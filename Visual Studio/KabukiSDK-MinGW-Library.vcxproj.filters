@@ -4,545 +4,542 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{d7d0a3fd-0f8b-4582-9523-4a55e571ff49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source">
+    <Filter Include="KabukiSDK-Library">
       <UniqueIdentifier>{07963084-0870-47bd-bb21-dcca9a9c0719}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK-Impl">
+    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl">
       <UniqueIdentifier>{419977ad-1483-4e4b-a6ee-8a51d93dcc5c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK-Impl\_Id">
+    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_Id">
       <UniqueIdentifier>{ed68df14-80fc-4420-88ac-49d9046f2460}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK-Impl\_UI">
+    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_UI">
       <UniqueIdentifier>{ecf2e808-ac20-4edb-a508-18982c478d1d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK-Impl\_UI\Components">
+    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_UI\Components">
       <UniqueIdentifier>{c26e2dd3-c713-4d32-aa2d-b7becb408017}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK-Impl\_Search">
+    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_Search">
       <UniqueIdentifier>{2e5dcfc7-7c23-4dcc-be41-c08b00c22a19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK-Impl\_2D">
+    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_2D">
       <UniqueIdentifier>{30e0452a-3457-4528-bed8-c7be439f7763}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK-Impl\_Math">
+    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_Math">
       <UniqueIdentifier>{ea048242-a3da-4871-97ca-c5d1f8717ef9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK-Impl\_Math\Operators">
+    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_Math\Operators">
       <UniqueIdentifier>{ab0f0d39-b290-41da-8e5e-5595ea04ec4c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK-Impl\_">
+    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_">
       <UniqueIdentifier>{f7dda6d6-06b8-4ce2-b68e-653345d86a24}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK-Impl\_3D">
+    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_3D">
       <UniqueIdentifier>{6faee06e-3010-4eb5-b13c-bed68de1b35b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK-Impl\_Data">
+    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_Data">
       <UniqueIdentifier>{fcde6ffa-6fdb-4012-9ffc-1ef1b926c804}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK">
-      <UniqueIdentifier>{63d2ed2e-54c9-4ee8-b2b5-649ace8a0665}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\KabukiSDK\_2D">
-      <UniqueIdentifier>{7b207d6f-7891-4874-bf57-e4b5a710eec7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\KabukiSDK\_Id">
-      <UniqueIdentifier>{3df9f4da-db95-4003-b359-c640b9bf18ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\KabukiSDK\_Search">
-      <UniqueIdentifier>{ef1dad3c-4db3-43da-b34c-8ba1960a3ca2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\KabukiSDK\_UI">
-      <UniqueIdentifier>{9c209997-21bc-4877-a537-544db2ae7e98}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\KabukiSDK\_UI\Components">
-      <UniqueIdentifier>{01e7af27-6890-4e73-b62a-773cab55db28}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\KabukiSDK\_">
+    <Filter Include="KabukiSDK-Library\_">
       <UniqueIdentifier>{cdb010f2-9c4d-445b-89d7-1640c97f8118}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK\_3D">
+    <Filter Include="KabukiSDK-Library\_2D">
+      <UniqueIdentifier>{7b207d6f-7891-4874-bf57-e4b5a710eec7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KabukiSDK-Library\_3D">
       <UniqueIdentifier>{71b79c36-bb8e-4fb8-adce-664000b42117}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK\_Data">
+    <Filter Include="KabukiSDK-Library\_Data">
       <UniqueIdentifier>{e6451eab-9619-4ca0-b2ef-60068cf9f789}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK\_Math">
+    <Filter Include="KabukiSDK-Library\_Id">
+      <UniqueIdentifier>{3df9f4da-db95-4003-b359-c640b9bf18ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KabukiSDK-Library\_Math">
       <UniqueIdentifier>{142278d3-56c1-4fc2-8f1d-7b679addd6ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\KabukiSDK\_Math\Operators">
+    <Filter Include="KabukiSDK-Library\_Math\Operators">
       <UniqueIdentifier>{98a4dbbc-1142-4f8a-8b86-d13f41fd0e53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KabukiSDK-Library\_Search">
+      <UniqueIdentifier>{ef1dad3c-4db3-43da-b34c-8ba1960a3ca2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KabukiSDK-Library\_UI">
+      <UniqueIdentifier>{9c209997-21bc-4877-a537-544db2ae7e98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KabukiSDK-Library\_UI\Components">
+      <UniqueIdentifier>{01e7af27-6890-4e73-b62a-773cab55db28}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\KabukiToolkit-Library\_Math\Operators\Divide.h">
-      <Filter>Source\KabukiSDK\_Math\Operators</Filter>
+      <Filter>KabukiSDK-Library\_Math\Operators</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_\IComparable.hpp">
-      <Filter>Source\KabukiSDK\_</Filter>
+      <Filter>KabukiSDK-Library\_</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_\IEvent.hpp">
-      <Filter>Source\KabukiSDK\_</Filter>
+      <Filter>KabukiSDK-Library\_</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_\MorseCode.hpp">
-      <Filter>Source\KabukiSDK\_</Filter>
+      <Filter>KabukiSDK-Library\_</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_\Print.hpp">
-      <Filter>Source\KabukiSDK\_</Filter>
+      <Filter>KabukiSDK-Library\_</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_\ErrorList.hpp">
-      <Filter>Source\KabukiSDK\_</Filter>
+      <Filter>KabukiSDK-Library\_</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_\EventSequence.hpp">
-      <Filter>Source\KabukiSDK\_</Filter>
+      <Filter>KabukiSDK-Library\_</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_2D\Polar.hpp">
-      <Filter>Source\KabukiSDK\_2D</Filter>
+      <Filter>KabukiSDK-Library\_2D</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_2D\Rect.hpp">
-      <Filter>Source\KabukiSDK\_2D</Filter>
+      <Filter>KabukiSDK-Library\_2D</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_2D\RectRotor.hpp">
-      <Filter>Source\KabukiSDK\_2D</Filter>
+      <Filter>KabukiSDK-Library\_2D</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_2D\Vect.hpp">
-      <Filter>Source\KabukiSDK\_2D</Filter>
+      <Filter>KabukiSDK-Library\_2D</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_2D\Angle.hpp">
-      <Filter>Source\KabukiSDK\_2D</Filter>
+      <Filter>KabukiSDK-Library\_2D</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_2D\Bezier.hpp">
-      <Filter>Source\KabukiSDK\_2D</Filter>
+      <Filter>KabukiSDK-Library\_2D</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_2D\Point.hpp">
-      <Filter>Source\KabukiSDK\_2D</Filter>
+      <Filter>KabukiSDK-Library\_2D</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Data\Data.hpp">
-      <Filter>Source\KabukiSDK\_Data</Filter>
+      <Filter>KabukiSDK-Library\_Data</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Data\DLNode.hpp">
-      <Filter>Source\KabukiSDK\_Data</Filter>
+      <Filter>KabukiSDK-Library\_Data</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Data\File.hpp">
-      <Filter>Source\KabukiSDK\_Data</Filter>
+      <Filter>KabukiSDK-Library\_Data</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Data\ICollection.hpp">
-      <Filter>Source\KabukiSDK\_Data</Filter>
+      <Filter>KabukiSDK-Library\_Data</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Data\IFileFilter.hpp">
-      <Filter>Source\KabukiSDK\_Data</Filter>
+      <Filter>KabukiSDK-Library\_Data</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Data\IIterable.hpp">
-      <Filter>Source\KabukiSDK\_Data</Filter>
+      <Filter>KabukiSDK-Library\_Data</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Data\IIterator.hpp">
-      <Filter>Source\KabukiSDK\_Data</Filter>
+      <Filter>KabukiSDK-Library\_Data</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Data\LLList.hpp">
-      <Filter>Source\KabukiSDK\_Data</Filter>
+      <Filter>KabukiSDK-Library\_Data</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Data\LLNode.hpp">
-      <Filter>Source\KabukiSDK\_Data</Filter>
+      <Filter>KabukiSDK-Library\_Data</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Data\TNode.hpp">
-      <Filter>Source\KabukiSDK\_Data</Filter>
+      <Filter>KabukiSDK-Library\_Data</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Data\Array.hpp">
-      <Filter>Source\KabukiSDK\_Data</Filter>
+      <Filter>KabukiSDK-Library\_Data</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Data\BinaryTree.hpp">
-      <Filter>Source\KabukiSDK\_Data</Filter>
+      <Filter>KabukiSDK-Library\_Data</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Data\BTNode.hpp">
-      <Filter>Source\KabukiSDK\_Data</Filter>
+      <Filter>KabukiSDK-Library\_Data</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\EntityList.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Grammer.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\IMAccount.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Name.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Organization.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Password.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Person.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Privilege.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Profile.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Relationship.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Tag.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\User.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\UserList.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Username.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Address.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Date.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\EmailAddress.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Entity.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\EntityGroup.hpp">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Math\Binary.hpp">
-      <Filter>Source\KabukiSDK\_Math</Filter>
+      <Filter>KabukiSDK-Library\_Math</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Math\Calc.hpp">
-      <Filter>Source\KabukiSDK\_Math</Filter>
+      <Filter>KabukiSDK-Library\_Math</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Math\Converter.hpp">
-      <Filter>Source\KabukiSDK\_Math</Filter>
+      <Filter>KabukiSDK-Library\_Math</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Math\Equation.hpp">
-      <Filter>Source\KabukiSDK\_Math</Filter>
+      <Filter>KabukiSDK-Library\_Math</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Math\Hex.hpp">
-      <Filter>Source\KabukiSDK\_Math</Filter>
+      <Filter>KabukiSDK-Library\_Math</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Math\Imaginary.hpp">
-      <Filter>Source\KabukiSDK\_Math</Filter>
+      <Filter>KabukiSDK-Library\_Math</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Math\Matrix.hpp">
-      <Filter>Source\KabukiSDK\_Math</Filter>
+      <Filter>KabukiSDK-Library\_Math</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Math\BCD.hpp">
-      <Filter>Source\KabukiSDK\_Math</Filter>
+      <Filter>KabukiSDK-Library\_Math</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Math\Operators\Divide.hpp">
-      <Filter>Source\KabukiSDK\_Math\Operators</Filter>
+      <Filter>KabukiSDK-Library\_Math\Operators</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Search\HitList.hpp">
-      <Filter>Source\KabukiSDK\_Search</Filter>
+      <Filter>KabukiSDK-Library\_Search</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Search\Library.hpp">
-      <Filter>Source\KabukiSDK\_Search</Filter>
+      <Filter>KabukiSDK-Library\_Search</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Search\TagLibrary.hpp">
-      <Filter>Source\KabukiSDK\_Search</Filter>
+      <Filter>KabukiSDK-Library\_Search</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Search\Hit.hpp">
-      <Filter>Source\KabukiSDK\_Search</Filter>
+      <Filter>KabukiSDK-Library\_Search</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\ButtonScroller.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\ControlArray.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\ControlGrid.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\DMXButton.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\DMXControl.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\Event.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\KeyboardEvent.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\Label.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\MacroButton.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\MasterControls.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\MIDIButton.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\MIDIControl.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\OSCControl.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\RadioButton.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\Widget.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\AVControl.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\ButtonControl.hpp">
-      <Filter>Source\KabukiSDK\_UI</Filter>
+      <Filter>KabukiSDK-Library\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\Components\Component.hpp">
-      <Filter>Source\KabukiSDK\_UI\Components</Filter>
+      <Filter>KabukiSDK-Library\_UI\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\Components\XYControl.hpp">
-      <Filter>Source\KabukiSDK\_UI\Components</Filter>
+      <Filter>KabukiSDK-Library\_UI\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_UI\Components\ADSR.hpp">
-      <Filter>Source\KabukiSDK\_UI\Components</Filter>
+      <Filter>KabukiSDK-Library\_UI\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Account.h">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ARadioButton.h">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK.hpp">
-      <Filter>Source</Filter>
+      <Filter>KabukiSDK-Library</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK-Config.hpp">
-      <Filter>Source</Filter>
+      <Filter>KabukiSDK-Library</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\KabukiSDK-Library\_\ReadMe.md">
-      <Filter>Source\KabukiSDK\_</Filter>
+      <Filter>KabukiSDK-Library\_</Filter>
     </None>
     <None Include="..\KabukiSDK-Library\_2D\ReadMe.md">
-      <Filter>Source\KabukiSDK\_2D</Filter>
+      <Filter>KabukiSDK-Library\_2D</Filter>
     </None>
     <None Include="..\KabukiSDK-Library\_Data\ReadMe.md">
-      <Filter>Source\KabukiSDK\_Data</Filter>
+      <Filter>KabukiSDK-Library\_Data</Filter>
     </None>
     <None Include="..\KabukiSDK-Library\_Id\ReadMe.md">
-      <Filter>Source\KabukiSDK\_Id</Filter>
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </None>
     <None Include="..\KabukiSDK-Library\_Math\ReadMe.md">
-      <Filter>Source\KabukiSDK\_Math</Filter>
+      <Filter>KabukiSDK-Library\_Math</Filter>
     </None>
     <None Include="..\KabukiSDK-Library\_3D\ReadMe.md">
-      <Filter>Source\KabukiSDK\_3D</Filter>
+      <Filter>KabukiSDK-Library\_3D</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_\MorseCode.cpp">
-      <Filter>Source\KabukiSDK-Impl\_</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_\Print.cpp">
-      <Filter>Source\KabukiSDK-Impl\_</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_\Converter.cpp">
-      <Filter>Source\KabukiSDK-Impl\_</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_\EventSequence.cpp">
-      <Filter>Source\KabukiSDK-Impl\_</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Bezier.cpp">
-      <Filter>Source\KabukiSDK-Impl\_2D</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Entity.cpp">
-      <Filter>Source\KabukiSDK-Impl\_2D</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Point.cpp">
-      <Filter>Source\KabukiSDK-Impl\_2D</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Polar.cpp">
-      <Filter>Source\KabukiSDK-Impl\_2D</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Rect.cpp">
-      <Filter>Source\KabukiSDK-Impl\_2D</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Vect.cpp">
-      <Filter>Source\KabukiSDK-Impl\_2D</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Angle.cpp">
-      <Filter>Source\KabukiSDK-Impl\_2D</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\BTNode.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Data</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Data</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\Data.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Data</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Data</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\DLNode.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Data</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Data</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\File.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Data</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Data</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\LLList.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Data</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Data</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\LLNode.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Data</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Data</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\TNode.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Data</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Data</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\BinaryTree.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Data</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Data</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Address.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\EmailAddress.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Entity.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\EntityGroup.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\EntityList.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Grammer.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\IMAccount.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Name.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Organization.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Password.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Person.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Privilege.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Profile.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Relationship.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Tag.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\User.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\UserList.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Username.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Account.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Id</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Binary.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Math</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Calc.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Math</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Equation.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Math</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Hex.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Math</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Imaginary.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Math</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Matrix.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Math</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\BCD.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Math</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Operators\Divide.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Math\Operators</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math\Operators</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Search\HitList.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Search</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Search</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Search\Library.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Search</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Search</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Search\TagLibrary.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Search</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Search</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Search\Hit.cpp">
-      <Filter>Source\KabukiSDK-Impl\_Search</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Search</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ButtonControl.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ButtonScroller.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\Color.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ControlArray.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ControlGrid.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\DMXButton.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\DMXControl.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\KeyboardEvent.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\Label.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\MacroButton.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\MIDIButton.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\MIDIControl.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\Widget.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\AVControl.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\Components\XYControl.cpp">
-      <Filter>Source\KabukiSDK-Impl\_UI\Components</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_\ErrorList.cpp">
-      <Filter>Source\KabukiSDK-Impl\_</Filter>
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
