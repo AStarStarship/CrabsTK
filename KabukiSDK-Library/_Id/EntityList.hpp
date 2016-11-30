@@ -42,7 +42,7 @@ class _KabukiSDK EntityList
     Entity Find  (const char* S);
     /*<  */
     
-    bool Contains  (const char* S);
+    bool contains  (const char* S);
     /*<  */
     
     void print (I2P::Terminal& slot);

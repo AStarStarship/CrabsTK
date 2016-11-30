@@ -27,9 +27,9 @@ Point_i::Point_i ()
     /// Nothing to do here!
 }
 
-Point_i::Point_i (int X, int Y)
-:   X (X), 
-    Y (Y) 
+Point_i::Point_i (int x, int y)
+:   X (x), 
+    Y (y) 
 { 
 }
 
@@ -37,42 +37,42 @@ int Point_i::getX () const { return X; }
 
 int Point_i::getY () const { return Y; }
 
-void Point_i::getX (int Value) { X = Value; }
+void Point_i::setX (int value) { X = value; }
 
-void Point_i::getY (int Value) { Y = Value; }
+void Point_i::setY (int value) { Y = value; }
 
-void Point_i::get (int NewX = 0, int NewY = 0)
+void Point_i::set (int x = 0, int y = 0)
 {
-    X = NewX;
-    Y = NewY;
+    X = x;
+    Y = y;
 }
 
-void Point_i::get (const Point_i& P)
+void Point_i::set (const Point_i& P)
 {
     X = P.X;
     Y = P.Y;
 }
 
-void Point_i::Translate (const Vect_i& V)
+void Point_i::translate (const Vect_i& V)
 {
     Y += V.Y;
     X += V.X;
 }
 
-void Point_i::Translate (int DeltaX, int DeltaY)
+void Point_i::translate (int dx, int dy)
 {
-    Y += DeltaY;
-    X += DeltaX;
+    Y += dy;
+    X += dx;
 }
 
-bool Point_i::Equals (const Point_i& P) const
+bool Point_i::equals (const Point_i& P) const
 {
     if (X != P.X || Y != P.Y)
         return false;
     return true;
 }
 
-int Point_i::Compare (const Point_i& P) const
+int Point_i::compare (const Point_i& P) const
 {
     if (X >= P.X)
         if (Y >= P.Y)
@@ -87,7 +87,7 @@ int Point_i::Compare (const Point_i& P) const
     return 0;   //< There are equal.
 }
 
-void Point_i::Swap (Point_i& P)
+void Point_i::swap (Point_i& P)
 {
     float tempX = P.X,
         tempY = P.Y;
@@ -118,42 +118,42 @@ float Point_f::getX () const { return X; }
 
 float Point_f::getY () const { return Y; }
 
-void Point_f::getX (float Value) { X = Value; }
+void Point_f::setX (float value) { X = value; }
 
-void Point_f::getY (float Value) { Y = Value; }
+void Point_f::setY (float value) { Y = value; }
 
-void Point_f::get (float NewX = 0, float NewY = 0)
+void Point_f::set (float x = 0, float y = 0)
 {
-    X = NewX;
-    Y = NewY;
+    X = x;
+    Y = y;
 }
 
-void Point_f::get (const Point_f& P)
+void Point_f::set (const Point_f& P)
 {
     X = P.X;
     Y = P.Y;
 }
 
-void Point_f::Translate (const Vect_f& V)
+void Point_f::translate (const Vect_f& V)
 {
     Y += V.Y;
     X += V.X;
 }
 
-void Point_f::Translate (float DeltaX, float DeltaY)
+void Point_f::translate (float dx, float dy)
 {
-    Y += DeltaY;
-    X += DeltaX;
+    Y += dy;
+    X += dx;
 }
 
-bool Point_f::Equals (const Point_f& P) const
+bool Point_f::equals (const Point_f& P) const
 {
     if (X != P.X || Y != P.Y)
         return false;
     return true;
 }
 
-int Point_f::Compare (const Point_f& P) const
+int Point_f::compare (const Point_f& P) const
 {
     if (X >= P.X)
         if (Y >= P.Y)
@@ -168,7 +168,7 @@ int Point_f::Compare (const Point_f& P) const
     return 0;   //< There are equal.
 }
 
-void Point_f::Swap (Point_f P)
+void Point_f::swap (Point_f P)
 {
     float tempX = P.X,
         tempY = P.Y;

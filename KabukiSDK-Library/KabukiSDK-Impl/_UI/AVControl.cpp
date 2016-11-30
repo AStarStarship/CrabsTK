@@ -270,7 +270,7 @@ void AVControl::getMSBValue (int value)
     value = (value & 0x00ff) | ((value & 0xff) << 8);
 }
 
-void AVControl::getChannel (int value)
+void AVControl::setChannel (int value)
 {
     if (value < 0)
         channel = 0;

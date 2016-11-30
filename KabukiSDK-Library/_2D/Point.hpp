@@ -34,7 +34,7 @@ struct _KabukiSDK Point_i
         Y;      //< The Y position.
 
     Point_i  ();
-    /*< Default constructor initializes with given Point. */
+    /*< Constructs an uninitialized . */
 
     Point_i  (int initX = 0, int initY = 0);
     /*< Default constructor initializes with given Point. 
@@ -42,52 +42,46 @@ struct _KabukiSDK Point_i
         @param initY The y value.
 
         @code
-        find_package(KF5Archive)
-target_link_libraries(yourapp KF5::Archive)
         @endcode
-        */
+    */
 
-    int GetX () const;
-    /*< Gets the X component. */
+    int getX () const;
+    /*< gets the X component. */
 
-    int GetY () const;
-    /*< Gets the Y component. */
+    int getY () const;
+    /*< gets the Y component. */
 
-    void SetX (int Value);
-    /*< Sets the X component to the new Value. */
+    void setX (int Value);
+    /*< sets the X component to the new Value. */
 
-    void SetY (int Value);
-    /*< Sets the Y component to the new Value. */
+    void setY (int Value);
+    /*< sets the Y component to the new Value. */
 
-    void Set (int newX = 0, int newY = 0);
-    /*< Sets the X and Y Values to the new Values. */
+    void set (int newX = 0, int newY = 0);
+    /*< sets the X and Y Values to the new Values. */
 
-    void Set (const Point_i& P);
-    /*< Sets the X and Y Values to the this Point's X and Y. */
+    void set (const Point_i& P);
+    /*< sets the X and Y Values to the this Point's X and Y. */
 
-    void Translate (const Vect_i& V);
-    /** Translates the given vector to the point.
+    void translate (const Vect_i& V);
+    /** translates the given vector to the point.
         @param V The vector to translate the point by. */
 
-    void Translate (int DeltaX, int DeltaY);
-    /** Translates the given vector to the point. */
+    void translate (int dx, int dy);
+    /** translates the given vector to the point. */
 
-    bool Equals (const Point_i& P) const;
+    bool equals (const Point_i& P) const;
     /*< Compares this Point to the other and returns true if the two Positions are identical. */
 
-    int Compare (const Point_i& P) const;
+    int compare (const Point_i& P) const;
     /*< Compares this Point to the other and the quadrant this point is in relation to the other. */
 
-    void Swap (Point_i& P);
+    void swap (Point_i& P);
     /*< Swaps this object's Point with a. */
 
     void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 };
-
-vector<_2D::Point_i> points;
-
-Array points (sizeof (_2D::Point_i))
 
 struct _KabukiSDK Point_f
 /*< A 2D point storted as float types. */
@@ -98,37 +92,37 @@ struct _KabukiSDK Point_f
     Point_f  (float initX = 0.0f, float initY = 0.0f);
     /*< Default constructor initializes with given Point. */
 
-    float GetX () const;
-    /*< Gets the X component. */
+    float getX () const;
+    /*< gets the X component. */
 
-    float GetY () const;
-    /*< Gets the Y component. */
+    float getY () const;
+    /*< gets the Y component. */
 
-    void SetX (float Value);
-    /*< Sets the X component to the new Value. */
+    void setX (float Value);
+    /*< sets the X component to the new Value. */
 
-    void SetY (float Value);
-    /*< Sets the Y component to the new Value. */
+    void setY (float Value);
+    /*< sets the Y component to the new Value. */
 
-    void Set (float newX = 0.0f, float newY = 0.0f);
-    /*< Sets the X and Y Values to the new Values. */
+    void set (float newX = 0.0f, float newY = 0.0f);
+    /*< sets the X and Y Values to the new Values. */
 
-    void Set (const Point_f& P);
-    /*< Sets the X and Y Values to the this Point's X and Y. */
+    void set (const Point_f& P);
+    /*< sets the X and Y Values to the this Point's X and Y. */
 
-    void Translate (const Vect_f& V);
-    /** Translates the given vector to the point. */
+    void translate (const Vect_f& V);
+    /** translates the given vector to the point. */
 
-    void Translate (float DeltaX, float DeltaY);
-    /** Translates the given vector to the point. */
+    void translate (float dx, float dy);
+    /** translates the given vector to the point. */
 
-    bool Equals (const Point_f& P) const;
+    bool equals (const Point_f& P) const;
     /*< Compares this Point to the other and returns true if the two Positions are identical. */
 
-    int Compare (const Point_f& P) const;
+    int compare (const Point_f& P) const;
     /*< Compares this Point to the other and the quadrant this point is in relation to the other. */
 
-    void Swap (Point_f P);
+    void swap (Point_f P);
     /*< Swaps this object's Point with a. */
 
     void print (I2P::Terminal& slot);

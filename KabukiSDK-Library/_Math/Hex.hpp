@@ -24,9 +24,9 @@
 #include <FreeI2P.hpp>
 #include <KabukiSDK-Config.hpp>
 
-namespace _ {
+namespace _Math {
 
-char HexToChar  (byte Value);
+char hexToChar  (byte Value);
 /*< Conserts the hex value to ASCII char. */
 
 void hexToString  (char* result, int value);
@@ -41,4 +41,4 @@ int hexToInt  (const char* binaryHex);
 byte hexToByte  (char value);
 /*< Converts the given hex char value to a byte value 0 - 15. */
 
-}   //< namespace _
+}   //< namespace _Math

@@ -53,7 +53,7 @@ class _KabukiSDK User
     bool GetLogin (Account thisAccount);
     /*<  */
     
-    bool Equals (User aUser);
+    bool equals (User aUser);
     /*<  */
     
     void print (I2P::Terminal& slot);

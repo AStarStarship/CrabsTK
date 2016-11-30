@@ -43,28 +43,28 @@ Rect_i::Rect_i (const Point_i& P, const Vect_i& O)
 { 
 }
 
-Rect_i::Rect_i (const Rect_i& Value)
+Rect_i::Rect_i (const Rect_i& value)
     :   X (0), 
     Y (0), 
-    Width (Value.Width), 
-    Height (Value.Height) 
+    Width (value.Width), 
+    Height (value.Height) 
 {
 }
 
 int Rect_i::getWidth () const { return Width; }
 
-int Rect_i::getWidth (int Value)
+int Rect_i::setWidth (int value)
 {
-    if (Value < 0) Value;
-    Width = Value;
+    if (value < 0) value;
+    Width = value;
 }
 
 int Rect_i::getHeight () const { return Height; }
 
-int Rect_i::getHeight (int Value)
+int Rect_i::setHeight (int value)
 {
-    if (Value < 0) return Value;
-    Height = Value;
+    if (value < 0) return value;
+    Height = value;
 }
 
 int Rect_i::getCenterX () const
@@ -77,31 +77,31 @@ int Rect_i::getCenterY () const
     return Y + (Height >> 1);
 }
 
-void Rect_i::getCenterX (int XValue)
+void Rect_i::setCenterX (int Xvalue)
 {
-    X = XValue - (Width >> 1);    // >> to /2
+    X = Xvalue - (Width >> 1);    // >> to /2
 }
 
-void Rect_i::getCenterY (int YValue)
+void Rect_i::setCenterY (int Yvalue)
 {
-    X = YValue - (Height >> 1);    // >> to /2;
+    X = Yvalue - (Height >> 1);    // >> to /2;
 }
 
-void Rect_i::get (const Rect_i& Value)
+void Rect_i::set (const Rect_i& value)
 {
-    X = Value.X;
-    Y = Value.Y;
-    Width = Value.Width;
-    Height = Value.Height;
+    X = value.X;
+    Y = value.Y;
+    Width = value.Width;
+    Height = value.Height;
 }
 
-bool Rect_i::Equals (const Rect_i& Value) const
+bool Rect_i::equals (const Rect_i& value) const
 {
-    if ((X != Value.X) || (Width != Value.Width) || (Y != Value.Y) || (Height != Value.Height)) return false;
+    if ((X != value.X) || (Width != value.Width) || (Y != value.Y) || (Height != value.Height)) return false;
     return true;
 }
 
-bool Rect_i::Contains (const Point_i& P) const
+bool Rect_i::contains (const Point_i& P) const
 {
     int x = P.X,
         y = P.Y,
@@ -114,24 +114,24 @@ bool Rect_i::Contains (const Point_i& P) const
     return true;
 }
 
-bool Rect_i::Contains (int XValue, int YValue) const
+bool Rect_i::contains (int Xvalue, int Yvalue) const
 {
     int left = X,
         top = Y,
         right = left + Width,
         bottom = top + Height;
 
-    if (XValue < X || YValue > top || XValue > right || YValue > bottom) return false;
+    if (Xvalue < X || Yvalue > top || Xvalue > right || Yvalue > bottom) return false;
     return true;
 }
 
-bool Rect_i::Contains (const Rect_i& Value)
+bool Rect_i::contains (const Rect_i& value)
 {
-    if ((Value.X < X) || (Value.Y > Y) || (Value.Width < Width) || (Value.Height > Height)) return false;
+    if ((value.X < X) || (value.Y > Y) || (value.Width < Width) || (value.Height > Height)) return false;
     return true;
 }
 
-void Rect_i::Swap (Rect_i& R)
+void Rect_i::swap (Rect_i& R)
 {
     int x = X,
         y = Y,
@@ -149,7 +149,7 @@ void Rect_i::Swap (Rect_i& R)
     R.Height = height;
 }
 
-bool Rect_i::Intersects (const Rect_i& R) const
+bool Rect_i::intersects (const Rect_i& R) const
 {
     int left = X,
         top = Y,
@@ -167,7 +167,7 @@ bool Rect_i::Intersects (const Rect_i& R) const
     return true;
 }
 
-bool Rect_i::Intersects (int R_X, int R_Y, int R_Width, int R_Height) const
+bool Rect_i::intersects (int R_X, int R_Y, int R_Width, int R_Height) const
 {
     int left = X,
         top = Y,
@@ -183,13 +183,13 @@ bool Rect_i::Intersects (int R_X, int R_Y, int R_Width, int R_Height) const
     return true;
 }
 
-void Rect_i::Translate (const Vect_i& V)
+void Rect_i::translate (const Vect_i& V)
 {
     X += V.X;
     Y += V.Y;
 }
 
-void Rect_i::Translate (int DeltaX, int DeltaY)
+void Rect_i::translate (int dx, int dy)
 {
     X += X;
     Y += Y;
@@ -201,7 +201,7 @@ void Rect_i::getPosition (const Point_i& P)
     Y = P.Y;
 }
 
-void Rect_i::getDimensions (const Vect_i& V)
+void Rect_i::setDimensions (const Vect_i& V)
 {
     Width = V.X;
     Height = V.Y;
@@ -216,14 +216,14 @@ Rect_i& Rect_i::PareOff (int pixels)
     return *this;
 }
 
-bool Rect_i::operator== (const Rect_i& Value) const
+bool Rect_i::operator== (const Rect_i& value) const
 {
-    return (Width == Value.Width) && (Height == Value.Height) && (X == Value.X) && (Y == Value.Y);
+    return (Width == value.Width) && (Height == value.Height) && (X == value.X) && (Y == value.Y);
 }
 
-bool Rect_i::operator!= (const Rect_i& Value) const
+bool Rect_i::operator!= (const Rect_i& value) const
 {
-    return (Width != Value.Width) || (Height != Value.Height) || (X != Value.X) || (Y != Value.Y);
+    return (Width != value.Width) || (Height != value.Height) || (X != value.X) || (Y != value.Y);
 }
 
 Rect_i& Rect_i::operator= (const Point_i& P)
@@ -275,28 +275,28 @@ Rect_f::Rect_f (const Point_f& P, const Vect_f& O)
 { 
 }
 
-Rect_f::Rect_f (const Rect_f& Value)
+Rect_f::Rect_f (const Rect_f& value)
     :   X (0), 
     Y (0), 
-    Width (Value.Width), 
-    Height (Value.Height) 
+    Width (value.Width), 
+    Height (value.Height) 
 {
 }
 
 float Rect_f::getWidth () const { return Width; }
 
-float Rect_f::getWidth (float Value)
+float Rect_f::getWidth (float value)
 {
-    if (Value < 0) Value;
-    Width = Value;
+    if (value < 0) value;
+    Width = value;
 }
 
 float Rect_f::getHeight () const { return Height; }
 
-float Rect_f::getHeight (float Value)
+float Rect_f::getHeight (float value)
 {
-    if (Value < 0) return Value;
-    Height = Value;
+    if (value < 0) return value;
+    Height = value;
 }
 
 float Rect_f::getCenterX () const
@@ -314,26 +314,26 @@ void Rect_f::getCenterX (float CenterX)
     X = CenterX - (Width  / 2.0f);    // >> to /2
 }
 
-void Rect_f::getCenterY (float Value)
+void Rect_f::getCenterY (float value)
 {
-    Y = Value + (Height / 2.0f);
+    Y = value + (Height / 2.0f);
 }
 
-void Rect_f::get (const Rect_f& Value)
+void Rect_f::get (const Rect_f& value)
 {
-    X = Value.X;
-    Y = Value.Y;
-    Width = Value.Width;
-    Height = Value.Height;
+    X = value.X;
+    Y = value.Y;
+    Width = value.Width;
+    Height = value.Height;
 }
 
-bool Rect_f::Equals (const Rect_f& Value) const
+bool Rect_f::equals (const Rect_f& value) const
 {
-    if ((X != Value.X) || (Width != Value.Width) || (Y != Value.Y) || (Height != Value.Height)) return false;
+    if ((X != value.X) || (Width != value.Width) || (Y != value.Y) || (Height != value.Height)) return false;
     return true;
 }
 
-bool Rect_f::Contains (const Point_f& P) const
+bool Rect_f::contains (const Point_f& P) const
 {
     float x = P.X,
         y = P.Y,
@@ -346,24 +346,24 @@ bool Rect_f::Contains (const Point_f& P) const
     return true;
 }
 
-bool Rect_f::Contains (float XValue, float YValue) const
+bool Rect_f::contains (float Xvalue, float Yvalue) const
 {
     float left = X,
         top = Y,
         right = left + Width,
         bottom = top + Height;
 
-    if (XValue < X || YValue > top || XValue > right || YValue > bottom) return false;
+    if (Xvalue < X || Yvalue > top || Xvalue > right || Yvalue > bottom) return false;
     return true;
 }
 
-bool Rect_f::Contains (const Rect_f& Value)
+bool Rect_f::contains (const Rect_f& value)
 {
-    if ((Value.X < X) || (Value.Y > Y) || (Value.Width < Width) || (Value.Height > Height)) return false;
+    if ((value.X < X) || (value.Y > Y) || (value.Width < Width) || (value.Height > Height)) return false;
     return true;
 }
 
-void Rect_f::Swap (Rect_f& R)
+void Rect_f::swap (Rect_f& R)
 {
     float x = X,
         y = Y,
@@ -381,7 +381,7 @@ void Rect_f::Swap (Rect_f& R)
     R.Height = height;
 }
 
-bool Rect_f::Intersects (const Rect_f& R) const
+bool Rect_f::intersects (const Rect_f& R) const
 {
     float left = X,
         top = Y,
@@ -399,7 +399,7 @@ bool Rect_f::Intersects (const Rect_f& R) const
     return true;
 }
 
-bool Rect_f::Intersects (float R_X, float R_Y, float R_Width, float R_Height) const
+bool Rect_f::intersects (float R_X, float R_Y, float R_Width, float R_Height) const
 {
     float left = X,
         top = Y,
@@ -415,13 +415,13 @@ bool Rect_f::Intersects (float R_X, float R_Y, float R_Width, float R_Height) co
     return true;
 }
 
-void Rect_f::Translate (const Vect_f& V)
+void Rect_f::translate (const Vect_f& V)
 {
     X += V.X;
     Y += V.Y;
 }
 
-void Rect_f::Translate (float DeltaX, float DeltaY)
+void Rect_f::translate (float dx, float dy)
 {
     X += X;
     Y += Y;
@@ -439,14 +439,14 @@ void Rect_f::getDimensions (const Vect_f& V)
     Height = V.Y;
 }
 
-bool Rect_f::operator== (const Rect_f& Value) const
+bool Rect_f::operator== (const Rect_f& value) const
 {
-    return (Width == Value.Width) && (Height == Value.Height) && (X == Value.X) && (Y == Value.Y);
+    return (Width == value.Width) && (Height == value.Height) && (X == value.X) && (Y == value.Y);
 }
 
-bool Rect_f::operator!= (const Rect_f& Value) const
+bool Rect_f::operator!= (const Rect_f& value) const
 {
-    return (Width != Value.Width) || (Height != Value.Height) || (X != Value.X) || (Y != Value.Y);
+    return (Width != value.Width) || (Height != value.Height) || (X != value.X) || (Y != value.Y);
 }
 
 Rect_f& Rect_f::operator= (const Point_f& P)

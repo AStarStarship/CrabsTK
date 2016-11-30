@@ -39,13 +39,13 @@ class ICollection
     virtual void Clear () = 0;
     /*< Resets the Collection without deleting the contents. */
 
-    virtual bool Contains (void* Data) = 0;
+    virtual bool contains (void* Data) = 0;
     /*< Returns true if this Collection contains thatObect. */
     
-    virtual bool Contains (const Collection& c) = 0;
+    virtual bool contains (const Collection& c) = 0;
     /*< Returns true if this Collection contains thatCollection. */
 
-    virtual bool Equals (void* Data) = 0;
+    virtual bool equals (void* Data) = 0;
     /*< Returns true if this Collection contains only the given data. */
 
     virtual long GetHash () = 0;

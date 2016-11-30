@@ -57,7 +57,8 @@ void DLNode::setData (void* ptr) { data = ptr; }
 
 DLNode DLNode::getPrev ()
 {
-    ; set; }
+    return prev;
+}
 
 DLNode Next { get; set; }
 

@@ -19,6 +19,7 @@
 */
 
 #include <_Math/Imaginary.hpp>
+
 #include <_Math/Calc.hpp>
 
 namespace _Math {
@@ -28,9 +29,9 @@ Imaginary_f::Imaginary_f ()
 
 }
 
-Imaginary_f::Imaginary_f (float Ax, float By)
-:   A (Ax),
-    B (By)
+Imaginary_f::Imaginary_f (float a, float b)
+:   A (a),
+    B (b)
 {
 }
 
@@ -72,9 +73,9 @@ Imaginary_d::Imaginary_d ()
 {
 }
 
-Imaginary_d::Imaginary_d (double Ax, double By)
-:   A (Ax),
-    B (By)
+Imaginary_d::Imaginary_d (double a, double b)
+:   A (a),
+    B (b)
 {
 }
 

@@ -21,14 +21,14 @@
 
 #pragma once
 
-#include <vector>
-#include <string>
-#include <memory>
-
 #include <FreeI2P.hpp>
 #include <KabukiSDK-Config.hpp>
 
 #include "Point.hpp"
+
+#include <vector>
+#include <string>
+#include <memory>
 
 namespace _2D {
 
@@ -41,9 +41,13 @@ class _KabukiSDK Bezier_f
         MinmumNumPoints = 3     //< The minimum number of points reqruied for a bezier curve.
     };
 
-    Bezier_f  (const float* XPoints, const float* YPoints, int NumPoints, bool IsDynamic);
+    Bezier_f  (float* theXPoints, float* theYPoints, int theNumPoints);
     /*< Constructor.
-        @pre The length of XPoints and YPoints must equal NumPoints or curve will not be created correctly. */
+    @pre The length of XPoints and YPoints must equal NumPoints or curve will not be created correctly. */
+
+    Bezier_f  (const float* theXPoints, const float* theYPoints, int theNumPoints);
+    /*< Constructor.
+    @pre The length of XPoints and YPoints must equal NumPoints or curve will not be created correctly. */
 
     Bezier_f  (float X0, float Y0, float X1, float Y1, float X2, float Y2, float X3, float Y3);
     /*< Constructs a bezier curve with the given points. */
@@ -54,13 +58,10 @@ class _KabukiSDK Bezier_f
     ~Bezier_f ();
     /*< Destructs dynamic memory if used. */
 
-    Point_f GetPoint  (float P);
+    Point_f getPoint  (float P);
     /*< Gets a Point_f along the path of the of curve at time t. */
 
-    static int Factoral  (int Value);
-    /*< Gets the factorial of the given value. */
-
-    int GetNumPoints ();
+    int getNumPoints ();
     /*< Gets the number of points. */
 
     void print (I2P::Terminal& slot);
@@ -71,8 +72,8 @@ class _KabukiSDK Bezier_f
     float* xPoints,                 //< Array of X points.
         * yPoints;                  //< Array of Y points.
 
-    int numPoints,                  //< The number of points in the polygon.
-        type;                       //< Flag for if this is read-only.
+    int numPoints;                  //< The number of points in the polygon.
+    bool isDynamic;                 //< Flag for if this uses dynamic memory.
 };
 
 }   //< namespace _2D

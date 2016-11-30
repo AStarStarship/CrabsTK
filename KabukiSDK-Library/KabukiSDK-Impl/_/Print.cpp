@@ -20,6 +20,8 @@
 
 #include <_/Print.hpp>
 
+#include <stdio.h>
+
 namespace _ {
 
 void printLine (int LineWidth, const char* Token)

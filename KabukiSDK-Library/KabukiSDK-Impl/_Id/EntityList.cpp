@@ -46,7 +46,7 @@ Entity EntityList::find (string a)
     return nullptr;//static website guest entities
 }
 
-bool EntityList::Contains (string a)
+bool EntityList::contains (string a)
 {
     if (a.Length == 0 || a == nullptr) return false;
 

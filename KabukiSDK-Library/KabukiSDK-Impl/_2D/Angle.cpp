@@ -34,11 +34,18 @@ Angle_f::Angle_f (float Value)
 
 float Angle_f::getRads () { return Rads; }
 
-float Angle_f::getRads (float Value) { return Rads = Value; }
+void Angle_f::setRads (float Value) { return Rads = Value; }
 
 float Angle_f::getDegs () { return Rads * (180.0f / M_PI); }
 
-float Angle_f::getDegs (float Value) { Rads = (Value * M_PI) / 180.0f; }
+void Angle_f::setDegs (float Value) { Rads = (Value * M_PI) / 180.0f; }
+
+void Angle_f::print (I2P::Terminal& slot)
+{
+    static const index_t header[] = { 2, I2P::STR, 32, I2P::FLT, I2P::STR, 3 };
+
+    slot.print (header, "Angle_f: ", Rads, "\n\r");
+}
 
 Angle_d::Angle_d (double Value)
 :   Rads (Value)
@@ -48,10 +55,17 @@ Angle_d::Angle_d (double Value)
 
 double Angle_d::getRads () { return Rads; }
 
-double Angle_d::getRads (double Value) { return Rads = Value; }
+double Angle_d::setRads (double Value) { return Rads = Value; }
 
 double Angle_d::getDegs () { return Rads * (180.0 / M_PI); }
 
 double Angle_d::getDegs (double Value) { Rads = (Value * M_PI) / 180.0; }
+
+void Angle_d::print (I2P::Terminal& slot)
+{
+    static const index_t header[] = { 2, I2P::STR, 32, I2P::FLT, I2P::STR, 3 };
+
+    slot.print (header, "Angle_f: ", Rads, "\n\r");
+}
 
 }   //< namespace _2D

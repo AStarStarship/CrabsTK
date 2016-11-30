@@ -27,24 +27,4 @@ Profile::Profile ()
 
 }
 
-byte Profile::getState ()
-{
-    return 0;
-}
-
-const char* Profile::getState (byte Value)
-{
-    return 0;
-}
-
-const char* Profile::op (I2P::Terminal& slot, int index, int Enq)
-{
-    switch (Index)
-    {
-        case 0: return I2P::NumMembers (0);
-    }
-    
-    return Query ? Enquery ("Profile", "_Id"): InvalidIndex ();
-}
-
 }   //< namespace _Id

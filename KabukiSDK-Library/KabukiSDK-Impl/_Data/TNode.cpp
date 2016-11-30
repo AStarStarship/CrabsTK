@@ -20,7 +20,8 @@
 
 namespace _Data {
 
-TNode::TNode (int initIndex)
+TNode::
+ (int initIndex)
 {
     index = initIndex;
 }

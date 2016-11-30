@@ -59,13 +59,13 @@ bool User::Verify (const char* aUsername, const char* aUser)
 
 bool User::Login (Account& thisAccount)
 {
-    if (!thisAccount.Users ().Contains (this))
+    if (!thisAccount.Users ().contains (this))
         return false;
     activeAccounts.add (thisAccount);
     return true;
 }
 
-bool User::Equals (User& aUser)
+bool User::equals (User& aUser)
 {
     if (username != aUser.Name || password != aUser.password) //< The aUser is not this user
         return false;

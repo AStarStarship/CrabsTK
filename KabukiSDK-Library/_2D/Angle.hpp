@@ -35,16 +35,16 @@ class _KabukiSDK Angle_f
     Angle_f  (float Value = 0.0f);
     /*< Simple default constructor. */
 
-    float GetRads ();
+    float getRads ();
     /*< Gets the angle in radians. */
 
-    float SetRads (float Value);
+    void setRads (float Value);
     /*< Sets the angle to the new value in radians. */
 
-    float GetDegs ();
+    float getDegs ();
     /*< Converts the angle to degrees. */
 
-    float SetDegs (float Value);
+    void setDegs (float Value);
     /*< Sets the angle to the new value in degrees. */
 
     void print (I2P::Terminal& slot);
@@ -61,16 +61,16 @@ class _KabukiSDK Angle_d
     Angle_d  (double a = 0.0);
     /*< Simple default constructor. */
 
-    double GetRads ();
+    double getRads ();
     /*< Gets the angle in radians. */
 
-    double SetRads (double Value);
+    void setRads (double Value);
     /*< Sets the angle to the new value in radians. */
 
-    double GetDegs ();
+    double getDegs ();
     /*< Converts the angle to degrees. */
 
-    double SetDegs (double Value);
+    void setDegs (double Value);
     /*< Sets the angle to the new value in degrees. */
 
     void print (I2P::Terminal& slot);

@@ -49,17 +49,7 @@ const char* Password::Encript ()
     return password;
 }
 
-const char* Password::op (I2P::Terminal& slot, int index, int Enq)
+void Password::print (I2P::Terminal& slot)
 {
-    switch (Index)
-    {
-        case 0: return I2P::NumMembers (0);
-    }
-    
-    return Query ? Enquery ("Password", "_Id"): InvalidIndex ();
-}
-
-const char* Password::print (I2P::Terminal& slot)
-{
-    return password;
+    slot.prints (password);
 }

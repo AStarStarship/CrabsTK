@@ -46,73 +46,77 @@ struct _KabukiSDK Rect_i
     explicit Rect_i  (const Rect_i& R); 
     /*< Copy constructor. */
 
-    int GetWidth () const;
-    /*< Gets the width.
-    @pre    Input must be positive.
+    int getWidth () const;
+    /*< gets the width.
+        @pre    Input must be positive.
     */
 
-    int SetWidth  (int value);
-    /*< Sets the width.
+    int setWidth  (int value);
+    /*< sets the width.
     @pre    Input must be positive. */
 
-    int GetHeight () const;
-    /*< Gets and sets the height.
-    @pre    Input must be positive.
+    int getHeight () const;
+    /*< gets and sets the height.
+        @pre    Input must be positive.
     */
 
-    int SetHeight  (int value);
-    /*< Sets the height.
-    @return Gets 0 upon success, -1 if input is negative, and +1 if input greater than max. */
+    int setHeight  (int value);
+    /*< sets the height.
+        @return gets 0 upon success, -1 if input is negative, and +1 if input greater than max.
+    */
 
-    int GetCenterX () const;
-    /*< Gets and sets the center x value. */
+    int getCenterX () const;
+    /*< gets and sets the center x value. */
 
-    int GetCenterY () const;
-    /*< Gets and sets the center y value. */
+    int getCenterY () const;
+    /*< gets and sets the center y value. */
 
-    void SetCenterX  (int Value);
-    /*< Sets the center y value. */
+    void setCenterX  (int Value);
+    /*< sets the center y value. */
 
-    void SetCenterY  (int Value);
-    /*< Sets the center y value. */
+    void setCenterY  (int Value);
+    /*< sets the center y value. */
 
-    void Set  (const Rect_i& R);
-    /*< Sets this object's Point to the thisPositition. */
+    void set  (const Rect_i& R);
+    /*< sets this object's Point to the thisPositition. */
 
-    bool Equals  (const Rect_i& R) const;
-    /*< Gets true if this object's Point is the same as the given coordinates. */
+    bool equals  (const Rect_i& R) const;
+    /*< gets true if this object's Point is the same as the given coordinates. */
 
-    bool Contains  (const Point_i& P) const;
-    /*< Gets true if this rectangle contains the given point. */
+    bool contains  (const Point_i& P) const;
+    /*< gets true if this rectangle contains the given point. */
 
-    bool Contains  (int XValue, int YValue) const;
-    /*< Gets true if this object contains the given point. */
+    bool contains  (int XValue, int YValue) const;
+    /*< gets true if this object contains the given point. */
 
-    bool Contains  (const Rect_i& R);
-    /*< Gets true if this rectangle contains the given rectangle. */
+    bool contains  (const Rect_i& R);
+    /*< gets true if this rectangle contains the given rectangle. */
 
-    void Swap  (Rect_i& R);
+    void swap  (Rect_i& R);
     /*< Swaps this object's Point with thisPoint. */
 
-    bool Intersects  (int R_X, int R_Y, int R_Width, int R_Height) const;
-    /*< Gets true of this Rectangle intersects/overlaps the given rectangle. */
+    bool intersects  (int R_X, int R_Y, int R_Width, int R_Height) const;
+    /*< gets true of this Rectangle intersects/overlaps the given rectangle. */
 
-    bool Intersects  (const Rect_i& R) const;
-    /*< Gets true of this Rectangle intersects/overlaps the given rectangle. */
+    bool intersects  (const Rect_i& R) const;
+    /*< gets true of this Rectangle intersects/overlaps the given rectangle. */
 
-    void Translate  (const Vect_i& V);
+    void translate  (const Vect_i& V);
     /*< Translates this object's Point by the given Point. */
 
-    void Translate  (int DeltaX, int DeltaY);
+    void translate  (int dx, int dy);
     /*< Translates this object's Point by the given Point. */
 
-    void SetPosition  (const Point_i& P);
+    void setPosition  (const Point_i& P);
+    /*< Sets the x, y coordinates to the given point. */
 
-    void SetDimensions  (const Vect_i& S);
+    void setDimensions  (const Vect_i& S);
+    /*< Sets the dimensions to the given vector. */
 
     Rect_i& PareOff  (int pixels); 
     /*< Pares the specified pixels off the Rect_i. 
-    It's equal to x += pixels; y + pixels; width -=  (pixels << 1); height -=  (pixels << 1); */
+        It's equal to x += pixels; y + pixels; width -=  (pixels << 1); height -=  (pixels << 1); 
+    */
 
     bool operator==  (const Rect_i& R) const;
 
@@ -147,69 +151,69 @@ struct _KabukiSDK Rect_f
     explicit Rect_f  (const Rect_f& R); 
     /*< Copy constructor. */
 
-    float GetWidth () const;
-    /*< Gets the width.
+    float getWidth () const;
+    /*< gets the width.
     @pre    Input must be positive.
     */
 
-    float SetWidth  (float value);
-    /*< Sets the width.
+    float setWidth  (float value);
+    /*< sets the width.
     @pre    Input must be positive. */
 
-    float GetHeight () const;
-    /*< Gets and sets the height.
+    float getHeight () const;
+    /*< gets and sets the height.
     @pre    Input must be positive.
     */
 
-    float SetHeight  (float value);
-    /*< Sets the height.
-    @return Gets 0 upon success, -1 if input is negative, and +1 if input greater than max. */
+    float setHeight  (float value);
+    /*< sets the height.
+    @return gets 0 upon success, -1 if input is negative, and +1 if input greater than max. */
 
-    float GetCenterX () const;
-    /*< Gets and sets the center x value. */
+    float getCenterX () const;
+    /*< gets and sets the center x value. */
 
-    float GetCenterY () const;
-    /*< Gets and sets the center y value. */
+    float getCenterY () const;
+    /*< gets and sets the center y value. */
 
-    void SetCenterX  (float Value);
-    /*< Sets the center y value. */
+    void setCenterX  (float Value);
+    /*< sets the center y value. */
 
-    void SetCenterY  (float Value);
-    /*< Sets the center y value. */
+    void setCenterY  (float Value);
+    /*< sets the center y value. */
 
-    void Set  (const Rect_f& R);
-    /*< Sets this object's Point to the thisPositition. */
+    void set  (const Rect_f& R);
+    /*< sets this object's Point to the thisPositition. */
 
-    bool Equals  (const Rect_f& R) const;
-    /*< Gets true if this object's Point is the same as the given coordinates. */
+    bool equals  (const Rect_f& R) const;
+    /*< gets true if this object's Point is the same as the given coordinates. */
 
-    bool Contains  (const Point_f& P) const;
-    /*< Gets true if this rectangle contains the given point. */
+    bool contains  (const Point_f& P) const;
+    /*< gets true if this rectangle contains the given point. */
 
-    bool Contains  (float XValue, float YValue) const;
-    /*< Gets true if this object contains the given point. */
+    bool contains  (float XValue, float YValue) const;
+    /*< gets true if this object contains the given point. */
 
-    bool Contains  (const Rect_f& R);
-    /*< Gets true if this rectangle contains the given rectangle. */
+    bool contains  (const Rect_f& R);
+    /*< gets true if this rectangle contains the given rectangle. */
 
-    void Swap  (Rect_f& R);
+    void swap  (Rect_f& R);
     /*< Swaps this object's Point with thisPoint. */
 
-    bool Intersects  (float R_X, float R_Y, float R_Width, float R_Height) const;
-    /*< Gets true of this Rectangle intersects/overlaps the given rectangle. */
+    bool intersects  (float R_X, float R_Y, float R_Width, float R_Height) const;
+    /*< gets true of this Rectangle intersects/overlaps the given rectangle. */
 
-    bool Intersects  (const Rect_f& R) const;
-    /*< Gets true of this Rectangle intersects/overlaps the given rectangle. */
+    bool intersects  (const Rect_f& R) const;
+    /*< gets true of this Rectangle intersects/overlaps the given rectangle. */
 
-    void Translate  (const Vect_f& V);
+    void translate  (const Vect_f& V);
     /*< Translates this object's Point by the given Point. */
 
-    void Translate  (float DeltaX, float DeltaY);
+    void translate  (float dx, float dy);
     /*< Translates this object's Point by the given Point. */
 
-    void SetPosition  (const Point_f& P);
+    void setPosition  (const Point_f& P);
 
-    void SetDimensions  (const Vect_f& S);
+    void setDimensions  (const Vect_f& S);
 
     bool operator==  (const Rect_f& R) const;
 

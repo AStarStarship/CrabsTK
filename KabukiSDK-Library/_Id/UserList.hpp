@@ -39,10 +39,10 @@ class _KabukiSDK UserList
 	bool Add  (User newUser);
 	/*<  */
     
-	bool Contains  (string username);
+	bool contains  (string username);
 	/*<  */
     
-	bool Contains  (User this_user);
+	bool contains  (User this_user);
 	/*<  */
     
 	User Find  (string username);

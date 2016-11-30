@@ -39,7 +39,7 @@ Label::Label (const Label &other) :
     // Nothing to do here :-)
 }
 
-int Label::IsValid (const char*& label)
+int Label::isValid (const char*& label)
 {
     int labelLength = label.length ();
     Logger::outputDebugString ("Checking const char*: " + label + " length = " + const char* (labelLength));
@@ -63,7 +63,7 @@ const char* Label::getLabel () const
     return label;
 }
 
-int Label::getLabel (const char*& newLabel)
+int Label::setLabel (const char*& newLabel)
 {
     if (newLabel == "")
         return -1;
@@ -74,41 +74,21 @@ int Label::getLabel (const char*& newLabel)
     return 0;
 }
 
-int Label::getLabel (const Label& newLabel)
+int Label::setLabel (const Label& newLabel)
 {
     return setLabel (newLabel.label);
 }
 
-int Label::Compare (const char*& other) const
+int Label::compare (const char*& other) const
 {
-    Logger::outputDebugString ("# " + label + ".Compare (" + other + ") = " + const char* (label.Compare (other)));
+    Logger::outputDebugString ("# " + label + ".compare (" + other + ") = " + const char* (label.compare (other)));
 
-    return label.Compare (other);
+    return label.compare (other);
 }
 
-int Label::Compare (const Label& other) const
+int Label::compare (const Label& other) const
 {
-    return Compare (other.label);
-}
-
-byte Label::getState ()
-{
-    return 0;
-}
-
-const char* Label::getState (byte Value)
-{
-    return 0;
-}
-
-const char* Label::op (I2P::Terminal& slot, int index, int Enq)
-{
-    switch (Index)
-    {
-        case 0: return I2P::NumMembers (0);
-    }
-    
-    return Query ? Enquery ("Label", "_UI"): InvalidIndex ();
+    return compare (other.label);
 }
 
 const char* Label::print (I2P::Terminal& slot) const

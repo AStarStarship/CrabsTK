@@ -111,7 +111,7 @@ bool BTNode::contains (void* ptr)
     
 BTNode BTNode::findDepthFirst (void* ptr)
 {
-    if (Contains (ptr))
+    if (contains (ptr))
         return this;
 
     if (left != nullptr && haveBeenThisWay == false)// can go this way

@@ -18,35 +18,44 @@
         limitations under the License.
 */
 
-#include <cassert>
-#include <string>
+#include <_2D/Bezier.hpp>
 
 #include <_Math/Calc.hpp>
 
-#include <_2D/Bezier.hpp>
+#include <cassert>
+#include <string>
 
 namespace _2D {
 
-Bezier_f::Bezier_f (const float* XPoints, const float* YPoints, int NumPoints)
-:   xPoints ((float*)XPoints),
-    yPoints ((float*)YPoints),
-    numPoints (NumPoints),
+Bezier_f::Bezier_f (float* theXPoints, float* theYPoints, int theNumPoints)
+:   xPoints ((float*)theXPoints),
+    yPoints ((float*)theYPoints),
+    numPoints (theNumPoints),
+    isDynamic (true)
+{
+    assert (theXPoints != nullptr);
+    assert (theYPoints != nullptr);
+    assert (theNumPoints >= 0);
+}
+
+Bezier_f::Bezier_f (const float* theXPoints, const float* theYPoints, int theNumPoints)
+:   xPoints ((float*)theXPoints),
+    yPoints ((float*)theYPoints),
+    numPoints (theNumPoints),
     isDynamic (false)
 {
-    assert (XPoints != nullptr);
-    assert (YPoints != nullptr);
-    assert (NumPoints >= 0);
+    assert (theXPoints != nullptr);
+    assert (theYPoints != nullptr);
+    assert (theNumPoints >= 0);
 }
 
 Bezier_f::Bezier_f (float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
 :   xPoints (new float[3]),
     yPoints (new float[3]),
     numPoints (3),
-    isDynamic (false)
+    isDynamic (true)
 {
     numPoints = 4;
-    xPoints.resize (4);
-    yPoints.resize (4);
 
     xPoints[0] = x0;
     yPoints[0] = y0;
@@ -58,57 +67,51 @@ Bezier_f::Bezier_f (float x0, float y0, float x1, float y1, float x2, float y2, 
     yPoints[3] = y3;
 }
 
-Bezier_f::Bezier_f (const Bezier_f& O)
+Bezier_f::Bezier_f (const Bezier_f& o)
 {
-    int newNumPoints = O.numPoints;
+    int newNumPoints = o.numPoints;
     numPoints = newNumPoints;
-    xPoints.resize (newNumPoints);
-    yPoints.resize (newNumPoints);
+    float* newXPoints = new float[newNumPoints],
+        * newYPoints = new float[newNumPoints];
+    xPoints = newXPoints;
+    yPoints = newYPoints;
 
     for (int i = 0; i < newNumPoints; ++i)
     {
-        xPoints[i] = O.xPoints[i];
-        yPoints[i] = O.yPoints[i];
+        newXPoints[i] = o.xPoints[i];
+        newYPoints[i] = o.yPoints[i];
     }
+}
+
+Bezier_f::~Bezier_f ()
+{
+    if (~isDynamic) return;
+    delete xPoints;
+    delete yPoints;
 }
 
 Point_f Bezier_f::getPoint (float P)
 {
-    float x = 0,                            //< The x position to return.
-        y = 0,                              //< The y position to return.
-        factn = factoral (numPoints);       //< Local copy of n!.
+    float x = 0,                                //< The x position to return.
+        y = 0,                                  //< The y position to return.
+        factn = _Math::factoral (numPoints);    //< Local copy of n!.
 
-    int n = numPoints;                      //< Local copy of numPoints as a float.
+    int n = numPoints;                          //< Local copy on stack.
 
     for (int i = 0; i <= n; i++)
     {
-        float b = factn / (factoral (i) * factoral (n - i)), //< Calculate binomial coefficient
-            k = Math.pow (1 - P, n - i) * Math.pow (P, i);   //< Calculate powers
+        //< calculate binomial coefficient.
+        float b = factn / (_Math::factoral (i) * _Math::factoral (n - i));
+
+        //< calculate powers
+        float k = _Math::power (1 - P, n - i) * _Math::power (P, i);          
 
      // Add weighted points to totals
-        x += b * k * XPoints[i];
-        y += b * k * YPoint[i];
+        x += b * k * xPoints[i];
+        y += b * k * yPoints[i];
     }
 
-    return new Point_f.Double (x, y);
-}
-
-int Bezier_f::Factoral (int value)
-{
-    // return special case
-    if (value == 0)
-        return 1;
-
-    if (value < 0)
-        value *= -1;
-
-    // Calculate factoral of value.
-
-    int total = value;
-    while (--value > 1)
-        total *= value;
-
-    return total;
+    return Point_f (x, y);
 }
 
 int Bezier_f::getNumPoints ()

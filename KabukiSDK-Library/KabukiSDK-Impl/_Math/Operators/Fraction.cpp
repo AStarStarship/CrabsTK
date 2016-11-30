@@ -20,7 +20,7 @@
 
 #include <_Math/Fraction.hpp>
 
-namespace _Math {
+namespace _Math { namespace Operators {
     
 Fraction_f::Fraction_f (float thisNumberator, float thisDenominator)
 {
@@ -53,4 +53,5 @@ void Fraction_f::print (I2P::Terminal& slot)
 
 }
 
-}
+}   //< namespace Operators
+}   //< namespace _Math

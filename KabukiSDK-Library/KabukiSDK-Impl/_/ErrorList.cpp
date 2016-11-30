@@ -20,33 +20,30 @@
 
 #include <_/ErrorList.hpp>
 
+#include <_/Print.hpp>
+
 namespace _ {
 
 ErrorList::ErrorList (char** errorBuffer, int maximumNumErrors)
 :   numErrors  (0),
-    maxNumErrors (maximumNumErrors < 0 ? DefaultNumErrors : maximumNumErrors)
+    maxNumErrors (maximumNumErrors < 0 ? DefaultMaxNumErrors : maximumNumErrors)
 {
     /// Nothing to do here! :-)
 }
 
 void ErrorList::clear () { numErrors = 0; }
 
-unsigned int ErrorList::getNumErrors () { return numErrors; }
+int ErrorList::getNumErrors () { return numErrors; }
+
+int ErrorList::getMaxNumErrors () { return maxNumErrors; }
 
 void ErrorList::report  (const char* s)
 {
-    if  (numErrors >= MaxNumErrors) return;
+    if  (numErrors >= maxNumErrors) return;
     errors[numErrors++] = s;
-    return this;
-}
-    
-ErrorList& operator +=  (const char* s)
-{
-    report  (s);
-    return this;
 }
 
-const char* ErrorList::getErrors () { return errors; }
+const char** ErrorList::getErrors () { return errors; }
     
 void ErrorList::print (I2P::Terminal& slot)
 {

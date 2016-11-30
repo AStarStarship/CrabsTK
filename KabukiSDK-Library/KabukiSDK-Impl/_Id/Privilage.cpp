@@ -1,5 +1,5 @@
 /** Kabuki Software Development Kit
-    @file    /.../KabukiSDK-Impl/_2D/Entity.cpp
+    @file    /.../KabukiSDK-Impl/_Id/Privilage.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -18,34 +18,12 @@
         limitations under the License.
 */
 
-#include <string>
-using namespace std;
+#include <_Id/Privilage.hpp>
 
-#include <_2D/Entity.hpp>
+namespace _Id {
 
-namespace _2D {
-
-Entity_f::Entity_f (const char* Name, float X, float Y, float Width, float Height)
-:   name (Name),
-    bounds (X, Y, Width, Height)
+Privilage::Privilage ()
 {
-
 }
 
-const char* Entity_f::getName () { return name; }
-
-void Entity_f::getName (const char* Name)
-{
-    name = Name; 
-}
-
-Entity_f& Entity_f::getBounds () { return bounds; }
-
-void Entity_f::print (I2P::Terminal& slot)
-{
-    std::string str;
-    static const index_t Header[] = { 1, STX, str.length () };
-    Slot.Print ();
-}
-
-}   //< namespace _2D
+}   //< namespace _Id

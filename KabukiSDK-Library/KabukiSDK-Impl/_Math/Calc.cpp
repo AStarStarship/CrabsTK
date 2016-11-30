@@ -144,12 +144,12 @@ double oneMinusEToTheX (double x)
     return 0.0; // return System.Math.expm1 (x);
 }
 
-float Floor (float a)
+float floor (float a)
 {
     return 0.0f; // return System.Math.Floor (a);
 }
 
-double Floor (double a)
+double floor (double a)
 {
     return 0.0; // return System.Math.Floor (a);
 }

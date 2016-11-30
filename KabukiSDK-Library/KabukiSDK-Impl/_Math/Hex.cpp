@@ -1,3 +1,4 @@
+
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK-Impl/_Math/Converter.cpp
     @author  Cale McCollough <https://calemccollough.github.io>
@@ -23,26 +24,26 @@
 
 namespace _Math {
 
-char HexToChar (byte Value)
+char hexToChar (byte Value)
 {
     if (Value > 15) return '!';
     if (Value > 10) return Value + ('a' - 10);
     return Value + '0';
 }
 
-void HexToString (char* Result, int Value)
+void hexToString (char* Result, int Value)
 {
     if (Result == nullptr) return;
     ; // Write me!
 }
 
-void HexToString (char* Result, uint8_t Value)
+void hexToString (char* Result, uint8_t Value)
 { 
     if (Result == nullptr) return;
     ; // Write me!
 }
 
-int HexToToInt (const char* binaryHex)
+int hexToToInt (const char* binaryHex)
 {/*
     if (binaryHex.Length > 4)
         return 15;
@@ -61,7 +62,7 @@ int HexToToInt (const char* binaryHex)
     return 0;
 }
 
-int HexToInt (char Value)
+int hexToInt (char Value)
 {
     switch (Value)
     {

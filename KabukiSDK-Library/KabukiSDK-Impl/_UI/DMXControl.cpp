@@ -22,9 +22,6 @@
 
 namespace _UI {
 
-
-
-/** Default constructor. */
 DMXControl::DMXControl (const char* &newLabel, int newChannel, int initValue, int newMinValue, int newMaxValue, 
     int newWordSize, int newAVControlType) :
     AVControl (newAVControlType, newLabel, newChannel, initValue, newMinValue, newMaxValue, newWordSize)
@@ -32,7 +29,6 @@ DMXControl::DMXControl (const char* &newLabel, int newChannel, int initValue, in
     // Nothing to do here! :-)
 }
 
-/** Copy contructor. */
 DMXControl::DMXControl (const DMXControl &newState) : 
     AVControl (newState)
 {

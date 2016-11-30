@@ -1,5 +1,5 @@
 /** Kabuki Software Development Kit
-    @file    /.../KabukiSDK-Impl/_Math/TESTS/BCD/main.cpp
+    @file    /.../KabukiSDK-Impl/_Id/OAthAccount.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -18,19 +18,33 @@
         limitations under the License.
 */
 
-#pragma once
+#include <_Id/OAthAccount.hpp>
 
+namespace _Id {
 
-/* sprintf example */
-#include <stdio.hpp>
-#include <cstdlib>
-
-int main ()
+OAthAccount::OAthAccount ()
 {
-    char buffer [50];
-    float test = -12345.67890f;
-    int n = sprintf (buffer, "%f", test);
-    printf ("Testing BCD Class with input %f\n%s\n\r", test, buffer);
-    system ("PAUSE");
+
+}
+
+byte OAthAccount::getState ()
+{
     return 0;
 }
+
+const char* OAthAccount::getState (byte Value)
+{
+    return 0;
+}
+
+const char* OAthAccount::op (I2P::Terminal& slot, int index, int Enq)
+{
+    switch (Index)
+    {
+        case 0: return I2P::NumMembers (0);
+    }
+    
+    return Query ? Enquery ("OAthAccount", "_Id"): InvalidIndex ();
+}
+
+}   //< namespace _Id

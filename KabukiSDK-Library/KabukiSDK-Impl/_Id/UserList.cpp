@@ -35,7 +35,7 @@ bool UserList::add (User newUser)
     return true;
 }
 
-bool UserList::Contains (const char* username)
+bool UserList::contains (const char* username)
 {
     for (int index = 0; index < users.size (); index++)
     {
@@ -45,11 +45,11 @@ bool UserList::Contains (const char* username)
     return false;
 }
 
-bool UserList::Contains (User& U)
+bool UserList::contains (User& U)
 {
     for (int index = 0; index < users.size (); index++)
     {
-        if (users[index].Equals (U))
+        if (users[index].equals (U))
             return true;
     }
     return false;
@@ -62,7 +62,7 @@ User UserList::Find (const char* username)
         return nullptr;//static website guest account
     }
     for (int index = 0; index < users.size (); index++)
-        if (users[index].Name.Equals (username))
+        if (users[index].Name.equals (username))
             return users[index];
     return nullptr;//static website guest account
 }

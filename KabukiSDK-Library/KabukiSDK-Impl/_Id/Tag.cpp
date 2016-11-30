@@ -46,26 +46,6 @@ int Tag::getName (const char* S)
 {
     return 0;
 }
-
-byte Password::getState ()
-{
-    return 0;
-}
-
-const char* Password::getState (byte Value)
-{
-    return 0;
-}
-
-const char* Password::op (I2P::Terminal& slot, int index, int Enq)
-{
-    switch (Index)
-    {
-        case 0: return I2P::NumMembers (0);
-    }
-    
-    return Query ? Enquery ("Password", "_Id"): InvalidIndex ();
-}
     
 const char* Tag::print (I2P::Terminal& slot)
 {

@@ -53,14 +53,14 @@ void Vect_i::get (const Vect_i& V)
     Y = V.Y;
 }
 
-bool Vect_i::Equals (const Vect_i& V) const
+bool Vect_i::equals (const Vect_i& V) const
 {
     if (X != V.X || Y != V.Y)
         return false;
     return true;
 }
 
-void Vect_i::Swap (Vect_i V)
+void Vect_i::swap (Vect_i V)
 {
     int tempX = V.X,
         tempY = V.Y;
@@ -144,14 +144,14 @@ void Vect_f::get (const Vect_f& V)
     Y = V.Y;
 }
 
-bool Vect_f::Equals (const Vect_f& V) const
+bool Vect_f::equals (const Vect_f& V) const
 {
     if (X != V.X || Y != V.Y)
         return false;
     return true;
 }
 
-void Vect_f::Swap (Vect_f V)
+void Vect_f::swap (Vect_f V)
 {
     float tempX = V.X,
         tempY = V.Y;

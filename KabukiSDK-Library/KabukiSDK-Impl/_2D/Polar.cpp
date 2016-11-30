@@ -18,9 +18,10 @@
         limitations under the License.
 */
 
-#include <math.hpp>
+#include <math.h>
 
 #include <_2D/Polar.hpp>
+
 namespace _2D {
 
 Polar_f::Polar_f (float angle, float radius)
@@ -29,12 +30,12 @@ Polar_f::Polar_f (float angle, float radius)
 {
 }
 
-float Polar_f::getAngle ()           { return Angle; }
-float Polar_f::getRadius ()          { return Radius; }
-void Polar_f::getAngle (float A)    { Angle = A; }
-void Polar_f::getRadius (float R)    { Radius = R; }
+float Polar_f::getAngle ()              { return Angle; }
+float Polar_f::getRadius ()             { return Radius; }
+void Polar_f::setAngle (float angle)    { Angle = angle; }
+void Polar_f::setRadius (float radius)  { Radius = radius; }
 
-float Polar_f::CalcMagnitude ()
+float Polar_f::calcMagnitude ()
 {
     float angle = Angle,
         radius = Radius;
@@ -52,12 +53,12 @@ Polar_d::Polar_d (double angle, double radius)
 {
 }
 
-double Polar_d::getAngle ()          { return Angle; }
-double Polar_d::getRadius ()          { return Radius; }
-void Polar_d::getAngle (double A)    { Angle = A; }
-void Polar_d::getRadius (double R)    { Radius = R; }
+double Polar_d::getAngle ()             { return Angle; }
+double Polar_d::getRadius ()            { return Radius; }
+void Polar_d::setAngle (double angle)   { Angle = angle; }
+void Polar_d::setRadius (double radius) { Radius = radius; }
 
-double Polar_d::CalcMagnitude ()
+double Polar_d::calcMagnitude ()
 {
     double angle = Angle,
         radius = Radius;

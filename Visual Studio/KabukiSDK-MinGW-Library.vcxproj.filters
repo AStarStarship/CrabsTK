@@ -346,16 +346,10 @@
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_\Print.cpp">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_</Filter>
     </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_\Converter.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_</Filter>
-    </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_\EventSequence.cpp">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Bezier.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Entity.cpp">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Point.cpp">

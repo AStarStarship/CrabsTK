@@ -39,7 +39,7 @@ class _KabukiSDK Entity
     const char* GetName ();
     int setName  (const char* S);
 
-    bool Contains  (string queery);
+    bool contains  (string queery);
     
     private:
 

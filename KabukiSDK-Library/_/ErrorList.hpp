@@ -20,6 +20,8 @@
 
 #pragma once
 
+#include <KabukiSDK-Config.hpp>
+
 #include <FreeI2P.hpp>
 
 namespace _ {
@@ -46,19 +48,16 @@ class _KabukiSDK ErrorList
     void clear ();
     /*< Clears the error list. */
 
-    unsigned int getNumErrors ();
+    int getNumErrors ();
     /*< Gets the number of errors. */
 
-    unsigned int getMaxNumErrors ();
+    int getMaxNumErrors ();
     /*< Gets the number of errors. */
 
     void report  (const char* s);
     /** Reports an error with the given message. */
-    
-    ErrorList& operator +=  (const char* s)
-    /** Reports an error with the given message. */
 
-    const char* getErrors ();
+    const char** getErrors ();
     /*< Gets the list of errors. */
     
     inline void print (I2P::Terminal& slot);

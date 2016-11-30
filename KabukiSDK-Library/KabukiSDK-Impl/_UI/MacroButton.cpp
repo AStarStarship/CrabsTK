@@ -22,8 +22,6 @@
 
 namespace _UI {
 
-
-
 MacroButton::MacroButton (const char*& newLabel) 
 :   AVControl (AVControl::MacroButton, newLabel, 0, 0, 0, 0, 0),
     numControls (0),

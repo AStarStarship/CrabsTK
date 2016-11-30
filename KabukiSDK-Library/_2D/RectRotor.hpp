@@ -27,7 +27,8 @@
 namespace _2D {
 
 class _KabukiSDK RectRotor_f
-/*< Utility class for rotating rectangles. */
+/*< Utility class for rotating rectangles. 
+*/
 {
     public:
     

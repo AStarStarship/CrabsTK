@@ -113,7 +113,6 @@
   <ItemGroup>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Angle.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Bezier.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Entity.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Point.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Polar.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Rect.cpp" />
@@ -172,7 +171,6 @@
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\MIDIButton.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\MIDIControl.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\Widget.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_\Converter.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_\ErrorList.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_\EventSequence.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_\MorseCode.cpp" />

@@ -34,31 +34,31 @@ struct _KabukiSDK Vect_i
     Vect_i ();
     /*< Constructs an uninitialized vector. */
 
-    Vect_i  (int InitX = 0, int InitY = 0);
+    Vect_i  (int x = 0, int y = 0);
     /*< Default constructor initializes with given component. */
 
-    int GetX ();
-    /*< Gets the X component. */
+    int getX ();
+    /*< gets the X component. */
 
-    int GetY ();
-    /*< Gets the Y component. */
+    int getY ();
+    /*< gets the Y component. */
 
-    void SetX (int Value);
-    /*< Sets the X component to the new Value. */
+    void setX (int Value);
+    /*< sets the X component to the new Value. */
 
-    void SetY (int Value);
-    /*< Sets the Y component to the new Value. */
+    void setY (int Value);
+    /*< sets the Y component to the new Value. */
 
-    void Set (int NewX = 0, int NewY = 0);
-    /*< Sets the X and Y components to the new Values. */
+    void set (int NewX = 0, int NewY = 0);
+    /*< sets the X and Y components to the new Values. */
 
-    void Set (const Vect_i& V);
-    /*< Sets the X and Y components to the this Vect_i's X and Y. */
+    void set (const Vect_i& V);
+    /*< sets the X and Y components to the this Vect_i's X and Y. */
 
-    bool Equals (const Vect_i& V) const;
+    bool equals (const Vect_i& V) const;
     /*< Compares this object's Vect_i to a and returns true if the two Positions are identical. */
 
-    void Swap (Vect_i V);
+    void swap (Vect_i V);
     /*< Swaps this object's Vect_i with thiscomponent. */
 
     bool operator== (const Vect_i& P) const;
@@ -92,28 +92,28 @@ struct _KabukiSDK Vect_f
     Vect_f (float InitX = 0.0f, float InitY = 0.0f);
     /*< Default constructor initializes with given component. */
 
-    float GetX ();
-    /*< Gets the X component. */
+    float getX ();
+    /*< gets the X component. */
 
-    float GetY ();
-    /*< Gets the Y component. */
+    float getY ();
+    /*< gets the Y component. */
 
-    void SetX (float Value);
-    /*< Sets the X component to the new Value. */
+    void setX (float Value);
+    /*< sets the X component to the new Value. */
 
-    void SetY (float Value);
-    /*< Sets the Y component to the new Value. */
+    void setY (float Value);
+    /*< sets the Y component to the new Value. */
 
-    void Set (float NewX = 0.0f, float NewY = 0.0f);
-    /*< Sets the X and Y Values to the new Values. */
+    void set (float NewX = 0.0f, float NewY = 0.0f);
+    /*< sets the X and Y Values to the new Values. */
 
-    void Set (const Vect_f& V);
-    /*< Sets the X and Y Values to the this Vect_f's X and Y. */
+    void set (const Vect_f& V);
+    /*< sets the X and Y Values to the this Vect_f's X and Y. */
 
-    bool Equals (const Vect_f& V) const;
+    bool equals (const Vect_f& V) const;
     /*< Compares this object's Vect_f to a and returns true if the two Positions are identical. */
 
-    void Swap (Vect_f V);
+    void swap (Vect_f V);
     /*< Swaps this object's Vect_f with thiscomponent. */
 
     bool operator== (const Vect_f& P) const;

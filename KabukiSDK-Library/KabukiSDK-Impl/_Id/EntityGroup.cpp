@@ -48,29 +48,12 @@ void EntityGroup::ApplyPrivilages (Privilages& P)
         accounts[i].Role ().Apply_Privilages (new_privilages);
 }
 
-byte EntityGroup::getState ()
+void EntityGroup::print (I2P::Terminal& slot)
 {
-    return 0;
-}
-
-const char* EntityGroup::getState (byte Value)
-{
-    return 0;
-}
-
-const char* EntityGroup::op (I2P::Terminal& slot, int index, int Enq)
-{
-    switch (Index)
-    {
-        case 0: return I2P::NumMembers (0);
-    }
-    
-    return Query ? Enquery ("EntityGroup", "_Id"): InvalidIndex ();
-}
-
-string EntityGroup::print (I2P::Terminal& slot)
-{
-    return "Group: " + name.print (I2P::Terminal& slot) + " " + base.print (I2P::Terminal& slot);
+    slot.prints ("Group: ");
+    name.print (slot);
+    slot.print (" ");
+    base.print (slot);
 }
 
 }   //< namespace _Id

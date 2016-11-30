@@ -108,7 +108,7 @@ bool Account::login (User& U)
 {
     User aUser;
     aUser = users->find (U.getName ());
-    if (!U.Equals (aUser))
+    if (!U.equals (aUser))
         return false;
     return true;
 }

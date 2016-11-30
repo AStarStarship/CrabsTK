@@ -24,6 +24,8 @@
 
 namespace _ {
 
+class EventSequence;
+
 class EventNode
 /*< An IEvent node in a linear linked list. */
 {
@@ -32,24 +34,26 @@ class EventNode
     EventNode (IEvent* nodeEvent);
     /*< Constructs an event node with the given IEvent. */
 
-    EventNode* getNext () = 0;
+    EventNode* getNext ();
     /*< Gets the next IEvent */
-
-    timestamp_t getEventTime () = 0;
-    /*< Gets the timestamp of when the event occurred. */
     
     IEvent* getEvent ();
-    /*< Gets the event this this node triggers. */
+    /*< Gets the event this node triggers. */
 
-    void trigger ();
+    void setEvent (IEvent* newEvent);
+    /*< Sets the event this node triggers. */
+
+    void trigger (EventSequence* source);
     /*< Triggers the event. */
 
-    inline void print (I2P::Terminal& slot) = 0;
+    inline void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
     
     private:
     
-    IEvent* event;   //< The event this node triggers.
+    IEvent* iEvent;      //< The event this node triggers.
+
+    EventNode* next;    //< The next node in the LLL.
 };
 
 class EventSequence : public _::IEvent
@@ -60,10 +64,7 @@ class EventSequence : public _::IEvent
     EventSequence ();
     /*< Constructs an empty event sequence. */
 
-    virtual timestamp_t getEventTime () override;
-    /*< Gets the timestamp of when the event occurred. */
-
-    virtual void trigger (I2P::IObject* source) override;
+    void trigger ();
     /*< Triggers the event. */
 
     inline void print (I2P::Terminal& slot);

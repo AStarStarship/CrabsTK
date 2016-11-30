@@ -1,5 +1,6 @@
 /** Kabuki Software Development Kit
-    @file    /.../KabukiSDK-Impl/_Id/Username.hpp
+    @file    /.../KabukiSDK-Impl/_Id/Username.c
+    pp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 

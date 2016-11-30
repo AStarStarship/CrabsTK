@@ -1,5 +1,5 @@
 # Data Structures Module
-Contains various data structures that can be used across an assembly line boundry. You cannot pass a template across an assembly boundry because it is resolved at compile time, .
+contains various data structures that can be used across an assembly line boundry. You cannot pass a template across an assembly boundry because it is resolved at compile time, .
 
 ## Vision
 

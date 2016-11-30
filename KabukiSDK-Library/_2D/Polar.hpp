@@ -37,19 +37,19 @@ struct Polar_f
         @param  thisNumber  The magnitude of the coordinate.
     */
 
-    float GetAngle ();
+    float getAngle ();
     /*< Gets the angle. */
 
-    float GetRadius ();
+    float getRadius ();
     /*< Gets the radius. */
 
-    void SetAngle (float Value);
+    void setAngle (float Value);
     /*< Sets the angle to the new value. */
 
-    void SetRadius (float Value);
+    void setRadius (float Value);
     /*< Sets the angle to the new value. */
 
-    float CalcMagnitude ();
+    float calcMagnitude ();
     /*< Calculates the magnitude of the . */
 
     void print (I2P::Terminal& slot);
@@ -68,19 +68,19 @@ struct Polar_d
                         */
     Polar_d  (double angle, double radius);
 
-    double GetAngle ();
+    double getAngle ();
     /*< Gets the angle. */
 
-    double GetRadius ();
+    double getRadius ();
     /*< Gets the radius. */
 
-    void SetAngle (double Value);
+    void setAngle (double Value);
     /*< Sets the angle to the new value. */
 
-    void SetRadius (double Value);
+    void setRadius (double Value);
     /*< Sets the angle to the new value. */
 
-    double CalcMagnitude ();
+    double calcMagnitude ();
     /*< Calculates the magnitude. */
 
     void print (I2P::Terminal& slot);
