@@ -24,7 +24,7 @@
 #include "MIDIControl.hpp"
 #include "ButtonControl.hpp"
 
-namespace _UI { namespace Controls {
+namespace _UI {
 
 class _KabukiSDK MIDIControl;
 
@@ -41,39 +41,39 @@ class _KabukiSDK MIDIButton : public MIDIControl, public ButtonControl
     virtual ~MIDIButton () {}
     //< Virtual destructor.
 
-    int GetMaxWordValue () const override;
-    //< Gets th max valu of a AVControl word.
+    int getMaxWordValue () const override;
+    //< gets the max valu of a AVControl word.
 
-    void Toggle () override;
+    void toggle () override;
     //< Toggles the state of the ButtonControl if type is latching.
 
-    const char* GetLabel () const override;
-    //< Gets th label.
+    const char* getLabel () const override;
+    //< gets the label.
 
-    /** Sets the label to the new label.
-        @return Gets 0 upon success and 1 if the newLabel is too long.
+    /** sets the label to the new label.
+        @return gets 0 upon success and 1 if the newLabel is too long.
         @see    Label::IsValid  (char). */
     int setLabel  (const char* newLabel) override;
 
-    void Press () override;
+    void press () override;
     //< Triggered when a mode button is pressed.
     
-    void Depress () override;
+    void depress () override;
     //< Triggered when a mode button is depressed.
     
-    void Depress () override;
+    void depress () override;
     //< Triggered when a user "double clicks" a button.
 
     const char* headerString () const override;
-    //< Gets th header for toStringRow ().
+    //< gets the header for toStringRow ().
     
     const char* ToStringRow () const override;
-    //< Gets a column of the values without the labels.
+    //< gets a column of the values without the labels.
     
-    const char* ToString () const override;
-    //< Gets a text represenation of this object.
+    const char* print (I2P::Terminal& slot) const override;
+    //< gets a text represenation of this object.
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:
@@ -81,23 +81,5 @@ class _KabukiSDK MIDIButton : public MIDIControl, public ButtonControl
     MIDIControl* buttonControl;                 //< This Button's MIDIControl.
 };
 
-class _KabukiSDK MIDIButtonTests : public UnitTest
-{
-    public:
-    MIDIButtonTests () : UnitTest ("Controls::MIDIButton...\n" + ConsoleLine ('~')) {}
-
-    void runTest ()
-    {
-        auto buttonA = MIDIButton ("MIDI Button A");
-
-        beginTest ("Testing const char* ToString ()");
-        logMessage  (buttonA.ToString ());
-
-        logMessage ("Done testing Controls:::MIDIButton class _KabukiSDK");
-    }
-};
-static MIDIButtonTests testUnit_MIDIButton;
-
-}   //< namespace Controls
 }   //< namespace _UI
 

@@ -27,10 +27,10 @@
 
 namespace _Id {
 
-/** A physical address. */
 class _KabukiSDK Address
+/*< A physical address. */
 {
-    const const char* Home = "Home",
+    const char* Home = "Home",
         Work = "Work",
         Other = "Other";
 
@@ -40,36 +40,45 @@ class _KabukiSDK Address
     /** Constructor creates an address with the given parameters. */
     Address  (const char* street, const char* city, const char* state, const char* zip, const char* country, const char* type);
 
-    const char* GetType ();
-    void SetType  (const char* newType);
-    
-    const char* GetStreet ();
-    void SetStreet  (const char* newValue);
-    
-    const char* GetCity ();
-    void SetCity  (const char* newValue);
-    
-    const char* GetState ();
-    void SetState  (const char* newValue);
-    
-    const char* GetZip ();
-    void SetZip  (const char* newValue);
-    
-    const char* GetCountry ();
-    void SetCountry  (const char* newValue);
+    const char* getType ();
+    /*< Gets the address type.
+        The address type means street, PO box, etc.
+    */
 
-    virtual byte GetState ();
-    /*< Gets the Inter-process state. */
-    
-    virtual const char* SetState  (byte Value);
-    /*< Sets the Inter-process state.
-        @return returns 0 upon success, and an I2P::Errror upon failure. */
-    
-    virtual const char* Do  (const char* Query, byte index, Roombot* Bot);
-    /*< Inter-process oproutines. */
+    void setType  (const char* newType);
+    /*< Sets the addrss type. */
 
-    std::const char* ToString ();
+    const char* getStreet ();
+    void setStreet  (const char* newValue);
+    /*< Sets the street addrss. */
+    
+    const char* getCity ();
+    /*< Gets the city. */
+
+    void setCity  (const char* newValue);
+    /*< Sets the city. */
+
+    const char* getState ();
+    /*< Gest the State. */
+
+    void setState  (const char* newValue);
+    /*< Sets the state. */
+    
+    const char* getZip ();
+    /*< Gets the zip code. */
+
+    void setZip  (const char* newValue);
+    /*< Sets the zip code. */
+    
+    const char* getCountry ();
+    /*< Gets the country. */
+
+    void setCountry  (const char* newValue);
+    /*< Sets the country. */
+    
+    virtual const char* op (I2P::Terminal& slot, int index, int enq);
+    /*< Inter-process operations. */
+
+    inline const char* print (I2P::Terminal& slot);
 };
 }   //< namespace _Id
-}   //< namespace Librarian
-

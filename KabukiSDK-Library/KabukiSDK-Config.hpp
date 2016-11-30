@@ -1,4 +1,4 @@
-/** Kabuki Software Development Kit - A library for creating electronics devices and robots with FreeI2P.
+/** Kabuki Software Development Kit
     @version 0.9
     @file    /.../Kabuki_Toolkit/KabukitToolkit-Config.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -26,7 +26,7 @@
 #define _UseDynamicLibrary       1
 
 #include <cstdint>
-#include <stdint.hpp>
+#include <stdint.h>
 
 typedef float ADCSample;
 //typedef uint8_t ADCSample;

@@ -23,7 +23,7 @@
 #include <FreeI2P.hpp>
 #include <KabukiSDK-Config.hpp>
 
-namespace _UI { namespace Controls {
+namespace _UI {
 
 /* A event with a timestamp.
    An example of an Event is typically like a Control or menu funciton.
@@ -39,18 +39,17 @@ class Event
     //< Virtual destructor.
 
     double timestamp () const { return timestamp; }
-    //< Gets th timestamp of the Event.
+    //< gets the timestamp of the Event.
 
     virtual void trigger () = 0;
     //< Triggers the event.
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:
 
     Timestamp timestamp;    //< The timestamp in milliseconds of the event.
 };
-}   //< namespace Controls
 }   //< namespace _UI
 

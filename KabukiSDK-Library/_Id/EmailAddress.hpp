@@ -43,7 +43,7 @@ class _KabukiSDK EmailAddress
         /// Use IdnMapping class _KabukiSDK to convert Unicode domain names.
         try
         {
-            a = Regex.Replace  (a, @" (@) (.+)$", this.DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds  (200));
+            a = ::std::regex_replace  (a, @" (@) (.+)$", this.DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds  (200));
         }
         catch  (RegexMatchTimeoutException) { return false; }
 
@@ -80,9 +80,9 @@ class _KabukiSDK EmailAddress
         return match.Groups[1].Value + domainName;
     }
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 };
 }   //< namespace _Id
-}   //< namespace Librarian
+}   //< namespace _Search
 

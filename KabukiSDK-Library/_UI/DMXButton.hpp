@@ -25,7 +25,7 @@
 #include "DMXControl.hpp"
 #include "ButtonControl.hpp"
 
-namespace _UI { namespace Controls {
+namespace _UI {
 
 class _KabukiSDK DMXButton : public DMXControl, public ButtonControl
 {
@@ -40,14 +40,14 @@ class _KabukiSDK DMXButton : public DMXControl, public ButtonControl
     /*< Virtual destructor. */
 
     int getMaxWordValue () const override;
-    /*< Gets th max value of a AVControl word. */
+    /*< gets the max value of a AVControl word. */
 
     const char* getLabel () const override;
-    /*< Gets th label. */
+    /*< gets the label. */
 
     int setLabel  (const char* newLabel) override; 
-    /*< Sets the label to the new label.
-        @return Gets 0 upon success and 1 if the newLabel is too 
+    /*< sets the label to the new label.
+        @return gets 0 upon success and 1 if the newLabel is too 
             long.
         @see    Label::IsValid  (char). 
     */
@@ -65,46 +65,15 @@ class _KabukiSDK DMXButton : public DMXControl, public ButtonControl
     /*< Triggered when a user "double clicks" a button. */
 
     const char* getHeaderString () const override;
-    /*< Gets th header for toStringRow (). */
+    /*< gets the header for toStringRow (). */
 
     const char* toStringRow () const override;
-    /*< Gets a column of the values without the labels. */
+    /*< gets a column of the values without the labels. */
     
     inline void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 };
 
-#if DEBUG
-class _KabukiSDK DMXButtonTests : public UnitTest
-{
-    public:
+}   //< namespace _UI
 
-    DMXButtonTests () : UnitTest ("Controls::DMXButton class _KabukiSDK\n" + ConsoleLine ('-') + "\n") {}
-
-    void runTest ()
-    {
-        auto buttonA = DMXButton ("DMX Button A");
-
-        beginTest ("Testing const char* ToString ()...");
-        LogMessage  (buttonA.ToString ());
-        
-        beginTest ("Testing void processPress () and void processDepress ()");
-        buttonA.processPress ();
-        expect  (buttonA.isPressed ());
-        buttonA.processDepress ();
-        expect (!buttonA.isPressed ());
-
-        beginTest ("Testing void toggle ()");
-        buttonA.setButtonAction  (ButtonControl::Latching);
-        buttonA.toggle ();
-        expect  (buttonA.value () == buttonA.maxValue ());
-        buttonA.toggle ();
-        expect  (buttonA.value () == buttonA.minValue ());
-    }
-};
-static DMXButtonTests testUnit_DMXButton;
-#endif // DEBUG
-
-}   //< namespace Controls
-}   //< namespace _Dev
 

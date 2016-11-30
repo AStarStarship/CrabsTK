@@ -81,7 +81,7 @@ target_link_libraries(yourapp KF5::Archive)
     void Swap (Point_i& P);
     /*< Swaps this object's Point with a. */
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 
@@ -131,7 +131,7 @@ struct _KabukiSDK Point_f
     void Swap (Point_f P);
     /*< Swaps this object's Point with a. */
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 

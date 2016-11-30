@@ -116,7 +116,7 @@ int Bezier_f::getNumPoints ()
     return numPoints;
 }
 
-void Bezier_f::Print (I2P::Terminal& Slot)
+void Bezier_f::print (I2P::Terminal& slot)
 {
 
 }

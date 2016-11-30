@@ -20,51 +20,36 @@
 
 #include <_Search/HitList.hpp>
 
+#include <regex>
+
 namespace _Search {
 
 HitList::HitList ()
 {
-    LoadTestHites ();
+    loadTestHits ();
 }
 
-HitList::HitList (const Hit& o)
+bool HitList::addHit (Hit& p)
 {
-
-}
-
-bool HitList::addHit (Hit p)
-{
-    if (p == nullptr) return false;
-
-    patches.Add (p);
+    patches.push_back (p);
 
     /// Check the tags for duplicates and add to tags if no duplicates exist.
-    string tagCatagory = p.Catagory;
-    foreach (string s in tags) if (s == tagCatagory) return true;
-    tags.Add (tagCatagory);
+    /*
+    const char* tagCatagory = p.getCatagory ();
+    for_each (patches.begin (), patches.end (), [](std::string s) { if (s == tagCatagory) return true; }
+    tags.push_back (tagCatagory);
     sort (tags.begin (), tags.end ());
     return true;
+    */
+    return false;
 }
 
-void HitList::sortTags () { sort (tags.begin (), tags.end ());
-
-void HitList::LoadTestHites ()
-{
-    patches = new vector<Hit> (9);
-    
-    AddHit (new Hit ("Claranet", "Default claranet patch.", new string[] { "Woodwind", "Claranet", "Reed" }));
-    AddHit (new Hit ("Oboe", "Default oboe patch.", new string[] { "Woodwind", "Oboe", "Reed" }));
-    AddHit (new Hit ("Tenor Sax", "Default tenor sax patch.", new string[] { "Woodwind", "Tenor Sax", "Reed", "Tenor" }));
-    AddHit (new Hit ("Recorder", "Default recorder patch.", new string[] { "Woodwind", "Recorder", "Flute" }));
-    AddHit (new Hit ("Flute", "Default flute patch.", new string[] { "Woodwind", "Flute" }));
-    
-    AddHit (new Hit ("Trumpet", "Default trumpet patch.", new string[] { "Brass", "Trumpet" }));
-    AddHit (new Hit ("FlugleHorn","Default flugle horn patch.", new string[] { "Brass", "Flugle Horn" }));
-    AddHit (new Hit ("FrenchHorn", "Default french horn patch.", new string[] { "Brass", "French Horn" }));
-    AddHit (new Hit ("Trombone", "Default trombone patch.", new string[] { "Brass", "Trombone" }));
+void HitList::sortTags () 
+{ 
+    //sort (tags.begin (), tags.end ());
 }
 
-void HitList::LoadFromJSON (string json)
+void HitList::loadFromJSON (const char* json)
 {
     /*
     try
@@ -73,82 +58,112 @@ void HitList::LoadFromJSON (string json)
         JArray a = JArray.Parse (json);
         foreach (JObject o in a.Children<JObject> ())
         {
-            Hit p = o.ToObject<Hit> ();
+            Hit p = o.toObject<Hit> ();
         }
     }
     catch (Exception e)
     {
-        Debug.Assert (false, e.ToString ());
+        assert (false, e.print (I2P::Terminal& slot));
     }
      */
 }
 
-char* HitList::toJSON ()
+const char* HitList::toJSON ()
 {
-    string json = new string "[";
-    int count = patches.Count;
+    /*
+    ::std::string json = "[";
+    int count = patches.size ();
     for (int i = 0; i < count; i++)
     {
-        json += patches[i].ToJSON ();
+        json += patches[i].toJSON ();
         if (i < count - 1) json += ", ";
     }
-    return json + "]";
+    json += "]";
+    return json.c_str ();
+    */
+    return 0;
 }
 
-bool HitList::findDuplicateName (char* value)
+bool HitList::findDuplicateName (const char* value)
 {
-    foreach (Hit a in patches)
-    if (a.Name == value)
+    /*
+    for_each (patches.begin (), patches.end (), [](Hit& hit) 
+    {
+    if (a.getName () == value)
         return true;
+    });
+    */
     return false;
 }
 
-string HitList::getCatagoryName (int index)
+const char* HitList::getCatagoryName (int index)
 {
-    if (index >= catagories.Count) return nullptr;
+    if (index >= catagories.size ()) return nullptr;
     
-    return catagories[index];
+    return catagories[index].c_str ();
 }
 
-HitList HitList::findpatchesWithTag (char* tag)
+HitList* HitList::findTag (const char* tag)
 {
-    vector<Hit> patchList = new vector<Hit> ();
-    foreach (Hit patch in patches)
+    /*
+    vector<Hit> patchList;
+
+    for_each (Hit patch in patches)
     if (patch.ContainsTag (tag))
-        patchList.Add (patch);
+        patchList.add (patch);
     return patchList;
+    */
+    return 0;
 }
 
-HitList HitList::findpatchesWithTags (vector<string> tags)
+HitList* HitList::findTags (::std::vector<::std::string> tags)
 {
-    HitList
-    vector<Hit> patchList = new vector<Hit> ();
+    /*
+    ::std::vector<Hit> patchList;
     for_each (patches.begin (), patches.end (), [] (Hit& p)
-              {
-                  if (patch.ContainsTags (tags)) patchList.Add (patch);
-              });
+    {
+        if (patch.ContainsTags (tags)) patchList.add (patch);
+    });
     return patchList;
+    */
+    return 0;
 }
 
-char* HitList::getCatagoryImageName (string s)
+const char* HitList::getCatagoryImageName (const char* s)
 {
     if (s == nullptr || s == "") return nullptr;
-    return "Catagory" + Regex.Replace (s, @"\s+", "");// + ".png";
+    ::std::regex regularExpression ("\s+");
+    ::std::string result = "Catagory" + ::std::regex_replace (s, regularExpression, "");// + ".png";
+    return result.c_str ();
 }
 
-char* HitList::getSubcatagoryImageName (string s)
+const char* HitList::getSubcatagoryImageName (const char* s)
 {
     if (s == nullptr || s == "") return nullptr;
-    return "Subcatagory" + Regex.Replace (s, @"\s+", "");// + ".png";
-}
-
-char* HitList::defaultHitList ()
-{
-    return "";
+    ::std::regex regularExpression ("\s+");
+    ::std::string result = "Subcatagory" + ::std::regex_replace (s, regularExpression, "");// + ".png";
+    return result.c_str ();
 }
 
 void HitList::print (I2P::Terminal& slot)
 {
+}
+
+void HitList::loadTestHits ()
+{
+    patches.clear ();
+    /*
+    addHit (new Hit ("Claranet", "Default claranet patch.", { "Woodwind", "Claranet", "Reed" }));
+    addHit (new Hit ("Oboe", "Default oboe patch.", { "Woodwind", "Oboe", "Reed" }));
+    addHit (new Hit ("Tenor Sax", "Default tenor sax patch.", { "Woodwind", "Tenor Sax", "Reed", "Tenor" }));
+    addHit (new Hit ("Recorder", "Default recorder patch.", { "Woodwind", "Recorder", "Flute" }));
+    addHit (new Hit ("Flute", "Default flute patch.", { "Woodwind", "Flute" }));
+
+    addHit (new Hit ("Trumpet", "Default trumpet patch.", { "Brass", "Trumpet" }));
+    addHit (new Hit ("FlugleHorn","Default flugle horn patch.", { "Brass", "Flugle Horn" }));
+    addHit (new Hit ("FrenchHorn", "Default french horn patch.", { "Brass", "French Horn" }));
+    addHit (new Hit ("Trombone", "Default trombone patch.", { "Brass", "Trombone" }));
+    */
 }
 
 }   //< namespace _Search

@@ -22,23 +22,34 @@
 
 namespace _Search {
 
-char* TagList::getOrAddTag (const char* Tag)
+TagLibrary::TagLibrary ()
 {
+
+}
+
+const char* TagLibrary::getOrAddTag (const char* Tag)
+{
+    /*
     if (Tag.Compare ("")) return nullptr;
     for_each (tags.begin (), tags.end (), [] (char* s)
     {
         if (s.Compare (Tag) == 0) return s;
     });
-    
+    */
     return nullptr;
 }
 
-void TagList::SortTags ()
+void TagLibrary::sortTags ()
 {
-    sort (tags.begin (), tags.end ());
+    //sort (tags.begin (), tags.end ());
 }
 
-void TagList::print (I2P::Terminal& slot)
+int TagLibrary::getNumTags ()
+{
+    return tags.size ();
+}
+
+void TagLibrary::print (I2P::Terminal& slot)
 {
 }
 

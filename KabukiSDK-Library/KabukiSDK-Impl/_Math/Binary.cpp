@@ -20,12 +20,12 @@
 */
 
 #include "_Math/Binary.hpp"
-#include <stdio.hpp>
+#include <stdio.h>
 
 
 namespace _Math {
 
-void ToBinary (char* Result, byte Value)
+void toBinary (char* Result, byte Value)
 {
     *Result       = (Value & 0b00000001) + '0';
     *(Result + 1) = (Value & 0b00000010) + '0';
@@ -37,64 +37,64 @@ void ToBinary (char* Result, byte Value)
     *(Result + 7) = (Value & 0b10000000) + '0';
 }
 
-void ToBinary (char* Result, int8_t Value)
+void toBinary (char* Result, int8_t Value)
 {
-    ToBinary (Result, (byte)Value);
+    toBinary (Result, (byte)Value);
 }
 
-void ToBinary (char* Result, int16_t Value)
+void toBinary (char* Result, int16_t Value)
 {
-    ToBinary (Result, (byte)(Value & 0xff));
-    ToBinary (Result, (byte)((Value & 0xff00) >> 8));
+    toBinary (Result, (byte)(Value & 0xff));
+    toBinary (Result, (byte)((Value & 0xff00) >> 8));
 }
 
-void ToBinary (char* Result, uint16_t Value)
+void toBinary (char* Result, uint16_t Value)
 {
-    ToBinary (Result, (byte)(Value & 0xff));
-    ToBinary (Result, (byte)((Value & 0xff00) >> 8));
+    toBinary (Result, (byte)(Value & 0xff));
+    toBinary (Result, (byte)((Value & 0xff00) >> 8));
 }
 
-void ToBinary (char* Result, int32_t Value)
+void toBinary (char* Result, int32_t Value)
 {
-    ToBinary (Result, (byte)(Value & 0xff));
-    ToBinary (Result, (byte)((Value & 0xff00) >> 8));
-    ToBinary (Result, (byte)((Value & 0xff0000) >> 16));
-    ToBinary (Result, (byte)((Value & 0xff000000) >> 32));
+    toBinary (Result, (byte)(Value & 0xff));
+    toBinary (Result, (byte)((Value & 0xff00) >> 8));
+    toBinary (Result, (byte)((Value & 0xff0000) >> 16));
+    toBinary (Result, (byte)((Value & 0xff000000) >> 32));
 }
 
-void ToBinary (char* Result, uint32_t Value)
+void toBinary (char* Result, uint32_t Value)
 {
-    ToBinary (Result, (byte)(Value & 0xff));
-    ToBinary (Result, (byte)((Value & 0xff00) >> 8));
-    ToBinary (Result, (byte)((Value & 0xff0000) >> 16));
-    ToBinary (Result, (byte)((Value & 0xff000000) >> 32));
+    toBinary (Result, (byte)(Value & 0xff));
+    toBinary (Result, (byte)((Value & 0xff00) >> 8));
+    toBinary (Result, (byte)((Value & 0xff0000) >> 16));
+    toBinary (Result, (byte)((Value & 0xff000000) >> 32));
 }
 
-void ToBinary (char* Result, int64_t Value)
+void toBinary (char* Result, int64_t Value)
 {
-    ToBinary (Result, (byte)(Value & 0xff));
-    ToBinary (Result, (byte)((Value & 0xff00) >> 8));
-    ToBinary (Result, (byte)((Value & 0xff0000) >> 16));
-    ToBinary (Result, (byte)((Value & 0xff000000) >> 24));
-    ToBinary (Result, (byte)((Value & 0xff00000000) >> 32));
-    ToBinary (Result, (byte)((Value & 0xff0000000000) >> 40));
-    ToBinary (Result, (byte)((Value & 0xff000000000000) >> 48));
-    ToBinary (Result, (byte)((Value & 0xff00000000000000) >> 56));
+    toBinary (Result, (byte)(Value & 0xff));
+    toBinary (Result, (byte)((Value & 0xff00) >> 8));
+    toBinary (Result, (byte)((Value & 0xff0000) >> 16));
+    toBinary (Result, (byte)((Value & 0xff000000) >> 24));
+    toBinary (Result, (byte)((Value & 0xff00000000) >> 32));
+    toBinary (Result, (byte)((Value & 0xff0000000000) >> 40));
+    toBinary (Result, (byte)((Value & 0xff000000000000) >> 48));
+    toBinary (Result, (byte)((Value & 0xff00000000000000) >> 56));
 }
 
-void ToBinary (char* Result, uint64_t Value)
+void toBinary (char* Result, uint64_t Value)
 {
-    ToBinary (Result, (byte)(Value & 0xff));
-    ToBinary (Result, (byte)((Value & 0xff00) >> 8));
-    ToBinary (Result, (byte)((Value & 0xff0000) >> 16));
-    ToBinary (Result, (byte)((Value & 0xff000000) >> 24));
-    ToBinary (Result, (byte)((Value & 0xff00000000) >> 32));
-    ToBinary (Result, (byte)((Value & 0xff0000000000) >> 40));
-    ToBinary (Result, (byte)((Value & 0xff000000000000) >> 48));
-    ToBinary (Result, (byte)((Value & 0xff00000000000000) >> 56));
+    toBinary (Result, (byte)(Value & 0xff));
+    toBinary (Result, (byte)((Value & 0xff00) >> 8));
+    toBinary (Result, (byte)((Value & 0xff0000) >> 16));
+    toBinary (Result, (byte)((Value & 0xff000000) >> 24));
+    toBinary (Result, (byte)((Value & 0xff00000000) >> 32));
+    toBinary (Result, (byte)((Value & 0xff0000000000) >> 40));
+    toBinary (Result, (byte)((Value & 0xff000000000000) >> 48));
+    toBinary (Result, (byte)((Value & 0xff00000000000000) >> 56));
 }
 
-int8_t BinaryToInt8 (const char* Value)
+int8_t binaryToInt8 (const char* Value)
 {
     if (Value == nullptr) return 0xff;
 
@@ -116,7 +116,7 @@ int8_t BinaryToInt8 (const char* Value)
     return result;
 }
 
-uint8_t BinaryToUInt8 (const char* Value)
+uint8_t binaryToUInt8 (const char* Value)
 {
     uint8_t result = 0,
         currentBitValue = 1;
@@ -136,7 +136,7 @@ uint8_t BinaryToUInt8 (const char* Value)
     return result;
 }
 
-int16_t BinaryToInt16 (const char* Value)
+int16_t binaryToInt16 (const char* Value)
 {
     uint16_t result = 0,
         currentBitValue = 1;
@@ -156,7 +156,7 @@ int16_t BinaryToInt16 (const char* Value)
     return result;
 }
 
-uint16_t BinaryToUInt16 (const char* Value)
+uint16_t binaryToUInt16 (const char* Value)
 {
     uint16_t result = 0,
         currentBitValue = 1;
@@ -176,7 +176,7 @@ uint16_t BinaryToUInt16 (const char* Value)
     return result;
 }
 
-int32_t BinaryToInt32 (const char* Value)
+int32_t binaryToInt32 (const char* Value)
 {
     int32_t result = 0,
         currentBitValue = 1;
@@ -196,7 +196,7 @@ int32_t BinaryToInt32 (const char* Value)
     return result;
 }
 
-uint32_t BinaryToUInt32 (const char* Value)
+uint32_t binaryToUInt32 (const char* Value)
 {
     uint32_t result = 0,
         currentBitValue = 1;
@@ -216,7 +216,7 @@ uint32_t BinaryToUInt32 (const char* Value)
     return result;
 }
 
-int64_t BinaryToInt64 (const char* Value)
+int64_t binaryToInt64 (const char* Value)
 {
     int64_t result = 0,
         currentBitValue = 1;
@@ -236,7 +236,7 @@ int64_t BinaryToInt64 (const char* Value)
     return result;
 }
 
-uint64_t BinaryToUInt64 (const char* Value)
+uint64_t binaryToUInt64 (const char* Value)
 {
     uint64_t result = 0,
         currentBitValue = 1;

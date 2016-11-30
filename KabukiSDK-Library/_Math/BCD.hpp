@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <float.hpp>
+#include <float.h>
 
 #include <FreeI2P.hpp>
 #include <KabukiSDK-Config.hpp>
@@ -29,21 +29,8 @@ namespace _Math {
 
 class _KabukiSDK BCD
 /*< Binary coded decimal for precise math.
-    This BCD class uses optional dynamic memory. The class stores a pointer to a 
-    byte array, and this byte array contains four bytes at the begining for the 
-    following data. This allows for tigh
-    __________________________________
-    | Byte 4-N | Is Negative         |
-    |----------|---------------------|
-    | Byte 3   | Is Negative         |
-    |----------|---------------------|
-    | Byte 2   | Total Length.       |
-    |----------|---------------------|
-    | Byte 1   | Num Whole Digits.   |
-    |----------|---------------------|
-    | Byte 0   | Uses dynamic memory |
-    |__________|_____________________|
-*/
+    This BCD class uses optional dynamic memory. The isDynamic flag if true 
+    will trigger the destructor on the ptr. */
 {
     public:
 
@@ -61,88 +48,88 @@ class _KabukiSDK BCD
     ~BCD ();
     /*< Destructor destructs if dynamic memory is used. */
 
-    float GetFloat ();
-    /*< Gets the BCD value as a float. */
+    float getFloat ();
+    /*< gets the BCD value as a float. */
 
-    float GetDouble ();
-    /*< Gets the BCD value as a double. */
+    double getDouble ();
+    /*< gets the BCD value as a double. */
 
-    void SetValue (float Value);
-    /*< Sets the BCD value to the new Value. */
+    void setValue (float Value);
+    /*< sets the BCD value to the new Value. */
 
-    void SetValue (double Value);
-    /*< Sets the BCD value to the new Value. */
+    void setValue (double Value);
+    /*< sets the BCD value to the new Value. */
 
-    bool IsNegative ();
+    bool isNegative ();
     /*< Returns true of this BCD is negative. */
 
-    int8_t GetNumWholeDigits  (int index);
-    /*< Gets the number of whole BCDs. */
+    int8_t getNumWholeDigits  (int index);
+    /*< gets the number of whole BCDs. */
 
-    int8_t GetNumFractionalDigits  (int index);
-    /*< Gets the number of fractional digits. */
+    int8_t getNumFractionalDigits  (int index);
+    /*< gets the number of fractional digits. */
 
-    void Plus (const BCD& Value);
-    /*< Pluss the given Value to this BCD. */
+    void plus (const BCD& Value);
+    /*< pluss the given Value to this BCD. */
 
-    void Plus (int Value);
-    /*< Pluss the given Value to this BCD. */
+    void plus (int Value);
+    /*< pluss the given Value to this BCD. */
 
-    void Plus (long Value);
-    /*< Pluss the given Value to this BCD. */
+    void plus (long Value);
+    /*< pluss the given Value to this BCD. */
 
-    void Plus (float Value);
-    /*< Pluss the given Value to this BCD. */
+    void plus (float Value);
+    /*< pluss the given Value to this BCD. */
 
-    void Plus (double Value);
-    /*< Pluss the given Value to this BCD. */
+    void plus (double Value);
+    /*< pluss the given Value to this BCD. */
 
-    void Minus (const BCD& Value);
+    void minus (const BCD& Value);
     /*< Subtracts the given Value to this BCD. */
 
-    void Minus (int Value);
+    void minus (int Value);
     /*< Subtracts the given Value to this BCD. */
 
-    void Minus (long Value);
+    void minus (long Value);
     /*< Subtracts the given Value to this BCD. */
 
-    void Minus (float Value);
+    void minus (float Value);
     /*< Subtracts the given Value to this BCD. */
 
-    void Minus (double Value);
+    void minus (double Value);
     /*< Subtracts the given Value to this BCD. */
 
-    void Times (const BCD& Value);
+    void times (const BCD& Value);
     /*< Multiples the given Value to this BCD. */
 
-    void Times (int Value);
+    void times (int Value);
     /*< Multiples the given Value to this BCD. */
 
-    void Times (long Value);
+    void times (long Value);
     /*< Multiples the given Value to this BCD. */
 
-    void Times (float Value);
+    void times (float Value);
     /*< Multiples the given Value to this BCD. */
 
-    void Times (double Value);
+    void times (double Value);
     /*< Multiples the given Value to this BCD. */
 
-    void Divide (const BCD& Value);
-    /*< Divides the given Value to this BCD. */
+    void divide (const BCD& Value);
+    /*< divides the given Value to this BCD. */
 
-    void Divide (int Value);
-    /*< Divides the given Value to this BCD. */
+    void divide (int Value);
+    /*< divides the given Value to this BCD. */
 
-    void Divide (long Value);
-    /*< Divides the given Value to this BCD. */
+    void divide (long Value);
+    /*< divides the given Value to this BCD. */
 
-    void Divide (float Value);
-    /*< Divides the given Value to this BCD. */
+    void divide (float Value);
+    /*< divides the given Value to this BCD. */
 
-    void Divide (double Value);
-    /*< Divides the given Value to this BCD. */
+    void divide (double Value);
+    /*< divides the given Value to this BCD. */
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints the BCD to the terminal. */
 
     private:
@@ -152,7 +139,7 @@ class _KabukiSDK BCD
     byte isDynamic,         //< Flag for if using dynamic memory.
         numWholeDigits,     //< The number of whole digits.
         totalLength,        //< The total length of the BCD string.
-        isNegative;         //< Flag for it is negative or not (0 for positive and '-' for negative.)
+        numIsNegative;      //< Flag for it is negative or not (0 for positive and '-' for negative.)
 };
 
 } // namespace _Math

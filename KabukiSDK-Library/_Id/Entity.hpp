@@ -37,7 +37,7 @@ class _KabukiSDK Entity
         const char* aStreetAdress2 = "", const char* aZipCode2 = "");
 
     const char* GetName ();
-    int SetName  (const char* S);
+    int setName  (const char* S);
 
     bool Contains  (string queery);
     
@@ -59,5 +59,5 @@ class _KabukiSDK Entity
     std::vector<Note> notes;
 };
 }   //< namespace _Id
-}   //< namespace Librarian
+}   //< namespace _Search
 

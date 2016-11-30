@@ -32,9 +32,9 @@ class _KabukiSDK Person: public Entity
     /** Default constructor. **/
     Person ();
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 };
 }   //< namespace _Id
-}   //< namespace Librarian
+}   //< namespace _Search
 

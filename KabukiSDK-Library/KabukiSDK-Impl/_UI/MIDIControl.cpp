@@ -22,7 +22,7 @@
 
 namespace _UI {
 
-MIDIControl::MIDIControl (const const char* &newLabel, int newCC, int newChannel, int initValue, int newMinValue,
+MIDIControl::MIDIControl (const char* &newLabel, int newCC, int newChannel, int initValue, int newMinValue,
     int newMaxValue, int newWordSize, int newAVControlType) :
     AVControl (newAVControlType, newLabel, newChannel, initValue, newMinValue, newMaxValue, newWordSize)
 {
@@ -41,7 +41,7 @@ int MIDIControl::cc () const
     return _cC;
 }
 
-/** Sets the control change (CC) parameter of the parameter to the value. */
+/** sets the control change (CC) parameter of the parameter to the value. */
 void MIDIControl::setCC (int value)
 {
     if (value < 0)
@@ -52,21 +52,21 @@ void MIDIControl::setCC (int value)
         _cC = value;
 }
 
-/** Sets the min and max values. */
+/** sets the min and max values. */
 void MIDIControl::setMinMaxValues (int newMin, int newMax)
 {
     AVControl::setMinMaxValues (newMin, newMax);
     setCC (_cC);
 }
 
-/** Sets the min value to the value. */
+/** sets the min value to the value. */
 void MIDIControl::setMinValue (int value)
 {
     AVControl::setMinValue (value);
     setCC (_cC);
 }
 
-/** Sets the max value to the value. */
+/** sets the max value to the value. */
 void MIDIControl::setMaxValue (int value)
 {
     AVControl::setMaxValue (value);

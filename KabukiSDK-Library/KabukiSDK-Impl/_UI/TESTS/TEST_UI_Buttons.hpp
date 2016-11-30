@@ -21,19 +21,17 @@
  
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
-
 #if DEBUG
-#include "Label.hpp"
-#include "DMXControl.hpp"
-#include "MidiControl.hpp"
-#include "DMXButton.hpp"
-#include "MidiButton.hpp"
-#include "MacroButton.hpp"
-#include "ControlArray.hpp"
-#include "ControlGrid.hpp"
+#include <_UI/Label.hpp>
+#include <_UI/DMXControl.hpp>
+#include <_UI/MIDIControl.hpp>
+#include <_UI/DMXButton.hpp>
+#include <_UI/MIDIButton.hpp>
+#include <_UI/MacroButton.hpp>
+#include <_UI/ControlArray.hpp>
+#include <_UI/ControlGrid.hpp>
 
-namespace _ { namespace Devices { namespace Controls {
+namespace _UI {
 
 class UnitTests : public UnitTest
 {
@@ -46,9 +44,9 @@ class UnitTests : public UnitTest
         Array<UnitTest*> unitTestsArray;
         unitTestsArray.add (&testUnit_Label);
         unitTestsArray.add (&testUnit_DMXControl);
-        unitTestsArray.add (&testUnit_MidiControl);
+        unitTestsArray.add (&testUnit_MIDIControl);
         unitTestsArray.add (&testUnit_DMXButton);
-        unitTestsArray.add (&testUnit_MidiButton);
+        unitTestsArray.add (&testUnit_MIDIButton);
         unitTestsArray.add (&testUnit_MacroButton);
         unitTestsArray.add (&testUnit_ControlArray);
         unitTestsArray.add (&testUnit_ControlGrid);
@@ -57,8 +55,7 @@ class UnitTests : public UnitTest
         unitTestRunner.runTests (unitTestsArray);
     }
 };
-static UnitTests testUnit_SymmetryStation__Controls;
-}   //< namespace Controls
-}   //< namespace Devices
-}   //< namespace _
+static UnitTest testUnit_KabukiSDK__Controls;
+}   //< namespace _UI
+
 #endif // DUBUG

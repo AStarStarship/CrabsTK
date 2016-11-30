@@ -60,9 +60,9 @@ namespace _Data {
             return false;
         }
 
-        const char* ToString ()
+        const char* print (I2P::Terminal& slot)
         {
-            return const char*.concat (name, "/n", data.ToString ());
+            return const char*.concat (name, "/n", data.print (I2P::Terminal& slot));
         }
 
         void Delete ()

@@ -25,7 +25,7 @@
 #include "Label.hpp"
 #include "Event.hpp"
 
-namespace _UI { namespace Controls {
+namespace _UI {
 
 class _KabukiSDK AVControl, public Label, public Event
 /** An audio-visual control.
@@ -35,7 +35,15 @@ class _KabukiSDK AVControl, public Label, public Event
     public:
 
     /** A list of the different types of Control  (s). */
-    enum Types { DMXControl = 0, MIDIControl, OSCControl, DMXButton, MIDIButton, OSCButton, MacroButton } ;
+    enum Types { 
+        DMXControl = 0, 
+        MIDIControl, 
+        OSCControl, 
+        DMXButton, 
+        MIDIButton, 
+        OSCButton, 
+        MacroButton
+    } ;
 
     static const char* MacroHeader;        //< const char* for printing multiple AVControls with other opclasses.
     static const int MacroHeaderLength;     //< The length of the MacroHeader
@@ -50,98 +58,98 @@ class _KabukiSDK AVControl, public Label, public Event
     virtual ~AVControl () {}
     /*< Virtual destructor. */
 
-    int GetType () const;
-    /*< Gets what type of control this is. */
+    int getType () const;
+    /*< gets what type of control this is. */
 
-    const char* GetTypeString () const;
-    /*< Gets a const char* that says what type of AVControl this is. */
+    const char* getTypeString () const;
+    /*< gets a const char* that says what type of AVControl this is. */
 
-    int GetChannel () const;
-    /*< Gets th output channel of this control. */
+    int getChannel () const;
+    /*< gets the output channel of this control. */
 
-    int GetNumChannels () const;
-    /*< Gets th number of channels. */
+    int getNumChannels () const;
+    /*< gets the number of channels. */
 
-    int GetWordSize () const;
-    /*< Gets th number of bits of in a control word. */
+    int getWordSize () const;
+    /*< gets the number of bits of in a control word. */
 
-    int GetMinWordSize () const;
-    /*< Gets th minimum word size. */
+    int getMinWordSize () const;
+    /*< gets the minimum word size. */
 
-    int GetMinWordValue () const;
-    /*< Gets th minimum integer value of a word. */
+    int getMinWordValue () const;
+    /*< gets the minimum integer value of a word. */
 
-    int GetMaxWordSize () const;
-    /*< Gets th maximum word size. */
+    int getMaxWordSize () const;
+    /*< gets the maximum word size. */
 
-    int GetMaxWordValue () const;
-    /*< Gets th maximum integer value of a word. */
+    int getMaxWordValue () const;
+    /*< gets the maximum integer value of a word. */
 
-    int GetValue () const;
-    /*< Gets th current value of this control. */
+    int getValue () const;
+    /*< gets the current value of this control. */
 
-    int GetLSBValue () const;
-    /*< Gets th LSB of this value. */
+    int getLSBValue () const;
+    /*< gets the LSB of this value. */
 
-    int GetMSBValue () const;
-    /*< Gets th MSB of this value. */
+    int getMSBValue () const;
+    /*< gets the MSB of this value. */
 
-    int GetInitValue () const;
-    /*< Gets th default MIDI value of this control. */
+    int getInitValue () const;
+    /*< gets the default MIDI value of this control. */
 
-    int GetMinValue () const;
-    /*< Gets th min value of this control. */
+    int getMinValue () const;
+    /*< gets the min value of this control. */
 
-    int GetMaxValue () const;
-    /*< Gets th max value of this control. */
+    int getMaxValue () const;
+    /*< gets the max value of this control. */
     
-    void SetLSBValue  (int value);
-    /*< Sets the LSB value to the value. */
+    void setLSBValue  (int value);
+    /*< sets the LSB value to the value. */
 
-    void SetMSBValue  (int value);
-    /*< Sets the MSB value to the value. */
+    void setMSBValue  (int value);
+    /*< sets the MSB value to the value. */
 
-    void SetChannel  (int value);
-    /*< Sets the output channel to value. */
+    void setChannel  (int value);
+    /*< sets the output channel to value. */
 
-    void SetWordSize  (int value);
-    /*< Sets the control word size to the new value. */
+    void setWordSize  (int value);
+    /*< sets the control word size to the new value. */
 
-    void SetValue  (int value);
-    /*< Sets this control's value of the parameter to the value. */
+    void setValue  (int value);
+    /*< sets this control's value of the parameter to the value. */
 
-    void SetInitValue  (int value);
-    /*< Sets the initial value of a new control to the value. */
+    void setInitValue  (int value);
+    /*< sets the initial value of a new control to the value. */
 
-    virtual void SetMinMaxValues  (int newMin, int newMax);
-    /*< Sets the min and max values.
+    virtual void setMinMaxValues  (int newMin, int newMax);
+    /*< sets the min and max values.
     @pre    The word size must be set before calling this function! */
 
-    virtual void SetMinValue  (int value);
-    /*< Sets the min value to the value. */
+    virtual void setMinValue  (int value);
+    /*< sets the min value to the value. */
 
-    virtual void SetMaxValue  (int value);
-    /*< Sets the max value to the value. */
+    virtual void setMaxValue  (int value);
+    /*< sets the max value to the value. */
 
-    virtual void Trigger () {}
+    virtual void trigger () {}
     /*< Triggers the Control to fire. */
 
-    virtual void Toggle ();
+    virtual void toggle ();
     /*< Toggles between the min and the max values. */
 
-    virtual int Compare  (const AVControl& other) const;
+    virtual int compare  (const AVControl& other) const;
     /*< Compares this Control to the other.
-    @return Gets 0 if both Controls are the same.
-    @return Gets 1 if the controls are not identical. */
+    @return gets 0 if both Controls are the same.
+    @return gets 1 if the controls are not identical. */
 
-    virtual const char* GetHeaderString () const;
-    /*< Gets th header for toStringRow (). */
+    virtual const char* getHeaderString () const;
+    /*< gets the header for toStringRow (). */
 
     virtual const char* ToStringRow () const;
-    /*< Gets a column of the values without the labels. */
+    /*< gets a column of the values without the labels. */
 
-    virtual const char* ToString () const;
-    /*< Gets a text represenation of this Conrol. */
+    virtual const char* print (I2P::Terminal& slot) const;
+    /*< Prints this object to a terminal. */
 
     private:
     
@@ -159,9 +167,8 @@ class _KabukiSDK AVControl, public Label, public Event
         minValue,                                  //< The min value.
         maxValue;                                  //< The max value.
 
-    void SetType  (int value);
-    //< Sets the type to the new value. */
+    void setType  (int value);
+    //< sets the type to the new value. */
 };
-}   //< namespace Controls
-}   //< namespace _Dev
 
+}   //< namespace _UI

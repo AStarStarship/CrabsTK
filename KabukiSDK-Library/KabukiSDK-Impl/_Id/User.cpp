@@ -22,7 +22,7 @@
 
 namespace _Id {
 
-User::User (const char* AName, const char* APassoword)
+User::User (const char* aName, const char* APassoword)
 {
     if (IsValid (AUser))
         return;
@@ -61,7 +61,7 @@ bool User::Login (Account& thisAccount)
 {
     if (!thisAccount.Users ().Contains (this))
         return false;
-    activeAccounts.Add (thisAccount);
+    activeAccounts.add (thisAccount);
     return true;
 }
 

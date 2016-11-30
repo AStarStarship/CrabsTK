@@ -1,5 +1,5 @@
 /** Kabuki Software Development Kit
-    @file    /.../KabukiSDK-Impl/_Dev/Components/XYControl.cpp
+    @file    /.../KabukiSDK-Impl/_UI/ARadioButton.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -18,6 +18,6 @@
         limitations under the License.
 */
 
-namespace _Dev {
+namespace _UI {
 
-}   //< namespace _Dev
+}   //< namespace _UI

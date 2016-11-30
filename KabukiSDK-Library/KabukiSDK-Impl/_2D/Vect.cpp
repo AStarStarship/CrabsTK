@@ -106,7 +106,7 @@ Vect_i& Vect_i::operator+= (const Vect_i& P)
     return *this;
 }
 
-void Vect_i::Print (I2P::Terminal& Slot)
+void Vect_i::print (I2P::Terminal& slot)
 {
 
 }
@@ -197,7 +197,7 @@ Vect_f& Vect_f::operator+= (const Vect_f& P)
     return *this;
 }
 
-void Vect_f::Print (I2P::Terminal& Slot)
+void Vect_f::print (I2P::Terminal& slot)
 {
 
 }

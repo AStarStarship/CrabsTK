@@ -26,14 +26,14 @@
 namespace _Id {
 
 /** An instant messanging account. */
-class _KabukiSDK IMAccount
+class _KabukiSDK OAth
 {
-    IMAccount ();
+    OAth ();
     /*< Default constructor. **/
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 };
 }   //< namespace _Id
-}   //< namespace Librarian
+}   //< namespace _Search
 

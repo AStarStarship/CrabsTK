@@ -32,8 +32,8 @@ class _KabukiSDK Widget// : public ControlGrid
     Widget ();
     ~Widget ();
     
-    virtual const char* Do  (const char* Query, byte index, Roombot* Bot);
-    /*< Inter-process oproutines. */
+    virtual const char* op (I2P::Terminal& slot, int index, int enq);
+    /*< Inter-process operations. */
 
     private:
 

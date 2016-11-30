@@ -47,7 +47,7 @@ class _KabukiSDK Angle_f
     float SetDegs (float Value);
     /*< Sets the angle to the new value in degrees. */
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 
@@ -73,7 +73,7 @@ class _KabukiSDK Angle_d
     double SetDegs (double Value);
     /*< Sets the angle to the new value in degrees. */
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 

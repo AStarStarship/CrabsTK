@@ -41,7 +41,7 @@ void Entity_f::getName (const char* Name)
 
 Entity_f& Entity_f::getBounds () { return bounds; }
 
-void Entity_f::Print (I2P::Terminal& Slot)
+void Entity_f::print (I2P::Terminal& slot)
 {
     std::string str;
     static const index_t Header[] = { 1, STX, str.length () };

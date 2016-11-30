@@ -24,7 +24,7 @@
 #include <KabukiSDK-Config.hpp>
 #include "AVControl.hpp"
 
-namespace _UI { namespace Controls {
+namespace _UI {
 
 /** A DMX Control.
  */
@@ -42,76 +42,10 @@ class _KabukiSDK DMXControl : public AVControl
 
     virtual void trigger () override {}             //< Triggers this DMX event to send out the target device.
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 };
 
-#if DEBUG
-/** Unit test for the DMXControl class _KabukiSDK. */
-class _KabukiSDK DMXControlTests : public UnitTest
-{
-    public:
-    
-    DMXControlTests () : UnitTest ("Controls::DMXControl") {}
+}   //< namespace _UI
 
-    void runTest () 
-    {
-        LogMessage  (ConsoleLine ('-'));
-        DMXControl controlA ("DMX Control A");
-
-        LogMessage ("Printing controlA.ToString ()\n" + controlA.ToString ());
-
-        LogMessage ("Testing copy constructor\n");
-        DMXControl controlB  (controlA);
-        LogMessage ("Printing controlB.ToString ()\n" + controlB.ToString ());
-        LogMessage ("Testing int Compare  (const Control&)");
-
-        expect  (controlA.Compare  (controlB) == 0);
-        int CompareValue = controlA.Compare  (controlB);
-        LogMessage ("Testing int Compare  (const Control&): " + CompareValue);
-        expect  (CompareValue == 0);
-
-        beginTest ("Testing valid inputs...");
-
-        controlA = DMXControl ("", 1, 1, 0, 255, 8);
-
-        LogMessage ("Printing controlA.ToString ()...\n" + controlA.ToString ());
-
-        controlA.setLabel ("DMX Control B");
-        expect  (controlA.label () == "DMX Control B");
-        controlA.setInitValue  (35);
-        LogMessage  (controlA.ToString ());
-        expect  (controlA.initValue () == 35);
-        controlA.setLSBValue  (66);
-        expect  (controlA.lSBValue () == 66);
-        controlA.setMaxValue  (245);
-        expect  (controlA.maxValue () == 245);
-        controlA.setMinValue  (70);
-        expect  (controlA.minValue () == 70);
-
-        beginTest ("Retesting copy constructor");
-
-        controlB = DMXControl  (controlA);
-        CompareValue = controlA.Compare  (controlB);
-        expect (!CompareValue);
-
-        beginTest ("Testing invalid input...");
-
-        controlA.setWordSize  (5);
-        LogMessage ("controlA.wordSize (): " + const char*  (controlA.wordSize ()));
-        expect  (controlA.wordSize () == 7);
-        controlA.setChannel  (555);
-        expect  (controlA.channel () == DMXControl::NumChannels);
-        controlA.setChannel (-5);
-        expect  (controlA.channel () == 0);
-        controlA.setChannel  (1);
-        expect  (controlA.channel () == 1);
-
-        LogMessage ("Done testing DMXControl class _KabukiSDK");
-    }
-};
-static DMXControlTests testUnit_DMXControl;
-#endif // DEBUG
-}   //< namespace Controls
-}   //< namespace _Dev
 

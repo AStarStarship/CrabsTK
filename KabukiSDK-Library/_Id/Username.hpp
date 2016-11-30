@@ -35,7 +35,7 @@ class _KabukiSDK Username
         MaxMaxLength = 256      //< The maximum max length of a Username
     };
     
-    Username  (const char* AName, int AMinLength = MinMinLength, int AMaxLength = MaxMaxLength);
+    Username  (const char* aName, int AMinLength = MinMinLength, int AMaxLength = MaxMaxLength);
     /*< Constructor creates a standard username. */
 
     bool Set  (const char* S);
@@ -44,7 +44,7 @@ class _KabukiSDK Username
     bool IsValid  (const char* S);
     /*<  */
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints the state of this object. */
     
     private:

@@ -24,7 +24,7 @@
 #include <KabukiSDK-Config.hpp>
 #include "AVControl.hpp"
 
-namespace _UI { namespace Controls {
+namespace _UI {
 
 /** A Open SoundControl.
  */
@@ -45,37 +45,14 @@ class _KabukiSDK OSCControl : public AVControl
     //< Triggers this DMX event to send out the target device.
 
     const char* HeaderString () const override;
-    //< Gets th header for toStringRow ().
+    //< gets the header for toStringRow ().
 
     const char* ToStringRow () const override;
-    //< Gets a column of the values without the labels.
+    //< gets a column of the values without the labels.
     
-    virtual const char* Do  (const char* Query, byte index, Roombot* Bot);
-    /*< Inter-process oproutines. */
+    virtual const char* op (I2P::Terminal& slot, int index, int enq);
+    /*< Inter-process operations. */
 };
 
-#if DEBUG
-/** Unit test for the OSCControl class _KabukiSDK. */
-class _KabukiSDK OSCControlTests : public UnitTest
-{
-    public:
-
-    OSCControlTests () : UnitTest ("Controls::OSCControl") {}
-
-    void runTest () 
-    {
-        LogMessage  (ConsoleLine ('-'));
-        OSCControl controlA ("OSC Control A");
-
-        LogMessage ("Done testing OSCControl class _KabukiSDK");
-    }
-    
-    virtual const char* Do  (const char* Query, byte index, Roombot* Bot);
-    /*< Inter-process oproutines. */
-};
-static OSCControlTests testUnit_DMXControl;
-#endif // DEBUG
-
-}   //< namespace Controls
 }   //< namespace _UI
 

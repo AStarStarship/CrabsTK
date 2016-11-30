@@ -41,45 +41,45 @@ class _KabukiSDK ButtonScroller, public Label
     //< Copy constructor.
 
     std::vector<ButtonControl*>& buttons ();
-    //< Gets the array of buttons.
+    //< gets the array of buttons.
 
-    int GetNumButtons () const;
-    //< Gets the number of buttons in the array.
+    int getNumButtons () const;
+    //< gets the number of buttons in the array.
 
-    int GetNumVisibleButtons () const;
-    //< Gets the number of visible buttons.
+    int getNumVisibleButtons () const;
+    //< gets the number of visible buttons.
     
-    int GetCurrentIndex () const;
-    //< Gets the index of the first visible button.
+    int getCurrentIndex () const;
+    //< gets the index of the first visible button.
 
-    void SetNumVisibleButtons  (int value);
-    //< Sets the number of visible buttons to the new value.
+    void setNumVisibleButtons  (int value);
+    //< sets the number of visible buttons to the new value.
 
-    void RemoveButton  (int thisIndex);
+    void removeButton  (int thisIndex);
     //< Removes the button at the given index from the array.
 
-    void ScrollUp ();
+    void scrollUp ();
     //< Scrolls up the list.
     
-    void ScrollDown ();
+    void scrollDown ();
     //< Scrolls down the list.
 
-    void ScrollUp  (int numNodes);
+    void scrollUp  (int numNodes);
     //< Scrolls up the list.
     
-    void ScrollDown  (int numNodes);
+    void scrollDown  (int numNodes);
     //< Scrolls down the list.
 
-    void ScrollPageUp ();
+    void scrollPageUp ();
     //< Scrolls up one page
     
-    void ScrollPageDown ();
+    void scrollPageDown ();
     //< Scrolls down one page
 
-    int Press  (int index);
+    int press  (int index);
     //< Presses the Button at the specified index.
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:
@@ -89,6 +89,6 @@ class _KabukiSDK ButtonScroller, public Label
 
     std::vector<ButtonControl*> buttons;      //< The array of buttons.
 };
-}   //< namespace Controls
-}   //< namespace _Dev
+}   //< namespace _UI
+
 

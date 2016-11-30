@@ -1,8 +1,11 @@
 # Data Structures Module
-Contains various data structures that can be used across an assembly line boundry.
+Contains various data structures that can be used across an assembly line boundry. You cannot pass a template across an assembly boundry because it is resolved at compile time, .
+
+## Vision
+
 
 ## C# and Java Junk
-These files were created in C# and some in Java, and they need to get ported to C++.
+These files were created in C# and some in Java, and getting ported to C++.
 
 ## License ##
 Copyright 2016 (C) Cale McCollough <cale.mccollough@gmail.com> and contributors.

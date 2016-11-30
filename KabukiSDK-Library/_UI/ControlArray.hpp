@@ -36,14 +36,16 @@ class _KabukiSDK ControlArray
 {
     public:
 
-    static const int MinNumElements = 2,                 //< The minimum number of columns.
-        MaxNumElements = 256;                           //< The minimum number of columns.
+    enum {
+        MinNumElements = 2,         //< The minimum number of columns.
+        MaxNumElements = 256        //< The minimum number of columns.
+    };
 
-    /** Default constructor. */
     ControlArray  (int newNumControls = MinNumElements);
+    /*< Default constructor. */
 
-    /** Constructor creates a row with pointers to the newControls. */
     ControlArray  (const std::vector<AVControl*>& newControls);
+    /*< Constructor creates a row with pointers to the newControls. */
 
     ControlArray  (const ControlArray& other);
     //< Copy constrcutor.
@@ -51,84 +53,30 @@ class _KabukiSDK ControlArray
     ~ControlArray ();
     //< Destructor.
 
-    void AddControl  (AVControl* newControl);
+    void addControl  (AVControl* newControl);
     //< Adds a new control to the array.
     
-    int SetControl  (int index , AVControl* newControl);
+    int setControl  (int index , AVControl* newControl);
     //< Adds a new control to the array.
     
-    AVControl* RemoveControl  (int index);
+    AVControl* removeControl  (int index);
     //< Deletes the AVControl at the given index.
     
-    AVControl* GetControl  (int index);
-    /*< Gets th control at the given index.
-        @return Gets nullptr if the index if out of bounds. */
-    int GetNumControls () const;
-    //< Gets th number of AVControl  (s) in the row.
+    AVControl* getControl  (int index);
+    /*< gets the control at the given index.
+        @return gets nullptr if the index if out of bounds. */
+    int getNumControls () const;
+    //< gets the number of AVControl  (s) in the row.
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:
 
-    int numControls;                                   //< The number of controls in this row.
+    int numControls;            //< The number of controls in this row.
 
-    AVControl** controls;                                //< And array of AVControl pointers.
+    AVControl** controls;       //< And array of AVControl pointers.
 };
+}   //< namespace _UI
 
-#if DEBUG
-class _KabukiSDK ControlArrayTests : public UnitTest
-{
-    public:
-
-    ControlArrayTests () : UnitTest ("Controls::ControlArray class _KabukiSDK\n" + ConsoleLine ('-') + "\n") {}
-
-    void runTest ()
-    {
-        auto buttonA = ControlArray ();
-
-        beginTest ("Testing const char* ToString ()...");
-        LogMessage  (buttonA.ToString ());
-
-        auto testControl1 = DMXControl ("Control 1", 50, 33);
-        auto testControl2 = MIDIControl ("Control 2", 11, 102);
-
-        beginTest ("testing void setControl  (Control*)");
-
-        buttonA.setControl  (0, &testControl1);
-        buttonA.setControl  (1, &testControl2);
-
-        LogMessage ("Added 2 controls to buttonA:\n" + buttonA.ToString ());
-
-        auto testControl3 = DMXControl ("Control 3", 27, 66);
-        auto testControl4 = MIDIControl ("Control 4", 62, 24);
-
-        buttonA.addControl (&testControl3);
-        buttonA.addControl (&testControl4);
-
-        LogMessage ("Attempted to add 2 more controls buttonA:\n" + buttonA.ToString ());
-
-        auto testControl5 = DMXButton ("Control 5", 27, 66);
-        auto testControl6 = MIDIButton ("Control 6", 62, 24);
-        auto testControl7 = MacroButton ("Control 7");
-        testControl7.add (&testControl1);
-        testControl7.add (&testControl2);
-        testControl7.add (&testControl3);
-        testControl7.add (&testControl4);
-        testControl7.add (&testControl5);
-        testControl7.add (&testControl6);
-
-        buttonA.addControl (&testControl5);
-        buttonA.addControl (&testControl6);
-        buttonA.addControl (&testControl7);
-
-        LogMessage ("Attempted to add some buttons:\n" + buttonA.ToString ());
-
-        LogMessage ("Controls::ControlArray tests completed successfully. :-)");
-    }
-};
-static ControlArrayTests testUnit_ControlArray;
-#endif // DEBUG
-}   //< namespace Controls
-}   //< namespace _Dev
 

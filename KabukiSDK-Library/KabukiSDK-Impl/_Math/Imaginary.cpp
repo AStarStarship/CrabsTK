@@ -44,24 +44,24 @@ float Imaginary_f::getB () const
     return B;
 }
 
-void Imaginary_f::getA (float Value)
+void Imaginary_f::setA (float Value)
 {
     A = Value;
 }
 
-void Imaginary_f::getB (float Value)
+void Imaginary_f::setB (float Value)
 {
     B = Value;
 }
 
-float Imaginary_f::CalcAngle ()
+float Imaginary_f::calcAngle ()
 {
-    return ATan (A, B);
+    return atan (A/B);
 }
 
-float Imaginary_f::CalcMagnitude ()
+float Imaginary_f::calcMagnitude ()
 {
-    return SquareRoot (A * A + B * B);
+    return squareRoot (A * A + B * B);
 }
 
 void Imaginary_f::print (I2P::Terminal& slot)
@@ -88,24 +88,24 @@ double Imaginary_d::getB () const
     return B;
 }
 
-void Imaginary_d::getA (double Value)
+void Imaginary_d::setA (double Value)
 {
     A = Value;
 }
 
-void Imaginary_d::getB (double Value)
+void Imaginary_d::setB (double Value)
 {
     B = Value;
 }
 
-double Imaginary_d::CalcAngle ()
+double Imaginary_d::calcAngle ()
 {
-    return ATan (A, B);
+    return atan (A/B);
 }
 
-double Imaginary_d::CalcMagnitude ()
+double Imaginary_d::calcMagnitude ()
 {
-    return SquareRoot (A * A + B * B);
+    return squareRoot (A * A + B * B);
 }
 
 void Imaginary_d::print (I2P::Terminal& slot)

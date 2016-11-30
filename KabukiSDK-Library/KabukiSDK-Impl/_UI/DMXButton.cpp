@@ -22,7 +22,7 @@
 
 namespace _UI {
 
-DMXButton::DMXButton (const const char* &newLabel, int newChannel, int initValue, int newMinValue, int newMaxValue, 
+DMXButton::DMXButton (const char* &newLabel, int newChannel, int initValue, int newMinValue, int newMaxValue, 
     int newWordSize, int newAction, int newStepSize, double newDoublePressTime) :
     ButtonControl (newAction, newStepSize, newDoublePressTime),
     DMXControl (newLabel, newChannel, initValue, newMinValue,  newMaxValue, newWordSize, AVControl::DMXButton)
@@ -31,12 +31,12 @@ DMXButton::DMXButton (const const char* &newLabel, int newChannel, int initValue
 }
 
 /** Toggles the state of the ButtonControl if the type is latching. */
-void DMXButton::Toggle ()
+void DMXButton::toggle ()
 {
     if (buttonAction () != ButtonControl::Latching)
         return;
 
-    ButtonControl::Toggle ();
+    ButtonControl::toggle ();
 
     if (value () != minValue ())
         setValue (minValue ());
@@ -50,10 +50,10 @@ const char* DMXButton::getLabel () const
     return DMXButton::print (I2P::Terminal& slot);
 }
 
-/** Sets the label to the new label.
+/** sets the label to the new label.
     @return Returns 0 upon success and 1 if the newLabel is too long.
     @see    DMXButton::IsValid (char). */
-int DMXButton::getLabel (const const char*& newLabel)
+int DMXButton::getLabel (const char*& newLabel)
 {
     return DMXButton::getLabel (newLabel);
 }

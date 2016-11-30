@@ -20,73 +20,67 @@
  
 #pragma once
 
-namespace Librarian {
-
 #include <KabukiSDK-Config.hpp>
 #include "Hit.hpp"
 
 #include <string>
 #include <vector>
 
-using namespace std;
+namespace _Search {
 
-/** A collection of pointers to Hites.
+class _KabukiSDK HitList
+/** A collection of Hit(s).
 */
-class _KabukiSDK HitList: public I2P::IObject
 {
     public:
 
-    /** Simple default constructor. */
     HitList ();
+    /*< Simple default constructor. */
 
-    /** Adds a patch to the Hites. */
-    bool AddHit  (Hit p);
+    bool addHit  (Hit& p);
+    /*< Adds a patch to the Hits. */
     
-    void SortTags ();
+    void sortTags ();
+    /*< Sorts the tags alphabetically. */
 
-    void LoadTestHites ();
+    void loadFromJSON  (const char* json);
+    /*< Loads a patch from a JSON std::string. */
 
-    /** Loads a patch from a JSON string. */
-    void LoadFromJSON  (const char* json);
+    const char* toJSON ();
+    /*< Converts a patch to a JSON std::string. */
 
-    /** Converts a patch to a JSON string. */
-    string ToJSON ();
+    bool findDuplicateName  (const char* value);
+    /*< Gets true if their is a duplicate patch name. */
 
-    /** Gets true if their is a duplicate patch name. */
-    bool FindDuplicateName  (const char* value);
+    const char* getCatagoryName  (int index);
+    /*< Gets the catagory name at the given index. */
+    
+    HitList* findTag  (const char* tag);
+    /*< Gets a HitList of the given tag. */
+    
+    HitList* findTags  (::std::vector<::std::string> tags);
+    /*< Gets a HitList of the given tags. */
+    
+    const char* getCatagoryImageName  (const char* s);
+    /*< Ges the catagory image name. */
 
-    /** Gets the catagory name at the given index. */
-    string GetCatagoryName  (int index);
-    
-    /** Gets a HitList of the given tag. */
-    HitList FindHitesWithTag  (const char* tag);
-    
-    /** Gets a HitList of the given tags. */
-    HitList FindHitesWithTags  (vector<string> tags);
-    
-    /** Ges the catagory image name. */
-    string GetCatagoryImageName  (const char* s);
-    
-    string GetSubcatagoryImageName  (const char* s);
-    
-    virtual byte GetState ();
-    /*< Gets the Inter-process state. */
-    
-    virtual const char* SetState  (byte Value);
-    /*< Sets the Inter-process state.
-        @return returns 0 upon success, and an I2P::Errror upon failure. */
-    
-    virtual const char* Do  (const char* Query, byte index, Roombot* Bot);
-    /*< Inter-process oproutines. */
+    const char* getSubcatagoryImageName (const char* s);
+    /*< Ges the subcatagory image name. */
+
+    inline void print (I2P::Terminal& slot);
+    /*< Prints this object to a Terminal. */
     
     private:
 
     long uid = 0;
     
-    std::vector<Hit*> patches;          //< The list of patches.
+    ::std::vector<Hit&> patches;                //< The list of patches.
     
-    std::vector<char*> catagories,    //< The list of catagories.
-        tags;                           //< List of tag strings.
-};
-}   //< namespace Librarian
+    ::std::vector<::std::string> catagories,    //< The list of catagories.
+        tags;                                   //< List of tag strings.
 
+    void loadTestHits ();
+    /*< Loads up some test data: delete me and make unit test! */
+};
+
+}   //< namespace _Search

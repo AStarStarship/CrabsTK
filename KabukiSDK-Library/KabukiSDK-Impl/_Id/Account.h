@@ -57,7 +57,7 @@ class Account
 
 
     //
-    string ToString ();
+    string print (I2P::Terminal& slot);
 
     private:
     

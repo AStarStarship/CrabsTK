@@ -25,7 +25,7 @@ namespace _UI {
 
 
 /** Default constructor. */
-DMXControl::DMXControl (const const char* &newLabel, int newChannel, int initValue, int newMinValue, int newMaxValue, 
+DMXControl::DMXControl (const char* &newLabel, int newChannel, int initValue, int newMinValue, int newMaxValue, 
     int newWordSize, int newAVControlType) :
     AVControl (newAVControlType, newLabel, newChannel, initValue, newMinValue, newMaxValue, newWordSize)
 {

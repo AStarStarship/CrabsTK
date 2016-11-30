@@ -36,10 +36,10 @@ class _KabukiSDK UID_i
     const char* GetName () = 0;
     //< Gets the ID name.
 
-    const char* SetName  (const char* Name) = 0;
+    const char* setName  (const char* Name) = 0;
     //< Sets the ID name.
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 };
 }   //< namespace _Id

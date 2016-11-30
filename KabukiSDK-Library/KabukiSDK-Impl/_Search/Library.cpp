@@ -1,8 +1,24 @@
 /** Kabuki Software Development Kit
-    @file    /.../KabukiSDK-Impl/_Search/Library.cpp    @author  Cale McCollough <cale.mccollough@gmail.com>    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)                            All right reserved (R).        Licensed under the Apache License, Version 2.0 (the "License"); you may        not use this file except in compliance with the License. You may obtain        a copy of the License at        http://www.apache.org/licenses/LICENSE-2.0        Unless required by applicable law or agreed to in writing, software        distributed under the License is distributed on an "AS IS" BASIS,        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.        See the License for the specific language governing permissions and        limitations under the License.
+    @file    /.../KabukiSDK-Impl/_Search/Library.cpp
+    @author  Cale McCollough <cale.mccollough@gmail.com>
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
+
+                            All right reserved (R).
+
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
+        not use this file except in compliance with the License. You may obtain
+        a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
 */
 
-#include <Librarian/Library.hpp>
+#include <_Search/Library.hpp>
 
 namespace _Search {
 
@@ -16,39 +32,41 @@ Library::Library (const Hit& o)
     
 }
 
-char* Library::getHitChangeString
+char* Library::getHitChangeString ()
+{
+}
 
 /** Adds a patch to the patches. */
 bool Library::addHit (Hit& p)
 {
     if (p == nullptr) return false;
     
-    patches.Add (p);
+    patches.add (p);
     
     /// Check the tags for duplicates and add to tags if no duplicates exist.
     string tagCatagory = p.Catagory;
     foreach (string s in tags) if (s == tagCatagory) return true;
-    tags.Add (tagCatagory);
+    tags.add (tagCatagory);
     sort (tags.begin (), tags.end ());
     return true;
 }
 
 void Library::sortTags () { sort (tags.begin (), tags.end ());
     
-void Library::loadTestHites ()
+void Library::loadTestHits ()
 {
     patches = new vector<Hit> (9);
         
-    addHit (new Hit ("Claranet", "Default claranet patch.", new string[] { "Woodwind", "Claranet", "Reed" }));
-    addHit (new Hit ("Oboe", "Default oboe patch.", new string[] { "Woodwind", "Oboe", "Reed" }));
-    addHit (new Hit ("Tenor Sax", "Default tenor sax patch.", new string[] { "Woodwind", "Tenor Sax", "Reed", "Tenor" }));
-    addHit (new Hit ("Recorder", "Default recorder patch.", new string[] { "Woodwind", "Recorder", "Flute" }));
-    addHit (new Hit ("Flute", "Default flute patch.", new string[] { "Woodwind", "Flute" }));
+    addHit (new Hit ("Claranet", "Default claranet patch.", { "Woodwind", "Claranet", "Reed" }));
+    addHit (new Hit ("Oboe", "Default oboe patch.", { "Woodwind", "Oboe", "Reed" }));
+    addHit (new Hit ("Tenor Sax", "Default tenor sax patch.", { "Woodwind", "Tenor Sax", "Reed", "Tenor" }));
+    addHit (new Hit ("Recorder", "Default recorder patch.", { "Woodwind", "Recorder", "Flute" }));
+    addHit (new Hit ("Flute", "Default flute patch.", { "Woodwind", "Flute" }));
         
-    addHit (new Hit ("Trumpet", "Default trumpet patch.", new string[] { "Brass", "Trumpet" }));
-    addHit (new Hit ("FlugleHorn","Default flugle horn patch.", new string[] { "Brass", "Flugle Horn" }));
-    addHit (new Hit ("FrenchHorn", "Default french horn patch.", new string[] { "Brass", "French Horn" }));
-    addHit (new Hit ("Trombone", "Default trombone patch.", new string[] { "Brass", "Trombone" }));
+    addHit (new Hit ("Trumpet", "Default trumpet patch.", { "Brass", "Trumpet" }));
+    addHit (new Hit ("FlugleHorn","Default flugle horn patch.", { "Brass", "Flugle Horn" }));
+    addHit (new Hit ("FrenchHorn", "Default french horn patch.", { "Brass", "French Horn" }));
+    addHit (new Hit ("Trombone", "Default trombone patch.", { "Brass", "Trombone" }));
 }
     
 void Library::LoadFromJSON (string json)
@@ -65,7 +83,7 @@ void Library::LoadFromJSON (string json)
         }
         catch (Exception e)
         {
-        Debug.Assert (false, e.ToString ());
+        Debug.Assert (false, e.print (I2P::Terminal& slot));
         }
         */
 }
@@ -73,7 +91,7 @@ void Library::LoadFromJSON (string json)
 string* Library::toJSON ()
 {
     string json = new string "[";
-    int count = patches.Count;
+    int count = patches.size ();
     for (int i = 0; i < count; i++)
     {
         json += patches[i].ToJSON ();
@@ -92,7 +110,7 @@ bool Library::FindDuplicateName (char* value)
     
 string Library::getCatagoryName (int index)
 {
-    if (index >= catagories.Count) return nullptr;
+    if (index >= catagories.size ()) return nullptr;
         
     return catagories[index];
 }
@@ -102,7 +120,7 @@ Library Library::FindpatchesWithTag (char* tag)
     vector<Hit> Library = new vector<Hit> ();
     foreach (Hit patch in patches)
     if (patch.ContainsTag (tag))
-        Library.Add (patch);
+        Library.add (patch);
     return Library;
 }
     
@@ -112,7 +130,7 @@ Library Library::FindpatchesWithTags (vector<string> tags)
     vector<Hit> Library = new vector<Hit> ();
     for_each (patches.begin (), patches.end (), [] (Hit& p)
                 {
-                    if (patch.ContainsTags (tags)) Library.Add (patch);
+                    if (patch.ContainsTags (tags)) Library.add (patch);
                 });
     return Library;
 }
@@ -120,13 +138,13 @@ Library Library::FindpatchesWithTags (vector<string> tags)
 char* Library::getCatagoryImageName (string s)
 {
     if (s == nullptr || s == "") return nullptr;
-    return "Catagory" + Regex.Replace (s, "\s+", "");// + ".png";
+    return "Catagory" + ::std::regex_replace (s, "\s+", "");// + ".png";
 }
     
 char* Library::getSubcatagoryImageName (string s)
 {
     if (s == nullptr || s == "") return nullptr;
-    return "Subcatagory" + Regex.Replace (s, "\s+", "");// + ".png";
+    return "Subcatagory" + ::std::regex_replace (s, "\s+", "");// + ".png";
 }
     
 char* Library::DefaultHitLibrary ()

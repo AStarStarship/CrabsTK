@@ -45,7 +45,7 @@ class _KabukiSDK EntityList
     bool Contains  (const char* S);
     /*<  */
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
     
     private:
@@ -53,5 +53,5 @@ class _KabukiSDK EntityList
     std::vector<Entity> entities;      //< The list of entities.
 };
 }   //< namespace _Id
-}   //< namespace Librarian
+}   //< namespace _Search
 

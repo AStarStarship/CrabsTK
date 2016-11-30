@@ -22,104 +22,104 @@
 
 namespace _Math {
 
-float AbsValue (float a)
+float absValue (float a)
 {
     if (a < 0.0f) return a * -1.0f;
     return a;
 }
 
-double AbsValue (double a)
+double absValue (double a)
 {
     if (a < 0.0) return a * -1.0;
     return a;
 }
 
-int AbsValue (int a)
+int absValue (int a)
 {
     return 0.0; // return System.Math.Abs (a);
 }
 
-long AbsValue (long a)
+long absValue (long a)
 {
     return 0.0; // return System.Math.Abs (a);
 }
 
-float ACos (float a)
+float acos (float a)
 {
     return 0.0f; // return System.Math.Acos (a);
 }
 
-double ACos (double a)
+double acos (double a)
 {
     return 0.0; // return System.Math.Acos (a);
 }
 
-float ASin (float a)
+float asin (float a)
 {
     return 0.0f; // return System.Math.Asin (a);
 }
 
-double ASin (double a)
+double asin (double a)
 {
     return 0.0; // return System.Math.Asin (a);
 }
 
-float ATan (float a)
+float atan (float a)
 {
     return 0.0f; // return System.Math.Atan (a);
 }
 
-double ATan (double a)
+double atan (double a)
 {
     return 0.0; // return System.Math.Atan (a);
 }
 
-float ATan2 (float y, float x)
+float atan2 (float y, float x)
 {
     return 0.0f; // return System.Math.Atan2 (y, x);
 }
 
-double ATan2 (double y, double x)
+double atan2 (double y, double x)
 {
     return 0.0; // return System.Math.Atan2 (y, x);
 }
 
-float Ceiling (float a)
+float ceiling (float a)
 {
     return 0.0f; // return System.Math.ceil (a);
 }
 
-double Ceiling (double a)
+double ceiling (double a)
 {
     return 0.0; // return System.Math.ceil (a);
 }
 
-float CopySign (float magnitude, float sign)
+float copySign (float magnitude, float sign)
 {
     return 0.0f; // return System.Math.copySign (magnitude, sign);
 }
 
-double CopySign (double magnitude, double sign)
+double copySign (double magnitude, double sign)
 {
     return 0.0; // return System.Math.copySign (magnitude, sign);
 }
 
-float Cos (float a)
+float cos (float a)
 {
     return cos (a); // return System.Math.cos (a);
 }
 
-double Cos (double a)
+double cos (double a)
 {
     return 0.0; // return System.Math.cos (a);
 }
 
-float HCos (float x)
+float hcos (float x)
 {
     return 0.0f; // return System.Math.cosh (x);
 }
 
-double HCos (double x)
+double hcos (double x)
 {
     return 0.0; // return System.Math.cosh (x);
 }
@@ -134,12 +134,12 @@ double eToTheX (double a)
     return 0.0; // return System.Math.exp (a);
 }
 
-float OneMinusEToTheX (float x)
+float oneMinusEToTheX (float x)
 {
     return 0.0f; // return System.Math.expm1 (x);
 }
 
-double OneMinusEToTheX (double x)
+double oneMinusEToTheX (double x)
 {
     return 0.0; // return System.Math.expm1 (x);
 }
@@ -154,287 +154,287 @@ double Floor (double a)
     return 0.0; // return System.Math.Floor (a);
 }
 
-int Exponent (float f)
+int exponent (float f)
 {
     return 0; // return System.Math.getExponent (f);
 }
 
-int Exponent (double d)
+int exponent (double d)
 {
     return 0; // return System.Math.getExponent (d);
 }
 
-float Hypot (float x, float y)
+float hypot (float x, float y)
 {
     return 0.0f; // return System.Math.hppypot (x, y);
 }
 
-double Hypot (double x, double y)
+double hypot (double x, double y)
 {
     return 0.0; // return System.Math.hppypot (x, y);
 }
 
-float IEEERemainder (float f1, float f2)
+float ieeeRemainder (float f1, float f2)
 {
-    return 0.0f; // return System.Math.IEEEremainder (f1, f2);
+    return 0.0f; // return System.Math.ieeeRemainder (f1, f2);
 }
 
-double IEEERemainder (double f1, double f2)
+double ieeeRemainder (double f1, double f2)
 {
-    return 0.0; // return System.Math.IEEEremainder (f1, f2);
+    return 0.0; // return System.Math.ieeeRemainder (f1, f2);
 }
 
-float Ln (float a)
+float ln (float a)
 {
     return 0.0f; // return System.Math.log (a);
 }
 
-double Ln (double a)
+double ln (double a)
 {
     return 0.0; // return System.Math.log (a);
 }
 
-float Log (float a)
+float log (float a)
 {
     return 0.0f; // return System.Math.log10 (a);
 }
 
-double Log (double a)
+double log (double a)
 {
     return 0.0; // return System.Math.log10 (a);
 }
 
-float LogXPlus1 (float x)
+float logXPlus1 (float x)
 {
     return 0.0f; // return System.Math.log1p (x);
 }
 
-double LogXPlus1 (double x)
+double logXPlus1 (double x)
 {
     return 0.0; // return System.Math.log1p (x);
 }
 
-float Max (float a, float b)
+float max (float a, float b)
 {
     return (a > b) ? a : b;
 }
 
-double Max (double a, double b)
+double max (double a, double b)
 {
     return (a > b) ? a : b;
 }
 
-int Max (int a, int b)
+int max (int a, int b)
 {
     return (a > b) ? a : b;
 }
 
-long Max (long a, long b)
+long max (long a, long b)
 {
     return (a > b) ? a : b;
 }
 
-float Min (float a, float b)
+float min (float a, float b)
 {
-    return 0.0f; // return System.Math.Min (a, b);
+    return 0.0f; // return System.Math.min (a, b);
 }
 
-double Min (double a, double b)
+double min (double a, double b)
 {
-    return 0.0; // return System.Math.Min (a, b);
+    return 0.0; // return System.Math.min (a, b);
 }
 
-int Min (int a, int b)
+int min (int a, int b)
 {
-    return 0.0; // return System.Math.Min (a, b);
+    return 0.0; // return System.Math.min (a, b);
 }
 
-long Min (long a, long b)
+long min (long a, long b)
 {
-    return 0.0; // return System.Math.Min (a, b);
+    return 0.0; // return System.Math.min (a, b);
 }
 
-float NextAfter (float start, float direction)
+float nextAfter (float start, float direction)
 {
-    return 0.0f; // return System.Math.NextAfter (start, direction);
+    return 0.0f; // return System.Math.nextAfter (start, direction);
 }
 
-double NextAfter (double start, double direction)
+double nextAfter (double start, double direction)
 {
-    return 0.0; // return System.Math.NextAfter (start, direction);
+    return 0.0; // return System.Math.nextAfter (start, direction);
 }
 
-float NextUp (float f)
+float nextUp (float f)
 {
-    return 0.0f; // return System.Math.NextUp (f);
+    return 0.0f; // return System.Math.nextUp (f);
 }
 
-double NextUp (double d)
+double nextUp (double d)
 {
-    return 0.0; // return System.Math.NextUp (d);
+    return 0.0; // return System.Math.nextUp (d);
 }
 
-float Power (float a, float b)
+float power (float a, float b)
 {
     return 0.0f; // return System.Math.Pow (a, b);
 }
 
-double Power (double a, double b)
+double power (double a, double b)
 {
     return 0.0; // return System.Math.Pow (a, b);
 }
 
-float Random_f ()
+float random_f ()
 {
     return 0.0f; // return System.Math.Random ();
 }
 
-double Random_d ()
+double random_d ()
 {
     return 0.0; // return System.Math.Random ();
 }
 
-float Round (float a)
+float round (float a)
 {
     return 0.0f; // return System.Math.Rint (a);
 }
 
-double Round (double a)
+double round (double a)
 {
     return 0.0; // return System.Math.Rint (a);
 }
 
-int RoundToInt (float a)
+int roundToInt (float a)
 {
     return 0; // return System.Math.Round (a);
 }
 
-long RoundToInt (double a)
+long roundToInt (double a)
 {
     return 0; // return System.Math.Round (a);
 }
 
-float ScaleB (float d, int scaleFactor)
+float scaleB (float d, int scaleFactor)
 {
     return 0.0f; // return System.Math.Scalb (d, scaleFactor);
 }
 
-double ScaleB (double d, int scaleFactor)
+double scaleB (double d, int scaleFactor)
 {
     return 0.0; // return System.Math.Scalb (d, scaleFactor);
 }
 
-float FScaleFactor (float f, int scaleFactor)
+float fScaleFactor (float f, int scaleFactor)
 {
     return 0.0f; // return System.Math.Scalb (f, scaleFactor);
 }
 
-double FScaleFactor (double f, int scaleFactor)
+double fScaleFactor (double f, int scaleFactor)
 {
     return 0.0; // return System.Math.Scalb (f, scaleFactor);
 }
 
-float SignOf (float f)
+float signOf (float f)
 {
     return 0.0f; // return System.Math.Signum (f);
 }
 
-double SignOf (double d)
+double signOf (double d)
 {
     return 0.0; // return System.Math.Signum (d);
 }
 
-float Sin (float a)
+float sin (float a)
 {
     return 0.0f; // return System.Math.Sin (a);
 }
 
-double Sin (double a)
+double sin (double a)
 {
     return 0.0; // return System.Math.Sin (a);
 }
 
-float HSin (float x)
+float hsin (float x)
 {
     return 0.0f; // return System.Math.Sinh (x);
 }
 
-double HSin (double x)
+double hsin (double x)
 {
     return 0.0; // return System.Math.Sinh (x);
 }
 
-float SquareRoot (float a)
+float squareRoot (float a)
 {
     return 0.0f; // return System.Math.Sqrt (a);
 }
 
-double SquareRoot (double a)
+double squareRoot (double a)
 {
     return 0.0; // return System.Math.Sqrt (a);
 }
 
-float CubeRoot (float a)
+float cubeRoot (float a)
 {
     return 0.0f; // return System.Math.cbrt (a);
 }
 
-double CubeRoot (double a)
+double cubeRoot (double a)
 {
     return 0.0; // return System.Math.cbrt (a);
 }
 
-float Tan (float a)
+float tan (float a)
 {
     return 0.0f; // return System.Math.tan (a);
 }
 
-double Tan (double a)
+double tan (double a)
 {
     return 0.0; // return System.Math.tan (a);
 }
 
-float HTan (float x)
+float htan (float x)
 {
     return 0.0f; // return System.Math.tanh (x);
 }
 
-double HTan (double x)
+double htan (double x)
 {
     return 0.0; // return System.Math.tanh (x);
 }
 
-float ToDegrees (float angrad)
+float toDegrees (float angrad)
 {
     return 0.0f; // return System.Math.toDegrees (angrad);
 }
 
-double ToDegrees (double angrad)
+double toDegrees (double angrad)
 {
     return 0.0; // return System.Math.toDegrees (angrad);
 }
 
-float ToRadians (float angle)
+float toRadians (float angle)
 {
     return (angle * 180.0f) / Pi_f;
 }
 
-double ToRadians (double angle)
+double toRadians (double angle)
 {
     return (angle * 180.0) / Pi_d;
 }
 
-float ULP (float f)
+float ulp (float f)
 {
     return 0.0f; // return System.Math.ulp (f);
 }
 
-double ULP (double d)
+double ulp (double d)
 {
     return 0.0; // return System.Math.ulp (d);
 }
 
-float Factoral (float thisNumber)
+float factoral (float thisNumber)
 {
     float total;  //< The running total.
 
@@ -457,7 +457,7 @@ float Factoral (float thisNumber)
     return total;
 }
 
-double Factoral (double thisNumber)
+double factoral (double thisNumber)
 {
     double total;  //< The running total.
 
@@ -480,7 +480,7 @@ double Factoral (double thisNumber)
     return total;
 }
 
-int Factoral (int thisNumber)
+int factoral (int thisNumber)
 {
     int total;  //< The running total.
 
@@ -503,7 +503,7 @@ int Factoral (int thisNumber)
     return total;
 }
 
-long Factoral (long thisNumber)
+long factoral (long thisNumber)
 {
     long total;  //< The running total.
 
@@ -615,6 +615,11 @@ Calc::Calc ()
 {
     
 }
+const char* op (I2P::Terminal& slot, int index, int enq)
+{
+
+}
+
 
 void Calc::print (I2P::Terminal& slot)
 {

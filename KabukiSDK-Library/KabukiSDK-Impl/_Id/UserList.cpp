@@ -31,7 +31,7 @@ int UserList::NumUsers { get { return users.size (); } }
 bool UserList::add (User newUser)
 {
     if (!newUser.IsValid ()) return false;
-    users.Add (newUser);
+    users.add (newUser);
     return true;
 }
 
@@ -89,7 +89,7 @@ const char* UserList::op (I2P::Terminal& slot, int index, int Enq)
 
 const char* UserList::print (I2P::Terminal& slot)
 {
-    /// This method creates a string of the users.ToString () 
+    /// This method creates a string of the users.print (I2P::Terminal& slot) 
     /// strings separated by spaces
 
     std::string returnString;
@@ -98,8 +98,8 @@ const char* UserList::print (I2P::Terminal& slot)
     for (int index = 0; index < users.size (); index++)
     {
         /// Iterated through the indexs array and write the
-        /// ToString () strings to the returnString
-        returnString += "User " + (index + 1) + ": " + users[index].ToString () + "\n";
+        /// print (I2P::Terminal& slot) strings to the returnString
+        returnString += "User " + (index + 1) + ": " + users[index].print (I2P::Terminal& slot) + "\n";
     }
 
     return returnString;

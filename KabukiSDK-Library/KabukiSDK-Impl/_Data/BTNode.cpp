@@ -154,7 +154,7 @@ void BTNode::getIndex (int Value)
 
 const char* BTNode::print (I2P::Terminal& slot)
 {
-    return name + "/n" + data.ToString ();
+    return name + "/n" + data.print (I2P::Terminal& slot);
 }
 
 }   //< namespace _Data

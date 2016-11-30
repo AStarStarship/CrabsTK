@@ -90,132 +90,132 @@ float BCD::getFloat ()
     return 0.0f;
 }
 
-float BCD::getDouble ()
+double BCD::getDouble ()
 {
     return 0.0;
 }
 
-void BCD::getValue (float Value)
+void BCD::setValue (float Value)
 {
 
 }
 
-void SetValue (double Value)
+void BCD::setValue (double Value)
 {
 
 }
 
-bool BCD::IsNegative ()
+bool BCD::isNegative ()
 {
-
+    return false;
 }
 
 int8_t BCD::getNumWholeDigits (int index)
 {
-
+    return 0;
 }
 
 int8_t BCD::getNumFractionalDigits (int index)
 {
-
+    return 0;
 }
 
-void BCD::Plus (const BCD& Value)
+void BCD::plus (const BCD& Value)
 {
 
 }
 
-void BCD::Plus (int Value)
+void BCD::plus (int Value)
 {
 
 }
 
-void BCD::Plus (long Value)
+void BCD::plus (long Value)
 {
 
 }
 
-void BCD::Plus (float Value)
+void BCD::plus (float Value)
 {
 
 }
 
-void BCD::Plus (double Value)
+void BCD::plus (double Value)
 {
 
 }
 
-void BCD::Minus (const BCD& Value)
+void BCD::minus (const BCD& Value)
 {
 
 }
 
-void BCD::Minus (int Value)
+void BCD::minus (int Value)
 {
 
 }
 
-void BCD::Minus (long Value)
+void BCD::minus (long Value)
 {
 
 }
 
-void BCD::Minus (float Value)
+void BCD::minus (float Value)
 {
 
 }
 
-void BCD::Minus (double Value)
+void BCD::minus (double Value)
 {
 
 }
 
-void BCD::Times (const BCD& Value)
+void BCD::times (const BCD& Value)
 {
 
 }
 
-void BCD::Times (int Value)
+void BCD::times (int Value)
 {
 
 }
 
-void BCD::Times (long Value)
+void BCD::times (long Value)
 {
 
 }
 
-void BCD::Times (float Value)
+void BCD::times (float Value)
 {
 
 }
 
-void BCD::Times (double Value)
+void BCD::times (double Value)
 {
 
 }
 
-void BCD::Divide (const BCD& Value)
+void BCD::divide (const BCD& Value)
 {
 
 }
 
-void BCD::Divide (int Value)
+void BCD::divide (int Value)
 {
 
 }
 
-void BCD::Divide (long Value)
+void BCD::divide (long Value)
 {
 
 }
 
-void BCD::Divide (float Value)
+void BCD::divide (float Value)
 {
 
 }
 
-void BCD::Divide (double Value)
+void BCD::divide (double Value)
 {
 
 }

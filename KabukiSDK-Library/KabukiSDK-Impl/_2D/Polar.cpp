@@ -41,7 +41,7 @@ float Polar_f::CalcMagnitude ()
     return sqrt (angle * angle + radius * radius);
 }
 
-void Polar_f::Print (I2P::Terminal& Slot)
+void Polar_f::print (I2P::Terminal& slot)
 {
 
 }
@@ -64,7 +64,7 @@ double Polar_d::CalcMagnitude ()
     return sqrt (angle * angle + radius * radius);
 }
 
-void Polar_d::Print (I2P::Terminal& Slot)
+void Polar_d::print (I2P::Terminal& slot)
 {
 
 }

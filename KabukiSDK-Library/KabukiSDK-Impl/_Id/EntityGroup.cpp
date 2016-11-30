@@ -33,7 +33,7 @@ bool EntityGroup::IsValid ()
     return name.IsValid ();
 }
 
-string EntityGroup::getName () { return name.ToString (); }
+string EntityGroup::getName () { return name.print (I2P::Terminal& slot); }
 
 void EntityGroup::Rename (string newName)
 {
@@ -70,7 +70,7 @@ const char* EntityGroup::op (I2P::Terminal& slot, int index, int Enq)
 
 string EntityGroup::print (I2P::Terminal& slot)
 {
-    return "Group: " + name.ToString () + " " + base.ToString ();
+    return "Group: " + name.print (I2P::Terminal& slot) + " " + base.print (I2P::Terminal& slot);
 }
 
 }   //< namespace _Id

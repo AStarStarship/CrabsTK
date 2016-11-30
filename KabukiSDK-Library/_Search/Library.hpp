@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_Search/Library.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -20,73 +20,73 @@
  
 #pragma once
 
-namespace Librarian {
+namespace _Search {
 
 #include <string>
 #include <map>
-using namespace std;
 
 #include "Hit.hpp"
 
-/*< The main library of Hites.
+/*< The main library of Hits.
     This class _KabukiSDK owns the memory for the patches.
 */
-class _KabukiSDK Library: public IObject
+class _KabukiSDK Library
 {
     public:
     
-    /*< Simple default constructor. */
     Library ();
+    /*< Simple default constructor. */
     
-    /*< Adds a patch to the Hites. */
-    bool AddHit  (Hit& p);
+    bool addHit (Hit& p);
+    /*< Adds a patch to the Hits. */
     
-    void SortTags ();
+    void sortTags ();
+    /*< Sorts the tags alphabetically. */
     
-    void LoadTestHites ();
+    void loadTestHites ();
     
-    /*< Loads a patch from a JSON string. */tre
-    void LoadFromJSON  (const char* json);
+    void loadFromJSON (const char* jsonString);
+    /*< Loads a patch from a JSON string. */
     
-    /*< Converts a patch to a JSON string. */
-    string ToJSON ();
+    const char* toJSON ();
+    /*< Converts a patch to a JSON std::string. */
     
     /*< Gets true if their is a duplicate patch name. */
-    bool FindDuplicateName  (const char* value);
+    bool findDuplicateName (const char* value);
     
     /*< Gets the catagory name at the given index. */
-    char* GetCatagoryName  (int index);
+    const char* getCatagoryName (int index);
     
-    Library FindHitesWithTag  (const char* tag);
+    Library find (const char* tag);
     
-    Library FindHitesWithTags  (vector<string>& tags);
+    Library find (::std::vector<::std::string>& tags);
     
-    string& GetCatagoryImageName  (string s);
+    const char* getCatagoryImageName (::std::string s);
+    /*< Gets the subcatagory image name. */
     
-    string& GetSubcatagoryImageName  (string s);
+    const char* getSubcatagoryImageName (::std::string s);
+    /*< Gets the subcatagory image name. */
 
-    virtual byte GetState ();
-    /*< Gets the Inter-process state. */
-    
-    virtual const char* SetState  (byte Value);
-    /*< Sets the Inter-process state.
-        @return returns 0 upon success, and an I2P::Errror upon failure. */
-    
-    virtual const char* Do  (const char* Query, byte index, Roombot* Bot);
-    /*< Inter-process oproutines. */
+    inline void print (I2P::Terminal& slot);
+    /*< Prints this object to a Terminal. */
+
+    inline void print (I2P::Terminal& slot);
+    /*< Prints this object to a Terminal. */
     
     private:
 
-    static int currentUId;              //< The total number of patches.
+    static int currentUId;                      //< The total number of patches.
     
-    map<string, Hit> patches;         //< The list of patches.
+    ::std::map<::std::string, Hit> patches;       //< The list of patches.
     
-    vector<char*> catagories;         //< The list of catagories.
-        tags;                           //< List of tag strings.
+    ::std::vector<::std::string> catagories,    //< The list of catagories.
+        tags;                                   //< List of tag strings.
     
-    string& GetDefaultHitLibrary ();  //< Gets the default library in JSON.
+    ::std::string& getDefaultHitLibrary ();
+    //< Gets the default library in JSON.
 
-    int InitNumHites ();               //< Gets the number 0.
+    int initNumHits ();
+    //< Gets the number 0.
 };
-}   //< namespace Librarian
+}   //< namespace _Search
 

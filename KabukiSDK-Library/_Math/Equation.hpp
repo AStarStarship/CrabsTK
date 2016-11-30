@@ -32,7 +32,7 @@ class Equation
     Equation ();
     /*< Constructs an empty equation. */
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 
     private:

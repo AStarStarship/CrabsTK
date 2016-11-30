@@ -26,20 +26,20 @@
 #include <string>
 #include <vector>
 
-namespace Librarian {
+namespace _Search {
 
+class _KabukiSDK TagLibrary
 /*< A container of strings sorted alphabetically.
     This object owns the memory for the strings. Each time a patch is added,
     each tag is added, a pointer to the string is passed back.
 */
-class _KabukiSDK TagLibrary
 {
     public:
 
-    TagLibrary ()
+    TagLibrary ();
+    /*< Constructs an empty tag library. */
 
-    
-    char* getOrAddTag  (const char* tag);
+    const char* getOrAddTag  (const char* tag);
     /*< Gets the tag string, and adds it to the collection if it doesn't exist.
         @return Gets null if the tags list doesn't contatin the Tag, and 
             non-null if the Tag was added successfully. */
@@ -49,10 +49,13 @@ class _KabukiSDK TagLibrary
     
     int getNumTags ();
     /*< Gets the number of tags. */
+
+    inline void print (I2P::Terminal& slot);
+    /*< Prints this object to a Terminal. */
     
     private:
     
-    vector<string> tags;     //< Collection of tag strings.
+    ::std::vector<::std::string> tags;     //< Collection of tag strings.
 };
-}   //< namespace Librarian
+}   //< namespace _Search
 

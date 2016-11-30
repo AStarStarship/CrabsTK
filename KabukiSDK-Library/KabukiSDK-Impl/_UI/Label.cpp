@@ -22,12 +22,12 @@
 
 namespace _UI {
 
-const const char* Label::UnnamedLabel = "Unnamed";
-const const char* Label::AllowedSymbols = " `!@#$%^&* (){}+=-_\\|/?.>,<";
+const char* Label::UnnamedLabel = "Unnamed";
+const char* Label::AllowedSymbols = " `!@#$%^&* (){}+=-_\\|/?.>,<";
 
 const int Label::NonAlphaNumChars = AllowedSymbols.length ();
 
-Label::Label (const const char*& newLabel)
+Label::Label (const char*& newLabel)
 {
     if (SetLabel (newLabel))
         label = UnnamedLabel;
@@ -39,7 +39,7 @@ Label::Label (const Label &other) :
     // Nothing to do here :-)
 }
 
-int Label::IsValid (const const char*& label)
+int Label::IsValid (const char*& label)
 {
     int labelLength = label.length ();
     Logger::outputDebugString ("Checking const char*: " + label + " length = " + const char* (labelLength));
@@ -63,7 +63,7 @@ const char* Label::getLabel () const
     return label;
 }
 
-int Label::getLabel (const const char*& newLabel)
+int Label::getLabel (const char*& newLabel)
 {
     if (newLabel == "")
         return -1;
@@ -76,10 +76,10 @@ int Label::getLabel (const const char*& newLabel)
 
 int Label::getLabel (const Label& newLabel)
 {
-    return SetLabel (newLabel.label);
+    return setLabel (newLabel.label);
 }
 
-int Label::Compare (const const char*& other) const
+int Label::Compare (const char*& other) const
 {
     Logger::outputDebugString ("# " + label + ".Compare (" + other + ") = " + const char* (label.Compare (other)));
 

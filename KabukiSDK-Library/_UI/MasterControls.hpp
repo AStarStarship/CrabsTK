@@ -33,7 +33,7 @@ class _KabukiSDK MasterControls
     MasterControls ();
     /*< Constructs a blank set of master controls. */
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
     
     private:
@@ -43,6 +43,6 @@ class _KabukiSDK MasterControls
         *c,
         *d;
 };
-}   //< namespace Controls
-}   //< namespace _Dev
+}   //< namespace _UI
+
 

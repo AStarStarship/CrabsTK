@@ -32,7 +32,7 @@ class _KabukiSDK Profile
     Profile ();
     /*< Default constructor. */
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 };
 }   //< namespace _Id

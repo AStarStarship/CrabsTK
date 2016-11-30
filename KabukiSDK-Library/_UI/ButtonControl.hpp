@@ -48,7 +48,7 @@ class _KabukiSDK ButtonControl
 
     static const char* ActionStrings[];    //< An array of strings that corrispond to the Actions enum list.
 
-    ButtonControl  (int newButtonAction = Momentary, int newStepSize = 0, double newDoublePressTime = 
+    ButtonControl  (int newgetButtonAction = Momentary, int newStepSize = 0, double newDoublePressTime = 
         DefaultDoublePressTime);
     /*< Default constructor. */
 
@@ -58,60 +58,69 @@ class _KabukiSDK ButtonControl
     virtual ~ButtonControl () {}
     //< Destructor.
 
-    void ProcessPress ();
+    void processPress ();
     //< Processes the press logic before calling press ();
     
-    void ProcessDepress ();
+    void processDepress ();
     //< Processes the depress logic before calling depress ();
 
-    bool IsPressed () const;
-    //< Gets true if the button is in a pressed state.
-    void SetState  (bool buttonState);
-    //< Sets the is_pressed variable to the new buttonState.
+    bool isPressed () const;
+    //< gets true if the button is in a pressed state.
+    
+    void setState  (bool buttonState);
+    //< sets the is_pressed variable to the new buttonState.
 
-    double LastTimePressed () const;
-    //< Gets th last time the button was pressed.
+    double getLastTimePressed () const;
+    //< gets the last time the button was pressed.
 
-    int StepSize () const;
-    /*< Gets this buttons step_Size.
+    int getStepSize () const;
+    /*< gets this buttons step_Size.
         The step size is the increment that is added to the AVControl::value () every time the button is pressed. When 
         the value goes over the AVControl::maxValue (), it is reset to the AVControl::mixValue (). */
     
-    void SetStepSize  (int value);
-    //< Sets the _stepSize to the value.
+    void setStepSize  (int value);
+    //< sets the _stepSize to the value.
 
-    virtual void Toggle ();
+    virtual void toggle ();
     //< Toggles the state of the _isPressed if the type is latching. 
 
-    int ButtonAction () const;
+    int getButtonAction () const;
     //< The type of action this button performs: Momentary or latching.
     
-    void SetButtonAction  (int newAction);
-    //< Sets the button Action to the newAction.
+    void setGetButtonAction  (int newAction);
+    //< sets the button Action to the newAction.
     
-    const char* ActionString () const;
-    /*< Gets a string version of the buttonAction ().
+    const char* getActionString () const;
+    /*< gets a string version of the buttonAction ().
         @see    Actions */
 
     // Pure virtual functions.
 
-    virtual int MaxWordValue () const = 0;  //< Gets th max valu of a AVControl word.
+    virtual int MaxWordValue () const = 0;
+    //< gets the max valu of a AVControl word.
 
-    virtual void Press () = 0;              //< Triggered when a mode button is pressed.
-    virtual void Depress () = 0;            //< Triggered when a mode button is depressed.
-    virtual void Depress () = 0;        //< Triggered when a user "double clicks" a button.
-
-    virtual const char* Label () const = 0;      //< Gets th label.
-    /** Sets the label to the new label.
-        @return Gets 0 upon success and 1 if the newLabel is too long.
-        @see    Label::IsValid  (char). */
-    virtual int SetLabel  (const char* newLabel) = 0;
+    virtual void press () = 0;
+    //< Triggered when a mode button is pressed.
     
-    void Print (I2P::Terminal& Slot);
+    virtual void depress () = 0;
+    //< Triggered when a mode button is depressed.
+    
+    virtual void doublePress () = 0;
+    //< Triggered when a user "double clicks" a button.
+
+    virtual const char* getLabel () const = 0;
+    //< gets the label.
+    
+    virtual int setLabel  (const char* newLabel) = 0;
+    /** sets the label to the new label.
+        @return gets 0 upon success and 1 if the newLabel is too long.
+        @see    Label::IsValid  (char). */
+    
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
     
     private:
-
+    
     int buttonAction,                       //< The type of action this button performs  (i.e. momentary, latching, ect).
         stepSize;                           //< The step size of the button.
     
@@ -121,6 +130,7 @@ class _KabukiSDK ButtonControl
        lastTimePressed;                     /*< The last time that the mode button was depressed.
 												Used to calculate if the button was double clicked. */
 };
-}   //< namespace Controls
-}   //< namespace _Dev
+
+}   //< namespace _UI
+
 

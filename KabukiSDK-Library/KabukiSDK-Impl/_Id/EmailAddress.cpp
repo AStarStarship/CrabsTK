@@ -36,7 +36,7 @@ bool EmailAddress::getEmailAddress (const char* S)
     /// Use IdnMapping class to convert Unicode domain names.
     try
     {
-        S = Regex.Replace (a, @" (@) (.+)$", this.DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds (200));
+        S = ::std::regex_replace (a, @" (@) (.+)$", this.DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds (200));
     }
     catch (RegexMatchTimeoutException) { return false; }
 

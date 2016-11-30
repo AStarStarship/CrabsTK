@@ -46,52 +46,52 @@ class _KabukiSDK MacroButton : public AVControl, public ButtonControl
     ~MacroButton ();
     //< Destructor.
 
-    int GetNumControls () const;
-    //< Gets th number of controls.
+    int getNumControls () const;
+    //< gets the number of controls.
 
     void ClearControls ();
     //< Clears all of the controls from the list.
 
     int Add  (AVControl* newEvent);
     /*< Adds an Event to the event list.
-        @return Gets Success upon success.
-        @return Gets -1 if the newEvent is null. */
+        @return gets Success upon success.
+        @return gets -1 if the newEvent is null. */
         
     int Add  (std::vector<AVControl*> newEvents);
     //< Adds an array of newEvents to the list.
     
-    int Set  (int index, AVControl* newEvent);
-    //< Sets the Event at the given index to the newEvent.
+    int set  (int index, AVControl* newEvent);
+    //< sets the Event at the given index to the newEvent.
 
     AVControl* Remove ();
     //< Removes the first removes in the list.
     
     AVControl* Remove  (int index);
     /*< Removes the oldEvent from the list.
-        @return Gets nullptr if the index was out of 
+        @return gets nullptr if the index was out of 
             bounds. */
         
     AVControl* Remove  (AVControl* oldEvent);
     /*< Removes the oldEvent from the list.
-        @return Gets nullptr if the oldEvent was null or if 
+        @return gets nullptr if the oldEvent was null or if 
             it not in the list. */
 
-    AVControl* GetControl  (int index);
-    /*< Gets th event at the given index.
-        @return Gets nullptr if the index is invalid. */
+    AVControl* getControl  (int index);
+    /*< gets the event at the given index.
+        @return gets nullptr if the index is invalid. */
         
-    AVControl* GetFirstControl ();
-    /*< Gets th first event in the list.
-        @return Gets nullptr if list is empty. */
+    AVControl* getFirstControl ();
+    /*< gets the first event in the list.
+        @return gets nullptr if list is empty. */
 
     int maxWordValue () const override;
-    //< Gets th max value of a AVControl word.
+    //< gets the max value of a AVControl word.
 
     const char* label () const override;
-    //< Gets th label.
+    //< gets the label.
     int setLabel  (const char* newLabel) override;
-    /*< Sets the label to the new label.
-        @return Gets 0 upon success and 1 if the newLabel is
+    /*< sets the label to the new label.
+        @return gets 0 upon success and 1 if the newLabel is
         too long.
         @see    Label::IsValid  (char). */
     
@@ -101,25 +101,25 @@ class _KabukiSDK MacroButton : public AVControl, public ButtonControl
     virtual void trigger () override;
     //< Triggers all of this macros functions.
 
-    virtual void Press () override {}
+    virtual void press () override {}
     //< Triggered when a mode button is pressed.
     
-    virtual void Depress () override {}
+    virtual void depress () override {}
     //< Triggered when a mode button is depressed.
     
-    virtual void Depress () override {}
+    virtual void depress () override {}
     //< Triggered when a user "double clicks" a button.
     
-    const char* GetListString () const;
-    //< Gets a string of the row strings of the list.
+    const char* getListString () const;
+    //< gets a string of the row strings of the list.
     
-    const char* GetHeaderString () const override;
-    //< Gets th header for toStringRow ().
+    const char* getHeaderString () const override;
+    //< gets the header for toStringRow ().
     
     const char* ToStringRow () const override;
-    //< Gets a column of the values without the labels.
+    //< gets a column of the values without the labels.
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:
@@ -135,30 +135,6 @@ class _KabukiSDK MacroButton : public AVControl, public ButtonControl
     //< Removes the node after thisNode from the list.
 };
 
-class _KabukiSDK MacroButtonTests : public UnitTest
-{
-    public:
+}   //< namespace _UI
 
-    MacroButtonTests () : UnitTest ("Testing Controls::MacroButton class _KabukiSDK:\n" + ConsoleLine ('~')) {}
-
-    void runTest ()
-    {
-        auto macroA = MacroButton ("Macro Button A");
-
-        beginTest ("Testing const char* ToString ()...");
-        LogMessage  (macroA.ToString ());
-        beginTest ("Testing add  (AVControl*)");
-        macroA.add  (new DMXControl  ("Macro 1"));
-        macroA.add  (new MIDIControl ("Macro 2"));
-        macroA.add  (new DMXButton   ("Macro 3"));
-        macroA.add  (new MIDIButton  ("Macro 4"));
-        LogMessage ("Added " + const char*  (macroA.numControls ()) + " test controls.\n" + macroA.ToString ());
-        beginTest ("Testing void trigger ()");
-        macroA.trigger ();
-        beginTest ("Testing AVControl* remove  (index);");
-    }
-};
-static MacroButtonTests testUnit_MacroButton;
-}   //< namespace Controls
-}   //< namespace _Dev
 

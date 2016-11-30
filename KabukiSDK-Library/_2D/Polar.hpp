@@ -52,7 +52,7 @@ struct Polar_f
     float CalcMagnitude ();
     /*< Calculates the magnitude of the . */
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 
@@ -83,7 +83,7 @@ struct Polar_d
     double CalcMagnitude ();
     /*< Calculates the magnitude. */
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 

@@ -22,22 +22,22 @@
 
 namespace _UI {
 
-const const char* AVControl::MacroHeader = "|" + PrintCentered ("AVControl", AVControl::MaxLabelLength) +
-        "|    Type    |#Bit|Init | Min | Max |Value|Ch |CC |  Action  |Step |";
+const char* AVControl::MacroHeader = "|" + printCentered ("AVControl", AVControl::MaxLabelLength) +
+        "|    Type    |#Bit|Init | min | max |Value|Ch |CC |  Action  |Step |";
 
 const int AVControl::MacroHeaderLength = AVControl::MacroHeader.length ();
 
 /** Default constructor. */
-AVControl::AVControl (int newType, const const char* &newLabel, int newChannel, int newInitValue, int newMinValue, int newMaxValue,
+AVControl::AVControl (int newType, const char* &newLabel, int newChannel, int newInitValue, int newMinValue, int newMaxValue,
     int newWordSize) 
 :   AVControl  (newLabel)
 {
-    SetType (newType);
-    SetWordSize (newWordSize);
-    SetChannel (newChannel);
-    SetMinMaxValues (newMinValue, newMaxValue);
-    SetInitValue (newInitValue);
-    SetValue (newInitValue);
+    setType (newType);
+    setWordSize (newWordSize);
+    setChannel (newChannel);
+    setMinMaxValues (newMinValue, newMaxValue);
+    setInitValue (newInitValue);
+    setValue (newInitValue);
 }
 
 /** Copy contructor. */
@@ -72,7 +72,7 @@ AVControl::AVControl (const AVControl& O)
     {
         /*
         Logger::outputDebugString ("The variables were not the same: -1\n" + 
-            ConsoleLine ('-') + ToString () + ConsoleLine ('-') + O.ToString () + ConsoleLine ('-'));
+            ConsoleLine ('-') + print (I2P::Terminal& slot) + ConsoleLine ('-') + O.print (I2P::Terminal& slot) + ConsoleLine ('-'));
         */
         return -1;
     }
@@ -226,8 +226,8 @@ void AVControl::getMinMaxValues (int newMin, int newMax)
     minValue = newMin;
     maxValue = newMax;
 
-    SetValue (value);
-    SetInitValue (initValue);
+    setValue (value);
+    setInitValue (initValue);
 }
 
 void AVControl::getMinValue (int value)
@@ -287,10 +287,10 @@ void AVControl::getWordSize (int value)
 
     wordSize = value;
     maxWordValue = (value == minWordValue) ? minWordValue : maxWordValue;
-    SetMinMaxValues (minValue, maxValue);
+    setMinMaxValues (minValue, maxValue);
 }
 
-void AVControl::Toggle ()
+void AVControl::toggle ()
 {
     if (value != minValue)
         value = minValue;
@@ -300,23 +300,22 @@ void AVControl::Toggle ()
 
 const char* AVControl::headerString () const
 {
-    return "|" + PrintCentered ("AVControl", AVControl::MaxLabelLength) + "|    Type    |#Bit|Init | Min | Max |Value|Ch |";
+    return "|" + printCentered ("AVControl", AVControl::MaxLabelLength) + "|    Type    |#Bit|Init | min | max |Value|Ch |";
 }
 
 const char* AVControl::toStringRow () const
 {
-    return "|" + PrintCentered (label (), AVControl::MaxLabelLength) + "|" + PrintCentered (typeString (), 12) + "|" +
-        PrintCentered (const char* (wordSize), 4) + "|" + PrintCentered (const char* (initValue), 5) + "|" + 
-        PrintCentered (const char* (minValue), 5) + "|" + PrintCentered (const char* (maxValue) , 5) + "|" + 
-        PrintCentered (const char* (value)   , 5) + "|" + PrintCentered (const char* (channel)  , 3) + "|";
+    return "|" + printCentered (label (), AVControl::MaxLabelLength) + "|" + printCentered (typeString (), 12) + "|" +
+        printCentered (const char* (wordSize), 4) + "|" + printCentered (const char* (initValue), 5) + "|" + 
+        printCentered (const char* (minValue), 5) + "|" + printCentered (const char* (maxValue) , 5) + "|" + 
+        printCentered (const char* (value)   , 5) + "|" + printCentered (const char* (channel)  , 3) + "|";
 }
 
-const char* AVControl::print (I2P::Terminal& slot) const
+void AVControl::print (I2P::Terminal& slot) const
 {
-    return GetHeaderString () + "\n" + ToStringRow () + "\n";
+    return getHeaderString () + "\n" + ToStringRow () + "\n";
 }
 
-//----------------------------------------------------------------------------------------------------------------------
 
 void AVControl::getType (int value)
 {
@@ -356,26 +355,6 @@ void AVControl::getType (int value)
     minWordValue = 1;
     maxWordValue = 0x7fffffff;
     numChannels  = 0x7fffffff;
-}
-
-byte AVControl::getState ()
-{
-    return 0;
-}
-
-const char* AVControl::getState (byte Value)
-{
-    return 0;
-}
-
-const char* AVControl::op (I2P::Terminal& slot, int index, int Enq)
-{
-    switch (Index)
-    {
-        case 0: return I2P::NumMembers (0);
-    }
-    
-    return Query ? Enquery ("AVControl", "_UI"): InvalidIndex ();
 }
 
 }   //< namespace _UI

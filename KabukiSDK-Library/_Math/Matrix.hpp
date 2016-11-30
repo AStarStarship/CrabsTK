@@ -35,7 +35,7 @@ class Matrix
     ~Matrix ();
     /*< Destructor. */
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 
     private:

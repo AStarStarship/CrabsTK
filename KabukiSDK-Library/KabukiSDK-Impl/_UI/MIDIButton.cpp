@@ -22,7 +22,7 @@
 
 namespace _UI {
 
-MIDIButton::MIDIButton (const const char* &newLabel, int newCC, int newChannel, int initValue, int newWordSize, 
+MIDIButton::MIDIButton (const char* &newLabel, int newCC, int newChannel, int initValue, int newWordSize, 
     int newMinValue, int newMaxValue, int newAction, int newStepSize, double newDoublePressTime) :
     ButtonControl (newAction, newStepSize, newDoublePressTime),
     MIDIControl (newLabel, newCC, newChannel, initValue, newMinValue,  newMaxValue, newWordSize, AVControl::MIDIButton)
@@ -45,10 +45,10 @@ const char* MIDIButton::label () const
     return Label::print (I2P::Terminal& slot);
 }
 
-/** Sets the label to the new label.
+/** sets the label to the new label.
 @return Returns 0 upon success and 1 if the newLabel is too long.
 @see    Label::IsValid (char). */
-int MIDIButton::getLabel (const const char*& newLabel)
+int MIDIButton::getLabel (const char*& newLabel)
 {
     return Label::getLabel (newLabel);
 }

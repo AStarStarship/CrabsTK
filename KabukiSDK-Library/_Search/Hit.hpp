@@ -20,18 +20,22 @@
  
 #pragma once
 
-#include <FreeI2P.hpp>
 #include <KabukiSDK-Config.hpp>
-#include <stdint.hpp>
-#include <const char*>
+
+#include <FreeI2P.hpp>
+
+#include <stdint.h>
+#include <string.h>
 #include <vector>
 
-namespace Librarian {
+namespace _Search {
 
-class HitList;
+/** A list of search hits.
+    @note This class was for creating patch lists for musical instruments, but 
+        is getting generalized to metadata search.
 
-/** A list of saerch hits.
-    Each patch has a name and catagory, and type strings, and a list of tags that desribe the sound.
+    Each hit has a name and catagory, and type strings, and a list of tags that 
+    desribe the sound.
 */
 class _KabukiSDK Hit
 {
@@ -43,76 +47,80 @@ class _KabukiSDK Hit
         MaxDescriptionLength = 256      //< The max description length.
     };
 
-    Hit (const char* aName = "", char patch = 0, const char* aDescription = "", const char* aCatagory = "", const char* aType = "", char* someTags = 0, int ANumTags = 0);
-    /** Simple constructor. 
+    Hit (const char* aName = "", const char* aDescription = "", const char** someTags = nullptr, char hit = 0, 
+        const char* aCatagory = "", const char* aType = "", int aNumTags = 0);
+    /*< Constructs a hit from the given metadata. 
         User produces the SomeTags list as a new array of strings, and this object cosumes it and is responsible for the deallocation of the memory.
     */
 
-    char* getProgramChangeString () noexcept;
-    /** Gets and sets the program hange integer. */
+    const char* getName ();
+    /*< Gets the name. */
 
-    char* getName () noexcept;
-    /** Gets the name. */
-
-    int setName  (const char* AName) noexcept;
-    /** Sets the name.
+    const char* setName  (const char* aName);
+    /*< Sets the name.
         @return returns 0 upon success, -1 if the input is nullptr, and 1 if the label is too long. */
 
-    int getId () noexcept;
-    /** Gets the Id. */
+    int getId ();
+    /*< Gets the Id. */
     
-    void setId  (int value) noexcept;
-    /** Sets the Id. */
+    void setId  (int value);
+    /*< Sets the Id. */
+
+    const char* getDescription ();
+    /*< Gets the description string. */
     
-    int setDescription  (const char* ADescription) noexcept;
-    /** Sets the description.
+    const char* setDescription  (const char* aDescription);
+    /*< Sets the description.
         @return returns 0 upon success and 1 if the label is too long. */
+    
+    const char* getCatagory ();
+    /*< Gets the catagory const char*.
+    @return Gets an empty const char* no tags exist. */
 
-    int addTag  (const char* ATag) noexcept;
-    /** Addsa tag to the tag list.
+    const char* getSubcatagory ();
+    /*< Gets the subcatagory const char*.
+    @return Gets an empty const char* no tags exist. */
+
+    const char* addTag  (const char* aTag);
+    /*< Addsa tag to the tag list.
         @return returns 0 upon success, -1 if the input is nullptr, and 1 if the label is too long. */
-    
-    bool removeTag  (const char* Tag) noexcept;
-    /** Removes the given tag if it exists.
-        @return Gets true upon success, -1 if the input is nullptr, and false if the tag doesn't exist. */
-    
-    char* getCatagory () noexcept;
-    /** Gets the catagory const char*.
-        @return Gets an empty const char* no tags exist. */
 
-    char* getSubcatagory () noexcept;
-    /** Gets the opcatagory const char*.
-        @return Gets an empty const char* no tags exist. */
-
-    void addTags (char* SomeTags, int numTags);
+    void addTags (char* someTags, int numTags);
     /*< Adds a collection of tags to the hit-list. */
-
-    bool containsTag  (const char* Tag);
-    /** Gets true if this patch contains the given tag. */
-
-    bool containsTags  (HitList* Tags);
-    /** Gets true if this patch contains any of the given tags. */
     
-    vector<char*> getTags ();
-    /** Gets the tags. */
-    
-    char* toStringTags ();
-    /** Gets a comma seperated const char* of the tags. */
+    const char* removeTag  (const char* tag);
+    /*< Removes the given tag if it exists.
+        @return Gets true upon success, 1 if the input is nullptr, and the given tag if the it doesn't exist. */
 
-    char* toJSON ();
-    /** Serializes to JSON const char*. */
+    bool containsTag  (const char* tag);
+    /*< Gets true if this hit contains the given tag. */
+
+    bool containsTags (::std::vector<::std::string>& someTags);
+    /*< Gets true if this hit contains any of the given tags. */
+    
+    ::std::vector<::std::string>& getTags ();
+    /*< Gets the list of tags. */
+    
+    const char* toStringTags ();
+    /*< Gets a comma seperated const char* of the tags. */
+
+    const char* toJSON ();
+    /*< Serializes to JSON const char*. */
+
+    inline void print (I2P::Terminal& slot);
+    /*< Prints this object to a terminal. */
     
     private:
 
-    const char* name,               //< The name of the patch.
-        * description;              //< Description of the patch. 
+    const char* name,               //< The name of the hit.
+        * description;              //< Description of the hit. 
     
     const char** catagory,          //< Pointer to the catagory const char*.
-        * type;                     //< Pointer to the type of instrument  (i.e. Flute, claranet).
+        * type;                     //< Pointer to the type of instrument.
     
-    int uniqueId;                   //< The unique identifier.
+    int uid;                        //< The unique identifier.
 
-    std::vector<const char*> tags;  //< List of tags.
+    ::std::vector<::std::string> tags;  //< List of tags.
 };
-}   //< namespace Librarian
 
+}   //< namespace _Search

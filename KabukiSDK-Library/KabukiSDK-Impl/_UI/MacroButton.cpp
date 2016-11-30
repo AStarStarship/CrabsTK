@@ -24,7 +24,7 @@ namespace _UI {
 
 
 
-MacroButton::MacroButton (const const char*& newLabel) 
+MacroButton::MacroButton (const char*& newLabel) 
 :   AVControl (AVControl::MacroButton, newLabel, 0, 0, 0, 0, 0),
     numControls (0),
     controls (nullptr)
@@ -184,7 +184,7 @@ const char* MacroButton::label () const
     return Label::print (I2P::Terminal& slot);
 }
 
-int MacroButton::getLabel (const const char*& newLabel)
+int MacroButton::getLabel (const char*& newLabel)
 {
     return Label::getLabel (newLabel);
 }
@@ -219,7 +219,7 @@ const char* MacroButton::op (I2P::Terminal& slot, int index, int Enq)
 
 const char* MacroButton::headerString () const
 {
-    return "|    AVControl    |Action|Step | CC  | Ch  |Value| Min | Max |Init |# Bits|\n";
+    return "|    AVControl    |Action|Step | CC  | Ch  |Value| min | max |Init |# Bits|\n";
 }
 
 const char* MacroButton::toStringRow () const

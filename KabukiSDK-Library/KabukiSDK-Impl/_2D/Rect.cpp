@@ -247,7 +247,7 @@ Rect_i& Rect_i::operator= (const Vect_i& V)
     return *this;
 }
 
-void Rect_i::Print (I2P::Terminal& Slot)
+void Rect_i::print (I2P::Terminal& slot)
 {
 
 }
@@ -470,7 +470,7 @@ Rect_f& Rect_f::operator= (const Vect_f& V)
     return *this;
 }
 
-void Rect_f::Print (I2P::Terminal& Slot)
+void Rect_f::print (I2P::Terminal& slot)
 {
 
 }

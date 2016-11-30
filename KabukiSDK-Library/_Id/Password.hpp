@@ -31,7 +31,7 @@ class _KabukiSDK Password
     const int MinLength = 4,
         MaxLength = 12;
 
-    const const char* DefaultFormat = "^[a-zA-Z0-9]*$",
+    const char* DefaultFormat = "^[a-zA-Z0-9]*$",
         DefaultPassword = "password";
 
     /** . */
@@ -65,11 +65,11 @@ class _KabukiSDK Password
         return password;
     }
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
     
     /**  */
-    const char* ToString ()
+    const char* print (I2P::Terminal& slot)
     {
         return password;
     }

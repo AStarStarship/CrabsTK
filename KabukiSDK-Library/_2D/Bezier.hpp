@@ -63,7 +63,7 @@ class _KabukiSDK Bezier_f
     int GetNumPoints ();
     /*< Gets the number of points. */
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 
     private:

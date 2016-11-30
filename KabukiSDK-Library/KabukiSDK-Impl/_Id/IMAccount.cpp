@@ -1,5 +1,5 @@
 /** Kabuki Software Development Kit
-    @file    /.../KabukiSDK-Impl/_Id/IMAccount.cpp
+    @file    /.../KabukiSDK-Impl/_Id/OAth.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -18,33 +18,33 @@
         limitations under the License.
 */
 
-#include <_Id/IMAccount.hpp>
+#include <_Id/OAth.hpp>
 
 namespace _Id {
 
-IMAccount::IMAccount ()
+OAth::OAth ()
 {
 
 }
 
-byte IMAccount::getState ()
-{
-    return 0;
-}
-
-const char* IMAccount::getState (byte Value)
+byte OAth::getState ()
 {
     return 0;
 }
 
-const char* IMAccount::op (I2P::Terminal& slot, int index, int Enq)
+const char* OAth::getState (byte Value)
+{
+    return 0;
+}
+
+const char* OAth::op (I2P::Terminal& slot, int index, int Enq)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("IMAccount", "_Id"): InvalidIndex ();
+    return Query ? Enquery ("OAth", "_Id"): InvalidIndex ();
 }
 
 }   //< namespace _Id

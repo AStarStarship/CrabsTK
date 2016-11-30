@@ -42,10 +42,10 @@ class _KabukiSDK EntityGroup
 
     const char* GetName ()
     {
-        return name.ToString ();
+        return name.print (I2P::Terminal& slot);
     }
 
-    void SetName  (const char* newName)
+    void setName  (const char* newName)
     {
         name.rename  (newName);
     }
@@ -58,14 +58,14 @@ class _KabukiSDK EntityGroup
             accounts[i].Role ().Apply_Privilages  (P);
     }
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 
-    const char* ToString ()
+    const char* print (I2P::Terminal& slot)
     {
-        return "Group: " + name.ToString () + " " + base.ToString ();
+        return "Group: " + name.print (I2P::Terminal& slot) + " " + base.print (I2P::Terminal& slot);
     }
 };
 }   //< namespace _Id
-}   //< namespace Librarian
+}   //< namespace _Search
 

@@ -93,7 +93,7 @@ int ControlArray::getControl (int index, AVControl* newControl)
     return Success;
 }
 
-AVControl* ControlArray::RemoveControl (int index)
+AVControl* ControlArray::removeControl (int index)
 {
     if (index < 0)
         return nullptr;

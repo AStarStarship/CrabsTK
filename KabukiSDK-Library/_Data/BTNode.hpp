@@ -141,9 +141,9 @@ namespace _Data {
             set { index = Value; }
         }
         
-        const char* ToString ()
+        const char* print (I2P::Terminal& slot)
         {
-            return name + "/n" + data.ToString ();
+            return name + "/n" + data.print (I2P::Terminal& slot);
         }
     }
 }

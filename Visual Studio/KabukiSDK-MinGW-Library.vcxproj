@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK-Config.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Account.h" />
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ARadioButton.h" />
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_2D\Angle.hpp" />
@@ -50,7 +49,7 @@
     <ClInclude Include="..\KabukiSDK-Library\_Id\EntityGroup.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\EntityList.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Grammer.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Id\IMAccount.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_Id\OAthAccount.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Name.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Organization.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Password.hpp" />
@@ -232,7 +231,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\KabukiSDK-Library;..\..\mbed-os\hal\api;..\..\cpputest\include;..\..\FreeI2P\FreeI2P-Library;$(IncludePath)</IncludePath>
+    <IncludePath>..\KabukiSDK-Library;..\..\cpputest\include;..\..\FreeI2P\FreeI2P-Library;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

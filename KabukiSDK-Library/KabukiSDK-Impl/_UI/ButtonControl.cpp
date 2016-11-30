@@ -22,7 +22,7 @@
 
 namespace _UI {
 
-const const char* ButtonControl::ActionStrings[] = { "Momentary", "Latching", "Presure Sensitive" };
+const char* ButtonControl::ActionStrings[] = { "Momentary", "Latching", "Presure Sensitive" };
 
 const double ButtonControl::MinDoubleClickTime = 0.01;
 const double ButtonControl::MaxDoubleClickTime = 0.02;
@@ -37,7 +37,7 @@ ButtonControl::ButtonControl (int newButtonControlAction, int newStepSize, doubl
     doublePressTime (newDoublePressTime),
     lastTimePressed (0.0)
 {
-    SetButtonAction (newButtonControlAction);
+    setButtonAction (newButtonControlAction);
 }
 
 ButtonControl::ButtonControl (const ButtonControl &other) :
@@ -50,7 +50,7 @@ ButtonControl::ButtonControl (const ButtonControl &other) :
     // Nothing to do here :-)
 }
 
-void ButtonControl::Press ()
+void ButtonControl::press ()
 {
     isPressed = true;
 
@@ -60,17 +60,17 @@ void ButtonControl::Press ()
         DoublePress ();
         return;
     }
-    Press ();
+    press ();
 }
 
-void ButtonControl::Depress ()
+void ButtonControl::depress ()
 {
     isPressed = false;
-    Depress ();
+    depress ();
 
 }
 
-bool ButtonControl::IsPressed () const
+bool ButtonControl::isPressed () const
 {
     return isPressed;
 }
@@ -80,12 +80,12 @@ void ButtonControl::getState (bool isPressedState)
     isPressed = isPressedState;
 }
 
-double ButtonControl::LastTimePressed () const
+double ButtonControl::getLastTimePressed () const
 {
     return lastTimePressed;
 }
 
-int ButtonControl::StepSize () const
+int ButtonControl::getStepSize () const
 {
     return stepSize;
 }
@@ -100,22 +100,22 @@ void ButtonControl::getStepSize (int value)
         stepSize = value;
 }
 
-int ButtonControl::ButtonAction () const
+int ButtonControl::getButtonAction () const
 {
     return buttonAction;
 }
 
-void ButtonControl::getButtonAction (int newAction)
+void ButtonControl::getgetButtonAction (int newAction)
 {
     buttonAction = newAction;
 }
 
-const const char*& ButtonControl::ActionString () const
+const char*& ButtonControl::ActionString () const
 {
     return ActionStrings[buttonAction];
 }
 
-void ButtonControl::Toggle ()
+void ButtonControl::toggle ()
 {
     if (isPressed)
         isPressed = false;

@@ -51,7 +51,7 @@ KeyPress KeyboardEvent::keyPress ()
     return _keyPress;
 }
 
-/** Sets the _keyPress to the newKeyPress. */
+/** sets the _keyPress to the newKeyPress. */
 void KeyboardEvent::setKeyPress (const KeyPress& newKeyPress)
 {
     _keyPress = newKeyPress;

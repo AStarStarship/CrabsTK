@@ -159,9 +159,6 @@
     <ClInclude Include="..\KabukiSDK-Library\_Id\Grammer.hpp">
       <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\IMAccount.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Name.hpp">
       <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
@@ -309,9 +306,6 @@
     <ClInclude Include="..\KabukiSDK-Library\_UI\Components\ADSR.hpp">
       <Filter>KabukiSDK-Library\_UI\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Account.h">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ARadioButton.h">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClInclude>
@@ -320,6 +314,9 @@
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK-Config.hpp">
       <Filter>KabukiSDK-Library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\OAthAccount.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

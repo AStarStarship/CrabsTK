@@ -27,14 +27,14 @@ Address::Address ()
     /// Nothing to do here! :-)
 }
 
-Address::Address (const char* street, const char* city, const char* state, const char* zip, const char* country, const char* type)
+Address::Address (const char* aStreet, const char* aCity, const char* aState, const char* aZip, const char* aCountry, const char* aType)
+:   street  (aStreet),
+    city    (aCity),
+    state   (aState),
+    zip     (aZip),
+    country (aCountry),
+    type    (aType)
 {
-    Street  = street;
-    City    = city;
-    State   = state;
-    Zip     = zip;
-    Country = country;
-    Type    = type;
 }
 
 const char* Address::getType () { return type; }

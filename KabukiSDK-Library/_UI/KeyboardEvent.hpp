@@ -41,22 +41,22 @@ class _KabukiSDK KeyboardEvent : public Event:, public IObject
     KeyboardEvent  (const KeyboardEvent& other);
     //< Copy constructor.
 
-    KeyPress GetKeyPress ();
-    //< Gets th keyPress.
+    KeyPress getKeyPress ();
+    //< gets the keyPress.
 
-    void SetKeyPress  (const KeyPress& newKeyPress);
-    //< Sets the _keyPress to the newKeyPress.
+    void setKeyPress  (const KeyPress& newKeyPress);
+    //< sets the _keyPress to the newKeyPress.
 
     void Trigger () override;
     //< Triggers the KeyboardEvent in the host OS.
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:
 
     KeyPress keyPress;         //< The KeyPress data.
 };
-}   //< namespace Controls
-}   //< namespace _Dev
+}   //< namespace _UI
+
 

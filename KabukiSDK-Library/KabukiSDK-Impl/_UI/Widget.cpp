@@ -47,4 +47,4 @@ const char* Widget::op (I2P::Terminal& slot, int index, int Enq)
     return Query ? Enquery ("Widget", "_UI"): InvalidIndex ();
 }
 
-}   //< namespace _Dev
+

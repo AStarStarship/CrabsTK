@@ -27,7 +27,7 @@ namespace _Dev { namespace Controls {
 
 /** A controller for MIDI signals.
     
- */
+*/
 class _KabukiSDK MIDIControl : public AVControl
 {
     public:
@@ -45,64 +45,37 @@ class _KabukiSDK MIDIControl : public AVControl
     //< Virtual destructor.
 
     int cc () const;
-    //< Gets th MIDI control change  (CC) parameter.
+    //< gets the MIDI control change  (CC) parameter.
 
     void setCC  (int value);
-    //< Sets the control change  (CC) parameter.
+    //< sets the control change  (CC) parameter.
 
     void setMinMaxValues  (int newMin, int newMax) override;
-    /*< Sets the min and max values. */
+    /*< sets the min and max values. */
     
     void setMinValue  (int value) override;
-    //< Sets the min value to the value.
+    //< sets the min value to the value.
     
     void setMaxValue  (int value) override;
-    //< Sets the max value to the value.
+    //< sets the max value to the value.
 
     virtual void trigger ();
     //< Triggers the AVControl to fire.
 
     virtual const char* headerString () const;
-    //< Gets th header for toStringRow ().
+    //< gets the header for toStringRow ().
     
     virtual const char* toStringRow () const;
-    //< Gets a column of the values without the labels.
+    //< gets a column of the values without the labels.
     
-    virtual const char* Do  (const char* Query, byte index, Roombot* Bot);
-    /*< Inter-process oproutines. */
+    virtual const char* op (I2P::Terminal& slot, int index, int enq);
+    /*< Inter-process operations. */
 
     private:
 
     uint16_t cc;    //< The control change  (CC) parameter.
 };
 
-#if DEBUG
-/** Unit test for the DMXControl class _KabukiSDK */
-class _KabukiSDK MIDIControlTests : public UnitTest
-{
-    public:
+}   //< namespace _UI
 
-    MIDIControlTests () : UnitTest ("Testing Controls::MIDIControl\n" + ConsoleLine ('~')) {}
-
-    void runTest ()
-    {
-        MIDIControl controlA ("MIDI Control A");
-        LogMessage  (controlA.ToString ());
-
-        beginTest ("Testing setCC ()");
-        controlA.setCC  (127);
-        expect  (controlA.cc () = =  127);
-        controlA.setCC  (128);
-        expect  (controlA.cc () = =  127);
-        controlA.setCC (-1);
-        LogMessage ("controlA:\n" + controlA.ToString ());
-        expect  (controlA.cc () = =  0);
-        LogMessage ("Done testing Controls::MIDIControl class _KabukiSDK. :-)\n");
-    }
-};
-static MIDIControlTests testUnit_MIDIControl;
-#endif // DEBUG
-
-}   //< namespace Controls
-}   //< namespace _Dev
 

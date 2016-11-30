@@ -39,25 +39,25 @@ class _KabukiSDK Imaginary_f
     Imaginary_f  (float Ax, float By);
     /*< Constructs an imaginary number from the given values. */
 
-    float GetA () const;
+    float getA () const;
     /*< Gets the A value. */
 
-    float GetB () const;
+    float getB () const;
     /*< Gets the A value. */
 
-    void SetA (float Value);
+    void setA (float Value);
     /*< Sets the A value to the new Value. */
 
-    void SetB (float Value);
+    void setB (float Value);
     /*< Sets the A value to the new Value. */
 
-    float CalcAngle ();
+    float calcAngle ();
     /*< Gets the angle between A and B. */
 
-    float CalcMagnitude ();
+    float calcMagnitude ();
     /*< Gets the magnitude of A and B. */
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 
@@ -75,24 +75,24 @@ class _KabukiSDK Imaginary_d
     Imaginary_d  (double Ax, double By);
     /*< Gets and sets the A value. */
 
-    double GetA () const;
+    double getA () const;
     /*< Gets the A value. */
 
-    double GetB () const;
+    double getB () const;
     /*< Gets the A value. */
 
-    void SetA (double Value);
+    void setA (double Value);
     /*< Sets the A value to the new Value. */
 
-    void SetB (double Value);
+    void setB (double Value);
     /*< Sets the A value to the new Value. */
 
-    double CalcAngle ();
+    double calcAngle ();
     /*< Gets the angle between A and B. */
 
-    double CalcMagnitude ();
+    double calcMagnitude ();
     /*< Gets the magnitude of A and B. */
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 };

@@ -124,7 +124,7 @@ struct _KabukiSDK Rect_i
 
     Rect_i& operator=  (const Vect_i&);
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 
@@ -221,7 +221,7 @@ struct _KabukiSDK Rect_f
 
     Rect_f& operator=  (const Vect_f&);
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 

@@ -1,5 +1,5 @@
 /** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Id/IMAccount.hpp
+    @file    /.../KabukiSDK/_Id/OAthAccount.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,18 +20,17 @@
  
 #pragma once
 
-namespace Librarian { namespace Id {
+namespace _Id {
 
 /** An instant messanging account. */
-class IMAccount
+class OAthAccount
 {
     public:
     
-    IMAccount ();
+    OAthAccount ();
     /*< Simple default constructor. */
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 };
 }   //< namespace Id
-}   //< namespace Librarian

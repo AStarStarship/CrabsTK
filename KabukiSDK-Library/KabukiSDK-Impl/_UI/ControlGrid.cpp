@@ -99,7 +99,7 @@ const char* ControlGrid::print (I2P::Terminal& slot) const
     Logger::outputDebugString ("!!!!_numRows = " + const char* (_numRows));
 
     for (int i = 0; i < _numRows; ++i)
-        returnString += "Row " + const char* (i) + "\n" + rows[i].ToString ();
+        returnString += "Row " + const char* (i) + "\n" + rows[i].print (I2P::Terminal& slot);
     
     return returnString + CharLine ('-', AVControl::MacroHeaderLength);
 }

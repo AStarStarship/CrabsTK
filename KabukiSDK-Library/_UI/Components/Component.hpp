@@ -32,7 +32,7 @@ class _KabukiSDK Component
     Component ();
     /*< Constructs a dummy object. */
     
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
 }
 

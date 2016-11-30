@@ -23,7 +23,7 @@
 namespace _UI {
 
 /** Default constructor. */
-ButtonScroller::ButtonScroller (const const char*& initLabel, int newNumVisibleButtons) : 
+ButtonScroller::ButtonScroller (const char*& initLabel, int newNumVisibleButtons) : 
     ButtonScroller (initLabel),
     currentIndex (0),
     buttons ()
@@ -41,19 +41,19 @@ ButtonScroller::ButtonScroller (const ButtonScroller& other) :
     // Nothing to do here yet.
 }
 
-/** Gets the array of buttons. */
+/** gets the array of buttons. */
 Array<ButtonControl*>& ButtonScroller::buttons ()
 {
     return buttons;
 }
 
-/** Gets the number of buttons in the array. */
+/** gets the number of buttons in the array. */
 int ButtonScroller::numButtons () const
 {
     return buttons.size ();
 }
 
-/** Sets the number of visible buttons to the new value. */
+/** sets the number of visible buttons to the new value. */
 void ButtonScroller::setNumVisibleButtons (int value)
 {
     numVisibleButtons = (value < 1) ? 1 : value;
@@ -75,13 +75,13 @@ void ButtonScroller::removeButton (int index)
     }
 }
 
-/** Gets the number of visible buttons. */
+/** gets the number of visible buttons. */
 int ButtonScroller::numVisibleButtons () const
 {
     return numVisibleButtons;
 }
 
-/** Gets the index of the first visible button. */
+/** gets the index of the first visible button. */
 int ButtonScroller::currentIndex () const
 {
     return currentIndex;
@@ -109,7 +109,7 @@ int ButtonScroller::press (int index)
 /** Scrolls up the list. */
 void ButtonScroller::scrollUp ()
 {
-    // Note: Up equals GetPrevious.
+    // Note: Up equals getPrevious.
 
     if (currentIndex == 0) // Special Case: We can't scroll any farther.
         return;

@@ -29,7 +29,7 @@ EntityList::EntityList ()
 
 int EntityList::getSize () { return entities.size (); }
 
-void EntityList::add (Entity a)         { entities.Add (a); }
+void EntityList::add (Entity a)         { entities.add (a); }
 
 void EntityList::add (List<Entity> a)   { entities.AddRange (a); }
 
@@ -85,8 +85,8 @@ const char* EntityList::print (I2P::Terminal& slot)
     for (int i = 0; i < entities.size (); i++)
     {
         // Iterated throught the users array and write the
-        // ToString () strings to the returnstring
-        returnstring = returnstring + ("Account " + (i + 1) + ": " + entities[i].ToString () + (char)13);
+        // print (I2P::Terminal& slot) strings to the returnstring
+        returnstring = returnstring + ("Account " + (i + 1) + ": " + entities[i].print (I2P::Terminal& slot) + (char)13);
     }
 
     return returnstring.c_str ();
