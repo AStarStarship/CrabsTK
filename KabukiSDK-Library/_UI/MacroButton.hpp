@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_UI/MacroButton.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -39,8 +39,8 @@ class _KabukiSDK MacroButton : public AVControl, public ButtonControl
 
     /** Default constructor creates a MacroButton with no controls. 
         A MacroButton without any controls triggers system functions only.*/
-    MacroButton  (const char* newName = ""); 
-    //MacroButton  (const MacroButton& other);
+    MacroButton (const char* newName = ""); 
+    //MacroButton (const MacroButton& other);
     //< Copy constructor.
     
     ~MacroButton ();
@@ -52,36 +52,36 @@ class _KabukiSDK MacroButton : public AVControl, public ButtonControl
     void ClearControls ();
     //< Clears all of the controls from the list.
 
-    int Add  (AVControl* newEvent);
+    int Add (AVControl* newEvent);
     /*< Adds an Event to the event list.
         @return gets Success upon success.
         @return gets -1 if the newEvent is null. */
         
-    int Add  (std::vector<AVControl*> newEvents);
+    int Add (std::vector<AVControl*> newEvents);
     //< Adds an array of newEvents to the list.
     
-    int set  (int index, AVControl* newEvent);
+    int set (int index, AVControl* newEvent);
     //< sets the Event at the given index to the newEvent.
 
     AVControl* Remove ();
     //< Removes the first removes in the list.
     
-    AVControl* Remove  (int index);
+    AVControl* Remove (int index);
     /*< Removes the oldEvent from the list.
         @return gets nullptr if the index was out of 
             bounds. */
         
-    AVControl* Remove  (AVControl* oldEvent);
+    AVControl* Remove (AVControl* oldEvent);
     /*< Removes the oldEvent from the list.
         @return gets nullptr if the oldEvent was null or if 
             it not in the list. */
 
-    AVControl* getControl  (int index);
-    /*< gets the event at the given index.
+    AVControl* getControl (int index);
+    /*< Gets the event at the given index.
         @return gets nullptr if the index is invalid. */
         
     AVControl* getFirstControl ();
-    /*< gets the first event in the list.
+    /*< Gets the first event in the list.
         @return gets nullptr if list is empty. */
 
     int maxWordValue () const override;
@@ -89,11 +89,11 @@ class _KabukiSDK MacroButton : public AVControl, public ButtonControl
 
     const char* label () const override;
     //< gets the label.
-    int setLabel  (const char* newLabel) override;
-    /*< sets the label to the new label.
+    int setLabel (const char* newLabel) override;
+    /*< Sets the label to the new label.
         @return gets 0 upon success and 1 if the newLabel is
         too long.
-        @see    Label::IsValid  (char). */
+        @see    Label::IsValid (char). */
     
     void toggle () override;
     //< Toggles the state of the ButtonControl if type is latching.
@@ -128,10 +128,10 @@ class _KabukiSDK MacroButton : public AVControl, public ButtonControl
 
     LinearNode<AVControl*>* controls;       //< Pointer to the head of the linear linked list of Events.
 
-    void ClearList  (LinearNode<AVControl*>* thisNode);
+    void ClearList (LinearNode<AVControl*>* thisNode);
     //< Recursivly deletes all of the nodes.
 
-    AVControl* removeAfter  (LinearNode<AVControl*>* thisNode);
+    AVControl* removeAfter (LinearNode<AVControl*>* thisNode);
     //< Removes the node after thisNode from the list.
 };
 

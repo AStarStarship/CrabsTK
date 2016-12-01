@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_Math/Imaginary.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -33,10 +33,10 @@ class _KabukiSDK Imaginary_f
     float A,        //< Vector A, imagined on the x-axis.
         B;          //< Vector B, imagined on the y-axis.
 
-    Imaginary_f  ();
+    Imaginary_f ();
     /*< Constructs an uninitialized imaginary number. */
 
-    Imaginary_f  (float Ax, float By);
+    Imaginary_f (float Ax, float By);
     /*< Constructs an imaginary number from the given values. */
 
     float getA () const;
@@ -69,10 +69,10 @@ class _KabukiSDK Imaginary_d
     double A,       //< Vector A, imagined on the x-axis.
         B;          //< Vector B, imagined on the y-axis.
 
-    Imaginary_d  ();
+    Imaginary_d ();
     /*< Constructs an uninitialized imaginary number. */
 
-    Imaginary_d  (double Ax, double By);
+    Imaginary_d (double Ax, double By);
     /*< Gets and sets the A value. */
 
     double getA () const;

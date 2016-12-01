@@ -2,11 +2,11 @@
     @version 0.9
     @file    /.../KabukiSDK/_Math/Hex.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -26,19 +26,19 @@
 
 namespace _Math {
 
-char hexToChar  (byte Value);
+char hexToChar (byte Value);
 /*< Conserts the hex value to ASCII char. */
 
-void hexToString  (char* result, int value);
+void hexToString (char* result, int value);
 /*< Converts a give Value to a hex string. */
 
-void hexToString  (char* result, byte value);
+void hexToString (char* result, byte value);
 /*< Converts a give Value to a hex string. */
 
-int hexToInt  (const char* binaryHex);
+int hexToInt (const char* binaryHex);
 /*< Converts . */
 
-byte hexToByte  (char value);
+byte hexToByte (char value);
 /*< Converts the given hex char value to a byte value 0 - 15. */
 
 }   //< namespace _Math

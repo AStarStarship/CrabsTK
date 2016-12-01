@@ -28,12 +28,12 @@ Address::Address ()
 }
 
 Address::Address (const char* aStreet, const char* aCity, const char* aState, const char* aZip, const char* aCountry, const char* aType)
-:   street  (aStreet),
-    city    (aCity),
-    state   (aState),
-    zip     (aZip),
+:   street (aStreet),
+    city   (aCity),
+    state  (aState),
+    zip    (aZip),
     country (aCountry),
-    type    (aType)
+    type   (aType)
 {
 }
 
@@ -74,7 +74,7 @@ void Address::setZip (const char* s)
 
 void Address::print (I2P::Terminal& slot)
 {
-    prints (slot, "Street: ", Street, "\n", " Cit: ", City, "\n", " State/Province: ", State, "\n", 
+    slot.prints ( "Street: ", Street, "\n", " Cit: ", City, "\n", " State/Province: ", State, "\n", 
         "Zip/Postal Code: ", Zip, "\n", "Country: ", Country, "\n");
 }
 

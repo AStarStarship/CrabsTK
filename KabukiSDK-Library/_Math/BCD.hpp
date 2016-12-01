@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_2D/Vect.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -39,35 +39,35 @@ class _KabukiSDK BCD
         maxDigitsDouble = 3 + DBL_MANT_DIG - DBL_MIN_EXP
     };
 
-    BCD  (float floatingPointNumber, int numDecimalPlaces = -1);
+    BCD (float floatingPointNumber, int numDecimalPlaces = -1);
     /*< Constructs a BCD from a float. */
 
-    BCD  (double floatingPointNumber, int numDecimalPlaces = -1);
+    BCD (double floatingPointNumber, int numDecimalPlaces = -1);
     /*< Constructs a BCD from a double. */
 
     ~BCD ();
     /*< Destructor destructs if dynamic memory is used. */
 
     float getFloat ();
-    /*< gets the BCD value as a float. */
+    /*< Gets the BCD value as a float. */
 
     double getDouble ();
-    /*< gets the BCD value as a double. */
+    /*< Gets the BCD value as a double. */
 
     void setValue (float Value);
-    /*< sets the BCD value to the new Value. */
+    /*< Sets the BCD value to the new Value. */
 
     void setValue (double Value);
-    /*< sets the BCD value to the new Value. */
+    /*< Sets the BCD value to the new Value. */
 
     bool isNegative ();
     /*< Returns true of this BCD is negative. */
 
-    int8_t getNumWholeDigits  (int index);
-    /*< gets the number of whole BCDs. */
+    int8_t getNumWholeDigits (int index);
+    /*< Gets the number of whole BCDs. */
 
-    int8_t getNumFractionalDigits  (int index);
-    /*< gets the number of fractional digits. */
+    int8_t getNumFractionalDigits (int index);
+    /*< Gets the number of fractional digits. */
 
     void plus (const BCD& Value);
     /*< pluss the given Value to this BCD. */

@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../_/ErrorList.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -25,7 +25,7 @@
 namespace _ {
 
 ErrorList::ErrorList (char** errorBuffer, int maximumNumErrors)
-:   numErrors  (0),
+:   numErrors (0),
     maxNumErrors (maximumNumErrors < 0 ? DefaultMaxNumErrors : maximumNumErrors)
 {
     /// Nothing to do here! :-)
@@ -37,9 +37,9 @@ int ErrorList::getNumErrors () { return numErrors; }
 
 int ErrorList::getMaxNumErrors () { return maxNumErrors; }
 
-void ErrorList::report  (const char* s)
+void ErrorList::report (const char* s)
 {
-    if  (numErrors >= maxNumErrors) return;
+    if (numErrors >= maxNumErrors) return;
     errors[numErrors++] = s;
 }
 
@@ -47,7 +47,7 @@ const char** ErrorList::getErrors () { return errors; }
     
 void ErrorList::print (I2P::Terminal& slot)
 {
-    for  (int i = 0; i < numErrors; ++i)
+    for (int i = 0; i < numErrors; ++i)
         printLine (errors[i]);
 }
 

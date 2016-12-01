@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_UI/Label.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -42,10 +42,10 @@ class _KabukiSDK Label
     static const char* AllowedSymbols,         //< The non-alpha-numberic charactors allowed in a label.
         UnnamedLabel;                           //< const char* that reads "Unnnamed".
     
-    Label  (const char* newLabel = "");
+    Label (const char* newLabel = "");
     //< Default constructor.
     
-    Label  (const Label& other);
+    Label (const Label& other);
     //< Copy contructor.
     
     virtual ~Label () {}
@@ -54,27 +54,27 @@ class _KabukiSDK Label
     const char* getLabel () const;
     //< gets the label.
     
-    int setLabel  (const char* newLabel);
-    /*< sets the label to the new label.
+    int setLabel (const char* newLabel);
+    /*< Sets the label to the new label.
         @return gets 0 upon success and 1 if the newLabel is too long.
-        @see    Label::IsValid  (char). */
-    virtual int setLabel  (const Label& newLabel);
-    /*< sets the label to the new label.
+        @see    Label::IsValid (char). */
+    virtual int setLabel (const Label& newLabel);
+    /*< Sets the label to the new label.
         @return gets 0 upon success and 1 if the newLabel is too long.
-        @see    Label::IsValid  (char). */
+        @see    Label::IsValid (char). */
         
-    int Compare  (const char* other) const;
+    int Compare (const char* other) const;
     /*< Compares this label to the other const char*.
         @return gets  0 if they are identical and1 if the other string is too long. */
         
-    int Compare  (const Label& other) const;
+    int Compare (const Label& other) const;
     /*< Compares this label to the other Label.
         @return gets  0 if they are identical and1 if the other string  is too long. */
         
     const char* print (I2P::Terminal& slot) const;
     //< gets a text represenation of this object.
  
-    static int IsValid  (const char* label);
+    static int IsValid (const char* label);
     /*< Verifies if thisLabel is a valid label.
         @return gets 0 if the label is valid.
         @return gets 1 if the label is too long.

@@ -37,14 +37,14 @@ const char* Relationship::getState (byte Value)
     return 0;
 }
 
-const char* Relationship::op (I2P::Terminal& slot, int index, int Enq)
+const char* Relationship::op (I2P::Terminal* slot, int index)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("Relationship", "_Id"): InvalidIndex ();
+    return enquery ("Relationship", "_Id"): InvalidIndex ();
 }
 
 }   //< namespace _Id

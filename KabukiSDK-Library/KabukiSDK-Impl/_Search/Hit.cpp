@@ -178,7 +178,7 @@ const char* Hit::toJSON ()
 
 void Hit::print (I2P::Terminal& slot)
 {
-    prints (slot, "Hit", name, "/n");
+    slot.prints ( "Hit", name, "/n");
     //data.print (slot);
 }
 

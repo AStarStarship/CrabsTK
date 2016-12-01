@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_2D/Point.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -27,88 +27,20 @@
 
 namespace _2D {
 
-struct _KabukiSDK Point_i
-/*< A 2D point storted as int types. */
-{
-    int X,      //< The X position.
-        Y;      //< The Y position.
-
-    Point_i  ();
-    /*< Constructs an uninitialized . */
-
-    Point_i  (int initX = 0, int initY = 0);
-    /*< Default constructor initializes with given Point. 
-        @param initX The x value.
-        @param initY The y value.
-
-        @code
-        @endcode
-    */
-
-    int getX () const;
-    /*< gets the X component. */
-
-    int getY () const;
-    /*< gets the Y component. */
-
-    void setX (int Value);
-    /*< sets the X component to the new Value. */
-
-    void setY (int Value);
-    /*< sets the Y component to the new Value. */
-
-    void set (int newX = 0, int newY = 0);
-    /*< sets the X and Y Values to the new Values. */
-
-    void set (const Point_i& P);
-    /*< sets the X and Y Values to the this Point's X and Y. */
-
-    void translate (const Vect_i& V);
-    /** translates the given vector to the point.
-        @param V The vector to translate the point by. */
-
-    void translate (int dx, int dy);
-    /** translates the given vector to the point. */
-
-    bool equals (const Point_i& P) const;
-    /*< Compares this Point to the other and returns true if the two Positions are identical. */
-
-    int compare (const Point_i& P) const;
-    /*< Compares this Point to the other and the quadrant this point is in relation to the other. */
-
-    void swap (Point_i& P);
-    /*< Swaps this object's Point with a. */
-
-    void print (I2P::Terminal& slot);
-    /*< Prints this object to the terminal. */
-};
-
 struct _KabukiSDK Point_f
-/*< A 2D point storted as float types. */
+    /*< A 2D point storted as float types. */
 {
-    float X,    //< The X position.
-        Y;      //< The Y position.
+    float x,    //< The X position.
+        y;      //< The Y position.
 
-    Point_f  (float initX = 0.0f, float initY = 0.0f);
+    Point_f (float initX = 0, float initY = 0);
     /*< Default constructor initializes with given Point. */
 
-    float getX () const;
-    /*< gets the X component. */
-
-    float getY () const;
-    /*< gets the Y component. */
-
-    void setX (float Value);
-    /*< sets the X component to the new Value. */
-
-    void setY (float Value);
-    /*< sets the Y component to the new Value. */
-
-    void set (float newX = 0.0f, float newY = 0.0f);
-    /*< sets the X and Y Values to the new Values. */
+    void set (float newX = 0, float newY = 0);
+    /*< Sets the X and Y Values to the new Values. */
 
     void set (const Point_f& P);
-    /*< sets the X and Y Values to the this Point's X and Y. */
+    /*< Sets the X and Y Values to the this Point's X and Y. */
 
     void translate (const Vect_f& V);
     /** translates the given vector to the point. */
@@ -119,10 +51,54 @@ struct _KabukiSDK Point_f
     bool equals (const Point_f& P) const;
     /*< Compares this Point to the other and returns true if the two Positions are identical. */
 
-    int compare (const Point_f& P) const;
+    double compare (const Point_f& P) const;
     /*< Compares this Point to the other and the quadrant this point is in relation to the other. */
 
     void swap (Point_f P);
+    /*< Swaps this object's Point with a. */
+
+    void print (I2P::Terminal& slot);
+    /*< Prints this object to the terminal. */
+};
+
+struct _KabukiSDK Point_d
+/*< A 2D point storted as double types. */
+{
+    double x,   //< The X position.
+        y;      //< The Y position.
+
+    Point_d ();
+    /*< Constructs an uninitialized . */
+
+    Point_d (double initX = 0, double initY = 0);
+    /*< Default constructor initializes with given Point. 
+        @param initX The x value.
+        @param initY The y value.
+
+        @code
+        @endcode
+    */
+
+    void set (double newX = 0, double newY = 0);
+    /*< Sets the X and Y Values to the new Values. */
+
+    void set (const Point_d& P);
+    /*< Sets the X and Y Values to the this Point's X and Y. */
+
+    void translate (const Vect_i& V);
+    /** translates the given vector to the point.
+        @param V The vector to translate the point by. */
+
+    void translate (double dx, double dy);
+    /** translates the given vector to the point. */
+
+    bool equals (const Point_d& P) const;
+    /*< Compares this Point to the other and returns true if the two Positions are identical. */
+
+    double compare (const Point_d& P) const;
+    /*< Compares this Point to the other and the quadrant this point is in relation to the other. */
+
+    void swap (Point_d& P);
     /*< Swaps this object's Point with a. */
 
     void print (I2P::Terminal& slot);

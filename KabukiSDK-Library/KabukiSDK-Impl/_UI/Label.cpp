@@ -27,7 +27,7 @@ const char* Label::AllowedSymbols = " `!@#$%^&* (){}+=-_\\|/?.>,<";
 
 const int Label::NonAlphaNumChars = AllowedSymbols.length ();
 
-Label::Label (const char*& newLabel)
+Label::Label (const char* newLabel)
 {
     if (SetLabel (newLabel))
         label = UnnamedLabel;
@@ -39,7 +39,7 @@ Label::Label (const Label &other) :
     // Nothing to do here :-)
 }
 
-int Label::isValid (const char*& label)
+int Label::isValid (const char* label)
 {
     int labelLength = label.length ();
     Logger::outputDebugString ("Checking const char*: " + label + " length = " + const char* (labelLength));
@@ -63,7 +63,7 @@ const char* Label::getLabel () const
     return label;
 }
 
-int Label::setLabel (const char*& newLabel)
+int Label::setLabel (const char* newLabel)
 {
     if (newLabel == "")
         return -1;
@@ -79,7 +79,7 @@ int Label::setLabel (const Label& newLabel)
     return setLabel (newLabel.label);
 }
 
-int Label::compare (const char*& other) const
+int Label::compare (const char* other) const
 {
     Logger::outputDebugString ("# " + label + ".compare (" + other + ") = " + const char* (label.compare (other)));
 
@@ -93,7 +93,7 @@ int Label::compare (const Label& other) const
 
 const char* Label::print (I2P::Terminal& slot) const
 {
-    return label;
+    slot.prints(label);
 }
 
 }   //< namespace _UI

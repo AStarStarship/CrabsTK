@@ -2,11 +2,11 @@
     @version 0.9
     @file    /.../Kabuki_Toolkit/KabukitToolkit-Config.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -21,21 +21,7 @@
 
 #pragma once
 
-#include <FreeI2P-Config.hpp>
-
-#define _UseDynamicLibrary       1
-
-#include <cstdint>
-#include <stdint.h>
-
-typedef float ADCSample;
-//typedef uint8_t ADCSample;
-//typedef uint16_t ADCSample;
-
-enum {
-    BitToByteShift = 0,
-    BitNumberMask = 0,
-};
+#include <FreeI2P.hpp>
 
 #ifdef _ExportKabukiSDK
 #define _KabukiSDK __declspec (dllexport) 
@@ -59,8 +45,8 @@ enum {
 			#define __KabukiSDK __declspec (dllimport)
 		#endif // _KabukiSDK_Exports
 	#else 
-		// try the gcc visibility support  (see http://gcc.gnu.org/wiki/Visibility)
-		#if defined (__GNUC__) && ((__GNUC__ >= 4) ||  (__GNUC__ == 3 && __GNUC_MINOR__ >= 4))
+		// try the gcc visibility support (see http://gcc.gnu.org/wiki/Visibility)
+		#if defined (__GNUC__) && ((__GNUC__ >= 4) || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4))
 			#ifndef GCC_HASCLASSVISIBILITY
 				#define GCC_HASCLASSVISIBILITY
 			#endif

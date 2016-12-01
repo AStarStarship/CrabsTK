@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_UI/ButtonScroller.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -27,17 +27,17 @@
 
 namespace _Dev { namespace Controls {
 
-/** A scrollable array Button  (s). */
+/** A scrollable array Button (s). */
 class _KabukiSDK ButtonScroller, public Label
 {
     public:
 
     static const int DefaultNumVisibleButtons = 5;  //< The default number of visible numbers.
 
-    ButtonScroller  (const char* newLabel = "", int newArraySize = DefaultNumVisibleButtons);
+    ButtonScroller (const char* newLabel = "", int newArraySize = DefaultNumVisibleButtons);
     //< Default constructor.
     
-    ButtonScroller  (const ButtonScroller& other);
+    ButtonScroller (const ButtonScroller& other);
     //< Copy constructor.
 
     std::vector<ButtonControl*>& buttons ();
@@ -52,10 +52,10 @@ class _KabukiSDK ButtonScroller, public Label
     int getCurrentIndex () const;
     //< gets the index of the first visible button.
 
-    void setNumVisibleButtons  (int value);
+    void setNumVisibleButtons (int value);
     //< sets the number of visible buttons to the new value.
 
-    void removeButton  (int thisIndex);
+    void removeButton (int thisIndex);
     //< Removes the button at the given index from the array.
 
     void scrollUp ();
@@ -64,10 +64,10 @@ class _KabukiSDK ButtonScroller, public Label
     void scrollDown ();
     //< Scrolls down the list.
 
-    void scrollUp  (int numNodes);
+    void scrollUp (int numNodes);
     //< Scrolls up the list.
     
-    void scrollDown  (int numNodes);
+    void scrollDown (int numNodes);
     //< Scrolls down the list.
 
     void scrollPageUp ();
@@ -76,7 +76,7 @@ class _KabukiSDK ButtonScroller, public Label
     void scrollPageDown ();
     //< Scrolls down one page
 
-    int press  (int index);
+    int press (int index);
     //< Presses the Button at the specified index.
     
     void print (I2P::Terminal& slot);

@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Id/EntityList.hpp
+    @file    /.../KabukiSDK-Library/_Id/EntityList.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -20,30 +20,32 @@
  
 #pragma once
 
+#include "Entity.hpp"
+
 namespace _Id {
 
-/** A List of Entity  (s) and EntityGroup  (s). */
 class _KabukiSDK EntityList
+/*< A List of Entity(s) and EntityGroup(s). */
 {   
     public:
     
     EntityList ();
-    /** A list of Entity  (s). */
+    /** A list of Entity (s). */
 
-    int GetCount ();
+    int getCount ();
     /** Gets the number of Accounts in the List. */
     
-    void Add  (Entity a);
-    /** Adds an Entity to the list. */
+    void add (const Entity& e);
+    /*< Adds an Entity to the list. */
     
-    void Add  (List<Entity> a);
-    /** Adds a list of Entity  (s) to the list. */
+    void add (std::vector<Entity> e);
+    /*< Adds a list of Entity (s) to the list. */
     
-    Entity Find  (const char* S);
-    /*<  */
+    Entity find (const char* s);
+    /*< Finds an entity in the list by the given search string. */
     
-    bool contains  (const char* S);
-    /*<  */
+    bool contains (const char* s);
+    /*< Returns true if this list of entities contains the given string. */
     
     void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
@@ -52,6 +54,5 @@ class _KabukiSDK EntityList
     
     std::vector<Entity> entities;      //< The list of entities.
 };
-}   //< namespace _Id
-}   //< namespace _Search
 
+}   //< namespace _Id

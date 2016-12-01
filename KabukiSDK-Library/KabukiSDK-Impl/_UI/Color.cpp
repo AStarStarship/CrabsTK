@@ -134,14 +134,14 @@ const char* Color::getState (byte Value)
     return 0;
 }
 
-const char* Color::op (I2P::Terminal& slot, int index, int Enq)
+const char* Color::op (I2P::Terminal* slot, int index)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("Color", "_UI"): InvalidIndex ();
+    return enquery ("Color", "_UI"): InvalidIndex ();
 }
 
 void Color::print (I2P::Terminal& slot)

@@ -22,90 +22,6 @@
 
 namespace _2D {
 
-Point_i::Point_i () 
-{
-    /// Nothing to do here!
-}
-
-Point_i::Point_i (int x, int y)
-:   X (x), 
-    Y (y) 
-{ 
-}
-
-int Point_i::getX () const { return X; }
-
-int Point_i::getY () const { return Y; }
-
-void Point_i::setX (int value) { X = value; }
-
-void Point_i::setY (int value) { Y = value; }
-
-void Point_i::set (int x = 0, int y = 0)
-{
-    X = x;
-    Y = y;
-}
-
-void Point_i::set (const Point_i& P)
-{
-    X = P.X;
-    Y = P.Y;
-}
-
-void Point_i::translate (const Vect_i& V)
-{
-    Y += V.Y;
-    X += V.X;
-}
-
-void Point_i::translate (int dx, int dy)
-{
-    Y += dy;
-    X += dx;
-}
-
-bool Point_i::equals (const Point_i& P) const
-{
-    if (X != P.X || Y != P.Y)
-        return false;
-    return true;
-}
-
-int Point_i::compare (const Point_i& P) const
-{
-    if (X >= P.X)
-        if (Y >= P.Y)
-            return 1;
-        else if (Y < P.Y)
-            return 4;
-    if (X < P.X)
-        if (Y > P.Y)
-            return 2;
-        else if (Y < P.Y)
-            return 3;
-    return 0;   //< There are equal.
-}
-
-void Point_i::swap (Point_i& P)
-{
-    float tempX = P.X,
-        tempY = P.Y;
-
-    P.X = X;
-    P.Y = Y;
-
-    X = tempX;
-    Y = tempY;
-}
-
-void Point_i::print (I2P::Terminal& slot)
-{
-
-}
-
-///--------------------------------------------------------------------------------------------------------------------
-
 
 Point_f::Point_f (float X, float Y)
 :   X (X), 
@@ -153,7 +69,7 @@ bool Point_f::equals (const Point_f& P) const
     return true;
 }
 
-int Point_f::compare (const Point_f& P) const
+double Point_f::compare (const Point_f& P) const
 {
     if (X >= P.X)
         if (Y >= P.Y)
@@ -181,6 +97,90 @@ void Point_f::swap (Point_f P)
 }
 
 void Point_f::print (I2P::Terminal& slot)
+{
+
+}
+
+///--------------------------------------------------------------------------------------------------------------------
+
+Point_d::Point_d () 
+{
+    /// Nothing to do here!
+}
+
+Point_d::Point_d (double x, double y)
+    :   X (x), 
+    Y (y) 
+{ 
+}
+
+double Point_d::getX () const { return X; }
+
+double Point_d::getY () const { return Y; }
+
+void Point_d::setX (double value) { X = value; }
+
+void Point_d::setY (double value) { Y = value; }
+
+void Point_d::set (double x = 0, double y = 0)
+{
+    X = x;
+    Y = y;
+}
+
+void Point_d::set (const Point_d& P)
+{
+    X = P.X;
+    Y = P.Y;
+}
+
+void Point_d::translate (const Vect_i& V)
+{
+    Y += V.Y;
+    X += V.X;
+}
+
+void Point_d::translate (double dx, double dy)
+{
+    Y += dy;
+    X += dx;
+}
+
+bool Point_d::equals (const Point_d& P) const
+{
+    if (X != P.X || Y != P.Y)
+        return false;
+    return true;
+}
+
+double Point_d::compare (const Point_d& P) const
+{
+    if (X >= P.X)
+        if (Y >= P.Y)
+            return 1;
+        else if (Y < P.Y)
+            return 4;
+    if (X < P.X)
+        if (Y > P.Y)
+            return 2;
+        else if (Y < P.Y)
+            return 3;
+    return 0;   //< There are equal.
+}
+
+void Point_d::swap (Point_d& P)
+{
+    float tempX = P.X,
+        tempY = P.Y;
+
+    P.X = X;
+    P.Y = Y;
+
+    X = tempX;
+    Y = tempY;
+}
+
+void Point_d::print (I2P::Terminal& slot)
 {
 
 }

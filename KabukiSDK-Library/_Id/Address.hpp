@@ -1,11 +1,11 @@
 ﻿/** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_Id/Address.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -38,45 +38,45 @@ class _KabukiSDK Address
     Address ();
 
     /** Constructor creates an address with the given parameters. */
-    Address  (const char* street, const char* city, const char* state, const char* zip, const char* country, const char* type);
+    Address (const char* street, const char* city, const char* state, const char* zip, const char* country, const char* type);
 
     const char* getType ();
     /*< Gets the address type.
         The address type means street, PO box, etc.
     */
 
-    void setType  (const char* newType);
+    void setType (const char* newType);
     /*< Sets the addrss type. */
 
     const char* getStreet ();
-    void setStreet  (const char* newValue);
+    void setStreet (const char* newValue);
     /*< Sets the street addrss. */
     
     const char* getCity ();
     /*< Gets the city. */
 
-    void setCity  (const char* newValue);
+    void setCity (const char* newValue);
     /*< Sets the city. */
 
     const char* getState ();
     /*< Gest the State. */
 
-    void setState  (const char* newValue);
+    void setState (const char* newValue);
     /*< Sets the state. */
     
     const char* getZip ();
     /*< Gets the zip code. */
 
-    void setZip  (const char* newValue);
+    void setZip (const char* newValue);
     /*< Sets the zip code. */
     
     const char* getCountry ();
     /*< Gets the country. */
 
-    void setCountry  (const char* newValue);
+    void setCountry (const char* newValue);
     /*< Sets the country. */
     
-    virtual const char* op (I2P::Terminal& slot, int index, int enq);
+    virtual const char* op (I2P::Terminal* slot, int index);
     /*< Inter-process operations. */
 
     inline const char* print (I2P::Terminal& slot);

@@ -22,7 +22,7 @@
 
 namespace _UI {
 
-MacroButton::MacroButton (const char*& newLabel) 
+MacroButton::MacroButton (const char* newLabel) 
 :   AVControl (AVControl::MacroButton, newLabel, 0, 0, 0, 0, 0),
     numControls (0),
     controls (nullptr)
@@ -182,7 +182,7 @@ const char* MacroButton::label () const
     return Label::print (I2P::Terminal& slot);
 }
 
-int MacroButton::getLabel (const char*& newLabel)
+int MacroButton::getLabel (const char* newLabel)
 {
     return Label::getLabel (newLabel);
 }
@@ -205,14 +205,14 @@ const char* MacroButton::getState (byte Value)
     return 0;
 }
 
-const char* MacroButton::op (I2P::Terminal& slot, int index, int Enq)
+const char* MacroButton::op (I2P::Terminal* slot, int index)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("MacroButton", "_UI"): InvalidIndex ();
+    return enquery ("MacroButton", "_UI"): InvalidIndex ();
 }
 
 const char* MacroButton::headerString () const
@@ -273,14 +273,14 @@ const char* MacroButton::getState (byte Value)
     return 0;
 }
 
-const char* MacroButton::op (I2P::Terminal& slot, int index, int Enq)
+const char* MacroButton::op (I2P::Terminal* slot, int index)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("MacroButton", "_UI"): InvalidIndex ();
+    return enquery ("MacroButton", "_UI"): InvalidIndex ();
 }
 
 }   //< namespace _UI

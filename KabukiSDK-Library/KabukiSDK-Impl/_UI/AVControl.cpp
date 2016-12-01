@@ -30,7 +30,7 @@ const int AVControl::MacroHeaderLength = AVControl::MacroHeader.length ();
 /** Default constructor. */
 AVControl::AVControl (int newType, const char* &newLabel, int newChannel, int newInitValue, int newMinValue, int newMaxValue,
     int newWordSize) 
-:   AVControl  (newLabel)
+:   AVControl (newLabel)
 {
     setType (newType);
     setWordSize (newWordSize);
@@ -42,27 +42,27 @@ AVControl::AVControl (int newType, const char* &newLabel, int newChannel, int ne
 
 /** Copy contructor. */
 AVControl::AVControl (const AVControl& O)
-:   AVControl        (O             ),
-    type         (O.type        ),
-    channel      (O.channel     ),
-    numChannels  (O.numChannels ),
-    wordSize     (O.wordSize    ),
-    wordValue    (O.wordValue   ),
-    minWordSize  (O.minWordSize ),
-    maxWordSize  (O.maxWordSize ),
+:   AVControl       (O             ),
+    type        (O.type        ),
+    channel     (O.channel     ),
+    numChannels (O.numChannels ),
+    wordSize    (O.wordSize    ),
+    wordValue   (O.wordValue   ),
+    minWordSize (O.minWordSize ),
+    maxWordSize (O.maxWordSize ),
     minWordValue (O.minWordValue),
     maxWordValue (O.maxWordValue),
-    value        (O.value       ),
-    initValue    (O.initValue   ),
-    minValue     (O.minValue    ),
-    maxValue     (O.maxValue    )
+    value       (O.value       ),
+    initValue   (O.initValue   ),
+    minValue    (O.minValue    ),
+    maxValue    (O.maxValue    )
 {
     // Nothing to do here. :-)
 }
 
 /** Compares this AVControl to the O control.
     @return Returns 0 if this control is the same as the O. */
- int AVControl::Compare  (const AVControl& O) const
+ int AVControl::Compare (const AVControl& O) const
 {
     if (type     != O.type     ||
         channel  != O.channel  || 

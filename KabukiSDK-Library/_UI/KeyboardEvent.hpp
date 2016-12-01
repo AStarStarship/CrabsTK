@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_UI/KeyboardEvent.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -35,16 +35,16 @@ class _KabukiSDK KeyboardEvent : public Event:, public IObject
     KeyboardEvent ();
     /*< Constructs a blank keyboard event. */
 
-    KeyboardEvent  (const KeyPress& newEvent);
+    KeyboardEvent (const KeyPress& newEvent);
     //< Constructor.
 
-    KeyboardEvent  (const KeyboardEvent& other);
+    KeyboardEvent (const KeyboardEvent& other);
     //< Copy constructor.
 
     KeyPress getKeyPress ();
     //< gets the keyPress.
 
-    void setKeyPress  (const KeyPress& newKeyPress);
+    void setKeyPress (const KeyPress& newKeyPress);
     //< sets the _keyPress to the newKeyPress.
 
     void Trigger () override;

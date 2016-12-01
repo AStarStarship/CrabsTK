@@ -1,5 +1,5 @@
 /** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Data/ICollection.hpp
+    @file    /.../KabukiSDK/_Dev/_Dev/Components/ADSR.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,17 +20,32 @@
 
 #pragma once
 
-namespace _Data {
+#include <FreeI2P.hpp>
+#include <KabukiSDK-Config.hpp>
 
-class IIterator
-/*< An interface for a generic iterator. */
+namespace _Dev { namespace Components {
+
+class _KabukiSDK ADSR: public Device {
+    
+class _KabukiSDK ADSR
+/*< An ADSR filter. */
 {
-    public:
+    ADSR ();
+    /*< Constructs an ADSR with all zeroed out controls. */
+
+    virtual byte GetState ();
+    /*< Gets the Inter-process state. */
     
-    virtual void* GetNext () = 0;
+    virtual const char* SetState  (byte Value);
+    /*< Sets the Inter-process state.
+        @return returns 0 upon success, and an I2P::Errror upon failure. */
     
-    virtual void Reset () = 0;
-    
-    virtual size_t GetSize () = 0;
+    virtual const char* op (I2P::Terminal& slot, int index, int enq);
+    /*< Inter-process operations. */
+}
+
 };
-}   //< namespace _Data
+
+}   //< namespace Components
+}   //< namespace _Dev
+

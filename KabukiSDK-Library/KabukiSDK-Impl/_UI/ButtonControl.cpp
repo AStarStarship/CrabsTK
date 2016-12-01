@@ -28,7 +28,7 @@ const double ButtonControl::MinDoubleClickTime = 0.01;
 const double ButtonControl::MaxDoubleClickTime = 0.02;
 
 const double ButtonControl::DefaultDoublePressTime = 
-    (ButtonControl::MinDoubleClickTime + ButtonControl::MaxDoubleClickTime) /2.0;
+   (ButtonControl::MinDoubleClickTime + ButtonControl::MaxDoubleClickTime) /2.0;
 
 ButtonControl::ButtonControl (int newButtonControlAction, int newStepSize, double newDoublePressTime) :
     isPressed (false),
@@ -110,7 +110,7 @@ void ButtonControl::getgetButtonAction (int newAction)
     buttonAction = newAction;
 }
 
-const char*& ButtonControl::ActionString () const
+const char* ButtonControl::ActionString () const
 {
     return ActionStrings[buttonAction];
 }
@@ -133,14 +133,14 @@ const char* ButtonControl::getState (byte Value)
     return 0;
 }
 
-const char* ButtonControl::op (I2P::Terminal& slot, int index, int Enq)
+const char* ButtonControl::op (I2P::Terminal* slot, int index)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("ButtonControl", "_UI"): InvalidIndex ();
+    return enquery ("ButtonControl", "_UI"): InvalidIndex ();
 }
 
 }   //< namespace _UI

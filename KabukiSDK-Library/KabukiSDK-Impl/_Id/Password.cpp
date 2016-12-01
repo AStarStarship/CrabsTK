@@ -22,7 +22,7 @@
 
 using namespace _Id;
 
-Password::Password (const char* S = DefaultPassword, const char* aFormat = DefaultFormat)
+Password::Password (const char* S = DefaultPassword, const char* aFormat)
 {
     password = S;
 }

@@ -1,11 +1,11 @@
 ﻿/** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_Search/HitList.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -37,31 +37,31 @@ class _KabukiSDK HitList
     HitList ();
     /*< Simple default constructor. */
 
-    bool addHit  (Hit& p);
+    bool addHit (Hit& p);
     /*< Adds a patch to the Hits. */
     
     void sortTags ();
     /*< Sorts the tags alphabetically. */
 
-    void loadFromJSON  (const char* json);
+    void loadFromJSON (const char* json);
     /*< Loads a patch from a JSON std::string. */
 
     const char* toJSON ();
     /*< Converts a patch to a JSON std::string. */
 
-    bool findDuplicateName  (const char* value);
+    bool findDuplicateName (const char* value);
     /*< Gets true if their is a duplicate patch name. */
 
-    const char* getCatagoryName  (int index);
+    const char* getCatagoryName (int index);
     /*< Gets the catagory name at the given index. */
     
-    HitList* findTag  (const char* tag);
+    HitList* findTag (const char* tag);
     /*< Gets a HitList of the given tag. */
     
-    HitList* findTags  (::std::vector<::std::string> tags);
+    HitList* findTags (::std::vector<::std::string> tags);
     /*< Gets a HitList of the given tags. */
     
-    const char* getCatagoryImageName  (const char* s);
+    const char* getCatagoryImageName (const char* s);
     /*< Ges the catagory image name. */
 
     const char* getSubcatagoryImageName (const char* s);

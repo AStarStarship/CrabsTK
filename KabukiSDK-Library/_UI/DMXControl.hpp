@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_UI/DMXControl.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -35,9 +35,9 @@ class _KabukiSDK DMXControl : public AVControl
     static const int NumChannels = 512;             //< The number of DMX512 channels.
 
     /** Default constructor. */
-    DMXControl  (const char* &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0,
+    DMXControl (const char* &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0,
         int newMaxValue = 255, int newWordSize = 8, int newAVControlType = AVControl::DMXControl);
-    DMXControl  (const DMXControl& other);           //< Copy contructor.
+    DMXControl (const DMXControl& other);           //< Copy contructor.
     ~DMXControl () {}                               //< Virtual destructor.
 
     virtual void trigger () override {}             //< Triggers this DMX event to send out the target device.

@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_Id/Entity.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -32,14 +32,14 @@ namespace _Id {
 class _KabukiSDK Entity
 {
     /**  */
-    Entity  (const char* anEmailAdress = "", const char* aFirstName = "", const char* aLastName = "", 
+    Entity (const char* anEmailAdress = "", const char* aFirstName = "", const char* aLastName = "", 
         const char* aPrimaryPhoneNum = "", const char* aStreetAdress1 = "", const char* aZipCode1 = "", 
         const char* aStreetAdress2 = "", const char* aZipCode2 = "");
 
     const char* GetName ();
-    int setName  (const char* S);
+    int setName (const char* S);
 
-    bool contains  (string queery);
+    bool contains (string queery);
     
     private:
 

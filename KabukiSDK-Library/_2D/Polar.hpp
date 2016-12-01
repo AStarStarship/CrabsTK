@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_2D/PolarPoint.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -28,10 +28,10 @@ namespace _2D {
 /** A point in a polar coordinate system. */
 struct Polar_f
 {
-    float Angle,        //< The angle in radians.
-        Radius;         //< The radius in abstract units.
+    float angle,        //< The angle in radians.
+        radius;         //< The radius in abstract units.
 
-    Polar_f  (float angle, float radius);
+    Polar_f (float angle, float radius);
     /*< Constructor initializes with given values
         @param  thisAngle   The angle of the coordinate.
         @param  thisNumber  The magnitude of the coordinate.
@@ -59,14 +59,14 @@ struct Polar_f
 /** A point in a polar coordinate system. */
 struct Polar_d
 {
-    double Angle,        //< The angle in radians.
-        Radius;         //< The radius in abstract units.
+    double angle,        //< The angle in radians.
+        radius;         //< The radius in abstract units.
 
                         /** Constructor initializes with given values
                         @param  thisAngle   The angle of the coordinate.
                         @param  thisNumber  The magnitude of the coordinate.
                         */
-    Polar_d  (double angle, double radius);
+    Polar_d (double angle, double radius);
 
     double getAngle ();
     /*< Gets the angle. */

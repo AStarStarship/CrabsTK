@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK-Impl/_Id/Username.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -35,13 +35,13 @@ class _KabukiSDK Username
         MaxMaxLength = 256      //< The maximum max length of a Username
     };
     
-    Username  (const char* aName, int AMinLength = MinMinLength, int AMaxLength = MaxMaxLength);
+    Username (const char* aName, int AMinLength = MinMinLength, int AMaxLength = MaxMaxLength);
     /*< Constructor creates a standard username. */
 
-    bool Set  (const char* S);
+    bool Set (const char* S);
     /*< Gets true if this password is value. */
 
-    bool IsValid  (const char* S);
+    bool IsValid (const char* S);
     /*<  */
 
     void print (I2P::Terminal& slot);

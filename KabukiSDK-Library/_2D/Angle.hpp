@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_2D/Angle.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -30,16 +30,10 @@ class _KabukiSDK Angle_f
 {
     public:
 
-    float Rads;        //< The angle stored in radians.
+    float rads;        //< The angle stored in radians.
 
-    Angle_f  (float Value = 0.0f);
+    Angle_f (float Value = 0.0f);
     /*< Simple default constructor. */
-
-    float getRads ();
-    /*< Gets the angle in radians. */
-
-    void setRads (float Value);
-    /*< Sets the angle to the new value in radians. */
 
     float getDegs ();
     /*< Converts the angle to degrees. */
@@ -56,16 +50,10 @@ class _KabukiSDK Angle_d
 {
     public:
 
-    double Rads;        //< The angle in radians.
+    double rads;        //< The angle in radians.
 
-    Angle_d  (double a = 0.0);
+    Angle_d (double a = 0.0);
     /*< Simple default constructor. */
-
-    double getRads ();
-    /*< Gets the angle in radians. */
-
-    void setRads (double Value);
-    /*< Sets the angle to the new value in radians. */
 
     double getDegs ();
     /*< Converts the angle to degrees. */

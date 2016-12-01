@@ -32,10 +32,6 @@ Angle_f::Angle_f (float Value)
 
 }
 
-float Angle_f::getRads () { return Rads; }
-
-void Angle_f::setRads (float Value) { return Rads = Value; }
-
 float Angle_f::getDegs () { return Rads * (180.0f / M_PI); }
 
 void Angle_f::setDegs (float Value) { Rads = (Value * M_PI) / 180.0f; }
@@ -53,13 +49,9 @@ Angle_d::Angle_d (double Value)
 
 }
 
-double Angle_d::getRads () { return Rads; }
-
-double Angle_d::setRads (double Value) { return Rads = Value; }
-
 double Angle_d::getDegs () { return Rads * (180.0 / M_PI); }
 
-double Angle_d::getDegs (double Value) { Rads = (Value * M_PI) / 180.0; }
+double Angle_d::setDegs (double Value) { Rads = (Value * M_PI) / 180.0; }
 
 void Angle_d::print (I2P::Terminal& slot)
 {

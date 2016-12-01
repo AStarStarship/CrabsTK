@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_UI/MIDIButton.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -33,7 +33,7 @@ class _KabukiSDK MIDIButton : public MIDIControl, public ButtonControl
 {
     public:
 
-    MIDIButton  (const char* newLabel = "", int newCC = 0, int newChannel = 0, int newValue = 0, int newMinValue = 0, 
+    MIDIButton (const char* newLabel = "", int newCC = 0, int newChannel = 0, int newValue = 0, int newMinValue = 0, 
         int newMaxValue = 127, int newWordSize = 7, int initAction = ButtonControl::Momentary, int newStepSize = 0,
         double newDoublePressTime = ButtonControl::DefaultDoublePressTime);
     /*< Constructor. */
@@ -52,8 +52,8 @@ class _KabukiSDK MIDIButton : public MIDIControl, public ButtonControl
 
     /** sets the label to the new label.
         @return gets 0 upon success and 1 if the newLabel is too long.
-        @see    Label::IsValid  (char). */
-    int setLabel  (const char* newLabel) override;
+        @see    Label::IsValid (char). */
+    int setLabel (const char* newLabel) override;
 
     void press () override;
     //< Triggered when a mode button is pressed.

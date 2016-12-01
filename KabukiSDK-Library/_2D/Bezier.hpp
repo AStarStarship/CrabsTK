@@ -33,7 +33,7 @@
 namespace _2D {
 
 class _KabukiSDK Bezier_f
-/*< Class that represents a fourth order Bezier. */
+/*< Class that represents a n order Bezier. */
 {
     public:
 
@@ -41,28 +41,34 @@ class _KabukiSDK Bezier_f
         MinmumNumPoints = 3     //< The minimum number of points reqruied for a bezier curve.
     };
 
-    Bezier_f  (float* theXPoints, float* theYPoints, int theNumPoints);
+    Bezier_f  (float* initXPoints, float* initYPoints, int initNumPoints);
     /*< Constructor.
     @pre The length of XPoints and YPoints must equal NumPoints or curve will not be created correctly. */
 
-    Bezier_f  (const float* theXPoints, const float* theYPoints, int theNumPoints);
+    Bezier_f  (const float* initXPoints, const float* initYPoints, int initNumPoints);
     /*< Constructor.
-    @pre The length of XPoints and YPoints must equal NumPoints or curve will not be created correctly. */
+        @pre The length of XPoints and YPoints must equal NumPoints or curve will not be created correctly. */
 
-    Bezier_f  (float X0, float Y0, float X1, float Y1, float X2, float Y2, float X3, float Y3);
-    /*< Constructs a bezier curve with the given points. */
+    Bezier_f  (float initX0, float initY0, float initX1, float initY1, float initX2, float initY2, float initX3, float initY3);
+    /*< Constructs a quadratic bezier curve with the given points. */
 
-    Bezier_f  (const Bezier_f& O);
+    Bezier_f  (const Bezier_f& o);
     /*< Copy constructor initializes curve with the given points. */
 
     ~Bezier_f ();
     /*< Destructs dynamic memory if used. */
 
-    Point_f getPoint  (float P);
-    /*< Gets a Point_f along the path of the of curve at time t. */
+    float* getXPoints ();
+    /*< Retuns a pointer to the x points. */
+
+    float* getYPoints ();
+    /*< Retuns a pointer to the y points. */
 
     int getNumPoints ();
     /*< Gets the number of points. */
+
+    Point_f getPoint  (float P);
+    /*< Gets a Point_f along the path of the of curve at time t. */
 
     void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
@@ -73,7 +79,6 @@ class _KabukiSDK Bezier_f
         * yPoints;                  //< Array of Y points.
 
     int numPoints;                  //< The number of points in the polygon.
-    bool isDynamic;                 //< Flag for if this uses dynamic memory.
 };
 
 }   //< namespace _2D

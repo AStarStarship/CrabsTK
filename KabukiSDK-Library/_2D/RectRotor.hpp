@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/include/_2D/RectRotor_f.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -32,7 +32,7 @@ class _KabukiSDK RectRotor_f
 {
     public:
     
-    RectRotor_f  (bool rotated, const Rect_f& area);
+    RectRotor_f (const Rect_f& area);
     /*< Constructs a RectRotar with an unrotated rectangle. */
 
     float getX () const;
@@ -47,37 +47,47 @@ class _KabukiSDK RectRotor_f
     float& getY_ref ();
     /*< Gets the Y reference value. */
 
-    unsigned getWidth () const;
+    float getWidth () const;
     /*< Gets the width. */
 
-    unsigned& getWidth_ref ();
+    float& getWidth_ref ();
     /*< Gets the width reference. */
 
-    unsigned getHeight () const;
+    float getHeight () const;
     /*< Gets the height. */
 
-    unsigned& getHeight_ref ();
+    float& getHeight_ref ();
     /*< Gets the height reference. */
 
     float getRight () const;
     /*< Gets the right x value. */
 
+    Quad_f& getQuad_ref () const;
+    /*< Gets the  */
+
     float getBottom () const;
     /*< Gets the bottom y value. */
 
     const Rect_f& rotate () const;
-    /*< Rotates the original vector and returns the outter bouncs
+    /*< Rotates the original vector and returns the outter bounds. */
 
-    void print (I2P::Terminal& slot);
+    Rect_f getBounds ();
+    /*< Returns the outer bounds. */
+
+    inline void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
 
     private:
 
-    float angle;        //< The angle rotated by.
-
-    Vect_f vector;      //< The unrotated vector.
-
-    Rect_f area;        //< The rotated rectangle.
-};  //< class _KabukiSDK RectRotor_f
+    float angle,        //< The angle rotated by.
+        x,              //< The unrotated x coordinate.
+        y,              //< The unrotated y coordinate.
+        width,          //< The unrotated width.
+        height,         //< The unrotated height.
+        a,              //< The rotated x coordinate.
+        b,              //< The rotated y coordinate.
+        c,              //< The rotated x + width coordinate.
+        d;              //< The rotated y + height coordinate.
+};
 
 }   //< namespace _2D

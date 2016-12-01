@@ -23,7 +23,7 @@
 namespace _UI {
 
 /** Default constructor. */
-ButtonScroller::ButtonScroller (const char*& initLabel, int newNumVisibleButtons) : 
+ButtonScroller::ButtonScroller (const char* initLabel, int newNumVisibleButtons) : 
     ButtonScroller (initLabel),
     currentIndex (0),
     buttons ()
@@ -171,14 +171,14 @@ const char* ButtonScroller::getState (byte Value)
     return 0;
 }
 
-const char* ButtonScroller::op (I2P::Terminal& slot, int index, int Enq)
+const char* ButtonScroller::op (I2P::Terminal* slot, int index)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("ButtonScroller", "_UI"): InvalidIndex ();
+    return enquery ("ButtonScroller", "_UI"): InvalidIndex ();
 }
 
 /** Returns a const char* represenation of this void*. */

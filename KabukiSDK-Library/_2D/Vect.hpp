@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_2D/Vect.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -25,66 +25,11 @@
 
 namespace _2D {
 
-struct _KabukiSDK Vect_i
-/*< A 2D vector represented as int. */
-{
-    int X,          //< The x position.
-        Y;          //< The y position.
-
-    Vect_i ();
-    /*< Constructs an uninitialized vector. */
-
-    Vect_i  (int x = 0, int y = 0);
-    /*< Default constructor initializes with given component. */
-
-    int getX ();
-    /*< gets the X component. */
-
-    int getY ();
-    /*< gets the Y component. */
-
-    void setX (int Value);
-    /*< sets the X component to the new Value. */
-
-    void setY (int Value);
-    /*< sets the Y component to the new Value. */
-
-    void set (int NewX = 0, int NewY = 0);
-    /*< sets the X and Y components to the new Values. */
-
-    void set (const Vect_i& V);
-    /*< sets the X and Y components to the this Vect_i's X and Y. */
-
-    bool equals (const Vect_i& V) const;
-    /*< Compares this object's Vect_i to a and returns true if the two Positions are identical. */
-
-    void swap (Vect_i V);
-    /*< Swaps this object's Vect_i with thiscomponent. */
-
-    bool operator== (const Vect_i& P) const;
-    /** C== Operator== overloader. */
-
-    bool operator!= (const Vect_i& P) const;
-    /** C== Operator!= overloader. */
-
-    Vect_i operator- (const Vect_i& P) const;
-    /** C== Operator- overloader. */
-
-    Vect_i operator+ (const Vect_i& P) const;
-    /** C== Operator+ overloader. */
-
-    Vect_i& operator-= (const Vect_i& P);
-    /** C== Operator-= overloader. */
-
-    Vect_i& operator+= (const Vect_i& P);
-    /** C== Operator+= overloader. */
-};
-
 struct _KabukiSDK Vect_f
 /*< A 2D vector represented as float. */
 {
-    float X,        //< The x position.
-        Y;          //< The y position.
+    float x,        //< The x position.
+        y;          //< The y position.
 
     Vect_f ();
     /*< Constructs an uninitialized vector. */
@@ -92,46 +37,77 @@ struct _KabukiSDK Vect_f
     Vect_f (float InitX = 0.0f, float InitY = 0.0f);
     /*< Default constructor initializes with given component. */
 
-    float getX ();
-    /*< gets the X component. */
+    void set (float newX = 0.0f, float newY = 0.0f);
+    /*< Sets the X and Y Values to the new Values. */
 
-    float getY ();
-    /*< gets the Y component. */
+    void set (const Vect_f& v);
+    /*< Sets the X and Y Values to the this Vect_f's X and Y. */
 
-    void setX (float Value);
-    /*< sets the X component to the new Value. */
-
-    void setY (float Value);
-    /*< sets the Y component to the new Value. */
-
-    void set (float NewX = 0.0f, float NewY = 0.0f);
-    /*< sets the X and Y Values to the new Values. */
-
-    void set (const Vect_f& V);
-    /*< sets the X and Y Values to the this Vect_f's X and Y. */
-
-    bool equals (const Vect_f& V) const;
+    bool equals (const Vect_f& v) const;
     /*< Compares this object's Vect_f to a and returns true if the two Positions are identical. */
 
-    void swap (Vect_f V);
+    void swap (Vect_f v);
     /*< Swaps this object's Vect_f with thiscomponent. */
 
-    bool operator== (const Vect_f& P) const;
+    bool operator== (const Vect_f& p) const;
     /** C== Operator== overloader. */
 
-    bool operator!= (const Vect_f& P) const;
+    bool operator!= (const Vect_f& p) const;
     /** C== Operator!= overloader. */
 
-    Vect_f operator- (const Vect_f& P) const;
+    Vect_f operator- (const Vect_f& p) const;
     /** C== Operator- overloader. */
 
-    Vect_f operator+ (const Vect_f& P) const;
+    Vect_f operator+ (const Vect_f& p) const;
     /** C== Operator+ overloader. */
 
-    Vect_f& operator-= (const Vect_f& P);
+    Vect_f& operator-= (const Vect_f& p);
     /** C== Operator-= overloader. */
 
-    Vect_f& operator+= (const Vect_f& P);
+    Vect_f& operator+= (const Vect_f& p);
+    /** C== Operator+= overloader. */
+};
+
+struct _KabukiSDK Vect_d
+    /*< A 2D vector represented as double. */
+{
+    double x,          //< The x position.
+        y;          //< The y position.
+
+    Vect_d ();
+    /*< Constructs an uninitialized vector. */
+
+    Vect_d (double x = 0, double y = 0);
+    /*< Default constructor initializes with given component. */
+
+    void set (double newX = 0, double newY = 0);
+    /*< Sets the X and Y components to the new Values. */
+
+    void set (const Vect_d& v);
+    /*< Sets the X and Y components to the this Vect_d's X and Y. */
+
+    bool equals (const Vect_d& v) const;
+    /*< Compares this object's Vect_d to a and returns true if the two Positions are identical. */
+
+    void swap (Vect_d v);
+    /*< Swaps this object's Vect_d with thiscomponent. */
+
+    bool operator== (const Vect_d& p) const;
+    /** C== Operator== overloader. */
+
+    bool operator!= (const Vect_d& p) const;
+    /** C== Operator!= overloader. */
+
+    Vect_d operator- (const Vect_d& p) const;
+    /** C== Operator- overloader. */
+
+    Vect_d operator+ (const Vect_d& p) const;
+    /** C== Operator+ overloader. */
+
+    Vect_d& operator-= (const Vect_d& p);
+    /** C== Operator-= overloader. */
+
+    Vect_d& operator+= (const Vect_d& p);
     /** C== Operator+= overloader. */
 };
 

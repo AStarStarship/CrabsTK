@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_UI/DMXButton.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -31,7 +31,7 @@ class _KabukiSDK DMXButton : public DMXControl, public ButtonControl
 {
     public:
 
-    DMXButton  (const char* &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0, 
+    DMXButton (const char* &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0, 
         int newMaxValue = 255, int newWordSize = 8, int initAction = ButtonControl::Momentary, int newStepSize = 0, 
         double newDoublePressTime = ButtonControl::DefaultDoublePressTime);
     /*< Default constructor. */
@@ -40,16 +40,16 @@ class _KabukiSDK DMXButton : public DMXControl, public ButtonControl
     /*< Virtual destructor. */
 
     int getMaxWordValue () const override;
-    /*< gets the max value of a AVControl word. */
+    /*< Gets the max value of a AVControl word. */
 
     const char* getLabel () const override;
-    /*< gets the label. */
+    /*< Gets the label. */
 
-    int setLabel  (const char* newLabel) override; 
-    /*< sets the label to the new label.
+    int setLabel (const char* newLabel) override; 
+    /*< Sets the label to the new label.
         @return gets 0 upon success and 1 if the newLabel is too 
             long.
-        @see    Label::IsValid  (char). 
+        @see    Label::IsValid (char). 
     */
 
     void toggle () override;
@@ -65,10 +65,10 @@ class _KabukiSDK DMXButton : public DMXControl, public ButtonControl
     /*< Triggered when a user "double clicks" a button. */
 
     const char* getHeaderString () const override;
-    /*< gets the header for toStringRow (). */
+    /*< Gets the header for toStringRow (). */
 
     const char* toStringRow () const override;
-    /*< gets a column of the values without the labels. */
+    /*< Gets a column of the values without the labels. */
     
     inline void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */

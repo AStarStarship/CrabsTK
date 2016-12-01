@@ -48,7 +48,7 @@ const char* MIDIButton::label () const
 /** sets the label to the new label.
 @return Returns 0 upon success and 1 if the newLabel is too long.
 @see    Label::IsValid (char). */
-int MIDIButton::getLabel (const char*& newLabel)
+int MIDIButton::getLabel (const char* newLabel)
 {
     return Label::getLabel (newLabel);
 }
@@ -107,14 +107,14 @@ const char* MIDIButton::getState (byte Value)
     return 0;
 }
 
-const char* MIDIButton::op (I2P::Terminal& slot, int index, int Enq)
+const char* MIDIButton::op (I2P::Terminal* slot, int index)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("MIDIButton", "_UI"): InvalidIndex ();
+    return enquery ("MIDIButton", "_UI"): InvalidIndex ();
 }
 
 }   //< namespace _UI

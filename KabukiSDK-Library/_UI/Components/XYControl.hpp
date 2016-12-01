@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_Dev/_Dev/Components/XYControl.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -31,11 +31,11 @@ class _KabukiSDK XYTouchpad: public Component
 {
       public:
 
-    XYTouchpad  (int initX = 0, int initY = 0, int initLeftBounds = 0, int initRightBounds = 0, int initTopBounds = 0, 
+    XYTouchpad (int initX = 0, int initY = 0, int initLeftBounds = 0, int initRightBounds = 0, int initTopBounds = 0, 
         int initBottomBounds = 0);
     /*< Constructor. */
         
-    XYTouchpad  (const XYTouchpad& O);
+    XYTouchpad (const XYTouchpad& O);
     //< Copy constructor.
 
     int GetX ();
@@ -44,10 +44,10 @@ class _KabukiSDK XYTouchpad: public Component
     int GetY ();
     //< Gets thisY value.
 
-    void SetX  (int value);
+    void SetX (int value);
     //< Sets thisX to the value.
     
-    void SetY  (int value);
+    void SetY (int value);
     //< Sets thisY to the value.
 
     int GetLeftBounds ();
@@ -62,19 +62,19 @@ class _KabukiSDK XYTouchpad: public Component
     int GetBottomBound ();
     //< Gets th bottom_bounds.
     
-    bool SetLeftBounds  (int Value);
+    bool SetLeftBounds (int Value);
     /*< Sets the left_bounds to the newBouds.
         @pre Value < right_bounds. */
         
-    bool SetRightBounds  (int Value);
+    bool SetRightBounds (int Value);
     /*< Sets the right_bounds to the newBouds
         @pre Value > left_bounds    */
         
-    bool SetTopBounds  (int Value);
+    bool SetTopBounds (int Value);
     /*< Sets the top_bounds to the newBouds
         @pre Value > bottom_bounds.
     */
-    bool SetBottomBound  (int Value);
+    bool SetBottomBound (int Value);
     /*< Sets the bottom_bounds to the newBouds
         @pre Value < top_bounds.
     */

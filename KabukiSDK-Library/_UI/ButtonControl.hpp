@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_UI/ButtonControl.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -37,7 +37,7 @@ class _KabukiSDK ButtonControl
     - Do nothing.
 */
 {
-	    public:
+	public:
 
     static const double MinDoubleClickTime,  //< The min double click time period in seconds.
         MaxDoubleClickTime,                  //< The max double click time period in seconds.
@@ -48,11 +48,11 @@ class _KabukiSDK ButtonControl
 
     static const char* ActionStrings[];    //< An array of strings that corrispond to the Actions enum list.
 
-    ButtonControl  (int newgetButtonAction = Momentary, int newStepSize = 0, double newDoublePressTime = 
+    ButtonControl (int newgetButtonAction = Momentary, int newStepSize = 0, double newDoublePressTime = 
         DefaultDoublePressTime);
     /*< Default constructor. */
 
-    ButtonControl  (const ButtonControl  &O);
+    ButtonControl (const ButtonControl  &O);
     /*< Copy constructor. */
     
     virtual ~ButtonControl () {}
@@ -67,18 +67,18 @@ class _KabukiSDK ButtonControl
     bool isPressed () const;
     //< gets true if the button is in a pressed state.
     
-    void setState  (bool buttonState);
+    void setState (bool buttonState);
     //< sets the is_pressed variable to the new buttonState.
 
     double getLastTimePressed () const;
     //< gets the last time the button was pressed.
 
     int getStepSize () const;
-    /*< gets this buttons step_Size.
+    /*< Gets this buttons step_Size.
         The step size is the increment that is added to the AVControl::value () every time the button is pressed. When 
         the value goes over the AVControl::maxValue (), it is reset to the AVControl::mixValue (). */
     
-    void setStepSize  (int value);
+    void setStepSize (int value);
     //< sets the _stepSize to the value.
 
     virtual void toggle ();
@@ -87,11 +87,11 @@ class _KabukiSDK ButtonControl
     int getButtonAction () const;
     //< The type of action this button performs: Momentary or latching.
     
-    void setGetButtonAction  (int newAction);
+    void setGetButtonAction (int newAction);
     //< sets the button Action to the newAction.
     
     const char* getActionString () const;
-    /*< gets a string version of the buttonAction ().
+    /*< Gets a string version of the buttonAction ().
         @see    Actions */
 
     // Pure virtual functions.
@@ -111,17 +111,17 @@ class _KabukiSDK ButtonControl
     virtual const char* getLabel () const = 0;
     //< gets the label.
     
-    virtual int setLabel  (const char* newLabel) = 0;
+    virtual int setLabel (const char* newLabel) = 0;
     /** sets the label to the new label.
         @return gets 0 upon success and 1 if the newLabel is too long.
-        @see    Label::IsValid  (char). */
+        @see    Label::IsValid (char). */
     
     void print (I2P::Terminal& slot);
     /*< Prints this object to a terminal. */
     
     private:
     
-    int buttonAction,                       //< The type of action this button performs  (i.e. momentary, latching, ect).
+    int buttonAction,                       //< The type of action this button performs (i.e. momentary, latching, ect).
         stepSize;                           //< The step size of the button.
     
     bool isPressed;						    //< Variable represents if this button is pressed.

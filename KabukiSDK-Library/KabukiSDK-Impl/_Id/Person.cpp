@@ -37,14 +37,14 @@ const char* Person::getState (byte Value)
     return 0;
 }
 
-const char* Person::op (I2P::Terminal& slot, int index, int Enq)
+const char* Person::op (I2P::Terminal* slot, int index)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("Person", "_Id"): InvalidIndex ();
+    return enquery ("Person", "_Id"): InvalidIndex ();
 }
 
 }   //< namespace _Id

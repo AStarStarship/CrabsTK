@@ -1,11 +1,11 @@
 ﻿/** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_Search/Hit.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -56,20 +56,20 @@ class _KabukiSDK Hit
     const char* getName ();
     /*< Gets the name. */
 
-    const char* setName  (const char* aName);
+    const char* setName (const char* aName);
     /*< Sets the name.
         @return returns 0 upon success, -1 if the input is nullptr, and 1 if the label is too long. */
 
     int getId ();
     /*< Gets the Id. */
     
-    void setId  (int value);
+    void setId (int value);
     /*< Sets the Id. */
 
     const char* getDescription ();
     /*< Gets the description string. */
     
-    const char* setDescription  (const char* aDescription);
+    const char* setDescription (const char* aDescription);
     /*< Sets the description.
         @return returns 0 upon success and 1 if the label is too long. */
     
@@ -81,18 +81,18 @@ class _KabukiSDK Hit
     /*< Gets the subcatagory const char*.
     @return Gets an empty const char* no tags exist. */
 
-    const char* addTag  (const char* aTag);
+    const char* addTag (const char* aTag);
     /*< Addsa tag to the tag list.
         @return returns 0 upon success, -1 if the input is nullptr, and 1 if the label is too long. */
 
     void addTags (char* someTags, int numTags);
     /*< Adds a collection of tags to the hit-list. */
     
-    const char* removeTag  (const char* tag);
+    const char* removeTag (const char* tag);
     /*< Removes the given tag if it exists.
         @return Gets true upon success, 1 if the input is nullptr, and the given tag if the it doesn't exist. */
 
-    bool containsTag  (const char* tag);
+    bool containsTag (const char* tag);
     /*< Gets true if this hit contains the given tag. */
 
     bool containsTags (::std::vector<::std::string>& someTags);

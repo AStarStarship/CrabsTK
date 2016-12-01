@@ -53,7 +53,7 @@ const char* DMXButton::getLabel () const
 /** sets the label to the new label.
     @return Returns 0 upon success and 1 if the newLabel is too long.
     @see    DMXButton::IsValid (char). */
-int DMXButton::getLabel (const char*& newLabel)
+int DMXButton::getLabel (const char* newLabel)
 {
     return DMXButton::getLabel (newLabel);
 }
@@ -74,14 +74,14 @@ const char* DMXButton::getState (byte Value)
     return 0;
 }
 
-const char* DMXButton::op (I2P::Terminal& slot, int index, int Enq)
+const char* DMXButton::op (I2P::Terminal* slot, int index)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("DMXButton", "_UI"): InvalidIndex ();
+    return enquery ("DMXButton", "_UI"): InvalidIndex ();
 }
 
 /** Returns the header for toStringRow (). */

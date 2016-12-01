@@ -38,14 +38,14 @@ const char* Name::getState (byte Value)
     return 0;
 }
 
-const char* Name::op (I2P::Terminal& slot, int index, int Enq)
+const char* Name::op (I2P::Terminal* slot, int index)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("Name", "_Id"): InvalidIndex ();
+    return enquery ("Name", "_Id"): InvalidIndex ();
 }
 
 }   //< namespace _Id

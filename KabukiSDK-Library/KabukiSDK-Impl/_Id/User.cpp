@@ -82,14 +82,14 @@ const char* User::getState (byte Value)
     return 0;
 }
 
-const char* User::op (I2P::Terminal& slot, int index, int Enq)
+const char* User::op (I2P::Terminal* slot, int index)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("User", "_Id"): InvalidIndex ();
+    return enquery ("User", "_Id"): InvalidIndex ();
 }
 
 const char* User::print (I2P::Terminal& slot)

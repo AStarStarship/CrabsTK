@@ -24,24 +24,31 @@
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_2D\Angle.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_2D\Bezier.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_2D\Bezier4.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_2D\Point.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_2D\Polar.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_2D\Polygon.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_2D\Rect.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_2D\RectRotor.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_2D\Quad.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_2D\Vect.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Data\Array.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Data\BinaryTree.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Data\BTNode.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Data\Data.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Data\DLNode.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Data\File.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Data\ICollection.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Data\IFileFilter.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Data\IIterable.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Data\IIterator.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Data\LLList.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Data\LLNode.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Data\TNode.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\AnimatedTexture.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Caption.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Cell.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Color.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Colormap.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Elipse.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Entity.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Font.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Glyph.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Layer.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Line.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Polygon.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Rect.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Scene.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\String.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Texture.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_G\Triangle.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Address.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Date.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\EmailAddress.hpp" />
@@ -105,26 +112,38 @@
   <ItemGroup>
     <None Include="..\KabukiSDK-Library\_2D\ReadMe.md" />
     <None Include="..\KabukiSDK-Library\_3D\ReadMe.md" />
-    <None Include="..\KabukiSDK-Library\_Data\ReadMe.md" />
     <None Include="..\KabukiSDK-Library\_Id\ReadMe.md" />
     <None Include="..\KabukiSDK-Library\_Math\ReadMe.md" />
     <None Include="..\KabukiSDK-Library\_\ReadMe.md" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Angle.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Bezier.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Bezier4.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Point.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Polar.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Polygon.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Quad.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Rect.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\RectRotor.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Vect.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\BinaryTree.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\BTNode.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\Data.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\DLNode.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\File.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\LLList.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\LLNode.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Data\TNode.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\AnimatedTexture.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Caption.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Cell.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Color.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Colormap.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Elipse.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Entity.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Font.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Glyph.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Image.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Layer.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Polar.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Polygon.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Scene.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\String.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Texture.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Account.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Address.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\EmailAddress.cpp" />
@@ -137,7 +156,7 @@
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Organization.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Password.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Person.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Privilege.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Privilage.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Profile.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Relationship.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Tag.cpp" />
@@ -289,5 +308,12 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\ANGLE.WindowsStore.2.1.11\build\native\ANGLE.WindowsStore.targets" Condition="Exists('packages\ANGLE.WindowsStore.2.1.11\build\native\ANGLE.WindowsStore.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\ANGLE.WindowsStore.2.1.11\build\native\ANGLE.WindowsStore.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ANGLE.WindowsStore.2.1.11\build\native\ANGLE.WindowsStore.targets'))" />
+  </Target>
 </Project>

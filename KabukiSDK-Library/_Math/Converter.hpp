@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_/Converter.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -26,16 +26,16 @@ namespace _ {
     
 // _B_i_n_a_r_y________________________________________________________________
     
-__Inline void convertToBinary  (char* buffer, uint8_t value);
+__Inline void convertToBinary (char* buffer, uint8_t value);
 /*< converts the given value to a binary string. */
 
-__Inline void convertToBinary  (char* buffer, uint16_t value);
+__Inline void convertToBinary (char* buffer, uint16_t value);
 /*< converts the given value to a binary string. */
 
-__Inline void convertToBinary  (char* buffer, uint32_t value);
+__Inline void convertToBinary (char* buffer, uint32_t value);
 /*< converts the given value to a binary string. */
 
-__Inline void convertToBinary  (char* buffer, uint64_t value);
+__Inline void convertToBinary (char* buffer, uint64_t value);
 /*< converts the given value to a binary string. */
 
 __Inline uint8_t convertBinaryToUInt8 (char* buffer);
@@ -61,7 +61,7 @@ inline char convertToHexValue (char value);
 __Inline void convertToHexString (char* buffer, uint16_t value);
 /*< converts the given value to a hex string. */
 
-__Inline void convertToHexString  (char* buffer, uint8_t value);
+__Inline void convertToHexString (char* buffer, uint8_t value);
 /*< converts the given value to a string. */
 
 __Inline int8_t convertHexToInt8 (const char* value);

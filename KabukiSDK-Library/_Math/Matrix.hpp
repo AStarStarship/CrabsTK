@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file       /.../KabukiSDK/_Math/Matrix.hpp
     @author  Cale McCollough <https://calemccollough.github.io>
-    @license Copyright 2016  (C) Cale McCollough <cale.mccollough@gmail.com>
+    @license Copyright 2016 (C) Cale McCollough <cale.mccollough@gmail.com>
 
-                          All right reserved  (R).
+                          All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 

@@ -1,11 +1,11 @@
 ﻿/** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_Id/EmailAddress.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -29,42 +29,42 @@ namespace _Id {
 class _KabukiSDK EmailAddress
 {
     /** Default constructor. **/
-    EmailAddress  (string address)
+    EmailAddress (string address)
     {
 
     }
 
     /** Sets the email address to a string. */
-    bool SetAddress  (string a)
+    bool SetAddress (string a)
     {
         invalid = false;
-        if  (const char*.IsNullOrEmpty  (a)) return false;
+        if (const char*.IsNullOrEmpty (a)) return false;
 
         /// Use IdnMapping class _KabukiSDK to convert Unicode domain names.
         try
         {
-            a = ::std::regex_replace  (a, @" (@) (.+)$", this.DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds  (200));
+            a = ::std::regex_replace (a, @" (@) (.+)$", this.DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds (200));
         }
-        catch  (RegexMatchTimeoutException) { return false; }
+        catch (RegexMatchTimeoutException) { return false; }
 
-        if  (invalid) return false;
+        if (invalid) return false;
 
         // Return true if a is in valid e-mail format.
         try
         {
-            return Regex.IsMatch  (a,
+            return Regex.IsMatch (a,
                 @"^ (? ("") ("".+? (?<!\\)""@)| (([0-9a-z] ((\. (?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*) (?<=[0-9a-z])@))" +
                 @" (? (\[) (\[ (\d{1,3}\.){3}\d{1,3}\])| (([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
-                RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds  (250));
+                RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds (250));
         }
-        catch  (RegexMatchTimeoutException) { return false; }
+        catch (RegexMatchTimeoutException) { return false; }
     }
 
     string Address { get; set; }         //< Stores the email address.
 
     bool invalid = false;
 
-    string DomainMapper  (Match match)
+    string DomainMapper (Match match)
     {
         // IdnMapping class _KabukiSDK with default property values.
         IdnMapping idn = new IdnMapping ();
@@ -72,9 +72,9 @@ class _KabukiSDK EmailAddress
         string domainName = match.Groups[2].Value;
         try
         {
-            domainName = idn.GetAscii  (domainName);
+            domainName = idn.GetAscii (domainName);
         }
-        catch  (ArgumentException) {
+        catch (ArgumentException) {
             invalid = true;
         }
         return match.Groups[1].Value + domainName;

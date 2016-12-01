@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../_/ErrorList.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -54,7 +54,7 @@ class _KabukiSDK ErrorList
     int getMaxNumErrors ();
     /*< Gets the number of errors. */
 
-    void report  (const char* s);
+    void report (const char* s);
     /** Reports an error with the given message. */
 
     const char** getErrors ();

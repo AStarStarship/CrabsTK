@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_Search/TagLibrary.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -39,7 +39,7 @@ class _KabukiSDK TagLibrary
     TagLibrary ();
     /*< Constructs an empty tag library. */
 
-    const char* getOrAddTag  (const char* tag);
+    const char* getOrAddTag (const char* tag);
     /*< Gets the tag string, and adds it to the collection if it doesn't exist.
         @return Gets null if the tags list doesn't contatin the Tag, and 
             non-null if the Tag was added successfully. */

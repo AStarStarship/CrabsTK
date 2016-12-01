@@ -35,7 +35,7 @@ Rect_i::Rect_i (int InitX, int InitY, int InitWidth, int InitHeight)
 { 
 }
 
-Rect_i::Rect_i (const Point_i& P, const Vect_i& O) 
+Rect_i::Rect_i (const Point_d& P, const Vect_i& O) 
     :   X (P.X), 
     Y (P.Y), 
     Width (O.X), 
@@ -101,7 +101,7 @@ bool Rect_i::equals (const Rect_i& value) const
     return true;
 }
 
-bool Rect_i::contains (const Point_i& P) const
+bool Rect_i::contains (const Point_d& P) const
 {
     int x = P.X,
         y = P.Y,
@@ -195,7 +195,7 @@ void Rect_i::translate (int dx, int dy)
     Y += Y;
 }
 
-void Rect_i::getPosition (const Point_i& P)
+void Rect_i::getPosition (const Point_d& P)
 {
     X = P.X;
     Y = P.Y;
@@ -226,7 +226,7 @@ bool Rect_i::operator!= (const Rect_i& value) const
     return (Width != value.Width) || (Height != value.Height) || (X != value.X) || (Y != value.Y);
 }
 
-Rect_i& Rect_i::operator= (const Point_i& P)
+Rect_i& Rect_i::operator= (const Point_d& P)
 {
     X = P.X;
     Y = P.Y;

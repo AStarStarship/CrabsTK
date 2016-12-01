@@ -46,33 +46,13 @@ bool Username::get (const char* a)
 }
 
 /**  */
-bool Username::IsValid (string a)
+bool Username::isValid (string a)
 {
     if (a.Length < minLength || a.Length > maxLength)
         return false;
 
 
     return true;
-}
-
-byte Password::getState ()
-{
-    return 0;
-}
-
-const char* Password::getState (byte Value)
-{
-    return 0;
-}
-
-const char* Password::op (I2P::Terminal& slot, int index, int Enq)
-{
-    switch (Index)
-    {
-        case 0: return I2P::NumMembers (0);
-    }
-    
-    return Query ? Enquery ("Password", "_Id"): InvalidIndex ();
 }
 
 const char* Username::print (I2P::Terminal& slot)

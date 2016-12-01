@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_UI/ControlGrid.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -41,10 +41,10 @@ class _KabukiSDK ControlGrid
         MaxNumRows    = ControlArray::MaxNumElements,   //< The max number of rows.
         MaxNumColumns = ControlArray::MaxNumElements;   //< The max number of columns.
 
-    ControlGrid  (int newNumColumns = 8, int newNumRows = 6);
+    ControlGrid (int newNumColumns = 8, int newNumRows = 6);
     /*< Default constructor. */
     
-    ControlGrid  (const ControlGrid& other);
+    ControlGrid (const ControlGrid& other);
     //< Copy constructor.
     
     virtual ~ControlGrid ();
@@ -56,11 +56,11 @@ class _KabukiSDK ControlGrid
     int getNumColumns () const;
     //< gets the number of columns.
 
-    void setControl  (int Column, int Row, AVControl* NewKnob);
-    /*< sets the pointer to knobs[index] pointer to the newKnob. */
+    void setControl (int Column, int Row, AVControl* NewKnob);
+    /*< Sets the pointer to knobs[index] pointer to the newKnob. */
     
-    ControlArray* getRow  (int Row);
-    /*< gets the row at the given index.
+    ControlArray* getRow (int Row);
+    /*< Gets the row at the given index.
         @return gets nullptr if the index is invalid. */
     
     void print (I2P::Terminal& slot);

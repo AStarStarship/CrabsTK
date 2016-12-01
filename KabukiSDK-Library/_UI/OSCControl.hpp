@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_UI/OSCControl.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -33,9 +33,9 @@ class _KabukiSDK OSCControl : public AVControl
     public:
 
     /** Default constructor. */
-    OSCControl  (const char* &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0,
+    OSCControl (const char* &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0,
         int newMaxValue = 255, int newWordSize = 8);
-    OSCControl  (const OSCControl& other);
+    OSCControl (const OSCControl& other);
     //< Copy contructor.
 
     virtual ~OSCControl () {}
@@ -50,7 +50,7 @@ class _KabukiSDK OSCControl : public AVControl
     const char* ToStringRow () const override;
     //< gets a column of the values without the labels.
     
-    virtual const char* op (I2P::Terminal& slot, int index, int enq);
+    virtual const char* op (I2P::Terminal* slot, int index);
     /*< Inter-process operations. */
 };
 

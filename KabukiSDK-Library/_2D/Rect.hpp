@@ -1,11 +1,11 @@
 /** Kabuki Software Development Kit
     @file    /.../KabukiSDK/_2D/Rect.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved (r).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -27,206 +27,216 @@
 
 namespace _2D {
 
-struct _KabukiSDK Rect_i
+class _KabukiSDK Rect_f
 {
-    int X,          //< The left edge.
-        Y,          //< The top edge.
-        Width,      //< The width of the rectangle.
-        Height;     //< The height of the rectangle.
-
-    Rect_i ();
-    /*< Constructs an uninitialized rectangle. */
-
-    Rect_i  (int InitX = 0, int InitY = 0, int InitWidth = 0, int InitHeight = 0);
-    /*< Constructs a rectangle from the given data. */
-
-    Rect_i  (const Point_i& P, const Vect_i& V);
-    /*< Constructs . */
-
-    explicit Rect_i  (const Rect_i& R); 
-    /*< Copy constructor. */
-
-    int getWidth () const;
-    /*< gets the width.
-        @pre    Input must be positive.
-    */
-
-    int setWidth  (int value);
-    /*< sets the width.
-    @pre    Input must be positive. */
-
-    int getHeight () const;
-    /*< gets and sets the height.
-        @pre    Input must be positive.
-    */
-
-    int setHeight  (int value);
-    /*< sets the height.
-        @return gets 0 upon success, -1 if input is negative, and +1 if input greater than max.
-    */
-
-    int getCenterX () const;
-    /*< gets and sets the center x value. */
-
-    int getCenterY () const;
-    /*< gets and sets the center y value. */
-
-    void setCenterX  (int Value);
-    /*< sets the center y value. */
-
-    void setCenterY  (int Value);
-    /*< sets the center y value. */
-
-    void set  (const Rect_i& R);
-    /*< sets this object's Point to the thisPositition. */
-
-    bool equals  (const Rect_i& R) const;
-    /*< gets true if this object's Point is the same as the given coordinates. */
-
-    bool contains  (const Point_i& P) const;
-    /*< gets true if this rectangle contains the given point. */
-
-    bool contains  (int XValue, int YValue) const;
-    /*< gets true if this object contains the given point. */
-
-    bool contains  (const Rect_i& R);
-    /*< gets true if this rectangle contains the given rectangle. */
-
-    void swap  (Rect_i& R);
-    /*< Swaps this object's Point with thisPoint. */
-
-    bool intersects  (int R_X, int R_Y, int R_Width, int R_Height) const;
-    /*< gets true of this Rectangle intersects/overlaps the given rectangle. */
-
-    bool intersects  (const Rect_i& R) const;
-    /*< gets true of this Rectangle intersects/overlaps the given rectangle. */
-
-    void translate  (const Vect_i& V);
-    /*< Translates this object's Point by the given Point. */
-
-    void translate  (int dx, int dy);
-    /*< Translates this object's Point by the given Point. */
-
-    void setPosition  (const Point_i& P);
-    /*< Sets the x, y coordinates to the given point. */
-
-    void setDimensions  (const Vect_i& S);
-    /*< Sets the dimensions to the given vector. */
-
-    Rect_i& PareOff  (int pixels); 
-    /*< Pares the specified pixels off the Rect_i. 
-        It's equal to x += pixels; y + pixels; width -=  (pixels << 1); height -=  (pixels << 1); 
-    */
-
-    bool operator==  (const Rect_i& R) const;
-
-    bool operator!=  (const Rect_i& R) const;
-
-    Rect_i& operator=  (const Point_i& R);
-
-    Rect_i& operator=  (const Rect_i& R);
-
-    Rect_i& operator=  (const Vect_i&);
-
-    void print (I2P::Terminal& slot);
-    /*< Prints this object to the terminal. */
-};
-
-struct _KabukiSDK Rect_f
-{
-    float X,          //< The left edge.
-        Y,          //< The top edge.
-        Width,      //< The width of the rectangle.
-        Height;     //< The height of the rectangle.
+    public:
 
     Rect_f ();
     /*< Constructs an uninitialized rectangle. */
 
-    Rect_f  (float InitX = 0, float InitY = 0, float InitWidth = 0, float InitHeight = 0);
+    Rect_f (float initX = 0, float initY = 0, float initWidth = 0, float initHeight = 0);
     /*< Constructs a rectangle from the given data. */
 
-    Rect_f  (const Point_f& P, const Vect_f& V);
-    /*< Constructs . */
+    Rect_f (const Point_f& p, const Vect_f& v);
+    /*< Constructs a rectangle from the given point and vector. */
 
-    explicit Rect_f  (const Rect_f& R); 
+    explicit Rect_f (const Rect_f& r); 
     /*< Copy constructor. */
 
     float getWidth () const;
-    /*< gets the width.
-    @pre    Input must be positive.
+    /*< Gets the width.
+        @pre    Input must be positive.
     */
 
-    float setWidth  (float value);
-    /*< sets the width.
+    void setWidth (float value);
+    /*< Sets the width.
     @pre    Input must be positive. */
 
     float getHeight () const;
-    /*< gets and sets the height.
-    @pre    Input must be positive.
+    /*< Gets and sets the height.
+        @pre    Input must be positive.
     */
 
-    float setHeight  (float value);
-    /*< sets the height.
-    @return gets 0 upon success, -1 if input is negative, and +1 if input greater than max. */
+    void setHeight (float value);
+    /*< Sets the height.
+        @return gets 0 upon success, -1 if input is negative, and +1 if input greater than max. */
 
     float getCenterX () const;
-    /*< gets and sets the center x value. */
+    /*< Gets and sets the center x value. */
 
     float getCenterY () const;
-    /*< gets and sets the center y value. */
+    /*< Gets and sets the center y value. */
 
-    void setCenterX  (float Value);
-    /*< sets the center y value. */
+    void setCenterX (float value);
+    /*< Sets the center y value. */
 
-    void setCenterY  (float Value);
-    /*< sets the center y value. */
+    void setCenterY (float value);
+    /*< Sets the center y value. */
 
-    void set  (const Rect_f& R);
-    /*< sets this object's Point to the thisPositition. */
+    void set (const Rect_f& r);
+    /*< Sets this object's Point to the thisPositition. */
 
-    bool equals  (const Rect_f& R) const;
-    /*< gets true if this object's Point is the same as the given coordinates. */
+    void set (const Point_f& p);
+    /*< sets the rectangle's (x,y) position to the given point. */
 
-    bool contains  (const Point_f& P) const;
-    /*< gets true if this rectangle contains the given point. */
+    void set (const Vect_f& S);
+    /*< sets the rectangle's width and height to the given vector. */
 
-    bool contains  (float XValue, float YValue) const;
-    /*< gets true if this object contains the given point. */
+    bool equals (const Rect_f& r) const;
+    /*< Gets true if this object's Point is the same as the given coordinates. */
 
-    bool contains  (const Rect_f& R);
-    /*< gets true if this rectangle contains the given rectangle. */
+    bool contains (const Point_f& p) const;
+    /*< Gets true if this rectangle contains the given point. */
 
-    void swap  (Rect_f& R);
+    bool contains (float xValue, float yValue) const;
+    /*< Gets true if this object contains the given point. */
+
+    bool contains (const Rect_f& r);
+    /*< Gets true if this rectangle contains the given rectangle. */
+
+    void swap (Rect_f& r);
     /*< Swaps this object's Point with thisPoint. */
 
-    bool intersects  (float R_X, float R_Y, float R_Width, float R_Height) const;
-    /*< gets true of this Rectangle intersects/overlaps the given rectangle. */
+    bool intersects (float R_X, float R_Y, float R_Width, float R_Height) const;
+    /*< Gets true of this Rectangle intersects/overlaps the given rectangle. */
 
-    bool intersects  (const Rect_f& R) const;
-    /*< gets true of this Rectangle intersects/overlaps the given rectangle. */
+    bool intersects (const Rect_f& r) const;
+    /*< Gets true of this Rectangle intersects/overlaps the given rectangle. */
 
-    void translate  (const Vect_f& V);
+    void translate (const Vect_f& v);
     /*< Translates this object's Point by the given Point. */
 
-    void translate  (float dx, float dy);
+    void translate (float dx, float dy);
     /*< Translates this object's Point by the given Point. */
 
-    void setPosition  (const Point_f& P);
+    bool operator== (const Rect_f& r) const;
 
-    void setDimensions  (const Vect_f& S);
+    bool operator!= (const Rect_f& r) const;
 
-    bool operator==  (const Rect_f& R) const;
+    Rect_f& operator= (const Point_f& r);
 
-    bool operator!=  (const Rect_f& R) const;
+    Rect_f& operator= (const Rect_f& r);
 
-    Rect_f& operator=  (const Point_f& R);
-
-    Rect_f& operator=  (const Rect_f& R);
-
-    Rect_f& operator=  (const Vect_f&);
+    Rect_f& operator= (const Vect_f&);
 
     void print (I2P::Terminal& slot);
     /*< Prints this object to the terminal. */
+
+    private:
+
+    float x,        //< The left edge.
+        y,          //< The top edge.
+        width,      //< The width of the rectangle.
+        height;     //< The height of the rectangle.
+};
+
+class _KabukiSDK Rect_d
+{
+    private:
+
+    Rect_d ();
+    /*< Constructs an uninitialized rectangle. */
+
+    Rect_d (double initX = 0, double initY = 0, double initWidth = 0, double initHeight = 0);
+    /*< Constructs a rectangle from the given data. */
+
+    Rect_d (const Point_d& p, const Vect_i& v);
+    /*< Constructs . */
+
+    explicit Rect_d (const Rect_d& r); 
+    /*< Copy constructor. */
+
+    double getWidth () const;
+    /*< Gets the width.
+        @pre    Input must be positive.
+    */
+
+    double setWidth (double value);
+    /*< Sets the width.
+        @pre    Input must be positive. */
+
+    double getHeight () const;
+    /*< Gets and sets the height.
+        @pre    Input must be positive.
+    */
+
+    double setHeight (double value);
+    /*< Sets the height.
+        @return gets 0 upon success, -1 if input is negative, and +1 if input greater than max.
+    */
+
+    double getCenterX () const;
+    /*< Gets and sets the center x value. */
+
+    double getCenterY () const;
+    /*< Gets and sets the center y value. */
+
+    void setCenterX (double value);
+    /*< Sets the center y value. */
+
+    void setCenterY (double value);
+    /*< Sets the center y value. */
+
+    void set (const Rect_d& r);
+    /*< Sets this object's Point to the thisPositition. */
+
+    void set (const Point_d& p);
+    /*< sets the rectangle's (x,y) position to the given point. */
+
+    void set (const Vect_d& S);
+    /*< sets the rectangle's width and height to the given vector. */
+
+    bool equals (const Rect_d& r) const;
+    /*< Gets true if this object's Point is the same as the given coordinates. */
+
+    bool contains (const Point_d& p) const;
+    /*< Gets true if this rectangle contains the given point. */
+
+    bool contains (double xValue, double yValue) const;
+    /*< Gets true if this object contains the given point. */
+
+    bool contains (const Rect_d& r);
+    /*< Gets true if this rectangle contains the given rectangle. */
+
+    void swap (Rect_d& r);
+    /*< Swaps this object's Point with thisPoint. */
+
+    bool intersects (double thisX, double thisY, double thisWidth, double thisHeight) const;
+    /*< Gets true of this Rectangle intersects/overlaps the given rectangle. */
+
+    bool intersects (const Rect_d& r) const;
+    /*< Gets true of this Rectangle intersects/overlaps the given rectangle. */
+
+    void translate (const Vect_i& v);
+    /*< Translates this object's Point by the given Point. */
+
+    void translate (double dx, double dy);
+    /*< Translates this object's Point by the given Point. */
+
+    Rect_d& PareOff (double pixels); 
+    /*< Pares the specified pixels off the Rect_d. 
+    It's equal to x += pixels; y + pixels; width -= (pixels << 1); height -= (pixels << 1); 
+    */
+
+    bool operator== (const Rect_d& r) const;
+
+    bool operator!= (const Rect_d& r) const;
+
+    Rect_d& operator= (const Point_d& r);
+
+    Rect_d& operator= (const Rect_d& r);
+
+    Rect_d& operator= (const Vect_i&);
+
+    void print (I2P::Terminal& slot);
+    /*< Prints this object to the terminal. */
+
+    private:
+
+    double x,       //< The left edge.
+        y,          //< The top edge.
+        width,      //< The width of the rectangle.
+        height;     //< The height of the rectangle.
 };
 
 }   //< namespace  _2D

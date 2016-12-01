@@ -29,80 +29,72 @@ Vect_i::Vect_i ()
 
 Vect_i::Vect_i (int initX, int initY)
 {
-    X = initX;
-    Y = initY;
+    x = initX;
+    y = initY;
 }
 
-int Vect_i::getX () { return X; }
-
-int Vect_i::getY () { return Y; }
-
-void Vect_i::getX (int Value) { X = Value; }
-
-void Vect_i::getY (int Value) { Y = Value; }
-
-void Vect_i::get (int newX, int newY)
+void Vect_i::set (int newX, int newY)
 {
-    X = newX;
-    Y = newY;
+    x = newX;
+    y = newY;
 }
 
-void Vect_i::get (const Vect_i& V)
+void Vect_i::set (const Vect_i& V)
 {
-    X = V.X;
-    Y = V.Y;
+    x = V.x;
+    y = V.y;
 }
 
 bool Vect_i::equals (const Vect_i& V) const
 {
-    if (X != V.X || Y != V.Y)
+    if (x != V.x || y != V.y)
         return false;
     return true;
 }
 
 void Vect_i::swap (Vect_i V)
 {
-    int tempX = V.X,
-        tempY = V.Y;
+    int tempX = V.x,
+        tempY = V.y;
 
-    V.X = X;
-    V.Y = Y;
+    V.x = x;
+    V.y = y;
 
-    X = tempX;
-    Y = tempY;
+    x = tempX;
+    y = tempY;
 }
 
 bool Vect_i::operator== (const Vect_i& P) const
 {
-    return ((X == P.X) && (Y == P.Y));
+    return ((x == P.x) && (y == P.y));
 }
 
 bool Vect_i::operator!= (const Vect_i& P) const
 {
-    return ((X != P.X) || (Y != P.Y));
+    return ((x != P.x) || (y != P.y));
 }
 
 Vect_i Vect_i::operator- (const Vect_i& P) const
 {
-    return { X - P.X, Y - P.Y };
+    return { x - P.x, y - P.y };
 }
 
 Vect_i Vect_i::operator+ (const Vect_i& P) const
 {
-    return { X + P.X, Y + P.Y };
+    return { x + P.x, y + P.y };
 }
 
 Vect_i& Vect_i::operator-= (const Vect_i& P)
 {
-    X -= P.X;
-    Y -= P.Y;
+    x -= P.x;
+    y -= P.y;
     return *this;
 }
 
 Vect_i& Vect_i::operator+= (const Vect_i& P)
 {
-    X += P.X;
-    Y += P.Y;
+    x += P.x;
+    y += P.y;
     return *this;
 }
 
@@ -120,80 +112,80 @@ Vect_f::Vect_f ()
 
 Vect_f::Vect_f (float initX, float initY)
 {
-    X = initX;
-    Y = initY;
+    x = initX;
+    y = initY;
 }
 
-float Vect_f::getX () { return X; }
+float Vect_f::getX () { return x; }
 
-float Vect_f::getY () { return Y; }
+float Vect_f::getY () { return y; }
 
-void Vect_f::getX (float Value) { X = Value; }
+void Vect_f::getX (float Value) { x = Value; }
 
-void Vect_f::getY (float Value) { Y = Value; }
+void Vect_f::getY (float Value) { y = Value; }
 
 void Vect_f::get (float newX, float newY)
 {
-    X = newX;
-    Y = newY;
+    x = newX;
+    y = newY;
 }
 
 void Vect_f::get (const Vect_f& V)
 {
-    X = V.X;
-    Y = V.Y;
+    x = V.x;
+    y = V.y;
 }
 
 bool Vect_f::equals (const Vect_f& V) const
 {
-    if (X != V.X || Y != V.Y)
+    if (x != V.x || y != V.y)
         return false;
     return true;
 }
 
 void Vect_f::swap (Vect_f V)
 {
-    float tempX = V.X,
-        tempY = V.Y;
+    float tempX = V.x,
+        tempY = V.y;
 
-    V.X = X;
-    V.Y = Y;
+    V.x = x;
+    V.y = y;
 
-    X = tempX;
-    Y = tempY;
+    x = tempX;
+    y = tempY;
 }
 
 bool Vect_f::operator== (const Vect_f& P) const
 {
-    return ((X == P.X) && (Y == P.Y));
+    return ((x == P.x) && (y == P.y));
 }
 
 bool Vect_f::operator!= (const Vect_f& P) const
 {
-    return ((X != P.X) || (Y != P.Y));
+    return ((x != P.x) || (y != P.y));
 }
 
 Vect_f Vect_f::operator- (const Vect_f& P) const
 {
-    return { X - P.X, Y - P.Y };
+    return { x - P.x, y - P.y };
 }
 
 Vect_f Vect_f::operator+ (const Vect_f& P) const
 {
-    return { X + P.X, Y + P.Y };
+    return { x + P.x, y + P.y };
 }
 
 Vect_f& Vect_f::operator-= (const Vect_f& P)
 {
-    X -= P.X;
-    Y -= P.Y;
+    x -= P.x;
+    y -= P.y;
     return *this;
 }
 
 Vect_f& Vect_f::operator+= (const Vect_f& P)
 {
-    X += P.X;
-    Y += P.Y;
+    x += P.x;
+    y += P.y;
     return *this;
 }
 

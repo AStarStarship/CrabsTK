@@ -128,14 +128,14 @@ const char* ControlArray::getState (byte Value)
     return 0;
 }
 
-const char* ControlArray::op (I2P::Terminal& slot, int index, int Enq)
+const char* ControlArray::op (I2P::Terminal* slot, int index)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("ControlArray", "_UI"): InvalidIndex ();
+    return enquery ("ControlArray", "_UI"): InvalidIndex ();
 }
 
 const char* ControlArray::print (I2P::Terminal& slot) const

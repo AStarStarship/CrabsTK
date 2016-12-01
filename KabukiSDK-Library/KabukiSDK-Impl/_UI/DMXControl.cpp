@@ -45,14 +45,14 @@ const char* DMXControl::getState (byte Value)
     return 0;
 }
 
-const char* DMXControl::op (I2P::Terminal& slot, int index, int Enq)
+const char* DMXControl::op (I2P::Terminal* slot, int index)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("DMXControl", "_UI"): InvalidIndex ();
+    return enquery ("DMXControl", "_UI"): InvalidIndex ();
 }
 
 }   //< namespace _UI

@@ -36,182 +36,182 @@ double absValue (double a)
 
 int absValue (int a)
 {
-    return 0.0; // return System.Math.Abs (a);
+    return 0.0; // return System._Math::Abs (a);
 }
 
 long absValue (long a)
 {
-    return 0.0; // return System.Math.Abs (a);
+    return 0.0; // return System._Math::Abs (a);
 }
 
 float acos (float a)
 {
-    return 0.0f; // return System.Math.Acos (a);
+    return 0.0f; // return System._Math::Acos (a);
 }
 
 double acos (double a)
 {
-    return 0.0; // return System.Math.Acos (a);
+    return 0.0; // return System._Math::Acos (a);
 }
 
 float asin (float a)
 {
-    return 0.0f; // return System.Math.Asin (a);
+    return 0.0f; // return System._Math::Asin (a);
 }
 
 double asin (double a)
 {
-    return 0.0; // return System.Math.Asin (a);
+    return 0.0; // return System._Math::Asin (a);
 }
 
 float atan (float a)
 {
-    return 0.0f; // return System.Math.Atan (a);
+    return 0.0f; // return System._Math::Atan (a);
 }
 
 double atan (double a)
 {
-    return 0.0; // return System.Math.Atan (a);
+    return 0.0; // return System._Math::Atan (a);
 }
 
 float atan2 (float y, float x)
 {
-    return 0.0f; // return System.Math.Atan2 (y, x);
+    return 0.0f; // return System._Math::Atan2 (y, x);
 }
 
 double atan2 (double y, double x)
 {
-    return 0.0; // return System.Math.Atan2 (y, x);
+    return 0.0; // return System._Math::Atan2 (y, x);
 }
 
 float ceiling (float a)
 {
-    return 0.0f; // return System.Math.ceil (a);
+    return 0.0f; // return System._Math::ceil (a);
 }
 
 double ceiling (double a)
 {
-    return 0.0; // return System.Math.ceil (a);
+    return 0.0; // return System._Math::ceil (a);
 }
 
 float copySign (float magnitude, float sign)
 {
-    return 0.0f; // return System.Math.copySign (magnitude, sign);
+    return 0.0f; // return System._Math::copySign (magnitude, sign);
 }
 
 double copySign (double magnitude, double sign)
 {
-    return 0.0; // return System.Math.copySign (magnitude, sign);
+    return 0.0; // return System._Math::copySign (magnitude, sign);
 }
 
 float cos (float a)
 {
-    return cos (a); // return System.Math.cos (a);
+    return cos (a); // return System._Math::cos (a);
 }
 
 double cos (double a)
 {
-    return 0.0; // return System.Math.cos (a);
+    return 0.0; // return System._Math::cos (a);
 }
 
 float hcos (float x)
 {
-    return 0.0f; // return System.Math.cosh (x);
+    return 0.0f; // return System._Math::cosh (x);
 }
 
 double hcos (double x)
 {
-    return 0.0; // return System.Math.cosh (x);
+    return 0.0; // return System._Math::cosh (x);
 }
 
 float eToTheX (float a)
 {
-    return 0.0f; // return System.Math.exp (a);
+    return 0.0f; // return System._Math::exp (a);
 }
 
 double eToTheX (double a)
 {
-    return 0.0; // return System.Math.exp (a);
+    return 0.0; // return System._Math::exp (a);
 }
 
 float oneMinusEToTheX (float x)
 {
-    return 0.0f; // return System.Math.expm1 (x);
+    return 0.0f; // return System._Math::expm1 (x);
 }
 
 double oneMinusEToTheX (double x)
 {
-    return 0.0; // return System.Math.expm1 (x);
+    return 0.0; // return System._Math::expm1 (x);
 }
 
 float floor (float a)
 {
-    return 0.0f; // return System.Math.Floor (a);
+    return 0.0f; // return System._Math::Floor (a);
 }
 
 double floor (double a)
 {
-    return 0.0; // return System.Math.Floor (a);
+    return 0.0; // return System._Math::Floor (a);
 }
 
 int exponent (float f)
 {
-    return 0; // return System.Math.getExponent (f);
+    return 0; // return System._Math::getExponent (f);
 }
 
 int exponent (double d)
 {
-    return 0; // return System.Math.getExponent (d);
+    return 0; // return System._Math::getExponent (d);
 }
 
 float hypot (float x, float y)
 {
-    return 0.0f; // return System.Math.hppypot (x, y);
+    return 0.0f; // return System._Math::hppypot (x, y);
 }
 
 double hypot (double x, double y)
 {
-    return 0.0; // return System.Math.hppypot (x, y);
+    return 0.0; // return System._Math::hppypot (x, y);
 }
 
 float ieeeRemainder (float f1, float f2)
 {
-    return 0.0f; // return System.Math.ieeeRemainder (f1, f2);
+    return 0.0f; // return System._Math::ieeeRemainder (f1, f2);
 }
 
 double ieeeRemainder (double f1, double f2)
 {
-    return 0.0; // return System.Math.ieeeRemainder (f1, f2);
+    return 0.0; // return System._Math::ieeeRemainder (f1, f2);
 }
 
 float ln (float a)
 {
-    return 0.0f; // return System.Math.log (a);
+    return 0.0f; // return System._Math::log (a);
 }
 
 double ln (double a)
 {
-    return 0.0; // return System.Math.log (a);
+    return 0.0; // return System._Math::log (a);
 }
 
 float log (float a)
 {
-    return 0.0f; // return System.Math.log10 (a);
+    return 0.0f; // return System._Math::log10 (a);
 }
 
 double log (double a)
 {
-    return 0.0; // return System.Math.log10 (a);
+    return 0.0; // return System._Math::log10 (a);
 }
 
 float logXPlus1 (float x)
 {
-    return 0.0f; // return System.Math.log1p (x);
+    return 0.0f; // return System._Math::log1p (x);
 }
 
 double logXPlus1 (double x)
 {
-    return 0.0; // return System.Math.log1p (x);
+    return 0.0; // return System._Math::log1p (x);
 }
 
 float max (float a, float b)
@@ -236,182 +236,182 @@ long max (long a, long b)
 
 float min (float a, float b)
 {
-    return 0.0f; // return System.Math.min (a, b);
+    return 0.0f; // return System._Math::min (a, b);
 }
 
 double min (double a, double b)
 {
-    return 0.0; // return System.Math.min (a, b);
+    return 0.0; // return System._Math::min (a, b);
 }
 
 int min (int a, int b)
 {
-    return 0.0; // return System.Math.min (a, b);
+    return 0.0; // return System._Math::min (a, b);
 }
 
 long min (long a, long b)
 {
-    return 0.0; // return System.Math.min (a, b);
+    return 0.0; // return System._Math::min (a, b);
 }
 
 float nextAfter (float start, float direction)
 {
-    return 0.0f; // return System.Math.nextAfter (start, direction);
+    return 0.0f; // return System._Math::nextAfter (start, direction);
 }
 
 double nextAfter (double start, double direction)
 {
-    return 0.0; // return System.Math.nextAfter (start, direction);
+    return 0.0; // return System._Math::nextAfter (start, direction);
 }
 
 float nextUp (float f)
 {
-    return 0.0f; // return System.Math.nextUp (f);
+    return 0.0f; // return System._Math::nextUp (f);
 }
 
 double nextUp (double d)
 {
-    return 0.0; // return System.Math.nextUp (d);
+    return 0.0; // return System._Math::nextUp (d);
 }
 
 float power (float a, float b)
 {
-    return 0.0f; // return System.Math.Pow (a, b);
+    return 0.0f; // return System._Math::Pow (a, b);
 }
 
 double power (double a, double b)
 {
-    return 0.0; // return System.Math.Pow (a, b);
+    return 0.0; // return System._Math::Pow (a, b);
 }
 
 float random_f ()
 {
-    return 0.0f; // return System.Math.Random ();
+    return 0.0f; // return System._Math::Random ();
 }
 
 double random_d ()
 {
-    return 0.0; // return System.Math.Random ();
+    return 0.0; // return System._Math::Random ();
 }
 
 float round (float a)
 {
-    return 0.0f; // return System.Math.Rint (a);
+    return 0.0f; // return System._Math::Rint (a);
 }
 
 double round (double a)
 {
-    return 0.0; // return System.Math.Rint (a);
+    return 0.0; // return System._Math::Rint (a);
 }
 
 int roundToInt (float a)
 {
-    return 0; // return System.Math.Round (a);
+    return 0; // return System._Math::Round (a);
 }
 
 long roundToInt (double a)
 {
-    return 0; // return System.Math.Round (a);
+    return 0; // return System._Math::Round (a);
 }
 
 float scaleB (float d, int scaleFactor)
 {
-    return 0.0f; // return System.Math.Scalb (d, scaleFactor);
+    return 0.0f; // return System._Math::Scalb (d, scaleFactor);
 }
 
 double scaleB (double d, int scaleFactor)
 {
-    return 0.0; // return System.Math.Scalb (d, scaleFactor);
+    return 0.0; // return System._Math::Scalb (d, scaleFactor);
 }
 
 float fScaleFactor (float f, int scaleFactor)
 {
-    return 0.0f; // return System.Math.Scalb (f, scaleFactor);
+    return 0.0f; // return System._Math::Scalb (f, scaleFactor);
 }
 
 double fScaleFactor (double f, int scaleFactor)
 {
-    return 0.0; // return System.Math.Scalb (f, scaleFactor);
+    return 0.0; // return System._Math::Scalb (f, scaleFactor);
 }
 
 float signOf (float f)
 {
-    return 0.0f; // return System.Math.Signum (f);
+    return 0.0f; // return System._Math::Signum (f);
 }
 
 double signOf (double d)
 {
-    return 0.0; // return System.Math.Signum (d);
+    return 0.0; // return System._Math::Signum (d);
 }
 
 float sin (float a)
 {
-    return 0.0f; // return System.Math.Sin (a);
+    return 0.0f; // return System._Math::Sin (a);
 }
 
 double sin (double a)
 {
-    return 0.0; // return System.Math.Sin (a);
+    return 0.0; // return System._Math::Sin (a);
 }
 
 float hsin (float x)
 {
-    return 0.0f; // return System.Math.Sinh (x);
+    return 0.0f; // return System._Math::Sinh (x);
 }
 
 double hsin (double x)
 {
-    return 0.0; // return System.Math.Sinh (x);
+    return 0.0; // return System._Math::Sinh (x);
 }
 
 float squareRoot (float a)
 {
-    return 0.0f; // return System.Math.Sqrt (a);
+    return 0.0f; // return System._Math::Sqrt (a);
 }
 
 double squareRoot (double a)
 {
-    return 0.0; // return System.Math.Sqrt (a);
+    return 0.0; // return System._Math::Sqrt (a);
 }
 
 float cubeRoot (float a)
 {
-    return 0.0f; // return System.Math.cbrt (a);
+    return 0.0f; // return System._Math::cbrt (a);
 }
 
 double cubeRoot (double a)
 {
-    return 0.0; // return System.Math.cbrt (a);
+    return 0.0; // return System._Math::cbrt (a);
 }
 
 float tan (float a)
 {
-    return 0.0f; // return System.Math.tan (a);
+    return 0.0f; // return System._Math::tan (a);
 }
 
 double tan (double a)
 {
-    return 0.0; // return System.Math.tan (a);
+    return 0.0; // return System._Math::tan (a);
 }
 
 float htan (float x)
 {
-    return 0.0f; // return System.Math.tanh (x);
+    return 0.0f; // return System._Math::tanh (x);
 }
 
 double htan (double x)
 {
-    return 0.0; // return System.Math.tanh (x);
+    return 0.0; // return System._Math::tanh (x);
 }
 
 float toDegrees (float angrad)
 {
-    return 0.0f; // return System.Math.toDegrees (angrad);
+    return 0.0f; // return System._Math::toDegrees (angrad);
 }
 
 double toDegrees (double angrad)
 {
-    return 0.0; // return System.Math.toDegrees (angrad);
+    return 0.0; // return System._Math::toDegrees (angrad);
 }
 
 float toRadians (float angle)
@@ -426,12 +426,12 @@ double toRadians (double angle)
 
 float ulp (float f)
 {
-    return 0.0f; // return System.Math.ulp (f);
+    return 0.0f; // return System._Math::ulp (f);
 }
 
 double ulp (double d)
 {
-    return 0.0; // return System.Math.ulp (d);
+    return 0.0; // return System._Math::ulp (d);
 }
 
 float factoral (float thisNumber)
@@ -615,7 +615,7 @@ Calc::Calc ()
 {
     
 }
-const char* op (I2P::Terminal& slot, int index, int enq)
+const char* op (I2P::Terminal* slot, int index)
 {
 
 }

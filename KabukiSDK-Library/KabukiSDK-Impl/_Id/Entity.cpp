@@ -54,14 +54,14 @@ bool Entity::contains (const char* queery)
     return false;
 }
 
-const char* Entity::op (I2P::Terminal& slot, int index, int Enq)
+const char* Entity::op (I2P::Terminal* slot, int index)
 {
     switch (Index)
     {
         case 0: return I2P::NumMembers (0);
     }
     
-    return Query ? Enquery ("Entity", "_Id"): InvalidIndex ();
+    return enquery ("Entity", "_Id"): InvalidIndex ();
 }
 
 }   //< namespace _Id
