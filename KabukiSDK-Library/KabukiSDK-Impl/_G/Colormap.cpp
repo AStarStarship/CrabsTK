@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "Color.h"
+#include "Color.hpp"
 
 using namespace _G;
 
@@ -15,7 +15,7 @@ Colormap::Colormap () :
     Image ()
 {
 }
-void Colormap::Create (int Width, int Height, Color_i BGColor)
+void Colormap::Create (int Width, int Height, Color BGColor)
 {
     int x, Y;
     //colorMap = new Color[width][height]; colorMap[width][height];
@@ -44,14 +44,14 @@ void Colormap::Update ()
     }
 }
 
-Color Colormap::GetPixel (int XCoordinate, int YCoordinate)
+Color Colormap::getPixel (int XCoordinate, int YCoordinate)
 {
     if (XCoordinate > Plane.Width || YCoordinate > Plane.Height) return null;
 
     return colorMap[XCoordinate][YCoordinate];
 }
 
-bool Colormap::SetPixel (int XCoordinate, int YCoordinate, Color AColor)
+bool Colormap::setPixel (int XCoordinate, int YCoordinate, Color AColor)
 {
     if (XCoordinate > (int)Plane.Width || YCoordinate > (int)Plane.Height) return false;
     

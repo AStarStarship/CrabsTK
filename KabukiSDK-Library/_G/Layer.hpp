@@ -5,22 +5,22 @@
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
 */
 
-#include "Entity.h"
+#include "Entity.hpp"
 
 namespace _G {
 
 /**  */
 struct Layer
 {
-    Entity& Element;   	//< The element of this layer.
+    Entity& element;   	//< The element of this layer.
 
-    Layer* Prev,      	//< The previous layer in the pipeline.
-        * Next;         //< The next layer in the pipeline.
+    Layer* prev,      	//< The previous layer in the pipeline.
+        * next;         //< The next layer in the pipeline.
 	
-    void Remove ();
+    void remove ();
     /*<  */
 
-    void Draw (const Cell& C);
+    void draw (const Cell& C);
     /*<  */
 };
 }

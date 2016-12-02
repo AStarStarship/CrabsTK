@@ -63,7 +63,7 @@ class _KabukiSDK ControlGrid
     /*< Gets the row at the given index.
         @return gets nullptr if the index is invalid. */
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
     
     private:

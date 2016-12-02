@@ -39,7 +39,7 @@ class _KabukiSDK TagLibrary
     TagLibrary ();
     /*< Constructs an empty tag library. */
 
-    const char* getOrAddTag (const char* tag);
+    string getOrAddTag (string tag);
     /*< Gets the tag string, and adds it to the collection if it doesn't exist.
         @return Gets null if the tags list doesn't contatin the Tag, and 
             non-null if the Tag was added successfully. */
@@ -50,12 +50,12 @@ class _KabukiSDK TagLibrary
     int getNumTags ();
     /*< Gets the number of tags. */
 
-    inline void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a Terminal. */
     
     private:
     
-    ::std::vector<::std::string> tags;     //< Collection of tag strings.
+    ::vector<::string> tags;     //< Collection of tag strings.
 };
 }   //< namespace _Search
 

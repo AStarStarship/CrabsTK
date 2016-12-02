@@ -21,8 +21,7 @@
 
 #pragma once
 
-#include <FreeI2P.h>
-#include <KabukiToolkit-Config.h>
+#include <KabukiSDK-Config.hpp>
 
 namespace _G {
 
@@ -39,14 +38,14 @@ typedef enum {
     Indigo      = 0x4B0082,
     SkyBlue     = 0x87CEFF,
     NavyBlue    = 0x000080,
-    Blue        = 0xFF0000,
+    blue        = 0xFF0000,
     Turquoise   = 0x00F5FF,
-    Green       = 0x00FF00,
+    green       = 0x00FF00,
     Yellow      = 0xFFC0CB,
     Gold        = 0xFFD700,
     Oragne      = 0xFFA500,
     Pink        = 0xFFC0CB,
-    Red         = 0x0000FF,
+    red         = 0x0000FF,
     Maroon      = 0x800000,
     Brown       = 0xA52A2A,
     Black       = 0x000000      //< Black at the end as null-term char.
@@ -61,35 +60,35 @@ enum {
     BlueMixRatio     = 255  //< The color mix ratio (0 - 255) / 256 of the blue LED.
 };
 
-inline const color_t* RainbowColors ();
+inline const color_t* rainbowColors ();
 /*< Returns a pointer to an array of the rainbow colors. */
 
-inline const color_t* PresetColors ();
+inline const color_t* presetColors ();
 /*< Returns a pointer to an array of the present colors. */
 
-inline color_t GetRainbowColor (PresetColor Index);
+inline color_t getRainbowColor (PresetColor index);
 /*< Gets one of the rainbow colors. */
 
-inline color_t GetPresetColor (PresetColor Index);
+inline color_t getPresetColor (PresetColor index);
 /*< Gets one of the preset colors. */
 
-inline color_t GetRandomPresetColor (PresetColor Index);
+inline color_t getRandomPresetColor (PresetColor index);
 /*< Gets a random preset colors. */
 
-inline color_t GetRandomColor (PresetColor Index);
+inline color_t getRandomColor (PresetColor index);
 /*< Gets a random color. */
     
-inline color_t MixColor (color_t A, color_t B);
+inline color_t mixColor (color_t a, color_t b);
 /*< Mixes the color with the  */
 
-inline color_t ChangeBrightness (color_t color, int brightnessChange);
+inline color_t changeBrightness (color_t color, int brightnessChange);
 /*< Increases the alpha value of the given color by the given value. */
 
-inline color_t DecreaseBrightness (color_t color, int brightnessChange);
+inline color_t decreaseBrightness (color_t color, int brightnessChange);
 /*< Increases the alpha value of the given color by the given value. */
 
 
-class RGBAColor
+class Color
 {    
     public:
 
@@ -99,60 +98,60 @@ class RGBAColor
         DefaultBrightness = 127     //< Defaults to 50% brightness.
     };
 
-    byte R,     //< Red value.
-        G,      //< Green value.
-        B,      //< Blue value.
-        A;      //< Alpha/Brightness value.
+    byte r,     //< red value.
+        g,      //< green value.
+        b,      //< blue value.
+        a;      //< alpha/Brightness value.
 
-    RGBAColor (color_t value = 0);
+    Color (color_t value = 0);
     /*< Constructs a Color from 8-bit RGBA values. */
 
-    RGBAColor (byte Red, byte Green, byte Blue);
+    Color (byte red, byte green, byte blue);
     /*< Constructs a Color from the given RGB values. */
 
-    RGBAColor (byte Red, byte Green, byte Blue, byte Alpha);
+    Color (byte red, byte green, byte blue, byte alpha);
     /*< Constructs a Color from the given RGBA values. */
 
-    void Set (color_t Value);
+    void set (color_t value);
     /*< Sets this color to the given 8-bit RGBA values. */
 
-    void Set (byte Red, byte Green, byte Blue);
+    void set (byte red, byte green, byte blue);
     /*< Constructs a Color from the given RGB values. */
 
-    void Set (byte Red, byte Green, byte Blue, byte Alpha);
+    void set (byte red, byte green, byte blue, byte alpha);
     /*< Constructs a Color from the given RGBA values. */
 
-    byte GetRed   ();
+    byte getRed   ();
     /*< Gets the red value. */
 
-    void SetRed (byte Value);
+    void setRed (byte value);
     /*< Sets the red value. */
 
-    byte GetGreen ();
+    byte getGreen ();
     /*< Gets the green value. */
 
-    void SetGreen (byte Value);
+    void setGreen (byte value);
     /*< Sets the green value. */
 
-    byte GetBlue ();
+    byte getBlue ();
     /*< Gets the blue value. */
 
-    void SetBlue (byte Value);
+    void setBlue (byte value);
     /*< Sets the blue value. */
 
-    byte GetAlpha ();
+    byte getAlpha ();
     /*< Gets the alpha value. */
 
-    void SetAlpha (byte Value);
+    void setAlpha (byte value);
     /*< Sets the alpha value. */
 
-    void ToHSV (float& fR, float& fG, float fB, float& fH, float& fS, float& fV);
+    void toHSV (float& fR, float& fG, float fB, float& fH, float& fS, float& fV);
     /*< Converts this color to HSV. */
 
-    void SetHSV (float& fR, float& fG, float& fB, float& fH, float& fS, float& fV);
+    void setHSV (float& fR, float& fG, float& fB, float& fH, float& fS, float& fV);
     /*< Sets this color to the HSV values. */
 
-    void Print (I2P::Terminal& Slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 

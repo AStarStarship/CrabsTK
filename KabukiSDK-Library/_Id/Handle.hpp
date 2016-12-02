@@ -1,5 +1,5 @@
 /** Kabuki Software Development Kit
-    @file    /.../KabukiSDK-Impl/_Id/Username.hpp
+    @file    /.../KabukiSDK-Impl/_Id/Handle.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,38 +20,53 @@
 
 #pragma once
 
-#include <FreeI2P.hpp>
 #include <KabukiSDK-Config.hpp>
+
+#include <string>
+using namespace std;
 
 namespace _Id {
 
+int getMinHandleLength ();
+/*< Gets the min handle/username/ length. */
+
+int getMaxHandleLength ();
+/*< Gets the max handle/username/ length. */
+
+void setHandleLengthRange (int min, int max);
+/*< Sets the min and max hanlde legnth to the given values. */
+
 /**  */
-class _KabukiSDK Username
+class _KabukiSDK Handle
 {
     public:
 
     enum {
-        MinMinLength = 1,       //< The minimum min length of a Username
-        MaxMaxLength = 256      //< The maximum max length of a Username
+        MinLengthRange = 3,       //< The min length of a Handle range.
+        MaxLengthRange = 256      //< The max length of a Handle range.
     };
     
-    Username (const char* aName, int AMinLength = MinMinLength, int AMaxLength = MaxMaxLength);
+    Handle (const string& aName, int AMinLength = MinLengthRange, int AMaxLength = MaxLengthRange);
     /*< Constructor creates a standard username. */
 
-    bool Set (const char* S);
+    string& getHandle ();
+    /*< Gets a reference to the handle string. */
+
+    bool setHandle (const string& s);
     /*< Gets true if this password is value. */
 
-    bool IsValid (const char* S);
-    /*<  */
+    bool isValid (const string& s);
+    /*< Returns true if the handle is valid. */
 
-    void print (I2P::Terminal& slot);
+    bool equals (const Handle& h);
+    /*< Returns true if this Handle is idential to the given Handle. */
+
+    void print (Terminal& slot);
     /*< Prints the state of this object. */
     
     private:
 
-    int minLength,      //< The min length.
-        maxLength;      //< The max length.
-
-    const char* name;   //< The name of the object.
+    string name;   //< The name of the object.
 };
+
 }   //< namespace _Id

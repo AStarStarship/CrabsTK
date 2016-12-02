@@ -6,15 +6,16 @@
     @brief      This file contains the _2D::Vector_f interface.
 */
 
-#include <string>
-using namespace std;
+#pragma once
 
-#include "Color.h"
-#include "Rect_i.h"
+#include <KabukiSDK-Config.hpp>
+
+#include "Color.hpp"
+#include "Rect.hpp"
 
 namespace _G {
     
-class _G_API AnimatedTexture: public Rect_i
+class _KabukiSDK AnimatedTexture: public Rect_i
 /** An animated texture */
 {
     public:
@@ -75,7 +76,7 @@ class _G_API AnimatedTexture: public Rect_i
     
     void draw (const Cell& C, TextureObserver* O);
     
-    void Print (I2P::Terminal& Slot);
+    void Print (Terminal& Slot);
     /*< Prints this object to a terminal. */
 
     private:
@@ -93,4 +94,5 @@ class _G_API AnimatedTexture: public Rect_i
     Texture* originalFrame,   //< The original Textures given to the AnimatedTexture
         frame;
 };
-}
+
+}   //< namespace _G

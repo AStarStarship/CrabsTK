@@ -20,20 +20,51 @@
  
 #pragma once
 
-#include <FreeI2P.hpp>
 #include <KabukiSDK-Config.hpp>
 
 namespace _Id {
 
-/**  */
+typedef int PrivilageLevel;     //< typedef for an account privilage level.
+
+/** The default number of privilage levels is 5, because CPUs are fastest at 
+    working with the number -1, 0, and 1. */
+
+enum {
+    DefaultMinPrivilageLevel = -2,  //< Default min privilage level optimized for -1, 0, 1 numbers.
+    DefaultMaxPrivilageLevel = 2    //< Default mix privilage level optimized for -1, 0, 1 numbers.
+};
+
+PrivilageLevel getMinPrivilageLevel ();
+/*< Gets the static min privilage level. */
+
+PrivilageLevel setMinPrivilageLevel ();
+/*< Gets the static min privilage level. */
+
+bool setPrvilageLevelRange (PrivilageLevel min, PrivilageLevel max);
+/*< Attmpts to set the privilage level range to the given values.
+    @warning Algorihm will set min and max to default values if they are not in 
+        order min to max!. */
+
 class _KabukiSDK Privilage
+/*< An account privilage level. */
 {
+    public:
+
     Privilage ();
     /*< Default constructor. */
+
+    PrivilageLevel getPrivilageLevel ();
+    /*< Gest the priliage level. */
+
+    PrivilageLevel setPrivilageLevel (PrivilageLevel l);
+    /*< Attempts to set the privilage level to the new level. */
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
+
+    private:
+
+    PrivilageLevel privilageLevel;      //< The privilage level.
 };
 }   //< namespace _Id
-}   //< namespace _Search
 

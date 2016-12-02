@@ -11,14 +11,14 @@
 #include <string>
 using namespace std;
 
-#include "_Math/vect4.h"
+#include "_Math/vect4.hpp"
 using namespace _Math;
 
 #include <freetype/config/ftheader.h>
 
 namespace _G {
 
-class _G_API Font
+class _KabukiSDK Font
 /** A text font. */
 {
 	    public:
@@ -32,15 +32,15 @@ class _G_API Font
 		
     static const int DefaultAttributes = 0;
 	static const float DefaultSize = 10.0f;
-    static const char* DefaultFont = "Times New Roman";
+    static string DefaultFont = "Times New Roman";
 
 	Font ();
 
-	Font (const char* Name, float Size, int Attributes);
+	Font (string Name, float Size, int Attributes);
 
-	const char* getName ();
+	string getName ();
 	
-	void setName (const char* S);
+	void setName (string S);
 
 	int getAttributes ();
 	void setAttributes (int A);
@@ -48,18 +48,18 @@ class _G_API Font
 	int getSize ();
 	void setSize (int A);
     
-    int load (const char* Filename, uint8_t RelativePath, float FontSize, uint32_t TextureWidth, 
+    int load (string Filename, uint8_t RelativePath, float FontSize, uint32_t TextureWidth, 
         uint32_t TextureHeight, int FirstCharacter, int CountCharacter);
     
     void draw (const Cell& c, float X, float Y, const string* Text, vec4* color);
     
     float GetLength (char *text);
 
-	void print (I2P::Terminal& slot);
+	void print (Terminal& slot);
 
 	    private::
 	
-	const char* name;
+	string name;
 
 	float size;
 	

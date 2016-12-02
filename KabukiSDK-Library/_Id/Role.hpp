@@ -25,45 +25,33 @@
 
 namespace _Id {
 
-/** A role that an entinty plays in an organization.
-    A role 
-*/
 class _KabukiSDK Role
+/** A role that an entinty plays in an organization.
+    Examples of a role are:
+    
+    1. volunteer
+    2. employee
+    3. manager
+    4. owner
+*/
 {
-    Role (const char* aUsername, const char* aPassword);
+    Role (const string& aDescription);
     /*< Constructs a user with the given username and password. */
 
-    const char* getDescription ();
-    /*<  */
+    string& getDescription ();
+    /*< Gets a reference to the descritpion string. */
 
-    const char* getPassword ();
-    /*<  */
-
-    const char* encryptPassword ();
-    /*<  */
-
-    bool isValid ();
-    /*<  */
-
-    bool verify (string aUsername, string aPassword);
-
-    bool getLogin (Account thisAccount);
-    /*<  */
+    string setDescription (const string& s);
+    /*< Sets the description to the given string. */
     
-    bool equals (Role aUser);
-    /*<  */
-    
-    inline void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:
 
-    const char* description,
-        password;
-
-    // Currently the user is able log into more the one account at a time. This could cause a security threat.
-    //Account.List activeAccounts;
+    string description;       //< A description of the role.
 };
-}   //< namespace _Id
+
+}   //< namespace _Id   
 
 

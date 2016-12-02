@@ -22,13 +22,13 @@
 
 namespace _UI {
 
-const char* AVControl::MacroHeader = "|" + printCentered ("AVControl", AVControl::MaxLabelLength) +
+string AVControl::MacroHeader = "|" + printCentered ("AVControl", AVControl::MaxLabelLength) +
         "|    Type    |#Bit|Init | min | max |Value|Ch |CC |  Action  |Step |";
 
 const int AVControl::MacroHeaderLength = AVControl::MacroHeader.length ();
 
 /** Default constructor. */
-AVControl::AVControl (int newType, const char* &newLabel, int newChannel, int newInitValue, int newMinValue, int newMaxValue,
+AVControl::AVControl (int newType, string &newLabel, int newChannel, int newInitValue, int newMinValue, int newMaxValue,
     int newWordSize) 
 :   AVControl (newLabel)
 {
@@ -72,16 +72,16 @@ AVControl::AVControl (const AVControl& O)
     {
         /*
         Logger::outputDebugString ("The variables were not the same: -1\n" + 
-            ConsoleLine ('-') + print (I2P::Terminal& slot) + ConsoleLine ('-') + O.print (I2P::Terminal& slot) + ConsoleLine ('-'));
+            ConsoleLine ('-') + print (Terminal& slot) + ConsoleLine ('-') + O.print (Terminal& slot) + ConsoleLine ('-'));
         */
         return -1;
     }
 
     int CompareValue = AVControl::Compare (O.label ());
 
-    Logger::outputDebugString ("The variables were the same: CompareValue = " + const char* (CompareValue) + 
+    Logger::outputDebugString ("The variables were the same: CompareValue = " + string (CompareValue) + 
         "\nLabels: { " + label () + ", " + O.label () + " }\nlabel ().Compare (O.label ()) = " + 
-        const char* (label ().Compare (O.label ())));
+        string (label ().Compare (O.label ())));
     
     return CompareValue;
 }
@@ -92,8 +92,8 @@ AVControl::AVControl (const AVControl& O)
      return type;
  }
 
- /** Returns a const char* that says what type of AVControl this is. */
- const char* AVControl::typeString () const
+ /** Returns a string that says what type of AVControl this is. */
+ string AVControl::typeString () const
  {
      switch (type)
      {
@@ -298,20 +298,20 @@ void AVControl::toggle ()
         value = maxValue;
 }
 
-const char* AVControl::headerString () const
+string AVControl::headerString () const
 {
     return "|" + printCentered ("AVControl", AVControl::MaxLabelLength) + "|    Type    |#Bit|Init | min | max |Value|Ch |";
 }
 
-const char* AVControl::toStringRow () const
+string AVControl::toStringRow () const
 {
     return "|" + printCentered (label (), AVControl::MaxLabelLength) + "|" + printCentered (typeString (), 12) + "|" +
-        printCentered (const char* (wordSize), 4) + "|" + printCentered (const char* (initValue), 5) + "|" + 
-        printCentered (const char* (minValue), 5) + "|" + printCentered (const char* (maxValue) , 5) + "|" + 
-        printCentered (const char* (value)   , 5) + "|" + printCentered (const char* (channel)  , 3) + "|";
+        printCentered (string (wordSize), 4) + "|" + printCentered (string (initValue), 5) + "|" + 
+        printCentered (string (minValue), 5) + "|" + printCentered (string (maxValue) , 5) + "|" + 
+        printCentered (string (value)   , 5) + "|" + printCentered (string (channel)  , 3) + "|";
 }
 
-void AVControl::print (I2P::Terminal& slot) const
+void AVControl::print (Terminal& slot) const
 {
     return getHeaderString () + "\n" + ToStringRow () + "\n";
 }

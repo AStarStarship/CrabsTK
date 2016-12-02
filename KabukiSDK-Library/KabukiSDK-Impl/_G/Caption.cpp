@@ -5,8 +5,8 @@
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
 */
 
-#include "_G/Cell.h"
-#include "_G/Caption_f.h"
+#include "_G/Cell.hpp"
+#include "_G/Caption_f.hpp"
 
 namespace _G {
 
@@ -29,17 +29,17 @@ Caption::Caption (int captOriginX, int captOriginY) :
     SetBorderMode (Cell.FillRoundCorners);
 }
 
-void Caption::SetText (const std::string& newString)
+void Caption::setText (const string& newString)
 {
 }
 
-void Caption::Caption_f::SetVerticalMargin (int Value)
+void Caption::Caption_f::setVerticalMargin (int Value)
 {
     if (Value < 0) return;
     tbMargin = Value;
 }
 
-void Caption::Caption_f::SetHorizontalMargin (int Value)
+void Caption::Caption_f::setHorizontalMargin (int Value)
 {
     if (Value < 0) return;
     lrMargin = Value;
@@ -53,7 +53,7 @@ void Caption_f::Update ()
     SetHeight (captionText.Bottom_edge_int () + tbMargin);
 }
 
-void Caption_f::Draw (const Cell& C)
+void Caption_f::draw (const Cell& c)
 {
     if (isVisible)
      return;
@@ -62,7 +62,7 @@ void Caption_f::Draw (const Cell& C)
     captionText.Draw (C);
 }
 
-std::string Caption_f::ToString ()
+string Caption_f::toString ()
 {
     return captionText.ToString ();
 }

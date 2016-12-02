@@ -35,14 +35,14 @@ class _KabukiSDK DMXControl : public AVControl
     static const int NumChannels = 512;             //< The number of DMX512 channels.
 
     /** Default constructor. */
-    DMXControl (const char* &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0,
+    DMXControl (string &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0,
         int newMaxValue = 255, int newWordSize = 8, int newAVControlType = AVControl::DMXControl);
     DMXControl (const DMXControl& other);           //< Copy contructor.
     ~DMXControl () {}                               //< Virtual destructor.
 
     virtual void trigger () override {}             //< Triggers this DMX event to send out the target device.
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 };
 

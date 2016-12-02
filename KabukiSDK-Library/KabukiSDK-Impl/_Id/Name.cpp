@@ -22,7 +22,7 @@
 
 namespace _Id {
 
-/** Default constructor. **/
+/** Default constructor. */
 Name::Name ()
 {
 
@@ -33,16 +33,16 @@ byte Name::getState ()
     return 0;
 }
 
-const char* Name::getState (byte Value)
+string Name::getState (byte Value)
 {
     return 0;
 }
 
-const char* Name::op (I2P::Terminal* slot, int index)
+string Name::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("Name", "_Id"): InvalidIndex ();

@@ -3,10 +3,10 @@
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
-    @brief      This file contains the _2D.Vector_f interface.
+    @brief      This file contains the _2D::Vector_f interface.
 */
 
-#include "_G/Texture.h"
+#include "_G/Texture.hpp"
 using namespace _G;
 
 Texture::Texture () :
@@ -14,7 +14,7 @@ Texture::Texture () :
 {
 }
 
-void Texture::Create (int width, int height, _G.Color_i backgroundColor)
+void Texture::Create (int width, int height, _G.Color backgroundColor)
 {
     int x, y;
     //colorMap = new Color[width][height];
@@ -52,7 +52,7 @@ Color Texture::Pixel (int xCoordinate, int yCoordinate)
 
     return colorMap[xCoordinate][yCoordinate];
 }
-bool Texture::SetPixel (int xCoordinate, int yCoordinate, Color newColor)
+bool Texture::setPixel (int xCoordinate, int yCoordinate, Color newColor)
 {
     if (xCoordinate > (int)Plane.Width
       || yCoordinate > (int)Plane.Height
@@ -60,7 +60,7 @@ bool Texture::SetPixel (int xCoordinate, int yCoordinate, Color newColor)
     colorMap[xCoordinate][yCoordinate].Set (newColor);
     return true;
 }
-void Texture::Draw (const Cell& C)
+void Texture::draw (const Cell& c)
 {  
     //Image.Draw (C, this,
     //                         Rectangle.Left,

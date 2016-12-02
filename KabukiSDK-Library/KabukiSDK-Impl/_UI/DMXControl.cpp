@@ -22,7 +22,7 @@
 
 namespace _UI {
 
-DMXControl::DMXControl (const char* &newLabel, int newChannel, int initValue, int newMinValue, int newMaxValue, 
+DMXControl::DMXControl (string &newLabel, int newChannel, int initValue, int newMinValue, int newMaxValue, 
     int newWordSize, int newAVControlType) :
     AVControl (newAVControlType, newLabel, newChannel, initValue, newMinValue, newMaxValue, newWordSize)
 {
@@ -40,16 +40,16 @@ byte DMXControl::getState ()
     return 0;
 }
 
-const char* DMXControl::getState (byte Value)
+string DMXControl::getState (byte Value)
 {
     return 0;
 }
 
-const char* DMXControl::op (I2P::Terminal* slot, int index)
+string DMXControl::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("DMXControl", "_UI"): InvalidIndex ();

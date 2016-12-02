@@ -1,5 +1,5 @@
 /** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Math/Imaginary.hpp
+    @file    /.../KabukiSDK/_Math/Complex.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -25,31 +25,19 @@
 
 namespace _Math {
 
-class _KabukiSDK Imaginary_f
+class _KabukiSDK Complex_f
 /** An imaginary number stored as double types. */
 {
     public:
 
-    float A,        //< Vector A, imagined on the x-axis.
-        B;          //< Vector B, imagined on the y-axis.
+    float a,        //< Vector A, imagined on the x-axis.
+        b;          //< Vector B, imagined on the y-axis.
 
-    Imaginary_f ();
+    Complex_f ();
     /*< Constructs an uninitialized imaginary number. */
 
-    Imaginary_f (float Ax, float By);
+    Complex_f (float initA, float initB);
     /*< Constructs an imaginary number from the given values. */
-
-    float getA () const;
-    /*< Gets the A value. */
-
-    float getB () const;
-    /*< Gets the A value. */
-
-    void setA (float Value);
-    /*< Sets the A value to the new Value. */
-
-    void setB (float Value);
-    /*< Sets the A value to the new Value. */
 
     float calcAngle ();
     /*< Gets the angle between A and B. */
@@ -61,31 +49,19 @@ class _KabukiSDK Imaginary_f
     /*< Prints this object to the terminal. */
 };
 
-class _KabukiSDK Imaginary_d
+class _KabukiSDK Complex_d
 /** An imaginary number stored as double types. */
 {
     public:
 
-    double A,       //< Vector A, imagined on the x-axis.
-        B;          //< Vector B, imagined on the y-axis.
+    double a,      //< Vector A, imagined on the x-axis.
+        b;          //< Vector B, imagined on the y-axis.
 
-    Imaginary_d ();
+    Complex_d ();
     /*< Constructs an uninitialized imaginary number. */
 
-    Imaginary_d (double Ax, double By);
+    Complex_d (double initA, double initB);
     /*< Gets and sets the A value. */
-
-    double getA () const;
-    /*< Gets the A value. */
-
-    double getB () const;
-    /*< Gets the A value. */
-
-    void setA (double Value);
-    /*< Sets the A value to the new Value. */
-
-    void setB (double Value);
-    /*< Sets the A value to the new Value. */
 
     double calcAngle ();
     /*< Gets the angle between A and B. */

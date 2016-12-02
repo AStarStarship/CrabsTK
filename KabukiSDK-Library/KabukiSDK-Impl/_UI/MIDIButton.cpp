@@ -22,7 +22,7 @@
 
 namespace _UI {
 
-MIDIButton::MIDIButton (const char* &newLabel, int newCC, int newChannel, int initValue, int newWordSize, 
+MIDIButton::MIDIButton (string &newLabel, int newCC, int newChannel, int initValue, int newWordSize, 
     int newMinValue, int newMaxValue, int newAction, int newStepSize, double newDoublePressTime) :
     ButtonControl (newAction, newStepSize, newDoublePressTime),
     MIDIControl (newLabel, newCC, newChannel, initValue, newMinValue,  newMaxValue, newWordSize, AVControl::MIDIButton)
@@ -40,15 +40,15 @@ void MIDIButton::toggle ()
 }
 
 /** Returns the label. */
-const char* MIDIButton::label () const
+string MIDIButton::label () const
 {
-    return Label::print (I2P::Terminal& slot);
+    return Label::print (Terminal& slot);
 }
 
 /** sets the label to the new label.
 @return Returns 0 upon success and 1 if the newLabel is too long.
-@see    Label::IsValid (char). */
-int MIDIButton::getLabel (const char* newLabel)
+@see    Label::isValid (char). */
+int MIDIButton::getLabel (string newLabel)
 {
     return Label::getLabel (newLabel);
 }
@@ -78,7 +78,7 @@ void MIDIButton::doublePress ()
 }
 
 /** Returns the header for toStringRow (). */
-const char* MIDIButton::headerString () const
+string MIDIButton::headerString () const
 {
     if (type () == AVControl::MIDIControl)
         return MIDIControl::headerString ();
@@ -86,15 +86,15 @@ const char* MIDIButton::headerString () const
 }
 
 /** Returns a text represenation of this Conrol in a row format without headers. */
-const char* MIDIButton::toStringRow () const
+string MIDIButton::toStringRow () const
 {
-    return MIDIControl::toStringRow () + PrintCentered (actionString (), 10) + "|" + PrintCentered (const char* (stepSize ()), 5) + "|";
+    return MIDIControl::toStringRow () + PrintCentered (actionString (), 10) + "|" + PrintCentered (string (stepSize ()), 5) + "|";
 }
 
 /** Returns a text represenation of this void*. */
-const char* MIDIButton::print (I2P::Terminal& slot) const
+string MIDIButton::print (Terminal& slot) const
 {
-    return MIDIControl::print (I2P::Terminal& slot);
+    return MIDIControl::print (Terminal& slot);
 }
 
 byte MIDIButton::getState ()
@@ -102,16 +102,16 @@ byte MIDIButton::getState ()
     return 0;
 }
 
-const char* MIDIButton::getState (byte Value)
+string MIDIButton::getState (byte Value)
 {
     return 0;
 }
 
-const char* MIDIButton::op (I2P::Terminal* slot, int index)
+string MIDIButton::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("MIDIButton", "_UI"): InvalidIndex ();

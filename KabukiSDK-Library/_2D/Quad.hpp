@@ -72,7 +72,7 @@ struct _KabukiSDK Quad_f
     inline void swap (Point_f p);
     /*< Swaps this object's Point with a. */
 
-    inline void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 
@@ -129,7 +129,7 @@ struct _KabukiSDK Quad_d
     inline void swap (Point_d& p);
     /*< Swaps this object's Point with a. */
 
-    inline void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 

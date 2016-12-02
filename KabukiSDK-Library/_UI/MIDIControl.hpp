@@ -23,7 +23,7 @@
 #include <KabukiSDK-Config.hpp>
 #include "AVControl.hpp"
 
-namespace _Dev { namespace Controls {
+namespace _UI {
 
 /** A controller for MIDI signals.
     
@@ -34,7 +34,7 @@ class _KabukiSDK MIDIControl : public AVControl
 
     static const int NumChannels = 16;              //< The number of MIDI channels.
 
-    MIDIControl (const char* &newLabel = "", int newCC = 0, int newChannel = 0, int initValue = 0, int newMinValue = 0,
+    MIDIControl (string &newLabel = "", int newCC = 0, int newChannel = 0, int initValue = 0, int newMinValue = 0,
         int newMaxValue = 127, int newWordSize = 7, int newAVControlType = AVControl::MIDIControl);
     //< Constructor.
     
@@ -62,13 +62,13 @@ class _KabukiSDK MIDIControl : public AVControl
     virtual void trigger ();
     //< Triggers the AVControl to fire.
 
-    virtual const char* headerString () const;
+    virtual string headerString () const;
     //< gets the header for toStringRow ().
     
-    virtual const char* toStringRow () const;
+    virtual string toStringRow () const;
     //< gets a column of the values without the labels.
     
-    virtual const char* op (I2P::Terminal* slot, int index);
+    virtual string op (Terminal* slot, int index);
     /*< Inter-process operations. */
 
     private:

@@ -22,7 +22,7 @@
 
 namespace _UI {
 
-MacroButton::MacroButton (const char* newLabel) 
+MacroButton::MacroButton (string newLabel) 
 :   AVControl (AVControl::MacroButton, newLabel, 0, 0, 0, 0, 0),
     numControls (0),
     controls (nullptr)
@@ -177,19 +177,19 @@ void MacroButton::toggle ()
     ButtonControl::toggle ();
 }
 
-const char* MacroButton::label () const
+string MacroButton::label () const
 {
-    return Label::print (I2P::Terminal& slot);
+    return Label::print (Terminal& slot);
 }
 
-int MacroButton::getLabel (const char* newLabel)
+int MacroButton::getLabel (string newLabel)
 {
     return Label::getLabel (newLabel);
 }
 
-const char* MacroButton::listString () const
+string MacroButton::listString () const
 {
-    const char* returnString = CharLine ('#', AVControl::MacroHeaderLength);
+    string returnString = CharLine ('#', AVControl::MacroHeaderLength);
 
     auto currentNode = controls;
     while (currentNode != nullptr)
@@ -200,33 +200,33 @@ const char* MacroButton::listString () const
     return returnString + CharLine ('#', AVControl::MacroHeaderLength);
 }
 
-const char* MacroButton::getState (byte Value)
+string MacroButton::getState (byte Value)
 {
     return 0;
 }
 
-const char* MacroButton::op (I2P::Terminal* slot, int index)
+string MacroButton::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("MacroButton", "_UI"): InvalidIndex ();
 }
 
-const char* MacroButton::headerString () const
+string MacroButton::headerString () const
 {
     return "|    AVControl    |Action|Step | CC  | Ch  |Value| min | max |Init |# Bits|\n";
 }
 
-const char* MacroButton::toStringRow () const
+string MacroButton::toStringRow () const
 {
     return AVControl::toStringRow () + "   |" + PrintCentered (actionString (), 10) + "|" +
-        PrintCentered (const char* (stepSize ()), 5) + "|\n" + listString ();
+        PrintCentered (string (stepSize ()), 5) + "|\n" + listString ();
 }
 
-const char* MacroButton::print (I2P::Terminal& slot) const
+string MacroButton::print (Terminal& slot) const
 {
     return CharLine ('~', AVControl::MacroHeaderLength) + "Macro Control:\n " + 
         CharLine ('~', AVControl::MacroHeaderLength) + AVControl::MacroHeader + "\n" + 
@@ -268,16 +268,16 @@ byte MacroButton::getState ()
     return 0;
 }
 
-const char* MacroButton::getState (byte Value)
+string MacroButton::getState (byte Value)
 {
     return 0;
 }
 
-const char* MacroButton::op (I2P::Terminal* slot, int index)
+string MacroButton::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("MacroButton", "_UI"): InvalidIndex ();

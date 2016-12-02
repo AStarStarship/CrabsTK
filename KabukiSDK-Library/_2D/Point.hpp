@@ -57,7 +57,7 @@ struct _KabukiSDK Point_f
     void swap (Point_f P);
     /*< Swaps this object's Point with a. */
 
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 
@@ -101,7 +101,7 @@ struct _KabukiSDK Point_d
     void swap (Point_d& P);
     /*< Swaps this object's Point with a. */
 
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 

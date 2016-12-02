@@ -20,20 +20,19 @@
  
 #pragma once
 
-#include <FreeI2P.hpp>
 #include <KabukiSDK-Config.hpp>
 
 namespace _Id {
 
-/** An instant messanging account. */
-class _KabukiSDK OAth
+class _KabukiSDK Relationship
+/** A type of relationship. */
 {
-    OAth ();
-    /*< Default constructor. **/
+    public:
+
+    Relationship ();
+    /*< Default constructor. */
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 };
 }   //< namespace _Id
-}   //< namespace _Search
-

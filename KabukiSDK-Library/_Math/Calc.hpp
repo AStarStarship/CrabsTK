@@ -310,10 +310,10 @@ class _KabukiSDK Calc
     Calc ();
     /*< Constructs a calculator. */
 
-    virtual const char* op (I2P::Terminal* slot, int index);
+    virtual string op (Terminal* slot, int index);
     /*< Inter-process operations. */
 
-    inline void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 

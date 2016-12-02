@@ -43,40 +43,40 @@ class _KabukiSDK HitList
     void sortTags ();
     /*< Sorts the tags alphabetically. */
 
-    void loadFromJSON (const char* json);
-    /*< Loads a patch from a JSON std::string. */
+    void loadFromJSON (string json);
+    /*< Loads a patch from a JSON string. */
 
-    const char* toJSON ();
-    /*< Converts a patch to a JSON std::string. */
+    string toJSON ();
+    /*< Converts a patch to a JSON string. */
 
-    bool findDuplicateName (const char* value);
+    bool findDuplicateName (string value);
     /*< Gets true if their is a duplicate patch name. */
 
-    const char* getCatagoryName (int index);
+    string getCatagoryName (int index);
     /*< Gets the catagory name at the given index. */
     
-    HitList* findTag (const char* tag);
+    HitList* findTag (string tag);
     /*< Gets a HitList of the given tag. */
     
-    HitList* findTags (::std::vector<::std::string> tags);
+    HitList* findTags (::vector<::string> tags);
     /*< Gets a HitList of the given tags. */
     
-    const char* getCatagoryImageName (const char* s);
+    string getCatagoryImageName (string s);
     /*< Ges the catagory image name. */
 
-    const char* getSubcatagoryImageName (const char* s);
+    string getSubcatagoryImageName (string s);
     /*< Ges the subcatagory image name. */
 
-    inline void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a Terminal. */
     
     private:
 
     long uid = 0;
     
-    ::std::vector<Hit&> patches;                //< The list of patches.
+    ::vector<Hit&> patches;                //< The list of patches.
     
-    ::std::vector<::std::string> catagories,    //< The list of catagories.
+    ::vector<::string> catagories,    //< The list of catagories.
         tags;                                   //< List of tag strings.
 
     void loadTestHits ();

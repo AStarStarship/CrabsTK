@@ -20,17 +20,21 @@
  
 #pragma once
 
+#include <KabukiSDK-Config.hpp>
+
 namespace _Id {
 
-/** An instant messanging account. */
 class OAthAccount
+/** An OAth account. 
+*/
 {
     public:
     
     OAthAccount ();
     /*< Simple default constructor. */
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 };
-}   //< namespace Id
+
+}   //< namespace _Id

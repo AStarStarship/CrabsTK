@@ -9,19 +9,19 @@
 
 #include <string>
 
-#include "LaYer.h"
-#include "Entity.h"
+#include "LaYer.hpp"
+#include "Entity.hpp"
 
 namespace _G {
 
 /**  */
-class _G_API Scene : public Layer
+class _KabukiSDK Scene : public Layer
 {
     public:
 	
 	Scene ();
 
-	Scene (const const char*& Description);
+	Scene (const string& Description);
 	
 	void Delete ();
 
@@ -33,7 +33,7 @@ class _G_API Scene : public Layer
 
 	void DeconstructScene (Layer* L);
     
-    void Print (I2P::Terminal& Slot);
+    void Print (Terminal& Slot);
     /*< Prints this object to a terminal. */
 };
 }   //< namespace _G

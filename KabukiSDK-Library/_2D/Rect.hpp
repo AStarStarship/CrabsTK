@@ -45,8 +45,7 @@ class _KabukiSDK Rect_f
 
     float getWidth () const;
     /*< Gets the width.
-        @pre    Input must be positive.
-    */
+        @pre    Input must be positive. */
 
     void setWidth (float value);
     /*< Sets the width.
@@ -54,8 +53,7 @@ class _KabukiSDK Rect_f
 
     float getHeight () const;
     /*< Gets and sets the height.
-        @pre    Input must be positive.
-    */
+        @pre    Input must be positive. */
 
     void setHeight (float value);
     /*< Sets the height.
@@ -76,10 +74,10 @@ class _KabukiSDK Rect_f
     void set (const Rect_f& r);
     /*< Sets this object's Point to the thisPositition. */
 
-    void set (const Point_f& p);
+    void setPosition (const Point_f& p);
     /*< sets the rectangle's (x,y) position to the given point. */
 
-    void set (const Vect_f& S);
+    void setDimensions (const Vect_f& S);
     /*< sets the rectangle's width and height to the given vector. */
 
     bool equals (const Rect_f& r) const;
@@ -97,7 +95,7 @@ class _KabukiSDK Rect_f
     void swap (Rect_f& r);
     /*< Swaps this object's Point with thisPoint. */
 
-    bool intersects (float R_X, float R_Y, float R_Width, float R_Height) const;
+    bool intersects (float thisX, float thisY, float thisWdith, float thisHeight) const;
     /*< Gets true of this Rectangle intersects/overlaps the given rectangle. */
 
     bool intersects (const Rect_f& r) const;
@@ -119,7 +117,7 @@ class _KabukiSDK Rect_f
 
     Rect_f& operator= (const Vect_f&);
 
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 
     private:
@@ -140,7 +138,7 @@ class _KabukiSDK Rect_d
     Rect_d (double initX = 0, double initY = 0, double initWidth = 0, double initHeight = 0);
     /*< Constructs a rectangle from the given data. */
 
-    Rect_d (const Point_d& p, const Vect_i& v);
+    Rect_d (const Point_d& p, const Vect_d& v);
     /*< Constructs . */
 
     explicit Rect_d (const Rect_d& r); 
@@ -180,10 +178,10 @@ class _KabukiSDK Rect_d
     void set (const Rect_d& r);
     /*< Sets this object's Point to the thisPositition. */
 
-    void set (const Point_d& p);
+    void setPosition (const Point_d& p);
     /*< sets the rectangle's (x,y) position to the given point. */
 
-    void set (const Vect_d& S);
+    void setDimensions (const Vect_d& S);
     /*< sets the rectangle's width and height to the given vector. */
 
     bool equals (const Rect_d& r) const;
@@ -207,16 +205,19 @@ class _KabukiSDK Rect_d
     bool intersects (const Rect_d& r) const;
     /*< Gets true of this Rectangle intersects/overlaps the given rectangle. */
 
-    void translate (const Vect_i& v);
+    void translate (const Vect_d& v);
     /*< Translates this object's Point by the given Point. */
 
     void translate (double dx, double dy);
     /*< Translates this object's Point by the given Point. */
 
-    Rect_d& PareOff (double pixels); 
+    Rect_d& PareOff (int pixels); 
     /*< Pares the specified pixels off the Rect_d. 
-    It's equal to x += pixels; y + pixels; width -= (pixels << 1); height -= (pixels << 1); 
+        It's equal to x += pixels; y + pixels; width -= (pixels << 1); height -= (pixels << 1); 
     */
+
+    inline void print (Terminal& slot);
+    /*< Prints this object to the terminal. */
 
     bool operator== (const Rect_d& r) const;
 
@@ -226,9 +227,9 @@ class _KabukiSDK Rect_d
 
     Rect_d& operator= (const Rect_d& r);
 
-    Rect_d& operator= (const Vect_i&);
+    Rect_d& operator= (const Vect_d&);
 
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 
     private:

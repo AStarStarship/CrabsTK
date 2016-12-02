@@ -27,7 +27,7 @@ TagLibrary::TagLibrary ()
 
 }
 
-const char* TagLibrary::getOrAddTag (const char* Tag)
+string TagLibrary::getOrAddTag (string Tag)
 {
     /*
     if (Tag.Compare ("")) return nullptr;
@@ -49,7 +49,7 @@ int TagLibrary::getNumTags ()
     return tags.size ();
 }
 
-void TagLibrary::print (I2P::Terminal& slot)
+void TagLibrary::print (Terminal& slot)
 {
 }
 

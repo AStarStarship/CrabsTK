@@ -33,7 +33,7 @@ class _KabukiSDK OSCControl : public AVControl
     public:
 
     /** Default constructor. */
-    OSCControl (const char* &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0,
+    OSCControl (string &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0,
         int newMaxValue = 255, int newWordSize = 8);
     OSCControl (const OSCControl& other);
     //< Copy contructor.
@@ -44,13 +44,13 @@ class _KabukiSDK OSCControl : public AVControl
     void Trigger () override;
     //< Triggers this DMX event to send out the target device.
 
-    const char* HeaderString () const override;
+    string HeaderString () const override;
     //< gets the header for toStringRow ().
 
-    const char* ToStringRow () const override;
+    string ToStringRow () const override;
     //< gets a column of the values without the labels.
     
-    virtual const char* op (I2P::Terminal* slot, int index);
+    virtual string op (Terminal* slot, int index);
     /*< Inter-process operations. */
 };
 

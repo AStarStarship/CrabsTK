@@ -220,7 +220,7 @@ void BCD::divide (double Value)
 
 }
 
-void BCD::print (I2P::Terminal& slot)
+void BCD::print (Terminal& slot)
 {
 }
 

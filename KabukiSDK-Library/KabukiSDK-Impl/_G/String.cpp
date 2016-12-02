@@ -3,7 +3,7 @@
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
-    @brief      This file contains the _2D.Vector_f interface.
+    @brief      This file contains the _2D::Vector_f interface.
 */
 
 using namespace _G;
@@ -44,7 +44,7 @@ String::String (int leftEdge, int bottomEdge, string initText, int initFontSize)
 }
 
 /**  */
-String::String (int leftEdge, int bottomEdge, string initText, _G.Color_i initTextColor):
+String::String (int leftEdge, int bottomEdge, string initText, _G.Color initTextColor):
     Cell (leftEdge, bottomEdge, 0, 0)
 {
     text = initText;
@@ -53,7 +53,7 @@ String::String (int leftEdge, int bottomEdge, string initText, _G.Color_i initTe
 }
 
 /**  */
-String::String (int leftEdge, int bottomEdge, string initText, _G.Color_i initTextColor, int initFontSize):
+String::String (int leftEdge, int bottomEdge, string initText, _G.Color initTextColor, int initFontSize):
     Cell (leftEdge, bottomEdge, 0, 0)
 {
     text = initText;
@@ -111,14 +111,14 @@ void String::RemoveTextAtIndex (int index1, int index2)
 }  
 
 /**  */
-void String::SetFont (const string& newFontName)
+void String::setFont (const string& newFontName)
 {
     fontName = newFontName;
     font = new Font (fontName, fontStyle, fontSize);
 }  
 
 /**  */
-void String::SetFont (Font& newFont)
+void String::setFont (Font& newFont)
 {
     if (newFont==null)
     {
@@ -128,39 +128,39 @@ void String::SetFont (Font& newFont)
 }  
 
 /**  */
-void String::SetFontSyle (int newStyle)
+void String::setFontSyle (int newStyle)
 {
     fontStyle = newStyle;
     font = new Font (fontName, fontStyle, fontSize);
 }  
 
 /**  */
-float String::GetFontSize ()
+float String::getFontSize ()
 {
     return fontSize;
 }
 
-void String::SetFontSize (float newSize)
+void String::setFontSize (float newSize)
 {
     fontSize = newSize;
     font = new Font (fontName, fontStyle, fontSize);
 }
 
 /**  */
-Color String::GetDefaultColor ()
+Color String::getDefaultColor ()
 {
     return DefaultTextColor;
 }
 
 /**  */
-void String::SetFontColor (Color newColor)
+void String::setFontColor (Color newColor)
 {
     colour = newColor;
 }  
 
-string String::GetString () { return string; }
+string String::getString () { return string; }
 
-int String::SetString (const string& S) { string = S }
+int String::setString (const string& S) { string = S }
 
 void String::Update ()
 {  
@@ -179,7 +179,7 @@ void String::UpdateHeight ()
     }  
 }
 
-int String::GetLength ()
+int String::getLength ()
 {
     return numCharictors;
 }

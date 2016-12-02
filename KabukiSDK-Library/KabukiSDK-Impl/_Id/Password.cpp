@@ -18,38 +18,65 @@
         limitations under the License.
 */
 
-#include "_Id/Password.hpp"
+#include <_Id/Password.hpp>
 
-using namespace _Id;
+#include <regex>
 
-Password::Password (const char* S = DefaultPassword, const char* aFormat)
+namespace _Id {
+
+Password::Password (const string& s)
 {
-    password = S;
+    change (s);
 }
 
-void Password::Change (const char* newPassword)
+Password::Password (const string& s, Grammer& aFormat)
+:   format (aFormat)
 {
-    if (!IsValid (newPassword)) return;
+    change (s);
+}
+
+Grammer& Password::getGrammer ()
+{
+    return format;
+}
+
+void Password::setGrammer (const Grammer& g)
+{
+    format = g;
+}
+
+bool Password::change (const string& newPassword)
+{
+    bool valid = isValid (newPassword);
+    if (!valid) return false;
     password = newPassword;
+    return false;
 }
 
-bool PasswordIsValid (const char* S)
+bool Password::isValid (const string& S)
 {
-    if (S.Length < MinLength || S.Length > MaxLength)
+    if (S.length () < MinLength || S.length () > MaxLength)
         return false;
 
-    Regex r = new Regex ();
-    if (r.IsMatch (S)) return true;
+    //regex r;
+    //if (r.isMatch (S)) return true;
 
     return false;
 }
 
-const char* Password::Encript ()
+string Password::encript ()
 {
     return password;
 }
 
-void Password::print (I2P::Terminal& slot)
+bool Password::equals (const Password& p)
 {
-    slot.prints (password);
+    return password == p.password;
 }
+
+void Password::print (Terminal& slot)
+{
+    slot.prints (password.c_str ());
+}
+
+}   //< namespace _Id

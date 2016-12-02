@@ -75,31 +75,31 @@ byte ControlGrid::getState ()
     return 0;
 }
 
-const char* ControlGrid::getState (byte Value)
+string ControlGrid::getState (byte Value)
 {
     return 0;
 }
 
-const char* ControlGrid::op (I2P::Terminal* slot, int index)
+string ControlGrid::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("ControlGrid", "_UI"): InvalidIndex ();
 }
 
-const char* ControlGrid::print (I2P::Terminal& slot) const
+string ControlGrid::print (Terminal& slot) const
 {
-    const char* returnString = CharLine ('-', AVControl::MacroHeaderLength) + "Control Grid: rows = " + const char* (_numRows) + 
-        ", columns = " + const char* (_numColumns) + "\n" + CharLine ('-', AVControl::MacroHeaderLength) + 
+    string returnString = CharLine ('-', AVControl::MacroHeaderLength) + "Control Grid: rows = " + string (_numRows) + 
+        ", columns = " + string (_numColumns) + "\n" + CharLine ('-', AVControl::MacroHeaderLength) + 
         AVControl::MacroHeader + "\n" + CharLine ('-', AVControl::MacroHeaderLength);
 
-    Logger::outputDebugString ("!!!!_numRows = " + const char* (_numRows));
+    Logger::outputDebugString ("!!!!_numRows = " + string (_numRows));
 
     for (int i = 0; i < _numRows; ++i)
-        returnString += "Row " + const char* (i) + "\n" + rows[i].print (I2P::Terminal& slot);
+        returnString += "Row " + string (i) + "\n" + rows[i].print (Terminal& slot);
     
     return returnString + CharLine ('-', AVControl::MacroHeaderLength);
 }

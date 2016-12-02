@@ -24,7 +24,7 @@
 #include <FreeI2P.hpp>
 #include "AVControl.hpp"
 
-namespace _Dev { namespace Controls {
+namespace _UI {
 
 class _KabukiSDK ButtonControl
 /** A hardware or GUI button.
@@ -46,7 +46,7 @@ class _KabukiSDK ButtonControl
     /** An enumerated list of the differnt types of actions ButtonControls can perform. */
     enum Actions { Momentary = 0, Latching, PresureSensitive  };
 
-    static const char* ActionStrings[];    //< An array of strings that corrispond to the Actions enum list.
+    static string ActionStrings[];    //< An array of strings that corrispond to the Actions enum list.
 
     ButtonControl (int newgetButtonAction = Momentary, int newStepSize = 0, double newDoublePressTime = 
         DefaultDoublePressTime);
@@ -90,7 +90,7 @@ class _KabukiSDK ButtonControl
     void setGetButtonAction (int newAction);
     //< sets the button Action to the newAction.
     
-    const char* getActionString () const;
+    string getActionString () const;
     /*< Gets a string version of the buttonAction ().
         @see    Actions */
 
@@ -108,15 +108,15 @@ class _KabukiSDK ButtonControl
     virtual void doublePress () = 0;
     //< Triggered when a user "double clicks" a button.
 
-    virtual const char* getLabel () const = 0;
+    virtual string getLabel () const = 0;
     //< gets the label.
     
-    virtual int setLabel (const char* newLabel) = 0;
+    virtual int setLabel (string newLabel) = 0;
     /** sets the label to the new label.
         @return gets 0 upon success and 1 if the newLabel is too long.
-        @see    Label::IsValid (char). */
+        @see    Label::isValid (char). */
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
     
     private:

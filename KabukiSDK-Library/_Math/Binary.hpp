@@ -65,28 +65,28 @@ inline void toBinary (char* Result, uint64_t Value);
     @pre    The Result must be at least 9 bytes in length! 
 */
 
-int8_t binaryToInt8 (const char* Value);
+int8_t binaryToInt8 (string Value);
 /*< Converts the given string into an int8_t. */
 
-uint8_t binaryToUInt8 (const char* Value);
+uint8_t binaryToUInt8 (string Value);
 /*< Converts the given string into an uint8_t. */
 
-int16_t binaryToInt16 (const char* Value);
+int16_t binaryToInt16 (string Value);
 /*< Converts the given string into an int16_t. */
 
-uint16_t binaryToUInt16 (const char* Value);
+uint16_t binaryToUInt16 (string Value);
 /*< Converts the given string into an uint16_t. */
 
-int32_t binaryToInt32 (const char* Value);
+int32_t binaryToInt32 (string Value);
 /*< Converts the given string into an int32_t. */
 
-uint32_t binaryToUInt32 (const char* Value);
+uint32_t binaryToUInt32 (string Value);
 /*< Converts the given string into an uint32_t. */
 
-int64_t binaryToInt64 (const char* Value);
+int64_t binaryToInt64 (string Value);
 /*< Converts the given string into an int64_t. */
 
-uint64_t binaryToUInt64 (const char* Value);
+uint64_t binaryToUInt64 (string Value);
 /*< Converts the given string into an uint64_t. */
 
 }   //< namespace _

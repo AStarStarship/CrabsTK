@@ -20,69 +20,36 @@
  
 #pragma once
 
-#include <FreeI2P.hpp>
 #include <KabukiSDK-Config.hpp>
 
 namespace _Id {
 
-/** An email address. */
+bool isValidEmailAddress (const string& s);
+/*< Returns true if this is a valid email address. */
+
 class _KabukiSDK EmailAddress
+    /** An email address. */
 {
-    /** Default constructor. **/
-    EmailAddress (string address)
-    {
+    public:
 
-    }
+    EmailAddress (const string& address);
+    /*< Default constructor. */
 
-    /** Sets the email address to a string. */
-    bool SetAddress (string a)
-    {
-        invalid = false;
-        if (const char*.IsNullOrEmpty (a)) return false;
-
-        /// Use IdnMapping class _KabukiSDK to convert Unicode domain names.
-        try
-        {
-            a = ::std::regex_replace (a, @" (@) (.+)$", this.DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds (200));
-        }
-        catch (RegexMatchTimeoutException) { return false; }
-
-        if (invalid) return false;
-
-        // Return true if a is in valid e-mail format.
-        try
-        {
-            return Regex.IsMatch (a,
-                @"^ (? ("") ("".+? (?<!\\)""@)| (([0-9a-z] ((\. (?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*) (?<=[0-9a-z])@))" +
-                @" (? (\[) (\[ (\d{1,3}\.){3}\d{1,3}\])| (([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
-                RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds (250));
-        }
-        catch (RegexMatchTimeoutException) { return false; }
-    }
-
-    string Address { get; set; }         //< Stores the email address.
-
-    bool invalid = false;
-
-    string DomainMapper (Match match)
-    {
-        // IdnMapping class _KabukiSDK with default property values.
-        IdnMapping idn = new IdnMapping ();
-
-        string domainName = match.Groups[2].Value;
-        try
-        {
-            domainName = idn.GetAscii (domainName);
-        }
-        catch (ArgumentException) {
-            invalid = true;
-        }
-        return match.Groups[1].Value + domainName;
-    }
+    string& getAddress ();
+    /*< Gets the address string. */
     
-    void print (I2P::Terminal& slot);
-    /*< Prints this object to a terminal. */
-};
-}   //< namespace _Id
-}   //< namespace _Search
+    void setAddress (const string& s);
+    /*< Attempts to set the address to the new string. */
 
+    //string mapToDomain (Match match);
+    /*< Maps a domain to the given map??? */
+    
+    inline void print (Terminal& slot);
+    /*< Prints this object to a terminal. */
+
+    private:
+
+    string address;     //< The email address.
+};
+
+}   //< namespace _Id

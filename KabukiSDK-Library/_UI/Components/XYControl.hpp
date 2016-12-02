@@ -79,7 +79,7 @@ class _KabukiSDK XYTouchpad: public Component
         @pre Value < top_bounds.
     */
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:

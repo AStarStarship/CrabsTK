@@ -35,7 +35,7 @@ void hexToString (char* result, int value);
 void hexToString (char* result, byte value);
 /*< Converts a give Value to a hex string. */
 
-int hexToInt (const char* binaryHex);
+int hexToInt (string binaryHex);
 /*< Converts . */
 
 byte hexToByte (char value);

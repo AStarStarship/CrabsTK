@@ -6,7 +6,7 @@
 */
 
 #include <string>
-#include "_G/Font.h"
+#include "_G/Font.hpp"
 
 namespace _G {
 
@@ -17,36 +17,36 @@ Font::Font ()
     attributes = Plain;
 }
 
-Font::Font (std::string Name, int Size, int Attributes)
+Font::Font (string Name, int Size, int Attributes)
 {
     /// Initialize as the default, then modify.
     name = DefaultFont;
     size = DefaultSize;
     attributes = Plain;
 
-    SetName (Name);
+    setName (Name);
     SetSize (Size);
     SetAttributes (Attributes);
 }
 
-std::string Font::GetName () { return name; }
+string Font::getName () { return name; }
 
-bool Font::SetName (const std::string& S)
+bool Font::setName (const string& S)
 {
     name = S;
 }
 
-int Font::GetAtributes () { return attributes; }
+int Font::getAtributes () { return attributes; }
 
-int Font::SetFont (cont Font& F) { attributes = F; }
+int Font::setFont (cont Font& F) { attributes = F; }
 
-float Font::GetSize () { return size; }
+float Font::getSize () { return size; }
 
-int Font::SetSize (float Value) { size = Value; }
+int Font::setSize (float Value) { size = Value; }
 
-std::string Font::ToString ()
+string Font::toString ()
 {
-	std::string s = "Font: \"";
+	string s = "Font: \"";
 	
 	switch (attributes)
 	{

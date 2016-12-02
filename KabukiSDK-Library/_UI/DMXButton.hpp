@@ -31,7 +31,7 @@ class _KabukiSDK DMXButton : public DMXControl, public ButtonControl
 {
     public:
 
-    DMXButton (const char* &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0, 
+    DMXButton (string &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0, 
         int newMaxValue = 255, int newWordSize = 8, int initAction = ButtonControl::Momentary, int newStepSize = 0, 
         double newDoublePressTime = ButtonControl::DefaultDoublePressTime);
     /*< Default constructor. */
@@ -42,14 +42,14 @@ class _KabukiSDK DMXButton : public DMXControl, public ButtonControl
     int getMaxWordValue () const override;
     /*< Gets the max value of a AVControl word. */
 
-    const char* getLabel () const override;
+    string getLabel () const override;
     /*< Gets the label. */
 
-    int setLabel (const char* newLabel) override; 
+    int setLabel (string newLabel) override; 
     /*< Sets the label to the new label.
         @return gets 0 upon success and 1 if the newLabel is too 
             long.
-        @see    Label::IsValid (char). 
+        @see    Label::isValid (char). 
     */
 
     void toggle () override;
@@ -64,13 +64,13 @@ class _KabukiSDK DMXButton : public DMXControl, public ButtonControl
     void doubleClick () override {}
     /*< Triggered when a user "double clicks" a button. */
 
-    const char* getHeaderString () const override;
+    string getHeaderString () const override;
     /*< Gets the header for toStringRow (). */
 
-    const char* toStringRow () const override;
+    string toStringRow () const override;
     /*< Gets a column of the values without the labels. */
     
-    inline void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 };
 

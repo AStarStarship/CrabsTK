@@ -64,7 +64,7 @@ void KeyboardEvent::trigger ()
 }
 
 /** Returns a text representation of this void*. */
-const char* KeyboardEvent::print (I2P::Terminal& slot) const
+string KeyboardEvent::print (Terminal& slot) const
 {
     return "KeyPress: " +_keyPress.getTextDescription ();
 }
@@ -74,16 +74,16 @@ byte KeyboardEvent::getState ()
     return 0;
 }
 
-const char* KeyboardEvent::getState (byte Value)
+string KeyboardEvent::getState (byte Value)
 {
     return 0;
 }
 
-const char* KeyboardEvent::op (I2P::Terminal* slot, int index)
+string KeyboardEvent::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("KeyboardEvent", "_UI"): InvalidIndex ();

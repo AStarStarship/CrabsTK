@@ -22,6 +22,10 @@
 
 namespace _Id {
 
+const string getDefaultPassword () { "password"; }
+
+const string getDefaultPasswordFormat () { return "^[a-zA-Z0-9]*$"; }
+
 Grammer::Grammer ()
 {
     numIllegalCharRanges = 0;
@@ -64,7 +68,7 @@ Grammer::Grammer (const Grammer& initState)
  */
 }
 
-bool Grammer::isValid (const char* aString)
+bool Grammer::isValid (const string& s)
 {
     /*
        int stringLength = strlen (thisstring);
@@ -84,7 +88,7 @@ bool Grammer::isValid (const char* aString)
 
 int Grammer::getMinLength () { return minLength; }
 
-bool Grammer::getMinLength (int value)
+bool Grammer::setMinLength (int value)
 {
     if (value < 0 || value >= maxLength) return false;
     minLength = value;
@@ -93,7 +97,7 @@ bool Grammer::getMinLength (int value)
 
 int Grammer::getMaxLength () { return maxLength; }
 
-bool Grammer::getMinLength (int value)
+bool Grammer::setMinLength (int value)
 {
     if (value < minLength) return false;
     maxLength = value;
@@ -122,19 +126,10 @@ bool Grammer::makeMandatory (int startIndex, int stopIndex, int numInstances, st
     return true;
 }
 
-const char* Grammer::getState (byte Value)
+void Grammer::print (Terminal& slot)
 {
-    return 0;
-}
+    slot.print ("Grammer: ");
 
-const char* Grammer::op (I2P::Terminal* slot, int index)
-{
-    switch (Index)
-    {
-        case 0: return I2P::NumMembers (0);
-    }
-    
-    return enquery ("Grammer", "_Id"): InvalidIndex ();
 }
 
 }   //< namespace _Id

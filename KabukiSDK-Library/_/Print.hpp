@@ -22,7 +22,7 @@
 
 namespace _ {
 
-void printLine (const char* Token = "-", int ColumnWidth = 80);
+void printLine (string Token = "-", int ColumnWidth = 80);
 /*< Prints a line with the given token and number of columns to the debug
     stream. */
 

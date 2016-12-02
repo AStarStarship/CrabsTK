@@ -22,89 +22,6 @@
 
 namespace _2D {
 
-Vect_i::Vect_i () 
-{
-    /// Nothing to do here!
-}
-
-Vect_i::Vect_i (int initX, int initY)
-{
-    x = initX;
-    y = initY;
-}
-
-void Vect_i::set (int newX, int newY)
-{
-    x = newX;
-    y = newY;
-}
-
-void Vect_i::set (const Vect_i& V)
-{
-    x = V.x;
-    y = V.y;
-}
-
-bool Vect_i::equals (const Vect_i& V) const
-{
-    if (x != V.x || y != V.y)
-        return false;
-    return true;
-}
-
-void Vect_i::swap (Vect_i V)
-{
-    int tempX = V.x,
-        tempY = V.y;
-
-    V.x = x;
-    V.y = y;
-
-    x = tempX;
-    y = tempY;
-}
-
-bool Vect_i::operator== (const Vect_i& P) const
-{
-    return ((x == P.x) && (y == P.y));
-}
-
-bool Vect_i::operator!= (const Vect_i& P) const
-{
-    return ((x != P.x) || (y != P.y));
-}
-
-Vect_i Vect_i::operator- (const Vect_i& P) const
-{
-    return { x - P.x, y - P.y };
-}
-
-Vect_i Vect_i::operator+ (const Vect_i& P) const
-{
-    return { x + P.x, y + P.y };
-}
-
-Vect_i& Vect_i::operator-= (const Vect_i& P)
-{
-    x -= P.x;
-    y -= P.y;
-    return *this;
-}
-
-Vect_i& Vect_i::operator+= (const Vect_i& P)
-{
-    x += P.x;
-    y += P.y;
-    return *this;
-}
-
-void Vect_i::print (I2P::Terminal& slot)
-{
-
-}
-
-//---------------------------------------------------------------------------------------------------------------------
-
 Vect_f::Vect_f () 
 {
     /// Nothing to do here!
@@ -189,7 +106,90 @@ Vect_f& Vect_f::operator+= (const Vect_f& P)
     return *this;
 }
 
-void Vect_f::print (I2P::Terminal& slot)
+void Vect_f::print (Terminal& slot)
+{
+
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+Vect_d::Vect_d () 
+{
+    /// Nothing to do here!
+}
+
+Vect_d::Vect_d (double initX, double initY)
+{
+    x = initX;
+    y = initY;
+}
+
+void Vect_d::set (double newX, double newY)
+{
+    x = newX;
+    y = newY;
+}
+
+void Vect_d::set (const Vect_d& V)
+{
+    x = V.x;
+    y = V.y;
+}
+
+bool Vect_d::equals (const Vect_d& V) const
+{
+    if (x != V.x || y != V.y)
+        return false;
+    return true;
+}
+
+void Vect_d::swap (Vect_d V)
+{
+    double tempX = V.x,
+        tempY = V.y;
+
+    V.x = x;
+    V.y = y;
+
+    x = tempX;
+    y = tempY;
+}
+
+bool Vect_d::operator== (const Vect_d& P) const
+{
+    return ((x == P.x) && (y == P.y));
+}
+
+bool Vect_d::operator!= (const Vect_d& P) const
+{
+    return ((x != P.x) || (y != P.y));
+}
+
+Vect_d Vect_d::operator- (const Vect_d& P) const
+{
+    return { x - P.x, y - P.y };
+}
+
+Vect_d Vect_d::operator+ (const Vect_d& P) const
+{
+    return { x + P.x, y + P.y };
+}
+
+Vect_d& Vect_d::operator-= (const Vect_d& P)
+{
+    x -= P.x;
+    y -= P.y;
+    return *this;
+}
+
+Vect_d& Vect_d::operator+= (const Vect_d& P)
+{
+    x += P.x;
+    y += P.y;
+    return *this;
+}
+
+void Vect_d::print (Terminal& slot)
 {
 
 }

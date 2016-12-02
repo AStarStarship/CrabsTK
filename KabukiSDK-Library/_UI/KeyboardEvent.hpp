@@ -23,7 +23,7 @@
 #include <KabukiSDK-Config.hpp>
 #include "Event.hpp"
 
-namespace _Dev { namespace Controls {
+namespace _UI {
 
 /*  Triggers a keyboard event on the target system.
     A Macro can trigger a one or a combination of a MIDI Event, a keybaord shortcut. 
@@ -50,7 +50,7 @@ class _KabukiSDK KeyboardEvent : public Event:, public IObject
     void Trigger () override;
     //< Triggers the KeyboardEvent in the host OS.
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:

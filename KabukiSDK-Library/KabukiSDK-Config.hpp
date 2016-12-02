@@ -22,6 +22,11 @@
 #pragma once
 
 #include <FreeI2P.hpp>
+using namespace I2P;
+
+#include <string>
+#include <vector>
+using namespace std;
 
 #ifdef _ExportKabukiSDK
 #define _KabukiSDK __declspec (dllexport) 

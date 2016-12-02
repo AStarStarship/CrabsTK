@@ -6,7 +6,7 @@
     @brief      This file contains the _G::Cell class.
 */
 
-#include "_G/Cell.h"
+#include "_G/Cell.hpp"
 namespace _G {}
 
 Cell::Cell (int LeftEdge, int TopEdge, int Width, int height) :
@@ -24,19 +24,19 @@ void Cell::Draw (const string& S, int x, int y, float thisAngle)
 
 }
 
-Color_i Cell::GetBGColor () { return backgroundColor; }
-void Cell::SetBGColor (Color_i C) { backgroundColor = C }
+Color Cell::getBGColor () { return backgroundColor; }
+void Cell::setBGColor (Color C) { backgroundColor = C }
 
-Color_i Cell::GetFGColor () { return forgroundColor; }
-void Cell::SetFGColor (Color_i C) { forgroundColor = C }
+Color Cell::getFGColor () { return forgroundColor; }
+void Cell::setFGColor (Color C) { forgroundColor = C }
 
 
-void Cell::SetColor (Color_i newColor)
+void Cell::setColor (Color newColor)
 {
 
 }
 
-_G::Font& Cell::GetFont () { return font; }
+_G::Font& Cell::getFont () { return font; }
 void 
 
 void Cell::DrawImage (Image thisImage, int leftEdge, int topEdge)
@@ -54,17 +54,17 @@ void Cell::DrawLine (_G::Cell canvas, double startX, double startY, double endX,
 
 }
 
-void Cell::DrawLine (_G::Cell canvas, _G::Color_i thisColor, int startX, int startY, int endX, int endY)
+void Cell::DrawLine (_G::Cell canvas, _G::Color thisColor, int startX, int startY, int endX, int endY)
 {
 
 }
 
-void Cell::DrawRectangle (_G::Cell canvas, _G::Color_i_i color, int leftEdge, int topEdge, int width, int height)
+void Cell::DrawRectangle (_G::Cell canvas, _G::Color_i color, int leftEdge, int topEdge, int width, int height)
 {
 
 }
 
-void Cell::DrawRectangle (_G::Cell canvas, _G::Color_i_i color, int leftEdge, int topEdge, int width, int height, int thickness)
+void Cell::DrawRectangle (_G::Cell canvas, _G::Color_i color, int leftEdge, int topEdge, int width, int height, int thickness)
 {
 
 }
@@ -159,17 +159,17 @@ void Cell::FillRound3dRectangle (int x, int y, int width, int height, int arcWid
 
 }
 
-void Cell::SetClip (int x, int y, int width, int height)
+void Cell::setClip (int x, int y, int width, int height)
 {
 
 }
 
-void Cell::SetClip (_2D::Entity thisShape)
+void Cell::setClip (_2D::Entity thisShape)
 {
 
 }
 
-void Cell::SetXORMode (Color newColor)
+void Cell::setXORMode (Color newColor)
 {
 
 }
@@ -349,12 +349,12 @@ Cell::DrawLine (_G::Cell canvas, float startX, float startY, float endX, float e
 	DrawLinePreClipped (drawSpace, color, (int)startX, (int)startY, (int)endX, (int)endY);
 }
 
-void Cell::DrawLine (_G::Cell canvas, _G::Color_i_i color, int leftEdge, int topEdge, int width, int height)
+void Cell::DrawLine (_G::Cell canvas, _G::Color_i color, int leftEdge, int topEdge, int width, int height)
 {
 	drawLine (drawSpace, color, (float)leftEdge, (float)topEdge, (float)width, (float)height);
 }
 
-void Cell::DrawRectangle (_G::Cell canvas, _G::Color_i_i color, int leftEdge, int topEdge, int width, int height)
+void Cell::DrawRectangle (_G::Cell canvas, _G::Color_i color, int leftEdge, int topEdge, int width, int height)
 {
 	for (int y = 0; y < height; y++)
 		drawLine (drawSpace, color, leftEdge, topEdge, width, height);

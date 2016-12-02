@@ -96,7 +96,7 @@ void Point_f::swap (Point_f P)
     Y = tempY;
 }
 
-void Point_f::print (I2P::Terminal& slot)
+void Point_f::print (Terminal& slot)
 {
 
 }
@@ -109,7 +109,7 @@ Point_d::Point_d ()
 }
 
 Point_d::Point_d (double x, double y)
-    :   X (x), 
+:   X (x), 
     Y (y) 
 { 
 }
@@ -180,7 +180,7 @@ void Point_d::swap (Point_d& P)
     Y = tempY;
 }
 
-void Point_d::print (I2P::Terminal& slot)
+void Point_d::print (Terminal& slot)
 {
 
 }

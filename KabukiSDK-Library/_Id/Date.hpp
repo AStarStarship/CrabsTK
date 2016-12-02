@@ -20,24 +20,30 @@
  
 #pragma once
 
-#include <FreeI2P.hpp>
 #include <KabukiSDK-Config.hpp>
 
 namespace _Id {
 
-/** An instant messanging account. */
 class _KabukiSDK Date
+/*< A date that will be used to attach event data to. */
 {
     public:
     
-    Date ()
-    /*< Default constructor. **/
-    {
+    Date (time_t aTime);
+    /*< Default constructor. */
 
-    }
+    time_t getTime ();
+    /*< Gets the date time. */
+
+    void setTime (time_t t);
+    /*< Sets the date to the Unix timestamp. */
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
+
+    private:
+
+    time_t time;        //< The data time.
 };
 
 }   //< namespace _Id

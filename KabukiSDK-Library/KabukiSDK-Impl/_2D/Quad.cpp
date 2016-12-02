@@ -73,7 +73,7 @@ void Quad_f::set (float x, float y, float width, float height)
 
 void Quad_f::set (const Rect_f& r)
 {
-    set (r.x, r.y, r.width, r.height);
+    set (r.getX (), r.getY (), r.getWidth (), r.getHeight ());
 }
 
 void Quad_f::set (const Quad_f& q)
@@ -146,7 +146,7 @@ void Quad_f::swap (Quad_f q)
     y = tempY;
 }
 
-void Quad_f::print (I2P::Terminal& slot)
+void Quad_f::print (Terminal& slot)
 {
 
 }
@@ -222,7 +222,7 @@ void Quad_d::swap (Quad_d& q)
     y = tempY;
 }
 
-void Quad_d::print (I2P::Terminal& slot)
+void Quad_d::print (Terminal& slot)
 {
 
 }

@@ -43,9 +43,9 @@ void hexToString (char* Result, uint8_t Value)
     ; // Write me!
 }
 
-int hexToToInt (const char* binaryHex)
+int hexToToInt (string binaryHex)
 {/*
-    if (binaryHex.Length > 4)
+    if (binaryHex.length () > 4)
         return 15;
     
     int amount=128,

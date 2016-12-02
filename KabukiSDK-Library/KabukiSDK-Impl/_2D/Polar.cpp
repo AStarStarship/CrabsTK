@@ -25,7 +25,7 @@
 namespace _2D {
 
 Polar_f::Polar_f (float angle, float radius)
-    :   Angle (angle),
+:   Angle (angle),
     Radius (radius)
 {
 }
@@ -42,7 +42,7 @@ float Polar_f::calcMagnitude ()
     return sqrt (angle * angle + radius * radius);
 }
 
-void Polar_f::print (I2P::Terminal& slot)
+void Polar_f::print (Terminal& slot)
 {
 
 }
@@ -65,7 +65,7 @@ double Polar_d::calcMagnitude ()
     return sqrt (angle * angle + radius * radius);
 }
 
-void Polar_d::print (I2P::Terminal& slot)
+void Polar_d::print (Terminal& slot)
 {
 
 }

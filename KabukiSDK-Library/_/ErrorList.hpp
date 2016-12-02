@@ -54,13 +54,13 @@ class _KabukiSDK ErrorList
     int getMaxNumErrors ();
     /*< Gets the number of errors. */
 
-    void report (const char* s);
+    void report (string s);
     /** Reports an error with the given message. */
 
-    const char** getErrors ();
+    string* getErrors ();
     /*< Gets the list of errors. */
     
-    inline void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:
@@ -68,7 +68,7 @@ class _KabukiSDK ErrorList
     int numErrors,          //< The number of errors.
         maxNumErrors;       //< The max number of errors.
 
-    const char** errors;    //< Pointer to an array of pointers to error strings.
+    string* errors;    //< Pointer to an array of pointers to error strings.
 };
 
 }   //< namespace _

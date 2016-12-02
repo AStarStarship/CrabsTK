@@ -46,7 +46,7 @@ class EventNode
     void trigger (EventSequence* source);
     /*< Triggers the event. */
 
-    inline void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
     
     private:
@@ -67,7 +67,7 @@ class EventSequence : public _::IEvent
     void trigger ();
     /*< Triggers the event. */
 
-    inline void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 
     private:

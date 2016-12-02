@@ -129,7 +129,7 @@ class _KabukiSDK BCD
     void divide (double Value);
     /*< divides the given Value to this BCD. */
 
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints the BCD to the terminal. */
 
     private:

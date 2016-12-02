@@ -123,28 +123,28 @@ byte ControlArray::getState ()
     return 0;
 }
 
-const char* ControlArray::getState (byte Value)
+string ControlArray::getState (byte Value)
 {
     return 0;
 }
 
-const char* ControlArray::op (I2P::Terminal* slot, int index)
+string ControlArray::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("ControlArray", "_UI"): InvalidIndex ();
 }
 
-const char* ControlArray::print (I2P::Terminal& slot) const
+string ControlArray::print (Terminal& slot) const
 {
-    const char* returnString = CharLine ('~', AVControl::MacroHeaderLength) + "Num Controls: " + const char* (numControls) + 
+    string returnString = CharLine ('~', AVControl::MacroHeaderLength) + "Num Controls: " + string (numControls) + 
         "\n" + CharLine ('~', AVControl::MacroHeaderLength) + AVControl::MacroHeader + "\n" + 
         CharLine ('~', AVControl::MacroHeaderLength);
 
-    Logger::outputDebugString ("numControls = " + const char* (numControls));
+    Logger::outputDebugString ("numControls = " + string (numControls));
     for (int i = 0; i < numControls; ++i)
     {
         auto currentControl = controls[i];

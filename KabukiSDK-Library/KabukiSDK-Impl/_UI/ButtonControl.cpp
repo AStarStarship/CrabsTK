@@ -22,7 +22,7 @@
 
 namespace _UI {
 
-const char* ButtonControl::ActionStrings[] = { "Momentary", "Latching", "Presure Sensitive" };
+string ButtonControl::ActionStrings[] = { "Momentary", "Latching", "Presure Sensitive" };
 
 const double ButtonControl::MinDoubleClickTime = 0.01;
 const double ButtonControl::MaxDoubleClickTime = 0.02;
@@ -110,7 +110,7 @@ void ButtonControl::getgetButtonAction (int newAction)
     buttonAction = newAction;
 }
 
-const char* ButtonControl::ActionString () const
+string ButtonControl::ActionString () const
 {
     return ActionStrings[buttonAction];
 }
@@ -128,16 +128,16 @@ byte ButtonControl::getState ()
     return 0;
 }
 
-const char* ButtonControl::getState (byte Value)
+string ButtonControl::getState (byte Value)
 {
     return 0;
 }
 
-const char* ButtonControl::op (I2P::Terminal* slot, int index)
+string ButtonControl::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("ButtonControl", "_UI"): InvalidIndex ();

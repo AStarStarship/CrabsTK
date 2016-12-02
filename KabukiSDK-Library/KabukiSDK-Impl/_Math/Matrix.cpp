@@ -32,7 +32,7 @@ Matrix::~Matrix ()
 
 }
 
-void Matrix::print (I2P::Terminal& slot)
+void Matrix::print (Terminal& slot)
 {
 
 }

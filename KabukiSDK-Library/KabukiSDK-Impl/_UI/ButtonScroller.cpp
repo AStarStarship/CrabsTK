@@ -23,7 +23,7 @@
 namespace _UI {
 
 /** Default constructor. */
-ButtonScroller::ButtonScroller (const char* initLabel, int newNumVisibleButtons) : 
+ButtonScroller::ButtonScroller (string initLabel, int newNumVisibleButtons) : 
     ButtonScroller (initLabel),
     currentIndex (0),
     buttons ()
@@ -166,28 +166,28 @@ byte ButtonScroller::getState ()
     return 0;
 }
 
-const char* ButtonScroller::getState (byte Value)
+string ButtonScroller::getState (byte Value)
 {
     return 0;
 }
 
-const char* ButtonScroller::op (I2P::Terminal* slot, int index)
+string ButtonScroller::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("ButtonScroller", "_UI"): InvalidIndex ();
 }
 
-/** Returns a const char* represenation of this void*. */
-const char* ButtonScroller::print (I2P::Terminal& slot) const
+/** Returns a string represenation of this void*. */
+string ButtonScroller::print (Terminal& slot) const
 {
     int i;       // Looping variable.
 
-    const char* stringRep = "Controls:::ButtonScroller " + label () + 
-        "\n_numVisibleButtons: " + const char* (numVisibleButtons) + "   size (): " + const char* (numButtons ()) + 
+    string stringRep = "Controls:::ButtonScroller " + label () + 
+        "\n_numVisibleButtons: " + string (numVisibleButtons) + "   size (): " + string (numButtons ()) + 
         "\nVisible Buttons: ";
 
     for (i=0; i < numVisibleButtons; ++i)

@@ -64,16 +64,16 @@ __Inline void convertToHexString (char* buffer, uint16_t value);
 __Inline void convertToHexString (char* buffer, uint8_t value);
 /*< converts the given value to a string. */
 
-__Inline int8_t convertHexToInt8 (const char* value);
+__Inline int8_t convertHexToInt8 (string value);
 /*< converts from hex string to an int. */
 
-__Inline int16_t convertHexToInt16 (const char* value);
+__Inline int16_t convertHexToInt16 (string value);
 /*< converts from hex string to an int. */
 
-__Inline int32_t convertHexToInt32 (const char* value);
+__Inline int32_t convertHexToInt32 (string value);
 /*< converts from hex string to an int. */
 
-__Inline int64_t convertHexToInt64 (const char* value);
+__Inline int64_t convertHexToInt64 (string value);
 /*< converts from hex string to an int. */
 
 }   //< namespace _

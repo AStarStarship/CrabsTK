@@ -20,61 +20,63 @@
 
 #pragma once
 
-#include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include "Grammer.hpp"
 
-namespace _Id
-{
-/**  */
+namespace _Id {
+
+const string getDefaultPassword ();
+/*< Gets the default password. */
+
+const string getDefaultPasswordFormat ();
+/*< Gets the default password Grammer format. */
+
 class _KabukiSDK Password
+/*< An account password. 
+    @todo Add salt!
+*/
 {
-    const int MinLength = 4,
-        MaxLength = 12;
-
-    const char* DefaultFormat = "^[a-zA-Z0-9]*$",
-        DefaultPassword = "password";
-
-    /** . */
-    Password (const char* aPassword = DefaultPassword, const char* aFormat = DefaultFormat)
-    {
-        password = aPassword;
-    }
+    public:
     
-    /**  */
-    void Change (const char* newPassword)
-    {
-        if (!IsValid (newPassword)) return;
-        password = newPassword;
-    }
-    
-    /** Gets true if the given password is valid. */
-    static bool IsValid (const char* aPassword)
-    {
-        if (aPassword.Length < MinLength || aPassword.Length > MaxLength)
-            return false;
+    enum {
+        MinLength = 4,      //< The minimum length of a password.
+        MaxLength = 255     //< The maximum length of a password.
+    };
 
-        Regex r = new Regex ();
-        if (r.IsMatch (aPassword)) return true;
+    Password (const string& aPassword);
+    /*< Attemps to create a password from the given password with the default format. 
+        If the password does not match the default format, the default password will be used.
+    */
 
-        return false;
-    }
+    Password (const string& aPassword, Grammer& aFormat);
+    /*< Attemps to create a password from the given password with the required format. 
+        If the password does not match the format, the default password will be used.
+    */
+
+    Grammer& getGrammer ();
+    /*< Gets a reference to the password format grammer. */
+
+    void setGrammer (const Grammer& g);
+    /*< Sets the password format grammer. */
     
-    /**  */
-    const char* Encript ()
-    {
-        return password;
-    }
+    bool change (const string& newPassword);
+    /*< Attempts to set the password and returns a non-zero error message upon failure. */
     
-    void print (I2P::Terminal& slot);
+    static bool isValid (const string& aPassword);
+    /*< Gets true if the given password is valid. */
+    
+    string encript ();
+    /*< Entcypts the password with a salt.  */
+
+    bool equals (const Password& p);
+    /*< Returns true if this password equals the given one. */
+    
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
-    
-    /**  */
-    const char* print (I2P::Terminal& slot)
-    {
-        return password;
-    }
 
-    const char* rules,
-        password;
+    private:
+
+    Grammer& format;            //< The password format.
+    string password;            //< The password;
 };
-}
+
+}   //< namespace _Id

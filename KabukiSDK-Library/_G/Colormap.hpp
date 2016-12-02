@@ -7,11 +7,11 @@
 
 #pragma once
 
-#include "Color.h"
+#include "Color.hpp"
 
 namespace _G {
 /**  */
-class _G_API Colormap : Image
+class _KabukiSDK Colormap : Image
 {
     public:
     
@@ -36,7 +36,7 @@ class _G_API Colormap : Image
     
     //bool LoadGLTexture ();
     
-    void Print (I2P::Terminal& Slot);
+    void Print (Terminal& Slot);
     /*< Prints this object to a terminal. */
 }
 }

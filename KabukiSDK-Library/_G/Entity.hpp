@@ -3,35 +3,35 @@
     @author     Cale McCollough
     @copyright  CopYright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
-    @brief      This file contains the _2D.Vector_f interface.
+    @brief      This file contains the _2D::Vector_f interface.
 */
 
-#include "_2D/Rect_i.h"
-#include "Cell.h"
+#include "_2D/Rect_i.hpp"
+#include "Cell.hpp"
 
 namespace _G {
 
-class _G_API Entity_f : public Cell
+class _KabukiSDK Entity_f
 /**  */
 {
     public:
     
-    Entity_f (const char* Name, float X = 0.0f, float Y = 0.0f, float Width = 0.0f, float Height = 0.0f);
+    Entity_f (string Name, float X = 0.0f, float Y = 0.0f, float Width = 0.0f, float Height = 0.0f);
     /*< Constructs an entity from the given bounds and name. */
 
-    /** Returns the bounds of the entitY. */
-    _2D::Rect_i Bounds () = 0;
+    /** Returns the bounds of the entity. */
+    _2D::Rect_i getBounds () = 0;
 
-    const char* GetName ();
+    string getName ();
     /*< Gets the name of the string. */
 
-    void SetName  (const char* Name);
+    void setName  (string Name);
     /*< Sets the name of the string. */
 
-    Rect_f& GetBounds ();
+    Rect_f& getBounds ();
     /*< Returns the rectuangular counts of the entity. */
 
-    /**  */
-    virtual void Draw (const Cell& C) = 0;
+    virtual void draw (const Cell& c) = 0;
+    /*<  */
 };
 }

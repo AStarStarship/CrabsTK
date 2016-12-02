@@ -22,8 +22,40 @@
 
 namespace _Id {
 
+static PrivilageLevel minPrivailageLevel,
+    maxPrivilageLevel;
+
+PrivilageLevel getMinPrivilageLevel ()
+{
+    return minPrivilageLevel;
+}
+
+PrivilageLevel setMinPrivilageLevel ()
+{
+    return maxPrivilageLevel;
+}
+
+bool setPrvilageLevelRange (PrivilageLevel min, PrivilageLevel max)
+{
+
+}
+
 Privilage::Privilage ()
 {
+
 }
+
+PrivilageLevel Privilage::getPrivilageLevel ()
+{
+    return privilageLevel;
+}
+
+bool Privilage::setPrivilageLevel (PrivilageLevel l)
+{
+    if (l < minPrivilageLevel) return false;
+    privilageLevel = l;
+}
+
+void Privilage::print (Terminal& slot)
 
 }   //< namespace _Id

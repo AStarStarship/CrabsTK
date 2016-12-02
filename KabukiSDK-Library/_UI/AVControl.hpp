@@ -45,10 +45,10 @@ class _KabukiSDK AVControl, public Label, public Event
         MacroButton
     };
 
-    static const char* MacroHeader;        //< const char* for printing multiple AVControls with other opclasses.
+    static string MacroHeader;        //< string for printing multiple AVControls with other opclasses.
     static const int MacroHeaderLength;     //< The length of the MacroHeader
 
-    AVControl (int newType, const char* &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0,
+    AVControl (int newType, string &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0,
         int newMaxValue = 1, int newWordSize = 1);
     /*< Default constructor. */
 
@@ -61,8 +61,8 @@ class _KabukiSDK AVControl, public Label, public Event
     int getType () const;
     /*< Gets what type of control this is. */
 
-    const char* getTypeString () const;
-    /*< Gets a const char* that says what type of AVControl this is. */
+    string getTypeString () const;
+    /*< Gets a string that says what type of AVControl this is. */
 
     int getChannel () const;
     /*< Gets the output channel of this control. */
@@ -142,13 +142,13 @@ class _KabukiSDK AVControl, public Label, public Event
     @return gets 0 if both Controls are the same.
     @return gets 1 if the controls are not identical. */
 
-    virtual const char* getHeaderString () const;
+    virtual string getHeaderString () const;
     /*< Gets the header for toStringRow (). */
 
-    virtual const char* ToStringRow () const;
+    virtual string ToStringRow () const;
     /*< Gets a column of the values without the labels. */
 
-    virtual const char* print (I2P::Terminal& slot) const;
+    virtual string print (Terminal& slot) const;
     /*< Prints this object to a terminal. */
 
     private:

@@ -20,7 +20,7 @@
  
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include "Privilege.hpp"
 
 namespace _Id {
 
@@ -30,23 +30,27 @@ class _KabukiSDK EntityGroup
 {
     public:
 
-    EntityGroup (const char* Name);
+    EntityGroup (const char* aName);
     /*< A group of entities such as people or businesses. */
 
     bool isValid ();
     /*< Returns true if this is a valid group of entities. */
 
-    const char* getName ();
+    string& getName ();
     /*< Gets the name of the entity group. */
 
-    void setName (const char* newName);
+    void setName (const string& s);
     /*< Sets the name of the entity group. */
 
-    void applyPrivilages (Privilages& P);
+    void applyPrivilage (const Privilage& p);
     /*< Applies privilages to the entity group. */
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
+
+    private:
+
+    vector<Entity*> entities;    //< A vector if Entity pointers.
 };
 
 }   //< namespace _Id

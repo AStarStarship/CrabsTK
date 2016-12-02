@@ -22,7 +22,7 @@
 
 namespace _UI {
 
-DMXButton::DMXButton (const char* &newLabel, int newChannel, int initValue, int newMinValue, int newMaxValue, 
+DMXButton::DMXButton (string &newLabel, int newChannel, int initValue, int newMinValue, int newMaxValue, 
     int newWordSize, int newAction, int newStepSize, double newDoublePressTime) :
     ButtonControl (newAction, newStepSize, newDoublePressTime),
     DMXControl (newLabel, newChannel, initValue, newMinValue,  newMaxValue, newWordSize, AVControl::DMXButton)
@@ -45,15 +45,15 @@ void DMXButton::toggle ()
 }
 
 /** Returns the label. */
-const char* DMXButton::getLabel () const
+string DMXButton::getLabel () const
 {
-    return DMXButton::print (I2P::Terminal& slot);
+    return DMXButton::print (Terminal& slot);
 }
 
 /** sets the label to the new label.
     @return Returns 0 upon success and 1 if the newLabel is too long.
-    @see    DMXButton::IsValid (char). */
-int DMXButton::getLabel (const char* newLabel)
+    @see    DMXButton::isValid (char). */
+int DMXButton::getLabel (string newLabel)
 {
     return DMXButton::getLabel (newLabel);
 }
@@ -69,42 +69,42 @@ byte DMXButton::getState ()
     return 0;
 }
 
-const char* DMXButton::getState (byte Value)
+string DMXButton::getState (byte Value)
 {
     return 0;
 }
 
-const char* DMXButton::op (I2P::Terminal* slot, int index)
+string DMXButton::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("DMXButton", "_UI"): InvalidIndex ();
 }
 
 /** Returns the header for toStringRow (). */
-const char* DMXButton::getHeaderString () const
+string DMXButton::getHeaderString () const
 {
     return DMXControl::headerString () + "   |  Action  |Step |";
 }
 
 /** Returns a text represenation of this Conrol in a row format without headers. */
-const char* DMXButton::ToStringRow () const
+string DMXButton::toStringRow () const
 {
     if (type () == AVControl::DMXControl)
     {
         return DMXControl::toStringRow ();
     }
 
-    return DMXControl::ToStringRow () + "   |" + PrintCentered (actionString (), 10) + "|" + PrintCentered (const char* (stepSize ()), 5) + "|";
+    return DMXControl::toStringRow () + "   |" + PrintCentered (actionString (), 10) + "|" + PrintCentered (string (stepSize ()), 5) + "|";
 }
 
 /** Returns a text represenation of this void*. */
-const char* DMXButton::print (I2P::Terminal& slot) const
+string DMXButton::print (Terminal& slot) const
 {
-    return DMXControl::print (I2P::Terminal& slot);
+    return DMXControl::print (Terminal& slot);
 }
 
 }   //< namespace _UI

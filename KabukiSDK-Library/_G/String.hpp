@@ -7,93 +7,100 @@
 
 #include <string>
 
-#include "Cell.h"
-#include "Color.h"
-#include "Font.h"
+#include "Cell.hpp"
+#include "Color.hpp"
+#include "Font.hpp"
 
 namespace _G {
     
 /** A drawable string. */
-class _G_API String : public Cell
+class _KabukiSDK String : public Cell
 {
 	public:
 	
     const _G::Color DefaultTextColor = _G::Color.black;
 
-    const const char* DefaultFontName = "Times New Roman";
+    const string DefaultFontName = "Times New Roman";
 
     const int DefaultFontSize = 12,
         DefalutFontStyle = Font.Plain;
 
     const Font DefaultFont = new Font (DefaultFontName, DefalutFontStyle, DefaultFontSize);
+    /*<  */
 
-    /**  */
     String ();
+    /*<  */
 
     String (int leftEdge, int bottomEdge);
+    /*<  */
+
+    String (int leftEdge, int bottomEdge, string initText);
+    /*<  */
+
+    String (int leftEdge, int bottomEdge, string initText, int initFontSize);
+    /*<  */
+
+    String (int leftEdge, int bottomEdge, string initText, _G::Color_i initTextColor);
+    /*<  */
+
+    String (int leftEdge, int bottomEdge, string initText, _G::Color_i initTextColor, int initFontSize);
+    /*<  */
+
+    void addText (string newString);
+    /*<  */
+
+    string addTextOverflow (string newString);
+    /*<  */
+
+    bool insertText (string newString, int here);
+    /*<  */
+
+    void removeCharAtIndex (int index1);
+    /*<  */
+
+    void removeTextAtIndex (int index1, int index2);
+    /*<  */
+
+    void setFont (string newFontName);
+    /*<  */
+
+    void setFont (Font& newFont);
+    /*<  */
+
+    void getFontSyle (int newStyle);
+    /*<  */
+
+    int getFontSize ();
+    /*<  */
+
+    void setFontSize (int newSize);
+    /*<  */
+
+    Color getDefaultColor ();
+    /*<  */
+
+    void setFontColor (Color newColor);
 
     /**  */
-    String (int leftEdge, int bottomEdge, const char* initText);
+    string getString ();
+    /*<  */
 
-    /**  */
-    String (int leftEdge, int bottomEdge, const char* initText, int initFontSize);
+    void setString (const string s);
+    /*<  */
 
-    /**  */
-    String (int leftEdge, int bottomEdge, const char* initText, _G::Color_i initTextColor);
+	void update ();
+    /*<  */
 
-    /**  */
-    String (int leftEdge, int bottomEdge, const char* initText, _G::Color_i initTextColor, int initFontSize);
+    void updateHeight ();
+    /*<  */
 
-    /**  */
-    void AddText (const char* newString);
+    int getLength ();
+    /*<  */
 
-    /**  */
-    const char* AddTextOverflow (const char* newString);
+    void draw (const Cell& C);
+    /*<  */
 
-    /**  */
-    bool InsertText (const char* newString, int here);
-
-    /**  */
-    void RemoveCharAtIndex (int index1);
-
-    /**  */
-    void RemoveTextAtIndex (int index1, int index2);
-
-    /**  */
-    void SetFont (const char* newFontName);
-
-    /**  */
-    void SetFont (Font& newFont);
-
-    /**  */
-    void SetFontSyle (int newStyle);
-
-    /**  */
-    int GetFontSize ();
-
-    void SetFontSize (int newSize);
-
-    /**  */
-    Color GetDefaultColor ();
-
-    /**  */
-    void SetFontColor (Color newColor);
-
-    /**  */
-    const char* GetString ();
-	
-    void SetString (const const char* s);
-    
-
-    /**  */
-	void Update ();
-
-    /**  */
-    void UpdateHeight ();
-    int Length ();
-    void Draw (const Cell& C);
-
-	    private:
+	private:
 	
     int fontSize,
         fontStyle,
@@ -101,7 +108,7 @@ class _G_API String : public Cell
         fontHeight,
         numCharictor;
 
-    const char* fontName;
+    string fontName;
 
     Color color;
     Font font;

@@ -46,7 +46,7 @@ class Fraction_f
     void SetDenominator (float Value);
     /*< Sets the denominator. */
 
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 
     private:

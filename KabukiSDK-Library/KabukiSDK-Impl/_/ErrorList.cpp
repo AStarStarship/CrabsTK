@@ -37,15 +37,15 @@ int ErrorList::getNumErrors () { return numErrors; }
 
 int ErrorList::getMaxNumErrors () { return maxNumErrors; }
 
-void ErrorList::report (const char* s)
+void ErrorList::report (string s)
 {
     if (numErrors >= maxNumErrors) return;
     errors[numErrors++] = s;
 }
 
-const char** ErrorList::getErrors () { return errors; }
+string* ErrorList::getErrors () { return errors; }
     
-void ErrorList::print (I2P::Terminal& slot)
+void ErrorList::print (Terminal& slot)
 {
     for (int i = 0; i < numErrors; ++i)
         printLine (errors[i]);

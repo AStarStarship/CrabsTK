@@ -1,5 +1,5 @@
 /** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Id/Person.hpp
+    @file    /.../KabukiSDK-Impl/_Id/Date.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -17,30 +17,30 @@
         See the License for the specific language governing permissions and
         limitations under the License.
 */
- 
-#pragma once
 
-#include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include <_Id/Date.hpp>
 
 namespace _Id {
 
-class _KabukiSDK UID_i
+Date::Date (time_t aTime)
+:   time (aTime)
 {
-    virtual int GetUID () = 0;
-    //< Gets the Unique identifier number.
 
-    virtual const char* SetUID (int Value) = 0;
-    //< Sets the Unique identifier number.
+}
 
-    const char* GetName () = 0;
-    //< Gets the ID name.
+time_t Date::getTime ()
+{
+    return time;
+}
 
-    const char* setName (const char* Name) = 0;
-    //< Sets the ID name.
+void Date::setTime (time_t t)
+{
+    time = t;
+}
     
-    void print (I2P::Terminal& slot);
-    /*< Prints this object to a terminal. */
-};
-}   //< namespace _Id
+void Date::print (Terminal& slot)
+{
+    slot.print ("Date: ");
+}
 
+}   //< namespace _Id

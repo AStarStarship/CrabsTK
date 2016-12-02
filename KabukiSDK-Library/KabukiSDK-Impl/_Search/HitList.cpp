@@ -35,8 +35,8 @@ bool HitList::addHit (Hit& p)
 
     /// Check the tags for duplicates and add to tags if no duplicates exist.
     /*
-    const char* tagCatagory = p.getCatagory ();
-    for_each (patches.begin (), patches.end (), [](std::string s) { if (s == tagCatagory) return true; }
+    string tagCatagory = p.getCatagory ();
+    for_each (patches.begin (), patches.end (), [](string s) { if (s == tagCatagory) return true; }
     tags.push_back (tagCatagory);
     sort (tags.begin (), tags.end ());
     return true;
@@ -49,7 +49,7 @@ void HitList::sortTags ()
     //sort (tags.begin (), tags.end ());
 }
 
-void HitList::loadFromJSON (const char* json)
+void HitList::loadFromJSON (string json)
 {
     /*
     try
@@ -63,15 +63,15 @@ void HitList::loadFromJSON (const char* json)
     }
     catch (Exception e)
     {
-        assert (false, e.print (I2P::Terminal& slot));
+        assert (false, e.print (Terminal& slot));
     }
      */
 }
 
-const char* HitList::toJSON ()
+string HitList::toJSON ()
 {
     /*
-    ::std::string json = "[";
+    ::string json = "[";
     int count = patches.size ();
     for (int i = 0; i < count; i++)
     {
@@ -84,7 +84,7 @@ const char* HitList::toJSON ()
     return 0;
 }
 
-bool HitList::findDuplicateName (const char* value)
+bool HitList::findDuplicateName (string value)
 {
     /*
     for_each (patches.begin (), patches.end (), [](Hit& hit) 
@@ -96,14 +96,14 @@ bool HitList::findDuplicateName (const char* value)
     return false;
 }
 
-const char* HitList::getCatagoryName (int index)
+string HitList::getCatagoryName (int index)
 {
     if (index >= catagories.size ()) return nullptr;
     
     return catagories[index].c_str ();
 }
 
-HitList* HitList::findTag (const char* tag)
+HitList* HitList::findTag (string tag)
 {
     /*
     vector<Hit> patchList;
@@ -116,10 +116,10 @@ HitList* HitList::findTag (const char* tag)
     return 0;
 }
 
-HitList* HitList::findTags (::std::vector<::std::string> tags)
+HitList* HitList::findTags (::vector<::string> tags)
 {
     /*
-    ::std::vector<Hit> patchList;
+    ::vector<Hit> patchList;
     for_each (patches.begin (), patches.end (), [] (Hit& p)
     {
         if (patch.ContainsTags (tags)) patchList.add (patch);
@@ -129,23 +129,23 @@ HitList* HitList::findTags (::std::vector<::std::string> tags)
     return 0;
 }
 
-const char* HitList::getCatagoryImageName (const char* s)
+string HitList::getCatagoryImageName (string s)
 {
     if (s == nullptr || s == "") return nullptr;
-    ::std::regex regularExpression ("\s+");
-    ::std::string result = "Catagory" + ::std::regex_replace (s, regularExpression, "");// + ".png";
+    ::regex regularExpression ("\s+");
+    ::string result = "Catagory" + ::regex_replace (s, regularExpression, "");// + ".png";
     return result.c_str ();
 }
 
-const char* HitList::getSubcatagoryImageName (const char* s)
+string HitList::getSubcatagoryImageName (string s)
 {
     if (s == nullptr || s == "") return nullptr;
-    ::std::regex regularExpression ("\s+");
-    ::std::string result = "Subcatagory" + ::std::regex_replace (s, regularExpression, "");// + ".png";
+    ::regex regularExpression ("\s+");
+    ::string result = "Subcatagory" + ::regex_replace (s, regularExpression, "");// + ".png";
     return result.c_str ();
 }
 
-void HitList::print (I2P::Terminal& slot)
+void HitList::print (Terminal& slot)
 {
 }
 

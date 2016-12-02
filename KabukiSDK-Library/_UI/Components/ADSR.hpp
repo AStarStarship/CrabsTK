@@ -36,11 +36,11 @@ class _KabukiSDK ADSR
     virtual byte GetState ();
     /*< Gets the Inter-process state. */
     
-    virtual const char* SetState (byte Value);
+    virtual string SetState (byte Value);
     /*< Sets the Inter-process state.
-        @return returns 0 upon success, and an I2P::Errror upon failure. */
+        @return returns 0 upon success, and an Errror upon failure. */
     
-    virtual const char* op (I2P::Terminal* slot, int index);
+    virtual string op (Terminal* slot, int index);
     /*< Inter-process operations. */
 }
 

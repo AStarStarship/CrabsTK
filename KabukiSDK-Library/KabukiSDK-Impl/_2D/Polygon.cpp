@@ -5,8 +5,11 @@
 
 #pragma once
 
-#include "_2D/Polygon_i.h"
-#include "_2D/Calc.h"
+#include <_2D/Polygon.hpp>
+
+#include <_Math/Calc.hpp>
+
+using namespace _Math;
 
 namespace _G {
 
@@ -18,20 +21,12 @@ Polygon_f::Polygon_f()
 
 Polygon_f::Polygon_f (int xPoints[], int yPoints[], int numPoints) 
 {
-    // Fix 4489009: should throw IndexOutofBoundsException instead
-    // of OutofMemoryException if numPoints is huge and > {x,y}points.length
-    if (numPoints > xPoints.length || numPoints > yPoints.length) {
-        throw new IndexOutOfBoundsException("numPoints > xPoints.length || "+
-                                            "numPoints > yPoints.length");
-    }
-    // Fix 6191114: should throw NegativeArraySizeException with
-    // negative numPoints
     if (numPoints < 0)
     {
-        throw new NegativeArraySizeException("numPoints < 0");
+        xPoints = new int[MinLength];
+        yPoints = new int[MinLength];
     }
-    // Fix 6343431: Applet compatibility problems if arrays are not
-    // exactly numPoints in length
+
     numPoints = numPoints;
     xPoints = Arrays.copyOf (xPoints, numPoints);
     yPoints = Arrays.copyOf (yPoints, numPoints);
@@ -55,31 +50,27 @@ void Polygon_f::translate (int deltaX, int deltaY)
         xPoints[i] += deltaX;
         yPoints[i] += deltaY;
     }
-    if (bounds != nullptr)
-    {
-        bounds.translate (deltaX, deltaY);
-    }
+
+    bounds.translate (deltaX, deltaY);
 }
 
-void Polygon_f::calculateBounds (int xPoints[], int yPoints[], int numPoints)
+void Polygon_f::calculateBounds (int* xPoints, int* yPoints, int numPoints)
 {
-    int boundsMinX = Integer.MAX_VALUE;
-    int boundsMinY = Integer.MAX_VALUE;
-    int boundsMaxX = Integer.MIN_VALUE;
-    int boundsMaxY = Integer.MIN_VALUE;
+    int boundsMinX = ~(0);
+    int boundsMinY = ~(0);
+    int boundsMaxX = (~(0)) & (1 << (sizeof (int) * 8- 1));
+    int boundsMaxY = (~(0)) & (1 << (sizeof (int) * 8 - 1));
 
     for (int i = 0; i < numPoints; ++i)
     {
         int x = xPoints[i];
-        boundsMinX = _Math::min (boundsMinX, x);
-        boundsMaxX = _Math::max (boundsMaxX, x);
+        boundsMinX = min (boundsMinX, x);
+        boundsMaxX = max (boundsMaxX, x);
         int y = yPoints[i];
-        boundsMinY = _Math::min (boundsMinY, y);
-        boundsMaxY = _Math::max (boundsMaxY, y);
+        boundsMinY = min (boundsMinY, y);
+        boundsMaxY = max (boundsMaxY, y);
     }
-    bounds = new Rectangle (boundsMinX, boundsMinY,
-                           boundsMaxX - boundsMinX,
-                           boundsMaxY - boundsMinY);
+    return Rect_f (boundsMinX, boundsMinY, boundsMaxX - boundsMinX, boundsMaxY - boundsMinY);
 }
 
 void Polygon_f::updateBounds (int x, int y)
@@ -91,7 +82,7 @@ void Polygon_f::updateBounds (int x, int y)
     }
     else
     {
-        bounds.width = _Math::max (bounds.width, x - bounds.x);
+        bounds.width = max (bounds.width, x - bounds.x);
         // bounds.x = bounds.x;
     }
 
@@ -102,7 +93,7 @@ void Polygon_f::updateBounds (int x, int y)
     }
     else
     {
-        bounds.height = _Math::max (bounds.height, y - bounds.y);
+        bounds.height = max (bounds.height, y - bounds.y);
         // bounds.y = bounds.y;
     }
 }
@@ -132,7 +123,7 @@ void Polygon_f::addPoint (int x, int y)
     }
 }
 
-Rectangle Polygon_f::getBounds()
+Rect_f Polygon_f::getBounds()
 {
     return getBoundingBox();
 }
@@ -148,7 +139,7 @@ bool contains (int x, int y)
     return contains((float) x, (float) y);
 }
 
-Rect2D_f Polygon_f::getBounds2D()
+_2D::Rect_f Polygon_f::getBounds2D()
 {
     return getBounds();
 }
@@ -235,7 +226,7 @@ bool Polygon_f::intersects (float x, float y, float w, float h)
     return (cross == nullptr || !cross.isEmpty());
 }
 
-bool Polygon_f::intersects (Rect2D_f r)
+bool Polygon_f::intersects (_2D::Rect_f r)
 {
     return intersects (r.getX(), r.getY(), r.getWidth(), r.getHeight());
 }
@@ -250,7 +241,7 @@ bool Polygon_f::contains (float x, float y, float w, float h)
     return (cross != nullptr && cross.covers (y, y+h));
 }
 
-bool Polygon_f::contains (Rect2D_f r)
+bool Polygon_f::contains (_2D::Rect_f r)
 {
     return contains (r.getX(), r.getY(), r.getWidth(), r.getHeight());
 }
@@ -313,7 +304,7 @@ void PolygonPathIterator_f::getNext()
     index++;
 }
 
-int PolygonPathIterator_f::currentSegment (float[] coords)
+int PolygonPathIterator_f::currentSegment (float* coords)
 {
     if (index >= poly.numPoints) {
         return SEG_CLOSE;
@@ -326,7 +317,7 @@ int PolygonPathIterator_f::currentSegment (float[] coords)
     return (index == 0 ? SEG_MOVETO : SEG_LINETO);
 }
 
-int PolygonPathIterator_f::currentSegment (float[] coords)
+int PolygonPathIterator_f::currentSegment (float* coords)
 {
     if (index >= poly.numPoints) {
         return SEG_CLOSE;

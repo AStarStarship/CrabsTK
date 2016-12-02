@@ -22,80 +22,37 @@
 
 namespace _Id {
 
-User::User (const char* aName, const char* APassoword)
+User::User (const string& aName, const string& aPassoword)
+:   name (aName),
+    password (aPassword)
 {
-    if (IsValid (AUser))
-        return;
-
-    username = AUsername;
-    password = AUser;
-
     //activeAccounts = new Kabuki Software Development Kit.Game.Account.List ();
 }
 
-string User::getName { return username; }
+Handle& User::getUsername () { return name; }
 
-string User::getUser ()
+Password& User::getPassword ()
 {
     return password;
 }
 
-string User::EncryptUser ()
+bool User::verify (const string& aUsername, const string& aUser)
 {
-    return "";
+    //return isValidUsername (aUsername);
+    return false;
 }
 
-bool User::IsValid ()
+bool User::equals (const User& u)
 {
-    if (username == nullptr || username == "")
-        return false;
-    return true;
+    return (name.equals (u.name) && password.equals (u.password));
 }
 
-bool User::Verify (const char* aUsername, const char* aUser)
+void User::print (Terminal& slot)
 {
-    return username == aUsername;
-}
-
-bool User::Login (Account& thisAccount)
-{
-    if (!thisAccount.Users ().contains (this))
-        return false;
-    activeAccounts.add (thisAccount);
-    return true;
-}
-
-bool User::equals (User& aUser)
-{
-    if (username != aUser.Name || password != aUser.password) //< The aUser is not this user
-        return false;
-    return true;
-}
-
-byte User::getState ()
-{
-    return 0;
-}
-
-const char* User::getState (byte Value)
-{
-    return 0;
-}
-
-const char* User::op (I2P::Terminal* slot, int index)
-{
-    switch (Index)
-    {
-        case 0: return I2P::NumMembers (0);
-    }
-    
-    return enquery ("User", "_Id"): InvalidIndex ();
-}
-
-const char* User::print (I2P::Terminal& slot)
-{
-    std::string returnString = "User Name: " + username + " User: " + password;
-    return returnString.c_str ();
+    slot.print ("User Name: ");
+    name.print (slot);
+    slot.print (" Password: ");
+    password.print (slot);
 }
 
 }   //< namespace _Id

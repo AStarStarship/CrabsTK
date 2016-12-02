@@ -5,19 +5,19 @@
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt.
 */
 
-#include "Cell.h"
-#include "Point.h"
+#include "Cell.hpp"
+#include "Point.hpp"
 
 namespace _G {
 /**  */
-class _G_API Elipse
+class _KabukiSDK Elipse
 {
     public:
     
     /** Constructor. */
     Elipse (_2D::Point_i relativePosition, _2D::Point_i dimensions);
     
-    void Print (I2P::Terminal& Slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 };
 }

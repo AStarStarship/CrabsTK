@@ -48,7 +48,7 @@ void EventNode::trigger (EventSequence* source)
     iEvent->trigger ();
 }
 
-void EventNode::print (I2P::Terminal& slot)
+void EventNode::print (Terminal& slot)
 {
     if (iEvent == nullptr)
     {
@@ -72,11 +72,11 @@ void EventSequence::trigger ()
     head->trigger (this);
 }
 
-void EventSequence::print (I2P::Terminal& slot)
+void EventSequence::print (Terminal& slot)
 {
     if (head == nullptr) return;
     
-    static const index_t header[] = { 2, I2P::STR, 20, I2P::TMU };
+    static const index_t header[] = { 2, STR, 20, TMU };
 
     slot.print (header, "", eventTime);
 

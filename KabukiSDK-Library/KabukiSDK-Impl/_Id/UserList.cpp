@@ -26,16 +26,19 @@ UserList::UserList ()
 {
 }
 
-int UserList::NumUsers { get { return users.size (); } }
-
-bool UserList::add (User newUser)
+int UserList::getNumUsers ()
 {
-    if (!newUser.IsValid ()) return false;
-    users.add (newUser);
+    users.size (); 
+}
+
+bool UserList::add (const User& newUser)
+{
+    if (!newUser.isValid ()) return false;
+    users.push_back (User (newUser));
     return true;
 }
 
-bool UserList::contains (const char* username)
+bool UserList::contains (string username)
 {
     for (int index = 0; index < users.size (); index++)
     {
@@ -55,9 +58,9 @@ bool UserList::contains (User& U)
     return false;
 }
 
-User UserList::Find (const char* username)
+User UserList::Find (string username)
 {
-    if (username.Length == 0)
+    if (username.length () == 0)
     {
         return nullptr;//static website guest account
     }
@@ -72,34 +75,34 @@ byte UserList::getState ()
     return 0;
 }
 
-const char* UserList::getState (byte Value)
+string UserList::getState (byte Value)
 {
     return 0;
 }
 
-const char* UserList::op (I2P::Terminal* slot, int index)
+string UserList::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("UserList", "_Id"): InvalidIndex ();
 }
 
-const char* UserList::print (I2P::Terminal& slot)
+string UserList::print (Terminal& slot)
 {
-    /// This method creates a string of the users.print (I2P::Terminal& slot) 
+    /// This method creates a string of the users.print (Terminal& slot) 
     /// strings separated by spaces
 
-    std::string returnString;
+    string returnString;
     returnString = "Number of Users: " + users.size () + "\n";
 
     for (int index = 0; index < users.size (); index++)
     {
         /// Iterated through the indexs array and write the
-        /// print (I2P::Terminal& slot) strings to the returnString
-        returnString += "User " + (index + 1) + ": " + users[index].print (I2P::Terminal& slot) + "\n";
+        /// print (Terminal& slot) strings to the returnString
+        returnString += "User " + (index + 1) + ": " + users[index].print (Terminal& slot) + "\n";
     }
 
     return returnString;

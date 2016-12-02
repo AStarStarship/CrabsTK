@@ -20,24 +20,22 @@
 
 #pragma once
 
-#include "_2D/Polygon_i.h"
+#include "Rect.hpp"
 
-namespace _G {
+namespace _2D {
     
-class _G_API Polygon32
+class _KabukiSDK Polygon_f
 /** A 2D polygon that uses 32-bit floating point values. */
 {
     public:
+
+    enum {
+        MinLength = 4       //< The minimum length of a Polygon
+    };
     
-	Polygon_i ();
+    Polygon_f ();
 
-    Polygon()
-    {
-        xPoints = new int[MinLength];
-        yPoints = new int[MinLength];
-    }
-
-    Polygon (int xPoints[], int yPoints[], int numPoints);
+    Polygon_f (int* xPoints, int* yPoints, int numPoints);
 
     void reset();
 
@@ -45,11 +43,11 @@ class _G_API Polygon32
 
     void translate (int deltaX, int deltaY);
 
-    void calculateBounds (int xPoints[], int yPoints[], int numPoints);
+    void calculateBounds (int* xPoints, int* yPoints, int numPoints);
 
     void updateBounds (int x, int y);
 
-    void addPoint (int x, int y);
+    void addPoint (float x, float y);
 
     Rect_f getBounds();
 
@@ -57,23 +55,17 @@ class _G_API Polygon32
 
     bool contains (int x, int y);
 
-    Rect2D_f getBounds2D();
-
     bool contains (float x, float y);
 
-    bool contains (Point2D p);
+    bool contains (Point_f p);
 
     bool intersects (float x, float y, float w, float h);
 
-    bool intersects (Rect2D_f r);
+    bool intersects (Rect_f r);
 
-    bool contains (float x, float y, float w, float h);
+    PolygonPathIterator_f getPathIterator (AffineTransform_f at);
 
-    bool contains (Rect2D_f r);
-
-    Polygon32PathIterator getPathIterator (AffineTransform at);
-
-    PathIterator getPathIterator (AffineTransform at, float flatness);
+    PathIterator_f getPathIterator (AffineTransform_f at, float flatness);
 
     protected:
 
@@ -89,22 +81,16 @@ class _G_API Polygon32
 
     int* yPoints;
 
-    enum {
-        MinLength = 4       //< The minimum length of a Polygon
-    };
-
     Crossings getCrossings (float xlo, float ylo, float xhi, float yhi);
 };
 
 
 
-class Polygon32PathIterator: public PathIterator 
+class PolygonPathIterator_f: public PathIterator 
 {
-    Polygon poly;
-    AffineTransform transform;
-    int index;
+    public:
 
-    PolygonPathIterator (Polygon pg, AffineTransform at);
+    PolygonPathIterator_f (Polygon pg, AffineTransform at);
 
     int getWindingRule();
 
@@ -115,5 +101,14 @@ class Polygon32PathIterator: public PathIterator
     int currentSegment (float* coords);
 
     int currentSegment (float* coords);
+
+    private:
+
+    Polygon poly;
+
+    AffineTransform transform;
+
+    int index;
 };
-}
+
+}   //< _2D

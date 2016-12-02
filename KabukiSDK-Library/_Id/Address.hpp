@@ -20,65 +20,82 @@
  
 #pragma once
 
-#include <FreeI2P.hpp>
 #include <KabukiSDK-Config.hpp>
 
-#include <string.hpp>
-
 namespace _Id {
+
+typedef enum {
+    HomeAddress = 0,
+    WordAddress,
+    OtherAddress
+} AddressType;
+
+inline const char** addressTypeLabels ();
+/*< A read-only array of the AddressType string labels. */
+
+inline const char* addressTypeLabel (AddressType type);
+/*< Gets one of the addressTypeLables. */
 
 class _KabukiSDK Address
 /*< A physical address. */
 {
-    const char* Home = "Home",
-        Work = "Work",
-        Other = "Other";
+    public:
 
-    /** Default constructor. **/
     Address ();
+    /*< Default constructor. */
 
-    /** Constructor creates an address with the given parameters. */
-    Address (const char* street, const char* city, const char* state, const char* zip, const char* country, const char* type);
+    Address (const string& aStreet, const string& aCity, const string& aState, const string& aZip, const string& aCcountry, 
+        AddressType aType);
+    /*< Constructor creates an address with the given parameters. */
 
-    const char* getType ();
+    string& getStreet ();
+    /*< Gets the street addrss. */
+
+    void setStreet (const string& newValue);
+    /*< Sets the street addrss. */
+    
+    string& getCity ();
+    /*< Gets the city. */
+
+    void setCity (const string& newValue);
+    /*< Sets the city. */
+
+    string& getState ();
+    /*< Gest the State. */
+
+    void setState (const string& newValue);
+    /*< Sets the state. */
+    
+    string& getZip ();
+    /*< Gets the zip code. */
+
+    void setZip (const string& newValue);
+    /*< Sets the zip code. */
+    
+    string& getCountry ();
+    /*< Gets the country. */
+
+    void setCountry (const string& newValue);
+    /*< Sets the country. */
+
+    AddressType getType ();
     /*< Gets the address type.
         The address type means street, PO box, etc.
     */
 
-    void setType (const char* newType);
+    void setType (AddressType t);
     /*< Sets the addrss type. */
 
-    const char* getStreet ();
-    void setStreet (const char* newValue);
-    /*< Sets the street addrss. */
-    
-    const char* getCity ();
-    /*< Gets the city. */
+    inline void print (Terminal& slot);
 
-    void setCity (const char* newValue);
-    /*< Sets the city. */
+    private:
 
-    const char* getState ();
-    /*< Gest the State. */
-
-    void setState (const char* newValue);
-    /*< Sets the state. */
-    
-    const char* getZip ();
-    /*< Gets the zip code. */
-
-    void setZip (const char* newValue);
-    /*< Sets the zip code. */
-    
-    const char* getCountry ();
-    /*< Gets the country. */
-
-    void setCountry (const char* newValue);
-    /*< Sets the country. */
-    
-    virtual const char* op (I2P::Terminal* slot, int index);
-    /*< Inter-process operations. */
-
-    inline const char* print (I2P::Terminal& slot);
+    string street,          //< The street address.
+        city,               //< The city of address
+        state,              //< The state of address
+        zip,                //< The zip code of address
+        country;            //< The country of address
+    AddressType type;       //< The type of address
 };
+
 }   //< namespace _Id

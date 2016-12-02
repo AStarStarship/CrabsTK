@@ -22,6 +22,8 @@
 
 #include "Entity.hpp"
 
+using namespace std;
+
 namespace _Id {
 
 class _KabukiSDK EntityList
@@ -38,7 +40,7 @@ class _KabukiSDK EntityList
     void add (const Entity& e);
     /*< Adds an Entity to the list. */
     
-    void add (std::vector<Entity> e);
+    void add (vector<Entity> e);
     /*< Adds a list of Entity (s) to the list. */
     
     Entity find (const char* s);
@@ -47,12 +49,12 @@ class _KabukiSDK EntityList
     bool contains (const char* s);
     /*< Returns true if this list of entities contains the given string. */
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
     
     private:
     
-    std::vector<Entity> entities;      //< The list of entities.
+    vector<Entity> entities;      //< The list of entities.
 };
 
 }   //< namespace _Id

@@ -28,7 +28,7 @@
 #include "DMXButton.hpp"
 #include "MIDIButton.hpp"
 
-namespace _Dev { namespace Controls {
+namespace _UI {
 
 /*  An Event that can trigger multiple events.
     Controls are stored as pointers in a linear linked list to optimize for speed.
@@ -39,7 +39,7 @@ class _KabukiSDK MacroButton : public AVControl, public ButtonControl
 
     /** Default constructor creates a MacroButton with no controls. 
         A MacroButton without any controls triggers system functions only.*/
-    MacroButton (const char* newName = ""); 
+    MacroButton (string newName = ""); 
     //MacroButton (const MacroButton& other);
     //< Copy constructor.
     
@@ -57,7 +57,7 @@ class _KabukiSDK MacroButton : public AVControl, public ButtonControl
         @return gets Success upon success.
         @return gets -1 if the newEvent is null. */
         
-    int Add (std::vector<AVControl*> newEvents);
+    int Add (vector<AVControl*> newEvents);
     //< Adds an array of newEvents to the list.
     
     int set (int index, AVControl* newEvent);
@@ -87,13 +87,13 @@ class _KabukiSDK MacroButton : public AVControl, public ButtonControl
     int maxWordValue () const override;
     //< gets the max value of a AVControl word.
 
-    const char* label () const override;
+    string label () const override;
     //< gets the label.
-    int setLabel (const char* newLabel) override;
+    int setLabel (string newLabel) override;
     /*< Sets the label to the new label.
         @return gets 0 upon success and 1 if the newLabel is
         too long.
-        @see    Label::IsValid (char). */
+        @see    Label::isValid (char). */
     
     void toggle () override;
     //< Toggles the state of the ButtonControl if type is latching.
@@ -110,16 +110,16 @@ class _KabukiSDK MacroButton : public AVControl, public ButtonControl
     virtual void depress () override {}
     //< Triggered when a user "double clicks" a button.
     
-    const char* getListString () const;
+    string getListString () const;
     //< gets a string of the row strings of the list.
     
-    const char* getHeaderString () const override;
+    string getHeaderString () const override;
     //< gets the header for toStringRow ().
     
-    const char* ToStringRow () const override;
+    string ToStringRow () const override;
     //< gets a column of the values without the labels.
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:

@@ -18,52 +18,62 @@
         limitations under the License.
 */
 
-#include <vector>
-using namespace std;
+#pragma once
 
-namespace _Id
-{
-/** An account with a username and password. */
+#include "UserList.hpp"
+#include "Handle.hpp"
+#include "Password.hpp"
+#include "User.hpp"
+
+namespace _Id {
+
 class Account
+/** An account with a username and password. */
 {
 	public:
 	
-    /** Default constructor. **/
-    Account (const string& AUsername = "New user");
+    Account (const string& aUsername = "New user");
+    /*< Default constructor. */
 
-    Account (const string& AUsername, const string& APassword);
+    Account (const string& aUsername, const string& aPassword);
+    /*< Constructs an account from the given username and password. */
     
-    bool IsValid ();
+    bool isValid ();
+    /*< Returns true if this is a valid account. */
     
-    string GetName ();
+    string& getName ();
+    /*< Gets a reference to the name string.  */
     
-    bool SetName (const string& S);
+    bool setName (const string& s);
+    /*< Sets the name to the string. */
 
-    bool RequiresPassword ();
+    bool requiresPassword ();
+    /*< Retusn true if this account requires a password. */
     
-    void SetPassword (const string& S);
+    void setPassword (const string& s);
+    /*< Sets the password to the new string. */
 
-    //
-    UserList Users ();
+    UserList& getUsers ();
+    /*< Gets a reverence to the uesr list. */
 
-    //
-    void AllowUser (User& U);
+    void addUser (User& u);
+    /*< Allows another user to be attached to this account. */
 
-    //bool RequestNewAccount (Network.Address request_source, string User_Name, string Password,
+    //bool requestNewAccount (Network.Address request_source, string User_Name, string Password,
     //    string First_Name, string Last_Name, string Adress1, string Adress2, string Zip_Code);
 
-    //
-    bool Login (User U);
+    bool login (User& u);
+    /*< Logs the given user into the account. */
 
-
-    //
-    string print (I2P::Terminal& slot);
+    void print (Terminal& slot);
+    /*< Prints this object to a terminal. */
 
     private:
     
-    Username username;
-    Password password;
+    Handle name;            //< The account name.
+    Password password;      //< The admin password for this account.
 
-    vector<User> users;
+    UserList users;         //< The list of users that may login to this account.
 };
-}
+
+}   //< namespace _Id

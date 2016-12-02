@@ -26,18 +26,20 @@
 
 namespace _Id {
 
-/**  */
 class _KabukiSDK Organization : public Entity
+/*< An entity that is not a person such as a business or non-profit organization. */
 {
-    /** Default constructor. **/
-    Organization ()
-    {
+    public:
 
-    }
+    /** Default constructor. */
+    Organization ();
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
-};
-}   //< namespace _Id
-}   //< namespace _Search
 
+    private:
+
+
+};
+
+}   //< namespace _Id

@@ -20,8 +20,7 @@
  
 #pragma once
 
-#include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include "User.hpp"
 
 namespace _Id {
 
@@ -31,31 +30,30 @@ class _KabukiSDK UserList
     public:
     
 	UserList ();
-	/*<  */
+	/*< Constructs an empty user list. */
     
-	int GetNumUsers ();
-	/*<  */
+	int getNumUsers ();
+	/*< Gets the number of users in the list. */
     
-	bool Add (User newUser);
-	/*<  */
+	bool add (const User& newUser);
+	/*< Adds the new user to the list. */
     
-	bool contains (string username);
-	/*<  */
+	bool contains (const string& s);
+	/*< Returns true if this list contains the given user query result. */
     
-	bool contains (User this_user);
-	/*<  */
+	bool contains (const User& u);
+    /*< Returns true if this list contains the given user. */
     
-	User Find (string username);
-	/*<  */
+	User* find (string username);
+	/*< Attemps to find a user by username. 
+        @return Returns a nullptr if this list does not contain the search query. */
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 	
     private:
 	
-	List<User> users;
+	vector<User> users;
 };
+
 }   //< namespace _Id
-}   //< namespace _Search
-
-

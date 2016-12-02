@@ -24,7 +24,7 @@
 
 namespace _ {
 
-void printLine (int LineWidth, const char* Token)
+void printLine (int LineWidth, string Token)
 {
     for (int i = 0; i < LineWidth; ++i) 
         printf (Token);

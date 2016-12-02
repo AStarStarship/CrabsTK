@@ -90,7 +90,7 @@ Rect_f RectRotor_f::getBounds ()
     return r;
 }
 
-void print (I2P::Terminal& slot)
+void print (Terminal& slot)
 {
 
 }

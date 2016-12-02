@@ -27,7 +27,7 @@ Equation::Equation ()
 
 }
 
-void Equation::print (I2P::Terminal& slot)
+void Equation::print (Terminal& slot)
 {
 }
 

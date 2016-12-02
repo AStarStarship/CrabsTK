@@ -35,7 +35,7 @@ void EntityList::add (List<Entity> a)   { entities.AddRange (a); }
 
 Entity EntityList::find (string a)
 {
-    if (a.Length == 0)
+    if (a.length () == 0)
     {
         return nullptr;//static website guest entities
     }
@@ -48,7 +48,7 @@ Entity EntityList::find (string a)
 
 bool EntityList::contains (string a)
 {
-    if (a.Length == 0 || a == nullptr) return false;
+    if (a.length () == 0 || a == nullptr) return false;
 
     for (int i = 0; i < entities.size (); i++)
         if (entities[i].Name == a)
@@ -62,22 +62,22 @@ byte EntityList::getState ()
     return 0;
 }
 
-const char* EntityList::getState (byte Value)
+string EntityList::getState (byte Value)
 {
     return 0;
 }
 
-const char* EntityList::op (I2P::Terminal* slot, int index)
+string EntityList::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("EntityList", "_Id"): InvalidIndex ();
 }
 
-const char* EntityList::print (I2P::Terminal& slot)
+string EntityList::print (Terminal& slot)
 {
     string returnstring;
     returnstring = "Number of Accounts: " + entities.size () + (char)13;
@@ -85,8 +85,8 @@ const char* EntityList::print (I2P::Terminal& slot)
     for (int i = 0; i < entities.size (); i++)
     {
         // Iterated throught the users array and write the
-        // print (I2P::Terminal& slot) strings to the returnstring
-        returnstring = returnstring + ("Account " + (i + 1) + ": " + entities[i].print (I2P::Terminal& slot) + (char)13);
+        // print (Terminal& slot) strings to the returnstring
+        returnstring = returnstring + ("Account " + (i + 1) + ": " + entities[i].print (Terminal& slot) + (char)13);
     }
 
     return returnstring.c_str ();

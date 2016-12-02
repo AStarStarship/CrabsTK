@@ -24,8 +24,8 @@
 
 namespace _Search {
 
-Hit::Hit (const char* aName, const char* aDescription, const char** someTags, char patch, const char* aCatagory, 
-    const char* aType, int aNumTags)
+Hit::Hit (string aName, string aDescription, string* someTags, char patch, string aCatagory, 
+    string aType, int aNumTags)
 {
     static int currentUId = 0;
 
@@ -41,17 +41,17 @@ Hit::Hit (const char* aName, const char* aDescription, const char** someTags, ch
         return;
     }
     
-    std::string *s;
+    string *s;
     for (int i = 0; i < aNumTags; ++i)
         ;//tags.push_back (s);
 }
 
-const char* Hit::getName () { return name; }
+string Hit::getName () { return name; }
 
-const char* Hit::setName (const char* aName)
+string Hit::setName (string aName)
 {
-    if (aName == nullptr) return (const char*)1;
-    if (strlen (aName) > MaxnameLength) return (const char*)1;
+    if (aName == nullptr) return (string)1;
+    if (strlen (aName) > MaxnameLength) return (string)1;
     name = aName;
     return 0;
 }
@@ -60,34 +60,34 @@ int Hit::getId () { return uid; }
 
 void Hit::setId (int value) { uid = value; }
 
-const char* Hit::getDescription ()
+string Hit::getDescription ()
 {
     return description;
 }
 
-const char* Hit::setDescription (const char* aDescription)
+string Hit::setDescription (string aDescription)
 {
-    if (aDescription == nullptr) return (const char*)1;
+    if (aDescription == nullptr) return (string)1;
     if (strlen (aDescription) > MaxDescriptionLength) return aDescription;
     description = aDescription;
     return 0;
 }
 
-const char* Hit::getCatagory ()
+string Hit::getCatagory ()
 {
     if (tags.size () == 0) return "";
     return tags[0].c_str ();
 }
 
-const char* Hit::getSubcatagory ()
+string Hit::getSubcatagory ()
 {
     if (tags.size () < 0) return "";
     return tags[1].c_str ();
 }
 
-const char* Hit::addTag (const char* tag)
+string Hit::addTag (string tag)
 {
-    if (tag == nullptr) return (const char*)1;
+    if (tag == nullptr) return (string)1;
     if (strlen (tag) > MaxTagLength) return tag;
     
     tags.push_back (tag);
@@ -98,13 +98,13 @@ void Hit::addTags (char* someTags, int numTags)
 {
     if (numTags < 0) return;
 
-    for_each (tags.begin (), tags.end (), [](std::string *s)
+    for_each (tags.begin (), tags.end (), [](string *s)
     {
         //tags.push_back (s);
     });
 }
 
-const char* Hit::removeTag (const char* tag)
+string Hit::removeTag (string tag)
 {
     for (int i = tags.size (); i >= 0; --i)
     {
@@ -117,16 +117,16 @@ const char* Hit::removeTag (const char* tag)
     return tag;
 }
 
-bool Hit::containsTag (const char* tag)
+bool Hit::containsTag (string tag)
 {
-    for_each (tags.begin (), tags.end (), [] (std::string *a)
+    for_each (tags.begin (), tags.end (), [] (string *a)
     {
         //if (a == tag) return true;
     });
     return false;
 }
 
-bool Hit::containsTags (std::vector<std::string>& someTags)
+bool Hit::containsTags (vector<string>& someTags)
 {
     /*
     for_each (tags.begin (), tags.end (), [] (string &a)
@@ -140,11 +140,11 @@ bool Hit::containsTags (std::vector<std::string>& someTags)
     return false;
 }
 
-std::vector<std::string>& Hit::getTags () { return tags; }
+vector<string>& Hit::getTags () { return tags; }
 
-const char* Hit::toStringTags ()
+string Hit::toStringTags ()
 {
-    std::string s = "";
+    string s = "";
     int count = tags.size ();
     
     for (int i = 0; i < count; i++)
@@ -155,10 +155,10 @@ const char* Hit::toStringTags ()
     return s.c_str;
 }
 
-const char* Hit::toJSON ()
+string Hit::toJSON ()
 {
     /*
-    ::std::string json = "{\"Hit\":{\"name\":\"" + name + "\",\"description\":\"" + description + "\",\"tags\": [";
+    ::string json = "{\"Hit\":{\"name\":\"" + name + "\",\"description\":\"" + description + "\",\"tags\": [";
 
     tagsString = "";
     
@@ -176,7 +176,7 @@ const char* Hit::toJSON ()
     return 0;
 }
 
-void Hit::print (I2P::Terminal& slot)
+void Hit::print (Terminal& slot)
 {
     slot.prints ( "Hit", name, "/n");
     //data.print (slot);

@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <FreeI2P.hpp>
+#include <KabukiSDK-Config.hpp>
 
 namespace _Math {
 
@@ -35,7 +35,7 @@ class Matrix
     ~Matrix ();
     /*< Destructor. */
 
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 
     private:

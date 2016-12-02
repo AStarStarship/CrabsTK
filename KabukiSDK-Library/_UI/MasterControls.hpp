@@ -23,7 +23,7 @@
 #include <KabukiSDK-Config.hpp>
 #include "AVControl.hpp"
 
-namespace _Dev { namespace Controls {
+namespace _UI {
 
 /** Used for Quad ISymmetric control over a Device. */
 class _KabukiSDK MasterControls
@@ -33,7 +33,7 @@ class _KabukiSDK MasterControls
     MasterControls ();
     /*< Constructs a blank set of master controls. */
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
     
     private:

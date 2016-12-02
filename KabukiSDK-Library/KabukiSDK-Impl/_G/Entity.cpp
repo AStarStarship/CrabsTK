@@ -3,10 +3,10 @@
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
-    @brief      This file contains the _2D.Vector_f interface.
+    @brief      This file contains the _2D::Vector_f interface.
 */
 
-#include "_Id/Entity.h"
+#include "_Id/Entity.hpp"
 using namespace _Id;
 
 Entity::Entity (const string& anEmailAdress = "", const string& aFirstName = "", const string& aLastName = "", 
@@ -21,32 +21,32 @@ Entity::Entity (const string& anEmailAdress = "", const string& aFirstName = "",
     zipCode1 = aZipCode1;
 }
 
-string Entity::GetName () { return name; }
+string Entity::getName () { return name; }
 
-int Entity::SetName (const string& S) { name = S; }
+int Entity::setName (const string& S) { name = S; }
 
-bool Entity::Contains (string queery)
+bool Entity::Contains (string query)
 {
     for_each (tags.begin(), tags.end (), [](string &S) 
     { 
-        if (S == queery) return true; 
+        if (S == query) return true; 
     });
     
     for_each (addresses.begin (), addresses.end(), [](Address& A)
     { 
-        if (S == queery) return true; 
+        if (S == query) return true; 
     });
     for_each (emailAddresses.begin (), emailAddresses.end(), [](EmailAddress& A) 
     {
-        if (a == queery) return true;
+        if (a == query) return true;
     });
     for_each (profiles.begin (), profiles.end(), Profile& P)
     {
-        if (a == queery) return true; 
+        if (a == query) return true; 
     });
     for_each (tags.begin (), tags.end(), [](String& S)
     {
-        if (a == queery) return true; 
+        if (a == query) return true; 
     });
     
     return false;

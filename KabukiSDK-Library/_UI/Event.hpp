@@ -44,7 +44,7 @@ class Event
     virtual void trigger () = 0;
     //< Triggers the event.
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:

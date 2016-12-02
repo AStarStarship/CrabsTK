@@ -27,4 +27,9 @@ Profile::Profile ()
 
 }
 
+void Profile::print (Terminal& slot)
+{
+
+}
+
 }   //< namespace _Id

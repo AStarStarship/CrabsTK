@@ -20,21 +20,25 @@
  
 #pragma once
 
-#include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
 #include "Entity.hpp"
 
 namespace _Id {
 
-/** Class that represents a person. */
 class _KabukiSDK Person: public Entity
+/** Class that represents a person/human. 
+*/
 {
-    /** Default constructor. **/
-    Person ();
-    
-    void print (I2P::Terminal& slot);
-    /*< Prints this object to a terminal. */
-};
-}   //< namespace _Id
-}   //< namespace _Search
+    public:
 
+    Person ();
+    /**Constructs a person with no name. */
+    
+    inline void print (Terminal& slot);
+    /*< Prints this object to a terminal. */
+
+    private:
+
+
+};
+
+}   //< namespace _Id

@@ -6,7 +6,7 @@
     @brief      This file contains the _G.Layer class.
 */
 
-#include "_G/Layer.h"
+#include "_G/Layer.hpp"
 using namespace _G;
 
 void Remove ()

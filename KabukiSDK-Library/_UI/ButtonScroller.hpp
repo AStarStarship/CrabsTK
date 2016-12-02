@@ -25,7 +25,7 @@
 #include "Label.hpp"
 #include "ButtonControl.hpp"
 
-namespace _Dev { namespace Controls {
+namespace _UI {
 
 /** A scrollable array Button (s). */
 class _KabukiSDK ButtonScroller, public Label
@@ -34,13 +34,13 @@ class _KabukiSDK ButtonScroller, public Label
 
     static const int DefaultNumVisibleButtons = 5;  //< The default number of visible numbers.
 
-    ButtonScroller (const char* newLabel = "", int newArraySize = DefaultNumVisibleButtons);
+    ButtonScroller (string newLabel = "", int newArraySize = DefaultNumVisibleButtons);
     //< Default constructor.
     
     ButtonScroller (const ButtonScroller& other);
     //< Copy constructor.
 
-    std::vector<ButtonControl*>& buttons ();
+    vector<ButtonControl*>& buttons ();
     //< gets the array of buttons.
 
     int getNumButtons () const;
@@ -79,7 +79,7 @@ class _KabukiSDK ButtonScroller, public Label
     int press (int index);
     //< Presses the Button at the specified index.
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:
@@ -87,7 +87,7 @@ class _KabukiSDK ButtonScroller, public Label
     int currentIndex,                   //< The index of the first visible button.
         numVisibleButtons;              //< The number of physical buttons.
 
-    std::vector<ButtonControl*> buttons;      //< The array of buttons.
+    vector<ButtonControl*> buttons;      //< The array of buttons.
 };
 }   //< namespace _UI
 

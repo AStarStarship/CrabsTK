@@ -3,18 +3,18 @@
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
-    @brief      This file contains the _2D.Vector_f interface.
+    @brief      This file contains the _2D::Vector_f interface.
 */
 
 #include <string>
 
-#include "_2D/Point_f.h"
-#include "_2D/Rect_f.h"
+#include "_2D/Point_f.hpp"
+#include "_2D/Rect_f.hpp"
 
 namespace _G {
     
 /*<  */
-class _G_API Rect_f: public _2D.Rect_f, public Shape_f
+class _KabukiSDK Rect_f: public _2D::Rect_f, public Shape_f
 {
     public:
     
@@ -42,7 +42,7 @@ class _G_API Rect_f: public _2D.Rect_f, public Shape_f
     void Fill (const Cell& C);
     /*<  */
     
-    void Print (I2P::Terminal& Slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
     
     private:

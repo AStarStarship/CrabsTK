@@ -72,9 +72,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\KabukiToolkit-Library\_Math\Operators\Divide.h">
-      <Filter>KabukiSDK-Library\_Math\Operators</Filter>
-    </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_\IComparable.hpp">
       <Filter>KabukiSDK-Library\_</Filter>
     </ClInclude>
@@ -111,60 +108,6 @@
     <ClInclude Include="..\KabukiSDK-Library\_2D\Point.hpp">
       <Filter>KabukiSDK-Library\_2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\EntityList.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Grammer.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Name.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Organization.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Password.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Person.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Privilege.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Profile.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Relationship.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Tag.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\User.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\UserList.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Username.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Address.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Date.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\EmailAddress.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Entity.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\EntityGroup.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Math\Binary.hpp">
       <Filter>KabukiSDK-Library\_Math</Filter>
     </ClInclude>
@@ -178,9 +121,6 @@
       <Filter>KabukiSDK-Library\_Math</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Math\Hex.hpp">
-      <Filter>KabukiSDK-Library\_Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Math\Imaginary.hpp">
       <Filter>KabukiSDK-Library\_Math</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Math\Matrix.hpp">
@@ -264,17 +204,11 @@
     <ClInclude Include="..\KabukiSDK-Library\_UI\Components\ADSR.hpp">
       <Filter>KabukiSDK-Library\_UI\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ARadioButton.h">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
-    </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK.hpp">
       <Filter>KabukiSDK-Library</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK-Config.hpp">
       <Filter>KabukiSDK-Library</Filter>
-    </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\OAthAccount.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_2D\Polygon.hpp">
       <Filter>KabukiSDK-Library\_2D</Filter>
@@ -339,6 +273,72 @@
     <ClInclude Include="..\KabukiSDK-Library\_G\Cell.hpp">
       <Filter>KabukiSDK-Library\_G</Filter>
     </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Name.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\OAthAccount.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Organization.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Password.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Person.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Privilege.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Profile.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Relationship.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Role.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\User.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\UserList.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Account.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Address.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Date.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\EmailAddress.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Entity.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\EntityGroup.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\EntityList.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Grammer.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Handle.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\ITag.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Math\Complex.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\KabukiSDK-Library\_\ReadMe.md">
@@ -347,9 +347,6 @@
     <None Include="..\KabukiSDK-Library\_2D\ReadMe.md">
       <Filter>KabukiSDK-Library\_2D</Filter>
     </None>
-    <None Include="..\KabukiSDK-Library\_Id\ReadMe.md">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </None>
     <None Include="..\KabukiSDK-Library\_Math\ReadMe.md">
       <Filter>KabukiSDK-Library\_Math</Filter>
     </None>
@@ -357,6 +354,9 @@
       <Filter>KabukiSDK-Library\_3D</Filter>
     </None>
     <None Include="packages.config" />
+    <None Include="..\KabukiSDK-Library\_Id\ReadMe.md">
+      <Filter>KabukiSDK-Library\_Id</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_\MorseCode.cpp">
@@ -383,60 +383,6 @@
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\Angle.cpp">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Address.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\EmailAddress.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Entity.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\EntityGroup.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\EntityList.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Grammer.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\IMAccount.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Name.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Organization.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Password.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Person.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Profile.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Relationship.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Tag.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\User.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\UserList.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Username.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Account.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Binary.cpp">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
     </ClCompile>
@@ -447,9 +393,6 @@
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Hex.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Imaginary.cpp">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Matrix.cpp">
@@ -477,9 +420,6 @@
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ButtonScroller.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\Color.cpp">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ControlArray.cpp">
@@ -520,9 +460,6 @@
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_\ErrorList.cpp">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Privilage.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_2D\RectRotor.cpp">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
@@ -586,6 +523,69 @@
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Entity.cpp">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_G</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Handle.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Name.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\OAthAccount.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Organization.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Password.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Person.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Privilage.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Profile.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Relationship.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Tag.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\User.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\UserList.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Account.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Address.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\EmailAddress.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Entity.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\EntityGroup.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\EntityList.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Grammer.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Date.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
+    </ClCompile>
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Complex.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

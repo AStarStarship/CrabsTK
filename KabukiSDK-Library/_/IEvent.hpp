@@ -36,7 +36,7 @@ class IEvent
             
         }
         
-        virtual print (I2P::Terminal)
+        virtual print (Terminal)
         {
             
         }
@@ -49,7 +49,7 @@ class IEvent
     virtual void trigger () = 0;
     /*< Triggers the event. */
 
-    virtual void print (I2P::Terminal& slot) = 0;
+    virtual void print (Terminal& slot) = 0;
     /*< Prints this object to the terminal. */
 };
 

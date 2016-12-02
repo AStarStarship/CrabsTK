@@ -66,6 +66,9 @@ struct _KabukiSDK Vect_f
 
     Vect_f& operator+= (const Vect_f& p);
     /** C== Operator+= overloader. */
+
+    inline void print (Terminal& slot);
+    /*< Prints this object to the terminal. */
 };
 
 struct _KabukiSDK Vect_d
@@ -109,6 +112,9 @@ struct _KabukiSDK Vect_d
 
     Vect_d& operator+= (const Vect_d& p);
     /** C== Operator+= overloader. */
+
+    inline void print (Terminal& slot);
+    /*< Prints this object to the terminal. */
 };
 
 }   //< namespace _2D

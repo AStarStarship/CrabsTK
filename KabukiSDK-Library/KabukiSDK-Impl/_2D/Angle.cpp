@@ -27,7 +27,7 @@
 namespace _2D {
 
 Angle_f::Angle_f (float Value)
-    :   Rads (Value)
+:   Rads (Value)
 {
 
 }
@@ -36,9 +36,9 @@ float Angle_f::getDegs () { return Rads * (180.0f / M_PI); }
 
 void Angle_f::setDegs (float Value) { Rads = (Value * M_PI) / 180.0f; }
 
-void Angle_f::print (I2P::Terminal& slot)
+void Angle_f::print (Terminal& slot)
 {
-    static const index_t header[] = { 2, I2P::STR, 32, I2P::FLT, I2P::STR, 3 };
+    static const index_t header[] = { 2, STR, 32, FLT, STR, 3 };
 
     slot.print (header, "Angle_f: ", Rads, "\n\r");
 }
@@ -53,9 +53,9 @@ double Angle_d::getDegs () { return Rads * (180.0 / M_PI); }
 
 double Angle_d::setDegs (double Value) { Rads = (Value * M_PI) / 180.0; }
 
-void Angle_d::print (I2P::Terminal& slot)
+void Angle_d::print (Terminal& slot)
 {
-    static const index_t header[] = { 2, I2P::STR, 32, I2P::FLT, I2P::STR, 3 };
+    static const index_t header[] = { 2, STR, 32, FLT, STR, 3 };
 
     slot.print (header, "Angle_f: ", Rads, "\n\r");
 }

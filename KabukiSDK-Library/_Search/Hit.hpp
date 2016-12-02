@@ -47,16 +47,16 @@ class _KabukiSDK Hit
         MaxDescriptionLength = 256      //< The max description length.
     };
 
-    Hit (const char* aName = "", const char* aDescription = "", const char** someTags = nullptr, char hit = 0, 
-        const char* aCatagory = "", const char* aType = "", int aNumTags = 0);
+    Hit (string aName = "", string aDescription = "", string* someTags = nullptr, char hit = 0, 
+        string aCatagory = "", string aType = "", int aNumTags = 0);
     /*< Constructs a hit from the given metadata. 
         User produces the SomeTags list as a new array of strings, and this object cosumes it and is responsible for the deallocation of the memory.
     */
 
-    const char* getName ();
+    string getName ();
     /*< Gets the name. */
 
-    const char* setName (const char* aName);
+    string setName (string aName);
     /*< Sets the name.
         @return returns 0 upon success, -1 if the input is nullptr, and 1 if the label is too long. */
 
@@ -66,61 +66,61 @@ class _KabukiSDK Hit
     void setId (int value);
     /*< Sets the Id. */
 
-    const char* getDescription ();
+    string getDescription ();
     /*< Gets the description string. */
     
-    const char* setDescription (const char* aDescription);
+    string setDescription (string aDescription);
     /*< Sets the description.
         @return returns 0 upon success and 1 if the label is too long. */
     
-    const char* getCatagory ();
-    /*< Gets the catagory const char*.
-    @return Gets an empty const char* no tags exist. */
+    string getCatagory ();
+    /*< Gets the catagory string.
+    @return Gets an empty string no tags exist. */
 
-    const char* getSubcatagory ();
-    /*< Gets the subcatagory const char*.
-    @return Gets an empty const char* no tags exist. */
+    string getSubcatagory ();
+    /*< Gets the subcatagory string.
+    @return Gets an empty string no tags exist. */
 
-    const char* addTag (const char* aTag);
+    string addTag (string aTag);
     /*< Addsa tag to the tag list.
         @return returns 0 upon success, -1 if the input is nullptr, and 1 if the label is too long. */
 
     void addTags (char* someTags, int numTags);
     /*< Adds a collection of tags to the hit-list. */
     
-    const char* removeTag (const char* tag);
+    string removeTag (string tag);
     /*< Removes the given tag if it exists.
         @return Gets true upon success, 1 if the input is nullptr, and the given tag if the it doesn't exist. */
 
-    bool containsTag (const char* tag);
+    bool containsTag (string tag);
     /*< Gets true if this hit contains the given tag. */
 
-    bool containsTags (::std::vector<::std::string>& someTags);
+    bool containsTags (::vector<::string>& someTags);
     /*< Gets true if this hit contains any of the given tags. */
     
-    ::std::vector<::std::string>& getTags ();
+    ::vector<::string>& getTags ();
     /*< Gets the list of tags. */
     
-    const char* toStringTags ();
-    /*< Gets a comma seperated const char* of the tags. */
+    string toStringTags ();
+    /*< Gets a comma seperated string of the tags. */
 
-    const char* toJSON ();
-    /*< Serializes to JSON const char*. */
+    string toJSON ();
+    /*< Serializes to JSON string. */
 
-    inline void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
     
     private:
 
-    const char* name,               //< The name of the hit.
+    string name,               //< The name of the hit.
         * description;              //< Description of the hit. 
     
-    const char** catagory,          //< Pointer to the catagory const char*.
+    string* catagory,          //< Pointer to the catagory string.
         * type;                     //< Pointer to the type of instrument.
     
     int uid;                        //< The unique identifier.
 
-    ::std::vector<::std::string> tags;  //< List of tags.
+    ::vector<::string> tags;  //< List of tags.
 };
 
 }   //< namespace _Search

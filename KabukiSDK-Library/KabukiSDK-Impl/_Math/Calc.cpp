@@ -615,13 +615,13 @@ Calc::Calc ()
 {
     
 }
-const char* op (I2P::Terminal* slot, int index)
+const char* op (Terminal* slot, int index)
 {
 
 }
 
 
-void Calc::print (I2P::Terminal& slot)
+void Calc::print (Terminal& slot)
 {
 }
 

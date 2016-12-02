@@ -19,20 +19,21 @@
 */
 
 #include "_Id/Account.hpp"
-using namespace _Id;
 
-Account::Account (const char* aUsername)
+namespace _Id {
+
+Account::Account (const string& aUsername)
 {
     // If one calls this method then it is assuming that there is no password for the account.
-    username = new Name (aUsername);
+    name = new Name (aUsername);
     password = nullptr;
 
     users = new UserList ();
 }
 
-Account::Account (const char* aUsername, const char* aPassword)
+Account::Account (const string& aUsername, const string& aPassword)
 {
-    username = aUsername;
+    name = aUsername;
     password = aPassword;
 
     role = new Role ();
@@ -40,30 +41,26 @@ Account::Account (const char* aUsername, const char* aPassword)
     users = new UserList ();
 }
 
-Role Account::getRole ()
-{
-    return role;
-}
-
 bool Account::isValid ()
 {
     if (password == nullptr)
     {
         // The the account does not require a password
-        if (!username.IsValid ())
+        if (!name.isValid ())
             return false;
 
         return true;
     }
     else // we have to test the password
-    if (!username.IsValid () || !password.IsValid ())
+    if (!name.isValid () || !password.isValid ())
         return false;
 
     return true;
 }
-const char* Account::getName () { return username; }
 
-int Account::setName (const char* S) { username = S; }
+string& Account::getName () { return name; }
+
+bool Account::setName (const string& s) { return name.setHandle (s); }
 
 bool Account::requiresPassword ()
 {
@@ -72,23 +69,23 @@ bool Account::requiresPassword ()
     return true;
 }
 
-void Account::getPassword (const char* S)
+void Account::setPassword (const string& s)
 {
-    password.change (new_password);
+    password.change (s);
 }
 
-vector<User> Account::getUsers ()
+UserList Account::getUsers ()
 {
     return users;
 }
 
-void Account::allowUser (User& U)
+void Account::addUser (User& u)
 {
-    users->add (U);
+    users.add (u);
 }
 
-bool Account::requestNewAccount (Network.Address request_source, const char* User_Name, const char* Password,
-    const char* First_Name, const char* Last_Name, const char* Adress1, const char* Adress2, const char* Zip_Code)
+bool Account::requestNewAccount (Network.Address request_source, string User_Name, string Password,
+    string First_Name, string Last_Name, string Adress1, string Adress2, string Zip_Code)
 {
     if (informationIsValid (user_Name, Password, Confirm_Password,
         First_Name, Last_Name, Adress1, Adress2, Zip_Code))
@@ -96,26 +93,26 @@ bool Account::requestNewAccount (Network.Address request_source, const char* Use
     return false;
 }
 
-bool Account::informationIsValid (const char* Username, const char* Password, const char* First_Name, 
-    const char* Last_Name, const char* Adress1, const char* Adress2, const char* Zip_Code)
+bool Account::informationIsValid (string Handle, string Password, string First_Name, 
+    string Last_Name, string Adress1, string Adress2, string Zip_Code)
 {
     if ()
         return false;
     return true;
 }
 
-bool Account::login (User& U)
+bool Account::login (User& u)
 {
     User aUser;
-    aUser = users->find (U.getName ());
-    if (!U.equals (aUser))
+    aUser = users->find (u.getName ());
+    if (!u.equals (aUser))
         return false;
     return true;
 }
 
-void Account::print (I2P::Terminal& slot)
+void Account::print (Terminal& slot)
 {
-    print (slot, "Account Name: ", username.getCString () + " Password: " + password.getCString ());
+    slot.print ("Account Name: ", name.getCString () + " Password: " + password.getCString ());
 }
 
 }   //< namespace _Id

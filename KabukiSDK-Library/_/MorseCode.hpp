@@ -22,7 +22,7 @@
 
 namespace _ {
 
-const char* toMorseCode (char Value);
+string toMorseCode (char Value);
 /*< Gets the Morse code for the given char. */
 
 }   //< namespace KabukiSDK {

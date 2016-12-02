@@ -3,7 +3,7 @@
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
-    @brief      This file contains the _2D.Vector_f interface.
+    @brief      This file contains the _2D::Vector_f interface.
 */
 
 #
@@ -67,7 +67,7 @@ class Texture
 	bool load (char fileName);
     /*<  */
     
-	bool load (std::string fileName);
+	bool load (string fileName);
     /*<  */
     
 	bool loadBitmap (const string* fileName);

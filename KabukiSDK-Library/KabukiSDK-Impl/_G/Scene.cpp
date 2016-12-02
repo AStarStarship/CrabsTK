@@ -14,7 +14,7 @@ Scene::Scene ()
     Reset ();
 }
 
-Scene::Scene (const char* pipeDesc)
+Scene::Scene (string pipeDesc)
 :   head (nullptr)
 {
     Reset ();
@@ -28,7 +28,7 @@ void Scene::Delete ()
     Layer.Next = head;
 }
 
-void Scene::Draw (const Cell& C)
+void Scene::draw (const Cell& c)
 {
     if (head == nullptr)
         return;

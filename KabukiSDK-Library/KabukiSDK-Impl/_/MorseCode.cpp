@@ -22,11 +22,11 @@
 
 namespace _ {
 
-const char* toMorseCode (char code)
+string toMorseCode (char code)
 {
-    static const char* space = " "; //<
+    static string space = " "; //<
 
-    static const char* cypher[] = {
+    static string cypher[] = {
         ".-.-.",        //< ASCII: NUL, Morse code: End of message.
         0,              //< ASCII: SOH.
         "-.-.-",        //< ASCII: STX, Morse code: Start copying.

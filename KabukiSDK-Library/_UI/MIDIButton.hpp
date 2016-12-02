@@ -33,7 +33,7 @@ class _KabukiSDK MIDIButton : public MIDIControl, public ButtonControl
 {
     public:
 
-    MIDIButton (const char* newLabel = "", int newCC = 0, int newChannel = 0, int newValue = 0, int newMinValue = 0, 
+    MIDIButton (string newLabel = "", int newCC = 0, int newChannel = 0, int newValue = 0, int newMinValue = 0, 
         int newMaxValue = 127, int newWordSize = 7, int initAction = ButtonControl::Momentary, int newStepSize = 0,
         double newDoublePressTime = ButtonControl::DefaultDoublePressTime);
     /*< Constructor. */
@@ -47,13 +47,13 @@ class _KabukiSDK MIDIButton : public MIDIControl, public ButtonControl
     void toggle () override;
     //< Toggles the state of the ButtonControl if type is latching.
 
-    const char* getLabel () const override;
+    string getLabel () const override;
     //< gets the label.
 
     /** sets the label to the new label.
         @return gets 0 upon success and 1 if the newLabel is too long.
-        @see    Label::IsValid (char). */
-    int setLabel (const char* newLabel) override;
+        @see    Label::isValid (char). */
+    int setLabel (string newLabel) override;
 
     void press () override;
     //< Triggered when a mode button is pressed.
@@ -64,16 +64,16 @@ class _KabukiSDK MIDIButton : public MIDIControl, public ButtonControl
     void depress () override;
     //< Triggered when a user "double clicks" a button.
 
-    const char* headerString () const override;
+    string headerString () const override;
     //< gets the header for toStringRow ().
     
-    const char* ToStringRow () const override;
+    string ToStringRow () const override;
     //< gets a column of the values without the labels.
     
-    const char* print (I2P::Terminal& slot) const override;
+    string print (Terminal& slot) const override;
     //< gets a text represenation of this object.
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:

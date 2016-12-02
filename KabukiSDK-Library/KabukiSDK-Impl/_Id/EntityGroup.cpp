@@ -28,12 +28,12 @@ EntityGroup::EntityGroup (string groups_name)
     accounts = new _Id.Account.Account[0];
 }
 
-bool EntityGroup::IsValid ()
+bool EntityGroup::isValid ()
 {
-    return name.IsValid ();
+    return name.isValid ();
 }
 
-string EntityGroup::getName () { return name.print (I2P::Terminal& slot); }
+string EntityGroup::getName () { return name.print (Terminal& slot); }
 
 void EntityGroup::Rename (string newName)
 {
@@ -48,7 +48,7 @@ void EntityGroup::ApplyPrivilages (Privilages& P)
         accounts[i].Role ().Apply_Privilages (new_privilages);
 }
 
-void EntityGroup::print (I2P::Terminal& slot)
+void EntityGroup::print (Terminal& slot)
 {
     slot.prints ("Group: ");
     name.print (slot);

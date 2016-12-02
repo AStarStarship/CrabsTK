@@ -29,7 +29,7 @@
 #include "DMXButton.hpp"
 #include "MacroButton.hpp"
 
-namespace _Dev { namespace Controls {
+namespace _UI {
 
 /** A row of AVControl (s). */
 class _KabukiSDK ControlArray
@@ -44,7 +44,7 @@ class _KabukiSDK ControlArray
     ControlArray (int newNumControls = MinNumElements);
     /*< Default constructor. */
 
-    ControlArray (const std::vector<AVControl*>& newControls);
+    ControlArray (const vector<AVControl*>& newControls);
     /*< Constructor creates a row with pointers to the newControls. */
 
     ControlArray (const ControlArray& other);
@@ -68,7 +68,7 @@ class _KabukiSDK ControlArray
     int getNumControls () const;
     //< gets the number of AVControl (s) in the row.
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:

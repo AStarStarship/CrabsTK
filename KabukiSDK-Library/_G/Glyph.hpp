@@ -3,7 +3,7 @@
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
-    @brief      This file contains the _2D.Vector_f interface.
+    @brief      This file contains the _2D::Vector_f interface.
 */
 
 #include <string>
@@ -11,7 +11,7 @@ using namespace std;
 
 namespace _G {
 /**  */
-class _G_API Gylph
+class _KabukiSDK Gylph
 {
 	    public:
 	

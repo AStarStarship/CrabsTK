@@ -25,14 +25,14 @@
 
 namespace _Id {
 
-/** A name of an entity. */
 class _KabukiSDK Name
+/*< A name of an entity. */
 {
-    /** Default constructor. **/
+    /** Default constructor. */
     Name ();
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 };
-}   //< namespace _Id
 
+}   //< namespace _Id

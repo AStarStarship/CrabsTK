@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <FreeI2P.hpp>
+#include <KabukiSDK-config.hpp>
 
 namespace _Math {
 
@@ -32,7 +32,7 @@ class Equation
     Equation ();
     /*< Constructs an empty equation. */
 
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 
     private:

@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK-Config.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ARadioButton.h" />
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_2D\Angle.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_2D\Bezier.hpp" />
@@ -49,6 +48,7 @@
     <ClInclude Include="..\KabukiSDK-Library\_G\String.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_G\Texture.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_G\Triangle.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Account.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Address.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Date.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\EmailAddress.hpp" />
@@ -56,25 +56,26 @@
     <ClInclude Include="..\KabukiSDK-Library\_Id\EntityGroup.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\EntityList.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Grammer.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Id\OAthAccount.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Handle.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Name.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_Id\OAthAccount.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Organization.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Password.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Person.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Privilege.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Profile.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Relationship.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Tag.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Role.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_Id\ITag.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\User.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\UserList.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Username.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Math\BCD.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Math\Binary.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Math\Calc.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_Math\Complex.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Math\Converter.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Math\Equation.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Math\Hex.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Math\Imaginary.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Math\Matrix.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Math\Operators\Divide.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Search\Hit.hpp" />
@@ -107,7 +108,6 @@
     <ClInclude Include="..\KabukiSDK-Library\_\IEvent.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_\MorseCode.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_\Print.hpp" />
-    <ClInclude Include="..\KabukiToolkit-Library\_Math\Operators\Divide.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\KabukiSDK-Library\_2D\ReadMe.md" />
@@ -146,13 +146,15 @@
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_G\Texture.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Account.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Address.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Date.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\EmailAddress.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Entity.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\EntityGroup.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\EntityList.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Grammer.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\IMAccount.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Handle.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Name.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\OAthAccount.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Organization.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Password.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Person.cpp" />
@@ -162,13 +164,12 @@
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Tag.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\User.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\UserList.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Username.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\BCD.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Binary.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Calc.cpp" />
+    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Complex.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Equation.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Hex.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Imaginary.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Matrix.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\Operators\Divide.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Search\Hit.cpp" />
@@ -178,7 +179,6 @@
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\AVControl.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ButtonControl.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ButtonScroller.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\Color.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\Components\XYControl.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ControlArray.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_UI\ControlGrid.cpp" />

@@ -22,60 +22,83 @@
 
 namespace _Id {
 
+const char** addressTypeLabels ()
+{
+    static const char* labels[] = {
+        "Home",
+        "Work",
+        "Other"
+    };
+    return labels;
+}
+
+const char* addressTypeLabel (AddressType type)
+{
+    if (type < 0 || type >= 3)
+    return addressTypeLabels ()[type];
+}
+
 Address::Address ()
 {
     /// Nothing to do here! :-)
 }
 
-Address::Address (const char* aStreet, const char* aCity, const char* aState, const char* aZip, const char* aCountry, const char* aType)
+Address::Address (const string& aStreet, const string& aCity, const string& aState, const string& aZip, const string& aCountry, AddressType aType)
 :   street (aStreet),
     city   (aCity),
     state  (aState),
     zip    (aZip),
     country (aCountry),
-    type   (aType)
+    type    (aType)
 {
 }
 
-const char* Address::getType () { return type; }
+string& Address::getStreet () { return street; }
 
-void Address::getType (const char* s)
-{ 
-    type = s;
-}
-
-const char* Address::getStreet () { return street; }
-
-void Address::getStreet (const char* s)
+void Address::setStreet (const string& s)
 {
     street = s;
 }
 
-const char* Address::getCity () { return city; }
+string& Address::getCity () { return city; }
 
-void Address::getCity (const char* s)
+void Address::setCity (const string& s)
 { 
     city = s;
 }
 
-const char* Address::getState () { return state; }
+string& Address::getState () { return state; }
 
-void Address::setState (const char* s)
+void Address::setState (const string& s)
 { 
     state = s;
 }
 
-const char* Address::getZip () { return zip; }
+string& Address::getZip () { return zip; }
 
-void Address::setZip (const char* s)
+void Address::setZip (const string& s)
 { 
     zip = s;
 }
 
-void Address::print (I2P::Terminal& slot)
+string& Address::getCountry () { return country; }
+
+void Address::setCountry (const string& s)
+{ 
+    country = s;
+}
+
+AddressType Address::getType () { return type; }
+
+void Address::setType (AddressType t)
+{ 
+    type = t;
+}
+
+void Address::print (Terminal& slot)
 {
-    slot.prints ( "Street: ", Street, "\n", " Cit: ", City, "\n", " State/Province: ", State, "\n", 
-        "Zip/Postal Code: ", Zip, "\n", "Country: ", Country, "\n");
+    slot.prints ( "Street: ", street.c_str (), "\n", " City: ", city.c_str (), "\n State/Province: ", state.c_str (), 
+        "\n Zip/Postal Code: ", zip.c_str (), "\n Country: ", country.c_str (), "\n");
 }
 
 }   //< namespace _Id

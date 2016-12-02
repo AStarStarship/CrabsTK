@@ -83,7 +83,7 @@ void Library::LoadFromJSON (string json)
         }
         catch (Exception e)
         {
-        Debug.Assert (false, e.print (I2P::Terminal& slot));
+        Debug.Assert (false, e.print (Terminal& slot));
         }
         */
 }
@@ -138,13 +138,13 @@ Library Library::FindpatchesWithTags (vector<string> tags)
 char* Library::getCatagoryImageName (string s)
 {
     if (s == nullptr || s == "") return nullptr;
-    return "Catagory" + ::std::regex_replace (s, "\s+", "");// + ".png";
+    return "Catagory" + ::regex_replace (s, "\s+", "");// + ".png";
 }
     
 char* Library::getSubcatagoryImageName (string s)
 {
     if (s == nullptr || s == "") return nullptr;
-    return "Subcatagory" + ::std::regex_replace (s, "\s+", "");// + ".png";
+    return "Subcatagory" + ::regex_replace (s, "\s+", "");// + ".png";
 }
     
 char* Library::DefaultHitLibrary ()
@@ -154,7 +154,7 @@ char* Library::DefaultHitLibrary ()
 
 int Library::InitNumHites () { return 0; }
 
-void Library::print (I2P::Terminal& slot)
+void Library::print (Terminal& slot)
 {
 }
 

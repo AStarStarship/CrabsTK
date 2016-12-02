@@ -20,49 +20,37 @@
  
 #pragma once
 
-#include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include "Handle.hpp"
+#include "Password.hpp"
 
 namespace _Id {
 
-/** A user account on a computer.
+class _KabukiSDK User
+/*< A user account on a computer.
     A user does not necessarily have an account. Some accounts are and any user can use. i.e. the guest account.
 */
-class _KabukiSDK User
 {
-    User (const char* aUsername, const char* aPassword);
+    User (const string& aUsername, const string& aPassword);
     /*< Constructs a user with the given username and password. */
 
-    const char* GetName ();
-    /*<  */
+    Handle& getUsername ();
+    /*< Gets a reference to the username handle. */
 
-    const char* GetPassword ();
-    /*<  */
+    Password& getPassword ();
+    /*< Gets a reference to the password. */
 
-    const char* EncryptPassword ();
-    /*<  */
-
-    bool IsValid ();
-    /*<  */
-
-    bool Verify (string aUsername, string aPassword)
-    {
-        return username == aUsername;
-    }
-
-    bool GetLogin (Account thisAccount);
-    /*<  */
+    bool verify (const string& aUsername, const string& aPassword);
     
-    bool equals (User aUser);
-    /*<  */
+    bool equals (const User& aUser);
+    /*< Returns true if this user is the same as the given one.  */
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:
 
-    const char* username,
-        password;
+    Handle name;            //< The username.
+    Password password;      //< The user's password.
 
     // Currently the user is able log into more the one account at a time. This could cause a security threat.
     //Account.List activeAccounts;

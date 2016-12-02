@@ -20,30 +20,39 @@
  
 #pragma once
 
-#include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include "Address.hpp"
+#include "EmailAddress.hpp"
+#include "Profile.hpp"
 
 #include <string>
 #include <vector>
+using namespace std;
 
 namespace _Id {
 
-/**  */
 class _KabukiSDK Entity
+/** A entinty with contact information. */
 {
     /**  */
-    Entity (const char* anEmailAdress = "", const char* aFirstName = "", const char* aLastName = "", 
-        const char* aPrimaryPhoneNum = "", const char* aStreetAdress1 = "", const char* aZipCode1 = "", 
-        const char* aStreetAdress2 = "", const char* aZipCode2 = "");
+    Entity (string anEmailAdress = "", string aFirstName = "", string aLastName = "", 
+        string aPrimaryPhoneNum = "", string aStreetAdress1 = "", string aZipCode1 = "", 
+        string aStreetAdress2 = "", string aZipCode2 = "");
 
-    const char* GetName ();
-    int setName (const char* S);
+    string getName ();
+    /*< Gets the entity name string. */
 
-    bool contains (string queery);
+    int setName (string s);
+    /*< Attempts to set the name string to the new string. */
+
+    int contains (string query);
+    /*< Returns true if this entity contains the search query. */
+    
+    inline void print (Terminal& slot);
+    /*< Prints this object to a terminal. */
     
     private:
 
-    const char* firstName,
+    string firstName,
         lastName,
         emailAdress,
         streetAdress1,
@@ -52,12 +61,11 @@ class _KabukiSDK Entity
         zipCode2,
         phoneNumber;
     
-    std::vector<string> tags;
-    std::vector<Address> addresses;
-    std::vector<EmailAddress> emailAddresses;
-    std::vector<Profile> profiles;
-    std::vector<Note> notes;
+    vector<string> tags;
+    vector<Address> addresses;
+    vector<EmailAddress> emailAddresses;
+    vector<Profile> profiles;
+    vector<string> notes;
 };
-}   //< namespace _Id
-}   //< namespace _Search
 
+}   //< namespace _Id

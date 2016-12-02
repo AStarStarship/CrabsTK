@@ -101,11 +101,11 @@ const char* MIDIControl::getState (byte Value)
     return 0;
 }
 
-const char* MIDIControl::op (I2P::Terminal* slot, int index)
+const char* MIDIControl::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("MIDIControl", "_UI"): InvalidIndex ();

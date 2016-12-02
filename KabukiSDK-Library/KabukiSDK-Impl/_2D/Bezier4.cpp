@@ -130,7 +130,7 @@ Point_f Bezier4_f::getPoint (float t)
     return Point_f (x, y);
 }
 
-void Bezier4_f::print (I2P::Terminal& slot)
+void Bezier4_f::print (Terminal& slot)
 {
 
 }

@@ -70,7 +70,7 @@ class _KabukiSDK Bezier_f
     Point_f getPoint  (float P);
     /*< Gets a Point_f along the path of the of curve at time t. */
 
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 
     private:

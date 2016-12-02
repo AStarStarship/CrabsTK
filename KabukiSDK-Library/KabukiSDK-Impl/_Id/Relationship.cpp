@@ -32,16 +32,16 @@ byte Relationship::getState ()
     return 0;
 }
 
-const char* Relationship::getState (byte Value)
+string Relationship::getState (byte Value)
 {
     return 0;
 }
 
-const char* Relationship::op (I2P::Terminal* slot, int index)
+string Relationship::op (Terminal* slot, int index)
 {
     switch (Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return NumMembers (0);
     }
     
     return enquery ("Relationship", "_Id"): InvalidIndex ();

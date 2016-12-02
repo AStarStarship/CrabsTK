@@ -45,44 +45,44 @@ class _KabukiSDK Library
     
     void loadTestHites ();
     
-    void loadFromJSON (const char* jsonString);
+    void loadFromJSON (string jsonString);
     /*< Loads a patch from a JSON string. */
     
-    const char* toJSON ();
-    /*< Converts a patch to a JSON std::string. */
+    string toJSON ();
+    /*< Converts a patch to a JSON string. */
     
     /*< Gets true if their is a duplicate patch name. */
-    bool findDuplicateName (const char* value);
+    bool findDuplicateName (string value);
     
     /*< Gets the catagory name at the given index. */
-    const char* getCatagoryName (int index);
+    string getCatagoryName (int index);
     
-    Library find (const char* tag);
+    Library find (string tag);
     
-    Library find (::std::vector<::std::string>& tags);
+    Library find (::vector<::string>& tags);
     
-    const char* getCatagoryImageName (::std::string s);
+    string getCatagoryImageName (::string s);
     /*< Gets the subcatagory image name. */
     
-    const char* getSubcatagoryImageName (::std::string s);
+    string getSubcatagoryImageName (::string s);
     /*< Gets the subcatagory image name. */
 
-    inline void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a Terminal. */
 
-    inline void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a Terminal. */
     
     private:
 
     static int currentUId;                      //< The total number of patches.
     
-    ::std::map<::std::string, Hit> patches;       //< The list of patches.
+    ::map<::string, Hit> patches;       //< The list of patches.
     
-    ::std::vector<::std::string> catagories,    //< The list of catagories.
+    ::vector<::string> catagories,    //< The list of catagories.
         tags;                                   //< List of tag strings.
     
-    ::std::string& getDefaultHitLibrary ();
+    ::string& getDefaultHitLibrary ();
     //< Gets the default library in JSON.
 
     int initNumHits ();

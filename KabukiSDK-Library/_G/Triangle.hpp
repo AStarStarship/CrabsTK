@@ -5,12 +5,14 @@
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
 */
 
-#include "_2D/Triangle.h"
-#include "Cell.h"
+#pragma once
+
+#include <_2D/Point.hpp>
+#include "Cell.hpp"
 
 namespace _G {
 
-class _G_API Triangle: public _2D::Triangle
+class _KabukiSDK Triangle
 /*< A simple triangle for drawing shapes with.
     We don't really care if this class is slow. It's just for simple drawing.
 */
@@ -18,27 +20,20 @@ class _G_API Triangle: public _2D::Triangle
     public:
     
     /**  */
-    Triangle ():
-        ()
-    {
-    }
+    Triangle ();
 
-    Triangle (_2D.Point_i initOne, _2D.Point_i initTwo, _2D.Point_i initThree):
-        base (initOne, initTwo, initThree)
-    {
+    Triangle (_2D::Point_i initOne, _2D::Point_i initTwo, _2D::Point_i initThree);
 
-    }
+    Triangle (int x0, int y0, int x1, int y1, int x2, int y2);
 
-    Triangle (int x1, int y1, int x2, int y2, int x3, int y3):
-        base (x1, y1, x2, y2, x3, y3);
+    void draw (const Cell& C);
 
-    void Draw (const Cell& C);
-
-    void Draw (const Cell& C, _G::Color Color);
+    void draw (const Cell& C, _G::Color Color);
     /*< Draws the triangle on the cell with a different color. */
 
     private:
 
     _G::Color_i color;
 };
+
 }

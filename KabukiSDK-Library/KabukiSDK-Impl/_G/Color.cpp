@@ -1,9 +1,9 @@
-w/** Kabuki Toolkit
+/** Kabuki Toolkit
     @file    /.../KabukiToolkit-Impl/_/Color.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved  (r).
 
         Licensed under the Apache License, Version 2.0  (the "License"); you may
         not use this file except in compliance with the License. You may obtain
@@ -18,15 +18,15 @@ w/** Kabuki Toolkit
         limitations under the License.
 */
 
-#include <_/Color.h>
+#include <_G/Color.hpp>
 #include <stdlib.h>
 
 namespace _G {
 
-const color_t* RainbowColors ()
+const color_t* rainbowColors ()
 {
 
-    static const color_t RainbowColorsArray[] = {
+    static const color_t rainbowColorsArray[] = {
         0xF00000, 0xF01000, 0xF02000, 0xF03000, 0xF04000, 0xF05000, 0xF06000, 0xF07000, 0xF08000, 0xB0F000, 
         0xF09000, 0xF0A000, 0xF0B000, 0xF0C000, 0xF0D000, 0xF0E000, 0xF0F000, 0xF0F000, 0xE0F000, 0xD0F000, 
         0xC0F000, 0xA0F000, 0x90F000, 0x80F000, 0x70F000, 0x60F000, 0x50F000, 0x40F000, 0x30F000, 0x20F000, 
@@ -38,13 +38,13 @@ const color_t* RainbowColors ()
         0xF000F0 ,0xF000E0, 0xF000D0, 0xF000C0, 0xF000B0, 0xF000A0, 0xF00090, 0xF00080, 0xF00070, 0xF00060, 
         0xF00050, 0xF00040, 0xF00030, 0xF00020, 0xF00010, 0xF00000 };
 
-    return &RainbowColorsArray[0];
+    return &rainbowColorsArray[0];
 }
 
-const color_t* PresetColors ()
+const color_t* presetColors ()
 {
     /** An array of the previous colors. */
-    static const color_t PresetColorsArray[] = {
+    static const color_t presetColorsArray[] = {
         White,
         Orchid,
         Purple,
@@ -52,58 +52,58 @@ const color_t* PresetColors ()
         Indigo,
         SkyBlue,
         NavyBlue,
-        Blue,
+        blue,
         Turquoise,
-        Green,
+        green,
         Yellow,
         Gold,
         Oragne,
         Pink,
-        Red,
+        red,
         Maroon,
         Brown,
         Black
     };
-    return &PresetColorsArray[0];
+    return &presetColorsArray[0];
 }
 
-color_t GetRainbowColor (PresetColor Index)
+color_t getRainbowColor (PresetColor index)
 {
 
-    if (Index < 0 || Index >= 96) return Black;
-    return RainbowColors ()[Index];
+    if (index < 0 || index >= 96) return Black;
+    return rainbowColors ()[index];
 }
 
-color_t GetPresetColor (PresetColor Index)
+color_t getPresetColor (PresetColor index)
 {
 
-    if (Index < 0 || Index >= 96) return Black;
-    return PresetColors ()[Index];
+    if (index < 0 || index >= 96) return Black;
+    return presetColors ()[index];
 }
 
-color_t GetRandomPresetColor (PresetColor Index)
+color_t getRandomPresetColor (PresetColor index)
 {
     int index = rand () % NumPresetColors;
-    return PresetColors ()[index];
+    return presetColors ()[index];
 }
 
-color_t GetRandomColor (PresetColor Index)
+color_t getRandomColor (PresetColor index)
 {
     return rand ();
 }
 
-color_t MixColor (color_t A, color_t B)
+color_t mixColor (color_t a, color_t b)
 {
-    uint32_t red = A & 0xff,
-        green = (A & 0xff00) >> 8,
-        blue = (A & 0xff00) >> 16,
-        alpha = (A & 0xff00) >> 24,
+    uint32_t red = a & 0xff,
+        green = (a & 0xff00) >> 8,
+        blue = (a & 0xff00) >> 16,
+        alpha = (a & 0xff00) >> 24,
         result;
 
-    byte r2 = B & 0xff,
-        g2 = (B & 0xff00) >> 8,
-        b2 = (B & 0xff00) >> 16,
-        a2 = (B & 0xff00) >> 24;
+    byte r2 = b & 0xff,
+        g2 = (b & 0xff00) >> 8,
+        b2 = (b & 0xff00) >> 16,
+        a2 = (b & 0xff00) >> 24;
 
     red   = (red + r2) >> 1;    //< Shift right 1 to divide by 2.
     green = ((green + g2) >> 1) << 8;
@@ -113,79 +113,79 @@ color_t MixColor (color_t A, color_t B)
     return red & green & blue & alpha;
 }
 
-color_t ChangeBrightness (color_t color, int brightnessChange)
+color_t changeBrightness (color_t color, int brightnessChange)
 {
     color_t alpha = (color & 0xff000000) >> 24 + brightnessChange;
     return (color & 0xffffff) & (alpha << 24);
 }
 
-color_t DecreaseBrightness (color_t color, int brightnessChange)
+color_t decreaseBrightness (color_t color, int brightnessChange)
 {
     color_t alpha = (color & 0xff000000) >> 24 - brightnessChange;
     return (color & 0xffffff) & (alpha << 24);
 }
 
-RGBAColor::RGBAColor (color_t color)
+Color::Color (color_t color)
 {
     color_t* this_ptr = (color_t*)this;
     *this_ptr = color;
 }
 
-RGBAColor::RGBAColor (byte red, byte green, byte blue)
-:   R (Red),
-    G (Green),
-    B (Blue)
+Color::Color (byte red, byte green, byte blue)
+:   r (red),
+    g (green),
+    b (blue)
 {
 	// Nothing to do here!
 }
 
-RGBAColor::RGBAColor (byte Red, byte Green, byte Blue, byte Alpha)
-:   R (Red),
-    G (Green),
-    B (Blue),
-    A (Alpha)
+Color::Color (byte red, byte green, byte blue, byte alpha)
+:   r (red),
+    g (green),
+    b (blue),
+    a (alpha)
 {
 }
 
-void RGBAColor::Set (color_t Value) 
+void Color::set (color_t Value) 
 {
     color_t* this_ptr = (color_t*)this;
     *this_ptr = Value;
 }
 
-void RGBAColor::Set (byte Red, byte Green, byte Blue)
+void Color::set (byte red, byte green, byte blue)
 {
-    R = Red;
-    G = Green;
-    B = Blue;
-    A = 255;
+    r = red;
+    g = green;
+    b = blue;
+    a = 255;
 }
 
-void RGBAColor::Set (byte Red, byte Green, byte Blue, byte Alpha)
+void Color::set (byte red, byte green, byte blue, byte alpha)
 {
-    R = Red;
-    G = Green;
-    B = Blue;
-    A = Alpha;
+    r = red;
+    g = green;
+    b = blue;
+    a = alpha;
 }
 
-byte RGBAColor::GetRed () { return R; }
+byte Color::getRed () { return r; }
 
-void RGBAColor::SetRed (byte Value) { R = Value; }
+void Color::setRed (byte Value) { r = Value; }
 
-byte RGBAColor::GetGreen () { return G; }
+byte Color::getGreen () { return g; }
 
-void RGBAColor::SetGreen (byte Value) { G = Value; }
+void Color::setGreen (byte Value) { g = Value; }
 
-byte RGBAColor::GetBlue () { return B; }
+byte Color::getBlue () { return b; }
 
-void RGBAColor::SetBlue (byte Value) { B = Value; }
+void Color::setBlue (byte Value) { b = Value; }
 
-byte RGBAColor::GetAlpha () { return A; }
+byte Color::getAlpha () { return a; }
 
-void RGBAColor::SetAlpha (byte Value) { A = Value; }
+void Color::setAlpha (byte Value) { a = Value; }
 
-void RGBAColor::ToHSV (float& fR, float& fG, float fB, float& fH, float& fS, float& fV)
+void Color::toHSV (float& fR, float& fG, float fB, float& fH, float& fS, float& fV)
 {
     /*
     float fCMax = fR > fG ? fR : fG;
@@ -235,7 +235,7 @@ void RGBAColor::ToHSV (float& fR, float& fG, float fB, float& fH, float& fS, flo
     */
 }
 
-void RGBAColor::SetHSV (float& fR, float& fG, float& fB, float& fH, float& fS, float& fV)
+void Color::setHSV (float& fR, float& fG, float& fB, float& fH, float& fS, float& fV)
 {
     /*
     float fC = fV * fS; // Chroma
@@ -292,7 +292,7 @@ void RGBAColor::SetHSV (float& fR, float& fG, float& fB, float& fH, float& fS, f
 */
 }
 
-void RGBAColor::Print (I2P::Terminal& Slot)
+void Color::print (Terminal& slot)
 {
 
 }

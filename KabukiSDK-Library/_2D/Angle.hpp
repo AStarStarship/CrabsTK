@@ -20,7 +20,6 @@
 
 #pragma once
 
-#include <FreeI2P.hpp>
 #include <KabukiSDK-Config.hpp>
 
 namespace _2D {
@@ -41,7 +40,7 @@ class _KabukiSDK Angle_f
     void setDegs (float Value);
     /*< Sets the angle to the new value in degrees. */
 
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 
@@ -61,7 +60,7 @@ class _KabukiSDK Angle_d
     void setDegs (double Value);
     /*< Sets the angle to the new value in degrees. */
 
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 };
 

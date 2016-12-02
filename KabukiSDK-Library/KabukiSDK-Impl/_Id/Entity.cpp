@@ -1,5 +1,5 @@
 /** Kabuki Software Development Kit
-    @file    /.../KabukiSDK-Impl/_Id/Entity.cpp
+    @file    /.../KabukiSDK-Impl/_Id/Enity.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -18,50 +18,55 @@
         limitations under the License.
 */
 
-#include <_Id/Entity.h>
+#include <_Id/Enity.hpp>
 
 namespace _Id {
 
-Entity::Entity (const char* anEmailAdress = "", const char* aFirstName = "", const char* aLastName = "", 
-    const char* aPrimaryPhoneNum = "", const char* aStreetAdress1 = "", const char* aZipCode1 = "", 
-    const char* aStreetAdress2 = "", const char* aZipCode2 = "")
+Enity::Enity (string anEmailAdress, string aFirstName, string aLastName, 
+    string aPrimaryPhoneNum, string aStreetAdress1, string aZipCode1, 
+    string aStreetAdress2, string aZipCode2)
+:   firstName     (aFirstName),
+    lastName      (aLastName),
+    phoneNumber   (aPrimaryPhoneNum),
+    emailAdress   (anEmailAdress),
+    streetAdress1 (aStreetAdress1),
+    zipCode1      (aZipCode1)
 {
-    firstName = aFirstName;
-    lastName = aLastName;
-    phoneNumber = aPrimaryPhoneNum;
-    emailAdress = anEmailAdress;
-    streetAdress1 = aStreetAdress1;
-    zipCode1 = aZipCode1;
-}
-
-const char* Entity::getName () { return name; }
-
-void Entity::getName (const char* S) { name = S }
-
-bool Entity::contains (const char* queery)
-{
-    foreach (const char* a in tags)
-        if (a == queery) return true;
-    foreach (Address a in addresses)
-        if (a == queery) return true;
-    foreach (Entity a in emailAddresses)
-        if (a == queery) return true;
-    foreach (Profile a in profiles)
-        if (a == queery) return true;
-    foreach (const char* a in tags)
-        if (a == queery) return true;
     
-    return false;
 }
 
-const char* Entity::op (I2P::Terminal* slot, int index)
+string Enity::getName () { return name; }
+
+void Enity::setName (string S) { name = S }
+
+int Enity::contains (string query)
 {
-    switch (Index)
+    for_each (tags.begin (), tags.end (), [](string& s(
     {
-        case 0: return I2P::NumMembers (0);
-    }
+        if (s == query) return 1;
+    });
+
+    for_each (tags.begin (), tags.end (), [](Address& a(
+    {
+        if (a == query) return 1;
+    });
+
+    for_each (tags.begin (), tags.end (), [](Enity& e(
+    {
+        if (e == query) return 1;
+    });
+
+    for_each (tags.begin (), tags.end (), [](Profile& p(
+    {
+        if (p == query) return 1;
+    });
+
+    for_each (tags.begin (), tags.end (), [](string& s(
+    {
+        if (s == query) return 1;
+    });
     
-    return enquery ("Entity", "_Id"): InvalidIndex ();
+    return 0;
 }
 
 }   //< namespace _Id

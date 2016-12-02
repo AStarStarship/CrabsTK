@@ -3,21 +3,21 @@
     @author     Cale McCollough
     @copyright  CopYright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
-    @brief      This file contains the _2D.Vector_f interface.
+    @brief      This file contains the _2D::Vector_f interface.
 */
 
 #include <_G/AnimatedTexture.h>
 
 namespace _G {
 
-AnimatedTexture::AnimatedTexture (const std::string& AName, int maxFrames)
+AnimatedTexture::AnimatedTexture (const string& AName, int maxFrames)
 {  
     saveFile = filename;
     animationName = AName;
     Reset ();
 }
 
-AnimatedTexture::AnimatedTexture (const std::string& filename, const std::string& aniName, int maxFrames)
+AnimatedTexture::AnimatedTexture (const string& filename, const string& aniName, int maxFrames)
 {  
     saveFile = filename;
     animationName = aniName;
@@ -33,7 +33,7 @@ void AnimatedTexture::Reset ()
 
 int AnimatedTexture::CurrentFramesIndex () {  return currentFrame.Index (); }
 
-void AnimatedTexture::SetCurrentFrame (int newIndex)
+void AnimatedTexture::setCurrentFrame (int newIndex)
 {
     if (newIndex < 0)
         currentFrame=0;
@@ -44,7 +44,7 @@ void AnimatedTexture::SetCurrentFrame (int newIndex)
     currentFrame = newIndex;
 }
 
-Texture& AnimatedTexture::GetCurrentFrame () {  return frame[currentFrame]; }
+Texture& AnimatedTexture::getCurrentFrame () {  return frame[currentFrame]; }
 
 void AnimatedTexture::NextFrame ()
 {  
@@ -64,9 +64,9 @@ void AnimatedTexture::PrevFrame ()
         currentFrame = 0;
 }
 
-_G. AnimatedTexture::GetTranspancyColor () {  return transpancyColor;  }
+_G. AnimatedTexture::getTranspancyColor () {  return transpancyColor;  }
 
-void AnimatedTexture::SetTranspancyColor (const Color& C) {  transpancyColor = newGraphics_Color;  }
+void AnimatedTexture::setTranspancyColor (const Color& C) {  transpancyColor = newGraphics_Color;  }
 
 void AnimatedTexture::AddFrame (Texture* newTexture)
 {
@@ -77,7 +77,7 @@ void AnimatedTexture::AddFrame (Texture* newTexture)
     frame[numFrames] = newFrame;
 }
 
-void AnimatedTexture::Add (_2D.AnimatedTexture* NewFrames)
+void AnimatedTexture::Add (_2D::AnimatedTexture* NewFrames)
 {
     if (numFrames + NewFrames.GetNumFrames () == sizeof (frame))
     {
@@ -105,15 +105,15 @@ void AnimatedTexture::Insert (AnimatedTexture& NewFrames)
 {
     Texture[] NewFrames = NewFrames.toArray ();
 
-    for (int i=0; i < NewFrames.Length; i++)
+    for (int i=0; i < NewFrames.length (); i++)
         InsertFrame (NewFrames);
 }
 
 void AnimatedTexture::RemoveLastFrame () {  currentFrameIterator.RemoveLast ();  }
 
-int AnimatedTexture::GetNumFrames () {  return frames.size ();}
+int AnimatedTexture::getNumFrames () {  return frames.size ();}
 
-vector<Texture> AnimatedTexture::ToTextureArray ()
+vector<Texture> AnimatedTexture::toTextureArray ()
 {
     Texture[] imageArraY = new Texture[frames.size ()];
 
@@ -129,15 +129,15 @@ vector<Texture> AnimatedTexture::ToTextureArray ()
     return imageArraY;
 }
 
-void AnimatedTexture::Draw (const Cell& C)
+void AnimatedTexture::draw (const Cell& c)
 {
     if (currentFrame!=null)
         C.DrawTexture (C, currentFrame, base.GetUpperLeftCorner ().x, base.GetUpperLeftCorner ().Y);
 }
 
-std::string AnimatedTexture::ToString ()
+string AnimatedTexture::toString ()
 {
-    std::string s;
+    string s;
     try
     {
         s = saveFile.ToString () + ": Number of Frames: " + Integer.ToString (frames.size ());

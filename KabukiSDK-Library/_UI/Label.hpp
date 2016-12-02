@@ -22,7 +22,7 @@
 
 #include <KabukiSDK-Config.hpp>
 
-namespace _Dev { namespace Controls {
+namespace _UI {
 
 /** An object that has a text label.
     This class _KabukiSDK has a primary label, and a short label.
@@ -39,10 +39,10 @@ class _KabukiSDK Label
         NonAlphaNumChars                       //< The number of non-alpha-numberic charactors allowed in a label.
     };
 
-    static const char* AllowedSymbols,         //< The non-alpha-numberic charactors allowed in a label.
-        UnnamedLabel;                           //< const char* that reads "Unnnamed".
+    static string AllowedSymbols,         //< The non-alpha-numberic charactors allowed in a label.
+        UnnamedLabel;                           //< string that reads "Unnnamed".
     
-    Label (const char* newLabel = "");
+    Label (string newLabel = "");
     //< Default constructor.
     
     Label (const Label& other);
@@ -51,30 +51,30 @@ class _KabukiSDK Label
     virtual ~Label () {}
     //< Virtual destructor.
 
-    const char* getLabel () const;
+    string getLabel () const;
     //< gets the label.
     
-    int setLabel (const char* newLabel);
+    int setLabel (string newLabel);
     /*< Sets the label to the new label.
         @return gets 0 upon success and 1 if the newLabel is too long.
-        @see    Label::IsValid (char). */
+        @see    Label::isValid (char). */
     virtual int setLabel (const Label& newLabel);
     /*< Sets the label to the new label.
         @return gets 0 upon success and 1 if the newLabel is too long.
-        @see    Label::IsValid (char). */
+        @see    Label::isValid (char). */
         
-    int Compare (const char* other) const;
-    /*< Compares this label to the other const char*.
+    int Compare (string other) const;
+    /*< Compares this label to the other string.
         @return gets  0 if they are identical and1 if the other string is too long. */
         
     int Compare (const Label& other) const;
     /*< Compares this label to the other Label.
         @return gets  0 if they are identical and1 if the other string  is too long. */
         
-    const char* print (I2P::Terminal& slot) const;
+    string print (Terminal& slot) const;
     //< gets a text represenation of this object.
  
-    static int IsValid (const char* label);
+    static int isValid (string label);
     /*< Verifies if thisLabel is a valid label.
         @return gets 0 if the label is valid.
         @return gets 1 if the label is too long.
@@ -83,7 +83,7 @@ class _KabukiSDK Label
 
     private:
 
-    const char* label;                               //< This object's text label.
+    string label;                               //< This object's text label.
 
 };
 

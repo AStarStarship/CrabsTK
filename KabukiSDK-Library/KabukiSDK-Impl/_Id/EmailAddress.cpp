@@ -22,21 +22,16 @@
 
 namespace _Id {
 
-EmailAddress::EmailAddress (const char* S)
+bool isValidEmailAddress (const string& s)
 {
-
-}
-
-/** Sets the email address to a string. */
-bool EmailAddress::getEmailAddress (const char* S)
-{
+    /*
     invalid = false;
-    if (String.IsNullOrEmpty (S)) return false;
+    if (s.length () < 6) return false;  //< Min email length is "a@b.c"
 
     /// Use IdnMapping class to convert Unicode domain names.
     try
     {
-        S = ::std::regex_replace (a, @" (@) (.+)$", this.DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds (200));
+    s = regex_replace (a, " (@) (.+)$", this.DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds (200));
     }
     catch (RegexMatchTimeoutException) { return false; }
 
@@ -45,19 +40,27 @@ bool EmailAddress::getEmailAddress (const char* S)
     // Return true if a is in valid e-mail format.
     try
     {
-        return Regex.IsMatch (a,
-            @"^ (? ("") ("".+? (?<!\\)""@)| (([0-9a-z] ((\. (?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*) (?<=[0-9a-z])@))" +
-            @" (? (\[) (\[ (\d{1,3}\.){3}\d{1,3}\])| (([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
-            RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds (250));
+    return Regex.IsMatch (a,
+    "^ (? ("") ("".+? (?<!\\)""@)| (([0-9a-z] ((\. (?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*) (?<=[0-9a-z])@))" +
+    " (? (\[) (\[ (\d{1,3}\.){3}\d{1,3}\])| (([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$",
+    RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds (250));
     }
     catch (RegexMatchTimeoutException) { return false; }
+    */
+    return true;
 }
 
-char* EmailAddress::getEmailAddress () { return address; }
+EmailAddress::EmailAddress (const string& s)
+{
 
-void EmailAddress::getEmailAddress (const char* S) {address = S;}
+}
 
-string EmailAddress::domainMapper (Match match)
+string& EmailAddress::getAddress () { return address; }
+
+void EmailAddress::setAddress (const string& s) { address = s; }
+
+/* Old C# code to rewrite: 
+string EmailAddress::mapToDomain (Match match)
 {
     // IdnMapping class with default property values.
     IdnMapping idn = new IdnMapping ();
@@ -71,6 +74,12 @@ string EmailAddress::domainMapper (Match match)
         invalid = true;
     }
     return match.Groups[1].getValue () + domainName;
+}
+    */
+
+void EmailAddress::print (Terminal& slot)
+{
+
 }
 
 }   //< namespace _Id

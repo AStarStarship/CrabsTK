@@ -42,12 +42,12 @@ string Tag::getName ()
     return 0;
 }
 
-int Tag::getName (const char* S)
+int Tag::getName (string S)
 {
     return 0;
 }
     
-const char* Tag::print (I2P::Terminal& slot)
+string Tag::print (Terminal& slot)
 {
     return 0;
 }

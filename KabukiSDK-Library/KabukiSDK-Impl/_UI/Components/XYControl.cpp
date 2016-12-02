@@ -135,9 +135,9 @@ bool XYControl::setBottomBound (int newBounds)
 }
 
 
-void XYControl::print (I2P::Terminal& slot)
+void XYControl::print (Terminal& slot)
 {
-    std::string temp = "XYControl:\nx: " + x + "  y: " + y + "\n";
+    string temp = "XYControl:\nx: " + x + "  y: " + y + "\n";
     slot.print (temp);
 }
 

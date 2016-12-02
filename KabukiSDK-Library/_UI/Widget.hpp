@@ -32,7 +32,7 @@ class _KabukiSDK Widget// : public ControlGrid
     Widget ();
     ~Widget ();
     
-    virtual const char* op (I2P::Terminal* slot, int index);
+    virtual string op (Terminal* slot, int index);
     /*< Inter-process operations. */
 
     private:

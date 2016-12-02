@@ -26,13 +26,19 @@
 
 namespace _Id {
 
-/** An online profile of a person. */
 class _KabukiSDK Profile
+/*< An online profile of a person. */
 {
+    public:
+
     Profile ();
     /*< Default constructor. */
     
-    void print (I2P::Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
+
+    private:
+
+
 };
 }   //< namespace _Id

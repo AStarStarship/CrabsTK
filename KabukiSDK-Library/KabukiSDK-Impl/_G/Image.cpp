@@ -3,7 +3,7 @@
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
-    @brief      This file contains the _2D.Vector_f interface.
+    @brief      This file contains the _2D::Vector_f interface.
 */
 
 #include <_G/Image.h>
@@ -39,7 +39,7 @@ int Image::BPP ()
 }
 
 /**  */
-void Image::SetBPP (int newBPP)
+void Image::setBPP (int newBPP)
 {
     //  Reconstruct ColorData to new BPP
 
@@ -76,7 +76,7 @@ bool Load (const string& filename)
 {  
     string fileType;
     fileType = new StringArray (filename);
-    fileType = fileType.Substring (fileType.Last_index_of ('.') + 1, fileType.Length);
+    fileType = fileType.Substring (fileType.Last_index_of ('.') + 1, fileType.length ());
     if (   (fileType.char_at (0) == 'b' || fileType.char_at (0) == 'B')
         && (fileType.char_at (1) == 'm' || fileType.char_at (1) == 'M')
         && (fileType.char_at (2) == 'p' || fileType.char_at (2) == 'P'))
@@ -207,31 +207,31 @@ bool Image::LoadBitmap (const string& filename)
 }
 
 /**  */
-void Image::SetPixel (int X, int Y, uint32_t Color)
+void Image::setPixel (int X, int Y, uint32_t Color)
 {
     Image.SetPixel ((imageRowWidthInBytes Y) + (X  bpp), Color);
 }
 
 /**  */
-void Image::SetPixel (int X, int Y, uint32_t Color)
+void Image::setPixel (int X, int Y, uint32_t Color)
 {
     Image.SetPixel (color, (imageRowWidthInBytes Y) + (X  bpp), Color);
 }
 
 /**  */
-void Image::SetPixel (int X, int Y, uint32_t ColorValue1, uint32_t ColorValue2)
+void Image::setPixel (int X, int Y, uint32_t ColorValue1, uint32_t ColorValue2)
 {
     Image.SetPixel (ColorData, (imageRowWidthInBytes Y) + (X  bpp), ColorValue1, ColorValue2);
 }
 
 /**  */
-void Image::SetPixel (int X, int Y, uint32_t redValue, uint32_t greenValue, uint32_t blueValue)
+void Image::setPixel (int X, int Y, uint32_t redValue, uint32_t greenValue, uint32_t blueValue)
 {
     Image.setPixel (ColorData, (imageRowWidthInBytes Y) + (X  bpp), redValue, greenValue, blueValue);
 }
 
 /**  */
-void Image::SetPixel (int X, int Y, uint32_t redValue, uint32_t greenValue, uint32_t blueValue, uint32_t alphaValue)
+void Image::setPixel (int X, int Y, uint32_t redValue, uint32_t greenValue, uint32_t blueValue, uint32_t alphaValue)
 {
     Image.setPixel (ColorData, (imageRowWidthInBytes Y) + (X  bpp), redValue, greenValue, blueValue, alphaValue);
 }
@@ -248,7 +248,7 @@ void Image::SetPixel (int X, int Y, uint32_t redValue, uint32_t greenValue, uint
 //}
 
 /**  */
-static void Image::SetPixel (uint32_t pixel, int imageDataOffset, _G.Color_i color)
+static void Image::setPixel (uint32_t pixel, int imageDataOffset, _G.Color color)
 {
     if (color.bPP () == 1)
         Image.setPixel (imageData, imageDataOffset, color.Red ());
@@ -265,7 +265,7 @@ static void Image::SetPixel (uint32_t pixel, int imageDataOffset, _G.Color_i col
 }
 
 /**  */
-static void Image::SetPixel (uint32_t pixel, int imageDataOffset, uint32_t ColorValue)
+static void Image::setPixel (uint32_t pixel, int imageDataOffset, uint32_t ColorValue)
 {
     if (imageDataOffset > 1)
         return;
@@ -273,7 +273,7 @@ static void Image::SetPixel (uint32_t pixel, int imageDataOffset, uint32_t Color
 }
 
 /**  */
-static void Image::SetPixel (uint32_t pixel, int imageDataOffset, uint32_t ColorValue1, uint32_t ColorValue2)
+static void Image::setPixel (uint32_t pixel, int imageDataOffset, uint32_t ColorValue1, uint32_t ColorValue2)
 {
     if (imageDataOffset > sizeof (imageData))
         return;
@@ -282,7 +282,7 @@ static void Image::SetPixel (uint32_t pixel, int imageDataOffset, uint32_t Color
 }
 
 /**  */
-static void Image::SetPixel (uint32_t pixel, int imageDataOffset, uint32_t redValue, uint32_t greenValue, uint32_t blueValue)
+static void Image::setPixel (uint32_t pixel, int imageDataOffset, uint32_t redValue, uint32_t greenValue, uint32_t blueValue)
 {
     if (imageDataOffset > sizeof (imageData))
         return;
@@ -292,7 +292,7 @@ static void Image::SetPixel (uint32_t pixel, int imageDataOffset, uint32_t redVa
 }
 
 /**  */
-static void Image::SetPixel (uint32_t pixel, int imageDataOffset, uint32_t redValue, uint32_t greenValue, uint32_t blueValue, uint32_t alphaValue)
+static void Image::setPixel (uint32_t pixel, int imageDataOffset, uint32_t redValue, uint32_t greenValue, uint32_t blueValue, uint32_t alphaValue)
 {
     if (imageDataOffset > sizeof (imageData))
         return;
