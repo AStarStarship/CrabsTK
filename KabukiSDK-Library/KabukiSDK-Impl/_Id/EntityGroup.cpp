@@ -22,38 +22,35 @@
 
 namespace _Id {
 
-EntityGroup::EntityGroup (string groups_name)
+EntityGroup::EntityGroup (const string& aName)
+:   name (aName)
 {
-    name = new Name (groups_name);
-    accounts = new _Id.Account.Account[0];
 }
 
-bool EntityGroup::isValid ()
+string& EntityGroup::getName () { return name; }
+
+void EntityGroup::setName (const string& s)
 {
-    return name.isValid ();
+    name = s;
 }
 
-string EntityGroup::getName () { return name.print (Terminal& slot); }
-
-void EntityGroup::Rename (string newName)
+void EntityGroup::applyPrivilage (const Privilage& p)
 {
-    name.Rename (newName);
+    //for (int i = 0; i < base.getNumAccounts (); i++)
+    //    accounts[i].Role ().applyPrivilages (new_privilages);
 }
 
-void EntityGroup::ApplyPrivilages (Privilages& P)
+int EntityGroup::search (const string& s)
 {
-    if (new_privilages == nullptr)
-        return;
-    for (int i = 0; i < base.Num_Accounts (); i++)
-        accounts[i].Role ().Apply_Privilages (new_privilages);
+    for_each (entities.begin (), entities.end (), [](Entity& e)
+    {
+
+    });
 }
 
 void EntityGroup::print (Terminal& slot)
 {
-    slot.prints ("Group: ");
-    name.print (slot);
-    slot.print (" ");
-    base.print (slot);
+    slot.prints ("Group: ", name, " ");
 }
 
 }   //< namespace _Id

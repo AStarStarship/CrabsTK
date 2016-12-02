@@ -37,7 +37,9 @@ inline const char* addressTypeLabel (AddressType type);
 /*< Gets one of the addressTypeLables. */
 
 class _KabukiSDK Address
-/*< A physical address. */
+/*< A physical address. 
+    @todo Integrate with Google Maps API.
+*/
 {
     public:
 
@@ -46,7 +48,7 @@ class _KabukiSDK Address
 
     Address (const string& aStreet, const string& aCity, const string& aState, const string& aZip, const string& aCcountry, 
         AddressType aType);
-    /*< Constructor creates an address with the given parameters. */
+    /*< Constructs an address with the given parameters. */
 
     string& getStreet ();
     /*< Gets the street addrss. */

@@ -20,21 +20,20 @@
  
 #pragma once
 
-#include "Privilege.hpp"
+#include "Entity.hpp"
+#include "Privilage.hpp"
 
 namespace _Id {
 
-class _KabukiSDK EntityGroup
+class _KabukiSDK EntityGroup : public Entity
 /*< A group of entities.
+    @todo 
 */
 {
     public:
 
-    EntityGroup (const char* aName);
+    EntityGroup (const string& aName);
     /*< A group of entities such as people or businesses. */
-
-    bool isValid ();
-    /*< Returns true if this is a valid group of entities. */
 
     string& getName ();
     /*< Gets the name of the entity group. */
@@ -45,10 +44,15 @@ class _KabukiSDK EntityGroup
     void applyPrivilage (const Privilage& p);
     /*< Applies privilages to the entity group. */
     
-    inline void print (Terminal& slot);
+    virtual int search (const string& s) override;
+    /*< Returns true if this list of entities contains the given string. */ 
+    
+    virtual void print (Terminal& slot) override;
     /*< Prints this object to a terminal. */
 
     private:
+
+    string name;                 //< The name of the entity group.
 
     vector<Entity*> entities;    //< A vector if Entity pointers.
 };

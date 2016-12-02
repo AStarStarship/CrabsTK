@@ -24,60 +24,53 @@ namespace _Id {
 
 EntityList::EntityList ()
 {
-    entities = new List<Entity> ();
 }
 
 int EntityList::getSize () { return entities.size (); }
 
-void EntityList::add (Entity a)         { entities.add (a); }
+void EntityList::add (Entity* a)
+{ 
+    entities.push_back (a); 
+}
 
-void EntityList::add (List<Entity> a)   { entities.AddRange (a); }
+void EntityList::add (EntityList& l)   
+{ 
+    //entities.push_back (l); 
+}
 
-Entity EntityList::find (string a)
+Entity* EntityList::find (const string& a)
 {
     if (a.length () == 0)
-    {
-        return nullptr;//static website guest entities
-    }
+        return nullptr;
+    
+    Entity* ptr;
+
     for (int i = 0; i < entities.size (); i++)
-        if (strcmp (a, entities[i].getName ()) == 0)
-            return entities[i];
+    {
+        ptr = entities[i];
+        if (ptr->equals (a))
+            return ptr;
+    }
         
     return nullptr;//static website guest entities
 }
 
-bool EntityList::contains (string a)
+bool EntityList::search (const string& query)
 {
-    if (a.length () == 0 || a == nullptr) return false;
+    if (query.length () == 0) return false;
+
+    Entity* entity_ptr;
 
     for (int i = 0; i < entities.size (); i++)
-        if (entities[i].Name == a)
+    {
+        entity_ptr = entities[i];
+        if (entity_ptr->getFirstName () == query)
             return true;
-
+    }
     return false;//static website guest entities
 }
 
-byte EntityList::getState ()
-{
-    return 0;
-}
-
-string EntityList::getState (byte Value)
-{
-    return 0;
-}
-
-string EntityList::op (Terminal* slot, int index)
-{
-    switch (Index)
-    {
-        case 0: return NumMembers (0);
-    }
-    
-    return enquery ("EntityList", "_Id"): InvalidIndex ();
-}
-
-string EntityList::print (Terminal& slot)
+void EntityList::print (Terminal& slot)
 {
     string returnstring;
     returnstring = "Number of Accounts: " + entities.size () + (char)13;
@@ -86,10 +79,10 @@ string EntityList::print (Terminal& slot)
     {
         // Iterated throught the users array and write the
         // print (Terminal& slot) strings to the returnstring
-        returnstring = returnstring + ("Account " + (i + 1) + ": " + entities[i].print (Terminal& slot) + (char)13);
+        returnstring = returnstring + ("Account " + (i + 1) + ": " + entities[i].getFirstName () + (char)13);
     }
 
-    return returnstring.c_str ();
+    slot.print (returnstring.c_str ());
 }
 
 }   //< namespace _Id

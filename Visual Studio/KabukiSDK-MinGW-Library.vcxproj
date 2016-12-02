@@ -62,7 +62,7 @@
     <ClInclude Include="..\KabukiSDK-Library\_Id\Organization.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Password.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Person.hpp" />
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Privilege.hpp" />
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Privilage.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Profile.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Relationship.hpp" />
     <ClInclude Include="..\KabukiSDK-Library\_Id\Role.hpp" />
@@ -161,7 +161,6 @@
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Privilage.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Profile.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Relationship.cpp" />
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Tag.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\User.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\UserList.cpp" />
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Math\BCD.cpp" />

@@ -36,8 +36,10 @@ int getMaxHandleLength ();
 void setHandleLengthRange (int min, int max);
 /*< Sets the min and max hanlde legnth to the given values. */
 
-/**  */
 class _KabukiSDK Handle
+/** A handle like a username.
+    
+*/
 {
     public:
 
@@ -46,7 +48,7 @@ class _KabukiSDK Handle
         MaxLengthRange = 256      //< The max length of a Handle range.
     };
     
-    Handle (const string& aName, int AMinLength = MinLengthRange, int AMaxLength = MaxLengthRange);
+    Handle (const string& aName, int aMinLength = MinLengthRange, int aMaxLength = MaxLengthRange);
     /*< Constructor creates a standard username. */
 
     string& getHandle ();
@@ -61,7 +63,7 @@ class _KabukiSDK Handle
     bool equals (const Handle& h);
     /*< Returns true if this Handle is idential to the given Handle. */
 
-    void print (Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints the state of this object. */
     
     private:

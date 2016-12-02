@@ -35,13 +35,15 @@ class _KabukiSDK Role
     4. owner
 */
 {
+    public:
+
     Role (const string& aDescription);
     /*< Constructs a user with the given username and password. */
 
     string& getDescription ();
     /*< Gets a reference to the descritpion string. */
 
-    string setDescription (const string& s);
+    void setDescription (const string& s);
     /*< Sets the description to the given string. */
     
     inline void print (Terminal& slot);
@@ -53,5 +55,3 @@ class _KabukiSDK Role
 };
 
 }   //< namespace _Id   
-
-

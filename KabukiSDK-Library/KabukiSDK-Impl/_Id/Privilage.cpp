@@ -57,5 +57,8 @@ bool Privilage::setPrivilageLevel (PrivilageLevel l)
 }
 
 void Privilage::print (Terminal& slot)
+{
+
+}
 
 }   //< namespace _Id

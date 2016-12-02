@@ -65,7 +65,7 @@ string& Handle::getHandle () { return name; }
 
 bool Handle::setHandle (const string& s)
 {
-    if (s.length () < minLength || s.length () > maxLength)
+    if (s.length () < minHandleLength || s.length () > maxHandleLength)
         return false;
 
     return isValid (name);
@@ -73,7 +73,7 @@ bool Handle::setHandle (const string& s)
 
 bool Handle::isValid (const string& s)
 {
-    if (s.length () < minLength || s.length () > maxLength)
+    if (s.length () < minHandleLength || s.length () > maxHandleLength)
         return false;
 
     return true;

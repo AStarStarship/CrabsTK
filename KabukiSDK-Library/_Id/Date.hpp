@@ -25,7 +25,9 @@
 namespace _Id {
 
 class _KabukiSDK Date
-/*< A date that will be used to attach event data to. */
+/*< An eventful date. 
+    @todo Create a list of events. Is it an IEvent?
+*/
 {
     public:
     

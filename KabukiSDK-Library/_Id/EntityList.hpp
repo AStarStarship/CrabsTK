@@ -27,34 +27,33 @@ using namespace std;
 namespace _Id {
 
 class _KabukiSDK EntityList
-/*< A List of Entity(s) and EntityGroup(s). */
+/*< A List of Entity(s) and EntityGroup(s).
+    This is essentially a contact list.
+*/
 {   
     public:
     
     EntityList ();
     /** A list of Entity (s). */
 
-    int getCount ();
+    int getSize ();
     /** Gets the number of Accounts in the List. */
     
-    void add (const Entity& e);
+    void add (Entity* e);
     /*< Adds an Entity to the list. */
     
-    void add (vector<Entity> e);
+    void add (EntityList& l);
     /*< Adds a list of Entity (s) to the list. */
     
-    Entity find (const char* s);
+    Entity* find (const string& s);
     /*< Finds an entity in the list by the given search string. */
-    
-    bool contains (const char* s);
-    /*< Returns true if this list of entities contains the given string. */
     
     inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
     
     private:
     
-    vector<Entity> entities;      //< The list of entities.
+    vector<Entity*> entities;       //< The list of entities.
 };
 
 }   //< namespace _Id

@@ -1,5 +1,5 @@
 /** Kabuki Software Development Kit
-    @file    /.../KabukiSDK-Impl/_Id/Enity.cpp
+    @file    /.../KabukiSDK-Impl/_Id/Entity.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -18,13 +18,13 @@
         limitations under the License.
 */
 
-#include <_Id/Enity.hpp>
+#include <_Id/Entity.hpp>
 
 namespace _Id {
 
-Enity::Enity (string anEmailAdress, string aFirstName, string aLastName, 
-    string aPrimaryPhoneNum, string aStreetAdress1, string aZipCode1, 
-    string aStreetAdress2, string aZipCode2)
+Entity::Entity (const string& anEmailAdress, const string& aFirstName, const string& aLastName, 
+    const string& aPrimaryPhoneNum, const string& aStreetAdress1, const string& aZipCode1, 
+    const string& aStreetAdress2, const string& aZipCode2)
 :   firstName     (aFirstName),
     lastName      (aLastName),
     phoneNumber   (aPrimaryPhoneNum),
@@ -35,12 +35,13 @@ Enity::Enity (string anEmailAdress, string aFirstName, string aLastName,
     
 }
 
-string Enity::getName () { return name; }
+string& Entity::getFirstName () { return firstName; }
 
-void Enity::setName (string S) { name = S }
+void Entity::setFirstName (const string& s) { firstName = s; }
 
-int Enity::contains (string query)
+bool Entity::search (const string& query)
 {
+    /*
     for_each (tags.begin (), tags.end (), [](string& s(
     {
         if (s == query) return 1;
@@ -51,7 +52,7 @@ int Enity::contains (string query)
         if (a == query) return 1;
     });
 
-    for_each (tags.begin (), tags.end (), [](Enity& e(
+    for_each (tags.begin (), tags.end (), [](Entity& e(
     {
         if (e == query) return 1;
     });
@@ -65,8 +66,13 @@ int Enity::contains (string query)
     {
         if (s == query) return 1;
     });
-    
-    return 0;
+    */
+    return false;
+}
+
+void Entity::print (Terminal& slot)
+{
+    slot.print ("Entity: ");
 }
 
 }   //< namespace _Id

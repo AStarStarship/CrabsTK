@@ -23,26 +23,20 @@
 namespace _Id {
 
 Account::Account (const string& aUsername)
+:   name (aUsername)
 {
-    // If one calls this method then it is assuming that there is no password for the account.
-    name = new Name (aUsername);
-    password = nullptr;
-
-    users = new UserList ();
 }
 
 Account::Account (const string& aUsername, const string& aPassword)
+:   name     (aUsername),
+    password (aPassword)
 {
-    name = aUsername;
-    password = aPassword;
-
-    role = new Role ();
-
-    users = new UserList ();
+    //role = new Role ();
 }
 
 bool Account::isValid ()
 {
+    /*
     if (password == nullptr)
     {
         // The the account does not require a password
@@ -54,19 +48,17 @@ bool Account::isValid ()
     else // we have to test the password
     if (!name.isValid () || !password.isValid ())
         return false;
-
+    */
     return true;
 }
 
-string& Account::getName () { return name; }
+string& Account::getName () { return name.getHandle (); }
 
 bool Account::setName (const string& s) { return name.setHandle (s); }
 
 bool Account::requiresPassword ()
 {
-    if (password == nullptr)
-        return false;
-    return true;
+    return password.equals ("password");
 }
 
 void Account::setPassword (const string& s)
@@ -74,7 +66,7 @@ void Account::setPassword (const string& s)
     password.change (s);
 }
 
-UserList Account::getUsers ()
+UserList& Account::getUsers ()
 {
     return users;
 }
@@ -84,6 +76,7 @@ void Account::addUser (User& u)
     users.add (u);
 }
 
+/*
 bool Account::requestNewAccount (Network.Address request_source, string User_Name, string Password,
     string First_Name, string Last_Name, string Adress1, string Adress2, string Zip_Code)
 {
@@ -93,14 +86,6 @@ bool Account::requestNewAccount (Network.Address request_source, string User_Nam
     return false;
 }
 
-bool Account::informationIsValid (string Handle, string Password, string First_Name, 
-    string Last_Name, string Adress1, string Adress2, string Zip_Code)
-{
-    if ()
-        return false;
-    return true;
-}
-
 bool Account::login (User& u)
 {
     User aUser;
@@ -108,11 +93,14 @@ bool Account::login (User& u)
     if (!u.equals (aUser))
         return false;
     return true;
-}
+}*/
 
 void Account::print (Terminal& slot)
 {
-    slot.print ("Account Name: ", name.getCString () + " Password: " + password.getCString ());
+    slot.print ("Account Name: ");
+    name.print (slot);
+    slot.print (" Password: ");
+    password.print (slot);
 }
 
 }   //< namespace _Id

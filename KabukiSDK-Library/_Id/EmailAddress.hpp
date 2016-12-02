@@ -25,7 +25,9 @@
 namespace _Id {
 
 bool isValidEmailAddress (const string& s);
-/*< Returns true if this is a valid email address. */
+/*< Returns true if this is a valid email address. 
+    @todo Fix regex email verifier script.
+*/
 
 class _KabukiSDK EmailAddress
     /** An email address. */

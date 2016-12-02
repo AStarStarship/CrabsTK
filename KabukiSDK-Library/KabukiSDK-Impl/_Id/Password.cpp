@@ -69,6 +69,11 @@ string Password::encript ()
     return password;
 }
 
+bool Password::equals (const string& s)
+{
+    return password == s;
+}
+
 bool Password::equals (const Password& p)
 {
     return password == p.password;

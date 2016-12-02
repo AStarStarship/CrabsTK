@@ -26,6 +26,8 @@ using namespace I2P;
 
 #include <string>
 #include <vector>
+#include <memory>
+#include <algorithm>
 using namespace std;
 
 #ifdef _ExportKabukiSDK

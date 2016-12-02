@@ -27,4 +27,9 @@ Organization::Organization ()
 
 }
 
+void Organization::print (Terminal& slot)
+{
+
+}
+
 }   //< namespace _Id

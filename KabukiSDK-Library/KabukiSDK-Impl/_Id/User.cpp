@@ -22,7 +22,7 @@
 
 namespace _Id {
 
-User::User (const string& aName, const string& aPassoword)
+User::User (const string& aName, const string& aPassword)
 :   name (aName),
     password (aPassword)
 {
@@ -45,6 +45,11 @@ bool User::verify (const string& aUsername, const string& aUser)
 bool User::equals (const User& u)
 {
     return (name.equals (u.name) && password.equals (u.password));
+}
+
+bool User::equals (const string& aName)
+{
+    return name.equals (aName);
 }
 
 void User::print (Terminal& slot)

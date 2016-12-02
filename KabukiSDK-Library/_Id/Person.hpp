@@ -26,6 +26,7 @@ namespace _Id {
 
 class _KabukiSDK Person: public Entity
 /** Class that represents a person/human. 
+    @todo Load a person from social media account using Facbook and OAath APIs.
 */
 {
     public:
@@ -38,7 +39,7 @@ class _KabukiSDK Person: public Entity
 
     private:
 
-
+    string lastName,                           //< The last name of the entity.
 };
 
 }   //< namespace _Id

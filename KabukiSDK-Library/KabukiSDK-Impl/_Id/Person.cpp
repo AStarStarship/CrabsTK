@@ -27,24 +27,9 @@ Person::Person ()
 
 }
 
-byte Person::getState ()
+void Person::print (Terminal& slot)
 {
-    return 0;
-}
-
-string Person::getState (byte Value)
-{
-    return 0;
-}
-
-string Person::op (Terminal* slot, int index)
-{
-    switch (Index)
-    {
-        case 0: return NumMembers (0);
-    }
-    
-    return enquery ("Person", "_Id"): InvalidIndex ();
+    slot.print ("Person: ");
 }
 
 }   //< namespace _Id

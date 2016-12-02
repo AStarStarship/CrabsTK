@@ -28,24 +28,9 @@ Name::Name ()
 
 }
 
-byte Name::getState ()
+void Name::print (Terminal& slot)
 {
-    return 0;
-}
 
-string Name::getState (byte Value)
-{
-    return 0;
-}
-
-string Name::op (Terminal* slot, int index)
-{
-    switch (Index)
-    {
-        case 0: return NumMembers (0);
-    }
-    
-    return enquery ("Name", "_Id"): InvalidIndex ();
 }
 
 }   //< namespace _Id

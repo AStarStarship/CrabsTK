@@ -288,9 +288,6 @@
     <ClInclude Include="..\KabukiSDK-Library\_Id\Person.hpp">
       <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
-    <ClInclude Include="..\KabukiSDK-Library\_Id\Privilege.hpp">
-      <Filter>KabukiSDK-Library\_Id</Filter>
-    </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Id\Profile.hpp">
       <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
@@ -338,6 +335,9 @@
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\_Math\Complex.hpp">
       <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\KabukiSDK-Library\_Id\Privilage.hpp">
+      <Filter>KabukiSDK-Library\_Id</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -549,9 +549,6 @@
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Relationship.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
-    </ClCompile>
-    <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\Tag.cpp">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Id</Filter>
     </ClCompile>
     <ClCompile Include="..\KabukiSDK-Library\KabukiSDK-Impl\_Id\User.cpp">

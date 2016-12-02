@@ -20,19 +20,21 @@
  
 #pragma once
 
-#include <FreeI2P.hpp>
 #include <KabukiSDK-Config.hpp>
+
 #include "Entity.hpp"
 
 namespace _Id {
 
 class _KabukiSDK Organization : public Entity
-/*< An entity that is not a person such as a business or non-profit organization. */
+/*< An entity that is not a person such as a business or non-profit organization. 
+    @todo 
+*/
 {
     public:
 
-    /** Default constructor. */
     Organization ();
+    /*< Default constructor. */
     
     inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */

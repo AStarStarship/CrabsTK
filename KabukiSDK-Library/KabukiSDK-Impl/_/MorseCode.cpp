@@ -112,7 +112,7 @@ string toMorseCode (char code)
         ".-.",          //< ASCII: 'R'
         "...",          //< ASCII: 'S'
         "-",            //< ASCII: 'T'
-        "..-",          //< ASCII: 'U'
+        "..-",          //< ASCII: 'u'
         "...-",         //< ASCII: 'V'
         ".--",          //< ASCII: 'W'
         "-..-",         //< ASCII: 'X'

@@ -24,48 +24,42 @@
 #include "EmailAddress.hpp"
 #include "Profile.hpp"
 
-#include <string>
-#include <vector>
-using namespace std;
-
 namespace _Id {
 
 class _KabukiSDK Entity
-/** A entinty with contact information. */
+/** A entinty with contact information. 
+    @todo Attach a compressed image link.
+*/
 {
-    /**  */
-    Entity (string anEmailAdress = "", string aFirstName = "", string aLastName = "", 
-        string aPrimaryPhoneNum = "", string aStreetAdress1 = "", string aZipCode1 = "", 
-        string aStreetAdress2 = "", string aZipCode2 = "");
+    public:
 
-    string getName ();
-    /*< Gets the entity name string. */
+    Entity (const string& aFirstName = "", const string& aLastName = "", const string& anEmailAdress = "", 
+        const string& aPrimaryPhoneNum = "", const string& aStreetAdress1 = "", const string& aZipCode1 = "", 
+        const string& aStreetAdress2 = "", const string& aZipCode2 = "");
+    /*< A real-world enity with . */
 
-    int setName (string s);
-    /*< Attempts to set the name string to the new string. */
+    string& getName ();
+    /*< Gets the entity's first/only name. */
 
-    int contains (string query);
+    void setName (const string& s);
+    /*< Attempts to set the fname string to the new string. */
+
+    virtual int search (const string& query);
     /*< Returns true if this entity contains the search query. */
     
-    inline void print (Terminal& slot);
+    virtual void print (Terminal& slot);
     /*< Prints this object to a terminal. */
     
     private:
 
-    string firstName,
-        lastName,
-        emailAdress,
-        streetAdress1,
-        zipCode1,
-        streetAddress2,
-        zipCode2,
-        phoneNumber;
-    
-    vector<string> tags;
-    vector<Address> addresses;
-    vector<EmailAddress> emailAddresses;
-    vector<Profile> profiles;
-    vector<string> notes;
+    string name,                            //< The legal name of the entity.
+        phoneNumber;                        //< The phone number of the entity.
+    Address address;                        //< The address of the entity.
+    vector<string> tags;                    //< Metadata tags.
+    vector<Address> addresses;              //< The address of the entity.
+    vector<EmailAddress> emailAddresses;    //< The email address of the entity.
+    vector<Profile> profiles;               //< The online profiles this entinty is attached to.
+    vector<string> notes;                   //< An array of notes about the enitity.
 };
 
 }   //< namespace _Id

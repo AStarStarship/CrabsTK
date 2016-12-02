@@ -28,6 +28,8 @@ namespace _Id {
 class _KabukiSDK Name
 /*< A name of an entity. */
 {
+    public:
+
     /** Default constructor. */
     Name ();
     

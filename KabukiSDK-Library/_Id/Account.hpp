@@ -28,11 +28,13 @@
 namespace _Id {
 
 class Account
-/** An account with a username and password. */
+/** An account with a username and password. 
+    @todo Integrate with OS accounts.
+*/
 {
 	public:
 	
-    Account (const string& aUsername = "New user");
+    Account (const string& aUsername);
     /*< Default constructor. */
 
     Account (const string& aUsername, const string& aPassword);
@@ -59,13 +61,14 @@ class Account
     void addUser (User& u);
     /*< Allows another user to be attached to this account. */
 
-    //bool requestNewAccount (Network.Address request_source, string User_Name, string Password,
-    //    string First_Name, string Last_Name, string Adress1, string Adress2, string Zip_Code);
+    /*
+    bool requestNewAccount (Network.Address request_source, string User_Name, string Password,
+        string First_Name, string Last_Name, string Adress1, string Adress2, string Zip_Code);
 
     bool login (User& u);
-    /*< Logs the given user into the account. */
+    Logs the given user into the account. */
 
-    void print (Terminal& slot);
+    inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
 
     private:

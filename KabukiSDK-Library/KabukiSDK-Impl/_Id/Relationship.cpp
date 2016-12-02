@@ -27,24 +27,9 @@ Relationship::Relationship ()
 
 }
 
-byte Relationship::getState ()
+void Relationship::print (Terminal& slot)
 {
-    return 0;
-}
 
-string Relationship::getState (byte Value)
-{
-    return 0;
-}
-
-string Relationship::op (Terminal* slot, int index)
-{
-    switch (Index)
-    {
-        case 0: return NumMembers (0);
-    }
-    
-    return enquery ("Relationship", "_Id"): InvalidIndex ();
 }
 
 }   //< namespace _Id

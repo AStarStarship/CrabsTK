@@ -27,24 +27,9 @@ OAthAccount::OAthAccount ()
 
 }
 
-byte OAthAccount::getState ()
+void OAthAccount::print (Terminal& slot)
 {
-    return 0;
-}
 
-const char* OAthAccount::getState (byte Value)
-{
-    return 0;
-}
-
-const char* OAthAccount::op (Terminal& slot, int index, int Enq)
-{
-    switch (Index)
-    {
-        case 0: return NumMembers (0);
-    }
-    
-    return Query ? Enquery ("OAthAccount", "_Id"): InvalidIndex ();
 }
 
 }   //< namespace _Id

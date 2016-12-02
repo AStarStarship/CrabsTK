@@ -30,6 +30,8 @@ class _KabukiSDK User
     A user does not necessarily have an account. Some accounts are and any user can use. i.e. the guest account.
 */
 {
+    public:
+
     User (const string& aUsername, const string& aPassword);
     /*< Constructs a user with the given username and password. */
 
@@ -40,9 +42,13 @@ class _KabukiSDK User
     /*< Gets a reference to the password. */
 
     bool verify (const string& aUsername, const string& aPassword);
-    
-    bool equals (const User& aUser);
+    /*< Checks to see if the given username and password are in the corrent format. */
+
+    bool equals (const User& u);
     /*< Returns true if this user is the same as the given one.  */
+
+    bool equals (const string& aName);
+    /*< Returns true if this username is the same as the given one.  */
     
     inline void print (Terminal& slot);
     /*< Prints this object to a terminal. */
@@ -51,9 +57,6 @@ class _KabukiSDK User
 
     Handle name;            //< The username.
     Password password;      //< The user's password.
-
-    // Currently the user is able log into more the one account at a time. This could cause a security threat.
-    //Account.List activeAccounts;
 };
 }   //< namespace _Id
 

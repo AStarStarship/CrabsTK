@@ -44,8 +44,8 @@ class _KabukiSDK UserList
 	bool contains (const User& u);
     /*< Returns true if this list contains the given user. */
     
-	User* find (string username);
-	/*< Attemps to find a user by username. 
+	User* find (const string& query);
+	/*< Attemps to find a user with the given query. 
         @return Returns a nullptr if this list does not contain the search query. */
     
     inline void print (Terminal& slot);

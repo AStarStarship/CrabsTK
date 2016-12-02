@@ -42,7 +42,7 @@ class _KabukiSDK Password
         MaxLength = 255     //< The maximum length of a password.
     };
 
-    Password (const string& aPassword);
+    Password (const string& aPassword = "Password");
     /*< Attemps to create a password from the given password with the default format. 
         If the password does not match the default format, the default password will be used.
     */
@@ -66,6 +66,9 @@ class _KabukiSDK Password
     
     string encript ();
     /*< Entcypts the password with a salt.  */
+
+    bool equals (const string& s);
+    /*< Returns true if this password equals the given one. */
 
     bool equals (const Password& p);
     /*< Returns true if this password equals the given one. */
