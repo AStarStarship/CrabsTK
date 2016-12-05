@@ -1,0 +1,1 @@
+The purpose of this demo is to serve as a demo for the software rendered graphics on embedded systems.

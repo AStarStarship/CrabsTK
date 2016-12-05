@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\..\FreeI2P\FreeI2P-Console;$(IncludePath)</IncludePath>
+    <IncludePath>..\Library;..\..\FreeI2P\FreeI2P-Console;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -142,11 +142,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <None Include="..\Library\KabukiToolkit\Com\MIDI\ReadMe.md" />
-    <None Include="..\Library\KabukiToolkit\Com\OSC\ReadMe.md" />
-    <None Include="..\Library\KabukiToolkit\Librarian\Id\ReadMe.md" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
