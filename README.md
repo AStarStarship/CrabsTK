@@ -22,6 +22,7 @@ Kabuki SDK is built on FreeI2P, which is good for working with dictionaries (@go
 | _Audio  | Audio.|
 | _File   | Files and archives.|
 | _G      | Graphics engine.|
+| _Id     | Identification.|
 | _Math   | Math.|
 
 ## License ##

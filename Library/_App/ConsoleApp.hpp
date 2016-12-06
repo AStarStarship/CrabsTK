@@ -23,37 +23,37 @@ class ConsoleApp : Application
     ConsoleApp (const char* Args, int NumArgs);
     /*< Default constructor for a console app. */
 
-    long GetUID ();
+    long getUID ();
     /*< Returns the process ID of this App. */
 
-    int ActivateWindow (int newWindowIndex);
+    int activateWindow (int newWindowIndex);
     /*< Sets the activeWindow to the newIndex. */
 
-    int ActivateWindow (Window& newWindow);
+    int activateWindow (Window& newWindow);
     /*< Sets the activeWindow to the newWindow. */
 
-    WindowGroup Windows { return windows; }
+    WindowGroup getWindows { return windows; }
     /*< Returns the */
 
-    int Show  ();
+    int show  ();
     /*<  */
 
-    int Hide  ();
+    int hide  ();
     /*<  */
 
-    int Close ();
+    int close ();
     /*<  */
 
-    _G::Cell GetDrawingContext ();
+    _G::Cell getDrawingContext ();
     /*< Returns a link to this application's drawing context. */
 
-    void Draw (_G::Cell& C);
+    void draw (_G::Cell& C);
     /*< Draws the graphics on in the Cell canvas g. */
 
-    void Redraw ();
+    void redraw ();
     /*< Redraws the screen */
 
-    const char* ToString ();
+    const char* toString ();
     /*< Returns a text representation of this object. */
     
     private:

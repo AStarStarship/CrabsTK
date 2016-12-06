@@ -1,4 +1,4 @@
-/** Kabuki SDK
+/*< Kabuki SDK
     @file       /.../Source/Kabuki_SDK-Impl/include/_App/WindowGroup.h
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
@@ -9,43 +9,45 @@
 
 #include <vector>
 
-#include "Window.h"
+#include "Window.hpp"
 
-namespace _App
-{
-/** Class that stores a group of _App.Window objects. */
+namespace _App {
+
 class WindowGroup
+/*< Class that stores a group of _App.Window objects. *
 {
     public:
     
     static const int DefaultMaxWindows = 1024;
 
-    /** Default constructor. **/
     WindowGroup ();
+    /*< Default constructor. **/
 
-    /** Constructor initializes with a single window. */
     WindowGroup (Window& thisWindow);
+    /*< Constructor initializes with a single window. */
 
-    /** Constructor initializes with an array of windows. */
     WindowGroup (vector<Window> initWindows);
+    /*< Constructor initializes with an array of windows. */
 
-    /** Returns the UID of this Group. */
-    long GetUID ();
+    long getUID ();
+    /*< Returns the UID of this Group. */
 
-    /** Gets and sets the maximum number of windows in this group */
-    int GetMaxWindows ();
-    void SetMaxWindows (int Value);
+    int getMaxWindows ();
+    /*< Gets and sets the maximum number of windows in this group */
+    
+    void setMaxWindows (int Value);
+    /*< Gets and sets the maximum number of windows in this group */
 
-    /**  */
-    int Select (int windowNumber);
+    int select (int windowNumber);
+    /*<  */
 
-    /** Returns the number of windows in this group. */
-    int GetNumWindows ();
+    int getNumWindows ();
+    /*< Returns the number of windows in this group. */
 
-    /** Adds a newWindow to the group. */
-    void AddWindow (Window newWindow);
+    void addWindow (Window newWindow);
+    /*< Adds a newWindow to the group. */
 
-    void Print (I2P::Terminal& Slot);
+    void print (I2P::Terminal& ioSlot);
     /*< Prints this object to the terminal. */
 
     private:
