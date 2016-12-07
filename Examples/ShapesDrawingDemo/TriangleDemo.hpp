@@ -24,18 +24,14 @@ namespace KabukiSDKExamples {
 
 class TriangleDemo: public _App::App
 {  
-    int clipMinX, clipMinY, clipMaxX, clipMaxY;
+    int clipMinX,
+        clipMinY,
+        clipMaxX,
+        clipMaxY;
     
     TriangleDemo ();
     
-    void draw (_G::Cell& C);
-    
-    void drawTriangle (_G::Cell& C, _G::Color_i color, _2D::Point one, _2D::Point two, _2D::Point three);
-    
-    void drawTopTriangle (_G::Cell& C, _G::Color_i color, _2D::Point one, _2D::Point two, _2D::Point three);
-    
-    // 
-    void drawBottomTriangle (_G::Cell& C, _G::Color_i color, _2D::Point one, _2D::Point two, _2D::Point three);
+    virtual void draw (_G::Cell& C) override;
     
     class ClickListener: public _G::event.MouseListener
     {

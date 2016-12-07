@@ -5,57 +5,62 @@
     @license    http://www.apache.org/licenses/LICENSE-2.0
 */
 
-namespace _App
+#pragma once
+
+#include <KabukiSDK-Config.hpp>
+
+namespace _App {
+
+class IApplication
+/*< Interface for an Kabuki SDK app.
+*/
 {
-    /*< Interface for an Kabuki SDK app. */
-    class IApplication
-    {
-        public:
+    public:
         
-        /*<
-        const int MaxWindows = 256;
+    /*<
+    const int MaxWindows = 256;
         
-        long UID;
-        numWindows;
+    long UID;
+    numWindows;
         
-        Window windows[];
-        Window activeWindow;
-        */
+    Window windows[];
+    Window activeWindow;
+    */
+    
+    virtual void initialize () = 0;
+    /*< Initializer. */
         
-        void Initialize () = 0;
-        /*< Initializer. */
-        
-        long GetUID () = 0;
-        /*< Returns the process ID of this App. */
+    virtual long getUID () = 0;
+    /*< Returns the process ID of this App. */
 
-        int ActivateWindow (int newIndex) = 0;
-        /*< Sets the activeWindow to the newIndex. */
+    virtual int activateWindow (int newIndex) = 0;
+    /*< Sets the activeWindow to the newIndex. */
         
-        int ActivateWindow (Window newWindow) = 0;
-        /*< Sets the activeWindow to the newWindow. */
+    virtual int activateWindow (Window newWindow) = 0;
+    /*< Sets the activeWindow to the newWindow. */
 
-        WindowGroup Windows () = 0;
-        /*<  */
+    virtual WindowGroup getWindows () = 0;
+    /*<  */
 
-        int Show () = 0;
-        /*<  */
+    virtual int show () = 0;
+    /*<  */
         
-        int Hide () = 0;
-        /*<  */
+    virtual int hide () = 0;
+    /*<  */
         
-        int Close () = 0;
-        /*<  */
+    virtual int close () = 0;
+    /*<  */
 
-        _G::Cell& getCell () = 0;
-        /*< Returns a link to this application's drawing context. */
+    virtual _G::Cell& getCell () = 0;
+    /*< Returns a link to this application's drawing context. */
         
-        void draw (_G::Cell& C) = 0;
-        /*<  */
+    virtual void draw (_G::Cell& C) = 0;
+    /*<  */
         
-        void redraw () = 0;
-        /*<  */
+    virtual void redraw () = 0;
+    /*<  */
         
-        string toString () = 0;
-        /*< Returns a text representation of this object. */
-    };
+    virtual void print (Terminal& io) = 0;
+    /*< Prints this object to a Terminal.  */
+};
 }

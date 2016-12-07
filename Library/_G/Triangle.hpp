@@ -19,10 +19,10 @@ class _KabukiSDK Triangle
 {
     public:
     
-    /**  */
     Triangle ();
+    /*<  */
 
-    Triangle (_2D::Point_i initOne, _2D::Point_i initTwo, _2D::Point_i initThree);
+    Triangle (_2D::Point initOne, _2D::Point initTwo, _2D::Point initThree);
 
     Triangle (int x0, int y0, int x1, int y1, int x2, int y2);
 

@@ -44,7 +44,6 @@
     <ClInclude Include="..\Library\_App\AppGroup.hpp" />
     <ClInclude Include="..\Library\_App\ConsoleApp.hpp" />
     <ClInclude Include="..\Library\_App\IApp.hpp" />
-    <ClInclude Include="..\Library\_App\IContent.hpp" />
     <ClInclude Include="..\Library\_App\RealTimeApp.hpp" />
     <ClInclude Include="..\Library\_App\Window.hpp" />
     <ClInclude Include="..\Library\_G\AnimatedTexture.hpp" />
@@ -62,6 +61,7 @@
     <ClInclude Include="..\Library\_G\Rect.hpp" />
     <ClInclude Include="..\Library\_G\Scene.hpp" />
     <ClInclude Include="..\Library\_G\String.hpp" />
+    <ClInclude Include="..\Library\_G\SwRenderer.hpp" />
     <ClInclude Include="..\Library\_G\Texture.hpp" />
     <ClInclude Include="..\Library\_G\Triangle.hpp" />
     <ClInclude Include="..\Library\_Id\Account.hpp" />
@@ -149,6 +149,7 @@
     <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Polygon.cpp" />
     <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Scene.cpp" />
     <ClCompile Include="..\Library\KabukiSDK-Impl\_G\String.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\SwRenderer.cpp" />
     <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Texture.cpp" />
     <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Account.cpp" />
     <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Address.cpp" />

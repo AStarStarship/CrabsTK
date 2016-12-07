@@ -35,4 +35,3 @@ bool APIENTRY DllMain (HMODULE hModule,
     }
     return TRUE;
 }
-

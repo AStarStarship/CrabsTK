@@ -11,8 +11,7 @@
 #include "Color.hpp"
 #include "Font.hpp"
 #include "Rect.hpp"
-
-#include <string>
+#include "Image.hpp"
 
 namespace _G {
     
@@ -23,13 +22,13 @@ class _KabukiSDK Cell_f
 {
     public:
     
-    Cell_f (int LeftEdge, int TopEdge, int Width, int Height);
+    Cell_f (int leftEdge, int topEdge, int width, int height);
     /*<  */
 
-    void drawText (string S, int X, int Y);
+    void drawText (string S, int x, int y);
     /*<  */
 
-    void drawText (string S, int X, int Y, float Angle);
+    void drawText (string S, int x, int y, float angle);
     /*<  */
 
     inline void setColor (Color Color);
@@ -82,10 +81,10 @@ class _KabukiSDK Cell_f
         int contextOffset, int endingOffset);
     /*< Draws a preclipped horizontal line in 32-bit color. */
     
-    inline void drawImage (Image& I, int LeftEdge, int TopEdge);
+    inline void drawImage (Image& I, int leftEdge, int topEdge);
     /*<  */
     
-    inline void drawImage (Image& I, int LeftEdge, int TopEdge, int newWidth, int newHeight);
+    inline void drawImage (Image& I, int leftEdge, int topEdge, int newWidth, int newHeight);
     /*<  */
 
     inline void drawTriangle (Color color, int x1, int y1, int x2, int y2, int x3, int y3);
@@ -104,31 +103,31 @@ class _KabukiSDK Cell_f
 
     /*<  */
     
-    inline void drawRectangle (Color Color, int LeftEdge, int TopEdge, int Width, int Height);
+    inline void drawRectangle (Color Color, int leftEdge, int topEdge, int width, int height);
     /*<  */
     
-    inline void drawRectangle (Color Color, int LeftEdge, int TopEdge, int Width, int Height, int thickness);
+    inline void drawRectangle (Color Color, int leftEdge, int topEdge, int width, int height, int thickness);
     /*<  */
     
-    inline void drawOval (int X, int Y, int Width, int Height);
+    inline void drawOval (int x, int y, int width, int height);
     /*<  */
     
-    inline void drawRoundedRectangle (int X, int Y, int Width, int Height, int ArcWidth, int ArcHeight);
+    inline void drawRoundedRectangle (int x, int y, int width, int height, int ArcWidth, int ArcHeight);
     /*<  */
     
-    inline void clearArea (int X, int Y, int Width, int Height);
+    inline void clearArea (int x, int y, int width, int height);
     /*<  */
     
-    inline void clipArea (int X, int Y, int Width, int Height
+    inline void clipArea (int x, int y, int width, int height);
     /*<  */
     
-    inline void copyArea (int X, int Y, int Width, int Height, int DX, int DY);
+    inline void copyArea (int x, int y, int width, int height, int DX, int DY);
     /*<  */
 
-    inline void drawArc (int X, int Y, int Width, int Height, int StartAngle, int ArcAngle);
+    inline void drawArc (int x, int y, int width, int height, int StartAngle, int ArcAngle);
     /*<  */
     
-    inline void drawText (string thisText, int offset, int length, int X, int Y);
+    inline void drawText (string thisText, int offset, int length, int x, int y);
     /*<  */
     
     inline void drawPolygon (int* XPoints, int* YPoints, int NPoints);
@@ -137,40 +136,40 @@ class _KabukiSDK Cell_f
     inline void drawPolYline (int* XPoints, int* YPoints, int NPoints);
     /*<  */
     
-    inline void drawRect (int X, int Y, int Width, int Height);
+    inline void drawRect (int x, int y, int width, int height);
     /*<  */
     
-    inline void fill (_2D::Polygon_f& Shape);
+    inline void fill (_2D::Polygon& p);
     /*<  */
     
-    inline void draw (_2D::Polygon_f& Shape);
+    inline void draw (_2D::Polygon& p);
     /*<  */
     
-    inline void fill3DRect (int X, int Y, int Width, int Height, bool Raised);
+    inline void fill3DRect (int x, int y, int width, int height, bool Raised);
     /*<  */
     
-    inline void fillArc (int X, int Y, int Width, int Height, int StartAngle, int ArcAngle);
+    inline void fillArc (int x, int y, int width, int height, int StartAngle, int ArcAngle);
     /*<  */
     
-    inline void fillOval (int X, int Y, int Width, int Height);
+    inline void fillOval (int x, int y, int width, int height);
     /*<  */
     
     inline void fillPolygon (int& xPoints, int& YPoints, int NPoints);
     /*<  */
     
-    inline void fillRectangle (int X, int Y, int Width, int Height);
+    inline void fillRectangle (int x, int y, int width, int height);
     /*<  */
     
-    inline void fillRound3DRectangle (int X, int Y, int Width, int Height, int ArcWidth, int ArcHeight);
+    inline void fillRound3DRectangle (int x, int y, int width, int height, int ArcWidth, int ArcHeight);
     /*<  */
     
-    inline void setClip (int X, int Y, int Width, int Height);
+    inline void setClip (int x, int y, int width, int height);
     /*<  */
     
-    inline void setXORMode (Color Color);
+    inline void setXORMode (Color color);
     /*<  */
     
-    inline void translate (int X, int Y);
+    inline void translate (int x, int y);
     /*<  */
     
     private:

@@ -10,39 +10,14 @@
 
 #include "Color.hpp"
 
-using namespace _G {
-/** Bitmap file header
-	Provides general information about the file. 
-*/
-struct BitmapTextureFileHeader
-{
-	short   bitmapIsValid;
-	long    sizeInBytes;
-	short   bfReserved1;
-	short   bfReserved2;
-	long    colourDataStartBit;
-}
-
-/**  */
-struct BitmapcolourDataHeader
-{
-	long    sizeInBytes;
-	long    width;
-	long    height;
-	short   numPlanes;
-	short   bitsPerPixel;
-	long    compressionType;
-	long    imageSizeInBytes;
-	long    pixelsPerMeterX;
-	long    pixelsPerMeterY;
-	long    numColorsUsed;
-	long    numImportantColorIndexs;
-}
+namespace _G {
 
 
 class Texture
 /*< An OpenGL-compatible texture.  */
 {
+    public:
+    
 	Texture ();
     /*<  */
     
@@ -72,21 +47,21 @@ class Texture
 	bool load (string fileName);
     /*<  */
     
-	bool loadBitmap (const string* fileName);
+	bool loadBitmap (const string& fileName);
     /*<  */
     
-	void setPixel (int X, int Y, Color pixelColor);
+	void setPixel (int X, int Y, Color color);
     /*<  */
     
-	void setPixel (int X, int Y, color_t Color);
+	void setPixel (int X, int Y, color_t color);
 
 	/**  */
-	void setPixel (int X, int Y, int ColorA, int ColorB);
+	void setPixel (int X, int Y, int colorA, int colorB);
     /*<  */
-	void setPixel (int X, int Y, int Red, int Green, int Blue);
+	void setPixel (int X, int Y, int red, int green, int blue);
 
 	/**  */
-	void setPixel (int X, int Y, int Red, int Green, int Blue, int Alpha);
+	void setPixel (int X, int Y, int red, int green, int blue, int alpha);
     /*<  */
     
 	void setPixel (int pixel, int imageDataOffset, Color color);
@@ -98,34 +73,36 @@ class Texture
 	void setPixel (int pixel, int imageDataOffset, int colourValue1, int colourValue2);
     /*<  */
     
-	void setPixel (int pixel, int imageDataOffset, int Red, int Green, int Blue);
+	void setPixel (int pixel, int imageDataOffset, int red, int green, int blue);
 	/*<  */
     
-	void setPixel (int pixel, int imageDataOffset, int Red, int Green, int Blue, int Alpha);
+	void setPixel (int pixel, int imageDataOffset, int red, int green, int blue, int alpha);
 
-	void draw (Cell& C, Texture* Source);
-	/*< Draws the source to the canvas on the NW corner. */
+	void draw (Cell& C, Texture* texture);
+	/*< Draws a texture to the canvas on the NW corner. */
 	
-	void draw (Cell& C, const Texture& Source, int LeftEdge, int TopEdge);
-	/*< This method draws the source to the canvas. */
+	void draw (Cell& C, const Texture& texture, int dx, int dy);
+	/*< Draws a textureon the cell with the given offsets delta x and delta y. */
+	
+	void draw (Cell& C, const Texture& texture, float dx, float dy);
+	/*< Draws a textureon the cell with the given offsets delta x and delta y. */
 
-	void drawClippedSection (Cell& C, const Texture& Source, int CanvasOffset, int CanvasLineEndOffset, 
+	void drawClippedSection (Cell& c, const Texture& source, int canvasOffset, int canvasLineEndOffset, 
 		int CanvasLastLineOffset);
     /*< Draws a clipped section of this image. */
 
 	int getSourceOffset ();
 
-	void drawClippedHorizontalLine (int CanvasColorData, int SourceColorData, int CanvasOffset, 
-		int LineEndOffset, int SourceOffset);
+	void drawClippedHorizontalLine (int canvasColorData, int sourceColorData, int canvasOffset, 
+		int lineEndOffset, int sourceOffset);
 
     private:
 	
-	Color bgColor;
-	int colourData;
-	int imageRowWidthInBytes;
-
-	bool isLoaded;
-	int bpp;
+	Color bgColor;              //< The background color.
+	int colorData,              //< The color data.
+	    imageRowWidthInBytes,   //< The width of a row in bytes.
+        bpp;                    //< Bits per pixel
+	bool isLoaded;              //< Flag for if text has been loaded or not.
 };
 
 }   //< _G

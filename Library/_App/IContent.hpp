@@ -10,20 +10,21 @@
 namespace _App
 {
 class IContent
-/*<  */
+/*< Interface for app content. */
 {
     public:
     
-    int Catagory () = 0;                    
+    virtual int getAppCatagory () = 0;
+    /*< Gets the catagory index of the content. */
     
-    int MinAgeGroup () = 0;
+    int getMinAgeGroup () = 0;
     /*< Returns a number 0 - 21 for the recommended age group. */
     
-    string Descriptiong () = 0;
+    const char* getBriefDescriptiong () = 0;
     
-    string FullDescriptiong () = 0;
+    string getDescriptiong () = 0;
     
-    string ContentDescription () = 0;
+    string getContentDescription () = 0;
     /*< Returns a string with the type of content. */
 };
 }

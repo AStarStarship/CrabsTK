@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "_2D/Rect.hpp"
+#include <_2D/Rect.hpp>
 #include "Cell.hpp"
 
 namespace _G {
@@ -21,8 +21,8 @@ class _KabukiSDK Entity_f
     Entity_f (string Name, float X = 0.0f, float Y = 0.0f, float Width = 0.0f, float Height = 0.0f);
     /*< Constructs an entity from the given bounds and name. */
 
-    /** Returns the bounds of the entity. */
     virtual _2D::Rect_i getBounds () = 0;
+    /*< Returns the bounds of the entity. */
 
     string getName ();
     /*< Gets the name of the string. */

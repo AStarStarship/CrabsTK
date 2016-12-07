@@ -1,5 +1,5 @@
 # Kabuki Software Development Kit
-Kabuki SDK is an early-stage C++ SDK and graphics engine. At this point it doesn't really do much.
+Kabuki SDK is an early-stage C++ SDK and graphics engine built on top of [Simple Free Media Layer](http://www.sfml-dev.org/). At this point it doesn't really do much.
 
 ## Why use Kabuki SDK?
 
@@ -16,14 +16,11 @@ Kabuki SDK is built on FreeI2P, which is good for working with dictionaries (@go
 | Name    | Description |
 |:-------:|:------------|
 | _       | Core foundation.|
-| _2D     | 2D geometry.|
-| _3D     | 3D geometry.|
+| 
 | _App    | Application framework.|
-| _Audio  | Audio.|
-| _File   | Files and archives.|
 | _G      | Graphics engine.|
 | _Id     | Identification.|
-| _Math   | Math.|
+| _Math   | Math and geometry.|
 
 ## License ##
 Copyright 2016 (C) Cale McCollough <cale.mccollough@gmail.com> and contributors.

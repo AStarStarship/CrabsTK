@@ -7,14 +7,14 @@
 */
 
 #include "_G/Texture.hpp"
-using namespace _G;
+namespace _G {
 
 Texture::Texture () :
     Image ()
 {
 }
 
-void Texture::Create (int width, int height, _G.Color backgroundColor)
+void Texture::create (int width, int height, Color backgroundColor)
 {
     int x, y;
     //colorMap = new Color[width][height];
@@ -27,15 +27,15 @@ void Texture::Create (int width, int height, _G.Color backgroundColor)
     isLoaded = true;
 }
 
-void Texture::Update ()
+void Texture::update ()
 {
-    colorMap[Plane.Width]
-        [Plane.Height];
-    uint pixel = Image.color_data ();
+    colorMap[Plane.width]
+        [Plane.height];
+    color_t pixel = Image.colorData ();
     int pixelOffset = 0;
-    for (int y = 0; y < Plane.Height; y++)
+    for (int y = 0; y < Plane.height; y++)
     {
-        for (int x = 0; x < Plane.Width; x++)
+        for (int x = 0; x < Plane.width; x++)
         {
             colorMap[x][y] = new Color (imageData[pixelOffset++],
                 imageData[pixelOffset++],
@@ -44,7 +44,7 @@ void Texture::Update ()
     }
 }
 
-Color Texture::Pixel (int xCoordinate, int yCoordinate)
+Color Texture::getPixel (int xCoordinate, int yCoordinate)
 {
     if (xCoordinate > Plane.Width
       || yCoordinate > Plane.Height
@@ -67,9 +67,9 @@ void Texture::draw (Cell& c)
     //                         Rectangle.Top);
 }
 
-void Texture::Draw (Cell& c, int LeftEdge, int TopEdge)
+void Texture::draw (Cell& c, int leftEdge, int topEdge)
 {
-    Image.Draw (C, this, LeftEdge, TopEdge);
+    Image.draw (C, this, leftEdge, topEdge);
 }
 
 //   bool LoadGLTexture ()
@@ -81,3 +81,5 @@ void Texture::Draw (Cell& c, int LeftEdge, int TopEdge)
 //      glTexImage2D (GL_TEXTURE_2D, 0, 3, width, height, 0,
 //                   GL_RGB, GL_UNSIGNED_BYTE, pixel);
 //  }
+
+}   //< _G

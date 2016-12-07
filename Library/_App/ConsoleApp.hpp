@@ -9,16 +9,18 @@
 
 namespace _App {
 
-class ConsoleApp : Application
+class ConsoleApp
 /** An Kabuki Toolkit Application.
     
 */
 {
     public:
 
-    static const int MinWidthOrHeight = 1,
+    enum {
+        MinWidthOrHeight = 1,
         MaxWidth = 2 * 4096,                //< 2160 x 4096 is 4K Ultra resolution.
-        MaxHeight = 2 * 2160;               //< Change multiplier to alter min and max.
+        MaxHeight = 2 * 2160,               //< Change multiplier to alter min and max.
+    };
 
     ConsoleApp (const char* Args, int NumArgs);
     /*< Default constructor for a console app. */
@@ -61,7 +63,5 @@ class ConsoleApp : Application
     int uid;                 //< The UID of this appliction.
 
     AppGroup windows;     //< This windows 
-
-    IApp activeApp;
 };
 }

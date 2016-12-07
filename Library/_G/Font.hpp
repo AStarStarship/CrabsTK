@@ -53,7 +53,7 @@ class _KabukiSDK Font
     int load (string Filename, uint8_t RelativePath, float FontSize, uint32_t TextureWidth, 
         uint32_t TextureHeight, int FirstCharacter, int CountCharacter);
     
-    void draw (Cell& c, float X, float Y, const string* Text, Color color);
+    void draw (Cell& c, float X, float Y, const string& Text, Color color);
     
     float getLength (char *text);
 

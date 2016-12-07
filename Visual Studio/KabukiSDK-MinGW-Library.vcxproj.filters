@@ -132,9 +132,6 @@
     <ClInclude Include="..\Library\_3D\Point.hpp">
       <Filter>KabukiSDK-Library\_3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\_App\IContent.hpp">
-      <Filter>KabukiSDK-Library\_App</Filter>
-    </ClInclude>
     <ClInclude Include="..\Library\_App\RealTimeApp.hpp">
       <Filter>KabukiSDK-Library\_App</Filter>
     </ClInclude>
@@ -314,6 +311,9 @@
     </ClInclude>
     <ClInclude Include="..\Library\_Id\Entity.hpp">
       <Filter>KabukiSDK-Library\_Id</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_G\SwRenderer.hpp">
+      <Filter>KabukiSDK-Library\_G</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -520,6 +520,9 @@
     </ClCompile>
     <ClCompile Include="..\Library\KabukiSDK-Impl\_\ErrorList.cpp">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\SwRenderer.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_G</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
