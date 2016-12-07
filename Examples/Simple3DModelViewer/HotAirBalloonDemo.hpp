@@ -44,7 +44,7 @@ class HotAirBalloonDemo: public hal.Grfx3D.SoftwareEngine
     
     void setUpNextFrame ();
     
-    void draw (_G::image.ImageObserver driversIO, _G::Cell& C);
+    void draw (_G::Cell& C);
     
     class KeyboardDriver: public JavaKeyboardDriver
     {

@@ -1,296 +1,344 @@
-/** Kabuki Software Development Kit
-    @file       /.../Source/KabukiSDK-Impl/_G/Entity.h
-    @author     Cale McCollough
-    @copyright  Copyright 2016 Cale McCollough ©
-    @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
-    @brief      This file contains the _2D::Vector_f interface.
-*/
+////////////////////////////////////////////////////////////
+//
+// SFML - Simple and Fast Multimedia Library
+// Copyright (C) 2007-2016 Laurent Gomila (laurent@sfml-dev.org)
+//
+// This software is provided 'as-is', without any express or implied warranty.
+// In no event will the authors be held liable for any damages arising from the use of this software.
+//
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it freely,
+// subject to the following restrictions:
+//
+// 1. The origin of this software must not be misrepresented;
+//    you must not claim that you wrote the original software.
+//    If you use this software in a product, an acknowledgment
+//    in the product documentation would be appreciated but is not required.
+//
+// 2. Altered source versions must be plainly marked as such,
+//    and must not be misrepresented as being the original software.
+//
+// 3. This notice may not be removed or altered from any source distribution.
+//
+////////////////////////////////////////////////////////////
 
-#include <_G/Image.h>
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+#include <SFML/Graphics/Image.hpp>
+#include <SFML/Graphics/ImageLoader.hpp>
+#include <SFML/System/Err.hpp>
+#ifdef SFML_SYSTEM_ANDROID
+    #include <SFML/System/Android/ResourceStream.hpp>
+#endif
+#include <algorithm>
+#include <cstring>
 
-namespace _G {
 
-Image::Image ()
-{  
-    isLoaded = false;
-    bpp = 0;
-}
-
-Image::Image (int width, int height, int bitsPerPixel, _G.Color bgColor)
-{  
-    bpp = bitsPerPixel;
-    //imageRowWidthInBytes = width  bpp;
-    //uint32_t newColorData[imageRowWidthInBytes  height];
-    //uint32_t  newColorDataPointer;
-
-}
-
-void Image::markAsLoaded ()
-{  
-    isLoaded = true;
-}
-
-int Image::getBPP ()
-{  
-    return bpp;
-}
-
-void Image::setBPP (int newBPP)
+namespace sf
 {
-    //  Reconstruct ColorData to new BPP
-
-    bpp = newBPP;
-}
-
-int Image::getWidth () { return imageRowWidthInBytes; }
-
-uint32_t Image::getPixel (int X, int Y)
+////////////////////////////////////////////////////////////
+Image::Image() :
+m_size(0, 0)
 {
-    if (X > Plane.Width || Y > Plane.Height)
-        return null;
+    #ifdef SFML_SYSTEM_ANDROID
 
-    int pixelOffset = (imageRowWidthInBytes  Y) + (X  bpp);
+    m_stream = NULL;
 
-    return new Color (ColorData[pixelOffset   ],
-        ColorData[pixelOffset +1],
-        ColorData[pixelOffset +2]);
+    #endif
 }
 
-bool Image::load (const string& filename)
-{  
-    string filenameText;
-    filenameText = new StringArray (filename);
 
-    return Load (filenameText);
-}
-
-void Image::setPixel (int X, int Y, uint32_t Color)
+////////////////////////////////////////////////////////////
+Image::~Image()
 {
-    Image.SetPixel ((imageRowWidthInBytes Y) + (X  bpp), Color);
+    #ifdef SFML_SYSTEM_ANDROID
+
+        if (m_stream)
+            delete (priv::ResourceStream*)m_stream;
+
+    #endif
 }
 
-void Image::setPixel (int X, int Y, uint32_t Color)
+
+////////////////////////////////////////////////////////////
+void Image::create(unsigned int width, unsigned int height, const Color& color)
 {
-    Image.SetPixel (color, (imageRowWidthInBytes Y) + (X  bpp), Color);
-}
+    if (width && height)
+    {
+        // Assign the new size
+        m_size.x = width;
+        m_size.y = height;
 
-void Image::setPixel (int X, int Y, uint32_t ColorValue1, uint32_t ColorValue2)
-{
-    Image.SetPixel (ColorData, (imageRowWidthInBytes Y) + (X  bpp), ColorValue1, ColorValue2);
-}
+        // Resize the pixel buffer
+        m_pixels.resize(width * height * 4);
 
-void Image::setPixel (int X, int Y, uint32_t redValue, uint32_t greenValue, uint32_t blueValue)
-{
-    Image.setPixel (ColorData, (imageRowWidthInBytes Y) + (X  bpp), redValue, greenValue, blueValue);
-}
-
-void Image::setPixel (int X, int Y, uint32_t redValue, uint32_t greenValue, uint32_t blueValue, uint32_t alphaValue)
-{
-    Image.setPixel (ColorData, (imageRowWidthInBytes Y) + (X  bpp), redValue, greenValue, blueValue, alphaValue);
-}
-
-//void Draw (Cell& C)
-//{  Image.Draw (C, this);
-//}
-
-//void Draw (Cell& C, int leftEdge, int topEdge)
-//{  Image.Draw (C, this, leftEdge, topEdge);
-//}
-
-void Image::setPixel (uint32_t pixel, int imageDataOffset, _G.Color color)
-{
-    if (color.bPP () == 1)
-        Image.setPixel (imageData, imageDataOffset, color.Red ());
+        // Fill it with the specified color
+        Uint8* ptr = &m_pixels[0];
+        Uint8* end = ptr + m_pixels.size();
+        while (ptr < end)
+        {
+            *ptr++ = color.r;
+            *ptr++ = color.g;
+            *ptr++ = color.b;
+            *ptr++ = color.a;
+        }
+    }
     else
-    if (color.bPP () == 2)
-        Image.setPixel (imageData, imageDataOffset, color.Red (), color.Green ());
-    else
-    if (color.bPP () == 3)
-        Image.setPixel (imageData, imageDataOffset,
-                                                 color.Red (), color.Green (), color.blue ());
-    else if (color.bPP () == 4)
-        Image.setPixel (imageData, imageDataOffset, color.Red (), color.Green (), color.blue (), 
-            color.alpha ());
+    {
+        // Create an empty image
+        m_size.x = 0;
+        m_size.y = 0;
+        m_pixels.clear();
+    }
 }
 
-void Image::setPixel (uint32_t pixel, int imageDataOffset, uint32_t ColorValue)
+
+////////////////////////////////////////////////////////////
+void Image::create(unsigned int width, unsigned int height, const Uint8* pixels)
 {
-    if (imageDataOffset > 1)
+    if (pixels && width && height)
+    {
+        // Assign the new size
+        m_size.x = width;
+        m_size.y = height;
+
+        // Copy the pixels
+        std::size_t size = width * height * 4;
+        m_pixels.resize(size);
+        std::memcpy(&m_pixels[0], pixels, size); // faster than vector::assign
+    }
+    else
+    {
+        // Create an empty image
+        m_size.x = 0;
+        m_size.y = 0;
+        m_pixels.clear();
+    }
+}
+
+
+////////////////////////////////////////////////////////////
+bool Image::loadFromFile(const std::string& filename)
+{
+    #ifndef SFML_SYSTEM_ANDROID
+
+        return priv::ImageLoader::getInstance().loadImageFromFile(filename, m_pixels, m_size);
+
+    #else
+
+        if (m_stream)
+            delete (priv::ResourceStream*)m_stream;
+
+        m_stream = new priv::ResourceStream(filename);
+        return loadFromStream(*(priv::ResourceStream*)m_stream);
+
+    #endif
+}
+
+
+////////////////////////////////////////////////////////////
+bool Image::loadFromMemory(const void* data, std::size_t size)
+{
+    return priv::ImageLoader::getInstance().loadImageFromMemory(data, size, m_pixels, m_size);
+}
+
+
+////////////////////////////////////////////////////////////
+bool Image::loadFromStream(InputStream& stream)
+{
+    return priv::ImageLoader::getInstance().loadImageFromStream(stream, m_pixels, m_size);
+}
+
+
+////////////////////////////////////////////////////////////
+bool Image::saveToFile(const std::string& filename) const
+{
+    return priv::ImageLoader::getInstance().saveImageToFile(filename, m_pixels, m_size);
+}
+
+
+////////////////////////////////////////////////////////////
+Vector2u Image::getSize() const
+{
+    return m_size;
+}
+
+
+////////////////////////////////////////////////////////////
+void Image::createMaskFromColor(const Color& color, Uint8 alpha)
+{
+    // Make sure that the image is not empty
+    if (!m_pixels.empty())
+    {
+        // Replace the alpha of the pixels that match the transparent color
+        Uint8* ptr = &m_pixels[0];
+        Uint8* end = ptr + m_pixels.size();
+        while (ptr < end)
+        {
+            if ((ptr[0] == color.r) && (ptr[1] == color.g) && (ptr[2] == color.b) && (ptr[3] == color.a))
+                ptr[3] = alpha;
+            ptr += 4;
+        }
+    }
+}
+
+
+////////////////////////////////////////////////////////////
+void Image::copy(const Image& source, unsigned int destX, unsigned int destY, const IntRect& sourceRect, bool applyAlpha)
+{
+    // Make sure that both images are valid
+    if ((source.m_size.x == 0) || (source.m_size.y == 0) || (m_size.x == 0) || (m_size.y == 0))
         return;
-    imageData[imageDataOffset     ] = ColorValue;
-}
 
-void Image::setPixel (uint32_t pixel, int imageDataOffset, uint32_t ColorValue1, uint32_t ColorValue2)
-{
-    if (imageDataOffset > sizeof (imageData))
+    // Adjust the source rectangle
+    IntRect srcRect = sourceRect;
+    if (srcRect.width == 0 || (srcRect.height == 0))
+    {
+        srcRect.left   = 0;
+        srcRect.top    = 0;
+        srcRect.width  = source.m_size.x;
+        srcRect.height = source.m_size.y;
+    }
+    else
+    {
+        if (srcRect.left   < 0) srcRect.left = 0;
+        if (srcRect.top    < 0) srcRect.top  = 0;
+        if (srcRect.width  > static_cast<int>(source.m_size.x)) srcRect.width  = source.m_size.x;
+        if (srcRect.height > static_cast<int>(source.m_size.y)) srcRect.height = source.m_size.y;
+    }
+
+    // Then find the valid bounds of the destination rectangle
+    int width  = srcRect.width;
+    int height = srcRect.height;
+    if (destX + width  > m_size.x) width  = m_size.x - destX;
+    if (destY + height > m_size.y) height = m_size.y - destY;
+
+    // Make sure the destination area is valid
+    if ((width <= 0) || (height <= 0))
         return;
-    imageData[imageDataOffset     ] = ColorValue1;
-    imageData[imageDataOffset + 2] = ColorValue2;
-}
 
-void Image::setPixel (uint32_t pixel, int imageDataOffset, uint32_t redValue, uint32_t greenValue, uint32_t blueValue)
-{
-    if (imageDataOffset > sizeof (imageData))
-        return;
-    imageData[imageDataOffset     ] = redValue;
-    imageData[imageDataOffset + 2] = greenValue;
-    imageData[imageDataOffset + 3] = blueValue;
-}
+    // Precompute as much as possible
+    int          pitch     = width * 4;
+    int          rows      = height;
+    int          srcStride = source.m_size.x * 4;
+    int          dstStride = m_size.x * 4;
+    const Uint8* srcPixels = &source.m_pixels[0] + (srcRect.left + srcRect.top * source.m_size.x) * 4;
+    Uint8*       dstPixels = &m_pixels[0] + (destX + destY * m_size.x) * 4;
 
-void Image::setPixel (uint32_t pixel, int imageDataOffset, uint32_t redValue, uint32_t greenValue, uint32_t blueValue, uint32_t alphaValue)
-{
-    if (imageDataOffset > sizeof (imageData))
-        return;
-    imageData[imageDataOffset     ] = redValue;
-    imageData[imageDataOffset + 2] = greenValue;
-    imageData[imageDataOffset + 3] = blueValue;
-    imageData[imageDataOffset + 4] = alphaValue;
-}
-
-void Image::Draw (Cell& C, Image source)
-{
-    int sourceRowWidthInBytes, canvasRowWidthInBytes,
-                     canvasOffset, canvasLineEndOffset, sourceOffset,
-                     canvasLastLineOffset;
-
-    sourceRowWidthInBytes = source.Width  source.bPP ();
-    canvasRowWidthInBytes = C.Width  C.bPP ();
-    /// This series of control statements clips the source's bounds to the C's
-    /// bounds and stores the results in memory format of the source's Color map.
-    canvasOffset = 0;
-    sourceOffset = 0;
-
-    if (sourceRowWidthInBytes > canvasRowWidthInBytes)
+    // Copy the pixels
+    if (applyAlpha)
     {
-        Clip the right edge
-        canvasLineEndOffset = canvasRowWidthInBytes;
+        // Interpolation using alpha values, pixel by pixel (slower)
+        for (int i = 0; i < rows; ++i)
+        {
+            for (int j = 0; j < width; ++j)
+            {
+                // Get a direct pointer to the components of the current pixel
+                const Uint8* src = srcPixels + j * 4;
+                Uint8*       dst = dstPixels + j * 4;
+
+                // Interpolate RGBA components using the alpha value of the source pixel
+                Uint8 alpha = src[3];
+                dst[0] = (src[0] * alpha + dst[0] * (255 - alpha)) / 255;
+                dst[1] = (src[1] * alpha + dst[1] * (255 - alpha)) / 255;
+                dst[2] = (src[2] * alpha + dst[2] * (255 - alpha)) / 255;
+                dst[3] = alpha + dst[3] * (255 - alpha) / 255;
+            }
+
+            srcPixels += srcStride;
+            dstPixels += dstStride;
+        }
     }
     else
     {
-            canvasLineEndOffset = canvasRowWidthInBytes;
+        // Optimized copy ignoring alpha values, row by row (faster)
+        for (int i = 0; i < rows; ++i)
+        {
+            std::memcpy(dstPixels, srcPixels, pitch);
+            srcPixels += srcStride;
+            dstPixels += dstStride;
+        }
     }
+}
 
-    if (source.Height > C.Height)
+
+////////////////////////////////////////////////////////////
+void Image::setPixel(unsigned int x, unsigned int y, const Color& color)
+{
+    Uint8* pixel = &m_pixels[(x + y * m_size.x) * 4];
+    *pixel++ = color.r;
+    *pixel++ = color.g;
+    *pixel++ = color.b;
+    *pixel++ = color.a;
+}
+
+
+////////////////////////////////////////////////////////////
+Color Image::getPixel(unsigned int x, unsigned int y) const
+{
+    const Uint8* pixel = &m_pixels[(x + y * m_size.x) * 4];
+    return Color(pixel[0], pixel[1], pixel[2], pixel[3]);
+}
+
+
+////////////////////////////////////////////////////////////
+const Uint8* Image::getPixelsPtr() const
+{
+    if (!m_pixels.empty())
     {
-        /// Clip the bottom edge
-        canvasLastLineOffset = (C.Height-1)  canvasRowWidthInBytes;
+        return &m_pixels[0];
     }
     else
     {
-            canvasLastLineOffset = (source.Height-1)  canvasRowWidthInBytes;
+        err() << "Trying to access the pixels of an empty image" << std::endl;
+        return NULL;
     }
-
-    Image.DrawClippedSection (C, source, canvasOffset, canvasLineEndOffset, canvasLastLineOffset, sourceOffset);
 }
 
-void Image::draw (Cell& C, Image source, int leftEdge, int topEdge)
+
+////////////////////////////////////////////////////////////
+void Image::flipHorizontally()
 {
-    /// The leftEdge and topEdge are in pixel format
-    if (   leftEdge  < -C.Width
-         || topEdge  < -C.Height
-         || leftEdge >  C.Width
-         || topEdge  >  C.Height)
+    if (!m_pixels.empty())
     {
-        /// The source is not visible
-        return;
-    }
+        std::size_t rowSize = m_size.x * 4;
 
-    int canvasOffset, 
-            canvasLineEndOffset, 
-            sourceOffset,
-            canvasLastLineOffset, 
-            sourceLeftEdgeOffset;
+        for (std::size_t y = 0; y < m_size.y; ++y)
+        {
+            std::vector<Uint8>::iterator left = m_pixels.begin() + y * rowSize;
+            std::vector<Uint8>::iterator right = m_pixels.begin() + (y + 1) * rowSize - 4;
 
-    sourceLeftEdgeOffset = leftEdge;
-    source.bPP ();
+            for (std::size_t x = 0; x < m_size.x / 2; ++x)
+            {
+                std::swap_ranges(left, left + 4, right);
 
-    /// This series of control statements clips the source's bounds to the C's
-    /// bounds and stores the results in memory format of the source's Color map.
-
-    if (leftEdge < 0)
-    {
-        /// Clip the left edge
-        canvasOffset = 0;
-        sourceOffset = -sourceLeftEdgeOffset;
+                left += 4;
+                right -= 4;
+            }
+        }
     }
-    else
-    {
-        canvasOffset = sourceLeftEdgeOffset;
-        sourceOffset = 0;
-    }
-
-    if (topEdge < 0)
-    {
-        /// Clip the top edge
-        canvasOffset += (C.Width_uint32_ts ()  (-topEdge));
-        sourceOffset += (source.Width_uint32_ts ()  (-topEdge));
-    }
-    //else the sourceOffet remains the same because the top edge is in bounds.
-
-    if (sourceLeftEdgeOffset + source.Width_uint32_ts () > C.Width_uint32_ts ())
-    {
-        /// Clip the right edge
-        canvasLineEndOffset = C.Width_uint32_ts ();
-    }
-    else
-    {
-            canvasLineEndOffset = sourceLeftEdgeOffset + source.Width_uint32_ts ();
-    }
-
-    if (topEdge + source.Height > C.Height)
-    {
-        /// Clip the bottom edge
-        canvasLastLineOffset = (C.Height  C.Width_uint32_ts ())
-                                    + canvasOffset;
-    }
-    else
-    {
-        canvasLastLineOffset = ((topEdge + source.Height)
-                                      (C.Width_uint32_ts ())
-                                    )+ canvasOffset;
-    }
-    Image.DrawClippedSection (C, source, canvasOffset, canvasLineEndOffset, canvasLastLineOffset,  
-        sourceOffset);
 }
 
-void Image::DrawClippedSection (Cell& C, Image source, int canvasOffset, int canvasLineEndOffset, 
-    int canvasLastLineOffset)
+
+////////////////////////////////////////////////////////////
+void Image::flipVertically()
 {
-
-}
-
-int Image::getSourceOffset ()
-{
-    /** This method draws a clipped section of the image. the Offsets are in 
-        the 2D Array format where offset = (image.Width  y) + x 
-    */
-    imageWidthInBytes = image.Width  image.bPP
-
-    uint32_t canvasImageData,  sourceImageData;
-    
-    while (canvasOffset < canvasLastLineOffset)
+    if (!m_pixels.empty())
     {
-        Image.drawClippedHorizontalLine (canvasImageData, sourceImageData,  canvasOffset,  canvasLineEndOffset, sourceOffset);
-        canvasOffset += C.Width_uint32_ts ();
-        canvasLineEndOffset += C.Width_uint32_ts ();
-        sourceOffset += source.getWidth ();
+        std::size_t rowSize = m_size.x * 4;
+
+        std::vector<Uint8>::iterator top = m_pixels.begin();
+        std::vector<Uint8>::iterator bottom = m_pixels.end() - rowSize;
+
+        for (std::size_t y = 0; y < m_size.y / 2; ++y)
+        {
+            std::swap_ranges(top, top + rowSize, bottom);
+
+            top += rowSize;
+            bottom -= rowSize;
+        }
     }
 }
 
-void Image::drawClippedHorizontalLine (uint32_t canvasColorData, uint32_t sourceColorData, 
-    int canvasOffset, int lineEndOffset, int sourceOffset)
-{
-    // This method copies a line from the source source to the C source. The offsets are in memory format. Byte format: x = (image.Width  y) + x
-    
-    while (canvasOffset < lineEndOffset)
-        canvasColorData[canvasOffset++] == sourceColorData[sourceOffset++];
-}
-//    bool LoadGLTexture ()
-//    {
-//        glGenTextures (1, &texture[0]);
-//        glBindTexture (GL_TEXTURE_2D, texture[0]);
-//        glTexParameteri (GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-//        glTexParameteri (GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-//        glTexImage2D (GL_TEXTURE_2D, 0, 3, width, height, 0,
-//                         GL_RGB, GL_UNSIGNED_BYTE, pixel);
-//  }
+} // namespace sf

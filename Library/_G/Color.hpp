@@ -154,5 +154,153 @@ class Color
     inline void print (Terminal& slot);
     /*< Prints this object to the terminal. */
 };
+////////////////////////////////////////////////////////////
+//
+// SFML - Simple and Fast Multimedia Library
+// Copyright (C) 2007-2016 Laurent Gomila (laurent@sfml-dev.org)
+//
+// This software is provided 'as-is', without any express or implied warranty.
+// In no event will the authors be held liable for any damages arising from the use of this software.
+//
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it freely,
+// subject to the following restrictions:
+//
+// 1. The origin of this software must not be misrepresented;
+//    you must not claim that you wrote the original software.
+//    If you use this software in a product, an acknowledgment
+//    in the product documentation would be appreciated but is not required.
+//
+// 2. Altered source versions must be plainly marked as such,
+//    and must not be misrepresented as being the original software.
+//
+// 3. This notice may not be removed or altered from any source distribution.
+//
+////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
+/// \relates Color
+/// \brief Overload of the == operator
+///
+/// This operator compares two colors and check if they are equal.
+///
+/// \param left  Left operand
+/// \param right Right operand
+///
+/// \return True if colors are equal, false if they are different
+///
+////////////////////////////////////////////////////////////
+_KabukiSDK bool operator ==(const Color& left, const Color& right);
+
+////////////////////////////////////////////////////////////
+/// \relates Color
+/// \brief Overload of the != operator
+///
+/// This operator compares two colors and check if they are different.
+///
+/// \param left  Left operand
+/// \param right Right operand
+///
+/// \return True if colors are different, false if they are equal
+///
+////////////////////////////////////////////////////////////
+_KabukiSDK bool operator !=(const Color& left, const Color& right);
+
+////////////////////////////////////////////////////////////
+/// \relates Color
+/// \brief Overload of the binary + operator
+///
+/// This operator returns the component-wise sum of two colors.
+/// Components that exceed 255 are clamped to 255.
+///
+/// \param left  Left operand
+/// \param right Right operand
+///
+/// \return Result of \a left + \a right
+///
+////////////////////////////////////////////////////////////
+_KabukiSDK Color operator +(const Color& left, const Color& right);
+
+////////////////////////////////////////////////////////////
+/// \relates Color
+/// \brief Overload of the binary - operator
+///
+/// This operator returns the component-wise subtraction of two colors.
+/// Components below 0 are clamped to 0.
+///
+/// \param left  Left operand
+/// \param right Right operand
+///
+/// \return Result of \a left - \a right
+///
+////////////////////////////////////////////////////////////
+_KabukiSDK Color operator -(const Color& left, const Color& right);
+
+////////////////////////////////////////////////////////////
+/// \relates Color
+/// \brief Overload of the binary * operator
+///
+/// This operator returns the component-wise multiplication
+/// (also called "modulation") of two colors.
+/// Components are then divided by 255 so that the result is
+/// still in the range [0, 255].
+///
+/// \param left  Left operand
+/// \param right Right operand
+///
+/// \return Result of \a left * \a right
+///
+////////////////////////////////////////////////////////////
+_KabukiSDK Color operator *(const Color& left, const Color& right);
+
+////////////////////////////////////////////////////////////
+/// \relates Color
+/// \brief Overload of the binary += operator
+///
+/// This operator computes the component-wise sum of two colors,
+/// and assigns the result to the left operand.
+/// Components that exceed 255 are clamped to 255.
+///
+/// \param left  Left operand
+/// \param right Right operand
+///
+/// \return Reference to \a left
+///
+////////////////////////////////////////////////////////////
+_KabukiSDK Color& operator +=(Color& left, const Color& right);
+
+////////////////////////////////////////////////////////////
+/// \relates Color
+/// \brief Overload of the binary -= operator
+///
+/// This operator computes the component-wise subtraction of two colors,
+/// and assigns the result to the left operand.
+/// Components below 0 are clamped to 0.
+///
+/// \param left  Left operand
+/// \param right Right operand
+///
+/// \return Reference to \a left
+///
+////////////////////////////////////////////////////////////
+_KabukiSDK Color& operator -=(Color& left, const Color& right);
+
+////////////////////////////////////////////////////////////
+/// \relates Color
+/// \brief Overload of the binary *= operator
+///
+/// This operator returns the component-wise multiplication
+/// (also called "modulation") of two colors, and assigns
+/// the result to the left operand.
+/// Components are then divided by 255 so that the result is
+/// still in the range [0, 255].
+///
+/// \param left  Left operand
+/// \param right Right operand
+///
+/// \return Reference to \a left
+///
+////////////////////////////////////////////////////////////
+_KabukiSDK Color& operator *=(Color& left, const Color& right);
 
 }   //< _G

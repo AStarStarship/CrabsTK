@@ -26,11 +26,13 @@ namespace KabukiSDKExamples {
     
 class HotAirBalloon: public Shape
 {
+    public:
+    
     float helliumLift = 0,
           helliumFlow = (float) .1;
     Text name;
     
-    HotAirBalloon (DeepSerinity3DnGen driver, Geo3D.Point initPosition, Text balloonName)
+    HotAirBalloon (Engine& driver, Point2D initPosition, const string& balloonName)
     {
         super (driver, initPosition, "Models/sphere2.plg");
         name = balloonName;
