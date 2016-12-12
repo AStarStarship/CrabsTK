@@ -31,7 +31,7 @@
 #include <SFML/Graphics/GLCheck.hpp>
 
 
-namespace sf
+namespace _G
 {
 namespace priv
 {
@@ -69,7 +69,7 @@ private:
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_TEXTURESAVER_HPP

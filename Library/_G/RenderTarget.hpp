@@ -40,7 +40,7 @@
 #include <SFML/System/NonCopyable.hpp>
 
 
-namespace sf
+namespace _G
 {
 class Drawable;
 
@@ -64,7 +64,7 @@ public:
     /// This function is usually called once every frame,
     /// to clear the previous contents of the target.
     ///
-    /// \param color Fill color to use to clear the render target
+    /// @param color Fill color to use to clear the render target
     ///
     ////////////////////////////////////////////////////////////
     void clear(const Color& color = Color(0, 0, 0, 255));
@@ -83,7 +83,7 @@ public:
     /// To restore the original view of the target, you can pass
     /// the result of getDefaultView() to this function.
     ///
-    /// \param view New view to use
+    /// @param view New view to use
     ///
     /// \see getView, getDefaultView
     ///
@@ -93,7 +93,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the view currently in use in the render target
     ///
-    /// \return The view object that is currently used
+    /// @return The view object that is currently used
     ///
     /// \see setView, getDefaultView
     ///
@@ -106,7 +106,7 @@ public:
     /// The default view has the initial size of the render target,
     /// and never changes after the target has been created.
     ///
-    /// \return The default view of the render target
+    /// @return The default view of the render target
     ///
     /// \see setView, getView
     ///
@@ -121,9 +121,9 @@ public:
     /// render target to calculate the pixels rectangle that the viewport
     /// actually covers in the target.
     ///
-    /// \param view The view for which we want to compute the viewport
+    /// @param view The view for which we want to compute the viewport
     ///
-    /// \return Viewport rectangle, expressed in pixels
+    /// @return Viewport rectangle, expressed in pixels
     ///
     ////////////////////////////////////////////////////////////
     IntRect getViewport(const View& view) const;
@@ -139,9 +139,9 @@ public:
     /// target.mapPixelToCoords(point, target.getView());
     /// \endcode
     ///
-    /// \param point Pixel to convert
+    /// @param point Pixel to convert
     ///
-    /// \return The converted point, in "world" coordinates
+    /// @return The converted point, in "world" coordinates
     ///
     /// \see mapCoordsToPixel
     ///
@@ -169,10 +169,10 @@ public:
     /// overload of the function if you want to use the current view of the
     /// render target.
     ///
-    /// \param point Pixel to convert
-    /// \param view The view to use for converting the point
+    /// @param point Pixel to convert
+    /// @param view The view to use for converting the point
     ///
-    /// \return The converted point, in "world" units
+    /// @return The converted point, in "world" units
     ///
     /// \see mapCoordsToPixel
     ///
@@ -190,9 +190,9 @@ public:
     /// target.mapCoordsToPixel(point, target.getView());
     /// \endcode
     ///
-    /// \param point Point to convert
+    /// @param point Point to convert
     ///
-    /// \return The converted point, in target coordinates (pixels)
+    /// @return The converted point, in target coordinates (pixels)
     ///
     /// \see mapPixelToCoords
     ///
@@ -216,10 +216,10 @@ public:
     /// overload of the function if you want to use the current view of the
     /// render target.
     ///
-    /// \param point Point to convert
-    /// \param view The view to use for converting the point
+    /// @param point Point to convert
+    /// @param view The view to use for converting the point
     ///
-    /// \return The converted point, in target coordinates (pixels)
+    /// @return The converted point, in target coordinates (pixels)
     ///
     /// \see mapPixelToCoords
     ///
@@ -229,8 +229,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Draw a drawable object to the render target
     ///
-    /// \param drawable Object to draw
-    /// \param states   Render states to use for drawing
+    /// @param drawable Object to draw
+    /// @param states   Render states to use for drawing
     ///
     ////////////////////////////////////////////////////////////
     void draw(const Drawable& drawable, const RenderStates& states = RenderStates::Default);
@@ -238,10 +238,10 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Draw primitives defined by an array of vertices
     ///
-    /// \param vertices    Pointer to the vertices
-    /// \param vertexCount Number of vertices in the array
-    /// \param type        Type of primitives to draw
-    /// \param states      Render states to use for drawing
+    /// @param vertices    Pointer to the vertices
+    /// @param vertexCount Number of vertices in the array
+    /// @param type        Type of primitives to draw
+    /// @param states      Render states to use for drawing
     ///
     ////////////////////////////////////////////////////////////
     void draw(const Vertex* vertices, std::size_t vertexCount,
@@ -250,7 +250,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Return the size of the rendering region of the target
     ///
-    /// \return Size in pixels
+    /// @return Size in pixels
     ///
     ////////////////////////////////////////////////////////////
     virtual Vector2u getSize() const = 0;
@@ -270,9 +270,9 @@ public:
     /// target will automatically deactivate the previously active
     /// context (if any).
     ///
-    /// \param active True to activate, false to deactivate
+    /// @param active True to activate, false to deactivate
     ///
-    /// \return True if operation was successful, false otherwise
+    /// @return True if operation was successful, false otherwise
     ///
     ////////////////////////////////////////////////////////////
     virtual bool setActive(bool active = true) = 0;
@@ -373,7 +373,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Apply a new blending mode
     ///
-    /// \param mode Blending mode to apply
+    /// @param mode Blending mode to apply
     ///
     ////////////////////////////////////////////////////////////
     void applyBlendMode(const BlendMode& mode);
@@ -381,7 +381,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Apply a new transform
     ///
-    /// \param transform Transform to apply
+    /// @param transform Transform to apply
     ///
     ////////////////////////////////////////////////////////////
     void applyTransform(const Transform& transform);
@@ -389,7 +389,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Apply a new texture
     ///
-    /// \param texture Texture to apply
+    /// @param texture Texture to apply
     ///
     ////////////////////////////////////////////////////////////
     void applyTexture(const Texture* texture);
@@ -397,7 +397,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Apply a new shader
     ///
-    /// \param shader Shader to apply
+    /// @param shader Shader to apply
     ///
     ////////////////////////////////////////////////////////////
     void applyShader(const Shader* shader);
@@ -426,26 +426,26 @@ private:
     StatesCache m_cache;       ///< Render states cache
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_RENDERTARGET_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::RenderTarget
+/// \class _G::RenderTarget
 /// \ingroup graphics
 ///
-/// sf::RenderTarget defines the common behavior of all the
+/// _G::RenderTarget defines the common behavior of all the
 /// 2D render targets usable in the graphics module. It makes
 /// it possible to draw 2D entities like sprites, shapes, text
 /// without using any OpenGL command directly.
 ///
-/// A sf::RenderTarget is also able to use views (sf::View),
+/// A _G::RenderTarget is also able to use views (_G::View),
 /// which are a kind of 2D cameras. With views you can globally
 /// scroll, rotate or zoom everything that is drawn,
 /// without having to transform every single entity. See the
-/// documentation of sf::View for more details and sample pieces of
+/// documentation of _G::View for more details and sample pieces of
 /// code about this class.
 ///
 /// On top of that, render targets are still able to render direct
@@ -454,6 +454,6 @@ private:
 /// OpenGL states are not messed up by calling the
 /// pushGLStates/popGLStates functions.
 ///
-/// \see sf::RenderWindow, sf::RenderTexture, sf::View
+/// \see _G::RenderWindow, _G::RenderTexture, _G::View
 ///
 ////////////////////////////////////////////////////////////

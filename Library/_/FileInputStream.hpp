@@ -29,14 +29,14 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.hpp>
-#include <SFML/System/Export.hpp>
-#include <SFML/System/InputStream.hpp>
-#include <SFML/System/NonCopyable.hpp>
+#include <_/Export.hpp>
+#include <_/InputStream.hpp>
+#include <_/NonCopyable.hpp>
 #include <cstdio>
 #include <string>
 
 #ifdef ANDROID
-namespace sf
+namespace _
 {
 namespace priv
 {
@@ -46,7 +46,7 @@ class SFML_SYSTEM_API ResourceStream;
 #endif
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 /// \brief Implementation of input stream based on a file
@@ -70,9 +70,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Open the stream from a file path
     ///
-    /// \param filename Name of the file to open
+    /// @param filename Name of the file to open
     ///
-    /// \return True on success, false on error
+    /// @return True on success, false on error
     ///
     ////////////////////////////////////////////////////////////
     bool open(const std::string& filename);
@@ -83,10 +83,10 @@ public:
     /// After reading, the stream's reading position must be
     /// advanced by the amount of bytes read.
     ///
-    /// \param data Buffer where to copy the read data
-    /// \param size Desired number of bytes to read
+    /// @param data Buffer where to copy the read data
+    /// @param size Desired number of bytes to read
     ///
-    /// \return The number of bytes actually read, or -1 on error
+    /// @return The number of bytes actually read, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
     virtual Int64 read(void* data, Int64 size);
@@ -94,9 +94,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Change the current reading position
     ///
-    /// \param position The position to seek to, from the beginning
+    /// @param position The position to seek to, from the beginning
     ///
-    /// \return The position actually sought to, or -1 on error
+    /// @return The position actually sought to, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
     virtual Int64 seek(Int64 position);
@@ -104,7 +104,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the current reading position in the stream
     ///
-    /// \return The current position, or -1 on error.
+    /// @return The current position, or -1 on error.
     ///
     ////////////////////////////////////////////////////////////
     virtual Int64 tell();
@@ -112,7 +112,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Return the size of the stream
     ///
-    /// \return The total number of bytes available in the stream, or -1 on error
+    /// @return The total number of bytes available in the stream, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
     virtual Int64 getSize();
@@ -129,14 +129,14 @@ private:
 #endif
 };
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_FILEINPUTSTREAM_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::FileInputStream
+/// \class _::FileInputStream
 /// \ingroup system
 ///
 /// This class is a specialization of InputStream that

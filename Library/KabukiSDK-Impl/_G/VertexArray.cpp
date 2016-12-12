@@ -29,7 +29,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 VertexArray::VertexArray() :
@@ -147,4 +147,4 @@ void VertexArray::draw(RenderTarget& target, RenderStates states) const
         target.draw(&m_vertices[0], m_vertices.size(), m_primitiveType, states);
 }
 
-} // namespace sf
+} // namespace _G

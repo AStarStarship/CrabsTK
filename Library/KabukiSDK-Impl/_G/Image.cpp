@@ -35,7 +35,7 @@
 #include <cstring>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 Image::Image() :
@@ -341,4 +341,4 @@ void Image::flipVertically()
     }
 }
 
-} // namespace sf
+} // namespace _G

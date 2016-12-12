@@ -25,11 +25,11 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/MemoryInputStream.hpp>
+#include <_/MemoryInputStream.hpp>
 #include <cstring>
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 MemoryInputStream::MemoryInputStream() :
@@ -98,4 +98,4 @@ Int64 MemoryInputStream::getSize()
     return m_size;
 }
 
-} // namespace sf
+} // namespace _

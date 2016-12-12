@@ -25,13 +25,13 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/FileInputStream.hpp>
+#include <_/FileInputStream.hpp>
 #ifdef ANDROID
-#include <SFML/System/Android/ResourceStream.hpp>
+#include <_/Android/ResourceStream.hpp>
 #endif
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 FileInputStream::FileInputStream()
@@ -143,4 +143,4 @@ Int64 FileInputStream::getSize()
 #endif
 }
 
-} // namespace sf
+} // namespace _

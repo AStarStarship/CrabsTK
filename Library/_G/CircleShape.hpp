@@ -32,7 +32,7 @@
 #include <SFML/Graphics/Shape.hpp>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 /// \brief Specialized shape representing a circle
@@ -45,8 +45,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
-    /// \param radius     Radius of the circle
-    /// \param pointCount Number of points composing the circle
+    /// @param radius     Radius of the circle
+    /// @param pointCount Number of points composing the circle
     ///
     ////////////////////////////////////////////////////////////
     explicit CircleShape(float radius = 0, std::size_t pointCount = 30);
@@ -54,7 +54,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Set the radius of the circle
     ///
-    /// \param radius New radius of the circle
+    /// @param radius New radius of the circle
     ///
     /// \see getRadius
     ///
@@ -64,7 +64,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the radius of the circle
     ///
-    /// \return Radius of the circle
+    /// @return Radius of the circle
     ///
     /// \see setRadius
     ///
@@ -74,7 +74,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Set the number of points of the circle
     ///
-    /// \param count New number of points of the circle
+    /// @param count New number of points of the circle
     ///
     /// \see getPointCount
     ///
@@ -84,7 +84,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the number of points of the circle
     ///
-    /// \return Number of points of the circle
+    /// @return Number of points of the circle
     ///
     /// \see setPointCount
     ///
@@ -99,9 +99,9 @@ public:
     /// not taken into account.
     /// The result is undefined if \a index is out of the valid range.
     ///
-    /// \param index Index of the point to get, in range [0 .. getPointCount() - 1]
+    /// @param index Index of the point to get, in range [0 .. getPointCount() - 1]
     ///
-    /// \return index-th point of the shape
+    /// @return index-th point of the shape
     ///
     ////////////////////////////////////////////////////////////
     virtual Vector2f getPoint(std::size_t index) const;
@@ -115,25 +115,25 @@ private:
     std::size_t m_pointCount; ///< Number of points composing the circle
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_CIRCLESHAPE_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::CircleShape
+/// \class _G::CircleShape
 /// \ingroup graphics
 ///
-/// This class inherits all the functions of sf::Transformable
+/// This class inherits all the functions of _G::Transformable
 /// (position, rotation, scale, bounds, ...) as well as the
-/// functions of sf::Shape (outline, color, texture, ...).
+/// functions of _G::Shape (outline, color, texture, ...).
 ///
 /// Usage example:
 /// \code
-/// sf::CircleShape circle;
+/// _G::CircleShape circle;
 /// circle.setRadius(150);
-/// circle.setOutlineColor(sf::Color::Red);
+/// circle.setOutlineColor(_G::Color::Red);
 /// circle.setOutlineThickness(5);
 /// circle.setPosition(10, 20);
 /// ...
@@ -142,13 +142,13 @@ private:
 ///
 /// Since the graphics card can't draw perfect circles, we have to
 /// fake them with multiple triangles connected to each other. The
-/// "points count" property of sf::CircleShape defines how many of these
+/// "points count" property of _G::CircleShape defines how many of these
 /// triangles to use, and therefore defines the quality of the circle.
 ///
 /// The number of points can also be used for another purpose; with
 /// small numbers you can create any regular polygon shape:
 /// equilateral triangle, square, pentagon, hexagon, ...
 ///
-/// \see sf::Shape, sf::RectangleShape, sf::ConvexShape
+/// \see _G::Shape, _G::RectangleShape, _G::ConvexShape
 ///
 ////////////////////////////////////////////////////////////

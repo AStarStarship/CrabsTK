@@ -25,19 +25,17 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Unix/SleepImpl.hpp>
+#include <_/Unix/SleepImpl.hpp>
 #include <errno.h>
 #include <time.h>
 
 
-namespace sf
-{
-namespace priv
-{
+namespace _ { namespace priv {
+
 ////////////////////////////////////////////////////////////
 void sleepImpl(Time time)
 {
-    Uint64 usecs = time.asMicroseconds();
+    uint64_t usecs = time.asMicroseconds();
 
     // Construct the time to wait
     timespec ti;
@@ -56,4 +54,4 @@ void sleepImpl(Time time)
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _

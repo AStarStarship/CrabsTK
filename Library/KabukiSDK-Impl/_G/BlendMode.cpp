@@ -28,7 +28,7 @@
 #include <SFML/Graphics/BlendMode.hpp>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 // Commonly used blending modes
@@ -100,4 +100,4 @@ bool operator !=(const BlendMode& left, const BlendMode& right)
     return !(left == right);
 }
 
-} // namespace sf
+} // namespace _G

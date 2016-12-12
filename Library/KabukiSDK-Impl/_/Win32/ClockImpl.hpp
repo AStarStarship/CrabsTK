@@ -29,15 +29,15 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.hpp>
-#include <SFML/System/Time.hpp>
+#include <_/Time.hpp>
 
 
-namespace sf
+namespace _
 {
 namespace priv
 {
 ////////////////////////////////////////////////////////////
-/// \brief Windows implementation of sf::Clock
+/// \brief Windows implementation of _::Clock
 ///
 ////////////////////////////////////////////////////////////
 class ClockImpl
@@ -47,7 +47,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the current time
     ///
-    /// \return Current time
+    /// @return Current time
     ///
     ////////////////////////////////////////////////////////////
     static Time getCurrentTime();
@@ -55,7 +55,7 @@ public:
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_CLOCKIMPLWIN32_HPP

@@ -25,17 +25,17 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Thread.hpp>
+#include <_/Thread.hpp>
 
 
 #if defined(SFML_SYSTEM_WINDOWS)
-    #include <SFML/System/Win32/ThreadImpl.hpp>
+    #include <_/Win32/ThreadImpl.hpp>
 #else
-    #include <SFML/System/Unix/ThreadImpl.hpp>
+    #include <_/Unix/ThreadImpl.hpp>
 #endif
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 Thread::~Thread()
@@ -83,4 +83,4 @@ void Thread::run()
     m_entryPoint->run();
 }
 
-} // namespace sf
+} // namespace _

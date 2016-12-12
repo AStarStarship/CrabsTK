@@ -34,21 +34,21 @@
 namespace
 {
     // Add an underline or strikethrough line to the vertex array
-    void addLine(sf::VertexArray& vertices, float lineLength, float lineTop, const sf::Color& color, float offset, float thickness, float outlineThickness = 0)
+    void addLine(_G::VertexArray& vertices, float lineLength, float lineTop, const _G::Color& color, float offset, float thickness, float outlineThickness = 0)
     {
         float top = std::floor(lineTop + offset - (thickness / 2) + 0.5f);
         float bottom = top + std::floor(thickness + 0.5f);
 
-        vertices.append(sf::Vertex(sf::Vector2f(-outlineThickness,             top    - outlineThickness), color, sf::Vector2f(1, 1)));
-        vertices.append(sf::Vertex(sf::Vector2f(lineLength + outlineThickness, top    - outlineThickness), color, sf::Vector2f(1, 1)));
-        vertices.append(sf::Vertex(sf::Vector2f(-outlineThickness,             bottom + outlineThickness), color, sf::Vector2f(1, 1)));
-        vertices.append(sf::Vertex(sf::Vector2f(-outlineThickness,             bottom + outlineThickness), color, sf::Vector2f(1, 1)));
-        vertices.append(sf::Vertex(sf::Vector2f(lineLength + outlineThickness, top    - outlineThickness), color, sf::Vector2f(1, 1)));
-        vertices.append(sf::Vertex(sf::Vector2f(lineLength + outlineThickness, bottom + outlineThickness), color, sf::Vector2f(1, 1)));
+        vertices.append(_G::Vertex(_G::Vector2f(-outlineThickness,             top    - outlineThickness), color, _G::Vector2f(1, 1)));
+        vertices.append(_G::Vertex(_G::Vector2f(lineLength + outlineThickness, top    - outlineThickness), color, _G::Vector2f(1, 1)));
+        vertices.append(_G::Vertex(_G::Vector2f(-outlineThickness,             bottom + outlineThickness), color, _G::Vector2f(1, 1)));
+        vertices.append(_G::Vertex(_G::Vector2f(-outlineThickness,             bottom + outlineThickness), color, _G::Vector2f(1, 1)));
+        vertices.append(_G::Vertex(_G::Vector2f(lineLength + outlineThickness, top    - outlineThickness), color, _G::Vector2f(1, 1)));
+        vertices.append(_G::Vertex(_G::Vector2f(lineLength + outlineThickness, bottom + outlineThickness), color, _G::Vector2f(1, 1)));
     }
 
     // Add a glyph quad to the vertex array
-    void addGlyphQuad(sf::VertexArray& vertices, sf::Vector2f position, const sf::Color& color, const sf::Glyph& glyph, float italic, float outlineThickness = 0)
+    void addGlyphQuad(_G::VertexArray& vertices, _G::Vector2f position, const _G::Color& color, const _G::Glyph& glyph, float italic, float outlineThickness = 0)
     {
         float left   = glyph.bounds.left;
         float top    = glyph.bounds.top;
@@ -60,17 +60,17 @@ namespace
         float u2 = static_cast<float>(glyph.textureRect.left + glyph.textureRect.width);
         float v2 = static_cast<float>(glyph.textureRect.top  + glyph.textureRect.height);
 
-        vertices.append(sf::Vertex(sf::Vector2f(position.x + left  - italic * top    - outlineThickness, position.y + top    - outlineThickness), color, sf::Vector2f(u1, v1)));
-        vertices.append(sf::Vertex(sf::Vector2f(position.x + right - italic * top    - outlineThickness, position.y + top    - outlineThickness), color, sf::Vector2f(u2, v1)));
-        vertices.append(sf::Vertex(sf::Vector2f(position.x + left  - italic * bottom - outlineThickness, position.y + bottom - outlineThickness), color, sf::Vector2f(u1, v2)));
-        vertices.append(sf::Vertex(sf::Vector2f(position.x + left  - italic * bottom - outlineThickness, position.y + bottom - outlineThickness), color, sf::Vector2f(u1, v2)));
-        vertices.append(sf::Vertex(sf::Vector2f(position.x + right - italic * top    - outlineThickness, position.y + top    - outlineThickness), color, sf::Vector2f(u2, v1)));
-        vertices.append(sf::Vertex(sf::Vector2f(position.x + right - italic * bottom - outlineThickness, position.y + bottom - outlineThickness), color, sf::Vector2f(u2, v2)));
+        vertices.append(_G::Vertex(_G::Vector2f(position.x + left  - italic * top    - outlineThickness, position.y + top    - outlineThickness), color, _G::Vector2f(u1, v1)));
+        vertices.append(_G::Vertex(_G::Vector2f(position.x + right - italic * top    - outlineThickness, position.y + top    - outlineThickness), color, _G::Vector2f(u2, v1)));
+        vertices.append(_G::Vertex(_G::Vector2f(position.x + left  - italic * bottom - outlineThickness, position.y + bottom - outlineThickness), color, _G::Vector2f(u1, v2)));
+        vertices.append(_G::Vertex(_G::Vector2f(position.x + left  - italic * bottom - outlineThickness, position.y + bottom - outlineThickness), color, _G::Vector2f(u1, v2)));
+        vertices.append(_G::Vertex(_G::Vector2f(position.x + right - italic * top    - outlineThickness, position.y + top    - outlineThickness), color, _G::Vector2f(u2, v1)));
+        vertices.append(_G::Vertex(_G::Vector2f(position.x + right - italic * bottom - outlineThickness, position.y + bottom - outlineThickness), color, _G::Vector2f(u2, v2)));
     }
 }
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 Text::Text() :
@@ -506,4 +506,4 @@ void Text::ensureGeometryUpdate() const
     m_bounds.height = maxY - minY;
 }
 
-} // namespace sf
+} // namespace _G

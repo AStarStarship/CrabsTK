@@ -13,14 +13,18 @@ Kabuki SDK is built on FreeI2P, which is good for working with dictionaries (@go
 ## Project Status: Alpha
 
 ## Toolkit Modules
-| Name    | Description |
-|:-------:|:------------|
-| _       | Core foundation.|
-| 
-| _App    | Application framework.|
-| _G      | Graphics engine.|
-| _Id     | Identification.|
-| _Math   | Math and geometry.|
+| Name     | Description |
+|:--------:|:------------|
+| _        | Core foundation, XML, and JSON.|
+| _Archive | Compressed archives.|
+| _App     | Application framework.|
+| _G       | Graphics engine.|
+| _GUI     | Graphical User Interfaces.|
+| _HMI     | Human-Machine Interface.|
+| _Id      | Identification.|
+| _IO      | Input/Ouput: MIDI, Audio, Serial.|
+| _Math    | Math and geometry.|
+| _Net     | Networking.|
 
 ## License ##
 Copyright 2016 (C) Cale McCollough <cale.mccollough@gmail.com> and contributors.

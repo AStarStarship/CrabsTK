@@ -25,16 +25,16 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Mutex.hpp>
+#include <_/Mutex.hpp>
 
 #if defined(SFML_SYSTEM_WINDOWS)
-    #include <SFML/System/Win32/MutexImpl.hpp>
+    #include <_/Win32/MutexImpl.hpp>
 #else
-    #include <SFML/System/Unix/MutexImpl.hpp>
+    #include <_/Unix/MutexImpl.hpp>
 #endif
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 Mutex::Mutex()
@@ -63,4 +63,4 @@ void Mutex::unlock()
     m_mutexImpl->unlock();
 }
 
-} // namespace sf
+} // namespace _

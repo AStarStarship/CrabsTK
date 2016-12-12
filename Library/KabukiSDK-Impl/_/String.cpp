@@ -25,16 +25,16 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/String.hpp>
-#include <SFML/System/Utf.hpp>
+#include <_/String.hpp>
+#include <_/Utf.hpp>
 #include <iterator>
 #include <cstring>
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
-const std::size_t String::InvalidPos = std::basic_string<Uint32>::npos;
+const std::size_t String::InvalidPos = std::basic_string<uint32_t>::npos;
 
 
 ////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@ String::String(wchar_t wideChar)
 
 
 ////////////////////////////////////////////////////////////
-String::String(Uint32 utf32Char)
+String::String(uint32_t utf32Char)
 {
     m_string += utf32Char;
 }
@@ -111,7 +111,7 @@ String::String(const std::wstring& wideString)
 
 
 ////////////////////////////////////////////////////////////
-String::String(const Uint32* utf32String)
+String::String(const uint32_t* utf32String)
 {
     if (utf32String)
         m_string = utf32String;
@@ -119,7 +119,7 @@ String::String(const Uint32* utf32String)
 
 
 ////////////////////////////////////////////////////////////
-String::String(const std::basic_string<Uint32>& utf32String) :
+String::String(const std::basic_string<uint32_t>& utf32String) :
 m_string(utf32String)
 {
 }
@@ -189,10 +189,10 @@ std::basic_string<Uint8> String::toUtf8() const
 
 
 ////////////////////////////////////////////////////////////
-std::basic_string<Uint16> String::toUtf16() const
+std::basic_string<uint16_t> String::toUtf16() const
 {
     // Prepare the output string
-    std::basic_string<Uint16> output;
+    std::basic_string<uint16_t> output;
     output.reserve(m_string.length());
 
     // Convert
@@ -203,7 +203,7 @@ std::basic_string<Uint16> String::toUtf16() const
 
 
 ////////////////////////////////////////////////////////////
-std::basic_string<Uint32> String::toUtf32() const
+std::basic_string<uint32_t> String::toUtf32() const
 {
     return m_string;
 }
@@ -226,14 +226,14 @@ String& String::operator +=(const String& right)
 
 
 ////////////////////////////////////////////////////////////
-Uint32 String::operator [](std::size_t index) const
+uint32_t String::operator [](std::size_t index) const
 {
     return m_string[index];
 }
 
 
 ////////////////////////////////////////////////////////////
-Uint32& String::operator [](std::size_t index)
+uint32_t& String::operator [](std::size_t index)
 {
     return m_string[index];
 }
@@ -312,7 +312,7 @@ String String::substring(std::size_t position, std::size_t length) const
 
 
 ////////////////////////////////////////////////////////////
-const Uint32* String::getData() const
+const uint32_t* String::getData() const
 {
     return m_string.c_str();
 }
@@ -397,4 +397,4 @@ String operator +(const String& left, const String& right)
     return string;
 }
 
-} // namespace sf
+} // namespace _

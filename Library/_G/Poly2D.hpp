@@ -5,8 +5,11 @@
 
 #pragma once
 
-#include "_2D/Poly2D.hpp"
+#include "_Math/Poly2D.hpp"
 
 namespace _G {
+    
+class Poly2D: public _Math::Poly2D
+{
     
 }

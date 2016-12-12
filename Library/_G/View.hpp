@@ -34,7 +34,7 @@
 #include <SFML/System/Vector2.hpp>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 /// \brief 2D camera that defines what region is shown on screen
@@ -55,7 +55,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct the view from a rectangle
     ///
-    /// \param rectangle Rectangle defining the zone to display
+    /// @param rectangle Rectangle defining the zone to display
     ///
     ////////////////////////////////////////////////////////////
     explicit View(const FloatRect& rectangle);
@@ -63,8 +63,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct the view from its center and size
     ///
-    /// \param center Center of the zone to display
-    /// \param size   Size of zone to display
+    /// @param center Center of the zone to display
+    /// @param size   Size of zone to display
     ///
     ////////////////////////////////////////////////////////////
     View(const Vector2f& center, const Vector2f& size);
@@ -72,8 +72,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Set the center of the view
     ///
-    /// \param x X coordinate of the new center
-    /// \param y Y coordinate of the new center
+    /// @param x X coordinate of the new center
+    /// @param y Y coordinate of the new center
     ///
     /// \see setSize, getCenter
     ///
@@ -83,7 +83,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Set the center of the view
     ///
-    /// \param center New center
+    /// @param center New center
     ///
     /// \see setSize, getCenter
     ///
@@ -93,8 +93,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Set the size of the view
     ///
-    /// \param width  New width of the view
-    /// \param height New height of the view
+    /// @param width  New width of the view
+    /// @param height New height of the view
     ///
     /// \see setCenter, getCenter
     ///
@@ -104,7 +104,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Set the size of the view
     ///
-    /// \param size New size
+    /// @param size New size
     ///
     /// \see setCenter, getCenter
     ///
@@ -116,7 +116,7 @@ public:
     ///
     /// The default rotation of a view is 0 degree.
     ///
-    /// \param angle New angle, in degrees
+    /// @param angle New angle, in degrees
     ///
     /// \see getRotation
     ///
@@ -130,10 +130,10 @@ public:
     /// view are displayed, expressed as a factor (between 0 and 1)
     /// of the size of the RenderTarget to which the view is applied.
     /// For example, a view which takes the left side of the target would
-    /// be defined with View.setViewport(sf::FloatRect(0, 0, 0.5, 1)).
+    /// be defined with View.setViewport(_G::FloatRect(0, 0, 0.5, 1)).
     /// By default, a view has a viewport which covers the entire target.
     ///
-    /// \param viewport New viewport rectangle
+    /// @param viewport New viewport rectangle
     ///
     /// \see getViewport
     ///
@@ -145,7 +145,7 @@ public:
     ///
     /// Note that this function resets the rotation angle to 0.
     ///
-    /// \param rectangle Rectangle defining the zone to display
+    /// @param rectangle Rectangle defining the zone to display
     ///
     /// \see setCenter, setSize, setRotation
     ///
@@ -155,7 +155,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the center of the view
     ///
-    /// \return Center of the view
+    /// @return Center of the view
     ///
     /// \see getSize, setCenter
     ///
@@ -165,7 +165,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the size of the view
     ///
-    /// \return Size of the view
+    /// @return Size of the view
     ///
     /// \see getCenter, setSize
     ///
@@ -175,7 +175,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the current orientation of the view
     ///
-    /// \return Rotation angle of the view, in degrees
+    /// @return Rotation angle of the view, in degrees
     ///
     /// \see setRotation
     ///
@@ -185,7 +185,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the target viewport rectangle of the view
     ///
-    /// \return Viewport rectangle, expressed as a factor of the target size
+    /// @return Viewport rectangle, expressed as a factor of the target size
     ///
     /// \see setViewport
     ///
@@ -195,8 +195,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Move the view relatively to its current position
     ///
-    /// \param offsetX X coordinate of the move offset
-    /// \param offsetY Y coordinate of the move offset
+    /// @param offsetX X coordinate of the move offset
+    /// @param offsetY Y coordinate of the move offset
     ///
     /// \see setCenter, rotate, zoom
     ///
@@ -206,7 +206,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Move the view relatively to its current position
     ///
-    /// \param offset Move offset
+    /// @param offset Move offset
     ///
     /// \see setCenter, rotate, zoom
     ///
@@ -216,7 +216,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Rotate the view relatively to its current orientation
     ///
-    /// \param angle Angle to rotate, in degrees
+    /// @param angle Angle to rotate, in degrees
     ///
     /// \see setRotation, move, zoom
     ///
@@ -233,7 +233,7 @@ public:
     /// \li > 1 makes the view bigger (objects appear smaller)
     /// \li < 1 makes the view smaller (objects appear bigger)
     ///
-    /// \param factor Zoom factor to apply
+    /// @param factor Zoom factor to apply
     ///
     /// \see setSize, move, rotate
     ///
@@ -245,7 +245,7 @@ public:
     ///
     /// This function is meant for internal use only.
     ///
-    /// \return Projection transform defining the view
+    /// @return Projection transform defining the view
     ///
     /// \see getInverseTransform
     ///
@@ -257,7 +257,7 @@ public:
     ///
     /// This function is meant for internal use only.
     ///
-    /// \return Inverse of the projection transform defining the view
+    /// @return Inverse of the projection transform defining the view
     ///
     /// \see getTransform
     ///
@@ -279,17 +279,17 @@ private:
     mutable bool      m_invTransformUpdated; ///< Internal state telling if the inverse transform needs to be updated
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_VIEW_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::View
+/// \class _G::View
 /// \ingroup graphics
 ///
-/// sf::View defines a camera in the 2D scene. This is a
+/// _G::View defines a camera in the 2D scene. This is a
 /// very powerful concept: you can scroll, rotate or zoom
 /// the entire scene without altering the way that your
 /// drawable objects are drawn.
@@ -311,17 +311,17 @@ private:
 ///
 /// Usage example:
 /// \code
-/// sf::RenderWindow window;
-/// sf::View view;
+/// _G::RenderWindow window;
+/// _G::View view;
 ///
 /// // Initialize the view to a rectangle located at (100, 100) and with a size of 400x200
-/// view.reset(sf::FloatRect(100, 100, 400, 200));
+/// view.reset(_G::FloatRect(100, 100, 400, 200));
 ///
 /// // Rotate it by 45 degrees
 /// view.rotate(45);
 ///
 /// // Set its target viewport to be half of the window
-/// view.setViewport(sf::FloatRect(0.f, 0.f, 0.5f, 1.f));
+/// view.setViewport(_G::FloatRect(0.f, 0.f, 0.5f, 1.f));
 ///
 /// // Apply it
 /// window.setView(view);
@@ -336,8 +336,8 @@ private:
 /// window.draw(someText);
 /// \endcode
 ///
-/// See also the note on coordinates and undistorted rendering in sf::Transformable.
+/// See also the note on coordinates and undistorted rendering in _G::Transformable.
 ///
-/// \see sf::RenderWindow, sf::RenderTexture
+/// \see _G::RenderWindow, _G::RenderTexture
 ///
 ////////////////////////////////////////////////////////////

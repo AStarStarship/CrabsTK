@@ -22,12 +22,10 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_GRAPHICS_HPP
-#define SFML_GRAPHICS_HPP
+#pragma once
 
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
+/** @defgroup graphics Graphics module
+    2D graphics module: sprites, text, shapes, .... */
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/BlendMode.hpp>
@@ -55,13 +53,3 @@
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/View.hpp>
-
-
-#endif // SFML_GRAPHICS_HPP
-
-////////////////////////////////////////////////////////////
-/// \defgroup graphics Graphics module
-///
-/// 2D graphics module: sprites, text, shapes, ...
-///
-////////////////////////////////////////////////////////////

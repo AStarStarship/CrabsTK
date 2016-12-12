@@ -28,10 +28,10 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/ThreadLocal.hpp>
+#include <_/ThreadLocal.hpp>
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 /// \brief Pointer to a thread-local variable
@@ -45,7 +45,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
-    /// \param value Optional value to initialize the variable
+    /// @param value Optional value to initialize the variable
     ///
     ////////////////////////////////////////////////////////////
     ThreadLocalPtr(T* value = NULL);
@@ -56,7 +56,7 @@ public:
     /// Like raw pointers, applying the * operator returns a
     /// reference to the pointed-to object.
     ///
-    /// \return Reference to the thread-local variable
+    /// @return Reference to the thread-local variable
     ///
     ////////////////////////////////////////////////////////////
     T& operator *() const;
@@ -67,7 +67,7 @@ public:
     /// Similarly to raw pointers, applying the -> operator
     /// returns the pointed-to object.
     ///
-    /// \return Pointer to the thread-local variable
+    /// @return Pointer to the thread-local variable
     ///
     ////////////////////////////////////////////////////////////
     T* operator ->() const;
@@ -76,7 +76,7 @@ public:
     /// \brief Conversion operator to implicitly convert the
     ///        pointer to its raw pointer type (T*)
     ///
-    /// \return Pointer to the actual object
+    /// @return Pointer to the actual object
     ///
     ////////////////////////////////////////////////////////////
     operator T*() const;
@@ -84,9 +84,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Assignment operator for a raw pointer parameter
     ///
-    /// \param value Pointer to assign
+    /// @param value Pointer to assign
     ///
-    /// \return Reference to self
+    /// @return Reference to self
     ///
     ////////////////////////////////////////////////////////////
     ThreadLocalPtr<T>& operator =(T* value);
@@ -94,27 +94,27 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Assignment operator for a ThreadLocalPtr parameter
     ///
-    /// \param right ThreadLocalPtr to assign
+    /// @param right ThreadLocalPtr to assign
     ///
-    /// \return Reference to self
+    /// @return Reference to self
     ///
     ////////////////////////////////////////////////////////////
     ThreadLocalPtr<T>& operator =(const ThreadLocalPtr<T>& right);
 };
 
-} // namespace sf
+} // namespace _
 
-#include <SFML/System/ThreadLocalPtr.inl>
+#include <_/ThreadLocalPtr.inl>
 
 
 #endif // SFML_THREADLOCALPTR_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::ThreadLocalPtr
+/// \class _::ThreadLocalPtr
 /// \ingroup system
 ///
-/// sf::ThreadLocalPtr is a type-safe wrapper for storing
+/// _::ThreadLocalPtr is a type-safe wrapper for storing
 /// pointers to thread-local variables. A thread-local
 /// variable holds a different value for each different
 /// thread, unlike normal variables that are shared.
@@ -126,7 +126,7 @@ public:
 /// \code
 /// MyClass object1;
 /// MyClass object2;
-/// sf::ThreadLocalPtr<MyClass> objectPtr;
+/// _::ThreadLocalPtr<MyClass> objectPtr;
 ///
 /// void thread1()
 /// {
@@ -143,8 +143,8 @@ public:
 /// int main()
 /// {
 ///     // Create and launch the two threads
-///     sf::Thread t1(&thread1);
-///     sf::Thread t2(&thread2);
+///     _::Thread t1(&thread1);
+///     _::Thread t2(&thread2);
 ///     t1.launch();
 ///     t2.launch();
 ///

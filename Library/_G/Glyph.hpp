@@ -32,7 +32,7 @@
 #include <SFML/Graphics/Rect.hpp>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 /// \brief Structure describing a glyph
@@ -56,24 +56,24 @@ public:
     IntRect   textureRect; ///< Texture coordinates of the glyph inside the font's texture
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_GLYPH_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Glyph
+/// \class _G::Glyph
 /// \ingroup graphics
 ///
 /// A glyph is the visual representation of a character.
 ///
-/// The sf::Glyph structure provides the information needed
+/// The _G::Glyph structure provides the information needed
 /// to handle the glyph:
 /// \li its coordinates in the font's texture
 /// \li its bounding rectangle
 /// \li the offset to apply to get the starting position of the next glyph
 ///
-/// \see sf::Font
+/// \see _G::Font
 ///
 ////////////////////////////////////////////////////////////

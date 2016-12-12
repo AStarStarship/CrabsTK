@@ -28,11 +28,11 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Export.hpp>
-#include <SFML/System/Time.hpp>
+#include <_/Export.hpp>
+#include <_/Time.hpp>
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 /// \brief Utility class that measures the elapsed time
@@ -57,7 +57,7 @@ public:
     /// to restart() (or the construction of the instance if restart()
     /// has not been called).
     ///
-    /// \return Time elapsed
+    /// @return Time elapsed
     ///
     ////////////////////////////////////////////////////////////
     Time getElapsedTime() const;
@@ -68,7 +68,7 @@ public:
     /// This function puts the time counter back to zero.
     /// It also returns the time elapsed since the clock was started.
     ///
-    /// \return Time elapsed
+    /// @return Time elapsed
     ///
     ////////////////////////////////////////////////////////////
     Time restart();
@@ -81,17 +81,17 @@ private:
     Time m_startTime; ///< Time of last reset, in microseconds
 };
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_CLOCK_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Clock
+/// \class _::Clock
 /// \ingroup system
 ///
-/// sf::Clock is a lightweight class for measuring time.
+/// _::Clock is a lightweight class for measuring time.
 ///
 /// Its provides the most precise time that the underlying
 /// OS can achieve (generally microseconds or nanoseconds).
@@ -101,17 +101,17 @@ private:
 ///
 /// Usage example:
 /// \code
-/// sf::Clock clock;
+/// _::Clock clock;
 /// ...
 /// Time time1 = clock.getElapsedTime();
 /// ...
 /// Time time2 = clock.restart();
 /// \endcode
 ///
-/// The sf::Time value returned by the clock can then be
+/// The _::Time value returned by the clock can then be
 /// converted to a number of seconds, milliseconds or even
 /// microseconds.
 ///
-/// \see sf::Time
+/// \see _::Time
 ///
 ////////////////////////////////////////////////////////////

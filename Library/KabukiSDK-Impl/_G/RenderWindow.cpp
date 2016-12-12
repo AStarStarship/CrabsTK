@@ -29,7 +29,7 @@
 #include <SFML/Graphics/Texture.hpp>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 RenderWindow::RenderWindow()
@@ -103,4 +103,4 @@ void RenderWindow::onResize()
     setView(getView());
 }
 
-} // namespace sf
+} // namespace _G

@@ -29,7 +29,7 @@
 #include <cmath>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 RectangleShape::RectangleShape(const Vector2f& size)
@@ -73,4 +73,4 @@ Vector2f RectangleShape::getPoint(std::size_t index) const
     }
 }
 
-} // namespace sf
+} // namespace _G

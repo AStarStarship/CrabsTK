@@ -33,11 +33,11 @@ class IApplication
     virtual long getUID () = 0;
     /*< Returns the process ID of this App. */
 
-    virtual int activateWindow (int newIndex) = 0;
-    /*< Sets the activeWindow to the newIndex. */
+    virtual int activateWindow (int i) = 0;
+    /*< Sets the activeWindow to the new index. */
         
-    virtual int activateWindow (Window newWindow) = 0;
-    /*< Sets the activeWindow to the newWindow. */
+    virtual int activateWindow (Window w) = 0;
+    /*< Sets the activeWindow to the new window. */
 
     virtual WindowGroup getWindows () = 0;
     /*<  */
@@ -51,10 +51,10 @@ class IApplication
     virtual int close () = 0;
     /*<  */
 
-    virtual _G::Cell& getCell () = 0;
+    virtual _G::Canvas& getCanvas () = 0;
     /*< Returns a link to this application's drawing context. */
         
-    virtual void draw (_G::Cell& C) = 0;
+    virtual void draw (_G::Canvas& c) = 0;
     /*<  */
         
     virtual void redraw () = 0;

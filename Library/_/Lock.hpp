@@ -28,11 +28,11 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Export.hpp>
-#include <SFML/System/NonCopyable.hpp>
+#include <_/Export.hpp>
+#include <_/NonCopyable.hpp>
 
 
-namespace sf
+namespace _
 {
 class Mutex;
 
@@ -47,9 +47,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct the lock with a target mutex
     ///
-    /// The mutex passed to sf::Lock is automatically locked.
+    /// The mutex passed to _::Lock is automatically locked.
     ///
-    /// \param mutex Mutex to lock
+    /// @param mutex Mutex to lock
     ///
     ////////////////////////////////////////////////////////////
     explicit Lock(Mutex& mutex);
@@ -57,7 +57,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Destructor
     ///
-    /// The destructor of sf::Lock automatically unlocks its mutex.
+    /// The destructor of _::Lock automatically unlocks its mutex.
     ///
     ////////////////////////////////////////////////////////////
     ~Lock();
@@ -70,17 +70,17 @@ private:
     Mutex& m_mutex; ///< Mutex to lock / unlock
 };
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_LOCK_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Lock
+/// \class _::Lock
 /// \ingroup system
 ///
-/// sf::Lock is a RAII wrapper for sf::Mutex. By unlocking
+/// _::Lock is a RAII wrapper for _::Mutex. By unlocking
 /// it in its destructor, it ensures that the mutex will
 /// always be released when the current scope (most likely
 /// a function) ends.
@@ -88,16 +88,16 @@ private:
 /// return statement can interrupt the execution flow of the
 /// function.
 ///
-/// For maximum robustness, sf::Lock should always be used
+/// For maximum robustness, _::Lock should always be used
 /// to lock/unlock a mutex.
 ///
 /// Usage example:
 /// \code
-/// sf::Mutex mutex;
+/// _::Mutex mutex;
 ///
 /// void function()
 /// {
-///     sf::Lock lock(mutex); // mutex is now locked
+///     _::Lock lock(mutex); // mutex is now locked
 ///
 ///     functionThatMayThrowAnException(); // mutex is unlocked if this function throws
 ///
@@ -115,12 +115,12 @@ private:
 /// part of the code.
 ///
 /// \code
-/// sf::Mutex mutex;
+/// _::Mutex mutex;
 ///
 /// void function()
 /// {
 ///     {
-///       sf::Lock lock(mutex);
+///       _::Lock lock(mutex);
 ///       codeThatRequiresProtection();
 ///
 ///     } // mutex is unlocked here
@@ -134,6 +134,6 @@ private:
 /// a mutex is locked, other threads may be waiting doing nothing
 /// until it is released.
 ///
-/// \see sf::Mutex
+/// \see _::Mutex
 ///
 ////////////////////////////////////////////////////////////

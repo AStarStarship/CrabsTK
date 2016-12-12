@@ -25,10 +25,10 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/NativeActivity.hpp>
-#include <SFML/System/Android/Activity.hpp>
+#include <_/NativeActivity.hpp>
+#include <_/Android/Activity.hpp>
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 ANativeActivity* getNativeActivity()
@@ -36,4 +36,4 @@ ANativeActivity* getNativeActivity()
     return priv::getActivity()->activity;
 }
 
-} // namespace sf
+} // namespace _

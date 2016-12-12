@@ -32,7 +32,7 @@
 #include <SFML/Graphics/Shape.hpp>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 /// \brief Specialized shape representing a rectangle
@@ -45,7 +45,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
-    /// \param size Size of the rectangle
+    /// @param size Size of the rectangle
     ///
     ////////////////////////////////////////////////////////////
     explicit RectangleShape(const Vector2f& size = Vector2f(0, 0));
@@ -53,7 +53,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Set the size of the rectangle
     ///
-    /// \param size New size of the rectangle
+    /// @param size New size of the rectangle
     ///
     /// \see getSize
     ///
@@ -63,7 +63,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the size of the rectangle
     ///
-    /// \return Size of the rectangle
+    /// @return Size of the rectangle
     ///
     /// \see setSize
     ///
@@ -73,7 +73,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the number of points defining the shape
     ///
-    /// \return Number of points of the shape. For rectangle
+    /// @return Number of points of the shape. For rectangle
     ///         shapes, this number is always 4.
     ///
     ////////////////////////////////////////////////////////////
@@ -87,9 +87,9 @@ public:
     /// not taken into account.
     /// The result is undefined if \a index is out of the valid range.
     ///
-    /// \param index Index of the point to get, in range [0 .. 3]
+    /// @param index Index of the point to get, in range [0 .. 3]
     ///
-    /// \return index-th point of the shape
+    /// @return index-th point of the shape
     ///
     ////////////////////////////////////////////////////////////
     virtual Vector2f getPoint(std::size_t index) const;
@@ -102,31 +102,31 @@ private:
     Vector2f m_size; ///< Size of the rectangle
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_RECTANGLESHAPE_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::RectangleShape
+/// \class _G::RectangleShape
 /// \ingroup graphics
 ///
-/// This class inherits all the functions of sf::Transformable
+/// This class inherits all the functions of _G::Transformable
 /// (position, rotation, scale, bounds, ...) as well as the
-/// functions of sf::Shape (outline, color, texture, ...).
+/// functions of _G::Shape (outline, color, texture, ...).
 ///
 /// Usage example:
 /// \code
-/// sf::RectangleShape rectangle;
-/// rectangle.setSize(sf::Vector2f(100, 50));
-/// rectangle.setOutlineColor(sf::Color::Red);
+/// _G::RectangleShape rectangle;
+/// rectangle.setSize(_G::Vector2f(100, 50));
+/// rectangle.setOutlineColor(_G::Color::Red);
 /// rectangle.setOutlineThickness(5);
 /// rectangle.setPosition(10, 20);
 /// ...
 /// window.draw(rectangle);
 /// \endcode
 ///
-/// \see sf::Shape, sf::CircleShape, sf::ConvexShape
+/// \see _G::Shape, _G::CircleShape, _G::ConvexShape
 ///
 ////////////////////////////////////////////////////////////

@@ -25,16 +25,16 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/ThreadLocal.hpp>
+#include <_/ThreadLocal.hpp>
 
 #if defined(SFML_SYSTEM_WINDOWS)
-    #include <SFML/System/Win32/ThreadLocalImpl.hpp>
+    #include <_/Win32/ThreadLocalImpl.hpp>
 #else
-    #include <SFML/System/Unix/ThreadLocalImpl.hpp>
+    #include <_/Unix/ThreadLocalImpl.hpp>
 #endif
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 ThreadLocal::ThreadLocal(void* value)
@@ -64,4 +64,4 @@ void* ThreadLocal::getValue() const
     return m_impl->getValue();
 }
 
-} // namespace sf
+} // namespace _

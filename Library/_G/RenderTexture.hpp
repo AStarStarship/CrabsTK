@@ -33,7 +33,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 
-namespace sf
+namespace _G
 {
 namespace priv
 {
@@ -76,11 +76,11 @@ public:
     /// a depth buffer. Otherwise it is unnecessary, and you should
     /// leave this parameter to false (which is its default value).
     ///
-    /// \param width       Width of the render-texture
-    /// \param height      Height of the render-texture
-    /// \param depthBuffer Do you want this render-texture to have a depth buffer?
+    /// @param width       Width of the render-texture
+    /// @param height      Height of the render-texture
+    /// @param depthBuffer Do you want this render-texture to have a depth buffer?
     ///
-    /// \return True if creation has been successful
+    /// @return True if creation has been successful
     ///
     ////////////////////////////////////////////////////////////
     bool create(unsigned int width, unsigned int height, bool depthBuffer = false);
@@ -91,7 +91,7 @@ public:
     /// This function is similar to Texture::setSmooth.
     /// This parameter is disabled by default.
     ///
-    /// \param smooth True to enable smoothing, false to disable it
+    /// @param smooth True to enable smoothing, false to disable it
     ///
     /// \see isSmooth
     ///
@@ -101,7 +101,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Tell whether the smooth filtering is enabled or not
     ///
-    /// \return True if texture smoothing is enabled
+    /// @return True if texture smoothing is enabled
     ///
     /// \see setSmooth
     ///
@@ -114,7 +114,7 @@ public:
     /// This function is similar to Texture::setRepeated.
     /// This parameter is disabled by default.
     ///
-    /// \param repeated True to enable repeating, false to disable it
+    /// @param repeated True to enable repeating, false to disable it
     ///
     /// \see isRepeated
     ///
@@ -124,7 +124,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Tell whether the texture is repeated or not
     ///
-    /// \return True if texture is repeated
+    /// @return True if texture is repeated
     ///
     /// \see setRepeated
     ///
@@ -142,7 +142,7 @@ public:
     /// after subsequent drawing will lead to undefined behavior if a mipmap
     /// had been previously generated.
     ///
-    /// \return True if mipmap generation was successful, false if unsuccessful
+    /// @return True if mipmap generation was successful, false if unsuccessful
     ///
     ////////////////////////////////////////////////////////////
     bool generateMipmap();
@@ -157,9 +157,9 @@ public:
     /// want to draw OpenGL geometry to another render target
     /// (like a RenderWindow) don't forget to activate it again.
     ///
-    /// \param active True to activate, false to deactivate
+    /// @param active True to activate, false to deactivate
     ///
-    /// \return True if operation was successful, false otherwise
+    /// @return True if operation was successful, false otherwise
     ///
     ////////////////////////////////////////////////////////////
     bool setActive(bool active = true);
@@ -181,7 +181,7 @@ public:
     /// The returned value is the size that you passed to
     /// the create function.
     ///
-    /// \return Size in pixels
+    /// @return Size in pixels
     ///
     ////////////////////////////////////////////////////////////
     virtual Vector2u getSize() const;
@@ -192,12 +192,12 @@ public:
     /// After drawing to the render-texture and calling Display,
     /// you can retrieve the updated texture using this function,
     /// and draw it using a sprite (for example).
-    /// The internal sf::Texture of a render-texture is always the
+    /// The internal _G::Texture of a render-texture is always the
     /// same instance, so that it is possible to call this function
     /// once and keep a reference to the texture even after it is
     /// modified.
     ///
-    /// \return Const reference to the texture
+    /// @return Const reference to the texture
     ///
     ////////////////////////////////////////////////////////////
     const Texture& getTexture() const;
@@ -211,19 +211,19 @@ private:
     Texture                  m_texture; ///< Target texture to draw on
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_RENDERTEXTURE_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::RenderTexture
+/// \class _G::RenderTexture
 /// \ingroup graphics
 ///
-/// sf::RenderTexture is the little brother of sf::RenderWindow.
+/// _G::RenderTexture is the little brother of _G::RenderWindow.
 /// It implements the same 2D drawing and OpenGL-related functions
-/// (see their base class sf::RenderTarget for more details),
+/// (see their base class _G::RenderTarget for more details),
 /// the difference is that the result is stored in an off-screen
 /// texture rather than being show in a window.
 ///
@@ -237,10 +237,10 @@ private:
 ///
 /// \code
 /// // Create a new render-window
-/// sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
+/// _G::RenderWindow window(_G::VideoMode(800, 600), "SFML window");
 ///
 /// // Create a new render-texture
-/// sf::RenderTexture texture;
+/// _G::RenderTexture texture;
 /// if (!texture.create(500, 500))
 ///     return -1;
 ///
@@ -251,12 +251,12 @@ private:
 ///    // ...
 ///
 ///    // Clear the whole texture with red color
-///    texture.clear(sf::Color::Red);
+///    texture.clear(_G::Color::Red);
 ///
 ///    // Draw stuff to the texture
-///    texture.draw(sprite);  // sprite is a sf::Sprite
-///    texture.draw(shape);   // shape is a sf::Shape
-///    texture.draw(text);    // text is a sf::Text
+///    texture.draw(sprite);  // sprite is a _G::Sprite
+///    texture.draw(shape);   // shape is a _G::Shape
+///    texture.draw(text);    // text is a _G::Text
 ///
 ///    // We're done drawing to the texture
 ///    texture.display();
@@ -265,7 +265,7 @@ private:
 ///    window.clear();
 ///
 ///    // Draw the texture
-///    sf::Sprite sprite(texture.getTexture());
+///    _G::Sprite sprite(texture.getTexture());
 ///    window.draw(sprite);
 ///
 ///    // End the current frame and display its contents on screen
@@ -273,11 +273,11 @@ private:
 /// }
 /// \endcode
 ///
-/// Like sf::RenderWindow, sf::RenderTexture is still able to render direct
+/// Like _G::RenderWindow, _G::RenderTexture is still able to render direct
 /// OpenGL stuff. It is even possible to mix together OpenGL calls
 /// and regular SFML drawing commands. If you need a depth buffer for
 /// 3D rendering, don't forget to request it when calling RenderTexture::create.
 ///
-/// \see sf::RenderTarget, sf::RenderWindow, sf::View, sf::Texture
+/// \see _G::RenderTarget, _G::RenderWindow, _G::View, _G::Texture
 ///
 ////////////////////////////////////////////////////////////

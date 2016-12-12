@@ -28,13 +28,13 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Export.hpp>
-#include <SFML/System/InputStream.hpp>
+#include <_/Export.hpp>
+#include <_/InputStream.hpp>
 #include <android/asset_manager.h>
 #include <string>
 
 
-namespace sf
+namespace _
 {
 namespace priv
 {
@@ -49,7 +49,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
-    /// \param filename Filename of the asset
+    /// @param filename Filename of the asset
     ///
     ////////////////////////////////////////////////////////////
     ResourceStream(const std::string& filename);
@@ -63,10 +63,10 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Read data from the asset
     ///
-    /// \param data Buffer where the asset data is copied
-    /// \param size Number of bytes read
+    /// @param data Buffer where the asset data is copied
+    /// @param size Number of bytes read
     ///
-    /// \return The number of bytes actually read, or -1 on error
+    /// @return The number of bytes actually read, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
     Int64 read(void *data, Int64 size);
@@ -74,9 +74,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Change the current reading position in the asset file
     ///
-    /// \param position The position to seek to, from the beginning
+    /// @param position The position to seek to, from the beginning
     ///
-    /// \return The position actually sought to, or -1 on error
+    /// @return The position actually sought to, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
     Int64 seek(Int64 position);
@@ -84,7 +84,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the current reading position in the asset file
     ///
-    /// \return The current position, or -1 on error.
+    /// @return The current position, or -1 on error.
     ///
     ////////////////////////////////////////////////////////////
     Int64 tell();
@@ -92,7 +92,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Return the size of the asset file
     ///
-    /// \return The total number of bytes available in the asset, or -1 on error
+    /// @return The total number of bytes available in the asset, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
     Int64 getSize();
@@ -107,7 +107,7 @@ private:
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_RESOURCESTREAM_HPP

@@ -25,7 +25,7 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Win32/ClockImpl.hpp>
+#include <_/Win32/ClockImpl.hpp>
 #include <windows.h>
 
 
@@ -39,7 +39,7 @@ namespace
     }
 }
 
-namespace sf
+namespace _
 {
 namespace priv
 {
@@ -63,9 +63,9 @@ Time ClockImpl::getCurrentTime()
     SetThreadAffinityMask(currentThread, previousMask);
 
     // Return the current time as microseconds
-    return sf::microseconds(1000000 * time.QuadPart / frequency.QuadPart);
+    return _::microseconds(1000000 * time.QuadPart / frequency.QuadPart);
 }
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _

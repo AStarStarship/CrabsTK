@@ -240,7 +240,7 @@ TEST(Value, EqualtoOperator) {
     x["a"].PopBack();
     TestEqual(x, y);
 
-    // Issue #129: compare Uint64
+    // Issue #129: compare uint64_t
     x.SetUint64(RAPIDJSON_UINT64_C2(0xFFFFFFFF, 0xFFFFFFF0));
     y.SetUint64(RAPIDJSON_UINT64_C2(0xFFFFFFFF, 0xFFFFFFFF));
     TestUnequal(x, y);
@@ -551,7 +551,7 @@ TEST(Value, Int64) {
 #endif
 }
 
-TEST(Value, Uint64) {
+TEST(Value, uint64_t) {
     // Constructor with int
     Value x(uint64_t(1234));
     EXPECT_EQ(kNumberType, x.GetType());
@@ -1668,7 +1668,7 @@ struct TerminateHandler {
     bool Int(int) { return e != 2; }
     bool Uint(unsigned) { return e != 3; }
     bool Int64(int64_t) { return e != 4; }
-    bool Uint64(uint64_t) { return e != 5; }
+    bool uint64_t(uint64_t) { return e != 5; }
     bool Double(double) { return e != 6; }
     bool RawNumber(const char*, SizeType, bool) { return e != 7; }
     bool String(const char*, SizeType, bool) { return e != 8; }

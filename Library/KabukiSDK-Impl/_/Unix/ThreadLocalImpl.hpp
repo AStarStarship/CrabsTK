@@ -28,11 +28,11 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/NonCopyable.hpp>
+#include <_/NonCopyable.hpp>
 #include <pthread.h>
 
 
-namespace sf
+namespace _
 {
 namespace priv
 {
@@ -58,7 +58,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Set the thread-specific value of the variable
     ///
-    /// \param value Value of the variable for this thread
+    /// @param value Value of the variable for this thread
     ///
     ////////////////////////////////////////////////////////////
     void setValue(void* value);
@@ -66,7 +66,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Retrieve the thread-specific value of the variable
     ///
-    /// \return Value of the variable for this thread
+    /// @return Value of the variable for this thread
     ///
     ////////////////////////////////////////////////////////////
     void* getValue() const;
@@ -81,7 +81,7 @@ private:
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_THREADLOCALIMPL_HPP

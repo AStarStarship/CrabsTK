@@ -25,11 +25,11 @@
 #ifndef SFML_PRIMITIVETYPE_HPP
 #define SFML_PRIMITIVETYPE_HPP
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 /// \ingroup graphics
-/// \brief Types of primitives that a sf::VertexArray can render
+/// \brief Types of primitives that a _G::VertexArray can render
 ///
 /// Points and lines have no area, therefore their thickness
 /// will always be 1 pixel, regardless the current transform
@@ -52,7 +52,7 @@ enum PrimitiveType
     TrianglesFan   = TriangleFan    ///< \deprecated Use TriangleFan instead
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_PRIMITIVETYPE_HPP

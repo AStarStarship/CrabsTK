@@ -33,7 +33,7 @@
 #include <vector>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 /// \brief Specialized shape representing a convex polygon
@@ -46,7 +46,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
-    /// \param pointCount Number of points of the polygon
+    /// @param pointCount Number of points of the polygon
     ///
     ////////////////////////////////////////////////////////////
     explicit ConvexShape(std::size_t pointCount = 0);
@@ -56,7 +56,7 @@ public:
     ///
     /// \a count must be greater than 2 to define a valid shape.
     ///
-    /// \param count New number of points of the polygon
+    /// @param count New number of points of the polygon
     ///
     /// \see getPointCount
     ///
@@ -66,7 +66,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the number of points of the polygon
     ///
-    /// \return Number of points of the polygon
+    /// @return Number of points of the polygon
     ///
     /// \see setPointCount
     ///
@@ -82,8 +82,8 @@ public:
     /// number of points. The result is undefined if \a index is out
     /// of the valid range.
     ///
-    /// \param index Index of the point to change, in range [0 .. getPointCount() - 1]
-    /// \param point New position of the point
+    /// @param index Index of the point to change, in range [0 .. getPointCount() - 1]
+    /// @param point New position of the point
     ///
     /// \see getPoint
     ///
@@ -98,9 +98,9 @@ public:
     /// not taken into account.
     /// The result is undefined if \a index is out of the valid range.
     ///
-    /// \param index Index of the point to get, in range [0 .. getPointCount() - 1]
+    /// @param index Index of the point to get, in range [0 .. getPointCount() - 1]
     ///
-    /// \return Position of the index-th point of the polygon
+    /// @return Position of the index-th point of the polygon
     ///
     /// \see setPoint
     ///
@@ -115,19 +115,19 @@ private:
     std::vector<Vector2f> m_points; ///< Points composing the convex polygon
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_CONVEXSHAPE_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::ConvexShape
+/// \class _G::ConvexShape
 /// \ingroup graphics
 ///
-/// This class inherits all the functions of sf::Transformable
+/// This class inherits all the functions of _G::Transformable
 /// (position, rotation, scale, bounds, ...) as well as the
-/// functions of sf::Shape (outline, color, texture, ...).
+/// functions of _G::Shape (outline, color, texture, ...).
 ///
 /// It is important to keep in mind that a convex shape must
 /// always be... convex, otherwise it may not be drawn correctly.
@@ -136,18 +136,18 @@ private:
 ///
 /// Usage example:
 /// \code
-/// sf::ConvexShape polygon;
+/// _G::ConvexShape polygon;
 /// polygon.setPointCount(3);
-/// polygon.setPoint(0, sf::Vector2f(0, 0));
-/// polygon.setPoint(1, sf::Vector2f(0, 10));
-/// polygon.setPoint(2, sf::Vector2f(25, 5));
-/// polygon.setOutlineColor(sf::Color::Red);
+/// polygon.setPoint(0, _G::Vector2f(0, 0));
+/// polygon.setPoint(1, _G::Vector2f(0, 10));
+/// polygon.setPoint(2, _G::Vector2f(25, 5));
+/// polygon.setOutlineColor(_G::Color::Red);
 /// polygon.setOutlineThickness(5);
 /// polygon.setPosition(10, 20);
 /// ...
 /// window.draw(polygon);
 /// \endcode
 ///
-/// \see sf::Shape, sf::RectangleShape, sf::CircleShape
+/// \see _G::Shape, _G::RectangleShape, _G::CircleShape
 ///
 ////////////////////////////////////////////////////////////

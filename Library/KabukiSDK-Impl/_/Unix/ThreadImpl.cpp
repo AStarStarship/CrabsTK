@@ -25,13 +25,13 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Unix/ThreadImpl.hpp>
-#include <SFML/System/Thread.hpp>
+#include <_/Unix/ThreadImpl.hpp>
+#include <_/Thread.hpp>
 #include <iostream>
 #include <cassert>
 
 
-namespace sf
+namespace _
 {
 namespace priv
 {
@@ -91,4 +91,4 @@ void* ThreadImpl::entryPoint(void* userData)
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _

@@ -184,10 +184,10 @@ class Color
 ///
 /// This operator compares two colors and check if they are equal.
 ///
-/// \param left  Left operand
-/// \param right Right operand
+/// @param left  Left operand
+/// @param right Right operand
 ///
-/// \return True if colors are equal, false if they are different
+/// @return True if colors are equal, false if they are different
 ///
 ////////////////////////////////////////////////////////////
 _KabukiSDK bool operator ==(const Color& left, const Color& right);
@@ -198,10 +198,10 @@ _KabukiSDK bool operator ==(const Color& left, const Color& right);
 ///
 /// This operator compares two colors and check if they are different.
 ///
-/// \param left  Left operand
-/// \param right Right operand
+/// @param left  Left operand
+/// @param right Right operand
 ///
-/// \return True if colors are different, false if they are equal
+/// @return True if colors are different, false if they are equal
 ///
 ////////////////////////////////////////////////////////////
 _KabukiSDK bool operator !=(const Color& left, const Color& right);
@@ -213,10 +213,10 @@ _KabukiSDK bool operator !=(const Color& left, const Color& right);
 /// This operator returns the component-wise sum of two colors.
 /// Components that exceed 255 are clamped to 255.
 ///
-/// \param left  Left operand
-/// \param right Right operand
+/// @param left  Left operand
+/// @param right Right operand
 ///
-/// \return Result of \a left + \a right
+/// @return Result of \a left + \a right
 ///
 ////////////////////////////////////////////////////////////
 _KabukiSDK Color operator +(const Color& left, const Color& right);
@@ -228,10 +228,10 @@ _KabukiSDK Color operator +(const Color& left, const Color& right);
 /// This operator returns the component-wise subtraction of two colors.
 /// Components below 0 are clamped to 0.
 ///
-/// \param left  Left operand
-/// \param right Right operand
+/// @param left  Left operand
+/// @param right Right operand
 ///
-/// \return Result of \a left - \a right
+/// @return Result of \a left - \a right
 ///
 ////////////////////////////////////////////////////////////
 _KabukiSDK Color operator -(const Color& left, const Color& right);
@@ -245,10 +245,10 @@ _KabukiSDK Color operator -(const Color& left, const Color& right);
 /// Components are then divided by 255 so that the result is
 /// still in the range [0, 255].
 ///
-/// \param left  Left operand
-/// \param right Right operand
+/// @param left  Left operand
+/// @param right Right operand
 ///
-/// \return Result of \a left * \a right
+/// @return Result of \a left * \a right
 ///
 ////////////////////////////////////////////////////////////
 _KabukiSDK Color operator *(const Color& left, const Color& right);
@@ -261,10 +261,10 @@ _KabukiSDK Color operator *(const Color& left, const Color& right);
 /// and assigns the result to the left operand.
 /// Components that exceed 255 are clamped to 255.
 ///
-/// \param left  Left operand
-/// \param right Right operand
+/// @param left  Left operand
+/// @param right Right operand
 ///
-/// \return Reference to \a left
+/// @return Reference to \a left
 ///
 ////////////////////////////////////////////////////////////
 _KabukiSDK Color& operator +=(Color& left, const Color& right);
@@ -277,10 +277,10 @@ _KabukiSDK Color& operator +=(Color& left, const Color& right);
 /// and assigns the result to the left operand.
 /// Components below 0 are clamped to 0.
 ///
-/// \param left  Left operand
-/// \param right Right operand
+/// @param left  Left operand
+/// @param right Right operand
 ///
-/// \return Reference to \a left
+/// @return Reference to \a left
 ///
 ////////////////////////////////////////////////////////////
 _KabukiSDK Color& operator -=(Color& left, const Color& right);
@@ -295,10 +295,10 @@ _KabukiSDK Color& operator -=(Color& left, const Color& right);
 /// Components are then divided by 255 so that the result is
 /// still in the range [0, 255].
 ///
-/// \param left  Left operand
-/// \param right Right operand
+/// @param left  Left operand
+/// @param right Right operand
 ///
-/// \return Reference to \a left
+/// @return Reference to \a left
 ///
 ////////////////////////////////////////////////////////////
 _KabukiSDK Color& operator *=(Color& left, const Color& right);

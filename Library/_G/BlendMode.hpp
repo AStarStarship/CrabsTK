@@ -31,7 +31,7 @@
 #include <SFML/Graphics/Export.hpp>
 
 
-namespace sf
+namespace _G
 {
 
 ////////////////////////////////////////////////////////////
@@ -87,9 +87,9 @@ struct SFML_GRAPHICS_API BlendMode
     /// This constructor uses the same factors and equation for both
     /// color and alpha components. It also defaults to the Add equation.
     ///
-    /// \param sourceFactor      Specifies how to compute the source factor for the color and alpha channels.
-    /// \param destinationFactor Specifies how to compute the destination factor for the color and alpha channels.
-    /// \param blendEquation     Specifies how to combine the source and destination colors and alpha.
+    /// @param sourceFactor      Specifies how to compute the source factor for the color and alpha channels.
+    /// @param destinationFactor Specifies how to compute the destination factor for the color and alpha channels.
+    /// @param blendEquation     Specifies how to combine the source and destination colors and alpha.
     ///
     ////////////////////////////////////////////////////////////
     BlendMode(Factor sourceFactor, Factor destinationFactor, Equation blendEquation = Add);
@@ -97,12 +97,12 @@ struct SFML_GRAPHICS_API BlendMode
     ////////////////////////////////////////////////////////////
     /// \brief Construct the blend mode given the factors and equation.
     ///
-    /// \param colorSourceFactor      Specifies how to compute the source factor for the color channels.
-    /// \param colorDestinationFactor Specifies how to compute the destination factor for the color channels.
-    /// \param colorBlendEquation     Specifies how to combine the source and destination colors.
-    /// \param alphaSourceFactor      Specifies how to compute the source factor.
-    /// \param alphaDestinationFactor Specifies how to compute the destination factor.
-    /// \param alphaBlendEquation     Specifies how to combine the source and destination alphas.
+    /// @param colorSourceFactor      Specifies how to compute the source factor for the color channels.
+    /// @param colorDestinationFactor Specifies how to compute the destination factor for the color channels.
+    /// @param colorBlendEquation     Specifies how to combine the source and destination colors.
+    /// @param alphaSourceFactor      Specifies how to compute the source factor.
+    /// @param alphaDestinationFactor Specifies how to compute the destination factor.
+    /// @param alphaBlendEquation     Specifies how to combine the source and destination alphas.
     ///
     ////////////////////////////////////////////////////////////
     BlendMode(Factor colorSourceFactor, Factor colorDestinationFactor,
@@ -124,10 +124,10 @@ struct SFML_GRAPHICS_API BlendMode
 /// \relates BlendMode
 /// \brief Overload of the == operator
 ///
-/// \param left  Left operand
-/// \param right Right operand
+/// @param left  Left operand
+/// @param right Right operand
 ///
-/// \return True if blending modes are equal, false if they are different
+/// @return True if blending modes are equal, false if they are different
 ///
 ////////////////////////////////////////////////////////////
 SFML_GRAPHICS_API bool operator ==(const BlendMode& left, const BlendMode& right);
@@ -136,10 +136,10 @@ SFML_GRAPHICS_API bool operator ==(const BlendMode& left, const BlendMode& right
 /// \relates BlendMode
 /// \brief Overload of the != operator
 ///
-/// \param left  Left operand
-/// \param right Right operand
+/// @param left  Left operand
+/// @param right Right operand
 ///
-/// \return True if blending modes are different, false if they are equal
+/// @return True if blending modes are different, false if they are equal
 ///
 ////////////////////////////////////////////////////////////
 SFML_GRAPHICS_API bool operator !=(const BlendMode& left, const BlendMode& right);
@@ -152,17 +152,17 @@ SFML_GRAPHICS_API extern const BlendMode BlendAdd;      ///< Add source to dest
 SFML_GRAPHICS_API extern const BlendMode BlendMultiply; ///< Multiply source and dest
 SFML_GRAPHICS_API extern const BlendMode BlendNone;     ///< Overwrite dest with source
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_BLENDMODE_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::BlendMode
+/// \class _G::BlendMode
 /// \ingroup graphics
 ///
-/// sf::BlendMode is a class that represents a blend mode. A blend
+/// _G::BlendMode is a class that represents a blend mode. A blend
 /// mode determines how the colors of an object you draw are
 /// mixed with the colors that are already in the buffer.
 ///
@@ -197,19 +197,19 @@ SFML_GRAPHICS_API extern const BlendMode BlendNone;     ///< Overwrite dest with
 /// 0 and 1. Where necessary, the result is clamped to fit in that range.
 ///
 /// The most common blending modes are defined as constants
-/// in the sf namespace:
+/// in the _G namespace:
 ///
 /// \code
-/// sf::BlendMode alphaBlending          = sf::BlendAlpha;
-/// sf::BlendMode additiveBlending       = sf::BlendAdd;
-/// sf::BlendMode multiplicativeBlending = sf::BlendMultiply;
-/// sf::BlendMode noBlending             = sf::BlendNone;
+/// _G::BlendMode alphaBlending          = _G::BlendAlpha;
+/// _G::BlendMode additiveBlending       = _G::BlendAdd;
+/// _G::BlendMode multiplicativeBlending = _G::BlendMultiply;
+/// _G::BlendMode noBlending             = _G::BlendNone;
 /// \endcode
 ///
-/// In SFML, a blend mode can be specified every time you draw a sf::Drawable
-/// object to a render target. It is part of the sf::RenderStates compound
-/// that is passed to the member function sf::RenderTarget::draw().
+/// In SFML, a blend mode can be specified every time you draw a _G::Drawable
+/// object to a render target. It is part of the _G::RenderStates compound
+/// that is passed to the member function _G::RenderTarget::draw().
 ///
-/// \see sf::RenderStates, sf::RenderTarget
+/// \see _G::RenderStates, _G::RenderTarget
 ///
 ////////////////////////////////////////////////////////////

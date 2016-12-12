@@ -33,7 +33,7 @@
 #include <SFML/Window/Context.hpp>
 
 
-namespace sf
+namespace _G
 {
 namespace priv
 {
@@ -63,12 +63,12 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Create the render texture implementation
     ///
-    /// \param width       Width of the texture to render to
-    /// \param height      Height of the texture to render to
-    /// \param textureId   OpenGL identifier of the target texture
-    /// \param depthBuffer Is a depth buffer requested?
+    /// @param width       Width of the texture to render to
+    /// @param height      Height of the texture to render to
+    /// @param textureId   OpenGL identifier of the target texture
+    /// @param depthBuffer Is a depth buffer requested?
     ///
-    /// \return True if creation has been successful
+    /// @return True if creation has been successful
     ///
     ////////////////////////////////////////////////////////////
     virtual bool create(unsigned int width, unsigned int height, unsigned int textureId, bool depthBuffer);
@@ -76,9 +76,9 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Activate or deactivate the render texture for rendering
     ///
-    /// \param active True to activate, false to deactivate
+    /// @param active True to activate, false to deactivate
     ///
-    /// \return True on success, false on failure
+    /// @return True on success, false on failure
     ///
     ////////////////////////////////////////////////////////////
     virtual bool activate(bool active);
@@ -86,7 +86,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Update the pixels of the target texture
     ///
-    /// \param textureId OpenGL identifier of the target texture
+    /// @param textureId OpenGL identifier of the target texture
     ///
     ////////////////////////////////////////////////////////////
     virtual void updateTexture(unsigned textureId);
@@ -101,7 +101,7 @@ private:
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_RENDERTEXTUREIMPLDEFAULT_HPP

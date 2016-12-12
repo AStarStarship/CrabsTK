@@ -27,7 +27,7 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Android/Activity.hpp>
+#include <_/Android/Activity.hpp>
 #include <android/log.h>
 
 #define LOGE(...) ((void)__android_log_print(ANDROID_LOG_INFO, "sfml-error", __VA_ARGS__))
@@ -52,7 +52,7 @@ std::streambuf::int_type LogcatStream::overflow (std::streambuf::int_type c)
     return traits_type::not_eof(c);
 }
 
-namespace sf
+namespace _
 {
 namespace priv
 {

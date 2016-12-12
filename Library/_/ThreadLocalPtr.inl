@@ -23,7 +23,7 @@
 ////////////////////////////////////////////////////////////
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 template <typename T>
@@ -74,4 +74,4 @@ ThreadLocalPtr<T>& ThreadLocalPtr<T>::operator =(const ThreadLocalPtr<T>& right)
     return *this;
 }
 
-} // namespace sf
+} // namespace _

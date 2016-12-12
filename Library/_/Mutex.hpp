@@ -28,11 +28,11 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Export.hpp>
-#include <SFML/System/NonCopyable.hpp>
+#include <_/Export.hpp>
+#include <_/NonCopyable.hpp>
 
 
-namespace sf
+namespace _
 {
 namespace priv
 {
@@ -88,14 +88,14 @@ private:
     priv::MutexImpl* m_mutexImpl; ///< OS-specific implementation
 };
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_MUTEX_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Mutex
+/// \class _::Mutex
 /// \ingroup system
 ///
 /// Mutex stands for "MUTual EXclusion". A mutex is a
@@ -111,7 +111,7 @@ private:
 /// Usage example:
 /// \code
 /// Database database; // this is a critical resource that needs some protection
-/// sf::Mutex mutex;
+/// _::Mutex mutex;
 ///
 /// void thread1()
 /// {
@@ -134,7 +134,7 @@ private:
 ///
 /// To make the usage of mutexes more robust, particularly in
 /// environments where exceptions can be thrown, you should
-/// use the helper class sf::Lock to lock/unlock mutexes.
+/// use the helper class _::Lock to lock/unlock mutexes.
 ///
 /// SFML mutexes are recursive, which means that you can lock
 /// a mutex multiple times in the same thread without creating
@@ -143,6 +143,6 @@ private:
 /// However, you must call unlock() exactly as many times as you
 /// called lock(). If you don't, the mutex won't be released.
 ///
-/// \see sf::Lock
+/// \see _::Lock
 ///
 ////////////////////////////////////////////////////////////

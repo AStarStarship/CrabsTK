@@ -38,7 +38,7 @@
 #include <string>
 
 
-namespace sf
+namespace _G
 {
 class Color;
 class InputStream;
@@ -108,10 +108,10 @@ public:
     /// read a good documentation for it before writing your
     /// own shaders.
     ///
-    /// \param filename Path of the vertex, geometry or fragment shader file to load
-    /// \param type     Type of shader (vertex, geometry or fragment)
+    /// @param filename Path of the vertex, geometry or fragment shader file to load
+    /// @param type     Type of shader (vertex, geometry or fragment)
     ///
-    /// \return True if loading succeeded, false if it failed
+    /// @return True if loading succeeded, false if it failed
     ///
     /// \see loadFromMemory, loadFromStream
     ///
@@ -129,10 +129,10 @@ public:
     /// OpenGL shaders; you'll probably need to read a good documentation
     /// for it before writing your own shaders.
     ///
-    /// \param vertexShaderFilename   Path of the vertex shader file to load
-    /// \param fragmentShaderFilename Path of the fragment shader file to load
+    /// @param vertexShaderFilename   Path of the vertex shader file to load
+    /// @param fragmentShaderFilename Path of the fragment shader file to load
     ///
-    /// \return True if loading succeeded, false if it failed
+    /// @return True if loading succeeded, false if it failed
     ///
     /// \see loadFromMemory, loadFromStream
     ///
@@ -150,11 +150,11 @@ public:
     /// OpenGL shaders; you'll probably need to read a good documentation
     /// for it before writing your own shaders.
     ///
-    /// \param vertexShaderFilename   Path of the vertex shader file to load
-    /// \param geometryShaderFilename Path of the geometry shader file to load
-    /// \param fragmentShaderFilename Path of the fragment shader file to load
+    /// @param vertexShaderFilename   Path of the vertex shader file to load
+    /// @param geometryShaderFilename Path of the geometry shader file to load
+    /// @param fragmentShaderFilename Path of the fragment shader file to load
     ///
-    /// \return True if loading succeeded, false if it failed
+    /// @return True if loading succeeded, false if it failed
     ///
     /// \see loadFromMemory, loadFromStream
     ///
@@ -171,10 +171,10 @@ public:
     /// you'll probably need to read a good documentation for
     /// it before writing your own shaders.
     ///
-    /// \param shader String containing the source code of the shader
-    /// \param type   Type of shader (vertex, geometry or fragment)
+    /// @param shader String containing the source code of the shader
+    /// @param type   Type of shader (vertex, geometry or fragment)
     ///
-    /// \return True if loading succeeded, false if it failed
+    /// @return True if loading succeeded, false if it failed
     ///
     /// \see loadFromFile, loadFromStream
     ///
@@ -192,10 +192,10 @@ public:
     /// probably need to read a good documentation for it before
     /// writing your own shaders.
     ///
-    /// \param vertexShader   String containing the source code of the vertex shader
-    /// \param fragmentShader String containing the source code of the fragment shader
+    /// @param vertexShader   String containing the source code of the vertex shader
+    /// @param fragmentShader String containing the source code of the fragment shader
     ///
-    /// \return True if loading succeeded, false if it failed
+    /// @return True if loading succeeded, false if it failed
     ///
     /// \see loadFromFile, loadFromStream
     ///
@@ -213,11 +213,11 @@ public:
     /// probably need to read a good documentation for it before
     /// writing your own shaders.
     ///
-    /// \param vertexShader   String containing the source code of the vertex shader
-    /// \param geometryShader String containing the source code of the geometry shader
-    /// \param fragmentShader String containing the source code of the fragment shader
+    /// @param vertexShader   String containing the source code of the vertex shader
+    /// @param geometryShader String containing the source code of the geometry shader
+    /// @param fragmentShader String containing the source code of the fragment shader
     ///
-    /// \return True if loading succeeded, false if it failed
+    /// @return True if loading succeeded, false if it failed
     ///
     /// \see loadFromFile, loadFromStream
     ///
@@ -234,10 +234,10 @@ public:
     /// you'll probably need to read a good documentation for it
     /// before writing your own shaders.
     ///
-    /// \param stream Source stream to read from
-    /// \param type   Type of shader (vertex, geometry or fragment)
+    /// @param stream Source stream to read from
+    /// @param type   Type of shader (vertex, geometry or fragment)
     ///
-    /// \return True if loading succeeded, false if it failed
+    /// @return True if loading succeeded, false if it failed
     ///
     /// \see loadFromFile, loadFromMemory
     ///
@@ -255,10 +255,10 @@ public:
     /// you'll probably need to read a good documentation for
     /// it before writing your own shaders.
     ///
-    /// \param vertexShaderStream   Source stream to read the vertex shader from
-    /// \param fragmentShaderStream Source stream to read the fragment shader from
+    /// @param vertexShaderStream   Source stream to read the vertex shader from
+    /// @param fragmentShaderStream Source stream to read the fragment shader from
     ///
-    /// \return True if loading succeeded, false if it failed
+    /// @return True if loading succeeded, false if it failed
     ///
     /// \see loadFromFile, loadFromMemory
     ///
@@ -276,11 +276,11 @@ public:
     /// you'll probably need to read a good documentation for
     /// it before writing your own shaders.
     ///
-    /// \param vertexShaderStream   Source stream to read the vertex shader from
-    /// \param geometryShaderStream Source stream to read the geometry shader from
-    /// \param fragmentShaderStream Source stream to read the fragment shader from
+    /// @param vertexShaderStream   Source stream to read the vertex shader from
+    /// @param geometryShaderStream Source stream to read the geometry shader from
+    /// @param fragmentShaderStream Source stream to read the fragment shader from
     ///
-    /// \return True if loading succeeded, false if it failed
+    /// @return True if loading succeeded, false if it failed
     ///
     /// \see loadFromFile, loadFromMemory
     ///
@@ -290,8 +290,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify value for \p float uniform
     ///
-    /// \param name Name of the uniform variable in GLSL
-    /// \param x    Value of the float scalar
+    /// @param name Name of the uniform variable in GLSL
+    /// @param x    Value of the float scalar
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, float x);
@@ -299,8 +299,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify value for \p vec2 uniform
     ///
-    /// \param name   Name of the uniform variable in GLSL
-    /// \param vector Value of the vec2 vector
+    /// @param name   Name of the uniform variable in GLSL
+    /// @param vector Value of the vec2 vector
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, const Glsl::Vec2& vector);
@@ -308,8 +308,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify value for \p vec3 uniform
     ///
-    /// \param name   Name of the uniform variable in GLSL
-    /// \param vector Value of the vec3 vector
+    /// @param name   Name of the uniform variable in GLSL
+    /// @param vector Value of the vec3 vector
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, const Glsl::Vec3& vector);
@@ -317,17 +317,17 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify value for \p vec4 uniform
     ///
-    /// This overload can also be called with sf::Color objects
-    /// that are converted to sf::Glsl::Vec4.
+    /// This overload can also be called with _G::Color objects
+    /// that are converted to _G::Glsl::Vec4.
     ///
     /// It is important to note that the components of the color are
     /// normalized before being passed to the shader. Therefore,
     /// they are converted from range [0 .. 255] to range [0 .. 1].
-    /// For example, a sf::Color(255, 127, 0, 255) will be transformed
+    /// For example, a _G::Color(255, 127, 0, 255) will be transformed
     /// to a vec4(1.0, 0.5, 0.0, 1.0) in the shader.
     ///
-    /// \param name   Name of the uniform variable in GLSL
-    /// \param vector Value of the vec4 vector
+    /// @param name   Name of the uniform variable in GLSL
+    /// @param vector Value of the vec4 vector
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, const Glsl::Vec4& vector);
@@ -335,8 +335,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify value for \p int uniform
     ///
-    /// \param name Name of the uniform variable in GLSL
-    /// \param x    Value of the int scalar
+    /// @param name Name of the uniform variable in GLSL
+    /// @param x    Value of the int scalar
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, int x);
@@ -344,8 +344,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify value for \p ivec2 uniform
     ///
-    /// \param name   Name of the uniform variable in GLSL
-    /// \param vector Value of the ivec2 vector
+    /// @param name   Name of the uniform variable in GLSL
+    /// @param vector Value of the ivec2 vector
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, const Glsl::Ivec2& vector);
@@ -353,8 +353,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify value for \p ivec3 uniform
     ///
-    /// \param name   Name of the uniform variable in GLSL
-    /// \param vector Value of the ivec3 vector
+    /// @param name   Name of the uniform variable in GLSL
+    /// @param vector Value of the ivec3 vector
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, const Glsl::Ivec3& vector);
@@ -362,16 +362,16 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify value for \p ivec4 uniform
     ///
-    /// This overload can also be called with sf::Color objects
-    /// that are converted to sf::Glsl::Ivec4.
+    /// This overload can also be called with _G::Color objects
+    /// that are converted to _G::Glsl::Ivec4.
     ///
     /// If color conversions are used, the ivec4 uniform in GLSL
-    /// will hold the same values as the original sf::Color
-    /// instance. For example, sf::Color(255, 127, 0, 255) is
+    /// will hold the same values as the original _G::Color
+    /// instance. For example, _G::Color(255, 127, 0, 255) is
     /// mapped to ivec4(255, 127, 0, 255).
     ///
-    /// \param name   Name of the uniform variable in GLSL
-    /// \param vector Value of the ivec4 vector
+    /// @param name   Name of the uniform variable in GLSL
+    /// @param vector Value of the ivec4 vector
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, const Glsl::Ivec4& vector);
@@ -379,8 +379,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify value for \p bool uniform
     ///
-    /// \param name Name of the uniform variable in GLSL
-    /// \param x    Value of the bool scalar
+    /// @param name Name of the uniform variable in GLSL
+    /// @param x    Value of the bool scalar
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, bool x);
@@ -388,8 +388,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify value for \p bvec2 uniform
     ///
-    /// \param name   Name of the uniform variable in GLSL
-    /// \param vector Value of the bvec2 vector
+    /// @param name   Name of the uniform variable in GLSL
+    /// @param vector Value of the bvec2 vector
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, const Glsl::Bvec2& vector);
@@ -397,8 +397,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify value for \p bvec3 uniform
     ///
-    /// \param name   Name of the uniform variable in GLSL
-    /// \param vector Value of the bvec3 vector
+    /// @param name   Name of the uniform variable in GLSL
+    /// @param vector Value of the bvec3 vector
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, const Glsl::Bvec3& vector);
@@ -406,8 +406,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify value for \p bvec4 uniform
     ///
-    /// \param name   Name of the uniform variable in GLSL
-    /// \param vector Value of the bvec4 vector
+    /// @param name   Name of the uniform variable in GLSL
+    /// @param vector Value of the bvec4 vector
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, const Glsl::Bvec4& vector);
@@ -415,8 +415,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify value for \p mat3 matrix
     ///
-    /// \param name   Name of the uniform variable in GLSL
-    /// \param matrix Value of the mat3 matrix
+    /// @param name   Name of the uniform variable in GLSL
+    /// @param matrix Value of the mat3 matrix
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, const Glsl::Mat3& matrix);
@@ -424,8 +424,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify value for \p mat4 matrix
     ///
-    /// \param name   Name of the uniform variable in GLSL
-    /// \param matrix Value of the mat4 matrix
+    /// @param name   Name of the uniform variable in GLSL
+    /// @param matrix Value of the mat4 matrix
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, const Glsl::Mat4& matrix);
@@ -442,7 +442,7 @@ public:
     /// uniform sampler2D the_texture; // this is the variable in the shader
     /// \endcode
     /// \code
-    /// sf::Texture texture;
+    /// _G::Texture texture;
     /// ...
     /// shader.setUniform("the_texture", texture);
     /// \endcode
@@ -451,13 +451,13 @@ public:
     ///
     /// To use the texture of the object being drawn, which cannot be
     /// known in advance, you can pass the special value
-    /// sf::Shader::CurrentTexture:
+    /// _G::Shader::CurrentTexture:
     /// \code
-    /// shader.setUniform("the_texture", sf::Shader::CurrentTexture).
+    /// shader.setUniform("the_texture", _G::Shader::CurrentTexture).
     /// \endcode
     ///
-    /// \param name    Name of the texture in the shader
-    /// \param texture Texture to assign
+    /// @param name    Name of the texture in the shader
+    /// @param texture Texture to assign
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, const Texture& texture);
@@ -468,7 +468,7 @@ public:
     /// This overload maps a shader texture variable to the
     /// texture of the object being drawn, which cannot be
     /// known in advance. The second argument must be
-    /// sf::Shader::CurrentTexture.
+    /// _G::Shader::CurrentTexture.
     /// The corresponding parameter in the shader must be a 2D texture
     /// (\p sampler2D GLSL type).
     ///
@@ -477,10 +477,10 @@ public:
     /// uniform sampler2D current; // this is the variable in the shader
     /// \endcode
     /// \code
-    /// shader.setUniform("current", sf::Shader::CurrentTexture);
+    /// shader.setUniform("current", _G::Shader::CurrentTexture);
     /// \endcode
     ///
-    /// \param name Name of the texture in the shader
+    /// @param name Name of the texture in the shader
     ///
     ////////////////////////////////////////////////////////////
     void setUniform(const std::string& name, CurrentTextureType);
@@ -488,9 +488,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify values for \p float[] array uniform
     ///
-    /// \param name        Name of the uniform variable in GLSL
-    /// \param scalarArray pointer to array of \p float values
-    /// \param length      Number of elements in the array
+    /// @param name        Name of the uniform variable in GLSL
+    /// @param scalarArray pointer to array of \p float values
+    /// @param length      Number of elements in the array
     ///
     ////////////////////////////////////////////////////////////
     void setUniformArray(const std::string& name, const float* scalarArray, std::size_t length);
@@ -498,9 +498,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify values for \p vec2[] array uniform
     ///
-    /// \param name        Name of the uniform variable in GLSL
-    /// \param vectorArray pointer to array of \p vec2 values
-    /// \param length      Number of elements in the array
+    /// @param name        Name of the uniform variable in GLSL
+    /// @param vectorArray pointer to array of \p vec2 values
+    /// @param length      Number of elements in the array
     ///
     ////////////////////////////////////////////////////////////
     void setUniformArray(const std::string& name, const Glsl::Vec2* vectorArray, std::size_t length);
@@ -508,9 +508,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify values for \p vec3[] array uniform
     ///
-    /// \param name        Name of the uniform variable in GLSL
-    /// \param vectorArray pointer to array of \p vec3 values
-    /// \param length      Number of elements in the array
+    /// @param name        Name of the uniform variable in GLSL
+    /// @param vectorArray pointer to array of \p vec3 values
+    /// @param length      Number of elements in the array
     ///
     ////////////////////////////////////////////////////////////
     void setUniformArray(const std::string& name, const Glsl::Vec3* vectorArray, std::size_t length);
@@ -518,9 +518,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify values for \p vec4[] array uniform
     ///
-    /// \param name        Name of the uniform variable in GLSL
-    /// \param vectorArray pointer to array of \p vec4 values
-    /// \param length      Number of elements in the array
+    /// @param name        Name of the uniform variable in GLSL
+    /// @param vectorArray pointer to array of \p vec4 values
+    /// @param length      Number of elements in the array
     ///
     ////////////////////////////////////////////////////////////
     void setUniformArray(const std::string& name, const Glsl::Vec4* vectorArray, std::size_t length);
@@ -528,9 +528,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify values for \p mat3[] array uniform
     ///
-    /// \param name        Name of the uniform variable in GLSL
-    /// \param matrixArray pointer to array of \p mat3 values
-    /// \param length      Number of elements in the array
+    /// @param name        Name of the uniform variable in GLSL
+    /// @param matrixArray pointer to array of \p mat3 values
+    /// @param length      Number of elements in the array
     ///
     ////////////////////////////////////////////////////////////
     void setUniformArray(const std::string& name, const Glsl::Mat3* matrixArray, std::size_t length);
@@ -538,9 +538,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Specify values for \p mat4[] array uniform
     ///
-    /// \param name        Name of the uniform variable in GLSL
-    /// \param matrixArray pointer to array of \p mat4 values
-    /// \param length      Number of elements in the array
+    /// @param name        Name of the uniform variable in GLSL
+    /// @param matrixArray pointer to array of \p mat4 values
+    /// @param length      Number of elements in the array
     ///
     ////////////////////////////////////////////////////////////
     void setUniformArray(const std::string& name, const Glsl::Mat4* matrixArray, std::size_t length);
@@ -632,7 +632,7 @@ public:
     /// very specific stuff to implement that SFML doesn't support,
     /// or implement a temporary workaround until a bug is fixed.
     ///
-    /// \return OpenGL handle of the shader or 0 if not yet loaded
+    /// @return OpenGL handle of the shader or 0 if not yet loaded
     ///
     ////////////////////////////////////////////////////////////
     unsigned int getNativeHandle() const;
@@ -642,20 +642,20 @@ public:
     ///
     /// This function is not part of the graphics API, it mustn't be
     /// used when drawing SFML entities. It must be used only if you
-    /// mix sf::Shader with OpenGL code.
+    /// mix _G::Shader with OpenGL code.
     ///
     /// \code
-    /// sf::Shader s1, s2;
+    /// _G::Shader s1, s2;
     /// ...
-    /// sf::Shader::bind(&s1);
+    /// _G::Shader::bind(&s1);
     /// // draw OpenGL stuff that use s1...
-    /// sf::Shader::bind(&s2);
+    /// _G::Shader::bind(&s2);
     /// // draw OpenGL stuff that use s2...
-    /// sf::Shader::bind(NULL);
+    /// _G::Shader::bind(NULL);
     /// // draw OpenGL stuff that use no shader...
     /// \endcode
     ///
-    /// \param shader Shader to bind, can be null to use no shader
+    /// @param shader Shader to bind, can be null to use no shader
     ///
     ////////////////////////////////////////////////////////////
     static void bind(const Shader* shader);
@@ -665,9 +665,9 @@ public:
     ///
     /// This function should always be called before using
     /// the shader features. If it returns false, then
-    /// any attempt to use sf::Shader will fail.
+    /// any attempt to use _G::Shader will fail.
     ///
-    /// \return True if shaders are supported, false otherwise
+    /// @return True if shaders are supported, false otherwise
     ///
     ////////////////////////////////////////////////////////////
     static bool isAvailable();
@@ -677,7 +677,7 @@ public:
     ///
     /// This function should always be called before using
     /// the geometry shader features. If it returns false, then
-    /// any attempt to use sf::Shader geometry shader features will fail.
+    /// any attempt to use _G::Shader geometry shader features will fail.
     ///
     /// This function can only return true if isAvailable() would also
     /// return true, since shaders in general have to be supported in
@@ -686,7 +686,7 @@ public:
     /// Note: The first call to this function, whether by your
     /// code or SFML will result in a context switch.
     ///
-    /// \return True if geometry shaders are supported, false otherwise
+    /// @return True if geometry shaders are supported, false otherwise
     ///
     ////////////////////////////////////////////////////////////
     static bool isGeometryAvailable();
@@ -699,11 +699,11 @@ private:
     /// If one of the arguments is NULL, the corresponding shader
     /// is not created.
     ///
-    /// \param vertexShaderCode   Source code of the vertex shader
-    /// \param geometryShaderCode Source code of the geometry shader
-    /// \param fragmentShaderCode Source code of the fragment shader
+    /// @param vertexShaderCode   Source code of the vertex shader
+    /// @param geometryShaderCode Source code of the geometry shader
+    /// @param fragmentShaderCode Source code of the fragment shader
     ///
-    /// \return True on success, false if any error happened
+    /// @return True on success, false if any error happened
     ///
     ////////////////////////////////////////////////////////////
     bool compile(const char* vertexShaderCode, const char* geometryShaderCode, const char* fragmentShaderCode);
@@ -720,9 +720,9 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Get the location ID of a shader uniform
     ///
-    /// \param name Name of the uniform variable to search
+    /// @param name Name of the uniform variable to search
     ///
-    /// \return Location ID of the uniform, or -1 if not found
+    /// @return Location ID of the uniform, or -1 if not found
     ///
     ////////////////////////////////////////////////////////////
     int getUniformLocation(const std::string& name);
@@ -751,14 +751,14 @@ private:
     UniformTable m_uniforms;       ///< Parameters location cache
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_SHADER_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Shader
+/// \class _G::Shader
 /// \ingroup graphics
 ///
 /// Shaders are programs written using a specific language,
@@ -770,7 +770,7 @@ private:
 /// \li Geometry shaders, that process primitives
 /// \li Fragment (pixel) shaders, that process pixels
 ///
-/// A sf::Shader can be composed of either a vertex shader
+/// A _G::Shader can be composed of either a vertex shader
 /// alone, a geometry shader alone, a fragment shader alone,
 /// or any combination of them. (see the variants of the
 /// load functions).
@@ -782,15 +782,15 @@ private:
 ///
 /// Like any C/C++ program, a GLSL shader has its own variables
 /// called \a uniforms that you can set from your C++ application.
-/// sf::Shader handles different types of uniforms:
+/// _G::Shader handles different types of uniforms:
 /// \li scalars: \p float, \p int, \p bool
 /// \li vectors (2, 3 or 4 components)
 /// \li matrices (3x3 or 4x4)
 /// \li samplers (textures)
 ///
 /// Some SFML-specific types can be converted:
-/// \li sf::Color as a 4D vector (\p vec4)
-/// \li sf::Transform as matrices (\p mat3 or \p mat4)
+/// \li _G::Color as a 4D vector (\p vec4)
+/// \li _G::Transform as matrices (\p mat3 or \p mat4)
 ///
 /// Every uniform variable in a shader can be set through one of the
 /// setUniform() or setUniformArray() overloads. For example, if you
@@ -804,14 +804,14 @@ private:
 /// uniform sampler2D current;
 /// \endcode
 /// You can set their values from C++ code as follows, using the types
-/// defined in the sf::Glsl namespace:
+/// defined in the _G::Glsl namespace:
 /// \code
 /// shader.setUniform("offset", 2.f);
-/// shader.setUniform("point", sf::Vector3f(0.5f, 0.8f, 0.3f));
-/// shader.setUniform("color", sf::Glsl::Vec4(color));          // color is a sf::Color
-/// shader.setUniform("matrix", sf::Glsl::Mat4(transform));     // transform is a sf::Transform
-/// shader.setUniform("overlay", texture);                      // texture is a sf::Texture
-/// shader.setUniform("current", sf::Shader::CurrentTexture);
+/// shader.setUniform("point", _G::Vector3f(0.5f, 0.8f, 0.3f));
+/// shader.setUniform("color", _G::Glsl::Vec4(color));          // color is a _G::Color
+/// shader.setUniform("matrix", _G::Glsl::Mat4(transform));     // transform is a _G::Transform
+/// shader.setUniform("overlay", texture);                      // texture is a _G::Texture
+/// shader.setUniform("current", _G::Shader::CurrentTexture);
 /// \endcode
 ///
 /// The old setParameter() overloads are deprecated and will be removed in a
@@ -829,7 +829,7 @@ private:
 ///
 /// ... which is in fact just a shortcut for this:
 /// \code
-/// sf::RenderStates states;
+/// _G::RenderStates states;
 /// states.shader = &shader;
 /// window.draw(sprite, states);
 /// \endcode
@@ -838,22 +838,22 @@ private:
 /// be null (which means "no shader").
 ///
 /// Shaders can be used on any drawable, but some combinations are
-/// not interesting. For example, using a vertex shader on a sf::Sprite
+/// not interesting. For example, using a vertex shader on a _G::Sprite
 /// is limited because there are only 4 vertices, the sprite would
 /// have to be subdivided in order to apply wave effects.
-/// Another bad example is a fragment shader with sf::Text: the texture
+/// Another bad example is a fragment shader with _G::Text: the texture
 /// of the text is not the actual text that you see on screen, it is
 /// a big texture containing all the characters of the font in an
 /// arbitrary order; thus, texture lookups on pixels other than the
 /// current one may not give you the expected result.
 ///
 /// Shaders can also be used to apply global post-effects to the
-/// current contents of the target (like the old sf::PostFx class
+/// current contents of the target (like the old _G::PostFx class
 /// in SFML 1). This can be done in two different ways:
-/// \li draw everything to a sf::RenderTexture, then draw it to
+/// \li draw everything to a _G::RenderTexture, then draw it to
 ///     the main target using the shader
 /// \li draw everything directly to the main target, then use
-///     sf::Texture::update(Window&) to copy its contents to a texture
+///     _G::Texture::update(Window&) to copy its contents to a texture
 ///     and draw it to the main target using the shader
 ///
 /// The first technique is more optimized because it doesn't involve
@@ -861,15 +861,15 @@ private:
 /// second one doesn't impact the rendering process and can be
 /// easily inserted anywhere without impacting all the code.
 ///
-/// Like sf::Texture that can be used as a raw OpenGL texture,
-/// sf::Shader can also be used directly as a raw shader for
+/// Like _G::Texture that can be used as a raw OpenGL texture,
+/// _G::Shader can also be used directly as a raw shader for
 /// custom OpenGL geometry.
 /// \code
-/// sf::Shader::bind(&shader);
+/// _G::Shader::bind(&shader);
 /// ... render OpenGL geometry ...
-/// sf::Shader::bind(NULL);
+/// _G::Shader::bind(NULL);
 /// \endcode
 ///
-/// \see sf::Glsl
+/// \see _G::Glsl
 ///
 ////////////////////////////////////////////////////////////

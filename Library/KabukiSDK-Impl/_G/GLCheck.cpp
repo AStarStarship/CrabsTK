@@ -30,7 +30,7 @@
 #include <string>
 
 
-namespace sf
+namespace _G
 {
 namespace priv
 {
@@ -111,4 +111,4 @@ void glCheckError(const char* file, unsigned int line, const char* expression)
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _G

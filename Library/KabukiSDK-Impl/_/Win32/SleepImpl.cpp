@@ -25,11 +25,11 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Win32/SleepImpl.hpp>
+#include <_/Win32/SleepImpl.hpp>
 #include <windows.h>
 
 
-namespace sf
+namespace _
 {
 namespace priv
 {
@@ -52,4 +52,4 @@ void sleepImpl(Time time)
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _

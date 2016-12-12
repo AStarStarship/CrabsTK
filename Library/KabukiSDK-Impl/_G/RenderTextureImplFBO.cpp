@@ -31,7 +31,7 @@
 #include <SFML/System/Err.hpp>
 
 
-namespace sf
+namespace _G
 {
 namespace priv
 {
@@ -146,4 +146,4 @@ void RenderTextureImplFBO::updateTexture(unsigned int)
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _G

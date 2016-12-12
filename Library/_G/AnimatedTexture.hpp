@@ -74,7 +74,7 @@ class _KabukiSDK AnimatedTexture: public Rect_i
     Texture* toTextureArray ();
     /*<  */
     
-    void draw (Cell& C, TextureObserver* O);
+    void draw (Canvas& C, TextureObserver* O);
     
     void Print (Terminal& Slot);
     /*< Prints this object to a terminal. */

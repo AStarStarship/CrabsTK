@@ -25,29 +25,14 @@
     <Filter Include="KabukiSDK-Library\_G">
       <UniqueIdentifier>{b63646c3-dee9-436d-84d8-18a920f873a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="KabukiSDK-Library\_2D">
-      <UniqueIdentifier>{3d38a0d4-6847-4946-97b7-47ffe873132f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="KabukiSDK-Library\_3D">
-      <UniqueIdentifier>{060dcc4f-d946-4202-a1f2-69424bbded44}</UniqueIdentifier>
-    </Filter>
     <Filter Include="KabukiSDK-Library\_App">
       <UniqueIdentifier>{a89995e3-3c2a-43f7-bd7b-f5ecc3ec7a10}</UniqueIdentifier>
     </Filter>
     <Filter Include="KabukiSDK-Library\_Audio">
       <UniqueIdentifier>{8a6dac8d-4e85-4dc2-9492-a48579945528}</UniqueIdentifier>
     </Filter>
-    <Filter Include="KabukiSDK-Library\_File">
-      <UniqueIdentifier>{9f068ad2-ca12-4cfc-8e10-0beb3425346e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_G">
       <UniqueIdentifier>{df000fb2-cfc5-429e-aedd-07bf7a93d2f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_2D">
-      <UniqueIdentifier>{f9a5c5bf-4044-4605-9645-8dfdc0930829}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_3D">
-      <UniqueIdentifier>{d3829347-cecc-4cc5-ab72-511596e7b028}</UniqueIdentifier>
     </Filter>
     <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_App">
       <UniqueIdentifier>{bb8417f2-f3d4-4711-972b-55d96754285b}</UniqueIdentifier>
@@ -55,14 +40,20 @@
     <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_Audio">
       <UniqueIdentifier>{ac432156-370e-4157-be63-9c2e408de16b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_File">
-      <UniqueIdentifier>{6eeea6be-3dbf-4141-856c-40bf5a6f56e8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="KabukiSDK-Library\_Math">
       <UniqueIdentifier>{f6fc2e5f-79a2-4042-b111-06bbd930afbb}</UniqueIdentifier>
     </Filter>
     <Filter Include="KabukiSDK-Library\_Math\Operators">
       <UniqueIdentifier>{8eb302e6-743d-4418-aa95-2fe552fbf571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_Math">
+      <UniqueIdentifier>{66670c2e-2d36-4888-86c5-fa95f2406cee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KabukiSDK-Library\KabukiSDK-Impl\_Archive">
+      <UniqueIdentifier>{6eeea6be-3dbf-4141-856c-40bf5a6f56e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KabukiSDK-Library\_Archive">
+      <UniqueIdentifier>{9f068ad2-ca12-4cfc-8e10-0beb3425346e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -71,66 +62,6 @@
     </ClInclude>
     <ClInclude Include="..\KabukiSDK-Library\KabukiSDK-Config.hpp">
       <Filter>KabukiSDK-Library</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\IllegalPathException.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\IPathIterator.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\Point.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\Polar.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\Polygon.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\Quad.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\QuadBezier.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\QuadraticCurve.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\Rect.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\RectRotor.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\Vect.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\AffineTransform.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\Angle.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\Bezier.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\Crossings.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\CubicCurve.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_2D\Curve.hpp">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_3D\Polygon.hpp">
-      <Filter>KabukiSDK-Library\_3D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_3D\Entity.hpp">
-      <Filter>KabukiSDK-Library\_3D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_3D\Point.hpp">
-      <Filter>KabukiSDK-Library\_3D</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\_App\RealTimeApp.hpp">
       <Filter>KabukiSDK-Library\_App</Filter>
@@ -197,30 +128,6 @@
     </ClInclude>
     <ClInclude Include="..\Library\_G\AnimatedTexture.hpp">
       <Filter>KabukiSDK-Library\_G</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_Math\Hex.hpp">
-      <Filter>KabukiSDK-Library\_Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_Math\Matrix.hpp">
-      <Filter>KabukiSDK-Library\_Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_Math\BCD.hpp">
-      <Filter>KabukiSDK-Library\_Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_Math\Binary.hpp">
-      <Filter>KabukiSDK-Library\_Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_Math\Calc.hpp">
-      <Filter>KabukiSDK-Library\_Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_Math\Complex.hpp">
-      <Filter>KabukiSDK-Library\_Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_Math\Converter.hpp">
-      <Filter>KabukiSDK-Library\_Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Library\_Math\Equation.hpp">
-      <Filter>KabukiSDK-Library\_Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Library\_Math\Operators\Divide.hpp">
       <Filter>KabukiSDK-Library\_Math\Operators</Filter>
@@ -315,23 +222,95 @@
     <ClInclude Include="..\Library\_G\SwRenderer.hpp">
       <Filter>KabukiSDK-Library\_G</Filter>
     </ClInclude>
+    <ClInclude Include="..\Library\_Math\AffineTransform.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Angle2D.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\BCD.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Bezier.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Binary.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Calc.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Complex.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Converter.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Crossings.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\CubicCurve.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Curve2D.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Entity3D.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Equation.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Hex.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\InvalidPathException.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\IPathIterator.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Matrix.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Point2D.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Point3D.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Polar2D.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Poly2D.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Poly3D.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Quad2D.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\QuadBezier2D.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\QuadraticCurve.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Rect2D.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\RectRotor.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\_Math\Vect2D.hpp">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="..\Library\_2D\ReadMe.md">
-      <Filter>KabukiSDK-Library\_2D</Filter>
-    </None>
-    <None Include="..\Library\_3D\ReadMe.md">
-      <Filter>KabukiSDK-Library\_3D</Filter>
-    </None>
     <None Include="..\Library\_Audio\ReadMe.md">
       <Filter>KabukiSDK-Library\_Audio</Filter>
-    </None>
-    <None Include="..\Library\_File\ReadMe.md">
-      <Filter>KabukiSDK-Library\_File</Filter>
-    </None>
-    <None Include="..\Library\_Math\ReadMe.md">
-      <Filter>KabukiSDK-Library\_Math</Filter>
     </None>
     <None Include="..\Library\_\ReadMe.md">
       <Filter>KabukiSDK-Library\_</Filter>
@@ -339,47 +318,11 @@
     <None Include="..\Library\_Id\ReadMe.md">
       <Filter>KabukiSDK-Library\_Id</Filter>
     </None>
+    <None Include="..\Library\_Math\ReadMe.md">
+      <Filter>KabukiSDK-Library\_Math</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Library\KabukiSDK-Impl\_2D\Angle.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Library\KabukiSDK-Impl\_2D\Bezier.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Library\KabukiSDK-Impl\_2D\Point.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Library\KabukiSDK-Impl\_2D\Polar.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Library\KabukiSDK-Impl\_2D\Polygon.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Library\KabukiSDK-Impl\_2D\Quad.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Library\KabukiSDK-Impl\_2D\QuadBezier.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Library\KabukiSDK-Impl\_2D\Rect.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Library\KabukiSDK-Impl\_2D\RectRotor.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Library\KabukiSDK-Impl\_2D\Vect.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Library\KabukiSDK-Impl\_3D\Polygon.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_3D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Library\KabukiSDK-Impl\_3D\Entity.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_3D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Library\KabukiSDK-Impl\_3D\Point.cpp">
-      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_3D</Filter>
-    </ClCompile>
     <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Window.cpp">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_App</Filter>
     </ClCompile>
@@ -523,6 +466,66 @@
     </ClCompile>
     <ClCompile Include="..\Library\KabukiSDK-Impl\_G\SwRenderer.cpp">
       <Filter>KabukiSDK-Library\KabukiSDK-Impl\_G</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\BCD.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Bezier.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Binary.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Calc.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Complex.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Equation.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Hex.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\InvalidPathException.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Matrix.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Point2D.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Point3D.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Polar2D.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Poly2D.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Poly3D.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Quad2D.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\QuadBezier.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Rect2D.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Rect2DRotor.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Vect2D.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Angle2D.cpp">
+      <Filter>KabukiSDK-Library\KabukiSDK-Impl\_Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

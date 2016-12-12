@@ -28,7 +28,7 @@
 #include <SFML/Graphics/ConvexShape.hpp>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 ConvexShape::ConvexShape(std::size_t pointCount)
@@ -66,4 +66,4 @@ Vector2f ConvexShape::getPoint(std::size_t index) const
     return m_points[index];
 }
 
-} // namespace sf
+} // namespace _G

@@ -29,7 +29,9 @@ using namespace I2P;
 #include <memory>
 #include <map>
 #include <algorithm>
-using namespace std;
+using std::vector;
+using std::string;
+using std::map;
 
 #ifdef _ExportKabukiSDK
 #define _KabukiSDK __declspec (dllexport) 
@@ -95,9 +97,6 @@ using namespace std;
 // 3. This notice may not be removed or altered from any source distribution.
 //
 ////////////////////////////////////////////////////////////
-
-#ifndef SFML_CONFIG_HPP
-#define SFML_CONFIG_HPP
 
 
 ////////////////////////////////////////////////////////////
@@ -268,39 +267,25 @@ using namespace std;
 
 #endif
 
+/// iOS main fix.
+
+#if defined(SFML_SYSTEM_IOS)
+
+    // On iOS, we have no choice but to have our own main,
+    // so we need to rename the user one and call it later
+    #define main sfmlMain
+
+#endif
 
 ////////////////////////////////////////////////////////////
-// Define portable fixed-size types
+// Define portable import / export macros
 ////////////////////////////////////////////////////////////
-namespace sf
-{
-    // All "common" platforms use the same size for char, short and int
-    // (basically there are 3 types for 3 sizes, so no other match is possible),
-    // we can use them without doing any kind of check
+#if defined(SFML_WINDOW_EXPORTS)
 
-    // 8 bits integer types
-    typedef signed   char Int8;
-    typedef unsigned char Uint8;
+    #define SFML_WINDOW_API SFML_API_EXPORT
 
-    // 16 bits integer types
-    typedef signed   short Int16;
-    typedef unsigned short Uint16;
+#else
 
-    // 32 bits integer types
-    typedef signed   int Int32;
-    typedef unsigned int Uint32;
+    #define SFML_WINDOW_API SFML_API_IMPORT
 
-    // 64 bits integer types
-    #if defined(_MSC_VER)
-        typedef signed   __int64 Int64;
-        typedef unsigned __int64 Uint64;
-    #else
-        typedef signed   long long Int64;
-        typedef unsigned long long Uint64;
-    #endif
-
-} // namespace sf
-
-
-#endif // SFML_CONFIG_HPP
-
+#endif

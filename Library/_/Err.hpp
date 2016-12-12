@@ -28,11 +28,11 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Export.hpp>
+#include <_/Export.hpp>
 #include <ostream>
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 /// \brief Standard stream used by SFML to output warnings and errors
@@ -40,17 +40,17 @@ namespace sf
 ////////////////////////////////////////////////////////////
 SFML_SYSTEM_API std::ostream& err();
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_ERR_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \fn sf::err
+/// \fn _::err
 /// \ingroup system
 ///
-/// By default, sf::err() outputs to the same location as std::cerr,
+/// By default, _::err() outputs to the same location as std::cerr,
 /// (-> the stderr descriptor) which is the console if there's
 /// one available.
 ///
@@ -58,7 +58,7 @@ SFML_SYSTEM_API std::ostream& err();
 /// insertion operations defined by the STL
 /// (operator <<, manipulators, etc.).
 ///
-/// sf::err() can be redirected to write to another output, independently
+/// _::err() can be redirected to write to another output, independently
 /// of std::cerr, by using the rdbuf() function provided by the
 /// std::ostream class.
 ///
@@ -66,15 +66,15 @@ SFML_SYSTEM_API std::ostream& err();
 /// \code
 /// // Redirect to a file
 /// std::ofstream file("sfml-log.txt");
-/// std::streambuf* previous = sf::err().rdbuf(file.rdbuf());
+/// std::streambuf* previous = _::err().rdbuf(file.rdbuf());
 ///
 /// // Redirect to nothing
-/// sf::err().rdbuf(NULL);
+/// _::err().rdbuf(NULL);
 ///
 /// // Restore the original output
-/// sf::err().rdbuf(previous);
+/// _::err().rdbuf(previous);
 /// \endcode
 ///
-/// \return Reference to std::ostream representing the SFML error stream
+/// @return Reference to std::ostream representing the SFML error stream
 ///
 ////////////////////////////////////////////////////////////

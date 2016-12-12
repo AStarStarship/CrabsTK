@@ -35,7 +35,7 @@
 #include <SFML/Graphics/Rect.hpp>
 
 
-namespace sf
+namespace _G
 {
 class Texture;
 
@@ -59,7 +59,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct the sprite from a source texture
     ///
-    /// \param texture Source texture
+    /// @param texture Source texture
     ///
     /// \see setTexture
     ///
@@ -69,8 +69,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct the sprite from a sub-rectangle of a source texture
     ///
-    /// \param texture   Source texture
-    /// \param rectangle Sub-rectangle of the texture to assign to the sprite
+    /// @param texture   Source texture
+    /// @param rectangle Sub-rectangle of the texture to assign to the sprite
     ///
     /// \see setTexture, setTextureRect
     ///
@@ -90,8 +90,8 @@ public:
     /// the sprite is automatically adjusted to the size of the new
     /// texture. If it is false, the texture rect is left unchanged.
     ///
-    /// \param texture   New texture
-    /// \param resetRect Should the texture rect be reset to the size of the new texture?
+    /// @param texture   New texture
+    /// @param resetRect Should the texture rect be reset to the size of the new texture?
     ///
     /// \see getTexture, setTextureRect
     ///
@@ -105,7 +105,7 @@ public:
     /// the whole texture, but rather a part of it.
     /// By default, the texture rect covers the entire texture.
     ///
-    /// \param rectangle Rectangle defining the region of the texture to display
+    /// @param rectangle Rectangle defining the region of the texture to display
     ///
     /// \see getTextureRect, setTexture
     ///
@@ -120,7 +120,7 @@ public:
     /// its global opacity.
     /// By default, the sprite's color is opaque white.
     ///
-    /// \param color New color of the sprite
+    /// @param color New color of the sprite
     ///
     /// \see getColor
     ///
@@ -134,7 +134,7 @@ public:
     /// The returned pointer is const, which means that you can't
     /// modify the texture when you retrieve it with this function.
     ///
-    /// \return Pointer to the sprite's texture
+    /// @return Pointer to the sprite's texture
     ///
     /// \see setTexture
     ///
@@ -144,7 +144,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the sub-rectangle of the texture displayed by the sprite
     ///
-    /// \return Texture rectangle of the sprite
+    /// @return Texture rectangle of the sprite
     ///
     /// \see setTextureRect
     ///
@@ -154,7 +154,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the global color of the sprite
     ///
-    /// \return Global color of the sprite
+    /// @return Global color of the sprite
     ///
     /// \see setColor
     ///
@@ -170,7 +170,7 @@ public:
     /// In other words, this function returns the bounds of the
     /// entity in the entity's coordinate system.
     ///
-    /// \return Local bounding rectangle of the entity
+    /// @return Local bounding rectangle of the entity
     ///
     ////////////////////////////////////////////////////////////
     FloatRect getLocalBounds() const;
@@ -184,7 +184,7 @@ public:
     /// In other words, this function returns the bounds of the
     /// sprite in the global 2D world's coordinate system.
     ///
-    /// \return Global bounding rectangle of the entity
+    /// @return Global bounding rectangle of the entity
     ///
     ////////////////////////////////////////////////////////////
     FloatRect getGlobalBounds() const;
@@ -194,8 +194,8 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Draw the sprite to a render target
     ///
-    /// \param target Render target to draw to
-    /// \param states Current render states
+    /// @param target Render target to draw to
+    /// @param states Current render states
     ///
     ////////////////////////////////////////////////////////////
     virtual void draw(RenderTarget& target, RenderStates states) const;
@@ -220,60 +220,60 @@ private:
     IntRect        m_textureRect; ///< Rectangle defining the area of the source texture to display
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_SPRITE_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Sprite
+/// \class _G::Sprite
 /// \ingroup graphics
 ///
-/// sf::Sprite is a drawable class that allows to easily display
+/// _G::Sprite is a drawable class that allows to easily display
 /// a texture (or a part of it) on a render target.
 ///
-/// It inherits all the functions from sf::Transformable:
+/// It inherits all the functions from _G::Transformable:
 /// position, rotation, scale, origin. It also adds sprite-specific
 /// properties such as the texture to use, the part of it to display,
 /// and some convenience functions to change the overall color of the
 /// sprite, or to get its bounding rectangle.
 ///
-/// sf::Sprite works in combination with the sf::Texture class, which
+/// _G::Sprite works in combination with the _G::Texture class, which
 /// loads and provides the pixel data of a given texture.
 ///
-/// The separation of sf::Sprite and sf::Texture allows more flexibility
-/// and better performances: indeed a sf::Texture is a heavy resource,
+/// The separation of _G::Sprite and _G::Texture allows more flexibility
+/// and better performances: indeed a _G::Texture is a heavy resource,
 /// and any operation on it is slow (often too slow for real-time
-/// applications). On the other side, a sf::Sprite is a lightweight
-/// object which can use the pixel data of a sf::Texture and draw
+/// applications). On the other side, a _G::Sprite is a lightweight
+/// object which can use the pixel data of a _G::Texture and draw
 /// it with its own transformation/color/blending attributes.
 ///
-/// It is important to note that the sf::Sprite instance doesn't
+/// It is important to note that the _G::Sprite instance doesn't
 /// copy the texture that it uses, it only keeps a reference to it.
-/// Thus, a sf::Texture must not be destroyed while it is
-/// used by a sf::Sprite (i.e. never write a function that
-/// uses a local sf::Texture instance for creating a sprite).
+/// Thus, a _G::Texture must not be destroyed while it is
+/// used by a _G::Sprite (i.e. never write a function that
+/// uses a local _G::Texture instance for creating a sprite).
 ///
-/// See also the note on coordinates and undistorted rendering in sf::Transformable.
+/// See also the note on coordinates and undistorted rendering in _G::Transformable.
 ///
 /// Usage example:
 /// \code
 /// // Declare and load a texture
-/// sf::Texture texture;
+/// _G::Texture texture;
 /// texture.loadFromFile("texture.png");
 ///
 /// // Create a sprite
-/// sf::Sprite sprite;
+/// _G::Sprite sprite;
 /// sprite.setTexture(texture);
-/// sprite.setTextureRect(sf::IntRect(10, 10, 50, 30));
-/// sprite.setColor(sf::Color(255, 255, 255, 200));
+/// sprite.setTextureRect(_G::IntRect(10, 10, 50, 30));
+/// sprite.setColor(_G::Color(255, 255, 255, 200));
 /// sprite.setPosition(100, 25);
 ///
 /// // Draw it
 /// window.draw(sprite);
 /// \endcode
 ///
-/// \see sf::Texture, sf::Transformable
+/// \see _G::Texture, _G::Transformable
 ///
 ////////////////////////////////////////////////////////////

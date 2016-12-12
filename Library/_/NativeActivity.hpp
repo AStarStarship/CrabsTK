@@ -29,7 +29,7 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Export.hpp>
+#include <_/Export.hpp>
 
 
 #if !defined(SFML_SYSTEM_ANDROID)
@@ -39,7 +39,7 @@
 
 struct ANativeActivity;
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 /// \ingroup system
@@ -49,14 +49,14 @@ namespace sf
 /// to implement very specific details, that SFML doesn't
 /// support, or to use a workaround for a known issue.
 ///
-/// \return Pointer to Android native activity structure
+/// @return Pointer to Android native activity structure
 ///
-/// \sfplatform{Android,SFML/System/NativeActivity.hpp}
+/// \sfplatform{Android,_/NativeActivity.hpp}
 ///
 ////////////////////////////////////////////////////////////
 SFML_SYSTEM_API ANativeActivity* getNativeActivity();
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_NATIVEACTIVITY_HPP

@@ -29,7 +29,7 @@
 #include <cmath>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 Transformable::Transformable() :
@@ -216,4 +216,4 @@ const Transform& Transformable::getInverseTransform() const
     return m_inverseTransform;
 }
 
-} // namespace sf
+} // namespace _G

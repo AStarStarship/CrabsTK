@@ -32,7 +32,7 @@
 #include <SFML/System/Err.hpp>
 
 
-namespace sf
+namespace _G
 {
 namespace priv
 {
@@ -88,4 +88,4 @@ void RenderTextureImplDefault::updateTexture(unsigned int textureId)
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _G

@@ -28,7 +28,7 @@
 #include <SFML/Graphics/Vertex.hpp>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 Vertex::Vertex() :
@@ -74,4 +74,4 @@ texCoords(theTexCoords)
 {
 }
 
-} // namespace sf
+} // namespace _G

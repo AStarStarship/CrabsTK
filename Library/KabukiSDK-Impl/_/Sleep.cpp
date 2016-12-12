@@ -25,16 +25,16 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Sleep.hpp>
+#include <_/Sleep.hpp>
 
 #if defined(SFML_SYSTEM_WINDOWS)
-    #include <SFML/System/Win32/SleepImpl.hpp>
+    #include <_/Win32/SleepImpl.hpp>
 #else
-    #include <SFML/System/Unix/SleepImpl.hpp>
+    #include <_/Unix/SleepImpl.hpp>
 #endif
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 void sleep(Time duration)
@@ -43,4 +43,4 @@ void sleep(Time duration)
         priv::sleepImpl(duration);
 }
 
-} // namespace sf
+} // namespace _

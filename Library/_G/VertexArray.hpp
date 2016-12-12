@@ -36,7 +36,7 @@
 #include <vector>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 /// \brief Define a set of one or more 2D primitives
@@ -57,8 +57,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct the vertex array with a type and an initial number of vertices
     ///
-    /// \param type        Type of primitives
-    /// \param vertexCount Initial number of vertices in the array
+    /// @param type        Type of primitives
+    /// @param vertexCount Initial number of vertices in the array
     ///
     ////////////////////////////////////////////////////////////
     explicit VertexArray(PrimitiveType type, std::size_t vertexCount = 0);
@@ -66,7 +66,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Return the vertex count
     ///
-    /// \return Number of vertices in the array
+    /// @return Number of vertices in the array
     ///
     ////////////////////////////////////////////////////////////
     std::size_t getVertexCount() const;
@@ -78,9 +78,9 @@ public:
     /// [0, getVertexCount() - 1]. The behavior is undefined
     /// otherwise.
     ///
-    /// \param index Index of the vertex to get
+    /// @param index Index of the vertex to get
     ///
-    /// \return Reference to the index-th vertex
+    /// @return Reference to the index-th vertex
     ///
     /// \see getVertexCount
     ///
@@ -94,9 +94,9 @@ public:
     /// [0, getVertexCount() - 1]. The behavior is undefined
     /// otherwise.
     ///
-    /// \param index Index of the vertex to get
+    /// @param index Index of the vertex to get
     ///
-    /// \return Const reference to the index-th vertex
+    /// @return Const reference to the index-th vertex
     ///
     /// \see getVertexCount
     ///
@@ -123,7 +123,7 @@ public:
     /// If \a vertexCount is less than the current size, existing vertices
     /// are removed from the array.
     ///
-    /// \param vertexCount New size of the array (number of vertices)
+    /// @param vertexCount New size of the array (number of vertices)
     ///
     ////////////////////////////////////////////////////////////
     void resize(std::size_t vertexCount);
@@ -131,7 +131,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Add a vertex to the array
     ///
-    /// \param vertex Vertex to add
+    /// @param vertex Vertex to add
     ///
     ////////////////////////////////////////////////////////////
     void append(const Vertex& vertex);
@@ -145,9 +145,9 @@ public:
     /// \li As lines
     /// \li As triangles
     /// \li As quads
-    /// The default primitive type is sf::Points.
+    /// The default primitive type is _G::Points.
     ///
-    /// \param type Type of primitive
+    /// @param type Type of primitive
     ///
     ////////////////////////////////////////////////////////////
     void setPrimitiveType(PrimitiveType type);
@@ -155,7 +155,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the type of primitives drawn by the vertex array
     ///
-    /// \return Primitive type
+    /// @return Primitive type
     ///
     ////////////////////////////////////////////////////////////
     PrimitiveType getPrimitiveType() const;
@@ -166,7 +166,7 @@ public:
     /// This function returns the minimal axis-aligned rectangle
     /// that contains all the vertices of the array.
     ///
-    /// \return Bounding rectangle of the vertex array
+    /// @return Bounding rectangle of the vertex array
     ///
     ////////////////////////////////////////////////////////////
     FloatRect getBounds() const;
@@ -176,8 +176,8 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Draw the vertex array to a render target
     ///
-    /// \param target Render target to draw to
-    /// \param states Current render states
+    /// @param target Render target to draw to
+    /// @param states Current render states
     ///
     ////////////////////////////////////////////////////////////
     virtual void draw(RenderTarget& target, RenderStates states) const;
@@ -191,33 +191,33 @@ private:
     PrimitiveType       m_primitiveType; ///< Type of primitives to draw
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_VERTEXARRAY_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::VertexArray
+/// \class _G::VertexArray
 /// \ingroup graphics
 ///
-/// sf::VertexArray is a very simple wrapper around a dynamic
+/// _G::VertexArray is a very simple wrapper around a dynamic
 /// array of vertices and a primitives type.
 ///
-/// It inherits sf::Drawable, but unlike other drawables it
+/// It inherits _G::Drawable, but unlike other drawables it
 /// is not transformable.
 ///
 /// Example:
 /// \code
-/// sf::VertexArray lines(sf::LineStrip, 4);
-/// lines[0].position = sf::Vector2f(10, 0);
-/// lines[1].position = sf::Vector2f(20, 0);
-/// lines[2].position = sf::Vector2f(30, 5);
-/// lines[3].position = sf::Vector2f(40, 2);
+/// _G::VertexArray lines(_G::LineStrip, 4);
+/// lines[0].position = _G::Vector2f(10, 0);
+/// lines[1].position = _G::Vector2f(20, 0);
+/// lines[2].position = _G::Vector2f(30, 5);
+/// lines[3].position = _G::Vector2f(40, 2);
 ///
 /// window.draw(lines);
 /// \endcode
 ///
-/// \see sf::Vertex
+/// \see _G::Vertex
 ///
 ////////////////////////////////////////////////////////////

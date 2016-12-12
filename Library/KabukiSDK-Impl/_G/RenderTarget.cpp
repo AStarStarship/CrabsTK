@@ -37,47 +37,47 @@
 
 namespace
 {
-    // Convert an sf::BlendMode::Factor constant to the corresponding OpenGL constant.
-    sf::Uint32 factorToGlConstant(sf::BlendMode::Factor blendFactor)
+    // Convert an _G::BlendMode::Factor constant to the corresponding OpenGL constant.
+    _G::Uint32 factorToGlConstant(_G::BlendMode::Factor blendFactor)
     {
         switch (blendFactor)
         {
-            case sf::BlendMode::Zero:             return GL_ZERO;
-            case sf::BlendMode::One:              return GL_ONE;
-            case sf::BlendMode::SrcColor:         return GL_SRC_COLOR;
-            case sf::BlendMode::OneMinusSrcColor: return GL_ONE_MINUS_SRC_COLOR;
-            case sf::BlendMode::DstColor:         return GL_DST_COLOR;
-            case sf::BlendMode::OneMinusDstColor: return GL_ONE_MINUS_DST_COLOR;
-            case sf::BlendMode::SrcAlpha:         return GL_SRC_ALPHA;
-            case sf::BlendMode::OneMinusSrcAlpha: return GL_ONE_MINUS_SRC_ALPHA;
-            case sf::BlendMode::DstAlpha:         return GL_DST_ALPHA;
-            case sf::BlendMode::OneMinusDstAlpha: return GL_ONE_MINUS_DST_ALPHA;
+            case _G::BlendMode::Zero:             return GL_ZERO;
+            case _G::BlendMode::One:              return GL_ONE;
+            case _G::BlendMode::SrcColor:         return GL_SRC_COLOR;
+            case _G::BlendMode::OneMinusSrcColor: return GL_ONE_MINUS_SRC_COLOR;
+            case _G::BlendMode::DstColor:         return GL_DST_COLOR;
+            case _G::BlendMode::OneMinusDstColor: return GL_ONE_MINUS_DST_COLOR;
+            case _G::BlendMode::SrcAlpha:         return GL_SRC_ALPHA;
+            case _G::BlendMode::OneMinusSrcAlpha: return GL_ONE_MINUS_SRC_ALPHA;
+            case _G::BlendMode::DstAlpha:         return GL_DST_ALPHA;
+            case _G::BlendMode::OneMinusDstAlpha: return GL_ONE_MINUS_DST_ALPHA;
         }
 
-        sf::err() << "Invalid value for sf::BlendMode::Factor! Fallback to sf::BlendMode::Zero." << std::endl;
+        _G::err() << "Invalid value for _G::BlendMode::Factor! Fallback to _G::BlendMode::Zero." << std::endl;
         assert(false);
         return GL_ZERO;
     }
 
 
-    // Convert an sf::BlendMode::BlendEquation constant to the corresponding OpenGL constant.
-    sf::Uint32 equationToGlConstant(sf::BlendMode::Equation blendEquation)
+    // Convert an _G::BlendMode::BlendEquation constant to the corresponding OpenGL constant.
+    _G::Uint32 equationToGlConstant(_G::BlendMode::Equation blendEquation)
     {
         switch (blendEquation)
         {
-            case sf::BlendMode::Add:             return GLEXT_GL_FUNC_ADD;
-            case sf::BlendMode::Subtract:        return GLEXT_GL_FUNC_SUBTRACT;
-            case sf::BlendMode::ReverseSubtract: return GLEXT_GL_FUNC_REVERSE_SUBTRACT;
+            case _G::BlendMode::Add:             return GLEXT_GL_FUNC_ADD;
+            case _G::BlendMode::Subtract:        return GLEXT_GL_FUNC_SUBTRACT;
+            case _G::BlendMode::ReverseSubtract: return GLEXT_GL_FUNC_REVERSE_SUBTRACT;
         }
 
-        sf::err() << "Invalid value for sf::BlendMode::Equation! Fallback to sf::BlendMode::Add." << std::endl;
+        _G::err() << "Invalid value for _G::BlendMode::Equation! Fallback to _G::BlendMode::Add." << std::endl;
         assert(false);
         return GLEXT_GL_FUNC_ADD;
     }
 }
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 RenderTarget::RenderTarget() :
@@ -208,7 +208,7 @@ void RenderTarget::draw(const Vertex* vertices, std::size_t vertexCount,
     #ifdef SFML_OPENGL_ES
         if (type == Quads)
         {
-            err() << "sf::Quads primitive type is not supported on OpenGL ES platforms, drawing skipped" << std::endl;
+            err() << "_G::Quads primitive type is not supported on OpenGL ES platforms, drawing skipped" << std::endl;
             return;
         }
         #define GL_QUADS 0
@@ -501,7 +501,7 @@ void RenderTarget::applyShader(const Shader* shader)
     Shader::bind(shader);
 }
 
-} // namespace sf
+} // namespace _G
 
 
 ////////////////////////////////////////////////////////////
@@ -527,7 +527,7 @@ void RenderTarget::applyShader(const Shader* shader)
 //
 // * Texture
 //   Storing the pointer or OpenGL ID of the last used texture
-//   is not enough; if the sf::Texture instance is destroyed,
+//   is not enough; if the _G::Texture instance is destroyed,
 //   both the pointer and the OpenGL ID might be recycled in
 //   a new texture instance. We need to use our own unique
 //   identifier system to ensure consistent caching.

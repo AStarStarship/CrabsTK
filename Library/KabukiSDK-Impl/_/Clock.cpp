@@ -25,16 +25,16 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Clock.hpp>
+#include <_/Clock.hpp>
 
 #if defined(SFML_SYSTEM_WINDOWS)
-    #include <SFML/System/Win32/ClockImpl.hpp>
+    #include <_/Win32/ClockImpl.hpp>
 #else
-    #include <SFML/System/Unix/ClockImpl.hpp>
+    #include <_/Unix/ClockImpl.hpp>
 #endif
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 Clock::Clock() :
@@ -60,4 +60,4 @@ Time Clock::restart()
     return elapsed;
 }
 
-} // namespace sf
+} // namespace _

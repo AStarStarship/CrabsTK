@@ -28,9 +28,9 @@
 #include <SFML/Graphics/GLLoader.hpp>
 #include <SFML/Window/Context.hpp>
 
-static sf::GlFunctionPointer glLoaderGetProcAddress(const char* name)
+static _G::GlFunctionPointer glLoaderGetProcAddress(const char* name)
 {
-    return sf::Context::getFunction(name);
+    return _G::Context::getFunction(name);
 }
 
 int sfogl_ext_SGIS_texture_edge_clamp = sfogl_LOAD_FAILED;
@@ -896,7 +896,7 @@ void sfogl_LoadFunctions()
 
     for (int i = 0; i < g_extensionMapSize; ++i)
     {
-        if (sf::Context::isExtensionAvailable(ExtensionMap[i].extensionName))
+        if (_G::Context::isExtensionAvailable(ExtensionMap[i].extensionName))
             LoadExtension(ExtensionMap[i]);
     }
 }

@@ -34,7 +34,7 @@
 #include <vector>
 
 
-namespace sf
+namespace _G
 {
 class InputStream;
 
@@ -51,7 +51,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the unique instance of the class
     ///
-    /// \return Reference to the ImageLoader instance
+    /// @return Reference to the ImageLoader instance
     ///
     ////////////////////////////////////////////////////////////
     static ImageLoader& getInstance();
@@ -59,11 +59,11 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Load an image from a file on disk
     ///
-    /// \param filename Path of image file to load
-    /// \param pixels   Array of pixels to fill with loaded image
-    /// \param size     Size of loaded image, in pixels
+    /// @param filename Path of image file to load
+    /// @param pixels   Array of pixels to fill with loaded image
+    /// @param size     Size of loaded image, in pixels
     ///
-    /// \return True if loading was successful
+    /// @return True if loading was successful
     ///
     ////////////////////////////////////////////////////////////
     bool loadImageFromFile(const std::string& filename, std::vector<Uint8>& pixels, Vector2u& size);
@@ -71,12 +71,12 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Load an image from a file in memory
     ///
-    /// \param data     Pointer to the file data in memory
-    /// \param dataSize Size of the data to load, in bytes
-    /// \param pixels   Array of pixels to fill with loaded image
-    /// \param size     Size of loaded image, in pixels
+    /// @param data     Pointer to the file data in memory
+    /// @param dataSize Size of the data to load, in bytes
+    /// @param pixels   Array of pixels to fill with loaded image
+    /// @param size     Size of loaded image, in pixels
     ///
-    /// \return True if loading was successful
+    /// @return True if loading was successful
     ///
     ////////////////////////////////////////////////////////////
     bool loadImageFromMemory(const void* data, std::size_t dataSize, std::vector<Uint8>& pixels, Vector2u& size);
@@ -84,11 +84,11 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Load an image from a custom stream
     ///
-    /// \param stream Source stream to read from
-    /// \param pixels Array of pixels to fill with loaded image
-    /// \param size   Size of loaded image, in pixels
+    /// @param stream Source stream to read from
+    /// @param pixels Array of pixels to fill with loaded image
+    /// @param size   Size of loaded image, in pixels
     ///
-    /// \return True if loading was successful
+    /// @return True if loading was successful
     ///
     ////////////////////////////////////////////////////////////
     bool loadImageFromStream(InputStream& stream, std::vector<Uint8>& pixels, Vector2u& size);
@@ -96,11 +96,11 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Save an array of pixels as an image file
     ///
-    /// \param filename Path of image file to save
-    /// \param pixels   Array of pixels to save to image
-    /// \param size     Size of image to save, in pixels
+    /// @param filename Path of image file to save
+    /// @param pixels   Array of pixels to save to image
+    /// @param size     Size of image to save, in pixels
     ///
-    /// \return True if saving was successful
+    /// @return True if saving was successful
     ///
     ////////////////////////////////////////////////////////////
     bool saveImageToFile(const std::string& filename, const std::vector<Uint8>& pixels, const Vector2u& size);
@@ -122,12 +122,12 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Save an image file in JPEG format
     ///
-    /// \param filename Path of image file to save
-    /// \param pixels   Array of pixels to save to image
-    /// \param width    Width of image to save, in pixels
-    /// \param height   Height of image to save, in pixels
+    /// @param filename Path of image file to save
+    /// @param pixels   Array of pixels to save to image
+    /// @param width    Width of image to save, in pixels
+    /// @param height   Height of image to save, in pixels
     ///
-    /// \return True if saving was successful
+    /// @return True if saving was successful
     ///
     ////////////////////////////////////////////////////////////
     bool writeJpg(const std::string& filename, const std::vector<Uint8>& pixels, unsigned int width, unsigned int height);
@@ -135,7 +135,7 @@ private:
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_IMAGELOADER_HPP

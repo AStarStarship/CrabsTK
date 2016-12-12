@@ -31,7 +31,7 @@
 #include <SFML/System/Err.hpp>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 RenderTexture::RenderTexture() :
@@ -156,4 +156,4 @@ const Texture& RenderTexture::getTexture() const
     return m_texture;
 }
 
-} // namespace sf
+} // namespace _G

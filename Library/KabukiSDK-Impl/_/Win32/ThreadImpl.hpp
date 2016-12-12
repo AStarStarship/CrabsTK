@@ -28,7 +28,7 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/NonCopyable.hpp>
+#include <_/NonCopyable.hpp>
 #include <windows.h>
 
 // Fix for unaligned stack with clang and GCC on Windows XP 32-bit
@@ -43,7 +43,7 @@
 #endif
 
 
-namespace sf
+namespace _
 {
 class Thread;
 
@@ -59,7 +59,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor, launch the thread
     ///
-    /// \param owner The Thread instance to run
+    /// @param owner The Thread instance to run
     ///
     ////////////////////////////////////////////////////////////
     ThreadImpl(Thread* owner);
@@ -87,9 +87,9 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Global entry point for all threads
     ///
-    /// \param userData User-defined data (contains the Thread instance)
+    /// @param userData User-defined data (contains the Thread instance)
     ///
-    /// \return OS specific error code
+    /// @return OS specific error code
     ///
     ////////////////////////////////////////////////////////////
     ALIGN_STACK static unsigned int __stdcall entryPoint(void* userData);
@@ -103,7 +103,7 @@ private:
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_THREADIMPL_HPP

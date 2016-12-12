@@ -24,7 +24,7 @@
 
 
 ////////////////////////////////////////////////////////////
-/// \brief Helper functions to copy sf::Transform to sf::Glsl::Mat3/4
+/// \brief Helper functions to copy _G::Transform to _G::Glsl::Mat3/4
 ///
 ////////////////////////////////////////////////////////////
 void SFML_GRAPHICS_API copyMatrix(const Transform& source, Matrix<3, 3>& dest);
@@ -40,7 +40,7 @@ void SFML_GRAPHICS_API copyMatrix(const Transform& source, Matrix<4, 4>& dest);
 void SFML_GRAPHICS_API copyMatrix(const float* source, std::size_t elements, float* dest);
 
 ////////////////////////////////////////////////////////////
-/// \brief Helper functions to copy sf::Color to sf::Glsl::Vec4/Ivec4
+/// \brief Helper functions to copy _G::Color to _G::Glsl::Vec4/Ivec4
 ///
 ////////////////////////////////////////////////////////////
 void SFML_GRAPHICS_API copyVector(const Color& source, Vector4<float>& dest);
@@ -57,7 +57,7 @@ struct Matrix
     ////////////////////////////////////////////////////////////
     /// \brief Construct from raw data
     ///
-    /// \param pointer Points to the beginning of an array that
+    /// @param pointer Points to the beginning of an array that
     ///                has the size of the matrix. The elements
     ///                are copied to the instance.
     ///
@@ -73,7 +73,7 @@ struct Matrix
     /// This constructor is only supported for 3x3 and 4x4
     /// matrices.
     ///
-    /// \param transform Object containing a transform.
+    /// @param transform Object containing a transform.
     ///
     ////////////////////////////////////////////////////////////
     Matrix(const Transform& transform)
@@ -106,10 +106,10 @@ struct Vector4
     ////////////////////////////////////////////////////////////
     /// \brief Construct from 4 vector components
     ///
-    /// \param X Component of the 4D vector
-    /// \param Y Component of the 4D vector
-    /// \param Z Component of the 4D vector
-    /// \param W Component of the 4D vector
+    /// @param X Component of the 4D vector
+    /// @param Y Component of the 4D vector
+    /// @param Z Component of the 4D vector
+    /// @param W Component of the 4D vector
     ///
     ////////////////////////////////////////////////////////////
     Vector4(T X, T Y, T Z, T W) :
@@ -123,7 +123,7 @@ struct Vector4
     ////////////////////////////////////////////////////////////
     /// \brief Conversion constructor
     ///
-    /// \param other 4D vector of different type
+    /// @param other 4D vector of different type
     ///
     ////////////////////////////////////////////////////////////
     template <typename U>
@@ -138,7 +138,7 @@ struct Vector4
     ////////////////////////////////////////////////////////////
     /// \brief Construct float vector implicitly from color
     ///
-    /// \param color Color instance. Is normalized to [0, 1]
+    /// @param color Color instance. Is normalized to [0, 1]
     ///              for floats, and left as-is for ints.
     ///
     ////////////////////////////////////////////////////////////

@@ -35,7 +35,7 @@
 #include <string>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 /// \brief Window that can serve as a target for 2D drawing
@@ -67,10 +67,10 @@ public:
     /// depth-buffer bits, etc. You shouldn't care about these
     /// parameters for a regular usage of the graphics module.
     ///
-    /// \param mode     Video mode to use (defines the width, height and depth of the rendering area of the window)
-    /// \param title    Title of the window
-    /// \param style    %Window style, a bitwise OR combination of sf::Style enumerators
-    /// \param settings Additional settings for the underlying OpenGL context
+    /// @param mode     Video mode to use (defines the width, height and depth of the rendering area of the window)
+    /// @param title    Title of the window
+    /// @param style    %Window style, a bitwise OR combination of _G::Style enumerators
+    /// @param settings Additional settings for the underlying OpenGL context
     ///
     ////////////////////////////////////////////////////////////
     RenderWindow(VideoMode mode, const String& title, Uint32 style = Style::Default, const ContextSettings& settings = ContextSettings());
@@ -86,9 +86,9 @@ public:
     /// depth-buffer bits, etc. You shouldn't care about these
     /// parameters for a regular usage of the graphics module.
     ///
-    /// \param handle   Platform-specific handle of the control (\a HWND on
+    /// @param handle   Platform-specific handle of the control (\a HWND on
     ///                 Windows, \a %Window on Linux/FreeBSD, \a NSWindow on OS X)
-    /// \param settings Additional settings for the underlying OpenGL context
+    /// @param settings Additional settings for the underlying OpenGL context
     ///
     ////////////////////////////////////////////////////////////
     explicit RenderWindow(WindowHandle handle, const ContextSettings& settings = ContextSettings());
@@ -107,7 +107,7 @@ public:
     /// The size doesn't include the titlebar and borders
     /// of the window.
     ///
-    /// \return Size in pixels
+    /// @return Size in pixels
     ///
     ////////////////////////////////////////////////////////////
     virtual Vector2u getSize() const;
@@ -123,9 +123,9 @@ public:
     /// the window previously active (if any) automatically gets deactivated.
     /// This is not to be confused with requestFocus().
     ///
-    /// \param active True to activate, false to deactivate
+    /// @param active True to activate, false to deactivate
     ///
-    /// \return True if operation was successful, false otherwise
+    /// @return True if operation was successful, false otherwise
     ///
     ////////////////////////////////////////////////////////////
     bool setActive(bool active = true);
@@ -134,25 +134,25 @@ public:
     /// \brief Copy the current contents of the window to an image
     ///
     /// \deprecated
-    /// Use a sf::Texture and its sf::Texture::update(const Window&)
-    /// function and copy its contents into an sf::Image instead.
+    /// Use a _G::Texture and its _G::Texture::update(const Window&)
+    /// function and copy its contents into an _G::Image instead.
     /// \code
-    /// sf::Vector2u windowSize = window.getSize();
-    /// sf::Texture texture;
+    /// _G::Vector2u windowSize = window.getSize();
+    /// _G::Texture texture;
     /// texture.create(windowSize.x, windowSize.y);
     /// texture.update(window);
-    /// sf::Image screenshot = texture.copyToImage();
+    /// _G::Image screenshot = texture.copyToImage();
     /// \endcode
     ///
     /// This is a slow operation, whose main purpose is to make
     /// screenshots of the application. If you want to update an
     /// image with the contents of the window and then use it for
-    /// drawing, you should rather use a sf::Texture and its
+    /// drawing, you should rather use a _G::Texture and its
     /// update(Window&) function.
     /// You can also draw things directly to a texture with the
-    /// sf::RenderTexture class.
+    /// _G::RenderTexture class.
     ///
-    /// \return Image containing the captured contents
+    /// @return Image containing the captured contents
     ///
     ////////////////////////////////////////////////////////////
     SFML_DEPRECATED Image capture() const;
@@ -179,33 +179,33 @@ protected:
     virtual void onResize();
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_RENDERWINDOW_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::RenderWindow
+/// \class _G::RenderWindow
 /// \ingroup graphics
 ///
-/// sf::RenderWindow is the main class of the Graphics module.
+/// _G::RenderWindow is the main class of the Graphics module.
 /// It defines an OS window that can be painted using the other
 /// classes of the graphics module.
 ///
-/// sf::RenderWindow is derived from sf::Window, thus it inherits
+/// _G::RenderWindow is derived from _G::Window, thus it inherits
 /// all its features: events, window management, OpenGL rendering,
-/// etc. See the documentation of sf::Window for a more complete
+/// etc. See the documentation of _G::Window for a more complete
 /// description of all these features, as well as code examples.
 ///
-/// On top of that, sf::RenderWindow adds more features related to
+/// On top of that, _G::RenderWindow adds more features related to
 /// 2D drawing with the graphics module (see its base class
-/// sf::RenderTarget for more details).
-/// Here is a typical rendering and event loop with a sf::RenderWindow:
+/// _G::RenderTarget for more details).
+/// Here is a typical rendering and event loop with a _G::RenderWindow:
 ///
 /// \code
 /// // Declare and create a new render-window
-/// sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
+/// _G::RenderWindow window(_G::VideoMode(800, 600), "SFML window");
 ///
 /// // Limit the framerate to 60 frames per second (this step is optional)
 /// window.setFramerateLimit(60);
@@ -214,11 +214,11 @@ protected:
 /// while (window.isOpen())
 /// {
 ///    // Event processing
-///    sf::Event event;
+///    _G::Event event;
 ///    while (window.pollEvent(event))
 ///    {
 ///        // Request for closing the window
-///        if (event.type == sf::Event::Closed)
+///        if (event.type == _G::Event::Closed)
 ///            window.close();
 ///    }
 ///
@@ -235,17 +235,17 @@ protected:
 /// }
 /// \endcode
 ///
-/// Like sf::Window, sf::RenderWindow is still able to render direct
+/// Like _G::Window, _G::RenderWindow is still able to render direct
 /// OpenGL stuff. It is even possible to mix together OpenGL calls
 /// and regular SFML drawing commands.
 ///
 /// \code
 /// // Create the render window
-/// sf::RenderWindow window(sf::VideoMode(800, 600), "SFML OpenGL");
+/// _G::RenderWindow window(_G::VideoMode(800, 600), "SFML OpenGL");
 ///
 /// // Create a sprite and a text to display
-/// sf::Sprite sprite;
-/// sf::Text text;
+/// _G::Sprite sprite;
+/// _G::Text text;
 /// ...
 ///
 /// // Perform OpenGL initializations
@@ -279,6 +279,6 @@ protected:
 /// }
 /// \endcode
 ///
-/// \see sf::Window, sf::RenderTarget, sf::RenderTexture, sf::View
+/// \see _G::Window, _G::RenderTarget, _G::RenderTexture, _G::View
 ///
 ////////////////////////////////////////////////////////////

@@ -28,25 +28,25 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Export.hpp>
-#include <SFML/System/Time.hpp>
+#include <_/Export.hpp>
+#include <_/Time.hpp>
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 /// \ingroup system
 /// \brief Make the current thread sleep for a given duration
 ///
-/// sf::sleep is the best way to block a program or one of its
+/// _::sleep is the best way to block a program or one of its
 /// threads, as it doesn't consume any CPU power.
 ///
-/// \param duration Time to sleep
+/// @param duration Time to sleep
 ///
 ////////////////////////////////////////////////////////////
 void SFML_SYSTEM_API sleep(Time duration);
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_SLEEP_HPP

@@ -32,7 +32,7 @@
 #include <SFML/Graphics/RenderStates.hpp>
 
 
-namespace sf
+namespace _G
 {
 class RenderTarget;
 
@@ -62,37 +62,37 @@ protected:
     /// by the derived class to define how the drawable should be
     /// drawn.
     ///
-    /// \param target Render target to draw to
-    /// \param states Current render states
+    /// @param target Render target to draw to
+    /// @param states Current render states
     ///
     ////////////////////////////////////////////////////////////
     virtual void draw(RenderTarget& target, RenderStates states) const = 0;
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_DRAWABLE_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Drawable
+/// \class _G::Drawable
 /// \ingroup graphics
 ///
-/// sf::Drawable is a very simple base class that allows objects
-/// of derived classes to be drawn to a sf::RenderTarget.
+/// _G::Drawable is a very simple base class that allows objects
+/// of derived classes to be drawn to a _G::RenderTarget.
 ///
 /// All you have to do in your derived class is to override the
 /// draw virtual function.
 ///
-/// Note that inheriting from sf::Drawable is not mandatory,
+/// Note that inheriting from _G::Drawable is not mandatory,
 /// but it allows this nice syntax "window.draw(object)" rather
 /// than "object.draw(window)", which is more consistent with other
 /// SFML classes.
 ///
 /// Example:
 /// \code
-/// class MyDrawable : public sf::Drawable
+/// class MyDrawable : public _G::Drawable
 /// {
 /// public:
 ///
@@ -100,7 +100,7 @@ protected:
 ///
 /// private:
 ///
-///     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
+///     virtual void draw(_G::RenderTarget& target, _G::RenderStates states) const
 ///     {
 ///         // You can draw other high-level objects
 ///         target.draw(m_sprite, states);
@@ -115,12 +115,12 @@ protected:
 ///         glEnd();
 ///     }
 ///
-///     sf::Sprite m_sprite;
-///     sf::Texture m_texture;
-///     sf::VertexArray m_vertices;
+///     _G::Sprite m_sprite;
+///     _G::Texture m_texture;
+///     _G::VertexArray m_vertices;
 /// };
 /// \endcode
 ///
-/// \see sf::RenderTarget
+/// \see _G::RenderTarget
 ///
 ////////////////////////////////////////////////////////////

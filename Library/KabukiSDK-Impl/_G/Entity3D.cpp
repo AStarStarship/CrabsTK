@@ -1,25 +1,25 @@
 /** Underscore
-    @file       /.../Underscore.Library/_G3D/Entity.cs
+    @file       /.../Underscore.Library/_G/Entity3D.cpp
     @author     Cale McCollough
     @copyright  Copyright 2016 Blue Storm Engineering ©
     @license    http://www.apache.org/licenses/LICENSE-2.0
-    @brief      This file contains the _2D::Vector_f interface.
+    @brief      This file contains the _G::Vector_f interface.
 */
 
-#include <_2D/Entity.hpp>
+#include <_G/Entity3D.hpp>
 
-namespace _2D {
+namespace _G {
 
-Entity_f::Entity_f (SoftwareEngine theEngine, _3D::pos_f initPosition, string fileName)
+Entity_f::Entity_f (SoftwareEngine theEngine, Point3D_f initPosition, std::string filename)
 {
     engine = theEngine;
-    _2D::Point_f = initPosition;
-    if (loadPLG (fileName))
+    Point2D_f = initPosition;
+    if (loadPLG (filename))
     {
         isVisible  = true;
         for (int i = 0; i < numVerticies; i++)
         {
-            cameraVertex[i] = worldVertex[i] = new _3D::pos_f ();
+            cameraVertex[i] = worldVertex[i] = new Point3D_f ();
             cameraVertex[i].x = localVertex[i].x + pos.x;
             cameraVertex[i].y = localVertex[i].y + pos.y;
             cameraVertex[i].z = localVertex[i].z + pos.z;
@@ -27,9 +27,8 @@ Entity_f::Entity_f (SoftwareEngine theEngine, _3D::pos_f initPosition, string fi
     }
 }  
 
-/**  */
-Entity_f::Entity_f (SoftwareEngine theEngine, _3D::pos_f initPosition, string EntityName, _3D::pos[] verticies, 
-    Polygon[] polygons)
+Entity_f::Entity_f (SoftwareEngine theEngine, Point3D_f initPosition, std::string EntityName, Point3D_f* verticies, 
+    Polygon* polygons)
 {
     engine = theEngine;
     pos = initPosition;
@@ -41,11 +40,11 @@ Entity_f::Entity_f (SoftwareEngine theEngine, _3D::pos_f initPosition, string En
         isVisible = true;
 
     numVerticies = localVertex.Length;        
-    worldVertex  = new _3D::pos[numVerticies];
-    cameraVertex = new _3D::pos[numVerticies];
+    worldVertex  = new Point3D_f[numVerticies];
+    cameraVertex = new Point3D_f[numVerticies];
     for (int i = 0; i<numVerticies; i++)
     {
-        cameraVertex[i] = worldVertex[i] = new _3D::pos_f ();
+        cameraVertex[i] = worldVertex[i] = new Point3D_f ();
         cameraVertex[i].x = localVertex[i].x + pos ().x;
         cameraVertex[i].y = localVertex[i].y + pos ().y;
         cameraVertex[i].z = localVertex[i].z + pos ().z;
@@ -62,18 +61,18 @@ void setState (int value)
     state = value;
 }
 
-string& getName ()
+std::string& getName ()
 
-_2D::Point_f localVertex (int thisVertex)
+Point2D_f localVertex (int thisVertex)
 {  return localVertex[thisVertex];
 }
 
-_2D::Point_f worldVertex (int thisVertex)
+Point2D_f worldVertex (int thisVertex)
 {
     return worldVertex[thisVertex];
 }
 
-_2D::Point_f cameraVertex (int thisVertex)
+Point2D_f cameraVertex (int thisVertex)
 {
     return cameraVertex[thisVertex];
 }
@@ -85,16 +84,16 @@ Polygon& Entity_f::getGolygon (int index)
     return polygons[index];
 }
 
-void Entity_f::draw (ImageObserver enginesIO, Cell& C)
+void Entity_f::draw (Canas& c)
 {
-    drawWireFrame (page);
+    drawWireFrame (c);
 }
 
-void Entity_f::drawWireFrame (Cell& C)
+void Entity_f::drawWireFrame (Canas& c)
 {
-    _3D::pos[] convertedpos = new _3D::pos[numVerticies];
+    Point3D_f[] convertedpos = new Point3D_f[numVerticies];
     for (int i = 0; i< numVerticies; i++)
-        convertedpos[i] = new _3D::pos_f (engine.halfScreenWidth () + cameraVertex[i].x * 
+        convertedpos[i] = new Point3D_f (engine.halfScreenWidth () + cameraVertex[i].x * 
             engine.viewingDistance ()/cameraVertex[i].z, engine.halfScreenHeight () - engine.aspectRatio () *
             cameraVertex[i].y * engine.viewingDistance () / cameraVertex[i].z,0);
     for (int currPoly = 0; currPoly<numPolygons-1; currPoly++)
@@ -102,12 +101,12 @@ void Entity_f::drawWireFrame (Cell& C)
         if (polygon[currPoly].isActive ()||polygon[currPoly].isClipped ())
         {
             for (int currVertex = 0; currVertex<polygon[currPoly].numVerticies ()-1; currVertex++)
-                engine.drawLine (page, polygon[currPoly].colour (),
+                engine.drawLine (c, polygon[currPoly].getColor (),
                     convertedpos[polygon[currPoly].vertexIndex (currVertex )].x,
                     convertedpos[polygon[currPoly].vertexIndex (currVertex )].y,
                     convertedpos[polygon[currPoly].vertexIndex (currVertex+1)].x,
                     convertedpos[polygon[currPoly].vertexIndex (currVertex+1)].y);
-            engine.drawLine (page, polygon[currPoly].colour (),
+            engine.drawLine (c, polygon[currPoly].getColor (),
                                  convertedpos[polygon[currPoly].vertexIndex (0)].x,
                                  convertedpos[polygon[currPoly].vertexIndex (0)].y,
                                  convertedpos[polygon[currPoly].vertexIndex (polygon[currPoly].numVerticies ()-1)].x,
@@ -117,16 +116,16 @@ void Entity_f::drawWireFrame (Cell& C)
     }
 }
 
-void Entity_f::renderEntitySolid (Cell& C)
+void Entity_f::renderEntitySolid (Canas& c)
 {
     bool polygonIsQuad = false;
     int vertexA, vertexB, vertexC, vertexD;
     float z1, z2, z3, z4;
-    _2D::Point_f one, two, three, four;
-    _2D::Point_f convertedpos[numVerticies];
+    Point2D_f one, two, three, four;
+    Point2D_f convertedpos[numVerticies];
     for (int i = 0; i<numVerticies; ++i)
     {
-        convertedpos[i] = new _2D::Point_f ((engine.halfScreenWidth () + cameraVertex[i].x*engine.viewingDistance () /cameraVertex[i].z), 
+        convertedpos[i] = new Point2D_f ((engine.halfScreenWidth () + cameraVertex[i].x*engine.viewingDistance () /cameraVertex[i].z), 
         (engine.halfScreenHeight () - engine.aspectRatio ()*cameraVertex[i].y*engine.viewingDistance ()/cameraVertex[i].z));
     }
     for (int currPoly = 0; currPoly<numPolygons; ++currPoly)
@@ -140,7 +139,8 @@ void Entity_f::renderEntitySolid (Cell& C)
             z2 = cameraVertex[vertexB].z;
             z3 = cameraVertex[vertexC].z;
             if (polygon[currPoly].numVerticies () =  = 4)
-            {  vertexD = polygon[currPoly].vertexIndex (3);
+            {
+                vertexD = polygon[currPoly].vertexIndex (3);
                 z4 = cameraVertex[vertexD].z;
                 polygonIsQuad = true;
             }
@@ -157,7 +157,8 @@ void Entity_f::renderEntitySolid (Cell& C)
                      && z3<engine.clipFarZ ()  && z4<engine.clipFarZ ()
                    )
                )
-            {  engine.DrawTriangle (page, polygon[currPoly].getShade (), convertedpos[vertexA],convertedpos[vertexB],convertedpos[vertexC]);
+            {
+                engine.DrawTriangle (page, polygon[currPoly].getShade (), convertedpos[vertexA],convertedpos[vertexB],convertedpos[vertexC]);
                 if (polygonIsQuad)
                     engine.DrawTriangle (page, polygon[currPoly].getShade (), convertedpos[vertexA],convertedpos[vertexC],convertedpos[vertexD]);
             }
@@ -165,53 +166,55 @@ void Entity_f::renderEntitySolid (Cell& C)
     }
 }
 
-_2D::Point_f Entity_f::get2DPosition ()
+Point2D_f Entity_f::get2DPosition ()
 {  
     return pos;
 }
 
-void Entity_f::setPosition (_3D::pos_f newPosition)
+void Entity_f::setPosition (Point3D_f newPosition)
 {
     pos = newPosition;
 }    
 
 void Entity_f::translatePosition (float xIncrease, float yIncrease, float zIncrease)
 {
-    pos.x+ = xIncrease;
-    pos.y+ = yIncrease;
-    pos.z+ = zIncrease;
+    pos.x += xIncrease;
+    pos.y += yIncrease;
+    pos.z += zIncrease;
     for (int i = 0; i < numVerticies; i++)
-    {  cameraVertex[i].x+ = xIncrease;
-        cameraVertex[i].y+ = yIncrease;
-        cameraVertex[i].z+ = zIncrease;
+    {
+        cameraVertex[i].x += xIncrease;
+        cameraVertex[i].y += yIncrease;
+        cameraVertex[i].z += zIncrease;
     }
 }
 
 void Entity_f::translateX (float xIncrease)
 {
-    pos.x+ = xIncrease;
+    pos.x += xIncrease;
     for (int i = 0; i<numVerticies; i++)
-        cameraVertex[i].x+ = xIncrease;
+        cameraVertex[i].x += xIncrease;
 }
 
 void Entity_f::translateY (float yIncrease)
 {
-    pos.y+ = yIncrease;
+    pos.y += yIncrease;
     for (int i = 0; i<numVerticies; i++)
-        cameraVertex[i].y+ = yIncrease;
+        cameraVertex[i].y += yIncrease;
 }
 
 void Entity_f::translateZ (float zIncrease)
 {
-    pos.z+ = zIncrease;
+    pos.z += zIncrease;
     for (int i = 0; i<numVerticies; i++)
-        cameraVertex[i].z+ = zIncrease;
+        cameraVertex[i].z += zIncrease;
 }
 
 void Entity_f::translateLocalToWorld ()
 {
-    for (int i = 0; i<numVerticies; i++)
-    {  worldVertex[i].x = localVertex[i].x + pos.x;
+    for (int i = 0; i < numVerticies; i++)
+    {
+        worldVertex[i].x = localVertex[i].x + pos.x;
         worldVertex[i].y = localVertex[i].y + pos.y;
         worldVertex[i].z = localVertex[i].z + pos.z;         
     }
@@ -224,7 +227,8 @@ void Entity_f::translateLocalToWorld ()
 void Entity_f::translateWorldToCamera (float[][] globalView)
 {
     for (int i = 0; i<numVerticies; i++)
-    {  cameraVertex[i].x = worldVertex[i].x * globalView[0][0]+
+    {
+        cameraVertex[i].x = worldVertex[i].x * globalView[0][0]+
                                      worldVertex[i].y * globalView[1][0]+
                                      worldVertex[i].z * globalView[2][0]+
                                                                  globalView[3][0];
@@ -239,13 +243,13 @@ void Entity_f::translateWorldToCamera (float[][] globalView)
     }
 }
 
-void Entity_f::removeBackFacesAndShade (_3D::pos_f view_3D.pos, pos lightSource)
+void Entity_f::removeBackFacesAndShade (Point3D_f voidPoint, pos lightSource)
 {
     int vertexA, vertexB, vertexC;
     float dp,intensity;
     pos v,u,normal,lineOfSight;
     // for each polygon determine if its pointing towards or away
-    string debug = "";
+    std::string debug = "";
 
     for (int currPoly = 0; currPoly<polygon.Length; currPoly++)
     {
@@ -287,7 +291,7 @@ void Entity_f::removeBackFacesAndShade (_3D::pos_f view_3D.pos, pos lightSource)
             debug = debug.concat ("Polygon[" + Integer.ToString (currPoly) + "].isNotVisible ");
         }
     }
-    System.Console.Out (debug);
+    printf (debug);
 }
 
 void Entity_f::scale (float scaleFactor)
@@ -310,11 +314,11 @@ void Entity_f::rotate (int xAngle, int yAngle, int zAngle)
     int product = 0; 
     
     if (xAngle! = 0)
-        product+ = 4;
+        product += 4;
     if (yAngle! = 0)
-        product+ = 2;
+        product += 2;
     if (zAngle! = 0)
-        product+ = 1;
+        product += 1;
     if (product! = 0)
     {
         float[][] rotateX, rotateY, rotateZ, rotate;
@@ -325,10 +329,10 @@ void Entity_f::rotate (int xAngle, int yAngle, int zAngle)
         {
             case 1: // rotateZ
             {
-                rotate[0][0] = (engine.cos (zAngle));
-                rotate[0][1] = (engine.sin (zAngle));
-                rotate[1][0] = (-engine.sin (zAngle));
-                rotate[1][1] = (engine.cos (zAngle));
+                rotate[0][0] = (engine.cosl (zAngle));
+                rotate[0][1] = (engine.sinl (zAngle));
+                rotate[1][0] = (-engine.sinl (zAngle));
+                rotate[1][1] = (engine.cosl (zAngle));
             
                 for (int i = 0; i<numVerticies; i++)
                 {
@@ -347,10 +351,10 @@ void Entity_f::rotate (int xAngle, int yAngle, int zAngle)
             }  break;
             case 2: // rotateY
             {
-                rotate[0][0] = (engine.cos (yAngle));
-                rotate[0][2] = (-engine.sin (yAngle));
-                rotate[2][0] = (engine.sin (yAngle));
-                rotate[2][2] = (engine.cos (yAngle));
+                rotate[0][0] = (engine.cosl (yAngle));
+                rotate[0][2] = (-engine.sinl (yAngle));
+                rotate[2][0] = (engine.sinl (yAngle));
+                rotate[2][2] = (engine.cosl (yAngle));
             
                 for (int i = 0; i<numVerticies; i++)
                 {
@@ -368,16 +372,16 @@ void Entity_f::rotate (int xAngle, int yAngle, int zAngle)
             }  break;
             case 3: // rotate Y & Z
             {
-                rotate[0][0] =  engine.cos (yAngle)*engine.cos (zAngle);
-                rotate[0][1] =  engine.cos (yAngle)*engine.sin (zAngle);
-                rotate[0][2] = -engine.sin (yAngle);
+                rotate[0][0] =  engine.cosl (yAngle)*engine.cosl (zAngle);
+                rotate[0][1] =  engine.cosl (yAngle)*engine.sinl (zAngle);
+                rotate[0][2] = -engine.sinl (yAngle);
             
-                rotate[1][0] = -engine.sin (zAngle);
-                rotate[1][1] =  engine.cos (zAngle);
+                rotate[1][0] = -engine.sinl (zAngle);
+                rotate[1][1] =  engine.cosl (zAngle);
             
-                rotate[2][0] =  engine.sin (yAngle)*engine.cos (zAngle);
-                rotate[2][1] =  engine.sin (yAngle)*engine.sin (zAngle);
-                rotate[2][2] =  engine.cos (yAngle);
+                rotate[2][0] =  engine.sinl (yAngle)*engine.cosl (zAngle);
+                rotate[2][1] =  engine.sinl (yAngle)*engine.sinl (zAngle);
+                rotate[2][2] =  engine.cosl (yAngle);
             
                 for (int i = 0; i<numVerticies; i++)
                 {
@@ -397,10 +401,10 @@ void Entity_f::rotate (int xAngle, int yAngle, int zAngle)
             }  break;
             case 4: // rotateX
             {
-                rotate[1][1] = (engine.cos (xAngle));
-                rotate[1][2] = (engine.sin (xAngle));
-                rotate[2][1] = (-engine.sin (xAngle));
-                rotate[2][2] = (engine.cos (xAngle));
+                rotate[1][1] = (engine.cosl (xAngle));
+                rotate[1][2] = (engine.sinl (xAngle));
+                rotate[2][1] = (-engine.sinl (xAngle));
+                rotate[2][2] = (engine.cosl (xAngle));
             
                 for (int i = 0; i<numVerticies; i++)
                 {
@@ -417,16 +421,17 @@ void Entity_f::rotate (int xAngle, int yAngle, int zAngle)
                 }
             }  break;
             case 5: // rotate X & Z
-            {  rotate[0][0] =  engine.cos (zAngle);
-                rotate[0][1] =  engine.sin (zAngle);
+            {
+                rotate[0][0] =  engine.cosl (zAngle);
+                rotate[0][1] =  engine.sinl (zAngle);
             
-                rotate[1][0] = -engine.cos (xAngle) * engine.sin (zAngle);
-                rotate[1][1] =  engine.cos (xAngle) * engine.cos (zAngle);
-                rotate[1][2] =  engine.sin (xAngle);
+                rotate[1][0] = -engine.cosl (xAngle) * engine.sinl (zAngle);
+                rotate[1][1] =  engine.cosl (xAngle) * engine.cosl (zAngle);
+                rotate[1][2] =  engine.sinl (xAngle);
             
-                rotate[2][0] =  engine.sin (xAngle) * engine.sin (zAngle);
-                rotate[2][1] = -engine.sin (xAngle) * engine.cos (zAngle);
-                rotate[2][2] =  engine.cos (xAngle);
+                rotate[2][0] =  engine.sinl (xAngle) * engine.sinl (zAngle);
+                rotate[2][1] = -engine.sinl (xAngle) * engine.cosl (zAngle);
+                rotate[2][2] =  engine.cosl (xAngle);
             
             
                 for (int i = 0; i<numVerticies; i++)
@@ -446,16 +451,17 @@ void Entity_f::rotate (int xAngle, int yAngle, int zAngle)
                 }
             }  break;
             case 6:  // rotate X & Y
-            {  rotate[0][0] =  engine.cos (yAngle);
-                rotate[0][1] = -engine.sin (yAngle);
+            {
+                rotate[0][0] =  engine.cosl (yAngle);
+                rotate[0][1] = -engine.sinl (yAngle);
             
-                rotate[1][0] =  engine.sin (xAngle) * engine.sin (yAngle);
-                rotate[1][1] =  engine.cos (xAngle);
-                rotate[1][2] =  engine.sin (xAngle) * engine.cos (yAngle);
+                rotate[1][0] =  engine.sinl (xAngle) * engine.sinl (yAngle);
+                rotate[1][1] =  engine.cosl (xAngle);
+                rotate[1][2] =  engine.sinl (xAngle) * engine.cosl (yAngle);
             
-                rotate[2][0] =  engine.cos (xAngle) * engine.sin (yAngle);
-                rotate[2][1] = -engine.sin (xAngle);
-                rotate[2][2] =  engine.cos (xAngle) * engine.cos (yAngle);
+                rotate[2][0] =  engine.cosl (xAngle) * engine.sinl (yAngle);
+                rotate[2][1] = -engine.sinl (xAngle);
+                rotate[2][2] =  engine.cosl (xAngle) * engine.cosl (yAngle);
             
                 for (int i = 0; i<numVerticies; i++)
                 {
@@ -477,21 +483,21 @@ void Entity_f::rotate (int xAngle, int yAngle, int zAngle)
             case 7: // rotate X, Y & Z
             {
                 rotateX  = rotateY = rotateZ = engine.identityMatrix;
-                rotateX[1][1] = (engine.cos (xAngle));
-                rotateX[1][2] = (engine.sin (xAngle));
-                rotateX[2][1] = (-engine.sin (xAngle));
-                rotateX[2][2] = (engine.cos (xAngle));
+                rotateX[1][1] = (engine.cosl (xAngle));
+                rotateX[1][2] = (engine.sinl (xAngle));
+                rotateX[2][1] = (-engine.sinl (xAngle));
+                rotateX[2][2] = (engine.cosl (xAngle));
             
-                rotateY[0][0] = (engine.cos (yAngle));
-                rotateY[0][2] = (-engine.sin (yAngle));
-                rotateY[2][0] = (engine.sin (yAngle));
-                rotateY[2][2] = (engine.cos (yAngle));
+                rotateY[0][0] = (engine.cosl (yAngle));
+                rotateY[0][2] = (-engine.sinl (yAngle));
+                rotateY[2][0] = (engine.sinl (yAngle));
+                rotateY[2][2] = (engine.cosl (yAngle));
                 engine.multiply_4x4_by_4x4 (rotateX, rotateY, rotate);
             
-                rotateZ[0][0] = (engine.cos (zAngle));
-                rotateZ[0][1] = (engine.sin (zAngle));
-                rotateZ[1][0] = (-engine.sin (zAngle));
-                rotateZ[1][1] = (engine.cos (zAngle));
+                rotateZ[0][0] = (engine.cosl (zAngle));
+                rotateZ[0][1] = (engine.sinl (zAngle));
+                rotateZ[1][0] = (-engine.sinl (zAngle));
+                rotateZ[1][1] = (engine.cosl (zAngle));
                 engine.multiply_4x4_by_4x4 (rotate, rotateZ, rotate);
             
                 for (int i = 0; i<numVerticies; i++)
@@ -521,7 +527,8 @@ float Entity_f::computeRadius ()
     float newRadius,x,y,z;
     radius = 0;
     for (int i = 0; i<localVertex.Length; i++)
-    {  x = localVertex[i].x;
+    {
+        x = localVertex[i].x;
         y = localVertex[i].y;
         z = localVertex[i].z;
         newRadius = (float)Math.sqrt ((double) (x*x + y*y + z*z));
@@ -531,29 +538,34 @@ float Entity_f::computeRadius ()
     return radius;
 }
 
-/**  */
 void generatePolygonList ()
-{  for (int currPolygon = 0; currPolygon<polygon.Length; currPolygon++)
+{
+    for (int currPolygon = 0; currPolygon<polygon.Length; currPolygon++)
         if (polygon[currPolygon].isVisible () && !polygon[currPolygon].isClipped ())
             engine.addToPolygonList (polygon[currPolygon]);//  add to polygon list
 } 
 
 void Entity_f::clipObject (int mode)
 {  
-    _3D::pos_f one, two, three, four;
+    Point3D_f one, 
+        two, 
+        three, 
+        four;
     float x1, y1, z1, 
-            x2, y2, z2,
-            x3, y3, z3,
-            x4, y4, z4,
-        
-            x1Compair, y1Comair,
-            x2Compair, y2Comair,
-            x3Compair, y3Comair,
-            x4Compair, y4Comair;
+        x2, y2, z2,
+        x3, y3, z3,
+        x4, y4, z4,
+    
+        x1Compair, y1Comair,
+        x2Compair, y2Comair,
+        x3Compair, y3Comair,
+        x4Compair, y4Comair;
 
     if (mode = =  engine.ModeClipZ)
-    {  for (int currPolygon = 0; currPolygon<polygon.Length; currPolygon++)
-        {  z1 = cameraVertex[polygon[currPolygon].vertexIndex (0)].z;
+    {
+        for (int currPolygon = 0; currPolygon<polygon.Length; currPolygon++)
+        {
+            z1 = cameraVertex[polygon[currPolygon].vertexIndex (0)].z;
             z2 = cameraVertex[polygon[currPolygon].vertexIndex (1)].z;
             z3 = cameraVertex[polygon[currPolygon].vertexIndex (2)].z;
             if (polygon[currPolygon].numVerticies () =  = 4)// Polygon is a Quad
@@ -567,13 +579,15 @@ void Entity_f::clipObject (int mode)
         }
     }
     else // it is ModeCllipXYZ    full 3d viewing volume clipping
-    {  float x1Comapir, y1Compair,
-                x2Comapir, y2Compair,
-                x3Comapir, y3Compair,
-                x4Comapir, y4Compair;
+    {
+        float x1Comapir, y1Compair,
+            x2Comapir, y2Compair,
+            x3Comapir, y3Compair,
+            x4Comapir, y4Compair;
     
         for (int currPolygon = 0; currPolygon<polygon.Length; currPolygon++)
-        {  x1 = cameraVertex[polygon[currPolygon].vertexIndex (0)].x;
+        {
+            x1 = cameraVertex[polygon[currPolygon].vertexIndex (0)].x;
             y1 = cameraVertex[polygon[currPolygon].vertexIndex (0)].y;
             z1 = cameraVertex[polygon[currPolygon].vertexIndex (0)].z;
         
@@ -586,7 +600,8 @@ void Entity_f::clipObject (int mode)
             z3 = cameraVertex[polygon[currPolygon].vertexIndex (2)].z;
         
             if (polygon[currPolygon].numVerticies () =  = 4)// polygon is a quad.
-            {  x4 = cameraVertex[polygon[currPolygon].vertexIndex (3)].x;
+            {
+                x4 = cameraVertex[polygon[currPolygon].vertexIndex (3)].x;
                 y4 = cameraVertex[polygon[currPolygon].vertexIndex (3)].y;
                 z4 = cameraVertex[polygon[currPolygon].vertexIndex (3)].z;
             
@@ -646,11 +661,11 @@ void Entity_f::clipObject (int mode)
     }
 }
 
-string Entity_f::allCharictorsOnThisLineUntil (char thisChar)
+std::string Entity_f::allCharictorsOnThisLineUntil (char thisChar)
 {
     if (thisLine =  = null)
         return thisLine = "";
-    string returnString = "";
+    std::string returnString = "";
     char charictor;
 
     int i = 0;
@@ -675,9 +690,9 @@ string Entity_f::allCharictorsOnThisLineUntil (char thisChar)
     }  
 }
 
-bool Entity_f::loadPLG (string plgName)
+bool Entity_f::loadPLG (std::string plgName)
 {
-    System.Console.Out ("Loading " + plgName);
+    printf ("Loading " + plgName);
 
     try
     {
@@ -685,7 +700,7 @@ bool Entity_f::loadPLG (string plgName)
             
         if (!inFile.readLine ().equals ("plg header"))
         {
-            System.Console.Out ("Error loading " + plgName + ": plg header tag missing");
+            printf ("Error loading " + plgName + ": plg header tag missing");
             return false;
         }      
         thisLine = inFile.readLine ();
@@ -696,7 +711,7 @@ bool Entity_f::loadPLG (string plgName)
         }
         catch (NumberFormatException e)
         {
-            System.Console.Out ("Error loading " + plgName + ": numVerticies not specified right");
+            printf ("Error loading " + plgName + ": numVerticies not specified right");
             return false;
         }
         try
@@ -705,21 +720,21 @@ bool Entity_f::loadPLG (string plgName)
         }
         catch (NumberFormatException e)
         {
-            System.Console.Out ("Error loading " + plgName + ": numPolygons not specified right");
+            printf ("Error loading " + plgName + ": numPolygons not specified right");
             return false;
         }
         
         if (!inFile.readLine ().equals ("verticies"))
         {
-            System.Console.Out ("Error loading " + plgName + ":  verticies tag missing");
+            printf ("Error loading " + plgName + ":  verticies tag missing");
             return false;
         }
         plgText = (plgName + "\n" + "plg header\n" + name + " " + Integer.ToString (numVerticies) + 
             " " + Integer.ToString (numPolygons) + "\n" + "verticies\n");
     
-        localVertex  = new _3D::pos[numVerticies];
-        worldVertex  = new _3D::pos[numVerticies];
-        cameraVertex = new _3D::pos[numVerticies];
+        localVertex  = new Point3D_f[numVerticies];
+        worldVertex  = new Point3D_f[numVerticies];
+        cameraVertex = new Point3D_f[numVerticies];
     
         float xValue, yValue, zValue;
     
@@ -732,7 +747,7 @@ bool Entity_f::loadPLG (string plgName)
             }
             catch (NumberFormatException e)
             {
-                System.Console.Out ("Error loading " + plgName + ": vertex[" + h + "].x Value not a number");
+                printf ("Error loading " + plgName + ": vertex[" + h + "].x Value not a number");
                 return false;
             }              
             try
@@ -740,7 +755,7 @@ bool Entity_f::loadPLG (string plgName)
             }
             catch (NumberFormatException e)
             {
-                System.Console.Out ("Error loading " + plgName + ": vertex[" + h + "].y Value not a number");
+                printf ("Error loading " + plgName + ": vertex[" + h + "].y Value not a number");
                 return false;
             }                  
             try
@@ -749,29 +764,29 @@ bool Entity_f::loadPLG (string plgName)
             }
             catch (NumberFormatException e)
             {
-                System.Console.Out ("Error loading " + plgName + ": vertex[" + h + "].y Value not a number");
+                printf ("Error loading " + plgName + ": vertex[" + h + "].y Value not a number");
                 return false;
             }    
-            localVertex[h] = new _3D::pos_f (xValue, yValue, zValue);
+            localVertex[h] = new Point3D_f (xValue, yValue, zValue);
             plgText = plgText.concat (Float.ToString (xValue) + "," + Float.ToString (yValue) + "," + Float.ToString (zValue) + ".\n");
         }
     
         if (!inFile.readLine ().equals ("polygons"))
         {
-            System.Console.Out ("Error loading " + plgName + ": polygons tag missing\n");
+            printf ("Error loading " + plgName + ": polygons tag missing\n");
             return false;
         }            
     
         polygon = new Polygon[numPolygons];
-        _3D::pos[] vertexpos;
-        int[] vertexIndex;
+        Point3D_f* vertexpos;
+        int* vertexIndex;
         int numpossInPoly,
              red,green,blue;
         for (int j = 0; j<numPolygons; j++)
         {
             thisLine = inFile.readLine ();
             plgText = plgText +thisLine;
-            string rgb = allCharictorsOnThisLineUntil (' ');
+            std::string rgb = allCharictorsOnThisLineUntil (' ');
             try
             {
                 // The first 8 charictors of the polygon lines is the hexidecimal colour of the poly
@@ -781,7 +796,7 @@ bool Entity_f::loadPLG (string plgName)
             }
             catch (TextIndexOutOfBoundsException e)
             {
-                System.Console.Out ("Error loading " + plgName + ": polygon[" + j + "].colour () is not specified right");
+                printf ("Error loading " + plgName + ": polygon[" + j + "].colour () is not specified right");
                 return false;
             }
             try
@@ -790,11 +805,11 @@ bool Entity_f::loadPLG (string plgName)
             }
             catch (NumberFormatException e)
             {
-                System.Console.Out ("Error loading " + plgName + ": polygon[" + j + "].numVerticies () is not a valid number");
+                printf ("Error loading " + plgName + ": polygon[" + j + "].numVerticies () is not a valid number");
                 return false;
             }    
         
-            vertexpos = new _3D::pos[numpossInPoly];
+            vertexpos = new Point3D_f[numpossInPoly];
             vertexIndex = new int     [numpossInPoly];
         
             for (int l = 0; l<numpossInPoly; l++)
@@ -805,7 +820,7 @@ bool Entity_f::loadPLG (string plgName)
                 }
                 catch (NumberFormatException e)
                 {
-                    System.Console.Out ("Error loading " + plgName + ": polygon[" + j + "].vertextIndex[" + l + "] is not a valid nuber");
+                    printf ("Error loading " + plgName + ": polygon[" + j + "].vertextIndex[" + l + "] is not a valid nuber");
                     return false;
                 }
                 vertexpos[l] = localVertex[vertexIndex[l]];
@@ -820,12 +835,12 @@ bool Entity_f::loadPLG (string plgName)
             }
             catch (ArrayIndexOutOfBoundsException e)
             {
-                System.Console.Out ("Error loading " + plgName + ": polygon[" + j + "] cant access localVertex");
+                printf ("Error loading " + plgName + ": polygon[" + j + "] cant access localVertex");
                 return false;
             }
             polygon[j].activate ();                                         
         }
-        System.Console.Out ("Done reading " + plgName);
+        printf ("Done reading " + plgName);
         return true;
     }
     catch (FileNotFoundException e)
@@ -840,11 +855,11 @@ bool Entity_f::loadPLG (string plgName)
     return false;
 }
 
-void Entity_f::exportToPLG (string fileName)
+void Entity_f::exportToPLG (std::string filename)
 {
     try
     {
-        FileWriter fileWriter = new FileWriter (fileName);
+        FileWriter fileWriter = new FileWriter (filename);
         BufferedWriter bufferedWriter = new BufferedWriter (fileWriter);
         PrintWriter output = new PrintWriter (bufferedWriter);
     
@@ -860,12 +875,12 @@ bool Entity_f::updatePlgText ()
 {
     try
     {
-        string Value;
+        std::string Value;
         plgText =     "plg header"
                       + "\n" + name + " " + Integer.ToString (numVerticies) + " " + Integer.ToString (numPolygons)
                       + "\nverticies";
         
-        string vertexText[3][numVerticies];
+        std::string vertexText[3][numVerticies];
         
         int xLength = 0, yLength = 0, zLength = 0;
         for (int i = 0; i<numVerticies; i++)
@@ -880,7 +895,7 @@ bool Entity_f::updatePlgText ()
             if (vertexText[2][i].Length > zLength)
                 zLength = vertexText[2][i].Length;
         }
-        // This loop finds the longest string length for each variable so i can make the string equal length
+        // This loop finds the longest std::string length for each variable so i can make the std::string equal length
         for (int i = 0; i<numVerticies; i++)
         {
             while (xLength ! =  vertexText[0][i].Length)
@@ -916,7 +931,7 @@ bool Entity_f::updatePlgText ()
         return true;
     }
     catch (NullposerException e) {}
-    System.Console.Out ("Error: Shits fucked up with the " + name + " model");
+    printf ("Error: Shits fucked up with the " + name + " model");
     return false;
 }
 
@@ -926,4 +941,4 @@ void Entity_f::print (Terminal& io)
     return plgText;
 }
 
-}   //< _2D
+}   //< _G

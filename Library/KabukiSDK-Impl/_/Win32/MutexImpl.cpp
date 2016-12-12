@@ -25,10 +25,10 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Win32/MutexImpl.hpp>
+#include <_/Win32/MutexImpl.hpp>
 
 
-namespace sf
+namespace _
 {
 namespace priv
 {
@@ -61,4 +61,4 @@ void MutexImpl::unlock()
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _

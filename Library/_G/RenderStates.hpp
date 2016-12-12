@@ -33,7 +33,7 @@
 #include <SFML/Graphics/Transform.hpp>
 
 
-namespace sf
+namespace _G
 {
 class Shader;
 class Texture;
@@ -50,7 +50,7 @@ public:
     /// \brief Default constructor
     ///
     /// Constructing a default set of render states is equivalent
-    /// to using sf::RenderStates::Default.
+    /// to using _G::RenderStates::Default.
     /// The default set defines:
     /// \li the BlendAlpha blend mode
     /// \li the identity transform
@@ -63,7 +63,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct a default set of render states with a custom blend mode
     ///
-    /// \param theBlendMode Blend mode to use
+    /// @param theBlendMode Blend mode to use
     ///
     ////////////////////////////////////////////////////////////
     RenderStates(const BlendMode& theBlendMode);
@@ -71,7 +71,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct a default set of render states with a custom transform
     ///
-    /// \param theTransform Transform to use
+    /// @param theTransform Transform to use
     ///
     ////////////////////////////////////////////////////////////
     RenderStates(const Transform& theTransform);
@@ -79,7 +79,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct a default set of render states with a custom texture
     ///
-    /// \param theTexture Texture to use
+    /// @param theTexture Texture to use
     ///
     ////////////////////////////////////////////////////////////
     RenderStates(const Texture* theTexture);
@@ -87,7 +87,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct a default set of render states with a custom shader
     ///
-    /// \param theShader Shader to use
+    /// @param theShader Shader to use
     ///
     ////////////////////////////////////////////////////////////
     RenderStates(const Shader* theShader);
@@ -95,10 +95,10 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct a set of render states with all its attributes
     ///
-    /// \param theBlendMode Blend mode to use
-    /// \param theTransform Transform to use
-    /// \param theTexture   Texture to use
-    /// \param theShader    Shader to use
+    /// @param theBlendMode Blend mode to use
+    /// @param theTransform Transform to use
+    /// @param theTexture   Texture to use
+    /// @param theShader    Shader to use
     ///
     ////////////////////////////////////////////////////////////
     RenderStates(const BlendMode& theBlendMode, const Transform& theTransform,
@@ -118,14 +118,14 @@ public:
     const Shader*  shader;    ///< Shader
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_RENDERSTATES_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::RenderStates
+/// \class _G::RenderStates
 /// \ingroup graphics
 ///
 /// There are four global states that can be applied to
@@ -155,20 +155,20 @@ public:
 ///
 /// If you want to use a single specific render state,
 /// for example a shader, you can pass it directly to the Draw
-/// function: sf::RenderStates has an implicit one-argument
+/// function: _G::RenderStates has an implicit one-argument
 /// constructor for each state.
 /// \code
 /// window.draw(sprite, shader);
 /// \endcode
 ///
 /// When you're inside the Draw function of a drawable
-/// object (inherited from sf::Drawable), you can
+/// object (inherited from _G::Drawable), you can
 /// either pass the render states unmodified, or change
 /// some of them.
 /// For example, a transformable object will combine the
 /// current transform with its own transform. A sprite will
 /// set its texture. Etc.
 ///
-/// \see sf::RenderTarget, sf::Drawable
+/// \see _G::RenderTarget, _G::Drawable
 ///
 ////////////////////////////////////////////////////////////

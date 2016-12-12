@@ -28,12 +28,12 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Export.hpp>
-#include <SFML/System/NonCopyable.hpp>
+#include <_/Export.hpp>
+#include <_/NonCopyable.hpp>
 #include <cstdlib>
 
 
-namespace sf
+namespace _
 {
 namespace priv
 {
@@ -51,7 +51,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
-    /// \param value Optional value to initialize the variable
+    /// @param value Optional value to initialize the variable
     ///
     ////////////////////////////////////////////////////////////
     ThreadLocal(void* value = NULL);
@@ -65,7 +65,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Set the thread-specific value of the variable
     ///
-    /// \param value Value of the variable for the current thread
+    /// @param value Value of the variable for the current thread
     ///
     ////////////////////////////////////////////////////////////
     void setValue(void* value);
@@ -73,7 +73,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Retrieve the thread-specific value of the variable
     ///
-    /// \return Value of the variable for the current thread
+    /// @return Value of the variable for the current thread
     ///
     ////////////////////////////////////////////////////////////
     void* getValue() const;
@@ -86,18 +86,18 @@ private:
     priv::ThreadLocalImpl* m_impl; ///< Pointer to the OS specific implementation
 };
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_THREADLOCAL_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::ThreadLocal
+/// \class _::ThreadLocal
 /// \ingroup system
 ///
 /// This class manipulates void* parameters and thus is not
 /// appropriate for strongly-typed variables. You should rather
-/// use the sf::ThreadLocalPtr template class.
+/// use the _::ThreadLocalPtr template class.
 ///
 ////////////////////////////////////////////////////////////

@@ -28,7 +28,7 @@
 #include <SFML/Graphics/TextureSaver.hpp>
 
 
-namespace sf
+namespace _G
 {
 namespace priv
 {
@@ -47,4 +47,4 @@ TextureSaver::~TextureSaver()
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _G

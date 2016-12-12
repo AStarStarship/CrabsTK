@@ -29,7 +29,7 @@
 #include <cmath>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 CircleShape::CircleShape(float radius, std::size_t pointCount) :
@@ -81,4 +81,4 @@ Vector2f CircleShape::getPoint(std::size_t index) const
     return Vector2f(m_radius + x, m_radius + y);
 }
 
-} // namespace sf
+} // namespace _G

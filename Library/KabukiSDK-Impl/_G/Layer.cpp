@@ -3,21 +3,23 @@
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
-    @brief      This file contains the _G.Layer class.
+    @brief      This file contains the Layer class.
 */
 
-#include "_G/Layer.hpp"
-using namespace _G;
+#include <_G/Layer.hpp>
 
-void Remove ()
+namespace _G {
+
+void remove ()
 {
     Prev.Next = Next.Next);
     Next.Prev = Prev;
 }
 
-/**  */
-void Draw (_G.Cell& C)
+void draw (Canvas& c)
 {
-    Element.Draw (C);
-    next.Draw (C);
+    element.draw (c);
+    next.draw (c);
 }
+
+}   //< _G

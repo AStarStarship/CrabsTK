@@ -33,7 +33,7 @@
 #include <SFML/Window/GlResource.hpp>
 
 
-namespace sf
+namespace _G
 {
 class Window;
 class RenderTarget;
@@ -71,7 +71,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Copy constructor
     ///
-    /// \param copy instance to copy
+    /// @param copy instance to copy
     ///
     ////////////////////////////////////////////////////////////
     Texture(const Texture& copy);
@@ -87,10 +87,10 @@ public:
     ///
     /// If this function fails, the texture is left unchanged.
     ///
-    /// \param width  Width of the texture
-    /// \param height Height of the texture
+    /// @param width  Width of the texture
+    /// @param height Height of the texture
     ///
-    /// \return True if creation was successful
+    /// @return True if creation was successful
     ///
     ////////////////////////////////////////////////////////////
     bool create(unsigned int width, unsigned int height);
@@ -100,7 +100,7 @@ public:
     ///
     /// This function is a shortcut for the following code:
     /// \code
-    /// sf::Image image;
+    /// _G::Image image;
     /// image.loadFromFile(filename);
     /// texture.loadFromImage(image, area);
     /// \endcode
@@ -116,10 +116,10 @@ public:
     ///
     /// If this function fails, the texture is left unchanged.
     ///
-    /// \param filename Path of the image file to load
-    /// \param area     Area of the image to load
+    /// @param filename Path of the image file to load
+    /// @param area     Area of the image to load
     ///
-    /// \return True if loading was successful
+    /// @return True if loading was successful
     ///
     /// \see loadFromMemory, loadFromStream, loadFromImage
     ///
@@ -131,7 +131,7 @@ public:
     ///
     /// This function is a shortcut for the following code:
     /// \code
-    /// sf::Image image;
+    /// _G::Image image;
     /// image.loadFromMemory(data, size);
     /// texture.loadFromImage(image, area);
     /// \endcode
@@ -147,11 +147,11 @@ public:
     ///
     /// If this function fails, the texture is left unchanged.
     ///
-    /// \param data Pointer to the file data in memory
-    /// \param size Size of the data to load, in bytes
-    /// \param area Area of the image to load
+    /// @param data Pointer to the file data in memory
+    /// @param size Size of the data to load, in bytes
+    /// @param area Area of the image to load
     ///
-    /// \return True if loading was successful
+    /// @return True if loading was successful
     ///
     /// \see loadFromFile, loadFromStream, loadFromImage
     ///
@@ -163,7 +163,7 @@ public:
     ///
     /// This function is a shortcut for the following code:
     /// \code
-    /// sf::Image image;
+    /// _G::Image image;
     /// image.loadFromStream(stream);
     /// texture.loadFromImage(image, area);
     /// \endcode
@@ -179,10 +179,10 @@ public:
     ///
     /// If this function fails, the texture is left unchanged.
     ///
-    /// \param stream Source stream to read from
-    /// \param area   Area of the image to load
+    /// @param stream Source stream to read from
+    /// @param area   Area of the image to load
     ///
-    /// \return True if loading was successful
+    /// @return True if loading was successful
     ///
     /// \see loadFromFile, loadFromMemory, loadFromImage
     ///
@@ -203,10 +203,10 @@ public:
     ///
     /// If this function fails, the texture is left unchanged.
     ///
-    /// \param image Image to load into the texture
-    /// \param area  Area of the image to load
+    /// @param image Image to load into the texture
+    /// @param area  Area of the image to load
     ///
-    /// \return True if loading was successful
+    /// @return True if loading was successful
     ///
     /// \see loadFromFile, loadFromMemory
     ///
@@ -216,7 +216,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Return the size of the texture
     ///
-    /// \return Size in pixels
+    /// @return Size in pixels
     ///
     ////////////////////////////////////////////////////////////
     Vector2u getSize() const;
@@ -229,7 +229,7 @@ public:
     /// them to a new image, potentially applying transformations
     /// to pixels if necessary (texture may be padded or flipped).
     ///
-    /// \return Image containing the texture's pixels
+    /// @return Image containing the texture's pixels
     ///
     /// \see loadFromImage
     ///
@@ -249,7 +249,7 @@ public:
     /// This function does nothing if \a pixels is null or if the
     /// texture was not previously created.
     ///
-    /// \param pixels Array of pixels to copy to the texture
+    /// @param pixels Array of pixels to copy to the texture
     ///
     ////////////////////////////////////////////////////////////
     void update(const Uint8* pixels);
@@ -267,11 +267,11 @@ public:
     /// This function does nothing if \a pixels is null or if the
     /// texture was not previously created.
     ///
-    /// \param pixels Array of pixels to copy to the texture
-    /// \param width  Width of the pixel region contained in \a pixels
-    /// \param height Height of the pixel region contained in \a pixels
-    /// \param x      X offset in the texture where to copy the source pixels
-    /// \param y      Y offset in the texture where to copy the source pixels
+    /// @param pixels Array of pixels to copy to the texture
+    /// @param width  Width of the pixel region contained in \a pixels
+    /// @param height Height of the pixel region contained in \a pixels
+    /// @param x      X offset in the texture where to copy the source pixels
+    /// @param y      Y offset in the texture where to copy the source pixels
     ///
     ////////////////////////////////////////////////////////////
     void update(const Uint8* pixels, unsigned int width, unsigned int height, unsigned int x, unsigned int y);
@@ -291,7 +291,7 @@ public:
     /// This function does nothing if the texture was not
     /// previously created.
     ///
-    /// \param image Image to copy to the texture
+    /// @param image Image to copy to the texture
     ///
     ////////////////////////////////////////////////////////////
     void update(const Image& image);
@@ -306,9 +306,9 @@ public:
     /// This function does nothing if the texture was not
     /// previously created.
     ///
-    /// \param image Image to copy to the texture
-    /// \param x     X offset in the texture where to copy the source image
-    /// \param y     Y offset in the texture where to copy the source image
+    /// @param image Image to copy to the texture
+    /// @param x     X offset in the texture where to copy the source image
+    /// @param y     Y offset in the texture where to copy the source image
     ///
     ////////////////////////////////////////////////////////////
     void update(const Image& image, unsigned int x, unsigned int y);
@@ -328,7 +328,7 @@ public:
     /// This function does nothing if either the texture or the window
     /// was not previously created.
     ///
-    /// \param window Window to copy to the texture
+    /// @param window Window to copy to the texture
     ///
     ////////////////////////////////////////////////////////////
     void update(const Window& window);
@@ -343,9 +343,9 @@ public:
     /// This function does nothing if either the texture or the window
     /// was not previously created.
     ///
-    /// \param window Window to copy to the texture
-    /// \param x      X offset in the texture where to copy the source window
-    /// \param y      Y offset in the texture where to copy the source window
+    /// @param window Window to copy to the texture
+    /// @param x      X offset in the texture where to copy the source window
+    /// @param y      Y offset in the texture where to copy the source window
     ///
     ////////////////////////////////////////////////////////////
     void update(const Window& window, unsigned int x, unsigned int y);
@@ -359,7 +359,7 @@ public:
     /// you should leave it disabled.
     /// The smooth filter is disabled by default.
     ///
-    /// \param smooth True to enable smoothing, false to disable it
+    /// @param smooth True to enable smoothing, false to disable it
     ///
     /// \see isSmooth
     ///
@@ -369,7 +369,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Tell whether the smooth filter is enabled or not
     ///
-    /// \return True if smoothing is enabled, false if it is disabled
+    /// @return True if smoothing is enabled, false if it is disabled
     ///
     /// \see setSmooth
     ///
@@ -394,7 +394,7 @@ public:
     /// This option is only useful in conjunction with an sRGB capable
     /// framebuffer. This can be requested during window creation.
     ///
-    /// \param sRgb True to enable sRGB conversion, false to disable it
+    /// @param sRgb True to enable sRGB conversion, false to disable it
     ///
     /// \see isSrgb
     ///
@@ -404,7 +404,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Tell whether the texture source is converted from sRGB or not
     ///
-    /// \return True if the texture source is converted from sRGB, false if not
+    /// @return True if the texture source is converted from sRGB, false if not
     ///
     /// \see setSrgb
     ///
@@ -428,7 +428,7 @@ public:
     /// dimensions (such as 256x128).
     /// Repeating is disabled by default.
     ///
-    /// \param repeated True to repeat the texture, false to disable repeating
+    /// @param repeated True to repeat the texture, false to disable repeating
     ///
     /// \see isRepeated
     ///
@@ -438,7 +438,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Tell whether the texture is repeated or not
     ///
-    /// \return True if repeat mode is enabled, false if it is disabled
+    /// @return True if repeat mode is enabled, false if it is disabled
     ///
     /// \see setRepeated
     ///
@@ -465,7 +465,7 @@ public:
     /// modified, at which point this function will have to be called again to
     /// regenerate it.
     ///
-    /// \return True if mipmap generation was successful, false if unsuccessful
+    /// @return True if mipmap generation was successful, false if unsuccessful
     ///
     ////////////////////////////////////////////////////////////
     bool generateMipmap();
@@ -473,9 +473,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Overload of assignment operator
     ///
-    /// \param right Instance to assign
+    /// @param right Instance to assign
     ///
-    /// \return Reference to self
+    /// @return Reference to self
     ///
     ////////////////////////////////////////////////////////////
     Texture& operator =(const Texture& right);
@@ -487,7 +487,7 @@ public:
     /// very specific stuff to implement that SFML doesn't support,
     /// or implement a temporary workaround until a bug is fixed.
     ///
-    /// \return OpenGL handle of the texture or 0 if not yet created
+    /// @return OpenGL handle of the texture or 0 if not yet created
     ///
     ////////////////////////////////////////////////////////////
     unsigned int getNativeHandle() const;
@@ -497,16 +497,16 @@ public:
     ///
     /// This function is not part of the graphics API, it mustn't be
     /// used when drawing SFML entities. It must be used only if you
-    /// mix sf::Texture with OpenGL code.
+    /// mix _G::Texture with OpenGL code.
     ///
     /// \code
-    /// sf::Texture t1, t2;
+    /// _G::Texture t1, t2;
     /// ...
-    /// sf::Texture::bind(&t1);
+    /// _G::Texture::bind(&t1);
     /// // draw OpenGL stuff that use t1...
-    /// sf::Texture::bind(&t2);
+    /// _G::Texture::bind(&t2);
     /// // draw OpenGL stuff that use t2...
-    /// sf::Texture::bind(NULL);
+    /// _G::Texture::bind(NULL);
     /// // draw OpenGL stuff that use no texture...
     /// \endcode
     ///
@@ -519,8 +519,8 @@ public:
     /// coordinates more intuitive for the high-level API, users don't need
     /// to compute normalized values.
     ///
-    /// \param texture Pointer to the texture to bind, can be null to use no texture
-    /// \param coordinateType Type of texture coordinates to use
+    /// @param texture Pointer to the texture to bind, can be null to use no texture
+    /// @param coordinateType Type of texture coordinates to use
     ///
     ////////////////////////////////////////////////////////////
     static void bind(const Texture* texture, CoordinateType coordinateType = Normalized);
@@ -532,11 +532,35 @@ public:
     /// You can expect a value of 512 pixels for low-end graphics
     /// card, and up to 8192 pixels or more for newer hardware.
     ///
-    /// \return Maximum size allowed for textures, in pixels
+    /// @return Maximum size allowed for textures, in pixels
     ///
     ////////////////////////////////////////////////////////////
     static unsigned int getMaximumSize();
 
+    bool drawLine (Color color, float x0, float y0, float x1, float y1);
+    /*< Draws a line from the given points. */
+    
+    bool drawLine (Color color, Point2D_f a, Point2D_f b);
+    /*< Draws a line from the given points. */
+    
+    void drawTriangle (Color color, float x0, float y0, float x1, float y1, float x2, float y2);
+    /*< Draws a triangle from the given points. */
+    
+    void drawTriangle (Color color, Point2D_f a, Point2D_f b, Point2D_f c);
+    /*< Draws a triangle from the given points. */
+    
+    void drawTopTriangle (Color color, float x0, float y0, float x1, float y1, float x2, float y2);
+    /*< Draws the top of a triangle triangle from the given points. */
+    
+    void drawTopTriangle (Color color, Point2D_f a, Point2D_f b, Point2D_f c);
+    /*< Draws the top of a triangle triangle from the given points. */
+    
+    void drawBottomTriangle (Color color, float x0, float y0, float x1, float y1, float x2, float y2);
+    /*< Draws the bottom of a triangle triangle from the given points. */
+    
+    void drawBottomTriangle (Color color, Point2D_f a, Point2D_f b, Point2D_f c);
+    /*< Draws the top of a bottom triangle from the given points. */
+    
 private:
 
     friend class RenderTexture;
@@ -550,9 +574,9 @@ private:
     /// accordingly.
     /// The returned size is greater than or equal to the original size.
     ///
-    /// \param size size to convert
+    /// @param size size to convert
     ///
-    /// \return Valid nearest size (greater than or equal to specified size)
+    /// @return Valid nearest size (greater than or equal to specified size)
     ///
     ////////////////////////////////////////////////////////////
     static unsigned int getValidSize(unsigned int size);
@@ -581,27 +605,27 @@ private:
     Uint64       m_cacheId;       ///< Unique number that identifies the texture to the render target's cache
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_TEXTURE_HPP
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Texture
+/// \class _G::Texture
 /// \ingroup graphics
 ///
-/// sf::Texture stores pixels that can be drawn, with a sprite
+/// _G::Texture stores pixels that can be drawn, with a sprite
 /// for example. A texture lives in the graphics card memory,
 /// therefore it is very fast to draw a texture to a render target,
 /// or copy a render target to a texture (the graphics card can
 /// access both directly).
 ///
 /// Being stored in the graphics card memory has some drawbacks.
-/// A texture cannot be manipulated as freely as a sf::Image,
+/// A texture cannot be manipulated as freely as a _G::Image,
 /// you need to prepare the pixels first and then upload them
 /// to the texture in a single operation (see Texture::update).
 ///
-/// sf::Texture makes it easy to convert from/to sf::Image, but
+/// _G::Texture makes it easy to convert from/to _G::Image, but
 /// keep in mind that these calls require transfers between
 /// the graphics card and the central memory, therefore they are
 /// slow operations.
@@ -611,7 +635,7 @@ private:
 /// so that you don't need an image first for the most common cases.
 /// However, if you want to perform some modifications on the pixels
 /// before creating the final texture, you can load your file to a
-/// sf::Image, do whatever you need with the pixels, and then call
+/// _G::Image, do whatever you need with the pixels, and then call
 /// Texture::loadFromImage.
 ///
 /// Since they live in the graphics card memory, the pixels of a texture
@@ -621,23 +645,23 @@ private:
 /// store the collision information separately, for example in an array
 /// of booleans.
 ///
-/// Like sf::Image, sf::Texture can handle a unique internal
+/// Like _G::Image, _G::Texture can handle a unique internal
 /// representation of pixels, which is RGBA 32 bits. This means
 /// that a pixel must be composed of 8 bits red, green, blue and
-/// alpha channels -- just like a sf::Color.
+/// alpha channels -- just like a _G::Color.
 ///
 /// Usage example:
 /// \code
-/// // This example shows the most common use of sf::Texture:
+/// // This example shows the most common use of _G::Texture:
 /// // drawing a sprite
 ///
 /// // Load a texture from a file
-/// sf::Texture texture;
+/// _G::Texture texture;
 /// if (!texture.loadFromFile("texture.png"))
 ///     return -1;
 ///
 /// // Assign it to a sprite
-/// sf::Sprite sprite;
+/// _G::Sprite sprite;
 /// sprite.setTexture(texture);
 ///
 /// // Draw the textured sprite
@@ -645,23 +669,23 @@ private:
 /// \endcode
 ///
 /// \code
-/// // This example shows another common use of sf::Texture:
+/// // This example shows another common use of _G::Texture:
 /// // streaming real-time data, like video frames
 ///
 /// // Create an empty texture
-/// sf::Texture texture;
+/// _G::Texture texture;
 /// if (!texture.create(640, 480))
 ///     return -1;
 ///
 /// // Create a sprite that will display the texture
-/// sf::Sprite sprite(texture);
+/// _G::Sprite sprite(texture);
 ///
 /// while (...) // the main loop
 /// {
 ///     ...
 ///
 ///     // update the texture
-///     sf::Uint8* pixels = ...; // get a fresh chunk of pixels (the next frame of a movie, for example)
+///     _G::Uint8* pixels = ...; // get a fresh chunk of pixels (the next frame of a movie, for example)
 ///     texture.update(pixels);
 ///
 ///     // draw it
@@ -672,15 +696,15 @@ private:
 ///
 /// \endcode
 ///
-/// Like sf::Shader that can be used as a raw OpenGL shader,
-/// sf::Texture can also be used directly as a raw texture for
+/// Like _G::Shader that can be used as a raw OpenGL shader,
+/// _G::Texture can also be used directly as a raw texture for
 /// custom OpenGL geometry.
 /// \code
-/// sf::Texture::bind(&texture);
+/// _G::Texture::bind(&texture);
 /// ... render OpenGL geometry ...
-/// sf::Texture::bind(NULL);
+/// _G::Texture::bind(NULL);
 /// \endcode
 ///
-/// \see sf::Sprite, sf::Image, sf::RenderTexture
+/// \see _G::Sprite, _G::Image, _G::RenderTexture
 ///
 ////////////////////////////////////////////////////////////

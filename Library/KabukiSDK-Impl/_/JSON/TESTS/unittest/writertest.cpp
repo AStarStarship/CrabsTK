@@ -80,7 +80,7 @@ TEST(Writer, Int64) {
     TEST_ROUNDTRIP("[-9223372036854775808]");
 }
 
-TEST(Writer, Uint64) {
+TEST(Writer, uint64_t) {
     TEST_ROUNDTRIP("[1234567890123456789]");
     TEST_ROUNDTRIP("[9223372036854775807]");
 }
@@ -233,7 +233,7 @@ TEST(Writer, AssertRootMayBeAnyValue) {
     T(writer.Int(0));
     T(writer.Uint(0));
     T(writer.Int64(0));
-    T(writer.Uint64(0));
+    T(writer.uint64_t(0));
     T(writer.Double(0));
     T(writer.String("foo"));
 #undef T
@@ -283,7 +283,7 @@ TEST(Writer, AssertObjectKeyNotString) {
     T(writer.Int(0));
     T(writer.Uint(0));
     T(writer.Int64(0));
-    T(writer.Uint64(0));
+    T(writer.uint64_t(0));
     T(writer.Double(0));
     T(writer.StartObject());
     T(writer.StartArray());
@@ -355,7 +355,7 @@ TEST(Writer, RootValueIsComplete) {
     T(writer.Int(0));
     T(writer.Uint(0));
     T(writer.Int64(0));
-    T(writer.Uint64(0));
+    T(writer.uint64_t(0));
     T(writer.Double(0));
     T(writer.String(""));
 #undef T

@@ -38,7 +38,7 @@
 #endif
 
 
-namespace sf
+namespace _G
 {
 namespace priv
 {
@@ -90,4 +90,4 @@ void ensureExtensionsInit()
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _G

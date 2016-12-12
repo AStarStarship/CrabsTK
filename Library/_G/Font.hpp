@@ -39,7 +39,7 @@
 #include <vector>
 
 
-namespace sf
+namespace _G
 {
 class InputStream;
 
@@ -73,7 +73,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Copy constructor
     ///
-    /// \param copy Instance to copy
+    /// @param copy Instance to copy
     ///
     ////////////////////////////////////////////////////////////
     Font(const Font& copy);
@@ -97,11 +97,11 @@ public:
     ///
     /// \warning SFML cannot preload all the font data in this
     /// function, so the file has to remain accessible until
-    /// the sf::Font object loads a new font or is destroyed.
+    /// the _G::Font object loads a new font or is destroyed.
     ///
-    /// \param filename Path of the font file to load
+    /// @param filename Path of the font file to load
     ///
-    /// \return True if loading succeeded, false if it failed
+    /// @return True if loading succeeded, false if it failed
     ///
     /// \see loadFromMemory, loadFromStream
     ///
@@ -116,13 +116,13 @@ public:
     ///
     /// \warning SFML cannot preload all the font data in this
     /// function, so the buffer pointed by \a data has to remain
-    /// valid until the sf::Font object loads a new font or
+    /// valid until the _G::Font object loads a new font or
     /// is destroyed.
     ///
-    /// \param data        Pointer to the file data in memory
-    /// \param sizeInBytes Size of the data to load, in bytes
+    /// @param data        Pointer to the file data in memory
+    /// @param sizeInBytes Size of the data to load, in bytes
     ///
-    /// \return True if loading succeeded, false if it failed
+    /// @return True if loading succeeded, false if it failed
     ///
     /// \see loadFromFile, loadFromStream
     ///
@@ -140,11 +140,11 @@ public:
     ///
     /// \warning SFML cannot preload all the font data in this
     /// function, so the stream has to remain accessible until
-    /// the sf::Font object loads a new font or is destroyed.
+    /// the _G::Font object loads a new font or is destroyed.
     ///
-    /// \param stream Source stream to read from
+    /// @param stream Source stream to read from
     ///
-    /// \return True if loading succeeded, false if it failed
+    /// @return True if loading succeeded, false if it failed
     ///
     /// \see loadFromFile, loadFromMemory
     ///
@@ -154,7 +154,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the font information
     ///
-    /// \return A structure that holds the font information
+    /// @return A structure that holds the font information
     ///
     ////////////////////////////////////////////////////////////
     const Info& getInfo() const;
@@ -169,12 +169,12 @@ public:
     /// Be aware that using a negative value for the outline
     /// thickness will cause distorted rendering.
     ///
-    /// \param codePoint        Unicode code point of the character to get
-    /// \param characterSize    Reference character size
-    /// \param bold             Retrieve the bold version or the regular one?
-    /// \param outlineThickness Thickness of outline (when != 0 the glyph will not be filled)
+    /// @param codePoint        Unicode code point of the character to get
+    /// @param characterSize    Reference character size
+    /// @param bold             Retrieve the bold version or the regular one?
+    /// @param outlineThickness Thickness of outline (when != 0 the glyph will not be filled)
     ///
-    /// \return The glyph corresponding to \a codePoint and \a characterSize
+    /// @return The glyph corresponding to \a codePoint and \a characterSize
     ///
     ////////////////////////////////////////////////////////////
     const Glyph& getGlyph(Uint32 codePoint, unsigned int characterSize, bool bold, float outlineThickness = 0) const;
@@ -188,11 +188,11 @@ public:
     /// closer than other characters. Most of the glyphs pairs have a
     /// kerning offset of zero, though.
     ///
-    /// \param first         Unicode code point of the first character
-    /// \param second        Unicode code point of the second character
-    /// \param characterSize Reference character size
+    /// @param first         Unicode code point of the first character
+    /// @param second        Unicode code point of the second character
+    /// @param characterSize Reference character size
     ///
-    /// \return Kerning value for \a first and \a second, in pixels
+    /// @return Kerning value for \a first and \a second, in pixels
     ///
     ////////////////////////////////////////////////////////////
     float getKerning(Uint32 first, Uint32 second, unsigned int characterSize) const;
@@ -203,9 +203,9 @@ public:
     /// Line spacing is the vertical offset to apply between two
     /// consecutive lines of text.
     ///
-    /// \param characterSize Reference character size
+    /// @param characterSize Reference character size
     ///
-    /// \return Line spacing, in pixels
+    /// @return Line spacing, in pixels
     ///
     ////////////////////////////////////////////////////////////
     float getLineSpacing(unsigned int characterSize) const;
@@ -216,9 +216,9 @@ public:
     /// Underline position is the vertical offset to apply between the
     /// baseline and the underline.
     ///
-    /// \param characterSize Reference character size
+    /// @param characterSize Reference character size
     ///
-    /// \return Underline position, in pixels
+    /// @return Underline position, in pixels
     ///
     /// \see getUnderlineThickness
     ///
@@ -230,9 +230,9 @@ public:
     ///
     /// Underline thickness is the vertical size of the underline.
     ///
-    /// \param characterSize Reference character size
+    /// @param characterSize Reference character size
     ///
-    /// \return Underline thickness, in pixels
+    /// @return Underline thickness, in pixels
     ///
     /// \see getUnderlinePosition
     ///
@@ -244,11 +244,11 @@ public:
     ///
     /// The contents of the returned texture changes as more glyphs
     /// are requested, thus it is not very relevant. It is mainly
-    /// used internally by sf::Text.
+    /// used internally by _G::Text.
     ///
-    /// \param characterSize Reference character size
+    /// @param characterSize Reference character size
     ///
-    /// \return Texture containing the glyphs of the requested size
+    /// @return Texture containing the glyphs of the requested size
     ///
     ////////////////////////////////////////////////////////////
     const Texture& getTexture(unsigned int characterSize) const;
@@ -256,9 +256,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Overload of assignment operator
     ///
-    /// \param right Instance to assign
+    /// @param right Instance to assign
     ///
-    /// \return Reference to self
+    /// @return Reference to self
     ///
     ////////////////////////////////////////////////////////////
     Font& operator =(const Font& right);
@@ -306,12 +306,12 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Load a new glyph and store it in the cache
     ///
-    /// \param codePoint        Unicode code point of the character to load
-    /// \param characterSize    Reference character size
-    /// \param bold             Retrieve the bold version or the regular one?
-    /// \param outlineThickness Thickness of outline (when != 0 the glyph will not be filled)
+    /// @param codePoint        Unicode code point of the character to load
+    /// @param characterSize    Reference character size
+    /// @param bold             Retrieve the bold version or the regular one?
+    /// @param outlineThickness Thickness of outline (when != 0 the glyph will not be filled)
     ///
-    /// \return The glyph corresponding to \a codePoint and \a characterSize
+    /// @return The glyph corresponding to \a codePoint and \a characterSize
     ///
     ////////////////////////////////////////////////////////////
     Glyph loadGlyph(Uint32 codePoint, unsigned int characterSize, bool bold, float outlineThickness) const;
@@ -319,11 +319,11 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Find a suitable rectangle within the texture for a glyph
     ///
-    /// \param page   Page of glyphs to search in
-    /// \param width  Width of the rectangle
-    /// \param height Height of the rectangle
+    /// @param page   Page of glyphs to search in
+    /// @param width  Width of the rectangle
+    /// @param height Height of the rectangle
     ///
-    /// \return Found rectangle within the texture
+    /// @return Found rectangle within the texture
     ///
     ////////////////////////////////////////////////////////////
     IntRect findGlyphRect(Page& page, unsigned int width, unsigned int height) const;
@@ -331,9 +331,9 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Make sure that the given size is the current one
     ///
-    /// \param characterSize Reference character size
+    /// @param characterSize Reference character size
     ///
-    /// \return True on success, false if any error happened
+    /// @return True on success, false if any error happened
     ///
     ////////////////////////////////////////////////////////////
     bool setCurrentSize(unsigned int characterSize) const;
@@ -359,21 +359,21 @@ private:
     #endif
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_FONT_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Font
+/// \class _G::Font
 /// \ingroup graphics
 ///
 /// Fonts can be loaded from a file, from memory or from a custom
 /// stream, and supports the most common types of fonts. See
 /// the loadFromFile function for the complete list of supported formats.
 ///
-/// Once it is loaded, a sf::Font instance provides three
+/// Once it is loaded, a _G::Font instance provides three
 /// types of information about the font:
 /// \li Global metrics, such as the line spacing
 /// \li Per-glyph metrics, such as bounding box or kerning
@@ -381,28 +381,28 @@ private:
 ///
 /// Fonts alone are not very useful: they hold the font data
 /// but cannot make anything useful of it. To do so you need to
-/// use the sf::Text class, which is able to properly output text
+/// use the _G::Text class, which is able to properly output text
 /// with several options such as character size, style, color,
 /// position, rotation, etc.
 /// This separation allows more flexibility and better performances:
-/// indeed a sf::Font is a heavy resource, and any operation on it
+/// indeed a _G::Font is a heavy resource, and any operation on it
 /// is slow (often too slow for real-time applications). On the other
-/// side, a sf::Text is a lightweight object which can combine the
-/// glyphs data and metrics of a sf::Font to display any text on a
+/// side, a _G::Text is a lightweight object which can combine the
+/// glyphs data and metrics of a _G::Font to display any text on a
 /// render target.
-/// Note that it is also possible to bind several sf::Text instances
-/// to the same sf::Font.
+/// Note that it is also possible to bind several _G::Text instances
+/// to the same _G::Font.
 ///
-/// It is important to note that the sf::Text instance doesn't
+/// It is important to note that the _G::Text instance doesn't
 /// copy the font that it uses, it only keeps a reference to it.
-/// Thus, a sf::Font must not be destructed while it is
-/// used by a sf::Text (i.e. never write a function that
-/// uses a local sf::Font instance for creating a text).
+/// Thus, a _G::Font must not be destructed while it is
+/// used by a _G::Text (i.e. never write a function that
+/// uses a local _G::Font instance for creating a text).
 ///
 /// Usage example:
 /// \code
 /// // Declare a new font
-/// sf::Font font;
+/// _G::Font font;
 ///
 /// // Load it from a file
 /// if (!font.loadFromFile("arial.ttf"))
@@ -411,29 +411,29 @@ private:
 /// }
 ///
 /// // Create a text which uses our font
-/// sf::Text text1;
+/// _G::Text text1;
 /// text1.setFont(font);
 /// text1.setCharacterSize(30);
-/// text1.setStyle(sf::Text::Regular);
+/// text1.setStyle(_G::Text::Regular);
 ///
 /// // Create another text using the same font, but with different parameters
-/// sf::Text text2;
+/// _G::Text text2;
 /// text2.setFont(font);
 /// text2.setCharacterSize(50);
-/// text2.setStyle(sf::Text::Italic);
+/// text2.setStyle(_G::Text::Italic);
 /// \endcode
 ///
 /// Apart from loading font files, and passing them to instances
-/// of sf::Text, you should normally not have to deal directly
+/// of _G::Text, you should normally not have to deal directly
 /// with this class. However, it may be useful to access the
 /// font metrics or rasterized glyphs for advanced usage.
 ///
 /// Note that if the font is a bitmap font, it is not scalable,
 /// thus not all requested sizes will be available to use. This
-/// needs to be taken into consideration when using sf::Text.
+/// needs to be taken into consideration when using _G::Text.
 /// If you need to display text of a certain size, make sure the
 /// corresponding bitmap font that supports that size is used.
 ///
-/// \see sf::Text
+/// \see _G::Text
 ///
 ////////////////////////////////////////////////////////////

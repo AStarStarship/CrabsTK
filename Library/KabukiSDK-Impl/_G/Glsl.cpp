@@ -26,11 +26,11 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/Graphics/Glsl.hpp>
+#include <_G/GLSL.hpp>
 #include <algorithm>
 
 
-namespace sf
+namespace _G
 {
 namespace priv
 {
@@ -83,4 +83,4 @@ namespace priv
     }
 
 } // namespace priv
-} // namespace sf
+} // namespace _G

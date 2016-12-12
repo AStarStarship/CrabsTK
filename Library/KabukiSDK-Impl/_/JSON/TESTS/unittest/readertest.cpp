@@ -95,7 +95,7 @@ struct ParseInt64Handler : BaseReaderHandler<UTF8<>, ParseInt64Handler> {
 struct ParseUint64Handler : BaseReaderHandler<UTF8<>, ParseUint64Handler> {
     ParseUint64Handler() : step_(0), actual_() {}
     bool Default() { ADD_FAILURE(); return false; }
-    bool Uint64(uint64_t i) { actual_ = i; step_++; return true; }
+    bool uint64_t(uint64_t i) { actual_ = i; step_++; return true; }
 
     unsigned step_;
     uint64_t actual_;
@@ -1188,7 +1188,7 @@ struct IterativeParsingReaderHandler {
 
     bool Int64(int64_t) { RAPIDJSON_ASSERT(LogCount < LogCapacity); Logs[LogCount++] = LOG_INT64; return true; }
 
-    bool Uint64(uint64_t) { RAPIDJSON_ASSERT(LogCount < LogCapacity); Logs[LogCount++] = LOG_UINT64; return true; }
+    bool uint64_t(uint64_t) { RAPIDJSON_ASSERT(LogCount < LogCapacity); Logs[LogCount++] = LOG_UINT64; return true; }
 
     bool Double(double) { RAPIDJSON_ASSERT(LogCount < LogCapacity); Logs[LogCount++] = LOG_DOUBLE; return true; }
 
@@ -1371,7 +1371,7 @@ struct TerminateHandler {
     bool Int(int) { return e != 2; }
     bool Uint(unsigned) { return e != 3; }
     bool Int64(int64_t) { return e != 4; }
-    bool Uint64(uint64_t) { return e != 5;  }
+    bool uint64_t(uint64_t) { return e != 5;  }
     bool Double(double) { return e != 6; }
     bool RawNumber(const char*, SizeType, bool) { return e != 7; }
     bool String(const char*, SizeType, bool) { return e != 8; }
@@ -1540,7 +1540,7 @@ struct NumbersAsStringsHandler {
     bool Int(int) { return true; }
     bool Uint(unsigned) { return true; }
     bool Int64(int64_t) { return true; }
-    bool Uint64(uint64_t) { return true;  }
+    bool uint64_t(uint64_t) { return true;  }
     bool Double(double) { return true; }
     // 'str' is not null-terminated
     bool RawNumber(const char* str, SizeType length, bool) {

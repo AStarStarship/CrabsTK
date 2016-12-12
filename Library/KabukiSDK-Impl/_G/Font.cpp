@@ -43,10 +43,10 @@
 
 namespace
 {
-    // FreeType callbacks that operate on a sf::InputStream
+    // FreeType callbacks that operate on a _G::InputStream
     unsigned long read(FT_Stream rec, unsigned long offset, unsigned char* buffer, unsigned long count)
     {
-        sf::InputStream* stream = static_cast<sf::InputStream*>(rec->descriptor.pointer);
+        _G::InputStream* stream = static_cast<_G::InputStream*>(rec->descriptor.pointer);
         if (static_cast<unsigned long>(stream->seek(offset)) == offset)
         {
             if (count > 0)
@@ -63,7 +63,7 @@ namespace
 }
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 Font::Font() :
@@ -758,7 +758,7 @@ Font::Page::Page() :
 nextRow(3)
 {
     // Make sure that the texture is initialized by default
-    sf::Image image;
+    _G::Image image;
     image.create(128, 128, Color(255, 255, 255, 0));
 
     // Reserve a 2x2 white square for texturing underlines
@@ -771,4 +771,4 @@ nextRow(3)
     texture.setSmooth(true);
 }
 
-} // namespace sf
+} // namespace _G

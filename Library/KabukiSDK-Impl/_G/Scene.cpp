@@ -11,33 +11,34 @@ Scene::Scene ()
 {
     head = nullptr;
 
-    Reset ();
+    reset ();
 }
 
-Scene::Scene (string pipeDesc)
+Scene::Scene (const std::string& pipeDesc)
 :   head (nullptr)
 {
-    Reset ();
+    reset ();
 }
-void Scene::Delete ()
+
+void Scene::destroy ()
 {
-    head.Prev = this;
+    head.prev = this;
     //head.Next = this);//Dont need to do this
 
-    Layer.Prev = head;
-    Layer.Next = head;
+    Layer.prev = head;
+    Layer.next = head;
 }
 
-void Scene::draw (Cell& c)
+void Scene::draw (Canvas& c)
 {
     if (head == nullptr)
         return;
 
-    head->Draw (C);
-    head->Next->Draw (C);
+    head->draw (c);
+    head->next->draw (c);
 }
 
-void DeconstructScene (Layer* currentPipe)
+void Scene::deconstructScene (Layer* currentPipe)
 {
     if (currentPipe == nullptr)
         return

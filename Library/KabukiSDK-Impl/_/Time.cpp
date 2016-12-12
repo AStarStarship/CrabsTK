@@ -25,10 +25,10 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Time.hpp>
+#include <_/Time.hpp>
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 const Time Time::Zero;
@@ -257,4 +257,4 @@ Time& operator %=(Time& left, Time right)
     return left = left % right;
 }
 
-} // namespace sf
+} // namespace _

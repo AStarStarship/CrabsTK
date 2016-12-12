@@ -39,13 +39,59 @@
 #include <vector>
 
 
-namespace sf
-{
-////////////////////////////////////////////////////////////
-/// \brief Graphical text that can be drawn to a render target
-///
-////////////////////////////////////////////////////////////
+namespace _G {
+
 class SFML_GRAPHICS_API Text : public Drawable, public Transformable
+/*< Graphical text that can be drawn to a render target. 
+    \ingroup graphics
+   
+    _G::Text is a drawable class that allows to easily display
+    some text with custom style and color on a render target.
+   
+    It inherits all the functions from _G::Transformable:
+    position, rotation, scale, origin. It also adds text-specific
+    properties such as the font to use, the character size,
+    the font style (bold, italic, underlined, strike through), the
+    global color and the text to display of course.
+    It also provides convenience functions to calculate the
+    graphical size of the text, or to get the global position
+    of a given character.
+   
+    _G::Text works in combination with the _G::Font class, which
+    loads and provides the glyphs (visual characters) of a given font.
+   
+    The separation of _G::Font and _G::Text allows more flexibility
+    and better performances: indeed a _G::Font is a heavy resource,
+    and any operation on it is slow (often too slow for real-time
+    applications). On the other side, a _G::Text is a lightweight
+    object which can combine the glyphs data and metrics of a _G::Font
+    to display any text on a render target.
+   
+    It is important to note that the _G::Text instance doesn't
+    copy the font that it uses, it only keeps a reference to it.
+    Thus, a _G::Font must not be destructed while it is
+    used by a _G::Text (i.e. never write a function that
+    uses a local _G::Font instance for creating a text).
+   
+    See also the note on coordinates and undistorted rendering in _G::Transformable.
+   
+    Usage example:
+    \code
+    // Declare and load a font
+    _G::Font font;
+    font.loadFromFile("arial.ttf");
+   
+    // Create a text
+    _G::Text text("hello", font);
+    text.setCharacterSize(30);
+    text.setStyle(_G::Text::Bold);
+    text.setColor(_G::Color::Red);
+   
+    // Draw it
+    window.draw(text);
+    \endcode
+   
+    \see _G::Font, _G::Transformable */
 {
 public:
 
@@ -59,7 +105,7 @@ public:
         Bold          = 1 << 0, ///< Bold characters
         Italic        = 1 << 1, ///< Italic characters
         Underlined    = 1 << 2, ///< Underlined characters
-        StrikeThrough = 1 << 3  ///< Strike through characters
+        StrikeThrough = 1 << 3, ///< Strike through characters
     };
 
     ////////////////////////////////////////////////////////////
@@ -80,9 +126,9 @@ public:
     /// of a certain size, make sure the corresponding bitmap
     /// font that supports that size is used.
     ///
-    /// \param string         Text assigned to the string
-    /// \param font           Font used to draw the string
-    /// \param characterSize  Base size of characters, in pixels
+    /// @param string         Text assigned to the string
+    /// @param font           Font used to draw the string
+    /// @param characterSize  Base size of characters, in pixels
     ///
     ////////////////////////////////////////////////////////////
     Text(const String& string, const Font& font, unsigned int characterSize = 30);
@@ -90,7 +136,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Set the text's string
     ///
-    /// The \a string argument is a sf::String, which can
+    /// The \a string argument is a _G::String, which can
     /// automatically be constructed from standard string types.
     /// So, the following calls are all valid:
     /// \code
@@ -101,7 +147,7 @@ public:
     /// \endcode
     /// A text's string is empty by default.
     ///
-    /// \param string New string
+    /// @param string New string
     ///
     /// \see getString
     ///
@@ -118,7 +164,7 @@ public:
     /// If the font is destroyed and the text tries to
     /// use it, the behavior is undefined.
     ///
-    /// \param font New font
+    /// @param font New font
     ///
     /// \see getFont
     ///
@@ -137,7 +183,7 @@ public:
     /// of a certain size, make sure the corresponding bitmap
     /// font that supports that size is used.
     ///
-    /// \param size New character size, in pixels
+    /// @param size New character size, in pixels
     ///
     /// \see getCharacterSize
     ///
@@ -148,10 +194,10 @@ public:
     /// \brief Set the text's style
     ///
     /// You can pass a combination of one or more styles, for
-    /// example sf::Text::Bold | sf::Text::Italic.
-    /// The default style is sf::Text::Regular.
+    /// example _G::Text::Bold | _G::Text::Italic.
+    /// The default style is _G::Text::Regular.
     ///
-    /// \param style New style
+    /// @param style New style
     ///
     /// \see getStyle
     ///
@@ -165,7 +211,7 @@ public:
     /// Setting the fill color to a transparent color with an outline
     /// will cause the outline to be displayed in the fill area of the text.
     ///
-    /// \param color New fill color of the text
+    /// @param color New fill color of the text
     ///
     /// \see getFillColor
     ///
@@ -183,7 +229,7 @@ public:
     /// Setting the fill color to a transparent color with an outline
     /// will cause the outline to be displayed in the fill area of the text.
     ///
-    /// \param color New fill color of the text
+    /// @param color New fill color of the text
     ///
     /// \see getFillColor
     ///
@@ -195,7 +241,7 @@ public:
     ///
     /// By default, the text's outline color is opaque black.
     ///
-    /// \param color New outline color of the text
+    /// @param color New outline color of the text
     ///
     /// \see getOutlineColor
     ///
@@ -210,7 +256,7 @@ public:
     /// Be aware that using a negative value for the outline
     /// thickness will cause distorted rendering.
     ///
-    /// \param thickness New outline thickness, in pixels
+    /// @param thickness New outline thickness, in pixels
     ///
     /// \see getOutlineThickness
     ///
@@ -220,16 +266,16 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the text's string
     ///
-    /// The returned string is a sf::String, which can automatically
+    /// The returned string is a _G::String, which can automatically
     /// be converted to standard string types. So, the following
     /// lines of code are all valid:
     /// \code
-    /// sf::String   s1 = text.getString();
+    /// _G::String   s1 = text.getString();
     /// std::string  s2 = text.getString();
     /// std::wstring s3 = text.getString();
     /// \endcode
     ///
-    /// \return Text's string
+    /// @return Text's string
     ///
     /// \see setString
     ///
@@ -243,7 +289,7 @@ public:
     /// The returned pointer is const, which means that you
     /// cannot modify the font when you get it from this function.
     ///
-    /// \return Pointer to the text's font
+    /// @return Pointer to the text's font
     ///
     /// \see setFont
     ///
@@ -253,7 +299,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the character size
     ///
-    /// \return Size of the characters, in pixels
+    /// @return Size of the characters, in pixels
     ///
     /// \see setCharacterSize
     ///
@@ -263,7 +309,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the text's style
     ///
-    /// \return Text's style
+    /// @return Text's style
     ///
     /// \see setStyle
     ///
@@ -273,7 +319,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the fill color of the text
     ///
-    /// \return Fill color of the text
+    /// @return Fill color of the text
     ///
     /// \see setFillColor
     ///
@@ -287,7 +333,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the fill color of the text
     ///
-    /// \return Fill color of the text
+    /// @return Fill color of the text
     ///
     /// \see setFillColor
     ///
@@ -297,7 +343,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the outline color of the text
     ///
-    /// \return Outline color of the text
+    /// @return Outline color of the text
     ///
     /// \see setOutlineColor
     ///
@@ -307,7 +353,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the outline thickness of the text
     ///
-    /// \return Outline thickness of the text, in pixels
+    /// @return Outline thickness of the text, in pixels
     ///
     /// \see setOutlineThickness
     ///
@@ -324,9 +370,9 @@ public:
     /// If \a index is out of range, the position of the end of
     /// the string is returned.
     ///
-    /// \param index Index of the character
+    /// @param index Index of the character
     ///
-    /// \return Position of the character
+    /// @return Position of the character
     ///
     ////////////////////////////////////////////////////////////
     Vector2f findCharacterPos(std::size_t index) const;
@@ -340,7 +386,7 @@ public:
     /// In other words, this function returns the bounds of the
     /// entity in the entity's coordinate system.
     ///
-    /// \return Local bounding rectangle of the entity
+    /// @return Local bounding rectangle of the entity
     ///
     ////////////////////////////////////////////////////////////
     FloatRect getLocalBounds() const;
@@ -354,7 +400,7 @@ public:
     /// In other words, this function returns the bounds of the
     /// text in the global 2D world's coordinate system.
     ///
-    /// \return Global bounding rectangle of the entity
+    /// @return Global bounding rectangle of the entity
     ///
     ////////////////////////////////////////////////////////////
     FloatRect getGlobalBounds() const;
@@ -364,8 +410,8 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Draw the text to a render target
     ///
-    /// \param target Render target to draw to
-    /// \param states Current render states
+    /// @param target Render target to draw to
+    /// @param states Current render states
     ///
     ////////////////////////////////////////////////////////////
     virtual void draw(RenderTarget& target, RenderStates states) const;
@@ -395,62 +441,4 @@ private:
     mutable bool        m_geometryNeedUpdate; ///< Does the geometry need to be recomputed?
 };
 
-} // namespace sf
-
-
-#endif // SFML_TEXT_HPP
-
-
-////////////////////////////////////////////////////////////
-/// \class sf::Text
-/// \ingroup graphics
-///
-/// sf::Text is a drawable class that allows to easily display
-/// some text with custom style and color on a render target.
-///
-/// It inherits all the functions from sf::Transformable:
-/// position, rotation, scale, origin. It also adds text-specific
-/// properties such as the font to use, the character size,
-/// the font style (bold, italic, underlined, strike through), the
-/// global color and the text to display of course.
-/// It also provides convenience functions to calculate the
-/// graphical size of the text, or to get the global position
-/// of a given character.
-///
-/// sf::Text works in combination with the sf::Font class, which
-/// loads and provides the glyphs (visual characters) of a given font.
-///
-/// The separation of sf::Font and sf::Text allows more flexibility
-/// and better performances: indeed a sf::Font is a heavy resource,
-/// and any operation on it is slow (often too slow for real-time
-/// applications). On the other side, a sf::Text is a lightweight
-/// object which can combine the glyphs data and metrics of a sf::Font
-/// to display any text on a render target.
-///
-/// It is important to note that the sf::Text instance doesn't
-/// copy the font that it uses, it only keeps a reference to it.
-/// Thus, a sf::Font must not be destructed while it is
-/// used by a sf::Text (i.e. never write a function that
-/// uses a local sf::Font instance for creating a text).
-///
-/// See also the note on coordinates and undistorted rendering in sf::Transformable.
-///
-/// Usage example:
-/// \code
-/// // Declare and load a font
-/// sf::Font font;
-/// font.loadFromFile("arial.ttf");
-///
-/// // Create a text
-/// sf::Text text("hello", font);
-/// text.setCharacterSize(30);
-/// text.setStyle(sf::Text::Bold);
-/// text.setColor(sf::Color::Red);
-///
-/// // Draw it
-/// window.draw(text);
-/// \endcode
-///
-/// \see sf::Font, sf::Transformable
-///
-////////////////////////////////////////////////////////////
+} // namespace _G

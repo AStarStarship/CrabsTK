@@ -34,7 +34,7 @@ class ShadingDemo: public _G::Engine
     
     void init ();
     
-    void paint (Cell& C);
+    void draw (Cell& C);
     
     void renderShapeSolid (Entity3D renderShape, Cell& C);
     
@@ -46,17 +46,18 @@ class ShadingDemo: public _G::Engine
     
     float cosl (int degree);
     
-    float** getIdentityMatrix ();
+    float* getIdentityMatrix ();
     
-    float** getZeroMatrix ();
+    float* getZeroMatrix ();
     
     
-    class DirectionListener: public KeyListener
+    class DirectionListener: public IKeyListener
     {
-        void keyPressed (KeyEvent event)
+        void pressKey (KeyEvent e)
         {
-            switch (event.getKeyCode())
-            {  case KeyEvent.VK_UP:
+            switch (e.getKeyCode())
+            {
+                case KeyEvent.VK_UP:
                     testModel.translateShape(0,1,0);
                     break;
                 case KeyEvent.VK_DOWN:
@@ -96,15 +97,15 @@ class ShadingDemo: public _G::Engine
             
             repaint();
         }
-        void keyTyped (KeyEvent event) {}
-        void keyReleased (KeyEvent event) {}
+        void keyTyped (KeyEvent e) {}
+        void keyReleased (KeyEvent e) {}
     }
     
-    class ClickListener: public MouseListener
+    class ClickListener: public IMouseListener
     {
         void mousePressed (MouseEvent event)
         {
-            step++;
+            ++step;
             if (trip)
                 step = 0;
             if (step> = testModel.polygon.length)

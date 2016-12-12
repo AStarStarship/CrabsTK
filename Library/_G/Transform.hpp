@@ -33,7 +33,7 @@
 #include <SFML/System/Vector2.hpp>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 /// \brief Define a 3x3 transform matrix
@@ -54,15 +54,15 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct a transform from a 3x3 matrix
     ///
-    /// \param a00 Element (0, 0) of the matrix
-    /// \param a01 Element (0, 1) of the matrix
-    /// \param a02 Element (0, 2) of the matrix
-    /// \param a10 Element (1, 0) of the matrix
-    /// \param a11 Element (1, 1) of the matrix
-    /// \param a12 Element (1, 2) of the matrix
-    /// \param a20 Element (2, 0) of the matrix
-    /// \param a21 Element (2, 1) of the matrix
-    /// \param a22 Element (2, 2) of the matrix
+    /// @param a00 Element (0, 0) of the matrix
+    /// @param a01 Element (0, 1) of the matrix
+    /// @param a02 Element (0, 2) of the matrix
+    /// @param a10 Element (1, 0) of the matrix
+    /// @param a11 Element (1, 1) of the matrix
+    /// @param a12 Element (1, 2) of the matrix
+    /// @param a20 Element (2, 0) of the matrix
+    /// @param a21 Element (2, 1) of the matrix
+    /// @param a22 Element (2, 2) of the matrix
     ///
     ////////////////////////////////////////////////////////////
     Transform(float a00, float a01, float a02,
@@ -77,11 +77,11 @@ public:
     /// is directly compatible with OpenGL functions.
     ///
     /// \code
-    /// sf::Transform transform = ...;
+    /// _G::Transform transform = ...;
     /// glLoadMatrixf(transform.getMatrix());
     /// \endcode
     ///
-    /// \return Pointer to a 4x4 matrix
+    /// @return Pointer to a 4x4 matrix
     ///
     ////////////////////////////////////////////////////////////
     const float* getMatrix() const;
@@ -92,7 +92,7 @@ public:
     /// If the inverse cannot be computed, an identity transform
     /// is returned.
     ///
-    /// \return A new transform which is the inverse of self
+    /// @return A new transform which is the inverse of self
     ///
     ////////////////////////////////////////////////////////////
     Transform getInverse() const;
@@ -100,10 +100,10 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Transform a 2D point
     ///
-    /// \param x X coordinate of the point to transform
-    /// \param y Y coordinate of the point to transform
+    /// @param x X coordinate of the point to transform
+    /// @param y Y coordinate of the point to transform
     ///
-    /// \return Transformed point
+    /// @return Transformed point
     ///
     ////////////////////////////////////////////////////////////
     Vector2f transformPoint(float x, float y) const;
@@ -111,9 +111,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Transform a 2D point
     ///
-    /// \param point Point to transform
+    /// @param point Point to transform
     ///
-    /// \return Transformed point
+    /// @return Transformed point
     ///
     ////////////////////////////////////////////////////////////
     Vector2f transformPoint(const Vector2f& point) const;
@@ -127,9 +127,9 @@ public:
     /// rotation, the bounding rectangle of the transformed rectangle
     /// is returned.
     ///
-    /// \param rectangle Rectangle to transform
+    /// @param rectangle Rectangle to transform
     ///
-    /// \return Transformed rectangle
+    /// @return Transformed rectangle
     ///
     ////////////////////////////////////////////////////////////
     FloatRect transformRect(const FloatRect& rectangle) const;
@@ -141,9 +141,9 @@ public:
     /// *this followed by \a transform. Mathematically, it is
     /// equivalent to a matrix multiplication.
     ///
-    /// \param transform Transform to combine with this transform
+    /// @param transform Transform to combine with this transform
     ///
-    /// \return Reference to *this
+    /// @return Reference to *this
     ///
     ////////////////////////////////////////////////////////////
     Transform& combine(const Transform& transform);
@@ -154,14 +154,14 @@ public:
     /// This function returns a reference to *this, so that calls
     /// can be chained.
     /// \code
-    /// sf::Transform transform;
+    /// _G::Transform transform;
     /// transform.translate(100, 200).rotate(45);
     /// \endcode
     ///
-    /// \param x Offset to apply on X axis
-    /// \param y Offset to apply on Y axis
+    /// @param x Offset to apply on X axis
+    /// @param y Offset to apply on Y axis
     ///
-    /// \return Reference to *this
+    /// @return Reference to *this
     ///
     /// \see rotate, scale
     ///
@@ -174,13 +174,13 @@ public:
     /// This function returns a reference to *this, so that calls
     /// can be chained.
     /// \code
-    /// sf::Transform transform;
-    /// transform.translate(sf::Vector2f(100, 200)).rotate(45);
+    /// _G::Transform transform;
+    /// transform.translate(_G::Vector2f(100, 200)).rotate(45);
     /// \endcode
     ///
-    /// \param offset Translation offset to apply
+    /// @param offset Translation offset to apply
     ///
-    /// \return Reference to *this
+    /// @return Reference to *this
     ///
     /// \see rotate, scale
     ///
@@ -193,13 +193,13 @@ public:
     /// This function returns a reference to *this, so that calls
     /// can be chained.
     /// \code
-    /// sf::Transform transform;
+    /// _G::Transform transform;
     /// transform.rotate(90).translate(50, 20);
     /// \endcode
     ///
-    /// \param angle Rotation angle, in degrees
+    /// @param angle Rotation angle, in degrees
     ///
-    /// \return Reference to *this
+    /// @return Reference to *this
     ///
     /// \see translate, scale
     ///
@@ -217,15 +217,15 @@ public:
     /// This function returns a reference to *this, so that calls
     /// can be chained.
     /// \code
-    /// sf::Transform transform;
+    /// _G::Transform transform;
     /// transform.rotate(90, 8, 3).translate(50, 20);
     /// \endcode
     ///
-    /// \param angle Rotation angle, in degrees
-    /// \param centerX X coordinate of the center of rotation
-    /// \param centerY Y coordinate of the center of rotation
+    /// @param angle Rotation angle, in degrees
+    /// @param centerX X coordinate of the center of rotation
+    /// @param centerY Y coordinate of the center of rotation
     ///
-    /// \return Reference to *this
+    /// @return Reference to *this
     ///
     /// \see translate, scale
     ///
@@ -243,14 +243,14 @@ public:
     /// This function returns a reference to *this, so that calls
     /// can be chained.
     /// \code
-    /// sf::Transform transform;
-    /// transform.rotate(90, sf::Vector2f(8, 3)).translate(sf::Vector2f(50, 20));
+    /// _G::Transform transform;
+    /// transform.rotate(90, _G::Vector2f(8, 3)).translate(_G::Vector2f(50, 20));
     /// \endcode
     ///
-    /// \param angle Rotation angle, in degrees
-    /// \param center Center of rotation
+    /// @param angle Rotation angle, in degrees
+    /// @param center Center of rotation
     ///
-    /// \return Reference to *this
+    /// @return Reference to *this
     ///
     /// \see translate, scale
     ///
@@ -263,14 +263,14 @@ public:
     /// This function returns a reference to *this, so that calls
     /// can be chained.
     /// \code
-    /// sf::Transform transform;
+    /// _G::Transform transform;
     /// transform.scale(2, 1).rotate(45);
     /// \endcode
     ///
-    /// \param scaleX Scaling factor on the X axis
-    /// \param scaleY Scaling factor on the Y axis
+    /// @param scaleX Scaling factor on the X axis
+    /// @param scaleY Scaling factor on the Y axis
     ///
-    /// \return Reference to *this
+    /// @return Reference to *this
     ///
     /// \see translate, rotate
     ///
@@ -288,16 +288,16 @@ public:
     /// This function returns a reference to *this, so that calls
     /// can be chained.
     /// \code
-    /// sf::Transform transform;
+    /// _G::Transform transform;
     /// transform.scale(2, 1, 8, 3).rotate(45);
     /// \endcode
     ///
-    /// \param scaleX Scaling factor on X axis
-    /// \param scaleY Scaling factor on Y axis
-    /// \param centerX X coordinate of the center of scaling
-    /// \param centerY Y coordinate of the center of scaling
+    /// @param scaleX Scaling factor on X axis
+    /// @param scaleY Scaling factor on Y axis
+    /// @param centerX X coordinate of the center of scaling
+    /// @param centerY Y coordinate of the center of scaling
     ///
-    /// \return Reference to *this
+    /// @return Reference to *this
     ///
     /// \see translate, rotate
     ///
@@ -310,13 +310,13 @@ public:
     /// This function returns a reference to *this, so that calls
     /// can be chained.
     /// \code
-    /// sf::Transform transform;
-    /// transform.scale(sf::Vector2f(2, 1)).rotate(45);
+    /// _G::Transform transform;
+    /// transform.scale(_G::Vector2f(2, 1)).rotate(45);
     /// \endcode
     ///
-    /// \param factors Scaling factors
+    /// @param factors Scaling factors
     ///
-    /// \return Reference to *this
+    /// @return Reference to *this
     ///
     /// \see translate, rotate
     ///
@@ -334,14 +334,14 @@ public:
     /// This function returns a reference to *this, so that calls
     /// can be chained.
     /// \code
-    /// sf::Transform transform;
-    /// transform.scale(sf::Vector2f(2, 1), sf::Vector2f(8, 3)).rotate(45);
+    /// _G::Transform transform;
+    /// transform.scale(_G::Vector2f(2, 1), _G::Vector2f(8, 3)).rotate(45);
     /// \endcode
     ///
-    /// \param factors Scaling factors
-    /// \param center Center of scaling
+    /// @param factors Scaling factors
+    /// @param center Center of scaling
     ///
-    /// \return Reference to *this
+    /// @return Reference to *this
     ///
     /// \see translate, rotate
     ///
@@ -362,58 +362,58 @@ private:
 };
 
 ////////////////////////////////////////////////////////////
-/// \relates sf::Transform
+/// \relates _G::Transform
 /// \brief Overload of binary operator * to combine two transforms
 ///
 /// This call is equivalent to calling Transform(left).combine(right).
 ///
-/// \param left Left operand (the first transform)
-/// \param right Right operand (the second transform)
+/// @param left Left operand (the first transform)
+/// @param right Right operand (the second transform)
 ///
-/// \return New combined transform
+/// @return New combined transform
 ///
 ////////////////////////////////////////////////////////////
 SFML_GRAPHICS_API Transform operator *(const Transform& left, const Transform& right);
 
 ////////////////////////////////////////////////////////////
-/// \relates sf::Transform
+/// \relates _G::Transform
 /// \brief Overload of binary operator *= to combine two transforms
 ///
 /// This call is equivalent to calling left.combine(right).
 ///
-/// \param left Left operand (the first transform)
-/// \param right Right operand (the second transform)
+/// @param left Left operand (the first transform)
+/// @param right Right operand (the second transform)
 ///
-/// \return The combined transform
+/// @return The combined transform
 ///
 ////////////////////////////////////////////////////////////
 SFML_GRAPHICS_API Transform& operator *=(Transform& left, const Transform& right);
 
 ////////////////////////////////////////////////////////////
-/// \relates sf::Transform
+/// \relates _G::Transform
 /// \brief Overload of binary operator * to transform a point
 ///
 /// This call is equivalent to calling left.transformPoint(right).
 ///
-/// \param left Left operand (the transform)
-/// \param right Right operand (the point to transform)
+/// @param left Left operand (the transform)
+/// @param right Right operand (the point to transform)
 ///
-/// \return New transformed point
+/// @return New transformed point
 ///
 ////////////////////////////////////////////////////////////
 SFML_GRAPHICS_API Vector2f operator *(const Transform& left, const Vector2f& right);
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_TRANSFORM_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Transform
+/// \class _G::Transform
 /// \ingroup graphics
 ///
-/// A sf::Transform specifies how to translate, rotate, scale,
+/// A _G::Transform specifies how to translate, rotate, scale,
 /// shear, project, whatever things. In mathematical terms, it defines
 /// how to transform a coordinate system into another.
 ///
@@ -430,21 +430,21 @@ SFML_GRAPHICS_API Vector2f operator *(const Transform& left, const Vector2f& rig
 /// Example:
 /// \code
 /// // define a translation transform
-/// sf::Transform translation;
+/// _G::Transform translation;
 /// translation.translate(20, 50);
 ///
 /// // define a rotation transform
-/// sf::Transform rotation;
+/// _G::Transform rotation;
 /// rotation.rotate(45);
 ///
 /// // combine them
-/// sf::Transform transform = translation * rotation;
+/// _G::Transform transform = translation * rotation;
 ///
 /// // use the result to transform stuff...
-/// sf::Vector2f point = transform.transformPoint(10, 20);
-/// sf::FloatRect rect = transform.transformRect(sf::FloatRect(0, 0, 10, 100));
+/// _G::Vector2f point = transform.transformPoint(10, 20);
+/// _G::FloatRect rect = transform.transformRect(_G::FloatRect(0, 0, 10, 100));
 /// \endcode
 ///
-/// \see sf::Transformable, sf::RenderStates
+/// \see _G::Transformable, _G::RenderStates
 ///
 ////////////////////////////////////////////////////////////

@@ -29,7 +29,7 @@
 #include <cstddef>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 // We cannot use the default constructor here, because it accesses BlendAlpha, which is also global (and dynamically
@@ -99,4 +99,4 @@ shader   (theShader)
 {
 }
 
-} // namespace sf
+} // namespace _G

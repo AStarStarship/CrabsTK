@@ -25,14 +25,14 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Err.hpp>
+#include <_/Err.hpp>
 #include <streambuf>
 #include <cstdio>
 
 
 namespace
 {
-// This class will be used as the default streambuf of sf::Err,
+// This class will be used as the default streambuf of _::Err,
 // it outputs to stderr by default (to keep the default behavior)
 class DefaultErrStreamBuf : public std::streambuf
 {
@@ -95,7 +95,7 @@ private:
 };
 }
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 std::ostream& err()
@@ -107,4 +107,4 @@ std::ostream& err()
 }
 
 
-} // namespace sf
+} // namespace _

@@ -26,7 +26,7 @@
 #define SFML_VECTOR2_HPP
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 /// \brief Utility template class for manipulating
@@ -49,8 +49,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct the vector from its coordinates
     ///
-    /// \param X X coordinate
-    /// \param Y Y coordinate
+    /// @param X X coordinate
+    /// @param Y Y coordinate
     ///
     ////////////////////////////////////////////////////////////
     Vector2(T X, T Y);
@@ -63,7 +63,7 @@ public:
     /// A call to this constructor will fail to compile if U
     /// is not convertible to T.
     ///
-    /// \param vector Vector to convert
+    /// @param vector Vector to convert
     ///
     ////////////////////////////////////////////////////////////
     template <typename U>
@@ -80,9 +80,9 @@ public:
 /// \relates Vector2
 /// \brief Overload of unary operator -
 ///
-/// \param right Vector to negate
+/// @param right Vector to negate
 ///
-/// \return Memberwise opposite of the vector
+/// @return Memberwise opposite of the vector
 ///
 ////////////////////////////////////////////////////////////
 template <typename T>
@@ -95,10 +95,10 @@ Vector2<T> operator -(const Vector2<T>& right);
 /// This operator performs a memberwise addition of both vectors,
 /// and assigns the result to \a left.
 ///
-/// \param left  Left operand (a vector)
-/// \param right Right operand (a vector)
+/// @param left  Left operand (a vector)
+/// @param right Right operand (a vector)
 ///
-/// \return Reference to \a left
+/// @return Reference to \a left
 ///
 ////////////////////////////////////////////////////////////
 template <typename T>
@@ -111,10 +111,10 @@ Vector2<T>& operator +=(Vector2<T>& left, const Vector2<T>& right);
 /// This operator performs a memberwise subtraction of both vectors,
 /// and assigns the result to \a left.
 ///
-/// \param left  Left operand (a vector)
-/// \param right Right operand (a vector)
+/// @param left  Left operand (a vector)
+/// @param right Right operand (a vector)
 ///
-/// \return Reference to \a left
+/// @return Reference to \a left
 ///
 ////////////////////////////////////////////////////////////
 template <typename T>
@@ -124,10 +124,10 @@ Vector2<T>& operator -=(Vector2<T>& left, const Vector2<T>& right);
 /// \relates Vector2
 /// \brief Overload of binary operator +
 ///
-/// \param left  Left operand (a vector)
-/// \param right Right operand (a vector)
+/// @param left  Left operand (a vector)
+/// @param right Right operand (a vector)
 ///
-/// \return Memberwise addition of both vectors
+/// @return Memberwise addition of both vectors
 ///
 ////////////////////////////////////////////////////////////
 template <typename T>
@@ -137,10 +137,10 @@ Vector2<T> operator +(const Vector2<T>& left, const Vector2<T>& right);
 /// \relates Vector2
 /// \brief Overload of binary operator -
 ///
-/// \param left  Left operand (a vector)
-/// \param right Right operand (a vector)
+/// @param left  Left operand (a vector)
+/// @param right Right operand (a vector)
 ///
-/// \return Memberwise subtraction of both vectors
+/// @return Memberwise subtraction of both vectors
 ///
 ////////////////////////////////////////////////////////////
 template <typename T>
@@ -150,10 +150,10 @@ Vector2<T> operator -(const Vector2<T>& left, const Vector2<T>& right);
 /// \relates Vector2
 /// \brief Overload of binary operator *
 ///
-/// \param left  Left operand (a vector)
-/// \param right Right operand (a scalar value)
+/// @param left  Left operand (a vector)
+/// @param right Right operand (a scalar value)
 ///
-/// \return Memberwise multiplication by \a right
+/// @return Memberwise multiplication by \a right
 ///
 ////////////////////////////////////////////////////////////
 template <typename T>
@@ -163,10 +163,10 @@ Vector2<T> operator *(const Vector2<T>& left, T right);
 /// \relates Vector2
 /// \brief Overload of binary operator *
 ///
-/// \param left  Left operand (a scalar value)
-/// \param right Right operand (a vector)
+/// @param left  Left operand (a scalar value)
+/// @param right Right operand (a vector)
 ///
-/// \return Memberwise multiplication by \a left
+/// @return Memberwise multiplication by \a left
 ///
 ////////////////////////////////////////////////////////////
 template <typename T>
@@ -179,10 +179,10 @@ Vector2<T> operator *(T left, const Vector2<T>& right);
 /// This operator performs a memberwise multiplication by \a right,
 /// and assigns the result to \a left.
 ///
-/// \param left  Left operand (a vector)
-/// \param right Right operand (a scalar value)
+/// @param left  Left operand (a vector)
+/// @param right Right operand (a scalar value)
 ///
-/// \return Reference to \a left
+/// @return Reference to \a left
 ///
 ////////////////////////////////////////////////////////////
 template <typename T>
@@ -192,10 +192,10 @@ Vector2<T>& operator *=(Vector2<T>& left, T right);
 /// \relates Vector2
 /// \brief Overload of binary operator /
 ///
-/// \param left  Left operand (a vector)
-/// \param right Right operand (a scalar value)
+/// @param left  Left operand (a vector)
+/// @param right Right operand (a scalar value)
 ///
-/// \return Memberwise division by \a right
+/// @return Memberwise division by \a right
 ///
 ////////////////////////////////////////////////////////////
 template <typename T>
@@ -208,10 +208,10 @@ Vector2<T> operator /(const Vector2<T>& left, T right);
 /// This operator performs a memberwise division by \a right,
 /// and assigns the result to \a left.
 ///
-/// \param left  Left operand (a vector)
-/// \param right Right operand (a scalar value)
+/// @param left  Left operand (a vector)
+/// @param right Right operand (a scalar value)
 ///
-/// \return Reference to \a left
+/// @return Reference to \a left
 ///
 ////////////////////////////////////////////////////////////
 template <typename T>
@@ -223,10 +223,10 @@ Vector2<T>& operator /=(Vector2<T>& left, T right);
 ///
 /// This operator compares strict equality between two vectors.
 ///
-/// \param left  Left operand (a vector)
-/// \param right Right operand (a vector)
+/// @param left  Left operand (a vector)
+/// @param right Right operand (a vector)
 ///
-/// \return True if \a left is equal to \a right
+/// @return True if \a left is equal to \a right
 ///
 ////////////////////////////////////////////////////////////
 template <typename T>
@@ -238,33 +238,33 @@ bool operator ==(const Vector2<T>& left, const Vector2<T>& right);
 ///
 /// This operator compares strict difference between two vectors.
 ///
-/// \param left  Left operand (a vector)
-/// \param right Right operand (a vector)
+/// @param left  Left operand (a vector)
+/// @param right Right operand (a vector)
 ///
-/// \return True if \a left is not equal to \a right
+/// @return True if \a left is not equal to \a right
 ///
 ////////////////////////////////////////////////////////////
 template <typename T>
 bool operator !=(const Vector2<T>& left, const Vector2<T>& right);
 
-#include <SFML/System/Vector2.inl>
+#include <_/Vector2.inl>
 
 // Define the most common types
 typedef Vector2<int>          Vector2i;
 typedef Vector2<unsigned int> Vector2u;
 typedef Vector2<float>        Vector2f;
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_VECTOR2_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Vector2
+/// \class _::Vector2
 /// \ingroup system
 ///
-/// sf::Vector2 is a simple class that defines a mathematical
+/// _::Vector2 is a simple class that defines a mathematical
 /// vector with two coordinates (x and y). It can be used to
 /// represent anything that has two dimensions: a size, a point,
 /// a velocity, etc.
@@ -273,29 +273,29 @@ typedef Vector2<float>        Vector2f;
 /// can be any type that supports arithmetic operations (+, -, /, *)
 /// and comparisons (==, !=), for example int or float.
 ///
-/// You generally don't have to care about the templated form (sf::Vector2<T>),
+/// You generally don't have to care about the templated form (_::Vector2<T>),
 /// the most common specializations have special typedefs:
-/// \li sf::Vector2<float> is sf::Vector2f
-/// \li sf::Vector2<int> is sf::Vector2i
-/// \li sf::Vector2<unsigned int> is sf::Vector2u
+/// \li _::Vector2<float> is _::Vector2f
+/// \li _::Vector2<int> is _::Vector2i
+/// \li _::Vector2<unsigned int> is _::Vector2u
 ///
-/// The sf::Vector2 class has a small and simple interface, its x and y members
+/// The _::Vector2 class has a small and simple interface, its x and y members
 /// can be accessed directly (there are no accessors like setX(), getX()) and it
 /// contains no mathematical function like dot product, cross product, length, etc.
 ///
 /// Usage example:
 /// \code
-/// sf::Vector2f v1(16.5f, 24.f);
+/// _::Vector2f v1(16.5f, 24.f);
 /// v1.x = 18.2f;
 /// float y = v1.y;
 ///
-/// sf::Vector2f v2 = v1 * 5.f;
-/// sf::Vector2f v3;
+/// _::Vector2f v2 = v1 * 5.f;
+/// _::Vector2f v3;
 /// v3 = v1 + v2;
 ///
 /// bool different = (v2 != v3);
 /// \endcode
 ///
-/// Note: for 3-dimensional vectors, see sf::Vector3.
+/// Note: for 3-dimensional vectors, see _::Vector3.
 ///
 ////////////////////////////////////////////////////////////

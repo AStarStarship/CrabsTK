@@ -34,7 +34,7 @@
 #include <SFML/System/Vector3.hpp>
 
 
-namespace sf
+namespace _G
 {
 namespace priv
 {
@@ -45,7 +45,7 @@ namespace priv
     template <typename T>
     struct Vector4;
 
-#include <SFML/Graphics/Glsl.inl>
+#include <SFML/Graphics/GLSL.inl>
 
 } // namespace priv
 
@@ -54,7 +54,7 @@ namespace priv
 /// \brief Namespace with GLSL types
 ///
 ////////////////////////////////////////////////////////////
-namespace Glsl
+namespace GLSL
 {
 
     ////////////////////////////////////////////////////////////
@@ -98,13 +98,13 @@ namespace Glsl
     ////////////////////////////////////////////////////////////
     /// \brief 4D float vector (\p vec4 in GLSL)
     ///
-    /// 4D float vectors can be implicitly converted from sf::Color
+    /// 4D float vectors can be implicitly converted from _G::Color
     /// instances. Each color channel is normalized from integers
     /// in [0, 255] to floating point values in [0, 1].
     /// \code
-    /// sf::Glsl::Vec4 zeroVector;
-    /// sf::Glsl::Vec4 vector(1.f, 2.f, 3.f, 4.f);
-    /// sf::Glsl::Vec4 color = sf::Color::Cyan;
+    /// _G::GLSL::Vec4 zeroVector;
+    /// _G::GLSL::Vec4 vector(1.f, 2.f, 3.f, 4.f);
+    /// _G::GLSL::Vec4 color = _G::Color::Cyan;
     /// \endcode
     ////////////////////////////////////////////////////////////
     typedef implementation-defined Vec4;
@@ -112,13 +112,13 @@ namespace Glsl
     ////////////////////////////////////////////////////////////
     /// \brief 4D int vector (\p ivec4 in GLSL)
     ///
-    /// 4D int vectors can be implicitly converted from sf::Color
+    /// 4D int vectors can be implicitly converted from _G::Color
     /// instances. Each color channel remains unchanged inside
     /// the integer interval [0, 255].
     /// \code
-    /// sf::Glsl::Ivec4 zeroVector;
-    /// sf::Glsl::Ivec4 vector(1, 2, 3, 4);
-    /// sf::Glsl::Ivec4 color = sf::Color::Cyan;
+    /// _G::GLSL::Ivec4 zeroVector;
+    /// _G::GLSL::Ivec4 vector(1, 2, 3, 4);
+    /// _G::GLSL::Ivec4 color = _G::Color::Cyan;
     /// \endcode
     ////////////////////////////////////////////////////////////
     typedef implementation-defined Ivec4;
@@ -143,13 +143,13 @@ namespace Glsl
     ///     x, y, 1
     /// };
     ///
-    /// sf::Glsl::Mat3 matrix(array);
+    /// _G::GLSL::Mat3 matrix(array);
     /// \endcode
     ///
-    /// Mat3 can also be implicitly converted from sf::Transform:
+    /// Mat3 can also be implicitly converted from _G::Transform:
     /// \code
-    /// sf::Transform transform;
-    /// sf::Glsl::Mat3 matrix = transform;
+    /// _G::Transform transform;
+    /// _G::GLSL::Mat3 matrix = transform;
     /// \endcode
     ////////////////////////////////////////////////////////////
     typedef implementation-defined Mat3;
@@ -169,13 +169,13 @@ namespace Glsl
     ///     x, y, z, 1
     /// };
     ///
-    /// sf::Glsl::Mat4 matrix(array);
+    /// _G::GLSL::Mat4 matrix(array);
     /// \endcode
     ///
-    /// Mat4 can also be implicitly converted from sf::Transform:
+    /// Mat4 can also be implicitly converted from _G::Transform:
     /// \code
-    /// sf::Transform transform;
-    /// sf::Glsl::Mat4 matrix = transform;
+    /// _G::Transform transform;
+    /// _G::GLSL::Mat4 matrix = transform;
     /// \endcode
     ////////////////////////////////////////////////////////////
     typedef implementation-defined Mat4;
@@ -190,24 +190,24 @@ namespace Glsl
 
 #endif // SFML_DOXYGEN
 
-} // namespace Glsl
-} // namespace sf
+} // namespace GLSL
+} // namespace _G
 
 #endif // SFML_GLSL_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \namespace sf::Glsl
+/// \namespace _G::GLSL
 /// \ingroup graphics
 ///
-/// \details The sf::Glsl namespace contains types that match
+/// \details The _G::GLSL namespace contains types that match
 /// their equivalents in GLSL, the OpenGL shading language.
-/// These types are exclusively used by the sf::Shader class.
+/// These types are exclusively used by the _G::Shader class.
 ///
-/// Types that already exist in SFML, such as \ref sf::Vector2<T>
-/// and \ref sf::Vector3<T>, are reused as typedefs, so you can use
+/// Types that already exist in SFML, such as \ref _G::Vector2<T>
+/// and \ref _G::Vector3<T>, are reused as typedefs, so you can use
 /// the types in this namespace as well as the original ones.
-/// Others are newly defined, such as Glsl::Vec4 or Glsl::Mat3. Their
+/// Others are newly defined, such as GLSL::Vec4 or GLSL::Mat3. Their
 /// actual type is an implementation detail and should not be used.
 ///
 /// All vector types support a default constructor that
@@ -219,9 +219,9 @@ namespace Glsl
 /// All matrix types support a constructor with a float*
 /// parameter that points to a float array of the appropriate
 /// size (that is, 9 in a 3x3 matrix, 16 in a 4x4 matrix).
-/// Furthermore, they can be converted from sf::Transform
+/// Furthermore, they can be converted from _G::Transform
 /// objects.
 ///
-/// \see sf::Shader
+/// \see _G::Shader
 ///
 ////////////////////////////////////////////////////////////

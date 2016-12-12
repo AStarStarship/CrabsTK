@@ -30,7 +30,7 @@
 ////////////////////////////////////////////////////////////
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/EglContext.hpp>
-#include <SFML/System/Mutex.hpp>
+#include <_/Mutex.hpp>
 #include <android/native_activity.h>
 #include <android/configuration.h>
 #include <EGL/egl.h>
@@ -50,7 +50,7 @@ private:
     std::string m_message;
 };
 
-namespace sf
+namespace _
 {
 namespace priv
 {
@@ -95,7 +95,7 @@ struct ActivityStates
 SFML_SYSTEM_API ActivityStates* getActivity(ActivityStates* initializedStates=NULL, bool reset=false);
 
 } // namespace priv
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_ACTIVITY_HPP

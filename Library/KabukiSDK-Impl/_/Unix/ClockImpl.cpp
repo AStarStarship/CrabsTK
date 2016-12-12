@@ -25,7 +25,7 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Unix/ClockImpl.hpp>
+#include <_/Unix/ClockImpl.hpp>
 #if defined(SFML_SYSTEM_MACOS) || defined(SFML_SYSTEM_IOS)
     #include <mach/mach_time.h>
 #else
@@ -33,7 +33,7 @@
 #endif
 
 
-namespace sf
+namespace _
 {
 namespace priv
 {
@@ -46,19 +46,19 @@ Time ClockImpl::getCurrentTime()
     static mach_timebase_info_data_t frequency = {0, 0};
     if (frequency.denom == 0)
         mach_timebase_info(&frequency);
-    Uint64 nanoseconds = mach_absolute_time() * frequency.numer / frequency.denom;
-    return sf::microseconds(nanoseconds / 1000);
+    uint64_t nanoseconds = mach_absolute_time() * frequency.numer / frequency.denom;
+    return _::microseconds(nanoseconds / 1000);
 
 #else
 
     // POSIX implementation
     timespec time;
     clock_gettime(CLOCK_MONOTONIC, &time);
-    return sf::microseconds(static_cast<Uint64>(time.tv_sec) * 1000000 + time.tv_nsec / 1000);
+    return _::microseconds(static_cast<uint64_t>(time.tv_sec) * 1000000 + time.tv_nsec / 1000);
 
 #endif
 }
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _

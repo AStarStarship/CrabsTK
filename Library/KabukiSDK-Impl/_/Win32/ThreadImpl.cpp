@@ -25,14 +25,14 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Win32/ThreadImpl.hpp>
-#include <SFML/System/Thread.hpp>
-#include <SFML/System/Err.hpp>
+#include <_/Win32/ThreadImpl.hpp>
+#include <_/Thread.hpp>
+#include <_/Err.hpp>
 #include <cassert>
 #include <process.h>
 
 
-namespace sf
+namespace _
 {
 namespace priv
 {
@@ -90,4 +90,4 @@ unsigned int __stdcall ThreadImpl::entryPoint(void* userData)
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _

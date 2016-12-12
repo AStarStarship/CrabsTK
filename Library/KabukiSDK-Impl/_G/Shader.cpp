@@ -56,8 +56,8 @@
 
 namespace
 {
-    sf::Mutex maxTextureUnitsMutex;
-    sf::Mutex isAvailableMutex;
+    _G::Mutex maxTextureUnitsMutex;
+    _G::Mutex isAvailableMutex;
 
     GLint checkMaxTextureUnits()
     {
@@ -71,7 +71,7 @@ namespace
     GLint getMaxTextureUnits()
     {
         // TODO: Remove this lock when it becomes unnecessary in C++11
-        sf::Lock lock(maxTextureUnitsMutex);
+        _G::Lock lock(maxTextureUnitsMutex);
 
         static GLint maxUnits = checkMaxTextureUnits();
 
@@ -102,15 +102,15 @@ namespace
     }
 
     // Read the contents of a stream into an array of char
-    bool getStreamContents(sf::InputStream& stream, std::vector<char>& buffer)
+    bool getStreamContents(_G::InputStream& stream, std::vector<char>& buffer)
     {
         bool success = true;
-        sf::Int64 size = stream.getSize();
+        _G::Int64 size = stream.getSize();
         if (size > 0)
         {
             buffer.resize(static_cast<std::size_t>(size));
             stream.seek(0);
-            sf::Int64 read = stream.read(&buffer[0], size);
+            _G::Int64 read = stream.read(&buffer[0], size);
             success = (read == size);
         }
         buffer.push_back('\0');
@@ -119,7 +119,7 @@ namespace
 
     // Transforms an array of 2D vectors into a contiguous array of scalars
     template <typename T>
-    std::vector<T> flatten(const sf::Vector2<T>* vectorArray, std::size_t length)
+    std::vector<T> flatten(const _G::Vector2<T>* vectorArray, std::size_t length)
     {
         const std::size_t vectorSize = 2;
 
@@ -135,7 +135,7 @@ namespace
 
     // Transforms an array of 3D vectors into a contiguous array of scalars
     template <typename T>
-    std::vector<T> flatten(const sf::Vector3<T>* vectorArray, std::size_t length)
+    std::vector<T> flatten(const _G::Vector3<T>* vectorArray, std::size_t length)
     {
         const std::size_t vectorSize = 3;
 
@@ -152,7 +152,7 @@ namespace
 
     // Transforms an array of 4D vectors into a contiguous array of scalars
     template <typename T>
-    std::vector<T> flatten(const sf::priv::Vector4<T>* vectorArray, std::size_t length)
+    std::vector<T> flatten(const _G::priv::Vector4<T>* vectorArray, std::size_t length)
     {
         const std::size_t vectorSize = 4;
 
@@ -170,7 +170,7 @@ namespace
 }
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 Shader::CurrentTextureType Shader::CurrentTexture;
@@ -213,8 +213,8 @@ struct Shader::UniformBinder : private NonCopyable
 
     TransientContextLock lock;           ///< Lock to keep context active while uniform is bound
     GLEXT_GLhandle       savedProgram;   ///< Handle to the previously active program object
-    GLEXT_GLhandle       currentProgram; ///< Handle to the program object of the modified sf::Shader instance
-    GLint                location;       ///< Uniform location, used by the surrounding sf::Shader code
+    GLEXT_GLhandle       currentProgram; ///< Handle to the program object of the modified _G::Shader instance
+    GLint                location;       ///< Uniform location, used by the surrounding _G::Shader code
 };
 
 
@@ -785,7 +785,7 @@ bool Shader::isAvailable()
         TransientContextLock contextLock;
 
         // Make sure that extensions are initialized
-        sf::priv::ensureExtensionsInit();
+        _G::priv::ensureExtensionsInit();
 
         available = GLEXT_multitexture         &&
                     GLEXT_shading_language_100 &&
@@ -813,7 +813,7 @@ bool Shader::isGeometryAvailable()
         TransientContextLock contextLock;
 
         // Make sure that extensions are initialized
-        sf::priv::ensureExtensionsInit();
+        _G::priv::ensureExtensionsInit();
 
         available = isAvailable() && GLEXT_geometry_shader4;
     }
@@ -1009,13 +1009,13 @@ int Shader::getUniformLocation(const std::string& name)
     }
 }
 
-} // namespace sf
+} // namespace _G
 
 #else // SFML_OPENGL_ES
 
 // OpenGL ES 1 doesn't support GLSL shaders at all, we have to provide an empty implementation
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 Shader::CurrentTextureType Shader::CurrentTexture;
@@ -1329,6 +1329,6 @@ void Shader::bindTextures() const
 {
 }
 
-} // namespace sf
+} // namespace _G
 
 #endif // SFML_OPENGL_ES

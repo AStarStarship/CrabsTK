@@ -32,7 +32,7 @@
 #include <SFML/Graphics/GLExtensions.hpp>
 
 
-namespace sf
+namespace _G
 {
 namespace priv
 {
@@ -43,7 +43,7 @@ namespace priv
 
     // In debug mode, perform a test on every OpenGL call
     // The do-while loop is needed so that glCheck can be used as a single statement in if/else branches
-    #define glCheck(expr) do { expr; sf::priv::glCheckError(__FILE__, __LINE__, #expr); } while (false)
+    #define glCheck(expr) do { expr; _G::priv::glCheckError(__FILE__, __LINE__, #expr); } while (false)
 
 #else
 
@@ -55,16 +55,16 @@ namespace priv
 ////////////////////////////////////////////////////////////
 /// \brief Check the last OpenGL error
 ///
-/// \param file Source file where the call is located
-/// \param line Line number of the source file where the call is located
-/// \param expression The evaluated expression as a string
+/// @param file Source file where the call is located
+/// @param line Line number of the source file where the call is located
+/// @param expression The evaluated expression as a string
 ///
 ////////////////////////////////////////////////////////////
 void glCheckError(const char* file, unsigned int line, const char* expression);
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_GLCHECK_HPP

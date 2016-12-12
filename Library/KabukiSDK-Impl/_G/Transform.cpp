@@ -29,7 +29,7 @@
 #include <cmath>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 const Transform Transform::Identity;
@@ -269,4 +269,4 @@ Vector2f operator *(const Transform& left, const Vector2f& right)
     return left.transformPoint(right);
 }
 
-} // namespace sf
+} // namespace _G

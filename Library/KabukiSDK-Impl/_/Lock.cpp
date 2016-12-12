@@ -25,11 +25,11 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/Lock.hpp>
-#include <SFML/System/Mutex.hpp>
+#include <_/Lock.hpp>
+#include <_/Mutex.hpp>
 
 
-namespace sf
+namespace _
 {
 ////////////////////////////////////////////////////////////
 Lock::Lock(Mutex& mutex) :
@@ -45,4 +45,4 @@ Lock::~Lock()
     m_mutex.unlock();
 }
 
-} // namespace sf
+} // namespace _

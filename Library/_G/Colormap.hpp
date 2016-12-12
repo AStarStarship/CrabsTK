@@ -18,29 +18,29 @@ class _KabukiSDK Colormap : Image
 
     Colormap ();
     
-    void Create (int width, int height, Color bgColor);
+    void create (int width, int height, Color bgColor);
     
-    void Update ();
+    void update ();
 
-    Color GetPixel (int x, int y);
+    Color getPixel (int x, int y);
     
     bool SetPixel (int x, int y, Color color);
     
-    void Draw (Cell& c);
+    void draw (Cell& c);
     
-    void Draw (Cell& c, int leftEdge, int topEdge);
+    void draw (Cell& c, int leftEdge, int topEdge);
     
     //bool LoadGLTexture ();
     
-    void Print (Terminal& Slot);
+    void print (Terminal& io);
     /*< Prints this object to a terminal. */
 
     private:
 
     bool isLoaded;
-    int bpp;
-
-    Color* colorMap;
+    int bpp;            //< The bits per pixel.
+    Color* colorMap;    //< An array of colors.
+    const char* 
 };
 
 }   //< _G

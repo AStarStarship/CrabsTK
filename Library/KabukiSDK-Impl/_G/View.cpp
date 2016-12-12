@@ -29,7 +29,7 @@
 #include <cmath>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 View::View() :
@@ -237,4 +237,4 @@ const Transform& View::getInverseTransform() const
     return m_inverseTransform;
 }
 
-} // namespace sf
+} // namespace _G

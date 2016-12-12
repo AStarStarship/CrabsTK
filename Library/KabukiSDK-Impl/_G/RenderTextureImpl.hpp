@@ -22,68 +22,41 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_RENDERTEXTUREIMPL_HPP
-#define SFML_RENDERTEXTUREIMPL_HPP
+#pragma once
 
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
 #include <SFML/System/NonCopyable.hpp>
 
 
-namespace sf
-{
-namespace priv
-{
-////////////////////////////////////////////////////////////
-/// \brief Abstract base class for render-texture implementations
-///
-////////////////////////////////////////////////////////////
+namespace _G { namespace priv {
+
 class RenderTextureImpl : NonCopyable
+/*< Abstract base class for render-texture implementations. */
 {
-public:
+    public:
 
-    ////////////////////////////////////////////////////////////
-    /// \brief Destructor
-    ///
-    ////////////////////////////////////////////////////////////
     virtual ~RenderTextureImpl();
+    /*< Destructor. */
 
-    ////////////////////////////////////////////////////////////
-    /// \brief Create the render texture implementation
-    ///
-    /// \param width       Width of the texture to render to
-    /// \param height      Height of the texture to render to
-    /// \param textureId   OpenGL identifier of the target texture
-    /// \param depthBuffer Is a depth buffer requested?
-    ///
-    /// \return True if creation has been successful
-    ///
-    ////////////////////////////////////////////////////////////
     virtual bool create(unsigned int width, unsigned int height, unsigned int textureId, bool depthBuffer) = 0;
+    /*< Create the render texture implementation.
+        @param width       Width of the texture to render to
+        @param height      Height of the texture to render to
+        @param textureId   OpenGL identifier of the target texture
+        @param depthBuffer Is a depth buffer requested?
+       
+        @return True if creation has been successful */
 
-    ////////////////////////////////////////////////////////////
-    /// \brief Activate or deactivate the render texture for rendering
-    ///
-    /// \param active True to activate, false to deactivate
-    ///
-    /// \return True on success, false on failure
-    ///
-    ////////////////////////////////////////////////////////////
     virtual bool activate(bool active) = 0;
+    /*< Activate or deactivate the render texture for rendering
+       
+        @param active True to activate, false to deactivate
+       
+        @return True on success, false on failure. */
 
-    ////////////////////////////////////////////////////////////
-    /// \brief Update the pixels of the target texture
-    ///
-    /// \param textureId OpenGL identifier of the target texture
-    ///
-    ////////////////////////////////////////////////////////////
     virtual void updateTexture(unsigned int textureId) = 0;
+    /*< Update the pixels of the target texture
+        @param textureId OpenGL identifier of the target texture. */
 };
 
 } // namespace priv
-
-} // namespace sf
-
-
-#endif // SFML_RENDERTEXTUREIMPL_HPP
+} // namespace _G

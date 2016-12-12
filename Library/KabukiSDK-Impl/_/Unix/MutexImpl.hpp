@@ -28,11 +28,11 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/System/NonCopyable.hpp>
+#include <_/NonCopyable.hpp>
 #include <pthread.h>
 
 
-namespace sf
+namespace _
 {
 namespace priv
 {
@@ -77,7 +77,7 @@ private:
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_MUTEXIMPL_HPP

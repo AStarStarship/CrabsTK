@@ -33,7 +33,7 @@
 #include <SFML/System/Vector2.hpp>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 /// \brief Define a point with color and texture coordinates
@@ -54,7 +54,7 @@ public:
     ///
     /// The vertex color is white and texture coordinates are (0, 0).
     ///
-    /// \param thePosition Vertex position
+    /// @param thePosition Vertex position
     ///
     ////////////////////////////////////////////////////////////
     Vertex(const Vector2f& thePosition);
@@ -64,8 +64,8 @@ public:
     ///
     /// The texture coordinates are (0, 0).
     ///
-    /// \param thePosition Vertex position
-    /// \param theColor    Vertex color
+    /// @param thePosition Vertex position
+    /// @param theColor    Vertex color
     ///
     ////////////////////////////////////////////////////////////
     Vertex(const Vector2f& thePosition, const Color& theColor);
@@ -75,8 +75,8 @@ public:
     ///
     /// The vertex color is white.
     ///
-    /// \param thePosition  Vertex position
-    /// \param theTexCoords Vertex texture coordinates
+    /// @param thePosition  Vertex position
+    /// @param theTexCoords Vertex texture coordinates
     ///
     ////////////////////////////////////////////////////////////
     Vertex(const Vector2f& thePosition, const Vector2f& theTexCoords);
@@ -84,9 +84,9 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct the vertex from its position, color and texture coordinates
     ///
-    /// \param thePosition  Vertex position
-    /// \param theColor     Vertex color
-    /// \param theTexCoords Vertex texture coordinates
+    /// @param thePosition  Vertex position
+    /// @param theColor     Vertex color
+    /// @param theTexCoords Vertex texture coordinates
     ///
     ////////////////////////////////////////////////////////////
     Vertex(const Vector2f& thePosition, const Color& theColor, const Vector2f& theTexCoords);
@@ -99,14 +99,14 @@ public:
     Vector2f  texCoords; ///< Coordinates of the texture's pixel to map to the vertex
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_VERTEX_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Vertex
+/// \class _G::Vertex
 /// \ingroup graphics
 ///
 /// A vertex is an improved point. It has a position and other
@@ -127,22 +127,22 @@ public:
 /// Example:
 /// \code
 /// // define a 100x100 square, red, with a 10x10 texture mapped on it
-/// sf::Vertex vertices[] =
+/// _G::Vertex vertices[] =
 /// {
-///     sf::Vertex(sf::Vector2f(  0,   0), sf::Color::Red, sf::Vector2f( 0,  0)),
-///     sf::Vertex(sf::Vector2f(  0, 100), sf::Color::Red, sf::Vector2f( 0, 10)),
-///     sf::Vertex(sf::Vector2f(100, 100), sf::Color::Red, sf::Vector2f(10, 10)),
-///     sf::Vertex(sf::Vector2f(100,   0), sf::Color::Red, sf::Vector2f(10,  0))
+///     _G::Vertex(_G::Vector2f(  0,   0), _G::Color::Red, _G::Vector2f( 0,  0)),
+///     _G::Vertex(_G::Vector2f(  0, 100), _G::Color::Red, _G::Vector2f( 0, 10)),
+///     _G::Vertex(_G::Vector2f(100, 100), _G::Color::Red, _G::Vector2f(10, 10)),
+///     _G::Vertex(_G::Vector2f(100,   0), _G::Color::Red, _G::Vector2f(10,  0))
 /// };
 ///
 /// // draw it
-/// window.draw(vertices, 4, sf::Quads);
+/// window.draw(vertices, 4, _G::Quads);
 /// \endcode
 ///
 /// Note: although texture coordinates are supposed to be an integer
 /// amount of pixels, their type is float because of some buggy graphics
 /// drivers that are not able to process integer coordinates correctly.
 ///
-/// \see sf::VertexArray
+/// \see _G::VertexArray
 ///
 ////////////////////////////////////////////////////////////

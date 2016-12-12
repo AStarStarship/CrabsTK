@@ -35,9 +35,9 @@
 namespace
 {
     // Compute the normal of a segment
-    sf::Vector2f computeNormal(const sf::Vector2f& p1, const sf::Vector2f& p2)
+    _G::Vector2f computeNormal(const _G::Vector2f& p1, const _G::Vector2f& p2)
     {
-        sf::Vector2f normal(p1.y - p2.y, p2.x - p1.x);
+        _G::Vector2f normal(p1.y - p2.y, p2.x - p1.x);
         float length = std::sqrt(normal.x * normal.x + normal.y * normal.y);
         if (length != 0.f)
             normal /= length;
@@ -45,14 +45,14 @@ namespace
     }
 
     // Compute the dot product of two vectors
-    float dotProduct(const sf::Vector2f& p1, const sf::Vector2f& p2)
+    float dotProduct(const _G::Vector2f& p1, const _G::Vector2f& p2)
     {
         return p1.x * p2.x + p1.y * p2.y;
     }
 }
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 Shape::~Shape()
@@ -302,4 +302,4 @@ void Shape::updateOutlineColors()
         m_outlineVertices[i].color = m_outlineColor;
 }
 
-} // namespace sf
+} // namespace _G

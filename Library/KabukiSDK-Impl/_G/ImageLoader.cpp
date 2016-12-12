@@ -50,26 +50,26 @@ namespace
         return str;
     }
 
-    // stb_image callbacks that operate on a sf::InputStream
+    // stb_image callbacks that operate on a _G::InputStream
     int read(void* user, char* data, int size)
     {
-        sf::InputStream* stream = static_cast<sf::InputStream*>(user);
+        _G::InputStream* stream = static_cast<_G::InputStream*>(user);
         return static_cast<int>(stream->read(data, size));
     }
     void skip(void* user, int size)
     {
-        sf::InputStream* stream = static_cast<sf::InputStream*>(user);
+        _G::InputStream* stream = static_cast<_G::InputStream*>(user);
         stream->seek(stream->tell() + size);
     }
     int eof(void* user)
     {
-        sf::InputStream* stream = static_cast<sf::InputStream*>(user);
+        _G::InputStream* stream = static_cast<_G::InputStream*>(user);
         return stream->tell() >= stream->getSize();
     }
 }
 
 
-namespace sf
+namespace _G
 {
 namespace priv
 {
@@ -333,4 +333,4 @@ bool ImageLoader::writeJpg(const std::string& filename, const std::vector<Uint8>
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _G

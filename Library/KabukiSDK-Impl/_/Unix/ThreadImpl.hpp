@@ -29,11 +29,11 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.hpp>
-#include <SFML/System/NonCopyable.hpp>
+#include <_/NonCopyable.hpp>
 #include <pthread.h>
 
 
-namespace sf
+namespace _
 {
 class Thread;
 
@@ -44,50 +44,35 @@ namespace priv
 ////////////////////////////////////////////////////////////
 class ThreadImpl : NonCopyable
 {
-public:
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Default constructor, launch the thread
-    ///
-    /// \param owner The Thread instance to run
-    ///
-    ////////////////////////////////////////////////////////////
+    public:
+    
     ThreadImpl(Thread* owner);
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Wait until the thread finishes
+    /*< Default constructor, launch the thread
     ///
-    ////////////////////////////////////////////////////////////
+    /// @param owner The Thread instance to run */
+
     void wait();
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Terminate the thread
-    ///
-    ////////////////////////////////////////////////////////////
+    /*< Wait until the thread finishes. */
+    
     void terminate();
+    /*< Terminate the thread. */
 
-private:
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Global entry point for all threads
-    ///
-    /// \param userData User-defined data (contains the Thread instance)
-    ///
-    /// \return Os specific error code
-    ///
-    ////////////////////////////////////////////////////////////
+    private:
+    
     static void* entryPoint(void* userData);
+    /*< Global entry point for all threads
+    ///
+    /// @param userData User-defined data (contains the Thread instance)
+    ///
+    /// @return Os specific error code. */
 
-    ////////////////////////////////////////////////////////////
-    // Member data
-    ////////////////////////////////////////////////////////////
     pthread_t m_thread;   ///< pthread thread instance
     bool      m_isActive; ///< Thread state (active or inactive)
 };
 
 } // namespace priv
 
-} // namespace sf
+} // namespace _
 
 
 #endif // SFML_THREADIMPL_HPP

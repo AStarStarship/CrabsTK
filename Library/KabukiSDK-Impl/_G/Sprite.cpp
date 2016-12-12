@@ -31,7 +31,7 @@
 #include <cstdlib>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 Sprite::Sprite() :
@@ -64,7 +64,7 @@ m_textureRect()
 void Sprite::setTexture(const Texture& texture, bool resetRect)
 {
     // Recompute the texture area if requested, or if there was no valid texture & rect before
-    if (resetRect || (!m_texture && (m_textureRect == sf::IntRect())))
+    if (resetRect || (!m_texture && (m_textureRect == _G::IntRect())))
         setTextureRect(IntRect(0, 0, texture.getSize().x, texture.getSize().y));
 
     // Assign the new texture
@@ -171,4 +171,4 @@ void Sprite::updateTexCoords()
     m_vertices[3].texCoords = Vector2f(right, bottom);
 }
 
-} // namespace sf
+} // namespace _G

@@ -35,7 +35,7 @@
 #include <SFML/System/Vector2.hpp>
 
 
-namespace sf
+namespace _G
 {
 ////////////////////////////////////////////////////////////
 /// \brief Base class for textured shapes with outline
@@ -65,8 +65,8 @@ public:
     /// the shape is automatically adjusted to the size of the new
     /// texture. If it is false, the texture rect is left unchanged.
     ///
-    /// \param texture   New texture
-    /// \param resetRect Should the texture rect be reset to the size of the new texture?
+    /// @param texture   New texture
+    /// @param resetRect Should the texture rect be reset to the size of the new texture?
     ///
     /// \see getTexture, setTextureRect
     ///
@@ -80,7 +80,7 @@ public:
     /// the whole texture, but rather a part of it.
     /// By default, the texture rect covers the entire texture.
     ///
-    /// \param rect Rectangle defining the region of the texture to display
+    /// @param rect Rectangle defining the region of the texture to display
     ///
     /// \see getTextureRect, setTexture
     ///
@@ -93,11 +93,11 @@ public:
     /// This color is modulated (multiplied) with the shape's
     /// texture if any. It can be used to colorize the shape,
     /// or change its global opacity.
-    /// You can use sf::Color::Transparent to make the inside of
+    /// You can use _G::Color::Transparent to make the inside of
     /// the shape transparent, and have the outline alone.
     /// By default, the shape's fill color is opaque white.
     ///
-    /// \param color New color of the shape
+    /// @param color New color of the shape
     ///
     /// \see getFillColor, setOutlineColor
     ///
@@ -109,7 +109,7 @@ public:
     ///
     /// By default, the shape's outline color is opaque white.
     ///
-    /// \param color New outline color of the shape
+    /// @param color New outline color of the shape
     ///
     /// \see getOutlineColor, setFillColor
     ///
@@ -124,7 +124,7 @@ public:
     /// disables the outline.
     /// By default, the outline thickness is 0.
     ///
-    /// \param thickness New outline thickness
+    /// @param thickness New outline thickness
     ///
     /// \see getOutlineThickness
     ///
@@ -138,7 +138,7 @@ public:
     /// The returned pointer is const, which means that you can't
     /// modify the texture when you retrieve it with this function.
     ///
-    /// \return Pointer to the shape's texture
+    /// @return Pointer to the shape's texture
     ///
     /// \see setTexture
     ///
@@ -148,7 +148,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the sub-rectangle of the texture displayed by the shape
     ///
-    /// \return Texture rectangle of the shape
+    /// @return Texture rectangle of the shape
     ///
     /// \see setTextureRect
     ///
@@ -158,7 +158,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the fill color of the shape
     ///
-    /// \return Fill color of the shape
+    /// @return Fill color of the shape
     ///
     /// \see setFillColor
     ///
@@ -168,7 +168,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the outline color of the shape
     ///
-    /// \return Outline color of the shape
+    /// @return Outline color of the shape
     ///
     /// \see setOutlineColor
     ///
@@ -178,7 +178,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the outline thickness of the shape
     ///
-    /// \return Outline thickness of the shape
+    /// @return Outline thickness of the shape
     ///
     /// \see setOutlineThickness
     ///
@@ -188,7 +188,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the total number of points of the shape
     ///
-    /// \return Number of points of the shape
+    /// @return Number of points of the shape
     ///
     /// \see getPoint
     ///
@@ -203,9 +203,9 @@ public:
     /// not taken into account.
     /// The result is undefined if \a index is out of the valid range.
     ///
-    /// \param index Index of the point to get, in range [0 .. getPointCount() - 1]
+    /// @param index Index of the point to get, in range [0 .. getPointCount() - 1]
     ///
-    /// \return index-th point of the shape
+    /// @return index-th point of the shape
     ///
     /// \see getPointCount
     ///
@@ -221,7 +221,7 @@ public:
     /// In other words, this function returns the bounds of the
     /// entity in the entity's coordinate system.
     ///
-    /// \return Local bounding rectangle of the entity
+    /// @return Local bounding rectangle of the entity
     ///
     ////////////////////////////////////////////////////////////
     FloatRect getLocalBounds() const;
@@ -242,7 +242,7 @@ public:
     /// first check; you may want to use more precise checks
     /// on top of that.
     ///
-    /// \return Global bounding rectangle of the entity
+    /// @return Global bounding rectangle of the entity
     ///
     ////////////////////////////////////////////////////////////
     FloatRect getGlobalBounds() const;
@@ -270,8 +270,8 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Draw the shape to a render target
     ///
-    /// \param target Render target to draw to
-    /// \param states Current render states
+    /// @param target Render target to draw to
+    /// @param states Current render states
     ///
     ////////////////////////////////////////////////////////////
     virtual void draw(RenderTarget& target, RenderStates states) const;
@@ -316,17 +316,17 @@ private:
     FloatRect      m_bounds;           ///< Bounding rectangle of the whole shape (outline + fill)
 };
 
-} // namespace sf
+} // namespace _G
 
 
 #endif // SFML_SHAPE_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Shape
+/// \class _G::Shape
 /// \ingroup graphics
 ///
-/// sf::Shape is a drawable class that allows to define and
+/// _G::Shape is a drawable class that allows to define and
 /// display a custom convex shape on a render target.
 /// It's only an abstract base, it needs to be specialized for
 /// concrete types of shapes (circle, rectangle, convex polygon,
@@ -342,7 +342,7 @@ private:
 ///
 /// Each feature is optional, and can be disabled easily:
 /// \li the texture can be null
-/// \li the fill/outline colors can be sf::Color::Transparent
+/// \li the fill/outline colors can be _G::Color::Transparent
 /// \li the outline thickness can be zero
 ///
 /// You can write your own derived shape class, there are only
@@ -350,6 +350,6 @@ private:
 /// \li getPointCount must return the number of points of the shape
 /// \li getPoint must return the points of the shape
 ///
-/// \see sf::RectangleShape, sf::CircleShape, sf::ConvexShape, sf::Transformable
+/// \see _G::RectangleShape, _G::CircleShape, _G::ConvexShape, _G::Transformable
 ///
 ////////////////////////////////////////////////////////////
