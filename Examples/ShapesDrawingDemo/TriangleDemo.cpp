@@ -1,5 +1,5 @@
 /** Kabuki Card Games
-    @file    /.../KabukiSDK-Examples/ShapesDrawingDemo/TrangleDemo.cpp
+    @file    /.../KabukiTheater-Examples/ShapesDrawingDemo/TrangleDemo.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,7 +20,7 @@
 
 #include "TrangleDemo.hpp"
 
-namespace KabukiSDKExamples {
+namespace KabukiTheaterExamples {
 
 class TriangleDemo: public hal.app.Applet
 {  
@@ -209,4 +209,4 @@ class TriangleDemo: public hal.app.Applet
     }
 }
 
-}   //< KabukiSDKExamples
+}   //< KabukiTheaterExamples

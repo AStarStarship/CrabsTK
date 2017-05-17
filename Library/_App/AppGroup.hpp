@@ -1,4 +1,4 @@
-/*< Kabuki SDK
+/*< Kabuki Theater
     @file       /.../Source/Kabuki_SDK-Impl/include/_App/WindowGroup.h
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©

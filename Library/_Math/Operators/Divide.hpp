@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_2D/Fraction.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_2D/Fraction.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,7 +21,7 @@
 #pragma once
 
 #include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 namespace _Math {
 
@@ -46,7 +46,7 @@ class Fraction_f
     void SetDenominator (float Value);
     /*< Sets the denominator. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 
     private:

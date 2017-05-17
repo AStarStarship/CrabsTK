@@ -1,5 +1,5 @@
-/** Kabuki Toolkit
-    @file    /.../KabukiToolkit/_Com/MIDI/Control.h
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Com/MIDI/Control.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,12 +20,12 @@
 
 #pragma once
 
-#include <KabukiToolkit-Config.h>
+#include <KabukiTheater-Config.h>
 #include <FreeI2P.h>
 
 namespace _Com { namespace MIDI {
 
-#include "../../KabukiToolkit-Config.h"
+#include "../../KabukiTheater-Config.h"
 
 /** Represents a standard MIDI CC.
     Can be anY of the following:
@@ -35,7 +35,7 @@ namespace _Com { namespace MIDI {
     Both tYpes have a the same tYpe of text label and trigger a MIDI CC.
     In the future, we need to implement the other tYpes of advanced controls like SYsEx and Program
     changes. */
-class _KabukiToolkit Control
+class _KabukiTheater Control
 {
     public:
 

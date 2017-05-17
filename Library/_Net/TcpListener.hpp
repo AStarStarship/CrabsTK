@@ -24,24 +24,20 @@
 
 #ifndef SFML_TCPLISTENER_HPP
 #define SFML_TCPLISTENER_HPP
-
-////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/Network/Export.hpp>
-#include <SFML/Network/Socket.hpp>
-#include <SFML/Network/IpAddress.hpp>
+#include <_Net/Export.hpp>
+#include <_Net/Socket.hpp>
+#include <_Net/IPAddress.hpp>
 
 
-namespace sf
+namespace _Net
 {
-class TcpSocket;
-
-////////////////////////////////////////////////////////////
+class TCPSocket;
 /// \brief Socket that listens to new TCP connections
 ///
 ////////////////////////////////////////////////////////////
-class SFML_NETWORK_API TcpListener : public Socket
+class SFML_NETWORK_API TCPListener : public Socket
 {
 public:
 
@@ -49,7 +45,7 @@ public:
     /// \brief Default constructor
     ///
     ////////////////////////////////////////////////////////////
-    TcpListener();
+    TCPListener();
 
     ////////////////////////////////////////////////////////////
     /// \brief Get the port to which the socket is bound locally
@@ -57,12 +53,12 @@ public:
     /// If the socket is not listening to a port, this function
     /// returns 0.
     ///
-    /// \return Port to which the socket is bound
+    /// @return Port to which the socket is bound
     ///
     /// \see listen
     ///
     ////////////////////////////////////////////////////////////
-    unsigned short getLocalPort() const;
+    uint16_t getLocalPort() const;
 
     ////////////////////////////////////////////////////////////
     /// \brief Start listening for connections
@@ -72,15 +68,15 @@ public:
     /// If the socket was previously listening to another port,
     /// it will be stopped first and bound to the new port.
     ///
-    /// \param port    Port to listen for new connections
-    /// \param address Address of the interface to listen on
+    /// @param port    Port to listen for new connections
+    /// @param address Address of the interface to listen on
     ///
-    /// \return Status code
+    /// @return Status code
     ///
     /// \see accept, close
     ///
     ////////////////////////////////////////////////////////////
-    Status listen(unsigned short port, const IpAddress& address = IpAddress::Any);
+    Status listen(uint16_t port, const IPAddress& address = IPAddress::Any);
 
     ////////////////////////////////////////////////////////////
     /// \brief Stop listening and close the socket
@@ -99,25 +95,23 @@ public:
     /// If the socket is in blocking mode, this function will
     /// not return until a connection is actually received.
     ///
-    /// \param socket Socket that will hold the new connection
+    /// @param socket Socket that will hold the new connection
     ///
-    /// \return Status code
+    /// @return Status code
     ///
     /// \see listen
     ///
     ////////////////////////////////////////////////////////////
-    Status accept(TcpSocket& socket);
+    Status accept(TCPSocket& socket);
 };
 
 
-} // namespace sf
+} // namespace _Net
 
 
 #endif // SFML_TCPLISTENER_HPP
 
-
-////////////////////////////////////////////////////////////
-/// \class sf::TcpListener
+/// \class sf::TCPListener
 /// \ingroup network
 ///
 /// A listener socket is a special type of socket that listens to
@@ -125,14 +119,14 @@ public:
 /// This is all it can do.
 ///
 /// When a new connection is received, you must call accept and
-/// the listener returns a new instance of sf::TcpSocket that
+/// the listener returns a new instance of sf::TCPSocket that
 /// is properly initialized and can be used to communicate with
 /// the new client.
 ///
 /// Listener sockets are specific to the TCP protocol,
 /// UDP sockets are connectionless and can therefore communicate
 /// directly. As a consequence, a listener socket will always
-/// return the new connections as sf::TcpSocket instances.
+/// return the new connections as sf::TCPSocket instances.
 ///
 /// A listener is automatically closed on destruction, like all
 /// other types of socket. However if you want to stop listening
@@ -143,13 +137,13 @@ public:
 /// \code
 /// // Create a listener socket and make it wait for new
 /// // connections on port 55001
-/// sf::TcpListener listener;
+/// sf::TCPListener listener;
 /// listener.listen(55001);
 ///
 /// // Endless loop that waits for new connections
 /// while (running)
 /// {
-///     sf::TcpSocket client;
+///     sf::TCPSocket client;
 ///     if (listener.accept(client) == sf::Socket::Done)
 ///     {
 ///         // A new client just connected!
@@ -159,6 +153,6 @@ public:
 /// }
 /// \endcode
 ///
-/// \see sf::TcpSocket, sf::Socket
+/// \see sf::TCPSocket, sf::Socket
 ///
 ////////////////////////////////////////////////////////////

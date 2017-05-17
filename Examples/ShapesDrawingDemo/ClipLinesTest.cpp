@@ -1,5 +1,5 @@
 /** Kabuki Card Games
-    @file    /.../KabukiSDK-Examples/ShapesDrawingDemo/ClipLinesTest.cpp
+    @file    /.../KabukiTheater-Examples/ShapesDrawingDemo/ClipLinesTest.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,7 +20,7 @@
 
 #include "ClipLinesTest.hpp"
 
-namespace KabukiSDKExamples {
+namespace KabukiTheaterExamples {
 
 class ClipLinesDemo: public _App::App, public IKeyListener
 {
@@ -70,4 +70,4 @@ class ClipLinesDemo: public _App::App, public IKeyListener
     virtual void releaseKey (KeyEvent event) override {}
 }
 
-}   //< KabukiSDKExamples
+}   //< KabukiTheaterExamples

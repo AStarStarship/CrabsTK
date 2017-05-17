@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file       /.../Source/KabukiSDK-Impl/_G/Caption.h
+/** Kabuki Theater
+    @file       /.../Source/KabukiTheater-Impl/_G/Caption.h
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
@@ -15,7 +15,7 @@ using namespace std;
 
 namespace _G {
 
-class _KabukiSDK Caption : public Entity_f
+class _KabukiTheater Caption : public Entity_f
 /*<  */
 {
     public:
@@ -35,7 +35,7 @@ class _KabukiSDK Caption : public Entity_f
 
     void draw (Cell* c);
     
-    void print (Terminal& slot);
+    void print (Terminal& io);
     /*< Prints this object to a terminal. */
 
     private:

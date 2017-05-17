@@ -1,4 +1,4 @@
-/** Kabuki Software Development Kit
+/** Kabuki Theater
     @version 0.9
     @file    /.../Kabuki_Toolkit/KabukitToolkit.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "KabukiSDK-Config.hpp"
+#include "KabukiTheater-Config.hpp"
 
 #include "_G/Color.hpp"
 

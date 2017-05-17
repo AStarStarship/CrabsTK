@@ -24,22 +24,18 @@
 
 #ifndef SFML_PACKET_HPP
 #define SFML_PACKET_HPP
-
-////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/Network/Export.hpp>
+#include <_Net/Export.hpp>
 #include <string>
 #include <vector>
 
 
-namespace sf
+namespace _Net
 {
 class String;
-class TcpSocket;
-class UdpSocket;
-
-////////////////////////////////////////////////////////////
+class TCPSocket;
+class UDPSocket;
 /// \brief Utility class to build blocks of data to transfer
 ///        over the network
 ///
@@ -68,8 +64,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Append data to the end of the packet
     ///
-    /// \param data        Pointer to the sequence of bytes to append
-    /// \param sizeInBytes Number of bytes to append
+    /// @param data        Pointer to the sequence of bytes to append
+    /// @param sizeInBytes Number of bytes to append
     ///
     /// \see clear
     ///
@@ -94,7 +90,7 @@ public:
     /// be stored.
     /// The return pointer is NULL if the packet is empty.
     ///
-    /// \return Pointer to the data
+    /// @return Pointer to the data
     ///
     /// \see getDataSize
     ///
@@ -107,7 +103,7 @@ public:
     /// This function returns the number of bytes pointed to by
     /// what getData returns.
     ///
-    /// \return Data size, in bytes
+    /// @return Data size, in bytes
     ///
     /// \see getData
     ///
@@ -121,7 +117,7 @@ public:
     /// This function is useful to know if there is some data
     /// left to be read, without actually reading it.
     ///
-    /// \return True if all data was read, false otherwise
+    /// @return True if all data was read, false otherwise
     ///
     /// \see operator bool
     ///
@@ -163,7 +159,7 @@ public:
     /// it disallows unwanted implicit conversions to integer or
     /// pointer types.
     ///
-    /// \return True if last data extraction from packet was successful
+    /// @return True if last data extraction from packet was successful
     ///
     /// \see endOfPacket
     ///
@@ -180,7 +176,7 @@ public:
     Packet& operator >>(Int16&        data);
     Packet& operator >>(Uint16&       data);
     Packet& operator >>(Int32&        data);
-    Packet& operator >>(Uint32&       data);
+    Packet& operator >>(uint32_t&     data);
     Packet& operator >>(Int64&        data);
     Packet& operator >>(Uint64&       data);
     Packet& operator >>(float&        data);
@@ -201,7 +197,7 @@ public:
     Packet& operator <<(Int16               data);
     Packet& operator <<(Uint16              data);
     Packet& operator <<(Int32               data);
-    Packet& operator <<(Uint32              data);
+    Packet& operator <<(uint32_t              data);
     Packet& operator <<(Int64               data);
     Packet& operator <<(Uint64              data);
     Packet& operator <<(float               data);
@@ -214,8 +210,8 @@ public:
 
 protected:
 
-    friend class TcpSocket;
-    friend class UdpSocket;
+    friend class TCPSocket;
+    friend class UDPSocket;
 
     ////////////////////////////////////////////////////////////
     /// \brief Called before the packet is sent over the network
@@ -228,9 +224,9 @@ protected:
     /// The default implementation provides the packet's data
     /// without transforming it.
     ///
-    /// \param size Variable to fill with the size of data to send
+    /// @param size Variable to fill with the size of data to send
     ///
-    /// \return Pointer to the array of bytes to send
+    /// @return Pointer to the array of bytes to send
     ///
     /// \see onReceive
     ///
@@ -248,8 +244,8 @@ protected:
     /// The default implementation fills the packet directly
     /// without transforming the data.
     ///
-    /// \param data Pointer to the received bytes
-    /// \param size Number of bytes
+    /// @param data Pointer to the received bytes
+    /// @param size Number of bytes
     ///
     /// \see onSend
     ///
@@ -270,9 +266,9 @@ private:
     ///
     /// This function updates accordingly the state of the packet.
     ///
-    /// \param size Size to check
+    /// @param size Size to check
     ///
-    /// \return True if \a size bytes can be read from the packet
+    /// @return True if \a size bytes can be read from the packet
     ///
     ////////////////////////////////////////////////////////////
     bool checkSize(std::size_t size);
@@ -286,19 +282,17 @@ private:
     bool              m_isValid; ///< Reading state of the packet
 };
 
-} // namespace sf
+} // namespace _Net
 
 
 #endif // SFML_PACKET_HPP
 
-
-////////////////////////////////////////////////////////////
 /// \class sf::Packet
 /// \ingroup network
 ///
 /// Packets provide a safe and easy way to serialize data,
 /// in order to send it over the network using sockets
-/// (sf::TcpSocket, sf::UdpSocket).
+/// (sf::TCPSocket, sf::UDPSocket).
 ///
 /// Packets solve 2 fundamental problems that arise when
 /// transferring data over the network:
@@ -316,7 +310,7 @@ private:
 ///
 /// Usage example:
 /// \code
-/// sf::Uint32 x = 24;
+/// sf::uint32_t x = 24;
 /// std::string s = "hello";
 /// double d = 5.89;
 ///
@@ -324,7 +318,7 @@ private:
 /// sf::Packet packet;
 /// packet << x << s << d;
 ///
-/// // Send it over the network (socket is a valid sf::TcpSocket)
+/// // Send it over the network (socket is a valid sf::TCPSocket)
 /// socket.send(packet);
 ///
 /// -----------------------------------------------------------------
@@ -334,7 +328,7 @@ private:
 /// socket.receive(packet);
 ///
 /// // Extract the variables contained in the packet
-/// sf::Uint32 x;
+/// sf::uint32_t x;
 /// std::string s;
 /// double d;
 /// if (packet >> x >> s >> d)
@@ -407,6 +401,6 @@ private:
 /// ...
 /// \endcode
 ///
-/// \see sf::TcpSocket, sf::UdpSocket
+/// \see sf::TCPSocket, sf::UDPSocket
 ///
 ////////////////////////////////////////////////////////////

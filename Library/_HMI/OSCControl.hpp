@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/OSCControl.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/OSCControl.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,14 +21,14 @@
 #pragma once
 
 #include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include "AVControl.hpp"
 
 namespace _HMI {
 
 /** A Open SoundControl.
  */
-class _KabukiSDK OSCControl : public AVControl
+class _KabukiTheater OSCControl : public AVControl
 {
     public:
 

@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/Label.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/Label.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,17 +20,17 @@
  
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 namespace _HMI {
 
 /** An object that has a text label.
-    This class _KabukiSDK has a primary label, and a short label.
+    This class _KabukiTheater has a primary label, and a short label.
     A Label has the following rules:
     1.) Labels must be 32 characters or less for a normal label, and 16 characters or less for a short label.
     2.) Labels must contain printable ASCII characters that are HUI compatible.
 */ 
-class _KabukiSDK Label
+class _KabukiTheater Label
 {   
     public:
 
@@ -56,29 +56,30 @@ class _KabukiSDK Label
     
     int setLabel (const string& newLabel);
     /*< Sets the label to the new label.
-        @return gets 0 upon success and 1 if the newLabel is too long.
+        @return Returns 0 upon success and 1 if the newLabel is too long.
         @see    Label::isValid (char). */
+    
     virtual int setLabel (const Label& newLabel);
     /*< Sets the label to the new label.
-        @return gets 0 upon success and 1 if the newLabel is too long.
+        @return Returns 0 upon success and 1 if the newLabel is too long.
         @see    Label::isValid (char). */
         
     int compare (const string& other) const;
     /*< Compares this label to the other string.
-        @return gets  0 if they are identical and1 if the other string is too long. */
+        @return Returns 0 if they are identical and1 if the other string is too long. */
         
     int compare (const Label& other) const;
     /*< Compares this label to the other Label.
-        @return gets  0 if they are identical and1 if the other string  is too long. */
+        @return Returns 0 if they are identical and1 if the other string  is too long. */
  
     static int isValid (const string& label);
     /*< Verifies if thisLabel is a valid label.
-        @return gets 0 if the label is valid.
-        @return gets 1 if the label is too long.
-        @return gets -1 thisLabel is "".
+        @return Returns 0 if the label is valid.
+        @return Returns 1 if the label is too long.
+        @return Returns -1 thisLabel is "".
     */
         
-    void print (Terminal& slot);
+    void print (Terminal& io);
     /*< Prints this object to a Terminal. */
 
     private:

@@ -1,5 +1,5 @@
 /** Kabuki Card Games
-    @file    /.../KabukiSDK-Examples/KabukiCardGames/KabukiCardGames/Deck/DojoCard.hpp
+    @file    /.../KabukiTheater-Examples/KabukiCardGames/KabukiCardGames/Deck/DojoCard.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 

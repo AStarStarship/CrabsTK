@@ -24,14 +24,14 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include <_/Vector2.hpp>
 
 namespace _HMI{ 
 
 class Window;
 
-class _KabukiSDK Mouse
+class _KabukiTheater Mouse
 /*< Give access to the real-time state of the mouse. 
     @ingroup _HMI
    

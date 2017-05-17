@@ -24,12 +24,12 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 
 namespace _HMI {
     
-class _KabukiSDK Keyboard
+class _KabukiTheater Keyboard
 /*< Give access to the real-time state of the keyboard. 
     @ingroup _HMI
    

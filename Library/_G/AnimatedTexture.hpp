@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file       /.../Source/KabukiSDK-Impl/_G/AnimatedTexture.h
+/** Kabuki Theater
+    @file       /.../Source/KabukiTheater-Impl/_G/AnimatedTexture.h
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
@@ -8,14 +8,14 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 #include "Color.hpp"
 #include "Rect.hpp"
 
 namespace _G {
     
-class _KabukiSDK AnimatedTexture: public Rect_i
+class _KabukiTheater AnimatedTexture: public Rect_i
 /** An animated texture */
 {
     public:

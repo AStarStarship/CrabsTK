@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Math/Calc.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Math/Calc.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include <FreeI2P.hpp>
 
 namespace _Math {
@@ -312,7 +312,7 @@ inline int getNextPrime (int thisNumber);
     @return Gets 0 if thisNumber is greater then the biggest prime number in the Numbers array.
 */
 
-class _KabukiSDK Calc
+class _KabukiTheater Calc
 /*< An Inter-process calculator for doing math on distributed systems.
     @todo Map the above functions to the I2P operations.
 */
@@ -325,7 +325,7 @@ class _KabukiSDK Calc
     virtual const char* op (Terminal* slot, int index);
     /*< Inter-process operations. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 };
 

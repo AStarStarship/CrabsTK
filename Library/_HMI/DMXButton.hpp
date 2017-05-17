@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/DMXButton.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/DMXButton.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,13 +21,13 @@
 #pragma once
 
 #include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include "DMXControl.hpp"
 #include "ButtonControl.hpp"
 
 namespace _HMI {
 
-class _KabukiSDK DMXButton : public DMXControl, public ButtonControl
+class _KabukiTheater DMXButton : public DMXControl, public ButtonControl
 {
     public:
 
@@ -70,7 +70,7 @@ class _KabukiSDK DMXButton : public DMXControl, public ButtonControl
     string toStringRow () const override;
     /*< Gets a column of the values without the labels. */
     
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to a terminal. */
 };
 

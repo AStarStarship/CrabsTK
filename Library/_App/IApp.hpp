@@ -1,4 +1,4 @@
-/*< Kabuki SDK
+/*< Kabuki Theater
     @file       /.../Source/Kabuki_SDK-Impl/_App/IApplication.h
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
@@ -7,12 +7,12 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 namespace _App {
 
 class IApplication
-/*< Interface for an Kabuki SDK app.
+/*< Interface for an Kabuki Theater app.
 */
 {
     public:

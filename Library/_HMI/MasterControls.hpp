@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/MacroButton.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/MacroButton.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,20 +20,20 @@
  
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include "AVControl.hpp"
 
 namespace _HMI {
 
 /** Used for Quad ISymmetric control over a Device. */
-class _KabukiSDK MasterControls
+class _KabukiTheater MasterControls
 {
     public:
     
     MasterControls ();
     /*< Constructs a blank set of master controls. */
     
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to a terminal. */
     
     private:

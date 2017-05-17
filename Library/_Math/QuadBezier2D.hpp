@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Math/Bezier.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Math/Bezier.hpp
     @author     Cale McCollough
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
@@ -22,7 +22,7 @@
 #pragma once
 
 #include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 #include "Point.hpp"
 
@@ -32,7 +32,7 @@
 
 namespace _Math {
 
-class _KabukiSDK QuadBezier_f
+class _KabukiTheater QuadBezier_f
 /*< Class that represents a 4th order Bezier. */
 {
     public:
@@ -75,7 +75,7 @@ class _KabukiSDK QuadBezier_f
     Point_f getPoint (float t);
     /*< Gets a Point_f along the path of the of curve at time t. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 
     private:

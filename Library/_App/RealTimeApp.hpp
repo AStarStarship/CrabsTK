@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/** Kabuki Theater
     @file       /.../Source/Kabuki_SDK-Impl/_App/RealTimeApp.h
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©

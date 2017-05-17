@@ -1,5 +1,5 @@
-/** Kabuki Toolkit
-    @file    /.../KabukiToolkit/_Com/MIDI/TempoSync.h
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Com/MIDI/TempoSync.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,12 +21,12 @@
 #pragma once
 
 #include <FreeI2P.h>
-#include <KabukiToolkit-Config.h>
+#include <KabukiTheater-Config.h>
 
 namespace _Com { namespace MIDI {
 
 /** Class that is used to sync the system to the MIDI clock. */
-class _KabukiToolkit TempoSync
+class _KabukiTheater TempoSync
 {
       public:
 

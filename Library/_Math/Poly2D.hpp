@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK-Library/_G/Poly2D.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater-Library/_G/Poly2D.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -25,7 +25,7 @@
 
 namespace _Math {
     
-class _KabukiSDK Poly2D_f
+class _KabukiTheater Poly2D_f
 /*< A 2D polygon that uses 32-bit floating point values. 
     This class is a C++ implementation of Java's polygon interface that does not 
     use polymorphism.

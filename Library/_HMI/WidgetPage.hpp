@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/WidgetPage.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/WidgetPage.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,7 +20,7 @@
  
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include "Label.hpp"
 
 namespace _HMI {
@@ -29,7 +29,7 @@ class MIDIControl;
 class Button;
 class ControlMatrix;
 
-class _KabukiSDK WidgetPage
+class _KabukiTheater WidgetPage
 /*< Class that represents a page of controls in a Widget.
     A WidgetPage is composed of multiple groups of controls.
 */
@@ -105,8 +105,8 @@ class _KabukiSDK WidgetPage
 };
 
 #ifdef DEBUG
-/** Unit test for the WidgetPage class _KabukiSDK. */
-class _KabukiSDK WidgetPageTests: public UnitTest
+/** Unit test for the WidgetPage class _KabukiTheater. */
+class _KabukiTheater WidgetPageTests: public UnitTest
 {
     public:
 

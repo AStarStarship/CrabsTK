@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include <KabukiSDK-Export.hpp>
+#include <KabukiTheater-Export.hpp>
 #include <_/Vector2.hpp>
 
 
@@ -32,7 +32,7 @@ namespace _HMI {
 
 class Window;
 
-class _KabukiSDK Touch
+class _KabukiTheater Touch
 /*< Gives access to the real-time state of the touches
     @ingroup _HMI
    

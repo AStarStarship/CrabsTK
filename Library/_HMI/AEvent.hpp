@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/Event.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/Event.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,7 +20,7 @@
  
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 namespace _HMI {
 
@@ -43,7 +43,7 @@ class AEvent
     virtual void trigger () = 0;
     //< Triggers the event.
     
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to a terminal. */
 
     private:

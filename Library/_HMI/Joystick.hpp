@@ -24,13 +24,13 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include <_/String.hpp>
 
 
 namespace _HMI {
     
-class _KabukiSDK Joystick
+class _KabukiTheater Joystick
 /*< Give access to the real-time state of the joysticks.
 
     @ingroup _HMI
@@ -117,7 +117,7 @@ class _KabukiSDK Joystick
     /// \brief Structure holding a joystick's identification
     ///
     ////////////////////////////////////////////////////////////
-    struct _KabukiSDK Identification
+    struct _KabukiTheater Identification
     {
         Identification();
 

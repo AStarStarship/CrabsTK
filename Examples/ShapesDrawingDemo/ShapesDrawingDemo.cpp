@@ -1,5 +1,5 @@
 /** Kabuki Card Games
-    @file    /.../KabukiSDK-Examples/ShapesDrawingDemo/ShapesDrawingDemo.cpp
+    @file    /.../KabukiTheater-Examples/ShapesDrawingDemo/ShapesDrawingDemo.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -18,9 +18,9 @@
         limitations under the License.
 */
 
-#include <KabukiSDK.hpp>
+#include <KabukiTheater.hpp>
 
-namespace KabukiSDKExamples {
+namespace KabukiTheaterExamples {
 
 class ShapesDrawingDemo: public _App::Widget
 {
@@ -30,4 +30,4 @@ class ShapesDrawingDemo: public _App::Widget
     }
 };
 
-}   //< KabukiSDKExamples
+}   //< KabukiTheaterExamples

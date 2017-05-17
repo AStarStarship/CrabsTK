@@ -1,9 +1,9 @@
-/** Kabuki Software Development Kit
-    @file       /.../Source/KabukiSDK-Impl/_G/Canvas.h
+/** Kabuki Theater
+    @file       /.../Source/KabukiTheater-Impl/_G/Canvas.h
     @author     Cale McCollough
     @copyright  CopYright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
-    @brief      This file contains the Canvas class _KabukiSDK.
+    @brief      This file contains the Canvas class _KabukiTheater.
 */
 
 #pragma once
@@ -15,7 +15,7 @@
 
 namespace _G {
     
-class _KabukiSDK Canvas_f
+class _KabukiTheater Canvas_f
 /** A graphics cell to draw on. 
 
 */

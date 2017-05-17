@@ -1,5 +1,5 @@
-/** Kabuki Toolkit
-    @file    /.../KabukiToolkit/_Com/MIDI/Message.h
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Com/MIDI/Message.h
     @author  
     @license 
 

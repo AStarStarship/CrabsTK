@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK-Examples/Software3DWireFrameViewer/SoftwareEngine.cpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater-Examples/Software3DWireFrameViewer/SoftwareEngine.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,7 +20,7 @@
 
 #include "SoftwareEngine.hpp"
 
-namespace KabukiSDKExamples {
+namespace KabukiTheaterExamples {
 
 HotAirBalloon::HotAirBalloon (SoftwareEngine driver, _2D::Point_f initPosition, string balloonName)
 :   _3D::Shape (driver, initPosition, "Models/sphere2.plg"),
@@ -63,4 +63,4 @@ void HotAirBalloon::print (Terminal& io)
     getPosition().print (io);
 }
 
-}   //< KabukiSDKExamples
+}   //< KabukiTheaterExamples

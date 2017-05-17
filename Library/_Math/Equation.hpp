@@ -1,4 +1,4 @@
-/** Kabuki Software Development Kit
+/** Kabuki Theater
     @file       /.../_Math/Equation.hpp
     @author  Cale McCollough <https://calemccollough.github.io>
     @license Copyright 2016 (C) Cale McCollough <cale.mccollough@gmail.com>
@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <KabukiSDK-config.hpp>
+#include <KabukiTheater-config.hpp>
 
 namespace _Math {
 
@@ -32,7 +32,7 @@ class Equation
     Equation ();
     /*< Constructs an empty equation. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 
     private:

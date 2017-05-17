@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file       /.../Source/KabukiSDK-Impl/_G/Char.h
+/** Kabuki Theater
+    @file       /.../Source/KabukiTheater-Impl/_G/Char.h
     @author     Cale McCollough
     @copyright  CopYright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
@@ -11,7 +11,7 @@
 
 namespace _G {
 
-class _KabukiSDK Colormap : Image
+class _KabukiTheater Colormap : Image
 /*<  */
 {
     public:

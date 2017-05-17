@@ -24,14 +24,14 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include <_/Vector3.hpp>
 #include <_/Time.hpp>
 
 
 namespace _HMI {
 
-class _KabukiSDK Sensor
+class _KabukiTheater Sensor
 /*< Give access to the real-time state of the sensors
     @ingroup _HMI
    

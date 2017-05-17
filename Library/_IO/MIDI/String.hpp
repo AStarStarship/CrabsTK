@@ -1,5 +1,5 @@
-/** Kabuki Toolkit
-    @file    /.../KabukiToolkit/_Com/MIDI/const char*.h
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Com/MIDI/const char*.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,13 +21,13 @@
 #pragma once
 
 #include <FreeI2P.h>
-#include <KabukiToolkit-Config.h>
+#include <KabukiTheater-Config.h>
 
-namespace KabukiToolkit { namespace _Com { namespace DMX {
+namespace KabukiTheater { namespace _Com { namespace DMX {
 
 /** A string that can be displaYed on a standard MIDI complaitble device.
 */
-class _KabukiToolkit String
+class _KabukiTheater String
 {
     public:
 
@@ -86,4 +86,4 @@ class _KabukiToolkit String
 };
 }   //< namespace MIDI
 Com
-}   //< namespace KabukiToolkit
+}   //< namespace KabukiTheater

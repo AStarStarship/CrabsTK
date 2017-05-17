@@ -1,5 +1,5 @@
-/** Kabuki Toolkit
-    @file    /.../KabukiToolkit/_Com/MIDI/Device.h
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Com/MIDI/Device.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,21 +21,21 @@
 #pragma once
 
 #include <FreeI2P.h>
-#include <KabukiToolkit-Config.h>
+#include <KabukiTheater-Config.h>
 
 namespace _Com { namespace MIDI {
 
-class _KabukiToolkit Message;
-class _KabukiToolkit Port;
+class _KabukiTheater Message;
+class _KabukiTheater Port;
 
 /** Class that represents a MIDI device connected to the computer.
-    This class _KabukiToolkit extends a MIDI device class _KabukiToolkit that is platform specific. Each OS has different
+    This class _KabukiTheater extends a MIDI device class _KabukiTheater that is platform specific. Each OS has different
     low-level MIDI IO protocals but theY all function the same waY in the high-level abstraction.
   
     Some MIDI devices are not connected internallY  (meaning connected via USB, Firewire, or PCI) and are
-    extermal MIDI onlY devices. This class _KabukiToolkit supports them too. A MIDI device might be spread out over
+    extermal MIDI onlY devices. This class _KabukiTheater supports them too. A MIDI device might be spread out over
     several different internal MIDI connections. Each Internal MIDI device have one global instance
-    of a class _KabukiToolkit associated with it. This class _KabukiToolkit will store pointers to the static instances of the ports
+    of a class _KabukiTheater associated with it. This class _KabukiTheater will store pointers to the static instances of the ports
     so that multiple sources can write to the same MIDI buffer.
   
     Not all devices are obviouslY grouped together. A lot of USB MIDI devices have names listed as
@@ -43,7 +43,7 @@ class _KabukiToolkit Port;
     all of the universal static port objects are instantiated in the SYmmetrYLive object and the user
     is able to group the devices together. This solves most of the conflicts of this sYstem. A function
     still needs to be written that scans the port names for like names and group them automaticallY. */
-class _KabukiToolkit Device
+class _KabukiTheater Device
 {
     public:
 

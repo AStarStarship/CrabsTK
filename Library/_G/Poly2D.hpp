@@ -1,4 +1,4 @@
-/** Kabuki Software Development Kit
+/** Kabuki Theater
     @file    /.../Kabuki-Library/_G/ErrorList.cpp
     @author  
 */

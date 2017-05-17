@@ -1,5 +1,5 @@
-/** Kabuki Toolkit
-    @file    /.../KabukiToolkit/_Com/MIDI/LongMessage.h
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Com/MIDI/LongMessage.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -22,7 +22,7 @@
 
 namespace _Com { namespace MIDI {
 
-#include <KabukiToolkit-Config.h>
+#include <KabukiTheater-Config.h>
 
 #include "Message.h"
 
@@ -30,7 +30,7 @@ namespace _Com { namespace MIDI {
 
 /** Class that represents a MIDI SYsEx SYsExMessage.
     A SysExMessage extends a standard MIDI Message. */
-class _KabukiToolkit LongMessage
+class _KabukiTheater LongMessage
 {
     public:
 	

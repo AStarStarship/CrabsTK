@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/Widget.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/Widget.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -25,7 +25,7 @@
 
 namespace HMI {
 
-class _KabukiSDK Widget: public IObject
+class _KabukiTheater Widget: public IObject
 /*< A Widget or instance of a widget.
     A Widget is defined by Google as "an application, or a component of an interface, that 
     enables a user to perform a function or access a service."

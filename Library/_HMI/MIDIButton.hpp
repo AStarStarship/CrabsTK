@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/MIDIButton.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/MIDIButton.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,16 +20,16 @@
  
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include "MIDIControl.hpp"
 #include "ButtonControl.hpp"
 
 namespace _HMI {
 
-class _KabukiSDK MIDIControl;
+class _KabukiTheater MIDIControl;
 
 /** A button that triggers a MIDIEvent. */
-class _KabukiSDK MIDIButton : public MIDIControl, public ButtonControl
+class _KabukiTheater MIDIButton : public MIDIControl, public ButtonControl
 {
     public:
 
@@ -70,10 +70,10 @@ class _KabukiSDK MIDIButton : public MIDIControl, public ButtonControl
     string ToStringRow () const override;
     //< gets a column of the values without the labels.
     
-    string print (Terminal& slot) const override;
+    string print (Terminal& io) const override;
     //< gets a text represenation of this object.
     
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to a terminal. */
 
     private:

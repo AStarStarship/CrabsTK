@@ -1,5 +1,5 @@
-/** Kabuki Toolkit
-    @file    /.../KabukiToolkit/_Com/MIDI/ControlSurface.h
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Com/MIDI/ControlSurface.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,13 +21,13 @@
 #pragma once
 
 #include <FreeI2P.h>
-#include <KabukiToolkit-Config.h>
+#include <KabukiTheater-Config.h>
 
 namespace _Com { namespace MIDI {
 
-class _KabukiToolkit ControlSurface
-/** This class _KabukiToolkit represents a generic Control Surface.
-    This class _KabukiToolkit is to help facilitate the editing of templates on other control
+class _KabukiTheater ControlSurface
+/** This class _KabukiTheater represents a generic Control Surface.
+    This class _KabukiTheater is to help facilitate the editing of templates on other control
     surfaces through the Symmetry Live!'s API. For right now its pretty bare bones. */
 {
       public:

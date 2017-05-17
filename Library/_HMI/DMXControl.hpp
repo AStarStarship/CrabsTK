@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/DMXControl.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/DMXControl.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,29 +20,35 @@
  
 #pragma once
 
-#include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include <ChineseRoom.hpp>
+#include <KabukiTheater-Config.hpp>
 #include "AVControl.hpp"
+#include <string>
 
 namespace _HMI {
 
 /** A DMX Control.
  */
-class _KabukiSDK DMXControl : public AVControl
+class _KabukiTheater DMXControl : public AVControl
 {
     public:
 
     static const int NumChannels = 512;             //< The number of DMX512 channels.
 
-    /** Default constructor. */
-    DMXControl (string &newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0,
+    DMXControl (const string& newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0,
         int newMaxValue = 255, int newWordSize = 8, int newAVControlType = AVControl::DMXControl);
-    DMXControl (const DMXControl& other);           //< Copy contructor.
-    ~DMXControl () {}                               //< Virtual destructor.
+    /** Default constructor. */
 
-    virtual void trigger () override {}             //< Triggers this DMX event to send out the target device.
+    DMXControl (const DMXControl& other);
+    //< Copy contructor.
+
+    ~DMXControl () {}
+    //< Virtual destructor.
+
+    virtual void trigger () override {}
+    //< Triggers this DMX event to send out the target device.
     
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to a terminal. */
 };
 

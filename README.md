@@ -1,21 +1,20 @@
-# Kabuki Software Development Kit
-Kabuki SDK is an early-stage C++ SDK and graphics engine built on top of [Simple Free Media Layer](http://www.sfml-dev.org/). At this point it doesn't really do much.
+# Kabuki Theater
+A modern C++11 software development kit and app framework built on top of [Simple Free Media Layer](http://www.sfml-dev.org/).
 
-## Why use Kabuki SDK?
+## Why use Kabuki Theater?
 
-Kabuki SDK is built on FreeI2P, which is good for working with dictionaries (@google Python Dictionary), inter-process communication, serializing data, remotely controlling apps and IoT devices, and debugging apps. FreeI2P is the link between you app, and the world.
+Kabuki Theater is built on the Chinese Room, which is good for working with dictionaries (@google Python Dictionary), interprocess communication, serializing data, remotely controlling apps and IoT devices, and debugging apps. The Chinese Room is the link between your app or embedded device, and the world.
 
 ## Quick Links
-* [Quickstart Guide](https://github.com/Kabuki-Toolkit/Kabuki-SDK/wiki/Quickstart-Guide.md) - 
-    Check here for the Kabuki SDK wiki and github repository!
-* [Kabuki Project Website](https://kabuki-project.github.io/) - Official Kabuki Project website.
+* [Quickstart Guide](https://github.com/Kabuki-Toolkit/Kabuki-Theater/wiki/Quickstart-Guide.md) - 
+    Check here for the Kabuki Theater wiki and github repository!
+* [Kabuki Toolkit Website](https://kabuki-toolkit.github.io/) - Official Kabuki Toolkit website.
 
 ## Project Status: Alpha
 
 ## Toolkit Modules
 | Name     | Description |
 |:--------:|:------------|
-| _        | Core foundation, XML, and JSON.|
 | _Archive | Compressed archives.|
 | _App     | Application framework.|
 | _G       | Graphics engine.|

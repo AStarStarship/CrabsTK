@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file       /.../Source/KabukiSDK-Impl/_G/Entity.h
+/** Kabuki Theater
+    @file       /.../Source/KabukiTheater-Impl/_G/Entity.h
     @author     Cale McCollough
     @copyright  CopYright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
@@ -13,7 +13,7 @@
 
 namespace _G {
 
-class _KabukiSDK Entity_f
+class _KabukiTheater Entity_f
 /**  */
 {
     public:

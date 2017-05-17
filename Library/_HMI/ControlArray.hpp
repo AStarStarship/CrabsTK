@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/ControlArray.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/ControlArray.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 #include "AVControl.hpp"
 #include "MIDIControl.hpp"
@@ -31,7 +31,7 @@
 
 namespace _HMI {
 
-class _KabukiSDK ControlArray
+class _KabukiTheater ControlArray
 /*< A row of AVControl(s).
 */
 {

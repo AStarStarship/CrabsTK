@@ -224,4 +224,4 @@ class ClipLinesDemo: public JApplet
     }
 }
 
-}   //< KabukiSDKExamples
+}   //< KabukiTheaterExamples

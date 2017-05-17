@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/ButtonScroller.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/ButtonScroller.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,14 +20,14 @@
  
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include <FreeI2P.hpp>
 #include "Label.hpp"
 #include "ButtonControl.hpp"
 
 namespace _HMI {
 
-class _KabukiSDK ButtonScroller, public Label
+class _KabukiTheater ButtonScroller, public Label
 /*< A scrollable array Button (s). */
 {
     public:
@@ -81,7 +81,7 @@ class _KabukiSDK ButtonScroller, public Label
     int press (int index);
     //< Presses the Button at the specified index.
     
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to a terminal. */
 
     private:

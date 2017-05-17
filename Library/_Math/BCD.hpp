@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Math/Vect.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Math/Vect.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -23,11 +23,11 @@
 #include <float.h>
 
 #include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 namespace _Math {
 
-class _KabukiSDK BCD
+class _KabukiTheater BCD
 /*< Binary coded decimal for precise math.
     This BCD class uses optional dynamic memory. The isDynamic flag if true 
     will trigger the destructor on the ptr. */
@@ -129,7 +129,7 @@ class _KabukiSDK BCD
     void divide (double Value);
     /*< divides the given Value to this BCD. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints the BCD to the terminal. */
 
     private:

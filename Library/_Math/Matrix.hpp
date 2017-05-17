@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file       /.../KabukiSDK/_Math/Matrix.hpp
+/** Kabuki Theater
+    @file       /.../KabukiTheater/_Math/Matrix.hpp
     @author  Cale McCollough <https://calemccollough.github.io>
     @license Copyright 2016 (C) Cale McCollough <cale.mccollough@gmail.com>
 
@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 namespace _Math {
 
@@ -35,7 +35,7 @@ class Matrix
     ~Matrix ();
     /*< Destructor. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 
     private:

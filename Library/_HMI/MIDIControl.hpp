@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/MIDIButton.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/MIDIButton.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,7 +20,7 @@
  
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include "AVControl.hpp"
 
 namespace _HMI {
@@ -28,7 +28,7 @@ namespace _HMI {
 /** A controller for MIDI signals.
     
 */
-class _KabukiSDK MIDIControl : public AVControl
+class _KabukiTheater MIDIControl : public AVControl
 {
     public:
 

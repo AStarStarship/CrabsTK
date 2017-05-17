@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/include/_Math/RectRotor_f.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/include/_Math/RectRotor_f.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -24,7 +24,7 @@
 
 namespace _Math {
 
-class _KabukiSDK RectRotor_f
+class _KabukiTheater RectRotor_f
 /*< Utility class for rotating rectangles.
 */
 {
@@ -72,7 +72,7 @@ class _KabukiSDK RectRotor_f
     Rect_f getBounds ();
     /*< Returns the outer bounds. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 
     private:

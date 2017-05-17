@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file       /.../Source/KabukiSDK-Impl/_G/Triangle.h
+/** Kabuki Theater
+    @file       /.../Source/KabukiTheater-Impl/_G/Triangle.h
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
@@ -12,7 +12,7 @@
 
 namespace _G {
 
-class _KabukiSDK Triangle
+class _KabukiTheater Triangle
 /*< A simple triangle for drawing shapes with.
     We don't really care if this class is slow. It's just for simple drawing.
 */

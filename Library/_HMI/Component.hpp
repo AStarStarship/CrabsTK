@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/_HMI/Components/Component.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/_HMI/Components/Component.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,19 +20,19 @@
  
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include <FreeI2P.hpp>
 
 namespace _HMI { namespace Components {
     
-class _KabukiSDK Component
+class _KabukiTheater Component
 {
     public:
     
     Component ();
     /*< Constructs a dummy object. */
     
-    void print (I2P::Terminal& slot);
+    void print (I2P::Terminal& io);
     /*< Prints this object to a terminal. */
 }
 

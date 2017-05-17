@@ -1,4 +1,4 @@
-/** Kabuki Software Development Kit
+/** Kabuki Theater
     @version 0.9
     @file    /.../Kabuki_Toolkit/KabukitToolkit-Config.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -33,10 +33,10 @@ using std::vector;
 using std::string;
 using std::map;
 
-#ifdef _ExportKabukiSDK
-#define _KabukiSDK __declspec (dllexport) 
+#ifdef _ExportKabukiTheater
+#define _KabukiTheater __declspec (dllexport) 
 #else
-#define _KabukiSDK __declspec (dllimport) 
+#define _KabukiTheater __declspec (dllimport) 
 #endif
 
 /*
@@ -44,16 +44,16 @@ using std::map;
 	#if defined (_WIN32) || defined (__WIN32__)
 		#define DLL_CALLCONV __stdcall
 		// The following ifdef block is the standard way of creating macros which make exporting 
-		// from a DLL simpler. All files within this DLL are compiled with the _KabukiSDK_Exports
+		// from a DLL simpler. All files within this DLL are compiled with the _KabukiTheater_Exports
 		// symbol defined on the command line. this symbol should not be defined on any project
 		// that uses this DLL. This way any other project whose source files include this file see 
-		// __KabukiSDK functions as being imported from a DLL, wheras this DLL sees symbols
+		// __KabukiTheater functions as being imported from a DLL, wheras this DLL sees symbols
 		// defined with this macro as being exported.
-		#ifdef _KabukiSDK_Exports
-			#define __KabukiSDK __declspec (dllexport)
+		#ifdef _KabukiTheater_Exports
+			#define __KabukiTheater __declspec (dllexport)
 		#else
-			#define __KabukiSDK __declspec (dllimport)
-		#endif // _KabukiSDK_Exports
+			#define __KabukiTheater __declspec (dllimport)
+		#endif // _KabukiTheater_Exports
 	#else 
 		// try the gcc visibility support (see http://gcc.gnu.org/wiki/Visibility)
 		#if defined (__GNUC__) && ((__GNUC__ >= 4) || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4))
@@ -63,15 +63,15 @@ using std::map;
 		#endif // __GNUC__
 		#define DLL_CALLCONV
 		#if defined (GCC_HASCLASSVISIBILITY)
-			#define __KabukiSDK __attribute__ ((visibility("default")))
+			#define __KabukiTheater __attribute__ ((visibility("default")))
 		#else
-			#define __KabukiSDK
+			#define __KabukiTheater
 		#endif		
 	#endif // WIN32 / !WIN32
 #else
-	#define _KabukiSDK
+	#define _KabukiTheater
 	#define DLL_CALLCONV
-#endif // __KabukiSDKLib
+#endif // __KabukiTheaterLib
 */
 
 ////////////////////////////////////////////////////////////

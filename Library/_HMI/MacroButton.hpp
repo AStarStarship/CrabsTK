@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/MacroButton.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/MacroButton.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,7 +20,7 @@
  
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include "ButtonControl.hpp"
 #include "AVControl.hpp"
 #include "DMXControl.hpp"
@@ -33,7 +33,7 @@ namespace _HMI {
 /*  An Event that can trigger multiple events.
     Controls are stored as pointers in a linear linked list to optimize for speed.
 */
-class _KabukiSDK MacroButton : public AVControl, public ButtonControl
+class _KabukiTheater MacroButton : public AVControl, public ButtonControl
 {
     public:
 
@@ -119,7 +119,7 @@ class _KabukiSDK MacroButton : public AVControl, public ButtonControl
     string ToStringRow () const override;
     //< gets a column of the values without the labels.
     
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to a terminal. */
 
     private:

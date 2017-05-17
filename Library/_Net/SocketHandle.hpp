@@ -24,8 +24,6 @@
 
 #ifndef SFML_SOCKETHANDLE_HPP
 #define SFML_SOCKETHANDLE_HPP
-
-////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.hpp>
@@ -35,7 +33,7 @@
 #endif
 
 
-namespace sf
+namespace _Net
 {
 ////////////////////////////////////////////////////////////
 // Define the low-level socket handle type, specific to
@@ -51,7 +49,7 @@ namespace sf
 
 #endif
 
-} // namespace sf
+} // namespace _Net
 
 
 #endif // SFML_SOCKETHANDLE_HPP

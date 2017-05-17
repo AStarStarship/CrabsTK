@@ -24,21 +24,17 @@
 
 #ifndef SFML_SOCKET_HPP
 #define SFML_SOCKET_HPP
-
-////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/Network/Export.hpp>
-#include <SFML/Network/SocketHandle.hpp>
-#include <SFML/System/NonCopyable.hpp>
+#include <_Net/Export.hpp>
+#include <_Net/SocketHandle.hpp>
+#include <_/NonCopyable.hpp>
 #include <vector>
 
 
-namespace sf
+namespace _Net
 {
 class SocketSelector;
-
-////////////////////////////////////////////////////////////
 /// \brief Base class for all the socket types
 ///
 ////////////////////////////////////////////////////////////
@@ -88,7 +84,7 @@ public:
     /// available or not.
     /// By default, all sockets are blocking.
     ///
-    /// \param blocking True to set the socket as blocking, false for non-blocking
+    /// @param blocking True to set the socket as blocking, false for non-blocking
     ///
     /// \see isBlocking
     ///
@@ -98,7 +94,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Tell whether the socket is in blocking or non-blocking mode
     ///
-    /// \return True if the socket is blocking, false otherwise
+    /// @return True if the socket is blocking, false otherwise
     ///
     /// \see setBlocking
     ///
@@ -122,7 +118,7 @@ protected:
     ///
     /// This constructor can only be accessed by derived classes.
     ///
-    /// \param type Type of the socket (TCP or UDP)
+    /// @param type Type of the socket (TCP or UDP)
     ///
     ////////////////////////////////////////////////////////////
     Socket(Type type);
@@ -134,7 +130,7 @@ protected:
     /// was not created yet (or already destroyed).
     /// This function can only be accessed by derived classes.
     ///
-    /// \return The internal (OS-specific) handle of the socket
+    /// @return The internal (OS-specific) handle of the socket
     ///
     ////////////////////////////////////////////////////////////
     SocketHandle getHandle() const;
@@ -153,7 +149,7 @@ protected:
     ///
     /// This function can only be accessed by derived classes.
     ///
-    /// \param handle OS-specific handle of the socket to wrap
+    /// @param handle OS-specific handle of the socket to wrap
     ///
     ////////////////////////////////////////////////////////////
     void create(SocketHandle handle);
@@ -178,13 +174,11 @@ private:
     bool         m_isBlocking; ///< Current blocking mode of the socket
 };
 
-} // namespace sf
+} // namespace _Net
 
 
 #endif // SFML_SOCKET_HPP
 
-
-////////////////////////////////////////////////////////////
 /// \class sf::Socket
 /// \ingroup network
 ///
@@ -214,6 +208,6 @@ private:
 /// the socket often enough, and cannot afford blocking
 /// this loop.
 ///
-/// \see sf::TcpListener, sf::TcpSocket, sf::UdpSocket
+/// \see sf::TCPListener, sf::TCPSocket, sf::UDPSocket
 ///
 ////////////////////////////////////////////////////////////

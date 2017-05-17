@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/ControlGrid.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/ControlGrid.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,18 +20,18 @@
  
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include "ControlArray.hpp"
 
 namespace _HMI {
 
 /** A grid of Controls.
     Each AVControl Layer on the Symmetry Live can either have 8 pots or encoders, or can have 4 pots and 4 encoders.
-    This class _KabukiSDK helps us swap the values out quickly and efficiently.
+    This class _KabukiTheater helps us swap the values out quickly and efficiently.
 
     A ControlGrid must have the option of being bifurcated.
 */
-class _KabukiSDK ControlGrid
+class _KabukiTheater ControlGrid
 {
     public:
 

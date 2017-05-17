@@ -1,5 +1,5 @@
-/** Kabuki Toolkit
-    @file    /.../KabukiToolkit/_Com/MIDI/Message.h
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Com/MIDI/Message.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -22,9 +22,9 @@
 
 namespace _Com { namespace MIDI {
 
-#include <KabukiToolkit-Config.h>
+#include <KabukiTheater-Config.h>
     
-class _KabukiToolkit Device;
+class _KabukiTheater Device;
 
 struct HMIDIIN
 {
@@ -41,7 +41,7 @@ struct LPSTR
     char A;
 };
 
-class _KabukiToolkit InputHeader
+class _KabukiTheater InputHeader
 /** Encapsulates the MIDIHDR struct for MIDI input in Win. */
 {
     public:
@@ -67,7 +67,7 @@ class _KabukiToolkit InputHeader
 };
 
 /** Thread safe queue for storing MIDI::Message::InputHeader objects. */
-class _KabukiToolkit InputHeaderQueue
+class _KabukiTheater InputHeaderQueue
 {
     public:
 
@@ -98,7 +98,7 @@ struct HMIDIOUT
     char A;
 };
 
-class _KabukiToolkit OutputHeader
+class _KabukiTheater OutputHeader
 {
     public:
 
@@ -123,7 +123,7 @@ class _KabukiToolkit OutputHeader
     MIDIHDR  midiHeader;    //< The header of the MIDI message to send.
 };
 
-class _KabukiToolkit OutputHeaderQueue
+class _KabukiTheater OutputHeaderQueue
 /** A thread-safe queue for storing Win::MIDI::Message::OutputHeader objects. */
 {
     public:

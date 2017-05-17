@@ -1,5 +1,5 @@
 /** Kabuki Card Games
-    @file    /.../KabukiSDK-Examples/KabukiCardGames/KabukiCardGames/Card.cpp
+    @file    /.../KabukiTheater-Examples/KabukiCardGames/KabukiCardGames/Card.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 

@@ -1,5 +1,5 @@
-/** Kabuki Toolkit
-    @file    /.../KabukiToolkit/_Com/MIDI/Port.h
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Com/MIDI/Port.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,12 +21,12 @@
 #pragma once
 
 #include <FreeI2P.h>
-#include <KabukiToolkit-Config.h>
+#include <KabukiTheater-Config.h>
 #include "Message.h"
 
 namespace _IO { namespace MIDI {
 
-class _KabukiToolkit APort
+class _KabukiTheater APort
 /*< Each port has a circular queue of MIDI_Message.
     There are two tYpes of Ports, an input and an output port. The only real difference is
     that the InputPort Queue stores a IncommingMessage and the OutputPort stores OutgoingMessage(s).
@@ -34,7 +34,7 @@ class _KabukiToolkit APort
     Im not sure if it would be better to implement the queue as a template. Templates are C++ specific so
     I am very hessitant to use them.
   
-    One very usingant the that needs to happen is that this class _KabukiToolkit needs to be thread safe.
+    One very usingant the that needs to happen is that this class _KabukiTheater needs to be thread safe.
   
     SysEx message have not been implemented. */
 {

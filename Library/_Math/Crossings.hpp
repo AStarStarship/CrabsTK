@@ -195,7 +195,7 @@ class Crossings
 
     virtual bool covers (float ystart, float yend) = 0;
 
-    inline void print (Terminal& slot) 
+    inline void print (Terminal& io) 
     {
         slot.prints ("Crossings [");
         index_t l = 13;
@@ -497,7 +497,7 @@ Crossings* findCrossings (vector<Curve_f*>& curves,  float xlo, float ylo, float
         if (c.accumulateCrossings (cross)) return nullptr;
     });
     
-    #if _DebugKabukiSDK
+    #if _DebugKabukiTheater
     cross.print ();
     #endif
     return cross;
@@ -584,7 +584,7 @@ Crossings* findCrossings (PathIterator_f pi, float xlo, float ylo, float xhi, fl
     if (movy != cury)
         if (cross.accumulateLine (curx, cury, movx, movy)) return nullptr;
 
-    #if _DebugKabukiSDK
+    #if _DebugKabukiTheater
         cross.print ();
     #endif
     

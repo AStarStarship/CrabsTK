@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/_HMI/Components/ADSR.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/_HMI/Components/ADSR.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,13 +21,13 @@
 #pragma once
 
 #include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 namespace _HMI { namespace Components {
 
-class _KabukiSDK ADSR: public Device {
+class _KabukiTheater ADSR: public Device {
     
-class _KabukiSDK ADSR
+class _KabukiTheater ADSR
 /*< An ADSR filter. */
 {
     ADSR ();

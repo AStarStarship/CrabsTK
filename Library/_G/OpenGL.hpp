@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 ////////////////////////////////////////////////////////////
 /// This file just includes the OpenGL headers,

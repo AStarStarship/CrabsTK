@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/_HMI/Components/XYControl.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/_HMI/Components/XYControl.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,13 +21,13 @@
 #pragma once
 
 #include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 #include "../global.hpp"
 
 namespace _HMI { namespace Components {
 
-class _KabukiSDK XYTouchpad: public Component
+class _KabukiTheater XYTouchpad: public Component
 {
       public:
 
@@ -79,7 +79,7 @@ class _KabukiSDK XYTouchpad: public Component
         @pre Value < top_bounds.
     */
     
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to a terminal. */
 
     private:

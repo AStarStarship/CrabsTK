@@ -1,5 +1,5 @@
 /** Kabuki Card Games
-    @file    /.../KabukiSDK-Examples/KabukiCardGames/KabukiCardGames/Blackjack/CardCombo.hpp
+    @file    /.../KabukiTheater-Examples/KabukiCardGames/KabukiCardGames/Blackjack/CardCombo.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 

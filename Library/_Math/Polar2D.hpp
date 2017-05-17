@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Math/PolarPoint.cpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Math/PolarPoint.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,7 +21,7 @@
 #pragma once
 
 #include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 namespace _Math {
 
@@ -42,7 +42,7 @@ class Polar_f
     float calcMagnitude ();
     /*< Calculates the magnitude of the . */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 };
 
@@ -63,7 +63,7 @@ class Polar_d
     double calcMagnitude ();
     /*< Calculates the magnitude. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 };
 

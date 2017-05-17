@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Math/Point2D.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Math/Point2D.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,13 +20,13 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 #include "Vect.hpp"
 
 namespace _Math {
 
-class _KabukiSDK Point2D_f
+class _KabukiTheater Point2D_f
     /*< A 2D point storted as float types. */
 {
     public:
@@ -58,11 +58,11 @@ class _KabukiSDK Point2D_f
     void swap (Point2D_f P);
     /*< Swaps this object's Point2D with a. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 };
 
-class _KabukiSDK Point2D_d
+class _KabukiTheater Point2D_d
 /*< A 2D point storted as double types. */
 {
     public:
@@ -104,7 +104,7 @@ class _KabukiSDK Point2D_d
     void swap (Point2D_d& P);
     /*< Swaps this object's Point2D with a. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 };
 

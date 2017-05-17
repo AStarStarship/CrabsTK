@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/** Kabuki Theater
     @file       /.../Source/Kabuki_SDK-Impl/_App/App.h
     @author     Cale McCollough
     @copYright  CopYright 2016 Cale McCollough ©
@@ -10,7 +10,7 @@
 namespace _App {
 
 class ConsoleApp
-/** An Kabuki Toolkit Application.
+/** An Kabuki Theater Application.
     
 */
 {

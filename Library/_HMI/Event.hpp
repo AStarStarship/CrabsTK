@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include <_HMI/Joystick.hpp>
 #include <_HMI/Keyboard.hpp>
 #include <_HMI/Mouse.hpp>

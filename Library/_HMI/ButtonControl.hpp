@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/ButtonControl.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/ButtonControl.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,7 +20,7 @@
  
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 #include "AVControl.hpp"
 
@@ -46,7 +46,7 @@ float getDefaultDoublePressTime ();
 
 static string ActionStrings[];    //< An array of strings that corrispond to the Actions enum list.
 
-class _KabukiSDK ButtonControl
+class _KabukiTheater ButtonControl
 /*< A hardware or GUI button.
     Buttons need to be able to control both MIDI/DMX devices, and system control functions.
     A button can be linked to a physical hardware button, a software button, or both. A button can serve one of the 
@@ -129,7 +129,7 @@ class _KabukiSDK ButtonControl
         @return gets 0 upon success and 1 if the newLabel is too long.
         @see    Label::isValid (char). */
     
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to a terminal. */
     
     private:

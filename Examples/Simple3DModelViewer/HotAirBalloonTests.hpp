@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK-Examples/Software3DWireFrameViewer/HotAirBalloonTests.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater-Examples/Software3DWireFrameViewer/HotAirBalloonTests.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,9 +20,9 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
-namespace KabukiSDKExamples {
+namespace KabukiTheaterExamples {
     
 class HotAirBalloon: public Shape
 {

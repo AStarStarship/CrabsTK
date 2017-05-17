@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Math/Rect.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Math/Rect.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,13 +21,13 @@
 #pragma once
 
 #include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include "Point.hpp"
 #include "Vect.hpp"
 
 namespace _Math {
 
-class _KabukiSDK Rect_f
+class _KabukiTheater Rect_f
 {
     public:
 
@@ -120,7 +120,7 @@ class _KabukiSDK Rect_f
 
     Rect_f& operator= (const Vect_f& v);
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 
     private:
@@ -129,7 +129,7 @@ class _KabukiSDK Rect_f
         height;     //< The height of the rectangle.
 };
 
-class _KabukiSDK Rect_d
+class _KabukiTheater Rect_d
 {
     private:
 
@@ -217,7 +217,7 @@ class _KabukiSDK Rect_d
         It's equal to x += pixels; y + pixels; width -= (pixels << 1); height -= (pixels << 1); 
     */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 
     bool operator== (const Rect_d& r) const;
@@ -230,7 +230,7 @@ class _KabukiSDK Rect_d
 
     Rect_d& operator= (const Vect_d&);
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 
     private:

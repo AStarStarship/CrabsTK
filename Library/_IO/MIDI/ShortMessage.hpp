@@ -1,5 +1,5 @@
-/** Kabuki Toolkit
-    @file    /.../KabukiToolkit/_Com/MIDI/ShortMessage.h
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Com/MIDI/ShortMessage.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,15 +21,15 @@
 #pragma once
 
 #include <FreeI2P.h>
-#include <KabukiToolkit-Config.h>
+#include <KabukiTheater-Config.h>
 #include "Message.h"
 
 namespace _Com { namespace MIDI {
     
-class _KabukiToolkit Port;
+class _KabukiTheater Port;
 
 /** Represents a short MIDI message. */
-class _KabukiToolkit ShortMessage: public Message
+class _KabukiTheater ShortMessage: public Message
 {
       public:
 

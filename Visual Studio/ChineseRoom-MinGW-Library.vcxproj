@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ChineseRoom\Library\AssemblySettings.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Address.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\args.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\ASCII.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Book.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Clock.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Config.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Console.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Door.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Err.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Error.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\ErrorList.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\EventSequence.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\File.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\FileInputStream.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Global.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\IDevice.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\IEvent.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\IIterator.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\InputStream.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\IPortal.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Library.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Lock.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Log.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Member.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Memory.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\MemoryInputStream.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Mirror.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\MorseCode.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Mutex.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Platforms.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Print.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Process.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\RecordTable.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Room.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Sleep.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\String.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Terminal.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Time.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Types.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\UTF.hpp" />
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Utils.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\Address.inl" />
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\args.inl" />
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\Book.inl" />
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\Door.inl" />
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\IDevice.inl" />
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\Library.inl" />
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\Print.inl" />
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\ReadMe.md" />
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\String.inl" />
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\UTF.inl" />
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\Utils.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Clock.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Console.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Door.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Err.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Error.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\ErrorList.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\EventSequence.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\FileInputStream.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Lock.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Log.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Member.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Memory.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\MemoryInputStream.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Mirror.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\MorseCode.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Mutex.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Params.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Print.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Process.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\RecordTable.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Room.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Sleep.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\String.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Terminal.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Time.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Types.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Unit.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Utils.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{EFBED12B-932C-4D43-8F9F-A2AF5B5F04BA}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>_</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>..\..\ChineseRoom\Library;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>..\Library;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

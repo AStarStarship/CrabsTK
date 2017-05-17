@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file       /.../KabukiSDK-Library/_G/Texture/Texture.hpp
+/** Kabuki Theater
+    @file       /.../KabukiTheater-Library/_G/Texture/Texture.hpp
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt

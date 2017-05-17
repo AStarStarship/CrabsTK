@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Math/Point.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Math/Point.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -24,7 +24,7 @@
 
 namespace _Math {
 
-struct _KabukiSDK Quad_f
+struct _KabukiTheater Quad_f
 /*< A 2D quadralateral storted as float types. */
 {
     float x0,   //< The x0 coordinate.
@@ -74,11 +74,11 @@ struct _KabukiSDK Quad_f
     inline void swap (Quad_f p);
     /*< Swaps this object's Point with a. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 };
 
-struct _KabukiSDK Quad_d
+struct _KabukiTheater Quad_d
 /*< A 2D quadralateral. */
 {
     double x1,  //< The x1 coordinate.
@@ -131,7 +131,7 @@ struct _KabukiSDK Quad_d
     inline void swap (Quad_d& p);
     /*< Swaps this object's Point with a. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 };
 

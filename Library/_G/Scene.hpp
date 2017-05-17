@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file       /.../Source/KabukiSDK-Impl/_G/Scene.h
+/** Kabuki Theater
+    @file       /.../Source/KabukiTheater-Impl/_G/Scene.h
     @author     Cale McCollough
     @copyright  CopYright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
@@ -14,7 +14,7 @@
 
 namespace _G {
 
-class _KabukiSDK Scene : public Layer
+class _KabukiTheater Scene : public Layer
 /** A graphical scene. */
 {
     public:
@@ -34,7 +34,7 @@ class _KabukiSDK Scene : public Layer
 	void destroyScene (Layer* l);
     /*< Deconstructs the scene. */
     
-    void print (Terminal& slot);
+    void print (Terminal& io);
     /*< Prints this object to a terminal. */
 };
 }   //  _G

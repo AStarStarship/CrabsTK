@@ -1,5 +1,5 @@
 /** iSymmetric Engine
-    @file       /.../Source/KabukiToolkit/Devices/Displays/Color.h
+    @file       /.../Source/KabukiTheater/Devices/Displays/Color.h
     @author     Cale McCollough <cale.mccollough@gmail.com>
     @license    Copyright (C) 2016 Cale McCollough <calemccollough.github.io>
 
@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 namespace _G {
 
@@ -151,7 +151,7 @@ class Color
     void setHSV (float& fR, float& fG, float& fB, float& fH, float& fS, float& fV);
     /*< Sets this color to the HSV values. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 };
 ////////////////////////////////////////////////////////////
@@ -190,7 +190,7 @@ class Color
 /// @return True if colors are equal, false if they are different
 ///
 ////////////////////////////////////////////////////////////
-_KabukiSDK bool operator ==(const Color& left, const Color& right);
+_KabukiTheater bool operator ==(const Color& left, const Color& right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Color
@@ -204,7 +204,7 @@ _KabukiSDK bool operator ==(const Color& left, const Color& right);
 /// @return True if colors are different, false if they are equal
 ///
 ////////////////////////////////////////////////////////////
-_KabukiSDK bool operator !=(const Color& left, const Color& right);
+_KabukiTheater bool operator !=(const Color& left, const Color& right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Color
@@ -219,7 +219,7 @@ _KabukiSDK bool operator !=(const Color& left, const Color& right);
 /// @return Result of \a left + \a right
 ///
 ////////////////////////////////////////////////////////////
-_KabukiSDK Color operator +(const Color& left, const Color& right);
+_KabukiTheater Color operator +(const Color& left, const Color& right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Color
@@ -234,7 +234,7 @@ _KabukiSDK Color operator +(const Color& left, const Color& right);
 /// @return Result of \a left - \a right
 ///
 ////////////////////////////////////////////////////////////
-_KabukiSDK Color operator -(const Color& left, const Color& right);
+_KabukiTheater Color operator -(const Color& left, const Color& right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Color
@@ -251,7 +251,7 @@ _KabukiSDK Color operator -(const Color& left, const Color& right);
 /// @return Result of \a left * \a right
 ///
 ////////////////////////////////////////////////////////////
-_KabukiSDK Color operator *(const Color& left, const Color& right);
+_KabukiTheater Color operator *(const Color& left, const Color& right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Color
@@ -267,7 +267,7 @@ _KabukiSDK Color operator *(const Color& left, const Color& right);
 /// @return Reference to \a left
 ///
 ////////////////////////////////////////////////////////////
-_KabukiSDK Color& operator +=(Color& left, const Color& right);
+_KabukiTheater Color& operator +=(Color& left, const Color& right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Color
@@ -283,7 +283,7 @@ _KabukiSDK Color& operator +=(Color& left, const Color& right);
 /// @return Reference to \a left
 ///
 ////////////////////////////////////////////////////////////
-_KabukiSDK Color& operator -=(Color& left, const Color& right);
+_KabukiTheater Color& operator -=(Color& left, const Color& right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Color
@@ -301,6 +301,6 @@ _KabukiSDK Color& operator -=(Color& left, const Color& right);
 /// @return Reference to \a left
 ///
 ////////////////////////////////////////////////////////////
-_KabukiSDK Color& operator *=(Color& left, const Color& right);
+_KabukiTheater Color& operator *=(Color& left, const Color& right);
 
 }   //< _G

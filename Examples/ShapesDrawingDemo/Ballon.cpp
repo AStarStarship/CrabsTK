@@ -1,5 +1,5 @@
 /** Kabuki Card Games
-    @file    /.../KabukiSDK-Examples/ShapesDrawingDemo/BaloonTest.cpp
+    @file    /.../KabukiTheater-Examples/ShapesDrawingDemo/BaloonTest.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,7 +20,7 @@
 
 #include "BaloonTest.hpp"
 
-namespace KabukiSDKExamples {
+namespace KabukiTheaterExamples {
 
 class Ballon
 {
@@ -97,4 +97,4 @@ class Ballon
    
 } // End
 
-}   //< KabukiSDKExamples
+}   //< KabukiTheaterExamples

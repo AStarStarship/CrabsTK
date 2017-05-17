@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK-Examples/Software3DWireFrameViewer/ShadingDemo.cpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater-Examples/Software3DWireFrameViewer/ShadingDemo.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,7 +20,7 @@
 
 #include "SoftwareEngine.hpp"
 
-namespace KabukiSDKExamples {
+namespace KabukiTheaterExamples {
 
 class ShadingDemo: public hal.grfx3d.SoftwareEngine
 {

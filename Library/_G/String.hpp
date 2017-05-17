@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file       /.../Source/KabukiSDK-Impl/_G/String.h
+/** Kabuki Theater
+    @file       /.../Source/KabukiTheater-Impl/_G/String.h
     @author     Cale McCollough
     @copyright  Copyright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt
@@ -14,7 +14,7 @@
 namespace _G {
     
 /** A drawable string. */
-class _KabukiSDK String : public Cell
+class _KabukiTheater String : public Cell
 {
 	public:
 	

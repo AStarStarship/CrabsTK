@@ -1,5 +1,5 @@
 /** Kabuki Card Games
-    @file    /.../KabukiSDK-Examples/KabukiCardGames/KabukiCardGames/Card.hpp
+    @file    /.../KabukiTheater-Examples/KabukiCardGames/KabukiCardGames/Card.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <KabukiSDK.hpp>
+#include <KabukiTheater.hpp>
 
 namespace KabukiCardGames {
 

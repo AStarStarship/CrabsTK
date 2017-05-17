@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Math/AffineTransform.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Math/AffineTransform.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,11 +20,11 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 namespace _Math {
 
-class _KabukiSDK AffineTransform_f
+class _KabukiTheater AffineTransform_f
 /** A 2D affine transformation using 32-bit floating-point data. */
 {
     public:
@@ -32,11 +32,11 @@ class _KabukiSDK AffineTransform_f
     AffineTransform_f ();
     /*< Constructs an unintialized object. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 };
 
-class _KabukiSDK Angle_d
+class _KabukiTheater Angle_d
 /** An angle between two lines. */
 {
     public:
@@ -52,7 +52,7 @@ class _KabukiSDK Angle_d
     void setDegs (double Value);
     /*< Sets the angle to the new value in degrees. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 };
 

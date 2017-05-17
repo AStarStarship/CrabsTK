@@ -1,4 +1,4 @@
-/** Kabuki Software Development Kit
+/** Kabuki Theater
     @file    /.../Library/_G/Engine.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 namespace _G {
 
@@ -261,4 +261,4 @@ public:
     }
 };
 
-}   //< KabukiSDKExamples
+}   //< KabukiTheaterExamples

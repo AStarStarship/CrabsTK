@@ -1,4 +1,4 @@
-/** Dojo Card Games
+/** Kabuki Card Games
     @file       ~/Console/main.cpp
     @author     Cale McCollough
     @copyright  © CoderDojo 2015 ®

@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/AVControl.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/AVControl.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,13 +21,13 @@
 #pragma once
 
 #include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include "Label.hpp"
 #include <_/IEvent.hpp>
 
 namespace _HMI {
 
-class _KabukiSDK AVControl: public Label, public _::IEvent
+class _KabukiTheater AVControl: public Label, public _::IEvent
 /** An audio-visual control.
     
 */
@@ -142,13 +142,13 @@ class _KabukiSDK AVControl: public Label, public _::IEvent
     @return gets 0 if both Controls are the same.
     @return gets 1 if the controls are not identical. */
 
-    virtual void printHeader (Terminal& slot) const;
+    virtual void printHeader (Terminal& io) const;
     /*< Gets the header for toStringRow (). */
 
-    virtual void printRow (Terminal& slot) const;
+    virtual void printRow (Terminal& io) const;
     /*< Gets a column of the values without the labels. */
 
-    virtual void print (Terminal& slot) const;
+    virtual void print (Terminal& io) const;
     /*< Prints this object to a terminal. */
 
     private:

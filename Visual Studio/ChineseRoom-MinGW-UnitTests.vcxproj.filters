@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="TESTS">
+      <UniqueIdentifier>{ea5d69d7-7206-4e1a-bb6d-79ecfe14b105}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\TESTS\main.cpp" />
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\TESTS\RecordTableTests.cpp">
+      <Filter>TESTS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\TESTS\TerminalAndMirrorTests.cpp">
+      <Filter>TESTS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\TESTS\TerminalTests - Copy.cpp">
+      <Filter>TESTS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\TESTS\UtilsTests.cpp">
+      <Filter>TESTS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\TESTS\BookTests.cpp">
+      <Filter>TESTS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\TESTS\DaemonTests.cpp">
+      <Filter>TESTS</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\TESTS\Module.hpp">
+      <Filter>TESTS</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

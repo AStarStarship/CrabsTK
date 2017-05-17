@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK-Examples/Software3DWireFrameViewer/Shading.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater-Examples/Software3DWireFrameViewer/Shading.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,13 +20,13 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 #include <_/Keyboard.hpp>
 
 #include <_G/Engine.hpp>
 
-namespace KabukiSDKExamples {
+namespace KabukiTheaterExamples {
     
 class ShadingDemo: public _G::Engine
 {

@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Library">
+      <UniqueIdentifier>{f3cc128f-5a81-4698-a889-ecc9732ff5b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\ChineseRoom">
+      <UniqueIdentifier>{50359463-94b0-4941-a03d-5ad3b0262aca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\ChineseRoom-Impl">
+      <UniqueIdentifier>{9bb68166-fa92-4820-b369-70968074a961}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom.hpp">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\AssemblySettings.hpp">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Config.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Console.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Door.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Err.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Error.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\ErrorList.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\EventSequence.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\File.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\FileInputStream.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Global.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\IDevice.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\IEvent.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\IIterator.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\InputStream.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\IPortal.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Library.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Lock.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Log.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Member.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Memory.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\MemoryInputStream.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Mirror.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\MorseCode.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Mutex.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Platforms.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Print.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Process.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\RecordTable.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Room.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Sleep.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\String.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Terminal.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Time.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Types.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\UTF.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Utils.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Address.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\args.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\ASCII.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Book.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ChineseRoom\Library\ChineseRoom\Clock.hpp">
+      <Filter>Library\ChineseRoom</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\Door.inl">
+      <Filter>Library\ChineseRoom</Filter>
+    </None>
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\IDevice.inl">
+      <Filter>Library\ChineseRoom</Filter>
+    </None>
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\Library.inl">
+      <Filter>Library\ChineseRoom</Filter>
+    </None>
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\Print.inl">
+      <Filter>Library\ChineseRoom</Filter>
+    </None>
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\ReadMe.md">
+      <Filter>Library\ChineseRoom</Filter>
+    </None>
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\String.inl">
+      <Filter>Library\ChineseRoom</Filter>
+    </None>
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\UTF.inl">
+      <Filter>Library\ChineseRoom</Filter>
+    </None>
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\Utils.inl">
+      <Filter>Library\ChineseRoom</Filter>
+    </None>
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\Address.inl">
+      <Filter>Library\ChineseRoom</Filter>
+    </None>
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\args.inl">
+      <Filter>Library\ChineseRoom</Filter>
+    </None>
+    <None Include="..\..\ChineseRoom\Library\ChineseRoom\Book.inl">
+      <Filter>Library\ChineseRoom</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Lock.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Log.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Member.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Memory.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\MemoryInputStream.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Mirror.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\MorseCode.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Mutex.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Params.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Print.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Process.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\RecordTable.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Room.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Sleep.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\String.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Terminal.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Time.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Types.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Unit.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Utils.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Clock.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Console.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Door.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Err.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\Error.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\ErrorList.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\EventSequence.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ChineseRoom\Library\ChineseRoom-Impl\FileInputStream.cpp">
+      <Filter>Library\ChineseRoom-Impl</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

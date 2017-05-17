@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Math/Angle2D.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Math/Angle2D.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,11 +20,11 @@
 
 #pragma once
 
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 namespace _Math {
 
-class _KabukiSDK Angle2D_f
+class _KabukiTheater Angle2D_f
 /** An angle between two lines stored in radians. */
 {
     public:
@@ -40,11 +40,11 @@ class _KabukiSDK Angle2D_f
     void setDegs (float Value);
     /*< Sets the angle to the new value in degrees. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 };
 
-class _KabukiSDK Angle2D_d
+class _KabukiTheater Angle2D_d
 /** An angle between two lines. */
 {
     public:
@@ -60,7 +60,7 @@ class _KabukiSDK Angle2D_d
     void setDegs (double Value);
     /*< Sets the angle to the new value in degrees. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 };
 

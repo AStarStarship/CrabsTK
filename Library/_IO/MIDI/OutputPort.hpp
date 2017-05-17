@@ -1,5 +1,5 @@
-/** Kabuki Toolkit
-    @file    /.../KabukiToolkit/_Com/MIDI/OutputPort.h
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Com/MIDI/OutputPort.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,14 +21,14 @@
 #pragma once
 
 #include <FreeI2P.h>
-#include <KabukiToolkit-Config.h>
+#include <KabukiTheater-Config.h>
 #include "Message.h"
 #include "Port.h"
 
 namespace _Com { namespace MIDI {
 
 /**A MIDI output port on a Win */
-class _KabukiToolkit OutputPort: public Port
+class _KabukiTheater OutputPort: public Port
 {
       public:
 

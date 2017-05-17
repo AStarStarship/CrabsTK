@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file       /.../Source/KabukiSDK-Impl/_G/Elipse.h
+/** Kabuki Theater
+    @file       /.../Source/KabukiTheater-Impl/_G/Elipse.h
     @author     Cale McCollough
     @copyright  CopYright 2016 Cale McCollough ©
     @license    Read accompanying /.../README.md or online at http://www.boost.org/LICENSE_1_0.txt.
@@ -12,7 +12,7 @@
 
 namespace _G {
 
-class _KabukiSDK Elipse_f
+class _KabukiTheater Elipse_f
 /**  */
 {
     public:
@@ -37,7 +37,7 @@ class _KabukiSDK Elipse_f
     /*< Sets the radius of the rectangle in the x direction.
         @warning If value < 0.0, value will be multiplied by -1.0. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to a terminal. */
 
     private:

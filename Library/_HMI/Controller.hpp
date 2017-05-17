@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_HMI/Controller.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_HMI/Controller.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,16 +21,16 @@
 #pragma once
 
 #include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 #include "Label.hpp"
 
 namespace _HMI {
 
-/* This class _KabukiSDK represents a generic Control Surface.
-   This class _KabukiSDK is to help facilitate the editing of templates on other control surfaces through the Symmetry Live!'s API.
+/* This class _KabukiTheater represents a generic Control Surface.
+   This class _KabukiTheater is to help facilitate the editing of templates on other control surfaces through the Symmetry Live!'s API.
    For right now its pretty bare bones.
 */
-class _KabukiSDK Controller
+class _KabukiTheater Controller
 {
     public:
 

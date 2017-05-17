@@ -1,5 +1,5 @@
-/** Kabuki Software Development Kit
-    @file    /.../KabukiSDK/_Math/Vect.hpp
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_Math/Vect.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -21,11 +21,11 @@
 #pragma once
 
 #include <FreeI2P.hpp>
-#include <KabukiSDK-Config.hpp>
+#include <KabukiTheater-Config.hpp>
 
 namespace _Math {
 
-struct _KabukiSDK Vect_f
+struct _KabukiTheater Vect_f
 /*< A 2D vector represented as float. */
 {
     float x,        //< The x position.
@@ -67,11 +67,11 @@ struct _KabukiSDK Vect_f
     Vect_f& operator+= (const Vect_f& p);
     /** C== Operator+= overloader. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 };
 
-struct _KabukiSDK Vect_d
+struct _KabukiTheater Vect_d
     /*< A 2D vector represented as double. */
 {
     double x,          //< The x position.
@@ -113,7 +113,7 @@ struct _KabukiSDK Vect_d
     Vect_d& operator+= (const Vect_d& p);
     /** C== Operator+= overloader. */
 
-    inline void print (Terminal& slot);
+    inline void print (Terminal& io);
     /*< Prints this object to the terminal. */
 };
 

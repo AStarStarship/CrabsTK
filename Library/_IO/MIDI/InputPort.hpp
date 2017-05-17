@@ -1,5 +1,5 @@
-/** Kabuki Toolkit
-    @file    /.../KabukiToolkit/_KabukiToolkit/MIDI/InputPort.h
+/** Kabuki Theater
+    @file    /.../KabukiTheater/_KabukiTheater/MIDI/InputPort.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <KabukiToolkit-Config.h>
+#include <KabukiTheater-Config.h>
 
 #include "Message.h"
 
@@ -32,7 +32,7 @@ struct HANDLE
     char A;
 };
 
-class _KabukiToolkit InputPort
+class _KabukiTheater InputPort
 {
     public:
   
