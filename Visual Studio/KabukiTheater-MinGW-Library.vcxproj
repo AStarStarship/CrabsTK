@@ -1,0 +1,625 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Library\KabukiSDK-Impl\_App\iOS\EaglContext.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\iOS\InputImpl.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\iOS\JoystickImpl.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\iOS\SensorImpl.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\iOS\SFAppDelegate.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\iOS\SFMain.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\iOS\SFView.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\iOS\SFViewController.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\iOS\VideoModeImpl.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\iOS\WindowImplUIKit.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\AutoreleasePoolWrapper.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\cg_sf_conversion.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\cpp_objc_conversion.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\HIDInputManager.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\InputImpl.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\NSImage+raw.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\SFApplication.m" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\SFApplicationDelegate.m" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\SFContext.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\SFKeyboardModifiersHelper.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\SFOpenGLView+keyboard.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\SFOpenGLView+mouse.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\SFOpenGLView.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\SFSilentResponder.m" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\SFViewController.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\SFWindow.m" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\SFWindowController.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_App\OSX\WindowImplCocoa.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_GUI\darwin.mm" />
+    <None Include="..\Library\KabukiSDK-Impl\_IO\MIDI\ReadMe.md" />
+    <None Include="..\Library\_HMI\ReadMe.md" />
+    <None Include="..\Library\_Id\ReadMe.md" />
+    <None Include="..\Library\_IO\Audio\SoundFileFactory.inl" />
+    <None Include="..\Library\_IO\MIDI\ReadMe.md" />
+    <None Include="..\Library\_Math\ReadMe.md" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Android\InputImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Android\JoystickImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Android\SensorImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Android\WindowImplAndroid.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\EGLCheck.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\EGLContext.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\FreeBSD\JoystickImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\GLContext.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\iOS\EaglContext.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\iOS\InputImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\iOS\JoystickImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\iOS\ObjCType.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\iOS\SensorImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\iOS\SFAppDelegate.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\iOS\SFMain.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\iOS\SFView.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\iOS\SFViewController.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\iOS\WindowImplUIKit.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\AutoreleasePoolWrapper.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\cg_sf_conversion.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\cpp_objc_conversion.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\HIDInputManager.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\HIDJoystickManager.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\InputImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\JoystickImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\NSImage+raw.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\Scaling.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\SensorImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\SFApplication.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\SFApplicationDelegate.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\SFContext.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\SFKeyboardModifiersHelper.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\SFOpenGLView+keyboard_priv.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\SFOpenGLView+mouse_priv.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\SFOpenGLView.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\SFSilentResponder.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\SFViewController.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\SFWindow.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\SFWindowController.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\WindowImplCocoa.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\OSX\WindowImplDelegateProtocol.h" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Unix\Display.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Unix\GlxContext.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Unix\GlxExtensions.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Unix\InputImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Unix\JoystickImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Unix\SensorImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Unix\WindowImplX11.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\VideoModeImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Win32\InputImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Win32\JoystickImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Win32\SensorImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Win32\WglContext.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Win32\WglExtensions.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\Win32\WindowImplWin32.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_App\WindowImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_G\GLCheck.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_G\GLExtensions.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_G\GLLoader.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_G\ImageLoader.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_G\RenderTextureImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_G\RenderTextureImplDefault.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_G\RenderTextureImplFBO.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_G\TextureSaver.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_IO\Audio\ALCheck.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_Net\SocketImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_Net\Unix\SocketImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_Net\Win32\SocketImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_\Android\Activity.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_\Android\ResourceStream.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_\Unix\ClockImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_\Unix\MutexImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_\Unix\SleepImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_\Unix\ThreadImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_\Unix\ThreadLocalImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_\Win32\ClockImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_\Win32\MutexImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_\Win32\SleepImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_\Win32\ThreadImpl.hpp" />
+    <ClInclude Include="..\Library\KabukiSDK-Impl\_\Win32\ThreadLocalImpl.hpp" />
+    <ClInclude Include="..\Library\_HMI\AEvent.hpp" />
+    <ClInclude Include="..\Library\_HMI\ARadioButton.hpp" />
+    <ClInclude Include="..\Library\_HMI\AVControl.hpp" />
+    <ClInclude Include="..\Library\_HMI\ButtonControl.hpp" />
+    <ClInclude Include="..\Library\_HMI\ButtonScroller.hpp" />
+    <ClInclude Include="..\Library\_HMI\Component.hpp" />
+    <ClInclude Include="..\Library\_HMI\Components\ADSR.hpp" />
+    <ClInclude Include="..\Library\_HMI\Components\XYControl.hpp" />
+    <ClInclude Include="..\Library\_HMI\ControlArray.hpp" />
+    <ClInclude Include="..\Library\_HMI\Controller.hpp" />
+    <ClInclude Include="..\Library\_HMI\ControlMatrix.hpp" />
+    <ClInclude Include="..\Library\_HMI\DMXButton.hpp" />
+    <ClInclude Include="..\Library\_HMI\DMXControl.hpp" />
+    <ClInclude Include="..\Library\_HMI\Event.hpp" />
+    <ClInclude Include="..\Library\_HMI\Joystick.hpp" />
+    <ClInclude Include="..\Library\_HMI\Keyboard.hpp" />
+    <ClInclude Include="..\Library\_HMI\KeyEvent.hpp" />
+    <ClInclude Include="..\Library\_HMI\Label.hpp" />
+    <ClInclude Include="..\Library\_HMI\MacroButton.hpp" />
+    <ClInclude Include="..\Library\_HMI\MasterControls.hpp" />
+    <ClInclude Include="..\Library\_HMI\MIDIButton.hpp" />
+    <ClInclude Include="..\Library\_HMI\MIDIControl.hpp" />
+    <ClInclude Include="..\Library\_HMI\Mouse.hpp" />
+    <ClInclude Include="..\Library\_HMI\OSCControl.hpp" />
+    <ClInclude Include="..\Library\_HMI\Sensor.hpp" />
+    <ClInclude Include="..\Library\_HMI\Touch.hpp" />
+    <ClInclude Include="..\Library\_HMI\Widget.hpp" />
+    <ClInclude Include="..\Library\_HMI\WidgetPage.hpp" />
+    <ClInclude Include="..\Library\_Id\Account.hpp" />
+    <ClInclude Include="..\Library\_Id\Address.hpp" />
+    <ClInclude Include="..\Library\_Id\Date.hpp" />
+    <ClInclude Include="..\Library\_Id\EmailAddress.hpp" />
+    <ClInclude Include="..\Library\_Id\Entity.hpp" />
+    <ClInclude Include="..\Library\_Id\EntityGroup.hpp" />
+    <ClInclude Include="..\Library\_Id\EntityList.hpp" />
+    <ClInclude Include="..\Library\_Id\Grammer.hpp" />
+    <ClInclude Include="..\Library\_Id\Handle.hpp" />
+    <ClInclude Include="..\Library\_Id\ITag.hpp" />
+    <ClInclude Include="..\Library\_Id\Name.hpp" />
+    <ClInclude Include="..\Library\_Id\OAuthAccount.hpp" />
+    <ClInclude Include="..\Library\_Id\Organization.hpp" />
+    <ClInclude Include="..\Library\_Id\Password.hpp" />
+    <ClInclude Include="..\Library\_Id\Person.hpp" />
+    <ClInclude Include="..\Library\_Id\Privilage.hpp" />
+    <ClInclude Include="..\Library\_Id\Profile.hpp" />
+    <ClInclude Include="..\Library\_Id\Relationship.hpp" />
+    <ClInclude Include="..\Library\_Id\Role.hpp" />
+    <ClInclude Include="..\Library\_Id\User.hpp" />
+    <ClInclude Include="..\Library\_Id\UserList.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\AlResource.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\AudioDevice.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\Export.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\InputSoundFile.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\Listener.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\Music.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\OutputSoundFile.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\Sound.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\SoundBuffer.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\SoundBufferRecorder.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\SoundFileFactory.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\SoundFileReader.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\SoundFileReaderFlac.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\SoundFileReaderOgg.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\SoundFileReaderWav.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\SoundFileWriter.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\SoundFileWriterFlac.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\SoundFileWriterOgg.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\SoundFileWriterWav.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\SoundRecorder.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\SoundSource.hpp" />
+    <ClInclude Include="..\Library\_IO\Audio\SoundStream.hpp" />
+    <ClInclude Include="..\Library\_IO\MIDI\APort.hpp" />
+    <ClInclude Include="..\Library\_IO\MIDI\Control.hpp" />
+    <ClInclude Include="..\Library\_IO\MIDI\ControlSurface.hpp" />
+    <ClInclude Include="..\Library\_IO\MIDI\Device.hpp" />
+    <ClInclude Include="..\Library\_IO\MIDI\InputPort.hpp" />
+    <ClInclude Include="..\Library\_IO\MIDI\LongMessage.hpp" />
+    <ClInclude Include="..\Library\_IO\MIDI\Message.hpp" />
+    <ClInclude Include="..\Library\_IO\MIDI\MIDI.hpp" />
+    <ClInclude Include="..\Library\_IO\MIDI\MIDIMap.hpp" />
+    <ClInclude Include="..\Library\_IO\MIDI\Note.hpp" />
+    <ClInclude Include="..\Library\_IO\MIDI\OutputPort.hpp" />
+    <ClInclude Include="..\Library\_IO\MIDI\ShortMessage.hpp" />
+    <ClInclude Include="..\Library\_IO\MIDI\String.hpp" />
+    <ClInclude Include="..\Library\_IO\MIDI\TempoSync.hpp" />
+    <ClInclude Include="..\Library\_IO\Serial\impl\unix.h" />
+    <ClInclude Include="..\Library\_IO\Serial\impl\win.h" />
+    <ClInclude Include="..\Library\_IO\Serial\serial.h" />
+    <ClInclude Include="..\Library\_IO\Serial\v8stdint.h" />
+    <ClInclude Include="..\Library\_Math\AffineTransform.hpp" />
+    <ClInclude Include="..\Library\_Math\Angle2D.hpp" />
+    <ClInclude Include="..\Library\_Math\BCD.hpp" />
+    <ClInclude Include="..\Library\_Math\Bezier.hpp" />
+    <ClInclude Include="..\Library\_Math\Binary.hpp" />
+    <ClInclude Include="..\Library\_Math\Calc.hpp" />
+    <ClInclude Include="..\Library\_Math\Complex.hpp" />
+    <ClInclude Include="..\Library\_Math\Converter.hpp" />
+    <ClInclude Include="..\Library\_Math\Crossings.hpp" />
+    <ClInclude Include="..\Library\_Math\CubicCurve.hpp" />
+    <ClInclude Include="..\Library\_Math\Curve2D.hpp" />
+    <ClInclude Include="..\Library\_Math\Equation.hpp" />
+    <ClInclude Include="..\Library\_Math\Hex.hpp" />
+    <ClInclude Include="..\Library\_Math\InvalidPathException.hpp" />
+    <ClInclude Include="..\Library\_Math\IPathIterator.hpp" />
+    <ClInclude Include="..\Library\_Math\Matrix.hpp" />
+    <ClInclude Include="..\Library\_Math\Operators\Add.hpp" />
+    <ClInclude Include="..\Library\_Math\Operators\Divide.hpp" />
+    <ClInclude Include="..\Library\_Math\Operators\Multiply.hpp" />
+    <ClInclude Include="..\Library\_Math\Operators\Subtract.hpp" />
+    <ClInclude Include="..\Library\_Math\Point2D.hpp" />
+    <ClInclude Include="..\Library\_Math\Point3D.hpp" />
+    <ClInclude Include="..\Library\_Math\Polar2D.hpp" />
+    <ClInclude Include="..\Library\_Math\Poly2D.hpp" />
+    <ClInclude Include="..\Library\_Math\Poly3D.hpp" />
+    <ClInclude Include="..\Library\_Math\Quad2D.hpp" />
+    <ClInclude Include="..\Library\_Math\QuadBezier2D.hpp" />
+    <ClInclude Include="..\Library\_Math\QuadraticCurve.hpp" />
+    <ClInclude Include="..\Library\_Math\Rect2D.hpp" />
+    <ClInclude Include="..\Library\_Math\RectRotor.hpp" />
+    <ClInclude Include="..\Library\_Math\Vect2D.hpp" />
+    <ClInclude Include="..\Library\_Net\Export.hpp" />
+    <ClInclude Include="..\Library\_Net\FTP.hpp" />
+    <ClInclude Include="..\Library\_Net\HTTP.hpp" />
+    <ClInclude Include="..\Library\_Net\IPAddress.hpp" />
+    <ClInclude Include="..\Library\_Net\Packet.hpp" />
+    <ClInclude Include="..\Library\_Net\Socket.hpp" />
+    <ClInclude Include="..\Library\_Net\SocketHandle.hpp" />
+    <ClInclude Include="..\Library\_Net\SocketSelector.hpp" />
+    <ClInclude Include="..\Library\_Net\TCPListener.hpp" />
+    <ClInclude Include="..\Library\_Net\TCPSocket.hpp" />
+    <ClInclude Include="..\Library\_Net\UDPSocket.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Android\InputImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Android\JoystickImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Android\SensorImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Android\VideoModeImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Android\WindowImplAndroid.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\App.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\AppGroup.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Context.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\EGLCheck.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\EGLContext.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\FreeBSD\JoystickImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\GLContext.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\GLResource.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\OSX\HIDJoystickManager.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\OSX\JoystickImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\OSX\SensorImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\OSX\VideoModeImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Unix\Display.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Unix\GlxContext.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Unix\GlxExtensions.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Unix\InputImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Unix\JoystickImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Unix\SensorImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Unix\VideoModeImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Unix\WindowImplX11.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\VideoMode.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Win32\InputImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Win32\JoystickImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Win32\SensorImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Win32\VideoModeImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Win32\WglContext.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Win32\WglExtensions.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Win32\WindowImplWin32.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\Window.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_App\WindowImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\Button.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\Checkbox.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\ColorPicker.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\ColorWheel.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\ComboBox.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\Common.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\GLCanvas.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\GLUtil.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\Graph.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\ImagePanel.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\ImageView.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\Label.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\Layout.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\MessageDialog.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\Popup.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\PopupButton.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\ProgressBar.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\Screen.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\Serializer.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\Slider.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\StackedWidget.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\TabHeader.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\TabWidget.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\TextBox.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\Theme.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\VScrollPanel.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\Widget.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_GUI\Window.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\AnimatedTexture.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\BlendMode.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Caption.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Cell.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\CircleShape.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Color.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Colormap.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\ConvexShape.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Elipse.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Engine.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Entity.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Entity3D.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Font.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\GLCheck.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\GLExtensions.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\GLLoader.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\GLSL.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Glyph.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Image.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\ImageLoader.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Layer.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Polygon2D.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\RectangleShape.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\RenderStates.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\RenderTarget.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\RenderTexture.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\RenderTextureImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\RenderTextureImplDefault.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\RenderTextureImplFBO.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\RenderWindow.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Scene.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Shader.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Shape.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Sprite.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\String.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Text.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Texture.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\TextureSaver.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Transform.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Transformable.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\Vertex.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\VertexArray.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_G\View.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Account.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Address.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Date.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\EmailAddress.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Entity.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\EntityGroup.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\EntityList.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Grammer.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Handle.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Name.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\OAuthAccount.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Organization.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Password.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Person.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Privilage.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Profile.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\Relationship.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\User.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Id\UserList.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\ALCheck.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\AlResource.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\AudioDevice.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\InputSoundFile.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\Listener.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\Music.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\OutputSoundFile.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\Sound.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\SoundBuffer.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\SoundBufferRecorder.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\SoundFileFactory.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\SoundFileReaderFlac.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\SoundFileReaderOgg.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\SoundFileReaderWav.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\SoundFileWriterFlac.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\SoundFileWriterOgg.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\SoundFileWriterWav.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\SoundRecorder.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\SoundSource.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Audio\SoundStream.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\MIDI\Control.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\MIDI\ControlSurface.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\MIDI\Device.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\MIDI\InputPort.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\MIDI\LongMessage.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\MIDI\Message.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\MIDI\MIDIMap.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\MIDI\OutputPort.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\MIDI\Port.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\MIDI\ShortMessage.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\MIDI\String.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\MIDI\TargetDevice.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\MIDI\TempoSync.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Serial\impl\list_ports\list_ports_linux.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Serial\impl\list_ports\list_ports_osx.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Serial\impl\list_ports\list_ports_win.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Serial\impl\unix.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Serial\impl\win.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_IO\Serial\serial.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Angle2D.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\BCD.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Bezier.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Binary.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Calc.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Complex.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Equation.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Hex.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\InvalidPathException.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Matrix.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Point2D.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Point3D.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Polar2D.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Poly2D.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Poly3D.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Quad2D.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\QuadBezier.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Rect2D.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Rect2DRotor.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Math\Vect2D.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Net\FTP.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Net\HTTP.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Net\IPAddress.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Net\Packet.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Net\Socket.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Net\SocketSelector.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Net\TCPListener.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Net\TCPSocket.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Net\UDPSocket.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Net\Unix\SocketImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_Net\Win32\SocketImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Android\Activity.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Android\NativeActivity.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Android\ResourceStream.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Clock.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Err.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\ErrorList.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\EventSequence.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\FileInputStream.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Lock.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\MemoryInputStream.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\MorseCode.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Mutex.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Print.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Sleep.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\String.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Thread.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\ThreadLocal.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Time.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Unix\ClockImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Unix\MutexImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Unix\SleepImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Unix\ThreadImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Unix\ThreadLocalImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Win32\ClockImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Win32\MutexImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Win32\SleepImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Win32\ThreadImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\Win32\ThreadLocalImpl.cpp" />
+    <ClCompile Include="..\Library\KabukiSDK-Impl\_\XML\XML.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Library\KabukiSDK-Impl\_App\Unix\GlxExtensions.txt" />
+    <Text Include="..\Library\KabukiSDK-Impl\_App\Win32\WglExtensions.txt" />
+    <Text Include="..\Library\KabukiSDK-Impl\_G\GLExtensions.txt" />
+    <Text Include="..\Library\KabukiSDK-Impl\_IO\Audio\CMakeLists.txt" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3FBC20A1-E168-4BCD-B05A-922FACDB7B9E}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>KabukiToolkitMinGW</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>KabukiSDK-MinGW-Library</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>..\Library;..\..\cpputest\include;..\..\ChineseRoom\Library;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\ANGLE.WindowsStore.2.1.11\build\native\ANGLE.WindowsStore.targets" Condition="Exists('packages\ANGLE.WindowsStore.2.1.11\build\native\ANGLE.WindowsStore.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\ANGLE.WindowsStore.2.1.11\build\native\ANGLE.WindowsStore.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ANGLE.WindowsStore.2.1.11\build\native\ANGLE.WindowsStore.targets'))" />
+  </Target>
+</Project>
