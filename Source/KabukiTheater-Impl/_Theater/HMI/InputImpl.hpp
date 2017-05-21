@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////
+
 //
 // SFML - Simple and Fast Multimedia Library
 // Copyright (C) 2007-2016 Laurent Gomila (laurent@sfml-dev.org)
@@ -20,24 +20,19 @@
 //
 // 3. This notice may not be removed or altered from any source distribution.
 //
-////////////////////////////////////////////////////////////
 
-#ifndef SFML_INPUTIMPL_HPP
-#define SFML_INPUTIMPL_HPP
+#pragma once
 
 #include <KabukiTheater-Config.hpp>
 
 #if defined(SFML_SYSTEM_WINDOWS)
-    #include <_HMI/Win32/InputImpl.hpp>
+    #include <_Theater/HMI/Win32/InputImpl.hpp>
 #elif defined(SFML_SYSTEM_LINUX) || defined(SFML_SYSTEM_FREEBSD)
-    #include <_HMI/Unix/InputImpl.hpp>
+    #include <_Theater/HMI/Unix/InputImpl.hpp>
 #elif defined(SFML_SYSTEM_MACOS)
-    #include <_HMI/OSX/InputImpl.hpp>
+    #include <_Theater/HMI/OSX/InputImpl.hpp>
 #elif defined(SFML_SYSTEM_IOS)
-    #include <_HMI/iOS/InputImpl.hpp>
+    #include <_Theater/HMI/iOS/InputImpl.hpp>
 #elif defined(SFML_SYSTEM_ANDROID)
-    #include <_HMI/Android/InputImpl.hpp>
+    #include <_Theater/HMI/Android/InputImpl.hpp>
 #endif
-
-
-#endif // SFML_INPUTIMPL_HPP

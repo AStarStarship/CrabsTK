@@ -24,7 +24,7 @@
 #include <_HMI/AButton.hpp>
 #include <_HMI/ControlMatrix.hpp>
 
-namespace _HMI {
+namespace _Theater { namespace HMI {
 
 const string WidgetPage::TypeText = "Controls Page";
 
@@ -196,4 +196,5 @@ void WidgetPage::print (Terminal& io)
     io.printLine ('~');
 }
 
-}   //< namespace _HMI
+}   //< HMI
+}   //< _Theater

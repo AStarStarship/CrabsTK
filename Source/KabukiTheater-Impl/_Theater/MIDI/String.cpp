@@ -151,7 +151,7 @@ bool String::isValid  (const char *thisString)
 
 
 
-string String::ToString ()
+string String::toString ()
 {
     return Text::copy ("Write me!\0");
 }

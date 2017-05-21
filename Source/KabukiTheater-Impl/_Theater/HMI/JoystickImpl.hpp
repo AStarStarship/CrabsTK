@@ -22,16 +22,15 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_JOYSTICKIMPL_HPP
-#define SFML_JOYSTICKIMPL_HPP
+#pragma once
 
 #include <KabukiTheater-Config.hpp>
-#include <_HMI/Joystick.hpp>
+#include <_Theater/HMI/Joystick.hpp>
 #include <_/String.hpp>
 #include <algorithm>
 
 
-namespace _HMI { namespace priv {
+namespace _Theater { namespace HMI { namespace priv {
 
 struct JoystickCaps
 /*< Structure holding a joystick's information. */
@@ -62,34 +61,32 @@ struct JoystickState
 };
 
 } // namespace priv
-} // namespace _HMI
+}   //< HMI
+}   //< _Theater
 
 
 #if defined(SFML_SYSTEM_WINDOWS)
 
-    #include <_HMI/Win32/JoystickImpl.hpp>
+    #include <_Theater/HMI/Win32/JoystickImpl.hpp>
 
 #elif defined(SFML_SYSTEM_LINUX)
 
-    #include <_HMI/Unix/JoystickImpl.hpp>
+    #include <_Theater/HMI/Unix/JoystickImpl.hpp>
 
 #elif defined(SFML_SYSTEM_FREEBSD)
 
-    #include <_HMI/FreeBSD/JoystickImpl.hpp>
+    #include <_Theater/HMI/FreeBSD/JoystickImpl.hpp>
 
 #elif defined(SFML_SYSTEM_MACOS)
 
-    #include <_HMI/OSX/JoystickImpl.hpp>
+    #include <_Theater/HMI/OSX/JoystickImpl.hpp>
 
 #elif defined(SFML_SYSTEM_IOS)
 
-    #include <_HMI/iOS/JoystickImpl.hpp>
+    #include <_Theater/HMI/iOS/JoystickImpl.hpp>
 
 #elif defined(SFML_SYSTEM_ANDROID)
 
-    #include <_HMI/Android/JoystickImpl.hpp>
+    #include <_Theater/HMI/Android/JoystickImpl.hpp>
 
 #endif
-
-
-#endif // SFML_JOYSTICKIMPL_HPP

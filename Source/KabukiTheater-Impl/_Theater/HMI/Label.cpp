@@ -20,7 +20,7 @@
 
 #include <_HMI/Label.hpp>
 
-namespace _HMI {
+namespace _Theater { namespace HMI {
 
 string Label::UnnamedLabel = "Unnamed";
 string Label::AllowedSymbols = " `!@#$%^&* (){}+=-_\\|/?.>,<";
@@ -96,4 +96,5 @@ string Label::print (Terminal& slot) const
     slot.prints(label);
 }
 
-}   //  _HMI
+}   //< HMI
+}   //< _Theater

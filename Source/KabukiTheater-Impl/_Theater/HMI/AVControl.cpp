@@ -20,7 +20,7 @@
 
 #include <_Theater/HMI/AVControl.hpp>
 
-namespace _HMI {
+namespace _Theater { namespace HMI {
 
 string AVControl::MacroHeader = "|" + printCentered ("AVControl", AVControl::MaxLabelLength) +
         "|    Type    |#Bit|Init | min | max |Value|Ch |CC |  Action  |Step |";
@@ -351,4 +351,5 @@ void AVControl::getType (int value)
     numChannels  = 0x7fffffff;
 }
 
-}   //< _HMI
+}   //< HMI
+}   //< _Theater

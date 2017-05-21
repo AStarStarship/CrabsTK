@@ -25,7 +25,7 @@
 #include <_HMI/Touch.hpp>
 #include <_HMI/InputImpl.hpp>
 
-namespace _HMI {
+namespace _Theater { namespace HMI {
 
 bool Touch::isDown(uint finger)
 {
@@ -42,4 +42,5 @@ Vector2i Touch::getPosition(uint finger, const Window& relativeTo)
     return priv::InputImpl::getTouchPosition(finger, relativeTo);
 }
 
-} // namespace _HMI
+}   //< HMI
+}   //< _Theater

@@ -25,10 +25,10 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <_HMI/JoystickManager.hpp>
+#include <_Theater/HMI/JoystickManager.hpp>
 
 
-namespace _HMI {
+namespace _Theater { namespace HMI {
 namespace priv
 {
 ////////////////////////////////////////////////////////////
@@ -118,5 +118,5 @@ JoystickManager::~JoystickManager()
 }
 
 } // namespace priv
-
-} // namespace _HMI
+}   //< HMI
+}   //< _Theater

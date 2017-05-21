@@ -20,7 +20,7 @@
 
 #include <_HMI/MIDIDevice.hpp>
 
-namespace _HMI {
+namespace _Theater { namespace HMI {
 
 const Time MIDIDevice::minDoubleClickTime (1);
 const Time MIDIDevice::maxDoubleClickTime (1000);
@@ -125,4 +125,5 @@ void MIDIDevice::print (I2P::Terminal slot)
     return returnString;
 }
 
-}   //< namespace _HMI
+}   //< HMI
+}   //< _Theater

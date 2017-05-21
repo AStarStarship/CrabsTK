@@ -25,7 +25,7 @@
 #include <_HMI/Sensor.hpp>
 #include <_HMI/SensorManager.hpp>
 
-namespace _HMI {
+namespace _Theater { namespace HMI {
 
 bool Sensor::isAvailable(Type sensor)
 {
@@ -42,4 +42,5 @@ Vector3f Sensor::getValue(Type sensor)
     return priv::SensorManager::getInstance().getValue(sensor);
 }
 
-} // namespace _HMI
+}   //< HMI
+}   //< _Theater

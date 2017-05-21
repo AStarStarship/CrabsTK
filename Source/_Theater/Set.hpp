@@ -20,7 +20,7 @@
  
 #pragma once
 
-#include "Workspace.hpp"
+#include "Project.hpp"
 
 namespace _Theater {
 
@@ -38,18 +38,18 @@ class _KabukiTheater_ Set
     virtual ~Set ();
     /*< Destructor. */
 
-    void add  (Workspace& w);
-    /*< Adds a new Workspace to the set. */
+    void add (Project& w);
+    /*< Adds a new Project to the set. */
 
-    int getNumControlSurfaces ();
-    /*< Gets the num_control_surfaces. */
+    int getNumProjects ();
+    /*< Gets the number of projects in the set. */
 
     void print (I2P::Terminal& io);
     /*< Prints this object to the terminal. */
 
     private:
 
-    std::vector<Wordspace&> wordspaces;     //< The array of Workspace(s). 
+    std::vector<Project&> projects;     //< The array of Project(s). 
 };
 
-}   //< namespace _VEnv
+}   //< _Theater

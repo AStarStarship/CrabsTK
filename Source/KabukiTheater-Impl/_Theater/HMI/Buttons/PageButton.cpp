@@ -91,7 +91,7 @@ const char* PageButton::print (I2P::Terminal& slot)
 {
     const char* returnString = "Page AButton: \n";
     
-    returnString << AButton::print (I2P::Terminal& slot) << "\n" << thisPage->ToString ();
+    returnString << AButton::print (I2P::Terminal& slot) << "\n" << thisPage->toString ();
 
     return returnString;
 }

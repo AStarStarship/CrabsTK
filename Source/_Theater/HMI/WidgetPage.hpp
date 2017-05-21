@@ -122,12 +122,12 @@ class _KabukiTheater_ WidgetPageTests: public UnitTest
 
         WidgetPage testPage ("Test Page");
 
-        beginTest ("Testing const char* ToString ()");
-        logMessage  (testPage.ToString ());
+        beginTest ("Testing const char* toString ()");
+        logMessage  (testPage.toString ());
 
         logMessage ("Testing copy constructor...");
         WidgetPage testPageCopy  (testPage);
-        logMessage  (testPageCopy.ToString ());
+        logMessage  (testPageCopy.toString ());
 
         logMessage ("Done testing Page class");
     }

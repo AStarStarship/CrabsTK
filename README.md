@@ -1,5 +1,5 @@
 # Kabuki Theater
-A modern C++11 software development kit and app framework built on top of [Simple Free Media Layer](http://www.sfml-dev.org/).
+A modern C++11 software development kit and app framework built on top of [Simple Fast Media Layer](http://www.sfml-dev.org/).
 
 ## Why use Kabuki Theater?
 

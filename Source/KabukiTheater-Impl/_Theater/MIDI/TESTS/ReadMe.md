@@ -1,9 +1,8 @@
-# _Theater::MIDI Tests
+# _Theater::MIDI Unit Tests
 This folder contains the unit tests for the _Theater::MIDI module.
 
 ## Author
 * [Cale McCollough](https://calemccollough.github.io)
-* [Contributors please add your names here](mailto::your@email.address)
 
 ## License
 Copyright 2017 (C) [Cale McCollough](mailto:calemccollough@gmail.com)

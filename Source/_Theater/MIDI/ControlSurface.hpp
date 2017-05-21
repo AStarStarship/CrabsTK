@@ -61,7 +61,7 @@ class _KabukiTheater ControlSurface
     virtual const char* Do  (const char* Query, byte index, Roombot* Bot);
     /*< Inter-process subroutines. */
 
-    const char* ToString () const;
+    const char* toString () const;
     //< Gets a text represenation of this object.
  	
     private:

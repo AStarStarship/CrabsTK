@@ -18,9 +18,9 @@
         limitations under the License.
 */
 
-#include <_HMI/ControlMatrix.hpp>
+#include <_Theater/HMI/ControlMatrix.hpp>
 
-namespace _HMI {
+namespace _Theater { namespace HMI {
 
 ControlMatrix::ControlMatrix (int newNumColumns, int newNumRows)
 {

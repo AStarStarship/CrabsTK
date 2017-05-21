@@ -25,11 +25,11 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <_HMI/Keyboard.hpp>
-#include <_HMI/InputImpl.hpp>
+#include <_Theater/HMI/Keyboard.hpp>
+#include <_Theater/HMI/InputImpl.hpp>
 
 
-namespace _HMI {
+namespace _Theater { namespace HMI {
 ////////////////////////////////////////////////////////////
 bool Keyboard::isKeyPressed(Key key)
 {
@@ -43,4 +43,5 @@ void Keyboard::setVirtualKeyboardVisible(bool visible)
     priv::InputImpl::setVirtualKeyboardVisible(visible);
 }
 
-} // namespace _HMI
+}   //< HMI
+}   //< _Theater

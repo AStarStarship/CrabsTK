@@ -20,7 +20,7 @@
 
 #include <_HMI/Widget.hpp>
 
-namespace _HMI {
+namespace _Theater { namespace HMI {
 
 #include "Label.hpp"
 #include "MIDIControl.hpp"
@@ -464,4 +464,5 @@ void Widget::exportWidget (const File& thisFile)
 {
 }
 
-}   //< namespace _HMI
+}   //< HMI
+}   //< _Theater

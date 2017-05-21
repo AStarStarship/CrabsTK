@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../Source-Impl/_HMI/ButtonScroller.cpp
+    @file    /.../Source-Impl/_Theater/HMI/ButtonScroller.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 

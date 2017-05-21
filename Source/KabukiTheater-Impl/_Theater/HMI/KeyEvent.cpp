@@ -20,7 +20,7 @@
 
 #include <_Theater/HMI/KeyEvent.hpp>
 
-namespace _ { 
+namespace _Theater { namespace HMI {
 
 KeyEvent::KeyEvent (byte keyEvent)
 :   key (keyEvent)
@@ -38,4 +38,5 @@ void KeyEvent::print (Terminal& io)
     io.prints ("KeyEvent: ");
 }
 
-}   //< _
+}   //< HMI
+}   //< _Theater

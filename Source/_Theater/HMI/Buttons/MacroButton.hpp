@@ -67,7 +67,7 @@ class _KabukiTheater_ MacroButton: public Button
     const MacroEvent& macro ();
     //< Gets th buttonMacro.
 
-    const char* ToString ();
+    const char* toString ();
     //< Gets a string representation of this MacroButton.
 
     private:
@@ -93,10 +93,10 @@ public:
         MacroButton testMacro = MacroButton ();
         cout << "success\n\n";
 
-        logMessage  (testMacro->ToString () << "\n\n    Testing copy constructor...\n\n");
+        logMessage  (testMacro->toString () << "\n\n    Testing copy constructor...\n\n");
 
         MacroButton testMacroCopy = MacroButton  (testMacro);
-        logMessage  (testMacroCopy->ToString ());
+        logMessage  (testMacroCopy->toString ());
 
         logMessage ("\n\nDone testing Template class _KabukiTheater_\n");
     }

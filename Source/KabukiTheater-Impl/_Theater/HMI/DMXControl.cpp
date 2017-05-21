@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../Source-Impl/_HMI/DMXControl.cpp
+    @file    /.../Source-Impl/_Theater/HMI/DMXControl.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -18,7 +18,7 @@
         limitations under the License.
 */
 
-#include <_HMI/DMXControl.hpp>
+#include <_Theater/HMI/DMXControl.hpp>
 
 namespace _Theater { namespace HMI {
 

@@ -26,7 +26,7 @@
 #include <_/Err.hpp>
 
 
-namespace _HMI { namespace priv {
+namespace _Theater { namespace HMI { namespace priv {
 
 SensorManager& SensorManager::getInstance()
 {
@@ -106,5 +106,5 @@ SensorManager::~SensorManager()
 }
 
 } // namespace priv
-
-} // namespace _HMI
+}   //< HMI
+}   //< _Theater

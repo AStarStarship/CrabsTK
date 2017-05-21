@@ -77,7 +77,7 @@ class _KabukiTheater_ String
     virtual const char* Do  (const char* Query, byte index, Roombot* Bot);
     /*< Inter-process subroutines. */
 
-    const char *ToString ();
+    const char *toString ();
     //< Gets a string representation of this object.
 
     private:

@@ -22,15 +22,13 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_JOYSTICKMANAGER_HPP
-#define SFML_JOYSTICKMANAGER_HPP
+#pragma once
 
-#include <_HMI/Joystick.hpp>
-#include <_HMI/JoystickImpl.hpp>
-#include <_/NonCopyable.hpp>
+#include <_Theater/HMI/Joystick.hpp>
+#include <_Theater/HMI/JoystickImpl.hpp>
 
 
-namespace _HMI { namespace priv {
+namespace _Theater { namespace HMI { namespace priv {
 
 class JoystickManager : NonCopyable
 /*< Global joystick manager. */
@@ -87,7 +85,5 @@ class JoystickManager : NonCopyable
 };
 
 } // namespace priv
-} // namespace _HMI
-
-
-#endif // SFML_JOYSTICKMANAGER_HPP
+}   //< HMI
+}   //< _Theater

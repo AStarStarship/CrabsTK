@@ -101,7 +101,7 @@ const char* ControlSurface::Do (const char* Query, byte Index, Roombot* Bot)
     return Query ? Enquery ("ControlSurface", "_Com::MIDI"): InvalidIndex ();
 }
 
-const char *ControlSurface::ToString ()
+const char *ControlSurface::toString ()
 {
     return "Write me!!!\n";
 }

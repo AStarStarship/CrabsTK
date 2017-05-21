@@ -1,6 +1,9 @@
 # Kabuki Theater Source Root
 Kabuki Theater module headers are stored in the directories that begin with 
 underscores. The implmentation are stored in the KabukiTheater-Impl folder.
+Descriptions of the modules can be found in the module folder ReadMe.md file, 
+and development instructions can be found in the corresponding Module-Impl
+folder in it's ReadMe.md
 
 ## SDK Modules
 | Name     | Description |

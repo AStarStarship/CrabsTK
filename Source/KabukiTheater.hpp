@@ -21,7 +21,6 @@
 
 #pragma once
 
-#include "KabukiTheater-Config.hpp"
+#include <ChineseRoom.hpp>
 
-#include "_G/Color.hpp"
-
+#include "_Theater.hpp"

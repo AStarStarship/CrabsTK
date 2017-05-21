@@ -18,7 +18,7 @@
         limitations under the License.
 */
 
-#include <_HMI/DMXButton.hpp>
+#include <_Theater/HMI/DMXButton.hpp>
 
 namespace _Theater { namespace HMI {
 

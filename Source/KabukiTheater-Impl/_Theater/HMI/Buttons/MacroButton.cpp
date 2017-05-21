@@ -83,7 +83,7 @@ const char* MacroButton::print (I2P::Terminal& slot)
     string << AButton::getTypeString ();
     string << "\n";
 
-    string << buttonMacro.ToString ();
+    string << buttonMacro.toString ();
 
     return string.c_str ();
 }

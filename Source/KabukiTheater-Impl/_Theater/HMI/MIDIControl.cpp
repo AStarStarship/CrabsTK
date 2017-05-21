@@ -20,7 +20,7 @@
 
 #include <_HMI/MIDIControl.hpp>
 
-namespace _HMI {
+namespace _Theater { namespace HMI {
 
 MIDIControl::MIDIControl (const char* &newLabel, int newCC, int newChannel, int initValue, int newMinValue,
     int newMaxValue, int newWordSize, int newAVControlType) :
@@ -91,4 +91,5 @@ const char* MIDIControl::toStringRow () const
     return AVControl::toStringRow () + PrintCentered (const char* (_cC), 3) + "|";
 }
 
-}   //< _HMI
+}   //< HMI
+}   //< _Theater

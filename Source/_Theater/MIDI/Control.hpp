@@ -106,7 +106,7 @@ class _KabukiTheater Control
     void Toggle ();
     //< Toggle the midiValue from the min_Value to the max_Value.
 
-    const char* ToString ();
+    const char* toString ();
     //< gets a text represenation of this conrol.
 
     private:

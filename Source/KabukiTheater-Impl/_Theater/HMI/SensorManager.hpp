@@ -29,7 +29,7 @@
 #include <_/NonCopyable.hpp>
 
 
-namespace _HMI { namespace priv {
+namespace _Theater { namespace HMI { namespace priv {
     
 class SensorManager : NonCopyable
 /*< Global sensor manager. */
@@ -92,5 +92,5 @@ class SensorManager : NonCopyable
 };
 
 } // namespace priv
-
-} // namespace _HMI
+}   //< HMI
+}   //< _Theater

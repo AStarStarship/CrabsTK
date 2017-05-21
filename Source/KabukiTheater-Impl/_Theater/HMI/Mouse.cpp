@@ -30,7 +30,7 @@
 #include <_HMI/Window.hpp>
 
 
-namespace _HMI {
+namespace _Theater { namespace HMI {
 
 bool Mouse::isButtonPressed(Button button)
 {
@@ -57,4 +57,5 @@ void Mouse::setPosition(const Vector2i& position, const Window& relativeTo)
     priv::InputImpl::setMousePosition(position, relativeTo);
 }
 
-} // namespace _HMI
+}   //< HMI
+}   //< _Theater

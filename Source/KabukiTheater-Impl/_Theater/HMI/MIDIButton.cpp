@@ -20,7 +20,7 @@
 
 #include <_HMI/MIDIButton.hpp>
 
-namespace _HMI {
+namespace _Theater { namespace HMI {
 
 MIDIButton::MIDIButton (string &newLabel, int newCC, int newChannel, int initValue, int newWordSize, 
     int newMinValue, int newMaxValue, int newAction, int newStepSize, double newDoublePressTime) :
@@ -85,4 +85,5 @@ void MIDIButton::print (Terminal& slot) const
     return MIDIControl::print (Terminal& slot);
 }
 
-}   //  _HMI
+}   //< HMI
+}   //< _Theater

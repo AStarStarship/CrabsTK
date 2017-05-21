@@ -224,7 +224,7 @@ void Control::Copy  (const Control* C)
     outputCh   = C->outputCh;
 }
 
-const char* Control::ToString ()
+const char* Control::toString ()
 {
     /*
     char *returnString;

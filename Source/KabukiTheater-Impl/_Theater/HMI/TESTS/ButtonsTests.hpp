@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file       /.../Source/KabukiTheater/Controls/UnitTest.hpp
+    @file       /.../Source/KabukiTheater/HMI/UnitTest.hpp
     @author     Cale McCollough <cale.mccollough@gmail.com>
     @license    Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
 
@@ -22,14 +22,14 @@
 #pragma once
 
 #if DEBUG
-#include <_HMI/Label.hpp>
-#include <_HMI/DMXControl.hpp>
-#include <_HMI/MIDIControl.hpp>
-#include <_HMI/DMXButton.hpp>
-#include <_HMI/MIDIButton.hpp>
-#include <_HMI/MacroButton.hpp>
-#include <_HMI/ControlArray.hpp>
-#include <_HMI/ControlGrid.hpp>
+#include <_Theater/HMI/Label.hpp>
+#include <_Theater/HMI/DMXControl.hpp>
+#include <_Theater/HMI/MIDIControl.hpp>
+#include <_Theater/HMI/DMXButton.hpp>
+#include <_Theater/HMI/MIDIButton.hpp>
+#include <_Theater/HMI/MacroButton.hpp>
+#include <_Theater/HMI/ControlArray.hpp>
+#include <_Theater/HMI/ControlGrid.hpp>
 
 namespace _Theater { namespace HMI {
 
@@ -56,7 +56,7 @@ class UnitTests : public UnitTest
     }
 };
 static UnitTest testUnit_KabukiTheater__Controls;
-}   //< namespace _HMI
+}   //< namespace _Theater/HMI
 }   //< namespace _Theater
 
 #endif // DUBUG

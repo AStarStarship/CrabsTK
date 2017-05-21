@@ -47,6 +47,8 @@ class _KabukiTheater_ Mixer
         DMX  = 1,
     };
 
+    static const int MinMixerArraySize = 1;      //< The default mixer array size.
+
     Mixer ();
     //< Default constructor.
 
@@ -122,14 +124,13 @@ class _KabukiTheater_ Mixer
 
     private:
 
-    int numChannels,                                 //< The number of active channels in the mixer.
-        mixerSize,                                   //< The size of the mixer array.
-        controlResolution;                           //< The resolution of the ADCs of for the controls.
+    int numChannels,        //< The number of active channels in the mixer.
+        mixerSize,          //< The size of the mixer array.
+        controlResolution;  //< The resolution of the ADCs of for the controls.
 
-    static const int minimumMixerArraySize = 1;      //< The default mixer array size.
-
-    MixerChannel ** mixer;                           //< The main MixerChannel array.
-                                                     /*< Channel 0 is the master fadder. The pointers to pointers allows for 0 entries. */
+    MixerChannel ** mixer;
+    /*< The main MixerChannel array.
+        Channel 0 is the master fadder. The pointers to pointers allows for 0 entries. */
 
     void deleteChannelsAfter (int thisIndex);
     /*< deletes all of the channels after thisIndex.

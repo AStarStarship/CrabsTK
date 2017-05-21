@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////
+
 //
 // SFML - Simple and Fast Multimedia Library
 // Copyright (C) 2007-2016 Laurent Gomila (laurent@sfml-dev.org)
@@ -20,66 +20,64 @@
 //
 // 3. This notice may not be removed or altered from any source distribution.
 //
-////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
-#include <_HMI/Joystick.hpp>
-#include <_HMI/JoystickManager.hpp>
 
 
-namespace _HMI {
-////////////////////////////////////////////////////////////
+
+#include <_Theater/HMI/Joystick.hpp>
+#include <_Theater/HMI/JoystickManager.hpp>
+
+
+namespace _Theater { namespace HMI {
+
 bool Joystick::isConnected(uint joystick)
 {
     return priv::JoystickManager::getInstance().getState(joystick).connected;
 }
 
 
-////////////////////////////////////////////////////////////
+
 uint Joystick::getButtonCount(uint joystick)
 {
     return priv::JoystickManager::getInstance().getCapabilities(joystick).buttonCount;
 }
 
 
-////////////////////////////////////////////////////////////
+
 bool Joystick::hasAxis(uint joystick, Axis axis)
 {
     return priv::JoystickManager::getInstance().getCapabilities(joystick).axes[axis];
 }
 
 
-////////////////////////////////////////////////////////////
+
 bool Joystick::isButtonPressed(uint joystick, uint button)
 {
     return priv::JoystickManager::getInstance().getState(joystick).buttons[button];
 }
 
 
-////////////////////////////////////////////////////////////
+
 float Joystick::getAxisPosition(uint joystick, Axis axis)
 {
     return priv::JoystickManager::getInstance().getState(joystick).axes[axis];
 }
 
 
-////////////////////////////////////////////////////////////
+
 Joystick::Identification Joystick::getIdentification(uint joystick)
 {
     return priv::JoystickManager::getInstance().getIdentification(joystick);
 }
 
 
-////////////////////////////////////////////////////////////
+
 void Joystick::update()
 {
     return priv::JoystickManager::getInstance().update();
 }
 
 
-////////////////////////////////////////////////////////////
+
 Joystick::Identification::Identification() :
 name     ("No Joystick"),
 vendorId (0),
@@ -88,4 +86,5 @@ productId(0)
 
 }
 
-} // namespace _HMI
+}   //< HMI
+}   //< _Theater

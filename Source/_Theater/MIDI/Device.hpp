@@ -62,7 +62,7 @@ class _KabukiTheater_ Device
     int GetNumOutputPorts ();
     /*< Gets the number of output Ports. */
 
-    const char* ToString () const;
+    const char* toString () const;
     //< Gets a text represenation of this object.
 
 
