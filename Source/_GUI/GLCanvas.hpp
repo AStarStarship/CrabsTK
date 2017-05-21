@@ -19,19 +19,19 @@
 
 NAMESPACE_BEGIN(nanogui)
 
-/**
- * \class GLCanvas glcanvas.h nanogui/glcanvas.h
- * @brief Canvas widget for rendering OpenGL content
- *
- * Canvas widget that can be used to display arbitrary OpenGL content. This is
- * useful to display and manipulate 3D objects as part of an interactive
- * application. The implementation uses scissoring to ensure that rendered
- * objects don't spill into neighboring widgets.
- *
- * Usage: override `drawGL` in subclasses to provide custom drawing code.
+class NANOGUI_EXPORT GLCanvas : public Widget 
+/*< Canvas widget for rendering OpenGL content
+  
+    Canvas widget that can be used to display arbitrary OpenGL content. This is
+    useful to display and manipulate 3D objects as part of an interactive
+    application. The implementation uses scissoring to ensure that rendered
+    objects don't spill into neighboring widgets.
+  
+    Usage: override `drawGL` in subclasses to provide custom drawing code.
  */
-class NANOGUI_EXPORT GLCanvas : public Widget {
-public:
+{
+    public:
+    
     GLCanvas(Widget *parent);
 
     /// Return the background color
@@ -55,11 +55,13 @@ public:
     virtual void save(Serializer &s) const override;
     virtual bool load(Serializer &s) override;
 
-protected:
+    protected:
+    
     /// Internal helper function for drawing the widget border
     void drawWidgetBorder(NVGcontext* ctx) const;
 
-protected:
+    protected:
+    
     Color mBackgroundColor;
     bool mDrawBorder;
 };

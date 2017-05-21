@@ -30,7 +30,7 @@
      * The corresponding ``NAMESPACE_END`` macro also lists the namespace
      * name for improved readability.
      *
-     * \param name
+     * @param name
      *     The name of the namespace scope to open
      */
     #define NAMESPACE_BEGIN(name) namespace name {
@@ -42,7 +42,7 @@
      * Closes a namespace (counterpart to ``NAMESPACE_BEGIN``)
      * ``NAMESPACE_END(nanogui)`` will expand to only ``}``.
      *
-     * \param name
+     * @param name
      *     The name of the namespace scope to close
      */
     #define NAMESPACE_END(name) }
@@ -186,7 +186,7 @@ public:
     /**
      * Makes an exact copy of the data represented by the input parameter.
      *
-     * \param color
+     * @param color
      * The four dimensional float vector being copied.
      */
     Color(const Eigen::Vector4f &color) : Eigen::Vector4f(color) { }
@@ -195,10 +195,10 @@ public:
      * Copies (x, y, z) from the input vector, and uses the value specified by
      * the ``alpha`` parameter for this Color object's alpha component.
      *
-     * \param color
+     * @param color
      * The three dimensional float vector being copied.
      *
-     * \param alpha
+     * @param alpha
      * The value to set this object's alpha component to.
      */
     Color(const Eigen::Vector3f &color, float alpha)
@@ -210,10 +210,10 @@ public:
      * parameter, casted to a float and divided by ``255.0`` as well, for this
      * Color object's alpha component.
      *
-     * \param color
+     * @param color
      * The three dimensional integer vector being copied, will be divided by ``255.0``.
      *
-     * \param alpha
+     * @param alpha
      * The value to set this object's alpha component to, will be divided by ``255.0``.
      */
     Color(const Eigen::Vector3i &color, int alpha)
@@ -223,7 +223,7 @@ public:
      * Copies (x, y, z) from the input vector, and sets the alpha of this color
      * to be ``1.0``.
      *
-     * \param color
+     * @param color
      * The three dimensional float vector being copied.
      */
     Color(const Eigen::Vector3f &color) : Color(color, 1.0f) {}
@@ -232,7 +232,7 @@ public:
      * Copies (x, y, z) from the input vector, casting to floats and dividing by
      * ``255.0``.  The alpha of this color will be set to ``1.0``.
      *
-     * \param color
+     * @param color
      * The three dimensional integer vector being copied, will be divided by ``255.0``.
      */
     Color(const Eigen::Vector3i &color)
@@ -242,7 +242,7 @@ public:
      * Copies (x, y, z, w) from the input vector, casting to floats and dividing
      * by ``255.0``.
      *
-     * \param color
+     * @param color
      * The three dimensional integer vector being copied, will be divided by ``255.0``.
      */
     Color(const Eigen::Vector4i &color)
@@ -251,10 +251,10 @@ public:
     /**
      * Creates the Color ``(intensity, intensity, intensity, alpha)``.
      *
-     * \param intensity
+     * @param intensity
      * The value to be used for red, green, and blue.
      *
-     * \param alpha
+     * @param alpha
      * The alpha component of the color.
      */
     Color(float intensity, float alpha)
@@ -264,10 +264,10 @@ public:
      * Creates the Color ``(intensity, intensity, intensity, alpha) / 255.0``.
      * Values are casted to floats before division.
      *
-     * \param intensity
+     * @param intensity
      * The value to be used for red, green, and blue, will be divided by ``255.0``.
      *
-     * \param alpha
+     * @param alpha
      * The alpha component of the color, will be divided by ``255.0``.
      */
     Color(int intensity, int alpha)
@@ -276,16 +276,16 @@ public:
     /**
      * Explicit constructor: creates the Color ``(r, g, b, a)``.
      *
-     * \param r
+     * @param r
      * The red component of the color.
      *
-     * \param g
+     * @param g
      * The green component of the color.
      *
-     * \param b
+     * @param b
      * The blue component of the color.
      *
-     * \param a
+     * @param a
      * The alpha component of the color.
      */
     Color(float r, float g, float b, float a) : Color(Vector4f(r, g, b, a)) { }
@@ -294,16 +294,16 @@ public:
      * Explicit constructor: creates the Color ``(r, g, b, a) / 255.0``.
      * Values are casted to floats before division.
      *
-     * \param r
+     * @param r
      * The red component of the color, will be divided by ``255.0``.
      *
-     * \param g
+     * @param g
      * The green component of the color, will be divided by ``255.0``.
      *
-     * \param b
+     * @param b
      * The blue component of the color, will be divided by ``255.0``.
      *
-     * \param a
+     * @param a
      * The alpha component of the color, will be divided by ``255.0``.
      */
     Color(int r, int g, int b, int a) : Color(Vector4i(r, g, b, a)) { }
@@ -406,13 +406,13 @@ extern NANOGUI_EXPORT void shutdown();
 /**
  * @brief Enter the application main loop
  *
- * \param refresh
+ * @param refresh
  *     NanoGUI issues a redraw call whenever an keyboard/mouse/.. event is
  *     received. In the absence of any external events, it enforces a redraw
  *     once every ``refresh`` milliseconds. To disable the refresh timer,
  *     specify a negative value here.
  *
- * \param detach
+ * @param detach
  *     This pararameter only exists in the Python bindings. When the active
  *     \c Screen instance is provided via the \c detach parameter, the
  *     ``mainloop()`` function becomes non-blocking and returns
@@ -450,11 +450,11 @@ extern NANOGUI_EXPORT bool active();
 /**
  * @brief Open a native file open/save dialog.
  *
- * \param filetypes
+ * @param filetypes
  *     Pairs of permissible formats with descriptions like
  *     ``("png", "Portable Network Graphics")``.
  *
- * \param save
+ * @param save
  *     Set to ``true`` if you would like subsequent file dialogs to open
  *     at whatever folder they were in when they close this one.
  */
@@ -480,7 +480,7 @@ extern NANOGUI_EXPORT void chdir_to_bundle_parent();
  * defined in :ref:`file_include_nanogui_entypo.h`.
  * \endrst
  *
- * \param c
+ * @param c
  *     The UTF32 character to be converted.
  */
 extern NANOGUI_EXPORT std::array<char, 8> utf8(int c);

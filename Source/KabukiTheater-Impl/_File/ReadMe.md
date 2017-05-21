@@ -2,7 +2,9 @@
 This folder contains the implementation of the _Archive namespace.
 
 #Development
-None of this code has been tested.
+Currently this folder is empty. We just need to wrap the 7Zip C files in a C++ 
+wrapper. We need to take the Poco Archive code in the Archive.cpp file and 
+remap the code to the SFML file stream classes.
 
 ## Authors
 * [Igor Pavlov](http://www.7-zip.org/)

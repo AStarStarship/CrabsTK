@@ -19,4 +19,15 @@
         limitations under the License.
 */
 
-#include <ChineseRoom\Mirror.hpp>
+#include <KabukiTheater/Config.hpp>
+
+namespace _File {
+    
+class Archive : public IDevice
+{
+    public:
+    
+    const Member* op (Terminal* io, byte index) override;
+    /*< I2P proceedures. */
+}
+}   //< _File

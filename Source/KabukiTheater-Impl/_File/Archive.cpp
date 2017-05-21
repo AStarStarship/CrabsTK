@@ -1,3 +1,41 @@
+/** Kabuki Theater
+    @version 0.x
+    @file    /.../Source/_Archive/Archive.hpp
+    @author  Cale McCollough <cale.mccollough@gmail.com>
+    @license Copyright(C) 2016 Cale McCollough <https://calemccollough.github.io>
+
+                            All right reserved(R).
+
+        Licensed under the Apache License, Version 2.0(the "License"); you may
+        not use this file except in compliance with the License. You may obtain
+        a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+*/
+
+/** @todo Poco (pocoproject.org) has a wonderful 7-zip wrapper. I copied and pasted it below.
+        We need to take this code and translate it into the SFML
+*/
+
+#include <_File/Archive.hpp>
+
+namespace _File {
+    
+class Archive : public IDevice
+{
+    public:
+    
+    const Member* op (Terminal* io, byte index) override;
+    /*< I2P proceedures. */
+}
+}   //< _File
+
 //
 // Archive.cpp
 //
@@ -373,5 +411,9 @@ std::string Archive::extract(const ArchiveEntry& entry, const std::string& destP
 	return _pImpl->extract(entry, destPath);
 }
 
+const Member* Archive::op (Terminal* io, byte index)
+{
+    return invalidIndex ();
+}
 
-} } // namespace Poco::SevenZip
+}   //< _File

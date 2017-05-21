@@ -61,13 +61,13 @@ public:
     /**
      * @brief Construct a box layout which packs widgets in the given \c Orientation
      *
-     * \param alignment
+     * @param alignment
      *     Widget alignment perpendicular to the chosen orientation
      *
-     * \param margin
+     * @param margin
      *     Margin around the layout container
      *
-     * \param spacing
+     * @param spacing
      *     Extra spacing placed between widgets
      */
     BoxLayout(Orientation orientation, Alignment alignment = Alignment::Middle,

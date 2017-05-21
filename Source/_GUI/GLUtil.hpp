@@ -71,16 +71,16 @@ public:
     /**
      * @brief Initialize the shader using the specified source strings.
      *
-     * \param name
+     * @param name
      *     The name this shader will be registered as.
      *
-     * \param vertex_str
+     * @param vertex_str
      *     The source of the vertex shader as a string.
      *
-     * \param fragment_str
+     * @param fragment_str
      *     The source of the fragment shader as a string.
      *
-     * \param geometry_str
+     * @param geometry_str
      *     The source of the geometry shader as a string.  The default value is
      *     the empty string, which indicates no geometry shader will be used.
      */
@@ -91,16 +91,16 @@ public:
     /**
      * @brief Initialize the shader using the specified files on disk.
      *
-     * \param name
+     * @param name
      *     The name this shader will be registered as.
      *
-     * \param vertex_fname
+     * @param vertex_fname
      *     The path to the file containing the source of the fragment shader.
      *
-     * \param fragment_fname
+     * @param fragment_fname
      *     The path to the file containing the source of the vertex shader.
      *
-     * \param geometry_fname
+     * @param geometry_fname
      *     The path to the file containing the source of the geometry shader.
      *     The default value is the empty string, which indicates no geometry
      *     shader will be used.
@@ -515,16 +515,16 @@ protected:
  * defined by the provided model and projection matrices, and the dimensions
  * of the viewport.
  *
- * \param obj
+ * @param obj
  *     The vector being transformed.
  *
- * \param model
+ * @param model
  *     The model matrix.
  *
- * \param proj
+ * @param proj
  *     The projection matrix.
  *
- * \param viewportSize
+ * @param viewportSize
  *     The dimensions of the viewport to project into.
  */
 extern NANOGUI_EXPORT Vector3f project(const Vector3f &obj,
@@ -538,16 +538,16 @@ extern NANOGUI_EXPORT Vector3f project(const Vector3f &obj,
  * The reverse transformation of \ref project --- use the same matrices and
  * viewport dimensions to easily transition between the two spaces.
  *
- * \param win
+ * @param win
  *     The vector being transformed out of "screen space".
  *
- * \param model
+ * @param model
  *     The model matrix.
  *
- * \param proj
+ * @param proj
  *     The projection matrix.
  *
- * \param viewportSize
+ * @param viewportSize
  *     The dimensions of the viewport to project out of.
  */
 extern NANOGUI_EXPORT Vector3f unproject(const Vector3f &win,
@@ -559,13 +559,13 @@ extern NANOGUI_EXPORT Vector3f unproject(const Vector3f &win,
  * @brief Creates a "look at" matrix that describes the position and
  * orientation of e.g. a camera
  *
- * \param origin
+ * @param origin
  *     The position of the camera.
  *
- * \param target
+ * @param target
  *     The gaze target of the camera.
  *
- * \param up
+ * @param up
  *     The up vector of the camera.
  *
  * \rst
@@ -581,22 +581,22 @@ extern NANOGUI_EXPORT Matrix4f lookAt(const Vector3f &origin,
 /**
  * Creates an orthographic projection matrix.
  *
- * \param left
+ * @param left
  *     The left border of the viewport.
  *
- * \param right
+ * @param right
  *     The right border of the viewport.
  *
- * \param bottom
+ * @param bottom
  *     The bottom border of the viewport.
  *
- * \param top
+ * @param top
  *     The top border of the viewport.
  *
- * \param nearVal
+ * @param nearVal
  *     The near plane.
  *
- * \param farVal
+ * @param farVal
  *     The far plane.
  */
 extern NANOGUI_EXPORT Matrix4f ortho(float left, float right,
@@ -606,22 +606,22 @@ extern NANOGUI_EXPORT Matrix4f ortho(float left, float right,
 /**
  * Creates a perspective projection matrix.
  *
- * \param left
+ * @param left
  *     The left border of the viewport.
  *
- * \param right
+ * @param right
  *     The right border of the viewport.
  *
- * \param bottom
+ * @param bottom
  *     The bottom border of the viewport.
  *
- * \param top
+ * @param top
  *     The top border of the viewport.
  *
- * \param nearVal
+ * @param nearVal
  *     The near plane.
  *
- * \param farVal
+ * @param farVal
  *     The far plane.
  */
 extern NANOGUI_EXPORT Matrix4f frustum(float left, float right,
@@ -634,7 +634,7 @@ extern NANOGUI_EXPORT Matrix4f frustum(float left, float right,
  * components with the corresponding entries of the 3D vector ``v``. The ``w``
  * component is left unchanged
  *
- * \param v
+ * @param v
  *     The vector representing the scaling for each axis.
  */
 extern NANOGUI_EXPORT Matrix4f scale(const Vector3f &v);
@@ -646,7 +646,7 @@ extern NANOGUI_EXPORT Matrix4f scale(const Vector3f &v);
  * components by the corresponding entries of the 3D vector ``v``. The ``w``
  * component is left unchanged
  *
- * \param v
+ * @param v
  *     The vector representing the translation for each axis.
  */
 extern NANOGUI_EXPORT Matrix4f translate(const Vector3f &v);

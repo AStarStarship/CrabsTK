@@ -1,10 +1,6 @@
 # Archive
 This folder contains the _Archive namespace and utilities for working with 
-compressed files. 
-
-#Development
-Currently this folder is empty. We just need to wrap the 7Zip C files in a C++ 
-wrapper.
+compressed files.
 
 ## Authors
 * [Cale McCollough] (https://calemccollough.github.io)
