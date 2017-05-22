@@ -12,6 +12,9 @@ Kabuki Theater is built on the Chinese Room, which is good for working with dict
     looking for someone to help us fix the CSS on the website. It only works right at < 1024 pixel width so the 
     problem is in the @media section.
 
+## Project Organization
+The primary development environment is Visual Studio using [Symmetry Station](https://github.com/Kabuki-Toolkit/SymmetryStation). Please see the [Symmetry Station Quick Start Guide](https://github.com/Kabuki-Toolkit/SymmetryStation/wiki/Quick-Start-Guide). Each folder in the project should have ReadMe.md file in it that should tell you what you need to know. Source header files are separated from their precompiled .lib and .dll source implementation. Development instructions are in the ReadMe.md files in the /.../Source/KabukiTheater-Impl/ folder and subfolders. If you choose to not use Symmetry Station, you may need to update the projects libaries to the most recent updates that have not been synced across projects yet.
+
 ## Project Status: Alpha
 
 ## SDK Modules

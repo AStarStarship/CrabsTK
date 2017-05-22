@@ -1,9 +1,8 @@
 # Kabuki Theater Source Root
-Kabuki Theater module headers are stored in the directories that begin with 
-underscores. The implmentation are stored in the KabukiTheater-Impl folder.
-Descriptions of the modules can be found in the module folder ReadMe.md file, 
-and development instructions can be found in the corresponding Module-Impl
-folder in it's ReadMe.md
+Modules names start with underscores in order to reduce typing. You may delete unused modules if that does not break your dependencies.
+
+## Project Organization
+The primary development environment is Visual Studio using [Symmetry Station](https://github.com/Kabuki-Toolkit/SymmetryStation). Please see the [Symmetry Station Quick Start Guide](https://github.com/Kabuki-Toolkit/SymmetryStation/wiki/Quick-Start-Guide). Each folder in the project should have ReadMe.md file in it that should tell you what you need to know. Source header files are separated from their precompiled .lib and .dll files. Development instructions are in the ReadMe.md files in the /.../Source/KabukiTheater-Impl/ folder and subfolders. If you choose to not use Symmetry Station, you may need to update the projects libaries to the most recent updates that have not been synced across projects yet.
 
 ## SDK Modules
 | Name     | Description |

@@ -1,6 +1,5 @@
 # Kabuki Theater Tests
-This module is contains the _G namespace for programming graphicial
-applciations.
+This module is contains unit tests for the _Theater module.
 
 ## Author
 * [Cale McCollough](https://calemccollough.github.io)

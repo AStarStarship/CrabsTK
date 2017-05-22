@@ -21,7 +21,9 @@
  
 #pragma once
 
-#if DEBUG
+#include <KabukiTheater.hpp>
+
+#if _Debug_
 #include <_Theater/HMI/Label.hpp>
 #include <_Theater/HMI/DMXControl.hpp>
 #include <_Theater/HMI/MIDIControl.hpp>

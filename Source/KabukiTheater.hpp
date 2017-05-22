@@ -21,6 +21,10 @@
 
 #pragma once
 
+#ifndef _Debug_
+#define _Debug_ 1
+#endif
+
 #include <ChineseRoom.hpp>
 
 #include "_Theater.hpp"
