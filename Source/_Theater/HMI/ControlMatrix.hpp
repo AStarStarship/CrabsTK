@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../Source/_Theater/HMI/ControlGrid.hpp
+    @file    /.../Source/_Theater/HMI/ControlMatrix.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -29,9 +29,9 @@ namespace _Theater { namespace HMI {
     Each AVControl Layer on the Symmetry Live can either have 8 pots or encoders, or can have 4 pots and 4 encoders.
     This class _KabukiTheater_ helps us swap the values out quickly and efficiently.
 
-    A ControlGrid must have the option of being bifurcated.
+    A ControlMatrix must have the option of being bifurcated.
 */
-class _KabukiTheater_ ControlGrid
+class _KabukiTheater_ ControlMatrix
 {
     public:
 
@@ -40,13 +40,13 @@ class _KabukiTheater_ ControlGrid
         MaxNumRows    = ControlArray::MaxNumElements,   //< The max number of rows.
         MaxNumColumns = ControlArray::MaxNumElements;   //< The max number of columns.
 
-    ControlGrid (int newNumColumns = 8, int newNumRows = 6);
+    ControlMatrix (int newNumColumns = 8, int newNumRows = 6);
     /*< Default constructor. */
     
-    ControlGrid (const ControlGrid& o);
+    ControlMatrix (const ControlMatrix& o);
     //< Copy constructor.
     
-    virtual ~ControlGrid ();
+    virtual ~ControlMatrix ();
     //< Virtual Destructor.
 
     int getNumRows () const;
@@ -62,7 +62,7 @@ class _KabukiTheater_ ControlGrid
     /*< Gets the row at the given index.
         @return gets nullptr if the index is invalid. */
     
-    inline void print (Terminal& io);
+    inline void print(_::Log& log);
     /*< Prints this object to a terminal. */
     
     private:

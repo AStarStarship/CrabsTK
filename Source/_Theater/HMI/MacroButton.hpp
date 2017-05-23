@@ -119,7 +119,7 @@ class _KabukiTheater_ MacroButton : public AVControl, public ButtonControl
     string ToStringRow () const override;
     //< gets a column of the values without the labels.
     
-    inline void print (Terminal& io);
+    inline void print(_::Log& log);
     /*< Prints this object to a terminal. */
 
     private:

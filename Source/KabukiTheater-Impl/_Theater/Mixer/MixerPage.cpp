@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../KabukiTheater-Impl/_Theater/Mixer/MixerPage.cpp
+    @file    /.../Source/KabukiTheater-Impl/_Theater/Mixer/MixerPage.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -72,7 +72,7 @@ const char* MixerPage::setState (byte Value)
     return 0;
 }
 
-const char* MixerPage::op (Terminal* io, int index)
+const char* MixerPage::op (Terminal* io, byte index)
 {
     switch (Index)
     {

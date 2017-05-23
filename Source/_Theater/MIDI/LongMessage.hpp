@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../Source/_Theater/MIDI/LongMessage.h
+    @file    /.../Source/_Theater/MIDI/LongMessage.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -34,7 +34,7 @@ class _KabukiTheater_ LongMessage
 {
     public:
 	
-    LongMessage  (const char* Msg = nullptr, uint32_t Length = nullptr);
+    LongMessage  (const char* Msg = nullptr, uint32_t Length = 0);
     /*< Simple default constructor. */
 	
     LongMessage  (const LongMessage& O);
@@ -45,13 +45,13 @@ class _KabukiTheater_ LongMessage
     LongMessage &operator=  (const LongMessage &O);
     /*< Operator (= ) overloader. */
 
-    virtual uint32_t GetLength () const;
+    virtual uint32_t getLength () const;
     /*< Gets the length of this message. */
     
-	Message* GetMessage ();
+	byte* getMessageData ();
     /*< Gets the message. */
 	
-    void SetMessage  (const char* NewMessage, uint32_t Length);
+    void setMessageData (const char* NewMessage, uint32_t Length);
     /*< Sets thisMessage to the newMessage. */
 
     protected:
@@ -67,4 +67,4 @@ class _KabukiTheater_ LongMessage
 };
 
 }   //< namespace MIDI
-
+}   //< namespace _Theater

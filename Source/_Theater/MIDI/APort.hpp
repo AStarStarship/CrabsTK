@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../KabukiTheater/_Theater/MIDI/Port.hpp
+    @file    /.../Source/KabukiTheater/_Theater/MIDI/Port.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -20,9 +20,8 @@
 
 #pragma once
 
-
 #include <KabukiTheater-Config.hpp>
-#include "Message.h"
+#include "Message.hpp"
 
 namespace _Theater { namespace MIDI {
 
@@ -55,10 +54,10 @@ class _KabukiTheater_ APort
         Recording,
     } State;    
 
-    Port (int aQueueSize = DefaultQueueSize);
+    APort (int aQueueSize = DefaultQueueSize);
     //< Constructors a port with the given queue size.
 
-    ~Port ();
+    ~APort ();
     //< Destructor.
 
     void reset ();
@@ -116,5 +115,5 @@ class _KabukiTheater_ APort
     State currentState;             //< The currentState of this port.
 };
 
-}   //< namespace MIDI
-
+}   //< MIDI
+}   //< _Theater

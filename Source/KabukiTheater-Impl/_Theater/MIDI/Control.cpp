@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../KabukiTheater-Impl/_IO/MIDI/Control.cpp
+    @file    /.../Source/KabukiTheater-Impl/_Theater/MIDI/Control.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -18,24 +18,24 @@
         limitations under the License.
 */
 
-#include <_IO/MIDI/Control.h>
+#include <_Theater/MIDI/Control.hpp>
 
 #include <string>
 #include <string.h>
 #include <stdlib.h>
 
-namespace _IO { namespace MIDI {
+namespace _Theater { namespace MIDI {
 
 Control::Control  (int16_t initCC, int16_t initValue, int16_t initMinValue, int16_t initMaxValue, int16_t initLSB, int16_t initMSB, int16_t initCh)
 {
-    SetCC  (initCC);
-    SetValue  (initValue);
-    SetInitValue  (initValue);
-    SetMinValue  (initMinValue);
-    SetMaxValue  (initMaxValue);
-    SetLSBValue  (initLSB);
-    SetMSBValue  (initMSB);
-    SetChannel  (initCh);
+    setCC        (initCC);
+    setValue     (initValue);
+    setInitValue (initValue);
+    setMinValue  (initMinValue);
+    setMaxValue  (initMaxValue);
+    setLSBValue  (initLSB);
+    setMSBValue  (initMSB);
+    setChannel   (initCh);
 }
 
 
@@ -52,50 +52,43 @@ Control::Control  (const Control& C)
 {
 }
 
-
-
-Control::~Control ()
-{
-    // Nothing to do here.
-}
-
-int16_t Control::GetCC ()
+int16_t Control::getCC ()
 {
     return midiCC;
 }
-int16_t Control::GetValue ()
+int16_t Control::getValue ()
 {
     return midiValue;
 }
-int16_t Control::GetInitValue ()
+int16_t Control::getInitValue ()
 {
     return initValue;
 }
-int16_t Control::GetMinValue ()
+int16_t Control::getMinValue ()
 {
     return minValue;
 }
-int16_t Control::GetMaxValue ()
+int16_t Control::getMaxValue ()
 {
     return maxValue;
 }
 
-int16_t Control::GetLSBValue ()
+int16_t Control::getLSBValue ()
 {
     return lsbValue;
 }
 
-int16_t Control::GetMSBValue ()
+int16_t Control::getMSBValue ()
 {
     return msbValue;
 }
 
-int16_t Control::GetChannel ()
+int16_t Control::getChannel ()
 {
     return outputCh;
 }
 
-void Control::SetCC  (int16_t newCC)
+void Control::setCC  (int16_t newCC)
 {
     if  (newCC < 0)
         midiCC = 0;
@@ -106,7 +99,7 @@ void Control::SetCC  (int16_t newCC)
         midiCC = newCC;
 }
 
-void Control::SetValue  (int16_t Value)
+void Control::setValue  (int16_t Value)
 {
     if  (Value < minValue)
         midiValue = minValue;
@@ -117,7 +110,7 @@ void Control::SetValue  (int16_t Value)
         midiValue = Value;
 }
 
-void Control::SetInitValue  (int16_t Value)
+void Control::setInitValue  (int16_t Value)
 {
 
     if  (Value < 0)
@@ -129,7 +122,7 @@ void Control::SetInitValue  (int16_t Value)
         initValue = Value;
 }
 
-void Control::SetMinValue  (int16_t Value)
+void Control::setMinValue  (int16_t Value)
 {
     if  (Value < 0)
         minValue = 0;
@@ -143,7 +136,7 @@ void Control::SetMinValue  (int16_t Value)
         midiValue = minValue;
 }
 
-void Control::SetMaxValue  (int16_t Value)
+void Control::setMaxValue  (int16_t Value)
 {
     if  (Value < 0)
         maxValue = 0;
@@ -157,7 +150,7 @@ void Control::SetMaxValue  (int16_t Value)
         midiValue = maxValue;
 }
 
-void Control::SetLSBValue  (int16_t Value)
+void Control::setLSBValue  (int16_t Value)
 {
 
     if  (Value < 0)
@@ -169,7 +162,7 @@ void Control::SetLSBValue  (int16_t Value)
         lsbValue = Value;
 }
 
-void Control::SetMSBValue  (int16_t Value)
+void Control::setMSBValue  (int16_t Value)
 {
 
     if  (Value < 0)
@@ -181,7 +174,7 @@ void Control::SetMSBValue  (int16_t Value)
         msbValue = Value;
 }
 
-void Control::SetChannel  (int16_t Value)
+void Control::setChannel  (int16_t Value)
 {
 
     if  (Value < 0)
@@ -193,7 +186,7 @@ void Control::SetChannel  (int16_t Value)
         outputCh = Value;
 }
 
-void Control::Toggle ()
+void Control::toggle ()
 {
     if  (midiValue == maxValue)
         midiValue = minValue;
@@ -201,7 +194,7 @@ void Control::Toggle ()
         midiValue = maxValue;
 }
 
-bool Control::ComparedTo  (Control* C)
+bool Control::comparedTo  (Control* C)
 {
     if  (C == 0
        || midiCC    != C->midiCC
@@ -214,14 +207,14 @@ bool Control::ComparedTo  (Control* C)
     return true;
 }
 
-void Control::Copy  (const Control* C)
+void Control::copy  (const Control& C)
 {
-    midiCC     = C->midiCC;
-    midiValue  = C->midiValue;
-    initValue = C->initValue;
-    minValue  = C->minValue;
-    maxValue  = C->maxValue;
-    outputCh   = C->outputCh;
+    midiCC    = C.midiCC;
+    midiValue = C.midiValue;
+    initValue = C.initValue;
+    minValue  = C.minValue;
+    maxValue  = C.maxValue;
+    outputCh  = C.outputCh;
 }
 
 const char* Control::toString ()
@@ -285,25 +278,5 @@ const char* Control::toString ()
     return 0;
 }
 
-byte Control::GetState ()
-{
-    return 0;
-}
-
-const char* Control::SetState (byte Value)
-{
-    return 0;
-}
-
-const char* Control::Do (const char* Query, byte Index, Roombot* Bot)
-{
-    switch (Index)
-    {
-        case 0: return I2P::NumMembers (0);
-    }
-    
-    return Query ? Enquery ("Control", "_IO::MIDI"): InvalidIndex ();
-}
-
 }   //< namespace MIDI
-}   //< namespace _IO
+}   //< namespace _Theater

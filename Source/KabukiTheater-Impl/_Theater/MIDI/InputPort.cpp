@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../KabukiTheater-Impl/_Theater/MIDI/InputPort.cpp
+    @file    /.../Source/KabukiTheater-Impl/_Theater/MIDI/InputPort.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -66,7 +66,7 @@ InputPort::~InputPort ()
     //::CloseHandle  (messageEvent); // close the handle to the signalling event.
 }
 
-void InputPort::OpenPort  (uint32_t deviceID)
+void InputPort::openPort  (uint32_t deviceID)
 {
     //Close (); // Makes sure the GetPrevious device, if anY, is closed before opening another one.
 
@@ -86,7 +86,7 @@ void InputPort::OpenPort  (uint32_t deviceID)
 
 
 
-void InputPort::ClosePort ()
+void InputPort::closePort ()
 {
 /*
     if  (currentState == RECORDING) // If the device is recording then...
@@ -132,7 +132,7 @@ void InputPort::addSysExBuffer  (LPSTR buffer, uint32_t bufferLength)
 
 
 
-void InputPort::StartRecording ()
+void InputPort::startRecording ()
 {
 
     /*
@@ -164,7 +164,7 @@ void InputPort::StartRecording ()
 
 
 
-void InputPort::StopRecording ()
+void InputPort::stopRecording ()
 {
     /*
     // If the device is in fact recording...
@@ -201,7 +201,7 @@ ReceivesMIDIInput *InputPort::SetReceiver  (InputDevice &InputDevice)
 
 
 
-bool InputPort::IsOpen () const
+bool InputPort::isOpen () const
 {
 
     //return ((currentState == OPENED) ||  (currentState == RECORDING));
@@ -210,7 +210,7 @@ bool InputPort::IsOpen () const
 
 
 
-bool InputPort::IsRecording () const
+bool InputPort::isRecording () const
 {
 
     //return  (currentState == RECORDING);
@@ -219,7 +219,7 @@ bool InputPort::IsRecording () const
 
 
 
-uint32_t InputPort::GetDeviceID () const
+uint32_t InputPort::getDeviceID () const
 {
 /*
     uint32_t deviceID;
@@ -236,7 +236,7 @@ uint32_t InputPort::GetDeviceID () const
 
 
 
-uint32_t InputPort::GetNumDevices ()
+uint32_t InputPort::getNumDevices ()
 {
     //return midiInGetNumDevs ();
     return 0;
@@ -334,26 +334,6 @@ uint32_t InputPort::HeaderProc  (LPVOID parameter)
     return 0;
 }
 */
-
-byte InputPort::getState ()
-{
-    return 0;
-}
-
-const char* InputPort::setState (byte Value)
-{
-    return 0;
-}
-
-const char* InputPort::op (_::Terminal* io, byte index)
-{
-    switch (Index)
-    {
-        case 0: return I2P::NumMembers (0);
-    }
-    
-    return Query ? Enquery ("InputPort", "_Theater::MIDI"): InvalidIndex ();
-}
 
 }   //< namespace MIDI
 }   //< namespace _Theater

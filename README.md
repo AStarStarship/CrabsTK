@@ -1,32 +1,28 @@
 # Kabuki Theater
-A modern C++11 software development kit and app framework built on top of [Simple Fast Media Layer](http://www.sfml-dev.org/).
-
-## Why use Kabuki Theater?
-
-Kabuki Theater is built on the Chinese Room, which is good for working with dictionaries (@google Python Dictionary), interprocess communication, serializing data, remotely controlling apps and IoT devices, and debugging apps. The Chinese Room is the link between your app or embedded device, and the world.
+A modern C++11 software development kit and app framework built on top of [Simple Fast Media Layer](http://www.sfml-dev.org/) and the [Chinese Room](https://github.com/Kabuki-Toolkit/ChineseRoom).
 
 ## Quick Links
-* [Quickstart Guide](https://github.com/Kabuki-Toolkit/Kabuki-Theater/wiki/Quickstart-Guide.md) - 
+* [Quickstart Guide](https://github.com/Kabuki-Toolkit/Kabuki-Theater/wiki/Quickstart-Guide.md) -
     Check here for the Kabuki Theater wiki and github repository!
-* [Kabuki Toolkit Website](https://kabuki-toolkit.github.io/) - Official Kabuki Toolkit website. We are currently 
-    looking for someone to help us fix the CSS on the website. It only works right at < 1024 pixel width so the 
+* [Kabuki Toolkit Website](https://kabuki-toolkit.github.io/) - Official Kabuki Toolkit website. We are currently
+    looking for someone to help us fix the CSS on the website. It only works right at < 1024 pixel width so the
     problem is in the @media section.
 
 ## Project Organization
-The primary development environment is Visual Studio using [Symmetry Station](https://github.com/Kabuki-Toolkit/SymmetryStation). Please see the [Symmetry Station Quick Start Guide](https://github.com/Kabuki-Toolkit/SymmetryStation/wiki/Quick-Start-Guide). Each folder in the project should have ReadMe.md file in it that should tell you what you need to know. Source header files are separated from their precompiled .lib and .dll source implementation. Development instructions are in the ReadMe.md files in the /.../Source/KabukiTheater-Impl/ folder and subfolders. If you choose to not use Symmetry Station, you may need to update the projects libaries to the most recent updates that have not been synced across projects yet.
+The primary development environment is Visual Studio using [Symmetry Station](https://github.com/Kabuki-Toolkit/SymmetryStation). Please see the [Symmetry Station Quick Start Guide](https://github.com/Kabuki-Toolkit/SymmetryStation/wiki/Quick-Start-Guide). Each folder in the project should have ReadMe.md file in it that should tell you what you need to know. Source header files are separated from their precompiled .lib and .dll source implementation. Development instructions are in the ReadMe.md files in the /.../Source/KabukiTheater-Impl/ folder and subfolders. If you choose to not use Symmetry Station, you may need to update the projects libraries to the most recent updates that have not been synced across projects yet.
 
 ## Project Status: Alpha
 
 ## SDK Modules
 | Name     | Description |
 |:--------:|:------------|
-| _Audio   | Audio.|
 | _App     | Application framework.|
-| _File    | Files and compressed.|
+| _Audio   | Audio.|
+| _File    | Files and archives.|
 | _G       | Graphics engine.|
 | _GUI     | Graphical User Interfaces.|
 | _Id      | Identification.|
-| _IO      | Input/Ouput: Audio and Serial.|
+| _IO      | Input/Output: Audio and Serial.|
 | _Math    | Math and geometry.|
 | _Net     | Networking.|
 | _Theater | Music, lighting, and creativity.|
@@ -45,4 +41,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-

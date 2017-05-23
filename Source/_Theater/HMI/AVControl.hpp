@@ -148,7 +148,7 @@ class _KabukiTheater_ AVControl: public Label, public _::IEvent
     virtual void printRow (Terminal& io) const;
     /*< Gets a column of the values without the labels. */
 
-    virtual void print (Terminal& io) const;
+    virtual void print(_::Log& log) const;
     /*< Prints this object to a terminal. */
 
     private:

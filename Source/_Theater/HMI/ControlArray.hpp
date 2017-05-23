@@ -70,7 +70,7 @@ class _KabukiTheater_ ControlArray
     int getNumControls () const;
     //< gets the number of AVControl (s) in the row.
     
-    inline void print (Terminal& io);
+    inline void print(_::Log& log);
     /*< Prints this object to a terminal. */
 
     private:

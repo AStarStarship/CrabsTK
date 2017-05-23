@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../Source/_Theater/HMI/Mixer/Mixer.hpp
+    @file    /.../Source/_Theater/Mixer/Mixer.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -20,7 +20,9 @@
  
 #pragma once
 
-namespace _Theater { namespace HMI { namespace Mixer {
+#include <KabukiTheater-Config.hpp>
+
+namespace _Theater { namespace Mixer {
 
 class _KabukiTheater_ MixerChannel;
 
@@ -119,7 +121,7 @@ class _KabukiTheater_ Mixer
     void print (int startCh, int stopCh);
     //< Prints a string representation of mixer channels startCh - stopCh.
     
-    inline void print (Terminal& io);
+    inline void print (_::Terminal& io);
     /*< Prints this object to a terminal. */
 
     private:

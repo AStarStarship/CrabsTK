@@ -142,10 +142,10 @@ class IsymmetricController: public Controller
     //void syncToPort  (MIDI::Port * thisPort);
     //< Syncs the MIDI clock to thisPort.
     
-    virtual const char* op (Terminal* io, int index);
+    virtual const char* op (Terminal* io, byte index);
     /*< Inter-process subroutines. */
 
-    inline void print (Terminal& io);
+    inline void print(_::Log& log);
     /*< Prints this object to a Terminal. */
 
     private:

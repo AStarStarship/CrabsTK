@@ -42,7 +42,7 @@ class _KabukiTheater_ TempoSync
     int ticksPerBeat;   //< Number of Ticks Per Beat.
     int tickCount;      //< The current tick count.
     
-    virtual const char* Do  (const char* Query, byte index, Roombot* Bot);
+    virtual const char* op (_::Terminal* io, byte index);
     /*< Inter-process subroutines. */
 };
 

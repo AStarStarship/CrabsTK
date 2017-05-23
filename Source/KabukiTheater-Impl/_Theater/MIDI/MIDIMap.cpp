@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../KabukiTheater-Impl/_Theater/MIDI/MIDIMap.cpp
+    @file    /.../Source/KabukiTheater-Impl/_Theater/MIDI/MIDIMap.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -26,24 +26,14 @@ MIDIMap::MIDIMap ()
 {
 }
 
-byte MIDIMap::GetState ()
+void MIDIMap::mapParam (int index, byte input, const byte* outputAddress)
 {
-    return 0;
-}
+    if (outputAddress == nullptr) return;
+    if (index < 0) return;
+    if (index > 127) return;
 
-const char* MIDIMap::SetState (byte Value)
-{
-    return 0;
-}
-
-const Member* MIDIMap::op (_::Terminal* io, byte index)
-{
-    switch (index)
-    {
-        case '?': return deviceMember<"_Theater::MIDI::MIDIMap", 0, "A onto map of MIDI inputs to remapped outputs.";
-    }
-    
-    return invalidIndex ();
+    in[index] = input;
+    out[index] = outputAddress;
 }
 
 }   //< namespace MIDI

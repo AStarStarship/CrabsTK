@@ -70,7 +70,7 @@ class _KabukiTheater_ DMXButton : public DMXControl, public ButtonControl
     string toStringRow () const override;
     /*< Gets a column of the values without the labels. */
     
-    inline void print (Terminal& io);
+    inline void print(_::Log& log);
     /*< Prints this object to a terminal. */
 };
 

@@ -184,7 +184,7 @@ void WidgetPage::disableMasterControls ()
     mstrControlsEnabled = false;
 }
 
-void WidgetPage::print (Terminal& io)
+void WidgetPage::print(_::Log& log)
 {
     io << "Page: " << pageLabel << "\n";
     

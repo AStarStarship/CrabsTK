@@ -81,7 +81,7 @@ class _KabukiTheater_ ButtonScroller, public Label
     int press (int index);
     //< Presses the Button at the specified index.
     
-    inline void print (Terminal& io);
+    inline void print(_::Log& log);
     /*< Prints this object to a terminal. */
 
     private:

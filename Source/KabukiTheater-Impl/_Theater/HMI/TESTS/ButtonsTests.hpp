@@ -31,7 +31,7 @@
 #include <_Theater/HMI/MIDIButton.hpp>
 #include <_Theater/HMI/MacroButton.hpp>
 #include <_Theater/HMI/ControlArray.hpp>
-#include <_Theater/HMI/ControlGrid.hpp>
+#include <_Theater/HMI/ControlMatrix.hpp>
 
 namespace _Theater { namespace HMI {
 
@@ -51,7 +51,7 @@ class UnitTests : public UnitTest
         unitTestsArray.add (&testUnit_MIDIButton);
         unitTestsArray.add (&testUnit_MacroButton);
         unitTestsArray.add (&testUnit_ControlArray);
-        unitTestsArray.add (&testUnit_ControlGrid);
+        unitTestsArray.add (&testUnit_ControlMatrix);
 
         UnitTestRunner unitTestRunner;
         unitTestRunner.runTests (unitTestsArray);

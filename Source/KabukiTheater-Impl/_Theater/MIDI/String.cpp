@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../KabukiTheater-Impl/_Com/MIDI/String.cpp
+    @file    /.../Source/KabukiTheater-Impl/_Com/MIDI/String.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 

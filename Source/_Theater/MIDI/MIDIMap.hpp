@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../Source/_Theater/MIDI/MIDIMap.h
+    @file    /.../Source/_Theater/MIDI/MIDIMap.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -24,7 +24,8 @@
 
 namespace _Theater { namespace MIDI {
 
-/** Class that remaps MIDI Parameters to other specified values. */
+/** Class that remaps MIDI Parameters to other specified values.
+*/
 class _KabukiTheater_ MIDIMap
 {
       public:
@@ -32,14 +33,17 @@ class _KabukiTheater_ MIDIMap
     MIDIMap ();
     /*< Constructs a blank MIDI map. */
 
-    byte MapParam  (uint32_t channelNum, byte thisParameter); 
-    //< Re-maps thisParameter to its remappedParam.
+    void mapParam  (int index, byte input, const byte* output);
+    /*< Remaps the input parameter to the outputAddress I2P escpape sequence.
+        @param index  The index of the param to remap.
+        @param input  The MIDI input to remap.
+        @param output The I2P address of the remapped MIDI device.
+    */
 
     private:
 
-    byte remappedParam[16][128]; //< Aa 16x128 grid of 7-bit MIDI values to remap parameters to.
-    //char **paramString[16][128]; //< The string names of the remapped parameters.
+    byte in[128];                   //< MIDI input channels to remap.
+    const byte* out[128];           //< Remapped MIDI output channels.
 };
 }   //< namespace MIDI
 }   //< namespace _Theater
-

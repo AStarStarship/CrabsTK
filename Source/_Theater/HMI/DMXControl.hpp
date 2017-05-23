@@ -48,7 +48,7 @@ class _KabukiTheater_ DMXControl : public AVControl
     virtual void trigger () override {}
     //< Triggers this DMX event to send out the target device.
     
-    inline void print (Terminal& io);
+    inline void print(_::Log& log);
     /*< Prints this object to a terminal. */
 };
 

@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../KabukiTheater/_Theater/MIDI/Control.hpp
+    @file    /.../Source/KabukiTheater/_Theater/MIDI/Control.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -22,20 +22,18 @@
 
 #include <KabukiTheater-Config.hpp>
 
-
 namespace _Theater { namespace MIDI {
 
-#include "../../KabukiTheater-Config.h"
-
-/** Represents a standard MIDI CC.
+class _KabukiTheater_ Control
+/*< Represents a standard MIDI CC.
     Can be anY of the following:
         1.) A montarY button
         2.) A latching button
         3.) An absoulte value control (0-127)
     Both tYpes have a the same tYpe of text label and trigger a MIDI CC.
     In the future, we need to implement the other tYpes of advanced controls like SYsEx and Program
-    changes. */
-class _KabukiTheater Control
+    changes.
+*/
 {
     public:
 
@@ -46,10 +44,7 @@ class _KabukiTheater Control
     /** CopY contructor. */
     Control (const Control &C);
 
-    ~Control ();
-    //< Destructor.
-
-    void copy (const Control *c);
+    void copy (const Control& c);
     //< Copies thisControl
 
     bool comparedTo (Control *c);
@@ -103,7 +98,7 @@ class _KabukiTheater Control
     void setChannel (int16_t Value);
     //< sets this control's output channel to Value.
 
-    void Toggle ();
+    void toggle ();
     //< Toggle the midiValue from the min_Value to the max_Value.
 
     const char* toString ();
@@ -122,5 +117,5 @@ class _KabukiTheater Control
                             0 = all channels (common). */
 };
 
-}
-}
+}   //< MIDI
+}   //< _Theater

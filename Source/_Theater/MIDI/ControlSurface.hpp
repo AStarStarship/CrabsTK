@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../KabukiTheater/_Theater/MIDI/ControlSurface.hpp
+    @file    /.../Source/KabukiTheater/_Theater/MIDI/ControlSurface.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -25,9 +25,9 @@
 
 namespace _Theater { namespace MIDI {
 
-class _KabukiTheater ControlSurface
-/** This class _KabukiTheater represents a generic Control Surface.
-    This class _KabukiTheater is to help facilitate the editing of templates on other control
+class _KabukiTheater_ ControlSurface
+/** This class _KabukiTheater_ represents a generic Control Surface.
+    This class _KabukiTheater_ is to help facilitate the editing of templates on other control
     surfaces through the Symmetry Live!'s API. For right now its pretty bare bones. */
 {
       public:
@@ -58,7 +58,7 @@ class _KabukiTheater ControlSurface
     void SetDrumsChannel  (int16_t thisChannel);
     //< Sets the common drums MIDI channel.
     
-    virtual const char* Do  (const char* Query, byte index, Roombot* Bot);
+    virtual const char* op (_::Terminal* io, byte index);
     /*< Inter-process subroutines. */
 
     const char* toString () const;

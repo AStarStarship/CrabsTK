@@ -131,10 +131,10 @@ class _KabukiTheater_ Widget: public IDevice
     void saveToFile (const File& f);
     /*< Exports a Widget to thisFile. */
     
-    const Member* op (Terminal* io, int index) override;
+    const Member* op (Terminal* io, byte index) override;
     /*< I2P subroutines. */
     
-    inline void print (Terminal& io);
+    inline void print(_::Log& log);
     /*< Prints this object to a terminal. */
 
     private:
@@ -146,7 +146,7 @@ class _KabukiTheater_ Widget: public IDevice
         * masterKnobB,                          //< The master knob for Layer B.
         * masterBttnA,                          //< The master button for Layer A.
         * masterBttnB;                          //< The master button for Layer B.
-    std::vector<ControlMatrix*> controlGrids;   //< The control grids.
+    std::vector<ControlMatrix*> ControlMatrixs;   //< The control grids.
 
     void deletePage (ControlMatrix& thisPage);
     /*< Deletes thisPage from the Widget. */

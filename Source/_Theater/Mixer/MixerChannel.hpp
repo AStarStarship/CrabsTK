@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../Source/_Dev/Mixer/MixerChannel.hpp
+    @file    /.../Source/_Theater/Mixer/MixerChannel.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -22,21 +22,20 @@
 
 #include <KabukiTheater-Config.hpp>
 
-namespace _IO { namespace Mixer {
+namespace _Theater { namespace Mixer {
 
 class _KabukiTheater_ MixerChannel
 {
+    _Noncopyable_ (MixerChannel)
+
     public:
 
     enum { 
-        DefaultNumAuxSends = 0,       //< The default number of aux sends.
+        DefaultNumAuxSends = 3,       //< The default number of aux sends.
     };
 
     MixerChannel  (const char* initName = nullptr);
     /*< Constructs a mixer channel with the given name. */
-
-    MixerChannel  (const MixerChannel& o);
-    /*< Copy constructor. */
 
     ~MixerChannel ();
     /*< Destructor. */

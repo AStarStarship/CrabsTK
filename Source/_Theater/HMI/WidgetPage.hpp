@@ -89,7 +89,7 @@ class _KabukiTheater_ WidgetPage
     const char* getType ();
     //< Gets typeText.
     
-    void print (Terminal& io);
+    void print(_::Log& log);
     /*< Prints this object to a terminal. */
 
     private:

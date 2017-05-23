@@ -79,7 +79,7 @@ class _KabukiTheater_ XYTouchpad: public Component
         @pre Value < top_bounds.
     */
     
-    inline void print (Terminal& io);
+    inline void print(_::Log& log);
     /*< Prints this object to a terminal. */
 
     private:

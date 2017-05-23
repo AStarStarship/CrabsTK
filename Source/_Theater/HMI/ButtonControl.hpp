@@ -129,7 +129,7 @@ class _KabukiTheater_ ButtonControl
         @return gets 0 upon success and 1 if the newLabel is too long.
         @see    Label::isValid (char). */
     
-    inline void print (Terminal& io);
+    inline void print(_::Log& log);
     /*< Prints this object to a terminal. */
     
     private:

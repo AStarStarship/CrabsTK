@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../KabukiTheater/_VEnv/TESTS/Workspace/main.cpp
+    @file    /.../Source/KabukiTheater/_VEnv/TESTS/Workspace/main.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -18,14 +18,28 @@
         limitations under the License.
 */
  
-#include <../Workspace.hpp>
+#include <_Theater.hpp>
+#include <CppUTest\CommandLineTestRunner.h>
+#include <CppUTest\TestHarness.h>
+#include <stdio.h>
 
-int main ()
+using namespace _Theater;
+
+TEST_GROUP (_ProjectTests)
 {
-    beginTest ("Testing Workspace::Workspace class _KabukiToolkit...");
+    void setup ()
+    {
+        // Init stuff
+    }
 
-    Workspace workspace ();
+    void teardown ()
+    {
+        printf ("\n\n_Theater::ProjectTests completed.\n\n");
+        //system("PAUSE");
+    }
+};
 
-    logMessage ("Done testing Workspace::Workspace class _KabukiToolkit");
+TEST (_ProjectTests, ProjectTests1)
+{
 }
 

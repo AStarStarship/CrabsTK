@@ -73,7 +73,7 @@ class _KabukiTheater_ OutputPort: public Port
     /*< Gets the capabilities of a particular MIDI output device.
         Stores the results are stored in the caps      struct. */
     
-    virtual const char* Do  (const char* Query, byte index, Roombot* Bot);
+    virtual const char* op (_::Terminal* io, byte index);
     /*< Inter-process subroutines. */
     
     private:

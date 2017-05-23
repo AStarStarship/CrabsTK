@@ -39,8 +39,8 @@ class _KabukiTheater_ Label
         NonAlphaNumChars                       //< The number of non-alpha-numberic charactors allowed in a label.
     };
 
-    static string AllowedSymbols,         //< The non-alpha-numberic charactors allowed in a label.
-        UnnamedLabel;                           //< string that reads "Unnnamed".
+    static const char* AllowedSymbols,         //< The non-alpha-numberic charactors allowed in a label.
+        * UnnamedLabel;                           //< string that reads "Unnnamed".
     
     Label (const string& newLabel = "");
     //< Default constructor.
@@ -79,7 +79,7 @@ class _KabukiTheater_ Label
         @return Returns -1 thisLabel is "".
     */
         
-    void print (Terminal& io);
+    void print(_::Log& log);
     /*< Prints this object to a Terminal. */
 
     private:

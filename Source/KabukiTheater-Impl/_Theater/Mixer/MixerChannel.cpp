@@ -1,11 +1,11 @@
 /** Kabuki Firmware Development Kit
     @file    /.../KabukiFDK-Impl/MixerChannel/MixerChannel.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright(C) 2016 [Cale McCollough](calemccollough.github.io)
 
-                            All right reserved  (R).
+                            All right reserved(R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0(the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -18,154 +18,137 @@
         limitations under the License.
 */
 
-#include <MixerChannel/MixerChannel.hpp>
+#include <_Theater/Mixer/MixerChannel.hpp>
+#include <_Theater/HMI/Label.hpp>
 
-namespace _Theater { namespace MixerChannel {
+namespace _Theater { namespace Mixer {
 
-const int MixerChannel::defaultNumAuxSends = 3;
+using namespace _Theater;
 
-MixerChannel::MixerChannel  (const char *initName):
-    labelText  (Label::format  (initName)),
-    volValue  (0),
-    panValue  (0),
-    muteValue  (0),
-    soloValue  (0),
-    numAuxSends  (defaultNumAuxSends)
+MixerChannel::MixerChannel(const char *initName):
+    labelText(HMI::Label::format(initName)),
+    volValue(0),
+    panValue(0),
+    muteValue(0),
+    soloValue(0),
+    numAuxSends(DefaultNumAuxSends)
 {
-    auxSend = new int[defaultNumAuxSends];
-    for  (int i=0; i < defaultNumAuxSends; ++i)
+    auxSend = new int[DefaultNumAuxSends];
+    for(int i=0; i < DefaultNumAuxSends; ++i)
         auxSend[i] = 0;
 }
 
-MixerChannel::~MixerChannel ()
+MixerChannel::~MixerChannel()
 {
     delete auxSend;
 }
 
-int MixerChannel::getVolume ()
+int MixerChannel::getVolume()
 {
     return volValue;
 }
 
-int MixerChannel::pan ()
+int MixerChannel::getPan()
 {
     return panValue;
 }
 
-int MixerChannel::isMuted ()
+int MixerChannel::isMuted()
 {
     return muteValue;
 }
 
-int MixerChannel::isSoloed ()
+int MixerChannel::isSoloed()
 {
     return soloValue;
 }
 
-void MixerChannel::setVolume  (int value)
+void MixerChannel::setVolume(int value)
 {
     volValue = value;
 }
 
-void MixerChannel::setPan  (int value)
+void MixerChannel::setPan(int value)
 {
     panValue = value;
 }
 
-void MixerChannel::setMute  (bool isMuted)
+void MixerChannel::setMute(bool isMuted)
 {
     muteValue = isMuted;
 }
 
-void MixerChannel::setSolo  (bool isSoloed)
+void MixerChannel::setSolo(bool isSoloed)
 {
     soloValue = isSoloed;
 }
-void MixerChannel::toggleMute ()
+
+void MixerChannel::toggleMute()
 {
-    if  (muteValue)
+    if(muteValue)
         muteValue = false;
     else
         muteValue = true;
 }
-void MixerChannel::toggleSolo ()
+
+void MixerChannel::toggleSolo()
 {
-    if  (soloValue)
+    if(soloValue)
         soloValue = false;
     else
         soloValue = true;
 }
 
-
-
-
-
-int MixerChannel::aux  (int thisAux)
+int MixerChannel::getAux(int thisAux)
 {
-    if  (thisAux < 0 || thisAux >= numAuxSends)
+    if(thisAux < 0 || thisAux >= numAuxSends)
         return 0;
     return auxSend[thisAux];
 }
 
-
-
-void MixerChannel::setAux  (int thisAuxSend, int level)
+void MixerChannel::setAux(int thisAuxSend, int level)
 {
-    if  (thisAuxSend < 0 || thisAuxSend >= numAuxSends)
+    if(thisAuxSend < 0 || thisAuxSend >= numAuxSends)
         return;
     auxSend[thisAuxSend] = level;
 }
 
-
-
-void MixerChannel::deleteAux  (int thisIndex)
+void MixerChannel::deleteAux(int thisIndex)
 {
-    if  (thisIndex < 0 || thisIndex > numAuxSends)
+    if(thisIndex < 0 || thisIndex > numAuxSends)
 
-    for  (int i=thisIndex; i < numAuxSends-1; i)
+    for(int i=thisIndex; i < numAuxSends-1; i)
         auxSend[i] = auxSend[++i];
 
     --numAuxSends;
 }
 
-
-
-void MixerChannel::insertAux  (int thisIndex)
+void MixerChannel::insertAux(int thisIndex)
 {
-    if  (thisIndex < 0 || thisIndex > numAuxSends)
+    if(thisIndex < 0 || thisIndex > numAuxSends)
         return;
 
     int *newAuxSendArray = new int[numAuxSends+1];
 
     int i=0;
 
-    for  (i; i < numAuxSends-1; i)
+    for(i; i < numAuxSends-1; i)
         newAuxSendArray[i] = auxSend[++i];
 
-    for  (i; i < numAuxSends-1; i)
+    for(i; i < numAuxSends-1; i)
         auxSend[i] = auxSend[++i];
 
     ++numAuxSends;
 }
 
-byte MixerChannel::getState ()
+const char* MixerChannel::op(Terminal* io, byte index)
 {
-    return 0;
-}
-
-const char* MixerChannel::setState (byte Value)
-{
-    return 0;
-}
-
-const char* MixerChannel::op (Terminal* io, int index)
-{
-    switch (Index)
+    switch(Index)
     {
-        case 0: return I2P::NumMembers (0);
+        case 0: return I2P::NumMembers(0);
     }
     
-    return Query ? Enquery ("MixerChannel", "_Theater::Mixer"): InvalidIndex ();
+    return Query ? Enquery("MixerChannel", "_Theater::Mixer"): InvalidIndex();
 }
 
 }   //< Mixer

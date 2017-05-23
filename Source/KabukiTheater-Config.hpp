@@ -21,8 +21,7 @@
 
 #pragma once
 
-
-using namespace I2P;
+#include <ChineseRoom.hpp>
 
 #include <string>
 #include <vector>

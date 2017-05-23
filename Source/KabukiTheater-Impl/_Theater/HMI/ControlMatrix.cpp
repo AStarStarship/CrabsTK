@@ -70,7 +70,7 @@ ControlArray* ControlMatrix::getRow (int row)
     return &rows[row];
 }
 
-string ControlMatrix::print (Terminal& io) const
+string ControlMatrix::print(_::Log& log) const
 {
     string returnString = CharLine ('-', AVControl::MacroHeaderLength) + "Control Grid: rows = " + string (numRows) + 
         ", columns = " + string (numColumns) + "\n" + CharLine ('-', AVControl::MacroHeaderLength) + 
@@ -79,7 +79,7 @@ string ControlMatrix::print (Terminal& io) const
     Logger::outputDebugString ("!!!!numRows = " + string (numRows));
 
     for (int i = 0; i < numRows; ++i)
-        returnString += "Row " + string (i) + "\n" + rows[i].print (Terminal& io);
+        returnString += "Row " + string (i) + "\n" + rows[i].print(_::Log& log);
     
     return returnString + CharLine ('-', AVControl::MacroHeaderLength);
 }

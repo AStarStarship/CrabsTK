@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../KabukiTheater-Impl/_Theater/HMI/Buttons/SwapButton.cpp
+    @file    /.../Source/KabukiTheater-Impl/_Theater/HMI/Buttons/SwapButton.cpp
     @author  [Cale McCollough](mailto:cale.mccollough@gmail.com)
     @license Copyright (C) 2017 [Cale McCollough](https://calemccollough.github.io)
 

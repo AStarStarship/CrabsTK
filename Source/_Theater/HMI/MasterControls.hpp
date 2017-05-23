@@ -33,7 +33,7 @@ class _KabukiTheater_ MasterControls
     MasterControls ();
     /*< Constructs a blank set of master controls. */
     
-    inline void print (Terminal& io);
+    inline void print(_::Log& log);
     /*< Prints this object to a terminal. */
     
     private:

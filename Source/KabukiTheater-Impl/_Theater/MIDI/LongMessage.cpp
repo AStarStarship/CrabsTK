@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../KabukiTheater-Impl/_Theater/MIDI/LongMessage.cpp
+    @file    /.../Source/KabukiTheater-Impl/_Theater/MIDI/LongMessage.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -52,21 +52,21 @@ LongMessage &LongMessage::operator =  (const LongMessage &copyObject)
 
 }
 
-uint32_t LongMessage::GetLength () const
+uint32_t LongMessage::getLength () const
 {
     return messageLength;
 }
 
 
 
-Message* LongMessage::GetMessage ()
+byte* LongMessage::getMessageData ()
 {
     return messageData;
 }
 
 
 
-void LongMessage::SetMessage  (const char *message, uint32_t length)
+void LongMessage::setMessageData (const char *message, uint32_t length)
 {
 
     if  (messageData != 0) // Release old LongMessage if it exists
@@ -89,26 +89,6 @@ char& LongMessage::operator []  (int index)
     return messageData[index];
 }
 */
-
-byte LongMessage::getState ()
-{
-    return 0;
-}
-
-const char* LongMessage::setState (byte Value)
-{
-    return 0;
-}
-
-const char* LongMessage::op (_::Terminal* io, byte index)
-{
-    switch (Index)
-    {
-        case 0: return I2P::NumMembers (0);
-    }
-    
-    return Query ? Enquery ("LongMessage", "_Theater::MIDI"): InvalidIndex ();
-}
 
 }   //< namespace MIDI
 }   //< namespace _Theater

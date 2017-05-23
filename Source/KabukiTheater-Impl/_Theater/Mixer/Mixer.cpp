@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../KabukiTheater-Impl/_Theater/Mixer/Mixer.cpp
+    @file    /.../Source/KabukiTheater-Impl/_Theater/Mixer/Mixer.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)
 
@@ -166,7 +166,7 @@ const char* Mixer::setState (byte Value)
     return 0;
 }
 
-const Member* Mixer::op (Terminal* io, int index)
+const Member* Mixer::op (Terminal* io, byte index)
 {
     switch (Index)
     {

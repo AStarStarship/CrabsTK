@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../KabukiTheater-Impl/_Theater/HMI/Buttons/EventButton.cpp
+    @file    /.../Source/KabukiTheater-Impl/_Theater/HMI/Buttons/EventButton.cpp
     @author  [Cale McCollough](mailto:cale.mccollough@gmail.com)
     @license Copyright (C) 2017 [Cale McCollough](https://calemccollough.github.io)
 

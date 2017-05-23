@@ -227,7 +227,7 @@ class KeyEvent
     byte getVKCode ();
     /*< Gets the VK code of the event. */
     
-    inline void print (Terminal& io);
+    inline void print(_::Log& log);
     /*< Prints this object to a Terminal. */
     
     private:

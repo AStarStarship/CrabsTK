@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../KabukiTheater-Impl/HUD/Buttons/DeviceButton.cpp
+    @file    /.../Source/KabukiTheater-Impl/HUD/Buttons/DeviceButton.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 

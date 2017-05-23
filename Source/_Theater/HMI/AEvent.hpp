@@ -43,7 +43,7 @@ class AEvent
     virtual void trigger () = 0;
     //< Triggers the event.
     
-    inline void print (Terminal& io);
+    inline void print(_::Log& log);
     /*< Prints this object to a terminal. */
 
     private:

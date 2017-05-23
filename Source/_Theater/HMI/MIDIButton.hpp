@@ -70,10 +70,10 @@ class _KabukiTheater_ MIDIButton : public MIDIControl, public ButtonControl
     string ToStringRow () const override;
     //< gets a column of the values without the labels.
     
-    string print (Terminal& io) const override;
+    string print(_::Log& log) const override;
     //< gets a text represenation of this object.
     
-    inline void print (Terminal& io);
+    inline void print(_::Log& log);
     /*< Prints this object to a terminal. */
 
     private:

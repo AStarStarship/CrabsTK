@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../Source/_Dev/Mixer/MixerPage.hpp
+    @file    /.../Source/_Theater/Mixer/MixerPage.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -20,7 +20,7 @@
  
 #pragma once
 
-namespace _Theater { namespace _HMI { namespace Mixer {
+namespace _Theater { namespace Mixer {
 
 class _KabukiTheater_ Mixer;
 class _KabukiTheater_ MixerChannel;
@@ -33,22 +33,22 @@ class _KabukiTheater_ MixerPage
 {
     public:
 
-    MixerPage  (Mixer *theMixer = nullptr, int initStartIndex = 0);
+    MixerPage (Mixer *theMixer = nullptr, int initStartIndex = 0);
     //< Constructor.
 
     ~MixerPage ();
     //< Destructor.
 
-    int GetStartIndex ();
+    int getStartIndex ();
     //< Gets the startingIndex of this MixerPage.
 
-    void SetStartIndex  (int newIndex);
+    void setStartIndex (int newIndex);
     //< Sets the startingIndex to the newIndex.
 
-    void SetChannel  (int thisChannel, MixerChannel *theNewOne);
+    void setChannel (int thisChannel, MixerChannel* theNewOne);
     //< Replaces thisChannel with theNewOne.
 
-    MixerChannel *GetChannel  (int atThisIndex);
+    MixerChannel *getChannel (int index);
     //< Gets a pointer to the channel[atThisIndex].
     
     void print (I2P::Terminal& io);
@@ -56,12 +56,10 @@ class _KabukiTheater_ MixerPage
 
     private:
 
-    int startingIndex;                  //< The startingIndex of this page this MixerPage.
-
-    Mixer *mixer;                       //< A pointer to the global SL::Mixer.
-    std::vector<MixerChannel*> channels;      //< An array of pointers to pointers to MixerChannel  (s).
+    int startingIndex;                  	//< The startingIndex of this page this MixerPage.
+    Mixer *mixer;                       	//< A pointer to the global _Theater::Mixer.
+    std::vector<MixerChannel*> channels;  	//< An array of pointers to pointers to MixerChannel  (s).
 };
 }   //< namespace Mixer
-}   //< namespace HMI
 }   //< namespace _Theater
 

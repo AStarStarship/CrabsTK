@@ -33,7 +33,7 @@ byte KeyEvent::getVKCode ()
     return key;
 }
 
-void KeyEvent::print (Terminal& io)
+void KeyEvent::print(_::Log& log)
 {
     io.prints ("KeyEvent: ");
 }
