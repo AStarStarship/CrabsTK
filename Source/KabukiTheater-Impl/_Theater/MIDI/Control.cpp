@@ -99,91 +99,91 @@ void Control::setCC  (int16_t newCC)
         midiCC = newCC;
 }
 
-void Control::setValue  (int16_t Value)
+void Control::setValue  (int value)
 {
-    if  (Value < minValue)
+    if  (value < minValue)
         midiValue = minValue;
     else
-    if  (Value > maxValue)
+    if  (value > maxValue)
         midiValue = maxValue;
     else
-        midiValue = Value;
+        midiValue = value;
 }
 
-void Control::setInitValue  (int16_t Value)
+void Control::setInitValue  (int value)
 {
 
-    if  (Value < 0)
+    if  (value < 0)
         initValue = 0;
     else
-    if  (Value > 127)
+    if  (value > 127)
         initValue = 127;
     else
-        initValue = Value;
+        initValue = value;
 }
 
-void Control::setMinValue  (int16_t Value)
+void Control::setMinValue  (int value)
 {
-    if  (Value < 0)
+    if  (value < 0)
         minValue = 0;
     else
-    if  (Value > 127)
+    if  (value > 127)
         minValue = 127;
     else
-        minValue = Value;
+        minValue = value;
 
     if  (midiValue < minValue)
         midiValue = minValue;
 }
 
-void Control::setMaxValue  (int16_t Value)
+void Control::setMaxValue  (int value)
 {
-    if  (Value < 0)
+    if  (value < 0)
         maxValue = 0;
     else
-    if  (Value > 127)
+    if  (value > 127)
         maxValue = 127;
     else
-        maxValue = Value;
+        maxValue = value;
 
     if  (midiValue > maxValue)
         midiValue = maxValue;
 }
 
-void Control::setLSBValue  (int16_t Value)
+void Control::setLSBValue  (int value)
 {
 
-    if  (Value < 0)
+    if  (value < 0)
         lsbValue = 0;
     else
-    if  (Value > 127)
+    if  (value > 127)
         lsbValue = 127;
     else
-        lsbValue = Value;
+        lsbValue = value;
 }
 
-void Control::setMSBValue  (int16_t Value)
+void Control::setMSBValue  (int value)
 {
 
-    if  (Value < 0)
+    if  (value < 0)
         msbValue = 0;
     else
-    if  (Value > 127)
+    if  (value > 127)
         msbValue = 127;
     else
-        msbValue = Value;
+        msbValue = value;
 }
 
-void Control::setChannel  (int16_t Value)
+void Control::setChannel  (int value)
 {
 
-    if  (Value < 0)
+    if  (value < 0)
         outputCh = 0;
     else
-    if  (Value > 16)
+    if  (value > 16)
         outputCh = 16;
     else
-        outputCh = Value;
+        outputCh = value;
 }
 
 void Control::toggle ()
@@ -224,7 +224,7 @@ const char* Control::toString ()
 
     char midiCcHeader[]  = "CC:    ",
          channelHeader[] = "Ch:    ",
-         valueHeader[]   = "Value: ",
+         valueHeader[]   = "value: ",
          minHeader[]     = "Min:   ",
          maxHeader[]     = "Max:   ",
          initHeader[]    = "Init:  ";

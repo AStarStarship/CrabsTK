@@ -20,101 +20,58 @@
 
 #pragma once
 
-
 #include <KabukiTheater-Config.hpp>
 
 namespace _Math {
 
-struct _KabukiTheater_ Vect_f
-/*< A 2D vector represented as float. */
+template<typename T>
+struct _KabukiTheater_ Vect2D
+/*< A 2D vector. */
 {
-    float x,        //< The x position.
-        y;          //< The y position.
+    T x,            //< The x component.
+        y;          //< The y component.
 
-    Vect_f ();
+    Vect2D ();
     /*< Constructs an uninitialized vector. */
 
-    Vect_f (float initX = 0.0f, float initY = 0.0f);
+    Vect2D (T x, T y);
     /*< Default constructor initializes with given component. */
 
-    void set (float newX = 0.0f, float newY = 0.0f);
+    Vect2D (const Vect2D<T>& v);
+    /*< Copy constructor. */
+
+    void set (T newX = 0, T newY = 0);
     /*< Sets the X and Y Values to the new Values. */
 
-    void set (const Vect_f& v);
-    /*< Sets the X and Y Values to the this Vect_f's X and Y. */
+    void set (const Vect2D& v);
+    /*< Sets the X and Y Values to the this Vect2D's X and Y. */
 
-    bool equals (const Vect_f& v) const;
-    /*< Compares this object's Vect_f to a and returns true if the two Positions are identical. */
+    bool equals (const Vect2D& v) const;
+    /*< Compares this object's Vect2D to a and returns true if the two Positions are identical. */
 
-    void swap (Vect_f v);
-    /*< Swaps this object's Vect_f with thiscomponent. */
+    void swap (Vect2D v);
+    /*< Swaps this object's Vect2D with thiscomponent. */
 
-    bool operator== (const Vect_f& p) const;
+    bool operator== (const Vect2D& v) const;
     /** C== Operator== overloader. */
 
-    bool operator!= (const Vect_f& p) const;
+    bool operator!= (const Vect2D& v) const;
     /** C== Operator!= overloader. */
 
-    Vect_f operator- (const Vect_f& p) const;
+    Vect2D operator- (const Vect2D& v) const;
     /** C== Operator- overloader. */
 
-    Vect_f operator+ (const Vect_f& p) const;
+    Vect2D operator+ (const Vect2D& v) const;
     /** C== Operator+ overloader. */
 
-    Vect_f& operator-= (const Vect_f& p);
+    Vect2D& operator-= (const Vect2D& v);
     /** C== Operator-= overloader. */
 
-    Vect_f& operator+= (const Vect_f& p);
+    Vect2D& operator+= (const Vect2D& v);
     /** C== Operator+= overloader. */
 
-    inline void print (Terminal& io);
-    /*< Prints this object to the terminal. */
-};
-
-struct _KabukiTheater_ Vect_d
-    /*< A 2D vector represented as double. */
-{
-    double x,          //< The x position.
-        y;          //< The y position.
-
-    Vect_d ();
-    /*< Constructs an uninitialized vector. */
-
-    Vect_d (double x = 0, double y = 0);
-    /*< Default constructor initializes with given component. */
-
-    void set (double newX = 0, double newY = 0);
-    /*< Sets the X and Y components to the new Values. */
-
-    void set (const Vect_d& v);
-    /*< Sets the X and Y components to the this Vect_d's X and Y. */
-
-    bool equals (const Vect_d& v) const;
-    /*< Compares this object's Vect_d to a and returns true if the two Positions are identical. */
-
-    void swap (Vect_d v);
-    /*< Swaps this object's Vect_d with thiscomponent. */
-
-    bool operator== (const Vect_d& p) const;
-    /** C== Operator== overloader. */
-
-    bool operator!= (const Vect_d& p) const;
-    /** C== Operator!= overloader. */
-
-    Vect_d operator- (const Vect_d& p) const;
-    /** C== Operator- overloader. */
-
-    Vect_d operator+ (const Vect_d& p) const;
-    /** C== Operator+ overloader. */
-
-    Vect_d& operator-= (const Vect_d& p);
-    /** C== Operator-= overloader. */
-
-    Vect_d& operator+= (const Vect_d& p);
-    /** C== Operator+= overloader. */
-
-    inline void print (Terminal& io);
-    /*< Prints this object to the terminal. */
+    void print () const;
+    /*< Prints this object to the stdout. */
 };
 
 }   //< _Math

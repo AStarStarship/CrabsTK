@@ -54,7 +54,7 @@ const char* Device::SetState (byte Value)
     return 0;
 }
 
-const char* Device::Do (const char* Query, byte Index, Roombot* Bot)
+const char* Device::op (_::Terminal* io, byte index)
 {
     switch (Index)
     {

@@ -91,7 +91,7 @@ const char* ControlSurface::SetState (byte Value)
     return 0;
 }
 
-const char* ControlSurface::Do (const char* Query, byte Index, Roombot* Bot)
+const char* ControlSurface::op (_::Terminal* io, byte index)
 {
     switch (Index)
     {

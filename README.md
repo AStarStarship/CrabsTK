@@ -16,15 +16,14 @@ The primary development environment is Visual Studio using [Symmetry Station](ht
 ## SDK Modules
 | Name     | Description |
 |:--------:|:------------|
+| __       | System core, Windowing, IO, and Networking.|
 | _App     | Application framework.|
 | _Audio   | Audio.|
 | _File    | Files and archives.|
 | _G       | Graphics engine.|
 | _GUI     | Graphical User Interfaces.|
 | _Id      | Identification.|
-| _IO      | Input/Output: Audio and Serial.|
 | _Math    | Math and geometry.|
-| _Net     | Networking.|
 | _Theater | Music, lighting, and creativity.|
 
 ## License

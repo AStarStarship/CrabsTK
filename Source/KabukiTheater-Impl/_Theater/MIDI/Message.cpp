@@ -44,8 +44,7 @@ void Message::setTimestamp  (uint64_t newTimestamp)
 
 // Constructor.
 InputHeader::InputHeader  (HMIDIIn devHandle, LPSTR buffer, uint32_t length, bool &errorFlag)
-
-   :deviceHandle  (devHandle)
+:   deviceHandle  (devHandle)
 {
     // Initialize header
     //midiHeader.lpData         = buffer;

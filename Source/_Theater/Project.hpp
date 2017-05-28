@@ -46,7 +46,7 @@ class _KabukiTheater_ Project
     int getNumControlSurfaces ();
     /*< Gets the num_control_surfaces. */
 
-    void print (I2P::Terminal& io);
+    void print ();
     /*< Prints this object to the terminal. */
 
     private:

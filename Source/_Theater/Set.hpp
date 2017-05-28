@@ -44,7 +44,7 @@ class _KabukiTheater_ Set
     int getNumProjects ();
     /*< Gets the number of projects in the set. */
 
-    void print (I2P::Terminal& io);
+    void print ();
     /*< Prints this object to the terminal. */
 
     private:

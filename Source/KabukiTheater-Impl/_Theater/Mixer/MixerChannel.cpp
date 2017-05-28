@@ -19,14 +19,14 @@
 */
 
 #include <_Theater/Mixer/MixerChannel.hpp>
-#include <_Theater/HMI/Label.hpp>
+#include <_HMI/HMIComponent.hpp>
 
 namespace _Theater { namespace Mixer {
 
 using namespace _Theater;
 
 MixerChannel::MixerChannel(const char *initName):
-    labelText(HMI::Label::format(initName)),
+    labelText(HMI::HMIComponent::format(initName)),
     volValue(0),
     panValue(0),
     muteValue(0),

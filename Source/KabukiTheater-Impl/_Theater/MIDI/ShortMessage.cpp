@@ -224,7 +224,7 @@ const char* ShortMessage::SetState (byte Value)
     return 0;
 }
 
-const char* ShortMessage::Do (const char* Query, byte Index, Roombot* Bot)
+const char* ShortMessage::op (_::Terminal* io, byte index)
 {
     switch (Index)
     {

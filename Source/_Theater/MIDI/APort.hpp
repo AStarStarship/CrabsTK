@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../Source/KabukiTheater/_Theater/MIDI/Port.hpp
+    @file    /.../Source/KabukiTheater/_Theater/MIDI/APort.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -109,9 +109,7 @@ class _KabukiTheater_ APort
         numMsgs,                    //< The number of messages in the queue.
         readIndex,                  //< The head of the queue.
         queueIndex;                 //< The tail of the queue.
-
     Message** queue;                //< The MIDI message queue.
-    
     State currentState;             //< The currentState of this port.
 };
 

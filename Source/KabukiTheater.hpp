@@ -1,6 +1,6 @@
 /** Kabuki Theater
     @version 0.9
-    @file    /.../Kabuki_Toolkit/KabukitToolkit.hpp
+    @file    /.../KabukiTheater/KabukitToolkit.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 

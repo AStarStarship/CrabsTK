@@ -3,9 +3,9 @@
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
-                            All right reserved  (R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -20,7 +20,6 @@
 
 #pragma once
 
-
 #include <KabukiTheater-Config.hpp>
 
 namespace _Theater { namespace MIDI {
@@ -32,7 +31,9 @@ class _KabukiTheater_ ControlSurface
 {
       public:
 	
-    static const int16_t MaxTempo = 999;         	//< The maximum tempo allowed.
+    enum {
+		MaxTempo = 999; 	//< The maximum tempo allowed.
+	};
 	
     ControlSurface ();
     //< Default contrustor
@@ -40,33 +41,33 @@ class _KabukiTheater_ ControlSurface
     ~ControlSurface ();
     //< Default destructor
 
-    int16_t GetCommonChannel ();
-    //< Gets the common MIDI channel  (0 for all channels).
+    int16_t getCommonChannel ();
+    //< Gets the common MIDI channel (0 for all channels).
 
-    int16_t GetKeyboardChannel ();
+    int16_t getKeyboardChannel ();
     //< Gets the common keyboard MIDI channel.
 
-    int16_t GetDrumsChannel ();
+    int16_t getDrumsChannel ();
     //< Gets the common drums MIDI channel.
 
-    void SetCommonChannel  (int16_t thisChannel);
+    void setCommonChannel (int16_t thisChannel);
     //< Sets the common MIDI channel.
 
-    void SetKeyboardChannel  (int16_t thisChannel);
+    void setKeyboardChannel (int16_t thisChannel);
     //< Sets the common keyboard MIDI channel.
 
-    void SetDrumsChannel  (int16_t thisChannel);
+    void setDrumsChannel (int16_t thisChannel);
     //< Sets the common drums MIDI channel.
     
-    virtual const char* op (_::Terminal* io, byte index);
+    const Member* op (_::Terminal* io, byte index) override;
     /*< Inter-process subroutines. */
 
-    const char* toString () const;
-    //< Gets a text represenation of this object.
+    void print () const;
+    //< Prints this object to the stdout.
  	
     private:
 
-    int16_t commonChannel,      //< The common MIDI Channel  (0)
+    int16_t commonChannel,      //< The common MIDI Channel (0)
         keyboardChannel,        //< The keyboard MIDI out channel
         drumsChannel;           //< The drums MIDI out channel
 };

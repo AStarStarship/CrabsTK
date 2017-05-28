@@ -18,18 +18,18 @@
         limitations under the License.
 */
  
-#include <_Theater.hpp>
+#include <_Theater/Project.hpp>
 #include <CppUTest\CommandLineTestRunner.h>
 #include <CppUTest\TestHarness.h>
 #include <stdio.h>
 
 using namespace _Theater;
 
-TEST_GROUP (_ProjectTests)
+TEST_GROUP (_Theater_Project_Tests)
 {
     void setup ()
     {
-        // Init stuff
+        printf ("\n\nTesting _Theater::Project class...\n\n");
     }
 
     void teardown ()
@@ -39,7 +39,6 @@ TEST_GROUP (_ProjectTests)
     }
 };
 
-TEST (_ProjectTests, ProjectTests1)
+TEST (_Theater_Project_Tests, ProjectTests1)
 {
 }
-

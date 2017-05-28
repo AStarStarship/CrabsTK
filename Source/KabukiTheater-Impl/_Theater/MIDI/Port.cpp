@@ -161,7 +161,7 @@ const char* Port::SetState (byte Value)
     return 0;
 }
 
-const char* Port::Do (const char* Query, byte Index, Roombot* Bot)
+const char* Port::op (_::Terminal* io, byte index)
 {
     switch (Index)
     {

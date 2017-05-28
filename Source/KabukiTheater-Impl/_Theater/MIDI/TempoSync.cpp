@@ -54,7 +54,7 @@ const char* TempoSync::SetState (byte Value)
     return 0;
 }
 
-const char* TempoSync::Do (const char* Query, byte Index, Roombot* Bot)
+const char* TempoSync::op (_::Terminal* io, byte index)
 {
     switch (Index)
     {

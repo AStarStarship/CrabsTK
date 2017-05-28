@@ -51,7 +51,7 @@ class _KabukiTheater_ MixerPage
     MixerChannel *getChannel (int index);
     //< Gets a pointer to the channel[atThisIndex].
     
-    void print (I2P::Terminal& io);
+    void print ();
     /*< Prints this object to a terminal. */
 
     private:

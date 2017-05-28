@@ -166,7 +166,7 @@ const char* String::SetState (byte Value)
     return 0;
 }
 
-const char* String::Do (const char* Query, byte Index, Roombot* Bot)
+const char* String::op (_::Terminal* io, byte index)
 {
     switch (Index)
     {
