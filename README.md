@@ -16,7 +16,7 @@ The primary development environment is Visual Studio using [Symmetry Station](ht
 ## SDK Modules
 | Name     | Description |
 |:--------:|:------------|
-| __       | System core, Windowing, IO, and Networking.|
+| __       | System core, IO, and Networking.|
 | _App     | Application framework.|
 | _Audio   | Audio.|
 | _File    | Files and archives.|

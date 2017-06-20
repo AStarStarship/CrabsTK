@@ -1,5 +1,8 @@
 # Kabuki Theater Source Root
-Modules names start with underscores in order to reduce typing. You may delete unused modules if that does not break your dependencies.
+Source code is divided in between public facing headers in the 
+"/.../Source/KabukiTheater" folder and implementation files in the 
+"/.../Source/KabukiTheater-Impl" folder. One caveat of C++ is that compiled 
+libraries can not have dependencies on other libraries.
 
 ## Project Organization
 The primary development environment is Visual Studio using [Symmetry Station](https://github.com/Kabuki-Toolkit/SymmetryStation). Please see the [Symmetry Station Quick Start Guide](https://github.com/Kabuki-Toolkit/SymmetryStation/wiki/Quick-Start-Guide). Each folder in the project should have ReadMe.md file in it that should tell you what you need to know. Source header files are separated from their precompiled .lib and .dll files. Development instructions are in the ReadMe.md files in the /.../Source/KabukiTheater-Impl/ folder and subfolders. If you choose to not use Symmetry Station, you may need to update the projects libaries to the most recent updates that have not been synced across projects yet.
@@ -32,4 +35,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-

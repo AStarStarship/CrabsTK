@@ -1,7 +1,7 @@
 /** Kabuki Theater
-    @file    /.../Source-Impl/_Entity/Account.hpp
+    @file    /.../Source-Impl/_Entity/Account.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
 
                             All right reserved (R).
 
@@ -18,7 +18,8 @@
         limitations under the License.
 */
 
-#include <KabukiTheater.hpp>
+#include <KabukiTheater.h>
+
 #include <CppUTest\CommandLineTestRunner.h>
 #include <CppUTest\TestHarness.h>
 

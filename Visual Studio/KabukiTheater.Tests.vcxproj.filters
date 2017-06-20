@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\Source\KabukiTheater-Impl\TESTS\KabukiTheaterTests.cpp" />
+    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\main.cpp">
+      <Filter>_</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\RecordTableTests.cpp">
+      <Filter>_</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\TerminalAndMirrorTests.cpp">
+      <Filter>_</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\UtilsTests.cpp">
+      <Filter>_</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\BookTests.cpp">
+      <Filter>_</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\ConsoleTest.cpp">
+      <Filter>_</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\RoomTests.cpp">
+      <Filter>_</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Source\KabukiTheater-Impl\TESTS\ReadMe.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="_">
+      <UniqueIdentifier>{c87d6105-8546-4a8c-8d95-d1b5acb8a9f3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

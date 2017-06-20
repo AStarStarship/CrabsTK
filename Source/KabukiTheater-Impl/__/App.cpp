@@ -80,7 +80,7 @@ void App::redraw ()
 
 }
 
-string App::toString ()
+void App::print ()
 {
-    return "";
+    printf ("");
 }

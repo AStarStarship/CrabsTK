@@ -1,15 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KabukiSDK-MinGW-UnitTests", "KabukiSDK-MinGW-Console.vcxproj", "{67848E0E-E323-4584-B88C-A0D1418F4E77}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KabukiTheater.Tests", "KabukiTheater.Tests.vcxproj", "{67848E0E-E323-4584-B88C-A0D1418F4E77}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KabukiSDK-MinGW-Library", "KabukiSDK-MinGW-Library.vcxproj", "{3FBC20A1-E168-4BCD-B05A-922FACDB7B9E}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChineseRoom-MinGW-Library", "ChineseRoom-MinGW-Library.vcxproj", "{EFBED12B-932C-4D43-8F9F-A2AF5B5F04BA}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChineseRoom-MinGW-UnitTests", "ChineseRoom-MinGW-UnitTests.vcxproj", "{0622106C-4EC9-4313-B828-2547BC269809}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KabukiTheater.Library", "KabukiTheater.Library.vcxproj", "{3FBC20A1-E168-4BCD-B05A-922FACDB7B9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,22 +31,6 @@ Global
 		{3FBC20A1-E168-4BCD-B05A-922FACDB7B9E}.Release|x64.Build.0 = Release|x64
 		{3FBC20A1-E168-4BCD-B05A-922FACDB7B9E}.Release|x86.ActiveCfg = Release|Win32
 		{3FBC20A1-E168-4BCD-B05A-922FACDB7B9E}.Release|x86.Build.0 = Release|Win32
-		{EFBED12B-932C-4D43-8F9F-A2AF5B5F04BA}.Debug|x64.ActiveCfg = Debug|x64
-		{EFBED12B-932C-4D43-8F9F-A2AF5B5F04BA}.Debug|x64.Build.0 = Debug|x64
-		{EFBED12B-932C-4D43-8F9F-A2AF5B5F04BA}.Debug|x86.ActiveCfg = Debug|Win32
-		{EFBED12B-932C-4D43-8F9F-A2AF5B5F04BA}.Debug|x86.Build.0 = Debug|Win32
-		{EFBED12B-932C-4D43-8F9F-A2AF5B5F04BA}.Release|x64.ActiveCfg = Release|x64
-		{EFBED12B-932C-4D43-8F9F-A2AF5B5F04BA}.Release|x64.Build.0 = Release|x64
-		{EFBED12B-932C-4D43-8F9F-A2AF5B5F04BA}.Release|x86.ActiveCfg = Release|Win32
-		{EFBED12B-932C-4D43-8F9F-A2AF5B5F04BA}.Release|x86.Build.0 = Release|Win32
-		{0622106C-4EC9-4313-B828-2547BC269809}.Debug|x64.ActiveCfg = Debug|x64
-		{0622106C-4EC9-4313-B828-2547BC269809}.Debug|x64.Build.0 = Debug|x64
-		{0622106C-4EC9-4313-B828-2547BC269809}.Debug|x86.ActiveCfg = Debug|Win32
-		{0622106C-4EC9-4313-B828-2547BC269809}.Debug|x86.Build.0 = Debug|Win32
-		{0622106C-4EC9-4313-B828-2547BC269809}.Release|x64.ActiveCfg = Release|x64
-		{0622106C-4EC9-4313-B828-2547BC269809}.Release|x64.Build.0 = Release|x64
-		{0622106C-4EC9-4313-B828-2547BC269809}.Release|x86.ActiveCfg = Release|Win32
-		{0622106C-4EC9-4313-B828-2547BC269809}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

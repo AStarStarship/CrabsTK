@@ -22,54 +22,29 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_TEXTURESAVER_HPP
-#define SFML_TEXTURESAVER_HPP
+#pragma once
 
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
 #include <SFML/Graphics/GLCheck.hpp>
 
+namespace _G { namespace priv {
 
-namespace _G
-{
-namespace priv
-{
-////////////////////////////////////////////////////////////
-/// @brief Automatic wrapper for saving and restoring the current texture binding
-///
-////////////////////////////////////////////////////////////
 class TextureSaver
+/** Automatic wrapper for saving and restoring the current texture binding. */
 {
-public:
+    public:
 
-    ////////////////////////////////////////////////////////////
-    /// @brief Default constructor
-    ///
-    /// The current texture binding is saved.
-    ///
-    ////////////////////////////////////////////////////////////
     TextureSaver();
-
-    ////////////////////////////////////////////////////////////
-    /// @brief Destructor
-    ///
-    /// The previous texture binding is restored.
-    ///
-    ////////////////////////////////////////////////////////////
+    /*< Default constructor
+        The current texture binding is saved. */
+    
     ~TextureSaver();
+    /*< Destructor
+        The previous texture binding is restored. */
 
-private:
+    private:
 
-    ////////////////////////////////////////////////////////////
-    // Member data
-    ////////////////////////////////////////////////////////////
     GLint m_textureBinding; ///< Texture binding to restore
 };
 
-} // namespace priv
-
-} // namespace _G
-
-
-#endif // SFML_TEXTURESAVER_HPP
+} //< priv
+} //< _G
