@@ -99,7 +99,7 @@ class RealTimeApp: public App
 		*/
 	}
 
-	virtual void draw (const _G::Cell& c) = 0;
+	virtual void draw (const _g::Cell& c) = 0;
 };
 }   //< __
  

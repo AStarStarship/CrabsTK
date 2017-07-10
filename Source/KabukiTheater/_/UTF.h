@@ -11,12 +11,12 @@
 // subject to the following restrictions:
 //
 // 1. The origin of this software must not be misrepresented;
-//    you must not claim that you wrote the original software.
-//    If you use this software in a product, an acknowledgment
-//    in the product documentation would be appreciated but is not required.
+//  you must not claim that you wrote the original software.
+//  If you use this software in a product, an acknowledgment
+//  in the product documentation would be appreciated but is not required.
 //
 // 2. Altered source versions must be plainly marked as such,
-//    and must not be misrepresented as being the original software.
+//  and must not be misrepresented as being the original software.
 //
 // 3. This notice may not be removed or altered from any source distribution.
 //
@@ -25,18 +25,20 @@
 #ifndef CHINESEROOM_UTF_H
 #define CHINESEROOM_UTF_H
 
-#include "Config.h"
+#include "config.h"
+
+#if USING_UTF
 
 namespace _ {
 
 template <uint N>
 class UTF;
-/*< Utility class providing generic functions for UTF conversions.
+/** Utility class providing generic functions for UTF conversions.
     @ingroup _
     
     _::UTF is a low-level, generic interface for counting, iterating,
     encoding and decoding Unicode characters and strings. It is able
-    to handle ANSI, wide, latin-1, UTF-8, UTF-16 and UTF-32 encodings.
+    to handle ANSI, wide, Latin-1, UTF-8, UTF-16 and UTF-32 encodings.
 
     _::UTF<X> functions are all static, these classes are not meant to
     be instantiated. All the functions are template, so that you
@@ -49,13 +51,13 @@ class UTF;
 
 template <>
 class UTF<8>
-/*< Specialization of the UTF template for UTF-8. */
+/** Specialization of the UTF template for UTF-8. */
 {
     public:
 
     template <typename In>
     static In decode (In begin, In end, uint32_t& output, uint32_t replacement = 0)
-    /*< Decode a single UTF-8 character
+    /** Decode a single UTF-8 character
        
         Decoding a character means finding its unique 32-bits
         code (called the codepoint) in the Unicode standard.
@@ -112,7 +114,7 @@ class UTF<8>
 
     template <typename Out>
     static Out encode (uint32_t input, Out output, byte replacement = 0)
-    /*< Encode a single UTF-8 character
+    /** Encode a single UTF-8 character
        
         Encoding a character means converting a unique 32-bits
         code (called the codepoint) in the target encoding, UTF-8.
@@ -166,7 +168,7 @@ class UTF<8>
 
     template <typename In>
     static In next (In begin, In end)
-    /*< Advance to the next UTF-8 character
+    /** Advance to the next UTF-8 character
        
         This function is necessary for multi-elements encodings, as
         a single character may use more than 1 storage element.
@@ -182,7 +184,7 @@ class UTF<8>
 
     template <typename In>
     static std::size_t count (In begin, In end)
-    /*< Count the number of characters of a UTF-8 sequence
+    /** Count the number of characters of a UTF-8 sequence
        
         This function is necessary for multi-elements encodings, as
         a single character may use more than 1 storage element, thus the
@@ -205,7 +207,7 @@ class UTF<8>
 
     template <typename In, typename Out>
     static Out fromANSI (In begin, In end, Out output, const std::locale& locale = std::locale ())
-    /*< Convert an ANSI characters range to UTF-8
+    /** Convert an ANSI characters range to UTF-8
        
         The current global locale will be used by default, unless you
         pass a custom one in the \a locale parameter.
@@ -228,7 +230,7 @@ class UTF<8>
 
     template <typename In, typename Out>
     static Out fromWide (In begin, In end, Out output)
-    /*< Convert a wide characters range to UTF-8
+    /** Convert a wide characters range to UTF-8
        
         @param begin  Iterator pointing to the beginning of the input sequence
         @param end    Iterator pointing to the end of the input sequence
@@ -247,7 +249,7 @@ class UTF<8>
 
     template <typename In, typename Out>
     static Out fromLatin1 (In begin, In end, Out output)
-    /*< Convert a latin-1 (ISO-5589-1) characters range to UTF-8
+    /** Convert a Latin-1 (ISO-5589-1) characters range to UTF-8
        
         @param begin  Iterator pointing to the beginning of the input sequence
         @param end    Iterator pointing to the end of the input sequence
@@ -265,7 +267,7 @@ class UTF<8>
 
     template <typename In, typename Out>
     static Out toANSI (In begin, In end, Out output, char replacement = 0, const std::locale& locale = std::locale ())
-    /*< Convert an UTF-8 characters range to ANSI characters
+    /** Convert an UTF-8 characters range to ANSI characters
        
         The current global locale will be used by default, unless you
         pass a custom one in the \a locale parameter.
@@ -290,7 +292,7 @@ class UTF<8>
 
     template <typename In, typename Out>
     static Out toWide (In begin, In end, Out output, wchar_t replacement = 0)
-    /*< Convert an UTF-8 characters range to wide characters
+    /** Convert an UTF-8 characters range to wide characters
        
         @param begin       Iterator pointing to the beginning of the input sequence
         @param end         Iterator pointing to the end of the input sequence
@@ -311,7 +313,7 @@ class UTF<8>
 
     template <typename In, typename Out>
     static Out toLatin1 (In begin, In end, Out output, char replacement = 0)
-    /*< Convert an UTF-8 characters range to latin-1 (ISO-5589-1) characters
+    /** Convert an UTF-8 characters range to Latin-1 (ISO-5589-1) characters
        
         @param begin       Iterator pointing to the beginning of the input sequence
         @param end         Iterator pointing to the end of the input sequence
@@ -334,7 +336,7 @@ class UTF<8>
 
     template <typename In, typename Out>
     static Out toUTF8 (In begin, In end, Out output)
-    /*< Convert a UTF-8 characters range to UTF-8
+    /** Convert a UTF-8 characters range to UTF-8
        
         This functions does nothing more than a direct copy
         it is defined only to provide the same interface as other
@@ -352,7 +354,7 @@ class UTF<8>
 
     template <typename In, typename Out>
     static Out toUTF16 (In begin, In end, Out output)
-    /*< Convert a UTF-8 characters range to UTF-16
+    /** Convert a UTF-8 characters range to UTF-16
        
         @param begin  Iterator pointing to the beginning of the input sequence
         @param end    Iterator pointing to the end of the input sequence
@@ -372,7 +374,7 @@ class UTF<8>
 
     template <typename In, typename Out>
     static Out toUTF32 (In begin, In end, Out output)
-    /*< Convert a UTF-8 characters range to UTF-32
+    /** Convert a UTF-8 characters range to UTF-32
        
         @param begin  Iterator pointing to the beginning of the input sequence
         @param end    Iterator pointing to the end of the input sequence
@@ -393,13 +395,13 @@ class UTF<8>
 
 template <>
 class UTF<16>
-/*< Specialization of the UTF template for UTF-16. */
+/** Specialization of the UTF template for UTF-16. */
 {
     public:
 
     template <typename In>
     static In decode (In begin, In end, uint32_t& output, uint32_t replacement = 0)
-    /*< Decode a single UTF-16 character
+    /** Decode a single UTF-16 character
        
         Decoding a character means finding its unique 32-bits
         code (called the codepoint) in the Unicode standard.
@@ -422,7 +424,7 @@ class UTF<16>
                 if ((second >= 0xDC00) && (second <= 0xDFFF))
                 {
                     // The second element is valid: convert the two elements to a UTF-32 character
-                    output = static_cast<uint32_t> (((first - 0xD800) << 10) + (second - 0xDC00) + 0x0010000);
+                    output = static_cast<uint32_t> (( (first - 0xD800) << 10) + (second - 0xDC00) + 0x0010000);
                 }
                 else
                 {
@@ -448,7 +450,7 @@ class UTF<16>
 
     template <typename Out>
     static Out encode (uint32_t input, Out output, uint16_t replacement = 0)
-    /*< Encode a single UTF-16 character
+    /** Encode a single UTF-16 character
        
         Encoding a character means converting a unique 32-bits
         code (called the codepoint) in the target encoding, UTF-16.
@@ -493,7 +495,7 @@ class UTF<16>
 
     template <typename In>
     static In next (In begin, In end)
-    /*< Advance to the next UTF-16 character
+    /** Advance to the next UTF-16 character
        
         This function is necessary for multi-elements encodings, as
         a single character may use more than 1 storage element.
@@ -509,7 +511,7 @@ class UTF<16>
 
     template <typename In>
     static std::size_t count (In begin, In end)
-    /*< Count the number of characters of a UTF-16 sequence
+    /** Count the number of characters of a UTF-16 sequence
        
         This function is necessary for multi-elements encodings, as
         a single character may use more than 1 storage element, thus the
@@ -532,7 +534,7 @@ class UTF<16>
 
     template <typename In, typename Out>
     static Out fromANSI (In begin, In end, Out output, const std::locale& locale = std::locale ())
-    /*< Convert an ANSI characters range to UTF-16
+    /** Convert an ANSI characters range to UTF-16
        
         The current global locale will be used by default, unless you
         pass a custom one in the \a locale parameter.
@@ -555,7 +557,7 @@ class UTF<16>
 
     template <typename In, typename Out>
     static Out fromWide (In begin, In end, Out output)
-    /*< Convert a wide characters range to UTF-16
+    /** Convert a wide characters range to UTF-16
        
         @param begin  Iterator pointing to the beginning of the input sequence
         @param end    Iterator pointing to the end of the input sequence
@@ -574,7 +576,7 @@ class UTF<16>
 
     template <typename In, typename Out>
     static Out fromLatin1 (In begin, In end, Out output)
-    /*< Convert a latin-1 (ISO-5589-1) characters range to UTF-16
+    /** Convert a Latin-1 (ISO-5589-1) characters range to UTF-16
        
         @param begin  Iterator pointing to the beginning of the input sequence
         @param end    Iterator pointing to the end of the input sequence
@@ -589,7 +591,7 @@ class UTF<16>
 
     template <typename In, typename Out>
     static Out toANSI (In begin, In end, Out output, char replacement = 0, const std::locale& locale = std::locale ())
-    /*< Convert an UTF-16 characters range to ANSI characters
+    /** Convert an UTF-16 characters range to ANSI characters
        
         The current global locale will be used by default, unless you
         pass a custom one in the \a locale parameter.
@@ -614,7 +616,7 @@ class UTF<16>
 
     template <typename In, typename Out>
     static Out toWide (In begin, In end, Out output, wchar_t replacement = 0)
-    /*< Convert an UTF-16 characters range to wide characters
+    /** Convert an UTF-16 characters range to wide characters
        
         @param begin       Iterator pointing to the beginning of the input sequence
         @param end         Iterator pointing to the end of the input sequence
@@ -635,7 +637,7 @@ class UTF<16>
 
     template <typename In, typename Out>
     static Out toLatin1 (In begin, In end, Out output, char replacement = 0)
-    /*< Convert an UTF-16 characters range to latin-1 (ISO-5589-1) characters
+    /** Convert an UTF-16 characters range to Latin-1 (ISO-5589-1) characters
        
         @param begin       Iterator pointing to the beginning of the input sequence
         @param end         Iterator pointing to the end of the input sequence
@@ -657,7 +659,7 @@ class UTF<16>
 
     template <typename In, typename Out>
     static Out toUTF8 (In begin, In end, Out output)
-    /*< Convert a UTF-16 characters range to UTF-8
+    /** Convert a UTF-16 characters range to UTF-8
        
         @param begin  Iterator pointing to the beginning of the input sequence
         @param end    Iterator pointing to the end of the input sequence
@@ -677,7 +679,7 @@ class UTF<16>
 
     template <typename In, typename Out>
     static Out toUTF16 (In begin, In end, Out output)
-    /*< Convert a UTF-16 characters range to UTF-16
+    /** Convert a UTF-16 characters range to UTF-16
        
         This functions does nothing more than a direct copy
         it is defined only to provide the same interface as other
@@ -695,7 +697,7 @@ class UTF<16>
 
     template <typename In, typename Out>
     static Out toUTF32 (In begin, In end, Out output)
-    /*< Convert a UTF-16 characters range to UTF-32
+    /** Convert a UTF-16 characters range to UTF-32
        
         @param begin  Iterator pointing to the beginning of the input sequence
         @param end    Iterator pointing to the end of the input sequence
@@ -716,13 +718,13 @@ class UTF<16>
 
 template <>
 class UTF<32>
-/*< Specialization of the UTF template for UTF-32. */
+/** Specialization of the UTF template for UTF-32. */
 {
     public:
 
     template <typename In>
     static In decode (In begin, In end, uint32_t& output, uint32_t replacement = 0)
-    /*< Decode a single UTF-32 character
+    /** Decode a single UTF-32 character
        
         Decoding a character means finding its unique 32-bits
         code (called the codepoint) in the Unicode standard.
@@ -741,7 +743,7 @@ class UTF<32>
 
     template <typename Out>
     static Out encode (uint32_t input, Out output, uint32_t replacement = 0)
-    /*< Encode a single UTF-32 character
+    /** Encode a single UTF-32 character
        
         Encoding a character means converting a unique 32-bits
         code (called the codepoint) in the target encoding, UTF-32.
@@ -759,7 +761,7 @@ class UTF<32>
 
     template <typename In>
     static In next (In begin, In end)
-    /*< Advance to the next UTF-32 character
+    /** Advance to the next UTF-32 character
        
         This function is trivial for UTF-32, which can store
         every character in a single storage element.
@@ -774,7 +776,7 @@ class UTF<32>
 
     template <typename In>
     static std::size_t count (In begin, In end)
-    /*< Count the number of characters of a UTF-32 sequence
+    /** Count the number of characters of a UTF-32 sequence
        
         This function is trivial for UTF-32, which can store
         every character in a single storage element.
@@ -789,7 +791,7 @@ class UTF<32>
 
     template <typename In, typename Out>
     static Out fromANSI (In begin, In end, Out output, const std::locale& locale = std::locale ())
-    /*< Convert an ANSI characters range to UTF-32
+    /** Convert an ANSI characters range to UTF-32
        
         The current global locale will be used by default, unless you
         pass a custom one in the \a locale parameter.
@@ -809,7 +811,7 @@ class UTF<32>
 
     template <typename In, typename Out>
     static Out fromWide (In begin, In end, Out output)
-    /*< Convert a wide characters range to UTF-32
+    /** Convert a wide characters range to UTF-32
        
         @param begin  Iterator pointing to the beginning of the input sequence
         @param end    Iterator pointing to the end of the input sequence
@@ -825,7 +827,7 @@ class UTF<32>
 
     template <typename In, typename Out>
     static Out fromLatin1 (In begin, In end, Out output)
-    /*< Convert a latin-1 (ISO-5589-1) characters range to UTF-32
+    /** Convert a Latin-1 (ISO-5589-1) characters range to UTF-32
        
         @param begin  Iterator pointing to the beginning of the input sequence
         @param end    Iterator pointing to the end of the input sequence
@@ -840,7 +842,7 @@ class UTF<32>
 
     template <typename In, typename Out>
     static Out toANSI (In begin, In end, Out output, char replacement = 0, const std::locale& locale = std::locale ())
-    /*< Convert an UTF-32 characters range to ANSI characters
+    /** Convert an UTF-32 characters range to ANSI characters
        
         The current global locale will be used by default, unless you
         pass a custom one in the \a locale parameter.
@@ -861,7 +863,7 @@ class UTF<32>
 
     template <typename In, typename Out>
     static Out toWide (In begin, In end, Out output, wchar_t replacement = 0)
-    /*< Convert an UTF-32 characters range to wide characters
+    /** Convert an UTF-32 characters range to wide characters
        
         @param begin       Iterator pointing to the beginning of the input sequence
         @param end         Iterator pointing to the end of the input sequence
@@ -878,7 +880,7 @@ class UTF<32>
 
     template <typename In, typename Out>
     static Out toLatin1 (In begin, In end, Out output, char replacement = 0)
-    /*< Convert an UTF-16 characters range to latin-1 (ISO-5589-1) characters
+    /** Convert an UTF-16 characters range to Latin-1 (ISO-5589-1) characters
        
         @param begin       Iterator pointing to the beginning of the input sequence
         @param end         Iterator pointing to the end of the input sequence
@@ -900,7 +902,7 @@ class UTF<32>
 
     template <typename In, typename Out>
     static Out toUTF8 (In begin, In end, Out output)
-    /*< Convert a UTF-32 characters range to UTF-8
+    /** Convert a UTF-32 characters range to UTF-8
        
         @param begin  Iterator pointing to the beginning of the input sequence
         @param end    Iterator pointing to the end of the input sequence
@@ -916,7 +918,7 @@ class UTF<32>
 
     template <typename In, typename Out>
     static Out toUTF16 (In begin, In end, Out output)
-    /*< Convert a UTF-32 characters range to UTF-16
+    /** Convert a UTF-32 characters range to UTF-16
        
         @param begin  Iterator pointing to the beginning of the input sequence
         @param end    Iterator pointing to the end of the input sequence
@@ -932,7 +934,7 @@ class UTF<32>
 
     template <typename In, typename Out>
     static Out toUTF32 (In begin, In end, Out output)
-    /*< Convert a UTF-32 characters range to UTF-32
+    /** Convert a UTF-32 characters range to UTF-32
        
         This functions does nothing more than a direct copy
         it is defined only to provide the same interface as other
@@ -950,7 +952,7 @@ class UTF<32>
 
     template <typename In>
     static uint32_t decodeANSI (In input, const std::locale& locale = std::locale ())
-    /*< Decode a single ANSI character to UTF-32
+    /** Decode a single ANSI character to UTF-32
        
         This function does not exist in other specializations
         of _::UTF<>, it is defined for convenience (it is used by
@@ -970,7 +972,7 @@ class UTF<32>
  (defined (__GLIBCPP__) || defined (__GLIBCXX__)) &&     /* ... and standard library is glibc++ ... */ \
       ! (defined (__SGI_STL_PORT) || defined (_STLPORT_VERSION)) /* ... and STLPort is not used on top of it */
 
-        (void)locale; // to avoid warnings
+ (void)locale; // to avoid warnings
 
         wchar_t character = 0;
         mbtowc (&character, &input, 1);
@@ -1001,7 +1003,7 @@ class UTF<32>
 
     template <typename Out>
     static Out encodeANSI (uint32_t codepoint, Out output, char replacement = 0, const std::locale& locale = std::locale ())
-    /*< Encode a single UTF-32 character to ANSI
+    /** Encode a single UTF-32 character to ANSI
        
         This function does not exist in other specializations
         of _::UTF<>, it is defined for convenience (it is used by
@@ -1023,7 +1025,7 @@ class UTF<32>
  (defined (__GLIBCPP__) || defined (__GLIBCXX__)) &&     /* ... and standard library is glibc++ ... */ \
       ! (defined (__SGI_STL_PORT) || defined (_STLPORT_VERSION)) /* ... and STLPort is not used on top of it */
 
-        (void)locale; // to avoid warnings
+ (void)locale; // to avoid warnings
 
         char character = 0;
         if (wctomb (&character, static_cast<wchar_t> (codepoint)) >= 0)
@@ -1048,7 +1050,7 @@ class UTF<32>
 
     template <typename Out>
     static Out encodeWide (uint32_t codepoint, Out output, wchar_t replacement = 0)
-    /*< Encode a single UTF-32 character to wide
+    /** Encode a single UTF-32 character to wide
        
         This function does not exist in other specializations
         of _::UTF<>, it is defined for convenience (it is used by
@@ -1098,5 +1100,5 @@ using UTF16 = UTF<16>;
 using UTF32 = UTF<32>;
 
 }       //< namespace _
-
-#endif  //< CHINESEROOM__H
+#endif  //< USING_UTF
+#endif  //< CHINESEROOM_UTF_H

@@ -1,5 +1,5 @@
 /*< Kabuki Theater
-    @file       /.../Source/Kabuki_SDK-Impl/__/IApplication.hpp
+    @file       /.../Source/KabaukiTheater-Impl/__/IApplication.hpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -64,10 +64,10 @@ class IApplication
     virtual int close () = 0;
     /*<  */
 
-    virtual _G::Cell& getDrawCell () = 0;
+    virtual _g::Cell& getDrawCell () = 0;
     /*< Returns a link to this application's drawing context. */
         
-    virtual void draw (_G::Cell& c) = 0;
+    virtual void draw (_g::Cell& c) = 0;
     /*<  */
         
     virtual void redraw () = 0;

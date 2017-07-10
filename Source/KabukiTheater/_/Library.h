@@ -1,12 +1,12 @@
 /** The Chinese Room
     @version 0.x
-    @file    /.../Source/ChineseRoom\Book.h
+    @file    \...\library.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright(C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
 
-                        All right reserved(R).
+                        All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0(the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -22,122 +22,109 @@
 #ifndef CHINESEROOM_LIBRARY_H
 #define CHINESEROOM_LIBRARY_H
 
-#include "Config.h"
-#include "IDevice.h"
+#include "config.h"
+#include "device.h"
 
 namespace _ {
 
-template<typename TIndex, typename THeader, typename TData, typename THash, uint_t MaxStackHeight>
-class Library: public IDevice
+template<typename TIndex, typename THeader, typename TData, typename THash, 
+    uint_t MaxStackHeight>
+class Library: public Device
 {
     public:
 
-    Library()
-    /*< Constructs an empty dictionary. */
-    :   numMembers (0),
-        numCollisions (0),
-        headerSize (0),
-        collisionsSize (0),
-        dataSize (0)
-    {
+    /** Constructs an empty dictionary. */
+    Library ()
+    :   num_members_ (0),
+        num_collisions_ (0),
+        header_size_ (0),
+        collisions_size_ (0),
+        data_size_ (0) {
 
     }
 
-    bool hasHashTable()
-    /*< Returns true if the current Book has a hash table. */
-    {
-        return collisionsSize != 0;
+    /** Returns true if the current Book has a hash table. */
+    bool HasHashTable () {
+        return collisions_size_ != 0;
     }
 
-    uint_t getBookType ()
-    /*< Gets the number of keys in the current scope. */
-    {
-        return BK2template<typename TIndex, typename THeader, typename TData>
+    /** Gets the number of keys in the current scope. */
+    uint_t GetBookType () {
+        return 0;
     }
 
-    uint_t getNumKeys ()
-    /*< Gets the number of keys in the current scope. */
-    {
-        return numMembers;
+    /** Gets the number of keys in the current scope. */
+    uint_t GetNumKeys () {
+        return num_members_;
     }
 
-    uint_t getHeaderSize ()
-    /*< Gets the size of the header in bytes. */
-    {
-        return headerSize;
+    /** Gets the size of the header in bytes. */
+    uint_t GetHeaderSize () {
+        return header_size_;
     }
 
-    uint_t getDataSize
-    /*< Gets the data size in bytes. */
-    {
-        return dataSize;
+    /** Gets the data size in bytes. */
+    uint_t GetDataSize {
+        return data_size_;
     }
-
-    ticket_t add(byte type, const char* key, void* data)
-    /*< Attempts to add the Page data into the Object at the given BaseAddress.
+    
+    /** Attempts to add the Page data into the Object at the given BaseAddress.
         @return Returns nullptr upon success and an error string upon failure. */
-    {
-        TIndex sizeOfTypeToAdd = getSizeOfType (type);
-        if (sizeOfTypeToAdd == 0)
+    ticket_t Add (byte type, const char* key, void* data) {
+        TIndex size_of_type = getSizeOfType (type);
+        if (size_of_type == 0)
         {
             return 0;
         }
         return 0;
     }
      
-    ticket_t insert(byte type, const char* key, void* data, TIndex index = 0)
-    /*< Attempts to insert the Page data into the Object at the given index.
+    /** Attempts to insert the Page data into the Object at the given index.
         @return Returns nullptr upon success and an error string upon failure. */
-    {
+    ticket_t Insert (byte type, const char* key, void* data, TIndex index = 0) {
         TIndex l_numMembers = numNumbers;
         if (index > l_numMembers) index = l_numMembers;
 
         return 0;
     }
 
-    ticket_t remove(TIndex index)
-    /*< Attempts to remove the Page data into the Object at the given index.
+    /** Attempts to remove the Page data into the Object at the given index.
         @return Returns nullptr upon success and an error string upon failure. */
-    {
+    ticket_t Remove (TIndex index) {
         return 0;
     }
 
-    ticket_t clear(TIndex index)
-    /*< Attempts to clear the page at the given index.
+    /** Attempts to clear the page at the given index.
         @return Returns nullptr upon success and an error string upon failure. */
-    {
+    ticket_t Clear (TIndex index) {
         return 0;
     }
-
-    TIndex find(const char* key)
-    /*< Attempts to find the given member name.
+    
+    /** Attempts to find the given member name.
         @return Returns an invalid index upon failure. */
-    {
+    TIndex Find (const char* key) {
         return 0;
     }
 
-    bool search(const char* query, Library<TIndex, THeader, TData, THash, MaxStackHeight>* results)
-    /*< Searches for the given query and returns a book of query results.  */
-    {
+    /** Searches for the given query and returns a book of query results.  */
+    bool Search (const char* query, Library<TIndex, THeader, TData, THash, 
+        MaxStackHeight>* results) {
         return false;
     }
 
-    byte getMemberSize(TIndex index)
-    /*< gets the size of the item at the given index. */
-    {
+    /** gets the size of the item at the given index. */
+    byte GetMemberSize (TIndex index) {
         return 0;
     }
 
-    byte setMemberSize(TIndex index, TData newSize)
-    /*< gets the size of the item at the given index. */
-    {
+    /** gets the size of the item at the given index. */
+    byte SetMemberSize (TIndex index, TData newSize) {
         return 0;
     }
-
-    void* getDataAddress(TIndex index)
+    
     /** Returns the data address of the given member if it exists.
         @return Returns a pointer to one of the ChineseRoom error strings upon failure. */
-    {
+    void* GetDataAddress (TIndex index) {
         #if _BufferUIntSize >= 64
         IndexType64_t* UI8_ptr = (IndexType64_t*)address;
         #elif _BufferUIntSize >= 32
@@ -157,21 +144,24 @@ class Library: public IDevice
             case BK2:
                 #if _BufferUIntSize >= 16
                 /// Library format: { UI1, UI1, UI2, UI2 }
-                return size + sizeof (Library) + *(address + 1) * sizeof (byte) + *(UI2_ptr + 2) + *(UI8_ptr + 4);
+                return size + sizeof (Library) + * (address + 1) * 
+                       sizeof (byte) + *(UI2_ptr + 2) + * (UI8_ptr + 4);
                 #else
                 return 0;
                 #endif
             case BK4:
                 #if _BufferUIntSize >= 32
                 /// Library format: { UI1, UI1, UI2, UI4 }
-                return size + sizeof (Book32) + *(UI2_ptr + 2) * sizeof (byte) + *(UI4_ptr + 4) + *(UI8_ptr + 8);
+                return size + sizeof (Book32) + * (UI2_ptr + 2) * 
+                       sizeof (byte) + * (UI4_ptr + 4) + * (UI8_ptr + 8);
                 #else
                 return 0;
                 #endif
             case BK8:
                 #if _BufferUIntSize >= 64
                 /// Library format: { UI2, UI2, UI4, UI8 }
-                return size + sizeof (Library) + *(UI2_ptr + 2) * sizeof (byte) + *(UI4_ptr + 4) + *(UI8_ptr + 8);
+                return size + sizeof (Library) + * (UI2_ptr + 2) * 
+                       sizeof (byte) + * (UI4_ptr + 4) + * (UI8_ptr + 8);
                 #else
                 return 0;
                 #endif
@@ -179,15 +169,13 @@ class Library: public IDevice
         return 0;
     }
 
-    void shrink()
-    /*< Shrinks the currently selected book's buffer to the min size. */
-    {
+    /** Shrinks the currently selected book's buffer to the min size. */
+    void Shrink () {
 
     }
 
-    const Member<T>* op(Terminal* io, byte index) override
-    /*< ChineseRoom Operations. */
-    {
+    /** ChineseRoom Operations. */
+    const Member* Op (Rx* rx, Tx& tx, char index) override {
         switch (index)
         {
             case 0:
@@ -200,30 +188,29 @@ class Library: public IDevice
 
     private:
 
-    NONCOPYABLE(Library)
+    //NONCOPYABLE (Library)
 
     int reserved;           //< Reserved for 64-bit memory alignment.
-    Library** root;         //< Pointer to the dynamically allocated books.
-    Library* book;          //< The currently selected book.
-    uint_t currentIndex,    //< The index of the currently selected book.
-        numBooks,           //< The number of books on the stack.
-        numLibraries;       //< The number of libraries.
-    byte currentType;       //< The current type of book.
+    Library** root_;        //< Pointer to the dynamically allocated books.
+    Library* book_;         //< The currently selected book.
+    uint_t index_,          //< The index of the currently selected book.
+        stack_height_,      //< The number of books on the stack.
+        num_libraries_;     //< The number of libraries.
+    byte type_;             //< The current type of book.
     //Book<TIndex, THeader, TData, THash> book;
-    TIndex numKeys,      //< The current number of IDevice members.
-        bufferSize;         //< The current size of the header and names buffer in bytes.
-    THeader headerSize,  //< The current size of the header and names in bytes.
-        collisionsSize;     //< The current size of the header and names buffer in bytes.
-    TData dataSize;      //< The current total size of the book.
+    TIndex num_keys_,       //< The current number of Device members.
+        buffer_size_;       //< The current size of the header and names buffer in bytes.
+    THeader header_size_,   //< The current size of the header and names in bytes.
+        collisions_size_;   //< The current size of the header and names buffer in bytes.
+    TData data_size_;       //< The current total size of the book.
 };
 
+/** Destructs the given book. */
 template<typename TIndex, typename THeader, typename TData, typename THash, 
     uint MaxStackSize>
-inline void destruct(Library<TIndex, THeader, TData, THash, MaxStackSize>* r)
-/*< Destructs the given book. */
-{
+inline void destruct (Library<TIndex, THeader, TData, THash, MaxStackSize>* r) {
     if (r == nullptr) return;
-    delete reinterpret_cast<byte*>(r);
+    delete reinterpret_cast<byte*> (r);
 }
 
 }       //< namespace _

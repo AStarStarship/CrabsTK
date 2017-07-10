@@ -1,15 +1,15 @@
 #                Kabuki                Theater                Tests
 This                folder                is                contains                unit                tests                for                [Kabuki                Theater]
-(https://github.com/Kabuki-Toolkit/Kabuki-Theater).
+ (https://github.com/Kabuki-Toolkit/Kabuki-Theater).
 
 ##                Author
-*                [Cale                McCollough](https://calemccollough.github.io)
-*                [Contributors                please                add                your                names                here](mailto::your@email.address)
+*                [Cale                McCollough] (https://calemccollough.github.io)
+*                [Contributors                please                add                your                names                here] (mailto::your@email.GetAddress)
 
 ##                License
-Copyright                2017                (C)                [Cale                McCollough](mailto:calemccollough@gmail.com)
+Copyright                2017 (C)                [Cale                McCollough] (mailto:calemccollough@gmail.com)
 
-Licensed                under                the                Apache                License,                Version                2.0                (the                "License");
+Licensed                under                the                Apache                License,                Version                2.0 (the                "License");
 you                may                not                use                this                file                except                in                compliance                with                the                License.
 You                may                obtain                a                copy                of                the                License                at
 

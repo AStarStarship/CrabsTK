@@ -1,12 +1,12 @@
 /** The Chinese Room
     @version 0.x
-    @file    /.../Source/ChineseRoom/Room.h
+    @file    /.../Source/ChineseRoom/room.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright(C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
 
-                            All right reserved(R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0(the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -22,21 +22,31 @@
 #ifndef CHINESEROOM_ROOM_H
 #define CHINESEROOM_ROOM_H
 
-#include "Error.h"
-#include "Terminal.h"
-#include "IDevice.h"
+#include "door.h"
+#include "exceptions.h"
 
-namespace _ 
-{
+namespace _ {
 
-struct HandShakeHeader
-/*< The handshake header for two systems to connect. */
-{
-    byte unitSize;
+/** Returns an array of pointers to strings that describe the program states.
+*/
+inline const char** RoomStateStrings () {
+    static const char* states[] = {
+        "Initializing",
+        "Waking up",
+        "Running",
+        "Going to sleep",
+        "Exiting"
+    };
+    return states;
+}
+
+/** The handshake header for two systems to connect. */
+struct HandShakeHeader {
+    byte unit_size;
 };
 
-/** A list of Requests that can be sent from Terminal to Terminal.  */
-typedef enum {
+/** A list of Requests that can be sent from Terminal<uint_t, THash> to Terminal<uint_t, THash>.  */
+typedef enum Requests {
     OpenDoorRequest = 0,
     CloseDoorRequest,
     ConnectionRequest,
@@ -49,27 +59,23 @@ enum
     NumRequests = 2,    //< The number of Requests.
 };
 
-inline const char** requestStrings()
-/*< Returns a pointer to an array of pointers to the _::Request strings. */
-{
-    static const char* requestStrings[] = {
+/** Returns a pointer to an array of pointers to the _::Request strings. */
+inline const char** RequestStrings () {
+    static const char* RequestStrings[] = {
         "Open door",
         "Close door",
         "Invalid request"
     };
 
-    return requestStrings;
+    return RequestStrings;
 }
 
-inline const char* requestString(Request r)
-/*< Gets the response string corresponding to the given request. */
-{
-    if (r < 0 || r >= InvalidRequest) return requestStrings ()[InvalidRequest];
-    return requestStrings ()[r];
+/** Gets the response string corresponding to the given request. */
+inline const char* RequestString (Request r) {
+    if (r < 0 || r >= InvalidRequest) return RequestStrings ()[InvalidRequest];
+    return RequestStrings ()[r];
 }
 
-template<typename T>
-class Room: public IDevice
 /** A Chinese Room.
     An Chinese Room works the same way as in the Chinese Room thought 
     experiment. An Room receives a message through a slot in the door.
@@ -91,8 +97,8 @@ class Room: public IDevice
     Each door has multiple slots in lead to the same room. These slots are the 
     various IO ports of the system.
 */
-{
-    NONCOPYABLE (Room)
+class Room: public Device {
+    //NONCOPYABLE (Room)
 
     public:
 
@@ -102,182 +108,150 @@ class Room: public IDevice
         ShuttingDownState,
     } State;
 
-    Room(uint_t size)
-    /*< Constructs a Room. */
-    :   address (0),
-        addressMSB (0),
-        size (size),
-        stackHeight (0),
-        stackSize (0),
-        door (nullptr),
-        xoff (nullptr),
-        device (nullptr),
-        devices (nullptr)
-    {
+    /** Constructs a Room. */
+    Room (uint_t size)
+    :   address_ (0),
+        address_msb_ (0),
+        size_ (size),
+        stack_height_ (0),
+        stack_size_ (0),
+        door_ (nullptr),
+        xoff_ (nullptr),
+        device_ (nullptr),
+        devices_ (nullptr) {
 
     }
 
-    virtual ~Room()
-    /*< Destructor. */
-    {
+    /** Destructor. */
+    virtual ~Room () {
     }
-
-    Request processNextRequest(Request r)
-    /*< Processes a request from another Room.
+    
+    /** Processes a request from another Room.
         @return Returns false upon success and true if there is an error.
     */
-    {
+    Request HandleNextRequest (Request r) {
         return InvalidRequest;
     }
 
-    void clearLog()
-    /*< Clears the log. */
-    {
+    /** Clears the log. */
+    void ClearLog () {
 
     }
 
-    void processLog()
-    /*< Processes all of the errors in the error log. */
-    {
+    /** Processes all of the errors in the error log. */
+    void ProcessLog () {
 
     }
 
-    const char* printErrors(Terminal& io)
-    /*< Prints the error log to a terminal. */
-    {
+    /** Prints the error log to a terminal. */
+    void PrintErrors (Tx& tx) {
         //uint_t errorHeader[] = { 0 };
-        //return io.prints(errorHeader);
-        return 0;
+        //return io.prints (errorHeader);
     }
-    
-    virtual ticket_t diagnoseProblems()
-    /*< Function run every main loop cycle to check the system status. */
-    {
+
+    /** Function run every main loop cycle to check the system status. */
+    virtual void DiagnoseProblems () {
         /// Check for remote crash request.
-        /// set stack pointer to stackPointer.
+        throw RoomCrashException ();
+    }
+
+    /** Sets up the Room. */
+    virtual ticket_t Init () {
         return 0;
     }
-    
-    virtual ticket_t init()
-    /*< Sets up the Room. */
-    {
-        return 0;
+
+    /** Handler for shut down event. */
+    virtual void ShutDown () {}
+
+    /** Handler go to sleep event. */
+    virtual void Sleep () {}
+
+    /** Handler for wake from sleep event. */
+    virtual void Wake () {}
+
+    /** Handler for recovering from an external crash message. */
+    virtual void Crash () {}
+
+    /** Main program loop. */
+    virtual ticket_t Loop () {}
+
+    /** Returns true if the Room is on. */
+    bool IsOn () {
+        return true;
     }
 
-    void* getStackPointer ()
-    {
-        #if PLATFORM == ARM32
-        //  register word sp = asm("sp");
-        asm volatile(
-            "mov r14, sp"
-            );
-        #elif PLATFORM == ARM64
-        //  register word sp = asm("sp");
-        asm volatile(
-            "mov r30, sp"
-            );
-        #elif PLATFORM == X86 || PLATFORM == X64
-        asm volatile(
-            "movl %eax, %esp"
-        );
-        #endif
+    Request GetNextRequest (Request r) {
+        return InvalidRequest;
     }
 
-    virtual ticket_t loop()
-    /*< Main program loop. */
-    {
-        //! Save stack pointer to crash the program if need be.
-
-
-        //! Doors closed level.
-        Request request = processNextRequest (request);
-
-        while (request > 1)
-        {
-            request = processNextRequest (request);
-
+    /** The main function. */
+    virtual void Main (const char** args, int args_count) {
+        printf ("Launching Room with %i args:\n", args_count);
+        for (int i = 0; i < args_count; ++i) {
+            printf ("%s\n", args[i]);
         }
+        printf ("Entering main loop.");
 
-        //! By default we execute all of the ESC all at once, but they can be 
-        //! split up by creating a sub-class or Room, and using execNext () 
-        //! in you're main loop where you have free-time to run the operations.
-        execAll ();
+        while (IsOn ()) {
+            try {
+                Init ();
+                ticket_t t;
+                while (t = Loop ()){
+                    // Doors closed level.
+                    Request request = GetNextRequest (request);
 
-        return diagnoseProblems ();
-    }
+                    while (request > 1) {
+                        request = GetNextRequest (request);
 
-    ticket_t execNext ()
-    /*< Executes one escape sequence from the Rx buffer. */
-    {
+                    }
 
-        return 0;
-    }
+                    // By default we execute all of the ESC all at once, but 
+                    // they can be split up by creating a sub-class or Room, 
+                    // and using execNext () in you're main loop where you 
+                    // have free-time to run the operations.
+                    ExecAll ();
 
-    ticket_t execAll ()
-    /*< Executes all of the escape sequences from the slots in the Door(s). */
-    {
+                    DiagnoseProblems ();
+                    return;
+                }
+                
+            } catch (RoomCrashException e) {
 
-        return 0;
-    }
-
-    const Member<T>* op(Terminal* io, byte index) override
-    /*< ChineseRoom operations. */
-    {
-        /*
-        static const char* bin = "bin",
-        * boot  = "boot",
-        * dev   = "dev",
-        * etc   = "etc",
-        * home  = "home",
-        * lib   = "lib",
-        * media = "media",
-        * mnt   = "mnt",
-        * opt   = "opt",
-        * proc  = "proc",
-        * sbin  = "sbin",
-        * srv   = "srv",
-        * tmp   = "tmp",
-        * usr   = "usr",
-        * var   = "var";
-
-        if(find(Query)) index = Find(Query, &bin, 14);
-
-        switch(index)
-        {
-        case 0: return Query ? ChineseRoom::equerry(Query, bin,
-        "User binaries.");
-        : return Select(A, VarObject);
+            }
         }
+    }
 
-        return Query ? ChineseRoom::equerry(Query, "Room X");
-        : ChineseRoom::InvalidIndex();
-        */
+    /** Executes one escape sequence from the Rx buffer. */
+    ticket_t ExecNext () {
+
+        return 0;
+    }
+
+    /** Executes all of the escape sequences from the slots in the Door (s). */
+    ticket_t ExecAll () {
+
+        return 0;
+    }
+
+    /** I2P operations. */
+    virtual const Member* Op (Rx* rx, Tx& tx, byte index) {
         return 0;
     }
 
     protected:
 
-    //! 2-to-4-byte vtable pointer here in memory!
-    uint address;               //< The least significant bytes of the address.
-    uint_t addressMSB,          //< The most significant bytes of the address.
-        size;                   //< The size of the Room with device stack.
-    byte stackHeight,           //< The number of devices on the device stack.
-        stackSize;              //< The max size of the device stack.
-                                //! Device Control 1: this.
-    Door* door;                 //< Device Control 2: The Door to this room.
-    IDevice* xoff,              //< Device Control 3: XOFF - The XOFF handling device.
-        * device,               //< Device Control 4: the current device control.
-        * devices;              //< Pointer to the current device control.
+    // 2-to-4-byte vtable pointer here in memory!
+    uint address_;          //< The least significant bytes of the address.
+    uint_t address_msb_,    //< The most significant bytes of the address.
+        size_;              //< The size of the Room with device stack.
+    byte stack_height_,     //< The number of devices on the device stack.
+        stack_size_;        //< The max size of the device stack.
+                            // Device Control 1: this.
+    Door* door_;            //< Device Control 2: The Door to this room.
+    Device* xoff_,          //< Device Control 3: XOFF - XOFF handling device.
+        * device_,          //< Device Control 4: the current device control.
+        * devices_;         //< Pointer to the current device control.
 };
-
-template<typename T>
-void destroy (Room<T>* r)
-/*< Destructs the given room. */
-{
-    if (r == nullptr) return;
-    delete[] reinterpret_cast<byte*>(r);
-
-}
 
 }       //< namespace _
 #endif  //< CHINESEROOM_ROOM_H

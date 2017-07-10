@@ -23,13 +23,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\KabukiTheater-Impl\TESTS\KabukiTheaterTests.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\BookTests.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\ConsoleTest.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\RoomTests.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\main.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\RecordTableTests.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\TerminalAndMirrorTests.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\UtilsTests.cpp" />
+    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\book_tests.cpp" />
+    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\console_tests.cpp" />
+    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\record_table_tests.cpp" />
+    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\room_tests.cpp" />
+    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\uniprinter_tests.cpp" />
+    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\read_write_tests.cpp" />
+    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\utills_tests.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{67848E0E-E323-4584-B88C-A0D1418F4E77}</ProjectGuid>
@@ -87,9 +87,11 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>D:\Workspace\cpputest\include;D:\Workspace\Kabuki-Theater\Source\KabukiTheater;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Workspace\ChineseRoom\Visual Studio\Debug;D:\Workspace\cpputest\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)\Tests\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>D:\Workspace\cpputest\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -104,11 +106,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Workspace\Kabuki-Theater\Source\KabukiTheater;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>CppUTestd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CppUTestd.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -118,10 +121,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Workspace\cpputest\include;D:\Workspace\Kabuki-Theater\Source\KabukiTheater;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>CppUTestd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

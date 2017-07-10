@@ -2,11 +2,11 @@
     @version 0.x
     @file    /.../Member.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright(C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
 
-                            All right reserved(R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0(the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -22,116 +22,149 @@
 #ifndef CHINESEROOM_MEMBER_H
 #define CHINESEROOM_MEMBER_H
 
-#include "Config.h"
-#include "Error.h"
+#include "error.h"
 
-namespace _{ 
+namespace _ {
 
-template<typename T>
-struct Member 
-/*< Stores the key/name string, rxHeader, txHeader, and optional description
+/** Stores the key/name string, rx_header, tx_header, and optional description
     string.
     @code
     static const Member member = { "Key", Rx<1, 2>::Header, Tx<1, 2>::Header,
         "Description" };
-    static const Member memberObject = { "Key", setNumMembers(0), 0,
+    static const Member memberObject = { "Key", setNumMembers (0), 0,
         "Description" };
     @endcode
 */
-{
-    const char* key,        //< The member key.
-        description;        //< An optional description of the member.
-    const T* rxHeader,      //< The rx format header.
-        * txHeader;         //< The tx format header.
+struct Member {
+    const char* key;            //< The member key.
+    const uint_t* rx_header,    //< The rx format header. 
+        * tx_header;            //< The tx format header.
+    const char* description;    //< Optional member description.
 };
 
-template<typename T>
-inline const Member<T>* readError()
-/** Error flag member pointers for throwing Terminal io errors. */
-{
-    static const Member<T> error = { "readError",
-        0,
-        0,
-        0
-    };
-    return &error;
+/** Converts the value to a pointer. */
+inline uint_t* SetNumMembers (std::uintptr_t value) {
+    return reinterpret_cast<uint_t*> (value);
 }
 
-template<typename T>
-const Member<T>* writeError()
-/** Error flag member pointers for throwing Terminal io errors. */
-{
-    static const Member<T> error = { "write error",
-        0,
-        0,
-        0
-    };
-    return &error;
-}
-
-template<typename T>
-const Member<T>* deviceStackOverflowError()
-/** Error flag member pointers for throwing Terminal io errors. */
-{
-    static const Member<T> error = { "Device stack overflow error",
-        0,
-        0,
-        0
-    };
-    return &error;
-}
-
-template<typename T>
-const Member<T>* invalidMember ()
-/*< An error flag for an invalid member index. */
-{
-    static const Member<T> error = { "Invalid member index",
-        0,
-        0,
-        0
-    };
-    return &error;
-}
-
-template<typename T, const char* key, byte numMember, const char* description>
-const Member<T>* deviceHeader ()
-/** Creates a static const Member in ROM.
-    @code
-    const Member<T>* member = createMember<"memberName", RxHeader<STX, UI2>,
-        TxHeader<FLT, TMU>, "Description.">
-    @endcode
-*/
-{
-    static Member<T> m = { key, getNumMembers, 0, description };
+/** Creates a Read-only-memory Member for a member without a description. */
+template<const char* key>
+const Member* DeviceMember () {
+    static const Member m = { key, 0, 0, 0 };
     return &m;
 }
 
-template<const char* key, const uint_t* headerIn, const byte* headerOut,
-const char* description>
-const Member<T>* deviceMember ()
+/** Creates a Read-only-memory Member for a member without a description. */
+template<const char* key, byte num_members, const uint_t* rx_header,
+    const uint_t* tx_header>
+const Member* DeviceMember () {
+    static const Member m = { key, rx_header, tx_header, 0 };
+    return &m;
+}
+
 /** Creates a static const Member in ROM.
     @code
-    const Member<T>* member = createMember<"memberName", 1, TxHeader<FLT, TMU>,
+    const Member* m = createMember<"memberName", 1, TxHeader<FLT, TMU>,
         "Description.">
     @endcode
 */
-{
-    static Member<T> m = { key, headerIn, headerOut, description };
+template<const char* kKey, const uint_t* kHeaderIn, const byte* kHeaderOut,  const char* kDescription>
+const Member* DeviceMember () {
+    static Member m = { kKey, kHeaderIn, kHeaderOut, kDescription };
     return &m;
 }
 
-template<typename T>
-inline uint_t* setNumMembers(std::uintptr_t value)
-/*< Converts the input value to a uint_t*. */
-{
-    return reinterpret_cast<T*>(value);
+/** Creates a Read-only-memory Member for a Device. */
+template<const char* key, byte num_members, const char* description>
+const Member* DeviceMember () {
+    static const Member m = { key, ConvertNumMembers (num_members), 0,
+        description };
+    return &m;
 }
 
-template<typename T>
-inline std::uintptr_t getNumMembers(const Member<T>* m)
-/*< Returns the number of members an IDevice has. */
-{
-    return m == nullptr ? 0 : reinterpret_cast<uintptr_t>(m->rxHeader);
+/** Creates a Read-only-memory Member for a Device. */
+template<const char* key, byte num_members, const uint_t* tx_header,
+    const char* description>
+const Member* DeviceMember () {
+    static const Member m = { key, ConvertNumMembers (num_members), tx_header,
+        description };
+    return &m;
+}
+
+/** Creates a static const Member in ROM.
+    @code
+    const Member* member = createMember<"memberName", RxHeader<STX, UI2>,
+        TxHeader<FLT, TMU>, "Description.">
+    @endcode
+*/
+template<const char* kKey, byte kNumMember, const char* kDescription>
+const Member* DeviceHeader () {
+    static Member m = { kKey, ConvertNumMembers, 0, kDescription };
+    return &m;
+}
+
+/** Returns the number of members an Device has. */
+inline std::uintptr_t GetNumMembers (const Member* m) {
+    return m == nullptr ? 0 : reinterpret_cast<uintptr_t>(m->rx_header);
+}
+
+/** Shorthand for reinterpret_cast<const char*> (address). */
+inline const char* HeaderPtr (uint16_t* address) {
+    return reinterpret_cast<const char*>(address);
+}
+
+/** Shorthand for reinterpret_cast<const char*> (address). */
+inline const char* HeaderPtr (uint32_t* address) {
+    return reinterpret_cast<const char*>(address);
+}
+
+/** Shorthand for reinterpret_cast<const char*> (address). */
+inline const char* HeaderPtr (uint64_t* address) {
+    return reinterpret_cast<const char*>(address);
+}
+
+/** Error flag member pointers for throwing Terminal io errors. */
+inline const Member* ReadError () {
+    //return DeviceMember<"Read"> ();
+    static const Member error = { "Read",
+        0,
+        0,
+        0
+    };
+    return &error;
+}
+
+/** Error flag member pointers for throwing Terminal io errors. */
+inline const Member* WriteError () {
+    //return DeviceMember<"Write"> ();
+    static const Member error = { "Write",
+        0,
+        0,
+        0
+    };
+    return &error;
+}
+
+/** Error flag member pointers for throwing Terminal io errors. */
+inline const Member* DeviceStackOverflowError () {
+    //return DeviceMember<"Device stack overflow"> ();
+    static const Member error = { "Device stack overflow",
+        0,
+        0,
+        0
+    };
+    return &error;
+}
+
+/** An error flag for an invalid member index. */
+inline const Member* InvalidMember () {
+    //return DeviceMember<"Invalid member index"> ();
+    static const Member error = { "Invalid member index",
+        0,
+        0,
+        0
+    };
+    return &error;
 }
 
 }   //< namespace _

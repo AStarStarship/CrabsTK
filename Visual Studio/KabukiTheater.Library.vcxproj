@@ -19,48 +19,44 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Source\KabukiTheater\_\AssemblySettings.inl" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\Source\KabukiTheater\KabukiTheater.hpp" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Address.h" />
+    <ClInclude Include="..\Source\KabukiTheater\kabuki_theater.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\address.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\args.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Book.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\ChineseRoom.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Config.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Console.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Door.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Error.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\ErrorList.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Global.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\IDevice.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\IEvent.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\IIterator.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\IPortal.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Library.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Log.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Member.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Mirror.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Print.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Process.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\RecordTable.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Room.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\String.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Terminal.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Timestamp.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Types.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\UTF.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\Utils.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\book.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\chinese_room.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\config.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\device.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\door.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\error.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\event.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\exceptions.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\global.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\iterator.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\member.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\mirror.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\portal.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\print.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\record_table.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\room.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\rx.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\slot.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\uniprinter.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\string.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\terminal.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\timestamp.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\tx.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\types.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\utf.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\KabukiTheater\_\TESTS\ConsoleTest.cpp" />
+    <None Include="..\Source\KabukiTheater\_\assembly_settings.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3FBC20A1-E168-4BCD-B05A-922FACDB7B9E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>KabukiToolkitMinGW</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
     <ProjectName>KabukiTheater.Library</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -111,6 +107,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>D:\Workspace\ChineseRoom\Source;D:\Workspace\Kabuki-Theater\Source\KabukiTheater;D:\Workspace\cpputest\include;..\..\ChineseRoom\Library;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Workspace\cpputest\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)\Library\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -169,13 +166,5 @@
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="packages\ANGLE.WindowsStore.2.1.11\build\native\ANGLE.WindowsStore.targets" Condition="Exists('packages\ANGLE.WindowsStore.2.1.11\build\native\ANGLE.WindowsStore.targets')" />
-  </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('packages\ANGLE.WindowsStore.2.1.11\build\native\ANGLE.WindowsStore.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ANGLE.WindowsStore.2.1.11\build\native\ANGLE.WindowsStore.targets'))" />
-  </Target>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>

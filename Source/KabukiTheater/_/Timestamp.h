@@ -2,11 +2,11 @@
     @version 0.x
     @file    /.../Timestamp.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright(C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
 
-                        All right reserved(R).
+                        All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0(the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -22,30 +22,30 @@
 #ifndef CHINESEROOM_TIMESTAMP_H
 #define CHINESEROOM_TIMESTAMP_H
 
-#include "Config.h"
+#include "config.h"
 
 namespace _ {
 
-inline timestamp_t getTime(time_t unixTime, int32_t microseconds)
-/*< Generates a timestamp from a Unix timestamp and 32-bit mbed microsecond timestamp. */
+inline timestamp_t PackTimestamp (time_t unixTime, int32_t microseconds)
+/** Generates a timestamp from a Unix timestamp and 32-bit microsecond timestamp. */
 {
-    return(((timestamp_t)unixTime) << 8) &(timestamp_t)microseconds;
+    return (( (timestamp_t)unixTime) << 8) & (timestamp_t)microseconds;
 }
 
-inline time_t getTime_s(timestamp_t t)
-/*< Gets the seconds since January 1, 1970. */
+inline time_t GetSeconds (timestamp_t t)
+/** Gets the seconds since January 1, 1970. */
 {
-    return(time_t)t;
+    return (time_t)t;
 }
 
-inline int32_t getTime_us(timestamp_t timestamp)
-/*< Gets the microsecond time. */
+inline int32_t GetMicroseconds (timestamp_t timestamp)
+/** Gets the microsecond time. */
 {
-    return(int32_t)((timestamp & 0xFFFFFFFF00000000) >> 32);
+    return (int32_t) ((timestamp & 0xFFFFFFFF00000000) >> 32);
 }
 
-inline timestamp_t getTimestamp()
-/*< Creates a timestamp of the current time. */
+inline timestamp_t TimestampNow ()
+/** Creates a timestamp of the current time. */
 {
     std::chrono::microseconds us (1);
 

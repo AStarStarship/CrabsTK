@@ -2,11 +2,11 @@
     @version 0.x
     @file    /.../Print.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright(C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
 
-                            All right reserved(R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0(the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -22,17 +22,47 @@
 #ifndef CHINESEROOM_PRINT_H
 #define CHINESEROOM_PRINT_H
 
-#include "Config.h"
+#if DEBUG
 
-#include <iostream>
-#include <math.h>
-#include <stdio.h>
+#include "config.h"
 
 namespace _ {
 
-inline void printChar(char c)
-/*< Prints the given char to the stdout if it is printable, and prints SOH. */
-{
+/** Prints the given string center in the given width.
+    If string is too small to fit in the width, function will print as much of
+    the string as it has room for with a "..." If the given width is less than
+    5, than
+*/
+inline void PrintCentered (const char* s, int width) {
+    if (width < 2)
+    {
+        //? Not sure if this is an error.
+        return;
+    }
+    // We need to leave at least one space to the left and right of 
+    int length = strlen (s);
+    if (length < width - 2)
+    {
+        // We need to write the ....
+        if (length < 4)
+        {
+            // Then we're just going to write the first few letters.
+            for (; length >= 0; --length)
+            {
+                putchar ('\n');
+            }
+        }
+    }
+    int offset = (width - length) >> 1; //< >> 1 to /2
+    for (int i = 0; i < offset; ++i)
+        putchar ('\n');
+    printf (s);
+    for (offset = width - length - offset; offset <= width; ++offset)
+        putchar ('\n');
+}
+
+/** Prints the given char to the stdout if it is printable, and prints SOH. */
+static void PrintChar (char c) {
     if ((c > 0 && c < ' ') || c == 127)
     {
         putchar (1);
@@ -41,29 +71,26 @@ inline void printChar(char c)
     putchar (c);
 }
 
-inline void printLine(char token = '-', int columnWidth = 80)
-/*< Prints a line with the given token and number of columns to the debug
+/** Prints a line with the given token and number of columns to the debug
     stream. */
-{
+static void PrintLine (char token = '-', int column_width = 80) {
     putchar ('\n');
-    for (int i = 0; i < lineWidth; ++i)
+    for (int i = 0; i < column_width; ++i)
         putchar (token);
     putchar ('\n');
 }
 
-inline void printLines(int numRows = 10)
-/*< Prints a vertical tab with the given number of rows. */
-{
+/** Prints a vertical tab with the given number of rows. */
+static void PrintLines (int numRows = 10) {
     putchar ('\r');
     for (int i = 0; i < numRows - 1; ++i)
         putchar ('\n');
 }
 
-inline void printMemory(void* address, size_t size)
-/*< Prints out the contents of the adress to the debug stream. */
-{
+/** Prints out the contents of the address to the debug stream. */
+static void PrintMemory (void* address, size_t size) {
     printf ("|%i", 0);
-    //! Print columns
+    // Print columns
     for (int i = 8; i <= 66; i += 8)
         printf ("%8i", i);
     putchar ('\n');
@@ -72,8 +99,8 @@ inline void printMemory(void* address, size_t size)
         putchar ('_');
     putchar ('\n');
 
-    const char* chars = reinterpret_cast<const char*>(address);
-    char* end = reinterpret_cast<char*>(address) + size;
+    const char* chars = reinterpret_cast<const char*> (address);
+    char* end = reinterpret_cast<char*> (address) + size;
     char temp;
     while (chars < end)
     {
@@ -83,22 +110,21 @@ inline void printMemory(void* address, size_t size)
             temp = *chars;
             if (chars >= end)
                 temp = 'x';
-            printChar (temp);
+            PrintChar (temp);
             ++chars;
         }
-        printf ("| 0x%p\n", reinterpret_cast<uintptr_t>(chars) - 64);
+        printf ("| 0x%x\n", reinterpret_cast<uintptr_t> (chars) - 64);
     }
     putchar ('|');
     for (int i = 0; i < 64; ++i)
         putchar ('_');
-    printf ("| 0x%p", reinterpret_cast<uintptr_t>(chars) + size);
+    printf ("| 0x%x", reinterpret_cast<uintptr_t> (chars) + size);
     putchar ('\n');
 }
 
+/** */
 template<typename Type>
-void printHex(Type value)
-/*< */
-{
+void PrintHex (Type value) {
     char buffer[sizeof (Type) * 2 + 1];
     sprintf_s (buffer, "%p", value);
     printf ("0x");
@@ -109,14 +135,13 @@ void printHex(Type value)
     std::cout << buffer;
 }
 
-inline char createKeyValueFormatString(char* s, byte columnWidth, char type)
-/*< Creates the format string for a key-value pair where the key is right-aligned to the columnWidth. */
-{
-    char hundreds = (columnWidth / 100),
-        decimal = (columnWidth % 10),
-        tens = (columnWidth - hundreds - decimal) / 10;
+/** Creates the format string for a key-value pair where the key is right-aligned to the column_width. */
+inline char CreateKeyValueFormatString (char* s, byte column_width, char type) {
+    char hundreds = (column_width / 100),
+        decimal = (column_width % 10),
+        tens = (column_width - hundreds - decimal) / 10;
     s[0] = '%';
-    if (columnWidth <  10)
+    if (column_width <  10)
     {
         s[1] = decimal + '0';
         s[2] = 's';
@@ -129,7 +154,7 @@ inline char createKeyValueFormatString(char* s, byte columnWidth, char type)
         s[9] = '\n';
         return 0;
     }
-    else if (columnWidth < 100)
+    else if (column_width < 100)
     {
         s[1] = tens + '0';
         s[2] = decimal + '0';
@@ -157,77 +182,74 @@ inline char createKeyValueFormatString(char* s, byte columnWidth, char type)
     return 0;
 }
 
+/** */
 template<byte ColumnWidth>
-void printHex(const char* header, void* value)
-/*< */
-{
+void PrintHex (const char* header, void* value) {
     static char formatString[12],
-        nullTermChar = createKeyValueFormatString (formatString, ColumnWidth, 'p');
+        nullTermChar = CreateKeyValueFormatString (formatString, ColumnWidth, 'p');
     printf (formatString, header, value);
 }
 
+/** */
 template<byte ColumnWidth, typename Type>
-void printSignedHex(const char* header, Type value)
-/*< */
-{
+void PrintSignedHex (const char* header, Type value) {
     static char formatString[12],
-        nullTermChar = createKeyValueFormatString (formatString, ColumnWidth, 'i');
+        nullTermChar = CreateKeyValueFormatString (formatString, ColumnWidth, 'i');
     printf ("formatString: %s\n", formatString);
     printf (formatString, header, value);
 }
 
+/** */
 template<byte ColumnWidth, typename Type>
-void printUnsignedHex(const char* header, Type value)
-/*< */
-{
+void PrintUnsignedHex (const char* header, Type value) {
     static char formatString[12],
-        nullTermChar = createKeyValueFormatString (formatString, ColumnWidth, 'u');
+        nullTermChar = CreateKeyValueFormatString (formatString, ColumnWidth, 'u');
     printf (formatString, header, value);
 }
 
-inline void printNumberLine(int index)
-/*< Prints an 80-char line of the number repeating with an underscore i.e. 1_1_... */
-{
+/** Prints an 80-char line of the number repeating with an underscore i.e. 1_1_... */
+static void PrintNumberLine (int index) {
     putchar ('\n');
     enum { MaxBufferSize = (sizeof (int) == 2) ? 7 : (sizeof (int) == 4) ? 11 : 128 };
     char buffer[MaxBufferSize];
-    sprintf (buffer, "%u", index);
+    sprintf_s (buffer, MaxBufferSize, "%u", index);
     int length = strlen (buffer),
         i,
         lettersLeft = 80 % (length + 1);
 
-    for (i = 0; i < 80; i += (length + 1))  printf ("%s_", buffer);
-    for (int j = 0; j < lettersLeft; ++j)   putchar (buffer[j]);
+    for (i = 0; i < 80; i += (length + 1))
+        printf ("%s_", buffer);
+    for (int j = 0; j < lettersLeft; ++j)
+        putchar (buffer[j]);
     putchar ('\n');
 }
 
-inline void printStringLine(const char* s)
-/*< Prints an 80-char line of the string repeating with an underscore i.e. s_s_... */
-{
-    printLine ();
+/** Prints an 80-char line of the string repeating with an underscore i.e. s_s_... */
+static void PrintStringLine (const char* s) {
+    PrintLine ();
     int length = strlen (s),
         i;
 
-    for (i = 0; i < 80; i += (length + 1))  printf ("%s_", s);
-    for (int j = 0; j < 80 % (length + 1); ++j)   putchar (s[j]);
-    printLine ();
+    for (i = 0; i < 80; i += (length + 1))
+        printf ("%s_", s);
+    for (int j = 0; j < 80 % (length + 1); ++j)
+        putchar (s[j]);
+    PrintLine ();
 }
 
+/** Prints the given value to the console and prompts the user to press any key to continue. */
 template<typename Type, const char* format>
-Type printReturn(Type value)
-/*< Prints the given valud to the console and prompts the user to press any key to continue. */
-{
+Type PrintReturn (Type value) {
     printf (format, value);
     return value;
 }
 
-template<typename Type>
-void printArray(const char* header, const char* format, Type* base_ptr, 
-    Type numElements)
-/*< Prints the array starting at the base_ptr with the given numElements with a
+/** Prints the array starting at the base_ptr with the given numElements with a
     header and given format. */
-{
-    printLine ();
+template<typename Type>
+void PrintArray (const char* header, const char* format, Type* base_ptr, 
+    Type numElements) {
+    PrintLine ();
     printf (header);
     printf (": numElements: ");
     printf ("%u\n", numElements);
@@ -239,24 +261,22 @@ void printArray(const char* header, const char* format, Type* base_ptr,
         putchar ('\n');
     }
     putchar ('\n');
-    printLine ();
+    PrintLine ();
 }
 
-inline void printPause (const char* s)
-/*< Prints an error message and pauses the system. */
-{
+/** Prints an error message and pauses the system. */
+inline void PrintPause (const char* s) {
     #if DEBUG
     printf ("\n%s\n", s);
     system ("PAUSE");
     #endif
 }
 
-inline void printNL ()
-/*< Prints a new line. */
-{
+/** Prints a new line. */
+inline void PrintNL () {
     putchar ('\n');
 }
 
 }       //< namespace _
-
+#endif  //< DEBUG
 #endif  //< CHINESEROOM_PRINT_H

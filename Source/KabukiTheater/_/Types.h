@@ -1,16 +1,16 @@
 /** The Chinese Room
     @version 0.x
-    @file    /.../Source/ChineseRoom\Type.h
+    @file    /.../types.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright(C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
+    
+                            All right reserved (R).
 
-             All right reserved(R).
-
-        Licensed under the Ap License, Version 2.0(the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+                    http://www.apache.org/licenses/LICENSE-2.0
 
         Unless required by applicable law or agreed to in writing, software
         distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,20 +22,19 @@
 #ifndef CHINESEROOM_TYPES_H
 #define CHINESEROOM_TYPES_H
 
-#include "Config.h"
+#include "config.h"
 
 namespace _ {
-
-typedef enum
+    
 /** List of the 32 data types.
-    This has been mimiced in order to match the ASCII C0 codes as closely 
+    This has been mimicked in order to match the ASCII C0 codes as closely 
     as sanely possible. Many of the codes just don't make sense as types, but
     the codes were picked for the specific purpose that they are not human 
     readable, with the exception of HT, VT, CR, and LF. */
-{   
+typedef enum {   
     NIL   = 0,  //< 0.  NIL/null/void type.
-    STR   = 1,  //< 1.  A UTF-8/ASCII string.
-    STX   = 2,  //< 2.  A UTF-16 string.
+    SOH   = 1,  //< 1.  A 
+    STX   = 2,  //< 2.  A UTF-8/ASCII string.
     SI1   = 3,  //< 3.  An 8-bit signed integer.
     UI1   = 4,  //< 4.  An 8-bit unsigned integer.
     BOL   = 5,  //< 5.  An 8-bit non-zero asserted boolean variable.
@@ -61,19 +60,18 @@ typedef enum
     AR4   = 25, //< 25. An array of up to 2^32-1 like primitive types 3-16.
     AR8   = 26, //< 26. An array of up to 2^32-1 like primitive types 3-16.
     ESC   = 27, //< 27. An atomic escape sequence of I2P procedure calls.
-    BK8   = 28, //< 28. A book with up to 2^31-1 members and 2^64-1 bytes data.
-    BK4   = 29, //< 29. A book with up to 2^15-1 members and 2^32-1 bytes data.
-    BK2   = 30, //< 30. A book with up to 2^15-1 members and 2^16-1 bytes data.
+    BK8   = 28, //< 28. A book with up to 2^31-2 members and 2^64-1 bytes data.
+    BK4   = 29, //< 29. A book with up to 2^15-2 members and 2^32-1 bytes data.
+    BK2   = 30, //< 30. A book with up to 2^7-2 members and 2^16-1 bytes data.
     US    = 31, //< 31. A unit separator for breaking files and data into transmission blocks.
 } TData;
 
-inline uint_t getSizeOfType(uint_t Type)
-/*< Gets the width in bytes(1-8) of the given type. */
-{
-    static const int8_t widths[] =
+/** Gets the width in bytes (1-8) of the given type. */
+inline uint_t GetSizeOfType (uint_t Type) {
+    static const int8_t kWidths[] =
     {
         0,      //< NIL: 0 
-        0,      //< STR: 1 
+        0,      //< SOH: 1 
         0,      //< STX: 2 
         1,      //< SI1: 3 
         1,      //< UI1: 4 
@@ -105,17 +103,16 @@ inline uint_t getSizeOfType(uint_t Type)
         0,      //< BK4: 30
         0,      //< BK8: 31
     };
-    return widths[Type & 0x1f];
+    return kWidths[Type & 0x1f];
 }
 
-inline uint_t getAlignment(uint_t Type)
-/*< Gets aliment required for the specified type. 
+/** Gets aliment required for the specified type. 
     The types that get aligned are 2, 4, and 8-byte-wide types. */
-{
-    static const int8_t widths[] =
+inline uint_t GetAlignment (uint_t Type) {
+    static const int8_t kWidths[] =
     {
         0,      //< NIL: 0 
-        0,      //< STR: 1 
+        0,      //< SOH: 1 
         2,      //< STX: 2 
         0,      //< SI1: 3 
         0,      //< UI1: 4 
@@ -147,30 +144,21 @@ inline uint_t getAlignment(uint_t Type)
         8,      //< BK2: 30
         8,      //< US:  31
     };
-    return widths[Type & 0x1f];
+    return kWidths[Type & 0x1f];
 }
 
-inline bool typeIsValid(uint_t type)
-/*< Returns true if the type is a valid list type. */
+/** Returns true if the type is a valid list type. */
+inline bool TypeIsValid (uint_t type)
 {
 
     return type > 31 ? false : true;
 }
 
-inline bool typeIsValid(const char* TypeName)
-/*< Returns true if the TypeName is one of the ErrorStrings. */
-{
-
-    if (TypeName < typeStrings ()[0] || TypeName > typeStrings ()[BK8]) return false;
-    return true;
-}
-
-inline const char** typeStrings()
-/*< Returns a pointer to an array of pointers to the type names.*/
-{
-    static const char* names[] = {
+/** Returns a pointer to an array of pointers to the type names.*/
+inline const char** TypeStrings () {
+    static const char* kNames[] = {
         "NIL",
-        "STR",
+        "SOH",
         "STX",
         "SI1",
         "UI1",
@@ -202,34 +190,43 @@ inline const char** typeStrings()
         "BK2",
         "US",
     };
-    return names;
+    return kNames;
 }
 
-inline const char* typeString(uint_t type)
-/*< Returns the name of the given type. */
-{
-    return typeStrings ()[type];
-}
+/** Returns true if the TypeName is one of the ErrorStrings. */
+inline bool TypeIsValid (const char* type_name) {
 
-
-inline bool checkDelimiter (char const Char)
-{
-    if (Char == 0) return false;
-    if (Char == ' ') return false;
-    if (Char == '\n') return false;
-    if (Char == '\t') return false;
+    if (type_name < TypeStrings ()[0] || type_name > TypeStrings ()[BK8])
+        return false;
     return true;
 }
 
-template<char Char>
-bool checkLastLetter (uint16_t const Token)
+/** Returns the name of the given type. */
+inline const char* TypeString (uint_t type) {
+    return TypeStrings ()[type];
+}
+
+
+/** Checks to see if the given char is a delimiter. */
+inline bool CheckDelimiter (char const c)
 {
-    if (Char != (char)Token) return true;
-    return checkDelimiter (Token >> 8);
+    if (c == 0) return false;
+    if (c == ' ') return false;
+    if (c == '\n') return false;
+    if (c == '\t') return false;
+    return true;
+}
+
+/** Checks the last byte of the token to check if it is a specified char. */
+template<char c>
+bool CheckLastLetter (uint16_t const token)
+{
+    if (c != (char)token) return true;
+    return CheckDelimiter (token >> 8);
 }
 
 template<char LetterTwo, char LetterThree>
-bool checkLastLetters (uint32_t const Token)
+bool CheckLastLetters (uint32_t const Token)
 {
     char check = Token >> 8;
     if (LetterTwo != check) return true;
@@ -238,73 +235,72 @@ bool checkLastLetters (uint32_t const Token)
     if (LetterThree != check) return true;
 
     check = Token >> 24;
-    return checkDelimiter (Token >> 8);
+    return CheckDelimiter (Token >> 8);
 }
 
-inline byte getType(const char* s)
-/*< Returns the type from the given index. */
-{
-    uint32_t token = *((uint32_t*)s);
+/** Returns the type from the given index. */
+static byte GetType (const char* s) {
+    uint32_t token = * ((uint32_t*)s);
 
     char letter = (char)token;
 
     switch (letter)
     {
-        case 'A': if ((char)(token >> 8) != 'R') return 0xff;
-            switch (letter = (char)(token >> 16))
+        case 'A': if ((char) (token >> 8) != 'R') return 0xff;
+            switch (letter = (char) (token >> 16))
             {
-                case '1': return checkDelimiter (token >> 24) ? 0xff : AR1;
-                case '2': return checkDelimiter (token >> 24) ? 0xff : AR2;
-                case '4': return checkDelimiter (token >> 24) ? 0xff : AR4;
-                case '8': return checkDelimiter (token >> 24) ? 0xff : AR8;
+                case '1': return CheckDelimiter (token >> 24) ? 0xff : AR1;
+                case '2': return CheckDelimiter (token >> 24) ? 0xff : AR2;
+                case '4': return CheckDelimiter (token >> 24) ? 0xff : AR4;
+                case '8': return CheckDelimiter (token >> 24) ? 0xff : AR8;
                 default: return 0xff;
             }
-        case 'B': switch (letter = (char)(token >> 8))
+        case 'B': switch (letter = (char) (token >> 8))
         {
-            case 'K': switch (letter = (char)(token >> 16))
+            case 'K': switch (letter = (char) (token >> 16))
             {
-                case '2': return checkDelimiter (token >> 24) ? 0xff : BK2;
-                case '4': return checkDelimiter (token >> 24) ? 0xff : BK4;
-                case '8': return checkDelimiter (token >> 24) ? 0xff : BK8;
+                case '2': return CheckDelimiter (token >> 24) ? 0xff : BK2;
+                case '4': return CheckDelimiter (token >> 24) ? 0xff : BK4;
+                case '8': return CheckDelimiter (token >> 24) ? 0xff : BK8;
                 default: return 0xff;
             }
-            case 'O': return checkLastLetter<'L'> (token >> 16) ? 0xff : BOL;
+            case 'O': return CheckLastLetter<'L'> (token >> 16) ? 0xff : BOL;
             default: return 0xff;
         }
-        case 'D': return checkLastLetters<'B', 'L'> (token >> 16) ? 0xff : DBL;
-        case 'E': return checkLastLetters<'S', 'C'> (token >> 16) ? 0xff : ESC;
-        case 'F': return checkLastLetters<'L', 'T'> (token >> 16) ? 0xff : FLT;
+        case 'D': return CheckLastLetters<'B', 'L'> (token >> 16) ? 0xff : DBL;
+        case 'E': return CheckLastLetters<'S', 'C'> (token >> 16) ? 0xff : ESC;
+        case 'F': return CheckLastLetters<'L', 'T'> (token >> 16) ? 0xff : FLT;
         case 'G': return 0xff;
-        case 'H': return checkLastLetters<'L', 'F'> (token >> 16) ? 0xff : HLF;
+        case 'H': return CheckLastLetters<'L', 'F'> (token >> 16) ? 0xff : HLF;
         case 'I':
         case 'J':
         case 'K':
         case 'L':
         case 'M': return 0xff;
-        case 'N': return checkLastLetters<'I', 'L'> (token >> 16) ? 0xff : NIL;
+        case 'N': return CheckLastLetters<'I', 'L'> (token >> 16) ? 0xff : NIL;
         case 'O':
         case 'P':
         case 'Q':
         case 'R': return 0xff;
-        case 'S': switch (letter = (char)(token >> 8))
+        case 'S': switch (letter = (char) (token >> 8))
         {
-            case 'I': switch (letter = (char)(token >> 16))
+            case 'I': switch (letter = (char) (token >> 16))
             {
-                case '1': return checkDelimiter (token >> 24) ? 0xff : SI1;
-                case '2': return checkDelimiter (token >> 24) ? 0xff : SI2;
-                case '4': return checkDelimiter (token >> 24) ? 0xff : SI4;
-                case '8': return checkDelimiter (token >> 24) ? 0xff : SI8;
+                case '1': return CheckDelimiter (token >> 24) ? 0xff : SI1;
+                case '2': return CheckDelimiter (token >> 24) ? 0xff : SI2;
+                case '4': return CheckDelimiter (token >> 24) ? 0xff : SI4;
+                case '8': return CheckDelimiter (token >> 24) ? 0xff : SI8;
                 default: return 0xff;
             }
-            case 'T': switch (letter = (char)(token >> 16))
+            case 'O': switch (letter = (char) (token >> 16))
             {
-                case 'R': return checkDelimiter (token >> 24) ? 0xff : STR;
+                case 'H': return CheckDelimiter (token >> 24) ? 0xff : SOH;
                 default: return 0xff;
             }
-            case 'V': switch (letter = (char)(token >> 16))
+            case 'V': switch (letter = (char) (token >> 16))
             {
-                case '4': return checkDelimiter (token >> 24) ? 0xff : SV4;
-                case '8': return checkDelimiter (token >> 24) ? 0xff : SV8;
+                case '4': return CheckDelimiter (token >> 24) ? 0xff : SV4;
+                case '8': return CheckDelimiter (token >> 24) ? 0xff : SV8;
                 default: return 0xff;
             }
             default: break;
@@ -313,27 +309,27 @@ inline byte getType(const char* s)
         {
             case 'M': switch (letter = (token >> 16))
             {
-                case 'E': return checkDelimiter (token >> 24) ? 0xff : TMS;
-                case 'U': return checkDelimiter (token >> 24) ? 0xff : TMU;
+                case 'E': return CheckDelimiter (token >> 24) ? 0xff : TMS;
+                case 'U': return CheckDelimiter (token >> 24) ? 0xff : TMU;
                 default: return 0xff;
             }
             default: return 0xff;
         }
         case 'U': switch (letter = (token >> 8))
         {
-            case 'S': return checkDelimiter (token >> 16) ? 0xff : US;
-            case 'I': switch (letter = (char)(token >> 16))
+            case 'S': return CheckDelimiter (token >> 16) ? 0xff : US;
+            case 'I': switch (letter = (char) (token >> 16))
             {
-                case '1': return checkDelimiter (token >> 24) ? 0xff : UI1;
-                case '2': return checkDelimiter (token >> 24) ? 0xff : UI2;
-                case '4': return checkDelimiter (token >> 24) ? 0xff : UI4;
-                case '8': return checkDelimiter (token >> 24) ? 0xff : UI8;
+                case '1': return CheckDelimiter (token >> 24) ? 0xff : UI1;
+                case '2': return CheckDelimiter (token >> 24) ? 0xff : UI2;
+                case '4': return CheckDelimiter (token >> 24) ? 0xff : UI4;
+                case '8': return CheckDelimiter (token >> 24) ? 0xff : UI8;
                 default: return 0xff;
             }
-            case 'V': switch (letter = (char)(token >> 16))
+            case 'V': switch (letter = (char) (token >> 16))
             {
-                case '4': return checkDelimiter (token >> 24) ? 0xff : UV4;
-                case '8': return checkDelimiter (token >> 24) ? 0xff : UV8;
+                case '4': return CheckDelimiter (token >> 24) ? 0xff : UV4;
+                case '8': return CheckDelimiter (token >> 24) ? 0xff : UV8;
                 default: return 0xff;
             }
             default: return 0xff;
@@ -342,26 +338,22 @@ inline byte getType(const char* s)
     return 0xff;
 }
 
-inline byte maskType(byte value)
-/*< Masks off the lower 5-LSb to get the type. */
-{
+/** Masks off the lower 5-LSb to get the type. */
+inline byte MaskType (byte value) {
     return value & 0x1f;
 }
 
-inline bool typeHasBuffer(uint_t type)
-/*< Returns true if this type has a buffer. */
-{
-    if (type == STR || type == STX || type < AR1)
+/** Returns true if this type has a buffer. */
+inline bool TypeHasBuffer (uint_t type) {
+    if (type == STX || type < AR1)
         return false;
     return true;
 }
 
-inline bool typeIsHierarchical(uint_t type)
-/*< Returns true if this type has a buffer. */
-{
+/** Returns true if this type has a buffer. */
+inline bool TypeIsHierarchical (uint_t type) {
     return type > 20;
 }
 
 }       //< namespace _
-
 #endif  //< CHINESEROOM_TYPES_H

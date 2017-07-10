@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../Source-Impl/_Entity/Account.h
+    @file    /.../Source/KabukiTheater-Impl/TESTS/KabukiTheaterTests.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
 
@@ -18,14 +18,12 @@
         limitations under the License.
 */
 
-#include <KabukiTheater.h>
-
 #include <CppUTest\CommandLineTestRunner.h>
 #include <CppUTest\TestHarness.h>
 
-int main(int argc, char** argv)
+int main (int argc, char** argv)
 {
-    printf ("Welcome to the the Kabuki Theater Console.\n\n");
+    printf ("Welcome to the Kabuki Theater Console.\n\n");
     
 
     system ("PAUSE");

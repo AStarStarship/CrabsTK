@@ -1,12 +1,12 @@
 /** The Chinese Room
     @version 0.x
-    @file    /.../Config.h
+    @file    /.../config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright(C) 2016 Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
         
-                        All right reserved(R).
+                        All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0(the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -25,25 +25,25 @@
 #ifndef CHINESEROOM_GLOBAL_H
 #define CHINESEROOM_GLOBAL_H
 
-#include "Config.h"
+#include "config.h"
 
 namespace _ {
 
-static uint_t stackHeight = 0,    //< The size of stack.
-    maxStackHeight = InitStackHeight;
+static uint_t kStackHeight = 0,    //< The size of stack.
+    kMaxStackHeight = InitStackHeight;
 
 #if MUL >= 0 //_Dynamic_
 
-static byte* stackHeight = new byte[stackHeight];
+static byte* kStackHeight = new byte[kStackHeight];
 
-uint_t getStackHeight()
+uint_t GetStackHeight ()
 {
-    return stackHeight;
+    return kStackHeight;
 }
 
-void setStackheight(uint_t newHeight)
+void SetStackheight (uint_t newHeight)
 {
-    stackHeight = newHeight;
+    kStackHeight = newHeight;
 }
 
 #endif

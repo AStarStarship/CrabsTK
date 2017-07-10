@@ -2,11 +2,11 @@
     @version 0.x
     @file    /.../Mirror.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright(C) 2016 [Cale McCollough](calemccollough.github.io)
+    @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
 
-                            All right reserved(R).
+                            All right reserved (R).
 
-        Licensed under the Apache License, Version 2.0(the "License"); you may
+        Licensed under the Apache License, Version 2.0 (the "License"); you may
         not use this file except in compliance with the License. You may obtain
         a copy of the License at
 
@@ -22,102 +22,68 @@
 #ifndef CHINESEROOM_MIRROR_H
 #define CHINESEROOM_MIRROR_H
 
-#include "IPortal.h"
-#include "Log.h"
-#include "Print.h"
+#include "portal.h"
+#include "print.h"
+#include "door.h"
 
 namespace _ {
 
-inline const Member<T>* Door1 (Terminal* io, byte index)
-{
-    static const byte buffer[255];
-    DEVICE (door, "Door 1", 0, "Door 1")
-
-}
-
-template<typename T>
-class Mirror: public IPortal, public IDevice
-/*< A type of IPortal that loops back the tx to rx.
+/** A type of Portal that loops back the tx to rx.
 */
-{
+class Mirror: public Portal, public Device {
     public:
 
-    Mirror ()
-    /*< Default constructor. */
-    {
-        //! Nothing to do here!
+    /** Default constructor. */
+    Mirror () {
+        // Nothing to do here!
     }
 
-    Mirror* init (uint_t bufferSize, byte stackHeigth, IDevice* deviceA, IDevice* deviceB)
-    /*< Creates a mirror from a pre-created . */
-    {
-        t.init (bufferSize, stackSize, rootDevice, door);
+    /** Creates a mirror from a pre-created . */
+    Mirror* Init (uint_t buffer_size, byte stack_size, Device* a,
+                  Door* origin) {
+        io_.Init (buffer_size, stack_size, a, origin);
         return this;
     }
 
-    virtual void feed()
-    /*< Feeds tx messages through the io. */
-    {
-        while (t.isReadable ()) t.streamRxByte (t.streamTxByte ());
+    /** Feeds tx messages through the io. */
+    virtual void Feed () {
+        while (io_.IsReadable ()) t.StreamRxByte (t.StreamTxByte ());
     }
 
-    virtual void pull()
-    /*< Pulls rx messages through the io. */
-    {
-        feed ();
+    /** Pulls rx messages through the io. */
+    virtual void Pull () {
+        Feed ();
     }
 
-    void print(Log<T>& log)
-    /*< Prints the Mirror to the debug stream. */
-    {
-        printLine ('_');
-        printf ("| Terminal: %p", this);
-        t.print ();
-    }
-
-    const Member<T>* op(Terminal* io, byte index) override
-    /*< Inter-process operations. */
-    {
+    /** Inter-process operations. */
+    const Member* Op (Rx* rx, Tx& tx, char index) override {
         return nullptr;
     }
 
     private:
 
-    NONCOPYABLE (Mirror)
+    //NONCOPYABLE (Mirror)
 
-    IDevice* device;    //< The device in front of the mirror.
-    Terminal<T> t;      //< The Terminal for this Portal.
+    Device* device_;     //< The device in front of the mirror.
+    Terminal io_; //< The Terminal for this Portal.
 };
 
-template<typename T>
-inline Mirror<T>* createMirror(uint_t terminalSize, uint16_t stackSize)
-/*< Creates a Terminal with the given buffer and stack size. */
-{
+/** Creates a Mirror with the given buffer and stack size. */
+inline Mirror* CreateMirror (uint_t buffer_size, uint_t stack_size) {
     try
     {
-        byte* buffer = new byte[mirrorSize];
+        byte* buffer = new byte[buffer_size];
         #if DEBUG_CHINESEROOM
-        memset (buffer, '\0', mirrorSize);
+        memset (buffer, '\0', buffer_size);
         #endif
-        //! Copy the v-table pointer.
-        *reinterpret_cast<void**>(&buffer[0]) = *reinterpret_cast<void**>(&m);
-        Mirror* m_ptr = new(buffer) Mirror ();
 
-        //! Initialize the memory.
-        return m_ptr->init (mirrorSize, stackSize);
-    }
-    catch (...)
-    {
+        Mirror* m = new (buffer) Mirror ();
+
+        // Initialize the memory.
+        return m->Init (buffer_size, stack_size);
+    } catch (...) {
         return nullptr;
     }
-}
-
-template<typename T>
-inline void destroy(Mirror<T>* m)
-/*< Destroys the given Terminal. */
-{
-    if (m == nullptr) return;
-    delete[] reinterpret_cast<byte*>(m);
 }
 
 }       //< namespace _

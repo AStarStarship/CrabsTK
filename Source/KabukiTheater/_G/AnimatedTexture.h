@@ -25,7 +25,9 @@
 #include "Color.hpp"
 #include "Rect2D.hpp"
 
-namespace _G {
+namespace _g {
+
+_g
 
 template<typename Type>
 class AnimatedTexture: public Rect2D<Type>
