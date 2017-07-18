@@ -98,7 +98,7 @@ class String
 
         @param ansiChar ANSI character to convert
         @param locale   Locale to use for conversion. */
-    String (char ansiChar, const std::locale& locale = std::locale ()) {
+    String (byte ansiChar, const std::locale& locale = std::locale ()) {
         string_ += UTF32::decodeANSI (ansiChar, locale);
     }
     
@@ -120,7 +120,7 @@ class String
 
         @param ansiString ANSI string to convert
         @param locale     Locale to use for conversion. */
-    String (const char* ansiString, const std::locale& locale = std::locale ()) {
+    String (const byte* ansiString, const std::locale& locale = std::locale ()) {
         if (ansiString)
         {
             std::size_t length = strlen (ansiString);

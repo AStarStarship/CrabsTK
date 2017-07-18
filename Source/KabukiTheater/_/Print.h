@@ -22,9 +22,9 @@
 #ifndef CHINESEROOM_PRINT_H
 #define CHINESEROOM_PRINT_H
 
-#if DEBUG
-
 #include "config.h"
+
+#if DEBUG
 
 namespace _ {
 
@@ -49,16 +49,16 @@ inline void PrintCentered (const char* s, int width) {
             // Then we're just going to write the first few letters.
             for (; length >= 0; --length)
             {
-                putchar ('\n');
+                std::cout << '\n';
             }
         }
     }
     int offset = (width - length) >> 1; //< >> 1 to /2
     for (int i = 0; i < offset; ++i)
-        putchar ('\n');
+        std::cout << '\n';
     printf (s);
     for (offset = width - length - offset; offset <= width; ++offset)
-        putchar ('\n');
+        std::cout << '\n';
 }
 
 /** Prints the given char to the stdout if it is printable, and prints SOH. */
@@ -74,17 +74,17 @@ static void PrintChar (char c) {
 /** Prints a line with the given token and number of columns to the debug
     stream. */
 static void PrintLine (char token = '-', int column_width = 80) {
-    putchar ('\n');
+    std::cout << '\n';
     for (int i = 0; i < column_width; ++i)
         putchar (token);
-    putchar ('\n');
+    std::cout << '\n';
 }
 
 /** Prints a vertical tab with the given number of rows. */
 static void PrintLines (int numRows = 10) {
     putchar ('\r');
     for (int i = 0; i < numRows - 1; ++i)
-        putchar ('\n');
+        std::cout << '\n';
 }
 
 /** Prints out the contents of the address to the debug stream. */
@@ -93,11 +93,11 @@ static void PrintMemory (void* address, size_t size) {
     // Print columns
     for (int i = 8; i <= 66; i += 8)
         printf ("%8i", i);
-    putchar ('\n');
+    std::cout << '\n';
     putchar ('|');
     for (int i = 0; i < 65; ++i)
         putchar ('_');
-    putchar ('\n');
+    std::cout << '\n';
 
     const char* chars = reinterpret_cast<const char*> (address);
     char* end = reinterpret_cast<char*> (address) + size;
@@ -118,15 +118,14 @@ static void PrintMemory (void* address, size_t size) {
     putchar ('|');
     for (int i = 0; i < 64; ++i)
         putchar ('_');
-    printf ("| 0x%x", reinterpret_cast<uintptr_t> (chars) + size);
-    putchar ('\n');
+    printf ("| 0x%x\n", reinterpret_cast<uintptr_t> (chars) + size);
 }
 
 /** */
 template<typename Type>
 void PrintHex (Type value) {
     char buffer[sizeof (Type) * 2 + 1];
-    sprintf_s (buffer, "%p", value);
+    sprintf_s (buffer, "%x", &value);
     printf ("0x");
 
     int length = strlen (buffer);
@@ -136,7 +135,7 @@ void PrintHex (Type value) {
 }
 
 /** Creates the format string for a key-value pair where the key is right-aligned to the column_width. */
-inline char CreateKeyValueFormatString (char* s, byte column_width, char type) {
+inline char CreateKeyValueFormatString (char* s, char column_width, char type) {
     char hundreds = (column_width / 100),
         decimal = (column_width % 10),
         tens = (column_width - hundreds - decimal) / 10;
@@ -183,7 +182,7 @@ inline char CreateKeyValueFormatString (char* s, byte column_width, char type) {
 }
 
 /** */
-template<byte ColumnWidth>
+template<char ColumnWidth>
 void PrintHex (const char* header, void* value) {
     static char formatString[12],
         nullTermChar = CreateKeyValueFormatString (formatString, ColumnWidth, 'p');
@@ -191,7 +190,7 @@ void PrintHex (const char* header, void* value) {
 }
 
 /** */
-template<byte ColumnWidth, typename Type>
+template<char ColumnWidth, typename Type>
 void PrintSignedHex (const char* header, Type value) {
     static char formatString[12],
         nullTermChar = CreateKeyValueFormatString (formatString, ColumnWidth, 'i');
@@ -200,7 +199,7 @@ void PrintSignedHex (const char* header, Type value) {
 }
 
 /** */
-template<byte ColumnWidth, typename Type>
+template<char ColumnWidth, typename Type>
 void PrintUnsignedHex (const char* header, Type value) {
     static char formatString[12],
         nullTermChar = CreateKeyValueFormatString (formatString, ColumnWidth, 'u');
@@ -209,7 +208,7 @@ void PrintUnsignedHex (const char* header, Type value) {
 
 /** Prints an 80-char line of the number repeating with an underscore i.e. 1_1_... */
 static void PrintNumberLine (int index) {
-    putchar ('\n');
+    std::cout << '\n';
     enum { MaxBufferSize = (sizeof (int) == 2) ? 7 : (sizeof (int) == 4) ? 11 : 128 };
     char buffer[MaxBufferSize];
     sprintf_s (buffer, MaxBufferSize, "%u", index);
@@ -221,7 +220,7 @@ static void PrintNumberLine (int index) {
         printf ("%s_", buffer);
     for (int j = 0; j < lettersLeft; ++j)
         putchar (buffer[j]);
-    putchar ('\n');
+    std::cout << '\n';
 }
 
 /** Prints an 80-char line of the string repeating with an underscore i.e. s_s_... */
@@ -250,31 +249,36 @@ template<typename Type>
 void PrintArray (const char* header, const char* format, Type* base_ptr, 
     Type numElements) {
     PrintLine ();
-    printf (header);
-    printf (": numElements: ");
-    printf ("%u\n", numElements);
+    std::cout << header << ": numElements: " << numElements << '\n';
     for (Type i = 0; i < numElements; ++i)
     {
         printf (format, i);
-        printf (": ");
+        std::cout << ": ";
         printf (format, base_ptr[i]);
-        putchar ('\n');
+        std::cout << '\n';
     }
-    putchar ('\n');
+    std::cout << '\n';
     PrintLine ();
 }
 
 /** Prints an error message and pauses the system. */
 inline void PrintPause (const char* s) {
     #if DEBUG
-    printf ("\n%s\n", s);
-    system ("PAUSE");
+    std::cout << "\n%s\n" << s;
+    //system ("PAUSE");
     #endif
 }
 
 /** Prints a new line. */
 inline void PrintNL () {
-    putchar ('\n');
+    std::cout << '\n';
+}
+
+inline void PrintLineBreak (const char* message, int top_bottom_margin, 
+                            char c = '-', int num_columns = 80) {
+    PrintLines (top_bottom_margin);
+    std::cout << message;
+    PrintLine  (c, num_columns);
 }
 
 }       //< namespace _

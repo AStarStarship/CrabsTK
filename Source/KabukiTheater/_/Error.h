@@ -23,24 +23,26 @@
 #define CHINESEROOM_ERROR_H
 
 #include "args.h"
+#include "print.h"
 
 namespace _ {
 
 // typedef for an error: we have less than 255
-typedef byte error_t;
+typedef unsigned char error_t;
 
 /** List of common errors. */
 typedef enum {
     BufferUnderflowError = 0,
     BufferOverflowError,
     VarintOverflowError,
+    InvalidHashError,
     ReadInvalidTypeError,
-    InvalidDataError,
     InvalidStateError,
     InvalidIndexError,
     InvalidEnqueryError,
     UnsupportedTypeError,
     TypeMismatchError,
+    InvalidArgumentError,
     InvalidRoomNumberError,
     TooManyParametersError,
     NullPointerError,
@@ -50,80 +52,68 @@ typedef enum {
     NoDevceSelectedError,
     NoDeviceInSelectedIndexError,
     StackOverflowError,
-    UTF16NotSupportedError,
-    NonZeroPaddingError,
     InvalidNumBookPagesError,
-    InvalidErrorError,
     TooManyPopsError,
     RxStringBufferOverflowError,
     RxHandlingErrorError,
-    NullProcessError,
     NullDevicePushError,
     ReadErrorError,
     WriteErrorError,
     NonexistentMemberError,
     OutOfMemoryError,
-    kNumErrors,
+    InvalidErrorError,
 } Error;
 
-inline const char** errorStrings ()
+inline const char** ErrorStrings ()
 /** Returns the text label of the Error. */
 {
     static const char* errorStrings[] = {
-        "Buffer underflow",
-        "Buffer overflow",
+        "Buffer underflow",             //< 1
+        "Buffer overflow",              //< 2
         "Varint overflow"
+        "Invalid hash",
         "Read invalid type",
-        "Invalid data read",
         "Invalid state",
         "Invalid index",
         "Invalid equerry",
         "Unsupported type",
         "Type mismatch error"
         "Invalid argument number"
+        "Invalid room number",
         "Too many parameters",
         "Null pointer",
         "Null header",
-        "Null terminal",
+        "Null room",
         "Scan error",
         "Object stack overflow",
-        "UTF-16 not supported",
-        "Non-zero padding",
         "No device selected error",
-        "Invalid number of Book pages",
-        "Invalid error",
+        "Stack overflow",
+        "Invalid number of pages",
         "Too many pops",
         "Rx string buffer overflow error",
         "Rx handling error state",
-        "Null program error",
         "Null device push error",
         "Read error",
         "Write error",
         "Nonexistent member",
         "Out of memory",
+        "Invalid error",
     };
     return errorStrings;
-}
-
-inline const char* ErrorString (error_t e)
-/** Returns the text label of the Error. */
-{
-    if (e >= InvalidErrorError) return errorStrings ()[InvalidErrorError];
-    return errorStrings ()[e];
 }
 
 inline const char* ErrorString (Error e)
 /** Returns the text label of the Error. */
 {
-    if (e < 0 || e >= InvalidErrorError) return errorStrings ()[InvalidErrorError];
-    return errorStrings ()[e];
+    if (e < 0 || e >= InvalidErrorError) return ErrorStrings ()[InvalidErrorError];
+    return ErrorStrings ()[e];
 }
 
 /** An array of error strings.
     
     @code
     int max_errors = 5;
-    char* errorBuffer[max_errors];
+    byte* errorBuffer[max_errors];
     ErrorList errors (ErrorBuffer, max_errors);
     @endcode
 
@@ -160,7 +150,7 @@ class ErrorList {
         @param header   The header where the error occurred.
         @param offset   The offset in the current header.
     */
-    ticket_t Report (Error e, const uint_t* header = nullptr, byte offset = 0, 
+    ticket_t Report (Error e, const uint_t* header = nullptr, byte offset = 0,
                      byte* source = nullptr) {
         if (num_errors_ >= kMaxErrors)
         {
@@ -172,40 +162,65 @@ class ErrorList {
         offsets_[num_errors_] = offset;
         sources_[num_errors_] = source;
 
-        PrintReport (e, header, offset, source);
+#if DEBUG_CHINESEROOM
+        PrintError (e, header, offset, source);
+#endif
 
         ++num_errors_;
         return num_errors_ - 1;
     }
 
-    /** Prints out an error report to the stdout. */
-    void PrintReport (Error e, const uint_t* header, byte offset, byte* source) {
-        #if DEBUG
-        printf ("%s: ", ErrorString (e));
-        PrintParams (header);
-        printf ("\n    offset: %u", offset);
-        if (source == nullptr)
-        {
-            printf (" source: nullptr\n");
+    /** Prints out an error report to the stdout.
+    @param e The error type.
+    @param params The parameter header.
+    @param param_index the index in the params where the error occurred.
+    @param source The source buffer address. */
+    void PrintReport (Error e, const uint_t* params, byte param_index, byte* source) {
+        error_t num_errors = num_errors_;
+        Error* errors = errors_;
+        byte* offsets = offsets_;
+        const uint_t** headers = headers_;
+        byte** sources = sources_;
+        printf ("\nError Report:\n");
+
+        for (error_t i = 0; i < num_errors_; ++i) {
+            printf ("%4u: ", i);
+            PrintError (errors[i], headers[i], offsets[i], sources[i]);
         }
-        printf (" source: %s\n", TypeString (*source));
-        #endif
+    }
+
+    /** Prints out an error report to the stdout.
+        @param e The error type. 
+        @param params The parameter header. 
+        @param param_index the index in the params where the error occurred.
+        @param source The source buffer address. */
+    void PrintError (Error e, const uint_t* params, byte param_index, 
+                     byte* source)
+    {
+        enum {
+            kNumLines = 10
+        };
+        PrintLines (kNumLines);
+        printf ("%s error in argument %u:%s of ", ErrorString (e), param_index, 
+                TypeString (ParamNumber (params, param_index)));
+        PrintParams (params);
+        PrintLines (kNumLines);
     }
 
     /** Gets the list of errors. */
-    error_t* GetErrors () {
+    Error* GetErrors () {
         return errors_;
     }
 
     /** Prints the error list to the error stream. 
     void Print () {
-        static const char StartString[] = "\r\nStart\0",
+        static const byte StartString[] = "\r\nStart\0",
             StopString[] = "\r\nStop\0",
             BeginString[] = "\r\nBegin\0",
             EndString[] = "\r\nEnd\0",
             pointToErrorLocationString[] = "Start of error ---v\0";
 
-        const char* pointerHex;
+        const byte* pointerHex;
 
         if (sizeof (intptr_t) == 64)
             pointerHex = "0x%08x %s";
@@ -258,19 +273,19 @@ class ErrorList {
     private:
     
     error_t num_errors_;                //< The max number of errors.
-    error_t errors_[kMaxErrors];        //< An array of error types.
+    Error errors_[kMaxErrors];          //< An array of error types.
     byte offsets_[kMaxErrors];          //< An array of error types.
     const uint_t* headers_[kMaxErrors]; //< An array of pointers to error headers.
     byte* sources_[kMaxErrors];         //< An array of pointers to error sources.
 };
 
 /** Function that returns a static Error list with the given ErrorListNumber.
-The templates function allows for easy generation of multiple error lists.
-All you do to create another list is to alter the ErrorListNumber.
+    The templates function allows for easy generation of multiple error lists.
+    All you do to create another list is to alter the ErrorListNumber.
 
-@code
-ticket_t errorNumber = errors_<
-@endcode
+    @code
+    ticket_t errorNumber = errors_<
+    @endcode
 */
 static ErrorList& Errors () {
     static ErrorList el;
@@ -278,30 +293,29 @@ static ErrorList& Errors () {
 }
 
 /** Reports an error for later handling. */
-inline ticket_t ReportError (Error e, const uint_t* header, byte offset, 
-                                    byte* source) {
+inline ticket_t Report (Error e, const uint_t* header, byte offset, 
+                             byte* source) {
     return Errors ().Report (e, header, offset, source);
 }
 
 /** Reports an error for later handling. */
-inline ticket_t ReportError (Error e) {
+inline ticket_t Report (Error e) {
     return Errors ().Report (e, 0, 0, 0);
 }
 
 /** Reports an error for later handling. */
-inline ticket_t ReportError (Error e, const uint_t* header) {
+inline ticket_t Report (Error e, const uint_t* header) {
     return Errors ().Report (e, header, 0, 0);
 }
 
 /** Reports an error for later handling. */
-inline ticket_t ReportError (Error e, const uint_t* header, 
-                                    byte* source) {
+inline ticket_t Report (Error e, const uint_t* header, byte* source) {
     return Errors ().Report (e, header, 0, source);
 }
 
 /** Reports an error for later handling. */
-inline ticket_t ReportError (Error e, volatile const uint_t* header,
-                                    byte* source) {
+inline ticket_t Report (Error e, volatile const uint_t* header,
+                             byte* source) {
     return Errors ().Report (e, const_cast<const uint_t*>(header), 0, 0);
 }
 

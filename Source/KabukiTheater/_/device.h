@@ -43,7 +43,7 @@ namespace _ {
         void bar () {}     //< Example dummy bar.
 
         // I2P operations.
-        const Member* Op (Rx* rx, Tx& tx, char index) override
+        const Member* Op (Rx* rx, Tx* tx, byte index) override
         {
             void* argv[2];    //< An array of 2 void* for the Rpc arguments.
 
@@ -105,19 +105,19 @@ namespace _ {
         };
 
         float ioNumber;                 //< Example variable.
-        char ioString[StringBufferSize];//< Example string.
+        byte ioString[StringBufferSize];//< Example string.
     };
     @endcode
 */
 struct Device {
     /** I2P operations. */
-    virtual const Member* Op (Rx* rx, Tx& tx, char index) = 0;
+    virtual const Member* Op (Rx* rx, Tx* tx, byte index) = 0;
 };
 
 /** Gets the number of members of the given device. */
 inline uintptr_t GetNumMembers (Device* d) {
     if (d == nullptr) return 0;
-    const Member* m = d->Op (nullptr, Log (), '?');
+    const Member* m = d->Op (nullptr, Logbook<0> ().socket, '?');
     return m == nullptr ? 0 : reinterpret_cast<uintptr_t> (m->rx_header);
 }
 

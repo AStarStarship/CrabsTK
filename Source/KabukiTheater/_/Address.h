@@ -25,23 +25,23 @@
 namespace _ {
     
 /** C++11 constexpr struct for creating parameter headers with less typing.
-template<const char... N>
+template<const byte... N>
 struct Address {
-    static const char path[sizeof... (N)] = { N... };
-    static const char term_char = 0;
+    static const byte path[sizeof... (N)] = { N... };
+    static const byte term_char = 0;
     //static constexpr size_t length = sizeof... (N);
 }; */
 
-template<const char... N>
-const char* Address () {
-    static const char path[sizeof... (N)] = { N... };
-    static const char term_char = 0;
+template<const byte... N>
+const byte* Address () {
+    static const byte path[sizeof... (N)] = { N... };
+    static const byte term_char = 0;
     return path;
 }
 
 /** Returns a pointer to static variable for writing the address { a, \0 } to.
 */
-inline uint16_t PackAddress (char a) {
+inline uint16_t PackAddress (byte a) {
     return ((1 << 8) | a);
 }
 

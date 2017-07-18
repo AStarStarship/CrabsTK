@@ -26,6 +26,14 @@
 
 namespace _ {
 
+/*< Gets a random number. */
+template<typename T>
+inline T GetRandom () {
+    srand (time (NULL));
+    T random_number = static_cast<T>(rand ());
+    return random_number;
+}
+
 /*< Creates a buffer from dynamic memory. */
 template<typename T, typename U>
 static T* New (U const size, U min_size) {
@@ -42,61 +50,61 @@ static T* New (U const size, U min_size) {
     }
 }
 
+/** Deletes the given dynamic memory. */
+inline void Delete (void* buffer) {
+    if (buffer == nullptr) return;
+    delete [] buffer;
+}
+
 template<uint_t kBufferNumber, uint_t kBufferSize>
-inline byte* GetBuffer () {
+inline byte* Buffer () {
     static byte buffer[kBufferSize];
     return buffer;
 }
-
-/** Creates a  
-template<typename T, uint_t kMinSize>
-static T* Construct (uint_t size) {
-    byte* buffer = NewBuffer (size, kMinSize)
-    if (buffer == nullptr) return nullptr;
-    T* t = nullptr;//new (buffer) T (); //< This line wont work for some reason???
-    return t;
-}
-
-template<typename T, uint_t kMinSize>
-inline T* Construct (byte* buffer, uint_t size) {
-    if (size < kMinSize) return nullptr;
-    if (buffer == nullptr) return nullptr;
-#if DEBUG
-    memset (buffer, '\0', size);
-#endif
-    T* t = nullptr;//new (buffer) T (); //< This line wont work for some reason???
-    return t;
-}*/
 
 template<typename T>
 inline T* PointTo (void* base, uint_t offset) {
     return reinterpret_cast<T*>(reinterpret_cast<byte*>(base) + offset);
 }
 
-/** Deletes the given dynamic memory. */
-inline void Destroy (void* t) {
-    if (t == nullptr) return;
-    delete[] reinterpret_cast<byte*> (t);
+/** Copies a block from a ring-buffer to the given destination. */
+static byte* WriteSocket (void* source, byte* const begin, 
+                          byte* const start, byte* const stop, 
+                          byte* const end, size_t size) {
+    if (source == nullptr) return start;
+
+    // Now we can copy the book into memory.
+    if ((start > stop) && (start + size >= end)) {
+        // Calculate upper chunk size.
+        uint_t top_chunk = end - stop;
+        size -= top_chunk;
+
+        memcpy (source, start, top_chunk);
+        memcpy (reinterpret_cast<byte*>(source) + top_chunk, begin, size);
+        return begin + size;
+    }
+    memcpy (source, stop, size);
+    return start + size;
 }
 
-/** Calculates the used ring buffer space.
-    @param  Start The start of the data.
-    @param  Stop  The stop of the data.
-    @param  Size The size of the buffer.
-*/
-inline uint_t CalcRingSegmentLength (byte* start, byte* stop, uint_t size) {
-    uint_t delta_start_stop = static_cast<uint> (stop - start);
-    return start < stop ? size - delta_start_stop : delta_start_stop;
-}
+/** Copies a block from a ring-buffer to the given destination. */
+static byte* SocketRead (void* destination, byte* const begin,
+                         byte* const start, byte* const stop,
+                         byte* const end, size_t size) {
+    if (destination == nullptr) return start;
 
-/** Calculates the space left in the given ring buffer.
-    @param  Start The start of the data.
-    @param  Stop  The stop of the data.
-    @param  Size  The size of the buffer.
-*/
-inline uint_t CalcRingBufferSpace (byte* start, byte* stop, uint_t size) {
-    uint_t delta_start_stop = static_cast<uint> (stop - start);
-    return start < stop ? delta_start_stop : size - delta_start_stop;
+    // Now we can copy the book into memory.
+    if ((start > stop) && (start + size >= end)) {
+        // Calculate upper chunk size.
+        uint_t top_chunk = end - stop;
+        size -= top_chunk;
+
+        memcpy (start, destination, top_chunk);
+        memcpy (begin, reinterpret_cast<byte*>(destination) + top_chunk, size);
+        return begin + size;
+    }
+    memcpy (stop, destination, size);
+    return start + size;
 }
 
 /** Returns the number to add to word-align the given pointer to a uint_t-bit 
@@ -108,24 +116,6 @@ inline uintptr_t WordAlignOffset (void* ptr) {
     return (value & mask);
 }
 
-/** Hashes a single char. */
-template<typename THash>
-inline THash PrimeHash (char c, THash hash) {
-    return hash * (kHashPrime + c);
-}
-
-/** Hashes the given string using the primeHash function. */
-template<typename THash>
-inline THash PrimeHash (const char* s, THash hash = kHashSeed) {
-    char c = *s;
-    while (c) {
-        hash = PrimeHash<THash> (c, hash);
-        ++s;
-        c = *s;
-    }
-    return hash;
-}
-
 /** Copies a string from the source to the destination. */
 inline void CopyString (char* dest, const char* source) {
     try
@@ -135,7 +125,7 @@ inline void CopyString (char* dest, const char* source) {
         while (c != 0) {
             //putchar (c);
             //PrintHex ("", dest);
-            //putchar ('\n');
+            //std::cout << '\n';
             *dest = c;
             ++dest;
             c = *source;
@@ -148,27 +138,11 @@ inline void CopyString (char* dest, const char* source) {
         printf ("\n\nError: Attempted to write out of bounds!\n\n");
         //system ("PAUSE");
     }
-    //putchar ('\n');
-}
-
-/** Writes a block of memory to a file. */
-inline void WriteToFile (const char* filename, void* address, size_t size) {
-    std::ofstream f;
-    f.open (filename);
-    byte* ptr = reinterpret_cast<byte*> (address);
-
-    if (!f.is_open ())
-    {
-        printf ("Error: Could not open file for writing!\n");
-    }
-    for (size_t i = 0; i < size; ++i)
-        f << *ptr;
-    ++ptr;
-    f.close ();
+    //std::cout << '\n';
 }
 
 /** Converts a single byte a one-byte hex representation. */
-inline char NibbleToLowerCaseHex (byte b) {
+inline byte NibbleToLowerCaseHex (byte b) {
     if (b > 15) return 'f';
     //printf ("Input: %u ", b);
     if (b >  9)
@@ -181,7 +155,7 @@ inline char NibbleToLowerCaseHex (byte b) {
 }
 
 /** Converts a single byte a one-byte hex representation. */
-inline char NibbleToUpperCaseHex (byte b) {
+inline byte NibbleToUpperCaseHex (byte b) {
     if (b > 15) return 'F';
     if (b >  9) return b + ('A' - 10);
     return b + '0';
@@ -194,27 +168,27 @@ inline uint16_t ToLowerCaseHex (byte b) {
     //PrintLine ();
 
     //printf ("toLowerCaseHex: %u ", b);
-    uint16_t value = NibbleToLowerCaseHex (b >> 4);
-    //printf (" output << 8: %c ", (char) (value));
+    uint16_t value = NibbleToLowerCaseHex (b & 0xf);
+    //printf (" output << 8: %c ", (byte) (value));
     value = value << 8;
-    value |= NibbleToLowerCaseHex (b & 0xf);
-    //printf (" output: %c\n", (char)nibbleToLowerCaseHex (b));
+    value |= NibbleToLowerCaseHex (b >> 4);
+    //printf (" output: %c\n", (byte)nibbleToLowerCaseHex (b));
     return value;
 }
 
 /** Converts a single byte a two-byte hex representation. */
 inline uint16_t ToUpperCaseHex (byte b) {
-    uint16_t value = NibbleToUpperCaseHex (b >> 4);
+    uint16_t value = NibbleToUpperCaseHex (b & 0xf);
     value = value << 8;
-    value |= NibbleToUpperCaseHex (b & 0xf);
+    value |= NibbleToUpperCaseHex (b >> 4);
     return value;
 }
 
-/** Converts a single hex char a byte.
-    @return Returns -1 if c is not a hex char.
+/** Converts a single hex byte a byte.
+    @return Returns -1 if c is not a hex byte.
 */
-inline int ToByte (char c) {
-    //printf ("toByte (char c): %c ", c);
+inline int ToByte (byte c) {
+    //printf ("toByte (byte c): %c ", c);
     if (c < '0') return -1;
     if (c >= 'a')
     {
@@ -233,15 +207,15 @@ inline int ToByte (char c) {
 }
 
 /** Converts a single byte into a two-byte hex representation.
-    @return Returns -1 if c is not a hex char.
+    @return Returns -1 if c is not a hex byte.
 */
 inline int ToByte (uint16_t h) {
-    //printf ("toByte (uint16_t c): %c%c\n", (char) (h << 8), (char)h);
-    int lowerValue = ToByte (static_cast<char> (h));
+    //printf ("toByte (uint16_t c): %c%c\n", (byte) (h << 8), (byte)h);
+    int lowerValue = ToByte (static_cast<byte> (h));
     //printf (" lowerValue: %i \n", lowerValue);
     if (lowerValue < 0) return -1;
 
-    int upperValue = ToByte (static_cast<char> (h >> 8));
+    int upperValue = ToByte (static_cast<byte> (h >> 8));
     if (upperValue < 0) return -1;
     //printf (" upperValue: %i \nlowerValue | (upperValue << 4): %i\n",
     //	upperValue, lowerValue | (upperValue << 4));
@@ -250,83 +224,11 @@ inline int ToByte (uint16_t h) {
     return lowerValue | (upperValue << 4);
 }
 
-/** Copies the given */
-inline void CopyByteArrayToClipBoard (void* address, size_t size) {
-
-    /*
-    #include <conio.h>
-    #include <stdio.h>
-    #include <cstdlib>
-    #include <Windows.h> // use < > for all system and library headers
-    #include <winuser.h>
-    #include <cmath>
-    #include <iostream>
-    #include <iomanip>
-    #include <complex>
-    #include <string>
-
-    // 2. forward declaration (also see later)
-    void toClipboard (HWND hwnd, const std::string &s);
-
-    using namespace std;
-
-    int main (){
-
-        string AAA;
-
-        cout <<"Please enter sentence: "; cin >> AAA;
-        cout << endl;
-        cout << endl;
-        cout << "This has been copied to the clipboard: ";
-        cout << AAA << endl;
-        // 1. strlen takes a const char*, so have to call the strings c_str () method
-        // (but it would be better to use len = AAA.length () instead)
-        size_t len = strlen (AAA.c_str ());
-        cout << len << " char (s)" << endl;
-        // get desktop windows and the call toClipboard
-        toClipboard (hwnd, AAA);
-        cin.clear ();
-        cin.ignore (255, '\n');
-        cin.get ();
-
-        return 0;
-    }
-
-    // 2. declare functions at file scope
-    void toClipboard (HWND hwnd, const std::string &s){
-    }
-    #if PLATFORM == MINGW
-    HWND hwnd = GetDesktopWindow ();
-    OpenClipboard (hwnd);
-    EmptyClipboard ();
-    HGLOBAL hg = GlobalAlloc (GMEM_MOVEABLE, size);
-    if (!hg)
-    {
-        CloseClipboard ();
-        return;
-    }
-    memcpy (GlobalLock (hg), address, size);
-    GlobalUnlock (hg);
-    SetClipboardData (CF_TEXT, hg);
-    CloseClipboard ();
-    GlobalFree (hg);
-    #elif PLATFORM == _OSX_
-    #error Unsupported platform because you're OS is whack!
-    #endif
-    */
+/** Calculates the difference between the begin and end address. */
+inline uintptr_t Diff (void* begin, void* end) {
+    return static_cast<uintptr_t>(reinterpret_cast<byte*> (end) -
+        reinterpret_cast<byte*> (begin));
 }
-
-/** Calculates the difference between the start and stop GetAddresses. */
-inline uintptr_t Diff (void* start, void* stop) {
-    return static_cast<uintptr_t>(reinterpret_cast<byte*> (stop) -
-        reinterpret_cast<byte*> (start));
-}
-
-/** Calculates the difference between the start and stop GetAddresses. */
-//inline uintptr_t Diff (void* start, uint_t offset) {
-//    return static_cast<uintptr_t>(reinterpret_cast<byte*> (stop) -
-//                                  reinterpret_cast<byte*> (start));
-//}
 
 /** Gets a randomly generated 32-bit hash. */
 template<typename T>
@@ -343,10 +245,69 @@ inline const char* DuplicateString (const char* s) {
     return buffer;
 }
 
-/** Destroys the duplicate string created by const char* duplicate
-    (const char*). */
-inline void DestroyDuplicate (const char* s) {
+/** Destroys the duplicate string created by const byte* duplicate
+    (const byte*). */
+inline void DestroyDuplicate (const byte* s) {
     if (s == nullptr) return;
+}
+
+inline void PrintHex (byte c)     {
+    uint16_t chars = ToUpperCaseHex (c);
+    putchar ((char)chars);
+    putchar ((char)(chars >> 8));
+    putchar (' ');
+}
+
+/** Hashes a single byte. */
+inline hash16_t Hash16 (char c, hash16_t hash) {
+    PrintHex (c);
+    hash16_t cprime = c * 65521;
+    return cprime + hash;
+}
+
+/** Hashes the given string using the primeHash function. */
+inline hash16_t Hash16 (const char* s, hash16_t hash = 65521) {
+    byte c = *s;
+    while (c) {
+        hash = Hash16 (c, hash);
+        ++s;
+        c = *s;
+    }
+    return hash;
+}
+
+/** Hashes a single byte. */
+inline hash32_t Hash32 (char c, hash32_t hash) {
+    hash32_t cprime = c * 4294967291;
+    return cprime + hash;
+}
+
+/** Hashes the given string using the primeHash function. */
+inline hash16_t Hash32 (const char* s, hash32_t hash = 4294967291) {
+    byte c = *s;
+    while (c) {
+        hash = Hash32 (c, hash);
+        ++s;
+        c = *s;
+    }
+    return hash;
+}
+
+/** Hashes a single byte. */
+inline hash64_t Hash64 (char c, hash64_t hash) {
+    hash64_t cprime = c * 18446744073709551557;
+    return cprime + hash;
+}
+
+/** Hashes the given string using the primeHash function. */
+inline hash64_t Hash64 (const char* s, hash64_t hash = 18446744073709551557) {
+    byte c = *s;
+    while (c) {
+        hash = Hash64 (c, hash);
+        ++s;
+        c = *s;
+    }
+    return hash;
 }
 
 }       //< namespace _

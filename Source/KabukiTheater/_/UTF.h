@@ -266,7 +266,7 @@ class UTF<8>
     }
 
     template <typename In, typename Out>
-    static Out toANSI (In begin, In end, Out output, char replacement = 0, const std::locale& locale = std::locale ())
+    static Out toANSI (In begin, In end, Out output, byte replacement = 0, const std::locale& locale = std::locale ())
     /** Convert an UTF-8 characters range to ANSI characters
        
         The current global locale will be used by default, unless you
@@ -312,7 +312,7 @@ class UTF<8>
     }
 
     template <typename In, typename Out>
-    static Out toLatin1 (In begin, In end, Out output, char replacement = 0)
+    static Out toLatin1 (In begin, In end, Out output, byte replacement = 0)
     /** Convert an UTF-8 characters range to Latin-1 (ISO-5589-1) characters
        
         @param begin       Iterator pointing to the beginning of the input sequence
@@ -328,7 +328,7 @@ class UTF<8>
         {
             uint32_t codepoint;
             begin = decode (begin, end, codepoint);
-            *output++ = codepoint < 256 ? static_cast<char> (codepoint) : replacement;
+            *output++ = codepoint < 256 ? static_cast<byte> (codepoint) : replacement;
         }
 
         return output;
@@ -590,7 +590,7 @@ class UTF<16>
     }
 
     template <typename In, typename Out>
-    static Out toANSI (In begin, In end, Out output, char replacement = 0, const std::locale& locale = std::locale ())
+    static Out toANSI (In begin, In end, Out output, byte replacement = 0, const std::locale& locale = std::locale ())
     /** Convert an UTF-16 characters range to ANSI characters
        
         The current global locale will be used by default, unless you
@@ -636,7 +636,7 @@ class UTF<16>
     }
 
     template <typename In, typename Out>
-    static Out toLatin1 (In begin, In end, Out output, char replacement = 0)
+    static Out toLatin1 (In begin, In end, Out output, byte replacement = 0)
     /** Convert an UTF-16 characters range to Latin-1 (ISO-5589-1) characters
        
         @param begin       Iterator pointing to the beginning of the input sequence
@@ -650,7 +650,7 @@ class UTF<16>
         // and can thus be treated as (a sub-range of) UTF-32
         while (begin < end)
         {
-            *output++ = *begin < 256 ? static_cast<char> (*begin) : replacement;
+            *output++ = *begin < 256 ? static_cast<byte> (*begin) : replacement;
             begin++;
         }
 
@@ -841,7 +841,7 @@ class UTF<32>
     }
 
     template <typename In, typename Out>
-    static Out toANSI (In begin, In end, Out output, char replacement = 0, const std::locale& locale = std::locale ())
+    static Out toANSI (In begin, In end, Out output, byte replacement = 0, const std::locale& locale = std::locale ())
     /** Convert an UTF-32 characters range to ANSI characters
        
         The current global locale will be used by default, unless you
@@ -879,7 +879,7 @@ class UTF<32>
     }
 
     template <typename In, typename Out>
-    static Out toLatin1 (In begin, In end, Out output, char replacement = 0)
+    static Out toLatin1 (In begin, In end, Out output, byte replacement = 0)
     /** Convert an UTF-16 characters range to Latin-1 (ISO-5589-1) characters
        
         @param begin       Iterator pointing to the beginning of the input sequence
@@ -893,7 +893,7 @@ class UTF<32>
         // and can thus be treated as (a sub-range of) UTF-32
         while (begin < end)
         {
-            *output++ = *begin < 256 ? static_cast<char> (*begin) : replacement;
+            *output++ = *begin < 256 ? static_cast<byte> (*begin) : replacement;
             begin++;
         }
 
@@ -1002,7 +1002,7 @@ class UTF<32>
     }
 
     template <typename Out>
-    static Out encodeANSI (uint32_t codepoint, Out output, char replacement = 0, const std::locale& locale = std::locale ())
+    static Out encodeANSI (uint32_t codepoint, Out output, byte replacement = 0, const std::locale& locale = std::locale ())
     /** Encode a single UTF-32 character to ANSI
        
         This function does not exist in other specializations
@@ -1027,7 +1027,7 @@ class UTF<32>
 
  (void)locale; // to avoid warnings
 
-        char character = 0;
+        byte character = 0;
         if (wctomb (&character, static_cast<wchar_t> (codepoint)) >= 0)
             *output++ = character;
         else if (replacement)

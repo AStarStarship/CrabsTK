@@ -9,22 +9,25 @@ A modern C++11 software development kit and app framework built on top of [Simpl
     problem is in the @media section.
 
 ## Project Organization
-The primary development environment is Visual Studio using [Symmetry Station](https://github.com/Kabuki-Toolkit/SymmetryStation). Please see the [Symmetry Station Quick Start Guide](https://github.com/Kabuki-Toolkit/SymmetryStation/wiki/Quick-Start-Guide). Each folder in the project should have ReadMe.md file in it that should tell you what you need to know. Source header files are separated from their precompiled .lib and .dll source implementation. Development instructions are in the ReadMe.md files in the /.../Source/KabukiTheater-Impl/ folder and subfolders. If you choose to not use Symmetry Station, you may need to update the projects libraries to the most recent updates that have not been synced across projects yet.
+Each module listed below is decoupled, but all share a common header-only core
+of the Chinese Room. This microcore is the _ namespace. For examples, please 
+see the Examples folder.
 
 ## Project Status: Alpha
 
 ## SDK Modules
 | Name     | Description |
 |:--------:|:------------|
-| __       | System core, IO, and Networking.|
-| _App     | Application framework.|
-| _Audio   | Audio.|
-| _File    | Files and archives.|
-| _G       | Graphics engine.|
-| _GUI     | Graphical User Interfaces.|
-| _Id      | Identification.|
-| _Math    | Math and geometry.|
-| _Theater | Music, lighting, and creativity.|
+| _        | Microcore.|
+| __       | Application framework.|
+| _app     | Application framework.|
+| _audio   | Audio.|
+| _g       | Graphics engine.|
+| _gui     | Graphical User Interfaces.|
+| _hmi     | Human-machine Interfaces.|
+| _id      | Identification.|
+| _math    | Math and geometry.|
+| _play    | Music, lighting, and creativity.|
 
 ## License
 Copyright 2017 (C) [Cale McCollough](mailto:calemccollough@gmail.com)

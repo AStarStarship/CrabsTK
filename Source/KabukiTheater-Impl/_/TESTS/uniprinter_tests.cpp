@@ -1,5 +1,5 @@
-/** The Chinese Room
-    @version 0.9
+/** Kabuki Theater
+    @version 0.x
     @file    /.../Source/KabukiTheater-Impl/_/TESTS/uniprinter_tests.cpp
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright 2017 (C) Cale McCollough <cale.mccollough@gmail.com>
@@ -22,7 +22,7 @@
 #include <CppUTest/CommandLineTestRunner.h>
 #include <CppUTest/TestHarness.h>
 
-#include <_/terminal.h>
+#include <_/uniprinter.h>
 
 using namespace _;
 
@@ -43,7 +43,7 @@ class Gadget: public Device
     void functionB () {}                //< Example dummy function B.
 
     // Remote procedure call using switch statement example; note the only RAM used is one pointer per parameter.
-    const Member* Op (Rx* rx, Tx& tx, char index) override
+    const Member* Op (Rx* rx, Tx* tx, char index) override
     {
         void* args[2];
 
@@ -56,8 +56,8 @@ class Gadget: public Device
             }
             case 'A': {
                 static const Member m1 = { "FloatTests",
-                    Params<2, FLT, STX, kStringBufferSize> (),
-                    Params<2, FLT, STX> (),
+                    Param<2, FLT, STX, kStringBufferSize> (),
+                    Param<2, FLT, STX> (),
                     "Description of functionA." };
                 if (!io) return &m1;
 
@@ -74,8 +74,8 @@ class Gadget: public Device
             }
             case 'B': {
                 static const Member m2 = { "SignedIntegerTests",
-                    Params<2, FLT, STX, kStringBufferSize> (),
-                    Params<2, FLT, STX> (),
+                    Param<2, FLT, STX, kStringBufferSize> (),
+                    Param<2, FLT, STX> (),
                     "Description of functionB." };
 
                 if (!io) return &m2;
@@ -111,19 +111,20 @@ TEST_GROUP (UniprinterTests)
 {
     void setup ()
     {
-        // Init stuff
+        printf ("\n+ Running UniprinterTests...\n");
     }
 
     void teardown ()
     {
-        printf ("\n\nTerminalTests completed.\n\n");
-        system ("PAUSE");
+        printf ("  UniprinterTests completed.\n");
+        //system ("PAUSE");
     }
 
 };
 
-TEST (UniprinterTests, FirstTest)
+TEST (UniprinterTests, UniprinterTestsOne)
 {
+    printf ("Running UniprinterTestsOne...\n");
     //const char* result;
 
     /// Testing mythology:

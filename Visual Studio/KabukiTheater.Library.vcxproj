@@ -32,6 +32,7 @@
     <ClInclude Include="..\Source\KabukiTheater\_\exceptions.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\global.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\iterator.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\log.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\member.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\mirror.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\portal.h" />
@@ -40,6 +41,7 @@
     <ClInclude Include="..\Source\KabukiTheater\_\room.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\rx.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\slot.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\ring_buffer.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\uniprinter.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\string.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\terminal.h" />
@@ -48,6 +50,7 @@
     <ClInclude Include="..\Source\KabukiTheater\_\types.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\utf.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\utils.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\wall.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\KabukiTheater\_\assembly_settings.inl" />

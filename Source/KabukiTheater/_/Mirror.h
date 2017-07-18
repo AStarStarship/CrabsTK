@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    /.../Mirror.h
+    @file    /.../mirror.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
 
@@ -23,12 +23,11 @@
 #define CHINESEROOM_MIRROR_H
 
 #include "portal.h"
-#include "print.h"
 #include "door.h"
 
 namespace _ {
 
-/** A type of Portal that loops back the tx to rx.
+/** A type of Portal that .
 */
 class Mirror: public Portal, public Device {
     public:
@@ -39,15 +38,15 @@ class Mirror: public Portal, public Device {
     }
 
     /** Creates a mirror from a pre-created . */
-    Mirror* Init (uint_t buffer_size, byte stack_size, Device* a,
-                  Door* origin) {
-        io_.Init (buffer_size, stack_size, a, origin);
+    Mirror* Init (uint_t buffer_size, byte stack_size, Device* a) {
+        UniprinterInit (io_, buffer_size, stack_size, a);
         return this;
     }
 
     /** Feeds tx messages through the io. */
     virtual void Feed () {
-        while (io_.IsReadable ()) t.StreamRxByte (t.StreamTxByte ());
+        Rx* rx = GetRx (io_);
+        while (IsReadable (rx)) StreamRxByte (io_, StreamTxByte (io_));
     }
 
     /** Pulls rx messages through the io. */
@@ -56,7 +55,7 @@ class Mirror: public Portal, public Device {
     }
 
     /** Inter-process operations. */
-    const Member* Op (Rx* rx, Tx& tx, char index) override {
+    const Member* Op (Rx* rx, Tx* tx, byte index) override {
         return nullptr;
     }
 
@@ -64,27 +63,9 @@ class Mirror: public Portal, public Device {
 
     //NONCOPYABLE (Mirror)
 
-    Device* device_;     //< The device in front of the mirror.
-    Terminal io_; //< The Terminal for this Portal.
+    Device* device_;    //< The device in front of the mirror.
+    Uniprinter* io_;    //< The Terminal for this Portal.
 };
-
-/** Creates a Mirror with the given buffer and stack size. */
-inline Mirror* CreateMirror (uint_t buffer_size, uint_t stack_size) {
-    try
-    {
-        byte* buffer = new byte[buffer_size];
-        #if DEBUG_CHINESEROOM
-        memset (buffer, '\0', buffer_size);
-        #endif
-
-        Mirror* m = new (buffer) Mirror ();
-
-        // Initialize the memory.
-        return m->Init (buffer_size, stack_size);
-    } catch (...) {
-        return nullptr;
-    }
-}
 
 }       //< namespace _
 

@@ -79,7 +79,7 @@ struct Uniprinter {
         states_size,                //< Size of the state stack.
         num_states;                 //< Number of states on the state stack.
     Device* device;                 //< Device in the ESC being verified.
-    volatile const uint_t* header; //< Pointer to the header being verified.
+    volatile const uint_t* params; //< Pointer to the header being verified.
     const uint_t* headers_;         //< First header ptr in the scan array.
 };
 
@@ -107,22 +107,12 @@ typedef enum TxStates {
 } TxState;
 
 /*< Gets a pointer to the Rx slot. */
-inline Rx* GetRx (Uniprinter& io) {
-    return reinterpret_cast<Rx*>(reinterpret_cast<byte*>(&io) + io.rx_offset);
-}
-
-/*< Gets a pointer to the Rx slot. */
 inline Rx* GetRx (Uniprinter* io) {
     return io == nullptr ? nullptr :
            reinterpret_cast<Rx*>(reinterpret_cast<byte*>(io) + io->rx_offset);
 }
 
-/*< Gets a pointer to the Rx slot. */
-inline Tx* GetTx (Uniprinter& io) {
-    return reinterpret_cast<Tx*>(reinterpret_cast<byte*>(&io) + io.tx_offset);
-}
-
-/*< Gets a pointer to the Rx slot. */
+/*< Gets a pointer to the Tx slot. */
 inline Tx* GetTx (Uniprinter* io) {
     return io == nullptr ? nullptr :
            reinterpret_cast<Tx*>(reinterpret_cast<byte*>(io) + io->tx_offset);
@@ -130,7 +120,7 @@ inline Tx* GetTx (Uniprinter* io) {
     
 /** Constructs a Uniprinter with equal sized rx and tx slots.
     @param root */
-static Uniprinter* InitUniprinter (Uniprinter* io, uint_t buffer_size, 
+static Uniprinter* UniprinterInit (Uniprinter* io, uint_t buffer_size, 
                             uint_t stack_height, Device* root = nullptr) {
     if (buffer_size < kMinBufferSize)
         return nullptr;
@@ -151,32 +141,32 @@ static Uniprinter* InitUniprinter (Uniprinter* io, uint_t buffer_size,
                     sizeof (void*))), stack_height, buffer_size, size);
 #endif //< DEBUG_CHINESEROOM
     io->bytes_left = 0;
-    InitRx (GetRx (io), buffer_size);
-    InitTx (GetTx (io), buffer_size);
-    io->header = 0;
+    RxInit (GetRx (io), buffer_size);
+    TxInit (GetTx (io), buffer_size);
+    io->params = 0;
     io->device = root;
     //origin_ = door;
     return io;
 }
 
 /** Gets the base address of the device stack. */
-static Device** GetDeviceStackBasePtr (Uniprinter& io) {
+static Device** GetDeviceStackBasePtr (Uniprinter* io) {
     auto a = reinterpret_cast<byte*> (&io) + sizeof (Uniprinter) +
-        io.stack_height * io.stack_size * sizeof (const uint_t*);
+        io->stack_height * io->stack_size * sizeof (const uint_t*);
     return reinterpret_cast<Device**> (a);
 }
 
 /** Returns true if the Uniprinter uses dynamic memory. */
-inline bool IsDynamic (Uniprinter& io) {
-    return io.type % 2 == 1;
+inline bool IsDynamic (Uniprinter* io) {
+    return io->type % 2 == 1;
 }
 
-inline byte* GetEndAddress (Uniprinter& io) {
+inline byte* GetEndAddress (Uniprinter* io) {
     return SlotEndAddress (GetRx (io));
 }
 
 /** Returns true if the given Uniprinter contains the given address. */
-inline bool Contains (Uniprinter& io, void* address) {
+inline bool Contains (Uniprinter* io, void* address) {
     if (address < reinterpret_cast<byte*>(&io))
         return false;
     if (address > GetEndAddress (io)) return false;
@@ -184,7 +174,7 @@ inline bool Contains (Uniprinter& io, void* address) {
 }
 
 /** Resets this Uniprinter to the initial state. */
-static ticket_t Reset (Uniprinter& io) {
+static ticket_t Reset (Uniprinter* io) {
     return 0;
 }
 
@@ -192,58 +182,58 @@ static ticket_t Reset (Uniprinter& io) {
     device control onto the stack.
     @return Returns nullptr upon success and a pointer to a string
     upon failure. */
-static ticket_t Push (Uniprinter& io, Device* d) {
+static ticket_t Push (Uniprinter* io, Device* d) {
     if (d == nullptr)
-        return ReportError (NullDevicePushError);
-    if (io.stack_height >= io.stack_size)
-        return ReportError (StackOverflowError);
-    GetDeviceStackBasePtr (io)[io.stack_height++] = d;
+        return Report (NullDevicePushError);
+    if (io->stack_height >= io->stack_size)
+        return Report (StackOverflowError);
+    GetDeviceStackBasePtr (io)[io->stack_height++] = d;
     return 0;
 }
 
 /** Attempts to pop an Device off the stack and returns a pointer to a
     string upon failure. */
-static ticket_t Pop (Uniprinter& io) {
-    if (io.stack_height == 0)
-        return ReportError (TooManyPopsError);
-    io.device = GetDeviceStackBasePtr (io)[--io.stack_height];
+static ticket_t Pop (Uniprinter* io) {
+    if (io->stack_height == 0)
+        return Report (TooManyPopsError);
+    io->device = GetDeviceStackBasePtr (io)[--io->stack_height];
     return 0;
 }
 
 /** Gets the base address of the state stack. */
-static byte* StateStack (Uniprinter& io) {
+static byte* StateStack (Uniprinter* io) {
     return reinterpret_cast<byte*> (&io) + sizeof (Uniprinter);
 }
 
 /** Exits the current state. */
-static ticket_t ExitState (Uniprinter& io) {
-    auto a = io.stack_height;
+static ticket_t ExitState (Uniprinter* io) {
+    auto a = io->stack_height;
     if (a == 0)
-        return ReportError (TooManyPopsError);
-    io.rx_state = StateStack (io)[--a];
-    io.stack_height = a;
+        return Report (TooManyPopsError);
+    io->rx_state = StateStack (io)[--a];
+    io->stack_height = a;
     return 0;
 }
 
 /** Pushes the new state onto the verifier stack. */
-static ticket_t EnterState (Uniprinter& io, byte state) {
+static ticket_t EnterState (Uniprinter* io, byte state) {
     if (state >= RxInvalidState)
-        return ReportError (InvalidStateError);
-    auto a = io.stack_height;
-    if (a >= io.stack_size)
-        return ReportError (StackOverflowError);
-    StateStack (io)[a] = io.rx_state;
-    a = io.stack_height + 1;
-    io.rx_state = state;
+        return Report (InvalidStateError);
+    auto a = io->stack_height;
+    if (a >= io->stack_size)
+        return Report (StackOverflowError);
+    StateStack (io)[a] = io->rx_state;
+    a = io->stack_height + 1;
+    io->rx_state = state;
     return 0;
 }
 
 /** Selects the given member. */
-static ticket_t PushScanHeader (Uniprinter& io, volatile const uint_t* header) {
+static ticket_t PushScanHeader (Uniprinter* io, volatile const uint_t* header) {
     uint16_t num_verifying = num_verifying;
-    if (num_verifying >= io.stack_size) {
-        return ReportError (StackOverflowError, header,
-                            SlotBaseAddress (&io, io.tx_offset));
+    if (num_verifying >= io->stack_size) {
+        return Report (StackOverflowError, header,
+                            SocketBaseAddress (&io, io->tx_offset));
     }
     uint_t** scan_headers_ptr = reinterpret_cast<uint_t**> (&io) +
         (sizeof (Uniprinter) / sizeof (uint_t**)) +
@@ -255,23 +245,23 @@ static ticket_t PushScanHeader (Uniprinter& io, volatile const uint_t* header) {
 }
 
 /** Pops a header off the scan stack. */
-static ticket_t PopScanHeader (Uniprinter& io) {
-    auto num_verifying = io.num_verifying;
+static ticket_t PopScanHeader (Uniprinter* io) {
+    auto num_verifying = io->num_verifying;
     if (num_verifying == 0) {
-        return ReportError (TooManyPopsError);
+        return Report (TooManyPopsError);
     }
     --num_verifying;
     uint_t** headers = reinterpret_cast<uint_t**> (&io) +
         (sizeof (Uniprinter) / sizeof (uint_t**)) + num_verifying;
     ExitState (io);
-    io.header = *headers;
+    io->params = *headers;
     num_verifying = num_verifying;
     return 0;
 }
 
 /** Scans the next type header type. */
-static void ScanNextType (Uniprinter& io) {
-    uint_t* header = const_cast<uint_t*> (io.header);
+static void ScanNextType (Uniprinter* io) {
+    uint_t* header = const_cast<uint_t*> (io->params);
     if (header == nullptr) {
         EnterState (io, RxScanningArgsState);
         return;
@@ -283,18 +273,13 @@ static void ScanNextType (Uniprinter& io) {
         return;
     }
     ++header;
-    io.header = header;
-    io.rx_state = io.last_rx_state;
+    io->params = header;
+    io->rx_state = io->last_rx_state;
     //type = *header;
 }
 
-/** Returns true if the Rx buffer contains any data. */
-//bool IsReadable () {
-//    return GetRxLength () > 0;
-//}
-
 /** Streams an Rx byte. */
-static void StreamRxByte (Uniprinter& io, char b) {
+static void StreamRxByte (Uniprinter* io, byte b) {
     // It is fastest do a few branches as possible, and to compare to zero 
     // as much as possible. In order to optimize the switch, it is fastest 
     // to decrement the bytes_left, compare it to zero, and only process 
@@ -313,38 +298,44 @@ static void StreamRxByte (Uniprinter& io, char b) {
 
     uint_t size = tx->size,
         space_left;
-    hash16_t rx_hash = io.rx_hash;
+    hash16_t rx_hash = io->rx_hash;
 
-    byte* begin = SlotBaseAddress (GetRx(io)),
+    byte* begin = SocketBaseAddress (GetRx(io)),
         *end = begin + size,
         *start = begin + tx->start,
         *stop = begin + tx->stop;
-    space_left = CalcRingBufferSpace (start, stop, size);
+    space_left = RingBufferSpace (start, stop, size);
     *start = b;
     ++start;
 
     if (rx_state == RxParsingStringState) {
-        rx_hash = PrimeHash<hash32_t> (b, rx_hash);
+        printf ("| rx_state == RxParsingStringState\n");
+        rx_hash = Hash16 (b, rx_hash);
 
-        if (io.bytes_left == 0) {
-            ReportError (RxStringBufferOverflowError, io.header, start);
+        if (io->bytes_left == 0) {
+            printf ("| io->bytes_left == 0\n");
+            Report (RxStringBufferOverflowError, io->params, start);
             return;
         }
         // Hash byte.
-        rx_hash = PrimeHash (b, rx_hash);
+        rx_hash = Hash16 (b, rx_hash);
 
         // Check if string terminated.
         if (b == 0) {
+            printf ("| b == 0\n");
             ExitState (io);
             return;
         }
-        --io.bytes_left;
+        printf ("| b != 0\n");
+        --io->bytes_left;
         return;
     } else if (rx_state == RxParsingVarIntState) {
+        printf ("| rx_state == RxParsingVarIntState\n");
         // Hash byte.
-        rx_hash = PrimeHash (b, rx_hash);
+        rx_hash = Hash16 (b, rx_hash);
 
-        if (io.bytes_left == 1) {
+        if (io->bytes_left == 1) {
+            printf ("| io->bytes_left == 1\n");
             // Check last byte for error.
 
             // @warning I am not current saving the offset. I'm not sure 
@@ -355,60 +346,69 @@ static void StreamRxByte (Uniprinter& io, char b) {
             //          add 32 to the first byte.
 
             if ((b >> 7) != 1) {
-                ReportError (VarintOverflowError, io.header, start);
+                printf ("| (b >> 7) != 1\n");
+                Report (VarintOverflowError, io->params, start);
                 EnterState (io, RxHandlingErrorState);
                 return;
             }
 
             return;
         }
-        --io.bytes_left;
+        --io->bytes_left;
         return;
     } else if (rx_state == RxAddressState) {
+        printf ("| rx_state == RxAddressState\n");
         if (b == ESC) {     // Start processing a new ESC.
-            io.header++;
-            PushScanHeader (io, io.header);
+            printf ("| b == ESC\n");
+            io->params++;
+            PushScanHeader (io, io->params);
             return;
         }
 
         // Check if it is a Procedure Call or Device.
-        const Member* m = io.device->Op (nullptr, Log (), b);
+        const Member* m = io->device->Op (nullptr, Logbook<0> ().socket, b);
         if (m == nullptr) {
+            printf ("| m == nullptr\n");
             // The member does not exist.
-            ReportError (VarintOverflowError, io.header, start);
+            Report (VarintOverflowError, io->params, start);
             EnterState (io, RxLockedState);
             return;
         }
         if (m->tx_header == nullptr) {   // Then it's a Device.
+            printf ("| m->tx_header == nullptr\n");
             //device->Op (this, Log (), b);
-            Push (io, io.device);
+            Push (io, io->device);
             return;
         }
+        printf ("| it's a function call\n");
         // else it's a function call.
-        rx_hash = PrimeHash (b, rx_hash);
+        rx_hash = Hash16 (b, rx_hash);
         PushScanHeader (io, m->rx_header);
         EnterState (io, RxScanningArgsState);
         return;
     } else if (rx_state == RxHandlingErrorState) {
+        printf ("| rx_state == RxHandlingErrorState\n");
         return;
     } else if (rx_state == RxLockedState) {
+        printf ("| rx_state == RxLockedState\n");
         return;
     }
     // else we're parsing POD data.
 
-    --io.bytes_left;
-    if (io.bytes_left == 0) {
+    --io->bytes_left;
+    if (io->bytes_left == 0) {
+        printf ("| io->bytes_left == 0\n");
         // Success parsing POD type.
         ScanNextType (io);
     }
 }
 
 /** Streams a tx byte. */
-static byte StreamTxByte (Uniprinter& io) {
+static byte StreamTxByte (Uniprinter* io) {
 
     Tx* tx = GetTx (io);
 
-    byte* begin = SlotBaseAddress (&io, io.rx_offset),
+    byte* begin = SocketBaseAddress (&io, io->rx_offset),
         *end = begin + tx->size;
     byte* open = (byte*)begin + tx->read,
         *start = begin + tx->start,
@@ -418,7 +418,7 @@ static byte StreamTxByte (Uniprinter& io) {
                     (open - begin) + 2;
 
     if (length < 1)
-        return ReportError (BufferOverflowError, Params<1, STX> (), 2,
+        return Report (BufferOverflowError, Esc<1, STX> (), 2,
                             start);
 
     byte b = *cursor;
@@ -429,27 +429,27 @@ static byte StreamTxByte (Uniprinter& io) {
 
 /** Prints a single string to the console.
     @return Returns an index to the ErrorList ticket number.
-ticket_t Log (const char* s) {
+ticket_t Log (const byte* s) {
     if (s == nullptr) return 0;
 
     // Temp variables packed into groups of 8 bytes for memory alignment.
-    char c;
+    byte c;
     uint_t buffer_space,
         size_ = size_;
 
-    byte* begin = SlotBaseAddress (this, rx_offset),
+    byte* begin = SocketBaseAddress (this, rx_offset),
         *end = begin + size_,
         *start = begin + tx_start,
         *stop = begin + tx_stop;
 
-    buffer_space = CalcRingBufferSpace (start, stop, size_);
+    buffer_space = RingBufferSpace (start, stop, size_);
 
     c = *s;
     *stop = c;
 
     while (c != 0) {
         if (--buffer_space == 0) {
-            return ReportError(BufferUnderflowError, Params<1, STR> (), 2, start);
+            return ReportError(BufferUnderflowError, Esc<1, STR> (), 2, start);
         }
         ++s;
         c = *s;     // Read byte.
@@ -462,8 +462,8 @@ ticket_t Log (const char* s) {
 } */
 
 /** Returns true if this terminal contains the given address. */
-static bool UniprinterContains (Uniprinter& io, byte* address) {
-    byte* base_address = reinterpret_cast<byte*>(&io) + io.tx_offset;
+static bool UniprinterContains (Uniprinter* io, byte* address) {
+    byte* base_address = reinterpret_cast<byte*>(&io) + io->tx_offset;
     if (address < base_address) return false;
     Tx* tx = reinterpret_cast<Tx*>(base_address);
     uint_t tx_size = tx->size;
@@ -472,15 +472,15 @@ static bool UniprinterContains (Uniprinter& io, byte* address) {
 }
 
 /** Returns true if this terminal contains the given address. */
-inline bool UniprinterContains (Uniprinter& io, void* address) { 
+inline bool UniprinterContains (Uniprinter* io, void* address) { 
     return Contains (io, reinterpret_cast<byte*>(address));
 }
 
 /** Pushes a header onto the scan stack.*/
-static ticket_t PushHeader (Uniprinter& io, const uint_t* header) {
-    if (io.stack_height >= io.stack_size) {
+static ticket_t PushHeader (Uniprinter* io, const uint_t* header) {
+    if (io->stack_height >= io->stack_size) {
         // Big error! Stack overflow!
-        return ReportError (StackOverflowError, header);
+        return Report (StackOverflowError, header);
     }
 
     //if (dc == nullptr) return noDevceSelectedError ();
@@ -489,20 +489,20 @@ static ticket_t PushHeader (Uniprinter& io, const uint_t* header) {
 }
 
 /** Gets the base address of the header stack. */
-static const uint_t* GetHeaderStackBasePtr (Uniprinter& io) {
+static const uint_t* GetHeaderStackBasePtr (Uniprinter* io) {
     return reinterpret_cast<const uint_t*> (reinterpret_cast<byte*>
-        (&io) + sizeof (Uniprinter) + io.stack_height);
+        (&io) + sizeof (Uniprinter) + io->stack_height);
 }
 
 /** Closes the current expression and cues it for execution. */
-static void CloseExpression (Uniprinter& io) {
+static void CloseExpression (Uniprinter* io) {
 #if DEBUG
     printf ("\r\n[FF]\r\n");
 #endif
 }
 
 /** Cancels the current expression. */
-static void CancelExpression (Uniprinter& io) {
+static void CancelExpression (Uniprinter* io) {
 #if DEBUG
     printf ("\r\n[CAN]\r\n\n");
 #endif
@@ -510,18 +510,18 @@ static void CancelExpression (Uniprinter& io) {
 }
 
 /** Cancels the current expression and writes zeros to the buffer. */
-static void ScrubExpression (Uniprinter& io) {
+static void ScrubExpression (Uniprinter* io) {
     // Erase the buffer by writing zeros to it.
 
     Rx* rx = GetRx (io);
     uint_t size = rx->size;
 
-    byte* begin = SlotBaseAddress (&io, io.rx_offset),
+    byte* begin = SocketBaseAddress (&io, io->rx_offset),
         *end = begin + rx->size,
         *start = begin + rx->start,
         *stop = begin + rx->stop;
 
-    uint_t buffer_space = CalcRingBufferSpace (start, stop, size);
+    uint_t buffer_space = RingBufferSpace (start, stop, size);
 
     if (start == stop) return; //< Nothing to do.
     if (start > stop) {
@@ -533,14 +533,6 @@ static void ScrubExpression (Uniprinter& io) {
 
     rx->start = Diff (&io, begin);
     rx->stop = Diff (&io, start + 1);
-}
-
-/** Creates a Uniprinter with the given buffer and stack size. */
-static Uniprinter* CreateUniprinter (uint_t buffer_size, uint_t stack_size) {
-    Uniprinter* io = New<Uniprinter, uint_t> (buffer_size, kMinSlotSize * 2);
-    if (io == nullptr) return nullptr;
-    InitUniprinter (io, buffer_size, stack_size);
-    return io;
 }
 
 }       //< namespace _

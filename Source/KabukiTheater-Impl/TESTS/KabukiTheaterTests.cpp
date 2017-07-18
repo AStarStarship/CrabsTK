@@ -19,14 +19,13 @@
 */
 
 #include <CppUTest\CommandLineTestRunner.h>
-#include <CppUTest\TestHarness.h>
 
-int main (int argc, char** argv)
+int main (int args_count, char** args)
 {
-    printf ("Welcome to the Kabuki Theater Console.\n\n");
+    printf ("Welcome to the Kabuki Theater test Console.\n\n");
     
 
-    system ("PAUSE");
+    //system ("PAUSE");
 
-    return 0;
+    return CommandLineTestRunner::RunAllTests (args_count, args);
 }

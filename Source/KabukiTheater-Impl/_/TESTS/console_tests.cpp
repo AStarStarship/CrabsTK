@@ -1,6 +1,6 @@
-/** The Chinese Room
+/** Kabuki Theater
     @version 0.x
-    @file   /.../TESTS/BookTests.cpp
+    @file   /.../Source/KabukiTheater-Impl/_/TESTS/console_tsts.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
 
@@ -31,30 +31,18 @@ TEST_GROUP (ConsoleTests)
 {
     void setup ()
     {
-        // Init stuff
+        printf ("\n\n+ Running ConsoleTests...\n");
     }
 
     void teardown ()
     {
-        printf ("\n\nUtilsTests completed.\n\n");
+        printf ("  UtilsTests completed.\n");
         //system ("PAUSE");
     }
 };
 
-TEST (ConsoleTests, toHexTest)
+TEST (ConsoleTests, ConsoleTestOne)
 {
-    for (int i = 0; i < 16; ++i)
-    {
-        byte value = ToByte (NibbleToLowerCaseHex (i));
-        CHECK_EQUAL (i, value)
-        value = ToByte (NibbleToUpperCaseHex (i));
-        CHECK_EQUAL (i, value)
-   }
-    for (int i = 0; i < 256; ++i)
-    {
-        byte value = ToByte (ToLowerCaseHex (i));
-        CHECK_EQUAL (i, value)
-        value = ToByte (ToUpperCaseHex (i));
-        CHECK_EQUAL (i, value)
-    }
+    printf ("  - Running ConsoleTestOne...\n\n");
+
 }

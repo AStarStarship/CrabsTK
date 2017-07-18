@@ -1,6 +1,6 @@
-/** The Chinese Room
+/** Kabuki Theater
     @version 0.x
-    /.../Source/KabukiTheater-Impl/_/TESTS/record_table_tests.cpp
+    @file    /.../Source/KabukiTheater-Impl/_/TESTS/record_table_tests.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
 
@@ -35,24 +35,27 @@ TEST_GROUP (RecordTableTests)
 {
     void setup ()
     {
-        // Init stuff
+        PrintLineBreak ("+ Running RecordTableTests...", 5);
     }
 
     void teardown ()
     {
-        printf ("\n\nRecordTableTests completed.\n\n");
-        //system ("PAUSE");
+        std::cout << "  RecordTableTests completed.\n";
+        system ("PAUSE");
     }
 
 };
 
-TEST (RecordTableTests, FirstTest)
+TEST (RecordTableTests, RecordTableTest1)
 {
+    std::cout << "  - Running RecordTableTest1...\n";
     byte index;
-    RecordTable* rt = CreateRecordTable (8, 128);
+    RecordTable* rt = RecordTableInit (Buffer<0, 128> (), 8, 128);
+    
     CHECK (rt != nullptr)
     
     index = Add (rt, "D");
+    Print (rt);
     CHECK_EQUAL (0, index)
     CHECK_EQUAL (0, Find (rt, "D"))
 
@@ -98,6 +101,4 @@ TEST (RecordTableTests, FirstTest)
     
     index = Add (rt, "test");
     CHECK_EQUAL (index, kRecordTableFull)
-    
-    Destroy (rt);
 }

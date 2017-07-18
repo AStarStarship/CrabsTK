@@ -57,6 +57,9 @@ static const char* kChineseRoomVersion = "0.1";
 #define YES                         1
 #define NO                          0
 
+#include <cstdint>
+#include <stdint.h>
+
 #include "assembly_settings.inl"
 
 // Check the bounds of all of the assembly_settings
@@ -70,8 +73,6 @@ static const char NewLineString[] = "\n\0"; //< The empty string.
 
 // Pre-compiled headers: comment out those you're not using.
 
-#include <cstdint>
-#include <stdint.h>
 #include <time.h>
 #include <iterator>
 #include <iostream>
@@ -93,12 +94,6 @@ static const char NewLineString[] = "\n\0"; //< The empty string.
 
 typedef uint8_t byte;
 typedef unsigned int uint;
-
-namespace _ {
-enum {
-    kHashPrime = 101,
-};
-}
 
 #define INVALID_POSITIVE_VALUE 0x7FFFFFFF
 
@@ -134,6 +129,13 @@ static const intptr_t  NaNWInt = ~ (0);      //< Word-sized signed NaN.
 typedef uint16_t hash16_t;                  //< Using unsigned 16-bit hash type.
 typedef uint32_t hash32_t;                  //< Using unsigned 32-bit hash type.
 typedef uint64_t hash64_t;                  //< Using unsigned 64-bit hash type.
+
+enum {
+    kLargest16BitPrime  = 65521,            //< The largest 16-bit prime number.
+    kLargest32BitPrime = 4294967291,        //< The largest 32-bit prime number.
+    kLargest64BitPrime = 18446744073709551557,  // The largest 64-bit prime number.
+};
+
 typedef int64_t timestamp_t;                //< A 64-bit microsecond timestamp in microseconds from Unix Epoch.
 
 
@@ -158,6 +160,8 @@ enum {
 #elif MEMORY_USE_LEVEL == 1
 typedef int8_t int_t;                       //< Buffer signed index type.
 typedef uint8_t uint_t;                     //< Buffer unsigned index type.
+typedef int16_t dint_t;                     //< Buffer double signed index type.
+typedef uint16_t duint_t;                   //< Buffer unsigned index type.
 typedef byte TBookIndex;                    //< The largest bit-depth book TIndex this system supports.
 typedef uint16_t TBookHeader;               //< The largest bit-depth book THeader this system supports.
 typedef uint16_t TBookDataOffset;           //< The largest bit-depth book TData this system supports.
@@ -212,22 +216,6 @@ typedef uint16_t TBookIndex;                //< Book4 TIndex.
 typedef uint16_t TBookHeader;               //< Book 4 TBookHeader
 typedef uint32_t TBookDataOffset;           //< Book 4 TBookDataOffset
 typedef hash32_t TBookHash;                 //< Book 4 TBookHash
-
-#elif MUL == 6                              //< No dynamic memory with 64-bit offsets.
-typedef int64_t int_t;                      //< Buffer signed index type.
-typedef uint64_t uint_t;                    //< Buffer unsigned index type.
-typedef uint32_t TBookIndex;                //< Book8 TIndex.
-typedef uint16_t TBookHeader;               //< Book 8 TBookHeader
-typedef uint32_t TBookDataOffset;           //< Book 8 TBookDataOffset
-typedef hash64_t TBookHash;                 //< Book 8 TBookHash
-
-#elif MUL == 7                              //< Dynamic memory with 64-bit offsets.
-typedef int64_t int_t;                      //< Buffer signed index type.
-typedef uint64_t uint_t;                    //< Buffer unsigned index type.
-typedef uint32_t TBookIndex;                //< Book8 TIndex.
-typedef uint16_t TBookHeader;               //< Book 8 TBookHeader
-typedef uint32_t TBookDataOffset;           //< Book 8 TBookDataOffset
-typedef hash64_t TBookHash;                 //< Book 8 TBookHash
 
 #else
 #error  Invalid MEMORY_USE_LEVEL

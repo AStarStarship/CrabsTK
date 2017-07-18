@@ -1,4 +1,4 @@
-/** The Chinese Room
+/** Kabuki Theater
     @version 0.x
     @file   /.../Source/KabukiTheater-Impl/_/TESTS/UtilsTests.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -29,30 +29,29 @@ using namespace _;
 
 TEST_GROUP (UtilsTests)
 {
-    void setup ()
-    {
-        // Init stuff
+    void setup () {
+        printf ("\n+ Running UtilsTests...\n");
     }
 
-    void teardown ()
-    {
-        printf ("\n\nUtilsTests completed.\n\n");
+    void teardown () {
+        printf ("  UtilsTests completed.\n");
         //system ("PAUSE");
     }
 };
 
-TEST (UtilsTests, toHexTest)
+TEST (UtilsTests, HexTest)
 {
+    printf ("  - Running HexTest...\n");
     for (int i = 0; i < 16; ++i)
     {
-        byte value = ToByte (NibbleToLowerCaseHex (i));
+        int value = ToByte (NibbleToLowerCaseHex (i));
         CHECK_EQUAL (i, value)
         value = ToByte (NibbleToUpperCaseHex (i));
         CHECK_EQUAL (i, value)
    }
     for (int i = 0; i < 256; ++i)
     {
-        byte value = ToByte (ToLowerCaseHex (i));
+        int value = ToByte (ToLowerCaseHex (i));
         CHECK_EQUAL (i, value)
         value = ToByte (ToUpperCaseHex (i));
         CHECK_EQUAL (i, value)

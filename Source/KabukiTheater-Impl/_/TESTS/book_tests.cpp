@@ -1,4 +1,4 @@
-/** The Chinese Room
+/** Kabuki Theater
     @version 0.x
     @file    /.../Source/KabukiTheater-Impl/_/TESTS/book_tesets.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -28,14 +28,16 @@ using namespace _;
 
 TEST_GROUP (BookTests) {
     void setup () {
+        PrintLineBreak ("+ Running BookTests...", 5);
     }
 
     void teardown () {
-        printf ("\n\nUtilsTests completed.\n\n");
+        printf ("  BookTests completed.\n");
         //system ("PAUSE");
     }
 };
 
 TEST (BookTests, FirstBookTest) {
+    printf ("\n  - Running FirstBookTest\n");
     
 }

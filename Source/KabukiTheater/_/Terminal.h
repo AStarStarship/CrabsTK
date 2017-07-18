@@ -33,20 +33,20 @@ class Terminal : public Device {
     public:
 
     /** Default constructor that does nothing. */
-    Terminal (Uniprinter& io)
+    Terminal (Uniprinter* io)
     :   io_(io)
     {
     }
 
     ~Terminal () {
-        
+        //if (io_->type > 0) Delete<Uniprinter> (io_);
     }
 
     bool Contains (void* address) {
         return UniprinterContains (io_, address);
     }
 
-    const Member* Op (Rx* rx, Tx& tx, char index) override {
+    const Member* Op (Rx* rx, Tx* tx, byte index) override {
         switch (index) {
             case 0:
                 break;
@@ -56,7 +56,7 @@ class Terminal : public Device {
 
     private:
 
-    Uniprinter& io_;        //< The all-in-one printer and scanner.
+    Uniprinter* io_;        //< The all-in-one printer and scanner.
 };
 
 }       //< namespace _

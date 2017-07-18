@@ -22,7 +22,7 @@
 #ifndef CHINESEROOM_DOOR_H
 #define CHINESEROOM_DOOR_H
 
-#include "terminal.h"
+#include "slot.h"
 
 namespace _ {
 
@@ -51,7 +51,7 @@ class Door: public Device {
     /** A door in a Chinese room. */
     Door (const char* roomName = " (:-)>", uint_t slot_size = kMinDoorSize,
           bool is_dynamic = false)
-        : type_ (is_dynamic) {
+        : is_dynamic_ (is_dynamic) {
         //tx.SetBuffer (adjacentDoor->Rx ()->EndAddress () + 1), aSlotSize);
         //rx = new SerialTerminal (tx.EndAddress (), aSlot, aSlotSize, 
         //  aTalkbackSize);
@@ -59,7 +59,7 @@ class Door: public Device {
 
     /** Destructor. */
     ~Door () {
-        if (type_ == 0) return;
+        if (is_dynamic_ == 0) return;
         delete[] reinterpret_cast<byte*> (this);
     }
 
@@ -74,73 +74,63 @@ class Door: public Device {
     }
 
     /** Address the given terminal to the Door. */
-    ticket_t AddTerminal (Terminal& t) {
-        if (num_slots_ > max_num_slots_)
-            return 0;//ReportError (0);
-
-        return 0;
+    ticket_t AddTerminal (Terminal* t) {
+        return SlotAddTerminal (slot_, t);
     }
 
     /** Attempts to find a Terminal or Door with the given address. */
-    Terminal* Contains (byte* address) {
-        if (num_slots_ == 0) return nullptr;
-
-        byte numberOfSlots = num_slots_;
-
-        Terminal* current = GetTerminal (0),
-            *end = GetTerminal (numberOfSlots - 1);
-
-        do {
-            if (current->Contains (address)) return current;
-            current += sizeof (Terminal*);
-        } while (current != end);
-        return nullptr;
+    Terminal* Contains (void* address) {
+        return SlotFindTerminal (slot_, address);
     }
 
     /** Gets the Terminal that contains the given address.
         @return Returns null if this Door doesn't contain the given address.
     */
-    Terminal* GetTerminal (void* address) {
-        Terminal** terminals = reinterpret_cast<Terminal**>(slot_one_);
-        for (byte i = 0; i < num_doors_; ++i) {
-            Terminal* t = terminals[i];
-            if (t->Contains (address))
-                return t;
-        }
+    Terminal* ContainsTerminal (void* address) {
+        return SlotFindTerminal (slot_, address);
     }
 
     /** I2P operations. */
-    const Member* Op (Rx* rx, Tx& tx, char index) override {
+    const Member* Op (Rx* rx, Tx* tx, byte index) override {
         if (index == '?') {
             static const Member m0 = { "Door", SetNumMembers (0), 
                                        0, "A door in a Chinese room." };
             return &m0;
         }
         index -= ' ';
-        if (index >= num_slots_) return InvalidMember ();
+        if (index >= slot_->num_slots) return InvalidMember ();
         return nullptr;
     }
 
     private:
 
     // 2-to-4-byte vtable pointer here in memory!
-    uint size_;                     //< Size of the entire door and all of it's slots.
-    byte type_,                     //< The type of door: static(1) or dynamic(0).
-        door_number_,               //< This door's number.
-        max_num_doors_,             //< The max number of doors in the system.
-        num_doors_,                 //< The number of doors this door is connected too.
-        max_num_slots_,             //< The number of slots allocated in memory.
-        num_slots_,                 //< The number of slots in the door.
-        current_slot_,              //< Index of current Slot being iterated through.
-        current_door_;              //< Index of current Door being iterated through.
-    Terminal* slot_one_;            //< The slots in door that messages pass through.
+    uint size_;             //< Size of the entire door and all of it's slots.
+    byte is_dynamic_,       //< Flag for if the door is static(0) or dynamic(1).
+        door_number_,       //< This door's number.
+        max_num_doors_,     //< The max number of doors in the system.
+        num_doors_,         //< The number of doors this door is connected too.
+        current_slot_,      //< Index of current Slot being iterated through.
+        current_door_;      //< Index of current Door being iterated through.
+    Slot* slot_;            //< The slot in the door in the Chinese Room.
 };
 
 /** Returns the main door of the room. */
-inline Door& doors () {
+inline Door& Doors () {
     static Door front_door;
     return front_door;
 }
+
+/** Initializes a Door at the beginning of the given buffer. 
+static Door* InitDoor (byte* buffer, uint_t slot_size) {
+    if (buffer == nullptr) return nullptr;
+    if (slot_size < kMinSocketSize) return nullptr;
+    Wall* wall = reinterpret_cast<Door*>(buffer);
+    w->is_dynamic = 0;
+    w->num_doors = 0;
+    w->max_num_doors;
+    w->door_one = nullptr;
+}*/
 
 }       //< namespace _
 #endif  //< CHINESEROOM_DOOR_H

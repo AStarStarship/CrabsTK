@@ -33,9 +33,10 @@
 
 #define IS_LITTLE_ENDIAN            YES
 
-#ifndef DEBUG
+#ifdef DEBUG
+#undef DEBUG
+#endif
 #define DEBUG                       YES
-#endif //< DEBUG
 
 #ifndef DEBUG_CHINESEROOM
 #define DEBUG_CHINESEROOM           YES
@@ -75,19 +76,21 @@ enum
 };
 }
 
-#define ASSEMBLY_NAME               "Unnamed"
+typedef uint8_t error_t;
+
+#define ASSEMBLY_NAME           "Unnamed"
 
 //< The size of a transmission block unit in bits (1KB/2^10 default).
 
 /*> Sets any of the following macros to 0 or non-zero to disable/enable 
     respectively. */
 
-#define USING_1_BYTE_TYPES         NO
-#define USING_2_BYTE_TYPES         NO
-#define USING_4_BYTE_TYPES         NO
-#define USING_8_BYTE_TYPES         NO
-#define USING_VARINT2              NO
-#define USING_VARINT4              NO
+#define USING_1_BYTE_TYPES         YES
+#define USING_2_BYTE_TYPES         YES
+#define USING_4_BYTE_TYPES         YES
+#define USING_8_BYTE_TYPES         YES
+#define USING_VARINT2              YES
+#define USING_VARINT4              YES
 #define USING_VARINT8              NO
 #define USING_AR1                  NO
 #define USING_AR2                  NO

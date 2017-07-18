@@ -68,7 +68,7 @@ const Member* DeviceMember () {
         "Description.">
     @endcode
 */
-template<const char* kKey, const uint_t* kHeaderIn, const byte* kHeaderOut,  const char* kDescription>
+template<const char* kKey, const uint_t* kHeaderIn, const char* kHeaderOut,  const char* kDescription>
 const Member* DeviceMember () {
     static Member m = { kKey, kHeaderIn, kHeaderOut, kDescription };
     return &m;
@@ -106,21 +106,6 @@ const Member* DeviceHeader () {
 /** Returns the number of members an Device has. */
 inline std::uintptr_t GetNumMembers (const Member* m) {
     return m == nullptr ? 0 : reinterpret_cast<uintptr_t>(m->rx_header);
-}
-
-/** Shorthand for reinterpret_cast<const char*> (address). */
-inline const char* HeaderPtr (uint16_t* address) {
-    return reinterpret_cast<const char*>(address);
-}
-
-/** Shorthand for reinterpret_cast<const char*> (address). */
-inline const char* HeaderPtr (uint32_t* address) {
-    return reinterpret_cast<const char*>(address);
-}
-
-/** Shorthand for reinterpret_cast<const char*> (address). */
-inline const char* HeaderPtr (uint64_t* address) {
-    return reinterpret_cast<const char*>(address);
 }
 
 /** Error flag member pointers for throwing Terminal io errors. */

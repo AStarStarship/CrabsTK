@@ -31,9 +31,9 @@ namespace _ {
     as sanely possible. Many of the codes just don't make sense as types, but
     the codes were picked for the specific purpose that they are not human 
     readable, with the exception of HT, VT, CR, and LF. */
-typedef enum {   
+typedef enum {
     NIL   = 0,  //< 0.  NIL/null/void type.
-    SOH   = 1,  //< 1.  A 
+    SOH   = 1,  //< 1.  An address to an I2P device.
     STX   = 2,  //< 2.  A UTF-8/ASCII string.
     SI1   = 3,  //< 3.  An 8-bit signed integer.
     UI1   = 4,  //< 4.  An 8-bit unsigned integer.
@@ -67,7 +67,7 @@ typedef enum {
 } TData;
 
 /** Gets the width in bytes (1-8) of the given type. */
-inline uint_t GetSizeOfType (uint_t Type) {
+inline uint_t SizeOf (uint_t Type) {
     static const int8_t kWidths[] =
     {
         0,      //< NIL: 0 
@@ -113,7 +113,7 @@ inline uint_t GetAlignment (uint_t Type) {
     {
         0,      //< NIL: 0 
         0,      //< SOH: 1 
-        2,      //< STX: 2 
+        0,      //< STX: 2 
         0,      //< SI1: 3 
         0,      //< UI1: 4 
         0,      //< BOL: 5 
@@ -207,7 +207,7 @@ inline const char* TypeString (uint_t type) {
 }
 
 
-/** Checks to see if the given char is a delimiter. */
+/** Checks to see if the given byte is a delimiter. */
 inline bool CheckDelimiter (char const c)
 {
     if (c == 0) return false;
@@ -217,18 +217,18 @@ inline bool CheckDelimiter (char const c)
     return true;
 }
 
-/** Checks the last byte of the token to check if it is a specified char. */
-template<char c>
+/** Checks the last byte of the token to check if it is a specified byte. */
+template<byte c>
 bool CheckLastLetter (uint16_t const token)
 {
-    if (c != (char)token) return true;
+    if (c != (byte)token) return true;
     return CheckDelimiter (token >> 8);
 }
 
-template<char LetterTwo, char LetterThree>
+template<byte LetterTwo, byte LetterThree>
 bool CheckLastLetters (uint32_t const Token)
 {
-    char check = Token >> 8;
+    byte check = Token >> 8;
     if (LetterTwo != check) return true;
 
     check = Token >> 16;
@@ -242,12 +242,12 @@ bool CheckLastLetters (uint32_t const Token)
 static byte GetType (const char* s) {
     uint32_t token = * ((uint32_t*)s);
 
-    char letter = (char)token;
+    byte letter = (byte)token;
 
     switch (letter)
     {
-        case 'A': if ((char) (token >> 8) != 'R') return 0xff;
-            switch (letter = (char) (token >> 16))
+        case 'A': if ((byte) (token >> 8) != 'R') return 0xff;
+            switch (letter = (byte) (token >> 16))
             {
                 case '1': return CheckDelimiter (token >> 24) ? 0xff : AR1;
                 case '2': return CheckDelimiter (token >> 24) ? 0xff : AR2;
@@ -255,9 +255,9 @@ static byte GetType (const char* s) {
                 case '8': return CheckDelimiter (token >> 24) ? 0xff : AR8;
                 default: return 0xff;
             }
-        case 'B': switch (letter = (char) (token >> 8))
+        case 'B': switch (letter = (byte) (token >> 8))
         {
-            case 'K': switch (letter = (char) (token >> 16))
+            case 'K': switch (letter = (byte) (token >> 16))
             {
                 case '2': return CheckDelimiter (token >> 24) ? 0xff : BK2;
                 case '4': return CheckDelimiter (token >> 24) ? 0xff : BK4;
@@ -282,9 +282,9 @@ static byte GetType (const char* s) {
         case 'P':
         case 'Q':
         case 'R': return 0xff;
-        case 'S': switch (letter = (char) (token >> 8))
+        case 'S': switch (letter = (byte) (token >> 8))
         {
-            case 'I': switch (letter = (char) (token >> 16))
+            case 'I': switch (letter = (byte) (token >> 16))
             {
                 case '1': return CheckDelimiter (token >> 24) ? 0xff : SI1;
                 case '2': return CheckDelimiter (token >> 24) ? 0xff : SI2;
@@ -292,12 +292,12 @@ static byte GetType (const char* s) {
                 case '8': return CheckDelimiter (token >> 24) ? 0xff : SI8;
                 default: return 0xff;
             }
-            case 'O': switch (letter = (char) (token >> 16))
+            case 'O': switch (letter = (byte) (token >> 16))
             {
                 case 'H': return CheckDelimiter (token >> 24) ? 0xff : SOH;
                 default: return 0xff;
             }
-            case 'V': switch (letter = (char) (token >> 16))
+            case 'V': switch (letter = (byte) (token >> 16))
             {
                 case '4': return CheckDelimiter (token >> 24) ? 0xff : SV4;
                 case '8': return CheckDelimiter (token >> 24) ? 0xff : SV8;
@@ -318,7 +318,7 @@ static byte GetType (const char* s) {
         case 'U': switch (letter = (token >> 8))
         {
             case 'S': return CheckDelimiter (token >> 16) ? 0xff : US;
-            case 'I': switch (letter = (char) (token >> 16))
+            case 'I': switch (letter = (byte) (token >> 16))
             {
                 case '1': return CheckDelimiter (token >> 24) ? 0xff : UI1;
                 case '2': return CheckDelimiter (token >> 24) ? 0xff : UI2;
@@ -326,7 +326,7 @@ static byte GetType (const char* s) {
                 case '8': return CheckDelimiter (token >> 24) ? 0xff : UI8;
                 default: return 0xff;
             }
-            case 'V': switch (letter = (char) (token >> 16))
+            case 'V': switch (letter = (byte) (token >> 16))
             {
                 case '4': return CheckDelimiter (token >> 24) ? 0xff : UV4;
                 case '8': return CheckDelimiter (token >> 24) ? 0xff : UV8;
@@ -345,14 +345,51 @@ inline byte MaskType (byte value) {
 
 /** Returns true if this type has a buffer. */
 inline bool TypeHasBuffer (uint_t type) {
-    if (type == STX || type < AR1)
+    if (type == STX)
+        return true;
+    if (type == ESC)
         return false;
-    return true;
+    return false;
 }
 
 /** Returns true if this type has a buffer. */
 inline bool TypeIsHierarchical (uint_t type) {
     return type > 20;
+}
+
+
+/*< Converts from a 2's complement integer to a signed varint.
+    @param value A 2's complement integer.
+    @return An signed varint.
+    A signed varint is an uncomplemented signed integer with the sign in the 
+    LSb. To convert a negative 2's complement value to positive invert the bits 
+    and add one.
+*/
+template<typename T>
+inline T PackSignedVarint (T value) {
+    T sign_bit = value >> ((sizeof (T) * 8 - 1));   //< Extract the sign bit.
+    if (sign_bit != 0) {
+        T uncomplemented = (~value) + 1;
+        return sign_bit | (uncomplemented << 1);
+    }
+    // Else don't uncomplement.
+    return value << 1;
+}
+
+/*< Converts from a signed varint to a 2's complement signed integer.
+    @param  A signed integer casted as an unsigned integer.
+    @return Returns a standard signed integer cased as unsigned.
+    A varint is an uncomplemented signed integer with the sign in the LSb.
+*/
+template<typename T>
+inline T UnpackSignedVarint (T value) {
+    T sign_bit = value << (sizeof (T) * 8 - 1);
+    value = value >> 1;
+    if (sign_bit != 0) {
+        value = ~(value - 1);
+        return value;
+    }
+    return value;
 }
 
 }       //< namespace _

@@ -12,9 +12,6 @@
     <ClInclude Include="..\Source\KabukiTheater\kabuki_theater.h">
       <Filter>KabukiTheater</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\KabukiTheater\_\book.h">
-      <Filter>KabukiTheater\_</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\KabukiTheater\_\chinese_room.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
@@ -94,6 +91,18 @@
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\KabukiTheater\_\slot.h">
+      <Filter>KabukiTheater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\KabukiTheater\_\book.h">
+      <Filter>KabukiTheater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\KabukiTheater\_\wall.h">
+      <Filter>KabukiTheater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\KabukiTheater\_\log.h">
+      <Filter>KabukiTheater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\KabukiTheater\_\ring_buffer.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
   </ItemGroup>

@@ -40,11 +40,6 @@ inline const char** RoomStateStrings () {
     return states;
 }
 
-/** The handshake header for two systems to connect. */
-struct HandShakeHeader {
-    byte unit_size;
-};
-
 /** A list of Requests that can be sent from Terminal<uint_t, THash> to Terminal<uint_t, THash>.  */
 typedef enum Requests {
     OpenDoorRequest = 0,
@@ -144,7 +139,7 @@ class Room: public Device {
     }
 
     /** Prints the error log to a terminal. */
-    void PrintErrors (Tx& tx) {
+    void PrintErrors (Tx* tx) {
         //uint_t errorHeader[] = { 0 };
         //return io.prints (errorHeader);
     }
@@ -185,7 +180,7 @@ class Room: public Device {
     }
 
     /** The main function. */
-    virtual void Main (const char** args, int args_count) {
+    virtual void Main (const byte** args, int args_count) {
         printf ("Launching Room with %i args:\n", args_count);
         for (int i = 0; i < args_count; ++i) {
             printf ("%s\n", args[i]);
@@ -234,7 +229,7 @@ class Room: public Device {
     }
 
     /** I2P operations. */
-    virtual const Member* Op (Rx* rx, Tx& tx, byte index) {
+    virtual const Member* Op (Rx* rx, Tx* tx, byte index) {
         return 0;
     }
 
