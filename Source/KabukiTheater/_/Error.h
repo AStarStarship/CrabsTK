@@ -40,7 +40,7 @@ typedef enum {
     InvalidStateError,
     InvalidIndexError,
     InvalidEnqueryError,
-    UnsupportedTypeError,
+    InvalidRxTypeError,
     TypeMismatchError,
     InvalidArgumentError,
     InvalidRoomNumberError,
@@ -61,6 +61,7 @@ typedef enum {
     WriteErrorError,
     NonexistentMemberError,
     OutOfMemoryError,
+    ArrayOverflowError,
     InvalidErrorError,
 } Error;
 
@@ -68,9 +69,9 @@ inline const char** ErrorStrings ()
 /** Returns the text label of the Error. */
 {
     static const char* errorStrings[] = {
-        "Buffer underflow",             //< 1
-        "Buffer overflow",              //< 2
-        "Varint overflow"
+        "Buffer underflow",             //< 0
+        "Buffer overflow",              //< 1
+        "Varint overflow",
         "Invalid hash",
         "Read invalid type",
         "Invalid state",
@@ -97,6 +98,7 @@ inline const char** ErrorStrings ()
         "Write error",
         "Nonexistent member",
         "Out of memory",
+        "Array overflow",
         "Invalid error",
     };
     return errorStrings;
@@ -105,7 +107,8 @@ inline const char** ErrorStrings ()
 inline const char* ErrorString (Error e)
 /** Returns the text label of the Error. */
 {
-    if (e < 0 || e >= InvalidErrorError) return ErrorStrings ()[InvalidErrorError];
+    if (e < 0 || e > InvalidErrorError) 
+        return ErrorStrings ()[InvalidErrorError];
     return ErrorStrings ()[e];
 }
 
@@ -253,7 +256,7 @@ class ErrorList {
             {
                 header += sizeof (const uint_t*);
                 uint_t type = *header;
-                if (TypeHasBuffer (type))
+                if (TypeHasLength (type))
                 {
                     uint_t bufferSize = * (header += sizeof (const uint_t*));
                     printf ("%u", bufferSize);

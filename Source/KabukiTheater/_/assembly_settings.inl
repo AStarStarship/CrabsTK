@@ -91,11 +91,11 @@ typedef uint8_t error_t;
 #define USING_8_BYTE_TYPES         YES
 #define USING_VARINT2              YES
 #define USING_VARINT4              YES
-#define USING_VARINT8              NO
-#define USING_AR1                  NO
-#define USING_AR2                  NO
-#define USING_AR4                  NO
-#define USING_AR8                  NO
+#define USING_VARINT8              YES
+#define USING_AR1                  YES
+#define USING_AR2                  YES
+#define USING_AR4                  YES
+#define USING_AR8                  YES
 #define USING_BK2                  NO
 #define USING_BK4                  NO
 #define USING_BK8                  NO

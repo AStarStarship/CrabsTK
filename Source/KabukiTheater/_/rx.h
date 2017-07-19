@@ -143,9 +143,10 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
 #endif
     uint_t size,                //< The size of the ring buffer.
         length,                 //< The length of the data in the buffer.
-        arg_length,             //< The argument length.
+        count,                  //< The argument length.
         index,                  //< The index of the Esc.
-        num_params = *params;   //< The number of params.
+        num_params = *params,   //< The number of params.
+        array_type;             //< The type of being read.
     hash16_t hash;
 
     if (num_params == 0) return 0;   //< Nothing to do.
@@ -185,10 +186,10 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
           case SOH: //< _R_e_a_d__S_t_r_i_n_g_-_8_______________________________________
           case STX:
               // Load buffered-type argument length and increment the index.
-              arg_length = *param;
+              count = *param;
               ++param;
 #if DEBUG_CHINESEROOM
-              printf ("\n|           Reading string with max length %u: ", arg_length);
+              printf ("\n|           Reading string with max length %u: ", count);
 #endif
             // Load next pointer and increment args.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
@@ -201,8 +202,8 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             *ui1_ptr = ui1;
             ++ui1_ptr;
 
-            while (ui1 != 0 && arg_length != 0) {
-                if (arg_length-- == 0)
+            while (ui1 != 0 && count != 0) {
+                if (count-- == 0)
                     return Report (BufferUnderflowError, params, index,
                                         start);
 #if DEBUG_CHINESEROOM
@@ -243,7 +244,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             *ui1_ptr = ui1;                     //< Write
             break;
 #else
-            return Report (UnsupportedTypeError, params, index, start);
+            return Report (InvalidRxTypeError, params, index, start);
 #endif
           case SI2: //< _R_e_a_d__1_6_-_b_i_t__T_y_p_e_s________________________________
           case UI2:
@@ -272,7 +273,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             *(ui1_ptr + 1) = ui1;               //< Write
             break;
 #else
-            return Report (UnsupportedTypeError, params, index,
+            return Report (InvalidRxTypeError, params, index,
                                 start);
 #endif
           case SI4: //< _R_e_a_d__3_2_-_b_i_t__T_y_p_e_s________________________
@@ -315,7 +316,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             *(ui1_ptr + 3) = ui1;               //< Write
             break;
 #else
-            return Report (UnsupportedTypeError, params, index,
+            return Report (InvalidRxTypeError, params, index,
                                 start);
 #endif
           case TMU: //< _R_e_a_d__6_4_-_b_i_t__T_y_p_e_s________________________
@@ -382,7 +383,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             *(ui1_ptr + 7) = ui1;               //< Write
             break;
 #else
-            return Report (UnsupportedTypeError, params, index, start);
+            return Report (InvalidRxTypeError, params, index, start);
 #endif
           case SV2: //< _R_e_a_d__2_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_________
 
@@ -478,265 +479,246 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             break;
 #else
           case UV2:
-            return Report (UnsupportedTypeError, params, index, start);
+            return Report (InvalidRxTypeError, params, index, start);
 #endif
           case SV4: //< _R_e_a_d__4_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_________
           case UV4: //< _R_e_a_d__4_-_b_y_t_e__U_n_s_i_g_n_e_d__V_a_r_i_n_t_____
 #if USING_VARINT4
-            if (length == 0) 
-                return Report (BufferUnderflowError, params, index, start);
-
             // Load next pointer and increment args.
             ui4_ptr = reinterpret_cast<uint32_t*> (args[index]);
-
+            if (ui4_ptr == nullptr)
+                return Report (NullPointerError, params, index, start);
 
             // Scan byte 1.
             ui1 = *start;
             if (++start >= end) start -= size;
             hash = Hash16 (ui1, hash);
             ui4 = ui1;
-            ui2 = 7;
-            while (ui1 >> 7 != 0)
+            ui2 = 7;        //< Number of bits to shift ui1 to the left.
+            count = 5; //< The max number of Varint4 bytes.
+            while (ui1 >> 7 == 0)
             {
-                if (--length == 0) 
-                    return Report (BufferUnderflowError, params, index, 
-                                        start);
-                ui1 = * (++start);
+                if (length-- == 0)
+                    return Report (BufferUnderflowError, params, index, start);
+                ui1 = *start;
                 if (++start >= end) start -= size;
                 hash = Hash16 (ui1, hash);
-                ui4 |= ((uint32_t)ui1) << ui2;
+                ui4 |= ((uint32_t)(ui1 & 0x7F)) << ui2;
+                //< @todo I'm starting to second guess if we need to mask ui1 
+                //< because we're packing them up and will overwrite.
                 ui2 += 7;
+                if (--count == 0)
+                    return Report (VarintOverflowError, params, index, start);
             }
-            if (type == SV4) ui4 = UnpackSignedVarint<uint32_t> (ui4);
+            if (count == 5)    //< If there is only one byte we need to
+                ui4 &= 0x7F;        //< mask off the terminating varint bit.
+            if (type == SV4) 
+                ui4 = UnpackSignedVarint<uint32_t> (ui4);
             *ui4_ptr = ui4;
           break;
 #else
-            return Report (UnsupportedTypeError, params, index, start);
+            return Report (InvalidRxTypeError, params, index, start);
 #endif
-          case SV8: //< _R_e_a_d__8_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_________
-#if USING_VARINT8
-            // Load next pointer and increment args.
-            ui8_ptr = reinterpret_cast<uint64_t*> (args[index]);
-
-
-            if (ui8 >> 15) ui8 = 0x1 & (( (~ui8) + 1) << 1);
-            else               ui8 = ui8 << 1;
-
-            // Byte 1
-            ui1 = *start;
-            ui8 = ui1;
-            if (++start >= end) start -= size;
-
-            while (ui1 >> 7 != 0)
-            {
-                if (--length == 0)
-                    return Report (BufferUnderflowError, params, index, 
-                                        start);
-                ui1 = * (++start);
-                hash = Hash16 (ui1, hash);
-                ui8 |= ((uint64_t)ui1) << (1 * 7);
-                if (++start >= end) start -= size;
-            }
-            *ui8_ptr = UnpackSignedVarint<uint64_t> (ui8);
-            break;
-
-          case UV8: //< _R_e_a_d__8_-_b_y_t_e__U_n_s_i_g_n_e_d__V_a_r_i_n_t_____
-          {
-            if (length == 0) 
-                return Report (BufferUnderflowError, param, 
-                                                  index, start);
-
-            // Load next pointer and increment args.
-            ui8_ptr = reinterpret_cast<uint64_t*> (args[index]);
-
-
-            // Scan byte 1
-            ui1 = *start;
-            ui8 = ui1;
-            if (++start >= end) start -= size;
-
-            while (ui1 >> 7 != 0)
-            {
-                if (--length == 0) 
-                    return Report (BufferUnderflowError, params, index, 
-                                        start);
-                ui1 = * (++start);
-                ui8 |= ((uint64_t)ui1) << (1 * 7);
-                if (++start >= end) start -= size;
-                if (ui1 >> 7 == 0) { *ui8_ptr = ui8; break; }
-            }
-            *ui8_ptr = ui8;
-
-          break;
-#else
+          case SV8: //< _R_e_a_d__V_a_r_i_n_t__8________________________________
           case UV8:
-            return Report (UnsupportedTypeError, param, 
+#if USING_VARINT8
+              // Load next pointer and increment args.
+              ui8_ptr = reinterpret_cast<uint64_t*> (args[index]);
+              if (ui8_ptr == nullptr)
+                  return Report (NullPointerError, params, index, start);
+
+              // Scan byte 1.
+              ui1 = *start;
+              if (++start >= end) start -= size;
+              hash = Hash16 (ui1, hash);
+              ui8 = ui1;
+              ui2 = 7;        //< Number of bits to shift ui1 to the left.
+              count = 9; //< The max number of Varint8 bytes.
+              while (ui1 >> 7 == 0) {
+                  if (length-- == 0)
+                      return Report (BufferUnderflowError, params, index, start);
+                  ui1 = *start;
+                  if (++start >= end) start -= size;
+                  hash = Hash16 (ui1, hash);
+                  if (count == 1) {
+                      // Varint 8 differs from Varint 2 and 4 in that on the 
+                      // last byte, byte 9 of 9, there is no terminating varint 
+                      // bit.
+                      ui8 |= ((uint64_t)(ui1)) << ui2;
+                      break;
+                  }
+                  ui8 |= ((uint64_t)(ui1 & 0x7F)) << ui2;
+                  //< @todo I'm starting to second guess if we need to mask ui1 
+                  //< because we're packing them up and will overwrite.
+                  ui2 += 7;
+                  if (--count == 0)
+                      return Report (VarintOverflowError, params, index, start);
+              }
+              if (count == 9)    //< If there is only one byte we need to
+                  ui8 &= 0x7F;        //< mask off the terminating varint bit.
+              if (type == SV8)
+                  ui8 = UnpackSignedVarint<uint64_t> (ui8);
+              *ui8_ptr = ui8;
+            break;
+#else
+            return Report (InvalidRxTypeError, param, 
                                               index, start);
 #endif
           case AR1:  //< _R_e_a_d__A_r_r_a_y_-_1________________________________
 #if USING_AR1
-            if (--length == 0) 
-                return Report (BufferUnderflowError, params, index, start);
-
             // Load next pointer and increment args.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
-
-
-            // Load array size.
-            ui1 = *start;
-
-            if ((start > stop) && (start + ui1 >= end))
-            {
-                // Find length of upper chunk.
-                temp = (uint_t) (end - start);
-
-                memcpy (ui1_ptr, start, temp);
-                memcpy (ui1_ptr + temp, begin, (size_t) (ui1 - temp));
-                break;
-            }
-            memcpy (ui1_ptr, ui1_ptr, (size_t)ui1);
-            break;
+            if (ui1_ptr == nullptr)
+                return Report (NullPointerError, params, index, start);
+            count = *param++;
+            count *= SizeOf (*param++);
+            goto ReadBlock;
 #else
-            return Report (UnsupportedTypeError, params, index, start);
+            return Report (InvalidRxTypeError, params, index, start);
 #endif
           case AR2:  //< _R_e_a_d__A_r_r_a_y_-_2________________________________
 #if USING_AR2
-            alignOffset = WordAlignOffset (start);
-            if (length < sizeof (uint16_t) + alignOffset) 
-                return Report (BufferUnderflowError, param, 
-                                                  index, start);
-            start -= (start + alignOffset >= end) * size;
-
-            // Load next pointer and increment args.
-            ui2_ptr = reinterpret_cast<uint16_t*> (args[index]);
-
-
-            ui2 = *ui2_ptr;
-
-            // Copy array into memory.
-            if ((start > stop) && (start + ui2 >= end))
-            {
-                // Find length of upper chunk.
-                temp = (uint_t) (end - start);
-
-                memcpy (ui2_ptr, start, temp);
-                memcpy (ui2_ptr + temp, begin, (size_t) (ui2 - temp));
-                break;
-            }
-            memcpy (ui2_ptr, ui2_ptr + ui2, (size_t)ui2);
-            break;
+              // Load the pointer to the destination.
+              ui1_ptr = reinterpret_cast<byte*> (args[index]);
+              if (ui1_ptr == nullptr)
+                  return Report (NullPointerError, params, index, start);
+              count = *param++;
+              count *= SizeOf (*param++);
+              goto ReadBlock;
 #else
-            return Report (UnsupportedTypeError, params, index, start);
+            return Report (InvalidRxTypeError, params, index, start);
 #endif
           case AR4:  //< _R_e_a_d__A_r_r_a_y_-_4________________________________
-#if USING_AR2
+#if USING_AR4
+            // Load the pointer to the destination.
+            ui1_ptr = reinterpret_cast<byte*> (args[index]);
+            if (ui1_ptr == nullptr)
+                return Report (NullPointerError, params, index, start);
+            count = *param++;
+            count *= SizeOf (*param++);
+            goto ReadBlock;
 #else
-            return Report (UnsupportedTypeError, params, index, start);
+            return Report (InvalidRxTypeError, params, index, start);
 #endif
           case AR8:  //< _R_e_a_d__A_r_r_a_y_-_8________________________________
 #if USING_AR8
+            // Load the pointer to the destination.
+            ui1_ptr = reinterpret_cast<byte*> (args[index]);
+            if (ui1_ptr == nullptr)
+                return Report (NullPointerError, params, index, start);
+            count = *param++;
+            count *= SizeOf (*param++);
+            goto ReadBlock;
 #else
-            return Report (UnsupportedTypeError, params, index, start);
+            return Report (InvalidRxTypeError, params, index, start);
 #endif
           case ESC: //< _R_e_a_d__E_s_c_a_p_e__S_e_q_u_e_n_c_e__________________
-            if (length == 0) 
+            // I'm not sure exactly how this should work. I can't do recursion
+            // because of embedded limitations.
+            break;
+          case BK8: //< _R_e_a_d__B_o_o_k_8_____________________________________
+            if (length <= 128)
                 return Report (BufferUnderflowError, params, index, start);
-            --length;
-
             // Load next pointer and increment args.
-            ui1_ptr = static_cast<byte*> (args[index]);
+            ui8_ptr = reinterpret_cast<uint64_t*> (args[index]);
+            if (ui8_ptr == nullptr)
+                return Report (NullPointerError, params, index, start);
 
-            if (ui1_ptr != 0)
-            {
+            for (ui2 = 0; ui2 <= sizeof (uint64_t); ui2 += 8) {
                 ui1 = *start;
                 if (++start >= end) start -= size;
+                hash = Hash16 (ui1, hash);
+                ui8 |= ((uint64_t)ui1) << ui2;
             }
-          case BK8: //< _R_e_a_d__B_o_o_k_8_____________________________________
+            count = (uint_t)ui8;
+            break;
 #if USING_AR8
 #else
-            return Report (UnsupportedTypeError, params, index, start);
+            return Report (InvalidRxTypeError, params, index, start);
 #endif
           case BK4: //< _R_e_a_d__B_o_o_k_4_______________________________________
+            if (length <= 64)
+                return Report (BufferUnderflowError, params, index, start);
+            // Load the pointer to the destination.
+            ui4_ptr = reinterpret_cast<uint32_t*> (args[index]);
+            if (ui4_ptr == nullptr)
+                return Report (NullPointerError, params, index, start);
+
+            for (ui2 = 0; ui2 <= sizeof (uint32_t); ui2 += 8) {
+                ui1 = *start;
+                if (++start >= end) start -= size;
+                hash = Hash16 (ui1, hash);
+                ui4 |= ((uint32_t)ui1) << ui2;
+            }
+            count = (uint_t)ui4;
+            break;
 #if USING_BK4
 #else
-            return Report (UnsupportedTypeError, params, index, start);
+            return Report (InvalidRxTypeError, params, index, start);
 #endif
           case BK2: //< _R_e_a_d__B_o_o_k_2_______________________________________
-#if USING_BK2
-            alignOffest = WordAlignOffset (start);
-            
-            if ((start += sizeof (Book2)) >= end)
-            {
-                start -= size;
-            }
-
-            // To save stack space, we have to manually load the book param 
-            // and calculate size.
-
-            start = WordAlignOffset (start, begin, end, sizeof (Book2));
-
-            // Load numKeys.
-            ui2 = *start;
-            temp = ui2; // Store temp variable
-
-            // Load bufferSize.
-            ui2 = * (start + sizeof (byte));
-            temp += ui2;    // Add the stored temp variable.
-            temp *= (sizeof (uint16_t) + sizeof (uint16_t) + 
-                (collisionsSize > 0) * (sizeof (byte) + sizeof (primeHash)));
-            temp += collisionsSize;
-
-
-            ui2_ptr = reinterpret_cast<uint16_t*> (start);
-            // Load paramSize.
-            ui2 = * (ui2_ptr + 2 * sizeof (uint16_t));
-            temp += ui2;
-            start += sizeof (uint16_t);
-
-            // Load dataSize.
-            ui2 = * (ui2_ptr + 3 * sizeof (uint16_t));
-            temp += ui2;
-            start += sizeof (uint16_t);
-
-            // add the size of the param and we're done.
-            temp += 5 * sizeof (uint16_t);
-
-            if (length < temp)
+            if (length <= 32)
                 return Report (BufferUnderflowError, params, index, start);
-            length -= (uint_t)temp;
-
-            ui2_ptr = reinterpret_cast<uint16_t*> (args);
-            if(ui2_ptr == nullptr) {
-                // This isn't an error because the user might want to pass in a 
-                // nullptr.
-                break;
-            }
-
-            // Now we can copy the book into memory.
-            if ((start > stop) && (start + temp >= end))
-            {
-                // Calculate upper chunk size.
-                temp = end - stop;
-                temp -= temp;
-
-                memcpy (start, ui2_ptr, temp);
-                memcpy (begin, ui2_ptr + temp, (size_t)temp);
-                start = begin + temp;
-                break;
-            }
-            memcpy (stop, ui2_ptr, (size_t)temp);
-            start += temp;
+            // Load the pointer to the destination.
+            ui1_ptr = reinterpret_cast<byte*> (args[index]);
+            if (ui1_ptr == nullptr)
+                return Report (NullPointerError, params, index, start);
+            ui1 = *start;
+            if (++start >= end) start -= size;
+            hash = Hash16 (ui1, hash);
+            ui1 = *start;
+            if (++start >= end) start -= size;
+            hash = Hash16 (ui1, hash);
+            ui2 |= ((uint16_t)ui1) << 8;
+            count = (uint_t)ui2;
+            goto ReadBlock;
             break;
+#if USING_BK2
 #else
-            return Report (UnsupportedTypeError, params, index, start);
+            return Report (InvalidRxTypeError, params, index, start);
 #endif
           case US: //< _R_e_a_d__U_n_i_t__S_e_p_e_r_a_t_o_r_____________________
-            break;
-
+            ReadBlock:
+            {
+                if (length < count)
+                    return Report (BufferOverflowError, params, index, start);
+                if (count == 0)
+                    break;          //< Not sure if this is an error.
+                if (start + count >= end) {
+                    for (; size - count > 0; --count) {
+                        ui1 = *start;
+                        if (++start >= end) start -= size;
+                        hash = Hash16 (ui1, hash);
+                        *ui1_ptr = ui1;
+                        ++ui1_ptr;
+                    }
+                    stop = begin - 1;
+                    for (; count > 0; --count) {
+                        ui1 = *start;
+                        if (++start >= end) start -= size;
+                        hash = Hash16 (ui1, hash);
+                        *ui1_ptr = ui1;
+                        ++ui1_ptr;
+                    }
+                    break;
+                }
+               for (; count > 0; --count) {
+                    ui1 = *start;
+                   if (++start >= end) start -= size;
+                    hash = Hash16 (ui1, hash);
+                    *ui1_ptr = ui1;
+                    ++ui1_ptr;
+                }
+                break;
+            }
           default:
-            printf ("\n!!!Read invalid type %u\n", type);
-            return Report (ReadInvalidTypeError, params, index, start);
+            RxInvalidType:
+            {
+                printf ("\n!!!Read invalid type %u\n", type);
+                return Report (ReadInvalidTypeError, params, index, start);
+            }
         }
+        std::cout << " |";
     }
     printf ("\n| Hash expected: %x ", hash);
     ui2 = *start;

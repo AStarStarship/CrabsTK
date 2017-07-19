@@ -37,11 +37,15 @@ const uint_t* Esc () {
 
 /*< Returns the requested parameter number. */
 inline uint_t ParamNumber (const uint_t* params, byte param_number) {
-    uint_t num_params = *params;
+    uint_t num_params = *params++;
     int i;
-    for (i = 0; i < param_number; ++i)
-        if (TypeHasBuffer (params[i]))
-            ++i;
+    for (i = 0; i < param_number; ++i) {
+        uint_t value = params[i];
+        if (value == STX)
+            ++param_number;
+        else if (value >= AR1 && value <= AR8)
+            param_number += 2;
+    }
     return params[i];
 }
 
@@ -50,7 +54,7 @@ inline uint_t ParamNumber (const uint_t* params, byte param_number) {
 /**  Prints out the parameters to the debug console. */
 inline void PrintParams (const uint_t* params) {
     if (params == nullptr) return;
-    uint_t num_params = *params,
+    uint_t num_params = *params++,
         i,
         value = 0;
 
@@ -61,25 +65,34 @@ inline void PrintParams (const uint_t* params) {
         return;
     }
     printf ("%u: ", num_params);
-    ++params;
     for (i = 1; i < num_params; ++i)
     {
-        value = *params;
-        printf ("%s, ", TypeString (value));
-        if (TypeHasBuffer (value)) {
-            ++params;
+        value = *params++;
+        std::cout << TypeString (value) << ", ";
+        if (value == STX) {
             ++i;
-            value = *params;
+            value = *params++;
             printf ("%u, ", value);
+        } else if (value >= AR1 && value <= AR8) {
+            ++i;
+            value = *params++;
+            printf ("%u, ", value);
+            value = *params;
+            printf ("%s ", TypeString (value));
         }
-        ++params;
+        params;
     }
-    value = *params;
+    value = *params++;
     printf ("%s", TypeString (value));
-    if (TypeHasBuffer (value)) {
-        ++params;
+    if (value == STX) {
         value = *params;
-        printf (", %u>", value);
+        printf (", %u>\n", value);
+    } else if (value >= AR1 && value <= AR8) {
+        ++i;
+        value = *params++;
+        printf (", %u, ", value);
+        value = *params++;
+        printf ("%s>\n", TypeString (value));
     }
     else
     {

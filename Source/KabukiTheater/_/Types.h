@@ -344,12 +344,24 @@ inline byte MaskType (byte value) {
 }
 
 /** Returns true if this type has a buffer. */
-inline bool TypeHasBuffer (uint_t type) {
+inline bool TypeHasLength (uint_t type) {
     if (type == STX)
+        return true;
+    if (type >= AR1 && type <= AR8)
         return true;
     if (type == ESC)
         return false;
     return false;
+}
+
+/*< Returns true if the given type is an Array type. */
+inline bool TypeIsArray (uint_t type) {
+    return (type >= AR1) && (type <= AR8);
+}
+
+/*< Returns true if the given type is a Book type. */
+inline bool TypeIsBook (uint_t type) {
+    return (type >= BK8) && (type <= BK2);
 }
 
 /** Returns true if this type has a buffer. */

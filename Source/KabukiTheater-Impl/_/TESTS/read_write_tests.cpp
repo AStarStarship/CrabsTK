@@ -61,7 +61,7 @@ TEST (ReadWriteTests, TestingPrimitiveTypes) {
     char found_string1[kSlotSize],
         found_string2[kSlotSize];
 
-    Tx* tx = TxInit (Buffer<0, 64 + kSlotHeaderSize> (), 64 + kSlotHeaderSize);
+    Tx* tx = TxInit (Buffer<0, 128 + kSlotHeaderSize> (), 128 + kSlotHeaderSize);
 
     CHECK_EQUAL (0, Write (tx, Esc<2, STX, 5, STX, 5> (), Args (args, expected_string1, expected_string2)))
 
@@ -165,7 +165,7 @@ TEST (ReadWriteTests, TestingPrimitiveTypes) {
     uint64_t ui8_found = 0;
     double dbl_found = 0.0;
 
-    tx = TxInit (Buffer<0, 64 + kSlotHeaderSize> (), 64 + kSlotHeaderSize);
+    tx = TxInit (Buffer<0, 128 + kSlotHeaderSize> (), 128 + kSlotHeaderSize);
 
     CHECK_EQUAL (0, Write (tx, Esc<5, TMU, SI8, SI8, UI8, DBL> (),
            Args (args, &tmu_expected, &si8_p_expected, &si8_n_expected,
@@ -305,7 +305,8 @@ TEST (ReadWriteTests, TestingPrimitiveTypes) {
                                             ((int64_t)1) << 56, -(((int64_t)1) << 56) };
     int64_t sv8_found[19];
     CHECK_EQUAL (0, Write (tx, Esc<19, SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8,
-                           SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8> (),
+                           SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8, 
+                           SV8> (),
                            Args (args, &sv8_expected[0], &sv8_expected[1],
                                  &sv8_expected[2], &sv8_expected[3],
                                  &sv8_expected[4], &sv8_expected[5],
@@ -317,7 +318,8 @@ TEST (ReadWriteTests, TestingPrimitiveTypes) {
                                  &sv8_expected[16], &sv8_expected[17],
                                  &sv8_expected[18])))
         CHECK_EQUAL (0, Read (tx, Esc<19, SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8,
-                              SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8> (),
+                              SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8,
+                              SV8> (),
                               Args (args, &sv8_found[0], &sv8_found[1],
                                     &sv8_found[2], &sv8_found[3],
                                     &sv8_found[4], &sv8_found[5],
@@ -359,29 +361,71 @@ TEST (ReadWriteTests, TestingPrimitiveTypes) {
     CHECK_EQUAL (0, Write (tx, Esc<10, UV8, UV8, UV8, UV8, UV8, UV8, UV8, UV8,
                                    UV8, UV8> (),
                            Args (args, &uv8_expected[0], &uv8_expected[1],
-                                 &uv8_expected[ 2], &uv8_expected[3],
-                                 &uv8_expected[ 4], &uv8_expected[5],
-                                 &uv8_expected[ 6], &uv8_expected[7],
-                                 &uv8_expected[ 8], &uv8_expected[9],
+                                 &uv8_expected[2], &uv8_expected[3],
+                                 &uv8_expected[4], &uv8_expected[5],
+                                 &uv8_expected[6], &uv8_expected[7],
+                                 &uv8_expected[8], &uv8_expected[9],
                                  &uv8_expected[10], &uv8_expected[11],
                                  &uv8_expected[12], &uv8_expected[13])))
-        CHECK_EQUAL (0, Read (tx, Esc<10, UV8, UV8, UV8, UV8, UV8, UV8, UV8,
-                                      UV8, UV8, UV8> (),
-                              Args (args, &uv8_found[0], &uv8_found[1],
-                                    &uv8_found[ 2], &uv8_found[3],
-                                    &uv8_found[ 4], &uv8_found[5],
-                                    &uv8_found[ 6], &uv8_found[7],
-                                    &uv8_found[ 8], &uv8_found[9],
-                                    &uv8_found[10], &uv8_found[11],
-                                    &uv8_found[12], &uv8_found[13])))
-        CHECK_EQUAL (uv8_expected[0], uv8_found[0])
-        CHECK_EQUAL (uv8_expected[1], uv8_found[1])
-        CHECK_EQUAL (uv8_expected[2], uv8_found[2])
-        CHECK_EQUAL (uv8_expected[3], uv8_found[3])
-        CHECK_EQUAL (uv8_expected[4], uv8_found[4])
-        CHECK_EQUAL (uv8_expected[5], uv8_found[5])
-        CHECK_EQUAL (uv8_expected[6], uv8_found[6])
-        CHECK_EQUAL (uv8_expected[7], uv8_found[7])
-        CHECK_EQUAL (uv8_expected[8], uv8_found[8])
-        CHECK_EQUAL (uv8_expected[9], uv8_found[9])
+    CHECK_EQUAL (0, Read (tx, Esc<10, UV8, UV8, UV8, UV8, UV8, UV8, UV8,
+                                  UV8, UV8, UV8> (),
+                          Args (args, &uv8_found[0], &uv8_found[1],
+                                &uv8_found[2], &uv8_found[3],
+                                &uv8_found[4], &uv8_found[5],
+                                &uv8_found[6], &uv8_found[7],
+                                &uv8_found[8], &uv8_found[9],
+                                &uv8_found[10], &uv8_found[11],
+                                &uv8_found[12], &uv8_found[13])))
+    CHECK_EQUAL (uv8_expected[0], uv8_found[0])
+    CHECK_EQUAL (uv8_expected[1], uv8_found[1])
+    CHECK_EQUAL (uv8_expected[2], uv8_found[2])
+    CHECK_EQUAL (uv8_expected[3], uv8_found[3])
+    CHECK_EQUAL (uv8_expected[4], uv8_found[4])
+    CHECK_EQUAL (uv8_expected[5], uv8_found[5])
+    CHECK_EQUAL (uv8_expected[6], uv8_found[6])
+    CHECK_EQUAL (uv8_expected[7], uv8_found[7])
+    CHECK_EQUAL (uv8_expected[8], uv8_found[8])
+    CHECK_EQUAL (uv8_expected[9], uv8_found[9])
+
+    PrintLineBreak ("  - Testing AR1...\n", 5);
+
+    static const byte ar1_expected[] = { '0', '1', '2', '3', '4', '5' };
+    byte ar1_found[6];
+    CHECK_EQUAL (0, Write (tx, Esc<1, AR1, 6, UI1> (), Args (args, &ar1_expected)))
+    CHECK_EQUAL (0, Read (tx, Esc<1, AR1, 6, UI1> (), Args (args, &ar1_found)))
+    for (int i = 0; i < 6; ++i)
+        CHECK_EQUAL (ar1_expected[i], ar1_found[i])
+
+
+    PrintLineBreak ("  - Testing AR2...\n", 5);
+
+    static const uint16_t ar2_expected[] = { '0', '1', '2', '3', '4', '5' };
+    uint16_t ar2_found[6];
+    CHECK_EQUAL (0, Write (tx, Esc<1, AR2, 6, UI2> (), Args (args, &ar2_expected)))
+    CHECK_EQUAL (0, Read (tx, Esc<1, AR2, 6, UI2> (), Args (args, &ar2_found)))
+    for (int i = 0; i < 6; ++i)
+        CHECK_EQUAL (ar2_expected[i], ar2_found[i])
+
+    PrintLineBreak ("  - Testing AR4...\n", 5);
+    
+
+    static const uint32_t ar4_expected[] = { '0', '1', '2', '3', '4', '5' };
+    uint32_t ar4_found[6];
+    CHECK_EQUAL (0, Write (tx, Esc<1, AR4, 6, UI4> (), Args (args, &ar4_expected)))
+    CHECK_EQUAL (0, Read (tx, Esc<1, AR4, 6, UI4> (), Args (args, &ar4_found)))
+    for (int i = 0; i < 6; ++i)
+        CHECK_EQUAL (ar4_expected[i], ar4_found[i])
+
+    PrintLineBreak ("  - Testing AR8...\n", 5);
+
+    static const uint64_t ar8_expected[] = { '0', '1', '2', '3', '4', '5' };
+    uint64_t ar8_found[6];
+    CHECK_EQUAL (0, Write (tx, Esc<1, AR8, 6, UI8> (), Args (args, &ar8_expected)))
+    CHECK_EQUAL (0, Read (tx, Esc<1, AR8, 6, UI8> (), Args (args, &ar8_found)))
+    for (int i = 0; i < 6; ++i)
+        CHECK_EQUAL (ar8_expected[i], ar8_found[i])
+
+    PrintLineBreak ("  - Testing BK8...\n", 5);
+    PrintLineBreak ("  - Testing BK4...\n", 5);
+    PrintLineBreak ("  - Testing BK2...\n", 5);
 }

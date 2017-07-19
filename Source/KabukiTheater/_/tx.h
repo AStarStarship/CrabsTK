@@ -87,6 +87,7 @@ inline Tx* TxInit (Tx* buffer, uint_t size) {
 }
 
 #if DEBUG_CHINESEROOM
+/** Prints the given Tx to the stdout. */
 static void Print (Tx* tx) {
     if (tx == nullptr) {
         PrintLine ('_');
@@ -164,6 +165,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
 
     hash16_t hash = 0;                      //< 16-bit prime hash.
 
+    const uint_t* param = params;           //< Pointer to the current param.
     // Convert the socket offsets to pointers.
     byte* begin = SocketBaseAddress (tx),   //< Beginning of the buffer.
         * end   = begin + size,             //< End of the buffer.
@@ -180,7 +182,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
     const uint64_t* ui8_ptr;                //< Pointer to a 8-byte type.
 #endif
 #if USING_AR1 || USING_AR2 || USING_AR4 || USING_AR8
-    const uint_t* array_type;                //< Array type for writing arrays.
+    uint_t array_type;                      //< Array type for writing arrays.
 #endif
 
     space = RingBufferSpace (start, stop, size);
@@ -189,8 +191,8 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
 
     // Write data.
     for (index = 0; index < num_params; ++index) {
-        type = *params;
-        ++params;
+        type = *param;
+        ++param;
 #if DEBUG_CHINESEROOM
         printf ("\n| %i:%u:%s start: %u, stop: %u hash: ", index, type, 
                 TypeString (type), Diff (begin, start), Diff (begin, stop));
@@ -207,8 +209,8 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                     return Report (BufferUnderflowError, params, index, 
                                    start);
                 --space;
-                length = *params;   //< Load the max string length.
-                ++params;
+                length = *param;   //< Load the max string length.
+                ++param;
 
                 //strings = reinterpret_cast<const byte**> (ptrs);
                 //printf ("\ntestStrings at after: 0x%p\nstring1: %s\n"
@@ -539,15 +541,22 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 // Load the 4-byte type to write to the buffer.
                 ui8_ptr = reinterpret_cast<const uint64_t*> (ptrs[index]);
                 ui8 = *ui8_ptr;
-                WriteVarint8:   //< Optimized manual do while loop.
+                WriteVarint8:           //< Optimized manual do while loop.
                 {
-                    ui2 = 9;
-                    if (space == 0) //< @todo Benchmark to space--
+                    ui2 = 8;            //< The max number of varint bytes - 1.
+                    if (space <= 9)     //< @todo Benchmark to space--
                         return Report (BufferUnderflowError, params, index, 
                                        start);
-                    --space;    //< @todo Benchmark to space--
-                    ui1 = ui8 & 0x7f;
-                    ui8 = ui8 >> 7;
+                    --space;            //< @todo Benchmark to space--
+                    if (--ui2 == 0) {   //< It's the last byte not term bit.
+                        ui1 = ui8 & 0xFF;
+                        *stop = ui1;
+                        if (++stop >= end) stop -= size;
+                        hash = Hash16 (ui1, hash);
+                        break;
+                    }
+                    ui1 = ui8 & 0x7f;   //< Take 7 bits at a time.
+                    ui8 = ui8 >> 7;     //< 
                     if (ui8 == 0) {
                         ui1 |= 0x80;
                         *stop = ui1;
@@ -558,8 +567,6 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                     *stop = ui1;
                     if (++stop >= end) stop -= size;
                     hash = Hash16 (ui1, hash);
-                    if (--ui2 == 0)
-                        return Report (VarintOverflowError, params, index, start);
 
                     goto WriteVarint8;
                 }
@@ -575,66 +582,69 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 ui1_ptr = reinterpret_cast<const byte*> (ptrs[index]);
                 if (ui1_ptr == nullptr)
                     return Report (NullPointerError, params, index, start);
+                length = *param++;
+                // An array cannot take up more than half of the buffer;
+                if ((length * sizeof (byte)) >= (size >> 1))
+                    return Report (ArrayOverflowError, params, index, start);
                 array_type = *param++;
-                ui1 = *ui1_ptr;
-                length = SizeOf (array_type) * ui1; //< Calculate length of array.
+                length *= SizeOf (array_type); //< Calculate length of array.
                 goto WriteBlock;
 #else
                 goto UnsupportedType;
 #endif
-            case AR2:  //< _W_r_i_t_e__A_r_r_a_y_2______________________________
+              case AR2:  //< _W_r_i_t_e__A_r_r_a_y_2______________________________
 #if USING_AR2
                 // Load pointer to data to write and get size.
-                ui2_ptr = reinterpret_cast<const uint16_t*> (ptrs[index]);
-                if (ui2_ptr == nullptr)
+                ui1_ptr = reinterpret_cast<const byte*> (ptrs[index]);
+                if (ui1_ptr == nullptr)
                     return Report (NullPointerError, params, index, start);
+                length = *param++;
+                // An array cannot take up more than half of the buffer;
+                if ((length * sizeof (uint16_t)) >= (size >> 1))
+                    return Report (ArrayOverflowError, params, index, start);
                 array_type = *param++;
-                ui1_ptr = reinterpret_cast<byte*>(ui2_ptr);
-                ui2 = *ui2_ptr;
-                length = SizeOf (array_type) * ui2; //< Calculate length of array.
+                length *= SizeOf (array_type); //< Calculate length of array.
+                printf ("\nlength: %u\n", length);
                 goto WriteBlock;
 #else
                 goto UnsupportedType;
 #endif
-
-            case AR4:  //< _W_r_i_t_e__A_r_r_a_y_4______________________________
+              case AR4:  //< _W_r_i_t_e__A_r_r_a_y_4______________________________
 #if USING_AR4
                 // Load pointer to data to write and get size.
-                ui4_ptr = reinterpret_cast<const uint32_t*> (ptrs[index]);
-                if (ui4_ptr == nullptr)
+                ui1_ptr = reinterpret_cast<const byte*> (ptrs[index]);
+                if (ui1_ptr == nullptr)
                     return Report (NullPointerError, params, index, start);
+                length = *param++;
+                // An array cannot take up more than half of the buffer;
+                if ((length * sizeof (uint32_t)) >= (size >> 1))
+                    return Report (ArrayOverflowError, params, index, start);
                 array_type = *param++;
-                ui1_ptr = reinterpret_cast<byte*>(ui4_ptr);
-                ui4 = *ui4_ptr;
-                length = SizeOf (array_type) * ui4; //< Calculate length of array.
+                length *= SizeOf (array_type); //< Calculate length of array.
                 goto WriteBlock;
 #else
                 goto UnsupportedType;
 #endif
-
-            case AR8:  //< _W_r_i_t_e__A_r_r_a_y_8______________________________
+              case AR8:  //< _W_r_i_t_e__A_r_r_a_y_8______________________________
 #if USING_AR8
                 // Load pointer to data to write and get size.
-                ui8_ptr = reinterpret_cast<const uint64_t*> (ptrs[index]);
-                if (ui8_ptr == nullptr)
+                ui1_ptr = reinterpret_cast<const byte*> (ptrs[index]);
+                if (ui1_ptr == nullptr)
                     return Report (NullPointerError, params, index, start);
+                length = *param++;
+                // An array cannot take up more than half of the buffer;
+                if ((length * sizeof (uint64_t)) >= (size >> 1))
+                    return Report (ArrayOverflowError, params, index, start);
                 array_type = *param++;
-                ui1_ptr = reinterpret_cast<byte*>(ui8_ptr);
-                ui8 = *ui8_ptr;
-                length = SizeOf (array_type) * ui8; //< Calculate length of array.
+                length *= SizeOf (array_type); //< Calculate length of array.
                 goto WriteBlock;
 #else
                 goto UnsupportedType;
 #endif
-
-            case ESC: //< _W_r_i_t_e__E_s_c_a_p_e_S_e_q_u_e_n_c_e_______________________
-#if USING_ESC
-                
+              case ESC: //< _W_r_i_t_e__E_s_c_a_p_e_S_e_q_u_e_n_c_e_______________________
+                // @todo Write Tx ESC algorithm.
                 break;
-#else
-                goto UnsupportedType;
-#endif
-            case BK8:  //< _W_r_i_t_e__6_4_-_B_i_t__B_o_o_k____________________________
+              case BK8:  //< _W_r_i_t_e__6_4_-_B_i_t__B_o_o_k____________________________
 
 # if USING_BK8
                 ui8_ptr = reinterpret_cast<const uint64_t*> (ptrs[index]);
@@ -649,7 +659,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 goto UnsupportedType;
 #endif
 
-            case BK4:  //< _W_r_i_t_e__B_o_o_k_4_______________________________________
+              case BK4:  //< _W_r_i_t_e__B_o_o_k_4_______________________________________
 
 # if USING_BK4
                 ui4_ptr = reinterpret_cast<const uint32_t*> (ptrs[index]);
@@ -664,7 +674,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 goto UnsupportedType;
 #endif
 
-            case BK2:  //< _W_r_i_t_e__B_o_o_k_2_______________________________________
+              case BK2:  //< _W_r_i_t_e__B_o_o_k_2_______________________________________
 
 # if USING_BK2
                 ui2_ptr = reinterpret_cast<const uint16_t*> (ptrs[index]);
@@ -678,9 +688,17 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
 #else
                 goto UnsupportedType;
 #endif
-
+              case US:
 #if USING_BK2 || USING_BK4 || USING_BK8
-            case US:
+                  ui1_ptr = reinterpret_cast<const byte*> (ptrs[index]);
+                  if (ui1_ptr == nullptr)
+                      return Report (NullPointerError, params, index, start);
+                  length = 1 << kUnitSize;
+#else
+                goto UnsupportedType;
+#endif
+#if USING_BK2 || USING_BK4 || USING_BK8 || USING_AR1 || USING_AR2 \
+              || USING_AR4 || USING_AR8
                 ui1_ptr = reinterpret_cast<const byte*> (ptrs[index]);
                 if (ui1_ptr == nullptr)
                     return Report (NullPointerError, params, index, start);
@@ -713,11 +731,10 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                     *stop = ui1;
                     ++stop;
                 }
-                break;f
+                break;
 #endif
             default:
                 UnsupportedType:
-                printf ("\n\n\n!!!!!!!!!!!\n\n\n\n");
                 return Report (ReadInvalidTypeError, params, index, start);
         }
     }
