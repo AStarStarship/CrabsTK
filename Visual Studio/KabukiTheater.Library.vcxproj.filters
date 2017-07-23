@@ -12,13 +12,10 @@
     <ClInclude Include="..\Source\KabukiTheater\kabuki_theater.h">
       <Filter>KabukiTheater</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\KabukiTheater\_\chinese_room.h">
-      <Filter>KabukiTheater\_</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\KabukiTheater\_\config.h">
-      <Filter>KabukiTheater\_</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\KabukiTheater\_\device.h">
+      <Filter>KabukiTheater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\KabukiTheater\_\dictionary.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\KabukiTheater\_\door.h">
@@ -39,6 +36,9 @@
     <ClInclude Include="..\Source\KabukiTheater\_\iterator.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\KabukiTheater\_\log.h">
+      <Filter>KabukiTheater\_</Filter>
+    </ClInclude>
     <ClInclude Include="..\Source\KabukiTheater\_\member.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
@@ -48,16 +48,19 @@
     <ClInclude Include="..\Source\KabukiTheater\_\portal.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\KabukiTheater\_\print.h">
+    <ClInclude Include="..\Source\KabukiTheater\_\record_table.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\KabukiTheater\_\record_table.h">
+    <ClInclude Include="..\Source\KabukiTheater\_\ring_buffer.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\KabukiTheater\_\room.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\KabukiTheater\_\rx.h">
+      <Filter>KabukiTheater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\KabukiTheater\_\slot.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\KabukiTheater\_\string.h">
@@ -75,10 +78,16 @@
     <ClInclude Include="..\Source\KabukiTheater\_\types.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\KabukiTheater\_\uniprinter.h">
+      <Filter>KabukiTheater\_</Filter>
+    </ClInclude>
     <ClInclude Include="..\Source\KabukiTheater\_\utf.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\KabukiTheater\_\utils.h">
+      <Filter>KabukiTheater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\KabukiTheater\_\wall.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\KabukiTheater\_\address.h">
@@ -87,27 +96,24 @@
     <ClInclude Include="..\Source\KabukiTheater\_\args.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\KabukiTheater\_\uniprinter.h">
-      <Filter>KabukiTheater\_</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\KabukiTheater\_\slot.h">
+    <ClInclude Include="..\Source\KabukiTheater\_\array.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\KabukiTheater\_\book.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\KabukiTheater\_\wall.h">
+    <ClInclude Include="..\Source\KabukiTheater\_\chinese_room.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\KabukiTheater\_\log.h">
-      <Filter>KabukiTheater\_</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\KabukiTheater\_\ring_buffer.h">
+    <ClInclude Include="..\Source\KabukiTheater\_\config.h">
       <Filter>KabukiTheater\_</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\KabukiTheater\_\assembly_settings.inl">
+      <Filter>KabukiTheater\_</Filter>
+    </None>
+    <None Include="..\Source\KabukiTheater\_\ReadMe.md">
       <Filter>KabukiTheater\_</Filter>
     </None>
   </ItemGroup>

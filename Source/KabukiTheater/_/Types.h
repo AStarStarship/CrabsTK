@@ -64,7 +64,7 @@ typedef enum {
     BK4   = 29, //< 29. A book with up to 2^15-2 members and 2^32-1 bytes data.
     BK2   = 30, //< 30. A book with up to 2^7-2 members and 2^16-1 bytes data.
     US    = 31, //< 31. A unit separator for breaking files and data into transmission blocks.
-} TData;
+} TType;
 
 /** Gets the width in bytes (1-8) of the given type. */
 inline uint_t SizeOf (uint_t Type) {

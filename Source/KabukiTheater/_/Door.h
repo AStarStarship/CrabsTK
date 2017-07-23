@@ -93,7 +93,7 @@ class Door: public Device {
     /** I2P operations. */
     const Member* Op (Rx* rx, Tx* tx, byte index) override {
         if (index == '?') {
-            static const Member m0 = { "Door", SetNumMembers (0), 
+            static const Member m0 = { "Door", NumMembers (0), 
                                        0, "A door in a Chinese room." };
             return &m0;
         }

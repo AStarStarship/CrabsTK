@@ -28,16 +28,70 @@ using namespace _;
 
 TEST_GROUP (BookTests) {
     void setup () {
-        PrintLineBreak ("+ Running BookTests...", 5);
+        PrintLineBreak ("+ Running BookTests...", 20);
     }
 
     void teardown () {
-        printf ("  BookTests completed.\n");
+        std::cout << "  BookTests completed.\n";
         //system ("PAUSE");
     }
 };
 
 TEST (BookTests, FirstBookTest) {
-    printf ("\n  - Running FirstBookTest\n");
+    PrintLineBreak ("  + Running BookTests\n", 10);
+
+    PrintLineBreak ("  - Running Book2...\n", 5, ' ');
+    byte index;
+    Book2* book = Init2 (Buffer<0, 248 - sizeof (Book2)> (), 8, 256, 128);
+
+    CHECK (book != nullptr)
+
+    CHECK_EQUAL (0, index = Add2 (book, "D", (byte)0xFF))
+    BookPrint (book);
+    CHECK_EQUAL (0, index)
+    CHECK_EQUAL (0, Find2 (book, "D"))
+
+    index = Add2 (book, "C", (byte)0xFF);
+    CHECK_EQUAL (1, index)
+    CHECK_EQUAL (0, Find2 (book, "D"))
+    CHECK_EQUAL (1, Find2 (book, "C"))
+
+    index = Add2 (book, "B", (byte)0xFF);
+    CHECK_EQUAL (2, index)
+    CHECK_EQUAL (0, Find2 (book, "D"))
+    CHECK_EQUAL (1, Find2 (book, "C"))
+    CHECK_EQUAL (2, Find2 (book, "B"))
+
+    index = Add2 (book, "A", (byte)0xFF);
+    CHECK_EQUAL (3, index)
+    CHECK_EQUAL (0, Find2 (book, "D"))
+    CHECK_EQUAL (1, Find2 (book, "C"))
+    CHECK_EQUAL (2, Find2 (book, "B"))
+    CHECK_EQUAL (3, Find2 (book, "A"))
+
+    index = Add2 (book, "abc", (byte)0xFF);
+    CHECK_EQUAL (4, index)
+    CHECK_EQUAL (4, Find2 (book, "abc"))
+
+    index = Add2 (book, "bac", (byte)0xFF);
+    CHECK_EQUAL (5, index)
+    CHECK_EQUAL (4, Find2 (book, "abc"))
+    CHECK_EQUAL (5, Find2 (book, "bac"))
+
+    index = Add2 (book, "cba", (byte)0xFF);
+    CHECK_EQUAL (6, index)
+    CHECK_EQUAL (4, Find2 (book, "abc"))
+    CHECK_EQUAL (5, Find2 (book, "bac"))
+    CHECK_EQUAL (6, Find2 (book, "cba"))
+
+    index = Add2 (book, "cab", (byte)0xFF);
+    CHECK_EQUAL (7, index)
+    CHECK_EQUAL (4, Find2 (book, "abc"))
+    CHECK_EQUAL (5, Find2 (book, "bac"))
+    CHECK_EQUAL (6, Find2 (book, "cba"))
+    CHECK_EQUAL (7, Find2 (book, "cab"))
+
+    index = Add2 (book, "test", (byte)0xFF);
+    CHECK_EQUAL (index, ~0)
     
 }

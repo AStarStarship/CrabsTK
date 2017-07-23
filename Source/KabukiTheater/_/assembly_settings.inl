@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    /.../AssemblySettings.h
+    @file    /.../assembly_settings.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
         
@@ -62,17 +62,17 @@ namespace _ {
 enum
 {
     kMaxErrors                  = 8,    //< Max num errors before blowing up.
-    kDefaultTerminalSize        = 255,  //< Default Terminal buffer size.
+    kDefaultTerminalSize        = 256,  //< Default Terminal buffer size.
     kDefaultHeaderBufferSize    = 32,   //< Default header buffer size.
     kDefaultDataBufferSize      = 32,   //< Default data buffer size.
     kHashSeed                   = 3,    //< Prime number hash seed.
     kInitStackHeight            = 8,    //< Initial stack height.
     kMaxAddressLength           = 10,   //< Max length of an GetAddress.
     kMaxNumParams               = 26,   //< Max number of parameters.
-    kLogSize                    = 255,  //< Size of the log for this module.
-    kMinRoomSize                = 255,  //< Min size of a room.
-    kMaxRoomSize                = 0x7FFFFFFF,   //< Max room size.
-    kMinTerminalSize            = 255,  //< Min size of a Terminal minus one.
+    kLogSize                    = 256,  //< Size of the log for this module.
+    kMinRoomSize                = 256,  //< Min size of a room.
+    kMaxRoomSize                = 0x80000000,   //< Max room size: 2GB.
+    kMinTerminalSize            = 256,  //< Min size of a Terminal minus one.
 };
 }
 

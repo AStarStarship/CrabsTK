@@ -25,10 +25,10 @@
     <ClCompile Include="..\Source\KabukiTheater-Impl\TESTS\KabukiTheaterTests.cpp" />
     <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\book_tests.cpp" />
     <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\console_tests.cpp" />
+    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\read_write_tests.cpp" />
     <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\record_table_tests.cpp" />
     <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\room_tests.cpp" />
     <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\uniprinter_tests.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\read_write_tests.cpp" />
     <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\utills_tests.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -27,7 +27,6 @@
 #include <CppUTest\TestHarness.h>
 
 #include <_\record_table.h>
-#include <_\Print.h>
 
 using namespace _;
 
@@ -41,12 +40,12 @@ TEST_GROUP (RecordTableTests)
     void teardown ()
     {
         std::cout << "  RecordTableTests completed.\n";
-        system ("PAUSE");
+        //system ("PAUSE");
     }
 
 };
 
-TEST (RecordTableTests, RecordTableTest1)
+TEST (RecordTableTests, RecordTableTests)
 {
     std::cout << "  - Running RecordTableTest1...\n";
     byte index;

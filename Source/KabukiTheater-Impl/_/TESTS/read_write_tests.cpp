@@ -24,7 +24,7 @@
 
 #include <_/args.h>
 #include <_/rx.h>
-
+#include <_/book.h>
 #include <time.h>
 
 using namespace _;
@@ -44,7 +44,7 @@ TEST_GROUP (ReadWriteTests)
 
     void teardown () {
         printf ("\n\nTest completed.\n");
-        system ("PAUSE");
+        //system ("PAUSE");
     }
 
 };
@@ -63,9 +63,11 @@ TEST (ReadWriteTests, TestingPrimitiveTypes) {
 
     Tx* tx = TxInit (Buffer<0, 128 + kSlotHeaderSize> (), 128 + kSlotHeaderSize);
 
-    CHECK_EQUAL (0, Write (tx, Esc<2, STX, 5, STX, 5> (), Args (args, expected_string1, expected_string2)))
+    CHECK_EQUAL (0, Write (tx, Esc<2, STX, 5, STX, 5> (), 
+                           Args (args, expected_string1, expected_string2)))
 
-    CHECK_EQUAL (0, Read (tx, Esc<2, STX, 5, STX, 5> (), Args (args, found_string1, found_string2)))
+    CHECK_EQUAL (0, Read (tx, Esc<2, STX, 5, STX, 5> (), 
+                          Args (args, found_string1, found_string2)))
     STRCMP_EQUAL (expected_string1, found_string1)
     STRCMP_EQUAL (expected_string2, found_string2)
 
@@ -81,7 +83,8 @@ TEST (ReadWriteTests, TestingPrimitiveTypes) {
     byte ui1_found;
 
     CHECK_EQUAL (0, Write (tx, Esc<4, SI1, SI1, UI1, BOL> (),
-           Args (args, &si1_p_expected, &si1_n_expected, &ui1_expected, &bol_expected)))
+           Args (args, &si1_p_expected, &si1_n_expected, &ui1_expected, 
+                 &bol_expected)))
     CHECK_EQUAL (0, Read (tx, Esc<4, SI1, SI1, UI1, BOL> (),
           Args (args, &si1_p_found, &si1_n_found, &ui1_found, &bol_found)))
     CHECK_EQUAL (si1_p_expected, si1_p_found)
@@ -425,7 +428,11 @@ TEST (ReadWriteTests, TestingPrimitiveTypes) {
     for (int i = 0; i < 6; ++i)
         CHECK_EQUAL (ar8_expected[i], ar8_found[i])
 
-    PrintLineBreak ("  - Testing BK8...\n", 5);
-    PrintLineBreak ("  - Testing BK4...\n", 5);
     PrintLineBreak ("  - Testing BK2...\n", 5);
+
+
+
+    PrintLineBreak ("  - Testing BK4...\n", 5);
+
+    PrintLineBreak ("  - Testing BK8...\n", 5);
 }

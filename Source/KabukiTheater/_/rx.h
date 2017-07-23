@@ -145,8 +145,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
         length,                 //< The length of the data in the buffer.
         count,                  //< The argument length.
         index,                  //< The index of the Esc.
-        num_params = *params,   //< The number of params.
-        array_type;             //< The type of being read.
+        num_params = *params;   //< The number of params.
     hash16_t hash;
 
     if (num_params == 0) return 0;   //< Nothing to do.
@@ -183,6 +182,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
         switch (type)
         {
           case NIL:
+              goto RxInvalidType;
           case SOH: //< _R_e_a_d__S_t_r_i_n_g_-_8_______________________________________
           case STX:
               // Load buffered-type argument length and increment the index.
@@ -244,7 +244,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             *ui1_ptr = ui1;                     //< Write
             break;
 #else
-            return Report (InvalidRxTypeError, params, index, start);
+            goto RxInvalidType;
 #endif
           case SI2: //< _R_e_a_d__1_6_-_b_i_t__T_y_p_e_s________________________________
           case UI2:
@@ -273,8 +273,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             *(ui1_ptr + 1) = ui1;               //< Write
             break;
 #else
-            return Report (InvalidRxTypeError, params, index,
-                                start);
+            goto RxInvalidType;
 #endif
           case SI4: //< _R_e_a_d__3_2_-_b_i_t__T_y_p_e_s________________________
           case UI4:
@@ -316,8 +315,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             *(ui1_ptr + 3) = ui1;               //< Write
             break;
 #else
-            return Report (InvalidRxTypeError, params, index,
-                                start);
+            goto RxInvalidType;
 #endif
           case TMU: //< _R_e_a_d__6_4_-_b_i_t__T_y_p_e_s________________________
           case SI8:
@@ -383,7 +381,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             *(ui1_ptr + 7) = ui1;               //< Write
             break;
 #else
-            return Report (InvalidRxTypeError, params, index, start);
+            goto RxInvalidType;
 #endif
           case SV2: //< _R_e_a_d__2_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_________
 
@@ -479,7 +477,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             break;
 #else
           case UV2:
-            return Report (InvalidRxTypeError, params, index, start);
+            goto RxInvalidType;
 #endif
           case SV4: //< _R_e_a_d__4_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_________
           case UV4: //< _R_e_a_d__4_-_b_y_t_e__U_n_s_i_g_n_e_d__V_a_r_i_n_t_____
@@ -517,7 +515,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             *ui4_ptr = ui4;
           break;
 #else
-            return Report (InvalidRxTypeError, params, index, start);
+            goto RxInvalidType;
 #endif
           case SV8: //< _R_e_a_d__V_a_r_i_n_t__8________________________________
           case UV8:
@@ -561,8 +559,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
               *ui8_ptr = ui8;
             break;
 #else
-            return Report (InvalidRxTypeError, param, 
-                                              index, start);
+              goto RxInvalidType;
 #endif
           case AR1:  //< _R_e_a_d__A_r_r_a_y_-_1________________________________
 #if USING_AR1
@@ -574,7 +571,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             count *= SizeOf (*param++);
             goto ReadBlock;
 #else
-            return Report (InvalidRxTypeError, params, index, start);
+            goto RxInvalidType;
 #endif
           case AR2:  //< _R_e_a_d__A_r_r_a_y_-_2________________________________
 #if USING_AR2
@@ -586,7 +583,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
               count *= SizeOf (*param++);
               goto ReadBlock;
 #else
-            return Report (InvalidRxTypeError, params, index, start);
+            goto RxInvalidType;
 #endif
           case AR4:  //< _R_e_a_d__A_r_r_a_y_-_4________________________________
 #if USING_AR4
@@ -598,7 +595,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             count *= SizeOf (*param++);
             goto ReadBlock;
 #else
-            return Report (InvalidRxTypeError, params, index, start);
+            goto RxInvalidType;
 #endif
           case AR8:  //< _R_e_a_d__A_r_r_a_y_-_8________________________________
 #if USING_AR8
@@ -610,7 +607,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             count *= SizeOf (*param++);
             goto ReadBlock;
 #else
-            return Report (InvalidRxTypeError, params, index, start);
+              goto RxInvalidType;
 #endif
           case ESC: //< _R_e_a_d__E_s_c_a_p_e__S_e_q_u_e_n_c_e__________________
             // I'm not sure exactly how this should work. I can't do recursion
@@ -634,7 +631,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             break;
 #if USING_AR8
 #else
-            return Report (InvalidRxTypeError, params, index, start);
+            goto RxInvalidType;
 #endif
           case BK4: //< _R_e_a_d__B_o_o_k_4_______________________________________
             if (length <= 64)
@@ -654,7 +651,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             break;
 #if USING_BK4
 #else
-            return Report (InvalidRxTypeError, params, index, start);
+            goto RxInvalidType;
 #endif
           case BK2: //< _R_e_a_d__B_o_o_k_2_______________________________________
             if (length <= 32)
@@ -675,7 +672,7 @@ static ticket_t Read (Rx* rx, const uint_t* params, void** args) {
             break;
 #if USING_BK2
 #else
-            return Report (InvalidRxTypeError, params, index, start);
+            goto RxInvalidType;
 #endif
           case US: //< _R_e_a_d__U_n_i_t__S_e_p_e_r_a_t_o_r_____________________
             ReadBlock:

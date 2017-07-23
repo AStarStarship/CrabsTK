@@ -22,8 +22,8 @@
 #ifndef CHINESEROOM_BOOK_H
 #define CHINESEROOM_BOOK_H
 
-#include "device.h"
-#include "record_table.h"
+#include "utils.h"
+#include "types.h"
 
 namespace _ {
 
@@ -112,11 +112,11 @@ enum
     |___________________________________________________|0x0
     @endcode
 
-    | Dict | Max Values | % Collisions (p)  |          Overhead             |
-    |:----:|:----------:|:----------------:|:-----------------------------:|
+    | Book | Max Values | % Collisions (p) |           Overhead             |
+    |:----:|:----------:|:----------------:|:------------------------------:|
     |   2  |     255    |    0.0001        | Ceiling (0.02*p*2^8)  = 2      |
-    |   4  |     8192   |      0.1         | Ceiling (0.04*p*2^16) = 327.68 |
-    |   8  |    2^32/8  |    10^-16        | Ceiling (0.04*p*2^32) = 327.68 |
+    |   4  |     2^13   |      0.1         | Ceiling (0.04*p*2^13) = 327.68 |
+    |   8  |     2^29   |    10^-16        | Ceiling (0.04*p*2^29) = 327.68 |
 
     Memory Schema:
     The memory schema is optimized for fast search and push back. When searching
@@ -124,7 +124,7 @@ enum
 
     How to calculate size:
     The size of any size book can be calculated as follows:
-    size = num_keys * (2*sizeof (TIndex) + sizeof (TData)) + collissionSize +
+    size = num_items * (2*sizeof (TIndex) + sizeof (TData)) + collissionSize +
 
     # State Format
     @code
@@ -174,16 +174,35 @@ enum
 template<typename TIndex, typename TKey, typename TData, typename THash>
 struct Book {
     TData size;             //< The total size of the Book.
-    TKey header_size,       //< The size of the key strings in bytes.
-        collisions_size;    //< The size of the (optional) collisions table.
-    TIndex num_keys,       //< Number of Device members.
-        num_indexes;        //< The number of buffered items.
+    TKey table_size,        //< The size of the key strings in bytes.
+        pile_size;          //< The size of the (optional) collision table pile.
+    TIndex num_items,       //< Number of items.
+        max_items;          //< The max number of buffered items.
 };
+
+using Book2 = Book<byte, uint16_t, uint16_t, hash16_t>;
+using Book4 = Book<uint16_t, uint16_t, uint32_t, hash32_t>;
+using Book8 = Book<uint32_t, uint32_t, uint64_t, hash64_t>;
+using BookX = Book<TBookIndex, TBookHeader, TBookDataOffset, TBookHash>;
+
 
 template<typename TIndex, typename TKey, typename TData, typename THash>
 constexpr uint_t OverheadPerBookIndex () {
         return sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
+};
 
+template<typename TIndex, typename TKey, typename TData, typename THash>
+constexpr TData MinSizeBook (TIndex num_items) {
+    return sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
+};
+
+enum {
+    kMaxNumPagesBook2 = 255,                //< The number of pages in a Book2.
+    kMaxNumPagesBook4 = 8 * 1024,           //< The number of pages in a Book4.
+    kMaxNumPagesBook8 = 256 * 1024 * 1024,  //< The number of pages in a Book8.
+    kOverheadPerBook2Index = OverheadPerBookIndex<byte, uint16_t, uint16_t, hash16_t> (),
+    kOverheadPerBook4Index = OverheadPerBookIndex<byte, uint16_t, uint16_t, hash16_t> (),
+    kOverheadPerBook8Index = OverheadPerBookIndex<byte, uint16_t, uint16_t, hash16_t> (),
 };
     
 /** Initializes a Book.
@@ -192,501 +211,541 @@ constexpr uint_t OverheadPerBookIndex () {
     @warning The reservedNumMembers must be aligned to a 32-bit value,
         and it will get rounded up to the next higher multiple of 4.
 */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-Book<TIndex, TKey, TData, THash>* InitBook 
-    (Book<TIndex, TKey, TData, THash>* book, TIndex numBufferedIndexes, 
-     uint16_t totalSize)  {
-    if (totalSize < sizeof (Book) + numBufferedIndexes *
-        (kOverheadPerIndex + 2))
+static Book2* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t size)
+{
+    if (buffer == nullptr)
+        return nullptr;
+    if (table_size >= size)
+        return nullptr;
+    if (table_size < sizeof (Book2) + max_size *
+        (OverheadPerBookIndex<byte, uint16_t, uint16_t, hash16_t> () + 2))
         return nullptr;
 
-    num_keys = 0;
-    collisions_size = 0;
-    buffered_indexes_ = numBufferedIndexes;
-    size = totalSize;
-    return this;
+    Book2* book = reinterpret_cast<Book2*> (buffer);
+    book->size = table_size;
+    book->table_size = table_size;
+    book->num_items = 0;
+    book->max_items = max_size;
+    book->pile_size = 1;
+    return book;
 }
 
 /** Insets the given key-value pair.
 */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-TIndex Insert (Book<TIndex, TKey, TData, THash>* book, byte type, 
+TIndex BookInsert (Book<TIndex, TKey, TData, THash>* book, byte type, 
                const byte* key, void* data, TIndex index) {
     if (book == nullptr) return 0;
-    return 0;
+    return ~0;
 }
 
-/** Adds a key-value pair. */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-TIndex Add (Book<TIndex, TKey, TData, THash>* book, byte type, 
-            const byte* key, void* data) {
-    if (book == nullptr) return 0;
-    PrintStringLine (key);
+template<typename TIndex>
+TIndex MaxBookIndexes () {
+    enum {
+        kMaxIndexes = sizeof (TIndex) == 1 ? 255 : sizeof (TIndex) == 2 ? 
+                       8 * 1024 : sizeof (TIndex) == 4 ? 512 * 1024 * 1024 : 0
+    };
+    return kMaxIndexes;
+}
 
+/** Adds a key-value pair to the end of the book. */
+template<typename TIndex, typename TKey, typename TData, typename THash>
+TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key, 
+                TType type, void* data) {
+    if (book == nullptr) return 0;
     if (key == nullptr) return 0;
 
-    TIndex num_keys = num_keys,
-        buffered_indexes = buffered_indexes_,
-        TIndex,
+    PrintStringLine (key);
+
+    TIndex num_items = book->num_items,
+        max_items = book->max_items,
         temp;
 
-    TKey l_headerSize = size;
-    TData l_dataSize = size;
+    TKey table_size = book->table_size;
 
-    if (num_keys >= buffered_indexes) return TableFull;   //< We're out of buffered TIndexes.
+    if (num_items >= max_items) return ~0;
+    //< We're out of buffered indexes.
 
-    THash* hashes = reinterpret_cast<THash*> (reinterpret_cast<byte*> (this) + sizeof (Book));
-    uint16_t* keyOffsets = reinterpret_cast<uint16_t*> (hashes + buffered_indexes);
-    byte*     TIndexes = reinterpret_cast<byte*> (keyOffsets + buffered_indexes),
-        *ununsorted_indexes = TIndexes + buffered_indexes,
-        *collission_list = ununsorted_indexes + buffered_indexes;
-    byte*     keys = reinterpret_cast<byte*> (this) + l_headerSize - 1,
+    byte* states = reinterpret_cast<byte*> (book) + 
+                   sizeof (Book <TIndex, TKey, TData, THash>);
+    TKey* key_offsets = reinterpret_cast<TKey*> (states + max_items);
+    TData* data_offsets = reinterpret_cast<TData*> (states + max_items *
+                                                    (sizeof (TKey)));
+    THash* hashes = reinterpret_cast<THash*> (states + max_items *
+                                              (sizeof (TKey) + sizeof (TData))),
+        * hash_ptr;
+    TIndex* indexes = reinterpret_cast<TIndex*> (states + max_items *
+                                                 (sizeof (TKey) + sizeof (TData) + sizeof (TIndex))),
+        *unsorted_indexes = indexes + max_items,
+        *collission_list = unsorted_indexes + max_items;
+    char* keys = reinterpret_cast<char*> (book) + table_size - 1,
         *destination;
 
-    //printf ("Offsets:\nhashes: %u keyOffsets: %u TIndexes: %u ununsorted_indexes: %u collisionList: %u keys: %u",
-    //  reinterpret_cast<byte*> (hashes) - reinterpret_cast<byte*> (this), reinterpret_cast<byte*> (keyOffsets) - reinterpret_cast<byte*> (this),
-    //  TIndexes - reinterpret_cast<byte*> (this), ununsorted_indexes - reinterpret_cast<byte*> (this),
-    //  collission_list - reinterpret_cast<byte*> (this), keys - reinterpret_cast<byte*> (this));
-
     // Calculate space left.
-    TKey value = l_headerSize - buffered_indexes * OverheadPerTIndex,
-        l_collisionsSize,
-        key_length = static_cast<uint16_t> (strlen (key));
+    TKey value = table_size - max_items * OverheadPerBookIndex<TIndex, TKey, TData, THash> (),
+        key_length = static_cast<uint16_t> (strlen (key)),
+        pile_size;
 
     PrintLine ();
-    //printf ("Adding Key %s\n%20s: 0x%p\n%20s: %p\n%20s: 0x%p\n%20s: %p\n%20s: %u\n", key, "hashes", hashes, "keyOffsets", keyOffsets,
-    //  "keys", keys, "TIndexes", TIndexes, "value", value);
+    printf ("Adding Key %s\n%20s: 0x%p\n%20s: %p\n%20s: 0x%p\n"
+            "%20s: %p\n%20s: %u\n", key, "hashes", hashes, "key_offsets",
+            key_offsets, "keys", keys, "indexes", indexes, "value", value);
 
-    hash32_t hash = Hash<hash32_t> (key),
+    THash hash = Hash16 (key),
         current_hash;
 
-    if (key_length > value)
-    {
-        //printf ("Buffer overflow\n");
-        return BufferOverflowError;
+    if (key_length > value) {
+        std::cout << "Buffer overflow\n";
+        return ~((TIndex)0);
     }
 
     //print ();
 
-    if (num_keys == 0)
-    {
-        num_keys = 1;
+    if (num_items == 0) {
+        book->num_items = 1;
         *hashes = hash;
-        *keyOffsets = static_cast<uint16_t> (key_length);
-        *TIndexes = NoCollisions;
-        *ununsorted_indexes = 0;
+        *key_offsets = static_cast<uint16_t> (key_length);
+        *indexes = ~0;
+        *unsorted_indexes = 0;
         destination = keys - key_length;
 
-        copyString (destination, key);
-        //printf ("Inserted key %s at address 0x%p\n", key, destination);
-        Print ();
+        CopyString (destination, key);
+        printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
+        BookPrint (book);
         return 0;
     }
 
     // Calculate left over buffer size by looking up last string.
 
-    if (key_length >= value)
-    {
-        //printf ("Not enough room in buffer!\n");
+    if (key_length >= value) {
+        std::cout << "Not enough room in buffer!\n";
         return 0;   //< There isn't enough room left in the buffer.
     }
 
-    //printf ("Finding insert location... \n");
+    std::cout << "Finding insert location... \n";
 
     int low = 0,
         mid,
-        high = num_keys;
+        high = num_items,
+        index;
 
-    byte* temp_ptr;
+    TIndex* temp_ptr;
 
-    while (low <= high)
-    {
+    while (low <= high) {
         mid = (low + high) >> 1;        //< Shift >> 1 to / 2
 
         current_hash = hashes[mid];
-        //printf ("high: %i mid: %i low %i hash: %x\n", high, mid, low,
-        //  current_hash);
+        printf ("high: %i mid: %i low %i hash: %x\n", high, mid, low,
+                current_hash);
 
-        if (current_hash > hash)
-        {
+        if (current_hash > hash) {
             high = mid - 1;
-        }
-        else if (current_hash < hash)
-        {
+        } else if (current_hash < hash) {
             low = mid + 1;
-        }
-        else
+        } else    // Duplicate hash detected.
         {
-            // Duplicate hash detected.
-
-            //printf ("hash detected, ");
+            std::cout << "hash detected, ";
 
             // Check for other collisions.
 
-            TIndex = TIndexes[mid];
-            //< This is the TIndex in the collision table.
+            index = indexes[mid];       //< Index in the collision table.
 
-                                            //printf ("TIndex:%u\n", TIndex);
+            printf ("index:%u\n", index);
 
-            if (TIndex < NoCollisions)        // There are other collisions.
+            if (index < ~0)             //< There are other collisions.
             {
-                //printf ("with collisions, ");
+                std::cout << "with collisions, ";
                 // There was a collision so check the table.
 
-                // The collisionsList is a sequence of TIndexes terminated by an invalid TIndex > MaxNumKeys.
-                // collissionsList[0] is an invalid TIndex, so the collisionsList is searched from lower GetAddresses up.
-                temp = TIndexes[mid];
+                // The collisionsList is a sequence of indexes terminated 
+                // by an invalid index. collissionsList[0] is 
+                // an invalid index, so the collisionsList is searched from
+                // lower address up.
+                temp = indexes[mid];
                 temp_ptr = collission_list + temp;
-                TIndex = *temp_ptr;
-                while (TIndex < MaxNumKeys)
-                {
-                    //printf ("comparing \"%s\" to \"%s\"\n", key, keys - keyOffsets[TIndex]);
-                    if (strcmp (key, keys - keyOffsets[TIndex]) == 0)
-                    {
-                        //printf ("but table already contains key at offset: %u.\n", TIndex);
-                        return TIndex;
+                index = *temp_ptr;  //< Load the index in the collision table.
+                while (index < MaxBookIndexes<TIndex> ()) {
+                    printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
+                    if (strcmp (key, keys - key_offsets[index]) == 0) {
+                        printf ("but table already contains key at "
+                                "offset: %u.\n", index);
+                        return index;
                     }
                     ++temp_ptr;
-                    TIndex = *temp_ptr;
+                    index = *temp_ptr;
                 }
 
                 // Its a new collision!
-                //printf ("and new collision detected.\n");
+                std::cout << "and new collision detected.\n";
 
-                value = keyOffsets[num_keys - 1] + key_length + 1;
-                copyString (keys - value, key);
-                keyOffsets[num_keys] = value;
+                // Copy the key
+                value = key_offsets[num_items - 1] + key_length + 1;
+                CopyString (keys - value, key);
+                key_offsets[num_items] = value;
 
-                l_collisionsSize = collisions_size;
-                // Shift the collisions table up one element and insert the unsorted collision TIndex.
-                collission_list += l_collisionsSize;     //< Move to the top of the collisions list.
-                while (collission_list > temp_ptr)        //< And iterate down to the insert spot
-                {
-                    *collission_list = * (collission_list - 1);
+                // Update the collision table.
+                pile_size = book->pile_size;
+                // Shift the collisions table up one element and insert 
+                // the unsorted collision index.
+                // Then move to the top of the collisions list.
+                collission_list += pile_size;
+                // and iterate down to the insert spot
+                while (collission_list > temp_ptr) {
+                    *collission_list = *(collission_list - 1);
                     --collission_list;
                 }
-                *temp_ptr = num_keys;
+                *temp_ptr = num_items;
 
-                collisions_size = l_collisionsSize + 1;
+                book->pile_size = pile_size + 1;
+                printf ("\n\ncollision index: %u\n", temp);
+                // Store the collision index.
+                indexes[num_items] = temp;   //< Store the collision index
+                book->num_items = num_items + 1;
+                hashes[num_items] = ~0;      //< Set the last hash to 0xFFFF
 
-                // Store the collision TIndex.
-                TIndexes[num_keys] = temp;              //< Temp is storing the
-                num_keys = num_keys + 1;
-                hashes[num_keys] = ~0;                 //< Set the last hash to 0xff..f
+                                            // Move collisions pointer to the unsorted_indexes.
+                indexes += max_items;
 
-                TIndexes += buffered_indexes;           //< Move collisions pointer to the ununsorted_indexes.
-                TIndexes[num_keys] = num_keys;         //< The newest string added is at the end.
+                //< Add the newest string to the end.
+                indexes[num_items] = num_items;
 
-                Print ();
-                return num_keys;
+                BookPrint (book);
+                printf ("Done inserting.\n");
+                return num_items;
             }
 
             // But we still don't know if the string is a new collision.
 
-            //printf ("Checking if it's a collision... ");
+            std::cout << "Checking if it's a collision... ";
 
-            if (strcmp (key, keys - keyOffsets[TIndex]) != 0)  // It's a new collision!
-            {
-                //printf ("It's a new collision!\n");
+            if (strcmp (key, keys - key_offsets[index]) != 0) {
+                // It's a new collision!
+                std::cout << "It's a new collision!\n";
 
-                if (value < 3)
-                {
-                    //printf ("Buffer overflow!\n");
-                    return BufferOverflow;
+                if (value < 3) {
+                    std::cout << "Buffer overflow!\n";
+                    return ~0;
                 }
 
-                value = keyOffsets[num_keys - 1] + key_length + 1;
+                // Get offset to write the key too.
+                value = key_offsets[num_items - 1] + key_length + 1;
 
-                copyString (keys - value, key);
-                //printf ("$$$ Inserting value: %u into TIndex:%u num_keys:%u\n", value, TIndex, num_keys);
-                keyOffsets[num_keys] = value;
+                byte collision_index = unsorted_indexes[mid];
+                printf ("\n\ncollision_index: %u", collision_index);
 
-                l_collisionsSize = collisions_size;
+                CopyString (keys - value, key);
+                printf ("Inserting value: %u into index:%u "
+                        "num_items:%u with other collision_index: %u\n", value,
+                        index, num_items, collision_index);
+                key_offsets[num_items] = value;
 
-                TIndexes[mid] = static_cast<byte> (l_collisionsSize);
-                TIndexes[num_keys] = static_cast<byte> (l_collisionsSize);
+                pile_size = book->pile_size;
+                indexes[mid] = static_cast<byte> (pile_size);
+                indexes[num_items] = static_cast<byte> (pile_size);
 
                 // Insert the collision into the collision table.
-                temp_ptr = &collission_list[l_collisionsSize];
-                *temp_ptr = num_keys;
+                temp_ptr = &collission_list[pile_size];
+                // Move collisions pointer to the unsorted_indexes.
+                indexes += max_items;
+                *temp_ptr = collision_index;
                 ++temp_ptr;
-                *temp_ptr = mid;
+                *temp_ptr = num_items;
                 ++temp_ptr;
                 *temp_ptr = ~0;
-                collisions_size = l_collisionsSize + 3;  //< added one term-byte and two TIndexes.
+                book->pile_size = pile_size + 3;
+                //< Added one term-byte and two indexes.
 
-                TIndexes += buffered_indexes;        //< Move collisions pointer to the ununsorted_indexes.
-                TIndexes[num_keys] = num_keys;         //< The newest string added is at the end.
+                // Add the newest key at the end.
+                indexes[num_items] = num_items;
 
-                hashes[num_keys] = ~0;                 //< Set the last hash to 0xff..f
+                // Set the last hash to 0xFFFF
+                hashes[num_items] = ~0;
 
-                num_keys = num_keys + 1;
+                book->num_items = num_items + 1;
 
-                Print ();
+                BookPrint (book);
 
-                return num_keys;  //< Then it was a collision so the table doesn't contain s.
+                BookPrint (book);
+                std::cout << "Done inserting.\n";
+                // Then it was a collision so the table doesn't contain s.
+                return num_items;
             }
-            //printf ("table already contains the key\n");
-            return TIndex;
+            std::cout << "table already contains the key\n";
+            return index;
         }
     }
 
     // The hash was not in the table.
 
-    value = keyOffsets[num_keys - 1] + key_length + 1;
+    value = key_offsets[num_items - 1] + key_length + 1;
     destination = keys - value;
 
-    //printf ("The hash 0x%x was not in the table so inserting %s into mid: %i at TIndex %u before hash 0x%x \n", hash, key, mid,
-    //  destination - reinterpret_cast<byte*> (this), hashes[mid]);
+    printf ("The hash 0x%x was not in the table so inserting %s into mid:"
+            " %i at index %u before hash 0x%x \n", hash, key, mid,
+            Diff (book, destination), hashes[mid]);
 
     // First copy the string and set the key offset.
-    copyString (destination, key);
-    keyOffsets[num_keys] = value;
+    CopyString (destination, key);
+    key_offsets[num_items] = value;
 
     // Second move up the hashes and insert at the insertion point.
-
-    Hash* hash_ptr = hashes + num_keys;
+    hash_ptr = hashes;
+    hash_ptr += num_items;
     //*test = hashes;
-    //printf ("l_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u\n", num_keys, hashes - reinterpret_cast<THash*> (this),
-    //  hash_ptr - reinterpret_cast<THash*> (this), hashes + mid - reinterpret_cast<THash*> (this));
+    printf ("l_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u\n",
+            num_items, Diff (book, hashes),
+            Diff (book, hash_ptr), Diff (book, hashes + mid));
     hashes += mid;
-    //print ();
-    while (hash_ptr > hashes)
-    {
-        *hash_ptr = * (hash_ptr - 1);
+    BookPrint (book);
+    while (hash_ptr > hashes) {
+        *hash_ptr = *(hash_ptr - 1);
         --hash_ptr;
     }
     *hashes = hash;
 
-    // There were no collisions so set collisionTIndex to zero.
-    TIndexes[num_keys] = NoCollisions;
+    // Mark as not having any collisions.
+    indexes[num_items] = ~0;
 
-    // Move up the sorted TIndexes and insert the unsorted TIndex (which is the current num_keys).
-    TIndexes += buffered_indexes + mid;
-    temp_ptr = TIndexes + num_keys;
+    // Move up the sorted indexes and insert the unsorted index (which is 
+    // the current num_items).
+    indexes += max_items + mid;
+    temp_ptr = indexes + num_items;
 
-    while (temp_ptr > TIndexes)
-    {
-        *temp_ptr = * (temp_ptr - 1);
+    while (temp_ptr > indexes) {
+        *temp_ptr = *(temp_ptr - 1);
         --temp_ptr;
     }
-    *temp_ptr = num_keys;      //ununsorted_indexes[mid] = num_keys;
+    *temp_ptr = num_items;
 
-    num_keys = num_keys + 1;
+    book->num_items = num_items + 1;
 
-    /*
-    // The table did not contain the has so insert it in the low spot.
-
-
-    // Now move up the corresponding TIndexes.
-
-    byte* TIndex_ptr = TIndexes + num_keys * sizeof (byte*);
-
-    while (TIndex_ptr != TIndexes)
-    {
-    *TIndex_ptr = * (TIndex_ptr - 1);
-    --TIndex_ptr;
-    }*/
-
-    //printf ("\nAfter...");
-    Print ();
-    //printf ("Done inserting.\n");
+    BookPrint (book);
+    std::cout << "Done inserting.\n";
     PrintLine ();
 
-    return num_keys;
+    return num_items;
 }
 
-/** Returns a pointer to the given book's hash array.
-    @warning Does not check for nullptr for performance reasons. */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-inline THash* BookHashArray (Book<TIndex, TKey, TData, THash>* book) {
-    return reinterpret_cast<THash*> (reinterpret_cast<byte*> (this) + sizeof (Book));
+/** Adds a key-value pair to the end of the book. */
+inline byte Add2 (Book2* book, const char* key, byte data) {
+    return BookAdd<byte, uint16_t, uint16_t, hash16_t> (book, key, UI1, &data);
 }
 
 /** Returns  the given query string in the hash table. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-TIndex Find (Book<TIndex, TKey, TData, THash>* book, const byte* s) {
-    if (book == nullptr) return 0;
-    PrintLine ();
-    TIndex TIndex,
-        num_keys = num_keys,
-        buffered_indexes = buffered_indexes_,
+TIndex BookFind (Book<TIndex, TKey, TData, THash>* book, const char* key) {
+    if (book == nullptr)
+        return 0;
+    PrintLineBreak ("Finding record...", 5);
+    TIndex index,
+        num_items = book->num_items,
+        max_items = book->max_items,
         temp;
 
-    if (key == nullptr || num_keys == 0)
-        return InvalidTIndex;
+    if (key == nullptr || num_items == 0)
+        return ~((TIndex)0);
 
-    TKey l_headerSize = size;
+    TKey table_size = book->table_size;
 
-    THash* hashes = BookHashArray (book);
-    uint16_t* keyOffsets = reinterpret_cast<uint16_t*> (hashes + buffered_indexes);
-    byte*     TIndexes = reinterpret_cast<byte*> (keyOffsets + buffered_indexes),
-        *ununsorted_indexes = TIndexes + buffered_indexes,
-        *collission_list = ununsorted_indexes + buffered_indexes;
-    byte*     keys = reinterpret_cast<byte*> (this) + l_headerSize - 1;
-    byte*     collisions,
+    const THash* hashes = reinterpret_cast<const THash*>
+        (reinterpret_cast<const byte*> (book) +
+         sizeof (Book<TIndex, TKey, TData, THash>));
+    const TKey* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
+                                                                max_items);
+    const byte* indexes = reinterpret_cast<const byte*>(key_offsets +
+                                                        max_items),
+        *unsorted_indexes = indexes + max_items,
+        *collission_list = unsorted_indexes + max_items;
+    const char* keys = reinterpret_cast<const char*> (book) + table_size - 1;
+    const TIndex* collisions,
         *temp_ptr;
 
-    hash32_t hash = Hash<hash32_t> (key);
+    THash hash = Hash16 (key);
 
-    //printf ("\nSearching for key \"%s\" with hash 0x%x\n", key, hash);
+    printf ("\nSearching for key \"%s\" with hash 0x%x\n", key, hash);
 
-    if (num_keys == 1)
-    {
-        //printf ("Comparing keys - keyOffsets[0] - this %u\n%s\n", keys - keyOffsets[0] - reinterpret_cast<byte*> (this), keys - keyOffsets[0]);
-        if (strcmp (key, keys - keyOffsets[0]) != 0)
-        {
-            //printf ("Did not find key %s\n", key);
-            return InvalidTIndex;
+    if (num_items == 1) {
+        if (strcmp (key, keys - key_offsets[0]) != 0) {
+            printf ("Did not find key %s\n", key);
+            return ~((TIndex)0);
         }
-        //printf ("Found key %s\n", key);
+        printf ("Found key %s\n", key);
         PrintLine ();
         return 0;
     }
 
-    // Perform a binary search to find the first instance of the THash the binary search yields.
+    // Perform a binary search to find the first instance of the hash the 
+    // binary search yields. If the mid is odd, we need to subtract the 
+    // sizeof (THash*) in order to get the right pointer address.
     int low = 0,
         mid,
-        high = num_keys - 1;
-    //< If the mid is odd, we need to subtract the sizeof (THash*) in order to get the right pointer address.
+        high = num_items - 1;
 
-    while (low <= high)
-    {
+    while (low <= high) {
         mid = (low + high) >> 1;    //< >> 1 to /2
 
-        Hash current_hash = hashes[mid];
-        //printf ("low: %i mid: %i high %i hashes[mid]:%x\n", low, mid, high, hashes[mid]);
+        THash current_hash = hashes[mid];
+        printf ("low: %i mid: %i high %i hashes[mid]:%x\n", low, mid,
+                high, hashes[mid]);
 
-        if (current_hash > hash)
-        {
+        if (current_hash > hash) {
             high = mid - 1;
-        }
-        else if (current_hash < hash)
-        {
+        } else if (current_hash < hash) {
             low = mid + 1;
-        }
-        else
-        {
+        } else {
             // Duplicate hash found.
-            //printf ("\nFound same hash at mid:%i hash:%x offset for key: %s\n", mid, hashes[mid], key);
+            printf ("\nFound same hash at mid:%i hash:%x offset for key: "
+                    "%s\n", mid, hashes[mid], key);
 
             // Check for collisions
 
-            collisions = reinterpret_cast<byte*> (keyOffsets) + buffered_indexes * sizeof (uint16_t);
-            TIndex = collisions[mid];
+            collisions = reinterpret_cast<const byte*>(key_offsets) +
+                max_items * sizeof (uint16_t);
+            index = collisions[mid];
 
-            if (TIndex < NoCollisions)   // There was a collision so check the table.
-            {
-                //printf ("There was a collision so check the table\n");
+            if (index < ~0) {
+                // There was a collision so check the table.
+                std::cout << "There was a collision so check the table\n";
 
-                // The collisionsList is a sequence of TIndexes terminated by an invalid TIndex > MaxNumKeys.
-                // collissionsList[0] is an invalid TIndex, so the collisionsList is searched from lower GetAddresses up.
-                temp = TIndexes[mid];
+                // The collisionsList is a sequence of indexes terminated by
+                // an invalid index > kMaxI2PMembers. collissionsList[0] is an 
+                // invalid index, so the collisionsList is searched from 
+                // lower address up.
+
+                temp = indexes[mid];
+
                 temp_ptr = collission_list + temp;
-                TIndex = *temp_ptr;
-                while (TIndex < MaxNumKeys)
-                {
-                    //printf ("comparing \"%s\" to \"%s\"\n", key, keys - keyOffsets[TIndex]);
-                    if (strcmp (key, keys - keyOffsets[TIndex]) == 0)
-                    {
-                        //printf ("but table already contains key at offset: %u.\n", TIndex);
-                        return TIndex;
+                index = *temp_ptr;
+                while (index < MaxBookIndexes<TIndex> ()) {
+                    printf ("comparing to \"%s\"\n", keys -
+                            key_offsets[index]);
+                    if (strcmp (key, keys - key_offsets[index]) == 0) {
+                        printf ("but table already contains key at offset:"
+                                "%u.\n", index);
+                        return index;
                     }
                     ++temp_ptr;
-                    TIndex = *temp_ptr;
+                    index = *temp_ptr;
                 }
-                //printf ("Did not find %s.\n", key);
-                return InvalidTIndex;
+                std::cout << "Did not find \"" << key << "\"\n";
+                return ~((TIndex)0);
             }
 
             // There were no collisions.
 
             // But we still don't know if the string is new or a collision.
-            TIndexes += buffered_indexes; //< Move collisions pointer to the unsorted TIndexes.
-            TIndex = ununsorted_indexes[mid];
 
-            //printf ("\n!!!mid: %i-%x ununsorted_indexes: %u key: \"%s\" hash: %x\n", mid, hashes[mid], TIndex,
-            //  keys - keyOffsets[TIndex], Hash<hash32_t> (keys - keyOffsets[TIndex]));
+            // Move collisions pointer to the unsorted indexes.
+            indexes += max_items;
+            index = unsorted_indexes[mid];
 
-            if (strcmp (key, keys - keyOffsets[TIndex]) != 0)
-            {
-                //printf (" but it was a collision and did not find key.\n");
-                return InvalidTIndex;  //< Then it was a collision so the table doesn't contain s.
+            printf ("\n!!!mid: %i-%x unsorted_indexes: %u key: %s\n"
+                    "hash: %x\n", mid, hashes[mid], index, keys -
+                    key_offsets[index], Hash16 (keys -
+                                                key_offsets[index]));
+
+            if (strcmp (key, keys - key_offsets[index]) != 0) {
+                //< It was a collision so the table doesn't contain s.
+                std::cout << " but it was a collision and did not find key.\n";
+                return ~((TIndex)0);
             }
 
-            //printf ("and found key at mid: %i\n", mid);
-            return TIndex;
+            std::cout << "and found key at mid: " << mid << '\n';
+            return index;
         }
     }
-    //printf ("Did not find a hash for key %s\n", key);
+    std::cout << "Did not find a hash for key \"" << key << "\"\n";
     PrintLine ();
 
-    return InvalidTIndex;
+    return ~((TIndex)0);
+}
+
+static byte Find2 (Book2* book, const char* key) {
+    return BookFind<byte, uint16_t, uint16_t, hash16_t> (book, key);
 }
 
 /** Prints this object out to the console. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-void Print (const Book<TIndex, TKey, TData, THash>* book) {
-    if (book == nullptr) return 0;
-
-    byte num_keys = num_keys,
-        buffered_indexes = buffered_indexes_,
-        collisionTIndex,
-        temp;
-    uint16_t l_headerSize = size;
+void BookPrint (const Book<TIndex, TKey, TData, THash>* book) {
+    if (book == nullptr) return;
+    TIndex num_items = book->num_items,
+           max_items = book->max_items,
+           collision_index,
+           temp;
+    TKey table_size = book->table_size,
+         pile_size = book->pile_size;
     PrintLine ('_');
-    printf ("| Book: %p\n| num_keys: %u buffered_indexes_: %u  collisions_size: %u  size: %u",
-        this, num_keys, buffered_indexes, collisions_size, size);
+    
+    if (sizeof (TData) == 2)
+        printf ("| Book2: %p\n", book);
+    else if (sizeof (TData) == 4)
+        printf ("| Book4: %p\n", book);
+    else if (sizeof (TData) == 8)
+        printf ("| Book8: %p\n", book);
+    else
+        printf ("| Invalid Book type: %p\n", book);
+    printf ("| num_items: %u max_items: %u  "
+            "pile_size: %u  size: %u", num_items,
+            max_items, pile_size, table_size);
     std::cout << '\n';
-    putchar ('|');
+   std::cout << '|';
     for (int i = 0; i < 79; ++i) putchar ('_');
     std::cout << '\n';
 
-    THash* hashes = reinterpret_cast<THash*> (reinterpret_cast<byte*> (this) + sizeof (Book));
-    TKey* keyOffsets = reinterpret_cast<TKey*> (hashes + buffered_indexes);
-    TIndex*  TIndexes = reinterpret_cast<TIndex*> (keyOffsets + buffered_indexes),
-        *ununsorted_indexes = TIndexes + buffered_indexes,
-        *collission_list = ununsorted_indexes + buffered_indexes,
-        *currentCollision;
-    byte*     keys = reinterpret_cast<byte*> (this) + l_headerSize - 1;
+    const byte* states = reinterpret_cast<const byte*> (book) +
+                         sizeof (Book <TIndex, TKey, TData, THash>);
+    const TKey* key_offsets = reinterpret_cast<const TKey*> 
+                              (states + max_items);
+    const TData* data_offsets = reinterpret_cast<const TData*> 
+                                (states + max_items *(sizeof (TKey)));
+    const THash* hashes = reinterpret_cast<const THash*> (states + max_items *
+        (sizeof (TKey) + sizeof (TData)));
+    const TIndex* indexes = reinterpret_cast<const TIndex*> 
+                            (states + max_items * (sizeof (TKey) + 
+                             sizeof (TData) + sizeof (TIndex))),
+        * unsorted_indexes = indexes + max_items,
+        * collission_list = unsorted_indexes + max_items,
+        *cursor;
+    const char* keys = reinterpret_cast<const char*> (book) + table_size - 1;
 
-    printf ("| %3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset", "hash_e", "hash_u", "hash_s", "TIndex_u", "collisions");
-    putchar ('|');
-    for (int i = 0; i < 79; ++i) putchar ('_');
+    printf ("| %3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
+            "hash_e", "hash_u", "hash_s", "index_u", "collisions");
+   std::cout << '|';
+    for (int i = 0; i < 79; ++i)
+        putchar ('_');
     std::cout << '\n';
 
-    for (int i = 0; i < buffered_indexes; ++i)
-    {
-        collisionTIndex = TIndexes[i];
-        /*
-        //printf ("| %i: \"%s\":%u hash: %x:%x sorted:%u_%x ",
-        //  i, keys - keyOffsets[i], keyOffsets[i], Hash<hash32_t> (keys - keyOffsets[i]),
-        //  hashes[ununsorted_indexes[i]], ununsorted_indexes[i], hashes[i], collisionTIndex);*/
-        printf ("| %3i%10s%8u%10x%10x%10x%10u%11u: ", i, keys - keyOffsets[i], keyOffsets[i], Hash<hash32_t> (keys - keyOffsets[i]),
-            hashes[ununsorted_indexes[i]], hashes[i], ununsorted_indexes[i], collisionTIndex);
+    for (TIndex i = 0; i < max_items; ++i) {
+        // Print each record as a row.
+        // @todo Change max_items to num_items after done debugging.
+        collision_index = indexes[i];
+        printf ("| %3i %9s %7u %9x %9x %9x %9u %10u: ", i,
+                keys - key_offsets[i], key_offsets[i],
+                Hash16 (keys - key_offsets[i]),
+                hashes[unsorted_indexes[i]], hashes[i],
+                unsorted_indexes[i], collision_index);
 
-        if (collisionTIndex != NoCollisions && i < num_keys)
-        {
-            currentCollision = &collission_list[collisionTIndex];
-            temp = *currentCollision;
-            ++currentCollision;
+        if (collision_index != ~0 && i < num_items) {
+            // Print collisions.
+            cursor = &collission_list[collision_index];
+            temp = *cursor;
+            ++cursor;
             printf ("%u", temp);
-            while (temp != NoCollisions)
-            {
-                temp = *currentCollision;
-                ++currentCollision;
-                if (temp == NoCollisions) break;
+            while (temp != ~0) {
+                temp = *cursor;
+                ++cursor;
+                if (temp == ~0)
+                    break;
                 printf (", %u", temp);
             }
         }
 
         std::cout << '\n';
     }
-    putchar ('|');
-    for (int i = 0; i < 79; ++i) putchar ('_');
-    std::cout << '\n';
+    PrintLine ("|", '_');
 
-    PrintMemory (this, size);
+    PrintMemory (reinterpret_cast<const byte*> (book) + 
+                 sizeof (Book<TIndex, TKey, TData, THash>), book->size);
     std::cout << '\n';
 }
 
@@ -702,23 +761,24 @@ void Wipe (Book<TIndex, TKey, TData, THash>* book) {
 template<typename TIndex, typename TKey, typename TData, typename THash>
 void Clear (Book<TIndex, TKey, TData, THash>* book) {
     if (book == nullptr) return;
-    book->num_keys = 0;
-    book->collisions_size = 0;
+    book->num_items = 0;
+    book->pile_size = 0;
 }
 
 /** Returns true if this dictionary contains only the given address. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
 bool Contains (Book<TIndex, TKey, TData, THash>* book, void* data) {
     if (book == nullptr) return false;
-
-    if (data < this) return false;
+    if (data < book) return false;
     if (data > GetEndAddress()) return false;
     return true;
 }
 
-/** Removes that object from the book. */
+/** Removes that object from the book and copies it to the destination. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-bool RemoveCopy (Book<TIndex, TKey, TData, THash>* book, void* data) {
+bool RemoveCopy (Book<TIndex, TKey, TData, THash>* book, void* destination, 
+                 size_t buffer_size, void* data)
+{
     if (book == nullptr) return false;
 
     return false;
@@ -740,44 +800,10 @@ bool Retain (Book<TIndex, TKey, TData, THash>* book) {
     return false;
 }
 
-
-using Book2 = Book<byte, uint16_t, uint16_t, hash16_t>;
-using Book4 = Book<uint16_t, uint16_t, uint32_t, hash32_t>;
-using Book8 = Book<uint32_t, uint32_t, uint64_t, hash64_t>;
-using BookX = Book<TBookIndex, TBookHeader, TBookDataOffset, TBookHash>;
-
-class Dictionary2 : public Device {
-    public:
-
-    Dictionary2 (Book2* book)
-    :   book_ (book)
-    {
-
-    }
-
-    /** I2P procedures. */
-    virtual const Member* Op (Rx* rx, Tx* tx, byte index) {
-        return nullptr;
-    }
-
-    private:
-
-    Book2* book_;
-};
-
-
-
-enum
-{
-    MaxNumPagesBook2 = 255,
-    MaxNumPagesBook4 = 8 * 1024,
-    MaxNumPagesBook8 = 32 * 1024 * 1024,
-};
-
 /** Creates a book from dynamic memory. */
 template<typename TIndex, typename TOffset, typename TData, typename THash>
-inline Book<TIndex, TOffset, TData, THash>* CreateBook (TIndex buffered_indexes, 
-                                                        TData header_size, 
+inline Book<TIndex, TOffset, TData, THash>* BookCreate (TIndex buffered_indexes,
+                                                        TData table_size,
                                                         TData size) {
     Book<TIndex, TOffset, TData, THash>* book = New<Book, uint_t> ()
 }

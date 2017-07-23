@@ -97,6 +97,46 @@ static byte* RingBufferRead (void* destination, byte* const begin,
     return start + size;
 }
 
+/** Copies a block from a ring-buffer to the given destination. */
+static byte* WriteSocket (void* source, byte* const begin,
+                          byte* const start, byte* const stop,
+                          byte* const end, size_t size) {
+    if (source == nullptr) return start;
+
+    // Now we can copy the book into memory.
+    if ((start > stop) && (start + size >= end)) {
+        // Calculate upper chunk size.
+        uint_t top_chunk = end - stop;
+        size -= top_chunk;
+
+        memcpy (source, start, top_chunk);
+        memcpy (reinterpret_cast<byte*>(source) + top_chunk, begin, size);
+        return begin + size;
+    }
+    memcpy (source, stop, size);
+    return start + size;
+}
+
+/** Copies a block from a ring-buffer to the given destination. */
+static byte* SocketRead (void* destination, byte* const begin,
+                         byte* const start, byte* const stop,
+                         byte* const end, size_t size) {
+    if (destination == nullptr) return start;
+
+    // Now we can copy the book into memory.
+    if ((start > stop) && (start + size >= end)) {
+        // Calculate upper chunk size.
+        uint_t top_chunk = end - stop;
+        size -= top_chunk;
+
+        memcpy (start, destination, top_chunk);
+        memcpy (begin, reinterpret_cast<byte*>(destination) + top_chunk, size);
+        return begin + size;
+    }
+    memcpy (stop, destination, size);
+    return start + size;
+}
+
 }       //< namespace _
 
 #endif  //< CHINESEROOM_RINGBUFFER_H

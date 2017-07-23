@@ -22,13 +22,13 @@
 #ifndef CHINESEROOM_ARGS_H
 #define CHINESEROOM_ARGS_H
 
-#include "config.h"
 #include "types.h"
 
 namespace _ {
 
-/** Rx arguments header
-    struct uses C++11 variadic template to ensure only one copy in ROM. */
+/** An I2P escape sequence header.
+    struct uses C++11 variadic template to ensure only one copy in ROM and to eliminate 
+    redundant typing. */
 template<const uint_t... N>
 const uint_t* Esc () {
     static const uint_t list[sizeof... (N)] = { N... };
@@ -58,7 +58,7 @@ inline void PrintParams (const uint_t* params) {
         i,
         value = 0;
 
-    printf ("Esc<");
+    std::cout << "Esc<";
     if (num_params > kMaxNumParams)
     {
         printf ("Invalid num_params: %u>\n", num_params);
@@ -96,7 +96,7 @@ inline void PrintParams (const uint_t* params) {
     }
     else
     {
-        printf (">\n");
+        std::cout << ">\n";
     }
 }
 

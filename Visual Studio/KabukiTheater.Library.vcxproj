@@ -22,10 +22,12 @@
     <ClInclude Include="..\Source\KabukiTheater\kabuki_theater.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\address.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\args.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\array.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\book.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\chinese_room.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\config.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\device.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\dictionary.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\door.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\error.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\event.h" />
@@ -36,24 +38,24 @@
     <ClInclude Include="..\Source\KabukiTheater\_\member.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\mirror.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\portal.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\print.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\record_table.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\ring_buffer.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\room.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\rx.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\slot.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\ring_buffer.h" />
-    <ClInclude Include="..\Source\KabukiTheater\_\uniprinter.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\string.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\terminal.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\timestamp.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\tx.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\types.h" />
+    <ClInclude Include="..\Source\KabukiTheater\_\uniprinter.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\utf.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\utils.h" />
     <ClInclude Include="..\Source\KabukiTheater\_\wall.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\KabukiTheater\_\assembly_settings.inl" />
+    <None Include="..\Source\KabukiTheater\_\ReadMe.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3FBC20A1-E168-4BCD-B05A-922FACDB7B9E}</ProjectGuid>

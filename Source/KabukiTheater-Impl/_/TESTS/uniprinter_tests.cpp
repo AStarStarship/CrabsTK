@@ -1,7 +1,7 @@
 /** Kabuki Theater
     @version 0.x
     @file    /.../Source/KabukiTheater-Impl/_/TESTS/uniprinter_tests.cpp
-    @author  Cale McCollough <calemccollough.github.io>
+    @author  Cale McCollough <calemccollough.github.rx>
     @license Copyright 2017 (C) Cale McCollough <cale.mccollough@gmail.com>
 
                           All right reserved (R).
@@ -34,61 +34,55 @@ enum {
 };
 
 // Test Device for multiple unit tests.
-template<typename uint_t>
-class Gadget: public Device
-{
+class Child : public Device {
     public:
 
-    void functionA () {}                //< Example dummy function A.
-    void functionB () {}                //< Example dummy function B.
-
     // Remote procedure call using switch statement example; note the only RAM used is one pointer per parameter.
-    const Member* Op (Rx* rx, Tx* tx, char index) override
-    {
+    const Member* Op (Rx* rx, Tx* tx, byte index) override {
         void* args[2];
 
-        switch (index)
-        {
-            case '?': {
-                return RomMember<"ChineseRoomExample", 2,
-                                 "Description of ChineseRoomExample."
-                                 >;
+        switch (index) {
+            case '?':
+            {
+                static const Member m_device = { "Child",
+                    NumMembers (2),
+                    0,
+                    "A child Device." };
+                if (!rx) return &m_device;
             }
-            case 'A': {
+            case 'A':
+            {
                 static const Member m1 = { "FloatTests",
-                    Param<2, FLT, STX, kStringBufferSize> (),
-                    Param<2, FLT, STX> (),
+                    Esc<2, FLT, STX, kStringBufferSize> (),
+                    Esc<2, FLT, STX> (),
                     "Description of functionA." };
-                if (!io) return &m1;
+                if (!rx) return &m1;
 
-                if (io->read (m1.rxHeader, Args (args, &io_number_, 
-                                                 io_string_))) 
+                if (Read (rx, m1.rx_header, Args (args, &io_number_,
+                                                 io_string_)))
                     return ReadError ();
 
-                functionA ();
-
-                if (io->write (m1.txHeader, Args (args, &io_number_,
+                if (Write (tx, m1.tx_header, Args (args, &io_number_,
                                                   io_string_)))
                     return WriteError ();
                 return &m1;
             }
-            case 'B': {
+            case 'B':
+            {
                 static const Member m2 = { "SignedIntegerTests",
-                    Param<2, FLT, STX, kStringBufferSize> (),
-                    Param<2, FLT, STX> (),
+                    Esc<2, FLT, STX, kStringBufferSize> (),
+                    Esc<2, FLT, STX> (),
                     "Description of functionB." };
 
-                if (!io) return &m2;
+                if (!rx) return &m2;
 
-                if (io->read (m2.rxHeader, Args (args, &io_number_, 
-                                                 io_string_))) 
+                if (Read (rx, m2.rx_header, Args (args, &io_number_,
+                                                 io_string_)))
                     return ReadError ();
 
-                functionB ();
-
-                if (io->write (m2.txHeader, Args (args, &io_number_, 
-                                                  io_string_))) 
-                    return writeError ();
+                if (Write (tx, m2.tx_header, Args (args, &io_number_,
+                                                  io_string_)))
+                    return WriteError ();
                 return &m2;
             }
         }
@@ -97,9 +91,82 @@ class Gadget: public Device
 
     private:
 
-    //NONCOPYABLE (Device)
+    enum {
+        kStringBufferSize = 16              //< Example string buffer size.
+    };
 
-        enum {
+    Root root;                              //< The I2P root Device scope.
+
+    float io_number_;                       //< Example variable.
+    char io_string_[kStringBufferSize];     //< Example string.
+};
+
+// Test child Device.
+class Root : public Device {
+    public:
+
+                                         // Remote procedure call using switch statement example; note the only RAM used is one pointer per parameter.
+    virtual const Member* Op (Rx* rx, Tx* tx, byte index) {
+        static const Member this_member = { "Root",
+            NumMembers (2),
+            0,
+            "Root scope device." };
+
+        if (rx == nullptr)
+            return &this_member;
+
+        void* args[2];
+        switch (index) {
+            case ' ':
+            {
+                
+            }
+            case 'B':
+            {
+
+            }
+            case 'C':
+            {
+                static const Member m1 = { "FloatTests",
+                    Esc<2, FLT, STX, kStringBufferSize> (),
+                    Esc<2, FLT, STX> (),
+                    "Description of functionA." };
+                if (!rx) return &m1;
+
+                if (Read (rx, m1.rx_header, Args (args, &io_number_,
+                                                  io_string_)))
+                    return ReadError ();
+
+                if (Write (tx, m1.tx_header, Args (args, &io_number_,
+                                                   io_string_)))
+                    return WriteError ();
+                return &m1;
+            }
+            case 'D':
+            {
+                static const Member m2 = { "SignedIntegerTests",
+                    Esc <2, FLT, STX, kStringBufferSize> (),
+                    Esc <2, FLT, STX> (),
+                    "Description of functionB." };
+
+                if (!rx) return &m2;
+
+                if (Read (rx, m2.rx_header, Args (args, &io_number_,
+                                                  io_string_)))
+                    return ReadError ();
+
+                if (Write (tx, m2.tx_header, Args (args, &io_number_,
+                                                   io_string_)))
+                    return WriteError ();
+                return &m2;
+            }
+        }
+        return nullptr;
+    }
+
+    private:
+
+    enum {
         kStringBufferSize = 16              //< Example string buffer size.
     };
 
@@ -111,36 +178,21 @@ TEST_GROUP (UniprinterTests)
 {
     void setup ()
     {
-        printf ("\n+ Running UniprinterTests...\n");
+        std::cout << "\n+ Running UniprinterTests...\n";
     }
 
     void teardown ()
     {
-        printf ("  UniprinterTests completed.\n");
-        //system ("PAUSE");
+        std::cout << "  UniprinterTests completed.\n";
+        system ("PAUSE");
     }
 
 };
 
 TEST (UniprinterTests, UniprinterTestsOne)
 {
-    printf ("Running UniprinterTestsOne...\n");
-    //const char* result;
-
-    /// Testing mythology:
-    /// The plan is to test all the primitive Print and Scan functions in one 
-    /// test using a single header with randomly generated data, then running 
-    /// the test multiple times.
-    //static const uint_t TestA[] = { 1, STX, 100,  };
-
-    //byte buffer[kSlotSize];
+    std::cout << "Running UniprinterTests...\n";
     
-    //Terminal t (buffer, kSlotSize);
-
-    //for (int i = 0; i < NumLoopIterations; ++i)
-    //{
-        
-    //}
-    
-    //FAIL ("Pass me!");
+    Root root;
+    Uniprinter* up = UniprinterInit (Buffer<255> (), 255, 4, &root);
 }

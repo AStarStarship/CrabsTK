@@ -121,5 +121,9 @@ inline uintptr_t GetNumMembers (Device* d) {
     return m == nullptr ? 0 : reinterpret_cast<uintptr_t> (m->rx_header);
 }
 
+static void Print (Device* device) {
+    const Member* m = device->Op (nullptr, nullptr, ' ')
+}
+
 }       //< namespace
 #endif  //< CHINESEROOM_IDEVICE_H

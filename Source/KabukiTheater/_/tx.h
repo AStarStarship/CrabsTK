@@ -26,7 +26,7 @@
 #include "types.h"
 #include "address.h"
 #include "ring_buffer.h"
-#include "print.h"
+#include "array.h"
 
 namespace _ {
 
@@ -271,7 +271,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 if (++stop >= end) stop -= size;
                 break;
 #else
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
             case SI2: //< _W_r_i_t_e__1_6_-_b_i_t__T_y_p_e_s____________________
             case UI2:
@@ -303,7 +303,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 hash = Hash16 (ui1, hash);
                 break;
 #else
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
 
             case SI4: //< _W_r_i_t_e__3_2_-_b_i_t__T_y_p_e_s____________________________
@@ -349,7 +349,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 if (++stop >= end) stop -= size;
                 break;
 #else
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
 
             case TMU: //< _W_r_i_t_e__6_4_-_b_i_t__T_y_p_e_s____________________________
@@ -419,7 +419,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 if (++stop >= end) stop -= size;
                 break;
 #else
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
 
             case SV2: //< _W_r_i_t_e__2_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t____________
@@ -488,7 +488,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 }
 #else
             case UV2:
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
             case SV4: //< _W_r_i_t_e__4_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t____________
 
@@ -528,7 +528,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 }
 #else
             case UV4:
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
             case SV8: //< _W_r_i_t_e__8_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_____________
 #if USING_VARINT8
@@ -572,7 +572,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 }
 #else
             case UV8:
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
 
             case AR1:  //< _W_r_i_t_e__A_r_r_a_y_______________________________________
@@ -583,14 +583,13 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 if (ui1_ptr == nullptr)
                     return Report (NullPointerError, params, index, start);
                 length = *param++;
-                // An array cannot take up more than half of the buffer;
-                if ((length * sizeof (byte)) >= (size >> 1))
+                if (length > MaxArrayLength<byte> ())
                     return Report (ArrayOverflowError, params, index, start);
                 array_type = *param++;
                 length *= SizeOf (array_type); //< Calculate length of array.
                 goto WriteBlock;
 #else
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
               case AR2:  //< _W_r_i_t_e__A_r_r_a_y_2______________________________
 #if USING_AR2
@@ -599,15 +598,14 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 if (ui1_ptr == nullptr)
                     return Report (NullPointerError, params, index, start);
                 length = *param++;
-                // An array cannot take up more than half of the buffer;
-                if ((length * sizeof (uint16_t)) >= (size >> 1))
+                if (length > MaxArrayLength<uint16_t> ())
                     return Report (ArrayOverflowError, params, index, start);
                 array_type = *param++;
                 length *= SizeOf (array_type); //< Calculate length of array.
                 printf ("\nlength: %u\n", length);
                 goto WriteBlock;
 #else
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
               case AR4:  //< _W_r_i_t_e__A_r_r_a_y_4______________________________
 #if USING_AR4
@@ -616,14 +614,13 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 if (ui1_ptr == nullptr)
                     return Report (NullPointerError, params, index, start);
                 length = *param++;
-                // An array cannot take up more than half of the buffer;
-                if ((length * sizeof (uint32_t)) >= (size >> 1))
+                if (length > MaxArrayLength<uint32_t> ())
                     return Report (ArrayOverflowError, params, index, start);
                 array_type = *param++;
                 length *= SizeOf (array_type); //< Calculate length of array.
                 goto WriteBlock;
 #else
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
               case AR8:  //< _W_r_i_t_e__A_r_r_a_y_8______________________________
 #if USING_AR8
@@ -632,14 +629,13 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 if (ui1_ptr == nullptr)
                     return Report (NullPointerError, params, index, start);
                 length = *param++;
-                // An array cannot take up more than half of the buffer;
-                if ((length * sizeof (uint64_t)) >= (size >> 1))
+                if (length > MaxArrayLength<uint64_t> ())
                     return Report (ArrayOverflowError, params, index, start);
                 array_type = *param++;
                 length *= SizeOf (array_type); //< Calculate length of array.
                 goto WriteBlock;
 #else
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
               case ESC: //< _W_r_i_t_e__E_s_c_a_p_e_S_e_q_u_e_n_c_e_______________________
                 // @todo Write Tx ESC algorithm.
@@ -656,7 +652,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 length = static_cast<uint_t>(ui8);
                 goto WriteBlock;
 #else
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
 
               case BK4:  //< _W_r_i_t_e__B_o_o_k_4_______________________________________
@@ -671,7 +667,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 length = static_cast<uint_t>(ui4);
                 goto WriteBlock;
 #else
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
 
               case BK2:  //< _W_r_i_t_e__B_o_o_k_2_______________________________________
@@ -686,7 +682,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 length = static_cast<uint_t>(ui2);
                 goto WriteBlock;
 #else
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
               case US:
 #if USING_BK2 || USING_BK4 || USING_BK8
@@ -695,7 +691,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                       return Report (NullPointerError, params, index, start);
                   length = 1 << kUnitSize;
 #else
-                goto UnsupportedType;
+                goto TxInvalidType;
 #endif
 #if USING_BK2 || USING_BK4 || USING_BK8 || USING_AR1 || USING_AR2 \
               || USING_AR4 || USING_AR8
@@ -734,7 +730,7 @@ static ticket_t Write (Tx* tx, const uint_t params[], void** ptrs) {
                 break;
 #endif
             default:
-                UnsupportedType:
+                TxInvalidType:
                 return Report (ReadInvalidTypeError, params, index, start);
         }
     }

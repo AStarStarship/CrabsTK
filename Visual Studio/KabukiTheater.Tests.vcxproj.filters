@@ -2,16 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\Source\KabukiTheater-Impl\TESTS\KabukiTheaterTests.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\uniprinter_tests.cpp">
-      <Filter>_</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\read_write_tests.cpp">
-      <Filter>_</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\utills_tests.cpp">
-      <Filter>_</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\console_tests.cpp">
       <Filter>_</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\record_table_tests.cpp">
@@ -20,7 +11,16 @@
     <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\room_tests.cpp">
       <Filter>_</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\uniprinter_tests.cpp">
+      <Filter>_</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\utills_tests.cpp">
+      <Filter>_</Filter>
+    </ClCompile>
     <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\book_tests.cpp">
+      <Filter>_</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\console_tests.cpp">
       <Filter>_</Filter>
     </ClCompile>
   </ItemGroup>

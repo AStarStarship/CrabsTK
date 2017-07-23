@@ -119,11 +119,16 @@ inline Tx* GetTx (Uniprinter* io) {
 }
     
 /** Constructs a Uniprinter with equal sized rx and tx slots.
-    @param root */
-static Uniprinter* UniprinterInit (Uniprinter* io, uint_t buffer_size, 
+    @param root The root-scope device.
+*/
+static Uniprinter* UniprinterInit (byte* buffer, uint_t buffer_size, 
                             uint_t stack_height, Device* root = nullptr) {
+    if (buffer == nullptr)
+        return nullptr;
     if (buffer_size < kMinBufferSize)
         return nullptr;
+
+    Uniprinter* io = reinterpret_cast<Uniprinter*> (buffer);
 
     uint_t size = (buffer_size - sizeof (Uniprinter) -
         (stack_height * (2 * sizeof (void*)))) >> 1;  // >>1 to /2
@@ -135,7 +140,7 @@ static Uniprinter* UniprinterInit (Uniprinter* io, uint_t buffer_size,
     io->stack_size = stack_height;
 #if DEBUG_CHINESEROOM
     printf ("\nInitializing Uniprinter:\nsizeof (Uniprinter): %u\n "
-            "(stack_height * (2 * sizeof (void*))): %u\naStackSize: "
+            "(stack_height * (2 * sizeof (void*))): %u\nstack_height: "
             "%u buffer_size: %u size_: %u\n!!!\n",
             sizeof (Uniprinter), (stack_height * (2 * 
                     sizeof (void*))), stack_height, buffer_size, size);
@@ -525,14 +530,38 @@ static void ScrubExpression (Uniprinter* io) {
 
     if (start == stop) return; //< Nothing to do.
     if (start > stop) {
-        memset (start, '\0', end - start);
-        memset (begin, '\0', start - begin);
+        memset (start, 0, end - start);
+        memset (begin, 0, start - begin);
         return;
     }
-    memset (start, '\0', stop - start);
-
+    memset (start, 0, stop - start);
     rx->start = Diff (&io, begin);
     rx->stop = Diff (&io, start + 1);
+}
+
+static void Print (Uniprinter* up) {
+    if (up == nullptr)
+        return;
+    printf ("Uniprinter: 0x%p\n", up);
+    std::cout << "type: " << (up->type == -1) ? "interprocess no dynamic memory." :
+        (up->type == 0) ? "no dynamic memory" : (up->type == 1) ? "dynamic memory" :
+        (up->type == 2) ? "dynamic memory" : "Invalid type";
+
+    std::cout << "bytes_left:    " << up->bytes_left    << '\n'
+              << "tx_offset:     " << up->tx_offset     << '\n'
+              << "rx_offset:     " << up->rx_offset     << '\n'
+              << "stack_height:  " << up->stack_height  << '\n'
+              << "stack_size:    " << up->stack_size    << '\n'
+              << "num_verifying: " << up->num_verifying << '\n'
+              << "states_size:   " << up->states_size   << '\n'
+              << "num_states:    " << up->num_states    << '\n';
+    Print (up->device);
+    std::cout << "params: ";
+    PrintParams (const_cast<const uint_t*>(up->params));
+    std::cout << "Scan Stack Headers:\n";
+    for (int i = 0; i < up->stack_height; ++i) {
+
+    }
 }
 
 }       //< namespace _

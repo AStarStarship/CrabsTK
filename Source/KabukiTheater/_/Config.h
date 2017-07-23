@@ -87,7 +87,6 @@ static const char NewLineString[] = "\n\0"; //< The empty string.
 #include <exception>
 #include <iostream>
 #include <math.h>
-#include <new>
 #if USING_UTF
 #include <string>
 #endif

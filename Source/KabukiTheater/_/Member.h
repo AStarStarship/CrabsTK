@@ -43,7 +43,7 @@ struct Member {
 };
 
 /** Converts the value to a pointer. */
-inline uint_t* SetNumMembers (std::uintptr_t value) {
+inline uint_t* NumMembers (std::uintptr_t value) {
     return reinterpret_cast<uint_t*> (value);
 }
 
@@ -75,14 +75,6 @@ const Member* DeviceMember () {
 }
 
 /** Creates a Read-only-memory Member for a Device. */
-template<const char* key, byte num_members, const char* description>
-const Member* DeviceMember () {
-    static const Member m = { key, ConvertNumMembers (num_members), 0,
-        description };
-    return &m;
-}
-
-/** Creates a Read-only-memory Member for a Device. */
 template<const char* key, byte num_members, const uint_t* tx_header,
     const char* description>
 const Member* DeviceMember () {
@@ -91,15 +83,11 @@ const Member* DeviceMember () {
     return &m;
 }
 
-/** Creates a static const Member in ROM.
-    @code
-    const Member* member = createMember<"memberName", RxHeader<STX, UI2>,
-        TxHeader<FLT, TMU>, "Description.">
-    @endcode
-*/
-template<const char* kKey, byte kNumMember, const char* kDescription>
-const Member* DeviceHeader () {
-    static Member m = { kKey, ConvertNumMembers, 0, kDescription };
+/** Creates a Read-only-memory Member for a Device. */
+template<const char* key, byte num_members, const char* description>
+const Member* MemberDevice () {
+    static const Member m = { key, ConvertNumMembers (num_members), 0,
+        description };
     return &m;
 }
 

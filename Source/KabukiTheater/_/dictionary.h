@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    \...\library.h
+    @file    \...\dictionary.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
 
@@ -19,22 +19,22 @@
         limitations under the License.
 */
 
-#ifndef CHINESEROOM_LIBRARY_H
-#define CHINESEROOM_LIBRARY_H
+#ifndef CHINESEROOM_DICTIONARY_H
+#define CHINESEROOM_DICTIONARY_H
 
-#include "config.h"
 #include "device.h"
+#include "book.h"
 
 namespace _ {
 
-template<typename TIndex, typename THeader, typename TData, typename THash, 
+template<typename TIndex, typename TKey, typename TData, typename THash, 
     uint_t MaxStackHeight>
-class Library: public Device
+class Dictionary: public Device
 {
     public:
 
     /** Constructs an empty dictionary. */
-    Library ()
+    Dictionary ()
     :   num_members_ (0),
         num_collisions_ (0),
         header_size_ (0),
@@ -107,7 +107,7 @@ class Library: public Device
     }
 
     /** Searches for the given query and returns a book of query results.  */
-    bool Search (const char* query, Library<TIndex, THeader, TData, THash, 
+    bool Search (const char* query, Dictionary<TIndex, TKey, TData, THash, 
         MaxStackHeight>* results) {
         return false;
     }
@@ -143,15 +143,15 @@ class Library: public Device
         {
             case BK2:
                 #if _BufferUIntSize >= 16
-                /// Library format: { UI1, UI1, UI2, UI2 }
-                return size + sizeof (Library) + * (address + 1) * 
+                /// Dictionary format: { UI1, UI1, UI2, UI2 }
+                return size + sizeof (Dictionary) + * (address + 1) * 
                        sizeof (byte) + *(UI2_ptr + 2) + * (UI8_ptr + 4);
                 #else
                 return 0;
                 #endif
             case BK4:
                 #if _BufferUIntSize >= 32
-                /// Library format: { UI1, UI1, UI2, UI4 }
+                /// Dictionary format: { UI1, UI1, UI2, UI4 }
                 return size + sizeof (Book32) + * (UI2_ptr + 2) * 
                        sizeof (byte) + * (UI4_ptr + 4) + * (UI8_ptr + 8);
                 #else
@@ -159,8 +159,8 @@ class Library: public Device
                 #endif
             case BK8:
                 #if _BufferUIntSize >= 64
-                /// Library format: { UI2, UI2, UI4, UI8 }
-                return size + sizeof (Library) + * (UI2_ptr + 2) * 
+                /// Dictionary format: { UI2, UI2, UI4, UI8 }
+                return size + sizeof (Dictionary) + * (UI2_ptr + 2) * 
                        sizeof (byte) + * (UI4_ptr + 4) + * (UI8_ptr + 8);
                 #else
                 return 0;
@@ -188,31 +188,31 @@ class Library: public Device
 
     private:
 
-    //NONCOPYABLE (Library)
+    //NONCOPYABLE (Dictionary)
 
     int reserved;           //< Reserved for 64-bit memory alignment.
-    Library** root_;        //< Pointer to the dynamically allocated books.
-    Library* book_;         //< The currently selected book.
+    Dictionary** root_;     //< Pointer to the dynamically allocated books.
+    Dictionary* book_;      //< The currently selected book.
     uint_t index_,          //< The index of the currently selected book.
         stack_height_,      //< The number of books on the stack.
         num_libraries_;     //< The number of libraries.
     byte type_;             //< The current type of book.
-    //Book<TIndex, THeader, TData, THash> book;
+    //Book<TIndex, TKey, TData, THash> book;
     TIndex num_keys_,       //< The current number of Device members.
         buffer_size_;       //< The current size of the header and names buffer in bytes.
-    THeader header_size_,   //< The current size of the header and names in bytes.
+    TKey header_size_,   //< The current size of the header and names in bytes.
         collisions_size_;   //< The current size of the header and names buffer in bytes.
     TData data_size_;       //< The current total size of the book.
 };
 
 /** Destructs the given book. */
-template<typename TIndex, typename THeader, typename TData, typename THash, 
+template<typename TIndex, typename TKey, typename TData, typename THash, 
     uint MaxStackSize>
-inline void destruct (Library<TIndex, THeader, TData, THash, MaxStackSize>* r) {
+inline void destruct (Dictionary<TIndex, TKey, TData, THash, MaxStackSize>* r) {
     if (r == nullptr) return;
     delete reinterpret_cast<byte*> (r);
 }
 
 }       //< namespace _
 
-#endif  //< CHINESEROOM_LIBRARY_H
+#endif  //< CHINESEROOM_DICTIONARY_H
