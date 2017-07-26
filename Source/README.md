@@ -1,25 +1,27 @@
 # Kabuki Theater Source Root
 Source code is divided in between public facing headers in the 
-"/.../Source/KabukiTheater" folder and implementation files in the 
-"/.../Source/KabukiTheater-Impl" folder. One caveat of C++ is that compiled 
+"/.../Source/kabuki-theater" folder and implementation files in the 
+"/.../Source/kabuki-theater-impl" folder. One caveat of C++ is that compiled 
 libraries can not have dependencies on other libraries.
 
 ## Project Organization
-The primary development environment is Visual Studio using [Symmetry Station](https://github.com/Kabuki-Toolkit/SymmetryStation). Please see the [Symmetry Station Quick Start Guide](https://github.com/Kabuki-Toolkit/SymmetryStation/wiki/Quick-Start-Guide). Each folder in the project should have ReadMe.md file in it that should tell you what you need to know. Source header files are separated from their precompiled .lib and .dll files. Development instructions are in the ReadMe.md files in the /.../Source/KabukiTheater-Impl/ folder and subfolders. If you choose to not use Symmetry Station, you may need to update the projects libaries to the most recent updates that have not been synced across projects yet.
+The core of the application is the [Chinese Room](). This code is shared between
+Kabuki Theater and [Kabuki Tek] (https://github.com/Kabuki-Toolkit/Kabuki-Tek).
+Each module includes some parts of the Chinese Room. 
 
 ## SDK Modules
 | Name     | Description |
 |:--------:|:------------|
-| _Audio   | Audio.|
-| _App     | Application framework.|
-| _File    | Files and compressed.|
-| _G       | Graphics engine.|
-| _GUI     | Graphical User Interfaces.|
-| _Id      | Identification.|
-| _IO      | Input/Ouput: Audio and Serial.|
-| _Math    | Math and geometry.|
-| _Net     | Networking.|
-| _Theater | Music, lighting, and creativity.|
+| _        | Chinese Room Microcore.|
+| __       | Application framework.|
+| _audio   | Audio.|
+| _g       | Graphics engine.|
+| _gui     | Graphical User Interfaces.|
+| _hmi     | Human-machine Interfaces.|
+| _id      | Identification.|
+| _io      | Data input and output.|
+| _math    | Math and geometry.|
+| _play    | Music, lighting, and creative plugins.|
 
 ## License ##
 Copyright 2017 (C) [Cale McCollough](mailto:calemccollough@gmail.com)

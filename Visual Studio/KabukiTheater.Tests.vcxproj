@@ -19,17 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Source\KabukiTheater-Impl\TESTS\ReadMe.md" />
+    <ClCompile Include="..\Source\kabuki-theater-impl\TESTS\KabukiTheaterTests.cpp" />
+    <ClCompile Include="..\Source\kabuki-theater-impl\_\TESTS\book_tests.cpp" />
+    <ClCompile Include="..\Source\kabuki-theater-impl\_\TESTS\console_tests.cpp" />
+    <ClCompile Include="..\Source\kabuki-theater-impl\_\TESTS\read_write_tests.cpp" />
+    <ClCompile Include="..\Source\kabuki-theater-impl\_\TESTS\record_table_tests.cpp" />
+    <ClCompile Include="..\Source\kabuki-theater-impl\_\TESTS\room_tests.cpp" />
+    <ClCompile Include="..\Source\kabuki-theater-impl\_\TESTS\uniprinter_tests.cpp" />
+    <ClCompile Include="..\Source\kabuki-theater-impl\_\TESTS\utills_tests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\KabukiTheater-Impl\TESTS\KabukiTheaterTests.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\book_tests.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\console_tests.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\read_write_tests.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\record_table_tests.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\room_tests.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\uniprinter_tests.cpp" />
-    <ClCompile Include="..\Source\KabukiTheater-Impl\_\TESTS\utills_tests.cpp" />
+    <ClInclude Include="..\Source\kabuki-theater-impl\_\TESTS\test_devices.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{67848E0E-E323-4584-B88C-A0D1418F4E77}</ProjectGuid>
@@ -85,9 +85,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Workspace\cpputest\include;D:\Workspace\Kabuki-Theater\Source\KabukiTheater;$(IncludePath)</IncludePath>
+    <IncludePath>D:\Workspace\cpputest\include;D:\Workspace\Kabuki-Theater\Source\kabuki-theater;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Workspace\ChineseRoom\Visual Studio\Debug;D:\Workspace\cpputest\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)\Tests\</OutDir>
+    <IntDir>$(Configuration)\Tests\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
