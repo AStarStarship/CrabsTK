@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="kabuki-theater">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="kabuki-theater-impl">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="kabuki-theater\_">
+      <UniqueIdentifier>{fafe5d67-d829-4498-b0af-1c7055364026}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\address.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\args.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\array.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\ascii.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\chinese_room.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\config.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\device.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\dictionary.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\door.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\error.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\event.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\exceptions.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\iterator.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\log.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\member.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\portal.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\ring_buffer.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\room.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\slot.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\terminal.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\timestamp.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\types.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\uniprinter.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\unityper.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\utf.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\utils.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\verifier.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\wall.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\console.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\stdafx.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\stdafx.h">
+      <Filter>kabuki-theater</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\targetver.h">
+      <Filter>kabuki-theater</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\utf_string.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Source\Library\kabuki-theater\_\assembly.inl">
+      <Filter>kabuki-theater\_</Filter>
+    </None>
+    <None Include="..\..\Source\Library\kabuki-theater\_\readme.md">
+      <Filter>kabuki-theater\_</Filter>
+    </None>
+    <None Include="..\..\Source\Library\kabuki-theater\_\this_room.inl">
+      <Filter>kabuki-theater\_</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\Library\kabuki-theater\stdafx.cpp">
+      <Filter>kabuki-theater</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
