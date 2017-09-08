@@ -1,22 +1,18 @@
 /** The Chinese Room
     @version 0.x
-    @file    /.../utils.h
+    @file    ~/utils.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
-
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+             Licensed under the Apache License, Version 2.0 (the "License"); 
+             you may not use this file except in compliance with the License. 
+             You may obtain a copy of the License at
+                        http://www.apache.org/licenses/LICENSE-2.0
+             Unless required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
 #ifndef CHINESEROOM_UTILS_H
@@ -115,7 +111,7 @@ INLINE void DestroyDuplicate (const byte* s) {
 /*< Gets a random number. */
 template<typename T>
 INLINE T GetRandom () {
-    srand (time (NULL));
+    srand (time (nullptr));
     T random_number = static_cast<T>(rand ());
     return random_number;
 }
@@ -634,7 +630,7 @@ INLINE void CopyString (char* destination, const char* source,
 INLINE char* CloneString (const char* input, char delimeter = 0) {
     if (input == nullptr)
         input = "";
-    size_t length = strlen (input);
+    size_t length = StringLength (input);
     char* clone = new char[length + 1];
     CopyString (clone, input);
     return clone;
@@ -651,7 +647,7 @@ INLINE void PrintBreak (const char* header = "\n_", char c = '_', int num_lines 
     for (int i = 0; i < num_lines; ++i)
         std::cout << '\n';
     std::cout << header;
-    int length = strlen (header);
+    int length = StringLength (header);
     for (int i = 0; i < console_width - length; ++i)
         std::cout << c;
     std::cout << '\n';

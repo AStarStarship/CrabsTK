@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    /.../Source/ChineseRoom/ASCII.h
+    @file    ~/Source/ChineseRoom/ASCII.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright(C) 2016 [Cale McCollough](calemccollough.github.io)
 

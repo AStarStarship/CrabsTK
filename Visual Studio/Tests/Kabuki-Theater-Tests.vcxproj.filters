@@ -12,16 +12,139 @@
     <Filter Include="TESTS\_">
       <UniqueIdentifier>{2256c912-1158-48cd-a96d-9b29495d48ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TESTS\_serial">
+      <UniqueIdentifier>{4d3c28bd-247b-4d57-bdb5-3e07276844b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\Library\kabuki-theater-impl\_\TESTS\this_room.inl">
-      <Filter>TESTS\_</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Library\kabuki-theater-impl\TESTS\stdafx.h">
       <Filter>TESTS</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Library\kabuki-theater-impl\TESTS\targetver.h">
       <Filter>TESTS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\address.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\args.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\array.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\ascii.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\assembly.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\book.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\chinese_room.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\config.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\console.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\device.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\dictionary.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\door.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\error.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\event.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\exceptions.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\global.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\iterator.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\log.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\member.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\mirror.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\portal.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\room.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\slot.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\stdafx.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\symbol_table.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\terminal.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\this_room.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\timestamp.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\types.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\uniprinter.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\unityper.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\utf.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\utf_string.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\utils.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\verifier.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\wall.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater-impl\_\TESTS\this_room.h">
+      <Filter>TESTS\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_serial\unix.h">
+      <Filter>TESTS\_serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_serial\win.h">
+      <Filter>TESTS\_serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_serial\serial.h">
+      <Filter>TESTS\_serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\color.h">
+      <Filter>TESTS\_</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -34,5 +157,28 @@
     <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\TESTS\stdafx.cpp">
       <Filter>TESTS</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\_serial\list_ports_osx.cpp">
+      <Filter>TESTS\_serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\_serial\list_ports_win.cpp">
+      <Filter>TESTS\_serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\_serial\serial.cpp">
+      <Filter>TESTS\_serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\_serial\unix.cpp">
+      <Filter>TESTS\_serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\_serial\win.cpp">
+      <Filter>TESTS\_serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\_serial\list_ports_linux.cpp">
+      <Filter>TESTS\_serial</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Source\Library\kabuki-theater\_\readme.md">
+      <Filter>TESTS\_</Filter>
+    </None>
   </ItemGroup>
 </Project>

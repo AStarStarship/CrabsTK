@@ -1,6 +1,6 @@
 /** Kabuki Theater
     @version 0.9
-    @file    /.../KabukiTheater/KabukitToolkit-Config.hpp
+    @file    /.../KabukiTheater/KabukitToolkit-Config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include <ChineseRoom.hpp>
+#include <ChineseRoom.h>
 
 #include <string>
 #include <vector>

@@ -16,6 +16,9 @@
     <Filter Include="kabuki-theater\_">
       <UniqueIdentifier>{fafe5d67-d829-4498-b0af-1c7055364026}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kabuki-theater\__">
+      <UniqueIdentifier>{d1e33f03-c0ac-4477-b0b2-74b059dedb00}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\address.h">
@@ -48,31 +51,10 @@
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\error.h">
       <Filter>kabuki-theater\_</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\event.h">
-      <Filter>kabuki-theater\_</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\exceptions.h">
-      <Filter>kabuki-theater\_</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\iterator.h">
-      <Filter>kabuki-theater\_</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\log.h">
-      <Filter>kabuki-theater\_</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\member.h">
-      <Filter>kabuki-theater\_</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\portal.h">
-      <Filter>kabuki-theater\_</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\ring_buffer.h">
       <Filter>kabuki-theater\_</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\room.h">
-      <Filter>kabuki-theater\_</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\slot.h">
       <Filter>kabuki-theater\_</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\terminal.h">
@@ -117,15 +99,36 @@
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\utf_string.h">
       <Filter>kabuki-theater\_</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\event.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\exceptions.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\iterator.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\log.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\member.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\portal.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\mirror.h">
+      <Filter>kabuki-theater\_</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Source\Library\kabuki-theater\_\assembly.inl">
-      <Filter>kabuki-theater\_</Filter>
-    </None>
     <None Include="..\..\Source\Library\kabuki-theater\_\readme.md">
       <Filter>kabuki-theater\_</Filter>
     </None>
-    <None Include="..\..\Source\Library\kabuki-theater\_\this_room.inl">
+    <None Include="..\..\Source\Library\kabuki-theater\_\assembly.h">
+      <Filter>kabuki-theater\_</Filter>
+    </None>
+    <None Include="..\..\Source\Library\kabuki-theater\_\this_room.h">
       <Filter>kabuki-theater\_</Filter>
     </None>
   </ItemGroup>

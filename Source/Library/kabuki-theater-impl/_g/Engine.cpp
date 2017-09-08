@@ -20,7 +20,7 @@
 
 #include "SoftwareEngine.hpp"
 
-namespace _G {
+namespace _g {
 
 Engine::Engine (int screenWidth, int screenHeight, Color backgroundColor) :
     base (screenWidth, screenWidth, DefaultDelay),

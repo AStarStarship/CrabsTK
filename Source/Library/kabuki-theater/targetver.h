@@ -2,7 +2,7 @@
     @version 0.x
     @file    targetver.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
 
                             All right reserved (R).
 
@@ -26,6 +26,7 @@
 
 #pragma once
 
-#include <SDKDDKVer.h>
 #if PLATFORM == MINGW || PLATFORM == WINDOWS
+#include <SDKDDKVer.h>
+#include <windows.h>
 #endif

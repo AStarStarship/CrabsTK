@@ -137,10 +137,10 @@
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\iterator.h" />
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\log.h" />
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\member.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\mirror.h" />
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\portal.h" />
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\ring_buffer.h" />
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\room.h" />
-    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\slot.h" />
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\stdafx.h" />
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\utf_string.h" />
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\terminal.h" />
@@ -154,9 +154,9 @@
     <ClInclude Include="..\..\Source\Library\kabuki-theater\_\wall.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Source\Library\kabuki-theater\_\assembly.inl" />
+    <None Include="..\..\Source\Library\kabuki-theater\_\assembly.h" />
     <None Include="..\..\Source\Library\kabuki-theater\_\readme.md" />
-    <None Include="..\..\Source\Library\kabuki-theater\_\this_room.inl" />
+    <None Include="..\..\Source\Library\kabuki-theater\_\this_room.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Library\kabuki-theater\stdafx.cpp" />

@@ -20,55 +20,42 @@
 
 #pragma once
 
-#include <KabukiTheater-Config.hpp>
+#include <kabuki-theater-config.h>
 
-namespace _Math {
+namespace _math {
 
 template<typename Type>
-class _KabukiTheater_ Angle2D
+class Angle2D
 /** An angle between two lines stored in radians. */
 {
     public:
 
     Type rads;        //< The angle stored in radians.
 
-    Angle2D (Type value = 0);
-    /*< Constructor. */
+    /** Constructor. */
+    Angle2D (Type value = 0) {
+        
+    }
 
-    Type getDegs ();
-    /*< Converts the angle to degrees. */
+    /** Converts the angle to degrees. */
+    Type GetDegs () {
+        return (rads * 180.0) / pi;
+    }
 
-    void setDegs (Type Value);
-    /*< Sets the angle to the new value in degrees. */
+    /** Sets the angle to the new value in degrees. */
+    void SetDegs (Type Value) {
+        
+    }
 
-    inline void print (Terminal& io);
-    /*< Prints this object to the terminal. */
-};
-
-class _KabukiTheater_ Angle2D_d
-/** An angle between two lines. */
-{
-    public:
-
-    double rads;        //< The angle in radians.
-
-    Angle2D_d (double a = 0.0);
-    /*< Simple default constructor. */
-
-    double getDegs ();
-    /*< Converts the angle to degrees. */
-
-    void setDegs (double Value);
-    /*< Sets the angle to the new value in degrees. */
-
-    inline void print (Terminal& io);
-    /*< Prints this object to the terminal. */
+    /** Prints this object to the terminal. */
+    inline void Print (Terminal& io) {
+    }
 };
 
 #if _WordSize == 32
-using Angle = Angle_f;
+using Angle = Angle<float>;
 #elif _WordSize == 64
-using Angle = Angle_d;
+using Angle = Angle<double>;
 #endif
 
 }   //  _Math

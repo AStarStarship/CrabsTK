@@ -1,5 +1,5 @@
 /** Kabuki Theater
-    @file    /.../source/kabuki-theater-impl/TESTS/KabukiTheaterTests.cpp
+    @file    ~/source/kabuki-theater-impl/TESTS/KabukiTheaterTests.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
 

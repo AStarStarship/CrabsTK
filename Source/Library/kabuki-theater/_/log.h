@@ -1,22 +1,18 @@
 /** The Chinese Room
     @version 0.x
-    @file    /.../log.h
+    @file    ~/log.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough<calemccollough.github.io>
-
                             All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-                    http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+             Licensed under the Apache License, Version 2.0 (the "License"); 
+             you may not use this file except in compliance with the License. 
+             You may obtain a copy of the License at
+                        http://www.apache.org/licenses/LICENSE-2.0
+             Unless required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
 #ifndef CHINESEROOM_LOG_H
@@ -35,14 +31,14 @@ struct Log {
 @param tx The io socket.
 @param is_dynamic Flag for if we're using dynamic memory or not.
 */
-INLINE Log LogInit (Unityper* tx, bool is_dynamic = false) {
+inline Log LogInit (Unityper* tx, bool is_dynamic = false) {
     Log log;
     log.io = tx;
     return log;
 }
 
 /** Prints a message with the given header to the given Tx slot. */
-INLINE ticket_t Write (Unityper* tx, byte member, const char* string) {
+inline ticket_t Write (Unityper* tx, byte member, const char* string) {
 #if DEBUG_CHINESEROOM
     printf ("| Writting string to %p\n", tx);
 #endif
@@ -89,20 +85,20 @@ INLINE ticket_t Write (Unityper* tx, byte member, const char* string) {
 }
 
 /** Prints a message with the given header to the given Tx slot. */
-INLINE ticket_t Write (Log& log, byte member, const char* string) {
+inline ticket_t Write (Log& log, byte member, const char* string) {
     return Write (log.io, member, string);
 }
 
 /** Returns a reference to the log for this assembly. */
 template<uint_t kNumber>
-INLINE Log& Logbook () {
+inline Log& Logbook () {
     static byte* buffer = Buffer<kNumber, kLogSize> ();
     static Log s = LogInit (TxInit (buffer, kLogSize));
     return s;
 }
 
 /** Operator << prints the given value as a string to the log. */
-INLINE Log& operator<< (Log& log, int8_t value) {
+inline Log& operator<< (Log& log, int8_t value) {
     char buffer[5];
     sprintf_s (buffer, 5, "%i", value);
     Write (log, '?', buffer);
@@ -110,7 +106,7 @@ INLINE Log& operator<< (Log& log, int8_t value) {
 }
 
 /** Operator << prints the given value as a string to the socket. */
-INLINE Log& operator<< (Log& log, uint8_t value) {
+inline Log& operator<< (Log& log, uint8_t value) {
     char buffer[4];
     sprintf_s (buffer, 4, "%u", value);
     Write (log, '?', buffer);
@@ -118,7 +114,7 @@ INLINE Log& operator<< (Log& log, uint8_t value) {
 }
 
 /** Operator << prints the given value as a string to the socket. */
-INLINE Log& operator<< (Log& log, int16_t value) {
+inline Log& operator<< (Log& log, int16_t value) {
     char buffer[7];
     sprintf_s (buffer, 7, "%i", value);
     Write (log, '?', buffer);
@@ -126,7 +122,7 @@ INLINE Log& operator<< (Log& log, int16_t value) {
 }
 
 /** Operator << prints the given value as a string to the socket. */
-INLINE Log& operator<< (Log& log, uint16_t value) {
+inline Log& operator<< (Log& log, uint16_t value) {
     char buffer[6];
     sprintf_s (buffer, 6, "%u", value);
     Write (log, '?', buffer);
@@ -134,7 +130,7 @@ INLINE Log& operator<< (Log& log, uint16_t value) {
 }
 
 /** Operator << prints the given value as a string to the socket. */
-INLINE Log& operator<< (Log& log, int32_t value) {
+inline Log& operator<< (Log& log, int32_t value) {
     char buffer[12];
     sprintf_s (buffer, 12, "%i", value);
     Write (log, '?', buffer);
@@ -142,7 +138,7 @@ INLINE Log& operator<< (Log& log, int32_t value) {
 }
 
 /** Operator << prints the given value as a string to the socket. */
-INLINE Log& operator<< (Log& log, uint32_t value) {
+inline Log& operator<< (Log& log, uint32_t value) {
     char buffer[11];
     sprintf_s (buffer, 11, "%u", value);
     Write (log, '?', buffer);
@@ -150,7 +146,7 @@ INLINE Log& operator<< (Log& log, uint32_t value) {
 }
 
 /** Operator << prints the given value as a string to the socket. */
-INLINE Log& operator<< (Log& log, int64_t value) {
+inline Log& operator<< (Log& log, int64_t value) {
     char buffer[22];
     sprintf_s (buffer, 22, "%I64d", value);
     Write (log, '?', buffer);
@@ -158,7 +154,7 @@ INLINE Log& operator<< (Log& log, int64_t value) {
 }
 
 /** Operator << prints the given value as a string to the socket. */
-INLINE Log& operator<< (Log& log, uint64_t value) {
+inline Log& operator<< (Log& log, uint64_t value) {
     char buffer[21];
     sprintf_s (buffer, 21, "%llu", value);
     Write (log, '?', buffer);
@@ -166,7 +162,7 @@ INLINE Log& operator<< (Log& log, uint64_t value) {
 }
 
 /** Operator << prints the given value as a string to the socket. */
-INLINE Log& operator<< (Log& log, float value) {
+inline Log& operator<< (Log& log, float value) {
     char buffer[FLT_MAX_10_EXP + 2];
     sprintf_s (buffer, FLT_MAX_10_EXP + 2, "%f", value);
     Write (log, '?', buffer);
@@ -174,7 +170,7 @@ INLINE Log& operator<< (Log& log, float value) {
 }
 
 /** Operator << prints the given value as a string to the socket. */
-INLINE Log& operator<< (Log& log, double value) {
+inline Log& operator<< (Log& log, double value) {
     char buffer[DBL_MAX_10_EXP + 2];
     sprintf_s (buffer, DBL_MAX_10_EXP + 2, "%f", value);
     Write (log, '?', buffer);
@@ -182,7 +178,7 @@ INLINE Log& operator<< (Log& log, double value) {
 }
 
 /** Operator << prints a string to the socket. */
-INLINE Log& operator<< (Log& log, const char* s) {
+inline Log& operator<< (Log& log, const char* s) {
     Write (log, '?', s);
     return log;
 }

@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    /.../verifier.h
+    @file    ~/verifier.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -19,10 +19,12 @@
 #define CHINESEROOM_VERIFIER_H
 
 #include "device.h"
+#include "portal.h"
 
 namespace _ {
 
-/** A universal all-in-one printer and scanner for rx and tx slots.
+/** A universal all-in-one printer and scanner for slots in doors in Chinese 
+    Rooms.
     A Verifier connects two portals (@see ChineseRoom::Portal) between two
     rooms using rx and tx ring buffers as depicted below:
     # Ring Buffer Streaming Diagram
@@ -56,36 +58,37 @@ namespace _ {
     @endcode
 */
 struct Verifier {
-    byte type,                      /*< What type of Verifier it is.
-                                            -1 = interprocess no dynamic memory.
-                                            0 = no dynamic memory.
-                                            1 = dynamic memory.
-                                            2 =  interprocess dynamic memory. */
-         num_members,               //< The current number of members of the 
+    byte          type,             /*< What type of Verifier it is.
+                                        -1 = interprocess no dynamic memory.
+                                        0 = no dynamic memory.
+                                        1 = dynamic memory.
+                                        2 =  interprocess dynamic memory. */
+                  num_members,      //< The current number of members of the 
                                     //< Device being verified.
-         first_member;              //< The current first member of the Device
+                  first_member;     //< The current first member of the Device
                                     //< being verified.
     volatile byte rx_state,         //< Rx streaming state.
                   last_rx_state,    //< Last Rx state.
                   tx_state;         //< Unityper streaming state.
-    hash16_t hash;                  //< Rx data verification hash.
-    int16_t  timeout_us;            //< The timeout time.
-    uint_t bytes_left,              //< Countdown counter for parsing POD types.
-           tx_offset,               //< The offset to the Unityper slot.
-           rx_offset,               //< The offset to the Unityper slot.    
-           stack_height,            //< Number of Device(s) on the stack.
-           stack_size,              //< Stack buffer size.
-           num_verifying,           //< Height of header and cursors stacks.
-           type_index,              //< The index in the current type being 
+    hash16_t      hash;             //< Rx data verification hash.
+    int16_t       timeout_us;       //< The timeout time.
+    uint_t        bytes_left,       //< Countdown counter for parsing POD types.
+                  tx_offset,        //< The offset to the Unityper slot.
+                  rx_offset,        //< The offset to the Unityper slot.    
+                  stack_count,      //< Number of Device(s) on the stack.
+                  stack_size,       //< Stack buffer size and 1/4 the state
+                                    //< stack height.
+                  verify_count,     //< Height of header and cursors stacks.
+                  type_index,       //< The index in the current type being
                                     //< scanned.
-           num_states;              //< Number of states on the state stack.
-    timestamp_t last_time;          //< The last time the Verifier was scanned.
-    Device* device,                 //< Device in the Device being verified.
-          * operand;                //< Pointer to the Device this device is 
+                  num_states;       //< Number of states on the state stack.
+    timestamp_t   last_time;        //< The last time the Verifier was scanned.
+    Device      * device,           //< Device in the Device being verified.
+                * operand;          //< Pointer to the Device this device is
                                     //< operating on.
-    const char* return_address;     //< The return address.
+    const char  * return_address;   //< The return address.
     volatile const uint_t* header;  //< Pointer to the header being verified.
-    const uint_t* headers;          //< First header ptr in the scan array. 
+    const uint_t* headers;          //< First header ptr in the scan array.
 };
 
 enum {
@@ -95,14 +98,14 @@ enum {
 
 /** List of the Verifier Rx states. */
 typedef enum RxStates {
-    RxVerifyingAddressState = 0,    //< RxState 0: Verifying address.
-    RxVerifyingArgsState,           //< RxState 1: Verifying arguments.
-    RxVerifyingStringState,         //< RxState 2: Verifying STX.
-    RxVerifyingVarintState,         //< RxState 3: Verifying varint.
-    RxVerifyingPodState,            //< RxState 4: Verifying plain-old-data.
+    RxScanningAddressState = 0,     //< RxState 0: Scanning address.
+    RxScanningArgsState,            //< RxState 1: Scanning arguments.
+    RxScanningStringState,          //< RxState 2: Scanning STX.
+    RxScanningVarintState,          //< RxState 3: Scanning varint.
+    RxScanningPodState,             //< RxState 4: Scanning plain-old-data.
     RxHandlingErrorState,           //< RxState 5: Handling an error state.
     RxMemeberNotFoundErrorState,    //< RxState 6: Member not found.
-    RxVerifyingHashState,           //< RxState 7: Stand the 32-bit hash.
+    RxScanningHashState,            //< RxState 7: Stand the 32-bit hash.
     RxLockedState,                  //< RxState N: Idle state.
 } RxState;
 
@@ -115,14 +118,14 @@ typedef enum TxStates {
 /** Gets a a string for printing out the rx_state. */
 INLINE const char* RxStateString (byte state) {
     static const char* strings[] = {
-        "RxVerifyingStringState",
-        "RxVerifyingVarIntState",
-        "RxVerifyingAddressState",
-        "RxVerifyingPodState",
-        "RxVerifyingArgsState",
+        "RxScanningStringState",
+        "RxScanningVarIntState",
+        "RxScanningAddressState",
+        "RxScanningPodState",
+        "RxScanningArgsState",
         "RxHandlingErrorState",
         "RxMemeberNotFoundErrorState",
-        "RxVerifyingHashState",
+        "RxScanningHashState",
         "RxLockedState" };
     if (state >= RxLockedState)
         return strings[RxLockedState];
@@ -140,56 +143,57 @@ INLINE const char* TxStateStrings (byte state) {
     return strings[state];
 }
 
-/*< Gets a pointer to the Rx slot. */
+/** Gets a pointer to the Rx slot. */
 INLINE Uniprinter* VerifierRx (Verifier* io) {
     return io == nullptr ? nullptr :
            reinterpret_cast<Uniprinter*>(reinterpret_cast<byte*>(io) + 
                                          io->rx_offset);
 }
 
-/*< Gets a pointer to the Unityper slot. */
+/** Gets a pointer to the Unityper slot. */
 INLINE Unityper* VerifierTx (Verifier* io) {
     return io == nullptr ? nullptr :
            reinterpret_cast<Unityper*>(reinterpret_cast<byte*>(io) +
                                        io->tx_offset);
 }
-    
+
 /** Constructs a Verifier with equal sized rx and tx slots.
     @param root The root-scope device. */
 INLINE Verifier* VerifierInit (byte* buffer, uint_t buffer_size,
-                               uint_t stack_height, Device* root = nullptr) {
+                               uint_t stack_count, Device* root = nullptr) {
     if (buffer == nullptr)
         return nullptr;
     if (buffer_size < kMinBufferSize)
         return nullptr;
-    if (stack_height == 0) stack_height = 1;    //< Minimum stack size.
+    if (stack_count == 0) stack_count = 1;    //< Minimum stack size.
 
     Verifier* io = reinterpret_cast<Verifier*> (buffer);
-
-    uint_t total_stack_size = (stack_height - 1) * (2 * sizeof (void*));
+    
+    uint_t total_stack_size = (stack_count - 1) * (2 * sizeof (void*));
     // Calculate the size of the Unityper and Verifier.
     uint_t size = (buffer_size - sizeof (Verifier) -
                    total_stack_size + 1) >> 1;  // >>1 to divide by 2
-    io->type = 0;
-    io->rx_state = RxLockedState;
-    io->tx_state = 0;
-    io->stack_height = 0;
-    io->num_verifying = 0;
-    io->stack_size = stack_height;
-    io->num_states = 0;
+    io->type          = 0;
+    io->rx_state      = RxLockedState;
+    io->tx_state      = 0;
+    io->stack_count  = 0;
+    io->verify_count = 0;
+    io->stack_size    = stack_count;
+    io->num_states    = 0;
+    io->device        = nullptr;
 #if DEBUG_CHINESEROOM
-    printf ("\nInitializing Verifier:\nsizeof (Verifier): %u\n "
-            "(stack_height * (2 * sizeof (void*))): %u\nstack_height: "
-            "%u buffer_size: %u size: %u\n!!!\nstack_height: %u &stack_height: "
-            "0x%p\n",
-            sizeof (Verifier), (stack_height * 
-                                (2 * sizeof (void*))), stack_height, 
-                                buffer_size, size, stack_height, &stack_height);
+    printf ("\nInitializing Verifier:\n"
+            "sizeof (Verifier): %u\n"
+            "(stack_count * (2 * sizeof (void*))): %u\n"
+            "stack_count: %u buffer_size: %u size: %u\n"
+            "!!! stack_count: %u &stack_count: 0x%p !!!\n",
+            sizeof (Verifier), (stack_count * 
+                                (2 * sizeof (void*))), stack_count, 
+                                buffer_size, size, stack_count, &stack_count);
 #endif //< DEBUG_CHINESEROOM
     io->bytes_left = 0;
-    uint_t offset = sizeof (Verifier) + total_stack_size -
-        sizeof (void*),
-        rx_offset = sizeof (Uniprinter) + total_stack_size + offset;
+    uint_t offset    = sizeof (Verifier)   + total_stack_size - sizeof (void*),
+           rx_offset = sizeof (Uniprinter) + total_stack_size + offset;
     io->rx_offset = rx_offset;
     io->tx_offset = rx_offset + size;
     io->header = 0;
@@ -205,7 +209,7 @@ INLINE Verifier* VerifierInit (byte* buffer, uint_t buffer_size,
 /** Gets the base address of the device stack. */
 INLINE Device** VerifierDeviceStack (Verifier* io) {
     auto a = reinterpret_cast<byte*> (io) + sizeof (Verifier) +
-             io->stack_height * io->stack_size * sizeof (const uint_t*);
+             io->stack_count * io->stack_size * sizeof (const uint_t*);
     return reinterpret_cast<Device**> (a);
 }
 
@@ -232,18 +236,18 @@ INLINE const Member* Push (Verifier* io, Device* d) {
         return d->Op (0, nullptr);  //< Return d's header.
     if (d == nullptr)
         return reinterpret_cast<const Member*> (Report (NullDevicePushError));
-    if (io->stack_height >= io->stack_size)
+    if (io->stack_count >= io->stack_size)
         return reinterpret_cast<const Member*> (Report (StackOverflowError));
-    VerifierDeviceStack (io)[io->stack_height++] = d; 
+    VerifierDeviceStack (io)[io->stack_count++] = d; 
     return 0;
 }
 
 /** Attempts to pop an Device off the stack and returns a pointer to a
     string upon failure. */
 INLINE ticket_t VerifierPop (Verifier* io) {
-    if (io->stack_height == 0)
+    if (io->stack_count == 0)
         return Report (TooManyPopsError);
-    io->device = VerifierDeviceStack (io)[--io->stack_height];
+    io->device = VerifierDeviceStack (io)[--io->stack_count];
     return 0;
 }
 
@@ -254,11 +258,11 @@ INLINE byte* VerifierStateStack (Verifier* io) {
 
 /** Exits the current state. */
 INLINE ticket_t VerifierExitRxState (Verifier* io) {
-    auto a = io->stack_height;
+    auto a = io->stack_count;
     if (a == 0)
         return Report (TooManyPopsError);
     io->rx_state = VerifierStateStack (io)[--a];
-    io->stack_height = a;
+    io->stack_count = a;
     return 0;
 }
 
@@ -267,11 +271,11 @@ INLINE ticket_t VerifierEnterRxState (Verifier* io, RxState state) {
     
     if (state >= RxLockedState)
         return Report (InvalidRxStateError);
-    auto a = io->stack_height;
+    auto a = io->stack_count;
     if (a >= io->stack_size)
         return Report (StackOverflowError);
     VerifierStateStack (io)[a] = io->rx_state;
-    a = io->stack_height + 1;
+    a = io->stack_count + 1;
     io->rx_state = state;
     return 0;
 }
@@ -281,10 +285,10 @@ INLINE ticket_t VerifierEnterRxState (Verifier* io, RxState state) {
 INLINE ticket_t VerifierPushScanHeader (Verifier* io, const uint_t* header) {
     if (header == nullptr)
         return Report (NullPointerError, header, VerifierTx (io));
-    uint_t num_verifying = io->num_verifying,
+    uint_t verify_count = io->verify_count,
            stack_size    = io->stack_size;
     io->type_index = *header++;
-    if (num_verifying >= stack_size)
+    if (verify_count >= stack_size)
         return Report (StackOverflowError, header, VerifierTx (io));
     
     // Move the current header to the scan stack
@@ -292,7 +296,7 @@ INLINE ticket_t VerifierPushScanHeader (Verifier* io, const uint_t* header) {
     io->header = header;
     const uint_t** headers = (const uint_t**)&io->headers;
     headers[stack_size] = current_header;
-    io->num_verifying = num_verifying + 1;
+    io->verify_count = verify_count + 1;
     return 0;
 }
 
@@ -301,24 +305,24 @@ INLINE ticket_t VerifierPushScanHeader (Verifier* io, const uint_t* header) {
 INLINE ticket_t VerifierPushScanHeader (Verifier* io,
                                         volatile const uint_t* header) {
     const uint_t** headers;
-    uint_t num_verifying = io->num_verifying;
-    if (num_verifying >= io->stack_size)
+    uint_t verify_count = io->verify_count;
+    if (verify_count >= io->stack_size)
         return Report (StackOverflowError);
     
     headers = (const uint_t**)io->headers;
     VerifierExitRxState (io);
     io->header = *headers;
-    num_verifying = num_verifying;
+    verify_count = verify_count;
     return 0;
 }
 
 /** Pops a header off the scan stack. */
 INLINE ticket_t VerifierPopScanHeader (Verifier* io) {
-    uint_t num_verifying = io->num_verifying;
-    if (num_verifying == 0)
+    uint_t verify_count = io->verify_count;
+    if (verify_count == 0)
         return Report (TooManyPopsError);
     
-    num_verifying = num_verifying - 1;
+    verify_count = verify_count - 1;
     return 0;
 }
 
@@ -326,7 +330,7 @@ INLINE ticket_t VerifierPopScanHeader (Verifier* io) {
 INLINE void VerifierScanNextType (Verifier* io) {
     uint_t* header = const_cast<uint_t*> (io->header);
     if (header == nullptr) {
-        VerifierEnterRxState (io, RxVerifyingArgsState);
+        VerifierEnterRxState (io, RxScanningArgsState);
         return;
     }
 
@@ -348,68 +352,71 @@ INLINE byte VerifierStreamTxByte (Verifier* io) {
 
 /** Scans the Rx buffer and marks the data as being ready to execute.
     @param io The Verifier to scan. */
-INLINE void VerifierScan (Verifier* io) {
-    // It is fastest do a few branches as possible, and to compare to zero 
-    // as much as possible. In order to optimize the switch, it is fastest 
-    // to decrement the bytes_left, compare it to zero, and only process 
-    // events. When the data comes in it will be packed and not word 
-    // aligned. In order for most CPU to use the data, the data, we will 
-    // need to be realigned.
-    uint_t        size,
-                  space_left,
-                  length,
-                  type;
-    byte          rx_state,
-                  b;
-    ticket_t      result;
-    hash16_t      hash;
-    timestamp_t   timestamp,
-                  delta_t;
+INLINE void VerifierScan (Verifier* io, Portal* input) {
+    uint_t        size,         //< The size of the ring buffer.
+                  space,        //< The space left in the right buffer.
+                  length,       //< The length of the ring buffer data.
+                  type;         //< The current type.
+    byte          rx_state,     //< The current rx FSM state.
+                  b;            //< The current byte being verified.
+    //              temp_ui1;     //< Used for verifying AR1 only.
+    ticket_t      result;       //< An error ticket procedure return value.
+    hash16_t      hash;         //< The hash of the ESC being verified.
+    //uint16_t      temp_ui2;     //< Used for calculating AR2 and BK2 size.
+    //uint32_t      temp_ui4;     //< Used for calculating AR4 and BK4 size.
+    //uint64_t      temp_ui8;     //< Used for calculating AR8 and BK8 size.
+    time_t        timestamp,    //< The last time when the verifier ran.
+                  delta_t;      //< The time delta between the last timestamp.
     Device      * device;       //< The current Device.
-    const Member* m;            //< The current Member.
+    const Member* member;       //< The current Member.
     const uint_t* header;       //< The current Member header being verified.
-    Unityper    * tx;
-    byte        * begin,
-                * end,
-                * start,
-                * stop;
+    Uniprinter  * rx;           //< The rx Uniprinter.
+    byte        * begin,        //< The beginning of the ring buffer.
+                * end,          //< The end of the ring buffer.
+                * start,        //< The start of the ring buffer data.
+                * stop;         //< The stop of the ring buffer data.
 
     if (io == nullptr) {
-        std::cout << "io null\n";
+        PrintDebug ("io = null");
+        return;
+    }
+    if (input == nullptr) {
+        PrintDebug ("input = null");
         return;
     }
 
-    rx_state = io->rx_state;
-    tx        = VerifierTx (io);
-    size      = tx->size;
+    rx_state  = io->rx_state;
+    rx        = VerifierRx (io);
+    size      = rx->size;
     hash      = io->hash;
     timestamp = TimestampNow ();
     delta_t   = timestamp - io->last_time;
 
     if (delta_t <= io->timeout_us) {
-        if (delta_t < 0)    //< Special case for Epoch
+        if (delta_t < 0)    //< Special case for Epoch (rare)
             delta_t *= -1;
     }
 
-    begin = UniprinterBaseAddress (VerifierRx (io));
-    end   = begin + size;
-    start = begin + tx->start;
-    stop  = begin + tx->stop;
-    space_left  = RingBufferSpace (start, stop, size);
-    length = size - space_left + 1;
+    begin  = UniprinterBaseAddress (VerifierRx (io));
+    end    = begin + size;
+    start  = begin + rx->start;
+    stop   = begin + rx->stop;
+    space  = RingBufferSpace (start, stop, size);
+    length = size - space + 1;
 
-    printf ("\n\n| Verifying address 0x%p:\n| rx_state: %s\n| length: %u\n", io,
+    printf ("\n\n| Scanning address 0x%p:\n| rx_state: %s\n| length: %u\n", io,
             RxStateString (rx_state), length);
 
     // Manually load first byte:
-    b = UnityperStreamByte (tx);
+    b = input->Pull ();
+    //b = UnityperStreamByte (rx);
     hash = Hash16 (b, hash);
     *start = b;
     ++start;
-    for (; length > 0; --length) {
+    while (input->Length ()) {
         // Process the rest of the bytes in a loop to reduce setup overhead.
-        if (rx_state == RxVerifyingStringState) {
-            PrintDebug ("RxVerifyingStringState");
+        if (rx_state == RxScanningStringState) {
+            PrintDebug ("RxScanningStringState");
 
             if (io->bytes_left == 0) {
                 PrintDebug ("Done parsing string.");
@@ -426,20 +433,20 @@ INLINE void VerifierScan (Verifier* io) {
                 VerifierExitRxState (io);
                 return;
             }
-            PrintDebug ("b != 0\n");
+            PrintDebug ("b != 0");
             --io->bytes_left;
             return;
-        } else if (rx_state == RxVerifyingVarintState) {
+        } else if (rx_state == RxScanningVarintState) {
             // When verifying a varint, there is a max number of bytes for the
             // type (3, 5, or 9) but the varint may be complete before this
             // number of bytes. We're just basically counting down and looking
             // for an overflow situation.
 
-            PrintDebug ("RxVerifyingVarintState.");
+            PrintDebug ("RxScanningVarintState.");
             // Hash byte.
 
             if (io->bytes_left == 1) {
-                PrintDebug ("Checking last byte for error.\n");
+                PrintDebug ("Checking last byte:");
 
                 // @warning I am not current saving the offset. I'm not sure 
                 //          what to do here. The header class uses a variadic 
@@ -458,14 +465,14 @@ INLINE void VerifierScan (Verifier* io) {
             }
             --io->bytes_left;
             return;
-        } else if (rx_state == RxVerifyingAddressState) {
+        } else if (rx_state == RxScanningAddressState) {
             // When verifying an address, there is guaranteed to be an
             // io->device set. We are just looking for null return values
             // from the Do (byte, Verifier*): const Member* function, 
             // pushing Device(s) on to the Device stack, and looking for the 
             // first procedure call.
 
-            PrintDebugHex ("| RxVerifyingAddressState", b);
+            PrintDebugHex ("| RxScanningAddressState", b);
             if (b == ESC) {     // Start processing a new ESC.
                 PrintDebug ("Start of ESC:");
                 ++io->header;
@@ -475,8 +482,8 @@ INLINE void VerifierScan (Verifier* io) {
 
             device = io->device;
             io->operand = nullptr;
-            m = device->Op (b, nullptr);
-            if (m == nullptr) {
+            member = device->Op (b, nullptr);
+            if (member == nullptr) {
                 // Could be an invalid member or a Device Stack push.
                 if (io->operand == nullptr) {
                     PrintDebug ("No member found.");
@@ -484,37 +491,38 @@ INLINE void VerifierScan (Verifier* io) {
                 }
                 //VerifierPushScan (io, io->operand);
             }
-            if (result = VerifierPushScanHeader (io, m->rx_header)) {
+            if (result = VerifierPushScanHeader (io, member->rx_header)) {
                 PrintDebug ("Error reading address.");
                 return;
             }
-            VerifierEnterRxState (io, RxVerifyingArgsState);
+            VerifierEnterRxState (io, RxScanningArgsState);
             return;
-        } else if (rx_state == RxVerifyingArgsState) {
+        } else if (rx_state == RxScanningArgsState) {
             // In this state, a procedure has been called to scan on a valid
             // device. This state is responsible for loading the next header
             // argument and checking for the end of the procedure call.
 
-            PrintDebug ("RxVerifyingArgs.");
+            PrintDebug ("RxScanningArgs.");
 
             device = io->device;
             if (device == nullptr) {
                 // Check if it is a Procedure Call or Device.
                 device = io->device;
                 io->operand = nullptr;
-                m = device->Op (b, nullptr);
+                member = device->Op (b, nullptr);
                 device = io->operand;
                 if (!device) {
-                    if (m == nullptr) {
+                    if (member == nullptr) {
                         PrintError ("Invalid member");
                         VerifierEnterRxState (io, RxLockedState);
                         return;
                     }
                     // Else it was a function call.
-                    VerifierEnterRxState (io, RxVerifyingArgsState);
+                    VerifierEnterRxState (io, RxScanningArgsState);
                     return;
                 }
             } else {
+                // Verify byte as address.
                 header = const_cast<const uint_t*> (io->header);
                 if (!io->header) {
                     return;
@@ -537,16 +545,16 @@ INLINE void VerifierScan (Verifier* io) {
                         Report (ReadInvalidTypeError);
                         VerifierEnterRxState (io, RxLockedState);
                     } else {
-                        VerifierEnterRxState (io, RxVerifyingAddressState);
+                        VerifierEnterRxState (io, RxScanningAddressState);
                     }
                 } else if (type == STX) {   // String type.
-                    VerifierEnterRxState (io, RxVerifyingStringState);
+                    VerifierEnterRxState (io, RxScanningStringState);
                 } else if (type < DBL)  {   // Plain-old-data types.
                     io->bytes_left = SizeOf (type);
-                    VerifierEnterRxState (io, RxVerifyingVarintState);
+                    VerifierEnterRxState (io, RxScanningPodState);
                 } else if (type < UV8)  {   // Varint types
                     io->bytes_left = SizeOf (type);
-                    VerifierEnterRxState (io, RxVerifyingVarintState);
+                    VerifierEnterRxState (io, RxScanningVarintState);
                 } else if (type <= AR8) {
 
                 } else if (type == ESC) {
@@ -556,24 +564,23 @@ INLINE void VerifierScan (Verifier* io) {
                 } else if (type > US) {
                     Report (InvalidRxTypeError);
                 } else {    // It's a US
+                    PrintDebug ("Scanning Unit");
                     io->bytes_left = kUnitSize;
-                    VerifierEnterRxState (io, RxVerifyingPodState);
+                    VerifierEnterRxState (io, RxScanningPodState);
                 }
                 
             }
         } else if (rx_state == RxHandlingErrorState) {
             PrintDebug ("RxHandlingErrorState.");
-        } else if (rx_state == RxLockedState) {
-            PrintDebug ("RxLockedState.");
+
         } else if (rx_state >= RxLockedState) {
-            Report (InvalidRxStateError);
+            PrintDebug ("RxLockedState.");
         } else {    // parsing plain-old-data.
-            --io->bytes_left;
-            if (io->bytes_left == 0) {
+            if (io->bytes_left-- == 0) {
                 PrintDebug ("Done verifying POD type.");
                 VerifierScanNextType (io);
             } else {
-                b = VerifierStreamTxByte (io);
+                b = input->Pull ();
                 PrintDebugHex ("Loading next byte", b);
                 io->hash = Hash16 (b, hash);
                 *start = b;
@@ -581,6 +588,7 @@ INLINE void VerifierScan (Verifier* io) {
             }
         }
     }
+    rx->start = Diff (begin, start);
 }
 
 /** Returns true if the given Verifier contains the given address. */
@@ -593,7 +601,7 @@ INLINE bool VerifierContains (Verifier* io, void* address) {
 
 /** Pushes a header onto the scan stack.*/
 INLINE ticket_t VerifierPushHeader (Verifier* io, const uint_t* header) {
-    if (io->stack_height >= io->stack_size) {
+    if (io->stack_count >= io->stack_size) {
         // Handle overflow cleanup:
         return Report (StackOverflowError, header);
     }
@@ -606,7 +614,7 @@ INLINE ticket_t VerifierPushHeader (Verifier* io, const uint_t* header) {
 /** Gets the base address of the header stack. */
 INLINE const uint_t* VerifierHeaderStack (Verifier* io) {
     return reinterpret_cast<const uint_t*> (reinterpret_cast<byte*>
-        (io) + sizeof (Verifier) + io->stack_height);
+        (io) + sizeof (Verifier) + io->stack_count);
 }
 
 /** Closes the current expression and cues it for execution. */
@@ -676,29 +684,29 @@ INLINE void Print (Verifier* io) {
     }
     printf ("0x%p", io);
     PrintLine ("|", '_');
-    std::cout << "| type:          " <<
-        (io->type == -1) ? "interprocess no dynamic memory." :
-        (io->type == 0) ? "no dynamic memory" :
-        (io->type == 1) ? "dynamic memory" :
-        (io->type == 2) ? "dynamic memory" : "Invalid type";
+    std::cout << "| type:          "
+              << (io->type == -1) ? "interprocess no dynamic memory." :
+                 (io->type ==  0) ? "no dynamic memory" :
+                 (io->type ==  1) ? "dynamic memory"    :
+                 (io->type ==  2) ? "dynamic memory"    : "Invalid type";
 
     std::cout << "\n| bytes_left:    " << io->bytes_left
-        << "\n| tx_offset:     " << io->tx_offset
-        << "\n| rx_offset:     " << io->rx_offset
-        << "\n| stack_height:  " << io->stack_height
-        << "\n| stack_size:    " << io->stack_size
-        << "\n| num_verifying: " << io->num_verifying
-        << "\n| num_states:    " << io->num_states;
+              << "\n| tx_offset:     " << io->tx_offset
+              << "\n| rx_offset:     " << io->rx_offset
+              << "\n| stack_count:   " << io->stack_count
+              << "\n| stack_size:    " << io->stack_size
+              << "\n| verify_count:  " << io->verify_count
+              << "\n| num_states:    " << io->num_states;
     PrintLine ("|", '-');
     Print (io->device);
     std::cout << "| header: ";
     PrintEsc (const_cast<const uint_t*>(io->header));
-    std::cout << "| Scan Stack: " << io->num_verifying;
+    std::cout << "| Scan Stack: " << io->verify_count;
     const uint_t** headers = (const uint_t**)io->headers;
     if (headers == nullptr) {
         std::cout << " null";
     } else {
-        for (uint_t i = 0; i < io->stack_height; ++i) {
+        for (uint_t i = 0; i < io->stack_count; ++i) {
             std::cout << "| " << i << ": ";
             PrintEsc (headers[i]);
         }

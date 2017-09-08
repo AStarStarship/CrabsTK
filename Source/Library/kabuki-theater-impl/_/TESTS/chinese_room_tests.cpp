@@ -1,32 +1,24 @@
 /** Kabuki Theater
     @version 0.x
-    @file    /.../source/kabuki-theater-impl/_/TESTS/chinese_room_tests.cpp
-    @author  Cale McCollough <calemccollough.github.rx>
+    @file    ~/source/kabuki-theater-impl/_/TESTS/chinese_room_tests.cpp
+    @author  Cale McCollough <calemccollough.github.io>
     @license Copyright 2017 (C) Cale McCollough <cale.mccollough@gmail.com>
-
-                          All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-                http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+                            All right reserved (R).
+             Licensed under the Apache License, Version 2.0 (the "License"); 
+             you may not use this file except in compliance with the License. 
+             You may obtain a copy of the License at
+                        http://www.apache.org/licenses/LICENSE-2.0
+             Unless required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
 #include <CppUTest/CommandLineTestRunner.h>
 #include <CppUTest/TestHarness.h>
 
-#include <stdafx.h>
-#include "this_room.inl"
-#include <_/console.h>
-#include <_/symbol_table.h>
-#include <_/utils.h>
+#include <_/chinese_room.h>
 using namespace _;
 
 TEST_GROUP (ChineseRoomTests)
@@ -83,7 +75,10 @@ TEST (ChineseRoomTests, VerifierTests) {
                                                  &si4_expected, &flt_expected));
     PrintMemory (io, VerifierEndAddress (io));
     Print (io);
-    VerifierScan (io);
+    Mirror mirror;       //< @todo fix me!
+    //Portal* p = dynamic_cast<Portal*>(&mirror);   //< Not working?
+    Portal* p = reinterpret_cast<Portal*>(&mirror);
+    VerifierScan (io, p);
     system ("PAUSE");
     CHECK_EQUAL (0, Read (io, esc, Args (args, &stx_found,
                                          &si4_found, &flt_found)));
@@ -265,18 +260,18 @@ TEST (ChineseRoomTests, ReadWriteTests) {
         hlf_found;
 
     std::cout << "Expecting "
-         << si2_p_expected
-         << (si2_p_expected >> 8)
-         << ' '
-         << si2_n_expected
-         << (si2_n_expected >> 8)
-         << ' '
-         << ui2_expected
-         << (ui2_expected >> 8)
-         << ' '
-         << hlf_expected
-         << (hlf_expected >> 8)
-         << '\n';
+              << si2_p_expected
+              << (si2_p_expected >> 8)
+              << ' '
+              << si2_n_expected
+              << (si2_n_expected >> 8)
+              << ' '
+              << ui2_expected
+              << (ui2_expected >> 8)
+              << ' '
+              << hlf_expected
+              << (hlf_expected >> 8)
+              << '\n';
 
     CHECK_EQUAL (0, Write (tx, EmptyString, Esc<4, SI2, SI2, UI2, HLF> (),
                            Args (args, &si2_p_expected, &si2_n_expected, 
@@ -395,7 +390,7 @@ TEST (ChineseRoomTests, ReadWriteTests) {
                            Args (args, &uv2_expected[0], &uv2_expected[1],
                                  &uv2_expected[2], &uv2_expected[3])))
     CHECK_EQUAL (0, Read (tx, Esc<4, UV2, UV2, UV2, UV2> (),
-                            Args (args, &uv2_found[0], &uv2_found[1],
+                          Args (args, &uv2_found[0], &uv2_found[1],
                                 &uv2_found[2], &uv2_found[3])))
     CHECK_EQUAL (uv2_expected[0], uv2_found[0])
     CHECK_EQUAL (uv2_expected[1], uv2_found[1])

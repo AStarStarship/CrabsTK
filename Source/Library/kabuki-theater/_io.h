@@ -28,17 +28,17 @@
     Sounds, streaming (musics or custom sources), recording, spatialization.
 */
 
-#include <_/System.hpp>
-#include <_IO/Audio/InputSoundFile.hpp>
-#include <_IO/Audio/Listener.hpp>
-#include <_IO/Audio/Music.hpp>
-#include <_IO/Audio/OutputSoundFile.hpp>
-#include <_IO/Audio/Sound.hpp>
-#include <_IO/Audio/SoundBuffer.hpp>
-#include <_IO/Audio/SoundBufferRecorder.hpp>
-#include <_IO/Audio/SoundFileFactory.hpp>
-#include <_IO/Audio/SoundFileReader.hpp>
-#include <_IO/Audio/SoundFileWriter.hpp>
-#include <_IO/Audio/SoundRecorder.hpp>
-#include <_IO/Audio/SoundSource.hpp>
-#include <_IO/Audio/SoundStream.hpp>
+#include <_/System.h>
+#include <_IO/Audio/InputSoundFile.h>
+#include <_IO/Audio/Listener.h>
+#include <_IO/Audio/Music.h>
+#include <_IO/Audio/OutputSoundFile.h>
+#include <_IO/Audio/Sound.h>
+#include <_IO/Audio/SoundBuffer.h>
+#include <_IO/Audio/SoundBufferRecorder.h>
+#include <_IO/Audio/SoundFileFactory.h>
+#include <_IO/Audio/SoundFileReader.h>
+#include <_IO/Audio/SoundFileWriter.h>
+#include <_IO/Audio/SoundRecorder.h>
+#include <_IO/Audio/SoundSource.h>
+#include <_IO/Audio/SoundStream.h>

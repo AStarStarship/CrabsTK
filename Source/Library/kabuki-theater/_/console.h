@@ -1,8 +1,8 @@
 /** The Chinese Room
     @version 0.x
-    @file    /.../console.h
+    @file    ~/console.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
 
                             All right reserved (R).
 
@@ -23,8 +23,10 @@
 #define CHINESEROOM_CONSOLE_H
 
 #include "room.h"
-//#include "symbol_table.h"
+#include "mirror.h"
+#include "symbol_table.h"
 #include "book.h"
+#include "utils.h"
 
 namespace _ {
 

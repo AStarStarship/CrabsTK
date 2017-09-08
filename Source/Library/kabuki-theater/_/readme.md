@@ -34,7 +34,9 @@ expensive and unnecessary to has interprocess data because it is not being
 sent over an unstable connection.
 
 ## Todo
-* Update documentation about how the buffers are now +1 size (i.e. 255 = 
-  256 bytes).
+* Finish Book data RW functions.
+* Finish Verifier.
+* Serial PC/mbed demo.
+* Look into replacing code with array.h functions (if possible).
 
 

@@ -21,12 +21,61 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\Library\kabuki-theater-impl\TESTS\stdafx.h" />
     <ClInclude Include="..\..\Source\Library\kabuki-theater-impl\TESTS\targetver.h" />
-    <ClInclude Include="..\..\Source\Library\kabuki-theater-impl\_\TESTS\this_room.inl" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater-impl\_\TESTS\this_room.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_serial\serial.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_serial\unix.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_serial\win.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\address.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\args.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\array.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\ascii.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\assembly.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\book.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\chinese_room.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\color.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\config.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\console.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\device.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\dictionary.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\door.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\error.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\event.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\exceptions.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\global.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\iterator.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\log.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\member.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\mirror.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\portal.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\room.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\slot.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\stdafx.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\symbol_table.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\terminal.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\this_room.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\timestamp.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\types.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\uniprinter.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\unityper.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\utf.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\utf_string.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\utils.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\verifier.h" />
+    <ClInclude Include="..\..\Source\Library\kabuki-theater\_\wall.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\TESTS\Kabuki-Theater-Tests.cpp" />
     <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\TESTS\stdafx.cpp" />
+    <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\_serial\list_ports_linux.cpp" />
+    <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\_serial\list_ports_osx.cpp" />
+    <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\_serial\list_ports_win.cpp" />
+    <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\_serial\serial.cpp" />
+    <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\_serial\unix.cpp" />
+    <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\_serial\win.cpp" />
     <ClCompile Include="..\..\Source\Library\kabuki-theater-impl\_\TESTS\chinese_room_tests.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Source\Library\kabuki-theater\_\readme.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -96,12 +145,12 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\Source\Library\kabuki-theater;..\..\..\cpputest\include;$(IncludePath)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Source\Library\kabuki-theater-impl\_\TESTS;..\..\Source\Library\kabuki-theater;..\..\..\cpputest\include;$(IncludePath)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>

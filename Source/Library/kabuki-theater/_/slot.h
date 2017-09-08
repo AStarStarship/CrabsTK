@@ -1,22 +1,22 @@
 /** The Chinese Room
     @version 0.x
-    @file    /.../slot.h
+    @file    ~/slot.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
 
                     All right reserved (R).
 
-    Licensed under the Apache License, Version 2.0 (the "License"); you may
-    not use this file except in compliance with the License. You may obtain
-    a copy of the License at
+             Licensed under the Apache License, Version 2.0 (the "License"); 
+             you may not use this file except in compliance with the License. 
+             You may obtain a copy of the License at
 
-            http://www.apache.org/licenses/LICENSE-2.0
+                    http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+             Unless required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
 #ifndef CHINESEROOM_SLOT_H
@@ -29,31 +29,31 @@ namespace _ {
 /** A group of Terminal(s) that create a Slot in a door in a Chinese room.
 */
 struct Slot {
-    byte is_dynamic,            //< Flag for if using dynamic memory.
-        num_slots,              //< The number of slots in this group.
-        max_num_slots,          //< The number of slots allocated in memory.
-        reserved;               //< Reserved for memory alignment.
-    Terminal* slot_one;         //< The slots in door that messages pass through.
+    byte is_dynamic,        //< Flag for if using dynamic memory.
+         num_slots,         //< The number of slots in this group.
+         max_num_slots,     //< The number of slots allocated in memory.
+         reserved;          //< Reserved for memory alignment.
+    Terminal* slot_one;     //< The slots in door that messages pass through.
 };
 
 /** Initializes a Slot at the beginning of the given buffer. */
-INLINE Slot* SlotInit (uint_t slot_size) {
-    Slot* s = New<Slot, uint_t> (slot_size, kMinSocketSize);
+INLINE Slot* SlotInit (uint_t width, uint_t size, byte max_num_slots) {
+    Slot* s = New<Slot, uint_t> (width, kMinSocketSize);
     if (s == nullptr) return nullptr;
     s->is_dynamic = 0;
     s->num_slots = 0;
-    s->max_num_slots;
+    s->max_num_slots = max_num_slots;
     s->slot_one = nullptr;
 }
 
 /** Initializes a Slot at the beginning of the given buffer. */
-INLINE Slot* SlotInit (byte* buffer, uint_t slot_size) {
+INLINE Slot* SlotInit (byte* buffer, uint_t slot_size, byte max_num_slots) {
     if (buffer == nullptr) return nullptr;
     if (slot_size < kMinSocketSize) return nullptr;
     Slot* s = reinterpret_cast<Slot*>(buffer);
     s->is_dynamic = 0;
     s->num_slots = 0;
-    s->max_num_slots;
+    s->max_num_slots = max_num_slots;
     s->slot_one = nullptr;
 }
 

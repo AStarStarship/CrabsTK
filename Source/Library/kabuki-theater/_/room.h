@@ -1,22 +1,18 @@
 /** The Chinese Room
     @version 0.x
-    @file    /.../Source/ChineseRoom/room.h
+    @file    ~/Source/ChineseRoom/room.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
-
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+             Licensed under the Apache License, Version 2.0 (the "License"); 
+             you may not use this file except in compliance with the License. 
+             You may obtain a copy of the License at
+                        http://www.apache.org/licenses/LICENSE-2.0
+             Unless required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
 #ifndef CHINESEROOM_ROOM_H
@@ -40,7 +36,8 @@ INLINE const char** RoomStateStrings () {
     return states;
 }
 
-/** A list of Requests that can be sent from Terminal<uint_t, THash> to Terminal<uint_t, THash>.  */
+/** A list of Requests that can be sent from Terminal<uint_t, THash> to
+    Terminal<uint_t, THash>.  */
 typedef enum Requests {
     OpenDoorRequest = 0,
     CloseDoorRequest,
@@ -116,7 +113,8 @@ class Room: public Device {
         door_         (nullptr),
         xoff_         (nullptr),
         device_       (nullptr),
-        devices_      (nullptr) {
+        devices_      (nullptr)
+    {
 
     }
 
@@ -178,15 +176,9 @@ class Room: public Device {
         return true;
     }
 
-    /** Gets the next request. */
-    Request GetNextRequest (Request r) {
-        return InvalidRequest;
-    }
-
     /** The default main function.
-        This is 
-    */
-    virtual void Main (const byte** args, int args_count) {
+        Please feel free to override this with your own main function. */
+    virtual int Main (const char** args, int args_count) {
         ticket_t result;
 
         std::cout << "Initializing Chinese Room with " << args_count << " args:\n";
@@ -205,8 +197,10 @@ class Room: public Device {
                 ShutDown ();
             } catch (RoomCrashException e) {
                 std::cout << "\n| Room crashed!\n";
+                return 3;
             }
         }
+        return 1;
     }
 
     /** I2P operations. */

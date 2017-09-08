@@ -1,22 +1,18 @@
 /** The Chinese Room
     @version 0.x
-    @file    /.../unityper.h
+    @file    ~/unityper.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough<calemccollough.github.io>
-
                             All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-                    http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+             Licensed under the Apache License, Version 2.0 (the "License"); 
+             you may not use this file except in compliance with the License. 
+             You may obtain a copy of the License at
+                        http://www.apache.org/licenses/LICENSE-2.0
+             Unless required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
 #ifndef CHINESEROOM_UNITYPER_H
@@ -25,18 +21,128 @@
 #include "error.h"
 #include "types.h"
 #include "address.h"
-#include "ring_buffer.h"
 #include "array.h"
+#include "utils.h"
 
 namespace _ {
 
-/** A Tx socket.
-    A Tx socket is identical in structure to an Rx socket, but the stop becomes
+/** Clears the ring buffer by writing zeros to it. */
+INLINE void RingBufferClear (byte* const begin, uint_t rx_start, 
+                             byte* start, byte* const stop,
+                             byte* const end, uint_t size)
+{
+    byte* cursor = begin + rx_start;
+    while (start != cursor) {
+        *cursor = 0;
+        if (++cursor >= end) cursor -= size;
+    }
+}
+
+/** Calculates the used ring buffer space.
+    @param  Start The start of the data.
+    @param  Stop  The stop of the data.
+    @param  Size The size of the buffer. */
+INLINE uint_t RingBufferLength (byte* start, byte* stop, uint_t size) {
+    uint_t delta_start_stop = static_cast<uint> (stop - start);
+    return start <= stop ? delta_start_stop : size - delta_start_stop;
+}
+
+/** Calculates the space left in the given ring buffer.
+    @param  Start The start of the data.
+    @param  Stop  The stop of the data.
+    @param  Size  The size of the buffer. */
+INLINE uint_t RingBufferSpace (byte* start, byte* stop, uint_t size) {
+    uint_t delta_start_stop = static_cast<uint> (stop - start);
+    return start <= stop ? size - delta_start_stop : delta_start_stop;
+}
+
+/** Copies a block from a ring-buffer to the given destination. */
+INLINE byte* RingBufferWrite (void* source, byte* const begin,
+                              byte* const start, byte* const stop,
+                              byte* const end, size_t size) {
+    if (source == nullptr) return start;
+
+    // Now we can copy the book into memory.
+    if ((start > stop) && (start + size >= end)) {
+        // Calculate upper chunk size.
+        uint_t top_chunk = end - stop;
+        size -= top_chunk;
+
+        memcpy (source, start, top_chunk);
+        memcpy (reinterpret_cast<byte*>(source) + top_chunk, begin, size);
+        return begin + size;
+    }
+    memcpy (source, stop, size);
+    return start + size;
+}
+
+/** Copies a block from a ring-buffer to the given destination. */
+INLINE byte* RingBufferRead (void* destination, byte* const begin,
+                             byte* const start, byte* const stop,
+                             byte* const end, size_t size) {
+    if (destination == nullptr) return start;
+
+    // Now we can copy the book into memory.
+    if ((start > stop) && (start + size >= end)) {
+        // Calculate upper chunk size.
+        uint_t top_chunk = end - stop;
+        size -= top_chunk;
+
+        memcpy (start, destination, top_chunk);
+        memcpy (begin, reinterpret_cast<byte*>(destination) + top_chunk, size);
+        return begin + size;
+    }
+    memcpy (stop, destination, size);
+    return start + size;
+}
+
+/** Copies a block from a ring-buffer to the given destination. */
+INLINE byte* SocketWrite (void* source, byte* const begin,
+                          byte* const start, byte* const stop,
+                          byte* const end, size_t size) {
+    if (source == nullptr) return start;
+
+    // Now we can copy the book into memory.
+    if ((start > stop) && (start + size >= end)) {
+        // Calculate upper chunk size.
+        uint_t top_chunk = end - stop;
+        size -= top_chunk;
+
+        memcpy (source, start, top_chunk);
+        memcpy (reinterpret_cast<byte*>(source) + top_chunk, begin, size);
+        return begin + size;
+    }
+    memcpy (source, stop, size);
+    return start + size;
+}
+
+/** Copies a block from a ring-buffer to the given destination. */
+INLINE byte* RingBufferRead (void* destination, byte* const begin,
+                             byte* const start, byte* const stop,
+                             byte* const end, size_t size) {
+    if (destination == nullptr) return start;
+
+    // Now we can copy the book into memory.
+    if ((start > stop) && (start + size >= end)) {
+        // Calculate upper chunk size.
+        uint_t top_chunk = end - stop;
+        size -= top_chunk;
+
+        memcpy (start, destination, top_chunk);
+        memcpy (begin, reinterpret_cast<byte*>(destination) + top_chunk, size);
+        return begin + size;
+    }
+    memcpy (stop, destination, size);
+    return start + size;
+}
+
+/** A Tx ring-buffer.
+    A Tx ring-buffer is identical in structure to an Rx ring-buffer, but the stop becomes
     volatile and start is not volatile. */
 struct Unityper {
     uint_t size;            //< The size of the ring buffers.
-    volatile uint_t start;  //< The starting index of the ring buffer data.
-    uint_t stop,            //< The stopping index of the ring buffer data.
+    volatile uint_t start;  //< The starting index of the ring-buffer data.
+    uint_t stop,            //< The stopping index of the ring-buffer data.
         read;               //< The address that the Rx device is reading from.
 };
 
@@ -864,13 +970,12 @@ INLINE ticket_t Read (Unityper* rx, const uint_t* params, void** args) {
                     return Report (BufferUnderflowError, params, index,
                                         start);
 //#if DEBUG_CHINESEROOM
-//                putchar (ui1);
+//                std::cout << ui1;
 //#endif
                 ui1 = *start;       // Read byte from ring-buffer.
                 hash = Hash16 (ui1, hash);
                 if (++start >= end) start -= size;
-                *ui1_ptr = ui1;     // Write byte to destination.
-                ++ui1_ptr;
+                *ui1_ptr++ = ui1;   // Write byte to destination.
             }
 //#if DEBUG_CHINESEROOM
 //            //printf (" done!\n");
@@ -903,12 +1008,13 @@ INLINE ticket_t Read (Unityper* rx, const uint_t* params, void** args) {
 #else
             goto RxInvalidType;
 #endif
-          case SI2: //< _R_e_a_d__1_6_-_b_i_t__T_y_p_e_s________________________________
+          case SI2: //< _R_e_a_d__1_6_-_b_i_t__T_y_p_e_s________________________
           case UI2:
           case HLF:
 #if USING_2_BYTE_TYPES
             if (length < 2)
-                return Report (BufferUnderflowError, params, index, start);
+                return Report (BufferUnderflowError, params, index,
+                               start);
             length -= 2;
 
             // Load next pointer and increment args.
@@ -1405,13 +1511,12 @@ INLINE ticket_t Read (Unityper* rx, const uint_t* params, void** args) {
 
 /** Prints the given Tx to the stdout. */
 INLINE void Print (Unityper* tx) {
+    PrintLine ('_');
     if (tx == nullptr) {
-        PrintLine ('_');
         printf ("| Unityper null\n");
         return;
     }
     uint_t size = tx->size;
-    PrintLine ('_');
     printf ("| Unityper 0x%p: size: %u, start: %u, stop: %u, read: %u\n", tx, size,
             tx->start, tx->stop, tx->read);
     PrintMemory (UnityperSlot (tx), size);
