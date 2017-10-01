@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\hal\api\AnalogIn.h" />
+    <ClInclude Include="..\..\hal\api\AnalogOut.h" />
+    <ClInclude Include="..\..\hal\api\BusIn.h" />
+    <ClInclude Include="..\..\hal\api\BusInOut.h" />
+    <ClInclude Include="..\..\hal\api\BusOut.h" />
+    <ClInclude Include="..\..\hal\api\Callback.h" />
+    <ClInclude Include="..\..\hal\api\CallChain.h" />
+    <ClInclude Include="..\..\hal\api\CAN.h" />
+    <ClInclude Include="..\..\hal\api\can_helper.h" />
+    <ClInclude Include="..\..\hal\api\CircularBuffer.h" />
+    <ClInclude Include="..\..\hal\api\critical.h" />
+    <ClInclude Include="..\..\hal\api\CThunk.h" />
+    <ClInclude Include="..\..\hal\api\DigitalIn.h" />
+    <ClInclude Include="..\..\hal\api\DigitalInOut.h" />
+    <ClInclude Include="..\..\hal\api\DigitalOut.h" />
+    <ClInclude Include="..\..\hal\api\DirHandle.h" />
+    <ClInclude Include="..\..\hal\api\Ethernet.h" />
+    <ClInclude Include="..\..\hal\api\FileBase.h" />
+    <ClInclude Include="..\..\hal\api\FileHandle.h" />
+    <ClInclude Include="..\..\hal\api\FileLike.h" />
+    <ClInclude Include="..\..\hal\api\FilePath.h" />
+    <ClInclude Include="..\..\hal\api\FileSystemLike.h" />
+    <ClInclude Include="..\..\hal\api\FunctionPointer.h" />
+    <ClInclude Include="..\..\hal\api\I2C.h" />
+    <ClInclude Include="..\..\hal\api\I2CSlave.h" />
+    <ClInclude Include="..\..\hal\api\InterruptIn.h" />
+    <ClInclude Include="..\..\hal\api\InterruptManager.h" />
+    <ClInclude Include="..\..\hal\api\LocalFileSystem.h" />
+    <ClInclude Include="..\..\hal\api\LowPowerTicker.h" />
+    <ClInclude Include="..\..\hal\api\LowPowerTimeout.h" />
+    <ClInclude Include="..\..\hal\api\LowPowerTimer.h" />
+    <ClInclude Include="..\..\hal\api\mbed.h" />
+    <ClInclude Include="..\..\hal\api\mbed_assert.h" />
+    <ClInclude Include="..\..\hal\api\mbed_debug.h" />
+    <ClInclude Include="..\..\hal\api\mbed_error.h" />
+    <ClInclude Include="..\..\hal\api\mbed_interface.h" />
+    <ClInclude Include="..\..\hal\api\mbed_mem_trace.h" />
+    <ClInclude Include="..\..\hal\api\mbed_stats.h" />
+    <ClInclude Include="..\..\hal\api\platform.h" />
+    <ClInclude Include="..\..\hal\api\PlatformMutex.h" />
+    <ClInclude Include="..\..\hal\api\PortIn.h" />
+    <ClInclude Include="..\..\hal\api\PortInOut.h" />
+    <ClInclude Include="..\..\hal\api\PortOut.h" />
+    <ClInclude Include="..\..\hal\api\PwmOut.h" />
+    <ClInclude Include="..\..\hal\api\RawSerial.h" />
+    <ClInclude Include="..\..\hal\api\rtc_time.h" />
+    <ClInclude Include="..\..\hal\api\semihost_api.h" />
+    <ClInclude Include="..\..\hal\api\Serial.h" />
+    <ClInclude Include="..\..\hal\api\SerialBase.h" />
+    <ClInclude Include="..\..\hal\api\SingletonPtr.h" />
+    <ClInclude Include="..\..\hal\api\SPI.h" />
+    <ClInclude Include="..\..\hal\api\SPISlave.h" />
+    <ClInclude Include="..\..\hal\api\Stream.h" />
+    <ClInclude Include="..\..\hal\api\Ticker.h" />
+    <ClInclude Include="..\..\hal\api\Timeout.h" />
+    <ClInclude Include="..\..\hal\api\Timer.h" />
+    <ClInclude Include="..\..\hal\api\TimerEvent.h" />
+    <ClInclude Include="..\..\hal\api\toolchain.h" />
+    <ClInclude Include="..\..\hal\api\Transaction.h" />
+    <ClInclude Include="..\..\hal\api\wait_api.h" />
+    <ClInclude Include="..\..\hal\hal\analogin_api.h" />
+    <ClInclude Include="..\..\hal\hal\analogout_api.h" />
+    <ClInclude Include="..\..\hal\hal\buffer.h" />
+    <ClInclude Include="..\..\hal\hal\can_api.h" />
+    <ClInclude Include="..\..\hal\hal\dma_api.h" />
+    <ClInclude Include="..\..\hal\hal\ethernet_api.h" />
+    <ClInclude Include="..\..\hal\hal\gpio_api.h" />
+    <ClInclude Include="..\..\hal\hal\gpio_irq_api.h" />
+    <ClInclude Include="..\..\hal\hal\i2c_api.h" />
+    <ClInclude Include="..\..\hal\hal\lp_ticker_api.h" />
+    <ClInclude Include="..\..\hal\hal\pinmap.h" />
+    <ClInclude Include="..\..\hal\hal\port_api.h" />
+    <ClInclude Include="..\..\hal\hal\pwmout_api.h" />
+    <ClInclude Include="..\..\hal\hal\rtc_api.h" />
+    <ClInclude Include="..\..\hal\hal\serial_api.h" />
+    <ClInclude Include="..\..\hal\hal\sleep_api.h" />
+    <ClInclude Include="..\..\hal\hal\spi_api.h" />
+    <ClInclude Include="..\..\hal\hal\storage_abstraction\Driver_Common.h" />
+    <ClInclude Include="..\..\hal\hal\storage_abstraction\Driver_Storage.h" />
+    <ClInclude Include="..\..\hal\hal\ticker_api.h" />
+    <ClInclude Include="..\..\hal\hal\us_ticker_api.h" />
+    <ClInclude Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\device.h" />
+    <ClInclude Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\gpio_object.h" />
+    <ClInclude Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\objects.h" />
+    <ClInclude Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\PeripheralNames.h" />
+    <ClInclude Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\PinNames.h" />
+    <ClInclude Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\PortNames.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\hal\common\AnalogIn.cpp" />
+    <ClCompile Include="..\..\hal\common\BusIn.cpp" />
+    <ClCompile Include="..\..\hal\common\BusInOut.cpp" />
+    <ClCompile Include="..\..\hal\common\BusOut.cpp" />
+    <ClCompile Include="..\..\hal\common\CallChain.cpp" />
+    <ClCompile Include="..\..\hal\common\CAN.cpp" />
+    <ClCompile Include="..\..\hal\common\Ethernet.cpp" />
+    <ClCompile Include="..\..\hal\common\FileBase.cpp" />
+    <ClCompile Include="..\..\hal\common\FileLike.cpp" />
+    <ClCompile Include="..\..\hal\common\FilePath.cpp" />
+    <ClCompile Include="..\..\hal\common\FileSystemLike.cpp" />
+    <ClCompile Include="..\..\hal\common\I2C.cpp" />
+    <ClCompile Include="..\..\hal\common\I2CSlave.cpp" />
+    <ClCompile Include="..\..\hal\common\InterruptIn.cpp" />
+    <ClCompile Include="..\..\hal\common\InterruptManager.cpp" />
+    <ClCompile Include="..\..\hal\common\LocalFileSystem.cpp" />
+    <ClCompile Include="..\..\hal\common\mbed_alloc_wrappers.cpp" />
+    <ClCompile Include="..\..\hal\common\mbed_assert.c" />
+    <ClCompile Include="..\..\hal\common\mbed_board.c" />
+    <ClCompile Include="..\..\hal\common\mbed_critical.c" />
+    <ClCompile Include="..\..\hal\common\mbed_error.c" />
+    <ClCompile Include="..\..\hal\common\mbed_gpio.c" />
+    <ClCompile Include="..\..\hal\common\mbed_interface.c" />
+    <ClCompile Include="..\..\hal\common\mbed_lp_ticker_api.c" />
+    <ClCompile Include="..\..\hal\common\mbed_mem_trace.c" />
+    <ClCompile Include="..\..\hal\common\mbed_pinmap_common.c" />
+    <ClCompile Include="..\..\hal\common\mbed_rtc_time.cpp" />
+    <ClCompile Include="..\..\hal\common\mbed_semihost_api.c" />
+    <ClCompile Include="..\..\hal\common\mbed_ticker_api.c" />
+    <ClCompile Include="..\..\hal\common\mbed_us_ticker_api.c" />
+    <ClCompile Include="..\..\hal\common\mbed_wait_api_no_rtos.c" />
+    <ClCompile Include="..\..\hal\common\mbed_wait_api_rtos.cpp" />
+    <ClCompile Include="..\..\hal\common\RawSerial.cpp" />
+    <ClCompile Include="..\..\hal\common\retarget.cpp" />
+    <ClCompile Include="..\..\hal\common\Serial.cpp" />
+    <ClCompile Include="..\..\hal\common\SerialBase.cpp" />
+    <ClCompile Include="..\..\hal\common\SPI.cpp" />
+    <ClCompile Include="..\..\hal\common\SPISlave.cpp" />
+    <ClCompile Include="..\..\hal\common\Stream.cpp" />
+    <ClCompile Include="..\..\hal\common\Ticker.cpp" />
+    <ClCompile Include="..\..\hal\common\Timeout.cpp" />
+    <ClCompile Include="..\..\hal\common\Timer.cpp" />
+    <ClCompile Include="..\..\hal\common\TimerEvent.cpp" />
+    <ClCompile Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\analogin_api.c" />
+    <ClCompile Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\analogout_api.c" />
+    <ClCompile Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\can_api.c" />
+    <ClCompile Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\ethernet_api.c" />
+    <ClCompile Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\gpio_api.c" />
+    <ClCompile Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\gpio_irq_api.c" />
+    <ClCompile Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\i2c_api.c" />
+    <ClCompile Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\pinmap.c" />
+    <ClCompile Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\port_api.c" />
+    <ClCompile Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\pwmout_api.c" />
+    <ClCompile Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\rtc_api.c" />
+    <ClCompile Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\serial_api.c" />
+    <ClCompile Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\spi_api.c" />
+    <ClCompile Include="..\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86\us_ticker.c" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{13694A1F-3662-4878-8A33-47CC3FCC67BE}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>mbedBunkMinGW</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>D:\Workspace\mbedBunk\hal\hal;D:\Workspace\mbedBunk\mbedBunk-MinGW\Source\hal\targets\hal\TARGET_MinGW\TARGET_x86;D:\Workspace\mbedBunk\hal\api;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
