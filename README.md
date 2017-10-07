@@ -25,29 +25,29 @@ RPC functions. #CodeSloth
 * [Kabuki Toolkit Website](https://kabuki-toolkit.github.io/) - Official Kabuki Toolkit website. We are currently looking for someone to help us fix the CSS on the website. It only works right at < 1024 pixel width so the problem is in the @media section.
 
 ## SDK Modules
-| Name    | Description  |
-|:-------:|:-------------|
-| _       | Chinese Room.|
-| al      | Audio Library.|
-| app     | Application framework.|
-| biz     | Business eCommerce.|
-| code    | Coding utilities.|
-| data    | Data and data logging.|
-| gl      | Graphics Library.|
-| gui     | Graphical user interfaces.|
-| hmi     | Human-machine Interfaces.|
-| json    | JSON.|
-| id      | Identification.|
-| math    | Math.|
-| midi    | MIDI.|
-| tek     | Firmware toolkit.|
-| pplx    | Parallel Patterns Library.|
-| pro     | Projects, tasks, and scheduling.|
-| process | Threads and interprocess IO.|
-| serial  | Serial IO.|
-| utils   | Utilities.|
-| video   | Video.|
-| web     | WWW and IoT.|
+| Name         | Description  |
+|:------------:|:-------------|
+| chinese_room | Chinese Room Automata.|
+| al           | Audio Library.|
+| app          | Application framework.|
+| biz          | Business eCommerce.|
+| code         | Coding utilities.|
+| data         | Data and data logging.|
+| gl           | Graphics Library.|
+| gui          | Graphical user interfaces.|
+| hmi          | Human-machine Interfaces.|
+| json         | JSON.|
+| id           | Identification.|
+| math         | Math.|
+| midi         | MIDI.|
+| tek          | Firmware toolkit.|
+| pplx         | Parallel Patterns Library.|
+| pro          | Projects, tasks, and scheduling.|
+| process      | Threads and interprocess IO.|
+| serial       | Serial IO.|
+| utils        | Utilities.|
+| video        | Video.|
+| web          | WWW and IoT.|
 
 ## 3rd Party APIs
 * [Microsoft REST SDK](https://github.com/Microsoft/cpprestsdk)
@@ -59,7 +59,6 @@ RPC functions. #CodeSloth
 * [ANGLE](https://github.com/google/angle)
 * [nanovg](https://github.com/memononen/nanovg)
 * [nanogui](https://github.com/wjakob/nanogui)
-* [gflw](http://www.glfw.org/)
 * [stb](https://github.com/nothings/stb)
 * [Maximilian](https://github.com/micknoise/Maximilian)
 * [Static Math](https://github.com/Morwenn/static_math)
@@ -69,6 +68,8 @@ RPC functions. #CodeSloth
 * [RtMIDI](https://github.com/thestk/rtmidi)
 * [AStyle](http://astyle.sourceforge.net/)
 * [Serial](https://github.com/wjwwood/serial)
+* [SFML (Replacing with SDL)](https://www.sfml-dev.org/)
+* [gflw (Replacing with SDL)](http://www.glfw.org/)
 
 ## License
 Copyright 2017 (C) [Cale McCollough](mailto:calemccollough@gmail.com) and contributors. All rights reserved (R).
