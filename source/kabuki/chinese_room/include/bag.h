@@ -1,46 +1,43 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/Book.h
+    @file    ~/chinese_room/include/bag.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
-                            All right reserved (R).
-             Licensed under the Apache License, Version 2.0 (the "License"); 
-             you may not use this file except in compliance with the License. 
-             You may obtain a copy of the License at
-                        http://www.apache.org/licenses/LICENSE-2.0
-             Unless required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software 
+             distributed under the License is distributed on an "AS IS" BASIS, 
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
 
-#ifndef CHINESE_ROOM_BOOK_H
-#define CHINESE_ROOM_BOOK_H
+#ifndef CHINESE_ROOM_BAG_H
+#define CHINESE_ROOM_BAG_H
 
 #include "utils.h"
 #include "types.h"
 
 namespace _ {
 
-enum
-{
+enum {
     LockedBitMask      = 1 << 7,    //< Mask for the locked bit.
     ReadLockedBitMask  = 1 << 6,    //< Mask for the read-locked bit.
     WriteLockedBitMask = 1 << 5,    //< Mask for the write-locked bit.
 };
 
-/** A collection of key-value dictionaries that might or might not have a hash
-    table.
-    A book is like a Python dictionary or C++ map, the difference being a Book
-    can contain nested Book (s). The key design difference between both Python 
-    dictionaries and C++ maps are Books do not contains points, and instead
+/** A multiset that uses contiguousness memory.
+    A bag is like a Python dictionary or C++ map, the difference being a Bag
+    can contain nested Bag (s). The key design difference between both Python 
+    dictionaries and C++ maps are Bags do not contains points, and instead
     works using offsets.
 
-    A book may or may not have a hash table. In order to turn on the hash table,
-    simply set the collissionsSize to non-zero in the Book header.
+    A bag may or may not have a hash table. In order to turn on the hash table,
+    simply set the collissionsSize to non-zero in the Bag header.
 
-    The memory layout is the same for all of the Book types as depicted below:
+    The memory layout is the same for all of the Bag types as depicted below:
 
     @code
     _____________________________________________________ 
@@ -103,12 +100,12 @@ enum
     |_______ | ...                                      |
     |        | State byte 1                             |
     |___________________________________________________|
-    |                                                   | ^
-    |                    Header                         | |
-    |___________________________________________________|0x0
+    |                                                   |  ^
+    |                    Header                         |  |
+    |___________________________________________________| 0x0
     @endcode
 
-    | Book | Max Values | % Collisions (p) |           Overhead             |
+    | Bag | Max Values | % Collisions (p) |           Overhead             |
     |:----:|:----------:|:----------------:|:------------------------------:|
     |   2  |     255    |    0.0001        | Ceiling (0.02*p*2^8)  = 2      |
     |   4  |     2^13   |      0.1         | Ceiling (0.04*p*2^13) = 327.68 |
@@ -119,7 +116,7 @@ enum
     for a key, there might or might not be a hash table.
 
     How to calculate size:
-    The size of any size book can be calculated as follows:
+    The size of any size bag can be calculated as follows:
     size = num_items * (2*sizeof (TIndex) + sizeof (TData)) + collissionSize +
 
     # State Format
@@ -137,30 +134,30 @@ enum
     function '\"' (i.e. "foo" is TIndex 44).
 
     # Hash Table Collisions.
-    Because there are no pointers in I2P books, the hash tables are done using
+    Because there are no pointers in I2P bags, the hash tables are done using
     using a nil-terminated list in the Collision List. In the 
 
     # Use Case Scenario
-    We are creating a plug-in DLL. We need to create a book in the DLL code, and
-    pass it over to the program. The DLL manages the memory for the book. This
-    book might contain several million entries, and more than 4GB of data.
+    We are creating a plug-in DLL. We need to create a bag in the DLL code, and
+    pass it over to the program. The DLL manages the memory for the bag. This
+    bag might contain several million entries, and more than 4GB of data.
 
-    ### Why So Many Book Types?
-    We are running in RAM, and a book could contain millions of key-value pairs.
+    ### Why So Many Bag Types?
+    We are running in RAM, and a bag could contain millions of key-value pairs.
     Adding extra bytes would added megabytes of data we don't need. Also, on
     microcontrollers, especially 16-bit ones, will have very little RAM, so we
     need an 16-bit object. It is easy to imagine a complex AI software using
     more than 4GB RAM, or the need to attach a DVD ISO image as a key-value
-    pair, so we need a 64-bit book.
+    pair, so we need a 64-bit bag.
 
     # Design Strengths
     * Uses less memory.
     * Fast push back when within buffer size.
-    * Faster inserts on small books when within buffer size.
+    * Faster inserts on small bags when within buffer size.
 
     # Design Weaknesses
-    * Slow insert in large books.
-    * Slow at growing large books when buffer runs out.
+    * Slow insert in large bags.
+    * Slow at growing large bags when buffer runs out.
     * More complicated.
 
     @code
@@ -168,75 +165,75 @@ enum
     @endcode
 */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-struct Book {
-    TData size;         //< The total size of the Book.
+struct Bag {
+    TData size;         //< The total size of the Bag.
     TKey table_size,    //< The size of the key strings in bytes.
          pile_size;     //< The size of the (optional) collision table pile.
     TIndex num_items,   //< Number of items.
            max_items;   //< The max number of buffered items.
 };
 
-using Book2 = Book<byte, uint16_t, uint16_t, hash16_t>;
-using Book4 = Book<uint16_t, uint16_t, uint32_t, hash32_t>;
-using Book8 = Book<uint32_t, uint32_t, uint64_t, hash64_t>;
-using BookX = Book<TBookIndex, TBookHeader, TBookDataOffset, TBookHash>;
+using Bag2 = Bag<byte, uint16_t, uint16_t, hash16_t>;
+using Bag4 = Bag<uint16_t, uint16_t, uint32_t, hash32_t>;
+using Bag8 = Bag<uint32_t, uint32_t, uint64_t, hash64_t>;
+using BagX = Bag<index_t, header_t, offset_t, hash_t>;
 
 
 template<typename TIndex, typename TKey, typename TData, typename THash>
-constexpr uint_t OverheadPerBookIndex () {
+constexpr uint_t OverheadPerBagIndex () {
         return sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
 };
 
 template<typename TIndex, typename TKey, typename TData, typename THash>
-constexpr TData MinSizeBook (TIndex num_items) {
+constexpr TData MinSizeBag (TIndex num_items) {
     return sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
 };
 
 enum {
-    kMaxNumPagesBook2 = 255,                //< The number of pages in a Book2.
-    kMaxNumPagesBook4 = 8 * 1024,           //< The number of pages in a Book4.
-    kMaxNumPagesBook8 = 256 * 1024 * 1024,  //< The number of pages in a Book8.
-    kOverheadPerBook2Index = OverheadPerBookIndex<byte, uint16_t, uint16_t, hash16_t> (),
-    kOverheadPerBook4Index = OverheadPerBookIndex<byte, uint16_t, uint16_t, hash16_t> (),
-    kOverheadPerBook8Index = OverheadPerBookIndex<byte, uint16_t, uint16_t, hash16_t> (),
+    kMaxNumPagesBag2 = 255,                //< The number of pages in a Bag2.
+    kMaxNumPagesBag4 = 8 * 1024,           //< The number of pages in a Bag4.
+    kMaxNumPagesBag8 = 256 * 1024 * 1024,  //< The number of pages in a Bag8.
+    kOverheadPerBag2Index = OverheadPerBagIndex<byte, uint16_t, uint16_t, hash16_t> (),
+    kOverheadPerBag4Index = OverheadPerBagIndex<byte, uint16_t, uint16_t, hash16_t> (),
+    kOverheadPerBag8Index = OverheadPerBagIndex<byte, uint16_t, uint16_t, hash16_t> (),
 };
     
-/** Initializes a Book.
+/** Initializes a Bag.
     @post    Users might want to call the IsValid () function after construction
              to verify the integrity of the object.
     @warning The reservedNumMembers must be aligned to a 32-bit value, and it
              will get rounded up to the next higher multiple of 4.
 */
-static Book2* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t size)
+static Bag2* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t size)
 {
     if (buffer == nullptr)
         return nullptr;
     if (table_size >= size)
         return nullptr;
-    if (table_size < sizeof (Book2) + max_size *
-        (OverheadPerBookIndex<byte, uint16_t, uint16_t, hash16_t> () + 2))
+    if (table_size < sizeof (Bag2) + max_size *
+        (OverheadPerBagIndex<byte, uint16_t, uint16_t, hash16_t> () + 2))
         return nullptr;
 
-    Book2* book = reinterpret_cast<Book2*> (buffer);
-    book->size = table_size;
-    book->table_size = table_size;
-    book->num_items = 0;
-    book->max_items = max_size;
-    book->pile_size = 1;
-    return book;
+    Bag2* bag = reinterpret_cast<Bag2*> (buffer);
+    bag->size = table_size;
+    bag->table_size = table_size;
+    bag->num_items = 0;
+    bag->max_items = max_size;
+    bag->pile_size = 1;
+    return bag;
 }
 
 /** Insets the given key-value pair.
 */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-TIndex BookInsert (Book<TIndex, TKey, TData, THash>* book, byte type, 
+TIndex BagInsert (Bag<TIndex, TKey, TData, THash>* bag, byte type, 
                const byte* key, void* data, TIndex index) {
-    if (book == nullptr) return 0;
+    if (bag == nullptr) return 0;
     return ~0;
 }
 
 template<typename TIndex>
-TIndex MaxBookIndexes () {
+TIndex MaxBagIndexes () {
     enum {
         kMaxIndexes = sizeof (TIndex) == 1 ? 255 : sizeof (TIndex) == 2 ? 
                        8 * 1024 : sizeof (TIndex) == 4 ? 512 * 1024 * 1024 : 0
@@ -244,26 +241,26 @@ TIndex MaxBookIndexes () {
     return kMaxIndexes;
 }
 
-/** Adds a key-value pair to the end of the book. */
+/** Adds a key-value pair to the end of the bag. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key, 
+TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* bag, const char * key, 
                 TType type, void* data) {
-    if (book == nullptr) return 0;
+    if (bag == nullptr) return 0;
     if (key == nullptr) return 0;
 
     PrintStringLine (key);
 
-    TIndex num_items = book->num_items,
-        max_items = book->max_items,
+    TIndex num_items = bag->num_items,
+        max_items = bag->max_items,
         temp;
 
-    TKey table_size = book->table_size;
+    TKey table_size = bag->table_size;
 
     if (num_items >= max_items) return ~0;
     //< We're out of buffered indexes.
 
-    byte* states = reinterpret_cast<byte*> (book) + 
-                   sizeof (Book <TIndex, TKey, TData, THash>);
+    byte* states = reinterpret_cast<byte*> (bag) + 
+                   sizeof (Bag <TIndex, TKey, TData, THash>);
     TKey* key_offsets = reinterpret_cast<TKey*> (states + max_items);
     TData* data_offsets = reinterpret_cast<TData*> (states + max_items *
                                                     (sizeof (TKey)));
@@ -274,11 +271,11 @@ TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key,
                                                  (sizeof (TKey) + sizeof (TData) + sizeof (TIndex))),
         *unsorted_indexes = indexes + max_items,
         *collission_list = unsorted_indexes + max_items;
-    char* keys = reinterpret_cast<char*> (book) + table_size - 1,
+    char* keys = reinterpret_cast<char*> (bag) + table_size - 1,
         *destination;
 
     // Calculate space left.
-    TKey value = table_size - max_items * OverheadPerBookIndex<TIndex, TKey, TData, THash> (),
+    TKey value = table_size - max_items * OverheadPerBagIndex<TIndex, TKey, TData, THash> (),
         key_length = static_cast<uint16_t> (strlen (key)),
         pile_size;
 
@@ -298,7 +295,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key,
     //print ();
 
     if (num_items == 0) {
-        book->num_items = 1;
+        bag->num_items = 1;
         *hashes = hash;
         *key_offsets = static_cast<uint16_t> (key_length);
         *indexes = ~0;
@@ -307,7 +304,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key,
 
         CopyString (destination, key);
         printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
-        BookPrint (book);
+        BagPrint (bag);
         return 0;
     }
 
@@ -360,7 +357,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key,
                 temp = indexes[mid];
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;  //< Load the index in the collision table.
-                while (index < MaxBookIndexes<TIndex> ()) {
+                while (index < MaxBagIndexes<TIndex> ()) {
                     printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
                         printf ("but table already contains key at "
@@ -380,7 +377,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key,
                 key_offsets[num_items] = value;
 
                 // Update the collision table.
-                pile_size = book->pile_size;
+                pile_size = bag->pile_size;
                 // Shift the collisions table up one element and insert 
                 // the unsorted collision index.
                 // Then move to the top of the collisions list.
@@ -392,11 +389,11 @@ TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key,
                 }
                 *temp_ptr = num_items;
 
-                book->pile_size = pile_size + 1;
+                bag->pile_size = pile_size + 1;
                 printf ("\n\ncollision index: %u\n", temp);
                 // Store the collision index.
                 indexes[num_items] = temp;   //< Store the collision index
-                book->num_items = num_items + 1;
+                bag->num_items = num_items + 1;
                 hashes[num_items] = ~0;      //< Set the last hash to 0xFFFF
 
                                             // Move collisions pointer to the unsorted_indexes.
@@ -405,7 +402,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key,
                 //< Add the newest string to the end.
                 indexes[num_items] = num_items;
 
-                BookPrint (book);
+                BagPrint (bag);
                 printf ("Done inserting.\n");
                 return num_items;
             }
@@ -435,7 +432,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key,
                         index, num_items, collision_index);
                 key_offsets[num_items] = value;
 
-                pile_size = book->pile_size;
+                pile_size = bag->pile_size;
                 indexes[mid] = static_cast<byte> (pile_size);
                 indexes[num_items] = static_cast<byte> (pile_size);
 
@@ -448,7 +445,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key,
                 *temp_ptr = num_items;
                 ++temp_ptr;
                 *temp_ptr = ~0;
-                book->pile_size = pile_size + 3;
+                bag->pile_size = pile_size + 3;
                 //< Added one term-byte and two indexes.
 
                 // Add the newest key at the end.
@@ -457,11 +454,11 @@ TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key,
                 // Set the last hash to 0xFFFF
                 hashes[num_items] = ~0;
 
-                book->num_items = num_items + 1;
+                bag->num_items = num_items + 1;
 
-                BookPrint (book);
+                BagPrint (bag);
 
-                BookPrint (book);
+                BagPrint (bag);
                 std::cout << "Done inserting.\n";
                 // Then it was a collision so the table doesn't contain s.
                 return num_items;
@@ -478,7 +475,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key,
 
     printf ("The hash 0x%x was not in the table so inserting %s into mid:"
             " %i at index %u before hash 0x%x \n", hash, key, mid,
-            Diff (book, destination), hashes[mid]);
+            Diff (bag, destination), hashes[mid]);
 
     // First copy the string and set the key offset.
     CopyString (destination, key);
@@ -489,10 +486,10 @@ TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key,
     hash_ptr += num_items;
     //*test = hashes;
     printf ("l_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u\n",
-            num_items, Diff (book, hashes),
-            Diff (book, hash_ptr), Diff (book, hashes + mid));
+            num_items, Diff (bag, hashes),
+            Diff (bag, hash_ptr), Diff (bag, hashes + mid));
     hashes += mid;
-    BookPrint (book);
+    BagPrint (bag);
     while (hash_ptr > hashes) {
         *hash_ptr = *(hash_ptr - 1);
         --hash_ptr;
@@ -513,46 +510,46 @@ TIndex BookAdd (Book<TIndex, TKey, TData, THash>* book, const char* key,
     }
     *temp_ptr = num_items;
 
-    book->num_items = num_items + 1;
+    bag->num_items = num_items + 1;
 
-    BookPrint (book);
+    BagPrint (bag);
     std::cout << "Done inserting.\n";
     PrintLine ();
 
     return num_items;
 }
 
-/** Adds a key-value pair to the end of the book. */
-inline byte Add2 (Book2* book, const char* key, byte data) {
-    return BookAdd<byte, uint16_t, uint16_t, hash16_t> (book, key, UI1, &data);
+/** Adds a key-value pair to the end of the bag. */
+inline byte Add2 (Bag2* bag, const char * key, byte data) {
+    return BagAdd<byte, uint16_t, uint16_t, hash16_t> (bag, key, UI1, &data);
 }
 
 /** Returns  the given query string in the hash table. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-TIndex BookFind (Book<TIndex, TKey, TData, THash>* book, const char* key) {
-    if (book == nullptr)
+TIndex BagFind (Bag<TIndex, TKey, TData, THash>* bag, const char * key) {
+    if (bag == nullptr)
         return 0;
     PrintLineBreak ("Finding record...", 5);
     TIndex index,
-        num_items = book->num_items,
-        max_items = book->max_items,
+        num_items = bag->num_items,
+        max_items = bag->max_items,
         temp;
 
     if (key == nullptr || num_items == 0)
         return ~((TIndex)0);
 
-    TKey table_size = book->table_size;
+    TKey table_size = bag->table_size;
 
     const THash* hashes = reinterpret_cast<const THash*>
-        (reinterpret_cast<const byte*> (book) +
-         sizeof (Book<TIndex, TKey, TData, THash>));
+        (reinterpret_cast<const byte*> (bag) +
+         sizeof (Bag<TIndex, TKey, TData, THash>));
     const TKey* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
                                                                 max_items);
     const byte* indexes = reinterpret_cast<const byte*>(key_offsets +
                                                         max_items),
         *unsorted_indexes = indexes + max_items,
         *collission_list = unsorted_indexes + max_items;
-    const char* keys = reinterpret_cast<const char*> (book) + table_size - 1;
+    const char * keys = reinterpret_cast<const char *> (bag) + table_size - 1;
     const TIndex* collisions,
         *temp_ptr;
 
@@ -604,7 +601,7 @@ TIndex BookFind (Book<TIndex, TKey, TData, THash>* book, const char* key) {
                 std::cout << "There was a collision so check the table\n";
 
                 // The collisionsList is a sequence of indexes terminated by
-                // an invalid index > kMaxI2PMembers. collissionsList[0] is an 
+                // an invalid index > kMaxNumMembers. collissionsList[0] is an 
                 // invalid index, so the collisionsList is searched from 
                 // lower address up.
 
@@ -612,7 +609,7 @@ TIndex BookFind (Book<TIndex, TKey, TData, THash>* book, const char* key) {
 
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;
-                while (index < MaxBookIndexes<TIndex> ()) {
+                while (index < MaxBagIndexes<TIndex> ()) {
                     printf ("comparing to \"%s\"\n", keys -
                             key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
@@ -656,30 +653,30 @@ TIndex BookFind (Book<TIndex, TKey, TData, THash>* book, const char* key) {
     return ~((TIndex)0);
 }
 
-static byte Find2 (Book2* book, const char* key) {
-    return BookFind<byte, uint16_t, uint16_t, hash16_t> (book, key);
+static byte Find2 (Bag2* bag, const char * key) {
+    return BagFind<byte, uint16_t, uint16_t, hash16_t> (bag, key);
 }
 
 /** Prints this object out to the console. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-void BookPrint (const Book<TIndex, TKey, TData, THash>* book) {
-    if (book == nullptr) return;
-    TIndex num_items = book->num_items,
-           max_items = book->max_items,
+void BagPrint (const Bag<TIndex, TKey, TData, THash>* bag) {
+    if (bag == nullptr) return;
+    TIndex num_items = bag->num_items,
+           max_items = bag->max_items,
            collision_index,
            temp;
-    TKey table_size = book->table_size,
-         pile_size = book->pile_size;
+    TKey table_size = bag->table_size,
+         pile_size = bag->pile_size;
     PrintLine ('_');
     
     if (sizeof (TData) == 2)
-        printf ("| Book2: %p\n", book);
+        printf ("| Bag2: %p\n", bag);
     else if (sizeof (TData) == 4)
-        printf ("| Book4: %p\n", book);
+        printf ("| Bag4: %p\n", bag);
     else if (sizeof (TData) == 8)
-        printf ("| Book8: %p\n", book);
+        printf ("| Bag8: %p\n", bag);
     else
-        printf ("| Invalid Book type: %p\n", book);
+        printf ("| Invalid Bag type: %p\n", bag);
     printf ("| num_items: %u max_items: %u  "
             "pile_size: %u  size: %u", num_items,
             max_items, pile_size, table_size);
@@ -688,8 +685,8 @@ void BookPrint (const Book<TIndex, TKey, TData, THash>* book) {
     for (int i = 0; i < 79; ++i) putchar ('_');
     std::cout << '\n';
 
-    const byte* states = reinterpret_cast<const byte*> (book) +
-                         sizeof (Book <TIndex, TKey, TData, THash>);
+    const byte* states = reinterpret_cast<const byte*> (bag) +
+                         sizeof (Bag <TIndex, TKey, TData, THash>);
     const TKey* key_offsets = reinterpret_cast<const TKey*> 
                               (states + max_items);
     const TData* data_offsets = reinterpret_cast<const TData*> 
@@ -702,7 +699,7 @@ void BookPrint (const Book<TIndex, TKey, TData, THash>* book) {
         * unsorted_indexes = indexes + max_items,
         * collission_list = unsorted_indexes + max_items,
         *cursor;
-    const char* keys = reinterpret_cast<const char*> (book) + table_size - 1;
+    const char * keys = reinterpret_cast<const char *> (bag) + table_size - 1;
 
     printf ("| %3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
             "hash_e", "hash_u", "hash_s", "index_u", "collisions");
@@ -740,80 +737,80 @@ void BookPrint (const Book<TIndex, TKey, TData, THash>* book) {
     }
     PrintLine ("|", '_');
 
-    PrintMemory (reinterpret_cast<const byte*> (book) + 
-                 sizeof (Book<TIndex, TKey, TData, THash>), book->size);
+    PrintMemory (reinterpret_cast<const byte*> (bag) + 
+                 sizeof (Bag<TIndex, TKey, TData, THash>), bag->size);
     std::cout << '\n';
 }
 
-/** Deletes the book contents by overwriting it with zeros. */
+/** Deletes the bag contents by overwriting it with zeros. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-void Wipe (Book<TIndex, TKey, TData, THash>* book) {
-    if (book == nullptr) return;
-    TData size = book->size;
-    memset (book, 0, size);
+void Wipe (Bag<TIndex, TKey, TData, THash>* bag) {
+    if (bag == nullptr) return;
+    TData size = bag->size;
+    memset (bag, 0, size);
 }
 
-/** Deletes the book contents without wiping the contents. */
+/** Deletes the bag contents without wiping the contents. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-void Clear (Book<TIndex, TKey, TData, THash>* book) {
-    if (book == nullptr) return;
-    book->num_items = 0;
-    book->pile_size = 0;
+void Clear (Bag<TIndex, TKey, TData, THash>* bag) {
+    if (bag == nullptr) return;
+    bag->num_items = 0;
+    bag->pile_size = 0;
 }
 
 /** Returns true if this dictionary contains only the given address. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-bool Contains (Book<TIndex, TKey, TData, THash>* book, void* data) {
-    if (book == nullptr) return false;
-    if (data < book) return false;
+bool Contains (Bag<TIndex, TKey, TData, THash>* bag, void* data) {
+    if (bag == nullptr) return false;
+    if (data < bag) return false;
     if (data > GetEndAddress()) return false;
     return true;
 }
 
-/** Removes that object from the book and copies it to the destination. */
+/** Removes that object from the bag and copies it to the destination. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-bool RemoveCopy (Book<TIndex, TKey, TData, THash>* book, void* destination, 
+bool RemoveCopy (Bag<TIndex, TKey, TData, THash>* bag, void* destination, 
                  size_t buffer_size, void* data)
 {
-    if (book == nullptr) return false;
+    if (bag == nullptr) return false;
 
     return false;
 }
 
-/** Removes the item at the given address from the book. */
+/** Removes the item at the given address from the bag. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-bool Remove (Book<TIndex, TKey, TData, THash>* book, void* adress) {
-    if (book == nullptr) return false;
+bool Remove (Bag<TIndex, TKey, TData, THash>* bag, void* adress) {
+    if (bag == nullptr) return false;
 
     return false;
 }
 
-/** Removes all but the given collection from the book. */
+/** Removes all but the given collection from the bag. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-bool Retain (Book<TIndex, TKey, TData, THash>* book) {
-    if (book == nullptr) return false;
+bool Retain (Bag<TIndex, TKey, TData, THash>* bag) {
+    if (bag == nullptr) return false;
 
     return false;
 }
 
-/** Creates a book from dynamic memory. */
+/** Creates a bag from dynamic memory. */
 template<typename TIndex, typename TOffset, typename TData, typename THash>
-inline Book<TIndex, TOffset, TData, THash>* BookCreate (TIndex buffered_indexes,
+inline Bag<TIndex, TOffset, TData, THash>* BagCreate (TIndex buffered_indexes,
                                                         TData table_size,
                                                         TData size) {
-    Book<TIndex, TOffset, TData, THash>* book = New<Book, uint_t> ();
-    return book;
+    Bag<TIndex, TOffset, TData, THash>* bag = New<Bag, uint_t> ();
+    return bag;
 }
 
-/** Prints the given Book to the console. */
+/** Prints the given Bag to the console. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-inline void Print (Book<TIndex, TKey, TData, THash>* book) {
+inline void BagPrint (Bag<TIndex, TKey, TData, THash>* bag) {
 
 }
 
-inline void Print (Book2* book) {
-    return Print<byte, uint16_t, uint16_t, hash16_t> (book);
+inline void BagPrint (Bag2* bag) {
+    return BagPrint<byte, uint16_t, uint16_t, hash16_t> (bag);
 }
 
 }       //< namespace _
-#endif  //< CHINESE_ROOM_BOOK_H
+#endif  //< CHINESE_ROOM_BAG_H

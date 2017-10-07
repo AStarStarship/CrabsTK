@@ -1,15 +1,13 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/Source/ChineseRoomConsole/Address.h
+    @file    ~/kabuki-toolkit/source/include/kabuki/address.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
-             All right reserved (R).
-             Licensed under the Apache License, Version 2.0 (the "License"); 
-             you may not use this file except in compliance with the License. 
-             You may obtain a copy of the License [here](
-             http://www.apache.org/licenses/LICENSE-2.0).
-             
-             Unless required by applicable law or agreed to in writing, software
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
@@ -18,6 +16,8 @@
 
 #ifndef CHINESE_ROOM_ADDRESS_H
 #define CHINESE_ROOM_ADDRESS_H
+
+#include "config.h"
 
 namespace _ {
     
@@ -51,23 +51,22 @@ KABUKI uint32_t PackAddress (uint32_t a, uint32_t b, uint32_t c);
 /** Returns a pointer to static variable for writing the address { a, b, c, d,
     e, f, g, \0 } to. */
 KABUKI uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c,
-    uint64_t d);
+                             uint64_t d);
 
 /** Returns a pointer to static variable for writing the address { a, b, c, d,
     e, f, g, \0 } to. */
 KABUKI uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
-    uint64_t e);
+                             uint64_t e);
 
 /* Returns a pointer to static variable for writing the address { a, b, c, d, e,
    f, g, \0 } to. */
 KABUKI uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
-    uint64_t e, uint64_t f);
-}
+                             uint64_t e, uint64_t f);
 
 /** Returns a pointer to static variable for writing the address { a, b, c, d,
     e, f, g, \0 } to. */
 KABUKI uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
-    uint64_t e, uint64_t f, uint64_t g);
+                             uint64_t e, uint64_t f, uint64_t g);
 
 }       //< namespace _
 #endif  //< CHINESE_ROOM_ADDRESS_H

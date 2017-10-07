@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/mirror.h
+    @file    ~/chinese_room/include/mirror.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -21,34 +21,34 @@
 
 namespace _ {
 
-Mirror::Mirror ():
+Reflection::Reflection ():
     up (nullptr)
 {
 
 }
 
-virtual void Mirror::Prime () {
+virtual void Reflection::Prime () {
 
 }
 
-virtual uint_t Mirror::Length () {
-    return UniprinterLength (UniprinterRx (io));
+virtual uint_t Reflection::Length () {
+    return BLength (BRx (io));
 }
 
-virtual void Mirror::Feed (byte b) {
+virtual void Reflection::Feed (byte b) {
 
 }
 
-virtual byte Mirror::Pull () {
+virtual byte Reflection::Pull () {
     return 0;
 }
 
-ticket_t Mirror::Read (Mirror* io, const uint_t* header, void** args) {
+ticket_t Reflection::Read (Reflection* io, const uint_t* header, void** args) {
 
     return 0;
 }
 
-ticket_t Mirror::Write (Mirror* io, const uint_t* header, void** args) {
+ticket_t Reflection::Write (Reflection* io, const uint_t* header, void** args) {
 
     return 0;
 }

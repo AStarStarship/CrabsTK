@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/log.h
+    @file    ~/chinese_room/include/log.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough<calemccollough.github.io>
                             All right reserved (R).
@@ -18,17 +18,17 @@
 #ifndef CHINESE_ROOM_LOG_H
 #define CHINESE_ROOM_LOG_H
 
-#include "Unityper.h"
+#include "Monoid.h"
 
 namespace _ {
 
-inline Log LogInit (Unityper* tx, bool is_dynamic = false) {
+inline Log LogInit (Monoid* tx, bool is_dynamic = false) {
     Log log;
     log.io = tx;
     return log;
 }
 
-inline ticket_t Write (Unityper* tx, byte member, const char* string) {
+inline ticket_t Write (Monoid* tx, byte member, const char * string) {
 #if DEBUG_CHINESE_ROOM
     printf ("| Writting string to %p\n", tx);
 #endif
@@ -40,11 +40,11 @@ inline ticket_t Write (Unityper* tx, byte member, const char* string) {
         space;
 
     // Convert the socket offsets to pointers.
-    byte* begin = UnityperSlot (tx),
+    byte* begin = MonoidSlot (tx),
         *end = begin + size,
         *start = begin + tx->start,
         *stop = begin + tx->stop;
-    space = RingBufferSpace (start, stop, size);
+    space = MonoidSpace (start, stop, size);
     //  * temp_ptr;
     const byte* str_ptr;
 
@@ -74,12 +74,12 @@ inline ticket_t Write (Unityper* tx, byte member, const char* string) {
     return 0;
 }
 
-inline ticket_t Write (Log& log, byte member, const char* string) {
+inline ticket_t Write (Log& log, byte member, const char * string) {
     return Write (log.io, member, string);
 }
 
 template<uint_t kNumber>
-inline Log& Logbook () {
+inline Log& Logbag () {
     static byte* buffer = Buffer<kNumber, kLogSize> ();
     static Log s = LogInit (TxInit (buffer, kLogSize));
     return s;
@@ -155,7 +155,7 @@ inline Log& operator<< (Log& log, double value) {
     return log;
 }
 
-inline Log& operator<< (Log& log, const char* s) {
+inline Log& operator<< (Log& log, const char * s) {
     Write (log, '?', s);
     return log;
 }

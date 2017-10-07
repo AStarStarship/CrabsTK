@@ -18,13 +18,22 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\kabuki\TESTS\chinese_room_tests.cpp" />
+    <ClCompile Include="..\..\source\kabuki\TESTS\stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\source\kabuki\TESTS\stdafx.h" />
+    <ClInclude Include="..\..\source\kabuki\TESTS\targetver.h" />
+    <ClInclude Include="..\..\source\kabuki\TESTS\this_room.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{6C739D2A-D229-4E66-BF9D-0F96A4403D27}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>KabukiTheaterTests</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
-    <ProjectName>Kabuki_Theater_Tests</ProjectName>
+    <ProjectName>kabuki-toolkit_tests</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -92,7 +101,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\Source\Library\kabuki-theater-impl\_\TESTS;..\..\Source\Library\kabuki-theater;..\..\..\cpputest\include;$(IncludePath)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Workspace\kabuki-toolkit\source\kabuki;..\..\..\cpputest\include;$(IncludePath)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>

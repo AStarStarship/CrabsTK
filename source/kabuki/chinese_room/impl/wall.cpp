@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/slot.h
+    @file    ~/chinese_room/impl/wall.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -15,25 +15,11 @@
              permissions and limitations under the License.
 */
 
-#ifndef CHINESE_ROOM_SLOT_H
-#define CHINESE_ROOM_SLOT_H
-
-#include "door.h"
+#include "../include/wall.h"
 
 namespace _ {
 
-/** A group of Doors(s) that create a Wall in a Chinese room.
-*/
-struct Wall {
-    byte is_dynamic,        //< Flag for if using dynamic memory.
-        num_doors,          //< The number of doors in this group.
-        max_num_doors,      //< The number of doors allocated in memory.
-        reserved;           //< Reserved for memory alignment.
-    Wall* door_one;         //< The doors in door that messages pass through.
-};
-
-/** Initializes a Door at the beginning of the given buffer. */
-KABUKI Wall* WallInit (uint_t size) {
+Wall* WallInit (uint_t size) {
     Wall* w = New<Wall, uint_t> (size, 1);
     if (w == nullptr) return nullptr;
     w->is_dynamic = 0;
@@ -42,15 +28,11 @@ KABUKI Wall* WallInit (uint_t size) {
     w->door_one = nullptr;
 }
 
-/** Gets a pointer to the array of pointers to Door(s). */
-KABUKI Door** GetDoors (Wall* wall) {
+Door** GetDoors (Wall* wall) {
     return reinterpret_cast<Door**> (d->door_one);
 }
 
-/** Adds a Door to the slot.
-    @return Returns nullptr if the Door is full and a pointer to the Door in the 
-            buffer upon success. */
-KABUKI Door* AddDoor (Wall* wall, Door* t) {
+Door* AddDoor (Wall* wall, Door* t) {
     if (s == nullptr) return nullptr;
     if (t == nullptr) return nullptr;
     byte num_doors = d->num_doors;
@@ -59,16 +41,14 @@ KABUKI Door* AddDoor (Wall* wall, Door* t) {
     ++d->num_doors;
 }
 
-/** Gets the Door from the Door at the given index. */
-KABUKI Door* GetDoor (Wall* wall, byte index) {
+Door* GetDoor (Wall* wall, char_t index) {
     if (s == nullptr) return nullptr;
     if (index >= d->num_doors)
         return nullptr;
     return GetDoors (s)[index];
 }
 
-/** Deletes the Door from the Door at the given index. */
-KABUKI void Delete (Wall* wall, byte index) {
+void Delete (Wall* wall, char_t index) {
     if (s == nullptr) return;
     if (index >= d->num_doors)
         return;
@@ -80,12 +60,10 @@ KABUKI void Delete (Wall* wall, byte index) {
     --d->num_doors;
 }
 
-/** Prints the given Door to the stdout. */
-KABUKI void Print (Wall* wall) {
+void Print (Wall* wall) {
     if (s == nullptr) return;
     printf ("\nDoor:\nis_dynamic %s\nnum_doors: %u\nmax_num_doors: %u\n", 
             d->is_dynamic ? "true" : "false", d->num_doors, d->max_num_doors);
 }
 
 }       //< namespace _
-#endif  //< CHINESE_ROOM_SLOT_H

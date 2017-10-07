@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/device.h
+    @file    ~/chinese_room/include/set.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -19,21 +19,21 @@
 #define CHINESE_ROOM_DEVICE_H
 
 #include "uniprinter.h"
-#include "member.h"
+#include "set.h"
 
 namespace _ {
 
-struct Verifier;
+struct Set;
 
 /** Interface for a device that can be manipulated by a Terminal.
     When a device is selected by a Terminal, the caller can then call functions 
     of that device. The Terminal has a stack of devices that it then pushes the 
-    Device* on top of. This object is now selected, and agents can now call 
-    functions of this object via the Device Control (DC).
+    Star* on top of. This object is now selected, and agents can now call 
+    functions of this object via the Star Control (DC).
 
     @code
-    // Example remote procedure call using Device interface.
-    class DeviceExample : public Device {
+    // Example remote procedure call using Star interface.
+    class DeviceExample : public Operation {
         //NONCOPYABLE (DeviceExample)
         public:
 
@@ -41,14 +41,14 @@ struct Verifier;
         void bar () {}     //< Example dummy bar.
 
         // I2P operations.
-        const Member* Op (byte index, Verifier* io) override
+        const Set* Star (char_t index, Set* io) override
         {
             void* argv[2];    //< An array of 2 void* for the Rpc arguments.
 
             switch (index)
             {
                 case '?': { 
-                    static const Member m0 = 
+                    static const Set m0 = 
                     { 
                         "ChineseRoomExample", ConvertNumMembers (2), nullptr, 
                         "Description of ChineseRoomExample." 
@@ -58,43 +58,43 @@ struct Verifier;
                     return &m0;
                 }
                 case 64: {
-                        static const Member m1 = { "foo",
+                        static const Set s1 = { "foo",
                         Rx<2, FLT, STR, StringBufferSize>::Header,
                         Tx<2, FLT, STR>::Header,
                         "Description of foo." };
 
                     // 66 is ASCII 'A'
-                    if (!io) return &m1;
+                    if (!io) return &s1;
 
-                    if (io->read (m1.rx_header, args (argv, &ioNumber, 
+                    if (io->read (s1.input, args (argv, &ioNumber, 
                                                       ioString))) 
                     return readError ();
 
                     foo ();
 
-                    if (Write (io, m1.tx_header, param.args (&ioNumber, 
+                    if (Write (io, s1.result, param.args (&ioNumber, 
                                                              ioString)))
                         return writeError ();
-                    return &m1;
+                    return &s1;
                 }
                 case 65: {
-                    static const Member m2 = { "bar",
+                    static const Set s2 = { "bar",
                         Rx<2, FLT, STR, StringBufferSize>::Header,
                         Tx<2, FLT, STR>::Header,
                         "Description of bar." };
                 
-                    if (!io) return &m2;
+                    if (!io) return &s2;
 
-                    if (Read (io, m2.rx_header, param.args (&ioNumber, 
+                    if (Read (io, s2.input, param.args (&ioNumber, 
                                                             ioString)))
                         return readError ();
 
                     bar ();
 
-                    if (io->write (m2.tx_header, param.args (&ioNumber, 
+                    if (io->write (s2.result, param.args (&ioNumber, 
                                                              ioString)))
                         return writeError ();
-                    return &m2;
+                    return &s2;
                 }
             }
             return nullptr;
@@ -111,62 +111,62 @@ struct Verifier;
     };
     @endcode
 */
-struct Device {
+struct Operation {
     /** Interprocess operations.
          There are a total of 224 possible Members indexes 32-255, not including
-         the Device itself. To query a member, pass in nullptr for io and index 
-         of the Member you want to query, and if it is valid, the 
-         implementation should return a valid const Member*; pending the
+         the Star itself. To query a member, pass in nullptr for io and index 
+         of the Set you want to query, and if it is valid, the 
+         implementation should return a valid const Set*; pending the
          developer didn't mess up the implementation.
          @param index The index of the operation.
-         @param io The Uniprinter for the IO slot.
-         @return Returns null upon success, a Member header upon query, and an 
+         @param io The B for the IO slot.
+         @return Returns null upon success, a Set header upon query, and an 
                  error_t ticket upon Read-Write failure.
     */
-    virtual const Member* Op (byte index, Verifier* io) = 0;
+    virtual const Set* Star (char_t index, Set* io) = 0;
 };
 
 /** Gets the number of members of the given device. */
-KABUKI uintptr_t ToUInt (Device* d) {
+KABUKI uintptr_t ToUInt (Operation* d) {
     if (d == nullptr) return 0;
-    const Member* m = d->Op (0, nullptr);
-    return m == nullptr ? 0 : reinterpret_cast<uintptr_t> (m->rx_header);
+    const Set* m = d->Operation (0, nullptr);
+    return m == nullptr ? 0 : reinterpret_cast<uintptr_t> (m->input);
 }
 
-/** Returns true if the given tx_header from a Member is a non-printable ASCII 
-    char, meaning it's a Device. */
-KABUKI bool IsDevice (const Member* member) {
+/** Returns true if the given result from a Set is a non-printable ASCII 
+    char, meaning it's a Star. */
+KABUKI bool IsDevice (const Set* member) {
     if (!member)
         return false;
-    return (reinterpret_cast<uintptr_t> (member->tx_header) < ' ');
+    return (reinterpret_cast<uintptr_t> (member->result) < ' ');
 }
 
-/** Prints the given Device to the console. */
-KABUKI void Print (Device* d) {
-    std::cout << "| Device:        ";
+/** Prints the given Star to the console. */
+KABUKI void Print (Operation* d) {
+    std::cout << "| Star:        ";
     if (d == nullptr) {
         std::cout << "null";
         PrintLine ("|", '_');
         return;
     }
     printf ("0x%p ", d);
-    const Member* m = d->Op (0, nullptr);   //< Get Device header.
+    const Set* m = d->Operation (0, nullptr);   //< Get Star header.
     std::cout << m->key
         << "\n| NumMembers:  " << GetNumMembers (m)
         << "\n| Description: " << m->description << '\n';
-    byte i = Index (m->tx_header),
-        stop_index = i + Index (m->rx_header);
+    byte i = Index (m->result),
+        stop_index = i + Index (m->input);
     std::cout << "| FirstMember: " << i << " LastMember: "
         << stop_index;
     PrintLine ("|", '-');
     for (; i < stop_index; ++i) {
-        m = d->Op (i, nullptr);
+        m = d->Operation (i, nullptr);
         if (m != nullptr) {
             std::cout << "| " << i << ": " << m->key << '\n'
-                << "| rx_header:   ";
-            PrintEsc (m->rx_header);
-            std::cout << "| tx_header:   ";
-            PrintEsc (m->tx_header);
+                << "| input:   ";
+            PrintEsc (m->input);
+            std::cout << "| result:   ";
+            PrintEsc (m->result);
             std::cout << "| Description: " << m->description;
             if (i == stop_index)
                 PrintLine ("|", '_');
@@ -179,17 +179,17 @@ KABUKI void Print (Device* d) {
     //system ("PAUSE");
 }
 
-KABUKI void PrintAddress (const byte* address, Device* root) {
+KABUKI void PrintAddress (const byte* address, Operation* root) {
     if (address == nullptr)
         return;
     if (root == nullptr)
         return;
-    byte index = *address++;
-    const Member* m = root->Op (index, nullptr);
+    char_t index = *address++;
+    const Set* m = root->Operation (index, nullptr);
     std::cout << m->key;
     index = *address++;
     while (index) {
-        m = root->Op (index, nullptr);
+        m = root->Operation (index, nullptr);
         if (m == nullptr)
             return;
         std::cout << '.' << m->key;

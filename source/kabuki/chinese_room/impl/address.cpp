@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/Source/ChineseRoomConsole/Address.h
+    @file    ~/chinese_room/include/Source/ChineseRoomConsole/Address.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R).
@@ -45,14 +45,14 @@ uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
 }
 
 uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
-    uint64_t e, uint64_t f) {
+                      uint64_t e, uint64_t f) {
     uint64_t one = 1;
     return (one << 48 | a | (b << 8) | (c << 16) | (d << 24) | (e << 32) |
            (f << 40));
 }
 
 uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
-    uint64_t e, uint64_t f, uint64_t g) {
+                      uint64_t e, uint64_t f, uint64_t g) {
     uint64_t one = 1;
     return (one << 56 | a | (b << 8) | (c << 16) | (d << 24) | (e << 32) |
             (f << 40) | (g << 48));

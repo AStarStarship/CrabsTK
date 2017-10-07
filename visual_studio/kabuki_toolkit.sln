@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kabuki.Sloth", "..\Projects\kabuki.Sloth\Visual_Studio\kabuki.Sloth.vcxproj", "{C65FF802-4768-4472-81CD-A45026249903}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kabuki.Sloth", "..\projects\kabuki.Sloth\Visual_Studio\kabuki.Sloth.vcxproj", "{C65FF802-4768-4472-81CD-A45026249903}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kabuki", "kabuki\kabuki.vcxproj", "{05AD2F4E-E890-4B0F-878C-E29C49930221}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kabuki-toolkit_tests", "kabuki.tests\kabuki-toolkit_tests.vcxproj", "{6C739D2A-D229-4E66-BF9D-0F96A4403D27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{05AD2F4E-E890-4B0F-878C-E29C49930221}.Release|x64.Build.0 = Release|x64
 		{05AD2F4E-E890-4B0F-878C-E29C49930221}.Release|x86.ActiveCfg = Release|Win32
 		{05AD2F4E-E890-4B0F-878C-E29C49930221}.Release|x86.Build.0 = Release|Win32
+		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Debug|x64.ActiveCfg = Debug|x64
+		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Debug|x64.Build.0 = Debug|x64
+		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Debug|x86.ActiveCfg = Debug|Win32
+		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Debug|x86.Build.0 = Debug|Win32
+		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Release|x64.ActiveCfg = Release|x64
+		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Release|x64.Build.0 = Release|x64
+		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Release|x86.ActiveCfg = Release|Win32
+		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/portal.h
+    @file    ~/chinese_room/include/portal.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -29,7 +29,7 @@ struct Portal
 {
     /** Sets the Portal up for a batch of bytes transfer.
          Implementation of this function is not required to do anything, but 
-         regardless it will be called by the Verifier. */
+         regardless it will be called by the Set. */
     virtual void Prime () = 0;
 
     /** Gets the length of current portal.

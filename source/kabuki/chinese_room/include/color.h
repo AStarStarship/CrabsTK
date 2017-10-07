@@ -1,22 +1,17 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/color.h
+    @file    ~/chinese_room/include/color.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-                    http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
 #ifndef CHINESE_ROOM_COLOR_H
@@ -86,16 +81,16 @@ inline const color_t* RainbowColors () {
 inline const color_t* PresetColors ();
 
 /** Gets one of the rainbow colors. */
-inline color_t RainbowColor (int index);
+inline color_t RainbowColor (char_t index);
 
 /** Gets one of the preset colors. */
-inline color_t PresetColor (int index);
+inline color_t PresetColor (char_t index);
 
 /** Gets a random preset colors. */
-inline color_t RandomPresetColor (int index);
+inline color_t RandomPresetColor (char_t index);
 
 /** Gets a random color. */
-inline color_t RandomColor (int index);
+inline color_t RandomColor (char_t index);
     
 /** Mixes the color with the  */
 inline color_t MixColor (color_t a, color_t b);

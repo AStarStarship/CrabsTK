@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/impl/symbol_table.cpp
+    @file    ~/chinese_room/impl/symbol_table.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
                             All right reserved (R).
@@ -39,7 +39,7 @@ static SymbolTable* SymbolTableInit (byte* buffer, byte max_keys, uint16_t total
     return rt;
 }
 
-static byte Add (SymbolTable* rt, const char* key) {
+static byte Add (SymbolTable* rt, const char * key) {
     if (rt == nullptr) return 0;
     if (key == nullptr) return 0;
     
@@ -156,7 +156,7 @@ static byte Add (SymbolTable* rt, const char* key) {
                 temp = indexes[mid];
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;  //< Load the index in the collision table.
-                while (index < kMaxI2PMembers) {
+                while (index < kMaxNumMembers) {
                     printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
                         printf ("but table already contains key at "
@@ -319,11 +319,11 @@ static byte Add (SymbolTable* rt, const char* key) {
     return num_keys;
 }
 
-static byte Find (const SymbolTable* rt, const char* key) {
+static byte Find (const SymbolTable* rt, const char * key) {
     if (rt == nullptr)
         return 0;
     //PrintLineBreak ("Finding record...", 5);
-    byte index,
+    char_t index,
         num_keys = rt->num_keys,
         max_keys = rt->max_keys,
         temp;
@@ -342,7 +342,7 @@ static byte Find (const SymbolTable* rt, const char* key) {
                                                         max_keys),
         *unsorted_indexes = indexes + max_keys,
         *collission_list = unsorted_indexes + max_keys;
-    const char* keys = reinterpret_cast<const char*> (rt) + size - 1;
+    const char * keys = reinterpret_cast<const char *> (rt) + size - 1;
     const byte* collisions,
         *temp_ptr;
 
@@ -400,7 +400,7 @@ static byte Find (const SymbolTable* rt, const char* key) {
                 printf ("There was a collision so check the table\n");
 
                 // The collisionsList is a sequence of indexes terminated by
-                // an invalid index > kMaxI2PMembers. collissionsList[0] is an 
+                // an invalid index > kMaxNumMembers. collissionsList[0] is an 
                 // invalid index, so the collisionsList is searched from 
                 // lower address up.
 
@@ -408,7 +408,7 @@ static byte Find (const SymbolTable* rt, const char* key) {
 
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;
-                while (index < kMaxI2PMembers) {
+                while (index < kMaxNumMembers) {
                     printf ("comparing to \"%s\"\n", keys - 
                             key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {

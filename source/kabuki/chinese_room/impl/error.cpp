@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/error.h
+    @file    ~/chinese_room/include/error.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -21,9 +21,9 @@
 
 namespace _ {
 
-const char* ErrorString (Error e) {
+const char * ErrorString (Error e) {
 #if USING_CONSOLE
-    static const char* strings[] = {
+    static const char * strings[] = {
         "Buffer underflow",             //< 0
         "Buffer overflow",              //< 1
         "Varint overflow",              //< 2
@@ -55,7 +55,7 @@ const char* ErrorString (Error e) {
         "Nonexistent member",           //< 28
         "Out of memory",                //< 29
         "Array overflow",               //< 30
-        "Invalid Member",               //< 31
+        "Invalid Set",               //< 31
         "Invalid error"                 //< n
     };
     if (e < 0 || e > InvalidErrorError) 

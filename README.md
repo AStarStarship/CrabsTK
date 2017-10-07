@@ -1,11 +1,23 @@
 # Kabuki Toolkit
-A modern full-stack embedded C\++11 software and firmware platform built on top of mix of some of the world's best Apache 2.0 License compatible C/C++ APIs integrated into a ubiquitous style formatted using the [Google C++ Style Sheet](https://google.github.io/styleguide/cppguide.html). #WorkInProgress
+An cross-platform cross-language toolkit to for creating the Sloth,
+Chinese Rooms, and the Intergalactic Internet. Kabuki Toolkit is an attempt to
+combine all of the software in the world into a common SDK using a #CodeSloth 
+utility. I got sick of my shitty SDK that didn't work, and just wanted all of
+the SDK API modules to just be in the same format without all the extra junk.
 
-## Mission Statement
-Kabuki Toolkit's mission is to provide a clean SDK with good example projects, Doxygen API documentation, and tools for making portable apps and DLL plugins; and to automate the library build system and process of integrating, refactoring, and cleaning up the 3rd party libraries into a modern common style.
+The goal of Kabuki Toolkit is to #SlothAllTheCode and create an Intergalactic
+Internet using Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Protocol.
 
 ## Seeking Developers
-Please see the [Wiki](https://github.com/kabuki-toolkit/kabuki_toolkit/wiki) for instructions on how you can get involved. What you are seeing in the repo is a  prototype for the perfect C/C++/C#/Python/etc library format with a shared C core and multi-language bindings. What we need to do is repeat the way I set the SDK up, not my non-functional code. All I care about is the Sloth utility. Please notice that the git repo size is getting HUGE!!! We gotta dump the development crap and just leave the golden dev nuggets they want with a Sloth script. Slot is based on the SCRIPT, and I'm still mapping RPC funcitons. #CodeSloth
+Please see the [Wiki](https://github.com/kabuki-toolkit/kabuki_toolkit/wiki) 
+for instructions on how you can get involved. What you are seeing in the repo 
+is a  prototype for the perfect C/C++/C#/Python/etc library format with a 
+shared C core and multi-language bindings. What we need to do is repeat the 
+way I set the SDK up, not my non-functional code. All I care about is the 
+Sloth utility. Please notice that the git repo size is getting HUGE!!! We 
+gotta dump the development crap and just leave the golden dev nuggets they 
+want with a Sloth script. Slot is based on the SCRIPT, and I'm still mapping 
+RPC functions. #CodeSloth
 
 ## Quick Links
 * [Quickstart Guide](https://github.com/Kabuki-Toolkit/Kabuki_Toolkit/wiki/Quickstart-Guide.md) -
@@ -20,7 +32,6 @@ Please see the [Wiki](https://github.com/kabuki-toolkit/kabuki_toolkit/wiki) for
 | app     | Application framework.|
 | biz     | Business eCommerce.|
 | code    | Coding utilities.|
-| dmx     | DMX devices.|
 | data    | Data and data logging.|
 | gl      | Graphics Library.|
 | gui     | Graphical user interfaces.|
@@ -29,7 +40,7 @@ Please see the [Wiki](https://github.com/kabuki-toolkit/kabuki_toolkit/wiki) for
 | id      | Identification.|
 | math    | Math.|
 | midi    | MIDI.|
-| part    | Firmware toolkit.|
+| tek     | Firmware toolkit.|
 | pplx    | Parallel Patterns Library.|
 | pro     | Projects, tasks, and scheduling.|
 | process | Threads and interprocess IO.|
@@ -39,25 +50,25 @@ Please see the [Wiki](https://github.com/kabuki-toolkit/kabuki_toolkit/wiki) for
 | web     | WWW and IoT.|
 
 ## 3rd Party APIs
-* [Microsoft REST SDK]()
-* [boost::interprocess]()
-* [boost::polygon]()
-* [boost::dll]()
-* [boost::pool]()
-* [boost::tokenizer]()
-* [ANGLE]()
-* [nanovg]()
-* [nanogui]()
-* [gflw]()
-* [std]()
-* [Maximllian]()
-* [CMath]()
-* [mbed]()
-* [OpenAL-Soft]()
-* [PortAudio]()
-* [RtMIDI]()
-* [AStyle]()
-* [Serial]()
+* [Microsoft REST SDK](https://github.com/Microsoft/cpprestsdk)
+* [boost::interprocess](http://www.boost.org/)
+* [boost::polygon](http://www.boost.org/)
+* [boost::dll](http://www.boost.org/)
+* [boost::pool](http://www.boost.org/)
+* [boost::tokenizer](http://www.boost.org/)
+* [ANGLE](https://github.com/google/angle)
+* [nanovg](https://github.com/memononen/nanovg)
+* [nanogui](https://github.com/wjakob/nanogui)
+* [gflw](http://www.glfw.org/)
+* [stb](https://github.com/nothings/stb)
+* [Maximilian](https://github.com/micknoise/Maximilian)
+* [Static Math](https://github.com/Morwenn/static_math)
+* [mbed](https://www.mbed.com/en/)
+* [OpenAL-Soft](https://github.com/kcat/openal-soft)
+* [PortAudio](http://www.portaudio.com/)
+* [RtMIDI](https://github.com/thestk/rtmidi)
+* [AStyle](http://astyle.sourceforge.net/)
+* [Serial](https://github.com/wjwwood/serial)
 
 ## License
 Copyright 2017 (C) [Cale McCollough](mailto:calemccollough@gmail.com) and contributors. All rights reserved (R).

@@ -18075,7 +18075,7 @@
 															"height": 13,
 															"autoResize": false,
 															"underline": false,
-															"text": "Scanning Book",
+															"text": "Scanning Bag",
 															"horizontalAlignment": 2,
 															"verticalAlignment": 5,
 															"wordWrap": false
@@ -18178,7 +18178,7 @@
 													"containerChangeable": false,
 													"containerExtending": false,
 													"left": -160,
-													"top": 24,
+													"top": 16,
 													"width": 10,
 													"height": 10,
 													"autoResize": false
@@ -18202,7 +18202,7 @@
 													"containerChangeable": false,
 													"containerExtending": false,
 													"left": -160,
-													"top": 24,
+													"top": 16,
 													"width": 10,
 													"height": 10,
 													"autoResize": false
@@ -18331,7 +18331,7 @@
 															"height": 13,
 															"autoResize": false,
 															"underline": false,
-															"text": "Scanning Array",
+															"text": "Scanning Set",
 															"horizontalAlignment": 2,
 															"verticalAlignment": 5,
 															"wordWrap": false
@@ -24034,7 +24034,7 @@
 											"_parent": {
 												"$ref": "AAAAAAFb0oWzXwWM6Og="
 											},
-											"name": "Scanning Book",
+											"name": "Scanning Bag",
 											"visibility": "public"
 										},
 										{
@@ -24043,7 +24043,7 @@
 											"_parent": {
 												"$ref": "AAAAAAFb0oWzXwWM6Og="
 											},
-											"name": "Scanning Array",
+											"name": "Scanning Set",
 											"visibility": "public"
 										},
 										{

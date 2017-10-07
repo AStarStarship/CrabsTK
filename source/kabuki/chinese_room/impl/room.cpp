@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/Source/ChineseRoom/room.h
+    @file    ~/chinese_room/include/Source/ChineseRoom/room.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -21,8 +21,8 @@
 
 namespace _ {
 
-KABUKI const char** RoomStateStrings () {
-    static const char* states[] = {
+KABUKI const char ** RoomStateStrings () {
+    static const char * states[] = {
         "Initializing",
         "Waking up",
         "Running",
@@ -32,8 +32,8 @@ KABUKI const char** RoomStateStrings () {
     return states;
 }
 
-KABUKI const char** RequestStrings () {
-    static const char* RequestStrings[] = {
+KABUKI const char ** RequestStrings () {
+    static const char * RequestStrings[] = {
         "Open door",
         "Close door",
         "Invalid request"
@@ -42,7 +42,7 @@ KABUKI const char** RequestStrings () {
     return RequestStrings;
 }
 
-KABUKI const char* RequestString (Request r) {
+KABUKI const char * RequestString (Request r) {
     if (r < 0 || r >= InvalidRequest) return RequestStrings ()[InvalidRequest];
     return RequestStrings ()[r];
 }
@@ -76,7 +76,7 @@ void Room::ProcessLog () {
 
 }
 
-void Room::PrintErrors (Unityper* tx) {
+void Room::PrintErrors (Monoid* tx) {
     //uint_t errorHeader[] = { 0 };
     //return io.prints (errorHeader);
 }
@@ -104,7 +104,7 @@ virtual bool Room::IsOn () {
     return true;
 }
 
-virtual int Room::Main (const char** args, int args_count) {
+virtual int Room::Main (const char ** args, int args_count) {
     ticket_t result;
 
     std::cout << "Initializing Chinese Room with " << args_count << " args:\n";
@@ -129,12 +129,12 @@ virtual int Room::Main (const char** args, int args_count) {
     return 1;
 }
 
-virtual const Member* Room::Op (byte index, Verifier* io) {
-    static const Member this_member = { "Room", NumMembers (0), 
+virtual const Set* Room::Star (char_t index, B* io) {
+    static const Set this_member = { "Room", NumMembers (0), 
                                         FirstMember (' '), "A Chinese Room." };
     switch (index) {
         case ' ': {
-            static const Member m_space = { "Space", Esc <0> (), Esc <0> (), "" };
+            static const Set m_space = { "Space", Esc <0> (), Esc <0> (), "" };
         }
 
     }

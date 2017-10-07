@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/terminal.h
+    @file    ~/chinese_room/include/terminal.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough<calemccollough.github.io>
                             All right reserved (R).
@@ -18,28 +18,32 @@
 #ifndef CHINESE_ROOM_TERMINAL_H
 #define CHINESE_ROOM_TERMINAL_H
 
-#include "verifier.h"
+#include "monoid.h"
+#include "operation.h"
 
 namespace _ {
 
-/** A IO Terminal Device with Rx Uniprinter.
+/** An async monoid Terminal.
     
 */
-class Terminal : public Device {
+class Terminal : public Operation {
     public:
 
-    /** Default constructor that does nothing. */
-    Terminal (Verifier* io);
+    /** Default constructor. */
+    Terminal (Monoid* io);
 
+    /** Destructs the Terminal. */
     ~Terminal ();
 
+    /** Returns true if the set contains the given address pointer. */
     bool Contains (void* address);
 
-    const Member* Op (byte index, Verifier* io) override;
+    /** A*B Operations. */
+    const Set* Star (char_t index, B* b) override;
 
     private:
 
-    Verifier* io_;        //< The all-in-one printer and scanner.
+    Monoid* io_;        //< Async mondoid ring buffer socket.
 };
 
 }       //< namespace _

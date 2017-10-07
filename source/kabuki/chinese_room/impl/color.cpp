@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/chinses_room/include/color.h
+    @file    ~/chinese_room/include/chinese_room/include/color.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
 
@@ -68,22 +68,22 @@ const color_t* PresetColors () {
     return &presetColorsArray[0];
 }
 
-color_t RainbowColor (int index) {
+color_t RainbowColor (char_t index) {
     if (index < 0 || index >= 96) return Black;
     return RainbowColors ()[index];
 }
 
-color_t PresetColor (int index) {
+color_t PresetColor (char_t index) {
     if (index < 0 || index >= 96) return Black;
     return PresetColors ()[index];
 }
 
-color_t RandomPresetColor (int index) {
-    int index = rand () % NumPresetColors;
+color_t RandomPresetColor (char_t index) {
+    char_t index = rand () % NumPresetColors;
     return PresetColors ()[index];
 }
 
-color_t RandomColor (int index) {
+color_t RandomColor (char_t index) {
     return rand ();
 }
 
@@ -115,6 +115,10 @@ color_t ChangeBrightness (color_t color, int brightness_change) {
 color_t DecreaseBrightness (color_t color, int brightness_change) {
     color_t alpha = (color & 0xff000000) >> 24 - brightness_change;
     return (color & 0xffffff) & (alpha << 24);
+}
+
+void ColorSet (color_t color, color_t value)
+{
 }
 
 void ColorSet (color_t color, byte red, byte green, byte blue) {

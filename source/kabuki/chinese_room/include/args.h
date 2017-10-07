@@ -1,15 +1,13 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/args.h
+    @file    ~/chinese_room/include/args.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
-             All right reserved (R).
-             Licensed under the Apache License, Version 2.0 (the "License"); 
-             you may not use this file except in compliance with the License. 
-             You may obtain a copy of the License [here](
-             http://www.apache.org/licenses/LICENSE-2.0).
-             
-             Unless required by applicable law or agreed to in writing, software
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
@@ -24,8 +22,8 @@
 namespace _ {
 
 /** An I2P escape sequence header.
-struct uses C++11 variadic template to ensure only one copy in ROM and to eliminate
-redundant typing. */
+    struct uses C++11 variadic template to ensure only one copy in ROM and to eliminate
+    redundant typing. */
 template<const uint_t... N>
 KABUKI const uint_t* Esc () {
     static const uint_t list[sizeof... (N)] = { N... };
@@ -338,6 +336,5 @@ KABUKI void** Args (void** ptrs, const void* a, const void* b,
                     const void* m, const void* n, const void* o, const void* p, const void* q,
                     const void* r, const void* s, const void* t, const void* u, const void* v,
                     const void* w, const void* x, const void* y, const void* z);
-
 }       //< namespace _
 #endif  //< CHINESE_ROOM_ARGS_H

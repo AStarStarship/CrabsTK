@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/impl/uniscanner.cpp
+    @file    ~/chinese_room/impl/uniscanner.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough<calemccollough.github.io>
                             All right reserved (R).
@@ -20,58 +20,58 @@
 
 namespace _ {
 
-KABUKI Uniprinter* UniprinterInit (byte* buffer, uint_t size) {
+KABUKI B* BInit (byte* buffer, uint_t size) {
     if (buffer == nullptr)
         return nullptr;
-    Uniprinter* rx = reinterpret_cast<Uniprinter*>(rx);
-    rx->size = size - sizeof (Uniprinter);
+    B* rx = reinterpret_cast<B*>(rx);
+    rx->size = size - sizeof (B);
     rx->start = 0;
     rx->stop = 0;
     rx->read = 0;
     return rx;
 }
 
-KABUKI Uniprinter* UniprinterInit (Uniprinter* rx, uint_t size) {
+KABUKI B* BInit (B* rx, uint_t size) {
     if (rx == nullptr)
         return nullptr;
-    rx->size = size - sizeof (Uniprinter);
+    rx->size = size - sizeof (B);
     rx->start = 0;
     rx->stop = 0;
     rx->read = 0;
     return rx;
 }
 
-/** Gets the start of the Uniprinter ring buffer. 
-KABUKI byte* UniprinterBaseAddress (void* ptr) {
+/** Gets the start of the B ring buffer. 
+KABUKI byte* BBaseAddress (void* ptr) {
     return reinterpret_cast <byte*>(ptr) + kSlotHeaderSize;
 }*/
 
-KABUKI byte* UniprinterBaseAddress (Uniprinter* ptr) {
+KABUKI byte* BBaseAddress (B* ptr) {
     return reinterpret_cast <byte*>(ptr) + kSlotHeaderSize;
 }
 
-KABUKI uint_t UniprinterSpace (Uniprinter* rx) {
+KABUKI uint_t BSpace (B* rx) {
     if (rx == nullptr) return ~0;
 
-    byte* base = UniprinterBaseAddress (rx);
-    return RingBufferSpace (base + rx->start, base + rx->stop, rx->size);
+    byte* base = BBaseAddress (rx);
+    return MonoidSpace (base + rx->start, base + rx->stop, rx->size);
 }
 
-KABUKI byte* UniprinterBaseAddress (void* ptr, uint_t rx_tx_offset) {
+KABUKI byte* BBaseAddress (void* ptr, uint_t rx_tx_offset) {
     enum {
-        kSlotHeaderSize = sizeof (Uniprinter) + sizeof (uintptr_t) -
-        sizeof (Uniprinter) % sizeof (uintptr_t),
+        kSlotHeaderSize = sizeof (B) + sizeof (uintptr_t) -
+        sizeof (B) % sizeof (uintptr_t),
         //< Offset to the start of the ring buffer.
     };
 
     return reinterpret_cast <byte*>(ptr) + rx_tx_offset + kSlotHeaderSize;
 }
 
-KABUKI byte* UniprinterEndAddress (Uniprinter* rx) {
+KABUKI byte* BEndAddress (B* rx) {
     return reinterpret_cast<byte*>(rx) + kSlotHeaderSize + rx->size;
 }
 
-KABUKI ticket_t Read (Uniprinter* rx, const uint_t* params, void** args) {
+KABUKI ticket_t Read (B* rx, const uint_t* params, void** args) {
     if (rx == nullptr)
         Report (NullPointerError, 0, 0, 0);
     if (params == nullptr)
@@ -110,29 +110,29 @@ KABUKI ticket_t Read (Uniprinter* rx, const uint_t* params, void** args) {
     if (num_params == 0) {
 
 #if DEBUG_CHINESE_ROOM
-        std::cout << "\n\n| Reading Uniprinter: ";
+        std::cout << "\n\n| Reading B: ";
 #endif
         return 0;
     }
 
     size = rx->size;
 
-    byte* begin = UniprinterBaseAddress (rx),   //< The beginning of the buffer.
+    byte* begin = BBaseAddress (rx),   //< The beginning of the buffer.
         * end   = begin + size,                 //< The end of the buffer.
         * start = begin + rx->start,            //< The start of the data.
         * stop  = begin + rx->stop;             //< The stop of the data.
     const uint_t* param = params + 1;           //< The current param.
 
-    length = RingBufferLength (start, stop, size);
+    length = MonoidLength (start, stop, size);
 
 #if DEBUG_CHINESE_ROOM
-    std::cout << "\n\n| Reading Uniprinter: \n";
+    std::cout << "\n\n| Reading B: \n";
     //PrintEsc (params);
     printf ("| begin: 0x%p start : %u stop : %u end : %u "
             "length: %u ", begin, Diff (begin, start), 
             Diff (begin, stop), Diff (begin, end), length);
 #endif
-    // When we scan, we are reading from the beginning of the Uniprinter buffer.
+    // When we scan, we are reading from the beginning of the B buffer.
 
     for (index = 0; index < num_params; ++index) {
         type = *param;
@@ -493,7 +493,7 @@ KABUKI ticket_t Read (Uniprinter* rx, const uint_t* params, void** args) {
 
 #if DEBUG_CHINESE_ROOM
     printf ("| Done reading\n");
-    RingBufferClear (begin, rx->start, start, stop, end, size);
+    MonoidClear (begin, rx->start, start, stop, end, size);
 #endif
 
     // Convert pointer back to offset
@@ -502,18 +502,18 @@ KABUKI ticket_t Read (Uniprinter* rx, const uint_t* params, void** args) {
     return 0;
 }
 
-KABUKI bool IsReadable (Uniprinter* rx) {
+KABUKI bool IsReadable (B* rx) {
     return rx->start != rx->stop;
 }
 
-KABUKI void Print (Uniprinter* rx) {
+KABUKI void Print (B* rx) {
     if (rx == nullptr) return;
     uint_t size = rx->size;
     PrintLine ('_');
-    printf ("| Uniprinter %p: size: %u, start: %u, stop: %u, read: %u\n", rx, size,
+    printf ("| B %p: size: %u, start: %u, stop: %u, read: %u\n", rx, size,
             rx->start, rx->stop, rx->read);
 
-    PrintMemory (UniprinterBaseAddress (rx), size);
+    PrintMemory (BBaseAddress (rx), size);
 }
 
 }       //< namespace _

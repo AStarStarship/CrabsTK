@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/Door.h
+    @file    ~/chinese_room/include/Door.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -20,7 +20,7 @@
 
 namespace _ {
 
-Door (const char* roomName = " (:-)>", uint_t slot_size = kMinDoorSize,
+Door (const char * roomName = " (:-)>", uint_t slot_size = kMinDoorSize,
         bool is_dynamic = false) :
     is_dynamic_ (is_dynamic)
 {
@@ -39,7 +39,7 @@ Door* Door::Init (uint_t buffer_size) {
     return this;
 }
 
-Terminal* Door::GetTerminal (int index) {
+Terminal* Door::GetTerminal (char_t index) {
     return nullptr;
 }
 
@@ -59,9 +59,9 @@ ticket_t Door::ExecAll () {
     return 0;
 }
 
-const Member* Door::Op (byte index, Verifier* io) override {
+const Set* Door::Star (char_t index, B* io) override {
     if (index < ' ') {
-        static const Member this_member = { "Door", NumMembers (0), 
+        static const Set this_member = { "Door", NumMembers (0), 
             0, "A door in a Chinese room." };
         return &this_member;
     }

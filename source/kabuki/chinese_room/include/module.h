@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version   1.0a
-    @file      ~/Library/chinese_room.h
+    @file      ~/chinese_room/include/module.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -21,7 +21,10 @@
 #include "console.h"
 #include "utils.h"
 #include "symbol_table.h"
-#include "book.h"
-#include <this_room.h>
+#include "bag.h"
+
+#ifndef THIS_ROOM
+#include "this_room.h"
+#endif
 
 #endif  //< CHINESE_ROOM_H

@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/impl/terminal.cpp
+    @file    ~/chinese_room/impl/terminal.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough<calemccollough.github.io>
                             All right reserved (R).
@@ -20,20 +20,20 @@
 
 namespace _ {
 
-Terminal::Terminal (Verifier* io) :
+Terminal::Terminal (Set* io) :
     io_ (io)
 {
 }
 
 Terminal::~Terminal () {
-    //if (io_->type > 0) Delete<Uniprinter> (io_);
+    //if (io_->type > 0) Delete<B> (io_);
 }
 
 bool Terminal::Contains (void* address) {
-    return VerifierContains (io_, address);
+    return LinearityContains (io_, address);
 }
 
-const Member* Terminal::Op (byte index, Verifier* io) override {
+const Set* Terminal::Star (char_t index, B* io) override {
     switch (index) {
         case 0:
             break;

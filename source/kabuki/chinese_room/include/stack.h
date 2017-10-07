@@ -1,15 +1,15 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/verifier.h
+    @file    ~/chinese_room/include/verifier.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io> 
                             All right reserved (R).
              Licensed under the Apache License, Version 2.0 (the "License"); 
              you may not use this file except in compliance with the License. 
              You may obtain a copy of the License at
                         http://www.apache.org/licenses/LICENSE-2.0
-             Unless required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
+             Unless required by applicable law or agreed to in writing, software 
+             distributed under the License is distributed on an "AS IS" BASIS, 
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
@@ -18,14 +18,14 @@
 #ifndef CHINESE_ROOM_VERIFIER_H
 #define CHINESE_ROOM_VERIFIER_H
 
-#include "device.h"
+#include "set.h"
 #include "portal.h"
 
 namespace _ {
 
 /** A universal all-in-one printer and scanner for slots in doors in Chinese 
     Rooms.
-    A Verifier connects two portals (@see ChineseRoom::Portal) between two
+    A Stack connects two portals (@see ChineseRoom::Portal) between two
     rooms using rx and tx ring buffers as depicted below:
     # Ring Buffer Streaming Diagram
     @code
@@ -37,54 +37,54 @@ namespace _ {
     Tx  |>-Buffer->|>-Async Portal Tx->|>-Sync User Writes->|>-Buffer->|
         |__________|___________________|____________________|__________|
     @endcode
-    The Verifier needs to run as fast as possible, so no virtual members are
-    allowed in that class. Portals are created using an Device and Portal
-    interface. The Verifier needs to have an object stack, which requires
+    The Stack needs to run as fast as possible, so no virtual members are
+    allowed in that class. Portals are created using an Star and Portal
+    interface. The Stack needs to have an object stack, which requires
     three stacks of pointers: 2 for scanning the headers for sanitizing input,
-    and another Device* stack for running the sequences.
-    # Verifier Memory Layout
+    and another Star pointer stack for running the sequences.
+    # Stack Memory Layout
     @code
         ______________________________
-        |         Unityper           |
+        |         Monoid           |
         |____________________________|
         |         Rx Buffer          |
         |____________________________|
-        |   Scan Stack of Device**   |
+        |   Scan Stack of Star**   |
         |----------------------------|
         |   Scan Stack of uint_t**   |
      ^  |----------------------------|
-     |  |       Verifier Class       |
+     |  |       Stack Class       |
     0x0 |____________________________|
     @endcode
 */
-struct Verifier {
-    byte          type,             /*< What type of Verifier it is.
+struct Stack {
+    byte          type,             /*< What type of Stack it is.
                                         -1 = interprocess no dynamic memory.
                                         0 = no dynamic memory.
                                         1 = dynamic memory.
                                         2 =  interprocess dynamic memory. */
                   num_members,      //< The current number of members of the 
-                                    //< Device being verified.
-                  first_member;     //< The current first member of the Device
+                                    //< Star being verified.
+                  first_member;     //< The current first member of the Star
                                     //< being verified.
     volatile byte rx_state,         //< Rx streaming state.
                   last_rx_state,    //< Last Rx state.
-                  tx_state;         //< Unityper streaming state.
+                  tx_state;         //< Monoid streaming state.
     hash16_t      hash;             //< Rx data verification hash.
     int16_t       timeout_us;       //< The timeout time.
     uint_t        bytes_left,       //< Countdown counter for parsing POD types.
-                  tx_offset,        //< The offset to the Unityper slot.
-                  rx_offset,        //< The offset to the Unityper slot.    
-                  stack_count,      //< Number of Device(s) on the stack.
+                  tx_offset,        //< The offset to the Monoid slot.
+                  rx_offset,        //< The offset to the Monoid slot.    
+                  stack_count,      //< Number of Star(s) on the stack.
                   stack_size,       //< Stack buffer size and 1/4 the state
                                     //< stack height.
                   verify_count,     //< Height of header and cursors stacks.
                   type_index,       //< The index in the current type being
                                     //< scanned.
                   num_states;       //< Number of states on the state stack.
-    timestamp_t   last_time;        //< The last time the Verifier was scanned.
-    Device      * device,           //< Device in the Device being verified.
-                * operand;          //< Pointer to the Device this device is
+    timestamp_t   last_time;        //< The last time the Stack was scanned.
+    Star      * device,           //< Star in the Star being verified.
+                * operand;          //< Pointer to the Star this device is
                                     //< operating on.
     const char  * return_address;   //< The return address.
     volatile const uint_t* header;  //< Pointer to the header being verified.
@@ -96,7 +96,7 @@ enum {
     kMinBufferSize = 2,             //< The minimum buffer size.
 };
 
-/** List of the Verifier Rx states. */
+/** List of the Stack Rx states. */
 typedef enum RxStates {
     RxScanningAddressState = 0,     //< RxState 0: Scanning address.
     RxScanningArgsState,            //< RxState 1: Scanning arguments.
@@ -104,20 +104,20 @@ typedef enum RxStates {
     RxScanningVarintState,          //< RxState 3: Scanning varint.
     RxScanningPodState,             //< RxState 4: Scanning plain-old-data.
     RxHandlingErrorState,           //< RxState 5: Handling an error state.
-    RxMemeberNotFoundErrorState,    //< RxState 6: Member not found.
+    RxMemeberNotFoundErrorState,    //< RxState 6: Set not found.
     RxScanningHashState,            //< RxState 7: Stand the 32-bit hash.
     RxLockedState,                  //< RxState N: Idle state.
 } RxState;
 
-/** List of the Verifier Tx states. */
+/** List of the Stack Tx states. */
 typedef enum TxStates {
     TxWritingState = 0,             //< TxState 0: Most common state.
     TxLockedState,                  //< TxState 1: Locked.
 } TxState;
 
 /** Gets a a string for printing out the rx_state. */
-KABUKI const char* RxStateString (byte state) {
-    static const char* strings[] = {
+KABUKI const char * RxStateString (byte state) {
+    static const char * strings[] = {
         "RxScanningStringState",
         "RxScanningVarIntState",
         "RxScanningAddressState",
@@ -133,8 +133,8 @@ KABUKI const char* RxStateString (byte state) {
 }
 
 /** Gets a a string for printing out the tx_state. */
-KABUKI const char* TxStateStrings (byte state) {
-    static const char* strings[] = {
+KABUKI const char * TxStateStrings (byte state) {
+    static const char * strings[] = {
         "TxWritingState",
         "TxLockedState"
     };
@@ -144,56 +144,56 @@ KABUKI const char* TxStateStrings (byte state) {
 }
 
 /** Gets a pointer to the Rx slot. */
-KABUKI Uniprinter* VerifierRx (Verifier* io) {
+KABUKI B* LinearityRx (Stack* io) {
     return io == nullptr ? nullptr :
-           reinterpret_cast<Uniprinter*>(reinterpret_cast<byte*>(io) + 
+           reinterpret_cast<B*>(reinterpret_cast<byte*>(io) + 
                                          io->rx_offset);
 }
 
-/** Gets a pointer to the Unityper slot. */
-KABUKI Unityper* VerifierTx (Verifier* io) {
+/** Gets a pointer to the Monoid slot. */
+KABUKI Monoid* LinearityTx (Stack* io) {
     return io == nullptr ? nullptr :
-           reinterpret_cast<Unityper*>(reinterpret_cast<byte*>(io) +
+           reinterpret_cast<Monoid*>(reinterpret_cast<byte*>(io) +
                                        io->tx_offset);
 }
 
-/** Constructs a Verifier with equal sized rx and tx slots.
+/** Constructs a Stack with equal sized rx and tx slots.
     @param root The root-scope device. */
-KABUKI Verifier* VerifierInit (byte* buffer, uint_t buffer_size,
-                               uint_t stack_count, Device* root = nullptr) {
+KABUKI Stack* LinearityInit (byte* buffer, uint_t buffer_size,
+                               uint_t stack_count, Star* root = nullptr) {
     if (buffer == nullptr)
         return nullptr;
     if (buffer_size < kMinBufferSize)
         return nullptr;
     if (stack_count == 0) stack_count = 1;    //< Minimum stack size.
 
-    Verifier* io = reinterpret_cast<Verifier*> (buffer);
+    Stack* io = reinterpret_cast<Stack*> (buffer);
     
     uint_t total_stack_size = (stack_count - 1) * (2 * sizeof (void*));
-    // Calculate the size of the Unityper and Verifier.
-    uint_t size = (buffer_size - sizeof (Verifier) -
+    // Calculate the size of the Monoid and Stack.
+    uint_t size = (buffer_size - sizeof (Stack) -
                    total_stack_size + 1) >> 1;  // >>1 to divide by 2
-    io->type          = 0;
-    io->rx_state      = RxLockedState;
-    io->tx_state      = 0;
+    io->type         = 0;
+    io->rx_state     = RxLockedState;
+    io->tx_state     = 0;
     io->stack_count  = 0;
     io->verify_count = 0;
-    io->stack_size    = stack_count;
-    io->num_states    = 0;
-    io->device        = nullptr;
+    io->stack_size   = stack_count;
+    io->num_states   = 0;
+    io->device       = nullptr;
 #if DEBUG_CHINESE_ROOM
-    printf ("\nInitializing Verifier:\n"
-            "sizeof (Verifier): %u\n"
+    printf ("\nInitializing Stack:\n"
+            "sizeof (Stack): %u\n"
             "(stack_count * (2 * sizeof (void*))): %u\n"
             "stack_count: %u buffer_size: %u size: %u\n"
             "!!! stack_count: %u &stack_count: 0x%p !!!\n",
-            sizeof (Verifier), (stack_count * 
+            sizeof (Stack), (stack_count * 
                                 (2 * sizeof (void*))), stack_count, 
                                 buffer_size, size, stack_count, &stack_count);
 #endif //< DEBUG_CHINESE_ROOM
     io->bytes_left = 0;
-    uint_t offset    = sizeof (Verifier)   + total_stack_size - sizeof (void*),
-           rx_offset = sizeof (Uniprinter) + total_stack_size + offset;
+    uint_t offset    = sizeof (Stack)   + total_stack_size - sizeof (void*),
+           rx_offset = sizeof (B) + total_stack_size + offset;
     io->rx_offset = rx_offset;
     io->tx_offset = rx_offset + size;
     io->header = 0;
@@ -201,80 +201,80 @@ KABUKI Verifier* VerifierInit (byte* buffer, uint_t buffer_size,
     printf ("\n\n!!!\nroot: 0x%p\n", root);
     io->device = root;
     printf ("io->device: 0x%p\n", io->device);
-    UniprinterInit (VerifierRx (io), size);
-    UnityperInit (VerifierTx (io), size);
+    BInit (LinearityRx (io), size);
+    MonoidInit (LinearityTx (io), size);
     return io;
 }
 
 /** Gets the base address of the device stack. */
-KABUKI Device** VerifierDeviceStack (Verifier* io) {
-    auto a = reinterpret_cast<byte*> (io) + sizeof (Verifier) +
+KABUKI Star** LinearityDeviceStack (Stack* io) {
+    auto a = reinterpret_cast<byte*> (io) + sizeof (Stack) +
              io->stack_count * io->stack_size * sizeof (const uint_t*);
-    return reinterpret_cast<Device**> (a);
+    return reinterpret_cast<Star**> (a);
 }
 
-/** Returns true if the Verifier uses dynamic memory. */
-KABUKI bool VerifierIsDynamic (Verifier* io) {
+/** Returns true if the Stack uses dynamic memory. */
+KABUKI bool LinearityIsDynamic (Stack* io) {
     return io->type % 2 == 1;
 }
 
-KABUKI byte* VerifierEndAddress (Verifier* io) {
-    return UniprinterEndAddress (VerifierRx (io));
+KABUKI byte* LinearityEndAddress (Stack* io) {
+    return BEndAddress (LinearityRx (io));
 }
 
-/** Resets this Verifier to the initial state. */
-KABUKI ticket_t VerifierReset (Verifier* io) {
+/** Resets this Stack to the initial state. */
+KABUKI ticket_t LinearityReset (Stack* io) {
     return 0;
 }
 
-/** Attempts to push the Device at the given index of the current
+/** Attempts to push the Star at the given index of the current
     device control onto the stack.
     @return Returns nullptr upon success and a pointer to a string
     upon failure. */
-KABUKI const Member* Push (Verifier* io, Device* d) {
+KABUKI const Set* Push (Stack* io, Star* d) {
     if (io == nullptr)
-        return d->Op (0, nullptr);  //< Return d's header.
+        return d->Star (0, nullptr);  //< Return d's header.
     if (d == nullptr)
-        return reinterpret_cast<const Member*> (Report (NullDevicePushError));
+        return reinterpret_cast<const Set*> (Report (NullDevicePushError));
     if (io->stack_count >= io->stack_size)
-        return reinterpret_cast<const Member*> (Report (StackOverflowError));
-    VerifierDeviceStack (io)[io->stack_count++] = d; 
+        return reinterpret_cast<const Set*> (Report (StackOverflowError));
+    LinearityDeviceStack (io)[io->stack_count++] = d; 
     return 0;
 }
 
-/** Attempts to pop an Device off the stack and returns a pointer to a
+/** Attempts to pop an Star off the stack and returns a pointer to a
     string upon failure. */
-KABUKI ticket_t VerifierPop (Verifier* io) {
+KABUKI ticket_t LinearityPop (Stack* io) {
     if (io->stack_count == 0)
         return Report (TooManyPopsError);
-    io->device = VerifierDeviceStack (io)[--io->stack_count];
+    io->device = LinearityDeviceStack (io)[--io->stack_count];
     return 0;
 }
 
 /** Gets the base address of the state stack. */
-KABUKI byte* VerifierStateStack (Verifier* io) {
-    return reinterpret_cast<byte*> (io) + sizeof (Verifier);
+KABUKI byte* LinearityStateStack (Stack* io) {
+    return reinterpret_cast<byte*> (io) + sizeof (Stack);
 }
 
 /** Exits the current state. */
-KABUKI ticket_t VerifierExitRxState (Verifier* io) {
+KABUKI ticket_t LinearityExitRxState (Stack* io) {
     auto a = io->stack_count;
     if (a == 0)
         return Report (TooManyPopsError);
-    io->rx_state = VerifierStateStack (io)[--a];
+    io->rx_state = LinearityStateStack (io)[--a];
     io->stack_count = a;
     return 0;
 }
 
 /** Pushes the new state onto the verifier stack. */
-KABUKI ticket_t VerifierEnterRxState (Verifier* io, RxState state) {
+KABUKI ticket_t LinearityEnterRxState (Stack* io, RxState state) {
     
     if (state >= RxLockedState)
         return Report (InvalidRxStateError);
     auto a = io->stack_count;
     if (a >= io->stack_size)
         return Report (StackOverflowError);
-    VerifierStateStack (io)[a] = io->rx_state;
+    LinearityStateStack (io)[a] = io->rx_state;
     a = io->stack_count + 1;
     io->rx_state = state;
     return 0;
@@ -282,14 +282,14 @@ KABUKI ticket_t VerifierEnterRxState (Verifier* io, RxState state) {
 
 /** Selects the given member for scanning.
     @warning Function does not check for null pointers. You have been warned. */
-KABUKI ticket_t VerifierPushScanHeader (Verifier* io, const uint_t* header) {
+KABUKI ticket_t LinearityPushScanHeader (Stack* io, const uint_t* header) {
     if (header == nullptr)
-        return Report (NullPointerError, header, VerifierTx (io));
+        return Report (NullPointerError, header, LinearityTx (io));
     uint_t verify_count = io->verify_count,
            stack_size    = io->stack_size;
     io->type_index = *header++;
     if (verify_count >= stack_size)
-        return Report (StackOverflowError, header, VerifierTx (io));
+        return Report (StackOverflowError, header, LinearityTx (io));
     
     // Move the current header to the scan stack
     const uint_t* current_header = const_cast<const uint_t*> (io->header);
@@ -302,7 +302,7 @@ KABUKI ticket_t VerifierPushScanHeader (Verifier* io, const uint_t* header) {
 
 /** Selects the given member for scanning.
     @warning Function does not check for null pointers. You have been warned. */
-KABUKI ticket_t VerifierPushScanHeader (Verifier* io,
+KABUKI ticket_t LinearityPushScanHeader (Stack* io,
                                         volatile const uint_t* header) {
     const uint_t** headers;
     uint_t verify_count = io->verify_count;
@@ -310,14 +310,14 @@ KABUKI ticket_t VerifierPushScanHeader (Verifier* io,
         return Report (StackOverflowError);
     
     headers = (const uint_t**)io->headers;
-    VerifierExitRxState (io);
+    LinearityExitRxState (io);
     io->header = *headers;
     verify_count = verify_count;
     return 0;
 }
 
 /** Pops a header off the scan stack. */
-KABUKI ticket_t VerifierPopScanHeader (Verifier* io) {
+KABUKI ticket_t LinearityPopScanHeader (Stack* io) {
     uint_t verify_count = io->verify_count;
     if (verify_count == 0)
         return Report (TooManyPopsError);
@@ -327,16 +327,16 @@ KABUKI ticket_t VerifierPopScanHeader (Verifier* io) {
 }
 
 /** Scans the next type header type. */
-KABUKI void VerifierScanNextType (Verifier* io) {
+KABUKI void LinearityScanNextType (Stack* io) {
     uint_t* header = const_cast<uint_t*> (io->header);
     if (header == nullptr) {
-        VerifierEnterRxState (io, RxScanningArgsState);
+        LinearityEnterRxState (io, RxScanningArgsState);
         return;
     }
 
     uint_t type = *header;
     if (type == NIL) {  // Done scanning args.
-        VerifierPopScanHeader (io);
+        LinearityPopScanHeader (io);
         return;
     }
     ++header;
@@ -346,13 +346,13 @@ KABUKI void VerifierScanNextType (Verifier* io) {
 }
 
 /** Streams a tx byte. */
-KABUKI byte VerifierStreamTxByte (Verifier* io) {
-    return UnityperStreamByte (VerifierTx (io));
+KABUKI byte LinearityStreamTxByte (Stack* io) {
+    return MonoidStreamByte (LinearityTx (io));
 }
 
 /** Scans the Rx buffer and marks the data as being ready to execute.
-    @param io The Verifier to scan. */
-KABUKI void VerifierScan (Verifier* io, Portal* input) {
+    @param io The Stack to scan. */
+KABUKI void LinearityScan (Stack* io, Portal* input) {
     uint_t        size,         //< The size of the ring buffer.
                   space,        //< The space left in the right buffer.
                   length,       //< The length of the ring buffer data.
@@ -367,10 +367,10 @@ KABUKI void VerifierScan (Verifier* io, Portal* input) {
     //uint64_t      temp_ui8;     //< Used for calculating AR8 and BK8 size.
     time_t        timestamp,    //< The last time when the verifier ran.
                   delta_t;      //< The time delta between the last timestamp.
-    Device      * device;       //< The current Device.
-    const Member* member;       //< The current Member.
-    const uint_t* header;       //< The current Member header being verified.
-    Uniprinter  * rx;           //< The rx Uniprinter.
+    Star      * device;       //< The current Star.
+    const Set* member;       //< The current Set.
+    const uint_t* header;       //< The current Set header being verified.
+    B  * rx;           //< The rx B.
     byte        * begin,        //< The beginning of the ring buffer.
                 * end,          //< The end of the ring buffer.
                 * start,        //< The start of the ring buffer data.
@@ -386,7 +386,7 @@ KABUKI void VerifierScan (Verifier* io, Portal* input) {
     }
 
     rx_state  = io->rx_state;
-    rx        = VerifierRx (io);
+    rx        = LinearityRx (io);
     size      = rx->size;
     hash      = io->hash;
     timestamp = TimestampNow ();
@@ -397,11 +397,11 @@ KABUKI void VerifierScan (Verifier* io, Portal* input) {
             delta_t *= -1;
     }
 
-    begin  = UniprinterBaseAddress (VerifierRx (io));
+    begin  = BBaseAddress (LinearityRx (io));
     end    = begin + size;
     start  = begin + rx->start;
     stop   = begin + rx->stop;
-    space  = RingBufferSpace (start, stop, size);
+    space  = MonoidSpace (start, stop, size);
     length = size - space + 1;
 
     printf ("\n\n| Scanning address 0x%p:\n| rx_state: %s\n| length: %u\n", io,
@@ -409,7 +409,7 @@ KABUKI void VerifierScan (Verifier* io, Portal* input) {
 
     // Manually load first byte:
     b = input->Pull ();
-    //b = UnityperStreamByte (rx);
+    //b = MonoidStreamByte (rx);
     hash = Hash16 (b, hash);
     *start = b;
     ++start;
@@ -430,7 +430,7 @@ KABUKI void VerifierScan (Verifier* io, Portal* input) {
                 PrintDebug ("string terminated.");
                 // Check if there is another argument to scan.
                 // 
-                VerifierExitRxState (io);
+                LinearityExitRxState (io);
                 return;
             }
             PrintDebug ("b != 0");
@@ -457,7 +457,7 @@ KABUKI void VerifierScan (Verifier* io, Portal* input) {
 
                 if ((b >> 7) != 1) {
                     Report (VarintOverflowError, io->header, start);
-                    VerifierEnterRxState (io, RxHandlingErrorState);
+                    LinearityEnterRxState (io, RxHandlingErrorState);
                     return;
                 }
 
@@ -468,34 +468,34 @@ KABUKI void VerifierScan (Verifier* io, Portal* input) {
         } else if (rx_state == RxScanningAddressState) {
             // When verifying an address, there is guaranteed to be an
             // io->device set. We are just looking for null return values
-            // from the Do (byte, Verifier*): const Member* function, 
-            // pushing Device(s) on to the Device stack, and looking for the 
+            // from the Do (byte, Stack*): const Set* function, 
+            // pushing Star(s) on to the Star stack, and looking for the 
             // first procedure call.
 
             PrintDebugHex ("| RxScanningAddressState", b);
             if (b == ESC) {     // Start processing a new ESC.
                 PrintDebug ("Start of ESC:");
                 ++io->header;
-                VerifierPushScanHeader (io, io->header);
+                LinearityPushScanHeader (io, io->header);
                 return;
             }
 
             device = io->device;
             io->operand = nullptr;
-            member = device->Op (b, nullptr);
+            member = device->Star (b, nullptr);
             if (member == nullptr) {
-                // Could be an invalid member or a Device Stack push.
+                // Could be an invalid member or a Star Stack push.
                 if (io->operand == nullptr) {
                     PrintDebug ("No member found.");
                     return;
                 }
-                //VerifierPushScan (io, io->operand);
+                //LinearityPushScan (io, io->operand);
             }
-            if (result = VerifierPushScanHeader (io, member->rx_header)) {
+            if (result = LinearityPushScanHeader (io, member->params)) {
                 PrintDebug ("Error reading address.");
                 return;
             }
-            VerifierEnterRxState (io, RxScanningArgsState);
+            LinearityEnterRxState (io, RxScanningArgsState);
             return;
         } else if (rx_state == RxScanningArgsState) {
             // In this state, a procedure has been called to scan on a valid
@@ -506,19 +506,19 @@ KABUKI void VerifierScan (Verifier* io, Portal* input) {
 
             device = io->device;
             if (device == nullptr) {
-                // Check if it is a Procedure Call or Device.
+                // Check if it is a Procedure Call or Star.
                 device = io->device;
                 io->operand = nullptr;
-                member = device->Op (b, nullptr);
+                member = device->Star (b, nullptr);
                 device = io->operand;
                 if (!device) {
                     if (member == nullptr) {
                         PrintError ("Invalid member");
-                        VerifierEnterRxState (io, RxLockedState);
+                        LinearityEnterRxState (io, RxLockedState);
                         return;
                     }
                     // Else it was a function call.
-                    VerifierEnterRxState (io, RxScanningArgsState);
+                    LinearityEnterRxState (io, RxScanningArgsState);
                     return;
                 }
             } else {
@@ -529,7 +529,7 @@ KABUKI void VerifierScan (Verifier* io, Portal* input) {
                 }
                 if (io->type_index == 0) {
                     PrintDebug ("Procedure verified.");
-                    VerifierExitRxState (io);
+                    LinearityExitRxState (io);
                 }
                 // Get next type.
                 type = *header;
@@ -543,18 +543,18 @@ KABUKI void VerifierScan (Verifier* io, Portal* input) {
                 if (type <= SOH) {
                     if (type < SOH) {
                         Report (ReadInvalidTypeError);
-                        VerifierEnterRxState (io, RxLockedState);
+                        LinearityEnterRxState (io, RxLockedState);
                     } else {
-                        VerifierEnterRxState (io, RxScanningAddressState);
+                        LinearityEnterRxState (io, RxScanningAddressState);
                     }
                 } else if (type == STX) {   // String type.
-                    VerifierEnterRxState (io, RxScanningStringState);
+                    LinearityEnterRxState (io, RxScanningStringState);
                 } else if (type < DBL)  {   // Plain-old-data types.
                     io->bytes_left = SizeOf (type);
-                    VerifierEnterRxState (io, RxScanningPodState);
+                    LinearityEnterRxState (io, RxScanningPodState);
                 } else if (type < UV8)  {   // Varint types
                     io->bytes_left = SizeOf (type);
-                    VerifierEnterRxState (io, RxScanningVarintState);
+                    LinearityEnterRxState (io, RxScanningVarintState);
                 } else if (type <= AR8) {
 
                 } else if (type == ESC) {
@@ -566,7 +566,7 @@ KABUKI void VerifierScan (Verifier* io, Portal* input) {
                 } else {    // It's a US
                     PrintDebug ("Scanning Unit");
                     io->bytes_left = kUnitSize;
-                    VerifierEnterRxState (io, RxScanningPodState);
+                    LinearityEnterRxState (io, RxScanningPodState);
                 }
                 
             }
@@ -578,7 +578,7 @@ KABUKI void VerifierScan (Verifier* io, Portal* input) {
         } else {    // parsing plain-old-data.
             if (io->bytes_left-- == 0) {
                 PrintDebug ("Done verifying POD type.");
-                VerifierScanNextType (io);
+                LinearityScanNextType (io);
             } else {
                 b = input->Pull ();
                 PrintDebugHex ("Loading next byte", b);
@@ -591,16 +591,16 @@ KABUKI void VerifierScan (Verifier* io, Portal* input) {
     rx->start = Diff (begin, start);
 }
 
-/** Returns true if the given Verifier contains the given address. */
-KABUKI bool VerifierContains (Verifier* io, void* address) {
+/** Returns true if the given Stack contains the given address. */
+KABUKI bool LinearityContains (Stack* io, void* address) {
     if (address < reinterpret_cast<byte*>(io))
         return false;
-    if (address > VerifierEndAddress (io)) return false;
+    if (address > LinearityEndAddress (io)) return false;
     return true;
 }
 
 /** Pushes a header onto the scan stack.*/
-KABUKI ticket_t VerifierPushHeader (Verifier* io, const uint_t* header) {
+KABUKI ticket_t LinearityPushHeader (Stack* io, const uint_t* header) {
     if (io->stack_count >= io->stack_size) {
         // Handle overflow cleanup:
         return Report (StackOverflowError, header);
@@ -612,35 +612,35 @@ KABUKI ticket_t VerifierPushHeader (Verifier* io, const uint_t* header) {
 }
 
 /** Gets the base address of the header stack. */
-KABUKI const uint_t* VerifierHeaderStack (Verifier* io) {
+KABUKI const uint_t* LinearityHeaderStack (Stack* io) {
     return reinterpret_cast<const uint_t*> (reinterpret_cast<byte*>
-        (io) + sizeof (Verifier) + io->stack_count);
+        (io) + sizeof (Stack) + io->stack_count);
 }
 
 /** Closes the current expression and cues it for execution. */
-KABUKI void VerifierCloseExpression (Verifier* io) {
+KABUKI void LinearityCloseExpression (Stack* io) {
     PrintDebug ("[FF]");
 }
 
 /** Cancels the current expression. */
-KABUKI void VerifierCancelExpression (Verifier* io) {
+KABUKI void LinearityCancelExpression (Stack* io) {
     PrintDebug ("[CAN]");
     //stopAddress = txOpen;
 }
 
 /** Cancels the current expression and writes zeros to the buffer. */
-KABUKI void VerifierScrubExpression (Verifier* io) {
+KABUKI void LinearityScrubExpression (Stack* io) {
     // Erase the buffer by writing zeros to it.
 
-    Uniprinter* rx = VerifierRx (io);
+    B* rx = LinearityRx (io);
     uint_t size = rx->size;
 
-    byte* begin = UniprinterBaseAddress (io, io->rx_offset),
+    byte* begin = BBaseAddress (io, io->rx_offset),
         *end = begin + rx->size,
         *start = begin + rx->start,
         *stop = begin + rx->stop;
 
-    uint_t buffer_space = RingBufferSpace (start, stop, size);
+    uint_t buffer_space = MonoidSpace (start, stop, size);
 
     if (start == stop) return; //< Nothing to do.
     if (start > stop) {
@@ -654,29 +654,29 @@ KABUKI void VerifierScrubExpression (Verifier* io) {
 }
 
 /** Calls the Read function for the Rx slot. */
-KABUKI const Member* Read (Verifier* io, const uint_t* esc, void** args) {
-    return reinterpret_cast<const Member*> (Read (VerifierRx (io), esc, 
+KABUKI const Set* Read (Stack* io, const uint_t* esc, void** args) {
+    return reinterpret_cast<const Set*> (Read (LinearityRx (io), esc, 
                                                   args));
 }
 
 /** Calls the Write function for the Tx slot. */
-KABUKI const Member* Write (Verifier* io, const uint_t* esc, void** args) {
-    return reinterpret_cast<const Member*> (Write (VerifierTx (io),
+KABUKI const Set* Write (Stack* io, const uint_t* esc, void** args) {
+    return reinterpret_cast<const Set*> (Write (LinearityTx (io),
                                                    io->return_address, esc,
                                                    args));
 }
 
 /** Calls the Write function for the Tx slot. */
-KABUKI const Member* Write (Verifier* io, const char* address,
+KABUKI const Set* Write (Stack* io, const char * address,
                             const uint_t* esc, void** args) {
-    return reinterpret_cast<const Member*> (Write (VerifierTx (io), address, 
+    return reinterpret_cast<const Set*> (Write (LinearityTx (io), address, 
                                                    esc, args));
 }
 
-/** Prints the given Verifier to the console. */
-KABUKI void Print (Verifier* io) {
+/** Prints the given Stack to the console. */
+KABUKI void Print (Stack* io) {
     PrintLine ('_');
-    printf ("| Verifier:    ");
+    printf ("| Stack:    ");
     if (io == nullptr) {
         printf ("null\n");
         PrintLine ("|", '_');

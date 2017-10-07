@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/impl/types.cpp
+    @file    ~/chinese_room/impl/types.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -146,8 +146,8 @@ KABUKI bool TypeIsValid (uint_t type) {
     return type > 31 ? false : true;
 }
 
-KABUKI const char** TypeStrings () {
-    static const char* kNames[] = {
+KABUKI const char ** TypeStrings () {
+    static const char * kNames[] = {
         "NIL",
         "SOH",
         "STX",
@@ -185,13 +185,13 @@ KABUKI const char** TypeStrings () {
     return kNames;
 }
 
-KABUKI bool TypeIsValid (const char* type_name) {
+KABUKI bool TypeIsValid (const char * type_name) {
     if (type_name < TypeStrings ()[0] || type_name > TypeStrings ()[BK8])
         return false;
     return true;
 }
 
-KABUKI const char* TypeString (uint_t type) {
+KABUKI const char * TypeString (uint_t type) {
     if (type >= kInvalidType)
         return "Invalid";
     return TypeStrings ()[type];
@@ -223,10 +223,10 @@ KABUKI bool CheckLastLetters (uint32_t const Token) {
     return CheckDelimiter (Token >> 8);
 }
 
-KABUKI byte ReadType (const char* s) {
+KABUKI byte ReadType (const char * s) {
     uint32_t token = * ((uint32_t*)s);
 
-    byte index = (byte)token;
+    char_t index = (byte)token;
 
     switch (index)
     {
@@ -342,7 +342,7 @@ KABUKI bool TypeIsArray (uint_t type) {
     return (type >= AR1) && (type <= AR8);
 }
 
-KABUKI bool TypeIsBook (uint_t type) {
+KABUKI bool TypeIsBag (uint_t type) {
     return (type >= BK8) && (type <= BK2);
 }
 

@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/timestamp.h
+    @file    ~/chinese_room/include/timestamp.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -66,7 +66,7 @@ KABUKI int NumDaysMonth (time_t t);
 KABUKI int NumDaysMonth (int month, int year = 1);
 
 /** Gets the abbreviated day of the week string of the given day number 1-7. */ 
-KABUKI const char* DayOfWeek (int day_number);
+KABUKI const char * DayOfWeek (int day_number);
 
 /** Gets the abbreviated day of the week string of the given day number 1-7. */ 
 KABUKI char DayOfWeekInitial (int day_number);
@@ -97,7 +97,7 @@ KABUKI int CompareTimes (time_t t, int year, int month, int day,
     @16:20:00
     @endcode
 */
-KABUKI const char* ParseTimeString (const char* input, int* hour, int* minute, int* second);
+KABUKI const char * ParseTimeString (const char * input, int* hour, int* minute, int* second);
 
 /** Parses a time or time delta from a a string starting with an '@' sign..
     @param hour   The location to write the number of hours to.
@@ -114,13 +114,13 @@ KABUKI char* ParseTime (char* input, int* hour, int* minute, int* second) {
     @todo Add new and auto-detect formats.
           1/2/99,  1/2/1999, 1-2-1999, 2017-8-12
 */
-KABUKI const char* ParseTimeString (const char* input, tm* moment);
+KABUKI const char * ParseTimeString (const char * input, tm* moment);
 
 /** Converts a keyboard input to a human-readable manipulatable form. */
 KABUKI char* ParseTime (char* input, tm* result);
 
 /** Converts a keyboard input to a time_t. */
-KABUKI const char* ParseTimeString (const char* input, time_t& result);
+KABUKI const char * ParseTimeString (const char * input, time_t& result);
 
 /** Converts a keyboard input to a time_t. */
 KABUKI char* ParseTime (char* input, time_t& result);

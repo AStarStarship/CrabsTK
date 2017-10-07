@@ -1,6 +1,6 @@
 /** The Chinese Room
-    @version   1.0a
-    @file      ~/Library/chinese_room.h
+    @version 0.x
+    @file    ~/chinese_room/include/mirror.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -15,13 +15,35 @@
              permissions and limitations under the License.
 */
 
-#ifndef CHINESE_ROOM_H
-#define CHINESE_ROOM_H
+#ifndef CHINESE_ROOM_REFLECTION_H
+#define CHINESE_ROOM_REFLECTION_H
 
-#include "console.h"
-#include "utils.h"
-#include "symbol_table.h"
-#include "book.h"
-#include <this_room.h>
+#include "portal.h"
+#include "monoid.h"
 
-#endif  //< CHINESE_ROOM_H
+namespace _ {
+
+class Reflection : public Portal {
+    public:
+
+    Reflection ();
+
+    virtual void Prime ();
+
+    virtual uint_t Length ();
+
+    virtual void Feed (byte b);
+
+    virtual byte Pull ();
+
+    private:
+
+    Monoid* io;     //< The async monoid.
+};
+
+ticket_t Read (Reflection* io, const uint_t* header, void** args);
+
+ticket_t Write (Reflection* io, const uint_t* header, void** args);
+
+}       //< namespace _
+#endif  //< CHINESE_ROOM_REFLECTION_H

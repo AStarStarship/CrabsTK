@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/types.h
+    @file    ~/chinese_room/include/types.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -55,10 +55,10 @@ typedef enum {
     AR2   = 24, //< 24. An array of up to 2^16-1 like primitive types 3-16.
     AR4   = 25, //< 25. An array of up to 2^32-1 like primitive types 3-16.
     AR8   = 26, //< 26. An array of up to 2^32-1 like primitive types 3-16.
-    ESC   = 27, //< 27. An atomic escape sequence of I2P procedure calls.
-    BK8   = 28, //< 28. A book with up to 2^31-2 members and 2^64-1 bytes data.
-    BK4   = 29, //< 29. A book with up to 2^15-2 members and 2^32-1 bytes data.
-    BK2   = 30, //< 30. A book with up to 2^7-2 members and 2^16-1 bytes data.
+    ESC   = 27, //< 27. An atomic escape sequence of SCRIPT procedure calls.
+    BK8   = 28, //< 28. A bag with up to 2^31-2 members and 2^64-1 bytes data.
+    BK4   = 29, //< 29. A bag with up to 2^15-2 members and 2^32-1 bytes data.
+    BK2   = 30, //< 30. A bag with up to 2^7-2 members and 2^16-1 bytes data.
     US    = 31, //< 31. A unit separator for breaking files and data into 
                 //<     transmission blocks.
 } TType;
@@ -92,13 +92,13 @@ KABUKI uintptr_t TypeAlign (byte* ptr, uint_t type);
 KABUKI bool TypeIsValid (uint_t type);
 
 /** Returns a pointer to an array of pointers to the type names.*/
-KABUKI const char** TypeStrings ();
+KABUKI const char ** TypeStrings ();
 
 /** Returns true if the TypeName is one of the ErrorStrings. */
-KABUKI bool TypeIsValid (const char* type_name);
+KABUKI bool TypeIsValid (const char * type_name);
 
 /** Returns the name of the given type. */
-KABUKI const char* TypeString (uint_t type);
+KABUKI const char * TypeString (uint_t type);
 
 /** Checks to see if the given byte is a delimiter. */
 KABUKI bool CheckDelimiter (char const c);
@@ -113,7 +113,7 @@ KABUKI bool CheckLastLetters (uint32_t const Token);
 
 /** Returns the type from the given index.
     @warning Untested. */
-KABUKI byte ReadType (const char* s);
+KABUKI byte ReadType (const char * s);
 
 /** Masks off the lower 5-LSb to get the type. */
 KABUKI byte MaskType (byte value);
@@ -121,16 +121,16 @@ KABUKI byte MaskType (byte value);
 /** Returns true if this type has a buffer. */
 KABUKI bool TypeHasLength (uint_t type);
 
-/*< Returns true if the given type is an Array type. */
+/** Returns true if the given type is an Array type. */
 KABUKI bool TypeIsArray (uint_t type);
 
-/*< Returns true if the given type is a Book type. */
-KABUKI bool TypeIsBook (uint_t type);
+/** Returns true if the given type is a Bag type. */
+KABUKI bool TypeIsBag (uint_t type);
 
 /** Returns true if this type has a buffer. */
 KABUKI bool TypeIsHierarchical (uint_t type);
 
-/*< Converts from a 2's complement integer to a signed varint.
+/** Converts from a 2's complement integer to a signed varint.
     @param value A 2's complement integer.
     @return An signed varint.
     A signed varint is an uncomplemented signed integer with the sign in the 
@@ -148,7 +148,7 @@ KABUKI T PackSignedVarint (T value) {
     return value << 1;
 }
 
-/*< Converts from a signed varint to a 2's complement signed integer.
+/** Converts from a signed varint to a 2's complement signed integer.
     @param  A signed integer casted as an unsigned integer.
     @return Returns a standard signed integer cased as unsigned.
     A varint is an uncomplemented signed integer with the sign in the LSb. */

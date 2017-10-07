@@ -75,7 +75,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Workspace\kabuki-toolkit\source\kabuki\chinese_room\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Workspace\kabuki-toolkit\source\kabuki\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -117,37 +117,37 @@
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\array.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\ascii.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\assembly.h" />
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\book.h" />
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\chinese_room.h" />
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\bag.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\color.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\config.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\console.h" />
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\device.h" />
+    <ClInclude Include="..\..\source\kabuki\chinese_room\include\operation.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\dictionary.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\door.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\error.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\event.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\exceptions.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\global.h" />
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\include.h" />
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\module.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\iterator.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\log.h" />
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\member.h" />
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\mirror.h" />
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\set.h" />
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\reflection.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\portal.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\room.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\slot.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\stdafx.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\symbol_table.h" />
+    <ClInclude Include="..\..\source\kabuki\chinese_room\include\targetver.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\terminal.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\timestamp.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\types.h" />
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\uniprinter.h" />
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\unityper.h" />
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\subset.h" />
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\monoid.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\utf.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\utf_string.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\utils.h" />
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\verifier.h" />
+    <ClInclude Include="..\..\source\kabuki\chinese_room\include\stack.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\wall.h" />
   </ItemGroup>
   <ItemGroup>
@@ -172,8 +172,12 @@
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\uniprinter.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\unityper.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\utils.cpp" />
-    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\verifier.cpp" />
+    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\set.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\wall.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\readme.md" />
+    <None Include="..\..\source\kabuki\chinese_room\readme.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

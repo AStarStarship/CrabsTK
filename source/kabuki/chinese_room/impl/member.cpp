@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/Member.h
+    @file    ~/chinese_room/include/Set.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -15,7 +15,7 @@
              permissions and limitations under the License.
 */
 
-#include "../include/member.h"
+#include "../include/set.h"
 #include "../include/error.h"
 
 namespace _ {
@@ -32,13 +32,13 @@ KABUKI uintptr_t Index (const void* ptr) {
     return reinterpret_cast<uintptr_t>(ptr);
 }
 
-KABUKI uintptr_t GetNumMembers (const Member* m) {
-    return Index (m->rx_header);
+KABUKI uintptr_t GetNumMembers (const Set* m) {
+    return Index (m->input);
 }
 
-KABUKI const Member* ReadError () {
+KABUKI const Set* ReadError () {
     //return DeviceMember<"Read"> ();
-    static const Member error = { "Read",
+    static const Set error = { "Read",
         0,
         0,
         0
@@ -46,9 +46,9 @@ KABUKI const Member* ReadError () {
     return &error;
 }
 
-KABUKI const Member* WriteError () {
+KABUKI const Set* WriteError () {
     //return DeviceMember<"Write"> ();
-    static const Member error = { "Write",
+    static const Set error = { "Write",
         0,
         0,
         0
@@ -56,9 +56,9 @@ KABUKI const Member* WriteError () {
     return &error;
 }
 
-KABUKI const Member* DeviceStackOverflowError () {
-    //return DeviceMember<"Device stack overflow"> ();
-    static const Member error = { "Device stack overflow",
+KABUKI const Set* DeviceStackOverflowError () {
+    //return DeviceMember<"Star stack overflow"> ();
+    static const Set error = { "Star stack overflow",
         0,
         0,
         0
@@ -66,9 +66,9 @@ KABUKI const Member* DeviceStackOverflowError () {
     return &error;
 }
 
-KABUKI const Member* InvalidMember () {
+KABUKI const Set* InvalidMember () {
     //return DeviceMember<"Invalid member index"> ();
-    static const Member error = { "Invalid member index",
+    static const Set error = { "Invalid member index",
         0,
         0,
         0
@@ -76,22 +76,22 @@ KABUKI const Member* InvalidMember () {
     return &error;
 }
 
-KABUKI void Print (const Member* m) {
+KABUKI void Print (const Set* m) {
     if (m == nullptr)
         return;
 
-    const uint_t* tx_header = m->tx_header;
+    const uint_t* result = m->result;
 
-    if (Index (tx_header) < 256) {
-        // Print Member Device
+    if (Index (result) < 256) {
+        // Print Set Star
         std::cout << "\n| NumMembers:  " << GetNumMembers (m)
             << "\n| Description: " << m->description << '\n';
     }
 
-    std::cout << "| Name:          " << m->key;
-    PrintEsc (m->rx_header);
+    std::cout << "| Name:          " << m->name;
+    PrintEsc (m->input);
     std::cout << '\n';
-    PrintEsc (m->tx_header);
+    PrintEsc (m->result);
     std::cout << "\n| Description: " << m->description << '\n';
 }
 

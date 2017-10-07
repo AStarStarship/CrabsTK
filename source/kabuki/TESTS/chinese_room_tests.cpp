@@ -18,7 +18,7 @@
 #include <CppUTest/CommandLineTestRunner.h>
 #include <CppUTest/TestHarness.h>
 
-#include <_/chinese_room.h>
+#include <chinese_room/include/module.h>
 using namespace _;
 
 TEST_GROUP (ChineseRoomTests)
@@ -53,11 +53,11 @@ TEST (ChineseRoomTests, UtilsTests)
     }
 }
 
-TEST (ChineseRoomTests, VerifierTests) {
-    std::cout << "| Running VerifierTests...\n";
+TEST (ChineseRoomTests, LinearityTests) {
+    std::cout << "| Running LinearityTests...\n";
 
     Root root;
-    Verifier* io = VerifierInit (Buffer<255> (), 255, 4, &root);
+    Linearity* io = LinearityInit (Buffer<255> (), 255, 4, &root);
     Print (io);
 
     void*         args[3];
@@ -70,15 +70,15 @@ TEST (ChineseRoomTests, VerifierTests) {
     int si4_found;
     float flt_found;
     io->return_address = "A";
-    printf ("\n| Attempting to print to 0x%p\n", VerifierTx (io));
-    const Member* m = Write (io, "C", esc, Args (args, &stx_expected,
+    printf ("\n| Attempting to print to 0x%p\n", LinearityTx (io));
+    const Set* m = Write (io, "C", esc, Args (args, &stx_expected,
                                                  &si4_expected, &flt_expected));
-    PrintMemory (io, VerifierEndAddress (io));
+    PrintMemory (io, LinearityEndAddress (io));
     Print (io);
-    Mirror mirror;       //< @todo fix me!
+    Reflection mirror;       //< @todo fix me!
     //Portal* p = dynamic_cast<Portal*>(&mirror);   //< Not working?
     Portal* p = reinterpret_cast<Portal*>(&mirror);
-    VerifierScan (io, p);
+    LinearityScan (io, p);
     system ("PAUSE");
     CHECK_EQUAL (0, Read (io, esc, Args (args, &stx_found,
                                          &si4_found, &flt_found)));
@@ -91,7 +91,7 @@ TEST (ChineseRoomTests, RoomTests) {
 
 TEST (ChineseRoomTests, SymbolTableTests) {
     std::cout << "|  - Running SymbolTableTest1...\n";
-    byte index;
+    char_t index;
     SymbolTable* rt = SymbolTableInit (Buffer<0, 128> (), 8, 128);
 
     CHECK (rt != nullptr)
@@ -145,61 +145,61 @@ TEST (ChineseRoomTests, SymbolTableTests) {
     CHECK_EQUAL (index, kSymbolTableFull)
 }
 
-TEST (ChineseRoomTests, BookTests) {
-    PrintLineBreak ("|  + Running BookTests\n", 10);
+TEST (ChineseRoomTests, BagTests) {
+    PrintLineBreak ("|  + Running BagTests\n", 10);
 
-    PrintLineBreak ("|  - Running Book2...\n", 5, ' ');
-    byte index;
-    Book2* book = Init2 (Buffer<0, 248 - sizeof (Book2)> (), 8, 256, 128);
+    PrintLineBreak ("|  - Running BagInit...\n", 5, ' ');
+    char_t index;
+    Bag2* bag = Init2 (Buffer<0, 248 - sizeof (Bag2)> (), 8, 256, 128);
 
-    CHECK (book != nullptr)
+    CHECK (bag != nullptr)
 
-    CHECK_EQUAL (0, index = Add2 (book, "D", (byte)0xFF))
-    Print (book);
+    CHECK_EQUAL (0, index = Add2 (bag, "D", (byte)0xFF))
+    BagPrint (bag);
     CHECK_EQUAL (0, index)
-    CHECK_EQUAL (0, Find2 (book, "D"))
+    CHECK_EQUAL (0, Find2 (bag, "D"))
 
-    index = Add2 (book, "C", (byte)0xFF);
+    index = Add2 (bag, "C", (byte)0xFF);
     CHECK_EQUAL (1, index)
-    CHECK_EQUAL (0, Find2 (book, "D"))
-    CHECK_EQUAL (1, Find2 (book, "C"))
+    CHECK_EQUAL (0, Find2 (bag, "D"))
+    CHECK_EQUAL (1, Find2 (bag, "C"))
 
-    index = Add2 (book, "B", (byte)0xFF);
+    index = Add2 (bag, "B", (byte)0xFF);
     CHECK_EQUAL (2, index)
-    CHECK_EQUAL (0, Find2 (book, "D"))
-    CHECK_EQUAL (1, Find2 (book, "C"))
-    CHECK_EQUAL (2, Find2 (book, "B"))
+    CHECK_EQUAL (0, Find2 (bag, "D"))
+    CHECK_EQUAL (1, Find2 (bag, "C"))
+    CHECK_EQUAL (2, Find2 (bag, "B"))
 
-    index = Add2 (book, "A", (byte)0xFF);
+    index = Add2 (bag, "A", (byte)0xFF);
     CHECK_EQUAL (3, index)
-    CHECK_EQUAL (0, Find2 (book, "D"))
-    CHECK_EQUAL (1, Find2 (book, "C"))
-    CHECK_EQUAL (2, Find2 (book, "B"))
-    CHECK_EQUAL (3, Find2 (book, "A"))
+    CHECK_EQUAL (0, Find2 (bag, "D"))
+    CHECK_EQUAL (1, Find2 (bag, "C"))
+    CHECK_EQUAL (2, Find2 (bag, "B"))
+    CHECK_EQUAL (3, Find2 (bag, "A"))
 
-    index = Add2 (book, "abc", (byte)0xFF);
+    index = Add2 (bag, "abc", (byte)0xFF);
     CHECK_EQUAL (4, index)
-    CHECK_EQUAL (4, Find2 (book, "abc"))
+    CHECK_EQUAL (4, Find2 (bag, "abc"))
 
-    index = Add2 (book, "bac", (byte)0xFF);
+    index = Add2 (bag, "bac", (byte)0xFF);
     CHECK_EQUAL (5, index)
-    CHECK_EQUAL (4, Find2 (book, "abc"))
-    CHECK_EQUAL (5, Find2 (book, "bac"))
+    CHECK_EQUAL (4, Find2 (bag, "abc"))
+    CHECK_EQUAL (5, Find2 (bag, "bac"))
 
-    index = Add2 (book, "cba", (byte)0xFF);
+    index = Add2 (bag, "cba", (byte)0xFF);
     CHECK_EQUAL (6, index)
-    CHECK_EQUAL (4, Find2 (book, "abc"))
-    CHECK_EQUAL (5, Find2 (book, "bac"))
-    CHECK_EQUAL (6, Find2 (book, "cba"))
+    CHECK_EQUAL (4, Find2 (bag, "abc"))
+    CHECK_EQUAL (5, Find2 (bag, "bac"))
+    CHECK_EQUAL (6, Find2 (bag, "cba"))
 
-    index = Add2 (book, "cab", (byte)0xFF);
+    index = Add2 (bag, "cab", (byte)0xFF);
     CHECK_EQUAL (7, index)
-    CHECK_EQUAL (4, Find2 (book, "abc"))
-    CHECK_EQUAL (5, Find2 (book, "bac"))
-    CHECK_EQUAL (6, Find2 (book, "cba"))
-    CHECK_EQUAL (7, Find2 (book, "cab"))
+    CHECK_EQUAL (4, Find2 (bag, "abc"))
+    CHECK_EQUAL (5, Find2 (bag, "bac"))
+    CHECK_EQUAL (6, Find2 (bag, "cba"))
+    CHECK_EQUAL (7, Find2 (bag, "cab"))
 
-    index = Add2 (book, "test", (byte)0xFF);
+    index = Add2 (bag, "test", (byte)0xFF);
     CHECK_EQUAL (index, -1)
 }
 
@@ -215,7 +215,7 @@ TEST (ChineseRoomTests, ReadWriteTests) {
     char found_string1[kSlotSize],
          found_string2[kSlotSize];
 
-    Unityper* tx = UnityperInit (Buffer<0, 128 + kSlotHeaderSize> (), 128 + kSlotHeaderSize);
+    Monoid* tx = MonoidInit (Buffer<0, 128 + kSlotHeaderSize> (), 128 + kSlotHeaderSize);
 
     CHECK_EQUAL (0, Write (tx, EmptyString, Esc<2, STX, 5, STX, 5> (),
                            Args (args, expected_string1, expected_string2)))
@@ -324,7 +324,7 @@ TEST (ChineseRoomTests, ReadWriteTests) {
     uint64_t ui8_found = 0;
     double dbl_found = 0.0;
 
-    tx = UnityperInit (Buffer<0, 128 + kSlotHeaderSize> (), 128 + kSlotHeaderSize);
+    tx = MonoidInit (Buffer<0, 128 + kSlotHeaderSize> (), 128 + kSlotHeaderSize);
 
     CHECK_EQUAL (0, Write (tx, EmptyString, Esc<5, TMU, SI8, SI8, UI8, DBL> (),
            Args (args, &tmu_expected, &si8_p_expected, &si8_n_expected,

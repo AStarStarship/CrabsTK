@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/mirror.h
+    @file    stdafx.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -15,36 +15,26 @@
              permissions and limitations under the License.
 */
 
-#ifndef CHINESE_ROOM_MIRROR_H
-#define CHINESE_ROOM_MIRROR_H
+#pragma once
 
-#include "portal.h"
-#include "uniprinter.h"
+#if PLATFORM == WIN32 || PLATFORM == WINDOWS
+#include "targetver.h"
+#endif
 
-namespace _ {
-
-class Mirror: public Portal
-{
-    public:
-
-    Mirror ();
-
-    virtual void Prime ();
-
-    virtual uint_t Length ();
-
-    virtual void Feed (byte b);
-
-    virtual byte Pull ();
-
-    private:
-
-    Uniprinter* io;     //< The uniprinter we're writing to.
-};
-
-ticket_t Read (Mirror* io, const uint_t* header, void** args);
-
-ticket_t Write (Mirror* io, const uint_t* header, void** args);
-
-}       //< namespace _
-#endif  //< CHINESE_ROOM_MIRROR_H
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+#include <stdint.h>
+#include <cstdint>
+#include <iostream>
+#include <chrono>
+#include <float.h>
+#include <cstdint>
+#include <cstdlib>
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <locale>
+#include <exception>
+#include <math.h>
+#include <string>

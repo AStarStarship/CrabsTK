@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/ipml/timestamp.cpp
+    @file    ~/chinese_room/ipml/timestamp.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -115,8 +115,8 @@ KABUKI int NumDaysMonth (int month, int year = 1) {
     return days_per_month[month];
 }
 
-KABUKI const char* DayOfWeek (int day_number) {
-    static const char* days[] = { "Sunday", "Monday", "Tuesday", "Wednesday",
+KABUKI const char * DayOfWeek (int day_number) {
+    static const char * days[] = { "Sunday", "Monday", "Tuesday", "Wednesday",
         "Thursday", "Friday", "Saturday",
         "Invalid" };
     if (day_number < 0)
@@ -222,7 +222,7 @@ KABUKI int CompareTimes (time_t t, int year, int month, int day,
     return count;
 }
 
-KABUKI const char* ParseTimeString (const char* input, int* hour, int* minute, int* second) {
+KABUKI const char * ParseTimeString (const char * input, int* hour, int* minute, int* second) {
     if (input == nullptr)
         return nullptr;
     std::cout << input << ' ';
@@ -395,7 +395,7 @@ KABUKI char* ParseTime (char* input, int* hour, int* minute, int* second) {
     return (char*)ParseTimeString (input, hour, minute, second);
 }
 
-KABUKI const char* ParseTimeString (const char* input, tm* moment) {
+KABUKI const char * ParseTimeString (const char * input, tm* moment) {
     if (input == nullptr)
         return nullptr;
     if (moment == nullptr)
@@ -405,7 +405,7 @@ KABUKI const char* ParseTimeString (const char* input, tm* moment) {
     input = SkipLeadingZerosString (input);
     char c = *input,    //< The current char.
         delimiter;     //< The delimiter.
-    const char* end;    //< Might not need
+    const char * end;    //< Might not need
 
     int hour = 0,
         minute = 0,
@@ -609,7 +609,7 @@ KABUKI char* ParseTime (char* input, tm* result) {
     return (char*)ParseTimeString (input, result);
 }
 
-KABUKI const char* ParseTimeString (const char* input, time_t& result) {
+KABUKI const char * ParseTimeString (const char * input, time_t& result) {
     time_t t;
     time (&t);
     tm* moment = localtime (&t);

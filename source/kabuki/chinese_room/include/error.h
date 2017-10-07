@@ -1,14 +1,13 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/error.h
+    @file    ~/chinese_room/include/error.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
-                            All right reserved (R).
-             Licensed under the Apache License, Version 2.0 (the "License"); 
-             you may not use this file except in compliance with the License. 
-             You may obtain a copy of the License at
-                        http://www.apache.org/licenses/LICENSE-2.0
-             Unless required by applicable law or agreed to in writing, software
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
@@ -46,7 +45,7 @@ typedef enum {
     NoDevceSelectedError,
     NoDeviceInSelectedIndexError,
     StackOverflowError,
-    InvalidNumBookPagesError,
+    InvalidNumBagPagesError,
     TooManyPopsError,
     RxStringBufferOverflowError,
     RxHandlingErrorError,
@@ -61,7 +60,7 @@ typedef enum {
 } Error;
 
 /** Returns the text label of the Error. */
-KABUKI const char* ErrorString (Error e);
+KABUKI const char * ErrorString (Error e);
 
 /** An array of error strings.
     
@@ -98,6 +97,7 @@ class ErrorList {
     ticket_t Report (Error e, const uint_t* header = nullptr, byte offset = 0,
                      void* source = nullptr);
 
+    /** Gets a pointer to the offsets. */
     byte* GetOffsets ();
 
     const uint_t** GetHeaders ();
@@ -139,7 +139,7 @@ KABUKI ticket_t Report (Error e, const uint_t* header);
 KABUKI ticket_t Report (Error e, const uint_t* header, void* source);
 
 /** Reports an error for later handling. */
-KABUKI ticket_t Report (Error e, volatile const uint_t* header,
+KABUKI ticket_t Report (Error e, volatile const uint_t* header, 
                         byte* source);
 
 /** Prints out an error report to the stdout.

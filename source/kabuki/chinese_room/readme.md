@@ -12,11 +12,11 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 ## Development
-The current module under construction is the Uniprinter scanner. The protocol is doing some expensive hashing of the serial data and that is not going to work well for interprocess communication (IPC). The primary need is to get the  UART/SPI/etc communication working but IPC needs to kept in mind. It is too expensive and unnecessary to has interprocess data because it is not being  sent over an unstable connection.
+The current module under construction is the B scanner. The protocol is doing some expensive hashing of the serial data and that is not going to work well for interprocess communication (IPC). The primary need is to get the  UART/SPI/etc communication working but IPC needs to kept in mind. It is too expensive and unnecessary to has interprocess data because it is not being  sent over an unstable connection.
 
 ## Todo
-* Finish Book data RW functions.
-* Finish Verifier.
+* Finish Bag data RW functions.
+* Finish Linearity.
 * Serial PC/mbed demo.
 * Look into replacing code with array.h functions (if possible).
 

@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/impl/utils.cpp
+    @file    ~/chinese_room/impl/utils.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -23,60 +23,60 @@ namespace _ {
 static const char ErrorHeader[] = "| Error: \0",
                   VerticalBar[] = "| \0";
 
-KABUKI void PrintLine (const char* s) {
+void PrintLine (const char * s) {
     std::cout << '\n' << s << '\n';
 }
 
-KABUKI void PrintDebug (const char* message, 
-                        const char* end_string   = NewLineString,
-                        const char* begin_string = VerticalBar) {
+void PrintDebug (const char * message, 
+                        const char * end_string   = NewLineString,
+                        const char * begin_string = VerticalBar) {
 #if DEBUG
     std::cout << begin_string << message << end_string;
 #endif
 }
 
-KABUKI void PrintError (const char* message,
-                             const char* end_string = NewLineString) {
+void PrintError (const char * message,
+                             const char * end_string = NewLineString) {
 #if DEBUG
     std::cout << ErrorHeader << message << end_string;
 #endif
 }
 
-KABUKI void PrintDebugPointer (const char* message, const void* address) {
+void PrintDebugPointer (const char * message, const void* address) {
 #if DEBUG
     printf ("| Error at address 0x%p: %s\n", address, message);
 #endif
 }
 
-KABUKI void PrintDebugHex (const char* message, char value) {
+void PrintDebugHex (const char * message, char value) {
 #if DEBUG
     printf ("| %s '%c':0x%x\n", message, value, value);
 #endif
 }
 
 template<typename T>
-KABUKI void PrintDebugSignedHex (const char* message, T value) {
+void PrintDebugSignedHex (const char * message, T value) {
 #if DEBUG
     printf ("| %s:'%i':0x%x\n", message, value, value);
 #endif
 }
 
 template<typename T>
-KABUKI void PrintDebugUnsignedHex (const char* message, T value) {
+void PrintDebugUnsignedHex (const char * message, T value) {
 #if DEBUG
     printf ("%s:'%u':0x%x\n", message, value, value);
 #endif
 }
 
 template<typename T>
-KABUKI void PrintDebugError (const char* message, T expected, T found) {
+void PrintDebugError (const char * message, T expected, T found) {
 #if DEBUG
     std::out << ErrorHeader << "expecting " << expected << " and found " 
              << found << " attempting: " << message;
 #endif
 }
 
-KABUKI int StringLength (const char* s, char delimiter = 0) {
+int StringLength (const char * s, char delimiter = 0) {
     if (s == nullptr)
         return -1;
     int count = 0;
@@ -87,21 +87,21 @@ KABUKI int StringLength (const char* s, char delimiter = 0) {
     return count;
 }
 
-KABUKI const char* DuplicateString (const char* s, char delimiter = 0) {
+const char * DuplicateString (const char * s, char delimiter = 0) {
     int length = StringLength (s);
     if (length < 0)
         s = "Error duplicating string.";
-    char* buffer = new char[length + 1];
+    char * buffer = new char[length + 1];
     memcpy_s (buffer, length + 1, s, length + 1);
     return buffer;
 }
 
-KABUKI void DestroyDuplicate (const byte* s) {
+void DestroyDuplicate (const byte* s) {
     if (s == nullptr) return;
 }
 
 template<typename T, typename U>
-KABUKI T* New (U const size, U min_size) {
+T* New (U const size, U min_size) {
     if (size < min_size) return nullptr;
     byte* buffer;
     try {
@@ -115,39 +115,39 @@ KABUKI T* New (U const size, U min_size) {
     }
 }
 
-KABUKI void Delete (void* buffer) {
+void Delete (void* buffer) {
     if (buffer == nullptr) return;
     delete[] buffer;
 }
 
-KABUKI byte NibbleToLowerCaseHex (byte b) {
+byte NibbleToLowerCaseHex (byte b) {
     if (b > 15) return 'f';
     if (b > 9)
         return b + ('a' - 10);
     return b + '0';
 }
 
-KABUKI byte NibbleToUpperCaseHex (byte b) {
+byte NibbleToUpperCaseHex (byte b) {
     if (b > 15) return 'F';
     if (b > 9) return b + ('A' - 10);
     return b + '0';
 }
 
-KABUKI uint16_t ToLowerCaseHex (byte b) {
+uint16_t ToLowerCaseHex (byte b) {
     uint16_t value = NibbleToLowerCaseHex (b & 0xf);
     value = value << 8;
     value |= NibbleToLowerCaseHex (b >> 4);
     return value;
 }
 
-KABUKI uint16_t ToUpperCaseHex (byte b) {
+uint16_t ToUpperCaseHex (byte b) {
     uint16_t value = NibbleToUpperCaseHex (b & 0xf);
     value = value << 8;
     value |= NibbleToUpperCaseHex (b >> 4);
     return value;
 }
 
-KABUKI int ToByte (byte c) {
+int ToByte (byte c) {
     //printf ("toByte (byte c): %c ", c);
     if (c < '0') return -1;
     if (c >= 'a') {
@@ -164,7 +164,7 @@ KABUKI int ToByte (byte c) {
     return c - '0';
 }
 
-KABUKI int ToByte (uint16_t h) {
+int ToByte (uint16_t h) {
     // Note: This works but the upper and lower are switched... pay no 
     // attention to the man behind the curtain #HandWave
     //printf ("toByte (uint16_t c): %c%c\n", (byte) (h << 8), (byte)h);
@@ -181,24 +181,24 @@ KABUKI int ToByte (uint16_t h) {
     return lowerValue | (upperValue << 4);
 }
 
-KABUKI uintptr_t Diff (void* begin, void* end) {
+uintptr_t Diff (void* begin, void* end) {
     return static_cast<uintptr_t>(reinterpret_cast<byte*> (end) -
                                   reinterpret_cast<byte*> (begin));
 }
 
-KABUKI uintptr_t Diff (const void* begin, const void* end) {
+uintptr_t Diff (const void* begin, const void* end) {
     byte* start = static_cast<byte*> (const_cast<void*> (begin)),
         *stop = static_cast<byte*> (const_cast<void*> (end));
     return static_cast<uintptr_t> (stop - start);
 }
 
-KABUKI hash16_t Hash16 (char c, hash16_t hash) {
+hash16_t Hash16 (char c, hash16_t hash) {
     //PrintHex (c);
     hash16_t cprime = c * 65521;
     return cprime + hash;
 }
 
-KABUKI hash16_t Hash16 (const char* s, hash16_t hash = 65521) {
+hash16_t Hash16 (const char * s, hash16_t hash = 65521) {
     byte c = *s;
     while (c) {
         hash = Hash16 (c, hash);
@@ -208,12 +208,12 @@ KABUKI hash16_t Hash16 (const char* s, hash16_t hash = 65521) {
     return hash;
 }
 
-KABUKI hash32_t Hash32 (char c, hash32_t hash) {
+hash32_t Hash32 (char c, hash32_t hash) {
     hash32_t cprime = c * 4294967291;
     return cprime + hash;
 }
 
-KABUKI hash16_t Hash32 (const char* s, hash32_t hash = 4294967291) {
+hash16_t Hash32 (const char * s, hash32_t hash = 4294967291) {
     byte c = *s;
     while (c) {
         hash = Hash32 (c, hash);
@@ -223,12 +223,12 @@ KABUKI hash16_t Hash32 (const char* s, hash32_t hash = 4294967291) {
     return hash;
 }
 
-KABUKI hash64_t Hash64 (char c, hash64_t hash) {
+hash64_t Hash64 (char c, hash64_t hash) {
     hash64_t cprime = c * 18446744073709551557;
     return cprime + hash;
 }
 
-KABUKI hash64_t Hash64 (const char* s, hash64_t hash = 18446744073709551557) {
+hash64_t Hash64 (const char * s, hash64_t hash = 18446744073709551557) {
     byte c = *s;
     while (c) {
         hash = Hash64 (c, hash);
@@ -239,7 +239,7 @@ KABUKI hash64_t Hash64 (const char* s, hash64_t hash = 18446744073709551557) {
 }
 
 
-KABUKI timestamp_t TimestampNow () {
+timestamp_t TimestampNow () {
     using namespace std::chrono;
     time_point<system_clock> now;
     auto duration = now.time_since_epoch ();
@@ -247,14 +247,14 @@ KABUKI timestamp_t TimestampNow () {
     return millis;
 }
 
-KABUKI void PrintHex (byte c) {
+void PrintHex (byte c) {
     uint16_t chars = ToUpperCaseHex (c);
     putchar ((char)chars);
     putchar ((char)(chars >> 8));
     putchar (' ');
 }
 
-KABUKI void PrintCentered (const char* s, int width) {
+void PrintCentered (const char * s, int width) {
     if (width < 2) {
         //? Not sure if this is an error.
         return;
@@ -278,7 +278,7 @@ KABUKI void PrintCentered (const char* s, int width) {
         std::cout << '\n';
 }
 
-KABUKI void PrintChar (char c) {
+void PrintChar (char c) {
     if ((c > 0 && c < ' ') || c == 127) {
         std::cout << 1;
         return;
@@ -286,27 +286,27 @@ KABUKI void PrintChar (char c) {
     std::cout << c;
 }
 
-KABUKI void PrintLine (char token = '-', int column_width = 80) {
+void PrintLine (char token = '-', int column_width = 80) {
     std::cout << '\n';
     for (int i = 0; i < column_width; ++i)
         std::cout << token;
     std::cout << '\n';
 }
 
-KABUKI void PrintLine (const char* start_string, char token, int length = 79) {
+void PrintLine (const char * start_string, char token, int length = 79) {
     std::cout << '\n' << start_string;
     for (int i = 0; i < 79; ++i)
         std::cout << token;
     std::cout << '\n';
 }
 
-KABUKI void PrintLines (int numRows = 10) {
+void PrintLines (int numRows = 10) {
     std::cout << '\r';
     for (int i = 0; i < numRows - 1; ++i)
         std::cout << '\n';
 }
 
-KABUKI void PrintMemory (const void* address, const void* end) {
+void PrintMemory (const void* address, const void* end) {
     printf ("|%i", 0);
     // Print columns
     for (int i = 8; i <= 66; i += 8)
@@ -317,7 +317,7 @@ KABUKI void PrintMemory (const void* address, const void* end) {
         std::cout << '_';
     std::cout << '\n';
 
-    const char* chars = reinterpret_cast<const char*> (address);
+    const char * chars = reinterpret_cast<const char *> (address);
     char temp;
     while (chars < end) {
         std::cout << '|';
@@ -336,12 +336,12 @@ KABUKI void PrintMemory (const void* address, const void* end) {
     printf ("| 0x%x\n", reinterpret_cast<uintptr_t> (chars) + Diff (address, end));
 }
 
-KABUKI void PrintMemory (const void* address, size_t size) {
-    const char* end = reinterpret_cast<const char*>(address) + size;
+void PrintMemory (const void* address, size_t size) {
+    const char * end = reinterpret_cast<const char *>(address) + size;
     PrintMemory (address, end);
 }
 
-KABUKI char CreateKeyValueFormatString (char* s, char column_width, char type) {
+char CreateKeyValueFormatString (char * s, char column_width, char type) {
     char hundreds = (column_width / 100),
         decimal = (column_width % 10),
         tens = (column_width - hundreds - decimal) / 10;
@@ -384,7 +384,7 @@ KABUKI char CreateKeyValueFormatString (char* s, char column_width, char type) {
     return 0;
 }
 
-KABUKI void PrintNumberLine (int index) {
+void PrintNumberLine (char_t index) {
     std::cout << '\n';
     enum { MaxBufferSize = (sizeof (int) == 2) ? 7 : (sizeof (int) == 4) ? 11 : 128 };
     char buffer[MaxBufferSize];
@@ -400,7 +400,7 @@ KABUKI void PrintNumberLine (int index) {
     std::cout << '\n';
 }
 
-KABUKI void PrintStringLine (const char* s) {
+void PrintStringLine (const char * s) {
     PrintLine ();
     int length = StringLength (s),
         i;
@@ -412,25 +412,25 @@ KABUKI void PrintStringLine (const char* s) {
     PrintLine ();
 }
 
-KABUKI void PrintPause (const char* s) {
+void PrintPause (const char * s) {
 #if DEBUG
     std::cout << "\n" << s << "\n";
     system ("PAUSE");
 #endif
 }
 
-KABUKI void PrintNL () {
+void PrintNL () {
     std::cout << '\n';
 }
 
-KABUKI void PrintLineBreak (const char* message, int top_bottom_margin,
+void PrintLineBreak (const char * message, int top_bottom_margin,
                             char c = '-', int num_columns = 80) {
     PrintLines (top_bottom_margin);
     std::cout << message;
     PrintLine (c, num_columns);
 }
 
-KABUKI void CopyString (char* destination, const char* source,
+void CopyString (char * destination, const char * source,
                         char delimeter = 0) {
     if (destination == nullptr)
         return;
@@ -447,20 +447,20 @@ KABUKI void CopyString (char* destination, const char* source,
     *destination = '\0';
 }
 
-KABUKI char* CloneString (const char* input, char delimeter = 0) {
+char * CloneString (const char * input, char delimeter = 0) {
     if (input == nullptr)
         input = "";
     size_t length = StringLength (input);
-    char* clone = new char[length + 1];
+    char * clone = new char[length + 1];
     CopyString (clone, input);
     return clone;
 }
 
-KABUKI void PrintBar (const char* input) {
+void PrintBar (const char * input) {
     std::cout << "\n| " << input << '\n';
 }
 
-KABUKI void PrintBreak (const char* header = "\n_", char c = '_', int num_lines = 0, 
+void PrintBreak (const char * header = "\n_", char c = '_', int num_lines = 0, 
                  int console_width = 80) {
     for (int i = 0; i < num_lines; ++i)
         std::cout << '\n';
@@ -471,7 +471,7 @@ KABUKI void PrintBreak (const char* header = "\n_", char c = '_', int num_lines 
     std::cout << '\n';
 }
 
-KABUKI void PrintCentered (const char* input, int width, bool is_last = false,
+void PrintCentered (const char * input, int width, bool is_last = false,
                     char column_delimeter = '|')
 {
     if (width < 1)
@@ -498,7 +498,7 @@ KABUKI void PrintCentered (const char* input, int width, bool is_last = false,
         std::cout << column_delimeter << '\n';
 }
 
-KABUKI void PrintColumnBreak (int num_columns, char column_delimeter = '|', char break_char = '-', 
+void PrintColumnBreak (int num_columns, char column_delimeter = '|', char break_char = '-', 
                        int width = 80) {
     int column_width = width / num_columns;
     for (int i = 0; i < num_columns - 1; ++i) {
@@ -512,7 +512,7 @@ KABUKI void PrintColumnBreak (int num_columns, char column_delimeter = '|', char
     std::cout << column_delimeter << '\n';
 }
 
-KABUKI const char* FindEndOfRow (const char* input, int num_columns) {
+const char * FindEndOfRow (const char * input, int num_columns) {
     char c;
     // Scroll to the end of the line.
     while (c = *input++) {
@@ -530,14 +530,14 @@ KABUKI const char* FindEndOfRow (const char* input, int num_columns) {
     return --input;
 }
 
-KABUKI void PrintPageCentered (const char* input, int num_columns) {
+void PrintPageCentered (const char * input, int num_columns) {
     char c;   //< The current char.
     if (num_columns <= 4) // We need at least 4 columns for this to work.
         return;
     if (input == nullptr)
         return;
     do {
-        const char* end_row = FindEndOfRow (input, num_columns);
+        const char * end_row = FindEndOfRow (input, num_columns);
         size_t row_length = end_row - input,
             num_left_spaces = (num_columns / 2) - (row_length / 2),
             i;
@@ -555,7 +555,7 @@ KABUKI void PrintPageCentered (const char* input, int num_columns) {
     } while (c);
 }
 
-KABUKI void PrintPageRight (const char* input, int num_columns) {
+void PrintPageRight (const char * input, int num_columns) {
     char c;  //< The current char.
 
     if (num_columns <= 4) // We need at least 4 columns for this to work.
@@ -563,7 +563,7 @@ KABUKI void PrintPageRight (const char* input, int num_columns) {
     if (input == nullptr)
         return;
     do {
-        const char* end_row = FindEndOfRow (input, num_columns);
+        const char * end_row = FindEndOfRow (input, num_columns);
         size_t row_length = end_row - input,
             num_left_spaces = num_columns - row_length,
             i;
@@ -579,8 +579,8 @@ KABUKI void PrintPageRight (const char* input, int num_columns) {
     } while (c);
 }
 
-KABUKI void PrintPage (const char* input = "", int indentation = 0,
-                       char bullet = '*', int index = 0, int tab_size = 4,
+void PrintPage (const char * input = "", int indentation = 0,
+                       char bullet = '*', char_t index = 0, int tab_size = 4,
                        int num_columns = 80) {
     num_columns -= 4;
     std::cout << "| ";
@@ -629,7 +629,7 @@ KABUKI void PrintPage (const char* input = "", int indentation = 0,
     std::cout << '\n';
 }
 
-KABUKI const char* NextNonNumberString (const char* input) {
+const char * NextNonNumberString (const char * input) {
     char c = *input;
     if (c == '-')           // It might be negative.
     {
@@ -643,11 +643,11 @@ KABUKI const char* NextNonNumberString (const char* input) {
     return input;
 }
 
-KABUKI char* NextNonNumber (char* input) {
-    return (char*)NextNonNumberString (input);
+char * NextNonNumber (char * input) {
+    return (char *)NextNonNumberString (input);
 }
 
-KABUKI const char* SkipLeadingZerosString (const char* input) {
+const char * SkipLeadingZerosString (const char * input) {
     if (input == nullptr)
         return nullptr;
     char c = *input,
@@ -665,11 +665,11 @@ KABUKI const char* SkipLeadingZerosString (const char* input) {
     return input;
 }
 
-KABUKI char* SkipLeadingZeros (char* input) {
-    return (char*)SkipLeadingZerosString (input);
+char * SkipLeadingZeros (char * input) {
+    return (char *)SkipLeadingZerosString (input);
 }
 
-KABUKI const char* SkipSpacesString (const char* input) {
+const char * SkipSpacesString (const char * input) {
     if (input == nullptr)
         return 0;
     //std::cout << "\nSkipping spaces: ";
@@ -683,11 +683,11 @@ KABUKI const char* SkipSpacesString (const char* input) {
     return input;
 }
 
-KABUKI char* SkipSpaces (char* input) {
-    return (char*)SkipSpacesString (input);
+char * SkipSpaces (char * input) {
+    return (char *)SkipSpacesString (input);
 }
 
-KABUKI const char* EndOfTokenString (const char* input) {
+const char * EndOfTokenString (const char * input) {
     if (input == nullptr)
         return nullptr;
     input = SkipSpacesString (input);
@@ -701,11 +701,11 @@ KABUKI const char* EndOfTokenString (const char* input) {
     return input;
 }
 
-KABUKI char* EndOfToken (char* input) {
-    return (char*)EndOfTokenString (input);
+char * EndOfToken (char * input) {
+    return (char *)EndOfTokenString (input);
 }
 
-KABUKI const char* EndOfString (const char* input, char delimiter = '\"') {
+const char * EndOfString (const char * input, char delimiter = '\"') {
     char c = *input;
     while (c) {
         if (c == delimiter)
@@ -715,11 +715,11 @@ KABUKI const char* EndOfString (const char* input, char delimiter = '\"') {
     return input;
 }
 
-KABUKI char* EndOf (char* input, char delimiter = '\"') {
-    return (char*)EndOfString (input, delimiter);
+char * EndOf (char * input, char delimiter = '\"') {
+    return (char *)EndOfString (input, delimiter);
 }
 
-KABUKI const char* CompareTokenString (const char* input, const char* token) {
+const char * CompareTokenString (const char * input, const char * token) {
     if (input == nullptr)
         return nullptr;
     if (token == nullptr)
@@ -746,11 +746,11 @@ KABUKI const char* CompareTokenString (const char* input, const char* token) {
     return input;
 }
 
-KABUKI char* CompareToken (const char* input, const char* query) {
-    return (char*)CompareTokenString (input, query);
+char * CompareToken (const char * input, const char * query) {
+    return (char *)CompareTokenString (input, query);
 }
 
-KABUKI const char* CompareString (const char* input, const char* query,
+const char * CompareString (const char * input, const char * query,
                                   char delimiter = 0) {
     if (input == nullptr)
         return nullptr;
@@ -779,11 +779,11 @@ KABUKI const char* CompareString (const char* input, const char* query,
     return input; //< Query hit!
 }
 
-KABUKI char* Compare (char* source, const char* query, char delimiter = 0) {
-    return (char*)CompareString (source, query, delimiter);
+char * Compare (char * source, const char * query, char delimiter = 0) {
+    return (char *)CompareString (source, query, delimiter);
 }
 
-KABUKI const char* ParseString (const char* input, char* destination,
+const char * ParseString (const char * input, char * destination,
                                 int buffer_size, char delimiter = 0) {
     //std::cout << "> parse_string buffer_size: " << buffer_size
     //          << " delimiter " << delimiter << "\n> ";
@@ -824,12 +824,12 @@ KABUKI const char* ParseString (const char* input, char* destination,
     return input + 1;
 }
 
-KABUKI char* Parse (char* input, char* destination, int buffer_size,
+char * Parse (char * input, char * destination, int buffer_size,
                     char delimiter = 0) {
-    return (char*)ParseString (input, destination, buffer_size, delimiter);
+    return (char *)ParseString (input, destination, buffer_size, delimiter);
 }
 
-KABUKI char* ParseToken (char* input) {
+char * ParseToken (char * input) {
     if (input == nullptr)
         return nullptr;
 
@@ -843,7 +843,7 @@ KABUKI char* ParseToken (char* input) {
     return input; //< This is the start of the next token or whitespace.
 }
 
-KABUKI const char* FindString (const char* input, const char* query, char delimiter = 0) {
+const char * FindString (const char * input, const char * query, char delimiter = 0) {
     if (input == nullptr)
         return nullptr;
     if (query == nullptr)
@@ -854,7 +854,7 @@ KABUKI const char* FindString (const char* input, const char* query, char delimi
         c = t;          //< The first char of the query we're searching for.
     if (c == delimiter) //< We're not allowing empty queries.
         return nullptr;
-    const char* start_of_query,
+    const char * start_of_query,
         *cursor;
 
     query = SkipSpacesString (query);
@@ -886,11 +886,11 @@ KABUKI const char* FindString (const char* input, const char* query, char delimi
     return nullptr;
 }
 
-KABUKI char* Find(char* input, const char* query, char delimiter = 0) {
-    return (char*)FindString (input, query, delimiter);
+char * Find(char * input, const char * query, char delimiter = 0) {
+    return (char *)FindString (input, query, delimiter);
 }
 
-KABUKI const char* ParseIntString (const char* input, int* value) {
+const char * ParseIntString (const char * input, int* value) {
     if (input == nullptr)
         return nullptr;
     if (value == nullptr)
@@ -900,11 +900,11 @@ KABUKI const char* ParseIntString (const char* input, int* value) {
     return EndOfTokenString (input);
 }
 
-KABUKI char* ParseInt (char* input, int* value) {
-    return (char*)ParseIntString (input, value);
+char * ParseInt (char * input, int* value) {
+    return (char *)ParseIntString (input, value);
 }
 
-KABUKI const char* ParseFloatString (const char* input, float* value) {
+const char * ParseFloatString (const char * input, float * value) {
     if (input == nullptr)
         return nullptr;
     if (value == nullptr)
@@ -914,11 +914,11 @@ KABUKI const char* ParseFloatString (const char* input, float* value) {
     return EndOfTokenString (input);
 }
 
-KABUKI char* ParseFloat (char* input, float* value) {
-    return (char*)ParseFloatString (input, value);
+char * ParseFloat (char * input, float * value) {
+    return (char *)ParseFloatString (input, value);
 }
 
-KABUKI bool IsToken (const char* input) {
+bool IsToken (const char * input) {
     if (input == nullptr)
         return false;
     char c = *input;

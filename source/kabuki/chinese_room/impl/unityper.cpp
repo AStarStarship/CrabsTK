@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/impl/unityper.cpp
+    @file    ~/chinese_room/impl/unityper.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough<calemccollough.github.io>
                             All right reserved (R).
@@ -24,7 +24,7 @@
 
 namespace _ {
 
-KABUKI void RingBufferClear (byte* const begin, uint_t rx_start, 
+KABUKI void MonoidClear (byte* const begin, uint_t rx_start, 
                              byte* start, byte* const stop,
                              byte* const end, uint_t size)
 {
@@ -35,22 +35,22 @@ KABUKI void RingBufferClear (byte* const begin, uint_t rx_start,
     }
 }
 
-KABUKI uint_t RingBufferLength (byte* start, byte* stop, uint_t size) {
+KABUKI uint_t MonoidLength (byte* start, byte* stop, uint_t size) {
     uint_t delta_start_stop = static_cast<uint> (stop - start);
     return start <= stop ? delta_start_stop : size - delta_start_stop;
 }
 
-KABUKI uint_t RingBufferSpace (byte* start, byte* stop, uint_t size) {
+KABUKI uint_t MonoidSpace (byte* start, byte* stop, uint_t size) {
     uint_t delta_start_stop = static_cast<uint> (stop - start);
     return start <= stop ? size - delta_start_stop : delta_start_stop;
 }
 
-KABUKI byte* RingBufferWrite (void* source, byte* const begin,
+KABUKI byte* MonoidWrite (void* source, byte* const begin,
                               byte* const start, byte* const stop,
                               byte* const end, size_t size) {
     if (source == nullptr) return start;
 
-    // Now we can copy the book into memory.
+    // Now we can copy the bag into memory.
     if ((start > stop) && (start + size >= end)) {
         // Calculate upper chunk size.
         uint_t top_chunk = end - stop;
@@ -64,12 +64,12 @@ KABUKI byte* RingBufferWrite (void* source, byte* const begin,
     return start + size;
 }
 
-KABUKI byte* RingBufferRead (void* destination, byte* const begin,
+KABUKI byte* MonoidRead (void* destination, byte* const begin,
                              byte* const start, byte* const stop,
                              byte* const end, size_t size) {
     if (destination == nullptr) return start;
 
-    // Now we can copy the book into memory.
+    // Now we can copy the bag into memory.
     if ((start > stop) && (start + size >= end)) {
         // Calculate upper chunk size.
         uint_t top_chunk = end - stop;
@@ -88,7 +88,7 @@ KABUKI byte* SocketWrite (void* source, byte* const begin,
                           byte* const end, size_t size) {
     if (source == nullptr) return start;
 
-    // Now we can copy the book into memory.
+    // Now we can copy the bag into memory.
     if ((start > stop) && (start + size >= end)) {
         // Calculate upper chunk size.
         uint_t top_chunk = end - stop;
@@ -102,12 +102,12 @@ KABUKI byte* SocketWrite (void* source, byte* const begin,
     return start + size;
 }
 
-KABUKI byte* RingBufferRead (void* destination, byte* const begin,
+KABUKI byte* MonoidRead (void* destination, byte* const begin,
                              byte* const start, byte* const stop,
                              byte* const end, size_t size) {
     if (destination == nullptr) return start;
 
-    // Now we can copy the book into memory.
+    // Now we can copy the bag into memory.
     if ((start > stop) && (start + size >= end)) {
         // Calculate upper chunk size.
         uint_t top_chunk = end - stop;
@@ -121,7 +121,7 @@ KABUKI byte* RingBufferRead (void* destination, byte* const begin,
     return start + size;
 }
 
-struct Unityper {
+struct Monoid {
     uint_t size;            //< The size of the ring buffers.
     volatile uint_t start;  //< The starting index of the ring-buffer data.
     uint_t stop,            //< The stopping index of the ring-buffer data.
@@ -129,66 +129,66 @@ struct Unityper {
 };
 
 enum {
-    kSlotHeaderSize = sizeof (Unityper) + sizeof (uintptr_t) -
-    sizeof (Unityper) % sizeof (uintptr_t),
+    kSlotHeaderSize = sizeof (Monoid) + sizeof (uintptr_t) -
+    sizeof (Monoid) % sizeof (uintptr_t),
     //< Offset to the start of the ring buffer.
     kMinSocketSize = 32 + kSlotHeaderSize,
 };
 
-KABUKI byte* UnityperSlot (Unityper* tx) {
+KABUKI byte* MonoidSlot (Monoid* tx) {
     return reinterpret_cast<byte*>(tx) + kSlotHeaderSize;
 }
 
-KABUKI Unityper* UnityperInit (byte* buffer, uint_t size) {
+KABUKI Monoid* MonoidInit (byte* buffer, uint_t size) {
     if (size < kMinSocketSize) return nullptr;
     if (buffer == nullptr) return nullptr;
 
-    Unityper* tx = reinterpret_cast<Unityper*> (buffer);
+    Monoid* tx = reinterpret_cast<Monoid*> (buffer);
     tx->size = size - kSlotHeaderSize;
     tx->start = 0;
     tx->stop = 0;
     tx->read = 0;
 
 #if DEBUG_CHINESE_ROOM
-    memset (UnityperSlot (tx), '\0', size);
+    memset (MonoidSlot (tx), '\0', size);
 #endif
     return tx;
 }
 
-KABUKI Unityper* UnityperInit (Unityper* buffer, uint_t size) {
+KABUKI Monoid* MonoidInit (Monoid* buffer, uint_t size) {
     if (size < kMinSocketSize) return nullptr;
     if (buffer == nullptr)     return nullptr;
 
-    Unityper* tx = reinterpret_cast<Unityper*> (buffer);
+    Monoid* tx = reinterpret_cast<Monoid*> (buffer);
     tx->size = size - kSlotHeaderSize;
     tx->start = 0;
     tx->stop  = 0;
     tx->read  = 0;
 
 #if DEBUG_CHINESE_ROOM
-    memset (UnityperSlot (tx), '\0', size);
+    memset (MonoidSlot (tx), '\0', size);
 #endif
     return tx;
 }
 
-KABUKI uint_t UnityperSpace (Unityper* tx) {
+KABUKI uint_t MonoidSpace (Monoid* tx) {
     if (tx == nullptr) return ~0;
     byte* txb_ptr = reinterpret_cast<byte*>(tx);
-    return RingBufferSpace (txb_ptr + tx->start, txb_ptr + tx->stop, 
+    return MonoidSpace (txb_ptr + tx->start, txb_ptr + tx->stop, 
                                 tx->size);
 }
 
-KABUKI uint_t UnityperTxBufferLength (Unityper* tx) {
+KABUKI uint_t MonoidTxBufferLength (Monoid* tx) {
     if (tx == nullptr) return ~0;
-    byte* base = UnityperSlot (tx);
-    return RingBufferLength (base + tx->start, base + tx->stop, tx->size);
+    byte* base = MonoidSlot (tx);
+    return MonoidLength (base + tx->start, base + tx->stop, tx->size);
 }
 
-KABUKI byte* UnityperEndAddress (Unityper* tx) {
+KABUKI byte* MonoidEndAddress (Monoid* tx) {
     return reinterpret_cast<byte*>(tx) + kSlotHeaderSize + tx->size;
 }
 
-KABUKI ticket_t Write (Unityper* tx, const char* address, const uint_t* params, 
+KABUKI ticket_t Write (Monoid* tx, const char * address, const uint_t* params, 
                        void** args) {
     //printf ("\n\n| Writing to %p\n", tx);
     if (address == nullptr)
@@ -220,7 +220,7 @@ KABUKI ticket_t Write (Unityper* tx, const char* address, const uint_t* params,
     hash16_t hash = 0;                      //< 16-bit prime hash.
     const uint_t* param = params;           //< Pointer to the current param.
     // Convert the socket offsets to pointers.
-    byte* begin = UnityperSlot (tx),        //< Beginning of the buffer.
+    byte* begin = MonoidSlot (tx),        //< Beginning of the buffer.
         * end   = begin + size,             //< End of the buffer.
         * start = begin + tx->start,        //< Start of the data.
         * stop  = begin + tx->stop;         //< Stop of the data.
@@ -238,7 +238,7 @@ KABUKI ticket_t Write (Unityper* tx, const char* address, const uint_t* params,
     uint_t array_type;                      //< Array type for writing arrays.
 #endif
 
-    space = RingBufferSpace (start, stop, size);
+    space = MonoidSpace (start, stop, size);
 
     std::cout << "\n| space: " << space
               << "\n| address: \"";
@@ -819,9 +819,9 @@ KABUKI ticket_t Write (Unityper* tx, const char* address, const uint_t* params,
     return 0;
 }
 
-KABUKI byte UnityperStreamByte (Unityper* tx) {
+KABUKI byte MonoidStreamByte (Monoid* tx) {
 
-    byte* begin = UnityperSlot (tx),
+    byte* begin = MonoidSlot (tx),
         *end = begin + tx->size;
     byte* open = (byte*)begin + tx->read,
         *start = begin + tx->start,
@@ -839,7 +839,7 @@ KABUKI byte UnityperStreamByte (Unityper* tx) {
     return 0;
 }
 
-KABUKI ticket_t Read (Unityper* rx, const uint_t* params, void** args) {
+KABUKI ticket_t Read (Monoid* rx, const uint_t* params, void** args) {
     if (rx == nullptr)
         Report (NullPointerError, 0, 0, 0);
     if (params == nullptr)
@@ -879,13 +879,13 @@ KABUKI ticket_t Read (Unityper* rx, const uint_t* params, void** args) {
     hash = 0;
     size = rx->size;
 
-    byte* begin = UnityperSlot (rx),    //< The beginning of the buffer.
+    byte* begin = MonoidSlot (rx),    //< The beginning of the buffer.
         * end = begin + size,           //< The end of the buffer.
         * start = begin + rx->start,    //< The start of the data.
         * stop = begin + rx->stop;      //< The stop of the data.
     const uint_t* param = params + 1;   //< The current param.
 
-    length = RingBufferLength (start, stop, size);
+    length = MonoidLength (start, stop, size);
 //
 //#if DEBUG_CHINESE_ROOM
 //    //printf ("\n\n| Reading: ");
@@ -894,7 +894,7 @@ KABUKI ticket_t Read (Unityper* rx, const uint_t* params, void** args) {
 //            "length: %u ", begin, Diff (begin, start), 
 //            Diff (begin, stop), Diff (begin, end), length);
 //#endif
-    // When we scan, we are reading from the beginning of the Unityper buffer.
+    // When we scan, we are reading from the beginning of the Monoid buffer.
 
     for (index = 0; index < num_params; ++index) {
         type = *param;
@@ -1463,7 +1463,7 @@ KABUKI ticket_t Read (Unityper* rx, const uint_t* params, void** args) {
 
 //#if DEBUG_CHINESE_ROOM
 //    //printf ("| Done reading\n");
-//    RingBufferClear (begin, rx->start, start, stop, end, size);
+//    MonoidClear (begin, rx->start, start, stop, end, size);
 //#endif
 
     // Convert pointer back to offset
@@ -1472,17 +1472,17 @@ KABUKI ticket_t Read (Unityper* rx, const uint_t* params, void** args) {
     return 0;
 }
 
-KABUKI void Print (Unityper* tx) {
+KABUKI void Print (Monoid* tx) {
     PrintLine ('_');
     if (tx == nullptr) {
-        printf ("| Unityper null\n");
+        printf ("| Monoid null\n");
         return;
     }
     uint_t size = tx->size;
-    printf ("| Unityper 0x%p: size: %u, start: %u, stop: %u, read: %u\n", tx, size,
+    printf ("| Monoid 0x%p: size: %u, start: %u, stop: %u, read: %u\n", tx, size,
             tx->start, tx->stop, tx->read);
-    PrintMemory (UnityperSlot (tx), size);
+    PrintMemory (MonoidSlot (tx), size);
 }
 
 }       //< namespace _
-#endif  //< CHINESE_ROOM_UNITYPER_H
+#endif  //< #ifndef CHINESE_ROOM_MONOID_H

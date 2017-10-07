@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinses_room/include/log.h
+    @file    ~/chinese_room/include/log.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough<calemccollough.github.io>
                             All right reserved (R).
@@ -18,29 +18,29 @@
 #ifndef CHINESE_ROOM_LOG_H
 #define CHINESE_ROOM_LOG_H
 
-#include "Unityper.h"
+#include "monoid.h"
 
 namespace _ {
 
 /** A socket to write log info to. */
 struct Log {
-    Unityper* io;         //< The io socket.
+    Monoid* io;         //< The io socket.
 };
 
 /** Initializes the socket with the given tx socket.
     @param tx The io socket.
     @param is_dynamic Flag for if we're using dynamic memory or not. */
-inline Log LogInit (Unityper* tx, bool is_dynamic = false);
+inline Log LogInit (Monoid* tx, bool is_dynamic = false);
 
 /** Prints a message with the given header to the given Tx slot. */
-inline ticket_t Write (Unityper* tx, byte member, const char* string);
+inline ticket_t Write (Monoid* tx, byte member, const char * string);
 
 /** Prints a message with the given header to the given Tx slot. */
-inline ticket_t Write (Log& log, byte member, const char* string);
+inline ticket_t Write (Log& log, byte member, const char * string);
 
 /** Returns a reference to the log for this assembly. */
 template<uint_t kNumber>
-inline Log& Logbook () {
+inline Log& Logbag () {
     static byte* buffer = Buffer<kNumber, kLogSize> ();
     static Log s = LogInit (TxInit (buffer, kLogSize));
     return s;
@@ -77,7 +77,7 @@ inline Log& operator<< (Log& log, float value);
 inline Log& operator<< (Log& log, double value);
 
 /** Operator << prints a string to the socket. */
-inline Log& operator<< (Log& log, const char* s);
+inline Log& operator<< (Log& log, const char * s);
 
 }       //< namespace _
 #endif  //< CHINESE_ROOM_LOG_H
