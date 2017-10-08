@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinese_room/include/bag.h
+    @file    ~/source/kabuki/chinese_room/include/bag.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -29,7 +29,7 @@ enum {
 };
 
 /** A multiset that uses contiguousness memory.
-    A bag is like a Python dictionary or C++ map, the difference being a Bag
+    A bag is like a Python automata or C++ map, the difference being a Bag
     can contain nested Bag (s). The key design difference between both Python 
     dictionaries and C++ maps are Bags do not contains points, and instead
     works using offsets.
@@ -758,7 +758,7 @@ void Clear (Bag<TIndex, TKey, TData, THash>* bag) {
     bag->pile_size = 0;
 }
 
-/** Returns true if this dictionary contains only the given address. */
+/** Returns true if this automata contains only the given address. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
 bool Contains (Bag<TIndex, TKey, TData, THash>* bag, void* data) {
     if (bag == nullptr) return false;

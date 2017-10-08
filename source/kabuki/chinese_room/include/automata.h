@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    \...\dictionary.h
+    @file    \...\automata.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,8 +14,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef CHINESE_ROOM_DICTIONARY_H
-#define CHINESE_ROOM_DICTIONARY_H
+#ifndef CHINESE_ROOM_AUTOMATA_H
+#define CHINESE_ROOM_AUTOMATA_H
 
 #include "set.h"
 #include "bag.h"
@@ -24,12 +24,12 @@ namespace _ {
 
 template<typename TIndex, typename TKey, typename TData, typename THash, 
     uint_t MaxStackHeight>
-class Dictionary: public Operation
+class Automata: public Operation
 {
     public:
 
-    /** Constructs an empty dictionary. */
-    Dictionary ()
+    /** Constructs an empty automata. */
+    Automata ()
     :   num_members_ (0),
         num_collisions_ (0),
         header_size_ (0),
@@ -102,7 +102,7 @@ class Dictionary: public Operation
     }
 
     /** Searches for the given query and returns a bag of query results.  */
-    bool Search (const char * query, Dictionary<TIndex, TKey, TData, THash, 
+    bool Search (const char * query, Automata<TIndex, TKey, TData, THash, 
         MaxStackHeight>* results) {
         return false;
     }
@@ -138,15 +138,15 @@ class Dictionary: public Operation
         {
             case BK2:
                 #if _BufferUIntSize >= 16
-                /// Dictionary format: { UI1, UI1, UI2, UI2 }
-                return size + sizeof (Dictionary) + * (address + 1) * 
+                /// Automata format: { UI1, UI1, UI2, UI2 }
+                return size + sizeof (Automata) + * (address + 1) * 
                        sizeof (byte) + *(UI2_ptr + 2) + * (UI8_ptr + 4);
                 #else
                 return 0;
                 #endif
             case BK4:
                 #if _BufferUIntSize >= 32
-                /// Dictionary format: { UI1, UI1, UI2, UI4 }
+                /// Automata format: { UI1, UI1, UI2, UI4 }
                 return size + sizeof (Bag32) + * (UI2_ptr + 2) * 
                        sizeof (byte) + * (UI4_ptr + 4) + * (UI8_ptr + 8);
                 #else
@@ -154,8 +154,8 @@ class Dictionary: public Operation
                 #endif
             case BK8:
                 #if _BufferUIntSize >= 64
-                /// Dictionary format: { UI2, UI2, UI4, UI8 }
-                return size + sizeof (Dictionary) + * (UI2_ptr + 2) * 
+                /// Automata format: { UI2, UI2, UI4, UI8 }
+                return size + sizeof (Automata) + * (UI2_ptr + 2) * 
                        sizeof (byte) + * (UI4_ptr + 4) + * (UI8_ptr + 8);
                 #else
                 return 0;
@@ -183,11 +183,11 @@ class Dictionary: public Operation
 
     private:
 
-    //NONCOPYABLE (Dictionary)
+    //NONCOPYABLE (Automata)
 
     int reserved;           //< Reserved for 64-bit memory alignment.
-    Dictionary** root_;     //< Pointer to the dynamically allocated bags.
-    Dictionary* bag_;      //< The currently selected bag.
+    Automata** root_;     //< Pointer to the dynamically allocated bags.
+    Automata* bag_;      //< The currently selected bag.
     uint_t index_,          //< The index of the currently selected bag.
         stack_height_,      //< The number of bags on the stack.
         num_libraries_;     //< The number of libraries.
@@ -203,11 +203,11 @@ class Dictionary: public Operation
 /** Destructs the given bag. */
 template<typename TIndex, typename TKey, typename TData, typename THash, 
     uint MaxStackSize>
-KABUKI void destruct (Dictionary<TIndex, TKey, TData, THash, MaxStackSize>* r) {
+KABUKI void destruct (Automata<TIndex, TKey, TData, THash, MaxStackSize>* r) {
     if (r == nullptr) return;
     delete reinterpret_cast<byte*> (r);
 }
 
 }       //< namespace _
 
-#endif  //< CHINESE_ROOM_DICTIONARY_H
+#endif  //< CHINESE_ROOM_AUTOMATA_H

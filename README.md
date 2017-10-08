@@ -1,12 +1,7 @@
 # Kabuki Toolkit
-An cross-platform cross-language toolkit to for creating the Sloth,
-Chinese Rooms, and the Intergalactic Internet. Kabuki Toolkit is an attempt to
-combine all of the software in the world into a common SDK using a #CodeSloth 
-utility. I got sick of my shitty SDK that didn't work, and just wanted all of
-the SDK API modules to just be in the same format without all the extra junk.
-
-The goal of Kabuki Toolkit is to #SlothAllTheCode and create an Intergalactic
-Internet using Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Protocol.
+An cross-platform cross-language toolkit to for creating the Sloth and
+Chinese Rooms. Kabuki Toolkit is an Abstract Algebra Automata; a Turing 
+Machine and functional programming environment.
 
 ## Seeking Developers
 Please see the [Wiki](https://github.com/kabuki-toolkit/kabuki_toolkit/wiki) 

@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinese_room/include/utils.h
+    @file    ~/source/kabuki/chinese_room/include/utils.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).

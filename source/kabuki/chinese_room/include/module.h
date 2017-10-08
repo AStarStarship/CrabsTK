@@ -1,8 +1,8 @@
 /** The Chinese Room
-    @version   1.0a
-    @file      ~/chinese_room/include/module.h
+    @version   1.0
+    @file      ~/source/kabuki/chinese_room/include/module.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
                             All right reserved (R).
              Licensed under the Apache License, Version 2.0 (the "License"); 
              you may not use this file except in compliance with the License. 

@@ -122,7 +122,7 @@
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\config.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\console.h" />
     <ClInclude Include="..\..\source\kabuki\chinese_room\include\operation.h" />
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\dictionary.h" />
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\automata.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\door.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\error.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\event.h" />
@@ -156,7 +156,7 @@
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\color.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\console.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\device.cpp" />
-    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\dictionary.cpp" />
+    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\automata.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\door.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\error.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\exceptions.cpp" />

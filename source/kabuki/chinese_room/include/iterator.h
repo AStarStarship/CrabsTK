@@ -1,6 +1,6 @@
 /** Kabuki Software Development Kit
     @version 0.x
-    @file    ~/chinese_room/include/KabukiSDK/_Data/Iterator.h
+    @file    ~/source/kabuki/chinese_room/include/KabukiSDK/_Data/Iterator.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 

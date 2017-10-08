@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/chinese_room/include/symbol_table.h
+    @file    ~/source/kabuki/chinese_room/include/symbol_table.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 [Cale McCollough] (calemccollough.github.io)
                             All right reserved (R).
@@ -23,7 +23,7 @@
 
 namespace _ {
 
-/** A dictionary designed to work with Star (s) with less than 192 members.
+/** A automata designed to work with Star (s) with less than 192 members.
     
     # Memory Layout
 
