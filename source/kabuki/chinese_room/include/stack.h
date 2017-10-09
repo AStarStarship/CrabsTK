@@ -231,13 +231,13 @@ KABUKI ticket_t LinearityReset (Stack* io) {
     device control onto the stack.
     @return Returns nullptr upon success and a pointer to a string
     upon failure. */
-KABUKI const Set* Push (Stack* io, Star* d) {
+KABUKI const Superset* Push (Stack* io, Star* d) {
     if (io == nullptr)
         return d->Star (0, nullptr);  //< Return d's header.
     if (d == nullptr)
-        return reinterpret_cast<const Set*> (Report (NullDevicePushError));
+        return reinterpret_cast<const Superset*> (Report (NullDevicePushError));
     if (io->stack_count >= io->stack_size)
-        return reinterpret_cast<const Set*> (Report (StackOverflowError));
+        return reinterpret_cast<const Superset*> (Report (StackOverflowError));
     LinearityDeviceStack (io)[io->stack_count++] = d; 
     return 0;
 }
@@ -368,7 +368,7 @@ KABUKI void LinearityScan (Stack* io, Portal* input) {
     time_t        timestamp,    //< The last time when the verifier ran.
                   delta_t;      //< The time delta between the last timestamp.
     Star      * device;       //< The current Star.
-    const Set* member;       //< The current Set.
+    const Superset* member;       //< The current Set.
     const uint_t* header;       //< The current Set header being verified.
     B  * rx;           //< The rx B.
     byte        * begin,        //< The beginning of the ring buffer.
@@ -654,22 +654,22 @@ KABUKI void LinearityScrubExpression (Stack* io) {
 }
 
 /** Calls the Read function for the Rx slot. */
-KABUKI const Set* Read (Stack* io, const uint_t* esc, void** args) {
-    return reinterpret_cast<const Set*> (Read (LinearityRx (io), esc, 
+KABUKI const Superset* Read (Stack* io, const uint_t* esc, void** args) {
+    return reinterpret_cast<const Superset*> (Read (LinearityRx (io), esc, 
                                                   args));
 }
 
 /** Calls the Write function for the Tx slot. */
-KABUKI const Set* Write (Stack* io, const uint_t* esc, void** args) {
-    return reinterpret_cast<const Set*> (Write (LinearityTx (io),
+KABUKI const Superset* Write (Stack* io, const uint_t* esc, void** args) {
+    return reinterpret_cast<const Superset*> (Write (LinearityTx (io),
                                                    io->return_address, esc,
                                                    args));
 }
 
 /** Calls the Write function for the Tx slot. */
-KABUKI const Set* Write (Stack* io, const char * address,
+KABUKI const Superset* Write (Stack* io, const char * address,
                             const uint_t* esc, void** args) {
-    return reinterpret_cast<const Set*> (Write (LinearityTx (io), address, 
+    return reinterpret_cast<const Superset*> (Write (LinearityTx (io), address, 
                                                    esc, args));
 }
 

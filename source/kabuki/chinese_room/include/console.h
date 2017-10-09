@@ -80,7 +80,7 @@ class Console: public Room
     }
 
     /** Chinese room operations. */
-    const Set* Star (char_t index, Set* io) override {
+    const Superset* Star (char_t index, Superset* io) override {
         return 0;
     }
 

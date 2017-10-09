@@ -48,11 +48,11 @@ class Child : public Operation {
     public:
     
     /** Chinese Room operations. */
-    const Set* Star (char_t index, B* io) override {
+    const Superset* Star (char_t index, Abcdefg* io) override {
         void* args[2];
-        const Set* error;
+        const Superset* error;
 
-        static const Set this_member = { "Child",
+        static const Superset this_member = { "Child",
             NumMembers (2),
             FirstMember ('A'),
             "A child Operation." };
@@ -60,7 +60,7 @@ class Child : public Operation {
 
         switch (index) {
             case 'A': {
-                static const Set m1 = { "FloatTests",
+                static const Superset m1 = { "FloatTests",
                     Esc<2, FLT, STX, kStringBufferSize> (),
                     Esc<2, FLT, STX> (),
                     "Description of functionA." };
@@ -74,7 +74,7 @@ class Child : public Operation {
                                                    io_string_));
             }
             case 'B': {
-                static const Set m2 = { "SignedIntegerTests",
+                static const Superset m2 = { "SignedIntegerTests",
                     Esc<2, FLT, STX, kStringBufferSize> (),
                     Esc<2, FLT, STX> (),
                     "Description of functionB." };
@@ -107,11 +107,11 @@ class Root : public Operation {
     public:
 
     // Interprocess operations.
-    const Set* Star (char_t index, B* io) override {
+    const Superset* Star (char_t index, Abcdefg* io) override {
         void* args[2];
-        const Set* error;
+        const Superset* error;
 
-        static const Set this_member = { "Root",
+        static const Superset this_member = { "Root",
             NumMembers (4),
             FirstMember ('A'),
             "Root scope device." };
@@ -128,7 +128,7 @@ class Root : public Operation {
                 return Push (io, &child_b);
             }
             case 'C': {
-                static const Set m3 = { "FloatTests",
+                static const Superset m3 = { "FloatTests",
                     Esc<2, FLT, STX, kStringBufferSize> (),
                     Esc<2, FLT, STX> (),
                     "Description of functionA." };
@@ -142,7 +142,7 @@ class Root : public Operation {
                                                    io_string_));
             }
             case 'D': {
-                static const Set m4 = { "SignedIntegerTests",
+                static const Superset m4 = { "SignedIntegerTests",
                     Esc <2, FLT, STX, kStringBufferSize> (),
                     Esc <2, FLT, STX> (),
                     "Description of functionB." };

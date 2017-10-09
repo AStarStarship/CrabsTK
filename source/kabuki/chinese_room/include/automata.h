@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    \...\automata.h
+    @file    ~/kabuki-toolkit/source/kabuki/chinese_room/include/automata.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,7 +17,7 @@
 #ifndef CHINESE_ROOM_AUTOMATA_H
 #define CHINESE_ROOM_AUTOMATA_H
 
-#include "set.h"
+#include "supset.h"
 #include "bag.h"
 
 namespace _ {

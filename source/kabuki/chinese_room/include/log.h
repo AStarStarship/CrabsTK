@@ -24,16 +24,16 @@ namespace _ {
 
 /** A socket to write log info to. */
 struct Log {
-    Monoid* io;         //< The io socket.
+    MonoidTx* io;         //< The io socket.
 };
 
 /** Initializes the socket with the given tx socket.
     @param tx The io socket.
     @param is_dynamic Flag for if we're using dynamic memory or not. */
-inline Log LogInit (Monoid* tx, bool is_dynamic = false);
+inline Log LogInit (MonoidTx* tx, bool is_dynamic = false);
 
 /** Prints a message with the given header to the given Tx slot. */
-inline ticket_t Write (Monoid* tx, byte member, const char * string);
+inline ticket_t Write (MonoidTx* tx, byte member, const char * string);
 
 /** Prints a message with the given header to the given Tx slot. */
 inline ticket_t Write (Log& log, byte member, const char * string);

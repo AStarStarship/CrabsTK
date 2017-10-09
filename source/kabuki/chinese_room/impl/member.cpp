@@ -32,13 +32,13 @@ KABUKI uintptr_t Index (const void* ptr) {
     return reinterpret_cast<uintptr_t>(ptr);
 }
 
-KABUKI uintptr_t GetNumMembers (const Set* m) {
+KABUKI uintptr_t GetNumMembers (const Superset* m) {
     return Index (m->input);
 }
 
-KABUKI const Set* ReadError () {
+KABUKI const Superset* ReadError () {
     //return DeviceMember<"Read"> ();
-    static const Set error = { "Read",
+    static const Superset error = { "Read",
         0,
         0,
         0
@@ -46,9 +46,9 @@ KABUKI const Set* ReadError () {
     return &error;
 }
 
-KABUKI const Set* WriteError () {
+KABUKI const Superset* WriteError () {
     //return DeviceMember<"Write"> ();
-    static const Set error = { "Write",
+    static const Superset error = { "Write",
         0,
         0,
         0
@@ -56,9 +56,9 @@ KABUKI const Set* WriteError () {
     return &error;
 }
 
-KABUKI const Set* DeviceStackOverflowError () {
+KABUKI const Superset* DeviceStackOverflowError () {
     //return DeviceMember<"Star stack overflow"> ();
-    static const Set error = { "Star stack overflow",
+    static const Superset error = { "Star stack overflow",
         0,
         0,
         0
@@ -66,9 +66,9 @@ KABUKI const Set* DeviceStackOverflowError () {
     return &error;
 }
 
-KABUKI const Set* InvalidMember () {
+KABUKI const Superset* InvalidMember () {
     //return DeviceMember<"Invalid member index"> ();
-    static const Set error = { "Invalid member index",
+    static const Superset error = { "Invalid member index",
         0,
         0,
         0
@@ -76,7 +76,7 @@ KABUKI const Set* InvalidMember () {
     return &error;
 }
 
-KABUKI void Print (const Set* m) {
+KABUKI void Print (const Superset* m) {
     if (m == nullptr)
         return;
 

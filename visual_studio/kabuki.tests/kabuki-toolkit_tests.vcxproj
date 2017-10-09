@@ -20,11 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\kabuki\TESTS\chinese_room_tests.cpp" />
-    <ClCompile Include="..\..\source\kabuki\TESTS\stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\source\kabuki\TESTS\stdafx.h" />
-    <ClInclude Include="..\..\source\kabuki\TESTS\targetver.h" />
     <ClInclude Include="..\..\source\kabuki\TESTS\this_room.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -71,7 +71,7 @@ TEST (ChineseRoomTests, LinearityTests) {
     float flt_found;
     io->return_address = "A";
     printf ("\n| Attempting to print to 0x%p\n", LinearityTx (io));
-    const Set* m = Write (io, "C", esc, Args (args, &stx_expected,
+    const Superset* m = Write (io, "C", esc, Args (args, &stx_expected,
                                                  &si4_expected, &flt_expected));
     PrintMemory (io, LinearityEndAddress (io));
     Print (io);
@@ -215,7 +215,7 @@ TEST (ChineseRoomTests, ReadWriteTests) {
     char found_string1[kSlotSize],
          found_string2[kSlotSize];
 
-    Monoid* tx = MonoidInit (Buffer<0, 128 + kSlotHeaderSize> (), 128 + kSlotHeaderSize);
+    MonoidTx* tx = MonoidInit (Buffer<0, 128 + kSlotHeaderSize> (), 128 + kSlotHeaderSize);
 
     CHECK_EQUAL (0, Write (tx, EmptyString, Esc<2, STX, 5, STX, 5> (),
                            Args (args, expected_string1, expected_string2)))

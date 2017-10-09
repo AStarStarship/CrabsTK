@@ -18,12 +18,12 @@
 #ifndef CHINESE_ROOM_OPERATION_H
 #define CHINESE_ROOM_OPERATION_H
 
-#include "subset.h"
+#include "superset.h"
 #include "set.h"
 
 namespace _ {
 
-struct Set;
+struct Superset;
 
 /** Interface for a device that can be manipulated by a Terminal.
     When a device is selected by a Terminal, the caller can then call functions 
@@ -123,7 +123,7 @@ struct Operation {
         @return      Returns null upon success, a Set header upon query, and an 
                      error_t ticket upon Read-Write failure.
     */
-    virtual const Set* Star (char_t index, B* io) = 0;
+    virtual const Superset* Star (char_t index, Abcdefg* io) = 0;
 };
 
 /** Gets the number of members of the given device. */
@@ -131,7 +131,7 @@ KABUKI uintptr_t ToUInt (Operation* d);
 
 /** Returns true if the given result from a Set is a non-printable ASCII 
     char, meaning it's a Star. */
-KABUKI bool IsDevice (const Set* member);
+KABUKI bool IsDevice (const Superset* member);
 
 /** Prints the given Star to the console. */
 KABUKI void Print (Operation* d);

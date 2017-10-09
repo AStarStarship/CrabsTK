@@ -8,11 +8,9 @@ Please see the [Wiki](https://github.com/kabuki-toolkit/kabuki_toolkit/wiki)
 for instructions on how you can get involved. What you are seeing in the repo 
 is a  prototype for the perfect C/C++/C#/Python/etc library format with a 
 shared C core and multi-language bindings. What we need to do is repeat the 
-way I set the SDK up, not my non-functional code. All I care about is the 
+way I setup the SDK, not my non-functional code. All I care about is the 
 Sloth utility. Please notice that the git repo size is getting HUGE!!! We 
-gotta dump the development crap and just leave the golden dev nuggets they 
-want with a Sloth script. Slot is based on the SCRIPT, and I'm still mapping 
-RPC functions. #CodeSloth
+gotta dump the development crap from hundreds of people.
 
 ## Quick Links
 * [Quickstart Guide](https://github.com/Kabuki-Toolkit/Kabuki_Toolkit/wiki/Quickstart-Guide.md) -

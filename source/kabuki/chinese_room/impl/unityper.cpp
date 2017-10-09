@@ -121,7 +121,7 @@ KABUKI byte* MonoidRead (void* destination, byte* const begin,
     return start + size;
 }
 
-struct Monoid {
+struct MonoidTx {
     uint_t size;            //< The size of the ring buffers.
     volatile uint_t start;  //< The starting index of the ring-buffer data.
     uint_t stop,            //< The stopping index of the ring-buffer data.
@@ -129,21 +129,21 @@ struct Monoid {
 };
 
 enum {
-    kSlotHeaderSize = sizeof (Monoid) + sizeof (uintptr_t) -
-    sizeof (Monoid) % sizeof (uintptr_t),
+    kSlotHeaderSize = sizeof (MonoidTx) + sizeof (uintptr_t) -
+    sizeof (MonoidTx) % sizeof (uintptr_t),
     //< Offset to the start of the ring buffer.
     kMinSocketSize = 32 + kSlotHeaderSize,
 };
 
-KABUKI byte* MonoidSlot (Monoid* tx) {
+KABUKI byte* MonoidSlot (MonoidTx* tx) {
     return reinterpret_cast<byte*>(tx) + kSlotHeaderSize;
 }
 
-KABUKI Monoid* MonoidInit (byte* buffer, uint_t size) {
+KABUKI MonoidTx* MonoidInit (byte* buffer, uint_t size) {
     if (size < kMinSocketSize) return nullptr;
     if (buffer == nullptr) return nullptr;
 
-    Monoid* tx = reinterpret_cast<Monoid*> (buffer);
+    MonoidTx* tx = reinterpret_cast<MonoidTx*> (buffer);
     tx->size = size - kSlotHeaderSize;
     tx->start = 0;
     tx->stop = 0;
@@ -155,11 +155,11 @@ KABUKI Monoid* MonoidInit (byte* buffer, uint_t size) {
     return tx;
 }
 
-KABUKI Monoid* MonoidInit (Monoid* buffer, uint_t size) {
+KABUKI MonoidTx* MonoidInit (MonoidTx* buffer, uint_t size) {
     if (size < kMinSocketSize) return nullptr;
     if (buffer == nullptr)     return nullptr;
 
-    Monoid* tx = reinterpret_cast<Monoid*> (buffer);
+    MonoidTx* tx = reinterpret_cast<MonoidTx*> (buffer);
     tx->size = size - kSlotHeaderSize;
     tx->start = 0;
     tx->stop  = 0;
@@ -171,24 +171,24 @@ KABUKI Monoid* MonoidInit (Monoid* buffer, uint_t size) {
     return tx;
 }
 
-KABUKI uint_t MonoidSpace (Monoid* tx) {
+KABUKI uint_t MonoidSpace (MonoidTx* tx) {
     if (tx == nullptr) return ~0;
     byte* txb_ptr = reinterpret_cast<byte*>(tx);
     return MonoidSpace (txb_ptr + tx->start, txb_ptr + tx->stop, 
                                 tx->size);
 }
 
-KABUKI uint_t MonoidTxBufferLength (Monoid* tx) {
+KABUKI uint_t MonoidTxBufferLength (MonoidTx* tx) {
     if (tx == nullptr) return ~0;
     byte* base = MonoidSlot (tx);
     return MonoidLength (base + tx->start, base + tx->stop, tx->size);
 }
 
-KABUKI byte* MonoidEndAddress (Monoid* tx) {
+KABUKI byte* MonoidEndAddress (MonoidTx* tx) {
     return reinterpret_cast<byte*>(tx) + kSlotHeaderSize + tx->size;
 }
 
-KABUKI ticket_t Write (Monoid* tx, const char * address, const uint_t* params, 
+KABUKI ticket_t Write (MonoidTx* tx, const char * address, const uint_t* params, 
                        void** args) {
     //printf ("\n\n| Writing to %p\n", tx);
     if (address == nullptr)
@@ -819,7 +819,7 @@ KABUKI ticket_t Write (Monoid* tx, const char * address, const uint_t* params,
     return 0;
 }
 
-KABUKI byte MonoidStreamByte (Monoid* tx) {
+KABUKI byte MonoidStreamByte (MonoidTx* tx) {
 
     byte* begin = MonoidSlot (tx),
         *end = begin + tx->size;
@@ -839,7 +839,7 @@ KABUKI byte MonoidStreamByte (Monoid* tx) {
     return 0;
 }
 
-KABUKI ticket_t Read (Monoid* rx, const uint_t* params, void** args) {
+KABUKI ticket_t Read (MonoidTx* rx, const uint_t* params, void** args) {
     if (rx == nullptr)
         Report (NullPointerError, 0, 0, 0);
     if (params == nullptr)
@@ -1472,7 +1472,7 @@ KABUKI ticket_t Read (Monoid* rx, const uint_t* params, void** args) {
     return 0;
 }
 
-KABUKI void Print (Monoid* tx) {
+KABUKI void Print (MonoidTx* tx) {
     PrintLine ('_');
     if (tx == nullptr) {
         printf ("| Monoid null\n");

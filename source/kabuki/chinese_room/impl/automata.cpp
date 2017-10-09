@@ -2,13 +2,12 @@
     @version 0.x
     @file    ~/source/kabuki/chinese_room/include/automata.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
-                            All right reserved (R).
-             Licensed under the Apache License, Version 2.0 (the "License"); 
-             you may not use this file except in compliance with the License. 
-             You may obtain a copy of the License at
-                        http://www.apache.org/licenses/LICENSE-2.0
-             Unless required by applicable law or agreed to in writing, software
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
@@ -18,8 +17,8 @@
 #ifndef CHINESE_ROOM_AUTOMATA_H
 #define CHINESE_ROOM_AUTOMATA_H
 
-#include "set.h"
-#include "bag.h"
+#include "../include/set.h"
+#include "../include/bag.h"
 
 namespace _ {
 
@@ -186,24 +185,23 @@ class Automata: public Operation
 
     //NONCOPYABLE (Automata)
 
-    int reserved;           //< Reserved for 64-bit memory alignment.
-    Automata** root_;     //< Pointer to the dynamically allocated bags.
-    Automata* bag_;      //< The currently selected bag.
-    uint_t index_,          //< The index of the currently selected bag.
-        stack_height_,      //< The number of bags on the stack.
-        num_libraries_;     //< The number of libraries.
-    byte type_;             //< The current type of bag.
-    //Bag<TIndex, TKey, TData, THash> bag;
-    TIndex num_keys_,       //< The current number of Star members.
-        buffer_size_;       //< The current size of the header and names buffer in bytes.
-    TKey header_size_,   //< The current size of the header and names in bytes.
-        collisions_size_;   //< The current size of the header and names buffer in bytes.
-    TData data_size_;       //< The current total size of the bag.
+    int        reserved;            //< Reserved for 64-bit memory alignment.
+    Automata** root_;               //< Pointer to the dynamically allocated bags.
+    Automata*  bag_;                //< Currently selected bag.
+    uint_t     index_,              //< The index of the currently selected bag.
+               stack_height_,       //< The number of bags on the stack.
+               num_libraries_;      //< The number of libraries.
+    byte type_;                     //< Type of bag.
+    TIndex     num_keys_,           //< Number of Star members.
+               buffer_size_;        //< Header buffer size in bytes.
+    TKey       header_size_,        //< Total header size in bytes.
+               collisions_size_;    //< Collision table size in bytes.
+    TData      data_size_;          //< Total data size in bytes.
 };
 
 /** Destructs the given bag. */
 template<typename TIndex, typename TKey, typename TData, typename THash, 
-    uint MaxStackSize>
+         uint MaxStackSize>
 KABUKI void destruct (Automata<TIndex, TKey, TData, THash, MaxStackSize>* r) {
     if (r == nullptr) return;
     delete reinterpret_cast<byte*> (r);

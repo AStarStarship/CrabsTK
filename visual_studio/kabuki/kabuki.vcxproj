@@ -131,7 +131,7 @@
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\module.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\iterator.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\log.h" />
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\set.h" />
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\superset.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\reflection.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\portal.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\room.h" />
@@ -143,7 +143,7 @@
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\timestamp.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\types.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\subset.h" />
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\monoid.h" />
+    <ClInclude Include="..\..\source\kabuki\chinese_room\include\monoid_tx.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\utf.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\utf_string.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\utils.h" />
@@ -172,7 +172,7 @@
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\uniprinter.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\unityper.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\utils.cpp" />
-    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\set.cpp" />
+    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\superset.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\wall.cpp" />
   </ItemGroup>
   <ItemGroup>

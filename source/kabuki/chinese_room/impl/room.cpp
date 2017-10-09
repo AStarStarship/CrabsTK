@@ -2,13 +2,12 @@
     @version 0.x
     @file    ~/source/kabuki/chinese_room/include/Source/ChineseRoom/room.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
-                            All right reserved (R).
-             Licensed under the Apache License, Version 2.0 (the "License"); 
-             you may not use this file except in compliance with the License. 
-             You may obtain a copy of the License at
-                        http://www.apache.org/licenses/LICENSE-2.0
-             Unless required by applicable law or agreed to in writing, software
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
@@ -76,7 +75,7 @@ void Room::ProcessLog () {
 
 }
 
-void Room::PrintErrors (Monoid* tx) {
+void Room::PrintErrors (MonoidTx* tx) {
     //uint_t errorHeader[] = { 0 };
     //return io.prints (errorHeader);
 }
@@ -129,12 +128,12 @@ virtual int Room::Main (const char ** args, int args_count) {
     return 1;
 }
 
-virtual const Set* Room::Star (char_t index, B* io) {
-    static const Set this_member = { "Room", NumMembers (0), 
+virtual const Superset* Room::Star (char_t index, Abcdefg* io) {
+    static const Superset this_member = { "Room", NumMembers (0), 
                                         FirstMember (' '), "A Chinese Room." };
     switch (index) {
         case ' ': {
-            static const Set m_space = { "Space", Esc <0> (), Esc <0> (), "" };
+            static const Superset m_space = { "Space", Esc <0> (), Esc <0> (), "" };
         }
 
     }

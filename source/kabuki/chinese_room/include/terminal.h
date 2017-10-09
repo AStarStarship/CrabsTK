@@ -30,7 +30,7 @@ class Terminal : public Operation {
     public:
 
     /** Default constructor. */
-    Terminal (Monoid* io);
+    Terminal (MonoidTx* io);
 
     /** Destructs the Terminal. */
     ~Terminal ();
@@ -39,11 +39,11 @@ class Terminal : public Operation {
     bool Contains (void* address);
 
     /** A*B Operations. */
-    const Set* Star (char_t index, B* b) override;
+    const Superset* Star (char_t index, Abcdefg* b) override;
 
     private:
 
-    Monoid* io_;        //< Async mondoid ring buffer socket.
+    MonoidTx* io_;        //< Async mondoid ring buffer socket.
 };
 
 }       //< namespace _

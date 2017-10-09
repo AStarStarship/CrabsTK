@@ -86,7 +86,7 @@ ticket_t Console::Loop () {
     return 0;
 }
 
-const Set* Console::Star (char_t index, B* io) {
+const Superset* Console::Star (char_t index, Abcdefg* io) {
     return 0;
 }
 

@@ -23,7 +23,7 @@
 
 namespace _ {
 
-struct Set;
+struct Superset;
 
 /** Interface for a device that can be manipulated by a Terminal.
     When a device is selected by a Terminal, the caller can then call functions 
@@ -123,13 +123,13 @@ struct Operation {
          @return Returns null upon success, a Set header upon query, and an 
                  error_t ticket upon Read-Write failure.
     */
-    virtual const Set* Star (char_t index, Set* io) = 0;
+    virtual const Superset* Star (char_t index, Superset* io) = 0;
 };
 
 /** Gets the number of members of the given device. */
 KABUKI uintptr_t ToUInt (Operation* d) {
     if (d == nullptr) return 0;
-    const Set* m = d->Operation (0, nullptr);
+    const Superset* m = d->Operation (0, nullptr);
     return m == nullptr ? 0 : reinterpret_cast<uintptr_t> (m->input);
 }
 

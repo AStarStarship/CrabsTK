@@ -110,7 +110,7 @@ class Room: public Operation {
     void ProcessLog ();
 
     /** Prints the error log to a terminal. */
-    void PrintErrors (Monoid* tx);
+    void PrintErrors (MonoidTx* tx);
 
     /** Function run every main loop cycle to check the system status. */
     virtual void DiagnoseProblems ();
@@ -141,7 +141,7 @@ class Room: public Operation {
     virtual int Main (const char ** args, int args_count);
 
     /** I2P operations. */
-    virtual const Set* Star (char_t index, Set* io);
+    virtual const Superset* Star (char_t index, Superset* io);
 
     protected:
 
