@@ -14,7 +14,7 @@
              permissions and limitations under the License.
 */
 
-#include "../include/timestamp.h"
+#include "../include/clock.h"
 #include "../include/utils.h"
 
 namespace _ {

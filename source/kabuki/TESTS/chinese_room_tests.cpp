@@ -71,11 +71,11 @@ TEST (ChineseRoomTests, LinearityTests) {
     float flt_found;
     io->return_address = "A";
     printf ("\n| Attempting to print to 0x%p\n", LinearityTx (io));
-    const Superset* m = Write (io, "C", esc, Args (args, &stx_expected,
+    const Set* m = Write (io, "C", esc, Args (args, &stx_expected,
                                                  &si4_expected, &flt_expected));
     PrintMemory (io, LinearityEndAddress (io));
     Print (io);
-    Reflection mirror;       //< @todo fix me!
+    Mirror mirror;       //< @todo fix me!
     //Portal* p = dynamic_cast<Portal*>(&mirror);   //< Not working?
     Portal* p = reinterpret_cast<Portal*>(&mirror);
     LinearityScan (io, p);
@@ -106,17 +106,17 @@ TEST (ChineseRoomTests, SymbolTableTests) {
     CHECK_EQUAL (0, Find (rt, "D"))
     CHECK_EQUAL (1, Find (rt, "C"))
 
-    index = Add (rt, "B");
+    index = Add (rt, "MonoidRx");
     CHECK_EQUAL (2, index)
     CHECK_EQUAL (0, Find (rt, "D"))
     CHECK_EQUAL (1, Find (rt, "C"))
-    CHECK_EQUAL (2, Find (rt, "B"))
+    CHECK_EQUAL (2, Find (rt, "MonoidRx"))
 
     index = Add (rt, "A");
     CHECK_EQUAL (3, index)
     CHECK_EQUAL (0, Find (rt, "D"))
     CHECK_EQUAL (1, Find (rt, "C"))
-    CHECK_EQUAL (2, Find (rt, "B"))
+    CHECK_EQUAL (2, Find (rt, "MonoidRx"))
     CHECK_EQUAL (3, Find (rt, "A"))
 
     index = Add (rt, "abc");
@@ -164,17 +164,17 @@ TEST (ChineseRoomTests, BagTests) {
     CHECK_EQUAL (0, Find2 (bag, "D"))
     CHECK_EQUAL (1, Find2 (bag, "C"))
 
-    index = Add2 (bag, "B", (byte)0xFF);
+    index = Add2 (bag, "MonoidRx", (byte)0xFF);
     CHECK_EQUAL (2, index)
     CHECK_EQUAL (0, Find2 (bag, "D"))
     CHECK_EQUAL (1, Find2 (bag, "C"))
-    CHECK_EQUAL (2, Find2 (bag, "B"))
+    CHECK_EQUAL (2, Find2 (bag, "MonoidRx"))
 
     index = Add2 (bag, "A", (byte)0xFF);
     CHECK_EQUAL (3, index)
     CHECK_EQUAL (0, Find2 (bag, "D"))
     CHECK_EQUAL (1, Find2 (bag, "C"))
-    CHECK_EQUAL (2, Find2 (bag, "B"))
+    CHECK_EQUAL (2, Find2 (bag, "MonoidRx"))
     CHECK_EQUAL (3, Find2 (bag, "A"))
 
     index = Add2 (bag, "abc", (byte)0xFF);

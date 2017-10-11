@@ -14,11 +14,7 @@
              permissions and limitations under the License.
 */
 
-#include "../include/room.h"
-#include "../include/mirror.h"
-#include "../include/symbol_table.h"
-#include "../include/bag.h"
-#include "../include/utils.h"
+#include "../include/console.h"
 
 namespace _ {
 
@@ -68,13 +64,13 @@ void ReadString (const char * header, char* buffer, int buffer_size) {
     std::cin.ignore (buffer_size, '\n');
 }
 
-Console () :
+Console::Console () :
     Room (0)
 {
     
 }
 
-virtual Console::~Console () {
+Console::~Console () {
 
 }
 
@@ -86,7 +82,7 @@ ticket_t Console::Loop () {
     return 0;
 }
 
-const Superset* Console::Star (char_t index, Abcdefg* io) {
+const Set* Console::Star (char_t index, Automata* a) {
     return 0;
 }
 

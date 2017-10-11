@@ -28,7 +28,7 @@ namespace _ {
     static const Set member_device = { "Key", setNumMembers (0), 0,
                                        "Description" };
     @endcode */
-struct Superset {
+struct Set {
     const char   * name;        //< The set name.
     const uint_t * params,      //< The set parameters. 
                  * result;      //< The set operation result.
@@ -46,22 +46,22 @@ KABUKI const uint_t* FirstMember (uint_t value);
 KABUKI uintptr_t Index (const void* ptr);
 
 /** Returns the number of members a Star has. */
-KABUKI uintptr_t GetNumMembers (const Superset* m);
+KABUKI uintptr_t GetNumMembers (const Set* m);
 
 /** Error flag member pointers for throwing Terminal io errors. */
-KABUKI const Superset* ReadError ();
+KABUKI const Set* ReadError ();
 
 /** Error flag member pointers for throwing Terminal io errors. */
-KABUKI const Superset* WriteError ();
+KABUKI const Set* WriteError ();
 
 /** Error flag member pointers for throwing Terminal io errors. */
-KABUKI const Superset* DeviceStackOverflowError ();
+KABUKI const Set* DeviceStackOverflowError ();
 
 /** An error flag for an invalid member index. */
-KABUKI const Superset* InvalidMember ();
+KABUKI const Set* InvalidMember ();
 
 /** Prints the given Set to the std::out */
-KABUKI void SupersetPrint (const Superset* m);
+KABUKI void SetPrint (const Set* m);
 
 }   //< namespace _
 

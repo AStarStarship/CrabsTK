@@ -995,7 +995,7 @@ class UTF<32>
         // The encoding of wide characters is not well defined and is left to the system;
         // however we can safely assume that it is UCS-2 on Windows and
         // UCS-4 on Unix systems.
-        // In both cases, a simple copy is enough (UCS-2 is a superset of UCS-4,
+        // In both cases, a simple copy is enough (UCS-2 is a set of UCS-4,
         // and UCS-4 *is* UTF-32).
 
         return input;
@@ -1065,7 +1065,7 @@ class UTF<32>
         // The encoding of wide characters is not well defined and is left to the system;
         // however we can safely assume that it is UCS-2 on Windows and
         // UCS-4 on Unix systems.
-        // For UCS-2 we need to check if the source characters fits in (UCS-2 is a superset of UCS-4).
+        // For UCS-2 we need to check if the source characters fits in (UCS-2 is a set of UCS-4).
         // For UCS-4 we can do a direct copy (UCS-4 *is* UTF-32).
 
         switch (sizeof (wchar_t))

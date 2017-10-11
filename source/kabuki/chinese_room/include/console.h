@@ -22,6 +22,7 @@
 #include "symbol_table.h"
 #include "bag.h"
 #include "utils.h"
+#include "operation.h"
 
 namespace _ {
 
@@ -80,7 +81,7 @@ class Console: public Room
     }
 
     /** Chinese room operations. */
-    const Superset* Star (char_t index, Superset* io) override {
+    const Set* Star (char_t index, Automata* a) override {
         return 0;
     }
 

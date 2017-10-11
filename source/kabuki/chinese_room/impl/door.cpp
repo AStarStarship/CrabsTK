@@ -1,14 +1,13 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/include/Door.h
+    @file    ~/source/kabuki/chinese_room/impl/door.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
-                            All right reserved (R).
-             Licensed under the Apache License, Version 2.0 (the "License"); 
-             you may not use this file except in compliance with the License. 
-             You may obtain a copy of the License at
-                        http://www.apache.org/licenses/LICENSE-2.0
-             Unless required by applicable law or agreed to in writing, software
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
@@ -16,12 +15,10 @@
 */
 
 #include "../include/door.h"
-#include "../include/slot.h"
 
 namespace _ {
 
-Door (const char * roomName = " (:-)>", uint_t slot_size = kMinDoorSize,
-        bool is_dynamic = false) :
+Door::Door (const char * roomName, uint_t slot_size, bool is_dynamic) :
     is_dynamic_ (is_dynamic)
 {
     //tx.SetBuffer (adjacentDoor->Rx ()->EndAddress () + 1), aSlotSize);
@@ -59,7 +56,7 @@ ticket_t Door::ExecAll () {
     return 0;
 }
 
-const Set* Door::Star (char_t index, B* io) override {
+const Set* Door::Star (char_t index, Automata* a) {
     if (index < ' ') {
         static const Set this_member = { "Door", NumMembers (0), 
             0, "A door in a Chinese room." };

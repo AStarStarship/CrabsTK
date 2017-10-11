@@ -38,8 +38,8 @@ class Terminal : public Operation {
     /** Returns true if the set contains the given address pointer. */
     bool Contains (void* address);
 
-    /** A*B Operations. */
-    const Superset* Star (char_t index, Abcdefg* b) override;
+    /** A*MonoidRx Operations. */
+    const Set* Star (char_t index, Automata* b) override;
 
     private:
 

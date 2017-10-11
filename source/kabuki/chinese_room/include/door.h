@@ -70,7 +70,7 @@ class Door : public Operation {
     ticket_t ExecAll ();
 
     /** I2P operations. */
-    const Superset* Star (char_t index, Superset* io) override;
+    const Set* Star (char_t index, Automata* a) override;
 
     private:
 

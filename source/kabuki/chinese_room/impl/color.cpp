@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/include/chinese_room/include/color.h
+    @file    ~/source/kabuki/chinese_room/impl/color.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
 
@@ -132,7 +132,7 @@ void ColorSet (color_t color, byte red, byte green, byte blue, byte alpha) {
 }
 
 byte ColorGetRed   (color_t color) {
-    return (byte)rgba;
+    return (byte)color;
 }
 
 void ColorSetRed (color_t color, byte value) {
@@ -273,12 +273,11 @@ void ColorSetHSV (color_t color, float& fR, float& fG, float& fB, float& fH, flo
 }
 
 void ColorPrint (color_t color) {
-    color = argb;
     std::cout << "Color: "
-                    "R(" << (color && 0x000000FF) 
-                << "), G(" << (color && 0x0000FF00) >> 8 
-                << "), B(" << (color && 0x00FF0000) >> 16
-                << "), A(" << (color && 0xFF000000) >> 16
+                    "R("          << (color && 0x000000FF) 
+                << "), G("        << ((color && 0x0000FF00) >> 8)
+                << "), MonoidRx(" << ((color && 0x00FF0000) >> 16)
+                << "), A("        << ((color && 0xFF000000) >> 24)
                 << ")\n"; 
 }
 

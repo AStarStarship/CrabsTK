@@ -19,20 +19,20 @@
 
 namespace _ {
 
-Terminal::Terminal (Superset* io) :
+Terminal::Terminal (Set* io) :
     io_ (io)
 {
 }
 
 Terminal::~Terminal () {
-    //if (io_->type > 0) Delete<B> (io_);
+    //if (io_->type > 0) Delete<MonoidRx> (io_);
 }
 
 bool Terminal::Contains (void* address) {
     return LinearityContains (io_, address);
 }
 
-const Superset* Terminal::Star (char_t index, Superset* io) override {
+const Set* Terminal::Star (char_t index, Automata* a) override {
     switch (index) {
         case 0:
             break;

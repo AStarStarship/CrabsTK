@@ -141,7 +141,7 @@ class Room: public Operation {
     virtual int Main (const char ** args, int args_count);
 
     /** I2P operations. */
-    virtual const Superset* Star (char_t index, Superset* io);
+    virtual const Set* Star (char_t index, Automata* a);
 
     protected:
 

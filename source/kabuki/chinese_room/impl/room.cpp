@@ -128,12 +128,12 @@ virtual int Room::Main (const char ** args, int args_count) {
     return 1;
 }
 
-virtual const Superset* Room::Star (char_t index, Abcdefg* io) {
-    static const Superset this_member = { "Room", NumMembers (0), 
+virtual const Set* Room::Star (char_t index, Automata* io) {
+    static const Set this_member = { "Room", NumMembers (0), 
                                         FirstMember (' '), "A Chinese Room." };
     switch (index) {
         case ' ': {
-            static const Superset m_space = { "Space", Esc <0> (), Esc <0> (), "" };
+            static const Set m_space = { "Space", Esc <0> (), Esc <0> (), "" };
         }
 
     }

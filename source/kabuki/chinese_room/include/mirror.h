@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/include/reflection.h
+    @file    ~/source/kabuki/chinese_room/include/mirror.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,18 +14,20 @@
              permissions and limitations under the License.
 */
 
-#ifndef CHINESE_ROOM_REFLECTION_H
-#define CHINESE_ROOM_REFLECTION_H
+#ifndef CHINESE_ROOM_MIRROR_H
+#define CHINESE_ROOM_MIRROR_H
 
 #include "portal.h"
 #include "monoid.h"
 
 namespace _ {
 
-class Reflection : public Portal {
+/** Reflection.
+*/
+class Mirror : public Portal {
     public:
 
-    Reflection ();
+    Mirror ();
 
     virtual void Prime ();
 
@@ -36,13 +38,13 @@ class Reflection : public Portal {
     virtual byte Pull ();
 
     private:
-
-    MonoidTx* io;     //< The async monoid.
+    
+    Automata* a;     //< The async monoid.
 };
 
-ticket_t Read (Reflection* io, const uint_t* header, void** args);
+ticket_t Read (Mirror* io, const uint_t* header, void** args);
 
-ticket_t Write (Reflection* io, const uint_t* header, void** args);
+ticket_t Write (Mirror* io, const uint_t* header, void** args);
 
 }       //< namespace _
-#endif  //< CHINESE_ROOM_REFLECTION_H
+#endif  //< CHINESE_ROOM_MIRROR_H

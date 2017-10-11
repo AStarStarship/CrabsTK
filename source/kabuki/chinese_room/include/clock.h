@@ -1,28 +1,28 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/include/timestamp.h
+    @file    ~/source/kabuki/chinese_room/include/clock.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
-                            All right reserved (R).
-             Licensed under the Apache License, Version 2.0 (the "License"); 
-             you may not use this file except in compliance with the License. 
-             You may obtain a copy of the License at
-                        http://www.apache.org/licenses/LICENSE-2.0
-             Unless required by applicable law or agreed to in writing, software
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
 
-#ifndef CHINESE_ROOM_TIMESTAMP_H
-#define CHINESE_ROOM_TIMESTAMP_H
+#ifndef CHINESE_ROOM_CLOCK_H
+#define CHINESE_ROOM_CLOCK_H
 
 #include "utils.h"
 
 namespace _ {
 
-/** Generates a timestamp from a Unix timestamp and 32-bit microsecond timestamp. */
+/** Generates a timestamp from a Unix timestamp and 32-bit microsecond timestamp.
+*/
 KABUKI timestamp_t PackTimestamp (time_t unixTime, int32_t microseconds);
 
 /** Gets the seconds since January 1, 1970. */
@@ -97,7 +97,8 @@ KABUKI int CompareTimes (time_t t, int year, int month, int day,
     @16:20:00
     @endcode
 */
-KABUKI const char * ParseTimeString (const char * input, int* hour, int* minute, int* second);
+KABUKI const char * ParseTimeString (const char * input, int* hour, 
+    int* minute, int* second);
 
 /** Parses a time or time delta from a a string starting with an '@' sign..
     @param hour   The location to write the number of hours to.
@@ -130,5 +131,4 @@ KABUKI char* ParseTime (char* input, time_t& result);
 KABUKI void ZeroTime (tm* moment);
 
 }       //< namespace _
-
-#endif  //< CHINESE_ROOM_TIMESTRAMP_H
+#endif  //< CHINESE_ROOM_CLOCK_H

@@ -2,13 +2,12 @@
     @version 0.x
     @file    ~/source/kabuki/chinese_room/include/operation.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
-                            All right reserved (R).
-             Licensed under the Apache License, Version 2.0 (the "License"); 
-             you may not use this file except in compliance with the License. 
-             You may obtain a copy of the License at
-                        http://www.apache.org/licenses/LICENSE-2.0
-             Unless required by applicable law or agreed to in writing, software
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
@@ -18,12 +17,11 @@
 #ifndef CHINESE_ROOM_OPERATION_H
 #define CHINESE_ROOM_OPERATION_H
 
-#include "superset.h"
 #include "set.h"
 
 namespace _ {
 
-struct Superset;
+struct Automata;
 
 /** Interface for a device that can be manipulated by a Terminal.
     When a device is selected by a Terminal, the caller can then call functions 
@@ -41,7 +39,7 @@ struct Superset;
         void bar () {}     //< Example dummy bar.
 
         // I2P operations.
-        const Set* Star (char_t index, B* io) override
+        const Set* Star (char_t index, Automata* a) override
         {
             void* argv[2];    //< An array of 2 void* for the Rpc arguments.
 
@@ -119,19 +117,19 @@ struct Operation {
         implementation should return a valid const Set*; pending the 
         developer didn't mess up the implementation.
         @param index The index of the operation.
-        @param io    The B for the IO slot.
+        @param io    The MonoidRx for the IO slot.
         @return      Returns null upon success, a Set header upon query, and an 
                      error_t ticket upon Read-Write failure.
     */
-    virtual const Superset* Star (char_t index, Abcdefg* io) = 0;
+    virtual const Set* Star (char_t index, Automata* io) = 0;
 };
 
 /** Gets the number of members of the given device. */
-KABUKI uintptr_t ToUInt (Operation* d);
+KABUKI uintptr_t ToUInt (Operation* op);
 
 /** Returns true if the given result from a Set is a non-printable ASCII 
     char, meaning it's a Star. */
-KABUKI bool IsDevice (const Superset* member);
+KABUKI bool IsDevice (const Set* member);
 
 /** Prints the given Star to the console. */
 KABUKI void Print (Operation* d);

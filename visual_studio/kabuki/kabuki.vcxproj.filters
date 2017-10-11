@@ -36,9 +36,6 @@
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\console.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\device.cpp">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\door.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
@@ -69,16 +66,7 @@
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\terminal.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\timestamp.cpp">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\types.cpp">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\uniprinter.cpp">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\unityper.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\utils.cpp">
@@ -87,10 +75,28 @@
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\wall.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\automata.cpp">
+    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\clock.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\superset.cpp">
+    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\set.cpp">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\kabuki\chinese_room\impl\book.cpp">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\kabuki\chinese_room\impl\automata.cpp">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\kabuki\chinese_room\impl\monoid_rx.cpp">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\kabuki\chinese_room\impl\monoid_tx.cpp">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\kabuki\chinese_room\impl\monoid.cpp">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\operation.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
   </ItemGroup>
@@ -158,9 +164,6 @@
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\terminal.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\timestamp.h">
-      <Filter>kabuki\chinese_room\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\types.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
@@ -176,9 +179,6 @@
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\wall.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\kabuki\chinese_room\include\stack.h">
-      <Filter>kabuki\chinese_room\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\kabuki\chinese_room\include\targetver.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
@@ -191,19 +191,22 @@
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\module.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\subset.h">
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\clock.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\reflection.h">
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\mirror.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\automata.h">
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\set.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\superset.h">
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\book.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\kabuki\chinese_room\include\monoid_tx.h">
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\monoid.h">
+      <Filter>kabuki\chinese_room\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\kabuki\chinese_room\include\automata.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
   </ItemGroup>

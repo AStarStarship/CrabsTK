@@ -70,7 +70,7 @@ KABUKI byte* MonoidTxRead (void* destination, byte* const begin,
 
     # Monoid Format
     By default, all sequences are a set of one byte, all sets are linear, and all sets 
-    may repeat.
+    may repeat some number of times.
 
     @code
     ESC VU8 1 BS CR

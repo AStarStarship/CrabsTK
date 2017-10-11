@@ -240,7 +240,7 @@ KABUKI byte ReadType (const char * s) {
                 default: return 0xff;
             }
         }
-        case 'B': switch (index = (byte) (token >> 8))
+        case 'MonoidRx': switch (index = (byte) (token >> 8))
         {
             case 'K': switch (index = (byte) (token >> 16))
             {
@@ -252,7 +252,7 @@ KABUKI byte ReadType (const char * s) {
             case 'O': return CheckLastLetter<'L'> (token >> 16) ? 0xff : BOL;
             default: return 0xff;
         }
-        case 'D': return CheckLastLetters<'B', 'L'> (token >> 16) ? 0xff : DBL;
+        case 'D': return CheckLastLetters<'MonoidRx', 'L'> (token >> 16) ? 0xff : DBL;
         case 'E': return CheckLastLetters<'S', 'C'> (token >> 16) ? 0xff : ESC;
         case 'F': return CheckLastLetters<'L', 'T'> (token >> 16) ? 0xff : FLT;
         case 'G': return 0xff;

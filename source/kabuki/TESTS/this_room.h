@@ -48,11 +48,11 @@ class Child : public Operation {
     public:
     
     /** Chinese Room operations. */
-    const Superset* Star (char_t index, Abcdefg* io) override {
+    const Set* Star (char_t index, Automata* io) override {
         void* args[2];
-        const Superset* error;
+        const Set* error;
 
-        static const Superset this_member = { "Child",
+        static const Set this_member = { "Child",
             NumMembers (2),
             FirstMember ('A'),
             "A child Operation." };
@@ -60,7 +60,7 @@ class Child : public Operation {
 
         switch (index) {
             case 'A': {
-                static const Superset m1 = { "FloatTests",
+                static const Set m1 = { "FloatTests",
                     Esc<2, FLT, STX, kStringBufferSize> (),
                     Esc<2, FLT, STX> (),
                     "Description of functionA." };
@@ -73,8 +73,8 @@ class Child : public Operation {
                 return Write (io, m1.result, Args (args, &io_number_,
                                                    io_string_));
             }
-            case 'B': {
-                static const Superset m2 = { "SignedIntegerTests",
+            case 'MonoidRx': {
+                static const Set m2 = { "SignedIntegerTests",
                     Esc<2, FLT, STX, kStringBufferSize> (),
                     Esc<2, FLT, STX> (),
                     "Description of functionB." };
@@ -107,11 +107,11 @@ class Root : public Operation {
     public:
 
     // Interprocess operations.
-    const Superset* Star (char_t index, Abcdefg* io) override {
+    const Set* Star (char_t index, Automata* io) override {
         void* args[2];
-        const Superset* error;
+        const Set* error;
 
-        static const Superset this_member = { "Root",
+        static const Set this_member = { "Root",
             NumMembers (4),
             FirstMember ('A'),
             "Root scope device." };
@@ -123,12 +123,12 @@ class Root : public Operation {
                 if (!io) return child_a.Star (0, io);
                 return Push (io, &child_a);
             }
-            case 'B': {
+            case 'MonoidRx': {
                 if (!io) return child_b.Star (0, io);
                 return Push (io, &child_b);
             }
             case 'C': {
-                static const Superset m3 = { "FloatTests",
+                static const Set m3 = { "FloatTests",
                     Esc<2, FLT, STX, kStringBufferSize> (),
                     Esc<2, FLT, STX> (),
                     "Description of functionA." };
@@ -142,7 +142,7 @@ class Root : public Operation {
                                                    io_string_));
             }
             case 'D': {
-                static const Superset m4 = { "SignedIntegerTests",
+                static const Set m4 = { "SignedIntegerTests",
                     Esc <2, FLT, STX, kStringBufferSize> (),
                     Esc <2, FLT, STX> (),
                     "Description of functionB." };
@@ -163,7 +163,7 @@ class Root : public Operation {
     private:
     
     Child child_a,                          //< Child object in index 'A'.
-        child_b;                            //< Child object in index 'B'
+        child_b;                            //< Child object in index 'MonoidRx'
 
     enum {
         kStringBufferSize = 16              //< Example string buffer size.

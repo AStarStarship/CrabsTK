@@ -25,8 +25,7 @@ namespace _ {
 /** A slot in Door that connects two or more Chinese Rooms.
     Examples of common Portal are UART, Dual-UART, SPI, I2C, Quad SPI, 
     TCP/HTTP/UDP, Bluetooth, CAN. */
-struct Portal
-{
+struct Portal {
     /** Sets the Portal up for a batch of bytes transfer.
          Implementation of this function is not required to do anything, but 
          regardless it will be called by the Set. */

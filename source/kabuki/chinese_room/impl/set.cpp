@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/superset.cpp
+    @file    ~/source/kabuki/chinese_room/impl/set.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,7 +14,7 @@
              permissions and limitations under the License.
 */
 
-#include "../include/superset.h"
+#include "../include/set.h"
 
 namespace _ {
 
@@ -30,13 +30,13 @@ uintptr_t Index (const void* ptr) {
     return reinterpret_cast<uintptr_t>(ptr);
 }
 
-uintptr_t GetNumMembers (const Superset* m) {
+uintptr_t GetNumMembers (const Set* m) {
     return Index (m->params);
 }
 
-const Superset* ReadError () {
+const Set* ReadError () {
     //return DeviceMember<"Read"> ();
-    static const Superset error = { "Read",
+    static const Set error = { "Read",
         0,
         0,
         0
@@ -44,9 +44,9 @@ const Superset* ReadError () {
     return &error;
 }
 
-const Superset* WriteError () {
+const Set* WriteError () {
     //return DeviceMember<"Write"> ();
-    static const Superset error = { "Write",
+    static const Set error = { "Write",
         0,
         0,
         0
@@ -54,9 +54,9 @@ const Superset* WriteError () {
     return &error;
 }
 
-const Superset* DeviceStackOverflowError () {
+const Set* AutomataOverflowError () {
     //return DeviceMember<"Star stack overflow"> ();
-    static const Superset error = { "Star stack overflow",
+    static const Set error = { "Star stack overflow",
         0,
         0,
         0
@@ -64,9 +64,9 @@ const Superset* DeviceStackOverflowError () {
     return &error;
 }
 
-const Superset* InvalidMember () {
+const Set* InvalidMember () {
     //return DeviceMember<"Invalid member index"> ();
-    static const Superset error = { "Invalid member index",
+    static const Set error = { "Invalid member index",
         0,
         0,
         0
@@ -74,7 +74,7 @@ const Superset* InvalidMember () {
     return &error;
 }
 
-void SupersetPrint (const Superset* m) {
+void SetPrint (const Set* m) {
     if (m == nullptr)
         return;
 
