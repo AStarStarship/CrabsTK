@@ -14,10 +14,7 @@
              permissions and limitations under the License.
 */
 
-#include <CppUTest/CommandLineTestRunner.h>
-#include <CppUTest/TestHarness.h>
-
-#include <chinese_room/include/module.h>
+#include "module.h"
 using namespace _;
 
 enum {

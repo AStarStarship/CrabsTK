@@ -29,7 +29,7 @@ Terminal::~Terminal () {
 }
 
 bool Terminal::Contains (void* address) {
-    return LinearityContains (io_, address);
+    return AutomataContains (io_, address);
 }
 
 const Set* Terminal::Star (char_t index, Automata* a) override {

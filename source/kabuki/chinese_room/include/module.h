@@ -19,11 +19,11 @@
 
 #include "console.h"
 #include "utils.h"
-#include "symbol_table.h"
+#include "table.h"
 #include "bag.h"
 
 #ifndef THIS_ROOM
-#include "this_room.h"
+#include "this.h"
 #endif
 
 #endif  //< CHINESE_ROOM_H

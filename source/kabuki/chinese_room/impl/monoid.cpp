@@ -130,7 +130,7 @@ enum {
     kSlotHeaderSize = sizeof (MonoidTx) + sizeof (uintptr_t) -
     sizeof (MonoidTx) % sizeof (uintptr_t),
     //< Offset to the start of the ring buffer.
-    kMinSocketSize = 32 + kSlotHeaderSize,
+    kMinMonoidSize = 32 + kSlotHeaderSize,
 };
 
 byte* MonoidTxSlot (MonoidTx* tx) {
@@ -138,7 +138,7 @@ byte* MonoidTxSlot (MonoidTx* tx) {
 }
 
 MonoidTx* MonoidTxInit (byte* buffer, uint_t size) {
-    if (size < kMinSocketSize) return nullptr;
+    if (size < kMinMonoidSize) return nullptr;
     if (buffer == nullptr) return nullptr;
 
     MonoidTx* tx = reinterpret_cast<MonoidTx*> (buffer);
@@ -154,7 +154,7 @@ MonoidTx* MonoidTxInit (byte* buffer, uint_t size) {
 }
 
 MonoidTx* MonoidInit (MonoidTx* buffer, uint_t size) {
-    if (size < kMinSocketSize) return nullptr;
+    if (size < kMinMonoidSize) return nullptr;
     if (buffer == nullptr)     return nullptr;
 
     MonoidTx* tx = reinterpret_cast<MonoidTx*> (buffer);

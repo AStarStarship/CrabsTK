@@ -16,7 +16,7 @@ The current module under construction is the MonoidRx scanner. The protocol is d
 
 ## Todo
 * Finish Bag data RW functions.
-* Finish Linearity.
+* Finish Automata.
 * Serial PC/mbed demo.
 * Look into replacing code with array.h functions (if possible).
 

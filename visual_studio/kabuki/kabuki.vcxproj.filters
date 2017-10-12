@@ -60,9 +60,6 @@
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\slot.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\symbol_table.cpp">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\terminal.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
@@ -97,6 +94,9 @@
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\operation.cpp">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\table.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
   </ItemGroup>
@@ -158,9 +158,6 @@
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\stdafx.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\symbol_table.h">
-      <Filter>kabuki\chinese_room\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\terminal.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
@@ -207,6 +204,12 @@
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\kabuki\chinese_room\include\automata.h">
+      <Filter>kabuki\chinese_room\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\table.h">
+      <Filter>kabuki\chinese_room\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\kabuki\chinese_room\include\this.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
   </ItemGroup>

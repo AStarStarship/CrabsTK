@@ -76,9 +76,8 @@
 // Logical no.
 #define NO                          0
 
-//#include <assembly.h>                 //< Config stuff for your project.
-#include "assembly.h"               //< For debugging purposes: delete me.
-#include <stdafx.h>                 //< Don't knock it till you've tried it.
+#include <assembly.h>               //< Config stuff for your project.
+#include <stdafx.h>                 //< Precompiled headers don't need to compile.
 
 #if CHAR_WIDTH == 8
 typedef uint8_t char_t;
@@ -246,8 +245,6 @@ enum {
 #else
 #error  Invalid RAM_USE_LEVEL
 #endif
-
-typedef uint_t ticket_t;                    //< The size of the error ticket.
 
 /** Macro declares a class to be non-copyable. */
 #define NONCOPYABLE (ClassName)\

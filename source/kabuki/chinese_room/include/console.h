@@ -19,7 +19,7 @@
 
 #include "room.h"
 #include "mirror.h"
-#include "symbol_table.h"
+#include "table.h"
 #include "bag.h"
 #include "utils.h"
 #include "operation.h"

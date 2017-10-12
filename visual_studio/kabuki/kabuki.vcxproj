@@ -83,6 +83,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Workspace\kabuki-toolkit\source\kabuki\chinese_room\include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -137,10 +138,11 @@
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\room.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\slot.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\stdafx.h" />
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\symbol_table.h" />
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\table.h" />
     <ClInclude Include="..\..\source\kabuki\chinese_room\include\targetver.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\terminal.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\clock.h" />
+    <ClInclude Include="..\..\source\kabuki\chinese_room\include\this.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\types.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\monoid.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\utf.h" />
@@ -166,7 +168,7 @@
     <ClCompile Include="..\..\source\kabuki\chinese_room\impl\monoid_rx.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\room.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\slot.cpp" />
-    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\symbol_table.cpp" />
+    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\table.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\terminal.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\clock.cpp" />
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\types.cpp" />
