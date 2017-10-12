@@ -5,7 +5,7 @@ Machine and functional programming environment.
 
 ## Script
 Kabuki Toolkit is powered by Searle's Chinese Room, Interprocess, and Telemetry 
-Protocol (Script). Please checkout the [Script Specification RFC Draft](github.com/kabuki-project/kabuki-toolkit/wiki/Script-Specification-RFC).
+Protocol (Script). Please checkout the [Script Specification RFC Draft](https://github.com/kabuki-project/kabuki-toolkit/wiki/Script-Specification-RFC).
 
 ## Seeking Developers
 Please see the [Wiki](https://github.com/kabuki-toolkit/kabuki_toolkit/wiki) 
