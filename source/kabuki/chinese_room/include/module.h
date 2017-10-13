@@ -23,7 +23,7 @@
 #include "bag.h"
 
 #ifndef THIS_ROOM
-#include "this_room.h"
+#include "this.h"
 #endif
 
 #endif  //< CHINESE_ROOM_H

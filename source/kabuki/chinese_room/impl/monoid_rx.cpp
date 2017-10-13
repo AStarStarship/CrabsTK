@@ -70,14 +70,14 @@ KABUKI ticket_t Read (MonoidTx* rx, const uint_t* params, void** args) {
     const uint_t* param = params + 1;       //< The current param.
 
     length = MonoidLength (start, stop, size);
-//
-//#if DEBUG_CHINESE_ROOM
-//    //printf ("\n\n| Reading: ");
-//   PrintEsc (params);
-//    //printf ("| begin: 0x%p start : %u stop : %u end : %u "
-//            "length: %u ", begin, Diff (begin, start), 
-//            Diff (begin, stop), Diff (begin, end), length);
-//#endif
+    //
+    //#if DEBUG_CHINESE_ROOM
+    //    //printf ("\n\n| Reading: ");
+    //   PrintEsc (params);
+    //    //printf ("| begin: 0x%p start : %u stop : %u end : %u "
+    //            "length: %u ", begin, Diff (begin, start), 
+    //            Diff (begin, stop), Diff (begin, end), length);
+    //#endif
     // When we scan, we are reading from the beginning of the Monoid buffer.
 
     for (index = 0; index < num_params; ++index) {

@@ -2,13 +2,12 @@
     @version 0.x
     @file    ~/source/kabuki/chinese_room/include/Source/ChineseRoom/room.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
-                            All right reserved (R).
-             Licensed under the Apache License, Version 2.0 (the "License"); 
-             you may not use this file except in compliance with the License. 
-             You may obtain a copy of the License at
-                        http://www.apache.org/licenses/LICENSE-2.0
-             Unless required by applicable law or agreed to in writing, software
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
@@ -144,8 +143,13 @@ class Room: public Operation {
                             //< Star Control 1: this.
     Door* door_;            //< Star Control 2: The Door to this room.
     Operation* xoff_,       //< Star Control 3: XOFF - XOFF handling device.
+<<<<<<< HEAD
           * device_,        //< Star Control 4: the current device control.
           * devices_;       //< Pointer to the current device control.
+=======
+             * device_,     //< Star Control 4: the current device control.
+             * devices_;    //< Pointer to the current device control.
+>>>>>>> 98a6359c3af7d539eabe9e473c7b084cc3c6bfda
 };
 
 }       //< namespace _

@@ -83,6 +83,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Workspace\kabuki-toolkit\source\kabuki\chinese_room\include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,6 +141,7 @@
     <ClInclude Include="..\..\source\kabuki\chinese_room\include\targetver.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\terminal.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\clock.h" />
+    <ClInclude Include="..\..\source\kabuki\chinese_room\include\this.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\types.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\monoid.h" />
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\utf.h" />

@@ -29,8 +29,12 @@ Terminal::~Terminal () {
 }
 
 bool Terminal::Contains (void* address) {
+<<<<<<< HEAD
     //return MonoidContains (io_, address);
     return false;
+=======
+    return AutomataContains (io_, address);
+>>>>>>> 98a6359c3af7d539eabe9e473c7b084cc3c6bfda
 }
 
 const Set* Terminal::Star (char_t index, Automata* a) {

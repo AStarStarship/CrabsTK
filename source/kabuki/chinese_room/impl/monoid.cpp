@@ -124,6 +124,20 @@ byte* MonoidRead (void* destination, byte* const begin,
     return start + size;
 } */
 
+struct MonoidTx {
+    uint_t size;            //< The size of the ring buffers.
+    volatile uint_t start;  //< The starting index of the ring-buffer data.
+    uint_t stop,            //< The stopping index of the ring-buffer data.
+        read;               //< The address that the Rx device is reading from.
+};
+
+enum {
+    kSlotHeaderSize = sizeof (MonoidTx) + sizeof (uintptr_t) -
+    sizeof (MonoidTx) % sizeof (uintptr_t),
+    //< Offset to the start of the ring buffer.
+    kMinMonoidSize = 32 + kSlotHeaderSize,
+};
+
 byte* MonoidTxSlot (MonoidTx* tx) {
     return reinterpret_cast<byte*>(tx) + kSlotHeaderSize;
 }
@@ -144,7 +158,7 @@ MonoidTx* MonoidTxInit (byte* buffer, uint_t size) {
     return tx;
 }
 
-MonoidTx* MonoidTxInit (MonoidTx* buffer, uint_t size) {
+MonoidTx* MonoidInit (MonoidTx* buffer, uint_t size) {
     if (size < kMinMonoidSize) return nullptr;
     if (buffer == nullptr)     return nullptr;
 

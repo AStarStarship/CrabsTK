@@ -38,7 +38,11 @@ static Table* TableInit (byte* buffer, byte max_keys, uint16_t total_size)
     return rt;
 }
 
+<<<<<<< HEAD:source/kabuki/chinese_room/impl/table.cpp
 static byte TableAdd (Table* rt, const char* key) {
+=======
+static byte Add (Table* rt, const char * key) {
+>>>>>>> 98a6359c3af7d539eabe9e473c7b084cc3c6bfda:source/kabuki/chinese_room/impl/table.cpp
     if (rt == nullptr) return 0;
     if (key == nullptr) return 0;
     
@@ -318,7 +322,11 @@ static byte TableAdd (Table* rt, const char* key) {
     return num_keys;
 }
 
+<<<<<<< HEAD:source/kabuki/chinese_room/impl/table.cpp
 static byte TableFind (const Table* rt, const char* key) {
+=======
+static byte Find (const Table* rt, const char * key) {
+>>>>>>> 98a6359c3af7d539eabe9e473c7b084cc3c6bfda:source/kabuki/chinese_room/impl/table.cpp
     if (rt == nullptr)
         return 0;
     //PrintLineBreak ("Finding record...", 5);
@@ -451,7 +459,11 @@ static byte TableFind (const Table* rt, const char* key) {
     return kInvalidRecord;
 }
 
+<<<<<<< HEAD:source/kabuki/chinese_room/impl/table.cpp
 inline void TablePrint (Table* rt) {
+=======
+inline void Print (Table* rt) {
+>>>>>>> 98a6359c3af7d539eabe9e473c7b084cc3c6bfda:source/kabuki/chinese_room/impl/table.cpp
     if (rt == nullptr) return;
     byte num_keys = rt->num_keys,
         max_keys = rt->max_keys,

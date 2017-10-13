@@ -14,7 +14,11 @@
              permissions and limitations under the License.
 */
 
+<<<<<<< HEAD:source/kabuki/TESTS/this.h
 #include "../chinese_room/include/module.h"
+=======
+#include "module.h"
+>>>>>>> 98a6359c3af7d539eabe9e473c7b084cc3c6bfda:source/kabuki/TESTS/this_room.h
 using namespace _;
 
 enum {

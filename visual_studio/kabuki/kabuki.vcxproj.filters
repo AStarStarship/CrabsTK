@@ -86,9 +86,12 @@
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\table.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\..\source\kabuki\chinese_room\impl\library.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
+=======
+>>>>>>> 98a6359c3af7d539eabe9e473c7b084cc3c6bfda
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\address.h">
@@ -196,6 +199,12 @@
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\table.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
+    <ClInclude Include="..\..\source\kabuki\chinese_room\include\this.h">
+      <Filter>kabuki\chinese_room\include</Filter>
+    </ClInclude>
+>>>>>>> 98a6359c3af7d539eabe9e473c7b084cc3c6bfda
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\readme.md" />

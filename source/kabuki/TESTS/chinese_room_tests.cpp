@@ -1,25 +1,32 @@
 /** Kabuki Theater
     @version 0.x
-    @file    ~/source/kabuki-theater-impl/_/TESTS/chinese_room_tests.cpp
+    @file    ~/source/kabuki/impl/TESTS/chinese_room_tests.cpp
     @author  Cale McCollough <calemccollough.github.io>
-    @license Copyright 2017 (C) Cale McCollough <cale.mccollough@gmail.com>
-                            All right reserved (R).
-             Licensed under the Apache License, Version 2.0 (the "License"); 
-             you may not use this file except in compliance with the License. 
-             You may obtain a copy of the License at
-                        http://www.apache.org/licenses/LICENSE-2.0
-             Unless required by applicable law or agreed to in writing, software
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
 
+<<<<<<< HEAD
 #include "../chinese_room/include/module.h"
 #include "this.h"
 #include "../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
 #include "../../../cpputest/include/CppUTest/TestHarness.h"
 
+=======
+#include "../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
+#include "../../../../cpputest/include/CppUTest/TestHarness.h"
+
+#include "../chinese_room/include/module.h"
+#include "this.h"
+>>>>>>> 98a6359c3af7d539eabe9e473c7b084cc3c6bfda
 using namespace _;
 
 TEST_GROUP (ChineseRoomTests)
@@ -38,15 +45,13 @@ TEST_GROUP (ChineseRoomTests)
 TEST (ChineseRoomTests, UtilsTests)
 {
     printf ("  - Running HexTest...\n");
-    for (int i = 0; i < 16; ++i)
-    {
+    for (int i = 0; i < 16; ++i) {
         int value = ToByte (NibbleToLowerCaseHex (i));
         CHECK_EQUAL (i, value)
         value = ToByte (NibbleToUpperCaseHex (i));
         CHECK_EQUAL (i, value)
    }
-    for (int i = 0; i < 256; ++i)
-    {
+    for (int i = 0; i < 256; ++i) {
         int value = ToByte (ToLowerCaseHex (i));
         CHECK_EQUAL (i, value)
         value = ToByte (ToUpperCaseHex (i));

@@ -1,7 +1,11 @@
 # Kabuki Toolkit
 An cross-platform cross-language toolkit to for creating the Sloth and
-Chinese Rooms. Kabuki Toolkit is an Abstract Algebra Book; a Turing 
+Chinese Rooms. Kabuki Toolkit is an Abstract Algebra Automata; a Turing 
 Machine and functional programming environment.
+
+## Script
+Kabuki Toolkit is powered by Searle's Chinese Room, Interprocess, and Telemetry 
+Protocol (Script). Please checkout the [Script Specification RFC Draft](https://github.com/kabuki-project/kabuki-toolkit/wiki/Script-Specification-RFC).
 
 ## Seeking Developers
 Please see the [Wiki](https://github.com/kabuki-toolkit/kabuki_toolkit/wiki) 
@@ -20,7 +24,7 @@ gotta dump the development crap from hundreds of people.
 ## SDK Modules
 | Name         | Description  |
 |:------------:|:-------------|
-| chinese_room | Chinese Room Book.|
+| chinese_room | Chinese Room Automata.|
 | al           | Audio Library.|
 | app          | Application framework.|
 | biz          | Business eCommerce.|

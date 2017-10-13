@@ -76,9 +76,8 @@
 // Logical no.
 #define NO                          0
 
-//#include <assembly.h>                 //< Config stuff for your project.
-#include "assembly.h"               //< For debugging purposes: delete me.
-#include <stdafx.h>                 //< Don't knock it till you've tried it.
+#include <assembly.h>               //< Config stuff for your project.
+#include <stdafx.h>                 //< Precompiled headers don't need to compile.
 
 #if CHAR_WIDTH == 8
 typedef uint8_t char_t;
