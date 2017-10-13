@@ -23,7 +23,7 @@
 namespace _ {
     
 
-KABUKI ticket_t Read (MonoidTx* rx, const uint_t* params, void** args) {
+KABUKI const Set* Read (MonoidTx* rx, const uint_t* params, void** args) {
     if (rx == nullptr)
         Report (NullPointerError, 0, 0, 0);
     if (params == nullptr)

@@ -17,7 +17,7 @@
 #ifndef CHINESE_ROOM_MONOID_H
 #define CHINESE_ROOM_MONOID_H
 
-#include "config.h"
+#include "set.h"
 
 namespace _ {
 
@@ -69,6 +69,27 @@ struct MonoidRx {
     uint_t read;            //< The read variable.
 };
 
+/** A Tx ring-buffer.
+    A sequence of A*MonoidRx operations terminated by an ASCII CR char. All sequences get 
+    evaluated down to an immutable set (by definition all sets are immutable), which 
+    can be an empty set.
+
+    # Monoid Format
+    By default, all sequences are a set of one byte, all sets are linear, and all sets 
+    may repeat some number of times.
+
+    @code
+    ESC VU8 1 BS CR
+    @endcode
+    A Tx ring-buffer is identical in structure to an Rx ring-buffer, but the stop becomes
+    volatile and start is not volatile. */
+struct MonoidTx {
+    uint_t size;            //< The size of the monoid ring buffers.
+    volatile uint_t start;  //< The starting index of the ring-buffer data.
+    uint_t stop,            //< The stopping index of the ring-buffer data.
+        read;               //< The address that the Rx device is reading from.
+};
+
 /** Initializes the MonoidRx struct to an empty buffer. */
 KABUKI MonoidRx* MonoidRxInit (byte* buffer, uint_t size);
 
@@ -95,7 +116,14 @@ KABUKI byte* MonoidRxEndAddress (MonoidRx* rx);
     @param params The parameters.
     @param args The arguments.
     @return Returns 0 upon success and an ErrorList ticket number upon failure. */
-KABUKI ticket_t Read (MonoidRx* rx, const uint_t* params, void** args);
+KABUKI const Set* Read (MonoidRx* rx, const uint_t* params, void** args);
+
+/** Scans a message with the given params to the given Terminal.
+    @param rx The monoid socket.
+    @param params The parameters.
+    @param args The arguments.
+    @return Returns 0 upon success and an ErrorList ticket number upon failure. */
+KABUKI const Set* Read (MonoidTx* rx, const uint_t* params, void** args);
 
 /** Returns true if the MonoidRx buffer contains any data.
     @warning Function does not do any error checking for speed. */
@@ -103,27 +131,6 @@ KABUKI bool MonoidRxIsReadable (MonoidRx* rx);
 
 /** Prints out the given object to the std::out. */
 KABUKI void MonoidRxPrint (MonoidRx* rx);
-
-/** A Tx ring-buffer.
-    A sequence of A*MonoidRx operations terminated by an ASCII CR char. All sequences get 
-    evaluated down to an immutable set (by definition all sets are immutable), which 
-    can be an empty set.
-
-    # Monoid Format
-    By default, all sequences are a set of one byte, all sets are linear, and all sets 
-    may repeat some number of times.
-
-    @code
-    ESC VU8 1 BS CR
-    @endcode
-    A Tx ring-buffer is identical in structure to an Rx ring-buffer, but the stop becomes
-    volatile and start is not volatile. */
-struct MonoidTx {
-    uint_t size;            //< The size of the monoid ring buffers.
-    volatile uint_t start;  //< The starting index of the ring-buffer data.
-    uint_t stop,            //< The stopping index of the ring-buffer data.
-        read;               //< The address that the Rx device is reading from.
-};
 
 enum {
     kSlotHeaderSize = sizeof (MonoidTx) + sizeof (uintptr_t) -
@@ -160,13 +167,6 @@ KABUKI ticket_t Write (MonoidTx* tx, const char* address, const uint_t* params,
 /** Streams a tx byte.
     @param tx The tx monoid. */
 KABUKI byte MonoidTxStreamByte (MonoidTx* tx);
-
-/** Scans a message with the given params to the given Terminal.
-    @param rx The monoid socket.
-    @param params The parameters.
-    @param args The arguments.
-    @return Returns 0 upon success and an ErrorList ticket number upon failure. */
-KABUKI ticket_t Read (MonoidTx* rx, const uint_t* params, void** args);
 
 /** Prints the given Tx to the stdout. */
 KABUKI void MonoidTxPrint (MonoidTx* tx);

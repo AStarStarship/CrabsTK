@@ -8,6 +8,10 @@ Kabuki Toolkit is powered by Searle's Chinese Room, Interprocess, and Telemetry
 Protocol (Script). Please checkout the [Script Specification RFC Draft](https://github.com/kabuki-project/kabuki-toolkit/wiki/Script-Specification-RFC).
 
 ## Seeking Developers
+I just completley fucked up the last git pull add --all push. I'm making
+CMake files today to auto-generate the Visual Studio Projects because 
+I'm sick of them breaking.
+
 Please see the [Wiki](https://github.com/kabuki-toolkit/kabuki_toolkit/wiki) 
 for instructions on how you can get involved. What you are seeing in the repo 
 is a  prototype for the perfect C/C++/C#/Python/etc library format with a 
