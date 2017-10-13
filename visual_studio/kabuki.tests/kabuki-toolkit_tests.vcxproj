@@ -22,7 +22,7 @@
     <ClCompile Include="..\..\source\kabuki\TESTS\chinese_room_tests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\source\kabuki\TESTS\this_room.h" />
+    <ClInclude Include="..\..\source\kabuki\TESTS\this.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -98,7 +98,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Workspace\kabuki-toolkit\source\kabuki;..\..\..\cpputest\include;$(IncludePath)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\source\kabuki\TESTS;C:\Workspace\kabuki-toolkit\source\kabuki;$(IncludePath)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>

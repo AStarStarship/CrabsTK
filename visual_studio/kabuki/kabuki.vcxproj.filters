@@ -5,10 +5,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="impl">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="kabuki">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
@@ -45,12 +41,6 @@
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\exceptions.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\log.cpp">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\member.cpp">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\mirror.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
@@ -58,9 +48,6 @@
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\slot.cpp">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\symbol_table.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\terminal.cpp">
@@ -81,9 +68,6 @@
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\set.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\kabuki\chinese_room\impl\book.cpp">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\kabuki\chinese_room\impl\automata.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
@@ -97,6 +81,12 @@
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\operation.cpp">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\kabuki\chinese_room\impl\table.cpp">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\kabuki\chinese_room\impl\library.cpp">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,9 +130,6 @@
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\exceptions.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\log.h">
-      <Filter>kabuki\chinese_room\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\iterator.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
@@ -156,9 +143,6 @@
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\stdafx.h">
-      <Filter>kabuki\chinese_room\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\symbol_table.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\kabuki\chinese_room\include\terminal.h">
@@ -207,6 +191,9 @@
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\kabuki\chinese_room\include\automata.h">
+      <Filter>kabuki\chinese_room\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\kabuki\chinese_room\include\table.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
   </ItemGroup>

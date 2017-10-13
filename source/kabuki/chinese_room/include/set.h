@@ -14,8 +14,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef CHINESE_ROOM_SUPERSET_H
-#define CHINESE_ROOM_SUPERSET_H
+#ifndef CHINESE_ROOM_SET_H
+#define CHINESE_ROOM_SET_H
 
 #include "error.h"
 
@@ -54,8 +54,11 @@ KABUKI const Set* ReadError ();
 /** Error flag member pointers for throwing Terminal io errors. */
 KABUKI const Set* WriteError ();
 
+/** Generates a Set from the given error ticket_t. */
+KABUKI const Set* SetErrorTicket (ticket_t error);
+
 /** Error flag member pointers for throwing Terminal io errors. */
-KABUKI const Set* DeviceStackOverflowError ();
+KABUKI const Set* AutomataOverflowError ();
 
 /** An error flag for an invalid member index. */
 KABUKI const Set* InvalidMember ();
@@ -65,19 +68,19 @@ KABUKI void SetPrint (const Set* m);
 
 }   //< namespace _
 
-#endif  //< CHINESE_ROOM_SUPERSET_H
+#endif  //< CHINESE_ROOM_SET_H
 
 
 /*
 // Creates a Read-only-memory Set for a member without a description.
-template<const char * key>
+template<const char* key>
 KABUKI const C* DeviceMember () {
     static const C m = { key, 0, 0, 0 };
     return &m;
 }
 
 // Creates a Read-only-memory Set for a member without a description.
-template<const char * key, byte num_members, const uint_t* params,
+template<const char* key, byte num_members, const uint_t* params,
     const uint_t* result>
     KABUKI const C* DeviceMember () {
     static const C m = { key, params, result, 0 };
@@ -85,16 +88,16 @@ template<const char * key, byte num_members, const uint_t* params,
 }
 
 // Creates a static const Set in ROM. @code const Set* m = createMember<"memberName", 1, TxHeader<FLT, TMU>, "Description."> @endcode 
-template<const char * kKey, const uint_t* kHeaderIn, const char * kHeaderOut,
-    const char * kDescription>
+template<const char* kKey, const uint_t* kHeaderIn, const char* kHeaderOut,
+    const char* kDescription>
     KABUKI const C* DeviceMember () {
     static C m = { kKey, kHeaderIn, kHeaderOut, kDescription };
     return &m;
 }
 
 // Creates a Read-only-memory Set for a Star.
-template<const char * key, byte num_members, const uint_t* result,
-    const char * description>
+template<const char* key, byte num_members, const uint_t* result,
+    const char* description>
     KABUKI const C* DeviceMember () {
     static const C m = { key, ConvertNumMembers (num_members), result,
         description };
@@ -102,7 +105,7 @@ template<const char * key, byte num_members, const uint_t* result,
 }
 
 // Creates a Read-only-memory Set for a Star.
-template<const char * key, byte num_members, const char * description>
+template<const char* key, byte num_members, const char* description>
 KABUKI const C* MemberDevice () {
     static const C m = { key, ConvertNumMembers (num_members), 0,
         description };

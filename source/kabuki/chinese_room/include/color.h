@@ -43,8 +43,7 @@ typedef enum {
     Red         = 0x0000FF,
     Maroon      = 0x800000,
     Brown       = 0xA52A2A,
-    Black       = 0x000000,     //< Black at the end as null-term char.
-    NumPresetColors
+    Black       = 0x000000      //< Black at the end as null-term char.
 } PresetColor;
     
 enum {
@@ -58,43 +57,25 @@ enum {
 };
 
 /** Returns a pointer to an array of the rainbow colors. */
-inline const color_t* RainbowColors () {
-    static const color_t RainbowColorsArray[] = {
-        0xF00000, 0xF01000, 0xF02000, 0xF03000, 0xF04000, 0xF05000, 0xF06000,
-        0xF07000, 0xF08000, 0xB0F000, 0xF09000, 0xF0A000, 0xF0B000, 0xF0C000,
-        0xF0D000, 0xF0E000, 0xF0F000, 0xF0F000, 0xE0F000, 0xD0F000, 0xC0F000,
-        0xA0F000, 0x90F000, 0x80F000, 0x70F000, 0x60F000, 0x50F000, 0x40F000,
-        0x30F000, 0x20F000, 0x10F000, 0x00F000, 0x00F000, 0x00F010, 0x00F020,
-        0x00F030, 0x00F040, 0x00F050, 0x00F060, 0x00F070, 0x00F080, 0x00F090,
-        0x00F0A0, 0x00F0B0, 0x00F0C0, 0x00F0D0, 0x00F0E0, 0x00F0F0, 0x00F0F0,
-        0x00E0F0, 0x00D0F0, 0x00C0F0, 0x00B0F0, 0x00A0F0, 0x0090F0, 0x0080F0,
-        0x0070F0, 0x0060F0, 0x0050F0, 0x0040F0, 0x0030F0, 0x0020F0, 0x0010F0,
-        0x0000F0, 0x0000F0, 0x1000F0, 0x2000F0, 0x3000F0, 0x4000F0, 0x5000F0,
-        0x6000F0, 0x7000F0, 0x8000F0, 0x9000F0, 0xA000F0, 0xB000F0, 0xC000F0,
-        0xD000F0, 0xE000F0, 0xF000F0, 0xF000F0 ,0xF000E0, 0xF000D0, 0xF000C0,
-        0xF000B0, 0xF000A0, 0xF00090, 0xF00080, 0xF00070, 0xF00060, 0xF00050,
-        0xF00040, 0xF00030, 0xF00020, 0xF00010, 0xF00000
-    };
-    return &RainbowColorsArray[0];
-}
+inline const color_t* RainbowColors ();
 
 /** Returns a pointer to an array of the present colors. */
 inline const color_t* PresetColors ();
 
 /** Gets one of the rainbow colors. */
-inline color_t RainbowColor (char_t index);
+inline color_t ColorRainbow (char_t index);
 
 /** Gets one of the preset colors. */
-inline color_t PresetColor (char_t index);
+inline color_t ColorPreset (char_t index);
 
 /** Gets a random preset colors. */
-inline color_t RandomPresetColor (char_t index);
+inline color_t RandomPresetColor ();
 
 /** Gets a random color. */
 inline color_t RandomColor (char_t index);
     
 /** Mixes the color with the  */
-inline color_t MixColor (color_t a, color_t b);
+inline color_t ColorMix (color_t a, color_t b);
 
 /** Increases the alpha value of the given color by the given value. */
 inline color_t ChangeBrightness (color_t color, int brightnessChange);

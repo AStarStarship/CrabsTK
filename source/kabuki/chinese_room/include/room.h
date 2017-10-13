@@ -23,19 +23,6 @@
 
 namespace _ {
 
-/** Returns an array of pointers to strings that describe the program states.
-*/
-KABUKI const char ** RoomStateStrings () {
-    static const char * states[] = {
-        "Initializing",
-        "Waking up",
-        "Running",
-        "Going to sleep",
-        "Exiting"
-    };
-    return states;
-}
-
 /** A list of Requests that can be sent from Terminal<uint_t, THash> to
     Terminal<uint_t, THash>.  */
 typedef enum Requests {
@@ -51,11 +38,15 @@ enum
     NumRequests = 2,    //< The number of Requests.
 };
 
+/** Returns an array of pointers to strings that describe the program states.
+*/
+KABUKI const char** RoomStateStrings ();
+
 /** Returns a pointer to an array of pointers to the _::Request strings. */
-KABUKI const char ** RequestStrings ();
+KABUKI const char** RequestStrings ();
 
 /** Gets the response string corresponding to the given request. */
-KABUKI const char * RequestString (Request r);
+KABUKI const char* RequestString (Request r);
 
 /** A Chinese Room.
     An Chinese Room works the same way as in the Chinese Room thought 
@@ -99,8 +90,7 @@ class Room: public Operation {
     virtual ~Room ();
     
     /** Processes a request from another Room.
-        @return Returns false upon success and true if there is an error.
-    */
+        @return Returns false upon success and true if there is an error. */
     Request HandleNextRequest (Request r);
 
     /** Clears the log. */
@@ -138,7 +128,7 @@ class Room: public Operation {
 
     /** The default main function.
         Please feel free to override this with your own main function. */
-    virtual int Main (const char ** args, int args_count);
+    virtual int Main (const char** args, int args_count);
 
     /** I2P operations. */
     virtual const Set* Star (char_t index, Automata* a);
@@ -153,7 +143,7 @@ class Room: public Operation {
         stack_size_;        //< The max size of the device stack.
                             //< Star Control 1: this.
     Door* door_;            //< Star Control 2: The Door to this room.
-    Star* xoff_,          //< Star Control 3: XOFF - XOFF handling device.
+    Operation* xoff_,       //< Star Control 3: XOFF - XOFF handling device.
           * device_,        //< Star Control 4: the current device control.
           * devices_;       //< Pointer to the current device control.
 };

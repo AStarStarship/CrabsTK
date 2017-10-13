@@ -92,13 +92,13 @@ KABUKI uintptr_t TypeAlign (byte* ptr, uint_t type);
 KABUKI bool TypeIsValid (uint_t type);
 
 /** Returns a pointer to an array of pointers to the type names.*/
-KABUKI const char ** TypeStrings ();
+KABUKI const char** TypeStrings ();
 
 /** Returns true if the TypeName is one of the ErrorStrings. */
-KABUKI bool TypeIsValid (const char * type_name);
+KABUKI bool TypeIsValid (const char* type_name);
 
 /** Returns the name of the given type. */
-KABUKI const char * TypeString (uint_t type);
+KABUKI const char* TypeString (uint_t type);
 
 /** Checks to see if the given byte is a delimiter. */
 KABUKI bool CheckDelimiter (char const c);
@@ -113,7 +113,7 @@ KABUKI bool CheckLastLetters (uint32_t const Token);
 
 /** Returns the type from the given index.
     @warning Untested. */
-KABUKI byte ReadType (const char * s);
+KABUKI byte ReadType (const char* s);
 
 /** Masks off the lower 5-LSb to get the type. */
 KABUKI byte MaskType (byte value);

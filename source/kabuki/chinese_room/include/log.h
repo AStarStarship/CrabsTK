@@ -33,10 +33,10 @@ struct Log {
 inline Log LogInit (MonoidTx* tx, bool is_dynamic = false);
 
 /** Prints a message with the given header to the given Tx slot. */
-inline ticket_t Write (MonoidTx* tx, byte member, const char * string);
+inline ticket_t Write (MonoidTx* tx, byte member, const char* string);
 
 /** Prints a message with the given header to the given Tx slot. */
-inline ticket_t Write (Log& log, byte member, const char * string);
+inline ticket_t Write (Log& log, byte member, const char* string);
 
 /** Returns a reference to the log for this assembly. */
 template<uint_t kNumber>
@@ -77,7 +77,7 @@ inline Log& operator<< (Log& log, float value);
 inline Log& operator<< (Log& log, double value);
 
 /** Operator << prints a string to the socket. */
-inline Log& operator<< (Log& log, const char * s);
+inline Log& operator<< (Log& log, const char* s);
 
 }       //< namespace _
 #endif  //< CHINESE_ROOM_LOG_H

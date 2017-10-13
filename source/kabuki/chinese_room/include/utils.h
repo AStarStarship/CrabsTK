@@ -32,35 +32,35 @@ T MaxValue () {
 
 
 /** Prints the given string to the std::out. */
-KABUKI void PrintLine (const char * s);
+KABUKI void PrintLine (const char* s);
 
-KABUKI void PrintDebug (const char * message,
-                        const char * end_string   = NewLineString,
-                        const char * begin_string = VerticalBar);
+KABUKI void PrintDebug (const char* message,
+                        const char* end_string   = NewLineString,
+                        const char* begin_string = VerticalBar);
 
-KABUKI void PrintError (const char * message, 
-                        const char * end_string = NewLineString);
+KABUKI void PrintError (const char* message, 
+                        const char* end_string = NewLineString);
 
-KABUKI void PrintDebugPointer (const char * message, const void* address);
+KABUKI void PrintDebugPointer (const char* message, const void* address);
 
-KABUKI void PrintDebugHex (const char * message, char value);
+KABUKI void PrintDebugHex (const char* message, char value);
 
 template<typename T>
-KABUKI void PrintDebugSignedHex (const char * message, T value) {
+KABUKI void PrintDebugSignedHex (const char* message, T value) {
 #if DEBUG
     printf ("| %s:'%i':0x%x\n", message, value, value);
 #endif
 }
 
 template<typename T>
-KABUKI void PrintDebugUnsignedHex (const char * message, T value) {
+KABUKI void PrintDebugUnsignedHex (const char* message, T value) {
 #if DEBUG
     printf ("%s:'%u':0x%x\n", message, value, value);
 #endif
 }
 
 template<typename T>
-KABUKI void PrintDebugError (const char * message, T expected, T found) {
+KABUKI void PrintDebugError (const char* message, T expected, T found) {
 #if DEBUG
     std::out << ErrorHeader << "expecting " << expected << " and found " 
              << found << " attempting: " << message;
@@ -70,10 +70,10 @@ KABUKI void PrintDebugError (const char * message, T expected, T found) {
 /** Gets the length of the given string.
     @return Returns -1 if the input string is null.
 */
-KABUKI int StringLength (const char * s, char delimiter = 0);
+KABUKI int StringLength (const char* s, char delimiter = 0);
 
 /** Creates a duplicate copy of the given string using dynamic memory. */
-KABUKI const char * DuplicateString (const char * s, char delimiter = 0);
+KABUKI const char* DuplicateString (const char* s, char delimiter = 0);
 
 /** Destroys the duplicate string created by const byte* duplicate
 (const byte*). */
@@ -112,10 +112,19 @@ KABUKI byte* Buffer () {
     return buffer;
 }
 
+
 /** Creates/Gets one of n static buffers of the specified size. */
 template<uint_t kBufferNumber, uint_t kBufferSize>
 KABUKI byte* Buffer () {
     static byte buffer[kBufferSize + 1];
+    return buffer;
+}
+
+
+/** Creates/Gets one of n static buffers of the specified size. */
+template<typename T, uint_t kBufferNumber, uint_t kBufferSize>
+KABUKI T* Buffer () {
+    static T buffer[kBufferSize + 1];
     return buffer;
 }
 
@@ -188,19 +197,19 @@ KABUKI uint_t RandomHash () {
 KABUKI hash16_t Hash16 (char c, hash16_t hash);
 
 /** Hashes the given string using the primeHash function. */
-KABUKI hash16_t Hash16 (const char * s, hash16_t hash = 65521);
+KABUKI hash16_t Hash16 (const char* s, hash16_t hash = 65521);
 
 /** Hashes a single byte. */
 KABUKI hash32_t Hash32 (char c, hash32_t hash);
 
 /** Hashes the given string using the primeHash function. */
-KABUKI hash16_t Hash32 (const char * s, hash32_t hash = 4294967291);
+KABUKI hash16_t Hash32 (const char* s, hash32_t hash = 4294967291);
 
 /** Hashes a single byte. */
 KABUKI hash64_t Hash64 (char c, hash64_t hash);
 
 /** Hashes the given string using the primeHash function. */
-KABUKI hash64_t Hash64 (const char * s, hash64_t hash = 18446744073709551557);
+KABUKI hash64_t Hash64 (const char* s, hash64_t hash = 18446744073709551557);
 
 template<typename T>
 KABUKI bool IsNaN (T value) {
@@ -216,18 +225,13 @@ KABUKI timestamp_t TimestampNow ();
 
 /** Prints the given byte in Hex.
     This function prints the hex in big endian. */
-KABUKI void PrintHex (byte c) {
-    uint16_t chars = ToUpperCaseHex (c);
-    putchar ((char)chars);
-    putchar ((char)(chars >> 8));
-    putchar (' ');
-}
+KABUKI void PrintHex (byte c);
 
 /** Prints the given string center in the given width.
     If string is too small to fit in the width, function will print as much of
     the string as it has room for with a "..." If the given width is less than
     5, than */
-KABUKI void PrintCentered (const char * s, int width);
+KABUKI void PrintCentered (const char* s, int width);
 
 /** Prints the given char to the stdout if it is printable, and prints SOH. */
 KABUKI void PrintChar (char c);
@@ -236,7 +240,7 @@ KABUKI void PrintChar (char c);
 stream. */
 KABUKI void PrintLine (char token = '-', int column_width = 80);
 
-KABUKI void PrintLine (const char * start_string, char token, int length = 79);
+KABUKI void PrintLine (const char* start_string, char token, int length = 79);
 
 /** Prints a vertical tab with the given number of rows. */
 KABUKI void PrintLines (int numRows = 10);
@@ -265,7 +269,7 @@ KABUKI char CreateKeyValueFormatString (char* s, char column_width, char type);
 
 /** */
 template<char kColumnWidth>
-KABUKI void PrintHex (const char * header, void* value) {
+KABUKI void PrintHex (const char* header, void* value) {
     KABUKI char formatString[12],
         nullTermChar = CreateKeyValueFormatString (formatString, kColumnWidth, 'p');
     printf (formatString, header, value);
@@ -273,7 +277,7 @@ KABUKI void PrintHex (const char * header, void* value) {
 
 /** */
 template<char kColumnWidth, typename Type>
-KABUKI void PrintSignedHex (const char * header, Type value) {
+KABUKI void PrintSignedHex (const char* header, Type value) {
     KABUKI char formatString[12],
         nullTermChar = CreateKeyValueFormatString (formatString, kColumnWidth, 'i');
     printf ("formatString: %s\n", formatString);
@@ -282,7 +286,7 @@ KABUKI void PrintSignedHex (const char * header, Type value) {
 
 /** */
 template<char kColumnWidth, typename Type>
-KABUKI void PrintUnsignedHex (const char * header, Type value) {
+KABUKI void PrintUnsignedHex (const char* header, Type value) {
     KABUKI char formatString[12],
         nullTermChar = CreateKeyValueFormatString (formatString, kColumnWidth, 'u');
     printf (formatString, header, value);
@@ -293,11 +297,11 @@ KABUKI void PrintNumberLine (char_t index);
 
 /** Prints an 80-char line of the string repeating with an underscore
 i.e. s_s_... */
-KABUKI void PrintStringLine (const char * s);
+KABUKI void PrintStringLine (const char* s);
 
 /** Prints the given value to the console and prompts the user to press any key
 to continue. */
-template<typename Type, const char * format>
+template<typename Type, const char* format>
 KABUKI Type PrintReturn (Type value) {
     printf (format, value);
     return value;
@@ -306,7 +310,7 @@ KABUKI Type PrintReturn (Type value) {
 /** Prints the array starting at the base_ptr with the given numElements with a
 header and given format. */
 template<typename Type>
-KABUKI void PrintArray (const char * header, const char * format, Type* base_ptr,
+KABUKI void PrintArray (const char* header, const char* format, Type* base_ptr,
                         Type numElements) {
     PrintLine ();
     std::cout << header << ": numElements: " << numElements << '\n';
@@ -321,52 +325,52 @@ KABUKI void PrintArray (const char * header, const char * format, Type* base_ptr
 }
 
 /** Prints an error message and pauses the system. */
-KABUKI void PrintPause (const char * s);
+KABUKI void PrintPause (const char* s);
 
 /** Prints a new line. */
 KABUKI void PrintNL ();
 
 /** Prints a bunch of new lines followed by the given message and a line of
 the specified token. */
-KABUKI void PrintLineBreak (const char * message, int top_bottom_margin,
+KABUKI void PrintLineBreak (const char* message, int top_bottom_margin,
                             char c = '-', int num_columns = 80);
 
 /** Copies a string from the source to the destination. */
-KABUKI void CopyString (char* destination, const char * source,
+KABUKI void CopyString (char* destination, const char* source,
     char delimeter = 0);
 
 /** Clones the given string. */
-KABUKI char* CloneString (const char * input, char delimeter = 0);
+KABUKI char* CloneString (const char* input, char delimeter = 0);
 
 /** Prints the given string with a '|' at the beginning followed by a new line */
-KABUKI void PrintBar (const char * input);
+KABUKI void PrintBar (const char* input);
 
 /** Prints a line break. */
-KABUKI void PrintBreak (const char * header = "\n_", char c = '_', int num_lines = 0,
-    int console_width = 80);
+KABUKI void PrintBreak (const char* header = "\n_", char c = '_', int num_lines = 0,
+                        int console_width = 80);
 
 /** Prints the given string centered. */
-KABUKI void PrintCentered (const char * input, int width, bool is_last = false,
-    char column_delimeter = '|');
+KABUKI void PrintCentered (const char* input, int width, bool is_last = false,
+                           char column_delimeter = '|');
 
 /** Prints a line break with the given number of columns. */
 KABUKI void PrintColumnBreak (int num_columns, char column_delimeter = '|', char break_char = '-',
-    int width = 80);
+                              int width = 80);
 
 /** Returns a pointer to the char at the end of the row? */
-KABUKI const char * FindEndOfRow (const char * input, int num_columns);
+KABUKI const char* FindEndOfRow (const char* input, int num_columns);
 
 /** Prints the given string centered with a horizontal page bar to the left 
     and right of the row.
     @param input The string to print.
     @param num_columns 
 */
-KABUKI void PrintPageCentered (const char * input, int num_columns);
+KABUKI void PrintPageCentered (const char* input, int num_columns);
 
 /** Prints the given string justified right.
     @param input The string to print.
     @param num_columns The number of columns per row. */
-KABUKI void PrintPageRight (const char * input, int num_columns);
+KABUKI void PrintPageRight (const char* input, int num_columns);
 
 /** Prints the given input indented and bulleted with and '|' at the beginning 
     and end of the line representing a page.
@@ -381,14 +385,14 @@ KABUKI void PrintPageRight (const char * input, int num_columns);
     @param index  The index of the bullet in the list.
     @param tab_size The number of spaces per tab.
     @param num_columns The number of columns per line. */
-KABUKI void PrintPage (const char * input = "", int indentation = 0,
-    char bullet = '*', char_t index = 0, int tab_size = 4,
-    int num_columns = 80);
+KABUKI void PrintPage (const char* input = "", int indentation = 0,
+                       char bullet = '*', char_t index = 0, int tab_size = 4,
+                       int num_columns = 80);
 
 /** Returns the pointer to the next char in the string that is not an ASCII
     number.
     @return A pointer to the next non-number in the input string. */
-KABUKI const char * NextNonNumberString (const char * input);
+KABUKI const char* NextNonNumberString (const char* input);
 
 /** Returns the pointer to the next char in the string that is not an ASCII 
     number.
@@ -396,44 +400,44 @@ KABUKI const char * NextNonNumberString (const char * input);
 KABUKI char* NextNonNumber (char* input);
 
 /** Skips the leading zeros of a number if there are any. */
-KABUKI const char * SkipLeadingZerosString (const char * input);
+KABUKI const char* SkipLeadingZerosString (const char* input);
 
 /** Skips the leading zeros of a number if there are any. */
 KABUKI char* SkipLeadingZeros (char* input);
 
 /** Skips all the spaces at the start of the string. */
-KABUKI const char * SkipSpacesString (const char * input);
+KABUKI const char* SkipSpacesString (const char* input);
 
 /** Skips all the spaces at the start of the string. */
 KABUKI char* SkipSpaces (char* input);
 
 /** Gets the end of the current token from the string.
     @return Returns a pointer to the end of the token. */
-KABUKI const char * EndOfTokenString (const char * input);
+KABUKI const char* EndOfTokenString (const char* input);
 
 /** Gets the end of the current token from the string.
     @return Returns a pointer to the end of the token. */
 KABUKI char* EndOfToken (char* input);
 
 /** Scrolls over to the next double quote mark. */
-KABUKI const char * EndOfString (const char * input, char delimiter = '\"');
+KABUKI const char* EndOfString (const char* input, char delimiter = '\"');
 
 /** Scrolls over to the next double quote mark. */
 KABUKI char* EndOf (char* input, char delimiter = '\"');
 
 /** Compares the source and query string using the delimiter to terminate the query. */
-KABUKI const char * CompareTokenString (const char * input, const char * token);
+KABUKI const char* CompareTokenString (const char* input, const char* token);
 
 /** Compares the source and query string using the delimiter to terminate the query. */
-KABUKI char* CompareToken (const char * input, const char * query);
+KABUKI char* CompareToken (const char* input, const char* query);
 
 /** Compares the source and query string using the delimiter to terminate the query. */
-KABUKI const char * CompareString (const char * input, const char * query,
+KABUKI const char* CompareString (const char* input, const char* query,
     char delimiter = 0);
 
 /** Compares the source and query string using the delimiter to terminate the
     query. */
-KABUKI char* Compare (char* source, const char * query, char delimiter = 0);
+KABUKI char* Compare (char* source, const char* query, char delimiter = 0);
 
 /** Parses the given string for the given token, setting the following 
     whitespace to null.
@@ -442,7 +446,7 @@ KABUKI char* Compare (char* source, const char * query, char delimiter = 0);
     @return Returns null if the search failed and a pointer to the first hit
             upon success.
 */
-KABUKI const char * ParseString (const char * input, char* destination,
+KABUKI const char* ParseString (const char* input, char* destination,
     int buffer_size, char delimiter = 0);
 
 /** Parses the given string for the given token, setting the following 
@@ -468,7 +472,7 @@ KABUKI char* ParseToken (char* input);
     @param  delimiter The delimiter for the token, Example: '\"'
     @return Returns null if the parsing failed and a pointer to the first char
             after the end of the token upon success. */
-KABUKI const char * FindString (const char * input, const char * query, char delimiter = 0);
+KABUKI const char* FindString (const char* input, const char* query, char delimiter = 0);
 
 /** Searches the given string for the given string, setting the following 
     whitespace to null.
@@ -478,12 +482,12 @@ KABUKI const char * FindString (const char * input, const char * query, char del
     @return Returns null if the search failed and a pointer to the first hit
             upon success.
 */
-KABUKI char* Find (char* input, const char * query, char delimiter = 0);
+KABUKI char* Find (char* input, const char* query, char delimiter = 0);
 
 /** Parses the string for a int.
     @return Returns null there was not a number and a pointer to after the 
             number ends in the string upon success. */
-KABUKI const char * ParseIntString (const char * input, int* value);
+KABUKI const char* ParseIntString (const char* input, int* value);
 
 /** Parses the string for a int.
     @return Returns null there was not a number and a pointer to after the 
@@ -498,7 +502,7 @@ enum {
     @return Returns null there was not a number and a pointer to after the 
             number ends in the string upon success. */
 
-KABUKI const char * ParseFloatString (const char * input, float* value);
+KABUKI const char* ParseFloatString (const char* input, float* value);
 
 /** Parses the string for a float.
     @return Returns null there was not a number and a pointer to after the 
@@ -508,7 +512,7 @@ KABUKI char* ParseFloat (char* input, float* value);
 /** Checks if the given string is a token. 
     @param input The string to check.
     @returns Returns true if the given string is a token. */
-KABUKI bool IsToken (const char * input);
+KABUKI bool IsToken (const char* input);
 
 }       //< namespace _
 

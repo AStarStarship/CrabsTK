@@ -243,7 +243,7 @@ TIndex MaxBagIndexes () {
 
 /** Adds a key-value pair to the end of the bag. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* bag, const char * key, 
+TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* bag, const char* key, 
                 TType type, void* data) {
     if (bag == nullptr) return 0;
     if (key == nullptr) return 0;
@@ -520,13 +520,13 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* bag, const char * key,
 }
 
 /** Adds a key-value pair to the end of the bag. */
-inline byte Add2 (Bag2* bag, const char * key, byte data) {
+inline byte Add2 (Bag2* bag, const char* key, byte data) {
     return BagAdd<byte, uint16_t, uint16_t, hash16_t> (bag, key, UI1, &data);
 }
 
 /** Returns  the given query string in the hash table. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-TIndex BagFind (Bag<TIndex, TKey, TData, THash>* bag, const char * key) {
+TIndex BagFind (Bag<TIndex, TKey, TData, THash>* bag, const char* key) {
     if (bag == nullptr)
         return 0;
     PrintLineBreak ("Finding record...", 5);
@@ -549,7 +549,7 @@ TIndex BagFind (Bag<TIndex, TKey, TData, THash>* bag, const char * key) {
                                                         max_items),
         *unsorted_indexes = indexes + max_items,
         *collission_list = unsorted_indexes + max_items;
-    const char * keys = reinterpret_cast<const char *> (bag) + table_size - 1;
+    const char* keys = reinterpret_cast<const char*> (bag) + table_size - 1;
     const TIndex* collisions,
         *temp_ptr;
 
@@ -653,7 +653,7 @@ TIndex BagFind (Bag<TIndex, TKey, TData, THash>* bag, const char * key) {
     return ~((TIndex)0);
 }
 
-static byte Find2 (Bag2* bag, const char * key) {
+static byte Find2 (Bag2* bag, const char* key) {
     return BagFind<byte, uint16_t, uint16_t, hash16_t> (bag, key);
 }
 
@@ -699,7 +699,7 @@ void BagPrint (const Bag<TIndex, TKey, TData, THash>* bag) {
         * unsorted_indexes = indexes + max_items,
         * collission_list = unsorted_indexes + max_items,
         *cursor;
-    const char * keys = reinterpret_cast<const char *> (bag) + table_size - 1;
+    const char* keys = reinterpret_cast<const char*> (bag) + table_size - 1;
 
     printf ("| %3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
             "hash_e", "hash_u", "hash_s", "index_u", "collisions");

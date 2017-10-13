@@ -19,60 +19,37 @@
 
 namespace _ {
 
-void PrintLine (const char * s) {
+void PrintLine (const char* s) {
     std::cout << '\n' << s << '\n';
 }
 
-void PrintDebug (const char * message, 
-                        const char * end_string   = NewLineString,
-                        const char * begin_string = VerticalBar) {
+void PrintDebug (const char* message, 
+                 const char* end_string,
+                        const char* begin_string) {
 #if DEBUG
     std::cout << begin_string << message << end_string;
 #endif
 }
 
-void PrintError (const char * message,
-                             const char * end_string = NewLineString) {
+void PrintError (const char* message, const char* end_string) {
 #if DEBUG
     std::cout << ErrorHeader << message << end_string;
 #endif
 }
 
-void PrintDebugPointer (const char * message, const void* address) {
+void PrintDebugPointer (const char* message, const void* address) {
 #if DEBUG
     printf ("| Error at address 0x%p: %s\n", address, message);
 #endif
 }
 
-void PrintDebugHex (const char * message, char value) {
+void PrintDebugHex (const char* message, char value) {
 #if DEBUG
     printf ("| %s '%c':0x%x\n", message, value, value);
 #endif
 }
 
-template<typename T>
-void PrintDebugSignedHex (const char * message, T value) {
-#if DEBUG
-    printf ("| %s:'%i':0x%x\n", message, value, value);
-#endif
-}
-
-template<typename T>
-void PrintDebugUnsignedHex (const char * message, T value) {
-#if DEBUG
-    printf ("%s:'%u':0x%x\n", message, value, value);
-#endif
-}
-
-template<typename T>
-void PrintDebugError (const char * message, T expected, T found) {
-#if DEBUG
-    std::out << ErrorHeader << "expecting " << expected << " and found " 
-             << found << " attempting: " << message;
-#endif
-}
-
-int StringLength (const char * s, char delimiter = 0) {
+int StringLength (const char* s, char delimiter) {
     if (s == nullptr)
         return -1;
     int count = 0;
@@ -83,32 +60,17 @@ int StringLength (const char * s, char delimiter = 0) {
     return count;
 }
 
-const char * DuplicateString (const char * s, char delimiter = 0) {
+const char* DuplicateString (const char* s, char delimiter) {
     int length = StringLength (s);
     if (length < 0)
         s = "Error duplicating string.";
-    char * buffer = new char[length + 1];
+    char* buffer = new char[length + 1];
     memcpy_s (buffer, length + 1, s, length + 1);
     return buffer;
 }
 
 void DestroyDuplicate (const byte* s) {
     if (s == nullptr) return;
-}
-
-template<typename T, typename U>
-T* New (U const size, U min_size) {
-    if (size < min_size) return nullptr;
-    byte* buffer;
-    try {
-        buffer = new byte[size];
-#if DEBUG
-        memset (buffer, '\0', size);
-#endif
-        return reinterpret_cast<T*>(buffer);
-    } catch (...) {
-        return nullptr;
-    }
 }
 
 void Delete (void* buffer) {
@@ -194,7 +156,7 @@ hash16_t Hash16 (char c, hash16_t hash) {
     return cprime + hash;
 }
 
-hash16_t Hash16 (const char * s, hash16_t hash = 65521) {
+hash16_t Hash16 (const char* s, hash16_t hash) {
     byte c = *s;
     while (c) {
         hash = Hash16 (c, hash);
@@ -209,7 +171,7 @@ hash32_t Hash32 (char c, hash32_t hash) {
     return cprime + hash;
 }
 
-hash16_t Hash32 (const char * s, hash32_t hash = 4294967291) {
+hash16_t Hash32 (const char* s, hash32_t hash) {
     byte c = *s;
     while (c) {
         hash = Hash32 (c, hash);
@@ -224,7 +186,7 @@ hash64_t Hash64 (char c, hash64_t hash) {
     return cprime + hash;
 }
 
-hash64_t Hash64 (const char * s, hash64_t hash = 18446744073709551557) {
+hash64_t Hash64 (const char* s, hash64_t hash) {
     byte c = *s;
     while (c) {
         hash = Hash64 (c, hash);
@@ -250,7 +212,7 @@ void PrintHex (byte c) {
     putchar (' ');
 }
 
-void PrintCentered (const char * s, int width) {
+void PrintCentered (const char* s, int width) {
     if (width < 2) {
         //? Not sure if this is an error.
         return;
@@ -282,21 +244,21 @@ void PrintChar (char c) {
     std::cout << c;
 }
 
-void PrintLine (char token = '-', int column_width = 80) {
+void PrintLine (char token, int column_width) {
     std::cout << '\n';
     for (int i = 0; i < column_width; ++i)
         std::cout << token;
     std::cout << '\n';
 }
 
-void PrintLine (const char * start_string, char token, int length = 79) {
+void PrintLine (const char* start_string, char token, int length) {
     std::cout << '\n' << start_string;
     for (int i = 0; i < 79; ++i)
         std::cout << token;
     std::cout << '\n';
 }
 
-void PrintLines (int numRows = 10) {
+void PrintLines (int numRows) {
     std::cout << '\r';
     for (int i = 0; i < numRows - 1; ++i)
         std::cout << '\n';
@@ -313,7 +275,7 @@ void PrintMemory (const void* address, const void* end) {
         std::cout << '_';
     std::cout << '\n';
 
-    const char * chars = reinterpret_cast<const char *> (address);
+    const char* chars = reinterpret_cast<const char*> (address);
     char temp;
     while (chars < end) {
         std::cout << '|';
@@ -333,11 +295,11 @@ void PrintMemory (const void* address, const void* end) {
 }
 
 void PrintMemory (const void* address, size_t size) {
-    const char * end = reinterpret_cast<const char *>(address) + size;
+    const char* end = reinterpret_cast<const char*>(address) + size;
     PrintMemory (address, end);
 }
 
-char CreateKeyValueFormatString (char * s, char column_width, char type) {
+char CreateKeyValueFormatString (char* s, char column_width, char type) {
     char hundreds = (column_width / 100),
         decimal = (column_width % 10),
         tens = (column_width - hundreds - decimal) / 10;
@@ -396,7 +358,7 @@ void PrintNumberLine (char_t index) {
     std::cout << '\n';
 }
 
-void PrintStringLine (const char * s) {
+void PrintStringLine (const char* s) {
     PrintLine ();
     int length = StringLength (s),
         i;
@@ -408,7 +370,7 @@ void PrintStringLine (const char * s) {
     PrintLine ();
 }
 
-void PrintPause (const char * s) {
+void PrintPause (const char* s) {
 #if DEBUG
     std::cout << "\n" << s << "\n";
     system ("PAUSE");
@@ -419,15 +381,15 @@ void PrintNL () {
     std::cout << '\n';
 }
 
-void PrintLineBreak (const char * message, int top_bottom_margin,
-                            char c = '-', int num_columns = 80) {
+void PrintLineBreak (const char* message, int top_bottom_margin,
+                            char c, int num_columns) {
     PrintLines (top_bottom_margin);
     std::cout << message;
     PrintLine (c, num_columns);
 }
 
-void CopyString (char * destination, const char * source,
-                        char delimeter = 0) {
+void CopyString (char* destination, const char* source,
+                        char delimeter) {
     if (destination == nullptr)
         return;
     if (source == nullptr)
@@ -443,21 +405,21 @@ void CopyString (char * destination, const char * source,
     *destination = '\0';
 }
 
-char * CloneString (const char * input, char delimeter = 0) {
+char* CloneString (const char* input, char delimeter) {
     if (input == nullptr)
         input = "";
     size_t length = StringLength (input);
-    char * clone = new char[length + 1];
+    char* clone = new char[length + 1];
     CopyString (clone, input);
     return clone;
 }
 
-void PrintBar (const char * input) {
+void PrintBar (const char* input) {
     std::cout << "\n| " << input << '\n';
 }
 
-void PrintBreak (const char * header = "\n_", char c = '_', int num_lines = 0, 
-                 int console_width = 80) {
+void PrintBreak (const char* header, char c, int num_lines, 
+                 int console_width) {
     for (int i = 0; i < num_lines; ++i)
         std::cout << '\n';
     std::cout << header;
@@ -467,8 +429,8 @@ void PrintBreak (const char * header = "\n_", char c = '_', int num_lines = 0,
     std::cout << '\n';
 }
 
-void PrintCentered (const char * input, int width, bool is_last = false,
-                    char column_delimeter = '|')
+void PrintCentered (const char* input, int width, bool is_last,
+                    char column_delimeter)
 {
     if (width < 1)
         return;
@@ -494,8 +456,8 @@ void PrintCentered (const char * input, int width, bool is_last = false,
         std::cout << column_delimeter << '\n';
 }
 
-void PrintColumnBreak (int num_columns, char column_delimeter = '|', char break_char = '-', 
-                       int width = 80) {
+void PrintColumnBreak (int num_columns, char column_delimeter, char break_char, 
+                       int width) {
     int column_width = width / num_columns;
     for (int i = 0; i < num_columns - 1; ++i) {
         std::cout << column_delimeter;
@@ -508,7 +470,7 @@ void PrintColumnBreak (int num_columns, char column_delimeter = '|', char break_
     std::cout << column_delimeter << '\n';
 }
 
-const char * FindEndOfRow (const char * input, int num_columns) {
+const char* FindEndOfRow (const char* input, int num_columns) {
     char c;
     // Scroll to the end of the line.
     while (c = *input++) {
@@ -526,14 +488,14 @@ const char * FindEndOfRow (const char * input, int num_columns) {
     return --input;
 }
 
-void PrintPageCentered (const char * input, int num_columns) {
+void PrintPageCentered (const char* input, int num_columns) {
     char c;   //< The current char.
     if (num_columns <= 4) // We need at least 4 columns for this to work.
         return;
     if (input == nullptr)
         return;
     do {
-        const char * end_row = FindEndOfRow (input, num_columns);
+        const char* end_row = FindEndOfRow (input, num_columns);
         size_t row_length = end_row - input,
             num_left_spaces = (num_columns / 2) - (row_length / 2),
             i;
@@ -551,7 +513,7 @@ void PrintPageCentered (const char * input, int num_columns) {
     } while (c);
 }
 
-void PrintPageRight (const char * input, int num_columns) {
+void PrintPageRight (const char* input, int num_columns) {
     char c;  //< The current char.
 
     if (num_columns <= 4) // We need at least 4 columns for this to work.
@@ -559,7 +521,7 @@ void PrintPageRight (const char * input, int num_columns) {
     if (input == nullptr)
         return;
     do {
-        const char * end_row = FindEndOfRow (input, num_columns);
+        const char* end_row = FindEndOfRow (input, num_columns);
         size_t row_length = end_row - input,
             num_left_spaces = num_columns - row_length,
             i;
@@ -575,9 +537,9 @@ void PrintPageRight (const char * input, int num_columns) {
     } while (c);
 }
 
-void PrintPage (const char * input = "", int indentation = 0,
-                       char bullet = '*', char_t index = 0, int tab_size = 4,
-                       int num_columns = 80) {
+void PrintPage (const char* input, int indentation,
+                       char bullet, char_t index, int tab_size,
+                       int num_columns) {
     num_columns -= 4;
     std::cout << "| ";
     int cursor; //< The column number of the cursor.
@@ -625,7 +587,7 @@ void PrintPage (const char * input = "", int indentation = 0,
     std::cout << '\n';
 }
 
-const char * NextNonNumberString (const char * input) {
+const char* NextNonNumberString (const char* input) {
     char c = *input;
     if (c == '-')           // It might be negative.
     {
@@ -639,11 +601,11 @@ const char * NextNonNumberString (const char * input) {
     return input;
 }
 
-char * NextNonNumber (char * input) {
-    return (char *)NextNonNumberString (input);
+char* NextNonNumber (char* input) {
+    return (char*)NextNonNumberString (input);
 }
 
-const char * SkipLeadingZerosString (const char * input) {
+const char* SkipLeadingZerosString (const char* input) {
     if (input == nullptr)
         return nullptr;
     char c = *input,
@@ -661,11 +623,11 @@ const char * SkipLeadingZerosString (const char * input) {
     return input;
 }
 
-char * SkipLeadingZeros (char * input) {
-    return (char *)SkipLeadingZerosString (input);
+char* SkipLeadingZeros (char* input) {
+    return (char*)SkipLeadingZerosString (input);
 }
 
-const char * SkipSpacesString (const char * input) {
+const char* SkipSpacesString (const char* input) {
     if (input == nullptr)
         return 0;
     //std::cout << "\nSkipping spaces: ";
@@ -679,11 +641,11 @@ const char * SkipSpacesString (const char * input) {
     return input;
 }
 
-char * SkipSpaces (char * input) {
-    return (char *)SkipSpacesString (input);
+char* SkipSpaces (char* input) {
+    return (char*)SkipSpacesString (input);
 }
 
-const char * EndOfTokenString (const char * input) {
+const char* EndOfTokenString (const char* input) {
     if (input == nullptr)
         return nullptr;
     input = SkipSpacesString (input);
@@ -697,11 +659,11 @@ const char * EndOfTokenString (const char * input) {
     return input;
 }
 
-char * EndOfToken (char * input) {
-    return (char *)EndOfTokenString (input);
+char* EndOfToken (char* input) {
+    return (char*)EndOfTokenString (input);
 }
 
-const char * EndOfString (const char * input, char delimiter = '\"') {
+const char* EndOfString (const char* input, char delimiter) {
     char c = *input;
     while (c) {
         if (c == delimiter)
@@ -711,11 +673,11 @@ const char * EndOfString (const char * input, char delimiter = '\"') {
     return input;
 }
 
-char * EndOf (char * input, char delimiter = '\"') {
-    return (char *)EndOfString (input, delimiter);
+char* EndOf (char* input, char delimiter) {
+    return (char*)EndOfString (input, delimiter);
 }
 
-const char * CompareTokenString (const char * input, const char * token) {
+const char* CompareTokenString (const char* input, const char* token) {
     if (input == nullptr)
         return nullptr;
     if (token == nullptr)
@@ -742,12 +704,12 @@ const char * CompareTokenString (const char * input, const char * token) {
     return input;
 }
 
-char * CompareToken (const char * input, const char * query) {
-    return (char *)CompareTokenString (input, query);
+char* CompareToken (const char* input, const char* query) {
+    return (char*)CompareTokenString (input, query);
 }
 
-const char * CompareString (const char * input, const char * query,
-                                  char delimiter = 0) {
+const char* CompareString (const char* input, const char* query,
+                           char delimiter) {
     if (input == nullptr)
         return nullptr;
     if (query == nullptr)
@@ -775,12 +737,12 @@ const char * CompareString (const char * input, const char * query,
     return input; //< Query hit!
 }
 
-char * Compare (char * source, const char * query, char delimiter = 0) {
-    return (char *)CompareString (source, query, delimiter);
+char* Compare (char* source, const char* query, char delimiter) {
+    return (char*)CompareString (source, query, delimiter);
 }
 
-const char * ParseString (const char * input, char * destination,
-                                int buffer_size, char delimiter = 0) {
+const char* ParseString (const char* input, char* destination,
+                                int buffer_size, char delimiter) {
     //std::cout << "> parse_string buffer_size: " << buffer_size
     //          << " delimiter " << delimiter << "\n> ";
     if (input == nullptr) {
@@ -820,12 +782,12 @@ const char * ParseString (const char * input, char * destination,
     return input + 1;
 }
 
-char * Parse (char * input, char * destination, int buffer_size,
-                    char delimiter = 0) {
-    return (char *)ParseString (input, destination, buffer_size, delimiter);
+char* Parse (char* input, char* destination, int buffer_size,
+                    char delimiter) {
+    return (char*)ParseString (input, destination, buffer_size, delimiter);
 }
 
-char * ParseToken (char * input) {
+char* ParseToken (char* input) {
     if (input == nullptr)
         return nullptr;
 
@@ -839,7 +801,7 @@ char * ParseToken (char * input) {
     return input; //< This is the start of the next token or whitespace.
 }
 
-const char * FindString (const char * input, const char * query, char delimiter = 0) {
+const char* FindString (const char* input, const char* query, char delimiter) {
     if (input == nullptr)
         return nullptr;
     if (query == nullptr)
@@ -850,8 +812,9 @@ const char * FindString (const char * input, const char * query, char delimiter 
         c = t;          //< The first char of the query we're searching for.
     if (c == delimiter) //< We're not allowing empty queries.
         return nullptr;
-    const char * start_of_query,
-        *cursor;
+    const char* start_of_query,
+        //*cursor;             //< This was uninitialized???
+        *cursor = input;    //< @todo Is this working?
 
     query = SkipSpacesString (query);
 
@@ -882,11 +845,11 @@ const char * FindString (const char * input, const char * query, char delimiter 
     return nullptr;
 }
 
-char * Find(char * input, const char * query, char delimiter = 0) {
-    return (char *)FindString (input, query, delimiter);
+char* Find(char* input, const char* query, char delimiter) {
+    return (char*)FindString (input, query, delimiter);
 }
 
-const char * ParseIntString (const char * input, int* value) {
+const char* ParseIntString (const char* input, int* value) {
     if (input == nullptr)
         return nullptr;
     if (value == nullptr)
@@ -896,11 +859,11 @@ const char * ParseIntString (const char * input, int* value) {
     return EndOfTokenString (input);
 }
 
-char * ParseInt (char * input, int* value) {
-    return (char *)ParseIntString (input, value);
+char* ParseInt (char* input, int* value) {
+    return (char*)ParseIntString (input, value);
 }
 
-const char * ParseFloatString (const char * input, float * value) {
+const char* ParseFloatString (const char* input, float * value) {
     if (input == nullptr)
         return nullptr;
     if (value == nullptr)
@@ -910,11 +873,11 @@ const char * ParseFloatString (const char * input, float * value) {
     return EndOfTokenString (input);
 }
 
-char * ParseFloat (char * input, float * value) {
-    return (char *)ParseFloatString (input, value);
+char* ParseFloat (char* input, float* value) {
+    return (char*)ParseFloatString (input, value);
 }
 
-bool IsToken (const char * input) {
+bool IsToken (const char* input) {
     if (input == nullptr)
         return false;
     char c = *input;

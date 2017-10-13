@@ -65,7 +65,7 @@ class Book: public Operation
     
     /** Attempts to add the Page data into the Object at the given BaseAddress.
         @return Returns nullptr upon success and an error string upon failure. */
-    ticket_t Add (byte type, const char * key, void* data) {
+    ticket_t Add (byte type, const char* key, void* data) {
         TIndex size_of_type = getSizeOfType (type);
         if (size_of_type == 0)
         {
@@ -76,7 +76,7 @@ class Book: public Operation
      
     /** Attempts to insert the Page data into the Object at the given index.
         @return Returns nullptr upon success and an error string upon failure. */
-    ticket_t Insert (byte type, const char * key, void* data, TIndex index = 0) {
+    ticket_t Insert (byte type, const char* key, void* data, TIndex index = 0) {
         TIndex l_numMembers = numNumbers;
         if (index > l_numMembers) index = l_numMembers;
 
@@ -97,12 +97,12 @@ class Book: public Operation
     
     /** Attempts to find the given member name.
         @return Returns an invalid index upon failure. */
-    TIndex Find (const char * key) {
+    TIndex Find (const char* key) {
         return 0;
     }
 
     /** Searches for the given query and returns a bag of query results.  */
-    bool Search (const char * query, Book<TIndex, TKey, TData, THash, 
+    bool Search (const char* query, Book<TIndex, TKey, TData, THash, 
         MaxStackHeight>* results) {
         return false;
     }

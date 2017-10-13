@@ -1,6 +1,6 @@
-/** Kabuki Theater
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki-theater-impl/_/TESTS/chinese_room_tests.cpp
+    @file    ~/source/kabuki-theater-impl/TESTS/chinese_room_tests.cpp
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,10 +14,7 @@
              permissions and limitations under the License.
 */
 
-#include <CppUTest/CommandLineTestRunner.h>
-#include <CppUTest/TestHarness.h>
-
-#include <chinese_room/include/module.h>
+#include "../chinese_room/include/module.h"
 using namespace _;
 
 enum {
@@ -73,8 +70,8 @@ class Child : public Operation {
                 return Write (io, m1.result, Args (args, &io_number_,
                                                    io_string_));
             }
-            case 'MonoidRx': {
-                static const Set m2 = { "SignedIntegerTests",
+            case 'B': {
+                     const Set m2 = { "SignedIntegerTests",
                     Esc<2, FLT, STX, kStringBufferSize> (),
                     Esc<2, FLT, STX> (),
                     "Description of functionB." };
@@ -123,7 +120,7 @@ class Root : public Operation {
                 if (!io) return child_a.Star (0, io);
                 return Push (io, &child_a);
             }
-            case 'MonoidRx': {
+            case 'B': {
                 if (!io) return child_b.Star (0, io);
                 return Push (io, &child_b);
             }
@@ -163,7 +160,7 @@ class Root : public Operation {
     private:
     
     Child child_a,                          //< Child object in index 'A'.
-        child_b;                            //< Child object in index 'MonoidRx'
+        child_b;                            //< Child object in index 'B'
 
     enum {
         kStringBufferSize = 16              //< Example string buffer size.

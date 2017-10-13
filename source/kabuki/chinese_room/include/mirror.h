@@ -18,33 +18,47 @@
 #define CHINESE_ROOM_MIRROR_H
 
 #include "portal.h"
-#include "monoid.h"
+#include "automata.h"
 
 namespace _ {
 
 /** Reflection.
-*/
-class Mirror : public Portal {
+    Reflections are used for modifying 
+    @see https://en.wikipedia.org/wiki/Reflection_(computer_programming) */
+class Mirror : public Automata {
     public:
 
+    /** Constructs an empty reflection. */
     Mirror ();
-
+    
+    /** Primes the pump. */
     virtual void Prime ();
 
+    /** Length of the reflection. */
     virtual uint_t Length ();
-
+    
+    /** Feeds a byte through the Portal. */
     virtual void Feed (byte b);
 
+    /** Pulls the next  byte through the Portal. */
     virtual byte Pull ();
+
+    /** Sets the Automata. */
+    Automata* SetAutomata (Automata* automata);
+
+    /** Gets the Automata. */
+    Automata* GetAutomata ();
 
     private:
     
-    Automata* a;     //< The async monoid.
+    Automata* a;    //< The async monoid.
 };
 
-ticket_t Read (Mirror* io, const uint_t* header, void** args);
+/** Reads the given set from the reflection. */
+const Set* Read (Mirror* mirror, const uint_t* params, void** args);
 
-ticket_t Write (Mirror* io, const uint_t* header, void** args);
+/** Writes the given set to the reflection. */
+const Set* Write (Mirror* mirror, const uint_t* params, void** args);
 
 }       //< namespace _
 #endif  //< CHINESE_ROOM_MIRROR_H

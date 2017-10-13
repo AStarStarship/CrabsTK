@@ -65,7 +65,7 @@ class Book: public Operation
     
     /** Attempts to add the Page data into the Object at the given BaseAddress.
         @return Returns nullptr upon success and an error string upon failure. */
-    ticket_t Add (byte type, const char * key, void* data) {
+    ticket_t Add (byte type, const char* key, void* data) {
         TIndex size_of_type = getSizeOfType (type);
         if (size_of_type == 0)
         {
@@ -76,7 +76,7 @@ class Book: public Operation
      
     /** Attempts to insert the Page data into the Object at the given index.
         @return Returns nullptr upon success and an error string upon failure. */
-    ticket_t Insert (byte type, const char * key, void* data, TIndex index = 0) {
+    ticket_t Insert (byte type, const char* key, void* data, TIndex index = 0) {
         TIndex l_numMembers = numNumbers;
         if (index > l_numMembers) index = l_numMembers;
 
@@ -97,12 +97,12 @@ class Book: public Operation
     
     /** Attempts to find the given member name.
         @return Returns an invalid index upon failure. */
-    TIndex Find (const char * key) {
+    TIndex Find (const char* key) {
         return 0;
     }
 
     /** Searches for the given query and returns a bag of query results.  */
-    bool Search (const char * query, Book<TIndex, TKey, TData, THash, 
+    bool Search (const char* query, Book<TIndex, TKey, TData, THash, 
         MaxStackHeight>* results) {
         return false;
     }
@@ -120,13 +120,15 @@ class Book: public Operation
     /** Returns the data address of the given member if it exists.
         @return Returns a pointer to one of the ChineseRoom error strings upon failure. */
     void* GetDataAddress (TIndex index) {
-        #if _BufferUIntSize >= 64
+        #if MUL >= 4
         IndexType64_t* UI8_ptr = (IndexType64_t*)address;
-        #elif _BufferUIntSize >= 32
+        #elif MUL >= 3
         IndexType32_t* UI4_ptr = (IndexType32_t*)address;
-        #elif _BufferUIntSize >= 16
+        #elif MUL >= 2
         IndexType16_t* UI2_ptr = (IndexType16_t*)address;
-        #elif _BufferUIntSize != 8
+        #elif MUL != 1
+        IndexType8_t* UI1_ptr = (IndexType16_t*)address;
+        #else
         #error IndexType_t invalid size!
         #endif
 
@@ -137,7 +139,7 @@ class Book: public Operation
         switch (type)
         {
             case BK2:
-                #if _BufferUIntSize >= 16
+                #if MUL >= 16
                 /// Book format: { UI1, UI1, UI2, UI2 }
                 return size + sizeof (Book) + * (address + 1) * 
                        sizeof (byte) + *(UI2_ptr + 2) + * (UI8_ptr + 4);
@@ -145,7 +147,7 @@ class Book: public Operation
                 return 0;
                 #endif
             case BK4:
-                #if _BufferUIntSize >= 32
+                #if MUL >= 32
                 /// Book format: { UI1, UI1, UI2, UI4 }
                 return size + sizeof (Bag32) + * (UI2_ptr + 2) * 
                        sizeof (byte) + * (UI4_ptr + 4) + * (UI8_ptr + 8);
@@ -153,7 +155,7 @@ class Book: public Operation
                 return 0;
                 #endif
             case BK8:
-                #if _BufferUIntSize >= 64
+                #if MUL >= 64
                 /// Book format: { UI2, UI2, UI4, UI8 }
                 return size + sizeof (Book) + * (UI2_ptr + 2) * 
                        sizeof (byte) + * (UI4_ptr + 4) + * (UI8_ptr + 8);

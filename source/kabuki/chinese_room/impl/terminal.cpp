@@ -15,11 +15,11 @@
 */
 
 #include "../include/terminal.h"
-#include "../include/verifier.h"
+#include "../include/automata.h"
 
 namespace _ {
 
-Terminal::Terminal (Set* io) :
+Terminal::Terminal (MonoidTx* io) :
     io_ (io)
 {
 }
@@ -29,10 +29,11 @@ Terminal::~Terminal () {
 }
 
 bool Terminal::Contains (void* address) {
-    return LinearityContains (io_, address);
+    //return MonoidContains (io_, address);
+    return false;
 }
 
-const Set* Terminal::Star (char_t index, Automata* a) override {
+const Set* Terminal::Star (char_t index, Automata* a) {
     switch (index) {
         case 0:
             break;

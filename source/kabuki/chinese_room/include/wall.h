@@ -39,21 +39,21 @@ struct Wall {
 KABUKI Wall* WallInit (uint_t size);
 
 /** Gets a pointer to the array of pointers to Door(s). */
-KABUKI Door** GetDoors (Wall* wall);
+KABUKI Door** WallGetDoors (Wall* wall);
 
 /** Adds a Door to the slot.
     @return Returns nullptr if the Door is full and a pointer to the Door in the 
             buffer upon success. */
-KABUKI Door* AddDoor (Wall* wall, Door* t);
+KABUKI Door* WallAddDoor (Wall* wall, Door* t);
 
 /** Gets the Door from the Door at the given index. */
-KABUKI Door* GetDoor (Wall* wall, char_t index);
+KABUKI Door* WallGetDoor (Wall* wall, char_t index);
 
 /** Deletes the Door from the Door at the given index. */
-KABUKI void Delete (Wall* wall, char_t index);
+KABUKI void WallDelete (Wall* wall, char_t index);
 
 /** Prints the given Door to the stdout. */
-KABUKI void Print (Wall* wall);
+KABUKI void WallPrint (Wall* wall);
 
 }       //< namespace _
 #endif  //< CHINESE_ROOM_WALL_H

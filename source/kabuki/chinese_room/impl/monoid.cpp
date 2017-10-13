@@ -23,8 +23,8 @@
 namespace _ {
 
 void MonoidClear (byte* const begin, uint_t rx_start, 
-                             byte* start, byte* const stop,
-                             byte* const end, uint_t size)
+                  byte* start, byte* const stop,
+                  byte* const end, uint_t size)
 {
     byte* cursor = begin + rx_start;
     while (start != cursor) {
@@ -44,8 +44,8 @@ uint_t MonoidSpace (byte* start, byte* stop, uint_t size) {
 }
 
 byte* MonoidWrite (void* source, byte* const begin,
-                              byte* const start, byte* const stop,
-                              byte* const end, size_t size) {
+                   byte* const start, byte* const stop,
+                   byte* const end, size_t size) {
     if (source == nullptr) return start;
 
     // Now we can copy the bag into memory.
@@ -63,8 +63,9 @@ byte* MonoidWrite (void* source, byte* const begin,
 }
 
 byte* MonoidRead (void* destination, byte* const begin,
-                         byte* const start, byte* const stop,
-                         byte* const end, size_t size) {
+                  byte* const start, byte* const stop,
+                  byte* const end, size_t size)
+{
     if (destination == nullptr) return start;
 
     // Now we can copy the bag into memory.
@@ -81,9 +82,11 @@ byte* MonoidRead (void* destination, byte* const begin,
     return start + size;
 }
 
+/** Compiler says this already has a body???
 byte* MonoidWrite (void* source, byte* const begin,
-                          byte* const start, byte* const stop,
-                          byte* const end, size_t size) {
+                   byte* const start, byte* const stop,
+                   byte* const end, size_t size)
+{
     if (source == nullptr) return start;
 
     // Now we can copy the bag into memory.
@@ -98,11 +101,13 @@ byte* MonoidWrite (void* source, byte* const begin,
     }
     memcpy (source, stop, size);
     return start + size;
-}
+} */
 
+/** Compiler says this already has a body???
 byte* MonoidRead (void* destination, byte* const begin,
-                             byte* const start, byte* const stop,
-                             byte* const end, size_t size) {
+                  byte* const start, byte* const stop,
+                  byte* const end, size_t size)
+{
     if (destination == nullptr) return start;
 
     // Now we can copy the bag into memory.
@@ -117,28 +122,14 @@ byte* MonoidRead (void* destination, byte* const begin,
     }
     memcpy (stop, destination, size);
     return start + size;
-}
-
-struct MonoidTx {
-    uint_t size;            //< The size of the ring buffers.
-    volatile uint_t start;  //< The starting index of the ring-buffer data.
-    uint_t stop,            //< The stopping index of the ring-buffer data.
-        read;               //< The address that the Rx device is reading from.
-};
-
-enum {
-    kSlotHeaderSize = sizeof (MonoidTx) + sizeof (uintptr_t) -
-    sizeof (MonoidTx) % sizeof (uintptr_t),
-    //< Offset to the start of the ring buffer.
-    kMinSocketSize = 32 + kSlotHeaderSize,
-};
+} */
 
 byte* MonoidTxSlot (MonoidTx* tx) {
     return reinterpret_cast<byte*>(tx) + kSlotHeaderSize;
 }
 
 MonoidTx* MonoidTxInit (byte* buffer, uint_t size) {
-    if (size < kMinSocketSize) return nullptr;
+    if (size < kMinMonoidSize) return nullptr;
     if (buffer == nullptr) return nullptr;
 
     MonoidTx* tx = reinterpret_cast<MonoidTx*> (buffer);
@@ -153,8 +144,8 @@ MonoidTx* MonoidTxInit (byte* buffer, uint_t size) {
     return tx;
 }
 
-MonoidTx* MonoidInit (MonoidTx* buffer, uint_t size) {
-    if (size < kMinSocketSize) return nullptr;
+MonoidTx* MonoidTxInit (MonoidTx* buffer, uint_t size) {
+    if (size < kMinMonoidSize) return nullptr;
     if (buffer == nullptr)     return nullptr;
 
     MonoidTx* tx = reinterpret_cast<MonoidTx*> (buffer);
@@ -206,7 +197,7 @@ byte MonoidTxStreamByte (MonoidTx* tx) {
     return 0;
 }
 
-void Print (MonoidTx* tx) {
+void MonoidTxPrint (MonoidTx* tx) {
     PrintLine ('_');
     if (tx == nullptr) {
         printf ("| Monoid null\n");
@@ -219,4 +210,3 @@ void Print (MonoidTx* tx) {
 }
 
 }       //< namespace _
-

@@ -28,42 +28,42 @@ Wall* WallInit (uint_t size) {
     w->door_one = nullptr;
 }
 
-Door** GetDoors (Wall* wall) {
-    return reinterpret_cast<Door**> (d->door_one);
+Door** WallGetDoors (Wall* wall) {
+    return reinterpret_cast<Door**> (wall->door_one);
 }
 
-Door* AddDoor (Wall* wall, Door* t) {
-    if (s == nullptr) return nullptr;
-    if (t == nullptr) return nullptr;
-    byte num_doors = d->num_doors;
-    if (num_doors + 1 >= d->max_num_doors) return nullptr;
-    GetDoors (s)[num_doors] = t;
-    ++d->num_doors;
+Door* WallAddDoor (Wall* wall, Door* door) {
+    if (wall == nullptr) return nullptr;
+    if (door == nullptr) return nullptr;
+    byte num_doors = wall->num_doors;
+    if (num_doors + 1 >= wall->max_num_doors) return nullptr;
+    WallGetDoors (wall)[num_doors] = door;
+    ++wall->num_doors;
 }
 
-Door* GetDoor (Wall* wall, char_t index) {
-    if (s == nullptr) return nullptr;
-    if (index >= d->num_doors)
+Door* WallGetDoor (Wall* wall, char_t index) {
+    if (wall == nullptr) return nullptr;
+    if (index >= wall->num_doors)
         return nullptr;
-    return GetDoors (s)[index];
+    return WallGetDoors (wall)[index];
 }
 
-void Delete (Wall* wall, char_t index) {
-    if (s == nullptr) return;
-    if (index >= d->num_doors)
+void WallDelete (Wall* wall, char_t index) {
+    if (wall == nullptr) return;
+    if (index >= wall->num_doors)
         return;
-    Door** ts = GetDoors (s);
-    Door* t = ts[index];
-    t->~Door ();
-    for (byte i = index; i < d->num_doors; ++i)
-        ts[index] = ts[index + 1];
-    --d->num_doors;
+    Door** doors = WallGetDoors (wall);
+    Door* door = doors[index];
+    door->~Door ();
+    for (byte i = index; i < wall->num_doors; ++i)
+        doors[index] = doors[index + 1];
+    --wall->num_doors;
 }
 
-void Print (Wall* wall) {
-    if (s == nullptr) return;
+void WallPrint (Wall* wall) {
+    if (wall == nullptr) return;
     printf ("\nDoor:\nis_dynamic %s\nnum_doors: %u\nmax_num_doors: %u\n", 
-            d->is_dynamic ? "true" : "false", d->num_doors, d->max_num_doors);
+            wall->is_dynamic ? "true" : "false", wall->num_doors, wall->max_num_doors);
 }
 
 }       //< namespace _

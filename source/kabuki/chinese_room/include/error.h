@@ -60,7 +60,7 @@ typedef enum {
 } Error;
 
 /** Returns the text label of the Error. */
-KABUKI const char * ErrorString (Error e);
+KABUKI const char* ErrorString (Error e);
 
 /** An array of error strings.
     

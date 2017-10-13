@@ -20,8 +20,8 @@
 
 namespace _ {
 
-KABUKI const char ** RoomStateStrings () {
-    static const char * states[] = {
+const char** RoomStateStrings () {
+    static const char* states[] = {
         "Initializing",
         "Waking up",
         "Running",
@@ -31,8 +31,8 @@ KABUKI const char ** RoomStateStrings () {
     return states;
 }
 
-KABUKI const char ** RequestStrings () {
-    static const char * RequestStrings[] = {
+const char** RequestStrings () {
+    static const char* RequestStrings[] = {
         "Open door",
         "Close door",
         "Invalid request"
@@ -41,7 +41,7 @@ KABUKI const char ** RequestStrings () {
     return RequestStrings;
 }
 
-KABUKI const char * RequestString (Request r) {
+const char* RequestString (Request r) {
     if (r < 0 || r >= InvalidRequest) return RequestStrings ()[InvalidRequest];
     return RequestStrings ()[r];
 }
@@ -60,14 +60,14 @@ Room::Room (uint_t size) :
 
 }
 
-virtual Room::~Room () {
+Room::~Room () {
 }
 
 Request Room::HandleNextRequest (Request r) {
     return InvalidRequest;
 }
 
-voidRoom::ClearLog () {
+void Room::ClearLog () {
 
 }
 
@@ -80,30 +80,30 @@ void Room::PrintErrors (MonoidTx* tx) {
     //return io.prints (errorHeader);
 }
 
-virtual void Room::DiagnoseProblems () {
+void Room::DiagnoseProblems () {
     /// Check for remote crash request.
     throw RoomCrashException ();
 }
 
-virtual ticket_t Room::Init () {
+ticket_t Room::Init () {
     return 0;
 }
 
-virtual void Room::ShutDown () {}
+void Room::ShutDown () {}
 
-virtual void Room::Sleep () {}
+void Room::Sleep () {}
 
-virtual void Room::Wake () {}
+void Room::Wake () {}
 
-virtual void Room::Crash () {}
+void Room::Crash () {}
 
-virtual ticket_t Room::Loop () { return 0; }
+ticket_t Room::Loop () { return 0; }
 
-virtual bool Room::IsOn () {
+bool Room::IsOn () {
     return true;
 }
 
-virtual int Room::Main (const char ** args, int args_count) {
+int Room::Main (const char** args, int args_count) {
     ticket_t result;
 
     std::cout << "Initializing Chinese Room with " << args_count << " args:\n";
@@ -128,7 +128,7 @@ virtual int Room::Main (const char ** args, int args_count) {
     return 1;
 }
 
-virtual const Set* Room::Star (char_t index, Automata* io) {
+const Set* Room::Star (char_t index, Automata* io) {
     static const Set this_member = { "Room", NumMembers (0), 
                                         FirstMember (' '), "A Chinese Room." };
     switch (index) {

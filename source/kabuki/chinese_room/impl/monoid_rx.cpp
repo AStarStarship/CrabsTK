@@ -63,11 +63,11 @@ KABUKI ticket_t Read (MonoidTx* rx, const uint_t* params, void** args) {
     hash = 0;
     size = rx->size;
 
-    byte* begin = MonoidSlot (rx),    //< The beginning of the buffer.
-        * end = begin + size,           //< The end of the buffer.
-        * start = begin + rx->start,    //< The start of the data.
-        * stop = begin + rx->stop;      //< The stop of the data.
-    const uint_t* param = params + 1;   //< The current param.
+    byte* begin = MonoidRxBaseAddress (rx), //< The beginning of the buffer.
+        * end = begin + size,               //< The end of the buffer.
+        * start = begin + rx->start,        //< The start of the data.
+        * stop = begin + rx->stop;          //< The stop of the data.
+    const uint_t* param = params + 1;       //< The current param.
 
     length = MonoidLength (start, stop, size);
 //
@@ -657,4 +657,3 @@ KABUKI ticket_t Read (MonoidTx* rx, const uint_t* params, void** args) {
 }
 
 }       //< namespace _
-#endif  //< #ifndef CHINESE_ROOM_MONOID_H

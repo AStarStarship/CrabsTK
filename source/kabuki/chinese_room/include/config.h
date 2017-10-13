@@ -247,8 +247,6 @@ enum {
 #error  Invalid RAM_USE_LEVEL
 #endif
 
-typedef uint_t ticket_t;                    //< The size of the error ticket.
-
 /** Macro declares a class to be non-copyable. */
 #define NONCOPYABLE (ClassName)\
   ClassName (const ClassName&)      = delete;\

@@ -31,7 +31,7 @@ void Mirror::Prime () {
 }
 
 uint_t Mirror::Length () {
-    return MonoidRxLength (AutomataRx (a));
+    return MonoidRxSpace (AutomataRx (a));
 }
 
 void Mirror::Feed (byte b) {
@@ -42,26 +42,39 @@ byte Mirror::Pull () {
     return 0;
 }
 
-ticket_t Read (Mirror* mirror, const uint_t* header, void** args) {
+Automata* Mirror::SetAutomata (Automata* automata)
+{
+    if (automata == nullptr)
+        return nullptr;
+    a = automata;
+}
+
+Automata* Mirror::GetAutomata () {
+    return a;
+}
+
+const Set* Read (Mirror* mirror, const uint_t* header, void** args) {
 
     return 0;
 }
 
-ticket_t Write (Mirror* mirror, const uint_t* header, void** args) {
+const Set* Write (Mirror* mirror, const uint_t* header, void** args) {
 
     return 0;
 }
-Mirror LogInit (MonoidTx* tx, bool is_dynamic = false) {
+Mirror MirrorInit (Automata* a, bool is_dynamic) {
     Mirror mirror;
-    mirror.io = tx;
+    mirror.SetAutomata (a);
     return mirror;
 }
 
-ticket_t Write (MonoidTx* tx, byte member, const char * string) {
+const Set* Write (Automata* a, byte member, const char* string) {
+    if (a == nullptr)
+        return nullptr;
 #if DEBUG_CHINESE_ROOM
-    printf ("| Writting string to %p\n", tx);
+    printf ("| Writting string to %p\n", a);
 #endif
-
+    MonoidTx* tx = AutomataTx (a);
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte c;
 
@@ -69,13 +82,15 @@ ticket_t Write (MonoidTx* tx, byte member, const char * string) {
         space;
 
     // Convert the socket offsets to pointers.
-    byte* begin = MonoidSlot (tx),
+    byte* begin = MonoidTxSlot (tx),
         *end = begin + size,
         *start = begin + tx->start,
         *stop = begin + tx->stop;
     space = MonoidSpace (start, stop, size);
     //  * temp_ptr;
-    const byte* str_ptr;
+    //const byte* str_ptr;              //< This was not initialized???
+    const byte* str_ptr = reinterpret_cast<const byte*> (string);
+    //< I think this is what needs to happen.
 
     *stop = member;
     ++stop;
@@ -85,10 +100,11 @@ ticket_t Write (MonoidTx* tx, byte member, const char * string) {
     ++stop;
 
     while (c != 0) {
-        if (space-- == 0)
-            return Report (BufferUnderflowError, Esc<1, STX> (),
-                0, start);
-
+        if (space-- == 0) {
+            ticket_t error_ticket = Report (BufferUnderflowError,
+                                            Esc<1, STX> (), 0, start);
+            return SetErrorTicket (error_ticket);
+        }
         ++str_ptr;
         c = *str_ptr;     // Read byte.
 
@@ -102,10 +118,12 @@ ticket_t Write (MonoidTx* tx, byte member, const char * string) {
     tx->stop = Diff (stop, begin);
     return 0;
 }
-ticket_t Write (Mirror* mirror, const uint_t* header, void** args) {
-//ticket_t Write (Mirror* io, const uint_t* header, void** args) {
-    return Write (mirror.a, member, string);
-}
+
+/** Compiler says this already has a body???
+const Set* Write (Mirror* mirror, const uint_t* params, void** args) {
+    //ticket_t Write (Mirror* io, const uint_t* header, void** args) {
+    return Write (mirror->GetAutomata (), params, args);
+}*/
 
 template<uint_t kNumber>
 Mirror& Log () {
@@ -117,75 +135,75 @@ Mirror& Log () {
 Mirror& operator<< (Mirror& mirror, int8_t value) {
     char buffer[5];
     sprintf_s (buffer, 5, "%i", value);
-    Write (mirror, '?', buffer);
+    Write (mirror.GetAutomata (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, uint8_t value) {
     char buffer[4];
     sprintf_s (buffer, 4, "%u", value);
-    Write (mirror, '?', buffer);
+    Write (mirror.GetAutomata (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, int16_t value) {
     char buffer[7];
     sprintf_s (buffer, 7, "%i", value);
-    Write (mirror, '?', buffer);
+    Write (mirror.GetAutomata (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, uint16_t value) {
     char buffer[6];
     sprintf_s (buffer, 6, "%u", value);
-    Write (mirror, '?', buffer);
+    Write (mirror.GetAutomata (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, int32_t value) {
     char buffer[12];
     sprintf_s (buffer, 12, "%i", value);
-    Write (mirror, '?', buffer);
+    Write (mirror.GetAutomata (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, uint32_t value) {
     char buffer[11];
     sprintf_s (buffer, 11, "%u", value);
-    Write (mirror, '?', buffer);
+    Write (mirror.GetAutomata (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, int64_t value) {
     char buffer[22];
     sprintf_s (buffer, 22, "%I64d", value);
-    Write (mirror, '?', buffer);
+    Write (mirror.GetAutomata (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, uint64_t value) {
     char buffer[21];
     sprintf_s (buffer, 21, "%llu", value);
-    Write (mirror, '?', buffer);
+    Write (mirror.GetAutomata (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, float value) {
     char buffer[FLT_MAX_10_EXP + 2];
     sprintf_s (buffer, FLT_MAX_10_EXP + 2, "%f", value);
-    Write (mirror, '?', buffer);
+    Write (mirror.GetAutomata (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, double value) {
     char buffer[DBL_MAX_10_EXP + 2];
     sprintf_s (buffer, DBL_MAX_10_EXP + 2, "%f", value);
-    Write (mirror, '?', buffer);
+    Write (mirror.GetAutomata (), '?', buffer);
     return mirror;
 }
 
-Mirror& operator<< (Mirror& mirror, const char * s) {
-    Write (mirror, '?', s);
+Mirror& operator<< (Mirror& mirror, const char* s) {
+    Write (mirror.GetAutomata (), '?', s);
     return mirror;
 }
 

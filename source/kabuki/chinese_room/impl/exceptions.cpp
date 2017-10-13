@@ -18,7 +18,7 @@
 
 namespace _ {
 
-const char * RoomCrashException::what () const throw () {
+const char* RoomCrashException::what () const throw () {
         return "External crash";
     }
 

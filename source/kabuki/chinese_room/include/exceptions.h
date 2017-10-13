@@ -23,7 +23,7 @@ namespace _ {
 
 /** Exception thrown to crash the program. */
 struct RoomCrashException : public std::exception {
-    const char * what () const throw ();
+    const char* what () const throw ();
 };
 }       //< namespace _
 #endif  //< CHINESE_ROOM_EXCEPTIONS_H

@@ -19,7 +19,7 @@
 
 #include "console.h"
 #include "utils.h"
-#include "symbol_table.h"
+#include "table.h"
 #include "bag.h"
 
 #ifndef THIS_ROOM

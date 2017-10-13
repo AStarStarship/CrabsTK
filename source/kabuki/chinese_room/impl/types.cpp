@@ -145,8 +145,8 @@ KABUKI bool TypeIsValid (uint_t type) {
     return type > 31 ? false : true;
 }
 
-KABUKI const char ** TypeStrings () {
-    static const char * kNames[] = {
+KABUKI const char** TypeStrings () {
+    static const char* kNames[] = {
         "NIL",
         "SOH",
         "STX",
@@ -184,13 +184,13 @@ KABUKI const char ** TypeStrings () {
     return kNames;
 }
 
-KABUKI bool TypeIsValid (const char * type_name) {
+KABUKI bool TypeIsValid (const char* type_name) {
     if (type_name < TypeStrings ()[0] || type_name > TypeStrings ()[BK8])
         return false;
     return true;
 }
 
-KABUKI const char * TypeString (uint_t type) {
+KABUKI const char* TypeString (uint_t type) {
     if (type >= kInvalidType)
         return "Invalid";
     return TypeStrings ()[type];
@@ -222,7 +222,7 @@ KABUKI bool CheckLastLetters (uint32_t const Token) {
     return CheckDelimiter (Token >> 8);
 }
 
-KABUKI byte ReadType (const char * s) {
+KABUKI byte ReadType (const char* s) {
     uint32_t token = * ((uint32_t*)s);
 
     char_t index = (byte)token;
@@ -240,7 +240,7 @@ KABUKI byte ReadType (const char * s) {
                 default: return 0xff;
             }
         }
-        case 'MonoidRx': switch (index = (byte) (token >> 8))
+        case 'B': switch (index = (byte) (token >> 8))
         {
             case 'K': switch (index = (byte) (token >> 16))
             {
@@ -252,7 +252,7 @@ KABUKI byte ReadType (const char * s) {
             case 'O': return CheckLastLetter<'L'> (token >> 16) ? 0xff : BOL;
             default: return 0xff;
         }
-        case 'D': return CheckLastLetters<'MonoidRx', 'L'> (token >> 16) ? 0xff : DBL;
+        case 'D': return CheckLastLetters<'B', 'L'> (token >> 16) ? 0xff : DBL;
         case 'E': return CheckLastLetters<'S', 'C'> (token >> 16) ? 0xff : ESC;
         case 'F': return CheckLastLetters<'L', 'T'> (token >> 16) ? 0xff : FLT;
         case 'G': return 0xff;

@@ -20,7 +20,7 @@
 namespace _ {
 
 KABUKI Slot* SlotInit (uint_t width, uint_t size, byte max_num_slots) {
-    Slot* s = New<Slot, uint_t> (width, kMinSocketSize);
+    Slot* s = New<Slot, uint_t> (width, kMinMonoidSize);
     if (s == nullptr) return nullptr;
     s->is_dynamic = 0;
     s->num_slots = 0;
@@ -30,7 +30,7 @@ KABUKI Slot* SlotInit (uint_t width, uint_t size, byte max_num_slots) {
 
 KABUKI Slot* SlotInit (byte* buffer, uint_t slot_size, byte max_num_slots) {
     if (buffer == nullptr) return nullptr;
-    if (slot_size < kMinSocketSize) return nullptr;
+    if (slot_size < kMinMonoidSize) return nullptr;
     Slot* s = reinterpret_cast<Slot*>(buffer);
     s->is_dynamic = 0;
     s->num_slots = 0;

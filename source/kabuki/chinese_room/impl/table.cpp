@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/symbol_table.cpp
+    @file    ~/source/kabuki/chinese_room/impl/table.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,19 +14,19 @@
              permissions and limitations under the License.
 */
 
-#include "../include/symbol_table.h"
+#include "../include/table.h"
 #include "../include/utils.h"
 #include "../include/error.h"
 
 namespace _ {
 
-static SymbolTable* SymbolTableInit (byte* buffer, byte max_keys, uint16_t total_size)
+static Table* TableInit (byte* buffer, byte max_keys, uint16_t total_size)
 {
     if (buffer == nullptr)
         return nullptr;
-    SymbolTable* rt = reinterpret_cast<SymbolTable*>(buffer);
+    Table* rt = reinterpret_cast<Table*>(buffer);
 
-    uint_t min_required_size = sizeof (SymbolTable) + max_keys * 
+    uint_t min_required_size = sizeof (Table) + max_keys * 
                                (kOverheadPerRecord + 2);
     if (total_size < min_required_size)
         return nullptr;
@@ -38,7 +38,7 @@ static SymbolTable* SymbolTableInit (byte* buffer, byte max_keys, uint16_t total
     return rt;
 }
 
-static byte Add (SymbolTable* rt, const char * key) {
+static byte TableAdd (Table* rt, const char* key) {
     if (rt == nullptr) return 0;
     if (key == nullptr) return 0;
     
@@ -50,11 +50,11 @@ static byte Add (SymbolTable* rt, const char * key) {
 
     uint16_t size = rt->size;
 
-    if (num_keys >= max_keys) return kSymbolTableFull;
+    if (num_keys >= max_keys) return kTableFull;
     //< We're out of buffered indexes.
 
     hash16_t* hashes = reinterpret_cast<hash16_t*> (reinterpret_cast<byte*> (rt) +
-        sizeof (SymbolTable));
+        sizeof (Table));
     uint16_t* key_offsets = reinterpret_cast<uint16_t*> (hashes + 
         max_keys);
     byte* indexes = reinterpret_cast<byte*> (key_offsets + 
@@ -318,7 +318,7 @@ static byte Add (SymbolTable* rt, const char * key) {
     return num_keys;
 }
 
-static byte Find (const SymbolTable* rt, const char * key) {
+static byte TableFind (const Table* rt, const char* key) {
     if (rt == nullptr)
         return 0;
     //PrintLineBreak ("Finding record...", 5);
@@ -334,14 +334,14 @@ static byte Find (const SymbolTable* rt, const char * key) {
 
     const hash16_t* hashes = reinterpret_cast<const hash16_t*>
                              (reinterpret_cast<const byte*> (rt) + 
-                              sizeof (SymbolTable));
+                              sizeof (Table));
     const uint16_t* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
                                                                     max_keys);
     const byte* indexes = reinterpret_cast<const byte*>(key_offsets +
                                                         max_keys),
         *unsorted_indexes = indexes + max_keys,
         *collission_list = unsorted_indexes + max_keys;
-    const char * keys = reinterpret_cast<const char *> (rt) + size - 1;
+    const char* keys = reinterpret_cast<const char*> (rt) + size - 1;
     const byte* collisions,
         *temp_ptr;
 
@@ -451,7 +451,7 @@ static byte Find (const SymbolTable* rt, const char * key) {
     return kInvalidRecord;
 }
 
-inline void Print (SymbolTable* rt) {
+inline void TablePrint (Table* rt) {
     if (rt == nullptr) return;
     byte num_keys = rt->num_keys,
         max_keys = rt->max_keys,
@@ -460,7 +460,7 @@ inline void Print (SymbolTable* rt) {
     uint16_t size = rt->size,
         pile_size = rt->pile_size;
     PrintLine ('_');
-    printf ("| SymbolTable: %p\n| num_keys: %u max_keys: %u  "
+    printf ("| Table: %p\n| num_keys: %u max_keys: %u  "
             "pile_size: %u  size: %u", rt, num_keys,
             max_keys, pile_size, size);
     putchar ('\n');
@@ -469,7 +469,7 @@ inline void Print (SymbolTable* rt) {
     putchar ('\n');
 
     hash16_t* hashes = reinterpret_cast<hash16_t*>(reinterpret_cast<byte*>(rt) +
-                                                   sizeof (SymbolTable));
+                                                   sizeof (Table));
     uint16_t* key_offsets = reinterpret_cast<uint16_t*>(hashes + max_keys);
     byte* indexes = reinterpret_cast<byte*> (key_offsets + max_keys),
         *unsorted_indexes = indexes + max_keys,
@@ -520,4 +520,3 @@ inline void Print (SymbolTable* rt) {
 }
 
 }       //< namespace _
-#endif  //< CHINESE_ROOM_SYMBOLTABLE_H

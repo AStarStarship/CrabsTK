@@ -18,9 +18,9 @@
 
 namespace _ {
 
-const char * ErrorString (Error e) {
+const char* ErrorString (Error e) {
 #if USING_CONSOLE
-    static const char * strings[] = {
+    static const char* strings[] = {
         "Buffer underflow",             //< 0
         "Buffer overflow",              //< 1
         "Varint overflow",              //< 2
@@ -80,8 +80,8 @@ int ErrorList::GetMaxNumErrors () {
     return kMaxErrors;
 }
 
-ticket_t ErrorList::Report (Error e, const uint_t* header = nullptr, byte offset = 0,
-                    void* source = nullptr) {
+ticket_t ErrorList::Report (Error e, const uint_t* header, byte offset,
+                            void* source) {
     if (num_errors_ >= kMaxErrors)
     {
         printf ("Error: ErrorList overflow!\n");

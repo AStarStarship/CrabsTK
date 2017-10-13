@@ -45,7 +45,7 @@ class Door : public Operation {
     };
 
     /** A door in a Chinese room. */
-    Door (const char * roomName = " (:-)>", uint_t slot_size = kMinDoorSize,
+    Door (const char* roomName = " (:-)>", uint_t slot_size = kMinDoorSize,
           bool is_dynamic = false);
 
     /** Destructor. */
@@ -91,7 +91,7 @@ KABUKI Door& Doors ();
 /** Initializes a Door at the beginning of the given buffer. 
 static Door* DoorInit (byte* buffer, uint_t slot_size) {
     if (buffer == nullptr) return nullptr;
-    if (slot_size < kMinSocketSize) return nullptr;
+    if (slot_size < kMinMonoidSize) return nullptr;
     Wall* wall = reinterpret_cast<Door*>(buffer);
     w->is_dynamic = 0;
     w->num_doors = 0;

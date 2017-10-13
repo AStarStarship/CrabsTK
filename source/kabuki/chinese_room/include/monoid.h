@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/include/set.h
+    @file    ~/source/kabuki/chinese_room/include/monoid.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -20,10 +20,11 @@
 #include "config.h"
 
 namespace _ {
+
 /** Clears the ring buffer by writing zeros to it. */
 KABUKI void MonoidClear (byte* const begin, uint_t rx_start,
-                            byte* start, byte* const stop,
-                            byte* const end, uint_t size);
+                         byte* start, byte* const stop,
+                         byte* const end, uint_t size);
 
 /** Calculates the used ring buffer space.
     @param  Start The start of the data.
@@ -39,23 +40,26 @@ KABUKI uint_t MonoidSpace (byte* start, byte* stop, uint_t size);
 
 /** Copies a block from a ring-buffer to the given destination. */
 KABUKI byte* MonoidWrite (void* source, byte* const begin,
-                            byte* const start, byte* const stop,
-                            byte* const end, size_t size);
+                          byte* const start, byte* const stop,
+                          byte* const end, size_t size);
 
 /** Copies a block from a ring-buffer to the given destination. */
 KABUKI byte* MonoidRead (void* destination, byte* const begin,
-                            byte* const start, byte* const stop,
-                            byte* const end, size_t size);
+                         byte* const start, byte* const stop,
+                         byte* const end, size_t size);
 
 /** Copies a block from a ring-buffer to the given destination. */
 KABUKI byte* MonoidWrite (void* source, byte* const begin,
-                            byte* const start, byte* const stop,
-                            byte* const end, size_t size);
+                         byte* const start, byte* const stop,
+                         byte* const end, size_t size);
 
 /** Copies a block from a ring-buffer to the given destination. */
 KABUKI byte* MonoidRead (void* destination, byte* const begin,
-                            byte* const start, byte* const stop,
-                            byte* const end, size_t size);
+                         byte* const start, byte* const stop,
+                         byte* const end, size_t size);
+
+/** Returns true if the given monoid contains the given address. */
+//void* MonoidContains ();
 
 /*< A rx socket that prints results to any given memory address. */
 struct MonoidRx {
@@ -150,7 +154,7 @@ KABUKI byte* MonoidTxEndAddress (MonoidTx* tx);
     @param tx The Tx socket to write to.
     @param params The escape sequence to write.
     @param args The array of pointers to the stuff to write. */
-KABUKI ticket_t Write (MonoidTx* tx, const char * address, const uint_t* params,
+KABUKI ticket_t Write (MonoidTx* tx, const char* address, const uint_t* params,
                        void** args);
 
 /** Streams a tx byte.

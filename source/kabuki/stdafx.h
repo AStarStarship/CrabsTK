@@ -19,8 +19,8 @@
 #pragma clang diagnostic ignored "-Winfinite-recursion"
 #endif
 
-#include "cpprest/details/cpprest_compat.h"
-#include "cpprest/details/basic_types.h"
+#include "web/cpprest_compat.h"
+#include "web/basic_types.h"
 
 #ifdef _WIN32
 #ifdef CPPREST_TARGET_XP
@@ -96,47 +96,47 @@
 #include <set>
 
 #include "pplx/pplxtasks.h"
-#include "cpprest/version.h"
+#include "web/version.h"
 
 // streams
-#include "cpprest/streams.h"
-#include "cpprest/astreambuf.h"
-#include "cpprest/rawptrstream.h"
-#include "cpprest/interopstream.h"
-#include "cpprest/producerconsumerstream.h"
+#include "web/streams.h"
+#include "web/astreambuf.h"
+#include "web/rawptrstream.h"
+#include "web/interopstream.h"
+#include "web/producerconsumerstream.h"
 
 // json
-#include "cpprest/json.h"
+#include "web/json.h"
 
 // uri
-#include "cpprest/base_uri.h"
-#include "cpprest/details/uri_parser.h"
+#include "web/base_uri.h"
+#include "web/uri_parser.h"
 
 // utilities
-#include "cpprest/asyncrt_utils.h"
-#include "cpprest/details/web_utilities.h"
+#include "web/asyncrt_utils.h"
+#include "web/web_utilities.h"
 
 // http
-#include "cpprest/http_headers.h"
-#include "cpprest/http_msg.h"
-#include "cpprest/http_client.h"
-#include "cpprest/details/http_helpers.h"
+#include "web/http_headers.h"
+#include "web/http_msg.h"
+#include "web/http_client.h"
+#include "web/http_helpers.h"
 
 // oauth
 #if !defined(_WIN32) || _WIN32_WINNT >= _WIN32_WINNT_VISTA
-#include "cpprest/oauth1.h"
+#include "web/oauth1.h"
 #endif
-#include "cpprest/oauth2.h"
+#include "web/oauth2.h"
 
 // websockets
-#include "cpprest/ws_client.h"
-#include "cpprest/ws_msg.h"
+#include "web/ws_client.h"
+#include "web/ws_msg.h"
 
 #if !defined(__cplusplus_winrt)
 #if _WIN32_WINNT >= _WIN32_WINNT_VISTA
-#include "cpprest/details/http_server.h"
-#include "cpprest/http_listener.h"
-#include "cpprest/details/http_server_api.h"
+#include "web/http_server.h"
+#include "web/http_listener.h"
+#include "web/http_server_api.h"
 #endif // _WIN32_WINNT >= _WIN32_WINNT_VISTA
 #endif
 

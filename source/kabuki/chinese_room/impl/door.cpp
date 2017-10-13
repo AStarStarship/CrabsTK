@@ -18,7 +18,7 @@
 
 namespace _ {
 
-Door::Door (const char * roomName, uint_t slot_size, bool is_dynamic) :
+Door::Door (const char* roomName, uint_t slot_size, bool is_dynamic) :
     is_dynamic_ (is_dynamic)
 {
     //tx.SetBuffer (adjacentDoor->Rx ()->EndAddress () + 1), aSlotSize);
@@ -75,7 +75,7 @@ KABUKI Door& Doors () {
 /** Initializes a Door at the beginning of the given buffer. 
 static Door* DoorInit (byte* buffer, uint_t slot_size) {
     if (buffer == nullptr) return nullptr;
-    if (slot_size < kMinSocketSize) return nullptr;
+    if (slot_size < kMinMonoidSize) return nullptr;
     Wall* wall = reinterpret_cast<Door*>(buffer);
     w->is_dynamic = 0;
     w->num_doors = 0;

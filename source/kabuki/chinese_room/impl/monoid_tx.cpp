@@ -23,7 +23,7 @@
 namespace _ {
     
 
-KABUKI ticket_t Write (MonoidTx* tx, const char * address, const uint_t* params, 
+KABUKI ticket_t Write (MonoidTx* tx, const char* address, const uint_t* params, 
                        void** args) {
     //printf ("\n\n| Writing to %p\n", tx);
     if (address == nullptr)
@@ -55,7 +55,7 @@ KABUKI ticket_t Write (MonoidTx* tx, const char * address, const uint_t* params,
     hash16_t hash = 0;                      //< 16-bit prime hash.
     const uint_t* param = params;           //< Pointer to the current param.
     // Convert the socket offsets to pointers.
-    byte* begin = MonoidSlot (tx),          //< Beginning of the buffer.
+    byte* begin = MonoidTxSlot (tx),        //< Beginning of the buffer.
         * end   = begin + size,             //< End of the buffer.
         * start = begin + tx->start,        //< Start of the data.
         * stop  = begin + tx->stop;         //< Stop of the data.

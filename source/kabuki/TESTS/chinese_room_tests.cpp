@@ -15,10 +15,11 @@
              permissions and limitations under the License.
 */
 
-#include <CppUTest/CommandLineTestRunner.h>
-#include <CppUTest/TestHarness.h>
+#include "../chinese_room/include/module.h"
+#include "this.h"
+#include "../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
+#include "../../../cpputest/include/CppUTest/TestHarness.h"
 
-#include <chinese_room/include/module.h>
 using namespace _;
 
 TEST_GROUP (ChineseRoomTests)
@@ -53,11 +54,11 @@ TEST (ChineseRoomTests, UtilsTests)
     }
 }
 
-TEST (ChineseRoomTests, LinearityTests) {
-    std::cout << "| Running LinearityTests...\n";
+TEST (ChineseRoomTests, AutomataTests) {
+    std::cout << "| Running AutomataTests...\n";
 
     Root root;
-    Linearity* io = LinearityInit (Buffer<255> (), 255, 4, &root);
+    Automata* io = AutomataInit (Buffer<255> (), 255, 4, &root);
     Print (io);
 
     void*         args[3];
@@ -70,15 +71,15 @@ TEST (ChineseRoomTests, LinearityTests) {
     int si4_found;
     float flt_found;
     io->return_address = "A";
-    printf ("\n| Attempting to print to 0x%p\n", LinearityTx (io));
+    printf ("\n| Attempting to print to 0x%p\n", AutomataTx (io));
     const Set* m = Write (io, "C", esc, Args (args, &stx_expected,
                                                  &si4_expected, &flt_expected));
-    PrintMemory (io, LinearityEndAddress (io));
+    PrintMemory (io, AutomataEndAddress (io));
     Print (io);
     Mirror mirror;       //< @todo fix me!
     //Portal* p = dynamic_cast<Portal*>(&mirror);   //< Not working?
     Portal* p = reinterpret_cast<Portal*>(&mirror);
-    LinearityScan (io, p);
+    AutomataScan (io, p);
     system ("PAUSE");
     CHECK_EQUAL (0, Read (io, esc, Args (args, &stx_found,
                                          &si4_found, &flt_found)));
@@ -89,10 +90,10 @@ TEST (ChineseRoomTests, RoomTests) {
     printf ("|  - Running RoomTestOne...\n");
 }
 
-TEST (ChineseRoomTests, SymbolTableTests) {
-    std::cout << "|  - Running SymbolTableTest1...\n";
+TEST (ChineseRoomTests, TableTests) {
+    std::cout << "|  - Running TableTest1...\n";
     char_t index;
-    SymbolTable* rt = SymbolTableInit (Buffer<0, 128> (), 8, 128);
+    Table* rt = TableInit (Buffer<0, 128> (), 8, 128);
 
     CHECK (rt != nullptr)
 
@@ -142,7 +143,7 @@ TEST (ChineseRoomTests, SymbolTableTests) {
     CHECK_EQUAL (7, Find (rt, "cab"))
 
     index = Add (rt, "test");
-    CHECK_EQUAL (index, kSymbolTableFull)
+    CHECK_EQUAL (index, kTableFull)
 }
 
 TEST (ChineseRoomTests, BagTests) {
@@ -215,7 +216,7 @@ TEST (ChineseRoomTests, ReadWriteTests) {
     char found_string1[kSlotSize],
          found_string2[kSlotSize];
 
-    MonoidTx* tx = MonoidInit (Buffer<0, 128 + kSlotHeaderSize> (), 128 + kSlotHeaderSize);
+    MonoidTx* tx = MonoidTxInit (Buffer<0, 128 + kSlotHeaderSize> (), 128 + kSlotHeaderSize);
 
     CHECK_EQUAL (0, Write (tx, EmptyString, Esc<2, STX, 5, STX, 5> (),
                            Args (args, expected_string1, expected_string2)))
@@ -324,7 +325,7 @@ TEST (ChineseRoomTests, ReadWriteTests) {
     uint64_t ui8_found = 0;
     double dbl_found = 0.0;
 
-    tx = MonoidInit (Buffer<0, 128 + kSlotHeaderSize> (), 128 + kSlotHeaderSize);
+    tx = MonoidTxInit (Buffer<0, 128 + kSlotHeaderSize> (), 128 + kSlotHeaderSize);
 
     CHECK_EQUAL (0, Write (tx, EmptyString, Esc<5, TMU, SI8, SI8, UI8, DBL> (),
            Args (args, &tmu_expected, &si8_p_expected, &si8_n_expected,

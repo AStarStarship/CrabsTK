@@ -54,6 +54,11 @@ const Set* WriteError () {
     return &error;
 }
 
+const Set* SetErrorTicket (ticket_t error) {
+    // @todo Fix me!
+    return nullptr;
+}
+
 const Set* AutomataOverflowError () {
     //return DeviceMember<"Star stack overflow"> ();
     static const Set error = { "Star stack overflow",

@@ -19,7 +19,7 @@
 
 #include "room.h"
 #include "mirror.h"
-#include "symbol_table.h"
+#include "table.h"
 #include "bag.h"
 #include "utils.h"
 #include "operation.h"
@@ -60,30 +60,19 @@ class Console: public Room
     public:
 
     /** Constructs a Console. */
-    Console ()
-    :   Room (0) {
-    
-    }
+    Console ();
 
     /** Destructor. */
-    virtual ~Console () {
-
-    }
+    virtual ~Console ();
 
     /** Sets io the Room. */
-    ticket_t Init () override {
-        return 0;
-    }
+    ticket_t Init () override;
 
     /** Main process loop. */
-    ticket_t Loop () override {
-        return 0;
-    }
+    ticket_t Loop () override;
 
     /** Chinese room operations. */
-    const Set* Star (char_t index, Automata* a) override {
-        return 0;
-    }
+    const Set* Star (char_t index, Automata* a) override;
 
     private:
 

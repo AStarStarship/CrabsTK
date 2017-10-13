@@ -62,7 +62,7 @@ KABUKI Array<T, I>* ArrayInit (byte* buffer, I n) {
 }
 
 /** Inserts the item into the array at the given index.
-    @param a     The array.
+    @param a    			 The array.
     @param item  The item to insert. 
     @param index The index to insert at.
     @return Returns -1 if a is null and -2 if the array is full. */

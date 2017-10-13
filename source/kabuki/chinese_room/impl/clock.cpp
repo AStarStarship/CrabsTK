@@ -17,37 +17,38 @@
 #include "../include/clock.h"
 #include "../include/utils.h"
 
+using chrono_timestamp = std::chrono::time_point<std::chrono::system_clock,
+                            std::chrono::microseconds>;
+using namespace std::chrono;
+
 namespace _ {
 
-KABUKI timestamp_t PackTimestamp (time_t unixTime, int32_t microseconds)
+timestamp_t PackTimestamp (time_t unixTime, int32_t microseconds)
 {
     return (( (timestamp_t)unixTime) << 8) & (timestamp_t)microseconds;
 }
 
-KABUKI time_t GetSeconds (timestamp_t t)
+time_t GetSeconds (timestamp_t t)
 {
     return (time_t)t;
 }
 
-KABUKI int32_t GetMicroseconds (timestamp_t timestamp)
+int32_t GetMicroseconds (timestamp_t timestamp)
 {
     return (int32_t) ((timestamp & 0xFFFFFFFF00000000) >> 32);
 }
 
-KABUKI timestamp_t TimestampNow ()
+timestamp_t TimestampNow ()
 {
     std::chrono::microseconds us (1);
 
-    return us.count;
-}
-enum {
-    NUM_SEC_MIN = 60 * 60,
-    NUM_SEC_HOUR = 60 * NUM_SEC_MIN,
-    NUM_SEC_DAY = 24 * NUM_SEC_HOUR,
-    TIME_EPOCH = 1900,
-};
+    chrono_timestamp ts = time_point_cast<microseconds>(system_clock::now ());
 
-KABUKI bool PrintTimeStruct (tm* moment) {
+    //return ts;
+    return 0;
+}
+
+bool PrintTimeStruct (tm* moment) {
     if (moment == nullptr) {
         std::cout << "Null tm*\n";
         return false;
@@ -58,12 +59,12 @@ KABUKI bool PrintTimeStruct (tm* moment) {
     return true;
 }
 
-KABUKI void PrintTime (time_t t) {
+void PrintTime (time_t t) {
     tm* moment = localtime (&t);
     PrintTimeStruct (moment);
 }
 
-KABUKI void PrintDateTime (time_t t) {
+void PrintDateTime (time_t t) {
     tm* moment = localtime (&t);
     if (!moment) {
         std::cout << "\n| Invalid time: " << t << '\n';
@@ -73,7 +74,7 @@ KABUKI void PrintDateTime (time_t t) {
         << moment->tm_sec;
 }
 
-KABUKI bool PrintTimeStructString (char* buffer, int buffer_size, tm* moment) {
+bool PrintTimeStructString (char* buffer, int buffer_size, tm* moment) {
     if (buffer == nullptr)
         return false;
     if (moment == nullptr)
@@ -87,13 +88,13 @@ KABUKI bool PrintTimeStructString (char* buffer, int buffer_size, tm* moment) {
     return true;
 }
 
-KABUKI bool PrintDateTimeString (char* buffer, int buffer_size, time_t t) {
+bool PrintDateTimeString (char* buffer, int buffer_size, time_t t) {
     time (&t);
     tm* moment = localtime (&t);
     return PrintTimeStructString (buffer, buffer_size, moment);
 }
 
-KABUKI int NumDaysMonth (time_t t) {
+int NumDaysMonth (time_t t) {
     tm* date = localtime (&t);
     static const char days_per_month[12] = { 31, 28, 31, 30, 31, 30, 31, 31,
         30, 31, 30, 31 };
@@ -102,7 +103,7 @@ KABUKI int NumDaysMonth (time_t t) {
     return days_per_month[date->tm_mon];
 }
 
-KABUKI int NumDaysMonth (int month, int year = 1) {
+int NumDaysMonth (int month, int year) {
     if (month < 1)
         return 0;
     if (month > 12)
@@ -114,8 +115,8 @@ KABUKI int NumDaysMonth (int month, int year = 1) {
     return days_per_month[month];
 }
 
-KABUKI const char * DayOfWeek (int day_number) {
-    static const char * days[] = { "Sunday", "Monday", "Tuesday", "Wednesday",
+const char* DayOfWeek (int day_number) {
+    static const char* days[] = { "Sunday", "Monday", "Tuesday", "Wednesday",
         "Thursday", "Friday", "Saturday",
         "Invalid" };
     if (day_number < 0)
@@ -125,7 +126,7 @@ KABUKI const char * DayOfWeek (int day_number) {
     return days[day_number];
 }
 
-KABUKI char DayOfWeekInitial (int day_number) {
+char DayOfWeekInitial (int day_number) {
     static const char days[] = { "SMTWRFSU" };
     if (day_number < 0)
         return 'I';
@@ -134,7 +135,7 @@ KABUKI char DayOfWeekInitial (int day_number) {
     return days[day_number];
 }
 
-KABUKI int CompareTimes (time_t time_a, time_t time_b) {
+int CompareTimes (time_t time_a, time_t time_b) {
     int count = 0;
 
     tm* moment_a = localtime (&time_a),
@@ -182,7 +183,7 @@ KABUKI int CompareTimes (time_t time_a, time_t time_b) {
     return count;
 }
 
-KABUKI int CompareTimes (time_t t, int year, int month, int day,
+int CompareTimes (time_t t, int year, int month, int day,
                    int  hour, int minute, int second) {
     int count = 0;
 
@@ -221,7 +222,7 @@ KABUKI int CompareTimes (time_t t, int year, int month, int day,
     return count;
 }
 
-KABUKI const char * ParseTimeString (const char * input, int* hour, int* minute, int* second) {
+const char* ParseTimeString (const char* input, int* hour, int* minute, int* second) {
     if (input == nullptr)
         return nullptr;
     std::cout << input << ' ';
@@ -390,11 +391,11 @@ KABUKI const char * ParseTimeString (const char * input, int* hour, int* minute,
     return input;
 }
 
-KABUKI char* ParseTime (char* input, int* hour, int* minute, int* second) {
+char* ParseTime (char* input, int* hour, int* minute, int* second) {
     return (char*)ParseTimeString (input, hour, minute, second);
 }
 
-KABUKI const char * ParseTimeString (const char * input, tm* moment) {
+const char* ParseTimeString (const char* input, tm* moment) {
     if (input == nullptr)
         return nullptr;
     if (moment == nullptr)
@@ -404,7 +405,7 @@ KABUKI const char * ParseTimeString (const char * input, tm* moment) {
     input = SkipLeadingZerosString (input);
     char c = *input,    //< The current char.
         delimiter;     //< The delimiter.
-    const char * end;    //< Might not need
+    const char* end;    //< Might not need
 
     int hour = 0,
         minute = 0,
@@ -604,19 +605,30 @@ KABUKI const char * ParseTimeString (const char * input, tm* moment) {
 
 }
 
-KABUKI char* ParseTime (char* input, tm* result) {
+char* ParseTime (char* input, tm* result) {
     return (char*)ParseTimeString (input, result);
 }
 
-KABUKI const char * ParseTimeString (const char * input, time_t& result) {
+char* PrintStringTime (char* buffer, time_t t) {
+    if (buffer == nullptr)
+        return nullptr;
+
+    ctime_s (buffer, sizeof(buffer), &t);
+}
+
+const char* ParseTimeString (const char* input, time_t& result) {
     time_t t;
     time (&t);
-    tm* moment = localtime (&t);
-    char* end = (char*)ParseTimeString (input, moment);
+    struct tm moment;
+    localtime_s (&moment, &t);
+    
+    char* end = (char*)ParseTimeString (input, &moment);
 
-    t = mktime (moment);
+    t = mktime (&moment);
     std::cout << "|\n| Found ";
-    PrintTimeStruct (moment);
+    PrintTimeStruct (&moment);
+    char buffer[26];
+    PrintStringTime (buffer, t);
     char* time_string = ctime (&t);
     time_string = (time_string == nullptr ? "nullptr" : time_string);
     std::cout << "\n| Unpacked: " << time_string;
@@ -624,11 +636,11 @@ KABUKI const char * ParseTimeString (const char * input, time_t& result) {
     return end;
 }
 
-KABUKI char* ParseTime (char* input, time_t& result) {
+char* ParseTime (char* input, time_t& result) {
     return (char*)ParseTimeString (input, result);
 }
 
-KABUKI void ZeroTime (tm* moment) {
+void ZeroTime (tm* moment) {
     if (moment == nullptr)
         return;
     moment->tm_sec = 0;
