@@ -1,6 +1,5 @@
-# _audio Module
-This module is contains the _audio module and namespace. It has code for 
-working with audio hardware using OpenALSoft and 3D audio.
+# Audio Library Module
+This module is contains the kabuki::al Audio Library module and namespace. It has code for working with audio hardware using OpenALSoft and 3D audio.
 
 ## Authors
 * [Laurent Gomila](laurent@sfml-dev.org)
