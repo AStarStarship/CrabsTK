@@ -28,11 +28,11 @@
 #ifndef WEBSOCKETPP_TRANSPORT_STUB_HPP
 #define WEBSOCKETPP_TRANSPORT_STUB_HPP
 
-#include <websocketpp/common/memory.hpp>
-#include <websocketpp/logger/levels.hpp>
+#include <websocketpp/common/memory.h>
+#include <websocketpp/logger/levels.h>
 
-#include <websocketpp/transport/base/endpoint.hpp>
-#include <websocketpp/transport/stub/connection.hpp>
+#include <websocketpp/transport/base/endpoint.h>
+#include <websocketpp/transport/stub/connection.h>
 
 namespace websocketpp {
 namespace transport {

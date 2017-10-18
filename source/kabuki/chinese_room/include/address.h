@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/kabuki-toolkit/source/include/kabuki/address.h
+    @file    ~/kabuki/source/include/kabuki/address.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 

@@ -26,28 +26,28 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE transport_asio_timers
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <exception>
 #include <iostream>
 
-#include <websocketpp/common/thread.hpp>
+#include <websocketpp/common/thread.h>
 
-#include <websocketpp/transport/asio/endpoint.hpp>
-#include <websocketpp/transport/asio/security/tls.hpp>
+#include <websocketpp/transport/asio/endpoint.h>
+#include <websocketpp/transport/asio/security/tls.h>
 
 // Concurrency
-#include <websocketpp/concurrency/none.hpp>
+#include <websocketpp/concurrency/none.h>
 
 // HTTP
-#include <websocketpp/http/request.hpp>
-#include <websocketpp/http/response.hpp>
+#include <websocketpp/http/request.h>
+#include <websocketpp/http/response.h>
 
 // Loggers
-#include <websocketpp/logger/stub.hpp>
-//#include <websocketpp/logger/basic.hpp>
+#include <websocketpp/logger/stub.h>
+//#include <websocketpp/logger/basic.h>
 
-#include <boost/asio.hpp>
+#include <<websocketpp/asio.h>
 
 // Accept a connection, read data, and discard until EOF
 void run_dummy_server(int port) {

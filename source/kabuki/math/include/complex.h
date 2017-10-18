@@ -388,7 +388,7 @@ namespace smath
     #include "detail/complex.inl"
 }
 
-/** Kabuki Theater
+/** Kabuki Starship
     @file    /.../Source/_Math/Complex.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>

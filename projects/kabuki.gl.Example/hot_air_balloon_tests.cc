@@ -1,4 +1,4 @@
-/** Kabuki Theater
+/** Kabuki Starship
     @file    /.../KabukiTheater-Examples/Software3DWireFrameViewer/SoftwareEngine.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2016 [Cale McCollough](calemccollough.github.io)

@@ -1,4 +1,4 @@
-/** Kabuki Theater
+/** Kabuki Starship
     @file    /.../Source/KabukiTheater/_Theater/MIDI/Control.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>

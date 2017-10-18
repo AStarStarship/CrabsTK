@@ -29,36 +29,36 @@
 #define WEBSOCKETPP_CONFIG_MINIMAL_HPP
 
 // Non-Policy common stuff
-#include <websocketpp/common/platforms.hpp>
-#include <websocketpp/common/cpp11.hpp>
-#include <websocketpp/common/stdint.hpp>
+#include <websocketpp/common/platforms.h>
+#include <websocketpp/common/cpp11.h>
+#include <websocketpp/common/stdint.h>
 
 // Concurrency
-#include <websocketpp/concurrency/none.hpp>
+#include <websocketpp/concurrency/none.h>
 
 // Transport
-#include <websocketpp/transport/stub/endpoint.hpp>
+#include <websocketpp/transport/stub/endpoint.h>
 
 // HTTP
-#include <websocketpp/http/request.hpp>
-#include <websocketpp/http/response.hpp>
+#include <websocketpp/http/request.h>
+#include <websocketpp/http/response.h>
 
 // Messages
-#include <websocketpp/message_buffer/message.hpp>
-#include <websocketpp/message_buffer/alloc.hpp>
+#include <websocketpp/message_buffer/message.h>
+#include <websocketpp/message_buffer/alloc.h>
 
 // Loggers
-#include <websocketpp/logger/stub.hpp>
+#include <websocketpp/logger/stub.h>
 
 // RNG
-#include <websocketpp/random/none.hpp>
+#include <websocketpp/random/none.h>
 
 // User stub base classes
-#include <websocketpp/endpoint_base.hpp>
-#include <websocketpp/connection_base.hpp>
+#include <websocketpp/endpoint_base.h>
+#include <websocketpp/connection_base.h>
 
 // Extensions
-#include <websocketpp/extensions/permessage_deflate/disabled.hpp>
+#include <websocketpp/extensions/permessage_deflate/disabled.h>
 
 namespace websocketpp {
 namespace config {
@@ -88,7 +88,7 @@ namespace config {
  * <system_error>
  *
  * Operating System:
- * <stdint.h> or <boost/cstdint.hpp>
+ * <stdint.h> or <<websocketpp/cstdint.h>
  * <netinet/in.h> or <winsock2.h> (for ntohl.. could potentially bundle this)
  *
  * @since 0.4.0-dev

@@ -25,28 +25,31 @@
  *
  */
 
-#ifndef WEBSOCKETPP_COMMON_CONNECTION_HDL_HPP
-#define WEBSOCKETPP_COMMON_CONNECTION_HDL_HPP
+#ifndef WEBSOCKETPP_COMMON_CHRONO_HPP
+#define WEBSOCKETPP_COMMON_CHRONO_HPP
 
-#include <websocketpp/common/memory.hpp>
+#if defined _WEBSOCKETPP_CPP11_STL_ && !defined _WEBSOCKETPP_NO_CPP11_CHRONO_
+    #ifndef _WEBSOCKETPP_CPP11_CHRONO_
+        #define _WEBSOCKETPP_CPP11_CHRONO_
+    #endif
+#endif
+
+#ifdef _WEBSOCKETPP_CPP11_CHRONO_
+    #include <chrono>
+#else
+    #include <<websocketpp/chrono.h>
+#endif
 
 namespace websocketpp {
+namespace lib {
 
-/// A handle to uniquely identify a connection.
-/**
- * This type uniquely identifies a connection. It is implemented as a weak
- * pointer to the connection in question. This provides uniqueness across
- * multiple endpoints and ensures that IDs never conflict or run out.
- *
- * It is safe to make copies of this handle, store those copies in containers,
- * and use them from other threads.
- *
- * This handle can be upgraded to a full shared_ptr using
- * `endpoint::get_con_from_hdl()` from within a handler fired by the connection
- * that owns the handler.
- */
-typedef lib::weak_ptr<void> connection_hdl;
+#ifdef _WEBSOCKETPP_CPP11_CHRONO_
+    using std::chrono::system_clock;
+#else
+    using boost::chrono::system_clock;
+#endif
 
+} // namespace lib
 } // namespace websocketpp
 
-#endif // WEBSOCKETPP_COMMON_CONNECTION_HDL_HPP
+#endif // WEBSOCKETPP_COMMON_CHRONO_HPP

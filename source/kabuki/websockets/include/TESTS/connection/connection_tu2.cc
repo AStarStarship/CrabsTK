@@ -25,7 +25,7 @@
  *
  */
 
-#include "connection_tu2.hpp"
+#include "connection_tu2.h"
 
 void echo_func(server* s, websocketpp::connection_hdl hdl, message_ptr msg) {
     s->send(hdl, msg->get_payload(), msg->get_opcode());

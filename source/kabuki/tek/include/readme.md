@@ -1,16 +1,16 @@
 # mbedBunk
-mbedBunk is an early-stage cross-platform implementation of mbed using the [Kabuki Theater SDK](https://github.com/Kabuki-Toolkit/Kabuki-Theater). mbedBunk allows you to run unit tests and spoof mbed hardware on most operating systems.
+mbedBunk is an early-stage cross-platform implementation of mbed using the [Kabuki Starship SDK](https://github.com/Kabuki-Toolkit/kabuki). mbedBunk allows you to run unit tests and spoof mbed hardware on most operating systems.
   
 ## Quick Links
 * [mbedBunk Github Repository]
 * [mbed Operating System](https://github.com/ARMmbed/mbed-os) - The ARM mbed IoT Device Platform provides the operating system, cloud services, tools and  developer ecosystem to make the creation and deployment of commercial, standards-based IoT solutions possible at scale.
-* [Kabuki Theater SDK](https://github.com/Kabuki-Toolkit/Kabuki-Theater)
+* [Kabuki Starship SDK](https://github.com/Kabuki-Toolkit/kabuki)
 
 ## Author(s)
 * [Cale McCollough <https://calemccollough.github.io>]
   (https://calemccollough.github.io)
 * [mbed Constributors]()
-* [Kabuki Theater Constributors]()
+* [Kabuki Starship Constributors]()
 
 ## License
 Copyright 2017 (C) [Cale McCollough](mailto:calemccollough@gmail.com),

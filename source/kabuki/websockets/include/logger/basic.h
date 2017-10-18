@@ -40,11 +40,11 @@
  *
  */
 
-#include <websocketpp/logger/levels.hpp>
+#include <websocketpp/logger/levels.h>
 
-#include <websocketpp/common/cpp11.hpp>
-#include <websocketpp/common/stdint.hpp>
-#include <websocketpp/common/time.hpp>
+#include <websocketpp/common/cpp11.h>
+#include <websocketpp/common/stdint.h>
+#include <websocketpp/common/time.h>
 
 #include <ctime>
 #include <iostream>

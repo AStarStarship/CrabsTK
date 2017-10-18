@@ -26,13 +26,13 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE processors
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <iostream>
 #include <string>
 
-#include <websocketpp/processors/processor.hpp>
-#include <websocketpp/http/request.hpp>
+#include <websocketpp/processors/processor.h>
+#include <websocketpp/http/request.h>
 
 BOOST_AUTO_TEST_CASE( exact_match ) {
     websocketpp::http::parser::request r;

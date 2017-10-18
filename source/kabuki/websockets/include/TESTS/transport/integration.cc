@@ -26,17 +26,17 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE transport_integration
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
-#include <websocketpp/common/thread.hpp>
+#include <websocketpp/common/thread.h>
 
-#include <websocketpp/config/core.hpp>
-#include <websocketpp/config/core_client.hpp>
-#include <websocketpp/config/asio.hpp>
-#include <websocketpp/config/asio_client.hpp>
-#include <websocketpp/config/debug_asio.hpp>
-#include <websocketpp/server.hpp>
-#include <websocketpp/client.hpp>
+#include <websocketpp/core.h>
+#include <websocketpp/core_client.h>
+#include <websocketpp/asio.h>
+#include <websocketpp/asio_client.h>
+#include <websocketpp/debug_asio.h>
+#include <websocketpp/server.h>
+#include <websocketpp/client.h>
 
 struct config : public websocketpp::config::asio_client {
     typedef config type;

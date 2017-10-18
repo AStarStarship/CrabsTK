@@ -1,4 +1,4 @@
-/** Kabuki Theater
+/** Kabuki Starship
     @file    /.../Source-Impl/_Math/Converter.cpp
     @author  Cale McCollough <https://calemccollough.github.io>
     @author  Cale McCollough <cale.mccollough@gmail.com>

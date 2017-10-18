@@ -26,12 +26,12 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE hybi_util
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <iostream>
 
-#include "../../src/processors/hybi_util.hpp"
-#include "../../src/network_utilities.hpp"
+#include "../../src/processors/hybi_util.h"
+#include "../../src/network_utilities.h"
 
 BOOST_AUTO_TEST_CASE( circshift_0 ) {
     if (sizeof(size_t) == 8) {

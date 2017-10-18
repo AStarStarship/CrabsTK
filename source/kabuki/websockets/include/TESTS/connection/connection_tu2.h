@@ -30,10 +30,10 @@
 
 // Test Environment:
 // server, no TLS, no locks, iostream based transport
-#include <websocketpp/config/debug.hpp>
-#include <websocketpp/config/core.hpp>
-#include <websocketpp/server.hpp>
-#include <websocketpp/client.hpp>
+#include <websocketpp/debug.h>
+#include <websocketpp/core.h>
+#include <websocketpp/server.h>
+#include <websocketpp/client.h>
 
 typedef websocketpp::server<websocketpp::config::core> server;
 /// NOTE: the "server" config is being used for the client here because we don't

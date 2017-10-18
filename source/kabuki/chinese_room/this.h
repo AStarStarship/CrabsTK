@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki-theater-impl/TESTS/chinese_room_tests.cpp
+    @file    ~/source/kabuki-impl/TESTS/chinese_room_tests.cpp
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 

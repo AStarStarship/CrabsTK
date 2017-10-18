@@ -1,4 +1,4 @@
-/** Kabuki Theater
+/** Kabuki Starship
     @file       /.../Source/_Math/Matrix.h
     @author  Cale McCollough <https://calemccollough.github.io>
     @license Copyright 2016 (C) Cale McCollough <cale.mccollough@gmail.com>

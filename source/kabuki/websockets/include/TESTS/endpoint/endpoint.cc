@@ -26,13 +26,13 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE endpoint
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <iostream>
 #include <sstream>
 
-#include <websocketpp/config/asio.hpp>
-#include <websocketpp/server.hpp>
+#include <websocketpp/asio.h>
+#include <websocketpp/server.h>
 
 BOOST_AUTO_TEST_CASE( construct_server_iostream ) {
     websocketpp::server<websocketpp::config::core> s;

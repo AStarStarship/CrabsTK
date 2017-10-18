@@ -1,7 +1,6 @@
-/** Kabuki Theater
-    @version 0.x
-    @file    ~/source/kabuki/al/al_tests.cpp
-    @author  Cale McCollough <calemccollough.github.io>
+/** Kabuki Starship
+    @file    ~/source/kabuki-impl/TESTS/KabukiTheaterTests.cpp
+    @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
@@ -14,28 +13,17 @@
              permissions and limitations under the License.
 */
 
-#include "../../../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
-#include "../../../../../../cpputest/include/CppUTest/TestHarness.h"
+#include "../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
+#include "stdafx.h"
 
-#include "../include/module.h"
+using namespace std;
 
-using namespace _;
-
-TEST_GROUP (AL_TESTS)
+int main (int args_count, char** args)
 {
-    void setup ()
-    {
-        std::cout << "\n|  + Running kabuki::al tests...\n";
-    }
-
-    void teardown ()
-    {
-        std::cout << "| kabuki::al completed.\n";
-    }
-};
-
-TEST (AL_TESTS, AllTests)
-{
+    cout << "Kabuki Toolkit Unit Test.\n\n";
     
-}
 
+    //system ("PAUSE");
+
+    return CommandLineTestRunner::RunAllTests (args_count, args);
+}

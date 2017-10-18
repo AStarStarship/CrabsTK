@@ -26,16 +26,16 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE client
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <iostream>
 
-#include <websocketpp/random/random_device.hpp>
+#include <websocketpp/random/random_device.h>
 
-#include <websocketpp/config/core.hpp>
-#include <websocketpp/client.hpp>
+#include <websocketpp/core.h>
+#include <websocketpp/client.h>
 
-#include <websocketpp/http/request.hpp>
+#include <websocketpp/http/request.h>
 
 struct stub_config : public websocketpp::config::core {
     typedef core::concurrency_type concurrency_type;

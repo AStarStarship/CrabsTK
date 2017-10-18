@@ -1,4 +1,4 @@
-/** Kabuki Theater
+/** Kabuki Starship
     @file    /.../Source/KabukiTheater-Impl/_Theater/MIDI/MIDIMap.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright  (C) 2016 [Cale McCollough](calemccollough.github.io)

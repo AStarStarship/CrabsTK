@@ -26,13 +26,13 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE frame
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <iostream>
 #include <string>
 
-#include <websocketpp/frame.hpp>
-#include <websocketpp/utilities.hpp>
+#include <websocketpp/frame.h>
+#include <websocketpp/utilities.h>
 
 using namespace websocketpp;
 

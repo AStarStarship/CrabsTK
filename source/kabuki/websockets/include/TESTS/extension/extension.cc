@@ -26,11 +26,11 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE extension
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <string>
 
-#include <websocketpp/extensions/extension.hpp>
+#include <websocketpp/extensions/extension.h>
 
 BOOST_AUTO_TEST_CASE( blank ) {
     BOOST_CHECK( true );

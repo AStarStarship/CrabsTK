@@ -28,12 +28,12 @@
 #ifndef WEBSOCKETPP_PROCESSOR_BASE_HPP
 #define WEBSOCKETPP_PROCESSOR_BASE_HPP
 
-#include <websocketpp/close.hpp>
-#include <websocketpp/utilities.hpp>
-#include <websocketpp/uri.hpp>
+#include <websocketpp/close.h>
+#include <websocketpp/utilities.h>
+#include <websocketpp/uri.h>
 
-#include <websocketpp/common/cpp11.hpp>
-#include <websocketpp/common/system_error.hpp>
+#include <websocketpp/common/cpp11.h>
+#include <websocketpp/common/system_error.h>
 
 #include <string>
 

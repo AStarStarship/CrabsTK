@@ -47,9 +47,9 @@ class KabukiToolkit: public Project
     public:
     
     KabukiToolkit () :
-        Project ("Kabuki-Theater")
+        Project ("kabuki")
     {
-        PrintBreak ("<\n< Creating Kabuki-Theater Project...\n<", '-');
+        PrintBreak ("<\n< Creating kabuki Project...\n<", '-');
 
         AddSchedule ("Examples");
         Schedule* s = GetSchedule ("Examples");
@@ -61,7 +61,7 @@ class KabukiToolkit: public Project
                           "Linux."));
         
         Print ();
-        PrintBreak ("<\n< Done creatingK Kabuki-Theater Project...\n<", '-');
+        PrintBreak ("<\n< Done creatingK kabuki Project...\n<", '-');
     }
 };
 

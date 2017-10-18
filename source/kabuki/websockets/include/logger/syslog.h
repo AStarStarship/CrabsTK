@@ -33,10 +33,10 @@
 
 #include <syslog.h>
 
-#include <websocketpp/logger/basic.hpp>
+#include <websocketpp/logger/basic.h>
 
-#include <websocketpp/common/cpp11.hpp>
-#include <websocketpp/logger/levels.hpp>
+#include <websocketpp/common/cpp11.h>
+#include <websocketpp/logger/levels.h>
 
 namespace websocketpp {
 namespace log {

@@ -26,12 +26,12 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE uri
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <iostream>
 #include <string>
 
-#include <websocketpp/uri.hpp>
+#include <websocketpp/uri.h>
 
 // Test a regular valid ws URI
 BOOST_AUTO_TEST_CASE( uri_valid ) {

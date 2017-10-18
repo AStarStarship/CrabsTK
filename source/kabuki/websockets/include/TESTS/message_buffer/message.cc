@@ -26,12 +26,12 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE message
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <iostream>
 #include <string>
 
-#include <websocketpp/message_buffer/message.hpp>
+#include <websocketpp/message_buffer/message.h>
 
 template <typename message>
 struct stub {

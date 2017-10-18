@@ -1,4 +1,4 @@
-/** Kabuki Theater
+/** Kabuki Starship
     @file    /.../Source/_Theater/MIDI/MIDI.h
     @author  
     @license 

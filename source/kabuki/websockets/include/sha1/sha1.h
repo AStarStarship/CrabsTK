@@ -1,6 +1,6 @@
 /*
 *****
-sha1.hpp is a repackaging of the sha1.cpp and sha1.h files from the smallsha1
+sha1.h is a repackaging of the sha1.cpp and sha1.h files from the smallsha1
 library (http://code.google.com/p/smallsha1/) into a single header suitable for
 use as a header only library. This conversion was done by Peter Thorson
 (webmaster@zaphoyd.com) in 2013. All modifications to the code are redistributed

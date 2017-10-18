@@ -28,23 +28,23 @@
 #ifndef WEBSOCKETPP_TRANSPORT_ASIO_CON_HPP
 #define WEBSOCKETPP_TRANSPORT_ASIO_CON_HPP
 
-#include <websocketpp/transport/asio/base.hpp>
+#include <websocketpp/transport/asio/base.h>
 
-#include <websocketpp/transport/base/connection.hpp>
+#include <websocketpp/transport/base/connection.h>
 
-#include <websocketpp/logger/levels.hpp>
-#include <websocketpp/http/constants.hpp>
+#include <websocketpp/logger/levels.h>
+#include <websocketpp/http/constants.h>
 
-#include <websocketpp/base64/base64.hpp>
-#include <websocketpp/error.hpp>
+#include <websocketpp/base64/base64.h>
+#include <websocketpp/error.h>
 
-#include <websocketpp/common/cpp11.hpp>
-#include <websocketpp/common/memory.hpp>
-#include <websocketpp/common/functional.hpp>
-#include <websocketpp/common/connection_hdl.hpp>
+#include <websocketpp/common/cpp11.h>
+#include <websocketpp/common/memory.h>
+#include <websocketpp/common/functional.h>
+#include <websocketpp/common/connection_hdl.h>
 
-#include <boost/asio.hpp>
-#include <boost/system/error_code.hpp>
+#include <<websocketpp/asio.h>
+#include <<websocketpp/system/error_code.h>
 
 #include <istream>
 #include <sstream>
@@ -955,7 +955,7 @@ protected:
 
     /// Set Connection Handle
     /**
-     * See common/connection_hdl.hpp for information
+     * See common/connection_hdl.h for information
      *
      * @param hdl A connection_hdl that the transport will use to refer
      * to itself

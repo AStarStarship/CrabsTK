@@ -1,5 +1,5 @@
-/** Kabuki Theater
-    @file    /.../Source/kabuki-theater/app/key_listener.h
+/** Kabuki Starship
+    @file    /.../Source/kabuki/app/key_listener.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 

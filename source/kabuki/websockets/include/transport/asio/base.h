@@ -28,15 +28,15 @@
 #ifndef WEBSOCKETPP_TRANSPORT_ASIO_BASE_HPP
 #define WEBSOCKETPP_TRANSPORT_ASIO_BASE_HPP
 
-#include <websocketpp/common/cpp11.hpp>
-#include <websocketpp/common/functional.hpp>
-#include <websocketpp/common/system_error.hpp>
+#include <websocketpp/common/cpp11.h>
+#include <websocketpp/common/functional.h>
+#include <websocketpp/common/system_error.h>
 
-#include <boost/system/error_code.hpp>
+#include <<websocketpp/system/error_code.h>
 
-#include <boost/aligned_storage.hpp>
-#include <boost/noncopyable.hpp>
-#include <boost/array.hpp>
+#include <<websocketpp/aligned_storage.h>
+#include <<websocketpp/noncopyable.h>
+#include <<websocketpp/array.h>
 
 #include <string>
 

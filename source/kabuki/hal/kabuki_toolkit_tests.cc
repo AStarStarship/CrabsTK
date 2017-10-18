@@ -1,5 +1,5 @@
-/** Kabuki Theater
-    @file    ~/source/kabuki-theater-impl/TESTS/KabukiTheaterTests.cpp
+/** Kabuki Starship
+    @file    ~/source/kabuki-impl/TESTS/KabukiTheaterTests.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 

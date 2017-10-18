@@ -1,5 +1,5 @@
 # Kabuki Toolkit Source
-This folder contains two folders: one for the Kabuki-Theater Library and on for the Kabuki-Console.
+This folder contains two folders: one for the kabuki Library and on for the Kabuki-Console.
 
 # Development
 * All source code files shall be placed in this folder (ongoing).

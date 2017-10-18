@@ -28,12 +28,12 @@
 #ifndef WEBSOCKETPP_CONFIG_ASIO_TLS_DEBUG_HPP
 #define WEBSOCKETPP_CONFIG_ASIO_TLS_DEBUG_HPP
 
-#include <websocketpp/config/debug.hpp>
-#include <websocketpp/transport/asio/endpoint.hpp>
-#include <websocketpp/transport/asio/security/tls.hpp>
+#include <websocketpp/debug.h>
+#include <websocketpp/transport/asio/endpoint.h>
+#include <websocketpp/transport/asio/security/tls.h>
 
 // Pull in non-tls config
-#include <websocketpp/config/debug_asio_no_tls.hpp>
+#include <websocketpp/debug_asio_no_tls.h>
 
 // Define TLS config
 namespace websocketpp {

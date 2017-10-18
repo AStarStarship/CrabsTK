@@ -26,13 +26,13 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE basic_log
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <string>
 
-#include <websocketpp/logger/basic.hpp>
-#include <websocketpp/concurrency/none.hpp>
-#include <websocketpp/concurrency/basic.hpp>
+#include <websocketpp/logger/basic.h>
+#include <websocketpp/concurrency/none.h>
+#include <websocketpp/concurrency/basic.h>
 
 BOOST_AUTO_TEST_CASE( is_token_char ) {
     typedef websocketpp::log::basic<websocketpp::concurrency::none,websocketpp::log::elevel> error_log;

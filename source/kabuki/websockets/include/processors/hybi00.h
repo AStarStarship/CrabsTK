@@ -28,13 +28,13 @@
 #ifndef WEBSOCKETPP_PROCESSOR_HYBI00_HPP
 #define WEBSOCKETPP_PROCESSOR_HYBI00_HPP
 
-#include <websocketpp/frame.hpp>
-#include <websocketpp/utf8_validator.hpp>
-#include <websocketpp/common/network.hpp>
-#include <websocketpp/common/md5.hpp>
-#include <websocketpp/common/platforms.hpp>
+#include <websocketpp/frame.h>
+#include <websocketpp/utf8_validator.h>
+#include <websocketpp/common/network.h>
+#include <websocketpp/common/md5.h>
+#include <websocketpp/common/platforms.h>
 
-#include <websocketpp/processors/processor.hpp>
+#include <websocketpp/processors/processor.h>
 
 #include <algorithm>
 #include <cstdlib>

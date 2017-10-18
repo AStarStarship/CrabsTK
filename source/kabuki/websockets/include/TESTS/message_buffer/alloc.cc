@@ -26,12 +26,12 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE message_buffer_alloc
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <iostream>
 #include <string>
 
-#include <websocketpp/message_buffer/alloc.hpp>
+#include <websocketpp/message_buffer/alloc.h>
 
 template <template <class> class con_msg_manager>
 struct stub {

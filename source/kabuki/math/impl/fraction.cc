@@ -1,4 +1,4 @@
-/** Kabuki Theater
+/** Kabuki Starship
     @file       /.../Source-Impl/_Math/Fraction.cpp
     @author  Cale McCollough <https://calemccollough.github.io>
     @license Copyright 2016 (C) Cale McCollough <cale.mccollough@gmail.com>

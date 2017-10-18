@@ -1,6 +1,6 @@
-# Kabuki Theater Documentation
-The Doxyfile is used to create the [Kabuki Theater API Docs]
-(https://kabuki-toolkit.github.io/api/). You may build these 
+# Kabuki Starship Documentation
+The Doxyfile is used to create the [Kabuki Starship API Docs]
+(https://kabuki.github.io/api/). You may build these 
 yourself for offline viewing. The UML diagrams can be found in the 
 "Kabuki Toolkit Diagrams.mdj" file.
 
@@ -8,7 +8,7 @@ yourself for offline viewing. The UML diagrams can be found in the
 
 * Where should I start?
      It is best to start with the [Example projects]
-     (https://github.com/Kabuki-Toolkit/Kabuki-Theater/tree/master/Examples).
+     (https://github.com/Kabuki-Toolkit/kabuki/tree/master/Examples).
      Just find a project that is kind of like what you want to do and modify it.
 
 * How do I get started as a developer?
@@ -25,7 +25,7 @@ yourself for offline viewing. The UML diagrams can be found in the
     Theater website].
 
 * Why does the website look all messed up?
-    The [Kabuki Toolkit website](https://kabuki-toolkit.github.io/) needs to get
+    The [Kabuki Toolkit website](https://kabuki.github.io/) needs to get
     fixed ASAP. The CSS is messed up in full-screen mode, but works right in less
     than about 1024 pixel widths. It's something about the @media section in the
     CSS.
@@ -47,7 +47,7 @@ yourself for offline viewing. The UML diagrams can be found in the
 
 * Is there any UML?
     We're using [StarUML 2.x](http://staruml.io/). The models can be found in
-    the file "~/Documents/Kabuki Theater.mdj". Most of the included modules were
+    the file "~/Documents/Kabuki Starship.mdj". Most of the included modules were
     not documented correctly and will need to be back annotated. This is a back
     burner project and is only done when needed. Please feel free to help us
     write use cases and scenario.

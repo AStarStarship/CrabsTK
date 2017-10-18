@@ -1,4 +1,4 @@
-/** Kabuki Theater
+/** Kabuki Starship
     @version 0.x
     @file    /.../Source/_file/archive.h
     @author  Cale McCollough <cale.mccollough@gmail.com>

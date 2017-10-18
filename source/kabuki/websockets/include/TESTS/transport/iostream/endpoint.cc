@@ -26,11 +26,11 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE transport_iostream_endpoint
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <iostream>
 
-#include <websocketpp/transport/iostream/endpoint.hpp>
+#include <websocketpp/transport/iostream/endpoint.h>
 
 BOOST_AUTO_TEST_CASE( placeholder ) {}
 

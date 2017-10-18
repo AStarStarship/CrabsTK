@@ -26,14 +26,14 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE server
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <iostream>
 
 // Test Environment:
 // server, no TLS, no locks, iostream based transport
-#include <websocketpp/config/core.hpp>
-#include <websocketpp/server.hpp>
+#include <websocketpp/core.h>
+#include <websocketpp/server.h>
 
 typedef websocketpp::server<websocketpp::config::core> server;
 typedef websocketpp::config::core::message_type::ptr message_ptr;

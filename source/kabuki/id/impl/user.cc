@@ -1,4 +1,4 @@
-/** Kabuki Theater
+/** Kabuki Starship
     @file    /.../Source-Impl/_Id/User.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
@@ -26,7 +26,7 @@ User::User (const string& aName, const string& aPassword)
 :   name (aName),
     password (aPassword)
 {
-    //activeAccounts = new Kabuki Theater.Game.Account.List ();
+    //activeAccounts = new Kabuki Starship.Game.Account.List ();
 }
 
 Handle& User::getUsername () { return name; }

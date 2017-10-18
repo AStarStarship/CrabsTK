@@ -2,7 +2,7 @@
 A light-weight cross-platforman Embedded C++1x SDK core suitable for both software and firmware based on Searle's Chinese Room, Interprocess, and Telemetry Protocol (Script) and mimicry sciences.
 
 ## Overview
-This project is the SDK core for [Kabuki Project](https://github.com/kabuki-project) and [Kabuki Toolkit](https://github.com/kabuki-project/). The SDK is based on an Embedded C++1x core DLL with bindings for various languages. All library functions are precompilable C Compatible function calls, and all OOP, Function, etc programming is only used for application side (which is not 100% coverage yet. #WorkInProgress). All module source files are organized into a single  directory without sub-folders, all projects (like example projects) in a single folder, and all unit tests are placed into the ~/source/kabuki/TESTS directory. For UML  diagrams please see the ~/docs/kabuki-toolkit_diagrams.mdj [StarUML] (http://staruml.io/) file.
+This project is the SDK core for [Kabuki Starship](https://github.com/kabuki-project) and [Kabuki Toolkit](https://github.com/kabuki-project/). The SDK is based on an Embedded C++1x core DLL with bindings for various languages. All library functions are precompilable C Compatible function calls, and all OOP, Function, etc programming is only used for application side (which is not 100% coverage yet. #WorkInProgress). All module source files are organized into a single  directory without sub-folders, all projects (like example projects) in a single folder, and all unit tests are placed into the ~/source/kabuki/TESTS directory. For UML  diagrams please see the ~/docs/kabuki-toolkit_diagrams.mdj [StarUML] (http://staruml.io/) file.
 
 ## License
 Copyright 2017 (C) [Cale McCollough] (mailto:calemccollough@gmail.com)

@@ -42,9 +42,9 @@
 #pragma clang diagnostic ignored "-Winfinite-recursion"
 #endif
 
-#include <websocketpp/config/asio_client.hpp>
-#include <websocketpp/config/asio_no_tls_client.hpp>
-#include <websocketpp/client.hpp>
+#include <websocketpp/asio_client.h>
+#include <websocketpp/asio_no_tls_client.h>
+#include <websocketpp/client.h>
 
 #if defined(_WIN32)
 #pragma warning( pop )

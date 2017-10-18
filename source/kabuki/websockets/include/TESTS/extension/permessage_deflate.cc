@@ -26,17 +26,17 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE permessage_deflate
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
-#include <websocketpp/error.hpp>
+#include <websocketpp/error.h>
 
-#include <websocketpp/extensions/extension.hpp>
-#include <websocketpp/extensions/permessage_deflate/disabled.hpp>
-#include <websocketpp/extensions/permessage_deflate/enabled.hpp>
+#include <websocketpp/extensions/extension.h>
+#include <websocketpp/extensions/permessage_deflate/disabled.h>
+#include <websocketpp/extensions/permessage_deflate/enabled.h>
 
 #include <string>
 
-#include <websocketpp/utilities.hpp>
+#include <websocketpp/utilities.h>
 #include <iostream>
 
 class config {};

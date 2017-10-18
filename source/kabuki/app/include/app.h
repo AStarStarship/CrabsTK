@@ -1,4 +1,4 @@
-/** Kabuki Theater
+/** Kabuki Starship
     @file       ~/Source/kabauki_theater/app/app.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
@@ -25,7 +25,7 @@
 
 namespace app {
 
-/** Interface for an Kabuki Theater app.
+/** Interface for an Kabuki Starship app.
 */
 struct App {
     /*

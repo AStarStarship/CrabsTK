@@ -73,8 +73,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Bundled Libraries:
 
-****** Base 64 Library (base64/base64.hpp) ******
-base64.hpp is a repackaging of the base64.cpp and base64.h files into a
+****** Base 64 Library (base64/base64.h) ******
+base64.h is a repackaging of the base64.cpp and base64.h files into a
 single header suitable for use as a header only library. This conversion was
 done by Peter Thorson (webmaster@zaphoyd.com) in 2012. All modifications to
 the code are redistributed under the same license as the original, which is
@@ -104,8 +104,8 @@ freely, subject to the following restrictions:
 
 René Nyffenegger rene.nyffenegger@adp-gmbh.ch
 
-****** SHA1 Library (sha1/sha1.hpp) ******
-sha1.hpp is a repackaging of the sha1.cpp and sha1.h files from the shallsha1
+****** SHA1 Library (sha1/sha1.h) ******
+sha1.h is a repackaging of the sha1.cpp and sha1.h files from the shallsha1
 library (http://code.google.com/p/smallsha1/) into a single header suitable for
 use as a header only library. This conversion was done by Peter Thorson
 (webmaster@zaphoyd.com) in 2013. All modifications to the code are redistributed
@@ -136,8 +136,8 @@ under the same license as the original, which is listed below.
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-****** MD5 Library (common/md5.hpp) ******
-md5.hpp is a reformulation of the md5.h and md5.c code from
+****** MD5 Library (common/md5.h) ******
+md5.h is a reformulation of the md5.h and md5.c code from
 http://www.opensource.apple.com/source/cups/cups-59/cups/md5.c to allow it to
 function as a component of a header only library. This conversion was done by
 Peter Thorson (webmaster@zaphoyd.com) in 2012 for the WebSocket++ project. The
@@ -164,8 +164,8 @@ freely, subject to the following restrictions:
 L. Peter Deutsch
 ghost@aladdin.com
 
-****** UTF8 Validation logic (utf8_validation.hpp) ******
-utf8_validation.hpp is adapted from code originally written by Bjoern Hoehrmann
+****** UTF8 Validation logic (utf8_validation.h) ******
+utf8_validation.h is adapted from code originally written by Bjoern Hoehrmann
 <bjoern@hoehrmann.de>. See http://bjoern.hoehrmann.de/utf-8/decoder/dfa/ for
 details.
 

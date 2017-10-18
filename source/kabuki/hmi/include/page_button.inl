@@ -1,4 +1,4 @@
-/** Kabuki Theater
+/** Kabuki Starship
     @file    ~/Source/KabukiTheater-Impl/_Theater/HUD/Buttons/PageButton.cpp
     @author  [Cale McCollough](mailto:cale.mccollough@gmail.com)
     @license Copyright (C) 2017 [Cale McCollough](https://calemccollough.github.io)

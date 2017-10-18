@@ -28,7 +28,7 @@
 #ifndef WEBSOCKETPP_COMMON_FUNCTIONAL_HPP
 #define WEBSOCKETPP_COMMON_FUNCTIONAL_HPP
 
-#include <websocketpp/common/cpp11.hpp>
+#include <websocketpp/common/cpp11.h>
 
 // If we've determined that we're in full C++11 mode and the user hasn't
 // explicitly disabled the use of C++11 functional header, then prefer it to
@@ -52,9 +52,9 @@
 #ifdef _WEBSOCKETPP_CPP11_FUNCTIONAL_
     #include <functional>
 #else
-    #include <boost/bind.hpp>
-    #include <boost/function.hpp>
-    #include <boost/ref.hpp>
+    #include <<websocketpp/bind.h>
+    #include <<websocketpp/function.h>
+    #include <<websocketpp/ref.h>
 #endif
 
 

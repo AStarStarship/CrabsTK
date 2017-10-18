@@ -26,13 +26,13 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE http_parser
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <iostream>
 #include <string>
 
-#include <websocketpp/http/request.hpp>
-#include <websocketpp/http/response.hpp>
+#include <websocketpp/http/request.h>
+#include <websocketpp/http/response.h>
 
 BOOST_AUTO_TEST_CASE( is_token_char ) {
     // Valid characters

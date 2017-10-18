@@ -28,7 +28,7 @@
 #ifndef WEBSOCKETPP_CONFIG_MINIMAL_CLIENT_HPP
 #define WEBSOCKETPP_CONFIG_MINIMAL_CLIENT_HPP
 
-#include <websocketpp/config/minimal_server.hpp>
+#include <websocketpp/minimal_server.h>
 
 namespace websocketpp {
 namespace config {
@@ -59,7 +59,7 @@ namespace config {
  * <system_error>
  *
  * Operating System:
- * <stdint.h> or <boost/cstdint.hpp>
+ * <stdint.h> or <<websocketpp/cstdint.h>
  * <netinet/in.h> or <winsock2.h> (for ntohl.. could potentially bundle this)
  *
  * @since 0.4.0-dev

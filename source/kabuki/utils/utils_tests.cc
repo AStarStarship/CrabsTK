@@ -1,4 +1,4 @@
-/** Kabuki Theater
+/** Kabuki Starship
     @version 0.x
     @file    ~/source/kabuki/al/al_tests.cpp
     @author  Cale McCollough <calemccollough.github.io>

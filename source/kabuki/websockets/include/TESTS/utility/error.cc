@@ -26,9 +26,9 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE error
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
-#include <websocketpp/error.hpp>
+#include <websocketpp/error.h>
 
 BOOST_AUTO_TEST_CASE( constructing_exceptions ) {
     websocketpp::lib::error_code test_ec = websocketpp::error::make_error_code(websocketpp::error::test);

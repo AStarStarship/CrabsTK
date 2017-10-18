@@ -33,8 +33,8 @@
 #include <string>
 #include <utility>
 
-#include <websocketpp/utilities.hpp>
-#include <websocketpp/http/constants.hpp>
+#include <websocketpp/utilities.h>
+#include <websocketpp/http/constants.h>
 
 namespace websocketpp {
 namespace http {
@@ -610,6 +610,6 @@ protected:
 } // namespace http
 } // namespace websocketpp
 
-#include <websocketpp/http/impl/parser.hpp>
+#include <websocketpp/http/impl/parser.h>
 
 #endif // HTTP_PARSER_HPP

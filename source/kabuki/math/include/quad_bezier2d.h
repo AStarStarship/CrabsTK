@@ -1,4 +1,4 @@
-/** Kabuki Theater
+/** Kabuki Starship
     @file    /.../Source/_Math/Bezier.h
     @author     Cale McCollough
     @author  Cale McCollough <cale.mccollough@gmail.com>

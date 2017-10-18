@@ -28,10 +28,10 @@
 #ifndef WEBSOCKETPP_TRANSPORT_IOSTREAM_BASE_HPP
 #define WEBSOCKETPP_TRANSPORT_IOSTREAM_BASE_HPP
 
-#include <websocketpp/common/system_error.hpp>
-#include <websocketpp/common/cpp11.hpp>
-#include <websocketpp/common/functional.hpp>
-#include <websocketpp/common/connection_hdl.hpp>
+#include <websocketpp/common/system_error.h>
+#include <websocketpp/common/cpp11.h>
+#include <websocketpp/common/functional.h>
+#include <websocketpp/common/connection_hdl.h>
 
 #include <string>
 

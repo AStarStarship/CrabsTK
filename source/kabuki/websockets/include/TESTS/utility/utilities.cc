@@ -26,12 +26,12 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE utility
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <iostream>
 #include <string>
 
-#include <websocketpp/utilities.hpp>
+#include <websocketpp/utilities.h>
 
 BOOST_AUTO_TEST_SUITE ( utility )
 

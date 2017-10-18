@@ -28,7 +28,7 @@
 #ifndef WEBSOCKETPP_LOGGER_LEVELS_HPP
 #define WEBSOCKETPP_LOGGER_LEVELS_HPP
 
-#include <websocketpp/common/stdint.hpp>
+#include <websocketpp/common/stdint.h>
 
 namespace websocketpp {
 namespace log {

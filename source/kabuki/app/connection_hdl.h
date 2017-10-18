@@ -25,58 +25,28 @@
  *
  */
 
-#ifndef WEBSOCKETPP_COMMON_RANDOM_DEVICE_HPP
-#define WEBSOCKETPP_COMMON_RANDOM_DEVICE_HPP
+#ifndef WEBSOCKETPP_COMMON_CONNECTION_HDL_HPP
+#define WEBSOCKETPP_COMMON_CONNECTION_HDL_HPP
 
-#include <websocketpp/common/cpp11.hpp>
-
-// If we've determined that we're in full C++11 mode and the user hasn't
-// explicitly disabled the use of C++11 random header, then prefer it to
-// boost.
-#if defined _WEBSOCKETPP_CPP11_INTERNAL_ && !defined _WEBSOCKETPP_NO_CPP11_RANDOM_DEVICE_
-    #ifndef _WEBSOCKETPP_CPP11_RANDOM_DEVICE_
-        #define _WEBSOCKETPP_CPP11_RANDOM_DEVICE_
-    #endif
-#endif
-
-
-// If we're on Visual Studio 2010 or higher and haven't explicitly disabled
-// the use of C++11 random header then prefer it to boost.
-#if defined(_MSC_VER) && _MSC_VER >= 1600 && !defined _WEBSOCKETPP_NO_CPP11_MEMORY_
-    #ifndef _WEBSOCKETPP_CPP11_MEMORY_
-        #define _WEBSOCKETPP_CPP11_MEMORY_
-    #endif
-#endif
-
-
-
-#ifdef _WEBSOCKETPP_CPP11_RANDOM_DEVICE_
-    #include <random>
-#else
-    #include <boost/version.hpp>
-
-    #if (BOOST_VERSION/100000) == 1 && ((BOOST_VERSION/100)%1000) > 46
-        #include <boost/random/uniform_int_distribution.hpp>
-        #include <boost/random/random_device.hpp>
-    #elif (BOOST_VERSION/100000) == 1 && ((BOOST_VERSION/100)%1000) >= 43
-        #include <boost/nondet_random.hpp>
-    #else
-        // TODO: static_assert(false, "Could not find a suitable random_device")
-    #endif
-#endif
+#include <websocketpp/common/memory.h>
 
 namespace websocketpp {
-namespace lib {
 
-#ifdef _WEBSOCKETPP_CPP11_RANDOM_DEVICE_
-    using std::random_device;
-    using std::uniform_int_distribution;
-#else
-    using boost::random::random_device;
-    using boost::random::uniform_int_distribution;
-#endif
+/// A handle to uniquely identify a connection.
+/**
+ * This type uniquely identifies a connection. It is implemented as a weak
+ * pointer to the connection in question. This provides uniqueness across
+ * multiple endpoints and ensures that IDs never conflict or run out.
+ *
+ * It is safe to make copies of this handle, store those copies in containers,
+ * and use them from other threads.
+ *
+ * This handle can be upgraded to a full shared_ptr using
+ * `endpoint::get_con_from_hdl()` from within a handler fired by the connection
+ * that owns the handler.
+ */
+typedef lib::weak_ptr<void> connection_hdl;
 
-} // namespace lib
 } // namespace websocketpp
 
-#endif // WEBSOCKETPP_COMMON_RANDOM_DEVICE_HPP
+#endif // WEBSOCKETPP_COMMON_CONNECTION_HDL_HPP

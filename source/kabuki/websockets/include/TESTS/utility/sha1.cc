@@ -26,13 +26,13 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE sha1
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
 #include <iostream>
 #include <string>
 
-#include <websocketpp/sha1/sha1.hpp>
-#include <websocketpp/utilities.hpp>
+#include <websocketpp/sha1/sha1.h>
+#include <websocketpp/utilities.h>
 
 BOOST_AUTO_TEST_SUITE ( sha1 )
 

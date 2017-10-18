@@ -32,10 +32,10 @@
 #include <string>
 #include <array>
 
-#include <websocketpp/common/system_error.hpp>
-#include <websocketpp/common/network.hpp>
+#include <websocketpp/common/system_error.h>
+#include <websocketpp/common/network.h>
 
-#include <websocketpp/utilities.hpp>
+#include <websocketpp/utilities.h>
 
 namespace websocketpp {
 /// Data structures and utility functions for manipulating WebSocket frames

@@ -26,10 +26,10 @@
  */
 //#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE random_none
-#include <boost/test/unit_test.hpp>
+#include <<websocketpp/test/unit_test.h>
 
-#include <websocketpp/common/stdint.hpp>
-#include <websocketpp/random/none.hpp>
+#include <websocketpp/common/stdint.h>
+#include <websocketpp/random/none.h>
 
 BOOST_AUTO_TEST_CASE( does_it_compile ) {
     websocketpp::random::none::int_generator<int32_t> rng;
