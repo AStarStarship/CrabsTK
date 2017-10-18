@@ -68,7 +68,7 @@ KABUKI const char* RequestString (Request r);
     Each door has multiple slots in lead to the same room. These slots are the 
     various IO ports of the system.
 */
-class Room: public Operation {
+class Room: public Expression {
     //NONCOPYABLE (Room)
 
     public:
@@ -142,7 +142,7 @@ class Room: public Operation {
         stack_size_;        //< The max size of the device stack.
                             //< Star Control 1: this.
     Door* door_;            //< Star Control 2: The Door to this room.
-    Operation* xoff_,       //< Star Control 3: XOFF - XOFF handling device.
+    Expression* xoff_,       //< Star Control 3: XOFF - XOFF handling device.
 <<<<<<< HEAD
           * device_,        //< Star Control 4: the current device control.
           * devices_;       //< Pointer to the current device control.

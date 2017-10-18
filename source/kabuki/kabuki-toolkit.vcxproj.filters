@@ -32,9 +32,6 @@
     <ClCompile Include="chinese_room\impl\monoid_write.cc">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
-    <ClCompile Include="chinese_room\impl\operation.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
     <ClCompile Include="chinese_room\impl\room.cc">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
@@ -92,11 +89,11 @@
     <ClCompile Include="chinese_room\impl\library.cc">
       <Filter>kabuki\chinese_room\impl</Filter>
     </ClCompile>
+    <ClCompile Include="chinese_room\impl\expression.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="chinese_room\include\operation.h">
-      <Filter>kabuki\chinese_room\include</Filter>
-    </ClInclude>
     <ClInclude Include="chinese_room\include\portal.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
@@ -203,6 +200,9 @@
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
     <ClInclude Include="chinese_room\include\monoid_tx.h">
+      <Filter>kabuki\chinese_room\include</Filter>
+    </ClInclude>
+    <ClInclude Include="chinese_room\include\expression.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
   </ItemGroup>

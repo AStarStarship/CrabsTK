@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/include/operation.h
+    @file    ~/source/kabuki/chinese_room/include/expression.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -31,7 +31,7 @@ struct Automata;
 
     @code
     // Example remote procedure call using Star interface.
-    class DeviceExample : public Operation {
+    class DeviceExample : public Expression {
         //NONCOPYABLE (DeviceExample)
         public:
 
@@ -109,7 +109,7 @@ struct Automata;
     };
     @endcode
 */
-struct Operation {
+struct Expression {
     /** An abstract algebra operation.
         There are a total of 224 possible Members indexes 32-255, not including 
         the Star itself. To query a member, pass in nullptr for io and index 
@@ -125,16 +125,16 @@ struct Operation {
 };
 
 /** Gets the number of members of the given device. */
-KABUKI uintptr_t ToUInt (Operation* op);
+KABUKI uintptr_t ToUInt (Expression* op);
 
 /** Returns true if the given result from a Set is a non-printable ASCII 
     char, meaning it's a Star. */
 KABUKI bool IsDevice (const Set* member);
 
 /** Prints the given Star to the console. */
-KABUKI void Print (Operation* d);
+KABUKI void Print (Expression* d);
 
-KABUKI void PrintAddress (const byte* address, Operation* root);
+KABUKI void PrintAddress (const byte* address, Expression* root);
 
 }       //< namespace _
 #endif  //< CHINESE_ROOM_STAR_H

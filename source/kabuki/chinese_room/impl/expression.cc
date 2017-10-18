@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/operation.cpp
+    @file    ~/source/kabuki/chinese_room/impl/expression.cpp
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,11 +14,11 @@
              permissions and limitations under the License.
 */
 
-#include "../include/operation.h"
+#include "../include/expression.h"
 
 namespace _ {
 
-KABUKI uintptr_t ToUInt (Operation* d) {
+KABUKI uintptr_t ToUInt (Expression* d) {
     if (d == nullptr) return 0;
     const Set* m = d->Star (0, nullptr);
     return m == nullptr ? 0 : reinterpret_cast<uintptr_t> (m->params);
@@ -30,7 +30,7 @@ KABUKI bool IsDevice (const Set* member) {
     return (reinterpret_cast<uintptr_t> (member->result) < ' ');
 }
 
-KABUKI void Print (Operation* d) {
+KABUKI void Print (Expression* d) {
     std::cout << "| Star:        ";
     if (d == nullptr) {
         std::cout << "null";
@@ -67,7 +67,7 @@ KABUKI void Print (Operation* d) {
     //system ("PAUSE");
 }
 
-KABUKI void PrintAddress (const byte* address, Operation* root) {
+KABUKI void PrintAddress (const byte* address, Expression* root) {
     if (address == nullptr)
         return;
     if (root == nullptr)

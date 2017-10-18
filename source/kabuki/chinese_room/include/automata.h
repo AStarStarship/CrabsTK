@@ -20,7 +20,7 @@
 
 #include "set.h"
 #include "portal.h"
-#include "operation.h"
+#include "expression.h"
 #include "monoid.h"
 
 namespace _ {
@@ -85,7 +85,7 @@ struct Automata {
                                     //< scanned.
                   num_states;       //< Number of states on the state stack.
     timestamp_t   last_time;        //< The last time the Stack was scanned.
-    Operation   * device,           //< Star in the Star being verified.
+    Expression   * device,           //< Star in the Star being verified.
                 * operand;          //< Pointer to the Star this device is
                                     //< operating on.
     const char  * return_address;   //< The return address.
@@ -132,10 +132,10 @@ KABUKI MonoidTx* AutomataTx (Automata* a);
 /** Constructs a Stack with equal sized rx and tx slots.
     @param root The root-scope device. */
 KABUKI Automata* AutomataInit (byte* buffer, uint_t buffer_size,
-    uint_t stack_count, Operation* root = nullptr);
+    uint_t stack_count, Expression* root = nullptr);
 
 /** Gets the base address of the device stack. */
-KABUKI Operation** AutomataDeviceStack (Automata* a);
+KABUKI Expression** AutomataDeviceStack (Automata* a);
 
 /** Returns true if the Stack uses dynamic memory. */
 KABUKI bool AutomataIsDynamic (Automata* a);
@@ -149,7 +149,7 @@ KABUKI ticket_t AutomataReset (Automata* a);
     device control onto the stack.
     @return Returns nullptr upon success and a pointer to a string
     upon failure. */
-KABUKI const Set* Push (Automata* a, Operation* d);
+KABUKI const Set* Push (Automata* a, Expression* d);
 
 /** Attempts to pop an Star off the stack and returns a pointer to a
     string upon failure. */

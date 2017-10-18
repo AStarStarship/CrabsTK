@@ -37,7 +37,7 @@ namespace _ {
     Multiple doors also might share the same Portal. An example of this is a 
     connection to multiple systems over a WiFi connection.
 */
-class Door : public Operation {
+class Door : public Expression {
     public:
 
     enum {

@@ -18,14 +18,14 @@
 #define CHINESE_ROOM_TERMINAL_H
 
 #include "monoid.h"
-#include "operation.h"
+#include "expression.h"
 
 namespace _ {
 
 /** An async monoid Terminal.
     
 */
-class Terminal : public Operation {
+class Terminal : public Expression {
     public:
 
     /** Default constructor. */
@@ -37,7 +37,7 @@ class Terminal : public Operation {
     /** Returns true if the set contains the given address pointer. */
     bool Contains (void* address);
 
-    /** A*MonoidRx Operations. */
+    /** A*MonoidRx Expressions. */
     const Set* Star (char_t index, Automata* b) override;
 
     private:

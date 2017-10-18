@@ -24,7 +24,7 @@ namespace _ {
 
 template<typename TIndex, typename TKey, typename TData, typename THash, 
     uint_t MaxStackHeight>
-class Library: public Operation
+class Library: public Expression
 {
     public:
 
@@ -169,7 +169,7 @@ class Library: public Operation
 
     }
 
-    /** ChineseRoom Operations. */
+    /** ChineseRoom Expressions. */
     const Set* Star (Rx* rx, Tx& tx, char index) override {
         switch (index)
         {

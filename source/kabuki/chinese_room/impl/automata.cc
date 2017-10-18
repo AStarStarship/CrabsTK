@@ -58,7 +58,7 @@ MonoidTx* AutomataTx (Automata* io) {
 }
 
 Automata* AutomataInit (byte* buffer, uint_t buffer_size,
-                        uint_t stack_count, Operation* root) {
+                        uint_t stack_count, Expression* root) {
     if (buffer == nullptr)
         return nullptr;
     if (buffer_size < kMinBufferSize)
@@ -104,10 +104,10 @@ Automata* AutomataInit (byte* buffer, uint_t buffer_size,
     return io;
 }
 
-Operation** AutomataDeviceStack (Automata* io) {
+Expression** AutomataDeviceStack (Automata* io) {
     auto a = reinterpret_cast<byte*> (io) + sizeof (Automata) +
         io->stack_count * io->stack_size * sizeof (const uint_t*);
-    return reinterpret_cast<Operation**> (a);
+    return reinterpret_cast<Expression**> (a);
 }
 
 bool AutomataIsDynamic (Automata* io) {
@@ -122,7 +122,7 @@ ticket_t AutomataReset (Automata* io) {
     return 0;
 }
 
-const Set* Push (Automata* io, Operation* d) {
+const Set* Push (Automata* io, Expression* d) {
     if (io == nullptr)
         return d->Star (0, nullptr);  //< Return d's header.
     if (d == nullptr)
@@ -244,7 +244,7 @@ void AutomataScan (Automata* io, Portal* input) {
                                 //uint64_t      temp_ui8;       //< Used for calculating AR8 and BK8 size.
     time_t        timestamp,    //< The last time when the automata ran.
                   delta_t;      //< The time delta between the last timestamp.
-    Operation   * device;       //< The current Operation.
+    Expression   * device;       //< The current Expression.
     const Set   * member;       //< The current Set.
     const uint_t* header;       //< The current Set header being verified.
     MonoidRx    * rx;           //< The rx MonoidRx.

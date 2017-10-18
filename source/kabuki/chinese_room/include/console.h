@@ -22,7 +22,7 @@
 #include "table.h"
 #include "bag.h"
 #include "utils.h"
-#include "operation.h"
+#include "expression.h"
 
 namespace _ {
 
