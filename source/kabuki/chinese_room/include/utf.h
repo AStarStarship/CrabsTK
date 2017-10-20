@@ -291,7 +291,7 @@ class UTF<8>
     }
 
     template <typename In, typename Out>
-    static Out toWide (In begin, In end, Out output, wchar_t replacement = 0)
+    static Out toWide (In begin, In end, Out output, windex replacement = 0)
     /** Convert an UTF-8 characters range to wide characters
        
         @param begin       Iterator pointing to the beginning of the input sequence
@@ -615,7 +615,7 @@ class UTF<16>
     }
 
     template <typename In, typename Out>
-    static Out toWide (In begin, In end, Out output, wchar_t replacement = 0)
+    static Out toWide (In begin, In end, Out output, windex replacement = 0)
     /** Convert an UTF-16 characters range to wide characters
        
         @param begin       Iterator pointing to the beginning of the input sequence
@@ -862,7 +862,7 @@ class UTF<32>
     }
 
     template <typename In, typename Out>
-    static Out toWide (In begin, In end, Out output, wchar_t replacement = 0)
+    static Out toWide (In begin, In end, Out output, windex replacement = 0)
     /** Convert an UTF-32 characters range to wide characters
        
         @param begin       Iterator pointing to the beginning of the input sequence
@@ -974,14 +974,14 @@ class UTF<32>
 
  (void)locale; // to avoid warnings
 
-        wchar_t character = 0;
+        windex character = 0;
         mbtowc (&character, &input, 1);
         return static_cast<uint32_t> (character);
 
         #else
 
         // Get the facet of the locale which deals with character conversion
-        const std::ctype<wchar_t>& facet = std::use_facet< std::ctype<wchar_t> > (locale);
+        const std::ctype<windex>& facet = std::use_facet< std::ctype<windex> > (locale);
 
         // Use the facet to convert each character of the input string
         return static_cast<uint32_t> (facet.widen (input));
@@ -1028,7 +1028,7 @@ class UTF<32>
  (void)locale; // to avoid warnings
 
         byte character = 0;
-        if (wctomb (&character, static_cast<wchar_t> (codepoint)) >= 0)
+        if (wctomb (&character, static_cast<windex> (codepoint)) >= 0)
             *output++ = character;
         else if (replacement)
             *output++ = replacement;
@@ -1038,10 +1038,10 @@ class UTF<32>
         #else
 
         // Get the facet of the locale which deals with character conversion
-        const std::ctype<wchar_t>& facet = std::use_facet< std::ctype<wchar_t> > (locale);
+        const std::ctype<windex>& facet = std::use_facet< std::ctype<windex> > (locale);
 
         // Use the facet to convert each character of the input string
-        *output++ = facet.narrow (static_cast<wchar_t> (codepoint), replacement);
+        *output++ = facet.narrow (static_cast<windex> (codepoint), replacement);
 
         return output;
 
@@ -1049,7 +1049,7 @@ class UTF<32>
     }
 
     template <typename Out>
-    static Out encodeWide (uint32_t codepoint, Out output, wchar_t replacement = 0)
+    static Out encodeWide (uint32_t codepoint, Out output, windex replacement = 0)
     /** Encode a single UTF-32 character to wide
        
         This function does not exist in other specializations
@@ -1068,11 +1068,11 @@ class UTF<32>
         // For UCS-2 we need to check if the source characters fits in (UCS-2 is a set of UCS-4).
         // For UCS-4 we can do a direct copy (UCS-4 *is* UTF-32).
 
-        switch (sizeof (wchar_t))
+        switch (sizeof (windex))
         {
             case 4:
             {
-                *output++ = static_cast<wchar_t> (codepoint);
+                *output++ = static_cast<windex> (codepoint);
                 break;
             }
 
@@ -1080,7 +1080,7 @@ class UTF<32>
             {
                 if ((codepoint <= 0xFFFF) && ((codepoint < 0xD800) || (codepoint > 0xDFFF)))
                 {
-                    *output++ = static_cast<wchar_t> (codepoint);
+                    *output++ = static_cast<windex> (codepoint);
                 }
                 else if (replacement)
                 {

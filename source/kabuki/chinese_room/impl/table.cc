@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/table.cpp
+    @file    ~/source/kabuki/chinese_room/impl/table.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,6 +14,7 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
 #include "../include/table.h"
 #include "../include/utils.h"
 #include "../include/error.h"
@@ -24,40 +25,36 @@ static Table* TableInit (byte* buffer, byte max_keys, uint16_t total_size)
 {
     if (buffer == nullptr)
         return nullptr;
-    Table* rt = reinterpret_cast<Table*>(buffer);
+    Table* table = reinterpret_cast<Table*>(buffer);
 
     uint_t min_required_size = sizeof (Table) + max_keys * 
                                (kOverheadPerRecord + 2);
     if (total_size < min_required_size)
         return nullptr;
 
-    rt->num_keys = 0;
-    rt->max_keys = max_keys;
-    rt->pile_size = 0;
-    rt->size = total_size;
-    return rt;
+    table->num_keys = 0;
+    table->max_keys = max_keys;
+    table->pile_size = 0;
+    table->size = total_size;
+    return table;
 }
 
-<<<<<<< HEAD:source/kabuki/chinese_room/impl/table.cpp
-static byte TableAdd (Table* rt, const char* key) {
-=======
-static byte Add (Table* rt, const char * key) {
->>>>>>> 98a6359c3af7d539eabe9e473c7b084cc3c6bfda:source/kabuki/chinese_room/impl/table.cpp
-    if (rt == nullptr) return 0;
+static byte TableAdd (Table* table, const char* key) {
+    if (table == nullptr) return 0;
     if (key == nullptr) return 0;
     
     //PrintStringLine (key);
 
-    byte num_keys = rt->num_keys,
-        max_keys  = rt->max_keys,
+    byte num_keys = table->num_keys,
+        max_keys  = table->max_keys,
         temp;
 
-    uint16_t size = rt->size;
+    uint16_t size = table->size;
 
     if (num_keys >= max_keys) return kTableFull;
     //< We're out of buffered indexes.
 
-    hash16_t* hashes = reinterpret_cast<hash16_t*> (reinterpret_cast<byte*> (rt) +
+    hash16_t* hashes = reinterpret_cast<hash16_t*> (reinterpret_cast<byte*> (table) +
         sizeof (Table));
     uint16_t* key_offsets = reinterpret_cast<uint16_t*> (hashes + 
         max_keys);
@@ -65,7 +62,7 @@ static byte Add (Table* rt, const char * key) {
                     max_keys),
         *unsorted_indexes = indexes + max_keys,
         *collission_list = unsorted_indexes + max_keys;
-    char* keys = reinterpret_cast<char*> (rt) + size - 1,
+    char* keys = reinterpret_cast<char*> (table) + size - 1,
         *destination;
 
     // Calculate space left.
@@ -74,16 +71,16 @@ static byte Add (Table* rt, const char * key) {
         key_length = static_cast<uint16_t> (strlen (key));
 
     //PrintLine ();
-    printf ("Adding Key %s\n%20s: 0x%p\n%20s: %p\n%20s: 0x%p\n"
-        "%20s: %p\n%20s: %u\n", key, "hashes", hashes, "key_offsets", 
-        key_offsets, "keys", keys, "indexes", indexes, "value", value);
+    //printf ("Adding Key %s\n%20s: 0x%p\n%20s: %p\n%20s: 0x%p\n"
+    //    "%20s: %p\n%20s: %u\n", key, "hashes", hashes, "key_offsets", 
+    //    key_offsets, "keys", keys, "indexes", indexes, "value", value);
 
     hash16_t hash = Hash16 (key),
         current_hash;
 
     if (key_length > value)
     {
-        printf ("Buffer overflow\n");
+        //printf ("Buffer overflow\n");
         return BufferOverflowError;
     }
 
@@ -91,7 +88,7 @@ static byte Add (Table* rt, const char * key) {
 
     if (num_keys == 0)
     {
-        rt->num_keys = 1;
+        table->num_keys = 1;
         *hashes = hash;
         *key_offsets = static_cast<uint16_t> (key_length);
         *indexes = kNoCollidingRecords;
@@ -99,8 +96,8 @@ static byte Add (Table* rt, const char * key) {
         destination = keys - key_length;
 
         CopyString (destination, key);
-        printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
-        //Print (rt);
+        //printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
+        //Print (table);
         return 0;
     }
 
@@ -108,11 +105,11 @@ static byte Add (Table* rt, const char * key) {
 
     if (key_length >= value)
     {
-        printf ("Not enough room in buffer!\n");
+        //printf ("Not enough room in buffer!\n");
         return 0;   //< There isn't enough room left in the buffer.
     }
 
-    printf ("Finding insert location... \n");
+    //printf ("Finding insert location... \n");
 
     int low = 0,
         mid,
@@ -126,8 +123,8 @@ static byte Add (Table* rt, const char * key) {
         mid = (low + high) >> 1;        //< Shift >> 1 to / 2
 
         current_hash = hashes[mid];
-        printf ("high: %i mid: %i low %i hash: %x\n", high, mid, low, 
-                current_hash);
+        //printf ("high: %i mid: %i low %i hash: %x\n", high, mid, low, 
+        //        current_hash);
 
         if (current_hash > hash)
         {
@@ -139,17 +136,17 @@ static byte Add (Table* rt, const char * key) {
         }
         else    // Duplicate hash detected.
         {
-            printf ("hash detected, ");
+            //printf ("hash detected, ");
 
             // Check for other collisions.
 
             index = indexes[mid];       //< Index in the collision table.
 
-            printf ("index:%u\n", index);
+            //printf ("index:%u\n", index);
 
             if (index < kNoCollidingRecords)   //< There are other collisions.
             {
-                printf ("with collisions, ");
+                //printf ("with collisions, ");
                 // There was a collision so check the table.
 
                 // The collisionsList is a sequence of indexes terminated 
@@ -159,11 +156,11 @@ static byte Add (Table* rt, const char * key) {
                 temp = indexes[mid];
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;  //< Load the index in the collision table.
-                while (index < kMaxNumMembers) {
-                    printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
+                while (index < kMaxNumOperations) {
+                    //printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
-                        printf ("but table already contains key at "
-                                "offset: %u.\n", index);
+                        //printf ("but table already contains key at "
+                         //       "offset: %u.\n", index);
                         return index;
                     }
                     ++temp_ptr;
@@ -171,7 +168,7 @@ static byte Add (Table* rt, const char * key) {
                 }
 
                 // Its a new collision!
-                printf ("and new collision detected.\n");
+                //printf ("and new collision detected.\n");
                 
                 // Copy the key
                 value = key_offsets[num_keys - 1] + key_length + 1;
@@ -179,7 +176,7 @@ static byte Add (Table* rt, const char * key) {
                 key_offsets[num_keys] = value;
 
                 // Update the collision table.
-                pile_size = rt->pile_size;
+                pile_size = table->pile_size;
                 // Shift the collisions table up one element and insert 
                 // the unsorted collision index.
                 // Then move to the top of the collisions list.
@@ -192,11 +189,11 @@ static byte Add (Table* rt, const char * key) {
                 }
                 *temp_ptr = num_keys;
 
-                rt->pile_size = pile_size + 1;
-                printf ("\n\ncollision index: %u\n", temp);
+                table->pile_size = pile_size + 1;
+                //printf ("\n\ncollision index: %u\n", temp);
                 // Store the collision index.
                 indexes[num_keys] = temp;   //< Store the collision index
-                rt->num_keys = num_keys + 1;
+                table->num_keys = num_keys + 1;
                 hashes[num_keys] = ~0;      //< Set the last hash to 0xFFFF
 
                 // Move collisions pointer to the unsorted_indexes.
@@ -205,22 +202,22 @@ static byte Add (Table* rt, const char * key) {
                 //< Add the newest string to the end.
                 indexes[num_keys] = num_keys;
 
-                //Print (rt);
-                printf ("Done inserting.\n");
+                //Print (table);
+                //printf ("Done inserting.\n");
                 return num_keys;
             }
 
             // But we still don't know if the string is a new collision.
 
-            printf ("Checking if it's a collision... ");
+            //printf ("Checking if it's a collision... ");
 
             if (strcmp (key, keys - key_offsets[index]) != 0) {
                 // It's a new collision!
-                printf ("It's a new collision!\n");
+                //printf ("It's a new collision!\n");
 
                 if (value < 3)
                 {
-                    printf ("Buffer overflow!\n");
+                    //printf ("Buffer overflow!\n");
                     return kRecordOverflow;
                 }
 
@@ -228,15 +225,15 @@ static byte Add (Table* rt, const char * key) {
                 value = key_offsets[num_keys - 1] + key_length + 1;
 
                 byte collision_index = unsorted_indexes[mid];
-                printf ("\n\ncollision_index: %u", collision_index);
+                //printf ("\n\ncollision_index: %u", collision_index);
 
                 CopyString (keys - value, key);
-                printf ("Inserting value: %u into index:%u "
-                        "num_keys:%u with other collision_index: %u\n", value, 
-                        index, num_keys, collision_index);
+                //printf ("Inserting value: %u into index:%u "
+                //        "num_keys:%u with other collision_index: %u\n", value, 
+                //        index, num_keys, collision_index);
                 key_offsets[num_keys] = value;
 
-                pile_size = rt->pile_size;
+                pile_size = table->pile_size;
                 indexes[mid] = static_cast<byte> (pile_size);
                 indexes[num_keys] = static_cast<byte> (pile_size);
 
@@ -249,7 +246,7 @@ static byte Add (Table* rt, const char * key) {
                 *temp_ptr = num_keys;
                 ++temp_ptr;
                 *temp_ptr = ~0;
-                rt->pile_size = pile_size + 3;
+                table->pile_size = pile_size + 3;
                 //< Added one term-byte and two indexes.
 
                 // Add the newest key at the end.
@@ -258,15 +255,15 @@ static byte Add (Table* rt, const char * key) {
                 // Set the last hash to 0xFFFF
                 hashes[num_keys] = ~0;
 
-                rt->num_keys = num_keys + 1;
+                table->num_keys = num_keys + 1;
 
-                //Print (rt);
+                //Print (table);
 
-                printf ("Done inserting.\n");
+                //printf ("Done inserting.\n");
                 // Then it was a collision so the table doesn't contain s.
                 return num_keys;
             }
-            printf ("table already contains the key\n");
+            //printf ("table already contains the key\n");
             return index;
         }
     }
@@ -276,9 +273,9 @@ static byte Add (Table* rt, const char * key) {
     value = key_offsets[num_keys - 1] + key_length + 1;
     destination = keys - value;
 
-    printf ("The hash 0x%x was not in the table so inserting %s into mid:"
-            " %i at index %u before hash 0x%x \n", hash, key, mid, 
-            destination - reinterpret_cast<char*> (rt), hashes[mid]);
+    //printf ("The hash 0x%x was not in the table so inserting %s into mid:"
+    //        " %i at index %u before hash 0x%x \n", hash, key, mid, 
+    //        destination - reinterpret_cast<char*> (table), hashes[mid]);
 
     // First copy the string and set the key offset.
     CopyString (destination, key);
@@ -287,12 +284,12 @@ static byte Add (Table* rt, const char * key) {
     // Second move up the hashes and insert at the insertion point.
     hash16_t* hash_ptr = hashes + num_keys;
     //*test = hashes;
-    printf ("l_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u\n", 
-            num_keys, hashes - reinterpret_cast<hash16_t*> (rt), 
-            hash_ptr - reinterpret_cast<hash16_t*> (rt), hashes + mid - 
-            reinterpret_cast<hash16_t*> (rt));
+    //printf ("l_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u\n", 
+    //        num_keys, hashes - reinterpret_cast<hash16_t*> (table), 
+    //        hash_ptr - reinterpret_cast<hash16_t*> (table), hashes + mid - 
+    //        reinterpret_cast<hash16_t*> (table));
     hashes += mid;
-    //Print (rt);
+    //Print (table);
     while (hash_ptr > hashes) {
         *hash_ptr = *(hash_ptr - 1);
         --hash_ptr;
@@ -313,35 +310,31 @@ static byte Add (Table* rt, const char * key) {
     }
     *temp_ptr = num_keys;      //unsorted_indexes[mid] = num_keys;
 
-    rt->num_keys = num_keys + 1;
+    table->num_keys = num_keys + 1;
 
-    //Print (rt);
-    printf ("Done inserting.\n");
+    //Print (table);
+    //printf ("Done inserting.\n");
     //PrintLine ();
 
     return num_keys;
 }
 
-<<<<<<< HEAD:source/kabuki/chinese_room/impl/table.cpp
-static byte TableFind (const Table* rt, const char* key) {
-=======
-static byte Find (const Table* rt, const char * key) {
->>>>>>> 98a6359c3af7d539eabe9e473c7b084cc3c6bfda:source/kabuki/chinese_room/impl/table.cpp
-    if (rt == nullptr)
+static byte TableFind (const Table* table, const char* key) {
+    if (table == nullptr)
         return 0;
     //PrintLineBreak ("Finding record...", 5);
-    char_t index,
-        num_keys = rt->num_keys,
-        max_keys = rt->max_keys,
+    index index,
+        num_keys = table->num_keys,
+        max_keys = table->max_keys,
         temp;
 
     if (key == nullptr || num_keys == 0)
         return kInvalidRecord;
 
-    uint16_t size = rt->size;
+    uint16_t size = table->size;
 
     const hash16_t* hashes = reinterpret_cast<const hash16_t*>
-                             (reinterpret_cast<const byte*> (rt) + 
+                             (reinterpret_cast<const byte*> (table) + 
                               sizeof (Table));
     const uint16_t* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
                                                                     max_keys);
@@ -349,24 +342,24 @@ static byte Find (const Table* rt, const char * key) {
                                                         max_keys),
         *unsorted_indexes = indexes + max_keys,
         *collission_list = unsorted_indexes + max_keys;
-    const char* keys = reinterpret_cast<const char*> (rt) + size - 1;
+    const char* keys = reinterpret_cast<const char*> (table) + size - 1;
     const byte* collisions,
         *temp_ptr;
 
     hash16_t hash = Hash16 (key);
 
-    printf ("\nSearching for key \"%s\" with hash 0x%x\n", key, hash);
+    //printf ("\nSearching for key \"%s\" with hash 0x%x\n", key, hash);
 
     if (num_keys == 1)
     {
-        //printf ("Comparing keys - key_offsets[0] - this %u\n%s\n", keys - 
-        //        key_offsets[0] - reinterpret_cast<char*> (rt), keys - 
+        ////printf ("Comparing keys - key_offsets[0] - this %u\n%s\n", keys - 
+        //        key_offsets[0] - reinterpret_cast<char*> (table), keys - 
         //        key_offsets[0]);
         if (strcmp (key, keys - key_offsets[0]) != 0) {
-            printf ("Did not find key %s\n", key);
+            //printf ("Did not find key %s\n", key);
             return kInvalidRecord;
         }
-        printf ("Found key %s\n", key);
+        //printf ("Found key %s\n", key);
         //PrintLine ();
         return 0;
     }
@@ -382,8 +375,8 @@ static byte Find (const Table* rt, const char * key) {
         mid = (low + high) >> 1;    //< >> 1 to /2
 
         hash16_t current_hash = hashes[mid];
-        printf ("low: %i mid: %i high %i hashes[mid]:%x\n", low, mid, 
-                 high, hashes[mid]);
+        //printf ("low: %i mid: %i high %i hashes[mid]:%x\n", low, mid, 
+        //         high, hashes[mid]);
 
         if (current_hash > hash) {
             high = mid - 1;
@@ -392,8 +385,8 @@ static byte Find (const Table* rt, const char * key) {
             low = mid + 1;
         } else {
             // Duplicate hash found.
-            printf ("\nFound same hash at mid:%i hash:%x offset for key: "
-                    "%s\n", mid, hashes[mid], key);
+            //printf ("\nFound same hash at mid:%i hash:%x offset for key: "
+            //        "%s\n", mid, hashes[mid], key);
 
             // Check for collisions
 
@@ -404,10 +397,10 @@ static byte Find (const Table* rt, const char * key) {
             if (index < kNoCollidingRecords)
             {
                 // There was a collision so check the table.
-                printf ("There was a collision so check the table\n");
+                //printf ("There was a collision so check the table\n");
 
                 // The collisionsList is a sequence of indexes terminated by
-                // an invalid index > kMaxNumMembers. collissionsList[0] is an 
+                // an invalid index > kMaxNumOperations. collissionsList[0] is an 
                 // invalid index, so the collisionsList is searched from 
                 // lower address up.
 
@@ -415,18 +408,18 @@ static byte Find (const Table* rt, const char * key) {
 
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;
-                while (index < kMaxNumMembers) {
-                    printf ("comparing to \"%s\"\n", keys - 
-                            key_offsets[index]);
+                while (index < kMaxNumOperations) {
+                    //printf ("comparing to \"%s\"\n", keys - 
+                    //        key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
-                        printf ("but table already contains key at offset:"
-                                "%u.\n", index);
+                        //printf ("but table already contains key at offset:"
+                        //        "%u.\n", index);
                         return index;
                     }
                     ++temp_ptr;
                     index = *temp_ptr;
                 }
-                printf ("Did not find %s.\n", key);
+                //printf ("Did not find %s.\n", key);
                 return kInvalidRecord;
             }
 
@@ -438,97 +431,93 @@ static byte Find (const Table* rt, const char * key) {
             indexes += max_keys;
             index = unsorted_indexes[mid];
 
-            printf ("\n!!!mid: %i-%x unsorted_indexes: %u key: %s\n"
-                    "hash: %x\n", mid, hashes[mid], index, keys - 
-                    key_offsets[index], Hash16 (keys - 
-                    key_offsets[index]));
+            //printf ("\n!!!mid: %i-%x unsorted_indexes: %u key: %s\n"
+            //        "hash: %x\n", mid, hashes[mid], index, keys - 
+            //        key_offsets[index], Hash16 (keys - 
+            //        key_offsets[index]));
 
             if (strcmp (key, keys - key_offsets[index]) != 0) {
                 //< It was a collision so the table doesn't contain s.
-                printf (" but it was a collision and did not find key.\n");
+                //printf (" but it was a collision and did not find key.\n");
                 return kInvalidRecord;
             }
 
-            printf ("and found key at mid: %i\n", mid);
+            //printf ("and found key at mid: %i\n", mid);
             return index;
         }
     }
-    printf ("Did not find a hash for key %s\n", key);
+    //printf ("Did not find a hash for key %s\n", key);
     //PrintLine ();
 
     return kInvalidRecord;
 }
 
-<<<<<<< HEAD:source/kabuki/chinese_room/impl/table.cpp
-inline void TablePrint (Table* rt) {
-=======
-inline void Print (Table* rt) {
->>>>>>> 98a6359c3af7d539eabe9e473c7b084cc3c6bfda:source/kabuki/chinese_room/impl/table.cpp
-    if (rt == nullptr) return;
-    byte num_keys = rt->num_keys,
-        max_keys = rt->max_keys,
+inline void TablePrint (Table* table) {
+    if (table == nullptr) return;
+    byte num_keys = table->num_keys,
+        max_keys = table->max_keys,
         collision_index,
         temp;
-    uint16_t size = rt->size,
-        pile_size = rt->pile_size;
+    uint16_t size = table->size,
+        pile_size = table->pile_size;
     PrintLine ('_');
-    printf ("| Table: %p\n| num_keys: %u max_keys: %u  "
-            "pile_size: %u  size: %u", rt, num_keys,
-            max_keys, pile_size, size);
-    putchar ('\n');
-    putchar ('|');
-    for (int i = 0; i < 79; ++i) putchar ('_');
-    putchar ('\n');
+    //printf ("| Table: %p\n| num_keys: %u max_keys: %u  "
+    //        "pile_size: %u  size: %u", table, num_keys,
+    //        max_keys, pile_size, size);
+    //putchar ('\n');
+    //putchar ('|');
+    //for (int i = 0; i < 79; ++i) putchar ('_');
+    //putchar ('\n');
 
-    hash16_t* hashes = reinterpret_cast<hash16_t*>(reinterpret_cast<byte*>(rt) +
+    hash16_t* hashes = reinterpret_cast<hash16_t*>(reinterpret_cast<byte*>(table) +
                                                    sizeof (Table));
     uint16_t* key_offsets = reinterpret_cast<uint16_t*>(hashes + max_keys);
     byte* indexes = reinterpret_cast<byte*> (key_offsets + max_keys),
         *unsorted_indexes = indexes + max_keys,
         *collission_list = unsorted_indexes + max_keys,
         *cursor;
-    char* keys = reinterpret_cast<char*> (rt) + size - 1;
+    char* keys = reinterpret_cast<char*> (table) + size - 1;
 
-    printf ("| %3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
-            "hash_e", "hash_u", "hash_s", "index_u", "collisions");
-    putchar ('|');
-    for (int i = 0; i < 79; ++i)
-        putchar ('_');
-    putchar ('\n');
+    //printf ("| %3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
+    //        "hash_e", "hash_u", "hash_s", "index_u", "collisions");
+    //putchar ('|');
+    //for (int i = 0; i < 79; ++i)
+    //    putchar ('_');
+    //putchar ('\n');
 
     for (int i = 0; i < max_keys; ++i) {
         // Print each record as a row.
         // @todo Change max_keys to num_keys after done debugging.
         collision_index = indexes[i];
-        printf ("| %3i %9s %7u %9x %9x %9x %9u %10u: ", i,
-                keys - key_offsets[i], key_offsets[i],
-                Hash16 (keys - key_offsets[i]),
-                hashes[unsorted_indexes[i]], hashes[i],
-                unsorted_indexes[i], collision_index);
+        //printf ("| %3i %9s %7u %9x %9x %9x %9u %10u: ", i,
+        //        keys - key_offsets[i], key_offsets[i],
+        //        Hash16 (keys - key_offsets[i]),
+        //        hashes[unsorted_indexes[i]], hashes[i],
+        //        unsorted_indexes[i], collision_index);
 
         if (collision_index != kNoCollidingRecords && i < num_keys) {
             // Print collisions.
             cursor = &collission_list[collision_index];
             temp = *cursor;
             ++cursor;
-            printf ("%u", temp);
+            //printf ("%u", temp);
             while (temp != kNoCollidingRecords) {
                 temp = *cursor;
                 ++cursor;
                 if (temp == kNoCollidingRecords)
                     break;
-                printf (", %u", temp);
+                //printf (", %u", temp);
             }
         }
 
-        putchar ('\n');
+        //putchar ('\n');
     }
-    putchar ('|');
-    for (int i = 0; i < 79; ++i) putchar ('_');
-    putchar ('\n');
+    //putchar ('|');
+    //for (int i = 0; i < 79; ++i) putchar ('_');
+    //putchar ('\n');
 
-    PrintMemory (rt, rt->size);
-    putchar ('\n');
+    //PrintMemory (table, table->size);
+    //putchar ('\n');
 }
 
 }       //< namespace _

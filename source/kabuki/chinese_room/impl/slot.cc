@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/slot.cpp
+    @file    ~/source/kabuki/chinese_room/impl/slot.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,6 +14,7 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
 #include "../include/slot.h"
 #include "../include/terminal.h"
 
@@ -53,7 +54,7 @@ KABUKI ticket_t SlotAddTerminal (Slot* s, Terminal* t) {
     return 0;
 }
 
-KABUKI Terminal* SlotGetTerminal (Slot* s, char_t index) {
+KABUKI Terminal* SlotGetTerminal (Slot* s, index index) {
     if (s == nullptr) return nullptr;
     if (index >= s->num_slots)
         return nullptr;
@@ -70,7 +71,7 @@ KABUKI Terminal* SlotFindTerminal (Slot* s, void* address) {
     return nullptr;
 }
 
-KABUKI void SlotDelete (Slot* s, char_t index) {
+KABUKI void SlotDelete (Slot* s, index index) {
     if (s == nullptr) return;
     if (index >= s->num_slots)
         return;

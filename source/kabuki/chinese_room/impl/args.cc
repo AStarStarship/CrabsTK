@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/include/args.cpp
+    @file    ~/source/kabuki/chinese_room/include/args.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R).
@@ -16,12 +16,13 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
 #include "../include/args.h"
 #include "../include/types.h"
 
 namespace _ {
 
-void PrintEsc (const uint_t* params) {
+void EscPrint (const uint_t* params) {
     if (params < (const uint_t*)256) {
         std::cout << reinterpret_cast<uintptr_t> (params) << '\n';
         return;

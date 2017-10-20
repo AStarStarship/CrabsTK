@@ -24,19 +24,19 @@ namespace _ {
 
 /** A socket to write log info to. */
 struct Log {
-    MonoidTx* io;         //< The io socket.
+    Bout* a;         //< The a socket.
 };
 
 /** Initializes the socket with the given tx socket.
-    @param tx The io socket.
+    @param tx The a socket.
     @param is_dynamic Flag for if we're using dynamic memory or not. */
-inline Log LogInit (MonoidTx* tx, bool is_dynamic = false);
+inline Log LogInit (Bout* tx, bool is_dynamic = false);
 
 /** Prints a message with the given header to the given Tx slot. */
-inline ticket_t Write (MonoidTx* tx, byte member, const char* string);
+inline ticket_t Write (Bout* tx, byte op, const char* string);
 
 /** Prints a message with the given header to the given Tx slot. */
-inline ticket_t Write (Log& log, byte member, const char* string);
+inline ticket_t Write (Log& log, byte op, const char* string);
 
 /** Returns a reference to the log for this assembly. */
 template<uint_t kNumber>
@@ -46,37 +46,37 @@ inline Log& Logbag () {
     return s;
 }
 
-/** Operator << prints the given value as a string to the log. */
+/** Operation << prints the given value as a string to the log. */
 inline Log& operator<< (Log& log, int8_t value);
 
-/** Operator << prints the given value as a string to the socket. */
+/** Operation << prints the given value as a string to the socket. */
 inline Log& operator<< (Log& log, uint8_t value);
 
-/** Operator << prints the given value as a string to the socket. */
+/** Operation << prints the given value as a string to the socket. */
 inline Log& operator<< (Log& log, int16_t value);
 
-/** Operator << prints the given value as a string to the socket. */
+/** Operation << prints the given value as a string to the socket. */
 inline Log& operator<< (Log& log, uint16_t value);
 
-/** Operator << prints the given value as a string to the socket. */
+/** Operation << prints the given value as a string to the socket. */
 inline Log& operator<< (Log& log, int32_t value);
 
-/** Operator << prints the given value as a string to the socket. */
+/** Operation << prints the given value as a string to the socket. */
 inline Log& operator<< (Log& log, uint32_t value);
 
-/** Operator << prints the given value as a string to the socket. */
+/** Operation << prints the given value as a string to the socket. */
 inline Log& operator<< (Log& log, int64_t value);
 
-/** Operator << prints the given value as a string to the socket. */
+/** Operation << prints the given value as a string to the socket. */
 inline Log& operator<< (Log& log, uint64_t value);
 
-/** Operator << prints the given value as a string to the socket. */
+/** Operation << prints the given value as a string to the socket. */
 inline Log& operator<< (Log& log, float value);
 
-/** Operator << prints the given value as a string to the socket. */
+/** Operation << prints the given value as a string to the socket. */
 inline Log& operator<< (Log& log, double value);
 
-/** Operator << prints a string to the socket. */
+/** Operation << prints a string to the socket. */
 inline Log& operator<< (Log& log, const char* s);
 
 }       //< namespace _

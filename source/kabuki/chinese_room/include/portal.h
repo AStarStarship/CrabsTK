@@ -36,10 +36,10 @@ struct Portal {
                  of the data that is read to be pulled. */
     virtual uint_t Length () = 0;
 
-    /** Feeds tx messages through the io without scanning them. */
+    /** Feeds tx messages through the a without scanning them. */
     virtual void Feed (byte b) = 0;
 
-    /** Pulls rx messages through the io and runs them through the scanner. */
+    /** Pulls rx messages through the a and runs them through the scanner. */
     virtual byte Pull () = 0;
 };
 }       //< namespace _

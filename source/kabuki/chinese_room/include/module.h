@@ -20,7 +20,7 @@
 #include "console.h"
 #include "utils.h"
 #include "table.h"
-#include "bag.h"
+#include "set.h"
 
 #ifndef THIS_ROOM
 #include "this.h"

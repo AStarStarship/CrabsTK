@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/include/bag.h
+    @file    ~/source/kabuki/chinese_room/include/set.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,8 +14,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef CHINESE_ROOM_BAG_H
-#define CHINESE_ROOM_BAG_H
+#ifndef CHINESE_ROOM_SET_H
+#define CHINESE_ROOM_SET_H
 
 #include "utils.h"
 #include "types.h"
@@ -29,15 +29,15 @@ enum {
 };
 
 /** A multiset that uses contiguousness memory.
-    A bag is like a Python automata or C++ map, the difference being a Bag
-    can contain nested Bag (s). The key design difference between both Python 
-    dictionaries and C++ maps are Bags do not contains points, and instead
+    A bag is like a Python automata or C++ map, the difference being a Set
+    can contain nested Set (s). The key design difference between both Python 
+    dictionaries and C++ maps are Sets do not contains points, and instead
     works using offsets.
 
     A bag may or may not have a hash table. In order to turn on the hash table,
-    simply set the collissionsSize to non-zero in the Bag header.
+    simply set the collissionsSize to non-zero in the Set header.
 
-    The memory layout is the same for all of the Bag types as depicted below:
+    The memory layout is the same for all of the Set types as depicted below:
 
     @code
     _____________________________________________________ 
@@ -105,7 +105,7 @@ enum {
     |___________________________________________________| 0x0
     @endcode
 
-    | Bag | Max Values | % Collisions (p) |           Overhead             |
+    | Set | Max Values | % Collisions (p) |           Overhead             |
     |:----:|:----------:|:----------------:|:------------------------------:|
     |   2  |     255    |    0.0001        | Ceiling (0.02*p*2^8)  = 2      |
     |   4  |     2^13   |      0.1         | Ceiling (0.04*p*2^13) = 327.68 |
@@ -134,7 +134,7 @@ enum {
     function '\"' (i.e. "foo" is TIndex 44).
 
     # Hash Table Collisions.
-    Because there are no pointers in I2P bags, the hash tables are done using
+    Because there are no pointers in Script bags, the hash tables are done using
     using a nil-terminated list in the Collision List. In the 
 
     # Use Case Scenario
@@ -142,7 +142,7 @@ enum {
     pass it over to the program. The DLL manages the memory for the bag. This
     bag might contain several million entries, and more than 4GB of data.
 
-    ### Why So Many Bag Types?
+    ### Why So Many Set Types?
     We are running in RAM, and a bag could contain millions of key-value pairs.
     Adding extra bytes would added megabytes of data we don't need. Also, on
     microcontrollers, especially 16-bit ones, will have very little RAM, so we
@@ -170,7 +170,7 @@ struct Set {
     TKey table_size,    //< Size of the (optional) key strings in bytes.
          pile_size;     //< Size of the (optional) collision table in bytes.
     TIndex num_items,   //< Number of items.
-           max_items;   //< Max number of items fittable in the size.
+           max_items;   //< Max number of items that can fit in the size.
 };
 
 using Record   = Set<byte, uint16_t, uint16_t, hash16_t>;
@@ -180,45 +180,44 @@ using Group    = Set<uint16_t, uint16_t, uint32_t, hash32_t>;
 using File     = Set<uint32_t, uint32_t, uint64_t, hash64_t>;
 //< Files are easily mapped to virtual memory, RAM, drives, and networks.
 using Superset = Set<index_t, header_t, offset_t, hash_t>;
-//< Superset is the larget set that can fit in this Chinese Room's RAM.
+//< Superset is the largest set that can fit in this Chinese Room's RAM.
 
 
 template<typename TIndex, typename TKey, typename TData, typename THash>
-constexpr uint_t OverheadPerBagIndex () {
+constexpr uint_t OverheadPerSetIndex () {
         return sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
 };
 
 template<typename TIndex, typename TKey, typename TData, typename THash>
-constexpr TData MinSizeBag (TIndex num_items) {
+constexpr TData MinSizeSet (TIndex num_items) {
     return sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
 };
 
 enum {
-    kMaxNumPagesBag2 = 255,                //< The number of pages in a Bag2.
-    kMaxNumPagesBag4 = 8 * 1024,           //< The number of pages in a Bag4.
-    kMaxNumPagesBag8 = 256 * 1024 * 1024,  //< The number of pages in a Bag8.
-    kOverheadPerBag2Index = OverheadPerBagIndex<byte, uint16_t, uint16_t, hash16_t> (),
-    kOverheadPerBag4Index = OverheadPerBagIndex<byte, uint16_t, uint16_t, hash16_t> (),
-    kOverheadPerBag8Index = OverheadPerBagIndex<byte, uint16_t, uint16_t, hash16_t> (),
+    kMaxNumPagesSet2 = 255,                //< The number of pages in a Set2.
+    kMaxNumPagesSet4 = 8 * 1024,           //< The number of pages in a Set4.
+    kMaxNumPagesSet8 = 256 * 1024 * 1024,  //< The number of pages in a Set8.
+    kOverheadPerSet2Index = OverheadPerSetIndex<byte, uint16_t, uint16_t, hash16_t> (),
+    kOverheadPerSet4Index = OverheadPerSetIndex<byte, uint16_t, uint16_t, hash16_t> (),
+    kOverheadPerSet8Index = OverheadPerSetIndex<byte, uint16_t, uint16_t, hash16_t> (),
 };
     
-/** Initializes a Bag.
+/** Initializes a Set.
     @post    Users might want to call the IsValid () function after construction
              to verify the integrity of the object.
-    @warning The reservedNumMembers must be aligned to a 32-bit value, and it
+    @warning The reservedNumOperables must be aligned to a 32-bit value, and it
              will get rounded up to the next higher multiple of 4.
-*/
-static Bag2* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t size)
+static Set* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t size)
 {
     if (buffer == nullptr)
         return nullptr;
     if (table_size >= size)
         return nullptr;
-    if (table_size < sizeof (Bag2) + max_size *
-        (OverheadPerBagIndex<byte, uint16_t, uint16_t, hash16_t> () + 2))
+    if (table_size < sizeof (Set) + max_size *
+        (OverheadPerSetIndex<byte, uint16_t, uint16_t, hash16_t> () + 2))
         return nullptr;
 
-    Bag2* bag = reinterpret_cast<Bag2*> (buffer);
+    Set2* bag = reinterpret_cast<Set*> (buffer);
     bag->size = table_size;
     bag->table_size = table_size;
     bag->num_items = 0;
@@ -226,18 +225,19 @@ static Bag2* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t s
     bag->pile_size = 1;
     return bag;
 }
+*/
 
 /** Insets the given key-value pair.
 */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-TIndex BagInsert (Bag<TIndex, TKey, TData, THash>* bag, byte type, 
+TIndex SetInsert (Set<TIndex, TKey, TData, THash>* bag, byte type, 
                const byte* key, void* data, TIndex index) {
     if (bag == nullptr) return 0;
     return ~0;
 }
 
 template<typename TIndex>
-TIndex MaxBagIndexes () {
+TIndex MaxSetIndexes () {
     enum {
         kMaxIndexes = sizeof (TIndex) == 1 ? 255 : sizeof (TIndex) == 2 ? 
                        8 * 1024 : sizeof (TIndex) == 4 ? 512 * 1024 * 1024 : 0
@@ -247,7 +247,7 @@ TIndex MaxBagIndexes () {
 
 /** Adds a key-value pair to the end of the bag. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* bag, const char* key, 
+TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key, 
                 TType type, void* data) {
     if (bag == nullptr) return 0;
     if (key == nullptr) return 0;
@@ -264,7 +264,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* bag, const char* key,
     //< We're out of buffered indexes.
 
     byte* states = reinterpret_cast<byte*> (bag) + 
-                   sizeof (Bag <TIndex, TKey, TData, THash>);
+                   sizeof (Set <TIndex, TKey, TData, THash>);
     TKey* key_offsets = reinterpret_cast<TKey*> (states + max_items);
     TData* data_offsets = reinterpret_cast<TData*> (states + max_items *
                                                     (sizeof (TKey)));
@@ -279,7 +279,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* bag, const char* key,
         *destination;
 
     // Calculate space left.
-    TKey value = table_size - max_items * OverheadPerBagIndex<TIndex, TKey, TData, THash> (),
+    TKey value = table_size - max_items * OverheadPerSetIndex<TIndex, TKey, TData, THash> (),
         key_length = static_cast<uint16_t> (strlen (key)),
         pile_size;
 
@@ -308,7 +308,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* bag, const char* key,
 
         CopyString (destination, key);
         printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
-        BagPrint (bag);
+        SetPrint (bag);
         return 0;
     }
 
@@ -361,7 +361,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* bag, const char* key,
                 temp = indexes[mid];
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;  //< Load the index in the collision table.
-                while (index < MaxBagIndexes<TIndex> ()) {
+                while (index < MaxSetIndexes<TIndex> ()) {
                     printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
                         printf ("but table already contains key at "
@@ -406,7 +406,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* bag, const char* key,
                 //< Add the newest string to the end.
                 indexes[num_items] = num_items;
 
-                BagPrint (bag);
+                SetPrint (bag);
                 printf ("Done inserting.\n");
                 return num_items;
             }
@@ -460,9 +460,9 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* bag, const char* key,
 
                 bag->num_items = num_items + 1;
 
-                BagPrint (bag);
+                SetPrint (bag);
 
-                BagPrint (bag);
+                SetPrint (bag);
                 std::cout << "Done inserting.\n";
                 // Then it was a collision so the table doesn't contain s.
                 return num_items;
@@ -493,7 +493,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* bag, const char* key,
             num_items, Diff (bag, hashes),
             Diff (bag, hash_ptr), Diff (bag, hashes + mid));
     hashes += mid;
-    BagPrint (bag);
+    SetPrint (bag);
     while (hash_ptr > hashes) {
         *hash_ptr = *(hash_ptr - 1);
         --hash_ptr;
@@ -516,7 +516,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* bag, const char* key,
 
     bag->num_items = num_items + 1;
 
-    BagPrint (bag);
+    SetPrint (bag);
     std::cout << "Done inserting.\n";
     PrintLine ();
 
@@ -524,13 +524,13 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* bag, const char* key,
 }
 
 /** Adds a key-value pair to the end of the bag. */
-inline byte Add2 (Bag2* bag, const char* key, byte data) {
-    return BagAdd<byte, uint16_t, uint16_t, hash16_t> (bag, key, UI1, &data);
-}
+//inline byte Add2 (Set2* bag, const char* key, byte data) {
+//    return SetAdd<byte, uint16_t, uint16_t, hash16_t> (bag, key, UI1, &data);
+//}
 
 /** Returns  the given query string in the hash table. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-TIndex BagFind (Bag<TIndex, TKey, TData, THash>* bag, const char* key) {
+TIndex SetFind (Set<TIndex, TKey, TData, THash>* bag, const char* key) {
     if (bag == nullptr)
         return 0;
     PrintLineBreak ("Finding record...", 5);
@@ -546,7 +546,7 @@ TIndex BagFind (Bag<TIndex, TKey, TData, THash>* bag, const char* key) {
 
     const THash* hashes = reinterpret_cast<const THash*>
         (reinterpret_cast<const byte*> (bag) +
-         sizeof (Bag<TIndex, TKey, TData, THash>));
+         sizeof (Set<TIndex, TKey, TData, THash>));
     const TKey* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
                                                                 max_items);
     const byte* indexes = reinterpret_cast<const byte*>(key_offsets +
@@ -605,7 +605,7 @@ TIndex BagFind (Bag<TIndex, TKey, TData, THash>* bag, const char* key) {
                 std::cout << "There was a collision so check the table\n";
 
                 // The collisionsList is a sequence of indexes terminated by
-                // an invalid index > kMaxNumMembers. collissionsList[0] is an 
+                // an invalid index > kMaxNumOperables. collissionsList[0] is an 
                 // invalid index, so the collisionsList is searched from 
                 // lower address up.
 
@@ -613,7 +613,7 @@ TIndex BagFind (Bag<TIndex, TKey, TData, THash>* bag, const char* key) {
 
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;
-                while (index < MaxBagIndexes<TIndex> ()) {
+                while (index < MaxSetIndexes<TIndex> ()) {
                     printf ("comparing to \"%s\"\n", keys -
                             key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
@@ -657,13 +657,13 @@ TIndex BagFind (Bag<TIndex, TKey, TData, THash>* bag, const char* key) {
     return ~((TIndex)0);
 }
 
-static byte Find2 (Bag2* bag, const char* key) {
-    return BagFind<byte, uint16_t, uint16_t, hash16_t> (bag, key);
-}
+//static byte Find2 (Set2* bag, const char* key) {
+//    return SetFind<byte, uint16_t, uint16_t, hash16_t> (bag, key);
+//}
 
 /** Prints this object out to the console. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-void BagPrint (const Bag<TIndex, TKey, TData, THash>* bag) {
+void SetPrint (const Set<TIndex, TKey, TData, THash>* bag) {
     if (bag == nullptr) return;
     TIndex num_items = bag->num_items,
            max_items = bag->max_items,
@@ -674,13 +674,13 @@ void BagPrint (const Bag<TIndex, TKey, TData, THash>* bag) {
     PrintLine ('_');
     
     if (sizeof (TData) == 2)
-        printf ("| Bag2: %p\n", bag);
+        printf ("| Set2: %p\n", bag);
     else if (sizeof (TData) == 4)
-        printf ("| Bag4: %p\n", bag);
+        printf ("| Set4: %p\n", bag);
     else if (sizeof (TData) == 8)
-        printf ("| Bag8: %p\n", bag);
+        printf ("| Set8: %p\n", bag);
     else
-        printf ("| Invalid Bag type: %p\n", bag);
+        printf ("| Invalid Set type: %p\n", bag);
     printf ("| num_items: %u max_items: %u  "
             "pile_size: %u  size: %u", num_items,
             max_items, pile_size, table_size);
@@ -690,7 +690,7 @@ void BagPrint (const Bag<TIndex, TKey, TData, THash>* bag) {
     std::cout << '\n';
 
     const byte* states = reinterpret_cast<const byte*> (bag) +
-                         sizeof (Bag <TIndex, TKey, TData, THash>);
+                         sizeof (Set <TIndex, TKey, TData, THash>);
     const TKey* key_offsets = reinterpret_cast<const TKey*> 
                               (states + max_items);
     const TData* data_offsets = reinterpret_cast<const TData*> 
@@ -742,13 +742,13 @@ void BagPrint (const Bag<TIndex, TKey, TData, THash>* bag) {
     PrintLine ("|", '_');
 
     PrintMemory (reinterpret_cast<const byte*> (bag) + 
-                 sizeof (Bag<TIndex, TKey, TData, THash>), bag->size);
+                 sizeof (Set<TIndex, TKey, TData, THash>), bag->size);
     std::cout << '\n';
 }
 
 /** Deletes the bag contents by overwriting it with zeros. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-void Wipe (Bag<TIndex, TKey, TData, THash>* bag) {
+void Wipe (Set<TIndex, TKey, TData, THash>* bag) {
     if (bag == nullptr) return;
     TData size = bag->size;
     memset (bag, 0, size);
@@ -756,7 +756,7 @@ void Wipe (Bag<TIndex, TKey, TData, THash>* bag) {
 
 /** Deletes the bag contents without wiping the contents. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-void Clear (Bag<TIndex, TKey, TData, THash>* bag) {
+void Clear (Set<TIndex, TKey, TData, THash>* bag) {
     if (bag == nullptr) return;
     bag->num_items = 0;
     bag->pile_size = 0;
@@ -764,7 +764,7 @@ void Clear (Bag<TIndex, TKey, TData, THash>* bag) {
 
 /** Returns true if this automata contains only the given address. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-bool Contains (Bag<TIndex, TKey, TData, THash>* bag, void* data) {
+bool Contains (Set<TIndex, TKey, TData, THash>* bag, void* data) {
     if (bag == nullptr) return false;
     if (data < bag) return false;
     if (data > GetEndAddress()) return false;
@@ -773,7 +773,7 @@ bool Contains (Bag<TIndex, TKey, TData, THash>* bag, void* data) {
 
 /** Removes that object from the bag and copies it to the destination. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-bool RemoveCopy (Bag<TIndex, TKey, TData, THash>* bag, void* destination, 
+bool RemoveCopy (Set<TIndex, TKey, TData, THash>* bag, void* destination, 
                  size_t buffer_size, void* data)
 {
     if (bag == nullptr) return false;
@@ -783,7 +783,7 @@ bool RemoveCopy (Bag<TIndex, TKey, TData, THash>* bag, void* destination,
 
 /** Removes the item at the given address from the bag. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-bool Remove (Bag<TIndex, TKey, TData, THash>* bag, void* adress) {
+bool Remove (Set<TIndex, TKey, TData, THash>* bag, void* adress) {
     if (bag == nullptr) return false;
 
     return false;
@@ -791,7 +791,7 @@ bool Remove (Bag<TIndex, TKey, TData, THash>* bag, void* adress) {
 
 /** Removes all but the given collection from the bag. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-bool Retain (Bag<TIndex, TKey, TData, THash>* bag) {
+bool Retain (Set<TIndex, TKey, TData, THash>* bag) {
     if (bag == nullptr) return false;
 
     return false;
@@ -799,22 +799,22 @@ bool Retain (Bag<TIndex, TKey, TData, THash>* bag) {
 
 /** Creates a bag from dynamic memory. */
 template<typename TIndex, typename TOffset, typename TData, typename THash>
-inline Bag<TIndex, TOffset, TData, THash>* BagCreate (TIndex buffered_indexes,
+inline Set<TIndex, TOffset, TData, THash>* SetCreate (TIndex buffered_indexes,
                                                         TData table_size,
                                                         TData size) {
-    Bag<TIndex, TOffset, TData, THash>* bag = New<Bag, uint_t> ();
+    Set<TIndex, TOffset, TData, THash>* bag = New<Set, uint_t> ();
     return bag;
 }
 
-/** Prints the given Bag to the console. */
+/** Prints the given Set to the console. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-inline void BagPrint (Bag<TIndex, TKey, TData, THash>* bag) {
+inline void SetPrint (Set<TIndex, TKey, TData, THash>* bag) {
 
 }
 
-inline void BagPrint (Bag2* bag) {
-    return BagPrint<byte, uint16_t, uint16_t, hash16_t> (bag);
-}
+//inline void SetPrint (Set2* bag) {
+//    return SetPrint<byte, uint16_t, uint16_t, hash16_t> (bag);
+//}
 
 }       //< namespace _
-#endif  //< CHINESE_ROOM_BAG_H
+#endif  //< CHINESE_ROOM_SET_H

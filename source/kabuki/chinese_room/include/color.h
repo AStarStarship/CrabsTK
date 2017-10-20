@@ -63,16 +63,16 @@ inline const color_t* RainbowColors ();
 inline const color_t* PresetColors ();
 
 /** Gets one of the rainbow colors. */
-inline color_t ColorRainbow (char_t index);
+inline color_t ColorRainbow (index index);
 
 /** Gets one of the preset colors. */
-inline color_t ColorPreset (char_t index);
+inline color_t ColorPreset (index index);
 
 /** Gets a random preset colors. */
 inline color_t RandomPresetColor ();
 
 /** Gets a random color. */
-inline color_t RandomColor (char_t index);
+inline color_t RandomColor (index index);
     
 /** Mixes the color with the  */
 inline color_t ColorMix (color_t a, color_t b);

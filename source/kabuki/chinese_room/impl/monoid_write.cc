@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/unityper.cpp
+    @file    ~/source/kabuki/chinese_room/impl/unityper.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,13 +17,14 @@
              functions.
 */
 
+#include <stdafx.h>
 #include "../include/monoid.h"
 #include "../include/error.h"
 
 namespace _ {
     
 
-KABUKI ticket_t Write (MonoidTx* tx, const char* address, const uint_t* params, 
+KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params, 
                        void** args) {
     //printf ("\n\n| Writing to %p\n", tx);
     if (address == nullptr)

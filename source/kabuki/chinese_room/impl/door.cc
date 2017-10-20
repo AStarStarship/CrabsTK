@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/door.cpp
+    @file    ~/source/kabuki/chinese_room/impl/door.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,6 +14,7 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
 #include "../include/door.h"
 
 namespace _ {
@@ -36,7 +37,7 @@ Door* Door::Init (uint_t buffer_size) {
     return this;
 }
 
-Terminal* Door::GetTerminal (char_t index) {
+Terminal* Door::GetTerminal (index index) {
     return nullptr;
 }
 
@@ -56,14 +57,14 @@ ticket_t Door::ExecAll () {
     return 0;
 }
 
-const Set* Door::Star (char_t index, Automata* a) {
+const Operation* Door::Star (index index, Expression* a) {
     if (index < ' ') {
-        static const Set this_member = { "Door", NumMembers (0), 
+        static const Set this_member = { "Door", NumOperations (0), 
             0, "A door in a Chinese room." };
         return &this_member;
     }
     index -= ' ';
-    if (index >= slot_->num_slots) return InvalidMember ();
+    if (index >= slot_->num_slots) return InvalidOperation ();
     return nullptr;
 }
 

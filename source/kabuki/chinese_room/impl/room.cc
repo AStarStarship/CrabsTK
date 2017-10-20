@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/include/Source/ChineseRoom/room.h
+    @file    ~/source/kabuki/chinese_room/include/room.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,6 +14,7 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
 #include "../include/room.h"
 #include "../include/door.h"
 #include "../include/exceptions.h"
@@ -75,9 +76,9 @@ void Room::ProcessLog () {
 
 }
 
-void Room::PrintErrors (MonoidTx* tx) {
+void Room::PrintErrors (Bout* tx) {
     //uint_t errorHeader[] = { 0 };
-    //return io.prints (errorHeader);
+    //return a.prints (errorHeader);
 }
 
 void Room::DiagnoseProblems () {
@@ -128,9 +129,9 @@ int Room::Main (const char** args, int args_count) {
     return 1;
 }
 
-const Set* Room::Star (char_t index, Automata* io) {
-    static const Set this_member = { "Room", NumMembers (0), 
-                                        FirstMember (' '), "A Chinese Room." };
+const Operation* Room::Star (index index, Expression* a) {
+    static const Set this_member = { "Room", NumOperations (0), 
+                                        FirstOperation (' '), "A Chinese Room." };
     switch (index) {
         case ' ': {
             static const Set m_space = { "Space", Esc <0> (), Esc <0> (), "" };

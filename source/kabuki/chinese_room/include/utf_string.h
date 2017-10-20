@@ -22,8 +22,8 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef CHINESE_ROOM_STRING_H
-#define CHINESE_ROOM_STRING_H
+#ifndef CHINESE_ROOM_UTFSTRING_H
+#define CHINESE_ROOM_UTFSTRING_H
 
 #include "config.h"
 
@@ -104,7 +104,7 @@ class String
     
     /** Construct from single wide character
         @param wideChar Wide character to convert. */
-    String (wchar_t wideChar) {
+    String (windex wideChar) {
         string_ += UTF32::decodeWide (wideChar);
     }
     
@@ -143,7 +143,7 @@ class String
         UTF32::fromANSI (ansiString.begin (), ansiString.end (), std::back_inserter (string_), locale);
     }
 
-    String (const wchar_t* wideString)
+    String (const windex* wideString)
     /** Construct from null-terminated C-style wide string.
         @param wideString Wide string to convert. */
     {
@@ -594,4 +594,4 @@ String<uint_t> operator + (const String<uint_t>& left, const String<uint_t>& rig
 
 }       //< namespace _
 #endif  //< USING_UTF
-#endif  //< CHINESE_ROOM_STRING_H
+#endif  //< CHINESE_ROOM_UTFSTRING_H

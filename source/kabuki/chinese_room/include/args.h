@@ -21,7 +21,7 @@
 
 namespace _ {
 
-/** An I2P escape sequence header.
+/** An Script escape sequence header.
     struct uses C++11 variadic template to ensure only one copy in ROM and to eliminate
     redundant typing. */
 template<const uint_t... N>
@@ -30,8 +30,10 @@ KABUKI const uint_t* Esc () {
     return list;
 }
 
+int example[] = { 1, 2, 3, 4 };
+
 /**  Prints out the parameters to the debug console. */
-KABUKI void PrintEsc (const uint_t* params);
+KABUKI void EscPrint (const uint_t* params);
 
 /*< Returns the requested parameter number. */
 KABUKI uint_t ParamNumber (const uint_t* params, byte param_number);
@@ -89,42 +91,46 @@ KABUKI void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
 /** Sets the params to the given pointers corresponding to the index 1-26 of the
 letters a-z. */
 KABUKI void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
-                    void* f, void* g, void* h, void* i, void* j, void* k, void* l);
+                    void* f, void* g, void* h, void* i, void* j, void* k,
+                    void* l);
 
 /** Sets the params to the given pointers corresponding to the index 1-26 of the
 letters a-z. */
 KABUKI void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
-                    void* f, void* g, void* h, void* i, void* j, void* k, void* l, void* m);
+                    void* f, void* g, void* h, void* i, void* j, void* k,
+                    void* l, void* m);
 
 /** Sets the params to the given pointers corresponding to the index 1-26 of the
 letters a-z. */
 KABUKI void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
-                    void* f, void* g, void* h, void* i, void* j, void* k, void* l, void* m,
-                    void* n);
+                    void* f, void* g, void* h, void* i, void* j, void* k,
+                    void* l, void* m, void* n);
 
 /** Sets the params to the given pointers corresponding to the index 1-26 of the
 letters a-z. */
 KABUKI void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
-                    void* f, void* g, void* h, void* i, void* j, void* k, void* l, void* m,
-                    void* n, void* o);
+                    void* f, void* g, void* h, void* i, void* j, void* k, 
+                    void* l, void* m, void* n, void* o);
 
 /** Sets the params to the given pointers corresponding to the index 1-26 of the
 letters a-z. */
 KABUKI void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
-                    void* f, void* g, void* h, void* i, void* j, void* k, void* l, void* m,
-                    void* n, void* o, void* p);
+                    void* f, void* g, void* h, void* i, void* j, void* k, 
+                    void* l, void* m, void* n, void* o, void* p);
 
 /** Sets the params to the given pointers corresponding to the index 1-26 of the
 letters a-z. */
 KABUKI void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
-                    void* f, void* g, void* h, void* i, void* j, void* k, void* l, void* m,
-                    void* n, void* o, void* p, void* q, void* r);
+                    void* f, void* g, void* h, void* i, void* j, void* k, 
+                    void* l, void* m, void* n, void* o, void* p, void* q,
+                    void* r);
 
 /** Sets the params to the given pointers corresponding to the index 1-26 of the
 letters a-z. */
 KABUKI void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
-                    void* f, void* g, void* h, void* i, void* j, void* k, void* l, void* m,
-                    void* n, void* o, void* p, void* q, void* r, void* s);
+                    void* f, void* g, void* h, void* i, void* j, void* k, 
+                    void* l, void* m, void* n, void* o, void* p, void* q, 
+                    void* r, void* s);
 
 /** Sets the params to the given pointers corresponding to the index 1-26 of the
 letters a-z. */

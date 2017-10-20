@@ -60,7 +60,7 @@
 #define COM_TIMEOUT_TICKS   100     //< The number of seconds before a timeout.
                                     //< over a generic communication link.
 #define ASSEMBLY_NAME       "Unnamed"   //< Enter the name of your program or library.
-#define CHAR_WIDTH          8       //< char_t width in bytes: 8, 16, or 32.
+#define CHAR_WIDTH          8       //< index width in bytes: 8, 16, or 32.
 
 /*> Sets any of the following macros to YES or NO. */
 

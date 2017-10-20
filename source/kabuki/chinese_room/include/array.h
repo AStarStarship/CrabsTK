@@ -24,7 +24,7 @@
 namespace _ {
 
 /** Gets the max length of an array of size T.
-    The biggest thing you can fit in a buffer in I2P is 1/2 max size of a uint_t
+    The biggest thing you can fit in a buffer in Script is 1/2 max size of a uint_t
     divided by the size of the element in bytes. */
 template<typename T>
 KABUKI uint_t MaxArrayLength () {

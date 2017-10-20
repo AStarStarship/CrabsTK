@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/color.cpp
+    @file    ~/source/kabuki/chinese_room/impl/color.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,6 +14,7 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
 #include "../include/color.h"
 
 namespace _ {
@@ -63,22 +64,22 @@ const color_t* PresetColors () {
     return &presetColorsArray[0];
 }
 
-color_t ColorRainbow (char_t index) {
+color_t ColorRainbow (index index) {
     if (index < 0 || index >= 96) return Black;
     return RainbowColors ()[index];
 }
 
-color_t ColorPreset (char_t index) {
+color_t ColorPreset (index index) {
     if (index < 0 || index >= 96) return Black;
     return PresetColors ()[index];
 }
 
 color_t RandomPresetColor () {
-    char_t index = rand () % kNumPresetColors;
+    index index = rand () % kNumPresetColors;
     return PresetColors ()[index];
 }
 
-color_t RandomColor (char_t index) {
+color_t RandomColor (index index) {
     return rand ();
 }
 
@@ -86,8 +87,7 @@ color_t MixColor (color_t a, color_t b) {
     uint32_t red   = (a & 0xff  ),
              green = (a & 0xff00) >> 8,
              blue  = (a & 0xff00) >> 16,
-             alpha = (a & 0xff00) >> 24,
-             result;
+             alpha = (a & 0xff00) >> 24;
 
     byte r2 = (b & 0xff  ),
          g2 = (b & 0xff00) >> 8,
@@ -103,12 +103,12 @@ color_t MixColor (color_t a, color_t b) {
 }
 
 color_t ChangeBrightness (color_t color, int brightness_change) {
-    color_t alpha = (color & 0xff000000) >> 24 + brightness_change;
+    color_t alpha = ((color & 0xff000000) >> 24) + brightness_change;
     return (color & 0xffffff) & (alpha << 24);
 }
 
 color_t DecreaseBrightness (color_t color, int brightness_change) {
-    color_t alpha = (color & 0xff000000) >> 24 - brightness_change;
+    color_t alpha = ((color & 0xff000000) >> 24) - brightness_change;
     return (color & 0xffffff) & (alpha << 24);
 }
 
@@ -271,7 +271,7 @@ void ColorPrint (color_t color) {
     std::cout << "Color: "
                     "R("          << (color && 0x000000FF) 
                 << "), G("        << ((color && 0x0000FF00) >> 8)
-                << "), MonoidRx(" << ((color && 0x00FF0000) >> 16)
+                << "), Bin(" << ((color && 0x00FF0000) >> 16)
                 << "), A("        << ((color && 0xFF000000) >> 24)
                 << ")\n"; 
 }

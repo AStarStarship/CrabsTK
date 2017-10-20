@@ -47,10 +47,10 @@ KABUKI Door** WallGetDoors (Wall* wall);
 KABUKI Door* WallAddDoor (Wall* wall, Door* t);
 
 /** Gets the Door from the Door at the given index. */
-KABUKI Door* WallGetDoor (Wall* wall, char_t index);
+KABUKI Door* WallGetDoor (Wall* wall, index index);
 
 /** Deletes the Door from the Door at the given index. */
-KABUKI void WallDelete (Wall* wall, char_t index);
+KABUKI void WallDelete (Wall* wall, index index);
 
 /** Prints the given Door to the stdout. */
 KABUKI void WallPrint (Wall* wall);

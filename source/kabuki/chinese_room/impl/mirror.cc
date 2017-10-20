@@ -14,9 +14,10 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
 #include "../include/mirror.h"
 #include "../include/portal.h"
-#include "../include/automata.h"
+#include "../include/expression.h"
 
 namespace _ {
 
@@ -31,7 +32,7 @@ void Mirror::Prime () {
 }
 
 uint_t Mirror::Length () {
-    return MonoidRxSpace (AutomataRx (a));
+    return MonoidRxSpace (ExpressionRx (a));
 }
 
 void Mirror::Feed (byte b) {
@@ -42,39 +43,39 @@ byte Mirror::Pull () {
     return 0;
 }
 
-Automata* Mirror::SetAutomata (Automata* automata)
+Expression* Mirror::SetExpression (Expression* automata)
 {
     if (automata == nullptr)
         return nullptr;
     a = automata;
 }
 
-Automata* Mirror::GetAutomata () {
+Expression* Mirror::GetExpression () {
     return a;
 }
 
-const Set* Read (Mirror* mirror, const uint_t* header, void** args) {
+const Operation* Read (Mirror* mirror, const uint_t* header, void** args) {
 
     return 0;
 }
 
-const Set* Write (Mirror* mirror, const uint_t* header, void** args) {
+const Operation* Write (Mirror* mirror, const uint_t* header, void** args) {
 
     return 0;
 }
-Mirror MirrorInit (Automata* a, bool is_dynamic) {
+Mirror MirrorInit (Expression* a, bool is_dynamic) {
     Mirror mirror;
-    mirror.SetAutomata (a);
+    mirror.SetExpression (a);
     return mirror;
 }
 
-const Set* Write (Automata* a, byte member, const char* string) {
+const Operation* Write (Expression* a, byte op, const char* string) {
     if (a == nullptr)
         return nullptr;
 #if DEBUG_CHINESE_ROOM
     printf ("| Writting string to %p\n", a);
 #endif
-    MonoidTx* tx = AutomataTx (a);
+    Bout* tx = ExpressionTx (a);
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte c;
 
@@ -92,7 +93,7 @@ const Set* Write (Automata* a, byte member, const char* string) {
     const byte* str_ptr = reinterpret_cast<const byte*> (string);
     //< I think this is what needs to happen.
 
-    *stop = member;
+    *stop = op;
     ++stop;
     // We know we will always write at least one null-term byte.
     c = *str_ptr;
@@ -120,9 +121,9 @@ const Set* Write (Automata* a, byte member, const char* string) {
 }
 
 /** Compiler says this already has a body???
-const Set* Write (Mirror* mirror, const uint_t* params, void** args) {
-    //ticket_t Write (Mirror* io, const uint_t* header, void** args) {
-    return Write (mirror->GetAutomata (), params, args);
+const Operation* Write (Mirror* mirror, const uint_t* params, void** args) {
+    //ticket_t Write (Mirror* a, const uint_t* header, void** args) {
+    return Write (mirror->GetExpression (), params, args);
 }*/
 
 template<uint_t kNumber>
@@ -135,75 +136,75 @@ Mirror& Log () {
 Mirror& operator<< (Mirror& mirror, int8_t value) {
     char buffer[5];
     sprintf_s (buffer, 5, "%i", value);
-    Write (mirror.GetAutomata (), '?', buffer);
+    Write (mirror.GetExpression (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, uint8_t value) {
     char buffer[4];
     sprintf_s (buffer, 4, "%u", value);
-    Write (mirror.GetAutomata (), '?', buffer);
+    Write (mirror.GetExpression (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, int16_t value) {
     char buffer[7];
     sprintf_s (buffer, 7, "%i", value);
-    Write (mirror.GetAutomata (), '?', buffer);
+    Write (mirror.GetExpression (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, uint16_t value) {
     char buffer[6];
     sprintf_s (buffer, 6, "%u", value);
-    Write (mirror.GetAutomata (), '?', buffer);
+    Write (mirror.GetExpression (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, int32_t value) {
     char buffer[12];
     sprintf_s (buffer, 12, "%i", value);
-    Write (mirror.GetAutomata (), '?', buffer);
+    Write (mirror.GetExpression (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, uint32_t value) {
     char buffer[11];
     sprintf_s (buffer, 11, "%u", value);
-    Write (mirror.GetAutomata (), '?', buffer);
+    Write (mirror.GetExpression (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, int64_t value) {
     char buffer[22];
     sprintf_s (buffer, 22, "%I64d", value);
-    Write (mirror.GetAutomata (), '?', buffer);
+    Write (mirror.GetExpression (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, uint64_t value) {
     char buffer[21];
     sprintf_s (buffer, 21, "%llu", value);
-    Write (mirror.GetAutomata (), '?', buffer);
+    Write (mirror.GetExpression (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, float value) {
     char buffer[FLT_MAX_10_EXP + 2];
     sprintf_s (buffer, FLT_MAX_10_EXP + 2, "%f", value);
-    Write (mirror.GetAutomata (), '?', buffer);
+    Write (mirror.GetExpression (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, double value) {
     char buffer[DBL_MAX_10_EXP + 2];
     sprintf_s (buffer, DBL_MAX_10_EXP + 2, "%f", value);
-    Write (mirror.GetAutomata (), '?', buffer);
+    Write (mirror.GetExpression (), '?', buffer);
     return mirror;
 }
 
 Mirror& operator<< (Mirror& mirror, const char* s) {
-    Write (mirror.GetAutomata (), '?', s);
+    Write (mirror.GetExpression (), '?', s);
     return mirror;
 }
 

@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/error.h
+    @file    ~/source/kabuki/chinese_room/impl/error.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,6 +14,7 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
 #include "../include/error.h"
 
 namespace _ {
@@ -49,7 +50,7 @@ const char* ErrorString (Error e) {
         "Null device push",             //< 25
         "Read error",                   //< 26
         "Write error",                  //< 27
-        "Nonexistent member",           //< 28
+        "Nonexistent op",           //< 28
         "Out of memory",                //< 29
         "Array overflow",               //< 30
         "Invalid Set",               //< 31
@@ -147,7 +148,7 @@ void PrintError (Error e, const uint_t* params, byte param_index,
         std::cout << '\n';
     printf ("%s error in argument %u:%s of ", ErrorString (e), param_index,
             TypeString (ParamNumber (params, param_index)));
-    PrintEsc (params);
+    EscPrint (params);
     for (int i = 0; i < kNumLines; ++i)
         std::cout << '\n';
 }

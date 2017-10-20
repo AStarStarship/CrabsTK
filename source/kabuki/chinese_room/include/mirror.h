@@ -18,14 +18,14 @@
 #define CHINESE_ROOM_MIRROR_H
 
 #include "portal.h"
-#include "automata.h"
+#include "expression.h"
 
 namespace _ {
 
 /** Reflection.
     Reflections are used for modifying 
     @see https://en.wikipedia.org/wiki/Reflection_(computer_programming) */
-class Mirror : public Automata {
+class Mirror : public Expression {
     public:
 
     /** Constructs an empty reflection. */
@@ -43,33 +43,33 @@ class Mirror : public Automata {
     /** Pulls the next  byte through the Portal. */
     virtual byte Pull ();
 
-    /** Sets the Automata. */
-    Automata* SetAutomata (Automata* automata);
+    /** Sets the Expression. */
+    Expression* SetExpression (Expression* automata);
 
-    /** Gets the Automata. */
-    Automata* GetAutomata ();
+    /** Gets the Expression. */
+    Expression* GetExpression ();
 
     private:
     
-    Automata* a;    //< The async monoid.
+    Expression* a;
 };
 
 /** Reads the given set from the reflection. */
-const Set* Read (Mirror* mirror, const uint_t* params, void** args);
+const Operation* Read (Mirror* mirror, const uint_t* params, void** args);
 
 /** Writes the given set to the reflection. */
-const Set* Write (Mirror* mirror, const uint_t* params, void** args);
+const Operation* Write (Mirror* mirror, const uint_t* params, void** args);
 
 /** Initializes the mirror with the given tx mirror.
-    @param tx The io mirror.
+    @param tx The a mirror.
     @param is_dynamic Flag for if we're using dynamic memory or not. */
-inline Mirror LogInit (MonoidTx* tx, bool is_dynamic = false);
+inline Mirror LogInit (Bout* tx, bool is_dynamic = false);
 
 /** Prints a message with the given header to the given Tx slot. */
-inline ticket_t Write (MonoidTx* tx, byte member, const char * string);
+inline ticket_t Write (Bout* tx, byte op, const char * string);
 
 /** Prints a message with the given header to the given Tx slot. */
-inline ticket_t Write (Mirror& mirror, byte member, const char * string);
+inline ticket_t Write (Mirror& mirror, byte op, const char * string);
 
 /** Returns a reference to the mirror for this assembly. */
 template<uint_t kNumber>
@@ -79,37 +79,37 @@ inline Mirror& Logbag () {
     return s;
 }
 
-/** Operator << prints the given value as a string to the mirror. */
+/** Operation << prints the given value as a string to the mirror. */
 inline Mirror& operator<< (Mirror& mirror, int8_t value);
 
-/** Operator << prints the given value as a string to the mirror. */
+/** Operation << prints the given value as a string to the mirror. */
 inline Mirror& operator<< (Mirror& mirror, uint8_t value);
 
-/** Operator << prints the given value as a string to the mirror. */
+/** Operation << prints the given value as a string to the mirror. */
 inline Mirror& operator<< (Mirror& mirror, int16_t value);
 
-/** Operator << prints the given value as a string to the mirror. */
+/** Operation << prints the given value as a string to the mirror. */
 inline Mirror& operator<< (Mirror& mirror, uint16_t value);
 
-/** Operator << prints the given value as a string to the mirror. */
+/** Operation << prints the given value as a string to the mirror. */
 inline Mirror& operator<< (Mirror& mirror, int32_t value);
 
-/** Operator << prints the given value as a string to the mirror. */
+/** Operation << prints the given value as a string to the mirror. */
 inline Mirror& operator<< (Mirror& mirror, uint32_t value);
 
-/** Operator << prints the given value as a string to the mirror. */
+/** Operation << prints the given value as a string to the mirror. */
 inline Mirror& operator<< (Mirror& mirror, int64_t value);
 
-/** Operator << prints the given value as a string to the mirror. */
+/** Operation << prints the given value as a string to the mirror. */
 inline Mirror& operator<< (Mirror& mirror, uint64_t value);
 
-/** Operator << prints the given value as a string to the mirror. */
+/** Operation << prints the given value as a string to the mirror. */
 inline Mirror& operator<< (Mirror& mirror, float value);
 
-/** Operator << prints the given value as a string to the mirror. */
+/** Operation << prints the given value as a string to the mirror. */
 inline Mirror& operator<< (Mirror& mirror, double value);
 
-/** Operator << prints a string to the mirror. */
+/** Operation << prints a string to the mirror. */
 inline Mirror& operator<< (Mirror& mirror, const char * s);
 
 }       //< namespace _

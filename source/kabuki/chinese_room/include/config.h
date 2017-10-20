@@ -14,6 +14,10 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+
+#include <stdafx.h>
+
 #ifndef KABUKI_TOOLKIT_CONFIG_H
 #define KABUKI_TOOLKIT_CONFIG_H
 
@@ -77,17 +81,16 @@
 #define NO                          0
 
 #include <assembly.h>               //< Config stuff for your project.
-#include <stdafx.h>                 //< Precompiled headers don't need to compile.
 
 #if CHAR_WIDTH == 8
-typedef uint8_t char_t;
+typedef uint8_t index;
 #undef CHAR_WIDTH
 #elif CHAR_WIDTH == 16
 #undef CHAR_WIDTH
-typedef int16_t char_t;
+typedef int16_t index;
 #elif CHAR_WIDTH == 32
 #undef CHAR_WIDTH
-typedef int32_t char_t;
+typedef int32_t index;
 #else
 #error CHAR_WIDTH is not 8, 16, or 32!
 #endif

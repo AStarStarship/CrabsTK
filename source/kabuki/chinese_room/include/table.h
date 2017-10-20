@@ -83,7 +83,7 @@ struct Table {
 enum {
     kMinTableSize = 64,   //< The min size of a Table
     kInvalidRecord      = 255,  //< Invalid Record index.
-    kMaxNumMembers      = 192,  //< The max number of members in a particular scope.
+    kMaxNumOperations      = 192,  //< The max number of members in a particular scope.
     kNoCollidingRecords = 255,  //< 
     kRecordOverflow     = 254,  //< 
     kTableFull    = 253,  //< 
@@ -97,12 +97,12 @@ enum {
     max_keys.
     @post    Users might want to call the isValid () function after 
              construction to verify the integrity of the object.
-    @warning The reservedNumMembers must be aligned to a 32-bit value, and 
+    @warning The reservedNumOperations must be aligned to a 32-bit value, and 
              it will get rounded up to the next higher multiple of 4. */
 KABUKI Table* TableInit (byte* buffer, byte max_keys, uint16_t total_size);
     
 /** Adds the given key and returns the index 64-255 of the index of the 
-    member.
+    op.
     @return Returns an index 64-255 */
 KABUKI byte TableAdd (Table* table, const char* key);
 

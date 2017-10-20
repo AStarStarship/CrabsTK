@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/monoid_rx.cpp
+    @file    ~/source/kabuki/chinese_room/impl/monoid_rx.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,13 +17,14 @@
              functions.
 */
 
+#include <stdafx.h>
 #include "../include/monoid.h"
 #include "../include/error.h"
 
 namespace _ {
     
 
-KABUKI const Set* Read (MonoidTx* rx, const uint_t* params, void** args) {
+KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
     if (rx == nullptr)
         Report (NullPointerError, 0, 0, 0);
     if (params == nullptr)

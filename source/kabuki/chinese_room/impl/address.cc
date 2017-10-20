@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/include/Source/ChineseRoomConsole/Address.h
+    @file    ~/source/kabuki/chinese_room/include/Console/Address.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R).
@@ -16,6 +16,7 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
 #include "../include/address.h"
 
 namespace _ {

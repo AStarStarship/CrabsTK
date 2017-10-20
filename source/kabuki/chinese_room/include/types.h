@@ -29,7 +29,7 @@ namespace _ {
     readable, with the exception of HT, VT, CR, and LF. */
 typedef enum {
     NIL   = 0,  //< 0.  NIL/null/void type.
-    SOH   = 1,  //< 1.  An address to an I2P device.
+    SOH   = 1,  //< 1.  An address to an Script device.
     STX   = 2,  //< 2.  A UTF-8/ASCII string.
     SI1   = 3,  //< 3.  An 8-bit signed integer.
     UI1   = 4,  //< 4.  An 8-bit unsigned integer.

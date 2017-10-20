@@ -52,10 +52,10 @@ typedef enum {
     NullDevicePushError,
     ReadErrorError,
     WriteErrorError,
-    NonexistentMemberError,
+    NonexistentOperationError,
     OutOfMemoryError,
     ArrayOverflowError,
-    InvalidMemberError,
+    InvalidOperationError,
     InvalidErrorError,
 } Error;
 

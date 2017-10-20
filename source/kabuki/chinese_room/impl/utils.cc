@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/utils.cpp
+    @file    ~/source/kabuki/chinese_room/impl/utils.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,8 +14,8 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
 #include "../include/utils.h"
-#include "../include/config.h"
 
 namespace _ {
 
@@ -286,12 +286,12 @@ void PrintMemory (const void* address, const void* end) {
             PrintChar (temp);
             ++chars;
         }
-        printf ("| 0x%x\n", reinterpret_cast<uintptr_t> (chars) - 64);
+        printf ("| 0x%p\n", chars - 64);
     }
     std::cout << '|';
     for (int i = 0; i < 64; ++i)
         std::cout << '_';
-    printf ("| 0x%x\n", reinterpret_cast<uintptr_t> (chars) + Diff (address, end));
+    printf ("| 0x%p\n", chars + Diff (address, end));
 }
 
 void PrintMemory (const void* address, size_t size) {
@@ -342,7 +342,7 @@ char CreateKeyValueFormatString (char* s, char column_width, char type) {
     return 0;
 }
 
-void PrintNumberLine (char_t index) {
+void PrintNumberLine (index index) {
     std::cout << '\n';
     enum { MaxBufferSize = (sizeof (int) == 2) ? 7 : (sizeof (int) == 4) ? 11 : 128 };
     char buffer[MaxBufferSize];
@@ -435,7 +435,7 @@ void PrintCentered (const char* input, int width, bool is_last,
     if (width < 1)
         return;
     std::cout << column_delimeter;
-    int length = strlen (input),
+    size_t length = strlen (input),
         num_spaces;
 
     if (width < length) {
@@ -447,10 +447,10 @@ void PrintCentered (const char* input, int width, bool is_last,
             std::cout << column_delimeter << '\n';
     }
     num_spaces = width - length - 1 - (is_last ? 1 : 0);
-    for (int i = 0; i < num_spaces / 2; ++i)
+    for (size_t i = 0; i < num_spaces / 2; ++i)
         std::cout << ' ';
     std::cout << input;
-    for (int i = 0; i < num_spaces - (num_spaces / 2); ++i)
+    for (size_t i = 0; i < num_spaces - (num_spaces / 2); ++i)
         std::cout << ' ';
     if (is_last)
         std::cout << column_delimeter << '\n';
@@ -538,7 +538,7 @@ void PrintPageRight (const char* input, int num_columns) {
 }
 
 void PrintPage (const char* input, int indentation,
-                       char bullet, char_t index, int tab_size,
+                       char bullet, index index, int tab_size,
                        int num_columns) {
     num_columns -= 4;
     std::cout << "| ";

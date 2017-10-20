@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/include/Source/ChineseRoom/room.h
+    @file    ~/source/kabuki/chinese_room/include/room.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -68,7 +68,7 @@ KABUKI const char* RequestString (Request r);
     Each door has multiple slots in lead to the same room. These slots are the 
     various IO ports of the system.
 */
-class Room: public Expression {
+class Room: public Operable {
     //NONCOPYABLE (Room)
 
     public:
@@ -99,7 +99,7 @@ class Room: public Expression {
     void ProcessLog ();
 
     /** Prints the error log to a terminal. */
-    void PrintErrors (MonoidTx* tx);
+    void PrintErrors (Bout* tx);
 
     /** Function run every main loop cycle to check the system status. */
     virtual void DiagnoseProblems ();
@@ -129,8 +129,8 @@ class Room: public Expression {
         Please feel free to override this with your own main function. */
     virtual int Main (const char** args, int args_count);
 
-    /** I2P operations. */
-    virtual const Set* Star (char_t index, Automata* a);
+    /** Script expressions. */
+    virtual const Operation* Star (index index, Expression* a);
 
     protected:
 
@@ -142,7 +142,7 @@ class Room: public Expression {
         stack_size_;        //< The max size of the device stack.
                             //< Star Control 1: this.
     Door* door_;            //< Star Control 2: The Door to this room.
-    Expression* xoff_,       //< Star Control 3: XOFF - XOFF handling device.
+    Operation* xoff_,       //< Star Control 3: XOFF - XOFF handling device.
 <<<<<<< HEAD
           * device_,        //< Star Control 4: the current device control.
           * devices_;       //< Pointer to the current device control.

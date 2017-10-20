@@ -25,11 +25,11 @@ namespace _ {
 /** An async monoid Terminal.
     
 */
-class Terminal : public Expression {
+class Terminal : public Operable {
     public:
 
     /** Default constructor. */
-    Terminal (MonoidTx* io);
+    Terminal (Bout* a);
 
     /** Destructs the Terminal. */
     ~Terminal ();
@@ -37,12 +37,12 @@ class Terminal : public Expression {
     /** Returns true if the set contains the given address pointer. */
     bool Contains (void* address);
 
-    /** A*MonoidRx Expressions. */
-    const Set* Star (char_t index, Automata* b) override;
+    /** A*Bin Operations. */
+    const Operation* Star (index index, Expression* b) override;
 
     private:
 
-    MonoidTx* io_;        //< Async mondoid ring buffer socket.
+    Bout* io_;        //< Async mondoid ring buffer socket.
 };
 
 }       //< namespace _

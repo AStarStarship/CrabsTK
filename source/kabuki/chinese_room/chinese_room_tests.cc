@@ -14,10 +14,10 @@
              permissions and limitations under the License.
 */
 
-#include "../../../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
-#include "../../../../../../cpputest/include/CppUTest/TestHarness.h"
+#include "../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
+#include "../../../../cpputest/include/CppUTest/TestHarness.h"
 
-#include "../include/module.h"
+#include "module.h"
 #include "this.h"
 
 using namespace _;

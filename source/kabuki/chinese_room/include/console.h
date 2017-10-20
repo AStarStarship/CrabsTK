@@ -20,7 +20,7 @@
 #include "room.h"
 #include "mirror.h"
 #include "table.h"
-#include "bag.h"
+#include "set.h"
 #include "utils.h"
 #include "expression.h"
 
@@ -65,14 +65,14 @@ class Console: public Room
     /** Destructor. */
     virtual ~Console ();
 
-    /** Sets io the Room. */
-    ticket_t Init () override;
+    /** Sets a the Room. */
+    virtual ticket_t Init ();
 
     /** Main process loop. */
-    ticket_t Loop () override;
+    virtual ticket_t Loop ();
 
-    /** Chinese room operations. */
-    const Set* Star (char_t index, Automata* a) override;
+    /** Chinese room expressions. */
+    virtual const Operation* Star (char_t index, Expression* a);
 
     private:
 

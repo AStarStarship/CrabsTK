@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/monoid.cpp
+    @file    ~/source/kabuki/chinese_room/impl/monoid.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,6 +17,7 @@
              functions.
 */
 
+#include <stdafx.h>
 #include "../include/monoid.h"
 #include "../include/error.h"
 
@@ -124,7 +125,7 @@ byte* MonoidRead (void* destination, byte* const begin,
     return start + size;
 } */
 
-struct MonoidTx {
+struct Bout {
     uint_t size;            //< The size of the ring buffers.
     volatile uint_t start;  //< The starting index of the ring-buffer data.
     uint_t stop,            //< The stopping index of the ring-buffer data.
@@ -132,21 +133,21 @@ struct MonoidTx {
 };
 
 enum {
-    kSlotHeaderSize = sizeof (MonoidTx) + sizeof (uintptr_t) -
-    sizeof (MonoidTx) % sizeof (uintptr_t),
+    kSlotHeaderSize = sizeof (Bout) + sizeof (uintptr_t) -
+    sizeof (Bout) % sizeof (uintptr_t),
     //< Offset to the start of the ring buffer.
     kMinMonoidSize = 32 + kSlotHeaderSize,
 };
 
-byte* MonoidTxSlot (MonoidTx* tx) {
+byte* MonoidTxSlot (Bout* tx) {
     return reinterpret_cast<byte*>(tx) + kSlotHeaderSize;
 }
 
-MonoidTx* MonoidTxInit (byte* buffer, uint_t size) {
+Bout* MonoidTxInit (byte* buffer, uint_t size) {
     if (size < kMinMonoidSize) return nullptr;
     if (buffer == nullptr) return nullptr;
 
-    MonoidTx* tx = reinterpret_cast<MonoidTx*> (buffer);
+    Bout* tx = reinterpret_cast<Bout*> (buffer);
     tx->size = size - kSlotHeaderSize;
     tx->start = 0;
     tx->stop = 0;
@@ -158,11 +159,11 @@ MonoidTx* MonoidTxInit (byte* buffer, uint_t size) {
     return tx;
 }
 
-MonoidTx* MonoidInit (MonoidTx* buffer, uint_t size) {
+Bout* MonoidInit (Bout* buffer, uint_t size) {
     if (size < kMinMonoidSize) return nullptr;
     if (buffer == nullptr)     return nullptr;
 
-    MonoidTx* tx = reinterpret_cast<MonoidTx*> (buffer);
+    Bout* tx = reinterpret_cast<Bout*> (buffer);
     tx->size = size - kSlotHeaderSize;
     tx->start = 0;
     tx->stop  = 0;
@@ -174,24 +175,24 @@ MonoidTx* MonoidInit (MonoidTx* buffer, uint_t size) {
     return tx;
 }
 
-uint_t MonoidTxSpace (MonoidTx* tx) {
+uint_t MonoidTxSpace (Bout* tx) {
     if (tx == nullptr) return ~0;
     byte* txb_ptr = reinterpret_cast<byte*>(tx);
     return MonoidSpace (txb_ptr + tx->start, txb_ptr + tx->stop, 
                                 tx->size);
 }
 
-uint_t MonoidTxBufferLength (MonoidTx* tx) {
+uint_t MonoidTxBufferLength (Bout* tx) {
     if (tx == nullptr) return ~0;
     byte* base = MonoidTxSlot (tx);
     return MonoidLength (base + tx->start, base + tx->stop, tx->size);
 }
 
-byte* MonoidTxEndAddress (MonoidTx* tx) {
+byte* MonoidTxEndAddress (Bout* tx) {
     return reinterpret_cast<byte*>(tx) + kSlotHeaderSize + tx->size;
 }
 
-byte MonoidTxStreamByte (MonoidTx* tx) {
+byte MonoidTxStreamByte (Bout* tx) {
 
     byte* begin = MonoidTxSlot (tx),
         *end = begin + tx->size;
@@ -211,7 +212,7 @@ byte MonoidTxStreamByte (MonoidTx* tx) {
     return 0;
 }
 
-void MonoidTxPrint (MonoidTx* tx) {
+void MonoidTxPrint (Bout* tx) {
     PrintLine ('_');
     if (tx == nullptr) {
         printf ("| Monoid null\n");

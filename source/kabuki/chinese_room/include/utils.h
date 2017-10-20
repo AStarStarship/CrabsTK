@@ -293,7 +293,7 @@ KABUKI void PrintUnsignedHex (const char* header, Type value) {
 }
 
 /** Prints an 80-char line of the number repeating with an underscore i.e. 1_1_... */
-KABUKI void PrintNumberLine (char_t index);
+KABUKI void PrintNumberLine (index index);
 
 /** Prints an 80-char line of the string repeating with an underscore
 i.e. s_s_... */
@@ -386,7 +386,7 @@ KABUKI void PrintPageRight (const char* input, int num_columns);
     @param tab_size The number of spaces per tab.
     @param num_columns The number of columns per line. */
 KABUKI void PrintPage (const char* input = "", int indentation = 0,
-                       char bullet = '*', char_t index = 0, int tab_size = 4,
+                       char bullet = '*', index index = 0, int tab_size = 4,
                        int num_columns = 80);
 
 /** Returns the pointer to the next char in the string that is not an ASCII

@@ -64,7 +64,7 @@ KABUKI byte* MonoidTxRead (void* destination, byte* const begin,
                            byte* const end, size_t size);
 
 /** A Tx ring-buffer.
-    A sequence of A*B operations terminated by an ASCII CR char. All sequences get 
+    A sequence of A*B expressions terminated by an ASCII CR char. All sequences get 
     evaluated down to an immutable set (by definition all sets are immutable), which 
     can be an empty set.
 
@@ -77,7 +77,7 @@ KABUKI byte* MonoidTxRead (void* destination, byte* const begin,
     @endcode
     A Tx ring-buffer is identical in structure to an Rx ring-buffer, but the stop becomes
     volatile and start is not volatile. */
-struct MonoidTx {
+struct Bout {
     uint_t size;            //< The size of the monoid ring buffers.
     volatile uint_t start;  //< The starting index of the ring-buffer data.
     uint_t stop,            //< The stopping index of the ring-buffer data.
@@ -85,50 +85,50 @@ struct MonoidTx {
 };
 
 enum {
-    kSlotHeaderSize = sizeof (MonoidTx) + sizeof (uintptr_t) -
-    sizeof (MonoidTx) % sizeof (uintptr_t),
+    kSlotHeaderSize = sizeof (Bout) + sizeof (uintptr_t) -
+    sizeof (Bout) % sizeof (uintptr_t),
     //< Offset to the start of the ring buffer.
     kMinMonoidSize = 32 + kSlotHeaderSize,
 };
 
 /** Gets the start of the Tx ring buffer. */
-KABUKI byte* MonoidTxSlot (MonoidTx* tx);
+KABUKI byte* MonoidTxSlot (Bout* tx);
 
-KABUKI MonoidTx* MonoidTxInit (byte* buffer, uint_t size);
+KABUKI Bout* MonoidTxInit (byte* buffer, uint_t size);
 
 /** Initializes the tx buffer with the given buffer size. */
-KABUKI MonoidTx* MonoidTxInit (MonoidTx* buffer, uint_t size);
+KABUKI Bout* MonoidTxInit (Bout* buffer, uint_t size);
 
 /** Calculates the space left in the given ring buffer.
     @param  tx The Tx buffer. */
-KABUKI uint_t MonoidTxSpace (MonoidTx* tx);
+KABUKI uint_t MonoidTxSpace (Bout* tx);
 
 /** Gets the tx buffer space. */
-KABUKI uint_t MonoidTxBufferLength (MonoidTx* tx);
+KABUKI uint_t MonoidTxBufferLength (Bout* tx);
 
 /** Gets the end address of the tx buffer. */
-KABUKI byte* MonoidTxEndAddress (MonoidTx* tx);
+KABUKI byte* MonoidTxEndAddress (Bout* tx);
 
 /** Prints a message with the given params to the given Tx slot.
     @param tx The Tx socket to write to.
     @param params The escape sequence to write.
     @param args The array of pointers to the stuff to write. */
-KABUKI ticket_t Write (MonoidTx* tx, const char * address, const uint_t* params,
+KABUKI ticket_t Write (Bout* tx, const char * address, const uint_t* params,
                        void** args);
 
 /** Streams a tx byte.
     @param tx The tx monoid. */
-KABUKI byte MonoidTxStreamByte (MonoidTx* tx);
+KABUKI byte MonoidTxStreamByte (Bout* tx);
 
 /** Scans a message with the given params to the given Terminal.
     @param rx The monoid socket.
     @param params The parameters.
     @param args The arguments.
     @return Returns 0 upon success and an ErrorList ticket number upon failure. */
-KABUKI ticket_t Read (MonoidTx* rx, const uint_t* params, void** args);
+KABUKI ticket_t Read (Bout* rx, const uint_t* params, void** args);
 
 /** Prints the given Tx to the stdout. */
-KABUKI void MonoidTxPrint (MonoidTx* tx);
+KABUKI void MonoidTxPrint (Bout* tx);
 
 }       //< namespace _
 #endif  //< CHINESE_ROOM_MONOID_H

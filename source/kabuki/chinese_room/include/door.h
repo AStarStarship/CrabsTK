@@ -37,7 +37,7 @@ namespace _ {
     Multiple doors also might share the same Portal. An example of this is a 
     connection to multiple systems over a WiFi connection.
 */
-class Door : public Expression {
+class Door : public Operable {
     public:
 
     enum {
@@ -54,7 +54,7 @@ class Door : public Expression {
     Door* Init (uint_t buffer_size);
 
     /** Gets the terminal at the given index. */
-    Terminal* GetTerminal (char_t index);
+    Terminal* GetTerminal (index index);
 
     /** Address the given terminal to the Door. */
     ticket_t AddTerminal (Terminal* t);
@@ -69,8 +69,8 @@ class Door : public Expression {
     /** Executes all of the queued escape sequences. */
     ticket_t ExecAll ();
 
-    /** I2P operations. */
-    const Set* Star (char_t index, Automata* a) override;
+    /** Script expressions. */
+    const Operation* Star (index index, Expression* a) override;
 
     private:
 

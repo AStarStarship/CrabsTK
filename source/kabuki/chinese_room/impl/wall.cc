@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/wall.cpp
+    @file    ~/source/kabuki/chinese_room/impl/wall.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
                             All right reserved (R).
@@ -15,6 +15,7 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
 #include "../include/wall.h"
 
 namespace _ {
@@ -41,14 +42,14 @@ Door* WallAddDoor (Wall* wall, Door* door) {
     ++wall->num_doors;
 }
 
-Door* WallGetDoor (Wall* wall, char_t index) {
+Door* WallGetDoor (Wall* wall, index index) {
     if (wall == nullptr) return nullptr;
     if (index >= wall->num_doors)
         return nullptr;
     return WallGetDoors (wall)[index];
 }
 
-void WallDelete (Wall* wall, char_t index) {
+void WallDelete (Wall* wall, index index) {
     if (wall == nullptr) return;
     if (index >= wall->num_doors)
         return;

@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/kabuki/source/kabuki/chinese_room/include/automata.h
+    @file    ~/kabuki/source/kabuki/chinese_room/include/expression.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -18,13 +18,12 @@
 #define CHINESE_ROOM_AUTOMATA_H
 
 #include "set.h"
-#include "bag.h"
 
 namespace _ {
 
 template<typename TIndex, typename TKey, typename TData, typename THash, 
-    uint_t MaxStackHeight>
-class Library: public Expression
+         uint_t MaxStackHeight>
+class Library: public Operable
 {
     public:
 
@@ -77,8 +76,8 @@ class Library: public Expression
     /** Attempts to insert the Page data into the Object at the given index.
         @return Returns nullptr upon success and an error string upon failure. */
     ticket_t Insert (byte type, const char* key, void* data, TIndex index = 0) {
-        TIndex l_numMembers = numNumbers;
-        if (index > l_numMembers) index = l_numMembers;
+        TIndex l_numOperations = numNumbers;
+        if (index > l_numOperations) index = l_numOperations;
 
         return 0;
     }
@@ -95,7 +94,7 @@ class Library: public Expression
         return 0;
     }
     
-    /** Attempts to find the given member name.
+    /** Attempts to find the given op name.
         @return Returns an invalid index upon failure. */
     TIndex Find (const char* key) {
         return 0;
@@ -108,16 +107,16 @@ class Library: public Expression
     }
 
     /** gets the size of the item at the given index. */
-    byte GetMemberSize (TIndex index) {
+    byte GetOperationSize (TIndex index) {
         return 0;
     }
 
     /** gets the size of the item at the given index. */
-    byte SetMemberSize (TIndex index, TData newSize) {
+    byte SetOperationSize (TIndex index, TData newSize) {
         return 0;
     }
     
-    /** Returns the data address of the given member if it exists.
+    /** Returns the data address of the given op if it exists.
         @return Returns a pointer to one of the ChineseRoom error strings upon failure. */
     void* GetDataAddress (TIndex index) {
         #if _BufferUIntSize >= 64
@@ -169,8 +168,8 @@ class Library: public Expression
 
     }
 
-    /** ChineseRoom Expressions. */
-    const Set* Star (Rx* rx, Tx& tx, char index) override {
+    /** ChineseRoom Operations. */
+    const Operation* Star (Rx* rx, Tx& tx, char index) override {
         switch (index)
         {
             case 0:

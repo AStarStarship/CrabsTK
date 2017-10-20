@@ -46,13 +46,13 @@ KABUKI Terminal** SlotTerminals (Slot* s);
 KABUKI ticket_t SlotAddTerminal (Slot* s, Terminal* t);
 
 /** Gets the Terminal from the Slot at the given index. */
-KABUKI Terminal* SlotGetTerminal (Slot* s, char_t index);
+KABUKI Terminal* SlotGetTerminal (Slot* s, index index);
 
 /** Gets the Terminal from the Slot at the given index. */
 KABUKI Terminal* SlotFindTerminal (Slot* s, void* address);
 
 /** Deletes the Terminal from the Slot at the given index. */
-KABUKI void SlotDelete (Slot* s, char_t index);
+KABUKI void SlotDelete (Slot* s, index index);
 
 /** Prints the given Slot to the stdout. */
 KABUKI void SlotPrint (Slot* s);

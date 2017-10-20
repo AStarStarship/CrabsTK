@@ -61,16 +61,18 @@ KABUKI byte* MonoidRead (void* destination, byte* const begin,
 /** Returns true if the given monoid contains the given address. */
 //void* MonoidContains ();
 
-/*< A rx socket that prints results to any given memory address. */
-struct MonoidRx {
+/*< A*B B-Input arguments.
+    
+*/
+struct Bin {
     uint_t size,            //< The size of the buffer.
         start;              //< The starting index of the ring buffer data.
     volatile uint_t stop;   //< The stopping index of the ring buffer data.
     uint_t read;            //< The read variable.
 };
 
-/** A Tx ring-buffer.
-    A sequence of A*MonoidRx operations terminated by an ASCII CR char. All sequences get 
+/** A*B B-Output socket.
+    A sequence of A*Bin expressions terminated by an ASCII CR char. All sequences get 
     evaluated down to an immutable set (by definition all sets are immutable), which 
     can be an empty set.
 
@@ -83,93 +85,93 @@ struct MonoidRx {
     @endcode
     A Tx ring-buffer is identical in structure to an Rx ring-buffer, but the stop becomes
     volatile and start is not volatile. */
-struct MonoidTx {
+struct Bout {
     uint_t size;            //< The size of the monoid ring buffers.
     volatile uint_t start;  //< The starting index of the ring-buffer data.
     uint_t stop,            //< The stopping index of the ring-buffer data.
         read;               //< The address that the Rx device is reading from.
 };
 
-/** Initializes the MonoidRx struct to an empty buffer. */
-KABUKI MonoidRx* MonoidRxInit (byte* buffer, uint_t size);
+/** Initializes the Bin struct to an empty buffer. */
+KABUKI Bin* MonoidRxInit (byte* buffer, uint_t size);
 
-/** Initializes the MonoidRx struct to an empty buffer. */
-KABUKI MonoidRx* MonoidRxInit (MonoidRx* rx, uint_t size);
+/** Initializes the Bin struct to an empty buffer. */
+KABUKI Bin* MonoidRxInit (Bin* rx, uint_t size);
 
-/** Gets the start of the MonoidRx ring buffer. */
-KABUKI byte* MonoidRxBaseAddress (MonoidRx* ptr);
+/** Gets the start of the Bin ring buffer. */
+KABUKI byte* MonoidRxBaseAddress (Bin* ptr);
 
 /** Gets the rx buffer length. */
-KABUKI uint_t MonoidRxSpace (MonoidRx* rx);
+KABUKI uint_t MonoidRxSpace (Bin* rx);
 
-/** Gets the start of the MonoidRx ring buffer. */
+/** Gets the start of the Bin ring buffer. */
 KABUKI byte* MonoidRxBaseAddress (void* ptr, uint_t rx_tx_offset);
 
 /** Gets the end address of the rx buffer. */
-KABUKI byte* MonoidRxEndAddress (MonoidRx* rx);
+KABUKI byte* MonoidRxEndAddress (Bin* rx);
 
-/** Scans a message with the given params to the given MonoidRx.
-    The data in the MonoidRx is word-aligned, unlike the Monoid. It also
+/** Scans a message with the given params to the given Bin.
+    The data in the Bin is word-aligned, unlike the Monoid. It also
     doesn't have a hash with an escape sequence.
     
-    @param rx The MonoidRx socket.
+    @param rx The Bin socket.
     @param params The parameters.
     @param args The arguments.
     @return Returns 0 upon success and an ErrorList ticket number upon failure. */
-KABUKI const Set* Read (MonoidRx* rx, const uint_t* params, void** args);
+KABUKI const Operation* Read (Bin* rx, const uint_t* params, void** args);
 
 /** Scans a message with the given params to the given Terminal.
     @param rx The monoid socket.
     @param params The parameters.
     @param args The arguments.
     @return Returns 0 upon success and an ErrorList ticket number upon failure. */
-KABUKI const Set* Read (MonoidTx* rx, const uint_t* params, void** args);
+KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args);
 
-/** Returns true if the MonoidRx buffer contains any data.
+/** Returns true if the Bin buffer contains any data.
     @warning Function does not do any error checking for speed. */
-KABUKI bool MonoidRxIsReadable (MonoidRx* rx);
+KABUKI bool MonoidRxIsReadable (Bin* rx);
 
 /** Prints out the given object to the std::out. */
-KABUKI void MonoidRxPrint (MonoidRx* rx);
+KABUKI void MonoidRxPrint (Bin* rx);
 
 enum {
-    kSlotHeaderSize = sizeof (MonoidTx) + sizeof (uintptr_t) -
-    sizeof (MonoidTx) % sizeof (uintptr_t),
+    kSlotHeaderSize = sizeof (Bout) + sizeof (uintptr_t) -
+    sizeof (Bout) % sizeof (uintptr_t),
     //< Offset to the start of the ring buffer.
     kMinMonoidSize = 32 + kSlotHeaderSize,
 };
 
 /** Gets the start of the Tx ring buffer. */
-KABUKI byte* MonoidTxSlot (MonoidTx* tx);
+KABUKI byte* MonoidTxSlot (Bout* tx);
 
-KABUKI MonoidTx* MonoidTxInit (byte* buffer, uint_t size);
+KABUKI Bout* MonoidTxInit (byte* buffer, uint_t size);
 
 /** Initializes the tx buffer with the given buffer size. */
-KABUKI MonoidTx* MonoidTxInit (MonoidTx* buffer, uint_t size);
+KABUKI Bout* MonoidTxInit (Bout* buffer, uint_t size);
 
 /** Calculates the space left in the given ring buffer.
     @param  tx The Tx buffer. */
-KABUKI uint_t MonoidTxSpace (MonoidTx* tx);
+KABUKI uint_t MonoidTxSpace (Bout* tx);
 
 /** Gets the tx buffer space. */
-KABUKI uint_t MonoidTxBufferLength (MonoidTx* tx);
+KABUKI uint_t MonoidTxBufferLength (Bout* tx);
 
 /** Gets the end address of the tx buffer. */
-KABUKI byte* MonoidTxEndAddress (MonoidTx* tx);
+KABUKI byte* MonoidTxEndAddress (Bout* tx);
 
 /** Prints a message with the given params to the given Tx slot.
     @param tx The Tx socket to write to.
     @param params The escape sequence to write.
     @param args The array of pointers to the stuff to write. */
-KABUKI ticket_t Write (MonoidTx* tx, const char* address, const uint_t* params,
+KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
                        void** args);
 
 /** Streams a tx byte.
     @param tx The tx monoid. */
-KABUKI byte MonoidTxStreamByte (MonoidTx* tx);
+KABUKI byte MonoidTxStreamByte (Bout* tx);
 
 /** Prints the given Tx to the stdout. */
-KABUKI void MonoidTxPrint (MonoidTx* tx);
+KABUKI void MonoidTxPrint (Bout* tx);
 
 }       //< namespace _
 #endif  //< CHINESE_ROOM_MONOID_H
