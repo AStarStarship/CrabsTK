@@ -25,7 +25,8 @@ void PrintLine (const char* s) {
 
 void PrintDebug (const char* message, 
                  const char* end_string,
-                        const char* begin_string) {
+                 const char* begin_string)
+{
 #if DEBUG
     std::cout << begin_string << message << end_string;
 #endif
@@ -435,7 +436,7 @@ void PrintCentered (const char* input, int width, bool is_last,
     if (width < 1)
         return;
     std::cout << column_delimeter;
-    size_t length = strlen (input),
+    int length = strlen (input),
         num_spaces;
 
     if (width < length) {
@@ -447,10 +448,10 @@ void PrintCentered (const char* input, int width, bool is_last,
             std::cout << column_delimeter << '\n';
     }
     num_spaces = width - length - 1 - (is_last ? 1 : 0);
-    for (size_t i = 0; i < num_spaces / 2; ++i)
+    for (int i = 0; i < num_spaces / 2; ++i)
         std::cout << ' ';
     std::cout << input;
-    for (size_t i = 0; i < num_spaces - (num_spaces / 2); ++i)
+    for (int i = 0; i < num_spaces - (num_spaces / 2); ++i)
         std::cout << ' ';
     if (is_last)
         std::cout << column_delimeter << '\n';

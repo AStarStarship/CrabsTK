@@ -31,7 +31,7 @@ class Archive : public IDevice
 {
     public:
     
-    const Member* op (Terminal* io, byte index) override;
+    const Member* op (Expression* io, byte index) override;
     /*< I2P proceedures. */
 }
 }   //< _File
@@ -411,7 +411,7 @@ std::string Archive::extract(const ArchiveEntry& entry, const std::string& destP
 	return _pImpl->extract(entry, destPath);
 }
 
-const Member* Archive::op (Terminal* io, byte index)
+const Member* Archive::op (Expression* io, byte index)
 {
     return invalidIndex ();
 }

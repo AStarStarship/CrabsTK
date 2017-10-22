@@ -70,7 +70,7 @@ bool EntityList::search (const string& query)
     return false;//static website guest entities
 }
 
-void EntityList::print (Terminal& io)
+void EntityList::print (Expression& io)
 {
     string returnstring;
     returnstring = "Number of Accounts: " + entities.size () + (char)13;
@@ -78,7 +78,7 @@ void EntityList::print (Terminal& io)
     for (int i = 0; i < entities.size (); i++)
     {
         // Iterated throught the users array and write the
-        // print (Terminal& io) strings to the returnstring
+        // print (Expression& io) strings to the returnstring
         returnstring = returnstring + ("Account " + (i + 1) + ": " + entities[i].getFirstName () + (char)13);
     }
 

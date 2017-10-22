@@ -50,7 +50,7 @@ class TagLibrary
     /** Gets the number of tags. */
     int GetNumTags ();
 
-    /** Prints this object to a Terminal. */
+    /** Prints this object to a Expression. */
     inline void Print ();
     
     private:

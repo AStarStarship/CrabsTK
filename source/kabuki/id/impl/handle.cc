@@ -83,7 +83,7 @@ bool Handle::equals (const Handle& h)
     return name == h.name;
 }
 
-void Handle::print (Terminal& io)
+void Handle::print (Expression& io)
 {
     slot.prints ("Handle: ", name.c_str ());
 }

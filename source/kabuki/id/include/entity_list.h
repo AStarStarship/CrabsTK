@@ -48,7 +48,7 @@ class ID_API EntityList
     Entity* find (const string& s);
     /*< Finds an entity in the list by the given search string. */
     
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to a terminal. */
     
     private:

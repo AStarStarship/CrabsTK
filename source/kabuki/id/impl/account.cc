@@ -95,7 +95,7 @@ bool Account::login (User& u)
     return true;
 }*/
 
-void Account::print (Terminal& io)
+void Account::print (Expression& io)
 {
     slot.prints ("Account Name: \n\r");
     name.print (slot);

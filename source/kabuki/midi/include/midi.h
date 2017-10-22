@@ -68,7 +68,7 @@ struct MIDIHeader
                                              enables an application to determine which event caused the callback. */
     uint32_t*   dwReserved[4];   //< Reserved
     
-    virtual const char* op (_::Terminal* io, byte index);
+    virtual const char* op (_::Expression* io, byte index);
     /*< Inter-process subroutines. */
                                         /**< Do not use. */
 };
@@ -85,7 +85,7 @@ struct MIDIINCAPS
     TCHAR  szPname[MAXPNAMELEN];    //< Null-terminated product name string.
     uint32_t     dwSupport;         //< Reserved. Must be zero.
     
-    virtual const char* op (_::Terminal* io, byte index);
+    virtual const char* op (_::Expression* io, byte index);
     /*< Inter-process subroutines. */
 };
 
@@ -123,7 +123,7 @@ struct MIDIOutCaps
     /*< Sets the Inter-process state.
         @return returns 0 upon success, and an I2P::Errror upon failure. */
     
-    virtual const char* op (_::Terminal* io, byte index);
+    virtual const char* op (_::Expression* io, byte index);
     /*< Inter-process subroutines. */
 };
 
@@ -139,7 +139,7 @@ struct MIDIPropTempo
                             note format. This member is set in a MIDIPROP_SET operation and is filled on return
                             from a MIDIPROP_GET operation. */
     
-    virtual const char* op (_::Terminal* io, byte index);
+    virtual const char* op (_::Expression* io, byte index);
     /*< Inter-process subroutines. */
 };
 
@@ -163,7 +163,7 @@ struct MIDIPropTimeDiv
     /*< Sets the Inter-process state.
         @return returns 0 upon success, and an I2P::Errror upon failure. */
     
-    virtual const char* op (_::Terminal* io, byte index);
+    virtual const char* op (_::Expression* io, byte index);
     /*< Inter-process subroutines. */
 };
 typedef struct MIDIPropTimeDiv MIDIPROPTIMEDIV;
@@ -186,7 +186,7 @@ struct MIDIStrMBufVer
         they have specified. If a custom event is specified, it must be the first event sent
         after the stream is opened. */
     
-    virtual const char* op (_::Terminal* io, byte index);
+    virtual const char* op (_::Expression* io, byte index);
     /*< Inter-process subroutines. */
 };
 

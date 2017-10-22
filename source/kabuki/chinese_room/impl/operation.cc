@@ -23,7 +23,7 @@ uint_t* NumOperations (std::uintptr_t value) {
     return reinterpret_cast<uint_t*> (value);
 }
 
-const uint_t* FirstOperation (uint_t value) {
+params_t* FirstOperation (uint_t value) {
     uintptr_t index = value;
     return reinterpret_cast<uint_t*>(index);
 }
@@ -36,105 +36,63 @@ uintptr_t CountCoperations (const Operation* op) {
     return Index (op->params);
 }
 
-const Operation* ReadError () {
-    //return DeviceOperation<"Read"> ();
-    static const Operation error = { "Read",
-        0,
-        0,
-        0
-    };
-    return &error;
-}
-
-const Operation* WriteError () {
-    //return DeviceOperation<"Write"> ();
-    static const Operation error = { "Write",
-        0,
-        0,
-        0
-    };
-    return &error;
-}
-
-const Operation* ErrorTicket (ticket_t error) {
-    // @todo Fix me!
-    return nullptr;
-}
-
-const Operation* StackOverflow () {
-    //return DeviceOperation<"Star stack overflow"> ();
-    static const Operation error = { "Star stack overflow",
-        0,
-        0,
-        0
-    };
-    return &error;
-}
-
-const Operation* InvalidOperation () {
-    static const Operation error = { "Invalid operation",
-        0, 0, 0, 0
-    };
-    return &error;
-}
-
-void OperationPrint (const Operation* op) {
-    if (op == nullptr)
+void OperationPrint (const Operation* operand) {
+    if (operand == nullptr)
         return;
 
-    const uint_t* result = op->result;
+    params_t* result = operand->result;
 
     if (Index (result) < 256) {
         // Print Operation Star
-        std::cout << "\n| Num Operations:  " << CountCoperations (op)
-                  << "\n| Metadata:     " << op->metadata << '\n';
+        std::cout << "\n| Num Operations:  " << CountCoperations (operand)
+                  << "\n| Metadata:        " << operand->metadata << '\n';
     }
 
-    std::cout << "| Name:         " << op->name;
-    EscPrint (op->params);
+    std::cout << "| Name:         " << operand->name;
+    ParamsPrint (operand->params);
     std::cout << '\n';
-    EscPrint (op->result);
-    std::cout << "\n| Metadata:   " << op->metadata << '\n';
+    ParamsPrint (operand->result);
+    std::cout << "\n| Metadata:   " << operand->metadata << '\n';
 }
-uintptr_t ToUInt (Operable* op) {
-    if (op == nullptr) return 0;
-    const Operation* operation = op->Star (0, nullptr);
-    return operation == nullptr?0:
-        reinterpret_cast<uintptr_t> (operation->params);
+uintptr_t ToUInt (Operand* operand) {
+    if (operand == nullptr) return 0;
+    const Operation* ope = operand->Star (0, nullptr);
+    return ope == nullptr?0:
+        reinterpret_cast<uintptr_t> (ope->params);
 }
 
-bool IsOperation (const Operation* op) {
-    if (!op)
+bool IsGroup (const Operation* ope) {
+    if (!ope)
         return false;
-    return (reinterpret_cast<uintptr_t> (op->result) < ' ');
+    return (reinterpret_cast<uintptr_t> (ope->result) < ' ');
 }
 
-void OperationPrint (Operation* op) {
+void OperandPrint (Operand* operand) {
     std::cout << "| Operation:        ";
-    if (op == nullptr) {
+    if (operand == nullptr) {
         std::cout << "null";
         PrintLine ("|", '_');
         return;
     }
-    printf ("0x%p ", d);
-    const Operation* operation = op->Star (0, nullptr);   //< Get Star header.
-    std::cout << operation->name
-        << "\n| NumOperations:  " << CountCoperations (m)
-        << "\n| Description:   " << operation->metadata << '\n';
-    byte i = Index (operation->result),
-        stop_index = i + Index (operation->params);
+    printf ("0x%p ", operand);
+    const Operation* ope = operand->Star (0, nullptr);   //< Get Star header.
+    std::cout << ope->name
+        << "\n| NumOperations:  " << CountCoperations (ope)
+        << "\n| Description:   " << ope->metadata << '\n';
+    byte i = Index (ope->result),
+        stop_index = i + Index (ope->params);
     std::cout << "| FirstOperation: " << i << " LastOperation: "
         << stop_index;
     PrintLine ("|", '-');
     for (; i < stop_index; ++i) {
-        operation = op->Star (i, nullptr);
-        if (operation != nullptr) {
-            std::cout << "| " << i << ": " << operation->name << '\n'
+        ope = operand->Star (i, nullptr);
+        if (ope != nullptr) {
+            std::cout << "| " << i << ": " << ope->name << '\n'
                 << "| input:   ";
-            EscPrint (operation->params);
+            ParamsPrint (ope->params);
             std::cout << "| result:   ";
-            EscPrint (operation->result);
-            std::cout << "| Description: " << operation->metadata;
+            ParamsPrint (ope->result);
+            std::cout << "| Description: " << ope->metadata;
             if (i == stop_index)
                 PrintLine ("|", '_');
             else
@@ -146,20 +104,20 @@ void OperationPrint (Operation* op) {
     //system ("PAUSE");
 }
 
-void PrintAddress (const byte* address, Operation* root) {
+void PrintAddress (const byte* address, Operand* root) {
     if (address == nullptr)
         return;
     if (root == nullptr)
         return;
-    char_t index = *address++;
-    const Operation* op = root->Star (index, nullptr);
-    std::cout << op->name;
+    int index = *address++;
+    const Operation* ope = root->Star (index, nullptr);
+    std::cout << ope->name;
     index = *address++;
     while (index) {
-        m = root->Star (index, nullptr);
-        if (m == nullptr)
+        ope = root->Star (index, nullptr);
+        if (ope == nullptr)
             return;
-        std::cout << '.' << op->name;
+        std::cout << '.' << ope->name;
         index = *address++;
     }
 }

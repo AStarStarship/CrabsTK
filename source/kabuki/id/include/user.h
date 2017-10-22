@@ -50,7 +50,7 @@ class ID_API User
     bool equals (const string& aName);
     /*< Returns true if this username is the same as the given one.  */
     
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to a terminal. */
 
     private:

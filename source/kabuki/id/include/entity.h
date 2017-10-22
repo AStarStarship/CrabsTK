@@ -47,7 +47,7 @@ class ID_API Entity
     virtual int search (const string& query);
     /*< Returns true if this entity contains the search query. */
     
-    virtual void print (Terminal& io);
+    virtual void print (Expression& io);
     /*< Prints this object to a terminal. */
     
     private:

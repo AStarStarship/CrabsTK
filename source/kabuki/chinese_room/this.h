@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki-impl/TESTS/chinese_room_tests.cpp
+    @file    ~/source/kabuki/chinese_room/this.h
     @author  Cale McCollough <calemccollough.github.expr>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.expr>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -39,19 +39,19 @@ enum {
     kRoomSize           = 3,
 };
 
-/* Test Operation for multiple unit tests.
-    The name ChildObject does not mean anything other than it is a child. */
-class ChildObject : public Operable {
+/* Test Operand for multiple unit tests.
+    The name ChildOperand does not mean anything other than it is a child. */
+class ChildOperand : public Operand {
     public:
     
     /** Chinese Room operations. */
-    virtual const Operation* Star (int index, Expression* expr) {
+    virtual const Operand* Star (int index, Expression* expr) {
         void* args[2];
-        const Evaluation* error;
+        const Operation* error;
 
-        static const Operation this_member = { "ChildObject",
-            NumMembers (2), FirstMember ('A'),
-            "A child Operation." };
+        static const Operand this_member = { "ChildOperand",
+            NumOperations (2), FirstMember ('A'),
+            "A child Operand." };
             
         if (!index) return &this_member;
 
@@ -60,7 +60,7 @@ class ChildObject : public Operable {
                 // push operation.
             }
             case 'A': {
-                static const Operation m1 = { "FloatTests",
+                static const Operand m1 = { "FloatTests",
                     Esc<2, FLT, STX, kStringBufferSize> (),
                     Esc<2, FLT, STX> (),
                     "Description of functionA.", 0 };
@@ -76,7 +76,7 @@ class ChildObject : public Operable {
                                                    io_string_));
             }
             case 'B': {
-                     const Evaluation m2 = { "SignedIntegerTests",
+                     const Operation m2 = { "SignedIntegerTests",
                     Esc<2, FLT, STX, kStringBufferSize> (),
                     Esc<2, FLT, STX> (),
                     "Description of functionB." };
@@ -105,21 +105,21 @@ class ChildObject : public Operable {
     char io_string_[kStringBufferSize]; //< Example string.
 };
 
-/** Test child Operation. */
-class Root : public Operation {
+/** Test child Operand. */
+class Root : public Operand {
     public:
 
     // Interprocess operations.
-    const Evaluation* Star (int index, Expression* expr) override {
+    virtual const Operation* Star (int index, Expression* expr) {
         void* args[2];
-        const Evaluation* error;
+        const Operation* error;
 
-        static const Evaluation this_member = { "Root",
-            NumMembers (4),
+        static const Operation self = { "Root",
+            NumOperations (4),
             FirstMember ('A'),
             "Root scope device." };
 
-        if (!index) return &this_member;
+        if (!index) return &self;
 
         switch (index) {
             case 'A': {
@@ -131,30 +131,30 @@ class Root : public Operation {
                 return Push (expr, &child_b);
             }
             case 'C': {
-                static const Evaluation m3 = { "FloatTests",
+                static const Operation m3 = { "FloatTests",
                     Esc<2, FLT, STX, kStringBufferSize> (),
                     Esc<2, FLT, STX> (),
                     "Description of functionA." };
                 if (!expr) return &m3;
 
-                if (error = Read (expr, m3.params, Args (args, &io_number_,
+                if (Read (expr, m3.params, Args (args, &io_number_,
                                                        io_string_)))
-                    return error;
+                    return expr->result;
 
                 return Write (expr, m3.result, Args (args, &io_number_,
                                                    io_string_));
             }
             case 'D': {
-                static const Evaluation m4 = { "SignedIntegerTests",
+                static const Operation m4 = { "SignedIntegerTests",
                     Esc <2, FLT, STX, kStringBufferSize> (),
                     Esc <2, FLT, STX> (),
                     "Description of functionB." };
 
                 if (!expr) return &m4;
 
-                if (error = Read (expr, m4.params, Args (args, &io_number_,
-                                                         io_string_)))
-                    return error;
+                if (Read (expr, m4.params, Args (args, &io_number_,
+                                                 io_string_)))
+                    return expr->result;
 
                 return Write (expr, m4.result, Args (args, &io_number_,
                                                      io_string_));
@@ -165,8 +165,8 @@ class Root : public Operation {
 
     private:
     
-    ChildObject child_a,                      //< ChildObject Expression in index 'A'.
-          child_b;                      //< ChildObject Expression in index 'B'
+    ChildOperand child_a,               //< ChildOperand Expression in index 'A'.
+          child_b;                      //< ChildOperand Expression in index 'B'
 
     enum {
         kStringBufferSize = 16          //< Example string buffer size.

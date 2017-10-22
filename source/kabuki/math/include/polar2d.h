@@ -42,7 +42,7 @@ class Polar_f
     float calcMagnitude ();
     /*< Calculates the magnitude of the . */
 
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to the terminal. */
 };
 
@@ -63,7 +63,7 @@ class Polar_d
     double calcMagnitude ();
     /*< Calculates the magnitude. */
 
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to the terminal. */
 };
 

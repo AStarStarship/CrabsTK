@@ -37,7 +37,7 @@ KABUKI uint_t MaxArrayLength () {
 */
 template<typename T,    //< The C++ data type.
          typename I>    //< The C++ index type.
-struct Array {
+struct KABUKI Array {
     I count,            //< The count of item's in the array.
       size;             //< The size of the underlaying array.
     T element_one;      //< The first element in the array.

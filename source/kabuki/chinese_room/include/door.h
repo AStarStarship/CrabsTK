@@ -2,13 +2,12 @@
     @version 0.x
     @file    ~/source/kabuki/chinese_room/include/Door.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
-                            All right reserved (R).
-             Licensed under the Apache License, Version 2.0 (the "License"); 
-             you may not use this file except in compliance with the License. 
-             You may obtain a copy of the License at
-                        http://www.apache.org/licenses/LICENSE-2.0
-             Unless required by applicable law or agreed to in writing, software
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
@@ -18,7 +17,7 @@
 #ifndef CHINESE_ROOM_DOOR_H
 #define CHINESE_ROOM_DOOR_H
 
-#include "slot.h"
+#include "socket.h"
 
 namespace _ {
 
@@ -37,7 +36,7 @@ namespace _ {
     Multiple doors also might share the same Portal. An example of this is a 
     connection to multiple systems over a WiFi connection.
 */
-class Door : public Operable {
+class Door : public Operand {
     public:
 
     enum {
@@ -53,24 +52,24 @@ class Door : public Operable {
 
     Door* Init (uint_t buffer_size);
 
-    /** Gets the terminal at the given index. */
-    Terminal* GetTerminal (index index);
+    /** Gets the expr at the given index. */
+    Slot* GetSlot (index index);
 
-    /** Address the given terminal to the Door. */
-    ticket_t AddTerminal (Terminal* t);
+    /** Address the given expr to the Door. */
+    ticket_t AddSlot (Slot* t);
 
-    /** Attempts to find a Terminal or Door with the given address. */
-    Terminal* Contains (void* address);
+    /** Attempts to find a Slot or Door with the given address. */
+    Slot* Contains (void* address);
 
-    /** Gets the Terminal that contains the given address.
+    /** Gets the Slot that contains the given address.
         @return Returns null if this Door doesn't contain the given address. */
-    Terminal* ContainsTerminal (void* address);
+    Slot* ContainsSlot (void* address);
 
     /** Executes all of the queued escape sequences. */
     ticket_t ExecAll ();
 
     /** Script expressions. */
-    const Operation* Star (index index, Expression* a) override;
+    virtual const Operation* Star (index index, Expression* expr);
 
     private:
 
@@ -80,9 +79,9 @@ class Door : public Operable {
         door_number_,       //< This door's number.
         max_num_doors_,     //< The max number of doors in the system.
         num_doors_,         //< The number of doors this door is connected too.
-        current_slot_,      //< Index of current Slot being iterated through.
+        current_slot_,      //< Index of current Socket being iterated through.
         current_door_;      //< Index of current Door being iterated through.
-    Slot* slot_;            //< The slot in the door in the Chinese Room.
+    Socket* slot_;            //< The slot in the door in the Chinese Room.
 };
 
 /** Returns the main door of the room. */
@@ -91,7 +90,7 @@ KABUKI Door& Doors ();
 /** Initializes a Door at the beginning of the given buffer. 
 static Door* DoorInit (byte* buffer, uint_t slot_size) {
     if (buffer == nullptr) return nullptr;
-    if (slot_size < kMinMonoidSize) return nullptr;
+    if (slot_size < kMinSlotSize) return nullptr;
     Wall* wall = reinterpret_cast<Door*>(buffer);
     w->is_dynamic = 0;
     w->num_doors = 0;

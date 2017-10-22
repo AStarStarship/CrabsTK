@@ -36,7 +36,7 @@ class IEvent
             
         }
         
-        virtual Print (Terminal)
+        virtual Print (Expression)
         {
             
         }
@@ -49,7 +49,7 @@ class IEvent
     virtual void Trigger () = 0;
     /*< Triggers the event. */
 
-    virtual void Print (Terminal& slot) = 0;
+    virtual void Print (Expression& slot) = 0;
     /*< Prints this object to the terminal. */
 };
 

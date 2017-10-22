@@ -51,7 +51,7 @@ Room::Room (uint_t size) :
     address_      (0),
     address_msb_  (0),
     size_         (size),
-    stack_height_ (0),
+    height_ (0),
     stack_size_   (0),
     door_         (nullptr),
     xoff_         (nullptr),
@@ -76,7 +76,7 @@ void Room::ProcessLog () {
 
 }
 
-void Room::PrintErrors (Bout* tx) {
+void Room::PrintErrors (Bout* bout) {
     //uint_t errorHeader[] = { 0 };
     //return a.prints (errorHeader);
 }
@@ -129,12 +129,12 @@ int Room::Main (const char** args, int args_count) {
     return 1;
 }
 
-const Operation* Room::Star (index index, Expression* a) {
+const Operation* Room::Star (index index, Expression* expr) {
     static const Set this_member = { "Room", NumOperations (0), 
                                         FirstOperation (' '), "A Chinese Room." };
     switch (index) {
         case ' ': {
-            static const Set m_space = { "Space", Esc <0> (), Esc <0> (), "" };
+            static const Set m_space = { "Space", Params <0> (), Params <0> (), "" };
         }
 
     }

@@ -46,7 +46,7 @@ class Fraction_f
     void SetDenominator (float Value);
     /*< Sets the denominator. */
 
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to the terminal. */
 
     private:

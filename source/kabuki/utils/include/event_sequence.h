@@ -46,7 +46,7 @@ class EventNode
     void Trigger (EventSequence* source);
     /*< Triggers the event. */
 
-    inline void Print (Terminal& slot);
+    inline void Print (Expression& slot);
     /*< Prints this object to the terminal. */
     
     private:
@@ -67,7 +67,7 @@ class EventSequence : public _::IEvent
     void Trigger ();
     /*< Triggers the event. */
 
-    inline void Print (Terminal& slot);
+    inline void Print (Expression& slot);
     /*< Prints this object to the terminal. */
 
     private:

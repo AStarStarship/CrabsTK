@@ -18,7 +18,7 @@
 #define CHINESE_ROOM_TABLE_H
 
 #include "utils.h"
-#include "error.h"
+#include "evaluation.h"
 
 namespace _ {
 
@@ -73,7 +73,7 @@ namespace _ {
     0x0|___________________________________________________|
     @endcode
 */
-struct Table {
+struct KABUKI Table {
     byte num_keys,              //< Number of keys.
         max_keys;               //< Number of buffered indexes.
     uint16_t pile_size,         //< Size of the collision table pile.

@@ -83,7 +83,7 @@ ticket_t Console::Loop () {
     return 0;
 }
 
-const Operation* Console::Star (index index, Expression* a) {
+const Operation* Console::Star (index index, Expression* expr) {
     return 0;
 }
 

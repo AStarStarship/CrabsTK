@@ -75,7 +75,7 @@ struct _KabukiTheater_ Quad
     inline void swap (Quad p);
     /*< Swaps this object's Point with a. */
 
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to the terminal. */
 };
 

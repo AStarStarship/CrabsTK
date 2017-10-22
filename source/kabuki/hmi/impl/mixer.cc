@@ -166,7 +166,7 @@ const char* Mixer::setState (byte Value)
     return 0;
 }
 
-const Member* Mixer::op (Terminal* io, byte index)
+const Member* Mixer::op (Expression* io, byte index)
 {
     switch (Index)
     {

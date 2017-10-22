@@ -644,14 +644,14 @@ char* ParseTime (char* input, time_t& result) {
 void ZeroTime (tm* moment) {
     if (moment == nullptr)
         return;
-    moment->tm_sec = 0;
-    moment->tm_min = 0;
-    moment->tm_hour = 0;
-    moment->tm_mday = 0;
-    moment->tm_mon = 0;
-    moment->tm_year = 0;
-    moment->tm_wday = 0;
-    moment->tm_yday = 0;
+    moment->tm_sec   = 0;
+    moment->tm_min   = 0;
+    moment->tm_hour  = 0;
+    moment->tm_mday  = 0;
+    moment->tm_mon   = 0;
+    moment->tm_year  = 0;
+    moment->tm_wday  = 0;
+    moment->tm_yday  = 0;
     moment->tm_isdst = 0;
 }
 

@@ -49,7 +49,7 @@ int TagLibrary::getNumTags ()
     return tags.size ();
 }
 
-void TagLibrary::print (Terminal& slot)
+void TagLibrary::print (Expression& slot)
 {
 }
 

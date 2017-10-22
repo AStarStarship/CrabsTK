@@ -22,8 +22,8 @@
 
 namespace _ {
 
-void EscPrint (const uint_t* params) {
-    if (params < (const uint_t*)256) {
+void ParamsPrint (params_t* params) {
+    if (params < (params_t*)256) {
         std::cout << reinterpret_cast<uintptr_t> (params) << '\n';
         return;
     }
@@ -69,7 +69,7 @@ void EscPrint (const uint_t* params) {
     }
 }
 
-uint_t ParamNumber (const uint_t* params, byte param_number) {
+uint_t ParamNumber (params_t* params, byte param_number) {
     if (params == nullptr)
         return 0;
     uint_t num_params = *params++;

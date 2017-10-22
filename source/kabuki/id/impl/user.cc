@@ -52,7 +52,7 @@ bool User::equals (const string& aName)
     return name.equals (aName);
 }
 
-void User::print (Terminal& io)
+void User::print (Expression& io)
 {
     slot.prints ("User Name: ");
     name.print (slot);

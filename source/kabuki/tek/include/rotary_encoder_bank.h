@@ -103,7 +103,7 @@ class RotaryEncoderBank
         This handler has a counter that counts from 0-255 in an infinite loop. 
         Each time around the loop, all of the LEDs get turned on. */
     
-    void Print (I2P::Terminal& Slot);
+    void Print (I2P::Expression& Slot);
     /*< Prints this object to a terminal. */
     
     private:

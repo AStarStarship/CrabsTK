@@ -22,8 +22,8 @@
 
 namespace _ {
 
-/** A list of Requests that can be sent from Terminal<uint_t, THash> to
-    Terminal<uint_t, THash>.  */
+/** A list of Requests that can be sent from Slot<uint_t, THash> to
+    Slot<uint_t, THash>.  */
 typedef enum Requests {
     OpenDoorRequest = 0,
     CloseDoorRequest,
@@ -49,27 +49,44 @@ KABUKI const char* RequestString (Request r);
 
 /** A Chinese Room.
     An Chinese Room works the same way as in the Chinese Room thought 
-    experiment. An Room receives a message through a slot in the door.
-    The Room reads the message written in a Chinese, consults a collection of 
-    objects, writes a response on a piece of paper, and passes it back through 
-    the slot in the door.
+    experiment. An Room receives a message through a slot in the door, the man
+    in the room reads does manual optical character recognition with a pen and
+    paper stack, some filing cabinets, and a library of books.
+
+    The size of the Expression Stack is defined by the Script Protocol to be a 
+    a maximum of 2^15-1 expressions tall.
 
     # Memory Layout
+
     @code
-        ________________
-        | Star stack
-    ^   |_______________
-    |   | Header  
-    0x0 |_______________
+         __________________ 
+        |                  |
+        |      Buffer      |
+        |__________________|
+        |        ^         |
+        |        |         |
+        | Expression stack |
+    ^   |__________________|
+    |   |    Room Header   |
+    0x0 |__________________|
 
     @endcode
 
     There are multiple doors in a Chinese Room that lead to other Chinese Rooms.
     Each door has multiple slots in lead to the same room. These slots are the 
     various IO ports of the system.
+
+    # Doors
+
+    All doors in the Chinese Room are accessed through one of the four Data 
+    Controllers DC1 through DC4.
+
+    @code
+    
+    @endcode
 */
-class Room: public Operable {
-    //NONCOPYABLE (Room)
+class Room: public Operand {
+    //NONCOPYABLE (Room) //< Not sure why this isn't working?
 
     public:
 
@@ -81,8 +98,7 @@ class Room: public Operable {
 
     /** Constructs a Room with the given size.
         @param size The room size that is bounded between the kMinRoomSize 
-                    and kMaxRoomSize.
-    */
+                    and kMaxRoomSize. */
     Room (uint_t size);
 
     /** Destructor. */
@@ -99,7 +115,7 @@ class Room: public Operable {
     void ProcessLog ();
 
     /** Prints the error log to a terminal. */
-    void PrintErrors (Bout* tx);
+    void PrintErrors (Bout* bout);
 
     /** Function run every main loop cycle to check the system status. */
     virtual void DiagnoseProblems ();
@@ -125,31 +141,27 @@ class Room: public Operable {
     /** Returns true if the Room is on. */
     virtual bool IsOn ();
 
+    virtual void* GetClockAddress () = 0;
+
     /** The default main function.
         Please feel free to override this with your own main function. */
     virtual int Main (const char** args, int args_count);
 
     /** Script expressions. */
-    virtual const Operation* Star (index index, Expression* a);
+    virtual const Operation* Star (index index, Expression* expr);
 
     protected:
-
-    // 2-to-4-byte vtable pointer here in memory!
-    uint address_;          //< The least significant bytes of the address.
-    uint_t address_msb_,    //< The most significant bytes of the address.
-        size_;              //< The size of the Room with device stack.
-    byte stack_height_,     //< The number of devices on the device stack.
-        stack_size_;        //< The max size of the device stack.
+                            //! vtable pointer here in memory!
+    uint      address_;     //< The least significant bytes of the address.
+    uint_t    address_msb_, //< The most significant bytes of the address.
+              size_;        //< The size of the Room with device stack.
+    byte      height_,      //< The number of devices on the device stack.
+              stack_size_;  //< The max size of the device stack.
                             //< Star Control 1: this.
-    Door* door_;            //< Star Control 2: The Door to this room.
-    Operation* xoff_,       //< Star Control 3: XOFF - XOFF handling device.
-<<<<<<< HEAD
-          * device_,        //< Star Control 4: the current device control.
-          * devices_;       //< Pointer to the current device control.
-=======
-             * device_,     //< Star Control 4: the current device control.
-             * devices_;    //< Pointer to the current device control.
->>>>>>> 98a6359c3af7d539eabe9e473c7b084cc3c6bfda
+    Door    * door_;        //< Star Control 2: The Door to this room.
+    Operand* xoff_,         //< Star Control 3: XOFF - XOFF handling device.
+            * device_,      //< Star Control 4: the current device control.
+            * devices_;     //< Pointer to the current device control.
 };
 
 }       //< namespace _

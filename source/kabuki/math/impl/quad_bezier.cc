@@ -130,7 +130,7 @@ Point<Type> QuadBezier::getPoint (Type t)
     return Point<Type> (x, y);
 }
 
-void QuadBezier::print (Terminal& slot)
+void QuadBezier::print (Expression& slot)
 {
 
 }

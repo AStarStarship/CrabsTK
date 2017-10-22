@@ -48,7 +48,7 @@ class Angle2D
     }
 
     /** Prints this object to the terminal. */
-    inline void Print (Terminal& io) {
+    inline void Print (Expression& io) {
     }
 };
 

@@ -129,7 +129,7 @@ class _KabukiTheater_ BCD
     void divide (double Value);
     /*< divides the given Value to this BCD. */
 
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints the BCD to the terminal. */
 
     private:

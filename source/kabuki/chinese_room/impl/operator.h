@@ -44,8 +44,8 @@ struct Expression;
       Operable
     @endcode
 
-    When a device is selected by a Terminal, the caller can then call functions 
-    of that device. The Terminal has a stack of devices that it then pushes the 
+    When a device is selected by a Expression, the caller can then call functions 
+    of that device. The Expression has a stack of devices that it then pushes the 
     Star* on top of. This object is now selected, and agents can now call 
     functions of this object via the Star Control (DC).
 

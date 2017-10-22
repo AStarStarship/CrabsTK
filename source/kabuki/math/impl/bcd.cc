@@ -220,7 +220,7 @@ void BCD::divide (double Value)
 
 }
 
-void BCD::print (Terminal& slot)
+void BCD::print (Expression& slot)
 {
 }
 

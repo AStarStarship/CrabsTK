@@ -27,7 +27,7 @@ Equation::Equation ()
 
 }
 
-void Equation::print (Terminal& slot)
+void Equation::print (Expression& slot)
 {
 }
 

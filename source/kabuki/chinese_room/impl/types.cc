@@ -52,9 +52,9 @@ KABUKI uint_t SizeOf (uint_t type) {
         0,      //< GR8: 26
         0,      //< ESC: 27
         0,      //< FS:  28
-        0,      //< BK2: 29
-        0,      //< BK4: 30
-        0,      //< BK8: 31
+        0,      //< RS:  29
+        0,      //< GS:  30
+        0,      //< FS:  31
     };
     if (type >= 32)
         return 0;
@@ -92,9 +92,9 @@ KABUKI const byte* TypeAlignments () {
         4,      //< AR4: 25
         8,      //< AR8: 26
         8,      //< ESC: 27
-        8,      //< BK8: 28
-        8,      //< BK4: 29
-        8,      //< BK2: 30
+        8,      //< FS: 28
+        8,      //< GS: 29
+        8,      //< RS: 30
         8,      //< US:  31
     };
     return kWidths;
@@ -176,9 +176,9 @@ KABUKI const char** TypeStrings () {
         "AR4",
         "AR8",
         "ESC",
-        "BK8",
-        "BK4",
-        "BK2",
+        "FS",
+        "GS",
+        "RS",
         "US",
         "Invalid"
     };
@@ -186,7 +186,7 @@ KABUKI const char** TypeStrings () {
 }
 
 KABUKI bool TypeIsValid (const char* type_name) {
-    if (type_name < TypeStrings ()[0] || type_name > TypeStrings ()[BK8])
+    if (type_name < TypeStrings ()[0] || type_name > TypeStrings ()[FS])
         return false;
     return true;
 }
@@ -245,9 +245,9 @@ KABUKI byte ReadType (const char* s) {
         {
             case 'K': switch (index = (byte) (token >> 16))
             {
-                case '2': return CheckDelimiter (token >> 24) ? 0xff : BK2;
-                case '4': return CheckDelimiter (token >> 24) ? 0xff : BK4;
-                case '8': return CheckDelimiter (token >> 24) ? 0xff : BK8;
+                case '2': return CheckDelimiter (token >> 24) ? 0xff : RS;
+                case '4': return CheckDelimiter (token >> 24) ? 0xff : GS;
+                case '8': return CheckDelimiter (token >> 24) ? 0xff : FS;
                 default: return 0xff;
             }
             case 'O': return CheckLastLetter<'L'> (token >> 16) ? 0xff : BOL;
@@ -343,7 +343,7 @@ KABUKI bool TypeIsArray (uint_t type) {
 }
 
 KABUKI bool TypeIsBag (uint_t type) {
-    return (type >= BK8) && (type <= BK2);
+    return (type >= FS) && (type <= RS);
 }
 
 KABUKI bool TypeIsHierarchical (uint_t type) {

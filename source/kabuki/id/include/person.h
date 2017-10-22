@@ -34,7 +34,7 @@ class ID_API Person: public Entity
     Person ();
     /**Constructs a person with no name. */
     
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to a terminal. */
 
     private:

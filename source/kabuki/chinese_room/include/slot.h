@@ -7,8 +7,8 @@
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
              [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
-             required by applicable law or agreed to in writing, software 
-             distributed under the License is distributed on an "AS IS" BASIS, 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
@@ -17,45 +17,62 @@
 #ifndef CHINESE_ROOM_SLOT_H
 #define CHINESE_ROOM_SLOT_H
 
-#include "terminal.h"
+#include "config.h"
 
 namespace _ {
 
-/** A group of Terminal(s) that create a Slot in a door in a Chinese room.
-*/
-struct Slot {
-    byte is_dynamic,        //< Flag for if using dynamic memory.
-         num_slots,         //< The number of slots in this group.
-         max_num_slots,     //< The number of slots allocated in memory.
-         reserved;          //< Reserved for memory alignment.
-    Terminal* slot_one;     //< The slots in door that messages pass through.
+/** Calculates the used ring buffer space.
+    @param  Start The start of the data.
+    @param  Stop  The stop of the data.
+    @param  Size The size of the buffer. */
+KABUKI uint_t SlotLength (byte* start, byte* stop, uint_t size);
+
+/** Calculates the space left in the given ring buffer.
+    @param  Start The start of the data.
+    @param  Stop  The stop of the data.
+    @param  Size  The size of the buffer. */
+KABUKI uint_t SlotSpace (byte* start, byte* stop, uint_t size);
+
+/** Clears the ring buffer by writing zeros to it. */
+KABUKI void SlotClear (byte* const begin, uint_t rx_start,
+                       byte* start, byte* const stop,
+                       byte* const end, uint_t size);
+
+/** Copies a block from a ring-buffer to the given destination. */
+KABUKI byte* SlotWrite (void* source, byte* const begin,
+                        byte* const start, byte* const stop,
+                        byte* const end, size_t size);
+
+/** Copies a block from a ring-buffer to the given destination. */
+KABUKI byte* SlotRead (void* destination, byte* const begin,
+                       byte* const start, byte* const stop,
+                       byte* const end, size_t size);
+
+/** Copies a block from a ring-buffer to the given destination. */
+KABUKI byte* SlotWrite (void* source, byte* const begin,
+                        byte* const start, byte* const stop,
+                        byte* const end, size_t size);
+
+/** Copies a block from a ring-buffer to the given destination. */
+KABUKI byte* SlotRead (void* destination, byte* const begin,
+                       byte* const start, byte* const stop,
+                       byte* const end, size_t size);
+
+/** A Slot in a Socket in a Door. */
+struct KABUKI Slot {
+    uint_t     size,        //< The size of the buffer.
+               start,       //< The starting index of the ring buffer data.
+               stop,        //< The stopping index of the ring buffer data.
+               read;        //< The read variable.
+    byte       buffer;      //< The first byte in the ring buffer.
 };
 
-/** Initializes a Slot at the beginning of the given buffer. */
-KABUKI Slot* SlotInit (uint_t width, uint_t size, byte max_num_slots);
+enum {
+    kSlotHeaderSize = 4 * sizeof (uint_t)   //< Size of a Slot Header.
+};
 
-/** Initializes a Slot at the beginning of the given buffer. */
-KABUKI Slot* SlotInit (byte* buffer, uint_t slot_size, byte max_num_slots);
-
-/** Gets a pointer to the array of pointers to Terminal(s). */
-KABUKI Terminal** SlotTerminals (Slot* s);
-
-/** Adds a Terminal to the slot.
-    @return Returns nullptr if the Terminal is full and a pointer to the Slot in the 
-            buffer upon success. */
-KABUKI ticket_t SlotAddTerminal (Slot* s, Terminal* t);
-
-/** Gets the Terminal from the Slot at the given index. */
-KABUKI Terminal* SlotGetTerminal (Slot* s, index index);
-
-/** Gets the Terminal from the Slot at the given index. */
-KABUKI Terminal* SlotFindTerminal (Slot* s, void* address);
-
-/** Deletes the Terminal from the Slot at the given index. */
-KABUKI void SlotDelete (Slot* s, index index);
-
-/** Prints the given Slot to the stdout. */
-KABUKI void SlotPrint (Slot* s);
+/** Returns true if the given slot contains the given address. */
+KABUKI bool SlotContains (Slot* slot, void* address);
 
 }       //< namespace _
 #endif  //< CHINESE_ROOM_SLOT_H

@@ -70,7 +70,7 @@ class _KabukiTheater_ Bezier_f
     Point<float> getPoint  (float P);
     /*< Gets a Point<float> along the path of the of curve at time t. */
 
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to the terminal. */
 
     private:

@@ -175,7 +175,7 @@ std::string Hit::toJSON ()
     return 0;
 }
 
-void Hit::print (Terminal& slot)
+void Hit::print (Expression& slot)
 {
     slot.prints ( "Hit", name, "/n");
     //data.print (slot);

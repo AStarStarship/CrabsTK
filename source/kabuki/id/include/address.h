@@ -88,8 +88,8 @@ class ID_API Address
     void setType (AddressType t);
     /*< Sets the addrss type. */
 
-    inline void print (Terminal& io);
-    /*< Prints this object to a Terminal. */
+    inline void print (Expression& io);
+    /*< Prints this object to a Expression. */
 
     private:
 

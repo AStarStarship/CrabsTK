@@ -46,7 +46,7 @@ class ID_API EmailAddress
     //string mapToDomain (Match match);
     /*< Maps a domain to the given map??? */
     
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to a terminal. */
 
     private:

@@ -121,7 +121,7 @@ class _KabukiTheater_ Rect
 
     Rect_f& operator= (const Vect_f& v);
 
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to the terminal. */
 
     private:

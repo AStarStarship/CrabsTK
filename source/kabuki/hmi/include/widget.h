@@ -129,7 +129,7 @@ class _HMI_API Widget : public _::IDevice
     void saveToFile (const File& f);
     /*< Exports a Widget to thisFile. */
     
-    const _::Member* op (_::Terminal* io, byte index) override;
+    const _::Member* op (_::Expression* io, byte index) override;
     /*< I2P subroutines. */
     
     inline void print() const;

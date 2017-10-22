@@ -49,7 +49,7 @@ class SerialPortal: public Portal, public Serial
 
   private:
 
-    Terminal slot;          //< Terminal for this Portal.
+    Expression slot;          //< Expression for this Portal.
     //Serial serial;          //< mbed Serial port.
 };
 

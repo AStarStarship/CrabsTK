@@ -27,7 +27,7 @@ Relationship::Relationship ()
 
 }
 
-void Relationship::print (Terminal& io)
+void Relationship::print (Expression& io)
 {
 
 }

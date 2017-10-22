@@ -151,7 +151,7 @@ class Color
     void setHSV (float& fR, float& fG, float& fB, float& fH, float& fS, float& fV);
     /*< Sets this color to the HSV values. */
 
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to the terminal. */
 };
 ////////////////////////////////////////////////////////////

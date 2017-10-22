@@ -73,7 +73,7 @@ class _KabukiTheater_ PortOut: public APort
     /*< Gets the capabilities of a particular MIDI output device.
         Stores the results are stored in the caps      struct. */
     
-    const Member* op (_::Terminal* io, byte index) override;
+    const Member* op (_::Expression* io, byte index) override;
     /*< Inter-process subroutines. */
     
     private:

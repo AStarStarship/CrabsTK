@@ -23,7 +23,7 @@ Door::Door (const char* roomName, uint_t slot_size, bool is_dynamic) :
     is_dynamic_ (is_dynamic)
 {
     //tx.SetBuffer (adjacentDoor->Rx ()->EndAddress () + 1), aSlotSize);
-    //rx = new SerialTerminal (tx.EndAddress (), aSlot, aSlotSize, 
+    //rx = new SerialSlot (tx.EndAddress (), aSlot, aSlotSize, 
     //  aTalkbackSize);
 }
 
@@ -37,30 +37,30 @@ Door* Door::Init (uint_t buffer_size) {
     return this;
 }
 
-Terminal* Door::GetTerminal (index index) {
+Slot* Door::GetSlot (index index) {
     return nullptr;
 }
 
-ticket_t Door::AddTerminal (Terminal* t) {
-    return SlotAddTerminal (slot_, t);
+ticket_t Door::AddSlot (Slot* slot) {
+    return SlotAddSlot (slot_, slot);
 }
 
-Terminal* Door::Contains (void* address) {
-    return SlotFindTerminal (slot_, address);
+Slot* Door::Contains (void* address) {
+    return SlotFindSlot (slot_, address);
 }
 
-Terminal* Door::ContainsTerminal (void* address) {
-    return SlotFindTerminal (slot_, address);
+Slot* Door::ContainsSlot (void* address) {
+    return SlotFindSlot (slot_, address);
 }
 
 ticket_t Door::ExecAll () {
     return 0;
 }
 
-const Operation* Door::Star (index index, Expression* a) {
+const Operation* Door::Star (index index, Expression* expr) {
     if (index < ' ') {
-        static const Set this_member = { "Door", NumOperations (0), 
-            0, "A door in a Chinese room." };
+        static const Operation this_member = { "Door", NumOperations (0), 
+            0, "A door in a Chinese room.", 0 };
         return &this_member;
     }
     index -= ' ';
@@ -76,7 +76,7 @@ KABUKI Door& Doors () {
 /** Initializes a Door at the beginning of the given buffer. 
 static Door* DoorInit (byte* buffer, uint_t slot_size) {
     if (buffer == nullptr) return nullptr;
-    if (slot_size < kMinMonoidSize) return nullptr;
+    if (slot_size < kMinSlotSize) return nullptr;
     Wall* wall = reinterpret_cast<Door*>(buffer);
     w->is_dynamic = 0;
     w->num_doors = 0;

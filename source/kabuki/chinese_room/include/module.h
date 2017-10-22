@@ -17,10 +17,10 @@
 #ifndef CHINESE_ROOM_H
 #define CHINESE_ROOM_H
 
-#include "console.h"
 #include "utils.h"
-#include "table.h"
-#include "set.h"
+//#include "console.h"
+//#include "table.h"
+//#include "set.h"
 
 #ifndef THIS_ROOM
 #include "this.h"

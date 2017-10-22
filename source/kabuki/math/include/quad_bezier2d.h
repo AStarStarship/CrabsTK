@@ -76,7 +76,7 @@ class _KabukiTheater_ QuadBezier
     Point_f getPoint (Type t);
     /*< Gets a Point_f along the path of the of curve at time t. */
 
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to the terminal. */
 
     private:

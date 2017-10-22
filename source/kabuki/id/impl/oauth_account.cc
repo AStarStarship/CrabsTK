@@ -27,7 +27,7 @@ OAthAccount::OAthAccount ()
 
 }
 
-void OAthAccount::print (Terminal& io)
+void OAthAccount::print (Expression& io)
 {
 
 }

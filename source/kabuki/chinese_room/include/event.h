@@ -25,7 +25,7 @@ namespace _ {
     
     @code
     #include <chinese_room/include/Event.h>
-    struct Example: public Event
+    struct KABUKI Example: public Event
     {
         void Trigger () void
         {
@@ -34,7 +34,7 @@ namespace _ {
     };
     @endcode
 */
-struct Event {
+struct KABUKI Event {
     /** Triggers the event. */
     virtual void Trigger () = 0;
 };

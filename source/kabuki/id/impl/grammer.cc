@@ -126,7 +126,7 @@ bool Grammer::makeMandatory (int startIndex, int stopIndex, int numInstances, st
     return true;
 }
 
-void Grammer::print (Terminal& io)
+void Grammer::print (Expression& io)
 {
     slot.prints ("Grammer: ");
 

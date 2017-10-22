@@ -33,7 +33,7 @@ class _KabukiTheater_ AffineTransform
     AffineTransform ();
     /*< Constructs an unintialized object. */
 
-    void print (Terminal& io);
+    void print (Expression& io);
     /*< Prints this object to the terminal. */
 };
 
@@ -54,7 +54,7 @@ class _KabukiTheater_ Angle
     void setDegs (Type Value);
     /*< Sets the angle to the new value in degrees. */
 
-    void print (Terminal& io);
+    void print (Expression& io);
     /*< Prints this object to the terminal. */
 };
 

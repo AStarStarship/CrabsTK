@@ -72,7 +72,7 @@ const char* MixerPage::setState (byte Value)
     return 0;
 }
 
-const char* MixerPage::op (Terminal* io, byte index)
+const char* MixerPage::op (Expression* io, byte index)
 {
     switch (Index)
     {

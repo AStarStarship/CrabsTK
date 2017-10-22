@@ -32,7 +32,7 @@ class ID_API Relationship
     Relationship ();
     /*< Default constructor. */
     
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to a terminal. */
 };
 }   //  _id

@@ -30,7 +30,7 @@ class _KabukiTheater_ ADSR: public _::IDevice
     ADSR ();
     /*< Constructs an ADSR with all zeroed out controls. */
     
-    const _::Member* op (_::Terminal* io, byte index) override;
+    const _::Member* op (_::Expression* io, byte index) override;
     /*< Inter-process operations. */
 };
 

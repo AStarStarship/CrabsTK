@@ -44,7 +44,7 @@ class Pot
 
     }
     
-    inline void Poll  (uint_t NewValue, _::Terminal* io, uint16_t value, uint6_t minValue, uint6_t maxChannel)
+    inline void Poll  (uint_t NewValue, _::Expression* io, uint16_t value, uint6_t minValue, uint6_t maxChannel)
     {
         /// 1. Autoset the min-max bounds.
 
@@ -64,7 +64,7 @@ class Pot
         */
     }
     
-    void Print (I2P::Terminal& Slot);
+    void Print (I2P::Expression& Slot);
     /*< Prints this object to a terminal. */
     
     private:

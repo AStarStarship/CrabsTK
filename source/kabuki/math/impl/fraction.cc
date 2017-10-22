@@ -48,7 +48,7 @@ void Fraction_f::getDenominator (float Value)
     denominator = Value;
 }
 
-void Fraction_f::print (I2P::Terminal& slot)
+void Fraction_f::print (I2P::Expression& slot)
 {
 
 }

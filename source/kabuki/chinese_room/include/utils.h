@@ -22,12 +22,13 @@
 namespace _ {
 
 static const char ErrorHeader[] = "| Error: \0",
-VerticalBar[] = "| \0";
+               VerticalBar[] = "| \0";
 
+/* Returns the inverse of the given value.
+   For code metadata purposes. */
 template<typename T>
 T MaxValue () {
-    static T value = ~(T)0;
-    return value;
+    return ~(T)0;
 }
 
 

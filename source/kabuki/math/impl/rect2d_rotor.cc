@@ -90,7 +90,7 @@ Rect_f RectRotor::getBounds ()
     return r;
 }
 
-void print (Terminal& slot)
+void print (Expression& slot)
 {
 
 }

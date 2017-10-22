@@ -72,7 +72,7 @@ class Console: public Room
     virtual ticket_t Loop ();
 
     /** Chinese room expressions. */
-    virtual const Operation* Star (char_t index, Expression* a);
+    virtual const Operation* Star (int index, Expression* expr);
 
     private:
 

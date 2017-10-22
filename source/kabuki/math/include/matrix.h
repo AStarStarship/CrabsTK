@@ -35,7 +35,7 @@ class Matrix
     ~Matrix ();
     /*< Destructor. */
 
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to the terminal. */
 
     private:

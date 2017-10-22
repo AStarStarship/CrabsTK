@@ -63,8 +63,8 @@ class ID_API Library
     string getSubcatagoryImageName (string s);
     /*< Gets the subcatagory image name. */
 
-    inline void print (Terminal& slot);
-    /*< Prints this object to a Terminal. */
+    inline void print (Expression& slot);
+    /*< Prints this object to a Expression. */
     
     //void injectTestData ();
     

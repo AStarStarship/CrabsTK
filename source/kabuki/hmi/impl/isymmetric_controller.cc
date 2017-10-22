@@ -332,7 +332,7 @@ void IsymmetricController::processMIDIQuaterNote ()
     // Write me!!!
 }
 
-const Member* IsymmetricController::op (_::Terminal* io, byte index)
+const Member* IsymmetricController::op (_::Expression* io, byte index)
 {
     switch (index)
     {

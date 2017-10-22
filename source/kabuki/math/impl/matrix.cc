@@ -32,7 +32,7 @@ Matrix::~Matrix ()
 
 }
 
-void Matrix::print (Terminal& slot)
+void Matrix::print (Expression& slot)
 {
 
 }

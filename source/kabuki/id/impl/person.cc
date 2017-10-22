@@ -27,7 +27,7 @@ Person::Person ()
 
 }
 
-void Person::print (Terminal& io)
+void Person::print (Expression& io)
 {
     slot.prints ("Person: ");
 }

@@ -95,7 +95,7 @@ void Address::setType (AddressType t)
     type = t;
 }
 
-void Address::print (Terminal& io)
+void Address::print (Expression& io)
 {
     slot.prints ( "Street: ", street.c_str (), "\n", " City: ", city.c_str (), "\n State/Province: ", state.c_str (), 
         "\n Zip/Postal Code: ", zip.c_str (), "\n Country: ", country.c_str (), "\n");

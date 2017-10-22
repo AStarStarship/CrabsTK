@@ -57,8 +57,8 @@ class Poly3D
     /**  */  
     void computeZAverge ();
 
-    void print (Terminal io);
-    /*< Prints this object to a Terminal. */
+    void print (Expression io);
+    /*< Prints this object to a Expression. */
     
     private:
 

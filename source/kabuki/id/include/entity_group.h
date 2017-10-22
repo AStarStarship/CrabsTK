@@ -47,7 +47,7 @@ class ID_API EntityGroup : public Entity
     virtual int search (const string& s) override;
     /*< Returns true if this list of entities contains the given string. */ 
     
-    virtual void print (Terminal& io) override;
+    virtual void print (Expression& io) override;
     /*< Prints this object to a terminal. */
 
     private:

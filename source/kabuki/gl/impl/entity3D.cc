@@ -947,7 +947,7 @@ bool Entity::updatePlgText ()
     return false;
 }
 
-void Entity::print (Terminal& io)
+void Entity::print (Expression& io)
 {
     updatePlgText ();
     return plgText;

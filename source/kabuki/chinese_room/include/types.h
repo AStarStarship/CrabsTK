@@ -2,13 +2,12 @@
     @version 0.x
     @file    ~/source/kabuki/chinese_room/include/types.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
-                            All right reserved (R).
-             Licensed under the Apache License, Version 2.0 (the "License"); 
-             you may not use this file except in compliance with the License. 
-             You may obtain a copy of the License at
-                        http://www.apache.org/licenses/LICENSE-2.0
-             Unless required by applicable law or agreed to in writing, software
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
@@ -56,11 +55,10 @@ typedef enum {
     AR4   = 25, //< 25. An array of up to 2^32-1 like primitive types 3-16.
     AR8   = 26, //< 26. An array of up to 2^32-1 like primitive types 3-16.
     ESC   = 27, //< 27. An atomic escape sequence of SCRIPT procedure calls.
-    BK8   = 28, //< 28. A bag with up to 2^31-2 members and 2^64-1 bytes data.
-    BK4   = 29, //< 29. A bag with up to 2^15-2 members and 2^32-1 bytes data.
-    BK2   = 30, //< 30. A bag with up to 2^7-2 members and 2^16-1 bytes data.
-    US    = 31, //< 31. A unit separator for breaking files and data into 
-                //<     transmission blocks.
+    FS    = 28, //< 28. A Set with up to 2^31-2 members and 2^64-1 bytes data.
+    GS    = 29, //< 29. A Set with up to 2^15-2 members and 2^32-1 bytes data.
+    RS    = 30, //< 30. A Set with up to 2^7-2 members and 2^16-1 bytes data.
+    US    = 31, //< 31. A unit for breaking files and data into packets.
 } TType;
 
 enum {
@@ -133,7 +131,7 @@ KABUKI bool TypeIsHierarchical (uint_t type);
 /** Converts from a 2's complement integer to a signed varint.
     @param value A 2's complement integer.
     @return An signed varint.
-    A signed varint is an uncomplemented signed integer with the sign in the 
+    A signed varint is an complemented signed integer with the sign in the 
     LSb. To convert a negative 2's complement value to positive invert the bits 
     and add one.
 */
@@ -144,14 +142,14 @@ KABUKI T PackSignedVarint (T value) {
         T uncomplemented = (~value) + 1;
         return sign_bit | (uncomplemented << 1);
     }
-    // Else don't uncomplement.
+    // Else don't complemented.
     return value << 1;
 }
 
 /** Converts from a signed varint to a 2's complement signed integer.
     @param  A signed integer casted as an unsigned integer.
     @return Returns a standard signed integer cased as unsigned.
-    A varint is an uncomplemented signed integer with the sign in the LSb. */
+    A varint is an complemented signed integer with the sign in the LSb. */
 template<typename T>
 KABUKI T UnpackSignedVarint (T value) {
     T sign_bit = value << (sizeof (T) * 8 - 1);

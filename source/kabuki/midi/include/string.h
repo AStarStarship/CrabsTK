@@ -74,7 +74,7 @@ class _KabukiTheater_ String
         @return Gets true S if every char in S isValid.
         @param  thisName The const char* to check the validity of. */
     
-    virtual const char* op (_::Terminal* io, byte index);
+    virtual const char* op (_::Expression* io, byte index);
     /*< Inter-process subroutines. */
 
     const char *toString ();

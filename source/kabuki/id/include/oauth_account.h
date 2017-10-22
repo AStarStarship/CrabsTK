@@ -33,7 +33,7 @@ class OAuthAccount
     OAuthAccount ();
     /*< Simple default constructor. */
     
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to a terminal. */
 };
 

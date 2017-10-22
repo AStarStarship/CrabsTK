@@ -115,7 +115,7 @@ int Bezier_f::getNumPoints ()
     return numPoints;
 }
 
-void Bezier_f::print (Terminal& slot)
+void Bezier_f::print (Expression& slot)
 {
 
 }

@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/monoid_rx.cc
+    @file    ~/source/kabuki/chinese_room/impl/bin.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -12,29 +12,169 @@
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
-    @desc    Monoid implementation split into three files, monoid.h, 
+    @desc    Slot implementation split into three files, slot.h, 
              monoid_rx.h, and monoid_tx.h because of the large read/write
              functions.
 */
 
 #include <stdafx.h>
-#include "../include/monoid.h"
-#include "../include/error.h"
+#include "../include/bin.h"
+#include "../include/slot.h"
+#include "../include/operation.h"
 
 namespace _ {
+
+const char* BinErrorString (Bin::Error e) {
+#if USING_CONSOLE
+    static const char* strings[] = {
+        "Buffer underflow",             //< 0
+        "Buffer overflow",              //< 1
+        "Varint overflow",              //< 2
+        "Invalid hash",                 //< 3
+        "Invalid type",                 //< 4
+        "Invalid index",                //< 5
+        "Invalid equerry",              //< 6
+        "Invalid argument number",      //< 7
+        "Invalid door",                 //< 8
+        "Too many parameters",          //< 9
+        "Stack overflow",               //< 10
+        "Invalid subset",               //< 11
+        "Too many pops",                //< 12
+        "String buffer overflow",       //< 13
+        "Invalid error handler",        //< 14
+        "Invalid operation",            //< 15
+        "Array overflow",               //< 16
+        "Invalid Set",                  //< 17
+        "Room Error"                    //< 18
+    };
+    if (e < 0 || e > Bin::RoomError)
+        return strings[Bin::RoomError];
+    return strings[e];
+#else
+    return kEmptyString;
+#endif
+}
+
+const char* BinStateString (Bin::State state) {
+    static const char* strings[] = {
+        "Scanning string ",
+        "Scanning varint",
+        "Scanning address",
+        "Scanning POD",
+        "Scanning args",
+        "Handling error",
+        "Invalid operation",
+        "Scanning hash",
+        "Locked"
+    };
+    if (state >= Bin::LockedState)
+        return strings[Bin::LockedState];
+    return strings[state];
+}
+
+const Operation* BinResult (Bin* bin, Bin::Error error) {
+    // @todo Write me.
+    return 0;
+}
+
+const Operation* BinResult (Bin* bin, Bin::Error error, params_t* header) {
+    // @todo Write me.
+    return 0;
+}
+
+const Operation* BinResult (Bin* bin, Bin::Error error, params_t* header,
+                            byte offset) {
+    // @todo Write me.
+    return 0;
+}
+
+const Operation* BinResult (Bin* bin, Bin::Error error, params_t* header,
+                            byte offset, byte* address) {
+    // @todo Write me.
+    return 0;
+}
+
+Bin* BinInit (byte* buffer, uint_t size) {
+    if (size < kMinSlotSize) return nullptr;
+    if (buffer == nullptr) return nullptr;
+
+    Bin* bin = reinterpret_cast<Bin*> (buffer);
+    bin->size = size - (4 * sizeof (uint_t));
+    bin->start = 0;
+    bin->stop = 0;
+    bin->read = 0;
+
+#if DEBUG_CHINESE_ROOM
+    memset (&bin->buffer, '\0', size);
+#endif
+    return bin;
+}
+
+uint_t BinSpace (Bin* bin) {
+    if (bin == nullptr) return ~0;
+    byte* txb_ptr = reinterpret_cast<byte*>(bin);
+    return SlotSpace (txb_ptr + bin->start, txb_ptr + bin->stop,
+        bin->size);
+}
+
+uint_t BinBufferLength (Bin* bin) {
+    if (bin == nullptr) return ~0;
+    byte* base = &bin->buffer;
+    return SlotLength (base + bin->start, base + bin->stop, bin->size);
+}
+
+byte* BinEndAddress (Bin* bin) {
+    return reinterpret_cast<byte*>(bin) + (4 * sizeof (uint_t)) + bin->size;
+}
+
+int BinStreamByte (Bin* bin) {
+
+    byte* begin = &bin->buffer,
+        *end = begin + bin->size;
+    byte* open = (byte*)begin + bin->read,
+        *start = begin + bin->start,
+        *cursor = start;
+
+    int length = start < open?open - start + 1:
+        (end - start) + (open - begin) + 2;
+
+    if (length < 1) {
+        BinResult (bin, Bin::BufferOverflowError, Params<1, STX> (), 2, start);
+        return -1;
+    }
+    byte b = *cursor;
+    bin->stop = (++cursor > end)?static_cast<uint_t> (Diff (begin, end)):
+        static_cast<uint_t> (Diff (begin, cursor));
+    return 0;
+}
+
+bool BinIsReadable (Bin* bin) {
+    return BinBufferLength (bin) > 0;
+}
+
+void BinPrint (Bin* bin) {
+    PrintLine ('_');
+    if (bin == nullptr) {
+        printf ("| Bin null\n");
+        return;
+    }
+    uint_t size = bin->size;
+    printf ("| Bin 0x%p: size: %u, start: %u, stop: %u, read: %u\n", bin, size,
+        bin->start, bin->stop, bin->read);
+    PrintMemory (&bin->buffer, size);
+}
     
-
-KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
-    if (rx == nullptr)
-        Report (NullPointerError, 0, 0, 0);
+const Operation* BinRead (Bin* bin, params_t* params, void** args) {
+    if (bin == nullptr)
+        return BinResult (bin, Bin::RoomError);
     if (params == nullptr)
-        Report (NullHeaderError, 0, 0, 0);
+        return BinResult (bin, Bin::RoomError);
     if (args == nullptr)
-        Report (NullHeaderError, 0, 0, 0);
+        return BinResult (bin, Bin::RoomError);
 
-    byte type,                  //< The current type we're reading.
-        ui1;                    //< Temp variable to load most types.
-    uint16_t ui2;               //< Temp variable for working with UI2 types.
+    byte type,                          //< The current type being read.
+        ui1;                            //< Temp variable.
+    uint16_t ui2;                       //< Temp variable.
 #if USING_VARINT4 || USING_AR4 || USING_BK4
     uint32_t ui4;
 #endif
@@ -42,58 +182,57 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
     uint64_t ui8;
 #endif
 
-    byte*     ui1_ptr;          //< Pointer to a UI1.
+    byte*     ui1_ptr;                  //< Pointer to a UI1.
 #if  USING_VARINT2 || USING_BK2
-    uint16_t* ui2_ptr;          //< Pointer to a UI2.
+    uint16_t* ui2_ptr;                  //< Pointer to a UI2.
 #endif
 #if USING_VARINT4 || USING_AR4 || USING_BK4
-    uint32_t* ui4_ptr;          //< Pointer to a UI4.
+    uint32_t* ui4_ptr;                  //< Pointer to a UI4.
 #endif
 #if USING_VARINT8 || USING_AR8 || USING_BK8
-    uint64_t* ui8_ptr;          //< Pointer to a UI1.
+    uint64_t* ui8_ptr;                  //< Pointer to a UI1.
 #endif
-    uint_t size,                //< The size of the ring buffer.
-           length,              //< The length of the data in the buffer.
-           count,               //< The argument length.
-           index,               //< The index in the escape sequence.
-           num_params = *params;//< The number of params.
+    uint_t size,                        //< Size of the ring buffer.
+           length,                      //< Length of the data in the buffer.
+           count,                       //< Argument length.
+           index,                       //< Index in the escape sequence.
+           num_params = *params;        //< Number of params.
     hash16_t hash;
 
-    if (num_params == 0) return 0;   //< Nothing to do.
+    if (num_params == 0) return 0;      //< Nothing to do.
 
     hash = 0;
-    size = rx->size;
+    size = bin->size;
 
-    byte* begin = MonoidRxBaseAddress (rx), //< The beginning of the buffer.
-        * end = begin + size,               //< The end of the buffer.
-        * start = begin + rx->start,        //< The start of the data.
-        * stop = begin + rx->stop;          //< The stop of the data.
-    const uint_t* param = params + 1;       //< The current param.
+    byte* begin = &bin->buffer,         //< The beginning of the buffer.
+        * end = begin + size,           //< The end of the buffer.
+        * start = begin + bin->start,   //< The start of the data.
+        * stop = begin + bin->stop;     //< The stop of the data.
+    params_t* param = params + 1;       //< The current param.
 
-    length = MonoidLength (start, stop, size);
+    length = SlotLength (start, stop, size);
     //
     //#if DEBUG_CHINESE_ROOM
     //    //printf ("\n\n| Reading: ");
-    //   PrintEsc (params);
+    //   ParamsPrint (params);
     //    //printf ("| begin: 0x%p start : %u stop : %u end : %u "
     //            "length: %u ", begin, Diff (begin, start), 
     //            Diff (begin, stop), Diff (begin, end), length);
     //#endif
-    // When we scan, we are reading from the beginning of the Monoid buffer.
+    // When we scan, we are reading from the beginning of the Slot buffer.
 
     for (index = 0; index < num_params; ++index) {
-        type = *param;
-        ++param;
-        start += TypeAlign (start, type);
+         type = *param;
+         ++param;
+         start += TypeAlign (start, type);
 //#if DEBUG_CHINESE_ROOM
 //        //printf ("\n| Index %2u: %s  start: %u, stop: %u hash: ", index,  
 //                TypeString (type), Diff (begin, start), Diff (begin, stop));
 //#endif
 
-        switch (type)
-        {
+        switch (type) {
           case NIL:
-              goto RxInvalidType;
+              goto BoutInvalidType;
           case SOH: //< _R_e_a_d__S_t_r_i_n_g_-_8_______________________________________
           case STX:
               // Load buffered-type argument length and increment the index.
@@ -114,9 +253,9 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
             ++ui1_ptr;
 
             while (ui1 != 0 && count != 0) {
-                if (count-- == 0)
-                    return Report (BufferUnderflowError, params, index,
-                                        start);
+                if (count == 1)
+                    return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
+                --count;
 //#if DEBUG_CHINESE_ROOM
 //                std::cout << ui1;
 //#endif
@@ -138,7 +277,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
           case BOL:
 #if USING_1_BYTE_TYPES
             if (length-- == 0) 
-                return Report (BufferUnderflowError, params, index, start);
+                return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
 
             // Load next pointer and increment args.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
@@ -154,15 +293,15 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
             *ui1_ptr = ui1;                     //< Write
             break;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case SI2: //< _R_e_a_d__1_6_-_b_i_t__T_y_p_e_s________________________
           case UI2:
           case HLF:
 #if USING_2_BYTE_TYPES
             if (length < 2)
-                return Report (BufferUnderflowError, params, index,
-                               start);
+                return BinResult (bin, Bin::BufferUnderflowError, params, index,
+                                  start);
             length -= 2;
 
             // Load next pointer and increment args.
@@ -184,7 +323,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
             *(ui1_ptr + 1) = ui1;               //< Write
             break;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case SI4: //< _R_e_a_d__3_2_-_b_i_t__T_y_p_e_s________________________
           case UI4:
@@ -192,7 +331,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
           case TMS:
 #if USING_4_BYTE_TYPES
             if (length < 4) 
-                return Report (BufferUnderflowError, params, index, start);
+                return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
             length -= 4;
 
             // Load next pointer and increment args.
@@ -226,7 +365,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
             *(ui1_ptr + 3) = ui1;               //< Write
             break;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case TMU: //< _R_e_a_d__6_4_-_b_i_t__T_y_p_e_s________________________
           case SI8:
@@ -234,7 +373,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
           case DBL:
 #if USING_8_BYTE_TYPES
             if (length < 8)
-                  return Report (BufferUnderflowError, params, index, start);
+                  return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
             length -= 8;
 
             // Load next pointer and increment args.
@@ -292,7 +431,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
             *(ui1_ptr + 7) = ui1;               //< Write
             break;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case SV2: //< _R_e_a_d__2_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_________
 
@@ -300,11 +439,11 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
             // Load next pointer and increment args.
             ui2_ptr = reinterpret_cast<uint16_t*> (args[index]);
             if (ui2_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return BinResult (bin, Bin::RoomError, params, index, start);
 
             // Read byte 1
             if (length-- == 0)
-                return Report (BufferUnderflowError, params, index, start);
+                return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
             ui1 = *start;
             if (++start >= end) start -= size;
             hash = Hash16 (ui1, hash);
@@ -318,7 +457,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
 
             // Read byte 2
             if (--length == 0)
-                return Report (BufferUnderflowError, params, index, start);
+                return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
             ui1 = *start;
             if (++start >= end) start -= size;
             hash = Hash16 (ui1, hash);
@@ -332,12 +471,12 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
 
             // Read byte 3
             if (--length == 0)
-                return Report (BufferUnderflowError, params, index, start);
+                return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
             ui1 = *start;
             if (++start >= end) start -= size;
             hash = Hash16 (ui1, hash);
             if ((ui1 >> 7) == 0)
-                return Report (VarintOverflowError, params, index, start);
+                return BinResult (bin, Bin::VarintOverflowError, params, index, start);
             ui2 |= ((uint16_t)(ui1 & 0x7F) << 14);
             *ui2_ptr = UnpackSignedVarint<uint16_t> (ui2);
             break;
@@ -346,11 +485,11 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
             // Load next pointer and increment args.
               ui2_ptr = reinterpret_cast<uint16_t*> (args[index]);
               if (ui2_ptr == nullptr)
-                  return Report (NullPointerError, params, index, start);
+                  return BinResult (bin, Bin::RoomError, params, index, start);
 
               // Read byte 1
               if (length-- == 0)
-                  return Report (BufferUnderflowError, params, index, start);
+                  return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
               ui1 = *start;
               if (++start >= end) start -= size;
               hash = Hash16 (ui1, hash);
@@ -363,7 +502,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
 
               // Read byte 2
               if (--length == 0)
-                  return Report (BufferUnderflowError, params, index, start);
+                  return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
               ui1 = *start;
               if (++start >= end) start -= size;
               hash = Hash16 (ui1, hash);
@@ -377,18 +516,18 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
 
             // Read byte 3
             if (--length == 0)
-                return Report (BufferUnderflowError, params, index, start);
+                return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
             ui1 = *start;
             if (++start >= end) start -= size;
             hash = Hash16 (ui1, hash);
             if ((ui1 >> 7) == 0)
-                return Report (VarintOverflowError, params, index, start);
+                return BinResult (bin, Bin::VarintOverflowError, params, index, start);
             ui2 |= ((uint16_t)(ui1 & 0x7F) << 14);
             *ui2_ptr = ui2;
             break;
 #else
           case UV2:
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case SV4: //< _R_e_a_d__4_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_________
           case UV4: //< _R_e_a_d__4_-_b_y_t_e__U_n_s_i_g_n_e_d__V_a_r_i_n_t_____
@@ -396,7 +535,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
             // Load next pointer and increment args.
             ui4_ptr = reinterpret_cast<uint32_t*> (args[index]);
             if (ui4_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return BinResult (bin, Bin::RoomError, params, index, start);
 
             // Scan byte 1.
             ui1 = *start;
@@ -408,7 +547,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
             while (ui1 >> 7 == 0)
             {
                 if (length-- == 0)
-                    return Report (BufferUnderflowError, params, index, start);
+                    return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
                 ui1 = *start;
                 if (++start >= end) start -= size;
                 hash = Hash16 (ui1, hash);
@@ -417,7 +556,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
                 //< because we're packing them up and will overwrite.
                 ui2 += 7;
                 if (--count == 0)
-                    return Report (VarintOverflowError, params, index, start);
+                    return BinResult (bin, Bin::VarintOverflowError, params, index, start);
             }
             if (count == 5)    //< If there is only one byte we need to
                 ui4 &= 0x7F;        //< mask off the terminating varint bit.
@@ -426,7 +565,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
             *ui4_ptr = ui4;
           break;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case SV8: //< _R_e_a_d__V_a_r_i_n_t__8________________________________
           case UV8:
@@ -434,7 +573,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
               // Load next pointer and increment args.
               ui8_ptr = reinterpret_cast<uint64_t*> (args[index]);
               if (ui8_ptr == nullptr)
-                  return Report (NullPointerError, params, index, start);
+                  return BinResult (bin, Bin::RoomError, params, index, start);
 
               // Scan byte 1.
               ui1 = *start;
@@ -445,7 +584,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
               count = 9; //< The max number of Varint8 bytes.
               while (ui1 >> 7 == 0) {
                   if (length-- == 0)
-                      return Report (BufferUnderflowError, params, index, start);
+                      return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
                   ui1 = *start;
                   if (++start >= end) start -= size;
                   hash = Hash16 (ui1, hash);
@@ -461,7 +600,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
                   //< because we're packing them up and will overwrite.
                   ui2 += 7;
                   if (--count == 0)
-                      return Report (VarintOverflowError, params, index, start);
+                      return BinResult (bin, Bin::VarintOverflowError, params, index, start);
               }
               if (count == 9)    //< If there is only one byte we need to
                   ui8 &= 0x7F;        //< mask off the terminating varint bit.
@@ -470,67 +609,67 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
               *ui8_ptr = ui8;
             break;
 #else
-              goto RxInvalidType;
+              goto BoutInvalidType;
 #endif
           case AR1:  //< _R_e_a_d__A_r_r_a_y_-_1________________________________
 #if USING_AR1
             // Load next pointer and increment args.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
             if (ui1_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return BinResult (bin, Bin::RoomError, params, index, start);
             count = *param++;
             count *= SizeOf (*param++);
             goto ReadBlock;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case AR2:  //< _R_e_a_d__A_r_r_a_y_-_2________________________________
 #if USING_AR2
               // Load the pointer to the destination.
               ui1_ptr = reinterpret_cast<byte*> (args[index]);
               if (ui1_ptr == nullptr)
-                  return Report (NullPointerError, params, index, start);
+                  return BinResult (bin, Bin::RoomError, params, index, start);
               count = *param++;
               count *= SizeOf (*param++);
               goto ReadBlock;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case AR4:  //< _R_e_a_d__A_r_r_a_y_-_4________________________________
 #if USING_AR4
             // Load the pointer to the destination.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
             if (ui1_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return BinResult (bin, Bin::RoomError, params, index, start);
             count = *param++;
             count *= SizeOf (*param++);
             goto ReadBlock;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case AR8:  //< _R_e_a_d__A_r_r_a_y_-_8________________________________
 #if USING_AR8
             // Load the pointer to the destination.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
             if (ui1_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return BinResult (bin, Bin::RoomError, params, index, start);
             count = *param++;
             count *= SizeOf (*param++);
             goto ReadBlock;
 #else
-              goto RxInvalidType;
+              goto BoutInvalidType;
 #endif
           case ESC: //< _R_e_a_d__E_s_c_a_p_e__S_e_q_u_e_n_c_e__________________
             // I'm not sure exactly how this should work. I can't do recursion
             // because of embedded limitations.
             break;
-          case BK8: //< _R_e_a_d__B_o_o_k_8_____________________________________
+          case FS: //< _R_e_a_d__B_o_o_k_8_____________________________________
             if (length <= 128)
-                return Report (BufferUnderflowError, params, index, start);
+                return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
             // Load next pointer and increment args.
             ui8_ptr = reinterpret_cast<uint64_t*> (args[index]);
             if (ui8_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return BinResult (bin, Bin::RoomError, params, index, start);
 
             for (ui2 = 0; ui2 <= sizeof (uint64_t); ui2 += 8) {
                 ui1 = *start;
@@ -542,15 +681,15 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
             break;
 #if USING_AR8
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
-          case BK4: //< _R_e_a_d__B_o_o_k_4_______________________________________
+          case GS: //< _R_e_a_d__B_o_o_k_4_______________________________________
             if (length <= 64)
-                return Report (BufferUnderflowError, params, index, start);
+                return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
             // Load the pointer to the destination.
             ui4_ptr = reinterpret_cast<uint32_t*> (args[index]);
             if (ui4_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return BinResult (bin, Bin::RoomError, params, index, start);
 
             for (ui2 = 0; ui2 <= sizeof (uint32_t); ui2 += 8) {
                 ui1 = *start;
@@ -562,15 +701,15 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
             break;
 #if USING_BK4
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
-          case BK2: //< _R_e_a_d__B_o_o_k_2_______________________________________
+          case RS: //< _R_e_a_d__B_o_o_k_2_______________________________________
             if (length <= 32)
-                return Report (BufferUnderflowError, params, index, start);
+                return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
             // Load the pointer to the destination.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
             if (ui1_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return BinResult (bin, Bin::RoomError, params, index, start);
             ui1 = *start;
             if (++start >= end) start -= size;
             hash = Hash16 (ui1, hash);
@@ -583,7 +722,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
             break;
 #if USING_BK2
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case US: //< _R_e_a_d__U_n_i_t__S_e_p_e_r_a_t_o_r_____________________
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
@@ -591,7 +730,7 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
             ReadBlock:
             {
                 if (length < count)
-                    return Report (BufferOverflowError, params, index, start);
+                    return BinResult (bin, Bin::BufferOverflowError, params, index, start);
                 if (count == 0)
                     break;          //< Not sure if this is an error.
                 if (start + count >= end) {
@@ -622,12 +761,13 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
                 break;
             }
           default:
-            RxInvalidType:
+            BoutInvalidType:
             {
 #if DEBUG
                 //printf ("\n!!!Read invalid type %u\n", type);
 #endif
-                return Report (ReadInvalidTypeError, params, index, start);
+                return BinResult (bin, Bin::InvalidTypeError, params, index,
+                                  start);
             }
         }
         std::cout << " |";
@@ -644,15 +784,15 @@ KABUKI const Operation* Read (Bout* rx, const uint_t* params, void** args) {
     //printf ("found: %x\n", ui2);
     //#endif
     if (hash != ui2)
-        return Report (InvalidHashError, params, index, start);
+        return BinResult (bin, Bin::InvalidHashError, params, index, start);
 
 //#if DEBUG_CHINESE_ROOM
 //    //printf ("| Done reading\n");
-//    MonoidClear (begin, rx->start, start, stop, end, size);
+//    SlotClear (begin, bin->start, start, stop, end, size);
 //#endif
 
     // Convert pointer back to offset
-    rx->start = Diff (begin, start);
+    bin->start = Diff (begin, start);
 
     return 0;
 }

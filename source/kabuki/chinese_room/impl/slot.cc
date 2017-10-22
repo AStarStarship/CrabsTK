@@ -16,77 +16,77 @@
 
 #include <stdafx.h>
 #include "../include/slot.h"
-#include "../include/terminal.h"
 
 namespace _ {
 
-KABUKI Slot* SlotInit (uint_t width, uint_t size, byte max_num_slots) {
-    Slot* s = New<Slot, uint_t> (width, kMinMonoidSize);
-    if (s == nullptr) return nullptr;
-    s->is_dynamic = 0;
-    s->num_slots = 0;
-    s->max_num_slots = max_num_slots;
-    s->slot_one = nullptr;
-}
-
-KABUKI Slot* SlotInit (byte* buffer, uint_t slot_size, byte max_num_slots) {
-    if (buffer == nullptr) return nullptr;
-    if (slot_size < kMinMonoidSize) return nullptr;
-    Slot* s = reinterpret_cast<Slot*>(buffer);
-    s->is_dynamic = 0;
-    s->num_slots = 0;
-    s->max_num_slots = max_num_slots;
-    s->slot_one = nullptr;
-}
-
-KABUKI Terminal** SlotTerminals (Slot* s) {
-    return reinterpret_cast<Terminal**> (s->slot_one);
-}
-
-KABUKI ticket_t SlotAddTerminal (Slot* s, Terminal* t) {
-    if (s == nullptr) return Report (NullPointerError);
-    if (t == nullptr) return Report (NullPointerError);
-    byte num_slots = s->num_slots;
-    if (num_slots + 1 >= s->max_num_slots) 
-        return Report (NullPointerError);   //< @todo Add new error.
-    SlotTerminals (s)[num_slots] = t;
-    ++s->num_slots;
-    return 0;
-}
-
-KABUKI Terminal* SlotGetTerminal (Slot* s, index index) {
-    if (s == nullptr) return nullptr;
-    if (index >= s->num_slots)
-        return nullptr;
-    return SlotTerminals (s)[index];
-}
-
-KABUKI Terminal* SlotFindTerminal (Slot* s, void* address) {
-    Terminal** terminals = SlotTerminals (s);
-    if (terminals == nullptr) return nullptr;
-    for (byte i = 0; i < s->num_slots; ++i) {
-        Terminal* t = terminals[i];
-        if (t->Contains (address)) return t;
+void SlotClear (byte* const begin, uint_t rx_start,
+    byte* start, byte* const stop,
+    byte* const end, uint_t size)
+{
+    byte* cursor = begin + rx_start;
+    while (start != cursor) {
+        *cursor = 0;
+        if (++cursor >= end) cursor -= size;
     }
-    return nullptr;
 }
 
-KABUKI void SlotDelete (Slot* s, index index) {
-    if (s == nullptr) return;
-    if (index >= s->num_slots)
-        return;
-    Terminal** ts = SlotTerminals (s);
-    Terminal* t = ts[index];
-    t->~Terminal ();
-    for (byte i = index; i < s->num_slots; ++i)
-        ts[index] = ts[index + 1];
-    --s->num_slots;
+uint_t SlotLength (byte* start, byte* stop, uint_t size) {
+    uint_t delta_start_stop = static_cast<uint> (stop - start);
+    return start <= stop?delta_start_stop:size - delta_start_stop;
 }
 
-KABUKI void SlotPrint (Slot* s) {
-    if (s == nullptr) return;
-    printf ("\nSlot:\nis_dynamic %s\nnum_slots: %u\nmax_num_slots: %u\n", 
-            s->is_dynamic ? "true" : "false", s->num_slots, s->max_num_slots);
+uint_t SlotSpace (byte* start, byte* stop, uint_t size) {
+    uint_t delta_start_stop = static_cast<uint> (stop - start);
+    return start <= stop?size - delta_start_stop:delta_start_stop;
+}
+
+byte* SlotWrite (void* source, byte* const begin, byte* const start,
+                 byte* const stop, byte* const end, size_t size)
+{
+    if (source == nullptr) return start;
+
+    // Now we can copy the bag into memory.
+    if ((start > stop) && (start + size >= end)) {
+        // Calculate upper chunk size.
+        uint_t top_chunk = end - stop;
+        size -= top_chunk;
+
+        memcpy (source, start, top_chunk);
+        memcpy (reinterpret_cast<byte*>(source) + top_chunk, begin, size);
+        return begin + size;
+    }
+    memcpy (source, stop, size);
+    return start + size;
+}
+
+byte* SlotRead (void* destination, byte* const begin, byte* const start,
+                byte* const stop, byte* const end, size_t size)
+{
+    if (destination == nullptr) return start;
+
+    // Now we can copy the bag into memory.
+    if ((start > stop) && (start + size >= end)) {
+        // Calculate upper chunk size.
+        uint_t top_chunk = end - stop;
+        size -= top_chunk;
+
+        memcpy (start, destination, top_chunk);
+        memcpy (begin, reinterpret_cast<byte*>(destination) + top_chunk, size);
+        return begin + size;
+    }
+    memcpy (stop, destination, size);
+    return start + size;
+}
+
+bool SlotContains (Slot* slot, void* address) {
+    uintptr_t addr = reinterpret_cast<uintptr_t> (address),
+              base_address = reinterpret_cast<uintptr_t> (slot),
+              upper_address = base_address + slot->size;
+    if ((addr > base_address) && (addr < upper_address)) {
+        // Optimize for the most common case first.
+        return true;
+    }
+    return false;
 }
 
 }       //< namespace _

@@ -27,7 +27,7 @@ class FILE_API : public IDevice
 {
     public:
     
-    const Member* op (Terminal* io, byte index) override;
+    const Member* op (Expression* io, byte index) override;
     /*< I2P proceedures. */
 }
 }   //< _File

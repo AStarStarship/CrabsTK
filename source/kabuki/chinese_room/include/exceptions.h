@@ -22,7 +22,7 @@
 namespace _ {
 
 /** Exception thrown to crash the program. */
-struct RoomCrashException : public std::exception {
+struct KABUKI RoomCrashException : public std::exception {
     const char* what () const throw ();
 };
 }       //< namespace _

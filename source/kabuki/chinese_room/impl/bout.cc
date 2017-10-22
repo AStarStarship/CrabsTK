@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/unityper.cc
+    @file    ~/source/kabuki/chinese_room/impl/bout.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -12,25 +12,140 @@
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
-    @desc    Monoid implementation split into three files, monoid.h, 
+    @desc    Slot implementation split into three files, slot.h, 
              monoid_rx.h, and monoid_tx.h because of the large read/write
              functions.
 */
 
 #include <stdafx.h>
-#include "../include/monoid.h"
-#include "../include/error.h"
+#include "../include/bout.h"
+#include "../include/slot.h"
+#include "../include/args.h"
+#include "../include/address.h"
 
 namespace _ {
-    
 
-KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params, 
-                       void** args) {
+const char* BoutErrorString (Bout::Error error) {
+#if USING_CONSOLE
+    static const char* strings[] = {
+        "Buffer overflow",  //< 0
+        "Locked Error"      //< 1
+        "Room Error"        //< 2
+    };
+    if (error < 0 || error> Bout::RoomError)
+        return strings[Bout::RoomError];
+    return strings[error];
+#else
+    return kEmptyString;
+#endif
+}
+
+const char* BoutStateString (Bout::State state) {
+    static const char* strings[] = {
+        "WritingState",
+        "LockedState"
+    };
+    if (state >= Bout::LockedState)
+        return strings[Bout::LockedState];
+    return strings[state];
+}
+
+const Operation* BoutResult (Bout* bout, Bout::Error error) {
+    // @todo Write me.
+    return 0;
+}
+
+const Operation* BoutResult (Bout* bout, Bout::Error error, params_t* header) {
+    // @todo Write me.
+    return 0;
+}
+
+const Operation* BoutResult (Bout* bout, Bout::Error error, params_t* header,
+    byte offset) {
+    // @todo Write me.
+    return 0;
+}
+
+const Operation* BoutResult (Bout* bout, Bout::Error error, params_t* header,
+    byte offset, byte* address) {
+    // @todo Write me.
+    return 0;
+}
+
+Bout* BoutInit (byte* buffer, uint_t size) {
+    if (size < kMinSlotSize) return nullptr;
+    if (buffer == nullptr) return nullptr;
+
+    Bout* bout = reinterpret_cast<Bout*> (buffer);
+    bout->size = size - (4 * sizeof (uint_t));
+    bout->start = 0;
+    bout->stop = 0;
+    bout->read = 0;
+
+#if DEBUG_CHINESE_ROOM
+    memset (&bout->buffer, '\0', size);
+#endif
+    return bout;
+}
+
+uint_t BoutSpace (Bout* bout) {
+    if (bout == nullptr) return ~0;
+    byte* txb_ptr = reinterpret_cast<byte*>(bout);
+    return SlotSpace (txb_ptr + bout->start, txb_ptr + bout->stop,
+        bout->size);
+}
+
+uint_t BoutBufferLength (Bout* bout) {
+    if (bout == nullptr) return ~0;
+    byte* base = &bout->buffer;
+    return SlotLength (base + bout->start, base + bout->stop, bout->size);
+}
+
+byte* BoutEndAddress (Bout* bout) {
+    return reinterpret_cast<byte*>(bout) + (4 * sizeof (uint_t)) + bout->size;
+}
+
+int BoutStreamByte (Bout* bout) {
+
+    byte* begin = &bout->buffer,
+        *end = begin + bout->size;
+    byte* open = (byte*)begin + bout->read,
+        *start = begin + bout->start,
+        *cursor = start;
+
+    int length = start < open?open - start + 1:
+        (end - start) + (open - begin) + 2;
+
+    if (length < 1) {
+        BoutResult (bout, Bout::BufferOverflowError, Params<1, STX> (), 2, start);
+        return -1;
+    }
+    byte b = *cursor;
+    bout->stop = (++cursor > end)?static_cast<uint_t> (Diff (begin, end)):
+        static_cast<uint_t> (Diff (begin, cursor));
+    return 0;
+}
+
+void BoutPrint (Bout* bout) {
+    PrintLine ('_');
+    if (bout == nullptr) {
+        printf ("| Bout null\n");
+        return;
+    }
+    uint_t size = bout->size;
+    printf ("| Bout 0x%p: size: %u, start: %u, stop: %u, read: %u\n", bout, size,
+        bout->start, bout->stop, bout->read);
+    PrintMemory (&bout->buffer, size);
+}
+
+const Operation* BoutWrite (Bout* bout, params_t* params, void** args) {
     //printf ("\n\n| Writing to %p\n", tx);
-    if (address == nullptr)
-        return Report (NullHeaderError);
+    if (bout == nullptr)
+        return BoutResult (bout, Bout::RoomError);
     if (params == nullptr)
-        Report (NullHeaderError);
+        return BoutResult (bout, Bout::RoomError);
+    if (args == nullptr)
+        return BoutResult (bout, Bout::RoomError);
     
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte type,
@@ -45,21 +160,21 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
     uint64_t ui8;
 #endif
 
-    const uint_t num_params = *params;
+    params_t num_params = *params;
     ++params;
     if (num_params == 0) return 0;          //< Nothing to do.
 
-    uint_t size = tx->size,                 //< Size of the buffer.
+    uint_t size = bout->size,               //< Size of the buffer.
         space,                              //< Space in the buffer.
         index,                              //< Index in the params.
         length;                             //< Length of a type to write.
     hash16_t hash = 0;                      //< 16-bit prime hash.
-    const uint_t* param = params;           //< Pointer to the current param.
+    params_t* param = params;               //< Pointer to the current param.
     // Convert the socket offsets to pointers.
-    byte* begin = MonoidTxSlot (tx),        //< Beginning of the buffer.
+    byte* begin = &bout->buffer,            //< Beginning of the buffer.
         * end   = begin + size,             //< End of the buffer.
-        * start = begin + tx->start,        //< Start of the data.
-        * stop  = begin + tx->stop;         //< Stop of the data.
+        * start = begin + bout->start,      //< Start of the data.
+        * stop  = begin + bout->stop;       //< Stop of the data.
     const byte* ui1_ptr;                    //< Pointer to a 1-byte type.
 #if USING_2_BYTE_TYPES || USING_VARINT2
     const uint16_t* ui2_ptr;                //< Pointer to a 2-byte type.
@@ -74,39 +189,17 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
     uint_t array_type;                      //< Array type for writing arrays.
 #endif
 
-    space = MonoidSpace (start, stop, size);
+    space = SlotSpace (start, stop, size);
 
-    std::cout << "\n| space: " << space
-              << "\n| address: \"";
+    //std::cout << "\n| space: " << space
+    //          << "\n| address: \"";
 
     // Check if the buffer has enough room.
     if (space == 0)
-        return Report (BufferUnderflowError);
+        return BoutResult (bout, Bout::BufferOverflowError);
     --space;
     length = *param;   //< Load the max string length.
     ++param;
-
-    // We know we will always write at least one null-term byte.
-    ui1 = *address;
-    *stop = ui1;
-    if (++stop >= end) stop -= size;
-    hash = Hash16 (ui1, hash);
-    std::cout << ui1;
-
-    while (ui1 != 0) {
-        std::cout << ui1;
-
-        if (space-- == 0)
-            return Report (BufferUnderflowError, params, 0,
-                           start);
-        ++address;
-        ui1 = *address;     // Read byte.
-        hash = Hash16 (ui1, hash);
-
-        *stop = ui1;        // Write byte
-        if (++stop >= end) stop -= size;
-    }
-    std::cout << "\"\n";
 
     // Write data.
     for (index = 0; index < num_params; ++index) {
@@ -123,8 +216,8 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
             case SOH: //< _W_r_i_t_e__A_d_d_r_e_s_s__S_t_r_i_n_g________________
             case STX: //< _W_r_i_t_e__S_t_r_i_n_g_______________________________
                 if (space == 0)
-                    return Report (BufferUnderflowError, params, index, 
-                                   start);
+                    return BoutResult (bout, Bout::BufferOverflowError, params, index,
+                                       start);
                 --space;
                 length = *param;   //< Load the max string length.
                 ++param;
@@ -149,8 +242,8 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
 
                 while (ui1 != 0) {
                     if (space-- == 0)
-                        return Report (BufferUnderflowError, params, index, 
-                                       start);
+                        return BoutResult (bout, Bout::BufferOverflowError, params, index,
+                                           start);
                     ++ui1_ptr;
                     ui1 = *ui1_ptr;     // Read byte.
                     hash = Hash16 (ui1, hash);
@@ -175,7 +268,7 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
 #if USING_1_BYTE_TYPES
                 // Check if the buffer has enough room.
                 if (space-- == 0)
-                    return Report (BufferUnderflowError, params, index,
+                    return BoutResult (bout, Bout::BufferOverflowError, params, index,
                                         start);
 
                 // Load pointer and read data to write.
@@ -197,8 +290,8 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
                 // Align the buffer to a word boundary and check if the 
                 // buffer has enough room.
                 if (space < sizeof (uint16_t))
-                    return Report (BufferUnderflowError, params, index,
-                                        start);
+                    return BoutResult (bout, Bout::BufferOverflowError, params, index,
+                                       start);
                 space -= sizeof (uint16_t);
 
                 // Load pointer and value to write.
@@ -232,7 +325,7 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
                 // has enough room.
 
                 if (space < sizeof (uint32_t))
-                    return Report (BufferUnderflowError, params, index,
+                    return BoutResult (bout, Bout::BufferOverflowError, params, index,
                                         start);
                 space -= sizeof (uint64_t);
 
@@ -277,7 +370,7 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
                 // Align the buffer to a word boundary and check if the buffer
                 // has enough room.
                 if (space < sizeof (uint64_t))
-                    return Report (BufferUnderflowError, params, index,
+                    return BoutResult (bout, Bout::BufferOverflowError, params, index,
                                         start);
                 space -= sizeof (uint64_t);
 
@@ -356,14 +449,14 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
                 // Load next pointer value to write.
                 ui2_ptr = reinterpret_cast<const uint16_t*> (args[index]);
                 if (ui2_ptr == nullptr)
-                    return Report (NullPointerError, params, index, start);
+                    return BoutResult (bout, Bout::RoomError, params, index, start);
                 ui2 = *ui2_ptr;
 
                 WriteVarint2:
                 {
                     // Byte 1
                     if (space-- == 0)
-                        return Report (BufferUnderflowError, params, index, start);
+                        return BoutResult (bout, Bout::BufferOverflowError, params, index, start);
                     ui1 = ui2 & 0x7f;
                     ui2 = ui2 >> 7;
                     if (ui2 == 0) {
@@ -379,7 +472,7 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
 
                     // Byte 2
                     if (--space == 0)
-                        return Report (BufferUnderflowError, params, index, start);
+                        return BoutResult (bout, Bout::BufferOverflowError, params, index, start);
                     ui1 = ui2 & 0x7f;
                     ui2 = ui2 >> 7;
                     if (ui2 == 0) {
@@ -395,7 +488,7 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
 
                     // Byte 3
                     if (--space == 0)
-                        return Report (BufferUnderflowError, params, index, start);
+                        return BoutResult (bout, Bout::BufferOverflowError, params, index, start);
                     ui1 = ui2 & 0x7f;
                     ui1 |= 0x80;
                     *stop = ui1;
@@ -423,7 +516,7 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
                 {
                     ui2 = 5;
                     if (space == 0) //< @todo Benchmark to space--
-                        return Report (BufferUnderflowError, params, index, 
+                        return BoutResult (bout, Bout::BufferOverflowError, params, index,
                                        start);
                     --space;    //< @todo Benchmark to space--
                     ui1 = ui4 & 0x7f;
@@ -438,8 +531,9 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
                     *stop = ui1;
                     if (++stop >= end) stop -= size;
                     hash = Hash16 (ui1, hash);
-                    if (--ui2 == 0)
-                        return Report (VarintOverflowError, params, index, start);
+                    // This wont happen I don't think.
+                    //if (--ui2 == 0)
+                    //    return BoutResult (VarintOverflowError, params, index, start);
 
                     goto WriteVarint4;
                 }
@@ -462,7 +556,7 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
                 {
                     ui2 = 8;            //< The max number of varint bytes - 1.
                     if (space <= 9)     //< @todo Benchmark to space--
-                        return Report (BufferUnderflowError, params, index, 
+                        return BoutResult (bout, Bout::BufferOverflowError, params, index,
                                        start);
                     --space;            //< @todo Benchmark to space--
                     if (--ui2 == 0) {   //< It's the last byte not term bit.
@@ -498,10 +592,8 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
                 // Load pointer to data to write and get size.
                 ui1_ptr = reinterpret_cast<const byte*> (args[index]);
                 if (ui1_ptr == nullptr)
-                    return Report (NullPointerError, params, index, start);
+                    return BoutResult (bout, Bout::RoomError, params, index, start);
                 length = *param++;
-                if (length > MaxValue<byte> ())
-                    return Report (ArrayOverflowError, params, index, start);
                 array_type = *param++;
                 length *= SizeOf (array_type); //< Calculate length of array.
                 goto WriteBlock;
@@ -513,10 +605,8 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
                 // Load pointer to data to write and get size.
                 ui1_ptr = reinterpret_cast<const byte*> (args[index]);
                 if (ui1_ptr == nullptr)
-                    return Report (NullPointerError, params, index, start);
+                    return BoutResult (bout, Bout::RoomError, params, index, start);
                 length = *param++;
-                if (length > MaxValue<uint16_t> ())
-                    return Report (ArrayOverflowError, params, index, start);
                 array_type = *param++;
                 length *= SizeOf (array_type); //< Calculate length of array.
                 //printf ("\nlength: %u\n", length);
@@ -529,10 +619,8 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
                 // Load pointer to data to write and get size.
                 ui1_ptr = reinterpret_cast<const byte*> (args[index]);
                 if (ui1_ptr == nullptr)
-                    return Report (NullPointerError, params, index, start);
+                    return BoutResult (bout, Bout::RoomError, params, index, start);
                 length = *param++;
-                if (length > MaxValue<uint32_t> ())
-                    return Report (ArrayOverflowError, params, index, start);
                 array_type = *param++;
                 length *= SizeOf (array_type); //< Calculate length of array.
                 goto WriteBlock;
@@ -544,10 +632,8 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
                 // Load pointer to data to write and get size.
                 ui1_ptr = reinterpret_cast<const byte*> (args[index]);
                 if (ui1_ptr == nullptr)
-                    return Report (NullPointerError, params, index, start);
+                    return BoutResult (bout, Bout::RoomError, params, index, start);
                 length = *param++;
-                if (length > MaxValue<uint64_t> ())
-                    return Report (ArrayOverflowError, params, index, start);
                 array_type = *param++;
                 length *= SizeOf (array_type); //< Calculate length of array.
                 goto WriteBlock;
@@ -557,12 +643,12 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
               case ESC: //< _W_r_i_t_e__E_s_c_a_p_e_S_e_q_u_e_n_c_e_______________________
                 // @todo Write Tx ESC algorithm.
                 break;
-              case BK8:  //< _W_r_i_t_e__6_4_-_B_i_t__B_o_o_k____________________________
+              case FS:  //< _W_r_i_t_e__6_4_-_B_i_t__B_o_o_k____________________________
 
 # if USING_BK8
                 ui8_ptr = reinterpret_cast<const uint64_t*> (args[index]);
                 if (ui8_ptr == nullptr)
-                    return (NullPointerError, params, index, start);
+                    return (Bout::RoomError, params, index, start);
                 ui1_ptr = reinterpret_cast<byte*>(ui8_ptr);
                 // Load size.
                 ui8 = *ui8_ptr;
@@ -572,12 +658,12 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
                 goto TxInvalidType;
 #endif
 
-              case BK4:  //< _W_r_i_t_e__B_o_o_k_4_______________________________________
+              case GS:  //< _W_r_i_t_e__B_o_o_k_4_______________________________________
 
 # if USING_BK4
                 ui4_ptr = reinterpret_cast<const uint32_t*> (args[index]);
                 if (ui4_ptr == nullptr)
-                    return Report (NullPointerError, params, index, start);
+                    return BoutResult (bout, Bout::RoomError, params, index, start);
                 ui1_ptr = reinterpret_cast<byte*>(ui4_ptr);
                 // Load size.
                 ui4 = *ui4_ptr;
@@ -587,12 +673,12 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
                 goto TxInvalidType;
 #endif
 
-              case BK2:  //< _W_r_i_t_e__B_o_o_k_2_______________________________________
+              case RS:  //< _W_r_i_t_e__B_o_o_k_2_______________________________________
 
 # if USING_BK2
                 ui2_ptr = reinterpret_cast<const uint16_t*> (args[index]);
                 if (ui2_ptr == nullptr)
-                    return Report (NullPointerError, params, index, start);
+                    return BoutResult (bout, Bout::RoomError, params, index, start);
                 ui1_ptr = reinterpret_cast<byte*>(ui2_ptr);
                 // Load size.
                 ui2 = *ui2_ptr;
@@ -605,7 +691,7 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
 #if USING_BK2 || USING_BK4 || USING_BK8
                   ui1_ptr = reinterpret_cast<const byte*> (args[index]);
                   if (ui1_ptr == nullptr)
-                      return Report (NullPointerError, params, index, start);
+                      return BoutResult (bout, Bout::RoomError, params, index, start);
                   length = kUnitSize;
 #else
                 goto TxInvalidType;
@@ -614,12 +700,12 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
               || USING_AR4 || USING_AR8
                 ui1_ptr = reinterpret_cast<const byte*> (args[index]);
                 if (ui1_ptr == nullptr)
-                    return Report (NullPointerError, params, index, start);
+                    return BoutResult (bout, Bout::RoomError, params, index, start);
                 length = kUnitSize;
 
                 WriteBlock:
                 if (space < length)
-                    return Report (BufferOverflowError, params, index, start);
+                    return BoutResult (bout, Bout::BufferOverflowError, params, index, start);
                 if (length == 0)
                     break;          //< Not sure if this is an error.
                 if (start + length >= end) {
@@ -648,11 +734,12 @@ KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
 #endif
             default:
                 TxInvalidType:
-                return Report (ReadInvalidTypeError, params, index, start);
+                return BoutResult (bout, Bout::RoomError, params, index, start);
         }
     }
 
     return 0;
 }
+
 }       //< namespace _
 

@@ -20,74 +20,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="chinese_room\impl\clock.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\color.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\console.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\door.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\error.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\exceptions.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\expression.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\mirror.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\monoid.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\monoid_read.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\monoid_write.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\operation.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\room.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\slot.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\stdafx.cpp">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\table.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\terminal.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\types.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\utils.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\wall.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\address.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="chinese_room\impl\args.cc">
-      <Filter>kabuki\chinese_room\impl</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="chinese_room\include\array.h">
+      <Filter>kabuki\chinese_room\include</Filter>
+    </ClInclude>
+    <ClInclude Include="chinese_room\include\ascii.h">
+      <Filter>kabuki\chinese_room\include</Filter>
+    </ClInclude>
+    <ClInclude Include="chinese_room\include\assembly.h">
+      <Filter>kabuki\chinese_room\include</Filter>
+    </ClInclude>
+    <ClInclude Include="chinese_room\include\bin.h">
+      <Filter>kabuki\chinese_room\include</Filter>
+    </ClInclude>
+    <ClInclude Include="chinese_room\include\bout.h">
+      <Filter>kabuki\chinese_room\include</Filter>
+    </ClInclude>
+    <ClInclude Include="chinese_room\include\clock.h">
+      <Filter>kabuki\chinese_room\include</Filter>
+    </ClInclude>
+    <ClInclude Include="chinese_room\include\color.h">
+      <Filter>kabuki\chinese_room\include</Filter>
+    </ClInclude>
     <ClInclude Include="chinese_room\include\config.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
@@ -97,7 +50,7 @@
     <ClInclude Include="chinese_room\include\door.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
-    <ClInclude Include="chinese_room\include\error.h">
+    <ClInclude Include="chinese_room\include\evaluation.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
     <ClInclude Include="chinese_room\include\event.h">
@@ -121,16 +74,10 @@
     <ClInclude Include="chinese_room\include\log.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
-    <ClInclude Include="chinese_room\include\mirror.h">
-      <Filter>kabuki\chinese_room\include</Filter>
-    </ClInclude>
     <ClInclude Include="chinese_room\include\module.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
     <ClInclude Include="chinese_room\include\monoid.h">
-      <Filter>kabuki\chinese_room\include</Filter>
-    </ClInclude>
-    <ClInclude Include="chinese_room\include\monoid_tx.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
     <ClInclude Include="chinese_room\include\operation.h">
@@ -148,6 +95,9 @@
     <ClInclude Include="chinese_room\include\slot.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
+    <ClInclude Include="chinese_room\include\socket.h">
+      <Filter>kabuki\chinese_room\include</Filter>
+    </ClInclude>
     <ClInclude Include="chinese_room\include\stdafx.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
@@ -155,9 +105,6 @@
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
     <ClInclude Include="chinese_room\include\targetver.h">
-      <Filter>kabuki\chinese_room\include</Filter>
-    </ClInclude>
-    <ClInclude Include="chinese_room\include\terminal.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
     <ClInclude Include="chinese_room\include\this.h">
@@ -184,25 +131,81 @@
     <ClInclude Include="chinese_room\include\args.h">
       <Filter>kabuki\chinese_room\include</Filter>
     </ClInclude>
-    <ClInclude Include="chinese_room\include\array.h">
-      <Filter>kabuki\chinese_room\include</Filter>
-    </ClInclude>
-    <ClInclude Include="chinese_room\include\ascii.h">
-      <Filter>kabuki\chinese_room\include</Filter>
-    </ClInclude>
-    <ClInclude Include="chinese_room\include\assembly.h">
-      <Filter>kabuki\chinese_room\include</Filter>
-    </ClInclude>
-    <ClInclude Include="chinese_room\include\clock.h">
-      <Filter>kabuki\chinese_room\include</Filter>
-    </ClInclude>
-    <ClInclude Include="chinese_room\include\color.h">
-      <Filter>kabuki\chinese_room\include</Filter>
+    <ClInclude Include="chinese_room\impl\operator.h">
+      <Filter>kabuki\chinese_room\impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="chinese_room\include\module.h.in">
       <Filter>kabuki\chinese_room\include</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="chinese_room\impl\color.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\console.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\door.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\evaluation.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\exceptions.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\expression.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\log.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\operable.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\operation.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\room.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\slot.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\socket.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\stdafx.cpp">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\table.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\types.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\utils.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\wall.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\address.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\args.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\bin.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\bout.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="chinese_room\impl\clock.cc">
+      <Filter>kabuki\chinese_room\impl</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

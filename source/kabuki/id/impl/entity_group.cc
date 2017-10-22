@@ -48,7 +48,7 @@ int EntityGroup::search (const string& s)
     });
 }
 
-void EntityGroup::print (Terminal& io)
+void EntityGroup::print (Expression& io)
 {
     slot.prints ("Group: ", name, " ");
 }

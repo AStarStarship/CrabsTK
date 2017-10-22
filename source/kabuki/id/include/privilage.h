@@ -59,7 +59,7 @@ class ID_API Privilage
     PrivilageLevel setPrivilageLevel (PrivilageLevel l);
     /*< Attempts to set the privilage level to the new level. */
     
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to a terminal. */
 
     private:

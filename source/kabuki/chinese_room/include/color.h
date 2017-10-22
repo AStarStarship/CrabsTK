@@ -77,11 +77,11 @@ inline color_t RandomColor (index index);
 /** Mixes the color with the  */
 inline color_t ColorMix (color_t a, color_t b);
 
-/** Increases the alpha value of the given color by the given value. */
-inline color_t ChangeBrightness (color_t color, int brightnessChange);
+/** Increases the alpha value of the given color by the given delta. */
+inline color_t ChangeBrightness (color_t color, int delta);
 
-/** Increases the alpha value of the given color by the given value. */
-inline color_t DecreaseBrightness (color_t color, int brightnessChange);
+/** Increases the alpha value of the given color by the given delta. */
+inline color_t DecreaseBrightness (color_t color, int delta);
 
 /** Sets this color to the given 8-bit RGBA values. */
 void ColorSet (color_t color, color_t value);

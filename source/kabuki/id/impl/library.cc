@@ -81,7 +81,7 @@ void Library::LoadFromJSON (string json)
         }
         catch (Exception e)
         {
-        Debug.Assert (false, e.print (Terminal& slot));
+        Debug.Assert (false, e.print (Expression& slot));
         }
         */
 }
@@ -152,7 +152,7 @@ char* Library::DefaultHitLibrary ()
 
 int Library::InitNumHites () { return 0; }
 
-void Library::print (Terminal& slot)
+void Library::print (Expression& slot)
 {
 }
 

@@ -28,7 +28,7 @@ Name::Name ()
 
 }
 
-void Name::print (Terminal& io)
+void Name::print (Expression& io)
 {
 
 }

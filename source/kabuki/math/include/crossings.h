@@ -195,7 +195,7 @@ class Crossings
 
     virtual bool covers (float ystart, float yend) = 0;
 
-    inline void print (Terminal& io) 
+    inline void print (Expression& io) 
     {
         slot.prints ("Crossings [");
         index_t l = 13;

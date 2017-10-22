@@ -19,41 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="chinese_room\impl\address.cc" />
-    <ClCompile Include="chinese_room\impl\args.cc" />
-    <ClCompile Include="chinese_room\impl\clock.cc" />
-    <ClCompile Include="chinese_room\impl\color.cc" />
-    <ClCompile Include="chinese_room\impl\console.cc" />
-    <ClCompile Include="chinese_room\impl\door.cc" />
-    <ClCompile Include="chinese_room\impl\error.cc" />
-    <ClCompile Include="chinese_room\impl\exceptions.cc" />
-    <ClCompile Include="chinese_room\impl\expression.cc" />
-    <ClCompile Include="chinese_room\impl\mirror.cc" />
-    <ClCompile Include="chinese_room\impl\monoid.cc" />
-    <ClCompile Include="chinese_room\impl\monoid_read.cc" />
-    <ClCompile Include="chinese_room\impl\monoid_write.cc" />
-    <ClCompile Include="chinese_room\impl\operation.cc" />
-    <ClCompile Include="chinese_room\impl\room.cc" />
-    <ClCompile Include="chinese_room\impl\slot.cc" />
-    <ClCompile Include="chinese_room\impl\stdafx.cpp" />
-    <ClCompile Include="chinese_room\impl\table.cc" />
-    <ClCompile Include="chinese_room\impl\terminal.cc" />
-    <ClCompile Include="chinese_room\impl\types.cc" />
-    <ClCompile Include="chinese_room\impl\utils.cc" />
-    <ClCompile Include="chinese_room\impl\wall.cc" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="chinese_room\impl\operator.h" />
     <ClInclude Include="chinese_room\include\address.h" />
     <ClInclude Include="chinese_room\include\args.h" />
     <ClInclude Include="chinese_room\include\array.h" />
     <ClInclude Include="chinese_room\include\ascii.h" />
     <ClInclude Include="chinese_room\include\assembly.h" />
+    <ClInclude Include="chinese_room\include\bin.h" />
+    <ClInclude Include="chinese_room\include\bout.h" />
     <ClInclude Include="chinese_room\include\clock.h" />
     <ClInclude Include="chinese_room\include\color.h" />
     <ClInclude Include="chinese_room\include\config.h" />
     <ClInclude Include="chinese_room\include\console.h" />
     <ClInclude Include="chinese_room\include\door.h" />
-    <ClInclude Include="chinese_room\include\error.h" />
+    <ClInclude Include="chinese_room\include\evaluation.h" />
     <ClInclude Include="chinese_room\include\event.h" />
     <ClInclude Include="chinese_room\include\exceptions.h" />
     <ClInclude Include="chinese_room\include\expression.h" />
@@ -61,19 +40,17 @@
     <ClInclude Include="chinese_room\include\iterator.h" />
     <ClInclude Include="chinese_room\include\library.h" />
     <ClInclude Include="chinese_room\include\log.h" />
-    <ClInclude Include="chinese_room\include\mirror.h" />
     <ClInclude Include="chinese_room\include\module.h" />
     <ClInclude Include="chinese_room\include\monoid.h" />
-    <ClInclude Include="chinese_room\include\monoid_tx.h" />
     <ClInclude Include="chinese_room\include\operation.h" />
     <ClInclude Include="chinese_room\include\portal.h" />
     <ClInclude Include="chinese_room\include\room.h" />
     <ClInclude Include="chinese_room\include\set.h" />
     <ClInclude Include="chinese_room\include\slot.h" />
+    <ClInclude Include="chinese_room\include\socket.h" />
     <ClInclude Include="chinese_room\include\stdafx.h" />
     <ClInclude Include="chinese_room\include\table.h" />
     <ClInclude Include="chinese_room\include\targetver.h" />
-    <ClInclude Include="chinese_room\include\terminal.h" />
     <ClInclude Include="chinese_room\include\this.h" />
     <ClInclude Include="chinese_room\include\types.h" />
     <ClInclude Include="chinese_room\include\utf.h" />
@@ -83,6 +60,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="chinese_room\include\module.h.in" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="chinese_room\impl\address.cc" />
+    <ClCompile Include="chinese_room\impl\args.cc" />
+    <ClCompile Include="chinese_room\impl\bin.cc" />
+    <ClCompile Include="chinese_room\impl\bout.cc" />
+    <ClCompile Include="chinese_room\impl\clock.cc" />
+    <ClCompile Include="chinese_room\impl\color.cc" />
+    <ClCompile Include="chinese_room\impl\console.cc" />
+    <ClCompile Include="chinese_room\impl\door.cc" />
+    <ClCompile Include="chinese_room\impl\evaluation.cc" />
+    <ClCompile Include="chinese_room\impl\exceptions.cc" />
+    <ClCompile Include="chinese_room\impl\expression.cc" />
+    <ClCompile Include="chinese_room\impl\log.cc" />
+    <ClCompile Include="chinese_room\impl\operable.cc" />
+    <ClCompile Include="chinese_room\impl\operation.cc" />
+    <ClCompile Include="chinese_room\impl\room.cc" />
+    <ClCompile Include="chinese_room\impl\slot.cc" />
+    <ClCompile Include="chinese_room\impl\socket.cc" />
+    <ClCompile Include="chinese_room\impl\stdafx.cpp" />
+    <ClCompile Include="chinese_room\impl\table.cc" />
+    <ClCompile Include="chinese_room\impl\types.cc" />
+    <ClCompile Include="chinese_room\impl\utils.cc" />
+    <ClCompile Include="chinese_room\impl\wall.cc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

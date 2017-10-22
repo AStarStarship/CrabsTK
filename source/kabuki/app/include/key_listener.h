@@ -36,7 +36,7 @@ namespace app {
             
         }
         
-        virtual print (Terminal)
+        virtual print (Expression)
         {
             
         }

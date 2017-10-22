@@ -119,7 +119,7 @@ namespace _ {
 enum {
     kMinRoomSize     = 256,                 //< Min size of a room.
     kMaxRoomSize     = 0x7FFFFFFC,          //< Max room size: 2GB - 7 bits.
-    kMinTerminalSize = 256,                 //< Min size of a Terminal - 1.
+    kMinSlotSize = 256,                 //< Min size of a Slot - 1.
     kMaxErrors       = MAX_ERRORS,          //< Max errors before blowing up.
     kMaxNumParams    = MAX_NUM_PARAMS,      //< Max number of parameters.
     kMaxStringLength = MAX_STRING_LENGTH,   //< The max string length.
@@ -133,11 +133,7 @@ enum {
 #undef MAX_STRING_LENGTH
 #undef COM_TIMEOUT_TICKS
 
-#if USE_MORE_ROM
-#define KABUKI // @todo Fix me!
-#else
 #define KABUKI
-#endif
 
 #if USING_BK2 || USING_BK4 || USING_BK8
 #define USING_BOOKS                 YES
@@ -198,7 +194,7 @@ static const char NewLineString[] = "\n\0"; //< A string with a single newline c
 
 /** The level will more code creating a larger binary. Use one 
     underscore to use more memory, and two underscores to use even more. */
-#if RAM_USE_LEVEL == 1
+#if MEMORY_PROFILE == 1
 typedef int8_t   int_t;                     //< Buffer signed index type.
 typedef uint8_t  uint_t;                    //< Buffer unsigned index type.
 typedef int16_t  dint_t;                    //< Buffer double-wide signed index type.
@@ -214,7 +210,7 @@ enum {
 };
 }
 
-#elif RAM_USE_LEVEL == 2
+#elif MEMORY_PROFILE == 2
 typedef int16_t  int_t;                     //< Buffer signed index type.
 typedef uint32_t uint_t;                    //< Buffer unsigned signed index type.
 typedef int16_t  dint_t;                    //< Buffer double-wide signed index type.
@@ -230,7 +226,7 @@ enum {
 };
 }
 
-#elif RAM_USE_LEVEL == 3
+#elif MEMORY_PROFILE == 3
 typedef byte int_t;                         //< Buffer signed index type.
 typedef int16_t uint_t;                     //< Buffer unsigned signed index type.
 typedef int16_t dint_t;                     //< Buffer double-wide signed index type.
@@ -246,8 +242,11 @@ enum {
 };
 }
 #else
-#error  Invalid RAM_USE_LEVEL
+#error  Invalid MEMORY_PROFILE
 #endif
+
+typedef uint_t param_t;
+typedef const uint_t params_t;
 
 /** Macro declares a class to be non-copyable. */
 #define NONCOPYABLE (ClassName)\

@@ -59,7 +59,7 @@ class _KabukiTheater_ Point2D
     void swap (Point2D P);
     /*< Swaps this object's Point2D with a. */
 
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to the terminal. */
 };
 

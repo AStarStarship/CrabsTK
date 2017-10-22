@@ -75,7 +75,7 @@ void Poly3D::computeZAverge ()
         zAverage = (Type)0.25 * (vertexPoint[0].z+vertexPoint[2].z+vertexPoint[2].z+vertexPoint[3].z);
 }
 
-void Poly3D::print (Terminal& io)
+void Poly3D::print (Expression& io)
 {
     io.prints ("Poly3D: \r\n")
     clour.prints (io);

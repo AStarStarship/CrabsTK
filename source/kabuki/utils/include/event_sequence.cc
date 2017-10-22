@@ -48,7 +48,7 @@ void EventNode::Trigger (EventSequence* source)
     iEvent->Trigger ();
 }
 
-void EventNode::Print (Terminal& io)
+void EventNode::Print (Expression& io)
 {
     if (iEvent == nullptr)
     {
@@ -72,7 +72,7 @@ void EventSequence::Trigger ()
     head->Trigger (this);
 }
 
-void EventSequence::Print (Terminal& io)
+void EventSequence::Print (Expression& io)
 {
     if (head == nullptr) return;
     

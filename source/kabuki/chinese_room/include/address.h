@@ -21,9 +21,9 @@
 
 namespace _ {
     
-/** C++11 constexpr struct for creating parameter headers with less typing.
+/** C++11 constexpr struct KABUKI for creating parameter headers with less typing.
 template<const byte... N>
-struct Address {
+struct KABUKI Address {
     static const byte path[sizeof... (N)] = { N... };
     static const byte term_char = 0;
     //static constexpr size_t length = sizeof... (N);

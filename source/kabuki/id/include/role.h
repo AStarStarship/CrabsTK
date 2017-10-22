@@ -46,7 +46,7 @@ class ID_API Role
     void setDescription (const string& s);
     /*< Sets the description to the given string. */
     
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to a terminal. */
 
     private:

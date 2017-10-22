@@ -27,7 +27,7 @@ Profile::Profile ()
 
 }
 
-void Profile::print (Terminal& io)
+void Profile::print (Expression& io)
 {
 
 }

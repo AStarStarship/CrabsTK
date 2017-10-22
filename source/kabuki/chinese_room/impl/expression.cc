@@ -1,6 +1,6 @@
     /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/impl/uniscanner.cc
+    @file    ~/source/kabuki/chinese_room/impl/expression.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -16,70 +16,98 @@
 
 #include <stdafx.h>
 #include "../include/expression.h"
-#include "../include/log.h"
+#include "../include/slot.h"
 
 namespace _ {
 
-const char* RxStateString (byte state) {
+const char* ExpressionErrorString (byte state) {
+    return 0;
+}
+
+const char* ExpressionStateString (Expression::State state) {
     static const char* strings[] = {
-        "RxScanningStringState",
-        "RxScanningVarIntState",
-        "RxScanningAddressState",
-        "RxScanningPodState",
-        "RxScanningArgsState",
-        "RxHandlingErrorState",
-        "RxMemeberNotFoundErrorState",
-        "RxScanningHashState",
-        "RxLockedState" };
-    if (state >= RxLockedState)
-        return strings[RxLockedState];
+        "Disconnected",
+        "Scanning address",
+        "Scanning string",
+        "Scanning args",
+        "Scanning POD",
+        "Handling error",
+        "Scanning varint",
+        "Locked" };
     return strings[state];
 }
 
-const char* TxStateStrings (byte state) {
-    static const char* strings[] = {
-        "TxWritingState",
-        "TxLockedState"
-    };
-    if (state >= TxLockedState)
-        return strings[TxLockedState];
-    return strings[state];
+const Operation* ExpressionResult (Expression* expr, Expression::Error error) {
+    // @todo Write me.
+    return 0;
 }
 
-Bin* ExpressionRx (Expression* a) {
-    return a == nullptr?nullptr:
-        reinterpret_cast<Bin*>(reinterpret_cast<byte*>(a) +
-            a->rx_offset);
+const Operation* ExpressionResult (Expression* expr, Expression::Error error, params_t* header) {
+    // @todo Write me.
+    return 0;
 }
 
-Bout* ExpressionTx (Expression* a) {
-    return a == nullptr?nullptr:
-        reinterpret_cast<Bout*>(reinterpret_cast<byte*>(a) +
-            a->tx_offset);
+const Operation* ExpressionResult (Expression* expr, Expression::Error error, params_t* header,
+    byte offset) {
+    // @todo Write me.
+    return 0;
+}
+
+const Operation* ExpressionResult (Expression* expr, Expression::Error error, params_t* header,
+    byte offset, byte* address) {
+    // @todo Write me.
+    return 0;
+}
+
+const Operation* ExpressionResult (Expression* expr, Expression::Error error, 
+                                   params_t* header, byte offset, void* address)
+{
+    return 0;
+}
+
+byte* ExpressionBinAddress (Expression* expr) {
+    if (!expr)
+        return nullptr;
+    return reinterpret_cast<byte*>(expr) + expr->header_size;
+}
+
+Bin* ExpressionBin (Expression* expr) {
+    return reinterpret_cast<Bin*> (ExpressionBinAddress (expr));
+}
+
+byte* ExpressionBoutAddress (Expression* expr) {
+    if (!expr)
+        return nullptr;
+    return reinterpret_cast<byte*>(expr) + expr->header_size;
+}
+
+Bout* ExpressionBout (Expression* expr) {
+    return reinterpret_cast<Bout*> (ExpressionBoutAddress (expr));
 }
 
 Expression* ExpressionInit (byte* buffer, uint_t buffer_size,
-                        uint_t stack_count, Operable* root) {
+                            uint_t stack_count, Operand* root) {
     if (buffer == nullptr)
         return nullptr;
-    if (buffer_size < kMinBufferSize)
+    if (buffer_size < Expression::kMinBufferSize)
         return nullptr;
-    if (stack_count == 0) stack_count = 1;    //< Minimum stack size.
+    if (stack_count == 0)
+        stack_count = 1;    //< Minimum stack size.
 
     Expression* expr = reinterpret_cast<Expression*> (buffer);
 
     uint_t total_stack_size = (stack_count - 1) * (2 * sizeof (void*));
-    // Calculate the size of the Monoid and Stack.
+    // Calculate the size of the Slot and Stack.
     uint_t size = (buffer_size - sizeof (Expression) -
         total_stack_size + 1) >> 1;  // >>1 to divide by 2
     expr->type = 0;
-    expr->rx_state = RxLockedState;
-    expr->tx_state = 0;
+    expr->bout_state = Bout::LockedState;
+    expr->bin_state = 0;
     expr->stack_count = 0;
     expr->verify_count = 0;
     expr->stack_size = stack_count;
     expr->num_states = 0;
-    expr->op = nullptr;
+    expr->operand = nullptr;
 #if DEBUG_CHINESE_ROOM
     printf ("\nInitializing Stack:\n"
         "sizeof (Stack): %u\n"
@@ -92,173 +120,171 @@ Expression* ExpressionInit (byte* buffer, uint_t buffer_size,
 #endif //< DEBUG_CHINESE_ROOM
     expr->bytes_left = 0;
     uint_t offset = sizeof (Expression) + total_stack_size - sizeof (void*),
-        rx_offset = sizeof (Bin) + total_stack_size + offset;
-    expr->rx_offset = rx_offset;
-    expr->tx_offset = rx_offset + size;
+        bin_offset = sizeof (Bin) + total_stack_size + offset;
+    expr->header_size = sizeof (Expression) + 2 * sizeof (void*) * stack_count;
     expr->header = 0;
     expr->headers = 0;
     printf ("\n\n!!!\nroot: 0x%p\n", root);
-    expr->op = root;
-    printf ("a->op: 0x%p\n", expr->op);
-    MonoidRxInit (ExpressionRx (expr), size);
-    MonoidTxInit (ExpressionTx (expr), size);
+    expr->operand = root;
+    printf ("expr->op: 0x%p\n", expr->operand);
+    BinInit (ExpressionBinAddress (expr), size);
+    BoutInit (ExpressionBoutAddress (expr), size);
     return expr;
 }
 
-/** Expression** ExpressionStack (Expression* a) {
-    auto a = reinterpret_cast<byte*> (a) + sizeof (Expression) +
-        a->stack_count * a->stack_size * sizeof (const uint_t*);
-    return reinterpret_cast<Expression**> (a);
-} */
-
-bool ExpressionIsDynamic (Expression* a) {
-    return a->type % 2 == 1;
+Operand** ExpressionStack (Expression* expr) {
+    auto a = reinterpret_cast<byte*> (expr) + sizeof (Expression) +
+             expr->stack_count * expr->stack_size * sizeof (const uint_t*);
+    return reinterpret_cast<Operand**> (expr);
 }
 
-byte* ExpressionEndAddress (Expression* a) {
-    return MonoidRxEndAddress (ExpressionRx (a));
+bool ExpressionIsDynamic (Expression* expr) {
+    return expr->type % 2 == 1;
 }
 
-ticket_t ExpressionReset (Expression* a) {
+byte* ExpressionEndAddress (Expression* expr) {
+    //return BinEndAddress (ExpressionBin (expr));
     return 0;
 }
 
-const Operation* Push (Expression* a, Operable* b) {
-    if (a == nullptr)
+const Operation* ExpressionReset (Expression* expr) {
+    return 0;
+}
+
+const Operation* Push (Expression* expr, Operand* operand) {
+    if (expr == nullptr)
     {
-        if (b == nullptr)
+        if (operand == nullptr)
             return nullptr;
-        return b->Star (0, nullptr);  //< Return d's header.
+        return operand->Star (0, nullptr);  //< Return d's header.
     }
-    if (b == nullptr)
-        return reinterpret_cast<const Operation*> (Report (NullDevicePushError));
-    if (a->stack_count >= a->stack_size)
-        return reinterpret_cast<const Operation*> (Report (StackOverflowError));
-    ExpressionStack (a)[a->stack_count++] = b;
+    if (operand == nullptr)
+        return ExpressionResult (expr, Expression::InvalidOpeartionError);
+    if (expr->stack_count >= expr->stack_size)
+        return ExpressionResult (expr, Expression::InvalidOpeartionError);
+    ExpressionStack (expr)[expr->stack_count++] = operand;
     return 0;
 }
 
-ticket_t ExpressionPop (Expression* a) {
-    if (a->stack_count == 0)
-        return Report (TooManyPopsError);
-    a->op = ExpressionStack (a)[--a->stack_count];
+const Operation* Pop (Expression* expr) {
+    if (expr->stack_count == 0)
+        return ExpressionResult (expr, Expression::InvalidOpeartionError);
+    expr->operand = ExpressionStack (expr)[--expr->stack_count];
     return 0;
 }
 
-byte* ExpressionStateStack (Expression* a) {
-    return reinterpret_cast<byte*> (a) + sizeof (Expression);
+byte* ExpressionStates (Expression* expr) {
+    return reinterpret_cast<byte*> (expr) + sizeof (Expression);
 }
 
-ticket_t ExpressionExitRxState (Expression* a) {
-    auto count = a->stack_count;
+const Operation* ExpressionExitState (Expression* expr) {
+    auto count = expr->stack_count;
     if (count == 0)
-        return Report (TooManyPopsError);
-    a->rx_state = ExpressionStateStack (a)[--count];
-    a->stack_count = count;
+        return ExpressionResult (expr, Expression::InvalidOpeartionError);
+    expr->bout_state = ExpressionStates (expr)[--count];
+    expr->stack_count = count;
     return 0;
 }
 
-ticket_t ExpressionEnterRxState (Expression* a, RxState state) {
+const Operation* ExpressionEnterState (Expression* expr, Expression::State state) {
 
-    if (state >= RxLockedState)
-        return Report (InvalidRxStateError);
-    auto count = a->stack_count;
-    if (count >= a->stack_size)
-        return Report (StackOverflowError);
-    ExpressionStateStack (a)[count] = a->rx_state;
-    count = a->stack_count + 1;
-    a->rx_state = state;
+    if (state == Bout::LockedState) {
+        return ExpressionResult (expr, Expression::LockedStateError);
+    }
+    auto count = expr->stack_count;
+    if (count >= expr->stack_size)
+        return ExpressionResult (expr, Expression::StackOverflowError);
+    ExpressionStates (expr)[count] = expr->bout_state;
+    count = expr->stack_count + 1;
+    expr->bout_state = state;
     return 0;
 }
 
-ticket_t ExpressionPushScanHeader (Expression* a, const uint_t* header) {
+const Operation* ExpressionPushScanHeader (Expression* expr, params_t* header) {
     if (header == nullptr)
-        return Report (NullPointerError, header, ExpressionTx (a));
-    uint_t verify_count = a->verify_count,
-        stack_size = a->stack_size;
-    a->type_index = *header++;
+        return ExpressionResult (expr, Expression::RoomError);
+    uint_t verify_count = expr->verify_count,
+        stack_size = expr->stack_size;
+    expr->type_index = *header++;
     if (verify_count >= stack_size)
-        return Report (StackOverflowError, header, ExpressionTx (a));
+        return ExpressionResult (expr, Expression::StackOverflowError, header, 0, ExpressionBout (expr));
 
     // Move the current header to the scan stack
-    const uint_t* current_header = const_cast<const uint_t*> (a->header);
-    a->header = header;
-    const uint_t** headers = (const uint_t**)&a->headers;
+    const uint_t* current_header = const_cast<const uint_t*> (expr->header);
+    expr->header = header;
+    const uint_t** headers = (const uint_t**)&expr->headers;
     headers[stack_size] = current_header;
-    a->verify_count = verify_count + 1;
+    expr->verify_count = verify_count + 1;
     return 0;
 }
 
-ticket_t ExpressionPushScanHeader (Expression* a,
-    volatile const uint_t* header) {
+const Operation* ExpressionPushScanHeader (Expression* expr,
+    volatile params_t* header) {
     const uint_t** headers;
-    uint_t verify_count = a->verify_count;
-    if (verify_count >= a->stack_size)
-        return Report (StackOverflowError);
+    uint_t verify_count = expr->verify_count;
+    if (verify_count >= expr->stack_size)
+        return ExpressionResult (expr, Expression::StackOverflowError);
 
-    headers = (const uint_t**)a->headers;
-    ExpressionExitRxState (a);
-    a->header = *headers;
+    headers = (const uint_t**)expr->headers;
+    ExpressionExitState (expr);
+    expr->header = *headers;
     verify_count = verify_count;
     return 0;
 }
 
-ticket_t ExpressionPopScanHeader (Expression* a) {
-    uint_t verify_count = a->verify_count;
+const Operation* ExpressionPopScanHeader (Expression* expr) {
+    uint_t verify_count = expr->verify_count;
     if (verify_count == 0)
-        return Report (TooManyPopsError);
+        return ExpressionResult (expr, Expression::InvalidOpeartionError);
 
     verify_count = verify_count - 1;
     return 0;
 }
 
-void ExpressionScanNextType (Expression* a) {
-    uint_t* header = const_cast<uint_t*> (a->header);
+void ExpressionScanNextType (Expression* expr) {
+    uint_t* header = const_cast<uint_t*> (expr->header);
     if (header == nullptr) {
-        ExpressionEnterRxState (a, RxScanningArgsState);
+        ExpressionEnterState (expr, Expression::ScanningArgsState);
         return;
     }
 
     uint_t type = *header;
     if (type == NIL) {  // Done scanning args.
-        ExpressionPopScanHeader (a);
+        ExpressionPopScanHeader (expr);
         return;
     }
     ++header;
-    a->header = header;
-    a->rx_state = a->last_rx_state;
+    expr->header = header;
+    expr->bout_state = expr->last_rx_state;
     //type = *header;
 }
 
-byte ExpressionStreamTxByte (Expression* a) {
-    return MonoidTxStreamByte (ExpressionTx (a));
+byte ExpressionStreamBout (Expression* expr) {
+    return BoutStreamByte (ExpressionBout (expr));
 }
 
-void ExpressionScan (Expression* a, Portal* input) {
-    uint_t            size,         //< The size of the ring buffer.
-                      space,        //< The space left in the right buffer.
-                      length,       //< The length of the ring buffer data.
-                      type;         //< The current type.
-    byte              rx_state,     //< The current rx FSM state.
-                      b;            //< The current byte being verified.
-                                    //              temp_ui1;       //< Used for verifying AR1 only.
-    ticket_t          result;       //< An error ticket procedure return value.
-    hash16_t          hash;         //< The hash of the ESC being verified.
-                                    //uint16_t      temp_ui2;       //< Used for calculating AR2 and BK2 size.
-                                    //uint32_t      temp_ui4;       //< Used for calculating AR4 and BK4 size.
-                                    //uint64_t      temp_ui8;       //< Used for calculating AR8 and BK8 size.
-    time_t            timestamp,    //< The last time when the automata ran.
-                      delta_t;      //< The time delta between the last timestamp.
-    Expression      * expr;         //< The current Expression.
-    const Operation * op;           //< The current Set.
-    const uint_t    * header;       //< The current Set header being verified.
-    Bin             * rx;                //< The rx Bin.
-    byte            * begin,        //< The beginning of the ring buffer.
-                    * end,          //< The end of the ring buffer.
-                    * start,        //< The start of the ring buffer data.
-                    * stop;         //< The stop of the ring buffer data.
+void ExpressionScan (Expression* expr, Portal* input) {
+    uint_t            size,         //< Size of the ring buffer.
+                      space,        //< Space left in the right buffer.
+                      length,       //< Length of the ring buffer data.
+                      type;         //< Current type.
+    byte              bout_state,     //< Current bin FSM state.
+                      b;            //< Current byte being verified.
+    hash16_t          hash;         //< Hash of the ESC being verified.
+    timestamp_t       timestamp,    //< Last time when the expression ran.
+                      delta_t;      //< Time delta between the last timestamp.
+    Expression      * expr;         //< Current Expression.
+    const Operation * op;           //< Current Operation.
+    params_t        * header;       //< Header of the current Operation being verified.
+    Bin             * bin;          //< Bin.
+    byte            * begin,        //< Beginning of the ring buffer.
+                    * end,          //< End of the ring buffer.
+                    * start,        //< Start of the ring buffer data.
+                    * stop;         //< Stop of the ring buffer data.
+    const Operation * result;       //< The result of the Scan.
+    Operand         * operand;      //< The operand.
 
-    if (a == nullptr) {
+    if (expr == nullptr) {
         PrintDebug ("a = null");
         return;
     }
@@ -267,42 +293,43 @@ void ExpressionScan (Expression* a, Portal* input) {
         return;
     }
 
-    rx_state = a->rx_state;
-    rx = ExpressionRx (a);
-    size = rx->size;
-    hash = a->hash;
+    bout_state = expr->bout_state;
+    bin = ExpressionBin (expr);
+    size = bin->size;
+    hash = expr->hash;
     timestamp = TimestampNow ();
-    delta_t = timestamp - a->last_time;
+    delta_t = timestamp - expr->last_time;
 
-    if (delta_t <= a->timeout_us) {
+    if (delta_t <= expr->timeout_us) {
         if (delta_t < 0)    //< Special case for Epoch (rare)
             delta_t *= -1;
     }
 
-    begin = MonoidRxBaseAddress (ExpressionRx (a));
-    end = begin + size;
-    start = begin + rx->start;
-    stop = begin + rx->stop;
-    space = MonoidSpace (start, stop, size);
+    begin  = &ExpressionBin (expr)->buffer;
+    end    = begin + size;
+    start  = begin + bin->start;
+    stop   = begin + bin->stop;
+    space  = SlotSpace (start, stop, size);
     length = size - space + 1;
 
-    printf ("\n\n| Scanning address 0x%p:\n| rx_state: %s\n| length: %u\n", a,
-        RxStateString (rx_state), length);
+    printf ("\n\n| Scanning address 0x%p:\n| bout_state: %s\n| length: %u\n", start,
+        ExpressionStateString ((Expression::State)expr->bout_state), length);
 
     // Manually load first byte:
     b = input->Pull ();
-    //b = MonoidStreamByte (rx);
+    //b = SlotStreamByte (bout);
     hash = Hash16 (b, hash);
     *start = b;
     ++start;
     while (input->Length ()) {
         // Process the rest of the bytes in a loop to reduce setup overhead.
-        if (rx_state == RxScanningStringState) {
-            PrintDebug ("RxScanningStringState");
+        if (bout_state == Expression::ScanningStringState) {
+            PrintDebug ("ScanningStringState");
 
-            if (a->bytes_left == 0) {
+            if (expr->bytes_left == 0) {
                 PrintDebug ("Done parsing string.");
-                Report (RxStringBufferOverflowError, a->header, start);
+                ExpressionResult (expr, Expression::StringOverflowError,
+                        const_cast<params_t*>(expr->header), 0, start);
                 return;
             }
             // Hash byte.
@@ -312,22 +339,22 @@ void ExpressionScan (Expression* a, Portal* input) {
                 PrintDebug ("string terminated.");
                 // Check if there is another argument to scan.
                 // 
-                ExpressionExitRxState (a);
+                ExpressionExitState (expr);
                 return;
             }
             PrintDebug ("b != 0");
-            --a->bytes_left;
+            --expr->bytes_left;
             return;
-        } else if (rx_state == RxScanningVarintState) {
+        } else if (bout_state == Expression::ScanningVarintState) {
             // When verifying a varint, there is a max number of bytes for the
             // type (3, 5, or 9) but the varint may be complete before this
             // number of bytes. We're just basically counting down and looking
             // for an overflow situation.
 
-            PrintDebug ("RxScanningVarintState.");
+            PrintDebug ("ScanningVarintState.");
             // Hash byte.
 
-            if (a->bytes_left == 1) {
+            if (expr->bytes_left == 1) {
                 PrintDebug ("Checking last byte:");
 
                 // @warning I am not current saving the offset. I'm not sure 
@@ -338,80 +365,81 @@ void ExpressionScan (Expression* a, Portal* input) {
                 //          add 32 to the first byte.
 
                 if ((b >> 7) != 1) {
-                    Report (VarintOverflowError, a->header, start);
-                    ExpressionEnterRxState (a, RxHandlingErrorState);
+                    params_t* header = const_cast<params_t*>(expr->header);
+                    ExpressionResult (expr, Expression::VarintOverflowError, header, 0, start);
+                    ExpressionEnterState (expr, Expression::HandlingErrorState);
                     return;
                 }
 
                 return;
             }
-            --a->bytes_left;
+            --expr->bytes_left;
             return;
-        } else if (rx_state == RxScanningAddressState) {
+        } else if (bout_state == Expression::ScanningAddressState) {
             // When verifying an address, there is guaranteed to be an
-            // a->op set. We are just looking for null return values
-            // from the Do (byte, Stack*): const Operable* function, 
+            // expr->op set. We are just looking for null return values
+            // from the Do (byte, Stack*): const Operand* function, 
             // pushing Star(s) on to the Star stack, and looking for the 
             // first procedure call.
 
-            PrintDebugHex ("| RxScanningAddressState", b);
+            PrintDebugHex ("| ScanningAddressState", b);
             if (b == ESC) {     // Start processing a new ESC.
                 PrintDebug ("Start of ESC:");
-                ++a->header;
-                ExpressionPushScanHeader (a, a->header);
+                ++expr->header;
+                ExpressionPushScanHeader (expr, expr->header);
                 return;
             }
 
-            device = a->op;
-            a->operand = nullptr;
-            op = device->Star (b, nullptr);
+            operand = expr->operand;
+            expr->result = nullptr;
+            op = operand->Star (b, nullptr);
             if (op == nullptr) {
                 // Could be an invalid op or a Star Stack push.
-                if (a->operand == nullptr) {
+                if (expr->result == nullptr) {
                     PrintDebug ("No op found.");
                     return;
                 }
-                //ExpressionPushScan (a, a->operand);
+                //ExpressionPushScan (a, expr->operand);
             }
-            if (result = ExpressionPushScanHeader (a, op->params)) {
-                PrintDebug ("Error reading address.");
+            if (result = ExpressionPushScanHeader (expr, op->params)) {
+                PrintDebug ("Expression::Error reading address.");
                 return;
             }
-            ExpressionEnterRxState (a, RxScanningArgsState);
+            ExpressionEnterState (expr, Expression::ScanningArgsState);
             return;
-        } else if (rx_state == RxScanningArgsState) {
+        } else if (bout_state == Expression::ScanningArgsState) {
             // In this state, a procedure has been called to scan on a valid
-            // device. This state is responsible for loading the next header
+            // operand. This state is responsible for loading the next header
             // argument and checking for the end of the procedure call.
 
-            PrintDebug ("RxScanningArgs.");
+            PrintDebug ("BoutScanningArgs.");
 
-            device = a->op;
-            if (device == nullptr) {
+            operand = expr->operand;
+            if (operand == nullptr) {
                 // Check if it is a Procedure Call or Star.
-                device = a->op;
-                a->operand = nullptr;
-                op = device->Star (b, nullptr);
-                device = a->operand;
-                if (!device) {
+                operand = expr->operand;
+                expr->result = nullptr;
+                op = operand->Star (b, nullptr);
+                operand = expr->result;
+                if (!operand) {
                     if (op == nullptr) {
                         PrintError ("Invalid op");
-                        ExpressionEnterRxState (a, RxLockedState);
+                        ExpressionEnterState (expr, Expression::LockedState);
                         return;
                     }
                     // Else it was a function call.
-                    ExpressionEnterRxState (a, RxScanningArgsState);
+                    ExpressionEnterState (expr, Expression::ScanningArgsState);
                     return;
                 }
             } else {
                 // Verify byte as address.
-                header = const_cast<const uint_t*> (a->header);
-                if (!a->header) {
+                header = const_cast<const uint_t*> (expr->header);
+                if (!expr->header) {
                     return;
                 }
-                if (a->type_index == 0) {
+                if (expr->type_index == 0) {
                     PrintDebug ("Procedure verified.");
-                    ExpressionExitRxState (a);
+                    ExpressionExitState (expr);
                 }
                 // Get next type.
                 type = *header;
@@ -424,66 +452,66 @@ void ExpressionScan (Expression* a, Portal* input) {
                 // Switch to next state
                 if (type <= SOH) {
                     if (type < SOH) {
-                        Report (ReadInvalidTypeError);
-                        ExpressionEnterRxState (a, RxLockedState);
+                        ExpressionResult (expr, Expression::ReadInvalidTypeError);
+                        ExpressionEnterState (expr, Expression::LockedState);
                     } else {
-                        ExpressionEnterRxState (a, RxScanningAddressState);
+                        ExpressionEnterState (expr, Expression::ScanningAddressState);
                     }
                 } else if (type == STX) {   // String type.
-                    ExpressionEnterRxState (a, RxScanningStringState);
+                    ExpressionEnterState (expr, Expression::ScanningStringState);
                 } else if (type < DBL) {   // Plain-old-data types.
-                    a->bytes_left = SizeOf (type);
-                    ExpressionEnterRxState (a, RxScanningPodState);
+                    expr->bytes_left = SizeOf (type);
+                    ExpressionEnterState (expr, Expression::ScanningPodState);
                 } else if (type < UV8) {   // Varint types
-                    a->bytes_left = SizeOf (type);
-                    ExpressionEnterRxState (a, RxScanningVarintState);
+                    expr->bytes_left = SizeOf (type);
+                    ExpressionEnterState (expr, Expression::ScanningVarintState);
                 } else if (type <= AR8) {
 
                 } else if (type == ESC) {
 
-                } else if (type <= BK8) {
+                } else if (type <= FS) {
 
                 } else if (type > US) {
-                    Report (InvalidRxTypeError);
+                    ExpressionResult (expr, Expression::RoomError);
                 } else {    // It's a US
                     PrintDebug ("Scanning Unit");
-                    a->bytes_left = kUnitSize;
-                    ExpressionEnterRxState (a, RxScanningPodState);
+                    expr->bytes_left = kUnitSize;
+                    ExpressionEnterState (expr, Expression::ScanningPodState);
                 }
 
             }
-        } else if (rx_state == RxHandlingErrorState) {
-            PrintDebug ("RxHandlingErrorState.");
+        } else if (bout_state == Expression::HandlingErrorState) {
+            PrintDebug ("HandlingErrorState.");
 
-        } else if (rx_state >= RxLockedState) {
-            PrintDebug ("RxLockedState.");
+        } else if (bout_state >= Bout::LockedState) {
+            PrintDebug ("Bout::LockedState.");
         } else {    // parsing plain-old-data.
-            if (a->bytes_left-- == 0) {
+            if (expr->bytes_left-- == 0) {
                 PrintDebug ("Done verifying POD type.");
-                ExpressionScanNextType (a);
+                ExpressionScanNextType (expr);
             } else {
                 b = input->Pull ();
                 PrintDebugHex ("Loading next byte", b);
-                a->hash = Hash16 (b, hash);
+                expr->hash = Hash16 (b, hash);
                 *start = b;
                 ++start;
             }
         }
     }
-    rx->start = Diff (begin, start);
+    bin->start = Diff (begin, start);
 }
 
-bool ExpressionContains (Expression* a, void* address) {
-    if (address < reinterpret_cast<byte*>(a))
+bool ExpressionContains (Expression* expr, void* address) {
+    if (address < reinterpret_cast<byte*>(expr))
         return false;
-    if (address > ExpressionEndAddress (a)) return false;
+    if (address > ExpressionEndAddress (expr)) return false;
     return true;
 }
 
-ticket_t ExpressionPushHeader (Expression* a, const uint_t* header) {
-    if (a->stack_count >= a->stack_size) {
+const Operation* ExpressionPushHeader (Expression* expr, params_t* header) {
+    if (expr->stack_count >= expr->stack_size) {
         // Handle overflow cleanup:
-        return Report (StackOverflowError, header);
+        return ExpressionResult (expr, Expression::StackOverflowError, header);
     }
 
     //if (dc == nullptr) return noDevceSelectedError ();
@@ -491,32 +519,32 @@ ticket_t ExpressionPushHeader (Expression* a, const uint_t* header) {
     return 0;
 }
 
-const uint_t* ExpressionHeaderStack (Expression* a) {
+const uint_t* ExpressionHeaderStack (Expression* expr) {
     return reinterpret_cast<const uint_t*> (reinterpret_cast<byte*>
-        (a) + sizeof (Expression) + a->stack_count);
+        (expr) + sizeof (Expression) + expr->stack_count);
 }
 
-void ExpressionCloseExpression (Expression* a) {
+void ExpressionClose (Expression* expr) {
     PrintDebug ("[FF]");
 }
 
-void ExpressionCancelExpression (Expression* a) {
+void ExpressionCancel (Expression* expr) {
     PrintDebug ("[CAN]");
     //stopAddress = txOpen;
 }
 
-void ExpressionScrubExpression (Expression* a) {
+void ExpressionClear (Expression* expr) {
     // Erase the buffer by writing zeros to it.
 
-    Bin* rx = ExpressionRx (a);
-    uint_t size = rx->size;
+    Bin* bin = ExpressionBin (expr);
+    uint_t size = bin->size;
 
-    byte* begin = MonoidRxBaseAddress (a, a->rx_offset),
-        *end = begin + rx->size,
-        *start = begin + rx->start,
-        *stop = begin + rx->stop;
+    byte* begin = &bin->buffer,
+        * end   = begin + bin->size,
+        * start = begin + bin->start,
+        * stop  = begin + bin->stop;
 
-    uint_t buffer_space = MonoidSpace (start, stop, size);
+    uint_t buffer_space = SlotSpace (start, stop, size);
 
     if (start == stop) return; //< Nothing to do.
     if (start > stop) {
@@ -525,25 +553,22 @@ void ExpressionScrubExpression (Expression* a) {
         return;
     }
     memset (start, 0, stop - start);
-    rx->start = Diff (a, begin);
-    rx->stop = Diff (a, start + 1);
+    bin->start = Diff (expr, begin);
+    bin->stop  = Diff (expr, start + 1);
 }
 
-const Operable* Read (Expression* a, const uint_t* esc, void** args) {
-    return reinterpret_cast<const Operable*> (Read (ExpressionRx (a), esc,
-        args));
+const Operation* ExpressionRead (Expression* expr, params_t* params, void** args) {
+    return BinRead (ExpressionBin (expr), params, args);
 }
 
-const Operable* Write (Expression* a, const uint_t* esc, void** args) {
-    return reinterpret_cast<const Operable*> (Write (ExpressionTx (a),
-        a->return_address, esc,
-        args));
+const Operation* ExpressionResult (Expression* expr, params_t* params, void** args) {
+    return BoutWrite (ExpressionBout (expr), expr->return_address, params, 
+                      args);
 }
 
-const Operable* Write (Expression* a, const char* address,
-    const uint_t* esc, void** args) {
-    return reinterpret_cast<const Operable*> (Write (ExpressionTx (a), address,
-        esc, args));
+const Operation* Write (Expression* expr, const char* address, params_t* params,
+                      void** args) {
+    return BoutWrite (ExpressionBout (expr), address, params, args);
 }
 
 void ExpressionPrint (Expression* expr) {
@@ -563,16 +588,15 @@ void ExpressionPrint (Expression* expr) {
         (expr->type == 2)?"dynamic memory":"Invalid type";
 
     std::cout << "\n| bytes_left:    " << expr->bytes_left
-        << "\n| tx_offset:     " << expr->tx_offset
-        << "\n| rx_offset:     " << expr->rx_offset
-        << "\n| stack_count:   " << expr->stack_count
-        << "\n| stack_size:    " << expr->stack_size
-        << "\n| verify_count:  " << expr->verify_count
-        << "\n| num_states:    " << expr->num_states;
+              << "\n| header_size:   " << expr->header_size
+              << "\n| stack_count:   " << expr->stack_count
+              << "\n| stack_size:    " << expr->stack_size
+              << "\n| verify_count:  " << expr->verify_count
+              << "\n| num_states:    " << expr->num_states;
     PrintLine ("|", '-');
-    Print (expr->op);
+    OperandPrint (expr->operand);
     std::cout << "| header: ";
-    PrintEsc (const_cast<const uint_t*>(expr->header));
+    ParamsPrint (const_cast<const uint_t*>(expr->header));
     std::cout << "| Scan Stack: " << expr->verify_count;
     const uint_t** headers = (const uint_t**)expr->headers;
     if (headers == nullptr) {
@@ -580,7 +604,7 @@ void ExpressionPrint (Expression* expr) {
     } else {
         for (uint_t i = 0; i < expr->stack_count; ++i) {
             std::cout << "| " << i << ": ";
-            PrintEsc (headers[i]);
+            ParamsPrint (headers[i]);
         }
     }
     PrintLine ("|", '_');
@@ -590,22 +614,22 @@ void ExpressionPrint (Expression* expr) {
 Bin* ExpressionInit (byte* buffer, uint_t size) {
     if (buffer == nullptr)
         return nullptr;
-    Bin* rx = reinterpret_cast<Bin*>(buffer);
-    rx->size = size - sizeof (Bin);
-    rx->start = 0;
-    rx->stop = 0;
-    rx->read = 0;
-    return rx;
+    Bin* bin = reinterpret_cast<Bin*>(buffer);
+    bin->size = size - sizeof (Bin);
+    bin->start = 0;
+    bin->stop = 0;
+    bin->read = 0;
+    return bin;
 }
 
-Bin* ExpressionInit (Bin* rx, uint_t size) {
-    if (rx == nullptr)
+Bin* ExpressionInit (Bin* bin, uint_t size) {
+    if (bin == nullptr)
         return nullptr;
-    rx->size = size - sizeof (Bin);
-    rx->start = 0;
-    rx->stop = 0;
-    rx->read = 0;
-    return rx;
+    bin->size = size - sizeof (Bin);
+    bin->start = 0;
+    bin->stop = 0;
+    bin->read = 0;
+    return bin;
 }
 
 /** Gets the start of the Bin ring buffer. 
@@ -613,15 +637,16 @@ byte* BBaseAddress (void* ptr) {
     return reinterpret_cast <byte*>(ptr) + kSlotHeaderSize;
 }*/
 
-byte* ExpressionBaseAddress (Bin* ptr) {
-    return reinterpret_cast <byte*>(ptr) + kSlotHeaderSize;
+byte* ExpressionBaseAddress (Bin* bin) {
+    return reinterpret_cast <byte*>(bin) + kSlotHeaderSize;
 }
 
-uint_t ExpressionSpace (Bin* rx) {
-    if (rx == nullptr) return ~0;
+uint_t ExpressionSpace (Bin* bin) {
+    if (bin == nullptr)
+        return ~0;
 
-    byte* base = ExpressionBaseAddress (rx);
-    return MonoidSpace (base + rx->start, base + rx->stop, rx->size);
+    byte* base = ExpressionBaseAddress (bin);
+    return SlotSpace (base + bin->start, base + bin->stop, bin->size);
 }
 
 byte* ExpressionBaseAddress (void* ptr, uint_t rx_tx_offset) {
@@ -634,17 +659,20 @@ byte* ExpressionBaseAddress (void* ptr, uint_t rx_tx_offset) {
     return reinterpret_cast <byte*>(ptr) + rx_tx_offset + kSlotHeaderSize;
 }
 
-byte* ExpressionEndAddress (Bin* rx) {
-    return reinterpret_cast<byte*>(rx) + kSlotHeaderSize + rx->size;
+byte* ExpressionEndAddress (Bin* bin) {
+    return reinterpret_cast<byte*>(bin) + kSlotHeaderSize + bin->size;
 }
 
-ticket_t Read (Bin* rx, const uint_t* params, void** args) {
-    if (rx == nullptr)
-        Report (NullPointerError, 0, 0, 0);
+const Operation* ExpressionRead (Expression* expr, params_t* params, void** args) {
+    if (expr == nullptr)
+        ExpressionResult (expr, Expression::RoomError);
+    Bin* bin = ExpressionBin (expr);
+    if (bin == nullptr)     //< Is this a double check?
+        ExpressionResult (expr, Expression::RoomError);
     if (params == nullptr)
-        Report (NullHeaderError, 0, 0, 0);
+        ExpressionResult (expr, Expression::RoomError);
     if (args == nullptr)
-        Report (NullHeaderError, 0, 0, 0);
+        ExpressionResult (expr, Expression::RoomError);
 
     byte type,                  //< The current type we're reading.
         ui1;                    //< Temp variable to load most types.
@@ -682,19 +710,19 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
         return 0;
     }
 
-    size = rx->size;
+    size = bin->size;
 
-    byte* begin = ExpressionBaseAddress (rx), //< The beginning of the buffer.
+    byte* begin = ExpressionBaseAddress (bin), //< The beginning of the buffer.
         * end   = begin + size,             //< The end of the buffer.
-        * start = begin + rx->start,        //< The start of the data.
-        * stop  = begin + rx->stop;         //< The stop of the data.
+        * start = begin + bin->start,        //< The start of the data.
+        * stop  = begin + bin->stop;         //< The stop of the data.
     const uint_t* param = params + 1;       //< The current param.
 
-    length = MonoidLength (start, stop, size);
+    length = SlotLength (start, stop, size);
 
 #if DEBUG_CHINESE_ROOM
     std::cout << "\n\n| Reading Bin: \n";
-    //PrintEsc (params);
+    //ParamsPrint (params);
     printf ("| begin: 0x%p start : %u stop : %u end : %u "
             "length: %u ", begin, Diff (begin, start), 
             Diff (begin, stop), Diff (begin, end), length);
@@ -711,7 +739,7 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
 
         switch (type) {
           case NIL:
-              goto RxInvalidType;
+              goto BoutInvalidType;
           case SOH:    //< _R_e_a_d__S_t_r_i_n_g_-_8____________________________
           case STX:
               // Load buffered-type argument length and increment the index.
@@ -732,7 +760,7 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
 
             while (ui1 != 0 && count != 0) {
                 if (count-- == 0)
-                    return Report (BufferUnderflowError, params, index,
+                    return ExpressionResult (expr, Expression::BufferUnderflowError, params, index,
                                         start);
 #if DEBUG_CHINESE_ROOM
                 putchar (ui1);
@@ -754,7 +782,7 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
           case BOL:
 #if USING_1_BYTE_TYPES
             if (length == 0) 
-                return Report (BufferUnderflowError, params, index, start);
+                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
             --length;
 
             // Read from buffer and write to the stack:
@@ -767,7 +795,7 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             *ui1_ptr = ui1;                     //< Write
             break;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case SI2:     //< _R_e_a_d__1_6_-_b_i_t__T_y_p_e_s____________________
           case UI2:
@@ -777,7 +805,7 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             // Word-align
             offset = TypeAlign2 (start);
             if (length < offset + 2)
-                return Report (BufferUnderflowError, params, index, start);
+                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset + 2;
             start  += offset;
             if (start >= end) start -= size;    //< Bound
@@ -792,7 +820,7 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             *ui2_ptr = ui2;                     //< Write
             break;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case SI4:     //< _R_e_a_d__3_2_-_b_i_t__T_y_p_e_s____________________
           case UI4:
@@ -803,7 +831,7 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             // Word-align
             offset = TypeAlign4 (start);
             if (length < offset + 4)
-                return Report (BufferUnderflowError, params, index, start);
+                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset + 4;
             start += offset;
             if (start >= end) start -= size;    //< Bound
@@ -818,7 +846,7 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             *ui4_ptr = ui1;                     //< Write
             break;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case TMU:     //< _R_e_a_d__6_4_-_b_i_t__T_y_p_e_s____________________
           case SI8:
@@ -829,7 +857,7 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             // Word-align
             offset = TypeAlign8 (start);
             if (length < offset + 8)
-                return Report (BufferUnderflowError, params, index, start);
+                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset + 8;
             start += offset;
             if (start >= end) start -= size;    //< Bound
@@ -844,41 +872,41 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             *ui8_ptr = ui8;                     //< Write
             break;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case SV2:     //< _R_e_a_d__V_a_r_i_n_t__2____________________________
           case UV2:
 #if USING_VARINT2
             goto Read2ByteType;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case SV4:     //< _R_e_a_d__V_a_r_i_n_t__4____________________________
           case UV4:
 #if USING_VARINT4
               goto Read4ByteType;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case SV8:     //< _R_e_a_d__V_a_r_i_n_t__8____________________________
           case UV8:
 #if USING_VARINT8
             goto Read8ByteType;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case AR1:  //< _R_e_a_d__A_r_r_a_y_-_1________________________________
 #if USING_AR1
             // Load next pointer and increment args.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
             if (ui1_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return ExpressionResult (expr, Expression::RoomError, params, index, start);
             count = *param++;
 
             // Word-align
             offset = TypeAlign (start, count);
             if (length < offset)
-                return Report (BufferUnderflowError, params, index, start);
+                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset;
             start += offset;
             if (start >= end) start -= size;
@@ -886,20 +914,20 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             count *= SizeOf (*param++);
             goto ReadBlock;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case AR2:  //< _R_e_a_d__A_r_r_a_y_-_2________________________________
 #if USING_AR2
             // Load the pointer to the destination.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
             if (ui1_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return ExpressionResult (expr, Expression::RoomError, params, index, start);
             count = *param++; //< Get type from header
               
             // Word-align
             offset = TypeAlign (start, count);
             if (length < offset)
-                return Report (BufferUnderflowError, params, index, start);
+                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset;
             start += offset;
             if (start >= end) start -= size;
@@ -907,20 +935,20 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             count *= SizeOf (*param++);
             goto ReadBlock;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case AR4:  //< _R_e_a_d__A_r_r_a_y_-_4________________________________
 #if USING_AR4
             // Load the pointer to the destination.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
             if (ui1_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return ExpressionResult (expr, Expression::RoomError, params, index, start);
             count = *param++;   //< Read type
 
             // Word-align
             offset = TypeAlign (start, count);
             if (length < offset)
-                return Report (BufferUnderflowError, params, index, start);
+                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset;
             start += offset;
             if (start >= end) start -= size;
@@ -928,20 +956,20 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             count *= SizeOf (*param++);
             goto ReadBlock;
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case AR8:  //< _R_e_a_d__A_r_r_a_y_-_8________________________________
 #if USING_AR8
             // Load the pointer to the destination.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
             if (ui1_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return ExpressionResult (expr, Expression::RoomError, params, index, start);
             count = *param++;   //< Read Type
               
             // Word-align
             offset = TypeAlign (start, count);
             if (length < offset)
-                return Report (BufferUnderflowError, params, index, start);
+                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset;
             start += offset;
             if (start >= end) start -= size;
@@ -949,17 +977,17 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             count *= SizeOf (*param++);
             goto ReadBlock;
 #else
-              goto RxInvalidType;
+              goto BoutInvalidType;
 #endif
           case ESC: //< _R_e_a_d__E_s_c_a_p_e__S_e_q_u_e_n_c_e__________________
             // I'm not sure exactly how this should work. I can't do recursion
             // because of embedded limitations.
             break;
-          case BK8: //< _R_e_a_d__B_o_o_k_8_____________________________________
+          case FS: //< _R_e_a_d__B_o_o_k_8_____________________________________
             // Word-align
               offset = TypeAlign8 (start);
               if (length < offset + 128)
-                  return Report (BufferUnderflowError, params, index, start);
+                  return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
               length -= offset;
               start += offset;
               if (start >= end) start -= size;
@@ -967,19 +995,19 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             // Load the pointer to the destination.
             ui8_ptr = reinterpret_cast<uint64_t*> (args[index]);
             if (ui8_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return ExpressionResult (expr, Expression::RoomError, params, index, start);
             count = (uint_t)*ui8_ptr;
             ui1_ptr = reinterpret_cast<byte*> (ui8_ptr + 1);
             goto ReadBlock;
 #if USING_AR8
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
-          case BK4: //< _R_e_a_d__B_o_o_k_4_______________________________________
+          case GS: //< _R_e_a_d__B_o_o_k_4_______________________________________
             // Word-align
               offset = TypeAlign4 (start);
               if (length < offset + 64)
-                  return Report (BufferUnderflowError, params, index, start);
+                  return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
               length -= offset;
               start += offset;
               if (start >= end) start -= size;
@@ -987,19 +1015,19 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             // Load the pointer to the destination.
             ui4_ptr = reinterpret_cast<uint32_t*> (args[index]);
             if (ui4_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return ExpressionResult (expr, Expression::RoomError, params, index, start);
             count = (uint_t)*ui4_ptr;
             ui1_ptr = reinterpret_cast<byte*> (ui4_ptr + 1);
             goto ReadBlock;
 #if USING_BK4
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
-          case BK2: //< _R_e_a_d__B_o_o_k_2_______________________________________
+          case RS: //< _R_e_a_d__B_o_o_k_2_______________________________________
             // Word-align
             offset = TypeAlign2 (start);
             if (length < offset + 32)
-                return Report (BufferUnderflowError, params, index, start);
+                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset;
             start += offset;
             if (start >= end) start -= size;
@@ -1007,13 +1035,13 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             // Load the pointer to the destination.
             ui2_ptr = reinterpret_cast<uint16_t*> (args[index]);
             if (ui2_ptr == nullptr)
-                return Report (NullPointerError, params, index, start);
+                return ExpressionResult (expr, Expression::RoomError, params, index, start);
             count = (uint_t)*ui2_ptr;
             ui1_ptr = reinterpret_cast<byte*> (ui2_ptr + 1);
             goto ReadBlock;
 #if USING_BK2
 #else
-            goto RxInvalidType;
+            goto BoutInvalidType;
 #endif
           case US: //< _R_e_a_d__U_n_i_t__S_e_p_e_r_a_t_o_r_____________________
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
@@ -1021,7 +1049,7 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
             ReadBlock:
             {
                 if (length < count)
-                    return Report (BufferOverflowError, params, index, start);
+                    return ExpressionResult (expr, Expression::BufferOverflowError, params, index, start);
                 if (count == 0)
                     break;          //< Not sure if this is an error.
                 if (start + count >= end) {
@@ -1049,10 +1077,10 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
                 break;
             }
           default:
-            RxInvalidType:
+            BoutInvalidType:
             {
                 printf ("\n!!!Read invalid type %u\n", type);
-                return Report (ReadInvalidTypeError, params, index, start);
+                return ExpressionResult (expr, Expression::ReadInvalidTypeError, params, index, start);
             }
         }
         std::cout << " |";
@@ -1060,27 +1088,29 @@ ticket_t Read (Bin* rx, const uint_t* params, void** args) {
 
 #if DEBUG_CHINESE_ROOM
     printf ("| Done reading\n");
-    MonoidClear (begin, rx->start, start, stop, end, size);
+    SlotClear (begin, bin->start, start, stop, end, size);
 #endif
 
     // Convert pointer back to offset
-    rx->start = Diff (begin, start);
+    bin->start = Diff (begin, start);
 
     return 0;
 }
 
-bool IsReadable (Bin* rx) {
-    return rx->start != rx->stop;
+bool IsReadable (Bin* bin) {
+    return bin->start != bin->stop;
 }
 
-void Print (Bin* rx) {
-    if (rx == nullptr) return;
-    uint_t size = rx->size;
+void ExpressionPrint (Expression* expr) {
+    if (expr == nullptr) return;
+    uint_t size = expr->size;
     PrintLine ('_');
-    printf ("| Bin %p: size: %u, start: %u, stop: %u, read: %u\n", rx, size,
-            rx->start, rx->stop, rx->read);
+    printf ("| Expression: %p", expr);
+    PrintLine ("|", '=');
+}
 
-    PrintMemory (ExpressionBaseAddress (rx), size);
+const Operand* ExpressionWrite (Expression* expr, params_t* params, void** args) {
+    return 0;
 }
 
 }       //< namespace _

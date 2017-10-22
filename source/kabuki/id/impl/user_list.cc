@@ -70,9 +70,9 @@ User* UserList::find (const string& username)
     return nullptr;//static website guest account
 }
 
-void UserList::print (Terminal& io)
+void UserList::print (Expression& io)
 {
-    /// This method creates a string of the users.print (Terminal& io) 
+    /// This method creates a string of the users.print (Expression& io) 
     /// strings separated by spaces
 
     string returnString = "Number of Users: " + users.size () + "\n";
@@ -80,7 +80,7 @@ void UserList::print (Terminal& io)
     for (int index = 0; index < users.size (); index++)
     {
         /// Iterated through the indexs array and write the
-        /// print (Terminal& io) strings to the returnString
+        /// print (Expression& io) strings to the returnString
         returnString += "User " + (index + 1) + ": " + users[index].getUsername ().getHandle () + "\n";
     }
     slot.prints (returnString);

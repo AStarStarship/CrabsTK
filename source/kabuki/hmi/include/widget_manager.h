@@ -107,7 +107,7 @@ class _HMI_API WidgetManager
     void redo ();
     /*< Redos the previous action. */
     
-    inline void print (I2P::Terminal& slot);
+    inline void print (I2P::Expression& slot);
     /*< Prints this object to a terminal. */
 
     private:

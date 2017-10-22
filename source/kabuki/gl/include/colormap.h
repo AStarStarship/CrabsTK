@@ -45,7 +45,7 @@ class _KabukiTheater_ Colormap : Image
     
     //bool LoadGLTexture ();
     
-    void print (Terminal& io);
+    void print (Expression& io);
     /*< Prints this object to a terminal. */
 
     private:

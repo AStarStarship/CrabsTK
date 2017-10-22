@@ -114,7 +114,7 @@ class _KabukiTheater_ Mixer
     void print (int startCh, int stopCh);
     //< Prints a string representation of mixer channels startCh - stopCh.
     
-    inline void print (_::Terminal& io);
+    inline void print (_::Expression& io);
     /*< Prints this object to a terminal. */
 
     private:

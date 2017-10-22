@@ -36,7 +36,7 @@ class ID_API Organization : public Entity
     Organization ();
     /*< Default constructor. */
     
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to a terminal. */
 
     private:

@@ -5787,7 +5787,7 @@ namespace details
                     // Guarantee that the write of _M_completeDelegate is ordered with respect to the read of state below
                     // as perceived from _FireCompletion on another thread.
                     MemoryBarrier();
-                    if (_IsTerminalState())
+                    if (_IsExpressionState())
                     {
                         _FireCompletion();
                     }
@@ -5973,7 +5973,7 @@ namespace details
                 }
                 break;
             case _AsyncStatusInternal::_AsyncClosed:
-                if (!_IsTerminalState(_Current))
+                if (!_IsExpressionState(_Current))
                 {
                     return false;
                 }
@@ -5997,12 +5997,12 @@ namespace details
             return (_RetState == _Current);
         }
 
-        inline bool _IsTerminalState()
+        inline bool _IsExpressionState()
         {
-            return _IsTerminalState(_M_currentStatus);
+            return _IsExpressionState(_M_currentStatus);
         }
 
-        inline bool _IsTerminalState(_AsyncStatusInternal status)
+        inline bool _IsExpressionState(_AsyncStatusInternal status)
         {
             return (status == _AsyncError ||
                     status == _AsyncCanceled ||

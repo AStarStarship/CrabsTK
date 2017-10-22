@@ -33,7 +33,7 @@ class ID_API Name
     /** Default constructor. */
     Name ();
     
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to a terminal. */
 };
 

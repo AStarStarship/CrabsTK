@@ -292,7 +292,7 @@ void Color::setHSV (float& fR, float& fG, float& fB, float& fH, float& fS, float
 */
 }
 
-void Color::print (Terminal& io)
+void Color::print (Expression& io)
 {
 
 }

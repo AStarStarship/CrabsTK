@@ -36,11 +36,11 @@
 #define DEBUG_CHINESE_ROOM   YES
 #endif //< DEBUG_CHINESE_ROOM
 
-/** @brief The RAM Use Levels 1-3 control how much RAM is used by adjusting the
-           size of the uint_t type.
-    For constrained memory devices, use RAM_USE_LEVEL 1. For most uses use
-    RAM_USE_LEVEL 2. For applications that require 64-bit memory addresses, use
-    RAM_USE_LEVEL 3.
+/** @brief The Memory Profiles 1-4 are used to signal that the system is
+           memory constrained.
+    For constrained memory devices, use MEMORY_PROFILE 1. For most uses use
+    MEMORY_PROFILE 2. For applications that require 64-bit memory addresses, use
+    MEMORY_PROFILE 3.
 
     @code
     | RUL | sizeof (uint_t) | #bits Unit |
@@ -50,8 +50,8 @@
     |  4  |      4 byte     |    16      |
     @endcode
 */
-#define RAM_USE_LEVEL       2       //< The RAM User Level 1-3.
-#define USE_MORE_ROM        YES     //< Inlines functions or makes them static.
+#define MEMORY_PROFILE       2      //< The RAM User Level 1-3.
+#define USE_MORE_ROM        YES     //< Used to reduce ROM size.
 #define USING_CONSOLE       YES     //< Includes/excludes human-readable text.
 
 #define MAX_ERRORS          8       //< Max errors before locking up.

@@ -23,7 +23,7 @@ namespace _ {
 
 template<typename TIndex, typename TKey, typename TData, typename THash, 
          uint_t MaxStackHeight>
-class Library: public Operable
+class Library: public Operand
 {
     public:
 
@@ -135,7 +135,7 @@ class Library: public Operable
 
         switch (type)
         {
-            case BK2:
+            case RS:
                 #if _BufferUIntSize >= 16
                 /// Library format: { UI1, UI1, UI2, UI2 }
                 return size + sizeof (Library) + * (address + 1) * 
@@ -143,7 +143,7 @@ class Library: public Operable
                 #else
                 return 0;
                 #endif
-            case BK4:
+            case GS:
                 #if _BufferUIntSize >= 32
                 /// Library format: { UI1, UI1, UI2, UI4 }
                 return size + sizeof (Bag32) + * (UI2_ptr + 2) * 
@@ -151,7 +151,7 @@ class Library: public Operable
                 #else
                 return 0;
                 #endif
-            case BK8:
+            case FS:
                 #if _BufferUIntSize >= 64
                 /// Library format: { UI2, UI2, UI4, UI8 }
                 return size + sizeof (Library) + * (UI2_ptr + 2) * 
@@ -188,7 +188,7 @@ class Library: public Operable
     Library** root_;        //< Pointer to the dynamically allocated bags.
     Library* bag_;          //< The currently selected bag.
     uint_t index_,          //< The index of the currently selected bag.
-        stack_height_,      //< The number of bags on the stack.
+        height_,      //< The number of bags on the stack.
         num_libraries_;     //< The number of libraries.
     byte type_;             //< The current type of bag.
     //Bag<TIndex, TKey, TData, THash> bag;

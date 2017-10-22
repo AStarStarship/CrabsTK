@@ -70,7 +70,7 @@ bool Entity::search (const string& query)
     return false;
 }
 
-void Entity::print (Terminal& io)
+void Entity::print (Expression& io)
 {
     slot.prints ("Entity: ");
 }

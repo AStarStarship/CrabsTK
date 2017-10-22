@@ -73,7 +73,7 @@ class _KabukiTheater_ RectRotor
     Rect_f getBounds ();
     /*< Returns the outer bounds. */
 
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to the terminal. */
 
     private:

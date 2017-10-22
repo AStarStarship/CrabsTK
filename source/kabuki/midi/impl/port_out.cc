@@ -261,7 +261,7 @@ uint32_t PortOut::HeaderProc  (LPVOID Parameter)
 }
 */
 
-const _::Member* PortOut::op (_::Terminal* io, byte index)
+const _::Member* PortOut::op (_::Expression* io, byte index)
 {
     switch (index)
     {

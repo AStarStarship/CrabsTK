@@ -161,7 +161,7 @@ const char* Port::SetState (byte Value)
     return 0;
 }
 
-const char* Port::op (_::Terminal* io, byte index)
+const char* Port::op (_::Expression* io, byte index)
 {
     switch (Index)
     {

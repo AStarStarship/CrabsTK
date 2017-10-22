@@ -22,21 +22,19 @@
 namespace _ {
 
 /** An Script escape sequence header.
-    struct uses C++11 variadic template to ensure only one copy in ROM and to eliminate
+    struct KABUKI uses C++11 variadic template to ensure only one copy in ROM and to eliminate
     redundant typing. */
 template<const uint_t... N>
-KABUKI const uint_t* Esc () {
-    static const uint_t list[sizeof... (N)] = { N... };
+KABUKI params_t* Params () {
+    static params_t list[sizeof... (N)] = { N... };
     return list;
 }
 
-int example[] = { 1, 2, 3, 4 };
-
 /**  Prints out the parameters to the debug console. */
-KABUKI void EscPrint (const uint_t* params);
+KABUKI void ParamsPrint (params_t* params);
 
 /*< Returns the requested parameter number. */
-KABUKI uint_t ParamNumber (const uint_t* params, byte param_number);
+KABUKI uint_t ParamNumber (params_t* params, byte param_number);
 
 /** Sets the params to the given pointers corresponding to the index 1-26 of the
 letters a-z. */

@@ -20,7 +20,7 @@
 namespace _ {
 
 /** Interface for a generic iterator. */
-struct Iterator {
+struct KABUKI Iterator {
     
     /** Iterates over the next item.
         @return Pointer to the next object and nil when iteration is 

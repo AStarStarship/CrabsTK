@@ -51,7 +51,7 @@ class LED
     LED  (uint bit, uint row);
     /*< Simple default constructor stores the LED bit number and row number. */
     
-    inline void Print (_::Terminal& slot);
+    inline void Print (_::Expression& slot);
     /*< Prints this object to a terminal. */
     
     private:

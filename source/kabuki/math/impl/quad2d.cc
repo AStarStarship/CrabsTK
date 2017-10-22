@@ -173,7 +173,7 @@ void Quad2D::swap (Quad2D q)
     y0 = tempY0;
 }
 
-void Quad2D::print (Terminal& slot)
+void Quad2D::print (Expression& slot)
 {
 
 }
@@ -249,7 +249,7 @@ void Quad2D_d::swap (Quad2D_d& q)
     y = tempY;
 }
 
-void Quad2D_d::print (Terminal& slot)
+void Quad2D_d::print (Expression& slot)
 {
 
 }

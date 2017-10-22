@@ -79,7 +79,7 @@ bool Password::equals (const Password& p)
     return password == p.password;
 }
 
-void Password::print (Terminal& io)
+void Password::print (Expression& io)
 {
     slot.prints (password.c_str ());
 }

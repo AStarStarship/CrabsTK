@@ -51,7 +51,7 @@ TEST (_HMI_Tests, _Theater_HMI_ControlArrayTests_1)
 {
     ControlArray a ();
 
-    printf ("Testing const char* print (I2P::Terminal& slot)...");
+    printf ("Testing const char* print (I2P::Expression& slot)...");
     a.print ();
 
     DMXControl  c1 ("Control 1", 50, 33);
@@ -100,7 +100,7 @@ TEST (_HMI_Tests, ProjectTests1)
     
     DMXButton a ("DMX Button A");
 
-    printf ("Testing const char* print (I2P::Terminal& slot)...");
+    printf ("Testing const char* print (I2P::Expression& slot)...");
     a.print ();
 
     printf ("Testing void processPress () and void processDepress ()");
@@ -123,7 +123,7 @@ TEST (_HMI_Tests, _Theater_HMI_ControlMatrixTests_1)
 {
     printf ("Testing Controls::ControlMatrix class.");
     
-    printf ("Testing const char* print (I2P::Terminal& slot):\n");
+    printf ("Testing const char* print (I2P::Expression& slot):\n");
     ControlMatrix cm (5, 2);
     cm.print ();
 
@@ -285,7 +285,7 @@ TEST (_HMI_Tests, MIDIButtonTests1)
     
     MIDIButton a ("MIDI Button A");
 
-    printf ("Testing const char* print (I2P::Terminal& slot)");
+    printf ("Testing const char* print (I2P::Expression& slot)");
     a.print ();
     
     printf ("\n\n_Theater::MIDIButton tests completed.\n\n");
@@ -298,13 +298,13 @@ TEST (_HMI_Tests, MacroButtonTests)
     auto macroA = MacroButton ("Macro Button A");
 
     printf ("Testing const char* print (_::verifier&)...");
-    printf (macroA.print (I2P::Terminal& slot));
+    printf (macroA.print (I2P::Expression& slot));
     printf ("Testing add  (Parameter<int>*)");
     macroA.add (new DMXControl ("Macro 1"));
     macroA.add (new MIDIControl ("Macro 2"));
     macroA.add (new DMXButton ("Macro 3"));
     macroA.add (new MIDIButton ("Macro 4"));
-    printf ("Added " + const char*  (macroA.numControls ()) + " test controls.\n" + macroA.print (I2P::Terminal& slot));
+    printf ("Added " + const char*  (macroA.numControls ()) + " test controls.\n" + macroA.print (I2P::Expression& slot));
     printf ("Testing void trigger ()");
     macroA.trigger ();
     printf ("Testing Parameter<int>* remove  (index);");
@@ -381,12 +381,12 @@ TEST (_HMI_Tests, DMXControlTests)
     _::printLine ('-');
     DMXControl controlA ("DMX Control A");
 
-    printf ("Printing controlA.print (I2P::Terminal& slot)\n");
+    printf ("Printing controlA.print (I2P::Expression& slot)\n");
     controlA.print ();
 
     printf ("Testing copy constructor\n");
     DMXControl controlB (controlA);
-    printf ("Printing controlB.print (I2P::Terminal& slot)\n");
+    printf ("Printing controlB.print (I2P::Expression& slot)\n");
     controlB.print ();
     printf ("Testing int Compare  (const Control&)");
 
@@ -399,7 +399,7 @@ TEST (_HMI_Tests, DMXControlTests)
 
     controlA = DMXControl ("", 1, 1, 0, 255, 8);
 
-    printf ("Printing controlA.print (I2P::Terminal& slot)...\n");
+    printf ("Printing controlA.print (I2P::Expression& slot)...\n");
     controlA.print ();
 
     controlA.SetLabel ("DMX Control B");
@@ -441,7 +441,7 @@ TEST (ControlArrayTests, DmxButtonTests)
     
     DMXButton a ("DMX Button A");
 
-    printf ("Testing const char* print (I2P::Terminal& slot)...");
+    printf ("Testing const char* print (I2P::Expression& slot)...");
     a.Print ();
 
     printf ("Testing void processPress () and void processDepress ()");

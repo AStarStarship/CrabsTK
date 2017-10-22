@@ -51,7 +51,7 @@ class _KabukiTheater_ Elipse
     /*< Sets the radius of the rectangle in the x direction.
         @warning If value < 0.0, value will be multiplied by -1.0. */
 
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to a terminal. */
 
     private:

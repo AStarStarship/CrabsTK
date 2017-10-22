@@ -17,101 +17,115 @@
 #ifndef CHINESE_ROOM_OPERATION_H
 #define CHINESE_ROOM_OPERATION_H
 
-#include "error.h"
-#include "set.h"
+#include "evaluation.h"
+#include "array.h"
 
 namespace _ {
 
-struct Expression;
+/** Key/name string, params, result, and optional description of a data set.
+    @code
+    static const Operation this_evaluation = { "Key",
+        Params<1, 2>::Header, Params<1, 2>::Header,
+        "Description" };
+    static const Operation member_device =   { "Key", 
+        NumOperations (0), FirstOperation ('A'),
+        "Description" };
+    @endcode
+*/
+struct KABUKI Operation {
+    const char* name;       //< Pointer to the Operation name.
+    params_t  * params,     //< Pointer to the set parameters B-Seq.
+              * result;     //< Pointer to the set expression result B-Seq.
+    const char* metadata;   //< Pointer to the metadata string.
+    Evaluation* evaluation; //< Pointer to the evaluated B-Sequence.
+};
 
-/** Interface for an A*B Star Operable.
-    An Operable is not technically an expression in the mathematical sense
-    but it gets it becomes one when it is implemented on an Abstract Stack
-    Machine.
+struct KABUKI Expression;
 
-    
+/** Interface for an abstract A*B Operation operand.
+    A Script Operand is an object that is being operated on.
+    Let A be a set of states in a Chinese Room state machine.
+    Let B be a set of bytes in a set of Abstract Serial Ports.
 
     @code
-    +------------- Result
-    | +----------- Operation
-    | | +--------- Set of Finite States
-    | | | +------- Operable
-    | | | | +----- Arguments
+    +----------- Result: The set of finite states
+    | +--------- Operation
+    | | +------- Set of finite states
+    | | | +----- Star Operation
+    | | | | +--- Operands (input values)
     | | | | |
     v v v v v
-    A = A * B
-        |<->|
-      Operable
+    A = A * B   
+        |<->|   Operation
+    |<----->|   Evaluation
     @endcode
 
-    When a device is selected by a Terminal, the caller can then call functions 
-    of that device. The Terminal has a stack of devices that it then pushes the 
+    When a device is selected by a Slot, the caller can then call functions 
+    of that device. The Slot has a stack of devices that it then pushes the 
     Star* on top of. This object is now selected, and agents can now call 
-    functions of this object via the Star Control (DC).
+    functions of this object via the Data Controller (DC).
 
     @code
-    // Example remote procedure call using Star interface.
-    class OperableExample : public Operable {
+    class Expr : public Operand {
         public:
 
-        void foo () {}     //< Example dummy foo.
-        void bar () {}     //< Example dummy bar.
+        enum {
+            kStringBufferSize = 16       //< Example string buffer size.
+        };
 
-        // Script expressions.
-        const Operable* Star (char_t index, Expression* expr) override
-        {
-            void* argv[2];    //< An array of 2 void* for the Rpc arguments.
+        void foo () {}     //< Classical foo.
+        void bar () {}     //< Some people drink too much :-)
+
+        virtual const Operand* Star (int index, Expression* expr) {
+            void* args[2];    //< An array of 2 void* for the Operation.
 
             switch (index)
             {
                 case '?': { 
-                    static const Set m0 = 
+                    static const Operation o_header = 
                     { 
-                        "ChineseRoomExample", ConvertNumOperables (2), nullptr, 
-                        "Description of ChineseRoomExample." 
+                        "ChineseRoomExample", ConvertNumOperands (2), nullptr, 
+                        "Description of ChineseRoomExample.", 0
                     };
 
                     // 63 is ASCII '?'
-                    return &m0;
+                    return &o_header;
                 }
                 case 64: {
-                        static const Set s1 = { "foo",
-                        Rx<2, FLT, STR, StringBufferSize>::Header,
-                        Tx<2, FLT, STR>::Header,
+                    static const Operation o_A = { "foo",
+                        Params<2, FLT, STX, kStringBufferSize> (),
+                        Params<2, FLT, STX> (),
                         "Description of foo." };
 
                     // 66 is ASCII 'A'
-                    if (!io) return &s1;
+                    if (!expr) return &o_A;
 
-                    if (a->read (s1.params, args (argv, &ioNumber, 
-                                                      ioString))) 
+                    if (a->read (o_A.params, args (args, &ioNumber, 
+                                                   ioString))) 
                     return readError ();
 
-                    foo ();
+                    foo ();  // are you?
 
-                    if (Write (io, s1.result, param.args (&ioNumber, 
-                                                             ioString)))
-                        return writeError ();
-                    return &s1;
+                    return Write (expr, o_A.result, param.args (&ioNumber, 
+                                                                ioString)));
                 }
                 case 65: {
-                    static const Set s2 = { "bar",
-                        Rx<2, FLT, STR, StringBufferSize>::Header,
-                        Tx<2, FLT, STR>::Header,
-                        "Description of bar." };
+                    static const Operation o_B = { "bar",
+                        Params<2, FLT, STX, kStringBufferSize> (),
+                        Params<2, FLT, STX> (),
+                        "Description of bar."
+                    };
                 
-                    if (!io) return &s2;
+                    if (!io) return &o_B;
 
-                    if (Read (io, s2.params, param.args (&ioNumber, 
+                    if (Read (io, o_B.params, param.args (&ioNumber, 
                                                             ioString)))
                         return readError ();
 
                     bar ();
-
-                    if (a->write (s2.result, param.args (&ioNumber, 
-                                                             ioString)))
-                        return writeError ();
-                    return &s2;
+                    
+                    return Write (o_B.result, param.args (&ioNumber, 
+                                                          ioString)));
                 }
             }
             return nullptr;
@@ -119,88 +133,50 @@ struct Expression;
 
         private:
 
-        enum {
-            StringBufferSize = 16       //< Example string buffer size.
-        };
-
         float ioNumber;                 //< Example variable.
-        byte ioString[StringBufferSize];//< Example string.
+        byte ioString[kStringBufferSize];//< Example string.
     };
     @endcode
 */
 
-struct Operable {
-    /** An A*B abstract algebra expression.
+struct KABUKI Operand {
+    /** An A*B abstract algebra Script Expression.
         
         @param index The index of the expression.
         @param io    The Bin for the IO slot.
         @return      Returns null upon success, a Set header upon query, and an 
-                     error_t ticket upon Read-Write failure.
-    */
-    virtual const Operation* Star (char_t index, Expression* expr) = 0;
-};
-
-/** Key/name string, params, result, and optional description of a data set.
-    @code
-    static const Operation this_evaluation = { "Key",
-                                                Params<1, 2>::Header, Params<1, 2>::Header,
-                                                "Description" };
-    static const Operation member_device =   { "Key", setNumOperations (0), 0,
-                                                "Description" };
-    @endcode
-*/
-struct Operation {
-    const char   * name;        //< Pointer to the Operation name.
-    const uint_t * params,      //< Pointer to the set parameters B-Seq.
-                 * result;      //< Pointer to the set expression result B-Seq.
-    const char   * metadata;    //< Pointer to the metadata string.
-    void         * evaluation;  //< Pointer to the evaluated set (if it exists).
+                     error_t ticket upon Read-Write failure. */
+    virtual const Operation* Star (int index, Expression* expr) = 0;
 };
 
 /** Converts the value to a pointer. */
 KABUKI uint_t* NumOperations (std::uintptr_t value);
 
-
 /** Converts the given value to a pointer. */
-KABUKI const uint_t* FirstOperation (uint_t value);
+KABUKI params_t* FirstOperation (uint_t value);
 
 /** Returns the number of members an Star has. */
 KABUKI uintptr_t Index (const void* ptr);
 
 /** Returns the number of members a Star has. */
-KABUKI uintptr_t CountCoperations (const Operation* eval);
+KABUKI uintptr_t CountCoperations (const Operation* op);
 
-/** Error flag for throwing Expression read error. */
-KABUKI const Operation* ReadError ();
+/** Prints the given Set to the std::out 
+    Quote: Wikipedia "In mathematics an operand is the object of a mathematical
+    operation, i.e. it is the quantity that is operated on." */
+KABUKI void OperationPrint (const Operation* op);
 
-/** Error flag for throwing Expression write error. */
-KABUKI const Operation* WriteError ();
 
-/** Generates a Set from the given error ticket_t. */
-KABUKI const Operation* ErrorTicket (ticket_t error);
-
-/** Error flag for throwing Expression stack overflow error. */
-KABUKI const Operation* StackOverflow ();
-
-/** An error flag for an invalid op index. */
-KABUKI const Operation* InvalidOperation ();
-
-/** Prints the given Set to the std::out */
-KABUKI void OperationPrint (const Operation* eval);
 
 /** Gets the number of operations in the given expressions. */
-KABUKI uintptr_t ToUInt (Operable* op);
+KABUKI uintptr_t ToUInt (Operand* op);
 
-/** Returns true if the given Operable is a Operation (true) or Expression 
+/** Returns true if the given Operand is a Operation (true) or Expression 
     (false). */
-KABUKI bool IsOperation (const Operable* op);
+KABUKI bool IsGroup (const Operation* op);
 
 /** Prints the given Star to the console. */
-KABUKI void OperablePrint (Operable* expr);
-
-/** Prints the stack address of the expression to the std::out. */
-KABUKI void PrintAddress (const byte* address, Operable* expr);
+KABUKI void OperandPrint (Operand* operand);
 
 }   //< namespace _
-
 #endif  //< CHINESE_ROOM_OPERATION_H

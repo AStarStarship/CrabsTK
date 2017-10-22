@@ -38,7 +38,7 @@ void Date::setTime (time_t t)
     time = t;
 }
     
-void Date::print (Terminal& io)
+void Date::print (Expression& io)
 {
     slot.prints ("Date: ");
 }

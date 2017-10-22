@@ -156,7 +156,7 @@ class IsymmetricController: public Controller
     /*< Inter-process subroutines. */
 
     void Print() const;
-    /*< Prints this object to a Terminal. */
+    /*< Prints this object to a Expression. */
 
     private:
 

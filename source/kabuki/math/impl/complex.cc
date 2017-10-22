@@ -45,7 +45,7 @@ float Complex::calcMagnitude ()
     return squareRoot (a * a + b * b);
 }
 
-void Complex::print (I2P::Terminal& slot)
+void Complex::print (I2P::Expression& slot)
 {
 }
 
@@ -72,7 +72,7 @@ double Complex_d::calcMagnitude ()
     return squareRoot (a * a + b * b);
 }
 
-void Complex_d::print (I2P::Terminal& slot)
+void Complex_d::print (I2P::Expression& slot)
 {
 
 }

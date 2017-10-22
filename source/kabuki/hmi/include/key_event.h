@@ -228,7 +228,7 @@ class KeyEvent
     /*< Gets the VK code of the event. */
     
     inline void print() const;
-    /*< Prints this object to a Terminal. */
+    /*< Prints this object to a Expression. */
     
     private:
     

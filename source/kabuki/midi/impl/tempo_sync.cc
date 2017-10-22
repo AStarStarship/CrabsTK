@@ -54,7 +54,7 @@ const char* TempoSync::SetState (byte Value)
     return 0;
 }
 
-const char* TempoSync::op (_::Terminal* io, byte index)
+const char* TempoSync::op (_::Expression* io, byte index)
 {
     switch (Index)
     {

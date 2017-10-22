@@ -68,14 +68,14 @@ void MIDIButton::doublePress ()
     //! To do: Write me!
 }
 
-void MIDIButton::printHeader (Terminal& slot) const
+void MIDIButton::printHeader (Expression& slot) const
 {
     if (type () == Parameter<int>::MIDIControl)
         return MIDIControl::headerString ();
     return MIDIControl::headerString () + "  Action  |Step |";
 }
 
-void MIDIButton::printRow (Terminal& slot const
+void MIDIButton::printRow (Expression& slot const
 {
     return MIDIControl::toStringRow () + PrintCentered (actionString (), 10) + "|" + PrintCentered (string (stepSize ()), 5) + "|";
 }

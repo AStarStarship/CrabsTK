@@ -101,7 +101,7 @@ class ID_API Hit
     std::string toJSON ();
     /*< Serializes to JSON std::string. */
     
-    inline void print (Terminal& slot);
+    inline void print (Expression& slot);
     /*< Prints this object to a terminal. */
     
     private:

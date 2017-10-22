@@ -73,7 +73,7 @@ class ID_API Password
     bool equals (const Password& p);
     /*< Returns true if this password equals the given one. */
     
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to a terminal. */
 
     private:

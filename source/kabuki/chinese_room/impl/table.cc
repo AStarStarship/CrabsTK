@@ -17,7 +17,6 @@
 #include <stdafx.h>
 #include "../include/table.h"
 #include "../include/utils.h"
-#include "../include/error.h"
 
 namespace _ {
 
@@ -81,7 +80,7 @@ static byte TableAdd (Table* table, const char* key) {
     if (key_length > value)
     {
         //printf ("Buffer overflow\n");
-        return BufferOverflowError;
+        return ~(byte)0;
     }
 
     //print ();

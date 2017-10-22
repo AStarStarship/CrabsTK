@@ -27,7 +27,7 @@ Organization::Organization ()
 
 }
 
-void Organization::print (Terminal& io)
+void Organization::print (Expression& io)
 {
 
 }

@@ -47,8 +47,8 @@ class Point
     void TranslateZ (Type deltaZ);
     /*< Translated the z position by the given delta. */
 
-    void print (Terminal io);
-    /*< Prints this object to a Terminal. */
+    void print (Expression io);
+    /*< Prints this object to a Expression. */
 };
 
 }   //< _Math

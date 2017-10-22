@@ -224,7 +224,7 @@ const char* ShortMessage::SetState (byte Value)
     return 0;
 }
 
-const char* ShortMessage::op (_::Terminal* io, byte index)
+const char* ShortMessage::op (_::Expression* io, byte index)
 {
     switch (Index)
     {

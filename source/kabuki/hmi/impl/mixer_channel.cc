@@ -141,7 +141,7 @@ void MixerChannel::insertAux(int thisIndex)
     ++numAuxSends;
 }
 
-const char* MixerChannel::op(Terminal* io, byte index)
+const char* MixerChannel::op(Expression* io, byte index)
 {
     switch(Index)
     {

@@ -269,7 +269,7 @@ const char* OutputHeaderQueue::setState (byte Value)
     return 0;
 }
 
-const Member* OutputHeaderQueue::op (_::Terminal* io, byte index)
+const Member* OutputHeaderQueue::op (_::Expression* io, byte index)
 {
     switch (index)
     {

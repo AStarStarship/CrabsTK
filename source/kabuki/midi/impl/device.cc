@@ -54,7 +54,7 @@ const char* Device::SetState (byte Value)
     return 0;
 }
 
-const char* Device::op (_::Terminal* io, byte index)
+const char* Device::op (_::Expression* io, byte index)
 {
     switch (Index)
     {

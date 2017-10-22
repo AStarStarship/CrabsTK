@@ -59,7 +59,7 @@ class _KabukiTheater_ ControlSurface
     void setDrumsChannel (int16_t thisChannel);
     //< Sets the common drums MIDI channel.
     
-    const Member* op (_::Terminal* io, byte index) override;
+    const Member* op (_::Expression* io, byte index) override;
     /*< Inter-process subroutines. */
 
     void print () const;

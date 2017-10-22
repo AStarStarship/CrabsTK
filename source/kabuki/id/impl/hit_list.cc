@@ -63,7 +63,7 @@ void HitList::loadFromJSON (std::string json)
     }
     catch (Exception e)
     {
-        assert (false, e.print (Terminal& slot));
+        assert (false, e.print (Expression& slot));
     }
      */
 }
@@ -145,7 +145,7 @@ std::string HitList::getSubcatagoryImageName (std::string s)
     return result.c_str ();
 }
 
-void HitList::print (Terminal& slot)
+void HitList::print (Expression& slot)
 {
 }
 

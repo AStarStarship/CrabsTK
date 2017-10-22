@@ -28,8 +28,8 @@ enum {
     WriteLockedBitMask = 1 << 5,    //< Mask for the write-locked bit.
 };
 
-/** A multiset that uses contiguousness memory.
-    A bag is like a Python automata or C++ map, the difference being a Set
+/** A unique set or multiset that uses contiguous memory.
+    A bag is like a Python dictionary or C++ map, the difference being a Set
     can contain nested Set (s). The key design difference between both Python 
     dictionaries and C++ maps are Sets do not contains points, and instead
     works using offsets.
@@ -107,9 +107,9 @@ enum {
 
     | Set | Max Values | % Collisions (p) |           Overhead             |
     |:----:|:----------:|:----------------:|:------------------------------:|
-    |   2  |     255    |    0.0001        | Ceiling (0.02*p*2^8)  = 2      |
-    |   4  |     2^13   |      0.1         | Ceiling (0.04*p*2^13) = 327.68 |
-    |   8  |     2^29   |    10^-16        | Ceiling (0.04*p*2^29) = 327.68 |
+    |  2  |     255    |    0.0001        | Ceiling (0.02*p*2^8)  = 2      |
+    |  4  |     2^13   |      0.1         | Ceiling (0.04*p*2^13) = 327.68 |
+    |  8  |     2^29   |    10^-16        | Ceiling (0.04*p*2^29) = 327.68 |
 
     Memory Schema:
     The memory schema is optimized for fast search and push back. When searching
@@ -165,7 +165,7 @@ enum {
     @endcode
 */
 template<typename TIndex, typename TKey, typename TData, typename THash>
-struct Set {
+struct KABUKI Set {
     TData size;         //< Total size of the set.
     TKey table_size,    //< Size of the (optional) key strings in bytes.
          pile_size;     //< Size of the (optional) collision table in bytes.
@@ -205,7 +205,7 @@ enum {
 /** Initializes a Set.
     @post    Users might want to call the IsValid () function after construction
              to verify the integrity of the object.
-    @warning The reservedNumOperables must be aligned to a 32-bit value, and it
+    @warning The reservedNumOperands must be aligned to a 32-bit value, and it
              will get rounded up to the next higher multiple of 4.
 static Set* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t size)
 {
@@ -605,7 +605,7 @@ TIndex SetFind (Set<TIndex, TKey, TData, THash>* bag, const char* key) {
                 std::cout << "There was a collision so check the table\n";
 
                 // The collisionsList is a sequence of indexes terminated by
-                // an invalid index > kMaxNumOperables. collissionsList[0] is an 
+                // an invalid index > kMaxNumOperands. collissionsList[0] is an 
                 // invalid index, so the collisionsList is searched from 
                 // lower address up.
 
@@ -762,7 +762,7 @@ void Clear (Set<TIndex, TKey, TData, THash>* bag) {
     bag->pile_size = 0;
 }
 
-/** Returns true if this automata contains only the given address. */
+/** Returns true if this expr contains only the given address. */
 template<typename TIndex, typename TKey, typename TData, typename THash>
 bool Contains (Set<TIndex, TKey, TData, THash>* bag, void* data) {
     if (bag == nullptr) return false;

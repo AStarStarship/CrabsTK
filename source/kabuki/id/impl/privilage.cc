@@ -57,7 +57,7 @@ bool Privilage::setPrivilageLevel (PrivilageLevel l)
     return true;
 }
 
-void Privilage::print (Terminal& io)
+void Privilage::print (Expression& io)
 {
 
 }

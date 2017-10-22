@@ -81,7 +81,7 @@ class Grammer
 		@param stopIndex  The stoping ASCII char index.
 		@param numInstances  The number of times the symbol range must occur. */
     
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to a terminal. */
 
 	private:

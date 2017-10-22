@@ -322,10 +322,10 @@ class _KabukiTheater_ Calc
     Calc ();
     /*< Constructs a calculator. */
 
-    virtual const char* op (Terminal* slot, int index);
+    virtual const char* op (Expression* slot, int index);
     /*< Inter-process operations. */
 
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to the terminal. */
 };
 

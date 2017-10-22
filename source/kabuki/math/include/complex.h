@@ -437,7 +437,7 @@ class _KabukiTheater_ Complex_f
     float calcMagnitude ();
     /*< Gets the magnitude of A and B. */
 
-    void print (I2P::Terminal& io);
+    void print (I2P::Expression& io);
     /*< Prints this object to the terminal. */
 };
 
@@ -461,7 +461,7 @@ class _KabukiTheater_ Complex_d
     double calcMagnitude ();
     /*< Gets the magnitude of A and B. */
 
-    void print (I2P::Terminal& io);
+    void print (I2P::Expression& io);
     /*< Prints this object to the terminal. */
 };
 

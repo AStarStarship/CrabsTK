@@ -77,7 +77,7 @@ string EmailAddressmapToDomain (Match match)
 }
     */
 
-void EmailAddress::print (Terminal& io)
+void EmailAddress::print (Expression& io)
 {
 
 }

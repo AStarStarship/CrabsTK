@@ -71,7 +71,7 @@ struct App {
     /**  */
     virtual void Redraw () = 0;
         
-    /** Prints this object to a Terminal.  */
+    /** Prints this object to a Expression.  */
     virtual void Print () = 0;
 };      //< struct App
 }       //< namespace app

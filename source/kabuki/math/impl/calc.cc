@@ -637,13 +637,13 @@ Calc::Calc ()
 {
     
 }
-const char* op (Terminal* slot, int index)
+const char* op (Expression* slot, int index)
 {
 
 }
 
 
-void Calc::print (Terminal& slot)
+void Calc::print (Expression& slot)
 {
 }
 

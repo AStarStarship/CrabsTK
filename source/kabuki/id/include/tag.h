@@ -40,7 +40,7 @@ class ID_API ITag_i
     virtual string setName (const string& name) = 0;
     /*< Sets the ID name. */
     
-    virtual void print (Terminal& io) = 0;
+    virtual void print (Expression& io) = 0;
     /*< Prints this object to a terminal. */
 };
 }   //< _id

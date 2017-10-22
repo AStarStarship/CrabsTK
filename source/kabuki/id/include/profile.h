@@ -34,7 +34,7 @@ class ID_API Profile
     Profile ();
     /*< Default constructor. */
     
-    inline void print (Terminal& io);
+    inline void print (Expression& io);
     /*< Prints this object to a terminal. */
 
     private:
