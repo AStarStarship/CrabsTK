@@ -77,18 +77,18 @@ const Operation* BinResult (Bin* bin, Bin::Error error) {
     return 0;
 }
 
-const Operation* BinResult (Bin* bin, Bin::Error error, params_t* header) {
+const Operation* BinResult (Bin* bin, Bin::Error error, const uint_t* header) {
     // @todo Write me.
     return 0;
 }
 
-const Operation* BinResult (Bin* bin, Bin::Error error, params_t* header,
+const Operation* BinResult (Bin* bin, Bin::Error error, const uint_t* header,
                             byte offset) {
     // @todo Write me.
     return 0;
 }
 
-const Operation* BinResult (Bin* bin, Bin::Error error, params_t* header,
+const Operation* BinResult (Bin* bin, Bin::Error error, const uint_t* header,
                             byte offset, byte* address) {
     // @todo Write me.
     return 0;
@@ -164,7 +164,7 @@ void BinPrint (Bin* bin) {
     PrintMemory (&bin->buffer, size);
 }
     
-const Operation* BinRead (Bin* bin, params_t* params, void** args) {
+const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
     if (bin == nullptr)
         return BinResult (bin, Bin::RoomError);
     if (params == nullptr)
@@ -208,7 +208,7 @@ const Operation* BinRead (Bin* bin, params_t* params, void** args) {
         * end = begin + size,           //< The end of the buffer.
         * start = begin + bin->start,   //< The start of the data.
         * stop = begin + bin->stop;     //< The stop of the data.
-    params_t* param = params + 1;       //< The current param.
+    const uint_t* param = params + 1;       //< The current param.
 
     length = SlotLength (start, stop, size);
     //

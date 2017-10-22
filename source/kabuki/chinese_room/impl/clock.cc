@@ -3,14 +3,14 @@
     @file    ~/source/kabuki/chinese_room/impl/timestamp.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
-             All right reserved (R). Licensed under the Apache License, Version 
-             2.0 (the "License"); you may not use this file except in 
-             compliance with the License. You may obtain a copy of the License 
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             All right reserved (R). Licensed under the Apache License, Version
+             2.0 (the "License"); you may not use this file except in
+             compliance with the License. You may obtain a copy of the License
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
              required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
-             implied. See the License for the specific language governing 
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+             implied. See the License for the specific language governing
              permissions and limitations under the License.
 */
 
@@ -19,14 +19,14 @@
 #include "../include/utils.h"
 
 using chrono_timestamp = std::chrono::time_point<std::chrono::system_clock,
-                            std::chrono::microseconds>;
+    std::chrono::microseconds>;
 using namespace std::chrono;
 
 namespace _ {
 
 timestamp_t PackTimestamp (time_t unixTime, int32_t microseconds)
 {
-    return (( (timestamp_t)unixTime) << 8) & (timestamp_t)microseconds;
+    return (((timestamp_t)unixTime) << 8) & (timestamp_t)microseconds;
 }
 
 time_t GetSeconds (timestamp_t t)
@@ -36,18 +36,22 @@ time_t GetSeconds (timestamp_t t)
 
 int32_t GetMicroseconds (timestamp_t timestamp)
 {
-    return (int32_t) ((timestamp & 0xFFFFFFFF00000000) >> 32);
+    return (int32_t)((timestamp & 0xFFFFFFFF00000000) >> 32);
 }
 
-timestamp_t TimestampNow ()
-{
+timestamp_t TimestampNow () {
     std::chrono::microseconds us (1);
-
     chrono_timestamp ts = time_point_cast<microseconds>(system_clock::now ());
-
-    //return ts;
     return 0;
 }
+/*
+timestamp_t TimestampNow () {
+using namespace std::chrono;
+time_point<system_clock> now;
+auto duration = now.time_since_epoch ();
+auto millis = duration_cast<milliseconds>(duration).count ();
+return millis;
+}*/
 
 bool PrintTimeStruct (tm* moment) {
     if (moment == nullptr) {
@@ -61,18 +65,16 @@ bool PrintTimeStruct (tm* moment) {
 }
 
 void PrintTime (time_t t) {
-    tm* moment = localtime (&t);
-    PrintTimeStruct (moment);
+    tm moment;
+    localtime_s (&moment, &t);
+    PrintTimeStruct (&moment);
 }
 
 void PrintDateTime (time_t t) {
-    tm* moment = localtime (&t);
-    if (!moment) {
-        std::cout << "\n| Invalid time: " << t << '\n';
-        return;
-    }
-    std::cout << moment->tm_hour << ":" << moment->tm_min << ":"
-        << moment->tm_sec;
+    tm moment;
+    localtime_s (&moment, &t);
+    std::cout << moment.tm_hour << ":" << moment.tm_min << ":"
+        << moment.tm_sec;
 }
 
 bool PrintTimeStructString (char* buffer, int buffer_size, tm* moment) {
@@ -83,25 +85,28 @@ bool PrintTimeStructString (char* buffer, int buffer_size, tm* moment) {
     if (buffer_size < 32)
         return false;
 
-    sprintf (buffer, "%i-%i-%i@%i:%i:%i", moment->tm_year + TIME_EPOCH,
-             moment->tm_mon + 1, moment->tm_mday, moment->tm_hour,
-             moment->tm_min, moment->tm_sec);
+    sprintf_s (buffer, buffer_size, "%i-%i-%i@%i:%i:%i",
+        moment->tm_year + TIME_EPOCH, moment->tm_mon + 1,
+        moment->tm_mday, moment->tm_hour, moment->tm_min,
+        moment->tm_sec);
     return true;
 }
 
 bool PrintDateTimeString (char* buffer, int buffer_size, time_t t) {
     time (&t);
-    tm* moment = localtime (&t);
-    return PrintTimeStructString (buffer, buffer_size, moment);
+    tm moment;
+    localtime_s (&moment, &t);
+    return PrintTimeStructString (buffer, buffer_size, &moment);
 }
 
 int NumDaysMonth (time_t t) {
-    tm* date = localtime (&t);
+    tm date;
+    localtime_s (&date, &t);
     static const char days_per_month[12] = { 31, 28, 31, 30, 31, 30, 31, 31,
         30, 31, 30, 31 };
-    if ((date->tm_year & 0x0C) && (date->tm_mon == 4)) // Then it's a leap year and April:
+    if ((date.tm_year & 0x0C) && (date.tm_mon == 4)) // Then it's a leap year and April:
         return 29;
-    return days_per_month[date->tm_mon];
+    return days_per_month[date.tm_mon];
 }
 
 int NumDaysMonth (int month, int year) {
@@ -139,86 +144,81 @@ char DayOfWeekInitial (int day_number) {
 int CompareTimes (time_t time_a, time_t time_b) {
     int count = 0;
 
-    tm* moment_a = localtime (&time_a),
-        *moment_b = localtime (&time_b);
+    tm moment_a,
+        moment_b;
 
-    if (!moment_a) {
-        std::cout << "\n| time.a: " << time_a << " is invalid.\n";
-        return 6;
-    }
-    if (!moment_b) {
-        std::cout << "\n| time.b: " << time_b << " is invalid.\n";
-        return 6;
-    }
+    localtime_s (&moment_a, &time_a);
+    localtime_s (&moment_b, &time_b);
 
-    if (moment_a->tm_year != moment_b->tm_year) {
+    if (moment_a.tm_year != moment_b.tm_year) {
         ++count;
-        std::cout << "| tm_year.a: " << moment_a->tm_year + TIME_EPOCH << " != tm_year.b: "
-            << moment_b->tm_year + TIME_EPOCH << '\n';
+        std::cout << "| tm_year.a: " << moment_a.tm_year + TIME_EPOCH << " != tm_year.b: "
+            << moment_b.tm_year + TIME_EPOCH << '\n';
     }
-    if (moment_a->tm_mon != moment_b->tm_mon) {
+    if (moment_a.tm_mon != moment_b.tm_mon) {
         ++count;
-        std::cout << "| tm_mon.a: " << moment_a->tm_mon << " != tm_mon.b: "
-            << moment_b->tm_mon + 1 << '\n';
+        std::cout << "| tm_mon.a: " << moment_a.tm_mon << " != tm_mon.b: "
+            << moment_b.tm_mon + 1 << '\n';
     }
-    if (moment_a->tm_mday != moment_b->tm_mday) {
+    if (moment_a.tm_mday != moment_b.tm_mday) {
         ++count;
-        std::cout << "| tm_mday.a: " << moment_a->tm_mday << " != tm_mday.b: "
-            << moment_b->tm_mday << '\n';
+        std::cout << "| tm_mday.a: " << moment_a.tm_mday << " != tm_mday.b: "
+            << moment_b.tm_mday << '\n';
     }
-    if (moment_a->tm_hour != moment_b->tm_hour) {
+    if (moment_a.tm_hour != moment_b.tm_hour) {
         ++count;
-        std::cout << "| tm_hour.a: " << moment_a->tm_hour << " != tm_hour.b: "
-            << moment_b->tm_hour << '\n';
+        std::cout << "| tm_hour.a: " << moment_a.tm_hour << " != tm_hour.b: "
+            << moment_b.tm_hour << '\n';
     }
-    if (moment_a->tm_min != moment_b->tm_min) {
+    if (moment_a.tm_min != moment_b.tm_min) {
         ++count;
-        std::cout << "| tm_min.a: " << moment_a->tm_min << " != tm_min.b: "
-            << moment_b->tm_min << '\n';
+        std::cout << "| tm_min.a: " << moment_a.tm_min << " != tm_min.b: "
+            << moment_b.tm_min << '\n';
     }
-    if (moment_a->tm_sec != moment_b->tm_sec) {
+    if (moment_a.tm_sec != moment_b.tm_sec) {
         ++count;
-        std::cout << "| tm_sec.a: " << moment_a->tm_sec << " != tm_sec.b: "
-            << moment_b->tm_sec << '\n';
+        std::cout << "| tm_sec.a: " << moment_a.tm_sec << " != tm_sec.b: "
+            << moment_b.tm_sec << '\n';
     }
     return count;
 }
 
 int CompareTimes (time_t t, int year, int month, int day,
-                   int  hour, int minute, int second) {
+    int  hour, int minute, int second) {
     int count = 0;
 
-    tm* moment = localtime (&t);
+    tm moment;
+    localtime_s (&moment, &t);
 
-    if (year - TIME_EPOCH != moment->tm_year) {
+    if (year - TIME_EPOCH != moment.tm_year) {
         ++count;
         std::cout << "| Expecting year " << year << " but found "
-            << moment->tm_year + TIME_EPOCH << '\n';
+            << moment.tm_year + TIME_EPOCH << '\n';
     }
-    if (month != moment->tm_mon + 1) {
+    if (month != moment.tm_mon + 1) {
         ++count;
         std::cout << "| Expecting month " << month << " but found "
-            << moment->tm_mon + 1 << '\n';
+            << moment.tm_mon + 1 << '\n';
     }
-    if (day != moment->tm_mday) {
+    if (day != moment.tm_mday) {
         ++count;
         std::cout << "| Expecting day " << day << " but found "
-            << moment->tm_mday << '\n';
+            << moment.tm_mday << '\n';
     }
-    if (hour != moment->tm_hour) {
+    if (hour != moment.tm_hour) {
         ++count;
         std::cout << "| Expecting hour " << hour << " but found "
-            << moment->tm_hour << '\n';
+            << moment.tm_hour << '\n';
     }
-    if (minute != moment->tm_min) {
+    if (minute != moment.tm_min) {
         ++count;
         std::cout << "| Expecting minute " << minute << " but found "
-            << moment->tm_min << '\n';
+            << moment.tm_min << '\n';
     }
-    if (second != moment->tm_sec) {
+    if (second != moment.tm_sec) {
         ++count;
         std::cout << "| Expecting sec " << second << " but found "
-            << moment->tm_sec << '\n';
+            << moment.tm_sec << '\n';
     }
     return count;
 }
@@ -232,7 +232,7 @@ const char* ParseTimeString (const char* input, int* hour, int* minute, int* sec
     int h,  //< Hour.
         m,  //< Minute.
         s;  //< Second. 
-    if (!sscanf (++input, "%i", &h)) {
+    if (!sscanf_s (++input, "%i", &h)) {
         std::cout << "< Invalid hour: " << h << "\n";
         return 0;
     }
@@ -292,7 +292,7 @@ const char* ParseTimeString (const char* input, int* hour, int* minute, int* sec
 
     // Cases HH:MM, HH::MMam, HH::MMpm, HH:MM:SS, HH:MM:SSam, and HH:MM:SSpm
 
-    if (!sscanf (input, "%i", &m)) return 0;
+    if (!sscanf_s (input, "%i", &m)) return 0;
     input = NextNonNumberString (input);
     if (m < 0) {
         std::cout << "Minutes: " << m << " can't be negative\n";
@@ -342,7 +342,7 @@ const char* ParseTimeString (const char* input, int* hour, int* minute, int* sec
 
     // Cases HH:MM:SS, HH:MM:SSam, and HH:MM:SSpm
 
-    if (!sscanf (input, "%i", &s)) return 0;
+    if (!sscanf_s (input, "%i", &s)) return 0;
     if (s < 0) {
         std::cout << "\n< Seconds: " << s << " can't be negative\n";
         return 0;
@@ -396,7 +396,7 @@ char* ParseTime (char* input, int* hour, int* minute, int* second) {
     return (char*)ParseTimeString (input, hour, minute, second);
 }
 
-const char* ParseTimeString (const char* input, tm* moment) {
+const char* ParseTimeStructString (const char* input, tm* moment) {
     if (input == nullptr)
         return nullptr;
     if (moment == nullptr)
@@ -437,7 +437,7 @@ const char* ParseTimeString (const char* input, tm* moment) {
         is_last_year = 0; //< Flag for if the date was last year or not.
 
                           // Scan value1
-    if (!sscanf (input, "%i", &value1)) {
+    if (!sscanf_s (input, "%i", &value1)) {
         PrintBar ("Scan error at value1");
         return 0;
     }
@@ -462,7 +462,7 @@ const char* ParseTimeString (const char* input, tm* moment) {
     }
     // Scan value2.
     input = SkipLeadingZerosString (input);
-    if (!sscanf (input, "%i", &value2)) {
+    if (!sscanf_s (input, "%i", &value2)) {
         PrintBar ("Failed scanning value2 of date.");
         return 0;
     }
@@ -484,7 +484,7 @@ const char* ParseTimeString (const char* input, tm* moment) {
         {
             std::cout << " MM/DD\n";
             is_last_year = ((value1 >= moment->tm_mon) &&
-                (value2 >= moment->tm_mday)) ? 0 : 1;
+                (value2 >= moment->tm_mday))?0:1;
             moment->tm_year += is_last_year;
             moment->tm_mon = value1 - 1;
             moment->tm_mday = value2;
@@ -538,8 +538,8 @@ const char* ParseTimeString (const char* input, tm* moment) {
     input = SkipLeadingZerosString (++input);
     c = *input;
     // Then there are 3 values and 2 delimiters.
-    if (!isdigit (c) || !sscanf (input, "%i", &value3)) {
-        std::cout << "sscanf error reading value3 of date. c: " << c << '\n';
+    if (!isdigit (c) || !sscanf_s (input, "%i", &value3)) {
+        std::cout << "sscanf_s error reading value3 of date. c: " << c << '\n';
         return 0;  //< Invalid format!
     }
     input = NextNonNumberString (input);
@@ -606,52 +606,53 @@ const char* ParseTimeString (const char* input, tm* moment) {
 
 }
 
-char* ParseTime (char* input, tm* result) {
-    return (char*)ParseTimeString (input, result);
+char* ParseTimeStruct (char* input, tm* result) {
+    return (char*)ParseTimeStructString (input, result);
 }
 
 char* PrintStringTime (char* buffer, time_t t) {
     if (buffer == nullptr)
         return nullptr;
 
-    ctime_s (buffer, sizeof(buffer), &t);
+    ctime_s (buffer, sizeof (buffer), &t);
+    return buffer;
 }
 
-const char* ParseTimeString (const char* input, time_t& result) {
+const char* ParseUnixTimeString (const char* input, time_t& result) {
     time_t t;
     time (&t);
     struct tm moment;
     localtime_s (&moment, &t);
-    
-    char* end = (char*)ParseTimeString (input, &moment);
+
+    char* end = (char*)ParseTimeStructString (input, &moment);
 
     t = mktime (&moment);
     std::cout << "|\n| Found ";
     PrintTimeStruct (&moment);
     char buffer[26];
     PrintStringTime (buffer, t);
-    char* time_string = ctime (&t);
-    time_string = (time_string == nullptr ? "nullptr" : time_string);
+    char time_string[26];
+    errno_t error = ctime_s (time_string, 26, &t);
     std::cout << "\n| Unpacked: " << time_string;
     result = t;
     return end;
 }
 
-char* ParseTime (char* input, time_t& result) {
-    return (char*)ParseTimeString (input, result);
+char* ParseUnixTime (char* input, time_t& result) {
+    return (char*)ParseUnixTimeString (input, result);
 }
 
 void ZeroTime (tm* moment) {
     if (moment == nullptr)
         return;
-    moment->tm_sec   = 0;
-    moment->tm_min   = 0;
-    moment->tm_hour  = 0;
-    moment->tm_mday  = 0;
-    moment->tm_mon   = 0;
-    moment->tm_year  = 0;
-    moment->tm_wday  = 0;
-    moment->tm_yday  = 0;
+    moment->tm_sec = 0;
+    moment->tm_min = 0;
+    moment->tm_hour = 0;
+    moment->tm_mday = 0;
+    moment->tm_mon = 0;
+    moment->tm_year = 0;
+    moment->tm_wday = 0;
+    moment->tm_yday = 0;
     moment->tm_isdst = 0;
 }
 

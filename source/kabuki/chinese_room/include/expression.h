@@ -63,7 +63,7 @@ namespace _ {
         |======================|
         |  Stack of Operand**  |
         |======================|
-        |  Stack of params_t** |
+        |  Stack of const uint_t** |
      ^  |======================|
      |  |  Expression struct   |
     0x0 |______________________|
@@ -79,7 +79,6 @@ struct Expression {
         StackOverflowError,
         LockedStateError,
         StringOverflowError,
-        ScanningVarintState,
         VarintOverflowError,
         ReadInvalidTypeError,
         RoomError
@@ -132,8 +131,8 @@ struct Expression {
                 * result;           //< Pointer to the Operand object this 
                                     //< expr is operating on.
     const char  * return_address;   //< The return address.
-    volatile params_t* header;      //< Pointer to the header being verified.
-    params_t    * headers;          //< First header ptr in the scan array.
+    volatile const uint_t* header;      //< Pointer to the header being verified.
+    const uint_t    * headers;          //< First header ptr in the scan array.
 };
 
 /** Gets a a string for printing out the bin_state. */
@@ -143,7 +142,7 @@ KABUKI const char* ExpressionStateString (Expression::State state);
 
     @param error The error type.
     @return Returns a Static Error Operation Result. */
-KABUKI const Operation* ExpressionResult (Expression* expr,
+KABUKI const Operation* Result (Expression* expr,
                                           Expression::Error error);
 
 /** Used to return an erroneous result from a B-Input.
@@ -153,9 +152,9 @@ KABUKI const Operation* ExpressionResult (Expression* expr,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Operation* ExpressionResult (Expression* expr,
+KABUKI const Operation* Result (Expression* expr,
                                           Expression::Error error,
-                                          params_t* header);
+                                          const uint_t* header);
 
 /** Used to return an erroneous result from a B-Input.
     @param  expr    The source Expression.
@@ -164,9 +163,9 @@ KABUKI const Operation* ExpressionResult (Expression* expr,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Operation* ExpressionResult (Expression* expr, 
+KABUKI const Operation* Result (Expression* expr, 
                                           Expression::Error error,
-                                          params_t* header,
+                                          const uint_t* header,
                                           byte offset);
 
 /** Used to return an erroneous result from a B-Input.
@@ -176,9 +175,9 @@ KABUKI const Operation* ExpressionResult (Expression* expr,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Operation* ExpressionResult (Expression* expr,
+KABUKI const Operation* Result (Expression* expr,
                                           Expression::Error error,
-                                          params_t* header,
+                                          const uint_t* header,
                                           byte offset,
                                           byte* address);
 
@@ -190,7 +189,7 @@ KABUKI const char* ExpressionErrorString (Expression::Error error);
     @param params      The parameter header.
     @param param_index The index in the params where the error occurred.
     @param source The source buffer address. */
-KABUKI void ExpressionPrintError (Expression::Error error, params_t* params, 
+KABUKI void ExpressionPrintError (Expression::Error error, const uint_t* params, 
                                   byte param_index, void* source);
 
 /** Gets a pointer to the Bin slot. */
@@ -246,13 +245,13 @@ KABUKI const Operation* ExpressionEnterState (Expression* expr,
 /** Selects the given op for scanning.
 
     @warning Function does not check for null pointers. You have been warned. */
-KABUKI const Operation* ExpressionPushScanHeader (Expression* expr, params_t* header);
+KABUKI const Operation* ExpressionPushScanHeader (Expression* expr, const uint_t* header);
 
 /** Selects the given op for scanning.
 
     @warning Function does not check for null pointers. You have been warned. */
 KABUKI const Operation* ExpressionPushScanHeader (Expression* expr,
-                                                  volatile params_t* header);
+                                                  volatile const uint_t* header);
 
 /** Pops a header off the scan stack. */
 KABUKI const Operation* ExpressionPopScanHeader (Expression* expr);
@@ -272,10 +271,10 @@ KABUKI void ExpressionScan (Expression* expr, Portal* io);
 KABUKI bool ExpressionContains (Expression* expr, void* address);
 
 /** Pushes a header onto the scan stack.*/
-KABUKI const Operation* ExpressionPushHeader (Expression* expr, params_t* header);
+KABUKI const Operation* ExpressionPushHeader (Expression* expr, const uint_t* header);
 
 /** Gets the base address of the header stack. */
-KABUKI params_t* ExpressionHeaderStack (Expression* expr);
+KABUKI const uint_t* ExpressionHeaderStack (Expression* expr);
 
 /** Closes the current expr and cues it for execution. */
 KABUKI void ExpressionClose (Expression* expr);
@@ -287,10 +286,11 @@ KABUKI void ExpressionCancel (Expression* expr);
 KABUKI void ExpressionClear (Expression* expr);
 
 /** Calls the Read function for the Bout slot. */
-KABUKI const Operand* ExpressionRead (Expression* expr, params_t* params, void** args);
+KABUKI const Operation* ExpressionRead (Expression* expr, const uint_t* params,
+                                      void** args);
 
 /** Calls the Write function for the Tx slot. */
-KABUKI const Operand* ExpressionWrite (Expression* expr, params_t* params, void** args);
+KABUKI const Operation* ExpressionWrite (Expression* expr, const uint_t* params, void** args);
 
 /** Prints the given Expression to the console. */
 KABUKI void ExpressionPrint (Expression* expr);

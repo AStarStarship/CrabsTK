@@ -197,15 +197,6 @@ hash64_t Hash64 (const char* s, hash64_t hash) {
     return hash;
 }
 
-
-timestamp_t TimestampNow () {
-    using namespace std::chrono;
-    time_point<system_clock> now;
-    auto duration = now.time_since_epoch ();
-    auto millis = duration_cast<milliseconds>(duration).count ();
-    return millis;
-}
-
 void PrintHex (byte c) {
     uint16_t chars = ToUpperCaseHex (c);
     putchar ((char)chars);

@@ -75,15 +75,15 @@ Console::~Console () {
 
 }
 
-ticket_t Console::Init () {
+const Operation* Console::Init () {
     return 0;
 }
 
-ticket_t Console::Loop () {
+const Operation* Console::Loop () {
     return 0;
 }
 
-const Operation* Console::Star (index index, Expression* expr) {
+const Operation* Console::Star (int index, Expression* expr) {
     return 0;
 }
 

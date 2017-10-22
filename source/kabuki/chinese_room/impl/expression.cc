@@ -37,30 +37,30 @@ const char* ExpressionStateString (Expression::State state) {
     return strings[state];
 }
 
-const Operation* ExpressionResult (Expression* expr, Expression::Error error) {
+const Operation* Result (Expression* expr, Expression::Error error) {
     // @todo Write me.
     return 0;
 }
 
-const Operation* ExpressionResult (Expression* expr, Expression::Error error, params_t* header) {
+const Operation* Result (Expression* expr, Expression::Error error, const uint_t* header) {
     // @todo Write me.
     return 0;
 }
 
-const Operation* ExpressionResult (Expression* expr, Expression::Error error, params_t* header,
+const Operation* Result (Expression* expr, Expression::Error error, const uint_t* header,
     byte offset) {
     // @todo Write me.
     return 0;
 }
 
-const Operation* ExpressionResult (Expression* expr, Expression::Error error, params_t* header,
+const Operation* Result (Expression* expr, Expression::Error error, const uint_t* header,
     byte offset, byte* address) {
     // @todo Write me.
     return 0;
 }
 
-const Operation* ExpressionResult (Expression* expr, Expression::Error error, 
-                                   params_t* header, byte offset, void* address)
+const Operation* Result (Expression* expr, Expression::Error error, 
+                                   const uint_t* header, byte offset, void* address)
 {
     return 0;
 }
@@ -159,16 +159,16 @@ const Operation* Push (Expression* expr, Operand* operand) {
         return operand->Star (0, nullptr);  //< Return d's header.
     }
     if (operand == nullptr)
-        return ExpressionResult (expr, Expression::InvalidOpeartionError);
+        return Result (expr, Expression::InvalidOpeartionError);
     if (expr->stack_count >= expr->stack_size)
-        return ExpressionResult (expr, Expression::InvalidOpeartionError);
+        return Result (expr, Expression::InvalidOpeartionError);
     ExpressionStack (expr)[expr->stack_count++] = operand;
     return 0;
 }
 
 const Operation* Pop (Expression* expr) {
     if (expr->stack_count == 0)
-        return ExpressionResult (expr, Expression::InvalidOpeartionError);
+        return Result (expr, Expression::InvalidOpeartionError);
     expr->operand = ExpressionStack (expr)[--expr->stack_count];
     return 0;
 }
@@ -180,7 +180,7 @@ byte* ExpressionStates (Expression* expr) {
 const Operation* ExpressionExitState (Expression* expr) {
     auto count = expr->stack_count;
     if (count == 0)
-        return ExpressionResult (expr, Expression::InvalidOpeartionError);
+        return Result (expr, Expression::InvalidOpeartionError);
     expr->bout_state = ExpressionStates (expr)[--count];
     expr->stack_count = count;
     return 0;
@@ -189,25 +189,25 @@ const Operation* ExpressionExitState (Expression* expr) {
 const Operation* ExpressionEnterState (Expression* expr, Expression::State state) {
 
     if (state == Bout::LockedState) {
-        return ExpressionResult (expr, Expression::LockedStateError);
+        return Result (expr, Expression::LockedStateError);
     }
     auto count = expr->stack_count;
     if (count >= expr->stack_size)
-        return ExpressionResult (expr, Expression::StackOverflowError);
+        return Result (expr, Expression::StackOverflowError);
     ExpressionStates (expr)[count] = expr->bout_state;
     count = expr->stack_count + 1;
     expr->bout_state = state;
     return 0;
 }
 
-const Operation* ExpressionPushScanHeader (Expression* expr, params_t* header) {
+const Operation* ExpressionPushScanHeader (Expression* expr, const uint_t* header) {
     if (header == nullptr)
-        return ExpressionResult (expr, Expression::RoomError);
+        return Result (expr, Expression::RoomError);
     uint_t verify_count = expr->verify_count,
         stack_size = expr->stack_size;
     expr->type_index = *header++;
     if (verify_count >= stack_size)
-        return ExpressionResult (expr, Expression::StackOverflowError, header, 0, ExpressionBout (expr));
+        return Result (expr, Expression::StackOverflowError, header, 0, ExpressionBout (expr));
 
     // Move the current header to the scan stack
     const uint_t* current_header = const_cast<const uint_t*> (expr->header);
@@ -219,11 +219,11 @@ const Operation* ExpressionPushScanHeader (Expression* expr, params_t* header) {
 }
 
 const Operation* ExpressionPushScanHeader (Expression* expr,
-    volatile params_t* header) {
+    volatile const uint_t* header) {
     const uint_t** headers;
     uint_t verify_count = expr->verify_count;
     if (verify_count >= expr->stack_size)
-        return ExpressionResult (expr, Expression::StackOverflowError);
+        return Result (expr, Expression::StackOverflowError);
 
     headers = (const uint_t**)expr->headers;
     ExpressionExitState (expr);
@@ -235,7 +235,7 @@ const Operation* ExpressionPushScanHeader (Expression* expr,
 const Operation* ExpressionPopScanHeader (Expression* expr) {
     uint_t verify_count = expr->verify_count;
     if (verify_count == 0)
-        return ExpressionResult (expr, Expression::InvalidOpeartionError);
+        return Result (expr, Expression::InvalidOpeartionError);
 
     verify_count = verify_count - 1;
     return 0;
@@ -273,9 +273,9 @@ void ExpressionScan (Expression* expr, Portal* input) {
     hash16_t          hash;         //< Hash of the ESC being verified.
     timestamp_t       timestamp,    //< Last time when the expression ran.
                       delta_t;      //< Time delta between the last timestamp.
-    Expression      * expr;         //< Current Expression.
+//    Expression      * expression;   //< Current Expression.
     const Operation * op;           //< Current Operation.
-    params_t        * header;       //< Header of the current Operation being verified.
+    const uint_t        * header;       //< Header of the current Operation being verified.
     Bin             * bin;          //< Bin.
     byte            * begin,        //< Beginning of the ring buffer.
                     * end,          //< End of the ring buffer.
@@ -328,8 +328,8 @@ void ExpressionScan (Expression* expr, Portal* input) {
 
             if (expr->bytes_left == 0) {
                 PrintDebug ("Done parsing string.");
-                ExpressionResult (expr, Expression::StringOverflowError,
-                        const_cast<params_t*>(expr->header), 0, start);
+                Result (expr, Expression::StringOverflowError,
+                        const_cast<const uint_t*>(expr->header), 0, start);
                 return;
             }
             // Hash byte.
@@ -365,8 +365,8 @@ void ExpressionScan (Expression* expr, Portal* input) {
                 //          add 32 to the first byte.
 
                 if ((b >> 7) != 1) {
-                    params_t* header = const_cast<params_t*>(expr->header);
-                    ExpressionResult (expr, Expression::VarintOverflowError, header, 0, start);
+                    const uint_t* header = const_cast<const uint_t*>(expr->header);
+                    Result (expr, Expression::VarintOverflowError, header, 0, start);
                     ExpressionEnterState (expr, Expression::HandlingErrorState);
                     return;
                 }
@@ -452,7 +452,7 @@ void ExpressionScan (Expression* expr, Portal* input) {
                 // Switch to next state
                 if (type <= SOH) {
                     if (type < SOH) {
-                        ExpressionResult (expr, Expression::ReadInvalidTypeError);
+                        Result (expr, Expression::ReadInvalidTypeError);
                         ExpressionEnterState (expr, Expression::LockedState);
                     } else {
                         ExpressionEnterState (expr, Expression::ScanningAddressState);
@@ -472,7 +472,7 @@ void ExpressionScan (Expression* expr, Portal* input) {
                 } else if (type <= FS) {
 
                 } else if (type > US) {
-                    ExpressionResult (expr, Expression::RoomError);
+                    Result (expr, Expression::RoomError);
                 } else {    // It's a US
                     PrintDebug ("Scanning Unit");
                     expr->bytes_left = kUnitSize;
@@ -508,10 +508,10 @@ bool ExpressionContains (Expression* expr, void* address) {
     return true;
 }
 
-const Operation* ExpressionPushHeader (Expression* expr, params_t* header) {
+const Operation* ExpressionPushHeader (Expression* expr, const uint_t* header) {
     if (expr->stack_count >= expr->stack_size) {
         // Handle overflow cleanup:
-        return ExpressionResult (expr, Expression::StackOverflowError, header);
+        return Result (expr, Expression::StackOverflowError, header);
     }
 
     //if (dc == nullptr) return noDevceSelectedError ();
@@ -557,18 +557,8 @@ void ExpressionClear (Expression* expr) {
     bin->stop  = Diff (expr, start + 1);
 }
 
-const Operation* ExpressionRead (Expression* expr, params_t* params, void** args) {
-    return BinRead (ExpressionBin (expr), params, args);
-}
-
-const Operation* ExpressionResult (Expression* expr, params_t* params, void** args) {
-    return BoutWrite (ExpressionBout (expr), expr->return_address, params, 
-                      args);
-}
-
-const Operation* Write (Expression* expr, const char* address, params_t* params,
-                      void** args) {
-    return BoutWrite (ExpressionBout (expr), address, params, args);
+const Operation* Result (Expression* expr, const uint_t* params, void** args) {
+    return BoutWrite (ExpressionBout (expr), params, args);
 }
 
 void ExpressionPrint (Expression* expr) {
@@ -663,16 +653,16 @@ byte* ExpressionEndAddress (Bin* bin) {
     return reinterpret_cast<byte*>(bin) + kSlotHeaderSize + bin->size;
 }
 
-const Operation* ExpressionRead (Expression* expr, params_t* params, void** args) {
+const Operation* ExpressionRead (Expression* expr, const uint_t* params, void** args) {
     if (expr == nullptr)
-        ExpressionResult (expr, Expression::RoomError);
+        Result (expr, Expression::RoomError);
     Bin* bin = ExpressionBin (expr);
     if (bin == nullptr)     //< Is this a double check?
-        ExpressionResult (expr, Expression::RoomError);
+        Result (expr, Expression::RoomError);
     if (params == nullptr)
-        ExpressionResult (expr, Expression::RoomError);
+        Result (expr, Expression::RoomError);
     if (args == nullptr)
-        ExpressionResult (expr, Expression::RoomError);
+        Result (expr, Expression::RoomError);
 
     byte type,                  //< The current type we're reading.
         ui1;                    //< Temp variable to load most types.
@@ -760,7 +750,7 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
 
             while (ui1 != 0 && count != 0) {
                 if (count-- == 0)
-                    return ExpressionResult (expr, Expression::BufferUnderflowError, params, index,
+                    return Result (expr, Expression::BufferUnderflowError, params, index,
                                         start);
 #if DEBUG_CHINESE_ROOM
                 putchar (ui1);
@@ -782,7 +772,7 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
           case BOL:
 #if USING_1_BYTE_TYPES
             if (length == 0) 
-                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
+                return Result (expr, Expression::BufferUnderflowError, params, index, start);
             --length;
 
             // Read from buffer and write to the stack:
@@ -805,7 +795,7 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             // Word-align
             offset = TypeAlign2 (start);
             if (length < offset + 2)
-                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
+                return Result (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset + 2;
             start  += offset;
             if (start >= end) start -= size;    //< Bound
@@ -831,7 +821,7 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             // Word-align
             offset = TypeAlign4 (start);
             if (length < offset + 4)
-                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
+                return Result (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset + 4;
             start += offset;
             if (start >= end) start -= size;    //< Bound
@@ -857,7 +847,7 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             // Word-align
             offset = TypeAlign8 (start);
             if (length < offset + 8)
-                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
+                return Result (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset + 8;
             start += offset;
             if (start >= end) start -= size;    //< Bound
@@ -900,13 +890,13 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             // Load next pointer and increment args.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
             if (ui1_ptr == nullptr)
-                return ExpressionResult (expr, Expression::RoomError, params, index, start);
+                return Result (expr, Expression::RoomError, params, index, start);
             count = *param++;
 
             // Word-align
             offset = TypeAlign (start, count);
             if (length < offset)
-                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
+                return Result (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset;
             start += offset;
             if (start >= end) start -= size;
@@ -921,13 +911,13 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             // Load the pointer to the destination.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
             if (ui1_ptr == nullptr)
-                return ExpressionResult (expr, Expression::RoomError, params, index, start);
+                return Result (expr, Expression::RoomError, params, index, start);
             count = *param++; //< Get type from header
               
             // Word-align
             offset = TypeAlign (start, count);
             if (length < offset)
-                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
+                return Result (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset;
             start += offset;
             if (start >= end) start -= size;
@@ -942,13 +932,13 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             // Load the pointer to the destination.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
             if (ui1_ptr == nullptr)
-                return ExpressionResult (expr, Expression::RoomError, params, index, start);
+                return Result (expr, Expression::RoomError, params, index, start);
             count = *param++;   //< Read type
 
             // Word-align
             offset = TypeAlign (start, count);
             if (length < offset)
-                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
+                return Result (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset;
             start += offset;
             if (start >= end) start -= size;
@@ -963,13 +953,13 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             // Load the pointer to the destination.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
             if (ui1_ptr == nullptr)
-                return ExpressionResult (expr, Expression::RoomError, params, index, start);
+                return Result (expr, Expression::RoomError, params, index, start);
             count = *param++;   //< Read Type
               
             // Word-align
             offset = TypeAlign (start, count);
             if (length < offset)
-                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
+                return Result (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset;
             start += offset;
             if (start >= end) start -= size;
@@ -987,7 +977,7 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             // Word-align
               offset = TypeAlign8 (start);
               if (length < offset + 128)
-                  return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
+                  return Result (expr, Expression::BufferUnderflowError, params, index, start);
               length -= offset;
               start += offset;
               if (start >= end) start -= size;
@@ -995,7 +985,7 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             // Load the pointer to the destination.
             ui8_ptr = reinterpret_cast<uint64_t*> (args[index]);
             if (ui8_ptr == nullptr)
-                return ExpressionResult (expr, Expression::RoomError, params, index, start);
+                return Result (expr, Expression::RoomError, params, index, start);
             count = (uint_t)*ui8_ptr;
             ui1_ptr = reinterpret_cast<byte*> (ui8_ptr + 1);
             goto ReadBlock;
@@ -1007,7 +997,7 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             // Word-align
               offset = TypeAlign4 (start);
               if (length < offset + 64)
-                  return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
+                  return Result (expr, Expression::BufferUnderflowError, params, index, start);
               length -= offset;
               start += offset;
               if (start >= end) start -= size;
@@ -1015,7 +1005,7 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             // Load the pointer to the destination.
             ui4_ptr = reinterpret_cast<uint32_t*> (args[index]);
             if (ui4_ptr == nullptr)
-                return ExpressionResult (expr, Expression::RoomError, params, index, start);
+                return Result (expr, Expression::RoomError, params, index, start);
             count = (uint_t)*ui4_ptr;
             ui1_ptr = reinterpret_cast<byte*> (ui4_ptr + 1);
             goto ReadBlock;
@@ -1027,7 +1017,7 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             // Word-align
             offset = TypeAlign2 (start);
             if (length < offset + 32)
-                return ExpressionResult (expr, Expression::BufferUnderflowError, params, index, start);
+                return Result (expr, Expression::BufferUnderflowError, params, index, start);
             length -= offset;
             start += offset;
             if (start >= end) start -= size;
@@ -1035,7 +1025,7 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             // Load the pointer to the destination.
             ui2_ptr = reinterpret_cast<uint16_t*> (args[index]);
             if (ui2_ptr == nullptr)
-                return ExpressionResult (expr, Expression::RoomError, params, index, start);
+                return Result (expr, Expression::RoomError, params, index, start);
             count = (uint_t)*ui2_ptr;
             ui1_ptr = reinterpret_cast<byte*> (ui2_ptr + 1);
             goto ReadBlock;
@@ -1049,7 +1039,7 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             ReadBlock:
             {
                 if (length < count)
-                    return ExpressionResult (expr, Expression::BufferOverflowError, params, index, start);
+                    return Result (expr, Expression::BufferOverflowError, params, index, start);
                 if (count == 0)
                     break;          //< Not sure if this is an error.
                 if (start + count >= end) {
@@ -1080,7 +1070,7 @@ const Operation* ExpressionRead (Expression* expr, params_t* params, void** args
             BoutInvalidType:
             {
                 printf ("\n!!!Read invalid type %u\n", type);
-                return ExpressionResult (expr, Expression::ReadInvalidTypeError, params, index, start);
+                return Result (expr, Expression::ReadInvalidTypeError, params, index, start);
             }
         }
         std::cout << " |";
@@ -1101,15 +1091,7 @@ bool IsReadable (Bin* bin) {
     return bin->start != bin->stop;
 }
 
-void ExpressionPrint (Expression* expr) {
-    if (expr == nullptr) return;
-    uint_t size = expr->size;
-    PrintLine ('_');
-    printf ("| Expression: %p", expr);
-    PrintLine ("|", '=');
-}
-
-const Operand* ExpressionWrite (Expression* expr, params_t* params, void** args) {
+const Operation* ExpressionWrite (Expression* expr, const uint_t* params, void** args) {
     return 0;
 }
 

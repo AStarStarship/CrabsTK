@@ -121,7 +121,7 @@ class Room: public Operand {
     virtual void DiagnoseProblems ();
 
     /** Sets up the Room. */
-    virtual ticket_t Init ();
+    virtual const Operation* Init ();
 
     /** Handler for shut down event. */
     virtual void ShutDown ();
@@ -136,7 +136,7 @@ class Room: public Operand {
     virtual void Crash ();
 
     /** Main program loop. */
-    virtual ticket_t Loop ();
+    virtual const Operation* Loop ();
 
     /** Returns true if the Room is on. */
     virtual bool IsOn ();

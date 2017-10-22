@@ -18,6 +18,8 @@
 #include "../include/room.h"
 #include "../include/door.h"
 #include "../include/exceptions.h"
+#include "../include/args.h"
+#include "../include/operation.h"
 
 namespace _ {
 
@@ -86,7 +88,7 @@ void Room::DiagnoseProblems () {
     throw RoomCrashException ();
 }
 
-ticket_t Room::Init () {
+const Operation* Room::Init () {
     return 0;
 }
 
@@ -98,14 +100,14 @@ void Room::Wake () {}
 
 void Room::Crash () {}
 
-ticket_t Room::Loop () { return 0; }
+const Operation* Room::Loop () { return 0; }
 
 bool Room::IsOn () {
     return true;
 }
 
 int Room::Main (const char** args, int args_count) {
-    ticket_t result;
+    const Operation* result;
 
     std::cout << "Initializing Chinese Room with " << args_count << " args:\n";
     for (int i = 0; i < args_count; ++i) {
@@ -130,11 +132,14 @@ int Room::Main (const char** args, int args_count) {
 }
 
 const Operation* Room::Star (index index, Expression* expr) {
-    static const Set this_member = { "Room", NumOperations (0), 
-                                        FirstOperation (' '), "A Chinese Room." };
+    static const Operation star = { "Room",
+        NumOperations (0), FirstOperation (' '),
+        "A Chinese Room.", 0
+    };
+
     switch (index) {
-        case ' ': {
-            static const Set m_space = { "Space", Params <0> (), Params <0> (), "" };
+        case '?': {
+            return &star;
         }
 
     }

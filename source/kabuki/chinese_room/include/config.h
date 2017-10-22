@@ -245,9 +245,6 @@ enum {
 #error  Invalid MEMORY_PROFILE
 #endif
 
-typedef uint_t param_t;
-typedef const uint_t params_t;
-
 /** Macro declares a class to be non-copyable. */
 #define NONCOPYABLE (ClassName)\
   ClassName (const ClassName&)      = delete;\

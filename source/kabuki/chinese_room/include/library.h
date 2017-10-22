@@ -64,7 +64,7 @@ class Library: public Operand
     
     /** Attempts to add the Page data into the Object at the given BaseAddress.
         @return Returns nullptr upon success and an error string upon failure. */
-    ticket_t Add (byte type, const char* key, void* data) {
+    const Operation* Add (byte type, const char* key, void* data) {
         TIndex size_of_type = getSizeOfType (type);
         if (size_of_type == 0)
         {
@@ -75,7 +75,7 @@ class Library: public Operand
      
     /** Attempts to insert the Page data into the Object at the given index.
         @return Returns nullptr upon success and an error string upon failure. */
-    ticket_t Insert (byte type, const char* key, void* data, TIndex index = 0) {
+    const Operation* Insert (byte type, const char* key, void* data, TIndex index = 0) {
         TIndex l_numOperations = numNumbers;
         if (index > l_numOperations) index = l_numOperations;
 
@@ -84,13 +84,13 @@ class Library: public Operand
 
     /** Attempts to remove the Page data into the Object at the given index.
         @return Returns nullptr upon success and an error string upon failure. */
-    ticket_t Remove (TIndex index) {
+    const Operation* Remove (TIndex index) {
         return 0;
     }
 
     /** Attempts to clear the page at the given index.
         @return Returns nullptr upon success and an error string upon failure. */
-    ticket_t Clear (TIndex index) {
+    const Operation* Clear (TIndex index) {
         return 0;
     }
     

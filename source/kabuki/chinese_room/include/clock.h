@@ -106,25 +106,23 @@ KABUKI const char* ParseTimeString (const char* input, int* hour,
     @param Second The location to write the number of seconds to.
     @return The offset The end of where the parser exited successfully at.
 */
-KABUKI char* ParseTime (char* input, int* hour, int* minute, int* second) {
-    return (char*)ParseTimeString (input, hour, minute, second);
-}
+KABUKI char* ParseTime (char* input, int* hour, int* minute, int* second);
 
 /** Converts a keyboard input to string and deletes the string. 
     The only format this function currently supports is 2017-08-12@11:36:00PM".
     @todo Add new and auto-detect formats.
           1/2/99,  1/2/1999, 1-2-1999, 2017-8-12
 */
-KABUKI const char* ParseTimeString (const char* input, tm* moment);
+KABUKI const char* ParseTimeStructString (const char* input, tm* moment);
 
 /** Converts a keyboard input to a human-readable manipulatable form. */
-KABUKI char* ParseTime (char* input, tm* result);
+KABUKI char* ParseStructTime (char* input, tm* result);
 
 /** Converts a keyboard input to a time_t. */
-KABUKI const char* ParseTimeString (const char* input, time_t& result);
+KABUKI const char* ParseUnixTimeString (const char* input, time_t& result);
 
 /** Converts a keyboard input to a time_t. */
-KABUKI char* ParseTime (char* input, time_t& result);
+KABUKI char* ParseUnixTime (char* input, time_t& result);
 
 /** Zeros out the calendar_time struct.
     @param calendar_time A calendar time struct to zero out. */

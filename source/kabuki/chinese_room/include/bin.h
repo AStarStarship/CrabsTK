@@ -87,7 +87,7 @@ KABUKI const Operation* BinResult (Bin* bin, Bin::Error error);
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* BinResult (Bin* bin, Bin::Error error,
-                                   params_t* header);
+                                   const uint_t* header);
 
 /** Used to return an erroneous result from a B-Input.
     @param  bin     The source Bin.
@@ -97,7 +97,7 @@ KABUKI const Operation* BinResult (Bin* bin, Bin::Error error,
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* BinResult (Bin* bin, Bin::Error error,
-                                   params_t* header,
+                                   const uint_t* header,
                                    byte offset);
 
 /** Used to return an erroneous result from a B-Input.
@@ -108,7 +108,7 @@ KABUKI const Operation* BinResult (Bin* bin, Bin::Error error,
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* BinResult (Bin* bin, Bin::Error error,
-                                   params_t* header,
+                                   const uint_t* header,
                                    byte offset,
                                    byte* address);
 
@@ -136,7 +136,7 @@ KABUKI void BinPrint (Bin* bin);
     @param params The parameters.
     @param args The arguments.
     @return Returns 0 upon success and an ErrorList ticket number upon failure. */
-KABUKI const Operation* BinRead (Bin* bin, params_t* params, void** args);
+KABUKI const Operation* BinRead (Bin* bin, const uint_t* params, void** args);
 
 }       //< namespace _
 #endif  //< CHINESE_ROOM_BIN_H

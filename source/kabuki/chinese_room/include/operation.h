@@ -33,11 +33,11 @@ namespace _ {
     @endcode
 */
 struct KABUKI Operation {
-    const char* name;       //< Pointer to the Operation name.
-    params_t  * params,     //< Pointer to the set parameters B-Seq.
-              * result;     //< Pointer to the set expression result B-Seq.
-    const char* metadata;   //< Pointer to the metadata string.
-    Evaluation* evaluation; //< Pointer to the evaluated B-Sequence.
+    const char   * name;       //< Pointer to the Operation name.
+    const uint_t * params,     //< Pointer to the set parameters B-Seq.
+                 * result;     //< Pointer to the set expression result B-Seq.
+    const char   * metadata;   //< Pointer to the metadata string.
+    const byte   * evaluation; //< Pointer to the evaluated B-Sequence.
 };
 
 struct KABUKI Expression;
@@ -150,10 +150,10 @@ struct KABUKI Operand {
 };
 
 /** Converts the value to a pointer. */
-KABUKI uint_t* NumOperations (std::uintptr_t value);
+KABUKI const uint_t* NumOperations (std::uintptr_t value);
 
 /** Converts the given value to a pointer. */
-KABUKI params_t* FirstOperation (uint_t value);
+KABUKI const uint_t* FirstOperation (uint_t value);
 
 /** Returns the number of members an Star has. */
 KABUKI uintptr_t Index (const void* ptr);

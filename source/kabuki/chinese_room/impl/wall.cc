@@ -21,42 +21,50 @@
 namespace _ {
 
 Wall* WallInit (uint_t size) {
-    Wall* w = New<Wall, uint_t> (size, 1);
-    if (w == nullptr) return nullptr;
-    w->is_dynamic = 0;
-    w->num_doors = 0;
-    w->max_num_doors;
-    w->door_one = nullptr;
+    Wall* wall = New<Wall, uint_t> (size, 1);
+    if (wall == nullptr) return nullptr;
+    wall->is_dynamic = 0;
+    wall->num_doors = 0;
+    wall->max_num_doors;
+    wall->door_one = nullptr;
+    return wall;
 }
 
 Door** WallGetDoors (Wall* wall) {
     return reinterpret_cast<Door**> (wall->door_one);
 }
 
-Door* WallAddDoor (Wall* wall, Door* door) {
-    if (wall == nullptr) return nullptr;
-    if (door == nullptr) return nullptr;
-    byte num_doors = wall->num_doors;
-    if (num_doors + 1 >= wall->max_num_doors) return nullptr;
+int WallAddDoor (Wall* wall, Door* door) {
+    if (wall == nullptr) 
+        return 0;
+    if (door == nullptr)
+        return 0;
+
+    int num_doors = wall->num_doors;
+    if (num_doors + 1 >= wall->max_num_doors)
+        return 0;
     WallGetDoors (wall)[num_doors] = door;
-    ++wall->num_doors;
+    wall->num_doors = num_doors + 1;
+    return num_doors + 1;
 }
 
 Door* WallGetDoor (Wall* wall, index index) {
-    if (wall == nullptr) return nullptr;
+    if (wall == nullptr)
+        return nullptr;
     if (index >= wall->num_doors)
         return nullptr;
     return WallGetDoors (wall)[index];
 }
 
 void WallDelete (Wall* wall, index index) {
-    if (wall == nullptr) return;
+    if (wall == nullptr)
+        return;
     if (index >= wall->num_doors)
         return;
     Door** doors = WallGetDoors (wall);
     Door* door = doors[index];
     door->~Door ();
-    for (byte i = index; i < wall->num_doors; ++i)
+    for (int i = index; i < wall->num_doors; ++i)
         doors[index] = doors[index + 1];
     --wall->num_doors;
 }

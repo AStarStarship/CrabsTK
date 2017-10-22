@@ -1,6 +1,6 @@
 /** The Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/chinese_room/include/Door.h
+    @file    ~/source/kabuki/chinese_room/include/door.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -39,6 +39,11 @@ namespace _ {
 class Door : public Operand {
     public:
 
+    typedef enum Errors {
+        InvalidOperationError = 0,
+        RoomError
+    } Error;
+
     enum {
         kMinDoorSize = 248,   //< The min and default size of the door buffer.
     };
@@ -56,7 +61,7 @@ class Door : public Operand {
     Slot* GetSlot (index index);
 
     /** Address the given expr to the Door. */
-    ticket_t AddSlot (Slot* t);
+    const Operation* AddSlot (Slot* t);
 
     /** Attempts to find a Slot or Door with the given address. */
     Slot* Contains (void* address);
@@ -66,29 +71,34 @@ class Door : public Operand {
     Slot* ContainsSlot (void* address);
 
     /** Executes all of the queued escape sequences. */
-    ticket_t ExecAll ();
+    const Operation* ExecAll ();
 
     /** Script expressions. */
     virtual const Operation* Star (index index, Expression* expr);
 
     private:
 
-    // 2-to-4-byte vtable pointer here in memory!
+    // 2-to-4-int vtable pointer here in memory!
     uint size_;             //< Size of the entire door and all of it's slots.
-    byte is_dynamic_,       //< Flag for if the door is static(0) or dynamic(1).
+    int is_dynamic_,        //< Flag for if the door is static(0) or dynamic(1).
         door_number_,       //< This door's number.
         max_num_doors_,     //< The max number of doors in the system.
         num_doors_,         //< The number of doors this door is connected too.
         current_slot_,      //< Index of current Socket being iterated through.
         current_door_;      //< Index of current Door being iterated through.
-    Socket* slot_;            //< The slot in the door in the Chinese Room.
+    Socket* slot_;          //< The slot in the door in the Chinese Room.
 };
 
-/** Returns the main door of the room. */
-KABUKI Door& Doors ();
+/** Returns a Static Error Operation. */
+KABUKI const Operation* DoorResult (Door* door, Door::Error error);
+
+KABUKI const char* DoorErrorString (Door::Error error);
+
+/** Returns the main door of the room.
+KABUKI Door& Doors (); */
 
 /** Initializes a Door at the beginning of the given buffer. 
-static Door* DoorInit (byte* buffer, uint_t slot_size) {
+static Door* DoorInit (int* buffer, uint_t slot_size) {
     if (buffer == nullptr) return nullptr;
     if (slot_size < kMinSlotSize) return nullptr;
     Wall* wall = reinterpret_cast<Door*>(buffer);

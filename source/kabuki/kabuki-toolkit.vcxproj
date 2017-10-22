@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="chinese_room\impl\operator.h" />
     <ClInclude Include="chinese_room\include\address.h" />
     <ClInclude Include="chinese_room\include\args.h" />
     <ClInclude Include="chinese_room\include\array.h" />
@@ -74,7 +73,6 @@
     <ClCompile Include="chinese_room\impl\exceptions.cc" />
     <ClCompile Include="chinese_room\impl\expression.cc" />
     <ClCompile Include="chinese_room\impl\log.cc" />
-    <ClCompile Include="chinese_room\impl\operable.cc" />
     <ClCompile Include="chinese_room\impl\operation.cc" />
     <ClCompile Include="chinese_room\impl\room.cc" />
     <ClCompile Include="chinese_room\impl\slot.cc" />

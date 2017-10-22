@@ -55,18 +55,18 @@ const Operation* BoutResult (Bout* bout, Bout::Error error) {
     return 0;
 }
 
-const Operation* BoutResult (Bout* bout, Bout::Error error, params_t* header) {
+const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header) {
     // @todo Write me.
     return 0;
 }
 
-const Operation* BoutResult (Bout* bout, Bout::Error error, params_t* header,
+const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header,
     byte offset) {
     // @todo Write me.
     return 0;
 }
 
-const Operation* BoutResult (Bout* bout, Bout::Error error, params_t* header,
+const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header,
     byte offset, byte* address) {
     // @todo Write me.
     return 0;
@@ -138,7 +138,7 @@ void BoutPrint (Bout* bout) {
     PrintMemory (&bout->buffer, size);
 }
 
-const Operation* BoutWrite (Bout* bout, params_t* params, void** args) {
+const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     //printf ("\n\n| Writing to %p\n", tx);
     if (bout == nullptr)
         return BoutResult (bout, Bout::RoomError);
@@ -160,7 +160,7 @@ const Operation* BoutWrite (Bout* bout, params_t* params, void** args) {
     uint64_t ui8;
 #endif
 
-    params_t num_params = *params;
+    const uint_t num_params = *params;
     ++params;
     if (num_params == 0) return 0;          //< Nothing to do.
 
@@ -169,7 +169,7 @@ const Operation* BoutWrite (Bout* bout, params_t* params, void** args) {
         index,                              //< Index in the params.
         length;                             //< Length of a type to write.
     hash16_t hash = 0;                      //< 16-bit prime hash.
-    params_t* param = params;               //< Pointer to the current param.
+    const uint_t* param = params;               //< Pointer to the current param.
     // Convert the socket offsets to pointers.
     byte* begin = &bout->buffer,            //< Beginning of the buffer.
         * end   = begin + size,             //< End of the buffer.

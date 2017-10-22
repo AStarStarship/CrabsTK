@@ -18,7 +18,6 @@
 #define CHINESE_ROOM_CONSOLE_H
 
 #include "room.h"
-#include "mirror.h"
 #include "table.h"
 #include "set.h"
 #include "utils.h"
@@ -66,10 +65,10 @@ class Console: public Room
     virtual ~Console ();
 
     /** Sets a the Room. */
-    virtual ticket_t Init ();
+    virtual const Operation* Init ();
 
     /** Main process loop. */
-    virtual ticket_t Loop ();
+    virtual const Operation* Loop ();
 
     /** Chinese room expressions. */
     virtual const Operation* Star (int index, Expression* expr);

@@ -126,7 +126,7 @@ KABUKI byte* BoutEndAddress (Bout* tx);
     @param tx The Tx socket to write to.
     @param params The escape sequence to write.
     @param args The array of pointers to the stuff to write. */
-KABUKI ticket_t Write (Bout* tx, const char* address, const uint_t* params,
+KABUKI const Operation* Write (Bout* tx, const char* address, const uint_t* params,
                        void** args);
 
 /** Streams a tx byte.

@@ -2,13 +2,12 @@
     @version 0.x
     @file    ~/source/kabuki/chinese_room/include/wall.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
-                            All right reserved (R).
-             Licensed under the Apache License, Version 2.0 (the "License"); 
-             you may not use this file except in compliance with the License. 
-             You may obtain a copy of the License at
-                        http://www.apache.org/licenses/LICENSE-2.0
-             Unless required by applicable law or agreed to in writing, software
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
@@ -44,7 +43,7 @@ KABUKI Door** WallGetDoors (Wall* wall);
 /** Adds a Door to the slot.
     @return Returns nullptr if the Door is full and a pointer to the Door in the 
             buffer upon success. */
-KABUKI Door* WallAddDoor (Wall* wall, Door* t);
+KABUKI int WallAddDoor (Wall* wall, Door* door);
 
 /** Gets the Door from the Door at the given index. */
 KABUKI Door* WallGetDoor (Wall* wall, index index);

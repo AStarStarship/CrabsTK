@@ -75,7 +75,7 @@ KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error);
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
-                                    params_t* header);
+                                    const uint_t* header);
 
 /** Used to return an erroneous result from a B-Output.
     @param  bout    The source Bout.
@@ -85,7 +85,7 @@ KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
-                                    params_t* header,
+                                    const uint_t* header,
                                     byte offset);
 
 /** Used to return an erroneous result from a B-Output.
@@ -96,7 +96,7 @@ KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
-                                    params_t* header,
+                                    const uint_t* header,
                                     byte offset,
                                     byte* address);
 
@@ -124,7 +124,7 @@ KABUKI void BoutPrint (Bout* bout);
     @param bout   The B-Output socket to write to.
     @param params The escape sequence to write.
     @param args   The array of pointers to the stuff to write. */
-KABUKI const Operation* BoutWrite (Bout* bout, params_t* params, void** args);
+KABUKI const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args);
 
 /** Returns a reference to the bout for this assembly. */
 template<uint_t kNumber>

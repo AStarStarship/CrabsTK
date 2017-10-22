@@ -19,13 +19,13 @@
 
 namespace _ {
 
-uint_t* NumOperations (std::uintptr_t value) {
-    return reinterpret_cast<uint_t*> (value);
+const uint_t* NumOperations (std::uintptr_t value) {
+    return reinterpret_cast<const uint_t*> (value);
 }
 
-params_t* FirstOperation (uint_t value) {
+const uint_t* FirstOperation (uint_t value) {
     uintptr_t index = value;
-    return reinterpret_cast<uint_t*>(index);
+    return reinterpret_cast<const uint_t*>(index);
 }
 
 uintptr_t Index (const void* ptr) {
@@ -40,7 +40,7 @@ void OperationPrint (const Operation* operand) {
     if (operand == nullptr)
         return;
 
-    params_t* result = operand->result;
+    const uint_t* result = operand->result;
 
     if (Index (result) < 256) {
         // Print Operation Star

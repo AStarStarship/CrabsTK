@@ -19,6 +19,23 @@
 
 namespace _ {
 
+const Operation* DoorResult (Door* door, Door::Error error) {
+    return 0;
+}
+
+const char* DoorErrorString (Door::Error error) {
+    static const char* strings[] = {
+        "Invalid operation",
+        "Room error"
+    };
+
+    if (error < 0)
+        return strings[0];
+    if (error < 0)
+        return strings[Door::RoomError];
+    return strings[error];
+}
+
 Door::Door (const char* roomName, uint_t slot_size, bool is_dynamic) :
     is_dynamic_ (is_dynamic)
 {
@@ -34,6 +51,7 @@ Door::~Door () {
 
 Door* Door::Init (uint_t buffer_size) {
     if (buffer_size < kMinDoorSize)
+        return nullptr;
     return this;
 }
 
@@ -41,19 +59,19 @@ Slot* Door::GetSlot (index index) {
     return nullptr;
 }
 
-ticket_t Door::AddSlot (Slot* slot) {
-    return SlotAddSlot (slot_, slot);
+const Operation* Door::AddSlot (Slot* slot) {
+    return SocketAddSlot (slot_, slot);
 }
 
 Slot* Door::Contains (void* address) {
-    return SlotFindSlot (slot_, address);
+    return SocketFindSlot (slot_, address);
 }
 
 Slot* Door::ContainsSlot (void* address) {
-    return SlotFindSlot (slot_, address);
+    return SocketFindSlot (slot_, address);
 }
 
-ticket_t Door::ExecAll () {
+const Operation* Door::ExecAll () {
     return 0;
 }
 
@@ -64,14 +82,16 @@ const Operation* Door::Star (index index, Expression* expr) {
         return &this_member;
     }
     index -= ' ';
-    if (index >= slot_->num_slots) return InvalidOperation ();
+    if (index >= slot_->num_slots)
+        return DoorResult (this, Door::InvalidOperationError);
     return nullptr;
 }
 
+/*
 KABUKI Door& Doors () {
     static Door front_door;
     return front_door;
-}
+}*/
 
 /** Initializes a Door at the beginning of the given buffer. 
 static Door* DoorInit (byte* buffer, uint_t slot_size) {
