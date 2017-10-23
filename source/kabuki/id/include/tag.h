@@ -1,47 +1,44 @@
-/** Kabuki Starship
-    @file    /.../Source/_id/Person.h
+/** kabuki::id
+    @file    ~/source/kabuki/id/include/tag.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef KABUKI_ID_TAG_H
+#define KABUKI_ID_TAG_H
 
-#include <KabukiTheater-Config.h>
+#include "id_config.h"
 
-namespace _id {
+namespace kabuki { namespace id {
 
-class ID_API ITag_i
+class KABUKI ITag_i
 {
     public:
 
     virtual int getUID () = 0;
-    /*< Gets the Unique identifier number. */
+    /** Gets the Unique identifier number. */
 
-    virtual string setUID (int value) = 0;
-    /*< Sets the Unique identifier number. */
+    virtual char setUID (int value) = 0;
+    /** Sets the Unique identifier number. */
 
-    virtual string getName () = 0;
-    /*< Gets the ID name. */
+    virtual char getName () = 0;
+    /** Gets the ID name. */
 
-    virtual string setName (const string& name) = 0;
-    /*< Sets the ID name. */
+    virtual char SetName (const char* name) = 0;
+    /** Sets the ID name. */
     
-    virtual void print (Expression& io) = 0;
-    /*< Prints this object to a terminal. */
+    virtual void Print (_::Log& log) = 0;
+    /** Prints this object to a expression. */
 };
-}   //< _id
-
+}       //< namespace id
+}       //< namespace kabuki
+#endif  //< KABUKI_ID_TAG_H

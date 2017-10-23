@@ -1,4 +1,4 @@
-/** Kabuki Starship
+/** kabuki::gl
     @file       /.../Source/_G/Texture/Texture.h
     @author     Cale McCollough <cale.mccollough@gmail.com>
     @license    Copyright (C) 2017 Cale McCollough <calemccollough.github.io>

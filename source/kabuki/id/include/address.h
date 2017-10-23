@@ -1,28 +1,24 @@
-﻿/** Kabuki Starship
-    @file    /.../Source/_id/Address.h
+﻿/** kabuki::id
+    @file    ~/source/kabuki/id/include/address.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef KABUKI_ID_ADDRESS_H
+#define KABUKI_ID_ADDRESS_H
 
-#include <KabukiTheater-Config.h>
+#include "id_config.h"
 
-namespace _id {
+namespace kabuki { namespace id {
 
 typedef enum {
     HomeAddress = 0,
@@ -30,75 +26,74 @@ typedef enum {
     OtherAddress
 } AddressType;
 
-inline const char** addressTypeLabels ();
-/*< A read-only array of the AddressType string labels. */
+/** Gets one of the addressTypeLables. */
+inline const char* AddressTypeLabel (AddressType type);
 
-inline const char* addressTypeLabel (AddressType type);
-/*< Gets one of the addressTypeLables. */
-
-class ID_API Address
-/*< A physical address. 
+/** A physical address. 
     @todo Integrate with Google Maps API.
 */
+class KABUKI Address
 {
     public:
 
+    /** Default constructor. */
     Address ();
-    /*< Default constructor. */
-
-    Address (const string& aStreet, const string& aCity, const string& aState, const string& aZip, const string& aCcountry, 
+    
+    /** Creates an address with the given parameters. */
+    Address (const char* street, const char* aCity, const char* aState, const char* aZip, const char* aCcountry, 
         AddressType aType);
-    /*< Constructs an address with the given parameters. */
 
-    string& getStreet ();
-    /*< Gets the street addrss. */
+    /** Gets the street address. */
+    char& GetStreet ();
 
-    void setStreet (const string& newValue);
-    /*< Sets the street addrss. */
-    
-    string& getCity ();
-    /*< Gets the city. */
+    /** Sets the street address. */
+    void SetStreet (const char* newValue);
 
-    void setCity (const string& newValue);
-    /*< Sets the city. */
+    /** Gets the city. */
+    char& GetCity ();
 
-    string& getState ();
-    /*< Gest the State. */
+    /** Sets the city. */
+    void SetCity (const char* newValue);
 
-    void setState (const string& newValue);
-    /*< Sets the state. */
-    
-    string& getZip ();
-    /*< Gets the zip code. */
+    /** Gets the State. */
+    char& GetState ();
 
-    void setZip (const string& newValue);
-    /*< Sets the zip code. */
-    
-    string& getCountry ();
-    /*< Gets the country. */
+    /** Sets the state. */
+    void SetState (const char* newValue);
 
-    void setCountry (const string& newValue);
-    /*< Sets the country. */
+    /** Gets the zip code. */
+    char& GetZip ();
 
-    AddressType getType ();
-    /*< Gets the address type.
+    /** Sets the zip code. */
+    void SetZip (const char* newValue);
+
+    /** Gets the country. */
+    char& GetCountry ();
+
+    /** Sets the country. */
+    void SetCountry (const char* newValue);
+
+    /** Gets the address type.
         The address type means street, PO box, etc.
     */
+    AddressType GetType ();
 
-    void setType (AddressType t);
-    /*< Sets the addrss type. */
+    /** Sets the address type. */
+    void SetType (AddressType t);
 
-    inline void print (Expression& io);
-    /*< Prints this object to a Expression. */
+    /** Prints this object to a Expression. */
+    void Print (_::Log& log);
 
     private:
 
-    string street,          //< The street address.
-        city,               //< The city of address
-        state,              //< The state of address
-        zip,                //< The zip code of address
-        country;            //< The country of address
-    AddressType type;       //< The type of address
+    char        street_,  //< The street address.
+                city_,    //< The city of address
+                state_,   //< The state of address
+                zip_,     //< The zip code of address
+                country_; //< The country of address
+    AddressType type_;    //< The type of address
 };
 
-}   //< _id
+}       //< namespace id
+}       //< namespace kabuki
+#endif  //< KABUKI_ID_ADDRESS_H

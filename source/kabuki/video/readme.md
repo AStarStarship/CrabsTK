@@ -1,2 +1,4 @@
-# video Module
-This module cotains nothing at the moment, but will soon be mapped to OpenCV.
+# kabuki::video
+Folder contains the kabuki::video module
+.
+

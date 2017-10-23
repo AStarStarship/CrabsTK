@@ -1,40 +1,38 @@
-/** Kabuki Starship
-    @file    /.../Source/_id/OAuthAccount.h
+/** kabuki::id
+    @file    ~/source/kabuki/id/include/OAuthAccount.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef KABUKI_ID_OAUTHACCOUNT_H
+#define KABUKI_ID_OAUTHACCOUNT_H
 
-#include <KabukiTheater-Config.h>
+#include "id_config.h"
 
-namespace _id {
+namespace kabuki { namespace id {
 
-class OAuthAccount
-/** An OAuth account. 
+/** An OAuth account.
 */
+class OAuthAccount
 {
     public:
-    
+
+    /** Simple default constructor. */
     OAuthAccount ();
-    /*< Simple default constructor. */
-    
-    inline void print (Expression& io);
-    /*< Prints this object to a terminal. */
+
+    /** Prints this object to a expression. */
+    void Print (_::Log& log);
 };
 
-}   //< _id
+}       //< namespace id
+}       //< namespace kabuki
+#endif  //< KABUKI_ID_OAUTHACCOUNT_H

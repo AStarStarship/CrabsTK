@@ -1,32 +1,27 @@
-/** Kabuki Starship
-    @file    /.../Source/_id/Role.h
+/** kabuki::id
+    @file    ~/source/kabuki/id/include/role.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved  (R).
-
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef KABUKI_ID_ROLE_H
+#define KABUKI_ID_ROLE_H
 
 
-#include <KabukiTheater-Config.h>
+#include "id_config.h"
 
-namespace _id {
+namespace kabuki { namespace id {
 
-class ID_API Role
-/** A role that an entinty plays in an organization.
+/** A role that an entity plays in an organization.
     Examples of a role are:
     
     1. volunteer
@@ -34,24 +29,25 @@ class ID_API Role
     3. manager
     4. owner
 */
-{
+class KABUKI Role {
     public:
 
-    Role (const string& aDescription);
-    /*< Constructs a user with the given username and password. */
+    /** Creates a user with the given username and password. */
+    Role (const char* aDescription);
 
-    string& getDescription ();
-    /*< Gets a reference to the descritpion string. */
+    /** Gets a reference to the description char. */
+    char& GetDescription ();
 
-    void setDescription (const string& s);
-    /*< Sets the description to the given string. */
-    
-    inline void print (Expression& io);
-    /*< Prints this object to a terminal. */
+    /** Sets the description to the given char. */
+    void SetDescription (const char* string);
+
+    /** Prints this object to a expression. */
+    void Print (_::Log& log);
 
     private:
 
-    string description;       //< A description of the role.
+    char description;       //< A description of the role.
 };
-
-}   //  _id   
+}       //< namespace id
+}       //< namespace kabuki   
+#endif  //< KABUKI_ID_ROLE_H

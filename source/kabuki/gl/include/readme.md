@@ -1,6 +1,5 @@
-# Graphics Module
-This module is contains the \_g namespace for programming graphical
-applications.
+# kabuki::gl
+This module is contains the kabuki::gl Graphics Library.
 
 ## Development
 

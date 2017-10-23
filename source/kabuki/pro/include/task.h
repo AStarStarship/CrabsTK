@@ -1,7 +1,17 @@
-/** CS 162 Program 4-5
-    @file   task.h
-    @author Cale McCollough
-    @brief  File contains the Task class.
+/** kabuki::pro
+    @version 0.x
+    @file    ~/source/kabuki/pro/include/task.h
+    @author  Cale McCollough <cale.mccollough@gmail.com>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
 #ifndef KABUKI_PRO_TASK_H
@@ -9,18 +19,19 @@
 
 #include <time.h>
 
-namespace _pro {
 
-/** An abstract task in a set of Task(s). */
+namespace kabuki { namespace pro {
+
+/** An abstract task in a set of Task(string). */
 class Task
 {
     public:
     
-    /** Constructs a task with the given fields and clones the strings. */
+    /** Creates a task with the given fields and clones the strings. */
     Task (const char* summary = "", const char* details = "",  
           float weight = 0.0f, int time_testimate_min = 60 * 60);
 
-    /** Constructs a task with the given fields from strings this object now 
+    /** Creates a task with the given fields from strings this object now 
         owns and must delete. */
     Task (char* summary, char* details, float weight, int time_estimate_min);
     
@@ -74,7 +85,7 @@ class Task
     
     /** Sets the time_estimate.
         @param time The new time_estimate.
-        @return Returns null upon success and a pointer to an error string upon failure. */
+        @return Returns null upon success and a pointer to an error char upon failure. */
     void SetTimeEstimate (time_t time);
     
     /** Gets the time_begins. */
@@ -82,7 +93,7 @@ class Task
     
     /** Sets the time_begins.
         @param time The new time_begins.
-        @return Returns null upon success and a pointer to an error string upon failure. */
+        @return Returns null upon success and a pointer to an error char upon failure. */
     const char* SetTimeBegins (time_t time);
     
     /** Gets the end time. */
@@ -90,7 +101,7 @@ class Task
     
     /** Sets the time_ends.
         @param time The new time_ends.
-        @return Returns null upon success and a pointer to an error string upon failure. */
+        @return Returns null upon success and a pointer to an error char upon failure. */
     const char* SetTimeEnds (time_t time);
     
     /** Gets the time_started. */
@@ -98,7 +109,7 @@ class Task
     
     /** Sets the time_started.
         @param time The new time_started.
-        @return Returns null upon success and a pointer to an error string upon failure. */
+        @return Returns null upon success and a pointer to an error char upon failure. */
     const char* SetTimeStarted (time_t time);
     
     /** Gets the stop time. */
@@ -106,7 +117,7 @@ class Task
     
     /** Sets the time_stopped.
         @param time The new time_stopped.
-        @return Returns null upon success and a pointer to an error string upon failure. */
+        @return Returns null upon success and a pointer to an error char upon failure. */
     const char* SetTimeStopped (time_t time);
 
     /** Starts the task and saves the start time. */
@@ -119,8 +130,8 @@ class Task
     void Stop (const char* result, float result_grade = 1.0f);
     
     /** Returns true if the task is complete.
-        A Task is considered complete if the result string is null.
-        @return Returns true if the result string is not null. */
+        A Task is considered complete if the result char is null.
+        @return Returns true if the result char is not null. */
     bool IsDone ();
 
     /** Adds a Task that collides with this time slot. */
@@ -143,20 +154,21 @@ class Task
 
     private:
     
-    char* summary_,              //< The task summary.
-        * details_,              //< The task details.
-        * result_,               //< The task results log entry.
-        * review_;               //< An after-incident review of the Event.
-    float weight_,               //< The weight of the task.
-          assessment_,           //< The user's self-assessed grade.
-          grade_;                //< The reviewed grade.
-    time_t time_estimate_,       //< The amount of time it is estimated this will take.
-           time_begins_,         //< The time the task begins.
-           time_ends_,           //< The time the task was finished ends.
-           time_started_,        //< The time the user started the task.
-           time_stopped_;        //< The time the user stopped the task.
-    Task* collisions_;            //< Pointer to the collision node (if any).
+    char * summary_,        //< Task summary.
+         * details_,        //< Task details.
+         * result_,         //< Task results log entry.
+         * review_;         //< An after-incident review of the Event.
+    float  weight_,         //< Weight of the task.
+           assessment_,     //< User's self-assessed grade.
+           grade_;          //< Reviewed grade.
+    time_t time_estimate_,  //< Amount of time it is estimated this will take.
+           time_begins_,    //< Time the task begins.
+           time_ends_,      //< Time the task was finished ends.
+           time_started_,   //< Time the user started the task.
+           time_stopped_;   //< Time the user stopped the task.
+    Task * collisions_;      //< Pointer to the collision node (if any).
 };
-}       //< namespace _pro
+}       //< namespace pro
+}       //< namespace kabuki
 #endif  //< KABUKI_PRO_TASK_H
 

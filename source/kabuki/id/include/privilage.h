@@ -1,70 +1,67 @@
-/** Kabuki Starship
-    @file    /.../Source/_id/Privilage.h
+/** kabuki::id
+    @file    ~/source/kabuki/id/include/privilage.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef KABUKI_ID_PRIVILAGE_H
+#define KABUKI_ID_PRIVILAGE_H
 
-#include <KabukiTheater-Config.h>
+#include "id_config.h"
 
-namespace _id {
+namespace kabuki { namespace id {
 
-typedef int PrivilageLevel;     //< typedef for an account privilage level.
+typedef int PrivilageLevel;     //< typedef for an account privilege level.
 
-/** The default number of privilage levels is 5, because CPUs are fastest at 
+/** The default number of privilege levels is 5, because CPUs are fastest at 
     working with the number -1, 0, and 1. */
 
 enum {
-    DefaultMinPrivilageLevel = -2,  //< Default min privilage level optimized for -1, 0, 1 numbers.
-    DefaultMaxPrivilageLevel = 2    //< Default mix privilage level optimized for -1, 0, 1 numbers.
+    DefaultMinPrivilageLevel = -2,  //< Default min privilege level optimized for -1, 0, 1 numbers.
+    DefaultMaxPrivilageLevel = 2    //< Default mix privilege level optimized for -1, 0, 1 numbers.
 };
 
-PrivilageLevel getMinPrivilageLevel ();
-/*< Gets the static min privilage level. */
+/** Gets the static min privilege level. */
+PrivilageLevel GetMinPrivilageLevel ();
 
-PrivilageLevel setMinPrivilageLevel ();
-/*< Gets the static min privilage level. */
+/** Gets the static min privilege level. */
+PrivilageLevel SetMinPrivilageLevel ();
 
-bool setPrvilageLevelRange (PrivilageLevel min, PrivilageLevel max);
-/*< Attmpts to set the privilage level range to the given values.
-    @warning Algorihm will set min and max to default values if they are not in 
-        order min to max!. */
+/** Attempts to set the privilege level range to the given values.
+    @warning Algorithm will set min and max to default values if they are not in 
+             order min to max!. */
+bool SetPrvilageLevelRange (PrivilageLevel min, PrivilageLevel max);
 
-class ID_API Privilage
-/*< An account privilage level. */
+/** An account privilege level. */
+class KABUKI Privilage
 {
     public:
 
+    /** Default constructor. */
     Privilage ();
-    /*< Default constructor. */
 
-    PrivilageLevel getPrivilageLevel ();
-    /*< Gest the priliage level. */
+    /** Gets the privilege level. */
+    PrivilageLevel GetPrivilageLevel ();
 
-    PrivilageLevel setPrivilageLevel (PrivilageLevel l);
-    /*< Attempts to set the privilage level to the new level. */
-    
-    inline void print (Expression& io);
-    /*< Prints this object to a terminal. */
+    /** Attempts to set the privilege level to the new level. */
+    PrivilageLevel SetPrivilageLevel (PrivilageLevel level);
+
+    /** Prints this object to a expression. */
+    void Print (_::Log& log);
 
     private:
 
-    PrivilageLevel privilageLevel;      //< The privilage level.
+    PrivilageLevel privilageLevel;      //< The privilege level.
 };
-}   //  _id
-
+}       //< namespace id
+}       //< namespace kabuki
+#endif  //< KABUKI_ID_PRIVILAGE_H

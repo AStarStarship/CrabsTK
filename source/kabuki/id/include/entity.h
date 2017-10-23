@@ -1,65 +1,64 @@
-/** Kabuki Starship
-    @file    /.../Source/kabuki/_id/entity.h
+/** kabuki::id
+    @file    /.../source/kabuki/id/entity.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
- 
-#pragma once
 
-#include "Address.h"
-#include "EmailAddress.h"
-#include "Profile.h"
+#ifndef KABUKI_ID_ENTITY_H
+#define KABUKI_ID_ENTITY_H
 
-namespace _id {
+#include "address.h"
+#include "email_address.h"
+#include "profile.h"
 
-/** A entinty with contact information. 
+namespace kabuki { namespace id {
+
+/** A entity with contact information. 
     @todo Attach a compressed image link.
 */
-class ID_API Entity
+class KABUKI Entity
 {
     public:
 
-    Entity (const string& aFirstName = "", const string& aLastName = "", const string& anEmailAdress = "", 
-        const string& aPrimaryPhoneNum = "", const string& aStreetAdress1 = "", const string& aZipCode1 = "", 
-        const string& aStreetAdress2 = "", const string& aZipCode2 = "");
-    /*< A real-world enity with . */
+    /** A real-world entity with . */
+    Entity (const char* first_name      = "", const char* last_name     = "", 
+            const char* email_address   = "", const char* primary_phone = "", 
+            const char* street_address1 = "", const char* zip_ode1      = "",
+            const char* street_address2 = "", const char* zip_code2     = "");
 
-    string& getName ();
-    /*< Gets the entity's first/only name. */
+    /** Gets the entity first/only name. */
+    char& GetName ();
 
-    void setName (const string& s);
-    /*< Attempts to set the fname string to the new string. */
+    /** Attempts to set the name char to the new char. */
+    void SetName (const char* new_name);
 
-    virtual int search (const string& query);
-    /*< Returns true if this entity contains the search query. */
-    
-    virtual void print (Expression& io);
-    /*< Prints this object to a terminal. */
+    /** Returns true if this entity contains the search query. */
+    virtual int Search (const char* query);
+
+    /** Prints this object to a expression. */
+    virtual void Print (_::Log& log);
     
     private:
 
-    string name,                            //< The legal name of the entity.
-        phoneNumber;                        //< The phone number of the entity.
-    Address address;                        //< The address of the entity.
-    vector<string> tags;                    //< Metadata tags.
-    vector<Address> addresses;              //< The address of the entity.
-    vector<EmailAddress> emailAddresses;    //< The email address of the entity.
-    vector<Profile> profiles;               //< The online profiles this entinty is attached to.
-    vector<string> notes;                   //< An array of notes about the enitity.
+    char*                name,           //< The legal name of the entity.
+                         phoneNumber_;    //< The phone number of the entity.
+    Address              address_;        //< The address of the entity.
+    std::vector<Address>      addresses_;      //< The address of the entity.
+    std::vector<EmailAddress> emailAddresses_; //< The email address of the entity.
+    std::vector<Profile>      profiles_;       //< The online profiles this entity is attached to.
+    _::Array<char, int>         tags_,           //< Metadata tags.
+                         notes_;          //< An array of notes about the entity.
 };
 
-}   //< _id
+}       //< namespace id
+}       //< namespace kabuki
+#endif  //< KABUKI_ID_ENTITY_H

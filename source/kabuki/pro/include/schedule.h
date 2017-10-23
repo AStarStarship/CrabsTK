@@ -1,38 +1,49 @@
-/** CS 162 Program 4-5
-    @file   schedule.h
-    @author Cale McCollough
-    @brief  File contains the Schedule class.
+/** kabuki::pro
+    @version 0.x
+    @file    ~/source/kabuki/pro/include/schedule.h
+    @author  Cale McCollough <cale.mccollough@gmail.com>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
 #ifndef KABUKI_PRO_SCHEDULE_H
 #define KABUKI_PRO_SCHEDULE_H
 
-#include "array.h"
+#include "../../script/include/array.h"
 #include "task.h"
 
-namespace _pro {
 
-/** A group of Task(s) in temporal order that may repeat.
+namespace kabuki { namespace pro {
+
+/** A group of Task(string) in temporal order that may repeat.
     A Schedule contains a collection of Task objects. It has a starting date, 
-    and it can repeat x number of times. Multiple Schedule(s) can be combined 
+    and it can repeat x number of times. Multiple Schedule(string) can be combined 
     to create a Calendar. Schedules are designed to minimize the human time  
     to insert and manipulate the calendar.
     
     The average person will have no more than a handful of Tasks on any given
     day. Given 100 years in a life and 365 days in a year, 5*100*365 < 200K
-    Tasks in a normal person's lifetime. Maybe 1M Task(s) tops per lifetime.
+    Tasks in a normal person's lifetime. Maybe 1M Task(string) tops per lifetime.
     
     Where does the Calendar live?
     The calendar lives in the cloud in an SQL database.
     
     How is it loaded?
-    It is loaded cunks at a time.
+    It is loaded chunks at a time.
     
     What happens when you make edits?
     The local object is edited, changes staged, and edit's to only single 
     tasks are written to the server.
 
-    What about collising events?
+    What about colliding events?
     Colliding events are stored in a linear lined list of collisions.
 
     When does speed matter?
@@ -69,7 +80,7 @@ class Schedule
     void StealReadMe (char* new_readme);
 
     /** Sets the name to the new name.
-        @param new_readme A string this object now owns the memory.  */
+        @param new_readme A char this object now owns the memory.  */
     void SetReadMe (const char* new_readme);
     
     /** Gets the default schedule color of the child-tasks. */
@@ -89,7 +100,7 @@ class Schedule
     /** Searches for an event with the given time and creates one if it doesn't
         exist.
         @return Returns a pointer to an Event that starts at the given time, and
-                 a new  Task if no containing Event(s) match the event_time. */
+                 a new  Task if no containing Event(string) match the event_time. */
     Task* Find (time_t event_time);
     
     /** Gets the help menu. */
@@ -98,20 +109,21 @@ class Schedule
     /** Prints the Schedule to the console. */
     void Print (int indentation = 0);
     
-    /** Parse string input, possibly from the keyboard.
+    /** Parse char input, possibly from the keyboard.
         @param input The (possibly keyboard) input from the user.
         @param stack The stack of Project objects.
-        @return Returns null upon success and an error string upon failure. */
+        @return Returns null upon success and an error char upon failure. */
     const char* Command (char* input);
  
     private:
     
-    char* key_,             //< The name of the schedule.
-        * readme_;           //< The readme for the Schedule.
-    int color_,              //< The initial color of all of the Tasks.
-        num_repeats_;        //< The number of times the Schedule repeats.
-    Array<Task*> tasks_;     //< The array of Task pointers.
+    char* key_,                  //< Name of the schedule.
+        * readme_;               //< Readme for the Schedule.
+    int color_,                  //< Initial color of all of the Tasks.
+        num_repeats_;            //< Number of times the Schedule repeats.
+    _::Array<Task*, int> tasks_; //< Array of Task pointers.
 };
-}       //< namespace _pro
+}       //< namespace pro
+}       //< namespace kabuki
 #endif  //< KABUKI_PRO_SCHEDULE_H
 

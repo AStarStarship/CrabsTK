@@ -30,8 +30,7 @@
 
 namespace _ {
     
-class inline Time
-/*< Represents a time value.
+/** Represents a time value.
     @ingroup _
 
     _::Time encapsulates a time value in a flexible way.
@@ -72,57 +71,63 @@ class inline Time
     update(_::milliseconds(100));
     @endcode
 
-    @see _::Clock
-*/
-{
+    @see _::Clock */
+class inline Time {
     public:
 
-    Time();
-    /*< Default constructor.
+    /** Default constructor.
     
         Sets the time value to zero. */
+    Time() : 
+       m_microseconds(0) {
+    }
 
-    float asSeconds() const;
-    /*< Return the time value as a number of seconds.
+    /** Return the time value as a number of seconds.
 
         @return Time in seconds
         @see asMilliseconds, getMicroseconds. */
+    float AsSeconds() const  {
+        return m_microseconds / 1000000.f;
+    }
 
-    int32_t asMilliseconds() const;
-    /*< Return the time value as a number of milliseconds.
+    /** Return the time value as a number of milliseconds.
 
         @return Time in milliseconds
         @see asSeconds, getMicroseconds. */
+    int32_t AsMilliseconds() const {
+        return static_cast<int32_t>(m_microseconds / 1000);
+    }
 
-    timestamp_t getMicroseconds() const;
-    /*< Return the time value as a number of microseconds.
+    /** Return the time value as a number of microseconds.
 
         @return Time in microseconds
         @see asSeconds, asMilliseconds. */
+    timestamp_t GetMicroseconds() const {
+        return m_microseconds;
+    }
 
     static const Time Zero; //< Predefined "zero" time value
 
     private:
 
-    friend inline Time seconds(float);
-    friend inline Time milliseconds(int32_t);
-    friend inline Time microseconds(timestamp_t);
+    friend inline Time Seconds(float);
+    friend inline Time Milliseconds(int32_t);
+    friend inline Time Microseconds(timestamp_t);
 
-    explicit Time(timestamp_t microseconds);
-    /*< Construct from a number of microseconds.
+    /** Construct from a number of microseconds.
     
         This function is internal. To construct time values,
         use _::seconds, _::milliseconds or _::microseconds instead.
 
         @param microseconds Number of microseconds. */
+    explicit Time(timestamp_t microseconds);
 
     private:
 
-    timestamp_t m_microseconds; //< Time value stored as microseconds
+    timestamp_t microseconds_; //< Time value stored as microseconds
 };
 
-inline Time seconds(float amount);
-/*< Construct a time value from a number of seconds
+/** Construct a time value from a number of seconds
     @relates Time
 
     @param amount Number of seconds
@@ -130,9 +135,9 @@ inline Time seconds(float amount);
     @return Time value constructed from the amount of seconds
 
     @see milliseconds, microseconds. */
+inline Time Seconds(float amount);
 
-inline Time milliseconds(int32_t amount);
-/*< Construct a time value from a number of milliseconds
+/** Construct a time value from a number of milliseconds
     @relates Time
 
     @param amount Number of milliseconds
@@ -140,9 +145,9 @@ inline Time milliseconds(int32_t amount);
     @return Time value constructed from the amount of milliseconds
 
     @see seconds, microseconds. */
+inline Time Milliseconds(int32_t amount);
 
-inline Time microseconds(timestamp_t amount);
-/*< Construct a time value from a number of microseconds
+/** Construct a time value from a number of microseconds
     @relates Time
 
     @param amount Number of microseconds
@@ -150,246 +155,396 @@ inline Time microseconds(timestamp_t amount);
     @return Time value constructed from the amount of microseconds
 
     @see seconds, milliseconds. */
+inline Time Microseconds(timestamp_t amount);
 
-inline bool operator ==(Time left, Time right);
-/*< Overload of == operator to compare two time values
+/** Overload of == operator to compare two time values
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a time)
 
     @return True if both time values are equal. */
+inline bool operator ==(Time left, Time right);
 
-inline bool operator !=(Time left, Time right);
-/*< Overload of != operator to compare two time values
+/** Overload of != operator to compare two time values
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a time)
 
     @return True if both time values are different. */
+inline bool operator !=(Time left, Time right);
 
+/** Overload of < operator to compare two time values
+    @relates Time
+
+    @param left  Left operand(a time)
+    @param right Right operand(a time)
+
+    @return True if a left is lesser than a right. */
 inline bool operator <(Time left, Time right);
-/*< Overload of < operator to compare two time values
+
+/** Overload of > operator to compare two time values
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a time)
 
-    @return True if \a left is lesser than \a right. */
-
+    @return True if a left is greater than a right. */
 inline bool operator >(Time left, Time right);
-/*< Overload of > operator to compare two time values
+
+/** Overload of <= operator to compare two time values
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a time)
 
-    @return True if \a left is greater than \a right. */
-
+    @return True if a left is lesser or equal than a right. */
 inline bool operator <=(Time left, Time right);
-/*< Overload of <= operator to compare two time values
+
+/** Overload of >= operator to compare two time values
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a time)
 
-    @return True if \a left is lesser or equal than \a right. */
-
+    @return True if a left is greater or equal than a right. */
 inline bool operator >=(Time left, Time right);
-/*< Overload of >= operator to compare two time values
-    @relates Time
 
-    @param left  Left operand(a time)
-    @param right Right operand(a time)
-
-    @return True if \a left is greater or equal than \a right. */
-
-inline Time operator -(Time right);
-/*< Overload of unary - operator to negate a time value
+/** Overload of unary - operator to negate a time value
     @relates Time
 
     @param right Right operand(a time)
 
     @return Opposite of the time value. */
+inline Time operator -(Time right);
 
+/** Overload of binary + operator to add two time values
+    @relates Time
+
+    @param left  Left operand(a time)
+    @param right Right operand(a time)
+
+    @return Sum of the two times values. */
 inline Time operator +(Time left, Time right);
-/*< Overload of binary + operator to add two time values
+
+/** Overload of binary += operator to add/assign two time values
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a time)
 
     @return Sum of the two times values. */
-
 inline Time& operator +=(Time& left, Time right);
-/*< Overload of binary += operator to add/assign two time values
+
+/** Overload of binary - operator to subtract two time values
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a time)
 
-    @return Sum of the two times values. */
-
+    @return Difference of the two times values. */
 inline Time operator -(Time left, Time right);
-/*< Overload of binary - operator to subtract two time values
+
+/** Overload of binary -= operator to subtract/assign two time values
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a time)
 
     @return Difference of the two times values. */
-
 inline Time& operator -=(Time& left, Time right);
-/*< Overload of binary -= operator to subtract/assign two time values
+
+/** Overload of binary * operator to scale a time value
     @relates Time
 
     @param left  Left operand(a time)
-    @param right Right operand(a time)
+    @param right Right operand(a number)
 
-    @return Difference of the two times values. */
-
+    @return a left multiplied by a right. */
 inline Time operator *(Time left, float right);
-/*< Overload of binary * operator to scale a time value
+
+/** Overload of binary * operator to scale a time value
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a number)
 
-    @return \a left multiplied by \a right. */
-
+    @return a left multiplied by a right. */
 inline Time operator *(Time left, timestamp_t right);
-/*< Overload of binary * operator to scale a time value
+
+/** Overload of binary * operator to scale a time value
     @relates Time
 
-    @param left  Left operand(a time)
-    @param right Right operand(a number)
+    @param left  Left operand(a number)
+    @param right Right operand(a time)
 
-    @return \a left multiplied by \a right. */
-
+    @return a left multiplied by a right. */
 inline Time operator *(float left, Time right);
-/*< Overload of binary * operator to scale a time value
+
+/** Overload of binary * operator to scale a time value
     @relates Time
 
     @param left  Left operand(a number)
     @param right Right operand(a time)
 
-    @return \a left multiplied by \a right. */
-
+    @return a left multiplied by a right. */
 inline Time operator *(timestamp_t left, Time right);
-/*< Overload of binary * operator to scale a time value
+
+/** Overload of binary *= operator to scale/assign a time value
     @relates Time
 
-    @param left  Left operand(a number)
-    @param right Right operand(a time)
+    @param left  Left operand(a time)
+    @param right Right operand(a number)
 
-    @return \a left multiplied by \a right. */
-
+    @return a left multiplied by a right. */
 inline Time& operator *=(Time& left, float right);
-/*< Overload of binary *= operator to scale/assign a time value
+
+/** Overload of binary *= operator to scale/assign a time value.
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a number)
 
-    @return \a left multiplied by \a right. */
-
+    @return a left multiplied by a right. */
 inline Time& operator *=(Time& left, timestamp_t right);
-/*< Overload of binary *= operator to scale/assign a time value.
+
+/** Overload of binary / operator to scale a time value.
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a number)
 
-    @return \a left multiplied by \a right. */
-
+    @return a left divided by a right. */
 inline Time operator /(Time left, float right);
-/*< Overload of binary / operator to scale a time value.
+
+/** Overload of binary / operator to scale a time value.
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a number)
 
-    @return \a left divided by \a right. */
-
+    @return a left divided by a right. */
 inline Time operator /(Time left, timestamp_t right);
-/*< Overload of binary / operator to scale a time value.
+
+/** Overload of binary /= operator to scale/assign a time value
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a number)
 
-    @return \a left divided by \a right. */
-
+    @return a left divided by a right. */
 inline Time& operator /=(Time& left, float right);
-/*< Overload of binary /= operator to scale/assign a time value
+
+/** Overload of binary /= operator to scale/assign a time value.
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a number)
 
-    @return \a left divided by \a right. */
-
+    @return a left divided by a right. */
 inline Time& operator /=(Time& left, timestamp_t right);
-/*< Overload of binary /= operator to scale/assign a time value.
-    @relates Time
 
-    @param left  Left operand(a time)
-    @param right Right operand(a number)
-
-    @return \a left divided by \a right. */
-
-inline float operator /(Time left, Time right);
-/*< Overload of binary / operator to compute the ratio of two time values.
+/** Overload of binary / operator to compute the ratio of two time values.
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a time)
 
-    @return \a left divided by \a right. */
+    @return a left divided by a right. */
+inline float operator /(Time left, Time right) {
+    return left.asSeconds() / right.asSeconds();
+}
 
-inline Time operator %(Time left, Time right);
-/*< Overload of binary % operator to compute remainder of a time value.
+/** Overload of binary % operator to compute remainder of a time value.
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a time)
 
-    @return \a left modulo \a right. */
+    @return a left modulo a right. */
+inline Time operator %(Time left, Time right) {
+    return microseconds(left.getMicroseconds() % right.getMicroseconds());
+}
 
-inline Time& operator %=(Time& left, Time right);
-/*< Overload of binary %= operator to compute/assign remainder of a time value
+/** Overload of binary %= operator to compute/assign remainder of a time value
     @relates Time
 
     @param left  Left operand(a time)
     @param right Right operand(a time)
 
-    @return \a left modulo \a right. */
+    @return a left modulo a right. */
+inline Time& operator %=(Time& left, Time right) {
+    return left = left % right;
+}
 
-inline timestamp_t getTime(time_t unixTime, int32_t microseconds);
-/*< Generates a timestamp from a unix timestamp and 32-bit mbed microsecond timestamp. */
+/** Generates a timestamp from a unix timestamp and 32-bit mbed microsecond timestamp. */
+inline timestamp_t GetTime(time_t unixTime, int32_t microseconds);
 {
     return(((timestamp_t)UnixTime) << 8) &(timestamp_t)Microseconds;
 }
 
-inline time_t getTime_s(timestamp_t t);
-/*< Gets the seconds since January 1, 1970. */
+/** Gets the seconds since January 1, 1970. */
+inline time_t GetTime_s(timestamp_t t);
 {
     return(time_t)t;
 }
 
-inline int32_t getTime_us(timestamp_t timestamp);
-/*< Gets the microsecond time. */
+/** Gets the microsecond time. */
+inline int32_t GetTime_us(timestamp_t timestamp);
 {
     return(int32_t)((Timestamp & 0xFFFFFFFF00000000) >> 32);
 }
 
-inline timestamp_t getTimestamp();
-/*< Creates a timestamp of the current time. */
+/** Creates a timestamp of the current time. */
+inline timestamp_t GetTimestamp();
 {
     std::chrono::microseconds us (1);
 
     return us.count;
 }
+/** 
 
+float Time::asSeconds() const
+{
+    return m_microseconds / 1000000.f;
+}
+
+int32_t Time::asMilliseconds() const
+
+timestamp_t Time::getMicroseconds() const
+
+
+Time::Time(timestamp_t microseconds)
+    :m_microseconds (microseconds)
+{
+}
+
+Time seconds(float amount)
+{
+    return Time(static_cast<timestamp_t>(amount * 1000000));
+}
+
+Time milliseconds(int32_t amount)
+{
+    return Time(static_cast<timestamp_t>(amount) * 1000);
+}
+
+Time microseconds(timestamp_t amount)
+{
+    return Time(amount);
+}
+
+bool operator ==(Time left, Time right)
+{
+    return left.getMicroseconds() == right.getMicroseconds();
+}
+
+bool operator !=(Time left, Time right)
+{
+    return left.getMicroseconds() != right.getMicroseconds();
+}
+
+bool operator <(Time left, Time right)
+{
+    return left.getMicroseconds() < right.getMicroseconds();
+}
+
+bool operator >(Time left, Time right)
+{
+    return left.getMicroseconds() > right.getMicroseconds();
+}
+
+bool operator <=(Time left, Time right)
+{
+    return left.getMicroseconds() <= right.getMicroseconds();
+}
+
+bool operator >=(Time left, Time right)
+{
+    return left.getMicroseconds() >= right.getMicroseconds();
+}
+
+Time operator -(Time right)
+{
+    return microseconds(-right.getMicroseconds());
+}
+
+Time operator +(Time left, Time right)
+{
+    return microseconds(left.getMicroseconds() + right.getMicroseconds());
+}
+
+Time& operator +=(Time& left, Time right)
+{
+    return left = left + right;
+}
+
+Time operator -(Time left, Time right)
+{
+    return microseconds(left.getMicroseconds() - right.getMicroseconds());
+}
+
+Time& operator -=(Time& left, Time right)
+{
+    return left = left - right;
+}
+
+Time operator *(Time left, float right)
+{
+    return seconds(left.asSeconds() * right);
+}
+
+Time operator *(Time left, timestamp_t right)
+{
+    return microseconds(left.getMicroseconds() * right);
+}
+
+Time operator *(float left, Time right)
+{
+    return right * left;
+}
+
+Time operator *(timestamp_t left, Time right)
+{
+    return right * left;
+}
+
+Time& operator *=(Time& left, float right)
+{
+    return left = left * right;
+}
+
+Time& operator *=(Time& left, timestamp_t right)
+{
+    return left = left * right;
+}
+
+Time operator /(Time left, float right)
+{
+    return seconds(left.asSeconds() / right);
+}
+
+Time operator /(Time left, timestamp_t right)
+{
+    return microseconds(left.getMicroseconds() / right);
+}
+
+Time& operator /=(Time& left, float right)
+{
+    return left = left / right;
+}
+
+Time& operator /=(Time& left, timestamp_t right)
+{
+    return left = left / right;
+}
+
+float operator /(Time left, Time right)
+
+
+Time operator %(Time left, Time right)
+
+
+Time& operator %=(Time& left, Time right) */
 }   //< _

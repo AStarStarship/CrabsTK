@@ -1,31 +1,26 @@
-﻿/** Kabuki Starship
-    @file    /.../Source/_id/Hit.h
+﻿/** kabuki::id
+    @file    ~/source/kabuki/id/include/Hit.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
-#pragma once
+#ifndef KABUKI_ID_HITLIST_H
 
-#include <KabukiTheater-Config.h>
+#include "id_config.h"
 
-namespace _id {
+namespace kabuki { namespace id {
 
-class ID_API Hit
-/*< A list of search hits.
+class KABUKI Hit
+/** A list of search hits.
     @note This class was for creating patch lists for musical instruments, but 
         is getting generalized to metadata search.
 
@@ -41,77 +36,77 @@ class ID_API Hit
         MaxDescriptionLength = 256      //< The max description length.
     };
 
-    Hit (std::string aName = "", std::string aDescription = "", std::string* someTags = nullptr, char hit = 0, 
-        std::string aCatagory = "", std::string aType = "", int aNumTags = 0);
-    /*< Constructs a hit from the given metadata. 
+    Hit (std::char name = "", std::char aDescription = "", std::char* someTags = nullptr, char hit = 0, 
+        std::char aCatagory = "", std::char aType = "", int aNumTags = 0);
+    /** Creates a hit from the given metadata. 
         User produces the SomeTags list as a new array of std::strings, and this object cosumes it and is responsible for the deallocation of the memory.
     */
 
-    std::string getName ();
-    /*< Gets the name. */
+    std::char getName ();
+    /** Gets the name. */
 
-    std::string setName (std::string aName);
-    /*< Sets the name.
+    std::char SetName (std::char name);
+    /** Sets the name.
         @return returns 0 upon success, -1 if the input is nullptr, and 1 if the label is too long. */
 
     int getId ();
-    /*< Gets the Id. */
+    /** Gets the Id. */
     
     void setId (int value);
-    /*< Sets the Id. */
+    /** Sets the Id. */
 
-    std::string getDescription ();
-    /*< Gets the description std::string. */
+    std::char getDescription ();
+    /** Gets the description std::char. */
     
-    std::string setDescription (std::string aDescription);
-    /*< Sets the description.
+    std::char setDescription (std::char aDescription);
+    /** Sets the description.
         @return returns 0 upon success and 1 if the label is too long. */
     
-    std::string getCatagory ();
-    /*< Gets the catagory std::string.
-    @return Gets an empty std::string no tags exist. */
+    std::char getCatagory ();
+    /** Gets the catagory std::char.
+    @return Gets an empty std::char no tags exist. */
 
-    std::string getSubcatagory ();
-    /*< Gets the subcatagory std::string.
-    @return Gets an empty std::string no tags exist. */
+    std::char getSubcatagory ();
+    /** Gets the subcatagory std::char.
+    @return Gets an empty std::char no tags exist. */
 
-    std::string addTag (std::string aTag);
-    /*< Addsa tag to the tag list.
+    std::char addTag (std::char aTag);
+    /** Addsa tag to the tag list.
         @return returns 0 upon success, -1 if the input is nullptr, and 1 if the label is too long. */
 
     void addTags (char* someTags, int numTags);
-    /*< Adds a collection of tags to the hit-list. */
+    /** Adds a collection of tags to the hit-list. */
     
-    std::string removeTag (std::string tag);
-    /*< Removes the given tag if it exists.
+    std::char removeTag (std::char tag);
+    /** Removes the given tag if it exists.
         @return Gets true upon success, 1 if the input is nullptr, and the given tag if the it doesn't exist. */
 
-    bool containsTag (std::string tag);
-    /*< Gets true if this hit contains the given tag. */
+    bool containsTag (std::char tag);
+    /** Gets true if this hit contains the given tag. */
 
-    bool containsTags (vector<std::string>& someTags);
-    /*< Gets true if this hit contains any of the given tags. */
+    bool containsTags (vector<std::char>& someTags);
+    /** Gets true if this hit contains any of the given tags. */
     
-    vector<std::string>& getTags ();
-    /*< Gets the list of tags. */
+    std::vector<std::char>& getTags ();
+    /** Gets the list of tags. */
     
-    std::string toStringTags ();
-    /*< Gets a comma seperated std::string of the tags. */
+    std::char toStringTags ();
+    /** Gets a comma seperated std::char of the tags. */
 
-    std::string toJSON ();
-    /*< Serializes to JSON std::string. */
+    std::char toJSON ();
+    /** Serializes to JSON std::char. */
     
-    inline void print (Expression& slot);
-    /*< Prints this object to a terminal. */
+    void Print (Expression& slot);
+    /** Prints this object to a expression. */
     
     private:
 
-    std::string name,           //< The name of the hit.
+    std::char name,           //< The name of the hit.
         description;           //< Description of the hit. 
-    std::string* catagory,      //< Pointer to the catagory string.
+    std::char* catagory,      //< Pointer to the catagory char.
         * type;                 //< Pointer to the type of instrument.
     int uid;                    //< The unique identifier.
-    vector<std::string> tags;   //< List of tags.
+    std::vector<std::char> tags;   //< List of tags.
 };
 
-}   //  _id
+}       //< namespace id}       //< namespace kabuki

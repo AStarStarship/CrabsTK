@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="kabuki">
+      <UniqueIdentifier>{b4ac0909-35e2-42f0-8618-92e858d43b2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\script">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="kabuki\serial">
+      <UniqueIdentifier>{fce213eb-46b8-4537-9885-65a2468365f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\al">
+      <UniqueIdentifier>{b14ecb67-64d7-487c-be33-fe037f6e806e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\app">
+      <UniqueIdentifier>{b94e7c27-d80e-43ad-a0d5-f10f6fa3b309}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\biz">
+      <UniqueIdentifier>{46d557eb-f2c0-4511-a005-8c50f52803b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\code">
+      <UniqueIdentifier>{e6d8db89-0a24-4dd9-b44b-8e12a5eac984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\data">
+      <UniqueIdentifier>{1199cb80-6bd0-4f7d-a347-ccefa0ec89d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\file">
+      <UniqueIdentifier>{caa2cf5c-efed-4015-acc9-4802e257575c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\gl">
+      <UniqueIdentifier>{a4fd0a38-ad1b-48af-b990-defad848215d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\gui">
+      <UniqueIdentifier>{08cb46bc-08ca-4f88-86ca-282bc9d069d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\hal">
+      <UniqueIdentifier>{74661752-42e0-439e-a2ab-0b3b24447149}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\id">
+      <UniqueIdentifier>{bb404d24-983a-4f80-8f6a-9ea515d4f6fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\hmi">
+      <UniqueIdentifier>{8b15bd81-b35a-4c27-825c-8b95b49b106f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\json">
+      <UniqueIdentifier>{b6510f7b-1a8f-4435-9073-7be6a611f9f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\math">
+      <UniqueIdentifier>{de4d44c9-dee1-489e-b56e-8293be477ccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\midi">
+      <UniqueIdentifier>{e74ab7e3-4e5c-43d4-96bd-cfb5ddd6c84c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\pplx">
+      <UniqueIdentifier>{f756ca20-1636-4d16-991d-c9b7937ce0ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\process">
+      <UniqueIdentifier>{9fbf3dd6-9a6d-4f82-af91-afd955ee2d87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\project">
+      <UniqueIdentifier>{76fbebf6-1c3c-4648-b5c8-c0dbee3fafd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\tek">
+      <UniqueIdentifier>{8fe5244b-9037-4488-871f-153660e32d62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\utils">
+      <UniqueIdentifier>{c35e66f1-cf3e-4e1a-8bbd-ecc15d036cfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\video">
+      <UniqueIdentifier>{82b73a56-2698-4391-9e92-14514dee7158}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\web">
+      <UniqueIdentifier>{bcecd50d-9ef4-4d62-960a-467a1eed05ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\ws">
+      <UniqueIdentifier>{f74be4e0-3678-4673-8ac6-c7e66435a828}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="script\include\bout.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\clock.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\color.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\config.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\console.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\door.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\evaluation.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\event.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\exceptions.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\expression.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\global.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\iterator.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\library.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\log.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\operation.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\portal.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\room.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\script_module.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\set.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\slot.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\socket.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\stdafx.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\table.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\targetver.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\types.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\utf.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\utf_string.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\utils.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\wall.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\a.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\address.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\args.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\array.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\ascii.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\assembly.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\bin.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="script\include\script_module.h.in">
+      <Filter>kabuki\script</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="script\impl\script_bout.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_clock.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_color.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_console.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_door.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_evaluation.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_exceptions.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_expression.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_log.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_operation.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_room.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_slot.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_socket.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_table.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_types.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_utils.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_wall.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_address.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_args.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_bin.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

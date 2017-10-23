@@ -1,19 +1,33 @@
-/** CS 162 Program 4-5
-    @file   project_manager.h
-    @author Cale McCollough
-    @brief  File contains the header for the _pro::Manager
+/** kabuki::pro
+    @version 0.x
+    @file    ~/source/kabuki/pro/include/project.h
+    @author  Cale McCollough <cale.mccollough@gmail.com>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
 #ifndef KABUKI_PRO_PROJECT_H
 #define KABUKI_PRO_PROJECT_H
 
-#include "array.h"
+#include "../../script/include/array.h"
 #include "task.h"
 #include "schedule.h"
 
-namespace _pro {
+
+using namespace _;
+namespace kabuki { namespace pro {
 
 class Project;
+using ProjectArray  = Array<Schedule*, int>;
+using ScheduleArray = Array<Project *, int>;
 
 /** A linear linked list node for creating a stack of Project. */
 struct ProjectNode
@@ -21,7 +35,7 @@ struct ProjectNode
     Project* project;
     ProjectNode* prev;
     
-    /** Constructs a node that points to the previous node. */
+    /** Creates a node that points to the previous node. */
     ProjectNode (Project* project, ProjectNode* prev = nullptr);
 
     /** Destructor. */
@@ -37,6 +51,7 @@ ProjectNode* Pop (ProjectNode* stack, const char* result);
 /** Pushes a ProjectNode* off the stack. */
 const char* Push (ProjectNode*& stack, Project* project);
 
+
 /** A tree-like Project in the system that can be scheduled.
     An Project can be a person or virtual entity. An Project is identified by their 
     unique key. */
@@ -45,10 +60,10 @@ class Project
     public:
      
     enum {
-        INIT_NUM_SCHEDULES = 4,           //< The initial number of Schedule(s).
-        MAX_SCHEDULES      = 32,          //< Max number of Schedule(s).
-        MAX_SUMMARY_LENGTH = 256,         //< The max readme string length.
-        MAX_DETAIL_LENGTH  = 1024 * 1024, //< The max detail string length.
+        INIT_NUM_SCHEDULES = 4,           //< The initial number of Schedule(string).
+        MAX_SCHEDULES      = 32,          //< Max number of Schedule(string).
+        MAX_SUMMARY_LENGTH = 256,         //< The max readme char length.
+        MAX_DETAIL_LENGTH  = 1024 * 1024, //< The max detail char length.
     };
     
     /** Default constructor initializes list with the given or left key. */
@@ -143,19 +158,19 @@ class Project
     bool Select (int index);
  
     /** Deserializes the file with the stored key.
-        @return Returns 0 upon success and a pointer to an error string upon 
+        @return Returns 0 upon success and a pointer to an error char upon 
                 failure. */
     void Load ();
      
     /** Serializes the list to the given file.
-        @return Returns 0 upon success and a pointer to an error string upon 
+        @return Returns 0 upon success and a pointer to an error char upon 
                 failure. */
     void Save ();
 
-    /** Gets the help string. */
+    /** Gets the help char. */
     static const char* GetAppHelpString ();
 
-    /** Gets the help string. */
+    /** Gets the help char. */
     static const char* GetHelpString ();
         
     /** Prints the Shopping list to the console.
@@ -175,13 +190,13 @@ class Project
 
     private:
      
-    char* key_,                   //< The entity key.
-        * readme_;                //< The project readme.
-    Schedule* task_;              //< The current Schedule being edited.
-    Array<Schedule*> schedules_;  //< A composition of Schedule(s).
-    Array<Project*> projects_;    //< Child projects
+    char         * key_,        //< Entity key.
+                 * readme_;     //< Project readme.
+    Schedule     * task_;       //< Current Schedule being edited.
+    ScheduleArray* schedules_;  //< Composition of Schedule(string).
+    ProjectArray * projects_;   //< Child projects.
 };
 
-}       //  namespace _pro
-#endif  //< KABUKI_PRO_MANAGER_H
-
+}       //< namespace pro
+}       //< namespace kabuki
+#endif  //< KABUKI_PRO_PROJECT_H

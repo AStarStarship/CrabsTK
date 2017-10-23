@@ -1,29 +1,24 @@
-/** Kabuki Starship
+/** kabuki::id
     @file    /.../Source-Impl/_id/Handle.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
 #ifndef KABUKI_THEATER_ID_HANDLE_H
 #define KABUKI_THEATER_ID_HANDLE_H
 
-#include <config.h>
+#include "id_config.h"
 
-namespace _id {
+namespace kabuki { namespace id {
 
 /** Gets the min handle/username/ length. */
 int MinHandleLength ();
@@ -36,7 +31,7 @@ void SetHandleLengthRange (int min, int max);
 
 /** A handle like a username or uid.
 */
-class ID_API Handle
+class KABUKI Handle
 {
     public:
 
@@ -47,16 +42,16 @@ class ID_API Handle
     
     /** Constructor creates a standard username. */
     Handle (const char* name, int min_length = kMinLengthRange, 
-            int aMaxLength = kMaxLengthRange);
+            int max_length = kMaxLengthRange);
 
-    /** Gets a reference to the handle string. */
+    /** Gets a reference to the handle char. */
     const char* GetHandle ();
 
     /** Gets true if this password is value. */
-    bool SetHandle (const char* s);
+    bool SetHandle (const char* string);
 
     /** Returns true if the handle is valid. */
-    bool IsValid (const char* s);
+    bool IsValid (const char* string);
 
     /** Returns true if this Handle is idential to the given Handle. */
     bool Equals (const Handle& h);
@@ -66,7 +61,7 @@ class ID_API Handle
     
     private:
 
-    const char* name_;  //< The name of the object.
+    const char* name;  //< The name of the object.
 };      //< class Handle
 }       //< _id
 #endif  //< KABUKI_THEATER_ID_HANDLE_H

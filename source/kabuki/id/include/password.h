@@ -1,39 +1,35 @@
-/** Kabuki Starship
-    @file    /.../Source/_id/Password.h
+/** kabuki::id
+    @file    ~/source/kabuki/id/include/password.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
-#pragma once
+#ifndef KABUKI_ID_PASSWORD_H
+#define KABUKI_ID_PASSWORD_H
 
-#include "Grammer.h"
+#include "Grammar.h"
 
-namespace _id {
+namespace kabuki { namespace id {
 
-const string getDefaultPassword ();
-/*< Gets the default password. */
+/** Gets the default password. */
+const char* GetDefaultPassword ();
 
-const string getDefaultPasswordFormat ();
-/*< Gets the default password Grammer format. */
+/** Gets the default password Grammar format. */
+const char* GetDefaultPasswordFormat ();
 
-class ID_API Password
-/*< An account password. 
+/** An account password. 
     @todo Add salt!
 */
+class KABUKI Password
 {
     public:
     
@@ -42,44 +38,46 @@ class ID_API Password
         MaxLength = 255     //< The maximum length of a password.
     };
 
-    Password (const char* aPassword = "Password");
-    /*< Attemps to create a password from the given password with the default format. 
+    /** Attempts to create a password from the given password with the default format. 
         If the password does not match the default format, the default password will be used.
     */
-
-    Password (const char* aPassword, Grammer& aFormat);
-    /*< Attemps to create a password from the given password with the required format. 
+    Password (const char* password = "Password");
+    
+    /** Attempts to create a password from the given password with the required format. 
         If the password does not match the format, the default password will be used.
     */
+    Password (const char* password, Grammar& format);
 
-    Grammer& getGrammer ();
-    /*< Gets a reference to the password format grammer. */
+    /** Gets a reference to the password format grammar. */
+    Grammar& GetGrammer ();
 
-    void setGrammer (const Grammer& g);
-    /*< Sets the password format grammer. */
-    
-    bool change (const char* newPassword);
-    /*< Attempts to set the password and returns a non-zero error message upon failure. */
-    
-    static bool isValid (const char* aPassword);
-    /*< Gets true if the given password is valid. */
-    
-    string encript ();
-    /*< Entcypts the password with a salt.  */
+    /** Sets the password format grammar. */
+    void SetGrammer (const Grammar& grammar);
 
-    bool equals (const char* s);
-    /*< Returns true if this password equals the given one. */
+    /** Attempts to set the password and returns a non-zero error message upon failure. */
+    bool Change (const char* password);
 
-    bool equals (const Password& p);
-    /*< Returns true if this password equals the given one. */
-    
-    inline void print (Expression& io);
-    /*< Prints this object to a terminal. */
+    /** Gets true if the given password is valid. */
+    static bool IsValid (const char* password);
+
+    /** Encrypts the password with a salt.  */
+    const char* Encript ();
+
+    /** Returns true if this password equals the given one. */
+    bool Equals (const char* string);
+
+    /** Returns true if this password equals the given one. */
+    bool Equals (const Password& p);
+
+    /** Prints this object to a expression. */
+    void Print (_::Log& log);
 
     private:
 
-    Grammer& format;         	//< The password format.
-    char* password;            	//< The password;
+    Grammar& format_; //< The password format.
+    char* password;  //< The password;
 };
 
-}   //< _id
+}       //< namespace id
+}       //< namespace kabuki
+#endif  //< KABUKI_ID_PASSWORD_H
