@@ -49,14 +49,14 @@ KABUKI void PrintDebugHex (const char* message, char value);
 template<typename T>
 KABUKI void PrintDebugSignedHex (const char* message, T value) {
 #if DEBUG
-    printf ("| %string:'%i':0x%x\n", message, value, value);
+    printf ("| %s:'%i':0x%x\n", message, value, value);
 #endif
 }
 
 template<typename T>
 KABUKI void PrintDebugUnsignedHex (const char* message, T value) {
 #if DEBUG
-    printf ("%string:'%user':0x%x\n", message, value, value);
+    printf ("%s:'%u':0x%x\n", message, value, value);
 #endif
 }
 
@@ -281,7 +281,7 @@ template<char kColumnWidth, typename Type>
 KABUKI void PrintSignedHex (const char* header, Type value) {
     KABUKI char formatString[12],
         nullTermChar = CreateKeyValueFormatString (formatString, kColumnWidth, 'i');
-    printf ("formatString: %string\n", formatString);
+    printf ("formatString: %s\n", formatString);
     printf (formatString, header, value);
 }
 

@@ -70,8 +70,8 @@ static byte TableAdd (Table* table, const char* key) {
         key_length = static_cast<uint16_t> (strlen (key));
 
     //PrintLine ();
-    //printf ("Adding Key %string\n%20s: 0x%p\n%20s: %p\n%20s: 0x%p\n"
-    //    "%20s: %p\n%20s: %user\n", key, "hashes", hashes, "key_offsets", 
+    //printf ("Adding Key %s \n%20s: 0x%p\n%20s: %p\n%20s: 0x%p\n"
+    //    "%20s: %p\n%20s: %u\n", key, "hashes", hashes, "key_offsets", 
     //    key_offsets, "keys", keys, "indexes", indexes, "value", value);
 
     hash16_t hash = Hash16 (key),
@@ -95,7 +95,7 @@ static byte TableAdd (Table* table, const char* key) {
         destination = keys - key_length;
 
         CopyString (destination, key);
-        //printf ("Inserted key %string at GetAddress 0x%p\n", key, destination);
+        //printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
         //Print (table);
         return 0;
     }
@@ -141,7 +141,7 @@ static byte TableAdd (Table* table, const char* key) {
 
             index = indexes[mid];       //< Index in the collision table.
 
-            //printf ("index:%user\n", index);
+            //printf ("index:%u\n", index);
 
             if (index < kNoCollidingRecords)   //< There are other collisions.
             {
@@ -156,10 +156,10 @@ static byte TableAdd (Table* table, const char* key) {
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;  //< Load the index in the collision table.
                 while (index < kMaxNumOperations) {
-                    //printf ("comparing to \"%string\"\n", keys - key_offsets[index]);
+                    //printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
                         //printf ("but table already contains key at "
-                         //       "offset: %user.\n", index);
+                         //       "offset: %u.\n", index);
                         return index;
                     }
                     ++temp_ptr;
@@ -189,7 +189,7 @@ static byte TableAdd (Table* table, const char* key) {
                 *temp_ptr = num_keys;
 
                 table->pile_size = pile_size + 1;
-                //printf ("\n\ncollision index: %user\n", temp);
+                //printf ("\n\ncollision index: %u\n", temp);
                 // Store the collision index.
                 indexes[num_keys] = temp;   //< Store the collision index
                 table->num_keys = num_keys + 1;
@@ -224,11 +224,11 @@ static byte TableAdd (Table* table, const char* key) {
                 value = key_offsets[num_keys - 1] + key_length + 1;
 
                 byte collision_index = unsorted_indexes[mid];
-                //printf ("\n\ncollision_index: %user", collision_index);
+                //printf ("\n\ncollision_index: %u", collision_index);
 
                 CopyString (keys - value, key);
-                //printf ("Inserting value: %user into index:%user "
-                //        "num_keys:%user with other collision_index: %user\n", value, 
+                //printf ("Inserting value: %u into index:%u "
+                //        "num_keys:%u with other collision_index: %u\n", value, 
                 //        index, num_keys, collision_index);
                 key_offsets[num_keys] = value;
 
@@ -272,8 +272,8 @@ static byte TableAdd (Table* table, const char* key) {
     value = key_offsets[num_keys - 1] + key_length + 1;
     destination = keys - value;
 
-    //printf ("The hash 0x%x was not in the table so inserting %string into mid:"
-    //        " %i at index %user before hash 0x%x \n", hash, key, mid, 
+    //printf ("The hash 0x%x was not in the table so inserting %s into mid:"
+    //        " %i at index %u before hash 0x%x \n", hash, key, mid, 
     //        destination - reinterpret_cast<char*> (table), hashes[mid]);
 
     // First copy the char and set the key offset.
@@ -283,7 +283,7 @@ static byte TableAdd (Table* table, const char* key) {
     // Second move up the hashes and insert at the insertion point.
     hash16_t* hash_ptr = hashes + num_keys;
     //*test = hashes;
-    //printf ("l_numkeys: %user, hashes: %user hash_ptr: %user insert_ptr: %user\n", 
+    //printf ("l_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u\n", 
     //        num_keys, hashes - reinterpret_cast<hash16_t*> (table), 
     //        hash_ptr - reinterpret_cast<hash16_t*> (table), hashes + mid - 
     //        reinterpret_cast<hash16_t*> (table));
@@ -347,18 +347,18 @@ static byte TableFind (const Table* table, const char* key) {
 
     hash16_t hash = Hash16 (key);
 
-    //printf ("\nSearching for key \"%string\" with hash 0x%x\n", key, hash);
+    //printf ("\nSearching for key \"%s\" with hash 0x%x\n", key, hash);
 
     if (num_keys == 1)
     {
-        ////printf ("Comparing keys - key_offsets[0] - this %user\n%string\n", keys - 
+        ////printf ("Comparing keys - key_offsets[0] - this %u\n%s\n", keys - 
         //        key_offsets[0] - reinterpret_cast<char*> (table), keys - 
         //        key_offsets[0]);
         if (strcmp (key, keys - key_offsets[0]) != 0) {
-            //printf ("Did not find key %string\n", key);
+            //printf ("Did not find key %s\n", key);
             return kInvalidRecord;
         }
-        //printf ("Found key %string\n", key);
+        //printf ("Found key %s\n", key);
         //PrintLine ();
         return 0;
     }
@@ -385,7 +385,7 @@ static byte TableFind (const Table* table, const char* key) {
         } else {
             // Duplicate hash found.
             //printf ("\nFound same hash at mid:%i hash:%x offset for key: "
-            //        "%string\n", mid, hashes[mid], key);
+            //        "%s\n", mid, hashes[mid], key);
 
             // Check for collisions
 
@@ -408,17 +408,17 @@ static byte TableFind (const Table* table, const char* key) {
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;
                 while (index < kMaxNumOperations) {
-                    //printf ("comparing to \"%string\"\n", keys - 
+                    //printf ("comparing to \"%s\"\n", keys - 
                     //        key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
                         //printf ("but table already contains key at offset:"
-                        //        "%user.\n", index);
+                        //        "%u.\n", index);
                         return index;
                     }
                     ++temp_ptr;
                     index = *temp_ptr;
                 }
-                //printf ("Did not find %string.\n", key);
+                //printf ("Did not find %s.\n", key);
                 return kInvalidRecord;
             }
 
@@ -430,7 +430,7 @@ static byte TableFind (const Table* table, const char* key) {
             indexes += max_keys;
             index = unsorted_indexes[mid];
 
-            //printf ("\n!!!mid: %i-%x unsorted_indexes: %user key: %string\n"
+            //printf ("\n!!!mid: %i-%x unsorted_indexes: %u key: %s\n"
             //        "hash: %x\n", mid, hashes[mid], index, keys - 
             //        key_offsets[index], Hash16 (keys - 
             //        key_offsets[index]));
@@ -445,7 +445,7 @@ static byte TableFind (const Table* table, const char* key) {
             return index;
         }
     }
-    //printf ("Did not find a hash for key %string\n", key);
+    //printf ("Did not find a hash for key %s\n", key);
     //PrintLine ();
 
     return kInvalidRecord;
@@ -460,8 +460,8 @@ inline void TablePrint (Table* table) {
     uint16_t size = table->size,
         pile_size = table->pile_size;
     PrintLine ('_');
-    //printf ("| Table: %p\n| num_keys: %user max_keys: %user  "
-    //        "pile_size: %user  size: %user", table, num_keys,
+    //printf ("| Table: %p\n| num_keys: %u max_keys: %u  "
+    //        "pile_size: %u  size: %u", table, num_keys,
     //        max_keys, pile_size, size);
     //putchar ('\n');
     //putchar ('|');
@@ -499,13 +499,13 @@ inline void TablePrint (Table* table) {
             cursor = &collission_list[collision_index];
             temp = *cursor;
             ++cursor;
-            //printf ("%user", temp);
+            //printf ("%u", temp);
             while (temp != kNoCollidingRecords) {
                 temp = *cursor;
                 ++cursor;
                 if (temp == kNoCollidingRecords)
                     break;
-                //printf (", %user", temp);
+                //printf (", %u", temp);
             }
         }
 

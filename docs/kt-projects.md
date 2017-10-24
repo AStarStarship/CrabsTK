@@ -39,3 +39,16 @@ Users can copy and paste Unicode text symbols such as Greek letters using a conv
 ## vii. Task Timer & Analysis Tools
 
 User can set up tasks that they would like to time and set targets for how long they would like to work on tasks. Since the app is in the system tray, the user can do a better job of tracking how much time they are spending doing tasks and chart the time spent over a long period of time. Tools can be set up to remind users that they need to do things. Users can also automatically log the time they have spent on websites such as Facebook. (Maybe we could make a browser plugin.)
+
+## Author
+
+* [Cale McCollough](https://calemccollough.github.io) <[cale.mccollough@gmail.com](mailto:cale.mccollough@gmail.com)>
+
+## License
+
+Copyright 2017 (C) [Cale McCollough](mailto:calemccollough@gmail.com) and contributors. All rights reserved (R).
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License [here](http://www.apache.org/licenses/LICENSE-2.0).
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+

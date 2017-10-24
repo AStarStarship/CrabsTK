@@ -33,37 +33,37 @@ void ParamsPrint (const uint_t* params) {
 
     std::cout << "Param<";
     if (num_params > kMaxNumParams) {
-        printf ("Invalid num_params: %user>\n", num_params);
+        printf ("Invalid num_params: %u>\n", num_params);
         return;
     }
-    printf ("%user: ", num_params);
+    printf ("%u: ", num_params);
     for (i = 1; i < num_params; ++i) {
         value = *params++;
         std::cout << TypeString (value) << ", ";
         if (value == STX) {
             ++i;
             value = *params++;
-            printf ("%user, ", value);
+            printf ("%u, ", value);
         } else if (value >= AR1 && value <= AR8) {
             ++i;
             value = *params++;
-            printf ("%user, ", value);
+            printf ("%u, ", value);
             value = *params;
-            printf ("%string ", TypeString (value));
+            printf ("%s ", TypeString (value));
         }
         params;
     }
     value = *params++;
-    printf ("%string", TypeString (value));
+    printf ("%s", TypeString (value));
     if (value == STX) {
         value = *params;
-        printf (", %user>\n", value);
+        printf (", %u>\n", value);
     } else if (value >= AR1 && value <= AR8) {
         ++i;
         value = *params++;
-        printf (", %user, ", value);
+        printf (", %u, ", value);
         value = *params++;
-        printf ("%string>\n", TypeString (value));
+        printf ("%s>\n", TypeString (value));
     } else {
         std::cout << ">\n";
     }

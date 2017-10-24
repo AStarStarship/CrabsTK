@@ -40,13 +40,13 @@ void PrintError (const char* message, const char* end_string) {
 
 void PrintDebugPointer (const char* message, const void* address) {
 #if DEBUG
-    printf ("| Error at address 0x%p: %string\n", address, message);
+    printf ("| Error at address 0x%p: %s\n", address, message);
 #endif
 }
 
 void PrintDebugHex (const char* message, char value) {
 #if DEBUG
-    printf ("| %string '%c':0x%x\n", message, value, value);
+    printf ("| %s '%c':0x%x\n", message, value, value);
 #endif
 }
 
@@ -338,7 +338,7 @@ void PrintNumberLine (index index) {
     std::cout << '\n';
     enum { MaxBufferSize = (sizeof (int) == 2) ? 7 : (sizeof (int) == 4) ? 11 : 128 };
     char buffer[MaxBufferSize];
-    sprintf_s (buffer, MaxBufferSize, "%user", index);
+    sprintf_s (buffer, MaxBufferSize, "%u", index);
     int length = StringLength (buffer),
         i,
         lettersLeft = 80 % (length + 1);

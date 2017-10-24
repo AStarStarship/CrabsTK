@@ -1,6 +1,6 @@
 /** kabuki::script
     @version 0.x
-    @file    ~/script/include/Source/ChineseRoom/a.h
+    @file    ~/source/kabuki/script/include/a.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 

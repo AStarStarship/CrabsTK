@@ -19,6 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="aiml\include\agent.h" />
+    <ClInclude Include="data\include\array.h" />
+    <ClInclude Include="data\include\btree.h" />
+    <ClInclude Include="data\include\btree_node.h" />
+    <ClInclude Include="data\include\collection.h" />
+    <ClInclude Include="data\include\iIterable.h" />
+    <ClInclude Include="data\include\iIterator.h" />
+    <ClInclude Include="data\include\lllist.h" />
     <ClInclude Include="script\include\a.h" />
     <ClInclude Include="script\include\address.h" />
     <ClInclude Include="script\include\args.h" />
@@ -57,9 +65,15 @@
     <ClInclude Include="script\include\wall.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="data\include\ReadMe.md" />
     <None Include="script\include\script_module.h.in" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="data\impl\data_btree.cc" />
+    <ClCompile Include="data\impl\data_btree_node.cc" />
+    <ClCompile Include="data\impl\data_dlnode.cc" />
+    <ClCompile Include="data\impl\data_linked_list.cc" />
+    <ClCompile Include="data\impl\data_lllist_node.cc" />
     <ClCompile Include="script\impl\script_address.cc" />
     <ClCompile Include="script\impl\script_args.cc" />
     <ClCompile Include="script\impl\script_bin.cc" />
@@ -155,7 +169,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Workspace\kabuki-toolkit\source\kabuki;..\script\include\;$(IncludePath)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Workspace\kabuki-toolkit\source\kabuki;$(IncludePath)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>

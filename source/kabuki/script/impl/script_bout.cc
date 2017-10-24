@@ -133,7 +133,7 @@ void BoutPrint (Bout* bout) {
         return;
     }
     uint_t size = bout->size;
-    printf ("| Bout 0x%p: size: %user, start: %user, stop: %user, read: %user\n", bout, size,
+    printf ("| Bout 0x%p: size: %u, start: %u, stop: %u, read: %u\n", bout, size,
         bout->start, bout->stop, bout->read);
     PrintMemory (&bout->buffer, size);
 }
@@ -206,7 +206,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
         type = *param;
         ++param;
 //#if DEBUG_SCRIPT
-//        printf ("\n| %i:%user:%string start: %user, stop: %user hash: ", index, type, 
+//        printf ("\n| %i:%u:%s start: %u, stop: %u hash: ", index, type, 
 //                TypeString (type), Diff (begin, start), Diff (begin, stop));
 //#endif
         switch (type) {
@@ -223,13 +223,13 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 ++param;
 
                 //strings = reinterpret_cast<const byte**> (args);
-                //printf ("\ntestStrings at after: 0x%p\nstring1: %string\n"
-                //        "string2: %string\n", args, strings[0], strings[1]);
+                //printf ("\ntestStrings at after: 0x%p\nstring1: %s\n"
+                //        "string2: %s\n", args, strings[0], strings[1]);
 
                 // Load the source data pointer and increment args.fs
                 ui1_ptr = reinterpret_cast<const byte*> (args[index]);
 
-                //printf ("Before trying to print 0x%p: %string\n", ui1_ptr, ui1_ptr);
+                //printf ("Before trying to print 0x%p: %s\n", ui1_ptr, ui1_ptr);
                 //print ();
                 //printf ("\nWriting chars: ");
 
@@ -609,7 +609,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 length = *param++;
                 array_type = *param++;
                 length *= SizeOf (array_type); //< Calculate length of array.
-                //printf ("\nlength: %user\n", length);
+                //printf ("\nlength: %u\n", length);
                 goto WriteBlock;
 #else
                 goto TxInvalidType;

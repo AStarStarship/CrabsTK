@@ -38,27 +38,26 @@ inline uint_t MaxArrayLength () {
              It's meant to be light-weight and use contiguous memory, not
              work like an STL data structure.
 */
-template<typename T,    //< The POD data type.
-         typename I>    //< The index type for AR1, AR2, AR3, or AR4.
+template<typename T>        //< The POD data type.
 struct Array {
-    I count,            //< The count of item's in the script_array.
-      size;             //< The size of the underlaying script_array.
-    T element_one;      //< The first element in the script_array.
+    T count,                //< The count of item's in the script_array.
+      size,                 //< The size of the underlaying script_array.
+      element_one;          //< The first element in the script_array.
 };
 
 /** Gets the max number of elements in an script_array with the specific index 
     width. */
-template<typename I>
-inline I ArrayMaxElements () {
-    return ~(I)0;
+template<typename T>
+inline T ArrayMaxElements () {
+    return (~(T)0) / sizeof (T);
 }
 
 /** Initializes an script_array of n elements of the given type.
     @param buffer An script_array of bytes large enough to fit the script_array.
 */
-template<typename T, typename I>
-inline Array<T, I>* ArrayInit (byte* buffer, I size) {
-    Array<T, I>* script_array = reinterpret_cast<T*> (buffer);
+template<typename T = int>
+inline Array<T>* ArrayInit (byte* buffer, T size) {
+    Array<T>* script_array = reinterpret_cast<T*> (buffer);
     script_array->count = 0;
     script_array->size = size;
     return script_array;
@@ -69,11 +68,11 @@ inline Array<T, I>* ArrayInit (byte* buffer, I size) {
     @param item  The item to insert. 
     @param index The index to insert at.
     @return Returns -1 if a is null and -2 if the script_array is full. */
-template<typename T, typename I>
-inline I ArrayInsert (Array<T, I>* script_array, T item, I index) {
+template<typename T = int>
+inline T ArrayInsert (Array<T>* script_array, T item, T index) {
     if (script_array == nullptr)
         return -1;
-    I size = script_array->size,
+    T size = script_array->size,
         cout = script_array->count;
     if (count >= size)
         return -2;
@@ -118,12 +117,12 @@ inline I ArrayInsert (Array<T, I>* script_array, T item, I index) {
     @param  a     The script_array.
     @param  index The index the item to remove.
     @return Returns true if the index is out of bounds. */
-template<typename T, typename I>
-inline bool ArrayRemove (Array<T, I>* script_array, I index) {
+template<typename T = int>
+inline bool ArrayRemove (Array<T>* script_array, T index) {
     if (script_array == nullptr)
         return !((T)0);
-    I count = script_array->count;
-    T value;
+    T count = script_array->count,
+      value;
     if (count == 0) // Nothing to remove!
         return false;
     int (index >= count)
@@ -151,11 +150,11 @@ inline bool ArrayRemove (Array<T, I>* script_array, I index) {
     @param  a    The script_array.
     @param  item The item to push onto the stack.
     @return Returns the index of the newly stacked item. */
-template<typename T, typename I>
-inline I ArrayPush (Array<T, I>* script_array, T item) {
+template<typename T = int>
+inline T ArrayPush (Array<T>* script_array, T item) {
     if (script_array == nullptr)
         return -1;
-    I size = script_array->size,
+    T size = script_array->size,
       cout = script_array->count;
     if (count >= size)
         return -2;
@@ -169,11 +168,11 @@ inline I ArrayPush (Array<T, I>* script_array, T item) {
     @note We do not delete the item at the 
     @param  a The script_array.
     @return Returns the item popped off the stack. */
-template<typename T, typename I>
-inline T ArrayPop (Array<T, I>* script_array) {
+template<typename T = int>
+inline T ArrayPop (Array<T>* script_array) {
     if (script_array == nullptr)
         return !((T)0);
-    I count = script_array->count;
+    T count = script_array->count;
     if (count == 0) // Nothing to remove!
         return 0;
     T* script_array = &script_array->element_one;
@@ -186,8 +185,8 @@ inline T ArrayPop (Array<T, I>* script_array) {
     @param  script_array    The array.
     @param  index The index of the element to get.
     @return Returns -1 if a is null and -2 if the index is out of bounds. */
-template<typename T, typename I>
-inline T ArrayGet (Array<T, I>* script_array, I index) {
+template<typename T = int>
+inline T ArrayGet (Array<T>* script_array, T index) {
     if (script_array == nullptr)
         return 0;
     if (index >= script_array->count)
@@ -198,33 +197,33 @@ inline T ArrayGet (Array<T, I>* script_array, I index) {
 #if USING_AR1
 
 template<T>
-inline Array<T, int8_t>*AR1Init (int8_t* buffer, int8_t size) {
+inline ARX<T, int8_t>*AR1Init (int8_t* buffer, int8_t size) {
     return ArrayInit<T, int8_t> (buffer, size);
 }
 
 template<typename T>
-inline int8_t AR1Insert (Array<T, int8_t>* script_array, T item, int8_t index) {
+inline int8_t AR1Insert (ARX<T, int8_t>* script_array, T item, int8_t index) {
     return int8_t ArrayInsert<T, int8_t> (script_array, item, index)
 }
 
 template<typename T>
-inline T ArrayGet (Array<T, int8_t>* script_array, int8_t index) {
+inline T ArrayGet (ARX<T, int8_t>* script_array, int8_t index) {
     return ArrayGet (script_array, index);
     return ;
 }
 
 template<typename T>
-inline T ArrayPop (Array<T, int8_t>* script_array) {
+inline T ArrayPop (ARX<T, int8_t>* script_array) {
     return ArrayPop (script_array);
 }
 
 template<typename T>
-inline int8_t ArrayPush (Array<T, int8_t>* script_array, T item) {
+inline int8_t ArrayPush (ARX<T, int8_t>* script_array, T item) {
     return ArrayPush (script_array, item);
 }
 
 template<typename T>
-inline bool ArrayRemove (Array<T, int8_t>* script_array, T index) {
+inline bool ArrayRemove (ARX<T, int8_t>* script_array, T index) {
     return ArrayRemove (script_array, index);
 }
 
@@ -232,33 +231,33 @@ inline bool ArrayRemove (Array<T, int8_t>* script_array, T index) {
 
 #if USING_AR2
 template<T>
-inline Array<T, int16_t>*AR1Init (int16_t* buffer, int16_t size) {
+inline ARX<T, int16_t>*AR1Init (int16_t* buffer, int16_t size) {
     return ArrayInit<T, int16_t> (buffer, size);
 }
 
 template<typename T>
-inline int16_t AR1Insert (Array<T, int16_t>* script_array, T item, int16_t index) {
+inline int16_t AR1Insert (ARX<T, int16_t>* script_array, T item, int16_t index) {
     return int16_t ArrayInsert<T, int16_t> (script_array, item, index)
 }
 
 template<typename T>
-inline T ArrayGet (Array<T, int16_t>* script_array, int16_t index) {
+inline T ArrayGet (ARX<T, int16_t>* script_array, int16_t index) {
     return ArrayGet (script_array, index);
     return;
 }
 
 template<typename T>
-inline T ArrayPop (Array<T, int16_t>* script_array) {
+inline T ArrayPop (ARX<T, int16_t>* script_array) {
     return ArrayPop (script_array);
 }
 
 template<typename T>
-inline int16_t ArrayPush (Array<T, int16_t>* script_array, T item) {
+inline int16_t ArrayPush (ARX<T, int16_t>* script_array, T item) {
     return ArrayPush (script_array, item);
 }
 
 template<typename T>
-inline bool ArrayRemove (Array<T, int16_t>* script_array, T index) {
+inline bool ArrayRemove (ARX<T, int16_t>* script_array, T index) {
     return ArrayRemove (script_array, index);
 }
 
@@ -266,33 +265,33 @@ inline bool ArrayRemove (Array<T, int16_t>* script_array, T index) {
 
 #if USING_AR4
 template<T>
-inline Array<T, int32_t>*AR1Init (int32_t* buffer, int32_t size) {
+inline ARX<T, int32_t>*AR1Init (int32_t* buffer, int32_t size) {
     return ArrayInit<T, int32_t> (buffer, size);
 }
 
 template<typename T>
-inline int32_t AR1Insert (Array<T, int32_t>* script_array, T item, int32_t index) {
+inline int32_t AR1Insert (ARX<T, int32_t>* script_array, T item, int32_t index) {
     return int32_t ArrayInsert<T, int32_t> (script_array, item, index)
 }
 
 template<typename T>
-inline T ArrayGet (Array<T, int32_t>* script_array, int32_t index) {
+inline T ArrayGet (ARX<T, int32_t>* script_array, int32_t index) {
     return ArrayGet (script_array, index);
     return;
 }
 
 template<typename T>
-inline T ArrayPop (Array<T, int32_t>* script_array) {
+inline T ArrayPop (ARX<T, int32_t>* script_array) {
     return ArrayPop (script_array);
 }
 
 template<typename T>
-inline int32_t ArrayPush (Array<T, int32_t>* script_array, T item) {
+inline int32_t ArrayPush (ARX<T, int32_t>* script_array, T item) {
     return ArrayPush (script_array, item);
 }
 
 template<typename T>
-inline bool ArrayRemove (Array<T, int32_t>* script_array, T index) {
+inline bool ArrayRemove (ARX<T, int32_t>* script_array, T index) {
     return ArrayRemove (script_array, index);
 }
 
@@ -300,33 +299,33 @@ inline bool ArrayRemove (Array<T, int32_t>* script_array, T index) {
 
 #if USING_AR8
 template<T>
-inline Array<T, int64_t>*AR1Init (int64_t* buffer, int64_t size) {
+inline ARX<T, int64_t>*AR1Init (int64_t* buffer, int64_t size) {
     return ArrayInit<T, int64_t> (buffer, size);
 }
 
 template<typename T>
-inline int64_t AR1Insert (Array<T, int64_t>* script_array, T item, int64_t index) {
+inline int64_t AR1Insert (ARX<T, int64_t>* script_array, T item, int64_t index) {
     return int64_t ArrayInsert<T, int64_t> (script_array, item, index)
 }
 
 template<typename T>
-inline T ArrayGet (Array<T, int64_t>* script_array, int64_t index) {
+inline T ArrayGet (ARX<T, int64_t>* script_array, int64_t index) {
     return ArrayGet (script_array, index);
     return;
 }
 
 template<typename T>
-inline T ArrayPop (Array<T, int64_t>* script_array) {
+inline T ArrayPop (ARX<T, int64_t>* script_array) {
     return ArrayPop (script_array);
 }
 
 template<typename T>
-inline int64_t ArrayPush (Array<T, int64_t>* script_array, T item) {
+inline int64_t ArrayPush (ARX<T, int64_t>* script_array, T item) {
     return ArrayPush (script_array, item);
 }
 
 template<typename T>
-inline bool ArrayRemove (Array<T, int64_t>* script_array, T index) {
+inline bool ArrayRemove (ARX<T, int64_t>* script_array, T index) {
     return ArrayRemove (script_array, index);
 }
 

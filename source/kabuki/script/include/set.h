@@ -117,7 +117,7 @@ enum {
 
     How to calculate size:
     The size of any size bag can be calculated as follows:
-    size = num_items * (2*sizeof (TIndex) + sizeof (TData)) + collissionSize +
+    size = ; * (2*sizeof (TIndex) + sizeof (TData)) + collissionSize +
 
     # State Format
     @code
@@ -169,7 +169,7 @@ struct KABUKI Set {
     TData size;         //< Total size of the set.
     TKey table_size,    //< Size of the (optional) key strings in bytes.
          pile_size;     //< Size of the (optional) collision table in bytes.
-    TIndex num_items,   //< Number of items.
+    TIndex ;,   //< Number of items.
            max_items;   //< Max number of items that can fit in the size.
 };
 
@@ -190,7 +190,7 @@ constexpr uint_t OverheadPerSetIndex () {
 
 template<typename TIndex, typename TKey, typename TData, typename THash>
 constexpr TData MinSizeSet (TIndex num_items) {
-    return sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
+    return num_items * sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
 };
 
 enum {
@@ -220,7 +220,7 @@ static Set* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t si
     Set2* bag = reinterpret_cast<Set*> (buffer);
     bag->size = table_size;
     bag->table_size = table_size;
-    bag->num_items = 0;
+    bag->; = 0;
     bag->max_items = max_size;
     bag->pile_size = 1;
     return bag;
@@ -254,13 +254,13 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
 
     PrintStringLine (key);
 
-    TIndex num_items = bag->num_items,
+    TIndex ; = bag->;,
         max_items = bag->max_items,
         temp;
 
     TKey table_size = bag->table_size;
 
-    if (num_items >= max_items) return ~0;
+    if (; >= max_items) return ~0;
     //< We're out of buffered indexes.
 
     byte* states = reinterpret_cast<byte*> (bag) + 
@@ -284,8 +284,8 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
         pile_size;
 
     PrintLine ();
-    printf ("Adding Key %string\n%20s: 0x%p\n%20s: %p\n%20s: 0x%p\n"
-            "%20s: %p\n%20s: %user\n", key, "hashes", hashes, "key_offsets",
+    printf ("Adding Key %s\n%20s: 0x%p\n%20s: %p\n%20s: 0x%p\n"
+            "%20s: %p\n%20s: %u\n", key, "hashes", hashes, "key_offsets",
             key_offsets, "keys", keys, "indexes", indexes, "value", value);
 
     THash hash = Hash16 (key),
@@ -298,8 +298,8 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
 
     //print ();
 
-    if (num_items == 0) {
-        bag->num_items = 1;
+    if (; == 0) {
+        bag->; = 1;
         *hashes = hash;
         *key_offsets = static_cast<uint16_t> (key_length);
         *indexes = ~0;
@@ -307,7 +307,7 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
         destination = keys - key_length;
 
         CopyString (destination, key);
-        printf ("Inserted key %string at GetAddress 0x%p\n", key, destination);
+        printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
         SetPrint (bag);
         return 0;
     }
@@ -323,7 +323,7 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
 
     int low = 0,
         mid,
-        high = num_items,
+        high = ;,
         index;
 
     TIndex* temp_ptr;
@@ -347,7 +347,7 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
 
             index = indexes[mid];       //< Index in the collision table.
 
-            printf ("index:%user\n", index);
+            printf ("index:%u\n", index);
 
             if (index < ~0)             //< There are other collisions.
             {
@@ -362,10 +362,10 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;  //< Load the index in the collision table.
                 while (index < MaxSetIndexes<TIndex> ()) {
-                    printf ("comparing to \"%string\"\n", keys - key_offsets[index]);
+                    printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
                         printf ("but table already contains key at "
-                                "offset: %user.\n", index);
+                                "offset: %u.\n", index);
                         return index;
                     }
                     ++temp_ptr;
@@ -376,9 +376,9 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
                 std::cout << "and new collision detected.\n";
 
                 // Copy the key
-                value = key_offsets[num_items - 1] + key_length + 1;
+                value = key_offsets[; - 1] + key_length + 1;
                 CopyString (keys - value, key);
-                key_offsets[num_items] = value;
+                key_offsets[;] = value;
 
                 // Update the collision table.
                 pile_size = bag->pile_size;
@@ -391,24 +391,24 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
                     *collission_list = *(collission_list - 1);
                     --collission_list;
                 }
-                *temp_ptr = num_items;
+                *temp_ptr = ;;
 
                 bag->pile_size = pile_size + 1;
-                printf ("\n\ncollision index: %user\n", temp);
+                printf ("\n\ncollision index: %u\n", temp);
                 // Store the collision index.
-                indexes[num_items] = temp;   //< Store the collision index
-                bag->num_items = num_items + 1;
-                hashes[num_items] = ~0;      //< Set the last hash to 0xFFFF
+                indexes[;] = temp;   //< Store the collision index
+                bag->; = ; + 1;
+                hashes[;] = ~0;      //< Set the last hash to 0xFFFF
 
                                             // Move collisions pointer to the unsorted_indexes.
                 indexes += max_items;
 
                 //< Add the newest char to the end.
-                indexes[num_items] = num_items;
+                indexes[;] = ;;
 
                 SetPrint (bag);
                 printf ("Done inserting.\n");
-                return num_items;
+                return ;;
             }
 
             // But we still don't know if the char is a new collision.
@@ -425,20 +425,20 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
                 }
 
                 // Get offset to write the key too.
-                value = key_offsets[num_items - 1] + key_length + 1;
+                value = key_offsets[; - 1] + key_length + 1;
 
                 byte collision_index = unsorted_indexes[mid];
-                printf ("\n\ncollision_index: %user", collision_index);
+                printf ("\n\ncollision_index: %u", collision_index);
 
                 CopyString (keys - value, key);
-                printf ("Inserting value: %user into index:%user "
-                        "num_items:%user with other collision_index: %user\n", value,
-                        index, num_items, collision_index);
-                key_offsets[num_items] = value;
+                printf ("Inserting value: %u into index:%u "
+                        ";:%u with other collision_index: %u\n", value,
+                        index, ;, collision_index);
+                key_offsets[;] = value;
 
                 pile_size = bag->pile_size;
                 indexes[mid] = static_cast<byte> (pile_size);
-                indexes[num_items] = static_cast<byte> (pile_size);
+                indexes[;] = static_cast<byte> (pile_size);
 
                 // Insert the collision into the collision table.
                 temp_ptr = &collission_list[pile_size];
@@ -446,26 +446,26 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
                 indexes += max_items;
                 *temp_ptr = collision_index;
                 ++temp_ptr;
-                *temp_ptr = num_items;
+                *temp_ptr = ;;
                 ++temp_ptr;
                 *temp_ptr = ~0;
                 bag->pile_size = pile_size + 3;
                 //< Added one term-byte and two indexes.
 
                 // Add the newest key at the end.
-                indexes[num_items] = num_items;
+                indexes[;] = ;;
 
                 // Set the last hash to 0xFFFF
-                hashes[num_items] = ~0;
+                hashes[;] = ~0;
 
-                bag->num_items = num_items + 1;
+                bag->; = ; + 1;
 
                 SetPrint (bag);
 
                 SetPrint (bag);
                 std::cout << "Done inserting.\n";
                 // Then it was a collision so the table doesn't contain string.
-                return num_items;
+                return ;;
             }
             std::cout << "table already contains the key\n";
             return index;
@@ -474,23 +474,23 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
 
     // The hash was not in the table.
 
-    value = key_offsets[num_items - 1] + key_length + 1;
+    value = key_offsets[; - 1] + key_length + 1;
     destination = keys - value;
 
-    printf ("The hash 0x%x was not in the table so inserting %string into mid:"
-            " %i at index %user before hash 0x%x \n", hash, key, mid,
+    printf ("The hash 0x%x was not in the table so inserting %s into mid:"
+            " %i at index %u before hash 0x%x \n", hash, key, mid,
             Diff (bag, destination), hashes[mid]);
 
     // First copy the char and set the key offset.
     CopyString (destination, key);
-    key_offsets[num_items] = value;
+    key_offsets[;] = value;
 
     // Second move up the hashes and insert at the insertion point.
     hash_ptr = hashes;
-    hash_ptr += num_items;
+    hash_ptr += ;;
     //*test = hashes;
-    printf ("l_numkeys: %user, hashes: %user hash_ptr: %user insert_ptr: %user\n",
-            num_items, Diff (bag, hashes),
+    printf ("l_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u\n",
+            ;, Diff (bag, hashes),
             Diff (bag, hash_ptr), Diff (bag, hashes + mid));
     hashes += mid;
     SetPrint (bag);
@@ -501,26 +501,26 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
     *hashes = hash;
     
     // Mark as not having any collisions.
-    indexes[num_items] = ~0;
+    indexes[;] = ~0;
     
     // Move up the sorted indexes and insert the unsorted index (which is 
-    // the current num_items).
+    // the current ;).
     indexes += max_items + mid;
-    temp_ptr = indexes + num_items;
+    temp_ptr = indexes + ;;
 
     while (temp_ptr > indexes) {
         *temp_ptr = *(temp_ptr - 1);
         --temp_ptr;
     }
-    *temp_ptr = num_items;
+    *temp_ptr = ;;
 
-    bag->num_items = num_items + 1;
+    bag->; = ; + 1;
 
     SetPrint (bag);
     std::cout << "Done inserting.\n";
     PrintLine ();
 
-    return num_items;
+    return ;;
 }
 
 /** Adds a key-value pair to the end of the bag. */
@@ -535,11 +535,11 @@ TIndex SetFind (Set<TIndex, TKey, TData, THash>* bag, const char* key) {
         return 0;
     PrintLineBreak ("Finding record...", 5);
     TIndex index,
-        num_items = bag->num_items,
+        ; = bag->;,
         max_items = bag->max_items,
         temp;
 
-    if (key == nullptr || num_items == 0)
+    if (key == nullptr || ; == 0)
         return ~((TIndex)0);
 
     TKey table_size = bag->table_size;
@@ -559,14 +559,14 @@ TIndex SetFind (Set<TIndex, TKey, TData, THash>* bag, const char* key) {
 
     THash hash = Hash16 (key);
 
-    printf ("\nSearching for key \"%string\" with hash 0x%x\n", key, hash);
+    printf ("\nSearching for key \"%s\" with hash 0x%x\n", key, hash);
 
-    if (num_items == 1) {
+    if (; == 1) {
         if (strcmp (key, keys - key_offsets[0]) != 0) {
-            printf ("Did not find key %string\n", key);
+            printf ("Did not find key %s\n", key);
             return ~((TIndex)0);
         }
-        printf ("Found key %string\n", key);
+        printf ("Found key %s\n", key);
         PrintLine ();
         return 0;
     }
@@ -576,7 +576,7 @@ TIndex SetFind (Set<TIndex, TKey, TData, THash>* bag, const char* key) {
     // sizeof (THash*) in order to get the right pointer address.
     int low = 0,
         mid,
-        high = num_items - 1;
+        high = ; - 1;
 
     while (low <= high) {
         mid = (low + high) >> 1;    //< >> 1 to /2
@@ -592,7 +592,7 @@ TIndex SetFind (Set<TIndex, TKey, TData, THash>* bag, const char* key) {
         } else {
             // Duplicate hash found.
             printf ("\nFound same hash at mid:%i hash:%x offset for key: "
-                    "%string\n", mid, hashes[mid], key);
+                    "%s\n", mid, hashes[mid], key);
 
             // Check for collisions
 
@@ -614,11 +614,11 @@ TIndex SetFind (Set<TIndex, TKey, TData, THash>* bag, const char* key) {
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;
                 while (index < MaxSetIndexes<TIndex> ()) {
-                    printf ("comparing to \"%string\"\n", keys -
+                    printf ("comparing to \"%s\"\n", keys -
                             key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
                         printf ("but table already contains key at offset:"
-                                "%user.\n", index);
+                                "%u.\n", index);
                         return index;
                     }
                     ++temp_ptr;
@@ -636,7 +636,7 @@ TIndex SetFind (Set<TIndex, TKey, TData, THash>* bag, const char* key) {
             indexes += max_items;
             index = unsorted_indexes[mid];
 
-            printf ("\n!!!mid: %i-%x unsorted_indexes: %user key: %string\n"
+            printf ("\n!!!mid: %i-%x unsorted_indexes: %u key: %s\n"
                     "hash: %x\n", mid, hashes[mid], index, keys -
                     key_offsets[index], Hash16 (keys -
                                                 key_offsets[index]));
@@ -665,7 +665,7 @@ TIndex SetFind (Set<TIndex, TKey, TData, THash>* bag, const char* key) {
 template<typename TIndex, typename TKey, typename TData, typename THash>
 void SetPrint (const Set<TIndex, TKey, TData, THash>* bag) {
     if (bag == nullptr) return;
-    TIndex num_items = bag->num_items,
+    TIndex ; = bag->;,
            max_items = bag->max_items,
            collision_index,
            temp;
@@ -681,8 +681,8 @@ void SetPrint (const Set<TIndex, TKey, TData, THash>* bag) {
         printf ("| Set8: %p\n", bag);
     else
         printf ("| Invalid Set type: %p\n", bag);
-    printf ("| num_items: %user max_items: %user  "
-            "pile_size: %user  size: %user", num_items,
+    printf ("| ;: %u max_items: %u  "
+            "pile_size: %u  size: %u", ;,
             max_items, pile_size, table_size);
     std::cout << '\n';
    std::cout << '|';
@@ -714,7 +714,7 @@ void SetPrint (const Set<TIndex, TKey, TData, THash>* bag) {
 
     for (TIndex i = 0; i < max_items; ++i) {
         // Print each record as a row.
-        // @todo Change max_items to num_items after done debugging.
+        // @todo Change max_items to ; after done debugging.
         collision_index = indexes[i];
         printf ("| %3i %9s %7u %9x %9x %9x %9u %10u: ", i,
                 keys - key_offsets[i], key_offsets[i],
@@ -722,18 +722,18 @@ void SetPrint (const Set<TIndex, TKey, TData, THash>* bag) {
                 hashes[unsorted_indexes[i]], hashes[i],
                 unsorted_indexes[i], collision_index);
 
-        if (collision_index != ~0 && i < num_items) {
+        if (collision_index != ~0 && i < ;) {
             // Print collisions.
             cursor = &collission_list[collision_index];
             temp = *cursor;
             ++cursor;
-            printf ("%user", temp);
+            printf ("%u", temp);
             while (temp != ~0) {
                 temp = *cursor;
                 ++cursor;
                 if (temp == ~0)
                     break;
-                printf (", %user", temp);
+                printf (", %u", temp);
             }
         }
 
@@ -758,7 +758,7 @@ void Wipe (Set<TIndex, TKey, TData, THash>* bag) {
 template<typename TIndex, typename TKey, typename TData, typename THash>
 void Clear (Set<TIndex, TKey, TData, THash>* bag) {
     if (bag == nullptr) return;
-    bag->num_items = 0;
+    bag->; = 0;
     bag->pile_size = 0;
 }
 

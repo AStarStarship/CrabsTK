@@ -70,7 +70,7 @@ void WallDelete (Wall* wall, index index) {
 
 void WallPrint (Wall* wall) {
     if (wall == nullptr) return;
-    printf ("\nDoor:\nis_dynamic %string\nnum_doors: %user\nmax_num_doors: %user\n", 
+    printf ("\nDoor:\nis_dynamic %s\nnum_doors: %u\nmax_num_doors: %u\n", 
             wall->is_dynamic ? "true" : "false", wall->num_doors, wall->max_num_doors);
 }
 

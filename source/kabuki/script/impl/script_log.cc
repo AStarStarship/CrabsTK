@@ -35,7 +35,7 @@ Log& operator+ (Log& log, int8_t value) {
 Log& operator+ (Log& log, uint8_t value) {
     void* args[2];
     char buffer[4];
-    sprintf_s (buffer, 4, "%user", value);
+    sprintf_s (buffer, 4, "%u", value);
     BoutWrite (log.bout, Params<2, SOH, STX> (), Args (args, Address<'?'> (),
                                                    buffer));
     return log;
@@ -53,7 +53,7 @@ Log& operator+ (Log& log, int16_t value) {
 Log& operator+ (Log& log, uint16_t value) {
     void* args[2];
     char buffer[6];
-    sprintf_s (buffer, 6, "%user", value);
+    sprintf_s (buffer, 6, "%u", value);
     BoutWrite (log.bout, Params<2, SOH, STX> (), Args (args, Address<'?'> (),
                                                    buffer));
     return log;
@@ -71,7 +71,7 @@ Log& operator+ (Log& log, int32_t value) {
 Log& operator+ (Log& log, uint32_t value) {
     void* args[2];
     char buffer[11];
-    sprintf_s (buffer, 11, "%user", value);
+    sprintf_s (buffer, 11, "%u", value);
     BoutWrite (log.bout, Params<2, SOH, STX> (), Args (args, Address<'?'> (),
                                                    buffer));
     return log;

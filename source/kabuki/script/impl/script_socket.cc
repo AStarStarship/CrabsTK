@@ -86,7 +86,7 @@ void SocketDeleteSlot (Socket* socket, index index) {
 
 void SocketPrint (Socket* socket) {
     if (socket == nullptr) return;
-    printf ("\nSlot:\nis_dynamic %string socket\nnum_slots: %user\nmax_num_slots: %user\n",
+    printf ("\nSlot:\nis_dynamic %s socket\nnum_slots: %u\nmax_num_slots: %u\n",
         socket->is_dynamic? "true" : "false", socket->num_slots, socket->max_num_slots);
 }
 

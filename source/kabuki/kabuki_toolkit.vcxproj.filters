@@ -81,6 +81,9 @@
     <Filter Include="kabuki\ws">
       <UniqueIdentifier>{f74be4e0-3678-4673-8ac6-c7e66435a828}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kabuki\aiml">
+      <UniqueIdentifier>{5b844195-171c-4caf-99a6-af067a9a8dde}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="script\include\bout.h">
@@ -191,10 +194,37 @@
     <ClInclude Include="script\include\bin.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
+    <ClInclude Include="data\include\collection.h">
+      <Filter>kabuki\data</Filter>
+    </ClInclude>
+    <ClInclude Include="data\include\iIterable.h">
+      <Filter>kabuki\data</Filter>
+    </ClInclude>
+    <ClInclude Include="data\include\iIterator.h">
+      <Filter>kabuki\data</Filter>
+    </ClInclude>
+    <ClInclude Include="data\include\lllist.h">
+      <Filter>kabuki\data</Filter>
+    </ClInclude>
+    <ClInclude Include="data\include\array.h">
+      <Filter>kabuki\data</Filter>
+    </ClInclude>
+    <ClInclude Include="data\include\btree.h">
+      <Filter>kabuki\data</Filter>
+    </ClInclude>
+    <ClInclude Include="data\include\btree_node.h">
+      <Filter>kabuki\data</Filter>
+    </ClInclude>
+    <ClInclude Include="aiml\include\agent.h">
+      <Filter>kabuki\aiml</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="script\include\script_module.h.in">
       <Filter>kabuki\script</Filter>
+    </None>
+    <None Include="data\include\ReadMe.md">
+      <Filter>kabuki\data</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -257,6 +287,21 @@
     </ClCompile>
     <ClCompile Include="script\impl\script_bin.cc">
       <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="data\impl\data_dlnode.cc">
+      <Filter>kabuki\data</Filter>
+    </ClCompile>
+    <ClCompile Include="data\impl\data_linked_list.cc">
+      <Filter>kabuki\data</Filter>
+    </ClCompile>
+    <ClCompile Include="data\impl\data_lllist_node.cc">
+      <Filter>kabuki\data</Filter>
+    </ClCompile>
+    <ClCompile Include="data\impl\data_btree.cc">
+      <Filter>kabuki\data</Filter>
+    </ClCompile>
+    <ClCompile Include="data\impl\data_btree_node.cc">
+      <Filter>kabuki\data</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

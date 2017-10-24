@@ -2,6 +2,10 @@
 
 This folder contains the Kabuki Toolkit source code, and a Visual Studio 2017 Project, Eclipse Project, and CMake project all in one folder. When including Kabuki Toolkit in your projects, you don't need to include any Visual Studio projects, just the .lib, .a, .dll, etc file and #include the header file.
 
+## Author
+
+* [Cale McCollough](https://calemccollough.github.io) <[cale.mccollough@gmail.com](mailto:cale.mccollough@gmail.com)>
+
 ## License
 
 Copyright 2017 (C) [Cale McCollough](mailto:calemccollough@gmail.com) and contributors. All rights reserved (R).

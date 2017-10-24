@@ -159,7 +159,7 @@ void BinPrint (Bin* bin) {
         return;
     }
     uint_t size = bin->size;
-    printf ("| Bin 0x%p: size: %user, start: %user, stop: %user, read: %user\n", bin, size,
+    printf ("| Bin 0x%p: size: %u, start: %u, stop: %u, read: %u\n", bin, size,
         bin->start, bin->stop, bin->read);
     PrintMemory (&bin->buffer, size);
 }
@@ -215,8 +215,8 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
     //#if DEBUG_SCRIPT
     //    //printf ("\n\n| Reading: ");
     //   ParamsPrint (params);
-    //    //printf ("| begin: 0x%p start : %user stop : %user end : %user "
-    //            "length: %user ", begin, Diff (begin, start), 
+    //    //printf ("| begin: 0x%p start : %u stop : %u end : %u "
+    //            "length: %u ", begin, Diff (begin, start), 
     //            Diff (begin, stop), Diff (begin, end), length);
     //#endif
     // When we scan, we are reading from the beginning of the Slot buffer.
@@ -226,7 +226,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
          ++param;
          start += TypeAlign (start, type);
 //#if DEBUG_SCRIPT
-//        //printf ("\n| Index %2u: %string  start: %user, stop: %user hash: ", index,  
+//        //printf ("\n| Index %2u: %s  start: %u, stop: %u hash: ", index,  
 //                TypeString (type), Diff (begin, start), Diff (begin, stop));
 //#endif
 
@@ -239,7 +239,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
               count = *param;
               ++param;
 //#if DEBUG_SCRIPT
-//              //printf ("\n|           Reading char with max length %user: ", count);
+//              //printf ("\n|           Reading char with max length %u: ", count);
 //#endif
             // Load next pointer and increment args.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
@@ -764,7 +764,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             BoutInvalidType:
             {
 #if DEBUG
-                //printf ("\n!!!Read invalid type %user\n", type);
+                //printf ("\n!!!Read invalid type %u\n", type);
 #endif
                 return BinResult (bin, Bin::InvalidTypeError, params, index,
                                   start);

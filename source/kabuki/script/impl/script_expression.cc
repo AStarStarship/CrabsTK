@@ -110,10 +110,10 @@ Expression* ExpressionInit (byte* buffer, uint_t buffer_size,
     expr->operand = nullptr;
 #if DEBUG_SCRIPT
     printf ("\nInitializing Stack:\n"
-        "sizeof (Stack): %user\n"
-        "(stack_count * (2 * sizeof (void*))): %user\n"
-        "stack_count: %user buffer_size: %user size: %user\n"
-        "!!! stack_count: %user &stack_count: 0x%p !!!\n",
+        "sizeof (Stack): %u\n"
+        "(stack_count * (2 * sizeof (void*))): %u\n"
+        "stack_count: %u buffer_size: %u size: %u\n"
+        "!!! stack_count: %u &stack_count: 0x%p !!!\n",
         sizeof (Expression), (stack_count *
         (2 * sizeof (void*))), stack_count,
         buffer_size, size, stack_count, &stack_count);
@@ -312,7 +312,7 @@ void ExpressionScan (Expression* expr, Portal* input) {
     space  = SlotSpace (start, stop, size);
     length = size - space + 1;
 
-    printf ("\n\n| Scanning address 0x%p:\n| bout_state: %string\n| length: %user\n", start,
+    printf ("\n\n| Scanning address 0x%p:\n| bout_state: %s\n| length: %u\n", start,
         ExpressionStateString ((Expression::State)expr->bout_state), length);
 
     // Manually load first byte:
@@ -713,8 +713,8 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
 #if DEBUG_SCRIPT
     std::cout << "\n\n| Reading Bin: \n";
     //ParamsPrint (params);
-    printf ("| begin: 0x%p start : %user stop : %user end : %user "
-            "length: %user ", begin, Diff (begin, start), 
+    printf ("| begin: 0x%p start : %u stop : %u end : %u "
+            "length: %u ", begin, Diff (begin, start), 
             Diff (begin, stop), Diff (begin, end), length);
 #endif
     // When we scan, we are reading from the beginning of the Bin buffer.
@@ -723,7 +723,7 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
         type = *param;
         ++param;
 #if DEBUG_SCRIPT
-        printf ("\n| index %2u: %string  start: %user, stop: %user hash: ", index,  
+        printf ("\n| index %2u: %s  start: %u, stop: %u hash: ", index,  
                 TypeString (type), Diff (begin, start), Diff (begin, stop));
 #endif
 
@@ -736,7 +736,7 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
               count = *param;
               ++param;
 #if DEBUG_SCRIPT
-              printf ("\n|           Reading char with max length %user: ", count);
+              printf ("\n|           Reading char with max length %u: ", count);
 #endif
             // Load next pointer and increment args.
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
@@ -1069,7 +1069,7 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
           default:
             BoutInvalidType:
             {
-                printf ("\n!!!Read invalid type %user\n", type);
+                printf ("\n!!!Read invalid type %u\n", type);
                 return Result (expr, Expression::ReadInvalidTypeError, params, index, start);
             }
         }
