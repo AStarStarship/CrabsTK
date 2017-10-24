@@ -5,8 +5,8 @@ Please see "~/docs/kabuki-toolkit_diagrams.mdj" for [StarUML](http://staruml.io)
 Documents are split between the Wiki and the ~/docs folder.  Documents that are specific to Toolkit Versions are placed in the ~/docs folder and documents that are independet of version go in the Wiki.
 
 ## Docs
-* [Quick Start Guide](https://github.com/kabuki-project/kabuki/tree/master/docs/quickstart-guide/) - Quickstart guide.
-* [FAQ](https://github.com/kabuki-project/kabuki/tree/master/docs/faq/) - Frequently asked questions
+* [Quick Start Guide](https://github.com/kabuki-starship/kabuki-toolkit/blob/master/docs/quickstart-guide.md) - A short guide to get you up and running.
+* [FAQ](https://github.com/kabuki-starship/kabuki-toolkit/blob/master/docs/faq.md) - Frequently asked questions
 * [Script Protocol RFC](https://github.com/kabuki-starship/kabuki-toolkit/wiki/script-protocol-rfc) - Searle's Chinese Room, Interprocess, and Telemetry Protocol Release for Comment Specification.
 
 ## Author
