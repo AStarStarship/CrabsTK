@@ -6,7 +6,7 @@
 #ifndef KABUKI_AIML_AGENT_H
 #define KABUKI_AIML_AGENT_H
 
-#include "config.h"
+//#include "module_config.h"
 
 namespace kabuki { namespace aiml {
     
@@ -203,7 +203,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 3.18 The iterative deepening search algorithm, which repeatedly applies depthlimited search with increasing limits. It terminates when a solution is found or if the depthlimited search returns failure, meaning that no solution exists.
+/** Figure 3.18 The iterative deepening search algorithm, which repeatedly applies depth-limited search with increasing limits. It terminates when a solution is found or if the depth-limited search returns failure, meaning that no solution exists.
 
     @code
     function ITERATIVE-DEEPENING-SEARCH(problem) returns a solution, or failure
@@ -224,7 +224,7 @@ persistent: rules, a set of condition–action rules
         if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
         successors ←[ ]
         for each action in problem.ACTIONS(node.STATE) do
-        add CHILD-NODE(problem, node, action) intosuccessors
+        add CHILD-NODE(problem, node, action) into successors
         if successors is empty then return failure,∞
         for each s in successors do // update f with value from previous search, if any
         s.f ←max(s.g + s.h, node.f ))
@@ -340,7 +340,7 @@ persistent: rules, a set of condition–action rules
             s, a, the previous state and action, initially null
 
     if GOAL-TEST(s) then return stop
-    if s is a newstate (not in H) then H[s]←h(s)
+    if s is a new state (not in H) then H[s]←h(s)
     if s is not null
         result [s, a]←s
         H[s]← min
@@ -409,7 +409,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-// 6. Contraint Satisfaction Problems
+// 6. Constraint Satisfaction Problems
 
 /** Figure 6.3 The arc-consistency algorithm AC-3. After applying AC-3, either every arc is arc-consistent, or some variable has an empty domain, indicating that the CSP cannot be solved. The name “AC-3” was used by the algorithm’s inventor (Mackworth, 1977) because it’s the third version developed in the paper.
 
@@ -460,7 +460,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 6.8 The MIN-CONFLICTS algorithm for solving CSPs by local search. The initial state may be chosen randomly or by a greedy assignment process that chooses a minimalconflict value for each variable in turn. The CONFLICTS function counts the number of constraints violated by a particular value, given the rest of the current assignment.
+/** Figure 6.8 The MIN-CONFLICTS algorithm for solving CSPs by local search. The initial state may be chosen randomly or by a greedy assignment process that chooses a minimal conflict value for each variable in turn. The CONFLICTS function counts the number of constraints violated by a particular value, given the rest of the current assignment.
 
     @codefunction MIN-CONFLICTS(csp,max steps) returns a solution or failure
     inputs: csp, a constraint satisfaction problem
@@ -646,7 +646,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** Figure 7.20 A hybrid agent program for the wumpusworld. It uses a propositional knowledge base to infer the state of the world, and a combination of problem-solving search and domain-specific code to decide what actions to take.
+/** Figure 7.20 A hybrid agent program for the wumpus world. It uses a propositional knowledge base to infer the state of the world, and a combination of problem-solving search and domain-specific code to decide what actions to take.
 
     @code
     function HYBRID-WUMPUS-AGENT(percept ) returns an action

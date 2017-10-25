@@ -14,6 +14,9 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+
 #ifndef KABUKI_SCRIPT_WALL_H
 #define KABUKI_SCRIPT_WALL_H
 
@@ -46,10 +49,10 @@ KABUKI Door** WallGetDoors (Wall* wall);
 KABUKI int WallAddDoor (Wall* wall, Door* door);
 
 /** Gets the Door from the Door at the given index. */
-KABUKI Door* WallGetDoor (Wall* wall, index index);
+KABUKI Door* WallGetDoor (Wall* wall, int index);
 
 /** Deletes the Door from the Door at the given index. */
-KABUKI void WallDelete (Wall* wall, index index);
+KABUKI void WallDelete (Wall* wall, int index);
 
 /** Prints the given Door to the stdout. */
 KABUKI void WallPrint (Wall* wall);

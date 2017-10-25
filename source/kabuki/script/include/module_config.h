@@ -1,6 +1,6 @@
 /** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/script/include/config.h
+    @file    ~/source/kabuki/script/include/module_config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -15,17 +15,16 @@
 */
 
 #pragma once
-
 #include <stdafx.h>
 
-#ifndef KABUKI_TOOLKIT_CONFIG_H
-#define KABUKI_TOOLKIT_CONFIG_H
+#ifndef SCRIPT_CONFIG_H
+#define SCRIPT_CONFIG_H
 
 #define KABUKI_SCRIPT_MAJOR_VERSION 0
 #define KABUKI_SCRIPT_MINOR_VERSION 9
 
 // @todo Check all values of assembly_settings.inl, store them as an enum, 
-// then undef them.
+// then #undef them.
 
 // Bare metal (i.e. No OS) OS type macro.
 #define BARE_METAL                  1
@@ -80,7 +79,7 @@
 // Logical no.
 #define NO                          0
 
-#include <assembly.h>               //< Config stuff for your project.
+#include <assembly.h>           //< Config stuff for your project.
 
 #if CHAR_WIDTH == 8
 typedef uint8_t index;
@@ -250,4 +249,4 @@ enum {
   ClassName (const ClassName&)      = delete;\
   void operator= (const ClassName&) = delete;
 
-#endif  //< KABUKI_TOOLKIT_CONFIG_H
+#endif  //< SCRIPT_CONFIG_H

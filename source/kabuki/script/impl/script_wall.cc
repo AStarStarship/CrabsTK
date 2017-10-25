@@ -47,7 +47,7 @@ int WallAddDoor (Wall* wall, Door* door) {
     return num_doors + 1;
 }
 
-Door* WallGetDoor (Wall* wall, index index) {
+Door* WallGetDoor (Wall* wall, int index) {
     if (wall == nullptr)
         return nullptr;
     if (index >= wall->num_doors)
@@ -55,7 +55,7 @@ Door* WallGetDoor (Wall* wall, index index) {
     return WallGetDoors (wall)[index];
 }
 
-void WallDelete (Wall* wall, index index) {
+void WallDelete (Wall* wall, int index) {
     if (wall == nullptr)
         return;
     if (index >= wall->num_doors)

@@ -226,7 +226,7 @@ KABUKI bool CheckLastLetters (uint32_t const Token) {
 KABUKI byte ReadType (const char* string) {
     uint32_t token = * ((uint32_t*)string);
 
-    index index = (byte)token;
+    int index = (byte)token;
 
     switch (index)
     {

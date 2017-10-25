@@ -1,6 +1,5 @@
-/** kabuki::script
-    @version   1.0
-    @file      ~/source/kabuki/script/include/script_module.h
+/** TypeCraft - Teaching Typing through Mining and Crafting.
+    @file    ~/source/typecraft/module_config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,13 +13,9 @@
              permissions and limitations under the License.
 */
 
-#ifndef KABUKI_KABUKI_SCRIPT_H
-#define KABUKI_KABUKI_SCRIPT_H
+#ifndef KABUKI_DATA_MODULE_CONFIG_H
+#define KABUKI_DATA_MODULE_CONFIG_H
 
-#include "utils.h"
-#include "console.h"
-#include "table.h"
-#include "set.h"
-#include "log.h"
+#include "../../script/include/module_config.h"
 
-#endif  //< KABUKI_KABUKI_SCRIPT_H
+#endif  //< KABUKI_DATA_MODULE_CONFIG_H

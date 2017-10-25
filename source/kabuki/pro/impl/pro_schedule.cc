@@ -21,7 +21,7 @@ using namespace _;
 namespace kabuki { namespace pro {
 
 Schedule::Schedule (const char* key, int num_repeats, int color) :
-    key_ (CloneString (key)),
+    key_ (StringClone (key)),
     tasks_ (),
     color_ (color),
     num_repeats_ (num_repeats)
@@ -49,7 +49,7 @@ void Schedule::StealKey (char* new_name)
 
 void Schedule::SetKey (const char* new_name)
 {
-    return StealKey (CloneString (new_name));
+    return StealKey (StringClone (new_name));
 }
 
 const char* Schedule::GetReadme () {
@@ -64,7 +64,7 @@ void Schedule::StealReadMe (char* new_readme) {
 }
 
 void Schedule::SetReadMe (const char* new_readme) {
-    return StealReadMe (CloneString (new_readme));
+    return StealReadMe (StringClone (new_readme));
 }
 
 int Schedule::GetColor ()

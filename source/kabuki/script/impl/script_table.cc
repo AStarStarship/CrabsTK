@@ -94,7 +94,7 @@ static byte TableAdd (Table* table, const char* key) {
         *unsorted_indexes = 0;
         destination = keys - key_length;
 
-        CopyString (destination, key);
+        StringCopy (destination, key);
         //printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
         //Print (table);
         return 0;
@@ -171,7 +171,7 @@ static byte TableAdd (Table* table, const char* key) {
                 
                 // Copy the key
                 value = key_offsets[num_keys - 1] + key_length + 1;
-                CopyString (keys - value, key);
+                StringCopy (keys - value, key);
                 key_offsets[num_keys] = value;
 
                 // Update the collision table.
@@ -226,7 +226,7 @@ static byte TableAdd (Table* table, const char* key) {
                 byte collision_index = unsorted_indexes[mid];
                 //printf ("\n\ncollision_index: %u", collision_index);
 
-                CopyString (keys - value, key);
+                StringCopy (keys - value, key);
                 //printf ("Inserting value: %u into index:%u "
                 //        "num_keys:%u with other collision_index: %u\n", value, 
                 //        index, num_keys, collision_index);
@@ -277,7 +277,7 @@ static byte TableAdd (Table* table, const char* key) {
     //        destination - reinterpret_cast<char*> (table), hashes[mid]);
 
     // First copy the char and set the key offset.
-    CopyString (destination, key);
+    StringCopy (destination, key);
     key_offsets[num_keys] = value;
 
     // Second move up the hashes and insert at the insertion point.
@@ -322,7 +322,7 @@ static byte TableFind (const Table* table, const char* key) {
     if (table == nullptr)
         return 0;
     //PrintLineBreak ("Finding record...", 5);
-    index index,
+    int index,
         num_keys = table->num_keys,
         max_keys = table->max_keys,
         temp;

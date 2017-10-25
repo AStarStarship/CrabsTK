@@ -14,6 +14,9 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+
 #ifndef KABUKI_SCRIPT_DOOR_H
 #define KABUKI_SCRIPT_DOOR_H
 
@@ -58,7 +61,7 @@ class Door : public Operand {
     Door* Init (uint_t buffer_size);
 
     /** Gets the expr at the given index. */
-    Slot* GetSlot (index index);
+    Slot* GetSlot (int index);
 
     /** Address the given expr to the Door. */
     const Operation* AddSlot (Slot* t);
@@ -74,7 +77,7 @@ class Door : public Operand {
     const Operation* ExecAll ();
 
     /** Script expressions. */
-    virtual const Operation* Star (index index, Expression* expr);
+    virtual const Operation* Star (int index, Expression* expr);
 
     private:
 

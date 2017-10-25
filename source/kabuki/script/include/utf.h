@@ -22,10 +22,13 @@
 //
 ////////////////////////////////////////////////////////////
 
+#pragma once
+#include <stdafx.h>
+
 #ifndef KABUKI_SCRIPT_UTF_H
 #define KABUKI_SCRIPT_UTF_H
 
-#include "config.h"
+#include "module_config.h"
 
 #if USING_UTF
 

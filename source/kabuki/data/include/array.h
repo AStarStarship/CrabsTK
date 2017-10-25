@@ -17,76 +17,157 @@
 #ifndef KABUKI_DATA_ARRAY_H
 #define KABUKI_DATA_ARRAY_H
 
-#include "config.h"
+#include "module_config.h"
+#include "../../script/include/utils.h"
 
 namespace kabuki { namespace data {
+
+/** An array of like types that can auto-grow.
+*/
+template<typename T>
+class Array
+{
+    public:
+
+    enum
+    {
+        kMinSize = 4    //< The default and min size if none is entered.
+    };
+
+    /** Initializes an array of n elements of the given type.
+        @param max_elements The max number of elements in the array buffer. */
+    Array (int max_elements = kMinSize) :
+        size_ (max_elements = RoundToPowerOf2 (max_elements)),
+        count_ (0),
+        array_ (new T[max_elements]) {
+    }
+
+    /** Initializes an array of n elements of the given type and clears .
+        @param max_elements The max number of elements in the array buffer.
+        @param init_value The init value of the elements. */
+    Array (int max_elements, int init_value) :
+        size_ (max_elements = RoundToPowerOf2 (max_elements)),
+        count_ (0),
+        array_ (new T[max_elements]) {
+        memset (array_, init_value, max_elements);
+    }
+
+    /** Gets the num_elements_. */
+    int GetCount () {
+        return count_;
+    }
+
+    /** Gets the max_elements_. */
+    int Size () {
+        return size_;
+    }
+
+    /** Inserts the value into the given index into the array at the given,
+        index and shifts the contents at the index and above up one. */
+    int Insert (T value, int index) {
+        if (index < 0)
+            return -1;
+
+        int count = count_,
+            size = size_;
+
+        if (count >= size)
+            return -2;
+
+        if (index > count)
+            return ~0;
+
+        if (index == size)
+            Grow ();
+
+        T* array_ptr = array_;
+        if (count == 0) {
+            array_ptr[0] = value;
+            count_ = 1;
+            return 0;
+        }
+        if (count == 1) {
+            if (index == 0) {
+                array_ptr[1] = array_ptr[0];
+                array_ptr[0] = value;
+            } else {
+                array_ptr[1] = value;
+            }
+            count_ = 2;
+            return 0;
+        }
+        for (int i = index; i <= count; ++i)
+            array_ptr[i + 1] = array_ptr[i];
+        array_ptr[index] = value;
+        //T* insert_point = array_ptr + index,
+        //  * end = array_ptr + num_elements;
+        //while (insert_point != end)
+        //    *end = *(--end);
+        count_ = count + 1;
+        return count;
+    }
+
+    /** Adds the given value to the array. */
+    int Add (T value) {
+        return Insert (value, count_);   //< Add to the end.
+    }
+
+    /** Removes the given index from the array. */
+    bool Remove (int index) {
+        int num_elements = count_;
+        if (num_elements == 0)
+            return false;
+        if (num_elements == 1) {
+            count_ = 0;
+            return false;
+        }
+        T* insert_point = &array_[num_elements],
+            *end = &array_[index];
+        while (insert_point != end)
+            *end = *(--end);
+        count_ = --num_elements;
+        return true;
+    }
+
+    /** Gets the Array element at the given index. */
+    inline T& Element (int index) {
+        static T t;
+        if (index < 0)
+            return t;
+        if (index >= size_)
+            return t;
+        return array_[index];
+    }
+
+    inline T& operator[] (int index) {
+        static T t;
+        if (index < 0)
+            return t;
+        if (index >= size_)
+            return t;
+        return array_[index];
+    }
+
+    /** Doubles the size of the array. */
+    void Grow () {
+        int size = size_;
+        T* array_local = array_,
+            *new_array = new T[size << 1];
+        for (int i = 0; i < size; ++i)
+            new_array[i] = array_local[i];
+        size_ = size << 1;
+        // Size should never be below 4.
+        delete[] array_local;
+        array_ = new_array;
+    }
+
+    private:
+
+    int size_,      //< Max number of elements.
+        count_;     //< Number of elements.
+    T*  array_;     //< The array.
+};
+
 }       //< namespace data
 }       //< namespace kabuki
 #endif  //< KABUKI_DATA_ARRAY_H
-
-class ArrayIterator;
-
-class Array
-/*< An collection of owned items stored in a packed array. */
-{
-    public:
-    
-    Array (size_t element_size, int initBufferSize);
-    /*< Constructs an array with the given element and buffer size. */
-    
-    ~Array ();
-    
-    void clear ();
-    /*< Resets the Collection without deleting the contents. */
-    
-    bool add (void* ptr);
-    /*< Adds the given object from the given pointer. */
-    
-    bool add (const Array& a);
-    /*< Adds the given array to this one. */
-    
-    bool contains (void* Data);
-    /*< Returns true if this array contains the given data. */
-    
-    bool contains (const Array& a);
-    /*< Returns true if this Collection contains thatCollection. */
-    
-    bool equals (void* Data);
-    /*< Returns true if this Collection contains only the given data. */
-    
-    hash_t getHash ();
-    /*< Generates a hash for this Collection. */
-    
-    bool isEmpty ();
-    /*< Returns true of this Collection is empty. */
-
-    bool remove (void* Data);
-    /*< Removes that object from the collection. */
-    
-    bool remove (Array& a);
-    /*< Removes that object from the collection. */
-    
-    bool remove (Collection& c);
-    /*< Removes that object from the collection. */
-
-    bool retain (Collection& c);
-    /*< Removes all but the given collection from this collection. */
-
-    /*< Gets an iterator for this collection. */
-    ArrayIterator* GetIterator ();
-
-    /*< Gets the size_t of the object being stored. */
-    size_t GetSize ();
-
-    /*< Returns a Script Array packed array of the collection. */
-    void* ToScript ();
-    
-    private:
-    
-    size_t element_size;     //< The sizeof this object size.
-    int numItems;           //< The number of items.
-    
-    void* base;             //< Pointer to the dynamic memory.
-};
-
-}

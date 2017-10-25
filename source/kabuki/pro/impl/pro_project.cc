@@ -14,13 +14,13 @@
              permissions and limitations under the License.
 */
 
-#include "../../script/include/utils.h"
+#include "../../data/include/array.h"
 #include "../include/project.h"
 
 using namespace _;
+using namespace kabuki::data;
 
-namespace kabuki {
-namespace pro {
+namespace kabuki { namespace pro {
 
 ProjectNode* Pop (ProjectNode* stack, const char* result) {
     if (stack == nullptr)
@@ -55,14 +55,14 @@ const char* Push (ProjectNode*& stack, Project* project) {
 }
 
 Project::Project (char* key, char* readme) :
-    key_ (key == nullptr?CloneString (""):key),
-    readme_ (readme == nullptr?CloneString (""):readme),
+    key_ (key == nullptr?StringClone (""):key),
+    readme_ (readme == nullptr ? StringClone (""):readme),
     task_ (nullptr) {
 }
 
 Project::Project (const char* key, const char* readme) :
-    key_ (CloneString (key)),
-    readme_ (CloneString (readme)),
+    key_ (StringClone (key)),
+    readme_ (StringClone (readme)),
     task_ (nullptr) {
 }
 
@@ -72,7 +72,7 @@ Project::~Project () {
 bool Project::Select (int index) {
     if (index < 0) return false;
     if (index >= schedules_->count) return false;
-    task_ = ArrayGet<Schedule*, int> (schedules_, index);
+    task_ = ArrayGet<Schedule*> (schedules_, index);
     return true;
 }
 
@@ -83,11 +83,11 @@ void Project::ListObjects () {
         "|\n"
         "| Projects: " << projects_->count << '\n';
     for (int i = 0; i < projects_->count; ++i)
-        std::cout << "| " << i << ".) " << ArrayGet<Project*, int> (projects_, i)->GetKey () << '\n';
+        std::cout << "| " << i << ".) " << ArrayGet<Project*> (projects_, i)->GetKey () << '\n';
     std::cout << "|\n"
         "| Schedules: " << schedules_->count << '\n';
     for (int i = 0; i < schedules_->count; ++i)
-        std::cout << "| " << i << ".) " << ArrayGet<Schedule*, int> (schedules_, i)->GetKey () << '\n';
+        std::cout << "| " << i << ".) " << ArrayGet<Schedule*> (schedules_, i)->GetKey () << '\n';
     PrintBreak ("|", '_');
 }
 
@@ -103,7 +103,7 @@ void Project::StealKey (char* new_name) {
 }
 
 void Project::SetKey (const char* new_name) {
-    StealKey (CloneString (new_name));
+    StealKey (StringClone (new_name));
 }
 
 const char* Project::GetReadMe () {
@@ -117,34 +117,34 @@ void Project::StealReadMe (char* new_readme) {
 }
 
 void Project::CloneReadMe (const char* new_readme) {
-    StealReadMe (CloneString (new_readme));
+    StealReadMe (StringClone (new_readme));
 }
 
 bool Project::AddProject (const char* key) {
     if (!IsToken (key))
         return false;
-    ArrayPush<Project*, int> (projects_, new Project (key));
+    ArrayPush<Project*> (projects_, new Project (key));
     return true;
 }
 
 bool Project::AddProject (Project* project) {
     if (!project)
         return false;
-    ArrayPush<Project*, int> (projects_, project);
+    ArrayPush<Project*> (projects_, project);
     return true;
 }
 
 bool Project::AddSchedule (const char* key) {
     if (!IsToken (key))
         return false;
-    ArrayPush<Schedule*, int> (schedules_, new Schedule (key));
+    ArrayPush<Schedule*> (schedules_, new Schedule (key));
     return true;
 }
 
 bool Project::AddSchedule (Schedule* schedule) {
     if (!schedule)
         return false;
-    ArrayPush<Schedule*, int> (schedules_, schedule);
+    ArrayPush<Schedule*> (schedules_, schedule);
     return true;
 }
 
@@ -153,7 +153,7 @@ Schedule* Project::GetSchedule (int index) {
         return nullptr;
     if (index >= schedules_->count)
         return nullptr;
-    return ArrayGet<Schedule*, int> (schedules_, index);
+    return ArrayGet<Schedule*> (schedules_, index);
 }
 
 int Project::ScheduleIndex (const char* key) {
@@ -161,7 +161,7 @@ int Project::ScheduleIndex (const char* key) {
         return false;
     //  Search for an already existing key to add it to:
     for (int i = 0; i < schedules_->count; ++i)
-        if (CompareTokenString (key, ArrayGet<Schedule*, int> (schedules_, i)->GetKey ()))
+        if (CompareTokenString (key, ArrayGet<Schedule*> (schedules_, i)->GetKey ()))
             return i;
     return -1;
 }
@@ -171,7 +171,7 @@ Schedule* Project::GetSchedule (const char* query) {
 }
 
 bool Project::RemoveSchedule (int index) {
-    return ArrayRemove<Schedule*, int> (schedules_, index);
+    return ArrayRemove<Schedule*> (schedules_, index);
 }
 
 bool Project::RemoveSchedule (const char* key) {
@@ -183,7 +183,7 @@ int Project::ProjectIndex (const char* key) {
         return -1;
     //  Search for an already existing key to add it to:
     for (int i = 0; i < projects_->count; ++i)
-        if (CompareTokenString (key, ArrayGet<Project*, int> (projects_, i)->GetKey ()))
+        if (CompareTokenString (key, ArrayGet<Project*> (projects_, i)->GetKey ()))
             return i;
     return -1;
 }
@@ -193,15 +193,15 @@ Project* Project::GetProject (int index) {
         return nullptr;
     if (index >= projects_->count)
         return nullptr;
-    return  ArrayGet<Project*, int> (projects_, index);
+    return  ArrayGet<Project*> (projects_, index);
 }
 
 Project* Project::GetProject (const char* key) {
-    return ArrayGet<Project*, int> (projects_, ProjectIndex (key));
+    return ArrayGet<Project*> (projects_, ProjectIndex (key));
 }
 
 bool Project::RemoveProject (int index) {
-    return ArrayRemove<Project*, int> (projects_, index);
+    return ArrayRemove<Project*> (projects_, index);
 }
 
 bool Project::RemoveProject (const char* key) {
@@ -349,12 +349,12 @@ void Project::Print (int indent_level, char bullet_type, int spaces_per_tab) {
     std::cout << "| Projects: " << projects_->count
         << "|\n";
     for (int i = 0; i < projects_->count; ++i) {
-        ArrayGet<Project*, int> (projects_, i)->Print ();
+        ArrayGet<Project*> (projects_, i)->Print ();
     }
     std::cout << "| Schedules: " << schedules_->count
         << "|\n";
     for (int i = 0; i < schedules_->count; ++i) {
-        ArrayGet<Schedule*, int> (schedules_, i)->Print ();
+        ArrayGet<Schedule*> (schedules_, i)->Print ();
     }
     PrintBreak ("|", '_');
 }
@@ -415,7 +415,7 @@ const char* Project::Command (char* input, ProjectNode*& stack) {
                 if (ScheduleIndex (input) >= 0 || ScheduleIndex (input) >= 0)
                     return "Key is in use. Type -l to list the objects in the current scope.";
                 Schedule* string = new Schedule (input);
-                ArrayPush<Schedule*, int> (schedules_, string);
+                ArrayPush<Schedule*> (schedules_, string);
                 return nullptr;
             }
             case 'P':  // Add new Project
@@ -430,7 +430,7 @@ const char* Project::Command (char* input, ProjectNode*& stack) {
                 if (ProjectIndex (input) >= 0 || ProjectIndex (input) >= 0)
                     return "Key is in use. Type -l to list the objects in the current scope";
                 Project* p = new Project (input);
-                ArrayPush<Project*, int> (projects_, p);
+                ArrayPush<Project*> (projects_, p);
                 return nullptr;
             }
             case 'l':    //< List Objects
@@ -501,15 +501,15 @@ const char* Project::Command (char* input, ProjectNode*& stack) {
             std::cout << GetAppHelpString ();
             return nullptr;
         }
-        if (!CompareString (input + 2, "project")) {
+        if (!StringCompare (input + 2, "project")) {
             std::cout << Project::GetHelpString ();
             return nullptr;
         }
-        if (!CompareString (input + 2, "schedule")) {
+        if (!StringCompare (input + 2, "schedule")) {
             std::cout << Schedule::GetHelpString ();
             return nullptr;
         }
-        if (!CompareString (input + 2, "task")) {
+        if (!StringCompare (input + 2, "task")) {
             std::cout << Task::GetHelpString ();
             return nullptr;
         }
@@ -525,10 +525,10 @@ const char* Project::Command (char* input, ProjectNode*& stack) {
 
     value = ProjectIndex (input);
     if (value >= 0)
-        return ArrayGet<Project*, int> (projects_, value)->Command (end, stack);
+        return ArrayGet<Project*> (projects_, value)->Command (end, stack);
     value = ScheduleIndex (input);
     if (value >= 0)
-        return ArrayGet<Schedule*, int> (schedules_, value)->Command (end);
+        return ArrayGet<Schedule*> (schedules_, value)->Command (end);
     return "The Project does not contain the given key in this scope.";
 }
 

@@ -334,7 +334,7 @@ char CreateKeyValueFormatString (char* string, char column_width, char type) {
     return 0;
 }
 
-void PrintNumberLine (index index) {
+void PrintNumberLine (int index) {
     std::cout << '\n';
     enum { MaxBufferSize = (sizeof (int) == 2) ? 7 : (sizeof (int) == 4) ? 11 : 128 };
     char buffer[MaxBufferSize];
@@ -380,7 +380,7 @@ void PrintLineBreak (const char* message, int top_bottom_margin,
     PrintLine (c, num_columns);
 }
 
-void CopyString (char* destination, const char* source,
+void StringCopy (char* destination, const char* source,
                         char delimeter) {
     if (destination == nullptr)
         return;
@@ -397,12 +397,12 @@ void CopyString (char* destination, const char* source,
     *destination = '\0';
 }
 
-char* CloneString (const char* input, char delimeter) {
+char* StringClone (const char* input, char delimeter) {
     if (input == nullptr)
         input = "";
     size_t length = StringLength (input);
     char* clone = new char[length + 1];
-    CopyString (clone, input);
+    StringCopy (clone, input);
     return clone;
 }
 
@@ -530,7 +530,7 @@ void PrintPageRight (const char* input, int num_columns) {
 }
 
 void PrintPage (const char* input, int indentation,
-                       char bullet, index index, int tab_size,
+                       char bullet, int index, int tab_size,
                        int num_columns) {
     num_columns -= 4;
     std::cout << "| ";
@@ -700,7 +700,7 @@ char* CompareToken (const char* input, const char* query) {
     return (char*)CompareTokenString (input, query);
 }
 
-const char* CompareString (const char* input, const char* query,
+const char* StringCompare (const char* input, const char* query,
                            char delimiter) {
     if (input == nullptr)
         return nullptr;
@@ -730,7 +730,7 @@ const char* CompareString (const char* input, const char* query,
 }
 
 char* Compare (char* source, const char* query, char delimiter) {
-    return (char*)CompareString (source, query, delimiter);
+    return (char*)StringCompare (source, query, delimiter);
 }
 
 const char* ParseString (const char* input, char* destination,
@@ -883,6 +883,21 @@ bool IsToken (const char* input) {
         c = *(++input);
     }
     return true;
+}
+
+int RoundToPowerOf2 (int value) {
+    if (value < 0)
+        return 4;
+    // @cite https://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2
+    unsigned int v = (unsigned int)value;
+    --v;
+    v |= v >> 1;
+    v |= v >> 2;
+    v |= v >> 4;
+    v |= v >> 8;
+    v |= v >> 16;
+    ++v;
+    return (int)value;
 }
 
 }       //< namespace _

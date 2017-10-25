@@ -20,80 +20,29 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aiml\include\agent.h" />
-    <ClInclude Include="data\include\array.h" />
-    <ClInclude Include="data\include\btree.h" />
-    <ClInclude Include="data\include\btree_node.h" />
-    <ClInclude Include="data\include\collection.h" />
-    <ClInclude Include="data\include\iIterable.h" />
-    <ClInclude Include="data\include\iIterator.h" />
-    <ClInclude Include="data\include\lllist.h" />
-    <ClInclude Include="script\include\a.h" />
     <ClInclude Include="script\include\address.h" />
     <ClInclude Include="script\include\args.h" />
     <ClInclude Include="script\include\array.h" />
     <ClInclude Include="script\include\ascii.h" />
     <ClInclude Include="script\include\assembly.h" />
-    <ClInclude Include="script\include\bin.h" />
-    <ClInclude Include="script\include\bout.h" />
     <ClInclude Include="script\include\clock.h" />
     <ClInclude Include="script\include\color.h" />
-    <ClInclude Include="script\include\config.h" />
-    <ClInclude Include="script\include\console.h" />
-    <ClInclude Include="script\include\door.h" />
-    <ClInclude Include="script\include\evaluation.h" />
-    <ClInclude Include="script\include\event.h" />
-    <ClInclude Include="script\include\exceptions.h" />
-    <ClInclude Include="script\include\expression.h" />
-    <ClInclude Include="script\include\global.h" />
-    <ClInclude Include="script\include\iterator.h" />
-    <ClInclude Include="script\include\library.h" />
-    <ClInclude Include="script\include\log.h" />
+    <ClInclude Include="script\include\module_config.h" />
     <ClInclude Include="script\include\operation.h" />
-    <ClInclude Include="script\include\portal.h" />
-    <ClInclude Include="script\include\room.h" />
-    <ClInclude Include="script\include\script_module.h" />
-    <ClInclude Include="script\include\set.h" />
-    <ClInclude Include="script\include\slot.h" />
-    <ClInclude Include="script\include\socket.h" />
-    <ClInclude Include="script\include\stdafx.h" />
-    <ClInclude Include="script\include\table.h" />
-    <ClInclude Include="script\include\targetver.h" />
     <ClInclude Include="script\include\types.h" />
     <ClInclude Include="script\include\utf.h" />
     <ClInclude Include="script\include\utf_string.h" />
     <ClInclude Include="script\include\utils.h" />
-    <ClInclude Include="script\include\wall.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\include\ReadMe.md" />
-    <None Include="script\include\script_module.h.in" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="data\impl\data_btree.cc" />
-    <ClCompile Include="data\impl\data_btree_node.cc" />
-    <ClCompile Include="data\impl\data_dlnode.cc" />
-    <ClCompile Include="data\impl\data_linked_list.cc" />
-    <ClCompile Include="data\impl\data_lllist_node.cc" />
     <ClCompile Include="script\impl\script_address.cc" />
     <ClCompile Include="script\impl\script_args.cc" />
-    <ClCompile Include="script\impl\script_bin.cc" />
-    <ClCompile Include="script\impl\script_bout.cc" />
     <ClCompile Include="script\impl\script_clock.cc" />
     <ClCompile Include="script\impl\script_color.cc" />
-    <ClCompile Include="script\impl\script_console.cc" />
-    <ClCompile Include="script\impl\script_door.cc" />
-    <ClCompile Include="script\impl\script_evaluation.cc" />
-    <ClCompile Include="script\impl\script_exceptions.cc" />
-    <ClCompile Include="script\impl\script_expression.cc" />
-    <ClCompile Include="script\impl\script_log.cc" />
     <ClCompile Include="script\impl\script_operation.cc" />
-    <ClCompile Include="script\impl\script_room.cc" />
-    <ClCompile Include="script\impl\script_slot.cc" />
-    <ClCompile Include="script\impl\script_socket.cc" />
     <ClCompile Include="script\impl\script_table.cc" />
     <ClCompile Include="script\impl\script_types.cc" />
     <ClCompile Include="script\impl\script_utils.cc" />
-    <ClCompile Include="script\impl\script_wall.cc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -186,7 +135,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Workspace\kabuki-toolkit\source\kabuki\chinese_room\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Workspace\kabuki-toolkit\source\kabuki\script\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

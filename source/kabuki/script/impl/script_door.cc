@@ -55,7 +55,7 @@ Door* Door::Init (uint_t buffer_size) {
     return this;
 }
 
-Slot* Door::GetSlot (index index) {
+Slot* Door::GetSlot (int index) {
     return nullptr;
 }
 
@@ -75,7 +75,7 @@ const Operation* Door::ExecAll () {
     return 0;
 }
 
-const Operation* Door::Star (index index, Expression* expr) {
+const Operation* Door::Star (int index, Expression* expr) {
     if (index < ' ') {
         static const Operation this_member = { "Door", NumOperations (0), 
             0, "A door in a Chinese room.", 0 };

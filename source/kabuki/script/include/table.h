@@ -14,11 +14,13 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+
 #ifndef KABUKI_SCRIPT_TABLE_H
 #define KABUKI_SCRIPT_TABLE_H
 
 #include "utils.h"
-#include "evaluation.h"
 
 namespace _ {
 

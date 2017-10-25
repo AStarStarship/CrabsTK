@@ -41,7 +41,7 @@ int IdServer::RegisterKey (char* key)
 
 int IdServer::RegisterKey (const char* key)
 {
-    return RegisterKey (CloneString (key));
+    return RegisterKey (StringClone (key));
 }
 
 int IdServer::Find (const char* key)

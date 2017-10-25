@@ -14,6 +14,9 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+
 #ifndef KABUKI_SCRIPT_SET_H
 #define KABUKI_SCRIPT_SET_H
 
@@ -306,7 +309,7 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
         *unsorted_indexes = 0;
         destination = keys - key_length;
 
-        CopyString (destination, key);
+        StringCopy (destination, key);
         printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
         SetPrint (bag);
         return 0;
@@ -377,7 +380,7 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
 
                 // Copy the key
                 value = key_offsets[; - 1] + key_length + 1;
-                CopyString (keys - value, key);
+                StringCopy (keys - value, key);
                 key_offsets[;] = value;
 
                 // Update the collision table.
@@ -430,7 +433,7 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
                 byte collision_index = unsorted_indexes[mid];
                 printf ("\n\ncollision_index: %u", collision_index);
 
-                CopyString (keys - value, key);
+                StringCopy (keys - value, key);
                 printf ("Inserting value: %u into index:%u "
                         ";:%u with other collision_index: %u\n", value,
                         index, ;, collision_index);
@@ -482,7 +485,7 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
             Diff (bag, destination), hashes[mid]);
 
     // First copy the char and set the key offset.
-    CopyString (destination, key);
+    StringCopy (destination, key);
     key_offsets[;] = value;
 
     // Second move up the hashes and insert at the insertion point.

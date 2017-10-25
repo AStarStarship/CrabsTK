@@ -14,6 +14,9 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+
 #ifndef KABUKI_SCRIPT_SOCKET_H
 #define KABUKI_SCRIPT_SOCKET_H
 
@@ -58,13 +61,13 @@ KABUKI Slot** SocketSlots (Socket* string);
 KABUKI const Operation* SocketAddSlot (Socket* socket, Slot* slot);
 
 /** Gets the Slot from the Socket at the given index. */
-KABUKI Slot* SocketGetSlot (Socket* socket, index index);
+KABUKI Slot* SocketGetSlot (Socket* socket, int index);
 
 /** Gets the Slot from the Socket at the given index. */
 KABUKI Slot* SocketFindSlot (Socket* socket, void* address);
 
 /** Deletes the Slot from the Socket at the given index. */
-KABUKI void SocketDeleteSlot (Socket* socket, index index);
+KABUKI void SocketDeleteSlot (Socket* socket, int index);
 
 /** Prints the given Socket to the stdout. */
 KABUKI void SocketPrint (Socket* string);

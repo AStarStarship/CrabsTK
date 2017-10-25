@@ -14,6 +14,9 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+
 #ifndef KABUKI_SCRIPT_TYPES_H
 #define KABUKI_SCRIPT_TYPES_H
 

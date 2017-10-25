@@ -14,6 +14,9 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+
 #ifndef KABUKI_SCRIPT_ROOM_H
 #define KABUKI_SCRIPT_ROOM_H
 
@@ -148,7 +151,7 @@ class Room: public Operand {
     virtual int Main (const char** args, int args_count);
 
     /** Script expressions. */
-    virtual const Operation* Star (index index, Expression* expr);
+    virtual const Operation* Star (int index, Expression* expr);
 
     protected:
                             //! vtable pointer here in memory!

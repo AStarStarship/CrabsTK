@@ -14,10 +14,13 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+
 #ifndef KABUKI_SCRIPT_UTILS_H
 #define KABUKI_SCRIPT_UTILS_H
 
-#include "config.h"
+#include "module_config.h"
 
 namespace _ {
 
@@ -294,7 +297,7 @@ KABUKI void PrintUnsignedHex (const char* header, Type value) {
 }
 
 /** Prints an 80-char line of the number repeating with an underscore i.e. 1_1_... */
-KABUKI void PrintNumberLine (index index);
+KABUKI void PrintNumberLine (int index);
 
 /** Prints an 80-char line of the char repeating with an underscore
 i.e. s_s_... */
@@ -337,11 +340,11 @@ KABUKI void PrintLineBreak (const char* message, int top_bottom_margin,
                             char c = '-', int num_columns = 80);
 
 /** Copies a char from the source to the destination. */
-KABUKI void CopyString (char* destination, const char* source,
+KABUKI void StringCopy (char* destination, const char* source,
     char delimeter = 0);
 
 /** Clones the given char. */
-KABUKI char* CloneString (const char* input, char delimeter = 0);
+KABUKI char* StringClone (const char* input, char delimeter = 0);
 
 /** Prints the given char with a '|' at the beginning followed by a new line */
 KABUKI void PrintBar (const char* input);
@@ -387,7 +390,7 @@ KABUKI void PrintPageRight (const char* input, int num_columns);
     @param tab_size The number of spaces per tab.
     @param num_columns The number of columns per line. */
 KABUKI void PrintPage (const char* input = "", int indentation = 0,
-                       char bullet = '*', index index = 0, int tab_size = 4,
+                       char bullet = '*', int index = 0, int tab_size = 4,
                        int num_columns = 80);
 
 /** Returns the pointer to the next char in the char that is not an ASCII
@@ -433,7 +436,7 @@ KABUKI const char* CompareTokenString (const char* input, const char* token);
 KABUKI char* CompareToken (const char* input, const char* query);
 
 /** Compares the source and query char using the delimiter to terminate the query. */
-KABUKI const char* CompareString (const char* input, const char* query,
+KABUKI const char* StringCompare (const char* input, const char* query,
     char delimiter = 0);
 
 /** Compares the source and query char using the delimiter to terminate the
@@ -514,6 +517,9 @@ KABUKI char* ParseFloat (char* input, float* value);
     @param input The char to check.
     @returns Returns true if the given char is a token. */
 KABUKI bool IsToken (const char* input);
+
+/** Compute the next highest power of 2. */
+KABUKI int RoundToPowerOf2 (int value);
 
 }       //< namespace _
 

@@ -14,27 +14,35 @@
              permissions and limitations under the License.
 */
 
-#ifndef KABUKI_DATA_BTREE_H
-#define KABUKI_DATA_BTREE_H
+#ifndef KABUKI_DATA_ITERATOR_H
+#define KABUKI_DATA_ITERATOR_H
 
-#include "config.h"
+#include "module_config.h"
 
 namespace kabuki { namespace data {
-}       //< namespace data
-}       //< namespace kabuki
-#endif  //< KABUKI_DATA_BTREE_H
 
-namespace _Data {
-
-class IIterator
-/*< An interface for a generic iterator. */
+/** An interface for an object iterator. */
+class Iterator
 {
     public:
     
+    /** Iterates to the next item in the sequence. */
     virtual void* GetNext () = 0;
     
+    /** Resets the iterator to the beginning. */
     virtual void Reset () = 0;
     
-    virtual size_t GetSize () = 0;
+    /** Indicates if the iteration is complete.
+        @return Returns 0 when the iteration is complete. */
+    virtual int IsDone () = 0;
 };
-}   //< namespace _Data
+
+/** Interface for an Iterable Collection of objects. */
+struct Iterable {
+    /** Gets an instance of an Iterator. */
+    virtual Iterator* GetIterator () = 0;
+};      //< Iterable
+
+}       //< namespace data
+}       //< namespace kabuki
+#endif  //< KABUKI_DATA_ITERATOR_H

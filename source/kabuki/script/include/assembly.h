@@ -18,7 +18,7 @@
             it into your project directory into the source code root. This 
             files gets #include <assembly.h> in the config file. That means 
             that the compiler will look in your source code root before looking 
-            in this file. Please see config.h for configuration details.
+            in this file. Please see module_config.h for configuration details.
 */
 
 // Choose BARE_METAL, MBED, MBED_OS, ARDUINO, WIN32, WINDOWS, ANDROID, 
@@ -33,7 +33,7 @@
 #define DEBUG               YES
 
 #ifndef DEBUG_SCRIPT
-#define DEBUG_SCRIPT   YES
+#define DEBUG_SCRIPT        YES
 #endif //< DEBUG_SCRIPT
 
 /** @brief The Memory Profiles 1-4 are used to signal that the system is
@@ -78,5 +78,3 @@
 #define USING_RS            NO
 #define USING_GS            NO
 #define USING_FS            NO      //< Must use to enable file handling.
-
-#define USING_UTF           NO      //< Leave YES unless you're trying to save ROM.

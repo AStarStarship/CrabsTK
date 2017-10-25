@@ -14,10 +14,13 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+
 #ifndef KABUKI_SCRIPT_COLOR_H
 #define KABUKI_SCRIPT_COLOR_H
 
-#include "config.h"
+#include "module_config.h"
 
 namespace _ {
 
@@ -63,16 +66,16 @@ inline const color_t* RainbowColors ();
 inline const color_t* PresetColors ();
 
 /** Gets one of the rainbow colors. */
-inline color_t ColorRainbow (index index);
+inline color_t ColorRainbow (int index);
 
 /** Gets one of the preset colors. */
-inline color_t ColorPreset (index index);
+inline color_t ColorPreset (int index);
 
 /** Gets a random preset colors. */
 inline color_t RandomPresetColor ();
 
 /** Gets a random color. */
-inline color_t RandomColor (index index);
+inline color_t RandomColor (int index);
     
 /** Mixes the color with the  */
 inline color_t ColorMix (color_t a, color_t b);

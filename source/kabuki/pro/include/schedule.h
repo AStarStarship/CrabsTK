@@ -17,9 +17,10 @@
 #ifndef KABUKI_PRO_SCHEDULE_H
 #define KABUKI_PRO_SCHEDULE_H
 
-#include "../../script/include/array.h"
+#include "../../data/include/array.h"
 #include "task.h"
 
+using namespace kabuki;
 
 namespace kabuki { namespace pro {
 
@@ -117,11 +118,11 @@ class Schedule
  
     private:
     
-    char* key_,                  //< Name of the schedule.
-        * readme_;               //< Readme for the Schedule.
-    int color_,                  //< Initial color of all of the Tasks.
-        num_repeats_;            //< Number of times the Schedule repeats.
-    _::Array<Task*, int> tasks_; //< Array of Task pointers.
+    char* key_,                //< Name of the schedule.
+        * readme_;             //< Readme for the Schedule.
+    int color_,                //< Initial color of all of the Tasks.
+        num_repeats_;          //< Number of times the Schedule repeats.
+    data::Array<Task*> tasks_; //< Array of Task pointers.
 };
 }       //< namespace pro
 }       //< namespace kabuki

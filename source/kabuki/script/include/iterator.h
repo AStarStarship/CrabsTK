@@ -1,6 +1,6 @@
 /** Kabuki Software Development Kit
     @version 0.x
-    @file    ~/source/kabuki/script/include/KabukiSDK/_Data/Iterator.h
+    @file    ~/source/kabuki/script/include/KabukiSDK/data/Iterator.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -13,6 +13,9 @@
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
+
+#pragma once
+#include <stdafx.h>
 
 #ifndef KABUKI_SCRIPT_ITERATOR_H
 #define KABUKI_SCRIPT_ITERATOR_H

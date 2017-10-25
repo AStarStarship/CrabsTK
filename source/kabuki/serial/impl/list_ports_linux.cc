@@ -171,13 +171,13 @@ get_sysfs_info (const string& device_path) {
         if (path_exists (sys_id_path))
             hardware_id = read_line (sys_id_path);
     }
-
+    
     if (friendly_name.empty ())
         friendly_name = device_name;
-
+    
     if (hardware_id.empty ())
         hardware_id = "n/a";
-
+    
     vector<string> result;
     result.push_back (friendly_name);
     result.push_back (hardware_id);

@@ -54,7 +54,7 @@ const Operation* SocketAddSlot (Socket* socket, Slot* slot) {
     return 0;
 }
 
-Slot* SocketGetSlot (Socket* socket, index index) {
+Slot* SocketGetSlot (Socket* socket, int index) {
     if (socket == nullptr) return nullptr;
     if (index >= socket->num_slots)
         return nullptr;
@@ -72,7 +72,7 @@ Slot* SocketFindSlot (Socket* socket, void* address) {
     return nullptr;
 }
 
-void SocketDeleteSlot (Socket* socket, index index) {
+void SocketDeleteSlot (Socket* socket, int index) {
     if (socket == nullptr) return;
     if (index >= socket->num_slots)
         return;

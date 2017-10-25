@@ -16,6 +16,7 @@
 
 #include <stdafx.h>
 #include "../include/operation.h"
+#include "../include/args.h"
 
 namespace _ {
 
@@ -78,27 +79,27 @@ void OperandPrint (Operand* operand) {
     const Operation* ope = operand->Star (0, nullptr);   //< Get Star header.
     std::cout << ope->name
         << "\n| NumOperations:  " << CountCoperations (ope)
-        << "\n| Description:   " << ope->metadata << '\n';
-    byte i = Index (ope->result),
-        stop_index = i + Index (ope->params);
-    std::cout << "| FirstOperation: " << i << " LastOperation: "
+        << "\n| Description:    " << ope->metadata << '\n';
+    uintptr_t index      = Index (ope->result),
+              stop_index = index + Index (ope->params);
+    std::cout << "| FirstOperation: " << index << " LastOperation: "
         << stop_index;
     PrintLine ("|", '-');
-    for (; i < stop_index; ++i) {
-        ope = operand->Star (i, nullptr);
+    for (; index < stop_index; ++index) {
+        ope = operand->Star (index, nullptr);
         if (ope != nullptr) {
-            std::cout << "| " << i << ": " << ope->name << '\n'
+            std::cout << "| " << index << ": " << ope->name << '\n'
                 << "| input:   ";
             ParamsPrint (ope->params);
             std::cout << "| result:   ";
             ParamsPrint (ope->result);
             std::cout << "| Description: " << ope->metadata;
-            if (i == stop_index)
+            if (index == stop_index)
                 PrintLine ("|", '_');
             else
                 PrintLine ("|", '-');
         } else {
-            std::cout << "| " << i << ": null\n";
+            std::cout << "| " << index << ": null\n";
         }
     }
     //system ("PAUSE");

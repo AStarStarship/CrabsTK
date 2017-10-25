@@ -1,6 +1,6 @@
 /** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/script/include/config.h
+    @file    ~/source/kabuki/script/include/module_config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,10 +17,13 @@
     @desc  
 */
 
+#pragma once
+#include <stdafx.h>
+
 #ifndef KABUKI_SCRIPT_GLOBAL_H
 #define KABUKI_SCRIPT_GLOBAL_H
 
-#include "config.h"
+#include "module_config.h"
 
 namespace _ {
 

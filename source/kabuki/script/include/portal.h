@@ -15,10 +15,13 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+
 #ifndef KABUKI_SCRIPT_PORTAL_H
 #define KABUKI_SCRIPT_PORTAL_H
 
-#include "config.h"
+#include "module_config.h"
 
 namespace _ {
 

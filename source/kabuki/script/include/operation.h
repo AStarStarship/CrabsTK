@@ -14,10 +14,12 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+
 #ifndef KABUKI_SCRIPT_OPERATION_H
 #define KABUKI_SCRIPT_OPERATION_H
 
-#include "evaluation.h"
 #include "array.h"
 
 namespace _ {
@@ -66,7 +68,7 @@ struct KABUKI Expression;
     functions of this object via the Data Controller (DC).
 
     @code
-    class Expr : public Operand {
+    class Example : public Operand {
         public:
 
         enum {
@@ -100,14 +102,14 @@ struct KABUKI Expression;
                     // 66 is ASCII 'A'
                     if (!expr) return &o_A;
 
-                    if (a->read (o_A.params, args (args, &ioNumber, 
-                                                   ioString))) 
+                    if (a->read (o_A.params, args (args, &io_number_, 
+                                                   io_string_))) 
                     return readError ();
 
                     foo ();  // are you?
 
-                    return Write (expr, o_A.result, param.args (&ioNumber, 
-                                                                ioString)));
+                    return Write (expr, o_A.result, param.args (&io_number_, 
+                                                                io_string_)));
                 }
                 case 65: {
                     static const Operation o_B = { "bar",
@@ -118,14 +120,14 @@ struct KABUKI Expression;
                 
                     if (!io) return &o_B;
 
-                    if (Read (io, o_B.params, param.args (&ioNumber, 
-                                                            ioString)))
+                    if (Read (io, o_B.params, param.args (&io_number_, 
+                                                            io_string_)))
                         return readError ();
 
                     bar ();
                     
-                    return Write (o_B.result, param.args (&ioNumber, 
-                                                          ioString)));
+                    return Write (o_B.result, param.args (&io_number_, 
+                                                          io_string_)));
                 }
             }
             return nullptr;
@@ -133,8 +135,8 @@ struct KABUKI Expression;
 
         private:
 
-        float ioNumber;                 //< Example variable.
-        byte ioString[kStringBufferSize];//< Example char.
+        float io_number_;                   //< Example variable.
+        byte io_string_[kStringBufferSize]; //< Example char.
     };
     @endcode
 */
@@ -175,7 +177,7 @@ KABUKI uintptr_t ToUInt (Operand* op);
     (false). */
 KABUKI bool IsGroup (const Operation* op);
 
-/** Prints the given Star to the console. */
+/** Prints the given Operand to the console. */
 KABUKI void OperandPrint (Operand* operand);
 
 }   //< namespace _

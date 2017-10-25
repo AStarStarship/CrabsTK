@@ -131,7 +131,7 @@ int Room::Main (const char** args, int args_count) {
     return 1;
 }
 
-const Operation* Room::Star (index index, Expression* expr) {
+const Operation* Room::Star (int index, Expression* expr) {
     static const Operation star = { "Room",
         NumOperations (0), FirstOperation (' '),
         "A Chinese Room.", 0

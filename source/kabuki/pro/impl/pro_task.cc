@@ -25,8 +25,8 @@ namespace kabuki { namespace pro {
 
 Task::Task (const char* summary, const char* details, float weight,
             int time_estimate_min) :
-    summary_ (CloneString (summary)),
-    details_ (CloneString (details)),
+    summary_ (StringClone (summary)),
+    details_ (StringClone (details)),
     result_ (nullptr),
     review_ (nullptr),
     weight_ (weight),
@@ -202,7 +202,7 @@ void Task::Start () {
 }
 
 void Task::Stop (const char* new_result, float new_assessment) {
-    Stop (CloneString (new_result), new_assessment);
+    Stop (StringClone (new_result), new_assessment);
 }
 
 void Task::AddCollision (Task* task) {

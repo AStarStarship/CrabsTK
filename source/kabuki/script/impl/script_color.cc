@@ -64,22 +64,22 @@ const color_t* PresetColors () {
     return &presetColorsArray[0];
 }
 
-color_t ColorRainbow (index index) {
+color_t ColorRainbow (int index) {
     if (index < 0 || index >= 96) return Black;
     return RainbowColors ()[index];
 }
 
-color_t ColorPreset (index index) {
+color_t ColorPreset (int index) {
     if (index < 0 || index >= 96) return Black;
     return PresetColors ()[index];
 }
 
 color_t RandomPresetColor () {
-    index index = rand () % kNumPresetColors;
+    int index = rand () % kNumPresetColors;
     return PresetColors ()[index];
 }
 
-color_t RandomColor (index index) {
+color_t RandomColor (int index) {
     return rand ();
 }
 
