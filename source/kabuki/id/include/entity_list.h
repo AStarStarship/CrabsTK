@@ -17,6 +17,7 @@
 #define KABUKI_ID_ENTITYLIST_H
 
 #include "entity.h"
+#include "../../script/include/log.h"
 
 namespace kabuki { namespace id {
 
@@ -42,7 +43,7 @@ class KABUKI EntityList
     /** Finds an entity in the list by the given search char. */
     Entity* Find (const char* string);
 
-    /** Prints this object to a expression. */
+    /** Prints this object to the log. */
     void Print (_::Log& log);
     
     private:

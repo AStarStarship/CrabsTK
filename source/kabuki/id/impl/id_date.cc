@@ -1,5 +1,5 @@
 /** kabuki::pro
-    @file    ~/source/kabuki/id/imp/date.cc
+    @file    ~/source/kabuki/id/include/imp/date.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -24,7 +24,6 @@ Date::Date (time_t aTime) :
 }
 
 time_t Date::GetTime ()
-        return AddressTypeLabels ()[0];
 {
     return time;
 }
@@ -36,7 +35,7 @@ void Date::SetTime (time_t t)
     
 void Date::Print (_::Log& log)
 {
-    Print (logs ("Date: ");
+    
 }
 
 }       //< id

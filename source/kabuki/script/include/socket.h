@@ -61,13 +61,13 @@ KABUKI Slot** SocketSlots (Socket* string);
 KABUKI const Operation* SocketAddSlot (Socket* socket, Slot* slot);
 
 /** Gets the Slot from the Socket at the given index. */
-KABUKI Slot* SocketGetSlot (Socket* socket, int index);
+KABUKI Slot* SocketGetSlot (Socket* socket, uint_t index);
 
 /** Gets the Slot from the Socket at the given index. */
 KABUKI Slot* SocketFindSlot (Socket* socket, void* address);
 
 /** Deletes the Slot from the Socket at the given index. */
-KABUKI void SocketDeleteSlot (Socket* socket, int index);
+KABUKI void SocketDeleteSlot (Socket* socket, uint_t index);
 
 /** Prints the given Socket to the stdout. */
 KABUKI void SocketPrint (Socket* string);

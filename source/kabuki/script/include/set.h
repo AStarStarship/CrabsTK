@@ -44,41 +44,48 @@ enum {
 
     @code
     _____________________________________________________ 
+    |_______ | Library Key 1                            |
+    |_______ | ...                        Library       | 
+    |_______ v Library Key N                            |
+    |___________________________________________________|
+    |                                                   |
+    |               Header Buffer Space                 |
+    |___________________________________________________|
     |_______                                            | 
     |_______   Data N                                   | 
     |_______ ^ ...                       Data Table     | 
     |_______ | Data 0                                   | 
     |___________________________________________________|
     |_______ | Key 1                                    |
-    |_______ | ...                          Keys        | 
+    |_______ | ...                         Keys         | 
     |_______ v Key N                                    |
     |___________________________________________________|
     |                                                   |
     |               Header Buffer Space                 |
     |___________________________________________________|
     |_______                                            | 
-    |_______   Collision List N          Hash Table     | 
-    |_______ ^ ...                        Collision     | 
-    |_______ | Collision List 0              List       | 
+    |_______   Collision List N         Hash Table      | 
+    |_______ ^ ...                       Collision      | 
+    |_______ | Collision List 0             List        | 
     |___________________________________________________|
     |_______                                            |
     |_______   Buffer Indexes                           |
-    |_______                             Hash Table     |
-    |_______ ^ Collision Index N          Collision     |
-    |_______ | ...                         Indexes      |
+    |_______                            Hash Table      |
+    |_______ ^ Collision Index N         Collision      |
+    |_______ | ...                        Indexes       |
     |        | Collision Index 0                        |
     |___________________________________________________|
     |_______                                            |
     |_______   Buffer Indexes                           |
-    |_______                             Hash Table     |
-    |_______ ^ Collision Table N        Corresponding   |
-    |_______ | ...                          Hash        |
-    |        | Collision table 0           Indexes      |
+    |_______                            Hash Table      |
+    |_______ ^ Collision Table N       Corresponding    |
+    |_______ | ...                         Hash         |
+    |        | Collision table 0          Indexes       |
     |___________________________________________________|
     |_______                                            |
     |_______   Buffer Indexes                           |
     |_______                                            |
-    |_______ ^ Sorted Hash N                Hashes      |
+    |_______ ^ Sorted Hash N               Hashes       |
     |_______ | ...                                      |
     |        | Sorted Hash 1                            |
     |___________________________________________________|
@@ -172,7 +179,7 @@ struct KABUKI Set {
     TData size;         //< Total size of the set.
     TKey table_size,    //< Size of the (optional) key strings in bytes.
          pile_size;     //< Size of the (optional) collision table in bytes.
-    TIndex ;,   //< Number of items.
+    TIndex num_items,   //< Number of items.
            max_items;   //< Max number of items that can fit in the size.
 };
 

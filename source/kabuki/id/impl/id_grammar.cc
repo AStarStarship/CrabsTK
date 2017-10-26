@@ -1,5 +1,5 @@
 /** kabuki::pro
-    @file    ~/source/kabuki/id/impl/grammar.cc
+    @file    ~/source/kabuki/id/include/impl/grammar.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -18,9 +18,9 @@
 
 namespace kabuki { namespace id {
 
-const char GetDefaultPassword () { "password"; }
+const char* GetDefaultPassword () { "password"; }
 
-const char GetDefaultPasswordFormat () { return "^[a-zA-Z0-9]*$"; }
+const char* GetDefaultPasswordFormat () { return "^[a-zA-Z0-9]*$"; }
 
 Grammar::Grammar ()
 {

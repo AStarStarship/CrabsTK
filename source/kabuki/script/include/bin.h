@@ -116,7 +116,7 @@ KABUKI const Operation* BinResult (Bin* bin, Bin::Error error,
                                    byte* address);
 
 /** Initializes the Bin struct KABUKI to an empty buffer. */
-KABUKI Bin* BinInit (byte* buffer, uint_t size);
+KABUKI Bin* BinInit (uintptr_t* buffer, uint_t size);
 
 /** Gets the rx buffer length. */
 KABUKI uint_t BinSpace (Bin* bin);
@@ -125,7 +125,7 @@ KABUKI uint_t BinSpace (Bin* bin);
 KABUKI byte* BinEndAddress (Bin* bin);
 
 /** Returns true if the Bin buffer contains any data.
-@warning Function does not do any error checking for speed. */
+    @warning Function does not do any error checking for speed. */
 KABUKI bool BinIsReadable (Bin* bin);
 
 /** Prints out the given object to the std::out. */
@@ -137,9 +137,16 @@ KABUKI void BinPrint (Bin* bin);
     
     @param rx The Bin socket.
     @param params The parameters.
-    @param args The arguments.
-    @return Returns 0 upon success and an ErrorList ticket number upon failure. */
+    @param args   The arguments.
+    @return       Returns 0 upon success and an ErrorList ticket number upon 
+                  failure. */
 KABUKI const Operation* BinRead (Bin* bin, const uint_t* params, void** args);
+
+/** Reads the next char_t.
+    @param  bin     The Bin.
+    @param  result  The char_t result.
+    @return Returns an Error Operation upon failure. */
+KABUKI const Operation* BinReadChar (Bin* bin, char_t& result);
 
 }       //< namespace _
 #endif  //< KABUKI_SCRIPT_BIN_H

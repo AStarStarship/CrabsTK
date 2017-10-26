@@ -28,31 +28,31 @@ class KABUKI User
 {
     public:
 
-    /** Creates a user with the given username and password. */
+    /** Creates a user with the given char and password. */
     User (const char* username, const char* password);
 
-    /** Gets a reference to the username handle. */
+    /** Gets a reference to the char handle. */
     Handle& GetUsername ();
 
     /** Gets a reference to the password. */
     Password& GetPassword ();
 
-    /** Checks to see if the given username and password are in the correct format. */
+    /** Checks to see if the given char and password are in the correct format. */
     bool Verify (const char* username, const char* password);
 
     /** Returns true if this user is the same as the given one.  */
     bool Equals (const User& user);
 
-    /** Returns true if this username is the same as the given one.  */
-    bool equals (const char* name);
+    /** Returns true if this char is the same as the given one.  */
+    bool Equals (const char* name);
 
     /** Prints this object to a expression. */
     void Print (_::Log& log);
 
     private:
 
-    Handle username;      	//< The username.
-    Password password;      //< The user's password.
+    Handle   handle_;   //< The user's handle (i.e. key).
+    Password password_; //< The user's password.
 };
 }       //< namespace id
 }       //< kabuki

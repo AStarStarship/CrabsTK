@@ -1,5 +1,5 @@
 /** kabuki::pro
-    @file    ~/source/kabuki/id/imp/user_list.cc
+    @file    ~/source/kabuki/id/include/imp/user_list.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -24,20 +24,20 @@ UserList::UserList ()
 
 int UserList::GetNumUsers ()
 {
-    users.size (); 
+    users_.GetCount (); 
 }
 
 bool UserList::Add (const User& new_user)
 {
-    users.push_back (User (new_user));
+    users_->Push (User (new_user));
     return true;
 }
 
 bool UserList::Contains (const char* username)
 {
-    for (int index = 0; index < users.size (); index++)
+    for (int index = 0; index < users_.GetCount (); index++)
     {
-        if (users[index].equals (username))
+        if (users_[index]->Equals (username))
             return true;
     }
     return false;
@@ -45,9 +45,9 @@ bool UserList::Contains (const char* username)
     
 bool UserList::Contains (const User& user)   
 {
-    for (int index = 0; index < users.size (); index++)
+    for (int index = 0; index < users_.GetCount (); index++)
     {
-        if (users[index].equals (user))
+        if (users_[index]->Equals (user))
             return true;
     }
     return false;
@@ -55,15 +55,20 @@ bool UserList::Contains (const User& user)
 
 User* UserList::Find (const char* username)
 {
-    if (username.length () == 0)
+    size_t length = strlen (username);
+    if (length == 0)
     {
         return nullptr;//static website guest account
     }
 
-    for (int index = 0; index < users.size (); index++)
-        if (users[index].equals (username))
-            return &users[index];
+    for (int index = 0; index < users_.GetCount (); index++)
+        if (users_[index]->Equals (username))
+            return &users_[index];
     return nullptr;//static website guest account
+}
+
+int UserList::GetCount () {
+    return users_->GetCount ();
 }
 
 void UserList::Print (_::Log& log)
@@ -71,15 +76,14 @@ void UserList::Print (_::Log& log)
     /// This method creates a char of the users.Print (_::Log& log) 
     /// strings separated by spaces
 
-    char returnString = "Number of Users: " + users.size () + "\n";
+    log += "Number of Users: " + users_.GetCount () + "\n";
 
-    for (int index = 0; index < users.size (); index++)
+    for (int index = 0; index < users_.GetCount (); index++)
     {
         /// Iterated through the indexes array and write the
         /// Print (_::Log& log) strings to the returnString
-        returnString += "User " + (index + 1) + ": " + users[index].GetUsername ().GetHandle () + "\n";
+        log += "User " + (index + 1) + ": " + users_[index]->GetUsername ().GetKey () + "\n";
     }
-    Print (logs (returnString);
 }
 
 }       //< id

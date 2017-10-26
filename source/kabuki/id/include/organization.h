@@ -16,7 +16,7 @@
 #ifndef KABUKI_ID_ORGANIZATION_H
 #define KABUKI_ID_ORGANIZATION_H
 
-#include "id_config.h"
+#include "module_config.h"
 
 #include "Entity.h"
 

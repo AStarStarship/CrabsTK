@@ -17,6 +17,7 @@
 #define KABUKI_ID_USERLIST_H
 
 #include "user.h"
+#include "../../data/include/array.h"
 
 namespace kabuki { namespace id {
 
@@ -36,6 +37,9 @@ class KABUKI UserList
     /** Adds the new user to the list. */
     bool Add (const User& new_user);
 
+    /** Gets the number of users in the UserList. */
+    int GetCount ();
+
     /** Returns true if this list contains the given user query result. */
     bool Contains (const char* string);
 
@@ -47,11 +51,11 @@ class KABUKI UserList
     User* Find (const char* query);
 
     /** Prints this object to a expression. */
-    void Print ();
+    void Print (_::Log& log);
     
     private:
     
-    std::vector<User> users;
+    data::Array<User*> users_;
 };
 }       //< namespace id
 }       //< namespace kabuki

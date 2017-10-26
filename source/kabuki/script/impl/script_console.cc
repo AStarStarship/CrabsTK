@@ -19,14 +19,14 @@
 
 namespace _ {
 
-char ReadChar (const char* header) {
+char KeyboardChar (const char* header) {
     std::cout << header;
     char c = getchar ();
     std::cout << '\n';
     return c;
 }
 
-int ReadInt (const char* header) {
+int KeyboardInt (const char* header) {
     int number;
     std::cout << header;
     std::cin.clear ();
@@ -34,7 +34,7 @@ int ReadInt (const char* header) {
     return number;
 }
 
-float ReadFloat (const char* header) {
+float KeyboardFloat (const char* header) {
     float number;
     std::cout << header;
     std::cin.clear ();
@@ -42,7 +42,7 @@ float ReadFloat (const char* header) {
     return number;
 }
 
-char* ReadString (const char* header, int buffer_size) {
+char* KeyboardString (const char* header, int buffer_size) {
     if (buffer_size < 0)
         return nullptr;
     char* buffer = new char[buffer_size];
@@ -54,7 +54,7 @@ char* ReadString (const char* header, int buffer_size) {
     return buffer;
 }
 
-void ReadString (const char* header, char* buffer, int buffer_size) {
+void KeyboardString (const char* header, char* buffer, int buffer_size) {
     if (buffer == nullptr)
         return;
     if (buffer_size < 0)
@@ -83,7 +83,7 @@ const Operation* Console::Loop () {
     return 0;
 }
 
-const Operation* Console::Star (int index, Expression* expr) {
+const Operation* Console::Star (char_t index, Expression* expr) {
     return 0;
 }
 

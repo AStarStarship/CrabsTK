@@ -16,12 +16,13 @@
 #ifndef KABUKI_ID_GRAMMAR_H
 #define KABUKI_ID_GRAMMAR_H
 
-#include "id_config.h"
+#include "module_config.h"
+#include "../../script/include/log.h"
 
 namespace kabuki { namespace id {
 
 /** Used for settings rules to text grammar.
-Useful for rules for passwords.
+    Useful for rules for passwords.
 */
 class Grammar
 {

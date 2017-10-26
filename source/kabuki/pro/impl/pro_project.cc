@@ -14,7 +14,6 @@
              permissions and limitations under the License.
 */
 
-#include "../../data/include/array.h"
 #include "../include/project.h"
 
 using namespace _;
@@ -22,7 +21,7 @@ using namespace kabuki::data;
 
 namespace kabuki { namespace pro {
 
-ProjectNode* Pop (ProjectNode* stack, const char* result) {
+Project* Pop (_::Ar4<Project*>* stack, const char* result) {
     if (stack == nullptr)
         return nullptr;
     if (result == nullptr)
@@ -67,13 +66,6 @@ Project::Project (const char* key, const char* readme) :
 }
 
 Project::~Project () {
-}
-
-bool Project::Select (int index) {
-    if (index < 0) return false;
-    if (index >= schedules_->count) return false;
-    task_ = ArrayGet<Schedule*> (schedules_, index);
-    return true;
 }
 
 void Project::ListObjects () {
@@ -206,6 +198,13 @@ bool Project::RemoveProject (int index) {
 
 bool Project::RemoveProject (const char* key) {
     return RemoveProject (ProjectIndex (key));
+}
+
+bool Project::Select (int index) {
+    if (index < 0) return false;
+    if (index >= schedules_->count) return false;
+    task_ = ArrayGet<Schedule*> (schedules_, index);
+    return true;
 }
 
 void Project::Load () {
@@ -349,44 +348,20 @@ void Project::Print (int indent_level, char bullet_type, int spaces_per_tab) {
     std::cout << "| Projects: " << projects_->count
         << "|\n";
     for (int i = 0; i < projects_->count; ++i) {
-        ArrayGet<Project*> (projects_, i)->Print ();
+        Ar4Get<Project*> (projects_, i)->Print ();
     }
     std::cout << "| Schedules: " << schedules_->count
         << "|\n";
     for (int i = 0; i < schedules_->count; ++i) {
-        ArrayGet<Schedule*> (schedules_, i)->Print ();
+        Ar4Get<Schedule*> (schedules_, i)->Print ();
     }
     PrintBreak ("|", '_');
 }
 
-ProjectNode::ProjectNode (Project* project, ProjectNode* prev) :
-    project (project),
-    prev (prev) {
-}
-
-ProjectNode::~ProjectNode () {
-}
-
-void print_project_node (ProjectNode* node) {
-    if (node == nullptr)
-        return;
-    ProjectNode* prev = node->prev;
-    print_project_node (node->prev);
-    std::cout << node->project->GetKey ();
-    std::cout << ">";
-    if (prev == nullptr)
-        return;
-}
-
-void ProjectNode::Print () {
-    std::cout << "\n>";
-    print_project_node (this);
-}
-
-const char* Project::Command (char* input, ProjectNode*& stack) {
+const char* Project::Command (char* input, Ar4<Project*>* stack) {
     char c,  //< The first flag char.
-        d,  //< The second flag char.
-        e;  //< The third flag char.
+         d,  //< The second flag char.
+         e;  //< The third flag char.
     char* end;
     if (input == nullptr)
         return "Null Project command";

@@ -16,7 +16,8 @@
 #ifndef KABUKI_ID_DATE_H
 #define KABUKI_ID_DATE_H
 
-#include "id_config.h"
+#include "module_config.h"
+#include "../../script/include/log.h"
 
 namespace kabuki { namespace id {
 
@@ -35,7 +36,7 @@ class KABUKI Date
     /** Sets the date to the Unix timestamp. */
     void SetTime (time_t t);
     
-    /** Prints this object to the stdout. */
+    /** Prints this object to the log. */
     void Print (_::Log& log);
 
     private:

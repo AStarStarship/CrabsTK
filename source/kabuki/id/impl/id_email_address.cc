@@ -1,5 +1,5 @@
 ﻿/** kabuki::pro
-    @file    ~/source/kabuki/id/imp/email_address.cc
+    @file    ~/source/kabuki/id/include/imp/email_address.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 

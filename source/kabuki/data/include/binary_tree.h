@@ -66,16 +66,15 @@ class BinaryTree
         while (!BinaryNodeContains (current, ptr)) {
             while (true) {
                 if (current->left != nullptr && current->been_left == false) {
-                    current = current->left;// can go this way
-                    current->been_left = true;// flag the node so it knows were its been
-                } else if (current->right != nullptr && current->been_right == false) {
-                    current = current->right;// can go that way
-                    current->been_right = true;// flag the node so it knows were its been
+                    current = current->left;
+                    current->been_left = true;
+                } else if (current->right != nullptr && 
+                           current->been_right == false) {
+                    current = current->right;
+                    current->been_right = true;
                 } else if (current->root != nullptr) {
                     current = current->root;
                     current->been_right = current->been_right = false;
-                    // now were done with this op-tree so we reset the flags so that
-                    // we don't have to reset the whole tree to search it again
                 } else {
                     current->been_right = current->been_right = false;
                     return nullptr;

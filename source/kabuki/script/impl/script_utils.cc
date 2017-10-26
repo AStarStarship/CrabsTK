@@ -19,14 +19,28 @@
 
 namespace _ {
 
+const char* NewLineString () {
+    static const char string[] = "\n\0";
+    return string;
+}
+
+const char* ErrorHeader () {
+    static const char string[] = "| Error: \0";
+    return string;
+}
+
+const char* VerticalBar () {
+    static const char string[] = "| \0";
+    return string;
+}
+
 void PrintLine (const char* string) {
     std::cout << '\n' << string << '\n';
 }
 
 void PrintDebug (const char* message, 
                  const char* end_string,
-                 const char* begin_string)
-{
+                 const char* begin_string) {
 #if DEBUG
     std::cout << begin_string << message << end_string;
 #endif
@@ -77,6 +91,10 @@ void DestroyDuplicate (const byte* string) {
 void Delete (void* buffer) {
     if (buffer == nullptr) return;
     delete[] buffer;
+}
+
+byte* WordAlign (byte* ptr) {
+    return ptr + (((~reinterpret_cast<uintptr_t> (ptr)) + 1) & (sizeof (byte*) - 1));
 }
 
 byte NibbleToLowerCaseHex (byte b) {

@@ -16,10 +16,12 @@
 #ifndef KABUKI_ID_TAGLIBRARY_H
 #define KABUKI_ID_TAGLIBRARY_H
 
-#include "id_config.h"
-#include "../../scraipt/include/array.h"
+#include "tag.h"
+#include "../../data/include/array.h"
 
 namespace kabuki { namespace id {
+
+using namespace kabuki;
 
 /** A container of strings sorted alphabetically.
     This object owns the memory for the strings. Each time a patch is added,
@@ -44,11 +46,11 @@ class TagLibrary
     int GetNumTags ();
 
     /** Prints this object to a Expression. */
-    void Print ();
+    void Print (_::Log& log);
     
     private:
     
-    Ar1* tags; //< Collection of tag strings.
+    data::Array<id::Tag*> tags; //< Collection of tag strings.
 };
 }       //< namespace id
 }       //< namespace kabuki

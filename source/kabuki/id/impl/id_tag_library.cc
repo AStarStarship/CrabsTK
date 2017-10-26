@@ -1,5 +1,5 @@
 /** kabuki::pro
-    @file    ~/source/kabuki/id/imp/tag_library.cc
+    @file    ~/source/kabuki/id/include/imp/tag_library.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,7 +14,7 @@
 */
 
 #include <stdafx.h>
-#include "../include/tag_library.h"
+#include "../include/tag_tibrary.h"
 
 namespace kabuki { namespace id {
 
@@ -23,12 +23,12 @@ TagLibrary::TagLibrary ()
 
 }
 
-const char* TagLibrary::GetOrAddTag (const char* Tag)
+const char* TagLibrary::GetOrAddTag (const char* tag)
 {
     /*
-    if (Tag.compare ("")) return nullptr;
-    for_each (tags.begin (), tags.end (), [] (char* string)
-    {
+    if (StringCompare (tag, ""))
+        return nullptr;
+    for_each (tags.begin (), tags.end (), [] (char* string) {
         if (string.compare (Tag) == 0) return string;
     });
     */
@@ -45,7 +45,7 @@ int TagLibrary::GetNumTags ()
     return tags_.count;
 }
 
-void TagLibrary::Print (Expression& slot)
+void TagLibrary::Print (_::Log& log)
 {
 }
 

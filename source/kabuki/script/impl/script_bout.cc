@@ -72,7 +72,7 @@ const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header
     return 0;
 }
 
-Bout* BoutInit (byte* buffer, uint_t size) {
+Bout* BoutInit (uintptr_t* buffer, uint_t size) {
     if (size < kMinSlotSize) return nullptr;
     if (buffer == nullptr) return nullptr;
 

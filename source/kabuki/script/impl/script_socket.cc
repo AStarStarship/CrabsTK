@@ -54,17 +54,16 @@ const Operation* SocketAddSlot (Socket* socket, Slot* slot) {
     return 0;
 }
 
-Slot* SocketGetSlot (Socket* socket, int index) {
+Slot* SocketGetSlot (Socket* socket, uint_t index) {
     if (socket == nullptr) return nullptr;
     if (index >= socket->num_slots)
         return nullptr;
     return SocketSlots (socket)[index];
 }
-
 Slot* SocketFindSlot (Socket* socket, void* address) {
     Slot** slots = SocketSlots (socket);
     if (slots == nullptr) return nullptr;
-    for (byte i = 0; i < socket->num_slots; ++i) {
+    for (uint_t i = 0; i < socket->num_slots; ++i) {
         Slot* slot = slots[i];
         if (SlotContains (slot, address))
             return slot;
@@ -72,14 +71,14 @@ Slot* SocketFindSlot (Socket* socket, void* address) {
     return nullptr;
 }
 
-void SocketDeleteSlot (Socket* socket, int index) {
+void SocketDeleteSlot (Socket* socket, uint_t index) {
     if (socket == nullptr) return;
     if (index >= socket->num_slots)
         return;
     Slot** slots = SocketSlots (socket);
     Slot* slot = slots[index];
     slot->~Slot ();
-    for (byte i = index; i < socket->num_slots; ++i)
+    for (uint_t i = index; i < socket->num_slots; ++i)
         slots[index] = slots[index + 1];
     --socket->num_slots;
 }

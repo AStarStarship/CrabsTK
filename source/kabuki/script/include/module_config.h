@@ -26,44 +26,27 @@
 // @todo Check all values of assembly_settings.inl, store them as an enum, 
 // then #undef them.
 
-// Bare metal (i.e. No OS) OS type macro.
-#define BARE_METAL                  1
-// mbed bare-metal OS type macro.
-#define MBED                        2
-// Arduino bare-metal OS type macro.
-#define ARDUINO                     4
-// mbed OS type macro.
-#define MBED_OS                     3
-// mbed OS type macro.
-#define WIN32                       5
-// Win32 OS type macro.
-#define WINDOWS                     6
-// Windows Universal OS type macro.
-#define ANDROID                     7
-// Android OS type macro.
-#define LINUX                       8
-// Linux OS type macro.
-#define OSX                         9
-// iOS OS type macro.
-#define IOS                         10
-
-// x86 processor type macro.
-#define X86                         1
-// x64 processor type macro.
-#define X64                         2
-// x86 processor type macro.
-#define ARM8                        3
-// ARM16 processor type macro.
-#define ARM16                       4
-// ARM32 processor type macro.
-#define ARM32                       5
-// ARM64 processor type macro.
-#define ARM64                       6
+#define BARE_METAL       1 //< Bare metal (i.e. No OS) OS type macro.
+#define MBED_BARE_METAL  2 //< mbed bare-metal OS type macro.
+#define MBED_OS          3 //< Arduino bare-metal OS type macro.
+#define ARDUINO          4 //< mbed OS type macro.
+#define MINGW32          5 //< Win32 OS type macro.
+#define WINDOWS          6 //< Windows Universal OS type macro.
+#define ANDROID          7 //< Android OS type macro.
+#define LINUX            8 //< Linux OS type macro.
+#define OSX              9  //< iOS OS type macro.
+#define IOS              10 //<< 
+#define X86              1  //< x86 processor type macro.
+#define X64              2  //< x64 processor type macro.
+#define ARM8             3  //< ARM8 processor type macro.
+#define ARM16            4  //< ARM16 processor type macro.
+#define ARM32            5  //< ARM32 processor type macro.
+#define ARM64            6  //< ARM64 processor type macro.
 
 // Stupid dumb-face Big-Endian nonsense
 
-#define LITTLE_ENDIAN               1
-#define BIG_ENDIAN                  2
+#define LITTLE_ENDIAN   1
+#define BIG_ENDIAN      2   //< Don't ask me what they where thinking.
 
 // Executable assembly type macro.
 #define EXECECUTABLE                1
@@ -79,7 +62,7 @@
 // Logical no.
 #define NO                          0
 
-#include <assembly.h>           //< Config stuff for your project.
+#include <assembly.h>       //< Inline config stuff for your project.
 
 #if CHAR_WIDTH == 8
 typedef uint8_t index;
@@ -243,6 +226,9 @@ enum {
 #else
 #error  Invalid MEMORY_PROFILE
 #endif
+
+typedef int char_t;
+//< Right now I'm restricting Unicode chars to the int size. @todo Fix me.
 
 /** Macro declares a class to be non-copyable. */
 #define NONCOPYABLE (ClassName)\

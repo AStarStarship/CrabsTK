@@ -21,6 +21,9 @@
 #include "../include/bin.h"
 #include "../include/slot.h"
 #include "../include/operation.h"
+#include "../include/utils.h"
+#include "../include/args.h"
+#include "../include/types.h"
 
 namespace _ {
 
@@ -94,7 +97,7 @@ const Operation* BinResult (Bin* bin, Bin::Error error, const uint_t* header,
     return 0;
 }
 
-Bin* BinInit (byte* buffer, uint_t size) {
+Bin* BinInit (uintptr_t* buffer, uint_t size) {
     if (size < kMinSlotSize) return nullptr;
     if (buffer == nullptr) return nullptr;
 
@@ -162,6 +165,32 @@ void BinPrint (Bin* bin) {
     printf ("| Bin 0x%p: size: %u, start: %u, stop: %u, read: %u\n", bin, size,
         bin->start, bin->stop, bin->read);
     PrintMemory (&bin->buffer, size);
+}
+
+const Operation* BinReadChar (Bin* bin, char_t& result) {
+    if (bin == nullptr)
+        return BinResult (bin, Bin::RoomError);
+
+    byte type,                          //< The current type being read.
+        ui1;                            //< Temp variable.
+    char_t temp;
+    uint_t size,                        //< Size of the ring buffer.
+           length,                      //< Length of the data in the buffer.
+           count,                       //< Argument length.
+           index;                       //< Index in the escape sequence.
+
+    size = bin->size;
+
+    byte* begin = &bin->buffer,         //< The beginning of the buffer.
+        * end   = begin + size,         //< The end of the buffer.
+        * start = begin + bin->start,   //< The start of the data.
+        * stop  = begin + bin->stop;    //< The stop of the data.
+
+    length = SlotLength (start, stop, size);
+
+    if (length == 0) {
+        return BinResult (bin, Bin::BufferUnderflowError);
+    }
 }
     
 const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {

@@ -19,104 +19,120 @@
 
 #include "../include/log.h"
 #include "../include/address.h"
-#include "../include/args.h"
+#include "../include/bin.h"
+#include "../include/clock.h"
 
-using namespace _;
+namespace _ {
 
-Log& operator+ (Log& log, int8_t value) {
-    void* args[2];
-    char buffer[5];
-    sprintf_s (buffer, 5, "%i", value);
-    BoutWrite (log.bout, Params<2, SOH, STX> (), Args (args, Address<'?'> (),
-                                                   buffer));
-    return log;
-}
+void LogPrint (Log& log) {
 
-Log& operator+ (Log& log, uint8_t value) {
-    void* args[2];
-    char buffer[4];
-    sprintf_s (buffer, 4, "%u", value);
-    BoutWrite (log.bout, Params<2, SOH, STX> (), Args (args, Address<'?'> (),
-                                                   buffer));
-    return log;
-}
+    Bin* bin = reinterpret_cast<Bin*> (log.bout);
+    void* args[1];
 
-Log& operator+ (Log& log, int16_t value) {
-    void* args[2];
-    char buffer[7];
-    sprintf_s (buffer, 7, "%i", value);
-    BoutWrite (log.bout, Params<2, SOH, STX> (), Args (args, Address<'?'> (),
-                                                   buffer));
-    return log;
-}
+    byte     type = 0,                                             
+             ui1;
+    uint16_t ui2;
+    uint32_t ui4;
+    uint64_t ui8;
 
-Log& operator+ (Log& log, uint16_t value) {
-    void* args[2];
-    char buffer[6];
-    sprintf_s (buffer, 6, "%u", value);
-    BoutWrite (log.bout, Params<2, SOH, STX> (), Args (args, Address<'?'> (),
-                                                   buffer));
-    return log;
-}
+    int8_t   reserved,
+             si1;
+    uint16_t si2;
+    uint32_t si4;
+    uint64_t si8;
 
-Log& operator+ (Log& log, int32_t value) {
-    void* args[2];
-    char buffer[12];
-    sprintf_s (buffer, 12, "%i", value);
-    BoutWrite (log.bout, Params<2, SOH, STX> (), Args (args, Address<'?'> (),
-                                                   buffer));
-    return log;
-}
+    float     flt;
+    double    dbl;
 
-Log& operator+ (Log& log, uint32_t value) {
-    void* args[2];
-    char buffer[11];
-    sprintf_s (buffer, 11, "%u", value);
-    BoutWrite (log.bout, Params<2, SOH, STX> (), Args (args, Address<'?'> (),
-                                                   buffer));
-    return log;
-}
+    char_t index;
+    if (BinReadChar (reinterpret_cast<Bin*> (log.bout), index))
+        return;
 
-Log& operator+ (Log& log, int64_t value) {
-    void* args[2];
-    char buffer[22];
-    sprintf_s (buffer, 22, "%I64d", value);
-    BoutWrite (log.bout, Params<2, SOH, STX> (), Args (args, Address<'?'> (),
-                                                   buffer));
-    return log;
-}
-
-Log& operator+ (Log& log, uint64_t value) {
-    void* args[2];
-    char buffer[21];
-    sprintf_s (buffer, 21, "%llu", value);
-    BoutWrite (log.bout, Params<2, SOH, STX> (), Args (args, 
-                                                           Address<'?'> (),
-                                                           buffer));
-    return log;
-}
-
-Log& operator+ (Log& log, float value) {
-    void* args[2];
-    char buffer[FLT_MAX_10_EXP + 2];
-    sprintf_s (buffer, FLT_MAX_10_EXP + 2, "%f", value);
-    BoutWrite (log.bout, Params<2, SOH, STX> (), Args (args, Address<'?'> (),
-                                                   buffer));
-    return log;
-}
-
-Log& operator+ (Log& log, double value) {
-    void* args[2];
     char buffer[DBL_MAX_10_EXP + 2];
-    sprintf_s (buffer, DBL_MAX_10_EXP + 2, "%f", value);
-    BoutWrite (log.bout, Params<2, SOH, STX> (), Args (args, Address<'?'> (),
-                                                   buffer));
-    return log;
-}
 
-Log& operator+ (Log& log, const char* char) {
-    void* args[2];
-    BoutWrite (log.bout, Params<2, SOH, STX> (), Args (args, Address<'?'> (),
-                                                   char));
-    return log;
-}
+    while (index )
+
+    switch (type) {
+        case STX:
+        {
+            if (BinRead (bin, Params<2, SOH, STX> (), Args (args, &ui1,
+                                                            buffer)))
+                return;
+            std::cout << buffer;
+        }
+        case SI1: {
+            if (BinRead (bin, Params<2, SOH, SI1> (), Args (args, &si1)))
+                return;
+            std::cout << si1;
+        }       
+        case UI1: {
+            if (BinRead (bin, Params<2, SOH, UI1> (), Args (args, &ui1)))
+                return;
+            std::cout << si1;
+        }
+        case BOL:
+        {
+            if (BinRead (bin, Params<2, SOH, SI1> (), Args (args, &si1)))
+                return;
+            std::cout << si1;
+        }
+        case SI2: {
+            if (BinRead (bin, Params<2, SOH, SI2> (), Args (args, &si2)))
+            return;
+            std::cout << si1;
+        }
+        case UI2: {
+            if (BinRead (bin, Params<2, SOH, UI2> (), Args (args, &ui2,
+                                                            buffer)))
+                return;
+            std::cout << si1;
+        }
+
+        case SI4: {
+            if (BinRead (bin, Params<2, SOH, SI4> (), Args (args, &si4,
+                                                            buffer)))
+                return;
+            std::cout << si1;
+        }
+                  
+        case UI4: {
+            if (BinRead (bin, Params<2, SOH, UI4> (), Args (args, &ui4)))
+                return;
+            std::cout << si1;
+        }
+                  
+        case SI8: {
+            if (BinRead (bin, Params<2, SOH, SI8> (), Args (args, &si8)))
+                return;
+            std::cout << si8;
+        }
+                  
+        case UI8: {
+            if (BinRead (bin, Params<2, SOH, UI8> (), Args (args,  &ui8)))
+                return;
+            std::cout << ui8;
+        } 
+        case TMS: {
+            if (BinRead (bin, Params<2, SOH, TMS> (), Args (args, &ui4)))
+                return;
+            ClockPrintTime (ui4);
+        }
+        case TMU: {
+            if (BinRead (bin, Params<2, SOH, TMU> (), Args (args, &ui8)))
+                return;
+            ClockPrintTimestamp (ui8);
+        }
+        case FLT: {
+            if (BinRead (bin, Params<2, SOH, FLT> (), Args (args, &flt)))
+                return;
+            std::cout << si1;
+        }
+        case DBL: {
+            if (BinRead (bin, Params<2, SOH, STX> (), Args (args, &dbl)))
+                return;
+            std::cout << si1;
+        }
+    }
+}   
+
+}       //< namespace _

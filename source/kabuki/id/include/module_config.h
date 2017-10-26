@@ -1,6 +1,5 @@
-/** kabuki::script
-    @version 0.x
-    @file    ~/source/kabuki/script/impl/script_evaluation.cc
+/** kabuki::id
+    @file    ~/source/kabuki/id/include/script_module.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -13,10 +12,12 @@
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
+ 
+#ifndef KABUKI_ID_CONFIG_H
+#define KABUKI_ID_CONFIG_H
 
-#include <stdafx.h>
-#include "../include/evaluation.h"
+#include "../../script/include/module_config.h"
 
-namespace _ {
+typedef uintptr_t uid_t;
 
-}       //< namespace _
+#endif  //< KABUKI_ID_CONFIG_H

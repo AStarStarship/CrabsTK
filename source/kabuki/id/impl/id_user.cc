@@ -1,5 +1,5 @@
 /** kabuki::pro
-    @file    ~/source/kabuki/id/imp/user.cc
+    @file    ~/source/kabuki/id/include/imp/user.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -18,41 +18,35 @@
 namespace kabuki { namespace id {
 
 User::User (const char* name, const char* password) :
-    name (name),
-    password (password)
+    handle_     (name),
+    password_ (password)
 {
     //activeAccounts = new kabuki::pro.Game.Account.List ();
 }
 
-Handle& User::GetUsername () { return name; }
+Handle& User::GetUsername () { return handle_; }
 
-Password& User::GetPassword ()
-{
-    return password;
-}
+Password& User::GetPassword () { return password_; }
 
-bool User::Verify (const char* username, const char* aUser)
+bool User::Verify (const char* username, const char* user)
 {
-    //return IsValidUsername (username);
+    //return IsValidUsername (char);
     return false;
 }
 
 bool User::Equals (const User& user)
 {
-    return (name.equals (user.name) && password.Equals (user.password));
+    return (handle_.Equals (handle_.GetKey ()) && password_.Equals (user.password_));
 }
 
-bool User::equals (const char* name)
+bool User::Equals (const char* name)
 {
-    return name.Equals (name);
+    return handle_.Equals (name);
 }
 
 void User::Print (_::Log& log)
 {
-    slot.Prints ("User Name: ");
-    name.Print (slot);
-    slot.Prints (" Password: ");
-    password.Print (slot);
+    log += "User Name: " + handle_.GetKey () + "  Password: " + password_.GetString ();
 }
 
 }       //< id

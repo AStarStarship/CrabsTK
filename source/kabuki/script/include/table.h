@@ -117,7 +117,7 @@ KABUKI void TablePrint (Table* table);
 
 /** Attempts to find the given key.
     @return Returns 0 upon failure, and valid index upon success. */
-KABUKI byte Find (const Table* rt, const char * key);
+KABUKI byte Find (const Table* rt, const char* key);
 
 /** Prints this object out to the console. */
 KABUKI void Print (Table* rt);

@@ -24,8 +24,9 @@
 
 namespace _ {
 
-static const char ErrorHeader[] = "| Error: \0",
-               VerticalBar[] = "| \0";
+KABUKI const char* NewLineString ();
+KABUKI const char* ErrorHeader ();
+KABUKI const char* VerticalBar ();
 
 /* Returns the inverse of the given value.
    For code metadata purposes. */
@@ -39,11 +40,11 @@ T MaxValue () {
 KABUKI void PrintLine (const char* string);
 
 KABUKI void PrintDebug (const char* message,
-                        const char* end_string   = NewLineString,
-                        const char* begin_string = VerticalBar);
+                        const char* end_string   = NewLineString (),
+                        const char* begin_string = VerticalBar   ());
 
 KABUKI void PrintError (const char* message, 
-                        const char* end_string = NewLineString);
+                        const char* end_string = NewLineString ());
 
 KABUKI void PrintDebugPointer (const char* message, const void* address);
 
@@ -157,10 +158,11 @@ KABUKI uintptr_t WordAlignOffset (void* ptr) {
     // ~101 = 010 => 101 + 010 + 1 = 0x1000
     // ~110 = 001 => 110 + 001 + 1 = 0x1000
     // ~111 = 000 => 111 + 000 + 1 = 0x1000
-
-    static const uintptr_t mask = sizeof (T) - 1;
-    return ((~reinterpret_cast<uintptr_t> (ptr)) + 1) & mask;
+    //                                                        Mask
+    return ((~reinterpret_cast<uintptr_t> (ptr)) + 1) & (sizeof (T) - 1);
 }
+
+KABUKI byte* WordAlign (byte* ptr);
 
 /** Converts a single byte a one-byte hex representation. */
 KABUKI byte NibbleToLowerCaseHex (byte b);

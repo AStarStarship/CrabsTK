@@ -1,5 +1,5 @@
 /** kabuki::pro
-    @file    ~/source/kabuki/id/implLibrary.cc
+    @file    ~/source/kabuki/id/include/implLibrary.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -32,7 +32,7 @@ char* Library::getHitChangeString ()
 }
 
 /** Adds a patch to the patches. */
-bool Library::addHit (Hit& p)
+bool Library::AddHit (Hit& p)
 {
     patches.add (p);
     
@@ -50,16 +50,16 @@ void Library::loadTestHits ()
 {
     patches = new vector<Hit> (9);
         
-    addHit (new Hit ("Claranet", "Default claranet patch.", { "Woodwind", "Claranet", "Reed" }));
-    addHit (new Hit ("Oboe", "Default oboe patch.", { "Woodwind", "Oboe", "Reed" }));
-    addHit (new Hit ("Tenor Sax", "Default tenor sax patch.", { "Woodwind", "Tenor Sax", "Reed", "Tenor" }));
-    addHit (new Hit ("Recorder", "Default recorder patch.", { "Woodwind", "Recorder", "Flute" }));
-    addHit (new Hit ("Flute", "Default flute patch.", { "Woodwind", "Flute" }));
+    AddHit (new Hit ("Claranet", "Default claranet patch.", { "Woodwind", "Claranet", "Reed" }));
+    AddHit (new Hit ("Oboe", "Default oboe patch.", { "Woodwind", "Oboe", "Reed" }));
+    AddHit (new Hit ("Tenor Sax", "Default tenor sax patch.", { "Woodwind", "Tenor Sax", "Reed", "Tenor" }));
+    AddHit (new Hit ("Recorder", "Default recorder patch.", { "Woodwind", "Recorder", "Flute" }));
+    AddHit (new Hit ("Flute", "Default flute patch.", { "Woodwind", "Flute" }));
         
-    addHit (new Hit ("Trumpet", "Default trumpet patch.", { "Brass", "Trumpet" }));
-    addHit (new Hit ("FlugleHorn","Default flugle horn patch.", { "Brass", "Flugle Horn" }));
-    addHit (new Hit ("FrenchHorn", "Default french horn patch.", { "Brass", "French Horn" }));
-    addHit (new Hit ("Trombone", "Default trombone patch.", { "Brass", "Trombone" }));
+    AddHit (new Hit ("Trumpet", "Default trumpet patch.", { "Brass", "Trumpet" }));
+    AddHit (new Hit ("FlugleHorn","Default flugle horn patch.", { "Brass", "Flugle Horn" }));
+    AddHit (new Hit ("FrenchHorn", "Default french horn patch.", { "Brass", "French Horn" }));
+    AddHit (new Hit ("Trombone", "Default trombone patch.", { "Brass", "Trombone" }));
 }
     
 void Library::LoadFromJSON (char json)
@@ -76,18 +76,18 @@ void Library::LoadFromJSON (char json)
         }
         catch (Exception e)
         {
-        Debug.Assert (false, e.print (Expression& slot));
+        Debug.Assert (false, e.print (Log& log));
         }
         */
 }
     
-char* Library::toJSON ()
+char* Library::ToJson ()
 {
     char json = new char "[";
     int count = patches.size ();
     for (int i = 0; i < count; i++)
     {
-        json += patches[i].ToJSON ();
+        json += patches[i].ToJson ();
         if (i < count - 1) json += ", ";
     }
     return json + "]";
@@ -147,7 +147,7 @@ char* Library::DefaultHitLibrary ()
 
 int Library::InitNumHites () { return 0; }
 
-void Library::print (Expression& slot)
+void Library::print (Log& log)
 {
 }
 

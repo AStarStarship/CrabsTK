@@ -77,7 +77,7 @@ class Door : public Operand {
     const Operation* ExecAll ();
 
     /** Script expressions. */
-    virtual const Operation* Star (int index, Expression* expr);
+    virtual const Operation* Star (char_t index, Expression* expr);
 
     private:
 

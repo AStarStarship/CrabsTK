@@ -17,7 +17,7 @@
 #ifndef KABUKI_PRO_PROJECT_H
 #define KABUKI_PRO_PROJECT_H
 
-#include "../../script/include/array.h"
+#include "../../data/include/array.h"
 #include "task.h"
 #include "schedule.h"
 
@@ -26,30 +26,14 @@ using namespace _;
 namespace kabuki { namespace pro {
 
 class Project;
-using ProjectArray  = Array<Schedule*, int>;
-using ScheduleArray = Array<Project *, int>;
+using ProjectArray  = Array<Schedule*>;
+using ScheduleArray = Array<Project*>;
 
-/** A linear linked list node for creating a stack of Project. */
-struct ProjectNode
-{
-    Project* project;
-    ProjectNode* prev;
-    
-    /** Creates a node that points to the previous node. */
-    ProjectNode (Project* project, ProjectNode* prev = nullptr);
+/** Pops a Project pointer off the stack. */
+Project* Pop (_::Ar4<Project*>* stack, const char* result);
 
-    /** Destructor. */
-    ~ProjectNode ();
-
-    /** Prints the stack key's in a horizontal link. */
-    void Print ();
-};
-
-/** Pops a ProjectNode* off the stack. */
-ProjectNode* Pop (ProjectNode* stack, const char* result);
-
-/** Pushes a ProjectNode* off the stack. */
-const char* Push (ProjectNode*& stack, Project* project);
+/** Pushes a Project pointer onto the stack. */
+const char* Push (_::Ar4<Project*>* stack, Project* project);
 
 
 /** A tree-like Project in the system that can be scheduled.
@@ -179,14 +163,14 @@ class Project
                            letters, lower case letters, stars, dashes etc.
         @param spaces_per_tab The number of spaces in a tab.
     */
-    void Print (int indent_level = 0, char bullet_type = '1', 
+    void Print (int indent_level   = 0, char bullet_type = '1', 
                 int spaces_per_tab = 4);
     
     /** Parses keyboard input from the user.
         @param input Usually is the keyboard input from the user. 
         @param stack Reference to the stack pointer to allow the project to
                      push and pop off of the stack. */
-    const char* Command (char* input, ProjectNode*& stack);
+    const char* Command (char* input, _::Ar4<Project*>* stack);
 
     private:
      

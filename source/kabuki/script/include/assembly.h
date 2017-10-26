@@ -21,7 +21,7 @@
             in this file. Please see module_config.h for configuration details.
 */
 
-// Choose BARE_METAL, MBED, MBED_OS, ARDUINO, WIN32, WINDOWS, ANDROID, 
+// Choose BARE_METAL, MBED, MBED_OS, ARDUINO, MINGW32, WINDOWS, ANDROID, 
 // LINUX, OSX, or IOS
 #define PLATFORM            WINDOWS
 

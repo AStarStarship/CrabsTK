@@ -14,19 +14,21 @@
 */
 
 #ifndef KABUKI_ID_HITLIST_H
+#define KABUKI_ID_HITLIST_H
 
-#include "id_config.h"
+#include "module_config.h"
+#include "../../script/include/log.h"
 
 namespace kabuki { namespace id {
 
-class KABUKI Hit
 /** A list of search hits.
     @note This class was for creating patch lists for musical instruments, but 
         is getting generalized to metadata search.
 
-    Each hit has a name and catagory, and type std::strings, and a list of tags that 
-    desribe the sound.
+    Each hit has a name and category, and type std::strings, and a list of tags that 
+    describe the sound.
 */
+class KABUKI Hit
 {
     public:
     
@@ -36,77 +38,79 @@ class KABUKI Hit
         MaxDescriptionLength = 256      //< The max description length.
     };
 
-    Hit (std::char name = "", std::char aDescription = "", std::char* someTags = nullptr, char hit = 0, 
-        std::char aCatagory = "", std::char aType = "", int aNumTags = 0);
-    /** Creates a hit from the given metadata. 
-        User produces the SomeTags list as a new array of std::strings, and this object cosumes it and is responsible for the deallocation of the memory.
+    /** Creates a hit from the given metadata.
+    User produces the SomeTags list as a new array of std::strings, and this object consumes it and is responsible for the deallocation of the memory.
     */
+    Hit (const char* name = "", const char* aDescription = "", const char** tags = nullptr, char hit = 0, 
+        const char* aCatagory = "", const char* aType = "", int aNumTags = 0);
 
-    std::char getName ();
     /** Gets the name. */
+    const char* GetName ();
 
-    std::char SetName (std::char name);
     /** Sets the name.
         @return returns 0 upon success, -1 if the input is nullptr, and 1 if the label is too long. */
+    const char* SetName (const char* name);
 
-    int getId ();
     /** Gets the Id. */
-    
-    void setId (int value);
-    /** Sets the Id. */
+    int GetId ();
 
-    std::char getDescription ();
-    /** Gets the description std::char. */
+    /** Sets the Id. */
+    void SetId (int value);
+
+    /** Gets the description const char*. */
+    const char* GetDescription ();
     
-    std::char setDescription (std::char aDescription);
     /** Sets the description.
         @return returns 0 upon success and 1 if the label is too long. */
-    
-    std::char getCatagory ();
-    /** Gets the catagory std::char.
-    @return Gets an empty std::char no tags exist. */
+    const char* SetDescription (const char* aDescription);
 
-    std::char getSubcatagory ();
-    /** Gets the subcatagory std::char.
-    @return Gets an empty std::char no tags exist. */
+    /** Gets the category const char*.
+        @return Gets an empty const char* no tags exist. */
+    const char* GetCatagory ();
 
-    std::char addTag (std::char aTag);
-    /** Addsa tag to the tag list.
+    /** Gets the subcategory const char*.
+    @return Gets an empty const char* no tags exist. */
+    const char* GetSubcatagory ();
+
+    /** Adds a tag to the tag list.
         @return returns 0 upon success, -1 if the input is nullptr, and 1 if the label is too long. */
+    const char* AddTag (const char* tag);
 
-    void addTags (char* someTags, int numTags);
     /** Adds a collection of tags to the hit-list. */
+    void AddTags (char* tags, int numTags);
     
-    std::char removeTag (std::char tag);
     /** Removes the given tag if it exists.
         @return Gets true upon success, 1 if the input is nullptr, and the given tag if the it doesn't exist. */
+    const char* RemoveTag (const char* tag);
 
-    bool containsTag (std::char tag);
     /** Gets true if this hit contains the given tag. */
+    bool ContainsTag (const char* tag);
 
-    bool containsTags (vector<std::char>& someTags);
     /** Gets true if this hit contains any of the given tags. */
-    
-    std::vector<std::char>& getTags ();
-    /** Gets the list of tags. */
-    
-    std::char toStringTags ();
-    /** Gets a comma seperated std::char of the tags. */
+    bool ContainsTags (std::vector<const char*>& tags);
 
-    std::char toJSON ();
-    /** Serializes to JSON std::char. */
+    /** Gets the list of tags. */
+    std::vector<const char*>& GetTags ();
     
-    void Print (Expression& slot);
+    /** Gets a comma separated const char* of the tags. */
+    const char* ToStringTags ();
+
+    /** Serializes to JSON const char*. */
+    const char* ToJson ();
+    
     /** Prints this object to a expression. */
+    void Print (_::Log& log);
     
     private:
 
-    std::char name,           //< The name of the hit.
-        description;           //< Description of the hit. 
-    std::char* catagory,      //< Pointer to the catagory char.
-        * type;                 //< Pointer to the type of instrument.
-    int uid;                    //< The unique identifier.
-    std::vector<std::char> tags;   //< List of tags.
+    const char             * name_,        //< The name of the hit.
+                           * description_; //< Description of the hit. 
+    const char            ** category_,    //< Pointer to the category char.
+                           * type_;        //< Pointer to the instrument type.
+    int                      uid_;         //< The unique identifier.
+    data::Array<const char*> tags_;        //< List of tags.
 };
 
-}       //< namespace id}       //< namespace kabuki
+}       //< namespace id
+}       //< namespace kabuki
+#endif  //< KABUKI_ID_HITLIST_H

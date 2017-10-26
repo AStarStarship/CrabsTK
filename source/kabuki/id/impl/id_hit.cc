@@ -1,5 +1,5 @@
 ﻿/** kabuki::pro
-    @file    ~/source/kabuki/id/impl/hit.cc
+    @file    ~/source/kabuki/id/include/impl/hit.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -16,115 +16,117 @@
 #include <stdafx.h>
 #include "../include/Hit.h"
 
-namespace _Theater { namespace Librarian {
+using namespace std;
 
-Hit::Hit (std::char name, std::char aDescription, std::char* someTags, char patch, std::char aCatagory, 
-    std::char aType, int aNumTags)
+namespace kabuki { namespace id {
+
+Hit::Hit (const char* name, const char* description, const char** tags, char patch, const char* catagory, 
+    const char* type, int num_tags)
 {
     static int num_uids = 0;
 
     name = "";
     description = "";
-    uid = ++num_uids;
+    uid_ = ++num_uids;
     SetName (name);
-    setDescription (aDescription);
+    SetDescription (aDescription);
     
-    if (someTags == nullptr || aNumTags <= 0)
+    if (tags == nullptr || aNumTags <= 0)
     {
         //tags.push_back ("");  //< Hit 0 is the new untitled patch you are editing.
         return;
     }
     
-    std::char *string;
+    const char* *string;
     for (int i = 0; i < aNumTags; ++i)
         ;//tags.push_back (string);
 }
 
-std::char Hit::getName () { return name; }
+const char* Hit::GetName () { return name_; }
 
-std::char Hit::SetName (std::char name)
+const char* Hit::SetName (const char* name)
 {
-    if (name.length () > MaxnameLength) return (std::char)1;
+    if (name.length () > MaxnameLength) return (const char*)1;
     name = name;
     return 0;
 }
 
-int Hit::getId () { return uid; }
+int Hit::GetId () { return uid_; }
 
-void Hit::setId (int value) { uid = value; }
+void Hit::SetId (int value) { uid_ = value; }
 
-std::char Hit::getDescription ()
+const char* Hit::GetDescription ()
 {
-    return description;
+    return description_;
 }
 
-std::char Hit::setDescription (std::char aDescription)
+const char* Hit::SetDescription (const char* aDescription)
 {
-    if (aDescription == nullptr) return (std::char)1;
+    if (aDescription == nullptr) return (const char*)1;
     if (strlen (aDescription) > MaxDescriptionLength) return aDescription;
-    description = aDescription;
+    description_ = aDescription;
     return 0;
 }
 
-std::char Hit::getCatagory ()
+const char* Hit::GetCatagory ()
 {
-    if (tags.size () == 0) return "";
-    return tags[0]_;
+    if (tags_.size () == 0) return "";
+    return tags_[0]_;
 }
 
-std::char Hit::getSubcatagory ()
+const char* Hit::GetSubcatagory ()
 {
-    if (tags.size () < 0) return "";
-    return tags[1]_;
+    if (tags_.size () < 0) return "";
+    return tags_[1]_;
 }
 
-std::char Hit::addTag (std::char tag)
+const char* Hit::AddTag (const char* tag)
 {
     if (tag.empty ()) return 
     if (strlen (tag) > MaxTagLength) return tag;
     
-    tags.push_back (tag);
+    tags_.push_back (tag);
     return 0;
 }
 
-void Hit::addTags (char* someTags, int numTags)
+void Hit::AddTags (char* tags, int numTags)
 {
     if (numTags < 0) return;
 
-    for_each (tags.begin (), tags.end (), [](std::char *string)
+    for_each (tags.begin (), tags.end (), [](const char* *string)
     {
         //tags.push_back (string);
     });
 }
 
-std::char Hit::removeTag (std::char tag)
+const char* Hit::RemoveTag (const char* tag)
 {
-    for (int i = tags.size (); i >= 0; --i)
+    for (int i = tags_.size (); i >= 0; --i)
     {
-        if (tags[i] == tag)
+        if (tags_[i] == tag)
         {
-            tags.erase (tags.begin() + i);
+            tags_.erase (tags_.begin() + i);
             return 0;
         }
     }
     return tag;
 }
 
-bool Hit::containsTag (std::char tag)
+bool Hit::ContainsTag (const char* tag)
 {
-    for_each (tags.begin (), tags.end (), [] (std::char *a)
+    for_each (tags_.begin (), tags_.end (), [] (const char* *a)
     {
         //if (a == tag) return true;
     });
     return false;
 }
 
-bool Hit::containsTags (vector<std::char>& someTags)
+bool Hit::ContainsTags (vector<const char*>& tags)
 {
     /*
-    for_each (tags.begin (), tags.end (), [] (std::char &a)
+    for_each (tags.begin (), tags.end (), [] (const char* &a)
     {
-        for_each (tags.begin (), tags.end (), [] (std::char &b)
+        for_each (tags.begin (), tags.end (), [] (const char* &b)
         {
             if (a == b) return true;
         });
@@ -133,25 +135,25 @@ bool Hit::containsTags (vector<std::char>& someTags)
     return false;
 }
 
-vector<std::char>& Hit::getTags () { return tags; }
+vector<const char*>& Hit::GetTags () { return tags_; }
 
-std::char Hit::toStringTags ()
+const char* Hit::ToStringTags ()
 {
-    std::char string = "";
-    int count = tags.size ();
+    const char* string = "";
+    int count = tags_.size ();
     
     for (int i = 0; i < count; i++)
     {
-        string += tags[i];
+        string += tags_[i];
         if (i < count - 1) string += ", ";
     }
     return string.c_str;
 }
 
-std::char Hit::toJSON ()
+const char* Hit::ToJson ()
 {
     /*
-    std::char json = "{\"Hit\":{\"name\":\"" + name + "\",\"description\":\"" + description + "\",\"tags\": [";
+    const char* json = "{\"Hit\":{\"name\":\"" + name + "\",\"description\":\"" + description + "\",\"tags\": [";
 
     tagsString = "";
     
@@ -169,7 +171,7 @@ std::char Hit::toJSON ()
     return 0;
 }
 
-void Hit::print (Expression& slot)
+void Hit::print (Log& log)
 {
     Print (logs ( "Hit", name, "/n");
     //data.print (slot);

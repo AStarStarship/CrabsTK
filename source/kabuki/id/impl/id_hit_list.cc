@@ -1,5 +1,5 @@
 ﻿/** kabuki::pro
-    @file    ~/source/kabuki/id/impl/hit_list.cc
+    @file    ~/source/kabuki/id/include/impl/hit_list.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,24 +14,23 @@
 */
 
 #include <stdafx.h>
-#include "../include/HitList.h"
-
+#include "../include/hit_list.h"
 
 namespace kabuki { namespace id {
 
 HitList::HitList ()
 {
-    loadTestHits ();
+    LoadTestHits ();
 }
 
-bool HitList::addHit (Hit& p)
+bool HitList::AddHit (Hit& p)
 {
     patches.push_back (p);
 
     /// Check the tags for duplicates and add to tags if no duplicates exist.
     /*
-    std::char tagCatagory = p.getCatagory ();
-    for_each (patches.begin (), patches.end (), [](std::char string) { if (string == tagCatagory) return true; }
+    const char* tagCatagory = p.GetCatagory ();
+    for_each (patches.begin (), patches.end (), [](const char* string) { if (string == tagCatagory) return true; }
     tags.push_back (tagCatagory);
     sort (tags.begin (), tags.end ());
     return true;
@@ -39,12 +38,12 @@ bool HitList::addHit (Hit& p)
     return false;
 }
 
-void HitList::sortTags () 
+void HitList::SortTags () 
 { 
     //sort (tags.begin (), tags.end ());
 }
 
-void HitList::loadFromJSON (std::char json)
+void HitList::LoadFromJSON (const char* json)
 {
     /*
     try
@@ -58,19 +57,19 @@ void HitList::loadFromJSON (std::char json)
     }
     catch (Exception e)
     {
-        assert (false, e.print (Expression& slot));
+        assert (false, e.print (Log& log));
     }
      */
 }
 
-std::char HitList::toJSON ()
+const char* HitList::ToJson ()
 {
     /*
-    std::char json = "[";
+    const char* json = "[";
     int count = patches.size ();
     for (int i = 0; i < count; i++)
     {
-        json += patches[i].toJSON ();
+        json += patches[i].ToJson ();
         if (i < count - 1) json += ", ";
     }
     json += "]";
@@ -79,26 +78,26 @@ std::char HitList::toJSON ()
     return 0;
 }
 
-bool HitList::findDuplicateName (std::char value)
+bool HitList::FindDuplicateName (const char* value)
 {
     /*
     for_each (patches.begin (), patches.end (), [](Hit& hit) 
     {
-    if (a.getName () == value)
+    if (a.GetName () == value)
         return true;
     });
     */
     return false;
 }
 
-std::char HitList::getCatagoryName (int index)
+const char* HitList::GetCatagoryName (int index)
 {
     if (index >= catagories.size ()) return nullptr;
     
     return catagories[index]_;
 }
 
-HitList* HitList::findTag (std::char tag)
+HitList* HitList::FindTag (const char* tag)
 {
     /*
     std::vector<Hit> patchList;
@@ -111,7 +110,7 @@ HitList* HitList::findTag (std::char tag)
     return 0;
 }
 
-HitList* HitList::findTags (vector<std::char> tags)
+HitList* HitList::FindTags (vector<const char*> tags)
 {
     /*
     std::vector<Hit> patchList;
@@ -124,40 +123,40 @@ HitList* HitList::findTags (vector<std::char> tags)
     return 0;
 }
 
-std::char HitList::getCatagoryImageName (std::char string)
+const char* HitList::GetCatagoryImageName (const char* string)
 {
     if (string == "") return nullptr;
     regex regularExpression ("\string+");
-    std::char result = "Catagory" + regex_replace (string, regularExpression, "");// + ".png";
+    const char* result = "Category" + regex_replace (string, regularExpression, "");// + ".png";
     return result_;
 }
 
-std::char HitList::getSubcatagoryImageName (std::char string)
+const char* HitList::GetSubcatagoryImageName (const char* string)
 {
     if (string == "") return nullptr;
     regex regularExpression ("\string+");
-    std::char result = "Subcatagory" + regex_replace (string, regularExpression, "");// + ".png";
+    const char* result = "Subcategory" + regex_replace (string, regularExpression, "");// + ".png";
     return result_;
 }
 
-void HitList::print (Expression& slot)
+void HitList::Print (_::Log& log)
 {
 }
 
-void HitList::loadTestHits ()
+void HitList::LoadTestHits ()
 {
-    patches.clear ();
+    patches.Clear ();
     /*
-    addHit (new Hit ("Claranet", "Default claranet patch.", { "Woodwind", "Claranet", "Reed" }));
-    addHit (new Hit ("Oboe", "Default oboe patch.", { "Woodwind", "Oboe", "Reed" }));
-    addHit (new Hit ("Tenor Sax", "Default tenor sax patch.", { "Woodwind", "Tenor Sax", "Reed", "Tenor" }));
-    addHit (new Hit ("Recorder", "Default recorder patch.", { "Woodwind", "Recorder", "Flute" }));
-    addHit (new Hit ("Flute", "Default flute patch.", { "Woodwind", "Flute" }));
+    AddHit (new Hit ("Clarinet", "Default clarinet patch.", { "Woodwind", "Clarinet", "Reed" }));
+    AddHit (new Hit ("Oboe", "Default oboe patch.", { "Woodwind", "Oboe", "Reed" }));
+    AddHit (new Hit ("Tenor Sax", "Default tenor sax patch.", { "Woodwind", "Tenor Sax", "Reed", "Tenor" }));
+    AddHit (new Hit ("Recorder", "Default recorder patch.", { "Woodwind", "Recorder", "Flute" }));
+    AddHit (new Hit ("Flute", "Default flute patch.", { "Woodwind", "Flute" }));
 
-    addHit (new Hit ("Trumpet", "Default trumpet patch.", { "Brass", "Trumpet" }));
-    addHit (new Hit ("FlugleHorn","Default flugle horn patch.", { "Brass", "Flugle Horn" }));
-    addHit (new Hit ("FrenchHorn", "Default french horn patch.", { "Brass", "French Horn" }));
-    addHit (new Hit ("Trombone", "Default trombone patch.", { "Brass", "Trombone" }));
+    AddHit (new Hit ("Trumpet", "Default trumpet patch.", { "Brass", "Trumpet" }));
+    AddHit (new Hit ("FlugleHorn","Default flugle horn patch.", { "Brass", "Flugle Horn" }));
+    AddHit (new Hit ("FrenchHorn", "Default French horn patch.", { "Brass", "French Horn" }));
+    AddHit (new Hit ("Trombone", "Default trombone patch.", { "Brass", "Trombone" }));
     */
 }
 

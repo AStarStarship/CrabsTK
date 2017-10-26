@@ -16,7 +16,7 @@
 #ifndef KABUKI_ID_PASSWORD_H
 #define KABUKI_ID_PASSWORD_H
 
-#include "Grammar.h"
+#include "grammar.h"
 
 namespace kabuki { namespace id {
 
@@ -69,13 +69,19 @@ class KABUKI Password
     /** Returns true if this password equals the given one. */
     bool Equals (const Password& p);
 
+    /** Gets the password string. */
+    const char* GetString ();
+
+    /** Sets the password string. */
+    const char* SetString (const char* string);
+
     /** Prints this object to a expression. */
     void Print (_::Log& log);
 
     private:
 
-    Grammar& format_; //< The password format.
-    char* password;  //< The password;
+    Grammar& format_;   //< The password format.
+    char*    password;  //< The password;
 };
 
 }       //< namespace id

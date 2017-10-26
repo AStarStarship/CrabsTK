@@ -16,12 +16,15 @@
 
 #include <stdafx.h>
 #include "../include/wall.h"
+#include "../include/utils.h"
 
 namespace _ {
 
-Wall* WallInit (uint_t size) {
-    Wall* wall = New<Wall, uint_t> (size, 1);
-    if (wall == nullptr) return nullptr;
+Wall* WallInit (byte* buffer, uint_t size) {
+    if (buffer == nullptr)
+        return nullptr;
+    buffer = WordAlign (buffer);
+    Wall* wall = reinterpret_cast<Wall*> (buffer);
     wall->is_dynamic = 0;
     wall->num_doors = 0;
     wall->max_num_doors;

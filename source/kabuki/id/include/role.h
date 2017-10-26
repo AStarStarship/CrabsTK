@@ -17,7 +17,7 @@
 #define KABUKI_ID_ROLE_H
 
 
-#include "id_config.h"
+#include "module_config.h"
 
 namespace kabuki { namespace id {
 
@@ -32,7 +32,7 @@ namespace kabuki { namespace id {
 class KABUKI Role {
     public:
 
-    /** Creates a user with the given username and password. */
+    /** Creates a user with the given char and password. */
     Role (const char* aDescription);
 
     /** Gets a reference to the description char. */

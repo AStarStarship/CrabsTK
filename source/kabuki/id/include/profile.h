@@ -17,7 +17,7 @@
 #define KABUKI_ID_PROFILE_H
 
 
-#include "id_config.h"
+#include "module_config.h"
 #include "entity.h"
 
 namespace kabuki { namespace id {

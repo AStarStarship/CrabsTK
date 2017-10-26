@@ -1,5 +1,5 @@
 /** kabuki::id
-    @file    /.../Source-Impl/_id/Handle.h
+    @file    ~/source/kabuki/id/include/handle.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -13,55 +13,50 @@
              permissions and limitations under the License.
 */
 
-#ifndef KABUKI_THEATER_ID_HANDLE_H
-#define KABUKI_THEATER_ID_HANDLE_H
+#ifndef KABUKI_ID_HANDLE_H
+#define KABUKI_ID_HANDLE_H
 
-#include "id_config.h"
+#include "module_config.h"
+#include "../../script/include/log.h"
 
 namespace kabuki { namespace id {
 
-/** Gets the min handle/username/ length. */
-int MinHandleLength ();
-
-/** Gets the max handle/username/ length. */
-int MaxHandleLength ();
-
-/** Sets the min and max hanlde legnth to the given values. */
-void SetHandleLengthRange (int min, int max);
-
-/** A handle like a username or uid.
+/** A handle like a char or UID.
 */
 class KABUKI Handle
 {
     public:
 
     enum {
-        kMinLengthRange = 3,    //< The min length of a Handle range.
-        MaxLengthRange  = 256   //< The max length of a Handle range.
+        kMinLength = 3,    //< The min length of a Handle range.
+        kMaxLength  = 256   //< The max length of a Handle range.
     };
     
-    /** Constructor creates a standard username. */
-    Handle (const char* name, int min_length = kMinLengthRange, 
-            int max_length = kMaxLengthRange);
+    /** Constructor creates a standard char. */
+    Handle (const char* name,
+            int min_length = kMinLength, 
+            int max_length = kMaxLength);
 
-    /** Gets a reference to the handle char. */
-    const char* GetHandle ();
+    /** Gets a reference to the handle string. */
+    const char* GetKey ();
 
     /** Gets true if this password is value. */
-    bool SetHandle (const char* string);
+    bool SetKey (const char* key);
 
     /** Returns true if the handle is valid. */
-    bool IsValid (const char* string);
+    bool IsValid (const char* key);
 
-    /** Returns true if this Handle is idential to the given Handle. */
+    /** Returns true if this Handle is identical to the given Handle. */
     bool Equals (const Handle& h);
 
-    /** Prints this object to the stdout. */
-    void Print ();
+    /** Prints this object to the log. */
+    void Print (_::Log& log);
     
     private:
 
-    const char* name;  //< The name of the object.
+    const char* key_;  //< The name of the object.
+
 };      //< class Handle
-}       //< _id
-#endif  //< KABUKI_THEATER_ID_HANDLE_H
+}       //< id
+}       //< kabuki
+#endif  //< KABUKI_ID_HANDLE_H

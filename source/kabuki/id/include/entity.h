@@ -55,7 +55,7 @@ class KABUKI Entity
     std::vector<Address>      addresses_;      //< The address of the entity.
     std::vector<EmailAddress> emailAddresses_; //< The email address of the entity.
     std::vector<Profile>      profiles_;       //< The online profiles this entity is attached to.
-    _::Array<char, int>         tags_,           //< Metadata tags.
+    _::Arx<char, int>         tags_,           //< Metadata tags.
                          notes_;          //< An array of notes about the entity.
 };
 

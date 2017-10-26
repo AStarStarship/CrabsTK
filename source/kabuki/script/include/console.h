@@ -30,29 +30,29 @@ namespace _ {
 
 /** Reads a single char from the keyboard 
     @param header The header to print. */
-KABUKI char ReadChar (const char* header);
+KABUKI char KeyboardChar (const char* header);
 
 /** Reads an int from the keyboard.
     @param header The header to print. 
     @param number The number to read. */
-KABUKI int ReadInt (const char* header);
+KABUKI int KeyboardInt (const char* header);
 
 /** Reads a float from the keyboard. 
     @param header The header to print. 
     @param number The number to read. */
-KABUKI float ReadFloat (const char* header);
+KABUKI float KeyboardFloat (const char* header);
 
 /** Reads a new char from the keyboard.
     @header The header to print.
     @return Returns a new char that you have to delete. */
-KABUKI char* ReadString (const char* header, int buffer_size);
+KABUKI char* KeyboardString (const char* header, int buffer_size);
 
 /** Reads a new char from the keyboard.
     @param  header      The header to print.
     @param  buffer      A buffer to read keyboard input to.
     @param  buffer_size The size of the buffer.
     @return Returns a new char that you have to delete. */
-KABUKI void ReadString (const char* header, char* buffer, int buffer_size);
+KABUKI void KeyboardString (const char* header, char* buffer, int buffer_size);
   
 /** A text Console.
     @todo Write me!
@@ -74,7 +74,7 @@ class Console: public Room
     virtual const Operation* Loop ();
 
     /** Chinese room expressions. */
-    virtual const Operation* Star (int index, Expression* expr);
+    virtual const Operation* Star (char_t index, Expression* expr);
 
     private:
 

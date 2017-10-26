@@ -1,5 +1,5 @@
 /** kabuki::pro
-    @file    ~/source/kabuki/id/imp/id_server.cc
+    @file    ~/source/kabuki/id/include/imp/id_server.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -34,7 +34,7 @@ int IdServer::NumEvents ()
 
 int IdServer::RegisterKey (char* key)
 {
-    if (strlen (key) > MAX_KEY_LENGTH)
+    if (strlen (key) > kMaxKeyLength)
         return -1;
     return ids_.Add (key);
 }

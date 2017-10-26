@@ -40,7 +40,7 @@ class KABUKI Library
     void LoadFromJSON (char jsonString);
 
     /** Converts a patch to a JSON char. */
-    char ToJSON ();
+    char ToJson ();
 
     /** Gets true if their is a duplicate patch name. */
     bool FindDuplicateName (char value);
@@ -60,7 +60,7 @@ class KABUKI Library
     char GetSubcatagoryImageName (char string);
 
     /** Prints this object to a Expression. */
-    void Print (Expression& slot);
+    void Print (Log& log);
     
     //void injectTestData ();
     

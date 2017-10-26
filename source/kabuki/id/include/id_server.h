@@ -16,9 +16,11 @@
 #ifndef KABUKI_PRO_IDSERVER
 #define KABUKI_PRO_IDSERVER
 
-#include "../include/id_config.h"
+#include "module_config.h"
+#include "..\..\script\include\log.h"
+#include "..\..\data\include\array.h"
 
-namespace _pro {
+namespace kabuki { namespace id {
 
 /** Manages user keys and assigns unique ids to events. */
 class IdServer
@@ -26,7 +28,7 @@ class IdServer
     public:
     
     enum {
-        MAX_KEY_LENGTH = 32, //< The max key length.
+        kMaxKeyLength = 32, //< The max key length.
     };
 
     /** Creates an empty server. */    
@@ -57,9 +59,9 @@ class IdServer
     
     private:
 
-    int num_events_;            //< The global number of event created.
-    _::Array<char*, int> ids_;  //< A the id keys.
+    uid_t              num_events_; //< The global number of event created.
+    data::Array<char*> ids_;        //< A the id keys.
 };        //< Array class
-}         //< namespace _pro
+}         //< namespace id
+}         //< namespace kabuki
 #endif    //< KABUKI_PRO_IDSERVER
-

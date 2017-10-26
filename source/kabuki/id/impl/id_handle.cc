@@ -1,5 +1,5 @@
 /** kabuki::pro
-    @file    ~/source/kabuki/id/imp/handle.cc
+    @file    ~/source/kabuki/id/include/imp/handle.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -18,31 +18,6 @@
 
 namespace kabuki { namespace id {
 
-static int MinHandleLength = Handle::MinLengthRange,
-           MaxHandleLength = Handle::MaxLengthRange;
-
-int GetMinHandleLength ()
-{
-    return min_handle_length_;
-}
-
-int GetMaxHandleLength ()
-{
-    return max_handle_length_;
-}
-
-void SetHandleLengthRange (int min, int max)
-{
-    if (min >= max)
-    {
-        min_handle_length_ = min_handle_length_;
-        max_handle_length_ = max_handle_length_;
-        return;
-    }
-    min_handle_length_ = min;
-    max_handle_length_ = max;
-}
-
 Handle::Handle (const char* name, int min_length, int max_length)
 {
     if (min_length >= max_length)
@@ -52,36 +27,37 @@ Handle::Handle (const char* name, int min_length, int max_length)
         max_length = temp;
     }
     name = name;
-    if (min_length < MinLengthRange) min_length = MinLengthRange;
-    else if (min_length > MaxLengthRange) min_length = MinLengthRange;
+    if (min_length < kMinLength) min_length = kMinLength;
+    else if (min_length > kMaxLength) min_length = kMinLength;
 }
 
-char& Handle::GetHandle () { return name; }
+char& Handle::GetKey () { return key_; }
 
-bool Handle::SetHandle (const char* string)
+bool Handle::SetKey (const char* key)
 {
-    if (string.length () < min_handle_length_ || string.length () > max_handle_length_)
+    if (key.length () < kMinLength || key.length () > kMaxLength)
         return false;
 
-    return isValid (name);
+    return IsValid (key_);
 }
 
-bool Handle::isValid (const char* string)
+bool Handle::IsValid (const char* key)
 {
-    if (string.length () < min_handle_length_ || string.length () > max_handle_length_)
+    size_t length = strlen (key);
+    if (length < kMinLength || length > kMaxLength)
         return false;
 
     return true;
 }
 
-bool Handle::equals (const Handle& h)
+bool Handle::Equals (const Handle& h)
 {
-    return name == h.name;
+    return (strcmp (key_, h.key_) == 0);
 }
 
 void Handle::Print (_::Log& log)
 {
-    Print (logs ("Handle: ", name);
+    log += "Handle: " + key_ + "\n";
 }
 
 }       //< id

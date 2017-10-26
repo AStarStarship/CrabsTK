@@ -53,14 +53,14 @@ typedef enum {
     UV4   = 20, //< 21. A 32-bit unsigned varint.
     SV8   = 21, //< 19. A 64-bit signed varint.
     UV8   = 22, //< 22. A 64-bit unsigned varint.
-    AR1   = 23, //< 23. An array of up to 2^8-1 like primitive types 3-16.
-    AR2   = 24, //< 24. An array of up to 2^16-1 like primitive types 3-16.
+    AR1   = 23, //< 23. An array of up to 2^7-1 like primitive types 3-16.
+    AR2   = 24, //< 24. An array of up to 2^15-1 like primitive types 3-16.
     AR4   = 25, //< 25. An array of up to 2^32-1 like primitive types 3-16.
     AR8   = 26, //< 26. An array of up to 2^32-1 like primitive types 3-16.
     ESC   = 27, //< 27. An atomic escape sequence of SCRIPT procedure calls.
-    FS    = 28, //< 28. A Set with up to 2^31-2 members and 2^64-1 bytes data.
-    GS    = 29, //< 29. A Set with up to 2^15-2 members and 2^32-1 bytes data.
-    RS    = 30, //< 30. A Set with up to 2^7-2 members and 2^16-1 bytes data.
+    FS    = 28, //< 28. A Set with up to 2^31-2 members and 2^63-1 bytes data.
+    GS    = 29, //< 29. A Set with up to 2^15-2 members and 2^31-1 bytes data.
+    RS    = 30, //< 30. A Set with up to 2^7-2 members and 2^15-1 bytes data.
     US    = 31, //< 31. A unit for breaking files and data into packets.
 } TType;
 

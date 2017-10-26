@@ -35,38 +35,38 @@ class KABUKI HitList {
     void SortTags ();
 
     /** Loads a patch from a JSON char. */
-    void LoadFromJSON (std::char json);
+    void LoadFromJSON (const char* json);
 
     /** Converts a patch to a JSON char. */
-    std::char ToJSON ();
+    const char* ToJson ();
 
     /** Gets true if their is a duplicate patch name. */
-    bool FindDuplicateName (std::char value);
+    bool FindDuplicateName (const char* value);
 
-    /** Gets the catagory name at the given index. */
-    std::char GetCatagoryName (int index);
+    /** Gets the category name at the given index. */
+    const char* GetCatagoryName (int index);
     
     /** Gets a HitList of the given tag. */
-    HitList* findTag (std::char tag);
+    HitList* FindTag (const char* tag);
     
     /** Gets a HitList of the given tags. */
-    HitList* findTags (vector<std::char>& tags);
+    HitList* FindTags (data::Array<const char*>& tags);
     
-    /** Ges the catagory image name. */
-    std::char getCatagoryImageName (std::char string);
+    /** Gets the category image name. */
+    const char* GetCatagoryImageName (const char* string);
 
-    /** Ges the subcatagory image name. */
-    std::char getSubcatagoryImageName (std::char string);
+    /** Gets the subcategory image name. */
+    const char* GetSubcatagoryImageName (const char* string);
 
-    /** Prints this object to the stdout. */
-    void Print ();
+    /** Prints this object to the log. */
+    void Print (_::Log& log);
     
     private:
 
     long uid = 0;
     
     std::vector<Hit&> patches;               //< The list of patches.
-    std::vector<std::char> catagories,     //< The list of catagories.
+    std::vector<const char*> catagories,     //< The list of catagories.
         tags;                           //< List of tag strings.
 
     void loadTestHits ();

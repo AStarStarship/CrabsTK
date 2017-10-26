@@ -78,7 +78,7 @@ struct KABUKI Expression;
         void foo () {}     //< Classical foo.
         void bar () {}     //< Some people drink too much :-)
 
-        virtual const Operand* Star (int index, Expression* expr) {
+        virtual const Operand* Star (char_t index, Expression* expr) {
             void* args[2];    //< An array of 2 void* for the Operation.
 
             switch (index)
@@ -148,7 +148,7 @@ struct KABUKI Operand {
         @param io    The Bin for the IO slot.
         @return      Returns null upon success, a Set header upon query, and an 
                      error_t ticket upon Read-Write failure. */
-    virtual const Operation* Star (int index, Expression* expr) = 0;
+    virtual const Operation* Star (char_t index, Expression* expr) = 0;
 };
 
 /** Converts the value to a pointer. */

@@ -16,7 +16,7 @@
 #ifndef KABUKI_ID_ADDRESS_H
 #define KABUKI_ID_ADDRESS_H
 
-#include "id_config.h"
+#include "module_config.h"
 
 namespace kabuki { namespace id {
 

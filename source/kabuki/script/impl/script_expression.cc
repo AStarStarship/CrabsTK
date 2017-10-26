@@ -17,6 +17,7 @@
 #include <stdafx.h>
 #include "../include/expression.h"
 #include "../include/slot.h"
+#include "../include/args.h"
 
 namespace _ {
 
@@ -65,27 +66,27 @@ const Operation* Result (Expression* expr, Expression::Error error,
     return 0;
 }
 
-byte* ExpressionBinAddress (Expression* expr) {
+uintptr_t* ExpressionBinAddress (Expression* expr) {
     if (!expr)
         return nullptr;
-    return reinterpret_cast<byte*>(expr) + expr->header_size;
+    return reinterpret_cast<uintptr_t*>(expr) + expr->header_size;
 }
 
 Bin* ExpressionBin (Expression* expr) {
     return reinterpret_cast<Bin*> (ExpressionBinAddress (expr));
 }
 
-byte* ExpressionBoutAddress (Expression* expr) {
+uintptr_t* ExpressionBoutAddress (Expression* expr) {
     if (!expr)
         return nullptr;
-    return reinterpret_cast<byte*>(expr) + expr->header_size;
+    return reinterpret_cast<uintptr_t*>(expr) + expr->header_size;
 }
 
 Bout* ExpressionBout (Expression* expr) {
     return reinterpret_cast<Bout*> (ExpressionBoutAddress (expr));
 }
 
-Expression* ExpressionInit (byte* buffer, uint_t buffer_size,
+Expression* ExpressionInit (uintptr_t* buffer, uint_t buffer_size,
                             uint_t stack_count, Operand* root) {
     if (buffer == nullptr)
         return nullptr;
@@ -127,7 +128,7 @@ Expression* ExpressionInit (byte* buffer, uint_t buffer_size,
     printf ("\n\n!!!\nroot: 0x%p\n", root);
     expr->operand = root;
     printf ("expr->op: 0x%p\n", expr->operand);
-    BinInit (ExpressionBinAddress (expr), size);
+    BinInit  (ExpressionBinAddress  (expr), size);
     BoutInit (ExpressionBoutAddress (expr), size);
     return expr;
 }
@@ -142,7 +143,7 @@ bool ExpressionIsDynamic (Expression* expr) {
     return expr->type % 2 == 1;
 }
 
-byte* ExpressionEndAddress (Expression* expr) {
+uintptr_t* ExpressionEndAddress (Expression* expr) {
     //return BinEndAddress (ExpressionBin (expr));
     return 0;
 }
@@ -173,8 +174,8 @@ const Operation* Pop (Expression* expr) {
     return 0;
 }
 
-byte* ExpressionStates (Expression* expr) {
-    return reinterpret_cast<byte*> (expr) + sizeof (Expression);
+uintptr_t* ExpressionStates (Expression* expr) {
+    return reinterpret_cast<uintptr_t*> (expr) + sizeof (Expression);
 }
 
 const Operation* ExpressionExitState (Expression* expr) {
@@ -502,7 +503,7 @@ void ExpressionScan (Expression* expr, Portal* input) {
 }
 
 bool ExpressionContains (Expression* expr, void* address) {
-    if (address < reinterpret_cast<byte*>(expr))
+    if (address < reinterpret_cast<uintptr_t*>(expr))
         return false;
     if (address > ExpressionEndAddress (expr)) return false;
     return true;
@@ -601,7 +602,7 @@ void ExpressionPrint (Expression* expr) {
     //system ("PAUSE");
 }
 
-Bin* ExpressionInit (byte* buffer, uint_t size) {
+Bin* ExpressionInit (uintptr_t* buffer, uint_t size) {
     if (buffer == nullptr)
         return nullptr;
     Bin* bin = reinterpret_cast<Bin*>(buffer);
@@ -639,14 +640,14 @@ uint_t ExpressionSpace (Bin* bin) {
     return SlotSpace (base + bin->start, base + bin->stop, bin->size);
 }
 
-byte* ExpressionBaseAddress (void* ptr, uint_t rx_tx_offset) {
+uintptr_t* ExpressionBaseAddress (void* ptr, uint_t rx_tx_offset) {
     enum {
         kSlotHeaderSize = sizeof (Bin) + sizeof (uintptr_t) -
         sizeof (Bin) % sizeof (uintptr_t),
         //< Offset to the start of the ring buffer.
     };
-
-    return reinterpret_cast <byte*>(ptr) + rx_tx_offset + kSlotHeaderSize;
+    byte* result = reinterpret_cast <byte*>(ptr) + rx_tx_offset + kSlotHeaderSize;
+    return reinterpret_cast<uintptr_t*> (result);
 }
 
 byte* ExpressionEndAddress (Bin* bin) {
@@ -1089,10 +1090,6 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
 
 bool IsReadable (Bin* bin) {
     return bin->start != bin->stop;
-}
-
-const Operation* Result (Expression* expr, const uint_t* params, void** args) {
-    return 0;
 }
 
 }       //< namespace _

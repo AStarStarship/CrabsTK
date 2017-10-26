@@ -16,7 +16,7 @@
 #ifndef KABUKI_ID_PRIVILAGE_H
 #define KABUKI_ID_PRIVILAGE_H
 
-#include "id_config.h"
+#include "module_config.h"
 
 namespace kabuki { namespace id {
 

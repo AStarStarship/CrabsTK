@@ -24,49 +24,28 @@ using namespace std::chrono;
 
 namespace _ {
 
-inline std::tm* Localtime (std::tm* std_tm, std::time_t const & time) {
-    if (std_tm == nullptr)
-        return nullptr;
-#if (defined(__MINGW32__) || defined(__MINGW64__))
-    memcpy (&tm_snapshot, ::localtime (&time), sizeof (std::tm));
-#elif (defined(WIN32) || defined(_WIN32) || defined(__WIN32__))
-    localtime_s (std_tm, &time);
-#else
-    localtime_r (&time, std_tm); // POSIX  
-#endif
-    return std_tm;
-}
-
-timestamp_t PackTimestamp (time_t unixTime, int32_t microseconds)
+timestamp_t ClockPackTimestamp (time_t unixTime, int32_t microseconds)
 {
     return (((timestamp_t)unixTime) << 8) & (timestamp_t)microseconds;
 }
 
-time_t GetSeconds (timestamp_t t)
+time_t ClockGetSeconds (timestamp_t t)
 {
     return (time_t)t;
 }
 
-int32_t GetMicroseconds (timestamp_t timestamp)
+int32_t ClockGetMicroseconds (timestamp_t timestamp)
 {
     return (int32_t)((timestamp & 0xFFFFFFFF00000000) >> 32);
 }
 
-timestamp_t TimestampNow () {
+timestamp_t ClockTimestampNow () {
     std::chrono::microseconds us (1);
     chrono_timestamp ts = time_point_cast<microseconds>(system_clock::now ());
     return 0;
 }
-/*
-timestamp_t TimestampNow () {
-using namespace std::chrono;
-time_point<system_clock> now;
-auto duration = now.time_since_epoch ();
-auto millis = duration_cast<milliseconds>(duration).count ();
-return millis;
-}*/
 
-bool PrintTimeStruct (tm* std_tm) {
+bool ClockPrintTimeStruct (tm* std_tm) {
     if (std_tm == nullptr) {
         std::cout << "Null tm*\n";
         return false;
@@ -77,20 +56,39 @@ bool PrintTimeStruct (tm* std_tm) {
     return true;
 }
 
-void PrintTime (time_t t) {
-    tm std_tm;
-    localtime_s (&std_tm, &t);
-    PrintTimeStruct (&std_tm);
+bool ClockPrintTimeStruct (tm* std_tm, int32_t microseconds) {
+    if (std_tm == nullptr) {
+        std::cout << "Null tm*\n";
+        return false;
+    }
+    std::cout << std_tm->tm_year + TIME_EPOCH << "-" << std_tm->tm_mon + 1 << "-"
+        << std_tm->tm_mday << "@" << std_tm->tm_hour << ":"
+        << std_tm->tm_min << ":" << std_tm->tm_sec << ":" << microseconds;
+    return true;
 }
 
-void PrintDateTime (time_t t) {
+void ClockPrintTime (time_t t) {
+    tm std_tm;
+    localtime_s (&std_tm, &t);
+    ClockPrintTimeStruct (&std_tm);
+}
+
+void ClockPrintTimestamp (timestamp_t timestamp) {
+    time_t t = ClockGetSeconds (timestamp);
+    tm std_tm;
+    localtime_s (&std_tm, &t);
+    int32_t microseconds = ClockGetMicroseconds (timestamp);
+    ClockPrintTimeStruct (&std_tm, microseconds);
+}
+
+void ClockPrintDateTime (time_t t) {
     tm std_tm;
     localtime_s (&std_tm, &t);
     std::cout << std_tm.tm_hour << ":" << std_tm.tm_min << ":"
         << std_tm.tm_sec;
 }
 
-bool PrintTimeStructString (char* buffer, int buffer_size, tm* std_tm) {
+bool ClockPrintTimeStructString (char* buffer, int buffer_size, tm* std_tm) {
     if (buffer == nullptr)
         return false;
     if (std_tm == nullptr)
@@ -105,14 +103,14 @@ bool PrintTimeStructString (char* buffer, int buffer_size, tm* std_tm) {
     return true;
 }
 
-bool PrintDateTimeString (char* buffer, int buffer_size, time_t t) {
+bool ClockPrintDateTimeString (char* buffer, int buffer_size, time_t t) {
     time (&t);
     tm std_tm;
     localtime_s (&std_tm, &t);
-    return PrintTimeStructString (buffer, buffer_size, &std_tm);
+    return ClockPrintTimeStructString (buffer, buffer_size, &std_tm);
 }
 
-int NumDaysMonth (time_t t) {
+int ClockNumDaysMonth (time_t t) {
     tm date;
     localtime_s (&date, &t);
     static const char days_per_month[12] = { 31, 28, 31, 30, 31, 30, 31, 31,
@@ -122,7 +120,7 @@ int NumDaysMonth (time_t t) {
     return days_per_month[date.tm_mon];
 }
 
-int NumDaysMonth (int month, int year) {
+int ClockNumDaysMonth (int month, int year) {
     if (month < 1)
         return 0;
     if (month > 12)
@@ -134,7 +132,7 @@ int NumDaysMonth (int month, int year) {
     return days_per_month[month];
 }
 
-const char* DayOfWeek (int day_number) {
+const char* ClockDayOfWeek (int day_number) {
     static const char* days[] = { "Sunday", "Monday", "Tuesday", "Wednesday",
         "Thursday", "Friday", "Saturday",
         "Invalid" };
@@ -145,7 +143,7 @@ const char* DayOfWeek (int day_number) {
     return days[day_number];
 }
 
-char DayOfWeekInitial (int day_number) {
+char ClockDayOfWeekInitial (int day_number) {
     static const char days[] = { "SMTWRFSU" };
     if (day_number < 0)
         return 'I';
@@ -154,7 +152,7 @@ char DayOfWeekInitial (int day_number) {
     return days[day_number];
 }
 
-int CompareTimes (time_t time_a, time_t time_b) {
+int ClockCompareTimes (time_t time_a, time_t time_b) {
     int count = 0;
 
     tm moment_a,
@@ -196,7 +194,7 @@ int CompareTimes (time_t time_a, time_t time_b) {
     return count;
 }
 
-int CompareTimes (time_t t, int year, int month, int day,
+int ClockCompareTimes (time_t t, int year, int month, int day,
     int  hour, int minute, int second) {
     int count = 0;
 
@@ -236,7 +234,7 @@ int CompareTimes (time_t t, int year, int month, int day,
     return count;
 }
 
-const char* ParseTimeString (const char* input, int* hour, int* minute, int* second) {
+const char* ClockParseTimeString (const char* input, int* hour, int* minute, int* second) {
     if (input == nullptr)
         return nullptr;
     std::cout << input << ' ';
@@ -405,11 +403,11 @@ const char* ParseTimeString (const char* input, int* hour, int* minute, int* sec
     return input;
 }
 
-char* ParseTime (char* input, int* hour, int* minute, int* second) {
-    return (char*)ParseTimeString (input, hour, minute, second);
+char* ClockParseTime (char* input, int* hour, int* minute, int* second) {
+    return (char*)ClockParseTimeString (input, hour, minute, second);
 }
 
-const char* ParseTimeStructString (const char* input, tm* std_tm) {
+const char* ClockParseTimeStructString (const char* input, tm* std_tm) {
     if (input == nullptr)
         return nullptr;
     if (std_tm == nullptr)
@@ -426,7 +424,7 @@ const char* ParseTimeStructString (const char* input, tm* std_tm) {
         second = 0;
 
     if (c == '@') {
-        if (!(input = ParseTimeString (input, &hour, &minute, &second)))
+        if (!(input = ClockParseTimeString (input, &hour, &minute, &second)))
             return "Case @ invalid time";
         std_tm->tm_hour = hour;
         std_tm->tm_min = minute;
@@ -435,7 +433,7 @@ const char* ParseTimeStructString (const char* input, tm* std_tm) {
         return input + 1;
     }
     if (c == '#') {
-        if (!(input = ParseTimeString (input, &hour, &minute, &second)))
+        if (!(input = ClockParseTimeString (input, &hour, &minute, &second)))
             return "Case @ invalid time";
         std_tm->tm_hour += hour;
         std_tm->tm_min += minute;
@@ -465,7 +463,7 @@ const char* ParseTimeStructString (const char* input, tm* std_tm) {
     if (delimiter == '@') {
         std::cout << " HH@ ";
 
-        if (!(input = ParseTimeString (input, &hour, &minute, &second))) {
+        if (!(input = ClockParseTimeString (input, &hour, &minute, &second))) {
             PrintBar ("Invalid time DD@");
             return 0;
         }
@@ -489,7 +487,7 @@ const char* ParseTimeStructString (const char* input, tm* std_tm) {
     if (c != delimiter) // Cases MM/DD and MM/YYyy
     {
         if (c == '@') {
-            if (!(input = ParseTimeString (input, &hour, &minute, &second))) {
+            if (!(input = ClockParseTimeString (input, &hour, &minute, &second))) {
                 std::cout << " invalid time ";
             }
         }
@@ -509,13 +507,13 @@ const char* ParseTimeStructString (const char* input, tm* std_tm) {
             return input + 1;
         }
         c = tolower (c);
-        if ((value1 < 12) && (value2 > 0) && (value2 <= NumDaysMonth (value1))) {
+        if ((value1 < 12) && (value2 > 0) && (value2 <= ClockNumDaysMonth (value1))) {
             std::cout << " MM/DD ";
             if (value1 > 11) {
                 PrintBar ("Invalid MM/DD@ month");
                 return nullptr;
             }
-            if (value2 > NumDaysMonth (value1)) {
+            if (value2 > ClockNumDaysMonth (value1)) {
                 PrintBar ("Invalid MM/DD@ day");
                 return nullptr;
             }
@@ -524,18 +522,18 @@ const char* ParseTimeStructString (const char* input, tm* std_tm) {
             std_tm->tm_hour = hour;
             std_tm->tm_min = minute;
             std_tm->tm_sec = second;
-            if (!(input = ParseTimeString (input, &hour, &minute, &second))) {
+            if (!(input = ClockParseTimeString (input, &hour, &minute, &second))) {
                 PrintBar ("Invalid MM/DD@");
                 return nullptr;
             }
 
             return input + 1;
         }
-        if ((value1 < 12) && (value2 > NumDaysMonth (value1))) {
+        if ((value1 < 12) && (value2 > ClockNumDaysMonth (value1))) {
             std::cout << " MM/YYyy\n";
             std_tm->tm_mon = value1 - 1;
             std_tm->tm_year = value2;
-            if (!(input = ParseTimeString (input, &hour, &minute, &second))) {
+            if (!(input = ClockParseTimeString (input, &hour, &minute, &second))) {
                 PrintBar ("Invalid MM/YYYY@ time");
                 return 0;
             }
@@ -561,7 +559,7 @@ const char* ParseTimeStructString (const char* input, tm* std_tm) {
 
     c = *input;
     if (c == '@') {
-        if (!(end = ParseTimeString (input, &hour, &minute, &second))) {
+        if (!(end = ClockParseTimeString (input, &hour, &minute, &second))) {
             PrintBar ("Invalid YYyy/MM/DD@ time.");
             return 0;
         }
@@ -581,7 +579,7 @@ const char* ParseTimeStructString (const char* input, tm* std_tm) {
             return 0;              //< The day is not correct.
         }
 
-        if (value2 > NumDaysMonth (value2, value1)) {
+        if (value2 > ClockNumDaysMonth (value2, value1)) {
             PrintBar ("Invalid number of days");
             return 0;              //< The day is not correct.
         } // 17/05/06
@@ -603,7 +601,7 @@ const char* ParseTimeStructString (const char* input, tm* std_tm) {
         PrintBar ("Invalid month.\n");
         return nullptr;
     }
-    if (value2 > NumDaysMonth (value1, value3)) {
+    if (value2 > ClockNumDaysMonth (value1, value3)) {
         PrintBar ("Invalid day.\n");
         return nullptr;
     }
@@ -619,11 +617,11 @@ const char* ParseTimeStructString (const char* input, tm* std_tm) {
 
 }
 
-char* ParseTimeStruct (char* input, tm* result) {
-    return (char*)ParseTimeStructString (input, result);
+char* ClockParseTimeStruct (char* input, tm* result) {
+    return (char*)ClockParseTimeStructString (input, result);
 }
 
-char* PrintStringTime (char* buffer, time_t t) {
+char* ClockPrintStringTime (char* buffer, time_t t) {
     if (buffer == nullptr)
         return nullptr;
 
@@ -631,19 +629,19 @@ char* PrintStringTime (char* buffer, time_t t) {
     return buffer;
 }
 
-const char* ParseUnixTimeString (const char* input, time_t& result) {
+const char* ClockParseUnixTimeString (const char* input, time_t& result) {
     time_t t;
     time (&t);
     struct tm std_tm;
     localtime_s (&std_tm, &t);
 
-    char* end = (char*)ParseTimeStructString (input, &std_tm);
+    char* end = (char*)ClockParseTimeStructString (input, &std_tm);
 
     t = mktime (&std_tm);
     std::cout << "|\n| Found ";
-    PrintTimeStruct (&std_tm);
+    ClockPrintTimeStruct (&std_tm);
     char buffer[26];
-    PrintStringTime (buffer, t);
+    ClockPrintStringTime (buffer, t);
     char time_string[26];
     errno_t error = ctime_s (time_string, 26, &t);
     std::cout << "\n| Unpacked: " << time_string;
@@ -651,11 +649,11 @@ const char* ParseUnixTimeString (const char* input, time_t& result) {
     return end;
 }
 
-char* ParseUnixTime (char* input, time_t& result) {
-    return (char*)ParseUnixTimeString (input, result);
+char* ClockParseUnixTime (char* input, time_t& result) {
+    return (char*)ClockParseUnixTimeString (input, result);
 }
 
-void ZeroTime (tm* std_tm) {
+void ClockZeroTime (tm* std_tm) {
     if (std_tm == nullptr)
         return;
     std_tm->tm_sec = 0;

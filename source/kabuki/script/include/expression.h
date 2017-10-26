@@ -133,7 +133,7 @@ struct Expression {
     Operand     * operand,          //< Current Operand object being verified.
                 * result;           //< Pointer to the Operand object this 
                                     //< expr is operating on.
-    const char  * return_address;   //< The return address.
+    const char*  * return_address;   //< The return address.
     volatile const uint_t* header;      //< Pointer to the header being verified.
     const uint_t    * headers;          //< First header ptr in the scan array.
 };
@@ -182,34 +182,34 @@ KABUKI const Operation* Result (Expression* expr,
                                 Expression::Error error,
                                 const uint_t* header,
                                 byte offset,
-                                byte* address);
+                                uintptr_t* address);
 
-/** Returns the text label of the Expression::Error. */
-KABUKI const char* ExpressionErrorString (Expression::Error error);
+/** Returns the text label of the Expression::Error.
+KABUKI const char* ExpressionErrorString (Expression::Error error); */
 
 /** Prints out an error report to the stdout.
     @param e The error type.
     @param params      The parameter header.
     @param param_index The index in the params where the error occurred.
-    @param source The source buffer address. */
+    @param source The source buffer address.
 KABUKI void ExpressionPrintError (Expression::Error error, const uint_t* params, 
-                                  byte param_index, void* source);
+                                  byte param_index, void* source); */
 
 /** Gets a pointer to the Bin slot. */
-KABUKI byte* ExpressionBinAddress (Expression* expr);
+KABUKI uintptr_t* ExpressionBinAddress (Expression* expr);
 
 /** Gets a pointer to the Bin slot. */
 KABUKI Bin* ExpressionBin (Expression* expr);
 
 /** Gets a pointer to the Bout slot. */
-KABUKI byte* ExpressionBoutAddress (Expression* expr);
+KABUKI uintptr_t* ExpressionBoutAddress (Expression* expr);
 
 /** Gets a pointer to the Bout slot. */
 KABUKI Bout* ExpressionBout (Expression* expr);
 
 /** Creates a Stack with equal sized rx and tx slots.
     @param root The root-scope device. */
-KABUKI Expression* ExpressionInit (byte* buffer, uint_t buffer_size,
+KABUKI Expression* ExpressionInit (uintptr_t* buffer, uint_t buffer_size,
                                    uint_t stack_count,
                                    Operand* root = nullptr);
 
@@ -219,7 +219,7 @@ KABUKI Operand** ExpressionStack (Expression* expr);
 /** Returns true if the Stack uses dynamic memory. */
 KABUKI bool ExpressionIsDynamic (Expression* expr);
 
-KABUKI byte* ExpressionEndAddress (Expression* expr);
+KABUKI uintptr_t* ExpressionEndAddress (Expression* expr);
 
 /** Resets this Stack to the initial state. */
 KABUKI const Operation* ExpressionReset (Expression* expr);
@@ -236,7 +236,7 @@ KABUKI const Operation* Push (Expression* expr, Operand* op);
 KABUKI const Operation* Pop (Expression* expr);
 
 /** Gets the base address of the state stack. */
-KABUKI byte* ExpressionStates (Expression* expr);
+KABUKI uintptr_t* ExpressionStates (Expression* expr);
 
 /** Exits the current state. */
 KABUKI const Operation* ExpressionExitState (Expression* expr);

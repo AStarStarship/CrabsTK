@@ -16,28 +16,25 @@
 #ifndef KABUKI_ID_TAG_H
 #define KABUKI_ID_TAG_H
 
-#include "id_config.h"
+#include "module_config.h"
 
 namespace kabuki { namespace id {
 
-class KABUKI ITag_i
+class KABUKI Tag
 {
     public:
 
-    virtual int getUID () = 0;
     /** Gets the Unique identifier number. */
+    virtual int GetUID () = 0;
 
-    virtual char setUID (int value) = 0;
     /** Sets the Unique identifier number. */
+    virtual char SetUID (int value) = 0;
 
-    virtual char getName () = 0;
     /** Gets the ID name. */
+    virtual char GetName () = 0;
 
-    virtual char SetName (const char* name) = 0;
     /** Sets the ID name. */
-    
-    virtual void Print (_::Log& log) = 0;
-    /** Prints this object to a expression. */
+    virtual char SetName (const char* name) = 0;
 };
 }       //< namespace id
 }       //< namespace kabuki

@@ -75,11 +75,11 @@ const Operation* Door::ExecAll () {
     return 0;
 }
 
-const Operation* Door::Star (int index, Expression* expr) {
+const Operation* Door::Star (char_t index, Expression* expr) {
     if (index < ' ') {
-        static const Operation this_member = { "Door", NumOperations (0), 
-            0, "A door in a Chinese room.", 0 };
-        return &this_member;
+        static const Operation star = { "Door", 
+            NumOperations (0), FirstOperation ('A'), "A door in a Chinese room.", 0 };
+        return &star;
     }
     index -= ' ';
     if (index >= slot_->num_slots)
@@ -94,7 +94,7 @@ KABUKI Door& Doors () {
 }*/
 
 /** Initializes a Door at the beginning of the given buffer. 
-static Door* DoorInit (byte* buffer, uint_t slot_size) {
+static Door* DoorInit (uintptr_t* buffer, uint_t slot_size) {
     if (buffer == nullptr) return nullptr;
     if (slot_size < kMinSlotSize) return nullptr;
     Wall* wall = reinterpret_cast<Door*>(buffer);

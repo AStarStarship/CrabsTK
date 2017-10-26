@@ -72,7 +72,6 @@ KABUKI const char* RequestString (Request r);
     ^   |__________________|
     |   |    Room Header   |
     0x0 |__________________|
-
     @endcode
 
     There are multiple doors in a Chinese Room that lead to other Chinese Rooms.
@@ -151,7 +150,7 @@ class Room: public Operand {
     virtual int Main (const char** args, int args_count);
 
     /** Script expressions. */
-    virtual const Operation* Star (int index, Expression* expr);
+    virtual const Operation* Star (char_t index, Expression* expr);
 
     protected:
                             //! vtable pointer here in memory!

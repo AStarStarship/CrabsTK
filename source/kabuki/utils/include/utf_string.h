@@ -53,7 +53,7 @@ class String
     @code
     _::String string;
    
-    std::char s1 = string;  // automatically converted to ANSI char
+    const char* s1 = string;  // automatically converted to ANSI char
     std::wstring s2 = string; // automatically converted to wide char
     string = "hello";         // automatically converted from ANSI char
     string = L"hello";        // automatically converted from wide char
@@ -68,12 +68,12 @@ class String
     std::locale locale;
     _::String string;
     ...
-    std::char s1 = string.toANSIString (locale);
+    const char* s1 = string.toANSIString (locale);
     string = _::String ("hello", locale);
     @endcode
    
     _::String defines the most important functions of the
-    standard std::char class: removing, random access, iterating,
+    standard const char* class: removing, random access, iterating,
     appending, comparing, etc. However it is a simple class
     provided for convenience, and you may have to consider using
     a more optimized class if your program requires complex char
@@ -141,7 +141,7 @@ class String
 
         @param ansiString ANSI char to convert
         @param locale     Locale to use for conversion. */
-    String (const std::char& ansiString, const std::locale& locale = std::locale ()) {
+    String (const const char*& ansiString, const std::locale& locale = std::locale ()) {
         string_.reserve (ansiString.length () + 1);
         UTF32::fromANSI (ansiString.begin (), ansiString.end (), std::back_inserter (string_), locale);
     }
@@ -236,7 +236,7 @@ class String
         return char
     }
     
-    /** Implicit conversion operator to std::char (ANSI char).
+    /** Implicit conversion operator to const char* (ANSI char).
         The current global locale is used for conversion. If you
         want to explicitly specify a locale, see toANSIString.
         Characters that do not fit in the target encoding are
@@ -247,7 +247,7 @@ class String
         @return Converted ANSI char
 
         @see toANSIString, operator std::wstring. */
-    operator std::char () const {
+    operator const char* () const {
         return toANSIString ();
     }
     
@@ -257,7 +257,7 @@ class String
         This operator is defined for convenience, and is equivalent
         to calling toWideString ().
         @return Converted wide char
-        @see toWideString, operator std::char. */
+        @see toWideString, operator const char*. */
     operator std::wstring () const {
         return toWideString ();
     }
@@ -269,11 +269,11 @@ class String
         discarded from the returned char.
         @param locale Locale to use for conversion
         @return Converted ANSI char
-        @see toWideString, operator std::char. */
-    std::char toANSIString (const std::locale& locale = std::locale ()) const
+        @see toWideString, operator const char*. */
+    const char* toANSIString (const std::locale& locale = std::locale ()) const
     {
         // Prepare the output char
-        std::char output;
+        const char* output;
         output.reserve (string_.length () + 1);
 
         // Convert
@@ -528,7 +528,7 @@ class String
     @param right Right operand (a char).
     @return True if both strings are equal. */
 template<typename uint_t>
-bool operator == (const String<uint_t>& left, const String<uint_t>& right) {
+bool operator == (const String<uint32_t>& left, const String<uint32_t>& right) {
     return left.string_ == right.string_;
 }
 
@@ -538,7 +538,7 @@ bool operator == (const String<uint_t>& left, const String<uint_t>& right) {
     @param right Right operand (a char).
     @return True if both strings are different. */
 template<typename uint_t>
-bool operator != (const String<uint_t>& left, const String<uint_t>& right) {
+bool operator != (const String<uint32_t>& left, const String<uint32_t>& right) {
     return ! (left == right);
 }
 
@@ -548,7 +548,7 @@ bool operator != (const String<uint_t>& left, const String<uint_t>& right) {
     @param right Right operand (a char)
     @return True if \a left is lexicographically before \a right */
 template<typename uint_t>
-bool operator < (const String<uint_t>& left, const String<uint_t>& right) {
+bool operator < (const String<uint32_t>& left, const String<uint32_t>& right) {
     return left.string_ < right.string_;
 }
 
@@ -558,7 +558,7 @@ bool operator < (const String<uint_t>& left, const String<uint_t>& right) {
     @param right Right operand (a char)
     @return True if \a left is lexicographically after \a right */
 template<typename uint_t>
-bool operator > (const String<uint_t>& left, const String<uint_t>& right) {
+bool operator > (const String<uint32_t>& left, const String<uint32_t>& right) {
     return right < left;
 }
 
@@ -568,7 +568,7 @@ bool operator > (const String<uint_t>& left, const String<uint_t>& right) {
     @param right Right operand (a char)
     @return True if \a left is lexicographically before or equivalent to \a right */
 template<typename uint_t>
-bool operator <= (const String<uint_t>& left, const String<uint_t>& right) {
+bool operator <= (const String<uint32_t>& left, const String<uint32_t>& right) {
     return ! (right < left);
 }
 
@@ -578,7 +578,7 @@ bool operator <= (const String<uint_t>& left, const String<uint_t>& right) {
     @param right Right operand (a char)
     @return True if \a left is lexicographically after or equivalent to \a right. */
 template<typename uint_t>
-bool operator >= (const String<uint_t>& left, const String<uint_t>& right) {
+bool operator >= (const String<uint32_t>& left, const String<uint32_t>& right) {
     return ! (left < right);
 }
 
@@ -588,7 +588,7 @@ bool operator >= (const String<uint_t>& left, const String<uint_t>& right) {
     @param right Right operand (a char)
     @return Concatenated char */
 template<typename uint_t>
-String<uint_t> operator + (const String<uint_t>& left, const String<uint_t>& right) {
+String<uint32_t> operator + (const String<uint32_t>& left, const String<uint32_t>& right) {
     String char = left;
     char += right;
 

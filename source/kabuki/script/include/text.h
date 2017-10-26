@@ -1,5 +1,6 @@
-/** kabuki::id
-    @file    ~/source/kabuki/id/include/script_module.h
+/** kabuki::script
+    @version 0.x
+    @file    ~/source/kabuki/script/include/a.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -12,10 +13,29 @@
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
- 
-#ifndef KABUKI_ID_CONFIG_H
-#define KABUKI_ID_CONFIG_H
 
-#include "../../script/include/script_module.h"
+#pragma once
+#include <stdafx.h>
 
-#endif  //< KABUKI_ID_CONFIG_H
+#ifndef KABUKI_SCRIPT_A_H
+#define KABUKI_SCRIPT_A_H
+
+#include "room.h"
+
+namespace _ {
+
+/** The A in A*B.
+    
+*/
+struct A: public Room {
+    public:
+
+    A ():
+        A (1024)
+    {
+
+    }
+};
+
+}       //< namespace _
+#endif  //< KABUKI_SCRIPT_A_H

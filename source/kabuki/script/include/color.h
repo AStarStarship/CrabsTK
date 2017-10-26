@@ -125,7 +125,7 @@ void ColorToHSV (color_t color, float& fR, float& fG, float fB, float& fH, float
 /** Sets this color to the HSV values. */
 void ColorSetHSV (color_t color, float& fR, float& fG, float& fB, float& fH, float& fS, float& fV);
 
-/** Prints this object to the stdout. */
+/** Prints this object to the log. */
 inline void ColorPrint (color_t color);
 
 }       //< namespace _

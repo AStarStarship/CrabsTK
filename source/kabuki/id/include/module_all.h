@@ -1,5 +1,5 @@
 /** Kabuki Starship
-    @file    /.../Source/KabukiTheater-Impl/_Entity/TESTS/Module.h
+    @file    ~/source/kabuki/id/include/module_all.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
 
@@ -17,3 +17,10 @@
         See the License for the specific language governing permissions and
         limitations under the License.
 */
+
+#ifndef KABUKI_ID_MODULE_ALL_H
+#define KABUKI_ID_MODULE_ALL_H
+
+
+
+#endif  //< KABUKI_ID_MODULE_ALL_H

@@ -106,8 +106,7 @@ class List : public Array<T>, public Collection {
     virtual void* ToArray () {
         return 0;
     }
-};
+};      //< class List
 }       //< namespace data
 }       //< namespace kabuki
-
 #endif  //< KABUKI_DATA_LIST_H

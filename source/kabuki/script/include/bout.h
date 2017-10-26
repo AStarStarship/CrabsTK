@@ -104,7 +104,7 @@ KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
                                     byte* address);
 
 /** Initializes the B-Output buffer with the given buffer size. */
-KABUKI Bout* BoutInit (byte* buffer, uint_t size);
+KABUKI Bout* BoutInit (uintptr_t* buffer, uint_t size);
 
 /** Calculates the space left in the given ring buffer.
     @param  bout The B-Output buffer. */
@@ -132,7 +132,7 @@ KABUKI const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args
 /** Returns a reference to the bout for this assembly. */
 template<uint_t kNumber>
 inline Bout& Logbag () {
-    static byte* buffer = Buffer<kNumber, kLogSize> ();
+    static uintptr_t* buffer = Buffer<kNumber, kLogSize> ();
     static Bout bout = LogInit (TxInit (buffer, kLogSize));
     return bout;
 }
@@ -168,7 +168,7 @@ inline Bout& operator+ (Bout& bout, float value);
 inline Bout& operator+ (Bout& bout, double value);
 
 /** Operation + prints a char to the bout. */
-inline Bout& operator+ (Bout& bout, const char * string);
+inline Bout& operator+ (Bout& bout, const char* string);
 
 }       //< namespace _
 #endif  //< KABUKI_SCRIPT_BOUT_H
