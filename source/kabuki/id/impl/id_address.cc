@@ -44,42 +44,47 @@ Address::Address ()
 
 Address::Address (const char* street, const char* city, const char* state,
                   const char* zip, const char* country, AddressType type) :
-    street_  (street ),
-    city_    (city   ),
-    state_   (state  ),
-    zip_     (zip    ),
-    country_ (country),
+    street_  (_::StringClone (street )),
+    city_    (_::StringClone (city   )),
+    state_   (_::StringClone (state  )),
+    zip_     (_::StringClone (zip    )),
+    country_ (_::StringClone (country)),
     type_    (type   ) {
 }
 
-char& Address::GetStreet () { return street_; }
+const char* Address::GetStreet () { return street_; }
 
 void Address::SetStreet (const char* string) {
-    street_ = string;
+    delete street_;
+    street_ = _::StringClone (string);
 }
 
-char& Address::GetCity () { return city_; }
+const char* Address::GetCity () { return city_; }
 
 void Address::SetCity (const char* string) {
-    city_ = string;
+    delete city_;
+    city_ = _::StringClone (string);
 }
 
-char& Address::GetState () { return state_; }
+const char* Address::GetState () { return state_; }
 
 void Address::SetState (const char* string) {
-    state_ = string;
+    delete state_;
+    state_ = _::StringClone (string);
 }
 
-char& Address::GetZip () { return zip_; }
+const char* Address::GetZip () { return zip_; }
 
 void Address::SetZip (const char* string) {
-    zip_ = string;
+    delete zip_;
+    zip_ = _::StringClone (string);
 }
 
-char& Address::GetCountry () { return country_; }
+const char* Address::GetCountry () { return country_; }
 
 void Address::SetCountry (const char* string) {
-    country_ = string;
+    delete country_;
+    country_ = _::StringClone (string);
 }
 
 AddressType Address::GetType () { return type_; }
@@ -89,12 +94,12 @@ void Address::SetType (AddressType t) {
 }
 
 void Address::Print (_::Log& log) {
-    log + "Address:"
-        + "\n Street         : " + street_
-        + "\n City           : " + city_ 
-        + "\n State/Province : " + state_
-        + "\n Zip/Postal Code: " + zip_ 
-        + "\n Country        : " + country_ + "\n";
+    log << "Address:"
+        << "\n Street         : " << street_
+        << "\n City           : " << city_ 
+        << "\n State/Province : " << state_
+        << "\n Zip/Postal Code: " << zip_ 
+        << "\n Country        : " << country_ << "\n";
 }
 
 }       //< id

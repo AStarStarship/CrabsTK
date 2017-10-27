@@ -1,5 +1,5 @@
 /** kabuki::pro
-    @file    ~/source/kabuki/id/include/imp/user_list.cc
+    @file    ~/source/kabuki/id/include/imp/roster.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,75 +14,67 @@
 */
 
 #include <stdafx.h>
-#include "../include/user_list.h"
+#include "../include/roster.h"
 
 namespace kabuki { namespace id {
 
-UserList::UserList ()
-{
+Roster::Roster () {
 }
 
-int UserList::GetNumUsers ()
-{
-    users_.GetCount (); 
+int Roster::GetNumUsers () {
+    return users_.GetCount ();
 }
 
-bool UserList::Add (const User& new_user)
-{
-    users_->Push (User (new_user));
+bool Roster::Add (const User& user) {
+    users_.Push (new User (user));
     return true;
 }
 
-bool UserList::Contains (const char* username)
-{
-    for (int index = 0; index < users_.GetCount (); index++)
-    {
+bool Roster::Contains (const char* username) {
+    for (int index = 0; index < users_.GetCount (); index++) {
         if (users_[index]->Equals (username))
             return true;
     }
     return false;
 }
-    
-bool UserList::Contains (const User& user)   
-{
-    for (int index = 0; index < users_.GetCount (); index++)
-    {
+
+bool Roster::Contains (const User& user) {
+    for (int index = 0; index < users_.GetCount (); index++) {
         if (users_[index]->Equals (user))
             return true;
     }
     return false;
 }
 
-User* UserList::Find (const char* username)
-{
+User* Roster::Find (const char* username) {
     size_t length = strlen (username);
-    if (length == 0)
-    {
+    if (length == 0) {
         return nullptr;//static website guest account
     }
 
-    for (int index = 0; index < users_.GetCount (); index++)
-        if (users_[index]->Equals (username))
-            return &users_[index];
+    for (int index = 0; index < users_.GetCount (); index++) {
+        User* user = users_.Element (index);
+        if (users_[index]->Equals (username)) {
+            return user;
+        }
+    }
     return nullptr;//static website guest account
 }
 
-int UserList::GetCount () {
-    return users_->GetCount ();
+int Roster::GetCount () {
+    return users_.GetCount ();
 }
 
-void UserList::Print (_::Log& log)
-{
+void Roster::Print (_::Log& log) {
     /// This method creates a char of the users.Print (_::Log& log) 
     /// strings separated by spaces
 
-    log += "Number of Users: " + users_.GetCount () + "\n";
+    log << "Number of Users: " << users_.GetCount () << "\n";
 
-    for (int index = 0; index < users_.GetCount (); index++)
-    {
+    for (int index = 0; index < users_.GetCount (); index++) {
         /// Iterated through the indexes array and write the
         /// Print (_::Log& log) strings to the returnString
-        log += "User " + (index + 1) + ": " + users_[index]->GetUsername ().GetKey () + "\n";
+        log << "User " << (index + 1) << ": " << users_[index]->GetUsername ().GetKey () << "\n";
     }
 }
 

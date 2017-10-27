@@ -36,14 +36,10 @@
     <ClInclude Include="id\include\entity.h" />
     <ClInclude Include="id\include\entity_group.h" />
     <ClInclude Include="id\include\entity_list.h" />
-    <ClInclude Include="id\include\grammar.h" />
     <ClInclude Include="id\include\handle.h" />
-    <ClInclude Include="id\include\hit.h" />
-    <ClInclude Include="id\include\hit_list.h" />
     <ClInclude Include="id\include\module_config.h" />
     <ClInclude Include="id\include\id_module.h" />
     <ClInclude Include="id\include\id_server.h" />
-    <ClInclude Include="id\include\library.h" />
     <ClInclude Include="id\include\name.h" />
     <ClInclude Include="id\include\oauth_account.h" />
     <ClInclude Include="id\include\organization.h" />
@@ -53,8 +49,6 @@
     <ClInclude Include="id\include\profile.h" />
     <ClInclude Include="id\include\relationship.h" />
     <ClInclude Include="id\include\role.h" />
-    <ClInclude Include="id\include\tag.h" />
-    <ClInclude Include="id\include\tag_tibrary.h" />
     <ClInclude Include="id\include\user.h" />
     <ClInclude Include="id\include\user_list.h" />
     <ClInclude Include="script\include\a.h" />
@@ -101,11 +95,7 @@
     <ClCompile Include="id\impl\id_entity.cc" />
     <ClCompile Include="id\impl\id_entity_group.cc" />
     <ClCompile Include="id\impl\id_entity_list.cc" />
-    <ClCompile Include="id\impl\id_grammar.cc" />
     <ClCompile Include="id\impl\id_handle.cc" />
-    <ClCompile Include="id\impl\id_hit.cc" />
-    <ClCompile Include="id\impl\id_hit_list.cc" />
-    <ClCompile Include="id\impl\id_library.cc" />
     <ClCompile Include="id\impl\id_name.cc" />
     <ClCompile Include="id\impl\id_organization.cc" />
     <ClCompile Include="id\impl\id_password.cc" />
@@ -113,10 +103,7 @@
     <ClCompile Include="id\impl\id_privilage.cc" />
     <ClCompile Include="id\impl\id_profile.cc" />
     <ClCompile Include="id\impl\id_relationship.cc" />
-    <ClCompile Include="id\impl\id_tag_library.cc" />
     <ClCompile Include="id\impl\id_user.cc" />
-    <ClCompile Include="id\impl\id_user_list.cc" />
-    <ClCompile Include="id\include\id_server.cc" />
     <ClCompile Include="script\impl\script_address.cc" />
     <ClCompile Include="script\impl\script_args.cc" />
     <ClCompile Include="script\impl\script_bin.cc" />

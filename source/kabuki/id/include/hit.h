@@ -17,7 +17,7 @@
 #define KABUKI_ID_HITLIST_H
 
 #include "module_config.h"
-#include "../../script/include/log.h"
+#include "../../data/include/array.h"
 
 namespace kabuki { namespace id {
 
@@ -28,8 +28,7 @@ namespace kabuki { namespace id {
     Each hit has a name and category, and type std::strings, and a list of tags that 
     describe the sound.
 */
-class KABUKI Hit
-{
+class KABUKI Hit {
     public:
     
     enum {
@@ -41,8 +40,8 @@ class KABUKI Hit
     /** Creates a hit from the given metadata.
     User produces the SomeTags list as a new array of std::strings, and this object consumes it and is responsible for the deallocation of the memory.
     */
-    Hit (const char* name = "", const char* aDescription = "", const char** tags = nullptr, char hit = 0, 
-        const char* aCatagory = "", const char* aType = "", int aNumTags = 0);
+    Hit (const char* name = "", const char* description = "", const char** tags = nullptr, char hit = 0, 
+        const char* aCategory = "", const char* aType = "", int num_tags = 0);
 
     /** Gets the name. */
     const char* GetName ();
@@ -62,22 +61,22 @@ class KABUKI Hit
     
     /** Sets the description.
         @return returns 0 upon success and 1 if the label is too long. */
-    const char* SetDescription (const char* aDescription);
+    const char* SetDescription (const char* description);
 
     /** Gets the category const char*.
         @return Gets an empty const char* no tags exist. */
-    const char* GetCatagory ();
+    const char* GetCategory ();
 
     /** Gets the subcategory const char*.
     @return Gets an empty const char* no tags exist. */
-    const char* GetSubcatagory ();
+    const char* GetSubcategory ();
 
     /** Adds a tag to the tag list.
         @return returns 0 upon success, -1 if the input is nullptr, and 1 if the label is too long. */
     const char* AddTag (const char* tag);
 
     /** Adds a collection of tags to the hit-list. */
-    void AddTags (char* tags, int numTags);
+    void AddTags (char* tags, int num_tags);
     
     /** Removes the given tag if it exists.
         @return Gets true upon success, 1 if the input is nullptr, and the given tag if the it doesn't exist. */
@@ -87,10 +86,10 @@ class KABUKI Hit
     bool ContainsTag (const char* tag);
 
     /** Gets true if this hit contains any of the given tags. */
-    bool ContainsTags (std::vector<const char*>& tags);
+    bool ContainsTags (data::StringArray* tags);
 
     /** Gets the list of tags. */
-    std::vector<const char*>& GetTags ();
+    data::StringArray* GetTags ();
     
     /** Gets a comma separated const char* of the tags. */
     const char* ToStringTags ();
@@ -107,8 +106,8 @@ class KABUKI Hit
                            * description_; //< Description of the hit. 
     const char            ** category_,    //< Pointer to the category char.
                            * type_;        //< Pointer to the instrument type.
-    int                      uid_;         //< The unique identifier.
-    data::Array<const char*> tags_;        //< List of tags.
+    uid_t                    uid_;         //< The unique identifier.
+    data::StringArray      * tags_;        //< List of tags.
 };
 
 }       //< namespace id

@@ -13,6 +13,7 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
 #include "../include/user.h"
 
 namespace kabuki { namespace id {
@@ -46,7 +47,7 @@ bool User::Equals (const char* name)
 
 void User::Print (_::Log& log)
 {
-    log += "User Name: " + handle_.GetKey () + "  Password: " + password_.GetString ();
+    log << "User Name: " << handle_.GetKey () << "  Password: " << password_.GetKey ();
 }
 
 }       //< id

@@ -13,10 +13,13 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+
 #ifndef KABUKI_ID_ACCOUNT_H
 #define KABUKI_ID_ACCOUNT_H
 
-#include "user_list.h"
+#include "roster.h"
 #include "handle.h"
 #include "password.h"
 #include "user.h"
@@ -52,21 +55,10 @@ class KABUKI Account
     void SetPassword (const char* string);
 
     /** Gets a reverence to the user list. */
-    UserList& GetUsers ();
+    Roster& GetUsers ();
 
     /** Allows another user to be attached to this account. */
     void AddUser (User& user);
-
-    /* Requests a new account with the given information. */
-    uid_t RequestNewAccount (const char* source   , const char* username,
-                             const char* password , const char* first_name,
-                             const char* last_name, const char* adress1,
-                             const char* adress2  , const char* zip_code);
-
-    /** Logs the given user into the account.
-        I'm not sure this function belongs here.
-        @return Returns a unique id for a connection. */
-    uint_t Login (User& user);
 
     /** Prints this object to the log. */
     void Print (_::Log& log);
@@ -75,7 +67,7 @@ class KABUKI Account
     
     Handle   name_;     //< Account handle/name.
     Password password_; //< Admin password for this account.
-    UserList users_;    //< List of users that may login into this account.
+    Roster   users_;    //< Account Roster describes User Roles.
 };
 
 }       //< namespace id

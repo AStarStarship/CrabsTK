@@ -1,5 +1,5 @@
 /** kabuki::id
-    @file    ~/source/kabuki/id/include/Grammar.h
+    @file    ~/source/kabuki/id/include/grammar.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -24,7 +24,7 @@ namespace kabuki { namespace id {
 /** Used for settings rules to text grammar.
     Useful for rules for passwords.
 */
-class Grammar
+class Word
 {
     public:
     
@@ -38,10 +38,13 @@ class Grammar
     };
 
     /** Creates and anarchy grammar with no rules. */
-    Grammar ();
+    Word ();
 
     /** Copy Constructor. */
-    Grammar (const Grammar& initState);
+    Word (const Word& initState);
+
+    /** Clones the given object. */
+    void Clone (const Word* grammar);
 
     /** Verifies the given string to see if it has proper grammar. */
     bool IsValid (const char* string);
@@ -50,13 +53,13 @@ class Grammar
     int GetMinLength ();
 
     /** Sets the min length of a valid symbol. */
-    bool setMinLength (int value);
+    bool SetMinLength (int value);
 
     /** Gets the max length. */
     int GetMaxLength ();
 
     /** Gets the max length. */
-    bool SetMinLength (int value);
+    bool SetMaxLength (int value);
     
     /** Checks to see if thisChar is an illegal char. */
     bool IsIllegal (char aChar);
@@ -89,14 +92,15 @@ class Grammar
         num_mandatory_char_ranges_, //< The number of mandatory char ranges.
         min_length_,                //< The min length of a valid symbol.
         max_length_;                //< The max length of a valid symbol.
+    /*
+    _::Range<char_t> illegal_chars_,     //< A 2 column table of ints that represents all of illegal char ranges.
+    _::Range<char_t> mandatory_chars_,   //< A 3 column table of ints that represents all of mandatory char ranges and how many are mandatory.
+    _::Range<char_t> mustStartWithChars; //< A 2 column table of ints that represents the range (string) of chars that the symbol must start with.
 
-    int illegal_chars_,             //< A 2 column table of ints that represents all of illegal char ranges.
-         mandatory_chars_,          //< A 3 column table of ints that represents all of mandatory char ranges and how many are mandatory.
-         mustStartWithChars;        //< A 2 column table of ints that represents the range (string) of chars that the symbol must start with.
-
-    const char* illegalCharsDesc,   //< An array of strings that describes what illegal char (string) are.
-                mandatoryCharsDesc, //< An array of strings that describes what the mandatory char (string) are.
+    const char* illegal_dhars_desc,     //< An array of strings that describes what illegal char (string) are.
+                mandatory_chars_desc,   //< An array of strings that describes what the mandatory char (string) are.
                 mustStartWithCharsDesc; //< An array of strings that describes what mandatory first char (string) are.
+    */
 };
 
 }       //< namespace id

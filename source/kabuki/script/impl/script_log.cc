@@ -17,6 +17,7 @@
              functions.
 */
 
+#include <stdafx.h>
 #include "../include/log.h"
 #include "../include/address.h"
 #include "../include/bin.h"
@@ -26,25 +27,22 @@ namespace _ {
 
 void LogPrint (Log& log) {
 
-    Bin* bin = reinterpret_cast<Bin*> (log.bout);
-    void* args[1];
-
+    Bin    * bin = reinterpret_cast<Bin*> (log.bout);
+    void   * args[1];
     byte     type = 0,                                             
              ui1;
     uint16_t ui2;
     uint32_t ui4;
     uint64_t ui8;
-
     int8_t   reserved,
              si1;
     uint16_t si2;
     uint32_t si4;
     uint64_t si8;
+    float    flt;
+    double   dbl;
+    char_t   index;
 
-    float     flt;
-    double    dbl;
-
-    char_t index;
     if (BinReadChar (reinterpret_cast<Bin*> (log.bout), index))
         return;
 

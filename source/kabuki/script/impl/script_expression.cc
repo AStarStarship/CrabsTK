@@ -466,8 +466,6 @@ void ExpressionScan (Expression* expr, Portal* input) {
                 } else if (type < UV8) {   // Varint types
                     expr->bytes_left = SizeOf (type);
                     ExpressionEnterState (expr, Expression::ScanningVarintState);
-                } else if (type <= AR8) {
-
                 } else if (type == ESC) {
 
                 } else if (type <= FS) {
@@ -514,8 +512,6 @@ const Operation* ExpressionPushHeader (Expression* expr, const uint_t* header) {
         // Handle overflow cleanup:
         return Result (expr, Expression::StackOverflowError, header);
     }
-
-    //if (dc == nullptr) return noDevceSelectedError ();
 
     return 0;
 }
@@ -730,7 +726,7 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
 
         switch (type) {
           case NIL:
-              goto BoutInvalidType;
+              goto InvalidType;
           case SOH:    //< _R_e_a_d__S_t_r_i_n_g_-_8____________________________
           case STX:
               // Load buffered-type argument length and increment the index.
@@ -786,7 +782,7 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
             *ui1_ptr = ui1;                     //< Write
             break;
 #else
-            goto BoutInvalidType;
+            goto InvalidType;
 #endif
           case SI2:     //< _R_e_a_d__1_6_-_b_i_t__T_y_p_e_s____________________
           case UI2:
@@ -811,7 +807,7 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
             *ui2_ptr = ui2;                     //< Write
             break;
 #else
-            goto BoutInvalidType;
+            goto InvalidType;
 #endif
           case SI4:     //< _R_e_a_d__3_2_-_b_i_t__T_y_p_e_s____________________
           case UI4:
@@ -837,7 +833,7 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
             *ui4_ptr = ui1;                     //< Write
             break;
 #else
-            goto BoutInvalidType;
+            goto InvalidType;
 #endif
           case TMU:     //< _R_e_a_d__6_4_-_b_i_t__T_y_p_e_s____________________
           case SI8:
@@ -863,118 +859,35 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
             *ui8_ptr = ui8;                     //< Write
             break;
 #else
-            goto BoutInvalidType;
+            goto InvalidType;
 #endif
           case SV2:     //< _R_e_a_d__V_a_r_i_n_t__2____________________________
           case UV2:
 #if USING_VARINT2
             goto Read2ByteType;
 #else
-            goto BoutInvalidType;
+            goto InvalidType;
 #endif
           case SV4:     //< _R_e_a_d__V_a_r_i_n_t__4____________________________
           case UV4:
 #if USING_VARINT4
               goto Read4ByteType;
 #else
-            goto BoutInvalidType;
+            goto InvalidType;
 #endif
           case SV8:     //< _R_e_a_d__V_a_r_i_n_t__8____________________________
           case UV8:
 #if USING_VARINT8
             goto Read8ByteType;
 #else
-            goto BoutInvalidType;
-#endif
-          case AR1:  //< _R_e_a_d__A_r_r_a_y_-_1________________________________
-#if USING_AR1
-            // Load next pointer and increment args.
-            ui1_ptr = reinterpret_cast<byte*> (args[index]);
-            if (ui1_ptr == nullptr)
-                return Result (expr, Expression::RoomError, params, index, start);
-            count = *param++;
-
-            // Word-align
-            offset = TypeAlign (start, count);
-            if (length < offset)
-                return Result (expr, Expression::BufferUnderflowError, params, index, start);
-            length -= offset;
-            start += offset;
-            if (start >= end) start -= size;
-
-            count *= SizeOf (*param++);
-            goto ReadBlock;
-#else
-            goto BoutInvalidType;
-#endif
-          case AR2:  //< _R_e_a_d__A_r_r_a_y_-_2________________________________
-#if USING_AR2
-            // Load the pointer to the destination.
-            ui1_ptr = reinterpret_cast<byte*> (args[index]);
-            if (ui1_ptr == nullptr)
-                return Result (expr, Expression::RoomError, params, index, start);
-            count = *param++; //< Get type from header
-              
-            // Word-align
-            offset = TypeAlign (start, count);
-            if (length < offset)
-                return Result (expr, Expression::BufferUnderflowError, params, index, start);
-            length -= offset;
-            start += offset;
-            if (start >= end) start -= size;
-
-            count *= SizeOf (*param++);
-            goto ReadBlock;
-#else
-            goto BoutInvalidType;
-#endif
-          case AR4:  //< _R_e_a_d__A_r_r_a_y_-_4________________________________
-#if USING_AR4
-            // Load the pointer to the destination.
-            ui1_ptr = reinterpret_cast<byte*> (args[index]);
-            if (ui1_ptr == nullptr)
-                return Result (expr, Expression::RoomError, params, index, start);
-            count = *param++;   //< Read type
-
-            // Word-align
-            offset = TypeAlign (start, count);
-            if (length < offset)
-                return Result (expr, Expression::BufferUnderflowError, params, index, start);
-            length -= offset;
-            start += offset;
-            if (start >= end) start -= size;
-
-            count *= SizeOf (*param++);
-            goto ReadBlock;
-#else
-            goto BoutInvalidType;
-#endif
-          case AR8:  //< _R_e_a_d__A_r_r_a_y_-_8________________________________
-#if USING_AR8
-            // Load the pointer to the destination.
-            ui1_ptr = reinterpret_cast<byte*> (args[index]);
-            if (ui1_ptr == nullptr)
-                return Result (expr, Expression::RoomError, params, index, start);
-            count = *param++;   //< Read Type
-              
-            // Word-align
-            offset = TypeAlign (start, count);
-            if (length < offset)
-                return Result (expr, Expression::BufferUnderflowError, params, index, start);
-            length -= offset;
-            start += offset;
-            if (start >= end) start -= size;
-
-            count *= SizeOf (*param++);
-            goto ReadBlock;
-#else
-              goto BoutInvalidType;
+            goto InvalidType;
 #endif
           case ESC: //< _R_e_a_d__E_s_c_a_p_e__S_e_q_u_e_n_c_e__________________
             // I'm not sure exactly how this should work. I can't do recursion
             // because of embedded limitations.
             break;
           case FS: //< _R_e_a_d__B_o_o_k_8_____________________________________
+#if USING_FS
             // Word-align
               offset = TypeAlign8 (start);
               if (length < offset + 128)
@@ -990,11 +903,11 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
             count = (uint_t)*ui8_ptr;
             ui1_ptr = reinterpret_cast<byte*> (ui8_ptr + 1);
             goto ReadBlock;
-#if USING_AR8
 #else
-            goto BoutInvalidType;
-#endif
+            goto InvalidType;
+#endif  //< USING_FS
           case GS: //< _R_e_a_d__B_o_o_k_4_______________________________________
+#if USING_GS
             // Word-align
               offset = TypeAlign4 (start);
               if (length < offset + 64)
@@ -1010,11 +923,11 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
             count = (uint_t)*ui4_ptr;
             ui1_ptr = reinterpret_cast<byte*> (ui4_ptr + 1);
             goto ReadBlock;
-#if USING_BK4
 #else
-            goto BoutInvalidType;
+            goto InvalidType;
 #endif
-          case RS: //< _R_e_a_d__B_o_o_k_2_______________________________________
+          case RS: //< _R_e_a_d__B_o_o_k_-_2____________________________________
+#if USING_RS
             // Word-align
             offset = TypeAlign2 (start);
             if (length < offset + 32)
@@ -1030,11 +943,11 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
             count = (uint_t)*ui2_ptr;
             ui1_ptr = reinterpret_cast<byte*> (ui2_ptr + 1);
             goto ReadBlock;
-#if USING_BK2
 #else
-            goto BoutInvalidType;
-#endif
+            goto InvalidType;
+#endif  //<  USING_RS
           case US: //< _R_e_a_d__U_n_i_t__S_e_p_e_r_a_t_o_r_____________________
+#if USING_RS || USING_GS || USING_FS
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
             count = kUnitSize;
             ReadBlock:
@@ -1067,8 +980,95 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
                 }
                 break;
             }
+#else
+#endif  //< USING_US
+            /*
+          case AR1:  //< _R_e_a_d__A_r_r_a_y_-_1________________________________
+#if USING_AR1
+            // Load next pointer and increment args.
+            ui1_ptr = reinterpret_cast<byte*> (args[index]);
+            if (ui1_ptr == nullptr)
+                return Result (expr, Expression::RoomError, params, index, start);
+            count = *param++;
+
+            // Word-align
+            offset = TypeAlign (start, count);
+            if (length < offset)
+                return Result (expr, Expression::BufferUnderflowError, params, index, start);
+            length -= offset;
+            start += offset;
+            if (start >= end) start -= size;
+
+            count *= SizeOf (*param++);
+            goto ReadBlock;
+#else
+            goto InvalidType;
+#endif
+          case AR2:  //< _R_e_a_d__A_r_r_a_y_-_2________________________________
+#if USING_AR2
+            // Load the pointer to the destination.
+            ui1_ptr = reinterpret_cast<byte*> (args[index]);
+            if (ui1_ptr == nullptr)
+                return Result (expr, Expression::RoomError, params, index, start);
+            count = *param++; //< Get type from header
+              
+            // Word-align
+            offset = TypeAlign (start, count);
+            if (length < offset)
+                return Result (expr, Expression::BufferUnderflowError, params, index, start);
+            length -= offset;
+            start += offset;
+            if (start >= end) start -= size;
+
+            count *= SizeOf (*param++);
+            goto ReadBlock;
+#else
+            goto InvalidType;
+#endif
+          case AR4:  //< _R_e_a_d__A_r_r_a_y_-_4________________________________
+#if USING_AR4
+            // Load the pointer to the destination.
+            ui1_ptr = reinterpret_cast<byte*> (args[index]);
+            if (ui1_ptr == nullptr)
+                return Result (expr, Expression::RoomError, params, index, start);
+            count = *param++;   //< Read type
+
+            // Word-align
+            offset = TypeAlign (start, count);
+            if (length < offset)
+                return Result (expr, Expression::BufferUnderflowError, params, index, start);
+            length -= offset;
+            start += offset;
+            if (start >= end) start -= size;
+
+            count *= SizeOf (*param++);
+            goto ReadBlock;
+#else
+            goto InvalidType;
+#endif
+          case AR8:  //< _R_e_a_d__A_r_r_a_y_-_8________________________________
+#if USING_AR8
+            // Load the pointer to the destination.
+            ui1_ptr = reinterpret_cast<byte*> (args[index]);
+            if (ui1_ptr == nullptr)
+                return Result (expr, Expression::RoomError, params, index, start);
+            count = *param++;   //< Read Type
+              
+            // Word-align
+            offset = TypeAlign (start, count);
+            if (length < offset)
+                return Result (expr, Expression::BufferUnderflowError, params, index, start);
+            length -= offset;
+            start += offset;
+            if (start >= end) start -= size;
+
+            count *= SizeOf (*param++);
+            goto ReadBlock;
+#else
+              goto InvalidType;
+#endif */
           default:
-            BoutInvalidType:
+            InvalidType:
             {
                 printf ("\n!!!Read invalid type %u\n", type);
                 return Result (expr, Expression::ReadInvalidTypeError, params, index, start);

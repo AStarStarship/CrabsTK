@@ -42,146 +42,80 @@ KABUKI void LogPrint (Log& log);
 
 }       //< namespace _
 
-/** Operation += writes the given value to the log. */
-inline _::Log& operator+= (_::Log& log, int8_t value) {
+/** Operation << writes the given value to the log. */
+inline _::Log& operator<< (_::Log& log, int8_t value) {
     void* args[1];
     _::BoutWrite (log.bout, _::Params<1, _::STX> (), _::Args (args, &value));
     return log;
 }
 
-/** Operation += writes the given value to the log. */
-inline _::Log& operator+= (_::Log& log, uint8_t value) {
+/** Operation << writes the given value to the log. */
+inline _::Log& operator<< (_::Log& log, uint8_t value) {
     void* args[1];
     _::BoutWrite (log.bout, _::Params<1, _::UI1> (), _::Args (args, &value));
     return log;
 }
 
-/** Operation += writes the given value to the log. */
-inline _::Log& operator+= (_::Log& log, int16_t value) {
+/** Operation << writes the given value to the log. */
+inline _::Log& operator<< (_::Log& log, int16_t value) {
     void* args[1];
     _::BoutWrite (log.bout, _::Params<1, _::SI2> (), _::Args (args, &value));
     return log;
 }
 
-/** Operation += writes the given value to the log. */
-inline _::Log& operator+= (_::Log& log, uint16_t value) {
+/** Operation << writes the given value to the log. */
+inline _::Log& operator<< (_::Log& log, uint16_t value) {
     void* args[1];
     _::BoutWrite (log.bout, _::Params<1, _::UI2> (), _::Args (args, &value));
     return log;
 }
 
-/** Operation += writes the given value to the log. */
-inline _::Log& operator+= (_::Log& log, int32_t value) {
+/** Operation << writes the given value to the log. */
+inline _::Log& operator<< (_::Log& log, int32_t value) {
     void* args[1];
     _::BoutWrite (log.bout, _::Params<1, _::SI4> (), _::Args (args, &value));
     return log;
 }
 
-/** Operation += writes the given value to the log. */
-inline _::Log& operator+= (_::Log& log, uint32_t value) {
+/** Operation << writes the given value to the log. */
+inline _::Log& operator<< (_::Log& log, uint32_t value) {
     void* args[1];
     _::BoutWrite (log.bout, _::Params<2, _::UI4> (), _::Args (args, &value));
     return log;
 }
 
-/** Operation += writes the given value to the log. */
-inline _::Log& operator+= (_::Log& log, int64_t value) {
+/** Operation << writes the given value to the log. */
+inline _::Log& operator<< (_::Log& log, int64_t value) {
     void* args[1];
     _::BoutWrite (log.bout, _::Params<1, _::SI8> (), _::Args (args, &value));
     return log;
 }
 
-/** Operation += writes the given value to the log. */
-inline _::Log& operator+= (_::Log& log, uint64_t value) {
+/** Operation << writes the given value to the log. */
+inline _::Log& operator<< (_::Log& log, uint64_t value) {
     void* args[1];
     _::BoutWrite (log.bout, _::Params<1, _::UI8> (), _::Args (args, &value));
     return log;
 }
 
-/** Operation += writes the given value to the log. */
-inline _::Log& operator+= (_::Log& log, float value) {
+/** Operation << writes the given value to the log. */
+inline _::Log& operator<< (_::Log& log, float value) {
     void* args[1];
     _::BoutWrite (log.bout, _::Params<1, _::FLT> (), _::Args (args, &value));
     return log;
 }
 
-/** Operation += writes the given value to the log. */
-inline _::Log& operator+= (_::Log& log, double value) {
+/** Operation << writes the given value to the log. */
+inline _::Log& operator<< (_::Log& log, double value) {
     void* args[1];
     _::BoutWrite (log.bout, _::Params<1, _::DBL> (), _::Args (args, &value));
     return log;
 }
 
-/** Operation += prints a char to the log. */
-inline _::Log& operator+= (_::Log& log, const char* string) {
+/** Operation << prints a char to the log. */
+inline _::Log& operator<< (_::Log& log, const char* string) {
     void* args[1];
     _::BoutWrite (log.bout, _::Params<1, _::STX> (), _::Args (args, string));
-    return log;
-}
-
-/** Operation + writes the given value to the log. */
-inline _::Log& operator+ (_::Log& log, int8_t value) {
-    log += value;
-    return log;
-}
-
-/** Operation + writes the given value to the log. */
-inline _::Log& operator+ (_::Log& log, uint8_t value) {
-    log += value;
-    return log;
-}
-
-/** Operation + writes the given value to the log. */
-inline _::Log& operator+ (_::Log& log, int16_t value) {
-    log += value;
-    return log;
-}
-
-/** Operation + writes the given value to the log. */
-inline _::Log& operator+ (_::Log& log, uint16_t value) {
-    log += value;
-    return log;
-}
-
-/** Operation + writes the given value to the log. */
-inline _::Log& operator+ (_::Log& log, int32_t value) {
-    log += value;
-    return log;
-}
-
-/** Operation + writes the given value to the log. */
-inline _::Log& operator+ (_::Log& log, uint32_t value) {
-    log += value;
-    return log;
-}
-
-/** Operation + writes the given value to the log. */
-inline _::Log& operator+ (_::Log& log, int64_t value) {
-    log += value;
-    return log;
-}
-
-/** Operation + writes the given value to the log. */
-inline _::Log& operator+ (_::Log& log, uint64_t value) {
-    log += value;
-    return log;
-}
-
-/** Operation + writes the given value to the log. */
-inline _::Log& operator+ (_::Log& log, float value) {
-    log += value;
-    return log;
-}
-
-/** Operation + writes the given value to the log. */
-inline _::Log& operator+ (_::Log& log, double value) {
-    log += value;
-    return log;
-}
-
-/** Operation + prints a char to the log. */
-inline _::Log& operator+ (_::Log& log, const char* string) {
-    log += string;
     return log;
 }
 

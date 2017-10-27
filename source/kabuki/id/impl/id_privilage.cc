@@ -26,12 +26,12 @@ PrivilageLevel getMinPrivilageLevel ()
     return minPrivilageLevel;
 }
 
-PrivilageLevel setMinPrivilageLevel ()
+PrivilageLevel Privilage::SetMinPrivilageLevel ()
 {
     return maxPrivilageLevel;
 }
 
-bool setPrvilageLevelRange (PrivilageLevel min, PrivilageLevel max)
+bool Privilage::SetPrvilageLevelRange (PrivilageLevel min, PrivilageLevel max)
 {
 
 }

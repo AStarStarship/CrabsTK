@@ -14,7 +14,7 @@
 */
 
 #include <stdafx.h>
-#include "../include/Relationship.h"
+#include "../include/relationship.h"
 
 namespace kabuki { namespace id {
 

@@ -15,37 +15,32 @@
 
 #include <stdafx.h>
 #include "../include/id_server.h"
+#include "../../script/include/utils.h"
 
-namespace kabuki { namespace pro {
+namespace kabuki { namespace id {
 
-IdServer::IdServer ():
-    num_events_ (0)
-{
+IdServer::IdServer () :
+    num_events_ (0) {
 }
 
-IdServer::~IdServer ()
-{
+IdServer::~IdServer () {
 }
 
-int IdServer::NumEvents ()
-{
+int IdServer::NumEvents () {
     return num_events_;
 }
 
-int IdServer::RegisterKey (char* key)
-{
+int IdServer::RegisterKey (char* key) {
     if (strlen (key) > kMaxKeyLength)
         return -1;
-    return ids_.Add (key);
+    return ids_.Push (_::StringClone (key));
 }
 
-int IdServer::RegisterKey (const char* key)
-{
-    return RegisterKey (StringClone (key));
+int IdServer::RegisterKey (const char* key) {
+    return RegisterKey (_::StringClone (key));
 }
 
-int IdServer::Find (const char* key)
-{
+int IdServer::Find (const char* key) {
     // @todo Replace me with hash table!
     for (int i = 0; i < ids_.GetCount (); ++i)
         if (!strcmp (key, ids_.Element (i)))
@@ -53,16 +48,14 @@ int IdServer::Find (const char* key)
     return -1;
 }
 
-int IdServer::RegisterEvent ()
-{
+int IdServer::RegisterEvent () {
     return num_events_++;
 }
 
-void IdServer::print ()
-{
+void IdServer::Print (_::Log& log) {
     std::cout << "\n| Id Server:"
-              << "\n| num_events: " << num_events_
-              << "\n| Registered Handles: \n";
+        << "\n| num_events: " << num_events_
+        << "\n| Registered Handles: \n";
     for (int i = 0; i < ids_.GetCount (); ++i)
         std::cout << "| " << i << ": " << ids_[i] << '\n';
 }

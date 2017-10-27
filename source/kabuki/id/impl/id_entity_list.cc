@@ -22,11 +22,11 @@ EntityList::EntityList ()
 {
 }
 
-int EntityList::GetSize () { return entities.size (); }
+int EntityList::GetSize () { return entities_->GetSize (); }
 
 void EntityList::Add (Entity* a)
 { 
-    entities.push_back (a); 
+    entities_->Push (a); 
 }
 
 void EntityList::Add (EntityList& l)   
@@ -34,51 +34,29 @@ void EntityList::Add (EntityList& l)
     //entities.push_back (l); 
 }
 
-Entity* EntityList::Find (const char* a)
-{
-    if (a.length () == 0)
+Entity* EntityList::Find (const char* query) {
+    size_t length = strlen (query);
+    if (length == 0)
         return nullptr;
     
     Entity* ptr;
 
-    for (int i = 0; i < entities.size (); i++)
-    {
-        ptr = entities[i];
-        if (ptr->equals (a))
+    for (int i = 0; i < entities_->GetSize (); i++) {
+        ptr = entities_->Element (i);
+        if (ptr->Query (query))
             return ptr;
     }
-        
+    
     return nullptr;//static website guest entities
-}
-
-bool EntityList::Search (const char* query)
-{
-    if (query.length () == 0) return false;
-
-    Entity* entity_ptr;
-
-    for (int i = 0; i < entities.size (); i++)
-    {
-        entity_ptr = entities[i];
-        if (entity_ptr->GetFirstName () == query)
-            return true;
-    }
-    return false;//static website guest entities
 }
 
 void EntityList::Print (_::Log& log)
 {
-    char returnstring;
-    returnstring = "Number of Accounts: " + entities.size () + (char)13;
+    log << "Number of Accounts: " << entities_->GetCount () << (char)13;
 
-    for (int i = 0; i < entities.size (); i++)
-    {
-        // Iterated through the users array and write the
-        // Print (_::Log& log) strings to the return string
-        returnstring = returnstring + ("Account " + (i + 1) + ": " + entities[i].GetFirstName () + (char)13);
+    for (int i = 0; i < entities_->GetSize (); i++) {
+        log << "Account " << (i + 1) << ": " << entities_->Element (i)->GetFirstName () << (char)13;
     }
-
-    log + returnstring_;
 }
 
 }       //< id

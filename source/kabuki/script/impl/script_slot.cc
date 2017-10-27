@@ -19,10 +19,9 @@
 
 namespace _ {
 
-void SlotClear (byte* const begin, uint_t rx_start,
-    byte* start, byte* const stop,
-    byte* const end, uint_t size)
-{
+void SlotClear (byte* const begin, uint_t      rx_start,
+                byte*       start, byte* const stop,
+                byte* const end  , uint_t      size) {
     byte* cursor = begin + rx_start;
     while (start != cursor) {
         *cursor = 0;
@@ -41,8 +40,7 @@ uint_t SlotSpace (byte* start, byte* stop, uint_t size) {
 }
 
 byte* SlotWrite (void* source, byte* const begin, byte* const start,
-                 byte* const stop, byte* const end, size_t size)
-{
+                 byte* const stop, byte* const end, size_t size) {
     if (source == nullptr) return start;
 
     // Now we can copy the bag into memory.
@@ -60,8 +58,7 @@ byte* SlotWrite (void* source, byte* const begin, byte* const start,
 }
 
 byte* SlotRead (void* destination, byte* const begin, byte* const start,
-                byte* const stop, byte* const end, size_t size)
-{
+                byte* const stop , byte* const end  , size_t size) {
     if (destination == nullptr) return start;
 
     // Now we can copy the bag into memory.

@@ -20,7 +20,7 @@
 
 namespace _ {
 
-KABUKI uint_t SizeOf (uint_t type) {
+uint_t SizeOf (uint_t type) {
     static const int8_t kWidths[] =
     {
         0,      //< NIL: 0 
@@ -61,7 +61,7 @@ KABUKI uint_t SizeOf (uint_t type) {
     return kWidths[type];
 }
 
-KABUKI const byte* TypeAlignments () {
+const byte* TypeAlignments () {
     static const byte kWidths[] =
     {
         0,      //< NIL: 0 
@@ -100,21 +100,21 @@ KABUKI const byte* TypeAlignments () {
     return kWidths;
 }
 
-KABUKI uintptr_t TypeAlign2 (byte* ptr) {
+uintptr_t TypeAlign2 (byte* ptr) {
     // Mask off lower bit and add it to the ptr.
     uintptr_t value = reinterpret_cast<uintptr_t> (ptr);
     return value & 0x1;
 }
 
-KABUKI uintptr_t TypeAlign4 (byte* ptr) {
+uintptr_t TypeAlign4 (byte* ptr) {
     return WordAlignOffset<int> (ptr);
 }
 
-KABUKI uintptr_t TypeAlign8 (byte* ptr) {
+uintptr_t TypeAlign8 (byte* ptr) {
     return WordAlignOffset<long> (ptr);
 }
 
-KABUKI uintptr_t TypeAlign (byte* ptr, byte type) {
+uintptr_t TypeAlign (byte* ptr, byte type) {
     if (type >= 32)     return 0;
     byte alignment = TypeAlignments ()[type];
     if (alignment <= 1) return 0;
@@ -128,7 +128,7 @@ KABUKI uintptr_t TypeAlign (byte* ptr, byte type) {
     return offset;
 }
 
-KABUKI uintptr_t TypeAlign (byte* ptr, uint_t type) {
+uintptr_t TypeAlign (byte* ptr, uint_t type) {
     if (type >= 32)     return 0;
     byte alignment = TypeAlignments ()[type];
     if (alignment <= 1) return 0;
@@ -142,11 +142,11 @@ KABUKI uintptr_t TypeAlign (byte* ptr, uint_t type) {
     return offset;
 }
 
-KABUKI bool TypeIsValid (uint_t type) {
+bool TypeIsValid (uint_t type) {
     return type > 31 ? false : true;
 }
 
-KABUKI const char** TypeStrings () {
+const char** TypeStrings () {
     static const char* kNames[] = {
         "NIL",
         "SOH",
@@ -185,19 +185,19 @@ KABUKI const char** TypeStrings () {
     return kNames;
 }
 
-KABUKI bool TypeIsValid (const char* type_name) {
+bool TypeIsValid (const char* type_name) {
     if (type_name < TypeStrings ()[0] || type_name > TypeStrings ()[FS])
         return false;
     return true;
 }
 
-KABUKI const char* TypeString (uint_t type) {
+const char* TypeString (uint_t type) {
     if (type >= kInvalidType)
         return "Invalid";
     return TypeStrings ()[type];
 }
 
-KABUKI bool CheckDelimiter (char const c) {
+bool CheckDelimiter (char const c) {
     if (c == 0   ) return false;
     if (c == ' ' ) return false;
     if (c == '\n') return false;
@@ -206,13 +206,13 @@ KABUKI bool CheckDelimiter (char const c) {
 }
 
 template<char c>
-KABUKI bool CheckLastLetter (uint16_t const token) {
+bool CheckLastLetter (uint16_t const token) {
     if (c != (char)token) return true;
     return CheckDelimiter (token >> 8);
 }
 
 template<char LetterTwo, char LetterThree>
-KABUKI bool CheckLastLetters (uint32_t const Token) {
+bool CheckLastLetters (uint32_t const Token) {
     char check = Token >> 8;
     if (LetterTwo != check) return true;
 
@@ -223,24 +223,13 @@ KABUKI bool CheckLastLetters (uint32_t const Token) {
     return CheckDelimiter (Token >> 8);
 }
 
-KABUKI byte ReadType (const char* string) {
+byte ReadType (const char* string) {
     uint32_t token = * ((uint32_t*)string);
 
     int index = (byte)token;
 
     switch (index)
     {
-        case 'A': {
-            if ((byte)(token >> 8) != 'R')
-                return 0xff;    //< There are only AR1, AR2, AR4, and AR8
-            switch (index = (byte)(token >> 16)) {
-                case '1': return CheckDelimiter (token >> 24) ? 0xff : AR1;
-                case '2': return CheckDelimiter (token >> 24) ? 0xff : AR2;
-                case '4': return CheckDelimiter (token >> 24) ? 0xff : AR4;
-                case '8': return CheckDelimiter (token >> 24) ? 0xff : AR8;
-                default: return 0xff;
-            }
-        }
         case 'B': switch (index = (byte) (token >> 8))
         {
             case 'K': switch (index = (byte) (token >> 16))
@@ -281,6 +270,13 @@ KABUKI byte ReadType (const char* string) {
             case 'O': switch (index = (byte) (token >> 16))
             {
                 case 'H': return CheckDelimiter (token >> 24) ? 0xff : SOH;
+                default: return 0xff;
+            }
+            case 'T': switch (index = (byte)(token >> 16)) {
+                case '2': return CheckDelimiter (token >> 24) ? 0xff:ST2;
+                case '4': return CheckDelimiter (token >> 24) ? 0xff:ST4;
+                case '8': return CheckDelimiter (token >> 24) ? 0xff:ST8;
+                case 'X': return CheckDelimiter (token >> 24) ? 0xff:STX;
                 default: return 0xff;
             }
             case 'V': switch (index = (byte) (token >> 16))
@@ -324,29 +320,29 @@ KABUKI byte ReadType (const char* string) {
     return 0xff;
 }
 
-KABUKI byte MaskType (byte value) {
+byte MaskType (byte value) {
     return value & 0x1f;
 }
 
-KABUKI bool TypeHasLength (uint_t type) {
+bool TypeHasLength (uint_t type) {
     if (type == STX)
         return true;
-    if (type >= AR1 && type <= AR8)
+    if (type >US)
         return true;
     if (type == ESC)
         return false;
     return false;
 }
 
-KABUKI bool TypeIsArray (uint_t type) {
-    return (type >= AR1) && (type <= AR8);
+bool TypeIsArray (uint_t type) {
+    return type > 31;
 }
 
-KABUKI bool TypeIsBag (uint_t type) {
+bool TypeIsSet (uint_t type) {
     return (type >= FS) && (type <= RS);
 }
 
-KABUKI bool TypeIsHierarchical (uint_t type) {
+bool TypeIsHierarchical (uint_t type) {
     return type > ESC;
 }
 

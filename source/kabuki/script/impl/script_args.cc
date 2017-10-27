@@ -29,7 +29,8 @@ void ParamsPrint (const uint_t* params) {
     }
     uint_t num_params = *params++,
         i,
-        value = 0;
+        value = 0,
+        type;
 
     std::cout << "Param<";
     if (num_params > kMaxNumParams) {
@@ -40,33 +41,172 @@ void ParamsPrint (const uint_t* params) {
     for (i = 1; i < num_params; ++i) {
         value = *params++;
         std::cout << TypeString (value) << ", ";
-        if (value == STX) {
+        if ((value == STX) || (value == ST2) || (value == ST4) || (value == ST8)) {
             ++i;
             value = *params++;
             printf ("%u, ", value);
-        } else if (value >= AR1 && value <= AR8) {
+        } else if (value > US) {
+            // Then it's an array.
+            type = value & 0x1f;    //< Mask off type.
+            value = value >> 5;     //< Shift over array type.
             ++i;
-            value = *params++;
-            printf ("%u, ", value);
-            value = *params;
-            printf ("%s ", TypeString (value));
+            switch (value) {
+                case 0: {
+                    break;
+                }
+                case 1: {
+                    value = *params++;
+                    std::cout << "UI1:" << value << ", ";
+                    break;
+                }
+                case 2: {
+                    value = *params++;
+                    std::cout << "UI2:" << value << ", ";
+                    break;
+                }
+                case 3: {
+                    value = *params++;
+                    std::cout << "UI4:" << value << ", ";
+                    break;
+                }
+                case 4: {
+                    value = *params++;
+                    std::cout << "UI8:" << value << ", ";
+                    break;
+                }
+                case 5: {
+                    value = *params++;
+                    if (value == 0) {
+                        std::cout << "UI1:[0]";
+                        break;
+                    }
+                    std::cout << "UI1:[" << value << ": ";
+                    for (uint_t i = value; i != 0; --i) {
+                        value = *params++;
+                        std::cout << value << ", ";
+                    }
+                    value = *params++;
+                    std::cout << value << "]";
+                    break;
+                }
+                case 6: {
+                    value = *params++;
+                    if (value == 0) {
+                        std::cout << "UI2:[0]";
+                        break;
+                    }
+                    std::cout << "UI2:[" << value << ": ";
+                    for (uint_t i = value; i != 0; --i) {
+                        value = *params++;
+                        std::cout << value << ", ";
+                    }
+                    value = *params++;
+                    std::cout << value << "]";
+                    break;
+                }
+                case 7: {
+                    value = *params++;
+                    if (value == 0) {
+                        std::cout << "UI4:[0]";
+                        break;
+                    }
+                    std::cout << "UI4:[" << value << ": ";
+                    for (uint_t i = value; i != 0; --i) {
+                        value = *params++;
+                        std::cout << value << ", ";
+                    }
+                    value = *params++;
+                    std::cout << value << "]";
+                    break;
+                }
+            }
         }
-        params;
     }
+    // Do the last set without a comma.
     value = *params++;
-    printf ("%s", TypeString (value));
-    if (value == STX) {
-        value = *params;
-        printf (", %u>\n", value);
-    } else if (value >= AR1 && value <= AR8) {
+    std::cout << TypeString (value) << ", ";
+    if ((value == STX) || (value == ST2) || (value == ST4) || (value == ST8)) {
         ++i;
         value = *params++;
-        printf (", %u, ", value);
-        value = *params++;
-        printf ("%s>\n", TypeString (value));
-    } else {
-        std::cout << ">\n";
+        printf ("%u", value);
+    } else if (value > US) {
+        // Then it's an array.
+        type = value & 0x1f;    //< Mask off type.
+        value = value >> 5;     //< Shift over array type.
+        ++i;
+        switch (value) {
+            case 0: {
+                break;
+            }
+            case 1: {
+                value = *params++;
+                std::cout << "UI1:" << value << ", ";
+                break;
+            }
+            case 2: {
+                value = *params++;
+                std::cout << "UI2:" << value << ", ";
+                break;
+            }
+            case 3: {
+                value = *params++;
+                std::cout << "UI4:" << value << ", ";
+                break;
+            }
+            case 4: {
+                value = *params++;
+                std::cout << "UI5:" << value << ", ";
+                break;
+            }
+            case 5: {
+                value = *params++;
+                if (value == 0) {
+                    std::cout << "UI1:[0]";
+                    break;
+                }
+                std::cout << "UI1:[" << value << ": ";
+                for (uint_t i = value; i != 0; --i) {
+                    value = *params++;
+                    std::cout << value << ", ";
+                }
+                value = *params++;
+                std::cout << value << "]";
+                break;
+            }
+            case 6: {
+                value = *params++;
+                if (value == 0) {
+                    std::cout << "UI2:[0]";
+                    break;
+                }
+                std::cout << "UI2:[" << value << ": ";
+                for (uint_t i = value; i != 0; --i) {
+                    value = *params++;
+                    std::cout << value << ", ";
+                }
+                value = *params++;
+                std::cout << value << "]";
+                break;
+            }
+            case 7:
+            {
+                value = *params++;
+                if (value == 0) {
+                    std::cout << "UI4:[0]";
+                    break;
+                }
+                std::cout << "UI4:[" << value << ": ";
+                for (uint_t i = value; i != 0; --i) {
+                    value = *params++;
+                    std::cout << value << ", ";
+                }
+                value = *params++;
+                std::cout << value << "]";
+                break;
+            }
+        }
     }
+    std::cout << ">\n";
 }
 
 uint_t ParamNumber (const uint_t* params, byte param_number) {
@@ -78,8 +218,20 @@ uint_t ParamNumber (const uint_t* params, byte param_number) {
         uint_t value = params[i];
         if (value == STX)
             ++param_number;
-        else if (value >= AR1 && value <= AR8)
-            param_number += 2;
+        else if (value > US) {
+            // It's an array!
+            value = value >> 5;
+            if (value < 5) { // It's a single dimension
+                param_number += 2;
+                break;
+            } else if (value > 7) {
+                // Error
+                std::cout << "Error";
+            }
+            else {
+                param_number += params[i] + 1;
+            }
+        }
     }
     return params[i];
 }

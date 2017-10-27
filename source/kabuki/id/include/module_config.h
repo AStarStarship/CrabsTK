@@ -16,7 +16,7 @@
 #ifndef KABUKI_ID_CONFIG_H
 #define KABUKI_ID_CONFIG_H
 
-#include "../../script/include/module_config.h"
+#include "../../script/include/log.h"
 
 typedef uintptr_t uid_t;
 

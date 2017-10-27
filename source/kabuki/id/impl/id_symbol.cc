@@ -22,8 +22,7 @@ const char* GetDefaultPassword () { "password"; }
 
 const char* GetDefaultPasswordFormat () { return "^[a-zA-Z0-9]*$"; }
 
-Grammar::Grammar ()
-{
+Word::Word () {
     num_illegal_char_ranges_ = 0;
     num_mandatory_char_ranges_ = 0;
 
@@ -31,100 +30,100 @@ Grammar::Grammar ()
     mandatory_chars_ = nullptr;
 }
 
-Grammar::Grammar (const Grammar& initState)
-{
+Word::Word (const Word& initState) {
     num_illegal_char_ranges_ = initState.num_illegal_char_ranges_;
     num_mandatory_char_ranges_ = initState.num_mandatory_char_ranges_;
 
-/*
+    /*
     int i;
     if (num_illegal_char_ranges_)
     {
-        illegal_chars_ = new char[num_illegal_char_ranges_][2];
-        for (i = 0; i < num_illegal_char_ranges_; ++i)
-        {
-            illegal_chars_[i][1] = initState.illegal_chars_[i][1];
-            illegal_chars_[i][2] = initState.illegal_chars_[i][2];
-        }
+    illegal_chars_ = new char[num_illegal_char_ranges_][2];
+    for (i = 0; i < num_illegal_char_ranges_; ++i)
+    {
+    illegal_chars_[i][1] = initState.illegal_chars_[i][1];
+    illegal_chars_[i][2] = initState.illegal_chars_[i][2];
+    }
     }
     else
-        illegal_chars_ = nullptr;
+    illegal_chars_ = nullptr;
 
     if (num_mandatory_char_ranges_)
     {
-        illegaChars = new char[num_illegal_char_ranges_][2];
-        for (i = 0; i < num_illegal_char_ranges_; ++i)
-        {
-            illegal_chars_[i][1] = initState.illegal_chars_[i][1];
-            illegal_chars_[i][2] = initState.illegal_chars_[i][2];
-        }
+    illegaChars = new char[num_illegal_char_ranges_][2];
+    for (i = 0; i < num_illegal_char_ranges_; ++i)
+    {
+    illegal_chars_[i][1] = initState.illegal_chars_[i][1];
+    illegal_chars_[i][2] = initState.illegal_chars_[i][2];
+    }
     }
     else
-        mandatory_chars_ = nullptr;
- */
+    mandatory_chars_ = nullptr;
+    */
 }
 
-bool Grammar::isValid (const char* string)
-{
+void Word::SetFormat (const char* format) {
+    if (format == nullptr)
+        return;
+    if (format_ == nullptr)
+        return;
+    delete format_;
+    format_ = _::StringClone (format);
+}
+
+bool Word::IsValid (const char* string) {
     /*
-       int stringLength = strlen (thisstring);
+    int stringLength = strlen (thisstring);
 
-       if (stringLength  < min_length_ || stringLength > max_length_)
-           return false;
+    if (stringLength  < min_length_ || stringLength > max_length_)
+    return false;
 
-       int i, j; // Looping variables
-       for (i = 0; i < ; ++i)
-       {
-           for (j = 0; j < num_illegal_char_ranges_; ++j)
-               if (thisstring[i])
-       }
+    int i, j; // Looping variables
+    for (i = 0; i < ; ++i)
+    {
+    for (j = 0; j < num_illegal_char_ranges_; ++j)
+    if (thisstring[i])
+    }
     */
     return true;
 }
 
-int Grammar::GetMinLength () { return min_length_; }
+int Word::GetMinLength () { return min_length_; }
 
-bool Grammar::setMinLength (int value)
-{
+bool Word::setMinLength (int value) {
     if (value < 0 || value >= max_length_) return false;
     min_length_ = value;
     return true;
 }
 
-int Grammar::GetMaxLength () { return max_length_; }
+int Word::GetMaxLength () { return max_length_; }
 
-bool Grammar::setMinLength (int value)
-{
+bool Word::setMinLength (int value) {
     if (value < min_length_) return false;
     max_length_ = value;
     return true;
 }
 
-bool Grammar::IsIllegal (char aChar)
-{
+bool Word::IsIllegal (char aChar) {
     return true;
 }
 
-bool Grammar::MakeIllegal (char thisChar, char descstring)
-{
+bool Word::MakeIllegal (char thisChar, char descstring) {
     //if (!isprint (thisChar))
-     //   return false;
+    //   return false;
     return true;
 }
 
-bool Grammar::MakeIllegal (int start_index, int stop_index, char description)
-{
+bool Word::MakeIllegal (int start_index, int stop_index, char description) {
     return true;
 }
 
-bool Grammar::MakeMandatory (int start_index, int stop_index, int num_instances, char descstring)
-{
+bool Word::MakeMandatory (int start_index, int stop_index, int num_instances, char descstring) {
     return true;
 }
 
-void Grammar::Print (_::Log& log)
-{
-    log + "Grammar: ";
+void Word::Print (_::Log& log) {
+    log << "Word: ";
 }
 
 }       //< id

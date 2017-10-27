@@ -98,8 +98,10 @@ const Operation* BinResult (Bin* bin, Bin::Error error, const uint_t* header,
 }
 
 Bin* BinInit (uintptr_t* buffer, uint_t size) {
-    if (size < kMinSlotSize) return nullptr;
-    if (buffer == nullptr) return nullptr;
+    if (size < kMinSlotSize)
+        return nullptr;
+    if (buffer == nullptr)
+        return nullptr;
 
     Bin* bin = reinterpret_cast<Bin*> (buffer);
     bin->size = size - (4 * sizeof (uint_t));
@@ -261,7 +263,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 
         switch (type) {
           case NIL:
-              goto BoutInvalidType;
+              goto UnsupportedType;
           case SOH: //< _R_e_a_d__S_t_r_i_n_g_-_8_______________________________________
           case STX:
               // Load buffered-type argument length and increment the index.
@@ -301,6 +303,44 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 *ui1_ptr = ui1;
             }
             break;
+          case ST2: //< _R_e_a_d__S_t_r_i_n_g_-_16______________________________________
+              // Load buffered-type argument length and increment the index.
+              count = *param;
+              ++param;
+              //#if DEBUG_SCRIPT
+              //              //printf ("\n|           Reading char with max length %u: ", count);
+              //#endif
+              // Load next pointer and increment args.
+              ui2_ptr = reinterpret_cast<uint16_t*> (args[index]);
+              if (ui2_ptr == nullptr) break;
+
+              // Read char.
+              ui2 = *start;
+              hash = Hash16 (ui2, hash);
+              if (++start >= end) start -= size;
+              *ui2_ptr = ui2;
+              ++ui2_ptr;
+
+              while (ui2 != 0 && count != 0) {
+                  if (count == 1)
+                      return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
+                  --count;
+                  //#if DEBUG_SCRIPT
+                  //                std::cout << ui2;
+                  //#endif
+                  ui2 = *start;       // Read byte from ring-buffer.
+                  hash = Hash16 (ui2, hash);
+                  hash = Hash16 (ui2 >> 8, hash);
+                  if (++start >= end) start -= size;
+                  *ui2_ptr++ = ui2;   // Write byte to destination.
+              }
+              //#if DEBUG_SCRIPT
+              //            //printf (" done!\n");
+              //#endif
+              hash = Hash16 (ui2, hash);
+              hash = Hash16 (ui2 >> 8, hash);
+              *ui2_ptr = ui2;
+              break;
           case SI1: //< _R_e_a_d__1__B_y_t_e__T_y_p_e_s_________________________________
           case UI1:
           case BOL:
@@ -322,7 +362,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             *ui1_ptr = ui1;                     //< Write
             break;
 #else
-            goto BoutInvalidType;
+            goto UnsupportedType;
 #endif
           case SI2: //< _R_e_a_d__1_6_-_b_i_t__T_y_p_e_s________________________
           case UI2:
@@ -352,7 +392,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             *(ui1_ptr + 1) = ui1;               //< Write
             break;
 #else
-            goto BoutInvalidType;
+            goto UnsupportedType;
 #endif
           case SI4: //< _R_e_a_d__3_2_-_b_i_t__T_y_p_e_s________________________
           case UI4:
@@ -394,7 +434,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             *(ui1_ptr + 3) = ui1;               //< Write
             break;
 #else
-            goto BoutInvalidType;
+            goto UnsupportedType;
 #endif
           case TMU: //< _R_e_a_d__6_4_-_b_i_t__T_y_p_e_s________________________
           case SI8:
@@ -460,7 +500,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             *(ui1_ptr + 7) = ui1;               //< Write
             break;
 #else
-            goto BoutInvalidType;
+            goto UnsupportedType;
 #endif
           case SV2: //< _R_e_a_d__2_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_________
 
@@ -556,7 +596,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             break;
 #else
           case UV2:
-            goto BoutInvalidType;
+            goto UnsupportedType;
 #endif
           case SV4: //< _R_e_a_d__4_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_________
           case UV4: //< _R_e_a_d__4_-_b_y_t_e__U_n_s_i_g_n_e_d__V_a_r_i_n_t_____
@@ -594,7 +634,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             *ui4_ptr = ui4;
           break;
 #else
-            goto BoutInvalidType;
+            goto UnsupportedType;
 #endif
           case SV8: //< _R_e_a_d__V_a_r_i_n_t__8________________________________
           case UV8:
@@ -638,61 +678,18 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
               *ui8_ptr = ui8;
             break;
 #else
-              goto BoutInvalidType;
+              goto UnsupportedType;
 #endif
-          case AR1:  //< _R_e_a_d__A_r_r_a_y_-_1________________________________
-#if USING_AR1
-            // Load next pointer and increment args.
-            ui1_ptr = reinterpret_cast<byte*> (args[index]);
-            if (ui1_ptr == nullptr)
-                return BinResult (bin, Bin::RoomError, params, index, start);
-            count = *param++;
-            count *= SizeOf (*param++);
-            goto ReadBlock;
-#else
-            goto BoutInvalidType;
-#endif
-          case AR2:  //< _R_e_a_d__A_r_r_a_y_-_2________________________________
-#if USING_AR2
-              // Load the pointer to the destination.
-              ui1_ptr = reinterpret_cast<byte*> (args[index]);
-              if (ui1_ptr == nullptr)
-                  return BinResult (bin, Bin::RoomError, params, index, start);
-              count = *param++;
-              count *= SizeOf (*param++);
-              goto ReadBlock;
-#else
-            goto BoutInvalidType;
-#endif
-          case AR4:  //< _R_e_a_d__A_r_r_a_y_-_4________________________________
-#if USING_AR4
-            // Load the pointer to the destination.
-            ui1_ptr = reinterpret_cast<byte*> (args[index]);
-            if (ui1_ptr == nullptr)
-                return BinResult (bin, Bin::RoomError, params, index, start);
-            count = *param++;
-            count *= SizeOf (*param++);
-            goto ReadBlock;
-#else
-            goto BoutInvalidType;
-#endif
-          case AR8:  //< _R_e_a_d__A_r_r_a_y_-_8________________________________
-#if USING_AR8
-            // Load the pointer to the destination.
-            ui1_ptr = reinterpret_cast<byte*> (args[index]);
-            if (ui1_ptr == nullptr)
-                return BinResult (bin, Bin::RoomError, params, index, start);
-            count = *param++;
-            count *= SizeOf (*param++);
-            goto ReadBlock;
-#else
-              goto BoutInvalidType;
-#endif
+          case SEQ:
           case ESC: //< _R_e_a_d__E_s_c_a_p_e__S_e_q_u_e_n_c_e__________________
-            // I'm not sure exactly how this should work. I can't do recursion
-            // because of embedded limitations.
+              const Operation* op = BinRead (bin, params + index, args + index);
+              if (op != nullptr) {
+                  return op;
+              }
             break;
+
           case FS: //< _R_e_a_d__B_o_o_k_8_____________________________________
+#if USING_FS
             if (length <= 128)
                 return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
             // Load next pointer and increment args.
@@ -708,11 +705,11 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             }
             count = (uint_t)ui8;
             break;
-#if USING_AR8
 #else
-            goto BoutInvalidType;
+            goto UnsupportedType;
 #endif
           case GS: //< _R_e_a_d__B_o_o_k_4_______________________________________
+#if USING_GS
             if (length <= 64)
                 return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
             // Load the pointer to the destination.
@@ -728,11 +725,11 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             }
             count = (uint_t)ui4;
             break;
-#if USING_BK4
 #else
-            goto BoutInvalidType;
+            goto UnsupportedType;
 #endif
           case RS: //< _R_e_a_d__B_o_o_k_2_______________________________________
+#if USING_RS
             if (length <= 32)
                 return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
             // Load the pointer to the destination.
@@ -749,9 +746,8 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             count = (uint_t)ui2;
             goto ReadBlock;
             break;
-#if USING_BK2
 #else
-            goto BoutInvalidType;
+            goto UnsupportedType;
 #endif
           case US: //< _R_e_a_d__U_n_i_t__S_e_p_e_r_a_t_o_r_____________________
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
@@ -789,19 +785,20 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 }
                 break;
             }
-          default:
-            BoutInvalidType:
-            {
+          default: {
+                UnsupportedType: {
 #if DEBUG
-                //printf ("\n!!!Read invalid type %u\n", type);
+                std::cout << "\n!!!Read invalid type %u\n" << type;
 #endif
                 return BinResult (bin, Bin::InvalidTypeError, params, index,
                                   start);
-            }
+                }
+          }
         }
         std::cout << " |";
     }
     //#if DEBUG_SCRIPT
+
     //printf ("\n| Hash expected: %x ", hash);
     //#endif
     ui2 = *start;

@@ -16,13 +16,12 @@
 #include <stdafx.h>
 #include "../include/handle.h"
 
-namespace kabuki { namespace id {
+namespace kabuki {
+namespace id {
 
-Handle::Handle (const char* name, int min_length, int max_length)
-{
-    if (min_length >= max_length)
-    {
-        int temp   = min_length;
+Handle::Handle (const char* name, int min_length, int max_length) {
+    if (min_length >= max_length) {
+        int temp = min_length;
         min_length = max_length;
         max_length = temp;
     }
@@ -31,18 +30,17 @@ Handle::Handle (const char* name, int min_length, int max_length)
     else if (min_length > kMaxLength) min_length = kMinLength;
 }
 
-char& Handle::GetKey () { return key_; }
+const char* Handle::GetKey () { return key_; }
 
-bool Handle::SetKey (const char* key)
-{
-    if (key.length () < kMinLength || key.length () > kMaxLength)
+bool Handle::SetKey (const char* key) {
+    size_t length = strlen (key);
+    if (length < kMinLength || length > kMaxLength)
         return false;
 
     return IsValid (key_);
 }
 
-bool Handle::IsValid (const char* key)
-{
+bool Handle::IsValid (const char* key) {
     size_t length = strlen (key);
     if (length < kMinLength || length > kMaxLength)
         return false;
@@ -50,14 +48,12 @@ bool Handle::IsValid (const char* key)
     return true;
 }
 
-bool Handle::Equals (const Handle& h)
-{
+bool Handle::Equals (const Handle& h) {
     return (strcmp (key_, h.key_) == 0);
 }
 
-void Handle::Print (_::Log& log)
-{
-    log += "Handle: " + key_ + "\n";
+void Handle::Print (_::Log& log) {
+    log << "Handle: " << key_ << "\n";
 }
 
 }       //< id

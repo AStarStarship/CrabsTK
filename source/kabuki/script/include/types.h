@@ -25,43 +25,54 @@
 namespace _ {
 
 /** List of the 32 data types.
-    This has been mimicked in order to match the ASCII C0 codes as closely 
-    as sanely possible. Many of the codes just don't make sense as types, but 
-    the codes were picked for the specific purpose that they are not human 
-    readable, with the exception of HT, VT, CR, and LF. */
+    To make arrays of the 32 types, use the 3 MSb as follows:
+
+    | Value | Description                                 |
+    |:-----:|:--------------------------------------------|
+    |   0   | Single element.                             |
+    |   1   | 1-dimensional array with up to 2^7 values.  |
+    |   2   | 1-dimensional array with up to 2^15 values. |
+    |   3   | 1-dimensional array with up to 2^31 values. |
+    |   4   | 1-dimensional array with up to 2^63 values. |
+    |   5   | N-dimensional array with up to 2^7 values.  |
+    |   6   | N-dimensional array with up to 2^15 values. |
+    |   7   | N-dimensional array with up to 2^31 values. |
+
+    @note This has been mimicked in order to match the ASCII C0 codes as
+    closely as sanely possible. */
 typedef enum {
-    NIL   = 0,  //< 0.  NIL/null/void type.
-    SOH   = 1,  //< 1.  An address to an Script device.
-    STX   = 2,  //< 2.  A UTF-8/ASCII char.
-    SI1   = 3,  //< 3.  An 8-bit signed integer.
-    UI1   = 4,  //< 4.  An 8-bit unsigned integer.
-    BOL   = 5,  //< 5.  An 8-bit non-zero asserted boolean variable.
-    SI2   = 6,  //< 6.  A 16-bit signed integer.
-    UI2   = 7,  //< 7.  A 16-bit unsigned integer.
-    HLF   = 8,  //< 8.  A 16-bit floating-point number.
-    SI4   = 9,  //< 9.  A 32-bit signed integer.
-    UI4   = 10, //< 10. A 32-bit unsigned integer.
-    FLT   = 11, //< 11. A 32-bit floating-point number.
-    TMS   = 12, //< 12. A 32-bit second since epoch timestamp.
-    TMU   = 13, //< 13. A 64-bit microsecond since epoch timestamp.
-    SI8   = 14, //< 14. A 64-bit signed integer.
-    UI8   = 15, //< 15. A 64-bit unsigned integer.
-    DBL   = 16, //< 16. A 64-bit floating-point number.
-    SV2   = 17, //< 17. A 16-bit signed varint.
-    UV2   = 18, //< 20. A 16-bit unsigned varint.
-    SV4   = 19, //< 18. A 32-bit signed varint.
-    UV4   = 20, //< 21. A 32-bit unsigned varint.
-    SV8   = 21, //< 19. A 64-bit signed varint.
-    UV8   = 22, //< 22. A 64-bit unsigned varint.
-    AR1   = 23, //< 23. An array of up to 2^7-1 like primitive types 3-16.
-    AR2   = 24, //< 24. An array of up to 2^15-1 like primitive types 3-16.
-    AR4   = 25, //< 25. An array of up to 2^32-1 like primitive types 3-16.
-    AR8   = 26, //< 26. An array of up to 2^32-1 like primitive types 3-16.
-    ESC   = 27, //< 27. An atomic escape sequence of SCRIPT procedure calls.
-    FS    = 28, //< 28. A Set with up to 2^31-2 members and 2^63-1 bytes data.
-    GS    = 29, //< 29. A Set with up to 2^15-2 members and 2^31-1 bytes data.
-    RS    = 30, //< 30. A Set with up to 2^7-2 members and 2^15-1 bytes data.
-    US    = 31, //< 31. A unit for breaking files and data into packets.
+    NIL = 0,    //< 0.  NIL/null/void type.
+    SOH,        //< 1.  An address to an Script device.
+    STX,        //< 2.  A UTF-8 string.
+    ST2,        //< 3.  A UTF-16 string.
+    ST4,        //< 4.  A UTF-32 string.
+    ST8,        //< 5.  A UTF-64 string.
+    BOL,        //< 6.  An 8-bit non-zero asserted boolean variable.
+    SI1,        //< 7.  An 8-bit signed integer.
+    UI1,        //< 8.  An 8-bit unsigned integer.
+    SI2,        //< 9.  A 16-bit signed integer.
+    UI2,        //< 10. A 16-bit unsigned integer.
+    HLF,        //< 11.  A 16-bit floating-point number.
+    SI4,        //< 12. A 32-bit signed integer.
+    UI4,        //< 13. A 32-bit unsigned integer.
+    FLT,        //< 14. A 32-bit floating-point number.
+    TMS,        //< 15. A 32-bit second since epoch timestamp.
+    TMU,        //< 16. A 64-bit microsecond since epoch timestamp.
+    SI8,        //< 17. A 64-bit signed integer.
+    UI8,        //< 18. A 64-bit unsigned integer.
+    DBL,        //< 19. A 64-bit floating-point number.
+    SV2,        //< 20. A 16-bit signed varint.
+    UV2,        //< 21. A 16-bit unsigned varint.
+    SV4,        //< 22. A 32-bit signed varint.
+    UV4,        //< 23. A 32-bit unsigned varint.
+    SV8,        //< 24. A 64-bit signed varint.
+    UV8,        //< 25. A 64-bit unsigned varint.
+    SEQ,        //< 26. A B-Sequence without a hash.
+    ESC,        //< 27. A Escape Sequence with a hash.
+    FS,         //< 28. A Set with up to 2^31-1 members and 2^63-1 bytes data.
+    GS,         //< 29. A Set with up to 2^15-1 members and 2^31-1 bytes data.
+    RS,         //< 30. A Set with up to 2^7-1 members and 2^15-1 bytes data.
+    US,         //< 31. A unit for breaking files and data into packets.
 } TType;
 
 enum {
@@ -126,7 +137,7 @@ KABUKI bool TypeHasLength (uint_t type);
 KABUKI bool TypeIsArray (uint_t type);
 
 /** Returns true if the given type is a Bag type. */
-KABUKI bool TypeIsBag (uint_t type);
+KABUKI bool TypeIsSet (uint_t type);
 
 /** Returns true if this type has a buffer. */
 KABUKI bool TypeIsHierarchical (uint_t type);

@@ -19,34 +19,26 @@
 namespace kabuki { namespace id {
 
 EntityGroup::EntityGroup (const char* name) :
-   name (name)
-{
+    name_ (_::StringClone (name == nullptr?"":name)) {
 }
 
-char& EntityGroup::GetName () { return name; }
+const char* EntityGroup::GetName () { return name_; }
 
-void EntityGroup::SetName (const char* string)
-{
-    name = string;
+void EntityGroup::SetName (const char* string) {
+    name_ = _::StringClone (string);
 }
 
-void EntityGroup::ApplyPrivilage (const Privilage& privilage)
-{
+void EntityGroup::ApplyPrivilage (const char* privilages) {
     //for (int i = 0; i < base.getNumAccounts (); i++)
-    //    accounts[i].Role ().applyPrivilages (new_privilages);
+    //    accounts[i].Role ().ApplyPrivilages (new_privilages);
 }
 
-int EntityGroup::Search (const char* string)
-{
-    for_each (entities.begin (), entities.end (), [](Entity& e)
-    {
-
-    });
+int EntityGroup::Search (const char* string) {
+    return 0;
 }
 
-void EntityGroup::Print (_::Log& log)
-{
-    Print (logs ("Group: ", name, " ");
+void EntityGroup::Print (_::Log& log) {
+    log << "Group: " << name_ << " ";
 }
 
 }       //< id

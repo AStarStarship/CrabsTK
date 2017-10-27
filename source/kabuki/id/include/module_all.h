@@ -1,4 +1,4 @@
-/** Kabuki Starship
+/** Kabuki kabuki::id  
     @file    ~/source/kabuki/id/include/module_all.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>

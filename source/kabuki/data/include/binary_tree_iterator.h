@@ -3,8 +3,8 @@
     @file    ~/source/data/include/binary_tree.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
-             All right reserved (R). Licensed under the Apache License, Version 
-             2.0 (the "License"); you may not use this file except in 
+             All right reserved (R). Licensed under the Apache License, Version
+             2.0 (the "License"); you may not use this file except in
              compliance with the License. You may obtain a copy of the License 
              [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
              required by applicable law or agreed to in writing, software
@@ -32,15 +32,15 @@ class BinaryTreeIterator {
     /* BinaryTreeIterator () {
         current = root_;
     }
-    void* currentObject () {
+    void* CurrentObject () {
         return current->data ();
     }
-    void* nextObject () {
+    void* NextObject () {
         void* nextObj = current->data ();
         if (left != nullptr)
             current;
     }
-    void* prevObject () {
+    void* PrevObject () {
         prevIndex = index;
         index--;
         if (index < 1) {
@@ -51,22 +51,22 @@ class BinaryTreeIterator {
         return current->data;
     }
 
-    Link current () {
+    Link Current () {
         return current;
     }
 
-    Link getNext () {
+    Link GetNext () {
         prevIndex = index;
         index++;
         if (index>size ()) {
             index = 1;
             current = head;
         }
-        current = current->nextLink;
+        current = current->next;
         return current;
     }
 
-    Link prev () {
+    Link* Prev () {
         prevIndex = index;
         index--;
         if (index < 1) {
@@ -77,10 +77,10 @@ class BinaryTreeIterator {
         return current;
     }
 
-    bool isNotDone () {
+    bool IsNotDone () {
         if (index>prevIndex)// iterating forwards
         {
-            if (current->nextLink == head)
+            if (current->next == head)
                 return false;
         } else                // iterating backwards
         {
@@ -89,11 +89,11 @@ class BinaryTreeIterator {
         }
         return true;
     }
-    bool isNotDone (int forwardsOrBackwards)// Value to be < or > 0
+    bool IsNotDone (int forwardsOrBackwards)// Value to be < or > 0
     {
         if (forwardsOrBackwards>0)// iterating forwards
         {
-            if (current->nextLink == head)
+            if (current->next == head)
                 return false;
         } else                // iterating backwards
         {
@@ -110,7 +110,7 @@ class BinaryTreeIterator {
             BinaryTreeIterator iteration = new BinaryTreeIterator ();
             iteration.SetIndex (index - 1);
         } else {
-            remove (current->nextLink);
+            remove (current->next);
             Iterator iteration = new Iterator ();
             iteration.SetIndex (index);
         }
@@ -132,8 +132,9 @@ class BinaryTreeIterator {
         return -1;
     }
 
-    void SetDirection (int positiveNegative) {
-        if (positiveNegative<0)
+    void SetDirection (int value
+    ) {
+        if (value < 0)
             prevIndex = prevIndex + 1;
         else
             prevIndex = prevIndex - 1;
@@ -145,7 +146,7 @@ class BinaryTreeIterator {
         if (toHere > index) {
             if (toHere < index - toHere) {
                 for (int i = index; i<toHere; i++)
-                    current = current->nextLink;
+                    current = current->next;
             } else {
                 current = linkAtIndex (toHere);
             }

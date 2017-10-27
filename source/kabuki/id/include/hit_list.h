@@ -44,7 +44,7 @@ class KABUKI HitList {
     bool FindDuplicateName (const char* value);
 
     /** Gets the category name at the given index. */
-    const char* GetCatagoryName (int index);
+    const char* GetCategoryName (int index);
     
     /** Gets a HitList of the given tag. */
     HitList* FindTag (const char* tag);
@@ -53,10 +53,10 @@ class KABUKI HitList {
     HitList* FindTags (data::Array<const char*>& tags);
     
     /** Gets the category image name. */
-    const char* GetCatagoryImageName (const char* string);
+    const char* GetCategoryImageName (const char* string);
 
     /** Gets the subcategory image name. */
-    const char* GetSubcatagoryImageName (const char* string);
+    const char* GetSubcategoryImageName (const char* string);
 
     /** Prints this object to the log. */
     void Print (_::Log& log);
@@ -65,8 +65,8 @@ class KABUKI HitList {
 
     long uid = 0;
     
-    std::vector<Hit&> patches;               //< The list of patches.
-    std::vector<const char*> catagories,     //< The list of catagories.
+    data::Array<Hit&> patches;               //< The list of patches.
+    data::Array<const char*> catagories,     //< The list of catagories.
         tags;                           //< List of tag strings.
 
     void loadTestHits ();

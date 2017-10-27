@@ -24,8 +24,7 @@ namespace kabuki { namespace id {
 /** A user account on a computer.
     A user does not necessarily have an account. Some accounts are and any user can use. i.e. the guest account.
 */
-class KABUKI User
-{
+class KABUKI User {
     public:
 
     /** Creates a user with the given char and password. */
@@ -53,7 +52,7 @@ class KABUKI User
 
     Handle   handle_;   //< The user's handle (i.e. key).
     Password password_; //< The user's password.
-};
+};      //< class User
 }       //< namespace id
 }       //< kabuki
 #endif  //< KABUKI_ID_USER_H

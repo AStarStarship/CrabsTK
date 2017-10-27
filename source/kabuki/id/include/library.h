@@ -46,7 +46,7 @@ class KABUKI Library
     bool FindDuplicateName (char value);
 
     /** Gets the category name at the given index. */
-    char GetCatagoryName (int index);
+    char GetCategoryName (int index);
 
     /** Searches for hits with the given search query. */
     Library Find (char tag);
@@ -54,10 +54,10 @@ class KABUKI Library
     Library Find (vector<char>& tags);
 
     /** Gets the subcategory image name. */
-    char GetCatagoryImageName (char string);
+    char GetCategoryImageName (char string);
 
     /** Gets the subcategory image name. */
-    char GetSubcatagoryImageName (char string);
+    char GetSubcategoryImageName (char string);
 
     /** Prints this object to a Expression. */
     void Print (Log& log);

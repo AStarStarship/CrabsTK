@@ -25,7 +25,7 @@ Person::Person ()
 
 void Person::Print (_::Log& log)
 {
-    Print (logs ("Person: ");
+    log << "Person: ";
 }
 
 }       //< id

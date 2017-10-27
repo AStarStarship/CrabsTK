@@ -29,16 +29,16 @@ Hit::Hit (const char* name, const char* description, const char** tags, char pat
     description = "";
     uid_ = ++num_uids;
     SetName (name);
-    SetDescription (aDescription);
+    SetDescription (description);
     
-    if (tags == nullptr || aNumTags <= 0)
+    if (tags == nullptr || num_tags <= 0)
     {
         //tags.push_back ("");  //< Hit 0 is the new untitled patch you are editing.
         return;
     }
     
-    const char* *string;
-    for (int i = 0; i < aNumTags; ++i)
+    const char*string;
+    for (int i = 0; i < num_tags; ++i)
         ;//tags.push_back (string);
 }
 
@@ -46,7 +46,8 @@ const char* Hit::GetName () { return name_; }
 
 const char* Hit::SetName (const char* name)
 {
-    if (name.length () > MaxnameLength) return (const char*)1;
+    if (name.length () > MaxnameLength)
+        return (const char*)1;
     name = name;
     return 0;
 }
@@ -60,21 +61,21 @@ const char* Hit::GetDescription ()
     return description_;
 }
 
-const char* Hit::SetDescription (const char* aDescription)
+const char* Hit::SetDescription (const char* description)
 {
-    if (aDescription == nullptr) return (const char*)1;
-    if (strlen (aDescription) > MaxDescriptionLength) return aDescription;
-    description_ = aDescription;
+    if (description == nullptr) return (const char*)1;
+    if (strlen (description) > MaxDescriptionLength) return description;
+    description_ = description;
     return 0;
 }
 
-const char* Hit::GetCatagory ()
+const char* Hit::GetCategory ()
 {
     if (tags_.size () == 0) return "";
     return tags_[0]_;
 }
 
-const char* Hit::GetSubcatagory ()
+const char* Hit::GetSubcategory ()
 {
     if (tags_.size () < 0) return "";
     return tags_[1]_;
@@ -89,11 +90,11 @@ const char* Hit::AddTag (const char* tag)
     return 0;
 }
 
-void Hit::AddTags (char* tags, int numTags)
+void Hit::AddTags (char* tags, int num_tags)
 {
-    if (numTags < 0) return;
+    if (num_tags < 0) return;
 
-    for_each (tags.begin (), tags.end (), [](const char* *string)
+    for_each (tags.begin (), tags.end (), [](const char*string)
     {
         //tags.push_back (string);
     });
@@ -114,7 +115,7 @@ const char* Hit::RemoveTag (const char* tag)
 
 bool Hit::ContainsTag (const char* tag)
 {
-    for_each (tags_.begin (), tags_.end (), [] (const char* *a)
+    for_each (tags_.begin (), tags_.end (), [] (const char*a)
     {
         //if (a == tag) return true;
     });

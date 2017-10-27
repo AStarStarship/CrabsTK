@@ -1,16 +1,15 @@
 /** kabuki::data
-    @version 0.x
     @file    ~/source/data/include/array.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
-             All right reserved (R). Licensed under the Apache License, Version 
-             2.0 (the "License"); you may not use this file except in 
-             compliance with the License. You may obtain a copy of the License 
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             All right reserved (R). Licensed under the Apache License, Version
+             2.0 (the "License"); you may not use this file except in
+             compliance with the License. You may obtain a copy of the License
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
              required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
-             implied. See the License for the specific language governing 
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+             implied. See the License for the specific language governing
              permissions and limitations under the License.
 */
 
@@ -25,26 +24,24 @@ namespace kabuki { namespace data {
 /** An array of like types that can auto-grow.
 */
 template<typename T>
-class Array
-{
+class Array {
     public:
 
-    enum
-    {
+    enum {
         kMinSize = 4    //< The default and min size if none is entered.
     };
 
     /** Initializes an array of n elements of the given type.
-        @param max_elements The max number of elements in the array buffer. */
+    @param max_elements The max number of elements in the array buffer. */
     Array (int max_elements = kMinSize) :
-        size_ (max_elements = RoundToPowerOf2 (max_elements)),
+        size_ (max_elements = _::RoundToPowerOf2 (max_elements)),
         count_ (0),
         array_ (new T[max_elements]) {
     }
 
     /** Initializes an array of n elements of the given type and clears .
-        @param max_elements The max number of elements in the array buffer.
-        @param init_value The init value of the elements. */
+    @param max_elements The max number of elements in the array buffer.
+    @param init_value The init value of the elements. */
     Array (int max_elements, int init_value) :
         size_ (max_elements = RoundToPowerOf2 (max_elements)),
         count_ (0),
@@ -58,12 +55,12 @@ class Array
     }
 
     /** Gets the max_elements_. */
-    int Size () {
+    int GetSize () {
         return size_;
     }
 
     /** Inserts the value into the given index into the array at the given,
-        index and shifts the contents at the index and above up one. */
+    index and shifts the contents at the index and above up one. */
     int Insert (T value, int index) {
         if (index < 0)
             return -1;
@@ -107,9 +104,19 @@ class Array
         return count;
     }
 
-    /** Adds the given value to the array. */
-    int Add (T value) {
-        return Insert (value, count_);   //< Add to the end.
+    /** Pushes the element onto the Stack. */
+    int Push (T element) {
+        return Insert (element, count_);
+    }
+
+    /** Pops an element off the stack. */
+    int Pop (T& element) {
+        int count = count_;
+        if (count == 0)
+            return 0;
+        element = array_[count - 1];
+        count_ = count - 1;
+        return count;
     }
 
     /** Removes the given index from the array. */
@@ -140,12 +147,7 @@ class Array
     }
 
     inline T& operator[] (int index) {
-        static T t;
-        if (index < 0)
-            return t;
-        if (index >= size_)
-            return t;
-        return array_[index];
+        return Element (index);
     }
 
     /** Doubles the size of the array. */
@@ -167,6 +169,8 @@ class Array
         count_;     //< Number of elements.
     T*  array_;     //< The array.
 };
+
+using StringArray = Array<const char*>;
 
 }       //< namespace data
 }       //< namespace kabuki

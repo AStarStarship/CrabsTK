@@ -51,7 +51,7 @@ EmailAddress::EmailAddress (const char* string)
 
 }
 
-char& EmailAddress::GetAddress () { return address; }
+char& EmailAddress::GetAddress () { return address_; }
 
 void EmailAddress::SetAddress (const char* string) { address = string; }
 

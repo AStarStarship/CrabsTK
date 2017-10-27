@@ -14,16 +14,16 @@
 */
 
 #include <stdafx.h>
-#include "../include/oath_account.h"
+#include "../include/oauth_account.h"
 
 namespace kabuki { namespace id {
 
-OAthAccount::OAthAccount ()
+OAuthAccount::OAuthAccount ()
 {
 
 }
 
-void OAthAccount::Print (_::Log& log)
+void OAuthAccount::Print (_::Log& log)
 {
 
 }

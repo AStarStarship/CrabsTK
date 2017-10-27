@@ -44,34 +44,34 @@ class KABUKI Address
         AddressType aType);
 
     /** Gets the street address. */
-    char& GetStreet ();
+    const char* GetStreet ();
 
     /** Sets the street address. */
-    void SetStreet (const char* newValue);
+    void SetStreet (const char* string);
 
     /** Gets the city. */
-    char& GetCity ();
+    const char* GetCity ();
 
     /** Sets the city. */
-    void SetCity (const char* newValue);
+    void SetCity (const char* string);
 
     /** Gets the State. */
-    char& GetState ();
+    const char* GetState ();
 
     /** Sets the state. */
-    void SetState (const char* newValue);
+    void SetState (const char* string);
 
     /** Gets the zip code. */
-    char& GetZip ();
+    const char* GetZip ();
 
     /** Sets the zip code. */
-    void SetZip (const char* newValue);
+    void SetZip (const char* string);
 
     /** Gets the country. */
-    char& GetCountry ();
+    const char* GetCountry ();
 
     /** Sets the country. */
-    void SetCountry (const char* newValue);
+    void SetCountry (const char* string);
 
     /** Gets the address type.
         The address type means street, PO box, etc.
@@ -86,11 +86,11 @@ class KABUKI Address
 
     private:
 
-    char        street_,  //< The street address.
-                city_,    //< The city of address
-                state_,   //< The state of address
-                zip_,     //< The zip code of address
-                country_; //< The country of address
+    char      * street_,  //< The street address.
+              * city_,    //< The city of address
+              * state_,   //< The state of address
+              * zip_,     //< The zip code of address
+              * country_; //< The country of address
     AddressType type_;    //< The type of address
 };
 

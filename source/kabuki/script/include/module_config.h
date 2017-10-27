@@ -26,22 +26,22 @@
 // @todo Check all values of assembly_settings.inl, store them as an enum, 
 // then #undef them.
 
-#define BARE_METAL       1 //< Bare metal (i.e. No OS) OS type macro.
-#define MBED_BARE_METAL  2 //< mbed bare-metal OS type macro.
-#define MBED_OS          3 //< Arduino bare-metal OS type macro.
-#define ARDUINO          4 //< mbed OS type macro.
-#define MINGW32          5 //< Win32 OS type macro.
-#define WINDOWS          6 //< Windows Universal OS type macro.
-#define ANDROID          7 //< Android OS type macro.
-#define LINUX            8 //< Linux OS type macro.
-#define OSX              9  //< iOS OS type macro.
-#define IOS              10 //<< 
-#define X86              1  //< x86 processor type macro.
-#define X64              2  //< x64 processor type macro.
-#define ARM8             3  //< ARM8 processor type macro.
-#define ARM16            4  //< ARM16 processor type macro.
-#define ARM32            5  //< ARM32 processor type macro.
-#define ARM64            6  //< ARM64 processor type macro.
+#define BARE_METAL       1  //< Bare metal (i.e. No OS) OS type macro.
+#define MBED_BARE_METAL  2  //< mbed bare-metal OS type macro.
+#define MBED_OS          3  //< Arduino bare-metal OS type macro.
+#define ARDUINO          4  //< mbed OS type macro.
+#define MINGW32          5  //< Win32 OS type macro.
+#define WINDOWS          6  //< Windows Universal OS type macro.
+#define ANDROID          7  //< Android OS type macro.
+#define LINUX            8  //< Linux OS type macro.
+#define OSX              9  //< OSX OS type macro.
+#define IOS              10 //< iOS OS type macro.
+#define X86              11 //< x86 processor type macro.
+#define X64              12 //< x64 processor type macro.
+#define ARM8             13 //< ARM8 processor type macro.
+#define ARM16            14 //< ARM16 processor type macro.
+#define ARM32            15 //< ARM32 processor type macro.
+#define ARM64            16 //< ARM64 processor type macro.
 
 // Stupid dumb-face Big-Endian nonsense
 
@@ -63,6 +63,10 @@
 #define NO                          0
 
 #include <assembly.h>       //< Inline config stuff for your project.
+
+#if USING_RS || USING_GS || USING_FS
+#define USING_RS 1
+#endif
 
 #if CHAR_WIDTH == 8
 typedef uint8_t index;

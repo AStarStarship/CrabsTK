@@ -24,29 +24,14 @@ namespace kabuki { namespace id {
 /** A role that an entity plays in an organization.
     Examples of a role are:
     
-    1. volunteer
-    2. employee
-    3. manager
-    4. owner
+    1. Owner
+    2. Executive
+    3. Manager
+    4. Employee
+    5. Volunteer
 */
-class KABUKI Role {
-    public:
-
-    /** Creates a user with the given char and password. */
-    Role (const char* aDescription);
-
-    /** Gets a reference to the description char. */
-    char& GetDescription ();
-
-    /** Sets the description to the given char. */
-    void SetDescription (const char* string);
-
-    /** Prints this object to a expression. */
-    void Print (_::Log& log);
-
-    private:
-
-    char description;       //< A description of the role.
+struct KABUKI Role {
+    uid_t GetRole () = 0;
 };
 }       //< namespace id
 }       //< namespace kabuki   

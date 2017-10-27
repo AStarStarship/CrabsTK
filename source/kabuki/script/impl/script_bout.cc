@@ -214,7 +214,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 break;
 
             case SOH: //< _W_r_i_t_e__A_d_d_r_e_s_s__S_t_r_i_n_g________________
-            case STX: //< _W_r_i_t_e__S_t_r_i_n_g_______________________________
+            case STX: //< _W_r_i_t_e__U_T_F_-_8__S_t_r_i_n_g____________________
                 if (space == 0)
                     return BoutResult (bout, Bout::BufferOverflowError, params, index,
                                        start);
@@ -238,7 +238,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 *stop = ui1;
                 if (++stop >= end) stop -= size;
                 hash = Hash16 (ui1, hash);
-                //putchar (ui1);
+                //  std::cout << ui1;
 
                 while (ui1 != 0) {
                     if (space-- == 0)
@@ -248,7 +248,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                     ui1 = *ui1_ptr;     // Read byte.
                     hash = Hash16 (ui1, hash);
 
-                    //putchar (ui1);
+                    //std::cout <<ui1);
 
                     *stop = ui1;        // Write byte
                     if (++stop >= end) stop -= size;
@@ -261,7 +261,58 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 //std::cout << '\n';
 
                 break;
+            case ST2: //< _W_r_i_t_e__U_T_F_-_8__S_t_r_i_n_g____________________
+#if USING_UTF16
+                if (space == 0)
+                    return BoutResult (bout, Bout::BufferOverflowError, params, index,
+                        start);
+                --space;
+                length = *param;   //< Load the max char length.
+                ++param;
 
+                //strings = reinterpret_cast<const byte**> (args);
+                //printf ("\ntestStrings at after: 0x%p\nstring1: %s\n"
+                //        "string2: %s\n", args, strings[0], strings[1]);
+
+                // Load the source data pointer and increment args.fs
+                ui2_ptr = reinterpret_cast<const uint16_t*> (args[index]);
+
+                //printf ("Before trying to print 0x%p: %s\n", ui2_ptr, ui2_ptr);
+                //print ();
+                //printf ("\nWriting chars: ");
+
+                // We know we will always write at least one null-term byte.
+                ui2 = *ui2_ptr;
+                *stop = ui2;
+                if (++stop >= end) stop -= size;
+                hash = Hash16 (ui2, hash);
+                //  std::cout << ui2;
+
+                while (ui2 != 0) {
+                    if (space-- == 0)
+                        return BoutResult (bout, Bout::BufferOverflowError, params, index,
+                            start);
+                    ++ui2_ptr;
+                    ui2 = *ui2_ptr;     // Read byte.
+                    hash = Hash16 (ui2, hash);
+                    hash = Hash16 (ui2 >> 8, hash);
+
+                    //std::cout <<ui2);
+
+                    *stop = ui2;        // Write byte
+                    if (++stop >= end) stop -= size;
+                }
+                *stop = ui2;        // Write byte
+                if (++stop >= end) stop -= size;
+                //std::cout << '\n';
+                break;
+#else
+                goto TxInvalidType;
+#endif  //< USING_UTF-16
+            case ST4: //< _W_r_i_t_e__U_T_F_-_8__S_t_r_i_n_g____________________
+                break;
+            case ST8: //< _W_r_i_t_e__U_T_F_-_8__S_t_r_i_n_g____________________
+                break;
             case SI1: //< _W_r_i_t_e__8_-_b_i_t__T_y_p_e_s______________________
             case UI1:
             case BOL:
@@ -585,9 +636,54 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             case UV8:
                 goto TxInvalidType;
 #endif
+              case ESC: //< _W_r_i_t_e__E_s_c_a_p_e_S_e_q_u_e_n_c_e_______________________
+                // @todo Write Tx ESC algorithm.
+                break;
+              case FS:  //< _W_r_i_t_e__6_4_-_B_i_t__B_o_o_k____________________________
 
-            case AR1:  //< _W_r_i_t_e__A_r_r_a_y_______________________________________
+# if USING_BK8
+                ui8_ptr = reinterpret_cast<const uint64_t*> (args[index]);
+                if (ui8_ptr == nullptr)
+                    return (Bout::RoomError, params, index, start);
+                ui1_ptr = reinterpret_cast<byte*>(ui8_ptr);
+                // Load size.
+                ui8 = *ui8_ptr;
+                length = static_cast<uint_t>(ui8);
+                goto WriteBlock;
+#else
+                goto TxInvalidType;
+#endif
 
+              case GS:  //< _W_r_i_t_e__B_o_o_k_4_______________________________________
+
+# if USING_BK4
+                ui4_ptr = reinterpret_cast<const uint32_t*> (args[index]);
+                if (ui4_ptr == nullptr)
+                    return BoutResult (bout, Bout::RoomError, params, index, start);
+                ui1_ptr = reinterpret_cast<byte*>(ui4_ptr);
+                // Load size.
+                ui4 = *ui4_ptr;
+                length = static_cast<uint_t>(ui4);
+                goto WriteBlock;
+#else
+                goto TxInvalidType;
+#endif
+
+              case RS:  //< _W_r_i_t_e__B_o_o_k_2_______________________________________
+
+# if USING_BK2
+                ui2_ptr = reinterpret_cast<const uint16_t*> (args[index]);
+                if (ui2_ptr == nullptr)
+                    return BoutResult (bout, Bout::RoomError, params, index, start);
+                ui1_ptr = reinterpret_cast<byte*>(ui2_ptr);
+                // Load size.
+                ui2 = *ui2_ptr;
+                length = static_cast<uint_t>(ui2);
+                goto WriteBlock;
+#else
+                goto TxInvalidType;
+#endif
+/*              case AR1:  //< _W_r_i_t_e__A_r_r_a_y_______________________________________
 #if USING_AR1
                 // Load pointer to data to write and get size.
                 ui1_ptr = reinterpret_cast<const byte*> (args[index]);
@@ -639,56 +735,9 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 goto WriteBlock;
 #else
                 goto TxInvalidType;
-#endif
-              case ESC: //< _W_r_i_t_e__E_s_c_a_p_e_S_e_q_u_e_n_c_e_______________________
-                // @todo Write Tx ESC algorithm.
-                break;
-              case FS:  //< _W_r_i_t_e__6_4_-_B_i_t__B_o_o_k____________________________
-
-# if USING_BK8
-                ui8_ptr = reinterpret_cast<const uint64_t*> (args[index]);
-                if (ui8_ptr == nullptr)
-                    return (Bout::RoomError, params, index, start);
-                ui1_ptr = reinterpret_cast<byte*>(ui8_ptr);
-                // Load size.
-                ui8 = *ui8_ptr;
-                length = static_cast<uint_t>(ui8);
-                goto WriteBlock;
-#else
-                goto TxInvalidType;
-#endif
-
-              case GS:  //< _W_r_i_t_e__B_o_o_k_4_______________________________________
-
-# if USING_BK4
-                ui4_ptr = reinterpret_cast<const uint32_t*> (args[index]);
-                if (ui4_ptr == nullptr)
-                    return BoutResult (bout, Bout::RoomError, params, index, start);
-                ui1_ptr = reinterpret_cast<byte*>(ui4_ptr);
-                // Load size.
-                ui4 = *ui4_ptr;
-                length = static_cast<uint_t>(ui4);
-                goto WriteBlock;
-#else
-                goto TxInvalidType;
-#endif
-
-              case RS:  //< _W_r_i_t_e__B_o_o_k_2_______________________________________
-
-# if USING_BK2
-                ui2_ptr = reinterpret_cast<const uint16_t*> (args[index]);
-                if (ui2_ptr == nullptr)
-                    return BoutResult (bout, Bout::RoomError, params, index, start);
-                ui1_ptr = reinterpret_cast<byte*>(ui2_ptr);
-                // Load size.
-                ui2 = *ui2_ptr;
-                length = static_cast<uint_t>(ui2);
-                goto WriteBlock;
-#else
-                goto TxInvalidType;
-#endif
+#endif*/
               case US:
-#if USING_BK2 || USING_BK4 || USING_BK8
+#if USING_FS || USING_GS || USING_RS
                   ui1_ptr = reinterpret_cast<const byte*> (args[index]);
                   if (ui1_ptr == nullptr)
                       return BoutResult (bout, Bout::RoomError, params, index, start);
@@ -696,8 +745,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 #else
                 goto TxInvalidType;
 #endif
-#if USING_BK2 || USING_BK4 || USING_BK8 || USING_AR1 || USING_AR2 \
-              || USING_AR4 || USING_AR8
+#if USING_FS || USING_GS || USING_RS
                 ui1_ptr = reinterpret_cast<const byte*> (args[index]);
                 if (ui1_ptr == nullptr)
                     return BoutResult (bout, Bout::RoomError, params, index, start);

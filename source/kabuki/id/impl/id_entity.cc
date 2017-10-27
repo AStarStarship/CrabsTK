@@ -18,25 +18,31 @@
 
 namespace kabuki { namespace id {
 
-Entity::Entity (const char* email_address, const char* first_name, const char* last_name, 
-    const char* primary_phone, const char* street_adress1, const char* zip_code1, 
-    const char* street_address2, const char* zip_code2) :
-    first_name_     (first_name),
-    last_name_      (last_name),
-    phone_number_   (primary_phone),
-    email_adress_   (email_adress),
-    street_adress1_ (street_adress1),
-    zip_code1_      (zip_code1)
-{
+Entity::Entity () {
     
 }
 
-char& Entity::GetFirstName () { return first_name_; }
-
-void Entity::SetFirstName (const char* string) { first_name_ = string; }
-
-bool Entity::Search (const char* query)
+const char* Entity::GetFirstName ()
 {
+    return first_name_;
+}
+
+void Entity::SetFirstName (const char* string)
+{
+    delete first_name_;
+    first_name_ = _::StringClone (string);
+}
+
+const char* Entity::GetLastName () {
+    return last_name_;
+}
+
+void Entity::SetLastName (const char* string) {
+    delete last_name_;
+    last_name_ = _::StringClone (string);
+}
+
+bool Entity::Query (const char* query) {
     /*
     for_each (tags.begin (), tags.end (), [](char& string(
     {
@@ -68,7 +74,7 @@ bool Entity::Search (const char* query)
 
 void Entity::Print (_::Log& log)
 {
-    Print (logs ("Entity: ");
+    log << "Entity: ";
 }
 
 }       //< id

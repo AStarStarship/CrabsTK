@@ -13,17 +13,17 @@
              permissions and limitations under the License.
 */
  
-#ifndef KABUKI_ID_HITLIST_H
+#ifndef KABUKI_ID_PERSON_H
+#define KABUKI_ID_PERSON_H
 
 #include "Entity.h"
 
 namespace kabuki { namespace id {
 
-class KABUKI Person: public Entity
 /** Class that represents a person/human. 
-    @todo Load a person from social media account using Facbook and OAath APIs.
+    @todo Load a person from social media account using Facebook and OAuth APIs.
 */
-{
+class KABUKI Person : public Entity {
     public:
 
     Person ();
@@ -34,8 +34,8 @@ class KABUKI Person: public Entity
 
     private:
 
-    char lastName,                           //< The last name of the entity.
+    char* lastName;  //< The last name of the entity.
 };
-
 }       //< namespace id
 }       //< namespace kabuki
+#endif  //< KABUKI_ID_PERSON_H

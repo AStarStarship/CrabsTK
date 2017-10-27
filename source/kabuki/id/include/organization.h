@@ -16,17 +16,14 @@
 #ifndef KABUKI_ID_ORGANIZATION_H
 #define KABUKI_ID_ORGANIZATION_H
 
-#include "module_config.h"
-
-#include "Entity.h"
+#include "entity.h"
 
 namespace kabuki { namespace id {
 
 /** An entity that is not a person such as a business or non-profit organization. 
-    @todo 
+    Roster - list or plan showing turns of duty or leave for individuals or groups in an organization.
 */
-class KABUKI Organization : public Entity
-{
+class KABUKI Organization : public Entity {
     public:
 
     /** Default constructor. */

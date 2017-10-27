@@ -29,9 +29,9 @@ bool HitList::AddHit (Hit& p)
 
     /// Check the tags for duplicates and add to tags if no duplicates exist.
     /*
-    const char* tagCatagory = p.GetCatagory ();
-    for_each (patches.begin (), patches.end (), [](const char* string) { if (string == tagCatagory) return true; }
-    tags.push_back (tagCatagory);
+    const char* tagCategory = p.GetCategory ();
+    for_each (patches.begin (), patches.end (), [](const char* string) { if (string == tagCategory) return true; }
+    tags.push_back (tagCategory);
     sort (tags.begin (), tags.end ());
     return true;
     */
@@ -90,7 +90,7 @@ bool HitList::FindDuplicateName (const char* value)
     return false;
 }
 
-const char* HitList::GetCatagoryName (int index)
+const char* HitList::GetCategoryName (int index)
 {
     if (index >= catagories.size ()) return nullptr;
     
@@ -100,7 +100,7 @@ const char* HitList::GetCatagoryName (int index)
 HitList* HitList::FindTag (const char* tag)
 {
     /*
-    std::vector<Hit> patchList;
+    data::Array<Hit> patchList;
 
     for_each (Hit patch in patches)
     if (patch.ContainsTag (tag))
@@ -113,7 +113,7 @@ HitList* HitList::FindTag (const char* tag)
 HitList* HitList::FindTags (vector<const char*> tags)
 {
     /*
-    std::vector<Hit> patchList;
+    data::Array<Hit> patchList;
     for_each (patches.begin (), patches.end (), [] (Hit& p)
     {
         if (patch.ContainsTags (tags)) patchList.add (patch);
@@ -123,7 +123,7 @@ HitList* HitList::FindTags (vector<const char*> tags)
     return 0;
 }
 
-const char* HitList::GetCatagoryImageName (const char* string)
+const char* HitList::GetCategoryImageName (const char* string)
 {
     if (string == "") return nullptr;
     regex regularExpression ("\string+");
@@ -131,7 +131,7 @@ const char* HitList::GetCatagoryImageName (const char* string)
     return result_;
 }
 
-const char* HitList::GetSubcatagoryImageName (const char* string)
+const char* HitList::GetSubcategoryImageName (const char* string)
 {
     if (string == "") return nullptr;
     regex regularExpression ("\string+");

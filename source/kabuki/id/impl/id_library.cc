@@ -19,66 +19,68 @@ namespace kabuki { namespace id {
 
 Library::Library ()
 {
-    LoadTestHites ();
+    LoadTestHits ();
 }
 
-Library::Library (const Hit& o)
+Library::Library (const Hit& other)
 {
     
 }
 
-char* Library::getHitChangeString ()
+char* Library::GetHitChangeString ()
 {
 }
 
 /** Adds a patch to the patches. */
-bool Library::AddHit (Hit& p)
+bool Library::AddHit (Hit& hit)
 {
-    patches.add (p);
+    patches.Add (hit);
     
     /// Check the tags for duplicates and add to tags if no duplicates exist.
-    char tagCatagory = p.Catagory;
-    foreach (char string in tags) if (string == tagCatagory) return true;
-    tags.add (tagCatagory);
+    const char* category = hit.GetCategory ();
+    std::for_each (char* string in tags)
+        if (string == category)
+            return true;
+    tags.Add (category);
     sort (tags.begin (), tags.end ());
     return true;
 }
 
-void Library::sortTags () { sort (tags.begin (), tags.end ());
+void Library::SortTags () { sort (tags.begin (), tags.end ());
     
-void Library::loadTestHits ()
+void Library::LoadTestHits ()
 {
     patches = new vector<Hit> (9);
         
-    AddHit (new Hit ("Claranet", "Default claranet patch.", { "Woodwind", "Claranet", "Reed" }));
+    AddHit (new Hit ("Clarinet", "Default clarinet patch.", { "Woodwind", "Clarinet", "Reed" }));
     AddHit (new Hit ("Oboe", "Default oboe patch.", { "Woodwind", "Oboe", "Reed" }));
     AddHit (new Hit ("Tenor Sax", "Default tenor sax patch.", { "Woodwind", "Tenor Sax", "Reed", "Tenor" }));
     AddHit (new Hit ("Recorder", "Default recorder patch.", { "Woodwind", "Recorder", "Flute" }));
     AddHit (new Hit ("Flute", "Default flute patch.", { "Woodwind", "Flute" }));
         
     AddHit (new Hit ("Trumpet", "Default trumpet patch.", { "Brass", "Trumpet" }));
-    AddHit (new Hit ("FlugleHorn","Default flugle horn patch.", { "Brass", "Flugle Horn" }));
-    AddHit (new Hit ("FrenchHorn", "Default french horn patch.", { "Brass", "French Horn" }));
+    AddHit (new Hit ("FlugleHorn","Default Flugle horn patch.", { "Brass", "Flugle Horn" }));
+    AddHit (new Hit ("FrenchHorn", "Default French horn patch.", { "Brass", "French Horn" }));
     AddHit (new Hit ("Trombone", "Default trombone patch.", { "Brass", "Trombone" }));
 }
     
 void Library::LoadFromJSON (char json)
 {
     /*
-        try
-        {
+    try
+    {
         patches = new vector<Hit> ();
         JArray a = JArray.Parse (json);
         foreach (JObject o in a.Children<JObject> ())
         {
-        Hit p = o.ToObject<Hit> ();
+            Hit p = o.ToObject<Hit> ();
         }
-        }
-        catch (Exception e)
-        {
+    }
+    catch (Exception e)
+    {
         Debug.Assert (false, e.print (Log& log));
-        }
-        */
+    }
+    */
 }
     
 char* Library::ToJson ()
@@ -101,7 +103,7 @@ bool Library::FindDuplicateName (char* value)
     return false;
 }
     
-char Library::getCatagoryName (int index)
+char Library::getCategoryName (int index)
 {
     if (index >= catagories.size ()) return nullptr;
         
@@ -128,16 +130,16 @@ Library Library::FindpatchesWithTags (vector<char> tags)
     return Library;
 }
     
-char* Library::getCatagoryImageName (char string)
+char* Library::getCategoryImageName (char string)
 {
     if (string == nullptr || string == "") return nullptr;
-    return "Catagory" + ::regex_replace (string, "\string+", "");// + ".png";
+    return "Category" + ::regex_replace (string, "\string+", "");// + ".png";
 }
     
-char* Library::getSubcatagoryImageName (char string)
+char* Library::getSubcategoryImageName (char string)
 {
     if (string == nullptr || string == "") return nullptr;
-    return "Subcatagory" + ::regex_replace (string, "\string+", "");// + ".png";
+    return "Subcategory" + ::regex_replace (string, "\string+", "");// + ".png";
 }
     
 char* Library::DefaultHitLibrary ()
@@ -145,7 +147,7 @@ char* Library::DefaultHitLibrary ()
     return "";
 }
 
-int Library::InitNumHites () { return 0; }
+int Library::InitNumHits () { return 0; }
 
 void Library::print (Log& log)
 {

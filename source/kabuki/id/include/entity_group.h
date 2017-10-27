@@ -17,14 +17,14 @@
 #define KABUKI_ID_ENTITYGROUP_H
 
 #include "entity.h"
-#include "privilage.h"
+#include "../../data/include/array.h"
 
 namespace kabuki { namespace id {
 
 /** A group of entities.
     @todo 
 */
-class KABUKI EntityGroup : public Entity
+class KABUKI EntityGroup
 {
     public:
 
@@ -32,26 +32,27 @@ class KABUKI EntityGroup : public Entity
     EntityGroup (const char* name);
 
     /** Gets the name of the entity group. */
-    char& GetName ();
+    const char* GetName ();
 
     /** Sets the name of the entity group. */
     void SetName (const char* string);
 
     /** Applies privileges to the entity group. */
-    void ApplyPrivilage (const Privilage& p);
+    void ApplyPrivilage (const char* privilages);
 
     /** Returns true if this list of entities contains the given char. */
-    virtual int Search (const char* string) override;
+    virtual int Search (const char* string);
 
     /** Prints this object to a expression. */
-    virtual void Print (_::Log& log) override;
+    virtual void Print (_::Log& log);
 
     private:
 
-    char name;                      //< The name of the entity group.
-    std::vector<Entity*> entities_; //< A vector if Entity pointers.
+    char                * name_,       //< The name of the entity group.
+                        * privilages_; //< A string of privileges the group has.
+    data::Array<Entity*>* entities_;   //< A vector if Entity pointers.
 };
 
 }       //< namespace id
 }       //< namespace kabuki
-#define //< KABUKI_ID_ENTITYGROUP_H
+#endif //< KABUKI_ID_ENTITYGROUP_H

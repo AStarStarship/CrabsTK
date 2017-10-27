@@ -206,9 +206,6 @@
     <ClInclude Include="data\include\lllist.h">
       <Filter>kabuki\data</Filter>
     </ClInclude>
-    <ClInclude Include="data\include\lllist_iterator.h">
-      <Filter>kabuki\data</Filter>
-    </ClInclude>
     <ClInclude Include="data\include\module_config.h">
       <Filter>kabuki\data</Filter>
     </ClInclude>
@@ -236,25 +233,13 @@
     <ClInclude Include="id\include\entity_list.h">
       <Filter>kabuki\id</Filter>
     </ClInclude>
-    <ClInclude Include="id\include\grammar.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
     <ClInclude Include="id\include\handle.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\hit.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\hit_list.h">
       <Filter>kabuki\id</Filter>
     </ClInclude>
     <ClInclude Include="id\include\id_module.h">
       <Filter>kabuki\id</Filter>
     </ClInclude>
     <ClInclude Include="id\include\id_server.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\library.h">
       <Filter>kabuki\id</Filter>
     </ClInclude>
     <ClInclude Include="id\include\name.h">
@@ -284,12 +269,6 @@
     <ClInclude Include="id\include\role.h">
       <Filter>kabuki\id</Filter>
     </ClInclude>
-    <ClInclude Include="id\include\tag.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\tag_tibrary.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
     <ClInclude Include="id\include\user.h">
       <Filter>kabuki\id</Filter>
     </ClInclude>
@@ -301,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="id\include\module_config.h">
       <Filter>kabuki\id</Filter>
+    </ClInclude>
+    <ClInclude Include="data\include\lllist_iterator.h">
+      <Filter>kabuki\gl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -376,19 +358,7 @@
     <ClCompile Include="id\impl\id_entity_list.cc">
       <Filter>kabuki\id</Filter>
     </ClCompile>
-    <ClCompile Include="id\impl\id_grammar.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
     <ClCompile Include="id\impl\id_handle.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_hit.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_hit_list.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_library.cc">
       <Filter>kabuki\id</Filter>
     </ClCompile>
     <ClCompile Include="id\impl\id_name.cc">
@@ -412,19 +382,10 @@
     <ClCompile Include="id\impl\id_relationship.cc">
       <Filter>kabuki\id</Filter>
     </ClCompile>
-    <ClCompile Include="id\impl\id_tag_library.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
     <ClCompile Include="id\impl\id_user.cc">
       <Filter>kabuki\id</Filter>
     </ClCompile>
-    <ClCompile Include="id\impl\id_user_list.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
     <ClCompile Include="id\impl\id_account.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\include\id_server.cc">
       <Filter>kabuki\id</Filter>
     </ClCompile>
   </ItemGroup>

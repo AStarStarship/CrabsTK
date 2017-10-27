@@ -17,13 +17,12 @@
 #define KABUKI_ID_ENTITYLIST_H
 
 #include "entity.h"
-#include "../../script/include/log.h"
+#include "../../data/include/array.h"
 
 namespace kabuki { namespace id {
 
-/** A List of Entity(string) and EntityGroup(string).
-    This is essentially a contact list.
-*/
+/** A List of entities.
+    This is essentially a contact list. */
 class KABUKI EntityList
 {   
     public:
@@ -35,10 +34,10 @@ class KABUKI EntityList
     int GetSize ();
 
     /** Adds an Entity to the list. */
-    void Add (Entity* e);
+    void Add (Entity* entity);
 
     /** Adds a list of Entity (string) to the list. */
-    void Add (EntityList& l);
+    void Add (EntityList& enities);
 
     /** Finds an entity in the list by the given search char. */
     Entity* Find (const char* string);
@@ -48,7 +47,7 @@ class KABUKI EntityList
     
     private:
     
-    std::vector<Entity*> entities; //< The list of entities.
+    data::Array<Entity*>* entities_; //< The list of entities.
 };
 
 }       //< namespace id

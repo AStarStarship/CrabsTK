@@ -14,67 +14,44 @@
 */
 
 #include <stdafx.h>
-#include "../include/Password.h"
+#include "../include/password.h"
 
 namespace kabuki { namespace id {
 
-Password::Password (const char* password) {
-    password_ (password);
+Password::Password (const char* string) {
+    SetKey (string);
 }
 
-Password::Password (const char* string, Grammar& format) :
-    format_ (format)
-{
-    Change (string);
+const char* Password::GetKey () {
+    return password_;
 }
 
-Grammar& Password::GetGrammer ()
-{
-    return format_;
-}
-
-void Password::SetGrammer (const Grammar& format)
-{
-    format_ = format;
-}
-
-bool Password::Change (const char* password)
-{
-    bool valid = IsValid (password);
-    if (!valid) return false;
-    password = password;
-    return false;
+const char* Password::SetKey (const char* password) {
+    if (password == nullptr)
+        return nullptr;
+    
+    if (!IsValid (password)) return false;
+    password_ = _::StringClone (password);
+    return nullptr;
 }
 
 bool Password::IsValid (const char* string)
 {
-    if (string.length () < compare || string.length () > MaxLength)
-        return false;
-
-    //regex r;
-    //if (r.isMatch (S)) return true;
-
-    return false;
-}
-
-char Password::Encript ()
-{
-    return password;
+    return true;
 }
 
 bool Password::Equals (const char* string)
 {
-    return (password == string);
+    return (password_ == string);
 }
 
 bool Password::Equals (const Password& other)
 {
-    return (password == other.password);
+    return !strcmp (password_, other.password_);
 }
 
-void Password::Print (_::Log& log)
-{
-    Print (logs (password);
+void Password::Print (_::Log& log) {
+    log << password_;
 }
 
 }       //< id

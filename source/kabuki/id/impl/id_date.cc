@@ -13,29 +13,26 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
 #include "../include/date.h"
 
 namespace kabuki { namespace id {
 
 Date::Date (time_t aTime) :
-    time (aTime)
-{
+    time (aTime) {
 
 }
 
-time_t Date::GetTime ()
-{
+time_t Date::GetTime () {
     return time;
 }
 
-void Date::SetTime (time_t t)
-{
+void Date::SetTime (time_t t) {
     time = t;
 }
-    
-void Date::Print (_::Log& log)
-{
-    
+
+void Date::Print (_::Log& log) {
+
 }
 
 }       //< id

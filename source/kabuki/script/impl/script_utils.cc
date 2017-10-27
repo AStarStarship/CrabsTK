@@ -710,7 +710,7 @@ const char* CompareTokenString (const char* input, const char* token) {
         a = *(++input);
         b = *(++token);
     }
-    //std::cout << "> Query hit!\n";
+    //std::cout << "> Find hit!\n";
     return input;
 }
 
@@ -744,7 +744,7 @@ const char* StringCompare (const char* input, const char* query,
         string = *(++input);
         t = *(++query);
     }
-    return input; //< Query hit!
+    return input; //< Find hit!
 }
 
 char* Compare (char* source, const char* query, char delimiter) {
