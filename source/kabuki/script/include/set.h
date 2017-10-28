@@ -129,15 +129,6 @@ enum {
     The size of any size bag can be calculated as follows:
     size = ; * (2*sizeof (TIndex) + sizeof (TData)) + collissionSize +
 
-    # State Format
-    @code
-    ____________________________________________________
-    |                State byte                        |
-    |__________________________________________________|
-    | b7: Loaded | b6: Used | b5: Hidden | b4-b0: Type |
-    |____________|__________|____________|_____________|
-    @endcode
-
     # Cache Page Optimizations
     In order to optimize the cache pages, we need to group hot data together.
     ChineseRoom Objects work through calling by TIndex, or by key by using the
@@ -176,11 +167,11 @@ enum {
 */
 template<typename TIndex, typename TKey, typename TData, typename THash>
 struct KABUKI Set {
-    TData size;         //< Total size of the set.
-    TKey table_size,    //< Size of the (optional) key strings in bytes.
-         pile_size;     //< Size of the (optional) collision table in bytes.
+    TData  size;        //< Total size of the set.
+    TKey   table_size,  //< Size of the (optional) key strings in bytes.
+           pile_size;   //< Size of the (optional) collisions pile in bytes.
     TIndex num_items,   //< Number of items.
-           max_items;   //< Max number of items that can fit in the size.
+           max_items;   //< Max number of items that can fit in the header.
 };
 
 using Record   = Set<byte, uint16_t, uint16_t, hash16_t>;
@@ -194,7 +185,7 @@ using Superset = Set<index_t, header_t, offset_t, hash_t>;
 
 
 template<typename TIndex, typename TKey, typename TData, typename THash>
-constexpr uint_t OverheadPerSetIndex () {
+constexpr uint_t SetOverheadPerIndex () {
         return sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
 };
 
@@ -207,9 +198,9 @@ enum {
     kMaxNumPagesSet2 = 255,                //< The number of pages in a Set2.
     kMaxNumPagesSet4 = 8 * 1024,           //< The number of pages in a Set4.
     kMaxNumPagesSet8 = 256 * 1024 * 1024,  //< The number of pages in a Set8.
-    kOverheadPerSet2Index = OverheadPerSetIndex<byte, uint16_t, uint16_t, hash16_t> (),
-    kOverheadPerSet4Index = OverheadPerSetIndex<byte, uint16_t, uint16_t, hash16_t> (),
-    kOverheadPerSet8Index = OverheadPerSetIndex<byte, uint16_t, uint16_t, hash16_t> (),
+    kOverheadPerSet2Index = SetOverheadPerIndex<byte, uint16_t, uint16_t, hash16_t> (),
+    kOverheadPerSet4Index = SetOverheadPerIndex<byte, uint16_t, uint16_t, hash16_t> (),
+    kOverheadPerSet8Index = SetOverheadPerIndex<byte, uint16_t, uint16_t, hash16_t> (),
 };
     
 /** Initializes a Set.
@@ -224,7 +215,7 @@ static Set* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t si
     if (table_size >= size)
         return nullptr;
     if (table_size < sizeof (Set) + max_size *
-        (OverheadPerSetIndex<byte, uint16_t, uint16_t, hash16_t> () + 2))
+        (SetOverheadPerIndex<byte, uint16_t, uint16_t, hash16_t> () + 2))
         return nullptr;
 
     Set2* bag = reinterpret_cast<Set*> (buffer);
@@ -289,7 +280,7 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* bag, const char* key,
         *destination;
 
     // Calculate space left.
-    TKey value = table_size - max_items * OverheadPerSetIndex<TIndex, TKey, TData, THash> (),
+    TKey value = table_size - max_items * SetOverheadPerIndex<TIndex, TKey, TData, THash> (),
         key_length = static_cast<uint16_t> (strlen (key)),
         pile_size;
 

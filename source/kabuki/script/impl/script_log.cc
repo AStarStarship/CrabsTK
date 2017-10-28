@@ -34,8 +34,8 @@ void LogPrint (Log& log) {
     uint16_t ui2;
     uint32_t ui4;
     uint64_t ui8;
-    int8_t   reserved,
-             si1;
+    //int8_t   reserved,
+    int8_t   si1;
     uint16_t si2;
     uint32_t si4;
     uint64_t si8;
@@ -51,9 +51,9 @@ void LogPrint (Log& log) {
     while (index )
 
     switch (type) {
-        case STX:
+        case STR:
         {
-            if (BinRead (bin, Params<2, SOH, STX> (), Args (args, &ui1,
+            if (BinRead (bin, Params<2, SOH, STR> (), Args (args, &ui1,
                                                             buffer)))
                 return;
             std::cout << buffer;
@@ -126,7 +126,7 @@ void LogPrint (Log& log) {
             std::cout << si1;
         }
         case DBL: {
-            if (BinRead (bin, Params<2, SOH, STX> (), Args (args, &dbl)))
+            if (BinRead (bin, Params<2, SOH, STR> (), Args (args, &dbl)))
                 return;
             std::cout << si1;
         }

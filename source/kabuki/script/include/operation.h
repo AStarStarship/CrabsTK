@@ -95,8 +95,8 @@ struct KABUKI Expression;
                 }
                 case 64: {
                     static const Operation o_A = { "foo",
-                        Params<2, FLT, STX, kStringBufferSize> (),
-                        Params<2, FLT, STX> (),
+                        Params<2, FLT, STR, kStringBufferSize> (),
+                        Params<2, FLT, STR> (),
                         "Description of foo." };
 
                     // 66 is ASCII 'A'
@@ -113,8 +113,8 @@ struct KABUKI Expression;
                 }
                 case 65: {
                     static const Operation o_B = { "bar",
-                        Params<2, FLT, STX, kStringBufferSize> (),
-                        Params<2, FLT, STX> (),
+                        Params<2, FLT, STR, kStringBufferSize> (),
+                        Params<2, FLT, STR> (),
                         "Description of bar."
                     };
                 

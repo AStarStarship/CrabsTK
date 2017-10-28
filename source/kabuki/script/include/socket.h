@@ -37,8 +37,6 @@ struct KABUKI Socket {
         RoomError = 0
     } Error;
 
-
-
     uint_t slot_size,      //< The size of the socket in bytes.
            num_slots,      //< The number of slots in this group.
            max_num_slots,  //< The number of slots allocated in memory.

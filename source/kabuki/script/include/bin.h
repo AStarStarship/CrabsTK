@@ -57,7 +57,7 @@ struct KABUKI Bin {
     typedef enum States {
         ScanningAddressState = 0,   //< State 0: Scanning address.
         ScanningArgsState,          //< State 1: Scanning arguments.
-        ScanningStringState,        //< State 2: Scanning STX.
+        ScanningStringState,        //< State 2: Scanning STR.
         ScanningVarintState,        //< State 3: Scanning varint.
         ScanningPodState,           //< State 4: Scanning plain-old-data.
         ScanningHashState,          //< State 5: Stand the 32-bit hash.
@@ -141,12 +141,6 @@ KABUKI void BinPrint (Bin* bin);
     @return       Returns 0 upon success and an ErrorList ticket number upon 
                   failure. */
 KABUKI const Operation* BinRead (Bin* bin, const uint_t* params, void** args);
-
-/** Reads the next char_t.
-    @param  bin     The Bin.
-    @param  result  The char_t result.
-    @return Returns an Error Operation upon failure. */
-KABUKI const Operation* BinReadChar (Bin* bin, char_t& result);
 
 }       //< namespace _
 #endif  //< KABUKI_SCRIPT_BIN_H

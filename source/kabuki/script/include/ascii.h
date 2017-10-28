@@ -25,7 +25,7 @@ namespace ascii {
 typedef enum {
     NUL = 0,
     SOH,
-    STX,
+    STR,
     ETX,
     EOT,
     ENQ,

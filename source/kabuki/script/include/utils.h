@@ -205,6 +205,15 @@ KABUKI hash16_t Hash16 (char c, hash16_t hash);
 /** Hashes the given char using the primeHash function. */
 KABUKI hash16_t Hash16 (const char* string, hash16_t hash = 65521);
 
+/**  */
+hash16_t Hash16UI2 (uint16_t value, hash16_t hash);
+
+
+hash16_t Hash16UI4 (uint32_t value, hash16_t hash);
+
+
+hash16_t Hash16UI8 (uint64_t value, hash16_t hash);
+
 /** Hashes a single byte. */
 KABUKI hash32_t Hash32 (char c, hash32_t hash);
 
@@ -225,9 +234,6 @@ KABUKI bool IsNaN (T value) {
             sizeof (T) == 1 ? (T) 0xFFFFFFFFFFFFFFFF : 0;
     return value == nan;
 }
-
-/**  */
-KABUKI timestamp_t TimestampNow ();
 
 /** Prints the given byte in Hex.
     This function prints the hex in big endian. */

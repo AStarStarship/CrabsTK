@@ -25,7 +25,7 @@ uint_t SizeOf (uint_t type) {
     {
         0,      //< NIL: 0 
         0,      //< SOH: 1 
-        0,      //< STX: 2 
+        0,      //< STR: 2 
         1,      //< SI1: 3 
         1,      //< UI1: 4 
         1,      //< BOL: 5 
@@ -66,7 +66,7 @@ const byte* TypeAlignments () {
     {
         0,      //< NIL: 0 
         0,      //< SOH: 1 
-        0,      //< STX: 2 
+        0,      //< STR: 2 
         0,      //< SI1: 3 
         0,      //< UI1: 4 
         0,      //< BOL: 5 
@@ -150,7 +150,7 @@ const char** TypeStrings () {
     static const char* kNames[] = {
         "NIL",
         "SOH",
-        "STX",
+        "STR",
         "SI1",
         "UI1",
         "BOL",
@@ -276,7 +276,7 @@ byte ReadType (const char* string) {
                 case '2': return CheckDelimiter (token >> 24) ? 0xff:ST2;
                 case '4': return CheckDelimiter (token >> 24) ? 0xff:ST4;
                 case '8': return CheckDelimiter (token >> 24) ? 0xff:ST8;
-                case 'X': return CheckDelimiter (token >> 24) ? 0xff:STX;
+                case 'X': return CheckDelimiter (token >> 24) ? 0xff:STR;
                 default: return 0xff;
             }
             case 'V': switch (index = (byte) (token >> 16))
@@ -325,7 +325,7 @@ byte MaskType (byte value) {
 }
 
 bool TypeHasLength (uint_t type) {
-    if (type == STX)
+    if (type == STR)
         return true;
     if (type >US)
         return true;

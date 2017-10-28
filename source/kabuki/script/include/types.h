@@ -42,8 +42,8 @@ namespace _ {
     closely as sanely possible. */
 typedef enum {
     NIL = 0,    //< 0.  NIL/null/void type.
-    SOH,        //< 1.  An address to an Script device.
-    STX,        //< 2.  A UTF-8 string.
+    SOA,        //< 1.  A Stack Operation Address.
+    STR,        //< 2.  A UTF-8 string.
     ST2,        //< 3.  A UTF-16 string.
     ST4,        //< 4.  A UTF-32 string.
     ST8,        //< 5.  A UTF-64 string.
@@ -67,12 +67,12 @@ typedef enum {
     UV4,        //< 23. A 32-bit unsigned varint.
     SV8,        //< 24. A 64-bit signed varint.
     UV8,        //< 25. A 64-bit unsigned varint.
-    SEQ,        //< 26. A B-Sequence without a hash.
-    ESC,        //< 27. A Escape Sequence with a hash.
-    FS,         //< 28. A Set with up to 2^31-1 members and 2^63-1 bytes data.
-    GS,         //< 29. A Set with up to 2^15-1 members and 2^31-1 bytes data.
-    RS,         //< 30. A Set with up to 2^7-1 members and 2^15-1 bytes data.
-    US,         //< 31. A unit for breaking files and data into packets.
+    BSQ,        //< 26. A B-Sequence without a hash.
+    BSH,        //< 27. A B-Sequence with a hash.
+    KHT,        //< 28. A Key-Type-Value unique set with hash-table (map).
+    KTV,        //< 29. A Key-Type-Value multiset (unordered_map).
+    TVA,        //< 30. A Type-Value array.
+    PAK,        //< 31. A Packet for splitting up large sets.
 } TType;
 
 enum {

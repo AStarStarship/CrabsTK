@@ -21,7 +21,7 @@
 #define KABUKI_SCRIPT_ROOM_H
 
 #include "door.h"
-#include "exceptions.h"
+#include "interrupts.h"
 
 namespace _ {
 
@@ -63,6 +63,9 @@ KABUKI const char* RequestString (Request r);
 
     @code
          __________________ 
+        |                  |
+        |      Walls       |
+        |__________________|
         |                  |
         |      Buffer      |
         |__________________|

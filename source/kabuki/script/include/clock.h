@@ -65,7 +65,7 @@ KABUKI bool ClockPrintTimeStruct (tm* std_tm);
 KABUKI void ClockPrintTime (time_t t);
 
 /** Prints the given Script Timestamp to the console. */
-KABUKI void ClockPrintTimestamp (int64_t timestamp);
+KABUKI void ClockPrintTimestamp (timestamp_t timestamp);
 
 /** Prints the given time to the console. */
 KABUKI void ClockPrintDateTime (time_t t);

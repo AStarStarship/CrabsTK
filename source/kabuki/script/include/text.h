@@ -1,6 +1,6 @@
 /** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/script/include/a.h
+    @file    ~/source/kabuki/script/include/text.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -20,19 +20,17 @@
 #ifndef KABUKI_SCRIPT_A_H
 #define KABUKI_SCRIPT_A_H
 
-#include "room.h"
+#include "module_config.h"
 
 namespace _ {
 
 /** The A in A*B.
     
 */
-struct A: public Room {
+struct Text {
     public:
 
-    A ():
-        A (1024)
-    {
+    Text () {
 
     }
 };

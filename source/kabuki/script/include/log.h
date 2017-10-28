@@ -45,7 +45,7 @@ KABUKI void LogPrint (Log& log);
 /** Operation << writes the given value to the log. */
 inline _::Log& operator<< (_::Log& log, int8_t value) {
     void* args[1];
-    _::BoutWrite (log.bout, _::Params<1, _::STX> (), _::Args (args, &value));
+    _::BoutWrite (log.bout, _::Params<1, _::STR> (), _::Args (args, &value));
     return log;
 }
 
@@ -115,7 +115,7 @@ inline _::Log& operator<< (_::Log& log, double value) {
 /** Operation << prints a char to the log. */
 inline _::Log& operator<< (_::Log& log, const char* string) {
     void* args[1];
-    _::BoutWrite (log.bout, _::Params<1, _::STX> (), _::Args (args, string));
+    _::BoutWrite (log.bout, _::Params<1, _::STR> (), _::Args (args, string));
     return log;
 }
 

@@ -18,6 +18,7 @@
 #include "../include/expression.h"
 #include "../include/slot.h"
 #include "../include/args.h"
+#include "../include/clock.h"
 
 namespace _ {
 
@@ -458,7 +459,7 @@ void ExpressionScan (Expression* expr, Portal* input) {
                     } else {
                         ExpressionEnterState (expr, Expression::ScanningAddressState);
                     }
-                } else if (type == STX) {   // String type.
+                } else if (type == STR) {   // String type.
                     ExpressionEnterState (expr, Expression::ScanningStringState);
                 } else if (type < DBL) {   // Plain-old-data types.
                     expr->bytes_left = SizeOf (type);
@@ -728,7 +729,7 @@ const Operation* ExpressionArgs (Expression* expr, const uint_t* params, void** 
           case NIL:
               goto InvalidType;
           case SOH:    //< _R_e_a_d__S_t_r_i_n_g_-_8____________________________
-          case STX:
+          case STR:
               // Load buffered-type argument length and increment the index.
               count = *param;
               ++param;

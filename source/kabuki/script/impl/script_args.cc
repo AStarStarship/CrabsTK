@@ -41,7 +41,7 @@ void ParamsPrint (const uint_t* params) {
     for (i = 1; i < num_params; ++i) {
         value = *params++;
         std::cout << TypeString (value) << ", ";
-        if ((value == STX) || (value == ST2) || (value == ST4) || (value == ST8)) {
+        if ((value == STR) || (value == ST2) || (value == ST4) || (value == ST8)) {
             ++i;
             value = *params++;
             printf ("%u, ", value);
@@ -125,7 +125,7 @@ void ParamsPrint (const uint_t* params) {
     // Do the last set without a comma.
     value = *params++;
     std::cout << TypeString (value) << ", ";
-    if ((value == STX) || (value == ST2) || (value == ST4) || (value == ST8)) {
+    if ((value == STR) || (value == ST2) || (value == ST4) || (value == ST8)) {
         ++i;
         value = *params++;
         printf ("%u", value);
@@ -216,7 +216,7 @@ uint_t ParamNumber (const uint_t* params, byte param_number) {
     int i;
     for (i = 0; i < param_number; ++i) {
         uint_t value = params[i];
-        if (value == STX)
+        if (value == STR)
             ++param_number;
         else if (value > US) {
             // It's an array!

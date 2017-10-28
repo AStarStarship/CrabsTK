@@ -117,7 +117,7 @@ int BoutStreamByte (Bout* bout) {
         (end - start) + (open - begin) + 2;
 
     if (length < 1) {
-        BoutResult (bout, Bout::BufferOverflowError, Params<1, STX> (), 2, start);
+        BoutResult (bout, Bout::BufferOverflowError, Params<1, STR> (), 2, start);
         return -1;
     }
     byte b = *cursor;
@@ -185,9 +185,6 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 #if USING_8_BYTE_TYPES || USING_VARINT8
     const uint64_t* ui8_ptr;                //< Pointer to a 8-byte type.
 #endif
-#if USING_AR1 || USING_AR2 || USING_AR4 || USING_AR8
-    uint_t array_type;                      //< Array type for writing arrays.
-#endif
 
     space = SlotSpace (start, stop, size);
 
@@ -214,7 +211,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 break;
 
             case SOH: //< _W_r_i_t_e__A_d_d_r_e_s_s__S_t_r_i_n_g________________
-            case STX: //< _W_r_i_t_e__U_T_F_-_8__S_t_r_i_n_g____________________
+            case STR: //< _W_r_i_t_e__U_T_F_-_8__S_t_r_i_n_g____________________
                 if (space == 0)
                     return BoutResult (bout, Bout::BufferOverflowError, params, index,
                                        start);
@@ -285,7 +282,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 ui2 = *ui2_ptr;
                 *stop = ui2;
                 if (++stop >= end) stop -= size;
-                hash = Hash16 (ui2, hash);
+                hash = Hash16UI2 (ui2, hash);
                 //  std::cout << ui2;
 
                 while (ui2 != 0) {
@@ -294,8 +291,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                             start);
                     ++ui2_ptr;
                     ui2 = *ui2_ptr;     // Read byte.
-                    hash = Hash16 (ui2, hash);
-                    hash = Hash16 (ui2 >> 8, hash);
+                    hash = Hash16UI2 (ui2, hash);
 
                     //std::cout <<ui2);
 
