@@ -158,7 +158,7 @@ KABUKI const uint_t* NumOperations (std::uintptr_t value);
 KABUKI const uint_t* FirstOperation (uint_t value);
 
 /** Returns the number of members an Star has. */
-KABUKI uintptr_t Index (const void* ptr);
+KABUKI char_t Index (const void* ptr);
 
 /** Returns the number of members a Star has. */
 KABUKI uintptr_t CountCoperations (const Operation* op);

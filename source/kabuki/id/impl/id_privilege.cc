@@ -18,43 +18,34 @@
 
 namespace kabuki { namespace id {
 
-static PrivilageLevel minPrivilageLevel = DefaultMinPrivilageLevel,
-    maxPrivilageLevel = DefaultMaxPrivilageLevel;
+static Privilages num_privilage_levels = kDefaultMaxPrivilageLevels;
 
-PrivilageLevel getMinPrivilageLevel ()
-{
-    return minPrivilageLevel;
+Privilages SetMinPrivilageLevel () {
+    return num_privilage_levels;
 }
 
-PrivilageLevel Privilage::SetMinPrivilageLevel ()
-{
-    return maxPrivilageLevel;
-}
-
-bool Privilage::SetPrvilageLevelRange (PrivilageLevel min, PrivilageLevel max)
-{
+bool SetPrvilageLevelRange (Privilages min, Privilages max) {
 
 }
 
-Privilage::Privilage ()
-{
+Privilage::Privilage () {
 
 }
 
-PrivilageLevel Privilage::getPrivilageLevel ()
-{
-    return privilageLevel;
+Privilages Privilage::GetPrivilageLevel () {
+    return privilages_;
 }
 
-bool Privilage::setPrivilageLevel (PrivilageLevel l)
-{
-    if (l < minPrivilageLevel || l > maxPrivilageLevel) return false;
-    privilageLevel = l;
+bool Privilage::SetPrivilageLevel (Privilages privilages) {
+    if (privilages < 0)
+        return false;
+    if (privilages > num_privilage_levels)
+        return false;
+    privilages_ = privilages;
     return true;
 }
 
-void Privilage::Print (_::Log& log)
-{
+void Privilage::Print (_::Log& log) {
 
 }
 

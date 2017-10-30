@@ -20,47 +20,29 @@
 
 namespace kabuki { namespace id {
 
-typedef int PrivilageLevel;     //< typedef for an account privilege level.
-
-/** The default number of privilege levels is 5, because CPUs are fastest at 
-    working with the number -1, 0, and 1. */
-
-enum {
-    DefaultMinPrivilageLevel = -2,  //< Default min privilege level optimized for -1, 0, 1 numbers.
-    DefaultMaxPrivilageLevel = 2    //< Default mix privilege level optimized for -1, 0, 1 numbers.
-};
-
-/** Gets the static min privilege level. */
-PrivilageLevel GetMinPrivilageLevel ();
-
-/** Gets the static min privilege level. */
-PrivilageLevel SetMinPrivilageLevel ();
-
-/** Attempts to set the privilege level range to the given values.
-    @warning Algorithm will set min and max to default values if they are not in 
-             order min to max!. */
-bool SetPrvilageLevelRange (PrivilageLevel min, PrivilageLevel max);
+typedef int Privileges;     //< typedef for an account privilege level.
 
 /** An account privilege level. */
-class KABUKI Privilage
+class KABUKI Privilege
 {
     public:
 
     /** Default constructor. */
-    Privilage ();
+    Privilege (int num_privileges = 1);
 
     /** Gets the privilege level. */
-    PrivilageLevel GetPrivilageLevel ();
+    Privileges GetPrivilegeLevel ();
 
     /** Attempts to set the privilege level to the new level. */
-    PrivilageLevel SetPrivilageLevel (PrivilageLevel level);
+    Privileges SetPrivilegeLevel (Privileges privileges);
 
     /** Prints this object to a expression. */
     void Print (_::Log& log);
 
     private:
 
-    PrivilageLevel privilageLevel;      //< The privilege level.
+    int num_privileges;         //< The number of privileges.
+    Privileges privileges_;      //< The privilege level.
 };
 }       //< namespace id
 }       //< namespace kabuki

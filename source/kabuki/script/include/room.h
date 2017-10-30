@@ -25,8 +25,8 @@
 
 namespace _ {
 
-/** A list of Requests that can be sent from Slot<uint_t, THash> to
-    Slot<uint_t, THash>.  */
+/** A list of Requests that can be sent from Slot<uint_t, TSize> to
+    Slot<uint_t, TSize>.  */
 typedef enum Requests {
     OpenDoorRequest = 0,
     CloseDoorRequest,

@@ -27,6 +27,7 @@ namespace _ {
 /** The A in A*B.
     
 */
+template<typename T>
 struct Text {
     public:
 

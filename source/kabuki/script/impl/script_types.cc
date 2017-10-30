@@ -24,37 +24,37 @@ uint_t SizeOf (uint_t type) {
     static const int8_t kWidths[] =
     {
         0,      //< NIL: 0 
-        0,      //< SOH: 1 
+        0,      //< ADR: 1 
         0,      //< STR: 2 
-        1,      //< SI1: 3 
-        1,      //< UI1: 4 
-        1,      //< BOL: 5 
-        2,      //< SI2: 6 
-        2,      //< UI2: 7 
-        2,      //< HLF: 8 
-        4,      //< SI4: 9 
-        4,      //< UI4: 10
-        4,      //< FLT: 11
-        4,      //< TMS: 12
-        8,      //< TMU: 13
-        8,      //< SI8: 14
-        8,      //< UI8: 15
-        8,      //< DBL: 16
-        3,      //< SV2: 17
-        3,      //< UV2: 18
-        9,      //< SV4: 19
-        5,      //< UV4: 20
-        9,      //< SV8: 21
-        9,      //< UV8: 22
-        0,      //< GS1: 23
-        0,      //< GR2: 24
-        0,      //< GR4: 25
-        0,      //< GR8: 26
-        0,      //< ESC: 27
-        0,      //< FS:  28
-        0,      //< RS:  29
-        0,      //< GS:  30
-        0,      //< FS:  31
+        0,      //< ST2: 3 
+        0,      //< ST4: 4 
+        0,      //< ST8: 5 
+        1,      //< SI1: 6 
+        1,      //< UI1: 7 
+        1,      //< BOL: 8 
+        2,      //< SI2: 9 
+        2,      //< UI2: 10
+        2,      //< HLF: 11
+        4,      //< SI4: 12
+        4,      //< UI4: 13
+        4,      //< FLT: 14
+        4,      //< TMS: 15
+        8,      //< TMU: 16
+        8,      //< SI8: 17
+        8,      //< UI8: 18
+        8,      //< DBL: 19
+        3,      //< SV2: 20
+        3,      //< UV2: 21
+        9,      //< SV4: 22
+        5,      //< UV4: 23
+        9,      //< SV8: 24
+        9,      //< UV8: 25
+        0,      //< BSH: 27
+        0,      //< BSQ: 27
+        0,      //< BOK: 28
+        0,      //< BAG: 29
+        0,      //< SEQ: 30
+        0,      //< PAK: 31
     };
     if (type >= 32)
         return 0;
@@ -65,7 +65,7 @@ const byte* TypeAlignments () {
     static const byte kWidths[] =
     {
         0,      //< NIL: 0 
-        0,      //< SOH: 1 
+        0,      //< ADR: 1 
         0,      //< STR: 2 
         0,      //< SI1: 3 
         0,      //< UI1: 4 
@@ -149,8 +149,11 @@ bool TypeIsValid (uint_t type) {
 const char** TypeStrings () {
     static const char* kNames[] = {
         "NIL",
-        "SOH",
+        "ADR",
         "STR",
+        "ST2",
+        "ST4",
+        "ST8",
         "SI1",
         "UI1",
         "BOL",
@@ -171,14 +174,11 @@ const char** TypeStrings () {
         "UV4",
         "SV8",
         "UV8",
-        "AR1",
-        "AR2",
-        "AR4",
-        "AR8",
         "ESC",
-        "FS",
-        "GS",
-        "RS",
+        "ESC",
+        "KVH",
+        "KVM",
+        "TVA",
         "US",
         "Invalid"
     };
@@ -186,9 +186,11 @@ const char** TypeStrings () {
 }
 
 bool TypeIsValid (const char* type_name) {
-    if (type_name < TypeStrings ()[0] || type_name > TypeStrings ()[FS])
-        return false;
-    return true;
+    // @warning I'm not sure what I was thinking here.
+    //if (type_name < TypeStrings ()[0] || type_name > TypeStrings ()[FS])
+    //    return false;
+    //return true;
+    return false;
 }
 
 const char* TypeString (uint_t type) {
@@ -197,124 +199,102 @@ const char* TypeString (uint_t type) {
     return TypeStrings ()[type];
 }
 
-bool CheckDelimiter (char const c) {
-    if (c == 0   ) return false;
-    if (c == ' ' ) return false;
-    if (c == '\n') return false;
-    if (c == '\t') return false;
-    return true;
-}
-
 template<char c>
-bool CheckLastLetter (uint16_t const token) {
-    if (c != (char)token) return true;
+bool CharCompare (uint16_t const token) {
+    if (c != (char)token)
+        return true;
     return CheckDelimiter (token >> 8);
 }
 
 template<char LetterTwo, char LetterThree>
-bool CheckLastLetters (uint32_t const Token) {
-    char check = Token >> 8;
-    if (LetterTwo != check) return true;
+bool CharCompare (char letter_two, char letter_three) {
+    char check = letter_two;
+    if (LetterTwo != check)
+        return true;
 
-    check = Token >> 16;
-    if (LetterThree != check) return true;
+    letter_three;
+    if (LetterThree != check)
+        return true;
 
-    check = Token >> 24;
-    return CheckDelimiter (Token >> 8);
+    return false;
 }
 
 byte ReadType (const char* string) {
-    uint32_t token = * ((uint32_t*)string);
-
-    int index = (byte)token;
-
-    switch (index)
-    {
-        case 'B': switch (index = (byte) (token >> 8))
-        {
-            case 'K': switch (index = (byte) (token >> 16))
-            {
-                case '2': return CheckDelimiter (token >> 24) ? 0xff : RS;
-                case '4': return CheckDelimiter (token >> 24) ? 0xff : GS;
-                case '8': return CheckDelimiter (token >> 24) ? 0xff : FS;
-                default: return 0xff;
-            }
-            case 'O': return CheckLastLetter<'L'> (token >> 16) ? 0xff : BOL;
+    char d = *(string + 3);
+    if (!isspace (d) && (d != 0))
+        return 0xff;
+    char a = *string,
+         b = *(string + 1),
+         c = *(string + 2);
+    switch (a) {
+        case 'A': return CharCompare<'D', 'R'> (b, c)   ? 0xff : ADR;
+        case 'B': switch (b) {
+            case 'A': return (c != 'g')                 ? 0xff : BAG;
+            case 'O': return (c != 'L')                 ? 0xff : BOL;
+            case 'S': return (c != 'C')                 ? 0xff : BSC;
             default: return 0xff;
         }
-        case 'D': return CheckLastLetters<'B', 'L'> (token >> 16) ? 0xff : DBL;
-        case 'E': return CheckLastLetters<'S', 'C'> (token >> 16) ? 0xff : ESC;
-        case 'F': return CheckLastLetters<'L', 'T'> (token >> 16) ? 0xff : FLT;
+        case 'C': return 0xff;
+        case 'D': return CharCompare<'B', 'L'> (b, c)   ? 0xff : DBL;
+        case 'E': return 0xff;
+        case 'F': return CharCompare<'L', 'T'> (b, c) ? 0xff : FLT; 
         case 'G': return 0xff;
-        case 'H': return CheckLastLetters<'L', 'F'> (token >> 16) ? 0xff : HLF;
+        case 'H': return CharCompare<'L', 'F'> (b, c) ? 0xff : HLF;
         case 'I':
         case 'J':
-        case 'K':
-        case 'L':
-        case 'M': return 0xff;
-        case 'N': return CheckLastLetters<'I', 'L'> (token >> 16) ? 0xff : NIL;
-        case 'O':
-        case 'P':
+        case 'K': return 0xff;
+        case 'L': return CharCompare<'S', 'T'> (b, c)   ? 0xff : LST;
+        case 'M': return CharCompare<'A', 'P'> (b, c)   ? 0xff : MAP;
+        case 'N': return CharCompare<'I', 'L'> (b, c)   ? 0xff : NIL;
+        case 'O': return CharCompare<'B', 'J'> (b, c)   ? 0xff : OBJ;
+        case 'P': return CharCompare<'A', 'K'> (b, c)   ? 0xff : PAK;
         case 'Q':
         case 'R': return 0xff;
-        case 'S': switch (index = (byte) (token >> 8))
-        {
-            case 'I': switch (index = (byte) (token >> 16))
-            {
-                case '1': return CheckDelimiter (token >> 24) ? 0xff : SI1;
-                case '2': return CheckDelimiter (token >> 24) ? 0xff : SI2;
-                case '4': return CheckDelimiter (token >> 24) ? 0xff : SI4;
-                case '8': return CheckDelimiter (token >> 24) ? 0xff : SI8;
+        case 'S': switch (b) {
+            case 'I': switch (c) {
+                case '1': return  SI1;
+                case '2': return  SI2;
+                case '4': return  SI4;
+                case '8': return  SI8;
                 default: return 0xff;
             }
-            case 'O': switch (index = (byte) (token >> 16))
-            {
-                case 'H': return CheckDelimiter (token >> 24) ? 0xff : SOH;
-                default: return 0xff;
+            case 'T': switch (c) {
+                case '2': return ST2;
+                case '4': return ST4;
+                case 'R': return STR;
+                case 'V': return STV;
+                default : return 0xff;
             }
-            case 'T': switch (index = (byte)(token >> 16)) {
-                case '2': return CheckDelimiter (token >> 24) ? 0xff:ST2;
-                case '4': return CheckDelimiter (token >> 24) ? 0xff:ST4;
-                case '8': return CheckDelimiter (token >> 24) ? 0xff:ST8;
-                case 'X': return CheckDelimiter (token >> 24) ? 0xff:STR;
-                default: return 0xff;
-            }
-            case 'V': switch (index = (byte) (token >> 16))
-            {
-                case '4': return CheckDelimiter (token >> 24) ? 0xff : SV4;
-                case '8': return CheckDelimiter (token >> 24) ? 0xff : SV8;
-                default: return 0xff;
+            case 'V': switch (c) {
+                case '2': return SV2;
+                case '4': return SV4;
+                case '8': return SV8;
+                default : return 0xff;
             }
             default: break;
         }
-        case 'T': switch (index = (token >> 8))
-        {
-            case 'M': switch (index = (token >> 16))
-            {
-                case 'E': return CheckDelimiter (token >> 24) ? 0xff : TMS;
-                case 'U': return CheckDelimiter (token >> 24) ? 0xff : TMU;
-                default: return 0xff;
+        case 'T': {
+            if (b != 'M') return 0xff;
+            switch (c) {
+                case 'S': return TMS;
+                case 'U': return TMU;
+                default : return 0xff;
             }
-            default: return 0xff;
         }
-        case 'U': switch (index = (token >> 8))
-        {
-            case 'S': return CheckDelimiter (token >> 16) ? 0xff : US;
-            case 'I': switch (index = (byte) (token >> 16))
-            {
-                case '1': return CheckDelimiter (token >> 24) ? 0xff : UI1;
-                case '2': return CheckDelimiter (token >> 24) ? 0xff : UI2;
-                case '4': return CheckDelimiter (token >> 24) ? 0xff : UI4;
-                case '8': return CheckDelimiter (token >> 24) ? 0xff : UI8;
-                default: return 0xff;
+        case 'U': switch (b) {
+            case 'I': switch (c) {
+                case '1': return UI1;
+                case '2': return UI2;
+                case '4': return UI4;
+                case '8': return UI8;
+                default : return 0xff;
             }
-            case 'V': switch (index = (byte) (token >> 16))
-            {
-                case '4': return CheckDelimiter (token >> 24) ? 0xff : UV4;
-                case '8': return CheckDelimiter (token >> 24) ? 0xff : UV8;
-                default: return 0xff;
+            case 'V': switch (c) {
+                case '4': return UV4;
+                case '8': return UV8;
+                default : return 0xff;
             }
-            default: return 0xff;
+            default:      return 0xff;
         }
     }
     return 0xff;
@@ -325,25 +305,26 @@ byte MaskType (byte value) {
 }
 
 bool TypeHasLength (uint_t type) {
-    if (type == STR)
-        return true;
-    if (type >US)
-        return true;
-    if (type == ESC)
-        return false;
+    switch (type) {
+        case STR: return true;
+        case ST2: return true;
+        case ST4: return true;
+        case STV: return true;
+        case OBJ: return true;
+    }
     return false;
 }
 
 bool TypeIsArray (uint_t type) {
-    return type > 31;
+    return type >= kNumTypes;
 }
 
 bool TypeIsSet (uint_t type) {
-    return (type >= FS) && (type <= RS);
+    return type >= kNumTypes;
 }
 
 bool TypeIsHierarchical (uint_t type) {
-    return type > ESC;
+    return type >= BSC;
 }
 
 }       //< namespace _

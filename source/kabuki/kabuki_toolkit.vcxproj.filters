@@ -86,6 +86,18 @@
     <ClInclude Include="aiml\include\agent.h">
       <Filter>kabuki\aiml</Filter>
     </ClInclude>
+    <ClInclude Include="assembly.h">
+      <Filter>kabuki</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>kabuki</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>kabuki</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\bin.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
     <ClInclude Include="script\include\bout.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
@@ -98,19 +110,22 @@
     <ClInclude Include="script\include\console.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
+    <ClInclude Include="script\include\dic.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
     <ClInclude Include="script\include\door.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
     <ClInclude Include="script\include\event.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\include\exceptions.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\include\expression.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
     <ClInclude Include="script\include\global.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\interrupts.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
     <ClInclude Include="script\include\iterator.h">
@@ -122,6 +137,9 @@
     <ClInclude Include="script\include\log.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
+    <ClInclude Include="script\include\module_config.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
     <ClInclude Include="script\include\operation.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
@@ -131,16 +149,13 @@
     <ClInclude Include="script\include\room.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\include\set.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\include\slot.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
     <ClInclude Include="script\include\socket.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\include\stdafx.h">
+    <ClInclude Include="script\include\string.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
     <ClInclude Include="script\include\table.h">
@@ -149,19 +164,19 @@
     <ClInclude Include="script\include\targetver.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
+    <ClInclude Include="script\include\text.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
     <ClInclude Include="script\include\types.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\include\utf.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\include\utf_string.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
     <ClInclude Include="script\include\utils.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
     <ClInclude Include="script\include\wall.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\window.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
     <ClInclude Include="script\include\a.h">
@@ -185,111 +200,36 @@
     <ClInclude Include="script\include\assembly.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\include\bin.h">
+    <ClInclude Include="script\include\map.h">
       <Filter>kabuki\script</Filter>
-    </ClInclude>
-    <ClInclude Include="data\include\binary_tree.h">
-      <Filter>kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="data\include\binary_tree_iterator.h">
-      <Filter>kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="data\include\collection.h">
-      <Filter>kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="data\include\iterator.h">
-      <Filter>kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="data\include\list.h">
-      <Filter>kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="data\include\lllist.h">
-      <Filter>kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="data\include\module_config.h">
-      <Filter>kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="data\include\array.h">
-      <Filter>kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\account.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\address.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\date.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\email_address.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\entity.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\entity_group.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\entity_list.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\handle.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\id_module.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\id_server.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\name.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\oauth_account.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\organization.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\password.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\person.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\privilage.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\profile.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\relationship.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\role.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\user.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\user_list.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="script\include\module_config.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
-    <ClInclude Include="id\include\module_config.h">
-      <Filter>kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="data\include\lllist_iterator.h">
-      <Filter>kabuki\gl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="stdafx.cc">
+      <Filter>kabuki</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_color.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_console.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_door.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
     <ClCompile Include="script\impl\script_expression.cc">
       <Filter>kabuki\script</Filter>
     </ClCompile>
+    <ClCompile Include="script\impl\script_interrupts.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
     <ClCompile Include="script\impl\script_log.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_mirror_in.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_mirror_out.cc">
       <Filter>kabuki\script</Filter>
     </ClCompile>
     <ClCompile Include="script\impl\script_operation.cc">
@@ -331,67 +271,10 @@
     <ClCompile Include="script\impl\script_clock.cc">
       <Filter>kabuki\script</Filter>
     </ClCompile>
-    <ClCompile Include="script\impl\script_color.cc">
-      <Filter>kabuki\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\impl\script_console.cc">
-      <Filter>kabuki\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\impl\script_door.cc">
-      <Filter>kabuki\script</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_address.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_date.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_email_address.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_entity.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_entity_group.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_entity_list.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_handle.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_name.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_organization.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_password.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_person.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_privilage.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_profile.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_relationship.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_user.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\impl\id_account.cc">
-      <Filter>kabuki\id</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="id\include\readme.md">
-      <Filter>kabuki\id</Filter>
+    <None Include="script\include\module_config.in">
+      <Filter>kabuki\script</Filter>
     </None>
   </ItemGroup>
 </Project>

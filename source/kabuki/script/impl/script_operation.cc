@@ -29,8 +29,8 @@ const uint_t* FirstOperation (uint_t value) {
     return reinterpret_cast<const uint_t*>(index);
 }
 
-uintptr_t Index (const void* ptr) {
-    return reinterpret_cast<uintptr_t>(ptr);
+char_t Index (const void* ptr) {
+    return (char_t)reinterpret_cast<uintptr_t>(ptr);
 }
 
 uintptr_t CountCoperations (const Operation* op) {
@@ -80,8 +80,8 @@ void OperandPrint (Operand* operand) {
     std::cout << ope->name
         << "\n| NumOperations:  " << CountCoperations (ope)
         << "\n| Description:    " << ope->metadata << '\n';
-    uintptr_t index      = Index (ope->result),
-              stop_index = index + Index (ope->params);
+    char_t index      = Index (ope->result),
+           stop_index = index + Index (ope->params);
     std::cout << "| FirstOperation: " << index << " LastOperation: "
         << stop_index;
     PrintLine ("|", '-');

@@ -68,6 +68,8 @@
 #define USING_RS 1
 #endif
 
+typedef const char* string_ptr;
+
 #if CHAR_WIDTH == 8
 typedef uint8_t index;
 #undef CHAR_WIDTH
@@ -187,8 +189,7 @@ typedef int16_t  dint_t;                    //< Buffer double-wide signed index 
 typedef uint16_t duint_t;                   //< Buffer double-wide unsigned index type.
 typedef byte     index_t;                   //< The largest bit-depth bag index_t this system supports.
 typedef uint16_t header_t;                  //< The largest bit-depth bag header_t this system supports.
-typedef uint16_t offset_t;                  //< The largest bit-depth bag data_t this system supports.
-typedef uint16_t hash_t;                    //< The largest bit-depth bag hash_t this system supports.
+typedef uint16_t data_t;                    //< The largest bit-depth bag data_t this system supports.
 
 namespace _ {
 enum {
@@ -203,8 +204,7 @@ typedef int16_t  dint_t;                    //< Buffer double-wide signed index 
 typedef uint32_t duint_t;                   //< Buffer double-wide unsigned index type.
 typedef uint16_t index_t;                   //< Bag4 index_t.
 typedef uint16_t header_t;                  //< Bag4 header_t
-typedef uint32_t offset_t;                  //< Bag4 offset_t
-typedef hash32_t hash_t;                    //< Bag4 hash_t
+typedef uint32_t data_t;                    //< Bag4 data_t
 
 namespace _ {
 enum {
@@ -219,8 +219,7 @@ typedef int16_t dint_t;                     //< Buffer double-wide signed index 
 typedef uint64_t duint_t;                   //< Buffer double-wide unsigned index type.
 typedef uint16_t index_t;                   //< Bag8 index_t
 typedef uint32_t header_t;                  //< Bag8 header_t
-typedef uint64_t offset_t;                  //< Bag8 offset_t
-typedef hash64_t hash_t;                    //< Bag8 hash_t
+typedef uint64_t data_t;                    //< Bag8 data_t
 
 namespace _ {
 enum {

@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "../include/room.h"
 #include "../include/door.h"
-#include "../include/exceptions.h"
+#include "../include/interrupts.h"
 #include "../include/args.h"
 #include "../include/operation.h"
 

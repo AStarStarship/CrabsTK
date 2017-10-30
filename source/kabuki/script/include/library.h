@@ -24,7 +24,7 @@
 
 namespace _ {
 
-template<typename TIndex, typename TKey, typename TData, typename THash, 
+template<typename TIndex, typename TKey, typename TSize, 
          uint_t MaxStackHeight>
 class Library: public Operand
 {
@@ -104,7 +104,7 @@ class Library: public Operand
     }
 
     /** Searches for the given query and returns a bag of query results.  */
-    bool Search (const char* query, Library<TIndex, TKey, TData, THash, 
+    bool Search (const char* query, Library<TIndex, TKey, TSize, TSize, 
         MaxStackHeight>* results) {
         return false;
     }
@@ -115,7 +115,7 @@ class Library: public Operand
     }
 
     /** gets the size of the item at the given index. */
-    byte SetOperationSize (TIndex index, TData newSize) {
+    byte SetOperationSize (TIndex index, TSize newSize) {
         return 0;
     }
     
@@ -194,18 +194,18 @@ class Library: public Operand
         height_,      //< The number of bags on the stack.
         num_libraries_;     //< The number of libraries.
     byte type_;             //< The current type of bag.
-    //Bag<TIndex, TKey, TData, THash> bag;
+    //Bag<TIndex, TKey, TSize, TSize> bag;
     TIndex num_keys_,       //< The current number of Star members.
         buffer_size_;       //< The current size of the header and names buffer in bytes.
     TKey header_size_,      //< The current size of the header and names in bytes.
         collisions_size_;   //< The current size of the header and names buffer in bytes.
-    TData data_size_;       //< The current total size of the bag.
+    TSize data_size_;       //< The current total size of the bag.
 };
 
 /** Destructs the given bag. */
-template<typename TIndex, typename TKey, typename TData, typename THash, 
+template<typename TIndex, typename TKey, typename TSize, 
     uint MaxStackSize>
-KABUKI void Destruct (Library<TIndex, TKey, TData, THash, MaxStackSize>* r) {
+KABUKI void Destruct (Library<TIndex, TKey, TSize, TSize, MaxStackSize>* r) {
     if (r == nullptr) return;
     delete reinterpret_cast<byte*> (r);
 }

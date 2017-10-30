@@ -238,7 +238,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
         switch (type) {
             case NIL:
                 goto UnsupportedType;
-            case SOH: //< _R_e_a_d__S_t_r_i_n_g_-_8_______________________________________
+            case ADR: //< _R_e_a_d__S_t_r_i_n_g_-_8_______________________________________
             case STR:
                 // Load buffered-type argument length and increment the index.
                 count = *param;
@@ -272,7 +272,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 //#if DEBUG_SCRIPT
                 //            //printf (" done!\n");
                 //#endif
-                if (type != SOH) {
+                if (type != ADR) {
                     hash = Hash16 (ui1, hash);
                     *ui1_ptr = ui1;
                 }
@@ -650,8 +650,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #else
                 goto UnsupportedType;
 #endif
-            case SEQ: //< _R_e_a_d__B_-_S_e_q_u_e_n_c_e___________________________
-            case ESC: //< _R_e_a_d__E_s_c_a_p_e__S_e_q_u_e_n_c_e__________________
+            case BSC: //< _R_e_a_d__B_-_S_e_q_u_e_n_c_e_________________________
                 const Operation* op = BinRead (bin, params + index, args + index);
                 if (op != nullptr) {
                     return op;
@@ -698,10 +697,15 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #else
                 goto UnsupportedType;
 #endif
-            case RS: //< _R_e_a_d__B_o_o_k_2_______________________________________
+            case OBJ: //< _R_e_a_d__O_b_j_e_c_t_________________________________
+            case MAP: //< _R_e_a_d__M_a_p_______________________________________
+            case BAG: //< _R_e_a_d__B_a_g_______________________________________
+            case LST: //< _R_e_a_d__L_i_s_t_____________________________________
+                goto UnsupportedType;
 #if USING_RS
                 if (length <= 32)
-                    return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
+                    return BinResult (bin, Bin::BufferUnderflowError, 
+                                      params, index, start);
                 // Load the pointer to the destination.
                 ui1_ptr = reinterpret_cast<byte*> (args[index]);
                 if (ui1_ptr == nullptr)

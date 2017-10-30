@@ -210,7 +210,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             case NIL:
                 break;
 
-            case SOH: //< _W_r_i_t_e__A_d_d_r_e_s_s__S_t_r_i_n_g________________
+            case ADR: //< _W_r_i_t_e__A_d_d_r_e_s_s__S_t_r_i_n_g________________
             case STR: //< _W_r_i_t_e__U_T_F_-_8__S_t_r_i_n_g____________________
                 if (space == 0)
                     return BoutResult (bout, Bout::BufferOverflowError, params, index,
@@ -250,7 +250,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                     *stop = ui1;        // Write byte
                     if (++stop >= end) stop -= size;
                 }
-                if (type == SOH) {
+                if (type == ADR) {
                     *stop = ui1;        // Write byte
                     if (++stop >= end) stop -= size;
                     break;

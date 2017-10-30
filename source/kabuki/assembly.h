@@ -1,6 +1,6 @@
-/** Kabuki Toolkit
+/** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/assembly.h
+    @file    ~/source/kabuki/script/include/assembly.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -12,9 +12,16 @@
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
+    
+    @desc   This file contains the system configuration for ChineseRoom and  
+            applications and libraries that use it. To modify this file, copy 
+            it into your project directory into the source code root. This 
+            files gets #include <assembly.h> in the config file. That means 
+            that the compiler will look in your source code root before looking 
+            in this file. Please see module_config.h for configuration details.
 */
 
-// Choose BARE_METAL, MBED, MBED_OS, ARDUINO, WIN32, WINDOWS, ANDROID, 
+// Choose BARE_METAL, MBED, MBED_OS, ARDUINO, MINGW32, WINDOWS, ANDROID, 
 // LINUX, OSX, or IOS
 #define PLATFORM            WINDOWS
 
@@ -26,7 +33,7 @@
 #define DEBUG               YES
 
 #ifndef DEBUG_SCRIPT
-#define DEBUG_SCRIPT   YES
+#define DEBUG_SCRIPT        YES
 #endif //< DEBUG_SCRIPT
 
 /** @brief The Memory Profiles 1-4 are used to signal that the system is
@@ -71,5 +78,3 @@
 #define USING_RS            NO
 #define USING_GS            NO
 #define USING_FS            NO      //< Must use to enable file handling.
-
-#define USING_UTF           NO      //< Leave YES unless you're trying to save ROM.

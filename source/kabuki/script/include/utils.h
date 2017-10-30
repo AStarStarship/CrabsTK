@@ -245,7 +245,7 @@ KABUKI void PrintHex (byte c);
     5, than */
 KABUKI void PrintCentered (const char* string, int width);
 
-/** Prints the given char to the stdout if it is printable, and prints SOH. */
+/** Prints the given char to the stdout if it is printable, and prints ADR. */
 KABUKI void PrintChar (char c);
 
 /** Prints a line with the given token and number of columns to the debug
@@ -269,7 +269,7 @@ KABUKI void PrintHex (Type value) {
     sprintf_s (buffer, "%x", &value);
     std::cout << "0x";
 
-    int length = strlen (buffer);
+    int length = StringLength (buffer);
     for (int i = 0; i < length; ++i)
         std::cout << '0';
     std::cout << buffer;

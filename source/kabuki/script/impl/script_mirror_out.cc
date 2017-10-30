@@ -1,6 +1,6 @@
-/** kabuki::script
+    /** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/script/impl/script_exceptions.cc
+    @file    ~/source/kabuki/script/impl/script_expression.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -15,12 +15,13 @@
 */
 
 #include <stdafx.h>
-#include "../include/exceptions.h"
+#include "../include/window.h"
 
 namespace _ {
 
-const char* RoomCrashException::what () const throw () {
-        return "External crash";
-    }
+
+bool IsWritable (MirrorOut* mirror) {
+    return mirror->start != mirror->stop;
+}
 
 }       //< namespace _

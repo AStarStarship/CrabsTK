@@ -49,7 +49,6 @@ KABUKI time_t ClockGetSeconds (timestamp_t t);
 KABUKI int32_t ClockGetMicroseconds (timestamp_t timestamp);
 
 /** Creates a timestamp of the current time. */
-KABUKI timestamp_t ClockTimestampNow ();
 
 enum {
     NUM_SEC_MIN = 60 * 60,

@@ -1,6 +1,6 @@
 /** kabuki::script
     @version 0.x
-    @file    stdafx.h
+    @file    ~/source/kabuki/script/impl/script_exceptions.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,24 +14,13 @@
              permissions and limitations under the License.
 */
 
-#pragma once
+#include <stdafx.h>
+#include "../include/interrupts.h"
 
-#if PLATFORM == WIN32 || PLATFORM == WINDOWS
-#include "targetver.h"
-#endif
+namespace _ {
 
-#include <stdio.h>
-#include <time.h>
-#include <stdint.h>
-#include <cstdint>
-#include <iostream>
-#include <chrono>
-#include <float.h>
-#include <cstdint>
-#include <cstdlib>
-#include <iostream>
-#include <fstream>
-#include <algorithm>
-#include <locale>
-#include <exception>
-#include <math.h>
+const char* RoomCrashException::what () const throw () {
+        return "External crash";
+    }
+
+}       //< namespace _

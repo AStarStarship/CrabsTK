@@ -24,56 +24,55 @@
 
 namespace _ {
 
-/** List of the 32 data types.
-    To make arrays of the 32 types, use the 3 MSb as follows:
-
-    | Value | Description                                 |
-    |:-----:|:--------------------------------------------|
-    |   0   | Single element.                             |
-    |   1   | 1-dimensional array with up to 2^7 values.  |
-    |   2   | 1-dimensional array with up to 2^15 values. |
-    |   3   | 1-dimensional array with up to 2^31 values. |
-    |   4   | 1-dimensional array with up to 2^63 values. |
-    |   5   | N-dimensional array with up to 2^7 values.  |
-    |   6   | N-dimensional array with up to 2^15 values. |
-    |   7   | N-dimensional array with up to 2^31 values. |
-
-    @note This has been mimicked in order to match the ASCII C0 codes as
-    closely as sanely possible. */
+/** List of the 32 ASCII Data Types. */
 typedef enum {
     NIL = 0,    //< 0.  NIL/null/void type.
-    SOA,        //< 1.  A Stack Operation Address.
+    ADR,        //< 1.  A Stack Operation Address.
     STR,        //< 2.  A UTF-8 string.
-    ST2,        //< 3.  A UTF-16 string.
-    ST4,        //< 4.  A UTF-32 string.
-    ST8,        //< 5.  A UTF-64 string.
-    BOL,        //< 6.  An 8-bit non-zero asserted boolean variable.
-    SI1,        //< 7.  An 8-bit signed integer.
-    UI1,        //< 8.  An 8-bit unsigned integer.
-    SI2,        //< 9.  A 16-bit signed integer.
-    UI2,        //< 10. A 16-bit unsigned integer.
-    HLF,        //< 11.  A 16-bit floating-point number.
-    SI4,        //< 12. A 32-bit signed integer.
-    UI4,        //< 13. A 32-bit unsigned integer.
-    FLT,        //< 14. A 32-bit floating-point number.
-    TMS,        //< 15. A 32-bit second since epoch timestamp.
-    TMU,        //< 16. A 64-bit microsecond since epoch timestamp.
-    SI8,        //< 17. A 64-bit signed integer.
-    UI8,        //< 18. A 64-bit unsigned integer.
-    DBL,        //< 19. A 64-bit floating-point number.
-    SV2,        //< 20. A 16-bit signed varint.
-    UV2,        //< 21. A 16-bit unsigned varint.
-    SV4,        //< 22. A 32-bit signed varint.
-    UV4,        //< 23. A 32-bit unsigned varint.
-    SV8,        //< 24. A 64-bit signed varint.
-    UV8,        //< 25. A 64-bit unsigned varint.
-    BSQ,        //< 26. A B-Sequence without a hash.
-    BSH,        //< 27. A B-Sequence with a hash.
-    KHT,        //< 28. A Key-Type-Value unique set with hash-table (map).
-    KTV,        //< 29. A Key-Type-Value multiset (unordered_map).
-    TVA,        //< 30. A Type-Value array.
-    PAK,        //< 31. A Packet for splitting up large sets.
+    ST2,        //< 3. A NIL-terminated string of UI2 or UTF-16 string.
+    ST4,        //< 4. A NIL-terminated string of UI4 or UTF-32 string.
+    BOL,        //< 5.  An 8-bit non-zero asserted boolean variable.
+    SI1,        //< 6.  An 8-bit signed integer.
+    UI1,        //< 7.  An 8-bit unsigned integer.
+    SI2,        //< 8.  A 16-bit signed integer.
+    UI2,        //< 9.  A 16-bit unsigned integer.
+    HLF,        //< 10. A 16-bit floating-point number.
+    SI4,        //< 11. A 32-bit signed integer.
+    UI4,        //< 12. A 32-bit unsigned integer.
+    FLT,        //< 13. A 32-bit floating-point number.
+    TMS,        //< 14. A 32-bit second since epoch timestamp.
+    TMU,        //< 15. A 64-bit microsecond since epoch timestamp.
+    SI8,        //< 16. A 64-bit signed integer.
+    UI8,        //< 17. A 64-bit unsigned integer.
+    DBL,        //< 18. A 64-bit floating-point number.
+    SV2,        //< 19. A 16-bit signed varint.
+    UV2,        //< 20. A 16-bit unsigned varint.
+    SV4,        //< 21. A 32-bit signed varint.
+    UV4,        //< 22. A 32-bit unsigned varint.
+    SV8,        //< 23. A 64-bit signed varint.
+    UV8,        //< 24. A 64-bit unsigned varint.
+    STV,        //< 25. A nil-terminated string of unsigned varints.
+    OBJ,        //< 26. An n-byte object composed of contiguous memory.
+    BSC,        //< 27. A CR-terminated string of B-Sequences.
+    BOK,        //< 28. An unordered map of Key-{Type-Value} tuples.
+    DIC,        //< 29. A one-to-one map of Key-{Type-Value} tuples.
+    MAP,        //< 30. A one-to-one map of Id-{Type-Value} tuples.
+    LST,        //< 31. A stack of Type-Value tuples.
 } TType;
+
+enum
+{
+    kNumTypes = 32  //< The number of ASCII Data Types.
+};
+
+/** An ROM string for one of the 32 types..
+    C++11 variadic templates ensure there is only one copy in of the given
+    string in ROM. */
+template<char char_a, char char_b, char char_c>
+KABUKI uint32_t Type () {
+    return ((uint32_t)char_a) & (((uint32_t)char_b) << 8) &
+           (((uint32_t)char_c) << 16);
+}
 
 enum {
     kInvalidType = 32,  //< The starting index of invalid types.
@@ -112,16 +111,13 @@ KABUKI bool TypeIsValid (const char* type_name);
 /** Returns the name of the given type. */
 KABUKI const char* TypeString (uint_t type);
 
-/** Checks to see if the given byte is a delimiter. */
-KABUKI bool CheckDelimiter (char const c);
-
 /** Checks the last char of the token to check if it is a specified char. */
 template<char c>
-KABUKI bool CheckLastLetter (uint16_t const token);
+KABUKI bool CharCompare (uint16_t const token);
 
 /** Checks the last two char(string) of the token to check if it is a specified char. */
 template<char LetterTwo, char LetterThree>
-KABUKI bool CheckLastLetters (uint32_t const Token);
+KABUKI bool CharCompare (char two, char three);
 
 /** Returns the type from the given index.
     @warning Untested. */

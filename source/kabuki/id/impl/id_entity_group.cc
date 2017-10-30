@@ -28,9 +28,9 @@ void EntityGroup::SetName (const char* string) {
     name_ = _::StringClone (string);
 }
 
-void EntityGroup::ApplyPrivilage (const char* privilages) {
+void EntityGroup::ApplyPrivilege (const char* privileges) {
     //for (int i = 0; i < base.getNumAccounts (); i++)
-    //    accounts[i].Role ().ApplyPrivilages (new_privilages);
+    //    accounts[i].Role ().ApplyPrivileges (new_privileges);
 }
 
 int EntityGroup::Search (const char* string) {

@@ -32,16 +32,29 @@ inline uint_t MaxArrayLength () {
     return (((uint_t)1) << (sizeof (uint_t) * 8 - 1)) / sizeof (T);
 }
 
-/** A light-weight array of 8, 16, 32, or 64 bit plain-old-data (POD) types.
+/** A stack of 8, 16, 32, or 64 bit plain-old-data (POD) types.
 
-    @warning Do not use this class for anything that needs a copy constructor.
-             It's meant to be light-weight and use contiguous memory, not
-             work like an STL data structure.
+    Stack Memory Layout
+
+    @code
+        |================|
+        |  Packed Array  |  <-- Only if header_size = 0
+        |================|
+        | 64-bit Aligned |
+        |     Buffer     |
+        |================|
+        | Stack Elements |
+     ^  |================|
+     |  |  Stack struct  |
+    0xN |================|
+    @endcode
 */
-template<typename T, typename I = int>
-struct Arx {
-    T count,    //< The count of item's in the array.
-      size;     //< The size of the underlaying array.
+template<typename I = int>
+struct Array {
+    I size_bytes,   //< Total size of the Stack Array in 64-bit aligned bytes.
+      header_size,  //< Total size of the Dimensions Header in bytes.
+      height,       //< Total height of the Stack in elements.
+      count;        //< Count of the elements on the stack.
 };
 
 /** Gets the max number of elements in an array with the specific index 
@@ -55,11 +68,12 @@ inline I ArrayMaxElements () {
     @param buffer An array of bytes large enough to fit the array.
 */
 template<typename T, typename I = int>
-inline Arx<I, T>* ArrayInit (T* buffer, T size) {
-    Arx<I, T>* array = reinterpret_cast<T*> (buffer);
-    array->count = 0;
-    array->size = size;
-    return array;
+inline Array<I>* ArrayInit (T* buffer, T size) {
+    Array<I>* stack = reinterpret_cast<T*> (buffer);
+    stack->set_size;
+    stack->count = 0;
+    stack->height = size;
+    return stack;
 }
 
 /** Inserts the item into the array at the given index.
@@ -68,10 +82,10 @@ inline Arx<I, T>* ArrayInit (T* buffer, T size) {
     @param index The index to insert at.
     @return Returns -1 if a is null and -2 if the array is full. */
 template<typename T, typename I = int>
-inline T ArrayInsert (Arx<I, T>* array, T item, T index) {
+inline T ArrayInsert (Array<I>* array, T item, T index) {
     if (array == nullptr)
         return -1;
-    T size = array->size,
+    T size = array->height,
         cout = array->count;
     if (count >= size)
         return -2;
@@ -117,7 +131,7 @@ inline T ArrayInsert (Arx<I, T>* array, T item, T index) {
     @param  index The index the item to remove.
     @return Returns true if the index is out of bounds. */
 template<typename T, typename I = int>
-inline bool ArrayRemove (Arx<I, T>* array, T index) {
+inline bool ArrayRemove (Array<I>* array, T index) {
     if (array == nullptr)
         return !((T)0);
     T count = array->count,
@@ -134,7 +148,7 @@ inline bool ArrayRemove (Arx<I, T>* array, T index) {
     }
     // Move all of the elements after the index down one.
     T* insert_point = &array->element_one + index,
-      *end          = &array->element_one + count - 1;
+     * end          = &array->element_one + count - 1;
     while (insert_point != end) {
         value = *end;
         *(end - 1) = value;
@@ -150,10 +164,10 @@ inline bool ArrayRemove (Arx<I, T>* array, T index) {
     @param  item The item to push onto the stack.
     @return Returns the index of the newly stacked item. */
 template<typename T, typename I = int>
-inline I ArrayPush (Arx<I, T>* array, T item) {
+inline I ArrayPush (Array<I>* array, T item) {
     if (array == nullptr)
         return -1;
-    I size = array->size,
+    I size = array->height,
       cout = array->count;
     if (count >= size)
         return -2;
@@ -168,7 +182,7 @@ inline I ArrayPush (Arx<I, T>* array, T item) {
     @param  a The array.
     @return Returns the item popped off the stack. */
 template<typename T, typename I = int>
-inline T ArrayPop (Arx<I, T>* array) {
+inline T ArrayPop (Array<I>* array) {
     if (array == nullptr)
         return !((T)0);
     I count = array->count;
@@ -185,149 +199,13 @@ inline T ArrayPop (Arx<I, T>* array) {
     @param  index The index of the element to get.
     @return Returns -1 if a is null and -2 if the index is out of bounds. */
 template<typename T, typename I = int>
-inline T ArrayGet (Arx<I, T>* array, T index) {
+inline T ArrayGet (Array<I>* array, T index) {
     if (array == nullptr)
         return 0;
     if (index >= array->count)
         return 0;
     return &array->element_one + index;
 }
-
-#if USING_AR1
-
-template<typename T>
-inline Arx<T, int8_t>* Ar1Init (int8_t* buffer, int8_t size) {
-    return ArrayInit<T, int8_t> (buffer, size);
-}
-
-template<typename T>
-inline int8_t Ar1Insert (Arx<int8_t, T>* array, T item, int8_t index) {
-    return ArrayInsert<T, int8_t> (array, item, index);
-}
-
-template<typename T>
-inline T Ar1Get (Arx<int8_t, T>* array, int8_t index) {
-    return ArrayGet<T, int8_t> (array, index);
-}
-
-template<typename T>
-inline T Ar1Pop (Arx<int8_t, T>* array) {
-    return ArrayPop<T, int8_t> (array);
-}
-
-template<typename T>
-inline int8_t Ar1Push (Arx<int8_t, T>* array, T item) {
-    return ArrayPush<T, int8_t> (array, item);
-}
-
-template<typename T>
-inline bool Ar1Remove (Arx<int8_t, T>* array, T index) {
-    return ArrayRemove (array, index);
-}
-
-#endif  //< USING_AR1
-
-#if USING_AR2
-
-template<typename T>
-inline Arx<T, int16_t>* Ar2Init (int16_t* buffer, int16_t size) {
-    return ArrayInit<T, int16_t> (buffer, size);
-}
-
-template<typename T>
-inline int16_t Ar2Insert (Arx<int16_t, T>* array, T item, int16_t index) {
-    return ArrayInsert<T, int16_t> (array, item, index);
-}
-
-template<typename T>
-inline T Ar2Get (Arx<int16_t, T>* array, int16_t index) {
-    return ArrayGet<T, int16_t> (array, index);
-}
-
-template<typename T>
-inline T Ar2Pop (Arx<int16_t, T>* array) {
-    return ArrayPop<T, int16_t> (array);
-}
-
-template<typename T>
-inline int16_t Ar2Push (Arx<int16_t, T>* array, T item) {
-    return ArrayPush<T, int16_t> (array, item);
-}
-
-template<typename T>
-inline bool Ar2Remove (Arx<int16_t, T>* array, T index) {
-    return ArrayRemove (array, index);
-}
-
-#endif  //< USING_AR2
-
-#if USING_AR4
-
-template<typename T>
-inline Arx<T, int32_t>* Ar4Init (int32_t* buffer, int32_t size) {
-    return ArrayInit<T, int32_t> (buffer, size);
-}
-
-template<typename T>
-inline int32_t Ar4Insert (Arx<int32_t, T>* array, T item, int32_t index) {
-    return ArrayInsert<T, int32_t> (array, item, index);
-}
-
-template<typename T>
-inline T Ar4Get (Arx<int32_t, T>* array, int32_t index) {
-    return ArrayGet<T, int32_t> (array, index);
-}
-
-template<typename T>
-inline T Ar4Pop (Arx<int32_t, T>* array) {
-    return ArrayPop<T, int32_t> (array);
-}
-
-template<typename T>
-inline int32_t Ar4Push (Arx<int32_t, T>* array, T item) {
-    return ArrayPush<T, int32_t> (array, item);
-}
-
-template<typename T>
-inline bool Ar4Remove (Arx<int32_t, T>* array, T index) {
-    return ArrayRemove (array, index);
-}
-
-#endif  //< USING_AR4
-
-#if USING_AR8
-
-template<typename T>
-inline Arx<T, int64_t>* Ar8Init (int64_t* buffer, int64_t size) {
-    return ArrayInit<T, int64_t> (buffer, size);
-}
-
-template<typename T>
-inline int64_t Ar4Insert (Arx<int64_t, T>* array, T item, int64_t index) {
-    return ArrayInsert<T, int64_t> (array, item, index);
-}
-
-template<typename T>
-inline T Ar4Get (Arx<int64_t, T>* array, int64_t index) {
-    return ArrayGet<T, int64_t> (array, index);
-}
-
-template<typename T>
-inline T Ar4Pop (Arx<int64_t, T>* array) {
-    return ArrayPop<T, int64_t> (array);
-}
-
-template<typename T>
-inline int64_t Ar4Push (Arx<int64_t, T>* array, T item) {
-    return ArrayPush<T, int64_t> (array, item);
-}
-
-template<typename T>
-inline bool Ar4Remove (Arx<int64_t, T>* array, T index) {
-    return ArrayRemove (array, index);
-}
-
-#endif  //< USING_AR8
 
 }       //< namespace _
 #endif  //< KABUKI_SCRIPT_ARRAY_H

@@ -38,7 +38,7 @@ class KABUKI EntityGroup
     void SetName (const char* string);
 
     /** Applies privileges to the entity group. */
-    void ApplyPrivilage (const char* privilages);
+    void ApplyPrivilege (const char* privileges);
 
     /** Returns true if this list of entities contains the given char. */
     virtual int Search (const char* string);
@@ -49,7 +49,7 @@ class KABUKI EntityGroup
     private:
 
     char                * name_,       //< The name of the entity group.
-                        * privilages_; //< A string of privileges the group has.
+                        * privileges_; //< A string of privileges the group has.
     data::Array<Entity*>* entities_;   //< A vector if Entity pointers.
 };
 

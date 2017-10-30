@@ -178,6 +178,7 @@ hash16_t Hash16 (char c, hash16_t hash) {
 hash16_t Hash16UI2 (uint16_t value, hash16_t hash) {
     hash = ((value & 0xff) * 65521) + hash;
     hash = ((value >> 8  ) * 65521) + hash;
+    return hash;
 }
 
 hash16_t Hash16UI4 (uint32_t value, hash16_t hash) {
@@ -185,6 +186,7 @@ hash16_t Hash16UI4 (uint32_t value, hash16_t hash) {
     hash = (((value >> 8 ) & 0xff) * 65521) + hash;
     hash = (((value >> 16) & 0xff) * 65521) + hash;
     hash = (((value >> 24) & 0xff) * 65521) + hash;
+    return hash;
 }
 
 hash16_t Hash16UI8 (uint64_t value, hash16_t hash) {
@@ -196,6 +198,7 @@ hash16_t Hash16UI8 (uint64_t value, hash16_t hash) {
     hash = (((value >> 40) & 0xff) * 65521) + hash;
     hash = (((value >> 48) & 0xff) * 65521) + hash;
     hash = (((value >> 56) & 0xff) * 65521) + hash;
+    return hash;
 }
 
 hash16_t Hash16 (const char* string, hash16_t hash) {
@@ -468,7 +471,7 @@ void PrintCentered (const char* input, int width, bool is_last,
     if (width < 1)
         return;
     std::cout << column_delimeter;
-    int length = strlen (input),
+    int length = StringLength (input),
         num_spaces;
 
     if (width < length) {

@@ -101,7 +101,7 @@ enum {
              construction to verify the integrity of the object.
     @warning The reservedNumOperations must be aligned to a 32-bit value, and 
              it will get rounded up to the next higher multiple of 4. */
-KABUKI Table* TableInit (byte* buffer, byte max_keys, uint16_t total_size);
+KABUKI Table* TableInit (byte* buffer, byte max_keys, uint16_t set_size);
     
 /** Adds the given key and returns the index 64-255 of the index of the 
     op.

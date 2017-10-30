@@ -41,11 +41,14 @@ void ParamsPrint (const uint_t* params) {
     for (i = 1; i < num_params; ++i) {
         value = *params++;
         std::cout << TypeString (value) << ", ";
-        if ((value == STR) || (value == ST2) || (value == ST4) || (value == ST8)) {
+        if ((value == STR) || (value == ST2) || (value == ST4)) {
             ++i;
             value = *params++;
             printf ("%u, ", value);
-        } else if (value > US) {
+        } else if (value > 31) {
+            if (value > 127) {      //< 
+
+            }
             // Then it's an array.
             type = value & 0x1f;    //< Mask off type.
             value = value >> 5;     //< Shift over array type.
@@ -125,11 +128,11 @@ void ParamsPrint (const uint_t* params) {
     // Do the last set without a comma.
     value = *params++;
     std::cout << TypeString (value) << ", ";
-    if ((value == STR) || (value == ST2) || (value == ST4) || (value == ST8)) {
+    if ((value == STR) || (value == ST2) || (value == ST4)) {
         ++i;
         value = *params++;
         printf ("%u", value);
-    } else if (value > US) {
+    } else if (value > 31) {
         // Then it's an array.
         type = value & 0x1f;    //< Mask off type.
         value = value >> 5;     //< Shift over array type.
@@ -218,10 +221,9 @@ uint_t ParamNumber (const uint_t* params, byte param_number) {
         uint_t value = params[i];
         if (value == STR)
             ++param_number;
-        else if (value > US) {
-            // It's an array!
+        else if (value > 31) {  // It's an array!
             value = value >> 5;
-            if (value < 5) { // It's a single dimension
+            if (value < 4) {    // It's a single dimension
                 param_number += 2;
                 break;
             } else if (value > 7) {

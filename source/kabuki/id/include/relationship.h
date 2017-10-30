@@ -16,11 +16,11 @@
 #ifndef KABUKI_ID_RESATIONSHIP_H
 #define KABUKI_ID_RESATIONSHIP_H
 
-#include "module_config.h"
+#include "entity.h"
 
 namespace kabuki { namespace id {
 
-/** A type of relationship. */
+/** A relationship node between . */
 class KABUKI Relationship
 {
     public:
@@ -30,6 +30,12 @@ class KABUKI Relationship
 
     /** Prints this object to a expression. */
     void Print (_::Log& log);
+
+    private:
+
+    const char* type_;
+    Entity    * a,
+              * b;
 };
 }       //< namespace id
 }       //< namespace kabuki

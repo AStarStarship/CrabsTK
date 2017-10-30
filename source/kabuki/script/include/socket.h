@@ -26,8 +26,8 @@
 
 namespace _ {
 
-/** A Socket is a memory frame that Bin-Bout Slots go into.
-    A Slot is composed of a B-Input and B-Output pair. In the Chinese Room
+/** A Socket is an Array of Bin-Bout Slots pairs.
+    Each B-In/Bout Pair is located at indexes (2K) and (2K + 1). In the Chinese Room
     thought experiment there is only a single door with a single slot, so 
     all data is conceptually all serialized into a single Bin and Bout.
 */
@@ -37,11 +37,7 @@ struct KABUKI Socket {
         RoomError = 0
     } Error;
 
-    uint_t slot_size,      //< The size of the socket in bytes.
-           num_slots,      //< The number of slots in this group.
-           max_num_slots,  //< The number of slots allocated in memory.
-           is_dynamic;     //< Flag for if this Socket uses dynamic memory.
-    Bin    bin0;           //< The first and only required slot.
+    Array<uint_t> offsets;  //< An Array of offsets to 
 };
 
 /** Returns a Statically Evaluated Operation Error. */
@@ -58,14 +54,14 @@ KABUKI Slot** SocketSlots (Socket* string);
             in the buffer upon success. */
 KABUKI const Operation* SocketAddSlot (Socket* socket, Slot* slot);
 
+/** Deletes the Slot from the Socket at the given index. */
+KABUKI void SocketRemoveSlot (Socket* socket, uint_t index);
+
 /** Gets the Slot from the Socket at the given index. */
 KABUKI Slot* SocketGetSlot (Socket* socket, uint_t index);
 
 /** Gets the Slot from the Socket at the given index. */
 KABUKI Slot* SocketFindSlot (Socket* socket, void* address);
-
-/** Deletes the Slot from the Socket at the given index. */
-KABUKI void SocketDeleteSlot (Socket* socket, uint_t index);
 
 /** Prints the given Socket to the stdout. */
 KABUKI void SocketPrint (Socket* string);

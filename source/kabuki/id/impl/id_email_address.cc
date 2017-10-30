@@ -25,9 +25,10 @@ bool IsValidEmailAddress (const char* string)
     if (string.length () < 6) return false;  //< Min email length is "a@b.c"
 
     /// Use IdnMapping class to convert Unicode domain names.
-    try
-    {
-    string = regex_replace (a, " (@) (.+)$", this.DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds (200));
+    try {
+        string = regex_replace (a, " (@) (.+)$", this.DomainMapper,
+                                RegexOptions.None,
+                                TimeSpan.FromMilliseconds (200));
     }
     catch (RegexMatchTimeoutException) { return false; }
 
@@ -53,7 +54,9 @@ EmailAddress::EmailAddress (const char* string)
 
 char& EmailAddress::GetAddress () { return address_; }
 
-void EmailAddress::SetAddress (const char* string) { address = string; }
+void EmailAddress::SetAddress (const char* string) {
+    //address_ = string;
+}
 
 /* Old C# code to rewrite: 
 char EmailAddressmapToDomain (Match match)

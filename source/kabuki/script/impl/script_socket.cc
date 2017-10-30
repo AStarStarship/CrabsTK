@@ -30,7 +30,6 @@ Socket* SocketInit (byte* buffer, uint_t slot_size, byte max_num_slots) {
     if (buffer == nullptr) return nullptr;
     if (slot_size < kMinSlotSize) return nullptr;
     Socket* socket = reinterpret_cast<Socket*>(buffer);
-    socket->is_dynamic = 0;
     socket->num_slots = 0;
     socket->max_num_slots = max_num_slots;
     return socket;
@@ -71,7 +70,7 @@ Slot* SocketFindSlot (Socket* socket, void* address) {
     return nullptr;
 }
 
-void SocketDeleteSlot (Socket* socket, uint_t index) {
+void SocketRemoveSlot (Socket* socket, uint_t index) {
     if (socket == nullptr) return;
     if (index >= socket->num_slots)
         return;
