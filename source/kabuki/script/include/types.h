@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_TYPES_H
-#define KABUKI_SCRIPT_TYPES_H
+#ifndef SCRIPT_TYPES_H
+#define SCRIPT_TYPES_H
 
 #include "utils.h"
 
@@ -29,8 +29,8 @@ typedef enum {
     NIL = 0,    //< 0.  NIL/null/void type.
     ADR,        //< 1.  A Stack Operation Address.
     STR,        //< 2.  A UTF-8 string.
-    ST2,        //< 3. A NIL-terminated string of UI2 or UTF-16 string.
-    ST4,        //< 4. A NIL-terminated string of UI4 or UTF-32 string.
+    ST2,        //< 3.  A NIL-terminated string of UI2 or UTF-16 string.
+    ST4,        //< 4.  A NIL-terminated string of UI4 or UTF-32 string.
     BOL,        //< 5.  An 8-bit non-zero asserted boolean variable.
     SI1,        //< 6.  An 8-bit signed integer.
     UI1,        //< 7.  An 8-bit unsigned integer.
@@ -51,13 +51,13 @@ typedef enum {
     UV4,        //< 22. A 32-bit unsigned varint.
     SV8,        //< 23. A 64-bit signed varint.
     UV8,        //< 24. A 64-bit unsigned varint.
-    STV,        //< 25. A nil-terminated string of unsigned varints.
-    OBJ,        //< 26. An n-byte object composed of contiguous memory.
-    BSC,        //< 27. A CR-terminated string of B-Sequences.
-    BOK,        //< 28. An unordered map of Key-{Type-Value} tuples.
-    DIC,        //< 29. A one-to-one map of Key-{Type-Value} tuples.
-    MAP,        //< 30. A one-to-one map of Id-{Type-Value} tuples.
-    LST,        //< 31. A stack of Type-Value tuples.
+    OBJ,        //< 25. An n-byte object composed of contiguous memory.
+    OBV,        //< 26. A Observer with Subscriber List.
+    BSC,        //< 27. A B-Sequence.
+    LST,        //< 28. A stack of Type-Value tuples.
+    BOK,        //< 29. An unordered map of Key-{Type-Value} tuples.
+    DIC,        //< 30. A one-to-one map of Key-{Type-Value} tuples.
+    MAP,        //< 31. A one-to-one map of Id-{Type-Value} tuples.
 } TType;
 
 enum
@@ -172,4 +172,4 @@ KABUKI T UnpackSignedVarint (T value) {
 }
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_TYPES_H
+#endif  //< SCRIPT_TYPES_H

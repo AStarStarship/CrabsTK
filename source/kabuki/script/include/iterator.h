@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_ITERATOR_H
-#define KABUKI_SCRIPT_ITERATOR_H
+#ifndef SCRIPT_ITERATOR_H
+#define SCRIPT_ITERATOR_H
 
 namespace _ {
 
@@ -36,4 +36,4 @@ struct KABUKI Iterator {
 };
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_ITERATOR_H
+#endif  //< SCRIPT_ITERATOR_H

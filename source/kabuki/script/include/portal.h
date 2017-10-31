@@ -18,8 +18,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_PORTAL_H
-#define KABUKI_SCRIPT_PORTAL_H
+#ifndef SCRIPT_PORTAL_H
+#define SCRIPT_PORTAL_H
 
 #include "module_config.h"
 
@@ -46,4 +46,4 @@ struct KABUKI Portal {
     virtual byte Pull () = 0;
 };
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_PORTAL_H
+#endif  //< SCRIPT_PORTAL_H

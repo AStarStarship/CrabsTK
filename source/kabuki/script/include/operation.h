@@ -17,10 +17,10 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_OPERATION_H
-#define KABUKI_SCRIPT_OPERATION_H
+#ifndef SCRIPT_OPERATION_H
+#define SCRIPT_OPERATION_H
 
-#include "array.h"
+#include "module_config.h"
 
 namespace _ {
 
@@ -168,8 +168,6 @@ KABUKI uintptr_t CountCoperations (const Operation* op);
     operation, i.e. it is the quantity that is operated on." */
 KABUKI void OperationPrint (const Operation* op);
 
-
-
 /** Gets the number of operations in the given expressions. */
 KABUKI uintptr_t ToUInt (Operand* op);
 
@@ -181,4 +179,4 @@ KABUKI bool IsGroup (const Operation* op);
 KABUKI void OperandPrint (Operand* operand);
 
 }   //< namespace _
-#endif  //< KABUKI_SCRIPT_OPERATION_H
+#endif  //< SCRIPT_OPERATION_H

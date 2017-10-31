@@ -168,7 +168,7 @@ void BinPrint (Bin* bin) {
         bin->start, bin->stop, bin->read);
     PrintMemory (&bin->buffer, size);
 }
-
+/*
 const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
     if (bin == nullptr)
         return BinResult (bin, Bin::RoomError);
@@ -650,13 +650,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #else
                 goto UnsupportedType;
 #endif
-            case BSC: //< _R_e_a_d__B_-_S_e_q_u_e_n_c_e_________________________
-                const Operation* op = BinRead (bin, params + index, args + index);
-                if (op != nullptr) {
-                    return op;
-                }
-                break;
-
+                /*
             case FS: //< _R_e_a_d__B_o_o_k_8_____________________________________
 #if USING_FS
                 if (length <= 128)
@@ -698,32 +692,6 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 goto UnsupportedType;
 #endif
             case OBJ: //< _R_e_a_d__O_b_j_e_c_t_________________________________
-            case MAP: //< _R_e_a_d__M_a_p_______________________________________
-            case BAG: //< _R_e_a_d__B_a_g_______________________________________
-            case LST: //< _R_e_a_d__L_i_s_t_____________________________________
-                goto UnsupportedType;
-#if USING_RS
-                if (length <= 32)
-                    return BinResult (bin, Bin::BufferUnderflowError, 
-                                      params, index, start);
-                // Load the pointer to the destination.
-                ui1_ptr = reinterpret_cast<byte*> (args[index]);
-                if (ui1_ptr == nullptr)
-                    return BinResult (bin, Bin::RoomError, params, index, start);
-                ui1 = *start;
-                if (++start >= end) start -= size;
-                hash = Hash16 (ui1, hash);
-                ui1 = *start;
-                if (++start >= end) start -= size;
-                hash = Hash16 (ui1, hash);
-                ui2 |= ((uint16_t)ui1) << 8;
-                count = (uint_t)ui2;
-                goto ReadBlock;
-                break;
-#else
-                goto UnsupportedType;
-#endif
-            case US: //< _R_e_a_d__U_n_i_t__S_e_p_e_r_a_t_o_r_____________________
                 ui1_ptr = reinterpret_cast<byte*> (args[index]);
                 count = kUnitSize;
 ReadBlock:
@@ -758,7 +726,7 @@ ReadBlock:
                         ++ui1_ptr;
                     }
                     break;
-                    UnsupportedType:
+UnsupportedType:
                     {
 #if DEBUG
                         std::cout << "\n!!!Read invalid type %u\n" << type;
@@ -767,6 +735,39 @@ ReadBlock:
                             start);
                     }
                 }
+            case BSC: //< _B_-_S_e_q_u_e_n_c_e__S_t_r_i_n_g_____________________
+#if USING_BSC
+            ui1_ptr = reinterpret_cast<byte*> (args[index]);
+            if (ui1_ptr == nullptr)
+                return BinResult (bin, Bin::RoomError, params, index, start);
+            ui1 = *start;
+#endif 
+            case DIC: //< _R_e_a_d__D_i_c_t_i_o_n_a_r_y_________________________
+            case MAP: //< _R_e_a_d__M_a_p_______________________________________
+            case LST: //< _R_e_a_d__L_i_s_t_____________________________________
+                // These Types must have the 3 MSb between 1 and 4.
+                goto UnsupportedType;
+#if USING_RS
+                if (length <= 32)
+                    return BinResult (bin, Bin::BufferUnderflowError, 
+                                      params, index, start);
+                // Load the pointer to the destination.
+                ui1_ptr = reinterpret_cast<byte*> (args[index]);
+                if (ui1_ptr == nullptr)
+                    return BinResult (bin, Bin::RoomError, params, index, start);
+                ui1 = *start;
+                if (++start >= end) start -= size;
+                hash = Hash16 (ui1, hash);
+                ui1 = *start;
+                if (++start >= end) start -= size;
+                hash = Hash16 (ui1, hash);
+                ui2 |= ((uint16_t)ui1) << 8;
+                count = (uint_t)ui2;
+                goto ReadBlock;
+                break;
+#else
+                goto UnsupportedType;
+#endif
                 default: {  //< It's an Array
 
                 }
@@ -799,6 +800,6 @@ ReadBlock:
     bin->start = Diff (begin, start);
 
     return 0;
-}
+}*/
 
 }       //< namespace _

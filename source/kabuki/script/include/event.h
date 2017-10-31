@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_EVENT_H
-#define KABUKI_SCRIPT_EVENT_H
+#ifndef SCRIPT_EVENT_H
+#define SCRIPT_EVENT_H
 
 #include "module_config.h"
 
@@ -43,4 +43,4 @@ struct KABUKI Event {
 };
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_EVENT_H
+#endif  //< SCRIPT_EVENT_H

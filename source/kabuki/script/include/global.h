@@ -20,8 +20,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_GLOBAL_H
-#define KABUKI_SCRIPT_GLOBAL_H
+#ifndef SCRIPT_GLOBAL_H
+#define SCRIPT_GLOBAL_H
 
 #include "module_config.h"
 
@@ -48,4 +48,4 @@ KABUKI void SetStackheight (uint_t newHeight)
 
 }       //< namespace _
 
-#endif  //< KABUKI_SCRIPT_GLOBAL_H
+#endif  //< SCRIPT_GLOBAL_H

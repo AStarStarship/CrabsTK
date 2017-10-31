@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_A_H
-#define KABUKI_SCRIPT_A_H
+#ifndef SCRIPT_A_H
+#define SCRIPT_A_H
 
 #include "room.h"
 
@@ -31,11 +31,11 @@ struct A: public Room {
     public:
 
     A ():
-        A (1024)
+        Room (1024)
     {
 
     }
 };
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_A_H
+#endif  //< SCRIPT_A_H

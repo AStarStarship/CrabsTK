@@ -17,10 +17,10 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_ROOM_H
-#define KABUKI_SCRIPT_ROOM_H
+#ifndef SCRIPT_ROOM_H
+#define SCRIPT_ROOM_H
 
-#include "door.h"
+#include "wall.h"
 #include "interrupts.h"
 
 namespace _ {
@@ -156,18 +156,18 @@ class Room: public Operand {
     virtual const Operation* Star (char_t index, Expression* expr);
 
     protected:
-                            //! vtable pointer here in memory!
-    uint      address_;     //< The least significant bytes of the address.
-    uint_t    address_msb_, //< The most significant bytes of the address.
-              size_;        //< The size of the Room with device stack.
-    byte      height_,      //< The number of devices on the device stack.
-              stack_size_;  //< The max size of the device stack.
-                            //< Star Control 1: this.
-    Door    * door_;        //< Star Control 2: The Door to this room.
-    Operand* xoff_,         //< Star Control 3: XOFF - XOFF handling device.
-            * device_,      //< Star Control 4: the current device control.
-            * devices_;     //< Pointer to the current device control.
+                           //! vtable pointer here in memory!
+    uint     address_;     //< The least significant bytes of the address.
+    uint_t   address_msb_, //< The most significant bytes of the address.
+             size_;        //< The size of the Room with device stack.
+    byte     height_,      //< The number of devices on the device stack.
+             stack_size_;  //< The max size of the device stack.
+                           //< Star Control 1: this.
+    Door   * door_;        //< Star Control 2: The Door to this room.
+    Operand* xoff_,        //< Star Control 3: XOFF - XOFF handling device.
+           * device_,      //< Star Control 4: the current device control.
+           * devices_;     //< Pointer to the current device control.
 };
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_ROOM_H
+#endif  //< SCRIPT_ROOM_H

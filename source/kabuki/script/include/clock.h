@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_CLOCK_H
-#define KABUKI_SCRIPT_CLOCK_H
+#ifndef SCRIPT_CLOCK_H
+#define SCRIPT_CLOCK_H
 
 #include "utils.h"
 
@@ -37,6 +37,9 @@ inline std::tm* ClockLocaltime (std::tm* std_tm, std::time_t const & time) {
 #endif
     return std_tm;
 }
+
+/** Gets the current microsecond timestamp. */
+KABUKI timestamp_t ClockTimestampNow ();
 
 /** Generates a timestamp from a Unix timestamp and 32-bit microsecond timestamp.
 */
@@ -148,4 +151,4 @@ KABUKI char* ClockParseUnixTime (char* input, time_t& result);
 KABUKI void ClockZeroTime (tm* std_tm);
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_CLOCK_H
+#endif  //< SCRIPT_CLOCK_H

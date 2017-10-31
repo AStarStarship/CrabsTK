@@ -1,6 +1,6 @@
 /** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/script/include/map.h
+    @file    ~/source/kabuki/script/include/set.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,27 +17,20 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_MAP_H
-#define KABUKI_SCRIPT_MAP_H
+#ifndef SCRIPT_SET_H
+#define SCRIPT_SET_H
 
 #include "utils.h"
 #include "types.h"
 
 namespace _ {
 
-/** A one-to-one map of unsigned integers to unsigned integers.
-
-    Maps share the same data structure as Books, Dictionary(s) and Lists. Maps
-    like all Script Objects are required to are required to have a stack_height, size_bytes, and header_size that is a multiple of 8 as well as 
-    being .
-
-    It is easiest to explain this data structure in terms of the Socket. Sockets
-    use a Map to map a Slot number to a slot.
-
-    # Map Data Structure
+/** A one-to-one map of Key-{Type-Value} tuples.
+    A Dict is a hash-table that uses contiguous memory. The memory layout is
+    the same for all of the Dict types as depicted below:
 
     @code
-    _____________________________________________________ 
+    _____________________________________________________
     |                                                   |
     |                 Data Buffer Space                 |
     |___________________________________________________|
@@ -46,22 +39,38 @@ namespace _ {
     |_______ ^ ...                       Data Table     | 
     |_______ | Data 0                                   | 
     |___________________________________________________|
+    |_______ | Key 1                                    |
+    |_______ | ...                         Keys         | 
+    |_______ v Key N                                    |
+    |___________________________________________________|
     |                                                   |
     |               Header Buffer Space                 |
     |___________________________________________________|
+    |_______                                            | 
+    |_______   Collision List N         Hash Table      | 
+    |_______ ^ ...                       Collision      | 
+    |_______ | Collision List 0             List        | 
+    |___________________________________________________|
     |_______                                            |
     |_______   Buffer Indexes                           |
-    |_______                           Corresponding    |
-    |_______ ^ Collision Table N         Indexes        |
-    |_______ | ...                                      |
-    |        | Collision Table 0                        |
+    |_______                            Hash Table      |
+    |_______ ^ Collision Index N         Collision      |
+    |_______ | ...                        Indexes       |
+    |        | Collision Index 0                        |
+    |___________________________________________________|
+    |_______                                            |
+    |_______   Buffer Indexes                           |
+    |_______                            Hash Table      |
+    |_______ ^ Collision Table N       Corresponding    |
+    |_______ | ...                         Hash         |
+    |        | Collision Table 0          Indexes       |
     |___________________________________________________|
     |_______                                            |
     |_______   Buffer Indexes                           |
     |_______                                            |
-    |_______ ^ Sorted Id N                  Ids         |
+    |_______ ^ Sorted Hash N               Hashes       |
     |_______ | ...                                      |
-    |        | Sorted Id 1                              |
+    |        | Sorted Hash 1                            |
     |___________________________________________________|
     |_______                                            |
     |_______   Buffer Indexes                           |
@@ -72,21 +81,28 @@ namespace _ {
     |___________________________________________________|
     |_______                                            |
     |_______   Buffer Indexes                           |
-    |_______                               Type         |
-    |_______ ^ Type byte N                 Bytes        |
+    |_______                                Key         |
+    |_______ ^ Key Offset N               Offsets       |
     |_______ | ...                                      |
-    |        | Type byte 1                              |
+    |        | Key Offset 1                             |
+    |___________________________________________________|
+    |_______                                            |
+    |_______   Buffer Indexes                           |
+    |_______                               State        |
+    |_______ ^ State byte N                Byte         |
+    |_______ | ...                                      |
+    |        | State byte 1                             |
     |___________________________________________________|
     |                                                   |  ^
     |                    Header                         |  |
     |___________________________________________________| 0x0
     @endcode
 
-    | Map | Max Values | % Collisions (p) |           Overhead             |
+    | Dict | Max Values | % Collisions (p) |           Overhead             |
     |:----:|:----------:|:----------------:|:------------------------------:|
-    |  2  |     255    |    0.0001        | Ceiling (0.02*p*2^8)  = 2      |
-    |  4  |     2^13   |      0.1         | Ceiling (0.04*p*2^13) = 327.68 |
-    |  8  |     2^29   |    10^-16        | Ceiling (0.04*p*2^29) = 327.68 |
+    |  2   |     255    |    0.0001        | Ceiling (0.02*p*2^8)  = 2      |
+    |  4   |     2^13   |      0.1         | Ceiling (0.04*p*2^13) = 327.68 |
+    |  8   |     2^29   |    10^-16        | Ceiling (0.04*p*2^29) = 327.68 |
 
     Memory Schema:
     The memory schema is optimized for fast search and push back. When searching
@@ -110,7 +126,7 @@ namespace _ {
     pass it over to the program. The DLL manages the memory for the collection. This
     collection might contain several million entries, and more than 4GB of data.
 
-    ### Why So Many Map Types?
+    ### Why So Many Dict Types?
     We are running in RAM, and a collection could contain millions of key-value pairs.
     Adding extra bytes would added megabytes of data we don't need. Also, on
     microcontrollers, especially 16-bit ones, will have very little RAM, so we
@@ -133,63 +149,57 @@ namespace _ {
     @endcode
 */
 template<typename TIndex, typename TKey, typename TSize>
-struct KABUKI Map {
-    TSize  size_bytes;   //< Total size of the set.
-    TKey   table_size,   //< Size of the (optional) key strings in bytes.
-           pile_size;    //< Size of the (optional) collisions pile in bytes.
-    TIndex stack_height, //< Max number of items that can fit in the header.
-           num_items;    //< Number of items.
-           
+struct KABUKI Dict {
+    TSize  size;        //< Total size of the set.
+    TKey   table_size,  //< Size of the (optional) key strings in bytes.
+           pile_size;   //< Size of the (optional) collisions pile in bytes.
+    TIndex num_items,   //< Number of items.
+           stack_height;   //< Max number of items that can fit in the header.
 };
 
-using Map2   = Map<byte, uint16_t, uint16_t>;
-//< Records use the least RAM & run faster than Groups & Files on all systems.
-using Map4    = Map<uint16_t, uint16_t, uint32_t>;
-//< Groups more than enough memory for mosts tasks and run faster than files.
-using Map8     = Map<uint32_t, uint32_t, uint64_t>;
-//< Files are easily mapped to virtual memory, RAM, drives, and networks.
-using Superset = Map<index_t, header_t, data_t>;
-//< Superset is the largest set that can fit in this Chinese Room's RAM.
-
+using Dict2    = Dict<byte    , uint16_t, uint16_t>;
+using Dict4    = Dict<uint16_t, uint16_t, uint32_t>;
+using Dict8    = Dict<uint32_t, uint32_t, uint64_t>;
+using Superset = Dict<index_t , header_t, data_t  >;
 
 template<typename TIndex, typename TKey, typename TSize>
-constexpr uint_t MapOverheadPerIndex () {
+constexpr uint_t DictOverheadPerIndex () {
         return sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TSize) + 3);
 };
 
 template<typename TIndex, typename TKey, typename TSize>
-constexpr TSize MinSizeMap (TIndex num_items) {
+constexpr TSize MinSizeDict (TIndex num_items) {
     return num_items * sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TSize) + 3);
 };
 
 enum {
-    kMaxNumPagesMap2 = 255,                //< The number of pages in a Map2.
-    kMaxNumPagesMap4 = 8 * 1024,           //< The number of pages in a Map4.
-    kMaxNumPagesMap8 = 256 * 1024 * 1024,  //< The number of pages in a Map8.
-    kOverheadPerMap2Index = MapOverheadPerIndex<byte, uint16_t, uint16_t> (),
-    kOverheadPerMap4Index = MapOverheadPerIndex<byte, uint16_t, uint16_t> (),
-    kOverheadPerMap8Index = MapOverheadPerIndex<byte, uint16_t, uint16_t> (),
+    kMaxNumMappingsDict2   = 255,                //< The number of pages in a Dict2.
+    kMaxNumMappingsDict4   = 8 * 1024,           //< The number of pages in a Dict4.
+    kMaxNumMappingsDict8   = 256 * 1024 * 1024,  //< The number of pages in a Dict8.
+    kOverheadPerDict2Index = DictOverheadPerIndex<byte, uint16_t, uint16_t> (),
+    kOverheadPerDict4Index = DictOverheadPerIndex<uint16_t, uint16_t, uint32_t> (),
+    kOverheadPerDict8Index = DictOverheadPerIndex<uint32_t, uint32_t, uint64_t> (),
 };
     
-/** Initializes a Map.
+/** Initializes a Dict.
     @post    Users might want to call the IsValid () function after construction
              to verify the integrity of the object.
     @warning The reservedNumOperands must be aligned to a 32-bit value, and it
              will get rounded up to the next higher multiple of 4.
-static Map* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t size)
+static Dict* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t size)
 {
     if (buffer == nullptr)
         return nullptr;
     if (table_size >= size)
         return nullptr;
-    if (table_size < sizeof (Map) + max_size *
-        (MapOverheadPerIndex<byte, uint16_t, uint16_t, hash16_t> () + 2))
+    if (table_size < sizeof (Dict) + max_size *
+        (DictOverheadPerIndex<byte, uint16_t, uint16_t, hash16_t> () + 2))
         return nullptr;
 
-    Map2* collection = reinterpret_cast<Map*> (buffer);
+    Dict2* collection = reinterpret_cast<Dict*> (buffer);
     collection->size = table_size;
     collection->table_size = table_size;
-    collection->; = 0;
+    collection->num_items = 0;
     collection->stack_height = max_size;
     collection->pile_size = 1;
     return collection;
@@ -199,14 +209,14 @@ static Map* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t si
 /** Insets the given key-value pair.
 */
 template<typename TIndex, typename TKey, typename TSize>
-TIndex MapInsert (Map<TIndex, TKey, TSize>* collection, byte type, 
+TIndex DictInsert (Dict<TIndex, TKey, TSize>* collection, byte type, 
                const byte* key, void* data, TIndex index) {
     if (collection == nullptr) return 0;
     return ~0;
 }
 
 template<typename TIndex>
-TIndex MaxMapIndexes () {
+TIndex MaxDictIndexes () {
     enum {
         kMaxIndexes = sizeof (TIndex) == 1 ? 255 : sizeof (TIndex) == 2 ? 
                        8 * 1024 : sizeof (TIndex) == 4 ? 512 * 1024 * 1024 : 0
@@ -216,39 +226,41 @@ TIndex MaxMapIndexes () {
 
 /** Adds a key-value pair to the end of the collection. */
 template<typename TIndex, typename TKey, typename TSize>
-TIndex MapAdd (Map<TIndex, TKey, TSize>* collection, const char* key, 
+TIndex DictAdd (Dict<TIndex, TKey, TSize>* collection, const char* key, 
                 TType type, void* data) {
     if (collection == nullptr) return 0;
     if (key == nullptr) return 0;
 
     PrintStringLine (key);
 
-    TIndex ; = collection->;,
+    TIndex num_items = collection->num_items,
         stack_height = collection->stack_height,
         temp;
 
     TKey table_size = collection->table_size;
 
-    if (; >= stack_height) return ~0;
+    if (num_items >= stack_height) return ~0;
     //< We're out of buffered indexes.
 
     byte* states = reinterpret_cast<byte*> (collection) + 
-                   sizeof (Map <TIndex, TKey, TSize>);
+                   sizeof (Dict <TIndex, TKey, TSize>);
     TKey* key_offsets = reinterpret_cast<TKey*> (states + stack_height);
     TSize* data_offsets = reinterpret_cast<TSize*> (states + stack_height *
                                                     (sizeof (TKey)));
     TSize* hashes = reinterpret_cast<TSize*> (states + stack_height *
                                               (sizeof (TKey) + sizeof (TSize))),
-        * hash_ptr;
+         * hash_ptr;
     TIndex* indexes = reinterpret_cast<TIndex*> (states + stack_height *
-                                                 (sizeof (TKey) + sizeof (TSize) + sizeof (TIndex))),
+                                                 (sizeof (TKey) + 
+                                                  sizeof (TSize) +
+                                                  sizeof (TIndex))),
         *unsorted_indexes = indexes + stack_height,
         *collission_list = unsorted_indexes + stack_height;
     char* keys = reinterpret_cast<char*> (collection) + table_size - 1,
         *destination;
 
     // Calculate space left.
-    TKey value = table_size - stack_height * MapOverheadPerIndex<TIndex, TKey, TSize> (),
+    TKey value = table_size - stack_height * DictOverheadPerIndex<TIndex, TKey, TSize> (),
         key_length = static_cast<uint16_t> (strlen (key)),
         pile_size;
 
@@ -267,8 +279,8 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* collection, const char* key,
 
     //print ();
 
-    if (; == 0) {
-        collection->; = 1;
+    if (num_items == 0) {
+        collection->num_items = 1;
         *hashes = hash;
         *key_offsets = static_cast<uint16_t> (key_length);
         *indexes = ~0;
@@ -277,7 +289,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* collection, const char* key,
 
         StringCopy (destination, key);
         printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
-        MapPrint (collection);
+        DictPrint (collection);
         return 0;
     }
 
@@ -292,7 +304,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* collection, const char* key,
 
     int low = 0,
         mid,
-        high = ;,
+        high = num_items,
         index;
 
     TIndex* temp_ptr;
@@ -330,7 +342,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* collection, const char* key,
                 temp = indexes[mid];
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;  //< Load the index in the collision table.
-                while (index < MaxMapIndexes<TIndex> ()) {
+                while (index < MaxDictIndexes<TIndex> ()) {
                     printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
                         printf ("but table already contains key at "
@@ -345,9 +357,9 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* collection, const char* key,
                 std::cout << "and new collision detected.\n";
 
                 // Copy the key
-                value = key_offsets[; - 1] + key_length + 1;
+                value = key_offsets[num_items - 1] + key_length + 1;
                 StringCopy (keys - value, key);
-                key_offsets[;] = value;
+                key_offsets[num_items] = value;
 
                 // Update the collision table.
                 pile_size = collection->pile_size;
@@ -360,24 +372,24 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* collection, const char* key,
                     *collission_list = *(collission_list - 1);
                     --collission_list;
                 }
-                *temp_ptr = ;;
+                *temp_ptr = num_items;
 
                 collection->pile_size = pile_size + 1;
                 printf ("\n\ncollision index: %u\n", temp);
                 // Store the collision index.
-                indexes[;] = temp;   //< Store the collision index
-                collection->; = ; + 1;
-                hashes[;] = ~0;      //< Map the last hash to 0xFFFF
+                indexes[num_items] = temp;   //< Store the collision index
+                collection->num_items = ; + 1;
+                hashes[num_items] = ~0;      //< Dict the last hash to 0xFFFF
 
                                             // Move collisions pointer to the unsorted_indexes.
                 indexes += stack_height;
 
                 //< Add the newest char to the end.
-                indexes[;] = ;;
+                indexes[num_items] = num_items;
 
-                MapPrint (collection);
+                DictPrint (collection);
                 printf ("Done inserting.\n");
-                return ;;
+                return num_items;
             }
 
             // But we still don't know if the char is a new collision.
@@ -394,20 +406,20 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* collection, const char* key,
                 }
 
                 // Get offset to write the key too.
-                value = key_offsets[; - 1] + key_length + 1;
+                value = key_offsets[num_items - 1] + key_length + 1;
 
                 byte collision_index = unsorted_indexes[mid];
                 printf ("\n\ncollision_index: %u", collision_index);
 
                 StringCopy (keys - value, key);
                 printf ("Inserting value: %u into index:%u "
-                        ";:%u with other collision_index: %u\n", value,
-                        index, ;, collision_index);
-                key_offsets[;] = value;
+                        "num_items:%u with other collision_index: %u\n", value,
+                        index, num_items, collision_index);
+                key_offsets[num_items] = value;
 
                 pile_size = collection->pile_size;
                 indexes[mid] = static_cast<byte> (pile_size);
-                indexes[;] = static_cast<byte> (pile_size);
+                indexes[num_items] = static_cast<byte> (pile_size);
 
                 // Insert the collision into the collision table.
                 temp_ptr = &collission_list[pile_size];
@@ -415,26 +427,26 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* collection, const char* key,
                 indexes += stack_height;
                 *temp_ptr = collision_index;
                 ++temp_ptr;
-                *temp_ptr = ;;
+                *temp_ptr = num_items;
                 ++temp_ptr;
                 *temp_ptr = ~0;
                 collection->pile_size = pile_size + 3;
                 //< Added one term-byte and two indexes.
 
                 // Add the newest key at the end.
-                indexes[;] = ;;
+                indexes[num_items] = num_items;
 
-                // Map the last hash to 0xFFFF
-                hashes[;] = ~0;
+                // Dict the last hash to 0xFFFF
+                hashes[num_items] = ~0;
 
-                collection->; = ; + 1;
+                collection->num_items = num_items + 1;
 
-                MapPrint (collection);
+                DictPrint (collection);
 
-                MapPrint (collection);
+                DictPrint (collection);
                 std::cout << "Done inserting.\n";
                 // Then it was a collision so the table doesn't contain string.
-                return ;;
+                return num_items;
             }
             std::cout << "table already contains the key\n";
             return index;
@@ -452,17 +464,17 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* collection, const char* key,
 
     // First copy the char and set the key offset.
     StringCopy (destination, key);
-    key_offsets[;] = value;
+    key_offsets[num_items] = value;
 
     // Second move up the hashes and insert at the insertion point.
     hash_ptr = hashes;
-    hash_ptr += ;;
+    hash_ptr += num_items;
     //*test = hashes;
     printf ("l_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u\n",
-            ;, Diff (collection, hashes),
+            num_items, Diff (collection, hashes),
             Diff (collection, hash_ptr), Diff (collection, hashes + mid));
     hashes += mid;
-    MapPrint (collection);
+    DictPrint (collection);
     while (hash_ptr > hashes) {
         *hash_ptr = *(hash_ptr - 1);
         --hash_ptr;
@@ -470,41 +482,41 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* collection, const char* key,
     *hashes = hash;
     
     // Mark as not having any collisions.
-    indexes[;] = ~0;
+    indexes[num_items] = ~0;
     
     // Move up the sorted indexes and insert the unsorted index (which is 
     // the current ;).
     indexes += stack_height + mid;
-    temp_ptr = indexes + ;;
+    temp_ptr = indexes + num_items;
 
     while (temp_ptr > indexes) {
         *temp_ptr = *(temp_ptr - 1);
         --temp_ptr;
     }
-    *temp_ptr = ;;
+    *temp_ptr = num_items;
 
-    collection->; = ; + 1;
+    collection->num_items = ; + 1;
 
-    MapPrint (collection);
+    DictPrint (collection);
     std::cout << "Done inserting.\n";
     PrintLine ();
 
-    return ;;
+    return num_items;
 }
 
 /** Adds a key-value pair to the end of the collection. */
-//inline byte Add2 (Map2* collection, const char* key, byte data) {
-//    return MapAdd<byte, uint16_t, uint16_t, hash16_t> (collection, key, UI1, &data);
+//inline byte Add2 (Dict2* collection, const char* key, byte data) {
+//    return DictAdd<byte, uint16_t, uint16_t, hash16_t> (collection, key, UI1, &data);
 //}
 
 /** Returns  the given query char in the hash table. */
 template<typename TIndex, typename TKey, typename TSize>
-TIndex MapFind (Map<TIndex, TKey, TSize>* collection, const char* key) {
+TIndex DictFind (Dict<TIndex, TKey, TSize>* collection, const char* key) {
     if (collection == nullptr)
         return 0;
     PrintLineBreak ("Finding record...", 5);
     TIndex index,
-        ; = collection->;,
+        ; = collection->num_items,
         stack_height = collection->stack_height,
         temp;
 
@@ -515,7 +527,7 @@ TIndex MapFind (Map<TIndex, TKey, TSize>* collection, const char* key) {
 
     const TSize* hashes = reinterpret_cast<const TSize*>
         (reinterpret_cast<const byte*> (collection) +
-         sizeof (Map<TIndex, TKey, TSize>));
+         sizeof (Dict<TIndex, TKey, TSize>));
     const TKey* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
                                                                 stack_height);
     const byte* indexes = reinterpret_cast<const byte*>(key_offsets +
@@ -582,7 +594,7 @@ TIndex MapFind (Map<TIndex, TKey, TSize>* collection, const char* key) {
 
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;
-                while (index < MaxMapIndexes<TIndex> ()) {
+                while (index < MaxDictIndexes<TIndex> ()) {
                     printf ("comparing to \"%s\"\n", keys -
                             key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
@@ -626,15 +638,15 @@ TIndex MapFind (Map<TIndex, TKey, TSize>* collection, const char* key) {
     return ~((TIndex)0);
 }
 
-//static byte Find2 (Map2* collection, const char* key) {
-//    return MapFind<byte, uint16_t, uint16_t, hash16_t> (collection, key);
+//static byte Find2 (Dict2* collection, const char* key) {
+//    return DictFind<byte, uint16_t, uint16_t, hash16_t> (collection, key);
 //}
 
 /** Prints this object out to the console. */
 template<typename TIndex, typename TKey, typename TSize>
-void MapPrint (const Map<TIndex, TKey, TSize>* collection) {
+void DictPrint (const Dict<TIndex, TKey, TSize>* collection) {
     if (collection == nullptr) return;
-    TIndex ; = collection->;,
+    TIndex ; = collection->num_items,
            stack_height = collection->stack_height,
            collision_index,
            temp;
@@ -643,15 +655,15 @@ void MapPrint (const Map<TIndex, TKey, TSize>* collection) {
     PrintLine ('_');
     
     if (sizeof (TSize) == 2)
-        printf ("| Map2: %p\n", collection);
+        printf ("| Dict2: %p\n", collection);
     else if (sizeof (TSize) == 4)
-        printf ("| Map4: %p\n", collection);
+        printf ("| Dict4: %p\n", collection);
     else if (sizeof (TSize) == 8)
-        printf ("| Map8: %p\n", collection);
+        printf ("| Dict8: %p\n", collection);
     else
-        printf ("| Invalid Map type: %p\n", collection);
+        printf ("| Invalid Dict type: %p\n", collection);
     printf ("| ;: %u stack_height: %u  "
-            "pile_size: %u  size: %u", ;,
+            "pile_size: %u  size: %u", num_items,
             stack_height, pile_size, table_size);
     std::cout << '\n';
    std::cout << '|';
@@ -659,7 +671,7 @@ void MapPrint (const Map<TIndex, TKey, TSize>* collection) {
     std::cout << '\n';
 
     const byte* states = reinterpret_cast<const byte*> (collection) +
-                         sizeof (Map <TIndex, TKey, TSize>);
+                         sizeof (Dict <TIndex, TKey, TSize>);
     const TKey* key_offsets = reinterpret_cast<const TKey*> 
                               (states + stack_height);
     const TSize* data_offsets = reinterpret_cast<const TSize*> 
@@ -711,29 +723,29 @@ void MapPrint (const Map<TIndex, TKey, TSize>* collection) {
     PrintLine ("|", '_');
 
     PrintMemory (reinterpret_cast<const byte*> (collection) + 
-                 sizeof (Map<TIndex, TKey, TSize>), collection->size_bytes);
+                 sizeof (Dict<TIndex, TKey, TSize>), collection->size);
     std::cout << '\n';
 }
 
 /** Deletes the collection contents without wiping the contents. */
 template<typename TIndex, typename TKey, typename TSize>
-void Clear (Map<TIndex, TKey, TSize>* collection) {
+void Clear (Dict<TIndex, TKey, TSize>* collection) {
     if (collection == nullptr) return;
-    collection->; = 0;
+    collection->num_items = 0;
     collection->pile_size = 0;
 }
 
 /** Deletes the collection contents by overwriting it with zeros. */
 template<typename TIndex, typename TKey, typename TSize>
-void Wipe (Map<TIndex, TKey, TSize>* collection) {
+void Wipe (Dict<TIndex, TKey, TSize>* collection) {
     if (collection == nullptr) return;
-    TSize size = collection->size_bytes;
+    TSize size = collection->size;
     memset (collection, 0, size);
 }
 
 /** Returns true if this expr contains only the given address. */
 template<typename TIndex, typename TKey, typename TSize>
-bool Contains (Map<TIndex, TKey, TSize>* collection, void* data) {
+bool Contains (Dict<TIndex, TKey, TSize>* collection, void* data) {
     if (collection == nullptr) return false;
     if (data < collection) return false;
     if (data > GetEndAddress()) return false;
@@ -742,7 +754,7 @@ bool Contains (Map<TIndex, TKey, TSize>* collection, void* data) {
 
 /** Removes that object from the collection and copies it to the destination. */
 template<typename TIndex, typename TKey, typename TSize>
-bool RemoveCopy (Map<TIndex, TKey, TSize>* collection, void* destination, 
+bool RemoveCopy (Dict<TIndex, TKey, TSize>* collection, void* destination, 
                  size_t buffer_size, void* data)
 {
     if (collection == nullptr) return false;
@@ -752,7 +764,7 @@ bool RemoveCopy (Map<TIndex, TKey, TSize>* collection, void* destination,
 
 /** Removes the item at the given address from the collection. */
 template<typename TIndex, typename TKey, typename TSize>
-bool Remove (Map<TIndex, TKey, TSize>* collection, void* adress) {
+bool Remove (Dict<TIndex, TKey, TSize>* collection, void* adress) {
     if (collection == nullptr) return false;
 
     return false;
@@ -760,7 +772,7 @@ bool Remove (Map<TIndex, TKey, TSize>* collection, void* adress) {
 
 /** Removes all but the given collection from the collection. */
 template<typename TIndex, typename TKey, typename TSize>
-bool Retain (Map<TIndex, TKey, TSize>* collection) {
+bool Retain (Dict<TIndex, TKey, TSize>* collection) {
     if (collection == nullptr) return false;
 
     return false;
@@ -768,22 +780,22 @@ bool Retain (Map<TIndex, TKey, TSize>* collection) {
 
 /** Creates a collection from dynamic memory. */
 template<typename TIndex, typename TOffset, typename TSize, typename TSize>
-inline Map<TIndex, TOffset, TSize, TSize>* MapCreate (TIndex buffered_indexes,
+inline Dict<TIndex, TOffset, TSize>* DictCreate (TIndex buffered_indexes,
                                                         TSize table_size,
                                                         TSize size) {
-    Map<TIndex, TOffset, TSize, TSize>* collection = New<Map, uint_t> ();
+    Dict<TIndex, TOffset, TSize>* collection = New<Dict, uint_t> ();
     return collection;
 }
 
-/** Prints the given Map to the console. */
+/** Prints the given Dict to the console. */
 template<typename TIndex, typename TKey, typename TSize>
-inline void MapPrint (Map<TIndex, TKey, TSize>* collection) {
+inline void DictPrint (Dict<TIndex, TKey, TSize>* collection) {
 
 }
 
-//inline void MapPrint (Map2* collection) {
-//    return MapPrint<byte, uint16_t, uint16_t, hash16_t> (collection);
+//inline void DictPrint (Dict2* collection) {
+//    return DictPrint<byte, uint16_t, uint16_t, hash16_t> (collection);
 //}
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_MAP_H
+#endif  //< SCRIPT_SET_H

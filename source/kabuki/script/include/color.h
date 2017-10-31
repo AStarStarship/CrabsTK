@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_COLOR_H
-#define KABUKI_SCRIPT_COLOR_H
+#ifndef SCRIPT_COLOR_H
+#define SCRIPT_COLOR_H
 
 #include "module_config.h"
 
@@ -129,4 +129,4 @@ void ColorSetHSV (color_t color, float& fR, float& fG, float& fB, float& fH, flo
 inline void ColorPrint (color_t color);
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_COLOR_H
+#endif  //< SCRIPT_COLOR_H

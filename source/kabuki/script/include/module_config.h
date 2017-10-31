@@ -20,8 +20,8 @@
 #ifndef SCRIPT_CONFIG_H
 #define SCRIPT_CONFIG_H
 
-#define KABUKI_SCRIPT_MAJOR_VERSION 0
-#define KABUKI_SCRIPT_MINOR_VERSION 9
+#define SCRIPT_MAJOR_VERSION 0
+#define SCRIPT_MINOR_VERSION 9
 
 // @todo Check all values of assembly_settings.inl, store them as an enum, 
 // then #undef them.
@@ -126,6 +126,8 @@ enum {
 #if USING_BK2 || USING_BK4 || USING_BK8
 #define USING_BOOKS                 YES
 #endif
+
+typedef long word_t;
 
 // Pre-compiled headers: comment out those you're not using.
 

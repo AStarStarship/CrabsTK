@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_ASCII_H
-#define KABUKI_SCRIPT_ASCII_H
+#ifndef SCRIPT_ASCII_H
+#define SCRIPT_ASCII_H
 
 namespace ascii {
 
@@ -58,4 +58,4 @@ typedef enum {
 } C0Code;
 
 }       //< namespace ascii
-#endif  //< KABUKI_SCRIPT_ASCII_H
+#endif  //< SCRIPT_ASCII_H

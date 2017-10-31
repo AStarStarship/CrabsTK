@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_SLOT_H
-#define KABUKI_SCRIPT_SLOT_H
+#ifndef SCRIPT_SLOT_H
+#define SCRIPT_SLOT_H
 
 #include "module_config.h"
 
@@ -78,4 +78,4 @@ enum {
 KABUKI bool SlotContains (Slot* slot, void* address);
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_SLOT_H
+#endif  //< SCRIPT_SLOT_H

@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_ARGS_H
-#define KABUKI_SCRIPT_ARGS_H
+#ifndef SCRIPT_ARGS_H
+#define SCRIPT_ARGS_H
 
 #include "types.h"
 
@@ -344,4 +344,4 @@ KABUKI void** Args (void** ptrs, const void* a, const void* b,
                     const void* r, const void* string, const void* t, const void* user, const void* v,
                     const void* w, const void* x, const void* y, const void* z);
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_ARGS_H
+#endif  //< SCRIPT_ARGS_H

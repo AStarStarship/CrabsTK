@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_TABLE_H
-#define KABUKI_SCRIPT_TABLE_H
+#ifndef SCRIPT_TABLE_H
+#define SCRIPT_TABLE_H
 
 #include "utils.h"
 
@@ -123,4 +123,4 @@ KABUKI byte Find (const Table* rt, const char* key);
 KABUKI void Print (Table* rt);
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_TABLE_H
+#endif  //< SCRIPT_TABLE_H

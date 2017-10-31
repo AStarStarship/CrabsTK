@@ -17,12 +17,20 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_DOOR_H
-#define KABUKI_SCRIPT_DOOR_H
+#ifndef SCRIPT_DOOR_H
+#define SCRIPT_DOOR_H
 
-#include "socket.h"
+#include "operation.h"
+#include "bin.h"
+#include "bout.h"
+#include "tstack.h"
 
 namespace _ {
+
+struct Slot {
+    Bin * bin;  //< The B-Input.
+    Bout* bout; //< The B-Output.
+};
 
 /** An door that connects two Chinese rooms.
     @see https://en.wikipedia.org/wiki/Chinese_room
@@ -38,6 +46,16 @@ namespace _ {
 
     Multiple doors also might share the same Portal. An example of this is a 
     connection to multiple systems over a WiFi connection.
+
+    @code
+
+    |============|
+    |    slots   |
+    |============|
+    | open_slots |
+    |============|
+
+    @endcode
 */
 class Door : public Operand {
     public:
@@ -80,16 +98,14 @@ class Door : public Operand {
     virtual const Operation* Star (char_t index, Expression* expr);
 
     private:
-
-                            //< 2-to-4-int vtable pointer here in memory!
-    uint size_;             //< Size of the entire door and all of it's slots.
-    int is_dynamic_,        //< Flag for if the door is static(0) or dynamic(1).
-        door_number_,       //< This door's number.
-        max_num_doors_,     //< The max number of doors in the system.
-        num_doors_,         //< The number of doors this door is connected too.
-        current_slot_,      //< Index of current Socket being iterated through.
-        current_door_;      //< Index of current Door being iterated through.
-    Socket* slot_;          //< The slot in the door in the Chinese Room.
+                                 //< 2-to-4-int vtable pointer here in memory!
+    bool            is_dynamic_; //< Flag for if the door is static(0) or dynamic(1).
+    uint_t          door_size,   //< The size of the door in bytes.
+                    slot_size,   //< Reserved for 64-bit memory alignment.
+                    reserved2,   //< Reserved for 64-bit memory alignment.
+                    reserved3;   //< Reserved for 64-bit memory alignment.
+    TStack<uint_t>* slots,       //< The slots in the door.
+                  * open_slots;  //< List of the open slots.
 };
 
 /** Returns a Static Error Operation. */
@@ -112,4 +128,4 @@ static Door* DoorInit (int* buffer, uint_t slot_size) {
 }*/
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_DOOR_H
+#endif  //< SCRIPT_DOOR_H

@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_WALL_H
-#define KABUKI_SCRIPT_WALL_H
+#ifndef SCRIPT_WALL_H
+#define SCRIPT_WALL_H
 
 #include "door.h"
 
@@ -58,4 +58,4 @@ KABUKI void WallDelete (Wall* wall, int index);
 KABUKI void WallPrint (Wall* wall);
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_WALL_H
+#endif  //< SCRIPT_WALL_H

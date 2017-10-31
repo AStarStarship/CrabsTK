@@ -224,30 +224,38 @@ byte ReadType (const char* string) {
     if (!isspace (d) && (d != 0))
         return 0xff;
     char a = *string,
-         b = *(string + 1),
-         c = *(string + 2);
+        b = *(string + 1),
+        c = *(string + 2);
     switch (a) {
-        case 'A': return CharCompare<'D', 'R'> (b, c)   ? 0xff : ADR;
+        case 'A': return CharCompare<'D', 'R'> (b, c)?0xff:ADR;
         case 'B': switch (b) {
-            case 'A': return (c != 'g')                 ? 0xff : BAG;
-            case 'O': return (c != 'L')                 ? 0xff : BOL;
-            case 'S': return (c != 'C')                 ? 0xff : BSC;
+            case 'O': switch (c) {
+                case 'K': return BOK;
+                case 'L': return BOL;
+                default: return 0xff;
+            }
+            case 'S': return (c != 'C')?0xff:BSC;
             default: return 0xff;
         }
         case 'C': return 0xff;
-        case 'D': return CharCompare<'B', 'L'> (b, c)   ? 0xff : DBL;
+        case 'D': return CharCompare<'B', 'L'> (b, c)?0xff:DBL;
         case 'E': return 0xff;
-        case 'F': return CharCompare<'L', 'T'> (b, c) ? 0xff : FLT; 
+        case 'F': return CharCompare<'L', 'T'> (b, c)?0xff:FLT;
         case 'G': return 0xff;
-        case 'H': return CharCompare<'L', 'F'> (b, c) ? 0xff : HLF;
+        case 'H': return CharCompare<'L', 'F'> (b, c)?0xff:HLF;
         case 'I':
         case 'J':
         case 'K': return 0xff;
-        case 'L': return CharCompare<'S', 'T'> (b, c)   ? 0xff : LST;
-        case 'M': return CharCompare<'A', 'P'> (b, c)   ? 0xff : MAP;
-        case 'N': return CharCompare<'I', 'L'> (b, c)   ? 0xff : NIL;
-        case 'O': return CharCompare<'B', 'J'> (b, c)   ? 0xff : OBJ;
-        case 'P': return CharCompare<'A', 'K'> (b, c)   ? 0xff : PAK;
+        case 'L': return CharCompare<'S', 'T'> (b, c)?0xff:LST;
+        case 'M': return CharCompare<'A', 'P'> (b, c)?0xff:MAP;
+        case 'N': return CharCompare<'I', 'L'> (b, c)?0xff:NIL;
+        case 'O': switch (b) {
+            case 'B': switch (c) {
+                case 'J': return OBJ;
+                case 'V': return OBV;
+                default: return 0xff;
+            }
+        }
         case 'Q':
         case 'R': return 0xff;
         case 'S': switch (b) {
@@ -262,23 +270,23 @@ byte ReadType (const char* string) {
                 case '2': return ST2;
                 case '4': return ST4;
                 case 'R': return STR;
-                case 'V': return STV;
-                default : return 0xff;
+                default: return 0xff;
             }
             case 'V': switch (c) {
                 case '2': return SV2;
                 case '4': return SV4;
                 case '8': return SV8;
-                default : return 0xff;
+                default: return 0xff;
             }
             default: break;
         }
-        case 'T': {
+        case 'T':
+        {
             if (b != 'M') return 0xff;
             switch (c) {
                 case 'S': return TMS;
                 case 'U': return TMU;
-                default : return 0xff;
+                default: return 0xff;
             }
         }
         case 'U': switch (b) {
@@ -287,18 +295,19 @@ byte ReadType (const char* string) {
                 case '2': return UI2;
                 case '4': return UI4;
                 case '8': return UI8;
-                default : return 0xff;
+                default: return 0xff;
             }
             case 'V': switch (c) {
                 case '4': return UV4;
                 case '8': return UV8;
-                default : return 0xff;
+                default: return 0xff;
             }
             default:      return 0xff;
         }
     }
     return 0xff;
 }
+
 
 byte MaskType (byte value) {
     return value & 0x1f;
@@ -309,7 +318,6 @@ bool TypeHasLength (uint_t type) {
         case STR: return true;
         case ST2: return true;
         case ST4: return true;
-        case STV: return true;
         case OBJ: return true;
     }
     return false;

@@ -17,12 +17,13 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_SOCKET_H
-#define KABUKI_SCRIPT_SOCKET_H
+#ifndef SCRIPT_SOCKET_H
+#define SCRIPT_SOCKET_H
 
 #include "slot.h"
 #include "bin.h"
 #include "bout.h"
+#include "tstack.h"
 
 namespace _ {
 
@@ -37,7 +38,7 @@ struct KABUKI Socket {
         RoomError = 0
     } Error;
 
-    Array<uint_t> offsets;  //< An Array of offsets to 
+    TStack<uint_t> offsets;  //< An Array of offsets to 
 };
 
 /** Returns a Statically Evaluated Operation Error. */
@@ -67,4 +68,4 @@ KABUKI Slot* SocketFindSlot (Socket* socket, void* address);
 KABUKI void SocketPrint (Socket* string);
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_SOCKET_H
+#endif  //< SCRIPT_SOCKET_H

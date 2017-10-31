@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_EXPRESSION_H
-#define KABUKI_SCRIPT_EXPRESSION_H
+#ifndef SCRIPT_EXPRESSION_H
+#define SCRIPT_EXPRESSION_H
 
 #include "set.h"
 #include "portal.h"
@@ -133,9 +133,9 @@ struct Expression {
     Operand     * operand,          //< Current Operand object being verified.
                 * result;           //< Pointer to the Operand object this 
                                     //< expr is operating on.
-    const char*  * return_address;   //< The return address.
-    volatile const uint_t* header;      //< Pointer to the header being verified.
-    const uint_t    * headers;          //< First header ptr in the scan array.
+    const char*  * return_address;  //< The return address.
+    volatile const uint_t* header;  //< Pointer to the header being verified.
+    const uint_t * headers;         //< First header ptr in the scan array.
 };
 
 /** Gets a a char for printing out the bin_state. */
@@ -299,4 +299,4 @@ KABUKI const Operation* Result (Expression* expr, const uint_t* params, void** a
 KABUKI void ExpressionPrint (Expression* expr);
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_EXPRESSION_H
+#endif  //< SCRIPT_EXPRESSION_H

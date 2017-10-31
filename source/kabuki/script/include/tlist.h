@@ -1,6 +1,6 @@
 /** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/script/include/text.h
+    @file    ~/source/kabuki/script/include/tlist.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,24 +17,24 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_A_H
-#define KABUKI_SCRIPT_A_H
+#ifndef SCRIPT_TLIST_H
+#define SCRIPT_TLIST_H
 
 #include "module_config.h"
 
 namespace _ {
 
-/** The A in A*B.
+/** A type-value Stack.
     
 */
 template<typename T>
-struct Text {
+struct TList {
     public:
 
-    Text () {
+    TList () {
 
     }
 };
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_A_H
+#endif  //< SCRIPT_TLIST_H

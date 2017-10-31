@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_EXCEPTIONS_H
-#define KABUKI_SCRIPT_EXCEPTIONS_H
+#ifndef SCRIPT_EXCEPTIONS_H
+#define SCRIPT_EXCEPTIONS_H
 
 #include "module_config.h"
 
@@ -29,4 +29,4 @@ struct KABUKI RoomCrashException : public std::exception {
     const char* what () const throw ();
 };
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_EXCEPTIONS_H
+#endif  //< SCRIPT_EXCEPTIONS_H

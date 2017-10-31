@@ -107,12 +107,6 @@
     <ClInclude Include="script\include\color.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\include\console.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\include\dic.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\include\door.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
@@ -164,9 +158,6 @@
     <ClInclude Include="script\include\targetver.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\include\text.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\include\types.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
@@ -185,13 +176,7 @@
     <ClInclude Include="script\include\address.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\include\all.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\include\args.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\include\array.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
     <ClInclude Include="script\include\ascii.h">
@@ -200,7 +185,25 @@
     <ClInclude Include="script\include\assembly.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\include\map.h">
+    <ClInclude Include="script\include\dict.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\module_all.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\tarray.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\tmap.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\tstack.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\tlist.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\set.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
   </ItemGroup>

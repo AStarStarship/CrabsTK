@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_LOG_H
-#define KABUKI_SCRIPT_LOG_H
+#ifndef SCRIPT_LOG_H
+#define SCRIPT_LOG_H
 
 #include "bout.h"
 #include "../include/args.h"
@@ -119,4 +119,4 @@ inline _::Log& operator<< (_::Log& log, const char* string) {
     return log;
 }
 
-#endif  //< KABUKI_SCRIPT_LOG_H
+#endif  //< SCRIPT_LOG_H

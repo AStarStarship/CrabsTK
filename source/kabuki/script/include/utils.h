@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_UTILS_H
-#define KABUKI_SCRIPT_UTILS_H
+#ifndef SCRIPT_UTILS_H
+#define SCRIPT_UTILS_H
 
 #include "module_config.h"
 
@@ -531,4 +531,4 @@ KABUKI int RoundToPowerOf2 (int value);
 
 }       //< namespace _
 
-#endif  //< KABUKI_SCRIPT_UTILS_H
+#endif  //< SCRIPT_UTILS_H

@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_AUTOMATA_H
-#define KABUKI_SCRIPT_AUTOMATA_H
+#ifndef SCRIPT_AUTOMATA_H
+#define SCRIPT_AUTOMATA_H
 
 #include "set.h"
 
@@ -212,4 +212,4 @@ KABUKI void Destruct (Library<TIndex, TKey, TSize, TSize, MaxStackSize>* r) {
 
 }       //< namespace _
 
-#endif  //< KABUKI_SCRIPT_AUTOMATA_H
+#endif  //< SCRIPT_AUTOMATA_H

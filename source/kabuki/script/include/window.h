@@ -18,18 +18,16 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_WINDOW_H
-#define KABUKI_SCRIPT_WINDOW_H
+#ifndef SCRIPT_WINDOW_H
+#define SCRIPT_WINDOW_H
 
 #include "module_config.h"
 
 namespace _ {
 
-/** A slot in Door that connects two or more Chinese Rooms.
-    Examples of common Portal are UART, Dual-UART, SPI, I2C, Quad SPI, 
-    TCP/HTTP/UDP, Bluetooth, CAN. */
+/** A interprocess IO portal or reflection. */
 struct KABUKI Window {
-    Obj<
+    uintptr_t 
 };
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_WINDOW_H
+#endif  //< SCRIPT_WINDOW_H

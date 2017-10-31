@@ -1,6 +1,6 @@
 /** kabuki::script
     @version   1.0
-    @file      ~/source/kabuki/script/include/all.h
+    @file      ~/source/kabuki/script/include/module_all.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_KABUKI_SCRIPT_H
-#define KABUKI_KABUKI_SCRIPT_H
+#ifndef KABUKI_SCRIPT_H
+#define KABUKI_SCRIPT_H
 
 #include "utils.h"
 #include "console.h"
@@ -26,4 +26,4 @@
 #include "set.h"
 #include "log.h"
 
-#endif  //< KABUKI_KABUKI_SCRIPT_H
+#endif  //< KABUKI_SCRIPT_H

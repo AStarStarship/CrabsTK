@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_BOUT_H
-#define KABUKI_SCRIPT_BOUT_H
+#ifndef SCRIPT_BOUT_H
+#define SCRIPT_BOUT_H
 
 #include "operation.h"
 
@@ -171,4 +171,4 @@ inline Bout& operator+ (Bout& bout, double value);
 inline Bout& operator+ (Bout& bout, const char* string);
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_BOUT_H
+#endif  //< SCRIPT_BOUT_H

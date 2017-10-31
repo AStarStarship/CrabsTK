@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_ADDRESS_H
-#define KABUKI_SCRIPT_ADDRESS_H
+#ifndef SCRIPT_ADDRESS_H
+#define SCRIPT_ADDRESS_H
 
 #include "module_config.h"
 
@@ -72,4 +72,4 @@ KABUKI uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
                              uint64_t e, uint64_t f, uint64_t g);
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_ADDRESS_H
+#endif  //< SCRIPT_ADDRESS_H

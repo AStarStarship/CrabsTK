@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_BIN_H
-#define KABUKI_SCRIPT_BIN_H
+#ifndef SCRIPT_BIN_H
+#define SCRIPT_BIN_H
 
 #include "operation.h"
 
@@ -143,4 +143,4 @@ KABUKI void BinPrint (Bin* bin);
 KABUKI const Operation* BinRead (Bin* bin, const uint_t* params, void** args);
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_BIN_H
+#endif  //< SCRIPT_BIN_H
