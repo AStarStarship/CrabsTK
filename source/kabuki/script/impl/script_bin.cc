@@ -168,7 +168,7 @@ void BinPrint (Bin* bin) {
         bin->start, bin->stop, bin->read);
     PrintMemory (&bin->buffer, size);
 }
-/*
+
 const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
     if (bin == nullptr)
         return BinResult (bin, Bin::RoomError);
@@ -650,91 +650,6 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #else
                 goto UnsupportedType;
 #endif
-                /*
-            case FS: //< _R_e_a_d__B_o_o_k_8_____________________________________
-#if USING_FS
-                if (length <= 128)
-                    return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
-                // Load next pointer and increment args.
-                ui8_ptr = reinterpret_cast<uint64_t*> (args[index]);
-                if (ui8_ptr == nullptr)
-                    return BinResult (bin, Bin::RoomError, params, index, start);
-
-                for (ui2 = 0; ui2 <= sizeof (uint64_t); ui2 += 8) {
-                    ui1 = *start;
-                    if (++start >= end) start -= size;
-                    hash = Hash16 (ui1, hash);
-                    ui8 |= ((uint64_t)ui1) << ui2;
-                }
-                count = (uint_t)ui8;
-                break;
-#else
-                goto UnsupportedType;
-#endif
-            case GS: //< _R_e_a_d__B_o_o_k_4_______________________________________
-#if USING_GS
-                if (length <= 64)
-                    return BinResult (bin, Bin::BufferUnderflowError, params, index, start);
-                // Load the pointer to the destination.
-                ui4_ptr = reinterpret_cast<uint32_t*> (args[index]);
-                if (ui4_ptr == nullptr)
-                    return BinResult (bin, Bin::RoomError, params, index, start);
-
-                for (ui2 = 0; ui2 <= sizeof (uint32_t); ui2 += 8) {
-                    ui1 = *start;
-                    if (++start >= end) start -= size;
-                    hash = Hash16 (ui1, hash);
-                    ui4 |= ((uint32_t)ui1) << ui2;
-                }
-                count = (uint_t)ui4;
-                break;
-#else
-                goto UnsupportedType;
-#endif
-            case OBJ: //< _R_e_a_d__O_b_j_e_c_t_________________________________
-                ui1_ptr = reinterpret_cast<byte*> (args[index]);
-                count = kUnitSize;
-ReadBlock:
-                {
-                    if (length < count)
-                        return BinResult (bin, Bin::BufferOverflowError, params, index, start);
-                    if (count == 0)
-                        break;          //< Not sure if this is an error.
-                    if (start + count >= end) {
-                        for (; size - count > 0; --count) {
-                            ui1 = *start;
-                            if (++start >= end) start -= size;
-                            hash = Hash16 (ui1, hash);
-                            *ui1_ptr = ui1;
-                            ++ui1_ptr;
-                        }
-                        stop = begin - 1;
-                        for (; count > 0; --count) {
-                            ui1 = *start;
-                            if (++start >= end) start -= size;
-                            hash = Hash16 (ui1, hash);
-                            *ui1_ptr = ui1;
-                            ++ui1_ptr;
-                        }
-                        break;
-                    }
-                    for (; count > 0; --count) {
-                        ui1 = *start;
-                        if (++start >= end) start -= size;
-                        hash = Hash16 (ui1, hash);
-                        *ui1_ptr = ui1;
-                        ++ui1_ptr;
-                    }
-                    break;
-UnsupportedType:
-                    {
-#if DEBUG
-                        std::cout << "\n!!!Read invalid type %u\n" << type;
-#endif
-                        return BinResult (bin, Bin::InvalidTypeError, params, index,
-                            start);
-                    }
-                }
             case BSC: //< _B_-_S_e_q_u_e_n_c_e__S_t_r_i_n_g_____________________
 #if USING_BSC
             ui1_ptr = reinterpret_cast<byte*> (args[index]);
@@ -745,33 +660,70 @@ UnsupportedType:
             case DIC: //< _R_e_a_d__D_i_c_t_i_o_n_a_r_y_________________________
             case MAP: //< _R_e_a_d__M_a_p_______________________________________
             case LST: //< _R_e_a_d__L_i_s_t_____________________________________
-                // These Types must have the 3 MSb between 1 and 4.
-                goto UnsupportedType;
-#if USING_RS
-                if (length <= 32)
-                    return BinResult (bin, Bin::BufferUnderflowError, 
-                                      params, index, start);
-                // Load the pointer to the destination.
-                ui1_ptr = reinterpret_cast<byte*> (args[index]);
-                if (ui1_ptr == nullptr)
-                    return BinResult (bin, Bin::RoomError, params, index, start);
-                ui1 = *start;
-                if (++start >= end) start -= size;
-                hash = Hash16 (ui1, hash);
-                ui1 = *start;
-                if (++start >= end) start -= size;
-                hash = Hash16 (ui1, hash);
-                ui2 |= ((uint16_t)ui1) << 8;
-                count = (uint_t)ui2;
-                goto ReadBlock;
-                break;
-#else
-                goto UnsupportedType;
-#endif
+   
                 default: {  //< It's an Array
+                // These Types must have the 3 MSb between 1 and 4.
+                    switch ((type >> 5) & 0x3) {
+                        case 1:
+                        {
+                            ui2_ptr = reinterpret_cast<uint16_t*> (args[index]);
+                            if (ui2_ptr == nullptr)
+                                return BinResult (bin, Bin::RoomError, params, index, start);
 
+                            for (ui2 = 0; ui2 <= sizeof (uint64_t); ui2 += 8) {
+                                ui1 = *start;
+                                if (++start >= end) start -= size;
+                                hash = Hash16 (ui1, hash);
+                                ui8 |= ((uint64_t)ui1) << ui2;
+                            }
+                            count = (uint_t)ui8;
+                            break;
+                        }
+                        default: {
+                        }
+                    }
+                    ReadBlock:
+                    {
+                        if (length < count)
+                            return BinResult (bin, Bin::BufferOverflowError, params, index, start);
+                        if (count == 0)
+                            break;          //< Not sure if this is an error.
+                        if (start + count >= end) {
+                            for (; size - count > 0; --count) {
+                                ui1 = *start;
+                                if (++start >= end) start -= size;
+                                hash = Hash16 (ui1, hash);
+                                *ui1_ptr = ui1;
+                                ++ui1_ptr;
+                            }
+                            stop = begin - 1;
+                            for (; count > 0; --count) {
+                                ui1 = *start;
+                                if (++start >= end) start -= size;
+                                hash = Hash16 (ui1, hash);
+                                *ui1_ptr = ui1;
+                                ++ui1_ptr;
+                            }
+                            break;
+                        }
+                        for (; count > 0; --count) {
+                            ui1 = *start;
+                            if (++start >= end) start -= size;
+                            hash = Hash16 (ui1, hash);
+                            *ui1_ptr = ui1;
+                            ++ui1_ptr;
+                        }
+                        break;
+                        UnsupportedType:
+                        {
+#if DEBUG
+                            std::cout << "\n!!!Read invalid type %u\n" << type;
+#endif
+                            return BinResult (bin, Bin::InvalidTypeError, params, index,
+                                              start);
+                        }
+                    }
                 }
-            }
                 
         }
         std::cout << " |";
@@ -800,6 +752,6 @@ UnsupportedType:
     bin->start = Diff (begin, start);
 
     return 0;
-}*/
+}
 
 }       //< namespace _

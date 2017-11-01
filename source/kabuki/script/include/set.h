@@ -45,6 +45,9 @@ struct Set {
     /** Adds the given object to this Set. */
     virtual bool Add (TType Type, void* data) = 0;
 
+    /** Merges the given Set into this one. */
+    virtual bool Merge (TType Type, void* data) = 0;
+
     /** Removes the given object from this collection. */
     virtual bool Remove (TType Type, void* data) = 0;
 
@@ -58,8 +61,7 @@ struct Set {
     virtual uintptr_t FindIndex (TType type, void* data) = 0;
 
     /** Searches for the data of the given type and returns a pointer to it.
-        @return Returns nullptr if the Set does not contain the given data.
-    */
+        @return Returns nullptr if the Set does not contain the given data. */
     virtual void* Find (TType type, void* data) = 0;
 
     /** Gets the size_t of the object being stored. */

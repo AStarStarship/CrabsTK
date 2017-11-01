@@ -25,7 +25,7 @@
 namespace _ {
 
 /** List of the 32 ASCII Data Types. */
-typedef enum {
+typedef enum { 
     NIL = 0,    //< 0.  NIL/null/void type.
     ADR,        //< 1.  A Stack Operation Address.
     STR,        //< 2.  A UTF-8 string.

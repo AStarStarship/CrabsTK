@@ -27,7 +27,9 @@ namespace _ {
 
 /** A interprocess IO portal or reflection. */
 struct KABUKI Window {
-    uintptr_t 
+    uintptr_t size_bytes;
+
 };
+
 }       //< namespace _
 #endif  //< SCRIPT_WINDOW_H

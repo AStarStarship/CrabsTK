@@ -48,7 +48,6 @@
     <ClInclude Include="script\include\portal.h" />
     <ClInclude Include="script\include\room.h" />
     <ClInclude Include="script\include\slot.h" />
-    <ClInclude Include="script\include\socket.h" />
     <ClInclude Include="script\include\tstack.h" />
     <ClInclude Include="script\include\string.h" />
     <ClInclude Include="script\include\table.h" />
@@ -78,7 +77,6 @@
     <ClCompile Include="script\impl\script_operation.cc" />
     <ClCompile Include="script\impl\script_room.cc" />
     <ClCompile Include="script\impl\script_slot.cc" />
-    <ClCompile Include="script\impl\script_socket.cc" />
     <ClCompile Include="script\impl\script_table.cc" />
     <ClCompile Include="script\impl\script_types.cc" />
     <ClCompile Include="script\impl\script_utils.cc" />

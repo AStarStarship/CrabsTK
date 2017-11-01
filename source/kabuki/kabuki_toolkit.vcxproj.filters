@@ -146,9 +146,6 @@
     <ClInclude Include="script\include\slot.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\include\socket.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\include\string.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
@@ -242,9 +239,6 @@
       <Filter>kabuki\script</Filter>
     </ClCompile>
     <ClCompile Include="script\impl\script_slot.cc">
-      <Filter>kabuki\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\impl\script_socket.cc">
       <Filter>kabuki\script</Filter>
     </ClCompile>
     <ClCompile Include="script\impl\script_table.cc">
