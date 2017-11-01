@@ -26,6 +26,7 @@
     <ClInclude Include="script\include\set.h" />
     <ClInclude Include="script\include\module_all.h" />
     <ClInclude Include="script\include\args.h" />
+    <ClInclude Include="script\include\slot.h" />
     <ClInclude Include="script\include\tarray.h" />
     <ClInclude Include="script\include\ascii.h" />
     <ClInclude Include="script\include\assembly.h" />
@@ -47,7 +48,6 @@
     <ClInclude Include="script\include\operation.h" />
     <ClInclude Include="script\include\portal.h" />
     <ClInclude Include="script\include\room.h" />
-    <ClInclude Include="script\include\slot.h" />
     <ClInclude Include="script\include\tstack.h" />
     <ClInclude Include="script\include\string.h" />
     <ClInclude Include="script\include\table.h" />
@@ -72,8 +72,8 @@
     <ClCompile Include="script\impl\script_expression.cc" />
     <ClCompile Include="script\impl\script_interrupts.cc" />
     <ClCompile Include="script\impl\script_log.cc" />
-    <ClCompile Include="script\impl\script_mirror_in.cc" />
-    <ClCompile Include="script\impl\script_mirror_out.cc" />
+    <ClCompile Include="script\impl\script_slot_in.cc" />
+    <ClCompile Include="script\impl\script_slot_out.cc" />
     <ClCompile Include="script\impl\script_operation.cc" />
     <ClCompile Include="script\impl\script_room.cc" />
     <ClCompile Include="script\impl\script_slot.cc" />

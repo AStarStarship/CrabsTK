@@ -21,6 +21,7 @@
 #define SCRIPT_WALL_H
 
 #include "door.h"
+#include "log.h"
 
 namespace _ {
 
@@ -28,34 +29,70 @@ namespace _ {
     Only one single wall is required for a Chinese Room, but when more memory 
     is needed a new Wall may be created and destroyed dynamically. This gives 
     the user .
-*/
-struct Wall {
-    byte is_dynamic,        //< Flag for if using dynamic memory.
-        num_doors,          //< The number of doors in this group.
-        max_num_doors,      //< The number of doors allocated in memory.
-        reserved;           //< Reserved for memory alignment.
-    Wall* door_one;         //< The doors in door that messages pass through.
-};
+    
+    @code
 
-/** Initializes a Door at the beginning of the given buffer. */
-KABUKI Wall* WallInit (uint_t size);
+    |==============|
+    |  Terminals   |
+    |      |       |
+    |      v       |
+    |==============|
+    |    Buffer    |
+    |==============|
+    |      ^       |
+    |      |       |
+    |  TSTack of   |
+    |    Doors     |
+    |   Offsets    |
+    |==============|
+    |    Header    |
+    |==============|
 
-/** Gets a pointer to the array of pointers to Door(string). */
-KABUKI Door** WallGetDoors (Wall* wall);
 
-/** Adds a Door to the slot.
-    @return Returns nullptr if the Door is full and a pointer to the Door in the 
+    @endcode
+    
+    */
+class Wall : public Operation {
+
+    public:
+
+    enum {
+        kMinSizeBytes = 256, //< The default Wall size.
+    };
+
+    virtual ~Wall ();
+
+    Wall (TStack<Door*>* doors);
+
+    /** Constructs a wall from the given buffer. */
+    Wall (uint_t size_bytes = kMinSizeBytes);
+
+    /** Constructs a wall from the given buffer. */
+    Wall (uintptr_t* buffer, uint_t size_bytes);
+
+    /** Gets a pointer to the array of pointers to Door(string). */
+    TStack<Door*>* Doors ();
+
+    /** Gets the Door from the Door at the given index. */
+    Door* GetDoor (int index);
+
+    /** Adds a Door to the slot.
+    @return Returns nullptr if the Door is full and a pointer to the Door in the
             buffer upon success. */
-KABUKI int WallAddDoor (Wall* wall, Door* door);
+    int OpenDoor (Door* door);
 
-/** Gets the Door from the Door at the given index. */
-KABUKI Door* WallGetDoor (Wall* wall, int index);
+    /** Deletes the Door from the Door at the given index. */
+    bool CloseDoor (int index);
 
-/** Deletes the Door from the Door at the given index. */
-KABUKI void WallDelete (Wall* wall, int index);
+    /** Prints the given Door to the stdout. */
+    void Print ();
 
-/** Prints the given Door to the stdout. */
-KABUKI void WallPrint (Wall* wall);
+    private:
+
+    bool           is_dynamic_; //< Flag for if using dynamic memory.
+    TStack<Door*>* doors_;      //< The doors in the room.
+    uintptr_t    * buffer_;     //< The Wall's buffer.
+};
 
 }       //< namespace _
 #endif  //< SCRIPT_WALL_H

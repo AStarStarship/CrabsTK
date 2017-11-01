@@ -20,17 +20,10 @@
 #ifndef SCRIPT_DOOR_H
 #define SCRIPT_DOOR_H
 
-#include "operation.h"
-#include "bin.h"
-#include "bout.h"
+#include "slot.h"
 #include "tstack.h"
 
 namespace _ {
-
-struct Slot {
-    Bin * bin;  //< The B-Input.
-    Bout* bout; //< The B-Output.
-};
 
 /** An door that connects two Chinese rooms.
     @see https://en.wikipedia.org/wiki/Chinese_room
@@ -49,11 +42,11 @@ struct Slot {
 
     @code
 
-    |============|
-    |    slots   |
-    |============|
-    | open_slots |
-    |============|
+    |=============|
+    |    slots    |
+    |=============|
+    | Door struct |
+    |=============|
 
     @endcode
 */
@@ -82,14 +75,15 @@ class Door : public Operand {
     Slot* GetSlot (int index);
 
     /** Address the given expr to the Door. */
-    const Operation* AddSlot (Slot* t);
+    uint_t AddSlot (Slot* t);
 
     /** Attempts to find a Slot or Door with the given address. */
-    Slot* Contains (void* address);
+    int_t Contains (void* address);
 
     /** Gets the Slot that contains the given address.
-        @return Returns null if this Door doesn't contain the given address. */
-    Slot* ContainsSlot (void* address);
+        @return Returns the doors_ stack count if the Door does not
+                contain the given address. */
+    uint_t ContainsSlot (void* address);
 
     /** Executes all of the queued escape sequences. */
     const Operation* ExecAll ();
@@ -98,14 +92,9 @@ class Door : public Operand {
     virtual const Operation* Star (char_t index, Expression* expr);
 
     private:
-                                 //< 2-to-4-int vtable pointer here in memory!
-    bool            is_dynamic_; //< Flag for if the door is static(0) or dynamic(1).
-    uint_t          door_size,   //< The size of the door in bytes.
-                    slot_size,   //< Reserved for 64-bit memory alignment.
-                    reserved2,   //< Reserved for 64-bit memory alignment.
-                    reserved3;   //< Reserved for 64-bit memory alignment.
-    TStack<uint_t>* slots,       //< The slots in the door.
-                  * open_slots;  //< List of the open slots.
+                            //< 2-to-4-int vtable pointer here in memory!
+    bool is_dynamic_;       //< Flag for if using dynamic memory.
+    TStack<uint_t>* slots_; //< The slots in the door.
 };
 
 /** Returns a Static Error Operation. */

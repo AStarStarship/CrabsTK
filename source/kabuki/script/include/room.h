@@ -61,20 +61,28 @@ KABUKI const char* RequestString (Request r);
 
     # Memory Layout
 
+    Some systems have the stack grow up from the bottom and heap grow up and
+    vice versa.
+
     @code
-         __________________ 
-        |                  |
-        |      Walls       |
-        |__________________|
-        |                  |
-        |      Buffer      |
-        |__________________|
-        |        ^         |
-        |        |         |
-        | Expression stack |
-    ^   |__________________|
-    |   |    Room Header   |
-    0x0 |__________________|
+        |=======================|
+        |     Ceiling (Heap)    |
+        |         Wall 1        |
+        |         Wall 2        |
+        |          ...          |
+        |         Wall N        |
+        |           |           |
+        |           v           |
+        |=======================|
+        |      Unused Memory    |
+        |=======================|
+        |           ^           |
+        |           |           |
+        |     Program Stack     |
+        |=======================|
+    +/- |                       |
+     |  | Floor (Static Memory) |
+    0xN |=======================|
     @endcode
 
     There are multiple doors in a Chinese Room that lead to other Chinese Rooms.
@@ -83,11 +91,42 @@ KABUKI const char* RequestString (Request r);
 
     # Doors
 
-    All doors in the Chinese Room are accessed through one of the four Data 
-    Controllers DC1 through DC4.
+    There are two ways to access Doors in the CR. in the Root Scope, there are 
+    
 
     @code
-    
+    Use Case Scenario:
+    Actors: Jo  - The app developer.
+            Sam - The end-user.
+
+    1.  Jo is creating an App and needs to make a Chinese Room so Jo downloads 
+        Kabuki Toolkit, starts his Apps, and makes a Room. Jo defines a Floor
+        statically but is does not define any walls.
+        2.  Host creates a memory stack without any heap space.
+    2.  Jo needs to add a UART port out to his App so he adds a Bout with a 
+        slot_size of 2KB.
+        3.  Host adds the Mirror to the Program Stack.
+    4.  Jo needs to add a SPI IO device so he initializes a Window with 256
+        bytes.
+        5.  Host adds the new Window on top of the Mirror.
+    6.  Jo is out of memory in the Floor so he creates a Ceiling of size 2KB.
+        7.  Host creates a Heap Block for the Ceiling.
+    7.  Jo needs Interprocess communication to three threads: one MirrorIn,
+        one MirrorOut, and a Window of size 2KB.
+        8.  Host adds the MirrorIn, MirroOut, and Window to the Ceiling.
+    9.  Jo wants to add a Server so Jo creates Wall_1 with 1MB space.
+        10. Host creates a Wall_1 with 1MB memory.
+    11. Jo wants needs to distribute information to the end-users so Jo 
+        creates Dictionary in Wall_1 with some keys and values.
+        12. Host creates dictionary and adds keys and values.
+    13. Jo complies the program and launches the server.
+        14. Host loads.
+    15. Sam wants to use Jos app so he launches the app and connections to the
+        Host.
+        16. Host receives login attempt from Sam and opens a Door for him.
+    17. Sam needs to get the values Jo stored in step 11 so Same sends a 
+        Dictionary GET request.
+        
     @endcode
 */
 class Room: public Operand {
@@ -148,6 +187,10 @@ class Room: public Operand {
 
     virtual void* GetClockAddress () = 0;
 
+    uintptr_t GetNumWalls ();
+
+    uintptr_t GetSizeBytes ();
+
     /** The default main function.
         Please feel free to override this with your own main function. */
     virtual int Main (const char** args, int args_count);
@@ -156,18 +199,14 @@ class Room: public Operand {
     virtual const Operation* Star (char_t index, Expression* expr);
 
     protected:
-                           //! vtable pointer here in memory!
-    uint     address_;     //< The least significant bytes of the address.
-    uint_t   address_msb_, //< The most significant bytes of the address.
-             size_;        //< The size of the Room with device stack.
-    byte     height_,      //< The number of devices on the device stack.
-             stack_size_;  //< The max size of the device stack.
-                           //< Star Control 1: this.
-    Door   * door_;        //< Star Control 2: The Door to this room.
-    Operand* xoff_,        //< Star Control 3: XOFF - XOFF handling device.
-           * device_,      //< Star Control 4: the current device control.
-           * devices_;     //< Pointer to the current device control.
+                        //! vtable pointer here in memory!
+    Expression* expr;   //< The current Expression being executed.
+                        //< Star Control 1: this.
+    Door   * door_;     //< Star Control 2: The Door to this room.
+    Operand* xoff_,     //< Star Control 3: XOFF - XOFF handling device.
+           * device_,   //< Star Control 4: the current device control.
+           * devices_;  //< Pointer to the current device control.
 };
 
 }       //< namespace _
-#endif  //< SCRIPT_ROOM_H
+#endif  //< SCRIPT_ROOM_HDi

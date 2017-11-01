@@ -20,61 +20,68 @@
 
 namespace _ {
 
-Wall* WallInit (byte* buffer, uint_t size) {
-    if (buffer == nullptr)
-        return nullptr;
-    buffer = WordAlign (buffer);
-    Wall* wall = reinterpret_cast<Wall*> (buffer);
-    wall->is_dynamic = 0;
-    wall->num_doors = 0;
-    wall->max_num_doors;
-    wall->door_one = nullptr;
-    return wall;
+Wall::~Wall () {
+    if (is_dynamic_) {
+        byte* buffer = reinterpret_cast<byte*> (doors_);
+        delete [] buffer;
+    }
 }
 
-Door** WallGetDoors (Wall* wall) {
-    return reinterpret_cast<Door**> (wall->door_one);
+Wall::Wall (uint_t size_bytes) :
+    is_dynamic_ (true) {
+    size_bytes = size_bytes < kMinSizeBytes ? kMinSizeBytes : size_bytes;
+    size_bytes = AlignSize64 (size_bytes);
+    uint_t size_words = (size_bytes >> sizeof (uintptr_t)) + 3;
+    uintptr_t* buffer = new uintptr_t[size_words],
+             * aligned_buffer = WordAlign64 (buffer);
+    //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
+    //< on 16 and 32-bit systems.
+    size_bytes -= sizeof (uintptr_t) * (aligned_buffer - buffer);
+    buffer_ = buffer;
+    doors_ = reinterpret_cast<TStack<Door*>*> (aligned_buffer);
+    StackInit (buffer, size_bytes >> sizeof (uintptr_t));
 }
 
-int WallAddDoor (Wall* wall, Door* door) {
-    if (wall == nullptr) 
-        return 0;
-    if (door == nullptr)
-        return 0;
+Wall::Wall (uintptr_t* buffer, uint_t size_bytes) {
+    byte* ptr     = reinterpret_cast<byte*> (buffer),
+        * new_ptr = ptr + WordAlignOffset<uint64_t> (ptr),
+        * end_ptr = ptr + size_bytes;
+    uint_t size_words = (size_bytes >> sizeof (uintptr_t)) + 3;
+    //< Computer engineering voodoo for aligning to 64-bit boundary.
 
-    int num_doors = wall->num_doors;
-    if (num_doors + 1 >= wall->max_num_doors)
-        return 0;
-    WallGetDoors (wall)[num_doors] = door;
-    wall->num_doors = num_doors + 1;
-    return num_doors + 1;
+    uintptr_t*aligned_buffer = WordAlign64 (buffer);
+    //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
+    //< on 16 and 32-bit systems.
+    size_bytes -= sizeof (uintptr_t) * (aligned_buffer - buffer);
+    buffer_ = buffer;
+    doors_ = reinterpret_cast<TStack<Door*>*> (aligned_buffer);
+    StackInit (buffer, size_bytes >> sizeof (uintptr_t));
 }
 
-Door* WallGetDoor (Wall* wall, int index) {
-    if (wall == nullptr)
-        return nullptr;
-    if (index >= wall->num_doors)
-        return nullptr;
-    return WallGetDoors (wall)[index];
+Wall::Wall (TStack<Door*>* doors) {
+    
 }
 
-void WallDelete (Wall* wall, int index) {
-    if (wall == nullptr)
-        return;
-    if (index >= wall->num_doors)
-        return;
-    Door** doors = WallGetDoors (wall);
-    Door* door = doors[index];
-    door->~Door ();
-    for (int i = index; i < wall->num_doors; ++i)
-        doors[index] = doors[index + 1];
-    --wall->num_doors;
+TStack<Door*>* Wall::Doors () {
+    return doors_;
 }
 
-void WallPrint (Wall* wall) {
-    if (wall == nullptr) return;
-    printf ("\nDoor:\nis_dynamic %s\nnum_doors: %u\nmax_num_doors: %u\n", 
-            wall->is_dynamic ? "true" : "false", wall->num_doors, wall->max_num_doors);
+Door* Wall::GetDoor (int index) {
+    return 0;
+}
+
+int Wall::OpenDoor (Door* door) {
+    return 0;
+
+}
+
+bool Wall::CloseDoor (int index) {
+    return false;
+}
+
+void Wall::Print () {
+    //printf ("\nDoor:\nis_dynamic %s\nnum_doors: %u\nmax_num_doors: %u\n", 
+    //        is_dynamic ? "true" : "false", num_doors, max_num_doors);
 }
 
 }       //< namespace _

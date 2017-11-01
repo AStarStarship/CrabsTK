@@ -19,16 +19,6 @@
 
 namespace _ {
 
-void SlotClear (byte* const begin, uint_t      rx_start,
-                byte*       start, byte* const stop,
-                byte* const end  , uint_t      size) {
-    byte* cursor = begin + rx_start;
-    while (start != cursor) {
-        *cursor = 0;
-        if (++cursor >= end) cursor -= size;
-    }
-}
-
 uint_t SlotLength (byte* start, byte* stop, uint_t size) {
     uint_t delta_start_stop = static_cast<uint> (stop - start);
     return start <= stop?delta_start_stop:size - delta_start_stop;
@@ -37,6 +27,19 @@ uint_t SlotLength (byte* start, byte* stop, uint_t size) {
 uint_t SlotSpace (byte* start, byte* stop, uint_t size) {
     uint_t delta_start_stop = static_cast<uint> (stop - start);
     return start <= stop?size - delta_start_stop:delta_start_stop;
+}
+
+void SlotWipe (Slot* slot) {
+    if (slot == nullptr)
+        return;
+    byte* begin  = reinterpret_cast<byte*> (slot) + sizeof (Slot),
+        * start  = begin + slot->start,
+        * end    = begin + slot->size,
+        * cursor = begin + slot->start;
+    while (start != cursor) {
+        *cursor = 0;
+            cursor -= slot->size;
+    }
 }
 
 byte* SlotWrite (void* source, byte* const begin, byte* const start,
@@ -84,6 +87,46 @@ bool SlotContains (Slot* slot, void* address) {
         return true;
     }
     return false;
+}
+//bool IsWritable (MirrorOut* mirror) {
+//   return mirror->start != mirror->stop;
+//}
+
+const Operation* SlotResult (Slot* bin, Bin::Error error,
+                             const uint_t* header) {
+    return 0;
+}
+
+const Operation* SlotResult (Slot* bin, Bout::Error error,
+                                    const uint_t* header) {
+    return 0;
+}
+
+const Operation* SlotResult (Slot* bin, Bin::Error error,
+                                    const uint_t* header,
+                                    byte offset) {
+    return 0;
+}
+
+const Operation* SlotResult (Slot* bin, Bout::Error error,
+                                    const uint_t* header,
+                                    byte offset) {
+    return 0;
+}
+
+const Operation* SlotResult (Slot* bin, Bin::Error error,
+                                    const uint_t* header,
+                                    byte offset,
+                                    byte* address) {
+    return 0;
+}
+
+const Operation* SlotResult (Slot* bin, Bout::Error error,
+                                    const uint_t* header,
+                                    byte offset,
+                                    byte* address)
+{
+    return 0;
 }
 
 }       //< namespace _

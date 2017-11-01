@@ -26,7 +26,7 @@
 namespace _ {
 
 void LogPrint (Log& log) {
-
+    /*
     Bin    * bin = reinterpret_cast<Bin*> (log.bout);
     void   * args[1];
     byte     type = 0,                                             
@@ -141,7 +141,7 @@ void LogPrint (Log& log) {
                 std::cout << si1;
             }
         }
-    }
+    }*/
 }   
 
 }       //< namespace _

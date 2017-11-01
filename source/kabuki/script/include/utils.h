@@ -164,6 +164,11 @@ KABUKI uintptr_t WordAlignOffset (void* ptr) {
 
 KABUKI byte* WordAlign (byte* ptr);
 
+KABUKI uintptr_t* WordAlign64 (uintptr_t* buffer);
+
+//KABUKI uintptr_t AlignSize (uintptr_t size);
+KABUKI uintptr_t AlignSize64 (uintptr_t size);
+
 /** Converts a single byte a one-byte hex representation. */
 KABUKI byte NibbleToLowerCaseHex (byte b);
 

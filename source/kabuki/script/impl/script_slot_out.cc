@@ -15,13 +15,29 @@
 */
 
 #include <stdafx.h>
-#include "../include/window.h"
+#include "../include/slot.h"
 
 namespace _ {
 
-
-bool IsWritable (MirrorOut* mirror) {
-    return mirror->start != mirror->stop;
+const Operation* SlotResult (Slot* slot, Bin::Error error) {
+    return BinResult (reinterpret_cast<Bin*> (slot), error);
 }
+
+const Operation* SlotResult (Slot* slot, Bout::Error error) {
+    return BoutResult (reinterpret_cast<Bout*> (slot), error);
+}
+
+
+const Operation* BResult (Slot* slot, const uint_t* params, void** args) {
+    if (slot == nullptr)     //< Is this a double check?
+        return SlotResult (slot, Bout::RoomError);
+    if (params == nullptr)
+        return SlotResult (slot, Bout::RoomError);
+    if (args == nullptr)
+        return SlotResult (slot, Bout::RoomError);
+}
+//bool IsWritable (MirrorOut* mirror) {
+//   return mirror->start != mirror->stop;
+//}
 
 }       //< namespace _

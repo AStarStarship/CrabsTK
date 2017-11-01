@@ -24,6 +24,18 @@
 
 namespace _ {
 
+/** Calculates the used ring buffer space.
+    @param  Start The start of the data.
+    @param  Stop  The stop of the data.
+    @param  Size The size of the buffer. */
+KABUKI uint_t SlotLength (byte* start, byte* stop, uint_t size);
+
+/** Calculates the space left in the given ring buffer.
+    @param  Start The start of the data.
+    @param  Stop  The stop of the data.
+    @param  Size  The size of the buffer. */
+KABUKI uint_t SlotSpace (byte* start, byte* stop, uint_t size);
+
 /*< A*B B-Input Slot.
     A B-Input Slot is functionally identical to a input port in TCP.
 */

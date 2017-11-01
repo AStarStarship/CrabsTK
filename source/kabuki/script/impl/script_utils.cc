@@ -94,7 +94,49 @@ void Delete (void* buffer) {
 }
 
 byte* WordAlign (byte* ptr) {
-    return ptr + (((~reinterpret_cast<uintptr_t> (ptr)) + 1) & (sizeof (byte*) - 1));
+    return ptr + (((~reinterpret_cast<uintptr_t> (ptr))+1) & 
+                  (sizeof (byte*)-1));
+}
+
+uintptr_t* WordAlign64 (uintptr_t* buffer) {
+    byte* byte_ptr = reinterpret_cast<byte*> (buffer);
+    uintptr_t offset = (((~reinterpret_cast<uintptr_t> (buffer)) + 1) &
+        (sizeof (uint64_t) - 1));
+    return reinterpret_cast<uintptr_t*> (byte_ptr + offset);
+}
+
+uintptr_t WordAlignSize (uintptr_t size) {
+    // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
+    // This allows the algorithm to word align without any if statements.
+    // The algorithm works the same for all memory widths as proven by the
+    // truth table bellow.
+    // ~000 = 111 => 000 + 111 + 1 = 0x1000
+    // ~001 = 110 => 001 + 110 + 1 = 0x1000
+    // ~010 = 101 => 010 + 101 + 1 = 0x1000
+    // ~011 = 100 => 011 + 100 + 1 = 0x1000
+    // ~100 = 011 => 100 + 011 + 1 = 0x1000
+    // ~101 = 010 => 101 + 010 + 1 = 0x1000
+    // ~110 = 001 => 110 + 001 + 1 = 0x1000
+    // ~111 = 000 => 111 + 000 + 1 = 0x1000
+    //                                                        Mask
+    return size + ((~size) + 1) & (sizeof (uintptr_t) - 1);
+}
+
+uintptr_t AlignSize64 (uintptr_t size) {
+    // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
+    // This allows the algorithm to word align without any if statements.
+    // The algorithm works the same for all memory widths as proven by the
+    // truth table bellow.
+    // ~000 = 111 => 000 + 111 + 1 = 0x1000
+    // ~001 = 110 => 001 + 110 + 1 = 0x1000
+    // ~010 = 101 => 010 + 101 + 1 = 0x1000
+    // ~011 = 100 => 011 + 100 + 1 = 0x1000
+    // ~100 = 011 => 100 + 011 + 1 = 0x1000
+    // ~101 = 010 => 101 + 010 + 1 = 0x1000
+    // ~110 = 001 => 110 + 001 + 1 = 0x1000
+    // ~111 = 000 => 111 + 000 + 1 = 0x1000
+    //                                                        Mask
+    return size + ((~size) + 1) & (sizeof (uint64_t) - 1);
 }
 
 byte NibbleToLowerCaseHex (byte b) {

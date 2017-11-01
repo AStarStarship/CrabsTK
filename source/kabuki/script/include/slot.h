@@ -20,9 +20,27 @@
 #ifndef SCRIPT_SLOT_H
 #define SCRIPT_SLOT_H
 
-#include "module_config.h"
+#include "operation.h"
+#include "bout.h"
+#include "bin.h"
 
 namespace _ {
+
+/** A Slot in a Door in a Chinese Room. */
+struct KABUKI Slot {
+    uint_t size,  //< The size of the buffer.
+           start, //< The starting index of the ring buffer data.
+           stop,  //< The stopping index of the ring buffer data.
+           read;  //< The read variable.
+};
+const Operation* SlotResult (Slot* slot, Bin::Error error);
+const Operation* SlotResult (Slot* slot, Bout::Error error);
+
+enum {
+    kSlotHeaderSize = 4 * sizeof (uint_t)   //< Size of a Slot Header.
+};
+
+static const uintptr_t kMaxSlotSize = ~((uintptr_t)0);
 
 /** Calculates the used ring buffer space.
     @param  Start The start of the data.
@@ -37,45 +55,85 @@ KABUKI uint_t SlotLength (byte* start, byte* stop, uint_t size);
 KABUKI uint_t SlotSpace (byte* start, byte* stop, uint_t size);
 
 /** Clears the ring buffer by writing zeros to it. */
-KABUKI void SlotClear (byte* const begin, uint_t rx_start,
-                       byte* start, byte* const stop,
-                       byte* const end, uint_t size);
+KABUKI void SlotWipe (Slot* slot);
 
 /** Copies a block from a ring-buffer to the given destination. */
-KABUKI byte* SlotWrite (void* source, byte* const begin,
-                        byte* const start, byte* const stop,
-                        byte* const end, size_t size);
+KABUKI byte* SlotWrite (Slot* slot, void* source, size_t size);
 
 /** Copies a block from a ring-buffer to the given destination. */
-KABUKI byte* SlotRead (void* destination, byte* const begin,
-                       byte* const start, byte* const stop,
-                       byte* const end, size_t size);
+KABUKI byte* SlotRead (Slot* slot, void* source, size_t size);
 
-/** Copies a block from a ring-buffer to the given destination. */
-KABUKI byte* SlotWrite (void* source, byte* const begin,
-                        byte* const start, byte* const stop,
-                        byte* const end, size_t size);
+/** Gets the args from the b-sequence. */
+KABUKI const Operation* BArgs (Slot* slot, const uint_t* params, void** args);
 
-/** Copies a block from a ring-buffer to the given destination. */
-KABUKI byte* SlotRead (void* destination, byte* const begin,
-                       byte* const start, byte* const stop,
-                       byte* const end, size_t size);
+/** Posts a evaluated result to the b-sequence. */
+KABUKI const Operation* BResult (Slot* slot, const uint_t* params, void** args);
 
-/** A Slot in a Socket in a Door. */
-struct KABUKI Slot {
-    uint_t     size,        //< The size of the buffer.
-               start,       //< The starting index of the ring buffer data.
-               stop,        //< The stopping index of the ring buffer data.
-               read;        //< The read variable.
-    byte       buffer;      //< The first byte in the ring buffer.
-};
+KABUKI bool IsReadable (Slot* slot);
 
-enum {
-    kSlotHeaderSize = 4 * sizeof (uint_t)   //< Size of a Slot Header.
-};
+/** Used to return an erroneous result from a B-Input.
+    @param  bin     The source Slot.
+    @param  error   The error type.
+    @param  header  The B-Sequence Header.
+    @param  offset  The offset to the type in error in the B-Sequence.
+    @param  address The address of the byte in error.
+    @return         Returns a Static Error Operation Result. */
+KABUKI const Operation* SlotResult (Slot* bin, Bin::Error error,
+                                   const uint_t* header);
+/** Used to return an erroneous result from a B-Input.
+    @param  bin     The source Slot.
+    @param  error   The error type.
+    @param  header  The B-Sequence Header.
+    @param  offset  The offset to the type in error in the B-Sequence.
+    @param  address The address of the byte in error.
+    @return         Returns a Static Error Operation Result. */
+KABUKI const Operation* SlotResult (Slot* bin, Bout::Error error,
+                                   const uint_t* header);
 
-/** Returns true if the given slot contains the given address. */
-KABUKI bool SlotContains (Slot* slot, void* address);
+/** Used to return an erroneous result from a B-Input.
+    @param  bin     The source Slot.
+    @param  error   The error type.
+    @param  header  The B-Sequence Header.
+    @param  offset  The offset to the type in error in the B-Sequence.
+    @param  address The address of the byte in error.
+    @return         Returns a Static Error Operation Result. */
+KABUKI const Operation* SlotResult (Slot* bin, Bin::Error error,
+                                   const uint_t* header,
+                                   byte offset);
 
+/** Used to return an erroneous result from a B-Input.
+    @param  bin     The source Slot.
+    @param  error   The error type.
+    @param  header  The B-Sequence Header.
+    @param  offset  The offset to the type in error in the B-Sequence.
+    @param  address The address of the byte in error.
+    @return         Returns a Static Error Operation Result. */
+KABUKI const Operation* SlotResult (Slot* bin, Bout::Error error,
+                                   const uint_t* header,
+                                   byte offset);
+
+/** Used to return an erroneous result from a B-Input.
+    @param  bin     The source Slot.
+    @param  error   The error type.
+    @param  header  The B-Sequence Header.
+    @param  offset  The offset to the type in error in the B-Sequence.
+    @param  address The address of the byte in error.
+    @return         Returns a Static Error Operation Result. */
+KABUKI const Operation* SlotResult (Slot* bin, Bin::Error error,
+                                   const uint_t* header,
+                                   byte offset,
+                                   byte* address);
+
+/** Used to return an erroneous result from a B-Input.
+    @param  bin     The source Slot.
+    @param  error   The error type.
+    @param  header  The B-Sequence Header.
+    @param  offset  The offset to the type in error in the B-Sequence.
+    @param  address The address of the byte in error.
+    @return         Returns a Static Error Operation Result. */
+KABUKI const Operation* SlotResult (Slot* bin, Bout::Error error,
+                                   const uint_t* header,
+                                   byte offset,
+                                   byte* address);
 }       //< namespace _
 #endif  //< SCRIPT_SLOT_H

@@ -143,9 +143,6 @@
     <ClInclude Include="script\include\room.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\include\slot.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\include\string.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
@@ -203,6 +200,9 @@
     <ClInclude Include="script\include\set.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
+    <ClInclude Include="script\include\slot.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cc">
@@ -224,12 +224,6 @@
       <Filter>kabuki\script</Filter>
     </ClCompile>
     <ClCompile Include="script\impl\script_log.cc">
-      <Filter>kabuki\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\impl\script_mirror_in.cc">
-      <Filter>kabuki\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\impl\script_mirror_out.cc">
       <Filter>kabuki\script</Filter>
     </ClCompile>
     <ClCompile Include="script\impl\script_operation.cc">
@@ -266,6 +260,12 @@
       <Filter>kabuki\script</Filter>
     </ClCompile>
     <ClCompile Include="script\impl\script_clock.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_slot_in.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_slot_out.cc">
       <Filter>kabuki\script</Filter>
     </ClCompile>
   </ItemGroup>

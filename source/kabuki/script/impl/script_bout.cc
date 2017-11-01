@@ -167,7 +167,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     uint_t size = bout->size,               //< Size of the buffer.
         space,                              //< Space in the buffer.
         index,                              //< Index in the params.
-        length;                             //< Length of a type to write.
+        length,                             //< Length of a type to write.
+        obj_size_width;                   //< Width of the array size.
     hash16_t hash = 0;                      //< 16-bit prime hash.
     const uint_t* param = params;               //< Pointer to the current param.
     // Convert the socket offsets to pointers.
@@ -641,32 +642,30 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                   goto WriteBlock;
                 break;
 
-              case LST:
-              case BOK:
-              case DIC:
-              case MAP:
-                  ui1_ptr = reinterpret_cast<const byte*> (args[index]);
-                  if (ui1_ptr == nullptr)
-                      return BoutResult (bout, Bout::RoomError, params, index, start);
-                  // Load size.
-                  ui8 = *ui8_ptr;
-                  length = static_cast<uint_t>(ui8);
-                  goto WriteBlock;
-                ui1_ptr = reinterpret_cast<const byte*> (args[index]);
-                if (ui1_ptr == nullptr)
-                    return BoutResult (bout, Bout::RoomError, params, index, start);
-                length = kUnitSize;
-
             default: {
+                obj_size_width = type >> 5;
                 if ((type >> 5) && type > OBJ)
                     goto InvalidType;
-                switch ((type >> 5) & 0x3) {
+                if ((type >> 7) && ((type & 0x1f) >= OBJ)) { // It's an illegal type!
+                    type &= 0x1f;
+                    return BoutResult (bout, Bout::RoomError, params, index, start);
+                }
+                switch (obj_size_width) {
+                    case 0: {
+                        ui1_ptr = reinterpret_cast<const byte*> (args[index]);
+                        if (ui1_ptr == nullptr)
+                            return BoutResult (bout, Bout::RoomError, params, index, start);
+                        ui1 = *ui1_ptr;
+                        length = static_cast<uint_t>(ui1);
+                        goto WriteBlock;
+                    }
                     case 1: {
                         ui2_ptr = reinterpret_cast<const uint16_t*> (args[index]);
                         if (ui2_ptr == nullptr)
                             return BoutResult (bout, Bout::RoomError, params, index, start);
                         ui2 = *ui2_ptr;
                         length = static_cast<uint_t>(ui2);
+                        ui1_ptr = reinterpret_cast<const byte*> (ui2_ptr);
                         goto WriteBlock;
                     }
                     case 2: {
@@ -675,6 +674,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                             return BoutResult (bout, Bout::RoomError, params, index, start);
                         ui4 = *ui4_ptr;
                         length = static_cast<uint_t>(ui4);
+                        ui1_ptr = reinterpret_cast<const byte*> (ui4_ptr);
                         goto WriteBlock;
                     }
                     case 3: {
@@ -683,7 +683,11 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                             return BoutResult (bout, Bout::RoomError, params, index, start);
                         ui8 = *ui8_ptr;
                         length = static_cast<uint_t>(ui8);
+                        ui1_ptr = reinterpret_cast<const byte*> (ui8_ptr);
                         goto WriteBlock;
+                    }
+                    default: {
+                        return BoutResult (bout, Bout::RoomError, params, index, start);
                     }
 
                 }

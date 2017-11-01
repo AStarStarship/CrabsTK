@@ -24,7 +24,7 @@ namespace _ {
 /** Gets the max length of an stack of size T.
     The biggest thing you can fit in a buffer in Script is 1/2 max size of a uint_t
     divided by the size of the element in bytes. */
-template<typename T, typename I = int>
+template<typename T, typename I = int_t>
 inline uint_t MaxStackLength () {
     return (((uint_t)1) << (sizeof (uint_t) * 8 - 1)) / sizeof (T);
 }
@@ -46,7 +46,7 @@ inline uint_t MaxStackLength () {
     0xN |================|
     @endcode
 */
-template<typename I = int>
+template<typename I = int_t>
 struct TStack {
     I size_bytes,   //< Total size of the Stack in 64-bit aligned bytes.
       header_size,  //< Total size of the Dimensions Header in bytes.
@@ -56,7 +56,7 @@ struct TStack {
 
 /** Gets the max number of elements in an stack with the specific index 
     width. */
-template<typename T, typename I = int>
+template<typename T, typename I = int_t>
 inline I StackMaxElements () {
     return (~(I)0) / sizeof (T);
 }
@@ -64,13 +64,17 @@ inline I StackMaxElements () {
 /** Initializes an stack of n elements of the given type.
     @param buffer An stack of bytes large enough to fit the stack.
 */
-template<typename T, typename I = int>
-inline TStack<I>* StackInit (T* buffer, T size) {
-    TStack<I>* stack = reinterpret_cast<T*> (buffer);
-    stack->set_size;
+template<typename T, typename I = int_t>
+inline TStack<I>* StackInit (T* buffer, I size) {
+    TStack<I>* stack = reinterpret_cast<TStack<I>*> (buffer);
+    stack->size_bytes = size;
     stack->count = 0;
     stack->height = size;
     return stack;
+}
+template<typename T, typename I = int_t>
+inline TStack<I>* StackInit (uintptr_t* buffer, I size) {
+    return StackInit<T, I> (reinterpret_cast<T*> (buffer), size);
 }
 
 /** Inserts the item into the stack at the given index.
@@ -78,15 +82,15 @@ inline TStack<I>* StackInit (T* buffer, T size) {
     @param item  The item to insert. 
     @param index The index to insert at.
     @return Returns -1 if a is null and -2 if the stack is full. */
-template<typename T, typename I = int>
+template<typename T, typename I = int_t>
 inline T StackInsert (TStack<I>* stack, T item, T index) {
     if (stack == nullptr)
         return -1;
-    T size = stack->height,
+    I size = stack->height,
         cout = stack->count;
     if (count >= size)
         return -2;
-    T* items = &stack->element_one;
+    T* items = StackBase<T, I> (stack);
     if (count == 0) {
         *items = item;
         stack->count = 1;
@@ -123,11 +127,19 @@ inline T StackInsert (TStack<I>* stack, T item, T index) {
     return count;
 }
 
+template<typename T, typename I = int_t>
+inline T* StackBase (TStack<I>* stack) {
+    if (stack == nullptr)
+        return nullptr;
+    byte* address = reinterpret_cast<byte*> (stack) + sizeof (TStack<I>);
+    return reinterpret_cast<T*> (address);
+}
+
 /** Removes the given index from the stack.
     @param  a     The stack.
     @param  index The index the item to remove.
     @return Returns true if the index is out of bounds. */
-template<typename T, typename I = int>
+template<typename T, typename I = int_t>
 inline bool StackRemove (TStack<I>* stack, T index) {
     if (stack == nullptr)
         return !((T)0);
@@ -137,15 +149,15 @@ inline bool StackRemove (TStack<I>* stack, T index) {
         return false;
     int (index >= count)
         return false;
-    T* items = &stack->element_one;
+    T* items = StackBase<T, I> (stack);
     if (count == index - 1) {
         stack->count = count - 1;
         value = items[count - 1];
         return true;
     }
     // Move all of the elements after the index down one.
-    T* insert_point = &stack->element_one + index,
-     * end          = &stack->element_one + count - 1;
+    T* insert_point = StackBase<T, I> (stack) + index,
+     * end          = StackBase<T, I> (stack) + count - 1;
     while (insert_point != end) {
         value = *end;
         *(end - 1) = value;
@@ -160,15 +172,15 @@ inline bool StackRemove (TStack<I>* stack, T index) {
     @param  a    The stack.
     @param  item The item to push onto the stack.
     @return Returns the index of the newly stacked item. */
-template<typename T, typename I = int>
+template<typename T, typename I = int_t>
 inline I StackPush (TStack<I>* stack, T item) {
     if (stack == nullptr)
         return -1;
     I size = stack->height,
-      cout = stack->count;
+      count = stack->count;
     if (count >= size)
         return -2;
-    T* items = &stack->element_one;
+    T* items = StackBase<T, I> (stack);
     items[count] = item;
     stack->count = count + 1;
     return count;
@@ -178,14 +190,14 @@ inline I StackPush (TStack<I>* stack, T item) {
     @note We do not delete the item at the 
     @param  a The stack.
     @return Returns the item popped off the stack. */
-template<typename T, typename I = int>
+template<typename T, typename I = int_t>
 inline T StackPop (TStack<I>* stack) {
     if (stack == nullptr)
         return !((T)0);
     I count = stack->count;
     if (count == 0) // Nothing to remove!
         return 0;
-    T* stack = &stack->element_one;
+    T* stack = StackBase<T, I> (stack);
     stack->count = count - 1;
     T item = stack[count - 1];
     return item;
@@ -195,13 +207,27 @@ inline T StackPop (TStack<I>* stack) {
     @param  stack    The stack.
     @param  index The index of the element to get.
     @return Returns -1 if a is null and -2 if the index is out of bounds. */
-template<typename T, typename I = int>
+template<typename T, typename I = int_t>
 inline T StackGet (TStack<I>* stack, T index) {
     if (stack == nullptr)
         return 0;
     if (index >= stack->count)
         return 0;
-    return &stack->element_one + index;
+    return StackBase<T, I> (stack) + index;
+}
+
+/** Returns true if the given stack contains the given address. */
+template<typename T, typename I = int_t>
+inline bool StackContains (TStack<I>* stack, void* address) {
+    if (stack == nullptr)
+        return false;
+    byte* ptr = reinterpret_cast<byte*> (stack),
+        * adr = reinterpret_cast<byte*> (address);
+    if (adr < ptr)
+        return false;
+    if (adr >= ptr + stack->size_bytes)
+        return false;
+    return true;
 }
 
 }       //< namespace _

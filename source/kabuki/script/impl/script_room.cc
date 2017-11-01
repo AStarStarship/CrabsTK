@@ -50,11 +50,6 @@ const char* RequestString (Request r) {
 }
 
 Room::Room (uint_t size) :
-    address_      (0),
-    address_msb_  (0),
-    size_         (size),
-    height_ (0),
-    stack_size_   (0),
     door_         (nullptr),
     xoff_         (nullptr),
     device_       (nullptr),

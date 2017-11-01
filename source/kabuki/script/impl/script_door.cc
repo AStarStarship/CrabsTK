@@ -59,16 +59,23 @@ Slot* Door::GetSlot (int index) {
     return nullptr;
 }
 
-const Operation* Door::AddSlot (Slot* slot) {
-    return SocketAddSlot (slot_, slot);
+uint_t Door::AddSlot (Slot* slot) {
+    return StackPush<Slot*, uint_t> (slots_, slot);
 }
 
-Slot* Door::Contains (void* address) {
-    return SocketFindSlot (slot_, address);
+int_t Door::Contains (void* address) {
+    return StackContains<Door*> (slots_, address);
 }
 
-Slot* Door::ContainsSlot (void* address) {
-    return SocketFindSlot (slot_, address);
+uint_t Door::ContainsSlot (void* address) {
+    uint_t count = slots_->count;
+    for (uint_t i = 0; i < count; ++i) {
+        Slot* slot = nullptr; //< @todo fix me!
+        
+        if (StackContains<Door*> (slots_, address))
+            return i;
+    }
+    return count;
 }
 
 const Operation* Door::ExecAll () {
@@ -82,7 +89,7 @@ const Operation* Door::Star (char_t index, Expression* expr) {
         return &star;
     }
     index -= ' ';
-    if (index >= slot_->num_slots)
+    if (((uint_t)index) >= slots_->count)
         return DoorResult (this, Door::InvalidOperationError);
     return nullptr;
 }

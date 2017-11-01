@@ -21,7 +21,7 @@
 #ifndef SCRIPT_WINDOW_H
 #define SCRIPT_WINDOW_H
 
-#include "module_config.h"
+#include "slot.h"
 
 namespace _ {
 
