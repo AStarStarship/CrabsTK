@@ -20,8 +20,7 @@
 
 namespace _ {
 
-static Table* TableInit (byte* buffer, byte max_keys, uint16_t set_size)
-{
+Table* TableInit (byte* buffer, byte max_keys, uint16_t set_size) {
     if (buffer == nullptr)
         return nullptr;
     Table* table = reinterpret_cast<Table*>(buffer);
@@ -38,7 +37,7 @@ static Table* TableInit (byte* buffer, byte max_keys, uint16_t set_size)
     return table;
 }
 
-static byte TableAdd (Table* table, const char* key) {
+byte TableAdd (Table* table, const char* key) {
     if (table == nullptr) return 0;
     if (key == nullptr) return 0;
     
@@ -318,7 +317,7 @@ static byte TableAdd (Table* table, const char* key) {
     return num_keys;
 }
 
-static byte TableFind (const Table* table, const char* key) {
+byte TableFind (const Table* table, const char* key) {
     if (table == nullptr)
         return 0;
     //PrintLineBreak ("Finding record...", 5);
@@ -451,7 +450,7 @@ static byte TableFind (const Table* table, const char* key) {
     return kInvalidRecord;
 }
 
-inline void TablePrint (Table* table) {
+void TablePrint (Table* table) {
     if (table == nullptr) return;
     byte num_keys = table->num_keys,
         max_keys = table->max_keys,

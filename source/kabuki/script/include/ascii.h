@@ -54,7 +54,8 @@ typedef enum {
     FS,
     GS,
     RS,
-    US
+    US,
+    DEL = 127
 } C0Code;
 
 }       //< namespace ascii

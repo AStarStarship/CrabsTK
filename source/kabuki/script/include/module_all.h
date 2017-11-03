@@ -23,7 +23,10 @@
 #include "utils.h"
 #include "console.h"
 #include "table.h"
-#include "set.h"
+#include "tbook.h"
 #include "log.h"
+#include "tbook.h"
+#include "ascii.h"
+#include "expression.h"
 
 #endif  //< KABUKI_SCRIPT_H

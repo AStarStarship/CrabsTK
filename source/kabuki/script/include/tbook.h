@@ -26,8 +26,8 @@
 namespace _ {
 
 /** A one-to-one map of Key-{Type-Value} tuples.
-    A Dict is a hash-table that uses contiguous memory. The memory layout is
-    the same for all of the Dict types as depicted below:
+    A Book is a hash-table that uses contiguous memory. The memory layout is
+    the same for all of the Book types as depicted below:
 
     @code
     _____________________________________________________
@@ -98,7 +98,7 @@ namespace _ {
     |___________________________________________________| 0x0
     @endcode
 
-    | Dict | Max Values | % Collisions (p) |           Overhead             |
+    | Book | Max Values | % Collisions (p) |           Overhead             |
     |:----:|:----------:|:----------------:|:------------------------------:|
     |  2   |     255    |    0.0001        | Ceiling (0.02*p*2^8)  = 2      |
     |  4   |     2^13   |      0.1         | Ceiling (0.04*p*2^13) = 327.68 |
@@ -109,8 +109,8 @@ namespace _ {
     for a key, there might or might not be a hash table.
 
     How to calculate size:
-    The size of any size collection can be calculated as follows:
-    size = ; * (2*sizeof (TIndex) + sizeof (TSize)) + collissionSize +
+    The size of any size book can be calculated as follows:
+    size = ; * (2*sizeof (TIndex) + sizeof (TData)) + collissionSize +
 
     # Cache Page Optimizations
     In order to optimize the cache pages, we need to group hot data together.
@@ -122,17 +122,17 @@ namespace _ {
     using a nil-terminated list in the Collision List. In the 
 
     # Use Case Scenario
-    We are creating a plug-in DLL. We need to create a collection in the DLL code, and
-    pass it over to the program. The DLL manages the memory for the collection. This
-    collection might contain several million entries, and more than 4GB of data.
+    We are creating a plug-in DLL. We need to create a book in the DLL code, and
+    pass it over to the program. The DLL manages the memory for the book. This
+    book might contain several million entries, and more than 4GB of data.
 
-    ### Why So Many Dict Types?
-    We are running in RAM, and a collection could contain millions of key-value pairs.
+    ### Why So Many Book Types?
+    We are running in RAM, and a book could contain millions of key-value pairs.
     Adding extra bytes would added megabytes of data we don't need. Also, on
     microcontrollers, especially 16-bit ones, will have very little RAM, so we
     need an 16-bit object. It is easy to imagine a complex AI software using
     more than 4GB RAM, or the need to attach a DVD ISO image as a key-value
-    pair, so we need a 64-bit collection.
+    pair, so we need a 64-bit book.
 
     # Design Strengths
     * Uses less memory.
@@ -148,119 +148,124 @@ namespace _ {
     ;
     @endcode
 */
-template<typename TIndex, typename TKey, typename TSize>
-struct KABUKI Dict {
-    TSize  size;        //< Total size of the set.
+template<typename TIndex, typename TKey, typename TData>
+struct KABUKI Book {
+    TData  size;        //< Total size of the set.
     TKey   table_size,  //< Size of the (optional) key strings in bytes.
            pile_size;   //< Size of the (optional) collisions pile in bytes.
     TIndex num_items,   //< Number of items.
            stack_height;   //< Max number of items that can fit in the header.
 };
 
-using Dict2    = Dict<byte    , uint16_t, uint16_t>;
-using Dict4    = Dict<uint16_t, uint16_t, uint32_t>;
-using Dict8    = Dict<uint32_t, uint32_t, uint64_t>;
-using Superset = Dict<index_t , header_t, data_t  >;
+using Book2    = Book<int8_t , uint16_t, uint16_t>;
+using Book4    = Book<int16_t, uint16_t, uint32_t>;
+using Book8    = Book<int32_t, uint32_t, uint64_t>;
 
-template<typename TIndex, typename TKey, typename TSize>
-constexpr uint_t DictOverheadPerIndex () {
-        return sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TSize) + 3);
+template<typename TIndex, typename TKey, typename TData>
+constexpr uint_t BookOverheadPerIndex () {
+        return sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
 };
 
-template<typename TIndex, typename TKey, typename TSize>
-constexpr TSize MinSizeDict (TIndex num_items) {
-    return num_items * sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TSize) + 3);
+template<typename TIndex, typename TKey, typename TData>
+constexpr TData MinSizeBook (TIndex num_items) {
+    return num_items * sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
 };
 
 enum {
-    kMaxNumMappingsDict2   = 255,                //< The number of pages in a Dict2.
-    kMaxNumMappingsDict4   = 8 * 1024,           //< The number of pages in a Dict4.
-    kMaxNumMappingsDict8   = 256 * 1024 * 1024,  //< The number of pages in a Dict8.
-    kOverheadPerDict2Index = DictOverheadPerIndex<byte, uint16_t, uint16_t> (),
-    kOverheadPerDict4Index = DictOverheadPerIndex<uint16_t, uint16_t, uint32_t> (),
-    kOverheadPerDict8Index = DictOverheadPerIndex<uint32_t, uint32_t, uint64_t> (),
+    kMaxNumMappingsBook2   = 255,                //< The number of pages in a Book2.
+    kMaxNumMappingsBook4   = 8 * 1024,           //< The number of pages in a Book4.
+    kMaxNumMappingsBook8   = 256 * 1024 * 1024,  //< The number of pages in a Book8.
+    kOverheadPerBook2Index = BookOverheadPerIndex<byte, uint16_t, uint16_t> (),
+    kOverheadPerBook4Index = BookOverheadPerIndex<uint16_t, uint16_t, uint32_t> (),
+    kOverheadPerBook8Index = BookOverheadPerIndex<uint32_t, uint32_t, uint64_t> (),
 };
     
-/** Initializes a Dict.
+/** Initializes a Book.
     @post    Users might want to call the IsValid () function after construction
              to verify the integrity of the object.
     @warning The reservedNumOperands must be aligned to a 32-bit value, and it
-             will get rounded up to the next higher multiple of 4.
-static Dict* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t size)
-{
+             will get rounded up to the next higher multiple of 4. */
+template<typename TIndex, typename TKey, typename TData>
+Book<typename TIndex, typename TKey, typename TData>*
+BookInit (uintptr_t* buffer, byte max_size, uint16_t table_size, uint16_t size) {
     if (buffer == nullptr)
         return nullptr;
-    if (table_size >= size)
+    if (table_size >= (size - sizeof (Book<TIndex, TKey, TData>)))
         return nullptr;
-    if (table_size < sizeof (Dict) + max_size *
-        (DictOverheadPerIndex<byte, uint16_t, uint16_t, hash16_t> () + 2))
+    if (table_size < sizeof (Book<TIndex, TKey, TData>) + max_size *
+        (BookOverheadPerIndex<byte, uint16_t, uint16_t> () + 2))
         return nullptr;
 
-    Dict2* collection = reinterpret_cast<Dict*> (buffer);
-    collection->size = table_size;
-    collection->table_size = table_size;
-    collection->num_items = 0;
-    collection->stack_height = max_size;
-    collection->pile_size = 1;
-    return collection;
+    Book<TIndex, TKey, TData>* book = reinterpret_cast<Book<TIndex, TKey, TData>*> (buffer);
+    book->size = table_size;
+    book->table_size = table_size;
+    book->num_items = 0;
+    book->stack_height = max_size;
+    book->pile_size = 1;
+    return book;
 }
-*/
+
+
+inline Book<int8_t, uint16_t, uint16_t>* Book2Init (uintptr_t* buffer,
+                                                    byte max_size,
+                                                    uint16_t table_size,
+                                                    uint16_t size) {
+    return BookInit<int8_t, uint16_t, uint16_t> (buffer, max_size, table_size,
+                                                 size);
+}
 
 /** Insets the given key-value pair.
 */
-template<typename TIndex, typename TKey, typename TSize>
-TIndex DictInsert (Dict<TIndex, TKey, TSize>* collection, byte type, 
-               const byte* key, void* data, TIndex index) {
-    if (collection == nullptr) return 0;
+template<typename TIndex, typename TKey, typename TData, typename T, TType kType>
+TIndex BookInsert (Book<TIndex, TKey, TData>* book,  const byte* key, T value, TIndex index) {
+    if (book == nullptr) return 0;
     return ~0;
 }
 
 template<typename TIndex>
-TIndex MaxDictIndexes () {
-    enum {
-        kMaxIndexes = sizeof (TIndex) == 1 ? 255 : sizeof (TIndex) == 2 ? 
-                       8 * 1024 : sizeof (TIndex) == 4 ? 512 * 1024 * 1024 : 0
-    };
-    return kMaxIndexes;
+TIndex MaxBookIndexes () {
+    //return sizeof (TIndex) == 1 ? 255 : sizeof (TIndex) == 2 ? 8 * 1024 : 
+    //                                    sizeof (TIndex) == 4 ? 512 * 1024 * 1024
+    //                            : 0;
+    return ~(TIndex)0;
 }
 
-/** Adds a key-value pair to the end of the collection. */
-template<typename TIndex, typename TKey, typename TSize>
-TIndex DictAdd (Dict<TIndex, TKey, TSize>* collection, const char* key, 
-                TType type, void* data) {
-    if (collection == nullptr) return 0;
+/** Adds a key-value pair to the end of the book. */
+template<typename TIndex, typename TKey, typename TData, typename T, TType type>
+TIndex BookAdd (Book<TIndex, TKey, TData>* book, const char* key, T data) {
+    if (book == nullptr) return 0;
     if (key == nullptr) return 0;
 
     PrintStringLine (key);
 
-    TIndex num_items = collection->num_items,
-        stack_height = collection->stack_height,
+    TIndex num_items = book->num_items,
+        stack_height = book->stack_height,
         temp;
 
-    TKey table_size = collection->table_size;
+    TKey table_size = book->table_size;
 
     if (num_items >= stack_height) return ~0;
     //< We're out of buffered indexes.
 
-    byte* states = reinterpret_cast<byte*> (collection) + 
-                   sizeof (Dict <TIndex, TKey, TSize>);
+    byte* states = reinterpret_cast<byte*> (book) + 
+                   sizeof (Book <TIndex, TKey, TData>);
     TKey* key_offsets = reinterpret_cast<TKey*> (states + stack_height);
-    TSize* data_offsets = reinterpret_cast<TSize*> (states + stack_height *
+    TData* data_offsets = reinterpret_cast<TData*> (states + stack_height *
                                                     (sizeof (TKey)));
-    TSize* hashes = reinterpret_cast<TSize*> (states + stack_height *
-                                              (sizeof (TKey) + sizeof (TSize))),
+    TData* hashes = reinterpret_cast<TData*> (states + stack_height *
+                                              (sizeof (TKey) + sizeof (TData))),
          * hash_ptr;
     TIndex* indexes = reinterpret_cast<TIndex*> (states + stack_height *
                                                  (sizeof (TKey) + 
-                                                  sizeof (TSize) +
+                                                  sizeof (TData) +
                                                   sizeof (TIndex))),
         *unsorted_indexes = indexes + stack_height,
         *collission_list = unsorted_indexes + stack_height;
-    char* keys = reinterpret_cast<char*> (collection) + table_size - 1,
+    char* keys = reinterpret_cast<char*> (book) + table_size - 1,
         *destination;
 
     // Calculate space left.
-    TKey value = table_size - stack_height * DictOverheadPerIndex<TIndex, TKey, TSize> (),
+    TKey value = table_size - stack_height * BookOverheadPerIndex<TIndex, TKey, TData> (),
         key_length = static_cast<uint16_t> (strlen (key)),
         pile_size;
 
@@ -269,7 +274,7 @@ TIndex DictAdd (Dict<TIndex, TKey, TSize>* collection, const char* key,
             "%20s: %p\n%20s: %u\n", key, "hashes", hashes, "key_offsets",
             key_offsets, "keys", keys, "indexes", indexes, "value", value);
 
-    TSize hash = Hash16 (key),
+    TData hash = Hash16 (key),
         current_hash;
 
     if (key_length > value) {
@@ -280,7 +285,7 @@ TIndex DictAdd (Dict<TIndex, TKey, TSize>* collection, const char* key,
     //print ();
 
     if (num_items == 0) {
-        collection->num_items = 1;
+        book->num_items = 1;
         *hashes = hash;
         *key_offsets = static_cast<uint16_t> (key_length);
         *indexes = ~0;
@@ -289,7 +294,7 @@ TIndex DictAdd (Dict<TIndex, TKey, TSize>* collection, const char* key,
 
         StringCopy (destination, key);
         printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
-        DictPrint (collection);
+        BookPrint (book);
         return 0;
     }
 
@@ -342,7 +347,7 @@ TIndex DictAdd (Dict<TIndex, TKey, TSize>* collection, const char* key,
                 temp = indexes[mid];
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;  //< Load the index in the collision table.
-                while (index < MaxDictIndexes<TIndex> ()) {
+                while (index < MaxBookIndexes<TIndex> ()) {
                     printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
                         printf ("but table already contains key at "
@@ -362,7 +367,7 @@ TIndex DictAdd (Dict<TIndex, TKey, TSize>* collection, const char* key,
                 key_offsets[num_items] = value;
 
                 // Update the collision table.
-                pile_size = collection->pile_size;
+                pile_size = book->pile_size;
                 // Shift the collisions table up one element and insert 
                 // the unsorted collision index.
                 // Then move to the top of the collisions list.
@@ -374,12 +379,12 @@ TIndex DictAdd (Dict<TIndex, TKey, TSize>* collection, const char* key,
                 }
                 *temp_ptr = num_items;
 
-                collection->pile_size = pile_size + 1;
+                book->pile_size = pile_size + 1;
                 printf ("\n\ncollision index: %u\n", temp);
                 // Store the collision index.
                 indexes[num_items] = temp;   //< Store the collision index
-                collection->num_items = ; + 1;
-                hashes[num_items] = ~0;      //< Dict the last hash to 0xFFFF
+                book->num_items = num_items + 1;
+                hashes[num_items] = ~0;      //< Book the last hash to 0xFFFF
 
                                             // Move collisions pointer to the unsorted_indexes.
                 indexes += stack_height;
@@ -387,7 +392,7 @@ TIndex DictAdd (Dict<TIndex, TKey, TSize>* collection, const char* key,
                 //< Add the newest char to the end.
                 indexes[num_items] = num_items;
 
-                DictPrint (collection);
+                BookPrint (book);
                 printf ("Done inserting.\n");
                 return num_items;
             }
@@ -417,7 +422,7 @@ TIndex DictAdd (Dict<TIndex, TKey, TSize>* collection, const char* key,
                         index, num_items, collision_index);
                 key_offsets[num_items] = value;
 
-                pile_size = collection->pile_size;
+                pile_size = book->pile_size;
                 indexes[mid] = static_cast<byte> (pile_size);
                 indexes[num_items] = static_cast<byte> (pile_size);
 
@@ -430,20 +435,20 @@ TIndex DictAdd (Dict<TIndex, TKey, TSize>* collection, const char* key,
                 *temp_ptr = num_items;
                 ++temp_ptr;
                 *temp_ptr = ~0;
-                collection->pile_size = pile_size + 3;
+                book->pile_size = pile_size + 3;
                 //< Added one term-byte and two indexes.
 
                 // Add the newest key at the end.
                 indexes[num_items] = num_items;
 
-                // Dict the last hash to 0xFFFF
+                // Book the last hash to 0xFFFF
                 hashes[num_items] = ~0;
 
-                collection->num_items = num_items + 1;
+                book->num_items = num_items + 1;
 
-                DictPrint (collection);
+                BookPrint (book);
 
-                DictPrint (collection);
+                BookPrint (book);
                 std::cout << "Done inserting.\n";
                 // Then it was a collision so the table doesn't contain string.
                 return num_items;
@@ -455,12 +460,12 @@ TIndex DictAdd (Dict<TIndex, TKey, TSize>* collection, const char* key,
 
     // The hash was not in the table.
 
-    value = key_offsets[; - 1] + key_length + 1;
+    value = key_offsets[num_items - 1] + key_length + 1;
     destination = keys - value;
 
     printf ("The hash 0x%x was not in the table so inserting %s into mid:"
             " %i at index %u before hash 0x%x \n", hash, key, mid,
-            Diff (collection, destination), hashes[mid]);
+            Diff (book, destination), hashes[mid]);
 
     // First copy the char and set the key offset.
     StringCopy (destination, key);
@@ -471,10 +476,10 @@ TIndex DictAdd (Dict<TIndex, TKey, TSize>* collection, const char* key,
     hash_ptr += num_items;
     //*test = hashes;
     printf ("l_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u\n",
-            num_items, Diff (collection, hashes),
-            Diff (collection, hash_ptr), Diff (collection, hashes + mid));
+            num_items, Diff (book, hashes),
+            Diff (book, hash_ptr), Diff (book, hashes + mid));
     hashes += mid;
-    DictPrint (collection);
+    BookPrint (book);
     while (hash_ptr > hashes) {
         *hash_ptr = *(hash_ptr - 1);
         --hash_ptr;
@@ -495,54 +500,58 @@ TIndex DictAdd (Dict<TIndex, TKey, TSize>* collection, const char* key,
     }
     *temp_ptr = num_items;
 
-    collection->num_items = ; + 1;
+    book->num_items = num_items + 1;
 
-    DictPrint (collection);
+    BookPrint (book);
     std::cout << "Done inserting.\n";
     PrintLine ();
 
     return num_items;
 }
 
-/** Adds a key-value pair to the end of the collection. */
-//inline byte Add2 (Dict2* collection, const char* key, byte data) {
-//    return DictAdd<byte, uint16_t, uint16_t, hash16_t> (collection, key, UI1, &data);
+template<typename T, TType kType>
+inline int8_t Book2Add (Book2* book, const char* key, T data) {
+    return BookAdd<int8_t, uint16_t, uint16_t, T, kType> (book, key, data);
+}
+/** Adds a key-value pair to the end of the book. */
+//inline byte Add2 (Book2* book, const char* key, byte data) {
+//    return BookAdd<byte, uint16_t, uint16_t, hash16_t> (book, key, UI1, &data);
 //}
 
 /** Returns  the given query char in the hash table. */
-template<typename TIndex, typename TKey, typename TSize>
-TIndex DictFind (Dict<TIndex, TKey, TSize>* collection, const char* key) {
-    if (collection == nullptr)
+template<typename TIndex, typename TKey, typename TData>
+TIndex BookFind (Book<TIndex, TKey, TData>* book, const char* key) {
+    if (book == nullptr)
         return 0;
     PrintLineBreak ("Finding record...", 5);
     TIndex index,
-        ; = collection->num_items,
-        stack_height = collection->stack_height,
+        num_items = book->num_items,
+        stack_height = book->stack_height,
         temp;
 
-    if (key == nullptr || ; == 0)
+    if (key == nullptr || num_items == 0)
         return ~((TIndex)0);
 
-    TKey table_size = collection->table_size;
+    TKey table_size = book->table_size;
 
-    const TSize* hashes = reinterpret_cast<const TSize*>
-        (reinterpret_cast<const byte*> (collection) +
-         sizeof (Dict<TIndex, TKey, TSize>));
+    const TData* hashes = reinterpret_cast<const TData*>
+        (reinterpret_cast<const byte*> (book) +
+         sizeof (Book<TIndex, TKey, TData>));
     const TKey* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
                                                                 stack_height);
-    const byte* indexes = reinterpret_cast<const byte*>(key_offsets +
-                                                        stack_height),
+    const TIndex* indexes = reinterpret_cast<const TIndex*>(key_offsets +
+                                                            stack_height),
         *unsorted_indexes = indexes + stack_height,
         *collission_list = unsorted_indexes + stack_height;
-    const char* keys = reinterpret_cast<const char*> (collection) + table_size - 1;
+    const char* keys = reinterpret_cast<const char*> (book) + table_size - 1;
     const TIndex* collisions,
-        *temp_ptr;
+                * temp_ptr;
 
-    TSize hash = Hash16 (key);
+    TData hash = Hash16 (key);
 
     printf ("\nSearching for key \"%s\" with hash 0x%x\n", key, hash);
 
-    if (; == 1) {
+    if (num_items == 1) {
         if (strcmp (key, keys - key_offsets[0]) != 0) {
             printf ("Did not find key %s\n", key);
             return ~((TIndex)0);
@@ -554,15 +563,15 @@ TIndex DictFind (Dict<TIndex, TKey, TSize>* collection, const char* key) {
 
     // Perform a binary search to find the first instance of the hash the 
     // binary search yields. If the mid is odd, we need to subtract the 
-    // sizeof (TSize*) in order to get the right pointer address.
+    // sizeof (TData*) in order to get the right pointer address.
     int low = 0,
         mid,
-        high = ; - 1;
+        high = num_items - 1;
 
     while (low <= high) {
         mid = (low + high) >> 1;    //< >> 1 to /2
 
-        TSize current_hash = hashes[mid];
+        TData current_hash = hashes[mid];
         printf ("low: %i mid: %i high %i hashes[mid]:%x\n", low, mid,
                 high, hashes[mid]);
 
@@ -576,9 +585,8 @@ TIndex DictFind (Dict<TIndex, TKey, TSize>* collection, const char* key) {
                     "%s\n", mid, hashes[mid], key);
 
             // Check for collisions
-
-            collisions = reinterpret_cast<const byte*>(key_offsets) +
-                stack_height * sizeof (uint16_t);
+            collisions = reinterpret_cast<const TIndex*>(key_offsets) +
+                stack_height * sizeof (TKey);;
             index = collisions[mid];
 
             if (index < ~0) {
@@ -594,7 +602,7 @@ TIndex DictFind (Dict<TIndex, TKey, TSize>* collection, const char* key) {
 
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;
-                while (index < MaxDictIndexes<TIndex> ()) {
+                while (index < MaxBookIndexes<TIndex> ()) {
                     printf ("comparing to \"%s\"\n", keys -
                             key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
@@ -638,30 +646,35 @@ TIndex DictFind (Dict<TIndex, TKey, TSize>* collection, const char* key) {
     return ~((TIndex)0);
 }
 
-//static byte Find2 (Dict2* collection, const char* key) {
-//    return DictFind<byte, uint16_t, uint16_t, hash16_t> (collection, key);
+int8_t Book2Find (Book2* book, const char* key) {
+
+    return BookFind<int8_t, uint16_t, uint16_t> (book, key);
+}
+
+//static byte Find2 (Book2* book, const char* key) {
+//    return BookFind<byte, uint16_t, uint16_t, hash16_t> (book, key);
 //}
 
 /** Prints this object out to the console. */
-template<typename TIndex, typename TKey, typename TSize>
-void DictPrint (const Dict<TIndex, TKey, TSize>* collection) {
-    if (collection == nullptr) return;
-    TIndex ; = collection->num_items,
-           stack_height = collection->stack_height,
+template<typename TIndex, typename TKey, typename TData>
+void BookPrint (const Book<TIndex, TKey, TData>* book) {
+    if (book == nullptr) return;
+    TIndex num_items = book->num_items,
+           stack_height = book->stack_height,
            collision_index,
            temp;
-    TKey table_size = collection->table_size,
-         pile_size = collection->pile_size;
+    TKey table_size = book->table_size,
+         pile_size = book->pile_size;
     PrintLine ('_');
     
-    if (sizeof (TSize) == 2)
-        printf ("| Dict2: %p\n", collection);
-    else if (sizeof (TSize) == 4)
-        printf ("| Dict4: %p\n", collection);
-    else if (sizeof (TSize) == 8)
-        printf ("| Dict8: %p\n", collection);
+    if (sizeof (TData) == 2)
+        printf ("| Book2: %p\n", book);
+    else if (sizeof (TData) == 4)
+        printf ("| Book4: %p\n", book);
+    else if (sizeof (TData) == 8)
+        printf ("| Book8: %p\n", book);
     else
-        printf ("| Invalid Dict type: %p\n", collection);
+        printf ("| Invalid Book type: %p\n", book);
     printf ("| ;: %u stack_height: %u  "
             "pile_size: %u  size: %u", num_items,
             stack_height, pile_size, table_size);
@@ -670,21 +683,21 @@ void DictPrint (const Dict<TIndex, TKey, TSize>* collection) {
     for (int i = 0; i < 79; ++i) putchar ('_');
     std::cout << '\n';
 
-    const byte* states = reinterpret_cast<const byte*> (collection) +
-                         sizeof (Dict <TIndex, TKey, TSize>);
+    const byte* states = reinterpret_cast<const byte*> (book) +
+                         sizeof (Book <TIndex, TKey, TData>);
     const TKey* key_offsets = reinterpret_cast<const TKey*> 
                               (states + stack_height);
-    const TSize* data_offsets = reinterpret_cast<const TSize*> 
+    const TData* data_offsets = reinterpret_cast<const TData*> 
                                 (states + stack_height *(sizeof (TKey)));
-    const TSize* hashes = reinterpret_cast<const TSize*> (states + stack_height *
-        (sizeof (TKey) + sizeof (TSize)));
+    const TData* hashes = reinterpret_cast<const TData*> (states + stack_height *
+        (sizeof (TKey) + sizeof (TData)));
     const TIndex* indexes = reinterpret_cast<const TIndex*> 
                             (states + stack_height * (sizeof (TKey) + 
-                             sizeof (TSize) + sizeof (TIndex))),
+                             sizeof (TData) + sizeof (TIndex))),
         * unsorted_indexes = indexes + stack_height,
         * collission_list = unsorted_indexes + stack_height,
         *cursor;
-    const char* keys = reinterpret_cast<const char*> (collection) + table_size - 1;
+    const char* keys = reinterpret_cast<const char*> (book) + table_size - 1;
 
     printf ("| %3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
             "hash_e", "hash_u", "hash_s", "index_u", "collisions");
@@ -703,7 +716,7 @@ void DictPrint (const Dict<TIndex, TKey, TSize>* collection) {
                 hashes[unsorted_indexes[i]], hashes[i],
                 unsorted_indexes[i], collision_index);
 
-        if (collision_index != ~0 && i < ;) {
+        if (collision_index != ~0 && i < num_items) {
             // Print collisions.
             cursor = &collission_list[collision_index];
             temp = *cursor;
@@ -722,79 +735,83 @@ void DictPrint (const Dict<TIndex, TKey, TSize>* collection) {
     }
     PrintLine ("|", '_');
 
-    PrintMemory (reinterpret_cast<const byte*> (collection) + 
-                 sizeof (Dict<TIndex, TKey, TSize>), collection->size);
+    PrintMemory (reinterpret_cast<const byte*> (book) + 
+                 sizeof (Book<TIndex, TKey, TData>), book->size);
     std::cout << '\n';
 }
 
-/** Deletes the collection contents without wiping the contents. */
-template<typename TIndex, typename TKey, typename TSize>
-void Clear (Dict<TIndex, TKey, TSize>* collection) {
-    if (collection == nullptr) return;
-    collection->num_items = 0;
-    collection->pile_size = 0;
+inline void Book2Print (const Book2* book) {
+    BookPrint<int8_t, uint16_t, uint16_t> (book);
 }
 
-/** Deletes the collection contents by overwriting it with zeros. */
-template<typename TIndex, typename TKey, typename TSize>
-void Wipe (Dict<TIndex, TKey, TSize>* collection) {
-    if (collection == nullptr) return;
-    TSize size = collection->size;
-    memset (collection, 0, size);
+/** Deletes the book contents without wiping the contents. */
+template<typename TIndex, typename TKey, typename TData>
+void BookClear (Book<TIndex, TKey, TData>* book) {
+    if (book == nullptr) return;
+    book->num_items = 0;
+    book->pile_size = 0;
+}
+
+/** Deletes the book contents by overwriting it with zeros. */
+template<typename TIndex, typename TKey, typename TData>
+void BookWipe (Book<TIndex, TKey, TData>* book) {
+    if (book == nullptr) return;
+    TData size = book->size;
+    memset (book, 0, size);
 }
 
 /** Returns true if this expr contains only the given address. */
-template<typename TIndex, typename TKey, typename TSize>
-bool Contains (Dict<TIndex, TKey, TSize>* collection, void* data) {
-    if (collection == nullptr) return false;
-    if (data < collection) return false;
+template<typename TIndex, typename TKey, typename TData>
+bool BookContains (Book<TIndex, TKey, TData>* book, void* data) {
+    if (book == nullptr) return false;
+    if (data < book) return false;
     if (data > GetEndAddress()) return false;
     return true;
 }
 
-/** Removes that object from the collection and copies it to the destination. */
-template<typename TIndex, typename TKey, typename TSize>
-bool RemoveCopy (Dict<TIndex, TKey, TSize>* collection, void* destination, 
+/** Removes that object from the book and copies it to the destination. */
+template<typename TIndex, typename TKey, typename TData>
+bool BookRemoveCopy (Book<TIndex, TKey, TData>* book, void* destination,
                  size_t buffer_size, void* data)
 {
-    if (collection == nullptr) return false;
+    if (book == nullptr) return false;
 
     return false;
 }
 
-/** Removes the item at the given address from the collection. */
-template<typename TIndex, typename TKey, typename TSize>
-bool Remove (Dict<TIndex, TKey, TSize>* collection, void* adress) {
-    if (collection == nullptr) return false;
+/** Removes the item at the given address from the book. */
+template<typename TIndex, typename TKey, typename TData>
+bool BookRemove (Book<TIndex, TKey, TData>* book, void* adress) {
+    if (book == nullptr) return false;
 
     return false;
 }
 
-/** Removes all but the given collection from the collection. */
-template<typename TIndex, typename TKey, typename TSize>
-bool Retain (Dict<TIndex, TKey, TSize>* collection) {
-    if (collection == nullptr) return false;
+/** Removes all but the given book from the book. */
+template<typename TIndex, typename TKey, typename TData>
+bool BookRetain (Book<TIndex, TKey, TData>* book) {
+    if (book == nullptr) return false;
 
     return false;
 }
 
-/** Creates a collection from dynamic memory. */
-template<typename TIndex, typename TOffset, typename TSize, typename TSize>
-inline Dict<TIndex, TOffset, TSize>* DictCreate (TIndex buffered_indexes,
-                                                        TSize table_size,
-                                                        TSize size) {
-    Dict<TIndex, TOffset, TSize>* collection = New<Dict, uint_t> ();
-    return collection;
+/** Creates a book from dynamic memory. */
+template<typename TIndex, typename TOffset, typename TData>
+inline Book<TIndex, TOffset, TData>* BookCreate (TIndex buffered_indexes,
+                                                        TData table_size,
+                                                        TData size) {
+    Book<TIndex, TOffset, TData>* book = New<Book, uint_t> ();
+    return book;
 }
 
-/** Prints the given Dict to the console. */
-template<typename TIndex, typename TKey, typename TSize>
-inline void DictPrint (Dict<TIndex, TKey, TSize>* collection) {
+/** Prints the given Book to the console. */
+template<typename TIndex, typename TKey, typename TData>
+inline void BookPrint (Book<TIndex, TKey, TData>* book) {
 
 }
 
-//inline void DictPrint (Dict2* collection) {
-//    return DictPrint<byte, uint16_t, uint16_t, hash16_t> (collection);
+//inline void BookPrint (Book2* book) {
+//    return BookPrint<byte, uint16_t, uint16_t, hash16_t> (book);
 //}
 
 }       //< namespace _

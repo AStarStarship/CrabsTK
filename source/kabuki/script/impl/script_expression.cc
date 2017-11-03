@@ -19,6 +19,8 @@
 #include "../include/slot.h"
 #include "../include/args.h"
 #include "../include/clock.h"
+#include "../include/room.h"
+#include "../include/ascii.h"
 
 namespace _ {
 
@@ -44,27 +46,29 @@ const Operation* Result (Expression* expr, Expression::Error error) {
     return 0;
 }
 
-const Operation* Result (Expression* expr, Expression::Error error, const uint_t* header) {
-    // @todo Write me.
-    return 0;
-}
-
-const Operation* Result (Expression* expr, Expression::Error error, const uint_t* header,
-    byte offset) {
-    // @todo Write me.
-    return 0;
-}
-
-const Operation* Result (Expression* expr, Expression::Error error, const uint_t* header,
-    byte offset, byte* address) {
+const Operation* Result (Expression* expr, Expression::Error error,
+                         const uint_t* header) {
     // @todo Write me.
     return 0;
 }
 
 const Operation* Result (Expression* expr, Expression::Error error, 
-                                   const uint_t* header, byte offset, void* address)
-{
+                         const uint_t* header, byte offset) {
+    // @todo Write me.
     return 0;
+}
+
+const Operation* Result (Expression* expr, Expression::Error error, 
+                         const uint_t* header, byte offset, byte* address) {
+    // @todo Write me.
+    return 0;
+}
+
+const Operation* Result (Expression* expr, Expression::Error error, 
+                         const uint_t* header, byte offset, uintptr_t* address)
+{
+    std::cout << "\nBin " << ExpressionErrorString (error) << " Error!\n";
+    return reinterpret_cast<const Operation*> (1);
 }
 
 uintptr_t* ExpressionBinAddress (Expression* expr) {
@@ -202,14 +206,15 @@ const Operation* ExpressionEnterState (Expression* expr, Expression::State state
     return 0;
 }
 
-const Operation* ExpressionPushScanHeader (Expression* expr, const uint_t* header) {
+const Operation* ExpressionPushScanHeader (Expression* expr, 
+                                           const uint_t* header) {
     if (header == nullptr)
         return Result (expr, Expression::RoomError);
     uint_t verify_count = expr->verify_count,
-        stack_size = expr->stack_size;
+           stack_size = expr->stack_size;
     expr->type_index = *header++;
     if (verify_count >= stack_size)
-        return Result (expr, Expression::StackOverflowError, header, 0, ExpressionBout (expr));
+        return Result (expr, Expression::StackOverflowError, header);
 
     // Move the current header to the scan stack
     const uint_t* current_header = const_cast<const uint_t*> (expr->header);
@@ -270,21 +275,21 @@ void ExpressionScan (Expression* expr, Portal* input) {
                       space,        //< Space left in the right buffer.
                       length,       //< Length of the ring buffer data.
                       type;         //< Current type.
-    byte              bout_state,     //< Current bin FSM state.
+    byte              bout_state,   //< Current bin FSM state.
                       b;            //< Current byte being verified.
     hash16_t          hash;         //< Hash of the ESC being verified.
     timestamp_t       timestamp,    //< Last time when the expression ran.
                       delta_t;      //< Time delta between the last timestamp.
-//    Expression      * expression;   //< Current Expression.
+    //Expression      * expression; //< Current Expression.
     const Operation * op;           //< Current Operation.
-    const uint_t        * header;       //< Header of the current Operation being verified.
+    Operand         * operand;      //< The operand.
+    const uint_t    * header;       //< Header of the current Operation being verified.
     Bin             * bin;          //< Bin.
     byte            * begin,        //< Beginning of the ring buffer.
                     * end,          //< End of the ring buffer.
                     * start,        //< Start of the ring buffer data.
                     * stop;         //< Stop of the ring buffer data.
     const Operation * result;       //< The result of the Scan.
-    Operand         * operand;      //< The operand.
 
     if (expr == nullptr) {
         PrintDebug ("a = null");
@@ -418,22 +423,21 @@ void ExpressionScan (Expression* expr, Portal* input) {
 
             operand = expr->operand;
             if (operand == nullptr) {
-                // Check if it is a Procedure Call or Star.
-                operand = expr->operand;
-                expr->result = nullptr;
+                // Push the Room onto the stack.
+                operand = ChineseRoom ();
+                // Check if it is a Star Operation.
                 op = operand->Star (b, nullptr);
-                operand = expr->result;
-                if (!operand) {
-                    if (op == nullptr) {
-                        PrintError ("Invalid op");
-                        ExpressionEnterState (expr, Expression::LockedState);
-                        return;
-                    }
-                    // Else it was a function call.
-                    ExpressionEnterState (expr, Expression::ScanningArgsState);
+                expr->result = op;
+                if (op == nullptr) {
+                    PrintError ("Invalid op");
+                    ExpressionEnterState (expr, Expression::LockedState);
                     return;
                 }
+
+                ExpressionEnterState (expr, Expression::ScanningArgsState);
+                return;
             } else {
+                // There is an operation on the stack.
                 // Verify byte as address.
                 header = const_cast<const uint_t*> (expr->header);
                 if (!expr->header) {
@@ -476,6 +480,12 @@ void ExpressionScan (Expression* expr, Portal* input) {
             }
         } else if (bout_state == Expression::HandlingErrorState) {
             PrintDebug ("HandlingErrorState.");
+        } else if (bout_state == Expression::DisconnectedState) {
+            if (b != ascii::BEL) {
+                ExpressionEnterState (expr, Expression::AwaitingAckState);
+            } else {
+
+            }
 
         } else if (bout_state >= Bout::LockedState) {
             PrintDebug ("Bout::LockedState.");
@@ -548,6 +558,11 @@ void ExpressionClear (Expression* expr) {
     bin->start = Diff (expr, begin);
     bin->stop  = Diff (expr, start + 1);
 }
+
+bool Args (Expression* expr, const uint_t* params, void** args) {
+    return BinRead (ExpressionBin (expr), params, args);
+}
+
 
 const Operation* Result (Expression* expr, const uint_t* params, void** args) {
     return BoutWrite (ExpressionBout (expr), params, args);

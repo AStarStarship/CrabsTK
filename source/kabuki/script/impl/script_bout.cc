@@ -56,20 +56,20 @@ const Operation* BoutResult (Bout* bout, Bout::Error error) {
 }
 
 const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header) {
-    // @todo Write me.
-    return 0;
+    std::cout << "\nBout " << BoutErrorString (error) << " Error!\n";
+    return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header,
     byte offset) {
-    // @todo Write me.
-    return 0;
+    std::cout << "\nBout " << BoutErrorString (error) << " Error!\n";
+    return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header,
     byte offset, byte* address) {
-    // @todo Write me.
-    return 0;
+    std::cout << "\nBout " << BoutErrorString (error) << " Error!\n";
+    return reinterpret_cast<const Operation*> (1);
 }
 
 Bout* BoutInit (uintptr_t* buffer, uint_t size) {
@@ -77,7 +77,7 @@ Bout* BoutInit (uintptr_t* buffer, uint_t size) {
     if (buffer == nullptr) return nullptr;
 
     Bout* bout = reinterpret_cast<Bout*> (buffer);
-    bout->size = size - (4 * sizeof (uint_t));
+    bout->size = size - sizeof (Bout);
     bout->start = 0;
     bout->stop = 0;
     bout->read = 0;
@@ -129,7 +129,8 @@ int BoutStreamByte (Bout* bout) {
 void BoutPrint (Bout* bout) {
     PrintLine ('_');
     if (bout == nullptr) {
-        printf ("| Bout null\n");
+        printf ("| Bout: NIL\n");
+        PrintLine ('_');
         return;
     }
     uint_t size = bout->size;
@@ -139,6 +140,7 @@ void BoutPrint (Bout* bout) {
 }
 
 const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
+    BoutPrint (bout);
     //printf ("\n\n| Writing to %p\n", tx);
     if (bout == nullptr)
         return BoutResult (bout, Bout::RoomError);
@@ -164,13 +166,13 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     ++params;
     if (num_params == 0) return 0;          //< Nothing to do.
 
-    uint_t size = bout->size,               //< Size of the buffer.
-        space,                              //< Space in the buffer.
-        index,                              //< Index in the params.
-        length,                             //< Length of a type to write.
-        obj_size_width;                   //< Width of the array size.
+    uint_t   size = bout->size,             //< Size of the buffer.
+             space,                         //< Space in the buffer.
+             index,                         //< Index in the params.
+             length,                        //< Length of a type to write.
+             obj_size_width;                //< Width of the array size.
     hash16_t hash = 0;                      //< 16-bit prime hash.
-    const uint_t* param = params;               //< Pointer to the current param.
+    const uint_t* param = params;           //< Pointer to the current param.
     // Convert the socket offsets to pointers.
     byte* begin = &bout->buffer,            //< Beginning of the buffer.
         * end   = begin + size,             //< End of the buffer.
@@ -189,8 +191,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 
     space = SlotSpace (start, stop, size);
 
-    //std::cout << "\n| space: " << space
-    //          << "\n| address: \"";
+    std::cout << "\n| space: " << space
+              << "\n| address: \"";
 
     // Check if the buffer has enough room.
     if (space == 0)
@@ -203,10 +205,10 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     for (index = 0; index < num_params; ++index) {
         type = *param;
         ++param;
-//#if DEBUG_SCRIPT
-//        printf ("\n| %i:%u:%s start: %u, stop: %u hash: ", index, type, 
-//                TypeString (type), Diff (begin, start), Diff (begin, stop));
-//#endif
+#if DEBUG_SCRIPT
+        printf ("\n| %i:%u:%s start: %u, stop: %u hash: ", index, type, 
+                TypeString (type), Diff (begin, start), Diff (begin, stop));
+#endif
         switch (type) {
             case NIL:
                 break;
@@ -214,39 +216,39 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             case ADR: //< _W_r_i_t_e__A_d_d_r_e_s_s__S_t_r_i_n_g________________
             case STR: //< _W_r_i_t_e__U_T_F_-_8__S_t_r_i_n_g____________________
                 if (space == 0)
-                    return BoutResult (bout, Bout::BufferOverflowError, params, index,
-                                       start);
+                    return BoutResult (bout, Bout::BufferOverflowError, params,
+                                       index, start);
                 --space;
                 length = *param;   //< Load the max char length.
                 ++param;
 
                 //strings = reinterpret_cast<const byte**> (args);
                 //printf ("\ntestStrings at after: 0x%p\nstring1: %s\n"
-                //        "string2: %s\n", args, strings[0], strings[1]);
+                //       "string2: %s\n", args, strings[0], strings[1]);
 
                 // Load the source data pointer and increment args.fs
                 ui1_ptr = reinterpret_cast<const byte*> (args[index]);
 
-                //printf ("Before trying to print 0x%p: %s\n", ui1_ptr, ui1_ptr);
-                //print ();
-                //printf ("\nWriting chars: ");
+                printf ("Before trying to print 0x%p: %s\n", ui1_ptr, ui1_ptr);
+                printf ("\nWriting chars: ");
 
                 // We know we will always write at least one null-term byte.
                 ui1 = *ui1_ptr;
+
                 *stop = ui1;
                 if (++stop >= end) stop -= size;
                 hash = Hash16 (ui1, hash);
-                //  std::cout << ui1;
+                  std::cout << ui1;
 
                 while (ui1 != 0) {
                     if (space-- == 0)
-                        return BoutResult (bout, Bout::BufferOverflowError, params, index,
-                                           start);
+                        return BoutResult (bout, Bout::BufferOverflowError,
+                                           params, index, start);
                     ++ui1_ptr;
                     ui1 = *ui1_ptr;     // Read byte.
                     hash = Hash16 (ui1, hash);
 
-                    //std::cout <<ui1);
+                    std::cout <<ui1;
 
                     *stop = ui1;        // Write byte
                     if (++stop >= end) stop -= size;
@@ -256,14 +258,14 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                     if (++stop >= end) stop -= size;
                     break;
                 }
-                //std::cout << '\n';
+                std::cout << '\n';
 
                 break;
             case ST2: //< _W_r_i_t_e__U_T_F_-_8__S_t_r_i_n_g____________________
 #if USING_UTF16
                 if (space == 0)
-                    return BoutResult (bout, Bout::BufferOverflowError, params, index,
-                        start);
+                    return BoutResult (bout, Bout::BufferOverflowError, params,
+                                       index, start);
                 --space;
                 length = *param;   //< Load the max char length.
                 ++param;
@@ -275,7 +277,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 // Load the source data pointer and increment args.fs
                 ui2_ptr = reinterpret_cast<const uint16_t*> (args[index]);
 
-                //printf ("Before trying to print 0x%p: %s\n", ui2_ptr, ui2_ptr);
+                //printf ("Before trying to print 0x%p: %s\n", ui2_ptr, 
+                //        ui2_ptr);
                 //print ();
                 //printf ("\nWriting chars: ");
 
@@ -288,8 +291,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 
                 while (ui2 != 0) {
                     if (space-- == 0)
-                        return BoutResult (bout, Bout::BufferOverflowError, params, index,
-                            start);
+                        return BoutResult (bout, Bout::BufferOverflowError,
+                                           params, index, start);
                     ++ui2_ptr;
                     ui2 = *ui2_ptr;     // Read byte.
                     hash = Hash16UI2 (ui2, hash);
@@ -314,8 +317,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 #if USING_1_BYTE_TYPES
                 // Check if the buffer has enough room.
                 if (space-- == 0)
-                    return BoutResult (bout, Bout::BufferOverflowError, params, index,
-                                        start);
+                    return BoutResult (bout, Bout::BufferOverflowError, params,
+                                       index, start);
 
                 // Load pointer and read data to write.
                 ui1_ptr = reinterpret_cast<const byte*> (args[index]);
@@ -336,8 +339,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 // Align the buffer to a word boundary and check if the 
                 // buffer has enough room.
                 if (space < sizeof (uint16_t))
-                    return BoutResult (bout, Bout::BufferOverflowError, params, index,
-                                       start);
+                    return BoutResult (bout, Bout::BufferOverflowError, 
+                                       params, index, start);
                 space -= sizeof (uint16_t);
 
                 // Load pointer and value to write.
@@ -362,7 +365,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 goto InvalidType;
 #endif
 
-            case SI4: //< _W_r_i_t_e__3_2_-_b_i_t__T_y_p_e_s____________________________
+            case SI4: //< _W_r_i_t_e__3_2_-_b_i_t__T_y_p_e_s____________________
             case UI4:
             case FLT:
             case TMS:
@@ -371,8 +374,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 // has enough room.
 
                 if (space < sizeof (uint32_t))
-                    return BoutResult (bout, Bout::BufferOverflowError, params, index,
-                                        start);
+                    return BoutResult (bout, Bout::BufferOverflowError, params,
+                                       index, start);
                 space -= sizeof (uint64_t);
 
                 // Load pointer and value to write.
@@ -408,7 +411,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 goto InvalidType;
 #endif
 
-            case TMU: //< _W_r_i_t_e__6_4_-_b_i_t__T_y_p_e_s____________________________
+            case TMU: //< _W_r_i_t_e__6_4_-_b_i_t__T_y_p_e_s____________________
             case SI8:
             case UI8:
             case DBL:
@@ -416,8 +419,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 // Align the buffer to a word boundary and check if the buffer
                 // has enough room.
                 if (space < sizeof (uint64_t))
-                    return BoutResult (bout, Bout::BufferOverflowError, params, index,
-                                        start);
+                    return BoutResult (bout, Bout::BufferOverflowError, params, 
+                                       index, start);
                 space -= sizeof (uint64_t);
 
                 // Load pointer and value to write.
@@ -478,7 +481,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 goto InvalidType;
 #endif
 
-            case SV2: //< _W_r_i_t_e__2_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t____________
+            case SV2: //< _W_r_i_t_e__2_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_____
 
 #if USING_VARINT2
                 // Load number to write and increment args.
@@ -546,7 +549,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             case UV2:
                 goto InvalidType;
 #endif
-            case SV4: //< _W_r_i_t_e__4_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t____________
+            case SV4: //< _W_r_i_t_e__4_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_____
 
 #if USING_VARINT4
                 // Load number to write and increment args.
@@ -554,7 +557,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 ui4 = *ui4_ptr;
                 ui4 = PackSignedVarint<uint32_t> (ui4);
                 goto WriteVarint4;
-            case UV4: //< _W_r_i_t_e__4_-_b_y_t_e__U_n_s_i_g_n_e_d__V_a_r_i_n_t_________
+            case UV4: //< _W_r_i_t_e__4_-_b_y_t_e__U_n_s_i_g_n_e_d__V_a_r_i_n_t_
                 // Load the 4-byte type to write to the buffer.
                 ui4_ptr = reinterpret_cast<const uint32_t*> (args[index]);
                 ui4 = *ui4_ptr;
@@ -562,8 +565,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 {
                     ui2 = 5;
                     if (space == 0) //< @todo Benchmark to space--
-                        return BoutResult (bout, Bout::BufferOverflowError, params, index,
-                                       start);
+                        return BoutResult (bout, Bout::BufferOverflowError,
+                                           params, index, start);
                     --space;    //< @todo Benchmark to space--
                     ui1 = ui4 & 0x7f;
                     ui4 = ui4 >> 7;
@@ -579,7 +582,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                     hash = Hash16 (ui1, hash);
                     // This wont happen I don't think.
                     //if (--ui2 == 0)
-                    //    return BoutResult (VarintOverflowError, params, index, start);
+                    //    return BoutResult (VarintOverflowError, params, index,
+                    //                       start);
 
                     goto WriteVarint4;
                 }
@@ -587,14 +591,14 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             case UV4:
                 goto InvalidType;
 #endif
-            case SV8: //< _W_r_i_t_e__8_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_____________
+            case SV8: //< _W_r_i_t_e__8_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_____
 #if USING_VARINT8
                 // Load number to write and increment args.
                 ui8_ptr = reinterpret_cast<const uint64_t*> (args[index]);
                 ui8 = *ui8_ptr;
                 ui8 = PackSignedVarint<uint64_t> (ui8);
                 goto WriteVarint8;
-            case UV8: //< _W_r_i_t_e__8_-_b_y_t_e__U_n_s_i_g_n_e_d__V_a_r_i_n_t________
+            case UV8: //< _W_r_i_t_e__8_-_b_y_t_e__U_n_s_i_g_n_e_d__V_a_r_i_n_t_
                 // Load the 4-byte type to write to the buffer.
                 ui8_ptr = reinterpret_cast<const uint64_t*> (args[index]);
                 ui8 = *ui8_ptr;
@@ -602,7 +606,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 {
                     ui2 = 8;            //< The max number of varint bytes - 1.
                     if (space <= 9)     //< @todo Benchmark to space--
-                        return BoutResult (bout, Bout::BufferOverflowError, params, index,
+                        return BoutResult (bout, Bout::BufferOverflowError,
+                                           params, index,
                                        start);
                     --space;            //< @todo Benchmark to space--
                     if (--ui2 == 0) {   //< It's the last byte not term bit.
@@ -637,7 +642,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 // Load pointer to data to write and get size.
                   ui1_ptr = reinterpret_cast<const byte*> (args[index]);
                   if (ui1_ptr == nullptr)
-                      return BoutResult (bout, Bout::RoomError, params, index, start);
+                      return BoutResult (bout, Bout::RoomError, params, index,
+                                         start);
                   length = *param++;
                   goto WriteBlock;
                 break;
@@ -646,54 +652,65 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 obj_size_width = type >> 5;
                 if ((type >> 5) && type > OBJ)
                     goto InvalidType;
-                if ((type >> 7) && ((type & 0x1f) >= OBJ)) { // It's an illegal type!
+                if ((type >> 7) && ((type & 0x1f) >= OBJ)) {
+                    // It's an illegal type!
                     type &= 0x1f;
-                    return BoutResult (bout, Bout::RoomError, params, index, start);
+                    return BoutResult (bout, Bout::RoomError, params, index,
+                                       start);
                 }
                 switch (obj_size_width) {
                     case 0: {
                         ui1_ptr = reinterpret_cast<const byte*> (args[index]);
                         if (ui1_ptr == nullptr)
-                            return BoutResult (bout, Bout::RoomError, params, index, start);
+                            return BoutResult (bout, Bout::RoomError, params,
+                                               index, start);
                         ui1 = *ui1_ptr;
                         length = static_cast<uint_t>(ui1);
                         goto WriteBlock;
                     }
                     case 1: {
-                        ui2_ptr = reinterpret_cast<const uint16_t*> (args[index]);
+                        ui2_ptr = reinterpret_cast<const uint16_t*> 
+                            (args[index]);
                         if (ui2_ptr == nullptr)
-                            return BoutResult (bout, Bout::RoomError, params, index, start);
+                            return BoutResult (bout, Bout::RoomError, params,
+                                               index, start);
                         ui2 = *ui2_ptr;
                         length = static_cast<uint_t>(ui2);
                         ui1_ptr = reinterpret_cast<const byte*> (ui2_ptr);
                         goto WriteBlock;
                     }
                     case 2: {
-                        ui4_ptr = reinterpret_cast<const uint32_t*> (args[index]);
+                        ui4_ptr = reinterpret_cast<const uint32_t*>
+                            (args[index]);
                         if (ui4_ptr == nullptr)
-                            return BoutResult (bout, Bout::RoomError, params, index, start);
+                            return BoutResult (bout, Bout::RoomError, params,
+                                               index, start);
                         ui4 = *ui4_ptr;
                         length = static_cast<uint_t>(ui4);
                         ui1_ptr = reinterpret_cast<const byte*> (ui4_ptr);
                         goto WriteBlock;
                     }
                     case 3: {
-                        ui8_ptr = reinterpret_cast<const uint64_t*> (args[index]);
+                        ui8_ptr = reinterpret_cast<const uint64_t*>
+                            (args[index]);
                         if (ui8_ptr == nullptr)
-                            return BoutResult (bout, Bout::RoomError, params, index, start);
+                            return BoutResult (bout, Bout::RoomError, params,
+                                               index, start);
                         ui8 = *ui8_ptr;
                         length = static_cast<uint_t>(ui8);
                         ui1_ptr = reinterpret_cast<const byte*> (ui8_ptr);
                         goto WriteBlock;
                     }
                     default: {
-                        return BoutResult (bout, Bout::RoomError, params, index, start);
+                        return BoutResult (bout, Bout::RoomError, params,
+                                           index, start);
                     }
 
                 }
                 WriteBlock: {
                     if (space < length)
-                        return BoutResult (bout, Bout::BufferOverflowError, params, index, start);
+                        return BoutResult (bout, Bout::BufferOverflowError,
+                                           params, index, start);
                     if (length == 0)
                         break;          //< Not sure if this is an error.
                     if (start + length >= end) {
@@ -721,13 +738,24 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                     break;
                 }
                 InvalidType: {
-                    return BoutResult (bout, Bout::RoomError, params, index, start);
+                    return BoutResult (bout, Bout::RoomError, params, index,
+                                       start);
                 }
             }
         }
     }
-
+    if (space < 3)
+        return BoutResult (bout, Bout::BufferOverflowError, params, index,
+                           start);
+    *stop = hash & 0xff;
+    if (++stop >= end) stop -= size;
+    *stop = (byte)(hash >> 8);
+    if (++stop >= end) stop -= size;
+    bout->stop = Diff (begin, stop);
     return 0;
+}
+const Operation* BoutRead (Bout* bout, const uint_t* params, void** args) {
+    return BinRead (reinterpret_cast<Bin*> (bout), params, args);
 }
 
 }       //< namespace _

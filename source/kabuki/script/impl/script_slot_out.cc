@@ -1,6 +1,6 @@
     /** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/script/impl/script_expression.cc
+    @file    ~/source/kabuki/script/impl/script_slot_out.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 

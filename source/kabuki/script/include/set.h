@@ -21,6 +21,19 @@
 
 namespace _ {
 
+/** A Type-Value Tuple. */
+struct Tuple2 {
+    TType type;     //< The tuple type.
+    void* value;    //< The tuple value.
+};
+
+/** A Type-Value Tuple. */
+struct Tuple3 {
+    TType       type;  //< The tuple type.
+    void      * value; //< The tuple value.
+    const char* key;   //< The Tuple key.
+};
+
 /** Interface for a Script Set.
     Set Types:
 
@@ -42,27 +55,36 @@ struct Set {
     /** Clears the Set and wipes the memory. */
     virtual void Wipe () = 0;
 
-    /** Adds the given object to this Set. */
-    virtual bool Add (TType Type, void* data) = 0;
+    /** Adds the given Tuple2 to this Set. */
+    virtual bool Add (TType type, void* data) = 0;
+
+    /** Adds the given Tuple3 to this Set. */
+    virtual bool Add (TType type, void* data, const char* key) = 0;
 
     /** Merges the given Set into this one. */
-    virtual bool Merge (TType Type, void* data) = 0;
+    virtual bool Merge (Set* set) = 0;
 
     /** Removes the given object from this collection. */
-    virtual bool Remove (TType Type, void* data) = 0;
+    virtual bool Remove (Tuple2* tuple) = 0;
 
     /** Removes the given index from this collection. */
     virtual bool Remove (uintptr_t) = 0;
 
+    /** Removes the given key from this collection (if applicable.). */
+    virtual bool Remove (const char* key) = 0;
+
     /** Gets the element at the given index. */
     virtual void* Get (uintptr_t index) = 0;
 
-    /** Returns true if this Set contains this given Type-Value. */
-    virtual uintptr_t FindIndex (TType type, void* data) = 0;
-
     /** Searches for the data of the given type and returns a pointer to it.
         @return Returns nullptr if the Set does not contain the given data. */
-    virtual void* Find (TType type, void* data) = 0;
+    virtual void* Get (const char* key) = 0;
+
+    /** Returns true if this Set contains this given key. */
+    virtual uintptr_t FindIndex (const char* key) = 0;
+
+    /** Returns true if this Set contains this given Type-Value. */
+    virtual uintptr_t FindIndex (TType type, void* data) = 0;
 
     /** Gets the size_t of the object being stored. */
     virtual uintptr_t GetSize () = 0;

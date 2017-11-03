@@ -208,5 +208,8 @@ class Room: public Operand {
            * devices_;  //< Pointer to the current device control.
 };
 
+/** Returns the Room-Level Script. */
+KABUKI Room* ChineseRoom (Room* room = nullptr);
+
 }       //< namespace _
 #endif  //< SCRIPT_ROOM_HDi

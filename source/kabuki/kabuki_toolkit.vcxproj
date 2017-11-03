@@ -34,7 +34,8 @@
     <ClInclude Include="script\include\bout.h" />
     <ClInclude Include="script\include\clock.h" />
     <ClInclude Include="script\include\color.h" />
-    <ClInclude Include="script\include\dict.h" />
+    <ClInclude Include="script\include\tbag.h" />
+    <ClInclude Include="script\include\tbook.h" />
     <ClInclude Include="script\include\door.h" />
     <ClInclude Include="script\include\event.h" />
     <ClInclude Include="script\include\expression.h" />
@@ -51,12 +52,13 @@
     <ClInclude Include="script\include\tstack.h" />
     <ClInclude Include="script\include\string.h" />
     <ClInclude Include="script\include\table.h" />
-    <ClInclude Include="script\include\targetver.h" />
     <ClInclude Include="script\include\tlist.h" />
     <ClInclude Include="script\include\types.h" />
     <ClInclude Include="script\include\utils.h" />
     <ClInclude Include="script\include\wall.h" />
     <ClInclude Include="script\include\window.h" />
+    <ClInclude Include="script\tests\a.h" />
+    <ClInclude Include="script\tests\assembly.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -81,10 +83,17 @@
     <ClCompile Include="script\impl\script_types.cc" />
     <ClCompile Include="script\impl\script_utils.cc" />
     <ClCompile Include="script\impl\script_wall.cc" />
+    <ClCompile Include="script\tests\script_project.cc" />
+    <ClCompile Include="script\tests\script_tester.cc" />
+    <ClCompile Include="script\tests\script_tests.cc" />
     <ClCompile Include="stdafx.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="script\include\module_config.in" />
+    <None Include="script\tests\readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="script\tests\CMakeList.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

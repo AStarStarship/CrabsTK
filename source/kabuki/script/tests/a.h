@@ -14,7 +14,7 @@
              permissions and limitations under the License.
 */
 
-#include "../script/include/script_module.h"
+#include "../include/module_all.h"
 using namespace _;
 
 enum {
@@ -45,52 +45,51 @@ class ChildOperand : public Operand {
     public:
     
     /** Chinese Room operations. */
-    virtual const Operand* Star (int index, Expression* expr) {
+    virtual const Operation* Star (int index, Expression* expr) {
         void* args[2];
-        const Operation* error;
 
-        static const Operand a = { "ChildOperand",
-            NumOperations (2), FirstMember ('A'),
+        static const Operation a = { "ChildOperand",
+            NumOperations (2), FirstOperation ('A'),
             "A child Operand." };
             
         if (!index) return &a;
 
         switch (index) {
-            case ' ' {
+            case ' ': {
                 // push operation.
             }
             case 'A': {
-                static const Operand op_a = { "FloatTests",
-                    Params<2, FLT, STX, kStringBufferSize> (),
-                    Params<2, FLT, STX> (),
+                static const Operation op_a = { "FloatTests",
+                    Params<2, FLT, STR, kStringBufferSize> (),
+                    Params<2, FLT, STR> (),
                     "Description of functionA.", 0 };
                 if (!expr) return &op_a;
 
-                if (error = Read (expr, op_a.params, Args (args, &io_number_,
-                                                           io_string_)))
-                    return error;
+                if (Args (expr, op_a.params, Args (args, &io_number_,
+                                                   io_string_)))
+                    return expr->result;
                     
                 // Function logic here
 
-                return Write (expr, op_a.result, Args (args, &io_number_,
+                return Result (expr, op_a.result, Args (args, &io_number_,
                                                        io_string_));
             }
             case 'B': {
-                const Operation op_b = { "SignedIntegerTests",
-                    Params<2, FLT, STX, kStringBufferSize> (),
-                    Params<2, FLT, STX> (),
+                static const Operation op_b = { "SignedIntegerTests",
+                    Params<2, FLT, STR, kStringBufferSize> (),
+                    Params<2, FLT, STR> (),
                     "Description of functionB.", 0 };
 
                 if (!expr) return &op_b;
 
-                if (error = Read (expr, op_b.params, Args (args, &io_number_,
-                                                           io_string_)))
-                    return ReadError ();
+                if (Args (expr, op_b.params, Args (args, &io_number_,
+                          io_string_)))
+                    return expr->result;
 
-                return Write (expr, op_b.result, Args (args, &io_number_,
+                return Result (expr, op_b.result, Args (args, &io_number_,
                                                        io_string_));
             }
-            case ascii::DEL: {}
+            case ascii::DEL: {
 
                 break;
             }
@@ -115,11 +114,10 @@ class Root : public Operand {
     // Interprocess operations.
     virtual const Operation* Star (int index, Expression* expr) {
         void* args[2];
-        const Operation* error;
 
         static const Operation self = { "Root",
             NumOperations (4),
-            FirstMember ('A'),
+            FirstOperation ('A'),
             "Root scope device." };
 
         if (!index) return &self;
@@ -135,27 +133,27 @@ class Root : public Operand {
             }
             case 'c': {
                 static const Operation op_c = { "FloatTests",
-                    Params<2, FLT, STX, kStringBufferSize> (),
-                    Params<2, FLT, STX> (),
+                    Params<2, FLT, STR, kStringBufferSize> (),
+                    Params<2, FLT, STR> (),
                     "Description of functionA." };
                 if (!expr) return &op_c;
 
-                if (Read (expr, op_c.params, Args (args, &io_number_,
+                if (Args (expr, op_c.params, Args (args, &io_number_,
                                                        io_string_)))
                     return expr->result;
 
-                return Write (expr, op_c.result, Args (args, &io_number_,
+                return Result (expr, op_c.result, Args (args, &io_number_,
                                                    io_string_));
             }
             case 'D': {
                 static const Operation m4 = { "SignedIntegerTests",
-                    Params<2, FLT, STX, kStringBufferSize> (),
-                    Params<2, FLT, STX> (),
+                    Params<2, FLT, STR, kStringBufferSize> (),
+                    Params<2, FLT, STR> (),
                     "Description of functionB." };
 
                 if (!expr) return &m4;
 
-                if (Read (expr, m4.params, Args (args, &io_number_,
+                if (Args (expr, m4.params, Args (args, &io_number_,
                                                  io_string_)))
                     return expr->result;
 

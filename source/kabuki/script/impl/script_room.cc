@@ -141,4 +141,11 @@ const Operation* Room::Star (char_t index, Expression* expr) {
     return 0;
 }
 
+Room* ChineseRoom (Room* room) {
+    static Room* chinese_room = nullptr;
+    if (room != nullptr)
+        chinese_room = room;
+    return room;
+}
+
 }       //< namespace _

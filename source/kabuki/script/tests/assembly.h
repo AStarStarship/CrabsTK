@@ -51,7 +51,7 @@
     @endcode
 */
 #define RAM_USE_LEVEL       2       //< The RAM User Level 1-3.
-#define USE_MORE_ROM        YES     //< Inlines functions or makes them static.
+#define USE_MORE_ROM        YES     //< Inline more functions or makes them static.
 #define USING_CONSOLE       YES     //< Includes/excludes human-readable text.
 
 #define MAX_ERRORS          8       //< Max errors before locking up.

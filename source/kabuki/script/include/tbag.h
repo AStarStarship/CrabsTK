@@ -1,6 +1,6 @@
 /** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/script/include/set.h
+    @file    ~/source/kabuki/script/include/book.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,39 +17,28 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_SET_H
-#define KABUKI_SCRIPT_SET_H
+#ifndef KABUKI_SCRIPT_BOOK_H
+#define KABUKI_SCRIPT_BOOK_H
 
 #include "utils.h"
 #include "types.h"
 
 namespace _ {
 
-enum {
-    LockedBitMask      = 1 << 7,    //< Mask for the locked bit.
-    ReadLockedBitMask  = 1 << 6,    //< Mask for the read-locked bit.
-    WriteLockedBitMask = 1 << 5,    //< Mask for the write-locked bit.
-};
-
-template<typename I>
-struct Obj {
-    I   size_bytes,  //< The size of the OBJ in bytes.
-        header_size; //< The size of the OBJ header.
-};
-
 /** A unique set or multiset that uses contiguous memory.
-    A collection is like a Python dictionary or C++ map, the difference being a Set
-    can contain nested Set (string). The key design difference between both Python 
+    A collection is like a Python dictionary or C++ map, the difference being a Bag
+    can contain nested Bag (string). The key design difference between both Python 
     dictionaries and C++ maps are Sets do not contains points, and instead
     works using offsets.
 
     A collection may or may not have a hash table. In order to turn on the hash table,
-    simply set the collissionsSize to non-zero in the Set header.
+    simply set the collissionsSize to non-zero in the Bag header.
 
-    The memory layout is the same for all of the Set types as depicted below:
+    The memory layout is the same for all of the Bag types as depicted below:
 
     @code
-    _____________________________________________________    |                                                   |
+    _____________________________________________________    
+    |                                                   |
     |                 Data Buffer Space                 |
     |___________________________________________________|
     |_______                                            | 
@@ -116,58 +105,9 @@ struct Obj {
     |___________________________________________________| 0x0
     @endcode
 
-    | Set | Max Values | % Collisions (p) |           Overhead             |
-    |:----:|:----------:|:----------------:|:------------------------------:|
-    |  2  |     255    |    0.0001        | Ceiling (0.02*p*2^8)  = 2      |
-    |  4  |     2^13   |      0.1         | Ceiling (0.04*p*2^13) = 327.68 |
-    |  8  |     2^29   |    10^-16        | Ceiling (0.04*p*2^29) = 327.68 |
-
-    Memory Schema:
-    The memory schema is optimized for fast search and push back. When searching
-    for a key, there might or might not be a hash table.
-
-    How to calculate size:
-    The size of any size collection can be calculated as follows:
-    size = ; * (2*sizeof (TIndex) + sizeof (TData)) + collissionSize +
-
-    # Cache Page Optimizations
-    In order to optimize the cache pages, we need to group hot data together.
-    ChineseRoom Objects work through calling by TIndex, or by key by using the
-    function '\"' (i.e. "foo" is TIndex 44).
-
-    # Hash Table Collisions.
-    Because there are no pointers in Script collections, the hash tables are done using
-    using a nil-terminated list in the Collision List. In the 
-
-    # Use Case Scenario
-    We are creating a plug-in DLL. We need to create a collection in the DLL code, and
-    pass it over to the program. The DLL manages the memory for the collection. This
-    collection might contain several million entries, and more than 4GB of data.
-
-    ### Why So Many Set Types?
-    We are running in RAM, and a collection could contain millions of key-value pairs.
-    Adding extra bytes would added megabytes of data we don't need. Also, on
-    microcontrollers, especially 16-bit ones, will have very little RAM, so we
-    need an 16-bit object. It is easy to imagine a complex AI software using
-    more than 4GB RAM, or the need to attach a DVD ISO image as a key-value
-    pair, so we need a 64-bit collection.
-
-    # Design Strengths
-    * Uses less memory.
-    * Fast push back when within buffer size.
-    * Faster inserts on small collections when within buffer size.
-
-    # Design Weaknesses
-    * Slow insert in large collections.
-    * Slow at growing large collections when buffer runs out.
-    * More complicated.
-
-    @code
-    ;
-    @endcode
 */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-struct KABUKI Set {
+template<typename TIndex, typename TKey, typename TData>
+struct KABUKI Bag {
     TData  size;        //< Total size of the set.
     TKey   table_size,  //< Size of the (optional) key strings in bytes.
            pile_size;   //< Size of the (optional) collisions pile in bytes.
@@ -175,22 +115,20 @@ struct KABUKI Set {
            max_items;   //< Max number of items that can fit in the header.
 };
 
-using Set2   = Set<byte, uint16_t, uint16_t, hash16_t>;
+using Bag2   = Bag<byte, uint16_t, uint16_t>;
 //< Records use the least RAM & run faster than Groups & Files on all systems.
-using Set4    = Set<uint16_t, uint16_t, uint32_t, hash32_t>;
+using Bag4    = Bag<uint16_t, uint16_t, uint32_t>;
 //< Groups more than enough memory for mosts tasks and run faster than files.
-using Set8     = Set<uint32_t, uint32_t, uint64_t, hash64_t>;
+using Bag8     = Bag<uint32_t, uint32_t, uint64_t>;
 //< Files are easily mapped to virtual memory, RAM, drives, and networks.
-using Superset = Set<index_t, header_t, offset_t, hash_t>;
-//< Superset is the largest set that can fit in this Chinese Room's RAM.
 
 
-template<typename TIndex, typename TKey, typename TData, typename THash>
+template<typename TIndex, typename TKey, typename TData>
 constexpr uint_t SetOverheadPerIndex () {
         return sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
 };
 
-template<typename TIndex, typename TKey, typename TData, typename THash>
+template<typename TIndex, typename TKey, typename TData>
 constexpr TData MinSizeSet (TIndex num_items) {
     return num_items * sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
 };
@@ -199,27 +137,27 @@ enum {
     kMaxNumPagesSet2 = 255,                //< The number of pages in a Set2.
     kMaxNumPagesSet4 = 8 * 1024,           //< The number of pages in a Set4.
     kMaxNumPagesSet8 = 256 * 1024 * 1024,  //< The number of pages in a Set8.
-    kOverheadPerSet2Index = SetOverheadPerIndex<byte, uint16_t, uint16_t, hash16_t> (),
-    kOverheadPerSet4Index = SetOverheadPerIndex<byte, uint16_t, uint16_t, hash16_t> (),
-    kOverheadPerSet8Index = SetOverheadPerIndex<byte, uint16_t, uint16_t, hash16_t> (),
+    kOverheadPerSet2Index = SetOverheadPerIndex<byte, uint16_t, uint16_t> (),
+    kOverheadPerSet4Index = SetOverheadPerIndex<byte, uint16_t, uint16_t> (),
+    kOverheadPerSet8Index = SetOverheadPerIndex<byte, uint16_t, uint16_t> (),
 };
     
-/** Initializes a Set.
+/** Initializes a Bag.
     @post    Users might want to call the IsValid () function after construction
              to verify the integrity of the object.
     @warning The reservedNumOperands must be aligned to a 32-bit value, and it
              will get rounded up to the next higher multiple of 4.
-static Set* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t size)
+static Bag* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t size)
 {
     if (buffer == nullptr)
         return nullptr;
     if (table_size >= size)
         return nullptr;
-    if (table_size < sizeof (Set) + max_size *
+    if (table_size < sizeof (Bag) + max_size *
         (SetOverheadPerIndex<byte, uint16_t, uint16_t, hash16_t> () + 2))
         return nullptr;
 
-    Set2* collection = reinterpret_cast<Set*> (buffer);
+    Set2* collection = reinterpret_cast<Bag*> (buffer);
     collection->size = table_size;
     collection->table_size = table_size;
     collection->; = 0;
@@ -231,15 +169,15 @@ static Set* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t si
 
 /** Insets the given key-value pair.
 */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-TIndex SetInsert (Set<TIndex, TKey, TData, THash>* collection, byte type, 
+template<typename TIndex, typename TKey, typename TData>
+TIndex SetInsert (Bag<TIndex, TKey, TData, THash>* collection, byte type, 
                const byte* key, void* data, TIndex index) {
     if (collection == nullptr) return 0;
     return ~0;
 }
 
 template<typename TIndex>
-TIndex MaxSetIndexes () {
+TIndex BagMaxIndexes () {
     enum {
         kMaxIndexes = sizeof (TIndex) == 1 ? 255 : sizeof (TIndex) == 2 ? 
                        8 * 1024 : sizeof (TIndex) == 4 ? 512 * 1024 * 1024 : 0
@@ -248,8 +186,8 @@ TIndex MaxSetIndexes () {
 }
 
 /** Adds a key-value pair to the end of the collection. */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-TIndex SetAdd (Set<TIndex, TKey, TData, THash>* collection, const char* key, 
+template<typename TIndex, typename TKey, typename TData>
+TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key, 
                 TType type, void* data) {
     if (collection == nullptr) return 0;
     if (key == nullptr) return 0;
@@ -266,7 +204,7 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* collection, const char* key,
     //< We're out of buffered indexes.
 
     byte* states = reinterpret_cast<byte*> (collection) + 
-                   sizeof (Set <TIndex, TKey, TData, THash>);
+                   sizeof (Bag <TIndex, TKey, TData, THash>);
     TKey* key_offsets = reinterpret_cast<TKey*> (states + max_items);
     TData* data_offsets = reinterpret_cast<TData*> (states + max_items *
                                                     (sizeof (TKey)));
@@ -400,7 +338,7 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* collection, const char* key,
                 // Store the collision index.
                 indexes[;] = temp;   //< Store the collision index
                 collection->; = ; + 1;
-                hashes[;] = ~0;      //< Set the last hash to 0xFFFF
+                hashes[;] = ~0;      //< Bag the last hash to 0xFFFF
 
                                             // Move collisions pointer to the unsorted_indexes.
                 indexes += max_items;
@@ -457,7 +395,7 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* collection, const char* key,
                 // Add the newest key at the end.
                 indexes[;] = ;;
 
-                // Set the last hash to 0xFFFF
+                // Bag the last hash to 0xFFFF
                 hashes[;] = ~0;
 
                 collection->; = ; + 1;
@@ -531,8 +469,8 @@ TIndex SetAdd (Set<TIndex, TKey, TData, THash>* collection, const char* key,
 //}
 
 /** Returns  the given query char in the hash table. */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-TIndex SetFind (Set<TIndex, TKey, TData, THash>* collection, const char* key) {
+template<typename TIndex, typename TKey, typename TData>
+TIndex BagFind (Bag<TIndex, TKey, TData, THash>* collection, const char* key) {
     if (collection == nullptr)
         return 0;
     PrintLineBreak ("Finding record...", 5);
@@ -548,7 +486,7 @@ TIndex SetFind (Set<TIndex, TKey, TData, THash>* collection, const char* key) {
 
     const THash* hashes = reinterpret_cast<const THash*>
         (reinterpret_cast<const byte*> (collection) +
-         sizeof (Set<TIndex, TKey, TData, THash>));
+         sizeof (Bag<TIndex, TKey, TData, THash>));
     const TKey* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
                                                                 max_items);
     const byte* indexes = reinterpret_cast<const byte*>(key_offsets +
@@ -664,8 +602,8 @@ TIndex SetFind (Set<TIndex, TKey, TData, THash>* collection, const char* key) {
 //}
 
 /** Prints this object out to the console. */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-void SetPrint (const Set<TIndex, TKey, TData, THash>* collection) {
+template<typename TIndex, typename TKey, typename TData>
+void BagPrint (const Bag<TIndex, TKey, TData, THash>* collection) {
     if (collection == nullptr) return;
     TIndex ; = collection->;,
            max_items = collection->max_items,
@@ -682,7 +620,7 @@ void SetPrint (const Set<TIndex, TKey, TData, THash>* collection) {
     else if (sizeof (TData) == 8)
         printf ("| Set8: %p\n", collection);
     else
-        printf ("| Invalid Set type: %p\n", collection);
+        printf ("| Invalid Bag type: %p\n", collection);
     printf ("| ;: %u max_items: %u  "
             "pile_size: %u  size: %u", ;,
             max_items, pile_size, table_size);
@@ -692,7 +630,7 @@ void SetPrint (const Set<TIndex, TKey, TData, THash>* collection) {
     std::cout << '\n';
 
     const byte* states = reinterpret_cast<const byte*> (collection) +
-                         sizeof (Set <TIndex, TKey, TData, THash>);
+                         sizeof (Bag <TIndex, TKey, TData, THash>);
     const TKey* key_offsets = reinterpret_cast<const TKey*> 
                               (states + max_items);
     const TData* data_offsets = reinterpret_cast<const TData*> 
@@ -744,29 +682,29 @@ void SetPrint (const Set<TIndex, TKey, TData, THash>* collection) {
     PrintLine ("|", '_');
 
     PrintMemory (reinterpret_cast<const byte*> (collection) + 
-                 sizeof (Set<TIndex, TKey, TData, THash>), collection->size);
+                 sizeof (Bag<TIndex, TKey, TData, THash>), collection->size);
     std::cout << '\n';
 }
 
 /** Deletes the collection contents without wiping the contents. */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-void Clear (Set<TIndex, TKey, TData, THash>* collection) {
+template<typename TIndex, typename TKey, typename TData>
+void BagClear (Bag<TIndex, TKey, TData, THash>* collection) {
     if (collection == nullptr) return;
     collection->; = 0;
     collection->pile_size = 0;
 }
 
 /** Deletes the collection contents by overwriting it with zeros. */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-void Wipe (Set<TIndex, TKey, TData, THash>* collection) {
+template<typename TIndex, typename TKey, typename TData>
+void BagWipe (Bag<TIndex, TKey, TData, THash>* collection) {
     if (collection == nullptr) return;
     TData size = collection->size;
     memset (collection, 0, size);
 }
 
 /** Returns true if this expr contains only the given address. */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-bool Contains (Set<TIndex, TKey, TData, THash>* collection, void* data) {
+template<typename TIndex, typename TKey, typename TData>
+bool BagContains (Bag<TIndex, TKey, TData, THash>* collection, void* data) {
     if (collection == nullptr) return false;
     if (data < collection) return false;
     if (data > GetEndAddress()) return false;
@@ -774,8 +712,8 @@ bool Contains (Set<TIndex, TKey, TData, THash>* collection, void* data) {
 }
 
 /** Removes that object from the collection and copies it to the destination. */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-bool RemoveCopy (Set<TIndex, TKey, TData, THash>* collection, void* destination, 
+template<typename TIndex, typename TKey, typename TData>
+bool BagRemoveCopy (Bag<TIndex, TKey, TData, THash>* collection, void* destination,
                  size_t buffer_size, void* data)
 {
     if (collection == nullptr) return false;
@@ -784,16 +722,16 @@ bool RemoveCopy (Set<TIndex, TKey, TData, THash>* collection, void* destination,
 }
 
 /** Removes the item at the given address from the collection. */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-bool Remove (Set<TIndex, TKey, TData, THash>* collection, void* adress) {
+template<typename TIndex, typename TKey, typename TData>
+bool BagRemove (Bag<TIndex, TKey, TData, THash>* collection, void* adress) {
     if (collection == nullptr) return false;
 
     return false;
 }
 
 /** Removes all but the given collection from the collection. */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-bool Retain (Set<TIndex, TKey, TData, THash>* collection) {
+template<typename TIndex, typename TKey, typename TData>
+bool BagRetain (Bag<TIndex, TKey, TData, THash>* collection) {
     if (collection == nullptr) return false;
 
     return false;
@@ -801,22 +739,22 @@ bool Retain (Set<TIndex, TKey, TData, THash>* collection) {
 
 /** Creates a collection from dynamic memory. */
 template<typename TIndex, typename TOffset, typename TData, typename THash>
-inline Set<TIndex, TOffset, TData, THash>* SetCreate (TIndex buffered_indexes,
+inline Bag<TIndex, TOffset, TData, THash>* BagCreate (TIndex buffered_indexes,
                                                         TData table_size,
                                                         TData size) {
-    Set<TIndex, TOffset, TData, THash>* collection = New<Set, uint_t> ();
+    Bag<TIndex, TOffset, TData, THash>* collection = New<Bag, uint_t> ();
     return collection;
 }
 
-/** Prints the given Set to the console. */
-template<typename TIndex, typename TKey, typename TData, typename THash>
-inline void SetPrint (Set<TIndex, TKey, TData, THash>* collection) {
+/** Prints the given Bag to the console. */
+template<typename TIndex, typename TKey, typename TData>
+inline void BagPrint (Bag<TIndex, TKey, TData, THash>* collection) {
 
 }
 
 //inline void SetPrint (Set2* collection) {
-//    return SetPrint<byte, uint16_t, uint16_t, hash16_t> (collection);
+//    return BagPrint<byte, uint16_t, uint16_t, hash16_t> (collection);
 //}
 
 }       //< namespace _
-#endif  //< KABUKI_SCRIPT_SET_H
+#endif  //< KABUKI_SCRIPT_BOOK_H

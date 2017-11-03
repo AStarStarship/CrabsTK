@@ -13,7 +13,7 @@
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */  
-
+/*
 #include "../pro/include/module.h"
 
 using namespace kabuki::_;
@@ -49,3 +49,4 @@ class ChineseRoom : public Project
         PrintBreak ("<\n< Done creating Chinese-Room Project...\n<", '-');
     }
 };
+*/

@@ -107,7 +107,7 @@ namespace _ {
 enum {
     kMinRoomSize     = 256,                 //< Min size of a room.
     kMaxRoomSize     = 0x7FFFFFFC,          //< Max room size: 2GB - 7 bits.
-    kMinSlotSize = 256,                 //< Min size of a Slot - 1.
+    kMinSlotSize     = 128,                 //< Min size of a Slot - 1.
     kMaxErrors       = MAX_ERRORS,          //< Max errors before blowing up.
     kMaxNumParams    = MAX_NUM_PARAMS,      //< Max number of parameters.
     kMaxStringLength = MAX_STRING_LENGTH,   //< The max char length.

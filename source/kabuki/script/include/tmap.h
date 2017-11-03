@@ -142,11 +142,11 @@ struct KABUKI Map {
            
 };
 
-using Map2   = Map<byte, uint16_t, uint16_t>;
+using Map2 = Map<int8_t, uint16_t, uint16_t>;
 //< Records use the least RAM & run faster than Groups & Files on all systems.
-using Map4    = Map<uint16_t, uint16_t, uint32_t>;
+using Map4 = Map<int16_t, uint16_t, uint32_t>;
 //< Groups more than enough memory for mosts tasks and run faster than files.
-using Map8     = Map<uint32_t, uint32_t, uint64_t>;
+using Map8 = Map<int32_t, uint32_t, uint64_t>;
 //< Files are easily mapped to virtual memory, RAM, drives, and networks.
 using Superset = Map<index_t, header_t, data_t>;
 //< Superset is the largest set that can fit in this Chinese Room's RAM.

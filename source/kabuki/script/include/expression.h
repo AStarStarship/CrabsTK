@@ -53,23 +53,23 @@ namespace _ {
     # Stack Memory Layout
     
     @code
-         ______________________
-        |       Expression     |
-        |           |          |
-        |           v          |
-        |======================|
-        |         Buffer       |
-        |======================|
-        |           ^          |
-        |           |          |
-        |  B-Sequence Result   |
-        |======================|
-        |  Stack of Operand**  |
-        |======================|
-        |  Stack of const uint_t** |
-     ^  |======================|
-     |  |  Expression struct   |
-    0x0 |______________________|
+        |=========================|
+        |        Expression       |
+        |            |            |
+        |            v            |
+        |=========================|
+        |          Buffer         |
+        |=========================|
+        |            ^            |
+        |            |            |
+        |   B-Sequence Result     |
+        |=========================|
+        |   Stack of Operand**    |
+        |=========================|
+        | Stack of const uint_t** |
+     ^  |=========================|
+     |  |    Expression struct    |
+    0x0 |=========================|
     @endcode
 */
 struct Expression {
@@ -91,12 +91,13 @@ struct Expression {
 
     typedef enum States {
         DisconnectedState = 0,
+        AwaitingAckState,
         ScanningAddressState,
         ScanningStringState,
         ScanningArgsState,
         ScanningPodState,
-        HandlingErrorState,
         ScanningVarintState,
+        HandlingErrorState,
         LockedState,
     } State;
 
@@ -105,35 +106,35 @@ struct Expression {
         kMinBufferSize = 2,         //< The minimum buffer size.
     };
     
-    uint_t        size,             //< The offset to the Bout slot.
-                  header_size,      //< The total size of the header.   
-                  stack_count,      //< Number of Operands(string) on the stack.
-                  stack_size,       //< Stack buffer size and 1/4 the state
+    uint_t           size,          //< The offset to the Bout slot.
+                     header_size,   //< The total size of the header.   
+                     stack_count,   //< Number of Operands(string) on the stack.
+                     stack_size,    //< Stack buffer size and 1/4 the state
                                     //< stack height.
-                  verify_count,     //< Height of header and cursors stacks.
-                  type_index,       //< The index in the current type being
+                     verify_count,  //< Height of header and cursors stacks.
+                     type_index,    //< The index in the current type being
                                     //< scanned.
-                  num_states,       //< Number of states on the state stack.
-                  bytes_left;       //< Countdown counter for parsing POD types.
-    byte          type;             /*< What type of Expression it is.
+                     num_states,    //< Number of states on the state stack.
+                     bytes_left;    //< Countdown counter for parsing POD types.
+    byte             type;          /*< What type of Expression it is.
                                         -1 = interprocess no dynamic memory.
                                         0 = no dynamic memory.
                                         1 = dynamic memory.
                                         2 =  interprocess dynamic memory. */
-    volatile byte bout_state,       //< Bout streaming state.
-                  last_rx_state,    //< Last Bout state.
-                  bin_state;        //< Slot streaming state.
-    int16_t       reserved1;
-    int           num_ops,          //< The number of operand.
-                  first_op;         //< The first operation of the current Operand.
+    volatile byte    bout_state,    //< Bout streaming state.
+                     last_rx_state, //< Last Bout state.
+                     bin_state;     //< Slot streaming state.
+    int16_t          reserved1;
+    int              num_ops,       //< The number of operand.
+                     first_op;      //< The first operation of the current Operand.
                                     //< being verified.
-    hash16_t      hash;             //< Bin data verification hash.
-    int16_t       timeout_us;       //< The timeout time.
-    timestamp_t   last_time;        //< The last time the Stack was scanned.
-    Operand     * operand,          //< Current Operand object being verified.
-                * result;           //< Pointer to the Operand object this 
+    hash16_t         hash;          //< Bin data verification hash.
+    int16_t          timeout_us;    //< The timeout time.
+    timestamp_t      last_time;     //< The last time the Stack was scanned.
+    Operand        * operand;       //< Current Operand object being verified.
+    const Operation* result;        //< The result of the Expression.
                                     //< expr is operating on.
-    const char*  * return_address;  //< The return address.
+    const char   * return_address;  //< The return address.
     volatile const uint_t* header;  //< Pointer to the header being verified.
     const uint_t * headers;         //< First header ptr in the scan array.
 };
@@ -289,8 +290,7 @@ KABUKI void ExpressionCancel (Expression* expr);
 KABUKI void ExpressionClear (Expression* expr);
 
 /** Calls the Read function for the Bout slot. */
-KABUKI const Operation* ExpressionArgs (Expression* expr, const uint_t* params,
-                                        void** args);
+KABUKI bool Args (Expression* expr, const uint_t* params, void** args);
 
 /** Calls the Write function for the Tx slot. */
 KABUKI const Operation* Result (Expression* expr, const uint_t* params, void** args);

@@ -81,6 +81,9 @@
     <Filter Include="kabuki\aiml">
       <UniqueIdentifier>{5b844195-171c-4caf-99a6-af067a9a8dde}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kabuki\script\tests">
+      <UniqueIdentifier>{f761c686-c418-44b9-ab1f-1eb3aca1e7e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aiml\include\agent.h">
@@ -149,9 +152,6 @@
     <ClInclude Include="script\include\table.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\include\targetver.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\include\types.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
@@ -179,9 +179,6 @@
     <ClInclude Include="script\include\assembly.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\include\dict.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\include\module_all.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
@@ -201,6 +198,18 @@
       <Filter>kabuki\script</Filter>
     </ClInclude>
     <ClInclude Include="script\include\slot.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\tests\a.h">
+      <Filter>kabuki\script\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="script\tests\assembly.h">
+      <Filter>kabuki\script\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\tbook.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\include\tbag.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
   </ItemGroup>
@@ -268,10 +277,27 @@
     <ClCompile Include="script\impl\script_slot_out.cc">
       <Filter>kabuki\script</Filter>
     </ClCompile>
+    <ClCompile Include="script\tests\script_project.cc">
+      <Filter>kabuki\script\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="script\tests\script_tester.cc">
+      <Filter>kabuki\script\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="script\tests\script_tests.cc">
+      <Filter>kabuki\script\tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="script\include\module_config.in">
       <Filter>kabuki\script</Filter>
     </None>
+    <None Include="script\tests\readme.md">
+      <Filter>kabuki\script\tests</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="script\tests\CMakeList.txt">
+      <Filter>kabuki\script\tests</Filter>
+    </Text>
   </ItemGroup>
 </Project>

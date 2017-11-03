@@ -129,6 +129,7 @@ KABUKI void BoutPrint (Bout* bout);
     @param args   The array of pointers to the stuff to write. */
 KABUKI const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args);
 
+KABUKI const Operation* BoutRead (Bout* bout, const uint_t* params, void** args);
 /** Returns a reference to the bout for this assembly. */
 template<uint_t kNumber>
 inline Bout& Logbag () {
