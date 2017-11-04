@@ -28,48 +28,50 @@
 
 namespace _ {
 
-/** A input-output expr for a Slot in a Door.
-    A Expression connects two portals (@see _::Portal) between two
-    rooms using rx and tx ring buffers as depicted below:
+/** Expression scanner and runner.
+    Expressions (exprs or expr) must be word-aligned in order to run correctly
+    so it's best to scan and word align the data types in the same sweep.
+
+    Exprs are composed of one B-Input (Bin) and one B-Output (Bout) socket. The 
+    App/Driver/User writes to the end of the Tx buffer and the driver reads from 
+    the beginning. The user writes are synchronous and the driver reads are 
+    asynchronous.
     
     # Ring Buffer Streaming Diagram
     
     @code
-        |>---------------------- Ring Buffer ------------------------->|
-        ________________________________________________________________
-    Bout  |>-Buffer->|>-Sync User Scan-->|>-Async Portal Bout-->|>-Buffer->|
-        |__________|___________________|____________________|__________|
-        ________________________________________________________________
-    Tx  |>-Buffer->|>-Async Portal Tx->|>-Sync User Writes->|>-Buffer->|
-        |__________|___________________|____________________|__________|
+          |>---------------------- Ring Buffer ------------------------->|
+          ________________________________________________________________
+    Bout  |>-Buffer->|>-Sync User Scan-->|>-Async Portal Rx-->|>-Buffer->|
+          |__________|___________________|____________________|__________|
+          ________________________________________________________________
+    Bin   |>-Buffer->|>-Async Portal Tx->|>-Sync User Writes->|>-Buffer->|
+          |__________|___________________|____________________|__________|
     @endcode
     
-    The Stack needs to run as fast as possible, so no virtual members are
-    allowed in that class. Portals are created using an Star and Portal
-    interface. The Stack needs to have an object stack, which requires
-    three stacks of pointers: 2 for scanning the headers for sanitizing input,
-    and another Star pointer stack for running the sequences.
+    Almost all block of memory in Script has something that grows up and another
+    that grows down. 
     
     # Stack Memory Layout
     
     @code
         |=========================|
-        |        Expression       |
+        |     Evaluated Result    |
         |            |            |
         |            v            |
         |=========================|
         |          Buffer         |
         |=========================|
-        |            ^            |
+        |            +            |
         |            |            |
-        |   B-Sequence Result     |
+        |        Expression       |
         |=========================|
         |   Stack of Operand**    |
         |=========================|
         | Stack of const uint_t** |
-     ^  |=========================|
+     +  |=========================|
      |  |    Expression struct    |
-    0x0 |=========================|
+    0xN |=========================|
     @endcode
 */
 struct Expression {
@@ -192,7 +194,7 @@ KABUKI const char* ExpressionErrorString (Expression::Error error); */
     @param e The error type.
     @param params      The parameter header.
     @param param_index The index in the params where the error occurred.
-    @param source The source buffer address.
+    @param source      The source buffer address.
 KABUKI void ExpressionPrintError (Expression::Error error, const uint_t* params, 
                                   byte param_index, void* source); */
 

@@ -196,7 +196,8 @@ BookInit (uintptr_t* buffer, byte max_size, uint16_t table_size, uint16_t size) 
         (BookOverheadPerIndex<byte, uint16_t, uint16_t> () + 2))
         return nullptr;
 
-    Book<TIndex, TKey, TData>* book = reinterpret_cast<Book<TIndex, TKey, TData>*> (buffer);
+    Book<TIndex, TKey, TData>* book = 
+        reinterpret_cast<Book<TIndex, TKey, TData>*> (buffer);
     book->size = table_size;
     book->table_size = table_size;
     book->num_items = 0;

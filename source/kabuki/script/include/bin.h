@@ -81,8 +81,7 @@ struct KABUKI Bin {
                     start;  //< The starting index of the ring buffer data.
     volatile uint_t stop;   //< The stopping index of the ring buffer data.
     uint_t          read;   //< The read variable.
-    byte            state,  //< The state of the Bin.
-                    buffer; //< The first byte in the ring buffer.
+    byte            buffer; //< The first byte in the ring buffer.
 };
 
 /** Gets a a char for printing out the bin_state. */

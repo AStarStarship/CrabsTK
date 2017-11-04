@@ -267,6 +267,9 @@ KABUKI void PrintMemory (const void* address, const void* end);
 
 KABUKI void PrintMemory (const void* address, size_t size);
 
+/** Overwrites the memory with zeros. */
+KABUKI void MemoryClear (void* address, size_t size);
+
 /** Prints the given value in hex format. */
 template<typename Type>
 KABUKI void PrintHex (Type value) {

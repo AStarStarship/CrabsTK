@@ -377,6 +377,33 @@ void PrintMemory (const void* address, size_t size) {
     PrintMemory (address, end);
 }
 
+void MemoryClear (void* address, size_t size) {
+    byte* ptr = reinterpret_cast<byte*> (address);
+    for (; size != 0; --size)
+        *ptr++ = '\0';
+
+    /*
+    uintptr_t lsb_mask = (1 << sizeof (long)) - 1,
+              msb_mask = ~lsb_mask,
+              adr_uint  = reinterpret_cast<uintptr_t> (address),
+              adr_lsb   = adr_uint & lsb_mask;
+    long* ptr = reinterpret_cast<long*> (adr_uint & msb_mask),
+        * end = reinterpret_cast<long*> ((adr_uint + size) & lsb_mask);
+    // Example: address 0x1
+    // Mask off 0x1
+    long value = *ptr,
+        value_mask = adr_uint & lsb_mask;
+    value &= value_mask;
+    *ptr = value;
+    ++ptr;
+    for (; ptr < end; ++ptr)
+        *ptr = 0;
+    value = *ptr;
+    value_mask = adr_uint & lsb_mask;
+    value &= value_mask;
+    *ptr = value;*/
+}
+
 char CreateKeyValueFormatString (char* string, char column_width, char type) {
     char hundreds = (column_width / 100),
         decimal = (column_width % 10),

@@ -25,19 +25,19 @@
 namespace _ {
 
 /** A*B B-Output socket with a packed byte stream.
-    A sequence of A*Bout expressions terminated by an ASCII CR char. All sequences get 
-    evaluated down to an immutable set (by definition all sets are immutable), which 
-    can be an empty set.
+    A sequence of A*Bout expressions terminated by an ASCII CR char. All 
+    sequences get evaluated down to an immutable set (by definition all sets are
+    immutable), which can be an empty set.
 
     # Slot Format
-    By default, all sequences are a set of one byte, all sets are linear, and all sets 
-    may repeat some number of times.
+    By default, all sequences are a set of one byte, all sets are linear, and 
+    all sets may repeat some number of times.
 
     @code
     ESC VU8 1 BS CR
     @endcode
-    A B-Output ring-buffer is identical in structure to an Bout ring-buffer, but the stop becomes
-    volatile and start is not volatile. */
+    A B-Output ring-buffer is identical in structure to an Bout ring-buffer, but
+    the stop becomes volatile and start is not volatile. */
 struct KABUKI Bout {
 
     /** List of B-Output Errors. */
@@ -57,8 +57,7 @@ struct KABUKI Bout {
     volatile uint_t start; //< Starting index of the ring-buffer data.
     uint_t stop,           //< Stopping index of the ring-buffer data.
            read;           //< Address that the Bout device is reading from.
-    byte   state,          //< State of the B-Output.
-           buffer;         //< First byte in the ring buffer.
+    byte   buffer;         //< First byte in the ring buffer.
 };
 
 /** Gets a a char for printing out the bout_state. */
@@ -127,49 +126,18 @@ KABUKI void BoutPrint (Bout* bout);
     @param bout   The B-Output socket to write to.
     @param params The escape sequence to write.
     @param args   The array of pointers to the stuff to write. */
-KABUKI const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args);
+KABUKI const Operation* BoutWrite (Bout* bout, const uint_t* params, 
+                                   void** args);
 
-KABUKI const Operation* BoutRead (Bout* bout, const uint_t* params, void** args);
+KABUKI const Operation* BoutRead (Bout* bout, const uint_t* params, 
+                                  void** args);
 /** Returns a reference to the bout for this assembly. */
 template<uint_t kNumber>
-inline Bout& Logbag () {
+inline Bout& RoomLog () {
     static uintptr_t* buffer = Buffer<kNumber, kLogSize> ();
     static Bout bout = LogInit (TxInit (buffer, kLogSize));
     return bout;
 }
-
-/** Operation + writes the given value to the bout. */
-inline Bout& operator+ (Bout& bout, int8_t value);
-
-/** Operation + writes the given value to the bout. */
-inline Bout& operator+ (Bout& bout, uint8_t value);
-
-/** Operation + writes the given value to the bout. */
-inline Bout& operator+ (Bout& bout, int16_t value);
-
-/** Operation + writes the given value to the bout. */
-inline Bout& operator+ (Bout& bout, uint16_t value);
-
-/** Operation + writes the given value to the bout. */
-inline Bout& operator+ (Bout& bout, int32_t value);
-
-/** Operation + writes the given value to the bout. */
-inline Bout& operator+ (Bout& bout, uint32_t value);
-
-/** Operation + writes the given value to the bout. */
-inline Bout& operator+ (Bout& bout, int64_t value);
-
-/** Operation + writes the given value to the bout. */
-inline Bout& operator+ (Bout& bout, uint64_t value);
-
-/** Operation + writes the given value to the bout. */
-inline Bout& operator+ (Bout& bout, float value);
-
-/** Operation + writes the given value to the bout. */
-inline Bout& operator+ (Bout& bout, double value);
-
-/** Operation + prints a char to the bout. */
-inline Bout& operator+ (Bout& bout, const char* string);
 
 }       //< namespace _
 #endif  //< SCRIPT_BOUT_H

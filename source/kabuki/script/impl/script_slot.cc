@@ -19,16 +19,6 @@
 
 namespace _ {
 
-uint_t SlotLength (byte* start, byte* stop, uint_t size) {
-    uint_t delta_start_stop = static_cast<uint> (stop - start);
-    return start <= stop?delta_start_stop:size - delta_start_stop;
-}
-
-uint_t SlotSpace (byte* start, byte* stop, uint_t size) {
-    uint_t delta_start_stop = static_cast<uint> (stop - start);
-    return start <= stop?size - delta_start_stop:delta_start_stop;
-}
-
 void SlotWipe (Slot* slot) {
     if (slot == nullptr)
         return;

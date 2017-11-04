@@ -50,7 +50,7 @@
     |  4  |      4 byte     |    16      |
     @endcode
 */
-#define MEMORY_PROFILE       2      //< The RAM User Level 1-3.
+#define MEMORY_PROFILE      2      //< The RAM User Level 1-4.
 #define USE_MORE_ROM        YES     //< Used to reduce ROM size.
 #define USING_CONSOLE       YES     //< Includes/excludes human-readable text.
 

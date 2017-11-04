@@ -209,7 +209,7 @@ void ParamsPrint (const uint_t* params) {
             }
         }
     }
-    std::cout << ">\n";
+    std::cout << '>';
 }
 
 uint_t ParamNumber (const uint_t* params, byte param_number) {
@@ -279,7 +279,7 @@ void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e) {
 }
 
 void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
-                    void* f) {
+             void* f) {
     ptrs[0] = a;
     ptrs[1] = b;
     ptrs[2] = c;
@@ -291,7 +291,7 @@ void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
 }
 
 void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
-                    void* f, void* g) {
+             void* f, void* g) {
     ptrs[0] = a;
     ptrs[1] = b;
     ptrs[2] = c;
@@ -304,7 +304,7 @@ void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
 }
 
 void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
-                    void* f, void* g, void* h) {
+             void* f, void* g, void* h) {
     ptrs[0] = a;
     ptrs[1] = b;
     ptrs[2] = c;
@@ -318,7 +318,7 @@ void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
 }
 
 void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
-                    void* f, void* g, void* h, void* i) {
+             void* f, void* g, void* h, void* i) {
     ptrs[0] = a;
     ptrs[1] = b;
     ptrs[2] = c;
@@ -605,10 +605,10 @@ void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
     return ptrs;
 }
 
-void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e,
-                    void* f, void* g, void* h, void* i, void* j, void* k, void* l, void* m,
-                    void* n, void* o, void* p, void* q, void* r, void* string, void* t, void* user,
-                    void* v, void* w) {
+void** Args (void** ptrs, void* a, void* b, void* c, void* d, void* e, void* f,
+             void* g, void* h, void* i, void* j, void* k, void* l, void* m,
+             void* n, void* o, void* p, void* q, void* r, void* string, void* t,
+             void* user, void* v, void* w) {
     ptrs[0] = a;
     ptrs[1] = b;
     ptrs[2] = c;

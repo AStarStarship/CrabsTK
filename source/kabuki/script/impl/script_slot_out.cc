@@ -35,6 +35,7 @@ const Operation* BResult (Slot* slot, const uint_t* params, void** args) {
         return SlotResult (slot, Bout::RoomError);
     if (args == nullptr)
         return SlotResult (slot, Bout::RoomError);
+    return SlotResult (slot, Bout::RoomError);
 }
 //bool IsWritable (MirrorOut* mirror) {
 //   return mirror->start != mirror->stop;

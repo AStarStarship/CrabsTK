@@ -78,10 +78,10 @@ TEST (SCRIPT_TESTS, ExpressionTests) {
                                                        &si4_expected, &flt_expected));
     PrintMemory (expr, ExpressionEndAddress (expr));
     ExpressionPrint (expr);
-    /*Mirror mirror;       //< @todo fix me!
+    //Mirror mirror;       //< @todo fix me!
     //Portal* p = dynamic_cast<Portal*>(&mirror);   //< Not working?
-    Portal* p = reinterpret_cast<Portal*>(&mirror);
-    ExpressionScan (expr, p); */
+    //Portal* p = reinterpret_cast<Portal*>(&mirror);
+    //ExpressionScan (expr, p);
     system ("PAUSE");
     CHECK_EQUAL (0, Args (expr, esc, Args (args, &stx_found,
                                          &si4_found, &flt_found)));
@@ -155,8 +155,8 @@ TEST (SCRIPT_TESTS, BookTests) {
     int8_t index;
 
     enum {
-        kBufferSize = 248,
-        kBufferSizeWords = 248 / sizeof (uintptr_t),
+        kBufferSize = 256,
+        kBufferSizeWords = kBufferSize / sizeof (uintptr_t),
 
     };
 
@@ -173,7 +173,7 @@ TEST (SCRIPT_TESTS, BookTests) {
     CHECK_EQUAL (0, index)
     index = Book2Find (book, "D");
     CHECK_EQUAL (0, index)
-
+    system ("PAUSE");
     index = Book2Add<uint8_t, UI1> (book, "C", (byte)0xFF);
     CHECK_EQUAL (1, index)
     index = Book2Find (book, "D");
@@ -238,13 +238,18 @@ TEST (SCRIPT_TESTS, BookTests) {
 }
 
 TEST (SCRIPT_TESTS, ReadWriteTests) {
-
     enum {
-        kBufferSize = 248,
+        kBufferSize = 256,
         kElementsBuffer = kBufferSize / sizeof (uintptr_t)
     };
 
+    uintptr_t buffer[kElementsBuffer + 4];  //< Something isn't aligned right.
+    //< It works right with an extra 4 uintptr_t when I'm using MUL 2. I'm 
+    //< writing something to the end of the buffer
+
     PrintLineBreak ("|  - Running ReadWriteTests...", 5);
+    std::cout << "kBufferSize: " << kBufferSize 
+              << " kElementsBuffer: " << kElementsBuffer;
 
     void* args[19];
 
@@ -254,35 +259,46 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     char found_string1[6],
          found_string2[6];
 
-    std::cout << "Testing with kElementsBuffer: " << kElementsBuffer;
-    uintptr_t buffer[kElementsBuffer];
-    Bout* bout = BoutInit (buffer, kBufferSize);
+    printf ("\n| buffer_start:%p buffer_stop:%p\n", &buffer[0], 
+            &buffer[kBufferSize - 1]);
+    printf ("\n| &expected_string1[0]:%p &expected_string2[0]:%p\n", 
+            &expected_string1[0], &expected_string2[0]);
 
+    Bout* bout = BoutInit (buffer, kBufferSize);
+    
     CHECK_EQUAL (0, BoutWrite (bout, Params<2, STR, 6, STR, 6> (),
                                Args (args, expected_string1,
                                      expected_string2)))
-
+    void** test = Args (args, found_string1, found_string2);
+    printf ("\n| texpected_string1_start:%p texpected_string2_start:%p\n",
+            &test[0], &test[1]);
+    
     CHECK_EQUAL (0, BoutRead (bout, Params<2, STR, 5, STR, 5> (),
                               Args (args, found_string1, found_string2)))
-    
-    STRCMP_EQUAL (expected_string1, found_string1)
-    BoutPrint (bout);
-    STRCMP_EQUAL (expected_string2, found_string2)
 
+    std::cout << "\nExpected 1: " << expected_string1
+              << " Found 1: "     << found_string1
+              << "\nExpected 2: " << expected_string2
+              << " Found 2: "     << found_string2;
+
+    STRCMP_EQUAL (expected_string1, found_string1)
+    //BoutPrint (bout);
+    STRCMP_EQUAL (expected_string2, found_string2)
+    
     PrintLineBreak ("|  - Testing BOL/UI1/SI1...", 5);
 
     static const int8_t si1_p_expected = '+',
                         si1_n_expected = (int8_t)196;
-    static const byte ui1_expected = '0',
-                      bol_expected = '?';
-    int8_t  si1_p_found,
-            si1_n_found,
-            bol_found;
-    byte ui1_found;
+    static const byte   ui1_expected = '0',
+                        bol_expected = '?';
+    int8_t si1_p_found,
+           si1_n_found,
+           bol_found;
+    byte   ui1_found;
 
-    CHECK_EQUAL (0, BoutRead (bout, Params<4, SI1, SI1, UI1, BOL> (),
-                              Args (args, &si1_p_expected, &si1_n_expected, 
-                                    &ui1_expected, &bol_expected)))
+    CHECK_EQUAL (0, BoutWrite (bout, Params<4, SI1, SI1, UI1, BOL> (),
+                               Args (args, &si1_p_expected, &si1_n_expected, 
+                                     &ui1_expected, &bol_expected)))
     CHECK_EQUAL (0, BoutRead (bout, Params<4, SI1, SI1, UI1, BOL> (),
                               Args (args, &si1_p_found, &si1_n_found,
                                     &ui1_found, &bol_found)))
@@ -343,11 +359,12 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     time_t tms_found;
 
     CHECK_EQUAL (0, BoutWrite (bout, Params<5, SI4, SI4, UI4, FLT, TMS> (),
-                           Args (args, &si4_p_expected, &si4_n_expected,
-                                 &ui4_expected, &flt_expected, &tms_expected)))
+                               Args (args, &si4_p_expected, &si4_n_expected,
+                                     &ui4_expected, &flt_expected, 
+                                     &tms_expected)))
     CHECK_EQUAL (0, BoutRead (bout, Params<5, SI4, SI4, UI4, FLT, TMS> (),
-                          Args (args, &si4_p_found, &si4_n_found, &ui4_found,
-                                &flt_found, &tms_found)))
+                              Args (args, &si4_p_found, &si4_n_found,
+                                    &ui4_found, &flt_found, &tms_found)))
     CHECK_EQUAL (si4_p_expected, si4_p_found)
     CHECK_EQUAL (si4_n_expected, si4_n_found)
     CHECK_EQUAL (ui4_expected, ui4_found)
@@ -370,7 +387,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
 
     bout = BoutInit (buffer, kBufferSize);
 
-    CHECK_EQUAL (0, BoutRead (bout, Params<5, TMU, SI8, SI8, UI8, DBL> (),
+    CHECK_EQUAL (0, BoutWrite (bout, Params<5, TMU, SI8, SI8, UI8, DBL> (),
            Args (args, &tmu_expected, &si8_p_expected, &si8_n_expected,
                  &ui8_expected, &dbl_expected)))
 
@@ -391,28 +408,38 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
 
     PrintLineBreak ("  - Testing PackSignedVarint and UnpackSignedVarint...\n", 5);
 
-    CHECK_EQUAL (1, UnpackSignedVarint<uint16_t> (PackSignedVarint<uint16_t> (1)))
-        printf ("Found: 0x%x\n", UnpackSignedVarint<uint16_t> (PackSignedVarint<uint16_t> (~0)));
-    CHECK_EQUAL (((uint16_t)~0), UnpackSignedVarint<uint16_t> (PackSignedVarint<uint16_t> (~0)))
+    CHECK_EQUAL (1, UnpackSignedVarint<uint16_t> 
+                    (PackSignedVarint<uint16_t> (1)))
+    printf ("Found: 0x%x\n", 
+            UnpackSignedVarint<uint16_t> (PackSignedVarint<uint16_t> (~0)));
+    CHECK_EQUAL (((uint16_t)~0), UnpackSignedVarint<uint16_t>
+                                 (PackSignedVarint <uint16_t> (~0)))
 
-    CHECK_EQUAL (1 << 30, UnpackSignedVarint<uint32_t> (PackSignedVarint<uint32_t> (1 << 30)))
-    CHECK_EQUAL (~0, UnpackSignedVarint<uint32_t> (PackSignedVarint<uint32_t> (~0)))
+    CHECK_EQUAL (1 << 30, UnpackSignedVarint<uint32_t>
+                          (PackSignedVarint <uint32_t> (1 << 30)))
+    CHECK_EQUAL (~0, UnpackSignedVarint<uint32_t>
+                     (PackSignedVarint <uint32_t> (~0)))
         
 
     CHECK_EQUAL (((uint64_t)1) << 62, UnpackSignedVarint<uint64_t> (PackSignedVarint<uint64_t> (((uint64_t)1) << 62)))
-    CHECK_EQUAL (~0, UnpackSignedVarint<uint64_t> (PackSignedVarint<uint64_t>(~0)))
+    CHECK_EQUAL (~0, UnpackSignedVarint<uint64_t> 
+                     (PackSignedVarint<uint64_t>(~0)))
     
     PrintLineBreak ("  - Testing SV2...\n", 5);
 
-    static const int16_t sv2_expected[] = { 0, 1, -1, 1 << 7, -(1 << 7), 1 << 14, -(1 << 14) };
+    static const int16_t sv2_expected[] = {
+        0, 1, -1, 1 << 7, -(1 << 7), 1 << 14, -(1 << 14)
+    };
 
     int16_t sv2_found[7];
-    CHECK_EQUAL (0, BoutRead (bout, Params<7, SV2, SV2, SV2, SV2, SV2, SV2, SV2> (),
+    CHECK_EQUAL (0, BoutWrite (bout, Params<7, SV2, SV2, SV2, SV2, SV2, SV2, 
+                                            SV2> (),
                            Args (args, &sv2_expected[0], &sv2_expected[1],
                                  &sv2_expected[2], &sv2_expected[3],
                                  &sv2_expected[4], &sv2_expected[5],
                                  &sv2_expected[6])))
-    CHECK_EQUAL (0, BoutRead (bout, Params<7, SV2, SV2, SV2, SV2, SV2, SV2, SV2>(),
+    CHECK_EQUAL (0, BoutRead (bout, Params<7, SV2, SV2, SV2, SV2, SV2, SV2, 
+                                           SV2>(),
                           Args (args, &sv2_found[0], &sv2_found[1], 
                                 &sv2_found[2], &sv2_found[3], 
                                 &sv2_found[4], &sv2_found[5],
@@ -430,7 +457,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     static const uint16_t uv2_expected[] = { 0, 1, 1 << 7, 1 << 14 };
 
     uint16_t uv2_found[4];
-    CHECK_EQUAL (0, BoutRead (bout, Params<4, UV2, UV2, UV2, UV2> (),
+    CHECK_EQUAL (0, BoutWrite (bout, Params<4, UV2, UV2, UV2, UV2> (),
                            Args (args, &uv2_expected[0], &uv2_expected[1],
                                  &uv2_expected[2], &uv2_expected[3])))
     CHECK_EQUAL (0, BoutRead (bout, Params<4, UV2, UV2, UV2, UV2> (),
@@ -448,16 +475,16 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
                                             1 << 21, -(1 << 21),
                                             1 << 28, -(1 << 28) };
     int32_t sv4_found[11];
-    CHECK_EQUAL (0, BoutRead (bout, Params<11, SV4, SV4, SV4, SV4, SV4, SV4, SV4, SV4,
-                                   SV4, SV4, SV4> (),
+    CHECK_EQUAL (0, BoutWrite (bout, Params<11, SV4, SV4, SV4, SV4, SV4, SV4, 
+                                            SV4, SV4, SV4, SV4, SV4> (),
                            Args (args, &sv4_expected[0], &sv4_expected[1],
                                  &sv4_expected[2], &sv4_expected[3],
                                  &sv4_expected[4], &sv4_expected[5],
                                  &sv4_expected[6], &sv4_expected[7],
                                  &sv4_expected[8], &sv4_expected[9],
                                  &sv4_expected[10])))
-    CHECK_EQUAL (0, BoutRead (bout, Params<11, SV4, SV4, SV4, SV4, SV4, SV4, SV4, SV4, 
-                                  SV4, SV4, SV4>(),
+    CHECK_EQUAL (0, BoutRead (bout, Params<11, SV4, SV4, SV4, SV4, SV4, SV4, 
+                                           SV4, SV4, SV4, SV4, SV4>(),
                           Args (args, &sv4_found[0], &sv4_found[1], 
                                 &sv4_found[2], &sv4_found[3],
                                 &sv4_found[4], &sv4_found[5],
@@ -478,10 +505,10 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
 
     PrintLineBreak ("|  - Testing UV4...\n", 5);
 
-    static const uint32_t uv4_expected[] = { 0, 1, 1 << 7, 1 << 14, 1 << 21, 
-                                             1 << 28 };
+    static const uint32_t uv4_expected[] = { 
+        0, 1, 1 << 7, 1 << 14, 1 << 21, 1 << 28 };
     uint32_t uv4_found[6];
-    CHECK_EQUAL (0, BoutRead (bout, Params<6, UV4, UV4, UV4, UV4, UV4, UV4> (),
+    CHECK_EQUAL (0, BoutWrite (bout, Params<6, UV4, UV4, UV4, UV4, UV4, UV4> (),
                            Args (args, &uv4_expected[0], &uv4_expected[1],
                                  &uv4_expected[2], &uv4_expected[3],
                                  &uv4_expected[4], &uv4_expected[5])))
@@ -495,44 +522,46 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (uv4_expected[3], uv4_found[3])
     CHECK_EQUAL (uv4_expected[4], uv4_found[4])
     CHECK_EQUAL (uv4_expected[5], uv4_found[5])
+    
+    PrintLineBreak ("|  - Testing SV8...\n", 5);
 
-        PrintLineBreak ("|  - Testing SV8...\n", 5);
-
-    static const int64_t sv8_expected[] = { 0, 1, -1, 1 << 7, -(1 << 7),
-                                            1 << 14, -(1 << 14),
-                                            1 << 21, -(1 << 21),  
-                                            1 << 28, -(1 << 28),
-                                            ((int64_t)1) << 35, -(((int64_t)1) << 35),
-                                            ((int64_t)1) << 42, -(((int64_t)1) << 42),
-                                            ((int64_t)1) << 49, -(((int64_t)1) << 49),
-                                            ((int64_t)1) << 56, -(((int64_t)1) << 56) };
+    static const int64_t sv8_expected[] = {
+        0, 1, -1, 1 << 7, -(1 << 7),
+        1 << 14, -(1 << 14),
+        1 << 21, -(1 << 21),  
+        1 << 28, -(1 << 28),
+        ((int64_t)1) << 35, -(((int64_t)1) << 35),
+        ((int64_t)1) << 42, -(((int64_t)1) << 42),
+        ((int64_t)1) << 49, -(((int64_t)1) << 49),
+        ((int64_t)1) << 56, -(((int64_t)1) << 56)
+    };
     int64_t sv8_found[19];
-    CHECK_EQUAL (0, BoutRead (bout, Params<19, SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8,
-                           SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8, 
-                           SV8> (),
+    CHECK_EQUAL (0, BoutWrite (bout, Params<19, SV8, SV8, SV8, SV8, SV8, SV8,
+                                            SV8, SV8, SV8, SV8, SV8, SV8, SV8,
+                                            SV8, SV8, SV8, SV8, SV8, SV8> (),
                            Args (args, &sv8_expected[0], &sv8_expected[1],
-                                 &sv8_expected[2], &sv8_expected[3],
-                                 &sv8_expected[4], &sv8_expected[5],
-                                 &sv8_expected[6], &sv8_expected[7],
-                                 &sv8_expected[8], &sv8_expected[9],
+                                 &sv8_expected[ 2], &sv8_expected[3],
+                                 &sv8_expected[ 4], &sv8_expected[5],
+                                 &sv8_expected[ 6], &sv8_expected[7],
+                                 &sv8_expected[ 8], &sv8_expected[9],
                                  &sv8_expected[10], &sv8_expected[11],
                                  &sv8_expected[12], &sv8_expected[13],
                                  &sv8_expected[14], &sv8_expected[15],
                                  &sv8_expected[16], &sv8_expected[17],
                                  &sv8_expected[18])))
-        CHECK_EQUAL (0, BoutRead (bout, Params<19, SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8,
-                              SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8, SV8,
-                              SV8> (),
-                              Args (args, &sv8_found[0], &sv8_found[1],
-                                    &sv8_found[2], &sv8_found[3],
-                                    &sv8_found[4], &sv8_found[5],
-                                    &sv8_found[6], &sv8_found[7],
-                                    &sv8_found[8], &sv8_found[9],
-                                    &sv8_found[10], &sv8_found[11],
-                                    &sv8_found[12], &sv8_found[13],
-                                    &sv8_found[14], &sv8_found[15],
-                                    &sv8_found[16], &sv8_found[17],
-                                    &sv8_found[18])))
+    CHECK_EQUAL (0, BoutRead (bout, Params<19, SV8, SV8, SV8, SV8, SV8, SV8, 
+                                           SV8, SV8, SV8, SV8, SV8, SV8, SV8,
+                                           SV8, SV8, SV8, SV8, SV8, SV8> (),
+                            Args (args, &sv8_found[0], &sv8_found[1],
+                                &sv8_found[2], &sv8_found[3],
+                                &sv8_found[4], &sv8_found[5],
+                                &sv8_found[6], &sv8_found[7],
+                                &sv8_found[8], &sv8_found[9],
+                                &sv8_found[10], &sv8_found[11],
+                                &sv8_found[12], &sv8_found[13],
+                                &sv8_found[14], &sv8_found[15],
+                                &sv8_found[16], &sv8_found[17],
+                                &sv8_found[18])))
         CHECK_EQUAL (sv8_expected[0], sv8_found[0])
         CHECK_EQUAL (sv8_expected[1], sv8_found[1])
         CHECK_EQUAL (sv8_expected[2], sv8_found[2])
@@ -555,30 +584,32 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
 
         PrintLineBreak ("|  - Testing UV8...\n", 5);
 
-    static const uint64_t uv8_expected[] = { 0, 1, 1 << 7, 1 << 14, 1 << 21,
-                                             1 << 28, ((uint64_t)1) << 35, 
-                                             ((uint64_t)1) << 42, 
-                                             ((uint64_t)1) << 49, 
-                                             ((uint64_t)1) << 56 };
+    static const uint64_t uv8_expected[] = {
+        0, 1, 1 << 7, 1 << 14, 1 << 21,
+        1 << 28, ((uint64_t)1) << 35, 
+        ((uint64_t)1) << 42, 
+        ((uint64_t)1) << 49, 
+        ((uint64_t)1) << 56
+    };
     uint64_t uv8_found[10];
-    CHECK_EQUAL (0, BoutRead (bout, Params<10, UV8, UV8, UV8, UV8, UV8, UV8, UV8, UV8,
-                                   UV8, UV8> (),
-                           Args (args, &uv8_expected[0], &uv8_expected[1],
-                                 &uv8_expected[2], &uv8_expected[3],
-                                 &uv8_expected[4], &uv8_expected[5],
-                                 &uv8_expected[6], &uv8_expected[7],
-                                 &uv8_expected[8], &uv8_expected[9],
-                                 &uv8_expected[10], &uv8_expected[11],
-                                 &uv8_expected[12], &uv8_expected[13])))
-    CHECK_EQUAL (0, BoutRead (bout, Params<10, UV8, UV8, UV8, UV8, UV8, UV8, UV8,
-                                  UV8, UV8, UV8> (),
-                          Args (args, &uv8_found[0], &uv8_found[1],
-                                &uv8_found[2], &uv8_found[3],
-                                &uv8_found[4], &uv8_found[5],
-                                &uv8_found[6], &uv8_found[7],
-                                &uv8_found[8], &uv8_found[9],
-                                &uv8_found[10], &uv8_found[11],
-                                &uv8_found[12], &uv8_found[13])))
+    CHECK_EQUAL (0, BoutWrite (bout, Params<10, UV8, UV8, UV8, UV8, UV8, UV8, 
+                                            UV8, UV8, UV8, UV8> (),
+                               Args (args, &uv8_expected[0], &uv8_expected[1],
+                                     &uv8_expected[2], &uv8_expected[3],
+                                     &uv8_expected[4], &uv8_expected[5],
+                                     &uv8_expected[6], &uv8_expected[7],
+                                     &uv8_expected[8], &uv8_expected[9],
+                                     &uv8_expected[10], &uv8_expected[11],
+                                     &uv8_expected[12], &uv8_expected[13])))
+    CHECK_EQUAL (0, BoutRead (bout, Params<10, UV8, UV8, UV8, UV8, UV8, UV8, 
+                                           UV8, UV8, UV8, UV8> (),
+                              Args (args, &uv8_found[0], &uv8_found[1],
+                                    &uv8_found[2], &uv8_found[3],
+                                    &uv8_found[4], &uv8_found[5],
+                                    &uv8_found[6], &uv8_found[7],
+                                    &uv8_found[8], &uv8_found[9],
+                                    &uv8_found[10], &uv8_found[11],
+                                    &uv8_found[12], &uv8_found[13])))
     CHECK_EQUAL (uv8_expected[0], uv8_found[0])
     CHECK_EQUAL (uv8_expected[1], uv8_found[1])
     CHECK_EQUAL (uv8_expected[2], uv8_found[2])
@@ -589,51 +620,4 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (uv8_expected[7], uv8_found[7])
     CHECK_EQUAL (uv8_expected[8], uv8_found[8])
     CHECK_EQUAL (uv8_expected[9], uv8_found[9])
-        /*
-    PrintLineBreak ("|  - Testing AR1...\n", 5);
-
-    static const byte ar1_expected[] = { '0', '1', '2', '3', '4', '5' };
-    byte ar1_found[6];
-    CHECK_EQUAL (0, BoutRead (bout, Params<1, AR1, 6, UI1> (), Args (args, &ar1_expected)))
-    CHECK_EQUAL (0, BoutRead (bout, Params<1, AR1, 6, UI1> (), Args (args, &ar1_found)))
-    for (int i = 0; i < 6; ++i)
-        CHECK_EQUAL (ar1_expected[i], ar1_found[i])
-
-
-    PrintLineBreak ("|  - Testing AR2...\n", 5);
-
-    static const uint16_t ar2_expected[] = { '0', '1', '2', '3', '4', '5' };
-    uint16_t ar2_found[6];
-    CHECK_EQUAL (0, BoutRead (bout, Params<1, AR2, 6, UI2> (), Args (args, &ar2_expected)))
-    CHECK_EQUAL (0, BoutRead (bout, Params<1, AR2, 6, UI2> (), Args (args, &ar2_found)))
-    for (int i = 0; i < 6; ++i)
-        CHECK_EQUAL (ar2_expected[i], ar2_found[i])
-
-    PrintLineBreak ("|  - Testing AR4...\n", 5);
-    
-
-    static const uint32_t ar4_expected[] = { '0', '1', '2', '3', '4', '5' };
-    uint32_t ar4_found[6];
-    CHECK_EQUAL (0, BoutRead (bout, Params<1, AR4, 6, UI4> (), Args (args, &ar4_expected)))
-    CHECK_EQUAL (0, BoutRead (bout, Params<1, AR4, 6, UI4> (), Args (args, &ar4_found)))
-    for (int i = 0; i < 6; ++i)
-        CHECK_EQUAL (ar4_expected[i], ar4_found[i])
-
-    PrintLineBreak ("|  - Testing AR8...\n", 5);
-
-    static const uint64_t ar8_expected[] = { '0', '1', '2', '3', '4', '5' };
-    uint64_t ar8_found[6];
-    CHECK_EQUAL (0, BoutRead (bout, Params<1, AR8, 6, UI8> (), Args (args, &ar8_expected)))
-    CHECK_EQUAL (0, BoutRead (bout, Params<1, AR8, 6, UI8> (), Args (args, &ar8_found)))
-    for (int i = 0; i < 6; ++i)
-        CHECK_EQUAL (ar8_expected[i], ar8_found[i])
-
-    PrintLineBreak ("|  - Testing RS...\n", 5);
-
-
-
-    PrintLineBreak ("|  - Testing GS...\n", 5);
-
-    PrintLineBreak ("|  - Testing FS...\n", 5);*/
 }
-

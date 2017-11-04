@@ -153,7 +153,6 @@ const char** TypeStrings () {
         "STR",
         "ST2",
         "ST4",
-        "ST8",
         "SI1",
         "UI1",
         "BOL",
@@ -174,13 +173,13 @@ const char** TypeStrings () {
         "UV4",
         "SV8",
         "UV8",
-        "ESC",
-        "ESC",
-        "KVH",
-        "KVM",
-        "TVA",
-        "US",
-        "Invalid"
+        "BSC",
+        "OBJ",
+        "OBV",
+        "LST",
+        "BAG",
+        "BOK",
+        "MAP",
     };
     return kNames;
 }

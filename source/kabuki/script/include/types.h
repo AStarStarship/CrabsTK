@@ -51,13 +51,13 @@ typedef enum {
     UV4,        //< 22. A 32-bit unsigned varint.
     SV8,        //< 23. A 64-bit signed varint.
     UV8,        //< 24. A 64-bit unsigned varint.
-    OBJ,        //< 25. An n-byte object composed of contiguous memory.
-    OBV,        //< 26. An Observer with Subscriber List.
-    BSC,        //< 27. A B-Sequence.
+    BSC,        //< 25. A B-Sequence.
+    OBJ,        //< 26. An n-byte object composed of contiguous memory.
+    OBV,        //< 27. An Observer with Subscriber List.
     LST,        //< 28. A stack of Type-Value tuples.
     BAG,        //< 29. A multiset of unordered Key-{Type-Value} tuples.
     BOK,        //< 30. A one-to-one map of Key-{Type-Value} tuples.
-    MAP,        //< 31. A one-to-one map of  Id-{Type-Value} tuples.
+    MAP,        //< 31. A one-to-one map of Id-{Type-Value} tuples.
 } TType;
 
 enum
