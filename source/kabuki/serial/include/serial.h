@@ -30,14 +30,6 @@
 #ifndef KABUKI_THEATER_SERIAL_H
 #define KABUKI_THEATER_SERIAL_H
 
-#include <limits>
-#include <vector>
-#include <string>
-#include <cstring>
-#include <sstream>
-#include <exception>
-#include <stdexcept>
-#include <_/config.h>
 
 #define THROW(exceptionClass, message) throw exceptionClass(__FILE__, \
 __LINE__, (message) )
@@ -45,7 +37,7 @@ __LINE__, (message) )
 namespace serial {
 
 /**
-* Enumeration defines the possible bytesizes for the serial port.
+* Enumeration defines the possible byte sizes for the serial port.
 */
 typedef enum {
     fivebits = 5,
@@ -476,7 +468,7 @@ class Serial
 
     /** Sets the flow control for the serial port.
     *
-    * @param flowcontrol Type of flowcontrol used, default is flowcontrol_none,
+    * @param flowcontrol Type of flow-control used, default is flowcontrol_none,
     * possible values are: flowcontrol_none, flowcontrol_software,
     * flowcontrol_hardware
     *

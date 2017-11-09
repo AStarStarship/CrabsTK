@@ -31,7 +31,7 @@ namespace mbed {
  * @code
  * // Flash an LED while a DigitalIn is true
  *
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * DigitalIn enable(p5);
  * DigitalOut led(LED1);

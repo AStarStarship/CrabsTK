@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+#include <stdafx.h>
+
 #ifndef MBED_GPIO_OBJECT_H
 #define MBED_GPIO_OBJECT_H
 
-#include "mbed_assert.h"
+#include "../../hal/include/mbed_assert.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -26,11 +29,11 @@ typedef struct {
     PinName  pin;
     uint32_t mask;
 
-    __IO uint32_t *reg_dir;
-    __IO uint32_t *reg_mask;
-    __IO uint32_t *reg_set;
-    __IO uint32_t *reg_clr;
-    __I  uint32_t *reg_in;
+    uint32_t *reg_dir;
+    uint32_t *reg_mask;
+    uint32_t *reg_set;
+    uint32_t *reg_clr;
+    uint32_t *reg_in;
 } gpio_t;
 
 static inline void gpio_write(gpio_t *obj, int value) {

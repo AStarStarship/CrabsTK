@@ -40,7 +40,7 @@ namespace mbed {
  * @code
  * // Read from I2C slave at address 0x62
  *
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * I2C i2c(p28, p27);
  *

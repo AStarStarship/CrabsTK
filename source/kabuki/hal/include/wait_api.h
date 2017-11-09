@@ -26,7 +26,7 @@ extern "C" {
  *
  * Example:
  * @code
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * DigitalOut heartbeat(LED1);
  *

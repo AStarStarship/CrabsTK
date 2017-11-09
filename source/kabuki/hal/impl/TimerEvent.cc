@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "TimerEvent.h"
-#include "cmsis.h"
-
-#include <stddef.h>
-#include "ticker_api.h"
-#include "us_ticker_api.h"
+#include <stdafx.h>
+#include "../include/TimerEvent.h"
+#include "../include/ticker_api.h"
+#include "../include/us_ticker_api.h"
 
 namespace mbed {
 

@@ -36,7 +36,7 @@ namespace mbed {
  * @code
  * // Flash an LED while waiting for events
  *
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * InterruptIn event(p16);
  * DigitalOut led(LED1);

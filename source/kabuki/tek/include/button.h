@@ -22,8 +22,9 @@
 namespace kabuki { namespace tek {
 
 /** A button.
-    Buttons are composed of a single integer type that stores the bit offset from the Controller. This bit offset then 
-    gets translated to a byte offset and a mask through some bit shifting.
+    Buttons are composed of a single integer type that stores the bit offset 
+    from the Controller. This bit offset then gets translated to a byte offset
+    and a mask through some bit shifting.
 */
 class Button {
       public:

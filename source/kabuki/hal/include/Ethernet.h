@@ -30,7 +30,7 @@ namespace mbed {
  * @code
  * // Read destination and source from every ethernet packet
  *
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * Ethernet eth;
  *
@@ -136,7 +136,7 @@ public:
      * Example:
      * @code
      * // Using the Ethernet link function
-     * #include "mbed.h"
+     * #include "../include/mbed.h"
      *
      * Ethernet eth;
      *

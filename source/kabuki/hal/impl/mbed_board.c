@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 #include <stdio.h>
-#include "gpio_api.h"
-#include "wait_api.h"
-#include "toolchain.h"
-#include "mbed_interface.h"
-#include "critical.h"
-#include "serial_api.h"
+#include "../include/gpio_api.h"
+#include "../include/wait_api.h"
+#include "../include/toolchain.h"
+#include "../include/mbed_interface.h"
+#include "../include/critical.h"
+#include "../include/serial_api.h"
 
 #if DEVICE_SERIAL
 extern int stdio_uart_inited;

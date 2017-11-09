@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
+#include <stdafx.h>
+
 #ifndef MBED_PINNAMES_H
 #define MBED_PINNAMES_H
 
-#include "cmsis.h"
+// C++ Machine-Software Interface Standard
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,7 +34,7 @@ typedef enum {
 
 typedef enum {
     // LPC Pin Names
-    P0_0 = LPC_GPIO0_BASE,
+    P0_0 = 0,
           P0_1, P0_2, P0_3, P0_4, P0_5, P0_6, P0_7, P0_8, P0_9, P0_10, P0_11, P0_12, P0_13, P0_14, P0_15, P0_16, P0_17, P0_18, P0_19, P0_20, P0_21, P0_22, P0_23, P0_24, P0_25, P0_26, P0_27, P0_28, P0_29, P0_30, P0_31,
     P1_0, P1_1, P1_2, P1_3, P1_4, P1_5, P1_6, P1_7, P1_8, P1_9, P1_10, P1_11, P1_12, P1_13, P1_14, P1_15, P1_16, P1_17, P1_18, P1_19, P1_20, P1_21, P1_22, P1_23, P1_24, P1_25, P1_26, P1_27, P1_28, P1_29, P1_30, P1_31,
     P2_0, P2_1, P2_2, P2_3, P2_4, P2_5, P2_6, P2_7, P2_8, P2_9, P2_10, P2_11, P2_12, P2_13, P2_14, P2_15, P2_16, P2_17, P2_18, P2_19, P2_20, P2_21, P2_22, P2_23, P2_24, P2_25, P2_26, P2_27, P2_28, P2_29, P2_30, P2_31,
@@ -98,12 +100,10 @@ typedef enum {
 
 // version of PINCON_TypeDef using register arrays
 typedef struct {
-  __IO uint32_t PINSEL[11];
-       uint32_t RESERVED0[5];
-  __IO uint32_t PINMODE[10];
+  uint32_t PINSEL[11];
+  uint32_t RESERVED0[5];
+  uint32_t PINMODE[10];
 } PINCONARRAY_TypeDef;
-
-#define PINCONARRAY ((PINCONARRAY_TypeDef *)LPC_PINCON_BASE)
 
 #ifdef __cplusplus
 }

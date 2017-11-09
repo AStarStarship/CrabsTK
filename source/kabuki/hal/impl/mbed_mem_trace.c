@@ -17,8 +17,8 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdio.h>
-#include "mbed_mem_trace.h"
-#include "critical.h"
+#include "../include/mbed_mem_trace.h"
+#include "../include/critical.h"
 
 /******************************************************************************
  * Internal variables, functions and helpers

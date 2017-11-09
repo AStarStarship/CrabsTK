@@ -1,7 +1,7 @@
 #ifndef MBED_INTERRUPTMANAGER_H
 #define MBED_INTERRUPTMANAGER_H
 
-#include "cmsis.h"
+
 #include "CallChain.h"
 #include "PlatformMutex.h"
 #include <string.h>
@@ -15,7 +15,7 @@ namespace mbed {
  * Example (for LPC1768):
  * @code
  * #include "InterruptManager.h"
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * Ticker flipper;
  * DigitalOut led1(LED1);

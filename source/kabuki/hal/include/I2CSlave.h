@@ -31,7 +31,7 @@ namespace mbed {
  * Example:
  * @code
  * // Simple I2C responder
- * #include <mbed.h>
+ * #include <../include/mbed.h>
  *
  * I2CSlave slave(p9, p10);
  *

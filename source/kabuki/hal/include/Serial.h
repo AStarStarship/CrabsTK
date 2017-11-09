@@ -38,7 +38,7 @@ namespace mbed {
  * @code
  * // Print "Hello World" to the PC
  *
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * Serial pc(USBTX, USBRX);
  *

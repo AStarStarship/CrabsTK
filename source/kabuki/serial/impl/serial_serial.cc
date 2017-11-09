@@ -6,7 +6,8 @@
              A copy of the license can be obtained from:
                     http://opensource.org/licenses/MIT
 */
-#include <algorithm>
+
+#include <stdafx.h>
 
 #if !defined(_WIN32) && !defined(__OpenBSD__) && !defined(__FreeBSD__)
 # include <alloca.h>

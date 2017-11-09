@@ -39,6 +39,7 @@
 #ifndef SERIAL_IMPL_WINDOWS_H
 #define SERIAL_IMPL_WINDOWS_H
 
+#include <stdafx.h>
 #include "serial.h"
 
 #include "windows.h"
@@ -142,17 +143,14 @@ class serial::Serial::SerialImpl
     void reconfigurePort ();
 
     private:
-    wstring port_;               //< Path to the file descriptor
-    HANDLE fd_;
-
-    bool is_open_;
-
-    Timeout timeout_;           //< Timeout for read operations
-    unsigned long baudrate_;    //< Baudrate
-
-    parity_t parity_;           //< Parity
-    bytesize_t bytesize_;       //< Size of the bytes
-    stopbits_t stopbits_;       //< Stop Bits
+    wstring       port_;        //< Path to the file descriptor
+    HANDLE        fd_;
+    bool          is_open_;     //< Flag for if serial port is open.
+    Timeout       timeout_;     //< Timeout for read operations
+    unsigned long baudrate_;    //< Baud-rate
+    parity_t      parity_;      //< Parity
+    bytesize_t    bytesize_;    //< Size of the bytes
+    stopbits_t    stopbits_;    //< Stop Bits
     flowcontrol_t flowcontrol_; //< Flow Control
 
     HANDLE read_mutex;

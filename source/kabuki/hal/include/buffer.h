@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#include <stdafx.h>
 #ifndef MBED_BUFFER_H
 #define MBED_BUFFER_H
 
-#include <stddef.h>
 
 /** Generic buffer structure
  */

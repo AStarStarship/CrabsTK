@@ -33,7 +33,7 @@ namespace mbed {
  * @code
  * // Switch on an LED if any of mbed pins 21-26 is high
  *
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * PortIn     p(Port2, 0x0000003F);   // p21-p26
  * DigitalOut ind(LED4);

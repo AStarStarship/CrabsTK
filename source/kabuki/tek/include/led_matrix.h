@@ -1,5 +1,5 @@
 /** kabuki::tek
-    @file    ~/source/kabuki/tek/include/leds/led_matrix.h
+    @file    ~/source/kabuki/tek/include/led_matrix.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -56,8 +56,9 @@ class LEDMatrix {
 
     private:
 
-    byte* row,          //< Pointer to the row byte.
-        *columns;       //< Pointer to the column
+    byte* row,     //< Pointer to the row byte.
+        * columns; //< Pointer to the column.
+};      //< class LedMatrix
 }       //< namespace tek
 }       //< namespace kabuki
 #endif  //< KABUKI_TEK_LEDS_LEDMATRIX_H

@@ -38,7 +38,7 @@ namespace mbed {
  * @code
  * // Send a char to the PC
  *
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * RawSerial pc(USBTX, USBRX);
  *

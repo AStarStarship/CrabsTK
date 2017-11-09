@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "Ethernet.h"
+#include "../include/Ethernet.h"
 
 #if DEVICE_ETHERNET
 

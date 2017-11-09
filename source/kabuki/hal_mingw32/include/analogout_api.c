@@ -13,41 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "mbed_assert.h"
-#include "analogout_api.h"
-#include "cmsis.h"
-#include "pinmap.h"
+
+#include <stdafx.h>
+#include "../../hal/include/mbed_assert.h"
+#include "../../hal/include/analogout_api.h"
+#include "../../hal/include/pinmap.h"
 
 static const PinMap PinMap_DAC[] = {
-    {P0_26, DAC_0, 2},
-    {NC   , NC   , 0}
+    0,0
 };
 
 void analogout_init(dac_t *obj, PinName pin) {
-    obj->dac = (DACName)pinmap_peripheral(pin, PinMap_DAC);
-    MBED_ASSERT(obj->dac != (DACName)NC);
-    
-    // power is on by default, set DAC clk divider is /4
-    LPC_SC->PCLKSEL0 &= ~(0x3 << 22);
-    
-    // map out (must be done before accessing registers)
-    pinmap_pinout(pin, PinMap_DAC);
-    
-    analogout_write_u16(obj, 0);
 }
 
 void analogout_free(dac_t *obj) {}
 
 static inline void dac_write(int value) {
-    value &= 0x3FF; // 10-bit
-    
-    // Set the DAC output
-    LPC_DAC->DACR = (0 << 16)       // bias = 0
-                  | (value << 6);
 }
 
 static inline int dac_read() {
-    return (LPC_DAC->DACR >> 6) & 0x3FF;
+    return 0;
 }
 
 void analogout_write(dac_t *obj, float value) {

@@ -7,15 +7,11 @@
                     http://opensource.org/licenses/MIT
 */
 
+#include <stdafx.h>
+
 #if defined(_WIN32)
 
-#include <_serial/serial.h>
-#include <tchar.h>
-#include <windows.h>
-#include <setupapi.h>
-#include <initguid.h>
-#include <devguid.h>
-#include <cstring>
+#include "../include/serial.h"
 
 using serial::PortInfo;
 using std::vector;
@@ -27,14 +23,16 @@ static const DWORD hardware_id_max_length   = 256;
 
 // Convert a wide Unicode string to an UTF8 string
 std::string utf8_encode (const std::wstring &wstr) {
-    int size_needed = WideCharToMultiByte (CP_UTF8, 0, &wstr[0], (int)wstr.size (), nullptr, 0, nullptr, nullptr);
+    int size_needed = WideCharToMultiByte (CP_UTF8, 0, &wstr[0],
+                                           (int)wstr.size (), nullptr, 0,
+                                           nullptr, nullptr);
     std::string strTo (size_needed, 0);
-    WideCharToMultiByte (CP_UTF8, 0, &wstr[0], (int)wstr.size (), &strTo[0], size_needed, nullptr, nullptr);
+    WideCharToMultiByte (CP_UTF8, 0, &wstr[0], (int)wstr.size (), &strTo[0],
+                         size_needed, nullptr, nullptr);
     return strTo;
 }
 
-vector<PortInfo>
-serial::list_ports () {
+vector<PortInfo> serial::list_ports () {
     vector<PortInfo> devices_found;
 
     HDEVINFO device_info_set = SetupDiGetClassDevs (

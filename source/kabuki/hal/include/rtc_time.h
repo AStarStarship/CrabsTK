@@ -28,7 +28,7 @@ extern "C" {
  *
  * Example:
  * @code
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * int main() {
  *     set_time(1256729737);  // Set RTC time to Wed, 28 Oct 2009 11:35:37
@@ -62,7 +62,7 @@ extern "C" {
  *
  * Example:
  * @code
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * int main() {
  *     set_time(1256729737); // Set time to Wed, 28 Oct 2009 11:35:37

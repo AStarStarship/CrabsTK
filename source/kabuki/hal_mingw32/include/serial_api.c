@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 // math.h required for floating point operations for baud rate calculation
-#include "mbed_assert.h"
-#include <math.h>
-#include <string.h>
-#include <stdlib.h>
 
-#include "serial_api.h"
-#include "cmsis.h"
-#include "pinmap.h"
+#include <stdafx.h>
+#include "../../hal/include/mbed_assert.h"
+
+#include "../../hal/include/serial_api.h"
+#include "../../hal/include/pinmap.h"
 
 /******************************************************************************
  * INITIALIZATION

@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "mbed_assert.h"
-#include <math.h>
 
-#include "spi_api.h"
-#include "cmsis.h"
-#include "pinmap.h"
-#include "mbed_error.h"
+#include <stdafx.h>
+#include "../../hal/include/mbed_assert.h"
+
+#include "../../hal/include/spi_api.h"
+#include "../../hal/include/pinmap.h"
+#include "../../hal/include/mbed_error.h"
 
 static const PinMap PinMap_SPI_SCLK[] = {
     {P0_7 , SPI_1, 2},
@@ -96,34 +96,6 @@ void spi_init(spi_t *obj, PinName mosi, PinName miso, PinName sclk, PinName ssel
 void spi_free(spi_t *obj) {}
 
 void spi_format(spi_t *obj, int bits, int mode, int slave) {
-    MBED_ASSERT(((bits >= 4) && (bits <= 16)) && ((mode >= 0) && (mode <= 3)));
-    ssp_disable(obj);
-    
-    int polarity = (mode & 0x2) ? 1 : 0;
-    int phase = (mode & 0x1) ? 1 : 0;
-    
-    // set it up
-    int DSS = bits - 1;            // DSS (data select size)
-    int SPO = (polarity) ? 1 : 0;  // SPO - clock out polarity
-    int SPH = (phase) ? 1 : 0;     // SPH - clock out phase
-    
-    int FRF = 0;                   // FRF (frame format) = SPI
-    uint32_t tmp = obj->spi->CR0;
-    tmp &= ~(0xFFFF);
-    tmp |= DSS << 0
-        | FRF << 4
-        | SPO << 6
-        | SPH << 7;
-    obj->spi->CR0 = tmp;
-    
-    tmp = obj->spi->CR1;
-    tmp &= ~(0xD);
-    tmp |= 0 << 0                   // LBM - loop back mode - off
-        | ((slave) ? 1 : 0) << 2   // MS - master slave mode, 1 = slave
-        | 0 << 3;                  // SOD - slave output disable - na
-    obj->spi->CR1 = tmp;
-    
-    ssp_enable(obj);
 }
 
 void spi_frequency(spi_t *obj, int hz) {
@@ -215,5 +187,6 @@ void spi_slave_write(spi_t *obj, int value) {
 }
 
 int spi_busy(spi_t *obj) {
-    return ssp_busy(obj);
+    //return ssp_busy(obj);
+    return 0;
 }

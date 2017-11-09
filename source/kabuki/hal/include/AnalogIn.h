@@ -34,7 +34,7 @@ namespace mbed {
  * @code
  * // Print messages when the AnalogIn is greater than 50%
  *
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * AnalogIn temperature(p20);
  *

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 #include <stdio.h>
-#include "mbed_interface.h"
+#include "../include/mbed_interface.h"
 
-#include "gpio_api.h"
-#include "wait_api.h"
-#include "semihost_api.h"
-#include "mbed_error.h"
-#include "toolchain.h"
+#include "../include/gpio_api.h"
+#include "../include/wait_api.h"
+#include "../include/semihost_api.h"
+#include "../include/mbed_error.h"
+#include "../include/toolchain.h"
 
 #if DEVICE_SEMIHOST
 

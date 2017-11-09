@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "SerialBase.h"
-#include "wait_api.h"
-#include "critical.h"
+#include "../include/SerialBase.h"
+#include "../include/wait_api.h"
+#include "../include/critical.h"
 
 #if DEVICE_SERIAL
 

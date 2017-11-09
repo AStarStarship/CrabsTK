@@ -47,7 +47,7 @@ namespace mbed {
  * @code
  * // Send a byte to a SPI slave, and record the response
  *
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * // hardware ssel (where applicable)
  * //SPI device(p5, p6, p7, p8); // mosi, miso, sclk, ssel

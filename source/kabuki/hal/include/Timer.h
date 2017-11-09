@@ -29,7 +29,7 @@ namespace mbed {
  * @code
  * // Count the time to toggle a LED
  *
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * Timer timer;
  * DigitalOut led(LED1);

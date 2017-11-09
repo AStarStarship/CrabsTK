@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "mbed_assert.h"
+#include "../include/mbed_assert.h"
 #include "device.h"
 
-#include "mbed_interface.h"
-#include "critical.h"
+#include "../include/mbed_interface.h"
+#include "../include/critical.h"
 
 void mbed_assert_internal(const char *expr, const char *file, int line)
 {

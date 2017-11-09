@@ -1,4 +1,4 @@
-#include "cmsis.h"
+
 #if defined(NVIC_NUM_VECTORS)
 
 #include "InterruptManager.h"

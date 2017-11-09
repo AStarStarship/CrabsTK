@@ -35,9 +35,9 @@ typedef int ssize_t;
 typedef long off_t;
 
 #else
-#    include <sys/fcntl.h>
-#    include <sys/types.h>
-#    include <sys/syslimits.h>
+//#    include <sys/fcntl.h>
+//#    include <sys/types.h>
+//#    include <sys/syslimits.h>
 #endif
 
 #include "platform.h"

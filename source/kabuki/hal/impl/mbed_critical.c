@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-#include "critical.h"
+#include "../include/critical.h"
 
-#include "cmsis.h"
-#include "mbed_assert.h"
+
+#include "../include/mbed_assert.h"
 
 #define EXCLUSIVE_ACCESS (!defined (__CORTEX_M0) && !defined (__CORTEX_M0PLUS))
 

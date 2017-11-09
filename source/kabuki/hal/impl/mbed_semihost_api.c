@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "cmsis.h"
-#include "semihost_api.h"
 
-#include <stdint.h>
-#include <string.h>
+#include <stdafx.h>
+
+#include "../include/semihost_api.h"
 
 #if DEVICE_SEMIHOST
 

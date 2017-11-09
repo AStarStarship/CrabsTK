@@ -34,7 +34,7 @@ namespace mbed {
  * @code
  * // Reply to a SPI master as slave
  *
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * SPISlave device(p5, p6, p7, p8); // mosi, miso, sclk, ssel
  *

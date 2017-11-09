@@ -54,7 +54,7 @@ class Pot {
 
     AnalogIn  input;        //< The pot ADC input.
     channel_t channel;      //< The channel in the mixer.
-};
+};      //< class Pot
 }       //< namespace tek
 }       //< namespace kabuki
 #endif  //< KABUKI_TEK_POT_H

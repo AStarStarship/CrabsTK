@@ -26,12 +26,12 @@ class BouncySwitch: public _::Operation
     public:
     
     /** A software debcounced switch. */
-    Switch  (uintptr_t DInPin);
+    BouncySwitch (uintptr_t DInPin);
 
-    virtual ~Switch ();
+    virtual ~BouncySwitch ();
     
     /** Script operations. */
-    const Operation* Star (char_t index, _::Expression* expr);
+    const _::Operation* Star (char_t index, _::Expression* expr);
     
     private:
     

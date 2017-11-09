@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <stddef.h>
-#include "ticker_api.h"
-#include "critical.h"
+#include <stdafx.h>
+#include "../include/ticker_api.h"
+#include "../include/critical.h"
 
 void ticker_set_handler(const ticker_data_t *const data, ticker_event_handler handler) {
     data->interface->init();

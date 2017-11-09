@@ -2608,152 +2608,152 @@ private:
 typedef Callback<void(int)> event_callback_t;
 
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R>
 Callback<R()> callback(R (*func)() = 0) {
     return Callback<R()>(func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R>
 Callback<R()> callback(const Callback<R()> &func) {
     return Callback<R()>(func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R>
 Callback<R()> callback(void *obj, R (*func)(void*)) {
     return Callback<R()>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R>
 Callback<R()> callback(const void *obj, R (*func)(const void*)) {
     return Callback<R()>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R>
 Callback<R()> callback(volatile void *obj, R (*func)(volatile void*)) {
     return Callback<R()>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R>
 Callback<R()> callback(const volatile void *obj, R (*func)(const volatile void*)) {
     return Callback<R()>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R>
 Callback<R()> callback(T *obj, R (*func)(T*)) {
     return Callback<R()>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R>
 Callback<R()> callback(const T *obj, R (*func)(const T*)) {
     return Callback<R()>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R>
 Callback<R()> callback(volatile T *obj, R (*func)(volatile T*)) {
     return Callback<R()>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R>
 Callback<R()> callback(const volatile T *obj, R (*func)(const volatile T*)) {
     return Callback<R()>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R>
 Callback<R()> callback(T *obj, R (T::*func)()) {
     return Callback<R()>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R>
 Callback<R()> callback(const T *obj, R (T::*func)() const) {
     return Callback<R()>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R>
 Callback<R()> callback(volatile T *obj, R (T::*func)() volatile) {
     return Callback<R()>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R>
 Callback<R()> callback(const volatile T *obj, R (T::*func)() const volatile) {
@@ -2761,152 +2761,152 @@ Callback<R()> callback(const volatile T *obj, R (T::*func)() const volatile) {
 }
 
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0>
 Callback<R(A0)> callback(R (*func)(A0) = 0) {
     return Callback<R(A0)>(func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0>
 Callback<R(A0)> callback(const Callback<R(A0)> &func) {
     return Callback<R(A0)>(func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0>
 Callback<R(A0)> callback(void *obj, R (*func)(void*, A0)) {
     return Callback<R(A0)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0>
 Callback<R(A0)> callback(const void *obj, R (*func)(const void*, A0)) {
     return Callback<R(A0)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0>
 Callback<R(A0)> callback(volatile void *obj, R (*func)(volatile void*, A0)) {
     return Callback<R(A0)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0>
 Callback<R(A0)> callback(const volatile void *obj, R (*func)(const volatile void*, A0)) {
     return Callback<R(A0)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0>
 Callback<R(A0)> callback(T *obj, R (*func)(T*, A0)) {
     return Callback<R(A0)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0>
 Callback<R(A0)> callback(const T *obj, R (*func)(const T*, A0)) {
     return Callback<R(A0)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0>
 Callback<R(A0)> callback(volatile T *obj, R (*func)(volatile T*, A0)) {
     return Callback<R(A0)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0>
 Callback<R(A0)> callback(const volatile T *obj, R (*func)(const volatile T*, A0)) {
     return Callback<R(A0)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0>
 Callback<R(A0)> callback(T *obj, R (T::*func)(A0)) {
     return Callback<R(A0)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0>
 Callback<R(A0)> callback(const T *obj, R (T::*func)(A0) const) {
     return Callback<R(A0)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0>
 Callback<R(A0)> callback(volatile T *obj, R (T::*func)(A0) volatile) {
     return Callback<R(A0)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0>
 Callback<R(A0)> callback(const volatile T *obj, R (T::*func)(A0) const volatile) {
@@ -2914,152 +2914,152 @@ Callback<R(A0)> callback(const volatile T *obj, R (T::*func)(A0) const volatile)
 }
 
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1>
 Callback<R(A0, A1)> callback(R (*func)(A0, A1) = 0) {
     return Callback<R(A0, A1)>(func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1>
 Callback<R(A0, A1)> callback(const Callback<R(A0, A1)> &func) {
     return Callback<R(A0, A1)>(func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1>
 Callback<R(A0, A1)> callback(void *obj, R (*func)(void*, A0, A1)) {
     return Callback<R(A0, A1)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1>
 Callback<R(A0, A1)> callback(const void *obj, R (*func)(const void*, A0, A1)) {
     return Callback<R(A0, A1)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1>
 Callback<R(A0, A1)> callback(volatile void *obj, R (*func)(volatile void*, A0, A1)) {
     return Callback<R(A0, A1)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1>
 Callback<R(A0, A1)> callback(const volatile void *obj, R (*func)(const volatile void*, A0, A1)) {
     return Callback<R(A0, A1)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1>
 Callback<R(A0, A1)> callback(T *obj, R (*func)(T*, A0, A1)) {
     return Callback<R(A0, A1)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1>
 Callback<R(A0, A1)> callback(const T *obj, R (*func)(const T*, A0, A1)) {
     return Callback<R(A0, A1)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1>
 Callback<R(A0, A1)> callback(volatile T *obj, R (*func)(volatile T*, A0, A1)) {
     return Callback<R(A0, A1)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1>
 Callback<R(A0, A1)> callback(const volatile T *obj, R (*func)(const volatile T*, A0, A1)) {
     return Callback<R(A0, A1)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1>
 Callback<R(A0, A1)> callback(T *obj, R (T::*func)(A0, A1)) {
     return Callback<R(A0, A1)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1>
 Callback<R(A0, A1)> callback(const T *obj, R (T::*func)(A0, A1) const) {
     return Callback<R(A0, A1)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1>
 Callback<R(A0, A1)> callback(volatile T *obj, R (T::*func)(A0, A1) volatile) {
     return Callback<R(A0, A1)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1>
 Callback<R(A0, A1)> callback(const volatile T *obj, R (T::*func)(A0, A1) const volatile) {
@@ -3067,152 +3067,152 @@ Callback<R(A0, A1)> callback(const volatile T *obj, R (T::*func)(A0, A1) const v
 }
 
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2>
 Callback<R(A0, A1, A2)> callback(R (*func)(A0, A1, A2) = 0) {
     return Callback<R(A0, A1, A2)>(func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2>
 Callback<R(A0, A1, A2)> callback(const Callback<R(A0, A1, A2)> &func) {
     return Callback<R(A0, A1, A2)>(func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2>
 Callback<R(A0, A1, A2)> callback(void *obj, R (*func)(void*, A0, A1, A2)) {
     return Callback<R(A0, A1, A2)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2>
 Callback<R(A0, A1, A2)> callback(const void *obj, R (*func)(const void*, A0, A1, A2)) {
     return Callback<R(A0, A1, A2)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2>
 Callback<R(A0, A1, A2)> callback(volatile void *obj, R (*func)(volatile void*, A0, A1, A2)) {
     return Callback<R(A0, A1, A2)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2>
 Callback<R(A0, A1, A2)> callback(const volatile void *obj, R (*func)(const volatile void*, A0, A1, A2)) {
     return Callback<R(A0, A1, A2)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1, typename A2>
 Callback<R(A0, A1, A2)> callback(T *obj, R (*func)(T*, A0, A1, A2)) {
     return Callback<R(A0, A1, A2)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1, typename A2>
 Callback<R(A0, A1, A2)> callback(const T *obj, R (*func)(const T*, A0, A1, A2)) {
     return Callback<R(A0, A1, A2)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1, typename A2>
 Callback<R(A0, A1, A2)> callback(volatile T *obj, R (*func)(volatile T*, A0, A1, A2)) {
     return Callback<R(A0, A1, A2)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1, typename A2>
 Callback<R(A0, A1, A2)> callback(const volatile T *obj, R (*func)(const volatile T*, A0, A1, A2)) {
     return Callback<R(A0, A1, A2)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1, typename A2>
 Callback<R(A0, A1, A2)> callback(T *obj, R (T::*func)(A0, A1, A2)) {
     return Callback<R(A0, A1, A2)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1, typename A2>
 Callback<R(A0, A1, A2)> callback(const T *obj, R (T::*func)(A0, A1, A2) const) {
     return Callback<R(A0, A1, A2)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1, typename A2>
 Callback<R(A0, A1, A2)> callback(volatile T *obj, R (T::*func)(A0, A1, A2) volatile) {
     return Callback<R(A0, A1, A2)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1, typename A2>
 Callback<R(A0, A1, A2)> callback(const volatile T *obj, R (T::*func)(A0, A1, A2) const volatile) {
@@ -3220,152 +3220,152 @@ Callback<R(A0, A1, A2)> callback(const volatile T *obj, R (T::*func)(A0, A1, A2)
 }
 
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2, typename A3>
 Callback<R(A0, A1, A2, A3)> callback(R (*func)(A0, A1, A2, A3) = 0) {
     return Callback<R(A0, A1, A2, A3)>(func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2, typename A3>
 Callback<R(A0, A1, A2, A3)> callback(const Callback<R(A0, A1, A2, A3)> &func) {
     return Callback<R(A0, A1, A2, A3)>(func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2, typename A3>
 Callback<R(A0, A1, A2, A3)> callback(void *obj, R (*func)(void*, A0, A1, A2, A3)) {
     return Callback<R(A0, A1, A2, A3)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2, typename A3>
 Callback<R(A0, A1, A2, A3)> callback(const void *obj, R (*func)(const void*, A0, A1, A2, A3)) {
     return Callback<R(A0, A1, A2, A3)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2, typename A3>
 Callback<R(A0, A1, A2, A3)> callback(volatile void *obj, R (*func)(volatile void*, A0, A1, A2, A3)) {
     return Callback<R(A0, A1, A2, A3)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2, typename A3>
 Callback<R(A0, A1, A2, A3)> callback(const volatile void *obj, R (*func)(const volatile void*, A0, A1, A2, A3)) {
     return Callback<R(A0, A1, A2, A3)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
 Callback<R(A0, A1, A2, A3)> callback(T *obj, R (*func)(T*, A0, A1, A2, A3)) {
     return Callback<R(A0, A1, A2, A3)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
 Callback<R(A0, A1, A2, A3)> callback(const T *obj, R (*func)(const T*, A0, A1, A2, A3)) {
     return Callback<R(A0, A1, A2, A3)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
 Callback<R(A0, A1, A2, A3)> callback(volatile T *obj, R (*func)(volatile T*, A0, A1, A2, A3)) {
     return Callback<R(A0, A1, A2, A3)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
 Callback<R(A0, A1, A2, A3)> callback(const volatile T *obj, R (*func)(const volatile T*, A0, A1, A2, A3)) {
     return Callback<R(A0, A1, A2, A3)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1, typename A2, typename A3>
 Callback<R(A0, A1, A2, A3)> callback(T *obj, R (T::*func)(A0, A1, A2, A3)) {
     return Callback<R(A0, A1, A2, A3)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1, typename A2, typename A3>
 Callback<R(A0, A1, A2, A3)> callback(const T *obj, R (T::*func)(A0, A1, A2, A3) const) {
     return Callback<R(A0, A1, A2, A3)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1, typename A2, typename A3>
 Callback<R(A0, A1, A2, A3)> callback(volatile T *obj, R (T::*func)(A0, A1, A2, A3) volatile) {
     return Callback<R(A0, A1, A2, A3)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1, typename A2, typename A3>
 Callback<R(A0, A1, A2, A3)> callback(const volatile T *obj, R (T::*func)(A0, A1, A2, A3) const volatile) {
@@ -3373,152 +3373,152 @@ Callback<R(A0, A1, A2, A3)> callback(const volatile T *obj, R (T::*func)(A0, A1,
 }
 
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
 Callback<R(A0, A1, A2, A3, A4)> callback(R (*func)(A0, A1, A2, A3, A4) = 0) {
     return Callback<R(A0, A1, A2, A3, A4)>(func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
 Callback<R(A0, A1, A2, A3, A4)> callback(const Callback<R(A0, A1, A2, A3, A4)> &func) {
     return Callback<R(A0, A1, A2, A3, A4)>(func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
 Callback<R(A0, A1, A2, A3, A4)> callback(void *obj, R (*func)(void*, A0, A1, A2, A3, A4)) {
     return Callback<R(A0, A1, A2, A3, A4)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
 Callback<R(A0, A1, A2, A3, A4)> callback(const void *obj, R (*func)(const void*, A0, A1, A2, A3, A4)) {
     return Callback<R(A0, A1, A2, A3, A4)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
 Callback<R(A0, A1, A2, A3, A4)> callback(volatile void *obj, R (*func)(volatile void*, A0, A1, A2, A3, A4)) {
     return Callback<R(A0, A1, A2, A3, A4)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
 Callback<R(A0, A1, A2, A3, A4)> callback(const volatile void *obj, R (*func)(const volatile void*, A0, A1, A2, A3, A4)) {
     return Callback<R(A0, A1, A2, A3, A4)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
 Callback<R(A0, A1, A2, A3, A4)> callback(T *obj, R (*func)(T*, A0, A1, A2, A3, A4)) {
     return Callback<R(A0, A1, A2, A3, A4)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
 Callback<R(A0, A1, A2, A3, A4)> callback(const T *obj, R (*func)(const T*, A0, A1, A2, A3, A4)) {
     return Callback<R(A0, A1, A2, A3, A4)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
 Callback<R(A0, A1, A2, A3, A4)> callback(volatile T *obj, R (*func)(volatile T*, A0, A1, A2, A3, A4)) {
     return Callback<R(A0, A1, A2, A3, A4)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
 Callback<R(A0, A1, A2, A3, A4)> callback(const volatile T *obj, R (*func)(const volatile T*, A0, A1, A2, A3, A4)) {
     return Callback<R(A0, A1, A2, A3, A4)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
 Callback<R(A0, A1, A2, A3, A4)> callback(T *obj, R (T::*func)(A0, A1, A2, A3, A4)) {
     return Callback<R(A0, A1, A2, A3, A4)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
 Callback<R(A0, A1, A2, A3, A4)> callback(const T *obj, R (T::*func)(A0, A1, A2, A3, A4) const) {
     return Callback<R(A0, A1, A2, A3, A4)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
 Callback<R(A0, A1, A2, A3, A4)> callback(volatile T *obj, R (T::*func)(A0, A1, A2, A3, A4) volatile) {
     return Callback<R(A0, A1, A2, A3, A4)>(obj, func);
 }
 
-/** Create a callback class with type infered from the arguments
+/** Create a callback class with type inferred from the arguments
  *
  *  @param obj  Optional pointer to object to bind to function
  *  @param func Static function to attach
- *  @return     Callback with infered type
+ *  @return     Callback with inferred type
  */
 template<typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
 Callback<R(A0, A1, A2, A3, A4)> callback(const volatile T *obj, R (T::*func)(A0, A1, A2, A3, A4) const volatile) {

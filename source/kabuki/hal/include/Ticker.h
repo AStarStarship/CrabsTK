@@ -32,7 +32,7 @@ namespace mbed {
  * @code
  * // Toggle the blinking led after 5 seconds
  *
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * Ticker timer;
  * DigitalOut led1(LED1);

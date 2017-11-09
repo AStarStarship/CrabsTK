@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "BusOut.h"
-#include "mbed_assert.h"
+#include "../include/BusOut.h"
+#include "../include/mbed_assert.h"
 
 namespace mbed {
 
@@ -32,43 +32,18 @@ BusOut::BusOut(PinName p0, PinName p1, PinName p2, PinName p3, PinName p4, PinNa
 }
 
 BusOut::BusOut(PinName pins[16]) {
-    // No lock needed in the constructor
-    _nc_mask = 0;
-    for (int i=0; i<16; i++) {
-        _pin[i] = (pins[i] != NC) ? new DigitalOut(pins[i]) : 0;
-        if (pins[i] != NC) {
-            _nc_mask |= (1 << i);
-        }
-    }
 }
 
 BusOut::~BusOut() {
-    // No lock needed in the destructor
-    for (int i=0; i<16; i++) {
-        if (_pin[i] != 0) {
-            delete _pin[i];
-        }
-    }
 }
 
 void BusOut::write(int value) {
     lock();
-    for (int i=0; i<16; i++) {
-        if (_pin[i] != 0) {
-            _pin[i]->write((value >> i) & 1);
-        }
-    }
     unlock();
 }
 
 int BusOut::read() {
     lock();
-    int v = 0;
-    for (int i=0; i<16; i++) {
-        if (_pin[i] != 0) {
-            v |= _pin[i]->read() << i;
-        }
-    }
     unlock();
     return v;
 }

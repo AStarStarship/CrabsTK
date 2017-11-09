@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "BusIn.h"
-#include "mbed_assert.h"
+#include "../include/BusIn.h"
+#include "../include/mbed_assert.h"
 
 namespace mbed {
 

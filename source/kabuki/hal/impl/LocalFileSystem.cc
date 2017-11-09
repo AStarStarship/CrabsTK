@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "LocalFileSystem.h"
+#include "../include/LocalFileSystem.h"
 
 #if DEVICE_LOCALFILESYSTEM
 

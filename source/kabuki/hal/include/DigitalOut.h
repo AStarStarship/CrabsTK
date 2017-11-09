@@ -29,7 +29,7 @@ namespace mbed {
  * Example:
  * @code
  * // Toggle a LED
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * DigitalOut led(LED1);
  *

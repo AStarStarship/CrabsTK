@@ -13,8 +13,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef KABUKI_TEK_LEDS_LEDVUMETER_H
-#define KABUKI_TEK_LEDS_LEDVUMETER_H
+#ifndef KABUKI_TEK_LED_VU_METER_H
+#define KABUKI_TEK_LED_VU_METER_H
 
 #include "module_config.h"
 
@@ -39,4 +39,4 @@ class LedVuMeter
 };
 }       //< namespace tek
 }       //< namespace kabuki
-#endif  //< KABUKI_TEK_LEDS_LEDVUMETER_H
+#endif  //< KABUKI_TEK_LED_VU_METER_H

@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "rtc_api.h"
+
+#include <stdafx.h>
+#include "../../hal/include/rtc_api.h"
 
 // ensure rtc is running (unchanged if already running)
 
@@ -34,17 +36,9 @@
  * without impacting if it is the case
  */
 void rtc_init(void) {
-    LPC_SC->PCONP |= (1 << PCRTC); // Ensure power is on
-    LPC_RTC->CCR = 0x00;
-    
-    // clock source on 2368 is special test mode on 1768!
-    LPC_RTC->CCR |= 1 << 4;  // Ensure clock source is 32KHz Xtal
-    
-    LPC_RTC->CCR |= 1 << 0; // Ensure the RTC is enabled
 }
 
 void rtc_free(void) {
-    // [TODO]
 }
 
 /*
@@ -56,7 +50,7 @@ void rtc_free(void) {
  */
 
 int rtc_isenabled(void) {
-    return(((LPC_RTC->CCR) & 0x01) != 0);
+    return 0;
 }
 
 /*
@@ -84,12 +78,12 @@ int rtc_isenabled(void) {
 time_t rtc_read(void) {
     // Setup a tm structure based on the RTC
     struct tm timeinfo;
-    timeinfo.tm_sec = LPC_RTC->SEC;
-    timeinfo.tm_min = LPC_RTC->MIN;
-    timeinfo.tm_hour = LPC_RTC->HOUR;
-    timeinfo.tm_mday = LPC_RTC->DOM;
-    timeinfo.tm_mon = LPC_RTC->MONTH - 1;
-    timeinfo.tm_year = LPC_RTC->YEAR - 1900;
+    timeinfo.tm_sec  = 0;
+    timeinfo.tm_min  = 0;
+    timeinfo.tm_hour = 0;
+    timeinfo.tm_mday = 0;
+    timeinfo.tm_mon  = 0;
+    timeinfo.tm_year = 0 - 1900;
     
     // Convert to timestamp
     time_t t = mktime(&timeinfo);
@@ -98,6 +92,7 @@ time_t rtc_read(void) {
 }
 
 void rtc_write(time_t t) {
+    /*
     // Convert the time in to a tm
     struct tm *timeinfo = localtime(&t);
     
@@ -113,5 +108,5 @@ void rtc_write(time_t t) {
     LPC_RTC->YEAR = timeinfo->tm_year + 1900;
     
     // Restart clock
-    LPC_RTC->CCR &= ~((uint32_t)2);
+    LPC_RTC->CCR &= ~((uint32_t)2);*/
 }

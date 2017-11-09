@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "mbed_assert.h"
-#include "gpio_api.h"
-#include "pinmap.h"
+
+#include <stdafx.h>
+#include "../../hal/include/mbed_assert.h"
+#include "../../hal/include/gpio_api.h"
+#include "../../hal/include/pinmap.h"
 
 uint32_t gpio_set(PinName pin) {
-    LPC_SC->SCS |= 1; // High speed GPIO is enabled on ports 0 and 1
-    
-    pin_function(pin, 0);
-    
-    return (1 << ((int)pin & 0x1F));
+    return 0;
 }
 
 void gpio_init(gpio_t *obj, PinName pin) {
@@ -33,14 +31,6 @@ void gpio_init(gpio_t *obj, PinName pin) {
         return;
 
     obj->mask = gpio_set(pin);
-    
-    LPC_GPIO_TypeDef *port_reg = (LPC_GPIO_TypeDef *) ((int)pin & ~0x1F);
-    
-    obj->reg_set = &port_reg->FIOSET;
-    obj->reg_mask = &port_reg->FIOMASK;
-    obj->reg_clr = &port_reg->FIOCLR;
-    obj->reg_in  = &port_reg->FIOPIN;
-    obj->reg_dir = &port_reg->FIODIR;
 }
 
 void gpio_mode(gpio_t *obj, PinMode mode) {

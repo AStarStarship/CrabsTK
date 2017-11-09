@@ -16,17 +16,15 @@
 #ifndef MBED_PERIPHERALNAMES_H
 #define MBED_PERIPHERALNAMES_H
 
-#include "cmsis.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 typedef enum {
-    UART_0 = (int)LPC_UART0_BASE,
-    UART_1 = (int)LPC_UART1_BASE,
-    UART_2 = (int)LPC_UART2_BASE,
-    UART_3 = (int)LPC_UART3_BASE
+    UART_0 = 0,
+    UART_1 = 0,
+    UART_2 = 0,
+    UART_3 = 0
 } UARTName;
 
 typedef enum {
@@ -45,14 +43,14 @@ typedef enum {
 } DACName;
 
 typedef enum {
-    SPI_0 = (int)LPC_SSP0_BASE,
-    SPI_1 = (int)LPC_SSP1_BASE
+    SPI_0 = 0,
+    SPI_1 = 0
 } SPIName;
 
 typedef enum {
-    I2C_0 = (int)LPC_I2C0_BASE,
-    I2C_1 = (int)LPC_I2C1_BASE,
-    I2C_2 = (int)LPC_I2C2_BASE
+    I2C_0 = 0,
+    I2C_1 = 0,
+    I2C_2 = 0
 } I2CName;
 
 typedef enum {
@@ -65,8 +63,8 @@ typedef enum {
 } PWMName;
 
 typedef enum {
-     CAN_1 = (int)LPC_CAN1_BASE,
-     CAN_2 = (int)LPC_CAN2_BASE
+     CAN_1 = 0,
+     CAN_2 = 0
 } CANName;
 
 #define STDIO_UART_TX     USBTX

@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+#include <stdafx.h>
+
 #ifndef MBED_OBJECTS_H
 #define MBED_OBJECTS_H
 
-#include "cmsis.h"
 #include "PortNames.h"
 #include "PeripheralNames.h"
 #include "PinNames.h"
@@ -32,20 +34,20 @@ struct gpio_irq_s {
 };
 
 struct port_s {
-    __IO uint32_t *reg_dir;
-    __IO uint32_t *reg_out;
-    __I  uint32_t *reg_in;
+    uint32_t *reg_dir;
+    uint32_t *reg_out;
+    uint32_t *reg_in;
     PortName port;
     uint32_t mask;
 };
 
 struct pwmout_s {
-    __IO uint32_t *MR;
+    uint32_t *MR;
     PWMName pwm;
 };
 
 struct serial_s {
-    LPC_UART_TypeDef *uart;
+    void *uart;
     int index;
 };
 
@@ -58,15 +60,15 @@ struct dac_s {
 };
 
 struct can_s {
-    LPC_CAN_TypeDef *dev;
+    void *dev;
 };
 
 struct i2c_s {
-    LPC_I2C_TypeDef *i2c;
+    void *i2c;
 };
 
 struct spi_s {
-    LPC_SSP_TypeDef *spi;
+    void *spi;
 };
 
 #include "gpio_object.h"

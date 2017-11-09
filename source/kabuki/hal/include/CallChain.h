@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #ifndef MBED_CALLCHAIN_H
 #define MBED_CALLCHAIN_H
 
+#include <stdafx.h>
 #include "Callback.h"
 #include "toolchain.h"
-#include <string.h>
 
 namespace mbed {
 
@@ -30,7 +31,7 @@ namespace mbed {
  *
  * Example:
  * @code
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * CallChain chain;
  *

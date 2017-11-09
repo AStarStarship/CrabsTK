@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "Ticker.h"
+#include "../include/Ticker.h"
 
-#include "TimerEvent.h"
-#include "FunctionPointer.h"
-#include "ticker_api.h"
-#include "critical.h"
+#include "../include/TimerEvent.h"
+#include "../include/FunctionPointer.h"
+#include "../include/ticker_api.h"
+#include "../include/critical.h"
 
 namespace mbed {
 

@@ -13,46 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "port_api.h"
-#include "pinmap.h"
-#include "gpio_api.h"
+
+#include <stdafx.h>
+#include "../../hal/include/port_api.h"
+#include "../../hal/include/pinmap.h"
+#include "../../hal/include/gpio_api.h"
 
 PinName port_pin(PortName port, int pin_n) {
-    return (PinName)(LPC_GPIO0_BASE + ((port << PORT_SHIFT) | pin_n));
+    return 0;
 }
 
 void port_init(port_t *obj, PortName port, int mask, PinDirection dir) {
-    obj->port = port;
-    obj->mask = mask;
-    
-    LPC_GPIO_TypeDef *port_reg = (LPC_GPIO_TypeDef *)(LPC_GPIO0_BASE + ((int)port * 0x20));
-    
-    // Do not use masking, because it prevents the use of the unmasked pins
-    // port_reg->FIOMASK = ~mask;
-    
-    obj->reg_out = &port_reg->FIOPIN;
-    obj->reg_in  = &port_reg->FIOPIN;
-    obj->reg_dir  = &port_reg->FIODIR;
-    
-    uint32_t i;
-    // The function is set per pin: reuse gpio logic
-    for (i=0; i<32; i++) {
-        if (obj->mask & (1<<i)) {
-            gpio_set(port_pin(obj->port, i));
-        }
-    }
-    
-    port_dir(obj, dir);
 }
 
 void port_mode(port_t *obj, PinMode mode) {
-    uint32_t i;
-    // The mode is set per pin: reuse pinmap logic
-    for (i=0; i<32; i++) {
-        if (obj->mask & (1<<i)) {
-            pin_mode(port_pin(obj->port, i), mode);
-        }
-    }
 }
 
 void port_dir(port_t *obj, PinDirection dir) {

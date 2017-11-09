@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "i2c_api.h"
-#include "cmsis.h"
-#include "pinmap.h"
+
+#include <stdafx.h>
+#include "../../hal/include/i2c_api.h"
+#include "../../hal/include/pinmap.h"
 
 static const PinMap PinMap_I2C_SDA[] = {
     {P0_0 , I2C_1, 3},

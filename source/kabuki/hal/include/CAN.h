@@ -77,7 +77,7 @@ public:
      *
      * Example:
      * @code
-     * #include "mbed.h"
+     * #include "../include/mbed.h"
      *
      * Ticker ticker;
      * DigitalOut led1(LED1);

@@ -30,7 +30,7 @@ namespace mbed {
  * @code
  * // Blink until timeout.
  *
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * Timeout timeout;
  * DigitalOut led(LED1);

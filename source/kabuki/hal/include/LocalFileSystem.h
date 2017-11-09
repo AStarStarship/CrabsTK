@@ -64,7 +64,7 @@ protected:
  *
  * Example:
  * @code
- * #include "mbed.h"
+ * #include "../include/mbed.h"
  *
  * LocalFileSystem local("local");               // Create the local filesystem under the name "local"
  *
