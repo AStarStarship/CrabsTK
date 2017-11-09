@@ -1,8 +1,8 @@
 /** Kabuki Toolkit
     @version 0.x
     @file    ~/source/kabuki/script/a.h
-    @author  Cale McCollough <calemccollough.github.expr>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.expr>;
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -36,7 +36,7 @@ enum {
 
     /** @var  StackSize
         @todo Test with small and large sizes. */
-    kRoomSize           = 3,
+    kRoomSize           = 1024,
 };
 
 /* Test Operand for multiple unit tests.
@@ -111,18 +111,21 @@ class ChildOperand : public Operand {
 class Root : public Operand {
     public:
 
+    enum {
+        kStringBufferSize = 16          //< Example string buffer size.
+    };
+
     // Interprocess operations.
     virtual const Operation* Star (int index, Expression* expr) {
         void* args[2];
 
-        static const Operation self = { "Root",
+        static const Operation this_op = { "Root",
             NumOperations (4),
             FirstOperation ('A'),
             "Root scope device." };
 
-        if (!index) return &self;
-
         switch (index) {
+            case '?': return &this_op;
             case 'a': {
                 if (!expr) return child_a.Star (0, expr);
                 return Push (expr, &child_a);
@@ -168,24 +171,25 @@ class Root : public Operand {
     
     ChildOperand child_a,               //< ChildOperand Expression in index 'A'.
           child_b;                      //< ChildOperand Expression in index 'B'
-
-    enum {
-        kStringBufferSize = 16          //< Example string buffer size.
-    };
-
     float io_number_;                   //< Example variable.
     char  io_string_[kStringBufferSize];//< Example string.
 };
 
 /** A test room that can fit in 1KB of RAM. */
-class A : public Room {
+class This : public Room {
     public:
 
-    A ():
-        Room (kRoomSize)
+    enum {
+        kRoomSize = 1024
+    };
+
+    This ():
+        Room (buffer_, kRoomSize)
     {
         
     }
 
+    private:
 
+    uintptr_t buffer_[(kRoomSize / sizeof (uintptr_t)) + 1];  //< 
 };

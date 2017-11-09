@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/include/expression.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -201,6 +201,9 @@ KABUKI void ExpressionPrintError (Expression::Error error, const uint_t* params,
 /** Gets a pointer to the Bin slot. */
 KABUKI uintptr_t* ExpressionBinAddress (Expression* expr);
 
+/** Gets the expr's buffer. */
+KABUKI byte* ExpressionBuffer (Expression* expr);
+
 /** Gets a pointer to the Bin slot. */
 KABUKI Bin* ExpressionBin (Expression* expr);
 
@@ -214,7 +217,7 @@ KABUKI Bout* ExpressionBout (Expression* expr);
     @param root The root-scope device. */
 KABUKI Expression* ExpressionInit (uintptr_t* buffer, uint_t buffer_size,
                                    uint_t stack_count,
-                                   Operand* root = nullptr);
+                                   Operand* root);
 
 /** Gets the base address of the device stack. */
 KABUKI Operand** ExpressionStack (Expression* expr);

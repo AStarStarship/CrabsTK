@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/include/table.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -24,7 +24,7 @@
 
 namespace _ {
 
-/** A table designed to work with Star (string) with less than 192 members.
+/** A hash-table.
     
     # Memory Layout
 
@@ -83,14 +83,14 @@ struct KABUKI Table {
 };
 
 enum {
-    kMinTableSize = 64,   //< The min size of a Table
+    kMinTableSize       = 64,   //< Min size of a Table
     kInvalidRecord      = 255,  //< Invalid Record index.
-    kMaxNumOperations      = 192,  //< The max number of members in a particular scope.
+    kMaxNumOperations   = 192,  //< Max number of members in a particular scope.
     kNoCollidingRecords = 255,  //< 
     kRecordOverflow     = 254,  //< 
-    kTableFull    = 253,  //< 
-    kOverheadPerRecord  = sizeof (hash16_t) + sizeof (uint16_t) + sizeof (byte) + 
-        sizeof (byte),
+    kTableFull          = 253,  //< 
+    kOverheadPerRecord  = sizeof (hash16_t) + sizeof (uint16_t) + 
+                          sizeof (byte)     + sizeof (byte),
 };
 
 //void Print (Table* rt);
@@ -101,7 +101,7 @@ enum {
              construction to verify the integrity of the object.
     @warning The reservedNumOperations must be aligned to a 32-bit value, and 
              it will get rounded up to the next higher multiple of 4. */
-KABUKI Table* TableInit (byte* buffer, byte max_keys, uint16_t set_size);
+KABUKI Table* TableInit (uintptr_t* buffer, byte max_keys, uint16_t size_bytes);
     
 /** Adds the given key and returns the index 64-255 of the index of the 
     op.

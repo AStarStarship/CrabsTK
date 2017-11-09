@@ -1,6 +1,5 @@
-/** Kabuki Tek
-    @version 0.9
-    @file    /.../Source-Impl/Portals/SpiPortal.cpp
+/** kabuki::tek
+    @file    ~/source/kabuki/tek/impl/tek_electrolytic_mic.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 [Cale McCollough](calemccollough.github.io)
 
@@ -19,40 +18,35 @@
         limitations under the License.
 */
 
-#include <tek/portals/spi_portal.h>
+#include "../include/electrolytic_mic.h"
 
-namespace tek {
+namespace kabuki { namespace tek {
 
-SpiPortal::SpiPortal (int BufferSize)
-{
-    if (BufferSize < MinBufferSize)
-    {
-        buffer = new byte[MinBufferSize];
-        return;
-    }
+Electrolytic::Electrolytic (PinName pin) :
+    min (0),
+    max (0),
+    input (pin) {
 
-    buffer = new byte[BufferSize];
 }
 
-SpiPortal::~SpiPortal ()
-{
-    if (buffer != 0) delete buffer;
+uint16_t Electrolytic::GetMin () { return min; }
+
+void Electrolytic::SetMin (uint16_t Value) {
+    if (Value > max) return;
+    min = Value;
 }
 
-const char* SpiPortal::GetError ()
-{
-    return 0;
+uint16_t Electrolytic::GetMax () { return max; }
+
+void Electrolytic::SetMax (uint16_t Value) {
+    if (Value < min) return;
+    max = Value;
 }
 
-void SpiPortal::Feed ()
-{
-    //while (IsWritable (io)) UniprinterStreamByte ();
+void BoundMinMax () {
+
+    return input.read_u16 ();
 }
 
-void SpiPortal::Pull ()
-{
-	//Uniprinter* io;
-    //while (UniprinterIsReadable (io)) UniprinterStream (io, slot.UniprinterStream (slot.getc ());
-}
-
-}   //< namespace tek
+}       //< namespace tek
+}       //< namespace kabuki

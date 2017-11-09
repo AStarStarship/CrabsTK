@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/impl/script_operation.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -29,12 +29,12 @@ const uint_t* FirstOperation (uint_t value) {
     return reinterpret_cast<const uint_t*>(index);
 }
 
-char_t Index (const void* ptr) {
+char_t index (const void* ptr) {
     return (char_t)reinterpret_cast<uintptr_t>(ptr);
 }
 
 uintptr_t CountCoperations (const Operation* op) {
-    return Index (op->params);
+    return index (op->params);
 }
 
 void OperationPrint (const Operation* operand) {
@@ -43,7 +43,7 @@ void OperationPrint (const Operation* operand) {
 
     const uint_t* result = operand->result;
 
-    if (Index (result) < 256) {
+    if (index (result) < 256) {
         // Print Operation Star
         std::cout << "\n| Num Operations:  " << CountCoperations (operand)
                   << "\n| Metadata:        " << operand->metadata << '\n';
@@ -76,12 +76,12 @@ void OperandPrint (Operand* operand) {
         return;
     }
     printf ("0x%p ", operand);
-    const Operation* ope = operand->Star (0, nullptr);   //< Get Star header.
+    const Operation* ope = operand->Star ('?', nullptr);   //< Get Star header.
     std::cout << ope->name
         << "\n| NumOperations:  " << CountCoperations (ope)
         << "\n| Description:    " << ope->metadata << '\n';
-    char_t index      = Index (ope->result),
-           stop_index = index + Index (ope->params);
+    char_t index      = index (ope->result),
+           stop_index = index + index (ope->params);
     std::cout << "| FirstOperation: " << index << " LastOperation: "
         << stop_index;
     PrintLine ("|", '-');

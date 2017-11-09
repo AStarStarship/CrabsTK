@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/include/collection.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -91,6 +91,9 @@ struct Set {
 
     /** Gets the size_t of the object being stored. */
     virtual uintptr_t GetSizeWidth () = 0;
+
+    /**  */
+    virtual void Print () = 0;
 };
 }       //< namespace _
 #endif  //< SCRIPT_COLLECTION_H

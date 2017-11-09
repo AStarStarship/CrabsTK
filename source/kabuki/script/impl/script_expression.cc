@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/impl/script_expression.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -42,32 +42,31 @@ const char* ExpressionStateString (Expression::State state) {
 }
 
 const Operation* Result (Expression* expr, Expression::Error error) {
-    // @todo Write me.
-    return 0;
+    std::cout << "\nExpression " << ExpressionErrorString (error) << " Error!\n";
+    return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* Result (Expression* expr, Expression::Error error,
                          const uint_t* header) {
-    // @todo Write me.
-    return 0;
+    std::cout << "\nExpression " << ExpressionErrorString (error) << " Error!\n";
+    return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* Result (Expression* expr, Expression::Error error, 
                          const uint_t* header, byte offset) {
-    // @todo Write me.
-    return 0;
+    std::cout << "\nExpression " << ExpressionErrorString (error) << " Error!\n";
+    return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* Result (Expression* expr, Expression::Error error, 
                          const uint_t* header, byte offset, byte* address) {
-    // @todo Write me.
-    return 0;
+    std::cout << "\nExpression " << ExpressionErrorString (error) << " Error!\n";
+    return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* Result (Expression* expr, Expression::Error error, 
-                         const uint_t* header, byte offset, uintptr_t* address)
-{
-    std::cout << "\nBin " << ExpressionErrorString (error) << " Error!\n";
+                         const uint_t* header, byte offset, uintptr_t* address) {
+    std::cout << "\nExpression " << ExpressionErrorString (error) << " Error!\n";
     return reinterpret_cast<const Operation*> (1);
 }
 
@@ -75,6 +74,11 @@ uintptr_t* ExpressionBinAddress (Expression* expr) {
     if (!expr)
         return nullptr;
     return reinterpret_cast<uintptr_t*>(expr) + expr->header_size;
+}
+
+byte* ExpressionBuffer (Expression* expr) {
+    byte* ptr = reinterpret_cast<byte*> (expr);
+    return ptr + sizeof (Expression);
 }
 
 Bin* ExpressionBin (Expression* expr) {
@@ -226,7 +230,7 @@ const Operation* ExpressionPushScanHeader (Expression* expr,
 }
 
 const Operation* ExpressionPushScanHeader (Expression* expr,
-    volatile const uint_t* header) {
+                                           volatile const uint_t* header) {
     const uint_t** headers;
     uint_t verify_count = expr->verify_count;
     if (verify_count >= expr->stack_size)
@@ -280,7 +284,7 @@ void ExpressionScan (Expression* expr, Portal* input) {
     hash16_t          hash;         //< Hash of the ESC being verified.
     timestamp_t       timestamp,    //< Last time when the expression ran.
                       delta_t;      //< Time delta between the last timestamp.
-    //Expression      * expression; //< Current Expression.
+    //Expression    * expression;   //< Current Expression.
     const Operation * op;           //< Current Operation.
     Operand         * operand;      //< The operand.
     const uint_t    * header;       //< Header of the current Operation being verified.
@@ -312,14 +316,16 @@ void ExpressionScan (Expression* expr, Portal* input) {
             delta_t *= -1;
     }
 
-    begin  = &ExpressionBin (expr)->buffer;
+    begin  = ExpressionBuffer (expr);
     end    = begin + size;
     start  = begin + bin->start;
     stop   = begin + bin->stop;
     space  = SlotSpace (start, stop, size);
     length = size - space + 1;
 
-    printf ("\n\n| Scanning address 0x%p:\n| bout_state: %s\n| length: %u\n", start,
+    printf ("\n\n| Scanning address 0x%p:\n"
+            "| bout_state: %s\n"
+            "| length: %u\n", start,
         ExpressionStateString ((Expression::State)expr->bout_state), length);
 
     // Manually load first byte:
@@ -541,7 +547,7 @@ void ExpressionClear (Expression* expr) {
     Bin* bin = ExpressionBin (expr);
     uint_t size = bin->size;
 
-    byte* begin = &bin->buffer,
+    byte* begin = BinBuffer (bin),
         * end   = begin + bin->size,
         * start = begin + bin->start,
         * stop  = begin + bin->stop;

@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/include/wall.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -57,7 +57,7 @@ class Wall : public Operation {
     public:
 
     enum {
-        kMinSizeBytes = 256, //< The default Wall size.
+        kMinSizeBytes = 512, //< The minimum functional Wall size.
     };
 
     virtual ~Wall ();
@@ -90,8 +90,8 @@ class Wall : public Operation {
     private:
 
     bool           is_dynamic_; //< Flag for if using dynamic memory.
-    TStack<Door*>* doors_;      //< The doors in the room.
     uintptr_t    * buffer_;     //< The Wall's buffer.
+    TStack<Door*>* doors_;      //< The doors in the room.
 };
 
 }       //< namespace _

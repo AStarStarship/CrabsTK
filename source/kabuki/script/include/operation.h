@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/include/operation.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -158,7 +158,7 @@ KABUKI const uint_t* NumOperations (std::uintptr_t value);
 KABUKI const uint_t* FirstOperation (uint_t value);
 
 /** Returns the number of members an Star has. */
-KABUKI char_t Index (const void* ptr);
+KABUKI char_t index (const void* ptr);
 
 /** Returns the number of members a Star has. */
 KABUKI uintptr_t CountCoperations (const Operation* op);

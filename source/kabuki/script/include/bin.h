@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/include/bin.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -40,7 +40,6 @@ KABUKI uint_t SlotSpace (byte* start, byte* stop, uint_t size);
     A B-Input Slot is functionally identical to a input port in TCP.
 */
 struct KABUKI Bin {
-
     /** List of B-Input Errors. */
     typedef enum {
         BufferOverflowError      = 0,
@@ -81,8 +80,10 @@ struct KABUKI Bin {
                     start;  //< The starting index of the ring buffer data.
     volatile uint_t stop;   //< The stopping index of the ring buffer data.
     uint_t          read;   //< The read variable.
-    byte            buffer; //< The first byte in the ring buffer.
 };
+
+/** Get's the B-Input's buffer.*/
+KABUKI byte* BinBuffer (Bin* bin);
 
 /** Gets a a char for printing out the bin_state. */
 KABUKI const char* BinStateString (Bin::State state);
@@ -143,7 +144,7 @@ KABUKI bool BinIsReadable (Bin* bin);
 KABUKI void BinPrint (Bin* bin);
 
 /** Scans a message with the given params to the given Bin.
-    The data in the Bin is word-aligned, unlike the Slot. It also
+    The data in the Bin is word-aligned, unlike the Slot. It also 
     doesn't have a hash with an escape sequence.
     
     @param rx The Bin socket.

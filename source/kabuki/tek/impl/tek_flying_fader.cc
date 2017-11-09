@@ -1,8 +1,7 @@
-/** kabuki::script
-    @version 0.x
-    @file    ~/source/kabuki/script/include/a.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+/** kabuki::tek
+    @file    ~/source/kabuki/tek/impl/tek_FlyingFader.cc
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -14,28 +13,25 @@
              permissions and limitations under the License.
 */
 
-#pragma once
-#include <stdafx.h>
+#include "../include/flying_fader.h"
 
-#ifndef SCRIPT_A_H
-#define SCRIPT_A_H
+namespace kabuki { namespace tek {
 
-#include "room.h"
+FlyingFader:: FlyingFader ()
+{
+}
 
-namespace _ {
-
-/** The A in A*B.
-    
-*/
-struct A: public Room {
-    public:
-
-    A ():
-        Room (1024)
+const _::Operation* FlyingFader::Star (char_t index, _::Expression* expr)
+{
+    static const _::Operation this_op = { "FlyingFader",
+        _::NumMembers (0), _::FirstOperation ('A'),
+        "tek::sensuators", 0 };
+    switch (index)
     {
-
+        case 0: return _::NumOperations (0);
     }
-};
+    
+}
 
-}       //< namespace _
-#endif  //< SCRIPT_A_H
+}       //< namespace tek
+}       //< namespace kabuki

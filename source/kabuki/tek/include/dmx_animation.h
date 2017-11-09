@@ -1,45 +1,39 @@
-/** Kabuki Tek
-    @file    /.../Source/_tek/_tek/dmx/dmx_animation.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 [Cale McCollough](calemccollough.github.io)
-
-                            All right reserved  (R).
-
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** kabuki::tek
+    @file    ~/source/kabuki/tek/include/dmx_animation.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
-#pragma once
+#ifndef KABUKI_TEK_DMX_ANIMATION_H
+#define KABUKI_TEK_DMX_ANIMATION_H
 
-#include <config.h>
-#include <color.h>
+#include "module_config.h"
 
-namespace kabuki { namespace tek { namespace dmx {
+namespace kabuki { namespace tek {
 
-typedef void (*UpdateHandler)  (uint Chase, uint Frame, byte Scene);
-/*< @function UpdateHandler  (uint, uint, byte);
+/*< @fn    UpdateHandler  (uint, uint, byte);
     @brief C function Update handler for DMXAnimation.
     @code
     uint ExampleAnimation1  (uint
     @endcode
 */
+typedef void (*UpdateHandler)  (uint Chase, uint Frame, byte Scene);
 
-//inline IsInvalidFrame  (uint Index);
+//inline bool IsInvalidFrame  (uint Index);
 
 /** A simple DMX animation with variant.
 
 */
-class DMXAnimation
-{
+class DMXAnimation {
       public:
     
     enum {
@@ -47,7 +41,7 @@ class DMXAnimation
     };
     
     /** Simple default constructor. */
-    DMXAnimation  (uint NumChannels, uint NumChases, uint NumVariants);
+    DMXAnimation  (uint num_channels, uint num_chases, uint num_variants);
 
     /** Resets the animation to the first frame */
     void ResetAnimation ();
@@ -56,10 +50,10 @@ class DMXAnimation
     void SetChaseNumber  (uint Index);
     
     /** Function sends out DMX data for the given channel. */
-    void SetChannelData  (uint16_t Channel, byte Value);
+    void SetChannelData  (uint16_t Channel, byte value);
     
     /** Function sets an RGB color starting at the given channel. */
-    void SetRGBColor  (uint16_t Channel, color_t Value);
+    void SetRGBColor  (uint16_t Channel, color_t value);
     
     /** Randomizes the currentVariant */
     void RandomizeVariant ();
@@ -67,27 +61,26 @@ class DMXAnimation
     void SendScene ();
     void SetChase  (byte chaseNumber);
     void RandomizeSceneVariant ();
-    void SetColor  (uint16_t channel, byte Red, byte Green, byte Blue);
+    void SetColor  (uint16_t channel, byte red, byte green, byte blue);
     void SetColor  (uint16_t channel, color_t color);
     void SetAllColors  (color_t color);
-    color_t IncreaseBrightness  (color_t color, byte brightnessChange);
-    color_t DecreaseBrightness  (color_t color, byte brightnessChange);
+    color_t IncreaseBrightness  (color_t color, byte brightness_change);
+    color_t DecreaseBrightness  (color_t color, byte brightness_change);
     
     protected:
 
-    byte param1,            //< Animation parameter 1/Red.
-        param2,             //< Animation parameter 2/Green.
-        param3,             //< Animation parameter 3/Blue.
-        param4;             //< Animation parameter 4/White.
-    uint currentChase,      //< The current chase number.
-        currentChaseLength, //< The length of the current chase.
-        currentVariant,     //< Reserved for memory alignment.
-        numChannels,        //< The number of DMX channels.
-        numChases,          //< The number of DMX chases.
-        numVariants;        //< The number of variations of the animation.
-    byte* data;             //< Pointer to the DMX data for the current scene.
+    byte  param1_,              //< Animation parameter 1/Red.
+          param2_,              //< Animation parameter 2/Green.
+          param3_,              //< Animation parameter 3/Blue.
+          param4_;              //< Animation parameter 4/White.
+    uint  current_chase_,       //< Current chase number.
+          current_chase_length_,//< Length of the current chase.
+          current_variant_,     //< Current variant.
+          num_channels_,        //< The number of DMX channels.
+          num_chases_,          //< The number of DMX chases.
+          num_variants_;        //< The number of variations of the animation.
+    byte* data_;                //< Pointer to the DMX data for the current scene.
 };
-}   //< namespace dmx
-}   //< namespace tek
-}   //< namespace kabuki
-
+}       //< namespace tek
+}       //< namespace kabuki
+#endif  //< KABUKI_TEK_DMX_ANIMATION_H

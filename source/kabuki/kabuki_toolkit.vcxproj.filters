@@ -164,9 +164,6 @@
     <ClInclude Include="script\include\window.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\include\a.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\include\address.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
@@ -212,6 +209,105 @@
     <ClInclude Include="script\include\tbag.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
+    <ClInclude Include="script\include\bout_portal.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\debouncer.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\display.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\dmx_animation.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\dmx_buffer.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\dmx_receiver.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\dmx_transceiver.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\dmx_transmitter.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\electrolytic_mic.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\flow_controller.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\flying_fader.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\h_bridge_motor.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\i2c_portal.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\led.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\led_matrix.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\led_vu_meter.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\led_vu_meter_array.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\octo_ws28xx.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\photosensor.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\pot.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\rgb_led.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\rgb_status_led.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\rotary_encoder.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\rotary_encoder_bank.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\serial_portal.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\spi_portal.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\status_led.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\unicontroller.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\bouncy_swith.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\button.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\module_all.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\module_config.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
+    <ClInclude Include="tek\include\io_expander.h">
+      <Filter>kabuki\tek</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cc">
@@ -242,9 +338,6 @@
       <Filter>kabuki\script</Filter>
     </ClCompile>
     <ClCompile Include="script\impl\script_slot.cc">
-      <Filter>kabuki\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\impl\script_table.cc">
       <Filter>kabuki\script</Filter>
     </ClCompile>
     <ClCompile Include="script\impl\script_types.cc">
@@ -286,6 +379,66 @@
     <ClCompile Include="script\tests\script_tests.cc">
       <Filter>kabuki\script\tests</Filter>
     </ClCompile>
+    <ClCompile Include="script\impl\script_table.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_bout_portal.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_mixer_page.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_potosensor.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_rgb_led.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_rotary_encoder.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_rotary_encoder_bank.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_serial_portal.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_spi_portal.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_button.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_dmx_animation.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_dmx_buffer.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_electrolytic_mic.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_flow_controller.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_flying_fader.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_h_bridge_motor.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_led.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_mixer.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_mixer_channel.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
+    <ClCompile Include="tek\impl\tek_bouncy_switch.cc">
+      <Filter>kabuki\tek</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="script\include\module_config.in">
@@ -293,6 +446,9 @@
     </None>
     <None Include="script\tests\readme.md">
       <Filter>kabuki\script\tests</Filter>
+    </None>
+    <None Include="tek\include\readme.md">
+      <Filter>kabuki\tek</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

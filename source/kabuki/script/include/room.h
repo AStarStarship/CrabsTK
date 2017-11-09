@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/include/room.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -66,7 +66,7 @@ KABUKI const char* RequestString (Request r);
 
     @code
         |=======================|
-        |     Ceiling (Heap)    |
+        |          Heap         |
         |         Wall 1        |
         |         Wall 2        |
         |          ...          |
@@ -74,7 +74,7 @@ KABUKI const char* RequestString (Request r);
         |           |           |
         |           v           |
         |=======================|
-        |      Unused Memory    |
+        |     Unused Memory     |
         |=======================|
         |           ^           |
         |           |           |
@@ -121,8 +121,7 @@ KABUKI const char* RequestString (Request r);
         12. Host creates dictionary and adds keys and values.
     13. Jo complies the program and launches the server.
         14. Host loads.
-    15. Sam wants to use Jos app so he launches the app and connections to the
-        Host.
+    15. Sam launches Jo's app and connections to the Host.
         16. Host receives login attempt from Sam and opens a Door for him.
     17. Sam needs to get the values Jo stored in step 11 so Same sends a 
         Dictionary GET request.
@@ -138,12 +137,20 @@ class Room: public Operand {
         BootingState = 0,
         GoingToSleepState,
         ShuttingDownState,
+#ifndef CHINESE_FLOOR_SIZE
+        kFloorSize = 1024,
+#else
+        kFloorSize = CHINESE_FLOOR_SIZE,
+#undef CHINESE_ROOM_SIZE
+#endif
     } State;
 
     /** Creates a Room with the given size.
-        @param size The room size that is bounded between the kMinRoomSize 
-                    and kMaxRoomSize. */
-    Room (uint_t size);
+        @param floor Buffer used to create the Wall Stack. Set to nullptr to 
+                     enable dynamic memory.
+        @param size  The room size that is bounded between the kMinRoomSize and 
+                     kMaxRoomSize. */
+    Room (uintptr_t* floor, uintptr_t size);
 
     /** Destructor. */
     virtual ~Room ();
@@ -161,11 +168,15 @@ class Room: public Operand {
     /** Prints the error log to a expression. */
     void PrintErrors (Bout* bout);
 
+    uintptr_t GetNumWalls ();
+
+    uintptr_t GetSizeBytes ();
+
     /** Function run every main loop cycle to check the system status. */
     virtual void DiagnoseProblems ();
 
     /** Sets up the Room. */
-    virtual const Operation* Init ();
+    virtual const Operation* Init (Expression* expr);
 
     /** Handler for shut down event. */
     virtual void ShutDown ();
@@ -185,12 +196,6 @@ class Room: public Operand {
     /** Returns true if the Room is on. */
     virtual bool IsOn ();
 
-    virtual void* GetClockAddress () = 0;
-
-    uintptr_t GetNumWalls ();
-
-    uintptr_t GetSizeBytes ();
-
     /** The default main function.
         Please feel free to override this with your own main function. */
     virtual int Main (const char** args, int args_count);
@@ -198,14 +203,23 @@ class Room: public Operand {
     /** Script expressions. */
     virtual const Operation* Star (char_t index, Expression* expr);
 
+    /** Prints the Room to the std::cout. */
+    void Print ();
+
     protected:
-                        //! vtable pointer here in memory!
-    Expression* expr;   //< The current Expression being executed.
-                        //< Star Control 1: this.
-    Door   * door_;     //< Star Control 2: The Door to this room.
-    Operand* xoff_,     //< Star Control 3: XOFF - XOFF handling device.
-           * device_,   //< Star Control 4: the current device control.
-           * devices_;  //< Pointer to the current device control.
+                                //! vtable pointer here in memory (usually).
+    bool           dynamic_;    //< Flag for it we need to delete the buffers.
+    uintptr_t      size_bytes_; //< Size of the floor in bytes.
+    uintptr_t    * buffer_;     //< The Room Floor buffer.
+    const char   * name_;       //< The Room Name.
+    TStack<Wall*>* walls_;      //< The Walls in the Room.
+    Expression   * expr_;       //< The current Expression being executed.
+                                //< DC1: this.
+    Door         * this_;       //< DC2: The Door to this room.
+    Operand      * xoff_,       //< DC3: XOFF - XOFF handling device.
+                 * device_,     //< DC4: the current device control.
+                 * devices_;    //< Pointer to the current device control.
+
 };
 
 /** Returns the Room-Level Script. */

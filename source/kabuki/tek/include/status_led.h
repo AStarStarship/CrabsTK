@@ -1,31 +1,24 @@
-/** Kabuki Tek
-    @file    /.../KabukiTek/StatusLED.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2017 [Cale McCollough](calemccollough.github.io)
-
-                            All right reserved  (R).
-
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** kabuki::tek
+    @file    ~/source/kabuki/tek/include/status_led.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
-#pragma once
+#ifndef KABUKI_TEK_STATUS_LED_H
+#define KABUKI_TEK_STATUS_LED_H
 
-
-#include <KabukiTek\Config.h>
+#include "module_config.h"
 
 #define _Debug 0    //< Use this flag to turn this library into a debug example program. @see KabukiTek.cpp:int main ()
-
-#include <mbed.h>
 
 #include <stdint.h>
 
@@ -42,7 +35,7 @@ static StatusLED<0,1> Status  (GREEN_LED);\
     }\
 } 
 
-namespace tek { namespace Displays {
+namespace kabuki { namespace tek {
 
 /** Outputs the firmware status using the LED on the mbed board.
     This class works by using strings with ASCII Mores Code. Each char in a 
@@ -80,51 +73,46 @@ namespace tek { namespace Displays {
     @endcode
 */
 template <int On, int Off>
-class StatusLED
-{
-      public:
-    
+class StatusLED {
+    public:
+
     static const float DefaultFrequency = 0.5f, //< Default frequency in hertz.
         MinFrequency = 0.01f,                   //< Min frequency in hertz.
         MaxFrequency = 2.0f;                    //< Max frequency in hertz.
-    
+
     typedef enum {
-        Off     = 0,
-        Short   = 63,
-        Long    = 127,
-        On      = 255
+        Off   = 0,
+        Short = 63,
+        Long  = 127,
+        On    = 255
     } Pulse;
-    
+
     /** Simple constructor. */
-    StatusLED  (PinName led_pin = LED_1, float frequency = DefaultFrequency)
-    :   count      (0),
-        period     (0),
-        sequence   (0),
-        pattern    (0),
-        cursor     (0),
-        frequency  (frequency),
-        pin        (led_pin, Off)
-    {
+    StatusLED (PinName led_pin = LED_1, float frequency = DefaultFrequency)
+        : count (0),
+        period (0),
+        sequence (0),
+        pattern (0),
+        cursor (0),
+        frequency (frequency),
+        pin (led_pin, Off) {
         /// Nothing to do here.
     }
-    
+
     /** Sets the light blinking sequence. */
-    void SetSequence  (char** sequence)
-    {
-        if  (sequence == nullptr)
-        {
+    void SetSequence (char** sequence) {
+        if (sequence == nullptr) {
             sequence = 0;
             StopBlinking ();
             return;
         }
-        
+
         const char* tempString = sequence[0];
-        
-        if  (tempString == 0 || tempString[0] == 0) 
-        {
-           #if _Debug
+
+        if (tempString == 0 || tempString[0] == 0) {
+#if _Debug
             printf ("\r\n\nError: First sequence and first char can't be null.\r\n\n");
-           #endif
+#endif
             return;
         }
         sequence = sequence;
@@ -133,120 +121,101 @@ class StatusLED
         currentByte = *cursor;
         Update ();
     }
-    
+
     /** Turns off the blinker. */
-    void TurnOff ()
-    {
-        pin = Off; 
+    void TurnOff () {
+        pin = Off;
     }
-    
+
     /** Turns on the blinker. */
-    void TurnOn ()
-    { 
+    void TurnOn () {
         color = colorA;
-        Update (); 
+        Update ();
     }
-    
+
     /** Starts flashing the SOS sequence. */
-    void FlashSOS ()
-    {
+    void FlashSOS () {
         sequence = SOSPattern ();
         const char* _cursor = sequence[0];
         cursor = *_cursor;
         period = *_cursor;
     }
-    
+
     /** Starts blinking. */
-    void StartBlinking ()
-    {
+    void StartBlinking () {
         const char* _pattern = sequence[0];
         pattern = _pattern;
         cursor = _pattern;
         period = *_pattern;
 
-        blinker.attach  (this, &StatusLED::Blink, frequency / 4);
+        blinker.attach (this, &StatusLED::Blink, frequency / 4);
         Update ();
     }
-    
+
     /** Stops blinking and turns off the LED. */
-    void StopBlinking  ()
-    {
+    void StopBlinking () {
         TurnOff ();
         blinker.detach ();
         pin = Off;
         Update ();
     }
-    
-    /** Sets the blink frequeny. */
-    void SetFrequency  (float Value)
-    {
+
+    /** Sets the blink frequent. */
+    void SetFrequency (float Value) {
         frequency = Value;
-        blinker.attach  (this, &StatusLED::Blink, Value);
+        blinker.attach (this, &StatusLED::Blink, Value);
     }
-    
+
     /** Handler for the Assert macro. */
-    void HandleAssert ()
-    {
-        SetPattern  (SOSPattern ());
+    void HandleAssert () {
+        SetPattern (SOSPattern ());
     }
-    
+
     /** Pattern blinks three times in a row. */
-    const char** Blink3TimesPattern ()
-    {
+    const char** Blink3TimesPattern () {
         static const char** sequence = { "...   ", 0 };
         return &sequence;
     }
 
     /** Standard blink sequence. */
-    const char** SlowBlinkPattern ()
-    {
+    const char** SlowBlinkPattern () {
         static const char** sequence = { "__  ", 0 };
         return &sequence;
     }
-    
+
     /** Standard blink sequence. */
-    const char** FastBlinkPattern ()
-    {
+    const char** FastBlinkPattern () {
         static const char** sequence = { "_ ", 0 };
         return &sequence;
     }
-    
+
     /** Standard SOS sequence. */
-    const char** SOSPattern ()
-    {
+    const char** SOSPattern () {
         static const char** sequence = { "...---...      ", 0 };
         return &sequence;
     }
 
     private:
-  
-    char count,             //< Counter counts from from 1-3.
-        period;             //< The current period char.
-    
-    float frequency;        //< The period length
 
+    char         count,     //< Counter counts from 1-3.
+                 period;    //< The current period char.
+    float        frequency; //< The period length.
     const char** sequence;  //< Null-terminated string of pointers.
-    
-    const char* pattern,    //< The current string in the sequence.
-        * cursor;           //< The current char in the current string.
-    
+    const char * pattern,   //< The current string in the sequence.
+               * cursor;    //< The current char in the current string.
     DigitalOut pin;         //< Red LED on the mbed board.
-    
     Ticker blinker;         //< Ticker for blinking the LEDs.
-    
+
     /** Gets th next char in the sequence. */
-    inline char GetNextPeriod ()
-    {
+    inline char GetNextPeriod () {
         /// We've already checked that the sequence and cursor and not null.
-        
+
         char period_temp = *(++cursor);
-        
-        if  (period_temp == 0)
-        {
-            const char* tempPattern = *(pattern + sizeof  (const char*));
-            
-            if  (tempPattern == nullptr)
-            {
+
+        if (period_temp == 0) {
+            const char* tempPattern = *(pattern + sizeof (const char*));
+
+            if (tempPattern == nullptr) {
                 const char* _cursor = sequence[0];
                 cursor = pattern = _cursor;
                 return *_cursor;
@@ -254,62 +223,57 @@ class StatusLED
             pattern = tempPattern;
             return *tempPattern;    //< We don't particularly care if the period is '\0'.
         }
-        
+
         return period_temp;
     }
-    
+
     /** Updates the status LED. */
-    inline void Update ()
-    {
+    inline void Update () {
         const char* period_temp = period;
-        if  (sequence == nullptr || period_temp == nullptr) return;
-        
-        if  (count == 0)         //< Beginning of cycle period.
+        if (sequence == nullptr || period_temp == nullptr) return;
+
+        if (count == 0)         //< Beginning of cycle period.
         {
             char _period = GetNextPeriod ();
             period = _period;
             count = 1;
-            if  (_period < '-') 
-            {
-                pin = Off; 
-                return; 
+            if (_period < '-') {
+                pin = Off;
+                return;
             }
             pin = On;
             return;
-        }
-        else if  (count == 1)    //< 1/3 duty cycle.
+        } else if (count == 1)    //< 1/3 duty cycle.
         {
             count = 2;
-            if  (period == '.')
-            {
-                pin = Off; 
-                return; 
+            if (period == '.') {
+                pin = Off;
+                return;
             }
             return;
         }
         /// 2/3 duty cycle.
         count = 0;
-        if  (period > '.')       //< Leave the LED on
+        if (period > '.')       //< Leave the LED on
             return;
         pin = Off;
     }
-    
-    /** I2P operations. */
-    const Member* Op (byte index, Uniprinter* io);
+
+    /** Script operations. */
+    const Operation* Star (char_t index, _::Expression* expr);
 };
+}       //< namespace tek
+}       //< namespace kabuki
 
-}   //< namespace Displays
-}   //< namespace tek
 
-
-// _D_e_m_o_____________________________________________________________________
+        // _D_e_m_o_____________________________________________________________________
 
 #if 0   //< Set to non-zero to run this demo.
 
 using namespace KabukiTek;
 
 StatusLED Status ();
-InterruptIn Switch3  (SW3);
+InterruptIn Switch3 (SW3);
 
 const char* examplePattern[] = {
     "...   ",           //< Blinks fast three times in a row.
@@ -318,32 +282,28 @@ const char* examplePattern[] = {
     0                   //< Pattern must have null-term pointer.
 };
 /** Interrupt handler for SW2. */
-void SwitchIRQHandler ()
-{
+void SwitchIRQHandler () {
     static bool examplePatterMode = true;
-    
-    if  (examplePatterMode)
-    {
-        Status.SetPattern  (examplePattern);
+
+    if (examplePatterMode) {
+        Status.SetPattern (examplePattern);
         Status.StartBlinking ();
         examplePatterMode = false;
-    }
-    else    
-    {  
+    } else {
         Status.SetPattern (Status.SOSPattern ()));
         examplePatterMode = true;
     }
 }
 
-int main()
-{
+int main () {
     printf ("\r\n\nTesting mbed Utils.\r\n\n");
     PrintLine ();
-    
+
     Switch3.rise (&SwitchIRQHandler);
     //Status.StartBlinking ()
-    
-    while  (true);
+
+    while (true);
 }
 
 #endif  //< Demo
+#endif  //< KABUKI_TEK_STATUS_LED_H

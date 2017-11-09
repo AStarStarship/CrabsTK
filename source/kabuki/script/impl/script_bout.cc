@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/impl/script_bout.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -72,6 +72,13 @@ const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header
     return reinterpret_cast<const Operation*> (1);
 }
 
+byte* BoutBuffer (Bout* bout) {
+    if (bout == nullptr)
+        return nullptr;
+    byte* ptr = reinterpret_cast<byte*> (bout);
+    return ptr + sizeof (Bout);
+}
+
 Bout* BoutInit (uintptr_t* buffer, uint_t size) {
     if (size < kMinSlotSize)
         return nullptr;
@@ -79,13 +86,13 @@ Bout* BoutInit (uintptr_t* buffer, uint_t size) {
         return nullptr;
 
     Bout* bout  = reinterpret_cast<Bout*> (buffer);
-    bout->size  = size - 4 * sizeof (uint_t);
+    bout->size  = size - sizeof (Bin);
     bout->start = 0;
     bout->stop  = 0;
     bout->read  = 0;
 
 #if DEBUG_SCRIPT
-    MemoryClear (&bout->buffer, size);
+    MemoryClear (BoutBuffer (bout), size);
    // BoutPrint (bout);
 #endif
     return bout;
@@ -100,7 +107,7 @@ uint_t BoutSpace (Bout* bout) {
 
 uint_t BoutBufferLength (Bout* bout) {
     if (bout == nullptr) return ~0;
-    byte* base = &bout->buffer;
+    byte* base = BoutBuffer (bout);
     return SlotLength (base + bout->start, base + bout->stop, bout->size);
 }
 
@@ -110,7 +117,7 @@ byte* BoutEndAddress (Bout* bout) {
 
 int BoutStreamByte (Bout* bout) {
 
-    byte* begin = &bout->buffer,
+    byte* begin = BoutBuffer (bout),
         *end = begin + bout->size;
     byte* open = (byte*)begin + bout->read,
         *start = begin + bout->start,
@@ -140,7 +147,7 @@ void BoutPrint (Bout* bout) {
     uint_t size = bout->size;
     printf ("| Bout 0x%p: size: %u, start: %u, stop: %u, read: %u\n", bout,
             size, bout->start, bout->stop, bout->read);
-    PrintMemory (&bout->buffer, size + 64); // @todo remove the + 64.);
+    PrintMemory (BoutBuffer (bout), size + 64); // @todo remove the + 64.);
 }
 
 const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
@@ -181,7 +188,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     hash16_t hash = 0;                      //< 16-bit prime hash.
     const uint_t* param = params;           //< Pointer to the current param.
     // Convert the socket offsets to pointers.
-    byte* begin = &bout->buffer,            //< Beginning of the buffer.
+    byte* begin = BoutBuffer (bout),            //< Beginning of the buffer.
         * end   = begin + size,             //< End of the buffer.
         * start = begin + bout->start,      //< Start of the data.
         * stop  = begin + bout->stop;       //< Stop of the data.

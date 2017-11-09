@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/include/bout.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -57,8 +57,10 @@ struct KABUKI Bout {
     volatile uint_t start; //< Starting index of the ring-buffer data.
     uint_t stop,           //< Stopping index of the ring-buffer data.
            read;           //< Address that the Bout device is reading from.
-    byte   buffer;         //< First byte in the ring buffer.
 };
+
+/** Get's the B-Output's buffer.*/
+KABUKI byte* BoutBuffer (Bout* bout);
 
 /** Gets a a char for printing out the bout_state. */
 KABUKI const char* BoutStateString (Bout::State state);

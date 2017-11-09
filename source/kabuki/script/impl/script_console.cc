@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/impl/script_console.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -63,28 +63,6 @@ void KeyboardString (const char* header, char* buffer, int buffer_size) {
     std::cin.get (buffer, buffer_size, '\n');
     std::cin.clear ();
     std::cin.ignore (buffer_size, '\n');
-}
-
-Console::Console () :
-    Room (0)
-{
-    
-}
-
-Console::~Console () {
-
-}
-
-const Operation* Console::Init () {
-    return 0;
-}
-
-const Operation* Console::Loop () {
-    return 0;
-}
-
-const Operation* Console::Star (char_t index, Expression* expr) {
-    return 0;
 }
 
 }       //< namespace _

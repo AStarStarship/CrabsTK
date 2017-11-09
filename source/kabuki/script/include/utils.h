@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/include/utils.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -23,6 +23,11 @@
 #include "module_config.h"
 
 namespace _ {
+
+struct KABUKI Buffer {
+    uint_t size;
+
+};
 
 KABUKI const char* NewLineString ();
 KABUKI const char* ErrorHeader ();
@@ -112,24 +117,23 @@ KABUKI void Delete (void* buffer);
 
 /** Creates/Gets a static buffer of the specified size. */
 template<uint_t kBufferSize>
-KABUKI byte* Buffer () {
-    static byte buffer[kBufferSize + 1];
+KABUKI uintptr_t* WordBuffer () {
+    static uintptr_t buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }
 
 
 /** Creates/Gets one of n static buffers of the specified size. */
 template<uint_t kBufferNumber, uint_t kBufferSize>
-KABUKI byte* Buffer () {
-    static byte buffer[kBufferSize + 1];
+KABUKI uintptr_t* BufferNum () {
+    static uintptr_t buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }
 
-
 /** Creates/Gets one of n static buffers of the specified size. */
 template<typename T, uint_t kBufferNumber, uint_t kBufferSize>
-KABUKI T* Buffer () {
-    static T buffer[kBufferSize + 1];
+KABUKI T* TypeBuffer () {
+    static T buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }
 
@@ -233,16 +237,28 @@ KABUKI hash64_t Hash64 (const char* string, hash64_t hash = 18446744073709551557
 
 template<typename T>
 KABUKI bool IsNaN (T value) {
-    T nan = sizeof (T) == 8 ? (T) 0xFF :
-            sizeof (T) == 4 ? (T) 0xFFFF :
-            sizeof (T) == 2 ? (T) 0xFFFFFFFF :
-            sizeof (T) == 1 ? (T) 0xFFFFFFFFFFFFFFFF : 0;
+    static const T nan = sizeof (T) == 8 ? (T) 0xFF
+                       : sizeof (T) == 4 ? (T) 0xFFFF
+                       : sizeof (T) == 2 ? (T) 0xFFFFFFFF
+                       : sizeof (T) == 1 ? (T) 0xFFFFFFFFFFFFFFFF : 0;
     return value == nan;
 }
 
 /** Prints the given byte in Hex.
     This function prints the hex in big endian. */
 KABUKI void PrintHex (byte c);
+
+/** Print's out the given pointer to the console. */
+inline void PrintPointer (const void* pointer) {
+    // @todo Replace with PrintHex.
+    printf ("0x%p", pointer);
+}
+
+/** Print's out the given pointer to the console. */
+inline void PrintPointerNL (const void* pointer) {
+    // @todo Replace with PrintHex.
+    printf ("0x%p\n", pointer);
+}
 
 /** Prints the given char center in the given width.
     If char is too small to fit in the width, function will print as much of
@@ -451,9 +467,12 @@ KABUKI const char* CompareTokenString (const char* input, const char* token);
 /** Compares the source and query char using the delimiter to terminate the query. */
 KABUKI char* CompareToken (const char* input, const char* query);
 
+/** Compares the source and query char as nil-terminated strings. */
+KABUKI const char* StringEquals (const char* input, const char* query);
+
 /** Compares the source and query char using the delimiter to terminate the query. */
-KABUKI const char* StringCompare (const char* input, const char* query,
-    char delimiter = 0);
+KABUKI const char* StringEquals (const char* input, const char* query,
+                                 char delimiter);
 
 /** Compares the source and query char using the delimiter to terminate the
     query. */

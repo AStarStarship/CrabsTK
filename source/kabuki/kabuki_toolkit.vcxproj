@@ -21,8 +21,8 @@
   <ItemGroup>
     <ClInclude Include="aiml\include\agent.h" />
     <ClInclude Include="assembly.h" />
-    <ClInclude Include="script\include\a.h" />
     <ClInclude Include="script\include\address.h" />
+    <ClInclude Include="script\include\bout_portal.h" />
     <ClInclude Include="script\include\set.h" />
     <ClInclude Include="script\include\module_all.h" />
     <ClInclude Include="script\include\args.h" />
@@ -61,12 +61,45 @@
     <ClInclude Include="script\tests\assembly.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="tek\include\bouncy_swith.h" />
+    <ClInclude Include="tek\include\button.h" />
+    <ClInclude Include="tek\include\debouncer.h" />
+    <ClInclude Include="tek\include\display.h" />
+    <ClInclude Include="tek\include\dmx_animation.h" />
+    <ClInclude Include="tek\include\dmx_buffer.h" />
+    <ClInclude Include="tek\include\dmx_receiver.h" />
+    <ClInclude Include="tek\include\dmx_transceiver.h" />
+    <ClInclude Include="tek\include\dmx_transmitter.h" />
+    <ClInclude Include="tek\include\electrolytic_mic.h" />
+    <ClInclude Include="tek\include\flow_controller.h" />
+    <ClInclude Include="tek\include\flying_fader.h" />
+    <ClInclude Include="tek\include\h_bridge_motor.h" />
+    <ClInclude Include="tek\include\i2c_portal.h" />
+    <ClInclude Include="tek\include\led.h" />
+    <ClInclude Include="tek\include\led_matrix.h" />
+    <ClInclude Include="tek\include\led_vu_meter.h" />
+    <ClInclude Include="tek\include\led_vu_meter_array.h" />
+    <ClInclude Include="tek\include\module_all.h" />
+    <ClInclude Include="tek\include\module_config.h" />
+    <ClInclude Include="tek\include\octo_ws28xx.h" />
+    <ClInclude Include="tek\include\photosensor.h" />
+    <ClInclude Include="tek\include\pot.h" />
+    <ClInclude Include="tek\include\rgb_led.h" />
+    <ClInclude Include="tek\include\rgb_status_led.h" />
+    <ClInclude Include="tek\include\rotary_encoder.h" />
+    <ClInclude Include="tek\include\rotary_encoder_bank.h" />
+    <ClInclude Include="tek\include\io_expander.h" />
+    <ClInclude Include="tek\include\serial_portal.h" />
+    <ClInclude Include="tek\include\spi_portal.h" />
+    <ClInclude Include="tek\include\status_led.h" />
+    <ClInclude Include="tek\include\unicontroller.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="script\impl\script_address.cc" />
     <ClCompile Include="script\impl\script_args.cc" />
     <ClCompile Include="script\impl\script_bin.cc" />
     <ClCompile Include="script\impl\script_bout.cc" />
+    <ClCompile Include="script\impl\script_bout_portal.cc" />
     <ClCompile Include="script\impl\script_clock.cc" />
     <ClCompile Include="script\impl\script_color.cc" />
     <ClCompile Include="script\impl\script_console.cc" />
@@ -87,10 +120,29 @@
     <ClCompile Include="script\tests\script_tester.cc" />
     <ClCompile Include="script\tests\script_tests.cc" />
     <ClCompile Include="stdafx.cc" />
+    <ClCompile Include="tek\impl\tek_button.cc" />
+    <ClCompile Include="tek\impl\tek_dmx_animation.cc" />
+    <ClCompile Include="tek\impl\tek_dmx_buffer.cc" />
+    <ClCompile Include="tek\impl\tek_electrolytic_mic.cc" />
+    <ClCompile Include="tek\impl\tek_flow_controller.cc" />
+    <ClCompile Include="tek\impl\tek_flying_fader.cc" />
+    <ClCompile Include="tek\impl\tek_h_bridge_motor.cc" />
+    <ClCompile Include="tek\impl\tek_led.cc" />
+    <ClCompile Include="tek\impl\tek_mixer.cc" />
+    <ClCompile Include="tek\impl\tek_mixer_channel.cc" />
+    <ClCompile Include="tek\impl\tek_mixer_page.cc" />
+    <ClCompile Include="tek\impl\tek_potosensor.cc" />
+    <ClCompile Include="tek\impl\tek_rgb_led.cc" />
+    <ClCompile Include="tek\impl\tek_rotary_encoder.cc" />
+    <ClCompile Include="tek\impl\tek_rotary_encoder_bank.cc" />
+    <ClCompile Include="tek\impl\tek_serial_portal.cc" />
+    <ClCompile Include="tek\impl\tek_spi_portal.cc" />
+    <ClCompile Include="tek\impl\tek_bouncy_switch.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="script\include\module_config.in" />
     <None Include="script\tests\readme.md" />
+    <None Include="tek\include\readme.md" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="script\tests\CMakeList.txt" />

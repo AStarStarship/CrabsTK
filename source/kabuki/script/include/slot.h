@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/include/slot.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -28,11 +28,12 @@ namespace _ {
 
 /** A Slot in a Door in a Chinese Room. */
 struct KABUKI Slot {
-    uint_t size,  //< The size of the buffer.
-           start, //< The starting index of the ring buffer data.
-           stop,  //< The stopping index of the ring buffer data.
-           read;  //< The read variable.
+    uint_t size,    //< The size of the buffer.
+           start,   //< The starting index of the ring buffer data.
+           stop,    //< The stopping index of the ring buffer data.
+           read;    //< The read variable.
 };
+
 const Operation* SlotResult (Slot* slot, Bin::Error error);
 const Operation* SlotResult (Slot* slot, Bout::Error error);
 

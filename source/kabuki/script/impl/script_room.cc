@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/include/script_room.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -49,13 +49,17 @@ const char* RequestString (Request r) {
     return RequestStrings ()[r];
 }
 
-Room::Room (uint_t size) :
-    door_         (nullptr),
-    xoff_         (nullptr),
-    device_       (nullptr),
-    devices_      (nullptr)
+Room::Room (uintptr_t* floor, uintptr_t size_bytes) :
+    dynamic_    (floor == nullptr),
+    size_bytes_ (size_bytes < kMinRoomSize ? kMinRoomSize : size_bytes),
+    buffer_     (floor),
+    this_       (nullptr),
+    xoff_       (nullptr),
+    device_     (nullptr),
+    devices_    (nullptr)
 {
-
+    if (floor == nullptr)
+        buffer_ = new uintptr_t[(size_bytes_ / sizeof (uintptr_t)) + 1];
 }
 
 Room::~Room () {
@@ -83,17 +87,30 @@ void Room::DiagnoseProblems () {
     throw RoomCrashException ();
 }
 
-const Operation* Room::Init () {
-    return 0;
+const Operation* Room::Init (Expression* expr) {
+    if (expr != nullptr) {
+        // @todo We need to load a stored Room state.
+        return nullptr;
+    }
+    return nullptr;
 }
 
-void Room::ShutDown () {}
+void Room::ShutDown ()
+{
+    std::cout << "Shutting down...\n";
+}
 
-void Room::Sleep () {}
+void Room::Sleep () {
+    std::cout << "Going to sleep...\n";
+}
 
-void Room::Wake () {}
+void Room::Wake () {
+    std::cout << "Waking up...\n";
+}
 
-void Room::Crash () {}
+void Room::Crash () {
+    std::cout << "Room crash!\n";
+}
 
 const Operation* Room::Loop () { return 0; }
 
@@ -112,9 +129,10 @@ int Room::Main (const char** args, int args_count) {
 
     while (IsOn ()) {
         try {
-            Init ();
+            if (result = Init (nullptr))
+                return 1;
             do {
-                door_->ExecAll ();
+                this_->ExecAll ();
                 result = Loop ();
             } while (!result);
             ShutDown ();
@@ -139,6 +157,19 @@ const Operation* Room::Star (char_t index, Expression* expr) {
 
     }
     return 0;
+}
+
+uintptr_t Room::GetNumWalls () {
+    return 0;
+}
+
+uintptr_t Room::GetSizeBytes () {
+    return size_bytes_;
+}
+
+void Room::Print () {
+    PrintLine ();
+    std::cout << "| Room: ";
 }
 
 Room* ChineseRoom (Room* room) {

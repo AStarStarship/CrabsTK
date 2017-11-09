@@ -1,54 +1,50 @@
-/** Kabuki Tek
-    @file       /.../Source/tek/display/display.h
-    @author     Cale McCollough <cale.mccollough@gmail.com>
-    @license    Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
-
-                        All rights reserved  (R).
-
-        This program is free software: you can redistribute it and/or modify it 
-        under the terms of the GNU General Public License as published by the 
-        Free Software Foundation, either version 3 ofthe License, or  (at your 
-        option) any later version.
-
-        This program is distributed in the hope that it will be useful, but 
-        WITHOUT ANY WARRANTY; without even the implied warranty of 
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
-        General Public License for more details.
-
-        You should have received a copy of the GNU General Public License 
-        along with this program. If not, see <http://www.gnu.org/licenses/>.
+/** kabuki::tek
+    @file       ~/source/kabuki/tek/include/display.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef KABUKI_TEK_DISPLAY_H
+#define KABUKI_TEK_DISPLAY_H
 
-#include <tek/config.h>
+#include "module_config.h"
 
-namespace tek { 
+namespace kabuki { namespace tek {
 
 class Controller;
 
-namespace displays {
-
-/** A Display.
+/** An abstract Display.
     
 */
-class Display: public I2P::Device
-{
-      public:
+class Display: public _::Operation {
+    public:
     
-    Display () = 0;
+    /** Constructs an abstract display. */
+    Display ();
     
+    /** Virtual destructor. */
     virtual ~Display () = 0;
 
-    void Update () = 0;
+    /** Virtual function updates the display. */
+    virtual void Update () = 0;
     
-    /*< I2P operations. */
-    const Member* Op (byte index, Uniprinter* io) override;
+    /*< Script operations. */
+    const Operation* Star (char_t index, _::Expression* expr);
 
     private:
 
 
-};  
-}   //< namespace Displays
-}   //< namespace tek
+};
+}       //< namespace tek
+}       //< namespace kabuki
 
+#endif  //< KABUKI_TEK_DISPLAY_H

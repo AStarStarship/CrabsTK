@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/impl/script_bin.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -108,6 +108,13 @@ const Operation* BinResult (Bin* bin, Bin::Error error, const uint_t* header,
     return reinterpret_cast<const Operation*> (1);
 }
 
+byte* BinBuffer (Bin* bin) {
+    if (bin == nullptr)
+        return nullptr;
+    byte* ptr = reinterpret_cast<byte*> (bin);
+    return ptr + sizeof (Bin);
+}
+
 Bin* BinInit (uintptr_t* buffer, uint_t size) {
     if (size < kMinSlotSize)
         return nullptr;
@@ -115,13 +122,13 @@ Bin* BinInit (uintptr_t* buffer, uint_t size) {
         return nullptr;
 
     Bin* bin   = reinterpret_cast<Bin*> (buffer);
-    bin->size  = size - (4 * sizeof (uint_t));
+    bin->size  = size - sizeof (Bin);
     bin->start = 0;
     bin->stop  = 0;
     bin->read  = 0;
 
 #if DEBUG_SCRIPT
-    memset (&bin->buffer, '\0', size);
+    memset (BinBuffer (bin), '\0', size);
 #endif
     return bin;
 }
@@ -135,7 +142,7 @@ uint_t BinSpace (Bin* bin) {
 
 uint_t BinBufferLength (Bin* bin) {
     if (bin == nullptr) return ~0;
-    byte* base = &bin->buffer;
+    byte* base = BinBuffer (bin);
     return SlotLength (base + bin->start, base + bin->stop, bin->size);
 }
 
@@ -145,7 +152,7 @@ byte* BinEndAddress (Bin* bin) {
 
 int BinStreamByte (Bin* bin) {
 
-    byte* begin = &bin->buffer,
+    byte* begin = BinBuffer (bin),
         *end = begin + bin->size;
     byte* open = (byte*)begin + bin->read,
         *start = begin + bin->start,
@@ -159,7 +166,7 @@ int BinStreamByte (Bin* bin) {
         return -1;
     }
     byte b = *cursor;
-    bin->stop = (++cursor > end)?static_cast<uint_t> (Diff (begin, end)):
+    bin->stop = (++cursor >= end)?static_cast<uint_t> (Diff (begin, end)):
         static_cast<uint_t> (Diff (begin, cursor));
     return 0;
 }
@@ -177,12 +184,12 @@ void BinPrint (Bin* bin) {
     uint_t size = bin->size;
     printf ("| Bin 0x%p: size: %u, start: %u, stop: %u, read: %u\n", bin, size,
         bin->start, bin->stop, bin->read);
-    PrintMemory (&bin->buffer, size + 64); // @todo remove the + 64.
+    PrintMemory (BinBuffer (bin), size + sizeof (Bin));
 }
 
 const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #if DEBUG_SCRIPT
-    std::cout << "\n\Reading ";
+    std::cout << "\n| Reading ";
     ParamsPrint (params);
     std::cout << " from B-Input:";
     printf ("%p\n", bin);
@@ -228,7 +235,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
     hash = 0;
     size = bin->size;
 
-    byte* begin = &bin->buffer,       //< The beginning of the buffer.
+    byte* begin = BinBuffer (bin),       //< The beginning of the buffer.
         * end   = begin + size,       //< The end of the buffer.
         * start = begin + bin->start, //< The start of the data.
         * stop  = begin + bin->stop;  //< The stop of the data.
@@ -261,7 +268,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                     return BinResult (bin, Bin::RoomError, params, index, 
                                       start);
 #if DEBUG_SCRIPT
-                printf ("\n| Reading STR:%p with max length:%u \"", ui1_ptr, 
+                printf ("\n| Reading STR:0x%p with max length:%u \"", ui1_ptr, 
                         count);
 #endif
                 // Read char.
@@ -714,12 +721,13 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 switch ((type >> 5) & 0x3) {
                     case 0: {
 
-                    if ((type < LST) && (type < MAP))
-                        return BinResult (bin, Bin::InvalidTypeError, params, 
-                                          index, start);
-                        if (length < 1)
+                        if ((type < LST) && (type < MAP))
+                            return BinResult (bin, Bin::InvalidTypeError, params, 
+                                              index, start);
+                        if (length < 1) // 1 byte for the width word.
                             return BinResult (bin, Bin::BufferUnderflowError,
                                               params, index, start);
+
                         ui1_ptr = reinterpret_cast<byte*> (args[arg_index]);
                         if (ui1_ptr == nullptr)
                             return BinResult (bin, Bin::RoomError, params,
@@ -737,7 +745,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                     }
                     case 1:
                     {
-                        if (length < 2)
+                        if (length < 2) // 2 byte for the width word.
                             return BinResult (bin, Bin::BufferUnderflowError,
                                               params, index, start);
                         ui2_ptr = reinterpret_cast<uint16_t*> 
@@ -762,7 +770,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                     }
                     case 2:
                     {
-                        if (length < 4)
+                        if (length < 4) // 4 byte for the width word.
                             return BinResult (bin, Bin::BufferUnderflowError,
                                               params, index, start);
                         ui4_ptr = reinterpret_cast<uint32_t*> (args[arg_index]);
@@ -784,7 +792,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                         ui1_ptr = reinterpret_cast<byte*> (ui4_ptr);
                         break;
                     }
-                    case 3:
+                    case 3: // 8 byte for the width word.
                     {
                         if (length < 8)
                             return BinResult (bin, Bin::BufferUnderflowError,

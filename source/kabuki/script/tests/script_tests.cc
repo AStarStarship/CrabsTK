@@ -1,8 +1,8 @@
 /** Kabuki Starship
     @version 0.x
     @file    ~/source/kabuki/impl/tests/script_tests.cpp
-    @author  Cale McCollough <calemccollough.github.expr>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.expr>;
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -22,36 +22,18 @@
 
 using namespace _;
 
-TEST_GROUP (SCRIPT_TESTS)
-{
-    void setup ()
-    {
-        std::cout << "\n|  + Running Chinese Room tests...\n";
+TEST_GROUP (SCRIPT_TESTS) {
+    void setup () {
+        PrintLine ("| ");
     }
 
-    void teardown ()
-    {
-        std::cout << "| Chinese Room completed.\n";
+    void teardown () {
+        std::cout << "| Test completed.\n";
+        PrintLine ("+", '-');
     }
 };
 
-TEST (SCRIPT_TESTS, UtilsTests)
-{
-    printf ("  - Running HexTest...\n");
-    for (int i = 0; i < 16; ++i) {
-        int value = ToByte (NibbleToLowerCaseHex (i));
-        CHECK_EQUAL (i, value)
-        value = ToByte (NibbleToUpperCaseHex (i));
-        CHECK_EQUAL (i, value)
-   }
-    for (int i = 0; i < 256; ++i) {
-        int value = ToByte (ToLowerCaseHex (i));
-        CHECK_EQUAL (i, value)
-        value = ToByte (ToUpperCaseHex (i));
-        CHECK_EQUAL (i, value)
-    }
-}
-
+/*
 TEST (SCRIPT_TESTS, ExpressionTests) {
     std::cout << "| Running ExpressionTests...\n";
     enum {
@@ -78,9 +60,9 @@ TEST (SCRIPT_TESTS, ExpressionTests) {
                                                        &si4_expected, &flt_expected));
     PrintMemory (expr, ExpressionEndAddress (expr));
     ExpressionPrint (expr);
-    //Mirror mirror;       //< @todo fix me!
-    //Portal* p = dynamic_cast<Portal*>(&mirror);   //< Not working?
-    //Portal* p = reinterpret_cast<Portal*>(&mirror);
+    //Mirror mirror;                                  //< @todo fix me!
+    //Portal* p = dynamic_cast<Portal*>(&mirror);     //< Not working?
+    //Portal* p = reinterpret_cast<Portal*>(&mirror); //< 
     //ExpressionScan (expr, p);
     system ("PAUSE");
     CHECK_EQUAL (0, Args (expr, esc, Args (args, &stx_found,
@@ -90,62 +72,6 @@ TEST (SCRIPT_TESTS, ExpressionTests) {
 
 TEST (SCRIPT_TESTS, RoomTests) {
     printf ("|  - Running RoomTestOne...\n");
-}
-
-TEST (SCRIPT_TESTS, TableTests) {
-    std::cout << "|  - Running TableTest1...\n";
-    char_t index;
-    Table* table = TableInit (Buffer<0, 128> (), 8, 128);
-
-    CHECK (table != nullptr)
-
-    index = TableAdd (table, "D");
-    TablePrint (table);
-    CHECK_EQUAL (0, index)
-    CHECK_EQUAL (0, TableFind (table, "D"))
-
-    index = TableAdd (table, "C");
-    CHECK_EQUAL (1, index)
-    CHECK_EQUAL (0, TableFind (table, "D"))
-    CHECK_EQUAL (1, TableFind (table, "C"))
-
-    index = TableAdd (table, "Bin");
-    CHECK_EQUAL (2, index)
-    CHECK_EQUAL (0, TableFind (table, "D"))
-    CHECK_EQUAL (1, TableFind (table, "C"))
-    CHECK_EQUAL (2, TableFind (table, "Bin"))
-
-    index = TableAdd (table, "A");
-    CHECK_EQUAL (3, index)
-    CHECK_EQUAL (0, TableFind (table, "D"))
-    CHECK_EQUAL (1, TableFind (table, "C"))
-    CHECK_EQUAL (2, TableFind (table, "Bin"))
-    CHECK_EQUAL (3, TableFind (table, "A"))
-
-    index = TableAdd (table, "abc");
-    CHECK_EQUAL (4, index)
-    CHECK_EQUAL (4, TableFind (table, "abc"))
-
-    index = TableAdd (table, "bac");
-    CHECK_EQUAL (5, index)
-    CHECK_EQUAL (4, TableFind (table, "abc"))
-    CHECK_EQUAL (5, TableFind (table, "bac"))
-
-    index = TableAdd (table, "cba");
-    CHECK_EQUAL (6, index)
-    CHECK_EQUAL (4, TableFind (table, "abc"))
-    CHECK_EQUAL (5, TableFind (table, "bac"))
-    CHECK_EQUAL (6, TableFind (table, "cba"))
-
-    index = TableAdd (table, "cab");
-    CHECK_EQUAL (7, index)
-    CHECK_EQUAL (4, TableFind (table, "abc"))
-    CHECK_EQUAL (5, TableFind (table, "bac"))
-    CHECK_EQUAL (6, TableFind (table, "cba"))
-    CHECK_EQUAL (7, TableFind (table, "cab"))
-
-    index = TableAdd (table, "test");
-    CHECK_EQUAL (index, kTableFull)
 }
 
 TEST (SCRIPT_TESTS, BookTests) {
@@ -235,6 +161,85 @@ TEST (SCRIPT_TESTS, BookTests) {
 
     index = Book2Add<uint8_t, UI1> (book, "test", (byte)0xFF);
     CHECK_EQUAL (index, -1)
+}*/
+
+TEST (SCRIPT_TESTS, TableTests) {
+    std::cout << "|  - Running TableTest...\n";
+    char_t index;
+    uintptr_t buffer[128];
+    printf ("| &buffer[0]:%p &buffer[127]:%p\n", &buffer[0], &buffer[127]);
+    Table* table = TableInit (buffer, 8, 128);
+
+    CHECK (table != nullptr)
+
+    index = TableAdd (table, "D");
+    CHECK_EQUAL (0, index)
+    index = TableFind (table, "D");
+    CHECK_EQUAL (0, index)
+        
+    index = TableAdd (table, "C");
+    CHECK_EQUAL (1, index)
+    index = TableFind (table, "D");
+    CHECK_EQUAL (0, index)
+    index = TableFind (table, "C");
+    CHECK_EQUAL (1, index)
+        
+    index = TableAdd (table, "Bin");
+    CHECK_EQUAL (2, index)
+    index = TableFind (table, "D");
+    CHECK_EQUAL (0, index)
+    index = TableFind (table, "C");
+    CHECK_EQUAL (1, index)
+    index = TableFind (table, "Bin");
+    CHECK_EQUAL (2, index)
+        
+    index = TableAdd (table, "A");
+    CHECK_EQUAL (3, index)
+    index = TableFind (table, "D");
+    CHECK_EQUAL (0, index)
+    index = TableFind (table, "C");
+    CHECK_EQUAL (1, index)
+    index = TableFind (table, "Bin");
+    CHECK_EQUAL (2, index)
+    index = TableFind (table, "A");
+    CHECK_EQUAL (3, index)
+        
+    index = TableAdd (table, "abc");
+    CHECK_EQUAL (4, index)
+    index = TableFind (table, "abc");
+    CHECK_EQUAL (4, index)
+
+    index = TableAdd (table, "bac");
+    CHECK_EQUAL (5, index)
+    index = TableFind (table, "abc");
+    CHECK_EQUAL (4, index)
+    index = TableFind (table, "bac");
+    CHECK_EQUAL (5, index)
+        
+    index = TableAdd (table, "cba");
+    CHECK_EQUAL (6, index)
+    index = TableFind (table, "abc");
+    CHECK_EQUAL (4, index)
+    index = TableFind (table, "bac");
+    CHECK_EQUAL (5, index)
+    index = TableFind (table, "cba");
+    CHECK_EQUAL (6, index)
+        
+    index = TableAdd (table, "cab");
+    CHECK_EQUAL (7, index)
+    index = TableFind (table, "abc");
+    CHECK_EQUAL (4, index)
+    index = TableFind (table, "bac");
+    CHECK_EQUAL (5, index)
+    index = TableFind (table, "cba");
+    CHECK_EQUAL (6, index)
+    index = TableFind (table, "cab");
+    CHECK_EQUAL (7, index)
+
+    index = TableAdd (table, "test");
+    CHECK_EQUAL (index, kTableFull)
+
+    TablePrint (table);
 }
 
 TEST (SCRIPT_TESTS, ReadWriteTests) {
@@ -244,11 +249,11 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     };
 
     uintptr_t buffer[kElementsBuffer + 4];  //< Something isn't aligned right.
-    //< It works right with an extra 4 uintptr_t when I'm using MUL 2. I'm 
-    //< writing something to the end of the buffer
+    //< It works right with an extra 4 elements but no less. Am I writing
+    //< something to the end of the buffer???
 
     PrintLineBreak ("|  - Running ReadWriteTests...", 5);
-    std::cout << "kBufferSize: " << kBufferSize 
+    std::cout << " kBufferSize: "     << kBufferSize 
               << " kElementsBuffer: " << kElementsBuffer;
 
     void* args[19];
@@ -258,6 +263,9 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
 
     char found_string1[6],
          found_string2[6];
+
+    memset (found_string1, ' ', 6);
+    memset (found_string2, ' ', 6);
 
     printf ("\n| buffer_start:%p buffer_stop:%p\n", &buffer[0], 
             &buffer[kBufferSize - 1]);
@@ -346,17 +354,17 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
 
     PrintLineBreak ("|  - Testing UI4/SI4/FLT/TMS...", 5);
 
-    static const int32_t si4_p_expected = '+',
-        si4_n_expected = (int32_t)(0xFFFFFF00 | '-');
+    static const int32_t  si4_p_expected = '+',
+                          si4_n_expected = (int32_t)(0xFFFFFF00 | '-');
     static const uint32_t ui4_expected = '4';
     static const uint32_t flt_value = '.';
-    static const float flt_expected = *(float*)&flt_value;
-    static const time_t tms_expected = 0xE7;
-    int32_t si4_p_found,
-            si4_n_found;
-    uint32_t ui4_found;
-    float  flt_found;
-    time_t tms_found;
+    static const float    flt_expected = *(float*)&flt_value;
+    static const time_t   tms_expected = 0xE7;
+    int32_t               si4_p_found,
+                          si4_n_found;
+    uint32_t              ui4_found;
+    float                 flt_found;
+    time_t                tms_found;
 
     CHECK_EQUAL (0, BoutWrite (bout, Params<5, SI4, SI4, UI4, FLT, TMS> (),
                                Args (args, &si4_p_expected, &si4_n_expected,
@@ -428,7 +436,13 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     PrintLineBreak ("  - Testing SV2...\n", 5);
 
     static const int16_t sv2_expected[] = {
-        0, 1, -1, 1 << 7, -(1 << 7), 1 << 14, -(1 << 14)
+        0,
+        1,
+        -1,
+        1 << 7,
+        -(1 << 7),
+        1 << 14,
+        -(1 << 14)
     };
 
     int16_t sv2_found[7];
@@ -620,4 +634,70 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (uv8_expected[7], uv8_found[7])
     CHECK_EQUAL (uv8_expected[8], uv8_found[8])
     CHECK_EQUAL (uv8_expected[9], uv8_found[9])
+}
+
+TEST (SCRIPT_TESTS, UtilsTests) {
+    std::cout << "  - Running HexTest...\n";
+    for (int i = 0; i < 16; ++i) {
+        int value = ToByte (NibbleToLowerCaseHex (i));
+        CHECK_EQUAL (i, value)
+            value = ToByte (NibbleToUpperCaseHex (i));
+        CHECK_EQUAL (i, value)
+    }
+
+    for (int i = 0; i < 256; ++i) {
+        int value = ToByte (ToLowerCaseHex (i));
+        CHECK_EQUAL (i, value)
+            value = ToByte (ToUpperCaseHex (i));
+        CHECK_EQUAL (i, value)
+    }
+
+    std::cout << "\nTesting string utils...\n";
+
+    const char* strings[] = {
+        "Testing",
+        "Texting",
+        "Testing@",
+        "Texting@",
+    };
+
+    CHECK (!StringEquals (strings[0], strings[1]))
+    CHECK (!StringEquals (strings[0], strings[3]))
+    CHECK ( StringEquals (strings[0], strings[0]))
+    CHECK (!StringEquals (strings[2], strings[3], '@'))
+    CHECK ( StringEquals (strings[2], strings[2], '@'))
+
+    // @todo Add Token module and TokenEquals here.
+}
+
+TEST (SCRIPT_TESTS, OperationTests) {
+    enum {
+        kBufferSize = 1024,
+        kBufferWords = kBufferSize / sizeof (uintptr_t),
+        kStackHeight = 4,
+    };
+    uintptr_t buffer[kBufferWords];
+    printf ("|  - Running OperationTests in address ranges: [0x%p:0x%p]\n",
+            &buffer[0], &buffer[127]);
+
+    This a;
+
+    Expression* expr = ExpressionInit (buffer, kBufferSize, kStackHeight, &a);
+    ExpressionPrint (expr);
+
+    std::cout << "|    Testing Root (@see \"a.h\")...\n";
+
+    void* args[2];
+    float io_number_;                         //< Example variable.
+    char  io_string_[Root::kStringBufferSize];//< Example string.
+    StringCopy (io_string_, "Test");
+    Bout* bout = ExpressionBout (expr);
+    const Operation* result;
+    result = BoutWrite (bout, Params<2, FLT, STR, Root::kStringBufferSize> (),
+                        Args (args, &io_number_, &io_string_));
+    CHECK (result == nullptr)
+
+    BinPortal portal (bin);
+
+    ExpressionScan (expr, &portal);
 }

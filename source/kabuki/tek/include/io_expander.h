@@ -1,28 +1,24 @@
-/** Kabuki Tek
-    @file    /.../KabukiTek/tek/SpiIoExpander.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 [Cale McCollough](calemccollough.github.io)
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** kabuki::tek
+    @file    ~/source/kabuki/tek/include/io_expander.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef KABUKI_TEK_IO_EXPANDER_H
+#define KABUKI_TEK_IO_EXPANDER_H
 
-#include <KabukiFirmwareToolkit-Config.h>
+#include "module_config.h"
 
-namespace tek {
+namespace kabuki { namespace tek {
 
 class Unicontroller;
 
@@ -46,51 +42,44 @@ class Unicontroller;
     SPIPort controller8 (D11, D12, D13, D10, 1, &OutputData[5], 4, &OutputData[0]);
     @endcode
 */
-class SpiIoExpander
-{
-      public:
-    
+class SpiIoExpander {
+    public:
+
     /** Simple constructor. */
     SpiIoExpander (PinName MOSIPin, PinName MISOPin, PinName ClockPin, PinName StrobePin, byte NumBytesIn,
-        byte NumBytesOut) :
-        in_bytes     (0),
-        out_bytes    (0),
-        num_bytes_in_  (NumBytesIn),
+                   byte NumBytesOut) :
+        in_bytes (0),
+        out_bytes (0),
+        num_bytes_in_ (NumBytesIn),
         num_bytes_out_ (NumBytesOut),
-        port_        (MOSIPin, MISOPin, ClockPin),
-        strobe_      (StrobePin)
-    {
+        port_ (MOSIPin, MISOPin, ClockPin),
+        strobe_ (StrobePin) {
     }
-    
+
     /** Gets the number of input registers. */
-    byte GetNumInBytes ()
-    {
+    byte GetNumInBytes () {
         return num_bytes_in_;
     }
 
     /** Gets the number of output registers. */
-    byte GetNumOutBytes ()
-    {
+    byte GetNumOutBytes () {
         return num_bytes_out_;
     }
-        
+
     /** Attaches the controller to to this port_. */
-    void Attach (Controller* controller)
-    {
+    void Attach (Controller* controller) {
         if (controller == 0) return;
 
 
     }
-    
+
     /** Switches to the given row number. */
-    void SetDevice (byte deviceNumber)
-    {
+    void SetDevice (byte deviceNumber) {
 
     }
-    
+
     /** Gets the digital input byte at the given index. */
-    inline void Update (byte index)
-    {
+    inline void Update (byte index) {
         if (index < num_bytes_in_ && index < num_bytes_out_)
             in_bytes[index] = port_.write (out_bytes[index]);
         else if (index < num_bytes_in_)
@@ -98,18 +87,16 @@ class SpiIoExpander
         else
             port_.write (out_bytes[index]);
     }
-    
+
     private:
-    
-    byte num_bytes_in_, //< The number of input register bytes.
-        num_bytes_out_; //< The number of output register bytes.
 
-    byte* in_bytes,     //< The input buffer.
-        * out_bytes;    //< The output buffer.
-    
-    SPI port_;          //< The SPI port_.
-    DigitalOut strobe_; //< The strobe_ pin.
+    byte       num_bytes_in_,  //< The number of input register bytes.
+               num_bytes_out_; //< The number of output register bytes.
+    byte     * in_bytes,       //< The input buffer.
+             * out_bytes;      //< The output buffer.
+    SPI        port_;          //< The SPI port_.
+    DigitalOut strobe_;        //< The strobe_ pin.
 };
-
-}   //< namespace tek
-
+}       //< namespace tek
+}       //< namespace kabuki
+#endif  //< KABUKI_TEK_IO_EXPANDER_H

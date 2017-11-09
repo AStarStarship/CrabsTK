@@ -1,34 +1,26 @@
-/** Kabuki Tek
-    @version 0.9
-    @file    /.../Source/tek/Debouncer.h
-    @author  Dr Marty and Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>
-
-                        All rights reserved (R).
-
-        This program is free software: you can redistribute it and/or modify it 
-        under the terms of the , General Public License as published by the 
-        Free Software Foundation, either version 3 ofthe License, or (at your 
-        option) any later version.
-
-        This program is distributed in the hope that it will be useful, but 
-        WITHOUT ANY WARRANTY; without even the implied warranty of 
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the , 
-        General Public License for more details.
-
-        You should have received a copy of the , General Public License 
-        along with this program. If not, see <http://www.gnu.org/licenses/>.
+/** kabuki::tek
+    @version 0.x
+    @file    ~/source/kabuki/tek/include/debouncer.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
 #ifndef KABUKI_TEK_SENSORS_DEBOUNCER_H
 #define KABUKI_TEK_SENSORS_DEBOUNCER_H
 
-#include <tek\config.h>
+#include "module_config.h"
 
-namespace tek { namespace sensors {
+namespace kabuki { namespace tek {
 
-template <typename T>
-class Debouncer
 /** Dr Marty's switch debounce algorithm for shift registers and GPIO pins.
     In order to use this class, simply feed the constructor the address of the 
     memory you want to store the debounced data too. This allows the debounced 
@@ -71,46 +63,44 @@ class Debouncer
     }
     @endcode
 */
-{
-      public:
-    
+template <typename T>
+class Debouncer {
+    public:
+
     /** Constructor. */
-    Debouncer (T* stateAddress):
-        one_   (0),
-        two_   (0),
+    Debouncer (T* stateAddress) :
+        one_ (0),
+        two_ (0),
         three_ (0),
-        state_ (stateAddress)
-    {
+        state_ (stateAddress) {
     }
-    
+
     /** Debounces the input and returns an XOR of changes.
         Using an XOR of the previous state shows you which button states
-        have changed.
-    */
-    inline T Debounce (T sample)
-    {
-        T one   = one_,
-          two   = two_,
-          three = three_;
+        have changed. */
+    inline T Debounce (T sample) {
+        T  one = one_,
+           two = two_,
+           three = three_;
         T* state = state_;
-        T previous_state = *state,
-            current_state = previous_state & (one | two | three) | (one & two & three);
+        T  previous_state = *state,
+           current_state = previous_state & (one | two | three) | (one & two & three);
         *state = current_state;
         three_ = two;
         two_ = one;
         one_ = sample;
         return previous_state ^ current_state;
     }
-    
+
     private:
-    
-    T one_,          //< Sample t - 1.
-        two_,        //< Sample t - 2.
-        three_;      //< Sample t - 3.
-    
-    T* state_;       //< Pointer to the state.
+
+    T  one_,    //< Sample t - 1.
+       two_,    //< Sample t - 2.
+       three_;  //< Sample t - 3.
+    T* state_;  //< Pointer to the state.
 };
-}   //< namespace tek
+}       //< namespace tek
+}       //< namespace kabuki
 
 
 #if 0
@@ -124,38 +114,36 @@ Serial pc (USBTX, USBRX);
 SPI Spi1 (D11, D12, D13);
 
 DigitalOut Spi1CS (D10),
-    RedLED   (LED_RED),
-    GreenLED (LED_GREEN),
-    BlueLED  (LED_BLUE);
-    
+RedLED (LED_RED),
+GreenLED (LED_GREEN),
+BlueLED (LED_BLUE);
+
 PortIn GPIPort (PortA);
 
-void pollInputsHandler ()
-{
+void pollInputsHandler () {
     Spi1CS = 1;
     char dataIn = ShiftRegisterDebouncer.debounce (Spi1.write (0));
     int portA = GPIPortDebouncer.debounce (GPIPort);
-    if (dataIn & 0b001) RedLED   = RedLED   == 0 ? 1 : 0;
-    if (dataIn & 0b010) GreenLED = GreenLED == 0 ? 1 : 0;
-    if (dataIn & 0b100) BlueLED  = BlueLED  == 0 ? 1 : 0;
+    if (dataIn & 0b001) RedLED = RedLED == 0?1:0;
+    if (dataIn & 0b010) GreenLED = GreenLED == 0?1:0;
+    if (dataIn & 0b100) BlueLED = BlueLED == 0?1:0;
     Spi1CS = 0;
     pc.printf ("%x%x", dataIn, portA);
 }
 
-int main ()
-{
+int main () {
     static const float updateInterval = 0.010f;
     pc.baud (_BaudRate);
-    pc.printf ("\r\n\n================================================================================\r\n", 
-        1.0f / updateInterval);
+    pc.printf ("\r\n\n================================================================================\r\n",
+               1.0f / updateInterval);
     pollInputsTicker.attach (&pollInputsHandler, updateInterval);
     RedLED = GreenLED = BlueLED = 1;
-    
+
     Spi1CS = 0;
-    Spi1.format (8,3);
+    Spi1.format (8, 3);
     Spi1.frequency (_BaudRate);
-    
-    while (true) ;
+
+    while (true);
 }
 #endif  //< DEBUG
 #endif  //< KABUKI_TEK_SENSORS_DEBOUNCER_H

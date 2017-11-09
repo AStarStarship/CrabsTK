@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/include/assembly.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -61,6 +61,7 @@
                                     //< over a generic communication link.
 #define ASSEMBLY_NAME       "Unnamed"   //< Enter the name of your program or library.
 #define CHAR_WIDTH          8       //< char_t width in bytes: 8, 16, or 32.
+#define CHINESE_FLOOR_SIZE  1024    //< The 
 
 /*> Sets any of the following macros to YES or NO. */
 

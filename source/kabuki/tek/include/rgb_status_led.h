@@ -1,29 +1,24 @@
-/** Kabuki Tek
-    @file    /.../kabuki-tek/tek/RGBStatusLED.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright  (C) 2017 [Cale McCollough](calemccollough.github.io)
-
-                            All right reserved  (R).
-
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** kabuki::tek
+    @file    ~/source/kabuki/tek/include/rgb_status_led.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
 #ifndef KABUKI_TEK_LEDS_RGBSTATUSLED_H
 #define KABUKI_TEK_LEDS_RGBSTATUSLED_H
 
-#include <tek/config.h>
+#include "module_config.h"
 
-#include <mbed.h>
+namespace kabuki { namespace tek {
 
 #define _CreateRGBStatusLED \
 static RGBStatusLED<0,1> Status  (RED_LED, GREEN_LED, BLUE_LED);\
@@ -53,206 +48,184 @@ typedef enum
 } Color;
 }   //< namespace Primary {
     
-/** The onboard mbed RGB LED.
-    Some boards have PWM on the RGB LED, some don't. This class uses DigitalOut (s). There are 8 potential combinations 
-    of color without PWM (@see Wiki:"Color Space"), Black, Red, Yellow, Green, Cyan, Blue, Magenta, and White.
+/** The on-board mbed RGB LED.
+    Some boards have PWM on the RGB LED, some don't. This class uses 
+    DigitalOut (s). There are 8 potential combinations of color without PWM 
+    (@wiki:"Color Space"), Black, Red, Yellow, Green, Cyan, Blue, Magenta, and 
+    White.
     
     @code
-    RGBStatusLED<0, 1> stausLED  (RED_LED, GREEN_LED, BLUE_LED);    //< Use <0, 1> if you're LED is active low.
-    RGBStatusLED<1, 0> stausLED  (p0, p1, p2);                      //< Use <0, 1> if you're LED is active high.
+    RGBStatusLED<0, 1> stausLED  (RED_LED, GREEN_LED, BLUE_LED);
+    //< Use <0, 1> if you're LED is active low.
+    RGBStatusLED<1, 0> stausLED  (p0, p1, p2);
+    //< Use <0, 1> if you're LED is active high.
     
-    statusLED.SetColorA  (Color::);
+    status_led.SetColorA  (Color::);
     
     @endcode
 */
 template <int On, int Off>
-class RGBStatusLED
-{
-      public:
-    
-    enum
-    {
+class RGBStatusLED {
+    public:
+
+    enum {
         DefaultBrightness = 128
     };
-    
+
     /** Simple constructor. */
-    RGBStatusLED  (PinName redLED, PinName greenLED, PinName blueLED, float blinkDelay = 0.2f)
-    :   frequency  (aFrequency),
-        red        (redLED),
-        green      (greenLED),
-        blue       (blueLED),
-        blinker   (),
-        color      (Color::Black),
-        colorA     (Color::Black),
-        colorB     (Color::Black)
-    {
+    RGBStatusLED (PinName red_pin, PinName green_pin, PinName blue_pin,
+                  float blink_delay = 0.2f)
+        : frequency (aFrequency),
+        red (red_pin),
+        green (green_pin),
+        blue (blue_pin),
+        blinker (),
+        color (Color::Black),
+        colorA (Color::Black),
+        colorB (Color::Black) {
         red = green = blue = 1;
     }
-    
+
     /** Updates the RGB status LED "frame": color. */
-    void Update ()
-    {
-        switch  (color)
-        {
-            case Color::Black  : red = 1; green = 1; blue = 1; return;
-            case Color::Red    : red = 0; green = 1; blue = 1; return;
-            case Color::Yellow : red = 0; green = 0; blue = 1; return;
-            case Color::Green  : red = 1; green = 0; blue = 1; return;
-            case Color::Cyan   : red = 1; green = 0; blue = 0; return;
-            case Color::Blue   : red = 1; green = 1; blue = 0; return;
+    void Update () {
+        switch (color) {
+            case Color::Black:   red = 1; green = 1; blue = 1; return;
+            case Color::Red:     red = 0; green = 1; blue = 1; return;
+            case Color::Yellow:  red = 0; green = 0; blue = 1; return;
+            case Color::Green:   red = 1; green = 0; blue = 1; return;
+            case Color::Cyan:    red = 1; green = 0; blue = 0; return;
+            case Color::Blue:    red = 1; green = 1; blue = 0; return;
             case Color::Magenta: red = 0; green = 1; blue = 0; return;
-            case Color::White  : red = 0; green = 0; blue = 0; return;
+            case Color::White:   red = 0; green = 0; blue = 0; return;
         }
     }
-    
+
     /** Sets colorA. */
-    void SetColorA  (Primary::Color value)
-    {
-        colorA = value; 
+    void SetColorA (Primary::Color value) {
+        colorA = value;
     }
-    
+
     /** Sets colorB. */
-    void SetColorB  (Primary::Color value)
-    {
-        colorB = value; 
+    void SetColorB (Primary::Color value) {
+        colorB = value;
     }
-    
+
     /** Turns off the blinker. */
-    void TurnOff ()
-    {
+    void TurnOff () {
         red = green = blue = 1;
     }
-    
+
     /** Turns on the blinker. */
-    void TurnOn ()
-    { 
-        color = colorA; 
+    void TurnOn () {
+        color = colorA;
         Update ();
     }
-    
+
     /** Sets the color of the blinker. */
-    void SetColors  (Primary::Color ColorA, Primary::Color ColorB = Primary::Black)
-    {
+    void SetColors (Primary::Color ColorA, Primary::Color ColorB = Primary::Black) {
         colorA = ColorA;
         colorB = ColorB;
     }
-    
+
     /** Starts flashing red and blue lights. */
-    void FlashRedBlue ()
-    {
+    void FlashRedBlue () {
         colorA = Primary::Red;
         colorB = Primary::Blue;
         StartBlinking ();
     }
-    
+
     /** Starts blinking. */
-    void StartBlinking ()
-    {
-        blinker.attach  (this, &RGBStatusLED::Blink, frequency);
+    void StartBlinking () {
+        blinker.attach (this, &RGBStatusLED::Blink, frequency);
         color = colorA;
         Update ();
     }
-    
+
     /** Stops blinking and turns off the LED. */
-    void StopBlinking  ()
-    {
+    void StopBlinking () {
         TurnOff ();
         blinker.detach ();
         color = Primary::Black;
         Update ();
     }
-    
+
     /** Starts blinking and turns on Color A. */
-    void StopBlinkingA ()
-    {
+    void StopBlinkingA () {
         color = colorA;
         blinker.detach ();
     }
-    
+
     /** Starts blinking and turns on Color B. */
-    void StopBlinkingB ()
-    {
+    void StopBlinkingB () {
         color = colorB;
         blinker.detach ();
     }
-    
-    
-    /** Sets the blink frequeny. */
-    void SetFrequency  (float value)
-    {
+
+
+    /** Sets the blink frequency. */
+    void SetFrequency (float value) {
         frequency = value;
-        blinker.attach  (this, &RGBStatusLED::Blink, value);
+        blinker.attach (this, &RGBStatusLED::Blink, value);
     }
-    
+
     /** Handler for the Assert macro. */
-    void HandleAssert ()
-    {
+    void HandleAssert () {
         FlashRedBlue ()
     }
 
     private:
+
+    float     frequency_; //< The frequency of the blinking.
+    DigitalOut red_,      //< Red LED on the mbed board.
+               green_,    //< Green LED on the mbed board.
+               blue_;     //< Blue LED on the mbed board.
+    Ticker     blinker_;  //< Ticker for blinking the LEDs.
+    uint8_t    color_,    //< The current color.
+               colorA_,   //< Blink color A.
+               colorB_;   //< Blink color B.
     
-    float frequency_;    //< The frequency of the blinking.
-    
-    DigitalOut red_,     //< Red LED on the mbed board.
-         green_,         //< Green LED on the mbed board.
-         blue_;         //< Blue LED on the mbed board.
-    
-    Ticker blinker_;    //< Ticker for blinking the LEDs.
-    
-    uint8_t color_,     //< The current color.
-        colorA_,        //< Blink color A.
-        colorB_;        //< Blink color B.
-    
-    void Blink ()
-    /** Blinks the status RGB LED on the mbed board between colorA and colorB. */
-    { 
-        color =  (color == colorA) ? colorB : colorA;   
+    /** Blinks the status RGB LED on the mbed board between colorA and 
+        colorB. */
+    void Blink () {
+        color = (color == colorA) ? colorB : colorA;
         Update ();
     }
 };
-}   //< namespace leds
-}   //< namespace tek
+}       //< namespace tek
+}       //< namespace kabuki
 
 // _D_e_m_o_____________________________________________________________________
 
 #if 0   //< Set to non-zero to run this demo.
 
-using namespace kabuki-tek;
+using namespace kabuki - tek;
 
-RGBStatusLED Status  (LED_RED, LED_GREEN, LED_BLUE);
-InterruptIn Switch3  (SW3);
+RGBStatusLED Status (LED_RED, LED_GREEN, LED_BLUE);
+InterruptIn Switch3 (SW3);
 
 /** Interrupt handler for SW2. */
-void SW3Handler ()
-{
+void SW3Handler () {
     static int counter = 16;
-    
-    if (++counter > 15)
-    {
+
+    if (++counter > 15) {
         Status.FlashRedBlue (); counter = 0;
-    }
-    else if (counter & 1)
-    { 
-        Status.StopBlinking  ();
-    }
-    else    
-    {  
+    } else if (counter & 1) {
+        Status.StopBlinking ();
+    } else {
         Status.SetColorA ((Primary::Color)(counter >> 1));
-        Status.SetColorB  (Primary::Black);
+        Status.SetColorB (Primary::Black);
         Status.StartBlinking ();
     }
 }
 
-int main()
-{
+int main () {
     printf ("\r\nTesting mbed utils.\r\n");
     PrintLine ('-');
-    
+
     Switch3.rise (&SW3Handler);
     //Status.StartBlinking ();
-    
-    while  (true);
+
+    while (true);
 }
 #endif  //< #if _Demo
 #endif  //< KABUKI_TEK_LEDS_RGBSTATUSLED_H

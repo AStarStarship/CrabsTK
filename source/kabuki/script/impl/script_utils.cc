@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/kabuki/script/impl/script_utils.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -68,10 +68,15 @@ int StringLength (const char* string, char delimiter) {
     if (string == nullptr)
         return -1;
     int count = 0;
-
-    char c; c = *string;
-    while (c)
+    //std::cout << "Checking string length for " << string << '\n';
+    char c = *string;
+    //std::cout << c;
+    while (c) {
+        ++count;
         c = *(++string);
+        //std::cout << c;
+    }
+    //std::cout << '\n';
     return count;
 }
 
@@ -381,12 +386,11 @@ void MemoryClear (void* address, size_t size) {
     byte* ptr = reinterpret_cast<byte*> (address);
     for (; size != 0; --size)
         *ptr++ = '\0';
-
     /*
     uintptr_t lsb_mask = (1 << sizeof (long)) - 1,
               msb_mask = ~lsb_mask,
-              adr_uint  = reinterpret_cast<uintptr_t> (address),
-              adr_lsb   = adr_uint & lsb_mask;
+              adr_uint = reinterpret_cast<uintptr_t> (address),
+              adr_lsb  = adr_uint & lsb_mask;
     long* ptr = reinterpret_cast<long*> (adr_uint & msb_mask),
         * end = reinterpret_cast<long*> ((adr_uint + size) & lsb_mask);
     // Example: address 0x1
@@ -449,7 +453,13 @@ char CreateKeyValueFormatString (char* string, char column_width, char type) {
 
 void PrintNumberLine (int index) {
     std::cout << '\n';
-    enum { MaxBufferSize = (sizeof (int) == 2) ? 7 : (sizeof (int) == 4) ? 11 : 128 };
+    enum {
+        MaxBufferSize = (sizeof (int) == 2)
+                      ? 7 
+                      : (sizeof (int) == 4)
+                      ? 11
+                      : 128
+    };
     char buffer[MaxBufferSize];
     sprintf_s (buffer, MaxBufferSize, "%u", index);
     int length = StringLength (buffer),
@@ -696,7 +706,7 @@ const char* NextNonNumberString (const char* input) {
     char c = *input;
     if (c == '-') {  // It might be negative.
         c = *(++input);
-        if (!isdigit (c))   // but it's not.
+        if (!isdigit (c))   // it's not negative.
             return input - 1;
         c = *(++input);
     }
@@ -740,7 +750,8 @@ const char* SkipSpacesString (const char* input) {
         //std::cout << '.';
         if (!isspace (c))
             return input;
-        c = *(++input);
+        ++input;
+        c = *input;
     }
     return input;
 }
@@ -812,37 +823,73 @@ char* CompareToken (const char* input, const char* query) {
     return (char*)CompareTokenString (input, query);
 }
 
-const char* StringCompare (const char* input, const char* query,
-                           char delimiter) {
+const char* StringEquals (const char* input, const char* query) {
+    if (input == nullptr)
+        return nullptr;
+    if (query == nullptr)
+        return nullptr;
+    std::cout << "Comparing strings equal \"" << input << "\" to \"" << query
+        << "\"\n";
+
+    char i = *input,
+         q = *query;
+    while (i) {
+        std::cout << i;
+        if (i != q) { // Not a hit.
+            std::cout << "; but it's not a hit\n";
+            return nullptr;
+        }
+        if (q == 0) { // Hit!
+            std::cout << "; found hit at ";
+            PrintPointerNL (input);
+            return input;
+        }
+        i = *(++input);
+        q = *(++query);
+    }
+    if (q != 0) {
+        std::cout << "; Not a hit: no nil-term char found\n";
+        return nullptr;
+    }
+    std::cout << "; found hit at ";
+    PrintPointerNL (input);
+    return input; //< Find hit!
+}
+
+const char* StringEquals (const char* input, const char* query,
+                          char delimiter) {
+    std::cout << "Comparing strings \"" << input << "\" to \"" << query
+              << "\"\n";
     if (input == nullptr)
         return nullptr;
     if (query == nullptr)
         return nullptr;
 
-    input = SkipSpacesString (input);
-    query = SkipSpacesString (query);
+    //input = SkipSpacesString (input); //< I think this is token compare
+    //query = SkipSpacesString (query);
 
-    char string = *input,
-        t = *query;
-    if (string == 0)          // Nothing to do.
-        return nullptr;
-    if (t == 0)          // Nothing to do.
-        return nullptr;
-    if (t == delimiter) // Nothing to do.
-        return nullptr;
-    while (!isspace (string)) {
-        if (string != t)
+    char i = *input,
+         q = *query;
+    while (i != delimiter) {
+        if (i != q) { // Not a hit.
+            std::cout << "; not a hit\n";
             return nullptr;
-        if (t == delimiter) // Special case for null-term char.
-            return nullptr;
-        string = *(++input);
-        t = *(++query);
+        }
+        std::cout << i;
+        i = *(++input);
+        q = *(++query);
     }
+    if (q != delimiter) {
+        std::cout << "; reached nil-term char but no q:\'" << q << "\' is not the delimiter.\n";
+        return nullptr;
+    }
+    std::cout << "; found hit at ";
+    PrintPointerNL (input);
     return input; //< Find hit!
 }
 
 char* Compare (char* source, const char* query, char delimiter) {
-    return (char*)StringCompare (source, query, delimiter);
+    return (char*)StringEquals (source, query, delimiter);
 }
 
 const char* ParseString (const char* input, char* destination,
