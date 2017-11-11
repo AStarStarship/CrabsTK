@@ -1,6 +1,6 @@
-/** Kabuki Starship
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/impl/tests/script_tests.cpp
+    @file    ~/source/kabuki/script/pro_files/script_tests.cc
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -34,6 +34,113 @@ TEST_GROUP (SCRIPT_TESTS) {
 };
 
 /*
+
+template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
+    uint second = 0>
+    time_t TestTime (char* buffer, int buffer_size) {
+    if (buffer == nullptr)
+        return 0;
+    time_t t;
+    time (&t);
+    tm* moment = localtime (&t);
+    if (!moment) {
+        cout << "|\n| Created invalid test moment: " << moment << '\n';
+        return 0;
+    }
+    moment->tm_year = year - TIME_EPOCH;
+    moment->tm_mon = month - 1;
+    moment->tm_mday = day;
+    moment->tm_hour = hour;
+    moment->tm_min = minute;
+    moment->tm_sec = second;
+
+    if (!PrintDateTimeString (buffer, buffer_size, moment)) {
+        cout << "< Error making timestamp \n";
+
+        return 0;
+    }
+    cout << "< Creating test time: ";
+    PrintDateTime (moment);
+    t = mktime (moment);
+    if (t < 0) {
+        cout << "< Invalid " << t << '\n';
+        return 0;
+    } else {
+        cout << '\n';
+    }
+    return t;
+}
+
+TEST (SCRIPT_TESTS, ClockTests) {
+    time_t t,
+        t_found;
+    tm* lt;
+    const char* result;
+
+    PrintBreak ("<", '-');
+    cout << "< Testing date-time parser... \n";
+
+    const char* strings[] = { "8/9\0",
+        "08/09\0",
+        "8/9/17\0",
+        "8/09/17\0",
+        "8/9/2017\0",
+        "8/09/2017\0",
+        "8/09/2017\0",
+        "08/9/2017\0",
+        "8/09/2017@00\0",
+        "8.09.2017@00AM\0",
+        "8/09/2017@00:00\0",
+        "8/09/17@00:0AM\0",
+        "8/09/2017@00:00:00\0",
+        "8/09/2017@00:00:00AM\0",
+        "2017-08-09@00:00:00AM\0",
+        "2017-08-09@00:00:00am\0",
+        "2017-08-09@00:00:00A\0",
+        "2017-08-09@00:00:00a \0",
+    };
+    for (int i = 0; i < 18; ++i) {
+        PrintBreak ("<", '-');
+        cout << "| " << i;
+        time_t t = 0;
+        result = ParseTimeString (strings[i], t);
+        CompareTimes (t, 2017, 8, 9, 0, 0, 0);
+    }
+    enum {
+        SIZE = 32
+    };
+
+    char timestamp[SIZE];
+    PrintBreak ("<", '-');
+    PrintBreak ("<\n< Testing more valid input...\n");
+    PrintBreak ("<", '-');
+
+    t = TestTime<8, 9, 17, 4, 20> (timestamp, SIZE);
+    PrintTime (t);
+    result = ParseTimeString (timestamp, t_found);
+    CompareTimes (t, t_found);
+
+    t = TestTime<2020, 4, 20, 4, 20> (timestamp, SIZE);
+    PrintTime (t);
+    result = ParseTimeString (timestamp, t_found);
+    CompareTimes (t, t_found);
+
+    t = TestTime<1947, 12, 7, 23, 5, 7> (timestamp, SIZE);
+    PrintTime (t);
+    result = ParseTimeString (timestamp, t_found);
+    CompareTimes (t, t_found);
+
+    //system ("PAUSE");
+
+    PrintBreak ("<", '-');
+    PrintBreak ("<\n< Testing invalid input...\n<", '-');
+    ParseTimeString ("cat", t);
+    PrintBreak ("<", '-');
+    ParseTimeString ("2017-30-40", t);
+    PrintBreak ("<", '-');
+
+    cout << "<\n< Done testing date parsing utils! :-)\n";
+}
 TEST (SCRIPT_TESTS, ExpressionTests) {
     std::cout << "| Running ExpressionTests...\n";
     enum {
@@ -691,13 +798,14 @@ TEST (SCRIPT_TESTS, OperationTests) {
     float io_number_;                         //< Example variable.
     char  io_string_[Root::kStringBufferSize];//< Example string.
     StringCopy (io_string_, "Test");
+    Bin * bin  = ExpressionBin  (expr);
     Bout* bout = ExpressionBout (expr);
     const Operation* result;
-    result = BoutWrite (bout, Params<2, FLT, STR, Root::kStringBufferSize> (),
+    result = BoutWrite (bout, Params<3, ADR, FLT, STR, Root::kStringBufferSize> (),
                         Args (args, &io_number_, &io_string_));
     CHECK (result == nullptr)
 
-    BinPortal portal (bin);
+    Window window (bin, bout);
 
-    ExpressionScan (expr, &portal);
+    ExpressionScan (expr, &window);
 }

@@ -1,5 +1,5 @@
 /** Serial Communication Library
-    @file    ~/list_ports_linux.cpp
+    @file    ~/list_ports_linux.cc
     @author  Craig Lilley <cralilley@gmail.com>
     @license Copyright (c) 2014 Craig Lilley <cralilley@gmail.com>
              This software is made available under the terms of the MIT license.
@@ -7,24 +7,15 @@
                     http://opensource.org/licenses/MIT
 */
 
+#include <stdafx.h>
 #if defined(__linux__)
-
-#include <vector>
-#include <string>
-#include <sstream>
-#include <stdexcept>
-#include <iostream>
-#include <fstream>
-#include <cstdio>
-#include <cstdarg>
-#include <cstdlib>
 
 #include <glob.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "serial/serial.h"
+#include "../include/serial.h"
 
 using serial::PortInfo;
 using std::istringstream;

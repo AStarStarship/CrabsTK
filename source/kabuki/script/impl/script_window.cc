@@ -15,28 +15,36 @@
              permissions and limitations under the License.
 */
 
-#include "../include/bout_portal.h"
+#include "../include/window.h"
 
 namespace _ {
 
-BoutPortal::BoutPortal (Bout* bout) {
+Window::Window (Bin* bin, Bout* bout):
+    size_bytes_ (0),
+    bin_        (bin),
+    bout_       (bout)
+{
 
 }
 
-void BoutPortal::Prime () {
+void Window::Prime () {
 
 }
 
-uint_t BoutPortal::Length () {
+uint_t Window::Length () {
+    return 0;
+}
+
+void Window::Feed (byte b) {
 
 }
 
-void BoutPortal::Feed (byte b) {
-
+byte Window::Pull () {
+    return 0;
 }
 
-byte BoutPortal::Pull () {
-
+const Operation* Window::Star (char_t index, Expression* expr) {
+    return 0;
 }
 
 }       //< namespace _

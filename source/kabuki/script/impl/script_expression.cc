@@ -42,31 +42,37 @@ const char* ExpressionStateString (Expression::State state) {
 }
 
 const Operation* Result (Expression* expr, Expression::Error error) {
-    std::cout << "\nExpression " << ExpressionErrorString (error) << " Error!\n";
+    std::cout << "\nExpression " << ExpressionErrorString (error) 
+              << " Error!\n";
     return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* Result (Expression* expr, Expression::Error error,
                          const uint_t* header) {
-    std::cout << "\nExpression " << ExpressionErrorString (error) << " Error!\n";
+    std::cout << "\nExpression " << ExpressionErrorString (error) 
+              << " Error!\n";
     return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* Result (Expression* expr, Expression::Error error, 
                          const uint_t* header, byte offset) {
-    std::cout << "\nExpression " << ExpressionErrorString (error) << " Error!\n";
+    std::cout << "\nExpression " << ExpressionErrorString (error)
+              << " Error!\n";
     return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* Result (Expression* expr, Expression::Error error, 
                          const uint_t* header, byte offset, byte* address) {
-    std::cout << "\nExpression " << ExpressionErrorString (error) << " Error!\n";
+    std::cout << "\nExpression " << ExpressionErrorString (error) 
+              << " Error!\n";
     return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* Result (Expression* expr, Expression::Error error, 
-                         const uint_t* header, byte offset, uintptr_t* address) {
-    std::cout << "\nExpression " << ExpressionErrorString (error) << " Error!\n";
+                         const uint_t* header, byte offset, 
+                         uintptr_t* address) {
+    std::cout << "\nExpression " << ExpressionErrorString (error)
+              << " Error!\n";
     return reinterpret_cast<const Operation*> (1);
 }
 
@@ -196,7 +202,8 @@ const Operation* ExpressionExitState (Expression* expr) {
     return 0;
 }
 
-const Operation* ExpressionEnterState (Expression* expr, Expression::State state) {
+const Operation* ExpressionEnterState (Expression* expr, 
+                                       Expression::State state) {
 
     if (state == Bout::LockedState) {
         return Result (expr, Expression::LockedStateError);
@@ -280,7 +287,8 @@ void ExpressionScan (Expression* expr, Portal* input) {
                       length,       //< Length of the ring buffer data.
                       type;         //< Current type.
     byte              bout_state,   //< Current bin FSM state.
-                      b;            //< Current byte being verified.
+                      b,            //< Current byte being verified.
+                      array_type;   //< The type of array.
     hash16_t          hash;         //< Hash of the ESC being verified.
     timestamp_t       timestamp,    //< Last time when the expression ran.
                       delta_t;      //< Time delta between the last timestamp.
@@ -326,185 +334,211 @@ void ExpressionScan (Expression* expr, Portal* input) {
     printf ("\n\n| Scanning address 0x%p:\n"
             "| bout_state: %s\n"
             "| length: %u\n", start,
-        ExpressionStateString ((Expression::State)expr->bout_state), length);
-
-    // Manually load first byte:
-    b = input->Pull ();
-    //b = SlotStreamByte (bout);
-    hash = Hash16 (b, hash);
-    *start = b;
-    ++start;
-    while (input->Length ()) {
+    ExpressionStateString ((Expression::State)expr->bout_state), length);
+    
+    for (; length != 0; --length) {
+        b = *start;
+        if (++start >= end) start -= size;
+        hash = Hash16 (b, hash);
         // Process the rest of the bytes in a loop to reduce setup overhead.
-        if (bout_state == Expression::ScanningStringState) {
-            PrintDebug ("ScanningStringState");
+        switch (bout_state) {
+            case Expression::Utf8State: {
+                PrintDebug ("StringState");
 
-            if (expr->bytes_left == 0) {
-                PrintDebug ("Done parsing char.");
-                Result (expr, Expression::StringOverflowError,
-                        const_cast<const uint_t*>(expr->header), 0, start);
+                if (expr->bytes_left == 0) {
+                    PrintDebug ("Done parsing char.");
+                    Result (expr, Expression::StringOverflowError,
+                            const_cast<const uint_t*>(expr->header), 0, start);
+                    return;
+                }
+                // Hash byte.
+
+                // Check if char terminated.
+                if (b == 0) {
+                    PrintDebug ("char terminated.");
+                    // Check if there is another argument to scan.
+                    // 
+                    ExpressionExitState (expr);
+                    return;
+                }
+                PrintDebug ("b != 0");
+                --expr->bytes_left;
                 return;
             }
-            // Hash byte.
+            case Expression::VarintState: {
+                // When verifying a varint, there is a max number of bytes for 
+                // the type (3, 5, or 9) but the varint may be complete before 
+                // this number of bytes. We're just basically counting down and 
+                // looking for an overflow situation.
 
-            // Check if char terminated.
-            if (b == 0) {
-                PrintDebug ("char terminated.");
-                // Check if there is another argument to scan.
-                // 
-                ExpressionExitState (expr);
+                PrintDebug ("VarintState.");
+                // Hash byte.
+
+                if (expr->bytes_left == 1) {
+                    PrintDebug ("Checking last byte:");
+
+                    // @warning I am not current saving the offset. I'm not 
+                    // sure  what to do here. The header class uses a variadic 
+                    // template, I'm kind of tempted to switch to an int 
+                    // type for the headers so I can just use a normal 
+                    // array bracket initializer. The other option is to 
+                    // add 32 to the first byte.
+
+                    if ((b >> 7) != 1) {
+                        const uint_t* header = 
+                            const_cast<const uint_t*>(expr->header);
+                        Result (expr, Expression::VarintOverflowError, header, 
+                                0, start);
+                        ExpressionEnterState (expr, 
+                                              Expression::HandlingErrorState);
+                        return;
+                    }
+
+                    return;
+                }
+                --expr->bytes_left;
                 return;
             }
-            PrintDebug ("b != 0");
-            --expr->bytes_left;
-            return;
-        } else if (bout_state == Expression::ScanningVarintState) {
-            // When verifying a varint, there is a max number of bytes for the
-            // type (3, 5, or 9) but the varint may be complete before this
-            // number of bytes. We're just basically counting down and looking
-            // for an overflow situation.
+            case Expression::AddressState: {
+                // When verifying an address, there is guaranteed to be an
+                // expr->op set. We are just looking for null return values
+                // from the Do (byte, Stack*): const Operand* function, 
+                // pushing Star(string) on to the Star stack, and looking for 
+                // the first procedure call.
 
-            PrintDebug ("ScanningVarintState.");
-            // Hash byte.
-
-            if (expr->bytes_left == 1) {
-                PrintDebug ("Checking last byte:");
-
-                // @warning I am not current saving the offset. I'm not sure 
-                //          what to do here. The header class uses a variadic 
-                //          template, I'm kind of tempted to switch to an int 
-                //          type for the headers so I can just use a normal 
-                //          array bracket initializer. The other option is to 
-                //          add 32 to the first byte.
-
-                if ((b >> 7) != 1) {
-                    const uint_t* header = const_cast<const uint_t*>(expr->header);
-                    Result (expr, Expression::VarintOverflowError, header, 0, start);
-                    ExpressionEnterState (expr, Expression::HandlingErrorState);
+                PrintDebugHex ("| AddressState", b);
+                if (b == BSC) {     // Start processing a new ESC.
+                    PrintDebug ("Start of ESC:");
+                    ++expr->header;
+                    ExpressionPushScanHeader (expr, expr->header);
                     return;
                 }
 
-                return;
-            }
-            --expr->bytes_left;
-            return;
-        } else if (bout_state == Expression::ScanningAddressState) {
-            // When verifying an address, there is guaranteed to be an
-            // expr->op set. We are just looking for null return values
-            // from the Do (byte, Stack*): const Operand* function, 
-            // pushing Star(string) on to the Star stack, and looking for the 
-            // first procedure call.
-
-            PrintDebugHex ("| ScanningAddressState", b);
-            if (b == BSC) {     // Start processing a new ESC.
-                PrintDebug ("Start of ESC:");
-                ++expr->header;
-                ExpressionPushScanHeader (expr, expr->header);
-                return;
-            }
-
-            operand = expr->operand;
-            expr->result = nullptr;
-            op = operand->Star (b, nullptr);
-            if (op == nullptr) {
-                // Could be an invalid op or a Star Stack push.
-                if (expr->result == nullptr) {
-                    PrintDebug ("No op found.");
-                    return;
-                }
-                //ExpressionPushScan (a, expr->operand);
-            }
-            if (result = ExpressionPushScanHeader (expr, op->params)) {
-                PrintDebug ("Expression::Error reading address.");
-                return;
-            }
-            ExpressionEnterState (expr, Expression::ScanningArgsState);
-            return;
-        } else if (bout_state == Expression::ScanningArgsState) {
-            // In this state, a procedure has been called to scan on a valid
-            // operand. This state is responsible for loading the next header
-            // argument and checking for the end of the procedure call.
-
-            PrintDebug ("BoutScanningArgs.");
-
-            operand = expr->operand;
-            if (operand == nullptr) {
-                // Push the Room onto the stack.
-                operand = ChineseRoom ();
-                // Check if it is a Star Operation.
+                operand = expr->operand;
+                expr->result = nullptr;
                 op = operand->Star (b, nullptr);
-                expr->result = op;
                 if (op == nullptr) {
-                    PrintError ("Invalid op");
-                    ExpressionEnterState (expr, Expression::LockedState);
+                    // Could be an invalid op or a Star Stack push.
+                    if (expr->result == nullptr) {
+                        PrintDebug ("No op found.");
+                        return;
+                    }
+                    //ExpressionPushScan (a, expr->operand);
+                }
+                if (result = ExpressionPushScanHeader (expr, op->params)) {
+                    PrintDebug ("Expression::Error reading address.");
                     return;
                 }
-
                 ExpressionEnterState (expr, Expression::ScanningArgsState);
                 return;
-            } else {
-                // There is an operation on the stack.
-                // Verify byte as address.
-                header = const_cast<const uint_t*> (expr->header);
-                if (!expr->header) {
-                    return;
-                }
-                if (expr->type_index == 0) {
-                    PrintDebug ("Procedure verified.");
-                    ExpressionExitState (expr);
-                }
-                // Get next type.
-                type = *header;
+            }
+            case Expression::ScanningArgsState: {
+                // In this state, a procedure has been called to scan on a valid
+                // operand. This state is responsible for loading the next 
+                // header argument and checking for the end of the procedure 
+                // call.
 
-                PrintDebug (TypeString (type));
+                PrintDebug ("BoutScanningArgs.");
 
-                // Word-align the start of the buffer we're reading from.
-                start += TypeAlign (start, type);
-
-                // Switch to next state
-                if (type <= ADR) {
-                    if (type < ADR) {
-                        Result (expr, Expression::ReadInvalidTypeError);
+                operand = expr->operand;
+                if (operand == nullptr) {
+                    // Push the Room onto the stack.
+                    operand = ChineseRoom ();
+                    // Check if it is a Star Operation.
+                    op = operand->Star (b, nullptr);
+                    expr->result = op;
+                    if (op == nullptr) {
+                        PrintError ("Invalid op");
                         ExpressionEnterState (expr, Expression::LockedState);
-                    } else {
-                        ExpressionEnterState (expr, Expression::ScanningAddressState);
+                        return;
                     }
-                } else if (type == STR) {   // String type.
-                    ExpressionEnterState (expr, Expression::ScanningStringState);
-                } else if (type < DBL) {   // Plain-old-data types.
-                    expr->bytes_left = SizeOf (type);
-                    ExpressionEnterState (expr, Expression::ScanningPodState);
-                } else if (type < UV8) {   // Varint types
-                    expr->bytes_left = SizeOf (type);
-                    ExpressionEnterState (expr, Expression::ScanningVarintState);
-                } else {    // It's a US
-                    PrintDebug ("Scanning Unit");
-                    expr->bytes_left = kUnitSize;
-                    ExpressionEnterState (expr, Expression::ScanningPodState);
+
+                    ExpressionEnterState (expr, Expression::ScanningArgsState);
+                    return;
+                } else {
+                    // There is an operation on the stack.
+                    // Verify byte as address.
+                    header = const_cast<const uint_t*> (expr->header);
+                    if (!expr->header) {
+                        return;
+                    }
+                    if (expr->type_index == 0) {
+                        PrintDebug ("Procedure verified.");
+                        ExpressionExitState (expr);
+                    }
+                    // Get next type.
+                    type = *header;
+
+                    PrintDebug (TypeString (type));
+
+                    // Word-align the start of the buffer we're reading from.
+                    start += TypeAlign (start, type);
+
+                    array_type = type >> 5;  //< Mask off lower 5 bits.
+
+                    // Switch to next state
+                    if (type <= ADR) {
+                        if (type < ADR) {   // Address type.
+                            Result (expr, Expression::ReadInvalidTypeError);
+                            ExpressionEnterState (expr, 
+                                                  Expression::LockedState);
+                            return;
+                        }
+                        ExpressionEnterState (expr,
+                                              Expression::AddressState);
+
+                    } else if (type == STR) { // UTF-8/ASCII string type.
+                        ExpressionEnterState (expr, 
+                                              Expression::Utf8State);
+                    } else if (type == ST2) { // UTF-16 string type.
+                        ExpressionEnterState (expr,
+                                              Expression::Utf16State);
+                    } else if (type == ST4) { // UTF-32 string type.
+                        ExpressionEnterState (expr,
+                                              Expression::Utf32State);
+                    } else if (type < DBL)  { // Plain-old-data type.
+                        expr->bytes_left = SizeOf (type);
+                        ExpressionEnterState (expr, 
+                                              Expression::PodState);
+                    } else if (type < UV8)  { // Varint type.
+                        expr->bytes_left = SizeOf (type);
+                        ExpressionEnterState (expr, 
+                                              Expression::VarintState);
+                    } else { // It's a TObject.
+                        PrintDebug ("Scanning TObject");
+                        array_type = (byte)(type >> 5);
+                        // We're scanning so we need to read the size from the 
+                        ExpressionEnterState (expr, 
+                                              Expression::ObjectState);
+                    }
+                }
+            }
+            case Expression::HandlingErrorState: {
+                PrintDebug ("HandlingErrorState.");
+            }
+            case Expression::DisconnectedState: {
+                if (b != ascii::BEL) {
+                    ExpressionEnterState (expr, Expression::AwaitingAckState);
+                } else {
+
                 }
 
             }
-        } else if (bout_state == Expression::HandlingErrorState) {
-            PrintDebug ("HandlingErrorState.");
-        } else if (bout_state == Expression::DisconnectedState) {
-            if (b != ascii::BEL) {
-                ExpressionEnterState (expr, Expression::AwaitingAckState);
-            } else {
-
+            case  Bout::LockedState: {
+                PrintDebug ("Bout::LockedState.");
             }
-
-        } else if (bout_state >= Bout::LockedState) {
-            PrintDebug ("Bout::LockedState.");
-        } else {    // parsing plain-old-data.
-            if (expr->bytes_left-- == 0) {
-                PrintDebug ("Done verifying POD type.");
-                ExpressionScanNextType (expr);
-            } else {
-                b = input->Pull ();
-                PrintDebugHex ("Loading next byte", b);
-                expr->hash = Hash16 (b, hash);
-                *start = b;
-                ++start;
+            default: {
+                // parsing plain-old-data.
+                if (expr->bytes_left-- == 0) {
+                    PrintDebug ("Done verifying POD type.");
+                    ExpressionScanNextType (expr);
+                } else {
+                    b = input->Pull ();
+                    PrintDebugHex ("Loading next byte", b);
+                    expr->hash = Hash16 (b, hash);
+                    *start = b;
+                    ++start;
+                }
             }
         }
     }
@@ -658,7 +692,8 @@ uintptr_t* ExpressionBaseAddress (void* ptr, uint_t rx_tx_offset) {
         sizeof (Bin) % sizeof (uintptr_t),
         //< Offset to the start of the ring buffer.
     };
-    byte* result = reinterpret_cast <byte*>(ptr) + rx_tx_offset + kSlotHeaderSize;
+    byte* result = reinterpret_cast <byte*>(ptr) + rx_tx_offset + 
+                   kSlotHeaderSize;
     return reinterpret_cast<uintptr_t*> (result);
 }
 

@@ -42,8 +42,6 @@
 #include <stdafx.h>
 #include "serial.h"
 
-#include "windows.h"
-
 namespace serial {
 
 using std::string;
@@ -144,11 +142,11 @@ class serial::Serial::SerialImpl
 
     private:
     wstring       port_;        //< Path to the file descriptor
-    HANDLE        fd_;
+    HANDLE        fd_;          //< fd handle?
     bool          is_open_;     //< Flag for if serial port is open.
     Timeout       timeout_;     //< Timeout for read operations
     unsigned long baudrate_;    //< Baud-rate
-    parity_t      parity_;      //< Parity
+    parity_t      parity_;      //< Parity type
     bytesize_t    bytesize_;    //< Size of the bytes
     stopbits_t    stopbits_;    //< Stop Bits
     flowcontrol_t flowcontrol_; //< Flow Control

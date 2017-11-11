@@ -39,9 +39,6 @@
     <Filter Include="kabuki\gui">
       <UniqueIdentifier>{08cb46bc-08ca-4f88-86ca-282bc9d069d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="kabuki\hal">
-      <UniqueIdentifier>{74661752-42e0-439e-a2ab-0b3b24447149}</UniqueIdentifier>
-    </Filter>
     <Filter Include="kabuki\id">
       <UniqueIdentifier>{bb404d24-983a-4f80-8f6a-9ea515d4f6fc}</UniqueIdentifier>
     </Filter>
@@ -63,9 +60,6 @@
     <Filter Include="kabuki\process">
       <UniqueIdentifier>{9fbf3dd6-9a6d-4f82-af91-afd955ee2d87}</UniqueIdentifier>
     </Filter>
-    <Filter Include="kabuki\tek">
-      <UniqueIdentifier>{8fe5244b-9037-4488-871f-153660e32d62}</UniqueIdentifier>
-    </Filter>
     <Filter Include="kabuki\utils">
       <UniqueIdentifier>{c35e66f1-cf3e-4e1a-8bbd-ecc15d036cfe}</UniqueIdentifier>
     </Filter>
@@ -81,11 +75,14 @@
     <Filter Include="kabuki\aiml">
       <UniqueIdentifier>{5b844195-171c-4caf-99a6-af067a9a8dde}</UniqueIdentifier>
     </Filter>
-    <Filter Include="kabuki\script\tests">
+    <Filter Include="kabuki\script\pro_files">
       <UniqueIdentifier>{f761c686-c418-44b9-ab1f-1eb3aca1e7e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="kabuki\hal_win32">
-      <UniqueIdentifier>{059557ad-e147-4da1-9328-f1cc01d8bcd2}</UniqueIdentifier>
+    <Filter Include="kabuki\pro_files">
+      <UniqueIdentifier>{d9d6a492-c025-4d20-8429-b996d3596888}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\pro">
+      <UniqueIdentifier>{65351b5c-bf53-4c38-b303-05ce52229b1f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -149,9 +146,6 @@
     <ClInclude Include="script\include\room.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\include\string.h">
-      <Filter>kabuki\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\include\table.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
@@ -200,12 +194,6 @@
     <ClInclude Include="script\include\slot.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\tests\a.h">
-      <Filter>kabuki\script\tests</Filter>
-    </ClInclude>
-    <ClInclude Include="script\tests\assembly.h">
-      <Filter>kabuki\script\tests</Filter>
-    </ClInclude>
     <ClInclude Include="script\include\tbook.h">
       <Filter>kabuki\script</Filter>
     </ClInclude>
@@ -218,269 +206,32 @@
     <ClInclude Include="serial\include\serial.h">
       <Filter>kabuki\serial</Filter>
     </ClInclude>
-    <ClInclude Include="serial\include\include_win32.h">
+    <ClInclude Include="script\include\text.h">
+      <Filter>kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="serial\include\serial_portal.h">
       <Filter>kabuki\serial</Filter>
     </ClInclude>
-    <ClInclude Include="hal\include\CThunk.h">
-      <Filter>kabuki\hal</Filter>
+    <ClInclude Include="serial\include\serial_win32.h">
+      <Filter>kabuki\serial</Filter>
     </ClInclude>
-    <ClInclude Include="hal\include\DigitalIn.h">
-      <Filter>kabuki\hal</Filter>
+    <ClInclude Include="serial\include\serial_unix.h">
+      <Filter>kabuki\serial</Filter>
     </ClInclude>
-    <ClInclude Include="hal\include\DigitalInOut.h">
-      <Filter>kabuki\hal</Filter>
+    <ClInclude Include="serial\include\module_config.h">
+      <Filter>kabuki\serial</Filter>
     </ClInclude>
-    <ClInclude Include="hal\include\DigitalOut.h">
-      <Filter>kabuki\hal</Filter>
+    <ClInclude Include="script\pro_files\a.h">
+      <Filter>kabuki\script\pro_files</Filter>
     </ClInclude>
-    <ClInclude Include="hal\include\DirHandle.h">
-      <Filter>kabuki\hal</Filter>
+    <ClInclude Include="script\pro_files\assembly.h">
+      <Filter>kabuki\script\pro_files</Filter>
     </ClInclude>
-    <ClInclude Include="hal\include\dma_api.h">
-      <Filter>kabuki\hal</Filter>
+    <ClInclude Include="this.h">
+      <Filter>kabuki</Filter>
     </ClInclude>
-    <ClInclude Include="hal\include\Ethernet.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\ethernet_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\FileBase.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\FileHandle.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\FileLike.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\FilePath.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\FileSystemLike.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\FunctionPointer.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\gpio_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\gpio_irq_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\I2C.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\i2c_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\I2CSlave.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\InterruptIn.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\InterruptManager.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\LocalFileSystem.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\LowPowerTicker.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\LowPowerTimeout.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\LowPowerTimer.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\lp_ticker_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\mbed.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\mbed_assert.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\mbed_debug.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\mbed_error.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\mbed_interface.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\mbed_mem_trace.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\mbed_stats.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\pinmap.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\platform.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\PlatformMutex.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\port_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\PortIn.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\PortInOut.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\PortOut.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\PwmOut.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\pwmout_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\RawSerial.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\rtc_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\rtc_time.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\semihost_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\Serial.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\serial_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\SerialBase.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\SingletonPtr.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\sleep_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\SPI.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\spi_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\SPISlave.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\storage_abstraction_Driver_Common.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\storage_abstraction_Driver_Storage.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\Stream.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\Ticker.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\ticker_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\Timeout.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\Timer.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\TimerEvent.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\toolchain.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\Transaction.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\us_ticker_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\wait_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\AnalogIn.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\analogin_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\AnalogOut.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\analogout_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\buffer.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\BusIn.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\BusInOut.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\BusOut.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\Callback.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\CallChain.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\CAN.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\can_api.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\can_helper.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\CircularBuffer.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal\include\critical.h">
-      <Filter>kabuki\hal</Filter>
-    </ClInclude>
-    <ClInclude Include="hal_mingw32\include\device.h">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClInclude>
-    <ClInclude Include="hal_mingw32\include\gpio_object.h">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClInclude>
-    <ClInclude Include="hal_mingw32\include\objects.h">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClInclude>
-    <ClInclude Include="hal_mingw32\include\PeripheralNames.h">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClInclude>
-    <ClInclude Include="hal_mingw32\include\PinNames.h">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClInclude>
-    <ClInclude Include="hal_mingw32\include\PortNames.h">
-      <Filter>kabuki\hal_win32</Filter>
+    <ClInclude Include="kabuki_toolkit.h">
+      <Filter>kabuki</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -544,213 +295,60 @@
     <ClCompile Include="script\impl\script_slot_out.cc">
       <Filter>kabuki\script</Filter>
     </ClCompile>
-    <ClCompile Include="script\tests\script_project.cc">
-      <Filter>kabuki\script\tests</Filter>
-    </ClCompile>
-    <ClCompile Include="script\tests\script_tester.cc">
-      <Filter>kabuki\script\tests</Filter>
-    </ClCompile>
-    <ClCompile Include="script\tests\script_tests.cc">
-      <Filter>kabuki\script\tests</Filter>
-    </ClCompile>
     <ClCompile Include="script\impl\script_table.cc">
-      <Filter>kabuki\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\impl\script_bout_portal.cc">
       <Filter>kabuki\script</Filter>
     </ClCompile>
     <ClCompile Include="serial\impl\serial_win32.cc">
       <Filter>kabuki\serial</Filter>
     </ClCompile>
-    <ClCompile Include="serial\impl\list_ports_win32.cc">
-      <Filter>kabuki\serial</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_pinmap_common.c">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_rtc_time.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_semihost_api.c">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_ticker_api.c">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_us_ticker_api.c">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_wait_api_no_rtos.c">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_wait_api_rtos.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\RawSerial.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\retarget.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\Serial.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\SerialBase.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\SPI.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\SPISlave.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\Stream.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\Ticker.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\Timeout.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\Timer.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\TimerEvent.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\AnalogIn.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\BusIn.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\BusInOut.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\BusOut.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\CallChain.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\CAN.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\Ethernet.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\FileBase.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\FileLike.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\FilePath.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\FileSystemLike.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\I2C.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\I2CSlave.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\InterruptIn.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\InterruptManager.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\LocalFileSystem.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_alloc_wrappers.cc">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_assert.c">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_board.c">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_critical.c">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_error.c">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_gpio.c">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_interface.c">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_lp_ticker_api.c">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal\impl\mbed_mem_trace.c">
-      <Filter>kabuki\hal</Filter>
-    </ClCompile>
-    <ClCompile Include="hal_mingw32\include\analogin_api.c">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClCompile>
-    <ClCompile Include="hal_mingw32\include\analogout_api.c">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClCompile>
-    <ClCompile Include="hal_mingw32\include\can_api.c">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClCompile>
-    <ClCompile Include="hal_mingw32\include\ethernet_api.c">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClCompile>
-    <ClCompile Include="hal_mingw32\include\gpio_api.c">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClCompile>
-    <ClCompile Include="hal_mingw32\include\gpio_irq_api.c">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClCompile>
-    <ClCompile Include="hal_mingw32\include\i2c_api.c">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClCompile>
-    <ClCompile Include="hal_mingw32\include\pinmap.c">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClCompile>
-    <ClCompile Include="hal_mingw32\include\port_api.c">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClCompile>
-    <ClCompile Include="hal_mingw32\include\pwmout_api.c">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClCompile>
-    <ClCompile Include="hal_mingw32\include\rtc_api.c">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClCompile>
-    <ClCompile Include="hal_mingw32\include\serial_api.c">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClCompile>
-    <ClCompile Include="hal_mingw32\include\spi_api.c">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClCompile>
-    <ClCompile Include="hal_mingw32\include\us_ticker.c">
-      <Filter>kabuki\hal_win32</Filter>
-    </ClCompile>
     <ClCompile Include="serial\impl\serial_serial.cc">
       <Filter>kabuki\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_window.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="serial\impl\serial_unix.cc">
+      <Filter>kabuki\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="serial\impl\serial_list_ports_linux.cc">
+      <Filter>kabuki\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="serial\impl\serial_list_ports_osx.cc">
+      <Filter>kabuki\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="serial\impl\serial_list_ports_win32.cc">
+      <Filter>kabuki\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="script\pro_files\script_project.cc">
+      <Filter>kabuki\script\pro_files</Filter>
+    </ClCompile>
+    <ClCompile Include="script\pro_files\script_tester.cc">
+      <Filter>kabuki\script\pro_files</Filter>
+    </ClCompile>
+    <ClCompile Include="script\pro_files\script_tests.cc">
+      <Filter>kabuki\script\pro_files</Filter>
+    </ClCompile>
+    <ClCompile Include="pro_files\kabuki_tester.cc">
+      <Filter>kabuki\pro_files</Filter>
+    </ClCompile>
+    <ClCompile Include="pro_files\kabuki_tests.cc">
+      <Filter>kabuki\pro_files</Filter>
+    </ClCompile>
+    <ClCompile Include="pro_files\kabuki_project.cc">
+      <Filter>kabuki\pro_files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="script\include\module_config.in">
       <Filter>kabuki\script</Filter>
     </None>
-    <None Include="script\tests\readme.md">
-      <Filter>kabuki\script\tests</Filter>
+    <None Include="script\pro_files\readme.md">
+      <Filter>kabuki\script\pro_files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="script\tests\CMakeList.txt">
-      <Filter>kabuki\script\tests</Filter>
+    <Text Include="script\pro_files\CMakeList.txt">
+      <Filter>kabuki\script\pro_files</Filter>
     </Text>
   </ItemGroup>
 </Project>

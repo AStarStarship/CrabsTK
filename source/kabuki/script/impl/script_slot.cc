@@ -106,14 +106,14 @@ const Operation* SlotResult (Slot* bin, Bout::Error error,
 
 const Operation* SlotResult (Slot* bin, Bin::Error error,
                                     const uint_t* header,
-                                    byte offset,
+                                    uint_t offset,
                                     byte* address) {
     return 0;
 }
 
 const Operation* SlotResult (Slot* bin, Bout::Error error,
                                     const uint_t* header,
-                                    byte offset,
+                                    uint_t offset,
                                     byte* address)
 {
     return 0;

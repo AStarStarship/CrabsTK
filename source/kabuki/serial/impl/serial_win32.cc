@@ -1,10 +1,18 @@
+/** kabuki::serial
+    @file    ~/serial.cc
+    @author  William Woodal <wjwwood@gmail.com> and 
+             Craig Lilley <cralilley@gmail.com>
+    @license Copyright 2012 William Woodall and John Harrison
+             This software is made available under the terms of the MIT license.
+             A copy of the license YOU MUST READ can be obtained from 
+             http://opensource.org/licenses/MIT
+*/
+
+#pragma once
+#include <stdafx.h>
 #if defined(_WIN32)
 
-/* Copyright 2012 William Woodall and John Harrison */
-
-#include <sstream>
-
-#include "../include/include_win32.h"
+#include "../include/serial_win32.h"
 
 using std::string;
 using std::wstring;

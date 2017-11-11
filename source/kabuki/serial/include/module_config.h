@@ -1,8 +1,8 @@
-/** Kabuki Toolkit: Chinese Room
+/** kabuki::serial
     @version 0.x
-    @file    ~/kabuki/source/chinese_room/include/a.h
+    @file    ~/source/kabuki/serial/include/module_config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -14,25 +14,12 @@
              permissions and limitations under the License.
 */
 
-#ifndef CHINESE_ROOM_A_H
-#define CHINESE_ROOM_A_H
+#pragma once
+#include <stdafx.h>
 
-#include "chinese_room/include/room.h"
+#ifndef KABUKI_SERIAL_MODULE_CONFIG_H
+#define KABUKI_SERIAL_MODULE_CONFIG_H
 
-namespace _ {
+#include "../../script/include/module_all.h"
 
-/** Default empty room.
-    
-*/
-struct A: public Room {
-    public:
-
-    A ():
-        A (1024)
-    {
-
-    }
-};
-
-}       //< namespace _
-#endif  //< CHINESE_ROOM_A_H
+#endif  //< KABUKI_SERIAL_MODULE_CONFIG_H

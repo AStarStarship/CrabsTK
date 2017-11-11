@@ -29,7 +29,7 @@ extern "C" {
 typedef struct pwmout_s pwmout_t;
 
 /**
- * \defgroup hal_pwmout Pwmout hal functions
+ * @defgroup hal_pwmout Pwmout hal functions
  * @{
  */
 

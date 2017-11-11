@@ -1,10 +1,10 @@
-/** Serial Communication Library
-    @file    ~/list_ports_win.cpp
+/** kabuki::serial
+    @file    ~/list_ports_win.cc
     @author  Craig Lilley <cralilley@gmail.com>
     @license Copyright (c) 2014 Craig Lilley <cralilley@gmail.com>
              This software is made available under the terms of the MIT license.
              A copy of the license can be obtained from:
-                    http://opensource.org/licenses/MIT
+             http://opensource.org/licenses/MIT
 */
 
 #include <stdafx.h>
@@ -24,7 +24,7 @@ static const DWORD hardware_id_max_length   = 256;
 // Convert a wide Unicode string to an UTF8 string
 std::string utf8_encode (const std::wstring &wstr) {
     int size_needed = WideCharToMultiByte (CP_UTF8, 0, &wstr[0],
-                                           (int)wstr.size (), nullptr, 0,
+        (int)wstr.size (), nullptr, 0,
                                            nullptr, nullptr);
     std::string strTo (size_needed, 0);
     WideCharToMultiByte (CP_UTF8, 0, &wstr[0], (int)wstr.size (), &strTo[0],
@@ -88,13 +88,13 @@ vector<PortInfo> serial::list_ports () {
         DWORD friendly_name_actual_length = 0;
 
         BOOL got_friendly_name = SetupDiGetDeviceRegistryProperty (
-             device_info_set,
-             &device_info_data,
-             SPDRP_FRIENDLYNAME,
-             nullptr,
-             (PBYTE)friendly_name,
-             friendly_name_max_length,
-             &friendly_name_actual_length);
+            device_info_set,
+            &device_info_data,
+            SPDRP_FRIENDLYNAME,
+            nullptr,
+            (PBYTE)friendly_name,
+            friendly_name_max_length,
+            &friendly_name_actual_length);
 
         if (got_friendly_name == TRUE && friendly_name_actual_length > 0)
             friendly_name[friendly_name_actual_length - 1] = '\0';
@@ -107,13 +107,13 @@ vector<PortInfo> serial::list_ports () {
         DWORD hardware_id_actual_length = 0;
 
         BOOL got_hardware_id = SetupDiGetDeviceRegistryProperty (
-             device_info_set,
-             &device_info_data,
-             SPDRP_HARDWAREID,
-             nullptr,
-             (PBYTE)hardware_id,
-             hardware_id_max_length,
-             &hardware_id_actual_length);
+            device_info_set,
+            &device_info_data,
+            SPDRP_HARDWAREID,
+            nullptr,
+            (PBYTE)hardware_id,
+            hardware_id_max_length,
+            &hardware_id_actual_length);
 
         if (got_hardware_id == TRUE && hardware_id_actual_length > 0)
             hardware_id[hardware_id_actual_length - 1] = '\0';

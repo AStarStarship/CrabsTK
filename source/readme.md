@@ -1,6 +1,6 @@
-# ~/kabuki-toolkit/source
+# ~/kabuki-toolkit/source/
 
-This folder contains the Kabuki Toolkit source code, and a Visual Studio 2017 Project, Eclipse Project, and CMake project all in one folder. When including Kabuki Toolkit in your projects, you don't need to include any Visual Studio projects, just the .lib, .a, .dll, etc file and #include the header file.
+This folder contains the Kabuki Toolkit source code, a Visual Studio 2017 Project (kabuki_toolkit.sln), Eclipse Project (this folder), CMake Project (CMakeLists.txt), and [StarUML Diagrams](http://staruml.io/) (kabuki_toolkit.mdj). When including Kabuki Toolkit in your projects, you don't need to include any Visual Studio projects, just the .lib/.a/.dll/etc file built with the CMaake file and #include the header file. The Visual Studio project is only for development.
 
 ## Author
 

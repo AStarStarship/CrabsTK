@@ -152,13 +152,20 @@ struct KABUKI Operand {
 };
 
 /** Converts the value to a pointer. */
-KABUKI const uint_t* NumOperations (std::uintptr_t value);
+inline const uint_t* NumOperations (std::uintptr_t value) {
+    return reinterpret_cast<const uint_t*> (value);
+}
+
+/** Converts the value to a pointer. */
+inline std::uintptr_t PointerValue (const uint_t* value) {
+    return reinterpret_cast<std::uintptr_t> (value);
+}
 
 /** Converts the given value to a pointer. */
-KABUKI const uint_t* FirstOperation (uint_t value);
-
-/** Returns the number of members an Star has. */
-KABUKI char_t index (const void* ptr);
+inline const uint_t* FirstOperation (uint_t value) {
+    uintptr_t index = value;
+    return reinterpret_cast<const uint_t*>(index);
+}
 
 /** Returns the number of members a Star has. */
 KABUKI uintptr_t CountCoperations (const Operation* op);

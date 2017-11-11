@@ -97,13 +97,13 @@ const Operation* BinResult (Bin* bin, Bin::Error error, const uint_t* header) {
 }
 
 const Operation* BinResult (Bin* bin, Bin::Error error, const uint_t* header,
-                            byte offset) {
+                            uint_t offset) {
     std::cout << "\nBin " << BinErrorString (error) << " Error!\n";
     return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* BinResult (Bin* bin, Bin::Error error, const uint_t* header,
-                            byte offset, byte* address) {
+                            uint_t offset, byte* address) {
     std::cout << "\nBin " << BinErrorString (error) << " Error!\n";
     return reinterpret_cast<const Operation*> (1);
 }
@@ -201,7 +201,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
         return BinResult (bin, Bin::RoomError);
     if (args == nullptr)
         return BinResult (bin, Bin::RoomError);
-    byte     type,                  //< The current type being read.
+    byte     //array_type,            //< The current type being read.
              ui1;                   //< Temp variable.
     uint16_t ui2;                   //< Temp variable.
 #if USING_VARINT4 || USING_AR4 || USING_BK4
@@ -221,7 +221,8 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #if USING_VARINT8 || USING_AR8 || USING_BK8
     uint64_t* ui8_ptr;              //< Pointer to a UI1.
 #endif
-    uint_t size,                    //< Size of the ring buffer.
+    uint_t type,                    //< The current type being read.
+           size,                    //< Size of the ring buffer.
            length,                  //< Length of the data in the buffer.
            count,                   //< Argument length.
            index,                   //< Index in the params.
@@ -748,6 +749,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                         if (length < 2) // 2 byte for the width word.
                             return BinResult (bin, Bin::BufferUnderflowError,
                                               params, index, start);
+                        length -= 2;
                         ui2_ptr = reinterpret_cast<uint16_t*> 
                                     (args[arg_index]);
                         if (ui2_ptr == nullptr)
@@ -760,10 +762,10 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                             hash = Hash16 (ui1, hash);
                             ui2 |= ((uint16_t)ui1) << temp;
                         }
-                        if (ui2 > length - 2)
+                        if (ui2 > length)
                             return BinResult (bin, Bin::BufferOverflowError,
                                               params, index, start);
-                        length = length - count - 2;
+                        length -= count;
                         count = (uintptr_t)ui2;
                         ui1_ptr = reinterpret_cast<byte*> (ui2_ptr);
                         break;
@@ -773,6 +775,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                         if (length < 4) // 4 byte for the width word.
                             return BinResult (bin, Bin::BufferUnderflowError,
                                               params, index, start);
+                        length -= 4;
                         ui4_ptr = reinterpret_cast<uint32_t*> (args[arg_index]);
                         if (ui4_ptr == nullptr)
                             return BinResult (bin, Bin::RoomError, params,
@@ -784,19 +787,20 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                             hash = Hash16 (ui1, hash);
                             ui4 |= ((uint32_t)ui1) << temp;
                         }
-                        if (ui4 >= length - 4)
+                        if (ui4 >= length)
                             return BinResult (bin, Bin::BufferOverflowError,
                                               params, index, start);
-                        length = length - count - 5;
+                        length -= count;
                         count = (uintptr_t)ui4;
                         ui1_ptr = reinterpret_cast<byte*> (ui4_ptr);
                         break;
                     }
                     case 3: // 8 byte for the width word.
                     {
-                        if (length < 8)
+                        if (length < 9)
                             return BinResult (bin, Bin::BufferUnderflowError,
                                               params, index, start);
+                        length -= 8;
                         ui8_ptr = reinterpret_cast<uint64_t*> (args[arg_index]);
                         if (ui8_ptr == nullptr)
                             return BinResult (bin, Bin::RoomError, params,
@@ -808,10 +812,10 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                             hash = Hash16 (ui1, hash);
                             ui8 |= ((uint64_t)ui1) << temp;
                         }
-                        if (ui8 > length - 8)
+                        if (ui8 > length)
                             return BinResult (bin, Bin::BufferOverflowError,
                                               params, index, start);
-                        length = length - count - 8;
+                        length -= count;
                         count = (uintptr_t)ui8;
                         ui1_ptr = reinterpret_cast<byte*> (ui8_ptr);
                         break;

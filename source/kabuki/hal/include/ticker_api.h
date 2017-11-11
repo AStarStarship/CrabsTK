@@ -60,7 +60,7 @@ extern "C" {
 #endif
 
 /**
- * \defgroup hal_ticker Ticker HAL functions
+ * @defgroup hal_ticker Ticker HAL functions
  * @{
  */
 

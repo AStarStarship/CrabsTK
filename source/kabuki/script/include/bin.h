@@ -66,11 +66,11 @@ struct KABUKI Bin {
     /** List of Finite Bin States.
         @see Script Protocol RFC for list of states. */
     typedef enum States {
-        ScanningAddressState = 0,   //< State 0: Scanning address.
+        AddressState = 0,   //< State 0: Scanning address.
         ScanningArgsState,          //< State 1: Scanning arguments.
-        ScanningStringState,        //< State 2: Scanning STR.
-        ScanningVarintState,        //< State 3: Scanning varint.
-        ScanningPodState,           //< State 4: Scanning plain-old-data.
+        StringState,        //< State 2: Scanning STR.
+        VarintState,        //< State 3: Scanning varint.
+        PodState,           //< State 4: Scanning plain-old-data.
         ScanningHashState,          //< State 5: Stand the 32-bit hash.
         HandlingErrorState,         //< State 6: Handling an error state.
         LockedState,                //< State N: Locked state.
@@ -113,7 +113,7 @@ KABUKI const Operation* BinResult (Bin* bin, Bin::Error error,
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* BinResult (Bin* bin, Bin::Error error,
                                    const uint_t* header,
-                                   byte offset);
+                                   uint_t offset);
 
 /** Used to return an erroneous result from a B-Input.
     @param  bin     The source Bin.
@@ -124,7 +124,7 @@ KABUKI const Operation* BinResult (Bin* bin, Bin::Error error,
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* BinResult (Bin* bin, Bin::Error error,
                                    const uint_t* header,
-                                   byte offset,
+                                   uint_t offset,
                                    byte* address);
 
 /** Initializes the Bin struct KABUKI to an empty buffer. */

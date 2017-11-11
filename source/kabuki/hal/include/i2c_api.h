@@ -39,7 +39,7 @@
 /**@}*/
 
 #if DEVICE_I2C_ASYNCH
-/** Asynch I2C HAL structure
+/** Async I2C HAL structure
  */
 typedef struct {
     struct i2c_s    i2c;     /**< Target specific I2C structure */
@@ -48,7 +48,7 @@ typedef struct {
 } i2c_t;
 
 #else
-/** Non-asynch I2C HAL structure
+/** Non-async I2C HAL structure
  */
 typedef struct i2c_s i2c_t;
 
@@ -64,12 +64,12 @@ extern "C" {
 #endif
 
 /**
- * \defgroup hal_GeneralI2C I2C Configuration Functions
+ * @defgroup hal_GeneralI2C I2C Configuration Functions
  * @{
  */
 
 /** Initialize the I2C peripheral. It sets the default parameters for I2C
- *  peripheral, and configures its specifieds pins.
+ *  peripheral, and configures its specified pins.
  *  
  *  @param obj  The I2C object
  *  @param sda  The sda pin
@@ -127,7 +127,7 @@ void i2c_reset(i2c_t *obj);
 /** Read one byte
  *
  *  @param obj The I2C object
- *  @param last Acknoledge
+ *  @param last Acknowledge
  *  @return The read byte
  */
 int i2c_byte_read(i2c_t *obj, int last);
@@ -145,7 +145,7 @@ int i2c_byte_write(i2c_t *obj, int data);
 #if DEVICE_I2CSLAVE
 
 /**
- * \defgroup SynchI2C Synchronous I2C Hardware Abstraction Layer for slave
+ * @defgroup SynchI2C Synchronous I2C Hardware Abstraction Layer for slave
  * @{
  */
 
@@ -189,7 +189,7 @@ void i2c_slave_address(i2c_t *obj, int idx, uint32_t address, uint32_t mask);
 #if DEVICE_I2C_ASYNCH
 
 /**
- * \defgroup hal_AsynchI2C Asynchronous I2C Hardware Abstraction Layer
+ * @defgroup hal_AsynchI2C Asynchronous I2C Hardware Abstraction Layer
  * @{
  */
 

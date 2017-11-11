@@ -27,7 +27,7 @@ extern "C" {
 #endif
 
 /**
- * \defgroup hal_rtc RTC hal functions
+ * @defgroup hal_rtc RTC hal functions
  * @{
  */
 

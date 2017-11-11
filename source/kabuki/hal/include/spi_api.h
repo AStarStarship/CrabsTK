@@ -52,7 +52,7 @@ extern "C" {
 #endif
 
 /**
- * \defgroup hal_GeneralSPI SPI Configuration Functions
+ * @defgroup hal_GeneralSPI SPI Configuration Functions
  * @{
  */
 
@@ -101,7 +101,7 @@ void spi_frequency(spi_t *obj, int hz);
 
 /**@}*/
 /**
- * \defgroup SynchSPI Synchronous SPI Hardware Abstraction Layer
+ * @defgroup SynchSPI Synchronous SPI Hardware Abstraction Layer
  * @{
  */
 
@@ -154,7 +154,7 @@ uint8_t spi_get_module(spi_t *obj);
 
 #if DEVICE_SPI_ASYNCH
 /**
- * \defgroup AsynchSPI Asynchronous SPI Hardware Abstraction Layer
+ * @defgroup AsynchSPI Asynchronous SPI Hardware Abstraction Layer
  * @{
  */
 

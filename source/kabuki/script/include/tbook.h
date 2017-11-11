@@ -179,7 +179,7 @@ enum {
     kOverheadPerBook4Index = BookOverheadPerIndex<uint16_t, uint16_t, uint32_t> (),
     kOverheadPerBook8Index = BookOverheadPerIndex<uint32_t, uint32_t, uint64_t> (),
 };
-    
+
 /** Initializes a Book.
     @post    Users might want to call the IsValid () function after construction
              to verify the integrity of the object.
@@ -647,7 +647,7 @@ TIndex BookFind (Book<TIndex, TKey, TData>* book, const char* key) {
     return ~((TIndex)0);
 }
 
-int8_t Book2Find (Book2* book, const char* key) {
+inline int8_t Book2Find (Book2* book, const char* key) {
 
     return BookFind<int8_t, uint16_t, uint16_t> (book, key);
 }

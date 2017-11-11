@@ -29,7 +29,7 @@ extern "C" {
 typedef struct analogin_s analogin_t;
 
 /**
- * \defgroup hal_analogin Analogin hal functions
+ * @defgroup hal_analogin Analogin hal functions
  * @{
  */
 

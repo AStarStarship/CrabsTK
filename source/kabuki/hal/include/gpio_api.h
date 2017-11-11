@@ -24,7 +24,7 @@ extern "C" {
 #endif
 
 /**
- * \defgroup hal_gpio GPIO HAL functions
+ * @defgroup hal_gpio GPIO HAL functions
  * @{
  */
 

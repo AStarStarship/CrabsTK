@@ -1,35 +1,37 @@
-/** Serial Communication Library
-    @file    ~/_serial/serial.h
-    @author  William Woodall <wjwwood@gmail.com>
-    @author  John Harrison   <ash.gti@gmail.com>
-    @version 0.1
-    @license Copyright (c) 2012 William Woodall
-                                    The MIT License
-             Permission is hereby granted, free of charge, to any person obtaining a
-             copy of this software and associated documentation files (the "Software"),
-             to deal in the Software without restriction, including without limitation
-             the rights to use, copy, modify, merge, publish, distribute, sublicense,
-             and/or sell copies of the Software, and to permit persons to whom the
-             Software is furnished to do so, subject to the following conditions:
+/** kabuki::serial
+@file    ~/_serial/serial.h
+@author  William Woodall <wjwwood@gmail.com>
+@author  John Harrison   <ash.gti@gmail.com>
+@version 0.1
+@license Copyright (c) 2012 William Woodall
+The MIT License
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
 
-             The above copyright notice and this permission notice shall be included in
-             all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
-             THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-             IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-             FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-             AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-             LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-             FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-             DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
 
-    @section DESCRIPTION
-    This provides a cross platform interface for interacting with Serial Ports.
+@section DESCRIPTION
+This provides a cross platform interface for interacting with Serial Ports.
 */
 
-#ifndef KABUKI_THEATER_SERIAL_H
-#define KABUKI_THEATER_SERIAL_H
+#ifndef KABUKI_SERIAL_SERIAL_H
+#define KABUKI_SERIAL_SERIAL_H
 
+#include <stdafx.h>
+#include "module_config.h"
 
 #define THROW(exceptionClass, message) throw exceptionClass(__FILE__, \
 __LINE__, (message) )
@@ -70,18 +72,19 @@ typedef enum {
 } flowcontrol_t;
 
 /** Structure for setting the timeout of the serial port, times are
-    in milliseconds.
-    In order to disable the interbyte timeout, set it to Timeout::max(). */
+in milliseconds.
+In order to disable the interbyte timeout, set it to Timeout::max(). */
 struct Timeout {
 #ifdef max
-    #undef max
+#undef max
 #endif
     static uint32_t max () { return std::numeric_limits<uint32_t>::max (); }
     /** Convenience function to generate Timeout structs using a
         single absolute timeout.
         @param  timeout A long that defines the time in milliseconds until a
-                        timeout occurs after a call to read or write is made.
+        timeout occurs after a call to read or write is made.
         @return Timeout struct that represents this simple timeout provided. */
+
     static Timeout simpleTimeout (uint32_t timeout) {
         return Timeout (max (), timeout, 0, timeout, 0);
     }
@@ -92,61 +95,63 @@ struct Timeout {
     /** A constant number of milliseconds to wait after calling read. */
     uint32_t read_timeout_constant;
 
-    /** A multiplier against the number of requested bytes to wait after 
-        calling read. */
+    /** A multiplier against the number of requested bytes to wait after
+    calling read. */
     uint32_t read_timeout_multiplier;
 
     /** A constant number of milliseconds to wait after calling write. */
     uint32_t write_timeout_constant;
 
     /** A multiplier against the number of requested bytes to wait after
-        calling write. */
+    calling write. */
     uint32_t write_timeout_multiplier;
 
-    explicit Timeout (uint32_t inter_byte_timeout_       = 0,
-                      uint32_t read_timeout_constant_    = 0,
-                      uint32_t read_timeout_multiplier_  = 0,
-                      uint32_t write_timeout_constant_   = 0,
-                      uint32_t write_timeout_multiplier_ = 0):
+    explicit Timeout (uint32_t inter_byte_timeout_ = 0,
+                      uint32_t read_timeout_constant_ = 0,
+                      uint32_t read_timeout_multiplier_ = 0,
+                      uint32_t write_timeout_constant_ = 0,
+                      uint32_t write_timeout_multiplier_ = 0) :
         inter_byte_timeout (inter_byte_timeout_),
         read_timeout_constant (read_timeout_constant_),
         read_timeout_multiplier (read_timeout_multiplier_),
         write_timeout_constant (write_timeout_constant_),
-        write_timeout_multiplier (write_timeout_multiplier_) { }
+        write_timeout_multiplier (write_timeout_multiplier_) {
+    }
 };
 
 /** Class that provides a portable serial port interface. */
-class Serial
-{
+class Serial {
     public:
     /** Creates a Serial object and opens the port if a port is specified,
         otherwise it remains closed until serial::Serial::open is called.
         @param port A std::string containing the address of the serial port,
-                    which would be something like 'COM1' on Windows and 
-                    '/dev/ttyS0' on Linux.
+        which would be something like 'COM1' on Windows and
+        '/dev/ttyS0' on Linux.
         @param baudrate An unsigned 32-bit integer that represents the baud-rate
-        @param timeout A serial::Timeout struct that defines the timeout
-        conditions for the serial port. @see serial::Timeout
+        @param timeout  A serial::Timeout struct that defines the timeout
+                        conditions for the serial port. @see serial::Timeout
         @param bytesize Size of each byte in the serial transmission of data,
-                        default is eightbits, possible values are: fivebits, 
+                        default is eightbits, possible values are: fivebits,
                         sixbits, sevenbits, eightbits
-        @param parity Method of parity, default is parity_none, possible values
-        are: parity_none, parity_odd, parity_even
+        @param parity   Method of parity, default is parity_none, possible 
+                        values are: parity_none, parity_odd, parity_even
         @param stopbits Number of stop bits used, default is stopbits_one,
-        possible values are: stopbits_one, stopbits_one_point_five, stopbits_two
+                        possible values are: stopbits_one,
+                        stopbits_one_point_five, stopbits_two
         @param flowcontrol Type of flowcontrol used, default is
-                           flowcontrol_none, possible values are: flowcontrol_none,
-                           flowcontrol_software, flowcontrol_hardware
+                           flowcontrol_none, possible values are: 
+                           flowcontrol_none, flowcontrol_software, 
+                           flowcontrol_hardware
         @throw serial::PortNotOpenedException
         @throw serial::IOException
         @throw std::invalid_argument
     */
-    Serial (const std::string &port        = "",
-            uint32_t           baudrate    = 9600,
-            Timeout            timeout     = Timeout (),
-            bytesize_t         bytesize    = eightbits,
-            parity_t           parity      = parity_none,
-            stopbits_t         stopbits    = stopbits_one,
+    Serial (const std::string &port = "",
+            uint32_t           baudrate = 9600,
+            Timeout            timeout = Timeout (),
+            bytesize_t         bytesize = eightbits,
+            parity_t           parity = parity_none,
+            stopbits_t         stopbits = stopbits_one,
             flowcontrol_t      flowcontrol = flowcontrol_none);
 
     /** Destructor */
@@ -228,12 +233,12 @@ class Serial
     size_t read (std::vector<uint8_t> &buffer, size_t size = 1);
 
     /** Read a given amount of bytes from the serial port into a give buffer.
-        @param buffer A reference to a std::string.
-        @param size A size_t defining how many bytes to be read.
+        @param  buffer A reference to a std::string.
+        @param  size A size_t defining how many bytes to be read.
         @return A size_t representing the number of bytes read as a result of the
-                call to read.
-        @throw serial::PortNotOpenedException
-        @throw serial::SerialException
+        c       all to read.
+        @throw  serial::PortNotOpenedException
+        @throw  serial::SerialException
     */
     size_t read (std::string &buffer, size_t size = 1);
 
@@ -257,7 +262,7 @@ class Serial
     */
     size_t readline (std::string &buffer, size_t size = 65536, std::string eol = "\n");
 
-    /** Reads in a line or until a given delimiter has been processed.       
+    /** Reads in a line or until a given delimiter has been processed.
         Reads from the serial port until a single line has been read.
         @param size A maximum length of a line, defaults to 65536 (2^16)
         @param eol A string to match against for the EOL.
@@ -534,9 +539,12 @@ class Serial
     bool getCD ();
 
     private:
+
     // Disable copy constructors
-    Serial (const Serial&);
-    Serial& operator=(const Serial&);
+    Serial (const Serial&) = delete;
+    Serial& operator=(const Serial&) = delete;
+    //Serial (const Serial&);
+    //Serial& operator=(const Serial&);
 
     // Pimpl idiom, d_pointer
     class SerialImpl;
@@ -563,8 +571,8 @@ class SerialException : public std::exception {
         ss << "SerialException " << description << " failed.";
         e_what_ = ss.str ();
     }
-    SerialException (const SerialException& other): e_what_ (other.e_what_) { }
-    virtual ~SerialException () throw() { }
+    SerialException (const SerialException& other) : e_what_ (other.e_what_) {}
+    virtual ~SerialException () throw() {}
     virtual const char* what () const throw () {
         return e_what_.c_str ();
     }
@@ -572,7 +580,8 @@ class SerialException : public std::exception {
     private:
 
     // Disable copy constructors
-    SerialException& operator=(const SerialException&);
+    //SerialException& operator=(const SerialException&);
+    SerialException& operator=(const SerialException&) = delete;
     std::string e_what_;
 };
 
@@ -599,8 +608,8 @@ class IOException : public std::exception {
         ss << ", file " << file_ << ", line " << line_ << ".";
         e_what_ = ss.str ();
     }
-    virtual ~IOException () throw() { }
-    IOException (const IOException& other): line_ (other.line_), e_what_ (other.e_what_), errno_ (other.errno_) { }
+    virtual ~IOException () throw() {}
+    IOException (const IOException& other) : line_ (other.line_), e_what_ (other.e_what_), errno_ (other.errno_) {}
 
     int getErrorNumber () { return errno_; }
 
@@ -611,28 +620,41 @@ class IOException : public std::exception {
     private:
 
     // Disable copy constructors
-    IOException& operator=(const IOException&);
+    //IOException& operator=(const IOException&);
+    IOException& operator=(const IOException&) = delete;
     std::string file_;
     int line_;
     std::string e_what_;
     int errno_;
 };
 
+#define NONCOPYABLE2 (ClassName)\
+  ClassName (const ClassName&)      = delete;\
+  void operator= (const ClassName&) = delete;\
+  ClassName () = default
 class PortNotOpenedException : public std::exception {
-    // Disable copy constructors
-    const PortNotOpenedException& operator=(PortNotOpenedException);
-    std::string e_what_;
+
     public:
+
     PortNotOpenedException (const char * description) {
         std::stringstream ss;
         ss << "PortNotOpenedException " << description << " failed.";
         e_what_ = ss.str ();
     }
-    PortNotOpenedException (const PortNotOpenedException& other): e_what_ (other.e_what_) { }
-    virtual ~PortNotOpenedException () throw() { }
+
+    PortNotOpenedException (const PortNotOpenedException& other) : e_what_ (other.e_what_) {}
+    virtual ~PortNotOpenedException () throw() {}
     virtual const char* what () const throw () {
         return e_what_.c_str ();
     }
+
+    private:
+
+    // Disable copy constructors
+    //const PortNotOpenedException& operator=(PortNotOpenedException);
+    const PortNotOpenedException& operator=(PortNotOpenedException) = delete;
+
+    std::string e_what_;
 };
 
 /**
@@ -660,6 +682,5 @@ struct PortInfo {
 */
 std::vector<PortInfo> list_ports ();
 
-} // namespace serial
-
-#endif
+}       //< namespace serial
+#endif  //< KABUKI_SERIAL_SERIAL_H

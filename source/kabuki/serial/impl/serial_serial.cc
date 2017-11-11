@@ -1,5 +1,5 @@
-/** Serial Communication Library
-    @file    ~/serial.cpp
+/** kabuki::serial
+    @file    ~/serial.cc
     @author  Craig Lilley <cralilley@gmail.com>
     @license Copyright 2012 William Woodall and John Harrison
              This software is made available under the terms of the MIT license.
@@ -17,12 +17,12 @@
 # define alloca __builtin_alloca
 #endif
 
-#include <_serial/serial.h>
+#include "../include/serial.h"
 
 #ifdef _WIN32
-#include <_serial/win.h>
+#include "../include/serial_win32.h"
 #else
-#include <_serial/unix.h>
+#include "../include/serial_unix.h"
 #endif
 
 using std::invalid_argument;
@@ -163,7 +163,7 @@ Serial::readline (string &buffer, size_t size, string eol) {
         size_t bytes_read = this->read_ (buffer_ + read_so_far, 1);
         read_so_far += bytes_read;
         if (bytes_read == 0) {
-            break; // Timeout occured on reading 1 byte
+            break; // Timeout occurred on reading 1 byte
         }
         if (string (reinterpret_cast<const char*>
             (buffer_ + read_so_far - eol_len), eol_len) == eol) {
@@ -202,7 +202,7 @@ Serial::readlines (size_t size, string eol) {
                     string (reinterpret_cast<const char*> (buffer_ + start_of_line),
                             read_so_far - start_of_line));
             }
-            break; // Timeout occured on reading 1 byte
+            break; // Timeout occurred on reading 1 byte
         }
         if (string (reinterpret_cast<const char*>
             (buffer_ + read_so_far - eol_len), eol_len) == eol) {

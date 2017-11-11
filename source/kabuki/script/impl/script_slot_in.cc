@@ -33,7 +33,7 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
         return SlotResult (slot, Bin::RoomError);
     Bin* bin = reinterpret_cast<Bin*> (slot);
 
-    byte type,                  //< The current type we're reading.
+    byte //array_type,            //< The current array type.
         ui1;                    //< Temp variable to load most types.
     uint16_t ui2;               //< Temp variable for working with UI2 types.
 #if USING_VARINT4 || USING_AR4 || USING_BK4
@@ -53,13 +53,14 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
 #if USING_VARINT8 || USING_AR8 || USING_BK8
     uint64_t* ui8_ptr;          //< Pointer to a UI1.
 #endif
-    uint_t size,                //< The size of the ring buffer.
+    uint_t type,                //< The current type being read.
+        size,                   //< The size of the ring buffer.
         length,                 //< The length of the data in the buffer.
         index,                  //< The index in the escape sequence.
         num_params = *params;   //< The number of params.
 
     uintptr_t offset,           //< The offset to word align the current type.
-        count;            //< The argument length.
+        count;                  //< The argument length.
 
     if (num_params == 0) {
 
@@ -90,7 +91,7 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
     // When we scan, we are reading from the beginning of the Bin buffer.
 
     for (index = 0; index < num_params; ++index) {
-        type = *param;
+        type = (byte)*param;
         ++param;
 #if DEBUG_SCRIPT
         printf ("\n| index %2u: %s  start: %u, stop: %u hash: ", index,
@@ -226,12 +227,12 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
                     length -= offset + 8;
                     start += offset;
                     if (start >= end) start -= size;    //< Bound
-                                                        // Read from buffer and write to the stack:
+                    // Read from buffer and write to the stack:
                     ui8_ptr = reinterpret_cast<uint64_t*>(start);
                     ui8 = *ui8_ptr;                     //< Read
                     start += sizeof (uint64_t);         //< Increment
                     if (start >= end) start -= size;    //< Bound
-                                                        // Load next pointer and increment args.
+                    // Load next pointer and increment args.
                     ui8_ptr = reinterpret_cast<uint64_t*> (args[index]);
                     if (ui8_ptr == 0) break;
                     *ui8_ptr = ui8;                     //< Write
@@ -261,8 +262,7 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
 #else
                 goto InvalidType;
 #endif
-            default:
-            {
+            default: {
                 count = type >> 5;  //< count is now the array type bits.
                 type &= 0x1f;       //< Now type is the type 0-31
                 if (count && (type >= OBJ)) {
@@ -278,36 +278,46 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
                     case 0: { // It's a 8-bit count.
                         if (type >= LST) {
                             // LST, BAG, BOK, and MAP cannot take a 8-bit count!
-                            return SlotResult (slot, Bin::InvalidTypeError, params, index, start);
+                            return SlotResult (slot, Bin::InvalidTypeError,
+                                               params, index, start);
                         }
                         count = (uintptr_t)*ui1_ptr;
                         break;
                     }
                     case 1: { // It's a 16-bit count.
                         if (length < 3)
-                            return SlotResult (slot, Bin::BufferUnderflowError, params, index, start);
+                            return SlotResult (slot, Bin::BufferUnderflowError,
+                                               params, index, start);
+                        count -= 2;
                         ui2_ptr = reinterpret_cast<uint16_t*> (ui1_ptr);
                         count = (uintptr_t)*ui2_ptr;
-                        if (count > length - 2)
-                            return SlotResult (slot, Bin::BufferOverflowError, params, index, start);
+                        if (count > length)
+                            return SlotResult (slot, Bin::BufferOverflowError,
+                                               params, index, start);
                         break;
                     }
                     case 2: { // It's a 32-bit count.
                         if (length < 5)
-                            return SlotResult (slot, Bin::BufferUnderflowError, params, index, start);
+                            return SlotResult (slot, Bin::BufferUnderflowError,
+                                               params, index, start);
+                        count -= 4;
                         ui4_ptr = reinterpret_cast<uint32_t*> (ui1_ptr);
                         count = (uintptr_t)*ui4_ptr;
-                        if (count > length - 4)
-                            return SlotResult (slot, Bin::BufferOverflowError, params, index, start);
+                        if (count > length)
+                            return SlotResult (slot, Bin::BufferOverflowError,
+                                               params, index, start);
                         break;
                     }
                     case 3: { // It's a 64-bit count.
                         if (length < 9)
-                            return SlotResult (slot, Bin::BufferUnderflowError, params, index, start);
+                            return SlotResult (slot, Bin::BufferUnderflowError,
+                                               params, index, start);
+                        count -= 8;
                         ui8_ptr = reinterpret_cast<uint64_t*> (ui1_ptr);
                         count = (uintptr_t)*ui8_ptr;
-                        if (count > length - 8)
-                            return SlotResult (slot, Bin::BufferOverflowError, params, index, start);
+                        if (count > length)
+                            return SlotResult (slot, Bin::BufferOverflowError,
+                                               params, index, start);
                         break;
                     }
                     default:
@@ -342,8 +352,7 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
                     ++ui1_ptr;
                 }
                 break;
-                InvalidType:
-                {
+                InvalidType: {
                     printf ("\n!!!Read invalid type %u\n", type);
                     return SlotResult (slot, Bin::InvalidTypeError, params, index, start);
                 }

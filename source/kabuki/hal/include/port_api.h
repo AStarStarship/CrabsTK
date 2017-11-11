@@ -29,7 +29,7 @@ extern "C" {
 typedef struct port_s port_t;
 
 /**
- * \defgroup hal_port Port HAL functions
+ * @defgroup hal_port Port HAL functions
  * @{
  */
 

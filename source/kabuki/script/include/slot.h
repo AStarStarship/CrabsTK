@@ -111,7 +111,7 @@ KABUKI const Operation* SlotResult (Slot* bin, Bin::Error error,
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* SlotResult (Slot* bin, Bout::Error error,
                                    const uint_t* header,
-                                   byte offset);
+                                   uint_t offset);
 
 /** Used to return an erroneous result from a B-Input.
     @param  bin     The source Slot.
@@ -122,7 +122,7 @@ KABUKI const Operation* SlotResult (Slot* bin, Bout::Error error,
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* SlotResult (Slot* bin, Bin::Error error,
                                    const uint_t* header,
-                                   byte offset,
+                                   uint_t offset,
                                    byte* address);
 
 /** Used to return an erroneous result from a B-Input.
@@ -134,7 +134,7 @@ KABUKI const Operation* SlotResult (Slot* bin, Bin::Error error,
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* SlotResult (Slot* bin, Bout::Error error,
                                    const uint_t* header,
-                                   byte offset,
+                                   uint_t offset,
                                    byte* address);
 }       //< namespace _
 #endif  //< SCRIPT_SLOT_H

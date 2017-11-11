@@ -3,14 +3,14 @@
     @file    ~/source/kabuki/script/include/module_config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version 
-             2.0 (the "License"); you may not use this file except in 
-             compliance with the License. You may obtain a copy of the License 
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             All right reserved (R). Licensed under the Apache License, Version
+             2.0 (the "License"); you may not use this file except in
+             compliance with the License. You may obtain a copy of the License
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
              required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
-             implied. See the License for the specific language governing 
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+             implied. See the License for the specific language governing
              permissions and limitations under the License.
 */
 
@@ -168,9 +168,9 @@ enum { NaNInt = sizeof (int) == 4 ? static_cast<int>(0xFFFFFFFF) :
 };
 
 
-typedef uint16_t hash16_t;                  //< Using unsigned 16-bit hash type.
-typedef uint32_t hash32_t;                  //< Using unsigned 32-bit hash type.
-typedef uint64_t hash64_t;                  //< Using unsigned 64-bit hash type.
+typedef uint16_t hash16_t;  //< Using unsigned 16-bit hash type.
+typedef uint32_t hash32_t;  //< Using unsigned 32-bit hash type.
+typedef uint64_t hash64_t;  //< Using unsigned 64-bit hash type.
 
 enum {
     kLargest16BitPrime  = 65521,            //< The largest 16-bit prime number.
@@ -185,49 +185,38 @@ static const char NewLineString[] = "\n\0"; //< A char with a single newline cha
 /** The level will more code creating a larger binary. Use one 
     underscore to use more memory, and two underscores to use even more. */
 #if MEMORY_PROFILE == 1
-typedef int8_t   int_t;                     //< Buffer signed index type.
-typedef uint8_t  uint_t;                    //< Buffer unsigned index type.
-typedef int16_t  dint_t;                    //< Buffer double-wide signed index type.
-typedef uint16_t duint_t;                   //< Buffer double-wide unsigned index type.
-typedef byte     index_t;                   //< The largest bit-depth bag index_t this system supports.
-typedef uint16_t header_t;                  //< The largest bit-depth bag header_t this system supports.
-typedef uint16_t data_t;                    //< The largest bit-depth bag data_t this system supports.
+typedef int8_t   int_t;     //< Buffer signed index type.
+typedef uint8_t  uint_t;    //< Buffer unsigned index type.
+typedef int16_t  dint_t;    //< Buffer double-wide signed index type.
+typedef uint16_t duint_t;   //< Buffer double-wide unsigned index type.
+typedef uint8_t  index_t;   //< Largest bit-depth bag index_t this system supports.
+typedef uint16_t header_t;  //< Largest bit-depth bag header_t this system supports.
+typedef uint16_t data_t;    //< Largest bit-depth bag data_t this system supports.
 
 namespace _ {
 enum {
-    kUnitSize = 1 << 6                      //< The size of unit.
+    kUnitSize = 1 << 6      //< The size of unit.
 };
 }
 
 #elif MEMORY_PROFILE == 2
-typedef int16_t  int_t;                     //< Buffer signed index type.
-typedef uint32_t uint_t;                    //< Buffer unsigned signed index type.
-typedef int16_t  dint_t;                    //< Buffer double-wide signed index type.
-typedef uint32_t duint_t;                   //< Buffer double-wide unsigned index type.
-typedef uint16_t index_t;                   //< Bag4 index_t.
-typedef uint16_t header_t;                  //< Bag4 header_t
-typedef uint32_t data_t;                    //< Bag4 data_t
-
-namespace _ {
-enum {
-    kUnitSize = 1 << 10                     //< The size of unit.
-};
-}
+typedef int16_t  int_t;     //< Buffer signed index type.
+typedef uint16_t uint_t;    //< Buffer unsigned signed index type.
+typedef int32_t  dint_t;    //< Buffer double-wide signed index type.
+typedef uint32_t duint_t;   //< Buffer double-wide unsigned index type.
+typedef int16_t  index_t;   //< Default TIndex size.
+typedef uint16_t header_t;  //< Default TKey size.
+typedef uint32_t data_t;    //< Default TData size.
 
 #elif MEMORY_PROFILE == 3
-typedef byte int_t;                         //< Buffer signed index type.
-typedef int16_t uint_t;                     //< Buffer unsigned signed index type.
-typedef int16_t dint_t;                     //< Buffer double-wide signed index type.
-typedef uint64_t duint_t;                   //< Buffer double-wide unsigned index type.
-typedef uint16_t index_t;                   //< Bag8 index_t
-typedef uint32_t header_t;                  //< Bag8 header_t
-typedef uint64_t data_t;                    //< Bag8 data_t
+typedef int32_t  int_t;     //< Buffer signed index type.
+typedef uint32_t uint_t;    //< Buffer unsigned signed index type.
+typedef int16_t  dint_t;    //< Buffer double-wide signed index type.
+typedef uint64_t duint_t;   //< Buffer double-wide unsigned index type.
+typedef uint16_t index_t;   //< Default TIndex size.
+typedef uint32_t header_t;  //< Default TKey size.
+typedef uint64_t data_t;    //< Default TData size.
 
-namespace _ {
-enum {
-    kUnitSize = 1 << 10                     //< The size of unit.
-};
-}
 #else
 #error  Invalid MEMORY_PROFILE
 #endif
@@ -237,7 +226,8 @@ typedef int char_t;
 
 /** Macro declares a class to be non-copyable. */
 #define NONCOPYABLE (ClassName)\
-  ClassName (const ClassName&)      = delete;\
-  void operator= (const ClassName&) = delete;
+  ClassName (const ClassName&) = delete;\
+  void operator= (const ClassName&) = delete;//\
+  //ClassName () = default //< Saw this once on the net but do we need it?
 
 #endif  //< SCRIPT_CONFIG_H

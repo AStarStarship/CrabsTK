@@ -28,9 +28,9 @@ namespace _ {
 typedef enum { 
     NIL = 0,    //< 0.  NIL/null/void type.
     ADR,        //< 1.  A Stack Operation Address.
-    STR,        //< 2.  A UTF-8 string.
-    ST2,        //< 3.  A NIL-terminated string of UI2 or UTF-16 string.
-    ST4,        //< 4.  A NIL-terminated string of UI4 or UTF-32 string.
+    STR,        //< 2.  A NIL-terminated string of bytes.
+    ST2,        //< 3.  A NIL-terminated string of 2-byte or UTF-16 string.
+    ST4,        //< 4.  A NIL-terminated string of 4-bytes or UTF-32 string.
     BOL,        //< 5.  An 8-bit non-zero asserted boolean variable.
     SI1,        //< 6.  An 8-bit signed integer.
     UI1,        //< 7.  An 8-bit unsigned integer.
@@ -115,7 +115,8 @@ KABUKI const char* TypeString (uint_t type);
 template<char c>
 KABUKI bool CharCompare (uint16_t const token);
 
-/** Checks the last two char(string) of the token to check if it is a specified char. */
+/** Checks the last two char(string) of the token to check if it is a specified
+    char. */
 template<char LetterTwo, char LetterThree>
 KABUKI bool CharCompare (char two, char three);
 

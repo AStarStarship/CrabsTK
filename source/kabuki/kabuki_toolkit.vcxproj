@@ -19,95 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="kabuki_toolkit.h" />
+    <ClInclude Include="this.h" />
     <ClInclude Include="aiml\include\agent.h" />
     <ClInclude Include="assembly.h" />
-    <ClInclude Include="hal\include\AnalogIn.h" />
-    <ClInclude Include="hal\include\analogin_api.h" />
-    <ClInclude Include="hal\include\AnalogOut.h" />
-    <ClInclude Include="hal\include\analogout_api.h" />
-    <ClInclude Include="hal\include\buffer.h" />
-    <ClInclude Include="hal\include\BusIn.h" />
-    <ClInclude Include="hal\include\BusInOut.h" />
-    <ClInclude Include="hal\include\BusOut.h" />
-    <ClInclude Include="hal\include\Callback.h" />
-    <ClInclude Include="hal\include\CallChain.h" />
-    <ClInclude Include="hal\include\CAN.h" />
-    <ClInclude Include="hal\include\can_api.h" />
-    <ClInclude Include="hal\include\can_helper.h" />
-    <ClInclude Include="hal\include\CircularBuffer.h" />
-    <ClInclude Include="hal\include\critical.h" />
-    <ClInclude Include="hal\include\CThunk.h" />
-    <ClInclude Include="hal\include\DigitalIn.h" />
-    <ClInclude Include="hal\include\DigitalInOut.h" />
-    <ClInclude Include="hal\include\DigitalOut.h" />
-    <ClInclude Include="hal\include\DirHandle.h" />
-    <ClInclude Include="hal\include\dma_api.h" />
-    <ClInclude Include="hal\include\Ethernet.h" />
-    <ClInclude Include="hal\include\ethernet_api.h" />
-    <ClInclude Include="hal\include\FileBase.h" />
-    <ClInclude Include="hal\include\FileHandle.h" />
-    <ClInclude Include="hal\include\FileLike.h" />
-    <ClInclude Include="hal\include\FilePath.h" />
-    <ClInclude Include="hal\include\FileSystemLike.h" />
-    <ClInclude Include="hal\include\FunctionPointer.h" />
-    <ClInclude Include="hal\include\gpio_api.h" />
-    <ClInclude Include="hal\include\gpio_irq_api.h" />
-    <ClInclude Include="hal\include\I2C.h" />
-    <ClInclude Include="hal\include\I2CSlave.h" />
-    <ClInclude Include="hal\include\i2c_api.h" />
-    <ClInclude Include="hal\include\InterruptIn.h" />
-    <ClInclude Include="hal\include\InterruptManager.h" />
-    <ClInclude Include="hal\include\LocalFileSystem.h" />
-    <ClInclude Include="hal\include\LowPowerTicker.h" />
-    <ClInclude Include="hal\include\LowPowerTimeout.h" />
-    <ClInclude Include="hal\include\LowPowerTimer.h" />
-    <ClInclude Include="hal\include\lp_ticker_api.h" />
-    <ClInclude Include="hal\include\mbed.h" />
-    <ClInclude Include="hal\include\mbed_assert.h" />
-    <ClInclude Include="hal\include\mbed_debug.h" />
-    <ClInclude Include="hal\include\mbed_error.h" />
-    <ClInclude Include="hal\include\mbed_interface.h" />
-    <ClInclude Include="hal\include\mbed_mem_trace.h" />
-    <ClInclude Include="hal\include\mbed_stats.h" />
-    <ClInclude Include="hal\include\pinmap.h" />
-    <ClInclude Include="hal\include\platform.h" />
-    <ClInclude Include="hal\include\PlatformMutex.h" />
-    <ClInclude Include="hal\include\PortIn.h" />
-    <ClInclude Include="hal\include\PortInOut.h" />
-    <ClInclude Include="hal\include\PortOut.h" />
-    <ClInclude Include="hal\include\port_api.h" />
-    <ClInclude Include="hal\include\PwmOut.h" />
-    <ClInclude Include="hal\include\pwmout_api.h" />
-    <ClInclude Include="hal\include\RawSerial.h" />
-    <ClInclude Include="hal\include\rtc_api.h" />
-    <ClInclude Include="hal\include\rtc_time.h" />
-    <ClInclude Include="hal\include\semihost_api.h" />
-    <ClInclude Include="hal\include\Serial.h" />
-    <ClInclude Include="hal\include\SerialBase.h" />
-    <ClInclude Include="hal\include\serial_api.h" />
-    <ClInclude Include="hal\include\SingletonPtr.h" />
-    <ClInclude Include="hal\include\sleep_api.h" />
-    <ClInclude Include="hal\include\SPI.h" />
-    <ClInclude Include="hal\include\SPISlave.h" />
-    <ClInclude Include="hal\include\spi_api.h" />
-    <ClInclude Include="hal\include\storage_abstraction_Driver_Common.h" />
-    <ClInclude Include="hal\include\storage_abstraction_Driver_Storage.h" />
-    <ClInclude Include="hal\include\Stream.h" />
-    <ClInclude Include="hal\include\Ticker.h" />
-    <ClInclude Include="hal\include\ticker_api.h" />
-    <ClInclude Include="hal\include\Timeout.h" />
-    <ClInclude Include="hal\include\Timer.h" />
-    <ClInclude Include="hal\include\TimerEvent.h" />
-    <ClInclude Include="hal\include\toolchain.h" />
-    <ClInclude Include="hal\include\Transaction.h" />
-    <ClInclude Include="hal\include\us_ticker_api.h" />
-    <ClInclude Include="hal\include\wait_api.h" />
-    <ClInclude Include="hal_mingw32\include\device.h" />
-    <ClInclude Include="hal_mingw32\include\gpio_object.h" />
-    <ClInclude Include="hal_mingw32\include\objects.h" />
-    <ClInclude Include="hal_mingw32\include\PeripheralNames.h" />
-    <ClInclude Include="hal_mingw32\include\PinNames.h" />
-    <ClInclude Include="hal_mingw32\include\PortNames.h" />
     <ClInclude Include="script\include\address.h" />
     <ClInclude Include="script\include\bout_portal.h" />
     <ClInclude Include="script\include\set.h" />
@@ -137,83 +52,32 @@
     <ClInclude Include="script\include\portal.h" />
     <ClInclude Include="script\include\room.h" />
     <ClInclude Include="script\include\tstack.h" />
-    <ClInclude Include="script\include\string.h" />
+    <ClInclude Include="script\include\text.h" />
     <ClInclude Include="script\include\table.h" />
     <ClInclude Include="script\include\tlist.h" />
     <ClInclude Include="script\include\types.h" />
     <ClInclude Include="script\include\utils.h" />
     <ClInclude Include="script\include\wall.h" />
     <ClInclude Include="script\include\window.h" />
-    <ClInclude Include="script\tests\a.h" />
-    <ClInclude Include="script\tests\assembly.h" />
-    <ClInclude Include="serial\include\include_win32.h" />
+    <ClInclude Include="script\pro_files\a.h" />
+    <ClInclude Include="script\pro_files\assembly.h" />
+    <ClInclude Include="serial\include\module_config.h" />
+    <ClInclude Include="serial\include\serial_unix.h" />
+    <ClInclude Include="serial\include\serial_win32.h" />
     <ClInclude Include="serial\include\serial.h" />
+    <ClInclude Include="serial\include\serial_portal.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="hal\impl\AnalogIn.cc" />
-    <ClCompile Include="hal\impl\BusIn.cc" />
-    <ClCompile Include="hal\impl\BusInOut.cc" />
-    <ClCompile Include="hal\impl\BusOut.cc" />
-    <ClCompile Include="hal\impl\CallChain.cc" />
-    <ClCompile Include="hal\impl\CAN.cc" />
-    <ClCompile Include="hal\impl\Ethernet.cc" />
-    <ClCompile Include="hal\impl\FileBase.cc" />
-    <ClCompile Include="hal\impl\FileLike.cc" />
-    <ClCompile Include="hal\impl\FilePath.cc" />
-    <ClCompile Include="hal\impl\FileSystemLike.cc" />
-    <ClCompile Include="hal\impl\I2C.cc" />
-    <ClCompile Include="hal\impl\I2CSlave.cc" />
-    <ClCompile Include="hal\impl\InterruptIn.cc" />
-    <ClCompile Include="hal\impl\InterruptManager.cc" />
-    <ClCompile Include="hal\impl\LocalFileSystem.cc" />
-    <ClCompile Include="hal\impl\mbed_alloc_wrappers.cc" />
-    <ClCompile Include="hal\impl\mbed_assert.c" />
-    <ClCompile Include="hal\impl\mbed_board.c" />
-    <ClCompile Include="hal\impl\mbed_critical.c" />
-    <ClCompile Include="hal\impl\mbed_error.c" />
-    <ClCompile Include="hal\impl\mbed_gpio.c" />
-    <ClCompile Include="hal\impl\mbed_interface.c" />
-    <ClCompile Include="hal\impl\mbed_lp_ticker_api.c" />
-    <ClCompile Include="hal\impl\mbed_mem_trace.c" />
-    <ClCompile Include="hal\impl\mbed_pinmap_common.c" />
-    <ClCompile Include="hal\impl\mbed_rtc_time.cc" />
-    <ClCompile Include="hal\impl\mbed_semihost_api.c" />
-    <ClCompile Include="hal\impl\mbed_ticker_api.c" />
-    <ClCompile Include="hal\impl\mbed_us_ticker_api.c" />
-    <ClCompile Include="hal\impl\mbed_wait_api_no_rtos.c" />
-    <ClCompile Include="hal\impl\mbed_wait_api_rtos.cc" />
-    <ClCompile Include="hal\impl\RawSerial.cc" />
-    <ClCompile Include="hal\impl\retarget.cc" />
-    <ClCompile Include="hal\impl\Serial.cc" />
-    <ClCompile Include="hal\impl\SerialBase.cc" />
-    <ClCompile Include="hal\impl\SPI.cc" />
-    <ClCompile Include="hal\impl\SPISlave.cc" />
-    <ClCompile Include="hal\impl\Stream.cc" />
-    <ClCompile Include="hal\impl\Ticker.cc" />
-    <ClCompile Include="hal\impl\Timeout.cc" />
-    <ClCompile Include="hal\impl\Timer.cc" />
-    <ClCompile Include="hal\impl\TimerEvent.cc" />
-    <ClCompile Include="hal_mingw32\include\analogin_api.c" />
-    <ClCompile Include="hal_mingw32\include\analogout_api.c" />
-    <ClCompile Include="hal_mingw32\include\can_api.c" />
-    <ClCompile Include="hal_mingw32\include\ethernet_api.c" />
-    <ClCompile Include="hal_mingw32\include\gpio_api.c" />
-    <ClCompile Include="hal_mingw32\include\gpio_irq_api.c" />
-    <ClCompile Include="hal_mingw32\include\i2c_api.c" />
-    <ClCompile Include="hal_mingw32\include\pinmap.c" />
-    <ClCompile Include="hal_mingw32\include\port_api.c" />
-    <ClCompile Include="hal_mingw32\include\pwmout_api.c" />
-    <ClCompile Include="hal_mingw32\include\rtc_api.c" />
-    <ClCompile Include="hal_mingw32\include\serial_api.c" />
-    <ClCompile Include="hal_mingw32\include\spi_api.c" />
-    <ClCompile Include="hal_mingw32\include\us_ticker.c" />
+    <ClCompile Include="pro_files\kabuki_project.cc" />
+    <ClCompile Include="pro_files\kabuki_tester.cc" />
+    <ClCompile Include="pro_files\kabuki_tests.cc" />
     <ClCompile Include="script\impl\script_address.cc" />
     <ClCompile Include="script\impl\script_args.cc" />
     <ClCompile Include="script\impl\script_bin.cc" />
     <ClCompile Include="script\impl\script_bout.cc" />
-    <ClCompile Include="script\impl\script_bout_portal.cc" />
+    <ClCompile Include="script\impl\script_window.cc" />
     <ClCompile Include="script\impl\script_clock.cc" />
     <ClCompile Include="script\impl\script_color.cc" />
     <ClCompile Include="script\impl\script_console.cc" />
@@ -230,20 +94,23 @@
     <ClCompile Include="script\impl\script_types.cc" />
     <ClCompile Include="script\impl\script_utils.cc" />
     <ClCompile Include="script\impl\script_wall.cc" />
-    <ClCompile Include="script\tests\script_project.cc" />
-    <ClCompile Include="script\tests\script_tester.cc" />
-    <ClCompile Include="script\tests\script_tests.cc" />
-    <ClCompile Include="serial\impl\list_ports_win32.cc" />
+    <ClCompile Include="script\pro_files\script_project.cc" />
+    <ClCompile Include="script\pro_files\script_tester.cc" />
+    <ClCompile Include="script\pro_files\script_tests.cc" />
+    <ClCompile Include="serial\impl\serial_list_ports_linux.cc" />
+    <ClCompile Include="serial\impl\serial_list_ports_osx.cc" />
+    <ClCompile Include="serial\impl\serial_list_ports_win32.cc" />
     <ClCompile Include="serial\impl\serial_serial.cc" />
+    <ClCompile Include="serial\impl\serial_unix.cc" />
     <ClCompile Include="serial\impl\serial_win32.cc" />
     <ClCompile Include="stdafx.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="script\include\module_config.in" />
-    <None Include="script\tests\readme.md" />
+    <None Include="script\pro_files\readme.md" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="script\tests\CMakeList.txt" />
+    <Text Include="script\pro_files\CMakeList.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -319,14 +186,14 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Workspace\kabuki-toolkit\source\kabuki\hal_mingw32\include;C:\Workspace\kabuki-toolkit\source\kabuki;$(IncludePath)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(IncludePath)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\..\cpputest\lib\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CppUTestd.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CppUTestd.lib;Winmm.lib;Setupapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

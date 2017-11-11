@@ -29,7 +29,7 @@ extern "C" {
 typedef struct dac_s dac_t;
 
 /**
- * \defgroup hal_analogout Analogout hal functions
+ * @defgroup hal_analogout Analogout hal functions
  * @{
  */
 

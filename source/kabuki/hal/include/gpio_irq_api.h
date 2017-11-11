@@ -39,7 +39,7 @@ typedef struct gpio_irq_s gpio_irq_t;
 typedef void (*gpio_irq_handler)(uint32_t id, gpio_irq_event event);
 
 /**
- * \defgroup hal_gpioirq GPIO IRQ HAL functions
+ * @defgroup hal_gpioirq GPIO IRQ HAL functions
  * @{
  */
 

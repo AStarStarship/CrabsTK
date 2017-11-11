@@ -61,13 +61,13 @@ const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header
 }
 
 const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header,
-                             byte offset) {
+                             uint_t offset) {
     std::cout << "\nBout " << BoutErrorString (error) << " Error!\n";
     return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header,
-                             byte offset, byte* address) {
+                             uint_t offset, byte* address) {
     std::cout << "\nBout " << BoutErrorString (error) << " Error!\n";
     return reinterpret_cast<const Operation*> (1);
 }
@@ -164,7 +164,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
         return BoutResult (bout, Bout::RoomError);
 
     // Temp variables packed into groups of 8 bytes for memory alignment.
-    byte type,
+    byte //type,
         ui1;
 #if USING_2_BYTE_TYPES
     uint16_t ui2;
@@ -179,7 +179,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     uint_t num_params = params[0];
     if (num_params == 0) return 0;          //< Nothing to do.
 
-    uint_t   size = bout->size,             //< Size of the buffer.
+    uint_t   type,
+             size = bout->size,             //< Size of the buffer.
              space,                         //< Space in the buffer.
              index,                         //< Index in the params.
              arg_index = 0,                 //< Index in the args.

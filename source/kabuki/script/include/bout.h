@@ -90,7 +90,7 @@ KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
                                     const uint_t* header,
-                                    byte offset);
+                                    uint_t offset);
 
 /** Used to return an erroneous result from a B-Output.
     @param  bout    The source Bout.
@@ -101,7 +101,7 @@ KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
                                     const uint_t* header,
-                                    byte offset,
+                                    uint_t offset,
                                     byte* address);
 
 /** Initializes the B-Output buffer with the given buffer size. */

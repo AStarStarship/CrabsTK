@@ -20,15 +20,6 @@
 
 namespace _ {
 
-const uint_t* NumOperations (std::uintptr_t value) {
-    return reinterpret_cast<const uint_t*> (value);
-}
-
-const uint_t* FirstOperation (uint_t value) {
-    uintptr_t index = value;
-    return reinterpret_cast<const uint_t*>(index);
-}
-
 char_t index (const void* ptr) {
     return (char_t)reinterpret_cast<uintptr_t>(ptr);
 }
@@ -80,8 +71,8 @@ void OperandPrint (Operand* operand) {
     std::cout << ope->name
         << "\n| NumOperations:  " << CountCoperations (ope)
         << "\n| Description:    " << ope->metadata << '\n';
-    char_t index      = index (ope->result),
-           stop_index = index + index (ope->params);
+    char_t index      = PointerValue (ope->result),
+           stop_index = index + PointerValue (ope->params);
     std::cout << "| FirstOperation: " << index << " LastOperation: "
         << stop_index;
     PrintLine ("|", '-');

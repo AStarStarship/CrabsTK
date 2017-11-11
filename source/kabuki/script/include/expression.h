@@ -14,9 +14,6 @@
              permissions and limitations under the License.
 */
 
-#pragma once
-#include <stdafx.h>
-
 #ifndef SCRIPT_EXPRESSION_H
 #define SCRIPT_EXPRESSION_H
 
@@ -28,7 +25,7 @@
 
 namespace _ {
 
-/** Expression scanner and runner.
+/** A full-duplex Expression.
     Expressions (exprs or expr) must be word-aligned in order to run correctly
     so it's best to scan and word align the data types in the same sweep.
 
@@ -94,11 +91,14 @@ struct Expression {
     typedef enum States {
         DisconnectedState = 0,
         AwaitingAckState,
-        ScanningAddressState,
-        ScanningStringState,
+        AddressState,
+        Utf8State,
+        Utf16State,
+        Utf32State,
         ScanningArgsState,
-        ScanningPodState,
-        ScanningVarintState,
+        PodState,
+        VarintState,
+        ObjectState,
         HandlingErrorState,
         LockedState,
     } State;
@@ -118,7 +118,7 @@ struct Expression {
                                     //< scanned.
                      num_states,    //< Number of states on the state stack.
                      bytes_left;    //< Countdown counter for parsing POD types.
-    byte             type;          /*< What type of Expression it is.
+    byte             type;          /*< The type of Expression.
                                         -1 = interprocess no dynamic memory.
                                         0 = no dynamic memory.
                                         1 = dynamic memory.
@@ -280,7 +280,8 @@ KABUKI void ExpressionScan (Expression* expr, Portal* io);
 KABUKI bool ExpressionContains (Expression* expr, void* address);
 
 /** Pushes a header onto the scan stack.*/
-KABUKI const Operation* ExpressionPushHeader (Expression* expr, const uint_t* header);
+KABUKI const Operation* ExpressionPushHeader (Expression* expr,
+                                              const uint_t* header);
 
 /** Gets the base address of the header stack. */
 KABUKI const uint_t* ExpressionHeaderStack (Expression* expr);
@@ -298,7 +299,8 @@ KABUKI void ExpressionClear (Expression* expr);
 KABUKI bool Args (Expression* expr, const uint_t* params, void** args);
 
 /** Calls the Write function for the Tx slot. */
-KABUKI const Operation* Result (Expression* expr, const uint_t* params, void** args);
+KABUKI const Operation* Result (Expression* expr, const uint_t* params, 
+                                void** args);
 
 /** Prints the given Expression to the console. */
 KABUKI void ExpressionPrint (Expression* expr);

@@ -1,5 +1,5 @@
 /** Serial Communication Library
-    @file    ~/list_ports_osx.cpp
+    @file    ~/list_ports_osx.cc
     @author  Craig Lilley <cralilley@gmail.com>
     @license Copyright (c) 2014 Craig Lilley <cralilley@gmail.com>
              This software is made available under the terms of the MIT license.
@@ -7,6 +7,7 @@
                     http://opensource.org/licenses/MIT
 */
 
+#include <stdafx.h>
 #if defined(__APPLE__)
 
 #include <sys/param.h>
@@ -17,11 +18,7 @@
 #include <IOKit/serial/IOSerialKeys.h>
 #include <IOKit/IOBSD.h>
 
-#include <iostream>
-#include <string>
-#include <vector>
-
-#include "serial/serial.h"
+#include "../include/serial.h"
 
 using serial::PortInfo;
 using std::string;

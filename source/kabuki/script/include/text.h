@@ -1,5 +1,6 @@
-/** Kabuki Starship
-    @file    ~/source/kabuki/script/tests/script_tester
+/** kabuki::script
+    @version 0.x
+    @file    ~/source/kabuki/script/include/portal.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -13,14 +14,26 @@
              permissions and limitations under the License.
 */
 
-#include "../../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
-#include "stdafx.h"
+#pragma once
+#include <stdafx.h>
 
-using namespace std;
+#ifndef SCRIPT_PORTAL_H
+#define SCRIPT_PORTAL_H
 
-int main (int args_count, char** args)
-{
-    cout << "Kabuki Toolkit Unit Test.\n\n";
+#include "module_config.h"
 
-    return CommandLineTestRunner::RunAllTests (args_count, args);
-}
+namespace _ {
+
+/** .
+*/
+class KABUKI Text {
+    public:
+
+    //Text ();
+
+    private:
+
+
+};
+}       //< namespace _
+#endif  //< SCRIPT_PORTAL_H
