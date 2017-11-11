@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClInclude Include="kabuki_toolkit.h" />
     <ClInclude Include="this.h" />
-    <ClInclude Include="aiml\include\agent.h" />
     <ClInclude Include="assembly.h" />
     <ClInclude Include="script\include\address.h" />
     <ClInclude Include="script\include\bout_portal.h" />
@@ -70,9 +69,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pro_files\kabuki_project.cc" />
-    <ClCompile Include="pro_files\kabuki_tester.cc" />
-    <ClCompile Include="pro_files\kabuki_tests.cc" />
     <ClCompile Include="script\impl\script_address.cc" />
     <ClCompile Include="script\impl\script_args.cc" />
     <ClCompile Include="script\impl\script_bin.cc" />
@@ -94,7 +90,6 @@
     <ClCompile Include="script\impl\script_types.cc" />
     <ClCompile Include="script\impl\script_utils.cc" />
     <ClCompile Include="script\impl\script_wall.cc" />
-    <ClCompile Include="script\pro_files\script_project.cc" />
     <ClCompile Include="script\pro_files\script_tester.cc" />
     <ClCompile Include="script\pro_files\script_tests.cc" />
     <ClCompile Include="serial\impl\serial_list_ports_linux.cc" />

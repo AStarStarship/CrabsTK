@@ -14,8 +14,8 @@
              permissions and limitations under the License.
 */
 
-#include "../../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
-#include "../../../../../cpputest/include/CppUTest/TestHarness.h"
+#include "../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
+#include "../../../../cpputest/include/CppUTest/TestHarness.h"
 
 #include "kabuki_toolkit.h"
 #include "this.h"

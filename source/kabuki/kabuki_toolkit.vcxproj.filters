@@ -86,9 +86,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="aiml\include\agent.h">
-      <Filter>kabuki\aiml</Filter>
-    </ClInclude>
     <ClInclude Include="assembly.h">
       <Filter>kabuki</Filter>
     </ClInclude>
@@ -319,23 +316,11 @@
     <ClCompile Include="serial\impl\serial_list_ports_win32.cc">
       <Filter>kabuki\serial</Filter>
     </ClCompile>
-    <ClCompile Include="script\pro_files\script_project.cc">
-      <Filter>kabuki\script\pro_files</Filter>
-    </ClCompile>
     <ClCompile Include="script\pro_files\script_tester.cc">
       <Filter>kabuki\script\pro_files</Filter>
     </ClCompile>
     <ClCompile Include="script\pro_files\script_tests.cc">
       <Filter>kabuki\script\pro_files</Filter>
-    </ClCompile>
-    <ClCompile Include="pro_files\kabuki_tester.cc">
-      <Filter>kabuki\pro_files</Filter>
-    </ClCompile>
-    <ClCompile Include="pro_files\kabuki_tests.cc">
-      <Filter>kabuki\pro_files</Filter>
-    </ClCompile>
-    <ClCompile Include="pro_files\kabuki_project.cc">
-      <Filter>kabuki\pro_files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

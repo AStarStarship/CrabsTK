@@ -344,9 +344,10 @@ TEST (SCRIPT_TESTS, TableTests) {
     CHECK_EQUAL (7, index)
 
     index = TableAdd (table, "test");
-    CHECK_EQUAL (index, kTableFull)
+    CHECK_EQUAL (kInvalidIndex, index)
 
     TablePrint (table);
+    system ("PAUSE");
 }
 
 TEST (SCRIPT_TESTS, ReadWriteTests) {

@@ -14,7 +14,7 @@
              permissions and limitations under the License.
 */
 
-#include "../../pro/include/project.h"
+#include "../pro/include/project.h"
 
 using namespace kabuki::pro;
 using namespace std;

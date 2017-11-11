@@ -25,6 +25,11 @@
 namespace _ {
 
 /** A hash-table.
+
+    # Collision Table
+
+    Collision table works by using the maximum key value (i.e. 255 for a byte, 2^15-1 for
+    a int16_t, etc). The collisionsList is a sequence of indexes terminated by an invalid index > kMaxNumOperations. collissionsList[0] is an invalid index, so the collisionsList is searched from lower address up.
     
     # Memory Layout
 
@@ -76,21 +81,18 @@ namespace _ {
     @endcode
 */
 struct KABUKI Table {
-    byte num_keys,              //< Number of keys.
-        max_keys;               //< Number of buffered indexes.
+    char_t   first_char;        //< The first char of the Table. 
+    byte     num_keys,          //< Number of keys.
+             max_keys;          //< Number of buffered indexes.
     uint16_t pile_size,         //< Size of the collision table pile.
-        size;                   //< Size of this object in bytes.
+             size;              //< Size of this object in bytes.
 };
 
 enum {
-    kMinTableSize       = 64,   //< Min size of a Table
-    kInvalidRecord      = 255,  //< Invalid Record index.
-    kMaxNumOperations   = 192,  //< Max number of members in a particular scope.
-    kNoCollidingRecords = 255,  //< 
-    kRecordOverflow     = 254,  //< 
-    kTableFull          = 253,  //< 
-    kOverheadPerRecord  = sizeof (hash16_t) + sizeof (uint16_t) + 
-                          sizeof (byte)     + sizeof (byte),
+    kMinTableSize     = 64,   //< Min size of a Table
+    kInvalidIndex     = 255,  //< Invalid Record index.
+    kOverheadPerIndex = sizeof (hash16_t) + sizeof (uint16_t) + 
+                        sizeof (byte)     + sizeof (byte),
 };
 
 //void Print (Table* rt);

@@ -26,7 +26,7 @@ Table* TableInit (uintptr_t* buffer, byte max_keys, uint16_t set_size) {
     Table* table = reinterpret_cast<Table*>(buffer);
 
     uint_t min_required_size = sizeof (Table) + max_keys *
-        (kOverheadPerRecord + 2);
+        (kOverheadPerIndex + 2);
     if (set_size < min_required_size)
         return nullptr;
 
@@ -49,7 +49,7 @@ byte TableAdd (Table* table, const char* key) {
 
     uint16_t size = table->size;
 
-    if (num_keys >= max_keys) return kTableFull;
+    if (num_keys >= max_keys) return kInvalidIndex;
     //< We're out of buffered indexes.
 
     hash16_t* hashes = reinterpret_cast<hash16_t*> (reinterpret_cast<byte*> (table) +
@@ -64,7 +64,7 @@ byte TableAdd (Table* table, const char* key) {
         *destination;
 
     // Calculate space left.
-    uint16_t value = size - max_keys * kOverheadPerRecord,
+    uint16_t value = size - max_keys * kOverheadPerIndex,
         pile_size,
         key_length = static_cast<uint16_t> (StringLength (key));
 
@@ -87,7 +87,7 @@ byte TableAdd (Table* table, const char* key) {
         table->num_keys = 1;
         *hashes = hash;
         *key_offsets = static_cast<uint16_t> (key_length);
-        *indexes = kNoCollidingRecords;
+        *indexes = kInvalidIndex;
         *unsorted_indexes = 0;
         destination = keys - key_length;
 
@@ -130,18 +130,11 @@ byte TableAdd (Table* table, const char* key) {
 
             // Check for other collisions.
 
-            // @warning I'm not doing any error checking because I wrote the 
-            //          data myself but I just got a phantom bug where it the
-            //          index was 255 and it didn't go through the 
-            //          kNoCollidingRecords path. I think this software might be
-            //          possessed. I found a possessed doll at Burning Man once.
-
             index = indexes[mid];       //< Index in the collision table.
 
             printf ("index:%u\n", index);
 
-            if (index < kNoCollidingRecords)   //< There are other collisions.
-            {
+            if (index != kInvalidIndex) { //< There are other collisions.
                 std::cout << "with collisions, ";
                 // There was a collision so check the table.
 
@@ -152,7 +145,7 @@ byte TableAdd (Table* table, const char* key) {
                 temp = indexes[mid];
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;  //< Load the index in the collision table.
-                while (index < kMaxNumOperations) {
+                while (index < kInvalidIndex) {
                     printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
                     if (StringEquals (key, keys - key_offsets[index])) {
                         printf ("but table already contains key at "
@@ -204,15 +197,16 @@ byte TableAdd (Table* table, const char* key) {
 
             // But we still don't know if the char is a new collision.
 
-            std::cout << "Checking if " << index << " is a collision...";
+            index = unsorted_indexes[mid];
 
+            std::cout << "Checking if " << index << " is a collision...";
             if (!StringEquals (key, keys - key_offsets[index])) {
                 // It's a new collision!
                 std::cout << "It's a new collision!\n";
 
                 if (value < 3) {
                     std::cout << "Buffer overflow!\n";
-                    return kRecordOverflow;
+                    return kInvalidIndex;
                 }
 
                 // Get offset to write the key too.
@@ -289,7 +283,7 @@ byte TableAdd (Table* table, const char* key) {
     *hashes = hash;
 
     // Mark as not having any collisions.
-    indexes[num_keys] = kNoCollidingRecords;
+    indexes[num_keys] = kInvalidIndex;
 
     // Move up the sorted indexes and insert the unsorted index (which is 
     // the current num_keys).
@@ -321,7 +315,7 @@ byte TableFind (const Table* table, const char* key) {
         temp;
 
     if (key == nullptr || num_keys == 0)
-        return kInvalidRecord;
+        return kInvalidIndex;
 
     uint16_t size = table->size;
 
@@ -348,7 +342,7 @@ byte TableFind (const Table* table, const char* key) {
                 key_offsets[0]);
         if (!StringEquals (key, keys - key_offsets[0])) {
             printf ("Did not find key %s\n", key);
-            return kInvalidRecord;
+            return kInvalidIndex;
         }
         printf ("Found key %s\n", key);
         PrintLine ();
@@ -384,7 +378,7 @@ byte TableFind (const Table* table, const char* key) {
                 max_keys * sizeof (uint16_t);
             index = collisions[mid];
 
-            if (index < kNoCollidingRecords) {
+            if (index != kInvalidIndex) {
                 // There was a collision so check the table.
                 //printf ("There was a collision so check the table\n");
 
@@ -397,7 +391,7 @@ byte TableFind (const Table* table, const char* key) {
 
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;
-                while (index < kMaxNumOperations) {
+                while (index != kInvalidIndex) {
                     printf ("comparing to \"%s\"\n", keys - 
                             key_offsets[index]);
                     if (StringEquals (key, keys - key_offsets[index])) {
@@ -409,7 +403,7 @@ byte TableFind (const Table* table, const char* key) {
                     index = *temp_ptr;
                 }
                 std::cout << "Did not find "<< key << '\n';
-                return kInvalidRecord;
+                return kInvalidIndex;
             }
 
             // There were no collisions.
@@ -428,7 +422,7 @@ byte TableFind (const Table* table, const char* key) {
             if (!StringEquals (key, keys - key_offsets[index])) {
                 //< It was a collision so the table doesn't contain string.
                 printf (" but it was a collision and did not find key.\n");
-                return kInvalidRecord;
+                return kInvalidIndex;
             }
 
             std::cout << "; found key at mid: %i " << mid << '\n';
@@ -438,7 +432,7 @@ byte TableFind (const Table* table, const char* key) {
     std::cout << "; didn't find a hash for key " << key << '\n';
     PrintLine ();
 
-    return kInvalidRecord;
+    return kInvalidIndex;
 }
 
 void TablePrint (Table* table) {
@@ -487,18 +481,18 @@ void TablePrint (Table* table) {
                 hashes[unsorted_indexes[i]], hashes[i],
                 unsorted_indexes[i], collision_index);
 
-        if (collision_index != kNoCollidingRecords && i < num_keys) {
+        if ((collision_index != kInvalidIndex) && (i < num_keys)) {
             // Print collisions.
             cursor = &collission_list[collision_index];
             temp = *cursor;
             ++cursor;
             std::cout << temp;
-            while (temp != kNoCollidingRecords) {
+            while (temp != kInvalidIndex) {
                 temp = *cursor;
                 ++cursor;
-                if (temp == kNoCollidingRecords)
-                    break;
-                printf (", %u", temp);
+                if (temp != kInvalidIndex)
+                    printf (", %u", temp);
+                
             }
         }
 

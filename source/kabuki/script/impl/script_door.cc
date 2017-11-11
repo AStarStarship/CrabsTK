@@ -85,7 +85,8 @@ const Operation* Door::ExecAll () {
 const Operation* Door::Star (char_t index, Expression* expr) {
     if (index < ' ') {
         static const Operation star = { "Door", 
-            NumOperations (0), FirstOperation ('A'), "A door in a Chinese room.", 0 };
+            NumOperations (0), FirstOperation ('A'),
+            "A door in a Chinese room.", 0 };
         return &star;
     }
     index -= ' ';
