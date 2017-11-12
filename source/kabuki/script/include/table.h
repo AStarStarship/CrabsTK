@@ -28,8 +28,10 @@ namespace _ {
 
     # Collision Table
 
-    Collision table works by using the maximum key value (i.e. 255 for a byte, 2^15-1 for
-    a int16_t, etc). The collisionsList is a sequence of indexes terminated by an invalid index > kMaxNumOperations. collissionsList[0] is an invalid index, so the collisionsList is searched from lower address up.
+    Collision table works by using the maximum key value (i.e. 255 for a byte, 
+    2^15-1 for a int16_t, etc). The collisionsList is a sequence of indexes
+    terminated by an invalid index > kMaxNumOperations. collissionsList[0] is an
+    invalid index, so the collisionsList is searched from lower address up.
     
     # Memory Layout
 

@@ -41,25 +41,29 @@ uint_t SlotSpace (byte* start, byte* stop, uint_t size) {
 const char* BinErrorString (Bin::Error e) {
 #if USING_CONSOLE
     static const char* strings[] = {
-        "Buffer overflow",              //<  0
-        "Buffer underflow",             //<  1
-        "Varint overflow",              //<  2
-        "Invalid hash",                 //<  3
-        "Invalid type",                 //<  4
-        "Invalid index",                //<  5
-        "Invalid equerry",              //<  6
-        "Invalid argument number",      //<  7
-        "Invalid door",                 //<  8
-        "Too many parameters",          //<  9
-        "Stack overflow",               //< 10
-        "Invalid subset",               //< 11
-        "Too many pops",                //< 12
-        "String buffer overflow",       //< 13
-        "Invalid error handler",        //< 14
-        "Invalid operation",            //< 15
-        "Array overflow",               //< 16
-        "Invalid Set",                  //< 17
-        "Room Error"                    //< 18
+        "Buffer overflow",          //<  0
+        "Buffer underflow",         //<  1
+        "Varint overflow",          //<  2
+        "Invalid hash",             //<  3
+        "Invalid type",             //<  4
+        "Invalid index",            //<  5
+        "Invalid equerry",          //<  6
+        "Invalid argument number",  //<  7
+        "Invalid door",             //<  8
+        "Too many parameters",      //<  9
+        "Stack overflow",           //< 10
+        "Invalid subset",           //< 11
+        "Too many pops",            //< 12
+        "String buffer overflow",   //< 13
+        "Invalid error handler",    //< 14
+        "Invalid operation",        //< 15
+        "Array overflow",           //< 16
+        "Invalid Set",              //< 17
+        "UTF-8",                    //< 18
+        "UTF-16",                   //< 19
+        "UTF-32",                   //< 20
+        "Bin Locked"                //< 21
+        "Room Error"                //< 22
     };
     if (e < 0 || e > Bin::RoomError)
         return strings[Bin::RoomError];
@@ -70,20 +74,30 @@ const char* BinErrorString (Bin::Error e) {
 }
 
 const char* BinStateString (Bin::State state) {
-    static const char* strings[] = {
-        "Scanning char ",
-        "Scanning varint",
-        "Scanning address",
-        "Scanning POD",
-        "Scanning args",
-        "Handling error",
-        "Invalid operation",
-        "Scanning hash",
-        "Locked"
+    static const char* kStrings[] = {
+        "Address",      //< 0
+        "Args",         //< 1
+        "UTF-8",        //< 2
+        "UTF-16",       //< 3
+        "UTF-32",       //< 4
+        "Varint",       //< 5
+        "OB1",          //< 6
+        "OB2",          //< 7
+        "OB4",          //< 8
+        "OB8",          //< 9
+        "Hash",         //< 10
+        "Error",        //< 11
+        "Disconnected", //< 12
+        "ACK",          //< 13
+        "Locked",       //< 14
+        "POD"           //< 15
     };
-    if (state >= Bin::LockedState)
-        return strings[Bin::LockedState];
-    return strings[state];
+    static const char kErrorString[] = "Error\0";
+    if (state < 0)
+        return kErrorString;
+    if (state >= Bin::PodState)
+        return kErrorString;
+    return kStrings[state];
 }
 
 const Operation* BinResult (Bin* bin, Bin::Error error) {

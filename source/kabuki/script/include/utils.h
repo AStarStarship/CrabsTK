@@ -33,6 +33,11 @@ KABUKI const char* NewLineString ();
 KABUKI const char* ErrorHeader ();
 KABUKI const char* VerticalBar ();
 
+inline const void* Const (const void* ptr) {
+    printf ("\n!!! %s\n", ptr);
+    return ptr;
+}
+
 /* Returns the inverse of the given value.
    For code metadata purposes. */
 template<typename T>

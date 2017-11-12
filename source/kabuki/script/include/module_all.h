@@ -30,5 +30,6 @@
 #include "expression.h"
 #include "bout_portal.h"
 #include "color.h"
+#include "address.h"
 
 #endif  //< KABUKI_SCRIPT_H

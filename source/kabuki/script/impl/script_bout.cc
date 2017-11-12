@@ -22,6 +22,7 @@
 #include "../include/slot.h"
 #include "../include/args.h"
 #include "../include/address.h"
+#include "../include/ascii.h"
 
 namespace _ {
 
@@ -217,7 +218,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     for (index = 1; index <= num_params; ++index) {
         type = params[index];
 #if DEBUG_SCRIPT
-        printf ("| param:%2i TType:%s start:%u, stop:%u space:%u", 
+        printf ("| param:%2i TType:%s start:%u, stop:%u space:%u value:", 
                 arg_index + 1, TypeString (type), Diff (begin, start),
                 Diff (begin, stop), space);
 #endif
@@ -230,94 +231,48 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 if (space == 0)
                     return BoutResult (bout, Bout::BufferOverflowError, params,
                                        index, start);
-                --space;
-                length = params[++index]; //< Load the max char length.
-                ++num_params;
-
+                if (type != ADR) {
+                    // We might not need to write anything if it's an ADR with null string.
+                    length = params[++index]; //< Load the max char length.
+                    ++num_params;
+                } else {
+                    length = kMaxAddresLength;
+                }
                 // Load the source data pointer and increment args.fs
                 ui1_ptr = reinterpret_cast<const byte*> (args[arg_index]);
+                printf ("\"%s\"\n", ui1_ptr);
 
-                printf ("\nBefore trying to print 0x%p: %s\n", ui1_ptr,
-                        ui1_ptr);
-                printf ("\nWriting chars: ");
-
-                // We know we will always write at least one null-term byte.
+                // We know we will always have at least one null-term char.
                 ui1 = *ui1_ptr;
-
-                *stop = ui1;
-                if (++stop >= end) stop -= size;
-                hash = Hash16 (ui1, hash);
-                std::cout << ui1;
-
                 while (ui1 != 0) {
                     if (space-- == 0)
                         return BoutResult (bout, Bout::BufferOverflowError,
                                            params, index, start);
-                    ++ui1_ptr;
-                    ui1 = *ui1_ptr;     // Read byte.
                     hash = Hash16 (ui1, hash);
 
-                    std::cout << ui1;
-
                     *stop = ui1;        // Write byte
                     if (++stop >= end) stop -= size;
+                    ++ui1_ptr;
+                    ui1 = *ui1_ptr;     // Read byte.
                 }
-                if (type == ADR) {
-                    *stop = ui1;        // Write byte
+                if (type != ADR) {  //< 1 is faster to compare than 2
+                                    // More likely to have ADR than STR
+                    *stop = 0;      // Write null-term char.
+                    if (++stop >= end) stop -= size;
                     break;
                 }
-                std::cout << "\" Success!\n";
 
                 break;
-            case ST2: //< _W_r_i_t_e__U_T_F_-_8__S_t_r_i_n_g____________________
+            case ST2: //< _W_r_i_t_e__U_T_F_-_1_6__S_t_r_i_n_g__________________
 #if USING_UTF16
-                if (space == 0)
-                    return BoutResult (bout, Bout::BufferOverflowError, params,
-                                       index, start);
-                space -= 2;
-                length = params[++index]; //< Load the max char length.
-
-                //strings = reinterpret_cast<const byte**> (args);
-                //printf ("\ntestStrings at after: 0x%p\nstring1: %s\n"
-                //        "string2: %s\n", args, strings[0], strings[1]);
-
-                // Load the source data pointer and increment args.fs
-                ui2_ptr = reinterpret_cast<const uint16_t*> (args[arg_index]);
-
-                //printf ("Before trying to print 0x%p: %s\n", ui2_ptr, 
-                //        ui2_ptr);
-                //print ();
-                //printf ("\nWriting chars: ");
-
-                // We know we will always write at least one null-term byte.
-                ui2 = *ui2_ptr;
-                *stop = ui2;
-                if (++stop >= end) stop -= size;
-                hash = Hash16UI2 (ui2, hash);
-                //  std::cout << ui2;
-
-                while (ui2 != 0) {
-                    if (space-- == 0)
-                        return BoutResult (bout, Bout::BufferOverflowError,
-                                           params, index, start);
-                    ++ui2_ptr;
-                    ui2 = *ui2_ptr;     // Read byte.
-                    hash = Hash16UI2 (ui2, hash);
-
-                    //std::cout <<ui2);
-
-                    *stop = ui2;        // Write byte
-                    if (++stop >= end) stop -= size;
-                }
-                *stop = ui2;        // Write byte
-                if (++stop >= end) stop -= size;
-                //std::cout << '\n';
-                break;
 #else
                 return BoutResult (bout, Bout::RoomError, params, index);
 #endif  //< USING_UTF-16
-            case ST4: //< _W_r_i_t_e__U_T_F_-_8__S_t_r_i_n_g____________________
-                break;
+            case ST4: //< _W_r_i_t_e__U_T_F_-_3_2__S_t_r_i_n_g__________________
+#if USING_UTF32
+#else
+                return BoutResult (bout, Bout::RoomError, params, index);
+#endif  //< USING_UTF-32
             case SI1: //< _W_r_i_t_e__8_-_b_i_t__T_y_p_e_s______________________
             case UI1:
             case BOL:
@@ -760,6 +715,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     if (space < 3)
         return BoutResult (bout, Bout::BufferOverflowError, params, index,
                            start);
+    //space -= 2;   //< We don't need to save this variable.
     std::cout << "\n| Done writing to B-Output. :-)\n";
     *stop = hash & 0xff;
     if (++stop >= end) stop -= size;
@@ -771,6 +727,12 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 
 const Operation* BoutRead (Bout* bout, const uint_t* params, void** args) {
     return BinRead (reinterpret_cast<Bin*> (bout), params, args);
+} 
+
+const Operation* BoutConnect (Bout* bout, const char* address) {
+    void* args[2];
+    return BoutWrite (bout, Params<2, ADR, ADR> (),
+                      Args (args, address, Address<_::BEL> ()));
 }
 
 }       //< namespace _

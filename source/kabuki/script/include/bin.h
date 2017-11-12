@@ -60,20 +60,32 @@ struct KABUKI Bin {
         InvalidOpeartionError    = 15,
         ArrayOverflowError       = 16,
         InvalidOperationError    = 17,
-        RoomError                = 18,
+        Utf8Error                = 18,
+        Utf16Error               = 19,
+        Utf32Error               = 20,
+        LockedError              = 21,
+        RoomError                = 22,
     } Error;
 
     /** List of Finite Bin States.
         @see Script Protocol RFC for list of states. */
     typedef enum States {
-        AddressState = 0,   //< State 0: Scanning address.
-        ScanningArgsState,          //< State 1: Scanning arguments.
-        StringState,        //< State 2: Scanning STR.
-        VarintState,        //< State 3: Scanning varint.
-        PodState,           //< State 4: Scanning plain-old-data.
-        ScanningHashState,          //< State 5: Stand the 32-bit hash.
-        HandlingErrorState,         //< State 6: Handling an error state.
-        LockedState,                //< State N: Locked state.
+        AddressState = 0,   //< State  0: Scanning address.
+        ArgsState,          //< State  1: Scanning arguments.
+        Utf8State,          //< State  2: Scanning STR.
+        Utf16State,         //< State  3: Scanning ST2.
+        Utf32State,         //< State  4: Scanning ST8.
+        VarintState,        //< State  5: Scanning varint.
+        Obj8State,          //< State  6: 8-bit OB1 state.
+        Obj16State,         //< State  7: 16-bit OB2 state.
+        Obj32State,         //< State  8: 32-bit OB4 state.
+        Obj64State,         //< State  9: 64-bit OB8 state.
+        HashState,          //< State 10: Stand the 32-bit hash.
+        ErrorState,         //< State 11: Handling an error state.
+        DisconnectedState,  //< State 12: Disconnected state.
+        AckState,           //< State 13: Awaiting connection ACK.
+        LockedState,        //< State 14: Locked state.
+        PodState,           //< State 15: Scanning plain-old-data.
     } State;
 
     uint_t          size,   //< The size of the buffer.
@@ -87,6 +99,10 @@ KABUKI byte* BinBuffer (Bin* bin);
 
 /** Gets a a char for printing out the bin_state. */
 KABUKI const char* BinStateString (Bin::State state);
+
+inline const char* BinStateString (byte state) {
+    return BinStateString ((Bin::State)state);
+}
 
 /** Used to return an erroneous result from a B-Input.
 

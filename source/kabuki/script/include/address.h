@@ -24,18 +24,12 @@
 
 namespace _ {
     
-/** C++11 constexpr struct KABUKI for creating parameter headers with less typing.
-template<const byte... N>
-struct KABUKI Address {
-    static const byte path[sizeof... (N)] = { N... };
-    static const byte term_char = 0;
-    //static constexpr size_t length = sizeof... (N);
-}; */
+/** C++11 constexpr struct KABUKI for creating parameter headers with less typing. */
 
-template<const byte... N>
-KABUKI const byte* Address () {
-    static const byte path[sizeof... (N)] = { N... };
-    static const byte term_char = 0;
+template<const char... N>
+KABUKI const char* Address () {
+    static const char path[sizeof... (N)] = { N... };
+    static const char term_char = 0;
     return path;
 }
 

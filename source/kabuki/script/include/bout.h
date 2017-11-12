@@ -65,6 +65,10 @@ KABUKI byte* BoutBuffer (Bout* bout);
 /** Gets a a char for printing out the bout_state. */
 KABUKI const char* BoutStateString (Bout::State state);
 
+inline const char* BoutStateString (byte state) {
+    return BoutStateString ((Bout::State)state);
+}
+
 /** Used to return an erroneous result from a B-Output.
 
     @param error The error type.
@@ -124,15 +128,23 @@ KABUKI int BoutStreamByte (Bout* bout);
 /** Prints the given B-Output to the stdout. */
 KABUKI void BoutPrint (Bout* bout);
 
-/** Prints a message with the given params to the given B-Output slot.
+/** Writes a message with the given params to the given B-Output slot.
     @param bout   The B-Output socket to write to.
     @param params The escape sequence to write.
     @param args   The array of pointers to the stuff to write. */
 KABUKI const Operation* BoutWrite (Bout* bout, const uint_t* params, 
                                    void** args);
 
+/** Reads a message with the given params from the given B-Output slot.
+    @param bout   The B-Output socket to write to.
+    @param params The escape sequence to write.
+    @param args   The array of pointers to the stuff to write. */
 KABUKI const Operation* BoutRead (Bout* bout, const uint_t* params, 
                                   void** args);
+
+/** Sends a connection message to the given address. */
+KABUKI const Operation* BoutConnect (Bout* bout, const char* address);
+
 /** Returns a reference to the bout for this assembly. */
 template<uint_t kNumber>
 inline Bout& RoomLog () {

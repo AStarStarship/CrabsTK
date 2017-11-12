@@ -18,7 +18,7 @@
 #include "../../../../../cpputest/include/CppUTest/TestHarness.h"
 
 #include "../include/module_all.h"
-#include "a.h"
+#include "global.h"
 
 using namespace _;
 
@@ -795,18 +795,24 @@ TEST (SCRIPT_TESTS, OperationTests) {
 
     std::cout << "|    Testing Root (@see \"a.h\")...\n";
 
-    void* args[2];
-    float io_number_;                         //< Example variable.
-    char  io_string_[Root::kStringBufferSize];//< Example string.
-    StringCopy (io_string_, "Test");
+    void* args[3];
+    uint8_t io_number_ = 98; //< ASCII:'b'
+    char  io_string_[Parent::kStringBufferSize];//< Example string.
     Bin * bin  = ExpressionBin  (expr);
     Bout* bout = ExpressionBout (expr);
+    
     const Operation* result;
-    result = BoutWrite (bout, Params<3, ADR, FLT, STR, Root::kStringBufferSize> (),
-                        Args (args, &io_number_, &io_string_));
+    result = BoutWrite (bout,
+                        Params<3, ADR, UI1, STR, Parent::kStringBufferSize> (),
+                        Args (args, Address <BEL, ACK, 'a', 'a'> (), &io_number_,
+                              Const ("Test")));
+    BoutPrint (bout);
     CHECK (result == nullptr)
 
-    Window window (bin, bout);
+    ExpressionPrint (expr);
 
+    Window window (bin, bout);
+    // Bypass handshake for testing purposes.
     ExpressionScan (expr, &window);
+    system ("PAUSE");
 }

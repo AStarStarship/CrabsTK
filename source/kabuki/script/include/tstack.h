@@ -30,7 +30,7 @@ inline uint_t MaxStackLength () {
 }
 
 /** A stack of 8, 16, 32, or 64 bit plain-old-data (POD) types.
-
+    
     Stack Memory Layout
 
     @code
@@ -49,7 +49,7 @@ inline uint_t MaxStackLength () {
 template<typename I = int_t>
 struct TStack {
     I size_bytes,   //< Total size of the Stack in 64-bit aligned bytes.
-      header_size,  //< Total size of the Dimensions Header in bytes.
+      reserved,     //< .
       height,       //< Total height of the Stack in elements.
       count;        //< Count of the elements on the stack.
 };

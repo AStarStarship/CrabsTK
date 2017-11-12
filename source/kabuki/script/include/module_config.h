@@ -114,6 +114,7 @@ enum {
     kTimeoutMicroseconds = COM_TIMEOUT_TICKS,
     //< The number of seconds before a timeout over a generic communication link.
     kWordAddressMask = sizeof (void*) - 1,  //< For masking the word address.
+    kMaxAddresLength = 255,                 //< Max address (ADR) length.
 };
 }
 #undef MAX_ERRORS

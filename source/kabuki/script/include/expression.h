@@ -87,20 +87,19 @@ struct Expression {
     } Error;
 
     /** List of Finite Expression States. */
-
     typedef enum States {
         DisconnectedState = 0,
-        AwaitingAckState,
+        AckState,
         AddressState,
         Utf8State,
         Utf16State,
         Utf32State,
-        ScanningArgsState,
-        PodState,
+        ArgsState,
         VarintState,
         ObjectState,
-        HandlingErrorState,
+        ErrorState,
         LockedState,
+        PodState,
     } State;
 
     enum {
@@ -119,21 +118,22 @@ struct Expression {
                      num_states,    //< Number of states on the state stack.
                      bytes_left;    //< Countdown counter for parsing POD types.
     byte             type;          /*< The type of Expression.
-                                        -1 = interprocess no dynamic memory.
-                                        0 = no dynamic memory.
-                                        1 = dynamic memory.
-                                        2 =  interprocess dynamic memory. */
+                                            -1 = interprocess no dynamic memory.
+                                            0 = no dynamic memory.
+                                            1 = dynamic memory.
+                                            2 =  interprocess dynamic memory. */
     volatile byte    bout_state,    //< Bout streaming state.
-                     last_rx_state, //< Last Bout state.
+                     last_bin_state, //< Last Bout state.
                      bin_state;     //< Slot streaming state.
     int16_t          reserved1;
-    int              num_ops,       //< The number of operand.
-                     first_op;      //< The first operation of the current Operand.
+    int              num_ops,       //< Num operands in current scope.
+                     first_op;      //< The first operation of the current scope.
                                     //< being verified.
     hash16_t         hash;          //< Bin data verification hash.
     int16_t          timeout_us;    //< The timeout time.
     timestamp_t      last_time;     //< The last time the Stack was scanned.
-    Operand        * operand;       //< Current Operand object being verified.
+    Operand        * root,          //< The root-level scope of this expression.
+                   * operand;       //< Current Operand object being verified.
     const Operation* result;        //< The result of the Expression.
                                     //< expr is operating on.
     const char   * return_address;  //< The return address.
@@ -249,7 +249,7 @@ KABUKI const Operation* ExpressionExitState (Expression* expr);
 
 /** Pushes the new state onto the expression stack. */
 KABUKI const Operation* ExpressionEnterState (Expression* expr, 
-                                              Expression::State state);
+                                              Bin::State state);
 
 /** Selects the given op for scanning.
 
@@ -301,6 +301,9 @@ KABUKI bool Args (Expression* expr, const uint_t* params, void** args);
 /** Calls the Write function for the Tx slot. */
 KABUKI const Operation* Result (Expression* expr, const uint_t* params, 
                                 void** args);
+
+/** Prints the Expression stack to the std::cout */
+KABUKI void ExpressionPrintStack (Expression* expr);
 
 /** Prints the given Expression to the console. */
 KABUKI void ExpressionPrint (Expression* expr);

@@ -167,9 +167,6 @@ inline const uint_t* FirstOperation (uint_t value) {
     return reinterpret_cast<const uint_t*>(index);
 }
 
-/** Returns the number of members a Star has. */
-KABUKI uintptr_t CountCoperations (const Operation* op);
-
 /** Prints the given Set to the std::out 
     Quote: Wikipedia "In mathematics an operand is the object of a mathematical
     operation, i.e. it is the quantity that is operated on." */

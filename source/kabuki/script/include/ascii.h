@@ -14,18 +14,17 @@
              permissions and limitations under the License.
 */
 
-#pragma once
-#include <stdafx.h>
-
 #ifndef SCRIPT_ASCII_H
 #define SCRIPT_ASCII_H
 
-namespace ascii {
+#include "module_config.h"
+
+namespace _ {
 
 typedef enum {
     NUL = 0,
     SOH,
-    STR,
+    STX,
     ETX,
     EOT,
     ENQ,
@@ -56,7 +55,9 @@ typedef enum {
     RS,
     US,
     DEL = 127
-} C0Code;
+} AsciiCode;
+
+KABUKI const char* AsciiString (AsciiCode ascii_char);
 
 }       //< namespace ascii
 #endif  //< SCRIPT_ASCII_H

@@ -218,17 +218,17 @@
     <ClInclude Include="serial\include\module_config.h">
       <Filter>kabuki\serial</Filter>
     </ClInclude>
-    <ClInclude Include="script\pro_files\a.h">
-      <Filter>kabuki\script\pro_files</Filter>
-    </ClInclude>
-    <ClInclude Include="script\pro_files\assembly.h">
-      <Filter>kabuki\script\pro_files</Filter>
-    </ClInclude>
     <ClInclude Include="this.h">
       <Filter>kabuki</Filter>
     </ClInclude>
     <ClInclude Include="kabuki_toolkit.h">
       <Filter>kabuki</Filter>
+    </ClInclude>
+    <ClInclude Include="script\pro_files\global.h">
+      <Filter>kabuki\script\pro_files</Filter>
+    </ClInclude>
+    <ClInclude Include="script\pro_files\assembly.h">
+      <Filter>kabuki\script\pro_files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -316,11 +316,14 @@
     <ClCompile Include="serial\impl\serial_list_ports_win32.cc">
       <Filter>kabuki\serial</Filter>
     </ClCompile>
-    <ClCompile Include="script\pro_files\script_tester.cc">
-      <Filter>kabuki\script\pro_files</Filter>
-    </ClCompile>
     <ClCompile Include="script\pro_files\script_tests.cc">
       <Filter>kabuki\script\pro_files</Filter>
+    </ClCompile>
+    <ClCompile Include="script\impl\script_ascii.cc">
+      <Filter>kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="pro_files\kabuki_tester.cc">
+      <Filter>kabuki\pro_files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
