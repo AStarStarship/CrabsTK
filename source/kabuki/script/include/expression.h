@@ -47,7 +47,7 @@ namespace _ {
     @endcode
     
     Almost all block of memory in Script has something that grows up and another
-    that grows down. 
+    that grows down.
     
     # Stack Memory Layout
     
@@ -137,7 +137,7 @@ struct Expression {
     const Operation* result;        //< The result of the Expression.
                                     //< expr is operating on.
     const char   * return_address;  //< The return address.
-    volatile const uint_t* header;  //< Pointer to the header being verified.
+    const uint_t* header;           //< Pointer to the header being verified.
     const uint_t * headers;         //< First header ptr in the scan array.
 };
 
@@ -149,7 +149,7 @@ KABUKI const char* ExpressionStateString (Expression::State state);
     @param error The error type.
     @return Returns a Static Error Operation Result. */
 KABUKI const Operation* Result (Expression* expr,
-                                Expression::Error error);
+                                Bin::Error error);
 
 /** Used to return an erroneous result from a B-Input.
     @param  expr    The source Expression.
@@ -159,7 +159,7 @@ KABUKI const Operation* Result (Expression* expr,
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* Result (Expression* expr,
-                                Expression::Error error,
+                                Bin::Error error,
                                 const uint_t* header);
 
 /** Used to return an erroneous result from a B-Input.
@@ -170,7 +170,7 @@ KABUKI const Operation* Result (Expression* expr,
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* Result (Expression* expr, 
-                                Expression::Error error,
+                                Bin::Error error,
                                 const uint_t* header,
                                 byte offset);
 
@@ -182,13 +182,13 @@ KABUKI const Operation* Result (Expression* expr,
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
 KABUKI const Operation* Result (Expression* expr,
-                                Expression::Error error,
+                                Bin::Error error,
                                 const uint_t* header,
                                 byte offset,
                                 uintptr_t* address);
 
-/** Returns the text label of the Expression::Error.
-KABUKI const char* ExpressionErrorString (Expression::Error error); */
+/** Returns the text label of the Bin::Error.
+KABUKI const char* ExpressionErrorString (Bin::Error error); */
 
 /** Prints out an error report to the stdout.
     @param e The error type.
@@ -220,7 +220,7 @@ KABUKI Expression* ExpressionInit (uintptr_t* buffer, uint_t buffer_size,
                                    Operand* root);
 
 /** Gets the base address of the device stack. */
-KABUKI Operand** ExpressionStack (Expression* expr);
+KABUKI Operand** ExpressionStackBase (Expression* expr);
 
 /** Returns true if the Stack uses dynamic memory. */
 KABUKI bool ExpressionIsDynamic (Expression* expr);

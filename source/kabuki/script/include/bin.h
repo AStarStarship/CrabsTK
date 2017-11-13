@@ -97,6 +97,9 @@ struct KABUKI Bin {
 /** Get's the B-Input's buffer.*/
 KABUKI byte* BinBuffer (Bin* bin);
 
+/** Gets a human-readable description for given error. */
+KABUKI const char* BinErrorString (Bin::Error e);
+
 /** Gets a a char for printing out the bin_state. */
 KABUKI const char* BinStateString (Bin::State state);
 

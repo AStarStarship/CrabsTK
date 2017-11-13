@@ -28,7 +28,7 @@ namespace _ {
     struct KABUKI uses C++11 variadic template to ensure only one copy in ROM and to eliminate
     redundant typing. */
 template<const uint_t... N>
-KABUKI const uint_t* Params () {
+KABUKI const uint_t* BSeq () {
     static const uint_t list[sizeof... (N)] = { N... };
     return list;
 }

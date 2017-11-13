@@ -128,7 +128,7 @@ int BoutStreamByte (Bout* bout) {
         (end - start) + (open - begin) + 2;
 
     if (length < 1) {
-        BoutResult (bout, Bout::BufferOverflowError, Params<1, STR> (), 2,
+        BoutResult (bout, Bout::BufferOverflowError, BSeq<1, STR> (), 2,
                     start);
         return -1;
     }
@@ -731,7 +731,7 @@ const Operation* BoutRead (Bout* bout, const uint_t* params, void** args) {
 
 const Operation* BoutConnect (Bout* bout, const char* address) {
     void* args[2];
-    return BoutWrite (bout, Params<2, ADR, ADR> (),
+    return BoutWrite (bout, BSeq<2, ADR, ADR> (),
                       Args (args, address, Address<_::BEL> ()));
 }
 

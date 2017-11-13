@@ -48,7 +48,7 @@ class ChildOperand : public Operand {
     virtual const Operation* Star (int index, Expression* expr) {
         void* args[2];
 
-        static const Operation this_op = { "ChildOperand",
+        static const Operation this_op = { "Child",
             NumOperations (2), FirstOperation ('a'),
             "A child Operand." };
 
@@ -56,34 +56,33 @@ class ChildOperand : public Operand {
             case '?': return &this_op;
             case 'a': {
                 static const Operation op_a = { "SignedIntegerTests",
-                    Params<2, UI1, STR, kStringBufferSize> (),
-                    Params<2, UI1, STR> (),
+                    BSeq<2, UI1, STR, kStringBufferSize> (),
+                    BSeq<2, UI1, STR> (),
                     "Description of functionA.", 0 };
                 if (!expr) return &op_a;
 
-                if (Args (expr, op_a.params, Args (args, &test_ui1_,
-                                                   io_string_)))
+                if (Args (expr, op_a.params, 
+                          Args (args, &test_ui1_, test_str_)))
                     return expr->result;
                     
                 // Function logic here
 
                 return Result (expr, op_a.result, Args (args, &test_ui1_,
-                                                       io_string_));
+                                                       test_str_));
             }
             case 'b': {
                 static const Operation op_b = { "FloatTests",
-                    Params<2, FLT, STR, kStringBufferSize> (),
-                    Params<2, FLT, STR> (),
+                    BSeq<2, FLT, STR, kStringBufferSize> (),
+                    BSeq<2, FLT, STR> (),
                     "Description of functionB.", 0 };
-
                 if (!expr) return &op_b;
 
                 if (Args (expr, op_b.params, Args (args, &test_flt_,
-                          io_string_)))
+                          test_str_)))
                     return expr->result;
 
                 return Result (expr, op_b.result, Args (args, &test_flt_,
-                                                       io_string_));
+                                                       test_str_));
             }
             case _::DEL: {
 
@@ -99,9 +98,9 @@ class ChildOperand : public Operand {
         kStringBufferSize = 16          //< Example string buffer size.
     };
 
-    uint8_t test_ui1_;
-    float test_flt_;                   //< Example variable.
-    char io_string_[kStringBufferSize]; //< Example string.
+    uint8_t test_ui1_;                  //< Text UI1.
+    float test_flt_;                    //< Test FLT.
+    char test_str_[kStringBufferSize]; //< Test STR.
 };
 
 /** Test child Operand. */
@@ -132,8 +131,8 @@ class Parent : public Operand {
             }
             case 'c': {
                 static const Operation op_c = { "FloatTests",
-                    Params<2, FLT, STR, kStringBufferSize> (),
-                    Params<2, FLT, STR> (),
+                    BSeq<2, FLT, STR, kStringBufferSize> (),
+                    BSeq<2, FLT, STR> (),
                     "Description of functionA." };
                 if (!expr) return &op_c;
 
@@ -146,8 +145,8 @@ class Parent : public Operand {
             }
             case 'd': {
                 static const Operation m4 = { "SignedIntegerTests",
-                    Params<2, FLT, STR, kStringBufferSize> (),
-                    Params<2, FLT, STR> (),
+                    BSeq<2, FLT, STR, kStringBufferSize> (),
+                    BSeq<2, FLT, STR> (),
                     "Description of functionB." };
 
                 if (!expr) return &m4;
@@ -189,7 +188,7 @@ class This : public Room {
     virtual const Operation* Star (int index, Expression* expr) {
         void* args[2];
 
-        static const Operation this_op = { "This Room",
+        static const Operation this_op = { "Room",
             NumOperations (1), FirstOperation ('a'),
             "Root scope device.", 0 };
 

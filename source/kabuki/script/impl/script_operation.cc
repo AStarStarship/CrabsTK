@@ -58,7 +58,7 @@ void OperationPrint (const Operation* op) {
               << "\n| Evaluation   ";
     const byte* eval = op->evaluation;
     if (eval == nullptr) {
-        std::cout << "null\n";
+        std::cout << "null";
     } else {
         //PrintMemory (eval)
         std::cout << "@todo Print B-Sequence here";
