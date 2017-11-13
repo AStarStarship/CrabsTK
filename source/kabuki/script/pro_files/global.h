@@ -186,8 +186,6 @@ class This : public Room {
 
     // Interprocess operations.
     virtual const Operation* Star (int index, Expression* expr) {
-        void* args[2];
-
         static const Operation this_op = { "Room",
             NumOperations (1), FirstOperation ('a'),
             "Root scope device.", 0 };

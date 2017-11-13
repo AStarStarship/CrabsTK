@@ -84,7 +84,7 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
 #if DEBUG_SCRIPT
     std::cout << "\n\n| Reading Bin: \n";
     //ParamsPrint (params);
-    printf ("| begin: 0x%p start : %u stop : %u end : %u "
+    printf ("\n| begin: 0x%p start : %u stop : %u end : %u "
             "length: %u ", begin, Diff (begin, start),
             Diff (begin, stop), Diff (begin, end), length);
 #endif
@@ -361,7 +361,7 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
         }
     }
 #if DEBUG_SCRIPT
-    printf ("| Done reading\n");
+    printf ("\n| Done reading\n");
     SlotWipe (slot);
 #endif
 

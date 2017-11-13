@@ -163,32 +163,32 @@ int ClockCompareTimes (time_t time_a, time_t time_b) {
 
     if (moment_a.tm_year != moment_b.tm_year) {
         ++count;
-        std::cout << "| tm_year.a: " << moment_a.tm_year + TIME_EPOCH << " != tm_year.b: "
+        std::cout << "\n| tm_year.a: " << moment_a.tm_year + TIME_EPOCH << " != tm_year.b: "
             << moment_b.tm_year + TIME_EPOCH << '\n';
     }
     if (moment_a.tm_mon != moment_b.tm_mon) {
         ++count;
-        std::cout << "| tm_mon.a: " << moment_a.tm_mon << " != tm_mon.b: "
+        std::cout << "\n| tm_mon.a: " << moment_a.tm_mon << " != tm_mon.b: "
             << moment_b.tm_mon + 1 << '\n';
     }
     if (moment_a.tm_mday != moment_b.tm_mday) {
         ++count;
-        std::cout << "| tm_mday.a: " << moment_a.tm_mday << " != tm_mday.b: "
+        std::cout << "\n| tm_mday.a: " << moment_a.tm_mday << " != tm_mday.b: "
             << moment_b.tm_mday << '\n';
     }
     if (moment_a.tm_hour != moment_b.tm_hour) {
         ++count;
-        std::cout << "| tm_hour.a: " << moment_a.tm_hour << " != tm_hour.b: "
+        std::cout << "\n| tm_hour.a: " << moment_a.tm_hour << " != tm_hour.b: "
             << moment_b.tm_hour << '\n';
     }
     if (moment_a.tm_min != moment_b.tm_min) {
         ++count;
-        std::cout << "| tm_min.a: " << moment_a.tm_min << " != tm_min.b: "
+        std::cout << "\n| tm_min.a: " << moment_a.tm_min << " != tm_min.b: "
             << moment_b.tm_min << '\n';
     }
     if (moment_a.tm_sec != moment_b.tm_sec) {
         ++count;
-        std::cout << "| tm_sec.a: " << moment_a.tm_sec << " != tm_sec.b: "
+        std::cout << "\n| tm_sec.a: " << moment_a.tm_sec << " != tm_sec.b: "
             << moment_b.tm_sec << '\n';
     }
     return count;
@@ -203,32 +203,32 @@ int ClockCompareTimes (time_t t, int year, int month, int day,
 
     if (year - TIME_EPOCH != std_tm.tm_year) {
         ++count;
-        std::cout << "| Expecting year " << year << " but found "
+        std::cout << "\n| Expecting year " << year << " but found "
             << std_tm.tm_year + TIME_EPOCH << '\n';
     }
     if (month != std_tm.tm_mon + 1) {
         ++count;
-        std::cout << "| Expecting month " << month << " but found "
+        std::cout << "\n| Expecting month " << month << " but found "
             << std_tm.tm_mon + 1 << '\n';
     }
     if (day != std_tm.tm_mday) {
         ++count;
-        std::cout << "| Expecting day " << day << " but found "
+        std::cout << "\n| Expecting day " << day << " but found "
             << std_tm.tm_mday << '\n';
     }
     if (hour != std_tm.tm_hour) {
         ++count;
-        std::cout << "| Expecting hour " << hour << " but found "
+        std::cout << "\n| Expecting hour " << hour << " but found "
             << std_tm.tm_hour << '\n';
     }
     if (minute != std_tm.tm_min) {
         ++count;
-        std::cout << "| Expecting minute " << minute << " but found "
+        std::cout << "\n| Expecting minute " << minute << " but found "
             << std_tm.tm_min << '\n';
     }
     if (second != std_tm.tm_sec) {
         ++count;
-        std::cout << "| Expecting sec " << second << " but found "
+        std::cout << "\n| Expecting sec " << second << " but found "
             << std_tm.tm_sec << '\n';
     }
     return count;
@@ -638,7 +638,7 @@ const char* ClockParseUnixTimeString (const char* input, time_t& result) {
     char* end = (char*)ClockParseTimeStructString (input, &std_tm);
 
     t = mktime (&std_tm);
-    std::cout << "|\n| Found ";
+    std::cout << "\n|\n| Found ";
     ClockPrintTimeStruct (&std_tm);
     char buffer[26];
     ClockPrintStringTime (buffer, t);

@@ -52,24 +52,24 @@ const char* BoutStateString (Bout::State state) {
 }
 
 const Operation* BoutResult (Bout* bout, Bout::Error error) {
-    std::cout << "\nBout " << BoutErrorString (error) << " Error!\n";
+    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
     return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header) {
-    std::cout << "\nBout " << BoutErrorString (error) << " Error!\n";
+    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
     return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header,
                              uint_t offset) {
-    std::cout << "\nBout " << BoutErrorString (error) << " Error!\n";
+    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
     return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header,
                              uint_t offset, byte* address) {
-    std::cout << "\nBout " << BoutErrorString (error) << " Error!\n";
+    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
     return reinterpret_cast<const Operation*> (1);
 }
 
@@ -141,21 +141,21 @@ int BoutStreamByte (Bout* bout) {
 void BoutPrint (Bout* bout) {
     PrintLine ('_');
     if (bout == nullptr) {
-        printf ("| Bout: NIL\n");
+        printf ("\n| Bout: NIL");
         PrintLine ('_');
         return;
     }
     uint_t size = bout->size;
-    printf ("| Bout 0x%p: size: %u, start: %u, stop: %u, read: %u\n", bout,
+    printf ("\n| Bout 0x%p: size: %u, start: %u, stop: %u, read: %u", bout,
             size, bout->start, bout->stop, bout->read);
     PrintMemory (BoutBuffer (bout), size + 64); // @todo remove the + 64.);
 }
 
 const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
-    std::cout << "\n\nWriting ";
+    std::cout << "\n|\n|Writing ";
     ParamsPrint (params); 
     std::cout << " to B-Output:";
-    printf ("%p\n", bout);
+    printf ("%p", bout);
     BoutPrint (bout);
     if (bout == nullptr)
         return BoutResult (bout, Bout::RoomError);
@@ -187,7 +187,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
              arg_index = 0,                 //< Index in the args.
              length,                        //< Length of a type to write.
              obj_size_width;                //< Width of the array size.
-    hash16_t hash = 0;                      //< 16-bit prime hash.
+    hash16_t hash = kLargest16BitPrime;     //< Reset hash to largest 16-bit prime.
     const uint_t* param = params;           //< Pointer to the current param.
     // Convert the socket offsets to pointers.
     byte* begin = BoutBuffer (bout),            //< Beginning of the buffer.
@@ -218,7 +218,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     for (index = 1; index <= num_params; ++index) {
         type = params[index];
 #if DEBUG_SCRIPT
-        printf ("| param:%2i TType:%s start:%u, stop:%u space:%u value:", 
+        printf ("\n| param:%2i TType:%s start:%u, stop:%u space:%u value:", 
                 arg_index + 1, TypeString (type), Diff (begin, start),
                 Diff (begin, stop), space);
 #endif
@@ -240,7 +240,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 }
                 // Load the source data pointer and increment args.fs
                 ui1_ptr = reinterpret_cast<const byte*> (args[arg_index]);
-                printf ("\"%s\"\n", ui1_ptr);
+                printf ("\"%s\"", ui1_ptr);
 
                 // We know we will always have at least one null-term char.
                 ui1 = *ui1_ptr;
@@ -710,19 +710,108 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             }
         }
         ++arg_index;
-        std::cout << '\n';
     }
     if (space < 3)
         return BoutResult (bout, Bout::BufferOverflowError, params, index,
                            start);
     //space -= 2;   //< We don't need to save this variable.
-    std::cout << "\n| Done writing to B-Output. :-)\n";
-    *stop = hash & 0xff;
+    *stop = (byte)hash;
     if (++stop >= end) stop -= size;
     *stop = (byte)(hash >> 8);
     if (++stop >= end) stop -= size;
     bout->stop = Diff (begin, stop);
+    printf ("\n| Done writing to B-Output with the hash 0x%x.", hash);
     return 0;
+}
+
+void BoutRingBell (Bout* bout, const char* address) {
+    if (bout == nullptr) {
+        return;
+    }
+    if (address == nullptr) {
+        address = "";
+    }
+    std::cout << "\n|\n| Ringing BEL to address:" << address;
+
+    // Temp variables packed into groups of 8 bytes for memory alignment.
+    byte c;
+
+    uint_t size = bout->size,               //< Size of the buffer.
+        space;                              //< Space in the buffer.
+    // Convert the Slot offsets to pointers.
+    byte* begin = BoutBuffer (bout),        //< Beginning of the buffer.
+        * end   = begin + size,             //< End of the buffer.
+        * start = begin + bout->start,      //< Start of the data.
+        * stop  = begin + bout->stop;       //< Stop of the data.
+    space = SlotSpace (start, stop, size);
+    if (space == 0) {
+#if DEBUG_SCRIPT
+        std::cout << "\n| Buffer overflow!";
+#endif  //< DEBUG_SCRIPT
+        return;
+    }
+    *stop = BEL;
+    if (++stop >= end) stop -= size;
+
+    c = *address;
+    while (c) {
+        if (space == 0) {
+#if DEBUG_SCRIPT
+            std::cout << "\n| Buffer overflow!";
+#endif  //< DEBUG_SCRIPT
+            return;
+        }
+        *stop = c;
+        if (++stop >= end) stop -= size;
+        ++address;
+        c = *address;
+    }
+    bout->stop = Diff (begin, stop);
+}
+
+void BoutAckBack (Bout* bout, const char* address) {
+    if (bout == nullptr) {
+        return;
+    }
+    if (address == nullptr) {
+        address = "";
+    }
+    std::cout << "\n|\n| Ringing BEL to address:" << address;
+
+    // Temp variables packed into groups of 8 bytes for memory alignment.
+    byte c;
+
+    uint_t size = bout->size,               //< Size of the buffer.
+        space;                              //< Space in the buffer.
+    // Convert the Slot offsets to pointers.
+    byte* begin = BoutBuffer (bout),        //< Beginning of the buffer.
+        * end   = begin + size,             //< End of the buffer.
+        * start = begin + bout->start,      //< Start of the data.
+        * stop  = begin + bout->stop;       //< Stop of the data.
+    space = SlotSpace (start, stop, size);
+    if (space == 0) {
+#if DEBUG_SCRIPT
+        std::cout << "\n| Buffer overflow!";
+#endif  //< DEBUG_SCRIPT
+        return;
+    }
+    *stop = ACK;
+    if (++stop >= end) stop -= size;
+
+    c = *address;
+    while (c) {
+        if (space == 0) {
+#if DEBUG_SCRIPT
+            std::cout << "\n| Buffer overflow!";
+#endif  //< DEBUG_SCRIPT
+            return;
+        }
+        *stop = c;
+        if (++stop >= end) stop -= size;
+        ++address;
+        c = *address;
+    }
+    bout->stop = Diff (begin, stop);
 }
 
 const Operation* BoutRead (Bout* bout, const uint_t* params, void** args) {

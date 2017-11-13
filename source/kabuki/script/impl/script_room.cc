@@ -169,7 +169,7 @@ uintptr_t Room::GetSizeBytes () {
 
 void Room::Print () {
     PrintLine ();
-    std::cout << "| Room: ";
+    std::cout << "\n| Room: ";
 }
 
 Room* ChineseRoom (Room* room) {

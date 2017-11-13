@@ -23,6 +23,10 @@
 namespace _ {
 
 void ParamsPrint (const uint_t* params) {
+    if (params == 0) {
+        std::cout << "null\n";
+        return;
+    }
     if (params < (const uint_t*)256) {
         std::cout << reinterpret_cast<uintptr_t> (params) << '\n';
         return;

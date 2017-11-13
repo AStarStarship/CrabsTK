@@ -29,9 +29,9 @@ namespace _ {
     Expressions (exprs or expr) must be word-aligned in order to run correctly
     so it's best to scan and word align the data types in the same sweep.
 
-    Exprs are composed of one B-Input (Bin) and one B-Output (Bout) socket. The 
-    App/Driver/User writes to the end of the Tx buffer and the driver reads from 
-    the beginning. The user writes are synchronous and the driver reads are 
+    Exprs are composed of one B-Input (Bin) and one B-Output (Bout) socket. The
+    App/Driver/User writes to the end of the Tx buffer and the driver reads from
+    the beginning. The user writes are synchronous and the driver reads are
     asynchronous.
     
     # Ring Buffer Streaming Diagram
@@ -64,8 +64,6 @@ namespace _ {
         |        Expression       |
         |=========================|
         |   Stack of Operand**    |
-        |=========================|
-        | Stack of const uint_t** |
      +  |=========================|
      |  |    Expression struct    |
     0xN |=========================|
@@ -86,22 +84,6 @@ struct Expression {
         RoomError
     } Error;
 
-    /** List of Finite Expression States. */
-    typedef enum States {
-        DisconnectedState = 0,
-        AckState,
-        AddressState,
-        Utf8State,
-        Utf16State,
-        Utf32State,
-        ArgsState,
-        VarintState,
-        ObjectState,
-        ErrorState,
-        LockedState,
-        PodState,
-    } State;
-
     enum {
         kMinStackSize = 16,         //< The size of the expr stack.
         kMinBufferSize = 2,         //< The minimum buffer size.
@@ -112,37 +94,29 @@ struct Expression {
                      stack_count,   //< Number of Operands(string) on the stack.
                      stack_size,    //< Stack buffer size and 1/4 the state
                                     //< stack height.
-                     verify_count,  //< Height of header and cursors stacks.
-                     type_index,    //< The index in the current type being
-                                    //< scanned.
+                     type,          //< Current type being scanned.
                      num_states,    //< Number of states on the state stack.
-                     bytes_left;    //< Countdown counter for parsing POD types.
-    byte             type;          /*< The type of Expression.
-                                            -1 = interprocess no dynamic memory.
-                                            0 = no dynamic memory.
-                                            1 = dynamic memory.
-                                            2 =  interprocess dynamic memory. */
-    volatile byte    bout_state,    //< Bout streaming state.
-                     last_bin_state, //< Last Bout state.
-                     bin_state;     //< Slot streaming state.
-    int16_t          reserved1;
-    int              num_ops,       //< Num operands in current scope.
-                     first_op;      //< The first operation of the current scope.
-                                    //< being verified.
+                     bytes_left,    //< Countdown counter for parsing POD types.
+                     params_left;   //< Height of header and cursors stacks.
+    byte             bout_state,    //< Bout streaming state.
+                     bin_state,     //< Slot streaming state.
+                     last_bin_state,//< Last Bin state.
+                     last_byte;     //< The last byte read.
+    uint32_t         utf32_char;    //< The current UTF-32 char being scanned.
     hash16_t         hash;          //< Bin data verification hash.
-    int16_t          timeout_us;    //< The timeout time.
+    uint32_t         timeout_us ;   //< The timeout time in microseconds.
     timestamp_t      last_time;     //< The last time the Stack was scanned.
-    Operand        * root,          //< The root-level scope of this expression.
-                   * operand;       //< Current Operand object being verified.
     const Operation* result;        //< The result of the Expression.
                                     //< expr is operating on.
-    const char   * return_address;  //< The return address.
-    const uint_t* header;           //< Pointer to the header being verified.
-    const uint_t * headers;         //< First header ptr in the scan array.
+    uintptr_t        buffer_size,   //< The expression buffer_size.
+                     buffer_left;   //< Num bytes left in the buffer.
+    byte           * buffer;        //< Pointer to the word-aligned Expression.
+    const char     * return_address;//< The return address.
+    const uint_t   * header,        //< Pointer to the header being verified.
+                   * header_start;
+    Operand        * operand,       //< Current script Operand.
+                   * root;          //< The root-level scope Operand.
 };
-
-/** Gets a a char for printing out the bin_state. */
-KABUKI const char* ExpressionStateString (Expression::State state);
 
 /** Used to return an erroneous result from a B-Input.
 
@@ -217,13 +191,17 @@ KABUKI Bout* ExpressionBout (Expression* expr);
     @param root The root-scope device. */
 KABUKI Expression* ExpressionInit (uintptr_t* buffer, uint_t buffer_size,
                                    uint_t stack_count,
-                                   Operand* root);
+                                   Operand* root,
+                                   uintptr_t* unpacked_buffer, 
+                                   uintptr_t unpacked_size);
 
 /** Gets the base address of the device stack. */
-KABUKI Operand** ExpressionStackBase (Expression* expr);
+inline Operand** ExpressionStack (Expression* expr) {
+    return reinterpret_cast<Operand**> (&expr->root);
+}
 
 /** Returns true if the Stack uses dynamic memory. */
-KABUKI bool ExpressionIsDynamic (Expression* expr);
+//KABUKI bool ExpressionIsDynamic (Expression* expr);
 
 KABUKI uintptr_t* ExpressionEndAddress (Expression* expr);
 
@@ -241,32 +219,16 @@ KABUKI const Operation* Push (Expression* expr, Operand* op);
     char upon failure. */
 KABUKI const Operation* Pop (Expression* expr);
 
-/** Gets the base address of the state stack. */
-KABUKI uintptr_t* ExpressionStates (Expression* expr);
-
 /** Exits the current state. */
-KABUKI const Operation* ExpressionExitState (Expression* expr);
+KABUKI byte ExpressionExitState (Expression* expr);
 
-/** Pushes the new state onto the expression stack. */
+/** Sets the new state onto the expression stack. */
+KABUKI const Operation* ExpressionSetState (Expression* expr,
+                                            Bin::State state);
+
+/** Saves the current bin_state and sets the bin_state to the new state. */
 KABUKI const Operation* ExpressionEnterState (Expression* expr, 
                                               Bin::State state);
-
-/** Selects the given op for scanning.
-
-    @warning Function does not check for null pointers. You have been warned. */
-KABUKI const Operation* ExpressionPushScanHeader (Expression* expr, const uint_t* header);
-
-/** Selects the given op for scanning.
-
-    @warning Function does not check for null pointers. You have been warned. */
-KABUKI const Operation* ExpressionPushScanHeader (Expression* expr,
-                                                  volatile const uint_t* header);
-
-/** Pops a header off the scan stack. */
-KABUKI const Operation* ExpressionPopScanHeader (Expression* expr);
-
-/** Scans the next type header type. */
-KABUKI void ExpressionScanNextType (Expression* expr);
 
 /** Streams a B-Output byte. */
 KABUKI byte ExpressionStreamBout (Expression* expr);
@@ -280,7 +242,7 @@ KABUKI void ExpressionScan (Expression* expr, Portal* io);
 KABUKI bool ExpressionContains (Expression* expr, void* address);
 
 /** Pushes a header onto the scan stack.*/
-KABUKI const Operation* ExpressionPushHeader (Expression* expr,
+KABUKI const Operation* ExpressionScanHeader (Expression* expr,
                                               const uint_t* header);
 
 /** Gets the base address of the header stack. */
@@ -294,6 +256,11 @@ KABUKI void ExpressionCancel (Expression* expr);
 
 /** Cancels the current expr and writes zeros to the buffer. */
 KABUKI void ExpressionClear (Expression* expr);
+
+/** Rings the bell of the given address. */
+KABUKI void ExpressionRingBell (Expression* expr, const char* address = "");
+
+KABUKI void ExpressionAckBack (Expression* expr, const char* address = "");
 
 /** Calls the Read function for the Bout slot. */
 KABUKI bool Args (Expression* expr, const uint_t* params, void** args);

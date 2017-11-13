@@ -24,11 +24,11 @@ using namespace _;
 
 TEST_GROUP (SCRIPT_TESTS) {
     void setup () {
-        PrintLine ("| ");
+        PrintLine ("\n| ");
     }
 
     void teardown () {
-        std::cout << "| Test completed.\n";
+        std::cout << "\n| Test completed.\n";
         PrintLine ("+", '-');
     }
 };
@@ -44,7 +44,7 @@ template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
     time (&t);
     tm* moment = localtime (&t);
     if (!moment) {
-        cout << "|\n| Created invalid test moment: " << moment << '\n';
+        cout << "\n|\n| Created invalid test moment: " << moment << '\n';
         return 0;
     }
     moment->tm_year = year - TIME_EPOCH;
@@ -101,7 +101,7 @@ TEST (SCRIPT_TESTS, ClockTests) {
     };
     for (int i = 0; i < 18; ++i) {
         PrintBreak ("<", '-');
-        cout << "| " << i;
+        cout << "\n| " << i;
         time_t t = 0;
         result = ParseTimeString (strings[i], t);
         CompareTimes (t, 2017, 8, 9, 0, 0, 0);
@@ -142,7 +142,7 @@ TEST (SCRIPT_TESTS, ClockTests) {
     cout << "<\n< Done testing date parsing utils! :-)\n";
 }
 TEST (SCRIPT_TESTS, ExpressionTests) {
-    std::cout << "| Running ExpressionTests...\n";
+    std::cout << "\n| Running ExpressionTests...\n";
     enum {
         kBufferSize = 248 / sizeof (uint_t)
     };
@@ -178,13 +178,13 @@ TEST (SCRIPT_TESTS, ExpressionTests) {
 }
 
 TEST (SCRIPT_TESTS, RoomTests) {
-    printf ("|  - Running RoomTestOne...\n");
+    printf ("\n|  - Running RoomTestOne...\n");
 }
 
 TEST (SCRIPT_TESTS, BookTests) {
-    PrintLineBreak ("|  + Running BookTests\n", 10);
+    PrintLineBreak ("\n|  + Running BookTests\n", 10);
 
-    PrintLineBreak ("|  - Running BookInit...\n", 5, ' ');
+    PrintLineBreak ("\n|  - Running BookInit...\n", 5, ' ');
     int8_t index;
 
     enum {
@@ -271,10 +271,10 @@ TEST (SCRIPT_TESTS, BookTests) {
 }*/
 
 TEST (SCRIPT_TESTS, TableTests) {
-    std::cout << "|  - Running TableTest...\n";
+    std::cout << "\n|  - Running TableTest...\n";
     char_t index;
     uintptr_t buffer[128];
-    printf ("| &buffer[0]:%p &buffer[127]:%p\n", &buffer[0], &buffer[127]);
+    printf ("\n| &buffer[0]:%p &buffer[127]:%p\n", &buffer[0], &buffer[127]);
     Table* table = TableInit (buffer, 8, 128);
 
     CHECK (table != nullptr)
@@ -360,7 +360,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     //< It works right with an extra 4 elements but no less. Am I writing
     //< something to the end of the buffer???
 
-    PrintLineBreak ("|  - Running ReadWriteTests...", 5);
+    PrintLineBreak ("\n|  - Running ReadWriteTests...", 5);
     std::cout << " kBufferSize: "     << kBufferSize 
               << " kElementsBuffer: " << kElementsBuffer;
 
@@ -401,7 +401,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     //BoutPrint (bout);
     STRCMP_EQUAL (expected_string2, found_string2)
     
-    PrintLineBreak ("|  - Testing BOL/UI1/SI1...", 5);
+    PrintLineBreak ("\n|  - Testing BOL/UI1/SI1...", 5);
 
     static const int8_t si1_p_expected = '+',
                         si1_n_expected = (int8_t)196;
@@ -423,7 +423,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (ui1_expected, ui1_found)
     CHECK_EQUAL (bol_expected, bol_found)
 
-    PrintLineBreak ("|  - Testing UI2/SI2/HLF...", 5);
+    PrintLineBreak ("\n|  - Testing UI2/SI2/HLF...", 5);
 
     static const int16_t si2_p_expected = '+',
         si2_n_expected = (int16_t)(0xFF00 | '-');
@@ -460,7 +460,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (ui2_expected, ui2_found)
     CHECK_EQUAL (hlf_expected, hlf_found)
 
-    PrintLineBreak ("|  - Testing UI4/SI4/FLT/TMS...", 5);
+    PrintLineBreak ("\n|  - Testing UI4/SI4/FLT/TMS...", 5);
 
     static const int32_t  si4_p_expected = '+',
                           si4_n_expected = (int32_t)(0xFFFFFF00 | '-');
@@ -486,7 +486,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (ui4_expected, ui4_found)
     CHECK_EQUAL (flt_expected, flt_found)
     
-    PrintLineBreak ("|  - Testing TMU/UI8/SI1/DBL...\n", 5);
+    PrintLineBreak ("\n|  - Testing TMU/UI8/SI1/DBL...\n", 5);
 
     static const time_t tmu_expected = 0xE7;
     static const int64_t si8_p_expected = '+',
@@ -574,7 +574,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (sv2_expected[5], sv2_found[5])
     CHECK_EQUAL (sv2_expected[6], sv2_found[6])
 
-    PrintLineBreak ("|  - Testing UV2...\n", 5);
+    PrintLineBreak ("\n|  - Testing UV2...\n", 5);
 
     static const uint16_t uv2_expected[] = { 0, 1, 1 << 7, 1 << 14 };
 
@@ -590,7 +590,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (uv2_expected[2], uv2_found[2])
     CHECK_EQUAL (uv2_expected[3], uv2_found[3])
     
-    PrintLineBreak ("|  - Testing SV4...\n", 5);
+    PrintLineBreak ("\n|  - Testing SV4...\n", 5);
 
     static const int32_t sv4_expected[] = { 0, 1, -1, 1 << 7, -(1 << 7), 
                                             1 << 14, -(1 << 14),
@@ -625,7 +625,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (sv4_expected[9], sv4_found[9])
     CHECK_EQUAL (sv4_expected[10], sv4_found[10])
 
-    PrintLineBreak ("|  - Testing UV4...\n", 5);
+    PrintLineBreak ("\n|  - Testing UV4...\n", 5);
 
     static const uint32_t uv4_expected[] = { 
         0, 1, 1 << 7, 1 << 14, 1 << 21, 1 << 28 };
@@ -645,7 +645,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (uv4_expected[4], uv4_found[4])
     CHECK_EQUAL (uv4_expected[5], uv4_found[5])
     
-    PrintLineBreak ("|  - Testing SV8...\n", 5);
+    PrintLineBreak ("\n|  - Testing SV8...\n", 5);
 
     static const int64_t sv8_expected[] = {
         0, 1, -1, 1 << 7, -(1 << 7),
@@ -704,7 +704,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
         CHECK_EQUAL (sv8_expected[17], sv8_found[17])
         CHECK_EQUAL (sv8_expected[18], sv8_found[18])
 
-        PrintLineBreak ("|  - Testing UV8...\n", 5);
+        PrintLineBreak ("\n|  - Testing UV8...\n", 5);
 
     static const uint64_t uv8_expected[] = {
         0, 1, 1 << 7, 1 << 14, 1 << 21,
@@ -780,34 +780,37 @@ TEST (SCRIPT_TESTS, UtilsTests) {
 
 TEST (SCRIPT_TESTS, OperationTests) {
     enum {
-        kBufferSize = 1024,
+        kBufferSize = 2048,
         kBufferWords = kBufferSize / sizeof (uintptr_t),
         kStackHeight = 8,
     };
-    uintptr_t buffer[kBufferWords];
-    printf ("|  - Running OperationTests in address ranges: [0x%p:0x%p]\n",
+    uintptr_t buffer[kBufferWords],
+              unpacked_expr[kBufferWords];
+    printf ("\n|  - Running OperationTests in address ranges: [0x%p:0x%p]\n",
             &buffer[0], &buffer[kBufferWords-1]);
 
     This a;
 
-    Expression* expr = ExpressionInit (buffer, kBufferSize, kStackHeight, &a);
+    Expression* expr = ExpressionInit (buffer, kBufferSize, kStackHeight, &a,
+                                       unpacked_expr, kBufferSize);
     ExpressionPrint (expr);
 
-    std::cout << "|    Testing Root (@see \"a.h\")...\n";
+    std::cout << "\n|    Testing Root (@see \"a.h\")...\n";
 
     void* args[4];
     uint8_t io_number_ = 98; //< ASCII:'b'
-    char  io_string_[Parent::kStringBufferSize];//< Example string.
     Bin * bin  = ExpressionBin  (expr);
     Bout* bout = ExpressionBout (expr);
     
     const Operation* result;
+    ExpressionRingBell (expr);
+    ExpressionAckBack (expr);
     result = BoutWrite (bout,
                         BSeq<4, ADR, UI1, STR, Parent::kStringBufferSize, 
                                 ADR> (),
-                        Args (args, Address <BEL, ACK, 'a', 'a', 'a'> (), 
+                        Args (args, Address <'a', 'a', 'a'> (), 
                               &io_number_, Const ("Test"), 
-                              Address<DEL, CR> ()));
+                              Address<BS, CR> ()));
     BoutPrint (bout);
     CHECK (result == nullptr)
 

@@ -145,6 +145,12 @@ KABUKI const Operation* BoutRead (Bout* bout, const uint_t* params,
 /** Sends a connection message to the given address. */
 KABUKI const Operation* BoutConnect (Bout* bout, const char* address);
 
+/** Sends a connection message to the given address. */
+KABUKI void BoutRingBell (Bout* bout, const char* address);
+
+/** Sends a connection message to the given address. */
+KABUKI void BoutAckBack (Bout* bout, const char* address);
+
 /** Returns a reference to the bout for this assembly. */
 template<uint_t kNumber>
 inline Bout& RoomLog () {

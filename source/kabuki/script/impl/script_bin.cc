@@ -81,16 +81,13 @@ const char* BinStateString (Bin::State state) {
         "UTF-16",       //< 3
         "UTF-32",       //< 4
         "Varint",       //< 5
-        "OB1",          //< 6
-        "OB2",          //< 7
-        "OB4",          //< 8
-        "OB8",          //< 9
-        "Hash",         //< 10
-        "Error",        //< 11
-        "Disconnected", //< 12
-        "ACK",          //< 13
-        "Locked",       //< 14
-        "POD"           //< 15
+        "Object",       //< 6
+        "Hash",         //< 7
+        "Error",        //< 8
+        "Disconnected", //< 9
+        "ACK",          //< 10
+        "Locked",       //< 11
+        "POD"           //< 12
     };
     static const char kErrorString[] = "Error\0";
     if (state < 0)
@@ -192,11 +189,11 @@ bool BinIsReadable (Bin* bin) {
 void BinPrint (Bin* bin) {
     PrintLine ('_');
     if (bin == nullptr) {
-        printf ("| Bin null\n");
+        printf ("\n| Bin null\n");
         return;
     }
     uint_t size = bin->size;
-    printf ("| Bin 0x%p: size: %u, start: %u, stop: %u, read: %u\n", bin, size,
+    printf ("\n| Bin 0x%p: size: %u, start: %u, stop: %u, read: %u\n", bin, size,
         bin->start, bin->stop, bin->read);
     PrintMemory (BinBuffer (bin), size + sizeof (Bin));
 }
@@ -247,10 +244,10 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 
     if (num_params == 0) return 0;  //< Nothing to do.
 
-    hash = 0;
+    hash = kLargest16BitPrime;
     size = bin->size;
 
-    byte* begin = BinBuffer (bin),       //< The beginning of the buffer.
+    byte* begin = BinBuffer (bin),    //< The beginning of the buffer.
         * end   = begin + size,       //< The end of the buffer.
         * start = begin + bin->start, //< The start of the data.
         * stop  = begin + bin->stop;  //< The stop of the data.
@@ -895,7 +892,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                           start);
 
 //#if DEBUG_SCRIPT
-//    //printf ("| Done reading\n");
+//    //printf ("\n| Done reading\n");
 //    SlotClear (begin, bin->start, start, stop, end, size);
 //#endif
 

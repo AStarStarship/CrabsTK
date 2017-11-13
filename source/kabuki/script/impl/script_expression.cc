@@ -24,55 +24,38 @@
 
 namespace _ {
 
-//const char* ExpressionErrorString (byte state) {
-//    return "@todo Write ExpressionErrorString (byte)";
-//}
-
-const char* ExpressionStateString (Expression::State state) {
-    static const char* strings[] = {
-        "Disconnected",
-        "Scanning address",
-        "Scanning char",
-        "Scanning args",
-        "Scanning POD",
-        "Handling error",
-        "Scanning varint",
-        "Locked" };
-    return strings[state];
-}
-
 const Operation* Result (Expression* expr, Bin::Error error) {
-    std::cout << "\nExpression " << BinErrorString (error) 
-              << " Error!\n";
+    std::cout << "\n| Expression " << BinErrorString (error) 
+              << " Error!";
     return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* Result (Expression* expr, Bin::Error error,
                          const uint_t* header) {
-    std::cout << "\nExpression " << BinErrorString (error)
-              << " Error!\n";
+    std::cout << "\n| Expression " << BinErrorString (error)
+              << " Error!";
     return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* Result (Expression* expr, Bin::Error error, 
                          const uint_t* header, byte offset) {
-    std::cout << "\nExpression " << BinErrorString (error)
-              << " Error!\n";
+    std::cout << "\n| Expression " << BinErrorString (error)
+              << " Error!";
     return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* Result (Expression* expr, Bin::Error error, 
                          const uint_t* header, byte offset, byte* address) {
-    std::cout << "\nExpression " << BinErrorString (error)
-              << " Error!\n";
+    std::cout << "\n| Expression " << BinErrorString (error)
+              << " Error!";
     return reinterpret_cast<const Operation*> (1);
 }
 
 const Operation* Result (Expression* expr, Bin::Error error, 
                          const uint_t* header, byte offset, 
                          uintptr_t* address) {
-    std::cout << "\nExpression " << BinErrorString (error)
-              << " Error!\n";
+    std::cout << "\n| Expression " << BinErrorString (error)
+              << " Error!";
     return reinterpret_cast<const Operation*> (1);
 }
 
@@ -102,60 +85,75 @@ Bout* ExpressionBout (Expression* expr) {
 }
 
 Expression* ExpressionInit (uintptr_t* buffer, uint_t buffer_size,
-                            uint_t stack_count, Operand* root) {
-    if (buffer == nullptr)
+                            uint_t stack_size, Operand* root,
+                            uintptr_t* unpacked_buffer,
+                            uintptr_t unpacked_size) {
+    if (buffer == nullptr) {
         return nullptr;
-    if (buffer_size < Expression::kMinBufferSize)
+}
+    if (buffer_size < Expression::kMinBufferSize) {
         return nullptr;
-    if (stack_count == 0)
-        stack_count = 1;    //< Minimum stack size.
+    }
+    if (stack_size < kMinStackSize) {
+        stack_size = kMinStackSize;    //< Minimum stack size.
+    }
+    if (unpacked_buffer == nullptr) {
+#if DEBUG_SCRIPT 
+        std::cout << "\n| Error: unpacked_buffer was null!";
+#endif  //< DEBUG_SCRIPT
+    }
+
+    if (root == nullptr) {
+#if DEBUG_SCRIPT
+        std::cout << "\n| Error: root can't be null.";
+#endif  //< DEBUG_SCRIPT
+        return nullptr;
+    }
 
     Expression* expr = reinterpret_cast<Expression*> (buffer);
 
-    uint_t total_stack_size = (stack_count - 1) * (2 * sizeof (void*));
+    uint_t total_stack_size = (stack_size - 1) * (2 * sizeof (Operand*));
     // Calculate the size of the Slot and Stack.
     uint_t size = (buffer_size - sizeof (Expression) -
         total_stack_size + 1) >> 1;  // >>1 to divide by 2
-    expr->type         = 0;
+    //expr->type         = 0;       //< @todo Delete me
     expr->bout_state   = Bout::LockedState;
     expr->bin_state    = Bin::DisconnectedState;
-    expr->stack_count  = 0;
-    expr->verify_count = 0;
-    expr->type_index   = NIL;
-    expr->stack_size   = stack_count;
+    expr->stack_count  = 1;
+    expr->type   = NIL;
+    expr->stack_size   = stack_size;
     expr->num_states   = 0;
     expr->operand      = nullptr;
 #if DEBUG_SCRIPT
-    printf ("\nInitializing Stack:\n"
-        "sizeof (Stack): %u\n"
-        "(stack_count * (2 * sizeof (void*))): %u\n"
-        "stack_count: %u buffer_size: %u size: %u\n",
-        sizeof (Expression), (stack_count *
-        (2 * sizeof (void*))), stack_count,
+    printf ("\n| Initializing Stack: "
+        "\n| sizeof (Stack): %u"
+        "\n| (stack_count * (2 * sizeof (void*))): %u"
+        "\n| stack_count: %u buffer_size: %u size: %u",
+        sizeof (Expression), (stack_size *
+        (2 * sizeof (void*))), stack_size,
         buffer_size, size); 
 #endif //< DEBUG_SCRIPT
     expr->bytes_left = 0;
     uint_t offset = sizeof (Expression) + total_stack_size - sizeof (void*),
         bin_offset = sizeof (Bin) + total_stack_size + offset;
-    expr->header_size = sizeof (Expression) + 2 * sizeof (void*) * stack_count;
-    expr->header = 0;
-    expr->headers = 0;
+    expr->header_size = sizeof (Expression) + 2 * sizeof (void*) * stack_size;
+    expr->hash = kLargest16BitPrime;         //< Reset hash to largest 16-bit prime.
+    expr->result = nullptr;
+    expr->buffer = reinterpret_cast<byte*> (unpacked_buffer);
+    expr->buffer_size = unpacked_size;
+    expr->buffer_left = unpacked_size;
+    expr->header = nullptr;
+    expr->header_start = nullptr;
     expr->root = root;
-    printf ("expr->op: 0x%p\n", expr->operand);
+    printf ("expr->op: 0x%p", expr->operand);
     BinInit  (ExpressionBinAddress  (expr), size);
     BoutInit (ExpressionBoutAddress (expr), size);
     return expr;
 }
 
-Operand** ExpressionStackBase (Expression* expr) {
-    byte* a = reinterpret_cast<byte*> (expr) + sizeof (Expression)
-            + expr->stack_size  * sizeof (const uint_t*);
-    return reinterpret_cast<Operand**> (a);
-}
-
-bool ExpressionIsDynamic (Expression* expr) {
-    return expr->type % 2 == 1;
-}
+//bool ExpressionIsDynamic (Expression* expr) {
+//    return expr->type % 2 == 1;
+//}
 
 uintptr_t* ExpressionEndAddress (Expression* expr) {
     //return BinEndAddress (ExpressionBin (expr));
@@ -174,16 +172,12 @@ const Operation* Push (Expression* expr, Operand* operand) {
         return Result (expr, Bin::InvalidOpeartionError);
     }
     const Operation* op = operand->Star ('?', nullptr);
-    std::cout << "\n| Pushing " << op->name << " onto the stack\n";
+    std::cout << "\n| Pushing " << op->name << " onto the stack";
     uint_t stack_count = expr->stack_count;
-    if (stack_count == 0) {
-        expr->operand = operand;
-        expr->stack_count = 1;
-        return nullptr;
-    }
-    if (stack_count >= expr->stack_size)
+    if (stack_count >= expr->stack_size) {
         return Result (expr, Bin::StackOverflowError);
-    ExpressionStackBase (expr)[stack_count - 1] = expr->operand;
+    }
+    ExpressionStack (expr)[stack_count - 1] = expr->operand;
     expr->operand = operand;
     expr->stack_count = stack_count + 1;
     ExpressionPrintStack (expr);
@@ -191,107 +185,73 @@ const Operation* Push (Expression* expr, Operand* operand) {
 }
 
 const Operation* Pop (Expression* expr) {
-    if (expr->stack_count == 0)
-        return Result (expr, Bin::InvalidOpeartionError);
-    expr->operand = ExpressionStackBase (expr)[--expr->stack_count];
-    return 0;
-}
-
-uintptr_t* ExpressionStates (Expression* expr) {
-    return reinterpret_cast<uintptr_t*> (expr) + sizeof (Expression);
-}
-
-const Operation* ExpressionExitState (Expression* expr) {
-    uint_t count = expr->stack_count;
-    if (count == 0) {
+    uint_t stack_count = expr->stack_count;
+    if (stack_count == 0) { // This should not happen.
         return Result (expr, Bin::InvalidOpeartionError);
     }
-    std::cout << "\n| Popping expr off stack.\n";
-    expr->bout_state = ExpressionStates (expr)[count - 1];
-    expr->stack_count = count - 1;
-    return 0;
+    if (stack_count == 1) {
+        // We ever pop off the root.
+        ExpressionClose (expr);
+        return 0;
+    }
+#if DEBUG_SCRIPT
+    std::cout << "\n| Popping " << OperandName (expr->operand)
+              << " off the stack.";
+#endif  //< DEBUG_SCRIPT
+    expr->operand = ExpressionStack (expr)[stack_count - 2];
+#if DEBUG_SCRIPT
+    std::cout << "\n| Top of stack is now " << OperandName (expr->operand)
+        << ".";
+#endif  //< DEBUG_SCRIPT
+    expr->stack_count = stack_count - 1;
+    ExpressionPrintStack (expr);
+    return nullptr;
+}
+
+byte ExpressionExitState (Expression* expr) {
+    // We are guaranteed expr is not null at this point.
+    //if (expr == nullptr) {
+    //    return  BinResult (ExpressionBin (expr), Bin::RoomError);
+    //}
+#if DEBUG_SCRIPT
+    std::cout << "\n| Exiting " << BinStateString (expr->bin_state)
+              << " state back to the " << BinStateString (expr->last_bin_state) 
+              << " state .";
+#endif  //< DEBUG_SCRIPT
+    byte state = expr->last_bin_state;
+    expr->bin_state = state;
+    return state;
+}
+
+const Operation* ExpressionSetState (Expression* expr, Bin::State state) {
+    // We are guaranteed expr is not null at this point.
+    //if (expr == nullptr) {
+    //    return  BinResult (ExpressionBin (expr), Bin::RoomError);
+    //}
+    if (state == Bin::LockedState) {
+        return BinResult (ExpressionBin (expr), Bin::LockedError);
+    }
+#if DEBUG_SCRIPT
+    std::cout << "\n| Entering " << BinStateString (state)
+              << " state:" << state;
+#endif  //< DEBUG_SCRIPT
+    expr->bin_state = state;
+    return nullptr;
 }
 
 const Operation* ExpressionEnterState (Expression* expr, 
                                        Bin::State state) {
-    if (expr == nullptr) {
-        return  BinResult (ExpressionBin (expr), Bin::RoomError);
-    }
-
-    if (state == Bin::LockedState) {
-        return BinResult (ExpressionBin (expr), Bin::LockedError);
-    }
+    // We are guaranteed expr is not null at this point.
+    //if (expr == nullptr) {
+    //    return  BinResult (ExpressionBin (expr), Bin::RoomError);
+    //}
+#if DEBUG_SCRIPT
     std::cout << "\n| Entering " << BinStateString (state)
-              << " state:" << state << '\n';
-    uint_t count = expr->stack_count;
-    if (count >= expr->stack_size)
-        return BinResult (ExpressionBin (expr), Bin::StackOverflowError);
-    ExpressionStates (expr)[count] = expr->bout_state;
-    count = expr->stack_count + 1;
-    expr->bout_state = state;
-    return 0;
-}
-
-const Operation* ExpressionPushScanHeader (Expression* expr, 
-                                           const uint_t* header) {
-    if (header == nullptr) {
-        return Result (expr, Bin::RoomError);
-    }
-    uint_t verify_count = expr->verify_count,
-           stack_size   = expr->stack_size,
-           type_index   = expr->type_index;
-    expr->type_index = *header++;
-    if (verify_count >= stack_size)
-        return Result (expr, Bin::StackOverflowError, header);
-
-    // Move the current header to the scan stack
-    const uint_t* current_header = const_cast<const uint_t*> (expr->header);
-    expr->header = header;
-    const uint_t** headers = (const uint_t**)&expr->headers;
-    headers[stack_size] = current_header;
-    expr->verify_count = verify_count + 1;
-    return 0;
-}
-
-const Operation* ExpressionPushScanHeader (Expression* expr,
-                                           volatile const uint_t* header) {
-    const uint_t** headers;
-    uint_t verify_count = expr->verify_count;
-    if (verify_count >= expr->stack_size)
-        return Result (expr, Bin::StackOverflowError);
-
-    headers = (const uint_t**)expr->headers;
-    ExpressionExitState (expr);
-    expr->header = *headers;
-    verify_count = verify_count;
-    return 0;
-}
-
-const Operation* ExpressionPopScanHeader (Expression* expr) {
-    uint_t verify_count = expr->verify_count;
-    if (verify_count == 0)
-        return Result (expr, Bin::InvalidOpeartionError);
-
-    verify_count = verify_count - 1;
-    return 0;
-}
-
-void ExpressionScanNextType (Expression* expr) {
-    uint_t* header = const_cast<uint_t*> (expr->header);
-    if (header == nullptr) {
-        ExpressionEnterState (expr, Bin::ArgsState);
-        return;
-    }
-
-    uint_t type = *header;
-    if (type == NIL) {  // Done scanning args.
-        ExpressionPopScanHeader (expr);
-        return;
-    }
-    ++header;
-    expr->header = header;
-    expr->bin_state = expr->last_bin_state;
-    //type = *header;
+              << " state:" << state;
+#endif  //< DEBUG_SCRIPT
+    expr->last_bin_state = expr->bin_state;
+    expr->bin_state = state;
+    return nullptr;
 }
 
 byte ExpressionStreamBout (Expression* expr) {
@@ -299,33 +259,41 @@ byte ExpressionStreamBout (Expression* expr) {
 }
 
 void ExpressionScan (Expression* expr, Portal* input) {
+    if (expr == nullptr) {
+        PrintDebug ("a = null");
+        return;
+    }
+
     uint_t            size,         //< Size of the ring buffer.
                       space,        //< Space left in the right buffer.
                       length,       //< Length of the ring buffer data.
                       type,         //< Current type.
-                      bytes_left;   //< Num bytes left to scan.
+                      bytes_left,   //< Num bytes left to scan.
+                      array_type,   //< The type of array.
+                      shift_bits,   //< Num bytes left to scan.
+                      bytes_shift;  //< Num of bytes to shift to scan OBJ.
     byte              bin_state,    //< Current bin FSM state.
                       bout_state,   //< Current bin FSM state.
-                      b,            //< Current byte being verified.
-                      array_type;   //< The type of array.
-    hash16_t          hash;         //< Hash of the ESC being verified.
+                      b;            //< Current byte being verified.
+    hash16_t          hash,         //< Expected hash of the B-Sequence.
+                      found_hash;   //< Found B-Sequence hash.
     timestamp_t       timestamp,    //< Last time when the expression ran.
                       delta_t;      //< Time delta between the last timestamp.
     //Expression    * expression;   //< Current Expression.
     const Operation * op;           //< Current Operation.
     Operand         * operand;      //< The operand.
-    const uint_t    * header;       //< Header of the current Operation being verified.
     Bin             * bin;          //< Bin.
     byte            * begin,        //< Beginning of the ring buffer.
                     * end,          //< End of the ring buffer.
                     * start,        //< Start of the ring buffer data.
-                    * stop;         //< Stop of the ring buffer data.
+                    * stop,         //< Stop of the ring buffer data.
+                    * write = expr->buffer; //< The write location.
     const Operation * result;       //< The result of the Scan.
+    const uint_t    * header = expr->header;
+    uintptr_t         buffer_left = expr->buffer_left;
+    buffer_left = expr->bytes_left;
+    //< Header of the current Operation being verified.
 
-    if (expr == nullptr) {
-        PrintDebug ("a = null");
-        return;
-    }
     if (input == nullptr) {
         PrintDebug ("input = null");
         return;
@@ -349,40 +317,53 @@ void ExpressionScan (Expression* expr, Portal* input) {
     start  = begin + bin->start;
     stop   = begin + bin->stop;
     space  = SlotSpace (start, stop, size);
-    length = size - space + 1;
-    bytes_left = expr->bytes_left;
-
-    printf ("\n\n| Scanning Expression:0x%p with length:%u\n", start,
+    length = size - space;
+    printf ("\n| Scanning Expression:0x%p with length:%u", start,
             length);
-    
-    for (; length != 0; --length) {
+    for (length; length != 0; --length) {
         b = *start;
+        *write++ = b;
         PrintLine ("|", '=');
-        std::cout << "| " << length << ":\'";
-        if (b < 32)
+        std::cout << "\n| " << length << ":\'";
+        if (b < 32 || b == 127) {
             std::cout << AsciiString ((AsciiCode)b);
-        else
+        }
+        else {
             std::cout << b;
+        }
 
         std::cout << "\' " << BinStateString (bin_state) << " state";
         PrintLine ("|", '=');
 
         if (++start >= end) start -= size;
-        hash = Hash16 (b, hash);
         // Process the rest of the bytes in a loop to reduce setup overhead.
         switch (bin_state) {
             case Bin::AddressState: {
+                hash = Hash16 (b, hash);
+#if DEBUG_SCRIPT
+                printf ("\n| hash:0x%x", hash);
+#endif  //< DEBUG_SCRIPT
                 // When verifying an address, there is guaranteed to be an
                 // expr->op set. We are just looking for null return values
                 // from the Do (byte, Stack*): const Operand* function, 
-                // pushing Star(string) on to the Star stack, and looking for 
+                // pushing Star(string) on to the Star stack, and looking for
                 // the first procedure call.
-                //expr->result = nullptr;   //< Not sure what this does.
+                //
+                if (b == BS) {
+                    Pop (expr);
+                    break;
+                }
+                if (b == CR) {
+                    expr->bytes_left = 1;
+                    ExpressionSetState (expr, Bin::HashState);
+                    bin_state = Bin::HashState;
+                    break;
+                }
                 operand = expr->operand;
 
-                std::cout << "| Current Operation is ";
+                std::cout << "\n| Current Operation is \"";
                 op = operand->Star ('?', nullptr);
-                std::cout << op->name << '\n';
+                std::cout << op->name << '\"';
 
                 op = operand->Star (b, nullptr);
                 if (op == nullptr) {
@@ -393,7 +374,6 @@ void ExpressionScan (Expression* expr, Portal* input) {
                     }
                     //ExpressionPushScan (a, expr->operand);
                     // Clear the buffer and return.
-                    std::cout << "Clearing Expressing.\n";
                     ExpressionClear (expr);
                     return;
                 }
@@ -402,52 +382,34 @@ void ExpressionScan (Expression* expr, Portal* input) {
                 if (num_ops > kMaxNumParams) {
                     // It's an Operation.
                     // The software implementer pushes the Op on the stack.
-                    std::cout << "| Found Operation with params ";
+                    std::cout << "\n| Found Operation with params ";
                     ParamsPrint (params);
-                    std::cout << "\n";
-                    if (result = ExpressionPushScanHeader (expr, params)) {
+                    if (result = ExpressionScanHeader (expr, params)) {
                         PrintDebug ("Expression::Error reading address.");
                         ExpressionClear (expr);
                     }
 
                     operand = expr->operand;
                     if (operand == nullptr) {
-                        std::cout << "\n| Null operand found!\n";
-                        // Push the Room onto the stack.
-                        operand = expr->root;
-                        // Check if it is a Star Operation.
-                        op = operand->Star (b, nullptr);
-                        expr->result = op;
-                        if (op == nullptr) {
-                            PrintError ("Invalid op");
-                            ExpressionEnterState (expr, Bin::LockedState);
-                            bin_state = Bin::LockedState;
-                            break;
-                        }
-
-                        ExpressionEnterState (expr, Bin::ArgsState);
-                        bin_state = Bin::ArgsState;
-                        break;
+                        std::cout << "\n| Null operand found!";
+                        ExpressionClear (expr);
+                        return;
                     }
-                    // There is an operation on the stack.
-                    // Verify byte as address.
-                    //header = expr->header;
-                    //if (!header) {
-                    //    std::cout << "\nexpr->header was null\n";
-                    //    return;
-                    //}
-                    //if (expr->type_index == 0) {
-                    //    PrintDebug ("Procedure verified.");
-                    //    ExpressionExitState (expr);
-                    //    break;
-                    //}
+                    header = op->params;
+                    expr->params_left = *header;
+                    expr->header = header;      //< +1 to bypass the number of params
+                    expr->header_start = header;    //< Used to print current header.
                     ExpressionEnterState (expr, Bin::ArgsState);
                     bin_state = Bin::ArgsState;
+                    type = *(++expr->header);   //< Setup to read first type.
+#if DEBUG_SCRIPT
+                    std::cout << "\n| Next TType to scan:\'" << TypeString (type)
+                        << "\' with alignment " << TypeAlign (write, type) << '.';
+#endif  //< DEBUG_SCRIPT
+                    write += TypeAlign (write, type);
                     break;
                 }
-                std::cout << "| Pushing onto the stack the Operand ";
-                OperationPrint (op);
-                op = operand->Star (b, expr);  
+                op = operand->Star (b, expr);
                 break;
             }
             case Bin::ArgsState: {
@@ -456,16 +418,15 @@ void ExpressionScan (Expression* expr, Portal* input) {
                 // header argument and checking for the end of the procedure 
                 // call.
 
-                // Get next type.
-                type = *expr->header++;
-                std::cout << "\n| Scanning next type: " << TypeString (type);
+                if (expr->params_left-- == 0) {
+                    std::cout << "\n| Params successfully scanned.";
 
-                // Word-align the start of the buffer we're reading from.
-                stop += TypeAlign (stop, type);
-
-                array_type = type >> 5;
-                //< Shift off lower 5 bits to get upper 3 bits.
-                type &= 0x1f; //< Mask off lower 5 bits.
+                    break;
+                }
+                hash = Hash16 (b, hash);
+#if DEBUG_SCRIPT
+                printf ("\n| hash:0x%x", hash);
+#endif  //< DEBUG_SCRIPT
 
                 // Switch to next state
                 if (type <= ADR) {
@@ -482,14 +443,19 @@ void ExpressionScan (Expression* expr, Portal* input) {
                     break;
 
                 } else if (type == STR) { // UTF-8/ASCII string type.
-                    PrintDebug ("\n| Scanning STR.");
                     // Read the max number of chars off the header.
-                    bytes_left = *expr->header++;
+                    bytes_left = *(++expr->header);
+                    std::cout << "\n| Scanning STR with max length "
+                              << bytes_left;
                     ExpressionEnterState (expr, Bin::Utf8State);
                     bin_state = Bin::Utf8State;
                     break;
                 } else if (type == ST2) { // UTF-16 string type.
                     PrintDebug ("\n| Scanning ST2.");
+                    if (bytes_left == 1) {
+                        expr->last_byte = b;
+                        break;
+                    }
                     // Read the max number of chars off the header.
                     bytes_left = *expr->header++ * 2;
                     ExpressionEnterState (expr,
@@ -503,13 +469,23 @@ void ExpressionScan (Expression* expr, Portal* input) {
                     ExpressionEnterState (expr, Bin::Utf32State);
                     bin_state = Bin::Utf32State;
                 } else if (type < DBL)  { // Plain-old-data type.
-                    std::cout << "\n| Scanning POD." << " bytes_left:"
-                              << bytes_left << '\n';
                     bytes_left = SizeOf (type);
+#if DEBUG_SCRIPT
+                    std::cout << "\n| Scanning POD." << " bytes_left:"
+                              << bytes_left;
+#endif  //< DEBUG_SCRIPT
                     if (bytes_left == 1) {
                         // No need to enter a state because there is only one
                         // byte to parse and we already have the byte loaded.
-                        std::cout << "\n| Done scanning " << TypeString (type);
+                        std::cout << "\n| Done scanning without state change for \"" 
+                                  << TypeString (type) << '\"';
+                        // Setup to read the next type.
+                        type = *(++expr->header);
+#if DEBUG_SCRIPT
+                        std::cout << "\n| Next TType to scan:\'" << TypeString (type)
+                            << "\' with alignment " << TypeAlign (write, type) << '.';
+#endif  //< DEBUG_SCRIPT
+                        write += TypeAlign (write, type);
                         break;
                     }
                     ExpressionEnterState (expr, Bin::PodState);
@@ -526,60 +502,93 @@ void ExpressionScan (Expression* expr, Portal* input) {
                     // Multi-dimension arrays are parsed just like any other
                     // TObject.
                     array_type &= 0x3;
+                    bytes_left = b;
                     if (array_type == 0) {
-                            ExpressionEnterState (expr, Bin::Obj8State);
-                            bin_state = Bin::Obj8State;
-                            break;
+                        // We don't need to enter a state here because we
+                        // already have the size_bytes. :-)
+                        bin_state = Bin::PodState;
+                        break;
                     } else if (array_type == 1) {
-                            ExpressionEnterState (expr, Bin::Obj16State);
-                            bin_state = Bin::Obj16State;
-                            break;
+                        bytes_shift = 0;
+                        shift_bits  = 16;
+                        ExpressionEnterState (expr, Bin::ObjectState);
+                        bin_state = Bin::ObjectState;
+                        break;
                     } else if (array_type == 2) {
-                            ExpressionEnterState (expr, Bin::Obj32State);
-                            bin_state = Bin::Obj32State;
-                            break;
+                        bytes_shift = 0;
+                        shift_bits  = 32;
+                        ExpressionEnterState (expr, Bin::ObjectState);
+                        bin_state = Bin::ObjectState;
+                        break;
                     } else {    //< array_type == 3
-                            ExpressionEnterState (expr, Bin::Obj64State);
-                            bin_state = Bin::Obj64State;
-                            break;
+                        bytes_shift = 0;
+                        shift_bits  = 64;
+                        ExpressionEnterState (expr, Bin::ObjectState);
+                        bin_state = Bin::ObjectState;
+                        break;
                     }
                 }
             }
             case Bin::Utf8State: {
                 if (bytes_left == 0) {
-                    PrintDebug ("Done parsing char.");
-                    Result (expr, Bin::StringOverflowError,
-                            const_cast<const uint_t*>(expr->header), 0, start);
-                    return;
+Result (expr, Bin::StringOverflowError,
+        const_cast<const uint_t*>(expr->header), 0, start);
+break;
                 }
+                hash = Hash16 (b, hash);
+#if DEBUG_SCRIPT
+                printf ("\n| hash:0x%x", hash);
+#endif  //< DEBUG_SCRIPT
                 // Hash byte.
-
                 // Check if char terminated.
                 if (b == 0) {
-                    PrintDebug ("String terminated.");
                     // Check if there is another argument to scan.
-                    // 
                     ExpressionExitState (expr);
-                    return;
+                    bin_state = Bin::ArgsState;
+                    //< We can't go back from OBJ to POD for String Types.
+                    // Setup to read next type.
+                    type = *(++expr->header);
+#if DEBUG_SCRIPT
+                    if (expr->params_left == 0) {
+                        ExpressionSetState (expr, Bin::AddressState);
+                        bin_state = Bin::AddressState;
+                        break;
+                    }
+                    std::cout << "\n| Next TType to scan:\'" << TypeString (type)
+                        << "\' with alignment " << TypeAlign (write, type) << '.';
+#endif  //< DEBUG_SCRIPT
+                    write += TypeAlign (write, type);
+                    break;
                 }
-                PrintDebug ("b != 0");
                 --bytes_left;
                 break;
             }
             case Bin::Utf16State: {
+                hash = Hash16 (b, hash);
+#if DEBUG_SCRIPT
+                printf ("\n| hash:0x%x", hash);
+#endif  //< DEBUG_SCRIPT
                 ExpressionExitState (expr);
                 break;
             }
             case Bin::Utf32State: {
+                hash = Hash16 (b, hash);
+#if DEBUG_SCRIPT
+                printf ("\n| hash:0x%x", hash);
+#endif  //< DEBUG_SCRIPT
                 ExpressionExitState (expr);
                 break;
             }
             case Bin::VarintState: {
-                // When verifying a varint, there is a max number of bytes for 
-                // the type (3, 5, or 9) but the varint may be complete before 
-                // this number of bytes. We're just basically counting down and 
-                // looking for an overflow situation.
-                // Hash byte.
+                hash = Hash16 (b, hash);
+#if DEBUG_SCRIPT
+                printf ("\n| hash:0x%x", hash);
+#endif  //< DEBUG_SCRIPT
+// When verifying a varint, there is a max number of bytes for 
+// the type (3, 5, or 9) but the varint may be complete before 
+// this number of bytes. We're just basically counting down and 
+// looking for an overflow situation.
+// Hash byte.
 
                 if (bytes_left == 1) {
                     PrintDebug ("Checking last byte:");
@@ -592,11 +601,11 @@ void ExpressionScan (Expression* expr, Portal* input) {
                     // add 32 to the first byte.
 
                     if ((b >> 7) != 1) {
-                        const uint_t* header = 
+                        const uint_t* header =
                             const_cast<const uint_t*>(expr->header);
                         Result (expr, Bin::VarintOverflowError, header,
                                 0, start);
-                        ExpressionEnterState (expr, 
+                        ExpressionEnterState (expr,
                                               Bin::ErrorState);
                         bin_state = Bin::ErrorState;
                         return;
@@ -604,32 +613,90 @@ void ExpressionScan (Expression* expr, Portal* input) {
 
                     break;
                 }
+                if (b > 127) {
+                    std::cout << "\n| Don't scanning varint: " << 0;
+                    // Setup to read the next type.
+                    type = *(++header);
+#if DEBUG_SCRIPT
+                    std::cout << "\n| Next TType to scan:\'" << TypeString (type)
+                        << "\' with alignment " << TypeAlign (write, type) << '.';
+#endif  //< DEBUG_SCRIPT
+                    write += TypeAlign (write, type);
+                }
                 --bytes_left;
                 break;
+            }
+            case Bin::ObjectState: {
+                hash = Hash16 (b, hash);
+#if DEBUG_SCRIPT
+                printf ("\n| hash:0x%x", hash);
+#endif  //< DEBUG_SCRIPT
+                if (bytes_shift >= shift_bits) {
+                    // Done shifting.
+                    std::cout << "\n| Loading object of size:" << bytes_left;
+                    ExpressionExitState (expr);
+                    ExpressionEnterState (expr, Bin::PodState);
+                    bin_state = Bin::PodState;
+                    break;
+                }
+                bytes_left &= ((uint_t)b) << bytes_shift;
+                shift_bits += 8;
+                break;
+            }
+            case Bin::HashState: {
+                if (expr->bytes_left != 0) {  // One more byte to load.
+                    expr->last_byte = b;
+                    expr->bytes_left = 0;
+                    break;
+                }
+                found_hash = b;
+                found_hash = found_hash << 8;
+                found_hash |= expr->last_byte;
+                if (hash != found_hash) {
+#if DEBUG_SCRIPT
+                    printf ("\n | Error: expecting hash:0x%x and found 0x%x.", hash, found_hash);
+#endif  //< DEBUG_SCRIPT
+                    ExpressionClear (expr);
+                    return;
+                }
+#if DEBUG_SCRIPT
+                std::cout << "\n | Success reading hash!";
+#endif  //< DEBUG_SCRIPT
+                hash = kLargest16BitPrime; //< Reset hash to largest 16-bit prime.
+#if DEBUG_SCRIPT
+                std::cout << "\n| Resetting hash.\n";
+#endif  //< DEBUG_SCRIPT
             }
             case Bin::ErrorState: {
                 break;
             }
             case Bin::DisconnectedState: {
                 if (b != _::BEL) {
-                    ExpressionEnterState (expr, Bin::ErrorState);
+                    ExpressionSetState (expr, Bin::ErrorState);
                     bin_state = Bin::ErrorState;
                 } else {
-                    ExpressionEnterState (expr, Bin::AckState);
+                    ExpressionSetState (expr, Bin::AckState);
                     bin_state = Bin::AckState;
                 }
                 break;
             }
             case  Bin::AckState: {
                 if (b != _::ACK) {
-                    ExpressionEnterState (expr, Bin::ErrorState);
+                    ExpressionSetState (expr, Bin::ErrorState);
                     bin_state = Bin::ErrorState;
                 } else {
-                    ExpressionEnterState (expr, Bin::AddressState);
-                    Push (expr, expr->root);
-                    PrintLine ();
-                    OperandPrint (expr->operand);
+#if DEBUG_SCRIPT
+                    std::cout << "\n| Resetting hash.";
+#endif  //< DEBUG_SCRIPT
+                    hash = kLargest16BitPrime; //< Reset hash to largest 16-bit prime.
+                    expr->operand = expr->root;
+                    expr->result = nullptr;
                     bin_state = Bin::AddressState;
+                    ExpressionSetState (expr, Bin::AddressState);
+#if DEBUG_SCRIPT
+                    std::cout << "\n| Root scope: \"" 
+                              << OperandName (expr->operand) << '\"';
+#endif  //< DEBUG_SCRIPT
                 }
                 break;
             }
@@ -638,22 +705,36 @@ void ExpressionScan (Expression* expr, Portal* input) {
                 break;
             }
             default: {
+                hash = Hash16 (b, hash);
+#if DEBUG_SCRIPT
+                printf ("\n| hash:0x%x", hash);
+#endif  //< DEBUG_SCRIPT
                 // parsing plain-old-data.
                 if (bytes_left == 0) {
-                    PrintDebug ("... data verified.");
-                    ExpressionScanNextType (expr);
-                } else {
-                    --bytes_left;
-                    b = input->Pull ();
-                    PrintDebugHex ("Loading next byte", b);
-                    expr->hash = Hash16 (b, hash);
-                    *start = b;
-                    ++start;
+                    PrintDebug ("... done!");
+                    ExpressionExitState (expr);
+                    bin_state = expr->bin_state;
+
+                    // Setup to read the next type.
+                    type = *(++header);
+#if DEBUG_SCRIPT
+                    std::cout << "\n| Next TType to scan:\'" << TypeString (type)
+                        << "\' with alignment " << TypeAlign (write, type) << '.';
+#endif  //< DEBUG_SCRIPT
+                    write += TypeAlign (write, type);
+                    break;
                 }
+                --bytes_left;
+                b = input->Pull ();
+                PrintDebugHex ("Loading next byte", b);
+                hash = Hash16 (b, hash);
+                *start = b;
+                ++start;
                 break;
             }
         }
     }
+    expr->hash = hash;
     expr->bytes_left = bytes_left;
     bin->start = Diff (begin, start);
 }
@@ -665,7 +746,7 @@ bool ExpressionContains (Expression* expr, void* address) {
     return true;
 }
 
-const Operation* ExpressionPushHeader (Expression* expr, const uint_t* header) {
+const Operation* ExpressionScanHeader (Expression* expr, const uint_t* header) {
     if (expr->stack_count >= expr->stack_size) {
         // Handle overflow cleanup:
         return Result (expr, Bin::StackOverflowError, header);
@@ -680,12 +761,19 @@ const uint_t* ExpressionHeaderStack (Expression* expr) {
 }
 
 void ExpressionClose (Expression* expr) {
-    PrintDebug ("[FF]");
+#if DEBUG_SCRIPT
+    std::cout << "\n| Closing expression.";
+#endif  //< DEBUG_SCRIPT
+    expr->stack_count = 1;
 }
 
 void ExpressionCancel (Expression* expr) {
-    PrintDebug ("[CAN]");
-    //stopAddress = txOpen;
+#if DEBUG_SCRIPT
+    std::cout << "\n| Canceling expression.";
+#endif  //< DEBUG_SCRIPT
+    expr->stack_count = 1;
+    expr->bin_state = Bin::AddressState;
+    //ExpressionPush (expr->root);
 }
 
 void ExpressionClear (Expression* expr) {
@@ -712,6 +800,15 @@ void ExpressionClear (Expression* expr) {
     bin->stop  = Diff (expr, start + 1);
 }
 
+void ExpressionRingBell (Expression* expr, const char* address) {
+    BoutRingBell (ExpressionBout (expr), address);
+    
+}
+
+void ExpressionAckBack (Expression* expr, const char* address) {
+    BoutAckBack (ExpressionBout (expr), address);
+}
+
 bool Args (Expression* expr, const uint_t* params, void** args) {
     return BinRead (ExpressionBin (expr), params, args);
 }
@@ -726,75 +823,73 @@ void ExpressionPrintStack (Expression* expr) {
         return;
     }
 
-    Operand** stack = ExpressionStackBase (expr);
-    if (stack == nullptr) {
-        std::cout << "\n\n!!! stack == nullptr\n";
-    }
-    // @todo We don't need any error checking here I think.
+    uint_t i,
+        stack_count;
+    const Operation* op;
+    Operand* operand;
+    Operand** stack = ExpressionStack (expr);
+    stack_count = expr->stack_count;
+    std::cout << "\n| Operand stack_count:" << stack_count;
 
-    uint_t stack_count = expr->stack_count;
-    std::cout << "\n| Printing stack stack_count:" << stack_count << '\n';
-
-    if (stack_count == 0) {
-        std::cout << "\n| Empty\n";
+    if (stack_count == 1) {
+        std::cout << "\n| Stack Item 1: " << OperandName (expr->root);
         return;
     }
-    const Operation* op;
-    uint_t i;
     for (i = 0; i < stack_count - 1; ++i) {
-        std::cout << "| Element " << i << ":\"";
-        op = stack[i]->Star ('?', nullptr);
-        std::cout << op->name << "\"\n";
+        std::cout << "\n| Stack Item " << i + 1<< ":\"";
+        operand = stack[i];
+        op = operand->Star ('?', nullptr);
+        std::cout << op->name << '\"';
     }
     op = expr->operand->Star ('?', nullptr);
-    std::cout << "| Element " << i << ":\"" << op->name << "\"\n";
+    std::cout << "\n| Stack Item " << i + 1 << ":\"" << op->name << "\"";
+}
+
+void ExpressionPrintStateStack (Expression* expr) {
+    PrintLine ("|", '-');
+    std::cout << "\n| Expression State Stack:    ";
+    if (expr == nullptr) {
+        printf ("null");
+        PrintLine ("|", '-');
+        return;
+    }
+    PrintLine ("|", '-');
 }
 
 void ExpressionPrint (Expression* expr) {
-    PrintLine ('_');
-    printf ("| Stack:    ");
+    PrintLine ('~');
+   std::cout << "\n| Stack:    ";
     if (expr == nullptr) {
-        printf ("null\n");
-        PrintLine ("|", '_');
+        std::cout << "null";
+        PrintLine ("|", '~');
         return;
     }
     printf ("0x%p", expr);
     PrintLine ("|", '_');
-    std::cout << "| type:          "
-        << (expr->type == -1)?"interprocess no dynamic memory.":
-        (expr->type == 0)?"no dynamic memory":
-        (expr->type == 1)?"dynamic memory":
-        (expr->type == 2)?"dynamic memory":"Invalid type";
+    //std::cout << "\n| type:          "
+    //    << (expr->type == -1)?"interprocess no dynamic memory.":
+    //       (expr->type == 0)?"no dynamic memory":
+    //       (expr->type == 1)?"dynamic memory":
+    //       (expr->type == 2)?"dynamic memory":"Invalid type";
 
     std::cout << "\n| bytes_left  : " << expr->bytes_left
               << "\n| header_size : " << expr->header_size
               << "\n| stack_count : " << expr->stack_count
               << "\n| stack_size  : " << expr->stack_size
-              << "\n| verify_count: " << expr->verify_count
               << "\n| bin_state   : " << BinStateString  (expr->bin_state )
               << "\n| bout_state  : " << BoutStateString (expr->bout_state)
               << "\n| num_states  : " << expr->num_states
               << "\n| header_size : " << expr->header_size;
     PrintLine ("|", '-');
     OperandPrint (expr->operand);
-    std::cout << "| header: ";
-    ParamsPrint (const_cast<const uint_t*>(expr->header));
-    std::cout << "| Scan Stack: " << expr->verify_count;
-    const uint_t** headers = (const uint_t**)expr->headers;
-    if (headers == nullptr) {
-        std::cout << " null";
-    } else {
-        for (uint_t i = 0; i < expr->stack_count; ++i) {
-            std::cout << "| " << i << ": ";
-            ParamsPrint (headers[i]);
-        }
-    }
+    std::cout << "\n| header: ";
+    ParamsPrint (expr->header_start);
     PrintLine ("|", '-');
     ExpressionPrintStack (expr);
-    PrintLine ("|", '_');
+    PrintLine ("|", '~');
     //system ("PAUSE");
 }
-
+/*
 Bin* ExpressionInit (uintptr_t* buffer, uint_t size) {
     if (buffer == nullptr)
         return nullptr;
@@ -814,7 +909,7 @@ Bin* ExpressionInit (Bin* bin, uint_t size) {
     bin->stop = 0;
     bin->read = 0;
     return bin;
-}
+}*/
 
 /** Gets the start of the Bin ring buffer. 
 byte* BBaseAddress (void* ptr) {

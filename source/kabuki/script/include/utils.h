@@ -34,7 +34,6 @@ KABUKI const char* ErrorHeader ();
 KABUKI const char* VerticalBar ();
 
 inline const void* Const (const void* ptr) {
-    printf ("\n!!! %s\n", ptr);
     return ptr;
 }
 
@@ -63,7 +62,7 @@ KABUKI void PrintDebugHex (const char* message, char value);
 template<typename T>
 KABUKI void PrintDebugSignedHex (const char* message, T value) {
 #if DEBUG
-    printf ("| %s:'%i':0x%x\n", message, value, value);
+    printf ("\n| %s:'%i':0x%x\n", message, value, value);
 #endif
 }
 
@@ -217,7 +216,7 @@ KABUKI uint_t RandomHash () {
 KABUKI hash16_t Hash16 (char c, hash16_t hash);
 
 /** Hashes the given char using the primeHash function. */
-KABUKI hash16_t Hash16 (const char* string, hash16_t hash = 65521);
+KABUKI hash16_t Hash16 (const char* string, hash16_t hash = kLargest16BitPrime);
 
 /**  */
 hash16_t Hash16UI2 (uint16_t value, hash16_t hash);

@@ -64,24 +64,20 @@
 
 #include <assembly.h>       //< Inline config stuff for your project.
 
-#if USING_RS || USING_GS || USING_FS
-#define USING_RS 1
-#endif
-
 typedef const char* string_ptr;
-
+/*
 #if CHAR_WIDTH == 8
-typedef uint8_t index;
+typedef uint8_t index_t;
 #undef CHAR_WIDTH
 #elif CHAR_WIDTH == 16
 #undef CHAR_WIDTH
-typedef int16_t index;
+typedef int16_t index_t;
 #elif CHAR_WIDTH == 32
 #undef CHAR_WIDTH
-typedef int32_t index;
+typedef int32_t index_t;
 #else
 #error CHAR_WIDTH is not 8, 16, or 32!
-#endif
+#endif*/
 
 #if MAX_ERRORS < 0
 #error MAX_ERRORS must be greater than 0
@@ -115,6 +111,7 @@ enum {
     //< The number of seconds before a timeout over a generic communication link.
     kWordAddressMask = sizeof (void*) - 1,  //< For masking the word address.
     kMaxAddresLength = 255,                 //< Max address (ADR) length.
+    kMinStackSize    = 1,                   //< The min Expression stack size.
 };
 }
 #undef MAX_ERRORS
@@ -174,7 +171,7 @@ typedef uint32_t hash32_t;  //< Using unsigned 32-bit hash type.
 typedef uint64_t hash64_t;  //< Using unsigned 64-bit hash type.
 
 enum {
-    kLargest16BitPrime  = 65521,            //< The largest 16-bit prime number.
+    kLargest16BitPrime = 65521,             //< The largest 16-bit prime number.
     kLargest32BitPrime = 4294967291,        //< The largest 32-bit prime number.
     kLargest64BitPrime = 18446744073709551557,  
                                             //< The largest 64-bit prime number.

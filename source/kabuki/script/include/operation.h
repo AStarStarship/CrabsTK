@@ -151,6 +151,9 @@ struct KABUKI Operand {
     virtual const Operation* Star (char_t index, Expression* expr) = 0;
 };
 
+/** Returns the name of the given Operand. */
+KABUKI const char* OperandName (Operand* op);
+
 /** Converts the value to a pointer. */
 inline const uint_t* NumOperations (std::uintptr_t value) {
     return reinterpret_cast<const uint_t*> (value);

@@ -25,17 +25,17 @@ const char* NewLineString () {
 }
 
 const char* ErrorHeader () {
-    static const char string[] = "| Error: \0";
+    static const char string[] = "\n| Error: \0";
     return string;
 }
 
 const char* VerticalBar () {
-    static const char string[] = "| \0";
+    static const char string[] = "\n| \0";
     return string;
 }
 
 void PrintLine (const char* string) {
-    std::cout << '\n' << string << '\n';
+    std::cout << '\n' << string;
 }
 
 void PrintDebug (const char* message, 
@@ -54,13 +54,13 @@ void PrintError (const char* message, const char* end_string) {
 
 void PrintDebugPointer (const char* message, const void* address) {
 #if DEBUG
-    printf ("| Error at address 0x%p: %s\n", address, message);
+    printf ("\n| Error at address 0x%p: %s", address, message);
 #endif
 }
 
 void PrintDebugHex (const char* message, char value) {
 #if DEBUG
-    printf ("| %s '%c':0x%x\n", message, value, value);
+    printf ("\n| %s '%c':0x%x", message, value, value);
 #endif
 }
 
@@ -218,33 +218,33 @@ uintptr_t Diff (const void* begin, const void* end) {
 
 hash16_t Hash16 (char c, hash16_t hash) {
     //PrintHex (c);
-    hash16_t cprime = c * 65521;
+    hash16_t cprime = c * kLargest16BitPrime;
     return cprime + hash;
 }
 
 hash16_t Hash16UI2 (uint16_t value, hash16_t hash) {
-    hash = ((value & 0xff) * 65521) + hash;
-    hash = ((value >> 8  ) * 65521) + hash;
+    hash = ((value & 0xff) * kLargest16BitPrime) + hash;
+    hash = ((value >> 8  ) * kLargest16BitPrime) + hash;
     return hash;
 }
 
 hash16_t Hash16UI4 (uint32_t value, hash16_t hash) {
-    hash = ((value & 0xff        ) * 65521) + hash;
-    hash = (((value >> 8 ) & 0xff) * 65521) + hash;
-    hash = (((value >> 16) & 0xff) * 65521) + hash;
-    hash = (((value >> 24) & 0xff) * 65521) + hash;
+    hash = ((value & 0xff        ) * kLargest16BitPrime) + hash;
+    hash = (((value >> 8 ) & 0xff) * kLargest16BitPrime) + hash;
+    hash = (((value >> 16) & 0xff) * kLargest16BitPrime) + hash;
+    hash = (((value >> 24) & 0xff) * kLargest16BitPrime) + hash;
     return hash;
 }
 
 hash16_t Hash16UI8 (uint64_t value, hash16_t hash) {
-    hash = ((value & 0xff        ) * 65521) + hash;
-    hash = (((value >> 8 ) & 0xff) * 65521) + hash;
-    hash = (((value >> 16) & 0xff) * 65521) + hash;
-    hash = (((value >> 24) & 0xff) * 65521) + hash;
-    hash = (((value >> 32) & 0xff) * 65521) + hash;
-    hash = (((value >> 40) & 0xff) * 65521) + hash;
-    hash = (((value >> 48) & 0xff) * 65521) + hash;
-    hash = (((value >> 56) & 0xff) * 65521) + hash;
+    hash = ((value & 0xff        ) * kLargest16BitPrime) + hash;
+    hash = (((value >> 8 ) & 0xff) * kLargest16BitPrime) + hash;
+    hash = (((value >> 16) & 0xff) * kLargest16BitPrime) + hash;
+    hash = (((value >> 24) & 0xff) * kLargest16BitPrime) + hash;
+    hash = (((value >> 32) & 0xff) * kLargest16BitPrime) + hash;
+    hash = (((value >> 40) & 0xff) * kLargest16BitPrime) + hash;
+    hash = (((value >> 48) & 0xff) * kLargest16BitPrime) + hash;
+    hash = (((value >> 56) & 0xff) * kLargest16BitPrime) + hash;
     return hash;
 }
 
@@ -331,14 +331,12 @@ void PrintLine (char token, int column_width) {
     std::cout << '\n';
     for (int i = 0; i < column_width; ++i)
         std::cout << token;
-    std::cout << '\n';
 }
 
 void PrintLine (const char* start_string, char token, int length) {
     std::cout << '\n' << start_string;
     for (int i = 0; i < 79; ++i)
         std::cout << token;
-    std::cout << '\n';
 }
 
 void PrintLines (int numRows) {
@@ -348,20 +346,18 @@ void PrintLines (int numRows) {
 }
 
 void PrintMemory (const void* address, const void* end) {
-    printf ("|%i", 0);
+    printf ("\n|%i", 0);
     // Print columns
     for (int i = 8; i <= 66; i += 8)
         printf ("%8i", i);
-    std::cout << '\n';
-    std::cout << '|';
+    std::cout << '\n' << '|';
     for (int i = 0; i < 65; ++i)
         std::cout << '_';
-    std::cout << '\n';
 
     const char* chars = reinterpret_cast<const char*> (address);
     char temp;
     while (chars < end) {
-        std::cout << '|';
+        std::cout << '\n' << '|';
         for (int i = 0; i < 64; ++i) {
             temp = *chars;
             if (chars >= end)
@@ -369,9 +365,9 @@ void PrintMemory (const void* address, const void* end) {
             PrintChar (temp);
             ++chars;
         }
-        printf ("| 0x%p\n", chars - 64);
+        printf ("| 0x%p", chars - 64);
     }
-    std::cout << '|';
+    std::cout << '\n' << '|';
     for (int i = 0; i < 64; ++i)
         std::cout << '_';
     printf ("| 0x%p\n", chars + Diff (address, end));
@@ -656,7 +652,7 @@ void PrintPage (const char* input, int indentation,
                        char bullet, int index, int tab_size,
                        int num_columns) {
     num_columns -= 4;
-    std::cout << "| ";
+    std::cout << "\n| ";
     int cursor; //< The column number of the cursor.
     char c = *input++,  //< The current char.
         buffer[15];     //< The bullet buffer.
@@ -664,7 +660,7 @@ void PrintPage (const char* input, int indentation,
     {
         for (int i = num_columns; i > 0; --i)
             std::cout << ' ';
-        std::cout << "|\n";
+        std::cout << "\n|\n";
         return;
     }
 
@@ -672,7 +668,7 @@ void PrintPage (const char* input, int indentation,
     if (isdigit (bullet)) // Then we have to print a number bullet.
     {
         sprintf_s (&buffer[0], 15, "%i", index);
-        //< + 2 for "| " - 2 for the bullet offset.
+        //< + 2 for "\n| " - 2 for the bullet offset.
         char format[16];
         sprintf_s (&format[1], 16, "%%%us", indentation * tab_size);
         printf (format, buffer);
@@ -897,15 +893,15 @@ const char* ParseString (const char* input, char* destination,
     //std::cout << "> parse_string buffer_size: " << buffer_size
     //          << " delimiter " << delimiter << "\n> ";
     if (input == nullptr) {
-        std::cout << "| input == nullptr\n";
+        std::cout << "\n| input == nullptr\n";
         return nullptr;
     }
     if (destination == nullptr) {
-        std::cout << "| destination == nullptr\n";
+        std::cout << "\n| destination == nullptr\n";
         return nullptr;
     }
     if (buffer_size < 1) {
-        std::cout << "| buffer_size < 1\n";
+        std::cout << "\n| buffer_size < 1\n";
         return nullptr;
     }
     //std::cout << delimiter;

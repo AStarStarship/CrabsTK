@@ -20,8 +20,15 @@
 
 namespace _ {
 
-char_t index (const void* ptr) {
-    return (char_t)reinterpret_cast<uintptr_t>(ptr);
+const char* OperandName (Operand* operand) {
+    if (operand == nullptr) {
+        return "null operand";
+    }
+    const Operation* op = operand->Star ('?', nullptr);
+    if (op == nullptr) {
+        return "null op";
+    }
+    return op->name;
 }
 
 uintptr_t OperationCount (const uint_t* op) {
@@ -30,14 +37,14 @@ uintptr_t OperationCount (const uint_t* op) {
 
 void OperationPrint (const Operation* op) {
     if (op == nullptr) {
-        std::cout << "| Operation:      null";
+        std::cout << "\n| Operation:      null";
         return;
     }
     if (OperationCount (op->params) < kMaxNumParams) {
         // Print the Operand Header.
-        const uint_t* result = op->result;
-        uint_t        num_ops  = reinterpret_cast<uint_t>(op->params);
-        uintptr_t     first_op = reinterpret_cast<uintptr_t>(op->result),
+        const uint_t* result   = op->result;
+        uintptr_t     num_ops  = reinterpret_cast<uintptr_t>(op->params),
+                      first_op = reinterpret_cast<uintptr_t>(op->result),
                       last_op  = first_op + num_ops - 1;
         const byte  * eval     = op->evaluation;
         std::cout << op->name
@@ -49,7 +56,7 @@ void OperationPrint (const Operation* op) {
         return;
     }
 
-    std::cout <<   "| " << index << ": " << op->name << '\n'
+    std::cout << "\n| Operation:   " << op->name
               << "\n| Params:      ";
     ParamsPrint (op->params);
     std::cout << "\n| Result:      ";
@@ -79,15 +86,15 @@ bool IsGroup (const Operation* ope) {
 }
 
 void OperandPrint (Operand* operand) {
-    std::cout << "| Operand:          ";
+    std::cout << "\n| Operand:          ";
     if (operand == nullptr) {
-        std::cout << "null\n";
+        std::cout << "null";
         return;
     }
 
     const Operation* op = operand->Star ('?', nullptr);
     if (op == nullptr) {
-        std::cout << "\nnull Operation Error!\n";
+        std::cout << "\n| null Operation Error!";
         return;
     }
     OperationPrint (op);
@@ -96,11 +103,11 @@ void OperandPrint (Operand* operand) {
               op_num  = reinterpret_cast<uintptr_t>(op->result),
               last_op = op_num + num_ops - 1;
     if (num_ops > kMaxNumParams) {
-        std::cout << "\nError: Too many parameters!\n";
+        std::cout << "\n| Error: Too many parameters!";
         return;
     }
     for (; op_num <= last_op; ++op_num) {
-        std::cout << "| Operation \'";
+        std::cout << "\n| Operation \'";
         putchar (op_num);
         std::cout << "\':" << op_num << ' ';
         op = operand->Star (op_num, nullptr);
