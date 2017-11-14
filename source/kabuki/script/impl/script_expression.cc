@@ -1,17 +1,17 @@
     /** kabuki::script
-    @version 0.x
-    @file    ~/source/kabuki/script/impl/script_expression.cc
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version 
-             2.0 (the "License"); you may not use this file except in 
-             compliance with the License. You may obtain a copy of the License 
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
-             implied. See the License for the specific language governing 
-             permissions and limitations under the License.
+        @version 0.x
+        @file    ~/source/kabuki/script/impl/script_expression.cc
+        @author  Cale McCollough <cale.mccollough@gmail.com>
+        @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+                 All right reserved (R). Licensed under the Apache License, Version 
+                 2.0 (the "License"); you may not use this file except in 
+                 compliance with the License. You may obtain a copy of the License 
+                 [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+                 required by applicable law or agreed to in writing, software
+                 distributed under the License is distributed on an "AS IS" BASIS,
+                 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+                 implied. See the License for the specific language governing 
+                 permissions and limitations under the License.
 */
 
 #include <stdafx.h>
@@ -333,7 +333,7 @@ void ExpressionScan (Expression* expr, Portal* input) {
         }
 
         std::cout << "\' " << BinStateString (bin_state) << " state";
-        PrintLine ("|", '=');
+        PrintLine ("|", '-');
 
         if (++start >= end) start -= size;
         // Process the rest of the bytes in a loop to reduce setup overhead.
@@ -654,13 +654,13 @@ break;
                 found_hash |= expr->last_byte;
                 if (hash != found_hash) {
 #if DEBUG_SCRIPT
-                    printf ("\n | Error: expecting hash:0x%x and found 0x%x.", hash, found_hash);
+                    printf ("\n| Error: expecting hash:0x%x and found 0x%x.", hash, found_hash);
 #endif  //< DEBUG_SCRIPT
                     ExpressionClear (expr);
                     return;
                 }
 #if DEBUG_SCRIPT
-                std::cout << "\n | Success reading hash!";
+                std::cout << "\n| Success reading hash!";
 #endif  //< DEBUG_SCRIPT
                 hash = kLargest16BitPrime; //< Reset hash to largest 16-bit prime.
 #if DEBUG_SCRIPT
