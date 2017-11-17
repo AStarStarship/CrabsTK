@@ -17,33 +17,39 @@
 #ifndef KABUKI_TEK_SERIAL_PORTAL_H
 #define KABUKI_TEK_SERIAL_PORTAL_H
 
-#include "module_config.h
-
+#include "module_config.h"
 #include "Serial.h"
 
 namespace kabuki { namespace tek {
 
-/** A portal for passing messages through a slot in a Chinese Door.
+/** A portal that connects two Chinese Rooms through a UART connection.
 */
-class SerialPortal: public _::Portal, public Serial {
-  public:
+class SerialPortal: public _::Portal {
     
     /** Constructor creates a loop back port. */
-    SerialPortal (PinName TxPin, PinName RxPin, void* BaseAddress, index_t BufferSize);
+    SerialPortal (uintptr_t* buffer, uintptr_t buffer_size,
+                  PinName tx_pin, PinName rx_pin);
+    
+    /** Sets the Portal up for a batch of bytes transfer.
+         Implementation of this function is not required to do anything, but 
+         regardless it will be called by the Set. */
+    //virtual void Prime ();
 
-    /** gets the last error originating from this Portal. */
-    virtual const char* GetError ();
+    /** Gets the length of current portal.
+        @warning Length might not be the actual length, but rather the length
+                 of the data that is read to be pulled. */
+    //virtual uint_t Length ();
 
-    virtual void Feed ();
-    /** Feeds (Tx) punch cards through the slot. */
+    /** Feeds tx messages through the a without scanning them. */
+    virtual void Feed (byte b);
 
-    virtual void Pull ();
-    /** Pulls (Rx) punch cards through the slot. */
+    /** Pulls rx messages through the a and runs them through the scanner. */
+    virtual byte Pull ();
 
-  private:
+    private:
 
-    Expression slot;          //< Expression for this Portal.
-    //Serial serial;          //< mbed Serial port.
+    _::Expression* expr_; //< Expression for this Portal.
+    Serial serial_;       //< mbed Serial port.
 };
 }       //< namespace tek
 }       //< namespace kabuki

@@ -173,7 +173,7 @@ int BinStreamByte (Bin* bin) {
         (end - start) + (open - begin) + 2;
 
     if (length < 1) {
-        BinResult (bin, Bin::BufferOverflowError, BSeq<1, STR> (), 2, start);
+        BinResult (bin, Bin::BufferOverflowError, Params<1, STR> (), 2, start);
         return -1;
     }
     byte b = *cursor;

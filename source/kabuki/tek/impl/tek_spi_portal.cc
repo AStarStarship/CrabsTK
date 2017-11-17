@@ -18,7 +18,11 @@
 
 namespace kabuki { namespace tek {
 
-SpiPortal::SpiPortal (int buffer_size) {
+SpiPortal::SpiPortal (uintptr_t* buffer, uintptr_t buffer_size,
+                      PinName tx_pin, PinName rx_pin, PinName strobe_pin) :
+    expr_ (buffer, buffer_size)
+    spi_ (tx_pin, rx_pin, strobe_pin)
+{
     if (buffer_size < kMinBufferSize) {
         buffer = new byte[kMinBufferSize];
         return;

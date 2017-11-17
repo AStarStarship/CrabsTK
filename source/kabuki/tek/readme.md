@@ -1,16 +1,13 @@
 # kabuki::tek
-A modern Embedded C++ firmware toolkit for making devices with Searle's Chinese Room, Interprocess, and Telemetry Protocol (Script).
+A modern Embedded C++ firmware toolkit for making devices with Searle's Chinese Room, Interprocess, and Telemetry Protocol (Script) and [mbed](https://github.com/ARMmbed/mbed-os).
   
 ## Quick Links
 * [Kabuki Toolkit Github Repository](https://github.com/kabuki-starship/kabuki-toolkit) - Official open-source respository.
 * [mbed Operating System](https://github.com/ARMmbed/mbed-os) - The ARM mbed IoT Device Platform provides the operating system, cloud services, tools and  developer ecosystem to make the creation and deployment of commercial, standards-based IoT solutions possible at scale.
 * [Kabuki Starship SDK](https://github.com/kabuki-starship/)
 
-## Author(s)
-* [Cale McCollough <https://calemccollough.github.io>]
-  (https://calemccollough.github.io)
-* [mbed Constributors]()
-* [Kabuki Starship Constributors]()
+## Author
+* Cale McCollough <[https://calemccollough.github.io](https://calemccollough.github.io)>
 
 ## License
 Copyright 2017 (C) [Cale McCollough](mailto:calemccollough@gmail.com),

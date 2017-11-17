@@ -20,7 +20,22 @@
 
 namespace kabuki { namespace tek {
 
+    
+    /** Constructor creates a loop back port. */
+    I2CPortal (uintptr_t* buffer, uintptr_t BufferSize,
+               PinName sda_pin, PinName scl_pin);
+    
+    /** Feeds tx messages through the a without scanning them. */
+    virtual void Feed (byte b);
 
+    /** Pulls rx messages through the a and runs them through the scanner. */
+    virtual byte Pull ();
+
+    private:
+
+    _::Expression* expr; //< Expression for this Portal.
+    I2C i2c;             //< mbed Serial port.
+};      //< class I2CPortal
 }       //< namespace tek
 }       //< namespace kabuki
 #endif  //< KABUKI_TEK_H_I2C_PORTAL_H

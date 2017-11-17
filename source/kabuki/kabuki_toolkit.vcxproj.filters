@@ -84,6 +84,9 @@
     <Filter Include="kabuki\pro">
       <UniqueIdentifier>{65351b5c-bf53-4c38-b303-05ce52229b1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kabuki\tek">
+      <UniqueIdentifier>{82f1dc28-77e4-46d5-ab04-0675b56a584c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="assembly.h">

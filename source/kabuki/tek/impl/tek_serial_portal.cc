@@ -18,23 +18,18 @@
 
 namespace kabuki { namespace tek {
 
-SerialPortal::SerialPortal (PinName tx_pin, PinName rx_pin, void* base_address,
-                            uint_t buffer_size)
-:   slot (0, 0)   //< What happens wh,RxPin)
-    
-{
+SerialPortal::SerialPortal (PinName tx_pin, PinName rx_pin,
+                            uintptr_t* buffer, uint_t buffer_size) :
+    slot (ExpressionInit (buffer, buffer_size),
+          serial (tx_pin, rx_pin) {
     /// Nothing to do here!
 }
 
-const char* SerialPortal::GetError () { return error; }
-
-void SerialPortal::Feed ()
-{
-    while (slot.isReadable()) slot.StreamTxByte ();
+void SerialPortal::Feed () {
+    while (serial.readable ()) slot.StreamTxByte ();
 }
 
-void SerialPortal::Pull ()
-{
+void SerialPortal::Pull () {
     while (serial.readable ()) slot.StreamRxByte (serial.getc ());
 }
 

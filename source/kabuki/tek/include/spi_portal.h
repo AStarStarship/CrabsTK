@@ -22,17 +22,12 @@
 namespace kabuki { namespace tek {
 
 /** A type of Portal that allows for reading and writing to the local system. */
-class SPIPortal : public _::Portal, public SPI {
-public:
+class SpiPortal : public _::Portal {
+    public:
 
-    /** Constructs a SPIPortal. */
-    SPIPortal (int BufferSize);
-
-    /** Destructs the terminal. */
-    virtual ~SPIPortal ();
-
-    /** gets the last error originating from this Portal. */
-    virtual const char* GetError ();
+    /** Constructs a SpiPortal. */
+    SpiPortal (uintptr_t* buffer, uintptr_t BufferSize,
+               PinName tx_pin, PinName rx_pin, PinName strobe_pin);
 
     /** Feeds (Tx) punch cards through the slot. */
     virtual void Feed ();
@@ -40,9 +35,9 @@ public:
     /** Pulls (Rx) punch cards through the slot. */
     virtual void Pull ();
 
-private:
+    private:
 
-    byte* buffer;       //< The byte buffer.
+    _::Expression* expr_; //< Expression for this Portal.
 
     int startIndex,     //< The starting index of the terminal.
         stopIndex,

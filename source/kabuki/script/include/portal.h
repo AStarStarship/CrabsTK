@@ -29,12 +29,12 @@ struct KABUKI Portal {
     /** Sets the Portal up for a batch of bytes transfer.
          Implementation of this function is not required to do anything, but 
          regardless it will be called by the Set. */
-    virtual void Prime () = 0;
+    //virtual void Prime () = 0;
 
     /** Gets the length of current portal.
         @warning Length might not be the actual length, but rather the length
                  of the data that is read to be pulled. */
-    virtual uint_t Length () = 0;
+    //virtual uint_t Length () = 0;
 
     /** Feeds tx messages through the a without scanning them. */
     virtual void Feed (byte b) = 0;

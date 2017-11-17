@@ -354,6 +354,7 @@ void ExpressionScan (Expression* expr, Portal* input) {
                     break;
                 }
                 if (b == CR) {
+                    Pop (expr);
                     expr->bytes_left = 1;
                     ExpressionSetState (expr, Bin::HashState);
                     bin_state = Bin::HashState;

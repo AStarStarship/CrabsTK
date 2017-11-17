@@ -14808,9 +14808,9 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 515,
+											"left": 509,
 											"top": 619,
-											"width": 18,
+											"width": 30.71630859375,
 											"height": 13,
 											"autoResize": false,
 											"alpha": 0.7669375294558498,
@@ -57520,7 +57520,7 @@
 			"_parent": {
 				"$ref": "AAAAAAFF+h6SjaM2Hec="
 			},
-			"name": "Examples",
+			"name": "TCP",
 			"ownedElements": [
 				{
 					"_type": "FCFlowchartDiagram",
