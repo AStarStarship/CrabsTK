@@ -20,8 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kabuki_toolkit.h" />
-    <ClInclude Include="script\pro_files\assembly.h" />
-    <ClInclude Include="script\pro_files\global.h" />
     <ClInclude Include="this.h" />
     <ClInclude Include="assembly.h" />
     <ClInclude Include="script\include\address.h" />
@@ -92,7 +90,6 @@
     <ClCompile Include="script\impl\script_types.cc" />
     <ClCompile Include="script\impl\script_utils.cc" />
     <ClCompile Include="script\impl\script_wall.cc" />
-    <ClCompile Include="script\pro_files\script_tests.cc" />
     <ClCompile Include="serial\impl\serial_list_ports_linux.cc" />
     <ClCompile Include="serial\impl\serial_list_ports_osx.cc" />
     <ClCompile Include="serial\impl\serial_list_ports_win32.cc" />
@@ -103,10 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="script\include\module_config.in" />
-    <None Include="script\pro_files\readme.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="script\pro_files\CMakeList.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

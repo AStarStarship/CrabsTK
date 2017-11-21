@@ -227,12 +227,6 @@
     <ClInclude Include="kabuki_toolkit.h">
       <Filter>kabuki</Filter>
     </ClInclude>
-    <ClInclude Include="script\pro_files\global.h">
-      <Filter>kabuki\script\pro_files</Filter>
-    </ClInclude>
-    <ClInclude Include="script\pro_files\assembly.h">
-      <Filter>kabuki\script\pro_files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cc">
@@ -319,9 +313,6 @@
     <ClCompile Include="serial\impl\serial_list_ports_win32.cc">
       <Filter>kabuki\serial</Filter>
     </ClCompile>
-    <ClCompile Include="script\pro_files\script_tests.cc">
-      <Filter>kabuki\script\pro_files</Filter>
-    </ClCompile>
     <ClCompile Include="script\impl\script_ascii.cc">
       <Filter>kabuki\script</Filter>
     </ClCompile>
@@ -333,13 +324,5 @@
     <None Include="script\include\module_config.in">
       <Filter>kabuki\script</Filter>
     </None>
-    <None Include="script\pro_files\readme.md">
-      <Filter>kabuki\script\pro_files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="script\pro_files\CMakeList.txt">
-      <Filter>kabuki\script\pro_files</Filter>
-    </Text>
   </ItemGroup>
 </Project>
