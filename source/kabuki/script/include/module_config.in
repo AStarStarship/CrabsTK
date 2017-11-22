@@ -1,3 +1,0 @@
-// The configured options and settings for KabukiToolkit
-#define KabukiToolkit_VERSION_MAJOR @KabukiToolkit_VERSION_MAJOR@
-#define KabukiToolkit_VERSION_MINOR @KabukiToolkit_VERSION_MINOR@
