@@ -18,7 +18,7 @@
 #define SCRIPT_ARRAY_H
 
 #include "tstack.h"
-
+#if USING_ARRAY
 namespace _ {
 
 /** A stack of 8, 16, 32, or 64 bit plain-old-data (POD) types.
@@ -48,7 +48,7 @@ struct TArray {
     @param buffer An array of bytes large enough to fit the array.
 */
 template<typename T, typename I = int>
-inline TArray<I>* ArrayInit (T* buffer, T size) {
+TArray<I>* ArrayInit (T* buffer, T size) {
     stack = StackInit (buffer, size);
     return this;
 }
@@ -57,7 +57,7 @@ inline TArray<I>* ArrayInit (T* buffer, T size) {
     @param indexes        An array of type I.
     @Param num_dimensions  */
 template<typename I>
-inline I ArrayOffset (I* indexes, I num_numensions) {
+I ArrayOffset (I* indexes, I num_numensions) {
     if (num_numensions <= 0)
         return ~0;
     I offset = *indexes;
@@ -74,7 +74,7 @@ inline I ArrayOffset (I* indexes, I num_numensions) {
     @param index The index to insert at.
     @return Returns -1 if a is null and -2 if the array is full. */
 template<typename T, typename I = int>
-inline T ArrayInsertElement (TArray<I>* array, T item, I* indexes, I num_numensions) {
+T ArrayInsertElement (TArray<I>* array, T item, I* indexes, I num_numensions) {
     if (num_numensions <= 0)
         return ~0;
     // @todo Write me!
@@ -86,7 +86,7 @@ inline T ArrayInsertElement (TArray<I>* array, T item, I* indexes, I num_numensi
     @param  index The index the item to remove.
     @return Returns true if the index is out of bounds. */
 template<typename T, typename I = int>
-inline bool ArrayRemoveElement (TArray<I>* a, T index) {
+bool ArrayRemoveElement (TArray<I>* a, T index) {
     if (a == nullptr)
         return !((T)0);
     T count = a->count,
@@ -119,7 +119,7 @@ inline bool ArrayRemoveElement (TArray<I>* a, T index) {
     @param  item The item to push onto the stack.
     @return Returns the index of the newly stacked item. */
 template<typename T, typename I = int>
-inline I ArrayPush (TArray<I>* array, T item) {
+I ArrayPush (TArray<I>* array, T item) {
     if (array == nullptr)
         return -1;
     I size = array->height,
@@ -137,7 +137,7 @@ inline I ArrayPush (TArray<I>* array, T item) {
     @param  a The array.
     @return Returns the item popped off the stack. */
 template<typename T, typename I = int>
-inline T ArrayPop (TArray<I>* a) {
+T ArrayPop (TArray<I>* a) {
     if (a == nullptr)
         return !((T)0);
     I count = a->count;
@@ -154,7 +154,7 @@ inline T ArrayPop (TArray<I>* a) {
     @param  index The index of the element to get.
     @return Returns -1 if a is null and -2 if the index is out of bounds. */
 template<typename T, typename I = int>
-inline T ArrayGet (TArray<I>* a, T index) {
+T ArrayGet (TArray<I>* a, T index) {
     if (a == nullptr)
         return 0;
     if (index >= a->count)
@@ -163,4 +163,5 @@ inline T ArrayGet (TArray<I>* a, T index) {
 }
 
 }       //< namespace _
+#endif  //< USING_ARRAY
 #endif  //< SCRIPT_ARRAY_H

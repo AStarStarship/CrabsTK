@@ -22,6 +22,7 @@
 
 #include "slot.h"
 #include "tstack.h"
+#include "text.h"
 
 namespace _ {
 
@@ -59,15 +60,15 @@ class Door : public Operand {
     } Error;
 
     enum {
-        kMinDoorSize = 248,   //< The min and default size of the door buffer.
+        kMinDoorSize = 128,   //< The min and default size of the door buffer.
     };
 
     /** A door in a Chinese room. */
-    Door (const char* roomName = EmptyString, uintptr_t* buffer = nullptr,
+    Door (const char* roomName = EmptyString (), uintptr_t* buffer = nullptr,
           uintptr_t size_bytes = kMinDoorSize);
 
     /** Destructor. */
-    ~Door ();
+    virtual ~Door ();
 
     /** Gets the Bout at the given index. */
     slot_t GetSlot (slot_t index);

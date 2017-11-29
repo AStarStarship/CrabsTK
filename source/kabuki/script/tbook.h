@@ -20,6 +20,8 @@
 #ifndef SCRIPT_SET_H
 #define SCRIPT_SET_H
 
+#if USING_BOOK
+
 #include "memory.h"
 #include "types.h"
 #include "text.h"
@@ -188,7 +190,7 @@ enum {
              will get rounded up to the next higher multiple of 4. */
 template<typename TIndex, typename TKey, typename TData>
 Book<TIndex, TKey, TData>* BookInit (uintptr_t* buffer, byte max_size,
-		                             uint16_t table_size, uint16_t size) {
+                                     uint16_t table_size, uint16_t size) {
     if (buffer == nullptr)
         return nullptr;
     if (table_size >= (size - sizeof (Book<TIndex, TKey, TData>)))
@@ -208,7 +210,7 @@ Book<TIndex, TKey, TData>* BookInit (uintptr_t* buffer, byte max_size,
 }
 
 
-inline Book<int8_t, uint16_t, uint16_t>* Book2Init (uintptr_t* buffer,
+Book<int8_t, uint16_t, uint16_t>* Book2Init (uintptr_t* buffer,
                                                     byte max_size,
                                                     uint16_t table_size,
                                                     uint16_t size) {
@@ -268,7 +270,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData>* book, const char* key, T data) {
 
     // Calculate space left.
     TKey value = table_size - stack_height * BookOverheadPerIndex<TIndex, TKey,
-    		                                                      TData> (),
+                                                                  TData> (),
          key_length = static_cast<uint16_t> (StringLength (key)),
          pile_size;
 
@@ -513,11 +515,11 @@ TIndex BookAdd (Book<TIndex, TKey, TData>* book, const char* key, T data) {
 }
 
 template<typename T, TType kType>
-inline int8_t Book2Add (Book2* book, const char* key, T data) {
+int8_t Book2Add (Book2* book, const char* key, T data) {
     return BookAdd<int8_t, uint16_t, uint16_t, T, kType> (book, key, data);
 }
 /** Adds a key-value pair to the end of the book. */
-//inline byte Add2 (Book2* book, const char* key, byte data) {
+//byte Add2 (Book2* book, const char* key, byte data) {
 //    return BookAdd<byte, uint16_t, uint16_t, hash16_t> (book, key, UI1, &data);
 //}
 
@@ -649,7 +651,7 @@ TIndex BookFind (Book<TIndex, TKey, TData>* book, const char* key) {
     return ~((TIndex)0);
 }
 
-inline int8_t Book2Find (Book2* book, const char* key) {
+int8_t Book2Find (Book2* book, const char* key) {
     return BookFind<int8_t, uint16_t, uint16_t> (book, key);
 }
 
@@ -664,7 +666,7 @@ void BookPrint (const Book<TIndex, TKey, TData>* book) {
     TKey table_size = book->table_size,
          pile_size = book->pile_size;
 
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
     PrintLine ('_');
     
     if (sizeof (TData) == 2)
@@ -682,7 +684,7 @@ void BookPrint (const Book<TIndex, TKey, TData>* book) {
     std::cout << '|';
     for (int i = 0; i < 79; ++i) putchar ('_');
     std::cout << '\n';
-#endif  //< DEBUG_SCRIPT
+#endif  //< SCRIPT_DEBUG
     const byte* states = reinterpret_cast<const byte*> (book) +
                          sizeof (Book <TIndex, TKey, TData>);
     const TKey* key_offsets = reinterpret_cast<const TKey*> 
@@ -740,7 +742,7 @@ void BookPrint (const Book<TIndex, TKey, TData>* book) {
     std::cout << '\n';
 }
 
-inline void Book2Print (const Book2* book) {
+void Book2Print (const Book2* book) {
     BookPrint<int8_t, uint16_t, uint16_t> (book);
 }
 
@@ -767,9 +769,9 @@ void* BookContains (Book<TIndex, TKey, TData>* book, void* data) {
     if (data < book) return false;
     byte* base = reinterpret_cast<byte*> (book);
     if (data < base)
-    	return nullptr;
+        return nullptr;
     if (data > base + book->size_bytes)
-    	return nullptr;
+        return nullptr;
     return data;
 }
 
@@ -801,13 +803,14 @@ bool BookRetain (Book<TIndex, TKey, TData>* book) {
 
 /** Prints the given Book to the console. */
 template<typename TIndex, typename TKey, typename TData>
-inline void BookPrint (Book<TIndex, TKey, TData>* book) {
+void BookPrint (Book<TIndex, TKey, TData>* book) {
 
 }
 
-//inline void BookPrint (Book2* book) {
+//void BookPrint (Book2* book) {
 //    return BookPrint<byte, uint16_t, uint16_t, hash16_t> (book);
 //}
 
 }       //< namespace _
+#endif  //< USING_BOOK
 #endif  //< SCRIPT_SET_H

@@ -103,21 +103,20 @@ typedef uint32_t ticket_t;
 
 namespace _ {
 enum {
-	// I think these two are macros.
+    // I think these two are macros.
     //kMinFloorSize     = 256,            //< Min size of a room.
     //kMaxFloorSize     = 0x7FFFFFFC,     //< Max room size: 2GB - 7 bits.
-	kFloorSize       = ROOM_FLOOR_SIZE,   //< Size of the Room Floor (buffer).
+    kFloorSize       = ROOM_FLOOR_SIZE,   //< Size of the Room Floor (buffer).
     kMinSlotSize     = 128,               //< Min size of a Slot - 1.
     kMaxErrors       = MAX_ERRORS,        //< Max errors before blowing up.
     kMaxNumParams    = MAX_NUM_PARAMS,    //< Max number of parameters.
     kMaxStringLength = MAX_STRING_LENGTH, //< Max char length.
     kTimeoutMicroseconds = COM_TIMEOUT_TICKS,
     //< The number of seconds before a timeout over a generic communication
-	//< link.
+    //< link.
     kWordAddressMask = sizeof (void*) - 1,   //< For masking the word address.
     kMaxAddresLength = 255,                  //< Max address (ADR) length.
     kMinStackSize    = 1,                    //< Min Expression stack size.
-	kLogSize         = SCRIPT_LOG_SIZE,		 //<
 };
 }
 #undef MAX_ERRORS
@@ -141,17 +140,17 @@ typedef int64_t time_us_t; //< A 64-bit microseconds since epoch timestamp.
 #if MAX_NUM_SLOTS <= 255
 typedef byte slot_t;
 enum {
-	kMaxNumSlots = 0xff
+    kMaxNumSlots = 0xff
 };
 #elif MAX_NUM_SLOTS <=65535
 typedef uint16_t slot_t;
 enum {
-	kMaxNumSlots = 0xffff
+    kMaxNumSlots = 0xffff
 };
 #else
 typedef uint32_t slot_t;
 enum {
-	kMaxNumSlots = 0xffffffff
+    kMaxNumSlots = 0xffffffff
 };
 #endif
 
@@ -184,8 +183,7 @@ enum {
 static const uint64_t kLargest64BitPrime = 0xFFFFFFFFFFFFFFC5;
 //< Largest 64-bit prime: 18446744073709551557;
 
-static const char EmptyString[] = "\0";     //< The empty char.
-static const char NewLineString[] = "\n\0"; //< A char with a single newline char.
+//< A char with a single newline char.
 
 /** The level will more code creating a larger binary. Use one 
     underscore to use more memory, and two underscores to use even more. */
@@ -198,7 +196,7 @@ typedef uint8_t  index_t;   //< Largest bit-depth TIndex this system supports.
 typedef uint16_t header_t;  //< Largest bit-depth THeader this system supports.
 typedef uint16_t data_t;    //< Largest bit-depth TData this system supports.
 
-#elif MEMORY_PROFILE == 2
+#elif (MEMORY_PROFILE == 2) || (MEMORY_PROFILE == 3)
 typedef int16_t  int_t;     //< Buffer signed index type.
 typedef uint16_t uint_t;    //< Buffer unsigned signed index type.
 typedef int32_t  dint_t;    //< Buffer double-wide signed index type.
@@ -207,7 +205,7 @@ typedef int16_t  index_t;   //< Default TIndex size.
 typedef uint16_t header_t;  //< Default TKey size.
 typedef uint32_t data_t;    //< Default TData size.
 
-#elif MEMORY_PROFILE == 3
+#elif MEMORY_PROFILE == 5
 typedef int32_t  int_t;     //< Buffer signed index type.
 typedef uint32_t uint_t;    //< Buffer unsigned signed index type.
 typedef int16_t  dint_t;    //< Buffer double-wide signed index type.
@@ -219,6 +217,10 @@ typedef uint64_t data_t;    //< Default TData size.
 #else
 #error  Invalid MEMORY_PROFILE
 #endif
+
+#if MEMORY_PROFILE >= 3 || SCRIPT_DEBUG
+#define USE_MORE_ROM 3
+#endif  //< MEMORY_PROFILE >= 3
 
 typedef int char_t;  //< Size of a Script function index.
 

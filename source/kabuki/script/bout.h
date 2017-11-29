@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef SCRIPT_BOUT_H
-#define SCRIPT_BOUT_H
+#ifndef HEADER_FOR___BOUT
+#define HEADER_FOR___BOUT
 
 #include "operation.h"
 
@@ -62,8 +62,12 @@ struct KABUKI Bout {
 /** Get's the B-Output's buffer.*/
 KABUKI byte* BoutBuffer (Bout* bout);
 
+#if SCRIPT_DEBUG
+KABUKI const char* BoutErrorString (Bout::Error error);
+
 /** Gets a a char for printing out the bout_state. */
 KABUKI const char* BoutStateString (Bout::State state);
+#endif  //< SCRIPT_DEBUG
 
 inline const char* BoutStateString (byte state) {
     return BoutStateString ((Bout::State)state);
@@ -73,7 +77,12 @@ inline const char* BoutStateString (byte state) {
 
     @param error The error type.
     @return Returns a Static Error Operation Result. */
-KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error);
+inline const Operation* BoutResult (Bout* bout, Bout::Error error) {
+#if SCRIPT_DEBUG
+    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
+#endif
+    return reinterpret_cast<const Operation*> (1);
+}
 
 /** Used to return an erroneous result from a B-Output.
     @param  bout    The source Bout.
@@ -82,8 +91,13 @@ KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error);
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
-                                    const uint_t* header);
+inline const Operation* BoutResult (Bout* bout, Bout::Error error,
+                                    const uint_t* header) {
+#if SCRIPT_DEBUG
+    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
+#endif  //< MEMORY_PROFILE >= USE_MORE_ROM
+    return reinterpret_cast<const Operation*> (1);
+}
 
 /** Used to return an erroneous result from a B-Output.
     @param  bout    The source Bout.
@@ -92,9 +106,14 @@ KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
+inline const Operation* BoutResult (Bout* bout, Bout::Error error,
                                     const uint_t* header,
-                                    uint_t offset);
+                                    uint_t offset) {
+#if SCRIPT_DEBUG
+    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
+#endif  //< MEMORY_PROFILE >= USE_MORE_ROM
+    return reinterpret_cast<const Operation*> (1);
+}
 
 /** Used to return an erroneous result from a B-Output.
     @param  bout    The source Bout.
@@ -103,10 +122,15 @@ KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Operation* BoutResult (Bout* bout, Bout::Error error,
+inline const Operation* BoutResult (Bout* bout, Bout::Error error,
                                     const uint_t* header,
                                     uint_t offset,
-                                    byte* address);
+                                    byte* address) {
+#if SCRIPT_DEBUG
+    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
+#endif  //< MEMORY_PROFILE >= USE_MORE_ROM
+    return reinterpret_cast<const Operation*> (1);
+}
 
 /** Initializes the B-Output buffer with the given buffer size. */
 KABUKI Bout* BoutInit (uintptr_t* buffer, uint_t size);
@@ -125,8 +149,10 @@ KABUKI byte* BoutEndAddress (Bout* bout);
     @param bout A B-Output abstract byte stream. */
 KABUKI int BoutStreamByte (Bout* bout);
 
+#if SCRIPT_DEBUG
 /** Prints the given B-Output to the stdout. */
 KABUKI void BoutPrint (Bout* bout);
+#endif  //< SCRIPT_DEBUG
 
 /** Writes a message with the given params to the given B-Output slot.
     @param bout   The B-Output socket to write to.
@@ -152,4 +178,4 @@ KABUKI void BoutRingBell (Bout* bout, const char* address);
 KABUKI void BoutAckBack (Bout* bout, const char* address);
 
 }       //< namespace _
-#endif  //< SCRIPT_BOUT_H
+#endif  //< HEADER_FOR___BOUT

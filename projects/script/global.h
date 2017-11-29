@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/a.h
+    @file    ~/source/kabuki/script/global.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,30 +14,9 @@
              permissions and limitations under the License.
 */
 
-#include "../include/module_all.h"
+#include "../../source/kabuki/script/global.h"
+
 using namespace _;
-
-enum {
-    /** @var  ErrorListSize 
-       @todo Test with small and large sizes. */
-    kErrorListSize       = 4,
-    
-    /** @var  NumLoopIterations 
-       @todo Test with small and large sizes. */
-    kNumLoopIterations   = 3,  //< The number of times to test each type with random data.
-    
-    /** @var  kSlotSize 
-       @todo Test with small and large sizes. */
-    kSlotSize           = 128,
-    
-    /** @var  StackSize 
-       @todo Test with small and large sizes. */
-    kStackSize          = 3,
-
-    /** @var  StackSize
-        @todo Test with small and large sizes. */
-    kRoomSize           = 1024,
-};
 
 /* Test Operand for multiple unit tests.
     The name ChildOperand does not mean anything other than it is a child. */
@@ -48,40 +27,40 @@ class ChildOperand : public Operand {
     virtual const Operation* Star (int index, Expression* expr) {
         void* args[2];
 
-        static const Operation this_op = { "Child",
-            NumOperations (2), FirstOperation ('a'),
+        static const Operation This = { "Child",
+            NumOperations (2), FirstOperation ('A'),
             "A child Operand." };
 
         switch (index) {
-            case '?': return &this_op;
-            case 'a': {
-                static const Operation op_a = { "SignedIntegerTests",
-                    BSeq<2, UI1, STR, kStringBufferSize> (),
-                    BSeq<2, UI1, STR> (),
-                    "Description of functionA.", 0 };
-                if (!expr) return &op_a;
+            case '?': return &This;
+            case 'A': {
+                static const Operation OpA = { "SignedIntegerTests",
+                    Params<2, UI1, STR, kStringBufferSize> (),
+                    Params<2, UI1, STR> (),
+                    "Description of function \'A\'.", 0 };
+                if (!expr) return &OpA;
 
-                if (Args (expr, op_a.params, 
+                if (ExprArgs (expr, OpA.params, 
                           Args (args, &test_ui1_, test_str_)))
                     return expr->result;
                     
                 // Function logic here
 
-                return Result (expr, op_a.result, Args (args, &test_ui1_,
+                return ExprResult (expr, OpA.result, Args (args, &test_ui1_,
                                                        test_str_));
             }
-            case 'b': {
+            case 'B': {
                 static const Operation op_b = { "FloatTests",
-                    BSeq<2, FLT, STR, kStringBufferSize> (),
-                    BSeq<2, FLT, STR> (),
-                    "Description of functionB.", 0 };
+                    Params<2, FLT, STR, kStringBufferSize> (),
+                    Params<2, FLT, STR> (),
+                    "Description of function \'B\'.", 0 };
                 if (!expr) return &op_b;
 
-                if (Args (expr, op_b.params, Args (args, &test_flt_,
+                if (ExprArgs (expr, op_b.params, Args (args, &test_flt_,
                           test_str_)))
                     return expr->result;
 
-                return Result (expr, op_b.result, Args (args, &test_flt_,
+                return ExprResult (expr, op_b.result, Args (args, &test_flt_,
                                                        test_str_));
             }
             case _::DEL: {
@@ -115,47 +94,47 @@ class Parent : public Operand {
     virtual const Operation* Star (int index, Expression* expr) {
         void* args[2];
 
-        static const Operation this_op = { "Parent",
-            NumOperations (4), FirstOperation ('a'),
-            "Root scope device." };
+        static const Operation This = { "Parent",
+            NumOperations (4), FirstOperation ('A'),
+            "Root scope device.", 0 };
 
         switch (index) {
-            case '?': return &this_op;
-            case 'a': {
+            case '?': return &This;
+            case 'A': {
                 if (!expr) return child_a.Star ('?', expr);
                 return Push (expr, &child_a);
             }
-            case 'b': {
+            case 'B': {
                 if (!expr) return child_b.Star ('?', expr);
                 return Push (expr, &child_b);
             }
-            case 'c': {
-                static const Operation op_c = { "FloatTests",
-                    BSeq<2, FLT, STR, kStringBufferSize> (),
-                    BSeq<2, FLT, STR> (),
-                    "Description of functionA." };
-                if (!expr) return &op_c;
+            case 'C': {
+                static const Operation OpC = { "FloatTests",
+                    Params<2, FLT, STR, kStringBufferSize> (),
+                    Params<2, FLT, STR> (),
+                    "Description of functionA.", 0 };
+                if (!expr) return &OpC;
 
-                if (Args (expr, op_c.params, Args (args, &io_number_,
+                if (ExprArgs (expr, OpC.params, Args (args, &io_number_,
                                                        io_string_)))
                     return expr->result;
 
-                return Result (expr, op_c.result, Args (args, &io_number_,
+                return ExprResult (expr, OpC.result, Args (args, &io_number_,
                                                    io_string_));
             }
-            case 'd': {
-                static const Operation m4 = { "SignedIntegerTests",
-                    BSeq<2, FLT, STR, kStringBufferSize> (),
-                    BSeq<2, FLT, STR> (),
-                    "Description of functionB." };
+            case 'D': {
+                static const Operation OpD = { "SignedIntegerTests",
+                    Params<2, FLT, STR, kStringBufferSize> (),
+                    Params<2, FLT, STR> (),
+                    "Description of functionB.", 0 };
 
-                if (!expr) return &m4;
+                if (!expr) return &OpD;
 
-                if (Args (expr, m4.params, Args (args, &io_number_,
+                if (ExprArgs (expr, OpD.params, Args (args, &io_number_,
                                                  io_string_)))
                     return expr->result;
 
-                return Result (expr, m4.result, Args (args, &io_number_,
+                return ExprResult (expr, OpD.result, Args (args, &io_number_,
                                                       io_string_));
             }
         }
@@ -179,20 +158,20 @@ class This : public Room {
     };
 
     This ():
-        Room (buffer_, kRoomSize)
+        Room ("Test")
     {
         
     }
 
     // Interprocess operations.
     virtual const Operation* Star (int index, Expression* expr) {
-        static const Operation this_op = { "Room",
-            NumOperations (1), FirstOperation ('a'),
+        static const Operation This = { "Room",
+            NumOperations (1), FirstOperation ('A'),
             "Root scope device.", 0 };
 
         switch (index) {
-            case '?': return &this_op;
-            case 'a': {
+            case '?': return &This;
+            case 'A': {
                 if (!expr) return parent.Star ('?', nullptr);
                 return Push (expr, &parent);
             }
@@ -205,6 +184,4 @@ class This : public Room {
     private:
 
     Parent parent;
-
-    uintptr_t buffer_[(kRoomSize / sizeof (uintptr_t)) + 1];  //< 
 };

@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef SCRIPT_BIN_H
-#define SCRIPT_BIN_H
+#ifndef HEADER_FOR___BIN
+#define HEADER_FOR___BIN
 
 #include "operation.h"
 
@@ -57,7 +57,7 @@ struct KABUKI Bin {
         TooManyPopsError         = 12,
         StringOverflowError      = 13,
         InvalidErrorHandlerError = 14,
-        InvalidOpeartionError    = 15,
+        InvalidOperandError    = 15,
         ArrayOverflowError       = 16,
         InvalidOperationError    = 17,
         Utf8Error                = 18,
@@ -108,7 +108,26 @@ inline const char* BinStateString (byte state) {
 
     @param error The error type.
     @return Returns a Static Error Operation Result. */
-KABUKI const Operation* BinResult (Bin* bin, Bin::Error error);
+inline const Operation* BinResult (Bin* bin, Bin::Error error) {
+#if SCRIPT_DEBUG
+    std::cout << "\n| Bin " << BinErrorString (error) << " Error!\n";
+#endif  //< SCRIPT_DEBUG
+    return reinterpret_cast<const Operation*> (1);
+}
+/** Used to return an erroneous result from a B-Input.
+    @param  bin     The source Bin.
+    @param  error   The error type.
+    @param  header  The B-Sequence Header.
+    @param  offset  The offset to the type in error in the B-Sequence.
+    @param  address The address of the byte in error.
+    @return         Returns a Static Error Operation Result. */
+inline const Operation* BinResult (Bin* bin, Bin::Error error,
+                                   const uint_t* header) {
+#if SCRIPT_DEBUG
+    std::cout << "\n| Bin " << BinErrorString (error) << " Error!\n";
+#endif  //< SCRIPT_DEBUG
+    return reinterpret_cast<const Operation*> (1);
+}
 
 /** Used to return an erroneous result from a B-Input.
     @param  bin     The source Bin.
@@ -117,19 +136,14 @@ KABUKI const Operation* BinResult (Bin* bin, Bin::Error error);
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Operation* BinResult (Bin* bin, Bin::Error error,
-                                   const uint_t* header);
-
-/** Used to return an erroneous result from a B-Input.
-    @param  bin     The source Bin.
-    @param  error   The error type.
-    @param  header  The B-Sequence Header.
-    @param  offset  The offset to the type in error in the B-Sequence.
-    @param  address The address of the byte in error.
-    @return         Returns a Static Error Operation Result. */
-KABUKI const Operation* BinResult (Bin* bin, Bin::Error error,
+inline const Operation* BinResult (Bin* bin, Bin::Error error,
                                    const uint_t* header,
-                                   uint_t offset);
+                                   uint_t offset) {
+#if SCRIPT_DEBUG
+    std::cout << "\n| Bin " << BinErrorString (error) << " Error!\n";
+#endif  //< SCRIPT_DEBUG
+    return reinterpret_cast<const Operation*> (1);
+}
 
 /** Used to return an erroneous result from a B-Input.
     @param  bin     The source Bin.
@@ -138,10 +152,15 @@ KABUKI const Operation* BinResult (Bin* bin, Bin::Error error,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Operation* BinResult (Bin* bin, Bin::Error error,
+inline const Operation* BinResult (Bin* bin, Bin::Error error,
                                    const uint_t* header,
                                    uint_t offset,
-                                   byte* address);
+                                   byte* address) {
+#if SCRIPT_DEBUG
+    std::cout << "\n| Bin " << BinErrorString (error) << " Error!\n";
+#endif  //< SCRIPT_DEBUG
+    return reinterpret_cast<const Operation*> (1);
+}
 
 /** Initializes the Bin struct KABUKI to an empty buffer. */
 KABUKI Bin* BinInit (uintptr_t* buffer, uint_t size);
@@ -171,4 +190,4 @@ KABUKI void BinPrint (Bin* bin);
 KABUKI const Operation* BinRead (Bin* bin, const uint_t* params, void** args);
 
 }       //< namespace _
-#endif  //< SCRIPT_BIN_H
+#endif  //< HEADER_FOR___BIN

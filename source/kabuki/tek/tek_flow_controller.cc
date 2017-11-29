@@ -14,7 +14,6 @@
 */
 
 #include "flow_controller.h"
-#include "script/script/text.h"
 
 using namespace _;
 

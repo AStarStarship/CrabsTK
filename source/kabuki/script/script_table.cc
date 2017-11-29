@@ -17,8 +17,10 @@
 */
 
 #include <stdafx.h>
-#include "../script/table.h"
-#include "../script/text.h"
+#include "table.h"
+#include "text.h"
+
+#if USING_TABLE
 
 namespace _ {
 
@@ -70,20 +72,26 @@ byte TableAdd (Table* table, const char* key) {
         pile_size,
         key_length = static_cast<uint16_t> (StringLength (key));
 
+#if SCRIPT_DEBUG
     PrintLine ();
     printf ("Adding Key %s:%u \n%20s: 0x%p\n%20s: %p\n%20s: 0x%p\n"
             "%20s: %p\n%20s:%u\n", key, key_length, "hashes", hashes, "key_offsets",
             key_offsets, "keys", keys, "indexes", indexes, "value", value);
+#endif  //< SCRIPT_DEBUG
 
     hash16_t hash = Hash16 (key),
         current_hash;
 
     if (key_length > value) {
+#if SCRIPT_DEBUG
         printf ("Buffer overflow\n");
+#endif  //< SCRIPT_DEBUG
         return ~(byte)0;
     }
 
+#if SCRIPT_DEBUG
     TablePrint (table);
+#endif  //< SCRIPT_DEBUG
 
     if (num_keys == 0) {
         table->num_keys = 1;
@@ -94,19 +102,25 @@ byte TableAdd (Table* table, const char* key) {
         destination = keys - key_length;
 
         StringCopy (destination, key);
+#if SCRIPT_DEBUG
         printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
         TablePrint (table);
+#endif  //< SCRIPT_DEBUG
         return 0;
     }
 
     // Calculate left over buffer size by looking up last char.
 
     if (key_length >= value) {
+#if SCRIPT_DEBUG
         printf ("Not enough room in buffer!\n");
+#endif  //< SCRIPT_DEBUG
         return 0;   //< There isn't enough room left in the buffer.
     }
 
+#if SCRIPT_DEBUG
     std::cout << "Finding insert location... \n";
+#endif  //< SCRIPT_DEBUG
 
     int low = 0,
         mid,
@@ -119,8 +133,10 @@ byte TableAdd (Table* table, const char* key) {
         mid = (low + high) >> 1;        //< Shift >> 1 to / 2
 
         current_hash = hashes[mid];
+#if SCRIPT_DEBUG
         printf ("high: %i mid: %i low %i hash: %x\n", high, mid, low,
                 current_hash);
+#endif  //< SCRIPT_DEBUG
 
         if (current_hash > hash) {
             high = mid - 1;
@@ -128,16 +144,22 @@ byte TableAdd (Table* table, const char* key) {
             low = mid + 1;
         } else    // Duplicate hash detected.
         {
+#if SCRIPT_DEBUG
             std::cout << "hash detected, ";
+#endif  //< SCRIPT_DEBUG
 
             // Check for other collisions.
 
             index = indexes[mid];       //< Index in the collision table.
 
+#if SCRIPT_DEBUG
             printf ("index:%u\n", index);
+#endif  //< SCRIPT_DEBUG
 
             if (index != kInvalidIndex) { //< There are other collisions.
+#if SCRIPT_DEBUG
                 std::cout << "with collisions, ";
+#endif  //< SCRIPT_DEBUG
                 // There was a collision so check the table.
 
                 // The collisionsList is a sequence of indexes terminated 
@@ -148,10 +170,14 @@ byte TableAdd (Table* table, const char* key) {
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;  //< Load the index in the collision table.
                 while (index < kInvalidIndex) {
+#if SCRIPT_DEBUG
                     printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
+#endif  //< SCRIPT_DEBUG
                     if (StringEquals (key, keys - key_offsets[index])) {
+#if SCRIPT_DEBUG
                         printf ("but table already contains key at "
                                 "offset: %u.\n", index);
+#endif  //< SCRIPT_DEBUG
                         return index;
                     }
                     ++temp_ptr;
@@ -159,7 +185,9 @@ byte TableAdd (Table* table, const char* key) {
                 }
 
                 // Its a new collision!
+#if SCRIPT_DEBUG
                 std::cout << "and new collision detected.\n";
+#endif  //< SCRIPT_DEBUG
 
                 // Copy the key
                 value = key_offsets[num_keys - 1] + key_length + 1;
@@ -180,7 +208,9 @@ byte TableAdd (Table* table, const char* key) {
                 *temp_ptr = num_keys;
 
                 table->pile_size = pile_size + 1;
+#if SCRIPT_DEBUG
                 printf ("\n\ncollision index: %u\n", temp);
+#endif  //< SCRIPT_DEBUG
                 // Store the collision index.
                 indexes[num_keys] = temp;   //< Store the collision index
                 table->num_keys = num_keys + 1;
@@ -192,8 +222,10 @@ byte TableAdd (Table* table, const char* key) {
                 //< Add the newest char to the end.
                 indexes[num_keys] = num_keys;
 
+#if SCRIPT_DEBUG
                 TablePrint (table);
                 std::cout << "Done inserting.\n";
+#endif  //< SCRIPT_DEBUG
                 return num_keys;
             }
 
@@ -201,13 +233,19 @@ byte TableAdd (Table* table, const char* key) {
 
             index = unsorted_indexes[mid];
 
+#if SCRIPT_DEBUG
             std::cout << "Checking if " << index << " is a collision...";
+#endif  //< SCRIPT_DEBUG
             if (!StringEquals (key, keys - key_offsets[index])) {
                 // It's a new collision!
+#if SCRIPT_DEBUG
                 std::cout << "It's a new collision!\n";
+#endif  //< SCRIPT_DEBUG
 
                 if (value < 3) {
+#if SCRIPT_DEBUG
                     std::cout << "Buffer overflow!\n";
+#endif  //< SCRIPT_DEBUG
                     return kInvalidIndex;
                 }
 
@@ -216,9 +254,11 @@ byte TableAdd (Table* table, const char* key) {
 
                 byte collision_index = unsorted_indexes[mid];
                 StringCopy (keys - value, key);
+#if SCRIPT_DEBUG
                 printf ("Inserting value: %u into index:%u "
                         "num_keys:%u with other collision_index: %u\n", value,
                         index, num_keys, collision_index);
+#endif  //< SCRIPT_DEBUG
                 key_offsets[num_keys] = value;
 
                 pile_size = table->pile_size;
@@ -245,13 +285,16 @@ byte TableAdd (Table* table, const char* key) {
 
                 table->num_keys = num_keys + 1;
 
+#if SCRIPT_DEBUG
                 TablePrint (table);
-
                 std::cout << "Done inserting.\n";
+#endif  //< SCRIPT_DEBUG
                 // Then it was a collision so the table doesn't contain string.
                 return num_keys;
             }
+#if SCRIPT_DEBUG
             std::cout << "table already contains the key\n";
+#endif  //< SCRIPT_DEBUG
             return index;
         }
     }
@@ -261,9 +304,11 @@ byte TableAdd (Table* table, const char* key) {
     value = key_offsets[num_keys - 1] + key_length + 1;
     destination = keys - value;
 
+#if SCRIPT_DEBUG
     printf ("The hash 0x%x was not in the table so inserting %s into mid:"
             " %i at index %u before hash 0x%x \n", hash, key, mid,
             destination - reinterpret_cast<char*> (table), hashes[mid]);
+#endif  //< SCRIPT_DEBUG
 
     // First copy the char and set the key offset.
     StringCopy (destination, key);
@@ -272,12 +317,16 @@ byte TableAdd (Table* table, const char* key) {
     // Second move up the hashes and insert at the insertion point.
     hash16_t* hash_ptr = hashes + num_keys;
     //*test = hashes;
+#if SCRIPT_DEBUG
     printf ("l_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u\n",
             num_keys, hashes - reinterpret_cast<hash16_t*> (table),
             hash_ptr - reinterpret_cast<hash16_t*> (table), hashes + mid -
             reinterpret_cast<hash16_t*> (table));
+#endif  //< SCRIPT_DEBUG
     hashes += mid;
+#if SCRIPT_DEBUG
     TablePrint (table);
+#endif  //< SCRIPT_DEBUG
     while (hash_ptr > hashes) {
         *hash_ptr = *(hash_ptr - 1);
         --hash_ptr;
@@ -300,9 +349,11 @@ byte TableAdd (Table* table, const char* key) {
 
     table->num_keys = num_keys + 1;
 
+#if SCRIPT_DEBUG
     TablePrint (table);
     std::cout << "Done inserting.\n";
     PrintLine ();
+#endif  //< SCRIPT_DEBUG
 
     return num_keys;
 }
@@ -310,7 +361,9 @@ byte TableAdd (Table* table, const char* key) {
 byte TableFind (const Table* table, const char* key) {
     if (table == nullptr)
         return 0;
+#if SCRIPT_DEBUG
     PrintLineBreak ("Finding record...", 5);
+#endif  //< SCRIPT_DEBUG
     int index,
         num_keys = table->num_keys,
         max_keys = table->max_keys,
@@ -336,18 +389,26 @@ byte TableFind (const Table* table, const char* key) {
 
     hash16_t hash = Hash16 (key);
 
+#if SCRIPT_DEBUG
     printf ("\nSearching for key \"%s\" with hash 0x%x\n", key, hash);
+#endif  //< SCRIPT_DEBUG
 
     if (num_keys == 1) {
+#if SCRIPT_DEBUG
         printf ("Comparing keys - key_offsets[0] - this %u\n%s\n", (keys - 
                 key_offsets[0]) - reinterpret_cast<const char*> (table), keys - 
                 key_offsets[0]);
+#endif  //< SCRIPT_DEBUG
         if (!StringEquals (key, keys - key_offsets[0])) {
+#if SCRIPT_DEBUG
             printf ("Did not find key %s\n", key);
+#endif  //< SCRIPT_DEBUG
             return kInvalidIndex;
         }
+#if SCRIPT_DEBUG
         printf ("Found key %s\n", key);
         PrintLine ();
+#endif  //< SCRIPT_DEBUG
         return 0;
     }
 
@@ -362,8 +423,10 @@ byte TableFind (const Table* table, const char* key) {
         mid = (low + high) >> 1;    //< >> 1 to /2
 
         hash16_t current_hash = hashes[mid];
+#if SCRIPT_DEBUG
         printf ("low: %i mid: %i high %i hashes[mid]:%x\n", low, mid, 
                  high, hashes[mid]);
+#endif  //< SCRIPT_DEBUG
 
         if (current_hash > hash) {
             high = mid - 1;
@@ -394,17 +457,23 @@ byte TableFind (const Table* table, const char* key) {
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;
                 while (index != kInvalidIndex) {
+#if SCRIPT_DEBUG
                     printf ("comparing to \"%s\"\n", keys - 
                             key_offsets[index]);
+#endif  //< SCRIPT_DEBUG
                     if (StringEquals (key, keys - key_offsets[index])) {
+#if SCRIPT_DEBUG
                         printf ("Table already contains key at offset:"
                                 "%u.\n", index);
+#endif  //< SCRIPT_DEBUG
                         return index;
                     }
                     ++temp_ptr;
                     index = *temp_ptr;
                 }
+#if SCRIPT_DEBUG
                 std::cout << "Did not find "<< key << '\n';
+#endif  //< SCRIPT_DEBUG
                 return kInvalidIndex;
             }
 
@@ -416,27 +485,36 @@ byte TableFind (const Table* table, const char* key) {
             indexes += max_keys;
             index = unsorted_indexes[mid];
 
+#if SCRIPT_DEBUG
             printf ("\n!!!mid: %i-%x unsorted_indexes: %u key: %s\n"
                     "hash: %x\n", mid, hashes[mid], index, keys - 
                     key_offsets[index], Hash16 (keys - 
                     key_offsets[index]));
+#endif  //< SCRIPT_DEBUG
 
             if (!StringEquals (key, keys - key_offsets[index])) {
                 //< It was a collision so the table doesn't contain string.
+#if SCRIPT_DEBUG
                 printf (" but it was a collision and did not find key.\n");
+#endif  //< SCRIPT_DEBUG
                 return kInvalidIndex;
             }
 
+#if SCRIPT_DEBUG
             std::cout << "; found key at mid: %i " << mid << '\n';
+#endif  //< SCRIPT_DEBUG
             return index;
         }
     }
+#if SCRIPT_DEBUG
     std::cout << "; didn't find a hash for key " << key << '\n';
+#endif  //< SCRIPT_DEBUG
     PrintLine ();
 
     return kInvalidIndex;
 }
 
+#if USE_MORE_ROM
 void TablePrint (Table* table) {
     if (table == nullptr)
         return;
@@ -508,5 +586,6 @@ void TablePrint (Table* table) {
     PrintMemory (table, table->size);
     std::cout << '\n';
 }
-
+#endif  //< USE_MORE_ROM
 }       //< namespace _
+#endif  //< USING_TABLE

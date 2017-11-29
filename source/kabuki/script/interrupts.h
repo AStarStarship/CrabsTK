@@ -24,9 +24,11 @@
 
 namespace _ {
 
+#if USE_MORE_ROM
 /** Exception thrown to interrupt and crash the program. */
 struct KABUKI RoomCrashException : public std::exception {
     const char* what () const throw ();
 };
+#endif  //< USE_MORE_ROM
 }       //< namespace _
 #endif  //< SCRIPT_EXCEPTIONS_H

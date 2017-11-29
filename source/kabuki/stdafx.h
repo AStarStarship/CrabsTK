@@ -28,6 +28,7 @@
 #include <chrono>
 #include <cstdint>
 #include <cstdlib>
+#include <cstdio>
 #include <cstring>
 #include <devguid.h>
 #include <exception>
@@ -52,3 +53,5 @@
 #include <time.h>
 #include <vector>
 #include <windows.h>
+
+using namespace std;

@@ -16,8 +16,8 @@
 #ifndef KABUKI_TEK_ROTARY_ENCODER_BANK_H
 #define KABUKI_TEK_ROTARY_ENCODER_BANK_H
 
-#include "tek/led.h"
-#include "tek/button.h"
+#include "led.h"
+#include "button.h"
 
 namespace kabuki { namespace tek {
 

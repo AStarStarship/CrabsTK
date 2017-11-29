@@ -16,7 +16,7 @@
 */
 
 #include <stdafx.h>
-#include "../script/memory.h"
+#include "memory.h"
 
 using namespace std;
 
@@ -79,6 +79,7 @@ uintptr_t Diff (const void* begin, const void* end) {
     return static_cast<uintptr_t> (stop - start);
 }
 
+#if USE_MORE_ROM
 void PrintMemory (const void* address, const void* end) {
     printf ("\n|%i", 0);
     // Print columns
@@ -111,6 +112,7 @@ void PrintMemory (const void* address, size_t size) {
     const char* end = reinterpret_cast<const char*>(address) + size;
     PrintMemory (address, end);
 }
+#endif  //< USE_MORE_ROM
 
 void MemoryClear (void* address, size_t size) {
     byte* ptr = reinterpret_cast<byte*> (address);

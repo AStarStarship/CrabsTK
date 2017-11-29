@@ -16,8 +16,8 @@
 */
 
 #include <stdafx.h>
-#include "../script/slot.h"
-#include "../script/memory.h"
+#include "slot.h"
+#include "memory.h"
 
 namespace _ {
 

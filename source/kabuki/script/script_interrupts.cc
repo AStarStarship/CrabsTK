@@ -16,12 +16,14 @@
 */
 
 #include <stdafx.h>
-#include "../script/interrupts.h"
+#include "interrupts.h"
 
 namespace _ {
 
+#if USE_MORE_ROM
 const char* RoomCrashException::what () const throw () {
-        return "External crash";
-    }
+	return "External crash";
+}
+#endif  //< USE_MORE_ROM
 
 }       //< namespace _

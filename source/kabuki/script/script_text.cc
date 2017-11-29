@@ -16,15 +16,197 @@
 
 #include <stdafx.h>
 
-#ifndef SCRIPT_PORTAL_H
-#define SCRIPT_PORTAL_H
-
 #include "../script/text.h"
 #include "../script/memory.h"
 
 using namespace std;
 
 namespace _ {
+
+const char* EmptyString () {
+    return "";
+}
+
+void StringCopy (char* destination, const char* source) {
+    if (destination == nullptr)
+        return;
+    if (source == nullptr)
+        return;
+    char c = *source;
+    ++source;
+    while (c) {
+        *destination = c;
+        ++destination;
+        c = *source;
+        ++source;
+    }
+    *destination = 0;
+}
+
+const char* StringEquals (const char* input, const char* query) {
+    if (input == nullptr)
+        return nullptr;
+    if (query == nullptr)
+        return nullptr;
+    //cout << "Comparing strings equal \"" << input << "\" to \"" << query
+    //    << "\"\n";
+
+    char i = *input,
+        q = *query;
+    while (i) {
+        //cout << i;
+        if (i != q) { // Not a hit.
+            //cout << "; but it's not a hit\n";
+            return nullptr;
+        }
+        if (q == 0) { // Hit!
+            //cout << "; found hit at ";
+            //PrintPointerNL (input);
+            return input;
+        }
+        i = *(++input);
+        q = *(++query);
+    }
+    if (q != 0) {
+        //cout << "; Not a hit: no nil-term char found\n";
+        return nullptr;
+    }
+    //cout << "; found hit at ";
+    //PrintPointerNL (input);
+    return input; //< Find hit!
+}
+
+const char* StringEquals (const char* input, const char* query,
+                          char delimiter) {
+    cout << "Comparing strings \"" << input << "\" to \"" << query
+        << "\"\n";
+    if (input == nullptr)
+        return nullptr;
+    if (query == nullptr)
+        return nullptr;
+
+    //input = SkipSpacesString (input); //< I think this is token compare
+    //query = SkipSpacesString (query);
+
+    char i = *input,
+        q = *query;
+    while (i != delimiter) {
+        if (i != q) { // Not a hit.
+            cout << "\n| not a hit";
+            return nullptr;
+        }
+        cout << i;
+        i = *(++input);
+        q = *(++query);
+    }
+    if (q != delimiter) {
+        cout << "\n| reached nil-term char but no q:\'" << q
+            << "\' is not the delimiter.";
+        return nullptr;
+    }
+    cout << "; found hit at ";
+    PrintPointerNL (input);
+    return input; //< Find hit!
+}
+
+int StringLength (const char* string, char delimiter) {
+    if (string == nullptr)
+        return -1;
+    int count = 0;
+    //cout << "Checking string length for " << string << '\n';
+    char c = *string;
+    //cout << c;
+    while (c) {
+        ++count;
+        c = *(++string);
+        //cout << c;
+    }
+    //cout << '\n';
+    return count;
+}
+
+hash16_t Hash16 (const char* string, hash16_t hash) {
+    byte c = *string;
+    while (c) {
+        hash = Hash16 (c, hash);
+        ++string;
+        c = *string;
+    }
+    return hash;
+}
+
+hash16_t Hash32 (const char* string, hash32_t hash) {
+    byte c = *string;
+    while (c) {
+        hash = Hash32 (c, hash);
+        ++string;
+        c = *string;
+    }
+    return hash;
+}
+
+hash64_t Hash64 (const char* string, hash64_t hash) {
+    byte c = *string;
+    while (c) {
+        hash = Hash64 (c, hash);
+        ++string;
+        c = *string;
+    }
+    return hash;
+}
+
+#if USE_MORE_ROM
+
+void PrintLine (char token, int column_width) {
+    cout << '\n';
+    for (int i = 0; i < column_width; ++i)
+        cout << token;
+}
+
+void PrintLine (const char* start_string, char token, int length) {
+    cout << '\n' << start_string;
+    for (int i = 0; i < 79; ++i)
+        cout << token;
+}
+
+void PrintDebug (const char* message,
+                 const char* end_string,
+                 const char* begin_string) {
+#if DEBUG
+    cout << begin_string << message << end_string;
+#endif
+}
+
+void PrintLineBreak (const char* message, int top_bottom_margin,
+                            char c, int num_columns) {
+    PrintLines (top_bottom_margin);
+    cout << message;
+    PrintLine (c, num_columns);
+}
+
+void PrintLines (int num_rows) {
+    cout << '\r';
+    for (int i = 0; i < num_rows - 1; ++i)
+        cout << '\n';
+}
+
+void PrintStringLine (const char* string) {
+    PrintLine ();
+    int length = StringLength (string),
+        i;
+
+    for (i = 0; i < 80; i += (length + 1))
+        cout << string << '_';
+    for (int j = 0; j < 80 % (length + 1); ++j)
+        cout << string[j];
+    PrintLine ();
+}
+
+void PrintDebugHex (const char* message, char value) {
+#if DEBUG
+    printf ("\n| %s '%c':0x%x", message, value, value);
+#endif
+}
 
 char* TextWrite (char* buffer, char* buffer_end, int value) {
     // Stolen from https://goo.gl/waaF1G
@@ -188,31 +370,21 @@ const char* TextRead (const char* buffer, int& result) {
 const char* TextRead (const char* buffer, float& result) {
     return nullptr;
 }
+
 const char* NewLineString () {
-    static const char string[] = "\n\0";
-    return string;
+    return "\n";
 }
 
 const char* ErrorHeader () {
-    static const char string[] = "\n| Error: \0";
-    return string;
+    return "\n| Error: ";
 }
 
 const char* VerticalBar () {
-    static const char string[] = "\n| \0";
-    return string;
+    return "\n| ";
 }
 
 void PrintLine (const char* string) {
     cout << '\n' << string;
-}
-
-void PrintDebug (const char* message,
-                 const char* end_string,
-                 const char* begin_string) {
-#if DEBUG
-    cout << begin_string << message << end_string;
-#endif
 }
 
 void PrintError (const char* message, const char* end_string) {
@@ -225,28 +397,6 @@ void PrintDebugPointer (const char* message, const void* address) {
 #if DEBUG
     printf ("\n| Error at address 0x%p: %s", address, message);
 #endif
-}
-
-void PrintDebugHex (const char* message, char value) {
-#if DEBUG
-    printf ("\n| %s '%c':0x%x", message, value, value);
-#endif
-}
-
-int StringLength (const char* string, char delimiter) {
-    if (string == nullptr)
-        return -1;
-    int count = 0;
-    //cout << "Checking string length for " << string << '\n';
-    char c = *string;
-    //cout << c;
-    while (c) {
-        ++count;
-        c = *(++string);
-        //cout << c;
-    }
-    //cout << '\n';
-    return count;
 }
 
 char* DuplicateString (const char* string, char delimiter) {
@@ -326,12 +476,6 @@ int ToByte (uint16_t h) {
     return lowerValue | (upperValue << 4);
 }
 
-hash16_t Hash16 (char c, hash16_t hash) {
-    //PrintHex (c);
-    hash16_t cprime = c * kLargest16BitPrime;
-    return cprime + hash;
-}
-
 hash16_t Hash16UI2 (uint16_t value, hash16_t hash) {
     hash = ((value & 0xff) * kLargest16BitPrime) + hash;
     hash = ((value >> 8  ) * kLargest16BitPrime) + hash;
@@ -355,46 +499,6 @@ hash16_t Hash16UI8 (uint64_t value, hash16_t hash) {
     hash = (((value >> 40) & 0xff) * kLargest16BitPrime) + hash;
     hash = (((value >> 48) & 0xff) * kLargest16BitPrime) + hash;
     hash = (((value >> 56) & 0xff) * kLargest16BitPrime) + hash;
-    return hash;
-}
-
-hash16_t Hash16 (const char* string, hash16_t hash) {
-    byte c = *string;
-    while (c) {
-        hash = Hash16 (c, hash);
-        ++string;
-        c = *string;
-    }
-    return hash;
-}
-
-hash32_t Hash32 (char c, hash32_t hash) {
-    hash32_t cprime = c * kLargest32BitPrime;
-    return cprime + hash;
-}
-
-hash16_t Hash32 (const char* string, hash32_t hash) {
-    byte c = *string;
-    while (c) {
-        hash = Hash32 (c, hash);
-        ++string;
-        c = *string;
-    }
-    return hash;
-}
-
-hash64_t Hash64 (char c, hash64_t hash) {
-    hash64_t cprime = c * kLargest64BitPrime;
-    return cprime + hash;
-}
-
-hash64_t Hash64 (const char* string, hash64_t hash) {
-    byte c = *string;
-    while (c) {
-        hash = Hash64 (c, hash);
-        ++string;
-        c = *string;
-    }
     return hash;
 }
 
@@ -435,24 +539,6 @@ void PrintChar (char c) {
         return;
     }
     cout << c;
-}
-
-void PrintLine (char token, int column_width) {
-    cout << '\n';
-    for (int i = 0; i < column_width; ++i)
-        cout << token;
-}
-
-void PrintLine (const char* start_string, char token, int length) {
-    cout << '\n' << start_string;
-    for (int i = 0; i < 79; ++i)
-        cout << token;
-}
-
-void PrintLines (int num_rows) {
-    cout << '\r';
-    for (int i = 0; i < num_rows - 1; ++i)
-        cout << '\n';
 }
 
 char CreateKeyValueFormatString (char* string, char column_width, char type) {
@@ -520,18 +606,6 @@ void PrintNumberLine (int index) {
     cout << '\n';
 }
 
-void PrintStringLine (const char* string) {
-    PrintLine ();
-    int length = StringLength (string),
-        i;
-
-    for (i = 0; i < 80; i += (length + 1))
-        cout << string << '_';
-    for (int j = 0; j < 80 % (length + 1); ++j)
-        cout << string[j];
-    PrintLine ();
-}
-
 void PrintPause (const char* string) {
 #if DEBUG
     cout << "\n" << string << "\n";
@@ -541,29 +615,6 @@ void PrintPause (const char* string) {
 
 void PrintNL () {
     cout << '\n';
-}
-
-void PrintLineBreak (const char* message, int top_bottom_margin,
-                            char c, int num_columns) {
-    PrintLines (top_bottom_margin);
-    cout << message;
-    PrintLine (c, num_columns);
-}
-
-void StringCopy (char* destination, const char* source) {
-    if (destination == nullptr)
-        return;
-    if (source == nullptr)
-        return;
-    char c = *source;
-    ++source;
-    while (c) {
-        *destination = c;
-        ++destination;
-        c = *source;
-        ++source;
-    }
-    *destination = 0;
 }
 
 void StringCopy (char* destination, const char* source, char delimeter) {
@@ -859,14 +910,14 @@ char* SkipLeadingZeros (char* input) {
 const char* SkipSpacesString (const char* input) {
     if (input == nullptr)
         return nullptr;
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
     cout << "\nSkipping spaces: ";
-#endif    //< DEBUG_SCRIPT
+#endif    //< SCRIPT_DEBUG
     char c = *input;
     while (c) {
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
         cout << '.';
-#endif    //< DEBUG_SCRIPT
+#endif    //< SCRIPT_DEBUG
         if (!isspace (c))
             return input;
         ++input;
@@ -941,72 +992,6 @@ const char* CompareTokenString (const char* input, const char* token) {
 
 char* CompareToken (const char* input, const char* query) {
     return (char*)CompareTokenString (input, query);
-}
-
-const char* StringEquals (const char* input, const char* query) {
-    if (input == nullptr)
-        return nullptr;
-    if (query == nullptr)
-        return nullptr;
-    cout << "Comparing strings equal \"" << input << "\" to \"" << query
-         << "\"\n";
-
-    char i = *input,
-         q = *query;
-    while (i) {
-        cout << i;
-        if (i != q) { // Not a hit.
-            cout << "; but it's not a hit\n";
-            return nullptr;
-        }
-        if (q == 0) { // Hit!
-            cout << "; found hit at ";
-            PrintPointerNL (input);
-            return input;
-        }
-        i = *(++input);
-        q = *(++query);
-    }
-    if (q != 0) {
-        cout << "; Not a hit: no nil-term char found\n";
-        return nullptr;
-    }
-    cout << "; found hit at ";
-    PrintPointerNL (input);
-    return input; //< Find hit!
-}
-
-const char* StringEquals (const char* input, const char* query,
-                          char delimiter) {
-    cout << "Comparing strings \"" << input << "\" to \"" << query
-              << "\"\n";
-    if (input == nullptr)
-        return nullptr;
-    if (query == nullptr)
-        return nullptr;
-
-    //input = SkipSpacesString (input); //< I think this is token compare
-    //query = SkipSpacesString (query);
-
-    char i = *input,
-         q = *query;
-    while (i != delimiter) {
-        if (i != q) { // Not a hit.
-            cout << "\n| not a hit";
-            return nullptr;
-        }
-        cout << i;
-        i = *(++input);
-        q = *(++query);
-    }
-    if (q != delimiter) {
-        cout << "\n| reached nil-term char but no q:\'" << q
-                  << "\' is not the delimiter.";
-        return nullptr;
-    }
-    cout << "; found hit at ";
-    PrintPointerNL (input);
-    return input; //< Find hit!
 }
 
 char* StringCompare (char* source, const char* query, char delimiter) {
@@ -1149,5 +1134,51 @@ int RoundToPowerOf2 (int value) {
     ++v;
     return (int)value;
 }
+
+char KeyboardChar (const char* header) {
+    std::cout << header;
+    char c = getchar ();
+    std::cout << '\n';
+    return c;
+}
+
+int KeyboardInt (const char* header) {
+    int number;
+    std::cout << header;
+    std::cin.clear ();
+    std::cin >> number;
+    return number;
+}
+
+float KeyboardFloat (const char* header) {
+    float number;
+    std::cout << header;
+    std::cin.clear ();
+    std::cin >> number;
+    return number;
+}
+
+char* KeyboardString (const char* header, int buffer_size) {
+    if (buffer_size < 0)
+        return nullptr;
+    char* buffer = new char[buffer_size];
+    std::cout << header;
+    std::cin.get (buffer, buffer_size, '\n');
+    std::cin.clear ();
+    std::cin.ignore (buffer_size, '\n');
+
+    return buffer;
+}
+
+void KeyboardString (const char* header, char* buffer, int buffer_size) {
+    if (buffer == nullptr)
+        return;
+    if (buffer_size < 0)
+        return;
+    std::cout << header;
+    std::cin.get (buffer, buffer_size, '\n');
+    std::cin.clear ();
+    std::cin.ignore (buffer_size, '\n');
+}
+#endif  //< MEMORY_PROFILE > USE_MORE_ROM
 }       //< namespace _
-#endif  //< SCRIPT_PORTAL_H

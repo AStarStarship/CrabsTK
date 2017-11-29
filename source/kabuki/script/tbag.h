@@ -22,6 +22,7 @@
 
 #include "memory.h"
 #include "types.h"
+#if USING_BAG
 
 namespace _ {
 
@@ -160,7 +161,7 @@ static Bag* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t si
     Set2* collection = reinterpret_cast<Bag*> (buffer);
     collection->size = table_size;
     collection->table_size = table_size;
-    collection->; = 0;
+    collection->num_items; = 0;
     collection->max_items = max_size;
     collection->pile_size = 1;
     return collection;
@@ -194,13 +195,13 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
 
     PrintStringLine (key);
 
-    TIndex ; = collection->;,
+    TIndex num_items = collection->num_items,
         max_items = collection->max_items,
         temp;
 
     TKey table_size = collection->table_size;
 
-    if (; >= max_items) return ~0;
+    if (num_items >= max_items) return ~0;
     //< We're out of buffered indexes.
 
     byte* states = reinterpret_cast<byte*> (collection) + 
@@ -238,8 +239,8 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
 
     //print ();
 
-    if (; == 0) {
-        collection->; = 1;
+    if (num_items == 0) {
+        collection->num_items = 1;
         *hashes = hash;
         *key_offsets = static_cast<uint16_t> (key_length);
         *indexes = ~0;
@@ -263,7 +264,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
 
     int low = 0,
         mid,
-        high = ;,
+        high = num_items,
         index;
 
     TIndex* temp_ptr;
@@ -316,9 +317,9 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
                 std::cout << "and new collision detected.\n";
 
                 // Copy the key
-                value = key_offsets[; - 1] + key_length + 1;
+                value = key_offsets[num_items - 1] + key_length + 1;
                 StringCopy (keys - value, key);
-                key_offsets[;] = value;
+                key_offsets[num_items] = value;
 
                 // Update the collision table.
                 pile_size = collection->pile_size;
@@ -331,24 +332,24 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
                     *collission_list = *(collission_list - 1);
                     --collission_list;
                 }
-                *temp_ptr = ;;
+                *temp_ptr = num_items;
 
                 collection->pile_size = pile_size + 1;
                 printf ("\n\ncollision index: %u\n", temp);
                 // Store the collision index.
-                indexes[;] = temp;   //< Store the collision index
-                collection->; = ; + 1;
-                hashes[;] = ~0;      //< Bag the last hash to 0xFFFF
+                indexes[num_items] = temp;   //< Store the collision index
+                collection->num_items = num_items + 1;
+                hashes[num_items] = ~0;      //< Bag the last hash to 0xFFFF
 
-                                            // Move collisions pointer to the unsorted_indexes.
+                // Move collisions pointer to the unsorted_indexes.
                 indexes += max_items;
 
                 //< Add the newest char to the end.
-                indexes[;] = ;;
+                indexes[num_items] = num_items;
 
                 SetPrint (collection);
                 printf ("Done inserting.\n");
-                return ;;
+                return num_items;
             }
 
             // But we still don't know if the char is a new collision.
@@ -365,7 +366,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
                 }
 
                 // Get offset to write the key too.
-                value = key_offsets[; - 1] + key_length + 1;
+                value = key_offsets[num_items - 1] + key_length + 1;
 
                 byte collision_index = unsorted_indexes[mid];
                 printf ("\n\ncollision_index: %u", collision_index);
@@ -373,12 +374,12 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
                 StringCopy (keys - value, key);
                 printf ("Inserting value: %u into index:%u "
                         ";:%u with other collision_index: %u\n", value,
-                        index, ;, collision_index);
-                key_offsets[;] = value;
+                        index, num_items, collision_index);
+                key_offsets[num_items] = value;
 
                 pile_size = collection->pile_size;
                 indexes[mid] = static_cast<byte> (pile_size);
-                indexes[;] = static_cast<byte> (pile_size);
+                indexes[num_items] = static_cast<byte> (pile_size);
 
                 // Insert the collision into the collision table.
                 temp_ptr = &collission_list[pile_size];
@@ -386,26 +387,26 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
                 indexes += max_items;
                 *temp_ptr = collision_index;
                 ++temp_ptr;
-                *temp_ptr = ;;
+                *temp_ptr = num_items;
                 ++temp_ptr;
                 *temp_ptr = ~0;
                 collection->pile_size = pile_size + 3;
                 //< Added one term-byte and two indexes.
 
                 // Add the newest key at the end.
-                indexes[;] = ;;
+                indexes[num_items] = num_items;
 
                 // Bag the last hash to 0xFFFF
-                hashes[;] = ~0;
+                hashes[num_items] = ~0;
 
-                collection->; = ; + 1;
+                collection->num_items = num_items + 1;
 
                 SetPrint (collection);
 
                 SetPrint (collection);
                 std::cout << "Done inserting.\n";
                 // Then it was a collision so the table doesn't contain string.
-                return ;;
+                return num_items;
             }
             std::cout << "table already contains the key\n";
             return index;
@@ -414,7 +415,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
 
     // The hash was not in the table.
 
-    value = key_offsets[; - 1] + key_length + 1;
+    value = key_offsets[num_items - 1] + key_length + 1;
     destination = keys - value;
 
     printf ("The hash 0x%x was not in the table so inserting %s into mid:"
@@ -423,14 +424,14 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
 
     // First copy the char and set the key offset.
     StringCopy (destination, key);
-    key_offsets[;] = value;
+    key_offsets[num_items] = value;
 
     // Second move up the hashes and insert at the insertion point.
     hash_ptr = hashes;
-    hash_ptr += ;;
+    hash_ptr += num_items;
     //*test = hashes;
     printf ("l_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u\n",
-            ;, Diff (collection, hashes),
+            num_items, Diff (collection, hashes),
             Diff (collection, hash_ptr), Diff (collection, hashes + mid));
     hashes += mid;
     SetPrint (collection);
@@ -441,30 +442,30 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
     *hashes = hash;
     
     // Mark as not having any collisions.
-    indexes[;] = ~0;
+    indexes[num_items] = ~0;
     
     // Move up the sorted indexes and insert the unsorted index (which is 
     // the current ;).
     indexes += max_items + mid;
-    temp_ptr = indexes + ;;
+    temp_ptr = indexes + num_items;
 
     while (temp_ptr > indexes) {
         *temp_ptr = *(temp_ptr - 1);
         --temp_ptr;
     }
-    *temp_ptr = ;;
+    *temp_ptr = num_items;
 
-    collection->; = ; + 1;
+    collection->num_items = num_items + 1;
 
     SetPrint (collection);
     std::cout << "Done inserting.\n";
     PrintLine ();
 
-    return ;;
+    return num_items;
 }
 
 /** Adds a key-value pair to the end of the collection. */
-//inline byte Add2 (Set2* collection, const char* key, byte data) {
+//byte Add2 (Set2* collection, const char* key, byte data) {
 //    return SetAdd<byte, uint16_t, uint16_t, hash16_t> (collection, key, UI1, &data);
 //}
 
@@ -475,11 +476,11 @@ TIndex BagFind (Bag<TIndex, TKey, TData, THash>* collection, const char* key) {
         return 0;
     PrintLineBreak ("Finding record...", 5);
     TIndex index,
-        ; = collection->;,
+    num_items = collection->num_items,
         max_items = collection->max_items,
         temp;
 
-    if (key == nullptr || ; == 0)
+    if (key == nullptr || num_items == 0)
         return ~((TIndex)0);
 
     TKey table_size = collection->table_size;
@@ -501,7 +502,7 @@ TIndex BagFind (Bag<TIndex, TKey, TData, THash>* collection, const char* key) {
 
     printf ("\nSearching for key \"%s\" with hash 0x%x\n", key, hash);
 
-    if (; == 1) {
+    if (num_items == 1) {
         if (strcmp (key, keys - key_offsets[0]) != 0) {
             printf ("Did not find key %s\n", key);
             return ~((TIndex)0);
@@ -516,7 +517,7 @@ TIndex BagFind (Bag<TIndex, TKey, TData, THash>* collection, const char* key) {
     // sizeof (THash*) in order to get the right pointer address.
     int low = 0,
         mid,
-        high = ; - 1;
+        high = num_items - 1;
 
     while (low <= high) {
         mid = (low + high) >> 1;    //< >> 1 to /2
@@ -605,7 +606,7 @@ TIndex BagFind (Bag<TIndex, TKey, TData, THash>* collection, const char* key) {
 template<typename TIndex, typename TKey, typename TData>
 void BagPrint (const Bag<TIndex, TKey, TData, THash>* collection) {
     if (collection == nullptr) return;
-    TIndex ; = collection->;,
+    TIndex num_items = collection->num_items,
            max_items = collection->max_items,
            collision_index,
            temp;
@@ -622,7 +623,7 @@ void BagPrint (const Bag<TIndex, TKey, TData, THash>* collection) {
     else
         printf ("\n| Invalid Bag type: %p\n", collection);
     printf ("\n| ;: %u max_items: %u  "
-            "pile_size: %u  size: %u", ;,
+            "pile_size: %u  size: %u", num_items,
             max_items, pile_size, table_size);
     std::cout << '\n';
    std::cout << '|';
@@ -662,7 +663,7 @@ void BagPrint (const Bag<TIndex, TKey, TData, THash>* collection) {
                 hashes[unsorted_indexes[i]], hashes[i],
                 unsorted_indexes[i], collision_index);
 
-        if (collision_index != ~0 && i < ;) {
+        if (collision_index != ~0 && i < num_items) {
             // Print collisions.
             cursor = &collission_list[collision_index];
             temp = *cursor;
@@ -690,7 +691,7 @@ void BagPrint (const Bag<TIndex, TKey, TData, THash>* collection) {
 template<typename TIndex, typename TKey, typename TData>
 void BagClear (Bag<TIndex, TKey, TData, THash>* collection) {
     if (collection == nullptr) return;
-    collection->; = 0;
+    collection->num_items = 0;
     collection->pile_size = 0;
 }
 
@@ -739,7 +740,7 @@ bool BagRetain (Bag<TIndex, TKey, TData, THash>* collection) {
 
 /** Creates a collection from dynamic memory. */
 template<typename TIndex, typename TOffset, typename TData, typename THash>
-inline Bag<TIndex, TOffset, TData, THash>* BagCreate (TIndex buffered_indexes,
+Bag<TIndex, TOffset, TData, THash>* BagCreate (TIndex buffered_indexes,
                                                         TData table_size,
                                                         TData size) {
     Bag<TIndex, TOffset, TData, THash>* collection = New<Bag, uint_t> ();
@@ -748,13 +749,14 @@ inline Bag<TIndex, TOffset, TData, THash>* BagCreate (TIndex buffered_indexes,
 
 /** Prints the given Bag to the console. */
 template<typename TIndex, typename TKey, typename TData>
-inline void BagPrint (Bag<TIndex, TKey, TData, THash>* collection) {
+void BagPrint (Bag<TIndex, TKey, TData, THash>* collection) {
 
 }
 
-//inline void SetPrint (Set2* collection) {
+//void SetPrint (Set2* collection) {
 //    return BagPrint<byte, uint16_t, uint16_t, hash16_t> (collection);
 //}
 
 }       //< namespace _
+#endif  //< USING_BAG
 #endif  //< KABUKI_SCRIPT_BOOK_H

@@ -17,8 +17,8 @@
 */
 
 #include <stdafx.h>
-#include "../script/types.h"
-#include "../script/text.h"
+#include "types.h"
+#include "text.h"
 
 namespace _ {
 
@@ -200,6 +200,23 @@ const char* TypeString (uint_t type) {
     if (type >= kInvalidType)
         return "Invalid";
     return TypeStrings ()[type];
+}
+
+template<char c>
+bool CharCompare (uint16_t const token) {
+    if (c != (char)token)
+        return true;
+    return (token >> 8) == 0;
+}
+
+template<char LetterTwo, char LetterThree>
+bool CharCompare (char letter_two, char letter_three) {
+    char check = letter_two;
+    if (LetterTwo != check)
+        return true;
+    if (LetterThree != check)
+        return true;
+    return false;
 }
 
 byte ReadType (const char* string) {

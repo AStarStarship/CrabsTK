@@ -15,7 +15,7 @@
 */
 
 #include "rgb_led.h"
-#include "../../script/script/color.h"
+#include "../script/color.h"
 
 namespace kabuki { namespace tek {
     

@@ -17,14 +17,14 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef SCRIPT_AUTOMATA_H
-#define SCRIPT_AUTOMATA_H
+#ifndef SCRIPT_LIBRARY_H
+#define SCRIPT_LIBRARY_H
 
-#include "set.h"
+#include "config.h"
 
 namespace _ {
-
-template<typename TIndex, typename TKey, typename TSize, 
+#if USE_MORE_ROM
+template<typename TIndex, typename TKey, typename TData,
          uint_t MaxStackHeight>
 class Library: public Operand
 {
@@ -37,6 +37,10 @@ class Library: public Operand
         header_size_ (0),
         collisions_size_ (0),
         data_size_ (0) {
+
+    }
+
+    virtual ~Library () {
 
     }
 
@@ -61,7 +65,7 @@ class Library: public Operand
     }
 
     /** Gets the data size in bytes. */
-    uint_t GetDataSize {
+    uint_t GetDataSize () {
         return data_size_;
     }
     
@@ -104,7 +108,7 @@ class Library: public Operand
     }
 
     /** Searches for the given query and returns a bag of query results.  */
-    bool Search (const char* query, Library<TIndex, TKey, TSize, TSize, 
+    bool Search (const char* query, Library<TIndex, TKey, TData, TData,
         MaxStackHeight>* results) {
         return false;
     }
@@ -115,7 +119,7 @@ class Library: public Operand
     }
 
     /** gets the size of the item at the given index. */
-    byte SetOperationSize (TIndex index, TSize newSize) {
+    byte SetOperationSize (TIndex index, TData newSize) {
         return 0;
     }
     
@@ -172,9 +176,12 @@ class Library: public Operand
     }
 
     /** ChineseRoom Operations. */
-    const Operation* Star (Rx* rx, Tx& tx, char index) override {
-        switch (index)
-        {
+    const Operation* Star (char_t index, Expression* expr) override {
+        static const Operation This = { "Library",
+            NumOperations (0), FirstOperation ('A'),
+            "", 0 };
+
+        switch (index) {
             case 0:
                 return 0;
             default:
@@ -194,22 +201,22 @@ class Library: public Operand
         height_,      //< The number of bags on the stack.
         num_libraries_;     //< The number of libraries.
     byte type_;             //< The current type of bag.
-    //Bag<TIndex, TKey, TSize, TSize> bag;
+    //Bag<TIndex, TKey, TData, TData> bag;
     TIndex num_keys_,       //< The current number of Star members.
         buffer_size_;       //< The current size of the header and names buffer in bytes.
     TKey header_size_,      //< The current size of the header and names in bytes.
         collisions_size_;   //< The current size of the header and names buffer in bytes.
-    TSize data_size_;       //< The current total size of the bag.
+    TData data_size_;       //< The current total size of the bag.
 };
 
 /** Destructs the given bag. */
-template<typename TIndex, typename TKey, typename TSize, 
+template<typename TIndex, typename TKey, typename TData,
     uint MaxStackSize>
-KABUKI void Destruct (Library<TIndex, TKey, TSize, TSize, MaxStackSize>* r) {
+KABUKI void Destruct (Library<TIndex, TKey, TData, TData, MaxStackSize>* r) {
     if (r == nullptr) return;
     delete reinterpret_cast<byte*> (r);
 }
-
+#endif  //< MEMORY_PROFILE > 2
 }       //< namespace _
 
-#endif  //< SCRIPT_AUTOMATA_H
+#endif  //< SCRIPT_LIBRARY_H

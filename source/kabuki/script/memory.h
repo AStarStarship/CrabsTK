@@ -90,10 +90,12 @@ KABUKI uintptr_t Diff (void* begin, void* end);
 /** Calculates the difference between the begin and end address. */
 KABUKI uintptr_t Diff (const void* begin, const void* end);
 
+#if USE_MORE_ROM
 /** Prints out the contents of the address to the debug stream. */
 KABUKI void PrintMemory (const void* address, const void* end);
 
 KABUKI void PrintMemory (const void* address, size_t size);
+#endif  //< USE_MORE_ROM
 
 /** Overwrites the memory with zeros. */
 KABUKI void MemoryClear (void* address, size_t size);

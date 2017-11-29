@@ -22,6 +22,7 @@
 
 #include "memory.h"
 
+#if USING_TABLE
 namespace _ {
 
 /** A hash-table.
@@ -116,8 +117,10 @@ KABUKI byte TableAdd (Table* table, const char* key);
     @return Returns 0 upon failure, and valid index upon success. */
 KABUKI byte TableFind (const Table* table, const char* key);
 
+#if USE_MORE_ROM
 /** Prints this object out to the console. */
 KABUKI void TablePrint (Table* table);
-
+#endif  //< USE_MORE_ROM
 }       //< namespace _
+#endif  //< USING_TABLE
 #endif  //< SCRIPT_TABLE_H

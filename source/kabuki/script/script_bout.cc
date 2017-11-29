@@ -23,18 +23,18 @@
 */
 
 #include <stdafx.h>
-#include "../script/bout.h"
-#include "../script/ascii.h"
-#include "../script/types.h"
-#include "../script/slot.h"
-#include "../script/args.h"
-#include "../script/address.h"
-#include "../script/text.h"
+#include "bout.h"
+#include "ascii.h"
+#include "types.h"
+#include "slot.h"
+#include "args.h"
+#include "address.h"
+#include "text.h"
 
 namespace _ {
 
+#if SCRIPT_DEBUG
 const char* BoutErrorString (Bout::Error error) {
-#if USING_CONSOLE
     static const char* strings[] = {
         "Buffer overflow",  //< 0
         "Locked Error"      //< 1
@@ -46,9 +46,6 @@ const char* BoutErrorString (Bout::Error error) {
     if (error > Bout::RoomError)
         return strings[Bout::RoomError];
     return strings[error];
-#else
-    return kEmptyString;
-#endif
 }
 
 const char* BoutStateString (Bout::State state) {
@@ -60,28 +57,7 @@ const char* BoutStateString (Bout::State state) {
         return strings[Bout::LockedState];
     return strings[state];
 }
-
-const Operation* BoutResult (Bout* bout, Bout::Error error) {
-    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
-    return reinterpret_cast<const Operation*> (1);
-}
-
-const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header) {
-    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
-    return reinterpret_cast<const Operation*> (1);
-}
-
-const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header,
-                             uint_t offset) {
-    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
-    return reinterpret_cast<const Operation*> (1);
-}
-
-const Operation* BoutResult (Bout* bout, Bout::Error error, const uint_t* header,
-                             uint_t offset, byte* address) {
-    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
-    return reinterpret_cast<const Operation*> (1);
-}
+#endif  //< SCRIPT_DEBUG
 
 byte* BoutBuffer (Bout* bout) {
     if (bout == nullptr)
@@ -102,7 +78,7 @@ Bout* BoutInit (uintptr_t* buffer, uint_t size) {
     bout->stop  = 0;
     bout->read  = 0;
 
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
     MemoryClear (BoutBuffer (bout), size);
    // BoutPrint (bout);
 #endif
@@ -148,6 +124,7 @@ int BoutStreamByte (Bout* bout) {
     return 0;
 }
 
+#if SCRIPT_DEBUG
 void BoutPrint (Bout* bout) {
     PrintLine ('_');
     if (bout == nullptr) {
@@ -160,13 +137,17 @@ void BoutPrint (Bout* bout) {
             size, bout->start, bout->stop, bout->read);
     PrintMemory (BoutBuffer (bout), size + 64); // @todo remove the + 64.);
 }
+#endif  //< SCRIPT_DEBUG
 
 const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
+    
+#if SCRIPT_DEBUG
     std::cout << "\n|\n|Writing ";
     ParamsPrint (params); 
     std::cout << " to B-Output:";
     printf ("%p", bout);
     BoutPrint (bout);
+#endif  //< SCRIPT_DEBUG
     if (bout == nullptr)
         return BoutResult (bout, Bout::RoomError);
     if (params == nullptr)
@@ -227,7 +208,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     // Write data.
     for (index = 1; index <= num_params; ++index) {
         type = params[index];
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
         printf ("\n| param:%2i TType:%s start:%u, stop:%u space:%u value:", 
                 arg_index + 1, TypeString (type), Diff (begin, start),
                 Diff (begin, stop), space);
@@ -250,7 +231,9 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 }
                 // Load the source data pointer and increment args.fs
                 ui1_ptr = reinterpret_cast<const byte*> (args[arg_index]);
+#if SCRIPT_DEBUG
                 printf ("\"%s\"", ui1_ptr);
+#endif  //< SCRIPT_DEBUG
 
                 // We know we will always have at least one null-term char.
                 ui1 = *ui1_ptr;
@@ -519,8 +502,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                     *stop = ui1;
                     if (++stop >= end) stop -= size;
                     hash = Hash16 (ui1, hash);
-                    break;
                 }
+                break;
 #else
             case UV2:
                 goto InvalidType;
@@ -537,8 +520,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                       // Load the 4-byte type to write to the buffer.
                 ui4_ptr = reinterpret_cast<const uint32_t*> (args[arg_index]);
                 ui4 = *ui4_ptr;
-                WriteVarint4:   //< Optimized manual do while loop.
-                {
+                WriteVarint4: { //< Optimized manual do while loop.
                     ui2 = 5;
                     if (space == 0) //< @todo Benchmark to space--
                         return BoutResult (bout, Bout::BufferOverflowError,
@@ -563,6 +545,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 
                     goto WriteVarint4;
                 }
+                break;
 #else
             case UV4:
                 goto InvalidType;
@@ -608,6 +591,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 
                     goto WriteVarint8;
                 }
+                break;
 #else
             case UV8:
                 goto InvalidType;
@@ -633,9 +617,11 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                     return BoutResult (bout, Bout::RoomError, params, index);
                 if ((type >> 7) && ((type & 0x1f) >= OBJ)) {
                     // Cannot have multi-dimensional arrays of objects!
-                    type &= 0x1f;
-                    return BoutResult (bout, Bout::RoomError, params, index,
-                                       start);
+					type &= 0x1f;
+                	InvalidType: {
+						return BoutResult (bout, Bout::RoomError, params, index,
+										   start);
+                	}
                 }
                 type = type & 0x1f;   //< Mask off lower 5 bits.
                 switch (obj_size_width) {
@@ -648,6 +634,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         ui1 = *ui1_ptr;
                         length = static_cast<uint_t>(ui1);
                     }
+#if USING_2_BYTE_TYPES
                     case 1:
                     {
                         ui2_ptr = reinterpret_cast<const uint16_t*>
@@ -659,6 +646,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         length = static_cast<uint_t>(ui2);
                         ui1_ptr = reinterpret_cast<const byte*> (ui2_ptr);
                     }
+#endif  //< USING_2_BYTE_TYPES
+#if USING_4_BYTE_TYPES
                     case 2:
                     {
                         ui4_ptr = reinterpret_cast<const uint32_t*>
@@ -670,6 +659,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         length = static_cast<uint_t>(ui4);
                         ui1_ptr = reinterpret_cast<const byte*> (ui4_ptr);
                     }
+#endif  //< USING_4_BYTE_TYPES
+#if USING_8_BYTE_TYPES
                     case 3:
                     {
                         ui8_ptr = reinterpret_cast<const uint64_t*>
@@ -681,6 +672,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         length = static_cast<uint_t>(ui8);
                         ui1_ptr = reinterpret_cast<const byte*> (ui8_ptr);
                     }
+#endif  //< USING_8_BYTE_TYPES
                     default:
                     {  // This wont happen due to the & 0x3 bit mask
                        // but it stops the compiler from barking.
@@ -730,7 +722,9 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     *stop = (byte)(hash >> 8);
     if (++stop >= end) stop -= size;
     bout->stop = Diff (begin, stop);
+#if SCRIPT_DEBUG
     printf ("\n| Done writing to B-Output with the hash 0x%x.", hash);
+#endif  //< SCRIPT_DEBUG
     return 0;
 }
 
@@ -741,7 +735,9 @@ void BoutRingBell (Bout* bout, const char* address) {
     if (address == nullptr) {
         address = "";
     }
+#if SCRIPT_DEBUG
     std::cout << "\n|\n| Ringing BEL to address:" << address;
+#endif  //< SCRIPT_DEBUG
 
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte c;
@@ -755,9 +751,9 @@ void BoutRingBell (Bout* bout, const char* address) {
         * stop  = begin + bout->stop;       //< Stop of the data.
     space = SlotSpace (start, stop, size);
     if (space == 0) {
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
         std::cout << "\n| Buffer overflow!";
-#endif  //< DEBUG_SCRIPT
+#endif  //< SCRIPT_DEBUG
         return;
     }
     *stop = BEL;
@@ -766,9 +762,9 @@ void BoutRingBell (Bout* bout, const char* address) {
     c = *address;
     while (c) {
         if (space == 0) {
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
             std::cout << "\n| Buffer overflow!";
-#endif  //< DEBUG_SCRIPT
+#endif  //< SCRIPT_DEBUG
             return;
         }
         *stop = c;
@@ -786,7 +782,9 @@ void BoutAckBack (Bout* bout, const char* address) {
     if (address == nullptr) {
         address = "";
     }
+#if SCRIPT_DEBUG
     std::cout << "\n|\n| Ringing BEL to address:" << address;
+#endif  //< SCRIPT_DEBUG
 
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte c;
@@ -800,9 +798,9 @@ void BoutAckBack (Bout* bout, const char* address) {
         * stop  = begin + bout->stop;       //< Stop of the data.
     space = SlotSpace (start, stop, size);
     if (space == 0) {
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
         std::cout << "\n| Buffer overflow!";
-#endif  //< DEBUG_SCRIPT
+#endif  //< SCRIPT_DEBUG
         return;
     }
     *stop = ACK;
@@ -811,9 +809,9 @@ void BoutAckBack (Bout* bout, const char* address) {
     c = *address;
     while (c) {
         if (space == 0) {
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
             std::cout << "\n| Buffer overflow!";
-#endif  //< DEBUG_SCRIPT
+#endif  //< SCRIPT_DEBUG
             return;
         }
         *stop = c;

@@ -23,10 +23,10 @@
 */
 
 #include <stdafx.h>
-#include "../script/bin.h"
-#include "../script/types.h"
-#include "../script/args.h"
-#include "../script/text.h"
+#include "bin.h"
+#include "types.h"
+#include "args.h"
+#include "text.h"
 
 namespace _ {
 
@@ -42,8 +42,8 @@ uint_t SlotSpace (byte* start, byte* stop, uint_t size) {
     return size - (stop - start);
 }
 
+#if USE_MORE_ROM
 const char* BinErrorString (Bin::Error e) {
-#if USING_CONSOLE
     static const char* strings[] = {
         "Buffer overflow",          //<  0
         "Buffer underflow",         //<  1
@@ -51,7 +51,7 @@ const char* BinErrorString (Bin::Error e) {
         "Invalid hash",             //<  3
         "Invalid type",             //<  4
         "Invalid index",            //<  5
-        "Invalid equerry",          //<  6
+        "Invalid equery",           //<  6
         "Invalid argument number",  //<  7
         "Invalid door",             //<  8
         "Too many parameters",      //<  9
@@ -69,15 +69,12 @@ const char* BinErrorString (Bin::Error e) {
         "Bin Locked"                //< 21
         "Room Error"                //< 22
     };
-    // Compiler says this will alwyas be false but I thought it enum as signed int?
+    // Compiler says this will always be false but I thought it enum as signed int?
     //if (e < 0 || e > Bin::RoomError)
     //    return strings[Bin::RoomError];
     if (e > Bin::RoomError)
         return strings[Bin::RoomError];
     return strings[e];
-#else
-    return kEmptyString;
-#endif
 }
 
 const char* BinStateString (Bin::State state) {
@@ -97,35 +94,14 @@ const char* BinStateString (Bin::State state) {
         "POD"           //< 12
     };
     static const char kErrorString[] = "Error\0";
-    // Compiler says this will alwyas be false but I thought it enum as signed int?
+    // Compiler says this will always be false but I thought it enum as signed int?
     //if (state < 0)
     //    return kErrorString;
     if (state >= Bin::PodState)
         return kErrorString;
     return kStrings[state];
 }
-
-const Operation* BinResult (Bin* bin, Bin::Error error) {
-    std::cout << "\nBin " << BinErrorString (error) << " Error!\n";
-    return reinterpret_cast<const Operation*> (1);
-}
-
-const Operation* BinResult (Bin* bin, Bin::Error error, const uint_t* header) {
-    std::cout << "\nBin Bin " << BinErrorString (error) << " Error!\n";
-    return reinterpret_cast<const Operation*> (1);
-}
-
-const Operation* BinResult (Bin* bin, Bin::Error error, const uint_t* header,
-                            uint_t offset) {
-    std::cout << "\nBin " << BinErrorString (error) << " Error!\n";
-    return reinterpret_cast<const Operation*> (1);
-}
-
-const Operation* BinResult (Bin* bin, Bin::Error error, const uint_t* header,
-                            uint_t offset, byte* address) {
-    std::cout << "\nBin " << BinErrorString (error) << " Error!\n";
-    return reinterpret_cast<const Operation*> (1);
-}
+#endif
 
 byte* BinBuffer (Bin* bin) {
     if (bin == nullptr)
@@ -146,7 +122,7 @@ Bin* BinInit (uintptr_t* buffer, uint_t size) {
     bin->stop  = 0;
     bin->read  = 0;
 
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
     MemoryClear (BinBuffer (bin), size);
 #endif
     return bin;
@@ -194,8 +170,9 @@ bool BinIsReadable (Bin* bin) {
     return BinBufferLength (bin) > 0;
 }
 
+#if SCRIPT_DEBUG
 void BinPrint (Bin* bin) {
-    PrintLine ('_');
+    PrintLine ("\n| ", '_');
     if (bin == nullptr) {
         printf ("\n| Bin null\n");
         return;
@@ -205,9 +182,10 @@ void BinPrint (Bin* bin) {
         bin->start, bin->stop, bin->read);
     PrintMemory (BinBuffer (bin), size + sizeof (Bin));
 }
+#endif  //< SCRIPT_DEBUG
 
 const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
     std::cout << "\n| Reading ";
     ParamsPrint (params);
     std::cout << " from B-Input:";
@@ -221,8 +199,8 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
     if (args == nullptr)
         return BinResult (bin, Bin::RoomError);
     byte     //array_type,            //< The current type being read.
-             ui1;                   //< Temp variable.
-    uint16_t ui2;                   //< Temp variable.
+             ui1;                     //< Temp variable.
+    uint16_t ui2;                     //< Temp variable.
 #if USING_VARINT4 || USING_AR4 || USING_BK4
     uint32_t ui4;
 #endif
@@ -231,13 +209,13 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #endif
 
     byte*     ui1_ptr;              //< Pointer to a UI1.
-#if  USING_VARINT2 || USING_BK2
+#if  USING_VARINT2
     uint16_t* ui2_ptr;              //< Pointer to a UI2.
 #endif
-#if USING_VARINT4 || USING_AR4 || USING_BK4
+#if USING_VARINT4
     uint32_t* ui4_ptr;              //< Pointer to a UI4.
 #endif
-#if USING_VARINT8 || USING_AR8 || USING_BK8
+#if USING_VARINT8
     uint64_t* ui8_ptr;              //< Pointer to a UI1.
 #endif
     uint_t type,                    //< The current type being read.
@@ -246,7 +224,9 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
            count,                   //< Argument length.
            index,                   //< Index in the params.
            arg_index = 0,           //< Index in the args.
+#if USING_ARRAY
            temp,
+#endif  //< USING_ARRAY
            num_params = *params;    //< Number of params.
     hash16_t hash;
 
@@ -267,7 +247,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 
     for (index = 1; index <= num_params; ++index) {
         type   = params[index];
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
         printf ("\n| param:%2u TType:%s  start:%u, stop:%u length:%u",
                 arg_index + 1,  TypeString (type), Diff (begin, start),
                 Diff (begin, stop), length);
@@ -287,7 +267,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 if (ui1_ptr == nullptr)
                     return BinResult (bin, Bin::RoomError, params, index, 
                                       start);
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
                 printf ("\n| Reading STR:0x%p with max length:%u \"", ui1_ptr, 
                         count);
 #endif
@@ -297,7 +277,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 if (++start >= end) start -= size;
                 *ui1_ptr = ui1;
                 ++ui1_ptr;
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
                 std::cout << ui1;
 #endif
                 while ((ui1 != 0) && (count != 0)) {
@@ -309,13 +289,13 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                     hash = Hash16 (ui1, hash);
                     if (++start >= end) start -= size;
                     *ui1_ptr++ = ui1;   // Write byte to destination.
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
                     std::cout << ui1;
 #endif
                 }
-                #if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
                 std::cout << "\" success!\n";
-                #endif
+#endif
                 if (type != ADR) {
                     *ui1_ptr = 0;
                     // No need to hash 0.
@@ -326,7 +306,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 // Load buffered-type argument length and increment the index.
                 ++num_params;
                 count = params[++index];
-                //#if DEBUG_SCRIPT
+                //#if SCRIPT_DEBUG
                 //printf ("\n|           Reading char with max length %u: ",
                 //        count);
                 //#endif
@@ -346,7 +326,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                         return BinResult (bin, Bin::BufferUnderflowError, 
                                           params, index, start);
                     --count;
-                    //#if DEBUG_SCRIPT
+                    //#if SCRIPT_DEBUG
                     //std::cout << ui2;
                     //#endif
                     ui2 = *start;       // Read byte from ring-buffer.
@@ -354,7 +334,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                     if (++start >= end) start -= size;
                     *ui2_ptr++ = ui2;   // Write byte to destination.
                 }
-                //#if DEBUG_SCRIPT
+                //#if SCRIPT_DEBUG
                 //            //printf (" done!\n");
                 //#endif
                 hash = Hash16UI2 (ui2, hash);
@@ -381,7 +361,9 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 
                 // Byte 1
                 ui1 = *start;                       //< Read
+#if SCRIPT_DEBUG
                 std::cout << " \'" << ui1 << "\',";
+#endif  //< SCRIPT_DEBUG
                 hash = Hash16 (ui1, hash);          //< Hash
                 if (++start >= end) start -= size;  //< Increment
                 *ui1_ptr = ui1;                     //< Write
@@ -737,10 +719,12 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             ui1 = *start;
 #endif 
             default: {  //< It's an Array
+#if SCRIPT_DEBUG
                 std::cout << "\nIt's an array!\n";
+#endif  //< SCRIPT_DEBUG
+#if USING_ARRAY
                 switch ((type >> 5) & 0x3) {
                     case 0: {
-
                         if ((type < LST) && (type < MAP))
                             return BinResult (bin, Bin::InvalidTypeError, params, 
                                               index, start);
@@ -763,8 +747,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                         count = (uintptr_t)ui1;
                         break;
                     }
-                    case 1:
-                    {
+                    case 1: {
                         if (length < 2) // 2 byte for the width word.
                             return BinResult (bin, Bin::BufferUnderflowError,
                                               params, index, start);
@@ -789,8 +772,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                         ui1_ptr = reinterpret_cast<byte*> (ui2_ptr);
                         break;
                     }
-                    case 2:
-                    {
+                    case 2: {
                         if (length < 4) // 4 byte for the width word.
                             return BinResult (bin, Bin::BufferUnderflowError,
                                               params, index, start);
@@ -814,8 +796,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                         ui1_ptr = reinterpret_cast<byte*> (ui4_ptr);
                         break;
                     }
-                    case 3: // 8 byte for the width word.
-                    {
+                    case 3: { // 8 byte for the width word.
                         if (length < 9)
                             return BinResult (bin, Bin::BufferUnderflowError,
                                               params, index, start);
@@ -875,15 +856,17 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                     ++ui1_ptr;
                 }
                 break;
+#endif  //< SCRIPT_DEBUG    
             }
-                
         }
         ++arg_index;
+#if SCRIPT_DEBUG
         std::cout << " |";
+#endif  //< SCRIPT_DEBUG    
     }
-    #if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
     printf ("\n| Hash expected: %x ", hash);
-    #endif
+#endif
     if (length < 2)
         return BinResult (bin, Bin::BufferUnderflowError, params, index,
                           start);
@@ -892,14 +875,14 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
     ui1 = *start;
     if (++start >= end) start -= size;
     ui2 |= (((uint16_t)ui1) << 8);
-    #if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
     printf ("found: %x\n", ui2);
-    #endif
+#endif
     if (hash != ui2)
         return BinResult (bin, Bin::InvalidHashError, params, index,
                           start);
 
-//#if DEBUG_SCRIPT
+//#if SCRIPT_DEBUG
 //    //printf ("\n| Done reading\n");
 //    SlotClear (begin, bin->start, start, stop, end, size);
 //#endif

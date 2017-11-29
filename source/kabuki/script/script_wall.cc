@@ -17,7 +17,7 @@
 */
 
 #include <stdafx.h>
-#include "../script/wall.h"
+#include "wall.h"
 
 namespace _ {
 

@@ -13,8 +13,8 @@
              permissions and limitations under the License.
 */
 
-#include "../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
-#include "../kabuki_toolkit.h"
+#include "../../cpputest/include/CppUTest/CommandLineTestRunner.h"
+#include "../source/kabuki/kabuki_toolkit.h"
 
 using namespace _;
 using namespace std;

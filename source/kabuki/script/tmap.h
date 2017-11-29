@@ -23,13 +23,15 @@
 #include "memory.h"
 #include "types.h"
 
+#if USING_MAP
+
 namespace _ {
 
 /** A one-to-one map of unsigned integers to unsigned integers.
 
     Maps share the same data structure as Books, Dictionary(s) and Lists. Maps
-    like all Script Objects are required to are required to have a stack_height, size_bytes, and header_size that is a multiple of 8 as well as 
-    being .
+    like all Script Objects are required to are required to have a stack_height,
+    size_bytes, and header_size that is a multiple of 8 as well as being .
 
     It is easiest to explain this data structure in terms of the Socket. Sockets
     use a Map to map a Slot number to a slot.
@@ -495,7 +497,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
 }
 
 /** Adds a key-value pair to the end of the collection. */
-//inline byte Add2 (Map2* collection, const char* key, byte data) {
+//byte Add2 (Map2* collection, const char* key, byte data) {
 //    return MapAdd<byte, uint16_t, uint16_t, hash16_t> (collection, key, UI1, &data);
 //}
 
@@ -770,7 +772,7 @@ bool Retain (Map<TIndex, TKey, TSize>* collection) {
 
 /** Creates a collection from dynamic memory. */
 template<typename TIndex, typename TOffset, typename TSize, typename TSize>
-inline Map<TIndex, TOffset, TSize, TSize>* MapCreate (TIndex buffered_indexes,
+Map<TIndex, TOffset, TSize, TSize>* MapCreate (TIndex buffered_indexes,
                                                         TSize table_size,
                                                         TSize size) {
     Map<TIndex, TOffset, TSize, TSize>* collection = New<Map, uint_t> ();
@@ -779,13 +781,14 @@ inline Map<TIndex, TOffset, TSize, TSize>* MapCreate (TIndex buffered_indexes,
 
 /** Prints the given Map to the console. */
 template<typename TIndex, typename TKey, typename TSize>
-inline void MapPrint (Map<TIndex, TKey, TSize>* collection) {
+void MapPrint (Map<TIndex, TKey, TSize>* collection) {
 
 }
 
-//inline void MapPrint (Map2* collection) {
+//void MapPrint (Map2* collection) {
 //    return MapPrint<byte, uint16_t, uint16_t, hash16_t> (collection);
 //}
 
 }       //< namespace _
+#endif  //< USING_MAP
 #endif  //< SCRIPT_MAP_H

@@ -28,16 +28,16 @@ namespace _ {
     
     @code
     #include <script/include/Event.h>
-    struct KABUKI Example: public Event
-    {
-        void Trigger () void
-        {
+    struct KABUKI Example: public Event {
+        virtual void Trigger () {
             // ...
         }
     };
-    @endcode
-*/
+    @endcode */
 struct KABUKI Event {
+	/** Virtual destructor. */
+	virtual ~Event ();
+
     /** Triggers the event. */
     virtual void Trigger () = 0;
 };

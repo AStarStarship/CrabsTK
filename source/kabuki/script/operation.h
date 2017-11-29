@@ -170,11 +170,6 @@ inline const uint_t* FirstOperation (uint_t value) {
     return reinterpret_cast<const uint_t*>(index);
 }
 
-/** Prints the given Set to the std::out 
-    Quote: Wikipedia "In mathematics an operand is the object of a mathematical
-    operation, i.e. it is the quantity that is operated on." */
-KABUKI void OperationPrint (const Operation* op);
-
 /** Gets the number of operations in the given expressions. */
 KABUKI uintptr_t ToUInt (Operand* op);
 
@@ -182,8 +177,15 @@ KABUKI uintptr_t ToUInt (Operand* op);
     (false). */
 KABUKI bool IsGroup (const Operation* op);
 
+#if USE_MORE_ROM
+/** Prints the given Set to the std::out
+    Quote: Wikipedia "In mathematics an operand is the object of a mathematical
+    operation, i.e. it is the quantity that is operated on." */
+KABUKI void OperationPrint (const Operation* op);
+
 /** Prints the given Operand to the console. */
 KABUKI void OperandPrint (Operand* operand);
+#endif  //< USE_MORE_ROM
 
 /** Evaluated Nil Operation result. */
 KABUKI const Operation* NilResult ();

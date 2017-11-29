@@ -16,7 +16,7 @@
 */
 
 #include <stdafx.h>
-#include "../script/slot.h"
+#include "slot.h"
 
 namespace _ {
 
@@ -29,7 +29,7 @@ const Operation* SlotResult (Slot* slot, Bout::Error error) {
 }
 
 
-const Operation* BResult (Slot* slot, const uint_t* params, void** args) {
+const Operation* Slotwrite (Slot* slot, const uint_t* params, void** args) {
     if (slot == nullptr)     //< Is this a double check?
         return SlotResult (slot, Bout::RoomError);
     if (params == nullptr)

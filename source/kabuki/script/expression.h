@@ -15,7 +15,6 @@
 */
 
 #ifndef SCRIPT_EXPRESSION_H
-
 #define SCRIPT_EXPRESSION_H
 
 #include "set.h"
@@ -76,7 +75,7 @@ struct Expression {
     typedef enum Errors {
         BufferOverflowError  = 0,
         BufferUnderflowError = 1,
-        InvalidOpeartionError,
+        InvalidOperandError,
         StackOverflowError,
         LockedStateError,
         StringOverflowError,
@@ -106,7 +105,7 @@ struct Expression {
     uint32_t         utf32_char;    //< The current UTF-32 char being scanned.
     hash16_t         hash;          //< Bin data verification hash.
     uint32_t         timeout_us ;   //< The timeout time in microseconds.
-    time_us_t      last_time;     //< The last time the Stack was scanned.
+    time_us_t      last_time;       //< The last time the Stack was scanned.
     const Operation* result;        //< The result of the Expression.
                                     //< expr is operating on.
     uintptr_t        buffer_size,   //< The expression buffer_size.
@@ -123,8 +122,14 @@ struct Expression {
 
     @param error The error type.
     @return Returns a Static Error Operation Result. */
-KABUKI const Operation* Result (Expression* expr,
-                                Bin::Error error);
+inline const Operation* Result (Expression* expr,
+                                Bin::Error error) {
+#if SCRIPT_DEBUG
+    cout << "\n| Expression " << BinErrorString (error)
+              << " Error!";
+#endif  //< SCRIPT_DEBUG
+    return reinterpret_cast<const Operation*> (1);
+}
 
 /** Used to return an erroneous result from a B-Input.
     @param  expr    The source Expression.
@@ -133,9 +138,15 @@ KABUKI const Operation* Result (Expression* expr,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Operation* Result (Expression* expr,
+inline const Operation* Result (Expression* expr,
                                 Bin::Error error,
-                                const uint_t* header);
+                                const uint_t* header) {
+#if SCRIPT_DEBUG
+    cout << "\n| Expression " << BinErrorString (error)
+              << " Error!";
+#endif  //< SCRIPT_DEBUG
+    return reinterpret_cast<const Operation*> (1);
+}
 
 /** Used to return an erroneous result from a B-Input.
     @param  expr    The source Expression.
@@ -144,10 +155,16 @@ KABUKI const Operation* Result (Expression* expr,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Operation* Result (Expression* expr, 
+inline const Operation* Result (Expression* expr,
                                 Bin::Error error,
                                 const uint_t* header,
-                                byte offset);
+                                byte offset) {
+#if SCRIPT_DEBUG
+    cout << "\n| Expression " << BinErrorString (error)
+              << " Error!";
+#endif  //< SCRIPT_DEBUG
+    return reinterpret_cast<const Operation*> (1);
+}
 
 /** Used to return an erroneous result from a B-Input.
     @param  expr    The source Expression.
@@ -156,11 +173,17 @@ KABUKI const Operation* Result (Expression* expr,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Operation* Result (Expression* expr,
+inline const Operation* Result (Expression* expr,
                                 Bin::Error error,
                                 const uint_t* header,
                                 byte offset,
-                                uintptr_t* address);
+                                byte* address) {
+#if SCRIPT_DEBUG
+    cout << "\n| Expression " << BinErrorString (error)
+              << " Error!";
+#endif  //< SCRIPT_DEBUG
+    return reinterpret_cast<const Operation*> (1);
+}
 
 /** Returns the text label of the Bin::Error.
 KABUKI const char* ExpressionErrorString (Bin::Error error); */
@@ -234,7 +257,7 @@ KABUKI byte ExpressionStreamBout (Expression* expr);
 
 /** Scans the Bout buffer and marks the data as being ready to execute.
     @param a The Stack to scan. */
-KABUKI void ExpressionScan (Expression* expr, Portal* io);
+KABUKI const Operation* ExpressionScan (Expression* expr);// , Portal* io);
 
 /** Returns true if the given Stack contains the given address. */
 KABUKI bool ExpressionContains (Expression* expr, void* address);
@@ -260,18 +283,23 @@ KABUKI void ExpressionRingBell (Expression* expr, const char* address = "");
 
 KABUKI void ExpressionAckBack (Expression* expr, const char* address = "");
 
+/** Disconnects the expression. */
+KABUKI const Operation* ExpressionForceDisconnect (Expression* expr, Bin::Error error);
+
 /** Calls the Read function for the Bout slot. */
-KABUKI bool Args (Expression* expr, const uint_t* params, void** args);
+KABUKI const Operation* ExprArgs (Expression* expr, const uint_t* params, void** args);
 
 /** Calls the Write function for the Tx slot. */
-KABUKI const Operation* Result (Expression* expr, const uint_t* params, 
+KABUKI const Operation* ExprResult (Expression* expr, const uint_t* params, 
                                 void** args);
 
+#if USE_MORE_ROM
 /** Prints the Expression stack to the std::cout */
 KABUKI void ExpressionPrintStack (Expression* expr);
 
 /** Prints the given Expression to the console. */
 KABUKI void ExpressionPrint (Expression* expr);
+#endif  //< USE_MORE_ROM
 
 }       //< namespace _
 #endif  //< SCRIPT_EXPRESSION_H

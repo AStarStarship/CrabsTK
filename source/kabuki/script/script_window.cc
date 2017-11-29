@@ -15,7 +15,7 @@
              permissions and limitations under the License.
 */
 
-#include "../script/window.h"
+#include "window.h"
 
 namespace _ {
 

@@ -17,10 +17,10 @@
 */
 
 #include <stdafx.h>
-#include "../script/operation.h"
-#include "../script/memory.h"
-#include "../script/args.h"
-#include "../script/text.h"
+#include "operation.h"
+#include "memory.h"
+#include "args.h"
+#include "text.h"
 
 namespace _ {
 
@@ -39,6 +39,7 @@ uintptr_t OperationCount (const uint_t* op) {
     return (char_t)reinterpret_cast<uintptr_t>(op);
 }
 
+#if USE_MORE_ROM
 void OperationPrint (const Operation* op) {
     if (op == nullptr) {
         std::cout << "\n| Operation:      null";
@@ -75,20 +76,6 @@ void OperationPrint (const Operation* op) {
         std::cout << "@todo Print B-Sequence here";
     }
 }
-
-uintptr_t ToUInt (Operand* operand) {
-    if (operand == nullptr) return 0;
-    const Operation* ope = operand->Star (0, nullptr);
-    return ope == nullptr?0:
-        reinterpret_cast<uintptr_t> (ope->params);
-}
-
-bool IsGroup (const Operation* ope) {
-    if (!ope)
-        return false;
-    return (reinterpret_cast<uintptr_t> (ope->result) < ' ');
-}
-
 void OperandPrint (Operand* operand) {
     std::cout << "\n| Operand:          ";
     if (operand == nullptr) {
@@ -137,6 +124,21 @@ void PrintAddress (const byte* address, Operand* root) {
         index = *address++;
     }
 }
+#endif  //< USE_MORE_ROM
+
+uintptr_t ToUInt (Operand* operand) {
+    if (operand == nullptr) return 0;
+    const Operation* ope = operand->Star (0, nullptr);
+    return ope == nullptr?0:
+        reinterpret_cast<uintptr_t> (ope->params);
+}
+
+bool IsGroup (const Operation* ope) {
+    if (!ope)
+        return false;
+    return (reinterpret_cast<uintptr_t> (ope->result) < ' ');
+}
+
 
 const Operation* NilResult () {
 static const Operation Result = { "Nil",

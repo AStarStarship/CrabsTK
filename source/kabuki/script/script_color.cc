@@ -16,11 +16,12 @@
 */
 
 #include <stdafx.h>
-#include "../script/color.h"
+#include "color.h"
 
 namespace _ {
 
 const color_t* RainbowColors () {
+#if USE_MORE_ROM
     static const color_t RainbowColorsArray[] = {
         0xF00000, 0xF01000, 0xF02000, 0xF03000, 0xF04000, 0xF05000, 0xF06000,
         0xF07000, 0xF08000, 0xB0F000, 0xF09000, 0xF0A000, 0xF0B000, 0xF0C000,
@@ -38,6 +39,9 @@ const color_t* RainbowColors () {
         0xF00040, 0xF00030, 0xF00020, 0xF00010, 0xF00000
     };
     return &RainbowColorsArray[0];
+#else
+    return 0;
+#endif
 }
 
 const color_t* PresetColors () {
@@ -266,6 +270,7 @@ void ColorSetHSV (color_t color, float& fR, float& fG, float& fB, float& fH,
 */
 }
 
+#if USE_MORE_ROM
 void ColorPrint (color_t color) {
     std::cout << "Color: "
                     "R("          << (color && 0x000000FF) 
@@ -274,5 +279,6 @@ void ColorPrint (color_t color) {
                 << "), A("        << ((color && 0xFF000000) >> 24)
                 << ")\n"; 
 }
+#endif  //< USE_MORE_ROM
 
 }       //< namespace _

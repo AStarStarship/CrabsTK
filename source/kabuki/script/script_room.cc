@@ -18,10 +18,10 @@
 */
 
 #include <stdafx.h>
-#include "../script/room.h"
-#include "../script/door.h"
-#include "../script/args.h"
-#include "../script/text.h"
+#include "room.h"
+#include "door.h"
+#include "args.h"
+#include "text.h"
 
 namespace _ {
 
@@ -94,21 +94,28 @@ const Operation* Room::Init (Expression* expr) {
     return nullptr;
 }
 
-void Room::ShutDown ()
-{
+void Room::ShutDown () {
+#if SCRIPT_DEBUG
     std::cout << "Shutting down...\n";
+#endif  //< SCRIPT_DEBUG
 }
 
 void Room::Sleep () {
+#if SCRIPT_DEBUG
     std::cout << "Going to sleep...\n";
+#endif  //< SCRIPT_DEBUG
 }
 
 void Room::Wake () {
+#if SCRIPT_DEBUG
     std::cout << "Waking up...\n";
+#endif  //< SCRIPT_DEBUG
 }
 
 void Room::Crash () {
+#if SCRIPT_DEBUG
     std::cout << "Room crash!\n";
+#endif  //< SCRIPT_DEBUG
 }
 
 const Operation* Room::Loop () { return 0; }
@@ -118,13 +125,19 @@ bool Room::IsOn () {
 }
 
 int Room::Main (const char** args, int args_count) {
-    const Operation* result;
+    //const Operation* result;
 
+#if SCRIPT_DEBUG
     std::cout << "Initializing Chinese Room with " << args_count << " args:\n";
+#endif  //< SCRIPT_DEBUG
     for (int i = 0; i < args_count; ++i) {
+#if SCRIPT_DEBUG
         std::cout << i << ": " << args[i] << '\n';
+#endif  //< SCRIPT_DEBUG
     }
+#if SCRIPT_DEBUG
     std::cout << '\n';
+#endif  //< SCRIPT_DEBUG
 
     while (IsOn ()) {
         /*try {
@@ -170,6 +183,7 @@ Wall* Room::GetWall (int_t wall_number) {
 		return nullptr;
 	return StackGet<Wall*> (walls_, wall_number);
 }
+
 Wall* Room::AddWall (Wall* new_wall) {
     if (new_wall == nullptr)
     	return nullptr;
@@ -192,16 +206,11 @@ uintptr_t Room::GetSizeBytes () {
 	return count;
 }
 
+#if USE_MORE_ROM
 void Room::Print () {
     PrintLine ();
     std::cout << "\n| Room: ";
 }
-
-Room* ChineseRoom (Room* room) {
-    static Room* chinese_room = nullptr;
-    if (room)
-        chinese_room = room;
-    return chinese_room;
-}
+#endif  //< USE_MORE_ROM
 
 }       //< namespace _

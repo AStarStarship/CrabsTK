@@ -16,7 +16,6 @@
 #ifndef KABUKI_TEK_GLOBAL_H
 #define KABUKI_TEK_GLOBAL_H
 
-#include "tek/tek/rgb_led.h"
-#include "tek/tek/unicontroller.h"
+#include "unicontroller.h"
 
 #endif	//< KABUKI_TEK_GLOBAL_H

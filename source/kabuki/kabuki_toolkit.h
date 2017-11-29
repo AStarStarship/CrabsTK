@@ -17,7 +17,6 @@
 #ifndef KABUKI_THIS_H
 #define KABUKI_THIS_H
 
-#include <stdafx.h>
-#include "script/include/module_all.h"
+#include "script/global.h"
 
 #endif  //< KABUKI_THIS_H

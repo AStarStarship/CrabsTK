@@ -20,6 +20,19 @@
 #include "types.h"
 
 namespace _ {
+/**
+    @code
+    ;
+    @endcode
+*/
+template<typename TIndex, typename TKey, typename TData, typename THash>
+struct KABUKI Set {
+    TData  size;        //< Total size of the set.
+    TKey   table_size,  //< Size of the (optional) key strings in bytes.
+           pile_size;   //< Size of the (optional) collisions pile in bytes.
+    TIndex num_items,   //< Number of items.
+           max_items;   //< Max number of items that can fit in the header.
+};
 
 /** A Type-Value Tuple. */
 struct Tuple2 {
@@ -47,7 +60,7 @@ struct Tuple3 {
     | Dictionary | DIC  | A one-to-one map of Key-{Type-Value} tuples. |
     |   Observer | OBV  | A Observer with Subscriber List.             |
 */
-struct Set {
+struct Collection {
 
     /** Clears the Set without wiping the memory. */
     virtual void Clear () = 0;
@@ -62,7 +75,7 @@ struct Set {
     virtual bool Add (TType type, void* data, const char* key) = 0;
 
     /** Merges the given Set into this one. */
-    virtual bool Merge (Set* set) = 0;
+    virtual bool Merge (Collection* collection) = 0;
 
     /** Removes the given object from this collection. */
     virtual bool Remove (Tuple2* tuple) = 0;

@@ -143,7 +143,7 @@ class Room: public Operand {
         kFloorSize = ROOM_FLOOR_SIZE,
 #undef ROOM_FLOOR_SIZE
 #endif
-		kFloorSizeWords = kFloorSize / sizeof (uintptr_t),
+        kFloorSizeWords = kFloorSize / sizeof (uintptr_t) + 2, //< +2 buffer.
     } State;
 
     /** Creates a Room with the given size.
@@ -210,8 +210,10 @@ class Room: public Operand {
     /** Script expressions. */
     virtual const Operation* Star (char_t index, Expression* expr);
 
-    /** Prints the Room to the std::cout. */
+#if USE_MORE_ROM
+    /** Prints the Room to the stdout. */
     virtual  void Print ();
+#endif  //< USE_MORE_ROM
 
     protected:
                                 //! vtable pointer here in memory (usually).

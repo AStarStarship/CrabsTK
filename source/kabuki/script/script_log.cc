@@ -22,10 +22,11 @@
 */
 
 #include <stdafx.h>
-#include "../script/log.h"
+#include "log.h"
 
 namespace _ {
 
+#if USE_MORE_ROM
 Log LogInit (uintptr_t* buffer, size_t buffer_size) {
     Bout* bout = BoutInit (buffer, buffer_size);
     Log log;
@@ -151,5 +152,5 @@ void LogPrint (Log& log) {
         }
     }*/
 }   
-
+#endif  //< MEMORY_PROFILE > 2
 }       //< namespace _

@@ -18,50 +18,53 @@
             it into your project directory into the source code root. This 
             files gets #include <assembly.h> in the config file. That means 
             that the compiler will look in your source code root before looking 
-            in this file. Please see config.h for configuration details.
+            in this file. Please see module_config.h for configuration details.
 */
 
-// Choose BARE_METAL, MBED, MBED_OS, ARDUINO, WIN32, WINDOWS, ANDROID, 
+// Choose BARE_METAL, MBED, MBED_OS, ARDUINO, MINGW32, WINDOWS, ANDROID, 
 // LINUX, OSX, or IOS
 #define PLATFORM            WINDOWS
 
 // Choose X86, X64, ARM8, ARM16, ARM32, or ARM64
 #define CPU_ACHITECTURE     X86
 
+#define CPU_WORD_SIZE       32
+
 #define IS_LITTLE_ENDIAN    YES
 
 #define DEBUG               YES
 
-#ifndef DEBUG_CHINESE_ROOM
-#define DEBUG_CHINESE_ROOM   YES
-#endif //< DEBUG_CHINESE_ROOM
+#ifndef SCRIPT_DEBUG
+#define SCRIPT_DEBUG        YES
+#endif //< SCRIPT_DEBUG
 
-/** @brief The RAM Use Levels 1-3 control how much RAM is used by adjusting the
-           size of the uint_t type.
-    For constrained memory devices, use RAM_USE_LEVEL 1. For most uses use
-    RAM_USE_LEVEL 2. For applications that require 64-bit memory addresses, use
-    RAM_USE_LEVEL 3.
+/** @brief The Memory Profiles 1-4 are used to signal that the system is
+           memory constrained.
+    For constrained memory devices, use MEMORY_PROFILE 1. For most uses use
+    MEMORY_PROFILE 2. For applications that require 64-bit memory addresses, use
+    MEMORY_PROFILE 3.
 
     @code
-    | RUL | sizeof (uint_t) | #bits Unit |
-    |:---:|:---------------:|:----------:|
-    |  1  |      1 byte     |     5      |
-    |  2  |      2 byte     |    10      |
-    |  4  |      4 byte     |    16      |
+    | RUL | sizeof (uint_t) | #bits Unit | USE_MORE_ROM |
+    |:---:|:---------------:|:----------:|:------------:|
+    |  1  |      1 byte     |     5      |     NO       |
+    |  2  |      2 byte     |    10      |     NO       |
+    |  2  |      2 byte     |    10      |     YES      |
+    |  4  |      4 byte     |    16      |     YES      |
+    |  5  |      8 byte     |    16      |     YES      |
     @endcode
 */
-#define RAM_USE_LEVEL       2       //< The RAM User Level 1-3.
-#define USE_MORE_ROM        YES     //< Inline more functions or makes them static.
-#define USING_CONSOLE       YES     //< Includes/excludes human-readable text.
+#define MEMORY_PROFILE       2        //< MEMORY User Level 1-3.
 
-#define MAX_ERRORS          8       //< Max errors before locking up.
-#define MAX_NUM_PARAMS      26      //< Max number of parameters.
-#define MAX_STRING_LENGTH   64 * 1024   //< The max string length.
-#define COM_TIMEOUT_TICKS   100     //< The number of seconds before a timeout.
-                                    //< over a generic communication link.
-#define ASSEMBLY_NAME       "Unnamed"   //< Enter the name of your program or library.
-#define CHAR_WIDTH          8       //< char_t width in bytes: 8, 16, or 32.
-#define CHINESE_FLOOR_SIZE  1024    //< The 
+#define MAX_ERRORS          8         //< Max errors before locking up.
+#define MAX_NUM_PARAMS      26        //< Max number of parameters.
+#define MAX_STRING_LENGTH   64 * 1024 //< Max char length.
+#define MAX_NUM_SLOTS       256       //< The maximum number of Slots.
+#define COM_TIMEOUT_TICKS   100       //< Number of seconds before a timeout.
+                                      //< over a generic communication link.
+#define CHAR_WIDTH          8         //< index width in bytes: 8, 16, or 32.
+#define ROOM_FLOOR_SIZE     1024      //< Size of the Room Floor.
+#define ROOM_LOG_SIZE       256       //< Size of the script log.
 
 /*> Sets any of the following macros to YES or NO. */
 
@@ -72,12 +75,8 @@
 #define USING_VARINT2       YES
 #define USING_VARINT4       YES
 #define USING_VARINT8       YES
-#define USING_AR1           YES
-#define USING_AR2           YES
-#define USING_AR4           YES
-#define USING_AR8           YES
-#define USING_BK2           NO
-#define USING_BK4           NO
-#define USING_BK8           NO      //< Must use to enable file handling.
+#define USING_ARRAY         NO
+#define USING_BAG           NO
+#define USING_BOOK          NO
+#define USING_MAP           NO
 
-#define USING_UTF           NO      //< Leave YES unless you're trying to save ROM.

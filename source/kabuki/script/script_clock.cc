@@ -17,15 +17,17 @@
 */
 
 #include <stdafx.h>
-#include "../script/clock.h"
-#include "../script/text.h"
+#include "clock.h"
+#include "text.h"
 
-using chrono_timestamp = std::chrono::time_point<std::chrono::system_clock,
-    std::chrono::microseconds>;
 using namespace std;
-using namespace std::chrono;
+//using namespace std::chrono;
 
+//using chrono_timestamp = std::chrono::time_point<std::chrono::system_clock,
+//    std::chrono::microseconds>;
 namespace _ {
+
+#if USE_MORE_ROM
 
 std::tm* ClockLocalTime (std::tm* std_tm, std::time_t const& time) {
     if (std_tm == nullptr)
@@ -33,7 +35,7 @@ std::tm* ClockLocalTime (std::tm* std_tm, std::time_t const& time) {
 #if (defined(__MINGW32__) || defined(__MINGW64__))
     memcpy (&tm_snapshot, ::localtime (&time), sizeof (std::tm));
 #elif (defined(_WIN32) || defined(__WIN32__))
-    localtime_s (std_tm, time);
+    localtime_s (std_tm, &time);
 #else
     localtime_r (&time, std_tm); // POSIX
 #endif
@@ -53,12 +55,6 @@ time_t ClockGetSeconds (time_us_t t)
 int32_t ClockGetMicroseconds (time_us_t timestamp)
 {
     return (int32_t)((timestamp & 0xFFFFFFFF00000000) >> 32);
-}
-
-time_us_t ClockTimestampNow () {
-    std::chrono::microseconds us (1);
-    //chrono_timestamp ts = time_point_cast<microseconds>(system_clock::now ());
-    return 0;
 }
 
 bool ClockPrintTimeStruct (tm* std_tm) {
@@ -104,17 +100,14 @@ void ClockPrintDateTime (time_t t) {
         << std_tm.tm_sec;
 }
 
-char* ClockkWriteTimeStructString (char* buffer, char* buffer_end, tm* std_tm) {
+char* ClockWriteTimeStructString (char* buffer, char* buffer_end, tm* std_tm) {
     if (buffer == nullptr) {
         return nullptr;
     }
+    if (buffer_end <= buffer) {
+        return nullptr;
+    }
     if (std_tm == nullptr) {
-        return nullptr;
-    }
-    if (buffer >= buffer_end) {
-        return nullptr;
-    }
-    if ((buffer_end - buffer) < 32) {
         return nullptr;
     }
 
@@ -458,13 +451,13 @@ const char* ClockReadTimeString (const char* input, int* hour, int* minute,
     return input;
 }
 
-char* ClockReadTime (char* input, char* buffer_end, int* hour, int* minute,
+char* ClockReadTime (char* input, int* hour, int* minute,
                       int* second) {
     return (char*)ClockReadTimeString (input, hour, minute,
                                         second);
 }
 
-const char* ClockReadTimeStructString (const char* input, char* buffer_end,
+const char* ClockReadTimeStructString (const char* input, //char* buffer_end,
                                         tm* std_tm) {
     if (input == nullptr)
         return nullptr;
@@ -683,15 +676,15 @@ const char* ClockReadTimeStructString (const char* input, char* buffer_end,
 
 }
 
-char* ClockReadTimeStruct (char* input, char* buffer_end, tm* result) {
+char* ClockReadTimeStruct (char* input, tm* result) {
     return (char*)ClockReadTimeStructString (input, result);
 }
 
 char* ClockWriteStringTime (char* buffer, char* buffer_end, time_t t) {
     if (buffer == nullptr)
         return nullptr;
-    if (buffer_end == nullptr)
-        return nullptr;
+    //if (buffer_end == nullptr)
+    //    return nullptr;
 
     ClockWriteDateTimeString (buffer, buffer_end, t);
     return buffer;
@@ -717,7 +710,7 @@ const char* ClockReadUnixTimeString (const char* input, time_t& result) {
     return end;
 }
 
-char* ClockReadUnixTime (char* input, char* buffer_end, time_t& result) {
+char* ClockReadUnixTime (char* input, time_t& result) {
     return (char*)ClockReadUnixTimeString (input, result);
 }
 
@@ -734,5 +727,7 @@ void ClockZeroTime (tm* std_tm) {
     std_tm->tm_yday = 0;
     std_tm->tm_isdst = 0;
 }
+
+#endif   //< USE_MORE_ROM
 
 }       //< namespace _

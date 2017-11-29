@@ -14,11 +14,12 @@
              permissions and limitations under the License.
 */
 
-#include "../script/ascii.h"
+#include "ascii.h"
 
 namespace _ {
 
 const char* AsciiString (AsciiCode ascii_char) {
+#if USE_MORE_ROM
     static const char* kStrings[] = {
         "NUL",
         "SOH",
@@ -63,6 +64,9 @@ const char* AsciiString (AsciiCode ascii_char) {
         return "DEL";
     }
     return kStrings[ascii_char];
+#else
+    return nullptr;
+#endif  //< MEMORY_PROFILE > 2
 }
 
 }       //< namespace ascii

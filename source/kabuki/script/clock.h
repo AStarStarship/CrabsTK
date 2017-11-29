@@ -27,12 +27,27 @@
 
 namespace _ {
 
-/** Portable std::tm. */
-inline KABUKI std::tm* ClockLocalTime (std::tm* std_tm,
-		                               std::time_t const& time);
+/** Creates a timestamp of the current time. */
+
+enum {
+    kNumSecondsMin = 60 * 60,
+    kNumSecondsMinute = 60 * kNumSecondsMin,
+    kNumSecondsPerDay = 24 * kNumSecondsMinute,
+    kTimeEpoch = 1900,
+};
 
 /** Gets the current microsecond timestamp. */
-KABUKI time_us_t ClockTimestampNow ();
+inline time_us_t ClockTimestampNow () {
+    //std::chrono::microseconds us (1);
+    //chrono_timestamp ts = time_point_cast<microseconds>(system_clock::now ());
+    return 0;
+}
+
+#if USE_MORE_ROM
+
+/** Portable std::tm. */
+KABUKI std::tm* ClockLocalTime (std::tm* std_tm,
+                                       std::time_t const& time);
 
 /** Generates a timestamp from a Unix timestamp and 32-bit microsecond
     timestamp.
@@ -44,15 +59,6 @@ KABUKI time_t ClockGetSeconds (time_us_t t);
 
 /** Gets the microsecond time. */
 KABUKI int32_t ClockGetMicroseconds (time_us_t timestamp);
-
-/** Creates a timestamp of the current time. */
-
-enum {
-    kNumSecondsMin     = 60 * 60,
-    kNumSecondsMinute  = 60 * kNumSecondsMin,
-    kNumSecondsPerDay  = 24 * kNumSecondsMinute,
-    kTimeEpoch         = 1900,
-};
 
 /** Prints the given tm struct to the console. */
 KABUKI bool ClockPrintTimeStruct (tm* std_tm);
@@ -68,11 +74,11 @@ KABUKI void ClockPrintDateTime (time_t t);
 
 /** Writes the given std_tm to the char buffer. */
 KABUKI char* ClockWriteTimeStructString (char* buffer, char* buffer_end,
-		                                 tm* std_tm);
+                                         tm* std_tm);
 
 /** Writes the given time to the char buffer. */
 KABUKI char* ClockWriteDateTimeString (char* buffer, char* buffer_end,
-		                               time_t t);
+                                       time_t t);
 
 /** Gets the number of days in a months. 
     @todo Maybe get some open-source date utility? */
@@ -129,7 +135,7 @@ KABUKI char* ClockReadTime (char* input, int* hour, int* minute, int* second);
 /** Converts a keyboard input to char and deletes the char. 
 */
 KABUKI const char* ClockReadTimeStructString (const char* input,
-		                                      tm* std_tm);
+                                              tm* std_tm);
 
 /** Converts a keyboard input to a human-readable manipulatable form. */
 KABUKI char* ClockReadTimeStruct (char* input, tm* result);
@@ -145,6 +151,8 @@ KABUKI char* ClockReadUnixTime (char* input,
 /** Zeros out the calendar_time struct.
     @param calendar_time A calendar time struct to zero out. */
 KABUKI void ClockZeroTime (tm* std_tm);
+
+#endif  //< USE_MORE_ROM
 
 }       //< namespace _
 #endif  //< SCRIPT_CLOCK_H

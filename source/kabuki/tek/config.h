@@ -16,7 +16,7 @@
 #ifndef KABUKI_TEK_MODULE_COFIG_H
 #define KABUKI_TEK_MODULE_COFIG_H
 
-#include <script/global.h>
+#include "../script/global.h"
 #include <mbed.h>
 
 using namespace _;

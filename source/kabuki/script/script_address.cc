@@ -15,44 +15,43 @@
              permissions and limitations under the License.
 */
 
-#include <stdafx.h>
-#include "../script/address.h"
+#include "config.h"
 
 namespace _ {
 
-uint16_t PackAddress (byte a) {
+inline uint16_t PackAddress (byte a) {
     return ((1 << 8) | a);
 }
 
-uint32_t PackAddress (uint32_t a, uint32_t b) {
+inline uint32_t PackAddress (uint32_t a, uint32_t b) {
     return ((1 << 16) | a | (b << 8));
 }
 
-uint32_t PackAddress (uint32_t a, uint32_t b, uint32_t c) {
+inline uint32_t PackAddress (uint32_t a, uint32_t b, uint32_t c) {
     return ((1 << 24) | a | (b << 8) | (c << 16));
 }
 
-uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c,
-                      uint64_t d) {
+inline uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c,
+                             uint64_t d) {
     uint64_t one = 1;
     return (one << 32 | a | (b << 8) | (c << 16) | (d << 24));
 }
 
-uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
-                      uint64_t e) {
+inline uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
+                             uint64_t e) {
     uint64_t one = 1;
     return (one << 40 | a | (b << 8) | (c << 16) | (d << 24) | (e << 32));
 }
 
-uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
-                      uint64_t e, uint64_t f) {
+inline uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
+                             uint64_t e, uint64_t f) {
     uint64_t one = 1;
     return (one << 48 | a | (b << 8) | (c << 16) | (d << 24) | (e << 32) |
            (f << 40));
 }
 
-uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
-                      uint64_t e, uint64_t f, uint64_t g) {
+inline uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
+                             uint64_t e, uint64_t f, uint64_t g) {
     uint64_t one = 1;
     return (one << 56 | a | (b << 8) | (c << 16) | (d << 24) | (e << 32) |
             (f << 40) | (g << 48));

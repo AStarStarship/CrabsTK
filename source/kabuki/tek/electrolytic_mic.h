@@ -16,7 +16,7 @@
 #ifndef KABUKI_TEK_ELECTROLYTIC_MIC_H
 #define KABUKI_TEK_ELECTROLYTIC_MIC_H
 
-#include "tek/photosensor.h"
+#include "photosensor.h"
 
 namespace kabuki { namespace tek {
 

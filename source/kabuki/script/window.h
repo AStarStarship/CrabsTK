@@ -15,7 +15,6 @@
 */
 
 #ifndef SCRIPT_WINDOW_H
-
 #define SCRIPT_WINDOW_H
 
 #include "operation.h"

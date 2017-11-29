@@ -61,31 +61,31 @@ enum {
 };
 
 /** Returns a pointer to an array of the rainbow colors. */
-inline const color_t* RainbowColors ();
+const color_t* RainbowColors ();
 
 /** Returns a pointer to an array of the present colors. */
-inline const color_t* PresetColors ();
+const color_t* PresetColors ();
 
 /** Gets one of the rainbow colors. */
-inline color_t ColorRainbow (int index);
+color_t ColorRainbow (int index);
 
 /** Gets one of the preset colors. */
-inline color_t ColorPreset (int index);
+color_t ColorPreset (int index);
 
 /** Gets a random preset colors. */
-inline color_t RandomPresetColor ();
+color_t RandomPresetColor ();
 
 /** Gets a random color. */
-inline color_t RandomColor (int index);
+color_t RandomColor (int index);
     
 /** Mixes the color with the  */
-inline color_t ColorMix (color_t a, color_t b);
+color_t ColorMix (color_t a, color_t b);
 
 /** Increases the alpha value of the given color by the given delta. */
-inline color_t ChangeBrightness (color_t color, int delta);
+color_t ChangeBrightness (color_t color, int delta);
 
 /** Increases the alpha value of the given color by the given delta. */
-inline color_t DecreaseBrightness (color_t color, int delta);
+color_t DecreaseBrightness (color_t color, int delta);
 
 /** Creates a Color from the given RGB values. */
 color_t ColorMake (byte red, byte green, byte blue);
@@ -118,13 +118,15 @@ byte ColorGetAlpha (color_t color);
 void ColorSetAlpha (color_t color, byte value);
 
 /** Converts this color to HSV. */
-void ColorToHSV (color_t color, float& fR, float& fG, float fB, float& fH, float& fS, float& fV);
+void ColorToHSV (color_t color, float& fR, float& fG, float fB,
+		         float& fH, float& fS, float& fV);
 
 /** Sets this color to the HSV values. */
-void ColorSetHSV (color_t color, float& fR, float& fG, float& fB, float& fH, float& fS, float& fV);
+void ColorSetHSV (color_t color, float& fR, float& fG, float& fB,
+		          float& fH, float& fS, float& fV);
 
 /** Prints this object to the log. */
-inline void ColorPrint (color_t color);
+void ColorPrint (color_t color);
 
 }       //< namespace _
 #endif  //< SCRIPT_COLOR_H

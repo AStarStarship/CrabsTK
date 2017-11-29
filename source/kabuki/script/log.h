@@ -34,9 +34,9 @@ struct KABUKI Log {
 /** Initializes the buffer of given size in bytes. */
 KABUKI Log LogInit (uintptr_t* buffer, size_t buffer_size);
 
-/** Returns a reference to the bout for this assembly. */
+/** Returns a reference to the bout for this assembly.
 template<uint_t kNumber>
-inline Log& RoomLog () {
+Log& RoomLog () {
     static uintptr_t buffer[kLogSize / sizeof (uintptr_t) + 1];
     static Log log = LogInit (buffer, kLogSize);
     return log;
@@ -47,7 +47,7 @@ Log& LogInit () {
     static uintptr_t* buffer = WordBuffer<kNumber, kLogSize> ();
     static Log log = LogInit (buffer, kLogSize);
     return log;
-}
+} */
 
 /** Prints the given log to the stdout. */
 KABUKI void LogPrint (Log& log);

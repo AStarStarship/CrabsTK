@@ -24,38 +24,18 @@
 #define SCRIPT_GLOBAL_H
 
 #include "memory.h"
-#include "console.h"
+#include "text.h"
 #include "table.h"
 #include "tbook.h"
 #include "log.h"
 #include "tbook.h"
 #include "ascii.h"
-#include "expression.h"
 #include "bout_portal.h"
 #include "color.h"
 #include "address.h"
 #include "event.h"
-/*
-namespace _ {
+#include "room.h"
+#include "expression.h"
+#include "window.h"
 
-static uint_t kStackHeight = 0,    //< The size of stack.
-    kMaxStackHeight = kInitStackHeight;
-
-#if MUL >= 0 //_Dynamic_
-
-static byte* kStackHeight = new byte[kStackHeight];
-
-KABUKI uint_t GetStackHeight ()
-{
-    return kStackHeight;
-}
-
-KABUKI void SetStackheight (uint_t newHeight)
-{
-    kStackHeight = newHeight;
-}
-
-#endif
-
-}       //< namespace _*/
 #endif  //< SCRIPT_GLOBAL_H

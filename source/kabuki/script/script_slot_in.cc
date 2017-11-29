@@ -17,8 +17,8 @@
 */
 
 #include <stdafx.h>
-#include "../script/slot.h"
-#include "../script/types.h"
+#include "slot.h"
+#include "types.h"
 
 namespace _ {
 
@@ -26,7 +26,7 @@ bool IsReadable (Slot* slot) {
     return (slot->start != slot->stop);
 }
 
-const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
+const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
     if (slot == nullptr)
         return SlotResult (slot, Bin::RoomError);
     if (params == nullptr)
@@ -38,23 +38,23 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
     byte //array_type,            //< The current array type.
         ui1;                    //< Temp variable to load most types.
     uint16_t ui2;               //< Temp variable for working with UI2 types.
-#if USING_VARINT4 || USING_AR4 || USING_BK4
+#if USING_4_BYTE_TYPES || USING_VARINT4
     uint32_t ui4;
-#endif
-#if USING_VARINT8 || USING_AR8 || USING_BK8
+#endif  //< USING_4_BYTE_TYPES
+#if USING_8_BYTE_TYPES || USING_VARINT8
     uint64_t ui8;
-#endif
+#endif  //< USING_8_BYTE_TYPES || USING_VARINT8
 
     byte*     ui1_ptr;          //< Pointer to a UI1.
-#if  USING_VARINT2 || USING_BK2
+//#if  USING_VARINT2 || USING_BK2
     uint16_t* ui2_ptr;          //< Pointer to a UI2.
-#endif
-#if USING_VARINT4 || USING_AR4 || USING_BK4
+//#endif
+//#if USING_VARINT4 || USING_AR4 || USING_BK4
     uint32_t* ui4_ptr;          //< Pointer to a UI4.
-#endif
-#if USING_VARINT8 || USING_AR8 || USING_BK8
-    uint64_t* ui8_ptr;          //< Pointer to a UI1.
-#endif
+//#endif
+//#if USING_VARINT8 || USING_8_BIT_TYPES
+    uint64_t* ui8_ptr;          //< Pointer to a UI8.
+//#endif
     uint_t type,                //< The current type being read.
         size,                   //< The size of the ring buffer.
         length,                 //< The length of the data in the buffer.
@@ -66,7 +66,7 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
 
     if (num_params == 0) {
 
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
         std::cout << "\n\n| Reading Bin: ";
 #endif
         return 0;
@@ -83,7 +83,7 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
 
     length = SlotLength (start, stop, size);
 
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
     std::cout << "\n\n| Reading Bin: \n";
     //ParamsPrint (params);
     printf ("\n| begin: 0x%p start : %u stop : %u end : %u "
@@ -95,7 +95,7 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
     for (index = 0; index < num_params; ++index) {
         type = (byte)*param;
         ++param;
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
         printf ("\n| index %2u: %s  start: %u, stop: %u hash: ", index,
                 TypeString (type), Diff (begin, start), Diff (begin, stop));
 #endif
@@ -108,7 +108,7 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
                 // Load buffered-type argument length and increment the index.
                 count = *param;
                 ++param;
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
                 printf ("\n|           Reading char with max length %u: ", count);
 #endif
                 // Load next pointer and increment args.
@@ -125,7 +125,7 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
                     if (count-- == 0)
                         return SlotResult (slot, Bin::BufferUnderflowError,
                                            params, index, start);
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
                     putchar (ui1);
 #endif
                     ui1 = *start;       // Read byte from ring-buffer.
@@ -133,7 +133,7 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
                     *ui1_ptr = ui1;     // Write byte to destination.
                     ++ui1_ptr;
                 }
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
                 printf (" done!\n");
 #endif
                 if (type != ADR) {
@@ -183,8 +183,8 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
                     ui2_ptr = reinterpret_cast<uint16_t*> (args[index]);
                     if (ui2_ptr == 0) break;
                     *ui2_ptr = ui2;                     //< Write
-                    break;
                 }
+            break;
 #else
                 goto InvalidType;
 #endif
@@ -355,18 +355,22 @@ const Operation* BArgs (Slot* slot, const uint_t* params, void** args) {
                 }
                 break;
                 InvalidType: {
+#if SCRIPT_DEBUG
                     printf ("\n!!!Read invalid type %u\n", type);
+#endif  //< SCRIPT_DEBUG
                     return SlotResult (slot, Bin::InvalidTypeError, params,
                                        index, start);
                 }
             }
+#if SCRIPT_DEBUG
             std::cout << " |";
+#endif  //< SCRIPT_DEBUG
         }
     }
-#if DEBUG_SCRIPT
+#if SCRIPT_DEBUG
     printf ("\n| Done reading\n");
     SlotWipe (slot);
-#endif
+#endif  //< SCRIPT_DEBUG
 
     // Convert pointer back to offset
     bin->start = Diff (begin, start);

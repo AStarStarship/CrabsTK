@@ -59,9 +59,5 @@ typedef enum {
 
 KABUKI const char* AsciiString (AsciiCode ascii_char);
 
-inline const char* AsciiString (byte ascii_char) {
-    return AsciiString  ((AsciiCode)ascii_char);
-}
-
 }       //< namespace ascii
 #endif  //< SCRIPT_ASCII_H
