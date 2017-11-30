@@ -22,27 +22,27 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_
 
-#include <KabukiTheater-Config.h>
+#include "config.h"
 #include <_Math/Vect2D.h>
 
-namespace _hmi{ 
+namespace hmi{ 
 
 class Window;
 
-class _HMI_API Mouse
-/*< Give access to the real-time state of the mouse. 
-    @ingroup _hmi
+class KABUKI Mouse
+/** Give access to the real-time state of the mouse. 
+    @ingroup hmi
    
-    _hmi::Mouse provides an interface to the state of the
+    hmi::Mouse provides an interface to the state of the
     mouse. It only contains static functions (a single
     mouse is assumed), so it's not meant to be instantiated.
    
     This class allows users to query the mouse state at any
     time and directly, without having to deal with a window and
     its events. Compared to the MouseMoved, MouseButtonPressed
-    and MouseButtonReleased events, _hmi::Mouse can retrieve the
+    and MouseButtonReleased events, hmi::Mouse can retrieve the
     state of the cursor and the buttons at any time
     (you don't need to store and update a boolean on your side
     in order to know if a button is pressed or released), and you
@@ -58,19 +58,19 @@ class _HMI_API Mouse
    
     Usage example:
     @code
-    if (_hmi::Mouse::isButtonPressed(_hmi::Mouse::Left))
+    if (hmi::Mouse::isButtonPressed(hmi::Mouse::Left))
     {
         // left click...
     }
    
     // get global mouse position
-    _hmi::Vect2D<int> position = _hmi::Mouse::getPosition();
+    hmi::Vect2D<int> position = hmi::Mouse::GetPosition();
    
     // set mouse position relative to a window
-    _hmi::Mouse::setPosition(_hmi::Vect2D<int>(100, 200), window);
+    hmi::Mouse::SetPosition(hmi::Vect2D<int>(100, 200), window);
     @endcode
    
-    @see _hmi::Joystick, _hmi::Keyboard, _hmi::Touch */
+    @see hmi::Joystick, hmi::Keyboard, hmi::Touch */
 {
     public:
 
@@ -80,20 +80,20 @@ class _HMI_API Mouse
     ////////////////////////////////////////////////////////////
     enum Button
     {
-        Left,       ///< The left mouse button
-        Right,      ///< The right mouse button
-        Middle,     ///< The middle (wheel) mouse button
-        XButton1,   ///< The first extra mouse button
-        XButton2,   ///< The second extra mouse button
+        Left,       //< The left mouse button
+        Right,      //< The right mouse button
+        Middle,     //< The middle (wheel) mouse button
+        XButton1,   //< The first extra mouse button
+        XButton2,   //< The second extra mouse button
 
-        ButtonCount ///< Keep last -- the total number of mouse buttons
+        ButtonCount //< Keep last -- the total number of mouse buttons
     };
 
     enum Wheel
     //< Mouse wheels
     {
-        VerticalWheel,  ///< The vertical mouse wheel
-        HorizontalWheel ///< The horizontal mouse wheel
+        VerticalWheel,  //< The vertical mouse wheel
+        HorizontalWheel //< The horizontal mouse wheel
     };
 
     ////////////////////////////////////////////////////////////
@@ -154,4 +154,4 @@ class _HMI_API Mouse
     static void setPosition(const Vect2D<int>& position, const Window& relativeTo);
 };
 
-} // namespace _hmi
+} // namespace hmi

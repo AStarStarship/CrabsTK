@@ -1,3 +1,55 @@
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/hmi/event.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
+*/
+ 
+#ifndef HEADER_FOR_KABUKI_HMI_EVENT2
+#define HEADER_FOR_KABUKI_HMI_EVENT2
+
+#include "config.h"
+
+namespace kabuki { namespace hmi {
+
+/** A event with a timestamp.
+    An example of an Event is typically like a Control or menu function.
+ */
+class Event {
+    public:
+
+    /** Default constructor. */
+    Event ();
+    
+    /** Virtual destructor. */
+    virtual ~Event ();
+
+    /** gets the timestamp of the Event. */
+    timestamp_t GetTimestamp ();
+
+    /** Triggers the event. */
+    virtual void Trigger () = 0;
+    
+    /** Prints this object to a stdout. */
+    virtual void Print () const = 0;
+
+    private:
+
+    timestamp_t timestamp;    //< Event timestamp in microseconds.
+};      //< class Event
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_EVENT2
+
+
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
@@ -22,25 +74,26 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_EVENT
+#define HEADER_FOR_KABUKI_HMI_EVENT
 
-#include <KabukiTheater-Config.h>
-#include <_hmi/Joystick.h>
-#include <_hmi/Keyboard.h>
-#include <_hmi/Mouse.h>
-#include <_hmi/Sensor.h>
+#include "config.h"
+#include "joystick.h"
+#include "keyboard.h"
+#include "mouse.h"
+#include "sensor.h"
 
-namespace _hmi {
+namespace kabuki { namespace hmi {
 
 class Event
-/*< Defines a system event and its parameters. 
-    @ingroup _hmi
+/** Defines a system event and its parameters. 
+    @ingroup hmi
    
-    _hmi::Event holds all the informations about a system event
+    hmi::Event holds all the informations about a system event
     that just happened. Events are retrieved using the
-    _hmi::Window::pollEvent and _hmi::Window::waitEvent functions.
+    hmi::Window::pollEvent and hmi::Window::waitEvent functions.
    
-    A _hmi::Event instance contains the type of the event
+    A hmi::Event instance contains the type of the event
     (mouse moved, key pressed, window closed, ...) as well
     as the details about this particular event. Please note that
     the event parameters are defined in a union, which means that
@@ -53,19 +106,19 @@ class Event
    
     Usage example:
     @code
-    _hmi::Event event;
+    hmi::Event event;
     while (window.pollEvent(event))
     {
         // Request for closing the window
-        if (event.type == _hmi::Event::Closed)
+        if (event.type == hmi::Event::Closed)
             window.close();
    
         // The escape key was pressed
-        if ((event.type == _hmi::Event::KeyPressed) && (event.key.code == _hmi::Keyboard::Escape))
+        if ((event.type == hmi::Event::KeyPressed) && (event.key.code == hmi::Keyboard::Escape))
             window.close();
    
         // The window was resized
-        if (event.type == _hmi::Event::Resized)
+        if (event.type == hmi::Event::Resized)
             doSomethingWithTheNewSize(event.size.width, event.size.height);
    
         // etc ...
@@ -75,14 +128,14 @@ class Event
     public:
     
     struct SizeEvent
-    /*< Size events parameters (Resized). */
+    /** Size events parameters (Resized). */
     {
         uint width;  //< New width, in pixels
         uint height; //< New height, in pixels
     };
 
+    /** Keyboard event parameters (KeyPressed, KeyReleased). */
     struct KeyEvent
-    /*< Keyboard event parameters (KeyPressed, KeyReleased). */
     {
         Keyboard::Key code;    //< Code of the key that has been pressed
         bool alt;     //< Is the Alt key pressed?
@@ -91,30 +144,30 @@ class Event
         bool system;  //< Is the System key pressed?
     };
 
+    /** Text event parameters (TextEntered). */
     struct TextEvent
-    /*< Text event parameters (TextEntered). */
     {
         uint32_t unicode; //< UTF-32 Unicode value of the character
     };
     
+    /** Mouse move event parameters (MouseMoved). */
     struct MouseMoveEvent
-    /*< Mouse move event parameters (MouseMoved). */
     {
         int x; //< X position of the mouse pointer, relative to the left of the owner window
         int y; //< Y position of the mouse pointer, relative to the top of the owner window
     };
     
-    struct MouseButtonEvent
-    /*< Mouse buttons events parameters
+    /** Mouse buttons events parameters
         (MouseButtonPressed, MouseButtonReleased). */
+    struct MouseButtonEvent
     {
         Mouse::Button button; //< Code of the button that has been pressed
         int x;      //< X position of the mouse pointer, relative to the left of the owner window
         int y;      //< Y position of the mouse pointer, relative to the top of the owner window
     };
     
+    /** Mouse wheel events parameters (MouseWheelScrolled). */
     struct MouseWheelScrollEvent
-    /*< Mouse wheel events parameters (MouseWheelScrolled). */
     {
         Mouse::Wheel wheel; //< Which wheel (for mice with multiple ones)
         float delta; //< Wheel offset (positive is up/left, negative is down/right). High-precision mice may use non-integral offsets.
@@ -122,39 +175,39 @@ class Event
         int y;     //< Y position of the mouse pointer, relative to the top of the owner window
     };
 
-    struct JoystickConnectEvent
-    /*< Joystick connection events parameters
+    /** Joystick connection events parameters
         (JoystickConnected, JoystickDisconnected). */
+    struct JoystickConnectEvent
     {
         uint joystickId; //< Index of the joystick (in range [0 .. Joystick::Count - 1])
     };
     
+    /** Joystick axis move event parameters (JoystickMoved). */
     struct JoystickMoveEvent
-    /*< Joystick axis move event parameters (JoystickMoved). */
     {
         uint joystickId;      //< Index of the joystick (in range [0 .. Joystick::Count - 1])
         Joystick::Axis axis;    //< Axis on which the joystick moved
         float position;         //< New position on the axis (in range [-100 .. 100])
     };
 
-    struct JoystickButtonEvent
-    /*< Joystick buttons events parameters
+    /** Joystick buttons events parameters
         (JoystickButtonPressed, JoystickButtonReleased). */
+    struct JoystickButtonEvent
     {
         uint joystickId; //< Index of the joystick (in range [0 .. Joystick::Count - 1])
         uint button;     //< Index of the button that has been pressed (in range [0 .. Joystick::ButtonCount - 1])
     };
     
+    /** Touch events parameters (TouchBegan, TouchMoved, TouchEnded). */
     struct TouchEvent
-    /*< Touch events parameters (TouchBegan, TouchMoved, TouchEnded). */
     {
         uint finger;        //< Index of the finger in case of multi-touch events
         int x;              //< X position of the touch, relative to the left of the owner window
         int y;              //< Y position of the touch, relative to the top of the owner window
     };
 
+    /** Sensor event parameters (SensorChanged). */
     struct SensorEvent
-    /*< Sensor event parameters (SensorChanged). */
     {
         Sensor::Type type; //< Type of the sensor
         float x;           //< Current value of the sensor on X axis
@@ -162,8 +215,8 @@ class Event
         float z;           //< Current value of the sensor on Z axis
     };
 
+    /** Enumeration of the different types of events. */
     enum EventType
-    /*< Enumeration of the different types of events. */
     {
         Closed,                 //< The window requested to be closed (no data)
         Resized,                //< The window was resized (data in event.size)
@@ -194,8 +247,7 @@ class Event
 
     EventType type; //< Type of the event
     
-    union
-    {
+    union {
         SizeEvent size;                         //< Size event parameters (Event::Resized)
         KeyEvent key;                           //< Key event parameters (Event::KeyPressed, Event::KeyReleased)
         TextEvent text;                         //< Text event parameters (Event::TextEntered)
@@ -211,5 +263,6 @@ class Event
     };
 };
 
-}   //< _hmi
-}   //< _Theater
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_EVENT

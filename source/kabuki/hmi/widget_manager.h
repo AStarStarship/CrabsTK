@@ -1,121 +1,116 @@
-/** Kabuki Starship
-    @file    ~/Source/_hmi/WiidgetManager.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-                    http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/hmi//wiidget_nanager.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_WIDGETPAGE
+#define HEADER_FOR_KABUKI_HMI_WIDGETPAGE
 
-#include "KabukiTheater-Config.h"
+#include "config.h"
 
-#include "Widget.h";
-class _HMI_API ControlsPage;
-class _HMI_API Controller;
+#include "widget.h";
+class KABUKI ControlsPage;
+class KABUKI Controller;
 
-namespace _hmi {
+namespace kabuki { namespace hmi {
 
-class _HMI_API WidgetManager
 /*  The WidgetManager is an editor for templates
     The Template editor has one Template at a time loaded along with one page that it is editing.
 
     There is one main global instance of the WidgetManager. Through the GUI, a user can edit only one
     parameter on either ControlLayer through a drop down/up menu on either the top or bottom of the screen.
-    This seperation of API from GUI allows the GUI to be programmed much easier by simply having them wrap
-    the functions to the API. Because of this speration, there is not going to be any checking to see if a
+    The separation of API from GUI allows the GUI to be programmed much easier by simply having them wrap
+    the functions to the API. Because of this separation, there is not going to be any checking to see if a
     template has been saved in before applying any changes that this classes functions might make.
 
     # Templates File Format:
-    The data for the Template file will be in the same order as the data declorations in this object followed
+    The data for the Template file will be in the same order as the data declarations in this object followed
     by a packed array of the ControlsPage.
 */
-{
+class KABUKI WidgetManager {
     public:
 
+    /** Default constructor. */
     WidgetManager (Controller* controller = nullptr);
-    /*< Default constructor. */
 
+    /** Default destructor. */
     ~WidgetManager ();
-    /*< Default deconstructor. */
 
-    void resetEditor ();
-    /*< Resets the Editor to nullptr currentTemplate and currentPage. */
+    /** Resets the Editor to nullptr currentTemplate and currentPage. */
+    void ResetEditor ();
 
-    int checkIfTemplateIsSaved ();
-    /*< Checks to see if the current template is saved. */
+    /** Checks to see if the current template is saved. */
+    int CheckIfTemplateIsSaved ();
     
-    int checkIfPageIsSaved ();
-    /*< Checks to see if the current page is saved. */
+    /** Checks to see if the current page is saved. */
+    int CheckIfPageIsSaved ();
 
-    void saveCurrentPage ();
-    /*< Saves the current TemplatePage being edited.
-        Warning: Does not compair to previous state! */
+    /** Saves the current TemplatePage being edited.
+        @warning Does not compare to previous state! */
+    void SaveCurrentPage ();
         
+    /** Saves the current Template being edited
+        @warning Does not compare to previous state! */
     void saveCurrentTemplate ();
-    /*< Saves the current Template being edited
-        Warning: Does not compair to previous state! */
 
-    int loadTemplate (Template *thisTemplate);
-    /*< Loads an Template into the editors currentTempalte. */
+    /** Loads an Template into the editors currentTempalte. */
+    int LoadTemplate (Template* new_template);
     
-    int loadPage (ControlsPage *thisPage);
-    /*< Loads an TemplatePage into the editors currentPage. */
+    /** Loads an TemplatePage into the editors currentPage. */
+    int LoadPage (ControlsPage *thisPage);
 
-    void newTemplate ();
-    /*< Creates a new template. */
+    /** Creates a new template. */
+    void NewTemplate ();
     
-    void newTemplate (const char* initName);
-    /*< Creates a new Template with the initName. */
+    /** Creates a new Template with the name. */
+    void NewTemplate (const char* name);
     
-    void saveTemplate ();
-    /*< Saves the current template. */
+    /** Saves the current template. */
+    void SaveTemplate ();
 
-    void renamePage (const char* newName);
-    /*< Renames the current page being edited. */
+    /** Renames the current page being edited. */
+    void RenamePage (const char* name);
     
-    void renameTemplate (const char* newName);
-    /*< Renames the current template being edited. */
+    /** Renames the current template being edited. */
+    void RenameTemplate (const char* name);
 
-    void removePage ();
-    /*< Removes the current page being edited. */
+    /** Removes the current page being edited. */
+    void RemovePage ();
 
-    void removeTemplate ();
-    /*< Removes the current template being edited. */
+    /** Removes the current template being edited. */
+    void RemoveTemplate ();
 
-    void importTemplate (const File& f);
-    /*< Imports a template from the given file. */
+    /** Imports a template from the given file. */
+    void ImportTemplate (const File& file);
     
-    void exportTemplate (const File& f);
-    /*< Exports the current Template to the given file. */
+    /** Exports the current Template to the given file. */
+    void ExportTemplate (const File& file);
 
-    void undo ();
-    /*< Undos the previous action. */
+    /** Undoes the previous action. */
+    void Undo ();
     
-    void redo ();
-    /*< Redos the previous action. */
+    /** Undoes the previous action. */
+    void Redo ();
     
-    inline void print (I2P::Expression& slot);
-    /*< Prints this object to a terminal. */
+    /** Prints this object to a terminal. */
+    inline void print (Script::Expression& slot);
 
     private:
     
-    IsymmetricController* controls;     //< The iSymmeric control surface.
-
-    Widget* currentTemplate;            //< The current template being edited.
-    WidgetPage* currentPage;            //< The current page being edited.
+    IsymmetricController* controls_; //< Isymmeric control surface.
+    Widget              * template_; //< Current template being edited.
+    WidgetPage          * page_;     //< Current page being edited.
 };
-}   //< _hmi }   //<Theater
-
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_WIDGETPAGE

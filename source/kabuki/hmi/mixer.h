@@ -1,38 +1,33 @@
-/** Kabuki Starship
-    @file    ~/Source/_Theater/Mixer/Mixer.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/mixer.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_MIXER
+#define HEADER_FOR_KABUKI_HMI_MIXER
 
-#include <KabukiTheater-Config.h>
+#include "config.h"
 
-namespace _Theater { namespace Mixer {
+namespace kabuki { namespace hmi {
 
-class _KabukiTheater_ MixerChannel;
+class KABUKI MixerChannel;
 
-template<typename T>
-class _KabukiTheater_ Mixer
-/*< A generic parameter mixer.
+/** A generic parameter mixer.
 
 
 */
-{
+template<typename T>
+class KABUKI Mixer {
     public:
 
     typedef enum 
@@ -42,95 +37,97 @@ class _KabukiTheater_ Mixer
         DMX  = 1,
     };
 
-    static const int MinMixerArraySize = 1;      //< The default mixer array size.
+    enum {
+        MinMixerArraySize = 1; //< Default mixer array size.
+    };
 
+    /** Default constructor. */
     Mixer ();
-    //< Default constructor.
 
+    /** Deconstructor. */
     ~Mixer ();
-    //< Deconstructor.
 
-    int getNumChannels ();
-    //< Gets th number of channels on the mixer.
+    /** Gets th number of channels on the mixer.
+    int GetNumChannels ();
 
-    void setNumChannels (int value);
-    /*< Resizes the mixer to the given value.
-        @pre 0 <= numChannels <= newNumChannels. */
+    /** Resizes the mixer to the given value.
+        @pre 0 <= num_channels_ <= newNumChannels. */
+    void SetNumChannels (int value);
 
-    int getControlsResolution ();
-    //< Gets th DAC resolution of the controls.
+    /** Gets th DAC resolution of the controls. */
+    int GetControlsResolution ();
 
-    void setResolution (int value);
-    //< Sets the resolution of the controls.
+    /** Sets the resolution of the controls. */
+    void SetResolution (int value);
 
-    int getMixerType ();
-    /*< Gets true if the mixer is in MIDI mode.
+    /** Gets true if the mixer is in MIDI mode.
         i.e. controlResolution = 7 bits. */
+    int GetMixerType ();
 
-    int getVolume (int channelNum);
-    //< Gets th volume of the ChannelNum.
+    /** Gets th volume of the ChannelNum. */
+    int GetVolume (int channel);
 
-    int getPan (int channelNum);
-    //< Gets th pan value of the ChannelNum.
+    /** Gets th pan value of the ChannelNum. */
+    int GetPan (int channel);
 
-    void setVol (int channelNum, int value);
-    //< Sets the volume of the ChannelNum.
+    /** Sets the volume of the ChannelNum. */
+    void SetVol (int channel, int value);
 
-    void setPan (int channelNum, int value);
-    /*< Sets the pan of the ChannelNum.
+    /** Sets the pan of the ChannelNum.
         @pre - (controlResolution/2) < value + (controlResolution/2)
-        @pre 0 < ChannelNum < numChannels */
+        @pre 0 < ChannelNum < num_channels_ */
+    void SetPan (int channel, int value);
 
-    void setMute (int channelNum, bool isMuted);
-    //< Sets the mute flag to isMuted.
+    /** Sets the mute flag to is_muted. */
+    void SetMute (int channel, bool is_muted);
 
-    void setSolo (int channelNum, bool isSoloed);
-    //< Sets the solo flag to isSoloed.
+    /** Sets the solo flag to is_soloed. */
+    void SetSolo (int channel, bool is_soloed);
 
-    int  isMuted (int channelNum);
-    //< Gets true if the ChannelNum is muted.
+    /** Gets true if the ChannelNum is muted. */
+    int  IsMuted (int channel);
 
-    int isSoloed (int channelNum);
-    //< Gets true if the ChannelNum is soloed.
+    /** Gets true if the ChannelNum is soloed. */
+    int IsSoloed (int channel);
 
-    void toggleMute (int thisChannelNum);
-    //< Toggles the mute on thisChannelNum.
+    /** Toggles the mute on channel. */
+    void ToggleMute (int channel);
 
-    void toggleSolo (int thisChannelNum);
-    //< Toggles the solo on thisChannelNum.
+    /** Toggles the solo on channel. */
+    void ToggleSolo (int channel);
 
-    int boundValue (int thisValue);
-    //< Bounds and returns thisValue to the controls resolution.
+    /** Bounds and returns value to the controls resolution. */
+    int BoundValue (int value);
 
-    void moveChannel (int channel, int newIndex);
-    /*< Moves channel to the newIndex.
-        @pre (0 < thisChannel < numChannels)
-        @pre (0 < newIndex < numChannels)  */
+    /** Moves channel to the index.
+        @pre (0 < thisChannel < num_channels_)
+        @pre (0 < index < num_channels_)  */
+    void MoveChannel (int channel, int index);
 
-    void addChannels (int numChannels);
-    /*< Adds a specified numChannels to the mixer.
-        @pre (0 < numChannels < NUM_MIXER_CHANNELS - numChannels) */
+    /** Adds a specified num_channels_ to the mixer.
+        @pre (0 < num_channels_ < NUM_MIXER_CHANNELS - num_channels_) */
+    void AddChannels (int num_channels);
 
-    void print (int startCh, int stopCh);
-    //< Prints a string representation of mixer channels startCh - stopCh.
+    /** Prints a string representation of mixer channels start_channel - stop_channel. */
+    void Print (int start_channel, int stop_channel);
     
-    inline void print (_::Expression& io);
-    /*< Prints this object to a terminal. */
+    /** Prints this object to a terminal. */
+    inline void Print (_::Expression& io);
 
     private:
 
-    int numChannels,        //< The number of active channels in the mixer.
-        mixerSize,          //< The size of the mixer array.
-        controlResolution;  //< The resolution of the ADCs of for the controls.
-
-    MixerChannel ** mixer;
-    /*< The main MixerChannel array.
+    int num_channels_,       //< number of active channels in the mixer.
+        mixer_size_,         //< Size of the mixer array.
+        control_resolution_; //< Resolution of the ADCs of for the controls.
+     
+    /** The main MixerChannel array.
         Channel 0 is the master fadder. The pointers to pointers allows for 0 entries. */
+    MixerChannel ** mixer;
 
-    void deleteChannelsAfter (int thisIndex);
-    /*< deletes all of the channels after thisIndex.
-        @pre 0 < thisIndex < numChannels */
+    /** Deletes all of the channels after index.
+        @pre 0 < index < num_channels_ */
+    void DeleteChannelsAfter (int index);
 };
-}   //< namespace Mixer
-}   //< namespace _Theater
-
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_MIXER

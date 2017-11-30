@@ -1,31 +1,26 @@
-/** Kabuki Starship
-    @file    ~/Source/_hmi/Widget.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-                    http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/hmi/widget.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_WIDGET
+#define HEADER_FOR_KABUKI_HMI_WIDGET
 
-#include "ControlMatrix.h"
+#include "control_matrix.h"
 
-namespace _hmi {
+namespace kabuki { namespace hmi {
 
-class _HMI_API Widget : public _::IDevice
-/*< A Widget or instance of a widget.
+/** A Widget or instance of a widget.
     A Widget is defined by Google as "an application, or a component of an interface, that 
     enables a user to perform a function or access a service."
     A Widget is an array of ControlMatrix pointers with a currently selected ControlMatrix.
@@ -38,14 +33,13 @@ class _HMI_API Widget : public _::IDevice
     Each Widget will also store the resolution of the pots. Some widgets will accept 14-bit
     MIDI values.
 
-    # Saving and Loading Widget(s):
+    # Saving and Loading Widget(s): 
 */
-{
+class KABUKI Widget : public _::Operation {
     public:
     
-    enum Types
-    /*< A list of all the different types of Human-Machine Input types. */
-    { 
+    /** A list of all the different types of Human-Machine Input types. */
+    enum Types { 
         Touchscreen = 0, 
         Keyboard, 
         DrumPad, 
@@ -53,108 +47,109 @@ class _HMI_API Widget : public _::IDevice
         DMXWidget 
     };
 
-    Widget (const char* newName = "");
-    /*< Default contrctor. */
+    /** Default contrctor. */
+    Widget (const char* name = "");
     
-    Widget (const Widget& w);
-    /*< Copy constructor. */
+    /** Copy constructor. */
+    Widget (const Widget& other);
     
-    void loadFromFile (const File& f);
-    /*< Constructor loads a Widget from the filename. */
+    /** Constructor loads a Widget from the filename. */
+    void LoadFromFile (const File& f);
     
+    /** Destructor. */
     ~Widget ();
-    /*< Destructor. */
 
+    /** Deep copies given widgen. */
     Widget& operator= (const Widget& w);
-    /*< Deep copies given widgen. */
 
+    /** Checks to see if this filename is equal to thatFilename and returns non-zero if they are the same file. */
     bool operator== (const File& f);
-    /*< Checks to see if this filename is equal to thatFilename and returns non-zero if they are the same file. */
 
-    int compare (const Widget& w);
-    /*< Compairs this Widget to the given one.
+    /** Compairs this Widget to the given one.
         @return Gets true if the two objects are the identical. */
+    int Compare (const Widget& w);
         
-    void reset ();
-    /*< Deletes all of the ControlPages. */
+    /** Deletes all of the ControlPages. */
+    void Reset ();
 
-    const char* getName ();
-    /*< Gets this Widget's name. */
+    /** Gets this Widget's name. */
+    const char* GetName ();
     
-    const char* setName (const char* s);
-    /*< Renames this Widget to the given string. */
+    /** Renames this Widget to the given string. */
+    const char* SetName (const char* s);
 
-    int getType ();
-    /*< Gets what type Widget this is.
+    /** Gets what type Widget this is.
         This is the index of this Widget's mode. */
+    int GetType ();
         
-    int getNumPages ();
-    /*< Gets the number of pages in the Array. */
+    /** Gets the number of pages in the Array. */
+    int GetNumPages ();
 
-    bool containsPage (const char* s);
-    /*< Gets true if this Widget contans a page with a name that matches the search string. */
+    /** Gets true if this Widget contans a page with a name that matches the search string. */
+    bool ContainsPage (const char* s);
 
-    int insertPage (const char* s);
-    /*< Inserts a new blank page into the Array.
+    /** Inserts a new blank page into the Array.
         @param s The name for the new page. */
+    int InsertPage (const char* s);
 
-    int insertPage (const ControlMatrix& newPage);
-    /*< Inserts and deep copies an already existing page into the Array.
+    /** Inserts and deep copies an already existing page into the Array.
         @param newPage The page to deep copy. */
+    int InsertPage (const ControlMatrix& page);
         
-    int deletePage (int index);
-    /*< Deletes Page at thisIndex from this Widget. */
+    /** Deletes Page at thisIndex from this Widget. */
+    int DeletePage (int index);
     
-    int deletePage (const char* s);
-    /*< Delete page with entitled by the given string. */
+    /** Delete page with entitled by the given string. */
+    int DeletePage (const char* key);
 
-    ControlMatrix* firstPage ();
-    /*< Gets a pointer to the first Page in the Widget. */
+    /** Gets a pointer to the first Page in the Widget. */
+    ControlMatrix* FirstPage ();
     
-    ControlMatrix* getPage (const char* pageName);
-    /*< Gets the page with this pageName. */
+    /** Gets the page with this name. */
+    ControlMatrix* GetPage (const char* name);
 
-    const char* printPageLabels ();
-    /*< Gets a const char* of the Page Labels. */
+    /** Gets a const char* of the Page Labels. */
+    const char* PrintPageLabels ();
 
-    void setFile (const File& newFilename);
-    /*< Sets the filename of this Widget to the newFilename. */
+    /** Sets the filename of this Widget to the newFilename. */
+    void SetFile (const File& file);
     
-    const char* getFilename ();
-    /*< Gets the filename of this Widget. */
+    /** Gets the filename of this Widget. */
+    const char* GetFilename ();
 
-    void loadFromFile (const File& f);
-    /*< Imports a Widget from thisFile. */
+    /** Imports a Widget from thisFile. */
+    void LoadFromFile (const File& f);
     
-    void saveToFile (const File& f);
-    /*< Exports a Widget to thisFile. */
+    /** Exports a Widget to thisFile. */
+    void SaveToFile (const File& f);
     
-    const _::Member* op (_::Expression* io, byte index) override;
-    /*< I2P subroutines. */
+    /** Script subroutines. */
+    virtual const _::Operation* Op (uint index, _::Expression* io);
     
-    inline void print() const;
-    /*< Prints this object to a terminal. */
+    /** Prints this object to a terminal. */
+    inline void Print () const;
 
     private:
 
-    const char* widgetName,                 //< This Widget's name.
-        * filename;                         //< The filename of this widget.
-    int numPages;                           //< The number of pages this Widget has.
-    Parameter<int>* masterKnobA,            //< The master knob for Layer A.
-        * masterKnobB,                      //< The master knob for Layer B.
-        * masterBttnA,                      //< The master button for Layer A.
-        * masterBttnB;                      //< The master button for Layer B.
-    std::vector<ControlMatrix*> controls;   //< The control grids.
+    const char    * widget_name_,          //< This Widget's name.
+                  * filename_;             //< Filename of this widget.
+    int             num_pages_;            //< Number of pages this Widget has.
+    Parameter<int>* masterKnob_a_,         //< Master knob for Layer A.
+                  * master_knob_b_,        //< Master knob for Layer B.
+                  * master_bttn_a_,        //< Master button for Layer A.
+                  * master_bttn_b_;        //< Master button for Layer B.
+    std::vector<ControlMatrix*> controls_; //< Control grids.
 
-    void deletePage (WidgetPage& thisPage);
-    /*< Deletes thisPage from the Widget. */
+    /** Deletes the given page from the Widget. */
+    void DeletePage (WidgetPage& page);
     
-    int insertPage (ControlMatrix& newPage);
-    /*< Inserts newPage into the list. */
+    /** Inserts the given page into the list. */
+    int InsertPage (ControlMatrix& page);
 
-    int insertDuplicate (const char*newPageName);
-    /*< Inserts a page that has been tested for duplicate names. */
+    /** Inserts a page that has been tested for duplicate names. */
+    int InsertDuplicate (const char*page_key);
 };
 
-}   //< _hmi
-}   //< _Theater
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_WIDGET

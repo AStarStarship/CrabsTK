@@ -22,74 +22,75 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_SENSORMANAGER
+#define HEADER_FOR_KABUKI_HMI_SENSORMANAGER
 
-#include <_hmi/Sensor.h>
-#include <_hmi/SensorImpl.h>
-#include <_/NonCopyable.h>
+#include "sensor.h"
+#include "sensor_impl.h>
 
 
-namespace _hmi { namespace priv {
+namespace kabuki { namespace hmi { namespace priv {
     
-class SensorManager : NonCopyable
-/*< Global sensor manager. */
-{
+/** Global sensor manager. */
+class SensorManager {
+    NONCOPYABLE (SensorManager)
     public:
 
-    static SensorManager& getInstance();
-    /*< Get the global unique instance of the manager.
+    /** Get the global unique instance of the manager.
        
         @return Unique instance of the sensor manager. */
+    static SensorManager& GetInstance();
 
-    bool isAvailable(Sensor::Type sensor);
-    /*< Check if a sensor is available on the underlying platform.
+    /** Check if a sensor is available on the underlying platform.
        
         @param sensor Sensor to check.
        
         @return True if the sensor is available, false otherwise. */
+    bool IsAvailable(Sensor::Type sensor);
 
-    void setEnabled(Sensor::Type sensor, bool enabled);
-    /*< Enable or disable a sensor.
+    /** Enable or disable a sensor.
        
         @param sensor  Sensor to modify
         @param enabled Whether it should be enabled or not. */
+    void SetEnabled(Sensor::Type sensor, bool enabled);
 
-    bool isEnabled(Sensor::Type sensor) const;
-    /*< Check if a sensor is enabled.
+    /** Check if a sensor is enabled.
        
         @param sensor Sensor to check
        
         @return True if the sensor is enabled, false otherwise. */
+    bool IsEnabled(Sensor::Type sensor) const;
 
-    Vector3f getValue(Sensor::Type sensor) const;
-    /*< Get the current value of a sensor.
+    /** Get the current value of a sensor.
        
         @param sensor Sensor to read
        
         @return Current value of the sensor. */
+    Vector3f GetValue(Sensor::Type sensor) const;
 
-    void update();
-    /*< Update the state of all the sensors. */
+    /** Update the state of all the sensors. */
+    void Update();
 
     private:
 
+    /** Default constructor. */
     SensorManager();
-    /*< Default constructor. */
 
+    /** Destructor. */
     ~SensorManager();
-    /*< Destructor. */
 
-    struct Item
-    /*< Sensor information and state. */
-    {
-        bool available;    ///< Is the sensor available on this device?
-        bool enabled;      ///< Current enable state of the sensor
-        SensorImpl sensor; ///< Sensor implementation
-        Vector3f value;    ///< The current sensor value
+    /** Sensor information and state. */
+    struct Item {
+        bool       available; //< Is the sensor available on this device?
+        bool       enabled;   //< Current enable state of the sensor
+        SensorImpl sensor;    //< Sensor implementation
+        Vector3f   value;     //< The current sensor value
     };
 
-    Item m_sensors[Sensor::Count]; ///< Sensors information and state
+    Item m_sensors[Sensor::Count]; //< Sensors information and state
 };
 
-} // namespace priv
-}   //< _hmi
+}       // namespace priv
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_SENSORMANAGER

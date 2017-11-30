@@ -1,37 +1,32 @@
-/** Kabuki Starship
-    @file    ~/Source/_hmi/Controller.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved  (R).
-
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/hmi/controller.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_CONTROL
+#define HEADER_FOR_KABUKI_HMI_CONTROL
 
-#include "HMIComponent.h"
+#include "hmi_component.h"
 
-namespace _hmi {
+namespace kabuki { namespace hmi {
 
-class _HMI_API Controller
-/* A group of _hmi::Parameter(s).
+/* A group of hmi::Parameter(s).
 */
+class KABUKI Controller
 {
     public:
 
-    enum
-    {
+    enum     {
         MaxTemplates = 1024,            //< The max amount of templates (Should there be one?).
         MaxTempo = 999,                 //< The max allowed tempo
         MinTicksPerBeat,                //< The min number of ticks per MIDI beat.
@@ -45,62 +40,64 @@ class _HMI_API Controller
         DefaultEncoderAcceleration = 1  //< The default encoder acceleration.
     };
 
-    // Contrustor.
+    /** Contrustor. */
     Controller  (int initCommonChannel = 0, int initKeyboardChannel = 1, int initDrumsChannel = 7);
     
+    /** Copy constructor. */
     Controller  (const Controller& o);
-    //< Copy constructor.
     
+    /** Destructor. */
     ~Controller ();
-    //< Destructor.
 
-    void updateMIDIClock ();
-    //< Processes a MIDI beat sub-division.
+    /** Processes a MIDI beat sub-division. */
+    void UpdateMIDIClock ();
     
-    void processMIDIQuaterNote ();
-    //< Processes a MIDI quarter note beat.
+    /** Processes a MIDI quarter note beat. */
+    void ProcessMIDIQuaterNote ();
 
-    int getTicksPerBeat ();
-    //< gets the number of ticks per MIDI quarter note beat.
+    /** Gets the number of ticks per MIDI quarter note beat. */
+    int GetTicksPerBeat ();
     
-    void setTicksPerBeat  (int newNumTicksPerBeat);
-    //< sets the ticksPerBeat to the newNumTicks.
+    /** Sets the ticksPerBeat to the newNumTicks. */
+    void SetTicksPerBeat  (int newNumTicksPerBeat);
 
-    int getTempo ();
-    //< gets the current tempo.
+    /** Gets the current tempo. */
+    int GetTempo ();
     
-    void setTempo  (double newTempo);
-    //< sets the tempo to the newTempo.
+    /** Sets the tempo to the newTempo. */
+    void SetTempo  (double newTempo);
         
-    void start ();
-    //< Starts the MIDI engine.
+    /** Starts the MIDI engine. */
+    void Start ();
 
-    void stop ();
-    //< Stops  the MIDI engine.
+    /** Stops  the MIDI engine. */
+    void Stop ();
     
-    void forward ();
-    //< Processes a fast-forward button press.
+    /** Processes a fast-forward button press. */
+    void Forward ();
     
-    void backward ();
-    //< Processes a rewind button press.
+    /** Processes a rewind button press. */
+    void Backward ();
 
-    double getDoublePressTime ();
-    //< gets the double press time in seconds.
+    /** Gets the double press time in seconds. */
+    double GetDoublePressTime ();
     
-    int setDoublePressTime  (double newTime);
-    /*< sets the double_press_time to the newTime in seconds.
+    /** sets the double_press_time to the newTime in seconds.
         @return gets -1 if the newTime is to small, 1 if it is to 
             big, and 0 upon success */
+    int SetDoublePressTime  (double newTime);
     
-    void print () const;
-    /*< Prints this object to a stdout. */
+    /** Prints this object to a stdout. */
+    void Print () const;
 
     private:
 
-    int commonChannel,          //< The common MIDI Channel  (0)
-        keyboardChannel,        //< The keyboard MIDI out channel
-        drumsChannel,           //< The drums MIDI out channel
-        doublePressTime;        //< The max time period that constitutes a "double press", or "double click".
-};
-
-}   //< _hmi
+    int common_channel_,    //< Common MIDI Channel  (0)
+        keyboard_channel_,  //< Keyboard MIDI out channel
+        drums_channel_,     //< Drums MIDI out channel
+        double_press_time_; //< "Double press", or "double click" time.
+        
+};      //< class Controller
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_CONTROL

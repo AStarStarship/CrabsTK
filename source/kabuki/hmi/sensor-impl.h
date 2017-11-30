@@ -22,29 +22,31 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_SENSORIMPL
+#define HEADER_FOR_KABUKI_HMI_SENSORIMPL
 
-#include <KabukiTheater-Config.h>
-#include <_hmi/Sensor.h>
+#include "config.h"
+#include <hmi/Sensor.h>
 
 #if defined(SFML_SYSTEM_WINDOWS)
 
-    #include <_hmi/Win32/SensorImpl.h>
+    #include <hmi/Win32/SensorImpl.h>
 
 #elif defined(SFML_SYSTEM_LINUX) || defined(SFML_SYSTEM_FREEBSD)
 
-    #include <_hmi/Unix/SensorImpl.h>
+    #include <hmi/Unix/SensorImpl.h>
 
 #elif defined(SFML_SYSTEM_MACOS)
 
-    #include <_hmi/OSX/SensorImpl.h>
+    #include <hmi/OSX/SensorImpl.h>
 
 #elif defined(SFML_SYSTEM_IOS)
 
-    #include <_hmi/iOS/SensorImpl.h>
+    #include <hmi/iOS/SensorImpl.h>
 
 #elif defined(SFML_SYSTEM_ANDROID)
 
-    #include <_hmi/Android/SensorImpl.h>
+    #include <hmi/Android/SensorImpl.h>
 
 #endif
+#endif  //< HEADER_FOR_KABUKI_HMI_SENSORIMPL

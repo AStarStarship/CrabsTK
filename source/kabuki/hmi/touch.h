@@ -22,29 +22,26 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_TOUCH
 
-#include <KabukiTheater-Config.h>
-#include <_Math/Point2D.h>
+#include "config.h"
+#include "../math/point2D.h"
 
-using namespace _Math;
-
-namespace _hmi {
+namespace kabuki { namespace hmi {
 
 class Window;
 
-class _HMI_API Touch
-/*< Gives access to the real-time state of the touches
-    @ingroup _hmi
+/** Gives access to the real-time state of the touches
+    @ingroup hmi
    
-    _hmi::Touch provides an interface to the state of the
+    hmi::Touch provides an interface to the state of the
     touches. It only contains static functions, so it's not
     meant to be instantiated.
    
     This class allows users to query the touches state at any
     time and directly, without having to deal with a window and
     its events. Compared to the TouchBegan, TouchMoved
-    and TouchEnded events, _hmi::Touch can retrieve the
+    and TouchEnded events, hmi::Touch can retrieve the
     state of the touches at any time (you don't need to store and
     update a boolean on your side in order to know if a touch is down),
     and you always get the real state of the touches, even if they
@@ -65,50 +62,44 @@ class _HMI_API Touch
    
     Usage example:
     @code
-    if (_hmi::Touch::isDown(0))
+    if (hmi::Touch::isDown(0))
     {
         // touch 0 is down
     }
    
     // get global position of touch 1
-    _hmi::Point2D<int> globalPos = _hmi::Touch::getPosition(1);
+    hmi::Point2D<int> globalPos = hmi::Touch::GetPosition(1);
    
     // get position of touch 1 relative to a window
-    _hmi::Point2D<int> relativePos = _hmi::Touch::getPosition(1, window);
+    hmi::Point2D<int> relativePos = hmi::Touch::GetPosition(1, window);
     @endcode
    
-    @see _hmi::Joystick, _hmi::Keyboard, _hmi::Mouse */
-{
+    @see hmi::Joystick, hmi::Keyboard, hmi::Mouse */
+class KABUKI Touch {
     public:
 
+    /** Check if a touch event is currently down.
+        @param  finger Finger index.
+        @return True if a finger is currently touching the screen, false 
+                otherwise. */
     static bool isDown(uint finger);
-    /*< Check if a touch event is currently down
-        
-        @param finger Finger index
-        
-        @return True if \a finger is currently touching the screen, false otherwise. */
     
-    static Point2D<int> getPosition(uint finger);
-    /*< Get the current position of a touch in desktop coordinates
-        
+    /** Get the current position of a touch in desktop coordinates.
         This function returns the current touch position
         in global (desktop) coordinates.
-        
         @param finger Finger index
         
-        @return Current position of \a finger, or undefined if it's not down. */
+        @return Current position of a finger, or undefined if it's not down. */
+    static Point2D<int> GetPosition(uint finger);
 
-    static Point2D<int> getPosition(uint finger, const Window& relativeTo);
-    /*< Get the current position of a touch in window coordinates
-        
-        This function returns the current touch position
-        relative to the given window.
-        
+    /** Get the current position of a touch in window coordinates.
+        This function returns the current touch position relative to the given
+        window.
         @param finger Finger index
         @param relativeTo Reference window
-        
-        @return Current position of \a finger, or undefined if it's not down. */
+        @return Current position of a finger, or undefined if it's not down. */
+    static Point2D<int> GetPosition(uint finger, const Window& relativeTo);
 };
 
-}   //< _hmi
-}   //< _Theater
+}       //< namespace hmi
+}       //< kabuki

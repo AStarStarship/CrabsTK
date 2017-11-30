@@ -1,6 +1,4 @@
 /** kabuki::script
-#include <script_types.h>
-#include <script_args.h>
     @version 0.x
     @file    ~/source/kabuki/script/include/script_args.cc
     @author  Cale McCollough <https://calemccollough.github.io>

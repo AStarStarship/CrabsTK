@@ -1,104 +1,106 @@
-/** Kabuki Starship
-    @file    ~/Source/_hmi/WidgetPage.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved  (R).
-
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/hmi//widget_page.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_WIDGETPAGE
+#define HEADER_FOR_KABUKI_HMI_WIDGETPAGE
 
-#include "HMIComponent.h"
+#include "midi_control.h"
+#include "hmi_component.h"
 
-namespace _hmi {
+namespace kabuki { namespace hmi {
 
-class MIDIControl;
+class MidiControl;
 class Button;
 class ControlMatrix;
 
-class _HMI_API WidgetPage
-/*< A page of controls in a Widget.
+/** A page of controls in a Widget.
     A WidgetPage is composed of multiple groups of controls.
 */
-{
+class KABUKI WidgetPage {
     public:
 
     enum {
-        MinControlPairs = 6,               //< The minimum number of control pairs allowed per Page.
-        MaxControlPairs = 16,                           //< The maximum number of control pairs allowed per Page.
+        MinControlPairs = 6,  //< Min number of control pairs allowed per Page.
+        MaxControlPairs = 16, //< Max number of control pairs allowed per Page.
     };
 
-    static const char* TypeText;                       //< The const char* "Page".
+    static const char* TypeText; //< String that reads "Page".
 
     /** Default constructor. */
     WidgetPage  (const char* initName = "", int initNumControlPairs = 0);
-    WidgetPage  (const WidgetPage& thisPage);            //< Copy constuctor.
-    ~WidgetPage ();                                     //< Destructor.
 
-    WidgetPage& operator=  (const WidgetPage& other);    //< C++ operator= overlaoder.
+    /** Copy constuctor. */
+    WidgetPage  (const WidgetPage& thisPage);
+    
+    /** Destructor. */
+    ~WidgetPage ();
 
-    int getNumControlPairs ();                             //< Gets the num_control_pairs.
+    /** C++ operator= overlaoder.
+    WidgetPage& operator=  (const WidgetPage& other);
+
+    int GetNumControlPairs ();                             /** Gets the num_control_pairs.
 
     /** Gets a pointer to the specified groupNumber.
         @return Gets nullptr if the groupNumber is invalid. */
-    ControlMatrix* getControlGroup  (int groupNumber);
+    ControlMatrix* GetControlGroup  (int groupNumber);
 
     /** Gets the knob at the specified index.
         @return Gets nullptr if thisIndex is greater than the num_control_pairs. */
-    MIDIControl* getKnob  (int index);
+    MidiControl* GetKnob  (int index);
 
     /** Gets the button at the specified index.
         @return Gets 0 thisIndex is greater than the num_control_pairs. */
-    Button* getButton  (int index);
+    Button* GetButton  (int index);
 
-    const char* getLabel ();
-    //< Gets the pageLabel.
+    /** Gets the page_label_. */
+    const char* GetLabel ();
     
-    void setLabel  (const char* newLabel);
-    //< Sets the pageLabel to the newLabel.
+    /** Sets the pageLabel to the newLabel. */
+    void SetLabel  (const char* newLabel);
 
-    int compare  (const WidgetPage& thatPage);
-    /*< Compares this control to thatControl.
+    /** Compares this control to thatControl.
         @return Gets true if this control and thatControl are identical. */
+    int Compare  (const WidgetPage& thatPage);
 
-    bool masterControlsEnabled ();
-    //< Gets whether the master knob and button are enabled/disabled.
+    /** Gets whether the master knob and button are enabled/disabled. */
+    bool MasterControlsEnabled ();
     
-    void enableMasterControls ();
-    //< Enables the master controls.
+    /** Enables the master controls. */
+    void EnableMasterControls ();
     
-    void disableMasterControls ();
-    //< Disables Master Controls.
+    /** Disables Master Controls. */
+    void DisableMasterControls ();
 
-    bool hasButtons ();
-    //< Gets true if this page of controls has Button  (s)
+    /** Gets true if this page of controls has Button(s). */
+    bool HasButtons ();
 
-    const char* getType ();
-    //< Gets typeText.
+    /** Gets type string. */
+    const char* GetType ();
     
-    void print() const;
-    /*< Prints this object to a terminal. */
+    /** Prints this object to a terminal. */
+    void Print () const;
 
     private:
 
-    int numControlPairs;                    //< The number of BoundedControl/Button pairs.
-    bool mstrControlsEnabled;               //< Stores if knob 9 is page specific or is the master controls.
-    std::vector<MIDIControl*> knobs;        //< The knob controls.
-    std::vector<Button*> bttns;             //< The button controls.
-    std::vector<ControlMatrix*> controlGroup; //< An array of pointers to ControlGroup objects.
+    int num_control_pairs_;                    //< Number of BoundedControl/Button pairs.
+    bool mstr_controls_enabled_;               //< Stores if knob 9 is page specific or is the master controls.
+    std::vector<MidiControl*>   knobs_;         //< Knob controls.
+    std::vector<Button*>        bttns_;         //< Button controls.
+    std::vector<ControlMatrix*> control_group_; //< Array of pointers to ControlMatrix objects.
 };
 
-}   //< Devices
-}   //< _hmi
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_WIDGETPAGE

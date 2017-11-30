@@ -21,18 +21,21 @@
 // 3. This notice may not be removed or altered from any source distribution.
 //
 
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_INPUT
+#define HEADER_FOR_KABUKI_HMI_INPUT
 
-#include <KabukiTheater-Config.h>
+#include "config.h"
 
 #if defined(SFML_SYSTEM_WINDOWS)
-    #include <_hmi/Win32/InputImpl.h>
+    #include "Win32/InputImpl.h>
 #elif defined(SFML_SYSTEM_LINUX) || defined(SFML_SYSTEM_FREEBSD)
-    #include <_hmi/Unix/InputImpl.h>
+    #include "Unix/InputImpl.h>
 #elif defined(SFML_SYSTEM_MACOS)
-    #include <_hmi/OSX/InputImpl.h>
+    #include "OSX/InputImpl.h>
 #elif defined(SFML_SYSTEM_IOS)
-    #include <_hmi/iOS/InputImpl.h>
+    #include "iOS/InputImpl.h>
 #elif defined(SFML_SYSTEM_ANDROID)
-    #include <_hmi/Android/InputImpl.h>
+    #include "Android/InputImpl.h>
 #endif
+
+#endif  //< HEADER_FOR_KABUKI_HMI_INPUT

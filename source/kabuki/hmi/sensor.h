@@ -22,33 +22,33 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_SENSOR
+#define HEADER_FOR_KABUKI_HMI_SENSOR
 
-#include <KabukiTheater-Config.h>
-#include <_Math/Vect3D.h>
+#include "config.h"
+#include "../math/vect3D.h"
 
-using namespace _Math;
+using namespace kabuki::math;
 
-namespace _hmi {
+namespace kabuki { namespace hmi {
 
-class _HMI_API Sensor
-/*< Give access to the real-time state of the sensors
-    @ingroup _hmi
+/** Give access to the real-time state of the sensors
+    @ingroup hmi
    
-    _hmi::Sensor provides an interface to the state of the
+    hmi::Sensor provides an interface to the state of the
     various sensors that a device provides. It only contains static
     functions, so it's not meant to be instantiated.
    
     This class allows users to query the sensors values at any
     time and directly, without having to deal with a window and
-    its events. Compared to the SensorChanged event, _hmi::Sensor
+    its events. Compared to the SensorChanged event, hmi::Sensor
     can retrieve the state of a sensor at any time (you don't need to
     store and update its current value on your side).
    
     Depending on the OS and hardware of the device (phone, tablet, ...),
     some sensor types may not be available. You should always check
     the availability of a sensor before trying to read it, with the
-    _hmi::Sensor::isAvailable function.
+    hmi::Sensor::isAvailable function.
    
     You may wonder why some sensor types look so similar, for example
     Accelerometer and Gravity / UserAcceleration. The first one
@@ -60,48 +60,47 @@ class _HMI_API Sensor
     This is exactly the same for Gyroscope vs Orientation.
    
     Because sensors consume a non-negligible amount of current, they are
-    all disabled by default. You must call _hmi::Sensor::setEnabled for each
+    all disabled by default. You must call hmi::Sensor::SetEnabled for each
     sensor in which you are interested.
    
     Usage example:
     @code
-    if (_hmi::Sensor::isAvailable(_hmi::Sensor::Gravity))
+    if (hmi::Sensor::isAvailable(hmi::Sensor::Gravity))
     {
         // gravity sensor is available
     }
    
     // enable the gravity sensor
-    _hmi::Sensor::setEnabled(_hmi::Sensor::Gravity, true);
+    hmi::Sensor::SetEnabled(hmi::Sensor::Gravity, true);
    
     // get the current value of gravity
-    _hmi::Vect3D<float> gravity = _hmi::Sensor::getValue(_hmi::Sensor::Gravity);
+    hmi::Vect3D<float> gravity = hmi::Sensor::GetValue(hmi::Sensor::Gravity);
     @endcode
 */
+class KABUKI Sensor
 {
     public:
     
-    enum Type
-    /*< Sensor type. */
-    {
-        Accelerometer,    ///< Measures the raw acceleration (m/s^2).
-        Gyroscope,        ///< Measures the raw rotation rates (degrees/s).
-        Magnetometer,     ///< Measures the ambient magnetic field (micro-teslas).
-        Gravity,          ///< Measures the direction and intensity of gravity, independent of device acceleration (m/s^2).
-        UserAcceleration, ///< Measures the direction and intensity of device acceleration, independent of the gravity (m/s^2).
-        Orientation,      ///< Measures the absolute 3D orientation (degrees).
+    /** Sensor type. */
+    enum Type {
+        Accelerometer,    //< Measures the raw acceleration (m/s^2).
+        Gyroscope,        //< Measures the raw rotation rates (degrees/s).
+        Magnetometer,     //< Measures the ambient magnetic field (micro-teslas).
+        Gravity,          //< Measures the direction and intensity of gravity, independent of device acceleration (m/s^2).
+        UserAcceleration, //< Measures the direction and intensity of device acceleration, independent of the gravity (m/s^2).
+        Orientation,      //< Measures the absolute 3D orientation (degrees).
 
-        Count             ///< Keep last -- the total number of sensor types
+        Count             //< Keep last -- the total number of sensor types
     };
     
-    static bool isAvailable(Type sensor);
-    /*< Check if a sensor is available on the underlying platform.
+    /** Check if a sensor is available on the underlying platform.
        
         @param sensor Sensor to check
        
         @return True if the sensor is available, false otherwise. */
+    static bool isAvailable(Type sensor);
 
-    static void setEnabled(Type sensor, bool enabled);
-    /*< Enable or disable a sensor.
+    /** Enable or disable a sensor.
        
         All sensors are disabled by default, to avoid consuming too
         much battery power. Once a sensor is enabled, it starts
@@ -111,14 +110,16 @@ class _HMI_API Sensor
        
         @param sensor  Sensor to enable
         @param enabled True to enable, false to disable. */
+    static void setEnabled(Type sensor, bool enabled);
 
-    static Vect3D<float> getValue(Type sensor);
-    /*< Get the current sensor value.
+    /** Get the current sensor value.
        
         @param sensor Sensor to read
        
         @return The current sensor value. */
+    static Vect3D<float> getValue(Type sensor);
 };
 
-} // namespace HMI
-} // namespace _Theater
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_SENSOR

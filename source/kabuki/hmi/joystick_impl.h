@@ -22,18 +22,19 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_JOYSTICKIMPL
+#define HEADER_FOR_KABUKI_HMI_JOYSTICKIMPL
 
-#include <KabukiTheater-Config.h>
-#include <_hmi/Joystick.h>
+#include "config.h"
+#include "Joystick.h>
 #include <_/String.h>
 #include <algorithm>
 
 
-namespace _hmi { namespace priv {
+namespace kabuki { namespace hmi { namespace priv {
 
+/** Structure holding a joystick's information. */
 struct JoystickCaps
-/*< Structure holding a joystick's information. */
 {
     JoystickCaps()
     {
@@ -41,12 +42,12 @@ struct JoystickCaps
         std::fill(axes, axes + Joystick::AxisCount, false);
     }
 
-    uint buttonCount;               ///< Number of buttons supported by the joystick
-    bool         axes[Joystick::AxisCount]; ///< Support for each axis
+    uint buttonCount;               //< Number of buttons supported by the joystick
+    bool         axes[Joystick::AxisCount]; //< Support for each axis
 };
 
+/** Structure holding a joystick's state. */
 struct JoystickState
-/*< Structure holding a joystick's state. */
 {
     JoystickState()
     {
@@ -55,37 +56,38 @@ struct JoystickState
         std::fill(buttons, buttons + Joystick::ButtonCount, false);
     }
 
-    bool  connected;                      ///< Is the joystick currently connected?
-    float axes[Joystick::AxisCount];      ///< Position of each axis, in range [-100, 100]
-    bool  buttons[Joystick::ButtonCount]; ///< Status of each button (true = pressed)
+    bool  connected;                      //< Is the joystick currently connected?
+    float axes[Joystick::AxisCount];      //< Position of each axis, in range [-100, 100]
+    bool  buttons[Joystick::ButtonCount]; //< Status of each button (true = pressed)
 };
 
 } // namespace priv
-}   //< _hmi
+}       //< namespace hmi
 
 
 #if defined(SFML_SYSTEM_WINDOWS)
 
-    #include <_hmi/Win32/JoystickImpl.h>
+    #include "Win32/JoystickImpl.h>
 
 #elif defined(SFML_SYSTEM_LINUX)
 
-    #include <_hmi/Unix/JoystickImpl.h>
+    #include "Unix/JoystickImpl.h>
 
 #elif defined(SFML_SYSTEM_FREEBSD)
 
-    #include <_hmi/FreeBSD/JoystickImpl.h>
+    #include "FreeBSD/JoystickImpl.h>
 
 #elif defined(SFML_SYSTEM_MACOS)
 
-    #include <_hmi/OSX/JoystickImpl.h>
+    #include "OSX/JoystickImpl.h>
 
 #elif defined(SFML_SYSTEM_IOS)
 
-    #include <_hmi/iOS/JoystickImpl.h>
+    #include "iOS/JoystickImpl.h>
 
 #elif defined(SFML_SYSTEM_ANDROID)
 
-    #include <_hmi/Android/JoystickImpl.h>
+    #include "Android/JoystickImpl.h>
 
 #endif
+#endif  //< HEADER_FOR_KABUKI_HMI_JOYSTICKIMPL

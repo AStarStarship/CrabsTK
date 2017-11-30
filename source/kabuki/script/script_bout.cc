@@ -1,9 +1,4 @@
 /** kabuki::script
-#include <script_slot.h>
-#include <script_bout.h>
-#include <script_ascii.h>
-#include <script_args.h>
-#include <script_address.h>
     @version 0.x
     @file    ~/source/kabuki/script/impl/script_bout.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -617,11 +612,11 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                     return BoutResult (bout, Bout::RoomError, params, index);
                 if ((type >> 7) && ((type & 0x1f) >= OBJ)) {
                     // Cannot have multi-dimensional arrays of objects!
-					type &= 0x1f;
-                	InvalidType: {
-						return BoutResult (bout, Bout::RoomError, params, index,
-										   start);
-                	}
+                    type &= 0x1f;
+                    InvalidType: {
+                        return BoutResult (bout, Bout::RoomError, params, index,
+                                           start);
+                    }
                 }
                 type = type & 0x1f;   //< Mask off lower 5 bits.
                 switch (obj_size_width) {

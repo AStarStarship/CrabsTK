@@ -22,20 +22,20 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_JOYSTICK
+#define HEADER_FOR_KABUKI_HMI_JOYSTICK
 
-#include <KabukiTheater-Config.h>
+#include "config.h"
 #include <_/String.h>
 
 
-namespace _hmi {
+namespace kabuki { namespace hmi {
     
-class _HMI_API Joystick
-/*< Give access to the real-time state of the joysticks.
+/** Give access to the real-time state of the joysticks.
 
-    @ingroup _hmi
+    @ingroup hmi
    
-    _hmi::Joystick provides an interface to the state of the
+    hmi::Joystick provides an interface to the state of the
     joysticks. It only contains static functions, so it's not
     meant to be instantiated. Instead, each joystick is identified
     by an index that is passed to the functions of this class.
@@ -43,7 +43,7 @@ class _HMI_API Joystick
     This class allows users to query the state of joysticks at any
     time and directly, without having to deal with a window and
     its events. Compared to the JoystickMoved, JoystickButtonPressed
-    and JoystickButtonReleased events, _hmi::Joystick can retrieve the
+    and JoystickButtonReleased events, hmi::Joystick can retrieve the
     state of axes and buttons of joysticks at any time
     (you don't need to store and update a boolean on your side
     in order to know if a button is pressed or released), and you
@@ -52,9 +52,9 @@ class _HMI_API Joystick
     and no event is triggered.
    
     SFML supports:
-    @li 8 joysticks (_hmi::Joystick::Count)
-    @li 32 buttons per joystick (_hmi::Joystick::ButtonCount)
-    @li 8 axes per joystick (_hmi::Joystick::AxisCount)
+    @li 8 joysticks (hmi::Joystick::Count)
+    @li 32 buttons per joystick (hmi::Joystick::ButtonCount)
+    @li 8 axes per joystick (hmi::Joystick::AxisCount)
    
     Unlike the keyboard or mouse, the state of joysticks is sometimes
     not directly available (depending on the OS), therefore an update()
@@ -62,68 +62,65 @@ class _HMI_API Joystick
     joysticks. When you have a window with event handling, this is done
     automatically, you don't need to call anything. But if you have no
     window, or if you want to check joysticks state before creating one,
-    you must call _hmi::Joystick::update explicitly.
+    you must call hmi::Joystick::update explicitly.
    
     Usage example:
     @code
     // Is joystick #0 connected?
-    bool connected = _hmi::Joystick::isConnected(0);
+    bool connected = hmi::Joystick::isConnected(0);
    
     // How many buttons does joystick #0 support?
-    uint buttons = _hmi::Joystick::getButtonCount(0);
+    uint buttons = hmi::Joystick::GetButtonCount(0);
    
     // Does joystick #0 define a X axis?
-    bool hasX = _hmi::Joystick::hasAxis(0, _hmi::Joystick::X);
+    bool hasX = hmi::Joystick::hasAxis(0, hmi::Joystick::X);
    
     // Is button #2 pressed on joystick #0?
-    bool pressed = _hmi::Joystick::isButtonPressed(0, 2);
+    bool pressed = hmi::Joystick::isButtonPressed(0, 2);
    
     // What's the current position of the Y axis on joystick #0?
-    float position = _hmi::Joystick::getAxisPosition(0, _hmi::Joystick::Y);
+    float position = hmi::Joystick::GetAxisPosition(0, hmi::Joystick::Y);
     @endcode
    
-    @see _hmi::Keyboard, _hmi::Mouse */
-{
+    @see hmi::Keyboard, hmi::Mouse */
+class KABUKI Joystick {
     public:
 
     ////////////////////////////////////////////////////////////
     /// @brief Constants related to joysticks capabilities
     ///
     ////////////////////////////////////////////////////////////
-    enum
-    {
-        Count       = 8,  ///< Maximum number of supported joysticks
-        ButtonCount = 32, ///< Maximum number of supported buttons
-        AxisCount   = 8   ///< Maximum number of supported axes
+    enum {
+        Count       = 8,  //< Maximum number of supported joysticks
+        ButtonCount = 32, //< Maximum number of supported buttons
+        AxisCount   = 8   //< Maximum number of supported axes
     };
 
     ////////////////////////////////////////////////////////////
     /// @brief Axes supported by SFML joysticks
     ///
     ////////////////////////////////////////////////////////////
-    enum Axis
-    {
-        X,    ///< The X axis
-        Y,    ///< The Y axis
-        Z,    ///< The Z axis
-        R,    ///< The R axis
-        U,    ///< The U axis
-        V,    ///< The V axis
-        PovX, ///< The X axis of the point-of-view hat
-        PovY  ///< The Y axis of the point-of-view hat
+    enum Axis {
+        X,    //< The X axis
+        Y,    //< The Y axis
+        Z,    //< The Z axis
+        R,    //< The R axis
+        U,    //< The U axis
+        V,    //< The V axis
+        PovX, //< The X axis of the point-of-view hat
+        PovY  //< The Y axis of the point-of-view hat
     };
 
     ////////////////////////////////////////////////////////////
     /// @brief Structure holding a joystick's identification
     ///
     ////////////////////////////////////////////////////////////
-    struct _HMI_API Identification
-    {
+    struct KABUKI Identification {
         Identification();
 
-        String       name;      ///< Name of the joystick
-        uint vendorId;  ///< Manufacturer identifier
-        uint productId; ///< Product identifier
+        String       name;      //< Name of the joystick
+        uint vendorId;  //< Manufacturer identifier
+        uint productId; //< Product identifier
     };
 
     ////////////////////////////////////////////////////////////
@@ -134,7 +131,7 @@ class _HMI_API Joystick
     /// @return True if the joystick is connected, false otherwise
     ///
     ////////////////////////////////////////////////////////////
-    static bool isConnected(uint joystick);
+    static bool IsConnected(uint joystick);
 
     ////////////////////////////////////////////////////////////
     /// @brief Return the number of buttons supported by a joystick
@@ -146,7 +143,7 @@ class _HMI_API Joystick
     /// @return Number of buttons supported by the joystick
     ///
     ////////////////////////////////////////////////////////////
-    static uint getButtonCount(uint joystick);
+    static uint GetButtonCount(uint joystick);
 
     ////////////////////////////////////////////////////////////
     /// @brief Check if a joystick supports a given axis
@@ -172,7 +169,7 @@ class _HMI_API Joystick
     /// @return True if the button is pressed, false otherwise
     ///
     ////////////////////////////////////////////////////////////
-    static bool isButtonPressed(uint joystick, uint button);
+    static bool IsButtonPressed(uint joystick, uint button);
 
     ////////////////////////////////////////////////////////////
     /// @brief Get the current position of a joystick axis
@@ -185,7 +182,7 @@ class _HMI_API Joystick
     /// @return Current position of the axis, in range [-100 .. 100]
     ///
     ////////////////////////////////////////////////////////////
-    static float getAxisPosition(uint joystick, Axis axis);
+    static float GetAxisPosition(uint joystick, Axis axis);
 
     ////////////////////////////////////////////////////////////
     /// @brief Get the joystick information
@@ -195,7 +192,7 @@ class _HMI_API Joystick
     /// @return Structure containing joystick information.
     ///
     ////////////////////////////////////////////////////////////
-    static Identification getIdentification(uint joystick);
+    static Identification GetIdentification(uint joystick);
 
     ////////////////////////////////////////////////////////////
     /// @brief Update the states of all joysticks
@@ -206,8 +203,9 @@ class _HMI_API Joystick
     /// in this case the joystick states are not updated automatically.
     ///
     ////////////////////////////////////////////////////////////
-    static void update();
+    static void Update();
 };
 
-}   //< _hmi
-}   //< _Theater
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_JOYSTICK

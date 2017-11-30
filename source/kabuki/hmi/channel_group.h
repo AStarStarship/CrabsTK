@@ -1,56 +1,54 @@
-/** Kabuki Starship
-    @file    ~/Source/_hmi/ChannelGroup.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved  (R).
-
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/hmi//channel_group.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_CHANNELGROUP
+#define HEADER_FOR_KABUKI_HMI_CHANNELGROUP
 
-#include <KabukiTheater-Config.h>
+#include "config.h"
 
-namespace _hmi {
+namespace kabuki { namespace hmi {
     
-class _HMI_API ChannelGroup
-/*< A group of */
+/** A group of */
+class KABUKI ChannelGroup
 {
     public:
     
+    /** Constructs a group of channels. */
     ChannelGroup ();
-    /*< Constructs a group of channels. */
 
-    const byte* getChannelAddress (uint_t channel);
-    /*< Gets the I2P address of the channel. */
+    /** Gets the Script address of the channel. */
+    const byte* GetChannelAddress (uint_t channel);
 
-    void setChannelAddress (uint_t channel, const byte* address);
-    /*< Sets the channel address I2P device. */
+    /** Sets the channel address Script device. */
+    void SetChannelAddress (uint_t channel, const byte* address);
 
-    uint_t addChannel (const byte* address);
-    /*< Adds a new channel to the group. */
+    /** Adds a new channel to the group. */
+    uint_t AddChannel (const byte* address);
 
-    bool removeChannel (uint_t index);
-    /*< Removes the channel at the given index if it exists.
+    /** Removes the channel at the given index if it exists.
         @return Returns false if the index is out of bounds. */
+    bool RemoveChannel (uint_t index);
 
-    void print () const;
-    /*< Prints this object to a stdout. */
+    /** Prints this object to a stdout. */
+    void Print () const;
 
     private:
 
-    std::vector<const byte*> channels;      //< The list of I2P address for the channels.
-};
+    std::vector<const byte*> channels_; //< List of Script address for the channels.
 
-}   //< _hmi
+};      //< class ChannelGroup
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_CHANNELGROUP

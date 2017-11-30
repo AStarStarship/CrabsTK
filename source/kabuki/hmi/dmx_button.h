@@ -1,39 +1,34 @@
-/** Kabuki Starship
-    @file    ~/Source/_hmi/DMXButton.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/hmi/dmx_button.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_DMXBUTTON
+#define HEADER_FOR_KABUKI_HMI_DMXBUTTON
 
-#include <KabukiTheater-Config.h>
-#include "DMXControl.h"
-#include "IButton.h"
+#include "dmx_control.h"
+#include "button.h"
 
-namespace _hmi {
+namespace kabuki { namespace hmi {
 
-class _HMI_API DMXButton: public Parameter<int>, public IButton
-{
+class KABUKI DMXButton: public Parameter<int>, public Button {
     public:
 
     /** Default constructor. */
-    DMXButton (const char* newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0, 
-        int newMaxValue = 255, int newWordSize = 8, int initAction = ButtonAction::Momentary, int newStepSize = 0, 
-        int newDoublePressTime = IButton::DefaultDoublePressTime);
+    DMXButton (const char* newLabel = "", int newChannel = 0, int initValue = 0,
+               int newMinValue = 0, int newMaxValue = 255, int newWordSize = 8, 
+               int initAction = ButtonAction::Momentary, int newStepSize = 0, 
+               int newDoublePressTime = Button::DefaultDoublePressTime);
     
     /** Virtual destructor. */
     ~DMXButton () override;
@@ -53,7 +48,7 @@ class _HMI_API DMXButton: public Parameter<int>, public IButton
     /** Sets the button pressed state to the new state. */
     void SetButtonState (bool state) override;
 
-    /** gets the last time the button was pressed. */
+    /** Gets the last time the button was pressed. */
     int GetLastTimePressed () const override;
 
     /** Gets the double press time in microseconds. */
@@ -61,7 +56,7 @@ class _HMI_API DMXButton: public Parameter<int>, public IButton
 
     /** Gets this buttons step_Size.
         The step size is the increment that is added to the Parameter<int>::value () every time the button is pressed. When
-        the value goes over the Parameter<int>::maxValue (), it is reset to the Parameter<int>::mixValue (). */
+        the value goes over the Parameter<int>::max_value_ (), it is reset to the Parameter<int>::mixValue (). */
     int GetStepSize () const override;
 
     /** Sets the stepSize to the value. */
@@ -81,13 +76,12 @@ class _HMI_API DMXButton: public Parameter<int>, public IButton
 
     private:
 
-    ButtonAction buttonAction;  //< The type of action this button performs (i.e. momentary, latching, ect).
-
-    int stepSize,               //< The step size of the button.
-        doublePressTime,        //< The timespace of a double press in seconds.
-        lastTimePressed;        /*< The last time that the mode button was depressed.
+    ButtonAction action_;   //< Type of action this button performs (i.e. momentary, latching, ect).
+    int step_size_,         //< The step size of the button.
+        double_press_time_, //< The timespace of a double press in seconds.
+        last_time_pressed_; /** The last time that the mode button was depressed.
                                     Used to calculate if the button was double clicked. */
-};
-
-}   //< _hmi
-}   //< _Theater
+};      //< class DmxButton
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_DMXBUTTON

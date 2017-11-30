@@ -24,9 +24,9 @@
 
 namespace _ {
 
-/** An Script escape sequence header.
-    struct KABUKI uses C++11 variadic template to ensure only one copy in ROM and to eliminate
-    redundant typing. */
+/** Returns a static const Script B-Sequence header.
+    C++11 variadic template to ensure only one copy in ROM 
+    and to eliminate some redundant typing. */
 template<const uint_t... N>
 KABUKI const uint_t* Params () {
     static const uint_t list[sizeof... (N)] = { N... };

@@ -1,29 +1,25 @@
-/** Kabuki Starship
-    @file    ~/Source/_hmi/IButton.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/hmi//button.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_BUTTON
+#define HEADER_FOR_KABUKI_HMI_BUTTON
 
-#include "Parameter.h"
-#include "HMIComponent.h"
+#include "parameter.h"
+#include "hmi_component.h"
 
-namespace _hmi {
+namespace kabuki { namespace hmi {
 
 /** An enumerated list of the differnt types of actions ButtonControls can
     perform. */
@@ -57,9 +53,9 @@ int GetDefaultDoublePressTime ();
 
     @todo Change unit test framework to CppUTest
 */
-class _HMI_API IButton
+class KABUKI IButton
 {
-	public:
+    public:
 
     enum {
         DefaultMinDoublePressTime = 100,       /** The min double click time period in seconds.
@@ -102,7 +98,7 @@ class _HMI_API IButton
     virtual int getStepSize () const = 0;
     /*< Gets this buttons step_Size.
         The step size is the increment that is added to the Parameter<int>::value () every time the button is pressed. When 
-        the value goes over the Parameter<int>::maxValue (), it is reset to the Parameter<int>::mixValue (). */
+        the value goes over the Parameter<int>::max_value_ (), it is reset to the Parameter<int>::mixValue (). */
     
     virtual void setStepSize (int value) = 0;
     /*< Sets the stepSize to the value. */
@@ -123,5 +119,6 @@ class _HMI_API IButton
     /*< Prints this object to the stdout. */
 };
 
-}   /** _hmi
-}   /** _Theater
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_BUTTON

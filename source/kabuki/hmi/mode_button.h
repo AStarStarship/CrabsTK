@@ -1,81 +1,77 @@
-/** Kabuki Starship
-    @file    ~/Source/_hmi/Buttons/ModeButton.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved  (R).
-
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/hmi/mode_button.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_MODEBUTTON
+#define HEADER_FOR_KABUKI_HMI_MODEBUTTON
 
-#include "../Button.h"
+#include "button.h"
 
-namespace _hmi { namespace Buttons {
+namespace kabuki { namespace hmi { namespace Buttons {
 
-class _HMI_API MacroButton;
-class _HMI_API MacroEvent;
-class _HMI_API Device;
-class _HMI_API ControlsPage;
+class KABUKI MacroButton;
+class KABUKI MacroEvent;
+class KABUKI Device;
+class KABUKI ControlsPage;
 
-class _HMI_API ModeButton : public Button
 /** A ModeButton is a MacroButton that has the ability to change the Device on a ControlSurfaces.
     A Device button is capable of changing the Device on a ControlSurface and triggering a MacroEvent. 
 */
-{
+class KABUKI ModeButton : public Button {
     public:
 
-    ModeButton  (const char* initLabel = "", const MacroEvent& initMacro = MacroEvent (),
-        const Device& initDevice = Device::Dummy, const ControlsPage& initPage = ControlsPage::blank);
-    /*< Constructor. */
+    /** Constructor. */
+    ModeButton  (const char        * label = "", 
+                 const MacroEvent  & macro = MacroEvent (),
+                 const Device      & device = Device::Dummy,
+                 const ControlsPage& page = ControlsPage::blank);
         
-    ModeButton  (const ModeButton& that);
-    //< Copy constructor.
+    /** Copy constructor. */
+    ModeButton  (const ModeButton& other);
+    
+    /** Destructor. */
     ~ModeButton ();
     
-
+    /** The function Called when this Button gets pressed. */
     void Press  (ButtonEvent buttonEvent);
-    //< The function that is called when this Button gets pressed.
     
     void Depress  (ButtonEvent buttonEvent);
     
-    //< The function that is called when this Button gets double pressed.
-    
+    /** Function Called when this Button gets double pressed. */
     void Depress  (ButtonEvent buttonEvent);
-    //< The function that is called when this Button gets depressed.
 
+    /** Device loaded when this macro gets triggered. */
     Device *focusDevice ();
-    //< The Device that gets loaded when this macro gets triggered.
     
+    /** Gets a pointer to page to focus on. */
     ControlsPage *focusPage ();
-    //< Gets a pointer to page to focus on.
 
-    int setDevice  (Device *thisDevice);
-    //< Sets this Device's focus to thisDevice.
+    /** Sets this Device's focus to device. */
+    int setDevice  (Device *device);
     
-    int setFocusPage  (ControlsPage *thisPage);
-    //< Sets the focusPage to thisPage.
+    /** Sets the focusPage to page. */
+    int SetFocusPage  (ControlsPage *page);
     
-    void print ();
-    /*< Prints this object to a terminal. */
+    /** Prints this object to a terminal. */
+    void Print ();
 
     private:
 
-    Device *_focusDevice;                                   //< The Device to load for this macro.
-    ControlsPage *_focusPage;                               //< The last saved page  (for switching between macros).
-};
-
-}   //< namespace Buttons
-}   //< namespace _hmi
-
+    Device      * device_; //< Device to load for this macro.
+    ControlsPage* page_;   //< Last saved page for switching macros.
+    
+};      /** class ModeButton
+}       /** namespace Buttons
+}       /** namespace hmi
+#endif  /** HEADER_FOR_KABUKI_HMI_MODEBUTTON

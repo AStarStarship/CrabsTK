@@ -1,81 +1,78 @@
-/** Kabuki Starship
-    @file    ~/Source/_hmi/MIDIButton.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/hmi/midi_control.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_MIDICONTROL
+#define HEADER_FOR_KABUKI_HMI_MIDICONTROL
 
-#include "Parameter<int>.h"
+#include "parameter.h"
 
-namespace _hmi {
+namespace kabuki { namespace hmi {
 
-class _HMI_API MIDIControl : public Parameter<int>
-/*< A controller for MIDI signals.
+/** A controller for MIDI signals.
     
 */
-{
+class KABUKI MidiControl : public Parameter<int> {
     public:
 
     enum { 
-        NumChannels = 16    //< The number of MIDI channels.
+        NumChannels = 16    //< Number of MIDI channels.
     };
 
-    MIDIControl (const string& newLabel = "", int newCC = 0, int newChannel = 0, int initValue = 0, int newMinValue = 0,
-        int newMaxValue = 127, int newWordSize = 7, int newParameterType = Parameter<int>::MIDIControl);
-    //< Constructor.
+    /** Constructor. */
+    MidiControl (const string& label = "", int cc = 0, int channel = 0, 
+                 int init_value = 0, int newMinValue = 0, int min_value = 127,
+                 int word_size = 7, int type = Parameter<int>::MidiControl);
     
-    MIDIControl (const MIDIControl& o);
-    //< Copy contructor.
+    /** Copy constructor. */
+    MidiControl (const MidiControl& o);
     
-    virtual ~MIDIControl () {}
-    //< Virtual destructor.
+    /** Virtual destructor. */
+    virtual ~MidiControl () {}
 
-    int getCC () const;
-    //< gets the MIDI control change (CC) parameter.
+    /** gets the MIDI control change (CC) parameter. */
+    int GetCc () const;
 
-    void setCC (int value);
-    //< sets the control change (CC) parameter.
+    /** sets the control change (CC) parameter. */
+    void SetCc (int value);
 
-    void setMinMaxValues (int newMin, int newMax) override;
-    /*< Sets the min and max values. */
+    /** Sets the min and max values. */
+    void SetMinMaxValues (int newMin, int newMax) override;
     
-    void setMinValue (int value) override;
-    //< sets the min value to the value.
+    /** sets the min value to the value. */
+    void SetMinValue (int value) override;
     
-    void setMaxValue (int value) override;
-    //< sets the max value to the value.
+    /** sets the max value to the value. */
+    void SetMaxValue (int value) override;
 
-    virtual void trigger ();
-    //< Triggers the Parameter<int> to fire.
+    /** Triggers the Parameter<int> to fire. */
+    virtual void Trigger ();
 
-    virtual void printHeaderString () const;
-    //< gets the header for toStringRow ().
+    /** gets the header for toStringRow (). */
+    virtual void PrintHeaderString () const;
     
-    void printRow () const override;
-    //< gets a column of the values without the labels.
+    /** gets a column of the values without the labels. */
+    void PrintRow () const override;
 
-    void print () const;
-    /*< Prints this object to the stdout. */
+    /** Prints this object to the stdout. */
+    void Print () const;
 
     private:
 
-    uint16_t cc;    //< The control change (CC) parameter.
+    uint16_t cc_; //< The control change (CC) parameter.
 };
 
-}   //< _hmi
-}   //< _Theater
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_MIDICONTROL

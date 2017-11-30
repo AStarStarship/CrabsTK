@@ -13,7 +13,8 @@
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
     
-    @brief This file contains the system configuration for ChineseRoom and apps that use it.
+    @brief This file contains the system configuration for ChineseRoom and apps
+           that use it.
     @desc  
 */
 

@@ -1,98 +1,95 @@
-/** Kabuki Starship
-    @file    ~/Source/_Theater/Mixer/MixerChannel.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved  (R).
-
-        Licensed under the Apache License, Version 2.0  (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/mixer_channel.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_MIXERCHANNEL
+#define HEADER_FOR_KABUKI_HMI_MIXERCHANNEL
 
-#include <KabukiTheater-Config.h>
+#include "config.h"
 
-namespace _Theater { namespace Mixer {
+namespace kabuki { namespace hmi {
 
-class _KabukiTheater_ MixerChannel
-{
-    _Noncopyable_ (MixerChannel)
-
+/** A mixer channel Operation. */
+class KABUKI MixerChannel : public _::Operation {
+    NONCOPYABLE (MixerChannel)
     public:
 
     enum { 
-        DefaultNumAuxSends = 3,       //< The default number of aux sends.
+        DefaultNumAuxSends = 3, //< Default number of aux sends.
     };
 
+    /** Constructs a mixer channel with the given name. */
     MixerChannel  (const char* initName = nullptr);
-    /*< Constructs a mixer channel with the given name. */
 
+    /** Destructor. */
     ~MixerChannel ();
-    /*< Destructor. */
 
-    int getVolume ();
-    /*< Gets th volume of this channel. */
+    /** Gets th volume of this channel. */
+    int GetVolume ();
 
-    int getPan ();
-    /*< Gets th pan of of the channel. */
+    /** Gets th pan of of the channel. */
+    int GetPan ();
 
-    int isMuted ();
-    /*< Gets if this channel is muted. */
+    /** Gets if this channel is muted. */
+    int IsMuted ();
 
-    int isSoloed ();
-    /*< Gets if this channel is soloed. */
+    /** Gets if this channel is soloed. */
+    int IsSoloed ();
 
+    /** Sets the channel volume to the value. */
     void setVolume  (int value);
-    /*< Sets the channel volume to the value. */
 
-    void setPan  (int value);
-    /*< Sets the channel pan to the value. */
+    /** Sets the channel pan to the value. */
+    void SetPan  (int value);
 
-    void setMute  (bool isMuted);
-    /*< Either mutes or unmutes this channel. */
+    /** Either mutes or unmutes this channel. */
+    void SetMute  (bool isMuted);
 
-    void setSolo  (bool isSoloed);
-    /*< Either solos or unsolos this channel. */
+    /** Either solos or unsolos this channel. */
+    void SetSolo  (bool isSoloed);
 
-    void toggleMute ();
-    /*< Toggles the mute variable. */
+    /** Toggles the mute variable. */
+    void ToggleMute ();
 
-    void toggleSolo ();
-    /*< Toggles the solo variable. */
+    /** Toggles the solo variable. */
+    void ToggleSolo ();
 
-    int  getAux  (int thisAux);
-    /*< Gets thisAux level. */
+    /** Gets thisAux level. */
+    int  GetAux  (int thisAux);
 
-    void setAux  (int thisAuxSend, int level);
-    /*< Sets thisAuxSend level. */
+    /** Sets thisAuxSend level. */
+    void SetAux  (int thisAuxSend, int level);
 
-    void deleteAux  (int thisIndex);
-    /*< Deletes the aux send channel at thisIndex.
+    /** Deletes the aux send channel at thisIndex.
         @warning This function does not trim the auxSend array size for speed 
         considerations Inserts an aux send at thisIndex. */
+    void DeleteAux  (int thisIndex);
+    
+    /** Script Operations. */
+    const _::Operation Star (uint index, _::Expression expr);
 
     private:
 
-    const char* labelText;          //< The name of this channel.
-
-    int volValue,                   //< The volume value for this channel.
-        panValue,                   //< The pan value for this channel.
-        muteValue,                  //< The mute value for this channel.
-        soloValue,                  //< The solo value for this channel.
-        numAuxSends;                //< The number of aux sends.
-
-    int* auxSend;                   //< An array of aux send levels.
-};
-
-}   //< namespace Mixer
-}   //< namespace _Theater
+    const char* label_text_;    //< Name of this channel.
+    int         vol_value_,     //< Volume value for this channel.
+                pan_value_,     //< Pan value for this channel.
+                mute_value_,    //< Mute value for this channel.
+                solo_value_,    //< Solo value for this channel.
+                num_aux_sends_; //< Number of aux sends.
+    int*        aux_send_;      //< Array of aux send levels.
+    
+};      //< class MixerChannel
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_MIXERCHANNEL

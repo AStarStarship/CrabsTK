@@ -1,9 +1,4 @@
 /** kabuki::script
-#include <script_utils.h>
-#include <script_types.h>
-#include <script_operation.h>
-#include <script_bin.h>
-#include <script_args.h>
     @version 0.x
     @file    ~/source/kabuki/script/impl/script_bin.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>

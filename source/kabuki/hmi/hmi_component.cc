@@ -1,42 +1,37 @@
-/** Kabuki Starship
-    @file    /.../Source-Impl/_HMI/HMIComponent.cpp
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/hmi/hmi_component.cc
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
 
-#include <_HMI/HMIComponent.h>
+#include "hmi_component.h"
 
-namespace _HMI {
+using namespace std;
+using namespace _;
 
-const char* getAllowedSymbols ()
-{
+namespace kabuki { namespace hmi {
+
+const char* GetAllowedSymbols () {
     return " `!@#$%^&* (){}+=-_\\|/?.>,<";
 }
 
-const char* allowedSymbols = getAllowedSymbols ();
+const char* allowed_symbols_ = GetAllowedSymbols ();
 
-void setAllowedSymbols (const char* s)
-{
+void SetAllowedSymbols (const char* s) {
     if (s == nullptr) return;
-    allowedSymbols = s;
+    allowed_symbols_ = s;
 }
 
-bool containsChar (const char* chars, const char* s)
-{
+bool ContainsChar (const char* chars, const char* s) {
     if (chars == nullptr) return false;
     if (s == nullptr) return false;
     const char* s_ptr;
@@ -45,14 +40,13 @@ bool containsChar (const char* chars, const char* s)
     do {
         s_ptr = s;
         c = *chars;
-        if (containsChar (chars, c)) return true;
+        if (ContainsChar (chars, c)) return true;
         ++chars;
     } while (c != 0);
     return false;
 }
 
-bool containsChar (const char* chars, char c)
-{
+bool ContainsChar (const char* chars, char c) {
     if (chars == nullptr) return false;
     const char* s_ptr;
     char d;
@@ -64,89 +58,78 @@ bool containsChar (const char* chars, char c)
     return false;
 }
 
-const char* getUnnamedLabel ()
-{
+const char* GetUnnamedLabel () {
     return "Unnamed";
 }
 
-int isValidLabel (const char* label)
-{
-    int labelLength = strlen (label);
+int IsValidLabel (const char* label) {
+    int labelLength = StringLength (label);
     printf ("Checking string: %s length = %u", label, labelLength);
 
     if (labelLength == 0)
         return 1;
-    else if (labelLength > HMIComponent::MaxLabelLength)
+    else if (labelLength > HmiComponent::MaxLabelLength)
         return 2;
 
-    for (int i = 0; i < labelLength; ++i)
-    {
+    for (int i = 0; i < labelLength; ++i) {
         char temp = label[i];
         if (!isalnum (temp))
             return 3;
-        if (!containsChar (getAllowedSymbols (), temp))
+        if (!ContainsChar (GetAllowedSymbols (), temp))
             return 3;
     }
     return 0;
 }
 
-HMIComponent::HMIComponent (const char* newLabel)
-{
-    if (setLabel (newLabel))
-        label = getUnnamedLabel ();
+HmiComponent::HmiComponent (const char* label) {
+    if (SetLabel (label))
+        label = GetUnnamedLabel ();
 }
 
-HMIComponent::HMIComponent (const HMIComponent &s) :
-    label (s.label)
-{
+HmiComponent::HmiComponent (const HmiComponent &s) :
+    Label (s.label_) {
     // Nothing to do here :-)
 }
 
-uintptr_t HMIComponent::getUID ()
-{
-    return uid;
+uid_t HmiComponent::GetUid () {
+    return uid_;
 }
 
 /** Returns the label string. */
-const char* HMIComponent::getLabel () const
-{
-    return label;
+const char* HmiComponent::GetLabel () const {
+    return label_;
 }
 
-int HMIComponent::setLabel (const char* newLabel)
-{
-    if (newLabel == "")
+int HmiComponent::SetLabel (const char* label) {
+    if (label == "")
         return -1;
-    size_t length = strlen (newLabel);
+    size_t length = strlen (label);
     if (length > MaxLabelLength)
         return 1;
 
-    if (!labelIsValid (newLabel)) return 1;
+    if (!IsValidLabel (label)) return 1;
 
-    label = newLabel;
+    label = label;
     return 0;
 }
 
-int HMIComponent::setLabel (const HMIComponent& newLabel)
-{
-    return setLabel (newLabel.label);
+int HmiComponent::SetLabel (const HmiComponent& label) {
+    return SetLabel (label.label_);
 }
 
-int HMIComponent::compare (const char* s) const
-{
-    std::cout << "# " << label << ".compare (" << s << ") = " << label.compare (s);
+int HmiComponent::Compare (const char* s) const {
+    cout << "# " << label_ << ".compare (" << s << ") = " << label_.Compare (s);
 
-    return label.compare (s);
+    return label_.Compare (s);
 }
 
-int HMIComponent::compare (const HMIComponent& s) const
-{
-    return compare (s.label);
+int HmiComponent::Compare (const HmiComponent& s) const {
+    return Compare (s.label_);
 }
 
-void HMIComponent::print () const
-{
-    printf (label);
+void HmiComponent::Print () const {
+    label_->Print ();
 }
 
-}   //< _HMI
+}   //< namespace hmi
+}   //< namespace kabuki

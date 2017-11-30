@@ -1,96 +1,91 @@
-/** Kabuki Starship
-    @file    ~/Source/_hmi/ButtonScroller.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/hmi//button_scroller.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_BUTTONSCROLLER
+#define HEADER_FOR_KABUKI_HMI_BUTTONSCROLLER
 
-#include <KabukiTheater-Config.h>
+#include "config.h"
 
-#include "HMIComponent.h"
-#include "IButton.h"
+#include "hmi_homponent.h"
+#include "button.h"
 
-namespace _hmi {
+namespace kabuki { namespace hmi {
 
-class _HMI_API ButtonScroller: public HMIComponent
-/*< A scrollable array Button (s). */
-{
+/** A scrollable array Button (s). */
+class KABUKI ButtonScroller: public HmiComponent {
     public:
 
     enum {
-        DefaultNumVisibleButtons = 5,  //< The default number of visible numbers.
+        kDefaultNumVisibleButtons = 5,  //< Default number of visible numbers.
     };
 
-    ButtonScroller (string newLabel = "", int newArraySize = DefaultNumVisibleButtons);
-    //< Default constructor.
+    /** Default constructor. */
+    ButtonScroller (String* newLabel = "", int new_array_size = kDefaultNumVisibleButtons);
     
+    /** Copy constructor. */
     ButtonScroller (const ButtonScroller& o);
-    //< Copy constructor.
 
-    IButton** getButtons ();
-    //< gets the array of buttons.
+    /** Gets the array of buttons. */
+    IButton** GetButtons ();
 
-    int getNumButtons () const;
-    //< gets the number of buttons in the array.
+    /** Gets the number of buttons in the array. */
+    int GetNumButtons () const;
 
-    int getNumVisibleButtons () const;
-    //< gets the number of visible buttons.
+    /** Gets the number of visible buttons. */
+    int GetNumVisibleButtons () const;
     
-    int getCurrentIndex () const;
-    //< gets the index of the first visible button.
+    /** Gets the index of the first visible button. */
+    int GetCurrentIndex () const;
 
-    void setNumVisibleButtons (int value);
-    //< sets the number of visible buttons to the new value.
+    /** Sets the number of visible buttons to the new value. */
+    void SetNumVisibleButtons (int value);
 
-    void removeButton (int index);
-    //< Removes the button at the given index from the array.
+    /** Removes the button at the given index from the array. */
+    void RemoveButton (int index);
 
-    void scrollUp ();
-    //< Scrolls up the list.
+    /** Scrolls up the list. */
+    void ScrollUp ();
     
-    void scrollDown ();
-    //< Scrolls down the list.
+    /** Scrolls down the list. */
+    void ScrollDown ();
 
-    void scrollUp (int numNodes);
-    //< Scrolls up the list.
+    /** Scrolls up the list. */
+    void ScrollUp (int numNodes);
     
-    void scrollDown (int numNodes);
-    //< Scrolls down the list.
+    /** Scrolls down the list. */
+    void ScrollDown (int numNodes);
 
-    void scrollPageUp ();
-    //< Scrolls up one page
+    /** Scrolls up one page. */
+    void ScrollPageUp ();
     
-    void scrollPageDown ();
-    //< Scrolls down one page
+    /** Scrolls down one page. */
+    void ScrollPageDown ();
 
-    int press (int index);
-    //< Presses the Button at the specified index.
+    /** Presses the Button at the specified index. */
+    int Press (int index);
     
-    void print () const;
-    /*< Prints this object to a stdout. */
+    /** Prints this object to a stdout. */
+    void Print () const;
 
     private:
 
-    int currentIndex,                   //< The index of the first visible button.
-        numVisibleButtons;              //< The number of physical buttons.
-
-    vector<IButton*> buttons;      //< The array of buttons.
+    int current_index_,             //< Index of the first visible button.
+        num_visible_buttons_;       //< Number of physical buttons.
+    std::vector<IButton*> buttons_; //< Array of buttons.
 };
 
-}   //< _hmi
-}   //< _Theater
+}       //< namespace hmi
+}       //< kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_BUTTONSCROLLER

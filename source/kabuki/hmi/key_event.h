@@ -1,29 +1,25 @@
-/** Kabuki Starship
-    @file    ~/Source/_/KeyEvent.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/hmi/key_event.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
+ 
+#ifndef HEADER_FOR_KABUKI_HMI_KEYEVENT
+#define HEADER_FOR_KABUKI_HMI_KEYEVENT
 
-#pragma once
+namespace kabuki { namespace hmi { 
 
-namespace _hmi { 
-
-class KeyEvent
-{
+/** A virtual keyboard event. */
+class KeyEvent {
     public:
 
     enum VK {
@@ -221,18 +217,20 @@ class KeyEvent
         VK_XBUTTON2             = 0x06, //< X Button 2
     };
     
+    /** Constructs a KeyEvent from the given VK keyboard code. */
     KeyEvent (byte keyEvent);
-    /*< Constructs a KeyEvent from the given VK keyboard code. */
     
-    byte getVKCode ();
-    /*< Gets the VK code of the event. */
+    /** Gets the VK code of the event. */
+    byte GetVKCode ();
     
-    inline void print() const;
-    /*< Prints this object to a Expression. */
+    /** Prints this object to a Expression. */
+    inline void Print () const;
     
     private:
     
-    byte key;   //< The VK keybaord code of the event.
+    byte key;   //< VK keybaord code of the event.
 };
 
-}   //< _hmi
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_KEYEVENT

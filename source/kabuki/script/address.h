@@ -24,8 +24,15 @@
 
 namespace _ {
     
-/** C++11 constexpr struct KABUKI for creating parameter headers with less typing. */
+/** C++11 constexpr function for creating Script addresses headers with less  
+    typing as well as ensuring there is only a single copy in ROM.
+    Template solves the problem of not being able using array constructors to 
+    create data structures in ROM.
 
+    @code
+    Address<'A', 'B', 'C'> ()
+    @endcode
+*/
 template<const char... N>
 KABUKI const char* Address () {
     static const char path[sizeof... (N)] = { N... };

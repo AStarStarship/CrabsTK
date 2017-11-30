@@ -22,67 +22,68 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_JOYSTICKMANAGER
+#define HEADER_FOR_KABUKI_HMI_JOYSTICKMANAGER
 
-#include <_hmi/Joystick.h>
-#include <_hmi/JoystickImpl.h>
+#include "Joystick.h>
+#include "JoystickImpl.h>
 
 
-namespace _hmi { namespace priv {
+namespace kabuki { namespace hmi { namespace priv {
 
-class JoystickManager : NonCopyable
-/*< Global joystick manager. */
-{
+/** Global joystick manager. */
+class JoystickManager {
+    NONCOPYABLE (JoystickManager)
     public:
 
-    static JoystickManager& getInstance();
-    /*< Get the global unique instance of the manager
+    /** Get the global unique instance of the manager
        
         @return Unique instance of the joystick manager. */
+    static JoystickManager& GetInstance();
 
-    const JoystickCaps& getCapabilities(uint joystick) const;
-    /*< Get the capabilities for an open joystick
+    /** Get the capabilities for an open joystick
        
         @param joystick Index of the joystick
        
         @return Capabilities of the joystick. */
+    const JoystickCaps& GetCapabilities(uint joystick) const;
 
-    const JoystickState& getState(uint joystick) const;
-    /*< Get the current state of an open joystick
+    /** Get the current state of an open joystick
        
         @param joystick Index of the joystick
        
         @return Current state of the joystick. */
+    const JoystickState& GetState(uint joystick) const;
 
-    const Joystick::Identification& getIdentification(uint joystick) const;
-    /*< Get the identification for an open joystick
+    /** Get the identification for an open joystick
        
         @param joystick Index of the joystick
        
         @return Identification for the joystick. */
+    const Joystick::Identification& GetIdentification(uint joystick) const;
 
-    void update();
-    /*< Update the state of all the joysticks. */
+    /** Update the state of all the joysticks. */
+    void Update();
 
     private:
 
+    /** Default constructor. */
     JoystickManager();
-    /*< Default constructor. */
 
+    /** Destructor. */
     ~JoystickManager();
-    /*< Destructor. */
 
-    struct Item
-    /*< Joystick information and state. */
-    {
-        JoystickImpl             joystick;       ///< Joystick implementation
-        JoystickState            state;          ///< The current joystick state
-        JoystickCaps             capabilities;   ///< The joystick capabilities
-        Joystick::Identification identification; ///< The joystick identification
+    /** Joystick information and state. */
+    struct Item {
+        JoystickImpl             joystick;       //< Joystick implementation
+        JoystickState            state;          //< The current joystick state
+        JoystickCaps             capabilities;   //< The joystick capabilities
+        Joystick::Identification identification; //< The joystick identification
     };
     
-    Item m_joysticks[Joystick::Count];      ///< Joysticks information and state
-};
-
-} // namespace priv
-}   //< _hmi
+    Item m_joysticks[Joystick::Count];      //< Joysticks information and state
+};      //< class JoystickManager
+}       //< namespace priv
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_JOYSTICKMANAGER

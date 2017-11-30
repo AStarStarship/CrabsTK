@@ -26,7 +26,7 @@ namespace _ {
 
 /** Creates/Gets a static buffer of the specified size. */
 template<uint_t kBufferSize>
-KABUKI uintptr_t* WordBuffer () {
+inline uintptr_t* WordBuffer () {
     static uintptr_t buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }
@@ -34,7 +34,7 @@ KABUKI uintptr_t* WordBuffer () {
 /** Creates/Gets one of n static buffers of the specified size. */
 template<uint_t kBufferNumber,
          uint_t kBufferSize>
-KABUKI uintptr_t* BufferNum () {
+    inline uintptr_t* BufferNum () {
     static uintptr_t buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }
@@ -43,7 +43,7 @@ KABUKI uintptr_t* BufferNum () {
 template<typename T,
          uint_t kBufferNumber,
          uint_t kBufferSize>
-KABUKI T* TypeBuffer () {
+inline T* TypeBuffer () {
     static T buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }
@@ -51,17 +51,16 @@ KABUKI T* TypeBuffer () {
 /** reinterpret_cast(string) a the given base and offset to an object pointer.
 */
 template<typename T>
-KABUKI T* PointTo (void* base, uint_t offset) {
+inline T* PointTo (void* base, uint_t offset) {
     return reinterpret_cast<T*>(reinterpret_cast<byte*>(base) + offset);
 }
 
 /** Returns the number to add to word-align the given pointer to a uint_t-bit
     boundary.
     @param ptr The address to align.
-    @return The offset to add to the ptr to word align it.
-    */
+    @return The offset to add to the ptr to word align it. */
 template<typename T>
-KABUKI uintptr_t WordAlignOffset (void* ptr) {
+inline uintptr_t WordAlignOffset (void* ptr) {
     // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
     // This allows the algorithm to word align without any if statements.
     // The algorithm works the same for all memory widths as proven by the
@@ -77,47 +76,89 @@ KABUKI uintptr_t WordAlignOffset (void* ptr) {
     return ((~reinterpret_cast<uintptr_t> (ptr)) + 1) & (sizeof (T) - 1);
 }
 
-KABUKI byte* WordAlign (byte* ptr);
+/** Word aligns the given byte pointer up in addresses.
+    @param ptr Pointer to align.
+    @return Next word aligned up pointer. */
+inline byte* WordAlign (byte* ptr) {
+    return ptr + (((~reinterpret_cast<uintptr_t> (ptr)) + 1) &
+        (sizeof (byte*) - 1));
+}
 
-KABUKI uintptr_t* WordAlign64 (uintptr_t* buffer);
+inline uintptr_t* WordAlign64 (uintptr_t* buffer) {
+    byte* byte_ptr = reinterpret_cast<byte*> (buffer);
+    uintptr_t offset = (((~reinterpret_cast<uintptr_t> (buffer)) + 1) &
+        (sizeof (uint64_t) - 1));
+    return reinterpret_cast<uintptr_t*> (byte_ptr + offset);
+}
+
+uintptr_t WordAlignSize (uintptr_t size) {
+    // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
+    // This allows the algorithm to word align without any if statements.
+    // The algorithm works the same for all memory widths as proven by the
+    // truth table bellow.
+    // ~000 = 111 => 000 + 111 + 1 = 0x1000
+    // ~001 = 110 => 001 + 110 + 1 = 0x1000
+    // ~010 = 101 => 010 + 101 + 1 = 0x1000
+    // ~011 = 100 => 011 + 100 + 1 = 0x1000
+    // ~100 = 011 => 100 + 011 + 1 = 0x1000
+    // ~101 = 010 => 101 + 010 + 1 = 0x1000
+    // ~110 = 001 => 110 + 001 + 1 = 0x1000
+    // ~111 = 000 => 111 + 000 + 1 = 0x1000
+    //                                       v----- Mask
+    return size + (((~size) + 1) & (sizeof (uintptr_t) - 1));
+}
+
 
 //KABUKI uintptr_t AlignSize (uintptr_t size);
-KABUKI uintptr_t AlignSize64 (uintptr_t size);
+inline uintptr_t AlignSize64 (uintptr_t size) {
+    // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
+    // This allows the algorithm to word align without any if statements.
+    // The algorithm works the same for all memory widths as proven by the
+    // truth table bellow.
+    // ~000 = 111 => 000 + 111 + 1 = 0x1000
+    // ~001 = 110 => 001 + 110 + 1 = 0x1000
+    // ~010 = 101 => 010 + 101 + 1 = 0x1000
+    // ~011 = 100 => 011 + 100 + 1 = 0x1000
+    // ~100 = 011 => 100 + 011 + 1 = 0x1000
+    // ~101 = 010 => 101 + 010 + 1 = 0x1000
+    // ~110 = 001 => 110 + 001 + 1 = 0x1000
+    // ~111 = 000 => 111 + 000 + 1 = 0x1000
+    //                                       v----- Mask
+    return size + (((~size) + 1) & (sizeof (uint64_t) - 1));
+}
 
 /** Calculates the difference between the begin and end address. */
-KABUKI uintptr_t Diff (void* begin, void* end);
+inline uintptr_t Diff (void* begin, void* end) {
+    return static_cast<uintptr_t>(reinterpret_cast<byte*> (end) -
+                                  reinterpret_cast<byte*> (begin));
+}
 
 /** Calculates the difference between the begin and end address. */
-KABUKI uintptr_t Diff (const void* begin, const void* end);
+inline uintptr_t Diff (const void* begin, const void* end) {
+    byte* start = static_cast<byte*> (const_cast<void*> (begin)),
+        *stop = static_cast<byte*> (const_cast<void*> (end));
+    return static_cast<uintptr_t> (stop - start);
+}
+
+/** Overwrites the memory with zeros functionally identical to memset.
+    @warning Sharp knives: Function used to make L3 compiler warnings stop
+             barking on known safe memory blocks. Newbs have been warned. */
+KABUKI void MemoryClear (void* address, size_t size);
+
+/** Copies the source to the destination functionally identical to memcpy.
+    @warning Sharp knives: Function used to make L3 compiler warnings stop
+             barking on known safe memory blocks. Newbs have been warned. */
+KABUKI size_t MemoryCopy (void* destination, size_t size, const void* source);
 
 #if USE_MORE_ROM
 /** Prints out the contents of the address to the debug stream. */
 KABUKI void PrintMemory (const void* address, const void* end);
 
-KABUKI void PrintMemory (const void* address, size_t size);
-#endif  //< USE_MORE_ROM
-
-/** Overwrites the memory with zeros. */
-KABUKI void MemoryClear (void* address, size_t size);
-
-/** Copies the source to the destination. */
-KABUKI size_t MemoryCopy (void* destination, size_t size, const void* source);
-
-/*< Creates a buffer from dynamic memory. */
-template<typename T, typename U>
-KABUKI T* New (U const size, U min_size) {
-    if (size < min_size) return nullptr;
-    byte* buffer;
-    try {
-        buffer = new byte[size];
-#if DEBUG
-        memset (buffer, '\0', size);
-#endif
-        return reinterpret_cast<T*>(buffer);
-    } catch (...) {
-        return nullptr;
-    }
+inline void PrintMemory (const void* address, size_t size) {
+    const char* end = reinterpret_cast<const char*>(address) + size;
+    PrintMemory (address, end);
 }
+#endif  //< USE_MORE_ROM
 
 }       //< namespace _
 

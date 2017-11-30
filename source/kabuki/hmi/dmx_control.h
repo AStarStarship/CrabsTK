@@ -1,57 +1,52 @@
-/** Kabuki Starship
-    @file    ~/Source/_hmi/DMXControl.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <https://calemccollough.github.io>
-
-                            All right reserved (R).
-
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/hmi/dmx_control.h
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
 */
  
-#pragma once
+#ifndef HEADER_FOR_KABUKI_HMI_DMXCONTROL
+#define HEADER_FOR_KABUKI_HMI_DMXCONTROL
 
-#include <KabukiTheater-Config.h>
-#include "Parameter<int>.h"
-#include <string>
+#include "parameter.h"
 
-namespace _hmi {
+namespace kabuki { namespace hmi {
 
 /** A DMX Control.
  */
-class _HMI_API DMXControl : public Parameter<int>
-{
+class KABUKI DmxControl : public Parameter<int> {
     public:
 
     enum {
         NumChannels = 512   //< The number of DMX512 channels.
     };
 
-    DMXControl (const char* newLabel = "", int newChannel = 0, int initValue = 0, int newMinValue = 0,
-        int newMaxValue = 255, int newWordSize = 8, int newAVControlType = Parameter<int>::DMXControl);
     /** Default constructor. */
+    DmxControl (const char* label = "", int channel = 0, int value = 0, 
+                int min_value = 0, int max_value = 255, int word_size = 8,
+                int control_type = Parameter<int>::DmxControl);
 
-    DMXControl (const DMXControl& o);
-    //< Copy contructor.
+    /** Copy contructor. */
+    DmxControl (const DmxControl& other);
 
-    ~DMXControl () {}
-    //< Virtual destructor.
+    /** Virtual destructor. */
+    ~DmxControl () {}
 
-    virtual void trigger () override {}
-    //< Triggers this DMX event to send out the target device.
+    /** Triggers this DMX event to send out the target device. */
+    virtual void Trigger () {}
     
-    void print () const;
-    /*< Prints this object to a stdout. */
-};
-
-}   //< _hmi
-}   //< _Theater
+    /** Prints this object to a stdout. */
+    void Print () const;
+    
+};      //< class DmxControl
+}       //< namespace hmi
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_HMI_DMXCONTROL
