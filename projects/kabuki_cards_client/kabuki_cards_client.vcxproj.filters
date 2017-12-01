@@ -11,21 +11,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="targetver.h">
-      <Filter>source</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="scriptdemoserver.cc">
+    <ClCompile Include="stdafx.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cc">
+    <ClCompile Include="kabukicardsclient.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

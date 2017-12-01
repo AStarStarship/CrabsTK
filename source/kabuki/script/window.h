@@ -50,7 +50,7 @@ class KABUKI Window : public Operation {
     virtual byte Pull ();
 
     /** Script Operations. */
-    virtual const Operation* Star (char_t index, Expression* expr);
+    virtual const Operation* Star (uint index, Expression* expr);
     
     private:
 

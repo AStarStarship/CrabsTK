@@ -24,7 +24,7 @@ class ChildOperand : public Operand {
     public:
     
     /** Chinese Room operations. */
-    virtual const Operation* Star (int index, Expression* expr) {
+    virtual const Operation* Star (uint index, Expression* expr) {
         void* args[2];
 
         static const Operation This = { "Child",
@@ -50,17 +50,17 @@ class ChildOperand : public Operand {
                                                        test_str_));
             }
             case 'B': {
-                static const Operation op_b = { "FloatTests",
+                static const Operation OpB = { "FloatTests",
                     Params<2, FLT, STR, kStringBufferSize> (),
                     Params<2, FLT, STR> (),
                     "Description of function \'B\'.", 0 };
-                if (!expr) return &op_b;
+                if (!expr) return &OpB;
 
-                if (ExprArgs (expr, op_b.params, Args (args, &test_flt_,
+                if (ExprArgs (expr, OpB.params, Args (args, &test_flt_,
                           test_str_)))
                     return expr->result;
 
-                return ExprResult (expr, op_b.result, Args (args, &test_flt_,
+                return ExprResult (expr, OpB.result, Args (args, &test_flt_,
                                                        test_str_));
             }
             case _::DEL: {
@@ -74,11 +74,11 @@ class ChildOperand : public Operand {
     private:
 
     enum {
-        kStringBufferSize = 16          //< Example string buffer size.
+        kStringBufferSize = 16         //< Example string buffer size.
     };
 
-    uint8_t test_ui1_;                  //< Text UI1.
-    float test_flt_;                    //< Test FLT.
+    uint8_t test_ui1_;                 //< Text UI1.
+    float test_flt_;                   //< Test FLT.
     char test_str_[kStringBufferSize]; //< Test STR.
 };
 
@@ -87,11 +87,11 @@ class Parent : public Operand {
     public:
 
     enum {
-        kStringBufferSize = 16          //< Example string buffer size.
+        kStringBufferSize = 16         //< Example string buffer size.
     };
 
     // Interprocess operations.
-    virtual const Operation* Star (int index, Expression* expr) {
+    virtual const Operation* Star (uint index, Expression* expr) {
         void* args[2];
 
         static const Operation This = { "Parent",
@@ -143,10 +143,10 @@ class Parent : public Operand {
 
     private:
     
-    ChildOperand child_a,               //< ChildOperand Expression in index 'A'.
-          child_b;                      //< ChildOperand Expression in index 'B'
-    float io_number_;                   //< Example variable.
-    char  io_string_[kStringBufferSize];//< Example string.
+    ChildOperand child_a,                //< ChildOperand Expression in index 'A'.
+                 child_b;                //< ChildOperand Expression in index 'B'
+    float io_number_;                    //< Example variable.
+    char  io_string_[kStringBufferSize]; //< Example string.
 };
 
 /** A test room that can fit in 1KB of RAM. */
@@ -164,7 +164,7 @@ class This : public Room {
     }
 
     // Interprocess operations.
-    virtual const Operation* Star (int index, Expression* expr) {
+    virtual const Operation* Star (uint index, Expression* expr) {
         static const Operation This = { "Room",
             NumOperations (1), FirstOperation ('A'),
             "Root scope device.", 0 };

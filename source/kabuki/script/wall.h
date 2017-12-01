@@ -57,7 +57,7 @@ class Wall : public Operation {
     public:
 
     enum {
-        kMinSizeBytes = 512, //< The minimum functional Wall size.
+        kMinSizeBytes = 512, //< Min functional Wall size.
     };
 
     virtual ~Wall ();

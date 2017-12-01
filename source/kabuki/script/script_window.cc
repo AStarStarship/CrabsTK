@@ -43,7 +43,7 @@ byte Window::Pull () {
     return 0;
 }
 
-const Operation* Window::Star (char_t index, Expression* expr) {
+const Operation* Window::Star (uint index, Expression* expr) {
     return 0;
 }
 

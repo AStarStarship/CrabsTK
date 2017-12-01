@@ -86,7 +86,7 @@ struct Expression {
 
     enum {
         kMinStackSize = 16,         //< The size of the expr stack.
-        kMinBufferSize = 2,         //< The minimum buffer size.
+        kMinBufferSize = 2,         //< Min buffer size.
     };
     
     uint_t           size,          //< The offset to the Bout slot.

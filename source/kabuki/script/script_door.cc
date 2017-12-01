@@ -89,7 +89,7 @@ const Operation* Door::ExecAll () {
     return 0;
 }
 
-const Operation* Door::Star (char_t index, Expression* expr) {
+const Operation* Door::Star (uint index, Expression* expr) {
     if (index < ' ') {
         static const Operation star = { "Door", 
             NumOperations (0), FirstOperation ('A'),

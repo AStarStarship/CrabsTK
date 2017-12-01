@@ -176,7 +176,7 @@ class Library: public Operand
     }
 
     /** ChineseRoom Operations. */
-    const Operation* Star (char_t index, Expression* expr) override {
+    const Operation* Star (uint index, Expression* expr) override {
         static const Operation This = { "Library",
             NumOperations (0), FirstOperation ('A'),
             "", 0 };

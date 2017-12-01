@@ -58,7 +58,7 @@ MEMORY_PROFILE 3.
 #define MAX_ERRORS          8         //< Max errors before locking up.
 #define MAX_NUM_PARAMS      26        //< Max number of parameters.
 #define MAX_STRING_LENGTH   64 * 1024 //< The max char length.
-#define MAX_NUM_SLOTS       256       //< The maximum number of Slots.
+#define MAX_NUM_SLOTS       256       //< Max number of Slots.
 #define COM_TIMEOUT_TICKS   100       //< The number of seconds before a timeout.
 //< over a generic communication link.
 #define CHAR_WIDTH          8         //< index width in bytes: 8, 16, or 32.

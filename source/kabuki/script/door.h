@@ -88,7 +88,7 @@ class Door : public Operand {
     const Operation* ExecAll ();
 
     /** Script expressions. */
-    virtual const Operation* Star (char_t index, Expression* expr);
+    virtual const Operation* Star (uint index, Expression* expr);
 
     private:
                                     //< vtable pointer here in memory.

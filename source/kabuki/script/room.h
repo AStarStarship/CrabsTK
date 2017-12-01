@@ -208,7 +208,7 @@ class Room: public Operand {
     virtual int Main (const char** args, int args_count);
 
     /** Script expressions. */
-    virtual const Operation* Star (char_t index, Expression* expr);
+    virtual const Operation* Star (uint index, Expression* expr);
 
 #if USE_MORE_ROM
     /** Prints the Room to the stdout. */
