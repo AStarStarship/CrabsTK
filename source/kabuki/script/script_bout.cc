@@ -613,10 +613,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 if ((type >> 7) && ((type & 0x1f) >= OBJ)) {
                     // Cannot have multi-dimensional arrays of objects!
                     type &= 0x1f;
-                    InvalidType: {
-                        return BoutResult (bout, Bout::RoomError, params, index,
-                                           start);
-                    }
+                    return BoutResult (bout, Bout::RoomError, params, index,
+                                       start);
                 }
                 type = type & 0x1f;   //< Mask off lower 5 bits.
                 switch (obj_size_width) {

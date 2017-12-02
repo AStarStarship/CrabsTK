@@ -1,5 +1,5 @@
 /** kabuki::cards
-    @file    ~/source/kabuki/hmi/config.h
+    @file    ~/source/kabuki/cards/config.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,5 +17,6 @@
 #define KABUKI_CARDS_COFIG_H
 
 #include "../script/global.h"
+#include "../data/array.h"
 
 #endif	//< KABUKI_CARDS_COFIG_H

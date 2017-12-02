@@ -186,14 +186,6 @@ KABUKI char* DuplicateString (const char* string,
     (const byte*). */
 KABUKI void DestroyDuplicate (const char* string);
 
-/*< Gets a random number. */
-template<typename T>
-KABUKI T GetRandom () {
-    srand (time (nullptr));
-    T random_number = static_cast<T>(rand ());
-    return random_number;
-}
-
 /** Converts a single byte a one-byte hex representation. */
 KABUKI byte NibbleToLowerCaseHex (byte b);
 
@@ -548,6 +540,7 @@ KABUKI bool IsToken (const char* input);
 
 /** Compute the next highest power of 2. */
 KABUKI int RoundToPowerOf2 (int value);
+
 /** Reads a single char from the keyboard
     @param header The header to print. */
 KABUKI char KeyboardChar (const char* header);

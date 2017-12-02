@@ -13,8 +13,8 @@
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
     
-    @brief This file contains the system configuration for ChineseRoom and apps
-           that use it.
+    @brief   This file contains the system configuration for ChineseRoom and 
+             apps that use it.
     @desc  
 */
 
@@ -27,7 +27,6 @@
 #include "memory.h"
 #include "text.h"
 #include "table.h"
-#include "tbook.h"
 #include "log.h"
 #include "tbook.h"
 #include "ascii.h"
@@ -38,5 +37,6 @@
 #include "room.h"
 #include "expression.h"
 #include "window.h"
+#include "random.h"
 
 #endif  //< SCRIPT_GLOBAL_H

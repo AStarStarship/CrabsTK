@@ -20,64 +20,64 @@
 
 namespace kabuki { namespace cards {
     
-/** Class that represents a CardStack point combination in a playing card game.
+/** A CardStack point combination in a playing card game.
     There are two major things that will effect a combination's rank besides
-    suit rank; the presence of jokers, and if aces are high or low.
-*/
+    suit rank; the presence of jokers, and if aces are high or low. */
 class CardCombo : public CardStack { 
-public:
+    public:
 
     /** Default constructor. */
-    CardCombo (CardStack& copyStack, int aces_high, int joker_pip_value1 = 0,
-               int joker_suit_value1 = 1, int joker_pip_value_2 = 0,
-               int joker_suit_value2 = 2);
+    CardCombo (const CardStack& cards, bool aces_high = false,
+               int joker_pip_1 = 0, int joker_suit_1 = 1,
+               int joker_pip_2 = 0, int joker_suit_2 = 2);
 
-    /** Function that returns the point value with the wild card and ace values. */
-    virtual int GetPointValue () = 0;
+    /** Sets the given variables settings. */
+    void Set (bool aces_high = false, int joker_pip_1 = 0, int joker_suit_1 = 1,
+              int joker_pip_2 = 0, int joker_suit_2 = 2);
 
-    /** Returns the joker_pip_value_1. */
-    int GetJokerPipValue1 ();
+    /** Function that returns the point value with the wild card and ace
+        values. */
+    virtual int GetValue () = 0;
+
+    /** Returns the joker_pip_1. */
+    int GetJokerPip1 ();
     
-    /** Sets the joker_pip_value_1 to the value. */
-    int SetJokerPipValue1 (int value);
+    /** Sets the joker_pip_1 to the value. */
+    bool SetJokerPip1 (int value);
 
-    /** Returns the joker_suit_value_1. */
+    /** Returns the joker_suit_1. */
     int GetJokerSuitValue1 ();
     
-    /** Sets the joker_suit_value_1 to the value. */
-    int SetJokerSuitValue1 (int value);
+    /** Sets the joker_suit_1 to the value. */
+    bool SetJokerSuitValue1 (int value);
 
-    /** Returns the joker_pip_value_2. */
-    int GetJokerPipValue2 ();
+    /** Returns the joker_pip_2. */
+    int GetJokerPip2 ();
     
-    /** Sets the joker_pip_value_2 to the value. */
-    int SetJokerPipValue2 (int value);
+    /** Sets the joker_pip_2 to the value. */
+    bool SetJokerPip2 (int value);
 
-    /** Returns the joker_suit_value_2. */
+    /** Returns the joker_suit_2. */
     int GetJokerSuitValue2 ();
     
-    /** Sets the joker_suit_value_2 to the value. */
-    int SetJokerSuitValue2 (int value);
+    /** Sets the joker_suit_2 to the value. */
+    bool SetJokerSuitValue2 (int value);
 
-    /** Returns the joker_pip_value_1. */
-    int GetAcesHigh ();
+    /** Returns the joker_pip_1. */
+    int AcesHigh ();
     
-    /** Sets the joker_pip_value_1 to the value. */
-    int SetAcesHigh (int value);
+    /** Sets the joker_pip_1 to the value. */
+    void SetAcesHigh (int value);
     
     private:
 
-    /** Function sets values to the new values. */
-    void SetValues (int aces_high, int joker_suit_value_1 = 0,
-                    int joker_pip_value_1 = 1, int joker_pip_value_2 = 0,
-                    int joker_suit_value_2 = 2);
-
-    int joker_pip_value_1_,   //< Black joker wildcard pip value.
-        joker_suit_value_1_,  //< Black joker wildcard suit value.
-        joker_pip_value_2_,   //< Red joker wildcard pip value.
-        joker_suit_value_2_,  //< Red joker wildcard suit value.
-        aces_high_;           //< Flag represents if aces are high (>1) or 
-                              //< low (0), or either (<0).
+    bool aces_high_;     //< Flag represents if aces are high (>1) or 
+                         //< low (0), or either (<0).
+    int  joker_pip_1_,   //< Black joker wildcard pip value.
+         joker_suit_1_,  //< Black joker wildcard suit value.
+         joker_pip_2_,   //< Red joker wildcard pip value.
+         joker_suit_2_;  //< Red joker wildcard suit value.
+        
 };      //< class CardCombo
 }       //< namespace cards
 }       //< namespace kabuki

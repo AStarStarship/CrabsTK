@@ -1,5 +1,5 @@
 /** kabuki::cards
-    @file       ~/source/kabuki/cards/blackjack/blackjackCardCombo.cc
+    @file       ~/source/kabuki/cards/blackjack_card_combo.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -12,50 +12,31 @@
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
-#include "BlackjackCardCombo.h"
+#include "blackjack_card_combo.h"
 
-using namespace kabuki_cards;
+namespace kabuki { namespace cards {
 
-BlackjackCardCombo::BlackjackCardCombo (CardStack& copyStack, int acesHighLowORNA) :
-    CardCombo (copyStack, acesHighLowORNA)
-{
-    setValues (0, 1, 0, 1, acesHighLowORNA);
+BlackjackCardCombo::BlackjackCardCombo (const CardStack& cards, bool aces_high) :
+    CardCombo (cards, aces_high) {
+    Set (0, 1, 0, 1, aces_high);
 }
 
-int BlackjackCardCombo::getPointValue ()
-{
+int BlackjackCardCombo::GetValue () {
     int total = 0;
-    Card* currentCard;
-    for (int i = 0; i < getNumCards (); ++i)
-    {
-        int currentPipValue = currentCard->getPipValue ();
+    Card* card;
+    for (int i = 0; i < GetCount (); ++i) {
+        card = GetCard (i);
+        int pip = card->GetPip ();
 
-        if (currentPipValue == 1) // If its an ace.
-        {
-            if (getAcesHigh ())
-                total += 10;
-            else
-                total += 1;
+        if (pip == Card::kAce) {
+            total += AcesHigh ()?10:1;
+        } else {
+            // Then just add the point to the score like normal.
+            total += card->GetValue ();
         }
-        else
-            total += currentCard->getPointValue (); //< Then just add the point to to the score like normal.
     }
     return total;
 }
 
-
-#if DEBUG_MODE
-
-#include "Deck.h"
-
-class BlackjackCardComboUnitTest : public UnitTest
-{
-    BlackjackCardComboUnitTest () : UnitTest ("Testing Blackjack::BlackjackCardCombo class...") {}
-
-    void runTest ()
-    {
-
-    }
-};
-static BlackjackCardComboUnitTest cardComboUnitTest;
-#endif // DEBUG_MODE
+}   //< namespace cards
+}   //< namespace kabuki

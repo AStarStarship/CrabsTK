@@ -21,6 +21,7 @@
 namespace kabuki { namespace data {
 
 /** An array of like types that can auto-grow.
+    This class is used to save a little bit of ROM space over the std::vector.
     To use this class with anything other than POD types the class T must have
     a overloaded operator= and operator==.
 */
@@ -52,7 +53,7 @@ class Array {
 
     /** Clears the array content by setting count_ to zero. */
     void Clear () {
-        cout_ = 0;
+        count_ = 0;
     }
 
     /** Gets the num_elements_. */
@@ -68,9 +69,10 @@ class Array {
     /** Returns true if this Array contains the given value.
          @warning Non-POD types must overload operator= and operator==. */
     bool Contains (T& element) {
-        for (int i = 0; i < cards_.GetCount (); ++i) {
-            if (cards_[i] == element)
+        for (int i = 0; i < count_; ++i) {
+            if (array_[i] == element) {
                 return true;
+            }
         }
         return false;
     }
@@ -127,13 +129,13 @@ class Array {
 
     /** Pushes the Array contents onto the Stack. */
     int Push (Array<T>& elements) {
-        int count = cards_.GetCount (),
+        int count = count_,
             other_count = elements.GetCount (),
             new_size = count + other_count;
         if (other_count <= 0) { // Nothing to do.
             return -1;
         }
-        if (new_size > cards_.GetSize ()) {
+        if (new_size > size_) {
             Grow (new_size);
         }
         T* ptr = &array_[count],
@@ -141,16 +143,17 @@ class Array {
         for (int i = 0; i < new_size; ++i) {
             *ptr = *element++;
         }
+        return count_;
     }
 
     /** Pops an element off the stack. */
-    int Pop (T& element) {
+    T Pop () {
         int count = count_;
         if (count == 0)
             return 0;
-        element = array_[count - 1];
+        T element = array_[count - 1];
         count_ = count - 1;
-        return count;
+        return element;
     }
 
     /** Removes the given index from the array. */
@@ -173,8 +176,8 @@ class Array {
     /** Returns true if this Array contains the given value.
          @warning Non-POD types must overload operator= and operator==. */
     bool RemoveFirstInstanceOf (T& element) {
-        for (int i = 0; i < cards_.GetCount (); ++i) {
-            if (cards_[i] == element)
+        for (int i = 0; i < count_; ++i) {
+            if (array_[i] == element)
                 return Remove (i);
         }
         return false;

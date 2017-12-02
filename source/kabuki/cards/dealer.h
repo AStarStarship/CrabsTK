@@ -24,7 +24,7 @@ namespace kabuki { namespace cards {
 /** A class that represents a dealer in a card game. 
     A dealer has the Deck of cards, but is not necessarily a player. A dealer
     needs to keep track of all of the Players. */
-class Dealer {
+class KABUKI Dealer {
     public:
     
     /** Constructor. */
@@ -44,10 +44,10 @@ class Dealer {
     int GetMaxNumCardsPerHand ();
 
     /** Sets the minNumCardsPerHand to the num_cards. */
-    int SetMinNumCardsPerHand (int num_cards);
+    bool SetMinNumCardsPerHand (int num_cards);
     
     /** Sets the maxNumCardsPerHand to the num_cards. */
-    int SetMaxNumCardsPerHand (int num_cards);
+    bool SetMaxNumCardsPerHand (int num_cards);
 
     void AddPlayer (Player* newPlayer);
     /** Adds the newPlayer to the game.
@@ -86,14 +86,14 @@ class Dealer {
     int GetNumDecks ();
     
     /** Sets the numDecks to the new_num_decks. */
-    void SetNumDecks (int new_num_decks);
+    bool SetNumDecks (int new_num_decks);
 
     /** Returns the deckSize. */
     int GetDeckSize ();
     
     /** Sets the deckSize.
         @param num_decks The number of decks in use. */
-    void SetDeckSize (int num_decks);
+    bool SetDeckSize (int num_decks);
 
     /** Returns the total number of points in the pot */
     int GetStartingAnte ();
@@ -134,21 +134,25 @@ class Dealer {
     void SetValues (int ante, int min_bet, int min_cards_per_hand,
                     int max_cards_per_hand, int max_num_player, int deck_size);
     
-    int           num_decks_,           //< Number of decks in this game.
-                  deck_size_,           //< Size of the deck for this game.
-                  pot_total_,           //< Number of points in the pot.
-                  starting_ante_,       //< Starting ante for the game.
-                  ante_,                //< Current ante for the game.
-                  min_bet_,             //< Min bet for this round.
-                  min_cards_per_hand_,  //< Min number of Cards per Hand.
-                  max_cards_per_hand_,  //< Max number of Cards per Hand.
-                  max_players_,         //< Max number of players in this game.
-                  current_player_num_;  //< Player number of the current player who is playing in this round.
-    Deck          pack_;                /*< Main pack of Card objects; the Deck owns the Card objects.
-                                            A pack of Cards is the entire deck of cards. Note: can be a DoubleDeck (which you should make). */
-    CardStack     stock_;               /*< Stock of playing Cards. */
-    data::Array<Player> players_;       /*< Array of Player objects.
-                                                 @todo This won't work for online play! */
+    int       num_decks_,           //< Number of decks in this game.
+              deck_size_,           //< Size of the deck for this game.
+              pot_total_,           //< Number of points in the pot.
+              starting_ante_,       //< Starting ante for the game.
+              ante_,                //< Current ante for the game.
+              min_bet_,             //< Min bet for this round.
+              min_cards_per_hand_,  //< Min number of Cards per Hand.
+              max_cards_per_hand_,  //< Max number of Cards per Hand.
+              max_players_,         //< Max number of players in this game.
+              player_number_;        /*< Player number of the current player who
+                                         is playing in this round. */
+    Deck      pack_;                /*< Main pack of Card objects; the Deck owns
+                                        the Card objects.
+                                        A pack of Cards is the entire deck of
+                                        cards. Note: can be a DoubleDeck (which
+                                        you should make). */
+    CardStack stock_;               //< Stock of playing Cards.
+    data::Array<Player*> players_;      //< Array of Player pointers.
+
 };      //< class Dealer
 }       //< namespace cards
 }       //< namespace kabuki

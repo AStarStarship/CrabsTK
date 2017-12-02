@@ -1,5 +1,5 @@
 /** kabuki::cards
-    @file       ~/source/kabuki/cards/dealer.h
+    @file    ~/source/kabuki/cards/dealer.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -21,7 +21,8 @@
 #include "player.h"
 
 namespace kabuki { namespace cards {
-/** A dealer in a card game. 
+
+/** A dealer in a card game.
     A dealer has the Deck of cards, but is not necessarily a player. A
     dealer needs to keep track of all of the Players. A BlackjackDealer is both
     a Player and a Dealer at the same time. */
@@ -29,21 +30,23 @@ class BlackjackDealer : public Player, public Dealer {
     public:
     
     enum {
-        kNumDecks           = 1,       //< Number of decks for this game.
-        kDeckSize           = 52,      //< Number of cards in the Deck.
-        kStartingPoints     = 999999,  //< Dealers starting points.
-        kStartingAnte       = 5,       //< Starting ante.
-        kMinBet             = 1,       //< Min bet.
-        kMinNumCardsPerHand = 2,       //< Min cards in a hand.
-        kMaxNumCardsPerHand = Deck::kDefaultNumCards, //<  Max cards in a hand.
-        kMaxNumPlayer       = 2,       //< Max players.
+        kNumDecks           = 1,      //< Number of decks for this game.
+        kDeckSize           = 52,     //< Number of cards in the Deck.
+        kStartingPoints     = 999999, //< Dealers starting points.
+        kStartingAnte       = 5,      //< Starting ante.
+        kMinBet             = 1,      //< Min bet.
+        kMinNumCardsPerHand = 2,      //< Min cards in a hand.
+        kMaxNumPlayer       = 2,      //< Max number of players.
+        kMaxNumCardsPerHand = Deck::kDefaultNumCards, //< Max cards in a hand.
+    };
 
-    /** Constructor. 
+    /** Default constructor. 
          This is why we like polymorphism. Notice all we have is a single 
          constructor here, because all of our code we are recycling from the
-         Dealer class.*/
+         Dealer class. */
     BlackjackDealer ();
-};
+
+};      //< class BlackjackDealer
 }       //< namespace cards
 }       //< namespace kabuki
 #endif  //< HEADER_FOR_KABUKI_CARDS_BLACKJACKDEADER

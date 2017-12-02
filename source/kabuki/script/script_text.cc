@@ -16,8 +16,8 @@
 
 #include <stdafx.h>
 
-#include "../script/text.h"
-#include "../script/memory.h"
+#include "text.h"
+#include "memory.h"
 
 using namespace std;
 

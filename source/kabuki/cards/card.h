@@ -24,24 +24,36 @@ namespace kabuki { namespace cards {
     Cards as we know them originated in Europe. We traditionally think of cards
     as only being clubs, hearts, diamonds, and spades, but there are also some
     other variations from other European countries. For more information on
-    them, please Wiki "Playing Card Suits". The nifty thing about these extra
+    them, please @wiki "Playing Card Suits". The nifty thing about these extra
     card decks, is that we can make a double deck of cards, and use the suit
     culture to tell the decks apart.
 */
-class Card {
+class KABUKI Card {
     public:
 
     enum {
+        kAce              = 1, //< Face value of an ace.
         kDefaultSuitValue = 1, //< Default suit value.
     };
 
     /** Enumerated list of the different suites on playing cards in various
-         countries. */
+         countries.
+         |   Culture    |    0   |    1     |   2    |    3    |
+         |:------------:|:------:|:--------:|:------:|:-------:|
+         |   Italian    | Cups   |  Coins   | Clubs  | Swords  |
+         |   Spanish    | Cups   |  Coins   | Clubs  | Swords  |
+         | Swiss-German | Roses  |  Bells   | Acorns | Shields |
+         |   German     | Hearts |  Bells   | Acorns | Leaves  |
+         |   French     | Hearts | Diamonds | Clubs  | Spades  |
+         */
     typedef enum class Suites { 
-        kClub = 1, kAcorn = 1, kCoin = 1, kBlack = 1, 
-        kDiamond = 2, kRose = 2, kCup = 2, kRed = 2, 
-        kHeart = 3, kBell = 3, 
-        kSpade = 4, kLief = 4, kShield = 4, kSword = 4 ,
+        kCup   = 0, kRose   = 0, kHeart   = 0,
+        kCoin  = 1, kBell   = 1, kDiamond = 1,
+        kClub  = 2, kAcorn  = 2,
+        kSword = 3, kShield = 3, kLief    = 3, kSpade = 3,
+        kRed   = 0, kBlack  = 2,
+        
+        
     } Suit;
 
     /** Enumerated list of the different French playing cards suites. */
@@ -81,7 +93,7 @@ class Card {
          Latin suites, because they are from countries that speak Romantic
          languages. */
     typedef enum SuitCultures {
-        kFrench = 1,
+        kFrench = 0,
         kGerman,
         kSwissGerman,
         kPiacentine,
@@ -107,27 +119,19 @@ class Card {
     static const char* kSuitCulturestrings[];
 
     /** Default constructor.
-        This constructor creates a simple card with no image. The faceValue will
-        equal the pointValue. Setting Default Values: When you put the = in the 
-        constructor, it sets the default value. This case, we can make a card
-        like this: Card example (); This constructor creates a Black Joker card.
+        There exists a single unique card for each of the 54 cards in a pack
+        of cards. Cards are taken from the pack and shuffled into the deck_
+        using pointers.
     */
-    Card (int pip_value = 0, Suit suit = Suit::kBlack);
-    
-    /** Verbose constructor. */
-    Card (int pip_value, Suit suit, int face_value, int point_value, 
-          int suit_value = kDefaultSuitValue,
-          SuitCulture culture = SuitCulture::kFrench,
-          const char* image_directory = nullptr);
-    
-    /** Copy constructor. */
-    Card (const Card& other);
+    Card ();
     
     /** Virtual destructor just in case we want to make a sub-class later. */
     virtual ~Card () {}
 
-    /** Operator= overlaoder deeps copies the other Card. */
-    Card& operator= (const Card& other);
+    /** Sets the values of the cards. */
+    void Set (int pip, Suit suit, int face_value, int point_value,
+              int suit_value = kDefaultSuitValue,
+              SuitCulture suit_culture = SuitCulture::kFrench);
 
     /** Compares this Card to the other Card.
         @return Returns 0 if they are identical.
@@ -141,18 +145,18 @@ class Card {
     /** Returns the pip value of this Card.
         The pip value is a number between 0-13 that represents which card it is: 
         J=0, A=1, 2-10, J=11, Q=12, K=13. */
-    int GetPipValue ();
+    int GetPip ();
                            
     /** Returns the face value of this Card
          The face value represents the rank of the card. */                         
-    int GetFaceValue ();
+    int GetFace ();
     
     /** Returns the point value of this Card
         The face value represents how many points this card is worth. */
-    int GetPointValue ();
+    int GetValue ();
                                      
     /** Sets the point value to the value. */          
-    void SetPointValue (int value);
+    void SetValue (int value);
     
     /** Returns the face value of this Card
         The face value represents how many points this card is worth. */
@@ -164,7 +168,8 @@ class Card {
     /** Returns the Card::Culture of this Deck.
         Function sets the suitCulture to the cardCulture. */
     SuitCulture GetSuitCulture ();
-        
+    
+
     void SetSuitCulture (SuitCulture culture);
 
     /** Returns a string representation of the suit. */
@@ -187,12 +192,6 @@ class Card {
     void Print ();
 
     private:
-    
-    //< Sets the values of the cards.
-    void SetCard (int pip_value, Suit suit, int face_value, int point_value,
-                  int suit_value = kDefaultSuitValue,
-                  SuitCulture suit_culture = SuitCulture::kFrench,
-                  const char* folder_path = nullptr);
 
     /** Loads the cardImage from the specified directory.
          We can address images in DLL(s) but not files or anything
@@ -200,14 +199,14 @@ class Card {
     */
     //Image LoadCardImage (const char* directory);
 
-    int         pip_value_,    //< Value of this Card from 0-13.
+    int         pip_,          //< Value of this Card from 0-13.
                 face_value_,   //< Face value of this Card from 1-14.
                 point_value_,  //< Number of points this Card is worth from 0-10.
                 suit_value_;   //< Value of this suit for changing suit's value.
     Suit        suit_;         //< Suit of this Card.
     SuitCulture suit_culture_; //< Culture of this Card.
     const char* suit_string_;  //< String that stores the suit.
-    //Image       card_image_;     //< Image of this Card.
+    //Image*       card_image_;//< Image of this Card.
 };      //< class Card
 }       //< namespace cards
 }       //< namespace kabuki

@@ -1,5 +1,5 @@
 /** kabuki:cards_
-    @file    ~/source/kabuki/cards/card_stack.cc
+    @file    ~/source/kabuki/cards/cards_card_stack.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -24,26 +24,32 @@ CardStack::CardStack () :
     cards_ () {
     // Nothing to do here. ({:-)
 }
-
-CardStack::CardStack (CardStack& cards, int min_cards, int max_cards,
+/*
+CardStack::CardStack (const CardStack& cards, int min_cards, int max_cards,
                       bool visible) :
-    min_cards_ (min_cards < 0?0:min_cards),
-    max_cards_ (max_cards < 1?1:max_cards),
-    visible_ (visible) {
+    min_cards_ (min_cards < 0 ? 0 : min_cards),
+    max_cards_ (max_cards < 1 ? 1 : max_cards),
+    visible_   (visible),
+    cards_     (cards) {
     // Nothing to do here. ({:-)
-}
+} */
 
 CardStack::CardStack (Deck& deck) :
-    max_cards_ (deck.GetNumCards ()),
+    max_cards_ (deck.GetCount ()),
     visible_ (false) {
-    for (int i = 0; i < deck.GetNumCards (); ++i)
-        AddCard (deck.GetCard (i));
+    for (int i = 0; i < deck.GetCount (); ++i) {
+        Push (deck.GetCard (i));
+    }
+}
+
+void CardStack::Clear () {
+    cards_.Clear ();
 }
 
 CardStack::CardStack (const CardStack& other) :
     max_cards_ (other.max_cards_),
-    cards_ (other.cards_),
-    visible_ (other.visible_) {
+    cards_     (other.cards_    ),
+    visible_   (other.visible_  ) {
     // Nothing to do here.
 }
 
@@ -52,11 +58,12 @@ CardStack& CardStack::operator= (const CardStack& other) {
     max_cards_ = other.max_cards_;
     visible_ = other.visible_;
     cards_ = other.cards_;
+    return *this;
 }
 
 int CardStack::Compare (CardStack& other) {
-    int point_value       = GetPointValue (),
-        other_point_value = other.GetPointValue ();
+    int point_value       = GetValue (),
+        other_point_value = other.GetValue ();
 
     if (point_value > other_point_value)
         return 1;
@@ -65,10 +72,10 @@ int CardStack::Compare (CardStack& other) {
     return 0;
 }
 
-int CardStack::GetPointValue () {
+int CardStack::GetValue () {
     int total = 0;
     for (int i = 0; i < cards_.GetCount (); ++i) {
-        total += cards_.Element (i)->GetPointValue ();
+        total += cards_.Element (i)->GetValue ();
     }
     return total;
 }
@@ -85,7 +92,17 @@ void CardStack::Shuffle () {
     }
 }
 
-int CardStack::GetNumCards () {
+void CardStack::Shuffle (Deck& deck) {
+    int num_cards = deck.GetCount ();
+    CardStack cards (deck);
+    cards_.Grow (num_cards);
+    Clear ();
+    for (int i = 0; i < num_cards; ++i) {
+        cards_.Push (cards.TakeRandomCard ());
+    }
+}
+
+int CardStack::GetCount () {
     return cards_.GetCount ();
 }
 
@@ -93,16 +110,16 @@ int CardStack::GetMinNumCards () {
     return min_cards_;
 }
 
-int CardStack::GetMaxNumCards () {
+int CardStack::GetMaxCards () {
     return max_cards_;
 }
 
-int CardStack::AddCard (Card* card) {
+int CardStack::Push (Card* card) {
     if (card == nullptr) {
         return -1;
     }
-    if (GetNumCards () + 1 > max_cards_) {
-        return GetNumCards ();
+    if (GetCount () + 1 > max_cards_) {
+        return GetCount ();
     }
     if (max_cards_ > cards_.GetCount () + 1) {
         // Then we are a the max card number limit.
@@ -112,37 +129,41 @@ int CardStack::AddCard (Card* card) {
     return cards_.GetCount ();
 }
 
+Card* CardStack::Draw () {
+    return cards_.Pop ();
+}
+
 int CardStack::InsertCard (Card* card, int index) {
     if (index < 0)
         return -1;
     if (index > cards_.GetCount ())
         return -1;
-    if (GetNumCards () + 1 > max_cards_)
+    if (GetCount () + 1 > max_cards_)
         return 2;
 
-    cards_.Insert (card, index);
+    return cards_.Insert (card, index);
 }
 
-int CardStack::AddCards (CardStack& cards) {
-    if (GetNumCards () + cards.GetNumCards () > max_cards_)
+int CardStack::Push (CardStack& cards) {
+    if (GetCount () + cards.GetCount () > max_cards_)
         return 1;
 
-    cards_.Push (cards.cards_);
+    return cards_.Push (cards.cards_);
 }
 
-int CardStack::DrawCards (CardStack& stackToDrawFrom, int num_cards_take) {
+int CardStack::DrawCards (CardStack& cards, int num_cards_take) {
     if (num_cards_take < 0) { //< Remember the @pre thing???
         return -1;
     }
 
-    if (num_cards_take > stackToDrawFrom.GetNumCards ())
+    if (num_cards_take > cards.GetCount ())
         return 1;
 
-    if (GetNumCards () + num_cards_take > max_cards_)
+    if (GetCount () + num_cards_take > max_cards_)
         return 2;
 
     for (int i = 0; i < num_cards_take; ++i)
-        AddCard (stackToDrawFrom.TakeNextCard ());
+        Push (cards.TakeNextCard ());
 
     return 0;
 }
@@ -158,7 +179,7 @@ int CardStack::SetCards (CardStack& stack, int num_cards) {
     if (num_cards < 0)
         return -1;
 
-    if (num_cards > stack.GetNumCards ())
+    if (num_cards > stack.GetCount ())
         return 1;
 
     if (num_cards < min_cards_)
@@ -169,15 +190,21 @@ int CardStack::SetCards (CardStack& stack, int num_cards) {
 
     cards_.Clear ();
 
-    for (int i = 0; i < num_cards; ++i)
+    if (num_cards == 1) {
+        return cards_.Push (stack.GetCard (0));
+    }
+
+    for (int i = 0; i < num_cards - 1; ++i)
         cards_.Push (stack.GetCard (i));
+
+    return cards_.Push (stack.GetCard (num_cards - 1));
 }
 
 int CardStack::TakeCards (CardStack& stack, int num_cards) {
     if (num_cards < 0)
         return -1;
 
-    if (num_cards > stack.GetNumCards ()) {
+    if (num_cards > stack.GetCount ()) {
         // Not enough cards_ on the stack.
         return 1;
     }
@@ -192,9 +219,14 @@ int CardStack::TakeCards (CardStack& stack, int num_cards) {
 
     cards_.Clear ();
 
-    for (int i = 0; i < num_cards; ++i) {
+    if (num_cards == 1) {
+        return cards_.Push (stack.TakeNextCard ());
+    }
+
+    for (int i = 0; i < num_cards - 1; ++i) {
         cards_.Push (stack.TakeNextCard ());
     }
+    return cards_.Push (stack.TakeNextCard ());
 }
 
 Card* CardStack::GetCard (int index) {
@@ -231,7 +263,7 @@ Card* CardStack::TakeRandomCard () {
     if (cards_.GetCount () == 0) // Then there are no cards_ in the cards_.
         return nullptr;
 
-    srand (time (nullptr));
+    srand ((uint)time (nullptr));
 
     int randomIndex = rand () % cards_.GetCount ();
     Card* return_card = cards_[randomIndex];

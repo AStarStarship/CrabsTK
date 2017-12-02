@@ -91,7 +91,7 @@ inline uintptr_t* WordAlign64 (uintptr_t* buffer) {
     return reinterpret_cast<uintptr_t*> (byte_ptr + offset);
 }
 
-uintptr_t WordAlignSize (uintptr_t size) {
+inline uintptr_t WordAlignSize (uintptr_t size) {
     // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
     // This allows the algorithm to word align without any if statements.
     // The algorithm works the same for all memory widths as proven by the

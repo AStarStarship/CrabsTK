@@ -1,5 +1,5 @@
 /** kabuki::cards
-    @file       ~/source/kabuki/cards/blackjack/player.h
+    @file       ~/source/kabuki/cards/player.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -13,29 +13,46 @@
              permissions and limitations under the License.
 */
 
-#ifndef KABUKI_BLACKJACK_PLAYER_H
-#define KABUKI_BLACKJACK_PLAYER_H
+#ifndef HEADER_FOR_KABUKI_BLACKJACK_PLAYER
+#define HEADER_FOR_KABUKI_BLACKJACK_PLAYER
 
-#include "../../global.h"
+#include "dealer.h"
 
-#include "../Dealer.h"
+namespace kabuki { namespace cards {
 
-namespace kabuki_cards
-{
-namespace Blackjack
-{
-class BlackjackPlayer
-{
-public:
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/** A player in a Blackjack game. */
+class BlackjackPlayer : public Player {
+    public:
+
+    enum States {
+        kWaitingState = 0,
+        kHittingState = 1,
+        kHoldingState = 2,
+    };
 
     /** Default Constructor. */
-    BlackjackPlayer (String playerName = "You", int startPoints = 10, bool playerOrDealer);
-    ~BlackjackPlayer ();                    //< Destructor.
-    
-    bool playOrPass (Dealer& dealer);       /*< AI function that determines if a player (usually the dealer) hits or holds. */
-    void playHand ();                       //< Function that performs the logic of playing a hand.
+    BlackjackPlayer (const char* player_name = "You", int start_points = 10,
+                     bool is_dealer = false);
+
+    /** Destructor. */
+    ~BlackjackPlayer ();
+
+    /** Psudo-AI function that determines if a player (usually the dealer) hits 
+        or holds. */
+    virtual bool PlayOrPass (Dealer& dealer);
+
+    /** Function that performs the logic of playing a hand. */
+    void PlayHand ();
+
+    /** Function that attempts to take a card from the Deck for a player.
+        @pre    The Deck must not be empty.
+        @pre    The player must have a max hand score of 21. */
+    void HitMe (CardStack& stock);
+
+    private:
+
+    State state; //< State of the BlackjackPlayer FSM.
 };
-}
-}
-#endif // KABUKI_CARDS__BLACKJACK__PLAYER_H_INCLUDED
+}       //< namespace cards
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_BLACKJACK_PLAYER

@@ -1,5 +1,5 @@
 /** kabuki::cards
-    @file       ~/source/kabuki/cards/blackjack/blackjackCardCombo.h
+    @file    ~/source/kabuki/cards/blackjack/blackjackCardCombo.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -12,24 +12,27 @@
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
-#ifndef KABUKI_CARDS__BLACKJACK__BLACKJACKCARDCOMBO_H_INCLUDED
-#define KABUKI_CARDS__BLACKJACK__BLACKJACKCARDCOMBO_H_INCLUDED
+#ifndef HEADER_FOR_KABUKI_CARDS_BLACKJACKCARDCOMBO
+#define HEADER_FOR_KABUKI_CARDS_BLACKJACKCARDCOMBO
 
 #include "card_combo.h"
 
-namespace kabuki_cards
-{
+namespace kabuki { namespace cards {
 /** Class that represents a CardCombo in a game.
-    There are two major things that will effect a combination's rank besides suit rank; the presence of jokers, and if aces are high or low.
+    There are two major things that will effect a combination's rank besides
+    suit rank; the presence of jokers, and if aces are high or low.
 */
 class BlackjackCardCombo : public CardCombo { 
     public:
 
     /** Default constructor.
     */
-    BlackjackCardCombo (const CardStack& copyStack, int acesHighLowORNA);
+    BlackjackCardCombo (const CardStack& cards, bool aces_high);
 
-    int getPointValue ();                           //< Function that returns the point value based on the ace value.
-};
-}
-#endif // KABUKI_CARDS__BLACKJACK__BLACKJACKCARDCOMBO_H_INCLUDED
+    /** Function that returns the point value based on the ace value. */
+    int GetValue ();
+    
+};      //< class BlackjackCardCombo
+}       //< namespace cards
+}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_CARDS_BLACKJACKCARDCOMBO

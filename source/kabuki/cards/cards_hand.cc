@@ -1,5 +1,5 @@
 /** kabuki:cards
-    @file    /.../KabukiTheater-Examples/kabuki_cards/kabuki_cards/Blackjack/Hand.cc
+    @file    ~/source/kabuki/cards/hand.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -12,121 +12,90 @@
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
-#include "Hand.h"
+
+#include "hand.h"
+
+using namespace _;
+using namespace std;
 
 namespace kabuki { namespace cards {
 
-Hand::Hand (CardStack& stock, int minCards, int maxNumCards) :
-    minNumCards (boundInt1(minCards)),
-    maxNumCards (boundInt1(maxNumCards)),
-    visibleCards (CardStack ()),
-    nonVisibleCards (CardStack ())
-{
+Hand::Hand (CardStack& stock, int min_cards, int max_cards) :
+    min_cards_ (min_cards),
+    max_cards_ (max_cards),
+    visible_cards_ (),
+    nonvisible_cards_ () {
 }
 
-Hand& Hand::operator= (const Hand& other)
-{
-    minNumCards = other.minNumCards;
-    maxNumCards = other.maxNumCards;
-
-    visibleCards = other.visibleCards;
-    nonVisibleCards = other.nonVisibleCards;
+int Hand::GetMinNumCards () {
+    return min_cards_;
 }
 
-int Hand::getMinNumCards ()
-{
-    return minNumCards;
-}
-
-int Hand::setMinCards (int newNumCards)
-{
-    if (newNumCards < 0)
-        return newNumCards;
-    minNumCards = newNumCards;
+int Hand::SetMinCards (int value) {
+    if (value < 0)
+        return value;
+    min_cards_ = value;
     return 0;
 }
 
-int Hand::getMaxNumCards ()
-{
-    return maxNumCards;
+int Hand::GetMaxCards () {
+    return max_cards_;
 }
 
-int Hand::getNumCards ()
-{
-    return visibleCards.size () + nonVisibleCards.size ();
+int Hand::GetCount () {
+    return visible_cards_.GetCount () + nonvisible_cards_.GetCount ();
 }
 
-int Hand::setMaxCards (int newNumCards)
-{
-    if (newNumCards < 0)
+int Hand::SetMaxCards (int value) {
+    if (value < 0)
         return 1;
-    minNumCards = newNumCards;
+    min_cards_ = value;
     return 0;
 }
 
-int Hand::drawCard (CardStack& stack)
-{
-    return addCard (stack.takeCard ());
+int Hand::Add (Card* card) {
+    return GetCards ().Push (card);
 }
 
-CardStack Hand::getCards ()
-{
+int Hand::Draw (CardStack& stack) {
+    return Add (stack.TakeNextCard ());
+}
+
+CardStack Hand::GetCards () {
     auto returnStack = CardStack ();
 
     return returnStack;
 }
 
-CardStack& Hand::getVisibleCards ()
-{
-    return visibleCards;
+CardStack& Hand::GetVisibleCards () {
+    return visible_cards_;
 }
 
-CardStack& Hand::getNonVisibleCards ()
-{
-    return nonVisibleCards;
+CardStack& Hand::GetNonVisibleCards () {
+    return nonvisible_cards_;
 }
 
-string Hand::tostring ()
-{
-    string returnstring = "Cards:\n" + dashedLnBreak + visibleCards.tostring ();
+void Hand::Organize () {}
 
-    if (nonVisiblePile.getNumCards () > 0)
-        returnstring += "\n\nNon-visible Cards:\n" + nonVisibleCards.tostring ();
-}
+void Hand::Print () {
+    cout << "\n| Cards:";
+    PrintLine ('-');
+    visible_cards_.Print ();
 
-
-#if DEBUG_MODE
-
-#include "Deck.h"
-
-class HandUnitTest : public UnitTest
-{
-    HandUnitTest () : UnitTest ("Testing Blackjack::Hand class...") {}
-
-    void runTest ()
-    {
-        logMessage ("Creating deck...");
-
-        Deck pack (Deck::Culture Deck::french, Deck::acesHighOrLow, Deck::doesNotContainJokers);
-
-        CardStack deck = CardStack (pack);
-
-        deck.shuffle ();
-
-        logMessage ("Creating playerHand");
-
-        Hand playerHand (deck.takeNextCard (), deck.takeNextCard ()),
-            dealersHand (deck.takeNextCard (), deck.takeNextCard ());
-
-        logMessage ("Testing string Hard::tostring ()...");
-        logMessage (playerHand.tostring);
-        logMessage (dealersHand.tostring);
-
-        logMessage ("Creating Hands Player{Ace of Hearts, Ace of Clubs) Dealer{ King of Hearts, Nine of Diamonds } ...");
-        playersHand.setCards ();
+    if (nonvisible_cards_.GetCount () > 0) {
+        cout << "\n|\n| Non-visible Cards: ";
+        nonvisible_cards_.Print ();
     }
-};
-static HandUnitTest cardPileUnitTest;
-#endif // DEBUG_MODE
+}
 
-}   //< kabuki_cards
+Hand& Hand::operator= (const Hand& hand) {
+    min_cards_ = hand.min_cards_;
+    max_cards_ = hand.max_cards_;
+
+    visible_cards_ = hand.visible_cards_;
+    nonvisible_cards_ = hand.nonvisible_cards_;
+    return *this;
+}
+
+}   //< namespace cards
+}   //< namespace kabuki

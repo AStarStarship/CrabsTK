@@ -13,8 +13,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef KABUKI_CARDS_HAND_H
-#define KABUKI_CARDS_HAND_H
+#ifndef HEADER_FOR_KABUKI_CARDS_HAND_H
+#define HEADER_FOR_KABUKI_CARDS_HAND_H
 
 #include "card_stack.h"
 #include "card_combo.h"
@@ -22,25 +22,28 @@
 namespace kabuki { namespace cards {
     
 /** Class that represents a hand in a playing card game.
-    In most cases, the player will have a visible set of cards, and a non-visible set of cards.
+    In most cases, the player will have a visible set of cards, and a
+    non-visible set of cards.
 */
 class Hand : public CardStack { 
     public:
 
-    /** Default constructor. */
-    Hand ();
-
     /** Constructs an empty hand with the given parameters.
-        In order to create a Hand, first create a CardStack with a maxNumCards, and add the minimumNumCards to it.
+        In order to create a Hand, first create a CardStack with a
+        max_num_cards, and add the minimumNumCards to it.
         @pre    stock.getNumCards must be > minCards!!!
     */
-    Hand (CardStack& stock, int minCards = 1, int maxNumCards = Deck::defaultNumCardsWithJokers);
+    Hand (CardStack& stock, int min_cards = 1,
+          int max_cards = Deck::kFullDeckSize);
     
     /** Virtual destructor. */
     virtual ~Hand () {}
 
-    /** Operator= overloader deep copiers the state of the other object. */
-    Hand& operator= (const Hand& other);
+    /** Compares this hand to the other hand.
+    @return Returns 0 if they are equal, 1 if this hand is greater than
+    the other Hand, and -1 if the other Hand is greater than this
+    Hand. */
+    virtual int Compare (const Hand& other) = 0;
 
     /** Returns the minNumCards in a Hand. */
     int GetMinNumCards ();
@@ -48,22 +51,22 @@ class Hand : public CardStack {
     /** Sets the minNumCards to the newNumCards. */
     int SetMinCards (int newNumCards);
 
-    /** Returns the maxNumCards in a Hand. */
-    int GetMaxNumCards ();
+    /** Returns the max_num_cards in a Hand. */
+    int GetMaxCards ();
     
     /** Sets the minNumCards to the newNumCards. */
     int SetMaxCards (int newNumCards);
 
-    /** Retruns the number of Cards in this Hand. */
-    int GetNumCards ();
+    /** Returns the number of Cards in this Hand. */
+    int GetCount ();
 
     /** Adds the card to this Hand. */
-    virtual int AddCard (Card* card);
+    virtual int Add (Card* card);
 
     /** Adds the card to this Hand. */
-    int DrawCard (CardStack& stack);
+    int Draw (CardStack& stack);
     
-    /** Returns a combination of the visible and nonvisible cards. */
+    /** Returns a combination of the visible and non-visible cards. */
     CardStack GetCards ();
     
     /** Returns the visibleCards. */
@@ -73,29 +76,24 @@ class Hand : public CardStack {
     CardStack& GetNonVisibleCards ();
 
     /** Returns a list different hand point combinations for this game. */
-    virtual Array<CardCombo> GetHandCombos ();
-
-    /** Compares this hand to the other hand.
-        @return Returns 0 if they are equal, 1 if this hand is greater than 
-            the other Hand, and -1 if the other Hand is greater than this Hand. */
-    virtual int Compare (const Hand& other);
+    //virtual data::Array<CardCombo> GetHandCombos ();
 
     /** Virtual function that organizes the player's hand. */
-    virtual void Organize () {}
+    virtual void Organize ();
     
     /** Returns a string representation of this Object. */
-    void Print (_::Log& log);
+    void Print ();
 
-    private:
+    /** Overloaded operator= deep copiers the state of the other object. */
+    Hand& operator= (const Hand& other);
 
-    int       minNumCards,      //< Min number of cards in a Hand.
-              maxNumCards;      //< Max number of cards in a Hand.
+    protected:
 
-    CardStack visibleCards,     //< The visible cards.
-              nonVisibleCards;  //< The non-visible cards.
-};
-
+    int       min_cards_,        //< Min number of cards in a Hand.
+              max_cards_;        //< Max number of cards in a Hand.
+    CardStack visible_cards_,    //< Visible cards.
+              nonvisible_cards_; //< Non-visible cards.
+};      //< class Hand
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< KABUKI_CARDS_HAND_H
-
+#endif  //< HEADER_FOR_KABUKI_CARDS_HAND_H

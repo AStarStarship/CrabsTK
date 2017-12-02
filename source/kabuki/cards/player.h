@@ -21,36 +21,52 @@
 
 namespace kabuki { namespace cards {
 
-class Player
-{
+/** An abstract player in an abstract card game. */
+class Player {
     public:
 
     /** Default Constructor. */
-    Player (string thisPlayerName = "You", int startPoints = 10, bool playerOrDealer = false);
+    Player (const char* player_name = "You", int start_points = 10,
+            bool is_dealer = false);
     
     /** Virtual destructor. */
     virtual ~Player () {}
 
+    /** Resets the number of wins to 0. */
+    virtual void DealHand (CardStack& stock) = 0;
+
+    /** Processes beginning of round logic.
+        It's not really possible to predict what function parameters this
+        this function will need so you will need to pass them into your 
+        sub-class object constructor.
+    */
+    virtual void BeginRound () = 0;
+
+    /** Processes beginning of round logic.
+        It's not really possible to predict what function parameters this
+        this function will need so you will need to pass them into your 
+        sub-class object constructor.
+    */
+    virtual void EndRound () = 0;
+
     /** Virtual function that determines if this Player plays, or passes. */
-    virtual bool playOrPass (Hand& other) = 0;
-    
-    /** Virtual function that performs a Player's turn. */
-    virtual void PlayHand () = 0;
-    
-    /** Virtual function that performs the discard action. */
-    virtual Array<Card*> Discard ();
+    virtual bool PlayOrPass (Hand& other);
 
     /** Returns the player_name_. */
     const char* GetName ();
+
+    int GetState ();
+
+    virtual const char* SetState (int state);
     
     /** Sets the playerName to the newName. */
     void SetName (const char* newName);
     
     /** Returns the player's hand. */
-    Hand& GetHand ();
+    Hand* GetHand ();
     
     /** Sets the hand to the newHand. */
-    void SetHand (Hand& newHand);
+    void TakeHand (Hand* newHand);
 
     /** Returns the point total. */
     int GetNumPoints ();
@@ -60,12 +76,13 @@ class Player
     int AddPoints (int num_points);
                   
     /** Removes the specified numPoints from the players point total.
-        @return Returns 0 upon success, -1 if thesePoints is less than 0, or returns the number of missing points if the 
-            player doesn't have enough points to take. */                                  
+        @return Returns 0 upon success, -1 if thesePoints is less than 0, or
+                returns the number of missing points if the player doesn't
+                have enough points to take. */                                  
     int RemovePoints (int num_points);
                    
     /** Resets the numWins to 0. */
-    void resetWins ();
+    void ResetWins ();
     
     /** Returns the number of wins. */
     int GetNumWins ();
@@ -73,19 +90,17 @@ class Player
     /** Adds a win to the players numWins. */
     void AddWin ();
 
-    /** Resets the number of wins to 0. */
-    void DealHand (Hand& newHand);
-
-    /** Returns a string reprentation of this object. */
-    void Print (_::Log& log);
+    /** Prints this object to the console. */
+    void Print ();
 
     private:
 
-    string name_;       //< The Player's name.
-    bool   is_dealer_;  //< Stores if this player is the dealer or not.
-    int    num_points_, //< The number of points.
-           num_wins_;   //< The total number of wins.
-    Hand&  hand_;       //< The Player's Hand.
+    const char* name_;       //< Player's name.
+    bool        is_dealer_;  //< Flags if this player is the dealer or not.
+    int         state_,      //< The state of the player.
+                num_points_, //< Number of points.
+                num_wins_;   //< Total number of wins.
+    Hand*       hand_;       //< Player's Hand.
 };
 
 }       //< namespace cards

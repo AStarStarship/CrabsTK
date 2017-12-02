@@ -13,7 +13,8 @@
              permissions and limitations under the License.
 */
 
-#pragma once
+#ifndef HEADER_FOR_KABUKI_CARDS_CARDSTACK
+#define HEADER_FOR_KABUKI_CARDS_CARDSTACK
 
 #include "card.h"
 #include "deck.h"
@@ -34,9 +35,9 @@ class CardStack {
     CardStack ();
     
     /** Verbose constructor. */
-    CardStack (CardStack& cards, int min_num_cards = 0, 
-               int max_num_cards = Deck::kFullDeckSize,
-               bool is_visible = false);
+    //CardStack (const CardStack& cards, int min_num_cards, 
+    //           int max_num_cards = Deck::kFullDeckSize,
+    //           bool is_visible = false);
     
     /** Creates a CardStack from the deck. */
     CardStack (Deck& deck);
@@ -47,35 +48,38 @@ class CardStack {
         
     /** Destructor. */
     virtual ~CardStack () {}
-    
-    /** Operator= makes this object = other object. */
-    CardStack& operator= (const CardStack& other);
+
+    /** Removes all the cards from the stack. */
+    void Clear ();
 
     /** Compares this CardStack to the other CardStack.
-        @return Returns 0 if the two have equal values, 1 if this stack is greater, and -1 if the other stack is 
-        greater. */
+        @return Returns 0 if the two have equal values, 1 if this stack is
+                greater, and -1 if the other stack is greater. */
     virtual int Compare (CardStack& other);
         
     /** Returns the point value total of this stack of cards. */
-    virtual int GetPointValue ();
+    virtual int GetValue ();
 
     /** Shuffles this CardStack. */
     void Shuffle ();
 
+    /** Shuffles this CardStack. */
+    void Shuffle (Deck& deck);
+
     /** Returns the number of Card(s) in this stack. */
-    int GetNumCards ();
+    int GetCount ();
     
     /** Returns the minNumCards. */
     int GetMinNumCards ();
     
     /** Returns the maxNumCards. */
-    int GetMaxNumCards ();
+    int GetMaxCards ();
 
     /** Adds the card to top of the stack.
          @param card The Card to add.
          @return Returns the number of cards in the deck or -1 if the operation
                  failed. */
-    int AddCard (Card* card);
+    int Push (Card* card);
     
     /** Inserts the card into the stack at the specified index.
         @return Returns 0 upon success
@@ -83,27 +87,36 @@ class CardStack {
         @return Returns 2 if adding a card about exceed the manNumCards. */
     int InsertCard (Card* card, int index);
         
-    /** Adds the cards to the stack.
-        Functions takes the num_cards_take from the cardsToTakeFrom and adds them to this Stack.
-        @pre    cardsToTakeFrom.getNuMCards () must be > num_cards_take.
-        @pre    num_cards_take must be less than the maximum number of cards allowed.
+    /** Pushes the cards onto the stack.
+        Functions takes the num_cards_take from the cards and adds
+        them to this Stack.
+        @pre    cards.getNuMCards () must be > num_cards_take.
+        @pre    num_cards_take must be less than the maximum number of cards
+                allowed.
         @return Returns 0 upon success.
         @return Returns -1 if the num_cards_take is < 0.
-        @return Returns 1 if the num_cards_take is greater than the cardsToTakeFrom.getNumCards ()
-        @return Returns 2 if the num_cards_take would put the user over the maxNumCards.
+        @return Returns 1 if the num_cards_take is greater than the cards.getNumCards ()
+        @return Returns 2 if the num_cards_take would put the user over the
+                maxNumCards.
     */
-    int AddCards (CardStack& cards);
+    int Push (CardStack& cards);
+
+    /** Pops a card off the stack. */
+    Card* Draw ();
     
-    /** Attempts to draw the given number of cards from the deck if there is enough. 
+    /** Attempts to draw the given number of cards from the deck if there is
+        enough. 
         @return Returns the number of cards drawn. */
-    int DrawCards (CardStack& cardsToTakeFrom, int num_cards_take);
+    int DrawCards (CardStack& cards, int num_cards_take);
 
     /** Removes card from the stack.
-       @return Returns true upon success and false if this stack doesn't contain card. */
+        @return Returns true upon success and false if this stack doesn't 
+                contain the pointer. */
     bool RemoveCard (Card* card);
 
     /** Copies the num_cards from the stack
-        @pre    num_cards must be greater than the number of cards in the stock. */
+        @pre    num_cards must be greater than the number of cards in the
+                stock. */
     int SetCards (CardStack& stack, int num_cards);
         
     /** Draws the specified num_cards and adds them to this stack
@@ -112,7 +125,8 @@ class CardStack {
     int TakeCards (CardStack& stock, int num_cards);
         
     /** Returns a pointer to the Card at the specified index.
-        @return Returns nullptr if the index is greater than the number of Cards in this Hand. */
+        @return Returns nullptr if the index is greater than the number of Cards
+                in this Hand. */
     Card* GetCard (int index);
         
     /** Returns and removes the Card at the specified index. */
@@ -130,19 +144,23 @@ class CardStack {
     /** Returns if the stackIsVisible. */
     bool IsVisible ();
     
-    /** Sets stackIsVisible to the new visiblityState. */
-    void SetVisiblity (bool visiblityState);
+    /** Sets stackIsVisible to the new visibility. */
+    void SetVisiblity (bool visiblity);
 
     /** Prints this object to the log. */
     void Print ();
+
+    /** Operator= makes this object = other object. */
+    CardStack& operator= (const CardStack& other);
 
     private:
 
     int                min_cards_, //< Min number of cards in a stack.
                        max_cards_; //< Number of cards on the stack.
     bool               visible_;   //< Flag for card is visible or not.
-    data::Array<Card*> cards_;     //< Stack (i.e. Array) of Card pointers.
+    data::Array<Card*> cards_;     //< Stack (Array) of Card pointers.
 
 };      //< class CardStack
+}       //< namespace cards
 }       //< namespace kabuki
-}       //< namespace kabuki
+#endif  //< HEADER_FOR_KABUKI_CARDS_CARDSTACK

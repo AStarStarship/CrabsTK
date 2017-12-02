@@ -1,5 +1,5 @@
 /** kabuki:cards
-    @file    /.../KabukiTheater-Examples/kabuki_cards/kabuki_cards/Blackjack/CardCombo.cc
+    @file    ~/source/kabuki/cards/cards_card_combo.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,98 +17,100 @@
 
 namespace kabuki { namespace cards {
 
-CardCombo::CardCombo (CardStack& copyStack, int joker_pip_value1,
-                      int joker_suit_value_1, int joker_pip_value_2,
-                      int joker_suit_value_2, int aces_high) {
-    SetValues (joker_pip_value1, joker_suit_value_1, joker_pip_value_2,
-               joker_suit_value_2, aces_high);
+CardCombo::CardCombo (const CardStack& cards, bool aces_high,
+                      int joker_pip_1, int joker_suit_1,
+                      int joker_pip_2, int joker_suit_2) {
+    Set (aces_high, joker_pip_1, joker_suit_1, joker_pip_2, joker_suit_2);
 }
 
-void CardCombo::SetValues (int joker_pip_value1, int joker_suit_value_1,
-                           int joker_pip_value_2, int joker_suit_value_2,
-                           int aces_high) {
-    if (joker_pip_value1 < 1)
-        joker_pip_value1 = 1;
-    else if (joker_pip_value1 > 13)
-        joker_pip_value1 = 13;
+void CardCombo::Set (bool aces_high, int joker_pip_1, int joker_suit_1,
+                     int joker_pip_2, int joker_suit_2) {
+    if (joker_pip_1 < 1)
+        joker_pip_1 = 1;
+    else if (joker_pip_1 > 13)
+        joker_pip_1 = 13;
 
-    if (joker_pip_value_2 < 1)
-        joker_pip_value_2 = 1;
-    else if (joker_pip_value_2 > 13)
-        joker_pip_value_2 = 13;
+    if (joker_pip_2 < 1)
+        joker_pip_2 = 1;
+    else if (joker_pip_2 > 13)
+        joker_pip_2 = 13;
 
-    if (joker_suit_value_1 < 1)
-        joker_suit_value_1 = 1;
-    else if (joker_suit_value_1 > 4)
-        joker_suit_value_1 = 4;
+    if (joker_suit_1 < 1)
+        joker_suit_1 = 1;
+    else if (joker_suit_1 > 4)
+        joker_suit_1 = 4;
 
-    if (joker_suit_value_2 < 1)
-        joker_suit_value_2 = 1;
-    else if (joker_suit_value_2 > 4)
-        joker_suit_value_2 = 4;
+    if (joker_suit_2 < 1)
+        joker_suit_2 = 1;
+    else if (joker_suit_2 > 4)
+        joker_suit_2 = 4;
 
-    joker_pip_value_1_ = joker_pip_value1;
-    joker_suit_value_1_ = joker_suit_value_1;
-    joker_pip_value_2_ = joker_pip_value_2;
-    joker_suit_value_2_ = joker_suit_value_2;
+    joker_pip_1_ = joker_pip_1;
+    joker_suit_1_ = joker_suit_1;
+    joker_pip_2_ = joker_pip_2;
+    joker_suit_2_ = joker_suit_2;
     aces_high_ = aces_high;
 }
 
-int CardCombo::GetJokerPipValue1 () {
-    return joker_pip_value_1_;
+int CardCombo::GetJokerPip1 () {
+    return joker_pip_1_;
 }
 
-int CardCombo::SetJokerPipValue1 (int value) {
+bool CardCombo::SetJokerPip1 (int value) {
     if (value < 0)
-        return -1;
+        return false;
     if (value > 13)
-        return 1;
-    joker_pip_value_1_ = value;
+        return false;
+    joker_pip_1_ = value;
+    return true;
 }
 
 int CardCombo::GetJokerSuitValue1 () {
-    return joker_suit_value_1_;
+    return joker_suit_1_;
 }
 
-int CardCombo::SetJokerSuitValue1 (int value) {
+bool CardCombo::SetJokerSuitValue1 (int value) {
     if (value < 0)
-        return -1;
+        return false;
     if (value > 13)
-        return 1;
-    joker_suit_value_1_ = value;
+        return false;
+    joker_suit_1_ = value;
+    return true;
 }
 
-int CardCombo::GetJokerPipValue2 () {
-    return joker_pip_value_2_;
+int CardCombo::GetJokerPip2 () {
+    return joker_pip_2_;
 }
 
-int CardCombo::SetJokerPipValue2 (int value) {
+bool CardCombo::SetJokerPip2 (int value) {
     if (value < 0)
-        return -1;
+        return false;
     if (value > 13)
-        return 1;
-    joker_pip_value_2_ = value;
+        return false;
+    joker_pip_2_ = value;
+    return true;
 }
 
 int CardCombo::GetJokerSuitValue2 () {
-    return joker_suit_value_2_;
+    return joker_suit_2_;
 }
 
-int CardCombo::SetJokerSuitValue2 (int value) {
+bool CardCombo::SetJokerSuitValue2 (int value) {
     if (value < 0)
-        return -1;
+        return false;
     if (value > 13)
-        return 1;
-    joker_suit_value_2_ = value;
+        return false;
+    joker_suit_2_ = value;
+    return true;
 }
 
-int CardCombo::GetAcesHigh () {
+int CardCombo::AcesHigh () {
     return aces_high_;
 }
 
-int CardCombo::SetAcesHigh (int value) {
+void CardCombo::SetAcesHigh (int value) {
     aces_high_ = value;
 }
 
-}   //< namesapce cards
-}   //< namesapce kabuki
+}   //< namespace cards
+}   //< namespace kabuki

@@ -1,5 +1,5 @@
 /** kabuki::cards
-    @file       ~/source/kabuki/cards/blackjack/impl/blackjack_dealer.cc
+    @file       ~/source/kabuki/cards/blackjack_dealer.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -13,12 +13,16 @@
              permissions and limitations under the License.
 */
 
-#include "BlackjackDealer.h"
+#include "blackjack_dealer.h"
 
-using namespace kabuki_cards::Blackjack;
+namespace kabuki { namespace cards {
 
 BlackjackDealer::BlackjackDealer () :
-    Player ("Dealer", startingPoints),
-    Dealer (startingPoints, startingAnte, minBet, minNumCardsPerHand, maxNumCardsPerHand, maxNumPlayer)
-{
+    Player ("Dealer", kStartingPoints),
+    Dealer (kStartingPoints, kStartingAnte, kMinBet, kMinNumCardsPerHand,
+            kMaxNumCardsPerHand, kMaxNumPlayer) {
+    // Nothing to do here :-)
 }
+
+}   //< namespace cards
+}   //< namespace kabuki

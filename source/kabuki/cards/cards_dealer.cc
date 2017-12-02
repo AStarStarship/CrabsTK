@@ -1,5 +1,5 @@
 /** kabuki:cards
-    @file    /.../KabukiTheater-Examples/kabuki_cards/kabuki_cards/Blackjack/Dealer.cc
+    @file    ~/source/kabuki/cards/dealer.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -19,9 +19,9 @@ namespace kabuki { namespace cards {
 
 Dealer::Dealer (int ante, int min_bet, int min_cards_per_hand,
                 int max_cards_per_hand, int max_players, int deck_size) :
-    pack_    (Deck ()),
-    stock_   (pack_),
-    players_ (OwnedArray<Player> ()) {
+    pack_     (Deck ()),
+    stock_    (pack_),
+    players_  () {
     SetValues (ante, min_bet, min_cards_per_hand, max_cards_per_hand,
                max_players, deck_size);
 }
@@ -42,56 +42,51 @@ int Dealer::GetDeckSize () {
     return deck_size_;
 }
 
-int Dealer::SetDeckSize (int value) {
+bool Dealer::SetDeckSize (int value) {
     if (value < 1)
-        return -1;
+        return false;
     deck_size_ = value;
+    pack_.Reshuffle ();
+    return true;
 }
 
 int Dealer::GetNumDecks () {
     return num_decks_;
 }
 
-int Dealer::SetNumDecks (int value) {
+bool Dealer::SetNumDecks (int value) {
     if (value < 1)
-        return -1;
+        return false;
     num_decks_ = value;
 
-    pack_ = Deck ()
+    pack_.Reshuffle ();
+    return true;
 }
 
 int Dealer::GetMaxNumCardsPerHand () {
     return max_cards_per_hand_;
 }
 
-int Dealer::SetMinNumCardsPerHand (int num_cards) {
+bool Dealer::SetMinNumCardsPerHand (int num_cards) {
     if (num_cards < 1)
-        return -1;
+        return false;
     min_cards_per_hand_ = num_cards;
+    return true;
 }
 
-int Dealer::GetMaxNumCardsPerHand () {
-    return max_cards_per_hand_;
-}
-
-int Dealer::SetMinNumCardsPerHand (int num_cards) {
-    if (num_cards < 1)
-        return -1;
-    min_cards_per_hand_ = num_cards;
-}
-
-int Dealer::SetMaxNumCardsPerHand (int num_cards) {
+bool Dealer::SetMaxNumCardsPerHand (int num_cards) {
     if (num_cards < min_cards_per_hand_)
-        return -1;
+        return false;
     max_cards_per_hand_ = num_cards;
+    return true;
 }
 
 void Dealer::AddPlayer (Player* newPlayer) {
-    players_.Add (newPlayer);
+    players_.Push (newPlayer);
 }
 
 int Dealer::RemovePlayer (const char* playerName) {
-    for (int i = 0; i < players_.size (); ++i) {
+    for (int i = 0; i < players_.GetCount (); ++i) {
         if (players_[i]->GetName () == playerName) {
             players_.Remove (i);
             return i;
@@ -105,7 +100,7 @@ int Dealer::RemovePlayer (int player_number_) {
     if (player_number_ < 0)
         return -1;
 
-    if (player_number_ >= players_.size ())
+    if (player_number_ >= players_.GetCount ())
         return 1;
 
     players_.Remove (player_number_);
@@ -115,7 +110,7 @@ int Dealer::RemovePlayer (int player_number_) {
 Player* Dealer::GetPlayer (int player_number_) {
     if (player_number_ < 0)
         return nullptr;
-    if (player_number_ > players_.size ())
+    if (player_number_ > players_.GetCount ())
         return nullptr;
 
     return players_[player_number_];
@@ -184,15 +179,14 @@ void Dealer::SetMaxPlayers (int max_players) {
 }
 
 void Dealer::StartNewGame () {
-    stock_.Reset ();
     stock_.Shuffle ();
     Redeal ();
 }
 
 void Dealer::Redeal () {
-    for (Player* player : players_) {
-        Hand hand (stock_, 2, Deck::kFullDeckSize);
-        player->DealHand ();
+    for (int i = 0; i < players_.GetCount (); ++i) {
+        Player*  player = players_[i];
+        player->DealHand (stock_);
     }
 }
 
@@ -201,7 +195,7 @@ void Dealer::Print () {
 }
 
 void Dealer::SetValues (int ante, int min_bet, int min_cards_per_hand,
-                        int max_cards_per_hand, int newMaxNumPlayer,
+                        int max_cards_per_hand, int max_num_players,
                         int deck_size) {
     if (ante < 0)
         ante = 0;
@@ -215,8 +209,8 @@ void Dealer::SetValues (int ante, int min_bet, int min_cards_per_hand,
     if (max_cards_per_hand < 1)
         max_cards_per_hand = 1;
 
-    if (newMaxNumPlayer < 1)
-        newMaxNumPlayer = 1;
+    if (max_num_players < 1)
+        max_num_players = 1;
 
     pot_total_ = 0;
     starting_ante_ = ante;
@@ -224,7 +218,7 @@ void Dealer::SetValues (int ante, int min_bet, int min_cards_per_hand,
     min_bet_ = min_bet;
     min_cards_per_hand_ = min_cards_per_hand;
     max_cards_per_hand_ = max_cards_per_hand;
-    player_number_ = newMaxNumPlayer;
+    player_number_ = max_num_players;         //< Dealer is always 
 }
 
 }   //< namespace cards

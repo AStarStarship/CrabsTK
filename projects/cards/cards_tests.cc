@@ -35,92 +35,15 @@ TEST_GROUP (CARDS_TESTS) {
     }
 };
 
-TEST (CARDS_TESTS, DealerTests) {
-    cout << "\n| Testing CardStack class..."
-         << "\n| Creating testDeck...";
-
-    Deck testDeck = Deck ();
-
-    cout << "\n| Creating cards from testDeck...");
-
-    CardStack cards = CardStack (testDeck);
-
-    cards.Print ();
-
-    cout << "\n| Testing CardStack::shuffle()...";
-
-    cards.Shuffle ();
-
-    cards.Print ();
-}
-
-TEST (CARDS_TESTS, DealerTests) {
-    cout << "\n| Testing kabuki::cards::Dealer class...";
-    cout << "\n| Done testing kabuki::cards::Dealer class...";
-}
-
-TEST (CARDS_TESTS, DeckTests) {
-    cout << "\n| Testing kabuki::cards::Dealer class..."
-         << "Creating testDeck...";
-
-    Deck deck ();
-    deck.Print ();
-
-    for (int i = 0; i < 7; ++i) {
-        cout << "\n| Creating " << Card::kSuitCulturestrings[i]
-             << " Deck...";
-        Deck testDeck ((Card::SuitCulture) i, Deck::kAcesLow,
-                       Deck::kNoJokers);
-        testDeck.Print ();
-    }
-    //logMessage (testDeck.tostring ());
-    cout << "\n| Done testing kabuki::cards::Dealer class...";
-}
-
-TEST (CARDS_TESTS, CardComboTests) {
-    cout << "\n| Testing kabuki::cards::CardCombo class...";
-    cout << "\n| Done testing kabuki::cards::CardCombo class...";
-}
-
-TEST (CARDS_TESTS, CardTests) {
-    cout << "\n| Testing kabuki::cards::Card class..."
-         << "Creating test objects...";
-
-    const char* directory_path = "../../../resources/images/deck_art/french/vectorized-playing-cards/";
-
-    Card test_card_1 (12, (Card::Suit)1, 12, 1, "Clubs"   , directory_path),
-         test_card_2 (13, (Card::Suit)1, 14, 1, "Clubs"   , directory_path),
-         test_card_3 (12, (Card::Suit)2, 12, 2, "Diamonds", directory_path),
-         test_card_4 (13, (Card::Suit)1, 13, 1, "Hearts"  , directory_path);
-
-    cout << "\n| Testing string ToString()";
-    test_card_1.Print ();
-    test_card_2.Print ();
-    test_card_3.Print ();
-    test_card_4.Print ();
-
-    cout << "\n| Testing int Compare(const Card&)...";
-
-    CHECK (test_card_1.Compare (test_card_2) < 0)
-    //< "Error in int compare (const Card&) function");
-    CHECK (test_card_2.Compare (test_card_3) < 0)
-    //< "Error in int compare (const Card&) function");
-    CHECK (test_card_1.Compare (test_card_3) < 0)
-    //< "Error in int compare (const Card&) function");
-    CHECK (test_card_1.Equals (test_card_4) < 0)
-    //< "Error in bool equals (const Card&) function");
-
-    cout << "\n| Testing kabuki::cards::Card class..."
-}
-
-void PlayBlackjack () {
+/*
+TEST (CARDS_TESTS, BlackjackTests) {
     Deck pack ();
-    BlackjackPlayer player = BlackjackPlayer ("Player", 100);
-    BlackjackDealer dealer = BlackjackDealer ();
+    BlackjackPlayer player ("Player", 100);
+    BlackjackDealer dealer ();
 
     // 
-    bool agian = true;
-    string input = "";
+    bool again = true;
+    char input[256];
 
 
     do {
@@ -139,8 +62,7 @@ void PlayBlackjack () {
             bool input_valid = false;
 
             do {
-                cout << "\n| Hit or hold?";
-                getline (cin, input);
+                KeyboardString ("\n| Hit or hold?", input);
 
                 if (input == "hit") {
                     input_valid = true;
@@ -148,20 +70,21 @@ void PlayBlackjack () {
                     if (stock.IsEmpty ())
                         stock.Shuffle ();
 
-                    player.GetHand ().AddToHand (stock.NextCard ());
+                    player.GetHand ().Add (stock.NextCard ());
                     input_valid = true;
                 } else if (input == "hold") {
-                    agian = false;
-                } else if (input == "quit") //< First we need to check for the exit condition
+                    again = false;
+                } else if (input == "quit") {
+                    // First we need to check for the exit condition
                 {
                     input_valid = true;
-                    agian = false;
+                    again = false;
                 } else {
                     cout << "\n| Error: invalid input. Please type 'hit', 'hold', 'quit'";
                 }
             }
 
-        } while (agian);
+        } while (again);
 
         dealer.PlayHand ();
 
@@ -176,12 +99,137 @@ void PlayBlackjack () {
             }
         }
         cout << "\n| Your Score: " << player.HandTotal ()[0] << " with "
-             << player.HandTotal ()[1] << " aces"
-             << "\n| Computers Score: " << dealer.HandTotal ()[0] << " with "
-             << dealer.HandTotal ()[1] << " ace(s)."
-             << "\n| Do you want to play again?";
-        getline (cin, input);
+            << player.HandTotal ()[1] << " aces"
+            << "\n| Computers Score: " << dealer.HandTotal ()[0] << " with "
+            << dealer.HandTotal ()[1] << " ace(s).";
+        KeyboardString (\n| Do you want to play again?, input);
         if (input == "y" || input == "Y")
-            agian = true;
-    } while (agian);
+            again = true;
+    } while (again);
+}
+
+TEST (CARDS_TESTS, BlackjackHandTests) {
+    cout << "\n| Testing Blackjack::BlackjackHand class..."
+         << "\n| Creating deck...";
+
+    Deck deck (Deck::Culture Deck::kFrench, Deck::kAcesHigh,
+                      Deck::kNoJokers);
+
+    CardStack deck (deck);
+
+    deck.Reshuffle ();
+
+    cout << "\n| Creating player_hand";
+
+    BlackjackHand player_hand (deck.TakeNextCard (), deck.TakeNextCard ()),
+        dealer_hand (deck.TakeNextCard (), deck.TakeNextCard ());
+
+    cout << "\n| Testing String Hard::toString ()...";
+    player_hand.Print ();
+    dealer_hand.Print ();
+
+    cout << "\n| Creating BlackjackHands Player{Ace of Hearts, Ace of Clubs) "
+            "Dealer{ King of Hearts, Nine of Diamonds } ...";
+    player_hand.SetCards ();
+}
+
+TEST (CARDS_TESTS, DealerTests) {
+    cout << "\n| Testing CardStack class..."
+         << "\n| Creating test_deck...";
+
+    Deck test_deck = Deck ();
+
+    cout << "\n| Creating cards from test_deck...";
+
+    CardStack cards = CardStack (test_deck);
+
+    cards.Print ();
+
+    cout << "\n| Testing CardStack::shuffle()...";
+
+    cards.Shuffle ();
+
+    cards.Print ();
+}
+
+TEST (CARDS_TESTS, DealerTests) {
+    cout << "\n| Testing kabuki::cards::Dealer class...";
+    cout << "\n| Done testing kabuki::cards::Dealer class...";
+}
+
+TEST (CARDS_TESTS, DeckTests) {
+    cout << "\n| Testing Blackjack::Hand class..." {}
+
+void runTest () {
+    cout << "\n| Creating deck...");
+
+    Deck pack (Deck::Culture Deck::kFrench, Deck::kAcesLow, Deck::doesNotContainJokers);
+
+    CardStack deck = CardStack (pack);
+
+    deck.shuffle ();
+
+    cout << "\n| Creating playerHand");
+
+    Hand playerHand (deck.takeNextCard (), deck.takeNextCard ()),
+        dealersHand (deck.takeNextCard (), deck.takeNextCard ());
+
+    cout << "\n| Testing Hard::Print ()...");
+    logMessage (playerHand.tostring);
+    logMessage (dealersHand.tostring);
+
+    cout << "\n| Creating Hands Player {Ace of Hearts, Ace of Clubs) "
+            " Dealer { King of Hearts, Nine of Diamonds } ...");
+    playersHand.setCards ();
+}*/
+
+TEST (CARDS_TESTS, DeckTests) {
+    cout << "\n|\n| Testing kabuki::cards::Dealer class..."
+         << "\n|\n| Creating test_deck...";
+
+    Deck deck;
+
+    for (int i = 0; i < 7; ++i) {
+        cout << "\n| Creating " << Card::kSuitCulturestrings[i]
+             << " Deck...";
+        deck.Set (Deck::kNoJokers), Deck::kAcesLow,
+            (Card::SuitCulture) i;
+        deck.Print ();
+    }
+    cout << "\n|\n| Done testing kabuki::cards::Dealer class...";
+}
+
+TEST (CARDS_TESTS, CardComboTests) {
+    cout << "\n|\n| Testing kabuki::cards::CardCombo class...";
+    cout << "\n|\n| Done testing kabuki::cards::CardCombo class...";
+}
+
+TEST (CARDS_TESTS, CardTests) {
+    cout << "\n|\n| Testing kabuki::cards::Card class..."
+         << "\n|\n| Creating test Cards...";
+
+    Card cards[4];
+
+    cards[1].Set (12, Card::Suit::kClub, 12, 1);
+    cards[2].Set (13, Card::Suit::kClub, 14, 1);
+    cards[3].Set (12, Card::Suit::kDiamond, 12, 2);
+    cards[4].Set (13, Card::Suit::kHeart, 13, 1);
+
+    cout << "\n| Testing Print():void";
+    for (int i = 0; i < 4; ++i) {
+        cards[i].Print ();
+    }
+
+    cout << "\n| Testing int Compare(const Card&)...";
+
+    CHECK (cards[1].Compare (cards[2]) < 0)
+    //< "Error in int compare (const Card&) function");
+    CHECK (cards[2].Compare (cards[3]) < 0)
+    //< "Error in int compare (const Card&) function");
+    CHECK (cards[1].Compare (cards[3]) < 0)
+    //< "Error in int compare (const Card&) function");
+    CHECK (cards[1].Equals (cards[4]))
+    //< "Error in bool equals (const Card&) function");
+
+    cout << "\n|\n| Testing kabuki::cards::Card class...";
 }

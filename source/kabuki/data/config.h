@@ -1,5 +1,5 @@
-/** TypeCraft - Teaching Typing through Mining and Crafting.
-    @file    ~/source/typecraft/module_config.h
+/** kabuki::data
+    @file    ~/source/kabuki/data/config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -13,9 +13,9 @@
              permissions and limitations under the License.
 */
 
-#ifndef KABUKI_DATA_MODULE_CONFIG_H
-#define KABUKI_DATA_MODULE_CONFIG_H
+#ifndef HEADER_FOR_KABUKI_DATA_CONFIG
+#define HEADER_FOR_KABUKI_DATA_CONFIG
 
-#include "../../script/include/module_config.h"
+#include "../../script/config.h"
 
-#endif  //< KABUKI_DATA_MODULE_CONFIG_H
+#endif  //< HEADER_FOR_KABUKI_DATA_CONFIG

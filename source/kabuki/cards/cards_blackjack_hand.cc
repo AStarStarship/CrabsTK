@@ -1,5 +1,5 @@
 /** kabuki::cards
-    @file       ~/source/kabuki/cards/blackjack/blackjack.cc
+    @file       ~/source/kabuki/cards/cards_blackjack_hand.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -12,93 +12,92 @@
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
-#include "BlackjackHand.h"
+#include "blackjack_hand.h"
 
-using namespace kabuki_cards::Blackjack;
+namespace kabuki {
+namespace cards {
 
 BlackjackHand::BlackjackHand (CardStack& startingCards) :
-    Hand (startingCards, 2, Deck::defaultNumCards)
-{
+    Hand (startingCards, 2, Deck::kDefaultNumCards) {
 }
-   
-Array<CardCombo> BlackjackHand::getHandCombos ()
-{
-    auto lowScore = BlackjackCardCombo (,
-        highScore;
 
-    scores.low = 0;     //< scores.low is the total of the cards with aces as 1
-    scores.high = 0;    //< scores.high is the number of aces to add on an opt 10.
+int BlackjackHand::Compare (const Hand& other) {
+    return 0;
+}
 
-    for (int s=0; s < getNumCards (); ++s)
-    {
-        int currentValue = getCard(s)->getPipValue ();
-         
+/*
+data::Array<CardCombo> BlackjackHand::GetHandCombos () {
+    auto low_score,
+        high_score;
+
+    scores.low = 0;  //< scores.low is the total of the cards with aces as 1
+    scores.high = 0; //< scores.high is the number of aces to add on an opt 10.
+
+    for (int s = 0; s < GetCount (); ++s) {
+        int currentValue = GetCard (s)->GetPip ();
+
         if (currentValue == 1) // First check if its an ace
         {
             ++scores.low;       //< Aces low means add 1 to the low total.
             scores.high += 10;  //< Aces high means add a 10 to the high total.
-        }
-        else if (currentValue >= 10) // Next check to see if its a Jack, Queen, or King because they are all 10 points.
-        {
+        } else if (currentValue >= 10) {
+            // Next check to see if its a Jack, Queen, or King because they
+            // are all 10 points.
+
             scores.low += 10;
             scores.high += 10;
-        }
-        else // then its just number card so add it to both the low and high totals.
-        {
+        } else {
+            // then its just number card so add it to both the low and high totals.
             scores.low += currentValue;
             scores.high += currentValue;
         }
     }
-      
+
     return scores;
-}
+}*/
 
+int BlackjackHand::GetScore (int ace_value) {
+    int score = 0;  //< Always set the variable before you start using it!!!
 
-int BlackjackHand::addCard (Card* card)
-{
-    if (getNumCards () + 1 > maxNumCards)
-        return 1;
-    nonVisibleCards.addCard (card);
-}
-
-String BlackjackHand::toString ()
-{
-    HighLowScore highLowScore = getHighLowScore ();
-    
-    return "BlackjackHand:\nHigh score: " + String (highLowScore.high) + " Low Score: " + String (highLowScore.low) + "\n" + CardStack::toString ();
-}
-
-
-#if DEBUG_MODE
-
-#include "../Deck.h"
-
-class BlackjackHandUnitTest : public UnitTest
-{
-    BlackjackHandUnitTest () : UnitTest ("Testing Blackjack::BlackjackHand class...") {}
-
-    void runTest ()
-    {
-        logMessage ("Creating deck...");
-
-        Deck stackedDeck (Deck::Culture Deck::french, Deck::acesHighOrLow, Deck::doesNotContainJokers);
-
-        CardStack deck (stackedDeck);
-
-        deck.shuffle ();
-
-        logMessage ("Creating playerBlackjackHand");
-
-        BlackjackHand playerBlackjackHand (deck.takeNextCard (), deck.takeNextCard ()),
-            dealersBlackjackHand (deck.takeNextCard (), deck.takeNextCard ());
-
-        logMessage ("Testing String Hard::toString ()...");
-        logMessage (playerBlackjackHand.toString);
-        logMessage (dealersBlackjackHand.toString);
-
-        logMessage ("Creating BlackjackHands Player{Ace of Hearts, Ace of Clubs) Dealer{ King of Hearts, Nine of Diamonds } ...");
-        playersBlackjackHand.setCards ();
+    Card* card;
+    for (int i = 0; i < visible_cards_.GetCount (); ++i) {
+        card = visible_cards_.GetCard (i);
+        int face_value = card->GetFace ();
+        score += ((face_value == Card::kAce) ? ace_value : face_value);
     }
-};
-static CardStackUnitTest cardPileUnitTest;
-#endif // DEBUG_MODE
+
+    return score;
+}
+
+int BlackjackHand::GetMinScore () {
+    return GetScore (1);
+}
+
+int BlackjackHand::GetMaxScore () {
+    return GetScore (11);
+}
+
+
+int BlackjackHand::Add (Card* card) {
+    if (GetCount () + 1 > GetMaxCards ())
+        return 1;
+    return nonvisible_cards_.Push (card);
+}
+
+bool BlackjackHand::Is21 () {
+    return GetMinScore () == 21 || GetMaxScore () == 21;
+}
+
+bool BlackjackHand::IsBust () {
+    return GetMaxScore () > 21;
+}
+
+void BlackjackHand::Print () {
+    cout << "\n| BlackjackHand:"
+         << "\n| High score: " << GetScore (Deck::kAcesHigh) << " Low Score: "
+         << GetScore (Deck::kAcesLow);
+    CardStack::Print ();
+}
+
+}   //< namespace cards
+}   //< namespace kabuki

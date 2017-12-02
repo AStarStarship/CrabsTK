@@ -1,5 +1,5 @@
 /** kabuki:cards
-    @file    /.../KabukiTheater-Examples/kabuki_cards/kabuki_cards/Player.cc
+    @file    ~/source/kabuki/cards/player.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -12,90 +12,99 @@
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
-#include "Player.h"
+#include "player.h"
+
+using namespace _;
+using namespace std;
 
 namespace kabuki { namespace cards {
 
-Player::Player (string thisPlayerName, int startingPoints) :
-    name (thisPlayerName),
-    numWins (0),
-    numPoints (startingPoints < 1 ? 1 : startingPoints),
-    hand (Hand ())
-{
+Player::Player (const char* player_name, int start_points, bool is_dealer) :
+    name_ (player_name),
+    num_wins_ (0),
+    num_points_ (start_points < 1?1:start_points),
+    hand_ () {
     // Nothing to do here!
 }
 
-const char* Player::getName ()
-{
-    return name;
+bool Player::PlayOrPass (Hand& other) {
+    return false;
 }
 
-void Player::setName (const char* newName)
-{
-    name = newName;
+const char* Player::GetName () {
+    return name_;
 }
 
-Hand& Player::getHand ()
-{
-	return hand;
+void Player::SetName (const char* name) {
+    if (name == nullptr)
+        return;
+    name_ = name;
 }
 
-void Player::setHand (Hand& newHand)
-{
-    hand = newHand;
+int Player::GetState () {
+    return state_;
 }
 
-int Player::getNumPoints ()
-{
-    return numPoints;
+const char* Player::SetState (int state) {
+    state_ = state;
+    return nullptr;
 }
 
-int Player::addPoints (int num_points)
-{
+Hand* Player::GetHand () {
+    return hand_;
+}
+
+void Player::TakeHand (Hand* hand) {
+    if (hand == nullptr)
+        return;
+    hand_ = hand;
+}
+
+int Player::GetNumPoints () {
+    return num_points_;
+}
+
+int Player::AddPoints (int num_points) {
     if (num_points < 0)
         return -1;
 
-    numPoints += num_points;
+    num_points_ += num_points;
 
-    return numPoints;
+    return num_points_;
 }
 
-int Player::removePoints (int num_points)
-{
+int Player::RemovePoints (int num_points) {
     if (num_points < 0)
         return -1;
 
-    if (num_points > numPoints)
-        return numPoints - num_points;
+    if (num_points > num_points_)
+        return num_points_ - num_points;
 
-    numPoints -= num_points;
+    num_points_ -= num_points;
 
     return 0;
 }
 
-int Player::getNumWins ()
-{
-    return numWins;
+int Player::GetNumWins () {
+    return num_wins_;
 }
 
-void Player::addWin ()
-{
-    ++numWins;
+void Player::AddWin () {
+    ++num_wins_;
 }
 
-void Player::resetWins ()
-{
-    numWins = 0;    //< Reset the numWins.
+void Player::ResetWins () {
+    num_wins_ = 0;    //< Reset the num_wins_.
 }
 
-void Player::dealHand (Hand& newHand)
-{
-    hand = newHand; //< And deal a new hand.
+void Player::Print () {
+    cout << "\n| Player     : " << name_
+        << "\n| num_points_: " << num_points_
+        << "\n| num_windows: " << num_wins_;
+
+    PrintLine ('-');
+    hand_->Print ();
 }
 
-string Player::tostring ()
-{
-    return "Player: " + name + "\nnumPoints: " + string (numPoints) + "\nnumWindows: " + string (numWins) + "\n" + dashedLnBreak + hand.tostring ();;
-}
-
-}   //< kabuki_cards
+}   //< namespace cards
+}   //< namespace kabuki

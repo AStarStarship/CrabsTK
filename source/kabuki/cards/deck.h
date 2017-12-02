@@ -17,6 +17,7 @@
 #define KABUKI_CARDS_DECK_H
 
 #include "card.h"
+#include "../../data/array.h"
 
 namespace kabuki { namespace cards {
     
@@ -33,7 +34,6 @@ class Deck {
         kFullDeckSize    = 54, //< Default num cards in a deck with Jokers.
         kAcesHigh        = 14, //< Flag for if Aces are high.
         kAcesLow         = 0,  //< Flag for if Aces are low.
-        kAcesHighOrLow   = 1,  //< Flag for if Aces are high or low.
         kHasJokers       = 0,  //< Flag for whether the deck has Jokers.
         kNoJokers        = 1,  //< Flag for whether the deck has no Jokers.
     };
@@ -54,35 +54,46 @@ class Deck {
                                 means that aces are low.
         @param  culture         Used to determine what suites we are using.
     */
-    Deck (bool contains_jokers = kNoJokers, int aces_high = kAcesHigh,  
-        Card::SuitCulture culture = Card::kFrench, 
-        const char* deck_name = kDefaultRearDeckImage,
-        const char* directory_path = kDefaultDeckArtDirectory);
+    Deck (bool has_jokers = kNoJokers, int aces_high = kAcesHigh,
+          Card::SuitCulture culture = Card::kFrench, 
+          const char* deck_name = kDefaultRearDeckImage,
+          const char* directory_path = kDefaultDeckArtDirectory);
+
+    bool Set (bool has_jokers = kNoJokers, int aces_high = kAcesHigh,
+              Card::SuitCulture culture = Card::kFrench,
+              const char* deck_name = kDefaultRearDeckImage,
+              const char* directory_path = kDefaultDeckArtDirectory);
         
     /** Destructor. */
     virtual ~Deck () {}
 
-    /** Operator= overlaoder deep copies the state of the other object. */
-    Deck& operator= (const Deck& other);
+    /** Changes the SuitCulture to the given one. */
+    void SetSuitCulture (Card::SuitCulture culture);
+
+    /** Resets the deck to the initial state. */
+    void Reshuffle ();
     
     /** Function sets the suit values to the new values.
         @pre    valueN must be between 1-4.
-        @return Returns 0 upon success, and a number 1-4 if the valueN is not between 1-4. The number will be negative if the inputed number was, and vice-versa. */
-    int SetSuitValues (int value1, int value2, int value3, int value4);
-    
+        @return Returns 0 upon success, and a number 1-4 if the valueN is not
+                between 1-4. The number will be negative if the inputed number
+                was, and vice-versa. */
+    bool SetSuitValues (int value1, int value2, int value3, int value4);
+
     /** Gets the suit value of the given suit.
         @pre    suit must be between 1-4.
-        @return Returns a number between 1-4 upon success, and -1 if the index was out of bounds. */
+        @return Returns a number between 1-4 upon success, and -1 if the index
+                was out of bounds. */
     int GetSuitValue (int suit);
     
     /** Returns true if this deck has Jokers. */
-    bool DeckHasJokers ();
+    bool HasJokers ();
 
     /** Returns the number of cards in the deck. */
-    int GetNumCards ();
+    int GetCount ();
     
     /** Returns the if aces are high or low. */
-    int GetAcesHigh ();
+    bool AcesHigh ();
     
     /** Returns a pointer to the Card at the specified index.
         @return Returns nullptr if the index is out of bounds. */
@@ -94,33 +105,34 @@ class Deck {
     //int SetRearImage (const File& thisFile);
         
     /** Loads the deck art from the directory_path.
-        @pre    directory_path must contain all 54 card Images in [1-13]-[1-4].svg/J-1.svg/J-2.svg format.
-        @return Returns 0 upon success, 54 if the directory doesn't contain 54 .svg files, and -x if images are not named correctly, where x is the first failed filename. */
-    int SetDeckArt (const char* directory_path);
+        @pre    directory_path must contain all 54 card Images in 
+                [1-13]-[1-4].svg/J-1.svg/J-2.svg format.
+        @return Returns 0 upon success, 54 if the directory doesn't contain 
+                54 .svg files, and -x if images are not named correctly,
+                where x is the first failed filename. */
+    //int SetDeckArt (const char* directory_path);
         
     /** Returns a string representation of the suit. */
-    string GetSuitstring (Card::Suit suit);
+    const char* GetSuitstring (Card::Suit suit);
     
-    /** Returns a string representation of this Object. */
+    /** Prints this object to the console. */
     void Print ();
 
     private:
 
-    /** Function initializes the deck with a traditional set of playing cards. */
-    void Init (const char* deck_name, const char* directory_path);
-
-    /** Function that checks the artFolder to see if the it has 54 Images in [1-13]-[1-4].svg/J-1.svg/J-2.svg format. */
+    /** Function that checks the artFolder to see if the it has 54 Images in 
+        [1-13]-[1-4].svg/J-1.svg/J-2.svg format. */
     //int CheckDeckArtFolder (const char* directory_path);
 
-    bool          has_jokers_;         //< Flag for if the deck has Jokers.
-    Card::SuitCulture culture_;        //< Culture of the suits.
-    int           aces_high_,          //< Flags for aces high or low.
-                  num_cards_,          //< Num cards in the deck.
-                  lowest_card_value_,  //< Lowest allowed card value.
-                  highest_card_value_, //< Highest allowed card value.
-                  suit_values_[4];     //< Values of the 4 suites.
-    Array<Card>   deck_;               //< The deck of Card objects.
-    //Image         rear_image_;            //< The rear Image of the Deck.
+    bool               has_jokers_;      //< Flag for if the deck has Jokers.
+    Card::SuitCulture  culture_;         //< Culture of the suits.
+    int                aces_high_,       //< Flags for aces high or low.
+                       num_cards_,       //< Num cards in the deck.
+                       lowest_value_,    //< Lowest allowed card value.
+                       highest_value_,   //< Highest allowed card value.
+                       suit_values_[4];  //< Values of the 4 suites.
+    Card               pack_[54];        //< Unique array of single cards.
+    //Image         rear_image_;         //< The rear Image of the Deck.
 };
 
 }       //< namespace cards

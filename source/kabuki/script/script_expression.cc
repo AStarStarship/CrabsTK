@@ -753,6 +753,7 @@ const Operation* ExpressionScan (Expression* expr) {
     expr->hash = hash;
     expr->bytes_left = bytes_left;
     bin->start = Diff (begin, start);
+    return nullptr;
 }
 
 bool ExpressionContains (Expression* expr, void* address) {
