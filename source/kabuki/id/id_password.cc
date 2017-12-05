@@ -1,5 +1,5 @@
 /** kabuki::pro
-    @file    ~/source/kabuki/id/include/imp/password.cc
+    @file    ~/source/kabuki/id/password.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,7 +14,10 @@
 */
 
 #include <stdafx.h>
-#include "../include/password.h"
+#include "password.h"
+
+using namespace _;
+using namespace std;
 
 namespace kabuki { namespace id {
 
@@ -50,8 +53,8 @@ bool Password::Equals (const Password& other)
     return !strcmp (password_, other.password_);
 }
 
-void Password::Print (_::Log& log) {
-    log << password_;
+void Password::Print () {
+    cout << password_;
 }
 
 }       //< id

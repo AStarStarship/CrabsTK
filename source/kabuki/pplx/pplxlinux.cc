@@ -20,28 +20,23 @@
 #error "ERROR: This file should only be included in non-windows Build"
 #endif
 
-namespace pplx
-{
+namespace pplx {
 
 namespace details {
 
-    namespace platform
-    {
-        _PPLXIMP long GetCurrentThreadId()
-        {
-            return reinterpret_cast<long>(reinterpret_cast<void*>(pthread_self()));
-        }
+namespace platform {
+_PPLXIMP long GetCurrentThreadId () {
+    return reinterpret_cast<long>(reinterpret_cast<void*>(pthread_self ()));
+}
 
-        _PPLXIMP void YieldExecution()
-        {
-            std::this_thread::yield();
-        }
-    }
+_PPLXIMP void YieldExecution () {
+    std::this_thread::yield ();
+}
+}
 
-    _PPLXIMP void linux_scheduler::schedule(TaskProc_t proc, void* param)
-    {
-        crossplat::threadpool::shared_instance().service().post(boost::bind(proc, param));
-    }
+_PPLXIMP void linux_scheduler::schedule (TaskProc_t proc, void* param) {
+    crossplat::threadpool::shared_instance ().service ().post (boost::bind (proc, param));
+}
 
 } // namespace details
 

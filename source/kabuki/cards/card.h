@@ -16,7 +16,7 @@
 #ifndef HEADER_FOR_KABUKI_CARDS_CARD
 #define HEADER_FOR_KABUKI_CARDS_CARD
 
-#include "config.h"
+#include "suit.h"
 
 namespace kabuki { namespace cards {
 
@@ -26,154 +26,55 @@ namespace kabuki { namespace cards {
     other variations from other European countries. For more information on
     them, please @wiki "Playing Card Suits". The nifty thing about these extra
     card decks, is that we can make a double deck of cards, and use the suit
-    culture to tell the decks apart.
+    format to tell the decks apart.
 */
 class KABUKI Card {
     public:
 
     enum {
-        kAce              = 1, //< Face value of an ace.
-        kDefaultSuitValue = 1, //< Default suit value.
+        kJoker            = 0,    //< Pip value of a Joker.
+        kAce              = 1,    //< Pip value of an Ace.
+        kJack             = 11,   //< Pip value of a Jack.
+        kQueen            = 12,   //< Pip value of a Queen.
+        kKing             = 13,   //< Pip value of a King.
     };
-
-    /** Enumerated list of the different suites on playing cards in various
-         countries.
-         |   Culture    |    0   |    1     |   2    |    3    |
-         |:------------:|:------:|:--------:|:------:|:-------:|
-         |   Italian    | Cups   |  Coins   | Clubs  | Swords  |
-         |   Spanish    | Cups   |  Coins   | Clubs  | Swords  |
-         | Swiss-German | Roses  |  Bells   | Acorns | Shields |
-         |   German     | Hearts |  Bells   | Acorns | Leaves  |
-         |   French     | Hearts | Diamonds | Clubs  | Spades  |
-         */
-    typedef enum class Suites { 
-        kCup   = 0, kRose   = 0, kHeart   = 0,
-        kCoin  = 1, kBell   = 1, kDiamond = 1,
-        kClub  = 2, kAcorn  = 2,
-        kSword = 3, kShield = 3, kLief    = 3, kSpade = 3,
-        kRed   = 0, kBlack  = 2,
-        
-        
-    } Suit;
-
-    /** Enumerated list of the different French playing cards suites. */
-    typedef enum class FrenchSuits {
-        kClub = 1, 
-        kDiamond, 
-        kHeart, 
-        kSpade
-    } FrenchSuit;
-
-    /** Enumerated list of the different German playing cards suites. */
-    typedef enum class GermanSuits {
-        kAcorn = 1,
-        kBell,
-        kHeart,
-        kLief
-    } GermanSuit;
-
-    /** Enumerated list of the different German playing cards suites. */
-    typedef enum class SwissGermanSuits {
-        kAcorn = 1,
-        kBell,
-        kRose,
-        kShield
-    } SwissGermanSuit;
-
-    /** Enumerated list of the different Latin playing cards suites. */
-    typedef enum class LatinSuits {
-        kClub = 1,
-        kCoin,
-        kCup,
-        kSword,
-    } LatinSuit;
-
-    /** Enumerated list of different European-style playing card suites.
-         Piacentine, Napoletane, Spagnole, Bergamasche suits are also known as
-         Latin suites, because they are from countries that speak Romantic
-         languages. */
-    typedef enum SuitCultures {
-        kFrench = 0,
-        kGerman,
-        kSwissGerman,
-        kPiacentine,
-        kNapoletane,
-        kSpagnole,
-        kBergamasche
-    } SuitCulture;
-
-    /** A list of the strings "Clubs", "Diamonds", "Hearts", "Spades" */
-    static const char* kFrenchSuit[4];
-
-    /** A list of the strings "Acorns", "Bells", "Hearts", "Levies" */
-    static const char* kGermanSuit[4];
-
-    /** A list of the strings "Acorns", "Bells", "Roses", "Shields" */
-    static const char* kSwissGermanSuit[4];
-
-    /** A list of the strings "Clubs", "Coins", "Cups", "Swords" */
-    static const char* kLatinSuit[4];
-
-    /** An array of strings that represent the 7 different directories for the
-         suit icon file */
-    static const char* kSuitCulturestrings[];
 
     /** Default constructor.
         There exists a single unique card for each of the 54 cards in a pack
         of cards. Cards are taken from the pack and shuffled into the deck_
         using pointers.
     */
-    Card ();
+    Card (int pip = 0, Suit* suit = nullptr, int denomination = 0);
     
     /** Virtual destructor just in case we want to make a sub-class later. */
     virtual ~Card () {}
 
     /** Sets the values of the cards. */
-    void Set (int pip, Suit suit, int face_value, int point_value,
-              int suit_value = kDefaultSuitValue,
-              SuitCulture suit_culture = SuitCulture::kFrench);
+    void Set (int pip, Suit* suit, int denomination = ~0);
 
     /** Compares this Card to the other Card.
         @return Returns 0 if they are identical.
         @return Returns 1 if this Card is greater than the other Card. */
-    virtual int Compare (const Card& other);
+    virtual int Compare (const Card* other);
                                           
     /** Compares this Card to the other Card and returns true if the two are
         identical. */     
-    bool Equals (const Card& other);
+    bool Equals (const Card* other);
 
-    /** Returns the pip value of this Card.
+    /** Returns the pip value of this Card 0-13.
         The pip value is a number between 0-13 that represents which card it is: 
         J=0, A=1, 2-10, J=11, Q=12, K=13. */
     int GetPip ();
-                           
-    /** Returns the face value of this Card
-         The face value represents the rank of the card. */                         
-    int GetFace ();
     
     /** Returns the point value of this Card
         The face value represents how many points this card is worth. */
-    int GetValue ();
+    int GetDenomination ();
                                      
     /** Sets the point value to the value. */          
-    void SetValue (int value);
-    
-    /** Returns the face value of this Card
-        The face value represents how many points this card is worth. */
-    int GetSuitValue ();
+    void SetDenomination (int value);
 
     /** Returns the Suit of this card. */
-    Suit GetSuit ();
-
-    /** Returns the Card::Culture of this Deck.
-        Function sets the suitCulture to the cardCulture. */
-    SuitCulture GetSuitCulture ();
-    
-
-    void SetSuitCulture (SuitCulture culture);
-
-    /** Returns a string representation of the suit. */
-    const char* GetSuitString ();
+    Suit* GetSuit ();
 
     /** Loads and sets the cardImage to the on in the given directory.
         Yes this goes in the library, just no file IO or hardware dependent
@@ -193,20 +94,11 @@ class KABUKI Card {
 
     private:
 
-    /** Loads the cardImage from the specified directory.
-         We can address images in DLL(s) but not files or anything
-         hardware specific.
-    */
-    //Image LoadCardImage (const char* directory);
+    int   pip_,          //< Pip value of this Card from 0-13.
+          denomination_; //< Rank of this card in the deck.
+    Suit* suit_;         //< Suit of this Card.
+    //Image* image_;     //< Image of this Card.
 
-    int         pip_,          //< Value of this Card from 0-13.
-                face_value_,   //< Face value of this Card from 1-14.
-                point_value_,  //< Number of points this Card is worth from 0-10.
-                suit_value_;   //< Value of this suit for changing suit's value.
-    Suit        suit_;         //< Suit of this Card.
-    SuitCulture suit_culture_; //< Culture of this Card.
-    const char* suit_string_;  //< String that stores the suit.
-    //Image*       card_image_;//< Image of this Card.
 };      //< class Card
 }       //< namespace cards
 }       //< namespace kabuki

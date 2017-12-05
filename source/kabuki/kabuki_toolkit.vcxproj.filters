@@ -18,59 +18,8 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="source\kabuki\serial">
-      <UniqueIdentifier>{fce213eb-46b8-4537-9885-65a2468365f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\al">
-      <UniqueIdentifier>{b14ecb67-64d7-487c-be33-fe037f6e806e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\app">
-      <UniqueIdentifier>{b94e7c27-d80e-43ad-a0d5-f10f6fa3b309}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\biz">
-      <UniqueIdentifier>{46d557eb-f2c0-4511-a005-8c50f52803b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\code">
-      <UniqueIdentifier>{e6d8db89-0a24-4dd9-b44b-8e12a5eac984}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\kabuki\data">
       <UniqueIdentifier>{1199cb80-6bd0-4f7d-a347-ccefa0ec89d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\file">
-      <UniqueIdentifier>{caa2cf5c-efed-4015-acc9-4802e257575c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\gl">
-      <UniqueIdentifier>{a4fd0a38-ad1b-48af-b990-defad848215d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\gui">
-      <UniqueIdentifier>{08cb46bc-08ca-4f88-86ca-282bc9d069d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\id">
-      <UniqueIdentifier>{bb404d24-983a-4f80-8f6a-9ea515d4f6fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\hmi">
-      <UniqueIdentifier>{8b15bd81-b35a-4c27-825c-8b95b49b106f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\json">
-      <UniqueIdentifier>{b6510f7b-1a8f-4435-9073-7be6a611f9f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\math">
-      <UniqueIdentifier>{de4d44c9-dee1-489e-b56e-8293be477ccd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\midi">
-      <UniqueIdentifier>{e74ab7e3-4e5c-43d4-96bd-cfb5ddd6c84c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\pplx">
-      <UniqueIdentifier>{f756ca20-1636-4d16-991d-c9b7937ce0ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\process">
-      <UniqueIdentifier>{9fbf3dd6-9a6d-4f82-af91-afd955ee2d87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\utils">
-      <UniqueIdentifier>{c35e66f1-cf3e-4e1a-8bbd-ecc15d036cfe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\video">
-      <UniqueIdentifier>{82b73a56-2698-4391-9e92-14514dee7158}</UniqueIdentifier>
     </Filter>
     <Filter Include="source\kabuki\web">
       <UniqueIdentifier>{bcecd50d-9ef4-4d62-960a-467a1eed05ec}</UniqueIdentifier>
@@ -78,20 +27,17 @@
     <Filter Include="source\kabuki\ws">
       <UniqueIdentifier>{f74be4e0-3678-4673-8ac6-c7e66435a828}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\kabuki\aiml">
-      <UniqueIdentifier>{5b844195-171c-4caf-99a6-af067a9a8dde}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\pro_files">
-      <UniqueIdentifier>{d9d6a492-c025-4d20-8429-b996d3596888}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\pro">
-      <UniqueIdentifier>{65351b5c-bf53-4c38-b303-05ce52229b1f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\tek">
-      <UniqueIdentifier>{82f1dc28-77e4-46d5-ab04-0675b56a584c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\kabuki\cards">
       <UniqueIdentifier>{06a8e817-e59c-4660-a713-d59fb76f1e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kabuki\pplx">
+      <UniqueIdentifier>{f4a71fc6-33fb-488d-92e0-76eedad725fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kabuki\asio">
+      <UniqueIdentifier>{5dfcef8d-f3f1-4499-ab4b-b916e5259fac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kabuki\id">
+      <UniqueIdentifier>{54ef5742-9556-46b9-8f08-7725e161825a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -248,9 +194,6 @@
     <ClInclude Include="cards\blackjack_dealer.h">
       <Filter>source\kabuki\cards</Filter>
     </ClInclude>
-    <ClInclude Include="cards\blackjack_hand.h">
-      <Filter>source\kabuki\cards</Filter>
-    </ClInclude>
     <ClInclude Include="cards\blackjack_player.h">
       <Filter>source\kabuki\cards</Filter>
     </ClInclude>
@@ -259,6 +202,39 @@
     </ClInclude>
     <ClInclude Include="script\random.h">
       <Filter>source\kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="cards\suit.h">
+      <Filter>source\kabuki\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="cards\blackjack_game.h">
+      <Filter>source\kabuki\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="cards\card_game.h">
+      <Filter>source\kabuki\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="id\password.h">
+      <Filter>source\kabuki\id</Filter>
+    </ClInclude>
+    <ClInclude Include="id\user.h">
+      <Filter>source\kabuki\id</Filter>
+    </ClInclude>
+    <ClInclude Include="id\user_list.h">
+      <Filter>source\kabuki\id</Filter>
+    </ClInclude>
+    <ClInclude Include="id\config.h">
+      <Filter>source\kabuki\id</Filter>
+    </ClInclude>
+    <ClInclude Include="id\global.h">
+      <Filter>source\kabuki\id</Filter>
+    </ClInclude>
+    <ClInclude Include="id\handle.h">
+      <Filter>source\kabuki\id</Filter>
+    </ClInclude>
+    <ClInclude Include="cards\global.h">
+      <Filter>source\kabuki\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="cards\chat_message.h">
+      <Filter>source\kabuki\cards</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -361,10 +337,31 @@
     <ClCompile Include="cards\cards_blackjack_dealer.cc">
       <Filter>source\kabuki\cards</Filter>
     </ClCompile>
-    <ClCompile Include="cards\cards_blackjack_hand.cc">
+    <ClCompile Include="cards\cards_blackjack_player.cc">
       <Filter>source\kabuki\cards</Filter>
     </ClCompile>
-    <ClCompile Include="cards\cards_blackjack_player.cc">
+    <ClCompile Include="cards\cards_suit.cc">
+      <Filter>source\kabuki\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="cards\cards_card_game.cc">
+      <Filter>source\kabuki\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="cards\cards_blackjack_game.cc">
+      <Filter>source\kabuki\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="id\id_password.cc">
+      <Filter>source\kabuki\id</Filter>
+    </ClCompile>
+    <ClCompile Include="id\id_user.cc">
+      <Filter>source\kabuki\id</Filter>
+    </ClCompile>
+    <ClCompile Include="id\id_user_list.cc">
+      <Filter>source\kabuki\id</Filter>
+    </ClCompile>
+    <ClCompile Include="id\id_handle.cc">
+      <Filter>source\kabuki\id</Filter>
+    </ClCompile>
+    <ClCompile Include="cards\cards_chat_message.cc">
       <Filter>source\kabuki\cards</Filter>
     </ClCompile>
   </ItemGroup>

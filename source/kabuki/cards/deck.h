@@ -30,15 +30,16 @@ class Deck {
     public:
 
     enum {
-        kDefaultNumCards = 52, //< Default num cards in a deck excluding Jokers.
+        kDefaultDeckSize = 52, //< Default num cards in a deck excluding Jokers.
         kFullDeckSize    = 54, //< Default num cards in a deck with Jokers.
         kAcesHigh        = 14, //< Flag for if Aces are high.
         kAcesLow         = 0,  //< Flag for if Aces are low.
-        kHasJokers       = 0,  //< Flag for whether the deck has Jokers.
-        kNoJokers        = 1,  //< Flag for whether the deck has no Jokers.
+        kHasJokers       = 1,  //< Flag for whether the deck has Jokers.
+        kNoJokers        = 0,  //< Flag for whether the deck has no Jokers.
     };
 
-    static const int kDefaultSuitValues[4]; //< The default suit value order, Clubs=1, Diamonds=2, Hearts=3, and Spades=4.
+    // The default suit value order, Clubs=1, Diamonds=2, Hearts=3, and Spades=4.
+    static const int kDefaultSuitValues[4];
 
     /** The default deck art directory. */
     static const char kDefaultDeckArtDirectory[],
@@ -52,39 +53,57 @@ class Deck {
         @param  aces_high       0 means that aces are low, a positive number
                                 means that aces are high, a negative number
                                 means that aces are low.
-        @param  culture         Used to determine what suites we are using.
+        @param  format          Used to determine what suites we are using.
     */
-    Deck (bool has_jokers = kNoJokers, int aces_high = kAcesHigh,
-          Card::SuitCulture culture = Card::kFrench, 
+    Deck (int num_decks = 1, bool has_jokers = kNoJokers, int aces_high = kAcesHigh,
+          Suit::Format format = Suit::kFrench,
           const char* deck_name = kDefaultRearDeckImage,
-          const char* directory_path = kDefaultDeckArtDirectory);
+          const char* directory_path = kDefaultDeckArtDirectory,
+          Suit::Color color = Suit::Color::kWhite);
 
-    bool Set (bool has_jokers = kNoJokers, int aces_high = kAcesHigh,
-              Card::SuitCulture culture = Card::kFrench,
-              const char* deck_name = kDefaultRearDeckImage,
-              const char* directory_path = kDefaultDeckArtDirectory);
-        
     /** Destructor. */
-    virtual ~Deck () {}
+    virtual ~Deck () {
+        delete pack_;
+        delete cards_;
+    }
 
-    /** Changes the SuitCulture to the given one. */
-    void SetSuitCulture (Card::SuitCulture culture);
+    /** Sets the given parameters of the deck. */
+    void Set (bool has_jokers = kNoJokers, int aces_high = kAcesHigh,
+              Suit::Format format = Suit::kFrench,
+              const char* deck_name = kDefaultRearDeckImage,
+              const char* directory_path = kDefaultDeckArtDirectory,
+              Suit::Color color = Suit::Color::kWhite);
 
-    /** Resets the deck to the initial state. */
-    void Reshuffle ();
-    
+    /** Returns a pointer to a static Suit for the column 0 types AKA Hearts. */
+    Suit* Heart ();
+
+    /** Returns a pointer to a static Suit for the column 1 types AKA Diamonds. */
+    Suit* Diamond ();
+
+    /** Returns a pointer to a static Suit for the column 2 types AKA Clubs. */
+    Suit* Club ();
+
+    /** Returns a pointer to a static Suit for the column 3 types AKA Spades. */
+    Suit* Spade ();
+
+    /** Returns an array of the static Card objects for the 4 columns 0-3. */
+    Suit** Suits ();
+
+    /** Returns the number of cards in the deck. */
+    int GetNumCards ();
+
     /** Function sets the suit values to the new values.
         @pre    valueN must be between 1-4.
         @return Returns 0 upon success, and a number 1-4 if the valueN is not
-                between 1-4. The number will be negative if the inputed number
-                was, and vice-versa. */
-    bool SetSuitValues (int value1, int value2, int value3, int value4);
+        between 1-4. The number will be negative if the inputed number
+        was, and vice-versa. */
+    void SetSuitDenominations (int column_0, int olumn_1, int olumn_2, int olumn_3);
 
-    /** Gets the suit value of the given suit.
-        @pre    suit must be between 1-4.
-        @return Returns a number between 1-4 upon success, and -1 if the index
-                was out of bounds. */
-    int GetSuitValue (int suit);
+    /** Sets the format to the one given. */
+    void SetFormat (Suit::Format format);
+
+    /** Resets the deck to the initial state. */
+    void Reshuffle ();
     
     /** Returns true if this deck has Jokers. */
     bool HasJokers ();
@@ -99,6 +118,9 @@ class Deck {
         @return Returns nullptr if the index is out of bounds. */
     Card* GetCard (int index);
 
+    /** Gets a pointer to the array of Cards. */
+    Card** GetCardPointers ();
+
     /** Sets the frontImage to a new Image from thisFile.
         @pre    thisFile must be a valid existing Image file.
         @return returns -1 if thisFile is not a valid Image. */
@@ -111,9 +133,6 @@ class Deck {
                 54 .svg files, and -x if images are not named correctly,
                 where x is the first failed filename. */
     //int SetDeckArt (const char* directory_path);
-        
-    /** Returns a string representation of the suit. */
-    const char* GetSuitstring (Card::Suit suit);
     
     /** Prints this object to the console. */
     void Print ();
@@ -124,17 +143,21 @@ class Deck {
         [1-13]-[1-4].svg/J-1.svg/J-2.svg format. */
     //int CheckDeckArtFolder (const char* directory_path);
 
-    bool               has_jokers_;      //< Flag for if the deck has Jokers.
-    Card::SuitCulture  culture_;         //< Culture of the suits.
-    int                aces_high_,       //< Flags for aces high or low.
-                       num_cards_,       //< Num cards in the deck.
-                       lowest_value_,    //< Lowest allowed card value.
-                       highest_value_,   //< Highest allowed card value.
-                       suit_values_[4];  //< Values of the 4 suites.
-    Card               pack_[54];        //< Unique array of single cards.
-    //Image         rear_image_;         //< The rear Image of the Deck.
-};
+    bool    has_jokers_;    //< Flag for if the deck has Jokers.
+    int     aces_high_,     //< Flags for aces high or low.
+            num_cards_,     //< Num cards in the deck.
+            lowest_value_,  //< Lowest allowed card value.
+            highest_value_; //< Highest allowed card value.
+    Suit    heart_,         //< The heart suit.
+            diamond_,       //< The diamond suit.
+            club_,          //< The club suit.
+            spade_;         //< The spade suit.
+    Suit*   suits_[4];      //< Array of Suits.
+    Card*   pack_;          //< Unique array of single cards.
+    Card**  cards_;         //< Array of card pointers to the pack_.
+    //Image rear_image_;    //< The rear Image of the Deck.
 
+};      //< class Deck
 }       //< namespace cards
 }       //< namespace kabuki
 #endif  //< KABUKI_CARDS_DECK_H

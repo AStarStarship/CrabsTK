@@ -13,8 +13,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABUKI_CARDS_HAND_H
-#define HEADER_FOR_KABUKI_CARDS_HAND_H
+#ifndef HEADER_FOR_KABUKI_CARDS_HAND
+#define HEADER_FOR_KABUKI_CARDS_HAND
 
 #include "card_stack.h"
 #include "card_combo.h"
@@ -23,8 +23,7 @@ namespace kabuki { namespace cards {
     
 /** Class that represents a hand in a playing card game.
     In most cases, the player will have a visible set of cards, and a
-    non-visible set of cards.
-*/
+    non-visible set of cards. */
 class Hand : public CardStack { 
     public:
 
@@ -33,17 +32,13 @@ class Hand : public CardStack {
         max_num_cards, and add the minimumNumCards to it.
         @pre    stock.getNumCards must be > minCards!!!
     */
-    Hand (CardStack& stock, int min_cards = 1,
-          int max_cards = Deck::kFullDeckSize);
+    Hand (int max_cards, int min_cards = 1);
     
     /** Virtual destructor. */
     virtual ~Hand () {}
 
-    /** Compares this hand to the other hand.
-    @return Returns 0 if they are equal, 1 if this hand is greater than
-    the other Hand, and -1 if the other Hand is greater than this
-    Hand. */
-    virtual int Compare (const Hand& other) = 0;
+    /** Clears all the cards it the hand. */
+    void Clear ();
 
     /** Returns the minNumCards in a Hand. */
     int GetMinNumCards ();
@@ -59,41 +54,27 @@ class Hand : public CardStack {
 
     /** Returns the number of Cards in this Hand. */
     int GetCount ();
-
-    /** Adds the card to this Hand. */
-    virtual int Add (Card* card);
-
-    /** Adds the card to this Hand. */
-    int Draw (CardStack& stack);
-    
-    /** Returns a combination of the visible and non-visible cards. */
-    CardStack GetCards ();
     
     /** Returns the visibleCards. */
     CardStack& GetVisibleCards ();
     
     /** Returns the nonVisibleCards. */
-    CardStack& GetNonVisibleCards ();
+    CardStack& GetHiddenCards ();
 
     /** Returns a list different hand point combinations for this game. */
     //virtual data::Array<CardCombo> GetHandCombos ();
-
-    /** Virtual function that organizes the player's hand. */
-    virtual void Organize ();
     
     /** Returns a string representation of this Object. */
     void Print ();
 
-    /** Overloaded operator= deep copiers the state of the other object. */
-    Hand& operator= (const Hand& other);
-
     protected:
 
-    int       min_cards_,        //< Min number of cards in a Hand.
-              max_cards_;        //< Max number of cards in a Hand.
-    CardStack visible_cards_,    //< Visible cards.
-              nonvisible_cards_; //< Non-visible cards.
+    int       max_cards_,     //< Max number of cards in a Hand.
+              min_cards_;     //< Min number of cards in a Hand.
+    CardStack visible_cards_, //< Visible cards.
+              hidden_cards_;  //< Hidden cards.
+
 };      //< class Hand
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABUKI_CARDS_HAND_H
+#endif  //< HEADER_FOR_KABUKI_CARDS_HAND

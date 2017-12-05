@@ -22,18 +22,28 @@
     <ClInclude Include="..\..\projects\script\global.h" />
     <ClInclude Include="cards\blackjack_card_combo.h" />
     <ClInclude Include="cards\blackjack_dealer.h" />
-    <ClInclude Include="cards\blackjack_hand.h" />
+    <ClInclude Include="cards\blackjack_game.h" />
     <ClInclude Include="cards\blackjack_player.h" />
     <ClInclude Include="cards\card.h" />
     <ClInclude Include="cards\card_combo.h" />
+    <ClInclude Include="cards\card_game.h" />
     <ClInclude Include="cards\card_stack.h" />
+    <ClInclude Include="cards\chat_message.h" />
     <ClInclude Include="cards\config.h" />
     <ClInclude Include="cards\dealer.h" />
     <ClInclude Include="cards\deck.h" />
+    <ClInclude Include="cards\global.h" />
     <ClInclude Include="cards\hand.h" />
     <ClInclude Include="cards\player.h" />
+    <ClInclude Include="cards\suit.h" />
     <ClInclude Include="data\array.h" />
     <ClInclude Include="data\config.h" />
+    <ClInclude Include="id\config.h" />
+    <ClInclude Include="id\global.h" />
+    <ClInclude Include="id\handle.h" />
+    <ClInclude Include="id\password.h" />
+    <ClInclude Include="id\user.h" />
+    <ClInclude Include="id\user_list.h" />
     <ClInclude Include="kabuki_toolkit.h" />
     <ClInclude Include="script\address.h" />
     <ClInclude Include="script\args.h" />
@@ -78,17 +88,24 @@
   <ItemGroup>
     <ClCompile Include="..\..\projects\cards\cards_tests.cc" />
     <ClCompile Include="..\..\projects\kabuki_tester.cc" />
+    <ClCompile Include="cards\cards_blackjack_game.cc" />
     <ClCompile Include="cards\cards_blackjack_card_combo.cc" />
     <ClCompile Include="cards\cards_blackjack_dealer.cc" />
-    <ClCompile Include="cards\cards_blackjack_hand.cc" />
     <ClCompile Include="cards\cards_blackjack_player.cc" />
     <ClCompile Include="cards\cards_card.cc" />
     <ClCompile Include="cards\cards_card_combo.cc" />
     <ClCompile Include="cards\cards_card_stack.cc" />
+    <ClCompile Include="cards\cards_chat_message.cc" />
     <ClCompile Include="cards\cards_dealer.cc" />
     <ClCompile Include="cards\cards_deck.cc" />
     <ClCompile Include="cards\cards_hand.cc" />
     <ClCompile Include="cards\cards_player.cc" />
+    <ClCompile Include="cards\cards_suit.cc" />
+    <ClCompile Include="cards\cards_card_game.cc" />
+    <ClCompile Include="id\id_handle.cc" />
+    <ClCompile Include="id\id_password.cc" />
+    <ClCompile Include="id\id_user.cc" />
+    <ClCompile Include="id\id_user_list.cc" />
     <ClCompile Include="script\script_args.cc" />
     <ClCompile Include="script\script_ascii.cc" />
     <ClCompile Include="script\script_bin.cc" />
@@ -189,7 +206,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(IncludePath)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Workspace\boost_1_64_0\;$(ProjectDir);$(IncludePath)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>

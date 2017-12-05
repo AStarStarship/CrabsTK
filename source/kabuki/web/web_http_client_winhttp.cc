@@ -14,7 +14,7 @@
 ****/
 #include "stdafx.h"
 
-#include "cpprest/http_headers.h"
+#include "http_headers.h"
 #include "http_client_impl.h"
 
 #ifndef CPPREST_TARGET_XP

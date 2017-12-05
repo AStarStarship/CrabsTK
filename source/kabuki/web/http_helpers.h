@@ -15,9 +15,9 @@
 ****/
 #pragma once
 
-#include "cpprest/details/basic_types.h"
+#include "basic_types.h"
 
-#include "cpprest/http_msg.h"
+#include "http_msg.h"
 
 namespace web { namespace http
 {

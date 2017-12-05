@@ -16,9 +16,8 @@
 #ifndef HEADER_FOR_KABUKI_CARDS_BLACKJACKDEADER
 #define HEADER_FOR_KABUKI_CARDS_BLACKJACKDEADER
 
-#include "deck.h"
 #include "dealer.h"
-#include "player.h"
+#include "blackjack_player.h"
 
 namespace kabuki { namespace cards {
 
@@ -26,7 +25,7 @@ namespace kabuki { namespace cards {
     A dealer has the Deck of cards, but is not necessarily a player. A
     dealer needs to keep track of all of the Players. A BlackjackDealer is both
     a Player and a Dealer at the same time. */
-class BlackjackDealer : public Player, public Dealer {
+class BlackjackDealer : public Dealer, public BlackjackPlayer {
     public:
     
     enum {
@@ -37,14 +36,21 @@ class BlackjackDealer : public Player, public Dealer {
         kMinBet             = 1,      //< Min bet.
         kMinNumCardsPerHand = 2,      //< Min cards in a hand.
         kMaxNumPlayer       = 2,      //< Max number of players.
-        kMaxNumCardsPerHand = Deck::kDefaultNumCards, //< Max cards in a hand.
+        kMaxNumCardsPerHand = Deck::kDefaultDeckSize, //< Max cards in a hand.
+        kKeyboardBufferSize = 79,     //< Size of the keyboard input buffer.
     };
 
-    /** Default constructor. 
-         This is why we like polymorphism. Notice all we have is a single 
-         constructor here, because all of our code we are recycling from the
-         Dealer class. */
+    /** Default constructor. */
     BlackjackDealer ();
+
+    /** Resets the number of wins to 0. */
+    virtual void DealHand (CardStack& stock);
+
+    /** Processes beginning of round logic. */
+    virtual void BeginRound ();
+
+    /** Processes beginning of round logic. */
+    virtual void EndRound ();
 
 };      //< class BlackjackDealer
 }       //< namespace cards

@@ -32,7 +32,7 @@ struct KABUKI Log {
 };
 
 /** Initializes the buffer of given size in bytes. */
-KABUKI Log LogInit (uintptr_t* buffer, size_t buffer_size);
+KABUKI Log LogInit (uintptr_t* buffer, uint_t buffer_size);
 
 /** Returns a reference to the bout for this assembly.
 template<uint_t kNumber>

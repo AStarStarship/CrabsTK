@@ -27,7 +27,7 @@
 namespace _ {
 
 #if USE_MORE_ROM
-Log LogInit (uintptr_t* buffer, size_t buffer_size) {
+Log LogInit (uintptr_t* buffer, uint_t buffer_size) {
     Bout* bout = BoutInit (buffer, buffer_size);
     Log log;
     log.bout = bout;

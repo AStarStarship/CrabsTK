@@ -20,11 +20,16 @@ using namespace std;
 
 namespace kabuki { namespace cards {
 
-Hand::Hand (CardStack& stock, int min_cards, int max_cards) :
-    min_cards_ (min_cards),
+Hand::Hand (int max_cards, int min_cards) :
     max_cards_ (max_cards),
-    visible_cards_ (),
-    nonvisible_cards_ () {
+    min_cards_ (min_cards),
+    visible_cards_ (max_cards),
+    hidden_cards_ (max_cards) {
+}
+
+void Hand::Clear () {
+    visible_cards_.Clear ();
+    hidden_cards_.Clear ();
 }
 
 int Hand::GetMinNumCards () {
@@ -43,7 +48,7 @@ int Hand::GetMaxCards () {
 }
 
 int Hand::GetCount () {
-    return visible_cards_.GetCount () + nonvisible_cards_.GetCount ();
+    return visible_cards_.GetCount () + hidden_cards_.GetCount ();
 }
 
 int Hand::SetMaxCards (int value) {
@@ -53,48 +58,23 @@ int Hand::SetMaxCards (int value) {
     return 0;
 }
 
-int Hand::Add (Card* card) {
-    return GetCards ().Push (card);
-}
-
-int Hand::Draw (CardStack& stack) {
-    return Add (stack.TakeNextCard ());
-}
-
-CardStack Hand::GetCards () {
-    auto returnStack = CardStack ();
-
-    return returnStack;
-}
-
 CardStack& Hand::GetVisibleCards () {
     return visible_cards_;
 }
 
-CardStack& Hand::GetNonVisibleCards () {
-    return nonvisible_cards_;
+CardStack& Hand::GetHiddenCards () {
+    return hidden_cards_;
 }
-
-void Hand::Organize () {}
 
 void Hand::Print () {
     cout << "\n| Cards:";
     PrintLine ('-');
     visible_cards_.Print ();
 
-    if (nonvisible_cards_.GetCount () > 0) {
+    if (hidden_cards_.GetCount () > 0) {
         cout << "\n|\n| Non-visible Cards: ";
-        nonvisible_cards_.Print ();
+        hidden_cards_.Print ();
     }
-}
-
-Hand& Hand::operator= (const Hand& hand) {
-    min_cards_ = hand.min_cards_;
-    max_cards_ = hand.max_cards_;
-
-    visible_cards_ = hand.visible_cards_;
-    nonvisible_cards_ = hand.nonvisible_cards_;
-    return *this;
 }
 
 }   //< namespace cards

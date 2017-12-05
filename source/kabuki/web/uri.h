@@ -15,8 +15,8 @@
 #ifndef _CASA_URI_H
 #define _CASA_URI_H
 
-#include "cpprest/base_uri.h"
-#include "cpprest/uri_builder.h"
+#include "base_uri.h"
+#include "uri_builder.h"
 
 #endif
 

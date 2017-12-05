@@ -21,7 +21,7 @@
 #include <locale.h>
 
 #include "pplx/pplxtasks.h"
-#include "cpprest/details/basic_types.h"
+#include "basic_types.h"
 
 #if !defined(_WIN32) || (_MSC_VER >= 1700)
 #include <chrono>

@@ -16,7 +16,7 @@
 #ifndef HEADER_FOR_KABUKI_BLACKJACK_PLAYER
 #define HEADER_FOR_KABUKI_BLACKJACK_PLAYER
 
-#include "dealer.h"
+#include "player.h"
 
 namespace kabuki { namespace cards {
 
@@ -25,33 +25,88 @@ class BlackjackPlayer : public Player {
     public:
 
     enum States {
-        kWaitingState = 0,
-        kHittingState = 1,
-        kHoldingState = 2,
+        kStateWaitingToJoin = 0, //< State when player is waiting to join.
+        kStatePlayingRound  = 1, //< State when player is playing normally.
+        kStateHolding       = 2, //< State when player is holding.
+        kStateOutOfGame     = 3  //< State when player has lost game.
     };
 
     /** Default Constructor. */
-    BlackjackPlayer (const char* player_name = "You", int start_points = 10,
-                     bool is_dealer = false);
+    BlackjackPlayer (CardStack& stock, const char* player_name = "You",
+                     int start_points = 100, bool is_dealer = false);
 
     /** Destructor. */
     ~BlackjackPlayer ();
 
-    /** Psudo-AI function that determines if a player (usually the dealer) hits 
+    /** Sets the state of the player. */
+    const char* SetState (int state) override;
+
+    /** Compares this hand to the other hand.
+    @return Returns 0 if they are equal, 1 if this hand is greater than
+    the other Hand, and -1 if the other Hand is greater than this
+    Hand. */
+    virtual int Compare (Hand& other);
+
+    /** Returns the HighLowScore. */
+    //data::Array<CardCombo> GetHandCombos ();
+
+    /** Gets the hand score with the given ace value. */
+    int GetScore (int ace_value);
+
+    /** Returns the min score of this hand where Aces are worth 1. */
+    int GetMinScore ();
+
+    /** Returns the max score of this hand where Aces are worth 11. */
+    int GetMaxScore ();
+
+    /** Function returns if this hand is 21. */
+    bool Is21 ();
+
+    /** Function returns true if the hand is a bust.
+    A hand is a bust if it is over 21 points. */
+    bool IsBust ();
+
+    /** Prints this object to the console. */
+    void PrintHand ();
+
+    /** Psudo-AI function that determines if a player (usually the dealer) hits
         or holds. */
-    virtual bool PlayOrPass (Dealer& dealer);
+    //bool PlayOrPass (Dealer& dealer);
 
-    /** Function that performs the logic of playing a hand. */
-    void PlayHand ();
+    /** New game logic handler. */
+    virtual void NewGame ();
 
-    /** Function that attempts to take a card from the Deck for a player.
+    /** New round logic handler.
+        It's not really possible to predict what function parameters this
+        this function will need so you will need to pass them into your
+        sub-class object constructor. */
+    virtual void BeginRound ();
+
+    /** Attempts to take a card from the Deck for a player.
         @pre    The Deck must not be empty.
         @pre    The player must have a max hand score of 21. */
-    void HitMe (CardStack& stock);
+    virtual void PlayRound ();
 
-    private:
+    /** Processes end of round logic.
+        It's not really possible to predict what function parameters this
+        this function will need so you will need to pass them into your
+        sub-class object constructor. */
+    virtual void EndRound ();
 
-    State state; //< State of the BlackjackPlayer FSM.
+    virtual void EndGame ();
+
+    /** Checks to see if this hand wins compared to the given player's hand */
+    virtual bool HandWins (Hand& other);
+
+    /** Returns true if the player is holding. */
+    bool IsHolding ();
+
+    /** Prints the round stats. */
+    void PrintStats ();
+
+    /** Prints the player details. */
+    void Print ();
+
 };
 }       //< namespace cards
 }       //< namespace kabuki

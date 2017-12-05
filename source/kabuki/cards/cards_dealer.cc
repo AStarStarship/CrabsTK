@@ -179,18 +179,22 @@ void Dealer::SetMaxPlayers (int max_players) {
 }
 
 void Dealer::StartNewGame () {
-    stock_.Shuffle ();
-    Redeal ();
+    stock_.Shuffle (pack_);
 }
 
-void Dealer::Redeal () {
-    for (int i = 0; i < players_.GetCount (); ++i) {
-        Player*  player = players_[i];
-        player->DealHand (stock_);
+void Dealer::Deal (CardStack& stack, int num_cards) {
+    for (int i = 0; i < num_cards; ++i) {
+        stack.Push (stock_.Draw ());
     }
 }
 
-void Dealer::Print () {
+void Dealer::Redeal () {
+    //for (int i = 0; i < players_.GetCount (); ++i) {
+    //    Deal (players_[i].Get);
+    //}
+}
+
+void Dealer::PrintDealer () {
     cout << "\n| Dealer:\n| Pot Total: " << pot_total_;
 }
 

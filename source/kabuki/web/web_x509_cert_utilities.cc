@@ -15,7 +15,7 @@
 
 #if defined(__APPLE__) || (defined(ANDROID) || defined(__ANDROID__)) || (defined(_WIN32)  && !defined(__cplusplus_winrt) && !defined(_M_ARM) && !defined(CPPREST_EXCLUDE_WEBSOCKETS))
 
-#include "cpprest/details/x509_cert_utilities.h"
+#include "x509_cert_utilities.h"
 #include <vector>
 
 #if defined(ANDROID) || defined(__ANDROID__)

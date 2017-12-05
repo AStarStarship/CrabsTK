@@ -12,10 +12,10 @@
 ****/
 #pragma once
 
-#include "cpprest/details/basic_types.h"
-#include "cpprest/astreambuf.h"
-#include "cpprest/http_client.h"
-#include "cpprest/http_msg.h"
+#include "basic_types.h"
+#include "astreambuf.h"
+#include "http_client.h"
+#include "http_msg.h"
 #include <stdexcept>
 #include <string>
 #include <memory>

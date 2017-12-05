@@ -24,7 +24,7 @@
 #include <atomic>
 #include <mutex>
 
-#include "cpprest/details/http_server.h"
+#include "http_server.h"
 
 namespace web
 {

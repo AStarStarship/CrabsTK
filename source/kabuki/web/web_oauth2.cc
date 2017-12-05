@@ -30,7 +30,7 @@ namespace details
 
 #define _OAUTH2_STRINGS
 #define DAT(a_, b_) const oauth2_string oauth2_strings::a_(_XPLATSTR(b_));
-#include "cpprest/details/http_constants.dat"
+#include "http_constants.dat"
 #undef _OAUTH2_STRINGS
 #undef DAT
 

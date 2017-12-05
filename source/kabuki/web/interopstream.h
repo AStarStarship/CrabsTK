@@ -13,8 +13,8 @@
 #pragma once
 
 #include "pplx/pplxtasks.h"
-#include "cpprest/astreambuf.h"
-#include "cpprest/streams.h"
+#include "astreambuf.h"
+#include "streams.h"
 
 #if defined(_WIN32)
 #pragma warning(push)

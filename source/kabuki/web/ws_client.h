@@ -13,7 +13,7 @@
 #ifndef _CASA_WS_CLIENT_H
 #define _CASA_WS_CLIENT_H
 
-#include "cpprest/details/basic_types.h"
+#include "basic_types.h"
 
 #if !defined(CPPREST_EXCLUDE_WEBSOCKETS)
 
@@ -23,11 +23,11 @@
 #include <mutex>
 
 #include "pplx/pplxtasks.h"
-#include "cpprest/uri.h"
-#include "cpprest/details/web_utilities.h"
-#include "cpprest/http_headers.h"
-#include "cpprest/asyncrt_utils.h"
-#include "cpprest/ws_msg.h"
+#include "uri.h"
+#include "web_utilities.h"
+#include "http_headers.h"
+#include "asyncrt_utils.h"
+#include "ws_msg.h"
 
 namespace web
 {
@@ -75,8 +75,8 @@ public:
     websocket_client_config() :
         m_sni_enabled(true),
         m_validate_certificates(true)
-	{
-	}
+    {
+    }
 
     /// <summary>
     /// Get the web proxy object
@@ -179,7 +179,7 @@ public:
     /// <remarks>If you want all the subprotocols in a comma separated string
     /// they can be directly looked up in the headers using 'Sec-WebSocket-Protocol'.</remarks>
     _ASYNCRTIMP std::vector<::utility::string_t> subprotocols() const;
-	
+    
     /// <summary>
     /// Gets the server certificate validation property.
     /// </summary>
@@ -188,7 +188,7 @@ public:
     {
         return m_validate_certificates;
     }
-	
+    
     /// <summary>
     /// Sets the server certificate validation property.
     /// </summary>

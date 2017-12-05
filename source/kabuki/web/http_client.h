@@ -32,18 +32,18 @@ typedef void* native_handle;}}}
 #include <limits>
 
 #include "pplx/pplxtasks.h"
-#include "cpprest/http_msg.h"
-#include "cpprest/json.h"
-#include "cpprest/uri.h"
-#include "cpprest/details/web_utilities.h"
-#include "cpprest/details/basic_types.h"
-#include "cpprest/asyncrt_utils.h"
+#include "http_msg.h"
+#include "json.h"
+#include "uri.h"
+#include "web_utilities.h"
+#include "basic_types.h"
+#include "asyncrt_utils.h"
 
 #if !defined(CPPREST_TARGET_XP)
-#include "cpprest/oauth1.h"
+#include "oauth1.h"
 #endif
 
-#include "cpprest/oauth2.h"
+#include "oauth2.h"
 
 #if !defined(_WIN32) && !defined(__cplusplus_winrt) || defined(CPPREST_FORCE_HTTP_CLIENT_ASIO)
 #if defined(__clang__)

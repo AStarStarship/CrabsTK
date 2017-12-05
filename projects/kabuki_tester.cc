@@ -21,8 +21,8 @@ using namespace std;
 
 int main (int args_count, char** args) {
     PrintLine ();
-    cout << "\n| Running Kabuki Toolkit unit tests...\n|\n|";
-    PrintLine ("|", '~');
+    cout << "\n| Running Kabuki Toolkit unit tests...";
+    PrintLine ("+", '-');
     cout << "\n|";
     return CommandLineTestRunner::RunAllTests (args_count, args);
 }

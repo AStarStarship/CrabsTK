@@ -21,9 +21,9 @@
 
 namespace kabuki { namespace cards {
 
-/** A class that represents a dealer in a card game. 
+/** A dealer in a card game.
     A dealer has the Deck of cards, but is not necessarily a player. A dealer
-    needs to keep track of all of the Players. */
+    needs to keep track of all of the Players and deal them cards. */
 class KABUKI Dealer {
     public:
     
@@ -119,14 +119,19 @@ class KABUKI Dealer {
     /** Sets the minBet to the value. */
     void SetMaxPlayers (int newMaxPlayers);
 
-    /** Virtual function that shuffles the cards and gets ready to starts a new game. */
+    /** Virtual function that shuffles the cards and gets ready to starts a
+        new game. */
     virtual void StartNewGame ();
     
-    /** Virtual function that shuffles the cards and gets ready for a new round. */
+    /** Virtual function that shuffles the cards and gets ready for a new
+        round. */
     virtual void Redeal ();
 
+    /** Deals the given number of cards into the specified stack. */
+    void Deal (CardStack& stack, int num_cards = 1);
+
     /** Prints this object to the stdout. */
-    virtual void Print ();
+    virtual void PrintDealer ();
 
     private:
 
@@ -134,24 +139,19 @@ class KABUKI Dealer {
     void SetValues (int ante, int min_bet, int min_cards_per_hand,
                     int max_cards_per_hand, int max_num_player, int deck_size);
     
-    int       num_decks_,           //< Number of decks in this game.
-              deck_size_,           //< Size of the deck for this game.
-              pot_total_,           //< Number of points in the pot.
-              starting_ante_,       //< Starting ante for the game.
-              ante_,                //< Current ante for the game.
-              min_bet_,             //< Min bet for this round.
-              min_cards_per_hand_,  //< Min number of Cards per Hand.
-              max_cards_per_hand_,  //< Max number of Cards per Hand.
-              max_players_,         //< Max number of players in this game.
-              player_number_;        /*< Player number of the current player who
-                                         is playing in this round. */
-    Deck      pack_;                /*< Main pack of Card objects; the Deck owns
-                                        the Card objects.
-                                        A pack of Cards is the entire deck of
-                                        cards. Note: can be a DoubleDeck (which
-                                        you should make). */
-    CardStack stock_;               //< Stock of playing Cards.
-    data::Array<Player*> players_;      //< Array of Player pointers.
+    int  num_decks_,           //< Number of decks in this game.
+         deck_size_,           //< Size of the deck for this game.
+         pot_total_,           //< Number of points in the pot.
+         starting_ante_,       //< Starting ante for the game.
+         ante_,                //< Current ante for the game.
+         min_bet_,             //< Min bet for this round.
+         min_cards_per_hand_,  //< Min number of Cards per Hand.
+         max_cards_per_hand_,  //< Max number of Cards per Hand.
+         max_players_,         //< Max number of players in this game.
+         player_number_;       //< Index of current player who's turn it is.
+    Deck pack_;                //< Main pack of Card objects.
+    CardStack stock_;          //< Stock of playing Cards.
+    data::Array<Player*> players_;  //< Array of Player pointers.
 
 };      //< class Dealer
 }       //< namespace cards

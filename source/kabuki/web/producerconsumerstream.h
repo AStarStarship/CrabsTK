@@ -22,7 +22,7 @@
 #include <iterator>
 
 #include "pplx/pplxtasks.h"
-#include "cpprest/astreambuf.h"
+#include "astreambuf.h"
 
 namespace Concurrency { namespace streams {
 

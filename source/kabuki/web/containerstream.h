@@ -19,8 +19,8 @@
 #include <iterator>
 
 #include "pplx/pplxtasks.h"
-#include "cpprest/astreambuf.h"
-#include "cpprest/streams.h"
+#include "astreambuf.h"
+#include "streams.h"
 
 namespace Concurrency { namespace streams {
 

@@ -17,11 +17,11 @@
 
 namespace kabuki { namespace cards {
 
-CardStack::CardStack () :
+CardStack::CardStack (int size) :
     min_cards_ (0),
     max_cards_ (Deck::kFullDeckSize),
     visible_ (true),
-    cards_ () {
+    cards_ (size) {
     // Nothing to do here. ({:-)
 }
 /*
@@ -37,8 +37,12 @@ CardStack::CardStack (const CardStack& cards, int min_cards, int max_cards,
 CardStack::CardStack (Deck& deck) :
     max_cards_ (deck.GetCount ()),
     visible_ (false) {
+    CardStack temp (54);
     for (int i = 0; i < deck.GetCount (); ++i) {
-        Push (deck.GetCard (i));
+        temp.Push (deck.GetCard (i));
+    }
+    for (int i = 0; i < deck.GetCount (); ++i) {
+        cards_.Push (temp.TakeRandomCard ());
     }
 }
 
@@ -56,8 +60,8 @@ CardStack::CardStack (const CardStack& other) :
 CardStack& CardStack::operator= (const CardStack& other) {
     min_cards_ = other.min_cards_;
     max_cards_ = other.max_cards_;
-    visible_ = other.visible_;
-    cards_ = other.cards_;
+    visible_   = other.visible_;
+    cards_     = other.cards_;
     return *this;
 }
 
@@ -75,7 +79,7 @@ int CardStack::Compare (CardStack& other) {
 int CardStack::GetValue () {
     int total = 0;
     for (int i = 0; i < cards_.GetCount (); ++i) {
-        total += cards_.Element (i)->GetValue ();
+        total += cards_.Element (i)->GetDenomination ();
     }
     return total;
 }
@@ -100,6 +104,10 @@ void CardStack::Shuffle (Deck& deck) {
     for (int i = 0; i < num_cards; ++i) {
         cards_.Push (cards.TakeRandomCard ());
     }
+}
+
+int CardStack::GetSize () {
+    return cards_.GetSize ();
 }
 
 int CardStack::GetCount () {

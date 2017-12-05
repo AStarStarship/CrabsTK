@@ -14,14 +14,14 @@
              permissions and limitations under the License.
 */
 
-#include "pro/project.h"
+#include "../pro/project.h"
 
 namespace kabuki { namespace web {
 
-class Websockets : public Project {
+class WebsocketsProject : public _::Project {
     public:
 
-    Project () :
+    WebsocketsProject () :
         Project ("kabuki::websockets")
     {
     }

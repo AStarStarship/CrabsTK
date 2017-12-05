@@ -32,7 +32,7 @@ int BlackjackCardCombo::GetValue () {
             total += AcesHigh ()?10:1;
         } else {
             // Then just add the point to the score like normal.
-            total += card->GetValue ();
+            total += card->GetDenomination ();
         }
     }
     return total;

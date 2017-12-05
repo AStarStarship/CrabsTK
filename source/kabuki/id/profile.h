@@ -17,7 +17,7 @@
 #define KABUKI_ID_PROFILE_H
 
 
-#include "module_config.h"
+#include "config.h"
 #include "entity.h"
 
 namespace kabuki { namespace id {
@@ -30,8 +30,8 @@ class KABUKI Profile
     /** Constructor an anonymous Profile. */
     Profile ();
 
-    /** Prints this object to a expression. */
-    void Print (_::Log& log);
+    /** Prints this object to the console. */
+    void Print ();
 
     private:
 

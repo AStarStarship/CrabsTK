@@ -25,45 +25,37 @@
 #include <ppltasks.h>
 #include "pplx/pplxtasks.h"
 
-namespace pplx
-{
-namespace _Ppl_conv_helpers
-{
+namespace pplx {
+namespace _Ppl_conv_helpers {
 template<typename _Tc, typename _F>
-auto _Set_value(_Tc _Tcp, const _F& _Func) -> decltype(_Tcp.set(_Func())) { return _Tcp.set(_Func()); }
+auto _Set_value (_Tc _Tcp, const _F& _Func) -> decltype(_Tcp.set (_Func ())) { return _Tcp.set (_Func ()); }
 
 template<typename _Tc, typename _F>
-auto _Set_value(_Tc _Tcp, const _F& _Func, ...) -> decltype(_Tcp.set()) { _Func(); return _Tcp.set(); }
+auto _Set_value (_Tc _Tcp, const _F& _Func, ...) -> decltype(_Tcp.set ()) { _Func (); return _Tcp.set (); }
 
 template<typename _TaskType, typename _OtherTaskType, typename _OtherTCEType>
-_OtherTaskType _Convert_task(_TaskType _Task)
-{
+_OtherTaskType _Convert_task (_TaskType _Task) {
     _OtherTCEType _Tc;
-    _Task.then([_Tc](_TaskType _Task2) {
-        try
-        {
-            _Ppl_conv_helpers::_Set_value(_Tc, [=]{ return _Task2.get(); });
-        }
-        catch(...)
-        {
-            _Tc.set_exception(std::current_exception());
+    _Task.then ([_Tc] (_TaskType _Task2) {
+        try {
+            _Ppl_conv_helpers::_Set_value (_Tc, [=] { return _Task2.get (); });
+        } catch (...) {
+            _Tc.set_exception (std::current_exception ());
         }
     });
-    _OtherTaskType _T_other(_Tc);
+    _OtherTaskType _T_other (_Tc);
     return _T_other;
 }
 }
 
 template<typename _TaskType>
-concurrency::task<_TaskType> pplx_task_to_concurrency_task(pplx::task<_TaskType> _Task)
-{
-    return _Ppl_conv_helpers::_Convert_task<typename pplx::task<_TaskType>, concurrency::task<_TaskType>, concurrency::task_completion_event<_TaskType>>(_Task);
+concurrency::task<_TaskType> pplx_task_to_concurrency_task (pplx::task<_TaskType> _Task) {
+    return _Ppl_conv_helpers::_Convert_task<typename pplx::task<_TaskType>, concurrency::task<_TaskType>, concurrency::task_completion_event<_TaskType>> (_Task);
 }
 
 template<typename _TaskType>
-pplx::task<_TaskType> concurrency_task_to_pplx_task(concurrency::task<_TaskType> _Task)
-{
-    return _Ppl_conv_helpers::_Convert_task<typename concurrency::task<_TaskType>, pplx::task<_TaskType>, pplx::task_completion_event<_TaskType>>(_Task);
+pplx::task<_TaskType> concurrency_task_to_pplx_task (concurrency::task<_TaskType> _Task) {
+    return _Ppl_conv_helpers::_Convert_task<typename concurrency::task<_TaskType>, pplx::task<_TaskType>, pplx::task_completion_event<_TaskType>> (_Task);
 }
 } // namespace pplx
 

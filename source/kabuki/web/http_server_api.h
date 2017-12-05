@@ -17,7 +17,7 @@
 
 #include <memory>
 
-#include "cpprest/http_listener.h"
+#include "http_listener.h"
 
 namespace web { namespace http
 {

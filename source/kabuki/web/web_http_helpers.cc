@@ -49,7 +49,7 @@ namespace details
 static const http_status_to_phrase idToPhraseMap [] = {
 #define _PHRASES
 #define DAT(a,b,c) {status_codes::a, c},
-#include "cpprest/details/http_constants.dat"
+#include "http_constants.dat"
 #undef _PHRASES
 #undef DAT
 };
@@ -63,7 +63,7 @@ utility::string_t get_default_reason_phrase(status_code code)
     static const http_status_to_phrase idToPhraseMap [] = {
 #define _PHRASES
 #define DAT(a,b,c) {status_codes::a, c},
-#include "cpprest/details/http_constants.dat"
+#include "http_constants.dat"
 #undef _PHRASES
 #undef DAT
     };

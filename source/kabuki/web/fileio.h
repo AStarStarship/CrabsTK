@@ -24,7 +24,7 @@
 #endif
 
 #include "pplx/pplxtasks.h"
-#include "cpprest/details/basic_types.h"
+#include "basic_types.h"
 
 namespace Concurrency { namespace streams
 {

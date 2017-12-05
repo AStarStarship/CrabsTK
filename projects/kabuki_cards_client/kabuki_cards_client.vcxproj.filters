@@ -19,10 +19,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="stdafx.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="kabukicardsclient.cpp">
+    <ClCompile Include="cards_client.cc">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

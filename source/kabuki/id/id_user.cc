@@ -14,40 +14,45 @@
 */
 
 #include <stdafx.h>
-#include "../include/user.h"
+#include "user.h"
+
+using namespace _;
+using namespace std;
 
 namespace kabuki { namespace id {
 
 User::User (const char* name, const char* password) :
-    handle_     (name),
-    password_ (password)
-{
+    handle_ (name),
+    password_ (password) {
     //activeAccounts = new kabuki::pro.Game.Account.List ();
 }
 
-Handle& User::GetUsername () { return handle_; }
+const char* User::GetUsername () {
+    return handle_.GetKey ();
+}
+
+Handle& User::GetHandle () { return handle_; }
 
 Password& User::GetPassword () { return password_; }
 
-bool User::Verify (const char* username, const char* user)
-{
+bool User::Verify (const char* username, const char* user) {
     //return IsValidUsername (char);
     return false;
 }
 
-bool User::Equals (const User& user)
-{
-    return (handle_.Equals (handle_.GetKey ()) && password_.Equals (user.password_));
+bool User::Equals (const User& user) {
+    if (!handle_.Equals (handle_.GetKey ()))
+        return false;
+    return password_.Equals (user.password_);
 }
 
-bool User::Equals (const char* name)
-{
+bool User::Equals (const char* name) {
     return handle_.Equals (name);
 }
 
-void User::Print (_::Log& log)
-{
-    log << "User Name: " << handle_.GetKey () << "  Password: " << password_.GetKey ();
+void User::Print () {
+    cout << "\n| Username: " << handle_.GetKey () << "  Password: "
+        << password_.GetKey ();
 }
 
 }       //< id

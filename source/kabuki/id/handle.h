@@ -1,5 +1,5 @@
 /** kabuki::id
-    @file    ~/source/kabuki/id/include/handle.h
+    @file    ~/source/kabuki/id/handle.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -13,18 +13,16 @@
              permissions and limitations under the License.
 */
 
-#ifndef KABUKI_ID_HANDLE_H
-#define KABUKI_ID_HANDLE_H
+#ifndef HEADER_FOR_KABUKI_ID_HANDLE
+#define HEADER_FOR_KABUKI_ID_HANDLE
 
-#include "module_config.h"
-#include "../../script/include/log.h"
+#include "config.h"
 
 namespace kabuki { namespace id {
 
 /** A handle like a char or UID.
 */
-class KABUKI Handle
-{
+class KABUKI Handle {
     public:
 
     enum {
@@ -50,13 +48,13 @@ class KABUKI Handle
     bool Equals (const Handle& h);
 
     /** Prints this object to the log. */
-    void Print (_::Log& log);
+    void Print ();
     
     private:
 
-    const char* key_;  //< The name of the object.
+    char key_[kMaxLength + 1]; //< Unique string key.
 
 };      //< class Handle
 }       //< id
 }       //< kabuki
-#endif  //< KABUKI_ID_HANDLE_H
+#endif  //< HEADER_FOR_KABUKI_ID_HANDLE

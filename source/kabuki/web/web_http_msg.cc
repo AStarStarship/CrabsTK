@@ -1012,25 +1012,25 @@ details::_http_request::_http_request(std::unique_ptr<http::details::_http_serve
 
 #define _METHODS
 #define DAT(a,b) const method methods::a = b;
-#include "cpprest/details/http_constants.dat"
+#include "http_constants.dat"
 #undef _METHODS
 #undef DAT
 
 #define _HEADER_NAMES
 #define DAT(a,b) const utility::string_t header_names::a = _XPLATSTR(b);
-#include "cpprest/details/http_constants.dat"
+#include "http_constants.dat"
 #undef _HEADER_NAMES
 #undef DAT
 
 #define _MIME_TYPES
 #define DAT(a,b) const utility::string_t mime_types::a = _XPLATSTR(b);
-#include "cpprest/details/http_constants.dat"
+#include "http_constants.dat"
 #undef _MIME_TYPES
 #undef DAT
 
 #define _CHARSET_TYPES
 #define DAT(a,b) const utility::string_t charset_types::a = _XPLATSTR(b);
-#include "cpprest/details/http_constants.dat"
+#include "http_constants.dat"
 #undef _CHARSET_TYPES
 #undef DAT
 
@@ -1038,7 +1038,7 @@ details::_http_request::_http_request(std::unique_ptr<http::details::_http_serve
 #ifndef _WIN32
 #define _PHRASES
 #define DAT(a,b,c) const status_code status_codes::a;
-#include "cpprest/details/http_constants.dat"
+#include "http_constants.dat"
 #undef _PHRASES
 #undef DAT
 #endif

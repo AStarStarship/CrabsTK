@@ -29,7 +29,7 @@ namespace details
 
 #define _OAUTH1_STRINGS
 #define DAT(a_, b_) const oauth1_string oauth1_strings::a_(_XPLATSTR(b_));
-#include "cpprest/details/http_constants.dat"
+#include "http_constants.dat"
 #undef _OAUTH1_STRINGS
 #undef DAT
 
@@ -413,7 +413,7 @@ const oauth1_token& oauth1_config::token() const
 
 #define _OAUTH1_METHODS
 #define DAT(a,b) const oauth1_method oauth1_methods::a = b;
-#include "cpprest/details/http_constants.dat"
+#include "http_constants.dat"
 #undef _OAUTH1_METHODS
 #undef DAT
 

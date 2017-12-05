@@ -31,8 +31,9 @@ namespace kabuki { namespace cards {
 class CardStack {
     public:
 
-    /** Constructs an empty card stack with a max of 54 cards. */
-    CardStack ();
+    /** Constructs an empty card stack with a max of 54 cards.
+        @param size The number of array elements to reserve. */
+    CardStack (int size = 54);
     
     /** Verbose constructor. */
     //CardStack (const CardStack& cards, int min_num_cards, 
@@ -65,6 +66,9 @@ class CardStack {
 
     /** Shuffles this CardStack. */
     void Shuffle (Deck& deck);
+
+    /** Returns the size of this stack. */
+    int GetSize ();
 
     /** Returns the number of Card(s) in this stack. */
     int GetCount ();
@@ -107,7 +111,7 @@ class CardStack {
     /** Attempts to draw the given number of cards from the deck if there is
         enough. 
         @return Returns the number of cards drawn. */
-    int DrawCards (CardStack& cards, int num_cards_take);
+    int DrawCards (CardStack& cards, int num_cards_take = 1);
 
     /** Removes card from the stack.
         @return Returns true upon success and false if this stack doesn't 

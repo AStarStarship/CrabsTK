@@ -17,7 +17,7 @@
 #define KABUKI_ID_ROLE_H
 
 
-#include "module_config.h"
+#include "config.h"
 
 namespace kabuki { namespace id {
 

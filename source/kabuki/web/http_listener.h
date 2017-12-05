@@ -16,7 +16,7 @@
 #include <limits>
 #include <functional>
 
-#include "cpprest/http_msg.h"
+#include "http_msg.h"
 #if !defined(_WIN32) && !defined(__cplusplus_winrt) || defined(CPPREST_FORCE_HTTP_LISTENER_ASIO)
 #include <boost/asio/ssl.hpp>
 #endif

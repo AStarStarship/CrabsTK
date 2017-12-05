@@ -10,7 +10,7 @@
 ****/
 #pragma once
 
-#include "cpprest/details/basic_types.h"
+#include "basic_types.h"
 
 #if !defined(CPPREST_EXCLUDE_WEBSOCKETS)
 
@@ -18,10 +18,10 @@
 #include <limits>
 
 #include "pplx/pplxtasks.h"
-#include "cpprest/streams.h"
-#include "cpprest/containerstream.h"
-#include "cpprest/uri.h"
-#include "cpprest/asyncrt_utils.h"
+#include "streams.h"
+#include "containerstream.h"
+#include "uri.h"
+#include "asyncrt_utils.h"
 
 namespace web
 {
@@ -152,13 +152,13 @@ private:
     const pplx::task_completion_event<void> & body_sent() const { return m_body_sent; }
 
 #if !defined(__cplusplus_winrt)
-	void set_message_pong()
-	{
+    void set_message_pong()
+    {
         concurrency::streams::container_buffer<std::string> buffer("");
-		m_msg_type = websocket_message_type::pong;
-		m_length = static_cast<size_t>(buffer.size());
-		m_body = buffer;
-	}
+        m_msg_type = websocket_message_type::pong;
+        m_length = static_cast<size_t>(buffer.size());
+        m_body = buffer;
+    }
 #endif
 
     void set_message(const concurrency::streams::container_buffer<std::string> &buffer)

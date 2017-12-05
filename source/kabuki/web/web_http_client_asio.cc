@@ -15,7 +15,7 @@
 
 #include "stdafx.h"
 
-#include "cpprest/asyncrt_utils.h"
+#include "asyncrt_utils.h"
 #include "../common/internal_http_helpers.h"
 
 #if defined(__clang__)
@@ -38,9 +38,9 @@
 
 #include "pplx/threadpool.h"
 #include "http_client_impl.h"
-#include "cpprest/base_uri.h"
-#include "cpprest/details/x509_cert_utilities.h"
-#include "cpprest/details/http_helpers.h"
+#include "base_uri.h"
+#include "x509_cert_utilities.h"
+#include "http_helpers.h"
 #include <unordered_set>
 #include <memory>
 

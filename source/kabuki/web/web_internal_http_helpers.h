@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "cpprest/details/basic_types.h"
+#include "basic_types.h"
 #include <string>
 
 namespace web { namespace http { namespace details {

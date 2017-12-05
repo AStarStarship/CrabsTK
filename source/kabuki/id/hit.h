@@ -16,7 +16,7 @@
 #ifndef KABUKI_ID_HITLIST_H
 #define KABUKI_ID_HITLIST_H
 
-#include "module_config.h"
+#include "config.h"
 #include "../../data/include/array.h"
 
 namespace kabuki { namespace id {

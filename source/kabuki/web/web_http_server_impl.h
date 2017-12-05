@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "cpprest/details/http_server.h"
+#include "http_server.h"
 
 namespace web
 {

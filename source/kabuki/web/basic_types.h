@@ -17,7 +17,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include "cpprest/details/cpprest_compat.h"
+#include "cpprest_compat.h"
 
 #ifndef _WIN32
 # define __STDC_LIMIT_MACROS
@@ -26,7 +26,7 @@
 #include <cstdint>
 #endif
 
-#include "cpprest/details/SafeInt3.hpp"
+#include "SafeInt3.hpp"
 
 namespace utility
 {

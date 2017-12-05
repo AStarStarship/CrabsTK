@@ -16,7 +16,7 @@
 #ifndef KABUKI_ID_GRAMMAR_H
 #define KABUKI_ID_GRAMMAR_H
 
-#include "module_config.h"
+#include "config.h"
 #include "../../script/include/log.h"
 
 namespace kabuki { namespace id {

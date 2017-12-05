@@ -22,7 +22,7 @@
     <ClCompile Include="stdafx.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="kabuki_cards_server.cc">
+    <ClCompile Include="cards_server.cc">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

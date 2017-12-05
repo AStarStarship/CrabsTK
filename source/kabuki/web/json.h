@@ -21,8 +21,8 @@
 #include <vector>
 #include <unordered_map>
 #include <cstdint>
-#include "cpprest/details/basic_types.h"
-#include "cpprest/asyncrt_utils.h"
+#include "basic_types.h"
+#include "asyncrt_utils.h"
 
 namespace web
 {

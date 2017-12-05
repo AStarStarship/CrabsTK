@@ -16,7 +16,7 @@
 #ifndef KABUKI_PRO_IDSERVER
 #define KABUKI_PRO_IDSERVER
 
-#include "module_config.h"
+#include "config.h"
 #include "..\..\script\include\log.h"
 #include "..\..\data\include\array.h"
 

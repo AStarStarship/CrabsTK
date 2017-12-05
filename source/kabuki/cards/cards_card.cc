@@ -16,115 +16,35 @@
 #include "card.h"
 #include "deck.h"
 
+using namespace std;
+
 namespace kabuki { namespace cards {
 
-// These 4 string arrays allow us to print the names of suits in our text 
-// console app. The last 4 suit_ suitCultures are the Latin Suits.
-const char* Card::kFrenchSuit[4] = { "Clubs", "Diamonds", "Hearts",
-                                     "Spades" };
-const char* Card::kGermanSuit[4] = { "Acorns", "Bells", "Hearts",
-                                     "Leaves" };
-const char* Card::kSwissGermanSuit[4] = { "Acorns", "Bells", "Roses",
-                                          "Shields" };
-const char* Card::kLatinSuit[4] = { "Clubs", "Coins", "Cups",
-                                    "Swords" };
-const char* Card::kSuitCulturestrings[] = { "French", "German", "Swiss-German",
-                                            "Piacentine", "Napoletane",
-                                            "Spagnole", "Bergamasche" };
-
-Card::Card () {
+Card::Card (int pip, Suit* suit, int denomination) {
+    Set (pip, suit, denomination);
 }
 
-void Card::Set (int pip, Suit suit, int face_value, int points_value,
-                    int suit_value, SuitCulture culture) {
+void Card::Set (int pip, Suit* suit, int denomination) {
     // First we have to ensure that the input values were in bounds.
-
+    //< Pip values range from 0 - 13 J=0, A=1, J=10, Q=11, K=13
     if (pip < 0) {
-        //< We can't have any negative numbers.
-        pip_ = pip;
-    } else if (pip > 13) {
-        //< Pip values range from 0 - 13 J=0, A=1, J=10, Q=11, K=13
-        pip_ = 13;
+        pip = 0;
+    } else if (pip > kKing) {
+        pip = 13;
     }
     pip_ = pip;
-
-    if (suit > Suit::kSpade) {
-        suit = Suit::kSpade;
-    }
+    suit = (suit == nullptr) ? SuitError () : suit;
     suit_ = suit;
-
-    if (face_value < 0) {
-        //< 0 is a Joker
-        face_value_ = 0;
-    } else if (face_value > 14) {
-        //< An ace can have a face value of 14 in some games.
-        face_value_ = 14;
-    }
-    face_value_ = face_value;
-
-    if (face_value < 0) {
-        face_value_ = 0;
-    } else if (face_value > 10) {
-        face_value_ = 10;
-    }
-    face_value_ = face_value;
-
-    if (suit_value < 1) {
-        suit_value_ = 1;
-    } else if (suit_value > 4) {
-        suit_value_ = 4;
-    }
-    suit_value_ = suit_value;
-
-    suit_culture_ = culture;
-    int suit_index = (int)suit_;
-    switch (culture) {
-        case SuitCulture::kFrench:
-        {
-            suit_string_ = kFrenchSuit[suit_index];
-            break;
-        }
-        case SuitCulture::kGerman:
-        {
-            suit_string_ = kGermanSuit[suit_index];
-            break;
-        }
-        case SuitCulture::kSwissGerman:
-        {
-            suit_string_ = kSwissGermanSuit[suit_index];
-            break;
-        }
-        default:
-        {
-            //< kNapoletane, kSpagnole, and kBergamasche share the same suites.
-            suit_string_ = kLatinSuit[suit_index];
-            break;
-        }
-    }
+    int offset = 13 * suit->GetDenomination ();
+    denomination_ = offset + ((denomination == ~0) ? pip : denomination);
     //LoadCardImage (folder_path);
 }
 
-int Card::Compare (const Card& other) {
-    int pip = pip_,
-        other_pip = other.pip_,
-        suit_value = suit_value_,
-        other_suit_value = other.suit_value_;
-
-    // Function works like strcmp.
-
-    if (pip > other_pip)
-        return 1;
-    if (pip < other_pip)
-        return -1;
-
-    if (suit_value > other_suit_value)
-        return 1;
-    if (suit_value < other_suit_value)
-        return -1;
-    return 0;
+int Card::Compare (const Card* other) {
+    return other->denomination_ - denomination_;
 }
 
-bool Card::Equals (const Card& other) {
+bool Card::Equals (const Card* other) {
     return !Compare (other);
 }
 
@@ -132,37 +52,17 @@ int Card::GetPip () {
     return pip_;
 }
 
-void Card::SetValue (int newValue) {
+int Card::GetDenomination () {
+    return denomination_;
+}
+
+void Card::SetDenomination (int value) {
     // The user might want to use a negative point value in a game.
-    point_value_ = newValue;
+    denomination_ = value;
 }
 
-int Card::GetFace () {
-    return face_value_;
-}
-
-int Card::GetValue () {
-    return face_value_;
-}
-
-int Card::GetSuitValue () {
-    return suit_value_;
-}
-
-Card::Suit Card::GetSuit () {
+Suit* Card::GetSuit () {
     return suit_;
-}
-
-Card::SuitCulture Card::GetSuitCulture () {
-    return suit_culture_;
-}
-
-void Card::SetSuitCulture (Card::SuitCulture culture) {
-    suit_culture_ = culture;
-}
-
-const char* Card::GetSuitString () {
-    return suit_string_;
 }
 
 /*
@@ -176,7 +76,8 @@ int Card::LoadCardImage (const char* directory) {
 
     if (!filePath.isDirectory ())
         return -1;
-    // Directory is good, now check to see if the directory contains an image with the correct naming convention.
+    // Directory is good, now check to see if the directory contains an image
+    // with the correct naming convention.
 
     string filename = string (pip_) + "-" + string (suit_) + ".svg";
 
@@ -201,8 +102,11 @@ int Card::LoadCardImage (const char* directory) {
 
 void Card::Print () {
     switch (pip_) {
-        case 0:   {
-            cout << suit_string_;
+        case 0:
+        {
+            cout << ((suit_->GetColor () == Suit::Color::kBlack) ? "Black Joker" 
+                                                                 : "White Joker");
+            break;
         }
         case 1: {
             cout << "Ace of ";
@@ -225,7 +129,7 @@ void Card::Print () {
             break;
         }
     }
-    cout << suit_string_;
+    cout << suit_->GetLabel ();
 }
 
 }   //< namespace cards

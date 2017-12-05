@@ -18,10 +18,22 @@
 namespace kabuki { namespace cards {
 
 BlackjackDealer::BlackjackDealer () :
-    Player ("Dealer", kStartingPoints),
     Dealer (kStartingPoints, kStartingAnte, kMinBet, kMinNumCardsPerHand,
-            kMaxNumCardsPerHand, kMaxNumPlayer) {
+            kMaxNumCardsPerHand, kMaxNumPlayer),
+    BlackjackPlayer (GetStock (), "Dealer", kStartingPoints) {
     // Nothing to do here :-)
+}
+
+void BlackjackDealer::DealHand (CardStack& stock) {
+
+}
+
+void BlackjackDealer::BeginRound () {
+
+}
+
+void BlackjackDealer::EndRound () {
+
 }
 
 }   //< namespace cards

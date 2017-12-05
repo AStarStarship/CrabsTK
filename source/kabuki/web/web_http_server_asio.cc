@@ -28,7 +28,7 @@
 #pragma clang diagnostic pop
 #endif
 
-#include "cpprest/asyncrt_utils.h"
+#include "asyncrt_utils.h"
 #include "pplx/threadpool.h"
 #include "../common/internal_http_helpers.h"
 #include "http_server_impl.h"
