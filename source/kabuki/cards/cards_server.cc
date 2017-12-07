@@ -13,36 +13,38 @@
              permissions and limitations under the License.
 */
 
-#include "card_game.h"
+#include "server.h"
 
 using namespace _;
+using namespace kabuki::id;
 using namespace std;
 
 namespace kabuki { namespace cards {
 
-CardGame::CardGame (const char* game_name, int num_players,
+Server::Server (UserList* users, const char* game_name, int num_players,
                     int min_players, int max_players) :
-    name_ ((game_name == nullptr) ? "Unnamed Game" : game_name),
-    state_ (0),
-    dealer_  (nullptr) {
-
-    if (num_players < 1)
+                    name_    ((game_name == nullptr) ? "Unnamed Game" : game_name),
+                    state_   (0),
+                    dealer_  (nullptr),
+                    users_   (users) {
+    if (num_players < 1) {
         num_players = 1;
-
-    if (min_players < 1)
+    }
+    if (min_players < 1) {
         min_players = 1;
-
-    if (max_players < 1)
+    }
+    if (max_players < 1) {
         max_players = 1;
-
-    if (min_players > max_players)
+    }
+    if (min_players > max_players) {
         min_players = max_players;
-
-    if (num_players < min_players)
+    }
+    if (num_players < min_players) {
         num_players = min_players;
-    else if (num_players > max_players)
+    }
+    else if (num_players > max_players) {
         num_players = max_players;
-
+    }
     // By process of elimination we know that num_players_ is bounded
     // safely between the min and max values.
 
@@ -51,11 +53,18 @@ CardGame::CardGame (const char* game_name, int num_players,
     max_players_ = max_players;
 }
 
-int CardGame::GetState () {
+Server::~Server () {
+    for (int i = players_.GetCount (); i > 0; --i) {
+        Player* player = players_.Pop ();
+        delete player;
+    }
+}
+
+int Server::GetState () {
     return state_;
 }
 
-bool CardGame::SetState (int state) {
+bool Server::SetState (int state) {
     if (state < 0) {
         return false;
     }
@@ -63,68 +72,69 @@ bool CardGame::SetState (int state) {
     return true;
 }
 
-const char* CardGame::GetName () {
+const char* Server::GetName () {
     return name_;
 }
 
-Deck& CardGame::GetPack () {
+Deck& Server::GetPack () {
     return pack_;
 }
 
-int CardGame::GetRoundNumber () {
+int Server::GetRoundNumber () {
     return round_number_;
 }
 
-int CardGame::GetNumPlayers () {
+int Server::GetNumPlayers () {
     return num_players_;
 }
 
-int CardGame::SetNumPlayers (int value) {
-    if (value < min_players_)
+int Server::SetNumPlayers (int value) {
+    if (value < min_players_) {
         return -1;
-    if (value > max_players_)
+    }
+    if (value > max_players_) {
         return 1;
-
+    }
     min_players_ = value;
     return 0;
 }
 
-int CardGame::GetMinPlayers () {
+int Server::GetMinPlayers () {
     return min_players_;
 }
 
-int CardGame::SetMinPlayers (int value) {
-    if (value >= max_players_)
+int Server::SetMinPlayers (int value) {
+    if (value >= max_players_) {
         return -1;
-
+    }
     min_players_ = value;
     return 0;
 }
 
-int CardGame::GetMaxPlayers () {
+int Server::GetMaxPlayers () {
     return max_players_;
 }
 
-int CardGame::SetMaxPlayers (int value) {
-    if (value < min_players_)
+int Server::SetMaxPlayers (int value) {
+    if (value < min_players_) {
         return -1;
-
+    }
     max_players_ = value;
     return 0;
 }
 
-void CardGame::NewGame () {
+void Server::NewGame () {
     round_number_ = 1;
     BeginRound ();
 }
 
-void CardGame::PrintPlayers () {
+void Server::PrintPlayers () {
     for (int i = 0; i < players_.GetCount (); ++i) {
         players_.Element (i)->Print ();
     }
 }
 
-void CardGame::PrintRoundStatsString () {
+void Server::PrintRoundStatsString () {
     PrintLine ("|", '~');
     cout << "Round: " << round_number_ << "\n";
 
@@ -132,20 +142,21 @@ void CardGame::PrintRoundStatsString () {
     PrintLine ("> ", '~');
 }
 
-void CardGame::Print () {
+void Server::Print () {
     PrintLine (" ", '_');
-    cout << "\n| Card Game   : " << name_
-         << "\n| Num Players : " << num_players_ << " Min: " << min_players_ << " Max: " << max_players_
-         << "\n| Round Number: " << round_number_
-         << "\n| Num Players : " << players_.GetCount ();
+    cout << "\n> Card Game   : " << name_
+         << "\n> Num Players : " << num_players_ << " Min: " << min_players_ 
+         << " Max: " << max_players_
+         << "\n> Round Number: " << round_number_
+         << "\n> Num Players : " << players_.GetCount ();
 
     PrintPlayers ();
     PrintLine ("|", '_');
 }
 
 const char* DefaultPlayAgainString () {
-    static const char play_again[] = "\n| Do you want to play again?"
-        "\n| Enter y to continue, or n to quit."
+    static const char play_again[] = "\n> Do you want to play again?"
+        "\n> Enter y to continue, or n to quit."
         "\n< \0";
     return play_again;
 }

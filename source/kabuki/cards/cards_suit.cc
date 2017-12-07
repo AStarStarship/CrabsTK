@@ -134,7 +134,8 @@ int Suit::LoadCardImage (const char* directory) {
 
     if (!filePath.isDirectory ())
         return -1;
-    // Directory is good, now check to see if the directory contains an image with the correct naming convention.
+    // Directory is good, now check to see if the directory contains an image
+    // with the correct naming convention.
 
     string filename = string (pip_) + "-" + string (suit_) + ".svg";
 
@@ -162,7 +163,7 @@ void Suit::Print () {
 }
 
 Suit* SuitError () {
-    Suit error (Suit::kSpade);
+    static Suit error (Suit::kSpade);
     return &error;
 }
 

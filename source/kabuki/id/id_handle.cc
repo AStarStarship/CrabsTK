@@ -21,7 +21,12 @@ using namespace std;
 
 namespace kabuki { namespace id {
 
-Handle::Handle (const char* key, int min_length, int max_length) {
+const char Handle::kDefault[] = "user";
+
+Handle::Handle (Validator* validator, const char* key, int min_length,
+                int max_length) :
+                validator_ (validator),
+                type_      (kValidation) {
     if (min_length >= max_length) {
         int temp = min_length;
         min_length = max_length;
@@ -30,7 +35,7 @@ Handle::Handle (const char* key, int min_length, int max_length) {
     key = key;
     if (min_length < kMinLength) min_length = kMinLength;
     else if (min_length > kMaxLength) min_length = kMinLength;
-    StringCopy (key_, key);
+    key_ = StringClone (key);
 }
 
 const char* Handle::GetKey () { return key_; }
@@ -42,7 +47,8 @@ bool Handle::SetKey (const char* key) {
 
     if (!IsValid (key))
         return false;
-    StringCopy (key_, key);
+    delete key_;
+    key_ = StringClone (key);
     return true;
 }
 
@@ -54,11 +60,15 @@ bool Handle::IsValid (const char* key) {
 }
 
 bool Handle::Equals (const Handle& h) {
-    return !StringEquals (key_, h.key_);
+    return StringEquals (key_, h.key_);
+}
+
+bool Handle::Equals (const char* handle) {
+    return StringEquals (key_, handle);
 }
 
 void Handle::Print () {
-    cout << "\n| Handle: " << key_;
+    cout << "\n> Handle: " << key_;
 }
 
 }       //< id

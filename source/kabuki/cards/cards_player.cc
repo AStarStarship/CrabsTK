@@ -17,25 +17,41 @@
 using namespace _;
 using namespace std;
 
-namespace kabuki { namespace cards {
+namespace kabuki {
+namespace cards {
 
-Player::Player (CardStack& stock, const char* player_name, int start_points, bool is_dealer) :
-    name_       (player_name),
-    num_wins_   (0),
+Player::Player (CardStack& stock, const char* dislplay_name, int start_points, bool is_dealer) :
+    num_wins_ (0),
     num_points_ (start_points < 1?1:start_points),
-    hand_       (52),
-    stock_      (stock) {
-    // Nothing to do here!
+    hand_ (52),
+    stock_ (stock) {
+    SetDisplayName (dislplay_name);
 }
 
-const char* Player::GetName () {
+const char* Player::GetDislpayName () {
     return name_;
+}
+
+const char* Player::SetDislpayName (const char* name) {
+    if (name == nullptr) {
+        return "name can't be nil";
+    }
+    delete name;
+    return nullptr;
 }
 
 void Player::SetName (const char* name) {
     if (name == nullptr)
         return;
     name_ = name;
+}
+
+bool Player::IsDealer () {
+    return is_dealer_;
+}
+
+void Player::SetIsDealer (bool is_dealer) {
+    is_dealer = is_dealer_;
 }
 
 int Player::GetState () {
@@ -53,6 +69,14 @@ Hand& Player::GetHand () {
 
 int Player::GetNumPoints () {
     return num_points_;
+}
+
+bool Player::SetNumPoints (int num_points) {
+    if (num_points < 0) {
+        return false;
+    }
+    num_points_ = num_points;
+    return true;
 }
 
 int Player::AddPoints (int num_points) {
@@ -80,6 +104,14 @@ int Player::GetNumWins () {
     return num_wins_;
 }
 
+bool Player::SetNumWins (int num_wins) {
+    if (num_wins < 0) {
+        return false;
+    }
+    num_wins_ = num_wins;
+    return true;
+}
+
 void Player::AddWin () {
     ++num_wins_;
 }
@@ -89,7 +121,7 @@ void Player::ResetWins () {
 }
 
 void Player::Print () {
-    cout << "\n| Player    : " << name_ << " points: " << num_points_ 
+    cout << "\n> Player    : " << name_ << " points: " << num_points_ 
          << " wins  : " << num_wins_;
 
     PrintLine ('-');

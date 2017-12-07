@@ -41,14 +41,11 @@ class CardStack {
     //           bool is_visible = false);
     
     /** Creates a CardStack from the deck. */
-    CardStack (Deck& deck);
+    CardStack (Deck& deck, int min_cards = 0);
     
     /** Copy constructor deep copies the state of the other object.
         The copy constructor is use shuffle the CardStack. */
     CardStack (const CardStack& other);
-        
-    /** Destructor. */
-    virtual ~CardStack () {}
 
     /** Removes all the cards from the stack. */
     void Clear ();
@@ -84,6 +81,9 @@ class CardStack {
          @return Returns the number of cards in the deck or -1 if the operation
                  failed. */
     int Push (Card* card);
+
+    /** Pops a card off the stack. */
+    Card* Pop ();
     
     /** Inserts the card into the stack at the specified index.
         @return Returns 0 upon success
@@ -99,7 +99,8 @@ class CardStack {
                 allowed.
         @return Returns 0 upon success.
         @return Returns -1 if the num_cards_take is < 0.
-        @return Returns 1 if the num_cards_take is greater than the cards.getNumCards ()
+        @return Returns 1 if the num_cards_take is greater than the
+                cards.getNumCards ()
         @return Returns 2 if the num_cards_take would put the user over the
                 maxNumCards.
     */
@@ -159,8 +160,7 @@ class CardStack {
 
     private:
 
-    int                min_cards_, //< Min number of cards in a stack.
-                       max_cards_; //< Number of cards on the stack.
+    int                min_cards_; //< Min number of cards in a stack.
     bool               visible_;   //< Flag for card is visible or not.
     data::Array<Card*> cards_;     //< Stack (Array) of Card pointers.
 

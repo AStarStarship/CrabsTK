@@ -15,51 +15,36 @@
 
 #include "card_stack.h"
 
+using namespace _;
 namespace kabuki { namespace cards {
 
 CardStack::CardStack (int size) :
     min_cards_ (0),
-    max_cards_ (Deck::kFullDeckSize),
-    visible_ (true),
-    cards_ (size) {
+    visible_   (true),
+    cards_     (size) {
     // Nothing to do here. ({:-)
 }
-/*
-CardStack::CardStack (const CardStack& cards, int min_cards, int max_cards,
-                      bool visible) :
-    min_cards_ (min_cards < 0 ? 0 : min_cards),
-    max_cards_ (max_cards < 1 ? 1 : max_cards),
-    visible_   (visible),
-    cards_     (cards) {
-    // Nothing to do here. ({:-)
-} */
 
-CardStack::CardStack (Deck& deck) :
-    max_cards_ (deck.GetCount ()),
-    visible_ (false) {
-    CardStack temp (54);
-    for (int i = 0; i < deck.GetCount (); ++i) {
-        temp.Push (deck.GetCard (i));
-    }
-    for (int i = 0; i < deck.GetCount (); ++i) {
-        cards_.Push (temp.TakeRandomCard ());
-    }
+CardStack::CardStack (const CardStack& other) :
+    min_cards_ (other.min_cards_),
+    visible_   (other.visible_),
+    cards_     (other.cards_) {
+    // Nothing to do here. ({:-)
+}
+
+CardStack::CardStack (Deck& deck, int min_cards) :
+    min_cards_ ((min_cards < 0) ? 0 : 0),
+    visible_ (false),
+    cards_   (deck.GetCount ()) {
+    Shuffle (deck);
 }
 
 void CardStack::Clear () {
     cards_.Clear ();
 }
 
-CardStack::CardStack (const CardStack& other) :
-    max_cards_ (other.max_cards_),
-    cards_     (other.cards_    ),
-    visible_   (other.visible_  ) {
-    // Nothing to do here.
-}
-
 CardStack& CardStack::operator= (const CardStack& other) {
     min_cards_ = other.min_cards_;
-    max_cards_ = other.max_cards_;
     visible_   = other.visible_;
     cards_     = other.cards_;
     return *this;
@@ -88,22 +73,32 @@ void CardStack::Shuffle () {
     // Create an identical copy of this CardStack.
     CardStack cards (*this);
 
-    cards_.Clear (); //< Delete all of the cards_ in this CardStack
+    cards_.Clear (); //< Delete all of the cards_ in this CardStack.
 
-                    // Then for each Card in the CardStack, 
+    // Then for each Card in the CardStack, 
     for (int i = 0; i < cards_.GetCount (); ++i) {
         cards_.Push (cards.TakeRandomCard ());
     }
 }
 
 void CardStack::Shuffle (Deck& deck) {
-    int num_cards = deck.GetCount ();
-    CardStack cards (deck);
+    int num_cards = deck.GetNumCards ();
+    cout << "\n| Shuffling deck with count " << num_cards;
+    CardStack unshuffled_cards (num_cards);
+    for (int i = num_cards - 1; i >= 0; --i) {
+        Card* card = deck.GetCard (i);
+        unshuffled_cards.Push (deck.GetCard (i));
+    }
+    unshuffled_cards.Print ();
     cards_.Grow (num_cards);
     Clear ();
-    for (int i = 0; i < num_cards; ++i) {
-        cards_.Push (cards.TakeRandomCard ());
+    cout << "\n|\n Taking random cards\n|";
+    for (int i = num_cards - 1; i >= 0; --i) {
+        Card* card = unshuffled_cards.TakeRandomCard ();
+        cards_.Push (card);
     }
+    cout << "\n|\n Shuffled deck:\n|";
+    Print ();
 }
 
 int CardStack::GetSize () {
@@ -119,22 +114,19 @@ int CardStack::GetMinNumCards () {
 }
 
 int CardStack::GetMaxCards () {
-    return max_cards_;
+    return cards_.GetSize ();
 }
 
 int CardStack::Push (Card* card) {
     if (card == nullptr) {
         return -1;
     }
-    if (GetCount () + 1 > max_cards_) {
-        return GetCount ();
-    }
-    if (max_cards_ > cards_.GetCount () + 1) {
-        // Then we are a the max card number limit.
-        return 1;
-    }
-    cards_.Push (card);
-    return cards_.GetCount ();
+    //cout << "\n> Pushing "; card->Print ();
+    return cards_.Push (card);
+}
+
+Card* CardStack::Pop () {
+    return cards_.Pop ();
 }
 
 Card* CardStack::Draw () {
@@ -146,14 +138,14 @@ int CardStack::InsertCard (Card* card, int index) {
         return -1;
     if (index > cards_.GetCount ())
         return -1;
-    if (GetCount () + 1 > max_cards_)
+    if (GetCount () + 1 > cards_.GetSize ())
         return 2;
 
     return cards_.Insert (card, index);
 }
 
 int CardStack::Push (CardStack& cards) {
-    if (GetCount () + cards.GetCount () > max_cards_)
+    if (GetCount () + cards.GetCount () > cards_.GetSize ())
         return 1;
 
     return cards_.Push (cards.cards_);
@@ -167,7 +159,7 @@ int CardStack::DrawCards (CardStack& cards, int num_cards_take) {
     if (num_cards_take > cards.GetCount ())
         return 1;
 
-    if (GetCount () + num_cards_take > max_cards_)
+    if (GetCount () + num_cards_take > cards_.GetSize ())
         return 2;
 
     for (int i = 0; i < num_cards_take; ++i)
@@ -184,18 +176,18 @@ bool CardStack::RemoveCard (Card* card) {
 }
 
 int CardStack::SetCards (CardStack& stack, int num_cards) {
-    if (num_cards < 0)
+    if (num_cards < 0) {
         return -1;
-
-    if (num_cards > stack.GetCount ())
+    }
+    if (num_cards > stack.GetCount ()) {
         return 1;
-
-    if (num_cards < min_cards_)
+    }
+    if (num_cards < min_cards_) {
         return 2;
-
-    if (num_cards > max_cards_)
+    }
+    if (num_cards > cards_.GetSize ()) {
         return 3;
-
+    }
     cards_.Clear ();
 
     if (num_cards == 1) {
@@ -208,33 +200,28 @@ int CardStack::SetCards (CardStack& stack, int num_cards) {
     return cards_.Push (stack.GetCard (num_cards - 1));
 }
 
-int CardStack::TakeCards (CardStack& stack, int num_cards) {
-    if (num_cards < 0)
+int CardStack::TakeCards (CardStack& cards, int num_cards) {
+    if (num_cards < 1)
         return -1;
 
-    if (num_cards > stack.GetCount ()) {
+    int count = cards.GetCount ();
+    if (num_cards > count) {
         // Not enough cards_ on the stack.
         return 1;
     }
 
-    if (num_cards < min_cards_) { //< Min number of cards_.
+    if ((count + num_cards) < min_cards_) { //< Min number of cards_.
         return 2;
     }
 
-    if (num_cards > max_cards_) {
+    if ((count + num_cards) > cards_.GetSize ()) {
         return 3;
     }
 
-    cards_.Clear ();
-
-    if (num_cards == 1) {
-        return cards_.Push (stack.TakeNextCard ());
-    }
-
     for (int i = 0; i < num_cards - 1; ++i) {
-        cards_.Push (stack.TakeNextCard ());
+        cards_.Push (cards.TakeNextCard ());
     }
-    return cards_.Push (stack.TakeNextCard ());
+    return cards_.Push (cards.TakeNextCard ());
 }
 
 Card* CardStack::GetCard (int index) {
@@ -261,22 +248,25 @@ Card* CardStack::TakeNextCard () {
     if (cards_.GetCount () == 0) // Then there are no cards_ in the cards_.
         return nullptr;
 
-    int lastIndex = cards_.GetCount () - 1; // Golden rule: If you use a variable in a function more than once, store a local copy to get a performance increase.
+    int lastIndex = cards_.GetCount () - 1;
+    // Golden rule: If you use a variable in a function more than once, store a
+    // local copy to get a performance increase.
     Card* next_card = cards_[lastIndex];
     cards_.Remove (lastIndex);
     return next_card;
 }
 
 Card* CardStack::TakeRandomCard () {
-    if (cards_.GetCount () == 0) // Then there are no cards_ in the cards_.
+    if (cards_.GetCount () <= 0) // Then there are no cards_!
         return nullptr;
 
     srand ((uint)time (nullptr));
-
-    int randomIndex = rand () % cards_.GetCount ();
-    Card* return_card = cards_[randomIndex];
-    cards_.Remove (randomIndex);
-    return return_card;
+    int index = rand () % cards_.GetCount ();
+    Card* card = cards_[index];
+    cout << "\n| Taking card:" << index << ' ';
+    card->Print ();
+    cards_.Remove (index);
+    return card;
 }
 
 bool CardStack::IsEmpty () {
@@ -292,8 +282,10 @@ void CardStack::SetVisiblity (bool visiblity) {
 }
 
 void CardStack::Print () {
+    PrintLine (">", '-');
+    cout << "\n> cards_.GetCount () = " << cards_.GetCount ();
     for (int i = 0; i < cards_.GetCount (); ++i) {
-        cout << "\n| " << i << ".) ";
+        cout << "\n> " << i << ".) ";
         cards_[i]->Print ();
     }
 }

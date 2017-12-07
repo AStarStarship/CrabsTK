@@ -212,25 +212,25 @@ class Room: public Operand {
 
 #if USE_MORE_ROM
     /** Prints the Room to the stdout. */
-    virtual  void Print ();
+    virtual void Print ();
 #endif  //< USE_MORE_ROM
 
     protected:
-                                //! vtable pointer here in memory (usually).
-    const char   * name_;       //< Room Name.
-    TStack<Wall*>* walls_;      //< Walls in the Room.
-    Expression   * expr_;       //< Current Expression being executed.
-                                //< DC1: this.
-    Door         * this_;       //< DC2: The Door to this room.
-    Operand      * xoff_,       //< DC3: XOFF - XOFF handling device.
-                 * device_,     //< DC4: the current device control.
-                 * devices_;    //< Pointer to the current device control.
+                             //! vtable pointer here in memory (usually).
+    const char   * name_;    //< Room Name.
+    TStack<Wall*>* walls_;   //< Walls in the Room.
+    Expression   * expr_;    //< Current Expression being executed.
+                             //< DC1: this.
+    Door         * this_;    //< DC2: The Door to this room.
+    Operand      * xoff_,    //< DC3: XOFF - XOFF handling device.
+                 * device_,  //< DC4: the current device control.
+                 * devices_; //< Pointer to the current device control.
     uintptr_t buffer_[kFloorSizeWords]; //< Room Floor buffer.
 
 };
 
 /** Returns the Room-Level Script. */
-KABUKI Room* ChineseRoom (Room* room = nullptr);
+//KABUKI Room* ChineseRoom (Room* room = nullptr);
 
 }       //< namespace _
 #endif  //< SCRIPT_ROOM_HDi

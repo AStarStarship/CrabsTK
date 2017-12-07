@@ -64,7 +64,7 @@ size_t MemoryCopy (void* destination, size_t size, const void* source) {
 
 #if USE_MORE_ROM
 void PrintMemory (const void* address, const void* end) {
-    printf ("\n|%i", 0);
+    printf ("\n>%i", 0);
     // Print columns
     for (int i = 8; i <= 66; i += 8)
         printf ("%8i", i);

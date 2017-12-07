@@ -26,7 +26,9 @@
     <ClInclude Include="cards\blackjack_player.h" />
     <ClInclude Include="cards\card.h" />
     <ClInclude Include="cards\card_combo.h" />
-    <ClInclude Include="cards\card_game.h" />
+    <ClInclude Include="cards\client.h" />
+    <ClInclude Include="cards\remote_player.h" />
+    <ClInclude Include="cards\server.h" />
     <ClInclude Include="cards\card_stack.h" />
     <ClInclude Include="cards\chat_message.h" />
     <ClInclude Include="cards\config.h" />
@@ -42,8 +44,10 @@
     <ClInclude Include="id\global.h" />
     <ClInclude Include="id\handle.h" />
     <ClInclude Include="id\password.h" />
+    <ClInclude Include="id\uid_server.h" />
     <ClInclude Include="id\user.h" />
     <ClInclude Include="id\user_list.h" />
+    <ClInclude Include="id\validator.h" />
     <ClInclude Include="kabuki_toolkit.h" />
     <ClInclude Include="script\address.h" />
     <ClInclude Include="script\args.h" />
@@ -86,22 +90,23 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\projects\cards\cards_tests.cc" />
+    <ClCompile Include="..\..\projects\id\id_tests.cc" />
     <ClCompile Include="..\..\projects\kabuki_tester.cc" />
-    <ClCompile Include="cards\cards_blackjack_game.cc" />
     <ClCompile Include="cards\cards_blackjack_card_combo.cc" />
     <ClCompile Include="cards\cards_blackjack_dealer.cc" />
+    <ClCompile Include="cards\cards_blackjack_game.cc" />
     <ClCompile Include="cards\cards_blackjack_player.cc" />
     <ClCompile Include="cards\cards_card.cc" />
     <ClCompile Include="cards\cards_card_combo.cc" />
     <ClCompile Include="cards\cards_card_stack.cc" />
-    <ClCompile Include="cards\cards_chat_message.cc" />
+    <ClCompile Include="cards\cards_client.cc" />
     <ClCompile Include="cards\cards_dealer.cc" />
     <ClCompile Include="cards\cards_deck.cc" />
     <ClCompile Include="cards\cards_hand.cc" />
     <ClCompile Include="cards\cards_player.cc" />
+    <ClCompile Include="cards\cards_remote_player.cc" />
     <ClCompile Include="cards\cards_suit.cc" />
-    <ClCompile Include="cards\cards_card_game.cc" />
+    <ClCompile Include="cards\cards_server.cc" />
     <ClCompile Include="id\id_handle.cc" />
     <ClCompile Include="id\id_password.cc" />
     <ClCompile Include="id\id_user.cc" />

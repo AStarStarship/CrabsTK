@@ -16,6 +16,7 @@
 #include "blackjack_game.h"
 
 using namespace _;
+using namespace kabuki::id;
 using namespace std;
 
 namespace kabuki { namespace cards {
@@ -24,12 +25,9 @@ const int BlackjackGame::kDenominations[] = {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10
 };
 
-BlackjackGame::BlackjackGame (int initNumPlayers) :
-    CardGame ("Blackjack", initNumPlayers, 2, 13) {
+BlackjackGame::BlackjackGame (UserList* users) :
+    Server (users, "Blackjack", initNumPlayers, 2, 13) {
     min_ante_ = kDefaultAnte;
-    if (initNumPlayers < kMinPlayers) {
-        ante_ = initNumPlayers; //< Ante per round.
-    }
 
     // Set the ante
     ante_ = min_ante_ < kMinAnte?kMinAnte:min_ante_;
@@ -38,22 +36,28 @@ BlackjackGame::BlackjackGame (int initNumPlayers) :
     BeginRound ();       //< Starts a new game.
 }
 
-bool BlackjackGame::RaiseAnteBy10 () {
-    // You have to have enough points to play the game or else we have to exit.
+BlackjackGame::~BlackjackGame () {
 
+}
+
+bool BlackjackGame::RaiseAnte (int value) {
+    // You have to have enough points to play the game or else we have to exit.
+    if (value < 0) {
+        return false;
+    }
     for (int i = 0; i < players_.GetCount (); ++i) {
-        Player* player = players_.Element (i);
+        Player* player = players_[i];
         if (ante_ + 10 > player->GetNumPoints ()) {
-            return player->SetState (kStateOutOfGame);
+            return player->SetState (kStateObserving);
         }
     }
 
-    ante_ += 10;
+    ante_ += value;
     return true;
 }
 
 void BlackjackGame::StartNewGame () {
-    CardGame::NewGame ();
+    Server::NewGame ();
     round_number_ = 1;
     ante_ = min_ante_;
     points_pot_ = 0;
@@ -146,8 +150,8 @@ bool BlackjackGame::PlayGameInConsole () {
     }
 
     // Add some test players
-    BlackjackPlayer* player = new BlackjackPlayer (dealer_.GetStock ());
-    players_.Push (player);
+    players_.Push (new BlackjackPlayer (dealer_.GetStock ()));
+    players_.Push (new BlackjackPlayer (dealer_.GetStock ()));
 
     PrintStats ();
 
@@ -175,10 +179,11 @@ bool BlackjackGame::PlayGameInConsole () {
             KeyboardString ("\n> hit or hold?\n", input, kBufferSize);
 
             if (StringEquals (input, "hit")) {
-                dealer_.GetHand ().GetVisibleCards ().Push (dealer_.GetStock ().Draw ());
-                cout << "\n| ";
+                CardStack& cards = dealer_.GetHand ().GetVisibleCards ();
+                cards.Push (dealer_.GetStock ().Draw ());
+                cout << "\n> ";
                 for (int i = 0; i < players_.GetCount (); ++i) {
-                    cout << "\n| " << i;
+                    cout << "\n> " << i;
                     players_[i]->Print ();
                 }
                 inputValid = true;
@@ -186,7 +191,7 @@ bool BlackjackGame::PlayGameInConsole () {
                 inputValid = true;
                 players_[0]->SetState (BlackjackPlayer::kStateHolding);
             } else if (StringEquals (input, "exit") || StringEquals (input, "quit")) {
-                cout << "\n| Exiting the game...\n";
+                cout << "\n> Exiting the game...\n";
                 inputValid = true;
                 return false;
             } else {
@@ -214,14 +219,14 @@ bool BlackjackGame::PlayGameInConsole () {
 
             if (dealer_.HandWins (players_[0]->GetHand ())) //< If the dealer wins, it trumps all other players.
             {
-                cout << "\n|\n| Dealer wins ({:-()";
+                cout << "\n>\n> Dealer wins ({:-()";
                 dealer_.Print ();
                 players_[0]->Print ();
-                cout << "\n|";
+                cout << "\n>";
                 dealer_.AddPoints (points_pot_);
                 dealer_.AddWin ();
             } else if (players_[0]->HandWins (dealer_.GetHand ())) {
-                cout << "\n|\n| Players wins!!!";
+                cout << "\n>\n> Players wins!!!";
                 dealer_.Print ();
                 players_[0]->Print ();
                 players_[0]->AddPoints (points_pot_);
@@ -243,24 +248,39 @@ bool BlackjackGame::PlayGameInConsole () {
         }
 
         if (dealer_.GetNumPoints () < ante_) {
-            cout << "\n| You just wiped out the house!!!"
-                 << "\n| Your the ultimate Blackjack Champion!!!";
+            cout << "\n> You just wiped out the house!!!"
+                 << "\n> Your the ultimate Blackjack Champion!!!";
             return false;
         }
 
         round_number_++;
     }
-    delete players_[0];
-    players_.Pop ();
 }
 
 const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
     static const Operation This = { "Blackjack",
-        NumOperations (0), FirstOperation ('A'),
+        NumOperations (1), FirstOperation ('A'),
         "Insert directions on how to play blackjack here.", 0 };
+    
+    void* args[1];
 
     switch (index) {
         case '?': return &This;
+        case 'A': {
+            static const Operation OpA = { "AddPlayer",
+                Params<1, UI8> (), Params <0> (),
+                "Adds a player to the game."
+            };
+            if (!expr) return &OpA;
+            uid_t player_uid;
+            if (ExprArgs (expr, Params<1, UI8> (), Args (args, &player_uid))) {
+                return expr->result;
+            }
+            User* user;
+            players_.Push (new BlackjackPlayer ());
+
+            return nullptr;
+        }
     }
     return nullptr;
 }

@@ -31,13 +31,12 @@ TEST_GROUP (CARDS_TESTS) {
     }
 
     void teardown () {
-        std::cout << "\n| Test completed.\n";
-        PrintLine ("|", '-');
+        std::cout << "\n>\n> Test completed.";
+        PrintLine (">", '-');
     }
 };
 
 TEST (CARDS_TESTS, BlackjackTests) {
-    
     enum {
         kNameBufferSize = 64,
         kInputBufferSize = 256
@@ -58,9 +57,9 @@ TEST (CARDS_TESTS, BlackjackTests) {
 
     CardGame* game;
 
-    cout << "\n|\n|";
-    PrintLine ("|", '-');
-    cout << "\n| Starting a game of " << game->GetName ();
+    cout << "\n>\n>";
+    PrintLine (">", '-');
+    cout << "\n> Starting a game of " << game->GetName ();
 
     // Play-again loop.
     // A play-again loop goes in a loop where the user is asked if they want to
@@ -94,18 +93,18 @@ TEST (CARDS_TESTS, BlackjackTests) {
 }
 
 TEST (CARDS_TESTS, DealerTests) {
-    cout << "\n| Testing CardStack class..."
-         << "\n| Creating test_deck...";
+    cout << "\n> Testing CardStack class..."
+         << "\n> Creating test_deck...";
 
     Deck stock = Deck ();
 
-    cout << "\n| Creating cards from test_deck...";
+    cout << "\n> Creating cards from test_deck...";
 
     CardStack cards (stock);
 
     cards.Print ();
 
-    cout << "\n| Testing Dealer::Shuffle()...";
+    cout << "\n> Testing Dealer::Shuffle()...";
 
     cards.Shuffle ();
 
@@ -113,69 +112,63 @@ TEST (CARDS_TESTS, DealerTests) {
 }
 
 TEST (CARDS_TESTS, HandTests) {
-    cout << "\n|"
-            "\n| Testing BlackjackHand class..."
-         << "\n|"
-            "\n| Creating deck...";
+    cout << "\n>"
+            "\n> Testing BlackjackHand class..."
+         << "\n>"
+            "\n> Creating deck...";
     Deck pack;
 
     CardStack stock (pack);
 
     stock.Shuffle ();
 
-    cout << "\n| Creating player_hand...";
+    cout << "\n> Creating player_hand...";
 
     Hand player_hand (pack.GetNumCards ()),
          dealers_hand (pack.GetNumCards ());
 
-    cout << "\n| Testing Hard::Print ()...";
+    cout << "\n> Testing Hard::Print ()...";
     player_hand.Print ();
     dealers_hand.Print ();
 
-    cout << "\n| Creating Hands for Player {Ace of Hearts, Ace of Clubs) and"
-            "\n| Dealer { King of Hearts, Nine of Diamonds } ...";
+    cout << "\n> Creating Hands for Player {Ace of Hearts, Ace of Clubs) and"
+            "\n> Dealer { King of Hearts, Nine of Diamonds } ...";
     //player_hand.SetCards ();
 
-    cout << "\n|\n| Done testing kabuki::cards::Hand class...";
+    cout << "\n>\n> Done testing kabuki::cards::Hand class...";
     system ("PAUSE");
 }
 
 TEST (CARDS_TESTS, DeckTests) {
-    cout << "\n|\n| Testing kabuki::cards::Deck class..."
-         << "\n|\n| Creating test_deck...";
+    cout << "\n>\n> Testing kabuki::cards::Deck class..."
+         << "\n>\n> Creating test_deck...";
 
     Deck pack;
 
     for (int i = 0; i < 7; ++i) {
-        PrintLine ("|\n|", '-');
-        cout << "\n| Creating " << Suit::kFormatStrings[i] << " Deck...";
+        PrintLine ("|\n>", '-');
+        cout << "\n> Creating " << Suit::kFormatStrings[i] << " Deck...";
         pack.Set (Deck::kNoJokers, Deck::kAcesLow, (Suit::Format) i);
-        pack.Print ();
+        //pack.Print ();
     }
-    cout << "\n|\n| Testing kabuki::cards::Deck::Shuffle () class...";
+    cout << "\n>\n> Testing kabuki::cards::Deck::Shuffle ()...\n|";
 
     CardStack stock (pack);
-
-    stock.Shuffle ();
+    cout << "\n>\n> Printing shuffled deck...";
     pack.Print ();
 
-    cout << "\n|\n| Done testing kabuki::cards::Deck class...";
+    cout << "\n>\n> Done testing kabuki::cards::Deck class...";
 }
 
-//TEST (CARDS_TESTS, CardComboTests) {
-//    cout << "\n|\n| Testing kabuki::cards::CardCombo class...";
-//    cout << "\n|\n| Done testing kabuki::cards::CardCombo class...";
-//}
-
 TEST (CARDS_TESTS, CardTests) {
-    cout << "\n|\n| Testing kabuki::cards::Card class... "
-         << "\n|\n| Creating test Suit::Print ()...";
+    cout << "\n>\n> Testing kabuki::cards::Card class... "
+         << "\n>\n> Creating test Suit::Print ()...";
 
     Suit heart    (Suit::kHeart  , 0),
          diamond  (Suit::kDiamond, 1),
          club     (Suit::kClub   , 2),
          spade    (Suit::kSpade  , 3);
-    cout << "\n| ";
+    cout << "\n> ";
     heart.Print   ();
     cout << ", ";
     diamond.Print ();
@@ -186,7 +179,7 @@ TEST (CARDS_TESTS, CardTests) {
 
     Card cards[5];
 
-    cout << "\n|\n| Changing suits... ";
+    cout << "\n>\n> Changing suits... ";
 
     cards[0].Set (Card::kKing, &heart);
     cards[1].Set (Card::kKing, &heart);
@@ -194,32 +187,31 @@ TEST (CARDS_TESTS, CardTests) {
     cards[3].Set (Card::kJack, &club);
     cards[4].Set (Card::kKing, &club);
 
-    cout << "\n|\n| Testing Card::Print():void... ";
-
+    cout << "\n>\n> Testing Card::Print():void... ";
     for (int i = 0; i < 5; ++i) {
-        cout << "\n| ";
+        cout << "\n> ";
         cards[i].Print ();
     }
 
-    cout << "\n|\n| Testing Print():void";
+    cout << "\n>\n> Testing Print():void";
 
     for (int i = 0; i < 5; ++i) {
-        cout << "\n| ";
+        cout << "\n> ";
         cards[i].Print ();
     }
 
-    cout << "\n|\n| Testing Compare(const Card&):int... ";
+    cout << "\n>\n> Testing Compare(const Card&):int... ";
     int result = cards[0].Compare (&cards[1]);
-    cout << "\n| cards[0].Compare (&cards[1]) = " << result;
+    cout << "\n> cards[0].Compare (&cards[1]) = " << result;
     CHECK (result == 0)
     result = cards[2].Compare (&cards[3]);
-    cout << "\n| cards[2].Compare (&cards[3]) = " << result;
+    cout << "\n> cards[2].Compare (&cards[3]) = " << result;
     CHECK (result > 0)
     result = cards[3].Compare (&cards[4]);
-    cout << "\n| cards[1].Compare (&cards[3]) = " << result;
+    cout << "\n> cards[1].Compare (&cards[3]) = " << result;
     CHECK (result > 0)
     result = cards[4].Compare (&cards[3]);
     CHECK (result < 0)
 
-    cout << "\n|\n| Testing kabuki::cards::Card class... ";
+    cout << "\n>\n> Testing kabuki::cards::Card class... ";
 }

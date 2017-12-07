@@ -17,7 +17,6 @@
 #define KABUKI_CARDS_DECK_H
 
 #include "card.h"
-#include "../../data/array.h"
 
 namespace kabuki { namespace cards {
     
@@ -62,10 +61,7 @@ class Deck {
           Suit::Color color = Suit::Color::kWhite);
 
     /** Destructor. */
-    virtual ~Deck () {
-        delete pack_;
-        delete cards_;
-    }
+    ~Deck ();
 
     /** Sets the given parameters of the deck. */
     void Set (bool has_jokers = kNoJokers, int aces_high = kAcesHigh,
@@ -97,7 +93,7 @@ class Deck {
         @return Returns 0 upon success, and a number 1-4 if the valueN is not
         between 1-4. The number will be negative if the inputed number
         was, and vice-versa. */
-    void SetSuitDenominations (int column_0, int olumn_1, int olumn_2, int olumn_3);
+    void SetSuitDenominations (int column_0, int column_1, int column_2, int column_3);
 
     /** Sets the format to the one given. */
     void SetFormat (Suit::Format format);
@@ -113,13 +109,14 @@ class Deck {
     
     /** Returns the if aces are high or low. */
     bool AcesHigh ();
+
+    /** Returns a pointer to the Card with the given suit and pip.
+        @return Returns nullptr if the index is out of bounds. */
+    Card* GetCard (int suit, int pip);
     
     /** Returns a pointer to the Card at the specified index.
         @return Returns nullptr if the index is out of bounds. */
     Card* GetCard (int index);
-
-    /** Gets a pointer to the array of Cards. */
-    Card** GetCardPointers ();
 
     /** Sets the frontImage to a new Image from thisFile.
         @pre    thisFile must be a valid existing Image file.
@@ -154,7 +151,6 @@ class Deck {
             spade_;         //< The spade suit.
     Suit*   suits_[4];      //< Array of Suits.
     Card*   pack_;          //< Unique array of single cards.
-    Card**  cards_;         //< Array of card pointers to the pack_.
     //Image rear_image_;    //< The rear Image of the Deck.
 
 };      //< class Deck

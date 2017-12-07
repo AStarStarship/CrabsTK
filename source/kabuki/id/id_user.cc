@@ -21,23 +21,46 @@ using namespace std;
 
 namespace kabuki { namespace id {
 
-User::User (const char* name, const char* password) :
-    handle_ (name),
-    password_ (password) {
+User::User (Validator* validator, const char* name, const char* password) :
+    handle_    (validator, name),
+    password_  (validator, password),
+    validator_ (validator_) {
     //activeAccounts = new kabuki::pro.Game.Account.List ();
 }
 
-const char* User::GetUsername () {
-    return handle_.GetKey ();
+const char* User::GetDisplayName () {
+    return display_name_;
+}
+
+const char* User::SetDisplayName (const char* name) {
+    if (name == nullptr) {
+        return "name can't be nil.";
+    }
+    dislpay_name_ = StringClone (name);
+    return nullptr;
 }
 
 Handle& User::GetHandle () { return handle_; }
 
 Password& User::GetPassword () { return password_; }
 
-bool User::Verify (const char* username, const char* user) {
-    //return IsValidUsername (char);
-    return false;
+uid_t User::GetSession () {
+    return session_;
+}
+
+void User::SetSession (uid_t uid) {
+    session_ = uid;
+}
+
+bool User::IsValid (const char* dislpay_name, const char* handle,
+                    const char* password) {
+    if (dislpay_name == nullptr) {
+        // @todo Add rules for dislpay_name.
+        return false;
+    }
+    if (!handle_.IsValid (handle))
+        return false;
+    return password_.IsValid (password);
 }
 
 bool User::Equals (const User& user) {
@@ -46,13 +69,9 @@ bool User::Equals (const User& user) {
     return password_.Equals (user.password_);
 }
 
-bool User::Equals (const char* name) {
-    return handle_.Equals (name);
-}
-
 void User::Print () {
-    cout << "\n| Username: " << handle_.GetKey () << "  Password: "
-        << password_.GetKey ();
+    cout << "\n> User: Handle:\"" << handle_.GetKey () << "\"  Password: \""
+         << password_.GetKey () << '\"';
 }
 
 }       //< id

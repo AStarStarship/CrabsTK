@@ -67,7 +67,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
     if (num_params == 0) {
 
 #if SCRIPT_DEBUG
-        std::cout << "\n\n| Reading Bin: ";
+        std::cout << "\n\n> Reading Bin: ";
 #endif
         return 0;
     }
@@ -84,9 +84,9 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
     length = SlotLength (start, stop, size);
 
 #if SCRIPT_DEBUG
-    std::cout << "\n\n| Reading Bin: \n";
+    std::cout << "\n\n> Reading Bin: \n";
     //ParamsPrint (params);
-    printf ("\n| begin: 0x%p start : %u stop : %u end : %u "
+    printf ("\n> begin: 0x%p start : %u stop : %u end : %u "
             "length: %u ", begin, Diff (begin, start),
             Diff (begin, stop), Diff (begin, end), length);
 #endif
@@ -96,7 +96,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
         type = (byte)*param;
         ++param;
 #if SCRIPT_DEBUG
-        printf ("\n| index %2u: %s  start: %u, stop: %u hash: ", index,
+        printf ("\n> index %2u: %s  start: %u, stop: %u hash: ", index,
                 TypeString (type), Diff (begin, start), Diff (begin, stop));
 #endif
 
@@ -109,7 +109,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
                 count = *param;
                 ++param;
 #if SCRIPT_DEBUG
-                printf ("\n|           Reading char with max length %u: ", count);
+                printf ("\n>           Reading char with max length %u: ", count);
 #endif
                 // Load next pointer and increment args.
                 ui1_ptr = reinterpret_cast<byte*> (args[index]);
@@ -368,7 +368,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
         }
     }
 #if SCRIPT_DEBUG
-    printf ("\n| Done reading\n");
+    printf ("\n> Done reading\n");
     SlotWipe (slot);
 #endif  //< SCRIPT_DEBUG
 

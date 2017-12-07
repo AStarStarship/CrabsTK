@@ -38,5 +38,6 @@
 #include "expression.h"
 #include "window.h"
 #include "random.h"
+#include "args.h"
 
 #endif  //< SCRIPT_GLOBAL_H

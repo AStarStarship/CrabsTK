@@ -16,22 +16,23 @@
 #ifndef HEADER_FOR_KABUKI_BLACKJACK_GAME
 #define HEADER_FOR_KABUKI_BLACKJACK_GAME
 
-#include "card_game.h"
+#include "server.h"
 #include "blackjack_dealer.h"
 
 namespace kabuki { namespace cards {
 
 /** A blackjack card game. */
-class BlackjackGame : public CardGame {
+class BlackjackGame : public Server {
     public:
 
     enum {
+        kMinAnte            = 1,  //< Min ante.
         kDefaultAnte        = 10, //< Default ante.
         kMinPlayers         = 2,  //< Min num players.
         kStateBooting       = 0,  //< State when player is waiting to join.
         kStatePlayingRound  = 1,  //< State when player is playing normally.
         kStateHolding       = 2,  //< State when player is holding.
-        kStateOutOfGame     = 3   //< State when player has lost game.
+        kStateObserving     = 3   //< State when player has lost game.
     };
 
     static const int kDenominations[14];
@@ -40,10 +41,12 @@ class BlackjackGame : public CardGame {
         The maximum number of players in Blackjack is set by the house. The more
         players there are, the greater the chance of the house loosing points, 
         so the maximum number we are going to set is 13. */
-    BlackjackGame (int initNumPlayers = 2);
+    BlackjackGame (id::UserList* users);
 
-    /** Raises the ante 10 points. */
-    bool RaiseAnteBy10 ();
+    virtual ~BlackjackGame ();
+
+    /** Raises the ante the given value. */
+    bool RaiseAnte (int value = 10);
 
     /** Starts the game. */
     virtual void StartNewGame ();
@@ -71,6 +74,7 @@ class BlackjackGame : public CardGame {
                     ante_,       //< Current ante.
                     points_pot_; //< Current number of points in the pot.
     BlackjackDealer dealer_;     //< Dealer.
+    id::UserList*   users_;      //< List of server users.
     data::Array<BlackjackPlayer*> players_; //< Array of Player(s).
 
 };      //< class BlackjackGame

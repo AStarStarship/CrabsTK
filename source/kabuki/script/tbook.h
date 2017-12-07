@@ -298,7 +298,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData>* book, const char* key, T data) {
         destination = keys - key_length;
 
         StringCopy (destination, key);
-        printf ("\n| Inserted key %s at GetAddress 0x%p", key, destination);
+        printf ("\n> Inserted key %s at GetAddress 0x%p", key, destination);
         BookPrint (book);
         return 0;
     }
@@ -306,11 +306,11 @@ TIndex BookAdd (Book<TIndex, TKey, TData>* book, const char* key, T data) {
     // Calculate left over buffer size by looking up last char.
 
     if (key_length >= value) {
-        std::cout << "\n| Not enough room in buffer!";
+        std::cout << "\n> Not enough room in buffer!";
         return 0;   //< There isn't enough room left in the buffer.
     }
 
-    std::cout << "\n| Finding insert location...";
+    std::cout << "\n> Finding insert location...";
 
     int low = 0,
         mid,
@@ -385,7 +385,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData>* book, const char* key, T data) {
                 *temp_ptr = num_items;
 
                 book->pile_size = pile_size + 1;
-                printf ("\n| collision index: %u", temp);
+                printf ("\n> collision index: %u", temp);
                 // Store the collision index.
                 indexes[num_items] = temp;   //< Store the collision index
                 book->num_items = num_items + 1;
@@ -670,14 +670,14 @@ void BookPrint (const Book<TIndex, TKey, TData>* book) {
     PrintLine ('_');
     
     if (sizeof (TData) == 2)
-        printf ("\n| Book2: %p\n", book);
+        printf ("\n> Book2: %p\n", book);
     else if (sizeof (TData) == 4)
-        printf ("\n| Book4: %p\n", book);
+        printf ("\n> Book4: %p\n", book);
     else if (sizeof (TData) == 8)
-        printf ("\n| Book8: %p\n", book);
+        printf ("\n> Book8: %p\n", book);
     else
-        printf ("\n| Invalid Book type: %p\n", book);
-    printf ("\n| ;: %u stack_height: %u  "
+        printf ("\n> Invalid Book type: %p\n", book);
+    printf ("\n> ;: %u stack_height: %u  "
             "pile_size: %u  size: %u", num_items,
             stack_height, pile_size, table_size);
     std::cout << '\n';
@@ -701,7 +701,7 @@ void BookPrint (const Book<TIndex, TKey, TData>* book) {
         *cursor;
     const char* keys = reinterpret_cast<const char*> (book) + table_size - 1;
 
-    printf ("\n| %3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
+    printf ("\n> %3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
             "hash_e", "hash_u", "hash_s", "index_u", "collisions");
    std::cout << '|';
     for (int i = 0; i < 79; ++i)
@@ -712,7 +712,7 @@ void BookPrint (const Book<TIndex, TKey, TData>* book) {
         // Print each record as a row.
         // @todo Change stack_height to ; after done debugging.
         collision_index = indexes[i];
-        printf ("\n| %3i %9s %7u %9x %9x %9x %9u %10u: ", i,
+        printf ("\n> %3i %9s %7u %9x %9x %9x %9u %10u: ", i,
                 keys - key_offsets[i], key_offsets[i],
                 Hash16 (keys - key_offsets[i]),
                 hashes[unsorted_indexes[i]], hashes[i],

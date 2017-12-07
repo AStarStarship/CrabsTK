@@ -209,32 +209,32 @@ int ClockCompareTimes (time_t time_a, time_t time_b) {
 
     if (moment_a.tm_year != moment_b.tm_year) {
         ++count;
-        cout << "\n| tm_year.a: " << moment_a.tm_year + kTimeEpoch
+        cout << "\n> tm_year.a: " << moment_a.tm_year + kTimeEpoch
              << " != tm_year.b: " << moment_b.tm_year + kTimeEpoch << '\n';
     }
     if (moment_a.tm_mon != moment_b.tm_mon) {
         ++count;
-        cout << "\n| tm_mon.a: " << moment_a.tm_mon << " != tm_mon.b: "
+        cout << "\n> tm_mon.a: " << moment_a.tm_mon << " != tm_mon.b: "
             << moment_b.tm_mon + 1 << '\n';
     }
     if (moment_a.tm_mday != moment_b.tm_mday) {
         ++count;
-        cout << "\n| tm_mday.a: " << moment_a.tm_mday << " != tm_mday.b: "
+        cout << "\n> tm_mday.a: " << moment_a.tm_mday << " != tm_mday.b: "
             << moment_b.tm_mday << '\n';
     }
     if (moment_a.tm_hour != moment_b.tm_hour) {
         ++count;
-        cout << "\n| tm_hour.a: " << moment_a.tm_hour << " != tm_hour.b: "
+        cout << "\n> tm_hour.a: " << moment_a.tm_hour << " != tm_hour.b: "
             << moment_b.tm_hour << '\n';
     }
     if (moment_a.tm_min != moment_b.tm_min) {
         ++count;
-        cout << "\n| tm_min.a: " << moment_a.tm_min << " != tm_min.b: "
+        cout << "\n> tm_min.a: " << moment_a.tm_min << " != tm_min.b: "
             << moment_b.tm_min << '\n';
     }
     if (moment_a.tm_sec != moment_b.tm_sec) {
         ++count;
-        cout << "\n| tm_sec.a: " << moment_a.tm_sec << " != tm_sec.b: "
+        cout << "\n> tm_sec.a: " << moment_a.tm_sec << " != tm_sec.b: "
             << moment_b.tm_sec << '\n';
     }
     return count;
@@ -249,32 +249,32 @@ int ClockCompareTimes (time_t t, int year, int month, int day,
 
     if (year - kTimeEpoch != std_tm.tm_year) {
         ++count;
-        cout << "\n| Expecting year:" << year << " but found "
+        cout << "\n> Expecting year:" << year << " but found "
             << std_tm.tm_year + kTimeEpoch << '\n';
     }
     if (month != std_tm.tm_mon + 1) {
         ++count;
-        cout << "\n| Expecting month:" << month << " but found "
+        cout << "\n> Expecting month:" << month << " but found "
             << std_tm.tm_mon + 1 << '\n';
     }
     if (day != std_tm.tm_mday) {
         ++count;
-        cout << "\n| Expecting day:" << day << " but found "
+        cout << "\n> Expecting day:" << day << " but found "
             << std_tm.tm_mday << '\n';
     }
     if (hour != std_tm.tm_hour) {
         ++count;
-        cout << "\n| Expecting hour:" << hour << " but found "
+        cout << "\n> Expecting hour:" << hour << " but found "
             << std_tm.tm_hour << '\n';
     }
     if (minute != std_tm.tm_min) {
         ++count;
-        cout << "\n| Expecting minute:" << minute << " but found "
+        cout << "\n> Expecting minute:" << minute << " but found "
             << std_tm.tm_min << '\n';
     }
     if (second != std_tm.tm_sec) {
         ++count;
-        cout << "\n| Expecting second:" << second << " but found "
+        cout << "\n> Expecting second:" << second << " but found "
             << std_tm.tm_sec << '\n';
     }
     return count;
@@ -699,13 +699,13 @@ const char* ClockReadUnixTimeString (const char* input, time_t& result) {
     char* end = (char*)ClockReadTimeStructString (input, &std_tm);
 
     t = mktime (&std_tm);
-    cout << "\n|\n| Found ";
+    cout << "\n>\n> Found ";
     ClockPrintTimeStruct (&std_tm);
     char buffer[26];
     ClockWriteStringTime (buffer, buffer + 26, t);
     char time_string[26];
     ClockWriteDateTimeString (time_string, &time_string[0]  + 26, t);
-    cout << "\n| Unpacked: " << buffer;
+    cout << "\n> Unpacked: " << buffer;
     result = t;
     return end;
 }

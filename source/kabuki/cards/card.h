@@ -32,11 +32,11 @@ class KABUKI Card {
     public:
 
     enum {
-        kJoker            = 0,    //< Pip value of a Joker.
-        kAce              = 1,    //< Pip value of an Ace.
-        kJack             = 11,   //< Pip value of a Jack.
-        kQueen            = 12,   //< Pip value of a Queen.
-        kKing             = 13,   //< Pip value of a King.
+        kJoker = 0,  //< Pip value of a Joker.
+        kAce   = 1,  //< Pip value of an Ace.
+        kJack  = 11, //< Pip value of a Jack.
+        kQueen = 12, //< Pip value of a Queen.
+        kKing  = 13, //< Pip value of a King.
     };
 
     /** Default constructor.

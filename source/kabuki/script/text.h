@@ -36,6 +36,9 @@ KABUKI int StringLength (const char* string,
 KABUKI void StringCopy (char* destination,
                         const char* source);
 
+/** Concatenates and clones the given integer to the string as a new string. */
+KABUKI char* StringConcat (const char* string, int integer);
+
 /** Hashes a single byte. */
 inline hash16_t Hash16 (char c, hash16_t hash) {
     //PrintHex (c);
@@ -154,7 +157,7 @@ template<typename T>
 KABUKI void PrintDebugSignedHex (const char* message,
                                  T value) {
 #if DEBUG
-    printf ("\n| %s:'%i':0x%x\n", message, value, value);
+    printf ("\n> %s:'%i':0x%x\n", message, value, value);
 #endif
 }
 

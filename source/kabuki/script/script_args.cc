@@ -49,7 +49,7 @@ void ParamsPrint (const uint_t* params) {
         cout << TypeString (value) << ", ";
         if ((type >= STR) && (value <= ST4)) {
             if (value) {
-                cout << "\n| Error: arrays may only be created from POD types.";
+                cout << "\n> Error: arrays may only be created from POD types.";
                 return;
             }
             // Print out the max length of the string.
@@ -234,10 +234,10 @@ uint_t ParamNumber (const uint_t* params, byte param_number) {
             ++param_number;
         else if (value > 31) {  // It's an array!
             value = value >> 5;
-            if (value < 4) {    // It's a single dimension
+            if (value < 4) {    // It's a single dimension!
                 param_number += 2;
                 break;
-            } else if (value > 7) {
+            } else if (value > 7) { // Gratuitous explanation points!
                 cout << "Error";
                 return NIL;
             }

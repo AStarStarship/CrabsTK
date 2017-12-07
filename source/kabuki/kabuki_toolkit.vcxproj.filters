@@ -21,12 +21,6 @@
     <Filter Include="source\kabuki\data">
       <UniqueIdentifier>{1199cb80-6bd0-4f7d-a347-ccefa0ec89d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\kabuki\web">
-      <UniqueIdentifier>{bcecd50d-9ef4-4d62-960a-467a1eed05ec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\kabuki\ws">
-      <UniqueIdentifier>{f74be4e0-3678-4673-8ac6-c7e66435a828}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\kabuki\cards">
       <UniqueIdentifier>{06a8e817-e59c-4660-a713-d59fb76f1e22}</UniqueIdentifier>
     </Filter>
@@ -209,9 +203,6 @@
     <ClInclude Include="cards\blackjack_game.h">
       <Filter>source\kabuki\cards</Filter>
     </ClInclude>
-    <ClInclude Include="cards\card_game.h">
-      <Filter>source\kabuki\cards</Filter>
-    </ClInclude>
     <ClInclude Include="id\password.h">
       <Filter>source\kabuki\id</Filter>
     </ClInclude>
@@ -234,6 +225,21 @@
       <Filter>source\kabuki\cards</Filter>
     </ClInclude>
     <ClInclude Include="cards\chat_message.h">
+      <Filter>source\kabuki\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="id\uid_server.h">
+      <Filter>source\kabuki\id</Filter>
+    </ClInclude>
+    <ClInclude Include="id\validator.h">
+      <Filter>source\kabuki\id</Filter>
+    </ClInclude>
+    <ClInclude Include="cards\server.h">
+      <Filter>source\kabuki\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="cards\client.h">
+      <Filter>source\kabuki\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="cards\remote_player.h">
       <Filter>source\kabuki\cards</Filter>
     </ClInclude>
   </ItemGroup>
@@ -310,9 +316,6 @@
     <ClCompile Include="cards\cards_card.cc">
       <Filter>source\kabuki\cards</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\projects\cards\cards_tests.cc">
-      <Filter>projects</Filter>
-    </ClCompile>
     <ClCompile Include="cards\cards_card_stack.cc">
       <Filter>source\kabuki\cards</Filter>
     </ClCompile>
@@ -343,12 +346,6 @@
     <ClCompile Include="cards\cards_suit.cc">
       <Filter>source\kabuki\cards</Filter>
     </ClCompile>
-    <ClCompile Include="cards\cards_card_game.cc">
-      <Filter>source\kabuki\cards</Filter>
-    </ClCompile>
-    <ClCompile Include="cards\cards_blackjack_game.cc">
-      <Filter>source\kabuki\cards</Filter>
-    </ClCompile>
     <ClCompile Include="id\id_password.cc">
       <Filter>source\kabuki\id</Filter>
     </ClCompile>
@@ -361,7 +358,19 @@
     <ClCompile Include="id\id_handle.cc">
       <Filter>source\kabuki\id</Filter>
     </ClCompile>
-    <ClCompile Include="cards\cards_chat_message.cc">
+    <ClCompile Include="cards\cards_blackjack_game.cc">
+      <Filter>source\kabuki\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\projects\id\id_tests.cc">
+      <Filter>projects</Filter>
+    </ClCompile>
+    <ClCompile Include="cards\cards_server.cc">
+      <Filter>source\kabuki\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="cards\cards_client.cc">
+      <Filter>source\kabuki\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="cards\cards_remote_player.cc">
       <Filter>source\kabuki\cards</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,7 +1,4 @@
 /** kabuki::script
-#include <script_room.h>
-#include <script_operation.h>
-#include <script_interrupts.h>
     @version 0.x
     @file    ~/source/kabuki/script/include/script_room.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -125,8 +122,7 @@ bool Room::IsOn () {
 }
 
 int Room::Main (const char** args, int args_count) {
-    //const Operation* result;
-
+    const Operation* result = nullptr;
 #if SCRIPT_DEBUG
     std::cout << "Initializing Chinese Room with " << args_count << " args:\n";
 #endif  //< SCRIPT_DEBUG
@@ -138,9 +134,8 @@ int Room::Main (const char** args, int args_count) {
 #if SCRIPT_DEBUG
     std::cout << '\n';
 #endif  //< SCRIPT_DEBUG
-
     while (IsOn ()) {
-        /*try {
+        try {
             result = Init (nullptr);
             if (result)
                 return 1;
@@ -150,9 +145,9 @@ int Room::Main (const char** args, int args_count) {
             } while (!result);
             ShutDown ();
         } catch (RoomCrashException e) {
-            std::cout << "\n| Room crashed!\n";
+            std::cout << "\n> Room crashed!\n";
             return 3;
-        }*/
+        }
     }
     return 1;
 }
@@ -177,39 +172,39 @@ int_t Room::GetNumWalls () {
 }
 
 Wall* Room::GetWall (int_t wall_number) {
-	if (wall_number < 0)
-		return nullptr;
-	if (wall_number >= walls_->count)
-		return nullptr;
-	return StackGet<Wall*> (walls_, wall_number);
+    if (wall_number < 0)
+        return nullptr;
+    if (wall_number >= walls_->count)
+        return nullptr;
+    return StackGet<Wall*> (walls_, wall_number);
 }
 
 Wall* Room::AddWall (Wall* new_wall) {
     if (new_wall == nullptr)
-    	return nullptr;
+        return nullptr;
     if (walls_->count >= walls_->height)
-    	return nullptr;
+        return nullptr;
     StackPush<Wall*> (walls_, new_wall);
     return new_wall;
 }
 
 bool Room::RemoveWall (int_t wall_number) {
-	return StackRemove<Wall*> (walls_, wall_number);
+    return StackRemove<Wall*> (walls_, wall_number);
 }
 
 uintptr_t Room::GetSizeBytes () {
-	uintptr_t count = kFloorSize;
+    uintptr_t count = kFloorSize;
     for (int_t i = 0; i < walls_->count; ++i) {
-    	count += StackGet<Wall*> (walls_, i)->GetSizeBytes ();
+        count += StackGet<Wall*> (walls_, i)->GetSizeBytes ();
     }
     // @todo Add all memory we used in bytes here.
-	return count;
+    return count;
 }
 
 #if USE_MORE_ROM
 void Room::Print () {
     PrintLine ();
-    std::cout << "\n| Room: ";
+    std::cout << "\n> Room: ";
 }
 #endif  //< USE_MORE_ROM
 

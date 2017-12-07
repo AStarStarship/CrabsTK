@@ -21,18 +21,23 @@
 
 namespace kabuki { namespace cards {
 
-/** An abstract playing card game. */
-class CardGame : public _::Operation {
+/** An abstract playing card game server.
+    Most card games have pretty different rules*/
+class Server : public _::Operation {
     public:
     
     enum {
-        kMinAnte = 1,              //< Min ante.
-        kDefaultConsoleWidth = 80  //< Num rows in a DOS console.
+        kDefaultConsoleWidth    = 80  //< Num rows in a DOS console.
+        kDisconnected           = 0,
+        kStateAwaitingConnection = 1,
     };
 
     /** Default constructor. */
-    CardGame (const char* game_name, int num_players = 1,
-              int min_players = 1, int max_players = 1);
+    Server (id::UserList* users, const char* game_name, int num_players = 1,
+            int min_players = 1, int max_players = 1);
+
+    /** Constructor. */
+    virtual ~Server ();
 
     /** Returns the name of the game. */
     const char* GetName ();
@@ -104,18 +109,19 @@ class CardGame : public _::Operation {
 
     protected:
 
-    const char* name_;             //< Name of this game.
-    int         state_,            //< Game state.
-                num_players_,      //< Num players.
-                min_players_,      //< Min number of players.
-                max_players_,      //< Max number of players.
-                round_number_;     //< Current round number.
-    Deck        pack_;             //< Pack of cards.
-    CardStack   stock_;            //< The stock of cards.
-    Dealer*     dealer_;           //< Pointer to the Dealer.
+    const char  * name_;           //< Name of this game.
+    int           state_,          //< Game state.
+                  num_players_,    //< Num players.
+                  min_players_,    //< Min number of players.
+                  max_players_,    //< Max number of players.
+                  round_number_;   //< Current round number.
+    Deck          pack_;           //< Pack of cards.
+    CardStack     stock_;          //< The stock of cards.
+    Dealer      * dealer_;         //< Pointer to the Dealer.
+    id::UserList* users_;          //< Global list of User(s).
     data::Array<Player*> players_; //< Array of players.
 
-};      //< class CardGame
+};      //< class Server
 
 /** Returns the default play again or quit string. */
 KABUKI const char* DefaultPlayAgainString ();

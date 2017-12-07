@@ -17,6 +17,7 @@
 #define KABUKI_CARDS_COFIG_H
 
 #include "../script/global.h"
+#include "../id/global.h"
 #include "../data/array.h"
 
 #endif	//< KABUKI_CARDS_COFIG_H

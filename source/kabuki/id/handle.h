@@ -16,7 +16,7 @@
 #ifndef HEADER_FOR_KABUKI_ID_HANDLE
 #define HEADER_FOR_KABUKI_ID_HANDLE
 
-#include "config.h"
+#include "validator.h"
 
 namespace kabuki { namespace id {
 
@@ -26,12 +26,15 @@ class KABUKI Handle {
     public:
 
     enum {
-        kMinLength = 3,    //< The min length of a Handle range.
-        kMaxLength  = 256   //< The max length of a Handle range.
+        kValidation = 1,  //< Validation type.
+        kMinLength  = 3,  //< Min length of a Handle range.
+        kMaxLength  = 255 //< Max length of a Handle range.
     };
+
+    static const char kDefault[];
     
     /** Constructor creates a standard char. */
-    Handle (const char* name,
+    Handle (Validator* validator, const char* key,
             int min_length = kMinLength, 
             int max_length = kMaxLength);
 
@@ -47,14 +50,20 @@ class KABUKI Handle {
     /** Returns true if this Handle is identical to the given Handle. */
     bool Equals (const Handle& h);
 
+    /** Returns true if this Handle is identical to the given Handle. */
+    bool Equals (const char* handle);
+
     /** Prints this object to the log. */
     void Print ();
     
     private:
 
-    char key_[kMaxLength + 1]; //< Unique string key.
+    char     * key_;       //< Unique string key.
+    Validator* validator_; //< Handle validator.
+    int        type_;      //< The validation type.
 
 };      //< class Handle
+
 }       //< id
 }       //< kabuki
 #endif  //< HEADER_FOR_KABUKI_ID_HANDLE

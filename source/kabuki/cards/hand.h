@@ -30,8 +30,7 @@ class Hand : public CardStack {
     /** Constructs an empty hand with the given parameters.
         In order to create a Hand, first create a CardStack with a
         max_num_cards, and add the minimumNumCards to it.
-        @pre    stock.getNumCards must be > minCards!!!
-    */
+        @pre    stock.getNumCards must be > minCards!!! */
     Hand (int max_cards, int min_cards = 1);
     
     /** Virtual destructor. */

@@ -27,11 +27,19 @@ namespace kabuki { namespace id {
 class KABUKI User {
     public:
 
+    enum {
+        kValidation           = 2, //< Validator index.
+        kMaxDislpayNameLength = 63, //< Max dislpay_name_ length.
+    };
+
     /** Creates a user with the given char and password. */
-    User (const char* username, const char* password);
+    User (Validator* validator, const char* username, const char* password);
 
     /** Gets the handle's key. */
-    const char* GetUsername ();
+    const char* GetDisplayName ();
+
+    /** Gets the handle's key. */
+    const char* SetDisplayName (const char* name);
 
     /** Gets a reference to the char handle. */
     Handle& GetHandle ();
@@ -39,22 +47,28 @@ class KABUKI User {
     /** Gets a reference to the password. */
     Password& GetPassword ();
 
+    /** Gets the session uid. */
+    uid_t GetSession ();
+
+    /** Sets the session uid. */
+    void SetSession (uid_t uid);
+
     /** Checks to see if the given char and password are in the correct format. */
-    bool Verify (const char* username, const char* password);
+    bool IsValid (const char* dislpay_name, const char* username, const char* password);
 
     /** Returns true if this user is the same as the given one.  */
     bool Equals (const User& user);
-
-    /** Returns true if this char is the same as the given one.  */
-    bool Equals (const char* name);
 
     /** Prints this object to a expression. */
     void Print ();
 
     private:
 
-    Handle   handle_;   //< The user's handle (i.e. key).
-    Password password_; //< The user's password.
+    Handle     handle_;       //< User's handle (i.e. key).
+    char*      display_name_; //< User's display name.
+    Password   password_;     //< User's password.
+    Validator* validator_;    //< Handle and Password validator.
+    uid_t      session_;      //< User's session number.
 
 };      //< class User
 }       //< namespace id

@@ -16,30 +16,56 @@
 #ifndef HEADER_FOR_KABUKI_ID_USERLIST
 #define HEADER_FOR_KABUKI_ID_USERLIST
 
+#include "validator.h"
 #include "user.h"
 #include "../data/array.h"
 
 namespace kabuki { namespace id {
 
-/** A List of entities.
-    This is essentially a contact list. */
-class KABUKI UserList {   
+/** A List of User(s).
+    This class uses a single Validator interface for validating both user 
+    handles and passwords using the type parameter. This makes it very 
+    easy to create UserList subclasses for customizing format rules. */
+class KABUKI UserList : public Validator {   
     public:
 
+    enum {
+        kDefaultMaxUsers    = 1024,
+        kPasswordValidation = 0,
+        kHandleValidation   = 1,
+        kMinPasswordLength  = 8,
+        kMaxPasswordLength  = 63,
+        kMinHandleLength    = 2,
+        kMaxHandleLength    = 63,
+    };
+
     /** Creates an empty list. */
-    UserList ();
+    UserList (int max_users = kDefaultMaxUsers);
+
+    /** Destructs list of users. */
+    virtual ~UserList ();
 
     /** Gets the number of Accounts in the List. */
     int GetSize ();
 
-    /** Adds an User to the list. */
-    void Add (User* entity);
+    /** Gets the count of the User(s). */
+    int GetCount ();
+
+    /** Adds a new User to the list with the given handle and password. */
+    int Add (const char* handle, const char* password = Password::kDefault);
 
     /** Adds a list of User (string) to the list. */
-    void Add (UserList& enities);
+    int Add (UserList* enities);
 
     /** Finds an entity in the list by the given search char. */
     User* Find (const char* string);
+
+    /** Returns the User with the given user_number.
+        @return Returns nil if the user_number is invalid. */
+    User* UserNumber (int user_number);
+
+    /** Validates the input for correctness. */
+    virtual const char* IsValid (const char* input, int type);
 
     /** Prints this object to the log. */
     void Print ();

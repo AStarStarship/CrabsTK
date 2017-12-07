@@ -1,5 +1,5 @@
 /** kabuki::data
-    @file    ~/source/data/include/array.h
+    @file    ~/source/data/array.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -36,19 +36,34 @@ class Array {
     /** Initializes an array of n elements of the given type.
     @param max_elements The max number of elements in the array buffer. */
     Array (int max_elements = kMinSize) :
-        size_ (max_elements = _::RoundToPowerOf2 (max_elements)),
+        size_ (max_elements < 1 ? 1 :max_elements),
         count_ (0),
-        array_ (new T[max_elements]) {
+        elements_ (new T[size_]) {
     }
 
     /** Initializes an array of n elements of the given type and clears .
     @param max_elements The max number of elements in the array buffer.
     @param init_value The init value of the elements. */
     Array (int max_elements, int init_value) :
-        size_ (max_elements = RoundToPowerOf2 (max_elements)),
+        size_ (max_elements < 1?1:max_elements),
         count_ (0),
-        array_ (new T[max_elements]) {
-        memset (array_, init_value, max_elements);
+        elements_ (new T[max_elements]) {
+        memset (elements_, init_value, max_elements);
+    }
+
+    /** Initializes an array of n elements of the given type.
+    @param max_elements The max number of elements in the array buffer. */
+    Array (const Array& other) :
+        size_ (other.size_),
+        count_ (other.count_),
+        elements_ (new T[count_]) {
+        for (int i = count_ - 1; i >= 0; --i) {
+            elements_[i] = other.elements_[i];
+        }
+    }
+
+    ~Array () {
+        delete[] elements_;
     }
 
     /** Clears the array content by setting count_ to zero. */
@@ -70,7 +85,7 @@ class Array {
          @warning Non-POD types must overload operator= and operator==. */
     bool Contains (T& element) {
         for (int i = 0; i < count_; ++i) {
-            if (array_[i] == element) {
+            if (elements_[i] == element) {
                 return true;
             }
         }
@@ -80,22 +95,22 @@ class Array {
     /** Inserts the value into the given index into the array at the given,
          index and shifts the contents at the index and above up one. */
     int Insert (T value, int index) {
-        if (index < 0)
+        if (index < 0) {
             return -1;
-
+        }
         int count = count_,
             size = size_;
-
-        if (count >= size)
+        
+        if (count >= size) {
             return -2;
-
-        if (index > count)
+        }
+        if (index > count) {
             return ~0;
-
-        if (index == size)
+        }
+        if (index == size) {
             Grow ();
-
-        T* array_ptr = array_;
+        }
+        T* array_ptr = elements_;
         if (count == 0) {
             array_ptr[0] = value;
             count_ = 1;
@@ -138,8 +153,8 @@ class Array {
         if (new_size > size_) {
             Grow (new_size);
         }
-        T* ptr = &array_[count],
-         * element = elements.array_;
+        T* ptr = &elements_[count],
+         * element = elements.elements_;
         for (int i = 0; i < new_size; ++i) {
             *ptr = *element++;
         }
@@ -151,25 +166,29 @@ class Array {
         int count = count_;
         if (count == 0)
             return 0;
-        T element = array_[count - 1];
+        T element = elements_[count - 1];
         count_ = count - 1;
         return element;
     }
 
     /** Removes the given index from the array. */
     bool Remove (int index) {
-        int num_elements = count_;
-        if (num_elements == 0)
+        int count = count_;
+        if (count == 0)
             return false;
-        if (num_elements == 1) {
+        if (count == 1) {
             count_ = 0;
             return false;
         }
-        T* insert_point = &array_[num_elements],
-            *end = &array_[index];
-        while (insert_point != end)
-            *end = *(--end);
-        count_ = --num_elements;
+        //T* end_address     = &array_[count - 1],
+        // * current_address = &array_[index];
+        //while (current_address != end_address) {
+        //    *current_address = *(++current_address);
+        //}
+        for (int i = index; i < count; ++i) {
+            elements_[i] = elements_[i + 1];
+        }
+        count_ = count - 1;
         return true;
     }
 
@@ -177,8 +196,9 @@ class Array {
          @warning Non-POD types must overload operator= and operator==. */
     bool RemoveFirstInstanceOf (T& element) {
         for (int i = 0; i < count_; ++i) {
-            if (array_[i] == element)
+            if (elements_[i] == element) {
                 return Remove (i);
+            }
         }
         return false;
     }
@@ -186,16 +206,23 @@ class Array {
     /** Gets the Array element at the given index. */
     inline T& Element (int index) {
         static T t;
-        if (index < 0)
+        if (index < 0) {
             return t;
-        if (index >= size_)
+        }
+        if (index >= size_) {
             return t;
-        return array_[index];
+        }
+        return elements_[index];
     }
 
     /** Gets the Array element at the given index. */
     inline T& operator[] (int index) {
         return Element (index);
+    }
+
+    /** Gets the underlying array. */
+    T* GetArray () {
+        return elements_;
     }
 
     /** Doubles the size of the array. */
@@ -207,21 +234,22 @@ class Array {
         else if (new_size < size) {
             return;
         }
-        T* array_local = array_,
+        T* array_local = elements_,
             *new_array = new T[new_size];
-        for (int i = 0; i < size; ++i)
+        for (int i = 0; i < size; ++i) {
             new_array[i] = array_local[i];
+        }
         size_ = size << 1;
         // Size should never be below 4.
         delete[] array_local;
-        array_ = new_array;
+        elements_ = new_array;
     }
 
     private:
 
     int size_,  //< Max number of elements.
         count_; //< Number of elements.
-    T*  array_; //< The array.
+    T*  elements_; //< The array.
 
 };      //< class Array
 }       //< namespace data

@@ -47,7 +47,7 @@ Door::Door (const char* room_name, uintptr_t* buffer, uintptr_t size_bytes) {
         if (size_bytes < kMinDoorSize) {
         	// @todo insert error code here
 #if SCRIPT_DEBUG
-        	cout << "\n| Error: Door size_bytes < kMinDoorSize!";
+        	cout << "\n> Error: Door size_bytes < kMinDoorSize!";
 #endif  //< SCRIPT_DEBUG
         	return;
         }

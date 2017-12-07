@@ -18,6 +18,6 @@
 
 #include "../script/global.h"
 
-typedef uintptr_t uid_t;
+typedef uint64_t uid_t;
 
 #endif  //< HEADER_FOR_KABUKI_ID_CONFIG

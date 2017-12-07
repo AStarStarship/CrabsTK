@@ -67,12 +67,12 @@ CardStack& Hand::GetHiddenCards () {
 }
 
 void Hand::Print () {
-    cout << "\n| Cards:";
+    cout << "\n> Cards:";
     PrintLine ('-');
     visible_cards_.Print ();
 
     if (hidden_cards_.GetCount () > 0) {
-        cout << "\n|\n| Non-visible Cards: ";
+        cout << "\n>\n> Non-visible Cards: ";
         hidden_cards_.Print ();
     }
 }

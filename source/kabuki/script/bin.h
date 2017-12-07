@@ -110,7 +110,7 @@ inline const char* BinStateString (byte state) {
     @return Returns a Static Error Operation Result. */
 inline const Operation* BinResult (Bin* bin, Bin::Error error) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Bin " << BinErrorString (error) << " Error!\n";
+    std::cout << "\n> Bin " << BinErrorString (error) << " Error!\n";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
@@ -124,7 +124,7 @@ inline const Operation* BinResult (Bin* bin, Bin::Error error) {
 inline const Operation* BinResult (Bin* bin, Bin::Error error,
                                    const uint_t* header) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Bin " << BinErrorString (error) << " Error!\n";
+    std::cout << "\n> Bin " << BinErrorString (error) << " Error!\n";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
@@ -140,7 +140,7 @@ inline const Operation* BinResult (Bin* bin, Bin::Error error,
                                    const uint_t* header,
                                    uint_t offset) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Bin " << BinErrorString (error) << " Error!\n";
+    std::cout << "\n> Bin " << BinErrorString (error) << " Error!\n";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
@@ -157,7 +157,7 @@ inline const Operation* BinResult (Bin* bin, Bin::Error error,
                                    uint_t offset,
                                    byte* address) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Bin " << BinErrorString (error) << " Error!\n";
+    std::cout << "\n> Bin " << BinErrorString (error) << " Error!\n";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }

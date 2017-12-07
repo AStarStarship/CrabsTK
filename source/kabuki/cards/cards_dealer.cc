@@ -87,7 +87,7 @@ void Dealer::AddPlayer (Player* newPlayer) {
 
 int Dealer::RemovePlayer (const char* playerName) {
     for (int i = 0; i < players_.GetCount (); ++i) {
-        if (players_[i]->GetName () == playerName) {
+        if (players_[i]->GetDislpayName () == playerName) {
             players_.Remove (i);
             return i;
         }
@@ -195,7 +195,7 @@ void Dealer::Redeal () {
 }
 
 void Dealer::PrintDealer () {
-    cout << "\n| Dealer:\n| Pot Total: " << pot_total_;
+    cout << "\n> Dealer:\n> Pot Total: " << pot_total_;
 }
 
 void Dealer::SetValues (int ante, int min_bet, int min_cards_per_hand,

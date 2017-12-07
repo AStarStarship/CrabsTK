@@ -44,14 +44,14 @@ Deck::Deck (int num_decks, bool has_jokers, int aces_high, Suit::Format format,
     if (num_decks < 1) {
         num_decks = 1;
     }
-    int num_cards = num_decks * (has_jokers ? 54 : 52);
+    int num_cards = num_decks * (has_jokers ? kFullDeckSize : kDefaultDeckSize);
     pack_ = new Card[num_cards];
-    cards_ = new Card*[num_cards];
-    for (int i = num_cards; i > 0 ; --i) {
-        cards_[i] = &pack_[i];
-    }
 
     Set (has_jokers, aces_high, format, deck_name, directory_path, color);
+}
+
+Deck::~Deck () {
+    delete[] pack_;
 }
 
 void Deck::Set (bool has_jokers, int aces_high, Suit::Format format,
@@ -118,6 +118,20 @@ bool Deck::AcesHigh () {
     return aces_high_;
 }
 
+Card* Deck::GetCard (int suit, int pip) {
+    if (suit < 0) {
+        return &pack_[0];
+    }
+    if (pip == Card::kJoker) {
+        if (!has_jokers_) { // Error!
+
+        }
+        if (suit) {
+            return 
+        }
+    }
+}
+
 Card* Deck::GetCard (int index) {
     if (index < 0) {
         return nullptr;
@@ -128,9 +142,6 @@ Card* Deck::GetCard (int index) {
     return &pack_[index];
 }
 
-Card** Deck::GetCardPointers () {
-    return cards_;
-}
 /*
 int Deck::SetRearImage (const File& thisFile) {
     Image tempImage = ImageCache::getFromFile (thisFile);
@@ -225,12 +236,12 @@ void Deck::SetSuitDenominations (int column_0, int column_1, int column_2,
 }
 
 void Deck::Print () {
-    cout << "\n| Deck: num_cards_: " << num_cards_ << ", " 
+    cout << "\n> Deck: num_cards_: " << num_cards_ << ", " 
          << (aces_high_ ? "Aces high, " : "Aces low, ") 
          << (aces_high_ ? "Has Jokers" : "No Jokers");
 
     for (int i = 0; i < num_cards_; ++i) {
-        cout << "\n| " << i << ": ";
+        cout << "\n> " << i << ": ";
         pack_[i].Print ();
     }
 }

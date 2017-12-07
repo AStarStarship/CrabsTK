@@ -21,35 +21,113 @@ using namespace std;
 
 namespace kabuki { namespace id {
 
-UserList::UserList () {
+UserList::UserList (int max_users): 
+    users_ (max_users) {
+    // Nothing to do here ({:->)
+}
+
+UserList::~UserList () {
+    for (int i = users_.GetCount (); i > 0; --i) {
+        delete users_.Pop ();
+    }
 }
 
 int UserList::GetSize () { return users_.GetSize (); }
 
-void UserList::Add (User* a) {
-    users_.Push (a);
+int UserList::GetCount () { return users_.GetCount (); }
+
+int UserList::Add (const char* handle, const char* password) {
+    if (handle == nullptr) {
+        handle = StringClone (Handle::kDefault);
+    }
+    if (Find (handle)) {
+        return -1;
+    }
+    if (password == nullptr) {
+        password = StringClone (Password::kDefault);
+    }
+    return users_.Push (new User (this, handle, password));
 }
 
-void UserList::Add (UserList& user_list) {
-    users_.Push (user_list.users_);
+int UserList::Add (UserList* user_list) {
+    int count;
+    for (int i = 0; i < user_list.GetCount (); ++i) {
+        User* user = user_list.UserNumber (i);
+        // user should never be nil.
+        count = Add (user->GetHandle ().GetKey (), user->GetPassword ().GetKey ());
+        if (count < 0) {
+            return count;
+        }
+    }
+    return count;
 }
 
-User* UserList::Find (const char* query) {
-    size_t length = strlen (query);
+User* UserList::Find (const char* handle) {
+    if (handle == nullptr) {
+        return nullptr;
+    }
+    size_t length = strlen (handle);
     if (length == 0)
         return nullptr;
 
     // Currently using sequential search because UserList is not sorted.
 
-    User* ptr;
+    User* user;
 
-    for (int i = 0; i < users_.GetSize (); i++) {
-        ptr = users_.Element (i);
-        if (ptr->Equals (query))
-            return ptr;
+    for (int i = users_.GetSize () - 1; i >= 0; --i) {
+        user = users_.Element (i);
+        if (user->GetHandle ().Equals (handle))
+            return user;
     }
 
     return nullptr;//static website guest entities
+}
+
+User* UserList::UserNumber (int user_number) {
+    if (user_number < 0) {
+        return nullptr;
+    }
+    if (user_number >= users_.GetCount ()) {
+        return nullptr;
+    }
+    return users_[user_number];
+}
+
+const char* UserList::IsValid (const char* input, int type) {
+    if (input == nullptr) {
+        return "nil input";
+    }
+    int length = StringLength (input);
+    switch (type) {
+        case kPasswordValidation: {
+            if (length < kMinPasswordLength) {
+                return "Password too short";
+            }
+            if (length > kMaxPasswordLength) {
+                return "password too long";
+            }
+            for (int i = 0; i < length; ++length) {
+                if (isspace (input[i])) {
+                    return "password can't contain whitespace.";
+                }
+            }
+            return nullptr;
+        }
+        case kHandleValidation: {
+            if (length < kMinHandleLength) {
+                return "Password too short";
+            }
+            if (length > kMaxHandleLength) {
+                return "password too long";
+            }
+            for (int i = 0; i < length; ++length) {
+                if (isspace (input[i])) {
+                    return "password can't contain whitespace.";
+                }
+            }
+            return nullptr;
+        }
+    }
 }
 
 void UserList::Print () {

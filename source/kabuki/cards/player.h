@@ -26,7 +26,7 @@ class Player {
     public:
 
     /** Default Constructor. */
-    Player (CardStack& stock, const char* player_name = "You", int start_points = 100,
+    Player (CardStack& stock, const char* player_name = "Butt Face", int start_points = 100,
             bool is_dealer = false);
     
     /** Virtual destructor. */
@@ -47,23 +47,35 @@ class Player {
     /** Processes beginning of round logic. */
     virtual void EndGame () = 0;
 
+    /** Returns true if this hand wins compared to the other one. */
     virtual bool HandWins (Hand& other) = 0;
 
-    /** Returns the player_name_. */
-    const char* GetName ();
+    /** Gets the Player's dislpay_name_. */
+    const char* GetDislpayName ();
 
+    /** Sets the Player's dislpay_name_. */
+    const char* SetDislpayName (const char* name);
+
+    /** Gets is_dealer_. */
+    bool IsDealer ();
+
+    /** Sets is_dealer_. */
+    void SetIsDealer (bool is_dealer);
+
+    /** Gets this Player's state. */
     int GetState ();
 
+    /** Attempts to set the state. 
+        @return Returns nullptr upon success and an error string upon
+                failure. */
     virtual const char* SetState (int state);
-    
-    /** Sets the playerName to the newName. */
-    void SetName (const char* newName);
-    
-    /** Returns the player's hand. */
-    Hand& GetHand ();
 
-    /** Returns the point total. */
+    /** Gets the num_points. */
     int GetNumPoints ();
+
+    /** Sets the num_points.
+        @return Returns false if num_points is < 0. */
+    bool SetNumPoints (int num_points);
     
     /** Adds a specified num_points to the players point total.
         @return Returns 0 upon success, and -1 if num_points is less than 1. */
@@ -73,15 +85,21 @@ class Player {
         @return Returns false if num_pointers is less than 0 or if the player 
                 doesn't have enough points to take. */
     bool RemovePoints (int num_points);
+
+    /** Returns the number of wins. */
+    int GetNumWins ();
+
+    /** Returns the number of wins. */
+    bool SetNumWins (int num_wins);
+
+    /** Adds a win to the players numWins. */
+    void AddWin ();
+
+    /** Returns the player's hand. */
+    Hand& GetHand ();
                    
     /** Resets the numWins to 0. */
     void ResetWins ();
-    
-    /** Returns the number of wins. */
-    int GetNumWins ();
-    
-    /** Adds a win to the players numWins. */
-    void AddWin ();
 
     virtual void PrintStats () = 0;
 

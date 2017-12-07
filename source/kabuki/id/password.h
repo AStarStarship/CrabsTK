@@ -16,31 +16,46 @@
 #ifndef HEADER_FOR_KABUKI_ID_PASSWORD
 #define HEADER_FOR_KABUKI_ID_PASSWORD
 
-#include "config.h"
+#include "validator.h"
 
 namespace kabuki { namespace id {
 
-/** An account password. 
+/** Interface for a class that can validate a password. */
+struct PasswordValidator {
+    /** Function validates the password for correctness. */
+    virtual const char* IsValid (const char* password) = 0;
+};
+
+/** An account password Validator . 
     @todo Add salt!
 */
 class KABUKI Password {
     public:
     
     enum {
-        kMinLength      = 4,   //< The minimum length of a password.
-        kMaxLength      = 255, //< The maximum length of a password.
+        kValidation     = 1,      //< Validation type.
+        kMinLength      = 4,      //< The minimum length of a password.
+        kMaxLength      = 255,    //< The maximum length of a password.
     };
 
-    /** Attempts to create a password from the given password with the default format. 
-        If the password does not match the default format, the default password will be used.
+    static const char kDefault[]; //< Default password.
+
+    /** Attempts to create a password from the given password with the default
+        format. 
+        If the password does not match the default format, the default password
+        will be used.
     */
-    Password (const char* password = "Password");
+    Password (Validator* validator,
+              const char* password = "Password");
+
+    /** Destructs the password. */
+    ~Password ();
 
     /** Gets the password key. */
     const char* GetKey ();
 
     /** Attempts to set the password and returns a non-zero error message upon failure. */
-    const char* SetKey (const char* password);
+    bool SetKey (const char* password);
 
     /** Gets true if the given password is valid. */
     static bool IsValid (const char* password);
@@ -56,7 +71,9 @@ class KABUKI Password {
 
     private:
 
-    char*    password_; //< Unencrypted password.
+    char     * key_;       //< Unencrypted password.
+    Validator* validator_; //< Password validator.
+    int        type_;      //< The validation type.
 };
 
 }       //< namespace id

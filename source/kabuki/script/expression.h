@@ -125,7 +125,7 @@ struct Expression {
 inline const Operation* Result (Expression* expr,
                                 Bin::Error error) {
 #if SCRIPT_DEBUG
-    cout << "\n| Expression " << BinErrorString (error)
+    cout << "\n> Expression " << BinErrorString (error)
               << " Error!";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
@@ -142,7 +142,7 @@ inline const Operation* Result (Expression* expr,
                                 Bin::Error error,
                                 const uint_t* header) {
 #if SCRIPT_DEBUG
-    cout << "\n| Expression " << BinErrorString (error)
+    cout << "\n> Expression " << BinErrorString (error)
               << " Error!";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
@@ -160,7 +160,7 @@ inline const Operation* Result (Expression* expr,
                                 const uint_t* header,
                                 byte offset) {
 #if SCRIPT_DEBUG
-    cout << "\n| Expression " << BinErrorString (error)
+    cout << "\n> Expression " << BinErrorString (error)
               << " Error!";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
@@ -179,7 +179,7 @@ inline const Operation* Result (Expression* expr,
                                 byte offset,
                                 byte* address) {
 #if SCRIPT_DEBUG
-    cout << "\n| Expression " << BinErrorString (error)
+    cout << "\n> Expression " << BinErrorString (error)
               << " Error!";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);

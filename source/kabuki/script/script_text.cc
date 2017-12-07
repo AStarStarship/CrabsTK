@@ -43,6 +43,20 @@ void StringCopy (char* destination, const char* source) {
     *destination = 0;
 }
 
+char* StringConcat (const char* string, int integer) {
+    enum {
+        kBufferSize = 12
+    };
+    if (string == nullptr) {
+        return nullptr;
+    }
+    int  length = StringLength (string);
+    char* result = new char[length + kBufferSize];
+    StringCopy (result, string);
+    TextWrite (result + length, result + length + kBufferSize - 1, integer);
+    return result;
+}
+
 const char* StringEquals (const char* input, const char* query) {
     if (input == nullptr)
         return nullptr;
@@ -92,7 +106,7 @@ const char* StringEquals (const char* input, const char* query,
         q = *query;
     while (i != delimiter) {
         if (i != q) { // Not a hit.
-            cout << "\n| not a hit";
+            cout << "\n> not a hit";
             return nullptr;
         }
         cout << i;
@@ -100,7 +114,7 @@ const char* StringEquals (const char* input, const char* query,
         q = *(++query);
     }
     if (q != delimiter) {
-        cout << "\n| reached nil-term char but no q:\'" << q
+        cout << "\n> reached nil-term char but no q:\'" << q
             << "\' is not the delimiter.";
         return nullptr;
     }
@@ -123,6 +137,10 @@ int StringLength (const char* string, char delimiter) {
     }
     //cout << '\n';
     return count;
+}
+
+int StringWrite (char* buffer_start, char* buffer_stop, int integer) {
+
 }
 
 hash16_t Hash16 (const char* string, hash16_t hash) {
@@ -204,7 +222,7 @@ void PrintStringLine (const char* string) {
 
 void PrintDebugHex (const char* message, char value) {
 #if DEBUG
-    printf ("\n| %s '%c':0x%x", message, value, value);
+    printf ("\n> %s '%c':0x%x", message, value, value);
 #endif
 }
 
@@ -213,17 +231,17 @@ char* TextWrite (char* buffer, char* buffer_end, int value) {
     // @todo Convert to pointer arithmetic.
 
     if (buffer == nullptr) {
-        std::cout << "\n| null buffer!";
+        std::cout << "\n> null buffer!";
         return 0;
     }
 
     if (buffer_end == nullptr) {
-        std::cout << "\n| null buffer_end!";
+        std::cout << "\n> null buffer_end!";
         return 0;
     }
     if (buffer_end <= buffer) {
         // We have to have room for at least a zero.
-        std::cout << "\n| buffer overflow!!";
+        std::cout << "\n> buffer overflow!!";
         return 0;
     }
 
@@ -268,17 +286,17 @@ char* TextWrite (char* buffer, char* buffer_end, uint value) {
     // Stolen from https://goo.gl/waaF1G
 
     if (buffer == nullptr) {
-        std::cout << "\n| buffer was null!";
+        std::cout << "\n> buffer was null!";
         return 0;
     }
 
     if (buffer_end == nullptr) {
-        std::cout << "\n| buffer_end was null!";
+        std::cout << "\n> buffer_end was null!";
         return 0;
     }
     if (buffer_end <= buffer) {
         // We have to have room for at least a zero.
-        std::cout << "\n| buffer overflow!!";
+        std::cout << "\n> buffer overflow!!";
         return 0;
     }
 
@@ -328,7 +346,7 @@ const char* TextRead (const char* buffer, int& result) {
         kMaxLetters = sizeof (int) == 32 ? 10 : 6, //< int can be 16 or 32-bit.
     };
     if (buffer == nullptr) {
-        std::cout << "\n| Buffer was null!";
+        std::cout << "\n> Buffer was null!";
         return 0;
     }
     char c = *buffer++;
@@ -376,11 +394,11 @@ const char* NewLineString () {
 }
 
 const char* ErrorHeader () {
-    return "\n| Error: ";
+    return "\n> Error: ";
 }
 
 const char* VerticalBar () {
-    return "\n| ";
+    return "\n> ";
 }
 
 void PrintLine (const char* string) {
@@ -395,7 +413,7 @@ void PrintError (const char* message, const char* end_string) {
 
 void PrintDebugPointer (const char* message, const void* address) {
 #if DEBUG
-    printf ("\n| Error at address 0x%p: %s", address, message);
+    printf ("\n> Error at address 0x%p: %s", address, message);
 #endif
 }
 
@@ -647,7 +665,7 @@ void StringCopy (char* destination, char* buffer_end, const char* source) {
     while (c) {
         *destination = c;
         if (++destination >= buffer_end) {
-            //cout << "\n| Buffer overflow!";
+            //cout << "\n> Buffer overflow!";
             return;
         }
         c = *source;
@@ -671,7 +689,7 @@ void StringCopy (char* destination, char* buffer_end, const char* source,
     while (c != delimeter) {
         *destination = c;
         if (++destination >= buffer_end) {
-            //cout << "\n| Buffer overflow!";
+            //cout << "\n> Buffer overflow!";
             return;
         }
         c = *source;
@@ -690,7 +708,7 @@ char* StringClone (const char* input, char delimeter) {
 }
 
 void PrintBar (const char* input) {
-    cout << "\n| " << input << '\n';
+    cout << "\n> " << input << '\n';
 }
 
 void PrintBreak (const char* header, char c, int num_lines,
@@ -819,21 +837,21 @@ void PrintPage (const char* input, int indentation,
                        char bullet, int index, int tab_size,
                        int num_columns) {
     num_columns -= 4;
-    cout << "\n| ";
+    cout << "\n> ";
     int cursor; //< The column number of the cursor.
     char c = *input++,  //< The current char.
         buffer[15];     //< The bullet buffer.
     if (!c || input == nullptr) { //< It's an empty input.
         for (int i = num_columns; i > 0; --i)
             cout << ' ';
-        cout << "\n|\n";
+        cout << "\n>\n";
         return;
     }
 
     // Make the input for the bullet.
     if (isdigit (bullet)) { // Then we have to print a number bullet.
         TextWrite (buffer, buffer + 15, index);
-        //< + 2 for "\n| " - 2 for the bullet offset.
+        //< + 2 for "\n> " - 2 for the bullet offset.
         //char format[16];
         //format[0] = '%';
         //sprintf_s (&format[1], 16, "%%%us", indentation * tab_size);
@@ -964,25 +982,29 @@ char* EndOf (char* input, char delimiter) {
 }
 
 const char* CompareTokenString (const char* input, const char* token) {
-    if (input == nullptr)
+    if (input == nullptr) {
         return nullptr;
-    if (token == nullptr)
+    }
+    if (token == nullptr) {
         return nullptr;
+    }
 
     input = SkipSpacesString (input);
     token = SkipSpacesString (token);
 
     char a = *input,
         b = *token;
-    if (b == 0) // Nothing to do.
+    if (b == 0) { // Nothing to do.
         return nullptr;
+    }
     while (a && !isspace (a)) {
         //cout << "> a: " << a << " b: " << b << '\n';
         if (a != b) {
             return nullptr;
         }
-        if (!b)
+        if (!b) {
             return nullptr;
+        }
         a = *(++input);
         b = *(++token);
     }
@@ -1003,19 +1025,19 @@ const char* ParseString (const char* input, char* destination,
     //cout << "> parse_string buffer_size: " << buffer_size
     //          << " delimiter " << delimiter << "\n> ";
     if (input == nullptr) {
-        cout << "\n| input == nullptr";
+        cout << "\n> input == nullptr";
         return nullptr;
     }
     if (destination == nullptr) {
-        cout << "\n| destination == nullptr";
+        cout << "\n> destination == nullptr";
         return nullptr;
     }
     if (destination >= buffer_end) {
-        cout << "\n| destination >= buffer_end";
+        cout << "\n> destination >= buffer_end";
         return nullptr;
     }
     //cout << delimiter;
-    char c = *input;       //< Current char from input.
+    char c = *input; //< Current char from input.
     while (c) {
         if (c == delimiter) {
             //cout << delimiter << " parsed.\n";
@@ -1027,7 +1049,7 @@ const char* ParseString (const char* input, char* destination,
         }
         //cout << c;
         if (input >= buffer_end) {
-            cout << "\n| Buffer overflow!";
+            cout << "\n> Buffer overflow!";
             return nullptr;
         }
         *destination++ = c;
@@ -1035,8 +1057,9 @@ const char* ParseString (const char* input, char* destination,
     }
     //cout << delimiter << " done.\n";
     *destination = 0;
-    if (delimiter == 0)
+    if (delimiter == 0) {
         return input;
+    }
     return input + 1;
 }
 
@@ -1075,8 +1098,7 @@ const char* FindString (const char* input, const char* query, char delimiter) {
 
     // Scroll through each char and match it to the query char.
     while (string) {
-        if (string == c) // The first char matches:
-        {
+        if (string == c) { // The first char matches:
             // Setup to compare the strings;
             start_of_query = input;
             cursor = query;
@@ -1085,10 +1107,12 @@ const char* FindString (const char* input, const char* query, char delimiter) {
             while (string == t) {
                 string = *(++input);
                 t = *(++cursor);
-                if (t == delimiter)        // Once we've reached the delimiter
+                if (t == delimiter) {      // Once we've reached the delimiter
                     return start_of_query;  // it's a match!
-                if (!string) // We've reached the end of char without a hit.
+                }
+                if (!string) { // We've reached the end of char without a hit.
                     return nullptr;
+                }
             }
         }
         // The char did not match so repeat the process for each char.
@@ -1105,24 +1129,29 @@ char* Find(char* input, const char* query, char delimiter) {
 }
 
 bool IsToken (const char* input) {
-    if (input == nullptr)
+    if (input == nullptr) {
         return false;
+    }
     char c = *input;
-    if (!isspace (c))
+    if (!isspace (c)) {
         return false;
-    if (isdigit (c))
+    }
+    if (isdigit (c)) {
         return false;
+    }
     while (c) {
-        if (isspace (c))
+        if (isspace (c)) {
             return false;
+        }
         c = *(++input);
     }
     return true;
 }
 
 int RoundToPowerOf2 (int value) {
-    if (value < 0)
+    if (value < 0) {
         return 4;
+    }
     // @cite https://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2
     unsigned int v = (unsigned int)value;
     --v;
@@ -1159,8 +1188,9 @@ float KeyboardFloat (const char* header) {
 }
 
 char* KeyboardString (const char* header, int buffer_size) {
-    if (buffer_size < 0)
+    if (buffer_size < 0) {
         return nullptr;
+    }
     char* buffer = new char[buffer_size];
     std::cout << header;
     std::cin.get (buffer, buffer_size, '\n');
@@ -1171,10 +1201,12 @@ char* KeyboardString (const char* header, int buffer_size) {
 }
 
 void KeyboardString (const char* header, char* buffer, int buffer_size) {
-    if (buffer == nullptr)
+    if (buffer == nullptr) {
         return;
-    if (buffer_size < 0)
+    }
+    if (buffer_size < 0) {
         return;
+    }
     std::cout << header;
     std::cin.get (buffer, buffer_size, '\n');
     std::cin.clear ();

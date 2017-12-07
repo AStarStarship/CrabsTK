@@ -108,27 +108,26 @@ class KABUKI Suit {
         kBergamasche
     } Format;
 
-    /** A list of the strings "Clubs", "Diamonds", "Hearts", "Spades" */
+    /** A list of the strings "Clubs", "Diamonds", "Hearts", "Spades". */
     static const char* kFrenchSuit[4];
 
-    /** A list of the strings "Acorns", "Bells", "Hearts", "Levies" */
+    /** A list of the strings "Acorns", "Bells", "Hearts", "Levies". */
     static const char* kGermanSuit[4];
 
-    /** A list of the strings "Acorns", "Bells", "Roses", "Shields" */
+    /** A list of the strings "Acorns", "Bells", "Roses", "Shields". */
     static const char* kSwissGermanSuit[4];
 
-    /** A list of the strings "Clubs", "Coins", "Cups", "Swords" */
+    /** A list of the strings "Clubs", "Coins", "Cups", "Swords". */
     static const char* kLatinSuit[4];
 
     /** An array of strings that represent the 7 different directories for the
-         suit icon file */
+        suit icon file. */
     static const char* kFormatStrings[];
 
     /** Default constructor.
         There exists a single unique card for each of the 54 cards in a pack
         of cards. Cards are taken from the pack and shuffled into the deck_
-        using pointers.
-    */
+        using pointers. */
     Suit (int column, int denomination = 0, Format format = kFrench,
           Color color = Color::kWhite);
     
@@ -136,14 +135,15 @@ class KABUKI Suit {
     virtual ~Suit () {}
 
     /** Sets the values of the cards. */
-    void Set (int denomination = kDefaultDenomination, Format format = Format::kFrench,
-              Color color = Color::kBlack);
+    void Set (int    denomination = kDefaultDenomination,
+              Format format       = Format::kFrench,
+              Color  color        = Color::kBlack);
 
     /** Compares this Suit to the other Suit.
         @return Returns 0 if they are identical.
         @return Returns 1 if this Suit is greater than the other Suit. */
     virtual int Compare (const Suit* other);
-                                          
+                           
     /** Compares this Suit to the other Suit and returns true if the two are
         identical. */     
     bool Equals (const Suit* other);
@@ -180,7 +180,7 @@ class KABUKI Suit {
         @return Returns 3 if the image didn't load right. */
     //int SetImage (const char* uri);
                        
-    /** Returns the address of this Suit's image. */                            
+    /** Returns the address of this Suit's image. */
     //Image& GetImage ();
     
     /** Returns a the label_. */
@@ -204,6 +204,7 @@ class KABUKI Suit {
 };      //< class Suit
 
 KABUKI Suit* SuitError ();
+
 }       //< namespace cards
 }       //< namespace kabuki
 #endif  //< HEADER_FOR_KABUKI_CARDS_SUIT
