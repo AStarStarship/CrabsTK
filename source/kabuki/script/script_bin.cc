@@ -61,8 +61,9 @@ const char* BinErrorString (Bin::Error e) {
         "UTF-8",                    //< 18
         "UTF-16",                   //< 19
         "UTF-32",                   //< 20
-        "Bin Locked"                //< 21
-        "Room Error"                //< 22
+        "Bin Locked",               //< 21
+        "Invalid args",             //< 22
+        "Room Error"                //< 23
     };
     // Compiler says this will always be false but I thought it enum as signed int?
     //if (e < 0 || e > Bin::RoomError)

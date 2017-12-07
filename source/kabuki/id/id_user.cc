@@ -21,11 +21,15 @@ using namespace std;
 
 namespace kabuki { namespace id {
 
-User::User (Validator* validator, const char* name, const char* password) :
-    handle_    (validator, name),
+const char User::kDefaultDislpayName[] = "Steve\0";
+
+User::User (Validator* validator, const char* display_name, const char* handle,
+            const char* password) :
+    handle_    (validator, handle),
     password_  (validator, password),
     validator_ (validator_) {
-    //activeAccounts = new kabuki::pro.Game.Account.List ();
+    if (SetDisplayName (display_name))
+        SetDisplayName ("Jo");
 }
 
 const char* User::GetDisplayName () {
@@ -36,7 +40,7 @@ const char* User::SetDisplayName (const char* name) {
     if (name == nullptr) {
         return "name can't be nil.";
     }
-    dislpay_name_ = StringClone (name);
+    display_name_ = StringClone (name);
     return nullptr;
 }
 
@@ -50,6 +54,14 @@ uid_t User::GetSession () {
 
 void User::SetSession (uid_t uid) {
     session_ = uid;
+}
+
+uid_t User::GetSessionKey () {
+    return session_key_;
+}
+
+void User::SetSessionKey (uid_t key) {
+    session_key_ = key;
 }
 
 bool User::IsValid (const char* dislpay_name, const char* handle,

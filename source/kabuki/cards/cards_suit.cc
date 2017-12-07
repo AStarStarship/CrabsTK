@@ -42,6 +42,15 @@ Suit::Suit (int column, int denomination, Format format, Color color) {
     Set (denomination, format, color);
 }
 
+Suit::Suit (const Suit& other):
+    column_       (other.column_),
+    denomination_ (other.denomination_),
+    char_         (other.char_),
+    label_        (other.label_),
+    color_        (other.color_) {
+    // Nothing to do here ({:-B)
+}
+
 void Suit::Set (int denomination, Format format, Color color) {
     // There are no rules for denomination as far as I can think of.
     denomination_ = denomination;

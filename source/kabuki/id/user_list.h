@@ -52,7 +52,8 @@ class KABUKI UserList : public Validator {
     int GetCount ();
 
     /** Adds a new User to the list with the given handle and password. */
-    int Add (const char* handle, const char* password = Password::kDefault);
+    int Add (const char* display_name, const char* handle,
+             const char* password = Password::kDefault);
 
     /** Adds a list of User (string) to the list. */
     int Add (UserList* enities);

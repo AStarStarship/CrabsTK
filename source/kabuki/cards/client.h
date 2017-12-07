@@ -18,38 +18,48 @@
 
 #include "deck.h"
 #include "dealer.h"
+#include "remote_player.h"
 
 namespace kabuki { namespace cards {
 
-/** An abstract playing card game.
-    Most card games have pretty different rules.
+/** A playing card game client that can play many types of games in the console.
+    The server does most of the game logic and feeds the client data on a 
+    need to know basis.
     
     
     */
 class Client : public _::Operation {
     public:
+
+    typedef enum States {
+        kStateDisconnected       = 0,
+        kStateAwaitingConnection = 1,
+        kStateConnected          = 2
+    } State;
     
     enum {
-        kDefaultConsoleWidth    = 80, //< Num rows in a DOS console.
-        kStateDisconnected      = 0,
-        kStateAwaitingConnection = 1,
+        kMaxPlayers          = 64 * 1024, //< Man number of players.
+        kDefaultConsoleWidth = 80,        //< Num rows in a DOS console.  
+        kMaxMessageLength    = 140,       //< Max message length.
+        kMaxGameNameLength   = 63,        //< Max game name length.
     };
 
     /** Default constructor. */
-    Client (id::UserList* users, const char* game_name, int num_players = 1,
-              int min_players = 1, int max_players = 1);
+    Client ();
 
     /** Constructor. */
     virtual ~Client ();
 
-    /** Returns the name of the game. */
-    const char* GetName ();
+    void DeleteRemotePlayers ();
 
     /** Gets the FSM state. */
-    int GetState ();
+    uint GetState ();
 
     /** Virtual function sets the FSM state to a positive value. */
     virtual bool SetState (int state);
+
+    /** Prints out the RemotePlayer(s). */
+    void Client::PrintPlayers ();
 
     /** Prints this game out to the console. */
     virtual void Print ();
@@ -58,10 +68,13 @@ class Client : public _::Operation {
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
     protected:
-
-    Dealer  * dealer_;             //< Pointer to the Dealer.
-    id::User* user_;               //< Global list of User(s).
-    data::Array<Player*> players_; //< Array of players.
+    
+    char     game_name_[kMaxGameNameLength]; //< Current game name.
+    uint     state_,        //< State of the app or current game index.
+             round_number_; //< Current round number.
+    id::User user_;         //< Global list of User(s).
+    Deck     pack_;  //< Pack of Card(s).
+    data::Array<RemotePlayer*> players_; //< Array of RemotePlayer(s).
 
 };      //< class Client
 

@@ -29,16 +29,22 @@ class RemotePlayer: public _::Operation {
     public:
 
     /** Default Constructor. */
-    RemotePlayer ();
+    RemotePlayer (Deck& pack);
     
     /** Virtual destructor. */
-    virtual ~RemotePlayer () {}
+    virtual ~RemotePlayer ();
 
-    /** Gets the Player's dislpay_name_. */
+    /** Gets the Player's display_name_. */
     const char* GetDislpayName ();
 
-    /** Sets the Player's dislpay_name_. */
+    /** Sets the Player's display_name_. */
     const char* SetDislpayName (const char* name);
+
+    /** Gets the Player's display_name_. */
+    const char* GetHandle ();
+
+    /** Sets the Player's display_name_. */
+    const char* SetHandle (const char* name);
 
     /** Gets is_dealer_. */
     bool IsDealer ();
@@ -73,6 +79,12 @@ class RemotePlayer: public _::Operation {
     /** Deletes the visible cards. */
     void DeleteVisibleCards ();
 
+    /** Adds a new Card to the visible_cards_.
+        @return Returns -1 upon failure and the new number of visible cards upon
+                success.
+        */
+    int AddCard (byte pip, byte suit);
+
     /** Prints this object to the console. */
     virtual void Print ();
 
@@ -80,11 +92,13 @@ class RemotePlayer: public _::Operation {
 
     protected:
 
-    char      * dislpay_name_;   //< RemotePlayer's name.
+    char      * display_name_,   //< RemotePlayer's name.
+              * handle_;         //< Display handle.
     bool        is_dealer_;      //< Flags if this player is the dealer.
     int32_t     state_,          //< The state of the player.
                 num_points_,     //< Number of points.
                 num_wins_;       //< Total number of wins.
+    Deck      & pack_;           //< The pack of cards.
     CardStack   visible_cards_;  //< Stock of Card(s) to draw from.
 };
 

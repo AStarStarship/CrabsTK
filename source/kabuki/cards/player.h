@@ -50,10 +50,10 @@ class Player {
     /** Returns true if this hand wins compared to the other one. */
     virtual bool HandWins (Hand& other) = 0;
 
-    /** Gets the Player's dislpay_name_. */
+    /** Gets the Player's display_name_. */
     const char* GetDislpayName ();
 
-    /** Sets the Player's dislpay_name_. */
+    /** Sets the Player's display_name_. */
     const char* SetDislpayName (const char* name);
 
     /** Gets is_dealer_. */

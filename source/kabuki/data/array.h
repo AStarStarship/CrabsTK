@@ -231,7 +231,7 @@ class Array {
         if (new_size < 0) { // Double in size.
             new_size = size << 1; //< <<1 to *2
         }
-        else if (new_size < size) {
+        else if (new_size < size) { // Nothing to do :-)
             return;
         }
         T* array_local = elements_,

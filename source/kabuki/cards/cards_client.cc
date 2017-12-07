@@ -21,17 +21,24 @@ using namespace std;
 
 namespace kabuki { namespace cards {
 
-Client::Client () {
+Client::Client ():
+    state_ (0),
+    user_  (),
+    pack_  (){
 }
 
 Client::~Client () {
+    DeleteRemotePlayers ();
+}
+
+void Client::DeleteRemotePlayers () {
     for (int i = players_.GetCount (); i > 0; --i) {
-        Player* player = players_.Pop ();
+        RemotePlayer* player = players_.Pop ();
         delete player;
     }
 }
 
-int Client::GetState () {
+uint Client::GetState () {
     return state_;
 }
 
@@ -43,64 +50,13 @@ bool Client::SetState (int state) {
     return true;
 }
 
-const char* Client::GetName () {
-    return name_;
-}
-
-Deck& Client::GetPack () {
-    return pack_;
-}
-
-int Client::GetRoundNumber () {
-    return round_number_;
-}
-
-int Client::GetNumPlayers () {
-    return num_players_;
-}
-
-int Client::SetNumPlayers (int value) {
-    if (value < min_players_)
-        return -1;
-    if (value > max_players_)
-        return 1;
-
-    min_players_ = value;
-    return 0;
-}
-
-int Client::GetMinPlayers () {
-    return min_players_;
-}
-
-int Client::SetMinPlayers (int value) {
-    if (value >= max_players_)
-        return -1;
-
-    min_players_ = value;
-    return 0;
-}
-
-int Client::GetMaxPlayers () {
-    return max_players_;
-}
-
-int Client::SetMaxPlayers (int value) {
-    if (value < min_players_)
-        return -1;
-
-    max_players_ = value;
-    return 0;
-}
-
-void Client::NewGame () {
-    round_number_ = 1;
-    BeginRound ();
+const char* Client::GetGameName () {
+    return game_name_;
 }
 
 void Client::PrintPlayers () {
     for (int i = 0; i < players_.GetCount (); ++i) {
-        players_.Element (i)->Print ();
+        players_[i]->Print ();
     }
 }
 
@@ -114,7 +70,7 @@ void Client::PrintRoundStatsString () {
 
 void Client::Print () {
     PrintLine (" ", '_');
-    cout << "\n> Card Game   : " << name_
+    cout << "\n> " << game_name_
          << "\n> Num Players : " << num_players_ << " Min: " << min_players_ 
          << " Max: " << max_players_
          << "\n> Round Number: " << round_number_
@@ -124,8 +80,70 @@ void Client::Print () {
     PrintLine ("|", '_');
 }
 
-const _::Operation* Client::Star (uint index, _::Expression* expr) {
-
+const Operation* Client::Star (uint index, _::Expression* expr) {
+    static const Operation This = { "CardsClient",
+        NumOperations (0), FirstOperation ('A'),
+        "kabuki::cards Script client.", 0
+    };
+    void* args[4];
+    RemotePlayer* player;
+    switch (index) {
+        case '?': return &This;
+        case 'A': {
+            static const Operation OpA = { "SetState",
+                Params<1, UI1> (), Params<0> (),
+                "Sets the client state.", 0
+            };
+            if (!expr) return &OpA;
+            byte state;
+            if (!ExprArgs (expr, Params<1, UI1> (), Args (args, &state)))
+                return expr->result;
+            SetState (state);
+            return nullptr;
+        }
+        case 'B': {
+            static const Operation OpB = { "Print",
+                Params<1, STX, kMaxMessageLength + 1> (), Params<0> (),
+                "Sets the client state.", 0
+            };
+            if (!expr) return &OpB;
+            char buffer[kMaxMessageLength + 1];
+            if (!ExprArgs (expr, Params<1, STX, kMaxMessageLength + 1> (),
+                           Args (args, buffer)))
+                return expr->result;
+            cout << buffer;
+            return nullptr;
+        }
+        case 'C': {
+            static const uint_t* kRxHeaderC = Params<1, SI4,
+                STX, User::kMaxDislpayNameLength + 1,
+                STX, Handle::kMaxLength + 1> ();
+            static const Operation OpC = { "SetPlayer",
+                kRxHeaderC, Params<0> (),
+                "Sets the player at the given #index to the given "
+                "#dislpay_name.", 0
+            };
+            if (!expr) return &OpC;
+            int32_t player_number;
+            char display_name[User::kMaxDislpayNameLength + 1],
+                 handle[Handle::kMaxLength];
+            if (!ExprArgs (expr, kRxHeaderC, Args (args, &player_number,
+                                                   display_name, handle)))
+                return expr->result;
+            if (player_number < 0) {
+                return Result (expr, Bin::InvalidArgumentError, Params<1, SI4> ());
+            }
+            if (player_number > kMaxPlayers) {
+                return Result (expr, Bin::InvalidArgumentError, Params<1, SI4> ());
+            }
+            players_.Grow (player_number);
+            player = players_[player_number];
+            player->SetDislpayName (display_name);
+            player->SetHandle (handle);
+            return nullptr;
+        }
+    }
+    return nullptr;
 }
 
 const char* DefaultPlayAgainString () {

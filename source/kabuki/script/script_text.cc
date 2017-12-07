@@ -656,7 +656,7 @@ void StringCopy (char* destination, char* buffer_end, const char* source) {
         return;
     if (buffer_end == nullptr)
         return;
-    if (destination >= buffer_end)
+    if (destination > buffer_end)
         return;
     if (source == nullptr)
         return;
@@ -664,7 +664,7 @@ void StringCopy (char* destination, char* buffer_end, const char* source) {
     ++source;
     while (c) {
         *destination = c;
-        if (++destination >= buffer_end) {
+        if (++destination > buffer_end) {
             //cout << "\n> Buffer overflow!";
             return;
         }
@@ -680,7 +680,7 @@ void StringCopy (char* destination, char* buffer_end, const char* source,
         return;
     if (buffer_end == nullptr)
         return;
-    if (destination >= buffer_end)
+    if (destination > buffer_end)
         return;
     if (source == nullptr)
         return;
@@ -688,7 +688,7 @@ void StringCopy (char* destination, char* buffer_end, const char* source,
     ++source;
     while (c != delimeter) {
         *destination = c;
-        if (++destination >= buffer_end) {
+        if (++destination > buffer_end) {
             //cout << "\n> Buffer overflow!";
             return;
         }
@@ -1032,8 +1032,8 @@ const char* ParseString (const char* input, char* destination,
         cout << "\n> destination == nullptr";
         return nullptr;
     }
-    if (destination >= buffer_end) {
-        cout << "\n> destination >= buffer_end";
+    if (destination > buffer_end) {
+        cout << "\n> destination > buffer_end";
         return nullptr;
     }
     //cout << delimiter;
@@ -1048,7 +1048,7 @@ const char* ParseString (const char* input, char* destination,
             return input + 1;
         }
         //cout << c;
-        if (input >= buffer_end) {
+        if (input > buffer_end) {
             cout << "\n> Buffer overflow!";
             return nullptr;
         }

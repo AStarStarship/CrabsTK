@@ -21,9 +21,8 @@ using namespace std;
 
 namespace kabuki { namespace cards {
 
-Server::Server (UserList* users, const char* game_name, int num_players,
-                    int min_players, int max_players) :
-                    name_    ((game_name == nullptr) ? "Unnamed Game" : game_name),
+Server::Server (uint port_number, const char* server_name) :
+                    server_name_ ((server_name_ == nullptr) ? "Unnamed Server" :server_name),
                     state_   (0),
                     dealer_  (nullptr),
                     users_   (users) {
@@ -72,8 +71,16 @@ bool Server::SetState (int state) {
     return true;
 }
 
-const char* Server::GetName () {
+const char* Server::GetServerName () {
     return name_;
+}
+
+const char* Server::SetServerName (const char* name) {
+    if (name == nullptr) {
+        return "server_name can't be nil";
+    }
+    delete server_name_;
+    server_name_ = StringClone (name);
 }
 
 Deck& Server::GetPack () {

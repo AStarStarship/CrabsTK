@@ -54,7 +54,8 @@ class Deck {
                                 means that aces are low.
         @param  format          Used to determine what suites we are using.
     */
-    Deck (int num_decks = 1, bool has_jokers = kNoJokers, int aces_high = kAcesHigh,
+    Deck (int num_decks = 1, bool has_jokers = kNoJokers, 
+          int aces_high = kAcesHigh,
           Suit::Format format = Suit::kFrench,
           const char* deck_name = kDefaultRearDeckImage,
           const char* directory_path = kDefaultDeckArtDirectory,

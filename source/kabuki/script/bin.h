@@ -57,14 +57,15 @@ struct KABUKI Bin {
         TooManyPopsError         = 12,
         StringOverflowError      = 13,
         InvalidErrorHandlerError = 14,
-        InvalidOperandError    = 15,
+        InvalidOperandError      = 15,
         ArrayOverflowError       = 16,
         InvalidOperationError    = 17,
         Utf8Error                = 18,
         Utf16Error               = 19,
         Utf32Error               = 20,
         LockedError              = 21,
-        RoomError                = 22,
+        kErrorInvalidArgs        = 22,
+        RoomError                = 23,
     } Error;
 
     /** List of Finite Bin States.

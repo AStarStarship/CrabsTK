@@ -130,6 +130,9 @@ class KABUKI Suit {
         using pointers. */
     Suit (int column, int denomination = 0, Format format = kFrench,
           Color color = Color::kWhite);
+
+    /** Copy constructor. */
+    Suit (const Suit& other);
     
     /** Virtual destructor just in case we want to make a sub-class later. */
     virtual ~Suit () {}

@@ -1,5 +1,5 @@
 ﻿/** kabuki::cards
-    @file    ~/source/kabuki/cards/cards_card_game.cc
+    @file    ~/source/kabuki/cards/cards_server.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -13,8 +13,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABAUKI_CARDS_CARDGAME
-#define HEADER_FOR_KABAUKI_CARDS_CARDGAME
+#ifndef HEADER_FOR_KABAUKI_CARDS_SERVER
+#define HEADER_FOR_KABAUKI_CARDS_SERVER
 
 #include "deck.h"
 #include "dealer.h"
@@ -23,24 +23,28 @@ namespace kabuki { namespace cards {
 
 /** An abstract playing card game server.
     Most card games have pretty different rules*/
-class Server : public _::Operation {
+class Server : public _::Room {
     public:
+
+    typedef enum States {
+        kStateAwaitingConnection = 0,
+    } State;
     
     enum {
-        kDefaultConsoleWidth    = 80  //< Num rows in a DOS console.
-        kDisconnected           = 0,
-        kStateAwaitingConnection = 1,
+        kDefaultConsoleWidth = 80, //< Num rows in a DOS console.
     };
 
     /** Default constructor. */
-    Server (id::UserList* users, const char* game_name, int num_players = 1,
-            int min_players = 1, int max_players = 1);
+    Server (uint port_number, const char* server_name);
 
     /** Constructor. */
     virtual ~Server ();
 
-    /** Returns the name of the game. */
-    const char* GetName ();
+    /** Gets the name of the server. */
+    const char* GetServerName ();
+
+    /** Sets the name of the server. */
+    const char* SetServerName (const char* name);
 
     /** Gets the FSM state. */
     int GetState ();
@@ -109,7 +113,8 @@ class Server : public _::Operation {
 
     protected:
 
-    const char  * name_;           //< Name of this game.
+    const char  * server_name_;    //< Server name.
+    uint32_t      port_number_;    //< Server port number.
     int           state_,          //< Game state.
                   num_players_,    //< Num players.
                   min_players_,    //< Min number of players.
@@ -128,4 +133,4 @@ KABUKI const char* DefaultPlayAgainString ();
 
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABAUKI_CARDS_CARDGAME
+#endif  //< HEADER_FOR_KABAUKI_CARDS_SERVER

@@ -29,11 +29,15 @@ class KABUKI User {
 
     enum {
         kValidation           = 2, //< Validator index.
-        kMaxDislpayNameLength = 63, //< Max dislpay_name_ length.
+        kMaxDislpayNameLength = 63, //< Max display_name_ length.
     };
 
+    /** Default User diplay_name_. */
+    static const char kDefaultDislpayName[];
+
     /** Creates a user with the given char and password. */
-    User (Validator* validator, const char* username, const char* password);
+    User (Validator* validator, const char* display_name, const char* handle,
+          const char* password);
 
     /** Gets the handle's key. */
     const char* GetDisplayName ();
@@ -53,8 +57,14 @@ class KABUKI User {
     /** Sets the session uid. */
     void SetSession (uid_t uid);
 
+    /** Gets the session key. */
+    uid_t GetSessionKey ();
+
+    /** Sets the session key. */
+    void SetSessionKey (uid_t jey);
+
     /** Checks to see if the given char and password are in the correct format. */
-    bool IsValid (const char* dislpay_name, const char* username, const char* password);
+    bool IsValid (const char* dislpay_name, const char* handle, const char* password);
 
     /** Returns true if this user is the same as the given one.  */
     bool Equals (const User& user);
@@ -68,7 +78,8 @@ class KABUKI User {
     char*      display_name_; //< User's display name.
     Password   password_;     //< User's password.
     Validator* validator_;    //< Handle and Password validator.
-    uid_t      session_;      //< User's session number.
+    uid_t      session_,      //< Session uid.
+               session_key_;  //< Session key for the session_.
 
 };      //< class User
 }       //< namespace id

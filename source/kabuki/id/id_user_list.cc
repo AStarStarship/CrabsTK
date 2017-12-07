@@ -36,7 +36,11 @@ int UserList::GetSize () { return users_.GetSize (); }
 
 int UserList::GetCount () { return users_.GetCount (); }
 
-int UserList::Add (const char* handle, const char* password) {
+int UserList::Add (const char* display_name, const char* handle,
+                   const char* password) {
+    if (display_name == nullptr) {
+        display_name = StringClone (User::kDefaultDislpayName);
+    }
     if (handle == nullptr) {
         handle = StringClone (Handle::kDefault);
     }
@@ -46,15 +50,18 @@ int UserList::Add (const char* handle, const char* password) {
     if (password == nullptr) {
         password = StringClone (Password::kDefault);
     }
-    return users_.Push (new User (this, handle, password));
+    User* user = new User (dynamic_cast<Validator*> (this), display_name,
+                           handle, password);
+    return users_.Push (user);
 }
 
 int UserList::Add (UserList* user_list) {
     int count;
-    for (int i = 0; i < user_list.GetCount (); ++i) {
-        User* user = user_list.UserNumber (i);
+    for (int i = 0; i < user_list->GetCount (); ++i) {
+        User* user = user_list->UserNumber (i);
         // user should never be nil.
-        count = Add (user->GetHandle ().GetKey (), user->GetPassword ().GetKey ());
+        count = Add (user->GetHandle ().GetKey (), 
+                     user->GetPassword ().GetKey ());
         if (count < 0) {
             return count;
         }

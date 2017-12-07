@@ -122,14 +122,19 @@ Card* Deck::GetCard (int suit, int pip) {
     if (suit < 0) {
         return &pack_[0];
     }
+    int index;
     if (pip == Card::kJoker) {
         if (!has_jokers_) { // Error!
-
+            return nullptr;
         }
-        if (suit) {
-            return 
+        if (suit <= 1) { // It's a black joker.
+            return &pack_[52];
         }
-    }
+        // It's a red joker.
+        // @todo $CaleMcCollough Make this work with multiple decks.
+        return &pack_[53];
+    } 
+    index = 13 * suit + pip;
 }
 
 Card* Deck::GetCard (int index) {
