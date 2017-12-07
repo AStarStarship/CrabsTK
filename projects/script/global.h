@@ -14,16 +14,22 @@
              permissions and limitations under the License.
 */
 
-#include "../../source/kabuki/script/global.h"
+#pragma once
+#include <stdafx.h>
+
+#ifndef HEADER_FOR_PROJECTS_SCRIPT_GLOBAL
+#define HEADER_FOR_PROJECTS_SCRIPT_GLOBAL
+
+#include "../global.h"
 
 using namespace _;
 
 /* Test Operand for multiple unit tests.
-    The name ChildOperand does not mean anything other than it is a child. */
+    The name ChildOperand does not mean anything other than it is a child.  */
 class ChildOperand : public Operand {
     public:
     
-    /** Chinese Room operations. */
+    // Chinese Room operations.
     virtual const Operation* Star (uint index, Expression* expr) {
         void* args[2];
 
@@ -82,7 +88,7 @@ class ChildOperand : public Operand {
     char test_str_[kStringBufferSize]; //< Test STR.
 };
 
-/** Test child Operand. */
+// Test child Operand.
 class Parent : public Operand {
     public:
 
@@ -149,7 +155,7 @@ class Parent : public Operand {
     char  io_string_[kStringBufferSize]; //< Example string.
 };
 
-/** A test room that can fit in 1KB of RAM. */
+// A test room that can fit in 1KB of RAM. 
 class This : public Room {
     public:
 
@@ -185,3 +191,5 @@ class This : public Room {
 
     Parent parent;
 };
+
+#endif  //< HEADER_FOR_PROJECTS_SCRIPT_GLOBAL

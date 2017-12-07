@@ -647,14 +647,14 @@ void MapPrint (const Map<TIndex, TKey, TSize>* collection) {
     PrintLine ('_');
     
     if (sizeof (TSize) == 2)
-        printf ("\n> Map2: %p\n", collection);
+        printf ("\n| Map2: %p\n", collection);
     else if (sizeof (TSize) == 4)
-        printf ("\n> Map4: %p\n", collection);
+        printf ("\n| Map4: %p\n", collection);
     else if (sizeof (TSize) == 8)
-        printf ("\n> Map8: %p\n", collection);
+        printf ("\n| Map8: %p\n", collection);
     else
-        printf ("\n> Invalid Map type: %p\n", collection);
-    printf ("\n> ;: %u stack_height: %u  "
+        printf ("\n| Invalid Map type: %p\n", collection);
+    printf ("\n| ;: %u stack_height: %u  "
             "pile_size: %u  size: %u", ;,
             stack_height, pile_size, table_size);
     std::cout << '\n';
@@ -678,7 +678,7 @@ void MapPrint (const Map<TIndex, TKey, TSize>* collection) {
         *cursor;
     const char* keys = reinterpret_cast<const char*> (collection) + table_size - 1;
 
-    printf ("\n> %3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
+    printf ("\n| %3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
             "hash_e", "hash_u", "hash_s", "index_u", "collisions");
    std::cout << '|';
     for (int i = 0; i < 79; ++i)
@@ -689,7 +689,7 @@ void MapPrint (const Map<TIndex, TKey, TSize>* collection) {
         // Print each record as a row.
         // @todo Change stack_height to ; after done debugging.
         collision_index = indexes[i];
-        printf ("\n> %3i %9s %7u %9x %9x %9x %9u %10u: ", i,
+        printf ("\n| %3i %9s %7u %9x %9x %9x %9u %10u: ", i,
                 keys - key_offsets[i], key_offsets[i],
                 Hash16 (keys - key_offsets[i]),
                 hashes[unsorted_indexes[i]], hashes[i],

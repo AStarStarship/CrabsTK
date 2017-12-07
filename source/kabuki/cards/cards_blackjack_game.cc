@@ -118,13 +118,13 @@ void BlackjackGame::EndRound () {
 
 void BlackjackGame::PrintStats () {
     PrintLine ("> ", '_');
-    cout << "\n> Ante: " << ante_ << ".\n" <<
-        "\n> Initial Stats:\n";
+    cout << "\n| Ante: " << ante_ << ".\n" <<
+        "\n| Initial Stats:\n";
     for (int i = 0; i < players_.GetCount (); ++i) {
         players_[i]->PrintStats ();
     }
     dealer_.PrintStats ();
-    cout << "\n> Starting round of Blackjack...\n\n";
+    cout << "\n| Starting round of Blackjack...\n\n";
 }
 
 bool BlackjackGame::PlayGameInConsole () {
@@ -144,8 +144,8 @@ bool BlackjackGame::PlayGameInConsole () {
     }
 
     if (dealer_.GetNumPoints () < ante_) {
-        cout << "\n> You just wiped out the house!!!"
-                "\n> Your the ultimate Blackjack Champion!!!\n\n";
+        cout << "\n| You just wiped out the house!!!"
+                "\n| Your the ultimate Blackjack Champion!!!\n\n";
         return false;
     }
 
@@ -159,9 +159,9 @@ bool BlackjackGame::PlayGameInConsole () {
     while (true) {
         BeginRound ();
 
-        cout << "\n>";
+        cout << "\n|";
         PrintLine ("> ", '_');
-        cout << "\n> Round " << round_number_
+        cout << "\n| Round " << round_number_
             << ":\n";
 
         dealer_.PrintStats ();
@@ -176,14 +176,14 @@ bool BlackjackGame::PlayGameInConsole () {
 
         while (!inputValid) {
             // Read a line from the terminal, and convert it to lower case letters.
-            KeyboardString ("\n> hit or hold?\n", input, kBufferSize);
+            KeyboardString ("\n| hit or hold?\n", input, kBufferSize);
 
             if (StringEquals (input, "hit")) {
                 CardStack& cards = dealer_.GetHand ().GetVisibleCards ();
                 cards.Push (dealer_.GetStock ().Draw ());
-                cout << "\n> ";
+                cout << "\n| ";
                 for (int i = 0; i < players_.GetCount (); ++i) {
-                    cout << "\n> " << i;
+                    cout << "\n| " << i;
                     players_[i]->Print ();
                 }
                 inputValid = true;
@@ -191,11 +191,11 @@ bool BlackjackGame::PlayGameInConsole () {
                 inputValid = true;
                 players_[0]->SetState (BlackjackPlayer::kStateHolding);
             } else if (StringEquals (input, "exit") || StringEquals (input, "quit")) {
-                cout << "\n> Exiting the game...\n";
+                cout << "\n| Exiting the game...\n";
                 inputValid = true;
                 return false;
             } else {
-                cout << "\n> Please input 'hit' or 'hold':\n";
+                cout << "\n| Please input 'hit' or 'hold':\n";
             }
         }
 
@@ -219,14 +219,14 @@ bool BlackjackGame::PlayGameInConsole () {
 
             if (dealer_.HandWins (players_[0]->GetHand ())) //< If the dealer wins, it trumps all other players.
             {
-                cout << "\n>\n> Dealer wins ({:-()";
+                cout << "\n|\n| Dealer wins ({:-()";
                 dealer_.Print ();
                 players_[0]->Print ();
-                cout << "\n>";
+                cout << "\n|";
                 dealer_.AddPoints (points_pot_);
                 dealer_.AddWin ();
             } else if (players_[0]->HandWins (dealer_.GetHand ())) {
-                cout << "\n>\n> Players wins!!!";
+                cout << "\n|\n| Players wins!!!";
                 dealer_.Print ();
                 players_[0]->Print ();
                 players_[0]->AddPoints (points_pot_);
@@ -248,8 +248,8 @@ bool BlackjackGame::PlayGameInConsole () {
         }
 
         if (dealer_.GetNumPoints () < ante_) {
-            cout << "\n> You just wiped out the house!!!"
-                 << "\n> Your the ultimate Blackjack Champion!!!";
+            cout << "\n| You just wiped out the house!!!"
+                 << "\n| Your the ultimate Blackjack Champion!!!";
             return false;
         }
 

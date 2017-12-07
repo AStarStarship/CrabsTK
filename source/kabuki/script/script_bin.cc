@@ -168,13 +168,13 @@ bool BinIsReadable (Bin* bin) {
 
 #if SCRIPT_DEBUG
 void BinPrint (Bin* bin) {
-    PrintLine ("\n> ", '_');
+    PrintLine ("\n| ", '_');
     if (bin == nullptr) {
-        printf ("\n> Bin null\n");
+        printf ("\n| Bin null\n");
         return;
     }
     uint_t size = bin->size;
-    printf ("\n> Bin 0x%p: size: %u, start: %u, stop: %u, read: %u\n", bin, size,
+    printf ("\n| Bin 0x%p: size: %u, start: %u, stop: %u, read: %u\n", bin, size,
         bin->start, bin->stop, bin->read);
     PrintMemory (BinBuffer (bin), size + sizeof (Bin));
 }
@@ -182,7 +182,7 @@ void BinPrint (Bin* bin) {
 
 const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #if SCRIPT_DEBUG
-    std::cout << "\n> Reading ";
+    std::cout << "\n| Reading ";
     ParamsPrint (params);
     std::cout << " from B-Input:";
     printf ("%p\n", bin);
@@ -244,7 +244,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
     for (index = 1; index <= num_params; ++index) {
         type   = params[index];
 #if SCRIPT_DEBUG
-        printf ("\n> param:%2u TType:%s  start:%u, stop:%u length:%u",
+        printf ("\n| param:%2u TType:%s  start:%u, stop:%u length:%u",
                 arg_index + 1,  TypeString (type), Diff (begin, start),
                 Diff (begin, stop), length);
 #endif
@@ -264,7 +264,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                     return BinResult (bin, Bin::RoomError, params, index, 
                                       start);
 #if SCRIPT_DEBUG
-                printf ("\n> Reading STR:0x%p with max length:%u \"", ui1_ptr, 
+                printf ("\n| Reading STR:0x%p with max length:%u \"", ui1_ptr, 
                         count);
 #endif
                 // Read char.
@@ -303,7 +303,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 ++num_params;
                 count = params[++index];
                 //#if SCRIPT_DEBUG
-                //printf ("\n>           Reading char with max length %u: ",
+                //printf ("\n|           Reading char with max length %u: ",
                 //        count);
                 //#endif
                 // Load next pointer and increment args.
@@ -861,7 +861,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #endif  //< SCRIPT_DEBUG    
     }
 #if SCRIPT_DEBUG
-    printf ("\n> Hash expected: %x ", hash);
+    printf ("\n| Hash expected: %x ", hash);
 #endif
     if (length < 2)
         return BinResult (bin, Bin::BufferUnderflowError, params, index,
@@ -879,7 +879,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                           start);
 
 //#if SCRIPT_DEBUG
-//    //printf ("\n> Done reading\n");
+//    //printf ("\n| Done reading\n");
 //    SlotClear (begin, bin->start, start, stop, end, size);
 //#endif
 

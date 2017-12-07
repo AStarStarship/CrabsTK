@@ -26,17 +26,17 @@ class KABUKI Handle {
     public:
 
     enum {
-        kValidation = 1,  //< Validation type.
-        kMinLength  = 3,  //< Min length of a Handle range.
-        kMaxLength  = 255 //< Max length of a Handle range.
+        kValidation        = 1,  //< Validation type.
+        kDefaultMinLength  = 3,  //< Min length of a Handle range.
+        kDefaultMaxLength  = 255 //< Max length of a Handle range.
     };
 
     static const char kDefault[];
     
     /** Constructor creates a standard char. */
     Handle (Validator* validator, const char* key,
-            int min_length = kMinLength, 
-            int max_length = kMaxLength);
+            int min_length = kDefaultMinLength, 
+            int max_length = kDefaultMaxLength);
 
     /** Gets a reference to the handle string. */
     const char* GetKey ();

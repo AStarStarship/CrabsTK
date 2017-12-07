@@ -82,7 +82,7 @@ bool User::Equals (const User& user) {
 }
 
 void User::Print () {
-    cout << "\n> User: Handle:\"" << handle_.GetKey () << "\"  Password: \""
+    cout << "\n| User: Handle:\"" << handle_.GetKey () << "\"  Password: \""
          << password_.GetKey () << '\"';
 }
 

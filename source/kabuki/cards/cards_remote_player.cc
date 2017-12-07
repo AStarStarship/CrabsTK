@@ -21,7 +21,7 @@ using namespace std;
 namespace kabuki { namespace cards {
 
 RemotePlayer::RemotePlayer (Deck& pack) :
-    display_name_  (new char[User::kMaxDislpayNameLength + 1]),
+    display_name_  (new char[User::kDefaultMaxDislpayNameLength + 1]),
     num_wins_      (0),
     num_points_    (0),
     pack_          (pack),
@@ -121,7 +121,7 @@ int RemotePlayer::AddCard (byte pip, byte suit) {
 }
 
 void RemotePlayer::Print () {
-    cout << "\n> " << display_name_ << ": points: " << num_points_ 
+    cout << "\n| " << display_name_ << ": points: " << num_points_ 
          << " wins  : " << num_wins_;
 
     PrintLine ('-');
@@ -138,11 +138,11 @@ const Operation* RemotePlayer::Star (uint index, _::Expression* expr) {
         case '?': return &This;
         case 'A': {
             static const Operation OpA { "SetDisplayName",
-                Params<0> (), Params<1, STX, User::kMaxDislpayNameLength> (),
+                Params<0> (), Params<1, STX, User::kDefaultMinDislpayNameLength> (),
                 "Sets the display_name_.", 0
             };
             if (!expr) return &OpA;
-            return ExprArgs (expr, Params<1, STX, User::kMaxDislpayNameLength> (),
+            return ExprArgs (expr, Params<1, STX, User::kDefaultMaxDislpayNameLength> (),
                              Args (args, display_name_));
         }
         case 'B': {

@@ -17,6 +17,7 @@
 #define HEADER_FOR_KABUKI_ID_CONFIG
 
 #include "../script/global.h"
+#include "../data/global.h"
 
 typedef uint64_t uid_t;
 

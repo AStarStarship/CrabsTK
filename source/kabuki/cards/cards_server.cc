@@ -151,19 +151,19 @@ void Server::PrintRoundStatsString () {
 
 void Server::Print () {
     PrintLine (" ", '_');
-    cout << "\n> Card Game   : " << name_
-         << "\n> Num Players : " << num_players_ << " Min: " << min_players_ 
+    cout << "\n| Card Game   : " << name_
+         << "\n| Num Players : " << num_players_ << " Min: " << min_players_ 
          << " Max: " << max_players_
-         << "\n> Round Number: " << round_number_
-         << "\n> Num Players : " << players_.GetCount ();
+         << "\n| Round Number: " << round_number_
+         << "\n| Num Players : " << players_.GetCount ();
 
     PrintPlayers ();
     PrintLine ("|", '_');
 }
 
 const char* DefaultPlayAgainString () {
-    static const char play_again[] = "\n> Do you want to play again?"
-        "\n> Enter y to continue, or n to quit."
+    static const char play_again[] = "\n| Do you want to play again?"
+        "\n| Enter y to continue, or n to quit."
         "\n< \0";
     return play_again;
 }

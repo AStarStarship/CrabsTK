@@ -1,24 +1,24 @@
 /** kabuki::script
-@version 0.x
-@file    ~/source/kabuki/script/assembly.h
-@author  Cale McCollough <cale.mccollough@gmail.com>
-@license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
-All right reserved (R). Licensed under the Apache License, Version
-2.0 (the "License"); you may not use this file except in
-compliance with the License. You may obtain a copy of the License
-[here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-implied. See the License for the specific language governing
-permissions and limitations under the License.
+    @version 0.x
+    @file    ~/source/kabuki/script/assembly.h
+    @author  Cale McCollough <cale.mccollough@gmail.com>
+    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version
+             2.0 (the "License"); you may not use this file except in
+             compliance with the License. You may obtain a copy of the License
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+             implied. See the License for the specific language governing
+             permissions and limitations under the License.
 
-@desc   This file contains the system configuration for ChineseRoom and
-applications and libraries that use it. To modify this file, copy
-it into your project directory into the source code root. This
-files gets #include <assembly.h> in the config file. That means
-that the compiler will look in your source code root before looking
-in this file. Please see module_config.h for configuration details.
+    @desc    This file contains the system configuration for ChineseRoom and
+             applications and libraries that use it. To modify this file, copy
+             it into your project directory into the source code root. This
+             files gets #include <assembly.h> in the config file. That means
+             that the compiler will look in your source code root before looking
+             in this file. Please see module_config.h for configuration details.
 */
 
 // Choose BARE_METAL, MBED, MBED_OS, ARDUINO, MINGW32, WINDOWS, ANDROID,

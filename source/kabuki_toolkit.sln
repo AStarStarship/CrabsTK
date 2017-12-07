@@ -5,10 +5,6 @@ VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kabuki_toolkit", "kabuki\kabuki_toolkit.vcxproj", "{6C739D2A-D229-4E66-BF9D-0F96A4403D27}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kabuki_cards_server", "..\projects\kabuki_cards_server\kabuki_cards_server.vcxproj", "{BD6AB544-FC1E-4DFA-8B59-53F2EAA249E5}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kabuki_cards_client", "..\projects\kabuki_cards_client\kabuki_cards_client.vcxproj", "{C7D09395-2427-4C6A-939B-2302AFD2012A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -19,28 +15,16 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Debug|x64.ActiveCfg = Debug|x64
 		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Debug|x64.Build.0 = Debug|x64
+		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Debug|x64.Deploy.0 = Debug|x64
 		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Debug|x86.ActiveCfg = Debug|Win32
 		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Debug|x86.Build.0 = Debug|Win32
+		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Debug|x86.Deploy.0 = Debug|Win32
 		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Release|x64.ActiveCfg = Release|x64
 		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Release|x64.Build.0 = Release|x64
+		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Release|x64.Deploy.0 = Release|x64
 		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Release|x86.ActiveCfg = Release|Win32
 		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Release|x86.Build.0 = Release|Win32
-		{BD6AB544-FC1E-4DFA-8B59-53F2EAA249E5}.Debug|x64.ActiveCfg = Debug|x64
-		{BD6AB544-FC1E-4DFA-8B59-53F2EAA249E5}.Debug|x64.Build.0 = Debug|x64
-		{BD6AB544-FC1E-4DFA-8B59-53F2EAA249E5}.Debug|x86.ActiveCfg = Debug|Win32
-		{BD6AB544-FC1E-4DFA-8B59-53F2EAA249E5}.Debug|x86.Build.0 = Debug|Win32
-		{BD6AB544-FC1E-4DFA-8B59-53F2EAA249E5}.Release|x64.ActiveCfg = Release|x64
-		{BD6AB544-FC1E-4DFA-8B59-53F2EAA249E5}.Release|x64.Build.0 = Release|x64
-		{BD6AB544-FC1E-4DFA-8B59-53F2EAA249E5}.Release|x86.ActiveCfg = Release|Win32
-		{BD6AB544-FC1E-4DFA-8B59-53F2EAA249E5}.Release|x86.Build.0 = Release|Win32
-		{C7D09395-2427-4C6A-939B-2302AFD2012A}.Debug|x64.ActiveCfg = Debug|x64
-		{C7D09395-2427-4C6A-939B-2302AFD2012A}.Debug|x64.Build.0 = Debug|x64
-		{C7D09395-2427-4C6A-939B-2302AFD2012A}.Debug|x86.ActiveCfg = Debug|Win32
-		{C7D09395-2427-4C6A-939B-2302AFD2012A}.Debug|x86.Build.0 = Debug|Win32
-		{C7D09395-2427-4C6A-939B-2302AFD2012A}.Release|x64.ActiveCfg = Release|x64
-		{C7D09395-2427-4C6A-939B-2302AFD2012A}.Release|x64.Build.0 = Release|x64
-		{C7D09395-2427-4C6A-939B-2302AFD2012A}.Release|x86.ActiveCfg = Release|Win32
-		{C7D09395-2427-4C6A-939B-2302AFD2012A}.Release|x86.Build.0 = Release|Win32
+		{6C739D2A-D229-4E66-BF9D-0F96A4403D27}.Release|x86.Deploy.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

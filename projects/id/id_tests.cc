@@ -14,10 +14,7 @@
              permissions and limitations under the License.
 */
 
-#include "../../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
-#include "../../../../../cpputest/include/CppUTest/TestHarness.h"
-
-#include "../../source/kabuki/id/global.h"
+#include "global.h"
 
 using namespace std;
 using namespace _;
@@ -26,16 +23,17 @@ using namespace kabuki::id;
 TEST_GROUP (ID_TESTS)
 {
     void setup () {
-        std::cout << "\n|  + Running kabuki::al tests...\n";
+        std::cout << "\n|  + Running kabuki::id tests...\n|";
     }
 
     void teardown () {
-        std::cout << "| kabuki::al completed.\n";
+        std::cout << "\n| kabuki::id tests completed.";
+        PrintLine ("|", '-');
     }
 };
 
 TEST (ID_TESTS, UserListTests) {
-    cout << "\n> Testing User class...";
+    cout << "\n| Testing User class...";
 
     UserList users;
     CHECK_EQUAL (1, users.Add ("user_1"));

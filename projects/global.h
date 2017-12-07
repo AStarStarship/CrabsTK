@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/impl/tests/script_tests.cc
+    @file    ~/source/kabuki/global.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,26 +14,17 @@
              permissions and limitations under the License.
 */
 
-#include "../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
-#include "../../../../cpputest/include/CppUTest/TestHarness.h"
+#pragma once
+#include <stdafx.h>
 
-#include "kabuki_toolkit.h"
-#include "this.h"
+#ifndef HEADER_FOR_PROJECTS_GLOBAL
+#define HEADER_FOR_PROJECTS_GLOBAL
+
+#include "../../cpputest/include/CppUTest/CommandLineTestRunner.h"
+#include "../../cpputest/include/CppUTest/TestHarness.h"
+#include "../source/kabuki/script/global.h"
 
 using namespace _;
+using namespace std;
 
-TEST_GROUP (KABUKI_TESTS) {
-    void setup () {
-        PrintLine ("| ");
-    }
-
-    void teardown () {
-        std::cout << "| Tests completed.\n";
-        PrintLine ("+", '-');
-    }
-};
-
-TEST (KABUKI_TESTS, Tests) {
-    PrintLine ();
-    PrintLine ("Running Kabuki Toolkit Tests...");
-}
+#endif  //< HEADER_FOR_PROJECTS_GLOBAL

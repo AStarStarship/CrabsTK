@@ -121,7 +121,7 @@ int CardStack::Push (Card* card) {
     if (card == nullptr) {
         return -1;
     }
-    //cout << "\n> Pushing "; card->Print ();
+    //cout << "\n| Pushing "; card->Print ();
     return cards_.Push (card);
 }
 
@@ -283,9 +283,9 @@ void CardStack::SetVisiblity (bool visiblity) {
 
 void CardStack::Print () {
     PrintLine (">", '-');
-    cout << "\n> cards_.GetCount () = " << cards_.GetCount ();
+    cout << "\n| cards_.GetCount () = " << cards_.GetCount ();
     for (int i = 0; i < cards_.GetCount (); ++i) {
-        cout << "\n> " << i << ".) ";
+        cout << "\n| " << i << ".) ";
         cards_[i]->Print ();
     }
 }

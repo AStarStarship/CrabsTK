@@ -50,10 +50,6 @@ bool Client::SetState (int state) {
     return true;
 }
 
-const char* Client::GetGameName () {
-    return game_name_;
-}
-
 void Client::PrintPlayers () {
     for (int i = 0; i < players_.GetCount (); ++i) {
         players_[i]->Print ();
@@ -70,11 +66,11 @@ void Client::PrintRoundStatsString () {
 
 void Client::Print () {
     PrintLine (" ", '_');
-    cout << "\n> " << game_name_
-         << "\n> Num Players : " << num_players_ << " Min: " << min_players_ 
-         << " Max: " << max_players_
-         << "\n> Round Number: " << round_number_
-         << "\n> Num Players : " << players_.GetCount ();
+    cout << "\n| " << game_name_
+         << "\n| Num Players : " << players_.GetCount () 
+         << " Max: " << players_.GetSize ()
+         << "\n| Round Number: " << round_number_
+         << "\n| Num Players : " << players_.GetCount ();
 
     PrintPlayers ();
     PrintLine ("|", '_');
@@ -116,8 +112,8 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
         }
         case 'C': {
             static const uint_t* kRxHeaderC = Params<1, SI4,
-                STX, User::kMaxDislpayNameLength + 1,
-                STX, Handle::kMaxLength + 1> ();
+                STX, User::kDefaultMaxDislpayNameLength + 1,
+                STX, Handle::kDefaultMaxLength + 1> ();
             static const Operation OpC = { "SetPlayer",
                 kRxHeaderC, Params<0> (),
                 "Sets the player at the given #index to the given "
@@ -125,8 +121,8 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
             };
             if (!expr) return &OpC;
             int32_t player_number;
-            char display_name[User::kMaxDislpayNameLength + 1],
-                 handle[Handle::kMaxLength];
+            char display_name[User::kDefaultMaxDislpayNameLength + 1],
+                 handle[Handle::kDefaultMaxLength];
             if (!ExprArgs (expr, kRxHeaderC, Args (args, &player_number,
                                                    display_name, handle)))
                 return expr->result;
@@ -147,8 +143,8 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
 }
 
 const char* DefaultPlayAgainString () {
-    static const char play_again[] = "\n> Do you want to play again?"
-        "\n> Enter y to continue, or n to quit."
+    static const char play_again[] = "\n| Do you want to play again?"
+        "\n| Enter y to continue, or n to quit."
         "\n< \0";
     return play_again;
 }

@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/pro_files/script_tests.cc
+    @file    ~/projects/script/script_tests.cc
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,9 +14,7 @@
              permissions and limitations under the License.
 */
 
-#include "../../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
-#include "../../../../../cpputest/include/CppUTest/TestHarness.h"
-
+#include <stdafx.h>
 #include "global.h"
 
 using namespace _;
@@ -33,7 +31,94 @@ TEST_GROUP (SCRIPT_TESTS) {
 };
 
 /*
+TEST (SCRIPT_TESTS, BookTests) {
+    PrintLineBreak ("\n|  + Running BookTests\n", 10);
 
+    PrintLineBreak ("\n|  - Running BookInit...\n", 5, ' ');
+    int8_t index;
+
+    enum {
+        kBufferSize = 256,
+        kBufferSizeWords = kBufferSize / sizeof (uintptr_t),
+
+    };
+
+    uintptr_t buffer[kBufferSizeWords];
+
+    Book2* book = Book2Init (buffer, 8, kBufferSize, 128);
+
+    CHECK (book != nullptr)
+
+    index = Book2Add<uint8_t, UI1> (book, "D", (byte)0xFF);
+
+    CHECK_EQUAL (0, index)
+    Book2Print (book);
+    CHECK_EQUAL (0, index)
+    index = Book2Find (book, "D");
+    CHECK_EQUAL (0, index)
+    system ("PAUSE");
+    index = Book2Add<uint8_t, UI1> (book, "C", (byte)0xFF);
+    CHECK_EQUAL (1, index)
+    index = Book2Find (book, "D");
+    CHECK_EQUAL (0, index)
+    index = Book2Find (book, "C");
+    CHECK_EQUAL (1, index)
+
+    index = Book2Add<uint8_t, UI1> (book, "Bin", (byte)0xFF);
+    CHECK_EQUAL (2, index)
+    index = Book2Find (book, "D");
+    CHECK_EQUAL (0, index)
+    index = Book2Find (book, "C");
+    CHECK_EQUAL (1, index)
+    index = Book2Find (book, "Bin");
+    CHECK_EQUAL (2, index)
+
+    index = Book2Add<uint8_t, UI1> (book, "A", (byte)0xFF);
+    CHECK_EQUAL (3, index)
+    index = Book2Find (book, "D");
+    CHECK_EQUAL (0, index)
+    index = Book2Find (book, "C");
+    CHECK_EQUAL (1, index)
+    index = Book2Find (book, "Bin");
+    CHECK_EQUAL (2, index)
+    index = Book2Find (book, "A");
+    CHECK_EQUAL (3, index)
+
+    index = Book2Add<uint8_t, UI1> (book, "abc", (byte)0xFF);
+    CHECK_EQUAL (4, index)
+    index = Book2Find (book, "abc");
+    CHECK_EQUAL (4, index)
+
+    index = Book2Add<uint8_t, UI1> (book, "bac", (byte)0xFF);
+    CHECK_EQUAL (5, index)
+    index = Book2Find (book, "abc");
+    CHECK_EQUAL (4, index)
+    index = Book2Find (book, "bac");
+    CHECK_EQUAL (5, index)
+
+    index = Book2Add<uint8_t, UI1> (book, "cba", (byte)0xFF);
+    CHECK_EQUAL (6, index)
+    index = Book2Find (book, "abc");
+    CHECK_EQUAL (4, index)
+    index = Book2Find (book, "bac");
+    CHECK_EQUAL (5, index)
+    index = Book2Find (book, "cba");
+    CHECK_EQUAL (6, index)
+
+    index = Book2Add<uint8_t, UI1> (book, "cab", (byte)0xFF);
+    CHECK_EQUAL (7, index)
+    index = Book2Find (book, "abc");
+    CHECK_EQUAL (4, index)
+    index = Book2Find (book, "bac");
+    CHECK_EQUAL (5, index)
+    index = Book2Find (book, "cba");
+    CHECK_EQUAL (6, index)
+    index = Book2Find (book, "cab");
+    CHECK_EQUAL (7, index)
+
+    index = Book2Add<uint8_t, UI1> (book, "test", (byte)0xFF);
+    CHECK_EQUAL (index, -1)
+}
 template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
     uint second = 0>
     time_t TestTime (char* buffer, int buffer_size) {
@@ -139,16 +224,102 @@ TEST (SCRIPT_TESTS, ClockTests) {
     PrintBreak ("<", '-');
 
     cout << "<\n< Done testing date parsing utils! :-)\n";
+}*/
+
+#if USING_TABLE
+TEST (SCRIPT_TESTS, TableTests) {
+    std::cout << "\n|  - Running TableTest...\n";
+    char_t index;
+    uintptr_t buffer[128];
+    printf ("\n| &buffer[0]:%p &buffer[127]:%p\n", &buffer[0], &buffer[127]);
+    Table* table = TableInit (buffer, 8, 128);
+
+    CHECK (table != nullptr)
+
+        index = TableAdd (table, "D");
+    CHECK_EQUAL (0, index)
+        index = TableFind (table, "D");
+    CHECK_EQUAL (0, index)
+
+        index = TableAdd (table, "C");
+    CHECK_EQUAL (1, index)
+        index = TableFind (table, "D");
+    CHECK_EQUAL (0, index)
+        index = TableFind (table, "C");
+    CHECK_EQUAL (1, index)
+
+        index = TableAdd (table, "Bin");
+    CHECK_EQUAL (2, index)
+        index = TableFind (table, "D");
+    CHECK_EQUAL (0, index)
+        index = TableFind (table, "C");
+    CHECK_EQUAL (1, index)
+        index = TableFind (table, "Bin");
+    CHECK_EQUAL (2, index)
+
+        index = TableAdd (table, "A");
+    CHECK_EQUAL (3, index)
+        index = TableFind (table, "D");
+    CHECK_EQUAL (0, index)
+        index = TableFind (table, "C");
+    CHECK_EQUAL (1, index)
+        index = TableFind (table, "Bin");
+    CHECK_EQUAL (2, index)
+        index = TableFind (table, "A");
+    CHECK_EQUAL (3, index)
+
+        index = TableAdd (table, "abc");
+    CHECK_EQUAL (4, index)
+        index = TableFind (table, "abc");
+    CHECK_EQUAL (4, index)
+
+        index = TableAdd (table, "bac");
+    CHECK_EQUAL (5, index)
+        index = TableFind (table, "abc");
+    CHECK_EQUAL (4, index)
+        index = TableFind (table, "bac");
+    CHECK_EQUAL (5, index)
+
+        index = TableAdd (table, "cba");
+    CHECK_EQUAL (6, index)
+        index = TableFind (table, "abc");
+    CHECK_EQUAL (4, index)
+        index = TableFind (table, "bac");
+    CHECK_EQUAL (5, index)
+        index = TableFind (table, "cba");
+    CHECK_EQUAL (6, index)
+
+        index = TableAdd (table, "cab");
+    CHECK_EQUAL (7, index)
+        index = TableFind (table, "abc");
+    CHECK_EQUAL (4, index)
+        index = TableFind (table, "bac");
+    CHECK_EQUAL (5, index)
+        index = TableFind (table, "cba");
+    CHECK_EQUAL (6, index)
+        index = TableFind (table, "cab");
+    CHECK_EQUAL (7, index)
+
+        index = TableAdd (table, "test");
+    CHECK_EQUAL (kInvalidIndex, index)
+
+        TablePrint (table);
+    //system ("PAUSE");
 }
+#endif  //< USING_TABLE
+
 TEST (SCRIPT_TESTS, ExpressionTests) {
     std::cout << "\n| Running ExpressionTests...\n";
     enum {
-        kBufferSize = 248 / sizeof (uint_t)
+        kBufferSize      = 256,
+        kBufferSizeWords = kBufferSize / sizeof (uint_t)
     };
 
-    uint_t buffer[kBufferSize];
-    Root root;
-    Expression* expr = ExpressionInit (buffer, 255, 4, &root);
+    uintptr_t buffer[kBufferSizeWords],
+              unpacked_buffer[kBufferSizeWords];
+    This root;
+    Expression* expr = ExpressionInit (buffer, 255, 4, &root, unpacked_buffer,
+                                       kBufferSizeWords);
     ExpressionPrint (expr);
 
     void*         args[4];
@@ -162,8 +333,10 @@ TEST (SCRIPT_TESTS, ExpressionTests) {
     float flt_found;
     expr->return_address = "A";
     printf ("\n| Attempting to print to 0x%p\n", ExpressionBout (expr));
-    const Operation* m = Result (expr, esc, Args (args, "C", &stx_expected,
-                                                       &si4_expected, &flt_expected));
+    const Operation* result = ExprResult (expr, esc, Args (args, "C",
+                                                           &stx_expected,
+                                                           &si4_expected,
+                                                           &flt_expected));
     PrintMemory (expr, ExpressionEndAddress (expr));
     ExpressionPrint (expr);
     //Mirror mirror;                                  //< @todo fix me!
@@ -171,185 +344,15 @@ TEST (SCRIPT_TESTS, ExpressionTests) {
     //Portal* p = reinterpret_cast<Portal*>(&mirror); //< 
     //ExpressionScan (expr, p);
     system ("PAUSE");
-    CHECK_EQUAL (0, Args (expr, esc, Args (args, &stx_found,
-                                         &si4_found, &flt_found)));
+    CHECK_EQUAL (0, ExprArgs (expr, esc, Args (args, &stx_found,
+                                               &si4_found,
+                                               &flt_found)));
     system ("PAUSE");
 }
 
 TEST (SCRIPT_TESTS, RoomTests) {
     printf ("\n|  - Running RoomTestOne...\n");
 }
-
-TEST (SCRIPT_TESTS, BookTests) {
-    PrintLineBreak ("\n|  + Running BookTests\n", 10);
-
-    PrintLineBreak ("\n|  - Running BookInit...\n", 5, ' ');
-    int8_t index;
-
-    enum {
-        kBufferSize = 256,
-        kBufferSizeWords = kBufferSize / sizeof (uintptr_t),
-
-    };
-
-    uintptr_t buffer[kBufferSizeWords];
-
-    Book2* book = Book2Init (buffer, 8, kBufferSize, 128);
-
-    CHECK (book != nullptr)
-
-    index = Book2Add<uint8_t, UI1> (book, "D", (byte)0xFF);
-
-    CHECK_EQUAL (0, index)
-    Book2Print (book);
-    CHECK_EQUAL (0, index)
-    index = Book2Find (book, "D");
-    CHECK_EQUAL (0, index)
-    system ("PAUSE");
-    index = Book2Add<uint8_t, UI1> (book, "C", (byte)0xFF);
-    CHECK_EQUAL (1, index)
-    index = Book2Find (book, "D");
-    CHECK_EQUAL (0, index)
-    index = Book2Find (book, "C");
-    CHECK_EQUAL (1, index)
-
-    index = Book2Add<uint8_t, UI1> (book, "Bin", (byte)0xFF);
-    CHECK_EQUAL (2, index)
-    index = Book2Find (book, "D");
-    CHECK_EQUAL (0, index)
-    index = Book2Find (book, "C");
-    CHECK_EQUAL (1, index)
-    index = Book2Find (book, "Bin");
-    CHECK_EQUAL (2, index)
-
-    index = Book2Add<uint8_t, UI1> (book, "A", (byte)0xFF);
-    CHECK_EQUAL (3, index)
-    index = Book2Find (book, "D");
-    CHECK_EQUAL (0, index)
-    index = Book2Find (book, "C");
-    CHECK_EQUAL (1, index)
-    index = Book2Find (book, "Bin");
-    CHECK_EQUAL (2, index)
-    index = Book2Find (book, "A");
-    CHECK_EQUAL (3, index)
-
-    index = Book2Add<uint8_t, UI1> (book, "abc", (byte)0xFF);
-    CHECK_EQUAL (4, index)
-    index = Book2Find (book, "abc");
-    CHECK_EQUAL (4, index)
-
-    index = Book2Add<uint8_t, UI1> (book, "bac", (byte)0xFF);
-    CHECK_EQUAL (5, index)
-    index = Book2Find (book, "abc");
-    CHECK_EQUAL (4, index)
-    index = Book2Find (book, "bac");
-    CHECK_EQUAL (5, index)
-
-    index = Book2Add<uint8_t, UI1> (book, "cba", (byte)0xFF);
-    CHECK_EQUAL (6, index)
-    index = Book2Find (book, "abc");
-    CHECK_EQUAL (4, index)
-    index = Book2Find (book, "bac");
-    CHECK_EQUAL (5, index)
-    index = Book2Find (book, "cba");
-    CHECK_EQUAL (6, index)
-
-    index = Book2Add<uint8_t, UI1> (book, "cab", (byte)0xFF);
-    CHECK_EQUAL (7, index)
-    index = Book2Find (book, "abc");
-    CHECK_EQUAL (4, index)
-    index = Book2Find (book, "bac");
-    CHECK_EQUAL (5, index)
-    index = Book2Find (book, "cba");
-    CHECK_EQUAL (6, index)
-    index = Book2Find (book, "cab");
-    CHECK_EQUAL (7, index)
-
-    index = Book2Add<uint8_t, UI1> (book, "test", (byte)0xFF);
-    CHECK_EQUAL (index, -1)
-}*/
-
-#if USING_TABLE
-TEST (SCRIPT_TESTS, TableTests) {
-    std::cout << "\n|  - Running TableTest...\n";
-    char_t index;
-    uintptr_t buffer[128];
-    printf ("\n| &buffer[0]:%p &buffer[127]:%p\n", &buffer[0], &buffer[127]);
-    Table* table = TableInit (buffer, 8, 128);
-
-    CHECK (table != nullptr)
-
-    index = TableAdd (table, "D");
-    CHECK_EQUAL (0, index)
-    index = TableFind (table, "D");
-    CHECK_EQUAL (0, index)
-        
-    index = TableAdd (table, "C");
-    CHECK_EQUAL (1, index)
-    index = TableFind (table, "D");
-    CHECK_EQUAL (0, index)
-    index = TableFind (table, "C");
-    CHECK_EQUAL (1, index)
-        
-    index = TableAdd (table, "Bin");
-    CHECK_EQUAL (2, index)
-    index = TableFind (table, "D");
-    CHECK_EQUAL (0, index)
-    index = TableFind (table, "C");
-    CHECK_EQUAL (1, index)
-    index = TableFind (table, "Bin");
-    CHECK_EQUAL (2, index)
-        
-    index = TableAdd (table, "A");
-    CHECK_EQUAL (3, index)
-    index = TableFind (table, "D");
-    CHECK_EQUAL (0, index)
-    index = TableFind (table, "C");
-    CHECK_EQUAL (1, index)
-    index = TableFind (table, "Bin");
-    CHECK_EQUAL (2, index)
-    index = TableFind (table, "A");
-    CHECK_EQUAL (3, index)
-        
-    index = TableAdd (table, "abc");
-    CHECK_EQUAL (4, index)
-    index = TableFind (table, "abc");
-    CHECK_EQUAL (4, index)
-
-    index = TableAdd (table, "bac");
-    CHECK_EQUAL (5, index)
-    index = TableFind (table, "abc");
-    CHECK_EQUAL (4, index)
-    index = TableFind (table, "bac");
-    CHECK_EQUAL (5, index)
-        
-    index = TableAdd (table, "cba");
-    CHECK_EQUAL (6, index)
-    index = TableFind (table, "abc");
-    CHECK_EQUAL (4, index)
-    index = TableFind (table, "bac");
-    CHECK_EQUAL (5, index)
-    index = TableFind (table, "cba");
-    CHECK_EQUAL (6, index)
-        
-    index = TableAdd (table, "cab");
-    CHECK_EQUAL (7, index)
-    index = TableFind (table, "abc");
-    CHECK_EQUAL (4, index)
-    index = TableFind (table, "bac");
-    CHECK_EQUAL (5, index)
-    index = TableFind (table, "cba");
-    CHECK_EQUAL (6, index)
-    index = TableFind (table, "cab");
-    CHECK_EQUAL (7, index)
-
-    index = TableAdd (table, "test");
-    CHECK_EQUAL (kInvalidIndex, index)
-
-    TablePrint (table);
-    //system ("PAUSE");
-}
-#endif  //< USING_TABLE
 
 TEST (SCRIPT_TESTS, ReadWriteTests) {
     enum {
@@ -745,42 +748,6 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (uv8_expected[9], uv8_found[9])
 }
 
-TEST (SCRIPT_TESTS, TextTests) {
-#if USE_MORE_ROM
-    std::cout << "  - Running HexTest...\n";
-    for (int i = 0; i < 16; ++i) {
-        int value = ToByte (NibbleToLowerCaseHex (i));
-        CHECK_EQUAL (i, value)
-            value = ToByte (NibbleToUpperCaseHex (i));
-        CHECK_EQUAL (i, value)
-    }
-
-    for (int i = 0; i < 256; ++i) {
-        int value = ToByte (ToLowerCaseHex (i));
-        CHECK_EQUAL (i, value)
-            value = ToByte (ToUpperCaseHex (i));
-        CHECK_EQUAL (i, value)
-    }
-
-    std::cout << "\nTesting string utils...\n";
-
-    const char* strings[] = {
-        "Testing",
-        "Texting",
-        "Testing@",
-        "Texting@",
-    };
-
-    CHECK (!StringEquals (strings[0], strings[1]))
-    CHECK (!StringEquals (strings[0], strings[3]))
-    CHECK ( StringEquals (strings[0], strings[0]))
-    CHECK (!StringEquals (strings[2], strings[3], '@'))
-    CHECK ( StringEquals (strings[2], strings[2], '@'))
-
-    // @todo Add Token module and TokenEquals here.
-#endif  //< USE_MORE_ROM
-}
-
 TEST (SCRIPT_TESTS, OperationTests) {
     enum {
         kBufferSize = 2048,
@@ -826,3 +793,40 @@ TEST (SCRIPT_TESTS, OperationTests) {
     std::cout << "\n| Done with Operation tests.\n";
     system ("PAUSE");
 }
+
+TEST (SCRIPT_TESTS, TextTests) {
+#if USE_MORE_ROM
+    std::cout << "  - Running HexTest...\n";
+    for (int i = 0; i < 16; ++i) {
+        int value = ToByte (NibbleToLowerCaseHex (i));
+        CHECK_EQUAL (i, value)
+            value = ToByte (NibbleToUpperCaseHex (i));
+        CHECK_EQUAL (i, value)
+    }
+
+    for (int i = 0; i < 256; ++i) {
+        int value = ToByte (ToLowerCaseHex (i));
+        CHECK_EQUAL (i, value)
+            value = ToByte (ToUpperCaseHex (i));
+        CHECK_EQUAL (i, value)
+    }
+
+    std::cout << "\nTesting string utils...\n";
+
+    const char* strings[] = {
+        "Testing",
+        "Texting",
+        "Testing@",
+        "Texting@",
+    };
+
+    CHECK (!StringEquals (strings[0], strings[1]))
+    CHECK (!StringEquals (strings[0], strings[3]))
+    CHECK (StringEquals (strings[0], strings[0]))
+    CHECK (!StringEquals (strings[2], strings[3], '@'))
+    CHECK (StringEquals (strings[2], strings[2], '@'))
+
+        // @todo Add Token module and TokenEquals here.
+#endif  //< USE_MORE_ROM
+}
+

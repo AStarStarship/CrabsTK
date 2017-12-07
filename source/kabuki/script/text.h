@@ -1,6 +1,6 @@
 /** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/script/include/portal.h
+    @file    ~/source/kabuki/script/portal.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -157,7 +157,7 @@ template<typename T>
 KABUKI void PrintDebugSignedHex (const char* message,
                                  T value) {
 #if DEBUG
-    printf ("\n> %s:'%i':0x%x\n", message, value, value);
+    printf ("\n| %s:'%i':0x%x\n", message, value, value);
 #endif
 }
 
@@ -521,9 +521,9 @@ KABUKI const char* ParseIntString (const char* input, int* value);
             number ends in the char upon success. */
 KABUKI char* ParseInt (char* input, int* value);
 
-enum {
-    kMaxDigitsFloat = DBL_MAX_10_EXP + 2
-};
+//enum {
+//    kMaxDigitsFloat = DBL_MAX_10_EXP + 2
+//};
 
 /** Parses the char for a float.
     @return Returns null there was not a number and a pointer to after the

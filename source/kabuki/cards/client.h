@@ -24,11 +24,8 @@ namespace kabuki { namespace cards {
 
 /** A playing card game client that can play many types of games in the console.
     The server does most of the game logic and feeds the client data on a 
-    need to know basis.
-    
-    
-    */
-class Client : public _::Operation {
+    need to know basis. */
+class Client : public id::ValidatorDefault, public _::Operation {
     public:
 
     typedef enum States {
@@ -61,6 +58,9 @@ class Client : public _::Operation {
     /** Prints out the RemotePlayer(s). */
     void Client::PrintPlayers ();
 
+    /** Prints the round stats string. */
+    void PrintRoundStatsString ();
+
     /** Prints this game out to the console. */
     virtual void Print ();
 
@@ -72,8 +72,8 @@ class Client : public _::Operation {
     char     game_name_[kMaxGameNameLength]; //< Current game name.
     uint     state_,        //< State of the app or current game index.
              round_number_; //< Current round number.
-    id::User user_;         //< Global list of User(s).
-    Deck     pack_;  //< Pack of Card(s).
+    id::User user_;         //< User.
+    Deck     pack_;         //< Pack of Card(s).
     data::Array<RemotePlayer*> players_; //< Array of RemotePlayer(s).
 
 };      //< class Client

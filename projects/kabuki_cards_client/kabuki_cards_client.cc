@@ -1,5 +1,5 @@
 /** kabuki::cards
-    @file    ~/source/kabuki/id/user_hist.h
+    @file    ~/projects/kabuki_cards_client.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -26,29 +26,32 @@ using namespace kabuki::data;
 using namespace kabuki::cards;
 using boost::asio::ip::tcp;
 
-typedef std::deque<ChatMessage> chat_message_queue;
-
-class CardsClient: public Room {
+class CardsClient: public Client {
     public:
+
+    typedef enum States {
+        kStateDisconnected       = 0,
+        kStateAwaitingConnection = 1,
+    } State;
 
     enum {
         kMaxUsernameLength = 64,
-        kMaxPasswordLength = 32
+        kMaxPasswordLength = 32,
     };
 
     CardsClient (boost::asio::io_service& io_service,
                  tcp::resolver::iterator endpoint_iterator) :
-        Room         ("Kabuki Cards"),
+        Client      (),
         io_service_ (io_service),
         socket_     (io_service) {
         Connect     (endpoint_iterator);
     }
 
-    void Write (const ChatMessage& msg) {
+    void Write (const std::string& message) {
         io_service_.post (
-            [this, msg] () {
+            [this, message] () {
             bool write_in_progress = !write_msgs_.empty ();
-            write_msgs_.push_back (msg);
+            write_msgs_.push_back (message);
             if (!write_in_progress) {
                 WriteToSocket ();
             }
@@ -74,7 +77,7 @@ class CardsClient: public Room {
     void ReadHeader () {
         boost::asio::async_read (socket_,
                                  boost::asio::buffer (read_msg_.Data (),
-                                 ChatMessage::kHeaderLength),
+                                 std::string::kHeaderLength),
                                  [this] (boost::system::error_code ec,
                                          std::size_t /*length*/) {
             if (!ec && read_msg_.DecodeHeader ()) {
@@ -118,96 +121,51 @@ class CardsClient: public Room {
         });
     }
 
-    /** Script operations. */
-    virtual const Operation* Star (uint index, Expression* expr) {
-        static const Operation This = { "kabuki::cards::client",
-            NumOperations (3), FirstOperation ('A'),
-            "kabuki::script and kabuki::cards Client demo.", 0 };
-
-        void* args[2];
-
-        switch (index) {
-            case '?': return &This;
-            case 'A': {
-                static const Operation OpA = { "Connect",
-                    Params<1, UI8> (), Params <0> (),
-                    "Adds a player to the game.", 0
-                };
-                if (!expr) return &OpA;
-
-                if (state_ != kStateAwaitingConnection) {
-
-                }
-
-                uid_t player_uid;
-                if (ExprArgs (expr, Params<1, UI8> (), Args (args, &player_uid))) {
-                    return expr->result;
-                }
-                User* user;
-                players_.Push (new BlackjackPlayer ());
-
-                return nullptr;
-            }
-            case 'B': {
-                static const Operation OpA = { "Ping",
-                    Params<0> (), Params<0> (),
-                    "Pings the client to see if it's still connected.", 0 };
-                if (!expr) return &OpA;
-
-                return ExprResult (expr, Params<1, ADR> (), Args (args, "A"));
-            }
-            case 'B': {
-                static const Operation OpA = { "Print",
-                    Params<1, STX> (), Params<0> (),
-                    "Attempts to login in the user with #username and "
-                    "#password.", 0 };
-                if (!expr) return &OpA;
-
-                return ExprResult (expr, Params<1, ADR> (), Args (args, "A"));
-            }
-            case 'C': {
-            }
-        }
-        return nullptr;
-    }
-
     private:
-
-    char username_[kMaxUsernameLength],
-        password_[kMaxPasswordLength];
 
     boost::asio::io_service& io_service_;
     tcp::socket socket_;
-    ChatMessage read_msg_;
     chat_message_queue write_msgs_;
 };
 
 int main (int argc, char* argv[]) {
+
+    enum {
+        kKeyboardBufferSize = 80,
+    };
+    
+    char keyboard_buffer[kKeyboardBufferSize];
+
+    if (argc != 3) {
+        std::cerr << "Usage: cards <host> <port>\n";
+        return 1;
+    }
+
+    ::_::KeyboardString ("\n| Welcome to Kabuki Cards Console."
+                    "\n|"
+                    "\n| Enter your handle:", keyboard_buffer,
+                    kKeyboardBufferSize);
     try {
-        if (argc != 3) {
-            std::cerr << "Usage: cards <host> <port>\n";
-            return 1;
-        }
 
         boost::asio::io_service io_service;
 
         tcp::resolver resolver (io_service);
         auto endpoint_iterator = resolver.resolve ({ argv[1], argv[2] });
-        CardsClient c (io_service, endpoint_iterator);
+        CardsClient cards_client (io_service, endpoint_iterator);
 
-        std::thread t ([&io_service] () { io_service.run (); });
+        std::thread client_thread ([&io_service] () { io_service.run (); });
 
-        char line[ChatMessage::kMaxBodyLength + 1];
-        while (std::cin.getline (line, ChatMessage::kMaxBodyLength + 1)) {
-            ChatMessage msg;
-            msg.BodyLength (std::strlen (line));
-            std::memcpy (msg.Body (), line, msg.BodyLength ());
-            msg.EncodeHeader ();
-            c.Write (msg);
+        char line[std::string::kMaxBodyLength + 1];
+        while (std::cin.getline (line, std::string::kMaxBodyLength + 1)) {
+            std::string message;
+            message.BodyLength (std::strlen (line));
+            std::memcpy (message.Body (), line, message.BodyLength ());
+            message.EncodeHeader ();
+            cards_client.Write (message);
         }
 
-        c.Close ();
-        t.join ();
+        cards_client.Close ();
+        client_thread.join ();
     } catch (std::exception& e) {
         std::cerr << "Exception: " << e.what () << "\n";
     }

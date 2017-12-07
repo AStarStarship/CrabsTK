@@ -113,7 +113,7 @@ struct Expression {
     byte           * buffer;        //< Pointer to the word-aligned Expression.
     const char     * return_address;//< The return address.
     const uint_t   * header,        //< Pointer to the header being verified.
-                   * header_start;
+                   * header_start;  //< Start of the header being verified.
     Operand        * operand,       //< Current script Operand.
                    * root;          //< The root-level scope Operand.
 };
@@ -125,7 +125,7 @@ struct Expression {
 inline const Operation* Result (Expression* expr,
                                 Bin::Error error) {
 #if SCRIPT_DEBUG
-    cout << "\n> Expression " << BinErrorString (error)
+    std::cout << "\n| Expression " << BinErrorString (error)
               << " Error!";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
@@ -142,7 +142,7 @@ inline const Operation* Result (Expression* expr,
                                 Bin::Error error,
                                 const uint_t* header) {
 #if SCRIPT_DEBUG
-    cout << "\n> Expression " << BinErrorString (error)
+    std::cout << "\n| Expression " << BinErrorString (error)
               << " Error!";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
@@ -160,7 +160,7 @@ inline const Operation* Result (Expression* expr,
                                 const uint_t* header,
                                 byte offset) {
 #if SCRIPT_DEBUG
-    cout << "\n> Expression " << BinErrorString (error)
+    std::cout << "\n| Expression " << BinErrorString (error)
               << " Error!";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
@@ -179,7 +179,7 @@ inline const Operation* Result (Expression* expr,
                                 byte offset,
                                 byte* address) {
 #if SCRIPT_DEBUG
-    cout << "\n> Expression " << BinErrorString (error)
+    std::cout << "\n| Expression " << BinErrorString (error)
               << " Error!";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
@@ -212,7 +212,9 @@ KABUKI uintptr_t* ExpressionBoutAddress (Expression* expr);
 KABUKI Bout* ExpressionBout (Expression* expr);
 
 /** Creates a Stack with equal sized rx and tx slots.
-    @param root The root-scope device. */
+    @param root The root-scope device.
+    @param unpacked_buffer The word-aligned expression buffer.
+    @param unpacked_size   Size of the unpacked buffer. */
 KABUKI Expression* ExpressionInit (uintptr_t* buffer, uint_t buffer_size,
                                    uint_t stack_count, Operand* root,
                                    uintptr_t* unpacked_buffer, 

@@ -1,6 +1,4 @@
 /** kabuki::script
-#include <script_wall.h>
-#include <script_utils.h>
     @version 0.x
     @file    ~/source/kabuki/script/impl/script_wall.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>

@@ -123,12 +123,12 @@ int BoutStreamByte (Bout* bout) {
 void BoutPrint (Bout* bout) {
     PrintLine ('_');
     if (bout == nullptr) {
-        printf ("\n> Bout: NIL");
+        printf ("\n| Bout: NIL");
         PrintLine ('_');
         return;
     }
     uint_t size = bout->size;
-    printf ("\n> Bout 0x%p: size: %u, start: %u, stop: %u, read: %u", bout,
+    printf ("\n| Bout 0x%p: size: %u, start: %u, stop: %u, read: %u", bout,
             size, bout->start, bout->stop, bout->read);
     PrintMemory (BoutBuffer (bout), size + 64); // @todo remove the + 64.);
 }
@@ -137,7 +137,7 @@ void BoutPrint (Bout* bout) {
 const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     
 #if SCRIPT_DEBUG
-    std::cout << "\n>\n>Writing ";
+    std::cout << "\n|\n|Writing ";
     ParamsPrint (params); 
     std::cout << " to B-Output:";
     printf ("%p", bout);
@@ -204,7 +204,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     for (index = 1; index <= num_params; ++index) {
         type = params[index];
 #if SCRIPT_DEBUG
-        printf ("\n> param:%2i TType:%s start:%u, stop:%u space:%u value:", 
+        printf ("\n| param:%2i TType:%s start:%u, stop:%u space:%u value:", 
                 arg_index + 1, TypeString (type), Diff (begin, start),
                 Diff (begin, stop), space);
 #endif
@@ -716,7 +716,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     if (++stop >= end) stop -= size;
     bout->stop = Diff (begin, stop);
 #if SCRIPT_DEBUG
-    printf ("\n> Done writing to B-Output with the hash 0x%x.", hash);
+    printf ("\n| Done writing to B-Output with the hash 0x%x.", hash);
 #endif  //< SCRIPT_DEBUG
     return 0;
 }
@@ -729,7 +729,7 @@ void BoutRingBell (Bout* bout, const char* address) {
         address = "";
     }
 #if SCRIPT_DEBUG
-    std::cout << "\n>\n> Ringing BEL to address:" << address;
+    std::cout << "\n|\n| Ringing BEL to address:" << address;
 #endif  //< SCRIPT_DEBUG
 
     // Temp variables packed into groups of 8 bytes for memory alignment.
@@ -745,7 +745,7 @@ void BoutRingBell (Bout* bout, const char* address) {
     space = SlotSpace (start, stop, size);
     if (space == 0) {
 #if SCRIPT_DEBUG
-        std::cout << "\n> Buffer overflow!";
+        std::cout << "\n| Buffer overflow!";
 #endif  //< SCRIPT_DEBUG
         return;
     }
@@ -756,7 +756,7 @@ void BoutRingBell (Bout* bout, const char* address) {
     while (c) {
         if (space == 0) {
 #if SCRIPT_DEBUG
-            std::cout << "\n> Buffer overflow!";
+            std::cout << "\n| Buffer overflow!";
 #endif  //< SCRIPT_DEBUG
             return;
         }
@@ -776,7 +776,7 @@ void BoutAckBack (Bout* bout, const char* address) {
         address = "";
     }
 #if SCRIPT_DEBUG
-    std::cout << "\n>\n> Ringing BEL to address:" << address;
+    std::cout << "\n|\n| Ringing BEL to address:" << address;
 #endif  //< SCRIPT_DEBUG
 
     // Temp variables packed into groups of 8 bytes for memory alignment.
@@ -792,7 +792,7 @@ void BoutAckBack (Bout* bout, const char* address) {
     space = SlotSpace (start, stop, size);
     if (space == 0) {
 #if SCRIPT_DEBUG
-        std::cout << "\n> Buffer overflow!";
+        std::cout << "\n| Buffer overflow!";
 #endif  //< SCRIPT_DEBUG
         return;
     }
@@ -803,7 +803,7 @@ void BoutAckBack (Bout* bout, const char* address) {
     while (c) {
         if (space == 0) {
 #if SCRIPT_DEBUG
-            std::cout << "\n> Buffer overflow!";
+            std::cout << "\n| Buffer overflow!";
 #endif  //< SCRIPT_DEBUG
             return;
         }

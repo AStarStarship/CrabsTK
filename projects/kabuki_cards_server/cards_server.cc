@@ -26,14 +26,14 @@ using namespace kabuki::cards;
 using namespace kabuki::id;
 
 
-typedef std::deque<ChatMessage> chat_message_queue;
+typedef std::deque<std::string> ExpressionQueue;
 
 class ChatParticipant {
     public:
     
     virtual ~ChatParticipant () {}
 
-    virtual void Deliver (const ChatMessage& msg) = 0;
+    virtual void Deliver (const std::string& message) = 0;
 };
 
 typedef std::shared_ptr<ChatParticipant> chat_participant_ptr;
@@ -44,27 +44,27 @@ class ChatRoom {
 
     void Join (chat_participant_ptr participant) {
         participants_.insert (participant);
-        for (auto msg : recent_msgs_)
-            participant->Deliver (msg);
+        for (auto message : recent_msgs_)
+            participant->Deliver (message);
     }
 
     void Leave (chat_participant_ptr participant) {
         participants_.erase (participant);
     }
 
-    void Deliver (const ChatMessage& msg) {
-        recent_msgs_.push_back (msg);
+    void Deliver (const std::string& message) {
+        recent_msgs_.push_back (message);
         while (recent_msgs_.size () > kMaxRecentMessages)
             recent_msgs_.pop_front ();
 
         for (auto participant : participants_)
-            participant->Deliver (msg);
+            participant->Deliver (message);
     }
 
     private:
 
     std::set<chat_participant_ptr> participants_;
-    chat_message_queue recent_msgs_;
+    ExpressionQueue             recent_msgs_;
 };
 
 class ChatSession : public ChatParticipant, 
@@ -81,9 +81,9 @@ class ChatSession : public ChatParticipant,
         ReadHeader ();
     }
 
-    void Deliver (const ChatMessage& msg) {
-        bool write_in_progress = !write_msgs_.empty ();
-        write_msgs_.push_back (msg);
+    void Deliver (const std::string& message) {
+        bool write_in_progress = !expression_queue.empty ();
+        expression_queue.push_back (message);
         if (!write_in_progress) {
             Write ();
         }
@@ -94,7 +94,7 @@ class ChatSession : public ChatParticipant,
     void ReadHeader () {
         auto self (shared_from_this ());
         boost::asio::async_read (socket_, boost::asio::buffer (read_msg_.Data (),
-                                 ChatMessage::kHeaderLength),
+                                 std::string::kHeaderLength),
                                  [this, self] (boost::system::error_code ec,
                                                std::size_t /*length*/) {
             if (!ec && read_msg_.DecodeHeader ()) {
@@ -124,13 +124,13 @@ class ChatSession : public ChatParticipant,
     void Write () {
         auto self (shared_from_this ());
         boost::asio::async_write (socket_,
-                                  boost::asio::buffer (write_msgs_.front ().Data (),
-                                  write_msgs_.front ().Length ()),
+                                  boost::asio::buffer (expression_queue.front ().Data (),
+                                  expression_queue.front ().Length ()),
                                   [this, self] (boost::system::error_code ec,
                                                 std::size_t /*length*/) {
             if (!ec) {
-                write_msgs_.pop_front ();
-                if (!write_msgs_.empty ()) {
+                expression_queue.pop_front ();
+                if (!expression_queue.empty ()) {
                     Write ();
                 }
             } else {
@@ -141,16 +141,16 @@ class ChatSession : public ChatParticipant,
 
     tcp::socket socket_;
     ChatRoom& room_;
-    ChatMessage read_msg_;
-    chat_message_queue write_msgs_;
+    std::string read_msg_;
+    ExpressionQueue expression_queue;
 };
 
-class Server {
+class KabukiCardsServer : public ::kabuki::cards::Server {
     public:
     enum {
         kMaxNumUsers = 1024
     };
-    Server (boost::asio::io_service& io_service,
+    KabukiCardsServer (boost::asio::io_service& io_service,
                  const tcp::endpoint& endpoint) :
         acceptor_ (io_service, endpoint),
         socket_ (io_service),
@@ -179,13 +179,13 @@ class Server {
 int main (int argc, char* argv[]) {
     try {
         if (argc < 2) {
-            std::cerr << "\n> Welcome to Kabuki Cards Usage: cards_server <port> [<port> ...]";
+            std::cerr << "\n| Welcome to Kabuki Cards Usage: cards_server <port> [<port> ...]";
             return 1;
         }
 
         boost::asio::io_service io_service;
 
-        std::list<Server> servers;
+        std::list<KabukiCardsServer> servers;
         for (int i = 1; i < argc; ++i) {
             tcp::endpoint endpoint (tcp::v4 (), std::atoi (argv[i]));
             servers.emplace_back (io_service, endpoint);
@@ -193,7 +193,7 @@ int main (int argc, char* argv[]) {
 
         io_service.run ();
     } catch (std::exception& e) {
-        std::cerr << "\n> Exception: " << e.what ();
+        std::cerr << "\n| Exception: " << e.what ();
     }
 
     return 0;

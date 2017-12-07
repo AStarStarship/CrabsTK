@@ -49,7 +49,7 @@ void ParamsPrint (const uint_t* params) {
         cout << TypeString (value) << ", ";
         if ((type >= STR) && (value <= ST4)) {
             if (value) {
-                cout << "\n> Error: arrays may only be created from POD types.";
+                cout << "\n| Error: arrays may only be created from POD types.";
                 return;
             }
             // Print out the max length of the string.

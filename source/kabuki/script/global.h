@@ -1,6 +1,6 @@
 /** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/script/include/module_config.h
+    @file    ~/source/kabuki/script/module_config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -24,8 +24,9 @@
 #ifndef SCRIPT_GLOBAL_H
 #define SCRIPT_GLOBAL_H
 
-#include "memory.h"
 #include "text.h"
+#include "memory.h"
+#include "random.h"
 #include "table.h"
 #include "log.h"
 #include "tbook.h"
@@ -37,7 +38,6 @@
 #include "room.h"
 #include "expression.h"
 #include "window.h"
-#include "random.h"
 #include "args.h"
 
 #endif  //< SCRIPT_GLOBAL_H

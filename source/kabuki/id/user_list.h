@@ -18,7 +18,6 @@
 
 #include "validator.h"
 #include "user.h"
-#include "../data/array.h"
 
 namespace kabuki { namespace id {
 
@@ -26,7 +25,7 @@ namespace kabuki { namespace id {
     This class uses a single Validator interface for validating both user 
     handles and passwords using the type parameter. This makes it very 
     easy to create UserList subclasses for customizing format rules. */
-class KABUKI UserList : public Validator {   
+class KABUKI UserList : public ValidatorDefault {   
     public:
 
     enum {

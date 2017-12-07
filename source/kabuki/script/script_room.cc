@@ -145,7 +145,7 @@ int Room::Main (const char** args, int args_count) {
             } while (!result);
             ShutDown ();
         } catch (RoomCrashException e) {
-            std::cout << "\n> Room crashed!\n";
+            std::cout << "\n| Room crashed!\n";
             return 3;
         }
     }
@@ -204,7 +204,7 @@ uintptr_t Room::GetSizeBytes () {
 #if USE_MORE_ROM
 void Room::Print () {
     PrintLine ();
-    std::cout << "\n> Room: ";
+    std::cout << "\n| Room: ";
 }
 #endif  //< USE_MORE_ROM
 

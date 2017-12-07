@@ -33,8 +33,8 @@ Handle::Handle (Validator* validator, const char* key, int min_length,
         max_length = temp;
     }
     key = key;
-    if (min_length < kMinLength) min_length = kMinLength;
-    else if (min_length > kMaxLength) min_length = kMinLength;
+    if (min_length < kDefaultMinLength) min_length = kDefaultMinLength;
+    else if (min_length > kDefaultMaxLength) min_length = kDefaultMinLength;
     key_ = StringClone (key);
 }
 
@@ -42,7 +42,7 @@ const char* Handle::GetKey () { return key_; }
 
 bool Handle::SetKey (const char* key) {
     size_t length = StringLength (key);
-    if (length < kMinLength || length > kMaxLength)
+    if (length < kDefaultMinLength || length > kDefaultMaxLength)
         return false;
 
     if (!IsValid (key))
@@ -54,7 +54,7 @@ bool Handle::SetKey (const char* key) {
 
 bool Handle::IsValid (const char* key) {
     size_t length = StringLength (key);
-    if (length < kMinLength || length > kMaxLength)
+    if (length < kDefaultMinLength || length > kDefaultMaxLength)
         return false;
     return true;
 }
@@ -68,7 +68,7 @@ bool Handle::Equals (const char* handle) {
 }
 
 void Handle::Print () {
-    cout << "\n> Handle: " << key_;
+    cout << "\n| Handle: " << key_;
 }
 
 }       //< id

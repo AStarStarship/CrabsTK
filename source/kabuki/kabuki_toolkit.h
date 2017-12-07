@@ -14,9 +14,10 @@
              permissions and limitations under the License.
 */
 
-#ifndef KABUKI_THIS_H
-#define KABUKI_THIS_H
+#ifndef HEADER_FOR_KABUKI_TOOLKIT
+#define HEADER_FOR_KABUKI_TOOLKIT
 
 #include "script/global.h"
+//#include "id/global.h"
 
-#endif  //< KABUKI_THIS_H
+#endif  //< HEADER_FOR_KABUKI_TOOLKIT

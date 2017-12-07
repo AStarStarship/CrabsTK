@@ -121,7 +121,7 @@ void Player::ResetWins () {
 }
 
 void Player::Print () {
-    cout << "\n> Player    : " << name_ << " points: " << num_points_ 
+    cout << "\n| Player    : " << name_ << " points: " << num_points_ 
          << " wins  : " << num_wins_;
 
     PrintLine ('-');

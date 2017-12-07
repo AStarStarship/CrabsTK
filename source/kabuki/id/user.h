@@ -28,8 +28,9 @@ class KABUKI User {
     public:
 
     enum {
-        kValidation           = 2, //< Validator index.
-        kMaxDislpayNameLength = 63, //< Max display_name_ length.
+        kValidation                  = 0,  //< Validator index.
+        kDefaultMinDislpayNameLength = 2,  //< Default max display name length.
+        kDefaultMaxDislpayNameLength = 63, //< Default max display name length.
     };
 
     /** Default User diplay_name_. */
@@ -64,7 +65,8 @@ class KABUKI User {
     void SetSessionKey (uid_t jey);
 
     /** Checks to see if the given char and password are in the correct format. */
-    bool IsValid (const char* dislpay_name, const char* handle, const char* password);
+    virtual bool IsValid (const char* dislpay_name, const char* handle,
+                          const char* password);
 
     /** Returns true if this user is the same as the given one.  */
     bool Equals (const User& user);

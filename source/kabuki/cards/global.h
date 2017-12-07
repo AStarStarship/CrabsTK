@@ -18,5 +18,6 @@
 
 #include "blackjack_game.h"
 #include "chat_message.h"
+#include "client.h"
 
 #endif  //< HEADER_FOR_KABUKI_CARDS_GLOBAL

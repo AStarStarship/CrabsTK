@@ -33,9 +33,9 @@ class KABUKI Password {
     public:
     
     enum {
-        kValidation     = 1,      //< Validation type.
-        kMinLength      = 4,      //< The minimum length of a password.
-        kMaxLength      = 255,    //< The maximum length of a password.
+        kValidation       = 2,   //< Validation type.
+        kDefaultMinLength = 4,   //< The minimum length of a password.
+        kDefaultMaxLength = 255, //< The maximum length of a password.
     };
 
     static const char kDefault[]; //< Default password.

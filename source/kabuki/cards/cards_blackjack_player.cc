@@ -148,8 +148,8 @@ bool BlackjackPlayer::IsBust () {
 }
 
 void BlackjackPlayer::PrintHand () {
-    cout << "\n> BlackjackPlayer:"
-         << "\n> High score: " << GetScore (Deck::kAcesHigh) << " Low Score: "
+    cout << "\n| BlackjackPlayer:"
+         << "\n| High score: " << GetScore (Deck::kAcesHigh) << " Low Score: "
          << GetScore (Deck::kAcesLow);
     hand_.Print ();
 }
@@ -229,9 +229,9 @@ void BlackjackPlayer::BeginRound () {
 }
 
 void BlackjackPlayer::PlayRound () {
-    cout << "\n> " << GetDislpayName () << "'s turn.";
+    cout << "\n| " << GetDislpayName () << "'s turn.";
     if (stock_.IsEmpty ()) {  // Always check for error conditions first!
-        cout << "\n> Error! The Deck was empty.";
+        cout << "\n| Error! The Deck was empty.";
         state_ = kStateHolding;
         return;
     }
@@ -270,7 +270,7 @@ void BlackjackPlayer::PrintStats () {
 void BlackjackPlayer::Print () {
     PrintLine ("|", '_');
     cout << "Player: " << name_ <<
-        "\n> Num Points: " << num_points_ << " Num Wins: " << num_wins_;
+        "\n| Num Points: " << num_points_ << " Num Wins: " << num_wins_;
 
     hand_.GetVisibleCards ().Print ();
     PrintLine ("|", '_');

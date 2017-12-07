@@ -195,7 +195,7 @@ void Dealer::Redeal () {
 }
 
 void Dealer::PrintDealer () {
-    cout << "\n> Dealer:\n> Pot Total: " << pot_total_;
+    cout << "\n| Dealer:\n| Pot Total: " << pot_total_;
 }
 
 void Dealer::SetValues (int ante, int min_bet, int min_cards_per_hand,

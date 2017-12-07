@@ -13,16 +13,12 @@
              permissions and limitations under the License.
 */
 
-#include "../../cpputest/include/CppUTest/CommandLineTestRunner.h"
-#include "../source/kabuki/kabuki_toolkit.h"
-
-using namespace _;
-using namespace std;
+#include "global.h"
 
 int main (int args_count, char** args) {
     PrintLine ();
-    cout << "\n> Running Kabuki Toolkit unit tests...";
+    cout << "\n| Running Kabuki Toolkit unit tests...";
     PrintLine ("+", '-');
-    cout << "\n>";
+    cout << "\n|";
     return CommandLineTestRunner::RunAllTests (args_count, args);
 }

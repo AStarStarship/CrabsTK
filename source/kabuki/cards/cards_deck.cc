@@ -241,12 +241,12 @@ void Deck::SetSuitDenominations (int column_0, int column_1, int column_2,
 }
 
 void Deck::Print () {
-    cout << "\n> Deck: num_cards_: " << num_cards_ << ", " 
+    cout << "\n| Deck: num_cards_: " << num_cards_ << ", " 
          << (aces_high_ ? "Aces high, " : "Aces low, ") 
          << (aces_high_ ? "Has Jokers" : "No Jokers");
 
     for (int i = 0; i < num_cards_; ++i) {
-        cout << "\n> " << i << ": ";
+        cout << "\n| " << i << ": ";
         pack_[i].Print ();
     }
 }

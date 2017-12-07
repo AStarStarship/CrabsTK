@@ -1,6 +1,6 @@
 /** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/script/include/portal.h
+    @file    ~/source/kabuki/script/script_text.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -106,7 +106,7 @@ const char* StringEquals (const char* input, const char* query,
         q = *query;
     while (i != delimiter) {
         if (i != q) { // Not a hit.
-            cout << "\n> not a hit";
+            cout << "\n| not a hit";
             return nullptr;
         }
         cout << i;
@@ -114,7 +114,7 @@ const char* StringEquals (const char* input, const char* query,
         q = *(++query);
     }
     if (q != delimiter) {
-        cout << "\n> reached nil-term char but no q:\'" << q
+        cout << "\n| reached nil-term char but no q:\'" << q
             << "\' is not the delimiter.";
         return nullptr;
     }
@@ -140,7 +140,7 @@ int StringLength (const char* string, char delimiter) {
 }
 
 int StringWrite (char* buffer_start, char* buffer_stop, int integer) {
-
+    return 0;
 }
 
 hash16_t Hash16 (const char* string, hash16_t hash) {
@@ -222,7 +222,7 @@ void PrintStringLine (const char* string) {
 
 void PrintDebugHex (const char* message, char value) {
 #if DEBUG
-    printf ("\n> %s '%c':0x%x", message, value, value);
+    printf ("\n| %s '%c':0x%x", message, value, value);
 #endif
 }
 
@@ -231,17 +231,17 @@ char* TextWrite (char* buffer, char* buffer_end, int value) {
     // @todo Convert to pointer arithmetic.
 
     if (buffer == nullptr) {
-        std::cout << "\n> null buffer!";
+        std::cout << "\n| null buffer!";
         return 0;
     }
 
     if (buffer_end == nullptr) {
-        std::cout << "\n> null buffer_end!";
+        std::cout << "\n| null buffer_end!";
         return 0;
     }
     if (buffer_end <= buffer) {
         // We have to have room for at least a zero.
-        std::cout << "\n> buffer overflow!!";
+        std::cout << "\n| buffer overflow!!";
         return 0;
     }
 
@@ -286,17 +286,17 @@ char* TextWrite (char* buffer, char* buffer_end, uint value) {
     // Stolen from https://goo.gl/waaF1G
 
     if (buffer == nullptr) {
-        std::cout << "\n> buffer was null!";
+        std::cout << "\n| buffer was null!";
         return 0;
     }
 
     if (buffer_end == nullptr) {
-        std::cout << "\n> buffer_end was null!";
+        std::cout << "\n| buffer_end was null!";
         return 0;
     }
     if (buffer_end <= buffer) {
         // We have to have room for at least a zero.
-        std::cout << "\n> buffer overflow!!";
+        std::cout << "\n| buffer overflow!!";
         return 0;
     }
 
@@ -346,7 +346,7 @@ const char* TextRead (const char* buffer, int& result) {
         kMaxLetters = sizeof (int) == 32 ? 10 : 6, //< int can be 16 or 32-bit.
     };
     if (buffer == nullptr) {
-        std::cout << "\n> Buffer was null!";
+        std::cout << "\n| Buffer was null!";
         return 0;
     }
     char c = *buffer++;
@@ -394,11 +394,11 @@ const char* NewLineString () {
 }
 
 const char* ErrorHeader () {
-    return "\n> Error: ";
+    return "\n| Error: ";
 }
 
 const char* VerticalBar () {
-    return "\n> ";
+    return "\n| ";
 }
 
 void PrintLine (const char* string) {
@@ -413,7 +413,7 @@ void PrintError (const char* message, const char* end_string) {
 
 void PrintDebugPointer (const char* message, const void* address) {
 #if DEBUG
-    printf ("\n> Error at address 0x%p: %s", address, message);
+    printf ("\n| Error at address 0x%p: %s", address, message);
 #endif
 }
 
@@ -665,7 +665,7 @@ void StringCopy (char* destination, char* buffer_end, const char* source) {
     while (c) {
         *destination = c;
         if (++destination > buffer_end) {
-            //cout << "\n> Buffer overflow!";
+            //cout << "\n| Buffer overflow!";
             return;
         }
         c = *source;
@@ -689,7 +689,7 @@ void StringCopy (char* destination, char* buffer_end, const char* source,
     while (c != delimeter) {
         *destination = c;
         if (++destination > buffer_end) {
-            //cout << "\n> Buffer overflow!";
+            //cout << "\n| Buffer overflow!";
             return;
         }
         c = *source;
@@ -708,7 +708,7 @@ char* StringClone (const char* input, char delimeter) {
 }
 
 void PrintBar (const char* input) {
-    cout << "\n> " << input << '\n';
+    cout << "\n| " << input << '\n';
 }
 
 void PrintBreak (const char* header, char c, int num_lines,
@@ -837,21 +837,21 @@ void PrintPage (const char* input, int indentation,
                        char bullet, int index, int tab_size,
                        int num_columns) {
     num_columns -= 4;
-    cout << "\n> ";
+    cout << "\n| ";
     int cursor; //< The column number of the cursor.
     char c = *input++,  //< The current char.
         buffer[15];     //< The bullet buffer.
     if (!c || input == nullptr) { //< It's an empty input.
         for (int i = num_columns; i > 0; --i)
             cout << ' ';
-        cout << "\n>\n";
+        cout << "\n|\n";
         return;
     }
 
     // Make the input for the bullet.
     if (isdigit (bullet)) { // Then we have to print a number bullet.
         TextWrite (buffer, buffer + 15, index);
-        //< + 2 for "\n> " - 2 for the bullet offset.
+        //< + 2 for "\n| " - 2 for the bullet offset.
         //char format[16];
         //format[0] = '%';
         //sprintf_s (&format[1], 16, "%%%us", indentation * tab_size);
@@ -1023,17 +1023,17 @@ char* StringCompare (char* source, const char* query, char delimiter) {
 const char* ParseString (const char* input, char* destination,
                          char* buffer_end, char delimiter) {
     //cout << "> parse_string buffer_size: " << buffer_size
-    //          << " delimiter " << delimiter << "\n> ";
+    //          << " delimiter " << delimiter << "\n| ";
     if (input == nullptr) {
-        cout << "\n> input == nullptr";
+        cout << "\n| input == nullptr";
         return nullptr;
     }
     if (destination == nullptr) {
-        cout << "\n> destination == nullptr";
+        cout << "\n| destination == nullptr";
         return nullptr;
     }
     if (destination > buffer_end) {
-        cout << "\n> destination > buffer_end";
+        cout << "\n| destination > buffer_end";
         return nullptr;
     }
     //cout << delimiter;
@@ -1049,7 +1049,7 @@ const char* ParseString (const char* input, char* destination,
         }
         //cout << c;
         if (input > buffer_end) {
-            cout << "\n> Buffer overflow!";
+            cout << "\n| Buffer overflow!";
             return nullptr;
         }
         *destination++ = c;
@@ -1126,6 +1126,26 @@ const char* FindString (const char* input, const char* query, char delimiter) {
 
 char* Find(char* input, const char* query, char delimiter) {
     return (char*)FindString (input, query, delimiter);
+}
+
+const char* ParseIntString (const char* input, int* value) {
+    return nullptr;
+}
+
+char* ParseInt (char* input, int* value) {
+    return nullptr;
+}
+
+enum {
+    kMaxDigitsFloat = DBL_MAX_10_EXP + 2
+};
+
+const char* ParseFloatString (const char* input, float* value) {
+    return nullptr;
+}
+
+char* ParseFloat (char* input, float* value) {
+    return nullptr;
 }
 
 bool IsToken (const char* input) {
