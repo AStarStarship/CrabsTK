@@ -26,7 +26,7 @@ class ValidatorDefault : public Validator {
     ValidatorDefault ();
 
     int GetMinDislpayNameLength ();
-    int GetMaxDisplayNameLength ();
+    int GetMaxStatusLength ();
     int GetMinHandleLength ();
     int GetMaxHandleLength ();
     int GetMinPasswordLength ();
@@ -37,7 +37,7 @@ class ValidatorDefault : public Validator {
     private:
 
     int min_dislpay_name_length_,
-        max_display_name_length_,
+        max_status_length_,
         min_handle_length_,
         max_handle_length_,
         min_password_length_,

@@ -23,7 +23,7 @@ namespace kabuki { namespace id {
 
 ValidatorDefault::ValidatorDefault () :
     min_dislpay_name_length_ (User::kDefaultMinDislpayNameLength),
-    max_display_name_length_ (User::kDefaultMaxDislpayNameLength),
+    max_status_length_ (User::kDefaultMaxDislpayNameLength),
     min_handle_length_       (Handle::kDefaultMinLength),
     max_handle_length_       (Handle::kDefaultMaxLength),
     min_password_length_     (Password::kDefaultMinLength),
@@ -34,8 +34,8 @@ int ValidatorDefault::GetMinDislpayNameLength () {
     return min_dislpay_name_length_;
 }
 
-int ValidatorDefault::GetMaxDisplayNameLength () {
-    return max_display_name_length_;
+int ValidatorDefault::GetMaxStatusLength () {
+    return max_status_length_;
 }
 
 int ValidatorDefault::GetMinHandleLength () {
@@ -91,10 +91,10 @@ const char* ValidatorDefault::IsValid (const char* input, int type) {
         case User::kValidation:
         {
             if (length < User::kDefaultMinDislpayNameLength) {
-                return "display_name_length too short";
+                return "status_length too short";
             }
             if (length > User::kDefaultMaxDislpayNameLength) {
-                return "display_name_length too long";
+                return "status_length too long";
             }
             for (int i = 0; i < length; ++length) {
                 if (isspace (input[i])) {

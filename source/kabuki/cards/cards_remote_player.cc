@@ -21,7 +21,7 @@ using namespace std;
 namespace kabuki { namespace cards {
 
 RemotePlayer::RemotePlayer (Deck& pack) :
-    display_name_  (new char[User::kDefaultMaxDislpayNameLength + 1]),
+    status_  (new char[User::kDefaultMaxDislpayNameLength + 1]),
     num_wins_      (0),
     num_points_    (0),
     pack_          (pack),
@@ -31,18 +31,18 @@ RemotePlayer::RemotePlayer (Deck& pack) :
 }
 
 RemotePlayer::~RemotePlayer () {
-    delete display_name_;
+    delete status_;
 }
 
 const char* RemotePlayer::GetDislpayName () {
-    return display_name_;
+    return status_;
 }
 
 const char* RemotePlayer::SetDislpayName (const char* name) {
     if (name == nullptr) {
         return "name can't be nil";
     }
-    StringCopy (display_name_, name);
+    StringCopy (status_, name);
     return nullptr;
 }
 
@@ -121,7 +121,7 @@ int RemotePlayer::AddCard (byte pip, byte suit) {
 }
 
 void RemotePlayer::Print () {
-    cout << "\n| " << display_name_ << ": points: " << num_points_ 
+    cout << "\n| " << status_ << ": points: " << num_points_ 
          << " wins  : " << num_wins_;
 
     PrintLine ('-');
@@ -137,13 +137,13 @@ const Operation* RemotePlayer::Star (uint index, _::Expression* expr) {
     switch (index) {
         case '?': return &This;
         case 'A': {
-            static const Operation OpA { "SetDisplayName",
+            static const Operation OpA { "SetStatus",
                 Params<0> (), Params<1, STX, User::kDefaultMinDislpayNameLength> (),
-                "Sets the display_name_.", 0
+                "Sets the status_.", 0
             };
             if (!expr) return &OpA;
             return ExprArgs (expr, Params<1, STX, User::kDefaultMaxDislpayNameLength> (),
-                             Args (args, display_name_));
+                             Args (args, status_));
         }
         case 'B': {
             static const Operation OpB { "SetIsDealer",

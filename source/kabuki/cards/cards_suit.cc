@@ -15,6 +15,8 @@
 
 #include "suit.h"
 
+using namespace std;
+
 namespace kabuki { namespace cards {
 
 // These 4 string arrays allow us to print the names of suits in our text 

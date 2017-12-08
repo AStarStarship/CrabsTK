@@ -21,8 +21,9 @@ using namespace std;
 
 namespace kabuki { namespace id {
 
-UserList::UserList (int max_users): 
-    users_ (max_users) {
+UserList::UserList (Validator* validator, int max_users) : 
+    validator_ (validator),
+    users_     (max_users) {
     // Nothing to do here ({:->)
 }
 
@@ -36,10 +37,10 @@ int UserList::GetSize () { return users_.GetSize (); }
 
 int UserList::GetCount () { return users_.GetCount (); }
 
-int UserList::Add (const char* display_name, const char* handle,
+int UserList::Add (const char* status, const char* handle,
                    const char* password) {
-    if (display_name == nullptr) {
-        display_name = StringClone (User::kDefaultDislpayName);
+    if (status == nullptr) {
+        status = StringClone (User::kDefaultDislpayName);
     }
     if (handle == nullptr) {
         handle = StringClone (Handle::kDefault);
@@ -50,7 +51,7 @@ int UserList::Add (const char* display_name, const char* handle,
     if (password == nullptr) {
         password = StringClone (Password::kDefault);
     }
-    User* user = new User (dynamic_cast<Validator*> (this), display_name,
+    User* user = new User (dynamic_cast<Validator*> (this), status,
                            handle, password);
     return users_.Push (user);
 }
@@ -69,25 +70,21 @@ int UserList::Add (UserList* user_list) {
     return count;
 }
 
-User* UserList::Find (const char* handle) {
+int UserList::Find (const char* handle) {
     if (handle == nullptr) {
-        return nullptr;
+        return -1;
     }
-    size_t length = strlen (handle);
-    if (length == 0)
-        return nullptr;
+    if (*handle == 0) //< It's an empty string.
+        return -1;
 
     // Currently using sequential search because UserList is not sorted.
 
-    User* user;
-
     for (int i = users_.GetSize () - 1; i >= 0; --i) {
-        user = users_.Element (i);
-        if (user->GetHandle ().Equals (handle))
-            return user;
+        if (users_[i]->GetHandle ().Equals (handle))
+            return i;
     }
 
-    return nullptr;//static website guest entities
+    return -1;
 }
 
 User* UserList::UserNumber (int user_number) {
@@ -135,6 +132,24 @@ const char* UserList::IsValid (const char* input, int type) {
             return nullptr;
         }
     }
+}
+
+uid_t UserList::LogIn (int index, const char* password) {
+    User* user = UserNumber (index);
+    if (!user) {
+        return 0;
+    }
+    if (password == nullptr) {
+        return 0;
+    }
+    user = UserNumber (index);
+    if (user == nullptr) {
+        return UidServer<>::kInvalidUid;
+    }
+    if (user->GetPassword ().Equals (password)) {
+        return uids_.GetNextUid ();
+    }
+    return 0; //< Login unsuccessful.
 }
 
 void UserList::Print () {

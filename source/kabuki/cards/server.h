@@ -113,17 +113,18 @@ class Server : public _::Room {
 
     protected:
 
-    const char  * server_name_;    //< Server name.
-    uint32_t      port_number_;    //< Server port number.
-    int           state_,          //< Game state.
-                  num_players_,    //< Num players.
-                  min_players_,    //< Min number of players.
-                  max_players_,    //< Max number of players.
-                  round_number_;   //< Current round number.
-    Deck          pack_;           //< Pack of cards.
-    CardStack     stock_;          //< The stock of cards.
-    Dealer      * dealer_;         //< Pointer to the Dealer.
-    id::UserList* users_;          //< Global list of User(s).
+    id::Validator* validator_;      //< Name, Handle, & Password validator.
+    const char   * server_name_;    //< Server name.
+    uint32_t       port_number_;    //< Server port number.
+    int            state_,          //< Game state.
+                   num_players_,    //< Num players.
+                   min_players_,    //< Min number of players.
+                   max_players_,    //< Max number of players.
+                   round_number_;   //< Current round number.
+    Deck           pack_;           //< Pack of cards.
+    CardStack      stock_;          //< The stock of cards.
+    Dealer       * dealer_;         //< Pointer to the Dealer.
+    id::UserList * users_;          //< Global list of User(s).
     data::Array<Player*> players_; //< Array of players.
 
 };      //< class Server

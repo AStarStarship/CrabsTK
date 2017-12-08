@@ -23,24 +23,24 @@ namespace kabuki { namespace id {
 
 const char User::kDefaultDislpayName[] = "Steve\0";
 
-User::User (Validator* validator, const char* display_name, const char* handle,
-            const char* password) :
-    handle_    (validator, handle),
-    password_  (validator, password),
-    validator_ (validator_) {
-    if (SetDisplayName (display_name))
-        SetDisplayName ("Jo");
+User::User (Validator* validator, const char* handle, const char* password,
+            const char* status) :
+            handle_    (validator, handle),
+            password_  (validator, password),
+            validator_ (validator_) {
+    if (SetStatus (status))
+        SetStatus ("Jo");
 }
 
-const char* User::GetDisplayName () {
-    return display_name_;
+const char* User::GetStatus () {
+    return status_;
 }
 
-const char* User::SetDisplayName (const char* name) {
+const char* User::SetStatus (const char* name) {
     if (name == nullptr) {
         return "name can't be nil.";
     }
-    display_name_ = StringClone (name);
+    status_ = StringClone (name);
     return nullptr;
 }
 
@@ -64,12 +64,7 @@ void User::SetSessionKey (uid_t key) {
     session_key_ = key;
 }
 
-bool User::IsValid (const char* dislpay_name, const char* handle,
-                    const char* password) {
-    if (dislpay_name == nullptr) {
-        // @todo Add rules for dislpay_name.
-        return false;
-    }
+bool User::IsValid (const char* handle, const char* password) {
     if (!handle_.IsValid (handle))
         return false;
     return password_.IsValid (password);

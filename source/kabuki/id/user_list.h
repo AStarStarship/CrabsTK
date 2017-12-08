@@ -16,8 +16,9 @@
 #ifndef HEADER_FOR_KABUKI_ID_USERLIST
 #define HEADER_FOR_KABUKI_ID_USERLIST
 
-#include "validator.h"
+#include "validator_default.h"
 #include "user.h"
+#include "uid_server.h"
 
 namespace kabuki { namespace id {
 
@@ -25,7 +26,7 @@ namespace kabuki { namespace id {
     This class uses a single Validator interface for validating both user 
     handles and passwords using the type parameter. This makes it very 
     easy to create UserList subclasses for customizing format rules. */
-class KABUKI UserList : public ValidatorDefault {   
+class KABUKI UserList {   
     public:
 
     enum {
@@ -39,7 +40,7 @@ class KABUKI UserList : public ValidatorDefault {
     };
 
     /** Creates an empty list. */
-    UserList (int max_users = kDefaultMaxUsers);
+    UserList (Validator* validator, int max_users = kDefaultMaxUsers);
 
     /** Destructs list of users. */
     virtual ~UserList ();
@@ -51,14 +52,14 @@ class KABUKI UserList : public ValidatorDefault {
     int GetCount ();
 
     /** Adds a new User to the list with the given handle and password. */
-    int Add (const char* display_name, const char* handle,
+    int Add (const char* status, const char* handle,
              const char* password = Password::kDefault);
 
     /** Adds a list of User (string) to the list. */
     int Add (UserList* enities);
 
     /** Finds an entity in the list by the given search char. */
-    User* Find (const char* string);
+    int Find (const char* string);
 
     /** Returns the User with the given user_number.
         @return Returns nil if the user_number is invalid. */
@@ -67,12 +68,16 @@ class KABUKI UserList : public ValidatorDefault {
     /** Validates the input for correctness. */
     virtual const char* IsValid (const char* input, int type);
 
+    virtual uid_t LogIn (int index, const char* password);
+
     /** Prints this object to the log. */
     void Print ();
     
     private:
     
-    data::Array<User*> users_; //< The list of users.
+    Validator        * validator_; //< Name, Handle, & Password Validator.
+    data::Array<User*> users_;     //< User list.
+    UidServer<>        uids_;      //< Unique Id Server
 };
 
 }       //< namespace id

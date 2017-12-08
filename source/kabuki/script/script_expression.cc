@@ -121,9 +121,8 @@ Expression* ExpressionInit (uintptr_t* buffer, uint_t buffer_size,
 //    return expr->type % 2 == 1;
 //}
 
-uintptr_t* ExpressionEndAddress (Expression* expr) {
-    //return BinEndAddress (ExpressionBin (expr));
-    return 0;
+byte* ExpressionEndAddress (Expression* expr) {
+    return BinEndAddress (ExpressionBin (expr));
 }
 
 const Operation* ExpressionReset (Expression* expr) {

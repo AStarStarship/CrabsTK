@@ -2,13 +2,13 @@
     @file    ~/source/kabuki/cards/cards_card_game.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
-             All right reserved (R). Licensed under the Apache License, Version 
-             2.0 (the "License"); you may not use this file except in 
-             compliance with the License. You may obtain a copy of the License 
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             All right reserved (R). Licensed under the Apache License, Version
+             2.0 (the "License"); you may not use this file except in
+             compliance with the License. You may obtain a copy of the License
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
              required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
@@ -22,34 +22,12 @@ using namespace std;
 namespace kabuki { namespace cards {
 
 Server::Server (uint port_number, const char* server_name) :
-                    server_name_ ((server_name_ == nullptr) ? "Unnamed Server" :server_name),
-                    state_   (0),
-                    dealer_  (nullptr),
-                    users_   (users) {
-    if (num_players < 1) {
-        num_players = 1;
-    }
-    if (min_players < 1) {
-        min_players = 1;
-    }
-    if (max_players < 1) {
-        max_players = 1;
-    }
-    if (min_players > max_players) {
-        min_players = max_players;
-    }
-    if (num_players < min_players) {
-        num_players = min_players;
-    }
-    else if (num_players > max_players) {
-        num_players = max_players;
-    }
-    // By process of elimination we know that num_players_ is bounded
-    // safely between the min and max values.
-
-    num_players_ = num_players;
-    min_players_ = min_players;
-    max_players_ = max_players;
+                Room       (server_name),
+                validator_ (new ValidatorDefault ()),
+                state_   (0),
+                dealer_  (nullptr),
+                users_   (),
+                players_ () {
 }
 
 Server::~Server () {
@@ -57,6 +35,7 @@ Server::~Server () {
         Player* player = players_.Pop ();
         delete player;
     }
+    delete validator_;
 }
 
 int Server::GetState () {

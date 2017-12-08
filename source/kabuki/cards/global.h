@@ -16,8 +16,8 @@
 #ifndef HEADER_FOR_KABUKI_CARDS_GLOBAL
 #define HEADER_FOR_KABUKI_CARDS_GLOBAL
 
+#include "../id/global.h"
 #include "blackjack_game.h"
-#include "chat_message.h"
 #include "client.h"
 
 #endif  //< HEADER_FOR_KABUKI_CARDS_GLOBAL

@@ -36,15 +36,16 @@ class KABUKI User {
     /** Default User diplay_name_. */
     static const char kDefaultDislpayName[];
 
-    /** Creates a user with the given char and password. */
-    User (Validator* validator, const char* display_name, const char* handle,
-          const char* password);
+    /** Creates a user with the given handle, password, and status. */
+    User (Validator* validator, const char* status = kDefaultDislpayName,
+          const char* handle   = Handle::kDefault,
+          const char* password = Password::kDefault);
 
     /** Gets the handle's key. */
-    const char* GetDisplayName ();
+    const char* GetStatus ();
 
     /** Gets the handle's key. */
-    const char* SetDisplayName (const char* name);
+    const char* SetStatus (const char* name);
 
     /** Gets a reference to the char handle. */
     Handle& GetHandle ();
@@ -65,8 +66,7 @@ class KABUKI User {
     void SetSessionKey (uid_t jey);
 
     /** Checks to see if the given char and password are in the correct format. */
-    virtual bool IsValid (const char* dislpay_name, const char* handle,
-                          const char* password);
+    virtual bool IsValid (const char* handle, const char* password);
 
     /** Returns true if this user is the same as the given one.  */
     bool Equals (const User& user);
@@ -77,7 +77,7 @@ class KABUKI User {
     private:
 
     Handle     handle_;       //< User's handle (i.e. key).
-    char*      display_name_; //< User's display name.
+    char*      status_;       //< User's status
     Password   password_;     //< User's password.
     Validator* validator_;    //< Handle and Password validator.
     uid_t      session_,      //< Session uid.

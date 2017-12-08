@@ -32,7 +32,7 @@ class BlackjackPlayer : public Player {
     };
 
     /** Default Constructor. */
-    BlackjackPlayer (CardStack& stock, const char* player_name = "You",
+    BlackjackPlayer (id::User* user, CardStack& stock,
                      int start_points = 100, bool is_dealer = false);
 
     /** Destructor. */
@@ -42,9 +42,9 @@ class BlackjackPlayer : public Player {
     const char* SetState (int state) override;
 
     /** Compares this hand to the other hand.
-    @return Returns 0 if they are equal, 1 if this hand is greater than
-    the other Hand, and -1 if the other Hand is greater than this
-    Hand. */
+        @return Returns 0 if they are equal, 1 if this hand is greater than
+        the other Hand, and -1 if the other Hand is greater than this
+        Hand. */
     virtual int Compare (Hand& other);
 
     /** Returns the HighLowScore. */
@@ -63,15 +63,11 @@ class BlackjackPlayer : public Player {
     bool Is21 ();
 
     /** Function returns true if the hand is a bust.
-    A hand is a bust if it is over 21 points. */
+        A hand is a bust if it is over 21 points. */
     bool IsBust ();
 
     /** Prints this object to the console. */
     void PrintHand ();
-
-    /** Psudo-AI function that determines if a player (usually the dealer) hits
-        or holds. */
-    //bool PlayOrPass (Dealer& dealer);
 
     /** New game logic handler. */
     virtual void NewGame ();
@@ -93,9 +89,10 @@ class BlackjackPlayer : public Player {
         sub-class object constructor. */
     virtual void EndRound ();
 
+    /** Processes end of game logic. */
     virtual void EndGame ();
 
-    /** Checks to see if this hand wins compared to the given player's hand */
+    /** Checks to see if this hand wins compared to the given player's hand. */
     virtual bool HandWins (Hand& other);
 
     /** Returns true if the player is holding. */

@@ -26,7 +26,7 @@ const int BlackjackGame::kDenominations[] = {
 };
 
 BlackjackGame::BlackjackGame (UserList* users) :
-    Server (users, "Blackjack", initNumPlayers, 2, 13) {
+    users_ (users) {
     min_ante_ = kDefaultAnte;
 
     // Set the ante
@@ -263,21 +263,22 @@ const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
         "Insert directions on how to play blackjack here.", 0 };
     
     void* args[1];
-
+    int   index;
+    User* user;
     switch (index) {
         case '?': return &This;
         case 'A': {
             static const Operation OpA = { "AddPlayer",
                 Params<1, UI8> (), Params <0> (),
-                "Adds a player to the game."
+                "Adds a player to the game.", 0
             };
             if (!expr) return &OpA;
             uid_t player_uid;
             if (ExprArgs (expr, Params<1, UI8> (), Args (args, &player_uid))) {
                 return expr->result;
             }
-            User* user;
-            players_.Push (new BlackjackPlayer ());
+            user = users_->UserNumber (player_uid);
+            players_.Push (new BlackjackPlayer (user));
 
             return nullptr;
         }

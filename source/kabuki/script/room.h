@@ -151,7 +151,7 @@ class Room: public Operand {
                      enable dynamic memory.
         @param size  The room size that is bounded between the kMinRoomSize and 
                      kMaxRoomSize. */
-    Room (const char* room_name);
+    Room (const char* room_name = "chinese_room");
 
     /** Destructor. */
     virtual ~Room ();

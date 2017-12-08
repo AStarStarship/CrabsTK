@@ -34,16 +34,16 @@ class RemotePlayer: public _::Operation {
     /** Virtual destructor. */
     virtual ~RemotePlayer ();
 
-    /** Gets the Player's display_name_. */
+    /** Gets the Player's status_. */
     const char* GetDislpayName ();
 
-    /** Sets the Player's display_name_. */
+    /** Sets the Player's status_. */
     const char* SetDislpayName (const char* name);
 
-    /** Gets the Player's display_name_. */
+    /** Gets the Player's status_. */
     const char* GetHandle ();
 
-    /** Sets the Player's display_name_. */
+    /** Sets the Player's status_. */
     const char* SetHandle (const char* name);
 
     /** Gets is_dealer_. */
@@ -92,7 +92,7 @@ class RemotePlayer: public _::Operation {
 
     protected:
 
-    char      * display_name_,   //< RemotePlayer's name.
+    char      * status_,   //< RemotePlayer's name.
               * handle_;         //< Display handle.
     bool        is_dealer_;      //< Flags if this player is the dealer.
     int32_t     state_,          //< The state of the player.

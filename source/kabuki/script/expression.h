@@ -228,7 +228,7 @@ inline Operand** ExpressionStack (Expression* expr) {
 /** Returns true if the Stack uses dynamic memory. */
 //KABUKI bool ExpressionIsDynamic (Expression* expr);
 
-KABUKI uintptr_t* ExpressionEndAddress (Expression* expr);
+KABUKI byte* ExpressionEndAddress (Expression* expr);
 
 /** Resets this Stack to the initial state. */
 KABUKI const Operation* ExpressionReset (Expression* expr);

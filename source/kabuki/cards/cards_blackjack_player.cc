@@ -12,7 +12,6 @@
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
-#include "blackjack_player.h"
 
 #include "hand.h"
 #include "card_stack.h"
@@ -20,10 +19,11 @@
 
 using namespace _;
 using namespace std;
+using namespace kabuki::id;
 
 namespace kabuki { namespace cards {
 
-BlackjackPlayer::BlackjackPlayer (CardStack& stock, const char* player_name,
+BlackjackPlayer::BlackjackPlayer (User* user, CardStack& stock, const char* player_name,
                                   int starting_points,  bool is_dealder) :
     Player (stock, player_name, starting_points, is_dealder) {
     // Nothing to do here!

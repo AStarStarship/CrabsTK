@@ -214,8 +214,6 @@ TEST (SCRIPT_TESTS, ClockTests) {
     result = ParseTimeString (timestamp, t_found);
     CompareTimes (t, t_found);
 
-    //system ("PAUSE");
-
     PrintBreak ("<", '-');
     PrintBreak ("<\n< Testing invalid input...\n<", '-');
     ParseTimeString ("cat", t);
@@ -224,7 +222,7 @@ TEST (SCRIPT_TESTS, ClockTests) {
     PrintBreak ("<", '-');
 
     cout << "<\n< Done testing date parsing utils! :-)\n";
-}*/
+}
 
 #if USING_TABLE
 TEST (SCRIPT_TESTS, TableTests) {
@@ -236,75 +234,74 @@ TEST (SCRIPT_TESTS, TableTests) {
 
     CHECK (table != nullptr)
 
-        index = TableAdd (table, "D");
+    index = TableAdd (table, "D");
     CHECK_EQUAL (0, index)
-        index = TableFind (table, "D");
+    index = TableFind (table, "D");
     CHECK_EQUAL (0, index)
 
-        index = TableAdd (table, "C");
+    index = TableAdd (table, "C");
     CHECK_EQUAL (1, index)
-        index = TableFind (table, "D");
+    index = TableFind (table, "D");
     CHECK_EQUAL (0, index)
-        index = TableFind (table, "C");
+    index = TableFind (table, "C");
     CHECK_EQUAL (1, index)
 
-        index = TableAdd (table, "Bin");
+    index = TableAdd (table, "Bin");
     CHECK_EQUAL (2, index)
-        index = TableFind (table, "D");
+    index = TableFind (table, "D");
     CHECK_EQUAL (0, index)
-        index = TableFind (table, "C");
+    index = TableFind (table, "C");
     CHECK_EQUAL (1, index)
-        index = TableFind (table, "Bin");
+    index = TableFind (table, "Bin");
     CHECK_EQUAL (2, index)
 
-        index = TableAdd (table, "A");
+    index = TableAdd (table, "A");
     CHECK_EQUAL (3, index)
-        index = TableFind (table, "D");
+    index = TableFind (table, "D");
     CHECK_EQUAL (0, index)
-        index = TableFind (table, "C");
+    index = TableFind (table, "C");
     CHECK_EQUAL (1, index)
-        index = TableFind (table, "Bin");
+    index = TableFind (table, "Bin");
     CHECK_EQUAL (2, index)
-        index = TableFind (table, "A");
+    index = TableFind (table, "A");
     CHECK_EQUAL (3, index)
 
-        index = TableAdd (table, "abc");
+    index = TableAdd (table, "abc");
     CHECK_EQUAL (4, index)
-        index = TableFind (table, "abc");
+    index = TableFind (table, "abc");
     CHECK_EQUAL (4, index)
 
-        index = TableAdd (table, "bac");
+    index = TableAdd (table, "bac");
     CHECK_EQUAL (5, index)
-        index = TableFind (table, "abc");
+    index = TableFind (table, "abc");
     CHECK_EQUAL (4, index)
-        index = TableFind (table, "bac");
+    index = TableFind (table, "bac");
     CHECK_EQUAL (5, index)
 
-        index = TableAdd (table, "cba");
+    index = TableAdd (table, "cba");
     CHECK_EQUAL (6, index)
-        index = TableFind (table, "abc");
+    index = TableFind (table, "abc");
     CHECK_EQUAL (4, index)
-        index = TableFind (table, "bac");
+    index = TableFind (table, "bac");
     CHECK_EQUAL (5, index)
-        index = TableFind (table, "cba");
+    index = TableFind (table, "cba");
     CHECK_EQUAL (6, index)
 
-        index = TableAdd (table, "cab");
+    index = TableAdd (table, "cab");
     CHECK_EQUAL (7, index)
-        index = TableFind (table, "abc");
+    index = TableFind (table, "abc");
     CHECK_EQUAL (4, index)
-        index = TableFind (table, "bac");
+    index = TableFind (table, "bac");
     CHECK_EQUAL (5, index)
-        index = TableFind (table, "cba");
+    index = TableFind (table, "cba");
     CHECK_EQUAL (6, index)
-        index = TableFind (table, "cab");
+    index = TableFind (table, "cab");
     CHECK_EQUAL (7, index)
 
-        index = TableAdd (table, "test");
+    index = TableAdd (table, "test");
     CHECK_EQUAL (kInvalidIndex, index)
 
-        TablePrint (table);
-    //system ("PAUSE");
+    TablePrint (table);
 }
 #endif  //< USING_TABLE
 
@@ -318,7 +315,8 @@ TEST (SCRIPT_TESTS, ExpressionTests) {
     uintptr_t buffer[kBufferSizeWords],
               unpacked_buffer[kBufferSizeWords];
     This root;
-    Expression* expr = ExpressionInit (buffer, 255, 4, &root, unpacked_buffer,
+    Expression* expr = ExpressionInit (buffer, kBufferSize, 4, 
+                                       &root, unpacked_buffer,
                                        kBufferSizeWords);
     ExpressionPrint (expr);
 
@@ -332,22 +330,52 @@ TEST (SCRIPT_TESTS, ExpressionTests) {
     int si4_found;
     float flt_found;
     expr->return_address = "A";
-    printf ("\n| Attempting to print to 0x%p\n", ExpressionBout (expr));
+
     const Operation* result = ExprResult (expr, esc, Args (args, "C",
                                                            &stx_expected,
                                                            &si4_expected,
                                                            &flt_expected));
-    PrintMemory (expr, ExpressionEndAddress (expr));
+    printf ("\n| Attempting to print Expression 0x%p\n", ExpressionBout (expr));
     ExpressionPrint (expr);
-    //Mirror mirror;                                  //< @todo fix me!
-    //Portal* p = dynamic_cast<Portal*>(&mirror);     //< Not working?
-    //Portal* p = reinterpret_cast<Portal*>(&mirror); //< 
-    //ExpressionScan (expr, p);
-    system ("PAUSE");
     CHECK_EQUAL (0, ExprArgs (expr, esc, Args (args, &stx_found,
                                                &si4_found,
                                                &flt_found)));
-    system ("PAUSE");
+}
+
+TEST (SCRIPT_TESTS, TextTests) {
+#if USE_MORE_ROM
+    std::cout << "  - Running HexTest...\n";
+    for (int i = 0; i < 16; ++i) {
+        int value = ToByte (NibbleToLowerCaseHex (i));
+        CHECK_EQUAL (i, value)
+            value = ToByte (NibbleToUpperCaseHex (i));
+        CHECK_EQUAL (i, value)
+    }
+
+    for (int i = 0; i < 256; ++i) {
+        int value = ToByte (ToLowerCaseHex (i));
+        CHECK_EQUAL (i, value)
+            value = ToByte (ToUpperCaseHex (i));
+        CHECK_EQUAL (i, value)
+    }
+
+    std::cout << "\nTesting string utils...\n";
+
+    const char* strings[] = {
+        "Testing",
+        "Texting",
+        "Testing@",
+        "Texting@",
+    };
+
+    CHECK (!StringEquals (strings[0], strings[1]))
+        CHECK (!StringEquals (strings[0], strings[3]))
+        CHECK (StringEquals (strings[0], strings[0]))
+        CHECK (!StringEquals (strings[2], strings[3], '@'))
+        CHECK (StringEquals (strings[2], strings[2], '@'))
+
+        // @todo Add Token module and TokenEquals here.
+#endif  //< USE_MORE_ROM
 }
 
 TEST (SCRIPT_TESTS, RoomTests) {
@@ -790,43 +818,6 @@ TEST (SCRIPT_TESTS, OperationTests) {
     // Bypass handshake for testing purposes.
     ExpressionScan (expr);//, &window);
     ExpressionPrint (expr);
-    std::cout << "\n| Done with Operation tests.\n";
+    std::cout << "\n| Done with Operation tests.";
     system ("PAUSE");
-}
-
-TEST (SCRIPT_TESTS, TextTests) {
-#if USE_MORE_ROM
-    std::cout << "  - Running HexTest...\n";
-    for (int i = 0; i < 16; ++i) {
-        int value = ToByte (NibbleToLowerCaseHex (i));
-        CHECK_EQUAL (i, value)
-            value = ToByte (NibbleToUpperCaseHex (i));
-        CHECK_EQUAL (i, value)
-    }
-
-    for (int i = 0; i < 256; ++i) {
-        int value = ToByte (ToLowerCaseHex (i));
-        CHECK_EQUAL (i, value)
-            value = ToByte (ToUpperCaseHex (i));
-        CHECK_EQUAL (i, value)
-    }
-
-    std::cout << "\nTesting string utils...\n";
-
-    const char* strings[] = {
-        "Testing",
-        "Texting",
-        "Testing@",
-        "Texting@",
-    };
-
-    CHECK (!StringEquals (strings[0], strings[1]))
-    CHECK (!StringEquals (strings[0], strings[3]))
-    CHECK (StringEquals (strings[0], strings[0]))
-    CHECK (!StringEquals (strings[2], strings[3], '@'))
-    CHECK (StringEquals (strings[2], strings[2], '@'))
-
-        // @todo Add Token module and TokenEquals here.
-#endif  //< USE_MORE_ROM
-}
-
+}*/

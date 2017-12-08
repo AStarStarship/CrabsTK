@@ -16,6 +16,8 @@
 #include "card_stack.h"
 
 using namespace _;
+using namespace std;
+
 namespace kabuki { namespace cards {
 
 CardStack::CardStack (int size) :

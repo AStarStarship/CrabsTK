@@ -20,12 +20,13 @@ using namespace std;
 namespace kabuki {
 namespace cards {
 
-Player::Player (CardStack& stock, const char* dislplay_name, int start_points, bool is_dealer) :
+Player::Player (CardStack& stock, const char* status,
+                int start_points, bool is_dealer) :
     num_wins_ (0),
     num_points_ (start_points < 1?1:start_points),
     hand_ (52),
     stock_ (stock) {
-    SetDisplayName (dislplay_name);
+    SetStatus (status);
 }
 
 const char* Player::GetDislpayName () {

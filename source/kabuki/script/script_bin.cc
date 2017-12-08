@@ -138,6 +138,9 @@ uint_t BinBufferLength (Bin* bin) {
 }
 
 byte* BinEndAddress (Bin* bin) {
+    if (bin == nullptr) {
+        return nullptr;
+    }
     return reinterpret_cast<byte*>(bin) + (4 * sizeof (uint_t)) + bin->size;
 }
 

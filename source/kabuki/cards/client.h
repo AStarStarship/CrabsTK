@@ -68,12 +68,13 @@ class Client : public id::ValidatorDefault, public _::Operation {
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
     protected:
-    
-    char     game_name_[kMaxGameNameLength]; //< Current game name.
-    uint     state_,        //< State of the app or current game index.
-             round_number_; //< Current round number.
-    id::User user_;         //< User.
-    Deck     pack_;         //< Pack of Card(s).
+
+    id::Validator* validator_;
+    char           game_name_[kMaxGameNameLength]; //< Current game name.
+    uint           state_,        //< State of the app or current game index.
+                   round_number_; //< Current round number.
+    id::User       user_;         //< User.
+    Deck           pack_;         //< Pack of Card(s).
     data::Array<RemotePlayer*> players_; //< Array of RemotePlayer(s).
 
 };      //< class Client

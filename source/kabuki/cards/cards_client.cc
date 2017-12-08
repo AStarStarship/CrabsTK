@@ -22,9 +22,10 @@ using namespace std;
 namespace kabuki { namespace cards {
 
 Client::Client ():
-    state_ (0),
-    user_  (),
-    pack_  (){
+    validator_ (new ValidatorDefault ()),
+    state_     (0),
+    user_      (validator_),
+    pack_      () {
 }
 
 Client::~Client () {
@@ -121,10 +122,10 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
             };
             if (!expr) return &OpC;
             int32_t player_number;
-            char display_name[User::kDefaultMaxDislpayNameLength + 1],
+            char status[User::kDefaultMaxDislpayNameLength + 1],
                  handle[Handle::kDefaultMaxLength];
             if (!ExprArgs (expr, kRxHeaderC, Args (args, &player_number,
-                                                   display_name, handle)))
+                                                   status, handle)))
                 return expr->result;
             if (player_number < 0) {
                 return Result (expr, Bin::InvalidArgumentError, Params<1, SI4> ());
@@ -134,7 +135,7 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
             }
             players_.Grow (player_number);
             player = players_[player_number];
-            player->SetDislpayName (display_name);
+            player->SetDislpayName (status);
             player->SetHandle (handle);
             return nullptr;
         }

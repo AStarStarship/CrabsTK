@@ -95,6 +95,8 @@ struct KABUKI Bin {
 /** Get's the B-Input's buffer.*/
 KABUKI byte* BinBuffer (Bin* bin);
 
+KABUKI byte* BinEndAddress (Bin* bin);
+
 /** Gets a human-readable description for given error. */
 KABUKI const char* BinErrorString (Bin::Error e);
 

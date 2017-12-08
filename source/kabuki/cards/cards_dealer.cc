@@ -15,6 +15,8 @@
 
 #include "dealer.h"
 
+using namespace std;
+
 namespace kabuki { namespace cards {
 
 Dealer::Dealer (int ante, int min_bet, int min_cards_per_hand,

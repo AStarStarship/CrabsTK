@@ -16,6 +16,8 @@
 #include "deck.h"
 #include "card_stack.h"
 
+using namespace std;
+
 namespace kabuki { namespace cards {
 
 const int Deck::kDefaultSuitValues[4] = { 1, 2, 3, 4 };

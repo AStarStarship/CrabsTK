@@ -22,17 +22,22 @@ namespace kabuki { namespace id {
 
 
 
-/** A uid server that can save and load the uid from a file. */
+/** A uid server that can save and load the uid from a file.
+    Unique ids are indexed using only positive integers. 0 is hence used to 
+    flag when the server doesn't contain a uid. */
 template<typename T = uid_t>
-class UidServer
-{
+class UidServer {
     public:
+
+    enum { kInvalidUid = 0 };
     
-    /** Constructs object by setting next_id_ eto init_uid and copying the
+    /** Constructs object by setting next_id_ to init_uid and copying the
         filename string. */    
-    UidServer (T init_uid = 0, const char* filename = "uid") :
-        next_uid_ (init_uid),
-        filename_ (StringClone (filename) {
+    UidServer (T init_uid = 1,
+               const char* filename = "uid") :
+               next_uid_ ((init_uid == kInvalidUid) ? kInvalidUid + 1
+                                                    : init_uid),
+               filename_ (StringClone (filename)) {
         //                           +---E  +----D
         // Nothing to do here ({:->)-|------|
         //                           +---E  +----D
@@ -45,6 +50,7 @@ class UidServer
 
     /** Gets the next uid. */
     T GetNextUid () {
+        if (next_uid_ == kInvalidUid) return kInvalidUid + 1;
         return next_uid_++;
     }
 
@@ -63,9 +69,9 @@ class UidServer
                 cout << line << '\n';
             }
             file.close ();
+        } else {
+            cout << "Unable to open file";
         }
-
-        else cout << "Unable to open file";
 
         return 0;
     }
@@ -73,7 +79,7 @@ class UidServer
     private:
 
     T           next_uid_; //< Next unique id.
-    const char* filename;  //< Filename to write uid too.
+    const char* filename_; //< Filename to write uid too.
 };        //< Array class
 }         //< namespace id
 }         //< namespace kabuki
