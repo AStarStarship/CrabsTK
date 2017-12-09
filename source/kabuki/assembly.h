@@ -63,6 +63,8 @@ MEMORY_PROFILE 3.
 //< over a generic communication link.
 #define CHAR_WIDTH          8         //< index width in bytes: 8, 16, or 32.
 #define ROOM_FLOOR_SIZE     1024      //< The
+#define OPERATION_MAX_NAME_LENGTH 64
+#define OPERATION_MAX_DESCRIPTION_LENGTH 1024
 
 // Sets any of the following macros to YES or NO.
 

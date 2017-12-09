@@ -25,7 +25,7 @@ const char Password::kDefault[] = "anything_but_password_or_admin";
 
 Password::Password (Authenticator* authenticator, const char* string) :
     authenticator_ (authenticator),
-    type_      (kValidation){
+    type_ (kValidation) {
     if (!SetKey (string)) {
         key_ = StringClone ("");
     }
@@ -42,8 +42,8 @@ const char* Password::GetKey () {
 bool Password::SetKey (const char* password) {
     if (password == nullptr)
         return false;
-    
-    if (!authenticator_->PasswordIsValid (password)) {
+
+    if (authenticator_->PasswordIsInvalid (password)) {
         return false;
     }
     delete key_;
@@ -51,19 +51,16 @@ bool Password::SetKey (const char* password) {
     return true;
 }
 
-bool Password::IsValid (const char* string)
-{
+bool Password::IsValid (const char* string) {
     return true;
 }
 
-bool Password::Equals (const char* string)
-{
-    return (key_ == string);
+bool Password::Equals (const char* key) {
+    return StringEquals (key_, key);
 }
 
-bool Password::Equals (const Password& other)
-{
-    return !strcmp (key_, other.key_);
+bool Password::Equals (const Password& other) {
+    return StringEquals (key_, other.key_);
 }
 
 void Password::Print () {

@@ -36,10 +36,10 @@ const char* BoutErrorString (Bout::Error error) {
         "Room Error"        //< 2
     };
     // Compiler says this will always be false but I thought enum was signed int type?
-    //if ((error < 0) || (error > Bout::RoomError))
-    //    return strings[Bout::RoomError];
-    if (error > Bout::RoomError)
-        return strings[Bout::RoomError];
+    //if ((error < 0) || (error > Bout::kErrorRoom))
+    //    return strings[Bout::kErrorRoom];
+    if (error > Bout::kErrorRoom)
+        return strings[Bout::kErrorRoom];
     return strings[error];
 }
 
@@ -144,11 +144,11 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     BoutPrint (bout);
 #endif  //< SCRIPT_DEBUG
     if (bout == nullptr)
-        return BoutResult (bout, Bout::RoomError);
+        return BoutResult (bout, Bout::kErrorRoom);
     if (params == nullptr)
-        return BoutResult (bout, Bout::RoomError);
+        return BoutResult (bout, Bout::kErrorRoom);
     if (args == nullptr)
-        return BoutResult (bout, Bout::RoomError);
+        return BoutResult (bout, Bout::kErrorRoom);
 
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte //type,
@@ -254,12 +254,12 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             case ST2: //< _W_r_i_t_e__U_T_F_-_1_6__S_t_r_i_n_g__________________
 #if USING_UTF16
 #else
-                return BoutResult (bout, Bout::RoomError, params, index);
+                return BoutResult (bout, Bout::kErrorRoom, params, index);
 #endif  //< USING_UTF-16
             case ST4: //< _W_r_i_t_e__U_T_F_-_3_2__S_t_r_i_n_g__________________
 #if USING_UTF32
 #else
-                return BoutResult (bout, Bout::RoomError, params, index);
+                return BoutResult (bout, Bout::kErrorRoom, params, index);
 #endif  //< USING_UTF-32
             case SI1: //< _W_r_i_t_e__8_-_b_i_t__T_y_p_e_s______________________
             case UI1:
@@ -448,7 +448,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                       // Load next pointer value to write.
                 ui2_ptr = reinterpret_cast<const uint16_t*> (args[arg_index]);
                 if (ui2_ptr == nullptr)
-                    return BoutResult (bout, Bout::RoomError, params, index,
+                    return BoutResult (bout, Bout::kErrorRoom, params, index,
                                        start);
                 ui2 = *ui2_ptr;
 
@@ -535,7 +535,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                     hash = Hash16 (ui1, hash);
                     // This wont happen I don't think.
                     //if (--ui2 == 0)
-                    //    return BoutResult (VarintOverflowError, params, index,
+                    //    return BoutResult (kErrorVarintOverflow, params, index,
                     //                       start);
 
                     goto WriteVarint4;
@@ -595,7 +595,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                       // Load pointer to data to write and get size.
                 ui1_ptr = reinterpret_cast<const byte*> (args[arg_index]);
                 if (ui1_ptr == nullptr)
-                    return BoutResult (bout, Bout::RoomError, params, index,
+                    return BoutResult (bout, Bout::kErrorRoom, params, index,
                                        start);
                 length = *param++;
                 Bout nested_bout;
@@ -609,11 +609,11 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             default: {
                 obj_size_width = type >> 5;
                 if ((type >> 5) && type > OBJ)
-                    return BoutResult (bout, Bout::RoomError, params, index);
+                    return BoutResult (bout, Bout::kErrorRoom, params, index);
                 if ((type >> 7) && ((type & 0x1f) >= OBJ)) {
                     // Cannot have multi-dimensional arrays of objects!
                     type &= 0x1f;
-                    return BoutResult (bout, Bout::RoomError, params, index,
+                    return BoutResult (bout, Bout::kErrorRoom, params, index,
                                        start);
                 }
                 type = type & 0x1f;   //< Mask off lower 5 bits.
@@ -622,7 +622,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         ui1_ptr = reinterpret_cast<const byte*> 
                                   (args[arg_index]);
                         if (ui1_ptr == nullptr)
-                            return BoutResult (bout, Bout::RoomError, params,
+                            return BoutResult (bout, Bout::kErrorRoom, params,
                                                index, start);
                         ui1 = *ui1_ptr;
                         length = static_cast<uint_t>(ui1);
@@ -633,7 +633,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         ui2_ptr = reinterpret_cast<const uint16_t*>
                             (args[arg_index]);
                         if (ui2_ptr == nullptr)
-                            return BoutResult (bout, Bout::RoomError, params,
+                            return BoutResult (bout, Bout::kErrorRoom, params,
                                                index, start);
                         ui2 = *ui2_ptr;
                         length = static_cast<uint_t>(ui2);
@@ -646,7 +646,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         ui4_ptr = reinterpret_cast<const uint32_t*>
                             (args[arg_index]);
                         if (ui4_ptr == nullptr)
-                            return BoutResult (bout, Bout::RoomError, params,
+                            return BoutResult (bout, Bout::kErrorRoom, params,
                                                index, start);
                         ui4 = *ui4_ptr;
                         length = static_cast<uint_t>(ui4);
@@ -659,7 +659,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         ui8_ptr = reinterpret_cast<const uint64_t*>
                             (args[arg_index]);
                         if (ui8_ptr == nullptr)
-                            return BoutResult (bout, Bout::RoomError, params,
+                            return BoutResult (bout, Bout::kErrorRoom, params,
                                                index, start);
                         ui8 = *ui8_ptr;
                         length = static_cast<uint_t>(ui8);
@@ -669,7 +669,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                     default:
                     {  // This wont happen due to the & 0x3 bit mask
                        // but it stops the compiler from barking.
-                        return BoutResult (bout, Bout::RoomError, params,
+                        return BoutResult (bout, Bout::kErrorRoom, params,
                                            index, start);
                     }
 

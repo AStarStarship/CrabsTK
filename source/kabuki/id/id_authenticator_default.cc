@@ -17,6 +17,7 @@
 #include "user.h"
 
 using namespace _;
+using namespace std;
 using namespace kabuki::id;
 
 namespace kabuki { namespace id {
@@ -25,7 +26,7 @@ AuthenticatorDefault::AuthenticatorDefault () :
     min_handle_length_       (Handle::kDefaultMinLength),
     max_handle_length_       (Handle::kDefaultMaxLength),
     min_password_length_     (Password::kDefaultMinLength),
-    max_password_length      (Password::kDefaultMaxLength) {
+    max_password_length_     (Password::kDefaultMaxLength) {
     // Nothing to do here. :-)
 }
 
@@ -42,45 +43,77 @@ int AuthenticatorDefault::GetMinPasswordLength () {
 }
 
 int AuthenticatorDefault::GetMaxPasswordLength () {
-    return max_password_length;
+    return max_password_length_;
 }
 
-const char* AuthenticatorDefault::HandleIsValid (const char* input) {
+const char* AuthenticatorDefault::HandleIsInvalid (const char* input) {
+    const char* result;
+
     if (input == nullptr) {
-        return "nil input";
+        result = "nil input";
+        //cout << "\n| " << result;
+        return result;
     }
     int length = StringLength (input);
+    //cout << "\n| Checking handle:\"" << input << "\"";
 
-    if (length < Handle::kDefaultMinLength) {
-        return "Password too short";
+    if (length < min_handle_length_) {
+        result = "Handle too short";
+        //cout << "\n| " << result;
+        return result;
     }
-    if (length > Handle::kDefaultMaxLength) {
-        return "password too long";
+    //cout << '.';
+    if (length > max_handle_length_) {
+        result = "Handle too long";
+        //cout << "\n| " << result;
+        return result;
     }
-    for (int i = 0; i < length; ++length) {
-        if (isspace (input[i])) {
-            return "password can't contain whitespace.";
+    if (length == 0) { //< min
+        return nullptr;
+    }
+    //cout << ". ";
+    for (--length; length > 0; --length) {
+        //cout << length << ' ';
+        if (isspace (input[length])) {
+            result = "password can't contain whitespace.";
+            //cout << "\n| " << result;
+            return result;
         }
     }
+    //cout << "\n| Handle is valid.";
     return nullptr;
 }
 
-const char* AuthenticatorDefault::PasswordIsValid (const char* input) {
+const char* AuthenticatorDefault::PasswordIsInvalid (const char* input) {
     if (input == nullptr) {
         return "nil input";
     }
+    const char* result;
+    //cout << "\n| Checking password:\"" << input << "\"";
     int length = StringLength (input);
-    if (length < Password::kDefaultMinLength) {
-        return "Password too short";
+    if (length < min_password_length_) {
+        result = "Password too short";
+        //cout << "\n| " << result;
+        return result;
     }
-    if (length > Password::kDefaultMaxLength) {
-        return "password too long";
+    //cout << '.';
+    if (length > max_password_length_) {
+        result = "password too long";
+        //cout << "\n| " << result;
+        return result;
     }
-    for (int i = 0; i < length; ++length) {
-        if (isspace (input[i])) {
-            return "password can't contain whitespace.";
+    //cout << '.';
+    //if (length == 0) { //< Min password length never less than 1.
+    //    return nullptr;
+    //}
+    for (--length; length > 0; --length) {
+        if (isspace (input[length])) {
+            result = "password can't contain whitespace.";
+            //cout << "\n| " << result;
+            return result;
         }
     }
+    //cout << "\n| Password is valid.";
     return nullptr;
 }
 

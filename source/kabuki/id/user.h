@@ -25,7 +25,7 @@ namespace kabuki { namespace id {
 /** A user account on a computer.
     A user does not necessarily have an account. Some accounts are and any user
     can use. i.e. the guest account. */
-class KABUKI User {
+class KABUKI User : _::Portal {
     public:
 
     enum {
@@ -66,10 +66,13 @@ class KABUKI User {
     uid_t GetUid ();
 
     /** Gets the session uid. */
-    uid_t GetSession ();
+    int32_t GetSession ();
 
     /** Sets the session uid. */
-    virtual const char* SetSession (uid_t uid);
+    virtual const char* SetSession (int32_t session);
+
+    /** Gets the session uid. */
+    uid_t GetSessionKey ();
 
     /** Gets the abstract response code. */
     uid_t GetResponse ();
@@ -83,6 +86,13 @@ class KABUKI User {
     /** Sets the abstract balance. */
     virtual const char* SetBalance (double balance);
 
+    /** Attempts to buy the given points.
+        @returns false if the balance_ is too low. */
+    bool BuyCoins (uint64_t num_coins, double point_cost);
+
+    /** Increase the balance_ by the given amount. */
+    bool IncreaseBalance (double amount);
+
     /** Gets the abstract value. */
     uint64_t GetValue ();
 
@@ -92,8 +102,18 @@ class KABUKI User {
     /** Returns true if this user is the same as the given one.  */
     bool Equals (User* user);
 
+    /** Gets the Script Slot to send messages to this User. */
+    _::Expression* GetSlot ();
+
+    /** Gets the Script Slot to send messages to this User. */
+    _::Window* GetWindow ();
+
+    /** Returns true if this session and cypher match the same as the given
+        one.  */
+    bool IsAuthentic (int32_t session, uid_t session_key);
+
     /** Prints this object to a expression. */
-    void Print ();
+    virtual void Print ();
 
     private:
 
@@ -101,12 +121,13 @@ class KABUKI User {
     char*          status_;       //< User's status
     Password       password_;     //< User's password.
     Authenticator* authenticator_;//< Handle and Password authenticator.
+    int32_t        session_;      //< Session index.
     uid_t          uid_,          //< Index of user in the UserList.
-                   session_,      //< Session uid.
                    session_key_,  //< Fake session encryption key.
                    response_;     //< Gets user abstract response code.
     double         balance_;      //< Abstract user account balance or money.
     uint64_t       value_;        //< Abstract account value, points, or coins.
+    _::Expression* slot_;         //< Portal to User's machine.
 
 };      //< class User
 }       //< namespace id

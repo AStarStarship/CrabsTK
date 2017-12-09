@@ -51,8 +51,8 @@ void BlackjackGame::EndRound () {
     dealer_->EndRound ();
 }
 
+/*
 bool BlackjackGame::PlayGameInConsole () {
-    /*
     enum {
         kBufferSize = 80,
     };
@@ -174,9 +174,9 @@ bool BlackjackGame::PlayGameInConsole () {
         }
 
         round_number_++;
-    } */
+    } 
     return false;
-}
+}*/
 
 void BlackjackGame::Print () {
     PrintLine (" ", '_');
@@ -197,14 +197,16 @@ const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
     };
     void* args[1];
     int32_t player_uid;
+    uint64_t session,
+             session_key;
 
     switch (index) {
         case '?': return &This;
         case 'A': {
-            static const Operation OpA = { "AddUser",
-                Params<1, UI8> (), Params <0> (),
-                "Adds a User to the list of game observers.", 0
-            };
+            static const Operation OpA = { "Join",
+                Params<1, UI8, UI8> (), Params <0> (),
+                "Adds the #user_session with #session_key to the list of game "
+                "observers pending authentication.", 0 };
             if (!expr) return &OpA;
             if (ExprArgs (expr, Params<1, SI4> (), Args (args, &player_uid))) {
                 return expr->result;
@@ -217,8 +219,37 @@ const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
 
             return nullptr;
         }
+        case 'B': {
+            static const Operation OpB = { "Leave",
+                Params<1, UI8, UI8> (), Params <0> (),
+                "Triggers #user_session with #session_key to Leave the game "
+                "observer queue pending authentication.", 0 };
+            if (!expr) return &OpB;
+            if (ExprArgs (expr, Params<2, UI8, UI8> (), Args (args, &session, 
+                                                              &session_key))) {
+                return expr->result;
+            }
+            User* user = GetObservers ()[player_uid];
+            if (user == nullptr) { // Invalid player_uid!
+                return nullptr;
+            }
+            if (session != user->GetSession ()) {
+                return Result (expr, Bin::kErrorAuthenticationError);
+            }
+            GetObservers ().Push (user);
+
+            return nullptr;
+        }
     }
-    return nullptr;
+    index -= 'C';
+    if (index == 0) {
+        return Push (expr, dynamic_cast<Operand*> (dealer_));
+    }
+    Player* player = dealer_->GetPlayer (index - 1);
+    if (!player) {
+        return Result (expr, Bin::kErrorInvalidIndex);
+    }
+    return Result (expr, Bin::kErrorInvalidIndex);
 }
 
 }       //< namespace cards

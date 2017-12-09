@@ -14,15 +14,17 @@
 */
 
 #include <stdafx.h>
-#include "../../source/kabuki/cards/blackjack_dealer.h"
-#include "../../source/kabuki/cards/blackjack_player.h"
-#include "../../source/kabuki/cards/blackjack_game.h"
-#include "../../source/kabuki/script/global.h"
+
 #include "../../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
 #include "../../../../../cpputest/include/CppUTest/TestHarness.h"
 
+#include "../../source/kabuki/cards/blackjack_dealer.h"
+#include "../../source/kabuki/cards/blackjack_player_ai.h"
+#include "../../source/kabuki/cards/blackjack_game.h"
+
 using namespace std;
 using namespace _;
+using namespace kabuki::id;
 using namespace kabuki::cards;
 
 TEST_GROUP (CARDS_TESTS) {
@@ -37,19 +39,26 @@ TEST_GROUP (CARDS_TESTS) {
 };
 
 TEST (CARDS_TESTS, BlackjackTests) {
-    enum {
-        kNameBufferSize = 64,
-        kInputBufferSize = 256
-    };
-    char name[kNameBufferSize];
+    char handle[Handle::kDefaultMaxLength + 1],
+        password[Password::kDefaultMaxLength + 1];
 
-    KeyboardString ("\n< Please Entire your name: ", name, kNameBufferSize);
+    KeyboardString ("\n< Enter your handle: ", handle, 
+                    Handle::kDefaultMaxLength + 1);
+    KeyboardString ("\n< Enter your password: ", password,
+                    Password::kDefaultMaxLength + 1);
 
+    UserList users;
+    users.Register ("Dealer1", "Foo");
     Deck pack;
     CardStack stock (pack);
 
-    BlackjackDealer dealer;
-    BlackjackPlayer player (dealer.GetStock (), name);
+    users.Register ("Player1", "Foo");
+    users.Register ("Computer1", "Foo");
+    users.Register ("Computer2", "Foo");
+    BlackjackDealer dealer (users.GetUser (0));
+    BlackjackPlayer player (users.GetUser (0), dealer.GetStock ());
+    BlackjackPlayerAi computer_1 (users.GetUser (1), dealer.GetStock ()),
+                      computer_2 (users.GetUser (2), dealer.GetStock ());
     /**
 
     bool play_again = true;

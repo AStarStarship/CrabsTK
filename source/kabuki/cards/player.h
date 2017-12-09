@@ -26,6 +26,12 @@ namespace kabuki { namespace cards {
 class Player {
     public:
 
+    typedef enum States {
+        kStateWaitingForTurn = 0, //< Player waiting for turn state.
+        kStatePlayingTurn    = 1, //< Player playing turn state.
+        kStateBetting        = 2, //< Player betting state.
+    } State;
+
     /** Default Constructor. */
     Player (id::User* user = nullptr, bool is_dealer = false);
     
@@ -35,8 +41,14 @@ class Player {
     /** Gets the user attached to this Player. */
     id::User* GetUser ();
 
+    /** Gets is_turn_. */
+    bool IsTurn ();
+
+    /** Sets is_turn_. */
+    virtual void SetIsTurn (bool is_turn);
+
     /** Gets is_dealer_. */
-    virtual bool IsDealer ();
+    bool IsDealer ();
 
     /** Sets is_dealer_. */
     virtual void SetIsDealer (bool is_dealer);
@@ -117,10 +129,14 @@ class Player {
     /** Prints the player to the console. */
     virtual void Print () = 0;
 
+    /** Script operations. */
+    virtual const _::Operation* Star (uint index, _::Expression* expr) = 0;
+
     protected:
 
     id::User * user_;       //< User attached to this Player.
-    bool       is_dealer_;  //< Flags if this player is the dealer or not.
+    bool       is_turn_,    //< Flags if it's this player's turn.
+               is_dealer_;  //< Flags if this player is the dealer or not.
     int        state_,      //< The state of the player.
                num_points_, //< Number of points.
                num_wins_;   //< Total number of wins.

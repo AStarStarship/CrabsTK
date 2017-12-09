@@ -28,11 +28,11 @@ bool IsReadable (Slot* slot) {
 
 const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
     if (slot == nullptr)
-        return SlotResult (slot, Bin::RoomError);
+        return SlotResult (slot, Bin::kErrorRoom);
     if (params == nullptr)
-        return SlotResult (slot, Bin::RoomError);
+        return SlotResult (slot, Bin::kErrorRoom);
     if (args == nullptr)
-        return SlotResult (slot, Bin::RoomError);
+        return SlotResult (slot, Bin::kErrorRoom);
     Bin* bin = reinterpret_cast<Bin*> (slot);
 
     byte //array_type,            //< The current array type.
@@ -123,7 +123,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
 
                 while (ui1 != 0 && count != 0) {
                     if (count-- == 0)
-                        return SlotResult (slot, Bin::BufferUnderflowError,
+                        return SlotResult (slot, Bin::kErrorBufferUnderflow,
                                            params, index, start);
 #if SCRIPT_DEBUG
                     putchar (ui1);
@@ -145,7 +145,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
             case BOL:
 #if USING_1_BYTE_TYPES
                 if (length == 0)
-                    return SlotResult (slot, Bin::BufferUnderflowError, params,
+                    return SlotResult (slot, Bin::kErrorBufferUnderflow, params,
                                        index, start);
                 --length;
 
@@ -169,7 +169,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
                     // Word-align
                     offset = TypeAlign2 (start);
                     if (length < offset + 2)
-                        return SlotResult (slot, Bin::BufferUnderflowError,
+                        return SlotResult (slot, Bin::kErrorBufferUnderflow,
                                            params, index, start);
                     length -= offset + 2;
                     start += offset;
@@ -197,7 +197,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
                     // Word-align
                     offset = TypeAlign4 (start);
                     if (length < offset + 4)
-                        return SlotResult (slot, Bin::BufferUnderflowError,
+                        return SlotResult (slot, Bin::kErrorBufferUnderflow,
                                            params, index, start);
                     length -= offset + 4;
                     start += offset;
@@ -225,7 +225,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
                     // Word-align
                     offset = TypeAlign8 (start);
                     if (length < offset + 8)
-                        return SlotResult (slot, Bin::BufferUnderflowError, params, index, start);
+                        return SlotResult (slot, Bin::kErrorBufferUnderflow, params, index, start);
                     length -= offset + 8;
                     start += offset;
                     if (start >= end) start -= size;    //< Bound
@@ -269,18 +269,18 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
                 type &= 0x1f;       //< Now type is the type 0-31
                 if (count && (type >= OBJ)) {
                     // Can't make arrays out of objects!
-                    return SlotResult (slot, Bin::InvalidTypeError, params, index, start);
+                    return SlotResult (slot, Bin::kErrorInvalidType, params, index, start);
                 }
                 // We don't care if it's a multidimensional array anymore.
                 ui1_ptr = reinterpret_cast<uint8_t*> (args[index]);
                 if (ui1_ptr == nullptr)
-                    return SlotResult (slot, Bin::RoomError, params, index, start);
+                    return SlotResult (slot, Bin::kErrorRoom, params, index, start);
                 count &= 0x3;
                 switch (count) {
                     case 0: { // It's a 8-bit count.
                         if (type >= LST) {
                             // LST, BAG, BOK, and MAP cannot take a 8-bit count!
-                            return SlotResult (slot, Bin::InvalidTypeError,
+                            return SlotResult (slot, Bin::kErrorInvalidType,
                                                params, index, start);
                         }
                         count = (uintptr_t)*ui1_ptr;
@@ -288,47 +288,47 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
                     }
                     case 1: { // It's a 16-bit count.
                         if (length < 3)
-                            return SlotResult (slot, Bin::BufferUnderflowError,
+                            return SlotResult (slot, Bin::kErrorBufferUnderflow,
                                                params, index, start);
                         count -= 2;
                         ui2_ptr = reinterpret_cast<uint16_t*> (ui1_ptr);
                         count = (uintptr_t)*ui2_ptr;
                         if (count > length)
-                            return SlotResult (slot, Bin::BufferOverflowError,
+                            return SlotResult (slot, Bin::kErrorBufferOverflow,
                                                params, index, start);
                         break;
                     }
                     case 2: { // It's a 32-bit count.
                         if (length < 5)
-                            return SlotResult (slot, Bin::BufferUnderflowError,
+                            return SlotResult (slot, Bin::kErrorBufferUnderflow,
                                                params, index, start);
                         count -= 4;
                         ui4_ptr = reinterpret_cast<uint32_t*> (ui1_ptr);
                         count = (uintptr_t)*ui4_ptr;
                         if (count > length)
-                            return SlotResult (slot, Bin::BufferOverflowError,
+                            return SlotResult (slot, Bin::kErrorBufferOverflow,
                                                params, index, start);
                         break;
                     }
                     case 3: { // It's a 64-bit count.
                         if (length < 9)
-                            return SlotResult (slot, Bin::BufferUnderflowError,
+                            return SlotResult (slot, Bin::kErrorBufferUnderflow,
                                                params, index, start);
                         count -= 8;
                         ui8_ptr = reinterpret_cast<uint64_t*> (ui1_ptr);
                         count = (uintptr_t)*ui8_ptr;
                         if (count > length)
-                            return SlotResult (slot, Bin::BufferOverflowError,
+                            return SlotResult (slot, Bin::kErrorBufferOverflow,
                                                params, index, start);
                         break;
                     }
                     default:
                     {
-                        return SlotResult (slot, Bin::RoomError, params, index, start);
+                        return SlotResult (slot, Bin::kErrorRoom, params, index, start);
                     }
                 }
                 if (length < count)
-                    return SlotResult (slot, Bin::BufferOverflowError, params, index, start);
+                    return SlotResult (slot, Bin::kErrorBufferOverflow, params, index, start);
                 if (count == 0)
                     break;          //< Not sure if this is an error.
                 if (start + count >= end) {
@@ -358,7 +358,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
 #if SCRIPT_DEBUG
                     printf ("\n!!!Read invalid type %u\n", type);
 #endif  //< SCRIPT_DEBUG
-                    return SlotResult (slot, Bin::InvalidTypeError, params,
+                    return SlotResult (slot, Bin::kErrorInvalidType, params,
                                        index, start);
                 }
             }

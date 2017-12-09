@@ -129,11 +129,11 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
                                                    status, handle)))
                 return expr->result;
             if (player_number < 0) {
-                return Result (expr, Bin::InvalidArgumentError,
+                return Result (expr, Bin::kErrorInvalidArgument,
                                Params<1, SI4> ());
             }
             if (player_number > kMaxPlayers) {
-                return Result (expr, Bin::InvalidArgumentError,
+                return Result (expr, Bin::kErrorInvalidArgument,
                                Params<1, SI4> ());
             }
             players_.Grow (player_number);

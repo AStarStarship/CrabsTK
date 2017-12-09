@@ -1,6 +1,6 @@
 /** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/script/include/window.h
+    @file    ~/source/kabuki/script/window.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -31,23 +31,7 @@ class KABUKI Window : public Operation {
     public:
 
     /** Constructs a Window. */
-    Window (Bin* bin, Bout* bout);
-
-    /** Sets the Portal up for a batch of bytes transfer.
-        Implementation of this function is not required to do anything, but
-        regardless it will be called by the Set. */
-    virtual void Prime ();
-
-    /** Gets the length of current portal.
-        @warning Length might not be the actual length, but rather the length
-        of the data that is read to be pulled. */
-    virtual uint_t Length ();
-
-    /** Feeds tx messages through the a without scanning them. */
-    virtual void Feed (byte b);
-
-    /** Pulls rx messages through the a and runs them through the scanner. */
-    virtual byte Pull ();
+    Window (Bin* bin = nullptr, Bout* bout = nullptr);
 
     /** Script Operations. */
     virtual const Operation* Star (uint index, Expression* expr);

@@ -71,9 +71,9 @@ class KABUKI Password {
 
     private:
 
-    char     * key_;       //< Unencrypted password.
+    char         * key_;           //< Unencrypted password.
     Authenticator* authenticator_; //< Password authenticator.
-    int        type_;      //< The validation type.
+    int            type_;          //< The validation type.
 };
 
 }       //< namespace id

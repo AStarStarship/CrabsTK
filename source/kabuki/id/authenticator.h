@@ -30,13 +30,13 @@ struct Authenticator {
         @param  handle The handle to validate.
         @return Returns null upon success and a pointer to an error string
                 if the input is invalid. */
-    virtual const char* HandleIsValid (const char* handle) = 0;
+    virtual const char* HandleIsInvalid (const char* handle) = 0;
 
     /** Function validates the password for correctness.
         @param  password The password to validate.
         @return Returns null upon success and a pointer to an error string
                 if the input is invalid. */
-    virtual const char* PasswordIsValid (const char* password) = 0;
+    virtual const char* PasswordIsInvalid (const char* password) = 0;
 };
 
 }       //< namespace id

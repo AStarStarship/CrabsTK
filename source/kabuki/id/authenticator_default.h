@@ -25,24 +25,36 @@ class AuthenticatorDefault : public Authenticator {
 
     AuthenticatorDefault ();
 
+    /** Gets the min handle length. */
     int GetMinHandleLength ();
 
+    /** Gets the max handle length. */
     int GetMaxHandleLength ();
 
+    /** Gets the min password length. */
     int GetMinPasswordLength ();
 
+    /** Gets the max password length. */
     int GetMaxPasswordLength ();
+    
+    /** Function validates the handle for correctness.
+        @param  handle The handle to validate.
+        @return Returns null upon success and a pointer to an error string
+                if the input is invalid. */
+    virtual const char* HandleIsInvalid (const char* handle);
 
-    virtual const char* HandleIsValid (const char* handle);
-
-    virtual const char* PasswordIsValid (const char* password);
+    /** Function validates the password for correctness.
+        @param  password The password to validate.
+        @return Returns null upon success and a pointer to an error string
+                if the input is invalid. */
+    virtual const char* PasswordIsInvalid (const char* password);
     
     private:
 
     int min_handle_length_,
         max_handle_length_,
         min_password_length_,
-        max_password_length;
+        max_password_length_;
 };
 
 }       //< namespace id

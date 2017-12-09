@@ -131,10 +131,10 @@ const Operation* ExpressionReset (Expression* expr) {
 
 const Operation* Push (Expression* expr, Operand* operand) {
     if (expr == nullptr) {
-        return Result (expr, Bin::RoomError);
+        return Result (expr, Bin::kErrorRoom);
     }
     if (operand == nullptr) {
-        return Result (expr, Bin::InvalidOperandError);
+        return Result (expr, Bin::kErrorInvalidOperand);
     }
 #if SCRIPT_DEBUG
     const Operation* op = operand->Star ('?', nullptr);
@@ -142,7 +142,7 @@ const Operation* Push (Expression* expr, Operand* operand) {
 #endif  //< SCRIPT_DEBUG
     uint_t stack_count = expr->stack_count;
     if (stack_count >= expr->stack_size) {
-        return Result (expr, Bin::StackOverflowError);
+        return Result (expr, Bin::kErrorStackOverflow);
     }
     ExpressionStack (expr)[stack_count - 1] = expr->operand;
     expr->operand = operand;
@@ -156,7 +156,7 @@ const Operation* Push (Expression* expr, Operand* operand) {
 const Operation* Pop (Expression* expr) {
     uint_t stack_count = expr->stack_count;
     if (stack_count == 0) { // This should not happen.
-        return Result (expr, Bin::InvalidOperandError);
+        return Result (expr, Bin::kErrorInvalidOperand);
     }
     if (stack_count == 1) {
         // We ever pop off the root.
@@ -180,7 +180,7 @@ const Operation* Pop (Expression* expr) {
 byte ExpressionExitState (Expression* expr) {
     // We are guaranteed expr is not null at this point.
     //if (expr == nullptr) {
-    //    return  BinResult (ExpressionBin (expr), Bin::RoomError);
+    //    return  BinResult (ExpressionBin (expr), Bin::kErrorRoom);
     //}
 #if SCRIPT_DEBUG
     cout << "\n| Exiting " << BinStateString (expr->bin_state)
@@ -195,10 +195,10 @@ byte ExpressionExitState (Expression* expr) {
 const Operation* ExpressionSetState (Expression* expr, Bin::State state) {
     // We are guaranteed expr is not null at this point.
     //if (expr == nullptr) {
-    //    return  BinResult (ExpressionBin (expr), Bin::RoomError);
+    //    return  BinResult (ExpressionBin (expr), Bin::kErrorRoom);
     //}
     if (state == Bin::LockedState) {
-        return BinResult (ExpressionBin (expr), Bin::LockedError);
+        return BinResult (ExpressionBin (expr), Bin::kErrorLocked);
     }
 #if SCRIPT_DEBUG
     cout << "\n| Entering " << BinStateString (state)
@@ -212,7 +212,7 @@ const Operation* ExpressionEnterState (Expression* expr,
                                        Bin::State state) {
     // We are guaranteed expr is not null at this point.
     //if (expr == nullptr) {
-    //    return  BinResult (ExpressionBin (expr), Bin::RoomError);
+    //    return  BinResult (ExpressionBin (expr), Bin::kErrorRoom);
     //}
 #if SCRIPT_DEBUG
     cout << "\n| Entering " << BinStateString (state)
@@ -229,7 +229,7 @@ byte ExpressionStreamBout (Expression* expr) {
 
 const Operation* ExpressionScan (Expression* expr) {
     if (expr == nullptr) {
-        return Result (expr, Bin::RoomError);
+        return Result (expr, Bin::kErrorRoom);
     }
 
     uint_t            size,         //< Size of the ring buffer.
@@ -346,13 +346,13 @@ const Operation* ExpressionScan (Expression* expr) {
                     // optimized.
                     //result = expr->result;
                     //if (result == nullptr) {
-                    //    return Result (expr, Bin::InvalidOperandError);
+                    //    return Result (expr, Bin::kErrorInvalidOperand);
                     //}
                     //ExpressionPushScan (expr, expr->operand);
                     // Clear the buffer and return.
                     //ExpressionClear (expr); //< Do I really need to clear?
                     //return expr->result;
-                    return ExpressionForceDisconnect (expr, Bin::InvalidOperandError);
+                    return ExpressionForceDisconnect (expr, Bin::kErrorInvalidOperand);
                 }
                 const uint_t* params = op->params;
                 uintptr_t num_ops = reinterpret_cast<uintptr_t> (params);
@@ -368,7 +368,7 @@ const Operation* ExpressionScan (Expression* expr) {
 #if SCRIPT_DEBUG
                         PrintDebug ("Expression::Error reading address.");
 #endif  //< SCRIPT_DEBUG
-                        return ExpressionForceDisconnect (expr, Bin::RoomError);
+                        return ExpressionForceDisconnect (expr, Bin::kErrorRoom);
                     }
 
                     operand = expr->operand;
@@ -376,7 +376,7 @@ const Operation* ExpressionScan (Expression* expr) {
 #if SCRIPT_DEBUG
                         cout << "\n| Null operand found!";
 #endif  //< SCRIPT_DEBUG
-                        return ExpressionForceDisconnect (expr, Bin::InvalidOperandError);
+                        return ExpressionForceDisconnect (expr, Bin::kErrorInvalidOperand);
                     }
                     header = op->params;
                     expr->params_left = *header;
@@ -419,7 +419,7 @@ const Operation* ExpressionScan (Expression* expr) {
 #if SCRIPT_DEBUG
                         PrintDebug ("\n| Scanning address.");
 #endif  //< SCRIPT_DEBUG
-                        Result (expr, Bin::InvalidTypeError);
+                        Result (expr, Bin::kErrorInvalidType);
                         ExpressionEnterState (expr, Bin::LockedState);
                         bin_state = Bin::LockedState;
                         break;
@@ -531,7 +531,7 @@ const Operation* ExpressionScan (Expression* expr) {
             }
             case Bin::Utf8State: {
                 if (bytes_left == 0) {
-                    Result (expr, Bin::StringOverflowError,
+                    Result (expr, Bin::kErrorStringOverflow,
                             const_cast<const uint_t*>(expr->header), 0, start);
                     break;
                 }
@@ -607,7 +607,7 @@ const Operation* ExpressionScan (Expression* expr) {
                             const_cast<const uint_t*>(expr->header);
                         
                         ExpressionEnterState (expr, Bin::ErrorState);
-                        return Result (expr, Bin::VarintOverflowError, header, 0, start);
+                        return Result (expr, Bin::kErrorVarintOverflow, header, 0, start);
                     }
 
                     break;
@@ -659,7 +659,7 @@ const Operation* ExpressionScan (Expression* expr) {
 #if SCRIPT_DEBUG
                     printf ("\n| Error: expecting hash:0x%x and found 0x%x.", hash, found_hash);
 #endif  //< SCRIPT_DEBUG
-                    return ExpressionForceDisconnect (expr, Bin::InvalidHashError);
+                    return ExpressionForceDisconnect (expr, Bin::kErrorInvalidHash);
                 }
 #if SCRIPT_DEBUG
                 cout << "\n| Success reading hash!";
@@ -759,7 +759,7 @@ bool ExpressionContains (Expression* expr, void* address) {
 const Operation* ExpressionScanHeader (Expression* expr, const uint_t* header) {
     if (expr->stack_count >= expr->stack_size) {
         // Handle overflow cleanup:
-        return Result (expr, Bin::StackOverflowError, header);
+        return Result (expr, Bin::kErrorStackOverflow, header);
     }
 
     return 0;
@@ -905,6 +905,18 @@ void ExpressionPrint (Expression* expr) {
     //system ("PAUSE");
 }
 #endif //< USE_MORE_ROM
+const Operation* ExpressionPrint (Expression* expr, const Operation* operation) {
+    void* args[2];
+    uintptr_t num_operations = (uintptr_t)operation->params,
+              first_operation = (uintptr_t)operation->result;
+    return ExprResult (expr, Params<5, STX, kOperationMaxNameLength,
+                                       UV8, UV8,
+                                       STX, kOperationMaxDescriptionLength> (),
+                       Args (args, operation->name,
+                             &num_operations, &first_operation,
+                             operation->metadata));
+}
+
 /*
 Bin* ExpressionInit (uintptr_t* buffer, uint_t size) {
     if (buffer == nullptr)

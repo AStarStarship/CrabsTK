@@ -17,7 +17,7 @@
 #ifndef SCRIPT_PORTAL_H
 #define SCRIPT_PORTAL_H
 
-#include "config.h"
+#include "window.h"
 
 namespace _ {
 
@@ -26,21 +26,11 @@ namespace _ {
     TCP/HTTP/UDP, Bluetooth, CAN. */
 struct KABUKI Portal {
 
-    /** Sets the Portal up for a batch of bytes transfer.
-         Implementation of this function is not required to do anything, but 
-         regardless it will be called by the Set. */
-    //virtual void Prime () = 0;
-
-    /** Gets the length of current portal.
-        @warning Length might not be the actual length, but rather the length
-                 of the data that is read to be pulled. */
-    //virtual uint_t Length () = 0;
-
     /** Feeds tx messages through the a without scanning them. */
-    virtual void Feed () = 0;
+    virtual Expression* GetSlot () = 0;
 
     /** Pulls rx messages through the a and runs them through the scanner. */
-    virtual void Pull () = 0;
+    virtual Window* GetWindow () = 0;
 };
 }       //< namespace _
 #endif  //< SCRIPT_PORTAL_H

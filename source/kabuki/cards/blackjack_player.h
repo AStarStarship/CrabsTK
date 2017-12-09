@@ -42,8 +42,9 @@ class BlackjackPlayer : public Player {
     enum States {
         kStateObserving     = 0, //< State when player is waiting to join.
         kStatePlayingRound  = 1, //< State when player is playing normally.
-        kStateHolding       = 2, //< State when player is holding.
-        kStateOutOfGame     = 3  //< State when player has lost game.
+        kStateMyTurn        = 2, //< State when it's this player's turn.
+        kStateHolding       = 3, //< State when player is holding.
+        kStateOutOfGame     = 4  //< State when player has lost game.
     };
 
     /** Default Constructor. */
@@ -55,6 +56,12 @@ class BlackjackPlayer : public Player {
 
     /** Sets the state of the player. */
     const char* SetState (int state) override;
+
+    /** Handles hit signal. */
+    void Hit ();
+
+    /** Handles hold signal. */
+    void Hold ();
 
     /** Returns the HighLowScore. */
     //Array<CardCombo> GetHandCombos ();
@@ -97,6 +104,9 @@ class BlackjackPlayer : public Player {
 
     /** Prints the player to the console. */
     virtual void Print ();
+
+    /** Script operations. */
+    virtual const _::Operation* Star (uint index, _::Expression* expr);
 
     protected:
 

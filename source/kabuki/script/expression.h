@@ -74,14 +74,14 @@ struct Expression {
     /** List of Expression Error Operations. */
     typedef enum Errors {
         BufferOverflowError  = 0,
-        BufferUnderflowError = 1,
-        InvalidOperandError,
-        StackOverflowError,
+        kErrorBufferUnderflow = 1,
+        kErrorInvalidOperand,
+        kErrorStackOverflow,
         LockedStateError,
-        StringOverflowError,
-        VarintOverflowError,
+        kErrorStringOverflow,
+        kErrorVarintOverflow,
         ReadInvalidTypeError,
-        RoomError
+        kErrorRoom
     } Error;
 
     enum {
@@ -301,6 +301,9 @@ KABUKI void ExpressionPrintStack (Expression* expr);
 
 /** Prints the given Expression to the console. */
 KABUKI void ExpressionPrint (Expression* expr);
+
+KABUKI const Operation* ExpressionPrint (Expression* expr,
+                                         const Operation* operation);
 #endif  //< USE_MORE_ROM
 
 }       //< namespace _

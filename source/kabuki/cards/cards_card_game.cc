@@ -38,7 +38,7 @@ const char* CardGame::GetGameName () {
     return game_name_;
 }
 
-uint CardGame::GetState () {
+int32_t CardGame::GetState () {
     return state_;
 }
 
@@ -54,11 +54,11 @@ int CardGame::GetNumPlayers () {
     return observers_.GetCount ();
 }
 
-int32_t CardGame::GetMinPlayers () {
+int CardGame::GetMinPlayers () {
     return min_players_;
 }
 
-int32_t CardGame::GetMaxPlayers () {
+int CardGame::GetMaxPlayers () {
     return observers_.GetSize ();
 }
 
@@ -71,14 +71,14 @@ void CardGame::PrintObservers () {
 void CardGame::Print () {
 }
 
-int CardGame::AddObserver (User* user) {
+int CardGame::Join (User* user) {
     if (user == nullptr) {
         return -1;
     }
     return observers_.Push (user);
 }
 
-int CardGame::RemoveObserver (User* user) {
+int CardGame::Leave (User* user) {
     for (int i = observers_.GetCount (); i > 0; --i) {
         User* user = observers_[i];
         // user will never be nil.
@@ -144,11 +144,11 @@ const Operation* CardGame::Star (uint index, _::Expression* expr) {
                                                    status, handle)))
                 return expr->result;
             if (player_number < 0) {
-                return Result (expr, Bin::InvalidArgumentError,
+                return Result (expr, Bin::kErrorInvalidArgument,
                                Params<1, SI4> ());
             }
             if (player_number > kMaxPlayers) {
-                return Result (expr, Bin::InvalidArgumentError,
+                return Result (expr, Bin::kErrorInvalidArgument,
                                Params<1, SI4> ());
             }
             observers_.Grow (player_number);

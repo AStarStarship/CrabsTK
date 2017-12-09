@@ -153,8 +153,7 @@ class KabukiCardsServer : public ::kabuki::cards::Server {
     KabukiCardsServer (boost::asio::io_service& io_service,
                  const tcp::endpoint& endpoint) :
         acceptor_ (io_service, endpoint),
-        socket_ (io_service),
-        users_ (kMaxNumUsers) {
+        socket_ (io_service){
         AcceptConnection ();
     }
 
@@ -173,7 +172,6 @@ class KabukiCardsServer : public ::kabuki::cards::Server {
     tcp::acceptor acceptor_;
     tcp::socket   socket_;
     ChatRoom      room_;
-    UserList      users_;
 };
 
 int main (int argc, char* argv[]) {

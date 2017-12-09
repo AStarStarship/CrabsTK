@@ -190,5 +190,7 @@ KABUKI void OperandPrint (Operand* operand);
 /** Evaluated Nil Operation result. */
 KABUKI const Operation* NilResult ();
 
+KABUKI const Operation* InvalidOperation ();
+
 }   //< namespace _
 #endif  //< SCRIPT_OPERATION_H

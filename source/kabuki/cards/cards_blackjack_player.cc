@@ -92,6 +92,23 @@ BlackjackPlayer::~BlackjackPlayer () {
     // Nothing to do here.
 }
 
+void BlackjackPlayer::Hit () {
+    is_turn_ = false;
+    state_ = kStateWaitingForTurn;
+#if DEBUG_SCRIPT
+    cout << "\n| Player " << GetUser ()->GetHandle ().GetKey () << " hits.";
+#endif //< DEBUG_SCRIPT
+}
+
+void BlackjackPlayer::Hold () {
+    is_turn_ = false;
+    state_ = kStateHolding;
+#if DEBUG_SCRIPT
+    cout << "\n| Player " << GetUser ()->GetHandle ().GetKey () << " holds.";
+#endif //< DEBUG_SCRIPT
+
+}
+
 const char* BlackjackPlayer::SetState (int state) {
     static const char* error = "Invalid state";
     if (state < 0) {
@@ -273,6 +290,53 @@ void BlackjackPlayer::Print () {
 
     hand_.GetVisibleCards ().Print ();
     PrintLine ("|", '_');
+}
+
+const Operation* BlackjackPlayer::Star (uint index, _::Expression* expr) {
+    static const Operation This = { "BlackjackPlayer",
+        NumOperations (0), FirstOperation ('A'),
+        "Player in a Blackjack game.", 0 };
+    void* args[2];
+    char handle[Handle::kDefaultMaxLength],
+        tweet[141];
+    switch (index) {
+        case '?': { if (!expr) return &This;
+            return ExpressionPrint (expr, &This);
+        }
+        case 'A': {
+            static const Operation OpA = { "Hit",
+                Params<0> (), Params<0> (),
+                "Signals a player to \"hit me\" and take another card.", 0 };
+            if (!expr) return &OpA;
+            if (!IsTurn ()) {
+                return Result (expr, Bin::kErrorInvalidOperand);
+            }
+            SetState (kStatePlayingRound);
+        }
+        case 'B': {
+            static const Operation OpA = { "Hold",
+                Params<0> (), Params<0> (),
+                "Signals a player to \"hold\" and not take any more cards "
+                "this round.", 0 };
+            if (!expr) return &OpA;
+            if (!IsTurn ()) {
+                return Result (expr, Bin::kErrorInvalidOperand);
+            }
+            SetState (kStatePlayingRound);
+        }
+        case 'C': {
+            static const Operation OpA = { "Tweet",
+                Params<2, STX, Handle::kDefaultMaxLength, STX, 141> (), Params<0> (),
+                "Sends a message of 140 chars or less to this player.", 0 };
+            if (!expr) return &OpA;
+            if (ExprArgs (expr, Params<2, STX, Handle::kDefaultMaxLength, STX,
+                                       141> (),
+                          Args (args, handle, tweet))) return expr->result;
+            cout << "\n| Message from @" << handle << "\n| " << tweet;
+            return nullptr;
+        }
+    }
+    return Result (expr, Bin::kErrorInvalidOperation);
 }
 
 }   //< namespace cards

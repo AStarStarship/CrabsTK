@@ -142,9 +142,14 @@ bool IsGroup (const Operation* ope) {
 
 const Operation* NilResult () {
 static const Operation Result = { "Nil",
-		NumOperations (0), FirstOperation (' '),
-		nullptr, 0 };
+        NumOperations (0), FirstOperation (' '),
+        nullptr, 0 };
     return &Result;
+}
+
+
+const Operation* InvalidOperation () {
+    return reinterpret_cast<const Operation*> (1);
 }
 
 }   //< namespace _

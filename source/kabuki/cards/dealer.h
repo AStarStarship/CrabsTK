@@ -35,76 +35,89 @@ class KABUKI Dealer : public Player {
     };
     
     /** Constructor. */
-    Dealer (id::User* user, int buy_in = kDefaultAnte, int ante = kDefaultAnte,
-            int min_bet     = kDefaultMinBet,
-            int min_players = kDefaultMinPlayers,
-            int max_players = kDefaultMaxPlayer);
+    Dealer (id::User* user, int32_t buy_in = kDefaultAnte, int32_t ante = kDefaultAnte,
+            int32_t min_bet     = kDefaultMinBet,
+            int32_t min_players = kDefaultMinPlayers,
+            int32_t max_players = kDefaultMaxPlayer,
+            int32_t num_decks   = Deck::kDefaultNumDecks);
     
     /** Destructor. */
     virtual ~Dealer ();
 
     /** Gets the round_number_. */
-    int GetRoundNumber ();
+    int32_t GetRoundNumber ();
 
-    /** Returns the number of Players. */
-    int GetNumPlayers ();
+    /** Gets the number of Players. */
+    int32_t GetNumPlayers ();
 
     /** Creates and adds a mew player to the game from the given User. */
     virtual void AddPlayer (Player* player);
     
     /** Removes the Player with the specified handle from the players_.
         @returns the index number of the player if the player is found. */
-    virtual int RemovePlayer (const char* handle);
+    virtual int32_t RemovePlayer (const char* handle);
                                                     
     /** Removes a Player with the specified index from the game.
         @return Returns 0 upon success.
         @return Returns -1 if player_number is < 0.
         @return Returns 1 if the player_number is > getNumPlayers ().*/
-    virtual int RemovePlayer (int player_number);
+    virtual int32_t RemovePlayer (int32_t player_number);
                                                     
-    /** Returns a pointer to the player with the specified player_number.
+    /** Gets a pointer to the player with the specified player_number.
         @return Returns nil if the player_number < 0 or > GetNumPlayers (). */
-    Player* GetPlayer (int player_number);
+    Player* GetPlayer (int32_t player_number);
 
-    /** Returns the address of the dealer's pack. */
+    /** Gets the current_player_ */
+    int32_t GetCurrentPlayer ();
+
+    /** Sets the current_player_ */
+    bool SetCurrentPlayer (int32_t session);
+
+    /** Gets the address of the dealer's pack. */
     Deck& GetPack ();
     
-    /** Returns the address of the dealer's stock. */
+    /** Gets the address of the dealer's stock. */
     CardStack& GetStock ();
 
-    /** Returns the total number of points in the pot. */
-    int GetPotTotal ();
+    /** Gets the total number of points in the pot. */
+    int32_t GetPotTotal ();
     
     /** Sets the pot_total_. */
-    virtual void SetPotTotal (int new_total);
+    virtual void SetPotTotal (int32_t new_total);
     
     /** Adds the pointsToAdd to the pot_total_.
         @pre    pointsToAdd > 0 */
-    virtual void AddToPot (int points);
+    virtual void AddToPot (int32_t points);
 
-    /** Returns the total number of points in the pot */
-    int GetBuyIn ();
+    /** Gets the total number of points in the pot */
+    int32_t GetBuyIn ();
     
     /** Sets the pot_total_. */
-    void SetBuyIn (int ante);
+    void SetBuyIn (int32_t ante);
 
-    /** Returns the total number of points in the pot. */
-    int GetAnte ();
+    /** Gets the total number of points in the pot. */
+    int32_t GetAnte ();
     
     /** Sets the pot_total_. */
-    void SetAnte (int ante);
+    void SetAnte (int32_t ante);
 
-    /** Returns the current min bet. */
-    int GetMinBet ();
+    /** Gets the current min bet. */
+    int32_t GetMinBet ();
     
     /** Sets the minBet to the value. */
-    void SetMinBet (int value);
+    virtual const char* SetMinBet (int32_t value);
 
-    /** Returns the current min_players_. */
-    int GetMinPlayers ();
+    /** Gets the current min_players_. */
+    int32_t GetMinPlayers ();
 
-    /** Returns the current min bet. */
-    int GetMaxPlayers ();
+    /** Gets the current min bet. */
+    int32_t GetMaxPlayers ();
+
+    /** Gets the player_number_. */
+    int32_t GetPlayerNumber ();
+    
+    /** Sets the player_number_. */
+    bool SetPlayerNumber (int32_t player_number);
 
     /** Virtual function that shuffles the cards and gets ready for a new
     round. */
@@ -131,9 +144,9 @@ class KABUKI Dealer : public Player {
     /** Compares this hand to the other.
         @return Returns 0 if the hands are equal, > 1 if the other hand beats
                 this hand and < 0 if the other hand wins.. */
-    virtual int Compare (Hand& other) = 0;
+    virtual int32_t Compare (Hand& other) = 0;
 
-    /** Returns true if this hand wins compared to the other one. */
+    /** Gets true if this hand wins compared to the other one. */
     virtual bool Wins (Hand& other) = 0;
 
     /** Prints the abridged player stats to the console. */
@@ -144,17 +157,18 @@ class KABUKI Dealer : public Player {
 
     protected:
     
-    int  round_number_,      //< Current round number.
-         pot_,               //< Number of points in the pot.
-         buy_in_,            //< Buy in price to start game.
-         ante_,              //< Current ante for the game.
-         min_bet_,           //< Min bet for this round.
-         min_players_,       //< Min players to start game.
-         max_players_,       //< Max allowed in game.
-         player_number_;     //< Index of current player who's turn it is.
-    Deck           pack_;    //< Main pack of Card objects.
-    CardStack      stock_;   //< Stock of playing Cards.
-    Array<Player*> players_; //< Array of Player pointers.
+    int32_t        round_number_,  //< Current round number.
+                   pot_,           //< Number of points in the pot.
+                   buy_in_,        //< Buy in price to start game.
+                   ante_,          //< Current ante for the game.
+                   min_bet_,       //< Min bet for this round.
+                   min_players_,   //< Min players to start game.
+                   max_players_,   //< Max allowed in game.
+                   current_player_,//< Index of the player who's turn it is.
+                   num_responses_; //< Number of responses.
+    Deck           pack_;          //< Main pack of Card objects.
+    CardStack      stock_;         //< Stock of playing Cards.
+    Array<Player*> players_;       //< Array of Player pointers.
 
 };      //< class Dealer
 }       //< namespace cards

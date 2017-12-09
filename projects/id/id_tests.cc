@@ -42,15 +42,49 @@ TEST (ID_TESTS, UserListTests) {
                                             { "user_6", "lunatic"  },
                                             { "user_1", "olives"   } };
     UserList users;
+    int result;
+    const char* handle,
+              * password;
+    cout << "\n|\n| Creating valid test users...";
+
     for (int i = 0; i < 6; ++i) {
-        CHECK_EQUAL (i + 1, users.Add (test_users[i][0], test_users[i][1]))
+        handle   = test_users[i][0];
+        password = test_users[i][1];
+        cout << "\n| Attempting to add \"" << handle << "\":\""
+             << password << "\" at index:" << i;
+        result = users.Register (handle, password);
+        cout << "\n| index: " << result;
+        CHECK_EQUAL (i + 1, result)
     }
-    CHECK_EQUAL (-1, users.Add (test_users[6][0], test_users[6][1]))
 
     users.Print ();
 
-    for (int i = 0; i < 6; ++i) {
-        CHECK_EQUAL (1, users.LogIn (test_users[i][0], test_users[i][1]))
+    cout << "\n|\n| Creating invalid test users...";
+
+    for (int i = 6; i < 7; ++i) {
+        handle = test_users[i][0];
+        password = test_users[i][1];
+        cout << "\n| Attempting to add \"" << handle << "\":\""
+             << password << "\" at index:" << i;
+        result = users.Register (handle, password);
+        cout << "\n| result:" << result;
+        CHECK_EQUAL (-1, result)
     }
+
+    users.Print ();
+
+    cout << "\n|\n| Testing UserList::LogIn users...";
+
+    for (int i = 0; i < 6; ++i) {
+        handle = test_users[i][0];
+        password = test_users[i][1];
+        cout << "\n| Attempting to log in \"" << handle << "\":\""
+            << password << "\" at index:" << i;
+        result = users.LogIn (handle, password);
+        cout << "\n| result:" << result;
+        CHECK_EQUAL (i + 1, result)
+    }
+
+    cout << "\n|\n| Done testing UserList ({:->})";
     system ("PAUSE");
 }

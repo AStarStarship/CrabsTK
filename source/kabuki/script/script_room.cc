@@ -61,6 +61,10 @@ Room::Room (const char* room_name) :
 Room::~Room () {
 }
 
+const char* Room::GetRoomName () {
+    return name_;
+}
+
 Request Room::HandleNextRequest (Request r) {
     return InvalidRequest;
 }

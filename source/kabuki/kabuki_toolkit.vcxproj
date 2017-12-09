@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\projects\cards\cards_tests.cc" />
     <ClCompile Include="..\..\projects\id\id_tests.cc" />
     <ClCompile Include="..\..\projects\kabuki_tester.cc" />
     <ClCompile Include="..\..\projects\script\script_tests.cc" />

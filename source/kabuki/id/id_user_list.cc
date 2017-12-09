@@ -22,15 +22,48 @@ using namespace std;
 namespace kabuki { namespace id {
 
 UserList::UserList (Authenticator* authenticator, int max_users) : 
+    point_cost_    (0.0),
     authenticator_ (authenticator),
-    users_     (max_users) {
+    users_         (max_users) {
     // Nothing to do here ({:->)
 }
 
 UserList::~UserList () {
-    for (int i = users_.GetCount (); i > 0; --i) {
+    int count = users_.GetCount ();
+    if (count == 0) {
+        return;
+    }
+    for (int i = count - 1; i > 0; --i) {
         delete users_.Pop ();
     }
+}
+
+double UserList::GetPointCost () {
+    return point_cost_;
+}
+
+bool UserList::SetPointCost (double point_cost) {
+    if (point_cost < 0.0) {
+        return false;
+    }
+    point_cost_ = point_cost;
+    return true;
+}
+
+bool UserList::BuyCoins (int session, uint64_t num_coins, double point_cost) {
+    User* user = GetUser (session);
+    if (!user) {
+        return false;
+    }
+    return users_[session]->BuyCoins (num_coins, point_cost);
+}
+
+bool UserList::IncreaseBalance (int session, double amount) {
+    User* user = GetUser (session);
+    if (!user) {
+        return false;
+    }
+    return users_[session]->IncreaseBalance (amount);
 }
 
 Authenticator* UserList::GetAuthenticator () {
@@ -41,49 +74,74 @@ int UserList::GetSize () { return users_.GetSize (); }
 
 int UserList::GetCount () { return users_.GetCount (); }
 
-int UserList::Add (const char* handle, const char* password) {
+int UserList::Register (const char* handle, const char* password) {
+    cout << "\n| Attempting to add new User with password:\"" 
+         << ((handle == nullptr) ? "null" : handle)
+         << "\", password:\"" 
+         << ((password == nullptr) ? "null" : password) << '\"';
     if (handle == nullptr) {
-        handle = StringClone (Handle::kDefault);
+        return -1;
     }
-    if (Find (handle)) {
+    if (authenticator_->HandleIsInvalid (handle)) {
+        cout << "\n| Invalid handle!";
+        return -1;
+    }
+    if (Find (handle) >= 0) {
+        cout << "\n| UserList contains handle!";
         return -1;
     }
     if (password == nullptr) {
         password = StringClone (Password::kDefault);
     }
+    if (authenticator_->PasswordIsInvalid (password)) {
+        cout << "\n| Invalid password!";
+        return -1;
+    }
     User* user = new User (authenticator_, users_.GetCount (),
                            handle, password);
+    cout << "\n| User added successfully. :-)";
     return users_.Push (user);
 }
 
-int UserList::Add (UserList* user_list) {
-    int count;
-    for (int i = 0; i < user_list->GetCount (); ++i) {
-        User* user = user_list->GetUser (i);
+int UserList::Register (UserList& users) {
+    int user_count = users.GetCount (),
+        new_count;
+    if (user_count == 0) {
+        return users_.GetCount ();
+    }
+    for (int i = 0; i < user_count; ++i) {
+        User* user = users.GetUser (i);
         // user should never be nil.
-        count = Add (user->GetHandle ().GetKey (), 
+        new_count = Register (user->GetHandle ().GetKey (), 
                      user->GetPassword ().GetKey ());
-        if (count < 0) {
-            return count;
+        if (new_count < 0) {
+            return new_count;
         }
     }
-    return count;
+    return new_count;
 }
 
 int UserList::Find (const char* handle) {
     if (handle == nullptr) {
         return -1;
     }
-    if (*handle == 0) //< It's an empty string.
-        return -1;
-
+    cout << "\n| Searching for handle:\"" << handle << '\"';
+    //if (*handle == 0) { //< It's an empty string.
+    //    return -1;      //  Not sure if I care about this or not.
+    //}
     // Currently using sequential search because UserList is not sorted.
-
-    for (int i = users_.GetSize () - 1; i >= 0; --i) {
-        if (users_[i]->GetHandle ().Equals (handle))
+    int count = users_.GetCount ();
+    if (count == 0) {
+        return -1;
+    }
+    for (int i = count - 1; i >= 0; --i) {
+        if (users_[i]->GetHandle ().Equals (handle)) {
+            cout << "\n| Found handle at index:" << i;
             return i;
+        }
     }
 
+    cout << "\n| Did not find handle.";
     return -1;
 }
 
@@ -94,74 +152,50 @@ User* UserList::GetUser (uid_t user_uid) {
     if (user_uid >= users_.GetCount ()) {
         return nullptr;
     }
-    return users_[user_uid];
+    return users_[(int)user_uid];
 }
 
-const char* UserList::IsValid (const char* input, int type) {
-    if (input == nullptr) {
-        return "nil input";
-    }
-    int length = StringLength (input);
-    switch (type) {
-        case kPasswordValidation: {
-            if (length < kMinPasswordLength) {
-                return "Password too short";
-            }
-            if (length > kMaxPasswordLength) {
-                return "password too long";
-            }
-            for (int i = 0; i < length; ++length) {
-                if (isspace (input[i])) {
-                    return "password can't contain whitespace.";
-                }
-            }
-            return nullptr;
-        }
-        case kHandleValidation: {
-            if (length < kMinHandleLength) {
-                return "Password too short";
-            }
-            if (length > kMaxHandleLength) {
-                return "password too long";
-            }
-            for (int i = 0; i < length; ++length) {
-                if (isspace (input[i])) {
-                    return "password can't contain whitespace.";
-                }
-            }
-            return nullptr;
-        }
-    }
-}
-
-uid_t UserList::LogIn (const char* handle, const char* password) {
+int32_t UserList::LogIn (const char* handle, const char* password) {
     return LogIn (Find (handle), password);
 }
 
-uid_t UserList::LogIn (int index, const char* password) {
+int32_t UserList::LogIn (int index, const char* password) {
+    cout << "\n| Attempting to log in as " << index << "\"" << password << "\"";
     User* user = GetUser (index);
     if (!user) {
-        return 0;
-    }
-    if (password == nullptr) {
-        return 0;
-    }
-    user = GetUser (index);
-    if (user == nullptr) {
+        cout << "\n| nil user!";
         return UidServer<>::kInvalidUid;
     }
+    if (password == nullptr) {
+        cout << "\n| nil password!";
+        return UidServer<>::kInvalidUid;
+    } 
+    cout << "\n| Comparing credentials \"" << user->GetHandle ().GetKey ()
+         << "\":\"" << user->GetPassword ().GetKey () << "\" to \""
+         << password << "\"";
+
     if (user->GetPassword ().Equals (password)) {
-        return uids_.GetNextUid ();
+        cout << "\n| Login successful :-)";
+        //uid_t uid = uids_.GetNextUid ();
+        return users_.GetCount () - 1; //< Session id is 
     }
-    return 0; //< Login unsuccessful.
+    cout << "\n| Login unsuccessful.";
+    return UidServer<>::kInvalidUid;
+}
+
+int UserList::Remove (int user_id) {
+    User* user = users_.Pop ();
+    delete user;
+    return users_.GetCount ();
 }
 
 void UserList::Print () {
-    cout << "Number of Accounts: " << users_.GetCount () << (char)13;
+    cout << "\n| UserList: Count:" << users_.GetCount () << " Size:" 
+         << users_.GetSize ();
 
-    for (int i = 0; i < users_.GetSize (); i++) {
-        cout << "Account " << (i + 1) << ": "
-            << users_.Element (i)->GetHandle ().GetKey () << (char)13;
+    for (int i = 0; i < users_.GetCount (); i++) {
+        cout << "\n| Account " << (i + 1) << ": "
+            << users_.Element (i)->GetHandle ().GetKey ();
     }
 }
 

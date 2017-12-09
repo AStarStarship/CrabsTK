@@ -55,8 +55,8 @@ class Door : public Operand {
     public:
 
     typedef enum Errors {
-        InvalidOperationError = 0,
-        RoomError
+        kErrorInvalidOperation = 0,
+        kErrorRoom
     } Error;
 
     enum {

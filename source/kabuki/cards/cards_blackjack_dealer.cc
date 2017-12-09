@@ -154,5 +154,100 @@ void BlackjackDealer::Print () {
     }
 }
 
+const Operation* BlackjackDealer::Star (uint index, Expression* expr) {
+    static const Operation This = { "BlackjackPlayer",
+        NumOperations (0), FirstOperation ('A'),
+        "Player in a Blackjack game.", 0 };
+    void* args[2];
+    char handle[id::Handle::kDefaultMaxLength],
+        tweet[141];
+    int32_t session;
+    uint64_t session_key,
+             num_points;
+    BlackjackPlayer* player;
+
+    switch (index) {
+        case '?': { if (!expr) return &This;
+            return ExpressionPrint (expr, &This);
+        }
+        case 'A': {
+            static const Operation OpA = { "Hit",
+                Params<0> (), Params<0> (),
+                "Signals a player to \"hit\" and not take any more cards "
+                "this round given correct #session and #session_key.", 0 };
+            if (!expr) return &OpA;
+            if (ExprArgs (expr, Params<2, SI4, UI8> (), Args (args, &session,
+                                                              &session_key))) {
+                return expr->result;
+            }
+            player = dynamic_cast<BlackjackPlayer*> (GetPlayer (current_player_));
+            if (player == nullptr) {
+                return Result (expr, Bin::kErrorInvalidOperand);
+            }
+            if (!player->GetUser ()->IsAuthentic (session, session_key)) {
+                return Result (expr, Bin::kErrorAuthenticationError);
+            }
+            player->Hit ();
+            PlayRound ();
+            return nullptr;
+        }
+        case 'B': {
+            static const Operation OpB = { "Hold",
+                Params<2, SI4, UI8> (), Params<0> (),
+                "Signals a player to \"hold\" and not take any more cards "
+                "this round given correct #session and #session_key.", 0 };
+            if (!expr) return &OpB;
+            if (ExprArgs (expr, Params<2, SI4, UI8> (), Args (args, &session,
+                &session_key))) {
+                return expr->result;
+            }
+            player = dynamic_cast<BlackjackPlayer*> (GetPlayer (session));
+            if (!player) {
+                return Result (expr, Bin::kErrorAuthenticationError);
+            }
+            if (session_key != player->GetUser ()->GetSessionKey ()) {
+                return Result (expr, Bin::kErrorAuthenticationError);
+            }
+            player->Hold ();
+            PlayRound ();
+            return nullptr;
+        }
+        case 'C': {
+            static const Operation OpC = { "TweetAll",
+                Params<2, STX, id::Handle::kDefaultMaxLength, STX, 141> (), 
+                       Params<0> (),
+                "Sends a message of 140 chars or less to this player.", 0 };
+            if (!expr) return &OpC;
+            if (ExprArgs (expr, Params<2, 
+                          STX, id::Handle::kDefaultMaxLength, STX, 141> (),
+                          Args (args, handle, tweet))) {
+                return expr->result;
+            }
+            cout << "\n| Message from @" << handle << "\n| " << tweet;
+        }
+        case 'D': {
+            static const Operation OpD = { "BuyCoins",
+                Params<3, SI4, UI8, UI8> (),
+                Params<UI8> (),
+                "Attempts to buy the specified number of coins.", 0 };
+            if (!expr) return &OpD;
+            if (ExprArgs (expr, Params<3, SI4, UI8, UI8> (),
+                          Args (args, &session, &session_key, &num_points))) {
+                return expr->result;
+            }
+            player = reinterpret_cast<BlackjackPlayer*> (GetPlayer (session));
+            if (!player) {
+                return Result (expr, Bin::kErrorAuthenticationError);
+            }
+            if (session_key != player->GetUser ()->GetSessionKey ()) {
+                return Result (expr, Bin::kErrorAuthenticationError);
+            }
+            cout << "\n| Message from @" << handle << "\n| " << tweet;
+            return nullptr;
+        }
+    }
+    return Result (expr, Bin::kErrorInvalidOperation);
+}
+
 }   //< namespace cards
 }   //< namespace kabuki

@@ -62,37 +62,36 @@ const char* StringEquals (const char* input, const char* query) {
         return nullptr;
     if (query == nullptr)
         return nullptr;
-    //cout << "Comparing strings equal \"" << input << "\" to \"" << query
-    //    << "\"\n";
+    cout << "\n| Comparing \"" << input << "\" to \"" << query << "\"";
 
     char i = *input,
         q = *query;
     while (i) {
-        //cout << i;
+        cout << i;
         if (i != q) { // Not a hit.
-            //cout << "; but it's not a hit\n";
+            cout << "\n| But it's not a hit\n";
             return nullptr;
         }
         if (q == 0) { // Hit!
-            //cout << "; found hit at ";
-            //PrintPointerNL (input);
+            cout << "\n| Found hit at ";
+            PrintPointerNL (input);
             return input;
         }
         i = *(++input);
         q = *(++query);
     }
     if (q != 0) {
-        //cout << "; Not a hit: no nil-term char found\n";
+        cout << "\n| Not a hit: no nil-term char found";
         return nullptr;
     }
-    //cout << "; found hit at ";
-    //PrintPointerNL (input);
+    cout << "\n| Found hit at ";
+    PrintPointerNL (input);
     return input; //< Find hit!
 }
 
 const char* StringEquals (const char* input, const char* query,
                           char delimiter) {
-    cout << "Comparing strings \"" << input << "\" to \"" << query
+    cout << "Comparing \"" << input << "\" to \"" << query
         << "\"\n";
     if (input == nullptr)
         return nullptr;
@@ -118,7 +117,7 @@ const char* StringEquals (const char* input, const char* query,
             << "\' is not the delimiter.";
         return nullptr;
     }
-    cout << "; found hit at ";
+    cout << "\n| Found hit at ";
     PrintPointerNL (input);
     return input; //< Find hit!
 }

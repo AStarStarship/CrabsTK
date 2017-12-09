@@ -35,6 +35,7 @@ class Deck {
         kAcesLow         = 0,  //< Flag for if Aces are low.
         kHasJokers       = 1,  //< Flag for whether the deck has Jokers.
         kNoJokers        = 0,  //< Flag for whether the deck has no Jokers.
+        kDefaultNumDecks = 1,  //< Default num decks.
     };
 
     // The default suit value order, Clubs=1, Diamonds=2, Hearts=3, and Spades=4.

@@ -18,6 +18,7 @@
 
 #include "deck.h"
 #include "dealer.h"
+#include "card_game.h"
 
 namespace kabuki { namespace cards {
 
@@ -31,20 +32,22 @@ class Server : public _::Room {
     } State;
     
     enum {
-        kDefaultConsoleWidth = 80, //< Num rows in a DOS console.
+        kDefaultPort         = 2048,    //< Default TCP port number.
+        kDefaultMaxUsers     = 1024,    //< Default max users.
+        kDefaultConsoleWidth = 80,      //< Default num rows in a DOS console.
+        kMaxStringLength     = 2 * 1024,//< Max string length.
+        kDefaultMaxGames     = 256,     //< Default max games.
     };
 
     /** Default constructor. */
-    Server (uint port_number, const char* server_name);
+    Server (const char* server_name = "Kabuki_Cards",
+            uint32_t port = kDefaultPort, int max_games = kDefaultMaxGames);
 
     /** Constructor. */
     virtual ~Server ();
 
     /** Gets the name of the server. */
     const char* GetServerName ();
-
-    /** Sets the name of the server. */
-    const char* SetServerName (const char* name);
 
     /** Gets the FSM state. */
     int GetState ();
@@ -60,12 +63,11 @@ class Server : public _::Room {
 
     protected:
 
-    id::Authenticator* authenticator_; //< Name, Handle, & Password authenticator.
-    const char   * server_name_;   //< Server name.
-    uint32_t       port_number_;   //< Server port number.
-    int            state_;         //< Server state.
-    id::UserList   users_;         //< Global list of User(s).
-    Array<Player*> players_; //< Array of players.
+    id::Authenticator* authenticator_; //< Handle, & Password authenticator.
+    uint32_t           state_,         //< Server state.
+                       port_;          //< Server port number.
+    id::UserList       users_;         //< Global list of User(s).
+    Array<CardGame*>   games_;         //< Array of CardGame.
 
 };      //< class Server
 

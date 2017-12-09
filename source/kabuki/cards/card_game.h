@@ -52,7 +52,7 @@ class CardGame : public id::AuthenticatorDefault, public _::Operation {
     const char* GetGameName ();
 
     /** Gets the FSM state. */
-    uint GetState ();
+    int32_t GetState ();
 
     /** Virtual function sets the FSM state to a positive value. */
     virtual bool SetState (int state);
@@ -89,12 +89,12 @@ class CardGame : public id::AuthenticatorDefault, public _::Operation {
     /** Attempts to add an observer user to the game.
         @return Returns -1 upon failure and the number of observers upon
                 success. */
-    virtual int AddObserver (id::User* user);
+    virtual int Join (id::User* user);
 
     /** Attempts to add an observer user to the game.
         @return Returns -1 upon failure and the number of observers upon
                 success. */
-    virtual int RemoveObserver (id::User* user);
+    virtual int Leave (id::User* user);
 
     /** Gets a reference to the observers_. */
     Array<id::User*>& GetObservers ();

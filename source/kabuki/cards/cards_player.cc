@@ -23,6 +23,7 @@ namespace cards {
 
 Player::Player (id::User* user, bool is_dealer) :
     user_       (user),
+    is_turn_    (false),
     is_dealer_  (false),
     num_wins_   (0),
     hand_       (52) {
@@ -32,6 +33,14 @@ Player::~Player () {}
 
 id::User* Player::GetUser () {
     return user_;
+}
+
+bool Player::IsTurn () {
+    return is_turn_;
+}
+
+void Player::SetIsTurn (bool is_turn) {
+    is_turn_ = is_turn;
 }
 
 bool Player::IsDealer () {

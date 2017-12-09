@@ -33,7 +33,7 @@ const char* DoorErrorString (Door::Error error) {
     };
 
     //if (error < 0)
-    //    return strings[Door::RoomError];
+    //    return strings[Door::kErrorRoom];
     return strings[error];
 }
 
@@ -98,7 +98,7 @@ const Operation* Door::Star (uint index, Expression* expr) {
     }
     index -= ' ';
     if (((slot_t)index) >= slots_->count)
-        return DoorResult (this, Door::InvalidOperationError);
+        return DoorResult (this, Door::kErrorInvalidOperation);
     return nullptr;
 }
 

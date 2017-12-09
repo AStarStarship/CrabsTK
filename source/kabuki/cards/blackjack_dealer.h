@@ -83,6 +83,9 @@ class BlackjackDealer : public Dealer {
     /** Prints the player to the console. */
     virtual void Print ();
 
+    /** Script operations. */
+    virtual const _::Operation* Star (uint index, _::Expression* expr);
+
 };      //< class BlackjackDealer
 }       //< namespace cards
 }       //< namespace kabuki

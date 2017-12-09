@@ -27,22 +27,6 @@ Window::Window (Bin* bin, Bout* bout):
 
 }
 
-void Window::Prime () {
-
-}
-
-uint_t Window::Length () {
-    return 0;
-}
-
-void Window::Feed (byte b) {
-
-}
-
-byte Window::Pull () {
-    return 0;
-}
-
 const Operation* Window::Star (uint index, Expression* expr) {
     return 0;
 }

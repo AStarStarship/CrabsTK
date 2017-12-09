@@ -31,12 +31,12 @@ const Operation* SlotResult (Slot* slot, Bout::Error error) {
 
 const Operation* Slotwrite (Slot* slot, const uint_t* params, void** args) {
     if (slot == nullptr)     //< Is this a double check?
-        return SlotResult (slot, Bout::RoomError);
+        return SlotResult (slot, Bout::kErrorRoom);
     if (params == nullptr)
-        return SlotResult (slot, Bout::RoomError);
+        return SlotResult (slot, Bout::kErrorRoom);
     if (args == nullptr)
-        return SlotResult (slot, Bout::RoomError);
-    return SlotResult (slot, Bout::RoomError);
+        return SlotResult (slot, Bout::kErrorRoom);
+    return SlotResult (slot, Bout::kErrorRoom);
 }
 //bool IsWritable (MirrorOut* mirror) {
 //   return mirror->start != mirror->stop;

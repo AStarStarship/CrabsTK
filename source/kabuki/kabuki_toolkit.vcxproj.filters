@@ -185,6 +185,9 @@
     <ClCompile Include="cards\cards_blackjack_player_ai.cc">
       <Filter>source\kabuki\cards</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\projects\cards\cards_tests.cc">
+      <Filter>projects\cards</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="script\address.h">

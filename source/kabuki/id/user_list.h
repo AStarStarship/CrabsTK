@@ -47,6 +47,19 @@ class KABUKI UserList {
     /** Destructs list of users. */
     virtual ~UserList ();
 
+    /** Gets the point_cost_ */
+    double GetPointCost ();
+
+    /** Attempts to set the point cost. */
+    bool SetPointCost (double point_cost);
+
+    /** Attempts to buy the given points.
+    @returns false if the balance_ is too low. */
+    bool BuyCoins (int session, uint64_t num_coins, double point_cost);
+
+    /** Increase the balance_ by the given amount. */
+    bool IncreaseBalance (int session, double amount);
+
     /** Gets the authenticator. */
     Authenticator* GetAuthenticator ();
 
@@ -57,10 +70,10 @@ class KABUKI UserList {
     int GetCount ();
 
     /** Adds a new User to the list with the given handle and password. */
-    int Add (const char* handle, const char* password = Password::kDefault);
+    int Register (const char* handle, const char* password = Password::kDefault);
 
     /** Adds a list of User (string) to the list. */
-    int Add (UserList* enities);
+    int Register (UserList& users);
 
     /** Finds an entity in the list by the given search char. */
     int Find (const char* string);
@@ -69,20 +82,23 @@ class KABUKI UserList {
         @return Returns nil if the user_number is invalid. */
     User* GetUser (uid_t user_number);
 
-    /** Validates the input for correctness. */
-    virtual const char* IsValid (const char* input, int type);
+    /** Attempts to login to the given session and returns a session key. */
+    virtual int32_t LogIn (const char* handle, const char* password);
 
     /** Attempts to login to the given session and returns a session key. */
-    virtual uid_t LogIn (const char* handle, const char* password);
+    virtual int32_t LogIn (int session, const char* password);
 
-    /** Attempts to login to the given session and returns a session key. */
-    virtual uid_t LogIn (int session, const char* password);
+    /** Attempts to remove the given user_id.
+        @return Returns negative upon failure and the user count upon
+                success. */
+    virtual int Remove (int user_id);
 
     /** Prints this object to the log. */
     void Print ();
     
     private:
     
+    double         point_cost_;    //< Cost per point.
     Authenticator* authenticator_; //< Handle, & Password Authenticator.
     Array<User*>   users_;         //< User list.
     UidServer<>    uids_;          //< Unique Id Server

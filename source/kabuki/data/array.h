@@ -105,7 +105,7 @@ class Array {
             return -2;
         }
         if (index > count) {
-            return ~0;
+            return -3;
         }
         if (index == size) {
             Grow ();
@@ -114,7 +114,7 @@ class Array {
         if (count == 0) {
             array_ptr[0] = value;
             count_ = 1;
-            return 0;
+            return 1;
         }
         if (count == 1) {
             if (index == 0) {
@@ -124,7 +124,7 @@ class Array {
                 array_ptr[1] = value;
             }
             count_ = 2;
-            return 0;
+            return 2;
         }
         for (int i = index; i <= count; ++i)
             array_ptr[i + 1] = array_ptr[i];
@@ -134,7 +134,7 @@ class Array {
         //while (insert_point != end)
         //    *end = *(--end);
         count_ = count + 1;
-        return count;
+        return count + 1;
     }
 
     /** Pushes the element onto the Stack. */
@@ -158,7 +158,8 @@ class Array {
         for (int i = 0; i < new_size; ++i) {
             *ptr = *element++;
         }
-        return count_;
+        count_ = new_size;
+        return new_size;
     }
 
     /** Pops an element off the stack. */
@@ -247,8 +248,8 @@ class Array {
 
     private:
 
-    int size_,  //< Max number of elements.
-        count_; //< Number of elements.
+    int size_,     //< Max number of elements.
+        count_;    //< Number of elements.
     T*  elements_; //< The array.
 
 };      //< class Array

@@ -69,11 +69,11 @@ KABUKI byte* SlotRead (Slot* slot, void* source, size_t size);
 
 /** Gets the args from the b-sequence. */
 KABUKI const Operation* SlotRead (Slot* slot, const uint_t* params,
-		                          void** args);
+                                  void** args);
 
 /** Posts a evaluated result to the b-sequence. */
 KABUKI const Operation* SlotWrite (Slot* slot, const uint_t* params,
-		                           void** args);
+                                   void** args);
 
 KABUKI bool IsReadable (Slot* slot);
 

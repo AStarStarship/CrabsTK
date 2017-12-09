@@ -36,7 +36,8 @@ User::User (Authenticator* authenticator, uid_t uid, const char* handle,
             session_       (0),
             session_key_   (0),
             balance_       (balance),
-            value_         (value) {
+            value_         (value),
+            slot_          (nullptr) {
     if (SetStatus (status)) {
         SetStatus ("");
     }
@@ -66,15 +67,19 @@ uid_t User::GetUid () {
     return uid_;
 }
 
-uid_t User::GetSession () {
+int32_t User::GetSession () {
     return session_;
 }
 
-const char* User::SetSession (uid_t session) {
+const char* User::SetSession (int32_t session) {
     if (session == 0)
         return "Invalid session key";
     session_ = session;
     return nullptr;
+}
+
+uid_t User::GetSessionKey () {
+    return session_key_;
 }
 
 uid_t User::GetResponse () {
@@ -95,6 +100,26 @@ const char* User::SetBalance (double balance) {
     return nullptr;
 }
 
+bool User::BuyCoins (uint64_t num_coins, double point_cost) {
+    // Right now we're not checking how much money the player has.
+    double cost = point_cost * (double)num_coins;
+
+    if (cost > balance_) {
+        cout << "\n| Can't buy coins because your ass is broke.";
+        return false;
+    }
+    value_ += num_coins;
+    balance_ -= cost;
+}
+
+bool User::IncreaseBalance (double amount) {
+    if (amount < 0.0) {
+        return false;
+    }
+    balance_ += amount;
+    return true;
+}
+
 uint64_t User::GetValue () {
     return value_;
 }
@@ -108,9 +133,28 @@ bool User::Equals (User* user) {
     if (user == nullptr) {
         return false;
     }
-    if (!handle_.Equals (handle_.GetKey ()))
+    if (!handle_.Equals (handle_.GetKey ())) {
         return false;
+    }
     return password_.Equals (user->password_);
+}
+
+Expression* User::GetSlot () {
+    return slot_;
+}
+
+Window* User::GetWindow () {
+    return nullptr;
+}
+
+bool User::IsAuthentic (int32_t session, uid_t session_key) {
+    if (session_ != session) {
+        return false;
+    }
+    if (session_key_ != session_key) {
+        return false;
+    }
+    return true;
 }
 
 void User::Print () {

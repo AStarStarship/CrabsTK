@@ -44,7 +44,7 @@ struct KABUKI Bout {
     typedef enum {
         BufferOverflowError = 0,
         LockedError,
-        RoomError,
+        kErrorRoom,
     } Error;
 
     /** List of the Finite Bout States. */

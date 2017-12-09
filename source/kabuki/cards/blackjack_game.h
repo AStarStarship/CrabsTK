@@ -61,9 +61,6 @@ class BlackjackGame : public CardGame {
     /** Processes the end of round logic. */
     virtual void EndRound ();
 
-    /** Game loop for card game. */
-    virtual bool PlayGameInConsole ();
-
     /** Prints this object to the console */
     void Print () override;
 

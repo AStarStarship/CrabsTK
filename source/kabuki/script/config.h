@@ -117,6 +117,8 @@ enum {
     kWordAddressMask = sizeof (void*) - 1,   //< For masking the word address.
     kMaxAddresLength = 255,                  //< Max address (ADR) length.
     kMinStackSize    = 1,                    //< Min Expression stack size.
+    kOperationMaxNameLength = OPERATION_MAX_NAME_LENGTH,
+    kOperationMaxDescriptionLength = OPERATION_MAX_DESCRIPTION_LENGTH,
 };
 }
 #undef MAX_ERRORS
@@ -124,6 +126,8 @@ enum {
 #undef MAX_STRING_LENGTH
 #undef COM_TIMEOUT_TICKS
 #undef SCRIPT_LOG_SIZE
+#undef OPERATION_MAX_NAME_LENGTH
+#undef OPERATION_MAX_DESCRIPTION_LENGTH
 
 #define KABUKI
 

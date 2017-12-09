@@ -156,6 +156,8 @@ class Room: public Operand {
     /** Destructor. */
     virtual ~Room ();
     
+    const char* GetRoomName ();
+
     /** Processes a request from another Room.
         @return Returns false upon success and true if there is an error. */
     Request HandleNextRequest (Request r);

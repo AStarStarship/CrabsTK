@@ -137,6 +137,7 @@ Card* Deck::GetCard (int suit, int pip) {
         return &pack_[53];
     } 
     index = 13 * suit + pip;
+    return &pack_[index];
 }
 
 Card* Deck::GetCard (int index) {

@@ -20,17 +20,20 @@ using namespace std;
 
 namespace kabuki { namespace cards {
 
-Dealer::Dealer (id::User* user, int buy_in, int ante, int min_bet, int min_players,
-                int max_players) :
-    round_number_ (0),
-    pot_          (0),
-    buy_in_       (buy_in),
-    ante_         (ante),
-    min_bet_      (min_bet),
-    pack_         (Deck ()),
-    stock_        (pack_),
-    players_      ((int)((max_players < BlackjackGame::kMinPlayers)?
-                   BlackjackGame::kMinPlayers : max_players)) {
+Dealer::Dealer (id::User* user, int32_t buy_in, int32_t ante, int32_t min_bet, 
+                int32_t min_players, int32_t max_players, int32_t num_decks) :
+    round_number_  (0),
+    pot_           (0),
+    buy_in_        (buy_in),
+    ante_          (ante),
+    min_bet_       (min_bet),
+    min_players_   (min_players),
+    current_player_(0),
+    num_responses_ (0),
+    pack_          (num_decks),
+    stock_         (pack_),
+    players_       ((int32_t)((max_players < BlackjackGame::kMinPlayers)?
+                    BlackjackGame::kMinPlayers : max_players)) {
     if (ante < 0) {
         ante = 0;
     }
@@ -43,16 +46,16 @@ Dealer::~Dealer () {
     // Nothing to do here :-)
 }
 
-int Dealer::GetRoundNumber () {
+int32_t Dealer::GetRoundNumber () {
     return round_number_;
 }
 
-int Dealer::GetNumPlayers () {
+int32_t Dealer::GetNumPlayers () {
     return players_.GetCount ();
 }
 
-int Dealer::RemovePlayer (const char* handle) {
-    for (int i = 0; i < players_.GetCount (); ++i) {
+int32_t Dealer::RemovePlayer (const char* handle) {
+    for (int32_t i = 0; i < players_.GetCount (); ++i) {
         if (players_[i]->GetUser()->GetStatus () == handle) {
             players_.Remove (i);
             return i;
@@ -61,25 +64,32 @@ int Dealer::RemovePlayer (const char* handle) {
     return 0;
 }
 
-int Dealer::RemovePlayer (int player_number_) {
+int32_t Dealer::RemovePlayer (int32_t session) {
     // Note: Arrays in C++ always start at element 0 (ie.e players_[0])
-    if (player_number_ < 0)
+    if (session < 0)
         return -1;
 
-    if (player_number_ >= players_.GetCount ())
+    if (session >= players_.GetCount ())
         return 1;
 
-    players_.Remove (player_number_);
+    players_.Remove (session);
     return true;
 }
 
-Player* Dealer::GetPlayer (int player_number_) {
-    if (player_number_ < 0)
+Player* Dealer::GetPlayer (int32_t session) {
+    if (session < 0)
         return nullptr;
-    if (player_number_ > players_.GetCount ())
+    if (session > players_.GetCount ())
         return nullptr;
+    return players_[session];
+}
 
-    return players_[player_number_];
+int32_t Dealer::GetCurrentPlayer () {
+    return current_player_;
+}
+
+bool Dealer::SetCurrentPlayer (int32_t session) {
+    return current_player_ = session;
 }
 
 Deck& Dealer::GetPack () {
@@ -90,56 +100,71 @@ CardStack& Dealer::GetStock () {
     return stock_;
 }
 
-int Dealer::GetPotTotal () {
+int32_t Dealer::GetPotTotal () {
     return pot_;
 }
 
-void Dealer::SetPotTotal (int newPotTotal) {
+void Dealer::SetPotTotal (int32_t newPotTotal) {
     if (newPotTotal < 0)
         return;
     pot_ = newPotTotal;
 }
-void Dealer::AddToPot (int pointsToAdd) {
+void Dealer::AddToPot (int32_t pointsToAdd) {
     if (pointsToAdd < 0)
         return;
     pot_ += pointsToAdd;
 }
 
-int Dealer::GetBuyIn () {
+int32_t Dealer::GetBuyIn () {
     return buy_in_;
 }
 
-void Dealer::SetBuyIn (int newAnte) {
+void Dealer::SetBuyIn (int32_t newAnte) {
     if (newAnte < 0)
         return;
     buy_in_ = newAnte;
 }
 
-int Dealer::GetAnte () {
+int32_t Dealer::GetAnte () {
     return ante_;
 }
 
-void Dealer::SetAnte (int newAnte) {
-    if (newAnte < 0)
+void Dealer::SetAnte (int32_t ante) {
+    if (ante < 0)
         return;
-    ante_ = newAnte;
+    ante_ = ante;
 }
 
-int Dealer::GetMinBet () {
+int32_t Dealer::GetMinBet () {
     return min_bet_;
 }
 
-void Dealer::SetMinBet (int newValue) {
-    if (newValue < 0)
-        return;
-    min_bet_ = newValue;
+const char* Dealer::SetMinBet (int32_t min_bet) {
+    if (min_bet < 0)
+        return "min_bet can't be negative";
+    min_bet_ = min_bet;
+    return nullptr;
 }
-int Dealer::GetMinPlayers () {
+
+int32_t Dealer::GetMinPlayers () {
     return min_players_;
 }
 
-int Dealer::GetMaxPlayers () {
+int32_t Dealer::GetMaxPlayers () {
     return max_players_;
+}
+
+int32_t Dealer::GetPlayerNumber () {
+    return min_bet_;
+}
+
+bool Dealer::SetPlayerNumber (int32_t player_number) {
+    if (player_number < 0)
+        return false;
+    if (player_number >= players_.GetCount ())
+        return false;
+    current_player_ = player_number;
+    return true;
 }
 
 void Dealer::RestartGame () {
@@ -153,13 +178,13 @@ void Dealer::RestartGame () {
     ante_ = buy_in_;
     pot_ = 0;
 
-    for (int i = 0; i < players_.GetCount (); ++i) {
+    for (int32_t i = 0; i < players_.GetCount (); ++i) {
         players_[i]->RestartGame ();
     }
 
     pot_ = players_.GetCount () * ante_;
 
-    for (int i = players_.GetCount (); i > 0; --i) {
+    for (int32_t i = players_.GetCount (); i > 0; --i) {
         players_[i]->RemovePoints (ante_);
     }
     RemovePoints (ante_);
@@ -170,14 +195,14 @@ Card* Dealer::Draw () {
 }
 
 void Dealer::Redeal () {
-    //for (int i = 0; i < players_.GetCount (); ++i) {
+    //for (int32_t i = 0; i < players_.GetCount (); ++i) {
     //    Deal (players_[i].Get);
     //}
 }
 
 void Dealer::Print () {
     cout << "\n| Dealer:\n| Pot Total: " << pot_;
-    for (int i = 0; i < players_.GetCount (); ++i) {
+    for (int32_t i = 0; i < players_.GetCount (); ++i) {
         players_[i]->Print ();
     }
 }
