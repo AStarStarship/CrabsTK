@@ -16,16 +16,17 @@
 #ifndef HEADER_FOR_KABUKI_ID_USERLIST
 #define HEADER_FOR_KABUKI_ID_USERLIST
 
-#include "validator_default.h"
+#include "authenticator_default.h"
 #include "user.h"
 #include "uid_server.h"
 
 namespace kabuki { namespace id {
 
 /** A List of User(s).
-    This class uses a single Validator interface for validating both user 
+    This class uses a single Authenticator interface for validating both user 
     handles and passwords using the type parameter. This makes it very 
-    easy to create UserList subclasses for customizing format rules. */
+    easy to create UserList subclasses for customizing format rules.
+    @todo This class needs to use a Script Dictionary. */
 class KABUKI UserList {   
     public:
 
@@ -40,10 +41,14 @@ class KABUKI UserList {
     };
 
     /** Creates an empty list. */
-    UserList (Validator* validator, int max_users = kDefaultMaxUsers);
+    UserList (Authenticator* authenticator = new AuthenticatorDefault (),
+              int max_users = kDefaultMaxUsers);
 
     /** Destructs list of users. */
     virtual ~UserList ();
+
+    /** Gets the authenticator. */
+    Authenticator* GetAuthenticator ();
 
     /** Gets the number of Accounts in the List. */
     int GetSize ();
@@ -52,8 +57,7 @@ class KABUKI UserList {
     int GetCount ();
 
     /** Adds a new User to the list with the given handle and password. */
-    int Add (const char* status, const char* handle,
-             const char* password = Password::kDefault);
+    int Add (const char* handle, const char* password = Password::kDefault);
 
     /** Adds a list of User (string) to the list. */
     int Add (UserList* enities);
@@ -61,23 +65,27 @@ class KABUKI UserList {
     /** Finds an entity in the list by the given search char. */
     int Find (const char* string);
 
-    /** Returns the User with the given user_number.
+    /** Returns the requested user_number.
         @return Returns nil if the user_number is invalid. */
-    User* UserNumber (int user_number);
+    User* GetUser (uid_t user_number);
 
     /** Validates the input for correctness. */
     virtual const char* IsValid (const char* input, int type);
 
-    virtual uid_t LogIn (int index, const char* password);
+    /** Attempts to login to the given session and returns a session key. */
+    virtual uid_t LogIn (const char* handle, const char* password);
+
+    /** Attempts to login to the given session and returns a session key. */
+    virtual uid_t LogIn (int session, const char* password);
 
     /** Prints this object to the log. */
     void Print ();
     
     private:
     
-    Validator        * validator_; //< Name, Handle, & Password Validator.
-    data::Array<User*> users_;     //< User list.
-    UidServer<>        uids_;      //< Unique Id Server
+    Authenticator* authenticator_; //< Handle, & Password Authenticator.
+    Array<User*>   users_;         //< User list.
+    UidServer<>    uids_;          //< Unique Id Server
 };
 
 }       //< namespace id

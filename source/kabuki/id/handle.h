@@ -16,7 +16,7 @@
 #ifndef HEADER_FOR_KABUKI_ID_HANDLE
 #define HEADER_FOR_KABUKI_ID_HANDLE
 
-#include "validator.h"
+#include "authenticator.h"
 
 namespace kabuki { namespace id {
 
@@ -34,7 +34,7 @@ class KABUKI Handle {
     static const char kDefault[];
     
     /** Constructor creates a standard char. */
-    Handle (Validator* validator, const char* key,
+    Handle (Authenticator* authenticator, const char* key,
             int min_length = kDefaultMinLength, 
             int max_length = kDefaultMaxLength);
 
@@ -59,7 +59,7 @@ class KABUKI Handle {
     private:
 
     char     * key_;       //< Unique string key.
-    Validator* validator_; //< Handle validator.
+    Authenticator* authenticator_; //< Handle authenticator.
     int        type_;      //< The validation type.
 
 };      //< class Handle

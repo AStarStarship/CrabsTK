@@ -23,9 +23,9 @@ namespace kabuki { namespace id {
 
 const char Handle::kDefault[] = "user";
 
-Handle::Handle (Validator* validator, const char* key, int min_length,
+Handle::Handle (Authenticator* authenticator, const char* key, int min_length,
                 int max_length) :
-                validator_ (validator),
+                authenticator_ (authenticator),
                 type_      (kValidation) {
     if (min_length >= max_length) {
         int temp = min_length;

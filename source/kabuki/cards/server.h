@@ -52,59 +52,6 @@ class Server : public _::Room {
     /** Virtual function sets the FSM state to a positive value. */
     virtual bool SetState (int state);
 
-    /** Getter and set tor for the stock (Deck) of cards. */
-    Deck& GetPack ();
-
-    /** The minimum number of players_.
-        The round number can not be less than 1. */
-    int GetRoundNumber ();
-
-    /** The number of players_.
-        min_players_ must be between the min and max number of players_. */
-    int GetNumPlayers ();
-
-    /** Sets the min number of players_ to the new value.
-        @return Returns 0 upon success.
-        @return Returns 1 if the value is greater the number of players_
-        @return Returns -1 if the new value is less greater than the max
-                value. */
-    virtual int SetNumPlayers (int value);
-
-    /** The minimum number of players_.
-        min_players_ can not be greater than max_players_. */
-    int GetMinPlayers ();
-
-    /** Sets the min number of players_ to the new value.
-        @return Returns 0 upon success and -1 if the new value is less greater
-                than or equal the max value. */
-    int SetMinPlayers (int value);
-
-    /** The maximum number of players_. */
-    int GetMaxPlayers ();
-
-    /** Sets the max number of players_ to the new value.
-        @return Returns 0 upon success and -1 if the new value is less than
-                the min value. */
-    int SetMaxPlayers (int value);
-
-    /** Restart the game to a new state with a preset number of players_. */
-    virtual void NewGame ();
-
-    /** Game loop for card game. */
-    virtual bool PlayGameInConsole() = 0;
-
-    /** Processes the beginning of round logic. */
-    virtual void BeginRound () = 0;
-
-    /** Processes the end of round logic. */
-    virtual void EndRound () = 0;
-
-    /** Prints the players out to the console. */
-    virtual void PrintPlayers ();
-
-    /** Returns the text string for the start of each round. */
-    virtual void PrintRoundStatsString ();
-
     /** Prints this game out to the console. */
     virtual void Print ();
 
@@ -113,24 +60,14 @@ class Server : public _::Room {
 
     protected:
 
-    id::Validator* validator_;      //< Name, Handle, & Password validator.
-    const char   * server_name_;    //< Server name.
-    uint32_t       port_number_;    //< Server port number.
-    int            state_,          //< Game state.
-                   num_players_,    //< Num players.
-                   min_players_,    //< Min number of players.
-                   max_players_,    //< Max number of players.
-                   round_number_;   //< Current round number.
-    Deck           pack_;           //< Pack of cards.
-    CardStack      stock_;          //< The stock of cards.
-    Dealer       * dealer_;         //< Pointer to the Dealer.
-    id::UserList * users_;          //< Global list of User(s).
-    data::Array<Player*> players_; //< Array of players.
+    id::Authenticator* authenticator_; //< Name, Handle, & Password authenticator.
+    const char   * server_name_;   //< Server name.
+    uint32_t       port_number_;   //< Server port number.
+    int            state_;         //< Server state.
+    id::UserList   users_;         //< Global list of User(s).
+    Array<Player*> players_; //< Array of players.
 
 };      //< class Server
-
-/** Returns the default play again or quit string. */
-KABUKI const char* DefaultPlayAgainString ();
 
 }       //< namespace cards
 }       //< namespace kabuki

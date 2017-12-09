@@ -90,7 +90,7 @@ struct Collection {
     virtual void* Get (uintptr_t index) = 0;
 
     /** Searches for the data of the given type and returns a pointer to it.
-        @return Returns nullptr if the Set does not contain the given data. */
+        @return Returns nil if the Set does not contain the given data. */
     virtual void* Get (const char* key) = 0;
 
     /** Returns true if this Set contains this given key. */

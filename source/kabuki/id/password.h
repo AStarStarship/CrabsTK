@@ -16,17 +16,17 @@
 #ifndef HEADER_FOR_KABUKI_ID_PASSWORD
 #define HEADER_FOR_KABUKI_ID_PASSWORD
 
-#include "validator.h"
+#include "authenticator.h"
 
 namespace kabuki { namespace id {
 
 /** Interface for a class that can validate a password. */
-struct PasswordValidator {
+struct PasswordAuthenticator {
     /** Function validates the password for correctness. */
     virtual const char* IsValid (const char* password) = 0;
 };
 
-/** An account password Validator . 
+/** An account password Authenticator . 
     @todo Add salt!
 */
 class KABUKI Password {
@@ -45,7 +45,7 @@ class KABUKI Password {
         If the password does not match the default format, the default password
         will be used.
     */
-    Password (Validator* validator,
+    Password (Authenticator* authenticator,
               const char* password = "Password");
 
     /** Destructs the password. */
@@ -72,7 +72,7 @@ class KABUKI Password {
     private:
 
     char     * key_;       //< Unencrypted password.
-    Validator* validator_; //< Password validator.
+    Authenticator* authenticator_; //< Password authenticator.
     int        type_;      //< The validation type.
 };
 

@@ -23,9 +23,8 @@ namespace kabuki { namespace cards {
 
 Server::Server (uint port_number, const char* server_name) :
                 Room       (server_name),
-                validator_ (new ValidatorDefault ()),
+                authenticator_ (new AuthenticatorDefault ()),
                 state_   (0),
-                dealer_  (nullptr),
                 users_   (),
                 players_ () {
 }
@@ -35,7 +34,7 @@ Server::~Server () {
         Player* player = players_.Pop ();
         delete player;
     }
-    delete validator_;
+    delete authenticator_;
 }
 
 int Server::GetState () {
@@ -60,91 +59,11 @@ const char* Server::SetServerName (const char* name) {
     }
     delete server_name_;
     server_name_ = StringClone (name);
-}
-
-Deck& Server::GetPack () {
-    return pack_;
-}
-
-int Server::GetRoundNumber () {
-    return round_number_;
-}
-
-int Server::GetNumPlayers () {
-    return num_players_;
-}
-
-int Server::SetNumPlayers (int value) {
-    if (value < min_players_) {
-        return -1;
-    }
-    if (value > max_players_) {
-        return 1;
-    }
-    min_players_ = value;
-    return 0;
-}
-
-int Server::GetMinPlayers () {
-    return min_players_;
-}
-
-int Server::SetMinPlayers (int value) {
-    if (value >= max_players_) {
-        return -1;
-    }
-    min_players_ = value;
-    return 0;
-}
-
-int Server::GetMaxPlayers () {
-    return max_players_;
-}
-
-int Server::SetMaxPlayers (int value) {
-    if (value < min_players_) {
-        return -1;
-    }
-    max_players_ = value;
-    return 0;
-}
-
-void Server::NewGame () {
-    round_number_ = 1;
-    BeginRound ();
-}
-
-void Server::PrintPlayers () {
-    for (int i = 0; i < players_.GetCount (); ++i) {
-        players_.Element (i)->Print ();
-    }
-}
-
-void Server::PrintRoundStatsString () {
-    PrintLine ("|", '~');
-    cout << "Round: " << round_number_ << "\n";
-
-
-    PrintLine ("> ", '~');
+    return nullptr;
 }
 
 void Server::Print () {
-    PrintLine (" ", '_');
-    cout << "\n| Card Game   : " << name_
-         << "\n| Num Players : " << num_players_ << " Min: " << min_players_ 
-         << " Max: " << max_players_
-         << "\n| Round Number: " << round_number_
-         << "\n| Num Players : " << players_.GetCount ();
-
-    PrintPlayers ();
-    PrintLine ("|", '_');
-}
-
-const char* DefaultPlayAgainString () {
-    static const char play_again[] = "\n| Do you want to play again?"
-        "\n| Enter y to continue, or n to quit."
-        "\n< \0";
-    return play_again;
+    cout << "\n| Server: " << server_name_;
 }
 
 }       //< namespace cards

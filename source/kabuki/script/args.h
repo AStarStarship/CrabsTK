@@ -29,8 +29,8 @@ namespace _ {
     and to eliminate some redundant typing. */
 template<const uint_t... N>
 KABUKI const uint_t* Params () {
-    static const uint_t list[sizeof... (N)] = { N... };
-    return list;
+    static const uint_t kList[sizeof... (N)] = { N... };
+    return kList;
 }
 
 /**  Prints out the parameters to the debug console. */

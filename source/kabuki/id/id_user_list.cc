@@ -21,8 +21,8 @@ using namespace std;
 
 namespace kabuki { namespace id {
 
-UserList::UserList (Validator* validator, int max_users) : 
-    validator_ (validator),
+UserList::UserList (Authenticator* authenticator, int max_users) : 
+    authenticator_ (authenticator),
     users_     (max_users) {
     // Nothing to do here ({:->)
 }
@@ -33,15 +33,15 @@ UserList::~UserList () {
     }
 }
 
+Authenticator* UserList::GetAuthenticator () {
+    return authenticator_;
+}
+
 int UserList::GetSize () { return users_.GetSize (); }
 
 int UserList::GetCount () { return users_.GetCount (); }
 
-int UserList::Add (const char* status, const char* handle,
-                   const char* password) {
-    if (status == nullptr) {
-        status = StringClone (User::kDefaultDislpayName);
-    }
+int UserList::Add (const char* handle, const char* password) {
     if (handle == nullptr) {
         handle = StringClone (Handle::kDefault);
     }
@@ -51,7 +51,7 @@ int UserList::Add (const char* status, const char* handle,
     if (password == nullptr) {
         password = StringClone (Password::kDefault);
     }
-    User* user = new User (dynamic_cast<Validator*> (this), status,
+    User* user = new User (authenticator_, users_.GetCount (),
                            handle, password);
     return users_.Push (user);
 }
@@ -59,7 +59,7 @@ int UserList::Add (const char* status, const char* handle,
 int UserList::Add (UserList* user_list) {
     int count;
     for (int i = 0; i < user_list->GetCount (); ++i) {
-        User* user = user_list->UserNumber (i);
+        User* user = user_list->GetUser (i);
         // user should never be nil.
         count = Add (user->GetHandle ().GetKey (), 
                      user->GetPassword ().GetKey ());
@@ -87,14 +87,14 @@ int UserList::Find (const char* handle) {
     return -1;
 }
 
-User* UserList::UserNumber (int user_number) {
-    if (user_number < 0) {
+User* UserList::GetUser (uid_t user_uid) {
+    if (user_uid < 0) {
         return nullptr;
     }
-    if (user_number >= users_.GetCount ()) {
+    if (user_uid >= users_.GetCount ()) {
         return nullptr;
     }
-    return users_[user_number];
+    return users_[user_uid];
 }
 
 const char* UserList::IsValid (const char* input, int type) {
@@ -134,15 +134,19 @@ const char* UserList::IsValid (const char* input, int type) {
     }
 }
 
+uid_t UserList::LogIn (const char* handle, const char* password) {
+    return LogIn (Find (handle), password);
+}
+
 uid_t UserList::LogIn (int index, const char* password) {
-    User* user = UserNumber (index);
+    User* user = GetUser (index);
     if (!user) {
         return 0;
     }
     if (password == nullptr) {
         return 0;
     }
-    user = UserNumber (index);
+    user = GetUser (index);
     if (user == nullptr) {
         return UidServer<>::kInvalidUid;
     }

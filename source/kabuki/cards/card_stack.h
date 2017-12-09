@@ -130,7 +130,7 @@ class CardStack {
     int TakeCards (CardStack& stock, int num_cards);
         
     /** Returns a pointer to the Card at the specified index.
-        @return Returns nullptr if the index is greater than the number of Cards
+        @return Returns nil if the index is greater than the number of Cards
                 in this Hand. */
     Card* GetCard (int index);
         
@@ -162,7 +162,7 @@ class CardStack {
 
     int                min_cards_; //< Min number of cards in a stack.
     bool               visible_;   //< Flag for card is visible or not.
-    data::Array<Card*> cards_;     //< Stack (Array) of Card pointers.
+    Array<Card*> cards_;     //< Stack (Array) of Card pointers.
 
 };      //< class CardStack
 }       //< namespace cards

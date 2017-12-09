@@ -17,6 +17,6 @@
 #define HEADER_FOR_KABUKI_ID_GLOBAL
 
 #include "user_list.h"
-#include "validator_default.h"
+#include "authenticator_default.h"
 
 #endif  //< HEADER_FOR_KABUKI_ID_GLOBAL

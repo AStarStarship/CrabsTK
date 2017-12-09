@@ -20,4 +20,6 @@
 #include "../id/global.h"
 #include "../data/array.h"
 
+using namespace kabuki::data;
+
 #endif	//< KABUKI_CARDS_COFIG_H

@@ -15,7 +15,7 @@
 
 #include "hand.h"
 #include "card_stack.h"
-#include "blackjack_dealer.h"
+#include "blackjack_player.h"
 
 using namespace _;
 using namespace std;
@@ -23,9 +23,68 @@ using namespace kabuki::id;
 
 namespace kabuki { namespace cards {
 
-BlackjackPlayer::BlackjackPlayer (User* user, CardStack& stock, const char* player_name,
-                                  int starting_points,  bool is_dealder) :
-    Player (stock, player_name, starting_points, is_dealder) {
+int BlackjackScore (Hand& hand, int ace_value) {
+    int score = 0;  //< Always set the variable before you start using it!!!
+
+    CardStack& cards = hand.GetVisibleCards ();
+    Card* card;
+    for (int i = 0; i < cards.GetCount (); ++i) {
+        card = cards.GetCard (i);
+        int denomination = card->GetDenomination ();
+        score += ((denomination == Card::kAce) ? ace_value : denomination);
+    }
+
+    return score;
+}
+
+int BlackjackMinScore (Hand& hand) {
+    return BlackjackScore (hand, 1);
+}
+
+int BlackjackMaxScore (Hand& hand) {
+    return BlackjackScore (hand, 11);
+}
+
+
+int BlackjackCompareHands (Hand& a, Hand& b) {
+    int a_min = BlackjackMinScore (a),
+        a_max = BlackjackMaxScore (a),
+        b_min = BlackjackMinScore (b),
+        b_max = BlackjackMaxScore (b);
+
+    if (a_min == 21 || a_max == 21)
+        if (b_min == 21 || b_max == 21) // We both got 21!
+            return 2;
+        else
+            return 3; //< We won!
+
+    if (b_min == 21 || b_max == 21) //< We lost.
+        return -2;
+
+    int best_score = a_max > 21?a_min:a_max,
+        other_best_score = b_max > 21?b_min:b_max;
+
+    if (best_score > 21)           //< We lost :-(
+        if (other_best_score > 21) //< We both lost!
+            return -2;
+        else
+            return -1;
+
+    if (other_best_score > 21)     //< We won!!!
+        return 1;
+
+    if (best_score > other_best_score)
+        return 1;
+
+    //if (best_score == other_best_score)
+    return 0;
+}
+
+
+BlackjackPlayer::BlackjackPlayer (id::User* user, CardStack& stock,
+                                  bool is_dealder) :
+    Player (user, is_dealder),
+    stock_ (stock) {
     // Nothing to do here!
 }
 
@@ -49,46 +108,8 @@ bool BlackjackPlayer::IsHolding () {
     return state_ == kStateHolding;
 }
 
-
-
-int BlackjackPlayer::Compare (Hand& other) {
-    BlackjackPlayer& other_hand = dynamic_cast<BlackjackPlayer&> (other);
-
-    int min_score = GetMinScore (),
-        max_score = GetMaxScore (),
-        other_min_score = other_hand.GetMinScore (),
-        other_max_score = other_hand.GetMaxScore ();
-
-    if (min_score == 21 || max_score == 21)
-        if (other_min_score == 21 || other_max_score == 21) // We both got 21!
-            return 2;
-        else
-            return 3; //< We won!
-
-    if (other_min_score == 21 || other_max_score == 21) //< We lost.
-        return -2;
-
-    int best_score = max_score > 21?min_score:max_score,
-        other_best_score = other_max_score > 21 ? other_min_score:other_max_score;
-    
-    if (best_score > 21)           //< We lost :-(
-        if (other_best_score > 21) //< We both lost!
-            return -2;
-        else
-            return -1;
-
-    if (other_best_score > 21)     //< We won!!!
-        return 1;
-
-    if (best_score > other_best_score)
-        return 1;
-
-    //if (best_score == other_best_score)
-    return 0;
-}
-
 /*
-data::Array<CardCombo> BlackjackPlayer::GetHandCombos () {
+Array<CardCombo> BlackjackPlayer::GetHandCombos () {
     auto low_score,
         high_score;
 
@@ -118,43 +139,16 @@ data::Array<CardCombo> BlackjackPlayer::GetHandCombos () {
     return scores;
 }*/
 
-int BlackjackPlayer::GetScore (int ace_value) {
-    int score = 0;  //< Always set the variable before you start using it!!!
-
-    Card* card;
-    for (int i = 0; i < hand_.GetVisibleCards ().GetCount (); ++i) {
-        card = hand_.GetVisibleCards ().GetCard (i);
-        int denomination = card->GetDenomination ();
-        score += ((denomination == Card::kAce) ? ace_value : denomination);
-    }
-
-    return score;
-}
-
-int BlackjackPlayer::GetMinScore () {
-    return GetScore (1);
-}
-
-int BlackjackPlayer::GetMaxScore () {
-    return GetScore (11);
-}
-
 bool BlackjackPlayer::Is21 () {
-    return GetMinScore () == 21 || GetMaxScore () == 21;
+    return BlackjackMinScore (hand_) == 21 || BlackjackMaxScore (hand_) == 21;
 }
 
 bool BlackjackPlayer::IsBust () {
-    return GetMaxScore () > 21;
+    return BlackjackMaxScore (hand_) > 21;
 }
 
-void BlackjackPlayer::PrintHand () {
-    cout << "\n| BlackjackPlayer:"
-         << "\n| High score: " << GetScore (Deck::kAcesHigh) << " Low Score: "
-         << GetScore (Deck::kAcesLow);
-    hand_.Print ();
-}
 /**
-bool BlackjackPlayer::PlayOrPass (Dealer& dealer) {
+bool BlackjackPlayer::PlayOrPass () {
     // Estimated chances of winning. 
     static const float chanes_of_winning_low[] = {
         0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f
@@ -215,12 +209,12 @@ bool BlackjackPlayer::PlayOrPass (Dealer& dealer) {
 
     float randomNumberBetween0and1 = RandomFloat ();
     // We want to pick a random number between 0 and 1
-
-    return chance_of_winning * randomNumberBetween0and1 >= 0.5; // If the percent chance is greater than 50%, then we should take another card.
-    return 0;
+    // If the percent chance is greater than 50%, then we should take another
+    // card.
+    return chance_of_winning * randomNumberBetween0and1 >= 0.5;
 }*/
 
-void BlackjackPlayer::NewGame () {
+void BlackjackPlayer::RestartGame () {
 
 }
 
@@ -229,20 +223,21 @@ void BlackjackPlayer::BeginRound () {
 }
 
 void BlackjackPlayer::PlayRound () {
-    cout << "\n| " << GetDislpayName () << "'s turn.";
-    if (stock_.IsEmpty ()) {  // Always check for error conditions first!
-        cout << "\n| Error! The Deck was empty.";
-        state_ = kStateHolding;
-        return;
-    }
+    cout << "\n| " << GetUser ()->GetHandle ().GetKey () << "'s turn.";
     if (IsBust () || Is21 ()) {
         // If the player's hand is a bust, than the dealer is not allowed to
         // deal that player another card.
         state_ = kStateHolding;
         return;
     }
+    Card* card = stock_.Draw ();
+    if (card == nullptr) {  // Always check for error conditions first!
+        cout << "\n| Error! The Deck was empty.";
+        state_ = kStateHolding;
+        return;
+    }
 
-    hand_.GetVisibleCards ().Push (stock_.Draw ());
+    hand_.GetVisibleCards ().Push (card);
 
     if (IsBust ()) {
         // If the player's hand is a bust, than the dealer is not allowed to
@@ -259,8 +254,12 @@ void BlackjackPlayer::EndGame () {
 
 }
 
-bool BlackjackPlayer::HandWins (Hand& other) {
-    return hand_.Compare (other) > 0;
+int BlackjackPlayer::Compare (Hand& other) {
+    return BlackjackCompareHands (hand_, other);
+}
+
+bool BlackjackPlayer::Wins (Hand& other) {
+    return BlackjackCompareHands (hand_, other) > 0;
 }
 
 void BlackjackPlayer::PrintStats () {
@@ -269,7 +268,7 @@ void BlackjackPlayer::PrintStats () {
 
 void BlackjackPlayer::Print () {
     PrintLine ("|", '_');
-    cout << "Player: " << name_ <<
+    cout << "Player: " << GetUser ()->GetHandle ().GetKey () <<
         "\n| Num Points: " << num_points_ << " Num Wins: " << num_wins_;
 
     hand_.GetVisibleCards ().Print ();

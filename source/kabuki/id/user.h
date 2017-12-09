@@ -18,6 +18,7 @@
 
 #include "handle.h"
 #include "password.h"
+#include "authenticator.h"
 
 namespace kabuki { namespace id {
 
@@ -28,24 +29,32 @@ class KABUKI User {
     public:
 
     enum {
-        kValidation                  = 0,  //< Validator index.
         kDefaultMinDislpayNameLength = 2,  //< Default max display name length.
         kDefaultMaxDislpayNameLength = 63, //< Default max display name length.
+        kDefaultValue                = 0,
     };
 
     /** Default User diplay_name_. */
     static const char kDefaultDislpayName[];
 
+    static const double kDefaultBalance;
+
     /** Creates a user with the given handle, password, and status. */
-    User (Validator* validator, const char* status = kDefaultDislpayName,
+    User (Authenticator* authenticator, uid_t uid = 0,
           const char* handle   = Handle::kDefault,
-          const char* password = Password::kDefault);
+          const char* password = Password::kDefault,
+          const char* status   = kDefaultDislpayName,
+          double      balance  = kDefaultBalance,
+          uint64_t    value    = kDefaultValue);
+
+    /** Virtual destructor. */
+    virtual ~User ();
 
     /** Gets the handle's key. */
     const char* GetStatus ();
 
     /** Gets the handle's key. */
-    const char* SetStatus (const char* name);
+    virtual const char* SetStatus (const char* name);
 
     /** Gets a reference to the char handle. */
     Handle& GetHandle ();
@@ -53,35 +62,51 @@ class KABUKI User {
     /** Gets a reference to the password. */
     Password& GetPassword ();
 
+    /** Gets the user's uid. */
+    uid_t GetUid ();
+
     /** Gets the session uid. */
     uid_t GetSession ();
 
     /** Sets the session uid. */
-    void SetSession (uid_t uid);
+    virtual const char* SetSession (uid_t uid);
 
-    /** Gets the session key. */
-    uid_t GetSessionKey ();
+    /** Gets the abstract response code. */
+    uid_t GetResponse ();
 
-    /** Sets the session key. */
-    void SetSessionKey (uid_t jey);
+    /** Sets the abstract response code. */
+    virtual const char* SetResponse (uid_t response);
 
-    /** Checks to see if the given char and password are in the correct format. */
-    virtual bool IsValid (const char* handle, const char* password);
+    /** Gets the abstract balance. */
+    double GetBalance ();
+
+    /** Sets the abstract balance. */
+    virtual const char* SetBalance (double balance);
+
+    /** Gets the abstract value. */
+    uint64_t GetValue ();
+
+    /** Sets the abstract value. */
+    virtual const char* SetValue (uint64_t value);
 
     /** Returns true if this user is the same as the given one.  */
-    bool Equals (const User& user);
+    bool Equals (User* user);
 
     /** Prints this object to a expression. */
     void Print ();
 
     private:
 
-    Handle     handle_;       //< User's handle (i.e. key).
-    char*      status_;       //< User's status
-    Password   password_;     //< User's password.
-    Validator* validator_;    //< Handle and Password validator.
-    uid_t      session_,      //< Session uid.
-               session_key_;  //< Session key for the session_.
+    Handle         handle_;       //< User's handle (i.e. key).
+    char*          status_;       //< User's status
+    Password       password_;     //< User's password.
+    Authenticator* authenticator_;//< Handle and Password authenticator.
+    uid_t          uid_,          //< Index of user in the UserList.
+                   session_,      //< Session uid.
+                   session_key_,  //< Fake session encryption key.
+                   response_;     //< Gets user abstract response code.
+    double         balance_;      //< Abstract user account balance or money.
+    uint64_t       value_;        //< Abstract account value, points, or coins.
 
 };      //< class User
 }       //< namespace id

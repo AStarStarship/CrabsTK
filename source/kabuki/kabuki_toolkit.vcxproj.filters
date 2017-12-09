@@ -116,9 +116,6 @@
     <ClCompile Include="..\..\projects\script\script_tests.cc">
       <Filter>projects\script</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\projects\script\stdafx.cc">
-      <Filter>projects\script</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\projects\id\id_tests.cc">
       <Filter>projects\id</Filter>
     </ClCompile>
@@ -129,9 +126,6 @@
       <Filter>source\kabuki\id</Filter>
     </ClCompile>
     <ClCompile Include="id\id_user_list.cc">
-      <Filter>source\kabuki\id</Filter>
-    </ClCompile>
-    <ClCompile Include="id\id_validator_default.cc">
       <Filter>source\kabuki\id</Filter>
     </ClCompile>
     <ClCompile Include="id\id_handle.cc">
@@ -180,6 +174,15 @@
       <Filter>source\kabuki\cards</Filter>
     </ClCompile>
     <ClCompile Include="cards\cards_card.cc">
+      <Filter>source\kabuki\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="id\id_authenticator_default.cc">
+      <Filter>source\kabuki\id</Filter>
+    </ClCompile>
+    <ClCompile Include="cards\cards_card_game.cc">
+      <Filter>source\kabuki\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="cards\cards_blackjack_player_ai.cc">
       <Filter>source\kabuki\cards</Filter>
     </ClCompile>
   </ItemGroup>
@@ -319,12 +322,6 @@
     <ClInclude Include="id\user_list.h">
       <Filter>source\kabuki\id</Filter>
     </ClInclude>
-    <ClInclude Include="id\validator.h">
-      <Filter>source\kabuki\id</Filter>
-    </ClInclude>
-    <ClInclude Include="id\validator_default.h">
-      <Filter>source\kabuki\id</Filter>
-    </ClInclude>
     <ClInclude Include="id\handle.h">
       <Filter>source\kabuki\id</Filter>
     </ClInclude>
@@ -395,6 +392,27 @@
       <Filter>source\kabuki\cards</Filter>
     </ClInclude>
     <ClInclude Include="cards\suit.h">
+      <Filter>source\kabuki\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="id\authenticator.h">
+      <Filter>source\kabuki\id</Filter>
+    </ClInclude>
+    <ClInclude Include="id\authenticator_default.h">
+      <Filter>source\kabuki\id</Filter>
+    </ClInclude>
+    <ClInclude Include="cards\card_game.h">
+      <Filter>source\kabuki\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="data\config.h">
+      <Filter>source\kabuki\data</Filter>
+    </ClInclude>
+    <ClInclude Include="data\global.h">
+      <Filter>source\kabuki\data</Filter>
+    </ClInclude>
+    <ClInclude Include="data\array.h">
+      <Filter>source\kabuki\data</Filter>
+    </ClInclude>
+    <ClInclude Include="cards\blackjack_player_ai.h">
       <Filter>source\kabuki\cards</Filter>
     </ClInclude>
   </ItemGroup>

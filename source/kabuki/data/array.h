@@ -205,12 +205,12 @@ class Array {
 
     /** Gets the Array element at the given index. */
     inline T& Element (int index) {
-        static T t;
+        static T nil = 0;
         if (index < 0) {
-            return t;
+            return nil;
         }
         if (index >= size_) {
-            return t;
+            return nil;
         }
         return elements_[index];
     }

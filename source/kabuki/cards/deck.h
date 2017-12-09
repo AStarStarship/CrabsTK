@@ -112,11 +112,11 @@ class Deck {
     bool AcesHigh ();
 
     /** Returns a pointer to the Card with the given suit and pip.
-        @return Returns nullptr if the index is out of bounds. */
+        @return Returns nil if the index is out of bounds. */
     Card* GetCard (int suit, int pip);
     
     /** Returns a pointer to the Card at the specified index.
-        @return Returns nullptr if the index is out of bounds. */
+        @return Returns nil if the index is out of bounds. */
     Card* GetCard (int index);
 
     /** Sets the frontImage to a new Image from thisFile.

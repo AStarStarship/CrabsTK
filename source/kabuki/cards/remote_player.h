@@ -56,7 +56,7 @@ class RemotePlayer: public _::Operation {
     int GetState ();
 
     /** Attempts to set the state. 
-        @return Returns nullptr upon success and an error string upon
+        @return Returns nil upon success and an error string upon
                 failure. */
     virtual const char* SetState (int32_t state);
 

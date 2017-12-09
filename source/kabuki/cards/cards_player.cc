@@ -12,6 +12,7 @@
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
+
 #include "player.h"
 
 using namespace _;
@@ -20,31 +21,17 @@ using namespace std;
 namespace kabuki {
 namespace cards {
 
-Player::Player (CardStack& stock, const char* status,
-                int start_points, bool is_dealer) :
-    num_wins_ (0),
-    num_points_ (start_points < 1?1:start_points),
-    hand_ (52),
-    stock_ (stock) {
-    SetStatus (status);
+Player::Player (id::User* user, bool is_dealer) :
+    user_       (user),
+    is_dealer_  (false),
+    num_wins_   (0),
+    hand_       (52) {
 }
 
-const char* Player::GetDislpayName () {
-    return name_;
-}
+Player::~Player () {}
 
-const char* Player::SetDislpayName (const char* name) {
-    if (name == nullptr) {
-        return "name can't be nil";
-    }
-    delete name;
-    return nullptr;
-}
-
-void Player::SetName (const char* name) {
-    if (name == nullptr)
-        return;
-    name_ = name;
+id::User* Player::GetUser () {
+    return user_;
 }
 
 bool Player::IsDealer () {
@@ -66,6 +53,20 @@ const char* Player::SetState (int state) {
 
 Hand& Player::GetHand () {
     return hand_;
+}
+
+int Player::TakeCardUp (Card* card) {
+    if (card == nullptr) {
+        return -1;
+    }
+    return hand_.GetVisibleCards ().Push (card);
+}
+
+int Player::TakeCardDown (Card* card) {
+    if (card == nullptr) {
+        return -1;
+    }
+    return hand_.GetHiddenCards ().Push (card);
 }
 
 int Player::GetNumPoints () {
@@ -122,8 +123,8 @@ void Player::ResetWins () {
 }
 
 void Player::Print () {
-    cout << "\n| Player    : " << name_ << " points: " << num_points_ 
-         << " wins  : " << num_wins_;
+    cout << "\n| Player    : " << GetUser ()->GetHandle ().GetKey () 
+         << " points: " << num_points_ << " wins  : " << num_wins_;
 
     PrintLine ('-');
     hand_.Print ();

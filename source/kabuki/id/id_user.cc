@@ -1,5 +1,5 @@
 /** kabuki::pro
-    @file    ~/source/kabuki/id/include/imp/user.cc
+    @file    ~/source/kabuki/id/user.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -23,13 +23,27 @@ namespace kabuki { namespace id {
 
 const char User::kDefaultDislpayName[] = "Steve\0";
 
-User::User (Validator* validator, const char* handle, const char* password,
-            const char* status) :
-            handle_    (validator, handle),
-            password_  (validator, password),
-            validator_ (validator_) {
-    if (SetStatus (status))
-        SetStatus ("Jo");
+const double User::kDefaultBalance = 0.0;
+
+User::User (Authenticator* authenticator, uid_t uid, const char* handle,
+            const char* password, const char* status, double balance,
+            uint64_t value) :
+            handle_        (authenticator, handle),
+            status_        (StringClone ("")),
+            password_      (authenticator, password),
+            authenticator_ (authenticator),
+            uid_           (uid),
+            session_       (0),
+            session_key_   (0),
+            balance_       (balance),
+            value_         (value) {
+    if (SetStatus (status)) {
+        SetStatus ("");
+    }
+}
+
+User::~User () {
+
 }
 
 const char* User::GetStatus () {
@@ -48,32 +62,55 @@ Handle& User::GetHandle () { return handle_; }
 
 Password& User::GetPassword () { return password_; }
 
+uid_t User::GetUid () {
+    return uid_;
+}
+
 uid_t User::GetSession () {
     return session_;
 }
 
-void User::SetSession (uid_t uid) {
-    session_ = uid;
+const char* User::SetSession (uid_t session) {
+    if (session == 0)
+        return "Invalid session key";
+    session_ = session;
+    return nullptr;
 }
 
-uid_t User::GetSessionKey () {
-    return session_key_;
+uid_t User::GetResponse () {
+    return response_;
 }
 
-void User::SetSessionKey (uid_t key) {
-    session_key_ = key;
+const char* User::SetResponse (uid_t response) {
+    response_ = response;
+    return nullptr;
 }
 
-bool User::IsValid (const char* handle, const char* password) {
-    if (!handle_.IsValid (handle))
+double User::GetBalance () {
+    return balance_;
+}
+
+const char* User::SetBalance (double balance) {
+    balance_ = balance;
+    return nullptr;
+}
+
+uint64_t User::GetValue () {
+    return value_;
+}
+
+const char* User::SetValue (uint64_t value) {
+    value_ = value;
+    return nullptr;
+}
+
+bool User::Equals (User* user) {
+    if (user == nullptr) {
         return false;
-    return password_.IsValid (password);
-}
-
-bool User::Equals (const User& user) {
+    }
     if (!handle_.Equals (handle_.GetKey ()))
         return false;
-    return password_.Equals (user.password_);
+    return password_.Equals (user->password_);
 }
 
 void User::Print () {

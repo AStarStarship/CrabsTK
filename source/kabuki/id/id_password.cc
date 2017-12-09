@@ -23,8 +23,8 @@ namespace kabuki { namespace id {
 
 const char Password::kDefault[] = "anything_but_password_or_admin";
 
-Password::Password (Validator* validator, const char* string) :
-    validator_ (validator),
+Password::Password (Authenticator* authenticator, const char* string) :
+    authenticator_ (authenticator),
     type_      (kValidation){
     if (!SetKey (string)) {
         key_ = StringClone ("");
@@ -43,7 +43,7 @@ bool Password::SetKey (const char* password) {
     if (password == nullptr)
         return false;
     
-    if (!validator_->IsValid (password, kValidation)) {
+    if (!authenticator_->PasswordIsValid (password)) {
         return false;
     }
     delete key_;

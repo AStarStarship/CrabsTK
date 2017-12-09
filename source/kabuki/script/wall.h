@@ -80,7 +80,7 @@ class Wall : public Operation {
     Door* GetDoor (int index);
 
     /** Adds a Door to the slot.
-    @return Returns nullptr if the Door is full and a pointer to the Door in the
+    @return Returns nil if the Door is full and a pointer to the Door in the
             buffer upon success. */
     int OpenDoor (Door* door);
 

@@ -13,19 +13,34 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABUKI_BLACKJACK_PLAYER
-#define HEADER_FOR_KABUKI_BLACKJACK_PLAYER
+#ifndef HEADER_FOR_KABUKI_BLACKJACKPLAYER
+#define HEADER_FOR_KABUKI_BLACKJACKPLAYER
 
 #include "player.h"
 
 namespace kabuki { namespace cards {
+
+/** Calculates the blackjack store of the given hand and ace_value.
+    @param hand The hand.
+    @param ace_value Use value of either 1 or 13.
+    @return Returns the score. */
+KABUKI int BlackjackScore (Hand& hand, int ace_value);
+
+/** Returns the min score of this hand where Aces are worth 1. */
+KABUKI int BlackjackMinScore (Hand& hand);
+
+/** Returns the max score of this hand where Aces are worth 11. */
+KABUKI int BlackjackMaxScore (Hand& hand);
+
+/** Compares the two Blackjack hands. */
+KABUKI int BlackjackCompareHands (Hand& a, Hand& b);
 
 /** A player in a Blackjack game. */
 class BlackjackPlayer : public Player {
     public:
 
     enum States {
-        kStateWaitingToJoin = 0, //< State when player is waiting to join.
+        kStateObserving     = 0, //< State when player is waiting to join.
         kStatePlayingRound  = 1, //< State when player is playing normally.
         kStateHolding       = 2, //< State when player is holding.
         kStateOutOfGame     = 3  //< State when player has lost game.
@@ -33,31 +48,19 @@ class BlackjackPlayer : public Player {
 
     /** Default Constructor. */
     BlackjackPlayer (id::User* user, CardStack& stock,
-                     int start_points = 100, bool is_dealer = false);
+                     bool is_dealer = false);
 
     /** Destructor. */
-    ~BlackjackPlayer ();
+    virtual ~BlackjackPlayer ();
 
     /** Sets the state of the player. */
     const char* SetState (int state) override;
 
-    /** Compares this hand to the other hand.
-        @return Returns 0 if they are equal, 1 if this hand is greater than
-        the other Hand, and -1 if the other Hand is greater than this
-        Hand. */
-    virtual int Compare (Hand& other);
-
     /** Returns the HighLowScore. */
-    //data::Array<CardCombo> GetHandCombos ();
+    //Array<CardCombo> GetHandCombos ();
 
-    /** Gets the hand score with the given ace value. */
-    int GetScore (int ace_value);
-
-    /** Returns the min score of this hand where Aces are worth 1. */
-    int GetMinScore ();
-
-    /** Returns the max score of this hand where Aces are worth 11. */
-    int GetMaxScore ();
+    /** Returns true if the player is holding. */
+    virtual bool IsHolding ();
 
     /** Function returns if this hand is 21. */
     bool Is21 ();
@@ -66,45 +69,40 @@ class BlackjackPlayer : public Player {
         A hand is a bust if it is over 21 points. */
     bool IsBust ();
 
-    /** Prints this object to the console. */
-    void PrintHand ();
+    /** Pure virtual new game logic handler. */
+    virtual void RestartGame ();
 
-    /** New game logic handler. */
-    virtual void NewGame ();
-
-    /** New round logic handler.
-        It's not really possible to predict what function parameters this
-        this function will need so you will need to pass them into your
-        sub-class object constructor. */
+    /** Processes beginning of round logic. */
     virtual void BeginRound ();
 
-    /** Attempts to take a card from the Deck for a player.
-        @pre    The Deck must not be empty.
-        @pre    The player must have a max hand score of 21. */
+    /** Performs round logic. */
     virtual void PlayRound ();
 
-    /** Processes end of round logic.
-        It's not really possible to predict what function parameters this
-        this function will need so you will need to pass them into your
-        sub-class object constructor. */
+    /** Processes beginning of round logic. */
     virtual void EndRound ();
 
-    /** Processes end of game logic. */
+    /** Processes beginning of round logic. */
     virtual void EndGame ();
 
-    /** Checks to see if this hand wins compared to the given player's hand. */
-    virtual bool HandWins (Hand& other);
+    /** Compares this hand to the other.
+    @return Returns 0 if the hands are equal, > 1 if the other hand beats
+    this hand and < 0 if the other hand wins.. */
+    virtual int Compare (Hand& hand);
 
-    /** Returns true if the player is holding. */
-    bool IsHolding ();
+    /** Returns true if this hand wins compared to the other one. */
+    virtual bool Wins (Hand& hand);
 
-    /** Prints the round stats. */
-    void PrintStats ();
+    /** Prints the abridged player stats to the console. */
+    virtual void PrintStats ();
 
-    /** Prints the player details. */
-    void Print ();
+    /** Prints the player to the console. */
+    virtual void Print ();
+
+    protected:
+
+    CardStack& stock_; //< Stock of cards to draw from.
 
 };
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABUKI_BLACKJACK_PLAYER
+#endif  //< HEADER_FOR_KABUKI_BLACKJACKPLAYER

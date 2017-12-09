@@ -21,52 +21,31 @@
 
 namespace kabuki { namespace cards {
 
-/** An abstract player in an abstract card game. */
+/** An abstract player in an abstract card game.
+*/
 class Player {
     public:
 
     /** Default Constructor. */
-    Player (CardStack& stock, const char* player_name = "Butt Face", int start_points = 100,
-            bool is_dealer = false);
+    Player (id::User* user = nullptr, bool is_dealer = false);
     
     /** Virtual destructor. */
-    virtual ~Player () {}
+    virtual ~Player ();
 
-    /** Pure virtual new game logic handler. */
-    virtual void NewGame () = 0;
-
-    /** Processes beginning of round logic. */
-    virtual void BeginRound () = 0;
-
-    /** Performs round logic. */
-    virtual void PlayRound () = 0;
-
-    /** Processes beginning of round logic. */
-    virtual void EndRound () = 0;
-
-    /** Processes beginning of round logic. */
-    virtual void EndGame () = 0;
-
-    /** Returns true if this hand wins compared to the other one. */
-    virtual bool HandWins (Hand& other) = 0;
-
-    /** Gets the Player's status_. */
-    const char* GetDislpayName ();
-
-    /** Sets the Player's status_. */
-    const char* SetDislpayName (const char* name);
+    /** Gets the user attached to this Player. */
+    id::User* GetUser ();
 
     /** Gets is_dealer_. */
-    bool IsDealer ();
+    virtual bool IsDealer ();
 
     /** Sets is_dealer_. */
-    void SetIsDealer (bool is_dealer);
+    virtual void SetIsDealer (bool is_dealer);
 
     /** Gets this Player's state. */
     int GetState ();
 
     /** Attempts to set the state. 
-        @return Returns nullptr upon success and an error string upon
+        @return Returns nil upon success and an error string upon
                 failure. */
     virtual const char* SetState (int state);
 
@@ -97,24 +76,55 @@ class Player {
 
     /** Returns the player's hand. */
     Hand& GetHand ();
+
+    /** Pushes a card onto the visible_cards_.
+        @return Returns -1 upon failure. */
+    int TakeCardUp (Card* card);
+
+    /** Pushes a card onto the hidden_cards_.
+        @return Returns -1 upon failure. */
+    int TakeCardDown (Card* card);
                    
     /** Resets the numWins to 0. */
     void ResetWins ();
 
+    /** Pure virtual new game logic handler. */
+    virtual void RestartGame () = 0;
+
+    /** Processes beginning of round logic. */
+    virtual void BeginRound () = 0;
+
+    /** Performs round logic. */
+    virtual void PlayRound () = 0;
+
+    /** Processes beginning of round logic. */
+    virtual void EndRound () = 0;
+
+    /** Processes beginning of round logic. */
+    virtual void EndGame () = 0;
+
+    /** Compares this hand to the other.
+        @return Returns 0 if the hands are equal, > 1 if the other hand beats
+                this hand and < 0 if the other hand wins.. */
+    virtual int Compare (Hand& hand) = 0;
+
+    /** Returns true if this hand wins compared to the other one. */
+    virtual bool Wins (Hand& hand) = 0;
+
+    /** Prints the abridged player stats to the console. */
     virtual void PrintStats () = 0;
 
-    /** Prints this object to the console. */
-    virtual void Print ();
+    /** Prints the player to the console. */
+    virtual void Print () = 0;
 
     protected:
 
-    const char* name_;       //< Player's name.
-    bool        is_dealer_;  //< Flags if this player is the dealer or not.
-    int         state_,      //< The state of the player.
-                num_points_, //< Number of points.
-                num_wins_;   //< Total number of wins.
-    Hand        hand_;       //< Player's Hand.
-    CardStack& stock_;       //< Stock of Card(s) to draw from.
+    id::User * user_;       //< User attached to this Player.
+    bool       is_dealer_;  //< Flags if this player is the dealer or not.
+    int        state_,      //< The state of the player.
+               num_points_, //< Number of points.
+               num_wins_;   //< Total number of wins.
+    Hand       hand_;       //< Player's Hand.
 };
 
 }       //< namespace cards

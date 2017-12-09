@@ -235,7 +235,7 @@ KABUKI const Operation* ExpressionReset (Expression* expr);
 
 /** Attempts to push the Star at the given index of the current
     device control onto the stack.
-    @return Returns nullptr upon success and a pointer to a char
+    @return Returns nil upon success and a pointer to a char
             upon failure. */
 KABUKI const Operation* Push (Expression* expr, Operand* op);
 

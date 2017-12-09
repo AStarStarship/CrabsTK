@@ -1,5 +1,5 @@
 /** kabuki::id
-    @file    ~/source/kabuki/id/validator.h
+    @file    ~/source/kabuki/id/authenticator.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -13,27 +13,38 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABUKI_ID_VALIDATOR
-#define HEADER_FOR_KABUKI_ID_VALIDATOR
+#ifndef HEADER_FOR_KABUKI_ID_VALIDATORDEFAULT
+#define HEADER_FOR_KABUKI_ID_VALIDATORDEFAULT
 
-#include "config.h"
+#include "authenticator.h"
 
 namespace kabuki { namespace id {
 
-/** Interface for a class that can validate a string for correctness.
-    This interface is useful for making rules for things like Handle(s) and
-    Password(s). Classes that implement this interface must define the indexes
-    of the types.
-*/
-struct Validator {
-    /** Function validates the input for correctness.
-        @param  input The input to validate.
-        @param  type  The type of input (i.e. Handle or Password).
-        @return Returns null upon success and a pointer to . an error string
-                if the input is invalid. */
-    virtual const char* IsValid (const char* input, int type) = 0;
+class AuthenticatorDefault : public Authenticator {
+    public:
+
+    AuthenticatorDefault ();
+
+    int GetMinHandleLength ();
+
+    int GetMaxHandleLength ();
+
+    int GetMinPasswordLength ();
+
+    int GetMaxPasswordLength ();
+
+    virtual const char* HandleIsValid (const char* handle);
+
+    virtual const char* PasswordIsValid (const char* password);
+    
+    private:
+
+    int min_handle_length_,
+        max_handle_length_,
+        min_password_length_,
+        max_password_length;
 };
 
 }       //< namespace id
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABUKI_ID_VALIDATOR
+#endif  //< HEADER_FOR_KABUKI_ID_VALIDATORDEFAULT

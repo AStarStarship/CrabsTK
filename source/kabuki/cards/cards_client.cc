@@ -22,10 +22,11 @@ using namespace std;
 namespace kabuki { namespace cards {
 
 Client::Client ():
-    validator_ (new ValidatorDefault ()),
-    state_     (0),
-    user_      (validator_),
-    pack_      () {
+    authenticator_ (new AuthenticatorDefault ()),
+    state_        (0),
+    round_number_ (0),
+    user_         (authenticator_) {
+    game_name_[0] = 0;
 }
 
 Client::~Client () {
@@ -62,7 +63,7 @@ void Client::PrintRoundStatsString () {
     cout << "Round: " << round_number_ << "\n";
 
 
-    PrintLine ("> ", '~');
+    PrintLine ("|", '~');
 }
 
 void Client::Print () {
@@ -128,10 +129,12 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
                                                    status, handle)))
                 return expr->result;
             if (player_number < 0) {
-                return Result (expr, Bin::InvalidArgumentError, Params<1, SI4> ());
+                return Result (expr, Bin::InvalidArgumentError,
+                               Params<1, SI4> ());
             }
             if (player_number > kMaxPlayers) {
-                return Result (expr, Bin::InvalidArgumentError, Params<1, SI4> ());
+                return Result (expr, Bin::InvalidArgumentError,
+                               Params<1, SI4> ());
             }
             players_.Grow (player_number);
             player = players_[player_number];
@@ -141,13 +144,6 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
         }
     }
     return nullptr;
-}
-
-const char* DefaultPlayAgainString () {
-    static const char play_again[] = "\n| Do you want to play again?"
-        "\n| Enter y to continue, or n to quit."
-        "\n< \0";
-    return play_again;
 }
 
 }       //< namespace cards

@@ -61,7 +61,7 @@ class Hand : public CardStack {
     CardStack& GetHiddenCards ();
 
     /** Returns a list different hand point combinations for this game. */
-    //virtual data::Array<CardCombo> GetHandCombos ();
+    //virtual Array<CardCombo> GetHandCombos ();
     
     /** Returns a string representation of this Object. */
     void Print ();

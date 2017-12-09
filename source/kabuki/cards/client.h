@@ -13,8 +13,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KABAUKI_CARDS_CARDGAME
-#define HEADER_FOR_KABAUKI_CARDS_CARDGAME
+#ifndef HEADER_FOR_KABAUKI_CARDS_CLIENT
+#define HEADER_FOR_KABAUKI_CARDS_CLIENT
 
 #include "deck.h"
 #include "dealer.h"
@@ -25,7 +25,7 @@ namespace kabuki { namespace cards {
 /** A playing card game client that can play many types of games in the console.
     The server does most of the game logic and feeds the client data on a 
     need to know basis. */
-class Client : public id::ValidatorDefault, public _::Operation {
+class Client : public id::AuthenticatorDefault, public _::Operation {
     public:
 
     typedef enum States {
@@ -69,19 +69,15 @@ class Client : public id::ValidatorDefault, public _::Operation {
 
     protected:
 
-    id::Validator* validator_;
-    char           game_name_[kMaxGameNameLength]; //< Current game name.
-    uint           state_,        //< State of the app or current game index.
-                   round_number_; //< Current round number.
-    id::User       user_;         //< User.
-    Deck           pack_;         //< Pack of Card(s).
-    data::Array<RemotePlayer*> players_; //< Array of RemotePlayer(s).
+    id::Authenticator  * authenticator_;
+    char                 game_name_[kMaxGameNameLength]; //< Current game name.
+    uint32_t             state_,        //< Client app state.
+                         round_number_; //< Current round number.
+    id::User             user_;         //< User.
+    Array<RemotePlayer*> players_;      //< Array of RemotePlayer(s).
 
-};      //< class Client
-
-/** Returns the default play again or quit string. */
-KABUKI const char* DefaultPlayAgainString ();
+};  //< class Client
 
 }       //< namespace cards
 }       //< namespace kabuki
-#endif  //< HEADER_FOR_KABAUKI_CARDS_CARDGAME
+#endif  //< HEADER_FOR_KABAUKI_CARDS_CLIENT

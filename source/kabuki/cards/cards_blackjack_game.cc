@@ -22,136 +22,56 @@ using namespace std;
 namespace kabuki { namespace cards {
 
 const int BlackjackGame::kDenominations[] = {
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10
-};
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10 };
 
-BlackjackGame::BlackjackGame (UserList* users) :
-    users_ (users) {
-    min_ante_ = kDefaultAnte;
-
-    // Set the ante
-    ante_ = min_ante_ < kMinAnte?kMinAnte:min_ante_;
-    points_pot_  = 0;  //< Points in the pot.
-    round_number_ = 1; //< Current round number.
-    BeginRound ();       //< Starts a new game.
+BlackjackGame::BlackjackGame (id::UserList& users, id::User* dealer_user, int buy_in,
+                              int ante, int min_bet, int min_players,
+                              int max_players) :
+    CardGame (users, "Blackjack", min_players, max_players)  {
+    dealer_ = new BlackjackDealer (dealer_user, buy_in, ante, min_bet, min_players,
+                                   max_players);
+    RestartGame ();
 }
 
 BlackjackGame::~BlackjackGame () {
-
+    delete dealer_;
 }
 
-bool BlackjackGame::RaiseAnte (int value) {
-    // You have to have enough points to play the game or else we have to exit.
-    if (value < 0) {
-        return false;
-    }
-    for (int i = 0; i < players_.GetCount (); ++i) {
-        Player* player = players_[i];
-        if (ante_ + 10 > player->GetNumPoints ()) {
-            return player->SetState (kStateObserving);
-        }
-    }
-
-    ante_ += value;
-    return true;
-}
-
-void BlackjackGame::StartNewGame () {
-    Server::NewGame ();
-    round_number_ = 1;
-    ante_ = min_ante_;
-    points_pot_ = 0;
-
-    for (int i = 0; i < players_.GetCount (); ++i) {
-        players_.Element (i)->NewGame ();
-    }
-    dealer_.StartNewGame ();
-
-    points_pot_ = num_players_ * ante_;
-
-    for (int i = players_.GetCount (); i > 0; --i) {
-        players_[i]->RemovePoints (ante_);
-    }
-    dealer_.RemovePoints (ante_);
-
+void BlackjackGame::RestartGame () {
+    dealer_->RestartGame ();
     BeginRound ();
 }
 
 void BlackjackGame::BeginRound () {
-    Player* player;
-    for (int i = players_.GetCount (); i > 0; --i) {
-        player = players_[i];
-        if (player->GetNumPoints () < ante_) {
-
-        }
-    }
-    if (dealer_.GetNumPoints () < ante_) {
-        return;
-    }
-
-    dealer_.RemovePoints (ante_);
-
-    for (int i = 0; i < players_.GetCount (); ++i) {
-        players_.Element (i)->RemovePoints (ante_);
-    }
-
-    // Then put the points into the pot.
-    points_pot_ = num_players_ * ante_;
-    // The fist part of every card game is to shuffle the Deck...
-    stock_.Shuffle (pack_);
-
-    // ... and to deal a new hand.
-    for (int i = players_.GetCount (); i > 0; --i) {
-        players_[i]->GetHand ().GetVisibleCards ().Push (stock_.Draw ());
-    }
-    dealer_.GetHand ().GetVisibleCards ().Push (dealer_.GetStock ().Draw ());
-    // ... and to deal a new hand.
-    for (int i = players_.GetCount (); i > 0; --i) {
-        players_[i]->GetHand ().GetVisibleCards ().Push (stock_.Draw ());
-    }
-    dealer_.GetHand ().GetHiddenCards ().Push (dealer_.GetStock ().Draw ());
+    dealer_->BeginRound ();
 }
 
 void BlackjackGame::EndRound () {
     // Do we need to wait for the clients to respond?
-}
-
-void BlackjackGame::PrintStats () {
-    PrintLine ("> ", '_');
-    cout << "\n| Ante: " << ante_ << ".\n" <<
-        "\n| Initial Stats:\n";
-    for (int i = 0; i < players_.GetCount (); ++i) {
-        players_[i]->PrintStats ();
-    }
-    dealer_.PrintStats ();
-    cout << "\n| Starting round of Blackjack...\n\n";
+    dealer_->EndRound ();
 }
 
 bool BlackjackGame::PlayGameInConsole () {
-    stock_.Shuffle (pack_);
-    BeginRound ();
-
+    /*
     enum {
         kBufferSize = 80,
     };
     
     char input[kBufferSize]; //< temp variable for console text input.
 
+    BeginRound ();
+
     // You have to have enough points to play the game or else we have to exit.
-    if (players_[0]->GetNumPoints () < ante_) {
+    if (observers_[0]->GetNumPoints () < ante_) {
         cout << "You lose!";
         return false;
     }
 
-    if (dealer_.GetNumPoints () < ante_) {
+    if (dealer_->GetNumPoints () < ante_) {
         cout << "\n| You just wiped out the house!!!"
                 "\n| Your the ultimate Blackjack Champion!!!\n\n";
         return false;
     }
-
-    // Add some test players
-    players_.Push (new BlackjackPlayer (dealer_.GetStock ()));
-    players_.Push (new BlackjackPlayer (dealer_.GetStock ()));
 
     PrintStats ();
 
@@ -160,13 +80,13 @@ bool BlackjackGame::PlayGameInConsole () {
         BeginRound ();
 
         cout << "\n|";
-        PrintLine ("> ", '_');
+        PrintLine ("|", '_');
         cout << "\n| Round " << round_number_
             << ":\n";
 
-        dealer_.PrintStats ();
-        for (int i = 0; i < players_.GetCount (); ++i) {
-            players_[i]->PrintStats ();
+        dealer_->PrintStats ();
+        for (int i = 0; i < GetObservers ().GetCount (); ++i) {
+            observers_[i]->PrintStats ();
         }
 
         // The players need to either hit or hold first.
@@ -179,17 +99,17 @@ bool BlackjackGame::PlayGameInConsole () {
             KeyboardString ("\n| hit or hold?\n", input, kBufferSize);
 
             if (StringEquals (input, "hit")) {
-                CardStack& cards = dealer_.GetHand ().GetVisibleCards ();
-                cards.Push (dealer_.GetStock ().Draw ());
+                CardStack& cards = dealer_->GetHand ().GetVisibleCards ();
+                cards.Push (dealer_->GetStock ().Draw ());
                 cout << "\n| ";
-                for (int i = 0; i < players_.GetCount (); ++i) {
+                for (int i = 0; i < GetObservers ().GetCount (); ++i) {
                     cout << "\n| " << i;
-                    players_[i]->Print ();
+                    observers_[i]->Print ();
                 }
                 inputValid = true;
             } else if (StringEquals (input, "hold")) {
                 inputValid = true;
-                players_[0]->SetState (BlackjackPlayer::kStateHolding);
+                observers_[0]->SetState (BlackjackPlayer::kStateHolding);
             } else if (StringEquals (input, "exit") || StringEquals (input, "quit")) {
                 cout << "\n| Exiting the game...\n";
                 inputValid = true;
@@ -200,15 +120,15 @@ bool BlackjackGame::PlayGameInConsole () {
         }
 
         // Dealer goes last
-        dealer_.PlayRound ();
+        dealer_->PlayRound ();
 
         // Now process the logic for if someone won the round.
 
         // The way we know that the round is over is when everyone is holding. 
 
-        bool everyone_is_holding = dealer_.IsHolding ();
-        for (int i = players_.GetCount (); i > 0; --i) {
-            if (players_[i]->IsHolding ()) {
+        bool everyone_is_holding = dealer_->IsHolding ();
+        for (int i = GetObservers ().GetCount (); i > 0; --i) {
+            if (observers_[i]->IsHolding ()) {
                 everyone_is_holding = false;
                 break;
             }
@@ -217,68 +137,83 @@ bool BlackjackGame::PlayGameInConsole () {
         if (everyone_is_holding) {
             // Then everyone is holding so we need to process the end of round game logic.
 
-            if (dealer_.HandWins (players_[0]->GetHand ())) //< If the dealer wins, it trumps all other players.
+            if (dealer_->Wins (observers_[0]->GetHand ())) //< If the dealer wins, it trumps all other players.
             {
                 cout << "\n|\n| Dealer wins ({:-()";
-                dealer_.Print ();
-                players_[0]->Print ();
+                dealer_->Print ();
+                observers_[0]->Print ();
                 cout << "\n|";
-                dealer_.AddPoints (points_pot_);
-                dealer_.AddWin ();
-            } else if (players_[0]->HandWins (dealer_.GetHand ())) {
+                dealer_->AddPoints (pot_);
+                dealer_->AddWin ();
+            } else if (observers_[0]->Wins (dealer_->GetHand ())) {
                 cout << "\n|\n| Players wins!!!";
-                dealer_.Print ();
-                players_[0]->Print ();
-                players_[0]->AddPoints (points_pot_);
-                players_[0]->AddWin ();
+                dealer_->Print ();
+                observers_[0]->Print ();
+                observers_[0]->AddPoints (pot_);
+                observers_[0]->AddWin ();
                 PrintLine ("|", '$');
             }
 
             return true; // Exits loop and plays another game of Blackjack.
         }
 
-        /** The loop is almost over, so we need to check again if we can
-            still play the next round. We checked when we first entered the 
-            PlayBlackjackInConsole (Player, Player) function, so this is why
-            we checked at the end of the loop as opposed to the
-            beginning. */
-        if (players_[0]->GetNumPoints () < ante_) {
+        // The loop is almost over, so we need to check again if we can
+        // still play the next round. We checked when we first entered the 
+        // PlayBlackjackInConsole (Player, Player) function, so this is why
+        // we checked at the end of the loop as opposed to the
+        // beginning.
+        if (observers_[0]->GetNumPoints () < ante_) {
             cout << "You lose!";
             return false;
         }
 
-        if (dealer_.GetNumPoints () < ante_) {
+        if (dealer_->GetNumPoints () < ante_) {
             cout << "\n| You just wiped out the house!!!"
                  << "\n| Your the ultimate Blackjack Champion!!!";
             return false;
         }
 
         round_number_++;
-    }
+    } */
+    return false;
+}
+
+void BlackjackGame::Print () {
+    PrintLine (" ", '_');
+    cout << "\n|         Game: " << game_name_
+        << "\n| Num Observers: " << observers_.GetCount ()
+        << " Min: " << GetMinPlayers ()
+        << " Max: " << GetMaxPlayers ()
+        << "\n| Num Observers: " << observers_.GetCount ();
+
+    dealer_->Print ();
+    PrintLine ("|", '_');
 }
 
 const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
     static const Operation This = { "Blackjack",
         NumOperations (1), FirstOperation ('A'),
-        "Insert directions on how to play blackjack here.", 0 };
-    
+        "Insert directions on how to play blackjack here.", 0
+    };
     void* args[1];
-    int   index;
-    User* user;
+    int32_t player_uid;
+
     switch (index) {
         case '?': return &This;
         case 'A': {
-            static const Operation OpA = { "AddPlayer",
+            static const Operation OpA = { "AddUser",
                 Params<1, UI8> (), Params <0> (),
-                "Adds a player to the game.", 0
+                "Adds a User to the list of game observers.", 0
             };
             if (!expr) return &OpA;
-            uid_t player_uid;
-            if (ExprArgs (expr, Params<1, UI8> (), Args (args, &player_uid))) {
+            if (ExprArgs (expr, Params<1, SI4> (), Args (args, &player_uid))) {
                 return expr->result;
             }
-            user = users_->UserNumber (player_uid);
-            players_.Push (new BlackjackPlayer (user));
+            User* user = GetObservers ()[player_uid];
+            if (user == nullptr) { // Invalid player_uid!
+                return nullptr;
+            }
+            GetObservers ().Push (user);
 
             return nullptr;
         }

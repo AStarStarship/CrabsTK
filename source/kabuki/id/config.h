@@ -18,6 +18,7 @@
 
 #include "../script/global.h"
 #include "../data/global.h"
+using namespace kabuki::data;
 
 typedef uint64_t uid_t;
 

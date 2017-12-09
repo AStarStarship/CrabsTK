@@ -17,7 +17,6 @@
 #define HEADER_FOR_KABUKI_CARDS_BLACKJACKDEADER
 
 #include "dealer.h"
-#include "blackjack_player.h"
 
 namespace kabuki { namespace cards {
 
@@ -25,32 +24,64 @@ namespace kabuki { namespace cards {
     A dealer has the Deck of cards, but is not necessarily a player. A
     dealer needs to keep track of all of the Players. A BlackjackDealer is both
     a Player and a Dealer at the same time. */
-class BlackjackDealer : public Dealer, public BlackjackPlayer {
+class BlackjackDealer : public Dealer {
     public:
     
     enum {
         kNumDecks           = 1,      //< Number of decks for this game.
         kDeckSize           = 52,     //< Number of cards in the Deck.
-        kStartingPoints     = 999999, //< Dealers starting points.
         kStartingAnte       = 5,      //< Starting ante.
         kMinBet             = 1,      //< Min bet.
-        kMinNumCardsPerHand = 2,      //< Min cards in a hand.
-        kMaxNumPlayer       = 2,      //< Max number of players.
-        kMaxNumCardsPerHand = Deck::kDefaultDeckSize, //< Max cards in a hand.
+        kMinCardsPerHand    = 2,      //< Min cards in a hand.
+        kMaxCardsPerHand    = Deck::kDefaultDeckSize, //< Max cards in a hand.
+        kDefaultMinPlayers  = 1,      //< Default min num players.
+        kDefaultMaxPlayers  = 10,     //< Default max num players.
         kKeyboardBufferSize = 79,     //< Size of the keyboard input buffer.
     };
 
     /** Default constructor. */
-    BlackjackDealer ();
+    BlackjackDealer (id::User* user, int buy_in = Dealer::kDefaultAnte,
+                     int ante        = Dealer::kDefaultAnte,
+                     int min_bet     = Dealer::kDefaultMinBet,
+                     int min_players = kDefaultMinPlayers,
+                     int max_players = kDefaultMaxPlayer);
 
-    /** Resets the number of wins to 0. */
-    virtual void DealHand (CardStack& stock);
+    virtual ~BlackjackDealer ();
+
+    /** Raises the ante by the given amount. */
+    bool RaiseAnte (int value);
+
+    /** Gets the hand score with the given ace value. */
+    int GetScore (int ace_value);
+
+    /** Pure virtual new game logic handler. */
+    virtual void RestartGame ();
 
     /** Processes beginning of round logic. */
     virtual void BeginRound ();
 
+    /** Performs round logic. */
+    virtual void PlayRound ();
+
     /** Processes beginning of round logic. */
     virtual void EndRound ();
+
+    /** Processes beginning of round logic. */
+    virtual void EndGame ();
+
+    /** Compares this hand to the other.
+        @return Returns 0 if the hands are equal, > 1 if the other hand beats
+        this hand and < 0 if the other hand wins.. */
+    virtual int Compare (Hand& hand);
+
+    /** Returns true if this hand wins compared to the other one. */
+    virtual bool Wins (Hand& hand);
+
+    /** Prints the abridged player stats to the console. */
+    virtual void PrintStats ();
+
+    /** Prints the player to the console. */
+    virtual void Print ();
 
 };      //< class BlackjackDealer
 }       //< namespace cards

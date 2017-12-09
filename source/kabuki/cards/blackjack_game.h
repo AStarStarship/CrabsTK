@@ -16,23 +16,23 @@
 #ifndef HEADER_FOR_KABUKI_BLACKJACK_GAME
 #define HEADER_FOR_KABUKI_BLACKJACK_GAME
 
-#include "server.h"
 #include "blackjack_dealer.h"
+#include "card_game.h"
 
 namespace kabuki { namespace cards {
 
 /** A blackjack card game. */
-class BlackjackGame : public Server {
+class BlackjackGame : public CardGame {
     public:
 
-    enum {
-        kMinAnte            = 1,  //< Min ante.
-        kDefaultAnte        = 10, //< Default ante.
-        kMinPlayers         = 2,  //< Min num players.
-        kStateBooting       = 0,  //< State when player is waiting to join.
+    typedef enum States {
+        kStateObserving     = 0,  //< State when player has lost game.
         kStatePlayingRound  = 1,  //< State when player is playing normally.
         kStateHolding       = 2,  //< State when player is holding.
-        kStateObserving     = 3   //< State when player has lost game.
+    } State;
+
+    enum {
+        kMinPlayers = 1,  //< Min players.
     };
 
     static const int kDenominations[14];
@@ -41,15 +41,17 @@ class BlackjackGame : public Server {
         The maximum number of players in Blackjack is set by the house. The more
         players there are, the greater the chance of the house loosing points, 
         so the maximum number we are going to set is 13. */
-    BlackjackGame (id::UserList* users);
+    BlackjackGame (id::UserList& users, id::User* user,
+                   int buy_in = Dealer::kDefaultAnte,
+                   int ante        = Dealer::kDefaultAnte,
+                   int min_bet     = Dealer::kDefaultMinBet,
+                   int min_players = kMinPlayers,
+                   int max_players = Dealer::kDefaultMaxPlayer);
 
     virtual ~BlackjackGame ();
 
-    /** Raises the ante the given value. */
-    bool RaiseAnte (int value = 10);
-
-    /** Starts the game. */
-    virtual void StartNewGame ();
+    /** Restarts the game. */
+    virtual void RestartGame ();
 
     /** Processes the beginning of round logic.
         Any player can hold, and sit out a round, but they still need to ante
@@ -59,23 +61,20 @@ class BlackjackGame : public Server {
     /** Processes the end of round logic. */
     virtual void EndRound ();
 
-    /** Returns the text string for the start of each round. */
-    virtual void PrintStats ();
-
     /** Game loop for card game. */
     virtual bool PlayGameInConsole ();
+
+    /** Prints this object to the console */
+    void Print () override;
 
     /** Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
     private:
 
-    int             min_ante_,   //< Initial ante.
-                    ante_,       //< Current ante.
-                    points_pot_; //< Current number of points in the pot.
-    BlackjackDealer dealer_;     //< Dealer.
-    id::UserList*   users_;      //< List of server users.
-    data::Array<BlackjackPlayer*> players_; //< Array of Player(s).
+    int              round_number_, //< Current round number.
+                     pot_;          //< Current number of points in the pot.
+    BlackjackDealer* dealer_;       //< Dealer.
 
 };      //< class BlackjackGame
 }       //< namespace cards

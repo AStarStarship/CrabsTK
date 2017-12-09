@@ -17,5 +17,6 @@
 #define HEADER_FOR_KABUKI_DATA_GLOBAL
 
 #include "array.h"
+//#include "binary_tree.h"
 
 #endif  //< HEADER_FOR_KABUKI_DATA_GLOBAL
