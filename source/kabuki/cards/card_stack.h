@@ -47,6 +47,8 @@ class CardStack {
         The copy constructor is use shuffle the CardStack. */
     CardStack (const CardStack& other);
 
+    virtual ~CardStack ();
+
     /** Removes all the cards from the stack. */
     void Clear ();
 
@@ -56,7 +58,7 @@ class CardStack {
     virtual int Compare (CardStack& other);
         
     /** Returns the point value total of this stack of cards. */
-    virtual int GetValue ();
+    int GetValue ();
 
     /** Shuffles this CardStack. */
     void Shuffle ();
@@ -70,9 +72,6 @@ class CardStack {
     /** Returns the number of Card(s) in this stack. */
     int GetCount ();
     
-    /** Returns the minNumCards. */
-    int GetMinNumCards ();
-    
     /** Returns the maxNumCards. */
     int GetMaxCards ();
 
@@ -81,9 +80,6 @@ class CardStack {
          @return Returns the number of cards in the deck or -1 if the operation
                  failed. */
     int Push (Card* card);
-
-    /** Pops a card off the stack. */
-    Card* Pop ();
     
     /** Inserts the card into the stack at the specified index.
         @return Returns 0 upon success
@@ -113,6 +109,12 @@ class CardStack {
         enough. 
         @return Returns the number of cards drawn. */
     int DrawCards (CardStack& cards, int num_cards_take = 1);
+
+    /** Counts the number of times this stack contains the given card. */
+    int Count (Card* card);
+
+    /** Returns true if this stack contains the given card. */
+    int Contains (Card* card);
 
     /** Removes card from the stack.
         @return Returns true upon success and false if this stack doesn't 
@@ -145,12 +147,6 @@ class CardStack {
 
     /** Returns true if there are no more cards in the deck. */
     bool IsEmpty ();
-    
-    /** Returns if the stackIsVisible. */
-    bool IsVisible ();
-    
-    /** Sets stackIsVisible to the new visibility. */
-    void SetVisiblity (bool visiblity);
 
     /** Prints this object to the log. */
     void Print ();
@@ -160,9 +156,7 @@ class CardStack {
 
     private:
 
-    int                min_cards_; //< Min number of cards in a stack.
-    bool               visible_;   //< Flag for card is visible or not.
-    Array<Card*> cards_;     //< Stack (Array) of Card pointers.
+    std::vector<Card*> cards_; //< Stack (Array) of Card pointers.
 
 };      //< class CardStack
 }       //< namespace cards

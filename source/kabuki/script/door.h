@@ -64,7 +64,7 @@ class Door : public Operand {
     };
 
     /** A door in a Chinese room. */
-    Door (const char* roomName = EmptyString (), uintptr_t* buffer = nullptr,
+    Door (const char* roomName = TextEmpty (), uintptr_t* buffer = nullptr,
           uintptr_t size_bytes = kMinDoorSize);
 
     /** Destructor. */
@@ -87,6 +87,13 @@ class Door : public Operand {
     /** Executes all of the queued escape sequences. */
     const Operation* ExecAll ();
 
+    /** Handles Script Commands.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* HandleText (const char* text,
+                                    const char* text_end);
+
     /** Script expressions. */
     virtual const Operation* Star (uint index, Expression* expr);
 
@@ -99,7 +106,7 @@ class Door : public Operand {
 /** Returns a Static Error Operation. */
 KABUKI const Operation* DoorResult (Door* door, Door::Error error);
 
-KABUKI const char* DoorErrorString (Door::Error error);
+KABUKI const char* DoorErrorText (Door::Error error);
 
 /** Returns the main door of the room.
 KABUKI Door& Doors (); */

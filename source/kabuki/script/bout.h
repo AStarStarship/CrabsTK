@@ -63,14 +63,14 @@ struct KABUKI Bout {
 KABUKI byte* BoutBuffer (Bout* bout);
 
 #if SCRIPT_DEBUG
-KABUKI const char* BoutErrorString (Bout::Error error);
+KABUKI const char* BoutErrorText (Bout::Error error);
 
 /** Gets a a char for printing out the bout_state. */
-KABUKI const char* BoutStateString (Bout::State state);
+KABUKI const char* BoutStateText (Bout::State state);
 #endif  //< SCRIPT_DEBUG
 
-inline const char* BoutStateString (byte state) {
-    return BoutStateString ((Bout::State)state);
+inline const char* BoutStateText (byte state) {
+    return BoutStateText ((Bout::State)state);
 }
 
 /** Used to return an erroneous result from a B-Output.
@@ -79,7 +79,7 @@ inline const char* BoutStateString (byte state) {
     @return Returns a Static Error Operation Result. */
 inline const Operation* BoutResult (Bout* bout, Bout::Error error) {
 #if SCRIPT_DEBUG
-    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
+    std::cout << "\nBout " << BoutErrorText (error) << " Error!";
 #endif
     return reinterpret_cast<const Operation*> (1);
 }
@@ -94,7 +94,7 @@ inline const Operation* BoutResult (Bout* bout, Bout::Error error) {
 inline const Operation* BoutResult (Bout* bout, Bout::Error error,
                                     const uint_t* header) {
 #if SCRIPT_DEBUG
-    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
+    std::cout << "\nBout " << BoutErrorText (error) << " Error!";
 #endif  //< MEMORY_PROFILE >= USE_MORE_ROM
     return reinterpret_cast<const Operation*> (1);
 }
@@ -110,7 +110,7 @@ inline const Operation* BoutResult (Bout* bout, Bout::Error error,
                                     const uint_t* header,
                                     uint_t offset) {
 #if SCRIPT_DEBUG
-    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
+    std::cout << "\nBout " << BoutErrorText (error) << " Error!";
 #endif  //< MEMORY_PROFILE >= USE_MORE_ROM
     return reinterpret_cast<const Operation*> (1);
 }
@@ -127,7 +127,7 @@ inline const Operation* BoutResult (Bout* bout, Bout::Error error,
                                     uint_t offset,
                                     byte* address) {
 #if SCRIPT_DEBUG
-    std::cout << "\nBout " << BoutErrorString (error) << " Error!";
+    std::cout << "\nBout " << BoutErrorText (error) << " Error!";
 #endif  //< MEMORY_PROFILE >= USE_MORE_ROM
     return reinterpret_cast<const Operation*> (1);
 }

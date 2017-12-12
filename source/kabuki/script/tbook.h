@@ -20,7 +20,7 @@
 #ifndef SCRIPT_SET_H
 #define SCRIPT_SET_H
 
-#if USING_BOOK
+#if USING_SCRIPT_BOOK
 
 #include "memory.h"
 #include "types.h"
@@ -240,7 +240,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData>* book, const char* key, T data) {
     if (book == nullptr) return 0;
     if (key == nullptr) return 0;
 
-    PrintStringLine (key);
+    PrintLine (key);
 
     TIndex num_items = book->num_items,
         stack_height = book->stack_height,
@@ -271,7 +271,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData>* book, const char* key, T data) {
     // Calculate space left.
     TKey value = table_size - stack_height * BookOverheadPerIndex<TIndex, TKey,
                                                                   TData> (),
-         key_length = static_cast<uint16_t> (StringLength (key)),
+         key_length = static_cast<uint16_t> (StrandLength (key)),
          pile_size;
 
     PrintLine ();
@@ -297,7 +297,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData>* book, const char* key, T data) {
         *unsorted_indexes = 0;
         destination = keys - key_length;
 
-        StringCopy (destination, key);
+        TextWrite (destination, key);
         printf ("\n| Inserted key %s at GetAddress 0x%p", key, destination);
         BookPrint (book);
         return 0;
@@ -368,7 +368,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData>* book, const char* key, T data) {
 
                 // Copy the key
                 value = key_offsets[num_items - 1] + key_length + 1;
-                StringCopy (keys - value, key);
+                TextWrite (keys - value, key);
                 key_offsets[num_items] = value;
 
                 // Update the collision table.
@@ -421,7 +421,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData>* book, const char* key, T data) {
                 byte collision_index = unsorted_indexes[mid];
                 printf ("\n\ncollision_index: %u", collision_index);
 
-                StringCopy (keys - value, key);
+                TextWrite (keys - value, key);
                 printf ("Inserting value: %u into index:%u "
                         "num_items:%u with other collision_index: %u\n", value,
                         index, num_items, collision_index);
@@ -473,7 +473,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData>* book, const char* key, T data) {
             Diff (book, destination), hashes[mid]);
 
     // First copy the char and set the key offset.
-    StringCopy (destination, key);
+    TextWrite (destination, key);
     key_offsets[num_items] = value;
 
     // Second move up the hashes and insert at the insertion point.
@@ -557,7 +557,7 @@ TIndex BookFind (Book<TIndex, TKey, TData>* book, const char* key) {
     printf ("\nSearching for key \"%s\" with hash 0x%x\n", key, hash);
 
     if (num_items == 1) {
-        if (!StringEquals (key, keys - key_offsets[0])) {
+        if (!StrandEquals (key, keys - key_offsets[0])) {
             printf ("Did not find key %s\n", key);
             return ~((TIndex)0);
         }
@@ -610,7 +610,7 @@ TIndex BookFind (Book<TIndex, TKey, TData>* book, const char* key) {
                 while (index < MaxBookIndexes<TIndex> ()) {
                     printf ("comparing to \"%s\"\n", keys -
                             key_offsets[index]);
-                    if (!StringEquals (key, keys - key_offsets[index])) {
+                    if (!StrandEquals (key, keys - key_offsets[index])) {
                         printf ("but table already contains key at offset:"
                                 "%u.\n", index);
                         return index;
@@ -635,7 +635,7 @@ TIndex BookFind (Book<TIndex, TKey, TData>* book, const char* key) {
                     key_offsets[index], Hash16 (keys -
                                                 key_offsets[index]));
 
-            if (!StringEquals (key, keys - key_offsets[index]) != 0) {
+            if (!StrandEquals (key, keys - key_offsets[index]) != 0) {
                 //< It was a collision so the table doesn't contain string.
                 std::cout << " but it was a collision and did not find key.\n";
                 return ~((TIndex)0);
@@ -735,7 +735,7 @@ void BookPrint (const Book<TIndex, TKey, TData>* book) {
 
         std::cout << '\n';
     }
-    PrintLine ("|", '_');
+    PrintLine ('_');
 
     PrintMemory (reinterpret_cast<const byte*> (book) + 
                  sizeof (Book<TIndex, TKey, TData>), book->size);
@@ -812,5 +812,5 @@ void BookPrint (Book<TIndex, TKey, TData>* book) {
 //}
 
 }       //< namespace _
-#endif  //< USING_BOOK
+#endif  //< USING_SCRIPT_BOOK
 #endif  //< SCRIPT_SET_H

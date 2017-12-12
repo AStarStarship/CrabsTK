@@ -29,7 +29,7 @@ const char* Suit::kSwissGermanSuit[4] = { "Roses", "Bells", "Acorns",
                                           "Shields" };
 const char* Suit::kLatinSuit[4] = { "Cups", "Coins", "Clubs",
                                     "Swords" };
-const char* Suit::kFormatStrings[] = { "French", "German", "Swiss-German",
+const char* Suit::kFormatTexts[] = { "French", "German", "Swiss-German",
                                        "Piacentine", "Napoletane",
                                        "Spagnole", "Bergamasche" };
 
@@ -61,14 +61,15 @@ void Suit::Set (int denomination, Format format, Color color) {
     SetColor (color);
 }
 
-int Suit::Compare (const Suit* other) {
+int Suit::Compare (Suit* other) {
+    int denomination = denomination_;
     if (other == nullptr) {
-        return denomination_;
+        return denomination;
     }
-    return other->denomination_ - denomination_;
+    return other->denomination_ - denomination;
 }
 
-bool Suit::Equals (const Suit* other) {
+bool Suit::Equals (Suit* other) {
     return !Compare (other);
 }
 
@@ -174,7 +175,7 @@ void Suit::Print () {
 }
 
 Suit* SuitError () {
-    static Suit error (Suit::kSpade);
+    static Suit error = (Suit::kSpade);
     return &error;
 }
 

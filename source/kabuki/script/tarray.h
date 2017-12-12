@@ -18,7 +18,7 @@
 #define SCRIPT_ARRAY_H
 
 #include "tstack.h"
-#if USING_ARRAY
+#if USING_SCRIPT_ARRAY
 namespace _ {
 
 /** A stack of 8, 16, 32, or 64 bit plain-old-data (POD) types.
@@ -163,5 +163,5 @@ T ArrayGet (TArray<I>* a, T index) {
 }
 
 }       //< namespace _
-#endif  //< USING_ARRAY
+#endif  //< USING_SCRIPT_ARRAY
 #endif  //< SCRIPT_ARRAY_H

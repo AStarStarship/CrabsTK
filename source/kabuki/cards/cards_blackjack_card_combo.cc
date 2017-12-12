@@ -21,6 +21,10 @@ BlackjackCardCombo::BlackjackCardCombo (const CardStack& cards, bool aces_high) 
     Set (0, 1, 0, 1, aces_high);
 }
 
+BlackjackCardCombo::~BlackjackCardCombo () {
+    // Nothing to do here :-)
+}
+
 int BlackjackCardCombo::GetValue () {
     int total = 0;
     Card* card;

@@ -21,7 +21,7 @@ using namespace std;
 namespace kabuki { namespace cards {
 
 RemotePlayer::RemotePlayer (Deck& pack) :
-    status_  (new char[User::kDefaultMaxDislpayNameLength + 1]),
+    status_        (new char[User::kDefaultMaxDislpayNameLength + 1]),
     num_wins_      (0),
     num_points_    (0),
     pack_          (pack),
@@ -42,7 +42,7 @@ const char* RemotePlayer::SetDislpayName (const char* name) {
     if (name == nullptr) {
         return "name can't be nil";
     }
-    StringCopy (status_, name);
+    TextWrite (status_, status_ + User::kDefaultMaxDislpayNameLength + 1, name);
     return nullptr;
 }
 
@@ -54,7 +54,8 @@ const char* RemotePlayer::SetHandle (const char* handle) {
     if (name == nullptr) {
         return "handle can't be nil";
     }
-    StringCopy (handle_, handle);
+    TextWrite (handle_, status_ + User::kDefaultMaxDislpayNameLength + 1,
+               handle);
     return nullptr;
 }
 
@@ -105,7 +106,7 @@ CardStack& RemotePlayer::GetVisibleCards () {
 
 void RemotePlayer::DeleteVisibleCards () {
     for (int i = 0; i < visible_cards_.GetCount (); ++i) {
-        delete visible_cards_.Pop ();
+        delete visible_cards_.Draw ();
     }
 }
 
@@ -116,8 +117,7 @@ int RemotePlayer::AddCard (byte pip, byte suit) {
     if (pip > 13) {
         return -1;
     }
-    Card* card = new Card (pip, pack_.Suits ()[suit], 0);
-    return visible_cards_.Push (card);
+    return visible_cards_.Push (new Card (pip, pack_.Suits ()[suit], 0));
 }
 
 void RemotePlayer::Print () {
@@ -130,7 +130,7 @@ void RemotePlayer::Print () {
 
 const Operation* RemotePlayer::Star (uint index, _::Expression* expr) {
     static const Operation This { "RemotePlayer",
-        NumOperations (6), FirstOperation ('A'),
+        NumOperations (6), OperationFirst ('A'),
         "A remotely controlled player in an abstract card game.", 0
     };
     void* args[1];
@@ -138,16 +138,16 @@ const Operation* RemotePlayer::Star (uint index, _::Expression* expr) {
         case '?': return &This;
         case 'A': {
             static const Operation OpA { "SetStatus",
-                Params<0> (), Params<1, STX, User::kDefaultMinDislpayNameLength> (),
+                Params<0> (), Params<1, STR, User::kDefaultMinDislpayNameLength> (),
                 "Sets the status_.", 0
             };
             if (!expr) return &OpA;
-            return ExprArgs (expr, Params<1, STX, User::kDefaultMaxDislpayNameLength> (),
+            return ExprArgs (expr, Params<1, STR, User::kDefaultMaxDislpayNameLength> (),
                              Args (args, status_));
         }
         case 'B': {
             static const Operation OpB { "SetIsDealer",
-                Params<0> (), Params<1, STX> (),
+                Params<0> (), Params<1, STR> (),
                 "Sets the is_dealer_ flag.", 0
             };
             if (!expr) return &OpB;

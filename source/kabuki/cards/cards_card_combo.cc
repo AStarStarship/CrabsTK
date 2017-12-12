@@ -52,6 +52,10 @@ void CardCombo::Set (bool aces_high, int joker_pip_1, int joker_suit_1,
     aces_high_ = aces_high;
 }
 
+CardCombo::~CardCombo () {
+    // Nothing to do here :-)
+}
+
 int CardCombo::GetJokerPip1 () {
     return joker_pip_1_;
 }

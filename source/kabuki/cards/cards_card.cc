@@ -24,6 +24,13 @@ Card::Card (int pip, Suit* suit, int denomination) {
     Set (pip, suit, denomination);
 }
 
+Card::Card (const Card& other) :
+    pip_          (other.pip_),
+    denomination_ (other.denomination_),
+    suit_         (other.suit_) {
+    // Nothing to do here. :-)
+}
+
 void Card::Set (int pip, Suit* suit, int denomination) {
     // First we have to ensure that the input values were in bounds.
     //< Pip values range from 0 - 13 J=0, A=1, J=10, Q=11, K=13
@@ -40,11 +47,11 @@ void Card::Set (int pip, Suit* suit, int denomination) {
     //LoadCardImage (folder_path);
 }
 
-int Card::Compare (const Card* other) {
+int Card::Compare (Card* other) {
     return other->denomination_ - denomination_;
 }
 
-bool Card::Equals (const Card* other) {
+bool Card::Equals (Card* other) {
     return !Compare (other);
 }
 
@@ -99,6 +106,16 @@ int Card::LoadCardImage (const char* directory) {
 //Image& Card::GetImage () {
 //    return card_image_;
 //}
+
+Card& Card::operator= (const Card& other) {
+    if (this == &other) { // self-assignment check expected
+        return *this;
+    }
+    pip_          = other.pip_;
+    denomination_ = other.denomination_;
+    suit_         = other.suit_;
+    return *this;
+}
 
 void Card::Print () {
     switch (pip_) {

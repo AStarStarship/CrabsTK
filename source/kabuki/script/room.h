@@ -42,13 +42,13 @@ enum
 
 /** Returns an array of pointers to strings that describe the program states.
 */
-KABUKI const char** RoomStateStrings ();
+KABUKI const char** RoomStateTexts ();
 
 /** Returns a pointer to an array of pointers to the _::Request strings. */
-KABUKI const char** RequestStrings ();
+KABUKI const char** RequestTexts ();
 
 /** Gets the response char corresponding to the given request. */
-KABUKI const char* RequestString (Request r);
+KABUKI const char* RequestText (Request r);
 
 /** A Chinese Room.
     An Chinese Room works the same way as in the Chinese Room thought 
@@ -156,7 +156,7 @@ class Room: public Operand {
     /** Destructor. */
     virtual ~Room ();
     
-    const char* GetRoomName ();
+    virtual const char* GetRoomName ();
 
     /** Processes a request from another Room.
         @return Returns false upon success and true if there is an error. */
@@ -208,6 +208,13 @@ class Room: public Operand {
     /** The default main function.
         Please feel free to override this with your own main function. */
     virtual int Main (const char** args, int args_count);
+
+    /** Handles Script Commands.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* HandleText (const char* text,
+                                    const char* text_end);
 
     /** Script expressions. */
     virtual const Operation* Star (uint index, Expression* expr);

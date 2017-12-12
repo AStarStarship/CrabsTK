@@ -35,11 +35,11 @@ add_library(kabuki SHARED ${KABUKI_SOURCES}
                         ${KABUKI_TOOLKIT_SOURCES} 
                         ${CHINESE_ROOM_SOURCES})
  
-# Creates folder "libraries" and adds target project (kabuki.vcproj)
+# Creates folder "libraries" and adds result project (kabuki.vcproj)
 set_property(TARGET kabuki PROPERTY FOLDER "libraries")
  
 # Properties->General->Output Directory
-set_target_properties(kabuki PROPERTIES
+set_result_properties(kabuki PROPERTIES
                       RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
  
 # Adds logic to INSTALL.vcproj to copy kabuki.dll to the destination directory

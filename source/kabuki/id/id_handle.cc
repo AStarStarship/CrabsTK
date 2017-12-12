@@ -35,36 +35,36 @@ Handle::Handle (Authenticator* authenticator, const char* key, int min_length,
     key = key;
     if (min_length < kDefaultMinLength) min_length = kDefaultMinLength;
     else if (min_length > kDefaultMaxLength) min_length = kDefaultMinLength;
-    key_ = StringClone (key);
+    key_ = StrandClone (key);
 }
 
 const char* Handle::GetKey () { return key_; }
 
 bool Handle::SetKey (const char* key) {
-    size_t length = StringLength (key);
+    size_t length = StrandLength (key);
     if (length < kDefaultMinLength || length > kDefaultMaxLength)
         return false;
 
     if (!IsValid (key))
         return false;
     delete key_;
-    key_ = StringClone (key);
+    key_ = StrandClone (key);
     return true;
 }
 
 bool Handle::IsValid (const char* key) {
-    size_t length = StringLength (key);
+    size_t length = StrandLength (key);
     if (length < kDefaultMinLength || length > kDefaultMaxLength)
         return false;
     return true;
 }
 
 bool Handle::Equals (const Handle& h) {
-    return StringEquals (key_, h.key_);
+    return StrandEquals (key_, h.key_);
 }
 
 bool Handle::Equals (const char* handle) {
-    return StringEquals (key_, handle);
+    return StrandEquals (key_, handle);
 }
 
 void Handle::Print () {

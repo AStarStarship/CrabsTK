@@ -18,6 +18,8 @@
 
 #include "../id/global.h"
 #include "blackjack_game.h"
+#include "blackjack_player_ai.h"
 #include "client.h"
+#include "server.h"
 
 #endif  //< HEADER_FOR_KABUKI_CARDS_GLOBAL

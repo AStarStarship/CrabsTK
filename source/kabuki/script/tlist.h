@@ -21,7 +21,7 @@
 #define SCRIPT_TLIST_H
 
 #include "set.h"
-#if USING_LIST
+#if USING_SCRIPT_LIST
 
 namespace _ {
 
@@ -189,6 +189,6 @@ template<typename TIndex, typename TKey, typename TData, typename THash>
 void SetPrint (Set<TIndex, TKey, TData, THash>* collection) {
 
 }
-#endif  //< USING_LIST
+#endif  //< USING_SCRIPT_LIST
 }       //< namespace _
 #endif  //< SCRIPT_TLIST_H

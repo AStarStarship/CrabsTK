@@ -33,7 +33,7 @@ Wall::Wall (uint_t size_bytes) :
     size_bytes = AlignSize64 (size_bytes);
     uint_t size_words = (size_bytes >> sizeof (uintptr_t)) + 3;
     uintptr_t* buffer = new uintptr_t[size_words],
-             * aligned_buffer = WordAlign64 (buffer);
+             * aligned_buffer = MemoryAlign64 (buffer);
     //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
     //< on 16 and 32-bit systems.
     size_bytes -= sizeof (uintptr_t) * (aligned_buffer - buffer);
@@ -44,7 +44,7 @@ Wall::Wall (uint_t size_bytes) :
 
 Wall::Wall (uintptr_t* buffer, uint_t size_bytes) {
     //byte* ptr     = reinterpret_cast<byte*> (buffer);//,
-    //    * new_ptr = ptr + WordAlignOffset<uint64_t> (ptr),
+    //    * new_ptr = ptr + MemoryAlignOffset<uint64_t> (ptr),
     //    * end_ptr = ptr + size_bytes;
     enum {
         kBitsShift = sizeof (uintptr_t) == 2 ? 1
@@ -54,7 +54,7 @@ Wall::Wall (uintptr_t* buffer, uint_t size_bytes) {
     //uint_t size_words = (size_bytes >> kBitsShift) + 3;
     //< Computer engineering voodoo for aligning to 64-bit boundary.
 
-    uintptr_t*aligned_buffer = WordAlign64 (buffer);
+    uintptr_t*aligned_buffer = MemoryAlign64 (buffer);
     //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
     //< on 16 and 32-bit systems.
     size_bytes -= sizeof (uintptr_t) * (aligned_buffer - buffer);

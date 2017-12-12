@@ -25,11 +25,13 @@
 #include "args.h"
 #include "address.h"
 #include "text.h"
+#include "hash.h"
+#include "print.h"
 
 namespace _ {
 
 #if SCRIPT_DEBUG
-const char* BoutErrorString (Bout::Error error) {
+const char* BoutErrorText (Bout::Error error) {
     static const char* strings[] = {
         "Buffer overflow",  //< 0
         "Locked Error"      //< 1
@@ -43,7 +45,7 @@ const char* BoutErrorString (Bout::Error error) {
     return strings[error];
 }
 
-const char* BoutStateString (Bout::State state) {
+const char* BoutStateText (Bout::State state) {
     static const char* strings[] = {
         "WritingState",
         "LockedState"
@@ -153,13 +155,13 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte //type,
         ui1;
-#if USING_2_BYTE_TYPES
+#if USING_SCRIPT_2_BYTE_TYPES
     uint16_t ui2;
 #endif
-#if USING_4_BYTE_TYPES
+#if USING_SCRIPT_4_BYTE_TYPES
     uint32_t ui4;
 #endif
-#if USING_8_BYTE_TYPES
+#if USING_SCRIPT_8_BYTE_TYPES
     uint64_t ui8;
 #endif
 
@@ -181,13 +183,13 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
         * start = begin + bout->start,      //< Start of the data.
         * stop  = begin + bout->stop;       //< Stop of the data.
     const byte* ui1_ptr;                    //< Pointer to a 1-byte type.
-#if USING_2_BYTE_TYPES || USING_VARINT2
+#if USING_SCRIPT_2_BYTE_TYPES || USING_SCRIPT_VARINT2
     const uint16_t* ui2_ptr;                //< Pointer to a 2-byte type.
 #endif
-#if USING_4_BYTE_TYPES || USING_VARINT4
+#if USING_SCRIPT_4_BYTE_TYPES || USING_SCRIPT_VARINT4
     const uint32_t* ui4_ptr;                //< Pointer to a 4-byte type.
 #endif
-#if USING_8_BYTE_TYPES || USING_VARINT8
+#if USING_SCRIPT_8_BYTE_TYPES || USING_SCRIPT_VARINT8
     const uint64_t* ui8_ptr;                //< Pointer to a 8-byte type.
 #endif
 
@@ -205,7 +207,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
         type = params[index];
 #if SCRIPT_DEBUG
         printf ("\n| param:%2i TType:%s start:%u, stop:%u space:%u value:", 
-                arg_index + 1, TypeString (type), Diff (begin, start),
+                arg_index + 1, TypeText (type), Diff (begin, start),
                 Diff (begin, stop), space);
 #endif
         switch (type) {
@@ -264,7 +266,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             case SI1: //< _W_r_i_t_e__8_-_b_i_t__T_y_p_e_s______________________
             case UI1:
             case BOL:
-#if USING_1_BYTE_TYPES
+#if USING_SCRIPT_1_BYTE_TYPES
                 // Check if the buffer has enough room.
                 if (space-- == 0)
                     return BoutResult (bout, Bout::BufferOverflowError, params,
@@ -285,7 +287,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             case SI2: //< _W_r_i_t_e__1_6_-_b_i_t__T_y_p_e_s____________________
             case UI2:
             case HLF:
-#if USING_2_BYTE_TYPES
+#if USING_SCRIPT_2_BYTE_TYPES
                 // Align the buffer to a word boundary and check if the 
                 // buffer has enough room.
                 if (space < sizeof (uint16_t))
@@ -319,7 +321,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             case UI4:
             case FLT:
             case TMS:
-#if USING_4_BYTE_TYPES
+#if USING_SCRIPT_4_BYTE_TYPES
                 // Align the buffer to a word boundary and check if the buffer
                 // has enough room.
 
@@ -365,7 +367,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             case SI8:
             case UI8:
             case DBL:
-#if USING_8_BYTE_TYPES
+#if USING_SCRIPT_8_BYTE_TYPES
                 // Align the buffer to a word boundary and check if the buffer
                 // has enough room.
                 if (space < sizeof (uint64_t))
@@ -433,7 +435,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 
             case SV2: //< _W_r_i_t_e__2_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_____
 
-#if USING_VARINT2
+#if USING_SCRIPT_VARINT2
                       // Load number to write and increment args.
                 ui2_ptr = reinterpret_cast<const uint16_t*> (args[arg_index]);
                 ui2 = *ui2_ptr;
@@ -505,7 +507,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 #endif
             case SV4: //< _W_r_i_t_e__4_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_____
 
-#if USING_VARINT4
+#if USING_SCRIPT_VARINT4
                       // Load number to write and increment args.
                 ui4_ptr = reinterpret_cast<const uint32_t*> (args[arg_index]);
                 ui4 = *ui4_ptr;
@@ -546,7 +548,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 goto InvalidType;
 #endif
             case SV8: //< _W_r_i_t_e__8_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_____
-#if USING_VARINT8
+#if USING_SCRIPT_VARINT8
                       // Load number to write and increment args.
                 ui8_ptr = reinterpret_cast<const uint64_t*> (args[arg_index]);
                 ui8 = *ui8_ptr;
@@ -627,7 +629,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         ui1 = *ui1_ptr;
                         length = static_cast<uint_t>(ui1);
                     }
-#if USING_2_BYTE_TYPES
+#if USING_SCRIPT_2_BYTE_TYPES
                     case 1:
                     {
                         ui2_ptr = reinterpret_cast<const uint16_t*>
@@ -639,8 +641,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         length = static_cast<uint_t>(ui2);
                         ui1_ptr = reinterpret_cast<const byte*> (ui2_ptr);
                     }
-#endif  //< USING_2_BYTE_TYPES
-#if USING_4_BYTE_TYPES
+#endif  //< USING_SCRIPT_2_BYTE_TYPES
+#if USING_SCRIPT_4_BYTE_TYPES
                     case 2:
                     {
                         ui4_ptr = reinterpret_cast<const uint32_t*>
@@ -652,8 +654,8 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         length = static_cast<uint_t>(ui4);
                         ui1_ptr = reinterpret_cast<const byte*> (ui4_ptr);
                     }
-#endif  //< USING_4_BYTE_TYPES
-#if USING_8_BYTE_TYPES
+#endif  //< USING_SCRIPT_4_BYTE_TYPES
+#if USING_SCRIPT_8_BYTE_TYPES
                     case 3:
                     {
                         ui8_ptr = reinterpret_cast<const uint64_t*>
@@ -665,7 +667,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         length = static_cast<uint_t>(ui8);
                         ui1_ptr = reinterpret_cast<const byte*> (ui8_ptr);
                     }
-#endif  //< USING_8_BYTE_TYPES
+#endif  //< USING_SCRIPT_8_BYTE_TYPES
                     default:
                     {  // This wont happen due to the & 0x3 bit mask
                        // but it stops the compiler from barking.

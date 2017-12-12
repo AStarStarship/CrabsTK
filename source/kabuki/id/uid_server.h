@@ -37,7 +37,7 @@ class UidServer {
                const char* filename = "uid") :
                next_uid_ ((init_uid == kInvalidUid) ? kInvalidUid + 1
                                                     : init_uid),
-               filename_ (StringClone (filename)) {
+               filename_ (StrandClone (filename)) {
         //                           +---E  +----D
         // Nothing to do here ({:->)-|------|
         //                           +---E  +----D

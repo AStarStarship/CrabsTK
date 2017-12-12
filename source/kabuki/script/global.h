@@ -25,6 +25,7 @@
 #define SCRIPT_GLOBAL_H
 
 #include "text.h"
+#include "strand.h"
 #include "memory.h"
 #include "random.h"
 #include "table.h"
@@ -39,5 +40,7 @@
 #include "expression.h"
 #include "window.h"
 #include "args.h"
+#include "keyboard.h"
+#include "print.h"
 
 #endif  //< SCRIPT_GLOBAL_H

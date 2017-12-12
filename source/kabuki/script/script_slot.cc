@@ -52,41 +52,41 @@ void SlotWipe (Slot* slot) {
         *start++ = 0;
     }
 }
-
-byte* SlotWrite (void* source, byte* const begin, byte* const start,
+/*
+byte* SlotWrite (void* target, void* target_end, byte* const begin, byte* const start,
                  byte* const stop, byte* const end, size_t size) {
-    if (source == nullptr) return start;
+    if (target == nullptr) return start;
 
     if ((start > stop) && (start + size >= end)) {
         // Calculate upper chunk size.
         size_t top_chunk = end - stop;
         size -= top_chunk;
 
-        MemoryCopy (stop, top_chunk, source);
-        MemoryCopy (begin, size, reinterpret_cast<byte*>(source) + top_chunk);
+        MemoryCopy (stop, top_chunk, target);
+        MemoryCopy (begin, size, reinterpret_cast<byte*>(target) + top_chunk);
         return begin + size;
     }
-    MemoryCopy (stop, size, source);
+    MemoryCopy (stop, size, target);
     return start + size;
 }
 
-byte* SlotRead (void* destination, byte* const begin, byte* const start,
+byte* SlotRead (void* target, void* target_end, byte* const begin, byte* const start,
                 byte* const stop , byte* const end  , size_t size) {
-    if (destination == nullptr) return start;
+    if (target == nullptr) return start;
 
     if ((start > stop) && (start + size >= end)) {
         // Calculate upper chunk size.
         size_t top_chunk = end - stop;
         size -= top_chunk;
 
-        MemoryCopy (destination, top_chunk, start);
-        MemoryCopy (reinterpret_cast<byte*>(destination) + top_chunk, size,
+        MemoryCopy (target, target_end, start, top_chunk);
+        MemoryCopy (reinterpret_cast<byte*>(target) + top_chunk, size,
                     begin);
         return begin + size;
     }
-    MemoryCopy (destination, size, stop);
+    MemoryCopy (target, target_end, stop, size);
     return start + size;
-}
+}*/
 
 //bool IsWritable (MirrorOut* mirror) {
 //   return mirror->start != mirror->stop;

@@ -93,11 +93,11 @@ class ChatSession : public ChatParticipant,
 
     void ReadHeader () {
         auto self (shared_from_this ());
-        boost::asio::async_read (socket_, boost::asio::buffer (read_msg_.Data (),
+        boost::asio::async_read (socket_, boost::asio::buffer (read_message_.Data (),
                                  std::string::kHeaderLength),
                                  [this, self] (boost::system::error_code ec,
                                                std::size_t /*length*/) {
-            if (!ec && read_msg_.DecodeHeader ()) {
+            if (!ec && read_message_.DecodeHeader ()) {
                 ReadBody ();
             } else {
                 room_.Leave (shared_from_this ());
@@ -108,12 +108,12 @@ class ChatSession : public ChatParticipant,
     void ReadBody () {
         auto self (shared_from_this ());
         boost::asio::async_read (socket_,
-                                 boost::asio::buffer (read_msg_.Body (),
-                                 read_msg_.BodyLength ()),
+                                 boost::asio::buffer (read_message_.Body (),
+                                 read_message_.BodyLength ()),
                                  [this, self] (boost::system::error_code ec,
                                                std::size_t /*length*/) {
             if (!ec) {
-                room_.Deliver (read_msg_);
+                room_.Deliver (read_message_);
                 ReadHeader ();
             } else {
                 room_.Leave (shared_from_this ());
@@ -141,7 +141,7 @@ class ChatSession : public ChatParticipant,
 
     tcp::socket socket_;
     ChatRoom& room_;
-    std::string read_msg_;
+    std::string read_message_;
     ExpressionQueue expression_queue;
 };
 

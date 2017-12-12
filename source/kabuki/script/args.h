@@ -37,7 +37,7 @@ KABUKI const uint_t* Params () {
 KABUKI void ParamsPrint (const uint_t* params);
 
 /*< Returns the requested parameter number. */
-KABUKI uint_t ParamNumber (const uint_t* params, byte param_number);
+KABUKI uint_t ParamNumber (const uint_t* params, int param_number);
 
 /** Sets the params to the given pointers corresponding to the index 1-26 of the
 letters a-z. */

@@ -21,52 +21,53 @@ using namespace std;
 namespace kabuki { namespace cards {
 
 CardStack::CardStack (int size) :
-    min_cards_ (0),
-    visible_   (true),
-    cards_     (size) {
+    cards_     () {
+    cards_.reserve (size);
     // Nothing to do here. ({:-)
 }
 
 CardStack::CardStack (const CardStack& other) :
-    min_cards_ (other.min_cards_),
-    visible_   (other.visible_),
     cards_     (other.cards_) {
     // Nothing to do here. ({:-)
 }
 
 CardStack::CardStack (Deck& deck, int min_cards) :
-    min_cards_ ((min_cards < 0) ? 0 : 0),
-    visible_ (false),
-    cards_   (deck.GetCount ()) {
+    cards_   () {
+    cards_.reserve (deck.GetSize ());
     Shuffle (deck);
 }
 
+CardStack::~CardStack () {
+    // Nothing to do here. ({:-)
+}
+
 void CardStack::Clear () {
-    cards_.Clear ();
+    cards_.clear ();
 }
 
 CardStack& CardStack::operator= (const CardStack& other) {
-    min_cards_ = other.min_cards_;
-    visible_   = other.visible_;
     cards_     = other.cards_;
     return *this;
 }
 
 int CardStack::Compare (CardStack& other) {
-    int point_value       = GetValue (),
-        other_point_value = other.GetValue ();
+    int point_value = GetValue ();
+    int other_point_value = other.GetValue (); // THis is giving me weird errors.
 
-    if (point_value > other_point_value)
+    if (point_value > other_point_value) {
         return 1;
-    if (point_value < other_point_value)
+    }
+    if (point_value < other_point_value) {
         return -1;
+    }
     return 0;
 }
 
 int CardStack::GetValue () {
     int total = 0;
-    for (int i = 0; i < cards_.GetCount (); ++i) {
-        total += cards_.Element (i)->GetDenomination ();
+    for (int i = 0; i < GetCount (); ++i) {
+        Card* card = cards_[i];
+        total += card->GetDenomination ();
     }
     return total;
 }
@@ -75,48 +76,47 @@ void CardStack::Shuffle () {
     // Create an identical copy of this CardStack.
     CardStack cards (*this);
 
-    cards_.Clear (); //< Delete all of the cards_ in this CardStack.
+    cards_.clear (); //< Delete all of the cards_ in this CardStack.
 
     // Then for each Card in the CardStack, 
-    for (int i = 0; i < cards_.GetCount (); ++i) {
-        cards_.Push (cards.TakeRandomCard ());
+    for (int i = 0; i < GetCount (); ++i) {
+        cards_.push_back (cards.TakeRandomCard ());
     }
 }
 
 void CardStack::Shuffle (Deck& deck) {
-    int num_cards = deck.GetNumCards ();
-    cout << "\n| Shuffling deck with count " << num_cards;
+    int num_cards = deck.GetSize ();
+    //cout << "\n| Shuffling deck with count " << num_cards;
     CardStack unshuffled_cards (num_cards);
     for (int i = num_cards - 1; i >= 0; --i) {
         Card* card = deck.GetCard (i);
         unshuffled_cards.Push (deck.GetCard (i));
     }
     unshuffled_cards.Print ();
-    cards_.Grow (num_cards);
+    cards_.reserve (num_cards);
     Clear ();
-    cout << "\n|\n Taking random cards\n|";
+    //cout << "\n|\n Taking random cards\n|";
     for (int i = num_cards - 1; i >= 0; --i) {
         Card* card = unshuffled_cards.TakeRandomCard ();
-        cards_.Push (card);
+        //cout << "\n| " << i << ".) Pushing ";
+        //card->Print ();
+        cards_.push_back (card);
     }
-    cout << "\n|\n Shuffled deck:\n|";
-    Print ();
+    //cout << "\n|\n Shuffled cards:\n|";
+    //Print ();
+    //cout << "\n|\n CardStack successfully shuffled! :-)\n|";
 }
 
 int CardStack::GetSize () {
-    return cards_.GetSize ();
+    return cards_.capacity ();
 }
 
 int CardStack::GetCount () {
-    return cards_.GetCount ();
-}
-
-int CardStack::GetMinNumCards () {
-    return min_cards_;
+    return cards_.size ();
 }
 
 int CardStack::GetMaxCards () {
-    return cards_.GetSize ();
+    return cards_.capacity ();
 }
 
 int CardStack::Push (Card* card) {
@@ -124,33 +124,34 @@ int CardStack::Push (Card* card) {
         return -1;
     }
     //cout << "\n| Pushing "; card->Print ();
-    return cards_.Push (card);
-}
-
-Card* CardStack::Pop () {
-    return cards_.Pop ();
+    cards_.push_back (card);
+    return GetCount ();
 }
 
 Card* CardStack::Draw () {
-    return cards_.Pop ();
+    Card* card = cards_[GetCount ()];
+    cards_.pop_back ();
+    return card;
 }
 
 int CardStack::InsertCard (Card* card, int index) {
-    if (index < 0)
-        return -1;
-    if (index > cards_.GetCount ())
-        return -1;
-    if (GetCount () + 1 > cards_.GetSize ())
-        return 2;
-
-    return cards_.Insert (card, index);
+    auto it = cards_.begin ();
+    cards_.insert (it + index, card);
+    return GetCount ();
 }
 
-int CardStack::Push (CardStack& cards) {
-    if (GetCount () + cards.GetCount () > cards_.GetSize ())
+int CardStack::Push (CardStack& new_cards) {
+    size_t new_count = GetCount () + new_cards.GetCount ();
+    if (new_count > cards_.capacity ())
         return 1;
 
-    return cards_.Push (cards.cards_);
+    auto it = cards_.begin ();
+    cards_.insert (it, new_cards.cards_.begin (), new_cards.cards_.end ());
+    //for (it = cards_.begin (); it != cards_.end ();
+    //     ++it) {
+    //    cards_.push_back (*it);
+    //}
+    return GetCount ();
 }
 
 int CardStack::DrawCards (CardStack& cards, int num_cards_take) {
@@ -161,7 +162,8 @@ int CardStack::DrawCards (CardStack& cards, int num_cards_take) {
     if (num_cards_take > cards.GetCount ())
         return 1;
 
-    if (GetCount () + num_cards_take > cards_.GetSize ())
+    size_t value = GetCount () + num_cards_take;
+    if (value > cards_.capacity ())
         return 2;
 
     for (int i = 0; i < num_cards_take; ++i)
@@ -170,11 +172,34 @@ int CardStack::DrawCards (CardStack& cards, int num_cards_take) {
     return 0;
 }
 
+int CardStack::Count (Card* card) {
+    int count = 0;
+    for (int i = 0; i < GetCount (); ++i) {
+        count += cards_[i]->Equals (card)?1:0;
+    }
+    return count;
+}
+
+int CardStack::Contains (Card* card) {
+    int count = 0;
+    for (int i = 0; i < GetCount (); ++i) {
+        if (cards_[i]->Equals (card)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool CardStack::RemoveCard (Card* card) {
-    if (!cards_.Contains (card))
-        return false;
-    cards_.RemoveFirstInstanceOf (card);
-    return true;
+    int count = 0;
+    for (int i = 0; i < GetCount (); ++i) {
+        if (cards_[i]->Equals (card)) {
+            auto it = cards_.begin ();
+            cards_.erase (it + i);
+            return true;
+        }
+    }
+    return false;
 }
 
 int CardStack::SetCards (CardStack& stack, int num_cards) {
@@ -184,22 +209,21 @@ int CardStack::SetCards (CardStack& stack, int num_cards) {
     if (num_cards > stack.GetCount ()) {
         return 1;
     }
-    if (num_cards < min_cards_) {
-        return 2;
-    }
-    if (num_cards > cards_.GetSize ()) {
+    if (num_cards > GetCount ()) {
         return 3;
     }
-    cards_.Clear ();
+    cards_.clear ();
 
     if (num_cards == 1) {
-        return cards_.Push (stack.GetCard (0));
+        cards_.push_back (stack.GetCard (0));
+        return GetCount ();
     }
 
     for (int i = 0; i < num_cards - 1; ++i)
-        cards_.Push (stack.GetCard (i));
+        cards_.push_back (stack.GetCard (i));
 
-    return cards_.Push (stack.GetCard (num_cards - 1));
+    cards_.push_back (stack.GetCard (num_cards - 1));
+    return GetCount ();
 }
 
 int CardStack::TakeCards (CardStack& cards, int num_cards) {
@@ -211,84 +235,74 @@ int CardStack::TakeCards (CardStack& cards, int num_cards) {
         // Not enough cards_ on the stack.
         return 1;
     }
-
-    if ((count + num_cards) < min_cards_) { //< Min number of cards_.
-        return 2;
-    }
-
-    if ((count + num_cards) > cards_.GetSize ()) {
+    size_t new_count = count + num_cards;
+    if (new_count > cards_.capacity ()) {
         return 3;
     }
 
     for (int i = 0; i < num_cards - 1; ++i) {
-        cards_.Push (cards.TakeNextCard ());
+        cards_.push_back (cards.TakeNextCard ());
     }
-    return cards_.Push (cards.TakeNextCard ());
+    cards_.push_back (cards.TakeNextCard ());
+    return GetCount ();
 }
 
 Card* CardStack::GetCard (int index) {
-    int num_cards = cards_.GetCount ();
-
-    if (num_cards == 0 || index > num_cards)
+    int num_cards = GetCount ();
+    if (num_cards == 0 || index >= num_cards) {
         return nullptr;
-
-    return cards_[index];
+    }
+    Card* card = cards_[index];
+    return card;
 }
 
 Card* CardStack::TakeCard (int index) {
-    int num_cards = cards_.GetCount ();
+    int num_cards = GetCount ();
 
     if (num_cards <= 0 || index >= num_cards) // Arrays start at 0, so if we used cards_[num_cards], it would be out of bounds.
         return nullptr;
 
     Card* return_card = cards_[index];
-    cards_.Remove (index);
+    cards_.erase (cards_.begin () + index);
     return return_card;
 }
 
 Card* CardStack::TakeNextCard () {
-    if (cards_.GetCount () == 0) // Then there are no cards_ in the cards_.
+    if (GetCount () == 0) // Then there are no cards_ in the cards_.
         return nullptr;
 
-    int lastIndex = cards_.GetCount () - 1;
+    int index = GetCount ();
     // Golden rule: If you use a variable in a function more than once, store a
     // local copy to get a performance increase.
-    Card* next_card = cards_[lastIndex];
-    cards_.Remove (lastIndex);
+    Card* next_card = cards_[index];
+    cards_.erase (cards_.begin () + index);
     return next_card;
 }
 
 Card* CardStack::TakeRandomCard () {
-    if (cards_.GetCount () <= 0) // Then there are no cards_!
+    if (GetCount () <= 0) // Then there are no cards_!
         return nullptr;
 
     srand ((uint)time (nullptr));
-    int index = rand () % cards_.GetCount ();
+    int index = rand () % GetCount ();
     Card* card = cards_[index];
-    cout << "\n| Taking card:" << index << ' ';
-    card->Print ();
-    cards_.Remove (index);
+    cards_.erase (cards_.begin () + index);
+    //cout << "\n| Taking card:" << index << ' ';
+    //card->Print ();
     return card;
 }
 
 bool CardStack::IsEmpty () {
-    return cards_.GetCount () == 0;
-}
-
-bool CardStack::IsVisible () {
-    return visible_;
-}
-
-void CardStack::SetVisiblity (bool visiblity) {
-    visible_ = visiblity;
+    return GetCount () == 0;
 }
 
 void CardStack::Print () {
-    PrintLine (">", '-');
-    cout << "\n| cards_.GetCount () = " << cards_.GetCount ();
-    for (int i = 0; i < cards_.GetCount (); ++i) {
+    PrintLine ('-', "\n>");
+    cout << "\n| CardStack: Count:" << GetCount ();
+    for (int i = 0; i < GetCount (); ++i) {
         cout << "\n| " << i << ".) ";
-        cards_[i]->Print ();
+        Card* card = cards_[i];
+        card->Print ();
     }
 }
 

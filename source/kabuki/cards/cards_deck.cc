@@ -31,14 +31,17 @@ Deck::Deck (int num_decks, bool has_jokers, int aces_high, Suit::Format format,
             const char* deck_name, const char* directory_path,
             Suit::Color color) :
     has_jokers_    (has_jokers),
+    num_decks_     ((num_decks < 1) ? 1 : num_decks),
+    num_cards_     (num_decks_ * (has_jokers ? kFullDeckSize : kDefaultDeckSize)),
     aces_high_     (aces_high),
-    num_cards_     (has_jokers ? kFullDeckSize : kDefaultDeckSize),
     lowest_value_  (aces_high == 0 ? 1 : 2),
     highest_value_ (aces_high == 0 ? 13 : 14),
     heart_         (Suit::kHeart  , 0),
     diamond_       (Suit::kDiamond, 1),
     club_          (Suit::kClub   , 2),
-    spade_         (Suit::kSpade  , 3){
+    spade_         (Suit::kSpade  , 3),
+    pack_          () {
+    pack_.reserve (num_cards_);
     suits_[0] = &heart_;
     suits_[1] = &diamond_;
     suits_[2] = &club_;
@@ -46,14 +49,14 @@ Deck::Deck (int num_decks, bool has_jokers, int aces_high, Suit::Format format,
     if (num_decks < 1) {
         num_decks = 1;
     }
-    int num_cards = num_decks * (has_jokers ? kFullDeckSize : kDefaultDeckSize);
-    pack_ = new Card[num_cards];
 
     Set (has_jokers, aces_high, format, deck_name, directory_path, color);
 }
 
 Deck::~Deck () {
-    delete[] pack_;
+    for (size_t i = 0; i < pack_.size (); ++i) {
+        delete pack_[i];
+    }
 }
 
 void Deck::Set (bool has_jokers, int aces_high, Suit::Format format,
@@ -61,33 +64,39 @@ void Deck::Set (bool has_jokers, int aces_high, Suit::Format format,
                 Suit::Color color) {
     has_jokers_    = has_jokers;
     aces_high_     = aces_high;
-    num_cards_     = has_jokers ? kFullDeckSize : kDefaultDeckSize;
     lowest_value_  = aces_high == 0 ? 1 : 2;
     highest_value_ = aces_high == 0 ? 13 : 14;
 
     // Depending on if aces are high, the value of an Ace will be either 1
     // followed by the 2 card, or 14.
     int start_value = aces_high_?1:2;
-    const char* format_string = Suit::kFormatStrings[format];
+    const char* format_string = Suit::kFormatTexts[format];
 
     // First we want to start by creating the Aces because their pipValue is 1,
     // but might have a faceValue of 14.
     int aceValue = aces_high_ ? 14 : 1;
 
+    pack_.clear ();
+    pack_.reserve (num_cards_);
     // This is a nested for loop. It makes it so that our deck_ will be sorted
     // by suit and value.
-    for (int suit = 0; suit <= 3; ++suit) { // If we had switched the order of
-        // the for loops, it would sort it by value then suit.
-        Suit* suit_ptr = suits_[suit];
-        suit_ptr->Set (suit, format);
-        for (int pip = 1; pip <= 13; ++pip) {
-            // There are 13 different face values { A,2,3,4,5,6,7,8,9,10,J,Q,K }
-            pack_[(suit * 13) + (pip - 1)].Set (pip, suit_ptr);
-            // The (Card::Suit) "casts" the suitValue to a Card::Suit.
+    int i = 0;
+    for (int i = 0; i < num_decks_; ++i) {
+        for (int suit = 0; suit <= 3; ++suit) { // If we had switched the order of
+            // the for loops, it would sort it by value then suit.
+            Suit* suit_ptr = suits_[suit];
+            //suit_ptr->Set (suit, format);
+            for (int pip = 1; pip <= 13; ++pip) {
+                // There are 13 different face values { A,2,3,4,5,6,7,8,9,10,J,Q,K }
+                pack_.emplace_back (new Card (pip, suit_ptr));
+                // The (Card::Suit) "casts" the suitValue to a Card::Suit.
+            }
+        }
+        if (has_jokers_) {
+            pack_.emplace_back (new Card (Card::kJoker, suits_[0]));
+            pack_.emplace_back (new Card (Card::kJoker, suits_[2]));
         }
     }
-    pack_[52].Set (Card::kJoker, suits_[0]);
-    pack_[53].Set (Card::kJoker, suits_[2]);
 
     //rearImage = ImageCache::getFromFile (deck_name);
 
@@ -98,21 +107,17 @@ void Deck::Set (bool has_jokers, int aces_high, Suit::Format format,
 }
 
 void Deck::SetFormat (Suit::Format format) {
-    Heart ()->SetFormat (format);
-    Diamond ()->SetFormat (format);
-    Club ()->SetFormat (format);
-    Spade ()->SetFormat (format);
-}
-
-void Deck::Reshuffle () {
-    
+    heart_.SetFormat   (format);
+    diamond_.SetFormat (format);
+    club_.SetFormat    (format);
+    spade_.SetFormat   (format);
 }
 
 bool Deck::HasJokers () {
     return has_jokers_;
 }
 
-int Deck::GetCount () {
+int Deck::GetSize ( ) {
     return num_cards_;
 }
 
@@ -122,7 +127,7 @@ bool Deck::AcesHigh () {
 
 Card* Deck::GetCard (int suit, int pip) {
     if (suit < 0) {
-        return &pack_[0];
+        return pack_[0];
     }
     int index;
     if (pip == Card::kJoker) {
@@ -130,24 +135,24 @@ Card* Deck::GetCard (int suit, int pip) {
             return nullptr;
         }
         if (suit <= 1) { // It's a black joker.
-            return &pack_[52];
+            return pack_[52];
         }
         // It's a red joker.
         // @todo $CaleMcCollough Make this work with multiple decks.
-        return &pack_[53];
+        return pack_[53];
     } 
     index = 13 * suit + pip;
-    return &pack_[index];
+    return pack_[index];
 }
 
 Card* Deck::GetCard (int index) {
     if (index < 0) {
-        return nullptr;
+        return pack_[0];
     }
     if (index >= num_cards_) {
-        return nullptr;
+        return pack_[num_cards_ - 1];;
     }
-    return &pack_[index];
+    return pack_[index];
 }
 
 /*
@@ -194,10 +199,11 @@ int Deck::checkDeckArtFolder (const char* directory_path) {
         return -54;
 }
 
-int Deck::setDeckArt (const char* directory_path) {
+int Deck::SetDeckArt (const char* directory_path) {
     int returnValue = Deck::checkDeckArtFolder ();
 
-    // Now we know that all of the files are in the directory and are named correctly. Now lets actually change the images.
+    // Now we know that all of the files are in the directory and are named
+    // correctly. Now lets actually change the images.
     for (int suit = 1; suit <= 4; ++suit) {
         for (int pipValue = 1; pipValue <= 13; ++pipValue) {
             int index = suit*pipValue;
@@ -231,26 +237,23 @@ Suit** Deck::Suits () {
     return suits_;
 }
 
-int Deck::GetNumCards () {
-    return num_cards_;
-}
-
 void Deck::SetSuitDenominations (int column_0, int column_1, int column_2,
                                  int column_4) {
-    suits_[0]->SetDenomination (column_0);
-    suits_[1]->SetDenomination (column_1);
-    suits_[2]->SetDenomination (column_2);
-    suits_[3]->SetDenomination (column_4);
+    heart_.SetDenomination   (column_0);
+    diamond_.SetDenomination (column_1);
+    club_.SetDenomination    (column_2);
+    spade_.SetDenomination   (column_4);
 }
 
 void Deck::Print () {
-    cout << "\n| Deck: num_cards_: " << num_cards_ << ", " 
+    cout << "\n| Deck: num_cards_: " << pack_.size () << ", "
          << (aces_high_ ? "Aces high, " : "Aces low, ") 
          << (aces_high_ ? "Has Jokers" : "No Jokers");
 
-    for (int i = 0; i < num_cards_; ++i) {
+    for (size_t i = 0; i < pack_.size (); ++i) {
         cout << "\n| " << i << ": ";
-        pack_[i].Print ();
+        Card* card = pack_[i];
+        card->Print ();
     }
 }
 

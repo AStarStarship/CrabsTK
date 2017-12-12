@@ -103,13 +103,13 @@ KABUKI uintptr_t TypeAlign (byte* ptr, uint_t type);
 KABUKI bool TypeIsValid (uint_t type);
 
 /** Returns a pointer to an array of pointers to the type names.*/
-KABUKI const char** TypeStrings ();
+KABUKI const char** TypeTexts ();
 
-/** Returns true if the TypeName is one of the ErrorStrings. */
+/** Returns true if the TypeName is one of the ErrorTexts. */
 KABUKI bool TypeIsValid (const char* type_name);
 
 /** Returns the name of the given type. */
-KABUKI const char* TypeString (uint_t type);
+KABUKI const char* TypeText (uint_t type);
 
 /** Checks the last char of the token to check if it is a specified char. */
 template<char c>

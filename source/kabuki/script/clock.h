@@ -73,11 +73,11 @@ KABUKI void ClockPrintTimestamp (time_us_t timestamp);
 KABUKI void ClockPrintDateTime (time_t t);
 
 /** Writes the given std_tm to the char buffer. */
-KABUKI char* ClockWriteTimeStructString (char* buffer, char* buffer_end,
+KABUKI char* ClockWriteTimeStructText (char* buffer, char* buffer_end,
                                          tm* std_tm);
 
 /** Writes the given time to the char buffer. */
-KABUKI char* ClockWriteDateTimeString (char* buffer, char* buffer_end,
+KABUKI char* ClockWriteDateTimeText (char* buffer, char* buffer_end,
                                        time_t t);
 
 /** Gets the number of days in a months. 
@@ -121,7 +121,7 @@ KABUKI int ClockCompareTimes (time_t t, int year, int month, int day,
     @16:20:00
     @endcode
 */
-KABUKI const char* ClockReadTimeString (const char* input, int* hour,
+KABUKI const char* ClockReadTimeText (const char* input, int* hour,
                                          int* minute, int* second);
 
 /** Reads a time or time delta from a a char starting with an '@' sign..
@@ -134,14 +134,14 @@ KABUKI char* ClockReadTime (char* input, int* hour, int* minute, int* second);
 
 /** Converts a keyboard input to char and deletes the char. 
 */
-KABUKI const char* ClockReadTimeStructString (const char* input,
+KABUKI const char* ClockReadTimeStructText (const char* input,
                                               tm* std_tm);
 
 /** Converts a keyboard input to a human-readable manipulatable form. */
 KABUKI char* ClockReadTimeStruct (char* input, tm* result);
 
 /** Converts a keyboard input to a time_t. */
-KABUKI const char* ClockReadUnixTimeString (const char* input,
+KABUKI const char* ClockReadUnixTimeText (const char* input,
                                             time_t& result);
 
 /** Converts a keyboard input to a time_t. */

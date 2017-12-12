@@ -54,7 +54,7 @@ const char* AuthenticatorDefault::HandleIsInvalid (const char* input) {
         //cout << "\n| " << result;
         return result;
     }
-    int length = StringLength (input);
+    int length = StrandLength (input);
     //cout << "\n| Checking handle:\"" << input << "\"";
 
     if (length < min_handle_length_) {
@@ -90,7 +90,7 @@ const char* AuthenticatorDefault::PasswordIsInvalid (const char* input) {
     }
     const char* result;
     //cout << "\n| Checking password:\"" << input << "\"";
-    int length = StringLength (input);
+    int length = StrandLength (input);
     if (length < min_password_length_) {
         result = "Password too short";
         //cout << "\n| " << result;

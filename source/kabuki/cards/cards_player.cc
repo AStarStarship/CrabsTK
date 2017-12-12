@@ -35,6 +35,10 @@ id::User* Player::GetUser () {
     return user_;
 }
 
+const char* Player::GetHandle () {
+    return user_->GetHandleKey ();
+}
+
 bool Player::IsTurn () {
     return is_turn_;
 }
@@ -78,39 +82,6 @@ int Player::TakeCardDown (Card* card) {
     return hand_.GetHiddenCards ().Push (card);
 }
 
-int Player::GetNumPoints () {
-    return num_points_;
-}
-
-bool Player::SetNumPoints (int num_points) {
-    if (num_points < 0) {
-        return false;
-    }
-    num_points_ = num_points;
-    return true;
-}
-
-int Player::AddPoints (int num_points) {
-    if (num_points < 0)
-        return -1;
-
-    num_points_ += num_points;
-
-    return num_points_;
-}
-
-bool Player::RemovePoints (int num_points) {
-    if (num_points < 0) {
-        return false;
-    }
-    if (num_points > num_points_) {
-        return false;
-    }
-    num_points_ -= num_points;
-
-    return true;
-}
-
 int Player::GetNumWins () {
     return num_wins_;
 }
@@ -132,8 +103,9 @@ void Player::ResetWins () {
 }
 
 void Player::Print () {
-    cout << "\n| Player    : " << GetUser ()->GetHandle ().GetKey () 
-         << " points: " << num_points_ << " wins  : " << num_wins_;
+    cout << "\n| "      << GetHandle ()
+         << " points: " << GetUser()->GetValue ()
+         << " wins  : " << num_wins_;
 
     PrintLine ('-');
     hand_.Print ();

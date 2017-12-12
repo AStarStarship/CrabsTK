@@ -65,19 +65,16 @@
 #include <assembly.h>       //< Inline config stuff for your project.
 
 typedef const char* string_ptr;
-/*
-#if CHAR_WIDTH == 8
-typedef uint8_t index_t;
-#undef CHAR_WIDTH
-#elif CHAR_WIDTH == 16
-#undef CHAR_WIDTH
-typedef int16_t index_t;
-#elif CHAR_WIDTH == 32
-#undef CHAR_WIDTH
-typedef int32_t index_t;
+
+#if SCRIPT_CHAR_WIDTH == 8
+typedef uint8_t char_t;
+#elif SCRIPT_CHAR_WIDTH == 16
+typedef int16_t char_t;
+#elif SCRIPT_CHAR_WIDTH == 32
+typedef int32_t char_t;
 #else
-#error CHAR_WIDTH is not 8, 16, or 32!
-#endif*/
+#error SCRIPT_CHAR_WIDTH must be 8, 16, or 32!
+#endif
 
 #if MAX_ERRORS < 0
 #error MAX_ERRORS must be greater than 0
@@ -110,7 +107,7 @@ enum {
     kMinSlotSize     = 128,               //< Min size of a Slot - 1.
     kMaxErrors       = MAX_ERRORS,        //< Max errors before blowing up.
     kMaxNumParams    = MAX_NUM_PARAMS,    //< Max number of parameters.
-    kMaxStringLength = MAX_STRING_LENGTH, //< Max char length.
+    kMaxTextLength = MAX_STRING_LENGTH, //< Max char length.
     kTimeoutMicroseconds = COM_TIMEOUT_TICKS,
     //< The number of seconds before a timeout over a generic communication
     //< link.
@@ -225,8 +222,6 @@ typedef uint64_t data_t;    //< Default TData size.
 #if MEMORY_PROFILE >= 3 || SCRIPT_DEBUG
 #define USE_MORE_ROM 3
 #endif  //< MEMORY_PROFILE >= 3
-
-typedef int char_t;  //< Size of a Script function index.
 
 /** Macro declares a class to be non-copyable. */
 #define NONCOPYABLE (ClassName)\

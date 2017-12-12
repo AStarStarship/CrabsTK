@@ -34,7 +34,7 @@ class KABUKI Password {
     
     enum {
         kValidation       = 2,   //< Validation type.
-        kDefaultMinLength = 4,   //< The minimum length of a password.
+        kDefaultMinLength = 0,   //< The minimum length of a password.
         kDefaultMaxLength = 255, //< The maximum length of a password.
     };
 
@@ -46,7 +46,7 @@ class KABUKI Password {
         will be used.
     */
     Password (Authenticator* authenticator,
-              const char* password = "Password");
+              const char* password = kDefault);
 
     /** Destructs the password. */
     ~Password ();

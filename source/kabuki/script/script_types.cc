@@ -109,11 +109,11 @@ uintptr_t TypeAlign2 (byte* ptr) {
 }
 
 uintptr_t TypeAlign4 (byte* ptr) {
-    return WordAlignOffset<int> (ptr);
+    return MemoryAlignOffset<int> (ptr);
 }
 
 uintptr_t TypeAlign8 (byte* ptr) {
-    return WordAlignOffset<long> (ptr);
+    return MemoryAlignOffset<long> (ptr);
 }
 
 uintptr_t TypeAlign (byte* ptr, byte type) {
@@ -148,7 +148,7 @@ bool TypeIsValid (uint_t type) {
     return type > 31 ? false : true;
 }
 
-const char** TypeStrings () {
+const char** TypeTexts () {
     static const char* kNames[] = {
         "NIL",
         "ADR",
@@ -188,16 +188,16 @@ const char** TypeStrings () {
 
 bool TypeIsValid (const char* type_name) {
     // @warning I'm not sure what I was thinking here.
-    //if (type_name < TypeStrings ()[0] || type_name > TypeStrings ()[FS])
+    //if (type_name < TypeTexts ()[0] || type_name > TypeTexts ()[FS])
     //    return false;
     //return true;
     return false;
 }
 
-const char* TypeString (uint_t type) {
+const char* TypeText (uint_t type) {
     if (type >= kInvalidType)
         return "Invalid";
-    return TypeStrings ()[type];
+    return TypeTexts ()[type];
 }
 
 template<char c>

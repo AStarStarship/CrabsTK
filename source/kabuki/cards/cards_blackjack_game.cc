@@ -24,12 +24,15 @@ namespace kabuki { namespace cards {
 const int BlackjackGame::kDenominations[] = {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10 };
 
-BlackjackGame::BlackjackGame (id::UserList& users, id::User* dealer_user, int buy_in,
-                              int ante, int min_bet, int min_players,
-                              int max_players) :
-    CardGame (users, "Blackjack", min_players, max_players)  {
-    dealer_ = new BlackjackDealer (dealer_user, buy_in, ante, min_bet, min_players,
-                                   max_players);
+BlackjackGame::BlackjackGame (id::UserList& users, id::User* dealer_user,
+                              int64_t buy_in, int64_t ante, int64_t min_bet,
+                              int min_players, int max_players) :
+    CardGame       (users, "Blackjack", min_players, max_players),
+    round_number_  (0),
+    pot_           (0),
+    num_ai_players (0),
+    dealer_ (new BlackjackDealer (dealer_user, buy_in, ante, min_bet, 
+             min_players, max_players)) {
     RestartGame ();
 }
 
@@ -49,6 +52,34 @@ void BlackjackGame::BeginRound () {
 void BlackjackGame::EndRound () {
     // Do we need to wait for the clients to respond?
     dealer_->EndRound ();
+}
+
+int BlackjackGame::GetRoundNumber () {
+    return round_number_;
+}
+
+bool BlackjackGame::SetRoundNumber (int value) {
+    if (value < 0) {
+        return false;
+    }
+    round_number_ = value;
+    return true;
+}
+
+int BlackjackGame::GetPot () {
+    return pot_;
+}
+
+bool BlackjackGame::SetPot (int value) {
+    if (value < 0) {
+        return false;
+    }
+    pot_ = value;
+    return true;
+}
+
+BlackjackDealer* BlackjackGame::GetDealer () {
+    return dealer_;
 }
 
 /*
@@ -80,12 +111,12 @@ bool BlackjackGame::PlayGameInConsole () {
         BeginRound ();
 
         cout << "\n|";
-        PrintLine ("|", '_');
+        PrintLine ('_');
         cout << "\n| Round " << round_number_
             << ":\n";
 
         dealer_->PrintStats ();
-        for (int i = 0; i < GetObservers ().GetCount (); ++i) {
+        for (int i = 0; i < GetObservers ().size (); ++i) {
             observers_[i]->PrintStats ();
         }
 
@@ -96,21 +127,21 @@ bool BlackjackGame::PlayGameInConsole () {
 
         while (!inputValid) {
             // Read a line from the terminal, and convert it to lower case letters.
-            KeyboardString ("\n| hit or hold?\n", input, kBufferSize);
+            KeyboardText ("\n| hit or hold?\n", input, kBufferSize);
 
-            if (StringEquals (input, "hit")) {
+            if (StrandEquals (input, "hit")) {
                 CardStack& cards = dealer_->GetHand ().GetVisibleCards ();
                 cards.Push (dealer_->GetStock ().Draw ());
                 cout << "\n| ";
-                for (int i = 0; i < GetObservers ().GetCount (); ++i) {
+                for (int i = 0; i < GetObservers ().size (); ++i) {
                     cout << "\n| " << i;
                     observers_[i]->Print ();
                 }
                 inputValid = true;
-            } else if (StringEquals (input, "hold")) {
+            } else if (StrandEquals (input, "hold")) {
                 inputValid = true;
                 observers_[0]->SetState (BlackjackPlayer::kStateHolding);
-            } else if (StringEquals (input, "exit") || StringEquals (input, "quit")) {
+            } else if (StrandEquals (input, "exit") || StrandEquals (input, "quit")) {
                 cout << "\n| Exiting the game...\n";
                 inputValid = true;
                 return false;
@@ -127,7 +158,7 @@ bool BlackjackGame::PlayGameInConsole () {
         // The way we know that the round is over is when everyone is holding. 
 
         bool everyone_is_holding = dealer_->IsHolding ();
-        for (int i = GetObservers ().GetCount (); i > 0; --i) {
+        for (int i = GetObservers ().size (); i > 0; --i) {
             if (observers_[i]->IsHolding ()) {
                 everyone_is_holding = false;
                 break;
@@ -151,7 +182,7 @@ bool BlackjackGame::PlayGameInConsole () {
                 observers_[0]->Print ();
                 observers_[0]->AddPoints (pot_);
                 observers_[0]->AddWin ();
-                PrintLine ("|", '$');
+                PrintLine ('$');
             }
 
             return true; // Exits loop and plays another game of Blackjack.
@@ -179,20 +210,20 @@ bool BlackjackGame::PlayGameInConsole () {
 }*/
 
 void BlackjackGame::Print () {
-    PrintLine (" ", '_');
+    PrintLine ('_');
     cout << "\n|         Game: " << game_name_
-        << "\n| Num Observers: " << observers_.GetCount ()
+        << "\n| Num Observers: " << observers_.size ()
         << " Min: " << GetMinPlayers ()
         << " Max: " << GetMaxPlayers ()
-        << "\n| Num Observers: " << observers_.GetCount ();
+        << "\n| Num Observers: " << observers_.size ();
 
     dealer_->Print ();
-    PrintLine ("|", '_');
+    PrintLine ('_');
 }
 
 const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
     static const Operation This = { "Blackjack",
-        NumOperations (1), FirstOperation ('A'),
+        NumOperations (1), OperationFirst ('A'),
         "Insert directions on how to play blackjack here.", 0
     };
     void* args[1];
@@ -215,7 +246,7 @@ const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
             if (user == nullptr) { // Invalid player_uid!
                 return nullptr;
             }
-            GetObservers ().Push (user);
+            GetObservers ().push_back (user);
 
             return nullptr;
         }
@@ -236,7 +267,7 @@ const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
             if (session != user->GetSession ()) {
                 return Result (expr, Bin::kErrorAuthenticationError);
             }
-            GetObservers ().Push (user);
+            GetObservers ().push_back (user);
 
             return nullptr;
         }
@@ -250,6 +281,26 @@ const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
         return Result (expr, Bin::kErrorInvalidIndex);
     }
     return Result (expr, Bin::kErrorInvalidIndex);
+}
+
+const char* BlackjackGame:: HandleText (const char* text,
+                                        const char* text_end) {
+    if (!text) {
+        return nullptr;
+    }
+    if (text >= text_end) {
+        return "\n| Error: nil text_end pointer in HandleText (const char*, "
+               "const char*):const char*!";
+    }
+
+    if (text > text_end) {
+        return "\n| Error: text buffer overflow in HandleText (const char*, "
+               "const char*):const char*!";
+    }
+
+
+
+    return nullptr;
 }
 
 }       //< namespace cards

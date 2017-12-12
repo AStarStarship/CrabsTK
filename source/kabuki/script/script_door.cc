@@ -26,7 +26,7 @@ const Operation* DoorResult (Door* door, Door::Error error) {
     return 0;
 }
 
-const char* DoorErrorString (Door::Error error) {
+const char* DoorErrorText (Door::Error error) {
     static const char* strings[] = {
         "Invalid operation",
         "Room error"
@@ -39,19 +39,19 @@ const char* DoorErrorString (Door::Error error) {
 
 Door::Door (const char* room_name, uintptr_t* buffer, uintptr_t size_bytes) {
 
-	if (buffer == nullptr) {
+    if (buffer == nullptr) {
         if (size_bytes < kMinDoorSize) {
-        	size_bytes = kMinDoorSize;
+            size_bytes = kMinDoorSize;
         }
-	} else {
+    } else {
         if (size_bytes < kMinDoorSize) {
-        	// @todo insert error code here
+            // @todo insert error code here
 #if SCRIPT_DEBUG
-        	cout << "\n| Error: Door size_bytes < kMinDoorSize!";
+            cout << "\n| Error: Door size_bytes < kMinDoorSize!";
 #endif  //< SCRIPT_DEBUG
-        	return;
+            return;
         }
-	}
+    }
     //tx.SetBuffer (adjacentDoor->Rx ()->EndAddress () + 1), aSlotSize);
     //rx = new SerialSlot (tx.EndAddress (), aSlot, aSlotSize, 
     //  aTalkbackSize);
@@ -59,7 +59,7 @@ Door::Door (const char* room_name, uintptr_t* buffer, uintptr_t size_bytes) {
 
 Door::~Door () {
     if (buffer_)
-    	delete[] buffer_;
+        delete[] buffer_;
 }
 
 slot_t Door::GetSlot (slot_t index) {
@@ -75,7 +75,7 @@ bool Door::Contains (void* address) {
 }
 
 slot_t Door::FindSlot (void* address) {
-	slot_t count = slots_->count;
+    slot_t count = slots_->count;
     for (slot_t i = 0; i < count; ++i) {
         //Slot* slot = nullptr; //< @todo fix me!
         
@@ -89,10 +89,14 @@ const Operation* Door::ExecAll () {
     return 0;
 }
 
+const char* Door::HandleText (const char* text, const char* text_end) {
+    return nullptr;
+}
+
 const Operation* Door::Star (uint index, Expression* expr) {
     if (index < ' ') {
         static const Operation star = { "Door", 
-            NumOperations (0), FirstOperation ('A'),
+            NumOperations (0), OperationFirst ('A'),
             "A door in a Chinese room.", 0 };
         return &star;
     }

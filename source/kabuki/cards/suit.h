@@ -122,7 +122,7 @@ class KABUKI Suit {
 
     /** An array of strings that represent the 7 different directories for the
         suit icon file. */
-    static const char* kFormatStrings[];
+    static const char* kFormatTexts[];
 
     /** Default constructor.
         There exists a single unique card for each of the 54 cards in a pack
@@ -145,11 +145,11 @@ class KABUKI Suit {
     /** Compares this Suit to the other Suit.
         @return Returns 0 if they are identical.
         @return Returns 1 if this Suit is greater than the other Suit. */
-    virtual int Compare (const Suit* other);
+    virtual int Compare (Suit* other);
                            
     /** Compares this Suit to the other Suit and returns true if the two are
         identical. */     
-    bool Equals (const Suit* other);
+    bool Equals (Suit* other);
     
     /** Returns the rank of the denomination of this Suit
         The face value represents how many points this card is worth. */
@@ -200,7 +200,7 @@ class KABUKI Suit {
     int         column_,        //< The column of the suit.
                 denomination_;  //< Rank of this suit compared to the others.
     wchar_t     char_;          //< Suit of this Suit.
-    const char* label_;         //< String label of the suit.
+    const char* label_;         //< Text label of the suit.
     Color       color_;         //< Color of the suit.
     //Image*    image_;         //< Image of this Suit.
 

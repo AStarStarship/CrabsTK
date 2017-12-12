@@ -40,7 +40,14 @@ class BlackjackPlayerAi : public BlackjackPlayer {
     /** Attempts to take a card from the Deck for a player.
         @pre    The Deck must not be empty.
         @pre    The player must have a max hand score of 21. */
-    virtual void PlayRound ();
+    void PlayRound () override;
+
+    /** Handles Text input.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    const char* HandleText (const char* text,
+                            const char* text_end) override;
 
 };
 }       //< namespace cards

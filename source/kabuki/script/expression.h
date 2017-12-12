@@ -78,7 +78,7 @@ struct Expression {
         kErrorInvalidOperand,
         kErrorStackOverflow,
         LockedStateError,
-        kErrorStringOverflow,
+        kErrorTextOverflow,
         kErrorVarintOverflow,
         ReadInvalidTypeError,
         kErrorRoom
@@ -125,7 +125,7 @@ struct Expression {
 inline const Operation* Result (Expression* expr,
                                 Bin::Error error) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Expression " << BinErrorString (error)
+    std::cout << "\n| Expression " << BinErrorText (error)
               << " Error!";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
@@ -142,7 +142,7 @@ inline const Operation* Result (Expression* expr,
                                 Bin::Error error,
                                 const uint_t* header) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Expression " << BinErrorString (error)
+    std::cout << "\n| Expression " << BinErrorText (error)
               << " Error!";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
@@ -160,7 +160,7 @@ inline const Operation* Result (Expression* expr,
                                 const uint_t* header,
                                 byte offset) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Expression " << BinErrorString (error)
+    std::cout << "\n| Expression " << BinErrorText (error)
               << " Error!";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
@@ -179,14 +179,14 @@ inline const Operation* Result (Expression* expr,
                                 byte offset,
                                 byte* address) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Expression " << BinErrorString (error)
+    std::cout << "\n| Expression " << BinErrorText (error)
               << " Error!";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
 
 /** Returns the text label of the Bin::Error.
-KABUKI const char* ExpressionErrorString (Bin::Error error); */
+KABUKI const char* ExpressionErrorText (Bin::Error error); */
 
 /** Prints out an error report to the stdout.
     @param e The error type.
@@ -286,14 +286,16 @@ KABUKI void ExpressionRingBell (Expression* expr, const char* address = "");
 KABUKI void ExpressionAckBack (Expression* expr, const char* address = "");
 
 /** Disconnects the expression. */
-KABUKI const Operation* ExpressionForceDisconnect (Expression* expr, Bin::Error error);
+KABUKI const Operation* ExpressionForceDisconnect (Expression* expr,
+                                                   Bin::Error error);
 
 /** Calls the Read function for the Bout slot. */
-KABUKI const Operation* ExprArgs (Expression* expr, const uint_t* params, void** args);
+KABUKI const Operation* ExprArgs (Expression* expr, const uint_t* params,
+                                  void** args);
 
 /** Calls the Write function for the Tx slot. */
 KABUKI const Operation* ExprResult (Expression* expr, const uint_t* params, 
-                                void** args);
+                                     void** args);
 
 #if USE_MORE_ROM
 /** Prints the Expression stack to the std::cout */
@@ -302,7 +304,7 @@ KABUKI void ExpressionPrintStack (Expression* expr);
 /** Prints the given Expression to the console. */
 KABUKI void ExpressionPrint (Expression* expr);
 
-KABUKI const Operation* ExpressionPrint (Expression* expr,
+KABUKI const Operation* ExpressionQuery (Expression* expr,
                                          const Operation* operation);
 #endif  //< USE_MORE_ROM
 

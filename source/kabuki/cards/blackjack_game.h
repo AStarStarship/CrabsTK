@@ -42,16 +42,32 @@ class BlackjackGame : public CardGame {
         players there are, the greater the chance of the house loosing points, 
         so the maximum number we are going to set is 13. */
     BlackjackGame (id::UserList& users, id::User* user,
-                   int buy_in = Dealer::kDefaultAnte,
-                   int ante        = Dealer::kDefaultAnte,
-                   int min_bet     = Dealer::kDefaultMinBet,
-                   int min_players = kMinPlayers,
-                   int max_players = Dealer::kDefaultMaxPlayer);
+                   int64_t buy_in      = Dealer::kDefaultAnte,
+                   int64_t ante        = Dealer::kDefaultAnte,
+                   int64_t min_bet     = Dealer::kDefaultMinBet,
+                   int     min_players = kMinPlayers,
+                   int     max_players = Dealer::kDefaultMaxPlayer);
 
+    /** Virtual destructor. */
     virtual ~BlackjackGame ();
 
     /** Restarts the game. */
     virtual void RestartGame ();
+
+    /** Gets the round_number_. */
+    int GetRoundNumber ();
+
+    /** Sets the round_number_. */
+    bool SetRoundNumber (int value);
+
+    /** Gets the pot_. */
+    int GetPot ();
+
+    /** Sets the pot_. */
+    bool SetPot (int value);
+
+    /** Gets the dealer_. */
+    BlackjackDealer* GetDealer ();
 
     /** Processes the beginning of round logic.
         Any player can hold, and sit out a round, but they still need to ante
@@ -62,15 +78,22 @@ class BlackjackGame : public CardGame {
     virtual void EndRound ();
 
     /** Prints this object to the console */
-    void Print () override;
+    virtual void Print ();
 
     /** Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
+    /** Handles Text input.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* HandleText (const char* text,
+                                    const char* text_end);
     private:
 
     int              round_number_, //< Current round number.
-                     pot_;          //< Current number of points in the pot.
+                     pot_,          //< Current number of points in the pot.
+                     num_ai_players;//< Num AI players.
     BlackjackDealer* dealer_;       //< Dealer.
 
 };      //< class BlackjackGame

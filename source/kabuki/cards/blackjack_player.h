@@ -108,6 +108,12 @@ class BlackjackPlayer : public Player {
     /** Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
+    /** Handles Text input.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* HandleText (const char* text,
+                                    const char* text_end);
     protected:
 
     CardStack& stock_; //< Stock of cards to draw from.

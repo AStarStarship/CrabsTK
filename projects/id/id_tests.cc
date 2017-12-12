@@ -27,10 +27,10 @@ TEST_GROUP (ID_TESTS) {
 
     void teardown () {
         std::cout << "\n| kabuki::id tests completed.";
-        PrintLine ("|", '-');
+        PrintLine ('-');
     }
 };
-
+/*
 TEST (ID_TESTS, UserListTests) {
     cout << "\n| Testing User class...";
 
@@ -42,19 +42,22 @@ TEST (ID_TESTS, UserListTests) {
                                             { "user_6", "lunatic"  },
                                             { "user_1", "olives"   } };
     UserList users;
-    int result;
+    int32_t session;
+    uint64_t session_key;
+
     const char* handle,
               * password;
     cout << "\n|\n| Creating valid test users...";
 
-    for (int i = 0; i < 6; ++i) {
+    for (int32_t i = 0; i < 6; ++i) {
         handle   = test_users[i][0];
         password = test_users[i][1];
         cout << "\n| Attempting to add \"" << handle << "\":\""
              << password << "\" at index:" << i;
-        result = users.Register (handle, password);
-        cout << "\n| index: " << result;
-        CHECK_EQUAL (i + 1, result)
+        session = users.Register (handle, password);
+        users.Print ();
+        cout << "\n| index: " << session;
+        CHECK_EQUAL (i + 1, session)
     }
 
     users.Print ();
@@ -66,25 +69,23 @@ TEST (ID_TESTS, UserListTests) {
         password = test_users[i][1];
         cout << "\n| Attempting to add \"" << handle << "\":\""
              << password << "\" at index:" << i;
-        result = users.Register (handle, password);
-        cout << "\n| result:" << result;
-        CHECK_EQUAL (-1, result)
+        session = users.Register (handle, password);
+        cout << "\n| result:" << session;
+        CHECK_EQUAL (-1, session)
     }
 
     users.Print ();
 
     cout << "\n|\n| Testing UserList::LogIn users...";
 
-    for (int i = 0; i < 6; ++i) {
-        handle = test_users[i][0];
+    for (int32_t i = 0; i < 5; ++i) {
+        handle = test_users[i][0];  
         password = test_users[i][1];
         cout << "\n| Attempting to log in \"" << handle << "\":\""
             << password << "\" at index:" << i;
-        result = users.LogIn (handle, password);
-        cout << "\n| result:" << result;
-        CHECK_EQUAL (i + 1, result)
+        session_key = users.LogIn (handle, password);
+        cout << "\n| result:" << session_key;
     }
 
     cout << "\n|\n| Done testing UserList ({:->})";
-    system ("PAUSE");
-}
+}*/

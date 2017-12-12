@@ -22,7 +22,7 @@
 
 #include "memory.h"
 #include "types.h"
-#if USING_BAG
+#if USING_SCRIPT_BAG
 
 namespace _ {
 
@@ -193,7 +193,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
     if (collection == nullptr) return 0;
     if (key == nullptr) return 0;
 
-    PrintStringLine (key);
+    PrintLine (key);
 
     TIndex num_items = collection->num_items,
         max_items = collection->max_items,
@@ -247,7 +247,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
         *unsorted_indexes = 0;
         destination = keys - key_length;
 
-        StringCopy (destination, key);
+        TextWrite (destination, key);
         printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
         SetPrint (collection);
         return 0;
@@ -318,7 +318,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
 
                 // Copy the key
                 value = key_offsets[num_items - 1] + key_length + 1;
-                StringCopy (keys - value, key);
+                TextWrite (keys - value, key);
                 key_offsets[num_items] = value;
 
                 // Update the collision table.
@@ -371,7 +371,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
                 byte collision_index = unsorted_indexes[mid];
                 printf ("\n\ncollision_index: %u", collision_index);
 
-                StringCopy (keys - value, key);
+                TextWrite (keys - value, key);
                 printf ("Inserting value: %u into index:%u "
                         ";:%u with other collision_index: %u\n", value,
                         index, num_items, collision_index);
@@ -423,7 +423,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
             Diff (collection, destination), hashes[mid]);
 
     // First copy the char and set the key offset.
-    StringCopy (destination, key);
+    TextWrite (destination, key);
     key_offsets[num_items] = value;
 
     // Second move up the hashes and insert at the insertion point.
@@ -680,7 +680,7 @@ void BagPrint (const Bag<TIndex, TKey, TData, THash>* collection) {
 
         std::cout << '\n';
     }
-    PrintLine ("|", '_');
+    PrintLine ('_');
 
     PrintMemory (reinterpret_cast<const byte*> (collection) + 
                  sizeof (Bag<TIndex, TKey, TData, THash>), collection->size);
@@ -758,5 +758,5 @@ void BagPrint (Bag<TIndex, TKey, TData, THash>* collection) {
 //}
 
 }       //< namespace _
-#endif  //< USING_BAG
+#endif  //< USING_SCRIPT_BAG
 #endif  //< KABUKI_SCRIPT_BOOK_H

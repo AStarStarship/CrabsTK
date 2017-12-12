@@ -38,21 +38,21 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
     byte //array_type,            //< The current array type.
         ui1;                    //< Temp variable to load most types.
     uint16_t ui2;               //< Temp variable for working with UI2 types.
-#if USING_4_BYTE_TYPES || USING_VARINT4
+#if USING_SCRIPT_4_BYTE_TYPES || USING_SCRIPT_VARINT4
     uint32_t ui4;
-#endif  //< USING_4_BYTE_TYPES
-#if USING_8_BYTE_TYPES || USING_VARINT8
+#endif  //< USING_SCRIPT_4_BYTE_TYPES
+#if USING_SCRIPT_8_BYTE_TYPES || USING_SCRIPT_VARINT8
     uint64_t ui8;
-#endif  //< USING_8_BYTE_TYPES || USING_VARINT8
+#endif  //< USING_SCRIPT_8_BYTE_TYPES || USING_SCRIPT_VARINT8
 
     byte*     ui1_ptr;          //< Pointer to a UI1.
-//#if  USING_VARINT2 || USING_BK2
+//#if  USING_SCRIPT_VARINT2 || USING_BK2
     uint16_t* ui2_ptr;          //< Pointer to a UI2.
 //#endif
-//#if USING_VARINT4 || USING_AR4 || USING_BK4
+//#if USING_SCRIPT_VARINT4 || USING_AR4 || USING_BK4
     uint32_t* ui4_ptr;          //< Pointer to a UI4.
 //#endif
-//#if USING_VARINT8 || USING_8_BIT_TYPES
+//#if USING_SCRIPT_VARINT8 || USING_8_BIT_TYPES
     uint64_t* ui8_ptr;          //< Pointer to a UI8.
 //#endif
     uint_t type,                //< The current type being read.
@@ -97,7 +97,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
         ++param;
 #if SCRIPT_DEBUG
         printf ("\n| index %2u: %s  start: %u, stop: %u hash: ", index,
-                TypeString (type), Diff (begin, start), Diff (begin, stop));
+                TypeText (type), Diff (begin, start), Diff (begin, stop));
 #endif
 
         switch (type) {
@@ -143,7 +143,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
             case SI1:     //< _R_e_a_d__1__B_y_t_e__T_y_p_e_s_____________________
             case UI1:
             case BOL:
-#if USING_1_BYTE_TYPES
+#if USING_SCRIPT_1_BYTE_TYPES
                 if (length == 0)
                     return SlotResult (slot, Bin::kErrorBufferUnderflow, params,
                                        index, start);
@@ -164,7 +164,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
             case SI2:     //< _R_e_a_d__1_6_-_b_i_t__T_y_p_e_s____________________
             case UI2:
             case HLF:
-#if USING_2_BYTE_TYPES
+#if USING_SCRIPT_2_BYTE_TYPES
                 Read2ByteType:{
                     // Word-align
                     offset = TypeAlign2 (start);
@@ -192,7 +192,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
             case UI4:
             case FLT:
             case TMS:
-#if USING_4_BYTE_TYPES
+#if USING_SCRIPT_4_BYTE_TYPES
                 Read4ByteType:{
                     // Word-align
                     offset = TypeAlign4 (start);
@@ -220,7 +220,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
             case SI8:
             case UI8:
             case DBL:
-#if USING_8_BYTE_TYPES
+#if USING_SCRIPT_8_BYTE_TYPES
                 Read8ByteType:{
                     // Word-align
                     offset = TypeAlign8 (start);
@@ -245,21 +245,21 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
 #endif
             case SV2:     //< _R_e_a_d__V_a_r_i_n_t__2____________________________
             case UV2:
-#if USING_VARINT2
+#if USING_SCRIPT_VARINT2
                 goto Read2ByteType;
 #else
                 goto InvalidType;
 #endif
             case SV4:     //< _R_e_a_d__V_a_r_i_n_t__4____________________________
             case UV4:
-#if USING_VARINT4
+#if USING_SCRIPT_VARINT4
                 goto Read4ByteType;
 #else
                 goto InvalidType;
 #endif
             case SV8:     //< _R_e_a_d__V_a_r_i_n_t__8____________________________
             case UV8:
-#if USING_VARINT8
+#if USING_SCRIPT_VARINT8
                 goto Read8ByteType;
 #else
                 goto InvalidType;
@@ -356,7 +356,7 @@ const Operation* SlotRead (Slot* slot, const uint_t* params, void** args) {
                 break;
                 InvalidType: {
 #if SCRIPT_DEBUG
-                    printf ("\n!!!Read invalid type %u\n", type);
+                    printf ("\n| !!!Read invalid type %u\n", type);
 #endif  //< SCRIPT_DEBUG
                     return SlotResult (slot, Bin::kErrorInvalidType, params,
                                        index, start);

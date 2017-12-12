@@ -26,6 +26,28 @@ using namespace kabuki::data;
 using namespace kabuki::cards;
 using boost::asio::ip::tcp;
 
+class TextOperation :public _::Text<1024>, public Operand {
+    public:
+
+    TextOperation () {
+
+    }
+
+    /** Handles Script Commands.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* HandleText (const char* text,
+                                    const char* text_end) {
+        return nullptr
+    }
+
+    /** Script Operations. */
+    virtual const Operation* Star (uint index, _::Expression* expr) {
+        return OperationInvalid;
+    }
+};
+
 class CardsClient: public Client {
     public:
 
@@ -37,6 +59,8 @@ class CardsClient: public Client {
     enum {
         kMaxUsernameLength = 64,
         kMaxPasswordLength = 32,
+        kBinSizeBytes      = 2048,
+        kBinBinSizeWords   = kBinSizeBytes / sizeof (uintptr_t),
     };
 
     CardsClient (boost::asio::io_service& io_service,
@@ -50,8 +74,8 @@ class CardsClient: public Client {
     void Write (const std::string& message) {
         io_service_.post (
             [this, message] () {
-            bool write_in_progress = !write_msgs_.empty ();
-            write_msgs_.push_back (message);
+            bool write_in_progress = !text_out_queue_.empty ();
+            text_out_queue_.push_back (message);
             if (!write_in_progress) {
                 WriteToSocket ();
             }
@@ -66,35 +90,34 @@ class CardsClient: public Client {
 
     void Connect (tcp::resolver::iterator endpoint_iterator) {
         boost::asio::async_connect (socket_, endpoint_iterator,
-                                    [this] (boost::system::error_code ec,
+                                    [this] (boost::system::error_code error_code,
                                     tcp::resolver::iterator) {
-            if (!ec) {
+            if (!error_code) {
                 ReadHeader ();
             }
         });
     }
 
-    void ReadHeader () {
-        boost::asio::async_read (socket_,
-                                 boost::asio::buffer (read_msg_.Data (),
-                                 std::string::kHeaderLength),
-                                 [this] (boost::system::error_code ec,
-                                         std::size_t /*length*/) {
-            if (!ec && read_msg_.DecodeHeader ()) {
-                ReadBody ();
-            } else {
-                socket_.close ();
-            }
-        });
-    }
+    //void ReadHeader () {
+    //    boost::asio::async_read (socket_,
+    //                             boost::asio::buffer (read_msg_.Data (),
+    //                             std::string::kHeaderLength),
+    //                             [this] (boost::system::error_code error_code,
+    //                                     std::size_t /*length*/) {
+    //        if (!error_code && read_msg_.DecodeHeader ()) {
+    //            ReadOperation ();
+    //        } else {
+    //            socket_.close ();
+    //        }
+    //    });
+    //}
 
-    void ReadBody () {
+    void ReadOperation () {
         boost::asio::async_read (socket_,
-                                 boost::asio::buffer (read_msg_.Body (),
-                                 read_msg_.BodyLength ()),
-                                 [this] (boost::system::error_code ec,
+                                 boost::asio::buffer (bin_buffer, kBinSizeBytes,
+                                 [this] (boost::system::error_code error_code,
                                          std::size_t /*length*/) {
-            if (!ec) {
+            if (!error_code) {
                 std::cout.write (read_msg_.Body (), read_msg_.BodyLength ());
                 std::cout << "\n";
                 ReadHeader ();
@@ -106,13 +129,13 @@ class CardsClient: public Client {
 
     void WriteToSocket () {
         boost::asio::async_write (socket_,
-                                  boost::asio::buffer (write_msgs_.front ().Data (),
-                                  write_msgs_.front ().Length ()),
-                                  [this] (boost::system::error_code ec,
+                                  boost::asio::buffer (text_out_queue_.front ().Data (),
+                                  text_out_queue_.front ().Length ()),
+                                  [this] (boost::system::error_code error_code,
                                   std::size_t /*length*/) {
-            if (!ec) {
-                write_msgs_.pop_front ();
-                if (!write_msgs_.empty ()) {
+            if (!error_code) {
+                text_out_queue_.pop_front ();
+                if (!text_out_queue_.empty ()) {
                     WriteToSocket ();
                 }
             } else {
@@ -123,9 +146,10 @@ class CardsClient: public Client {
 
     private:
 
+    uintptr_t bin_buffer[2048 / sizeof (uintptr_t)];
     boost::asio::io_service& io_service_;
     tcp::socket socket_;
-    chat_message_queue write_msgs_;
+    text_operation_queue text_out_queue_;
 };
 
 int main (int argc, char* argv[]) {
@@ -134,17 +158,17 @@ int main (int argc, char* argv[]) {
         kKeyboardBufferSize = 80,
     };
     
-    char keyboard_buffer[kKeyboardBufferSize];
+    char input[kKeyboardBufferSize];
 
     if (argc != 3) {
         std::cerr << "Usage: cards <host> <port>\n";
         return 1;
     }
 
-    ::_::KeyboardString ("\n| Welcome to Kabuki Cards Console."
-                    "\n|"
-                    "\n| Enter your handle:", keyboard_buffer,
-                    kKeyboardBufferSize);
+    Client client;
+    cout << 
+    KeyboardText ("\n| Enter your handle:", input,
+                  kKeyboardBufferSize);
     try {
 
         boost::asio::io_service io_service;
@@ -155,13 +179,14 @@ int main (int argc, char* argv[]) {
 
         std::thread client_thread ([&io_service] () { io_service.run (); });
 
-        char line[std::string::kMaxBodyLength + 1];
-        while (std::cin.getline (line, std::string::kMaxBodyLength + 1)) {
-            std::string message;
-            message.BodyLength (std::strlen (line));
-            std::memcpy (message.Body (), line, message.BodyLength ());
-            message.EncodeHeader ();
-            cards_client.Write (message);
+        while (std::cin.getline (input, kKeyboardBufferSize)) {
+
+           Text<23> text;
+            text.SetBodyLength (TextLength (input, input + kKeyboardBufferSize));
+
+            std::memcpy (text.Body (), input, text.BodyLength ());
+            text.EncodeHeader ();
+            cards_client.Write (text);
         }
 
         cards_client.Close ();

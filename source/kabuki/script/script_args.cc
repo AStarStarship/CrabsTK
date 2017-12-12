@@ -46,7 +46,7 @@ void ParamsPrint (const uint_t* params) {
         value = *params++;
         type  = value & 0x1f;   //< Mask off type.
         value = value >> 5;     //< Shift over array type.
-        cout << TypeString (value) << ", ";
+        cout << TypeText (value) << ", ";
         if ((type >= STR) && (value <= ST4)) {
             if (value) {
                 cout << "\n| Error: arrays may only be created from POD types.";
@@ -136,7 +136,7 @@ void ParamsPrint (const uint_t* params) {
     }
     // Do the last set without a comma.
     value = *params++;
-    cout << TypeString (value) << ", ";
+    cout << TypeText (value) << ", ";
     if ((value == STR) || (value == ST2) || (value == ST4)) {
         ++i;
         value = *params++;
@@ -221,7 +221,7 @@ void ParamsPrint (const uint_t* params) {
     cout << '>';
 }
 
-uint_t ParamNumber (const uint_t* params, byte param_number) {
+uint_t ParamNumber (const uint_t* params, int param_number) {
     if (params == nullptr)
         return 0;
     uint_t num_params = *params++;
@@ -238,7 +238,7 @@ uint_t ParamNumber (const uint_t* params, byte param_number) {
                 param_number += 2;
                 break;
             } else if (value > 7) { // Gratuitous explanation points!
-                cout << "Error";
+                cout << "\n| Error";
                 return NIL;
             }
             else {

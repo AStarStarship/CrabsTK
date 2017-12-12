@@ -51,7 +51,7 @@ bool CardGame::SetState (int state) {
 }
 
 int CardGame::GetNumPlayers () {
-    return observers_.GetCount ();
+    return observers_.size ();
 }
 
 int CardGame::GetMinPlayers () {
@@ -59,11 +59,11 @@ int CardGame::GetMinPlayers () {
 }
 
 int CardGame::GetMaxPlayers () {
-    return observers_.GetSize ();
+    return observers_.capacity ();
 }
 
 void CardGame::PrintObservers () {
-    for (int i = 0; i < observers_.GetCount (); ++i) {
+    for (size_t i = 0; i < observers_.size (); ++i) {
         observers_[i]->Print ();
     }
 }
@@ -75,27 +75,30 @@ int CardGame::Join (User* user) {
     if (user == nullptr) {
         return -1;
     }
-    return observers_.Push (user);
+    observers_.push_back (user);
+    return observers_.size ();
 }
 
 int CardGame::Leave (User* user) {
-    for (int i = observers_.GetCount (); i > 0; --i) {
+    for (int i = observers_.size (); i > 0; --i) {
         User* user = observers_[i];
         // user will never be nil.
         if (user->Equals (user)) {
-            return observers_.Remove (i);
+            auto it = observers_.begin ();
+            observers_.erase (it + i);
+            return observers_.size ();
         }
     }
     return -1;
 }
 
-Array<id::User*>& CardGame::GetObservers () {
+std::vector<id::User*>& CardGame::GetObservers () {
     return observers_;
 }
 
 const Operation* CardGame::Star (uint index, _::Expression* expr) {
     static const Operation This = { "CardsClient",
-        NumOperations (0), FirstOperation ('A'),
+        NumOperations (0), OperationFirst ('A'),
         "kabuki::cards Script client.", 0
     };
     void* args[4];
@@ -116,12 +119,12 @@ const Operation* CardGame::Star (uint index, _::Expression* expr) {
         }
         case 'B': {
             static const Operation OpB = { "Print",
-                Params<1, STX, kMaxMessageLength + 1> (), Params<0> (),
+                Params<1, STR, kMaxMessageLength + 1> (), Params<0> (),
                 "Sets the client state.", 0
             };
             if (!expr) return &OpB;
             char buffer[kMaxMessageLength + 1];
-            if (!ExprArgs (expr, Params<1, STX, kMaxMessageLength + 1> (),
+            if (!ExprArgs (expr, Params<1, STR, kMaxMessageLength + 1> (),
                            Args (args, buffer)))
                 return expr->result;
             cout << buffer;
@@ -129,8 +132,8 @@ const Operation* CardGame::Star (uint index, _::Expression* expr) {
         }
         case 'C': {
             static const uint_t* kRxHeaderC = Params<1, SI4,
-                STX, User::kDefaultMaxDislpayNameLength + 1,
-                STX, Handle::kDefaultMaxLength + 1> ();
+                STR, User::kDefaultMaxDislpayNameLength + 1,
+                STR, Handle::kDefaultMaxLength + 1> ();
             static const Operation OpC = { "SetPlayer",
                 kRxHeaderC, Params<0> (),
                 "Sets the player at the given #index to the given "
@@ -151,7 +154,7 @@ const Operation* CardGame::Star (uint index, _::Expression* expr) {
                 return Result (expr, Bin::kErrorInvalidArgument,
                                Params<1, SI4> ());
             }
-            observers_.Grow (player_number);
+            observers_.reserve (player_number);
             user = observers_[player_number];
             user->SetStatus (status);
             user->GetHandle ().SetKey (handle);
@@ -161,7 +164,7 @@ const Operation* CardGame::Star (uint index, _::Expression* expr) {
     return nullptr;
 }
 
-const char* DefaultPlayAgainString () {
+const char* DefaultPlayAgainText () {
     static const char play_again[] = "\n| Do you want to play again?"
         "\n| Enter y to continue, or n to quit."
         "\n< \0";

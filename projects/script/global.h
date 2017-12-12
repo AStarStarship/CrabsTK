@@ -29,19 +29,29 @@ using namespace _;
 class ChildOperand : public Operand {
     public:
     
+
+    /** Handles Script Commands.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* HandleText (const char* text,
+                                    const char* text_end) {
+        return nullptr;
+    }
+    
     // Chinese Room operations.
     virtual const Operation* Star (uint index, Expression* expr) {
         void* args[2];
 
         static const Operation This = { "Child",
-            NumOperations (2), FirstOperation ('A'),
+            NumOperations (2), OperationFirst ('A'),
             "A child Operand." };
 
         switch (index) {
             case '?': return &This;
             case 'A': {
                 static const Operation OpA = { "SignedIntegerTests",
-                    Params<2, UI1, STR, kStringBufferSize> (),
+                    Params<2, UI1, STR, kTextBufferSize> (),
                     Params<2, UI1, STR> (),
                     "Description of function \'A\'.", 0 };
                 if (!expr) return &OpA;
@@ -57,7 +67,7 @@ class ChildOperand : public Operand {
             }
             case 'B': {
                 static const Operation OpB = { "FloatTests",
-                    Params<2, FLT, STR, kStringBufferSize> (),
+                    Params<2, FLT, STR, kTextBufferSize> (),
                     Params<2, FLT, STR> (),
                     "Description of function \'B\'.", 0 };
                 if (!expr) return &OpB;
@@ -80,12 +90,12 @@ class ChildOperand : public Operand {
     private:
 
     enum {
-        kStringBufferSize = 16         //< Example string buffer size.
+        kTextBufferSize = 16         //< Example string buffer size.
     };
 
     uint8_t test_ui1_;                 //< Text UI1.
     float test_flt_;                   //< Test FLT.
-    char test_str_[kStringBufferSize]; //< Test STR.
+    char test_str_[kTextBufferSize]; //< Test STR.
 };
 
 // Test child Operand.
@@ -93,15 +103,24 @@ class Parent : public Operand {
     public:
 
     enum {
-        kStringBufferSize = 16         //< Example string buffer size.
+        kTextBufferSize = 16         //< Example string buffer size.
     };
+
+    /** Handles Script Commands.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* HandleText (const char* text,
+                                    const char* text_end) {
+        return nullptr;
+    }
 
     // Interprocess operations.
     virtual const Operation* Star (uint index, Expression* expr) {
         void* args[2];
 
         static const Operation This = { "Parent",
-            NumOperations (4), FirstOperation ('A'),
+            NumOperations (4), OperationFirst ('A'),
             "Root scope device.", 0 };
 
         switch (index) {
@@ -116,7 +135,7 @@ class Parent : public Operand {
             }
             case 'C': {
                 static const Operation OpC = { "FloatTests",
-                    Params<2, FLT, STR, kStringBufferSize> (),
+                    Params<2, FLT, STR, kTextBufferSize> (),
                     Params<2, FLT, STR> (),
                     "Description of functionA.", 0 };
                 if (!expr) return &OpC;
@@ -130,7 +149,7 @@ class Parent : public Operand {
             }
             case 'D': {
                 static const Operation OpD = { "SignedIntegerTests",
-                    Params<2, FLT, STR, kStringBufferSize> (),
+                    Params<2, FLT, STR, kTextBufferSize> (),
                     Params<2, FLT, STR> (),
                     "Description of functionB.", 0 };
 
@@ -152,7 +171,7 @@ class Parent : public Operand {
     ChildOperand child_a,                //< ChildOperand Expression in index 'A'.
                  child_b;                //< ChildOperand Expression in index 'B'
     float io_number_;                    //< Example variable.
-    char  io_string_[kStringBufferSize]; //< Example string.
+    char  io_string_[kTextBufferSize]; //< Example string.
 };
 
 // A test room that can fit in 1KB of RAM. 
@@ -172,7 +191,7 @@ class This : public Room {
     // Interprocess operations.
     virtual const Operation* Star (uint index, Expression* expr) {
         static const Operation This = { "Room",
-            NumOperations (1), FirstOperation ('A'),
+            NumOperations (1), OperationFirst ('A'),
             "Root scope device.", 0 };
 
         switch (index) {

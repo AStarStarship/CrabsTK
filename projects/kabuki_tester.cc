@@ -1,5 +1,5 @@
 /** Kabuki Toolkit
-    @file    ~/source/kabuki/script/tests/script_tester.cc
+    @file    ~/projects/kabuki_tester.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -18,7 +18,7 @@
 int main (int args_count, char** args) {
     PrintLine ();
     cout << "\n| Running Kabuki Toolkit unit tests...";
-    PrintLine ("+", '-');
+    PrintLine ();
     cout << "\n|";
     return CommandLineTestRunner::RunAllTests (args_count, args);
 }

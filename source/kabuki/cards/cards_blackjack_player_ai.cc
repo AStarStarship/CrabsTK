@@ -136,6 +136,7 @@ void BlackjackPlayerAi::PlayRound () {
         state_ = kStateHolding;
         return;
     }
+
     Card* card = stock_.Draw ();
     if (card == nullptr) {  // Always check for error conditions first!
         cout << "\n| Error! The Deck was empty.";
@@ -150,6 +151,11 @@ void BlackjackPlayerAi::PlayRound () {
         // deal that player another card.
         state_ = kStateHolding;
     }
+}
+
+const char* BlackjackPlayerAi::HandleText (const char* text,
+                                           const char* text_end) {
+    return nullptr;
 }
 
 }   //< namespace cards

@@ -31,21 +31,21 @@ class KABUKI User : _::Portal {
     enum {
         kDefaultMinDislpayNameLength = 2,  //< Default max display name length.
         kDefaultMaxDislpayNameLength = 63, //< Default max display name length.
-        kDefaultValue                = 0,
+        kDefaultValue                = 0,  //< Default abstract user value.
     };
-
-    /** Default User diplay_name_. */
-    static const char kDefaultDislpayName[];
-
-    static const double kDefaultBalance;
+    static const double kDefaultBalance;   //< Default account balance.
 
     /** Creates a user with the given handle, password, and status. */
     User (Authenticator* authenticator, uid_t uid = 0,
           const char* handle   = Handle::kDefault,
           const char* password = Password::kDefault,
-          const char* status   = kDefaultDislpayName,
           double      balance  = kDefaultBalance,
-          uint64_t    value    = kDefaultValue);
+          int64_t    value     = kDefaultValue);
+
+    /** Constructor deep copies the other object. */
+    User (const User& other);
+
+    User& operator= (const User& other);
 
     /** Virtual destructor. */
     virtual ~User ();
@@ -56,8 +56,11 @@ class KABUKI User : _::Portal {
     /** Gets the handle's key. */
     virtual const char* SetStatus (const char* name);
 
-    /** Gets a reference to the char handle. */
+    /** Gets a reference to the handle_. */
     Handle& GetHandle ();
+
+    /** Gets a reference to the handle_.GetKey (). */
+    const char* GetHandleKey ();
 
     /** Gets a reference to the password. */
     Password& GetPassword ();
@@ -88,16 +91,19 @@ class KABUKI User : _::Portal {
 
     /** Attempts to buy the given points.
         @returns false if the balance_ is too low. */
-    bool BuyCoins (uint64_t num_coins, double point_cost);
+    bool BuyValue (int64_t num_coins, double point_cost);
 
     /** Increase the balance_ by the given amount. */
-    bool IncreaseBalance (double amount);
+    bool AddBalance (double amount);
 
     /** Gets the abstract value. */
-    uint64_t GetValue ();
+    int64_t GetValue ();
+
+    /** Increase the balance_ by the given amount. */
+    int64_t AddValue (int64_t amount);
 
     /** Sets the abstract value. */
-    virtual const char* SetValue (uint64_t value);
+    virtual const char* SetValue (int64_t value);
 
     /** Returns true if this user is the same as the given one.  */
     bool Equals (User* user);
@@ -115,6 +121,13 @@ class KABUKI User : _::Portal {
     /** Prints this object to a expression. */
     virtual void Print ();
 
+    /** Handles Text input.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* HandleText (const char* text,
+                                    const char* text_end);
+
     private:
 
     Handle         handle_;       //< User's handle (i.e. key).
@@ -126,7 +139,7 @@ class KABUKI User : _::Portal {
                    session_key_,  //< Fake session encryption key.
                    response_;     //< Gets user abstract response code.
     double         balance_;      //< Abstract user account balance or money.
-    uint64_t       value_;        //< Abstract account value, points, or coins.
+    int64_t        value_;        //< Abstract account value, points, or coins.
     _::Expression* slot_;         //< Portal to User's machine.
 
 };      //< class User

@@ -19,10 +19,11 @@
 #include "door.h"
 #include "args.h"
 #include "text.h"
+#include "print.h"
 
 namespace _ {
 
-const char** RoomStateStrings () {
+const char** RoomStateTexts () {
     static const char* states[] = {
         "Initializing",
         "Waking up",
@@ -33,21 +34,21 @@ const char** RoomStateStrings () {
     return states;
 }
 
-const char** RequestStrings () {
-    static const char* RequestStrings[] = {
+const char** RequestTexts () {
+    static const char* RequestTexts[] = {
         "Open door",
         "Close door",
         "Invalid request"
     };
 
-    return RequestStrings;
+    return RequestTexts;
 }
 
-const char* RequestString (Request r) {
+const char* RequestText (Request r) {
     //if (r < 0 || r >= InvalidRequest)
     if (r >= InvalidRequest)
-        return RequestStrings ()[InvalidRequest];
-    return RequestStrings ()[r];
+        return RequestTexts ()[InvalidRequest];
+    return RequestTexts ()[r];
 }
 
 Room::Room (const char* room_name) :
@@ -156,9 +157,13 @@ int Room::Main (const char** args, int args_count) {
     return 1;
 }
 
+const char* Room::HandleText (const char* text, const char* text_end) {
+    return nullptr;
+}
+
 const Operation* Room::Star (uint index, Expression* expr) {
     static const Operation star = { "Room",
-        NumOperations (0), FirstOperation (' '),
+        NumOperations (0), OperationFirst (' '),
         "A Chinese Room.", 0
     };
 

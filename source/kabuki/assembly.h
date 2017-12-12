@@ -61,22 +61,26 @@ MEMORY_PROFILE 3.
 #define MAX_NUM_SLOTS       256       //< Max number of Slots.
 #define COM_TIMEOUT_TICKS   100       //< The number of seconds before a timeout.
 //< over a generic communication link.
-#define CHAR_WIDTH          8         //< index width in bytes: 8, 16, or 32.
+#define SCRIPT_CHAR_WIDTH          8         //< index width in bytes: 8, 16, or 32.
 #define ROOM_FLOOR_SIZE     1024      //< The
 #define OPERATION_MAX_NAME_LENGTH 64
 #define OPERATION_MAX_DESCRIPTION_LENGTH 1024
 
 // Sets any of the following macros to YES or NO.
 
-#define USING_1_BYTE_TYPES  YES
-#define USING_2_BYTE_TYPES  YES
-#define USING_4_BYTE_TYPES  YES
-#define USING_8_BYTE_TYPES  YES
-#define USING_VARINT2       YES
-#define USING_VARINT4       YES
-#define USING_VARINT8       YES
-#define USING_ARRAY         NO
-#define USING_BAG           NO
-#define USING_BOOK          NO
-#define USING_MAP           NO
-#define USING_LIST          NO
+#define USING_SCRIPT_1_BYTE_TYPES YES
+#define USING_SCRIPT_2_BYTE_TYPES YES
+#define USING_SCRIPT_4_BYTE_TYPES YES
+#define USING_SCRIPT_8_BYTE_TYPES YES
+#define USING_SCRIPT_VARINT2      YES
+#define USING_SCRIPT_VARINT4      YES
+#define USING_SCRIPT_VARINT8      YES
+#define USING_SCRIPT_ARRAY        NO
+#define USING_SCRIPT_BAG          NO
+#define USING_SCRIPT_BOOK         NO
+#define USING_SCRIPT_MAP          NO
+#define USING_SCRIPT_LIST         NO
+#define USE_SCRIPT_STRAND         YES
+#define USING_SCRIPT_TEXT         YES
+#define USING_SCRIPT_PRINT        YES
+#define USING_SCRIPT_KEYBOARD     YES

@@ -18,9 +18,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="source\kabuki\data">
-      <UniqueIdentifier>{1199cb80-6bd0-4f7d-a347-ccefa0ec89d4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\kabuki\cards">
       <UniqueIdentifier>{06a8e817-e59c-4660-a713-d59fb76f1e22}</UniqueIdentifier>
     </Filter>
@@ -84,9 +81,6 @@
       <Filter>source\kabuki\script</Filter>
     </ClCompile>
     <ClCompile Include="script\script_table.cc">
-      <Filter>source\kabuki\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_text.cc">
       <Filter>source\kabuki\script</Filter>
     </ClCompile>
     <ClCompile Include="script\script_types.cc">
@@ -188,6 +182,21 @@
     <ClCompile Include="..\..\projects\cards\cards_tests.cc">
       <Filter>projects\cards</Filter>
     </ClCompile>
+    <ClCompile Include="script\script_hash.cc">
+      <Filter>source\kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\script_text.cc">
+      <Filter>source\kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\script_print.cc">
+      <Filter>source\kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\script_keyboard.cc">
+      <Filter>source\kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\script_strand.cc">
+      <Filter>source\kabuki\script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="script\address.h">
@@ -272,9 +281,6 @@
       <Filter>source\kabuki\script</Filter>
     </ClInclude>
     <ClInclude Include="script\tbook.h">
-      <Filter>source\kabuki\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\text.h">
       <Filter>source\kabuki\script</Filter>
     </ClInclude>
     <ClInclude Include="script\tlist.h">
@@ -376,9 +382,6 @@
     <ClInclude Include="cards\deck.h">
       <Filter>source\kabuki\cards</Filter>
     </ClInclude>
-    <ClInclude Include="cards\deck_default.h">
-      <Filter>source\kabuki\cards</Filter>
-    </ClInclude>
     <ClInclude Include="cards\global.h">
       <Filter>source\kabuki\cards</Filter>
     </ClInclude>
@@ -406,17 +409,23 @@
     <ClInclude Include="cards\card_game.h">
       <Filter>source\kabuki\cards</Filter>
     </ClInclude>
-    <ClInclude Include="data\config.h">
-      <Filter>source\kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="data\global.h">
-      <Filter>source\kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="data\array.h">
-      <Filter>source\kabuki\data</Filter>
-    </ClInclude>
     <ClInclude Include="cards\blackjack_player_ai.h">
       <Filter>source\kabuki\cards</Filter>
+    </ClInclude>
+    <ClInclude Include="script\hash.h">
+      <Filter>source\kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\text.h">
+      <Filter>source\kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\print.h">
+      <Filter>source\kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\strand.h">
+      <Filter>source\kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\keyboard.h">
+      <Filter>source\kabuki\script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

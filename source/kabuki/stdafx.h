@@ -53,3 +53,6 @@
 #include <time.h>
 #include <vector>
 #include <windows.h>
+#include <memory>
+#include <cassert>
+#include <functional>

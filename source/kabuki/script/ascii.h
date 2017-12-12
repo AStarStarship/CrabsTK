@@ -58,7 +58,7 @@ typedef enum {
 } AsciiCode;
 
 #if USE_MORE_ROM
-KABUKI const char* AsciiString (AsciiCode ascii_char);
+KABUKI const char* AsciiText (AsciiCode ascii_char);
 #endif  //< USE_MORE_ROM
 }       //< namespace ascii
 #endif  //< SCRIPT_ASCII_H

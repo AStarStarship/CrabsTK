@@ -21,6 +21,8 @@
 #include "args.h"
 #include "slot.h"
 #include "text.h"
+#include "hash.h"
+#include "print.h"
 
 using namespace std;
 
@@ -183,8 +185,8 @@ byte ExpressionExitState (Expression* expr) {
     //    return  BinResult (ExpressionBin (expr), Bin::kErrorRoom);
     //}
 #if SCRIPT_DEBUG
-    cout << "\n| Exiting " << BinStateString (expr->bin_state)
-              << " state back to the " << BinStateString (expr->last_bin_state) 
+    cout << "\n| Exiting " << BinStateText (expr->bin_state)
+              << " state back to the " << BinStateText (expr->last_bin_state) 
               << " state .";
 #endif  //< SCRIPT_DEBUG
     byte state = expr->last_bin_state;
@@ -201,7 +203,7 @@ const Operation* ExpressionSetState (Expression* expr, Bin::State state) {
         return BinResult (ExpressionBin (expr), Bin::kErrorLocked);
     }
 #if SCRIPT_DEBUG
-    cout << "\n| Entering " << BinStateString (state)
+    cout << "\n| Entering " << BinStateText (state)
               << " state:" << state;
 #endif  //< SCRIPT_DEBUG
     expr->bin_state = state;
@@ -215,7 +217,7 @@ const Operation* ExpressionEnterState (Expression* expr,
     //    return  BinResult (ExpressionBin (expr), Bin::kErrorRoom);
     //}
 #if SCRIPT_DEBUG
-    cout << "\n| Entering " << BinStateString (state)
+    cout << "\n| Entering " << BinStateText (state)
               << " state:" << state;
 #endif  //< SCRIPT_DEBUG
     expr->last_bin_state = expr->bin_state;
@@ -292,17 +294,17 @@ const Operation* ExpressionScan (Expression* expr) {
         b = *start;
         *write++ = b;
 #if SCRIPT_DEBUG
-        PrintLine ("|", '=');
+        PrintLine ('=');
         cout << "\n| " << length << ":\'";
         if (b < 32 || b == 127) {
-            cout << AsciiString ((AsciiCode)b);
+            cout << AsciiText ((AsciiCode)b);
         }
         else {
             cout << b;
         }
 
-        cout << "\' " << BinStateString (bin_state) << " state";
-        PrintLine (">", '-');
+        cout << "\' " << BinStateText (bin_state) << " state";
+        PrintLine ();
 #endif  //< SCRIPT_DEBUG
 
         if (++start >= end) start -= size;
@@ -366,7 +368,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     result = ExpressionScanHeader (expr, params);
                     if (result) {
 #if SCRIPT_DEBUG
-                        PrintDebug ("Expression::Error reading address.");
+                        cout << "Expression::Error reading address.";
 #endif  //< SCRIPT_DEBUG
                         return ExpressionForceDisconnect (expr, Bin::kErrorRoom);
                     }
@@ -386,7 +388,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     bin_state = Bin::ArgsState;
                     type = *(++expr->header);   //< Setup to read first type.
 #if SCRIPT_DEBUG
-                    cout << "\n| Next TType to scan:\'" << TypeString (type)
+                    cout << "\n| Next TType to scan:\'" << TypeText (type)
                         << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                     write += TypeAlign (write, type);
@@ -417,7 +419,7 @@ const Operation* ExpressionScan (Expression* expr) {
                 if (type <= ADR) {
                     if (type < ADR) {   // Address type.
 #if SCRIPT_DEBUG
-                        PrintDebug ("\n| Scanning address.");
+                        cout << "\n| Scanning address.";
 #endif  //< SCRIPT_DEBUG
                         Result (expr, Bin::kErrorInvalidType);
                         ExpressionEnterState (expr, Bin::LockedState);
@@ -441,7 +443,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     break;
                 } else if (type == ST2) { // UTF-16 string type.
 #if SCRIPT_DEBUG
-                    PrintDebug ("\n| Scanning ST2.");
+                    cout << "\n| Scanning ST2.";
 #endif  //< SCRIPT_DEBUG
                     if (bytes_left == 1) {
                         expr->last_byte = b;
@@ -455,7 +457,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     break;
                 } else if (type == ST4) { // UTF-32 string type.
 #if SCRIPT_DEBUG
-                    PrintDebug ("\n| Scanning ST4.");
+                    cout << "\n| Scanning ST4.";
 #endif  //< SCRIPT_DEBUG
                     // Read the max number of chars off the header.
                     bytes_left = *expr->header++ * 4;
@@ -472,12 +474,12 @@ const Operation* ExpressionScan (Expression* expr) {
                         // byte to parse and we already have the byte loaded.
 #if SCRIPT_DEBUG
                         cout << "\n| Done scanning without state change for \""
-                                  << TypeString (type) << '\"';
+                                  << TypeText (type) << '\"';
 #endif  //< SCRIPT_DEBUG
                         // Setup to read the next type.
                         type = *(++expr->header);
 #if SCRIPT_DEBUG
-                        cout << "\n| Next TType to scan:\'" << TypeString (type)
+                        cout << "\n| Next TType to scan:\'" << TypeText (type)
                             << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                         write += TypeAlign (write, type);
@@ -488,7 +490,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     break;
                 } else if (type < UV8)  { // Varint type.
 #if SCRIPT_DEBUG
-                    PrintDebug ("\n| Scanning Varint.");
+                    cout << "\n| Scanning Varint.";
 #endif  //< SCRIPT_DEBUG
                     bytes_left = SizeOf (type);
                     ExpressionEnterState (expr, Bin::VarintState);
@@ -496,7 +498,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     break;
                 } else { // It's a TObject.
 #if SCRIPT_DEBUG
-                    PrintDebug ("\n| Scanning TObject.");
+                    cout << "\n| Scanning TObject.";
 #endif  //< SCRIPT_DEBUG
                     // Multi-dimension arrays are parsed just like any other
                     // TObject.
@@ -531,7 +533,7 @@ const Operation* ExpressionScan (Expression* expr) {
             }
             case Bin::Utf8State: {
                 if (bytes_left == 0) {
-                    Result (expr, Bin::kErrorStringOverflow,
+                    Result (expr, Bin::kErrorTextOverflow,
                             const_cast<const uint_t*>(expr->header), 0, start);
                     break;
                 }
@@ -545,7 +547,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     // Check if there is another argument to scan.
                     ExpressionExitState (expr);
                     bin_state = Bin::ArgsState;
-                    //< We can't go back from OBJ to POD for String Types.
+                    //< We can't go back from OBJ to POD for Text Types.
                     // Setup to read next type.
                     type = *(++expr->header);
 #if SCRIPT_DEBUG
@@ -554,7 +556,7 @@ const Operation* ExpressionScan (Expression* expr) {
                         bin_state = Bin::AddressState;
                         break;
                     }
-                    cout << "\n| Next TType to scan:\'" << TypeString (type)
+                    cout << "\n| Next TType to scan:\'" << TypeText (type)
                         << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                     write += TypeAlign (write, type);
@@ -592,7 +594,7 @@ const Operation* ExpressionScan (Expression* expr) {
 
                 if (bytes_left == 1) {
 #if SCRIPT_DEBUG
-                    PrintDebug ("Checking last byte:");
+                    cout << "Checking last byte:";
 #endif  //< SCRIPT_DEBUG
 
                     // @warning I am not current saving the offset. I'm not 
@@ -619,7 +621,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     // Setup to read the next type.
                     type = *(++header);
 #if SCRIPT_DEBUG
-                    cout << "\n| Next TType to scan:\'" << TypeString (type)
+                    cout << "\n| Next TType to scan:\'" << TypeText (type)
                         << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                     write += TypeAlign (write, type);
@@ -705,7 +707,7 @@ const Operation* ExpressionScan (Expression* expr) {
             }
             case  Bin::LockedState: {
 #if SCRIPT_DEBUG
-                PrintDebug ("Locked");
+                cout << "Locked";
 #endif  //< SCRIPT_DEBUG
                 break;
             }
@@ -717,7 +719,7 @@ const Operation* ExpressionScan (Expression* expr) {
                 // parsing plain-old-data.
                 if (bytes_left == 0) {
 #if SCRIPT_DEBUG
-                    PrintDebug ("... done!");
+                    cout << "... done!";
 #endif  //< SCRIPT_DEBUG
                     ExpressionExitState (expr);
                     bin_state = expr->bin_state;
@@ -725,7 +727,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     // Setup to read the next type.
                     type = *(++header);
 #if SCRIPT_DEBUG
-                    cout << "\n| Next TType to scan:\'" << TypeString (type)
+                    cout << "\n| Next TType to scan:\'" << TypeText (type)
                         << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                     write += TypeAlign (write, type);
@@ -734,7 +736,7 @@ const Operation* ExpressionScan (Expression* expr) {
                 --bytes_left;
                 //b = input->Pull ();
 #if SCRIPT_DEBUG
-                PrintDebugHex ("Loading next byte", b);
+                printf ("\n| Loading next byte:%x", b);
 #endif  //< SCRIPT_DEBUG
                 hash = Hash16 (b, hash);
                 *start = b;
@@ -861,14 +863,14 @@ void ExpressionPrintStack (Expression* expr) {
 }
 
 void ExpressionPrintStateStack (Expression* expr) {
-    PrintLine (">", '-');
+    PrintLine ();
     cout << "\n| Expression State Stack:    ";
     if (expr == nullptr) {
         printf ("null");
-        PrintLine (">", '-');
+        PrintLine ();
         return;
     }
-    PrintLine (">", '-');
+    PrintLine ();
 }
 
 void ExpressionPrint (Expression* expr) {
@@ -876,11 +878,11 @@ void ExpressionPrint (Expression* expr) {
    cout << "\n| Stack:    ";
     if (expr == nullptr) {
         cout << "null";
-        PrintLine ("|", '~');
+        PrintLine ('~');
         return;
     }
     printf ("0x%p", expr);
-    PrintLine ("|", '_');
+    PrintLine ('_');
     //cout << "\n| type:          "
     //    << (expr->type == -1)?"interprocess no dynamic memory.":
     //       (expr->type == 0)?"no dynamic memory":
@@ -891,30 +893,36 @@ void ExpressionPrint (Expression* expr) {
               << "\n| header_size : " << expr->header_size
               << "\n| stack_count : " << expr->stack_count
               << "\n| stack_size  : " << expr->stack_size
-              << "\n| bin_state   : " << BinStateString  (expr->bin_state )
-              << "\n| bout_state  : " << BoutStateString (expr->bout_state)
+              << "\n| bin_state   : " << BinStateText  (expr->bin_state )
+              << "\n| bout_state  : " << BoutStateText (expr->bout_state)
               << "\n| num_states  : " << expr->num_states
               << "\n| header_size : " << expr->header_size;
-    PrintLine (">", '-');
+    PrintLine ('-', "\n>");
     OperandPrint (expr->operand);
     cout << "\n| header: ";
     ParamsPrint (expr->header_start);
-    PrintLine (">", '-');
+    PrintLine ('-', "\n>");
     ExpressionPrintStack (expr);
-    PrintLine ("|", '~');
+    PrintLine ('~');
     //system ("PAUSE");
 }
 #endif //< USE_MORE_ROM
-const Operation* ExpressionPrint (Expression* expr, const Operation* operation) {
-    void* args[2];
-    uintptr_t num_operations = (uintptr_t)operation->params,
-              first_operation = (uintptr_t)operation->result;
-    return ExprResult (expr, Params<5, STX, kOperationMaxNameLength,
-                                       UV8, UV8,
-                                       STX, kOperationMaxDescriptionLength> (),
-                       Args (args, operation->name,
-                             &num_operations, &first_operation,
-                             operation->metadata));
+const Operation* ExpressionQuery (Expression* expr, const Operation* operation) {
+    if (expr) {
+        if (!operation) {
+            return OperationInvalid ();
+        }
+        void* args[2];
+        uintptr_t num_operations = (uintptr_t)operation->params,
+                  first_operation = (uintptr_t)operation->result;
+        return ExprResult (expr, Params<5, STR, kOperationMaxNameLength,
+                                           UV8, UV8,
+                                           STR, kOperationMaxDescriptionLength> (),
+                           Args (args, operation->name,
+                                 &num_operations, &first_operation,
+                                 operation->metadata));
+    }
+    return operation;
 }
 
 /*

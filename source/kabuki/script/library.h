@@ -175,6 +175,15 @@ class Library: public Operand
 
     }
 
+    /** Handles Script Commands.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* HandleText (const char* text,
+                                    const char* text_end) {
+        return nullptr;
+    }
+
     /** ChineseRoom Operations. */
     const Operation* Star (uint index, Expression* expr) override {
         static const Operation This = { "Library",

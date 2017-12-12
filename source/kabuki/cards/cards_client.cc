@@ -31,11 +31,13 @@ Client::Client ():
 
 Client::~Client () {
     DeleteRemotePlayers ();
+    delete authenticator_;
 }
 
 void Client::DeleteRemotePlayers () {
-    for (int i = players_.GetCount (); i > 0; --i) {
-        RemotePlayer* player = players_.Pop ();
+    for (int i = players_.size (); i > 0; --i) {
+        RemotePlayer* player = players_.back ();
+        players_.pop_back ();
         delete player;
     }
 }
@@ -53,34 +55,34 @@ bool Client::SetState (int state) {
 }
 
 void Client::PrintPlayers () {
-    for (int i = 0; i < players_.GetCount (); ++i) {
+    for (size_t i = 0; i < players_.size (); ++i) {
         players_[i]->Print ();
     }
 }
 
-void Client::PrintRoundStatsString () {
-    PrintLine ("|", '~');
+void Client::PrintRoundStatsText () {
+    PrintLine ('~');
     cout << "Round: " << round_number_ << "\n";
 
 
-    PrintLine ("|", '~');
+    PrintLine ('~');
 }
 
 void Client::Print () {
-    PrintLine (" ", '_');
+    PrintLine ('_');
     cout << "\n| " << game_name_
-         << "\n| Num Players : " << players_.GetCount () 
-         << " Max: " << players_.GetSize ()
+         << "\n| Num Players : " << players_.size () 
+         << " Max: " << players_.capacity ()
          << "\n| Round Number: " << round_number_
-         << "\n| Num Players : " << players_.GetCount ();
+         << "\n| Num Players : " << players_.size ();
 
     PrintPlayers ();
-    PrintLine ("|", '_');
+    PrintLine ('_');
 }
 
 const Operation* Client::Star (uint index, _::Expression* expr) {
     static const Operation This = { "CardsClient",
-        NumOperations (0), FirstOperation ('A'),
+        NumOperations (0), OperationFirst ('A'),
         "kabuki::cards Script client.", 0
     };
     void* args[4];
@@ -101,12 +103,12 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
         }
         case 'B': {
             static const Operation OpB = { "Print",
-                Params<1, STX, kMaxMessageLength + 1> (), Params<0> (),
+                Params<1, STR, kMaxMessageLength + 1> (), Params<0> (),
                 "Sets the client state.", 0
             };
             if (!expr) return &OpB;
             char buffer[kMaxMessageLength + 1];
-            if (!ExprArgs (expr, Params<1, STX, kMaxMessageLength + 1> (),
+            if (!ExprArgs (expr, Params<1, STR, kMaxMessageLength + 1> (),
                            Args (args, buffer)))
                 return expr->result;
             cout << buffer;
@@ -114,8 +116,8 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
         }
         case 'C': {
             static const uint_t* kRxHeaderC = Params<1, SI4,
-                STX, User::kDefaultMaxDislpayNameLength + 1,
-                STX, Handle::kDefaultMaxLength + 1> ();
+                STR, User::kDefaultMaxDislpayNameLength + 1,
+                STR, Handle::kDefaultMaxLength + 1> ();
             static const Operation OpC = { "SetPlayer",
                 kRxHeaderC, Params<0> (),
                 "Sets the player at the given #index to the given "
@@ -136,7 +138,7 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
                 return Result (expr, Bin::kErrorInvalidArgument,
                                Params<1, SI4> ());
             }
-            players_.Grow (player_number);
+            players_.reserve (player_number);
             player = players_[player_number];
             player->SetDislpayName (status);
             player->SetHandle (handle);

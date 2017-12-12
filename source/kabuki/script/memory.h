@@ -1,6 +1,6 @@
 /** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/script/utils.h
+    @file    ~/source/kabuki/script/memory.h
     @author  Cale McCollough <https://calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -24,9 +24,35 @@
 
 namespace _ {
 
+/** Compute the next highest power of 2. */
+KABUKI int MemoryAlignToPowerOf2 (int value);
+
+/** Returns the given pointer for use with uncooperative overloaded
+    operators. */
+inline const void* Pointer (const void* pointer) {
+    return pointer;
+}
+
+template<typename T>
+inline bool IsNaN (T value) {
+    static const T nan = (sizeof (T) == 8) 
+                       ? (T)0xFF
+                       : sizeof (T) == 4 ? (T)0xFFFF
+                       : sizeof (T) == 2 ? (T)0xFFFFFFFF
+                       : sizeof (T) == 1 ? (T)0xFFFFFFFFFFFFFFFF:0;
+    return value == nan;
+}
+
+/* Returns the inverse of the given value.
+For code metadata purposes. */
+template<typename T>
+T MaxValue () {
+    return ~(T)0;
+}
+
 /** Creates/Gets a static buffer of the specified size. */
 template<uint_t kBufferSize>
-inline uintptr_t* WordBuffer () {
+inline uintptr_t* MemoryBuffer () {
     static uintptr_t buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }
@@ -34,7 +60,7 @@ inline uintptr_t* WordBuffer () {
 /** Creates/Gets one of n static buffers of the specified size. */
 template<uint_t kBufferNumber,
          uint_t kBufferSize>
-    inline uintptr_t* BufferNum () {
+    inline uintptr_t* MemoryBuffer () {
     static uintptr_t buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }
@@ -43,7 +69,7 @@ template<uint_t kBufferNumber,
 template<typename T,
          uint_t kBufferNumber,
          uint_t kBufferSize>
-inline T* TypeBuffer () {
+inline T* MemoryBuffer () {
     static T buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }
@@ -51,7 +77,7 @@ inline T* TypeBuffer () {
 /** reinterpret_cast(string) a the given base and offset to an object pointer.
 */
 template<typename T>
-inline T* PointTo (void* base, uint_t offset) {
+inline T* MemoryPointer (void* base, uint_t offset) {
     return reinterpret_cast<T*>(reinterpret_cast<byte*>(base) + offset);
 }
 
@@ -60,7 +86,7 @@ inline T* PointTo (void* base, uint_t offset) {
     @param ptr The address to align.
     @return The offset to add to the ptr to word align it. */
 template<typename T>
-inline uintptr_t WordAlignOffset (void* ptr) {
+inline uintptr_t MemoryAlignOffset (void* ptr) {
     // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
     // This allows the algorithm to word align without any if statements.
     // The algorithm works the same for all memory widths as proven by the
@@ -79,12 +105,12 @@ inline uintptr_t WordAlignOffset (void* ptr) {
 /** Word aligns the given byte pointer up in addresses.
     @param ptr Pointer to align.
     @return Next word aligned up pointer. */
-inline byte* WordAlign (byte* ptr) {
+inline byte* MemoryAlign (byte* ptr) {
     return ptr + (((~reinterpret_cast<uintptr_t> (ptr)) + 1) &
         (sizeof (byte*) - 1));
 }
 
-inline uintptr_t* WordAlign64 (uintptr_t* buffer) {
+inline uintptr_t* MemoryAlign64 (uintptr_t* buffer) {
     byte* byte_ptr = reinterpret_cast<byte*> (buffer);
     uintptr_t offset = (((~reinterpret_cast<uintptr_t> (buffer)) + 1) &
         (sizeof (uint64_t) - 1));
@@ -145,21 +171,48 @@ inline uintptr_t Diff (const void* begin, const void* end) {
              barking on known safe memory blocks. Newbs have been warned. */
 KABUKI void MemoryClear (void* address, size_t size);
 
-/** Copies the source to the destination functionally identical to memcpy.
+/** Copies the source to the target functionally identical to memcpy.
     @warning Sharp knives: Function used to make L3 compiler warnings stop
              barking on known safe memory blocks. Newbs have been warned. */
-KABUKI size_t MemoryCopy (void* destination, size_t size, const void* source);
+KABUKI byte* MemoryCopy (void* target, void* target_end, const void* memory,
+                         size_t size);
+
+/** Copies the source to the target functionally identical to memcpy.
+    @warning Sharp knives: Function used to make L3 compiler warnings stop
+    barking on known safe memory blocks. Newbs have been warned. */
+KABUKI byte* MemoryCopy (void* target, void* target_end, const void* memory,
+                         const void* memory_end);
+
+/** Copies the source to the target functionally identical to memcpy.
+    @warning Sharp knives: Function used to make L3 compiler warnings stop
+    barking on known safe memory blocks. Newbs have been warned. */
+KABUKI byte* MemoryCopy (void* target, void* target_end, const void* memory,
+                         const void* memory_end, size_t size);
 
 #if USE_MORE_ROM
-/** Prints out the contents of the address to the debug stream. */
-KABUKI void PrintMemory (const void* address, const void* end);
 
-inline void PrintMemory (const void* address, size_t size) {
-    const char* end = reinterpret_cast<const char*>(address) + size;
-    PrintMemory (address, end);
-}
+/** Converts a single byte a one-byte hex representation. */
+KABUKI byte MemoryNibbleToLowerCaseHex (byte b);
+
+/** Converts a single byte a one-byte hex representation. */
+KABUKI byte MemoryNibbleToUpperCaseHex (byte b);
+
+/** Converts a single byte a two-byte hex representation. */
+KABUKI uint16_t MemoryByteToLowerCaseHex (byte b);
+
+/** Converts a single byte a two-byte hex representation. */
+KABUKI uint16_t MemoryByteToUpperCaseHex (byte b);
+
+/** Converts a single hex byte a byte.
+@return Returns -1 if c is not a hex byte.
+*/
+KABUKI int MemoryHexToByte (byte hex_byte);
+
+/** Converts a single byte into a two-byte hex representation.
+@return Returns -1 if c is not a hex byte.
+*/
+KABUKI int MemoryHexToByte (uint16_t hex);
+
 #endif  //< USE_MORE_ROM
-
 }       //< namespace _
-
 #endif  //< SCRIPT_MEMORY_H

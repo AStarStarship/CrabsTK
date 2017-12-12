@@ -55,7 +55,7 @@ struct KABUKI Bin {
         kErrorStackOverflow       = 10,
         kErrorInvalidSubet        = 11,
         kErrorTooManyPops         = 12,
-        kErrorStringOverflow      = 13,
+        kErrorTextOverflow      = 13,
         kErrorInvalidErrorHandler = 14,
         kErrorInvalidOperand      = 15,
         kErrorArrayOverflow       = 16,
@@ -99,13 +99,13 @@ KABUKI byte* BinBuffer (Bin* bin);
 KABUKI byte* BinEndAddress (Bin* bin);
 
 /** Gets a human-readable description for given error. */
-KABUKI const char* BinErrorString (Bin::Error e);
+KABUKI const char* BinErrorText (Bin::Error e);
 
 /** Gets a a char for printing out the bin_state. */
-KABUKI const char* BinStateString (Bin::State state);
+KABUKI const char* BinStateText (Bin::State state);
 
-inline const char* BinStateString (byte state) {
-    return BinStateString ((Bin::State)state);
+inline const char* BinStateText (byte state) {
+    return BinStateText ((Bin::State)state);
 }
 
 /** Used to return an erroneous result from a B-Input.
@@ -114,7 +114,7 @@ inline const char* BinStateString (byte state) {
     @return Returns a Static Error Operation Result. */
 inline const Operation* BinResult (Bin* bin, Bin::Error error) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Bin " << BinErrorString (error) << " Error!\n";
+    std::cout << "\n| Bin " << BinErrorText (error) << " Error!\n";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
@@ -128,7 +128,7 @@ inline const Operation* BinResult (Bin* bin, Bin::Error error) {
 inline const Operation* BinResult (Bin* bin, Bin::Error error,
                                    const uint_t* header) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Bin " << BinErrorString (error) << " Error!\n";
+    std::cout << "\n| Bin " << BinErrorText (error) << " Error!\n";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
@@ -144,7 +144,7 @@ inline const Operation* BinResult (Bin* bin, Bin::Error error,
                                    const uint_t* header,
                                    uint_t offset) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Bin " << BinErrorString (error) << " Error!\n";
+    std::cout << "\n| Bin " << BinErrorText (error) << " Error!\n";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
@@ -161,7 +161,7 @@ inline const Operation* BinResult (Bin* bin, Bin::Error error,
                                    uint_t offset,
                                    byte* address) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Bin " << BinErrorString (error) << " Error!\n";
+    std::cout << "\n| Bin " << BinErrorText (error) << " Error!\n";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }

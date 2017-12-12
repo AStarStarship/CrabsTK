@@ -19,6 +19,8 @@
 #include "card.h"
 
 namespace kabuki { namespace cards {
+
+using pack_ptr = std::unique_ptr<Card*>;
     
 /** A Deck of playing cards.
     A Deck of cards usually has 52 cards, but can also have 2 jokers, a black
@@ -53,8 +55,7 @@ class Deck {
         @param  aces_high       0 means that aces are low, a positive number
                                 means that aces are high, a negative number
                                 means that aces are low.
-        @param  format          Used to determine what suites we are using.
-    */
+        @param  format          Used to determine what suites we are using. */
     Deck (int num_decks = 1, bool has_jokers = kNoJokers, 
           int aces_high = kAcesHigh,
           Suit::Format format = Suit::kFrench,
@@ -63,7 +64,7 @@ class Deck {
           Suit::Color color = Suit::Color::kWhite);
 
     /** Destructor. */
-    ~Deck ();
+    virtual ~Deck ();
 
     /** Sets the given parameters of the deck. */
     void Set (bool has_jokers = kNoJokers, int aces_high = kAcesHigh,
@@ -72,23 +73,30 @@ class Deck {
               const char* directory_path = kDefaultDeckArtDirectory,
               Suit::Color color = Suit::Color::kWhite);
 
-    /** Returns a pointer to a static Suit for the column 0 types AKA Hearts. */
-    Suit* Heart ();
+    /** Returns true if this deck has Jokers. */
+    bool HasJokers ();
 
-    /** Returns a pointer to a static Suit for the column 1 types AKA Diamonds. */
-    Suit* Diamond ();
+    /** Returns the number of cards in the deck. */
+    int GetSize ();
 
-    /** Returns a pointer to a static Suit for the column 2 types AKA Clubs. */
+    /** Returns a pointer to a static Suit for the column 0 types AKA
+        Hearts. */
+   Suit* Heart ();
+
+    /** Returns a pointer to a static Suit for the column 1 types AKA
+        Diamonds. */
+   Suit* Diamond ();
+
+    /** Returns a pointer to a static Suit for the column 2 types AKA
+        Clubs. */
     Suit* Club ();
 
-    /** Returns a pointer to a static Suit for the column 3 types AKA Spades. */
+    /** Returns a pointer to a static Suit for the column 3 types AKA
+        Spades. */
     Suit* Spade ();
 
     /** Returns an array of the static Card objects for the 4 columns 0-3. */
     Suit** Suits ();
-
-    /** Returns the number of cards in the deck. */
-    int GetNumCards ();
 
     /** Function sets the suit values to the new values.
         @pre    valueN must be between 1-4.
@@ -99,15 +107,6 @@ class Deck {
 
     /** Sets the format to the one given. */
     void SetFormat (Suit::Format format);
-
-    /** Resets the deck to the initial state. */
-    void Reshuffle ();
-    
-    /** Returns true if this deck has Jokers. */
-    bool HasJokers ();
-
-    /** Returns the number of cards in the deck. */
-    int GetCount ();
     
     /** Returns the if aces are high or low. */
     bool AcesHigh ();
@@ -142,18 +141,19 @@ class Deck {
         [1-13]-[1-4].svg/J-1.svg/J-2.svg format. */
     //int CheckDeckArtFolder (const char* directory_path);
 
-    bool    has_jokers_;    //< Flag for if the deck has Jokers.
-    int     aces_high_,     //< Flags for aces high or low.
-            num_cards_,     //< Num cards in the deck.
-            lowest_value_,  //< Lowest allowed card value.
-            highest_value_; //< Highest allowed card value.
-    Suit    heart_,         //< The heart suit.
-            diamond_,       //< The diamond suit.
-            club_,          //< The club suit.
-            spade_;         //< The spade suit.
-    Suit*   suits_[4];      //< Array of Suits.
-    Card*   pack_;          //< Unique array of single cards.
-    //Image rear_image_;    //< The rear Image of the Deck.
+    bool     has_jokers_;    //< Flag for if the deck has Jokers.
+    int      num_decks_,     //< Num decks in the pack.
+             num_cards_,     //< Number of cards.
+             aces_high_,     //< Flags for aces high or low.
+             lowest_value_,  //< Lowest allowed card value.
+             highest_value_; //< Highest allowed card value.
+    Suit     heart_,         //< The heart suit.
+             diamond_,       //< The diamond suit.
+             club_,          //< The club suit.
+             spade_;         //< The spade suit.
+    Suit   * suits_[4];      //< Array of Suits.
+    std::vector<Card*> pack_; //< Unique array of single cards.
+    //Image rear_image_;     //< The rear Image of the Deck.
 
 };      //< class Deck
 }       //< namespace cards

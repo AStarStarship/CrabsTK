@@ -31,6 +31,9 @@ class CardCombo : public CardStack {
                int joker_pip_1 = 0, int joker_suit_1 = 1,
                int joker_pip_2 = 0, int joker_suit_2 = 2);
 
+    /** Virtual destructor. */
+    virtual ~CardCombo ();
+
     /** Sets the given variables settings. */
     void Set (bool aces_high = false, int joker_pip_1 = 0, int joker_suit_1 = 1,
               int joker_pip_2 = 0, int joker_suit_2 = 2);

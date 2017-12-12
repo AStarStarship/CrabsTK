@@ -62,18 +62,18 @@ KABUKI void* SlotContains (Slot* slot, void* address);
 KABUKI void SlotWipe (Slot* slot);
 
 /** Copies a block from a ring-buffer to the given destination. */
-KABUKI byte* SlotWrite (Slot* slot, void* source, size_t size);
+//KABUKI byte* SlotWrite (Slot* slot, void* source, size_t size);
 
 /** Copies a block from a ring-buffer to the given destination. */
-KABUKI byte* SlotRead (Slot* slot, void* source, size_t size);
+//KABUKI byte* SlotRead (Slot* slot, void* source, size_t size);
 
 /** Gets the args from the b-sequence. */
 KABUKI const Operation* SlotRead (Slot* slot, const uint_t* params,
                                   void** args);
 
 /** Posts a evaluated result to the b-sequence. */
-KABUKI const Operation* SlotWrite (Slot* slot, const uint_t* params,
-                                   void** args);
+//KABUKI const Operation* SlotWrite (Slot* slot, const uint_t* params,
+//                                   void** args);
 
 KABUKI bool IsReadable (Slot* slot);
 
@@ -114,9 +114,9 @@ KABUKI const Operation* SlotResult (Slot* bin, Bin::Error error,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Operation* SlotResult (Slot* bin, Bout::Error error,
-                                   const uint_t* header,
-                                   uint_t offset);
+//KABUKI const Operation* SlotResult (Slot* bin, Bout::Error error,
+//                                   const uint_t* header,
+//                                   uint_t offset);
 
 /** Used to return an erroneous result from a B-Input.
     @param  bin     The source Slot.

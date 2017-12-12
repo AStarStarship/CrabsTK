@@ -21,12 +21,12 @@ using namespace _;
 
 TEST_GROUP (SCRIPT_TESTS) {
     void setup () {
-        PrintLine (VerticalBar ());
+        PrintLine (TextNewLine ());
     }
 
     void teardown () {
         std::cout << "\n| Test completed.\n";
-        PrintLine ("+", '-');
+        PrintLine ();
     }
 };
 
@@ -138,7 +138,7 @@ template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
     moment->tm_min = minute;
     moment->tm_sec = second;
 
-    if (!PrintDateTimeString (buffer, buffer_size, moment)) {
+    if (!PrintDateTimeText (buffer, buffer_size, moment)) {
         cout << "< Error making timestamp \n";
 
         return 0;
@@ -187,7 +187,7 @@ TEST (SCRIPT_TESTS, ClockTests) {
         PrintBreak ("<", '-');
         cout << "\n| " << i;
         time_t t = 0;
-        result = ParseTimeString (strings[i], t);
+        result = ParseTimeText (strings[i], t);
         CompareTimes (t, 2017, 8, 9, 0, 0, 0);
     }
     enum {
@@ -201,24 +201,24 @@ TEST (SCRIPT_TESTS, ClockTests) {
 
     t = TestTime<8, 9, 17, 4, 20> (timestamp, SIZE);
     PrintTime (t);
-    result = ParseTimeString (timestamp, t_found);
+    result = ParseTimeText (timestamp, t_found);
     CompareTimes (t, t_found);
 
     t = TestTime<2020, 4, 20, 4, 20> (timestamp, SIZE);
     PrintTime (t);
-    result = ParseTimeString (timestamp, t_found);
+    result = ParseTimeText (timestamp, t_found);
     CompareTimes (t, t_found);
 
     t = TestTime<1947, 12, 7, 23, 5, 7> (timestamp, SIZE);
     PrintTime (t);
-    result = ParseTimeString (timestamp, t_found);
+    result = ParseTimeText (timestamp, t_found);
     CompareTimes (t, t_found);
 
     PrintBreak ("<", '-');
     PrintBreak ("<\n< Testing invalid input...\n<", '-');
-    ParseTimeString ("cat", t);
+    ParseTimeText ("cat", t);
     PrintBreak ("<", '-');
-    ParseTimeString ("2017-30-40", t);
+    ParseTimeText ("2017-30-40", t);
     PrintBreak ("<", '-');
 
     cout << "<\n< Done testing date parsing utils! :-)\n";
@@ -346,16 +346,16 @@ TEST (SCRIPT_TESTS, TextTests) {
 #if USE_MORE_ROM
     std::cout << "  - Running HexTest...\n";
     for (int i = 0; i < 16; ++i) {
-        int value = ToByte (NibbleToLowerCaseHex (i));
+        int value = ToByte (MemoryNibbleToLowerCaseHex (i));
         CHECK_EQUAL (i, value)
-            value = ToByte (NibbleToUpperCaseHex (i));
+            value = ToByte (MemoryNibbleToUpperCaseHex (i));
         CHECK_EQUAL (i, value)
     }
 
     for (int i = 0; i < 256; ++i) {
-        int value = ToByte (ToLowerCaseHex (i));
+        int value = ToByte (MemoryByteToLowerCaseHex (i));
         CHECK_EQUAL (i, value)
-            value = ToByte (ToUpperCaseHex (i));
+            value = ToByte (MemoryByteToUpperCaseHex (i));
         CHECK_EQUAL (i, value)
     }
 
@@ -368,11 +368,11 @@ TEST (SCRIPT_TESTS, TextTests) {
         "Texting@",
     };
 
-    CHECK (!StringEquals (strings[0], strings[1]))
-        CHECK (!StringEquals (strings[0], strings[3]))
-        CHECK (StringEquals (strings[0], strings[0]))
-        CHECK (!StringEquals (strings[2], strings[3], '@'))
-        CHECK (StringEquals (strings[2], strings[2], '@'))
+    CHECK (!StrandEquals (strings[0], strings[1]))
+        CHECK (!StrandEquals (strings[0], strings[3]))
+        CHECK (StrandEquals (strings[0], strings[0]))
+        CHECK (!StrandEquals (strings[2], strings[3], '@'))
+        CHECK (StrandEquals (strings[2], strings[2], '@'))
 
         // @todo Add Token module and TokenEquals here.
 #endif  //< USE_MORE_ROM
@@ -804,7 +804,7 @@ TEST (SCRIPT_TESTS, OperationTests) {
     ExpressionRingBell (expr);
     ExpressionAckBack (expr);
     result = BoutWrite (bout,
-                        Params<4, ADR, UI1, STR, Parent::kStringBufferSize, 
+                        Params<4, ADR, UI1, STR, Parent::kTextBufferSize, 
                                 ADR> (),
                         Args (args, Address <'A', 'A', 'A'> (), 
                               &io_number_, Const ("Test"), 

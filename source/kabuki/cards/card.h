@@ -45,6 +45,9 @@ class KABUKI Card {
         using pointers.
     */
     Card (int pip = 0, Suit* suit = nullptr, int denomination = 0);
+
+    /** Copy constructor deep-copies the state of the other object. */
+    Card (const Card& other);
     
     /** Virtual destructor just in case we want to make a sub-class later. */
     virtual ~Card () {}
@@ -55,11 +58,11 @@ class KABUKI Card {
     /** Compares this Card to the other Card.
         @return Returns 0 if they are identical.
         @return Returns 1 if this Card is greater than the other Card. */
-    virtual int Compare (const Card* other);
+    virtual int Compare (Card* other);
                                           
     /** Compares this Card to the other Card and returns true if the two are
         identical. */     
-    bool Equals (const Card* other);
+    bool Equals (Card* other);
 
     /** Returns the pip value of this Card 0-13.
         The pip value is a number between 0-13 that represents which card it is: 
@@ -91,6 +94,9 @@ class KABUKI Card {
     
     /** Returns a string representation of this Object. */
     void Print ();
+
+    /** Overloaded binary operator=. */
+    Card& operator= (const Card& other);
 
     private:
 

@@ -22,6 +22,83 @@ using namespace std;
 
 namespace _ {
 
+int MemoryAlignToPowerOf2 (int value) {
+    if (value < 0) {
+        return 4;
+    }
+    // @cite https://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2
+    uint v = (uint)value;
+    --v;
+    v |= v >> 1;
+    v |= v >> 2;
+    v |= v >> 4;
+    v |= v >> 8;
+    v |= v >> 16;
+    ++v;
+    return (int)value;
+}
+
+byte MemoryNibbleToLowerCaseHex (byte b) {
+    if (b > 15) return 'f';
+    if (b > 9)
+        return b + ('a' - 10);
+    return b + '0';
+}
+
+byte MemoryNibbleToUpperCaseHex (byte b) {
+    if (b > 15) return 'F';
+    if (b > 9) return b + ('A' - 10);
+    return b + '0';
+}
+
+uint16_t MemoryByteToLowerCaseHex (byte b) {
+    uint16_t value = MemoryNibbleToLowerCaseHex (b & 0xf);
+    value = value << 8;
+    value |= MemoryNibbleToLowerCaseHex (b >> 4);
+    return value;
+}
+
+uint16_t MemoryByteToUpperCaseHex (byte b) {
+    uint16_t value = MemoryNibbleToUpperCaseHex (b & 0xf);
+    value = value << 8;
+    value |= MemoryNibbleToUpperCaseHex (b >> 4);
+    return value;
+}
+
+int MemoryHexToByte (byte c) {
+    //printf ("toByte (byte c): %c ", c);
+    if (c < '0') return -1;
+    if (c >= 'a') {
+        if (c > 'f') return -1;
+        //printf ("output!: %i \n", c - ('a' - 10));
+        return c - ('a' - 10);
+    }
+    if (c >= 'A') {
+        if (c > 'F') return -1;
+        return c - ('A' - 10);
+    }
+    if (c > '9') return -1;
+    //printf ("output: %i \n", c - ('a' - 10));
+    return c - '0';
+}
+
+int MemoryHexToByte (uint16_t h) {
+    // Note: This works but the upper and lower are switched... pay no
+    // attention to the man behind the curtain #HandWave
+    //printf ("toByte (uint16_t c): %c%c\n", (byte) (h << 8), (byte)h);
+    int lowerValue = MemoryHexToByte (static_cast<byte> (h >> 8));
+    //printf (" lowerValue: %i \n", lowerValue);
+    if (lowerValue < 0) return -1;
+
+    int upperValue = MemoryHexToByte (static_cast<byte> (h));
+    if (upperValue < 0) return -1;
+    //printf (" upperValue: %i \nlowerValue | (upperValue << 4): %i\n",
+    //    upperValue, lowerValue | (upperValue << 4));
+
+    //PrintLine ();
+    return lowerValue | (upperValue << 4);
+}
+
 void MemoryClear (void* address, size_t size) {
     //memset (address, '0', size);
     byte* ptr = reinterpret_cast<byte*> (address);
@@ -49,47 +126,87 @@ void MemoryClear (void* address, size_t size) {
     *ptr = value;*/
 }
 
-size_t MemoryCopy (void* destination, size_t size, const void* source) {
-    if (destination == nullptr)
+byte* MemoryCopy (void* target, void* target_end, const void* memory, size_t size) {
+    // @todo Optimize to write in words.
+    if (target == nullptr) {
         return 0;
-    if (source == nullptr)
-        return 0;
-    //memcpy (destination, size, source);  //< This is all we're doing.
-    byte      * write = reinterpret_cast<byte*> (destination);
-    const byte* read = reinterpret_cast<const byte*> (source);
-    for (size_t count = size; count != 0; --count)
-        *write++ = *read++;
-    return size;
-}
-
-#if USE_MORE_ROM
-void PrintMemory (const void* address, const void* end) {
-    printf ("\n|%i", 0);
-    // Print columns
-    for (int i = 8; i <= 66; i += 8)
-        printf ("%8i", i);
-    cout << '\n' << '|';
-    for (int i = 0; i < 65; ++i)
-        cout << '_';
-
-    const char* chars = reinterpret_cast<const char*> (address);
-    char temp;
-    while (chars < end) {
-        cout << '\n' << '|';
-        for (int i = 0; i < 64; ++i) {
-            temp = *chars;
-            if (chars >= end)
-                temp = 'x';
-            putchar (temp);
-            ++chars;
-        }
-        printf ("| 0x%p", chars - 64);
     }
-    cout << '\n' << '|';
-    for (int i = 0; i < 64; ++i)
-        cout << '_';
-    printf ("| 0x%p\n", chars + Diff (address, end));
+    if (target_end == nullptr) {
+        return 0;
+    }
+    if (memory == nullptr) {
+        return 0;
+    }
+    byte* write = reinterpret_cast<byte*> (target),
+        * write_end = reinterpret_cast<byte*> (target_end);
+    if ((write_end - write) < size) {
+        return nullptr;
+    }
+    const byte* read = reinterpret_cast<const byte*> (memory);
+    for (; size != 0; --size)
+        *write++ = *read++;
+    return write;
 }
-#endif  //< USE_MORE_ROM
+
+byte* MemoryCopy (void* target, void* target_end, const void* memory,
+                   const void* memory_end) {
+    // @todo Optimize to write in words.
+    if (target == nullptr) {
+        return 0;
+    }
+    if (target_end == nullptr) {
+        return 0;
+    }
+    if (memory == nullptr) {
+        return 0;
+    }
+    if (memory_end == nullptr) {
+        return 0;
+    }
+    byte      * write     = reinterpret_cast<     byte*> (target    ),
+              * write_end = reinterpret_cast<      byte*> (target_end);
+    const byte* read      = reinterpret_cast<const byte*> (memory    ),
+              * read_end  = reinterpret_cast<const byte*> (memory_end);
+    size_t target_size = write_end - write,
+           memory_size = read_end - read;
+    if (target_size < memory_size) { // Buffer overflow!
+        return nullptr;
+    }
+    for (; memory_size != 0; --memory_size) {
+        *write++ = *read++;
+    }
+    return write;
+}
+
+byte* MemoryCopy (void* target, void* target_end, const void* memory,
+                  const void* memory_end, size_t size) {
+    // @todo Optimize to write in words.
+    if (target == nullptr) {
+        return 0;
+    }
+    if (target_end == nullptr) {
+        return 0;
+    }
+    if (memory == nullptr) {
+        return 0;
+    }
+    if (memory_end == nullptr) {
+        return 0;
+    }
+    byte* write = reinterpret_cast<byte*> (target),
+        *write_end = reinterpret_cast<byte*> (target_end);
+    if ((write_end - write) < size) {
+        return nullptr;
+    }
+    const byte* read = reinterpret_cast<const byte*> (memory),
+        *read_end = reinterpret_cast<const byte*> (memory_end);
+    if ((read_end - read) < size) {
+        return nullptr;
+    }
+    for (; size != 0; --size) {
+        *write++ = *read++;
+    }
+    return write;
+}
 
 }       //< namespace _

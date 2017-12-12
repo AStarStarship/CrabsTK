@@ -41,6 +41,9 @@ class Player {
     /** Gets the user attached to this Player. */
     id::User* GetUser ();
 
+    /** Gets the user's handle. */
+    const char* GetHandle ();
+
     /** Gets is_turn_. */
     bool IsTurn ();
 
@@ -60,22 +63,6 @@ class Player {
         @return Returns nil upon success and an error string upon
                 failure. */
     virtual const char* SetState (int state);
-
-    /** Gets the num_points. */
-    int GetNumPoints ();
-
-    /** Sets the num_points.
-        @return Returns false if num_points is < 0. */
-    bool SetNumPoints (int num_points);
-    
-    /** Adds a specified num_points to the players point total.
-        @return Returns 0 upon success, and -1 if num_points is less than 1. */
-    int AddPoints (int num_points);
-                  
-    /** Removes the specified num_points from the players point total.
-        @return Returns false if num_pointers is less than 0 or if the player 
-                doesn't have enough points to take. */
-    bool RemovePoints (int num_points);
 
     /** Returns the number of wins. */
     int GetNumWins ();
@@ -132,13 +119,18 @@ class Player {
     /** Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr) = 0;
 
+    /** Handles Text input.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* HandleText (const char* text,
+                                    const char* text_end) = 0;
     protected:
 
     id::User * user_;       //< User attached to this Player.
     bool       is_turn_,    //< Flags if it's this player's turn.
                is_dealer_;  //< Flags if this player is the dealer or not.
     int        state_,      //< The state of the player.
-               num_points_, //< Number of points.
                num_wins_;   //< Total number of wins.
     Hand       hand_;       //< Player's Hand.
 };

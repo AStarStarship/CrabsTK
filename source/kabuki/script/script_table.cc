@@ -45,7 +45,7 @@ byte TableAdd (Table* table, const char* key) {
     if (table == nullptr) return 0;
     if (key == nullptr) return 0;
 
-    //PrintStringLine (key);
+    //PrintLine (key);
 
     byte num_keys = table->num_keys,
         max_keys = table->max_keys,
@@ -70,7 +70,7 @@ byte TableAdd (Table* table, const char* key) {
     // Calculate space left.
     uint16_t value = size - max_keys * kOverheadPerIndex,
         pile_size,
-        key_length = static_cast<uint16_t> (StringLength (key));
+        key_length = static_cast<uint16_t> (StrandLength (key));
 
 #if SCRIPT_DEBUG
     PrintLine ();
@@ -101,7 +101,7 @@ byte TableAdd (Table* table, const char* key) {
         *unsorted_indexes = 0;
         destination = keys - key_length;
 
-        StringCopy (destination, key);
+        TextWrite (destination, key);
 #if SCRIPT_DEBUG
         printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
         TablePrint (table);
@@ -173,7 +173,7 @@ byte TableAdd (Table* table, const char* key) {
 #if SCRIPT_DEBUG
                     printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
 #endif  //< SCRIPT_DEBUG
-                    if (StringEquals (key, keys - key_offsets[index])) {
+                    if (StrandEquals (key, keys - key_offsets[index])) {
 #if SCRIPT_DEBUG
                         printf ("but table already contains key at "
                                 "offset: %u.\n", index);
@@ -191,7 +191,7 @@ byte TableAdd (Table* table, const char* key) {
 
                 // Copy the key
                 value = key_offsets[num_keys - 1] + key_length + 1;
-                StringCopy (keys - value, key);
+                TextWrite (keys - value, key);
                 key_offsets[num_keys] = value;
 
                 // Update the collision table.
@@ -236,7 +236,7 @@ byte TableAdd (Table* table, const char* key) {
 #if SCRIPT_DEBUG
             std::cout << "Checking if " << index << " is a collision...";
 #endif  //< SCRIPT_DEBUG
-            if (!StringEquals (key, keys - key_offsets[index])) {
+            if (!StrandEquals (key, keys - key_offsets[index])) {
                 // It's a new collision!
 #if SCRIPT_DEBUG
                 std::cout << "It's a new collision!\n";
@@ -253,7 +253,7 @@ byte TableAdd (Table* table, const char* key) {
                 value = key_offsets[num_keys - 1] + key_length + 1;
 
                 byte collision_index = unsorted_indexes[mid];
-                StringCopy (keys - value, key);
+                TextWrite (keys - value, key);
 #if SCRIPT_DEBUG
                 printf ("Inserting value: %u into index:%u "
                         "num_keys:%u with other collision_index: %u\n", value,
@@ -311,7 +311,7 @@ byte TableAdd (Table* table, const char* key) {
 #endif  //< SCRIPT_DEBUG
 
     // First copy the char and set the key offset.
-    StringCopy (destination, key);
+    TextWrite (destination, key);
     key_offsets[num_keys] = value;
 
     // Second move up the hashes and insert at the insertion point.
@@ -399,7 +399,7 @@ byte TableFind (const Table* table, const char* key) {
                 key_offsets[0]) - reinterpret_cast<const char*> (table), keys - 
                 key_offsets[0]);
 #endif  //< SCRIPT_DEBUG
-        if (!StringEquals (key, keys - key_offsets[0])) {
+        if (!StrandEquals (key, keys - key_offsets[0])) {
 #if SCRIPT_DEBUG
             printf ("Did not find key %s\n", key);
 #endif  //< SCRIPT_DEBUG
@@ -461,7 +461,7 @@ byte TableFind (const Table* table, const char* key) {
                     printf ("comparing to \"%s\"\n", keys - 
                             key_offsets[index]);
 #endif  //< SCRIPT_DEBUG
-                    if (StringEquals (key, keys - key_offsets[index])) {
+                    if (StrandEquals (key, keys - key_offsets[index])) {
 #if SCRIPT_DEBUG
                         printf ("Table already contains key at offset:"
                                 "%u.\n", index);
@@ -492,7 +492,7 @@ byte TableFind (const Table* table, const char* key) {
                     key_offsets[index]));
 #endif  //< SCRIPT_DEBUG
 
-            if (!StringEquals (key, keys - key_offsets[index])) {
+            if (!StrandEquals (key, keys - key_offsets[index])) {
                 //< It was a collision so the table doesn't contain string.
 #if SCRIPT_DEBUG
                 printf (" but it was a collision and did not find key.\n");

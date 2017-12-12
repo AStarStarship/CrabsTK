@@ -29,6 +29,8 @@ class BlackjackCardCombo : public CardCombo {
     */
     BlackjackCardCombo (const CardStack& cards, bool aces_high);
 
+    virtual ~BlackjackCardCombo ();
+
     /** Function that returns the point value based on the ace value. */
     int GetValue ();
     

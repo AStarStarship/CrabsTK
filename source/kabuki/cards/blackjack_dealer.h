@@ -40,16 +40,16 @@ class BlackjackDealer : public Dealer {
     };
 
     /** Default constructor. */
-    BlackjackDealer (id::User* user, int buy_in = Dealer::kDefaultAnte,
-                     int ante        = Dealer::kDefaultAnte,
-                     int min_bet     = Dealer::kDefaultMinBet,
+    BlackjackDealer (id::User* user, int64_t buy_in = Dealer::kDefaultAnte,
+                     int64_t ante    = Dealer::kDefaultAnte,
+                     int64_t min_bet = Dealer::kDefaultMinBet,
                      int min_players = kDefaultMinPlayers,
                      int max_players = kDefaultMaxPlayer);
 
     virtual ~BlackjackDealer ();
 
     /** Raises the ante by the given amount. */
-    bool RaiseAnte (int value);
+    bool RaiseAnte (int64_t value);
 
     /** Gets the hand score with the given ace value. */
     int GetScore (int ace_value);
@@ -77,6 +77,9 @@ class BlackjackDealer : public Dealer {
     /** Returns true if this hand wins compared to the other one. */
     virtual bool Wins (Hand& hand);
 
+    /** Adds a BlackjackPlayerAi to the . */
+    virtual int AddAiPlayer (id::User* user);
+
     /** Prints the abridged player stats to the console. */
     virtual void PrintStats ();
 
@@ -85,6 +88,13 @@ class BlackjackDealer : public Dealer {
 
     /** Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
+
+    /** Handles Text input.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* HandleText (const char* text,
+                                    const char* text_end);
 
 };      //< class BlackjackDealer
 }       //< namespace cards

@@ -27,7 +27,7 @@ namespace kabuki { namespace id {
     handles and passwords using the type parameter. This makes it very 
     easy to create UserList subclasses for customizing format rules.
     @todo This class needs to use a Script Dictionary. */
-class KABUKI UserList {   
+class KABUKI UserList : public _::Operand {   
     public:
 
     enum {
@@ -47,6 +47,15 @@ class KABUKI UserList {
     /** Destructs list of users. */
     virtual ~UserList ();
 
+    /** Peeks the next uid without incrementing it. */
+    uid_t PeekNextUid ();
+
+    /** Gets the number of users in the list. */
+    int GetCount ();
+
+    /** Gets the number of users in the list. */
+    int GetSize ();
+
     /** Gets the point_cost_ */
     double GetPointCost ();
 
@@ -55,38 +64,43 @@ class KABUKI UserList {
 
     /** Attempts to buy the given points.
     @returns false if the balance_ is too low. */
-    bool BuyCoins (int session, uint64_t num_coins, double point_cost);
+    bool BuyValue (int session, uint64_t num_coins, double point_cost);
 
     /** Increase the balance_ by the given amount. */
-    bool IncreaseBalance (int session, double amount);
+    bool AddBalance (int session, double amount);
 
     /** Gets the authenticator. */
     Authenticator* GetAuthenticator ();
 
-    /** Gets the number of Accounts in the List. */
-    int GetSize ();
-
-    /** Gets the count of the User(s). */
-    int GetCount ();
-
     /** Adds a new User to the list with the given handle and password. */
-    int Register (const char* handle, const char* password = Password::kDefault);
+    int Register (const char* handle, const char* password = Password::kDefault,
+                  double balance = User::kDefaultBalance,
+                  int64_t value  = User::kDefaultValue);
 
     /** Adds a list of User (string) to the list. */
     int Register (UserList& users);
 
+    /** Adds the given user and assumes control over the memory. */
+    int Add (User* user);
+
     /** Finds an entity in the list by the given search char. */
     int Find (const char* string);
 
-    /** Returns the requested user_number.
-        @return Returns nil if the user_number is invalid. */
-    User* GetUser (uid_t user_number);
+    /** Returns the requested user session.
+        @return Returns nil if the session is invalid. */
+    User* GetUser (int session);
+
+    /** Unregisters the given handle from the list.
+        @param handle   The handle of the user to delete.
+        @param password The password of the user to delete.
+        @return Returns the new users_ count or <0 upon failure. */
+    int Unregister (const char* handle, const char* password);
 
     /** Attempts to login to the given session and returns a session key. */
-    virtual int32_t LogIn (const char* handle, const char* password);
+    virtual uid_t LogIn (const char* handle, const char* password);
 
     /** Attempts to login to the given session and returns a session key. */
-    virtual int32_t LogIn (int session, const char* password);
+    virtual uid_t LogIn (int session, const char* password);
 
     /** Attempts to remove the given user_id.
         @return Returns negative upon failure and the user count upon
@@ -95,13 +109,27 @@ class KABUKI UserList {
 
     /** Prints this object to the log. */
     void Print ();
+
+    /** Handles Script Commands.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* HandleText (const char* text,
+                                    const char* text_end);
+    
+    /** An A*B abstract algebra Script Expression.
+        @param index The index of the expression.
+        @param expr  The Expression to read and write from.
+        @return      Returns null upon success, a Set header upon query, and an 
+                     error_t ticket upon Read-Write failure. */
+    virtual const _::Operation* Star (uint index, _::Expression* expr);
     
     private:
     
-    double         point_cost_;    //< Cost per point.
-    Authenticator* authenticator_; //< Handle, & Password Authenticator.
-    Array<User*>   users_;         //< User list.
-    UidServer<>    uids_;          //< Unique Id Server
+    double             point_cost_;    //< Cost per point.
+    Authenticator    * authenticator_; //< Handle, & Password Authenticator.
+    std::vector<User*> users_;         //< User list.
+    UidServer<>        uids_;          //< Unique Session Key server
 };
 
 }       //< namespace id

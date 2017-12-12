@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef SCRIPT_OPERATION_H
-#define SCRIPT_OPERATION_H
+#ifndef HEADER_FOR_SCRIPT_OPERATION
+#define HEADER_FOR_SCRIPT_OPERATION
 
 #include "config.h"
 
@@ -72,7 +72,7 @@ struct KABUKI Expression;
         public:
 
         enum {
-            kStringBufferSize = 16       //< Example char buffer size.
+            kTextBufferSize = 16       //< Example char buffer size.
         };
 
         void foo () {}     //< Classical foo.
@@ -95,7 +95,7 @@ struct KABUKI Expression;
                 }
                 case 64: {
                     static const Operation o_A = { "foo",
-                        Params<2, FLT, STR, kStringBufferSize> (),
+                        Params<2, FLT, STR, kTextBufferSize> (),
                         Params<2, FLT, STR> (),
                         "Description of foo." };
 
@@ -113,7 +113,7 @@ struct KABUKI Expression;
                 }
                 case 65: {
                     static const Operation o_B = { "bar",
-                        Params<2, FLT, STR, kStringBufferSize> (),
+                        Params<2, FLT, STR, kTextBufferSize> (),
                         Params<2, FLT, STR> (),
                         "Description of bar."
                     };
@@ -136,16 +136,23 @@ struct KABUKI Expression;
         private:
 
         float io_number_;                   //< Example variable.
-        byte io_string_[kStringBufferSize]; //< Example char.
+        byte io_string_[kTextBufferSize]; //< Example char.
     };
     @endcode
 */
 
 struct KABUKI Operand {
+
+    /** Handles Script Commands.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* HandleText (const char* text,
+                                    const char* text_end) = 0;
+
     /** An A*B abstract algebra Script Expression.
-        
         @param index The index of the expression.
-        @param io    The Bin for the IO slot.
+        @param expr  The Expression to read and write from.
         @return      Returns null upon success, a Set header upon query, and an 
                      error_t ticket upon Read-Write failure. */
     virtual const Operation* Star (uint index, Expression* expr) = 0;
@@ -153,6 +160,14 @@ struct KABUKI Operand {
 
 /** Returns the name of the given Operand. */
 KABUKI const char* OperandName (Operand* op);
+
+/** Queries the given Operand Operation Header.
+    @param  expr      The expression to write the query to. Set to nil to return
+                      operation.
+    @param  operation The Operation header.
+    @return Returns nil upon success and an error Operation upon failure. */
+KABUKI const Operation* OperandQuery (Expression* expr,
+                                      const Operation* operation);
 
 /** Converts the value to a pointer. */
 inline const uint_t* NumOperations (std::uintptr_t value) {
@@ -165,9 +180,36 @@ inline std::uintptr_t PointerValue (const uint_t* value) {
 }
 
 /** Converts the given value to a pointer. */
-inline const uint_t* FirstOperation (uint_t value) {
+inline const uint_t* OperationCount (uint_t count) {
+    return reinterpret_cast<const uint_t*>(count);
+}
+
+/** Converts the given value to a pointer. */
+inline uint OperationCount (const Operation& operation) {
+    return reinterpret_cast<uint>(operation.params);
+}
+
+/** Converts the given value to a pointer. */
+inline const uint_t* OperationFirst (uint_t value) {
     uintptr_t index = value;
     return reinterpret_cast<const uint_t*>(index);
+}
+
+/** Converts the given value to a pointer. */
+inline uint OperationFirst (const Operation* operaion) {
+    if (!operaion) {
+        return 0;
+    }
+    return reinterpret_cast<uint> (operaion->params);
+}
+
+/** Converts the given value to a pointer. */
+inline uint OperationLast (const Operation* operaion) {
+    if (!operaion) {
+        return 0;
+    }
+    return reinterpret_cast<uint> (operaion->params) +
+           reinterpret_cast<uint> (operaion->result);
 }
 
 /** Gets the number of operations in the given expressions. */
@@ -187,10 +229,17 @@ KABUKI void OperationPrint (const Operation* op);
 KABUKI void OperandPrint (Operand* operand);
 #endif  //< USE_MORE_ROM
 
-/** Evaluated Nil Operation result. */
-KABUKI const Operation* NilResult ();
+/** Sequentially searches through the given Operand for an Operation the
+    name.
+    @param operand The Operand scope.
+    @param name    The name to search for. */
+KABUKI uint OperationFind (Operand* operand, const char* name);
 
-KABUKI const Operation* InvalidOperation ();
+/** Evaluated Nil Operation result. */
+KABUKI const Operation* OperationNil ();
+
+/** Evaluated Invalid Operation result. */
+KABUKI const Operation* OperationInvalid ();
 
 }   //< namespace _
-#endif  //< SCRIPT_OPERATION_H
+#endif  //< HEADER_FOR_SCRIPT_OPERATION

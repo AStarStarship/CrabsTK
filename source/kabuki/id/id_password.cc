@@ -21,13 +21,13 @@ using namespace std;
 
 namespace kabuki { namespace id {
 
-const char Password::kDefault[] = "anything_but_password_or_admin";
+const char Password::kDefault[] = "";
 
 Password::Password (Authenticator* authenticator, const char* string) :
     authenticator_ (authenticator),
     type_ (kValidation) {
     if (!SetKey (string)) {
-        key_ = StringClone ("");
+        key_ = StrandClone ("");
     }
 }
 
@@ -47,7 +47,7 @@ bool Password::SetKey (const char* password) {
         return false;
     }
     delete key_;
-    key_ = StringClone (password);
+    key_ = StrandClone (password);
     return true;
 }
 
@@ -56,11 +56,11 @@ bool Password::IsValid (const char* string) {
 }
 
 bool Password::Equals (const char* key) {
-    return StringEquals (key_, key);
+    return StrandEquals (key_, key);
 }
 
 bool Password::Equals (const Password& other) {
-    return StringEquals (key_, other.key_);
+    return StrandEquals (key_, other.key_);
 }
 
 void Password::Print () {

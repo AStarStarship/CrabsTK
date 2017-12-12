@@ -96,7 +96,7 @@ void BlackjackPlayer::Hit () {
     is_turn_ = false;
     state_ = kStateWaitingForTurn;
 #if DEBUG_SCRIPT
-    cout << "\n| Player " << GetUser ()->GetHandle ().GetKey () << " hits.";
+    cout << "\n| Player " << GetHandleKey () << " hits.";
 #endif //< DEBUG_SCRIPT
 }
 
@@ -104,7 +104,7 @@ void BlackjackPlayer::Hold () {
     is_turn_ = false;
     state_ = kStateHolding;
 #if DEBUG_SCRIPT
-    cout << "\n| Player " << GetUser ()->GetHandle ().GetKey () << " holds.";
+    cout << "\n| Player " << GetHandleKey () << " holds.";
 #endif //< DEBUG_SCRIPT
 
 }
@@ -240,7 +240,7 @@ void BlackjackPlayer::BeginRound () {
 }
 
 void BlackjackPlayer::PlayRound () {
-    cout << "\n| " << GetUser ()->GetHandle ().GetKey () << "'s turn.";
+    cout << "\n| " << GetHandle () << "'s turn.";
     if (IsBust () || Is21 ()) {
         // If the player's hand is a bust, than the dealer is not allowed to
         // deal that player another card.
@@ -284,25 +284,25 @@ void BlackjackPlayer::PrintStats () {
 }
 
 void BlackjackPlayer::Print () {
-    PrintLine ("|", '_');
-    cout << "Player: " << GetUser ()->GetHandle ().GetKey () <<
-        "\n| Num Points: " << num_points_ << " Num Wins: " << num_wins_;
+    PrintLine ('_');
+    User* user = GetUser ();
+    cout << "\n| Player   : "        << user->GetHandleKey ()
+         << "\n| Num Chips: " << user->GetValue ()
+         << " Wins: " << num_wins_;
 
     hand_.GetVisibleCards ().Print ();
-    PrintLine ("|", '_');
+    PrintLine ('_');
 }
 
 const Operation* BlackjackPlayer::Star (uint index, _::Expression* expr) {
     static const Operation This = { "BlackjackPlayer",
-        NumOperations (0), FirstOperation ('A'),
+        NumOperations (0), OperationFirst ('A'),
         "Player in a Blackjack game.", 0 };
     void* args[2];
     char handle[Handle::kDefaultMaxLength],
         tweet[141];
     switch (index) {
-        case '?': { if (!expr) return &This;
-            return ExpressionPrint (expr, &This);
-        }
+        case '?': return ExpressionQuery (expr, &This);
         case 'A': {
             static const Operation OpA = { "Hit",
                 Params<0> (), Params<0> (),
@@ -326,10 +326,10 @@ const Operation* BlackjackPlayer::Star (uint index, _::Expression* expr) {
         }
         case 'C': {
             static const Operation OpA = { "Tweet",
-                Params<2, STX, Handle::kDefaultMaxLength, STX, 141> (), Params<0> (),
+                Params<2, STR, Handle::kDefaultMaxLength, STR, 141> (), Params<0> (),
                 "Sends a message of 140 chars or less to this player.", 0 };
             if (!expr) return &OpA;
-            if (ExprArgs (expr, Params<2, STX, Handle::kDefaultMaxLength, STX,
+            if (ExprArgs (expr, Params<2, STR, Handle::kDefaultMaxLength, STR,
                                        141> (),
                           Args (args, handle, tweet))) return expr->result;
             cout << "\n| Message from @" << handle << "\n| " << tweet;
@@ -337,6 +337,11 @@ const Operation* BlackjackPlayer::Star (uint index, _::Expression* expr) {
         }
     }
     return Result (expr, Bin::kErrorInvalidOperation);
+}
+
+const char* BlackjackPlayer::HandleText (const char* text,
+                                         const char* text_end) {
+    return nullptr;
 }
 
 }   //< namespace cards

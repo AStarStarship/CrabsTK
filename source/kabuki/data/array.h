@@ -34,29 +34,29 @@ class Array {
     };
 
     /** Initializes an array of n elements of the given type.
-    @param max_elements The max number of elements in the array buffer. */
+        @param max_elements The max number of elements in the array buffer. */
     Array (int max_elements = kMinSize) :
-        size_ (max_elements < 1 ? 1 :max_elements),
-        count_ (0),
+        size_     (max_elements < 1 ? 1 :max_elements),
+        count_    (0),
         elements_ (new T[size_]) {
     }
 
     /** Initializes an array of n elements of the given type and clears .
-    @param max_elements The max number of elements in the array buffer.
-    @param init_value The init value of the elements. */
+        @param max_elements The max number of elements in the array buffer.
+        @param init_value The init value of the elements. */
     Array (int max_elements, int init_value) :
-        size_ (max_elements < 1?1:max_elements),
-        count_ (0),
-        elements_ (new T[max_elements]) {
-        memset (elements_, init_value, max_elements);
+        size_     (max_elements < 1 ? 1 : max_elements),
+        count_    (0),
+        elements_ (new T[size_]) {
+        //memset (elements_, init_value, max_elements);
     }
 
     /** Initializes an array of n elements of the given type.
-    @param max_elements The max number of elements in the array buffer. */
+        @param max_elements The max number of elements in the array buffer. */
     Array (const Array& other) :
-        size_ (other.size_),
-        count_ (other.count_),
-        elements_ (new T[count_]) {
+        size_     (other.size_),
+        count_    (other.count_),
+        elements_ (new T[size_]) {
         for (int i = count_ - 1; i >= 0; --i) {
             elements_[i] = other.elements_[i];
         }

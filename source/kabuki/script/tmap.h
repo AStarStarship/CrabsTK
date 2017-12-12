@@ -23,7 +23,7 @@
 #include "memory.h"
 #include "types.h"
 
-#if USING_MAP
+#if USING_SCRIPT_MAP
 
 namespace _ {
 
@@ -225,7 +225,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
     if (id == nullptr)
         return 0;
 
-    PrintStringLine (id);
+    PrintLine (id);
 
     TIndex num_items = map->num_items,
         stack_height = map->stack->stack_height,
@@ -279,7 +279,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
         *unsorted_indexes = 0;
         destination = keys - key_length;
 
-        StringCopy (destination, id);
+        TextWrite (destination, id);
         printf ("Inserted key %s at GetAddress 0x%p\n", id, destination);
         MapPrint (map);
         return 0;
@@ -350,7 +350,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
 
                 // Copy the key
                 value = key_offsets[num_items - 1] + key_length + 1;
-                StringCopy (keys - value, id);
+                TextWrite (keys - value, id);
                 key_offsets[num_items] = value;
 
                 // Update the collision table.
@@ -403,7 +403,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
                 byte collision_index = unsorted_indexes[mid];
                 printf ("\n\ncollision_index: %u", collision_index);
 
-                StringCopy (keys - value, id);
+                TextWrite (keys - value, id);
                 printf ("Inserting value: %u into index:%u "
                         "num_items:%u with other collision_index: %u\n", value,
                         index, num_items, collision_index);
@@ -455,7 +455,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
             Diff (map, destination), hashes[mid]);
 
     // First copy the char and set the key offset.
-    StringCopy (destination, id);
+    TextWrite (destination, id);
     key_offsets[num_items] = value;
 
     // Second move up the hashes and insert at the insertion point.
@@ -712,7 +712,7 @@ void MapPrint (const Map<TIndex, TKey, TSize>* collection) {
 
         std::cout << '\n';
     }
-    PrintLine ("|", '_');
+    PrintLine ('_');
 
     PrintMemory (reinterpret_cast<const byte*> (collection) + 
                  sizeof (Map<TIndex, TKey, TSize>), collection->size_bytes);
@@ -790,5 +790,5 @@ void MapPrint (Map<TIndex, TKey, TSize>* collection) {
 //}
 
 }       //< namespace _
-#endif  //< USING_MAP
+#endif  //< USING_SCRIPT_MAP
 #endif  //< SCRIPT_MAP_H

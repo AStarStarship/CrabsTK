@@ -25,7 +25,7 @@ namespace kabuki { namespace cards {
 /** A playing card game client that can play many types of games in the console.
     The server does most of the game logic and feeds the client data on a 
     need to know basis. */
-class CardGame : public id::AuthenticatorDefault, public _::Operation {
+class CardGame : public _::Operation {
     public:
 
     typedef enum States {
@@ -33,6 +33,10 @@ class CardGame : public id::AuthenticatorDefault, public _::Operation {
         kStateAwaitingConnection = 1,
         kStateConnected          = 2
     } State;
+
+    enum {
+        kDefaultMinPlayers = 1,  //< Default min players.
+    };
     
     enum {
         kMaxPlayers          = 64 * 1024, //< Man number of players.
@@ -71,9 +75,6 @@ class CardGame : public id::AuthenticatorDefault, public _::Operation {
     /** Restart the game to a new state with a preset number of players_. */
     virtual void RestartGame () = 0;
 
-    /** Game loop for card game. */
-    virtual bool PlayGameInConsole () = 0;
-
     /** Processes the beginning of round logic. */
     virtual void BeginRound () = 0;
 
@@ -97,23 +98,29 @@ class CardGame : public id::AuthenticatorDefault, public _::Operation {
     virtual int Leave (id::User* user);
 
     /** Gets a reference to the observers_. */
-    Array<id::User*>& GetObservers ();
+    std::vector<id::User*>& GetObservers ();
 
     /** Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
+    /** Handles Text input.
+        @param text     Beginning of the Text buffer. 
+        @param text_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* HandleText (const char* text,
+                                    const char* text_end) = 0;
     protected:
 
-    const char     * game_name_;  //< Game name.
-    int32_t          state_,      //< Game state.
-                     min_players_;//< Min players.
-    id::UserList   & users_;      //< Server UserList.
-    Array<id::User*> observers_;  //< Array of Player.
+    const char           * game_name_;  //< Game name.
+    int32_t                state_,      //< Game state.
+                           min_players_;//< Min players.
+    id::UserList         & users_;      //< Server UserList.
+    std::vector<id::User*> observers_;  //< Array of Player.
 
 };      //< class CardGame
 
 /** Returns the default play again or quit string. */
-KABUKI const char* DefaultPlayAgainString ();
+KABUKI const char* DefaultPlayAgainText ();
 
 }       //< namespace cards
 }       //< namespace kabuki

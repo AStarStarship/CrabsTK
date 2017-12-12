@@ -19,11 +19,11 @@
 namespace _ {
 
 #if USE_MORE_ROM
-const char* AsciiString (AsciiCode ascii_char) {
-    static const char* kStrings[] = {
+const char* AsciiText (AsciiCode ascii_char) {
+    static const char* kTexts[] = {
         "NUL",
         "SOH",
-        "STX",
+        "STR",
         "ETX",
         "EOT",
         "ENQ",
@@ -54,16 +54,16 @@ const char* AsciiString (AsciiCode ascii_char) {
         "RS",
         "US"
     };
-    static const char kInvalidString[] = "Invalid\0";
+    static const char kInvalidText[] = "Invalid\0";
     // Compiler says this will always be false but I thought it enum as signed int?
     //if (ascii_char < 0)
-    //    return kInvalidString;
+    //    return kInvalidText;
     if (ascii_char > 31) {
         if (ascii_char != 127)
-            return kInvalidString;
+            return kInvalidText;
         return "DEL";
     }
-    return kStrings[ascii_char];
+    return kTexts[ascii_char];
 }
 #endif  //< USE_MORE_ROM
 

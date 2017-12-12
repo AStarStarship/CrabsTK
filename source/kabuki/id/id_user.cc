@@ -21,15 +21,13 @@ using namespace std;
 
 namespace kabuki { namespace id {
 
-const char User::kDefaultDislpayName[] = "Steve\0";
-
 const double User::kDefaultBalance = 0.0;
 
 User::User (Authenticator* authenticator, uid_t uid, const char* handle,
-            const char* password, const char* status, double balance,
-            uint64_t value) :
+            const char* password, double balance,
+            int64_t value) :
             handle_        (authenticator, handle),
-            status_        (StringClone ("")),
+            status_        (StrandClone ("")),
             password_      (authenticator, password),
             authenticator_ (authenticator),
             uid_           (uid),
@@ -38,9 +36,36 @@ User::User (Authenticator* authenticator, uid_t uid, const char* handle,
             balance_       (balance),
             value_         (value),
             slot_          (nullptr) {
-    if (SetStatus (status)) {
-        SetStatus ("");
-    }
+}
+
+User::User (const User& other) :
+           handle_        (other.handle_),
+           status_        (other.status_),
+           password_      (other.password_),
+           authenticator_ (other.authenticator_),
+           session_       (other.session_),
+           uid_           (other.uid_),
+           session_key_   (other.session_key_),
+           response_      (other.response_),
+           balance_       (other.balance_),
+           value_         (other.value_),
+           slot_          (other.slot_) {
+
+}
+
+User& User::operator= (const User& other) {
+    handle_        = other.handle_;
+    status_        = other.status_;
+    password_      = other.password_;
+    authenticator_ = other.authenticator_;
+    session_       = other.session_;
+    uid_           = other.uid_;
+    session_key_   = other.session_key_;
+    response_      = other.response_;
+    balance_       = other.balance_;
+    value_         = other.value_;
+    slot_          = other.slot_;
+    return *this;
 }
 
 User::~User () {
@@ -55,11 +80,13 @@ const char* User::SetStatus (const char* name) {
     if (name == nullptr) {
         return "name can't be nil.";
     }
-    status_ = StringClone (name);
+    status_ = StrandClone (name);
     return nullptr;
 }
 
 Handle& User::GetHandle () { return handle_; }
+
+const char* User::GetHandleKey () { return handle_.GetKey (); }
 
 Password& User::GetPassword () { return password_; }
 
@@ -100,7 +127,7 @@ const char* User::SetBalance (double balance) {
     return nullptr;
 }
 
-bool User::BuyCoins (uint64_t num_coins, double point_cost) {
+bool User::BuyValue (int64_t num_coins, double point_cost) {
     // Right now we're not checking how much money the player has.
     double cost = point_cost * (double)num_coins;
 
@@ -110,23 +137,28 @@ bool User::BuyCoins (uint64_t num_coins, double point_cost) {
     }
     value_ += num_coins;
     balance_ -= cost;
-}
-
-bool User::IncreaseBalance (double amount) {
-    if (amount < 0.0) {
-        return false;
-    }
-    balance_ += amount;
     return true;
 }
 
-uint64_t User::GetValue () {
+bool User::AddBalance (double amount) {
+    double balance = balance_;
+    balance_ = balance + amount;
+    return balance;
+}
+
+int64_t User::GetValue () {
     return value_;
 }
 
-const char* User::SetValue (uint64_t value) {
+const char* User::SetValue (int64_t value) {
     value_ = value;
     return nullptr;
+}
+
+int64_t User::AddValue (int64_t amount) {
+    int64_t value = value_;
+    value_ = value + amount;
+    return value;
 }
 
 bool User::Equals (User* user) {
@@ -160,6 +192,68 @@ bool User::IsAuthentic (int32_t session, uid_t session_key) {
 void User::Print () {
     cout << "\n| User: Handle:\"" << handle_.GetKey () << "\"  Password: \""
          << password_.GetKey () << '\"';
+}
+
+const char* User::HandleText (const char* text,
+                              const char* text_end) {
+    enum {
+        kMessageLength = 141,
+    };
+    const char* next_token;
+    double      balance;
+    int64_t     value;
+    char        input[kMessageLength];
+
+    text = TextSkipSpaces (text, text_end);
+    if (!text) {
+        return nullptr;
+    }
+    if (TextTokenCompare (text, text_end, "AddBalance")) {
+        next_token = TextRead (text, text_end, balance);
+        if (!next_token) {
+            return nullptr;
+        }
+        balance_ += balance;
+    } else if (TextTokenCompare (text, text_end, "AddValue")) {
+        next_token = TextRead (text, text_end, value);
+        if (!next_token) {
+            return nullptr;
+        }
+        value_ += value;
+    } else if (TextTokenCompare (text, text_end, "SetStatus")) {
+        next_token = TextRead (text, text_end, input, input + kMessageLength);
+        if (!next_token) {
+            return nullptr;
+        }
+        SetStatus (input);
+    } else if (TextTokenCompare (text, text_end, "SetHandle")) {
+        next_token = TextRead (text, text_end, input, input + kMessageLength);
+        if (!next_token) {
+            return nullptr;
+        }
+        if (!authenticator_->HandleIsInvalid (input)) {
+            return "\n| Error: Password in invalid format!";
+        }
+        handle_.SetKey (input);
+    } else if (TextTokenCompare (text, text_end, "SetPassword")) {
+        next_token = TextRead (text, text_end, input, input + 141);
+        if (!next_token) {
+            return nullptr;
+        }
+        if (authenticator_->PasswordIsInvalid (input)) {
+            return "\n| Error: Password in invalid format!";
+        }
+        password_.SetKey (input);
+    } else if (TextTokenCompare (text, text_end, "Print")) {
+        Print ();
+        return text;
+    }
+    
+    next_token = TextRead (text, text_end, input, input + kMessageLength);
+    if (!next_token) {
+        return nullptr;
+    }
+    return next_token;
 }
 
 }       //< id

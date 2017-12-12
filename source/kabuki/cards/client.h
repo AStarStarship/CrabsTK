@@ -44,7 +44,7 @@ class Client : public id::AuthenticatorDefault, public _::Operation {
     /** Default constructor. */
     Client ();
 
-    /** Constructor. */
+    /** Virtual destructor. */
     virtual ~Client ();
 
     void DeleteRemotePlayers ();
@@ -59,7 +59,7 @@ class Client : public id::AuthenticatorDefault, public _::Operation {
     void Client::PrintPlayers ();
 
     /** Prints the round stats string. */
-    void PrintRoundStatsString ();
+    void PrintRoundStatsText ();
 
     /** Prints this game out to the console. */
     virtual void Print ();
@@ -74,7 +74,7 @@ class Client : public id::AuthenticatorDefault, public _::Operation {
     uint32_t             state_,        //< Client app state.
                          round_number_; //< Current round number.
     id::User             user_;         //< User.
-    Array<RemotePlayer*> players_;      //< Array of RemotePlayer(s).
+    std::vector<RemotePlayer*> players_;      //< Array of RemotePlayer(s).
 
 };  //< class Client
 
