@@ -1,4 +1,4 @@
-/** kabuki::cards
+/** Kabuki Toolkit
     @file       ~/source/kabuki/cards/player.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -46,7 +46,7 @@ class BlackjackPlayerAi : public BlackjackPlayer {
         @param text     Beginning of the Text buffer. 
         @param text_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    const char* HandleText (const char* text,
+    const char* Do (const char* text,
                             const char* text_end) override;
 
 };

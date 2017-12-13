@@ -1,4 +1,4 @@
-/** kabuki::cards
+/** Kabuki Toolkit
     @file       ~/source/kabuki/cards/cards_blackjack_player.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -153,7 +153,7 @@ void BlackjackPlayerAi::PlayRound () {
     }
 }
 
-const char* BlackjackPlayerAi::HandleText (const char* text,
+const char* BlackjackPlayerAi::Do (const char* text,
                                            const char* text_end) {
     return nullptr;
 }

@@ -20,14 +20,11 @@
 #ifndef SCRIPT_CONFIG_H
 #define SCRIPT_CONFIG_H
 
-#define SCRIPT_MAJOR_VERSION 0
-#define SCRIPT_MINOR_VERSION 9
-
 // @todo Check all values of assembly_settings.inl, store them as an enum, 
 // then #undef them.
 
 #define BARE_METAL       1  //< Bare metal (i.e. No OS) OS type macro.
-#define MBED_BARE_METAL  2  //< mbed bare-metal OS type macro.
+#define BARE_METAL_MBED  2  //< mbed bare-metal OS type macro.
 #define MBED_OS          3  //< Arduino bare-metal OS type macro.
 #define ARDUINO          4  //< mbed OS type macro.
 #define MINGW32          5  //< Win32 OS type macro.
@@ -36,17 +33,19 @@
 #define LINUX            8  //< Linux OS type macro.
 #define OSX              9  //< OSX OS type macro.
 #define IOS              10 //< iOS OS type macro.
-#define X86              11 //< x86 processor type macro.
-#define X64              12 //< x64 processor type macro.
-#define ARM8             13 //< ARM8 processor type macro.
-#define ARM16            14 //< ARM16 processor type macro.
-#define ARM32            15 //< ARM32 processor type macro.
-#define ARM64            16 //< ARM64 processor type macro.
+
+
+#define X86              11 //< x86 processor family macro.
+#define X64              12 //< x64 processor family macro.
+#define ARM8             13 //< ARM8 processor family macro.
+#define ARM16            14 //< ARM16 processor family macro.
+#define ARM32            15 //< ARM32 processor family macro.
+#define ARM64            16 //< ARM64 processor family macro.
 
 // Stupid dumb-face Big-Endian nonsense
 
-#define ENDIAN_LITTLE   1
-#define ENDIAN_BIG      2   //< Don't ask me what they where thinking.
+#define LITTLE   1
+#define BIG      2   //< Don't ask me what they where thinking.
 
 // Executable assembly type macro.
 #define EXECECUTABLE                1
@@ -76,9 +75,9 @@ typedef int32_t char_t;
 #error SCRIPT_CHAR_WIDTH must be 8, 16, or 32!
 #endif
 
-#if MAX_ERRORS < 0
+#if SCRIPT_MAX_ERRORS < 0
 #error MAX_ERRORS must be greater than 0
-#elif MAX_ERRORS <= 255
+#elif SCRIPT_MAX_ERRORS <= 255
 typedef uint8_t ticket_t;
 #elif MAX_ERRORS <= 65535
 typedef uint16_t ticket_t;
@@ -86,11 +85,11 @@ typedef uint16_t ticket_t;
 typedef uint32_t ticket_t;
 #endif
 
-#if MAX_NUM_PARAMS < 0
+#if SCRIPT_MAX_PARAMS < 0
 #error MAX_ERRORS must be greater than 0
 #endif
 
-#if MAX_STRING_LENGTH < 0
+#if SCRIPT_TEXT_SIZE_MAX < 0
 #error MAX_ERRORS must be greater than 0
 #endif
 
@@ -99,23 +98,41 @@ typedef uint32_t ticket_t;
 #endif
 
 namespace _ {
+
+                        // Stupid dumb-face Big-Endian nonsense
+
+#define LITTLE   1
+#define BIG      2   //< Don't ask me what they where thinking.
+
+                        // Executable assembly type macro.
+#define EXECECUTABLE                1
+                        // Statically linked library assembly type macro.
+#define STATICALlY_LINKED_LIBRARY   2
+                        // Dynamically linked library assembly type macro.
+#define DYNAMICALLY_LINKED_LIBRARY  3
+                        // Dynamically linked library assembly type macro.
+#define SINGLE_DLL                  4
+
 enum {
-    // I think these two are macros.
-    //kMinFloorSize     = 256,            //< Min size of a room.
-    //kMaxFloorSize     = 0x7FFFFFFC,     //< Max room size: 2GB - 7 bits.
-    kFloorSize       = ROOM_FLOOR_SIZE,   //< Size of the Room Floor (buffer).
+    kNo              = 0,                 //< Script no/false value.
+    kYes             = 1,                 //< Script yes/true value.
+    kMajorVersion    = 0,                 //< Script version major.
+    kMinorVersion    = 9,                 //< Script version minor.
+    //kMinFloorSize  = 256,               //< Min size of a room.
+    //kMaxFloorSize  = 0x7FFFFFFC,        //< Max room size: 2GB - 7 bits.
+    kMaxFloorsCount  = SCRIPT_MAX_WALLS,  //< Size of the Room Floor (buffer).
     kMinSlotSize     = 128,               //< Min size of a Slot - 1.
-    kMaxErrors       = MAX_ERRORS,        //< Max errors before blowing up.
-    kMaxNumParams    = MAX_NUM_PARAMS,    //< Max number of parameters.
-    kMaxTextLength = MAX_STRING_LENGTH, //< Max char length.
-    kTimeoutMicroseconds = COM_TIMEOUT_TICKS,
+    kMaxErrors       = SCRIPT_MAX_ERRORS, //< Max errors before blowing up.
+    kMaxNumParams    = SCRIPT_MAX_PARAMS, //< Max number of parameters.
+    kMaxTextLength       = SCRIPT_TEXT_SIZE_MAX, //< Max char length.
+    kTimeoutMicroseconds = COM_TIMEOUT_TICKS, //< Timeout time in microseconds.
     //< The number of seconds before a timeout over a generic communication
     //< link.
-    kWordAddressMask = sizeof (void*) - 1,   //< For masking the word address.
-    kMaxAddresLength = 255,                  //< Max address (ADR) length.
-    kMinStackSize    = 1,                    //< Min Expression stack size.
-    kOperationMaxNameLength = OPERATION_MAX_NAME_LENGTH,
-    kOperationMaxDescriptionLength = OPERATION_MAX_DESCRIPTION_LENGTH,
+    kWordAddressMask = sizeof (void*) - 1,//< For masking the word address.
+    kMaxAddresLength = 255,               //< Max address (ADR) length.
+    kMinStackSize    = 1,                 //< Min Expression stack size.
+    kOperationMaxNameLength = SCRIPT_OPERATION_MAX_NAME_LENGTH,
+    kOperationMaxDescriptionLength = SCRIPT_OPERATION_MAX_DESCRIPTION_LENGTH,
 };
 }
 #undef MAX_ERRORS
@@ -188,7 +205,7 @@ static const uint64_t kLargest64BitPrime = 0xFFFFFFFFFFFFFFC5;
 
 /** The level will more code creating a larger binary. Use one 
     underscore to use more memory, and two underscores to use even more. */
-#if MEMORY_PROFILE == 1
+#if SCRIPT_MEMORY_PROFILE == 1
 typedef int8_t   int_t;     //< Buffer signed index type.
 typedef uint8_t  uint_t;    //< Buffer unsigned index type.
 typedef int16_t  dint_t;    //< Buffer double-wide signed index type.
@@ -197,7 +214,7 @@ typedef uint8_t  index_t;   //< Largest bit-depth TIndex this system supports.
 typedef uint16_t header_t;  //< Largest bit-depth THeader this system supports.
 typedef uint16_t data_t;    //< Largest bit-depth TData this system supports.
 
-#elif (MEMORY_PROFILE == 2) || (MEMORY_PROFILE == 3)
+#elif (SCRIPT_MEMORY_PROFILE == 2) || (SCRIPT_MEMORY_PROFILE == 3)
 typedef int16_t  int_t;     //< Buffer signed index type.
 typedef uint16_t uint_t;    //< Buffer unsigned signed index type.
 typedef int32_t  dint_t;    //< Buffer double-wide signed index type.
@@ -219,7 +236,7 @@ typedef uint64_t data_t;    //< Default TData size.
 #error  Invalid MEMORY_PROFILE
 #endif
 
-#if MEMORY_PROFILE >= 3 || SCRIPT_DEBUG
+#if SCRIPT_MEMORY_PROFILE >= 3 || SCRIPT_DEBUG
 #define USE_MORE_ROM 3
 #endif  //< MEMORY_PROFILE >= 3
 

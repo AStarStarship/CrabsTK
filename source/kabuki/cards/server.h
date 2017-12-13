@@ -1,4 +1,4 @@
-﻿/** kabuki::cards
+﻿/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/cards_server.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -23,30 +23,41 @@
 namespace kabuki { namespace cards {
 
 /** An abstract playing card game server.
+    
     # Session System
+
     When players are created, then are given a unique id (uid). Players will 
     join and leave the server, thus their index in the array of users will
-    more than likely change. When a user logs on they are given a session
-    index, which is their index in the UserList array, and a session_key,
-    which is a randomly generated number used as an ecryption key.
+    more than likely change. When a user logs on they are given a session,
+    public_key, and a private_key:
+    |       Tuple | Description                                          |
+    |------------:|:----------------------------------------------------:|
+    |     session | The index in the UserList array                      |
+    |  public_key | A randomly generated publicly visible session key.   |
+    | private_key | A randomly generated private encryption session key. |
 
     To preserve server state, then next uid must be saved. This is currently 
-    done by writing the number to and from a disk, but this is primitive.
+    done by writing the number to and from a disk, but this is primitive
+    and will change ASAP.
 
+    A user will log into the server and a User object will be created in the
+    users_ UserList.
 
 */
 class Server : public _::Room {
     public:
 
     typedef enum States {
-        kStateAwaitingConnection = 0,
+        kStateShuttingDown= 0, //< Server State 0: ShuttingDown.
+        kStateInitializing,    //< Server State 1: Initializing. 
+        kStateServingClients,  //< Server State 2: Serving clients. 
     } State;
     
     enum {
         kDefaultPort         = 2048,    //< Default TCP port number.
         kDefaultMaxUsers     = 1024,    //< Default max users.
         kDefaultConsoleWidth = 80,      //< Default num rows in a DOS console.
-        kMaxTextLength     = 2 * 1024,//< Max string length.
+        kMaxTextLength       = 2 * 1024,//< Max string length.
         kDefaultMaxGames     = 256,     //< Default max games.
     };
 
@@ -58,13 +69,17 @@ class Server : public _::Room {
     /** Constructor. */
     virtual ~Server ();
 
-    void RestartServer ();
+    /** Quits the server. */
+    const char* Exit ();
+
+    /** Restarts the server. */
+    const char* Restart ();
 
     /** Gets the FSM state. */
     int GetState ();
 
     /** Virtual function sets the FSM state to a positive value. */
-    virtual bool SetState (int state);
+    State SetState (State state);
 
     /** Gets the FSM state. */
     uint32_t GetPort ();
@@ -106,7 +121,7 @@ class Server : public _::Room {
         @param text     Beginning of the Text buffer. 
         @param text_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* HandleText (const char* text,
+    virtual const char* Do (const char* text,
                                     const char* text_end);
 
     /** Script operations. */
@@ -123,7 +138,6 @@ class Server : public _::Room {
     char                   * directions_;   //< Console input directions.
 
 };      //< class Server
-
 }       //< namespace cards
 }       //< namespace kabuki
 #endif  //< HEADER_FOR_KABAUKI_CARDS_SERVER

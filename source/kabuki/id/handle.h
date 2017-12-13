@@ -1,4 +1,4 @@
-/** kabuki::id
+/** Kabuki Toolkit
     @file    ~/source/kabuki/id/handle.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -28,7 +28,7 @@ class KABUKI Handle {
     enum {
         kValidation        = 1,  //< Validation type.
         kDefaultMinLength  = 3,  //< Min length of a Handle range.
-        kDefaultMaxLength  = 255 //< Max length of a Handle range.
+        kMaxLength  = 255 //< Max length of a Handle range.
     };
 
     static const char kDefault[];
@@ -36,7 +36,7 @@ class KABUKI Handle {
     /** Constructor creates a standard char. */
     Handle (Authenticator* authenticator, const char* key,
             int min_length = kDefaultMinLength, 
-            int max_length = kDefaultMaxLength);
+            int max_length = kMaxLength);
 
     /** Gets a reference to the handle string. */
     const char* GetKey ();

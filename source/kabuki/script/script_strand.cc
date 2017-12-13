@@ -24,340 +24,232 @@ using namespace std;
 
 namespace _ {
 
-#if USE_SCRIPT_STRAND
-const char* StrandEnd (const char* target) {
-    char c = *target;
+#if SCRIPT_USING_STRAND
+const char* StrandEnd (const char* strand) {
+    char c = *strand;
     while (c) {
-        c = *(++target);
+        c = *(++strand);
     }
-    return target;
+    return strand;
 }
 
-const char* StrandEnd (const char* target, char delimiter) {
-    char c = *target;
+const char* StrandEnd (const char* strand, char delimiter) {
+    char c = *strand;
     while (c) {
         if (c == delimiter) {
-            return target;
+            return strand;
         }
-        c = *(++target);
+        c = *(++strand);
     }
-    return target;
+    return strand;
 }
 
-int StrandLength (const char* target) {
-    if (target == nullptr)
+int StrandLength (const char* strand) {
+    if (strand == nullptr)
         return -1;
     int count = 0;
     //cout << "Checking string length for " << string << '\n';
-    char c = *target;
+    char c = *strand;
     //cout << c;
     while (c != 0) {
         ++count;
-        c = *(++target);
+        c = *(++strand);
         //cout << c;
     }
     //cout << '\n';
     return count;
 }
 
-int StrandLength (const char* target, char delimiter) {
-    if (target == nullptr)
+int StrandLength (const char* strand, char delimiter) {
+    if (strand == nullptr)
         return -1;
     int count = 0;
     //cout << "Checking string length for " << string << '\n';
-    char c = *target;
+    char c = *strand;
     //cout << c;
     while (!c) {
         if (c == delimiter) {
             return count;
         }
         ++count;
-        c = *(++target);
+        c = *(++strand);
         //cout << c;
     }
     //cout << '\n';
     return -1;
 }
 
-char* StrandClone (const char* input) {
-    if (input == nullptr)
-        input = "";
-    int length = StrandLength (input);
+char* StrandClone (const char* strand) {
+    if (strand == nullptr)
+        strand = "";
+    int length = StrandLength (strand);
     if (length < 0) {
         return nullptr;
     }
     char* clone = new char[length + 1];
-    TextWrite (clone, clone + length, input);
+    TextWrite (clone, clone + length, strand);
     return clone;
 }
 
-char* StrandClone (const char* input, char delimiter) {
-    if (input == nullptr)
-        input = "";
-    int length = StrandLength (input);
+char* StrandClone (const char* strand, char delimiter) {
+    if (strand == nullptr)
+        strand = "";
+    int length = StrandLength (strand);
     if (length < 0) {
         return nullptr;
     }
     char* clone = new char[length + 1];
-    TextWrite (clone, clone + length, input, delimiter);
+    TextWrite (clone, clone + length, strand, delimiter);
     return clone;
 }
 
-void StrandText (char* destination, const char* source) {
-    if (destination == nullptr) {
-        return;
-    }
-    if (source == nullptr) {
-        return;
-    }
-    char c = *source;
-    ++source;
-    while (c) {
-        *destination = c;
-        ++destination;
-        c = *source;
-        ++source;
-    }
-    *destination = 0;
-}
-
-char* StrandWrite (char* target, char* end, int8_t value) {
-    // @todo Don't use sprintf_s.
-    int result = sprintf_s (target, end - target, "%i", value);
-    if (result < 0) {
+const char* StrandSkipNumbers (const char* strand) {
+    if (strand == nullptr)
         return nullptr;
-    }
-    return target + result + 1;
-}
-
-char* StrandWrite (char* target, char* end, uint8_t value) {
-    // @todo Don't use sprintf_s.
-    int result = sprintf_s (target, end - target, "%u", value);
-    if (result < 0) {
-        return nullptr;
-    }
-    return target + result + 1;
-}
-
-char* StrandWrite (char* target, char* end, int16_t value) {
-    // @todo Don't use sprintf_s.
-    int result = sprintf_s (target, end - target, "%i", value);
-    if (result < 0) {
-        return nullptr;
-    }
-    return target + result + 1;
-}
-
-char* StrandWrite (char* target, char* end, uint16_t value) {
-    // @todo Don't use sprintf_s.
-    int result = sprintf_s (target, end - target, "%u", value);
-    if (result < 0) {
-        return nullptr;
-    }
-    return target + result + 1;
-}
-
-char* StrandWrite (char* target, char* end, int32_t value) {
-    // @todo Don't use sprintf_s.
-    int result = sprintf_s (target, end - target, "%i", value);
-    if (result < 0) {
-        return nullptr;
-    }
-    return target + result + 1;
-}
-
-char* StrandWrite (char* target, char* end, uint32_t value) {
-    // @todo Don't use sprintf_s.
-    int result = sprintf_s (target, end - target, "%u", value);
-    if (result < 0) {
-        return nullptr;
-    }
-    return target + result + 1;
-}
-
-char* StrandWrite (char* target, char* end, int64_t value) {
-    // @todo Don't use sprintf_s.
-    int result = sprintf_s (target, end - target, "%lli", value);
-    if (result < 0) {
-        return nullptr;
-    }
-    return target + result + 1;
-}
-
-char* StrandWrite (char* target, char* end, uint64_t value) {
-    // @todo Don't use sprintf_s.
-    int result = sprintf_s (target, end - target, "%llu", value);
-    if (result < 0) {
-        return nullptr;
-    }
-    return target + result + 1;
-}
-
-char* StrandWrite (char* target, char* end, float value) {
-    // @todo Don't use sprintf_s.
-    int result = sprintf_s (target, end - target, "%f", value);
-    if (result < 0) {
-        return nullptr;
-    }
-    return target + result + 1;
-}
-
-char* StrandWrite (char* target, char* end, double value) {
-    // @todo Don't use sprintf_s.
-    int result = sprintf_s (target, end - target, "%f", value);
-    if (result < 0) {
-        return nullptr;
-    }
-    return target + result + 1;
-}
-
-const char* StrandSkipNumbers (const char* target) {
-    if (target == nullptr)
-        return nullptr;
-    char c = *target;
+    char c = *strand;
     if (c == '-') {  // It might be negative.
-        c = *(++target);
+        c = *(++strand);
         if (!isdigit (c)) {  // it's not negative.
-            return target - 1;
+            return strand - 1;
         }
-        c = *(++target);
+        c = *(++strand);
     }
     while (isdigit (c)) {
-        c = *(++target);
+        c = *(++strand);
     }
-    return target;
+    return strand;
 }
 
-const char* StrandRead (const char* target, int8_t& result) {
+const char* StrandRead (const char* strand, int8_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     int extra_copy;
-    if (!sscanf_s (target, "%i", &extra_copy)) {
+    if (!sscanf_s (strand, "%i", &extra_copy)) {
         return nullptr;
     }
     result = (int8_t)extra_copy;
-    return StrandSkipNumbers (target);
+    return StrandSkipNumbers (strand);
 }
 
-const char* StrandRead (const char* target, uint8_t& result) {
+const char* StrandRead (const char* strand, uint8_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     uint extra_copy;
-    if (!sscanf_s (target, "%u", &extra_copy)) {
+    if (!sscanf_s (strand, "%u", &extra_copy)) {
         return nullptr;
     }
     result = (uint8_t)extra_copy;
-    return StrandSkipNumbers (target);
+    return StrandSkipNumbers (strand);
 }
 
-const char* StrandRead (const char* target, int16_t& result) {
+const char* StrandRead (const char* strand, int16_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     int extra_copy;
-    if (!sscanf_s (target, "%i", &extra_copy)) {
+    if (!sscanf_s (strand, "%i", &extra_copy)) {
         return nullptr;
     }
     result = (int16_t)extra_copy;
-    return StrandSkipNumbers (target);
+    return StrandSkipNumbers (strand);
 }
 
-const char* StrandRead (const char* target, uint16_t& result) {
+const char* StrandRead (const char* strand, uint16_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     uint extra_copy;
-    if (!sscanf_s (target, "%u", &extra_copy)) {
+    if (!sscanf_s (strand, "%u", &extra_copy)) {
         return nullptr;
     }
     result = (uint16_t)extra_copy;
-    return StrandSkipNumbers (target);
+    return StrandSkipNumbers (strand);
 }
 
-const char* StrandRead (const char* target, int32_t& result) {
+const char* StrandRead (const char* strand, int32_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     int extra_copy;
-    if (!sscanf_s (target, "%i", &extra_copy)) {
+    if (!sscanf_s (strand, "%i", &extra_copy)) {
         return nullptr;
     }
     result = (int32_t)extra_copy;
-    return StrandSkipNumbers (target);
+    return StrandSkipNumbers (strand);
 }
 
-const char* StrandRead (const char* target, uint32_t& result) {
+const char* StrandRead (const char* strand, uint32_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     uint extra_copy;
-    if (!sscanf_s (target, "%u", &extra_copy)) {
+    if (!sscanf_s (strand, "%u", &extra_copy)) {
         return nullptr;
     }
     result = (uint32_t)extra_copy;
-    return StrandSkipNumbers (target);
+    return StrandSkipNumbers (strand);
 }
 
-const char* StrandRead (const char* target, int64_t& result) {
+const char* StrandRead (const char* strand, int64_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     int64_t extra_copy;
-    if (!sscanf_s (target, "%lli", &extra_copy)) {
+    if (!sscanf_s (strand, "%lli", &extra_copy)) {
         return nullptr;
     }
     result = extra_copy;
-    return StrandSkipNumbers (target);
+    return StrandSkipNumbers (strand);
 }
 
-const char* StrandRead (const char* target, uint64_t& result) {
+const char* StrandRead (const char* strand, uint64_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     uint64_t extra_copy;
-    if (!sscanf_s (target, "%llu", &extra_copy)) {
+    if (!sscanf_s (strand, "%llu", &extra_copy)) {
         return nullptr;
     }
     result = extra_copy;
-    return StrandSkipNumbers (target);
+    return StrandSkipNumbers (strand);
 }
 
-const char* StrandRead (const char* target, float& result) {
+const char* StrandRead (const char* strand, float& result) {
     // @todo Rewrite with custom string-to-float function.
     float extra_copy;
-    if (!sscanf_s (target, "%f", &extra_copy)) {
+    if (!sscanf_s (strand, "%f", &extra_copy)) {
         return nullptr;
     }
     result = extra_copy;
-    return StrandSkipNumbers (target);
+    return StrandSkipNumbers (strand);
 }
 
-const char* StrandRead (const char* target, double& result) {
+const char* StrandRead (const char* strand, double& result) {
     // @todo Rewrite with custom string-to-float function.
     double extra_copy;
-    if (!sscanf_s (target, "%lf", &extra_copy)) {
+    if (!sscanf_s (strand, "%lf", &extra_copy)) {
         return nullptr;
     }
     result = extra_copy;
-    return StrandSkipNumbers (target);
+    return StrandSkipNumbers (strand);
 }
 
-const char* StrandEquals (const char* target, const char* query) {
-    if (target == nullptr)
+const char* StrandEquals (const char* strand, const char* query) {
+    if (strand == nullptr)
         return nullptr;
     if (query == nullptr)
         return nullptr;
     //cout << "\n| Comparing \"" << target << "\" to \"" << query << "\"";
 
-    char i = *target,
-        q = *query;
-    while (i) {
-        cout << i;
-        if (i != q) { // Not a hit.
+    char a = *strand,
+         b = *query;
+    while (a) {
+        cout << a;
+        if (a != b) { // Not a hit.
             //cout << "\n| But it's not a hit\n";
             return nullptr;
         }
-        if (q == 0) { // Hit!
+        if (b == 0) { // Hit!
             //cout << "\n| Found hit at ";
             //PrintPointerNL (target);
-            return target;
+            return strand;
         }
-        i = *(++target);
-        q = *(++query);
+        a = *(++strand);
+        b = *(++query);
     }
-    if (q != 0) {
+    if (b != 0) {
         cout << "\n| Not a hit: no nil-term char found";
         return nullptr;
     }
     cout << "\n| Found hit at ";
     //PrintPointerNL (target);
-    return target; //< Find hit!
+    return strand; //< Find hit!
 }
 
 const char* StrandEquals (const char* target, const char* query,
@@ -544,109 +436,25 @@ const char* StrandSkipZeros (const char* target) {
     return target;
 }
 
-const char* StrandSkipSpaces (const char* target) {
-    if (target == nullptr)
-        return nullptr;
-#if SCRIPT_DEBUG
-    cout << "\nSkipping spaces: ";
-#endif    //< SCRIPT_DEBUG
-    char c = *target;
-    while (c) {
-#if SCRIPT_DEBUG
-        cout << '.';
-#endif    //< SCRIPT_DEBUG
-        if (!isspace (c))
-            return target;
-        ++target;
-        c = *target;
-    }
-    return target;
-}
-
-bool StrandTokenQualifies (const char* target) {
-    if (target == nullptr) {
-        return false;
-    }
-    char c = *target;
-    while (c) {
-        if (!isspace (c)) {
-            return true;
-        }
-        c = *(++target);
-    }
-    return false;
-}
-
-const char* StrandTokenEnd (const char* target) {
-    if (!target) {
-        return nullptr;
-    }
-    target = StrandSkipSpaces (target);
-
-    char c = *target;
-    while (c) {
-        if (isspace (c))
-            return target + 1;
-        c = *(++target);
-    }
-    // We're skipping spaces because we're expecting good data so this is an
-    // error.
-    return nullptr;
-}
-
-int StrandTokenCompare (const char* strand, const char* token) {
-    int a,
-        b,
-        comparison;
+const char* StrandSkipSpaces (const char* strand) {
     if (!strand) {
-        if (!token) {
-            return 0;
-        }
-        return *token;
+        return nullptr;
     }
-    if (!token) {
-        return 0 - *strand;
-    }
-
-    // Algorithm combines loops for better performance.
-
-    a = *strand;
-    b = *token;
-    if (!a) {
-        if (!a) {
-            return 0;
-        }
-        return b;
-    }
-    if (!b) { // I like !t code rather than !c code. :-)
-        if (!a) {
-            return 0;
-        }
-        return 0 - a;
-    }
-    while (a && !isspace (a)) {
-        //cout << "\n| s: " << s << " t: " << t;
-        comparison = b - a;
-        if (comparison) {
-            //cout << "\n| Found unmatched chars t:\'" << t <<"\' s:\'" << s << "comparison:" << comparison;
-            return comparison;
+    char c = *strand;
+    while (isspace (c)) {
+        //cout << '.';
+        if (!c) { //< This isn't an error as far as I can see.
+            return strand;
         }
         ++strand;
-        ++token;
-        a = *strand;
-        b = *token;
+        c = *strand;
     }
-    if (!isspace (b)) {
-        //cout << "\n| token still has some chars so it's is greater.";
-        return b;
-    }
-    //cout << "\n| Find match!";
-    return 0;
+    return strand;
 }
 
 const char* StrandRead (const char* target, char* text,
                          char* text_end, char delimiter) {
-    //cout << "> parse_string buffer_size: " << buffer_size
+    //cout << "\n| parse_string buffer_size: " << buffer_size
     //          << " delimiter " << delimiter << "\n| ";
     if (!target) {
         cout << "\n| !target";
@@ -685,20 +493,6 @@ const char* StrandRead (const char* target, char* text,
         return target;
     }
     return target + 1;
-}
-
-char* StrandParseToken (char* target) {
-    if (target == nullptr)
-        return nullptr;
-
-    target = (char*)StrandSkipSpaces (target);
-
-    char c = *target;
-    while (c && !isspace (c)) {
-        c = *(++target);
-    }
-    *target = 0;   //< Mark the null-term char.
-    return target; //< This is the start of the next token or whitespace.
 }
 
 const char* StrandFind (const char* target, const char* query, char delimiter) {
@@ -760,5 +554,5 @@ char* StrandReadFloat (char* target, float* value) {
     return nullptr;
 } */
 
-#endif  //< USE_SCRIPT_STRAND
+#endif  //< SCRIPT_USING_STRAND
 }       //< namespace _

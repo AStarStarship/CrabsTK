@@ -169,13 +169,13 @@ inline uintptr_t Diff (const void* begin, const void* end) {
 /** Overwrites the memory with zeros functionally identical to memset.
     @warning Sharp knives: Function used to make L3 compiler warnings stop
              barking on known safe memory blocks. Newbs have been warned. */
-KABUKI void MemoryClear (void* address, size_t size);
+KABUKI void MemoryClear (void* address, int size);
 
 /** Copies the source to the target functionally identical to memcpy.
     @warning Sharp knives: Function used to make L3 compiler warnings stop
              barking on known safe memory blocks. Newbs have been warned. */
 KABUKI byte* MemoryCopy (void* target, void* target_end, const void* memory,
-                         size_t size);
+                         int size);
 
 /** Copies the source to the target functionally identical to memcpy.
     @warning Sharp knives: Function used to make L3 compiler warnings stop
@@ -187,7 +187,7 @@ KABUKI byte* MemoryCopy (void* target, void* target_end, const void* memory,
     @warning Sharp knives: Function used to make L3 compiler warnings stop
     barking on known safe memory blocks. Newbs have been warned. */
 KABUKI byte* MemoryCopy (void* target, void* target_end, const void* memory,
-                         const void* memory_end, size_t size);
+                         const void* memory_end, int size);
 
 #if USE_MORE_ROM
 

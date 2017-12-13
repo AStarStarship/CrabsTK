@@ -32,7 +32,7 @@ User::User (Authenticator* authenticator, uid_t uid, const char* handle,
             authenticator_ (authenticator),
             uid_           (uid),
             session_       (0),
-            session_key_   (0),
+            public_key_   (0),
             balance_       (balance),
             value_         (value),
             slot_          (nullptr) {
@@ -45,7 +45,7 @@ User::User (const User& other) :
            authenticator_ (other.authenticator_),
            session_       (other.session_),
            uid_           (other.uid_),
-           session_key_   (other.session_key_),
+           public_key_   (other.public_key_),
            response_      (other.response_),
            balance_       (other.balance_),
            value_         (other.value_),
@@ -60,7 +60,7 @@ User& User::operator= (const User& other) {
     authenticator_ = other.authenticator_;
     session_       = other.session_;
     uid_           = other.uid_;
-    session_key_   = other.session_key_;
+    public_key_   = other.public_key_;
     response_      = other.response_;
     balance_       = other.balance_;
     value_         = other.value_;
@@ -106,7 +106,7 @@ const char* User::SetSession (int32_t session) {
 }
 
 uid_t User::GetSessionKey () {
-    return session_key_;
+    return public_key_;
 }
 
 uid_t User::GetResponse () {
@@ -179,22 +179,24 @@ Window* User::GetWindow () {
     return nullptr;
 }
 
-bool User::IsAuthentic (int32_t session, uid_t session_key) {
+bool User::IsAuthentic (int32_t session, uid_t public_key) {
     if (session_ != session) {
         return false;
     }
-    if (session_key_ != session_key) {
+    if (public_key_ != public_key) {
         return false;
     }
     return true;
 }
 
 void User::Print () {
-    cout << "\n| User: Handle:\"" << handle_.GetKey () << "\"  Password: \""
-         << password_.GetKey () << '\"';
+    cout << "\n| User: @"  << handle_.GetKey ()
+         << " password:\"" << password_.GetKey ()
+         << "\" balance:"  << balance_
+         << " value:"      << value_;
 }
 
-const char* User::HandleText (const char* text,
+const char* User::Do (const char* text,
                               const char* text_end) {
     enum {
         kMessageLength = 141,
@@ -208,25 +210,25 @@ const char* User::HandleText (const char* text,
     if (!text) {
         return nullptr;
     }
-    if (TextTokenCompare (text, text_end, "AddBalance")) {
+    if (TokenCompare (text, text_end, "AddBalance")) {
         next_token = TextRead (text, text_end, balance);
         if (!next_token) {
             return nullptr;
         }
         balance_ += balance;
-    } else if (TextTokenCompare (text, text_end, "AddValue")) {
+    } else if (TokenCompare (text, text_end, "AddValue")) {
         next_token = TextRead (text, text_end, value);
         if (!next_token) {
             return nullptr;
         }
         value_ += value;
-    } else if (TextTokenCompare (text, text_end, "SetStatus")) {
+    } else if (TokenCompare (text, text_end, "SetStatus")) {
         next_token = TextRead (text, text_end, input, input + kMessageLength);
         if (!next_token) {
             return nullptr;
         }
         SetStatus (input);
-    } else if (TextTokenCompare (text, text_end, "SetHandle")) {
+    } else if (TokenCompare (text, text_end, "SetHandle")) {
         next_token = TextRead (text, text_end, input, input + kMessageLength);
         if (!next_token) {
             return nullptr;
@@ -235,7 +237,7 @@ const char* User::HandleText (const char* text,
             return "\n| Error: Password in invalid format!";
         }
         handle_.SetKey (input);
-    } else if (TextTokenCompare (text, text_end, "SetPassword")) {
+    } else if (TokenCompare (text, text_end, "SetPassword")) {
         next_token = TextRead (text, text_end, input, input + 141);
         if (!next_token) {
             return nullptr;
@@ -244,7 +246,7 @@ const char* User::HandleText (const char* text,
             return "\n| Error: Password in invalid format!";
         }
         password_.SetKey (input);
-    } else if (TextTokenCompare (text, text_end, "Print")) {
+    } else if (TokenCompare (text, text_end, "Print")) {
         Print ();
         return text;
     }

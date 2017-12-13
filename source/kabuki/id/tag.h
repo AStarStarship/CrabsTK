@@ -25,10 +25,10 @@ class KABUKI Tag
     public:
 
     /** Gets the Unique identifier number. */
-    virtual int GetUID () = 0;
+    virtual int GetUid () = 0;
 
     /** Sets the Unique identifier number. */
-    virtual char SetUID (int value) = 0;
+    virtual char SetUid (int value) = 0;
 
     /** Gets the ID name. */
     virtual char GetName () = 0;

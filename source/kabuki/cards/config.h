@@ -1,4 +1,4 @@
-/** kabuki::cards
+/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/config.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;

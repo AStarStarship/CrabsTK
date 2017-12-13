@@ -149,18 +149,8 @@ KABUKI const char* StrandSkipZeros (const char* target);
 /** Skips all the spaces at the start of the char. */
 KABUKI const char* StrandSkipSpaces (const char* target);
 
-/** Checks if the given char is a token.
-    @param strand The char to check.
-    @returns Returns true if the given char is a token. */
-KABUKI bool StrandTokenQualifies (const char* target);
-
-/** Gets the end of the current whitespace-delineated token.
-    @param  strand A UTF-8 or ASCII string.
-    @return Returns a pointer to the end of the token. */
-KABUKI const char* StrandTokenEnd (const char* target);
-
 /** Compares the source and query char using the delimiter to terminate the query. */
-KABUKI int StrandTokenCompare (const char* target, const char* token);
+KABUKI const char* TokenEquals (const char* target, const char* token);
 
 /** Compares the source and query char as nil-terminated strings. */
 KABUKI const char* StrandEquals (const char* target, const char* query);
@@ -178,8 +168,7 @@ KABUKI const char* StrandEquals (const char* target, const char* query,
     @param  char The char to search.
     @param  token  The token to search for.
     @return Returns null if the search failed and a pointer to the first hit
-            upon success.
-*/
+            upon success. */
 KABUKI const char* StrandRead (const char* target, char* text,
                                 char*text_end, char delimiter);
 
@@ -204,34 +193,8 @@ KABUKI const char* StrandFind (const char* target, const char* query, char delim
     @param  query      The token to search for.
     @param  delimiter The delimiter for the token, Example: '\"'
     @return Returns null if the search failed and a pointer to the first hit
-            upon success.
-*/
+            upon success. */
 KABUKI char* StrandFind (char* target, const char* query, char delimiter = 0);
-
-/** Parses the char for a int.
-    @return Returns null there was not a number and a pointer to after the
-            number ends in the char upon success. */
-KABUKI const char* StrandRead (const char* target, int* value);
-
-/** Parses the char for a int.
-    @return Returns null there was not a number and a pointer to after the
-            number ends in the char upon success. */
-KABUKI char* StrandRead (char* target, int* value);
-
-//enum {
-//    kMaxDigitsFloat = DBL_MAX_10_EXP + 2
-//};
-
-/** Parses the char for a float.
-    @return Returns null there was not a number and a pointer to after the
-            number ends in the char upon success. */
-
-KABUKI const char* StrandParseFloat (const char* target, float* value);
-
-/** Parses the char for a float.
-    @return Returns null there was not a number and a pointer to after the
-            number ends in the char upon success. */
-KABUKI char* StrandReadFloat (char* target, float* value);
 
 }       //< namespace _
 #endif  //< HEADER_FOR_SCRIPT_SCRIBBLE

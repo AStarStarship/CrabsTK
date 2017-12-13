@@ -1,4 +1,4 @@
-/** kabuki::id
+/** Kabuki Toolkit
     @file    ~/source/kabuki/id/password.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -35,7 +35,7 @@ class KABUKI Password {
     enum {
         kValidation       = 2,   //< Validation type.
         kDefaultMinLength = 0,   //< The minimum length of a password.
-        kDefaultMaxLength = 255, //< The maximum length of a password.
+        kMaxLength = 255, //< The maximum length of a password.
     };
 
     static const char kDefault[]; //< Default password.

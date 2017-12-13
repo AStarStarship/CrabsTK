@@ -23,64 +23,84 @@
 
 // Choose BARE_METAL, MBED, MBED_OS, ARDUINO, MINGW32, WINDOWS, ANDROID,
 // LINUX, OSX, or IOS
-#define PLATFORM            MBED
+#define SCRIPT_PLATFORM MBED
 
 // Choose X86, X64, ARM8, ARM16, ARM32, or ARM64
-#define CPU_ACHITECTURE     X86
+#define SCRIPT_ACHITECTURE X86
 
-#define CPU_WORD_SIZE       32
+#define SCRIPT_WORD_SIZE 32
 
-#define IS_LITTLE_ENDIAN    YES
+#define SCRIPT_ENDIANESS LITTLE
 
-#define DEBUG               YES
+// Global debug macro
+#define DEBUG YES
 
 #ifndef SCRIPT_DEBUG
 #define SCRIPT_DEBUG        YES
 #endif //< SCRIPT_DEBUG
 
 /** @brief The Memory Profiles 1-4 are used to signal that the system is
-memory constrained.
-For constrained memory devices, use MEMORY_PROFILE 1. For most uses use
-MEMORY_PROFILE 2. For applications that require 64-bit memory addresses, use
-MEMORY_PROFILE 3.
+    memory constrained.
+    For constrained memory devices, use MEMORY_PROFILE 1. For most uses use
+    MEMORY_PROFILE 2. For applications that require 64-bit memory addresses, use
+    MEMORY_PROFILE 3.
 
-@code
-| RUL | sizeof (uint_t) | #bits Unit |
-|:---:|:---------------:|:----------:|
-|  1  |      1 byte     |     5      |
-|  2  |      2 byte     |    10      |
-|  4  |      4 byte     |    16      |
-@endcode
+    @code
+    | RUL | sizeof (uint_t) | #bits Unit |
+    |:---:|:---------------:|:----------:|
+    |  1  |      1 byte     |     5      |
+    |  2  |      2 byte     |    10      |
+    |  4  |      4 byte     |    16      |
+    @endcode
 */
-#define MEMORY_PROFILE      2         //< Memory Use Level 1-5.
-#define USING_CONSOLE       YES       //< Includes/excludes human-readable text.
+#define SCRIPT_MEMORY_PROFILE 2
 
-#define MAX_ERRORS          8         //< Max errors before locking up.
-#define MAX_NUM_PARAMS      26        //< Max number of parameters.
-#define MAX_STRING_LENGTH   64 * 1024 //< The max char length.
-#define MAX_NUM_SLOTS       256       //< Max number of Slots.
-#define COM_TIMEOUT_TICKS   100       //< The number of seconds before a timeout.
-//< over a generic communication link.
-#define SCRIPT_CHAR_WIDTH          8         //< index width in bytes: 8, 16, or 32.
-#define ROOM_FLOOR_SIZE     1024      //< The
-#define OPERATION_MAX_NAME_LENGTH 64
-#define OPERATION_MAX_DESCRIPTION_LENGTH 1024
+// Max errors before locking up.
+#define SCRIPT_MAX_ERRORS 8
+
+// Max number of parameters.
+#define SCRIPT_MAX_PARAMS 26
+
+// The max char length.
+#define SCRIPT_TEXT_SIZE_MAX 2 * 1024
+
+// Max number of Slots.
+#define MAX_NUM_SLOTS 256
+
+// Number of seconds before a timeout over a generic communication link.
+#define COM_TIMEOUT_TICKS 100
+
+// Index width in bytes: 8, 16, or 32.
+#define SCRIPT_CHAR_WIDTH 8
+
+// Max number of walls in this _::Room
+#define SCRIPT_MAX_WALLS 1024
+
+// 
+#define SCRIPT_MAX_TEXT_LENGTH 
+
+// Max Script Operation name length in chars.
+#define SCRIPT_OPERATION_MAX_NAME_LENGTH 64
+
+// Max Script Operation description length in chars.
+#define SCRIPT_OPERATION_MAX_DESCRIPTION_LENGTH 1024
 
 // Sets any of the following macros to YES or NO.
 
-#define USING_SCRIPT_1_BYTE_TYPES YES
-#define USING_SCRIPT_2_BYTE_TYPES YES
-#define USING_SCRIPT_4_BYTE_TYPES YES
-#define USING_SCRIPT_8_BYTE_TYPES YES
-#define USING_SCRIPT_VARINT2      YES
-#define USING_SCRIPT_VARINT4      YES
-#define USING_SCRIPT_VARINT8      YES
-#define USING_SCRIPT_ARRAY        NO
-#define USING_SCRIPT_BAG          NO
-#define USING_SCRIPT_BOOK         NO
-#define USING_SCRIPT_MAP          NO
-#define USING_SCRIPT_LIST         NO
-#define USE_SCRIPT_STRAND         YES
-#define USING_SCRIPT_TEXT         YES
-#define USING_SCRIPT_PRINT        YES
-#define USING_SCRIPT_KEYBOARD     YES
+#define SCRIPT_USING_1_BYTE_TYPES YES
+#define SCRIPT_USING_2_BYTE_TYPES YES
+#define SCRIPT_USING_4_BYTE_TYPES YES
+#define SCRIPT_USING_8_BYTE_TYPES YES
+#define SCRIPT_USING_VARINT2      YES
+#define SCRIPT_USING_VARINT4      YES
+#define SCRIPT_USING_VARINT8      YES
+#define SCRIPT_USING_ARRAY        NO
+#define SCRIPT_USING_BAG          NO
+#define SCRIPT_USING_BOOK         NO
+#define SCRIPT_USING_MAP          NO
+#define SCRIPT_USING_LIST         NO
+#define SCRIPT_USING_STRAND       YES
+#define SCRIPT_USING_TEXT         YES
+#define SCRIPT_USING_PRINT        YES
+#define SCRIPT_USING_TOKEN        YES
+#define SCRIPT_USING_KEYBOARD     YES

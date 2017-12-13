@@ -22,7 +22,7 @@
 
 #include "memory.h"
 #include "types.h"
-#if USING_SCRIPT_BAG
+#if SCRIPT_USING_BAG
 
 namespace _ {
 
@@ -758,5 +758,5 @@ void BagPrint (Bag<TIndex, TKey, TData, THash>* collection) {
 //}
 
 }       //< namespace _
-#endif  //< USING_SCRIPT_BAG
+#endif  //< SCRIPT_USING_BAG
 #endif  //< KABUKI_SCRIPT_BOOK_H

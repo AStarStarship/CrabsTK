@@ -223,7 +223,7 @@ void Dealer::Print () {
     }
 }
 
-const char* Dealer::HandleText (const char* text, const char* text_end) {
+const char* Dealer::Do (const char* text, const char* text_end) {
     const char* next_token;
     if (!text) {
         return nullptr;
@@ -231,7 +231,7 @@ const char* Dealer::HandleText (const char* text, const char* text_end) {
     if (text > text_end) {
         return nullptr;
     }
-    if (next_token = TextTokenEquals (text, text_end, "Print")) {
+    if (next_token = TokenEquals (text, text_end, "Print")) {
         Print ();
         return next_token;
     }

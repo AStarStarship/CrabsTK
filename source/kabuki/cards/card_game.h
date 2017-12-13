@@ -1,4 +1,4 @@
-﻿/** kabuki::cards
+﻿/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/cards_card_game.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -100,14 +100,18 @@ class CardGame : public _::Operation {
     /** Gets a reference to the observers_. */
     std::vector<id::User*>& GetObservers ();
 
-    /** Script operations. */
+    /** Abstract Script Operation(s).
+        @param index The index of the expression.
+        @param expr  The Expression to read and write from.
+        @return      Returns null upon success, a Set header upon query, and an 
+                     error_t ticket upon Read-Write failure. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
     /** Handles Text input.
         @param text     Beginning of the Text buffer. 
         @param text_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* HandleText (const char* text,
+    virtual const char* Do (const char* text,
                                     const char* text_end) = 0;
     protected:
 

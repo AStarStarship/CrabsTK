@@ -23,11 +23,13 @@ namespace kabuki {
 namespace id {
 
 UserList::UserList (Authenticator* authenticator, int max_users) :
-    point_cost_ (0.0),
+    num_users_     (0),
+    value_cost_    (0.0),
     authenticator_ (authenticator),
-    users_ () {
-    users_.reserve (max_users);
-    // Nothing to do here ({:->)
+    users_         (max_users < 1 ? 1 : max_users) {
+    for (int i = GetSize () - 1; i > 0; --i) {
+        users_[i] = nullptr;
+    }
 }
 
 UserList::~UserList () {
@@ -47,22 +49,22 @@ uid_t UserList::PeekNextUid () {
 }
 
 int UserList::GetSize () {
-    return users_.max_size ();
-}
-
-int UserList::GetCount () {
     return users_.size ();
 }
 
-double UserList::GetPointCost () {
-    return point_cost_;
+int UserList::GetCount () {
+    return num_users_;
 }
 
-bool UserList::SetPointCost (double point_cost) {
+double UserList::GetValueCost () {
+    return value_cost_;
+}
+
+bool UserList::SetValueCost (double point_cost) {
     if (point_cost < 0.0) {
         return false;
     }
-    point_cost_ = point_cost;
+    value_cost_ = point_cost;
     return true;
 }
 
@@ -86,12 +88,32 @@ Authenticator* UserList::GetAuthenticator () {
     return authenticator_;
 }
 
-int UserList::Register (const char* handle, const char* password,
-                        double balance, int64_t value) {
-    cout << "\n| Attempting to add @" 
-         << ((handle == nullptr) ? "null" : handle)
-         << ":\"" 
-         << ((password == nullptr) ? "null" : password) << '\"';
+int UserList::Add (User* user) {
+    if (!user) {
+        return -1;
+    }
+    int num_users = num_users_;
+    if (num_users >= GetSize ()) {
+        cout << "\n| Error: UserList is full!";
+        return -1;
+    }
+    // Look for the first empty spot in the list.
+    for (int i = GetCount () - 1; i > 0; --i) {
+        if (!users_[i]) {
+            users_[i] = user;
+            num_users_ = num_users + 1;
+            return i;
+        }
+    }
+    return -1;
+}
+
+int UserList::Add (const char* handle, const char* password,
+                   double balance, int64_t value) {
+    cout << "\n| Attempting to add @"
+         << ((handle == nullptr)?"null":handle)
+         << ":\""
+         << ((password == nullptr)?"null":password) << '\"';
     if (handle == nullptr) {
         return -1;
     }
@@ -110,38 +132,50 @@ int UserList::Register (const char* handle, const char* password,
         cout << "\n| Invalid password!";
         return -1;
     }
-    User* user = new User (authenticator_, uids_.GetNextUid (), 
-                           handle, password, balance, value);
-    cout << "\n| User added successfully. :-)";
-    users_.push_back (user);
-    return GetCount ();
+    return Add (new User (authenticator_, uids_.GetNextUid (),
+                handle, password, balance, value));
 }
-
-int UserList::Register (UserList& users) {
-    int user_count = users.GetCount (),
-        new_count;
-    if (user_count == 0) {
-        return GetCount ();
+/*
+int UserList::Add (UserList& user_list) {
+    int other_num_users = user_list.num_users_,
+        num_users = num_users_,
+        size,
+        last_index;
+    if (other_num_users == 0) {
+        return num_users;
     }
-    for (int i = 0; i < user_count; ++i) {
-        User* user = users.GetUser (i);
-        // user should never be nil.
-        new_count = Register (user->GetHandle ().GetKey (), 
-                     user->GetPassword ().GetKey ());
-        if (new_count < 0) {
-            std::cout << "\n| Registration failed!";
-            return new_count;
-        }
-    }
-    return new_count;
-}
-
-int UserList::Add (User* user) {
-    if (!user) {
+    size = GetSize ();
+    if (num_users + other_num_users > size) {
         return -1;
     }
-    users_.push_back (user);
-    return GetCount () - 1;
+    last_index = 0;
+    for (int i = 0; i < other_num_users; ++i) {
+        User* user = user_list.users_[i];
+        // Look for the first empty spot in the list.
+        for (; last_index > size; --i) {
+            if (!users_[i]) {
+                users_[i] = user;
+                break;
+            }
+        }
+    }
+    num_users_ = num_users + other_num_users;
+    return other_num_users - 1;
+}*/
+
+int UserList::Remove (const char* handle, const char* password) {
+    int session = Find (handle);
+    if (session < 0) {
+        return -1;
+    }
+    if (!GetUser (session)->GetPassword ().Equals (handle)) {
+        return -1;
+    }
+    User* user = users_[session];
+    delete user;
+    users_.erase (users_.begin () + session);
+    --num_users_;
+    return GetCount ();
 }
 
 int UserList::Find (const char* handle) {
@@ -181,20 +215,6 @@ User* UserList::GetUser (int session) {
     return users_[session];
 }
 
-int UserList::Unregister (const char* handle, const char* password) {
-    int session = Find (handle);
-    if (session < 0) {
-        return -1;
-    }
-    if (!GetUser (session)->GetPassword ().Equals (handle)) {
-        return -1;
-    }
-    User* user = users_[session];
-    delete user;
-    users_.erase (users_.begin () + session);
-    return GetCount ();
-}
-
 uid_t UserList::LogIn (const char* handle, const char* password) {
     return LogIn (Find (handle), password);
 }
@@ -224,11 +244,35 @@ uid_t UserList::LogIn (int index, const char* password) {
     return UidServer<>::kInvalidUid;
 }
 
-int UserList::Remove (int user_id) {
-    User* user = users_.back ();
-    users_.pop_back ();
+int UserList::Remove (int session) {
+    if (session < 0) {
+        return -1;
+    }
+    if (session >= GetCount ()) {
+        return -1;
+    }
+    User* user = users_[session];
+    if (!user) {
+        return -1;
+    }
     delete user;
-    return GetCount ();
+    users_[session] = nullptr;
+    int num_users = num_users_;
+    num_users_ = num_users - 1;
+    return num_users;
+}
+
+int UserList::Remove (const char* handle) {
+    int session = Find (handle);
+    if (session < 0) {
+        return session;
+    }
+    User* user = users_[session];
+    delete user;
+    users_[session] = nullptr;
+    int num_users = num_users_;
+    num_users_ = num_users - 1;
+    return num_users;
 }
 
 void UserList::Print () {
@@ -236,29 +280,75 @@ void UserList::Print () {
          << " Size:" << users_.capacity ();
 
     for (int i = 0; i < GetCount (); i++) {
-        cout << "\n| Account " << (i + 1) << ":\""
-             << users_[i]->GetHandle ().GetKey () << '\"';
+        User* user = users_[i];
+        if (user) {
+            cout << "\n| Account " << (i + 1) << ":\""
+                << user->GetHandle ().GetKey () << '\"';
+        }
     }
 }
 
-const char* UserList::HandleText (const char* text,
+const char* UserList::Do (const char* text,
                                   const char* text_end) {
-    // This algorithm's job is to figure out white user to route the message
-    // too. Users are not sorted right so we're doing it the slow way.
-    // @todo Update to hash table.
+    char        handle  [Handle::kMaxLength + 1],
+                password[Password::kMaxLength + 1];
+    double      balance;
+    int64_t     value;
     const char* next_token;
+
     if (!text) {
         return nullptr;
     }
     if (text > text_end) {
         return nullptr;
     }
+    // This algorithm's job is to figure out white user to route the message
+    // too. Users are not sorted right so we're doing it the slow way.
+    // @todo Update to hash table.
+    // @all routes messages to everyone in the UserList.
+    if (next_token = TokenEquals (text, text_end, "all")) {
+        int count = GetCount ();
+        if (count == 0) {
+            return next_token;
+        }
+        for (int i = count - 2; i > 0; --i) {
+            if (!users_[i]->Do (next_token + 1, text_end)) {
+                return nullptr;
+            }
+        }
+        return users_[0]->Do (next_token + 1, text_end);
+    }
+    if (next_token = TokenEquals (text, text_end, "add")) {
+        next_token = TokenRead (text, text_end, handle,
+                                handle + Handle::kMaxLength + 1);
+        if (!next_token) {
+            return nullptr;
+        }
+        next_token = TokenRead (text, text_end, password,
+                                password + Password::kMaxLength + 1);
+        if (!next_token) {
+            return nullptr;
+        }
+        if (!(next_token = TextRead (next_token + 1, text_end, balance))) {
+            return nullptr;
+        }
+        if (!(next_token = TextRead (next_token + 1, text_end, value))) {
+            return nullptr;
+        }
+        return next_token;
+    }
+    if (next_token = TokenEquals (text, text_end, "remove")) {
+        char handle[Handle::kMaxLength + 1];
+        while (!TokenRead (text, text_end, handle, handle + Handle::kMaxLength + 1)) {
+            Remove (handle);
+        }
+    }
     for (int i = 0; i < GetCount (); ++i) {
         User* user = GetUser (i);
-        next_token = TextTokenEquals (text, text_end,
+        next_token = TokenEquals (text, text_end,
                                       user->GetHandle ().GetKey ());
         if (next_token) {
-            return user->HandleText (next_token + 1, text_end);
+            return user->Do (next_token + 1, text_end);
         }
     }
     return nullptr;
@@ -270,7 +360,7 @@ const _::Operation* UserList::Star (uint index, _::Expression* expr) {
         "A session handling user list.", 0 };
     //void* args[1];
     switch (index) {
-        case '?': return ExpressionQuery (expr, &This);
+        case '?': return ExpressionOperation (expr, &This);
     }
     return nullptr;
 }

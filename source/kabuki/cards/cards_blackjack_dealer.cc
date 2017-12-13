@@ -1,4 +1,4 @@
-/** kabuki::cards
+/** Kabuki Toolkit
     @file       ~/source/kabuki/cards/blackjack_dealer.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -171,30 +171,30 @@ const Operation* BlackjackDealer::Star (uint index, Expression* expr) {
         NumOperations (0), OperationFirst ('A'),
         "Player in a Blackjack game.", 0 };
     void* args[2];
-    char handle[id::Handle::kDefaultMaxLength],
+    char handle[id::Handle::kMaxLength],
         tweet[141];
     int session;
-    uint64_t session_key,
+    uint64_t public_key,
              num_points;
     BlackjackPlayer* player;
 
     switch (index) {
-        case '?': return ExpressionQuery (expr, &This);
+        case '?': return ExpressionOperation (expr, &This);
         case 'A': {
             static const Operation OpA = { "Hit",
                 Params<0> (), Params<0> (),
                 "Signals a player to \"hit\" and not take any more cards "
-                "this round given correct #session and #session_key.", 0 };
+                "this round given correct #session and #public_key.", 0 };
             if (!expr) return &OpA;
             if (ExprArgs (expr, Params<2, SI4, UI8> (), Args (args, &session,
-                                                              &session_key))) {
+                                                              &public_key))) {
                 return expr->result;
             }
             player = dynamic_cast<BlackjackPlayer*> (GetPlayer (current_player_));
             if (player == nullptr) {
                 return Result (expr, Bin::kErrorInvalidOperand);
             }
-            if (!player->GetUser ()->IsAuthentic (session, session_key)) {
+            if (!player->GetUser ()->IsAuthentic (session, public_key)) {
                 return Result (expr, Bin::kErrorAuthenticationError);
             }
             player->Hit ();
@@ -205,17 +205,17 @@ const Operation* BlackjackDealer::Star (uint index, Expression* expr) {
             static const Operation OpB = { "Hold",
                 Params<2, SI4, UI8> (), Params<0> (),
                 "Signals a player to \"hold\" and not take any more cards "
-                "this round given correct #session and #session_key.", 0 };
+                "this round given correct #session and #public_key.", 0 };
             if (!expr) return &OpB;
             if (ExprArgs (expr, Params<2, SI4, UI8> (), Args (args, &session,
-                &session_key))) {
+                &public_key))) {
                 return expr->result;
             }
             player = dynamic_cast<BlackjackPlayer*> (GetPlayer (session));
             if (!player) {
                 return Result (expr, Bin::kErrorAuthenticationError);
             }
-            if (session_key != player->GetUser ()->GetSessionKey ()) {
+            if (public_key != player->GetUser ()->GetSessionKey ()) {
                 return Result (expr, Bin::kErrorAuthenticationError);
             }
             player->Hold ();
@@ -224,12 +224,12 @@ const Operation* BlackjackDealer::Star (uint index, Expression* expr) {
         }
         case 'C': {
             static const Operation OpC = { "TweetAll",
-                Params<2, STR, id::Handle::kDefaultMaxLength, STR, 141> (), 
+                Params<2, STR, id::Handle::kMaxLength, STR, 141> (), 
                        Params<0> (),
                 "Sends a message of 140 chars or less to this player.", 0 };
             if (!expr) return &OpC;
             if (ExprArgs (expr, Params<2, 
-                          STR, id::Handle::kDefaultMaxLength, STR, 141> (),
+                          STR, id::Handle::kMaxLength, STR, 141> (),
                           Args (args, handle, tweet))) {
                 return expr->result;
             }
@@ -242,14 +242,14 @@ const Operation* BlackjackDealer::Star (uint index, Expression* expr) {
                 "Attempts to buy the specified number of coins.", 0 };
             if (!expr) return &OpD;
             if (ExprArgs (expr, Params<3, SI4, UI8, UI8> (),
-                          Args (args, &session, &session_key, &num_points))) {
+                          Args (args, &session, &public_key, &num_points))) {
                 return expr->result;
             }
             player = reinterpret_cast<BlackjackPlayer*> (GetPlayer (session));
             if (!player) {
                 return Result (expr, Bin::kErrorAuthenticationError);
             }
-            if (session_key != player->GetUser ()->GetSessionKey ()) {
+            if (public_key != player->GetUser ()->GetSessionKey ()) {
                 return Result (expr, Bin::kErrorAuthenticationError);
             }
             cout << "\n| Message from @" << handle << "\n| " << tweet;
@@ -259,7 +259,7 @@ const Operation* BlackjackDealer::Star (uint index, Expression* expr) {
     return Result (expr, Bin::kErrorInvalidOperation);
 }
 
-const char* BlackjackDealer::HandleText (const char* text,
+const char* BlackjackDealer::Do (const char* text,
                                          const char* text_end) {
     const char* token_end;
     BlackjackPlayer* player = dynamic_cast<BlackjackPlayer*> (GetPlayer ());
@@ -270,20 +270,20 @@ const char* BlackjackDealer::HandleText (const char* text,
     if (current_player_ < GetMinPlayers ()) {
         return "";
     }
-    token_end = TextTokenEnd (text, text_end);
-    if (TextTokenCompare (text, text_end, "BuyIn")) {
+    token_end = TokenEnd (text, text_end);
+    if (TokenCompare (text, text_end, "BuyIn")) {
         if (!player) {
             cout << "\n| Error: no player is selected to BuyIn!";
         }
-    } else if (TextTokenCompare (text, text_end, "Raise")) {
+    } else if (TokenCompare (text, text_end, "Raise")) {
         if (!player) {
             cout << "\n| Error: no player is selected to Raise!";
         }
-    } else if (TextTokenCompare (text, text_end, "Hit")) {
+    } else if (TokenCompare (text, text_end, "Hit")) {
         if (!player) {
             cout << "\n| Error: no player is selected to Hit!";
         }
-    } else if (TextTokenCompare (text, text_end, "Hold")) {
+    } else if (TokenCompare (text, text_end, "Hold")) {
         if (!player) {
             cout << "\n| Error: no player is selected to Hold!";
         }

@@ -179,7 +179,7 @@ class Library: public Operand
         @param text     Beginning of the Text buffer. 
         @param text_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* HandleText (const char* text,
+    virtual const char* Do (const char* text,
                                     const char* text_end) {
         return nullptr;
     }

@@ -20,7 +20,7 @@
 #ifndef SCRIPT_SET_H
 #define SCRIPT_SET_H
 
-#if USING_SCRIPT_BOOK
+#if SCRIPT_USING_BOOK
 
 #include "memory.h"
 #include "types.h"
@@ -812,5 +812,5 @@ void BookPrint (Book<TIndex, TKey, TData>* book) {
 //}
 
 }       //< namespace _
-#endif  //< USING_SCRIPT_BOOK
+#endif  //< SCRIPT_USING_BOOK
 #endif  //< SCRIPT_SET_H

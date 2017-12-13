@@ -22,7 +22,7 @@ using namespace std;
 
 namespace _ {
 
-#if USING_SCRIPT_KEYBOARD
+#if SCRIPT_USING_KEYBOARD
 
 char KeyboardChar (const char* header) {
     cout << header;
@@ -59,5 +59,5 @@ void KeyboardText (const char* header, char* target, char* target_end) {
     cin.clear ();
     cin.ignore (target_end - target, '\n');
 }
-#endif  //< USING_SCRIPT_KEYBOARD
+#endif  //< SCRIPT_USING_KEYBOARD
 }       //< namespace _

@@ -99,10 +99,10 @@ int MemoryHexToByte (uint16_t h) {
     return lowerValue | (upperValue << 4);
 }
 
-void MemoryClear (void* address, size_t size) {
+void MemoryClear (void* address, int size) {
     //memset (address, '0', size);
     byte* ptr = reinterpret_cast<byte*> (address);
-    for (; size != 0; --size)
+    for (; size; --size)
         *ptr++ = '\0';
     /* This code is designed to work like memcpy but is not working right now.
     uintptr_t lsb_mask = (1 << sizeof (long)) - 1,
@@ -126,7 +126,7 @@ void MemoryClear (void* address, size_t size) {
     *ptr = value;*/
 }
 
-byte* MemoryCopy (void* target, void* target_end, const void* memory, size_t size) {
+byte* MemoryCopy (void* target, void* target_end, const void* memory, int size) {
     // @todo Optimize to write in words.
     if (target == nullptr) {
         return 0;
@@ -179,7 +179,7 @@ byte* MemoryCopy (void* target, void* target_end, const void* memory,
 }
 
 byte* MemoryCopy (void* target, void* target_end, const void* memory,
-                  const void* memory_end, size_t size) {
+                  const void* memory_end, int size) {
     // @todo Optimize to write in words.
     if (target == nullptr) {
         return 0;
@@ -203,7 +203,7 @@ byte* MemoryCopy (void* target, void* target_end, const void* memory,
     if ((read_end - read) < size) {
         return nullptr;
     }
-    for (; size != 0; --size) {
+    for (; size; --size) {
         *write++ = *read++;
     }
     return write;

@@ -1,4 +1,4 @@
-/** kabuki::id
+/** Kabuki Toolkit
     @file    ~/source/projects/kabuki_cards_client/resultver.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;

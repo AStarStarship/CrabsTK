@@ -1,4 +1,4 @@
-﻿/** kabuki::cards
+﻿/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/cards_card_game.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -132,8 +132,8 @@ const Operation* CardGame::Star (uint index, _::Expression* expr) {
         }
         case 'C': {
             static const uint_t* kRxHeaderC = Params<1, SI4,
-                STR, User::kDefaultMaxDislpayNameLength + 1,
-                STR, Handle::kDefaultMaxLength + 1> ();
+                STR, User::kMaxStatusLength + 1,
+                STR, Handle::kMaxLength + 1> ();
             static const Operation OpC = { "SetPlayer",
                 kRxHeaderC, Params<0> (),
                 "Sets the player at the given #index to the given "
@@ -141,8 +141,8 @@ const Operation* CardGame::Star (uint index, _::Expression* expr) {
             };
             if (!expr) return &OpC;
             int32_t player_number;
-            char status[User::kDefaultMaxDislpayNameLength + 1],
-                 handle[Handle::kDefaultMaxLength];
+            char status[User::kMaxStatusLength + 1],
+                 handle[Handle::kMaxLength];
             if (!ExprArgs (expr, kRxHeaderC, Args (args, &player_number,
                                                    status, handle)))
                 return expr->result;

@@ -1,4 +1,4 @@
-/** kabuki::cards
+/** Kabuki Toolkit
     @file       ~/source/kabuki/cards/blackjack_card_combo.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;

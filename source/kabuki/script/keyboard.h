@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#if USING_SCRIPT_KEYBOARD
+#if SCRIPT_USING_KEYBOARD
 namespace _ {
 /** Reads a single char from the keyboard
     @param header The header to print. */
@@ -46,5 +46,5 @@ KABUKI float KeyboardFloat (const char* header);
 KABUKI void KeyboardText (const char* header, char* target, char* target_end);
 
 }       //< namespace _
-#endif  //< USING_SCRIPT_KEYBOARD
+#endif  //< SCRIPT_USING_KEYBOARD
 #endif  //< HEADER_FOR_SCRIPT_KEYBOARD

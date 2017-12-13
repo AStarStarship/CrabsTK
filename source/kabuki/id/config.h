@@ -1,4 +1,4 @@
-/** kabuki::id
+/** Kabuki Toolkit
     @file    ~/source/kabuki/id/include/script_module.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -18,7 +18,6 @@
 
 #include "../script/global.h"
 #include "../data/global.h"
-using namespace kabuki::data;
 
 typedef uint64_t uid_t;
 

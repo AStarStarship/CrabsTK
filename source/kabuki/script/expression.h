@@ -304,8 +304,19 @@ KABUKI void ExpressionPrintStack (Expression* expr);
 /** Prints the given Expression to the console. */
 KABUKI void ExpressionPrint (Expression* expr);
 
-KABUKI const Operation* ExpressionQuery (Expression* expr,
-                                         const Operation* operation);
+/** Returns the Operand header or writes it to the Expression.
+    @param expr   The expression to write the Operation header to.
+    @param header The Operation header.
+    @return Returns the header if expr is nil. */
+KABUKI const Operation* ExpressionOperand (Expression* expr,
+                                           const Operation* header);
+
+/** Returns the Operation header or writes it to the Expression.
+    @param expr   The expression to write the Operation header to.
+    @param header The Operation header.
+    @return Returns the header if expr is nil. */
+KABUKI const Operation* ExpressionOperation (Expression* expr,
+                                             const Operation* header);
 #endif  //< USE_MORE_ROM
 
 }       //< namespace _

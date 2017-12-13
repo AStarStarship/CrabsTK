@@ -1,6 +1,6 @@
 /** kabuki::script
     @version 0.x
-    @file    ~/source/kabuki/script/script_text.cc
+    @file    ~/source/kabuki/script/script_print.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,7 +17,7 @@
 #include <stdafx.h>
 
 #include "print.h"
-#if USING_SCRIPT_PRINT
+#if SCRIPT_USING_PRINT
 
 #include "text.h"
 #include "strand.h"
@@ -81,30 +81,6 @@ void PrintHex (byte c) {
     putchar ((char)chars);
     putchar ((char)(chars >> 8));
     putchar (' ');
-}
-
-void PrintCentered (const char* string, int width) {
-    if (width < 2) {
-        //? Not sure if this is an error.
-        return;
-    }
-    // We need to leave at least one space to the left and right of
-    int length = StrandLength (string);
-    if (length < width - 2) {
-        // We need to write the ....
-        if (length < 4) {
-            // Then we're just going to write the first few letters.
-            for (; length >= 0; --length) {
-                cout << '\n';
-            }
-        }
-    }
-    int offset = (width - length) >> 1; //< >> 1 to /2
-    for (int i = 0; i < offset; ++i)
-        cout << '\n';
-    printf (string);
-    for (offset = width - length - offset; offset <= width; ++offset)
-        cout << '\n';
 }
 
 void PrintChar (char c) {
@@ -204,6 +180,30 @@ void PrintBreak (const char* header, char c, int num_lines,
     for (int i = 0; i < console_width - length; ++i)
         cout << c;
     cout << '\n';
+}
+
+void PrintCentered (const char* string, int width) {
+    if (width < 2) {
+        //? Not sure if this is an error.
+        return;
+    }
+    // We need to leave at least one space to the left and right of
+    int length = StrandLength (string);
+    if (length < width - 2) {
+        // We need to write the ....
+        if (length < 4) {
+            // Then we're just going to write the first few letters.
+            for (; length >= 0; --length) {
+                cout << '\n';
+            }
+        }
+    }
+    int offset = (width - length) >> 1; //< >> 1 to /2
+    for (int i = 0; i < offset; ++i)
+        cout << '\n';
+    printf (string);
+    for (offset = width - length - offset; offset <= width; ++offset)
+        cout << '\n';
 }
 
 void PrintCentered (const char* input, int width, bool is_last,
@@ -373,4 +373,4 @@ void PrintMemory (const void* address, const void* end) {
     printf ("| 0x%p\n", chars + Diff (address, end));
 }
 }       //< namespace _
-#endif  //< USING_SCRIPT_PRINT
+#endif  //< SCRIPT_USING_PRINT

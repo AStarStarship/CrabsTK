@@ -21,7 +21,7 @@ using namespace std;
 namespace kabuki { namespace cards {
 
 RemotePlayer::RemotePlayer (Deck& pack) :
-    status_        (new char[User::kDefaultMaxDislpayNameLength + 1]),
+    status_        (new char[User::kMaxStatusLength + 1]),
     num_wins_      (0),
     num_points_    (0),
     pack_          (pack),
@@ -42,7 +42,7 @@ const char* RemotePlayer::SetDislpayName (const char* name) {
     if (name == nullptr) {
         return "name can't be nil";
     }
-    TextWrite (status_, status_ + User::kDefaultMaxDislpayNameLength + 1, name);
+    TextWrite (status_, status_ + User::kMaxStatusLength + 1, name);
     return nullptr;
 }
 
@@ -54,7 +54,7 @@ const char* RemotePlayer::SetHandle (const char* handle) {
     if (name == nullptr) {
         return "handle can't be nil";
     }
-    TextWrite (handle_, status_ + User::kDefaultMaxDislpayNameLength + 1,
+    TextWrite (handle_, status_ + User::kMaxStatusLength + 1,
                handle);
     return nullptr;
 }
@@ -142,7 +142,7 @@ const Operation* RemotePlayer::Star (uint index, _::Expression* expr) {
                 "Sets the status_.", 0
             };
             if (!expr) return &OpA;
-            return ExprArgs (expr, Params<1, STR, User::kDefaultMaxDislpayNameLength> (),
+            return ExprArgs (expr, Params<1, STR, User::kMaxStatusLength> (),
                              Args (args, status_));
         }
         case 'B': {

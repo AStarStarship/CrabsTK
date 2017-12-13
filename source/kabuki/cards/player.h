@@ -23,7 +23,7 @@ namespace kabuki { namespace cards {
 
 /** An abstract player in an abstract card game.
 */
-class Player {
+class Player : public _::Operand {
     public:
 
     typedef enum States {
@@ -115,15 +115,19 @@ class Player {
 
     /** Prints the player to the console. */
     virtual void Print () = 0;
-
-    /** Script operations. */
+    
+    /** Abstract Script Operation(s).
+        @param index The index of the expression.
+        @param expr  The Expression to read and write from.
+        @return      Returns null upon success, a Set header upon query, and an 
+                     error_t ticket upon Read-Write failure. */
     virtual const _::Operation* Star (uint index, _::Expression* expr) = 0;
 
     /** Handles Text input.
         @param text     Beginning of the Text buffer. 
         @param text_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* HandleText (const char* text,
+    virtual const char* Do (const char* text,
                                     const char* text_end) = 0;
     protected:
 

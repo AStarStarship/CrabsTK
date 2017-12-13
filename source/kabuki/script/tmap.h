@@ -23,7 +23,7 @@
 #include "memory.h"
 #include "types.h"
 
-#if USING_SCRIPT_MAP
+#if SCRIPT_USING_MAP
 
 namespace _ {
 
@@ -790,5 +790,5 @@ void MapPrint (Map<TIndex, TKey, TSize>* collection) {
 //}
 
 }       //< namespace _
-#endif  //< USING_SCRIPT_MAP
+#endif  //< SCRIPT_USING_MAP
 #endif  //< SCRIPT_MAP_H

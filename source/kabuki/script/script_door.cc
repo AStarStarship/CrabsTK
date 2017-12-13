@@ -89,7 +89,7 @@ const Operation* Door::ExecAll () {
     return 0;
 }
 
-const char* Door::HandleText (const char* text, const char* text_end) {
+const char* Door::Do (const char* text, const char* text_end) {
     return nullptr;
 }
 

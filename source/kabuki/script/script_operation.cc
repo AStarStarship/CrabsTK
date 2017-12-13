@@ -26,7 +26,7 @@
 namespace _ {
 
 const char* OperandName (Operand* operand) {
-    if (operand == nullptr) {
+    if (!operand) {
         return "null operand";
     }
     const Operation* op = operand->Star ('?', nullptr);
@@ -50,7 +50,7 @@ const Operation* OperandQuery (Expression* expr,
                                         kOperationMaxDescriptionLength> (),
                            Args (args, operation->name,
                                  &num_operations, &first_operation,
-                                 operation->metadata));
+                                 operation->description));
     }
     return operation;
 }
@@ -60,7 +60,7 @@ uintptr_t OperationCount (const uint_t* b_sequence) {
 }
 
 uintptr_t ToUInt (Operand* operand) {
-    if (operand == nullptr) {
+    if (!operand) {
         return 0;
     }
     const Operation* operation = operand->Star (0, nullptr);
@@ -132,7 +132,7 @@ void OperationPrint (const Operation* operation) {
         putchar (first_op);
         std::cout << "\' Last:" << last_op << '\'';
         putchar (last_op);
-        std::cout << "\'\n| Metadata:        " << operation->metadata;
+        std::cout << "\'\n| Metadata:        " << operation->description;
         return;
     }
 
@@ -141,7 +141,7 @@ void OperationPrint (const Operation* operation) {
     ParamsPrint (operation->params);
     std::cout << "\n| Result:      ";
     ParamsPrint (operation->params);
-    std::cout << "\n| Metadata:    " << operation->metadata
+    std::cout << "\n| Metadata:    " << operation->description
               << "\n| Evaluation   ";
     const byte* eval = operation->evaluation;
     if (eval == nullptr) {

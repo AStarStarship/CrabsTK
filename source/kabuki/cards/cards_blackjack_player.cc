@@ -1,4 +1,4 @@
-/** kabuki::cards
+/** Kabuki Toolkit
     @file       ~/source/kabuki/cards/cards_blackjack_player.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -299,10 +299,10 @@ const Operation* BlackjackPlayer::Star (uint index, _::Expression* expr) {
         NumOperations (0), OperationFirst ('A'),
         "Player in a Blackjack game.", 0 };
     void* args[2];
-    char handle[Handle::kDefaultMaxLength],
+    char handle[Handle::kMaxLength],
         tweet[141];
     switch (index) {
-        case '?': return ExpressionQuery (expr, &This);
+        case '?': return ExpressionOperation (expr, &This);
         case 'A': {
             static const Operation OpA = { "Hit",
                 Params<0> (), Params<0> (),
@@ -326,10 +326,10 @@ const Operation* BlackjackPlayer::Star (uint index, _::Expression* expr) {
         }
         case 'C': {
             static const Operation OpA = { "Tweet",
-                Params<2, STR, Handle::kDefaultMaxLength, STR, 141> (), Params<0> (),
+                Params<2, STR, Handle::kMaxLength, STR, 141> (), Params<0> (),
                 "Sends a message of 140 chars or less to this player.", 0 };
             if (!expr) return &OpA;
-            if (ExprArgs (expr, Params<2, STR, Handle::kDefaultMaxLength, STR,
+            if (ExprArgs (expr, Params<2, STR, Handle::kMaxLength, STR,
                                        141> (),
                           Args (args, handle, tweet))) return expr->result;
             cout << "\n| Message from @" << handle << "\n| " << tweet;
@@ -339,7 +339,7 @@ const Operation* BlackjackPlayer::Star (uint index, _::Expression* expr) {
     return Result (expr, Bin::kErrorInvalidOperation);
 }
 
-const char* BlackjackPlayer::HandleText (const char* text,
+const char* BlackjackPlayer::Do (const char* text,
                                          const char* text_end) {
     return nullptr;
 }

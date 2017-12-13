@@ -159,12 +159,19 @@ class KABUKI Dealer : public Player {
 
     /** Prints this object to the stdout. */
     virtual void Print ();
+    
+    /** Abstract Script Operation(s).
+        @param index The index of the expression.
+        @param expr  The Expression to read and write from.
+        @return      Returns null upon success, a Set header upon query, and an 
+                     error_t ticket upon Read-Write failure. */
+    virtual const _::Operation* Star (uint index, _::Expression* expr) = 0;
 
     /** Handles Text input.
         @param text     Beginning of the Text buffer. 
         @param text_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* HandleText (const char* text,
+    virtual const char* Do (const char* text,
                                     const char* text_end);
 
     protected:

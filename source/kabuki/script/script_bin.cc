@@ -203,21 +203,21 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
     byte     //array_type,            //< The current type being read.
              ui1;                     //< Temp variable.
     uint16_t ui2;                     //< Temp variable.
-#if USING_SCRIPT_VARINT4 || USING_AR4 || USING_BK4
+#if SCRIPT_USING_VARINT4 || USING_AR4 || USING_BK4
     uint32_t ui4;
 #endif
-#if USING_SCRIPT_VARINT8 || USING_AR8 || USING_BK8
+#if SCRIPT_USING_VARINT8 || USING_AR8 || USING_BK8
     uint64_t ui8;
 #endif
 
     byte*     ui1_ptr;              //< Pointer to a UI1.
-#if  USING_SCRIPT_VARINT2
+#if  SCRIPT_USING_VARINT2
     uint16_t* ui2_ptr;              //< Pointer to a UI2.
 #endif
-#if USING_SCRIPT_VARINT4
+#if SCRIPT_USING_VARINT4
     uint32_t* ui4_ptr;              //< Pointer to a UI4.
 #endif
-#if USING_SCRIPT_VARINT8
+#if SCRIPT_USING_VARINT8
     uint64_t* ui8_ptr;              //< Pointer to a UI1.
 #endif
     uint_t type,                    //< The current type being read.
@@ -226,9 +226,9 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
            count,                   //< Argument length.
            index,                   //< Index in the params.
            arg_index = 0,           //< Index in the args.
-#if USING_SCRIPT_ARRAY
+#if SCRIPT_USING_ARRAY
            temp,
-#endif  //< USING_SCRIPT_ARRAY
+#endif  //< SCRIPT_USING_ARRAY
            num_params = *params;    //< Number of params.
     hash16_t hash;
 
@@ -349,7 +349,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             case SI1: //< _R_e_a_d__1__B_y_t_e__T_y_p_e_s_______________________
             case UI1:
             case BOL:
-#if USING_SCRIPT_1_BYTE_TYPES
+#if SCRIPT_USING_1_BYTE_TYPES
                 if (length-- == 0)
                     return BinResult (bin, Bin::kErrorBufferUnderflow, params,
                                       index, start);
@@ -377,7 +377,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             case SI2: //< _R_e_a_d__1_6_-_b_i_t__T_y_p_e_s______________________
             case UI2:
             case HLF:
-#if USING_SCRIPT_2_BYTE_TYPES
+#if SCRIPT_USING_2_BYTE_TYPES
                 if (length < 2)
                     return BinResult (bin, Bin::kErrorBufferUnderflow, params,
                                       index, start);
@@ -409,7 +409,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             case UI4:
             case FLT:
             case TMS:
-#if USING_SCRIPT_4_BYTE_TYPES
+#if SCRIPT_USING_4_BYTE_TYPES
                 if (length < 4)
                     return BinResult (bin, Bin::kErrorBufferUnderflow, params, 
                                       index, start);
@@ -453,7 +453,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             case SI8:
             case UI8:
             case DBL:
-#if USING_SCRIPT_8_BYTE_TYPES
+#if SCRIPT_USING_8_BYTE_TYPES
                 if (length < 8)
                     return BinResult (bin, Bin::kErrorBufferUnderflow, params,
                                       index, start);
@@ -519,7 +519,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #endif
             case SV2: //< _R_e_a_d__2_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_______
 
-#if USING_SCRIPT_VARINT2
+#if SCRIPT_USING_VARINT2
                       // Load next pointer and increment args.
                 ui2_ptr = reinterpret_cast<uint16_t*> (args[arg_index]);
                 if (ui2_ptr == nullptr)
@@ -625,7 +625,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #endif
             case SV4: //< _R_e_a_d__4_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_______
             case UV4: //< _R_e_a_d__4_-_b_y_t_e__U_n_s_i_g_n_e_d__V_a_r_i_n_t___
-#if USING_SCRIPT_VARINT4
+#if SCRIPT_USING_VARINT4
                       // Load next pointer and increment args.
                 ui4_ptr = reinterpret_cast<uint32_t*> (args[arg_index]);
                 if (ui4_ptr == nullptr)
@@ -666,7 +666,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #endif
             case SV8: //< _R_e_a_d__V_a_r_i_n_t__8______________________________
             case UV8:
-#if USING_SCRIPT_VARINT8
+#if SCRIPT_USING_VARINT8
                 // Load next pointer and increment args.
                 ui8_ptr = reinterpret_cast<uint64_t*> (args[arg_index]);
                 if (ui8_ptr == nullptr)
@@ -724,7 +724,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #if SCRIPT_DEBUG
                 std::cout << "\nIt's an array!\n";
 #endif  //< SCRIPT_DEBUG
-#if USING_SCRIPT_ARRAY
+#if SCRIPT_USING_ARRAY
                 switch ((type >> 5) & 0x3) {
                     case 0: {
                         if ((type < LST) && (type < MAP))

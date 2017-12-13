@@ -18,7 +18,7 @@
 
 #include "text.h"
 
-#if USING_SCRIPT_TEXT
+#if SCRIPT_USING_TEXT
 
 #include "print.h"
 #include "memory.h"
@@ -48,16 +48,14 @@ const char* TextSkipSpaces (const char* text, const char* text_end) {
     if (!text) {
         return nullptr;
     }
-    if (text >= text_end) {
+    if (text > text_end) {
         return nullptr;
     }
     //cout << "\n| Skipping spaces: ";
     char c = *text;
-    while (!isspace (c)) {
+    while (isspace (c)) {
         //cout << '.';
         if (!c) {
-            // We're skipping spaces because we're expecting good data so this
-            // is an error.
             return nullptr;
         }
         if (++text > text_end) {
@@ -66,268 +64,6 @@ const char* TextSkipSpaces (const char* text, const char* text_end) {
         c = *text;
     }
     return text;
-}
-
-const char* TextTokenEnd (const char* text, const char* text_end) {
-    if (!text) {
-        return nullptr;
-    }
-    if (text > text_end) {
-        return nullptr;
-    }
-    text = TextSkipSpaces (text, text_end);
-
-    char c = *text;
-    while (c) {
-        if (isspace (c)) {
-            return text;
-        }
-        if (++text > text_end) {
-            return nullptr;
-        }
-        c = *text;
-    }
-    return text;
-}
-
-int TextTokenCompare (const char* text, const char* text_end,
-                      const char* token) {
-    int a,
-        b,
-        comparison;
-    if (!text) {
-        if (!token) {
-            return 0;
-        }
-        a = 0;
-        b = *token;
-        return b - a;
-    }
-    if (!token) {
-        a = *text;
-        b = 0;
-        return b - a;
-    }
-    if (text > text_end) {
-        return *token;
-    }
-    // Algorithm combines loops for better performance.
-
-    a = *text;
-    b = *token;
-    if (!a) {
-        if (!b) {
-            return 0;
-        }
-        return b;
-    }
-    if (!b) {
-        if (!a) {
-            return 0;
-        }
-        return 0 - a;
-    }
-    while (a && !isspace (a)) {
-        //cout << "\n| s: " << s << " t: " << t;
-        comparison = b - a;
-        if (comparison) {
-            //cout << "\n| Found unmatched chars t:\'" << t <<"\' s:\'" << s << "comparison:" << comparison;
-            return comparison;
-        }
-        if (++text > text_end) {
-            return *token;
-        }
-        ++token;
-        a = *text;
-        b = *token;
-    }
-    if (!isspace (b)) {
-        //cout << "\n| token still has some chars so it's is greater.";
-        return b;
-    }
-    //cout << "\n| Find match!";
-    return 0;
-}
-
-int TextTokenCompare (const char* text, const char* text_end,
-                      const char* token, const char* token_end) {
-    int a,
-        b,
-        comparison;
-    if (!text) {
-        if (!token) {
-            return 0;
-        }
-        return *token;
-    }
-    if (!token) {
-        return 0 - *text;
-    }
-    if (text > text_end) {
-        return *token;
-    }
-    if (token > token_end) {
-        return *text;
-    }
-    // Algorithm combines loops for better performance.
-
-    a = *text;
-    b = *token;
-    if (!a) {
-        if (!b) {
-            return 0;
-        }
-        return b;
-    }
-    if (!b) {
-        if (!a) {
-            return 0;
-        }
-        return 0 - a;
-    }
-    while (a && !isspace (a)) {
-        //cout << "\n| s: " << s << " t: " << t;
-        comparison = b - a;
-        if (comparison) {
-            //cout << "\n| Found unmatched chars t:\'" << t <<"\' s:\'" << s << "comparison:" << comparison;
-            return comparison;
-        }
-        if (++text > text_end) {
-            return b;
-        }
-        if (++token > token_end) {
-            return a;
-        }
-        a = *text;
-        b = *token;
-    }
-    if (!isspace (b)) {
-        //cout << "\n| token still has some chars so it's is greater.";
-        return b;
-    }
-    //cout << "\n| Find match!";
-    return 0;
-}
-
-const char* TextTokenEquals (const char* text, const char* text_end,
-                             const char* token) {
-    int a,
-        b,
-        comparison;
-    if (!text) {
-        return nullptr;
-    }
-    if (text > text_end) {
-        return nullptr;
-    }
-    if (!token) {
-        return nullptr;
-    }
-    // Algorithm combines loops for better performance.
-
-    a = *text;
-    b = *token;
-    if (!a) {
-        return nullptr;
-    }
-    if (!b) {
-        return nullptr;
-    }
-    while (a && !isspace (a)) {
-        //cout << "\n| s: " << s << " t: " << t;
-        comparison = b - a;
-        if (comparison) {
-            //cout << "\n| Found unmatched chars t:\'" << t <<"\' s:\'" << s << "comparison:" << comparison;
-            return nullptr;
-        }
-        if (++text > text_end) {
-            return nullptr;
-        }
-        ++token;
-        a = *text;
-        b = *token;
-    }
-    if (!isspace (b)) {
-        //cout << "\n| token still has some chars so it's is greater.";
-        return nullptr;
-    }
-    //cout << "\n| Find match!";
-    return 0;
-}
-
-const char* TextTokenEquals (const char* text, const char* text_end,
-                             const char* token, const char* token_end) {
-    int a,
-        b,
-        comparison;
-    if (!text) {
-        return nullptr;
-    }
-    if (text > text_end) {
-        return nullptr;
-    }
-    if (!token) {
-        return nullptr;
-    }
-    if (token > token_end) {
-        return nullptr;
-    }
-    // Algorithm combines loops for better performance.
-
-    a = *text;
-    b = *token;
-    while (a && !isspace (a)) {
-        //cout << "\n| s: " << s << " t: " << t;
-        comparison = b - a;
-        if (comparison) {
-            //cout << "\n| Found unmatched chars t:\'" << t <<"\' s:\'" << s << "comparison:" << comparison;
-            return nullptr;
-        }
-        if (++text > text_end) {
-            return nullptr;
-        }
-        if (++token > token_end) {
-            return nullptr;
-        }
-        a = *text;
-        b = *token;
-    }
-    if (!isspace (b)) {
-        //cout << "\n| token still has some chars so it's is greater.";
-        return nullptr;
-    }
-    //cout << "\n| Find match!";
-    return text;
-}
-
-bool TextTokenQualifies (const char* text, const char* text_end) {
-    if (!text) {
-        return false;
-    }
-    if (text > text_end) {
-        return false;
-    }
-    char c = *text;
-    while (c) {
-        if (!isspace (c)) { 
-            // The token must end at or before the target_end.
-            do {
-                if (++text > text_end) {
-                    return false;
-                }
-                c = *text;
-                if (!isspace (c)) {
-                    return true;
-                }
-            } while (c);
-            return true;
-        }
-        if (++text > text_end) {
-            return false;
-        }
-        c = *text;
-    }
-    return false;
 }
 
 char* TextWrite (char* target, char* target_end, const char* strand) {
@@ -668,9 +404,9 @@ const char* StrandRead (const char* buffer, int32_t& result) {
     // 2. Count length of int string and handle error in case of overflow.
     // 3. Get pointer to last char.
     // 4. Set variable named value to the first char and multiplier to 1.
-    // 4. Word backwards in a for loop from strand_end of int string to calculate each
-    //    decimal place by multiplying (c - '0') times a multiplier times 10
-    //    for each loop.
+    // 4. Word backwards in a for loop from strand_end of int string to
+    //    calculate each decimal place by multiplying (c - '0') times a
+    //    multiplier times 10 for each loop.
     // 5. Return sign times the resulting value above.
     enum {
         kMaxLetters = sizeof (int) == 32 ? 10 : 6, //< int can be 16 or 32-bit.
@@ -845,36 +581,8 @@ const char* TextRead (const char* target, const char* target_end,
     return TextNextNonNumber (target, target_end);
 }
 
-const char* TextTokenRead (const char* text, const char* text_end,
-                           char* token, char* token_end) {
-    if (!token) {
-        return nullptr;
-    }
-    if (token > token_end) {
-        return nullptr;
-    }
-    if (!text) {
-        return nullptr;
-    }
-    if (text > text_end) {
-        return nullptr;
-    }
-    char t = *text;
-    while (t && !isspace (t)) {
-        *token = t;
-        if (++token > token_end) {
-            return nullptr;
-        }
-        if (++text > text_end) {
-            return nullptr;
-        }
-        t = *text;
-    }
-    *token = t;
-    return text;
-}
-
-const char* TextRead (const char* target, const char* target_end, int64_t& result) {
+const char* TextRead (const char* target, const char* target_end,
+                      int64_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     __int64 extra_copy;
     if (!sscanf_s (target, "%lli", &extra_copy)) {
@@ -884,7 +592,8 @@ const char* TextRead (const char* target, const char* target_end, int64_t& resul
     return TextNextNonNumber (target, target_end);
 }
 
-const char* TextRead (const char* target, const char* target_end, uint64_t& result) {
+const char* TextRead (const char* target, const char* target_end,
+                      uint64_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     unsigned __int64 extra_copy;
     if (!sscanf_s (target, "%llu", &extra_copy)) {
@@ -894,7 +603,8 @@ const char* TextRead (const char* target, const char* target_end, uint64_t& resu
     return TextNextNonNumber (target, target_end);
 }
 
-const char* TextRead (const char* target, const char* target_end, float& result) {
+const char* TextRead (const char* target, const char* target_end,
+                      float& result) {
     // @todo Rewrite with custom string-to-float function.
     float extra_copy;
     if (!sscanf_s (target, "%f", &extra_copy)) {
@@ -904,7 +614,8 @@ const char* TextRead (const char* target, const char* target_end, float& result)
     return TextNextNonNumber (target, target_end);
 }
 
-const char* TextRead (const char* target, const char* target_end, double& result) {
+const char* TextRead (const char* target, const char* target_end,
+                      double& result) {
     // @todo Rewrite with custom string-to-float function.
     double extra_copy;
     if (!sscanf_s (target, "%lf", &extra_copy)) {
@@ -914,5 +625,70 @@ const char* TextRead (const char* target, const char* target_end, double& result
     return TextNextNonNumber (target, target_end);
 }
 
-#endif  //< USING_SCRIPT_TEXT
+Text::Text (const char* strand) :
+    cursor_ () {
+    if (!TextWrite (buffer_, buffer_ + kSize, strand)) {
+        *buffer_ = 0;
+    }
+}
+
+Text::Text (const Text& other) :
+    cursor_ (other.cursor_) {
+    char* cursor = cursor_;
+    const char* other_buffer_end = other.buffer_ + (cursor - buffer_);
+    MemoryCopy (buffer_, cursor, other.buffer_, other_buffer_end);
+}
+
+void Text::Clear () {
+    *buffer_ = 0;
+    cursor_ = buffer_;
+}
+
+void Text::Clone (const Text& other) {
+    int other_count = other.GetCount ();
+    MemoryCopy (buffer_, buffer_ + other_count, other.buffer_,
+                other.buffer_ + other_count);
+    cursor_ = buffer_ + other_count;
+}
+
+char* Text::GetBegin () {
+    return buffer_;
+}
+
+bool Text::SetCursor (char* new_cursor) {
+    if (new_cursor < buffer_) {
+        return false;
+    }
+    if (new_cursor >= buffer_+ kSize) {
+        return false;
+    }
+    cursor_ = new_cursor;
+    return true;
+}
+
+char* Text::GetCursor () {
+    return cursor_;
+}
+
+char* Text::GetEnd () {
+    return buffer_ + kSize;
+}
+
+int Text::GetCount () const {
+    return cursor_ - buffer_;
+}
+
+void Text::Print (Text& txt) {
+    txt << buffer_;
+}
+
+Text& Text::operator= (const Text& other) {
+    if (this == &other) {
+        return *this;
+    }
+    Clone (other);
+    return *this;
+}
+
+#endif  //< SCRIPT_USING_TEXT
 }       //< namespace _

@@ -1,4 +1,4 @@
-/** kabuki::cards Tests
+/** Kabuki Toolkit
     @file    ~/projects/cards/cards_tests.cc
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
@@ -102,9 +102,8 @@ TEST (CARDS_TESTS, CardTests) {
 
     stock.Print ();
 
-    cout << "\n|\n| Testing kabuki::cards::Card class... ";
+    cout << "\n|\n| Done testing kabuki::cards::Card class... ";
 }*/
-
 
 TEST (CARDS_TESTS, ServerTests) {
     // # How to use this tester:
@@ -118,7 +117,7 @@ TEST (CARDS_TESTS, ServerTests) {
     //    password[Password::kDefaultMaxLength + 1];
     char input[141];
     //int32_t session;
-    //uid_t session_key;
+    //uid_t public_key;
 
     PrintLine ();
     cout << "\n| Testing kabuki::cards::Server...";
@@ -129,18 +128,18 @@ TEST (CARDS_TESTS, ServerTests) {
 
     Server server;
 
-    cout << server.Star ('?', nullptr)->metadata;
+    cout << server.Star ('?', nullptr)->description;
     cout << "\n|\n|";
 
-    server.Users ().Register ("Me", "Too");
-    server.Users ().Register ("Dealer1");
+    server.Users ().Add ("Me", "Too");
+    server.Users ().Add ("Dealer1");
     server.Users ().Print ();
-    server.Users ().Register ("Player1");
-    server.Users ().Register ("Player2");
-    server.Users ().Register ("Player3");
+    server.Users ().Add ("Player1");
+    server.Users ().Add ("Player2");
+    server.Users ().Add ("Player3");
     cout << "\n|\n|";
     server.AddBlackjackGame ();
-    server.Print ();
+    server.Users ().Add ("Player4");
     server.AddBlackjackGame ();
     server.Print ();
     //KeyboardText ("\n< Enter your handle: ", handle,
@@ -151,14 +150,19 @@ TEST (CARDS_TESTS, ServerTests) {
     //     << password << '\"';
     //server.Users () = server.Users ().LogIn (handle, password);
     cout << "\n|\n|";
-    system ("PAUSE");
+    server.SetState (Server::kStateServingClients);
+    server.Print ();
     // Play-again loop.
     // A play-again loop goes in a loop where the user is asked if they want to
     // play again. The user can
     // enter "hit", "hold", "exit", or "quit". The code for the game.
-    while (server.GetState ()) {  // Main game loop.
-
+    while (server.GetState ()) {
+        // Server is asynchronous so all we do is loop and wait for the state
+        // to get set to 0.
         KeyboardText (server.GetDirections (), input, input + 141);
-        server.HandleText (input, input + 141);
+        server.Do (input, input + 141);
     }
+
+    cout << "\n|\n| Done testing kabuki::cards::Server class... ";
+    system ("PAUSE");
 }

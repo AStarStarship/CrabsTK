@@ -32,7 +32,6 @@
 #include "log.h"
 #include "tbook.h"
 #include "ascii.h"
-#include "bout_portal.h"
 #include "color.h"
 #include "address.h"
 #include "event.h"

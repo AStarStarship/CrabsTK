@@ -1,4 +1,4 @@
-/** kabuki::id
+/** Kabuki Toolkit
     @file    ~/source/kabuki/id/user.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -30,7 +30,7 @@ class KABUKI User : _::Portal {
 
     enum {
         kDefaultMinDislpayNameLength = 2,  //< Default max display name length.
-        kDefaultMaxDislpayNameLength = 63, //< Default max display name length.
+        kMaxStatusLength = 63, //< Default max display name length.
         kDefaultValue                = 0,  //< Default abstract user value.
     };
     static const double kDefaultBalance;   //< Default account balance.
@@ -116,7 +116,7 @@ class KABUKI User : _::Portal {
 
     /** Returns true if this session and cypher match the same as the given
         one.  */
-    bool IsAuthentic (int32_t session, uid_t session_key);
+    bool IsAuthentic (int32_t session, uid_t public_key);
 
     /** Prints this object to a expression. */
     virtual void Print ();
@@ -125,7 +125,7 @@ class KABUKI User : _::Portal {
         @param text     Beginning of the Text buffer. 
         @param text_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* HandleText (const char* text,
+    virtual const char* Do (const char* text,
                                     const char* text_end);
 
     private:
@@ -136,7 +136,7 @@ class KABUKI User : _::Portal {
     Authenticator* authenticator_;//< Handle and Password authenticator.
     int32_t        session_;      //< Session index.
     uid_t          uid_,          //< Index of user in the UserList.
-                   session_key_,  //< Fake session encryption key.
+                   public_key_,  //< Fake session encryption key.
                    response_;     //< Gets user abstract response code.
     double         balance_;      //< Abstract user account balance or money.
     int64_t        value_;        //< Abstract account value, points, or coins.

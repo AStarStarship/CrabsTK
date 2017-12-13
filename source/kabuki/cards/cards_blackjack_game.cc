@@ -1,4 +1,4 @@
-﻿/** kabuki::cards
+﻿/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/cards_blackjack_game.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -229,14 +229,14 @@ const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
     void* args[1];
     int32_t player_uid;
     uint64_t session,
-             session_key;
+             public_key;
 
     switch (index) {
         case '?': return &This;
         case 'A': {
-            static const Operation OpA = { "Join",
+            static const Operation OpA = { "join",
                 Params<1, UI8, UI8> (), Params <0> (),
-                "Adds the #user_session with #session_key to the list of game "
+                "Adds the #user_session with #public_key to the list of game "
                 "observers pending authentication.", 0 };
             if (!expr) return &OpA;
             if (ExprArgs (expr, Params<1, SI4> (), Args (args, &player_uid))) {
@@ -251,13 +251,13 @@ const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
             return nullptr;
         }
         case 'B': {
-            static const Operation OpB = { "Leave",
+            static const Operation OpB = { "leave",
                 Params<1, UI8, UI8> (), Params <0> (),
-                "Triggers #user_session with #session_key to Leave the game "
+                "Triggers #user_session with #public_key to Leave the game "
                 "observer queue pending authentication.", 0 };
             if (!expr) return &OpB;
             if (ExprArgs (expr, Params<2, UI8, UI8> (), Args (args, &session, 
-                                                              &session_key))) {
+                                                              &public_key))) {
                 return expr->result;
             }
             User* user = GetObservers ()[player_uid];
@@ -283,18 +283,18 @@ const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
     return Result (expr, Bin::kErrorInvalidIndex);
 }
 
-const char* BlackjackGame:: HandleText (const char* text,
+const char* BlackjackGame:: Do (const char* text,
                                         const char* text_end) {
     if (!text) {
         return nullptr;
     }
     if (text >= text_end) {
-        return "\n| Error: nil text_end pointer in HandleText (const char*, "
+        return "\n| Error: nil text_end pointer in Star (const char*, "
                "const char*):const char*!";
     }
 
     if (text > text_end) {
-        return "\n| Error: text buffer overflow in HandleText (const char*, "
+        return "\n| Error: text buffer overflow in Star (const char*, "
                "const char*):const char*!";
     }
 

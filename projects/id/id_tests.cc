@@ -43,7 +43,7 @@ TEST (ID_TESTS, UserListTests) {
                                             { "user_1", "olives"   } };
     UserList users;
     int32_t session;
-    uint64_t session_key;
+    uint64_t public_key;
 
     const char* handle,
               * password;
@@ -83,8 +83,8 @@ TEST (ID_TESTS, UserListTests) {
         password = test_users[i][1];
         cout << "\n| Attempting to log in \"" << handle << "\":\""
             << password << "\" at index:" << i;
-        session_key = users.LogIn (handle, password);
-        cout << "\n| result:" << session_key;
+        public_key = users.LogIn (handle, password);
+        cout << "\n| result:" << public_key;
     }
 
     cout << "\n|\n| Done testing UserList ({:->})";

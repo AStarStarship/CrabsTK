@@ -821,3 +821,39 @@ TEST (SCRIPT_TESTS, OperationTests) {
     std::cout << "\n| Done with Operation tests.";
     system ("PAUSE");
 }*/
+
+TEST (SCRIPT_TESTS, TextTests) {
+    cout << "\n|\n| Testing Token...";
+
+    enum {
+        kNumStrings = 5,
+        kSize = 10,
+    };
+
+    static const char* test_strings[kNumStrings][2] = {
+        { "?"      , ""        },
+        { "?"      , "?"       },
+        { "? "     , "?"       },
+        { "Apples" , "Apples"  },
+        { "Apples" , "Apples"  },
+    };
+
+    const char* end;
+
+    char buffer_a[kSize],
+         buffer_b[kSize];
+
+    for (int i = 0; i < kNumStrings; ++i) {
+        end = TextWrite (buffer_a, buffer_a + kSize, test_strings[i][0]);
+        CHECK (end != nullptr)
+        end = TextWrite (buffer_b, buffer_b + kSize, test_strings[i][0]);
+        CHECK (end != nullptr)
+
+        end = TokenEquals (buffer_a, buffer_b);
+        CHECK (end != nullptr)
+        end = TokenEquals (buffer_a, buffer_a + kSize, buffer_b);
+        CHECK (end != nullptr)
+    }
+    cout << "\n|\n| Done testing kabuki::cards::Server class... ";
+    system ("PAUSE");
+}

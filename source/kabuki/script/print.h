@@ -21,9 +21,15 @@
 #define HEADER_FOR_SCRIPT_PRINT
 
 #include "text.h"
-#if USING_SCRIPT_PRINT
+#if SCRIPT_USING_PRINT
 
 namespace _ {
+
+template<typename T>
+inline char Char (T value) {
+    if (value < 32) return ' ';
+    return value;
+}
 
 /** Prints the given token a specified num_times. */
 KABUKI void PrintLine (char token = '-', const char* left_column_text = "\n|",
@@ -54,35 +60,6 @@ KABUKI void PrintLine (const char* string);
 
 KABUKI void PrintError (const char* message,
                         const char* end_string = TextCR ());
-
-KABUKI void PrintDebugPointer (const char* message,
-                               const void* address);
-
-template<typename T>
-KABUKI void PrintDebugSignedHex (const char* message,
-                                 T value) {
-#if DEBUG
-    printf ("\n| %s:'%i':0x%x\n", message, value, value);
-#endif
-}
-
-template<typename T>
-KABUKI void PrintDebugUnsignedHex (const char* message,
-                                   T value) {
-#if DEBUG
-    printf ("%s:'%u':0x%x\n", message, value, value);
-#endif
-}
-
-template<typename T>
-KABUKI void PrintDebugError (const char* message,
-                             T expected,
-                             T found) {
-#if DEBUG
-    std::cout << TextErrorHeader << "expecting " << expected << " and found "
-              << found << " attempting: " << message;
-#endif
-}
 
 /** Converts a single byte a one-byte hex representation. */
 KABUKI byte MemoryNibbleToLowerCaseHex (byte b);
@@ -123,11 +100,20 @@ inline void PrintPointer (const void* pointer) {
     printf ("0x%p", pointer);
 }
 
-/** Prints the given char center in the given width.
+/** Prints the given strand centered about the given width in console char rows.
     If char is too small to fit in the width, function will print as much of
     the char as it has room for with a "..." If the given width is less than
-    5, than */
-KABUKI void PrintCentered (const char* string, int width);
+    5, then only dots will be printed. */
+KABUKI void PrintCentered (const char* strand, int width);
+
+/** Prints the given strand centered about the given width in console char rows.
+    If char is too small to fit in the width, function will print as much of
+    the char as it has room for with a "..." If the given width is less than
+    5 then only dots will be printed. */
+
+/** Prints the given char centered. */
+KABUKI void PrintCentered (const char* input, int width, bool is_last,
+                           char column_delimeter = '|');
 
 /** Prints the given char to the stdout if it is printable, and prints ADR. */
 KABUKI void PrintChar (char c);
@@ -224,12 +210,6 @@ KABUKI void PrintBreak (const char* header = "\n_",
                         int num_lines = 0,
                         int console_width = 80);
 
-/** Prints the given char centered. */
-KABUKI void PrintCentered (const char* input,
-                           int width,
-                           bool is_last = false,
-                           char column_delimeter = '|');
-
 /** Prints a line break with the given number of columns. */
 KABUKI void PrintColumnBreak (int num_columns,
                               char column_delimeter = '|',
@@ -272,13 +252,15 @@ KABUKI void PrintMemory (const void* address, const void* end);
 
 /** Prints out the contents of the address to the debug stream. */
 inline void PrintMemory (const void* address, int num_bytes) {
-    return PrintMemory (address, reinterpret_cast<const byte*> (address) + num_bytes);
+    return PrintMemory (address,
+                        reinterpret_cast<const byte*> (address) + num_bytes);
 }
 /** Prints out the contents of the address to the debug stream. */
 inline void PrintMemory (const void* address, uint num_bytes) {
-    return PrintMemory (address, reinterpret_cast<const byte*> (address) + num_bytes);
+    return PrintMemory (address,
+                        reinterpret_cast<const byte*> (address) + num_bytes);
 }
 
 }       //< namespace _
-#endif  //< USING_SCRIPT_PRINT
+#endif  //< SCRIPT_USING_PRINT
 #endif  //< HEADER_FOR_SCRIPT_PRINT

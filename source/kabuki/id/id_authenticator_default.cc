@@ -1,4 +1,4 @@
-/** kabuki::id
+/** Kabuki Toolkit
     @file    ~/source/kabuki/id/authenticator_default.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -24,9 +24,9 @@ namespace kabuki { namespace id {
 
 AuthenticatorDefault::AuthenticatorDefault () :
     min_handle_length_       (Handle::kDefaultMinLength),
-    max_handle_length_       (Handle::kDefaultMaxLength),
+    max_handle_length_       (Handle::kMaxLength),
     min_password_length_     (Password::kDefaultMinLength),
-    max_password_length_     (Password::kDefaultMaxLength) {
+    max_password_length_     (Password::kMaxLength) {
     // Nothing to do here. :-)
 }
 

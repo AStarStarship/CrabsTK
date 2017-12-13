@@ -36,6 +36,9 @@
     <Filter Include="projects\data">
       <UniqueIdentifier>{34d6995b-dbc8-455c-a6b9-b759e6c10d01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\kabuki\store">
+      <UniqueIdentifier>{292c5edd-566b-40b1-b709-d78a572f7ada}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="script\script_bin.cc">
@@ -90,9 +93,6 @@
       <Filter>source\kabuki\script</Filter>
     </ClCompile>
     <ClCompile Include="script\script_window.cc">
-      <Filter>source\kabuki\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\bout_portal.cc">
       <Filter>source\kabuki\script</Filter>
     </ClCompile>
     <ClCompile Include="script\script_args.cc">
@@ -179,9 +179,6 @@
     <ClCompile Include="cards\cards_blackjack_player_ai.cc">
       <Filter>source\kabuki\cards</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\projects\cards\cards_tests.cc">
-      <Filter>projects\cards</Filter>
-    </ClCompile>
     <ClCompile Include="script\script_hash.cc">
       <Filter>source\kabuki\script</Filter>
     </ClCompile>
@@ -196,6 +193,24 @@
     </ClCompile>
     <ClCompile Include="script\script_strand.cc">
       <Filter>source\kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\script_token.cc">
+      <Filter>source\kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\projects\cards\cards_tests.cc">
+      <Filter>projects\cards</Filter>
+    </ClCompile>
+    <ClCompile Include="script\script_textmessage.cc">
+      <Filter>source\kabuki\script</Filter>
+    </ClCompile>
+    <ClCompile Include="store\store_item.cc">
+      <Filter>source\kabuki\store</Filter>
+    </ClCompile>
+    <ClCompile Include="store\store_server.cc">
+      <Filter>source\kabuki\store</Filter>
+    </ClCompile>
+    <ClCompile Include="store\store_inventory.cc">
+      <Filter>source\kabuki\store</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,9 +227,6 @@
       <Filter>source\kabuki\script</Filter>
     </ClInclude>
     <ClInclude Include="script\bout.h">
-      <Filter>source\kabuki\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\bout_portal.h">
       <Filter>source\kabuki\script</Filter>
     </ClInclude>
     <ClInclude Include="script\clock.h">
@@ -319,12 +331,6 @@
     <ClInclude Include="..\..\projects\script\global.h">
       <Filter>projects\script</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\projects\script\stdafx.h">
-      <Filter>projects\script</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\projects\script\targetver.h">
-      <Filter>projects\script</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\projects\id\global.h">
       <Filter>projects\id</Filter>
     </ClInclude>
@@ -427,15 +433,29 @@
     <ClInclude Include="script\keyboard.h">
       <Filter>source\kabuki\script</Filter>
     </ClInclude>
+    <ClInclude Include="script\token.h">
+      <Filter>source\kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="store\config.h">
+      <Filter>source\kabuki\store</Filter>
+    </ClInclude>
+    <ClInclude Include="store\global.h">
+      <Filter>source\kabuki\store</Filter>
+    </ClInclude>
+    <ClInclude Include="store\item.h">
+      <Filter>source\kabuki\store</Filter>
+    </ClInclude>
+    <ClInclude Include="store\server.h">
+      <Filter>source\kabuki\store</Filter>
+    </ClInclude>
+    <ClInclude Include="script\textmessage.h">
+      <Filter>source\kabuki\script</Filter>
+    </ClInclude>
+    <ClInclude Include="store\inventory.h">
+      <Filter>source\kabuki\store</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\projects\script\readme.md">
-      <Filter>projects\script</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\projects\script\CMakeList.txt">
-      <Filter>projects\script</Filter>
-    </Text>
+    <None Include="..\..\readme.md" />
   </ItemGroup>
 </Project>

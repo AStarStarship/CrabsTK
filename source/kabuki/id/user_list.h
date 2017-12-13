@@ -1,4 +1,4 @@
-/** kabuki::id
+/** Kabuki Toolkit
     @file    ~/source/kabuki/id/user_hist.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -26,7 +26,11 @@ namespace kabuki { namespace id {
     This class uses a single Authenticator interface for validating both user 
     handles and passwords using the type parameter. This makes it very 
     easy to create UserList subclasses for customizing format rules.
-    @todo This class needs to use a Script Dictionary. */
+    @todo This class needs to use a Script Dictionary.
+    
+    Users may login and out. When a User logs out the pointer and class gets
+    deleted.
+*/
 class KABUKI UserList : public _::Operand {   
     public:
 
@@ -57,14 +61,14 @@ class KABUKI UserList : public _::Operand {
     int GetSize ();
 
     /** Gets the point_cost_ */
-    double GetPointCost ();
+    double GetValueCost ();
 
     /** Attempts to set the point cost. */
-    bool SetPointCost (double point_cost);
+    bool SetValueCost (double value);
 
     /** Attempts to buy the given points.
-    @returns false if the balance_ is too low. */
-    bool BuyValue (int session, uint64_t num_coins, double point_cost);
+        @returns false if the balance_ is too low. */
+    bool BuyValue (int session, uint64_t num_coins, double value_cost);
 
     /** Increase the balance_ by the given amount. */
     bool AddBalance (int session, double amount);
@@ -73,12 +77,12 @@ class KABUKI UserList : public _::Operand {
     Authenticator* GetAuthenticator ();
 
     /** Adds a new User to the list with the given handle and password. */
-    int Register (const char* handle, const char* password = Password::kDefault,
+    int Add (const char* handle, const char* password = Password::kDefault,
                   double balance = User::kDefaultBalance,
                   int64_t value  = User::kDefaultValue);
 
     /** Adds a list of User (string) to the list. */
-    int Register (UserList& users);
+    //int Add (UserList& users);
 
     /** Adds the given user and assumes control over the memory. */
     int Add (User* user);
@@ -86,15 +90,15 @@ class KABUKI UserList : public _::Operand {
     /** Finds an entity in the list by the given search char. */
     int Find (const char* string);
 
-    /** Returns the requested user session.
-        @return Returns nil if the session is invalid. */
-    User* GetUser (int session);
-
     /** Unregisters the given handle from the list.
         @param handle   The handle of the user to delete.
         @param password The password of the user to delete.
         @return Returns the new users_ count or <0 upon failure. */
-    int Unregister (const char* handle, const char* password);
+    int Remove (const char* handle, const char* password);
+
+    /** Returns the requested user session.
+        @return Returns nil if the session is invalid. */
+    User* GetUser (int session);
 
     /** Attempts to login to the given session and returns a session key. */
     virtual uid_t LogIn (const char* handle, const char* password);
@@ -102,10 +106,17 @@ class KABUKI UserList : public _::Operand {
     /** Attempts to login to the given session and returns a session key. */
     virtual uid_t LogIn (int session, const char* password);
 
-    /** Attempts to remove the given user_id.
+    /** Attempts to remove the given session.
+        @param  session Index of the User to remove
         @return Returns negative upon failure and the user count upon
                 success. */
-    virtual int Remove (int user_id);
+    virtual int Remove (int session);
+
+    /** Attempts to remove the given session.
+        @param  handle The handle of the User to remove.
+        @return Returns negative upon failure and the user count upon
+                success. */
+    virtual int Remove (const char* handle);
 
     /** Prints this object to the log. */
     void Print ();
@@ -114,7 +125,7 @@ class KABUKI UserList : public _::Operand {
         @param text     Beginning of the Text buffer. 
         @param text_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* HandleText (const char* text,
+    virtual const char* Do (const char* text,
                                     const char* text_end);
     
     /** An A*B abstract algebra Script Expression.
@@ -126,7 +137,8 @@ class KABUKI UserList : public _::Operand {
     
     private:
     
-    double             point_cost_;    //< Cost per point.
+    int                num_users_;     //< Number of users logged in.
+    double             value_cost_;    //< Cost per point.
     Authenticator    * authenticator_; //< Handle, & Password Authenticator.
     std::vector<User*> users_;         //< User list.
     UidServer<>        uids_;          //< Unique Session Key server

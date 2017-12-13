@@ -135,7 +135,7 @@ const Operation* Push (Expression* expr, Operand* operand) {
     if (expr == nullptr) {
         return Result (expr, Bin::kErrorRoom);
     }
-    if (operand == nullptr) {
+    if (!operand) {
         return Result (expr, Bin::kErrorInvalidOperand);
     }
 #if SCRIPT_DEBUG
@@ -374,7 +374,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     }
 
                     operand = expr->operand;
-                    if (operand == nullptr) {
+                    if (!operand) {
 #if SCRIPT_DEBUG
                         cout << "\n| Null operand found!";
 #endif  //< SCRIPT_DEBUG
@@ -907,7 +907,27 @@ void ExpressionPrint (Expression* expr) {
     //system ("PAUSE");
 }
 #endif //< USE_MORE_ROM
-const Operation* ExpressionQuery (Expression* expr, const Operation* operation) {
+
+const Operation* ExpressionOperand (Expression* expr, const Operation* operation) {
+    if (expr) {
+        if (!operation) {
+            return OperationInvalid ();
+        }
+        void* args[2];
+        uintptr_t num_operations = (uintptr_t)operation->params,
+            first_operation = (uintptr_t)operation->result;
+        // @todo Write params to expr!
+        return ExprResult (expr, Params<5, STR, kOperationMaxNameLength,
+                           UV8, UV8,
+                           STR, kOperationMaxDescriptionLength> (),
+                           Args (args, operation->name,
+                           &num_operations, &first_operation,
+                           operation->description));
+    }
+    return operation;
+}
+
+const Operation* ExpressionOperation (Expression* expr, const Operation* operation) {
     if (expr) {
         if (!operation) {
             return OperationInvalid ();
@@ -920,7 +940,7 @@ const Operation* ExpressionQuery (Expression* expr, const Operation* operation) 
                                            STR, kOperationMaxDescriptionLength> (),
                            Args (args, operation->name,
                                  &num_operations, &first_operation,
-                                 operation->metadata));
+                                 operation->description));
     }
     return operation;
 }

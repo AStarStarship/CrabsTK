@@ -1,4 +1,4 @@
-﻿/** kabuki::cards
+﻿/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/cards_server.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -25,31 +25,45 @@ Server::Server (const char* password, uint32_t port, int max_games) :
                 Room           ("Kabuki_Cards_Server"),
                 authenticator_ (),
                 password_      (&authenticator_, password),
-                state_         (0),
+                state_         (SetState (kStateInitializing)),
                 port_          (port),
                 users_         (&authenticator_, kDefaultMaxUsers),
                 games_         (),
-                directions_    (StrandClone ("")) {
+                directions_    (StrandClone ("\n>")) {
     games_.reserve (max_games);
 }
 
 Server::~Server () {
 }
 
-void Server::RestartServer () {
+const char* Server::Exit () {
+    SetState (kStateShuttingDown);
+    return nullptr;
+}
 
+const char* Server::Restart () {
+    return nullptr;
 }
 
 int Server::GetState () {
     return state_;
 }
 
-bool Server::SetState (int state) {
-    if (state < 0) {
-        return false;
+Server::State Server::SetState (State state) {
+    switch (state) {
+        case State::kStateShuttingDown: {
+            cout << "\n| Exiting server...\n|";
+        }
+        case State::kStateInitializing: {
+            cout << "\n| Initializing server...\n|";
+        }
+        case State::kStateServingClients: {
+            cout << "\n| Initializing completed! ({:-0)+=<\n|";
+        }
     }
+    system ("PAUSE");
     state_ = state;
-    return true;
+    return state;
 }
 
 uint32_t Server::GetPort () {
@@ -79,7 +93,10 @@ int Server::AddGame (CardGame* game) {
 }
 
 int Server::AddBlackjackGame () {
-    User* user = users_.GetUser (AddAgent ("Dealer"));
+    char handle[64];
+    TextWrite (TextWrite (handle, handle + 64, "Dealer"),
+               handle + 64, users_.PeekNextUid ());
+    User* user = users_.GetUser (AddAgent (handle));
     if (!user) {
         return -1;
     }
@@ -126,18 +143,19 @@ int Server::AddAgent (const char* handle_prefix,
     if (!TextWrite (token, handle + 32, users_.GetCount ())) {
         return -1;
     }
-    return users_.Register (handle, password_.GetKey (), balance, value);
+    return users_.Add (handle, password_.GetKey (), balance, value);
 }
 
-const char* Server::HandleText (const char* text, const char* text_end) {
-    const char* next_token;
-    char        handle[Handle::kDefaultMaxLength + 1],
-                password[Password::kDefaultMaxLength + 1];
-    int32_t     game_number;
-                //session;
-    double      money;
-    uint64_t    chips;
-    //User      * user;
+const char* Server::Do (const char* text, const char* text_end) {
+    const char* token_end;
+    int         index;
+    //char      handle[Handle::kMaxLength + 1],
+    //          password[Password::kMaxLength + 1];
+    //int32_t   game_number;
+    //          session;
+    //double    balance;
+    //uint64_t  chips;
+    //User    * user;
 
     if (!text) {
         return nullptr;
@@ -146,72 +164,30 @@ const char* Server::HandleText (const char* text, const char* text_end) {
         return nullptr;
     }
     if (*text == '@') {
-        return users_.HandleText (text + 1, text_end);
-    } else if (TextTokenEquals (text, text_end, "Quit")) {
-        RestartServer ();
-    } else if (TextTokenEquals (text, text_end, "Restart")) {
-        RestartServer ();
-    } else if (TextTokenEquals (text, text_end, "LogIn")) {
-        next_token = TextRead (text, text_end, handle,
-                               handle + Handle::kDefaultMaxLength + 1);
-        if (!next_token) {
+        return users_.Do (text + 1, text_end);
+    } else if (token_end = TokenEquals (text, text_end, "exit")) {
+        return Exit ();
+    } else if (token_end = TokenEquals (text, text_end, "restart")) {
+        return Restart ();
+    } else if (token_end = TokenEquals (text, text_end, "add")) {
+        if (token_end = TokenEquals (token_end + 1, text_end, "blackjack")) {
+            AddBlackjackGame ();
+            return token_end;
+        }
+        cout << "\n| Sorry but that game has not been programmed yet."
+             << "Your only option is "
+             << "\n| \"blackjack\" until you program another game.";
+
+        return nullptr;
+    } else if (token_end = TokenEquals (text, text_end, "remove")) {
+        if (!(token_end = TextRead (token_end + 1, text_end, index))) {
             return nullptr;
         }
-        next_token = TextRead (text, text_end, password,
-                               password + Password::kDefaultMaxLength + 1);
-        if (!next_token) {
-            return nullptr;
-        }
-        users_.LogIn (handle, password);
-    } else if (TextTokenEquals (text, text_end, "Register")) {
-        next_token = TextRead (text, text_end, handle,
-                               handle + Handle::kDefaultMaxLength + 1);
-        if (!next_token) {
-            return nullptr;
-        }
-        next_token = TextRead (text, text_end, password,
-                               password + Password::kDefaultMaxLength + 1);
-        if (!next_token) {
-            return nullptr;
-        }
-        next_token = TextRead (text, text_end, money);
-        if (!next_token) {
-            return nullptr;
-        }
-        next_token = TextRead (text, text_end, chips);
-        if (!next_token) {
-            return nullptr;
-        }
-        users_.Register (handle, password);
-    } else if (TextTokenEquals (text, text_end, "Unregister")) {
-        next_token = TextRead (text, text_end, handle,
-                               handle + Handle::kDefaultMaxLength + 1);
-        if (!next_token) {
-            return nullptr;
-        }
-        next_token = TextRead (text, text_end, password,
-                               password + Password::kDefaultMaxLength + 1);
-        if (!next_token) {
-            return nullptr;
-        }
-        users_.Unregister (handle, password);
-    } else if (TextTokenEquals (text, text_end, "AddAgent")) {
-        game_number = -1;
-        next_token = TextRead (text, text_end, game_number);
-        if (!next_token) {
-            return nullptr;
-        }
-        next_token = TextRead (text, text_end, money);
-        if (!next_token) {
-            return nullptr;
-        }
-        next_token = TextRead (text, text_end, chips);
-        if (!next_token) {
-            return nullptr;
-        }
-        AddAgent ("Terminator_", money, chips);
-    } else if (TextTokenEquals (text, text_end, "?")) {
-        cout << Star ('?', nullptr)->metadata;
+        RemoveGame (index);
+        return token_end;
+
+    } else if (token_end = TokenEquals (text, text_end, "?")) {
+        cout << Star ('?', nullptr)->description;
     }
     cout << "\n| Invalid input.";
     return nullptr;
@@ -232,8 +208,8 @@ const Operation* Server::Star (uint index, Expression* expr) {
         "\n|____________|__________________________________________________|"
         "\n|  Command   | Description                                      |"
         "\n|------------|--------------------------------------------------|"
-        "\n|   Quit     | Quits the server without saving.                 |"
-        "\n|  Restart   | Restarts the server.                             |"
+        "\n|   exit     | Exits the server without saving.                 |"
+        "\n|  restart   | Restarts the server.                             |"
         "\n|  AddAgent  | Adds agent to given SI4:game_number, DBL:money,  |"
         "\n|            | and SI8:num_chips.                               |"
         "\n|  ListUsers | Lists the users.                                 |"
@@ -252,7 +228,7 @@ const Operation* Server::Star (uint index, Expression* expr) {
         "\n| queue. You may leave the current game any time by type        |"
         "\n|                                                               |"
         "\n| To join a game you will have to purchase chips for the buy    |"
-        "\n| typing \"@dealer buy num_chips\", where num_chips is an       |"
+        "\n| typing \"@dealer buy num_chips\", where num_chips is an         |"
         "\n| integer.                                                      |"
         "\n|                                                               |"
         "\n| To send a message to a another player, type @handle followed  |"
@@ -269,85 +245,85 @@ const Operation* Server::Star (uint index, Expression* expr) {
     };
 
     void* args[2];
-    char handle[Handle::kDefaultMaxLength + 1],
-        password[Password::kDefaultMaxLength + 1];
+    char handle[Handle::kMaxLength + 1],
+        password[Password::kMaxLength + 1];
     //buffer[kMaxTextLength + 1];
     User  * user;
     int32_t session;
-    uid_t   session_key;
+    uid_t   public_key;
 
     switch (index) {
         case '?': return &This;
         case 'A': {
             static const Operation OpA = { "LogIn",
-                Params<2, STR, Handle::kDefaultMaxLength, STR,
-                Password::kDefaultMaxLength> (),
+                Params<2, STR, Handle::kMaxLength, STR,
+                Password::kMaxLength> (),
                 Params<2, UI8, UI8> (),
                 "Attempts to login with the given #handle and #password and "
-                "returns a #session_number and #session_key.", 0
+                "returns a #session_number and #public_key.", 0
             };
             if (!expr) return &OpA;
-            if (ExprArgs (expr, Params<2, STR, Handle::kDefaultMaxLength, STR,
-                Password::kDefaultMaxLength> (), Args (args, handle, password)))
+            if (ExprArgs (expr, Params<2, STR, Handle::kMaxLength, STR,
+                Password::kMaxLength> (), Args (args, handle, password)))
             {
                 return expr->result;
             }
-            session_key = users_.LogIn (handle, password);
-            if (!session_key) {
+            public_key = users_.LogIn (handle, password);
+            if (!public_key) {
                 Result (expr, Bin::kErrorInvalidArgs);
             }
             return ExprResult (expr, Params<2, UI8, UI8> (), Args (args, &session,
-                               &session_key));
+                               &public_key));
         }
         case 'B': {
             static const Operation OpB = { "Register",
-                Params<2, STR, Handle::kDefaultMaxLength,
-                STR, Password::kDefaultMaxLength> (),
+                Params<2, STR, Handle::kMaxLength,
+                STR, Password::kMaxLength> (),
                 Params<2, UI8, UI8> (),
                 "Attempts to register with the given handle:STR and "
                 "password:STR and returns a #session_number and "
-                "session_key:STR.", 0 };
+                "public_key:STR.", 0 };
 
             if (!expr) return &OpB;
-            if (ExprArgs (expr, Params<2, STR, Handle::kDefaultMaxLength, STR,
-                Password::kDefaultMaxLength> (), Args (args, handle, password))) {
+            if (ExprArgs (expr, Params<2, STR, Handle::kMaxLength, STR,
+                Password::kMaxLength> (), Args (args, handle, password))) {
                 return expr->result;
             }
-            session = users_.Register (handle, password);
+            session = users_.Add (handle, password);
             if (session < 0) { // Invalid login credentials
                 session = 0;
-                session_key = 0;
+                public_key = 0;
                 return ExprResult (expr, Params<2, UI8, UI8> (),
-                                   Args (args, &session, &session_key));
+                                   Args (args, &session, &public_key));
             }
             user = users_.GetUser (session);
             //if (!user) { // This will never happen.
             //    return Result (expr, Bin::kErrorRoomError);
             //}
             session     = user->GetSession ();
-            session_key = user->GetSessionKey ();
-            session_key = Random<uid_t> ();
+            public_key = user->GetSessionKey ();
+            public_key = Random<uid_t> ();
             return ExprResult (expr, Params<2, UI8, UI8> (),
-                               Args (args, &session, &session_key));
+                               Args (args, &session, &public_key));
         }
         case 'C': {
             static const Operation OpC = { "DeleteUser",
-                Params<2, STR, Handle::kDefaultMaxLength,
-                STR, Password::kDefaultMaxLength> (),
+                Params<2, STR, Handle::kMaxLength,
+                STR, Password::kMaxLength> (),
                 Params<0> (),
                 "Attempts to delete with the given #handle and #password.", 0 };
 
             if (!expr) return &OpC;
-            if (ExprArgs (expr, Params<2, STR, Handle::kDefaultMaxLength, STR,
-                Password::kDefaultMaxLength> (), Args (args, handle, password))) {
+            if (ExprArgs (expr, Params<2, STR, Handle::kMaxLength, STR,
+                Password::kMaxLength> (), Args (args, handle, password))) {
                 return expr->result;
             }
             session = users_.Find (handle);
             if (session < 0) { // Invalid login credentials
                 session = 0;
-                session_key = 0;
+                public_key = 0;
                 return ExprResult (expr, Params<2, UI8, UI8> (),
-                                   Args (args, &session, &session_key));
+                                   Args (args, &session, &public_key));
             }
             user = users_.GetUser (session);
             if (!user->GetPassword ().Equals (password)) {
@@ -358,24 +334,24 @@ const Operation* Server::Star (uint index, Expression* expr) {
         }
         case 'D': {
             static const Operation OpD = { "AddGame",
-                Params<2, STR, Handle::kDefaultMaxLength, STR,
-                Password::kDefaultMaxLength> (),
+                Params<2, STR, Handle::kMaxLength, STR,
+                Password::kMaxLength> (),
                 Params<2, UI8, UI8> (),
                 "Adds a new game:STR to the server.", 0 };
             if (!expr) return &OpD;
         }
         case 'E': {
             static const Operation OpE = { "DeleteGame",
-                Params<2, STR, Handle::kDefaultMaxLength, STR,
-                Password::kDefaultMaxLength> (),
+                Params<2, STR, Handle::kMaxLength, STR,
+                Password::kMaxLength> (),
                 Params<2, UI8, UI8> (),
                 "Deletes the given game:SI4.", 0 };
             if (!expr) return &OpE;
         }
         case 'F': {
             static const Operation OpF = { "ListGames",
-                Params<1, STR, Handle::kDefaultMaxLength, STR,
-                Password::kDefaultMaxLength> (),
+                Params<1, STR, Handle::kMaxLength, STR,
+                Password::kMaxLength> (),
                 Params<1, STR, kMaxTextLength> (),
                 "Lists the current games.", 0 };
             if (!expr) return &OpF;

@@ -38,7 +38,7 @@ struct KABUKI Operation {
     const char   * name;       //< Pointer to the Operation name.
     const uint_t * params,     //< Pointer to the set parameters B-Seq.
                  * result;     //< Pointer to the set expression result B-Seq.
-    const char   * metadata;   //< Pointer to the metadata char.
+    const char   * description;   //< Pointer to the metadata char.
     const byte   * evaluation; //< Pointer to the evaluated B-Sequence.
 };
 
@@ -147,10 +147,9 @@ struct KABUKI Operand {
         @param text     Beginning of the Text buffer. 
         @param text_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* HandleText (const char* text,
-                                    const char* text_end) = 0;
+    virtual const char* Do (const char* text, const char* text_end) = 0;
 
-    /** An A*B abstract algebra Script Expression.
+    /** Abstract Script Operation(s).
         @param index The index of the expression.
         @param expr  The Expression to read and write from.
         @return      Returns null upon success, a Set header upon query, and an 

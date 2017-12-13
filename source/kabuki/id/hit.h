@@ -32,16 +32,17 @@ class KABUKI Hit {
     public:
     
     enum {
-        MaxnameLength = 12,             //< The max name length.
-        MaxTagLength = 20,              //< The max tag length.
-        MaxDescriptionLength = 256      //< The max description length.
+        kMaxnameLength        = 12,  //< Max name length.
+        kMaxTagLength         = 20,  //< Max tag length.
+        kMaxDescriptionLength = 256  //< Max description length.
     };
 
     /** Creates a hit from the given metadata.
     User produces the SomeTags list as a new array of std::strings, and this object consumes it and is responsible for the deallocation of the memory.
     */
-    Hit (const char* name = "", const char* description = "", const char** tags = nullptr, char hit = 0, 
-        const char* aCategory = "", const char* aType = "", int num_tags = 0);
+    Hit (const char * name  = ""     , const char* description = "",
+         const char** tags  = nullptr, char hit     = 0, const char* category = "",
+         const char * ttype = ""     , int num_tags = 0);
 
     /** Gets the name. */
     const char* GetName ();
@@ -97,17 +98,17 @@ class KABUKI Hit {
     /** Serializes to JSON const char*. */
     const char* ToJson ();
     
-    /** Prints this object to a expression. */
-    void Print (_::Log& log);
+    /** Prints this object to the given text buffer. */
+    void Print (_::Text& text);
     
     private:
 
-    const char             * name_,        //< The name of the hit.
-                           * description_; //< Description of the hit. 
-    const char            ** category_,    //< Pointer to the category char.
-                           * type_;        //< Pointer to the instrument type.
-    uid_t                    uid_;         //< The unique identifier.
-    data::StringArray      * tags_;        //< List of tags.
+    const char             * name_,       //< The name of the hit.
+                           * description_;//< Description of the hit. 
+    const char            ** category_,   //< Pointer to the category char.
+                           * type_;       //< Pointer to the instrument type.
+    uid_t                    uid_;        //< The unique identifier.
+    data::StringArray      * tags_;       //< List of tags.
 };
 
 }       //< namespace id

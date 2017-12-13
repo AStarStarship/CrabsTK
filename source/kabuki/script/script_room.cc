@@ -157,7 +157,7 @@ int Room::Main (const char** args, int args_count) {
     return 1;
 }
 
-const char* Room::HandleText (const char* text, const char* text_end) {
+const char* Room::Do (const char* text, const char* text_end) {
     return nullptr;
 }
 

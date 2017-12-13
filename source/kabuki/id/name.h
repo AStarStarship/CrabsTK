@@ -28,8 +28,8 @@ class KABUKI Name
     /** Default constructor. */
     Name ();
 
-    /** Prints this object to a expression. */
-    void Print (_::Log& log);
+    /** Writes this object to the given text. */
+    void Write (_::Text& text);
 };
 
 }       //< namespace id

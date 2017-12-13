@@ -22,7 +22,7 @@
 
 #include "operation.h"
 
-#if USING_SCRIPT_TEXT
+#if SCRIPT_USING_TEXT
 
 namespace _ {
 
@@ -50,48 +50,52 @@ KABUKI const char* TextErrorHeader ();
 /** New line and vertical bar "\n| " string. */
 KABUKI const char* TextNewLine ();
 
-/** Skips all the spaces at the start of the char. */
-KABUKI const char* TextSkipSpaces (const char* target, const char* target_end);
+/** Skips all the spaces at the start of the char.
+    @param  text      Beginning address of the input buffer.
+    @param  text_end  End address of the input buffer.
+    @return A pointer to the end of the token read or if no token read. */
+KABUKI const char* TextSkipSpaces (const char* text, const char* text_end);
 
 /** Reads a whitespace-delineated token from the given text buffer.
-    @param text      Beginning address of the input buffer.
-    @param text_end  End address of the input buffer.
-    @param token     Beginning address of the token buffer.
-    @param token_end End address of the token buffer.
-                     strands. */
-KABUKI const char* TextTokenRead (const char* text, const char* text_end, 
+    @param  text      Beginning address of the input buffer.
+    @param  text_end  End address of the input buffer.
+    @param  token     Beginning address of the token buffer.
+    @param  token_end End address of the token buffer.
+                      strands.
+    @return A pointer to the end of the token read or if no token read. */
+KABUKI const char* TokenRead (const char* text, const char* text_end, 
                                   char* token, char* token_end);
 
 /** Gets the end of the current whitespace-delineated token.
     @param  strand A UTF-8 or ASCII string.
     @return Returns a pointer to the end of the token. */
-KABUKI const char* TextTokenEnd (const char* target, const char* target_end);
+KABUKI const char* TokenEnd (const char* target, const char* target_end);
 
 /** Gets the end of the current whitespace-delineated token.
     @param  strand A UTF-8 or ASCII string.
     @return Returns a pointer to the end of the token. */
-KABUKI const char* TextTokenEnd (const char* target, const char* target_end);
+KABUKI const char* TokenEnd (const char* target, const char* target_end);
 
 /** Compares the source and query char using the delimiter to terminate the query. */
-KABUKI int TextTokenCompare (const char* target, const char* target_end,
-                             const char* token);
+KABUKI int TokenCompare (const char* target, const char* target_end,
+                         const char* token);
 
 /** Compares the source and query char using the delimiter to terminate the query. */
-KABUKI int TextTokenCompare (const char* target, const char* target_end,
-                             const char* token, const char* token_end);
+KABUKI int TokenCompare (const char* target, const char* target_end,
+                         const char* token, const char* token_end);
 
 /** Compares the source and query char using the delimiter to terminate the query. */
-KABUKI const char* TextTokenEquals (const char* target, const char* target_end,
-                                     const char* token);
+KABUKI const char* TokenEquals (const char* target, const char* target_end,
+                                const char* token);
 
 /** Compares the source and query char using the delimiter to terminate the query. */
-KABUKI const char* TextTokenEquals (const char* target, const char* target_end,
-                                    const char* token, const char* token_end);
+KABUKI const char* TokenEquals (const char* target, const char* target_end,
+                                const char* token, const char* token_end);
 
 /** Checks if the given char is a token.
     @param strand The char to check.
     @returns Returns true if the given char is a valid token. */
-KABUKI bool TextTokenQualifies (const char* target, const char* target_end);
+KABUKI bool TokenQualifies (const char* target, const char* target_end);
 
 /** Writes the given strand to the text buffer.
     @param text     Beginning address of the buffer.
@@ -280,45 +284,47 @@ KABUKI const char* TextRead (const char* target, const char* target_end,
     operator<<. The class uses a statically allocated buffer allowing you to
     put it on the stack. The default size is 141 to allow for 140 char_t(s).
 */
-template<int kSize_ = 141 * sizeof (char_t)>
 class Text {
     public:
 
     enum {
-        kMixSize = 16, //< Min buffer size.
-        kSize = ((kSize_ < kMixSize) ? kMixSize: kSize_), 
-        //< Size of the buffer.
+        kMixSize = 16,                   //< Min buffer size.
+        kSize    = SCRIPT_TEXT_SIZE_MAX, //< Size of the Text buffer.
     };
 
-    /** Constructor copies the other Text buffer up the cursor. */
-    Text (const Text& other) :
-        cursor_ (other.cursor_) {
-        MemoryCopy (buffer_, buffer_end, other.buffer_, other.GetCount ());
-    }
+    /** Constructor creates a Text from the given strand. */
+    Text (const char* strand = "");
 
+    /** Constructor copies the other Text buffer up the cursor. */
+    Text (const Text& other);
+
+    /** Clears the text buffer. */
+    void Clear ();
+
+    /** Deep copies the state of the other object. */
+    void Clone (const Text& other);
+    
     /** Gets a pointer to the beginning of the buffer. */
-    char* GetText () {
-        return buffer_;
-    }
+    char* GetBegin ();
+
+    /** Gets a pointer to the current write location in the buffer_. */
+    char* GetCursor ();
+
+    /** Gets a pointer to the end of the buffer. */
+    char* GetEnd ();
 
     /** Sets the cursor to the new value. 
         @return Returns false if the new_cursor is out of bounds. */
-    bool SetCursor (char* new_cursor) {
-        if (new_cursor < buffer_) {
-            return false;
-        }
-        if (new_cursor > )
-    }
+    bool SetCursor (char* new_cursor);
 
-    /** Gets a pointer to the end of the buffer. */
-    char* GetTextEnd () {
-        return buffer_ + kSize;
-    }
+    /** Gets the char count of the buffer in bytes. */
+    int GetCount () const;
 
-    /** Gets the char count of the buffer. */
-    size_t GetCount () {
-        return cursor_ - buffer_;
-    }
+    /** Prints this Text to the stdout. */
+    void Print (Text& txt = Text ());
+
+    /** Overloaded operator= clones the other Text. */
+    Text& operator= (const Text& other);
 
     private:
 
@@ -327,301 +333,218 @@ class Text {
 
 };  //< struct Text
 
-/** A string that can be mapped between multiple systems. */
-template<int kSize_>
-class TextMessage : public Text<kSize_>, public Operation {
-    public:
-
-    TextMessage () :
-        cursor (buffer) {
-        // Nothing to do here. :-)
-    }
-
-    TextMessage (const char* message) :
-        cursor (buffer) {
-        if (!TextWrite (buffer, buffer + kSize, message)) {
-            cout << "\n| Error creating TextMessage!";
-            return;
-        }
-    }
-
-    virtual const Operation* Star (uint index, _::Expression* expr) {
-        static const Operation This = { "TextMessage",
-            NumOperations (2), OperationFirst ('A'),
-            "A text message.", 0
-        };
-        void* args[1];
-
-        switch (index) {
-            case '?': {
-                if (!expr) return &This;
-                return WriteOperation (expr, This);
-            }
-            case 'A': {
-                static const Operation OpA = { "Read",
-                    Params<1 STR, Text::kSize> (), Params<0> (),
-                    "Reads the message.", 0
-                };
-                if (!expr) return &OpA;
-                return ExprArgs (expr, Params<1, STR, Text::kSize> (), Args (args, GetBuffer ()));
-            }
-            case 'B': {
-                static const Operation OpB = { "Write",
-                    Params<1 STR, Text::kSize> (), Params<0> (),
-                    "Writes the message to the ether.", 0
-                };
-                if (!expr) return &OpB;
-                return ExprArgs (expr, Params<1, STR, Text::kSize> (), Args (args, GetBuffer ()));
-            }
-        }
-        return nullptr;
-    }
-};
-
 }   //< namespace _
 
 /** Operation << writes a nil-terminated UTF-8 or ASCII string to the 
-    target. 
-template<int kSize_>
-inline _::Text<kSize_>& operator<< (_::Text<kSize_>& target, const char* target) {
-    char* cursor = ::TextWrite (target.begin, target.end, value);
+    text. */
+inline _::Text& operator<< (_::Text& text, const char* strand) {
+    char* cursor = _::TextWrite (text.GetBegin (), text.GetEnd (), strand);
     if (cursor == nullptr) {
-        return target;
+        return text;
     }
-    target.SetCursor (cursor + 1);
-    return target;
+    text.SetCursor (cursor + 1);
+    return text;
+}
+
+/** Operation << writes the given value to the text. */
+inline _::Text& operator<< (_::Text& text, int8_t value) {
+    char* cursor = _::TextWrite (text.GetBegin (), text.GetEnd (), value);
+    if (cursor == nullptr) {
+        return text;
+    }
+    text.SetCursor (cursor + 1);
+    return text;
+}
+
+/** Operation >> reads the given int8_t to the text. 
+inline _::Text& operator>> (_::Text& text, int8_t value) {
+    char* cursor = _::TextRead (text.GetText (), text.GetTextEnd (), value);
+    if (cursor == nullptr) {
+        return text;
+    }
+    text.SetCursor (cursor + 1);
+    return text;
 }*/
 
-/** Operation >> reads a nil-terminated UTF-8 or ASCII string to the target. 
-template<int kSize_>
-inline _::Text<kSize_>& operator>> (_::Text<kSize_>& target, const char* target) {
-    char* cursor = ::TextRead (target.begin, target.end, value);
+/** Operation << writes the given value to the text. */
+inline _::Text& operator<< (_::Text& text, uint8_t value) {
+    char* cursor = _::TextWrite (text.GetBegin (), text.GetEnd (), value);
     if (cursor == nullptr) {
-        return target;
+        return text;
     }
-    target.SetCursor (cursor + 1);
-    return target;
+    text.SetCursor (cursor + 1);
+    return text;
+}
+
+/** Operation >> reads the given uint8_t from the text. 
+inline _::Text& operator>> (_::Text& text, uint8_t value) {
+    char* cursor = _::TextRead (text.GetText (), text.GetTextEnd (), value);
+    if (cursor == nullptr) {
+        return text;
+    }
+    text.SetCursor (cursor + 1);
+    return text;
 }*/
 
-/** Operation << writes the given value to the target. 
-template<int kSize_>
-inline _::Text& operator<< (_::Text<kSize_>& target, int8_t value) {
-    char* cursor = ::TextWrite (target.begin, target.end, value);
+/** Operation << writes the given value to the text. */
+inline _::Text& operator<< (_::Text& text, int16_t value) {
+    char* cursor = _::TextWrite (text.GetBegin (), text.GetEnd (), value);
     if (cursor == nullptr) {
-        return target;
+        return text;
     }
-    target.SetCursor (cursor + 1);
-    return target;
+    text.SetCursor (cursor + 1);
+    return text;
+}
+
+/** Operation >> reads the given int16_t from the text. 
+inline _::Text& operator>> (_::Text& text, int16_t value) {
+    char* cursor = _::TextRead (text.GetText (), text.GetTextEnd (), value);
+    if (cursor == nullptr) {
+        return text;
+    }
+    text.SetCursor (cursor + 1);
+    return text;
 }*/
 
-/** Operation >> writes the given int8_t to the target. 
-template<int kSize_>
-inline _::Text& operator>> (_::Text<kSize_>& target, int8_t value) {
-    char* cursor = ::TextRead (target.begin, target.end, value);
+/** Operation << writes the given value to the text. */
+inline _::Text& operator<< (_::Text& text, uint16_t value) {
+    char* cursor = _::TextWrite (text.GetBegin (), text.GetEnd (), value);
     if (cursor == nullptr) {
-        return target;
+        return text;
     }
-    target.SetCursor (cursor + 1);
-    return target;
+    text.SetCursor (cursor + 1);
+    return text;
+}
+
+/** Operation >> reads the given uint16_t from the text. 
+inline _::Text& operator>> (_::Text& text, uint16_t value) {
+    char* cursor = _::TextRead (text.GetText (), text.GetTextEnd (), value);
+    if (cursor == nullptr) {
+        return text;
+    }
+    text.SetCursor (cursor + 1);
+    return text;
 }*/
 
-/** Operation << writes the given value to the target. 
-template<int kSize_>
-inline _::Text<kSize_>& operator<< (_::Text<kSize_>& target, uint8_t value) {
-    char* cursor = ::TextWrite (target.begin, target.end, value);
+/** Operation << writes the given value to the text. */
+inline _::Text& operator<< (_::Text& text, int32_t value) {
+    char* cursor = _::TextWrite (text.GetBegin (), text.GetEnd (), value);
     if (cursor == nullptr) {
-        return target;
+        return text;
     }
-    target.SetCursor (cursor + 1);
-    return target;
+    text.SetCursor (cursor + 1);
+    return text;
+}
+
+/** Operation >> reads the given int32_t from the text. 
+inline _::Text& operator>> (_::Text& text, int32_t value) {
+    char* cursor = _::TextRead (text.GetText (), text.GetTextEnd (), value);
+    if (cursor == nullptr) {
+        return text;
+    }
+    text.SetCursor (cursor + 1);
+    return text;
 }*/
 
-/** Operation >> writes the given uint8_t to the target. 
-template<int kSize_>
-inline _::Text& operator>> (_::Text<kSize_>& target, uint8_t value) {
-    char* cursor = ::TextRead (target.begin, target.end, value);
+/** Operation << writes the given value to the text. */
+inline _::Text& operator<< (_::Text& text, uint32_t value) {
+    char* cursor = _::TextWrite (text.GetBegin (), text.GetEnd (), value);
     if (cursor == nullptr) {
-        return target;
+        return text;
     }
-    target.SetCursor (cursor + 1);
-    return target;
+    text.SetCursor (cursor + 1);
+    return text;
+}
+
+/** Operation >> reads the given uint32_t from the text. 
+inline _::Text& operator>> (_::Text& text, uint32_t value) {
+    char* cursor = _::TextRead (text.GetText (), text.GetTextEnd (), value);
+    if (cursor == nullptr) {
+        return text;
+    }
+    text.SetCursor (cursor + 1);
+    return text;
 }*/
 
-/** Operation << writes the given value to the target.
-template<int kSize_>
-inline _::Text<kSize_>& operator<< (_::Text<kSize_>& target, int16_t value) {
-    char* cursor = ::TextWrite (target.begin, target.end, value);
+/** Operation << writes the given value to the text. */
+inline _::Text& operator<< (_::Text& text, int64_t value) {
+    char* cursor = _::TextWrite (text.GetBegin (), text.GetEnd (), value);
     if (cursor == nullptr) {
-        return target;
+        return text;
     }
-    target.SetCursor (cursor + 1);
-    return target;
-} */
+    text.SetCursor (cursor + 1);
+    return text;
+}
 
-/** Operation >> writes the given int16_t to the target. 
-template<int kSize_>
-inline _::Text& operator>> (_::Text<kSize_>& target, int16_t value) {
-    char* cursor = ::TextRead (target.begin, target.end, value);
+/** Operation >> reads the given int64_t from the text. 
+inline _::Text& operator>> (_::Text& text, int64_t value) {
+    char* cursor = _::TextRead (text.GetText (), text.GetTextEnd (), value);
     if (cursor == nullptr) {
-        return target;
+        return text;
     }
-    target.SetCursor (cursor + 1);
-    return target;
+    text.SetCursor (cursor + 1);
+    return text;
 }*/
 
-/** Operation << writes the given value to the target. 
-template<int kSize_>
-inline _::Text<kSize_>& operator<< (_::Text<kSize_>& target, uint16_t value) {
-    char* cursor = ::TextWrite (target.begin, target.end, value);
+/** Operation << writes the given value to the text. */
+inline _::Text& operator<< (_::Text& text, uint64_t value) {
+    char* cursor = _::TextWrite (text.GetBegin (), text.GetEnd (), value);
     if (cursor == nullptr) {
-        return target;
+        return text;
     }
-    target.SetCursor (cursor + 1);
-    return target;
+    text.SetCursor (cursor + 1);
+    return text;
+}
+
+/** Operation >> reads the given uint64_t from the text. 
+inline _::Text& operator>> (_::Text& text, uint64_t value) {
+    char* cursor = _::TextRead (text.GetText (), text.GetTextEnd (), value);
+    if (cursor == nullptr) {
+        return text;
+    }
+    text.SetCursor (cursor + 1);
+    return text;
 }*/
 
-/** Operation >> writes the given uint16_t to the target. 
-template<int kSize_>
-inline _::Text& operator>> (_::Text<kSize_>& target, uint16_t value) {
-    char* cursor = ::TextRead (target.begin, target.end, value);
+/** Operation << writes the given value to the text. */
+inline _::Text& operator<< (_::Text& text, float value) {
+    char* cursor = _::TextWrite (text.GetBegin (), text.GetEnd (), value);
     if (cursor == nullptr) {
-        return target;
+        return text;
     }
-    target.SetCursor (cursor + 1);
-    return target;
+    text.SetCursor (cursor + 1);
+    return text;
+}
+
+/** Operation >> reads the given float from the text. 
+inline _::Text& operator>> (_::Text& text, float value) {
+    char* cursor = _::TextRead (text.GetText (), text.GetTextEnd (), value);
+    if (cursor == nullptr) {
+        return text;
+    }
+    text.SetCursor (cursor + 1);
+    return text;
 }*/
 
-/** Operation << writes the given value to the target. 
-template<int kSize_>
-inline _::Text<kSize_>& operator<< (_::Text<kSize_>& target, int32_t value) {
-    char* cursor = ::TextWrite (target.begin, target.end, value);
+/** Operation << writes the given value to the text. */
+inline _::Text& operator<< (_::Text& text, double value) {
+    char* cursor = _::TextWrite (text.GetBegin (), text.GetEnd (), value);
     if (cursor == nullptr) {
-        return target;
+        return text;
     }
-    target.SetCursor (cursor + 1);
-    return target;
+    text.SetCursor (cursor + 1);
+    return text;
+}
+
+/** Operation >> reads the given double from the text. 
+inline _::Text& operator>> (_::Text& text, double value) {
+    char* cursor = _::TextRead (text.GetText (), text.GetTextEnd (), value);
+    if (cursor == nullptr) {
+        return text;
+    }
+    text.SetCursor (cursor + 1);
+    return text;
 }*/
 
-/** Operation >> writes the given int32_t to the target. 
-template<int kSize_>
-inline _::Text& operator>> (_::Text<kSize_>& target, int32_t value) {
-    char* cursor = ::TextRead (target.begin, target.end, value);
-    if (cursor == nullptr) {
-        return target;
-    }
-    target.SetCursor (cursor + 1);
-    return target;
-}*/
-
-/** Operation << writes the given value to the target. 
-template<int kSize_>
-inline _::Text<kSize_>& operator<< (_::Text<kSize_>& target, uint32_t value) {
-    char* cursor = ::TextWrite (target.begin, target.end, value);
-    if (cursor == nullptr) {
-        return target;
-    }
-    target.SetCursor (cursor + 1);
-    return target;
-}*/
-
-/** Operation >> writes the given uint32_t to the target. 
-template<int kSize_>
-inline _::Text& operator>> (_::Text<kSize_>& target, uint32_t value) {
-    char* cursor = ::TextRead (target.begin, target.end, value);
-    if (cursor == nullptr) {
-        return target;
-    }
-    target.SetCursor (cursor + 1);
-    return target;
-}*/
-
-/** Operation << writes the given value to the target. 
-template<int kSize_>
-inline _::Text<kSize_>& operator<< (_::Text<kSize_>& target, int64_t value) {
-    char* cursor = ::TextWrite (target.begin, target.end, value);
-    if (cursor == nullptr) {
-        return target;
-    }
-    target.SetCursor (cursor + 1);
-    return target;
-}*/
-
-/** Operation >> writes the given int64_t to the target. 
-template<int kSize_>
-inline _::Text& operator>> (_::Text<kSize_>& target, int64_t value) {
-    char* cursor = ::TextRead (target.begin, target.end, value);
-    if (cursor == nullptr) {
-        return target;
-    }
-    target.SetCursor (cursor + 1);
-    return target;
-}*/
-
-/** Operation << writes the given value to the target. 
-template<int kSize_>
-inline _::Text<kSize_>& operator<< (_::Text<kSize_>& target, uint64_t value) {
-    char* cursor = ::TextWrite (target.begin, target.end, value);
-    if (cursor == nullptr) {
-        return target;
-    }
-    target.SetCursor (cursor + 1);
-    return target;
-}*/
-
-/** Operation >> writes the given uint64_t to the target. 
-template<int kSize_>
-inline _::Text& operator>> (_::Text<kSize_>& target, uint64_t value) {
-    char* cursor = ::TextRead (target.begin, target.end, value);
-    if (cursor == nullptr) {
-        return target;
-    }
-    target.SetCursor (cursor + 1);
-    return target;
-}*/
-
-/** Operation << writes the given value to the target. 
-template<int kSize_>
-inline _::Text<kSize_>& operator<< (_::Text<kSize_>& target, float value) {
-    char* cursor = ::TextWrite (target.begin, target.end, value);
-    if (cursor == nullptr) {
-        return target;
-    }
-    target.SetCursor (cursor + 1);
-    return target;
-}*/
-
-/** Operation >> writes the given float to the target. 
-template<int kSize_>
-inline _::Text& operator>> (_::Text<kSize_>& target, float value) {
-    char* cursor = ::TextRead (target.begin, target.end, value);
-    if (cursor == nullptr) {
-        return target;
-    }
-    target.SetCursor (cursor + 1);
-    return target;
-}*/
-
-/** Operation << writes the given value to the target. 
-template<int kSize_>
-inline _::Text<kSize_>& operator<< (_::Text<kSize_>& target, double value) {
-    char* cursor = ::TextWrite (target.begin, target.end, value);
-    if (cursor == nullptr) {
-        return target;
-    }
-    target.SetCursor (cursor + 1);
-    return target;
-}*/
-
-/** Operation >> writes the given double to the target. 
-template<int kSize_>
-inline _::Text& operator>> (_::Text<kSize_>& target, double value) {
-    char* cursor = ::TextRead (target.begin, target.end, value);
-    if (cursor == nullptr) {
-        return target;
-    }
-    target.SetCursor (cursor + 1);
-    return target;
-}*/
-
-#endif  //< USING_SCRIPT_TEXT
+#endif  //< SCRIPT_USING_TEXT
 #endif  //< HEADER_FOR_SCRIPT_TEXT

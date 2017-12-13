@@ -137,10 +137,10 @@ class Room: public Operand {
         BootingState = 0,
         GoingToSleepState,
         ShuttingDownState,
-#ifndef ROOM_FLOOR_SIZE
+#ifndef SCRIPT_MAX_WALLS
         kFloorSize = 1024,
 #else
-        kFloorSize = ROOM_FLOOR_SIZE,
+        kFloorSize = SCRIPT_MAX_WALLS,
 #undef ROOM_FLOOR_SIZE
 #endif
         kFloorSizeWords = kFloorSize / sizeof (uintptr_t) + 2, //< +2 buffer.
@@ -213,7 +213,7 @@ class Room: public Operand {
         @param text     Beginning of the Text buffer. 
         @param text_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* HandleText (const char* text,
+    virtual const char* Do (const char* text,
                                     const char* text_end);
 
     /** Script expressions. */
