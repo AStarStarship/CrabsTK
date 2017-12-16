@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/portal.h
+    @file    ~/source/kabuki/script/portal.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,10 +14,13 @@
              permissions and limitations under the License.
 */
 
-#ifndef SCRIPT_PORTAL_H
-#define SCRIPT_PORTAL_H
+#ifndef HEADER_FOR_SCRIPT_PORTAL
+#define HEADER_FOR_SCRIPT_PORTAL
 
-#include "window.h"
+#include "expression.h"
+#if SCRIPT_USING_MIRROR
+#include "mirror.h"
+#endif   //< SCRIPT_USING_MIRROR
 
 namespace _ {
 
@@ -29,8 +32,10 @@ struct KABUKI Portal {
     /** Feeds tx messages through the a without scanning them. */
     virtual Expression* GetSlot () = 0;
 
+#if SCRIPT_USING_MIRROR
     /** Pulls rx messages through the a and runs them through the scanner. */
-    virtual Window* GetWindow () = 0;
+    virtual Mirror* GetMirror () = 0;
+#endif   //< SCRIPT_USING_MIRROR
 };
 }       //< namespace _
-#endif  //< SCRIPT_PORTAL_H
+#endif  //< HEADER_FOR_SCRIPT_PORTAL

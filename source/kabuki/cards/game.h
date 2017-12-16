@@ -18,14 +18,14 @@
 
 #include "deck.h"
 #include "dealer.h"
-#include "remote_player.h"
+#include "player_proxy.h"
 
 namespace kabuki { namespace cards {
 
 /** A playing card game client that can play many types of games in the console.
     The server does most of the game logic and feeds the client data on a 
     need to know basis. */
-class CardGame : public _::Operation {
+class Game : public _::Operation {
     public:
 
     typedef enum States {
@@ -46,14 +46,14 @@ class CardGame : public _::Operation {
     };
 
     /** Default constructor. */
-    CardGame (id::UserList& users, const char* game_name, int min_players,
+    Game (id::UserList& users, const char* game_name, int min_players,
               int max_players);
 
     /** Constructor. */
-    virtual ~CardGame ();
+    virtual ~Game ();
 
     /** Gets the game_name_. */
-    const char* GetGameName ();
+    const char* GetName ();
 
     /** Gets the FSM state. */
     int32_t GetState ();
@@ -81,9 +81,6 @@ class CardGame : public _::Operation {
     /** Processes the end of round logic. */
     virtual void EndRound () = 0;
 
-    /** Prints this game out to the console. */
-    virtual void Print ();
-
     /** Prints the observers to the console. */
     void PrintObservers ();
 
@@ -100,6 +97,9 @@ class CardGame : public _::Operation {
     /** Gets a reference to the observers_. */
     std::vector<id::User*>& GetObservers ();
 
+    /** Prints this game out to the console. */
+    virtual _::Text& Print (_::Text& txt = _::Text ());
+
     /** Abstract Script Operation(s).
         @param index The index of the expression.
         @param expr  The Expression to read and write from.
@@ -109,19 +109,19 @@ class CardGame : public _::Operation {
 
     /** Handles Text input.
         @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text,
-                                    const char* text_end) = 0;
+    virtual const char* Sudo (const char* text,
+                            const char* strand_end) = 0;
     protected:
 
-    const char           * game_name_;  //< Game name.
+    const char           * name_;  //< Game name.
     int32_t                state_,      //< Game state.
                            min_players_;//< Min players.
     id::UserList         & users_;      //< Server UserList.
     std::vector<id::User*> observers_;  //< Array of Player.
 
-};      //< class CardGame
+};      //< class Game
 
 /** Returns the default play again or quit string. */
 KABUKI const char* DefaultPlayAgainText ();

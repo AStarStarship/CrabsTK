@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/log.h
+    @file    ~/source/kabuki/script/log.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -21,6 +21,7 @@
 #define SCRIPT_LOG_H
 
 #include "bout.h"
+#include "params.h"
 #include "args.h"
 #include "memory.h"
 

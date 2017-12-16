@@ -16,6 +16,6 @@
 #ifndef HEADER_FOR_KABUKI_STORE_GLOBAL
 #define HEADER_FOR_KABUKI_STORE_GLOBAL
 
-#include "shopping_list.h"
+#include "inventory.h"
 
 #endif  //< HEADER_FOR_KABUKI_STORE_GLOBAL

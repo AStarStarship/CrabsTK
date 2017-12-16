@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/kabuki/source/kabuki/script/include/expression.h
+    @file    ~/kabuki/source/kabuki/script/expression.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -174,20 +174,23 @@ class Library: public Operand
     void Shrink () {
 
     }
-
+    
     /** Handles Script Commands.
         @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text,
-                                    const char* text_end) {
+    virtual const char* Sudo (const char* text, const char* strand_end) {
         return nullptr;
     }
 
-    /** ChineseRoom Operations. */
-    const Operation* Star (uint index, Expression* expr) override {
+    /** Abstract Script Operation(s).
+        @param index The index of the expression.
+        @param expr  The Expression to read and write from.
+        @return      Returns null upon success, a Set header upon query, and an 
+                     error_t ticket upon Read-Write failure. */
+    virtual const Operation* Star (uint index, Expression* expr) {
         static const Operation This = { "Library",
-            NumOperations (0), FirstOperation ('A'),
+            OperationCount (0), FirstOperation ('A'),
             "", 0 };
 
         switch (index) {

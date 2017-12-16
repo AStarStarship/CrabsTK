@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/impl/script_bout.cc
+    @file    ~/source/kabuki/script/script_bout.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -12,26 +12,24 @@
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
-    @desc    Slot implementation split into three files, slot.h, 
-             monoid_rx.h, and monoid_tx.h because of the large read/write
-             functions.
 */
 
 #include <stdafx.h>
 #include "bout.h"
+#include "bin.h"
 #include "ascii.h"
 #include "types.h"
-#include "slot.h"
+#include "params.h"
 #include "args.h"
 #include "address.h"
 #include "text.h"
 #include "hash.h"
-#include "print.h"
+#include "slot.h"
 
 namespace _ {
 
 #if SCRIPT_DEBUG
-const char* BoutErrorText (Bout::Error error) {
+const char* BoutError (Bout::Error error) {
     static const char* strings[] = {
         "Buffer overflow",  //< 0
         "Locked Error"      //< 1
@@ -45,7 +43,7 @@ const char* BoutErrorText (Bout::Error error) {
     return strings[error];
 }
 
-const char* BoutStateText (Bout::State state) {
+const char* BoutState (Bout::State state) {
     static const char* strings[] = {
         "WritingState",
         "LockedState"
@@ -121,29 +119,14 @@ int BoutStreamByte (Bout* bout) {
     return 0;
 }
 
-#if SCRIPT_DEBUG
-void BoutPrint (Bout* bout) {
-    PrintLine ('_');
-    if (bout == nullptr) {
-        printf ("\n| Bout: NIL");
-        PrintLine ('_');
-        return;
-    }
-    uint_t size = bout->size;
-    printf ("\n| Bout 0x%p: size: %u, start: %u, stop: %u, read: %u", bout,
-            size, bout->start, bout->stop, bout->read);
-    PrintMemory (BoutBuffer (bout), size + 64); // @todo remove the + 64.);
-}
-#endif  //< SCRIPT_DEBUG
-
 const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     
 #if SCRIPT_DEBUG
-    std::cout << "\n|\n|Writing ";
-    ParamsPrint (params); 
-    std::cout << " to B-Output:";
-    printf ("%p", bout);
-    BoutPrint (bout);
+    Text txt;
+    txt << "\n|\n|Writing "
+        << ParamsPrint (params, txt)
+        << " to B-Output:" << txt.Pointer (bout)
+        << BoutPrint (bout, txt) << txt.Print ();
 #endif  //< SCRIPT_DEBUG
     if (bout == nullptr)
         return BoutResult (bout, Bout::kErrorRoom);
@@ -827,5 +810,20 @@ const Operation* BoutConnect (Bout* bout, const char* address) {
                       Args (args, address, Address<_::BEL> ()));
 }
 
-}       //< namespace _
+#if SCRIPT_USING_TEXT
+Text& BoutPrint (Bout* bout, Text& txt) {
+    txt << txt.Line ('_');
+    if (!bout) {
+        return txt << "\n| Bout: NIL"
+            << txt.Line ('_');
+    }
+    int size = bout->size;
+    return txt << "\n| Bout:0x" << txt.Pointer (bout) << " size:" << size
+        << " start:" << bout->start << " stop:" << bout->stop
+        << " read:" << bout->read
+        << txt.Memory (BoutBuffer (bout), size + 64);
+    //< @todo remove the + 64.);
+}
+#endif  //< SCRIPT_USING_TEXT
 
+}       //< namespace _

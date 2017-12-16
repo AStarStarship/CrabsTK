@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/color.h
+    @file    ~/source/kabuki/script/color.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -119,11 +119,11 @@ void ColorSetAlpha (color_t color, byte value);
 
 /** Converts this color to HSV. */
 void ColorToHSV (color_t color, float& fR, float& fG, float fB,
-		         float& fH, float& fS, float& fV);
+                 float& fH, float& fS, float& fV);
 
 /** Sets this color to the HSV values. */
 void ColorSetHSV (color_t color, float& fR, float& fG, float& fB,
-		          float& fH, float& fS, float& fV);
+                  float& fH, float& fS, float& fV);
 
 /** Prints this object to the log. */
 void ColorPrint (color_t color);

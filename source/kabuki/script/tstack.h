@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/tstack.h
+    @file    ~/source/kabuki/script/tstack.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -20,6 +20,11 @@
 #include "config.h"
 
 namespace _ {
+
+/** @ingroup Stack
+    @todo Rewrite this without templates and also with inline function 
+          calls that do not .
+*/
 
 /** Gets the max length of an stack of size T.
     The biggest thing you can fit in a buffer in Script is 1/2 max size of a uint_t
@@ -90,7 +95,7 @@ T* StackBase (TStack<T, I>* stack) {
     @param a    			 The stack.
     @param item  The item to insert. 
     @param index The index to insert at.
-    @return Returns -1 if a is null and -2 if the stack is full. */
+    @return -1 if a is null and -2 if the stack is full. */
 template<typename T, typename I = int_t>
 T StackInsert (TStack<T, I>* stack, T item, T index) {
     if (stack == nullptr)
@@ -139,7 +144,7 @@ T StackInsert (TStack<T, I>* stack, T item, T index) {
 /** Removes the given index from the stack.
     @param  a     The stack.
     @param  index The index the item to remove.
-    @return Returns true if the index is out of bounds. */
+    @return True if the index is out of bounds. */
 template<typename T, typename I = int_t>
 bool StackRemove (TStack<T, I>* stack, I index) {
     if (stack == nullptr)
@@ -172,7 +177,7 @@ bool StackRemove (TStack<T, I>* stack, I index) {
 /** Adds the given item to the end of the stack.
     @param  a    The stack.
     @param  item The item to push onto the stack.
-    @return Returns the index of the newly stacked item. */
+    @return The index of the newly stacked item. */
 template<typename T, typename I = int_t>
 I StackPush (TStack<T, I>* stack, T item) {
     if (stack == nullptr)
@@ -190,7 +195,7 @@ I StackPush (TStack<T, I>* stack, T item) {
 /** Pops the top item off of the stack.
     @note We do not delete the item at the 
     @param  a The stack.
-    @return Returns the item popped off the stack. */
+    @return The item popped off the stack. */
 template<typename T, typename I = int_t>
 T StackPop (TStack<T, I>* stack) {
     if (stack == nullptr)
@@ -207,7 +212,7 @@ T StackPop (TStack<T, I>* stack) {
 /** Gets the element at the given index.
     @param  stack    The stack.
     @param  index The index of the element to get.
-    @return Returns -1 if a is null and -2 if the index is out of bounds. */
+    @return -1 if a is null and -2 if the index is out of bounds. */
 template<typename T, typename I = int_t>
 T StackGet (TStack<T, I>* stack, I index) {
     if (stack == nullptr)
@@ -218,7 +223,8 @@ T StackGet (TStack<T, I>* stack, I index) {
     return reinterpret_cast<T*> (address)[index];
 }
 
-/** Returns true if the given stack contains the given address. */
+/** Returns true if the given stack contains the given address.
+    @return false upon failure. */
 template<typename T, typename I = int_t>
 bool StackContains (TStack<T, I>* stack, void* address) {
     if (stack == nullptr)

@@ -1,4 +1,4 @@
-/** kabuki:cards
+/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/hand.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -39,6 +39,9 @@ class Hand : public CardStack {
     /** Clears all the cards it the hand. */
     void Clear ();
 
+    /** Returns the number of Cards in this Hand. */
+    int Length () const;
+
     /** Returns the minNumCards in a Hand. */
     int GetMinNumCards ();
     
@@ -50,9 +53,6 @@ class Hand : public CardStack {
     
     /** Sets the minNumCards to the newNumCards. */
     int SetMaxCards (int newNumCards);
-
-    /** Returns the number of Cards in this Hand. */
-    int GetCount ();
     
     /** Returns the visibleCards. */
     CardStack& GetVisibleCards ();
@@ -64,7 +64,20 @@ class Hand : public CardStack {
     //virtual Array<CardCombo> GetHandCombos ();
     
     /** Returns a string representation of this Object. */
-    void Print ();
+    _::Text& Print (_::Text& txt = _::Text ());
+
+    /** Handles Script Commands.
+        @param text     Beginning of the Text buffer. 
+        @param strand_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* Sudo (const char* text, const char* strand_end);
+
+    /** Abstract Script Operation(s).
+        @param index The index of the expression.
+        @param expr  The Expression to read and write from.
+        @return      Returns null upon success, a Set header upon query, and an 
+                     error_t ticket upon Read-Write failure. */
+    virtual const  _::Operation* Star (uint index, _::Expression* expr);
 
     protected:
 

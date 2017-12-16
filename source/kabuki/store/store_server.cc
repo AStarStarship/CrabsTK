@@ -31,15 +31,15 @@ Inventory& Server::GetInventory () {
     return inventory_;
 }
 
-const char* Server::Do (const char* text, const char* text_end) {
+const char* Server::Sudo (const char* text, const char* strand_end) {
     if (!text) {
         return nullptr;
     }
-    if (text > text_end) {
+    if (text > strand_end) {
         return nullptr;
     }
     if (*text == Inventory::kLexicalDeilimiter) {
-        inventory_.Do (text + 1, text_end);
+        inventory_.Sudo (text + 1, strand_end);
     }
     return nullptr;
 }

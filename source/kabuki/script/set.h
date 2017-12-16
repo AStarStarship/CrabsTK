@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/script/include/collection.h
+    @file    ~/source/script/collection.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -18,6 +18,7 @@
 #define SCRIPT_COLLECTION_H
 
 #include "types.h"
+#include "text.h"
 
 namespace _ {
 /**
@@ -106,7 +107,7 @@ struct Collection {
     virtual uintptr_t GetSizeWidth () = 0;
 
     /**  */
-    virtual void Print () = 0;
+    virtual Text& Print (Text& txt = Text ()) = 0;
 };
 }       //< namespace _
 #endif  //< SCRIPT_COLLECTION_H

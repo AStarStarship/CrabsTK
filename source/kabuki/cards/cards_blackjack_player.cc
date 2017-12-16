@@ -28,7 +28,7 @@ int BlackjackScore (Hand& hand, int ace_value) {
 
     CardStack& cards = hand.GetVisibleCards ();
     Card* card;
-    for (int i = 0; i < cards.GetCount (); ++i) {
+    for (int i = 0; i < cards.Length (); ++i) {
         card = cards.GetCard (i);
         int denomination = card->GetDenomination ();
         score += ((denomination == Card::kAce) ? ace_value : denomination);
@@ -279,24 +279,24 @@ bool BlackjackPlayer::Wins (Hand& other) {
     return BlackjackCompareHands (hand_, other) > 0;
 }
 
-void BlackjackPlayer::PrintStats () {
-
+Text& BlackjackPlayer::PrintStats (Text& txt) {
+    return txt << "\n| BlackjackPlayer: " << GetHandle ();
 }
 
-void BlackjackPlayer::Print () {
-    PrintLine ('_');
+Text& BlackjackPlayer::Print (_::Text& txt) {
     User* user = GetUser ();
-    cout << "\n| Player   : "        << user->GetHandleKey ()
-         << "\n| Num Chips: " << user->GetValue ()
-         << " Wins: " << num_wins_;
-
-    hand_.GetVisibleCards ().Print ();
-    PrintLine ('_');
+    
+    return txt << txt.Line ('_')
+               << "\n| Player   : " << user->GetHandleKey ()
+               << "\n| Num Chips: " << user->GetValue ()
+               << " Wins: " << num_wins_
+               << hand_.GetVisibleCards ().Print (txt)
+               << txt.Line ('_');
 }
 
 const Operation* BlackjackPlayer::Star (uint index, _::Expression* expr) {
     static const Operation This = { "BlackjackPlayer",
-        NumOperations (0), OperationFirst ('A'),
+        OperationCount (0), OperationFirst ('A'),
         "Player in a Blackjack game.", 0 };
     void* args[2];
     char handle[Handle::kMaxLength],
@@ -329,7 +329,7 @@ const Operation* BlackjackPlayer::Star (uint index, _::Expression* expr) {
                 Params<2, STR, Handle::kMaxLength, STR, 141> (), Params<0> (),
                 "Sends a message of 140 chars or less to this player.", 0 };
             if (!expr) return &OpA;
-            if (ExprArgs (expr, Params<2, STR, Handle::kMaxLength, STR,
+            if (ExpressionArgs (expr, Params<2, STR, Handle::kMaxLength, STR,
                                        141> (),
                           Args (args, handle, tweet))) return expr->result;
             cout << "\n| Message from @" << handle << "\n| " << tweet;
@@ -339,8 +339,8 @@ const Operation* BlackjackPlayer::Star (uint index, _::Expression* expr) {
     return Result (expr, Bin::kErrorInvalidOperation);
 }
 
-const char* BlackjackPlayer::Do (const char* text,
-                                         const char* text_end) {
+const char* BlackjackPlayer::Sudo (const char* text,
+                                         const char* strand_end) {
     return nullptr;
 }
 

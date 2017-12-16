@@ -19,7 +19,7 @@
 #ifndef HEADER_FOR_KABUKI_STORE_INVENTORY
 #define HEADER_FOR_KABUKI_STORE_INVENTORY
 
-#include "item.h"
+#include "cart.h"
 
 namespace kabuki { namespace store {
 
@@ -42,7 +42,7 @@ class Inventory : public _::Operand {
     ~Inventory ();
 
     /** Gets the count of Item(s). */
-    int GetCount ();
+    int Length ();
 
     /** Adds a new item to the list and adds and updates quantity and cost.
         If the item is new, the item is added with the given information. If the
@@ -54,23 +54,26 @@ class Inventory : public _::Operand {
     virtual const char* Add (uid_t uid, const char* name, int64_t quantity,
                              double cost);
 
-    /** Calculates the total cost of the list. */
-    double GetCostTotal ();
-
-    /** Sums the quantities. */
-    int64_t GetQuantityTotal ();
+    /** Gets the category. */
+    const char* GetCategory ();
 
     /** Gets the category. */
-    char* GetCategory ();
+    const char* SetCategory (const char* new_name);
+
+    /** Calculates the total cost of the list. */
+    double GetTotalCost ();
+
+    /** Sums the quantities. */
+    int64_t GetTotalQuantity ();
 
     /** Prints the list to the console. */
-    void Print ();
+    _::Text& Print (_::Text& txt);
 
     /** Parses Script Text Commands.
         @param text     Beginning of the Text buffer.
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text, const char* text_end);
+    virtual const char* Sudo (const char* text, const char* strand_end);
 
     /** Abstract Script Operation(s).
         @param index The index of the expression.

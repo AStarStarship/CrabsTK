@@ -18,15 +18,16 @@
 #include "global.h"
 
 using namespace _;
+using namespace std;
 
 TEST_GROUP (SCRIPT_TESTS) {
     void setup () {
-        PrintLine (TextNewLine ());
+        cout << Text ();
     }
 
     void teardown () {
-        std::cout << "\n| Test completed.\n";
-        PrintLine ();
+        cout << Text ("\n| Test completed.\n|")
+             << Text ().Line ();
     }
 };
 
@@ -814,9 +815,9 @@ TEST (SCRIPT_TESTS, OperationTests) {
 
     ExpressionPrint (expr);
 
-    //Window window (bin, bout);
+    //Mirror mirror (bin, bout);
     // Bypass handshake for testing purposes.
-    ExpressionScan (expr);//, &window);
+    ExpressionScan (expr);//, &mirror);
     ExpressionPrint (expr);
     std::cout << "\n| Done with Operation tests.";
     system ("PAUSE");
@@ -844,9 +845,9 @@ TEST (SCRIPT_TESTS, TextTests) {
          buffer_b[kSize];
 
     for (int i = 0; i < kNumStrings; ++i) {
-        end = TextWrite (buffer_a, buffer_a + kSize, test_strings[i][0]);
+        end = StrandWrite (buffer_a, buffer_a + kSize, test_strings[i][0]);
         CHECK (end != nullptr)
-        end = TextWrite (buffer_b, buffer_b + kSize, test_strings[i][0]);
+        end = StrandWrite (buffer_b, buffer_b + kSize, test_strings[i][0]);
         CHECK (end != nullptr)
 
         end = TokenEquals (buffer_a, buffer_b);

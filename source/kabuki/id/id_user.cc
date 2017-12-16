@@ -1,4 +1,4 @@
-/** kabuki::pro
+/** Kabuki Toolkit
     @file    ~/source/kabuki/id/user.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -175,9 +175,12 @@ Expression* User::GetSlot () {
     return slot_;
 }
 
-Window* User::GetWindow () {
+#if SCRIPT_USING_MIRROR
+Mirror* User::GetMirror () {
     return nullptr;
 }
+
+#endif  //< SCRIPT_USING_MIRROR
 
 bool User::IsAuthentic (int32_t session, uid_t public_key) {
     if (session_ != session) {
@@ -189,73 +192,83 @@ bool User::IsAuthentic (int32_t session, uid_t public_key) {
     return true;
 }
 
-void User::Print () {
-    cout << "\n| User: @"  << handle_.GetKey ()
-         << " password:\"" << password_.GetKey ()
-         << "\" balance:"  << balance_
-         << " value:"      << value_;
+Text& User::Print (Text& txt) {
+    return txt << "\n| User: @"  << handle_.GetKey ()
+               << " password:\"" << password_.GetKey ()
+               << "\" balance:"  << balance_
+               << " value:"      << value_;
 }
 
-const char* User::Do (const char* text,
-                              const char* text_end) {
+const Operation* User::Star (uint index, Expression* expr) {
+    static const Operation This { "User",
+        OperationCount (0), OperationFirst ('A'),
+        "A user account.", 0
+    };
+    switch (index) {
+        case '?': return ExpressionOperand (expr, &This);
+    }
+    return nullptr;
+}
+
+const char* User::Sudo (const char* text, const char* strand_end) {
     enum {
         kMessageLength = 141,
     };
-    const char* next_token;
+    const char* token;
     double      balance;
     int64_t     value;
     char        input[kMessageLength];
 
-    text = TextSkipSpaces (text, text_end);
+    text = TextSkipSpaces (text, strand_end);
     if (!text) {
         return nullptr;
     }
-    if (TokenCompare (text, text_end, "AddBalance")) {
-        next_token = TextRead (text, text_end, balance);
-        if (!next_token) {
+    if (TokenCompare (text, strand_end, "AddBalance")) {
+        token = TextRead (text, strand_end, balance);
+        if (!token) {
             return nullptr;
         }
         balance_ += balance;
-    } else if (TokenCompare (text, text_end, "AddValue")) {
-        next_token = TextRead (text, text_end, value);
-        if (!next_token) {
+    } else if (TokenCompare (text, strand_end, "AddValue")) {
+        token = TextRead (text, strand_end, value);
+        if (!token) {
             return nullptr;
         }
         value_ += value;
-    } else if (TokenCompare (text, text_end, "SetStatus")) {
-        next_token = TextRead (text, text_end, input, input + kMessageLength);
-        if (!next_token) {
+    } else if (TokenCompare (text, strand_end, "SetStatus")) {
+        token = TextRead (text, strand_end, input, input + kMessageLength);
+        if (!token) {
             return nullptr;
         }
         SetStatus (input);
-    } else if (TokenCompare (text, text_end, "SetHandle")) {
-        next_token = TextRead (text, text_end, input, input + kMessageLength);
-        if (!next_token) {
+    } else if (TokenCompare (text, strand_end, "SetHandle")) {
+        token = TextRead (text, strand_end, input, input + kMessageLength);
+        if (!token) {
             return nullptr;
         }
         if (!authenticator_->HandleIsInvalid (input)) {
             return "\n| Error: Password in invalid format!";
         }
         handle_.SetKey (input);
-    } else if (TokenCompare (text, text_end, "SetPassword")) {
-        next_token = TextRead (text, text_end, input, input + 141);
-        if (!next_token) {
+    } else if (TokenCompare (text, strand_end, "SetPassword")) {
+        token = TextRead (text, strand_end, input, input + 141);
+        if (!token) {
             return nullptr;
         }
         if (authenticator_->PasswordIsInvalid (input)) {
             return "\n| Error: Password in invalid format!";
         }
         password_.SetKey (input);
-    } else if (TokenCompare (text, text_end, "Print")) {
-        Print ();
+    } else if (TokenCompare (text, strand_end, "print")) {
+        cout << Print ();
         return text;
     }
     
-    next_token = TextRead (text, text_end, input, input + kMessageLength);
-    if (!next_token) {
+    token = TextRead (text, strand_end, input, input + kMessageLength);
+    if (!token) {
         return nullptr;
     }
-    return next_token;
+    return token;
 }
 
 }       //< id

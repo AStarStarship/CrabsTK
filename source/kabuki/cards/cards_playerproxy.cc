@@ -1,5 +1,5 @@
-/** kabuki:cards
-    @file    ~/source/kabuki/cards/remote_player.cc
+/** Kabuki Toolkit
+    @file    ~/source/kabuki/cards/cards_playerproxy.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -12,7 +12,7 @@
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
 */
-#include "remote_player.h"
+#include "player_proxy.h"
 
 using namespace _;
 using namespace kabuki::id;
@@ -20,7 +20,7 @@ using namespace std;
 
 namespace kabuki { namespace cards {
 
-RemotePlayer::RemotePlayer (Deck& pack) :
+PlayerProxy::PlayerProxy (Deck& pack) :
     status_        (new char[User::kMaxStatusLength + 1]),
     num_wins_      (0),
     num_points_    (0),
@@ -30,57 +30,57 @@ RemotePlayer::RemotePlayer (Deck& pack) :
     SetDislpayName ("Steve");
 }
 
-RemotePlayer::~RemotePlayer () {
+PlayerProxy::~PlayerProxy () {
     delete status_;
 }
 
-const char* RemotePlayer::GetDislpayName () {
+const char* PlayerProxy::GetDislpayName () {
     return status_;
 }
 
-const char* RemotePlayer::SetDislpayName (const char* name) {
+const char* PlayerProxy::SetDislpayName (const char* name) {
     if (name == nullptr) {
         return "name can't be nil";
     }
-    TextWrite (status_, status_ + User::kMaxStatusLength + 1, name);
+    StrandWrite (status_, status_ + User::kMaxStatusLength + 1, name);
     return nullptr;
 }
 
-const char* RemotePlayer::GetHandle () {
+const char* PlayerProxy::GetHandle () {
     return handle_;
 }
 
-const char* RemotePlayer::SetHandle (const char* handle) {
-    if (name == nullptr) {
-        return "handle can't be nil";
+const char* PlayerProxy::SetHandle (const char* handle) {
+    if (!handle) {
+        return "\n| Error: handle can't be nil!";
     }
-    TextWrite (handle_, status_ + User::kMaxStatusLength + 1,
-               handle);
+    delete handle_;
+    handle = StrandClone (handle);
     return nullptr;
 }
 
-bool RemotePlayer::IsDealer () {
+bool PlayerProxy::IsDealer () {
     return is_dealer_;
 }
 
-void RemotePlayer::SetIsDealer (bool is_dealer) {
+void PlayerProxy::SetIsDealer (bool is_dealer) {
     is_dealer = is_dealer_;
 }
 
-int RemotePlayer::GetState () {
+int PlayerProxy::GetState () {
     return state_;
 }
 
-const char* RemotePlayer::SetState (int32_t state) {
+const char* PlayerProxy::SetState (int32_t state) {
     state_ = state;
     return nullptr;
 }
 
-int RemotePlayer::GetNumPoints () {
+int PlayerProxy::GetNumPoints () {
     return num_points_;
 }
 
-bool RemotePlayer::SetNumPoints (int num_points) {
+bool PlayerProxy::SetNumPoints (int num_points) {
     if (num_points < 0) {
         return false;
     }
@@ -88,11 +88,11 @@ bool RemotePlayer::SetNumPoints (int num_points) {
     return true;
 }
 
-int RemotePlayer::GetNumWins () {
+int PlayerProxy::GetNumWins () {
     return num_wins_;
 }
 
-bool RemotePlayer::SetNumWins (int num_wins) {
+bool PlayerProxy::SetNumWins (int num_wins) {
     if (num_wins < 0) {
         return false;
     }
@@ -100,17 +100,17 @@ bool RemotePlayer::SetNumWins (int num_wins) {
     return true;
 }
 
-CardStack& RemotePlayer::GetVisibleCards () {
+CardStack& PlayerProxy::GetVisibleCards () {
     return visible_cards_;
 }
 
-void RemotePlayer::DeleteVisibleCards () {
-    for (int i = 0; i < visible_cards_.GetCount (); ++i) {
+void PlayerProxy::DeleteVisibleCards () {
+    for (int i = 0; i < visible_cards_.Length (); ++i) {
         delete visible_cards_.Draw ();
     }
 }
 
-int RemotePlayer::AddCard (byte pip, byte suit) {
+int PlayerProxy::AddCard (byte pip, byte suit) {
     if (pip < 0) {
         return -1;
     }
@@ -120,17 +120,16 @@ int RemotePlayer::AddCard (byte pip, byte suit) {
     return visible_cards_.Push (new Card (pip, pack_.Suits ()[suit], 0));
 }
 
-void RemotePlayer::Print () {
-    cout << "\n| " << status_ << ": points: " << num_points_ 
-         << " wins  : " << num_wins_;
-
-    PrintLine ('-');
-    visible_cards_.Print ();
+Text& PlayerProxy::Print (Text& txt) {
+    return txt << "\n| " << status_ << ": points: " << num_points_ 
+               << " wins  : " << num_wins_
+               << txt.Line ()
+               << visible_cards_.Print (txt);
 }
 
-const Operation* RemotePlayer::Star (uint index, _::Expression* expr) {
-    static const Operation This { "RemotePlayer",
-        NumOperations (6), OperationFirst ('A'),
+const Operation* PlayerProxy::Star (uint index, Expression* expr) {
+    static const Operation This { "PlayerProxy",
+        OperationCount (6), OperationFirst ('A'),
         "A remotely controlled player in an abstract card game.", 0
     };
     void* args[1];
@@ -142,7 +141,7 @@ const Operation* RemotePlayer::Star (uint index, _::Expression* expr) {
                 "Sets the status_.", 0
             };
             if (!expr) return &OpA;
-            return ExprArgs (expr, Params<1, STR, User::kMaxStatusLength> (),
+            return ExpressionArgs (expr, Params<1, STR, User::kMaxStatusLength> (),
                              Args (args, status_));
         }
         case 'B': {
@@ -152,7 +151,7 @@ const Operation* RemotePlayer::Star (uint index, _::Expression* expr) {
             };
             if (!expr) return &OpB;
             byte is_dealer;
-            if (!ExprArgs (expr, Params<1, BOL> (), Args (args, &is_dealer)))
+            if (!ExpressionArgs (expr, Params<1, BOL> (), Args (args, &is_dealer)))
                 return expr->result;
             is_dealer_ = (is_dealer == 0);
             return nullptr;
@@ -163,7 +162,7 @@ const Operation* RemotePlayer::Star (uint index, _::Expression* expr) {
                 "Sets the state_.", 0
             };
             if (!expr) return &OpC;
-            return ExprArgs (expr, Params<1, UI4> (), Args (args, &state_));
+            return ExpressionArgs (expr, Params<1, UI4> (), Args (args, &state_));
         }
         case 'D': {
             static const Operation OpD { "SetNumPoints",
@@ -171,7 +170,7 @@ const Operation* RemotePlayer::Star (uint index, _::Expression* expr) {
                 "Sets the state_.", 0
             };
             if (!expr) return &OpD;
-            return ExprArgs (expr, Params<1, UI4> (), Args (args, &num_points_));
+            return ExpressionArgs (expr, Params<1, UI4> (), Args (args, &num_points_));
         }
         case 'E': {
             static const Operation OpE { "SetNumWins",
@@ -179,7 +178,7 @@ const Operation* RemotePlayer::Star (uint index, _::Expression* expr) {
                 "Sets the state_.", 0
             };
             if (!expr) return &OpE;
-            return ExprArgs (expr, Params<1, UI4> (), Args (args, &num_wins_));
+            return ExpressionArgs (expr, Params<1, UI4> (), Args (args, &num_wins_));
         }
         case 'F': {
             static const Operation OpF { "DeleteCards",
@@ -198,7 +197,7 @@ const Operation* RemotePlayer::Star (uint index, _::Expression* expr) {
             if (!expr) return &OpG;
             byte pip,
                  suit;
-            if (ExprArgs (expr, Params<2, UI1, UI1> (), Args (args, &pip, &suit)))
+            if (ExpressionArgs (expr, Params<2, UI1, UI1> (), Args (args, &pip, &suit)))
                 return expr->result;
             if (pip < 0) {
                 return Result (expr, Bin::kErrorInvalidArgs,

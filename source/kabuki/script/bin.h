@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/bin.h
+    @file    ~/source/kabuki/script/bin.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -21,24 +21,13 @@
 #define HEADER_FOR___BIN
 
 #include "operation.h"
+#include "text.h"
+#include "slot.h"
 
 namespace _ {
 
-/** Calculates the used ring buffer space.
-    @param  Start The start of the data.
-    @param  Stop  The stop of the data.
-    @param  Size  The size of the buffer. */
-KABUKI uint_t SlotLength (byte* start, byte* stop, uint_t size);
-
-/** Calculates the space left in the given ring buffer.
-    @param  Start The start of the data.
-    @param  Stop  The stop of the data.
-    @param  Size  The size of the buffer. */
-KABUKI uint_t SlotSpace (byte* start, byte* stop, uint_t size);
-
-/*< A*B B-Input Slot.
-    A B-Input Slot is functionally identical to a input port in TCP.
-*/
+/** A*B B-Input Slot.
+    A B-Input Slot is functionally identical to a input port in TCP. */
 struct KABUKI Bin {
     /** List of B-Input Errors. */
     typedef enum {
@@ -99,13 +88,13 @@ KABUKI byte* BinBuffer (Bin* bin);
 KABUKI byte* BinEndAddress (Bin* bin);
 
 /** Gets a human-readable description for given error. */
-KABUKI const char* BinErrorText (Bin::Error e);
+KABUKI const char* BinError (Bin::Error e);
 
 /** Gets a a char for printing out the bin_state. */
-KABUKI const char* BinStateText (Bin::State state);
+KABUKI const char* BinState (Bin::State state);
 
-inline const char* BinStateText (byte state) {
-    return BinStateText ((Bin::State)state);
+inline const char* BinState (byte state) {
+    return BinState ((Bin::State)state);
 }
 
 /** Used to return an erroneous result from a B-Input.
@@ -114,7 +103,7 @@ inline const char* BinStateText (byte state) {
     @return Returns a Static Error Operation Result. */
 inline const Operation* BinResult (Bin* bin, Bin::Error error) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Bin " << BinErrorText (error) << " Error!\n";
+    std::cout << "\n| Bin " << BinError (error) << " Error!\n";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
@@ -128,7 +117,7 @@ inline const Operation* BinResult (Bin* bin, Bin::Error error) {
 inline const Operation* BinResult (Bin* bin, Bin::Error error,
                                    const uint_t* header) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Bin " << BinErrorText (error) << " Error!\n";
+    std::cout << "\n| Bin " << BinError (error) << " Error!\n";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
@@ -144,7 +133,7 @@ inline const Operation* BinResult (Bin* bin, Bin::Error error,
                                    const uint_t* header,
                                    uint_t offset) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Bin " << BinErrorText (error) << " Error!\n";
+    std::cout << "\n| Bin " << BinError (error) << " Error!\n";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
@@ -161,7 +150,7 @@ inline const Operation* BinResult (Bin* bin, Bin::Error error,
                                    uint_t offset,
                                    byte* address) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Bin " << BinErrorText (error) << " Error!\n";
+    std::cout << "\n| Bin " << BinError (error) << " Error!\n";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
@@ -179,9 +168,6 @@ KABUKI byte* BinEndAddress (Bin* bin);
     @warning Function does not do any error checking for speed. */
 KABUKI bool BinIsReadable (Bin* bin);
 
-/** Prints out the given object to the std::out. */
-KABUKI void BinPrint (Bin* bin);
-
 /** Scans a message with the given params to the given Bin.
     The data in the Bin is word-aligned, unlike the Slot. It also 
     doesn't have a hash with an escape sequence.
@@ -193,5 +179,20 @@ KABUKI void BinPrint (Bin* bin);
                   failure. */
 KABUKI const Operation* BinRead (Bin* bin, const uint_t* params, void** args);
 
+#if SCRIPT_USING_TEXT
+/** Prints the Bin to the Text.
+    @param  bin The pin to print.
+    @param  txt The Text to print the bin to.
+    @return The txt. */
+KABUKI Text& BinPrint (Bin* bin, Text& txt);
+#endif  //< SCRIPT_USING_TEXT
 }       //< namespace _
+
+#if SCRIPT_USING_TEXT
+/** Prints out the bin to the txt. */
+inline _::Text& operator<< (_::Text& txt, _::Bin* bin) {
+    return _::BinPrint (bin, txt);
+}
+#endif  //< SCRIPT_USING_TEXT
+
 #endif  //< HEADER_FOR___BIN

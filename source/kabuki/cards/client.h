@@ -18,7 +18,7 @@
 
 #include "deck.h"
 #include "dealer.h"
-#include "remote_player.h"
+#include "player_proxy.h"
 
 namespace kabuki { namespace cards {
 
@@ -55,14 +55,14 @@ class Client : public id::AuthenticatorDefault, public _::Operation {
     /** Virtual function sets the FSM state to a positive value. */
     virtual bool SetState (int state);
 
-    /** Prints out the RemotePlayer(s). */
+    /** Prints out the PlayerProxy(s). */
     void Client::PrintPlayers ();
 
     /** Prints the round stats string. */
     void PrintRoundStatsText ();
 
     /** Prints this game out to the console. */
-    virtual void Print ();
+    virtual _::Text& Print (_::Text& txt = _::Text ());
 
     /** Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
@@ -74,7 +74,7 @@ class Client : public id::AuthenticatorDefault, public _::Operation {
     uint32_t             state_,        //< Client app state.
                          round_number_; //< Current round number.
     id::User             user_;         //< User.
-    std::vector<RemotePlayer*> players_;      //< Array of RemotePlayer(s).
+    std::vector<PlayerProxy*> players_; //< Array of PlayerProxy(s).
 
 };  //< class Client
 

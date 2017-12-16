@@ -1,4 +1,4 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
     @file    ~/source/kabuki/script/script_token.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -26,34 +26,6 @@ using namespace std;
 
 namespace _ {
 
-const char* TokenPrint (const char* strand) {
-    if (!strand) {
-        return nullptr;
-    }
-    char c = *strand;
-    while (c && !isspace (c)) {
-        cout << c;
-    }
-    return "";
-}
-
-const char* TokenPrint (const char* text, const char* text_end) {
-    if (!text) {
-        return nullptr;
-    }
-    if (text > text_end) {
-        return nullptr;
-    }
-    char c = *text;
-    while (c && !isspace (c)) {
-        cout << c;
-        if (++text > text_end) {
-            return nullptr;
-        }
-    }
-    return "";
-}
-
 bool TokenQualifies (const char* strand) {
     if (strand == nullptr) {
         return false;
@@ -68,11 +40,11 @@ bool TokenQualifies (const char* strand) {
     return false;
 }
 
-bool TokenQualifies (const char* text, const char* text_end) {
+bool TokenQualifies (const char* text, const char* strand_end) {
     if (!text) {
         return false;
     }
-    if (text > text_end) {
+    if (text > strand_end) {
         return false;
     }
     char c = *text;
@@ -80,7 +52,7 @@ bool TokenQualifies (const char* text, const char* text_end) {
         if (!isspace (c)) {
             // The token must end at or before the target_end.
             do {
-                if (++text > text_end) {
+                if (++text > strand_end) {
                     return false;
                 }
                 c = *text;
@@ -90,7 +62,7 @@ bool TokenQualifies (const char* text, const char* text_end) {
             } while (c);
             return true;
         }
-        if (++text > text_end) {
+        if (++text > strand_end) {
             return false;
         }
         c = *text;
@@ -138,9 +110,9 @@ const char* TokenEquals (const char* strand, const char* token) {
     return strand;
 }
 
-const char* TokenEquals (const char* text, const char* text_end,
+const char* TokenEquals (const char* text, const char* strand_end,
                          const char* token) {
-    text = TextSkipSpaces (text, text_end);
+    text = TextSkipSpaces (text, strand_end);
     if (!text) {
         return nullptr;
     }
@@ -168,7 +140,7 @@ const char* TokenEquals (const char* text, const char* text_end,
             cout << " is a partial match but !a.";
             return nullptr;
         }
-        if (++text > text_end) {
+        if (++text > strand_end) {
             cout << " but text buffer overflowed!";
             return nullptr;
         }
@@ -184,9 +156,9 @@ const char* TokenEquals (const char* text, const char* text_end,
     return text;
 }
 
-const char* TokenRead (const char* text, const char* text_end,
+const char* TokenRead (const char* text, const char* strand_end,
                        char* target, char* target_end) {
-    text = TextSkipSpaces (text, text_end);
+    text = TextSkipSpaces (text, strand_end);
     if (!text) {
         return nullptr;
     }
@@ -197,12 +169,10 @@ const char* TokenRead (const char* text, const char* text_end,
         return nullptr;
     }
 
-    cout << "\n| Reading token \"" << TokenPrint (text, text_end) << "\" and writing \"";
-
     char c = *text;
     while (c && !isspace (c)) {
         cout << c;
-        if (++text > text_end) {
+        if (++text > strand_end) {
             cout << " but text buffer overflowed!";
             return nullptr;
         }
@@ -272,7 +242,7 @@ int TokenCompare (const char* strand, const char* token) {
     return 0;
 }
 
-int TokenCompare (const char* text, const char* text_end,
+int TokenCompare (const char* text, const char* strand_end,
                   const char* token) {
     char a = *text,
         b = *token;
@@ -291,7 +261,7 @@ int TokenCompare (const char* text, const char* text_end,
         b = 0;
         return b - a;
     }
-    if (text > text_end) {
+    if (text > strand_end) {
         return *token;
     }
     // Algorithm combines loops for better performance.
@@ -322,7 +292,7 @@ int TokenCompare (const char* text, const char* text_end,
             //cout << " is a partial match but !a.";
             return result;
         }
-        if (++text > text_end) {
+        if (++text > strand_end) {
             //cout << " but buffer overflowed!";
             return result;
         }
@@ -355,21 +325,21 @@ const char* TokenEnd (const char* target) {
     return nullptr;
 }
 
-const char* TokenEnd (const char* text, const char* text_end) {
+const char* TokenEnd (const char* text, const char* strand_end) {
     if (!text) {
         return nullptr;
     }
-    if (text > text_end) {
+    if (text > strand_end) {
         return nullptr;
     }
-    text = TextSkipSpaces (text, text_end);
+    text = TextSkipSpaces (text, strand_end);
 
     char c = *text;
     while (c) {
         if (isspace (c)) {
             return text;
         }
-        if (++text > text_end) {
+        if (++text > strand_end) {
             return nullptr;
         }
         c = *text;

@@ -17,9 +17,9 @@
 
 #ifdef WIN32
 #include "resultver.h"
-#define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Windows headers
+#define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Mirrors headers
 #define NOMINMAX
-#include <Windows.h>
+#include <Mirrors.h>
 #endif
 
 #include <algorithm>

@@ -1,4 +1,5 @@
 /** Kabuki Toolkit
+    @version 0.x
     @file    ~/source/kabuki/cards/dealer.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -28,15 +29,14 @@ class BlackjackDealer : public Dealer {
     public:
     
     enum {
-        kNumDecks           = 1,      //< Number of decks for this game.
-        kDeckSize           = 52,     //< Number of cards in the Deck.
-        kStartingAnte       = 5,      //< Starting ante.
-        kMinBet             = 1,      //< Min bet.
-        kMinCardsPerHand    = 2,      //< Min cards in a hand.
-        kMaxCardsPerHand    = Deck::kDefaultDeckSize, //< Max cards in a hand.
-        kDefaultMinPlayers  = 1,      //< Default min num players.
-        kDefaultMaxPlayers  = 10,     //< Default max num players.
-        kKeyboardBufferSize = 79,     //< Size of the keyboard input buffer.
+        kNumDecks           = 1,  //< Number of decks for this game.
+        kDeckSize           = 52, //< Number of cards in the Deck.
+        kStartingAnte       = 5,  //< Starting ante.
+        kMinBet             = 1,  //< Min bet.
+        kDefaultMinPlayers  = 1,  //< Default min num players.
+        kDefaultMaxPlayers  = 10, //< Default max num players.
+        kMinCardsPerHand    = 2,  //< Min cards in a hand.
+        //kMaxCardsPerHand    = Deck::kDefaultDeckSize, //< Max cards in a hand.
     };
 
     /** Default constructor. */
@@ -46,13 +46,14 @@ class BlackjackDealer : public Dealer {
                      int min_players = kDefaultMinPlayers,
                      int max_players = kDefaultMaxPlayer);
 
+    /** Virtually destructs nothing. */
     virtual ~BlackjackDealer ();
 
     /** Raises the ante by the given amount. */
     bool RaiseAnte (int64_t value);
 
     /** Gets the hand score with the given ace value. */
-    int GetScore (int ace_value);
+    int CalcScore (int ace_value);
 
     /** Pure virtual new game logic handler. */
     virtual void RestartGame ();
@@ -78,23 +79,22 @@ class BlackjackDealer : public Dealer {
     virtual bool Wins (Hand& hand);
 
     /** Adds a BlackjackPlayerAi to the . */
-    virtual int AddAiPlayer (id::User* user);
+    virtual int AddAgent (id::User* user);
 
     /** Prints the abridged player stats to the console. */
-    virtual void PrintStats ();
+    virtual _::Text& PrintStats (_::Text& txt);
 
     /** Prints the player to the console. */
-    virtual void Print ();
+    virtual _::Text& Print (_::Text& txt = _::Text ());
 
     /** Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
     /** Handles Text input.
         @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text,
-                                    const char* text_end);
+    const char* Sudo (const char* text, const char* strand_end);
 
 };      //< class BlackjackDealer
 }       //< namespace cards

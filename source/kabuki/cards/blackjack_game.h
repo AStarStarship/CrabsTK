@@ -17,12 +17,12 @@
 #define HEADER_FOR_KABUKI_BLACKJACK_GAME
 
 #include "blackjack_dealer.h"
-#include "card_game.h"
+#include "game.h"
 
 namespace kabuki { namespace cards {
 
 /** A blackjack card game. */
-class BlackjackGame : public CardGame {
+class BlackjackGame : public Game {
     public:
 
     typedef enum States {
@@ -78,17 +78,17 @@ class BlackjackGame : public CardGame {
     virtual void EndRound ();
 
     /** Prints this object to the console */
-    virtual void Print ();
+    virtual _::Text& Print (_::Text& txt = _::Text ());
 
     /** Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
     /** Handles Text input.
         @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text,
-                                    const char* text_end);
+    virtual const char* Sudo (const char* text, const char* strand_end);
+
     private:
 
     int              round_number_, //< Current round number.

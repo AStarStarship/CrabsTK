@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/tmap.h
+    @file    ~/source/kabuki/script/tmap.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -279,7 +279,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
         *unsorted_indexes = 0;
         destination = keys - key_length;
 
-        TextWrite (destination, id);
+        StrandWrite (destination, id);
         printf ("Inserted key %s at GetAddress 0x%p\n", id, destination);
         MapPrint (map);
         return 0;
@@ -350,7 +350,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
 
                 // Copy the key
                 value = key_offsets[num_items - 1] + key_length + 1;
-                TextWrite (keys - value, id);
+                StrandWrite (keys - value, id);
                 key_offsets[num_items] = value;
 
                 // Update the collision table.
@@ -403,7 +403,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
                 byte collision_index = unsorted_indexes[mid];
                 printf ("\n\ncollision_index: %u", collision_index);
 
-                TextWrite (keys - value, id);
+                StrandWrite (keys - value, id);
                 printf ("Inserting value: %u into index:%u "
                         "num_items:%u with other collision_index: %u\n", value,
                         index, num_items, collision_index);
@@ -455,7 +455,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
             Diff (map, destination), hashes[mid]);
 
     // First copy the char and set the key offset.
-    TextWrite (destination, id);
+    StrandWrite (destination, id);
     key_offsets[num_items] = value;
 
     // Second move up the hashes and insert at the insertion point.

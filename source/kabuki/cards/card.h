@@ -1,4 +1,4 @@
-/** kabuki:cards
+/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/card.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -93,7 +93,7 @@ class KABUKI Card {
     //Image& GetImage ();
     
     /** Returns a string representation of this Object. */
-    void Print ();
+    _::Text& Print (_::Text& txt = _::Text ());
 
     /** Overloaded binary operator=. */
     Card& operator= (const Card& other);

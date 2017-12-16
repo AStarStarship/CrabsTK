@@ -42,13 +42,6 @@ class BlackjackPlayerAi : public BlackjackPlayer {
         @pre    The player must have a max hand score of 21. */
     void PlayRound () override;
 
-    /** Handles Text input.
-        @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
-        @return Returns nil upon success and an error string upon failure. */
-    const char* Do (const char* text,
-                            const char* text_end) override;
-
 };
 }       //< namespace cards
 }       //< namespace kabuki

@@ -1,4 +1,4 @@
-/** kabuki::pro
+/** Kabuki Toolkit
     @file    ~/source/kabuki/id/user_list.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -33,12 +33,12 @@ UserList::UserList (Authenticator* authenticator, int max_users) :
 }
 
 UserList::~UserList () {
-    int count = GetCount ();
+    int count = Length ();
     if (count == 0) {
         return;
     }
     for (int i = count - 1; i > 0; --i) {
-        User* user = users_[GetCount () - 1];
+        User* user = users_[Length () - 1];
         users_.pop_back ();
         delete user;
     }
@@ -52,7 +52,7 @@ int UserList::GetSize () {
     return users_.size ();
 }
 
-int UserList::GetCount () {
+int UserList::Length () {
     return num_users_;
 }
 
@@ -98,7 +98,7 @@ int UserList::Add (User* user) {
         return -1;
     }
     // Look for the first empty spot in the list.
-    for (int i = GetCount () - 1; i > 0; --i) {
+    for (int i = Length () - 1; i > 0; --i) {
         if (!users_[i]) {
             users_[i] = user;
             num_users_ = num_users + 1;
@@ -175,7 +175,7 @@ int UserList::Remove (const char* handle, const char* password) {
     delete user;
     users_.erase (users_.begin () + session);
     --num_users_;
-    return GetCount ();
+    return Length ();
 }
 
 int UserList::Find (const char* handle) {
@@ -186,7 +186,7 @@ int UserList::Find (const char* handle) {
     //    return -1;      //  Not sure if I care about this or not.
     //}
     // Currently using sequential search because UserList is not sorted.
-    size_t count = GetCount ();
+    size_t count = Length ();
     cout << "\n| Searching for handle:\"" << handle << "\" cout:" << count;
     if (count == 0) {
         return -1;
@@ -194,7 +194,7 @@ int UserList::Find (const char* handle) {
     for (size_t i = 0; i < count; ++i) {
         User* user = users_[i];
         cout << "\n| " << i << ' ';
-        user->Print ();
+        cout << user->Print ();
         if (users_[i]->GetHandle ().Equals (handle)) {
             cout << "\n| Found handle at index:" << i;
             return i;
@@ -209,7 +209,7 @@ User* UserList::GetUser (int session) {
     if (session < 0) {
         return nullptr;
     }
-    if (session >= GetCount ()) {
+    if (session >= Length ()) {
         return nullptr;
     }
     return users_[session];
@@ -248,7 +248,7 @@ int UserList::Remove (int session) {
     if (session < 0) {
         return -1;
     }
-    if (session >= GetCount ()) {
+    if (session >= Length ()) {
         return -1;
     }
     User* user = users_[session];
@@ -275,21 +275,22 @@ int UserList::Remove (const char* handle) {
     return num_users;
 }
 
-void UserList::Print () {
-    cout << "\n| UserList: Count:" << GetCount ()
-         << " Size:" << users_.capacity ();
+_::Text& UserList::Print (_::Text& txt) {
+    txt << "\n| UserList: Count:" << Length ()
+        << " Size:" << users_.capacity ();
 
-    for (int i = 0; i < GetCount (); i++) {
+    for (int i = 0; i < Length (); i++) {
         User* user = users_[i];
         if (user) {
-            cout << "\n| Account " << (i + 1) << ":\""
+            txt << "\n| Account " << (i + 1) << ":\""
                 << user->GetHandle ().GetKey () << '\"';
         }
     }
+    return txt;
 }
 
-const char* UserList::Do (const char* text,
-                                  const char* text_end) {
+const char* UserList::Sudo (const char* text,
+                                  const char* strand_end) {
     char        handle  [Handle::kMaxLength + 1],
                 password[Password::kMaxLength + 1];
     double      balance;
@@ -299,56 +300,56 @@ const char* UserList::Do (const char* text,
     if (!text) {
         return nullptr;
     }
-    if (text > text_end) {
+    if (text > strand_end) {
         return nullptr;
     }
     // This algorithm's job is to figure out white user to route the message
     // too. Users are not sorted right so we're doing it the slow way.
     // @todo Update to hash table.
     // @all routes messages to everyone in the UserList.
-    if (next_token = TokenEquals (text, text_end, "all")) {
-        int count = GetCount ();
+    if (next_token = TokenEquals (text, strand_end, "all")) {
+        int count = Length ();
         if (count == 0) {
             return next_token;
         }
         for (int i = count - 2; i > 0; --i) {
-            if (!users_[i]->Do (next_token + 1, text_end)) {
+            if (!users_[i]->Sudo (next_token + 1, strand_end)) {
                 return nullptr;
             }
         }
-        return users_[0]->Do (next_token + 1, text_end);
+        return users_[0]->Sudo (next_token + 1, strand_end);
     }
-    if (next_token = TokenEquals (text, text_end, "add")) {
-        next_token = TokenRead (text, text_end, handle,
+    if (next_token = TokenEquals (text, strand_end, "add")) {
+        next_token = TokenRead (text, strand_end, handle,
                                 handle + Handle::kMaxLength + 1);
         if (!next_token) {
             return nullptr;
         }
-        next_token = TokenRead (text, text_end, password,
+        next_token = TokenRead (text, strand_end, password,
                                 password + Password::kMaxLength + 1);
         if (!next_token) {
             return nullptr;
         }
-        if (!(next_token = TextRead (next_token + 1, text_end, balance))) {
+        if (!(next_token = TextRead (next_token + 1, strand_end, balance))) {
             return nullptr;
         }
-        if (!(next_token = TextRead (next_token + 1, text_end, value))) {
+        if (!(next_token = TextRead (next_token + 1, strand_end, value))) {
             return nullptr;
         }
         return next_token;
     }
-    if (next_token = TokenEquals (text, text_end, "remove")) {
+    if (next_token = TokenEquals (text, strand_end, "remove")) {
         char handle[Handle::kMaxLength + 1];
-        while (!TokenRead (text, text_end, handle, handle + Handle::kMaxLength + 1)) {
+        while (!TokenRead (text, strand_end, handle, handle + Handle::kMaxLength + 1)) {
             Remove (handle);
         }
     }
-    for (int i = 0; i < GetCount (); ++i) {
+    for (int i = 0; i < Length (); ++i) {
         User* user = GetUser (i);
-        next_token = TokenEquals (text, text_end,
+        next_token = TokenEquals (text, strand_end,
                                       user->GetHandle ().GetKey ());
         if (next_token) {
-            return user->Do (next_token + 1, text_end);
+            return user->Sudo (next_token + 1, strand_end);
         }
     }
     return nullptr;

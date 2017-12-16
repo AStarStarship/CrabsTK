@@ -16,9 +16,10 @@
 #include "global.h"
 
 int main (int args_count, char** args) {
-    PrintLine ();
-    cout << "\n| Running Kabuki Toolkit unit tests...";
-    PrintLine ();
-    cout << "\n|";
+    Text txt;
+    txt << txt.Line ()
+        << "\n| Running Kabuki Toolkit unit tests..."
+        << txt.Line ()
+        << "\n|";
     return CommandLineTestRunner::RunAllTests (args_count, args);
 }

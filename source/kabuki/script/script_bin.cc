@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/impl/script_bin.cc
+    @file    ~/source/kabuki/script/script_bin.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -12,35 +12,19 @@
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
              permissions and limitations under the License.
-    @desc    Slot implementation split into three files, slot.h, 
-             monoid_rx.h, and monoid_tx.h because of the large read/write
-             functions.
 */
 
 #include <stdafx.h>
 #include "bin.h"
 #include "types.h"
-#include "args.h"
-#include "text.h"
+#include "params.h"
 #include "hash.h"
-#include "print.h"
+#include "slot.h"
 
 namespace _ {
 
-uint_t SlotLength (byte* start, byte* stop, uint_t size) {
-    if (start > stop)
-        return size - (start - stop);
-    return stop - start;
-}
-
-uint_t SlotSpace (byte* start, byte* stop, uint_t size) {
-    if (start > stop)
-        return start - stop;
-    return size - (stop - start);
-}
-
 #if USE_MORE_ROM
-const char* BinErrorText (Bin::Error e) {
+const char* BinError (Bin::Error e) {
     static const char* strings[] = {
         "Buffer overflow",          //<  0
         "Buffer underflow",         //<  1
@@ -76,7 +60,7 @@ const char* BinErrorText (Bin::Error e) {
     return strings[e];
 }
 
-const char* BinStateText (Bin::State state) {
+const char* BinState (Bin::State state) {
     static const char* kTexts[] = {
         "Address",      //< 0
         "Args",         //< 1
@@ -172,27 +156,11 @@ bool BinIsReadable (Bin* bin) {
     return BinBufferLength (bin) > 0;
 }
 
-#if SCRIPT_DEBUG
-void BinPrint (Bin* bin) {
-    PrintLine ('_');
-    if (bin == nullptr) {
-        printf ("\n| Bin null\n");
-        return;
-    }
-    uint_t size = bin->size;
-    printf ("\n| Bin 0x%p: size: %u, start: %u, stop: %u, read: %u\n", bin, size,
-        bin->start, bin->stop, bin->read);
-    PrintMemory (BinBuffer (bin), size + sizeof (Bin));
-}
-#endif  //< SCRIPT_DEBUG
-
 const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #if SCRIPT_DEBUG
-    std::cout << "\n| Reading ";
-    ParamsPrint (params);
-    std::cout << " from B-Input:";
-    printf ("%p\n", bin);
-    BinPrint (bin);
+    Text txt;
+    txt << "\n| Reading " << ParamsPrint (params, txt) << " from B-Input:"
+        << txt.Pointer (bin) << BinPrint (bin, txt) << txt.Print ();
 #endif
     if (bin == nullptr)
         return BinResult (bin, Bin::kErrorRoom);
@@ -894,5 +862,19 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 
     return 0;
 }
+
+#if SCRIPT_USING_TEXT
+Text& BinPrint (Bin* bin, Text& txt) {
+    if (bin == nullptr) {
+        return txt << "\n| Error: Bin can't be null";
+    }
+    uint_t size = bin->size;
+    txt << txt.Line ('_')
+        << "\n| Bin 0x " << txt.Pointer (bin) << ": size:" << bin->size
+        << " start:" << bin->start << ", stop:" << bin->stop
+        << " read:" << bin->read
+        << txt.Memory (BinBuffer (bin), size + sizeof (Bin));
+}
+#endif  //< SCRIPT_USING_TEXT
 
 }       //< namespace _

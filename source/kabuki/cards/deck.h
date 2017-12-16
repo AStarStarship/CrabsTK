@@ -1,4 +1,4 @@
-/** kabuki:cards
+/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/deck.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -133,7 +133,7 @@ class Deck {
     //int SetDeckArt (const char* directory_path);
     
     /** Prints this object to the console. */
-    void Print ();
+    _::Text& Print (_::Text& txt = _::Text ());
 
     private:
 

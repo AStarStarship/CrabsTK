@@ -1,6 +1,6 @@
-/** kabuki::data
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/data/include/iterator.h
+    @file    ~/source/kabuki/data/iterator.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,10 +14,10 @@
              permissions and limitations under the License.
 */
 
-#ifndef KABUKI_DATA_ITERATOR_H
-#define KABUKI_DATA_ITERATOR_H
+#ifndef HEADER_FOR_KABUKI_DATA_ITERATOR
+#define HEADER_FOR_KABUKI_DATA_ITERATOR
 
-#include "module_config.h"
+#include "config.h"
 
 namespace kabuki { namespace data {
 
@@ -45,4 +45,4 @@ struct Iterable {
 
 }       //< namespace data
 }       //< namespace kabuki
-#endif  //< KABUKI_DATA_ITERATOR_H
+#endif  //< HEADER_FOR_KABUKI_DATA_ITERATOR

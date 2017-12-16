@@ -1,7 +1,7 @@
-/** kabuki::script
+/** Kabuki Toolkit
 #include <script_door.h>
     @version 0.x
-    @file    ~/source/kabuki/script/impl/script_door.cc
+    @file    ~/source/kabuki/script/script_door.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -89,14 +89,14 @@ const Operation* Door::ExecAll () {
     return 0;
 }
 
-const char* Door::Do (const char* text, const char* text_end) {
+const char* Door::Sudo (const char* text, const char* strand_end) {
     return nullptr;
 }
 
 const Operation* Door::Star (uint index, Expression* expr) {
     if (index < ' ') {
         static const Operation star = { "Door", 
-            NumOperations (0), OperationFirst ('A'),
+            OperationCount (0), OperationFirst ('A'),
             "A door in a Chinese room.", 0 };
         return &star;
     }

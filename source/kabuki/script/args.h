@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/args.h
+    @file    ~/source/kabuki/script/args.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -23,21 +23,6 @@
 #include "types.h"
 
 namespace _ {
-
-/** Returns a static const Script B-Sequence header.
-    C++11 variadic template to ensure only one copy in ROM 
-    and to eliminate some redundant typing. */
-template<const uint_t... N>
-KABUKI const uint_t* Params () {
-    static const uint_t kList[sizeof... (N)] = { N... };
-    return kList;
-}
-
-/**  Prints out the parameters to the debug console. */
-KABUKI void ParamsPrint (const uint_t* params);
-
-/*< Returns the requested parameter number. */
-KABUKI uint_t ParamNumber (const uint_t* params, int param_number);
 
 /** Sets the params to the given pointers corresponding to the index 1-26 of the
 letters a-z. */
@@ -1185,5 +1170,13 @@ inline void** Args (void** ptrs, const void* a, const void* b,
 
     return const_cast<void**>(const_ptrs);
 }
+
 }       //< namespace _
+
+#if SCRIPT_USING_TEXT
+#include "text.h"
+/**  Prints out the parameters to the debug console. */
+KABUKI _::Text& operator<< (_::Text& txt, const uint_t* params);
+
+#endif  //< SCRIPT_USING_TEXT
 #endif  //< SCRIPT_ARGS_H

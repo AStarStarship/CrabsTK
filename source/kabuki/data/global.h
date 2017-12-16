@@ -1,4 +1,4 @@
-/** kabuki::data  
+/** Kabuki Toolkit  
     @file    ~/source/kabuki/array/global.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -17,6 +17,6 @@
 #define HEADER_FOR_KABUKI_DATA_GLOBAL
 
 #include "array.h"
-//#include "binary_tree.h"
+//#include "tree_binary.h"
 
 #endif  //< HEADER_FOR_KABUKI_DATA_GLOBAL

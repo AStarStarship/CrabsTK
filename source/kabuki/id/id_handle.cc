@@ -1,4 +1,4 @@
-/** kabuki::pro
+/** Kabuki Toolkit
     @file    ~/source/kabuki/id/handle.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -67,8 +67,8 @@ bool Handle::Equals (const char* handle) {
     return StrandEquals (key_, handle);
 }
 
-void Handle::Print () {
-    cout << "\n| Handle: " << key_;
+Text& Handle::Print (Text& txt) {
+    return txt << "\n| Handle: " << key_;
 }
 
 }       //< id

@@ -46,7 +46,7 @@ class TagLibrary
     int GetNumTags ();
 
     /** Prints this object to a Expression. */
-    void Print (_::Log& log);
+    _::Text& Print (_::Text& txt);
     
     private:
     

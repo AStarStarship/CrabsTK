@@ -1,8 +1,6 @@
-/** kabuki::script
-#include <script_utils.h>
-#include <script_table.h>
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/impl/script_table.cc
+    @file    ~/source/kabuki/script/script_table.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -20,7 +18,7 @@
 #include "table.h"
 #include "text.h"
 
-#if USING_TABLE
+#if SCRIPT_USING_TABLE
 
 namespace _ {
 
@@ -101,7 +99,7 @@ byte TableAdd (Table* table, const char* key) {
         *unsorted_indexes = 0;
         destination = keys - key_length;
 
-        TextWrite (destination, key);
+        StrandWrite (destination, key);
 #if SCRIPT_DEBUG
         printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
         TablePrint (table);
@@ -191,7 +189,7 @@ byte TableAdd (Table* table, const char* key) {
 
                 // Copy the key
                 value = key_offsets[num_keys - 1] + key_length + 1;
-                TextWrite (keys - value, key);
+                StrandWrite (keys - value, key);
                 key_offsets[num_keys] = value;
 
                 // Update the collision table.
@@ -253,7 +251,7 @@ byte TableAdd (Table* table, const char* key) {
                 value = key_offsets[num_keys - 1] + key_length + 1;
 
                 byte collision_index = unsorted_indexes[mid];
-                TextWrite (keys - value, key);
+                StrandWrite (keys - value, key);
 #if SCRIPT_DEBUG
                 printf ("Inserting value: %u into index:%u "
                         "num_keys:%u with other collision_index: %u\n", value,
@@ -311,7 +309,7 @@ byte TableAdd (Table* table, const char* key) {
 #endif  //< SCRIPT_DEBUG
 
     // First copy the char and set the key offset.
-    TextWrite (destination, key);
+    StrandWrite (destination, key);
     key_offsets[num_keys] = value;
 
     // Second move up the hashes and insert at the insertion point.
@@ -588,4 +586,4 @@ void TablePrint (Table* table) {
 }
 #endif  //< USE_MORE_ROM
 }       //< namespace _
-#endif  //< USING_TABLE
+#endif  //< SCRIPT_USING_TABLE

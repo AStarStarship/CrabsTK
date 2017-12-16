@@ -1,4 +1,4 @@
-/** kabuki::pro
+/** Kabuki Toolkit
     @file    ~/source/kabuki/id/include/server.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -38,9 +38,9 @@ class UidServer {
                next_uid_ ((init_uid == kInvalidUid) ? kInvalidUid + 1
                                                     : init_uid),
                filename_ (StrandClone (filename)) {
-        //                           +---E  +----D
+        //                      +---E  +----<||
         // Nothing to do here ({:->)-|------|
-        //                           +---E  +----D
+        //                           +---E  +----<||
     }
 
     /** Peeks at the next uid with incrementing it. */

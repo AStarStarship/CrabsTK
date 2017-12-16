@@ -1,6 +1,6 @@
 /** Kabuki Toolkit: Chinese Room
     @version 0.x
-    @file    ~/source/kabuki/this.h
+    @file    ~/source/kabuki/store/global.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,24 +14,9 @@
              permissions and limitations under the License.
 */
 
-#ifndef KABUKI_THIS_H
-#define KABUKI_THIS_H
+#ifndef HEADER_FOR_KABUKI_STORE_GLOBAL
+#define HEADER_FOR_KABUKI_STORE_GLOBAL
 
-#include "script/include/module_all.h"
+#include "../security/global.h"
 
-namespace _ {
-
-/** Default empty room.
-    
-*/
-struct This: public Room {
-    public:
-
-    This (uintptr_t* buffer, uintptr_t size) :
-        Room (buffer, size) {
-        
-    }
-};
-
-}       //< namespace _
-#endif  //< KABUKI_THIS_H
+#endif  //< HEADER_FOR_KABUKI_STORE_GLOBAL

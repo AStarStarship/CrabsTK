@@ -1,4 +1,4 @@
-/** kabuki:cards
+/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/dealer.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -14,7 +14,7 @@
 */
 
 #include "dealer.h"
-#include "card_game.h"
+#include "game.h"
 #include "player.h"
 
 using namespace _;
@@ -51,12 +51,12 @@ int Dealer::GetRoundNumber () {
     return round_number_;
 }
 
-int Dealer::GetNumPlayers () {
+int Dealer::GetPlayersCount () {
     return (int)players_.size ();
 }
 
 int Dealer::RemovePlayer (const char* handle) {
-    for (int i = 0; i < (int)GetNumPlayers (); ++i) {
+    for (int i = 0; i < (int)GetPlayersCount (); ++i) {
         if (players_[i]->GetUser()->GetStatus () == handle) {
             players_.erase (players_.begin () + i);
             return i;
@@ -70,7 +70,7 @@ int Dealer::RemovePlayer (int index) {
     if (index < 0)
         return -1;
 
-    if (index >= (int)GetNumPlayers ())
+    if (index >= (int)GetPlayersCount ())
         return 1;
 
     players_.erase (players_.begin () + index);
@@ -82,7 +82,7 @@ Player* Dealer::GetPlayer () {
     if (number < 0) {
         return nullptr;
     }
-    if (number >= (int)GetNumPlayers ()) {
+    if (number >= (int)GetPlayersCount ()) {
         return nullptr;
     }
     return players_[number];
@@ -92,7 +92,7 @@ Player* Dealer::GetPlayer (int index) {
     if (index < 0) {
         return nullptr; 
     }
-    if (index > (int)GetNumPlayers ()) {
+    if (index > (int)GetPlayersCount ()) {
         return nullptr;
     }
     return players_[index];
@@ -169,14 +169,14 @@ int Dealer::GetMinPlayers () {
 }
 
 int Dealer::GetMaxPlayers () {
-    return GetNumPlayers ();
+    return GetPlayersCount ();
 }
 
 bool Dealer::SetPlayerNumber (int value) {
     if (value < 0) {
         return false;
     }
-    if (value >= (int)GetNumPlayers ()) {
+    if (value >= (int)GetPlayersCount ()) {
         return false;
     }
     current_player_ = value;
@@ -184,7 +184,7 @@ bool Dealer::SetPlayerNumber (int value) {
 }
 
 void Dealer::RestartGame () {
-    if ((int)GetNumPlayers () < min_players_) {
+    if ((int)GetPlayersCount () < min_players_) {
         std::cout << "\n| Not enough players!";
         return;
     }
@@ -194,13 +194,13 @@ void Dealer::RestartGame () {
     ante_         = buy_in_;
     pot_          = 0;
 
-    for (int i = 0; i < GetNumPlayers (); ++i) {
+    for (int i = 0; i < GetPlayersCount (); ++i) {
         players_[i]->RestartGame ();
     }
 
-    pot_ = (GetNumPlayers () + 1) * ante_;
+    pot_ = (GetPlayersCount () + 1) * ante_;
 
-    for (int i = GetNumPlayers (); i > 0; --i) {
+    for (int i = GetPlayersCount (); i > 0; --i) {
         players_[i]->GetUser()->AddValue (ante_);
     }
     GetUser ()->AddValue (ante_);
@@ -216,23 +216,24 @@ void Dealer::Redeal () {
     //}
 }
 
-void Dealer::Print () {
+Text& Dealer::Print (Text& txt) {
     cout << "\n| Dealer:\n| Pot Total: " << pot_;
-    for (int i = 0; i < GetNumPlayers (); ++i) {
-        players_[i]->Print ();
+    for (int i = 0; i < GetPlayersCount (); ++i) {
+        players_[i]->Print (txt);
     }
+    txt;
 }
 
-const char* Dealer::Do (const char* text, const char* text_end) {
+const char* Dealer::Sudo (const char* text, const char* strand_end) {
     const char* next_token;
     if (!text) {
         return nullptr;
     }
-    if (text > text_end) {
+    if (text > strand_end) {
         return nullptr;
     }
-    if (next_token = TokenEquals (text, text_end, "Print")) {
-        Print ();
+    if (next_token = TokenEquals (text, strand_end, "Print")) {
+        Print (Print ());
         return next_token;
     }
     return nullptr;

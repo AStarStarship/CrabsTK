@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/event.h
+    @file    ~/source/kabuki/script/event.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -27,7 +27,7 @@ namespace _ {
 /** Interface for a temporal event.
     
     @code
-    #include <script/include/Event.h>
+    #include <script/Event.h>
     struct KABUKI Example: public Event {
         virtual void Trigger () {
             // ...
@@ -35,8 +35,8 @@ namespace _ {
     };
     @endcode */
 struct KABUKI Event {
-	/** Virtual destructor. */
-	virtual ~Event ();
+    /** Virtual destructor. */
+    virtual ~Event ();
 
     /** Triggers the event. */
     virtual void Trigger () = 0;

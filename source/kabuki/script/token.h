@@ -1,4 +1,4 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
     @file    ~/source/kabuki/script/token.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -33,18 +33,6 @@ namespace _ {
     @ingroup Text
 */
 
-
-/** Prints the first whitespace or nil terminated token from the string.
-    @param strand A nil-terminated string in ROM.
-    @return A pointer to the end of the token or nil upon failure. */
-const char* TokenPrint (const char* strand);
-
-/** Prints the first whitespace or nil terminated token from the text.
-    @param text     A nil-terminated string in RAM or ROM.
-    @param text_end End of the text buffer.
-    @return A pointer to the end of the token or nil upon failure. */
-const char* TokenPrint (const char* text, const char* text_end);
-
 /** Checks if the given char is a token.
     @param strand The char to check.
     @returns Returns true if the given char is a token. */
@@ -53,14 +41,14 @@ KABUKI bool TokenQualifies (const char* strand);
 /** Checks if the given char is a token.
     @param strand The char to check.
     @returns Returns true if the given char is a valid token. */
-KABUKI bool TokenQualifies (const char* text, const char* text_end);
+KABUKI bool TokenQualifies (const char* text, const char* strand_end);
 
 /** Reads the next token .
     @param  text     A nil-terminated string that may start with the token.
-    @param  text_end End of the text buffer.
+    @param  strand_end End of the text buffer.
     @param  token    A nil-terminated string that DOES NOT HAVE whitespace.
     @return A pointer to the end of the token or nil upon failure. */
-KABUKI const char* TokenRead (const char* text, const char* text_end,
+KABUKI const char* TokenRead (const char* text, const char* strand_end,
                               char* target, char* target_end);
 
 /** Compares the source and query char using the delimiter to terminate the
@@ -73,10 +61,10 @@ KABUKI int TokenCompare (const char* strand, const char* token);
 /** Compares the source and query char using the delimiter to terminate the
     query.
     @param  text     A nil-terminated string that may start with the token.
-    @param  text_end End of the text buffer.
+    @param  strand_end End of the text buffer.
     @param  token    A nil-terminated string that DOES NOT HAVE whitespace.
     @return 0 if the tokens match, <0 if text < token, else, else >0. */
-KABUKI int TokenCompare (const char* text, const char* text_end,
+KABUKI int TokenCompare (const char* text, const char* strand_end,
                          const char* token);
 
 /** Compares the source and query char using the delimiter to terminate the
@@ -89,10 +77,10 @@ KABUKI const char* TokenEquals (const char* strand, const char* token);
 /** Compares the source and query char using the delimiter to terminate the
     query.
     @param  text     A nil-terminated string that may start with the token.
-    @param  text_end End of the text buffer.
+    @param  strand_end End of the text buffer.
     @param  token    A nil-terminated string that DOES NOT HAVE whitespace.
     @return A pointer to the end of the token or nil upon failure. */
-KABUKI const char* TokenEquals (const char* text, const char* text_end,
+KABUKI const char* TokenEquals (const char* text, const char* strand_end,
                                 const char* token);
 
 /** Gets the end of the current whitespace-delineated token.
@@ -102,9 +90,9 @@ KABUKI const char* TokenEnd (const char* strand);
 
 /** Gets the end of the current whitespace-delineated token.
     @param  text A nil-terminated string.
-    @param  text_end End of the text buffer.
+    @param  strand_end End of the text buffer.
     @return A pointer to the end of the token or nil upon failure. */
-KABUKI const char* TokenEnd (const char* text, const char* text_end);
+KABUKI const char* TokenEnd (const char* text, const char* strand_end);
 
 }   //< namespace _
 

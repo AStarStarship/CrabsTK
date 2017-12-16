@@ -1,4 +1,4 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
     @file    ~/source/kabuki/script/assembly.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -18,8 +18,12 @@
              it into your project directory into the source code root. This
              files gets #include <assembly.h> in the config file. That means
              that the compiler will look in your source code root before looking
-             in this file. Please see module_config.h for configuration details.
+             in this file. Please see config.h for configuration details.
 */
+
+// Global debug macro
+#define DEBUG        YES
+#define SCRIPT_DEBUG YES
 
 // Choose BARE_METAL, MBED, MBED_OS, ARDUINO, MINGW32, WINDOWS, ANDROID,
 // LINUX, OSX, or IOS
@@ -31,13 +35,6 @@
 #define SCRIPT_WORD_SIZE 32
 
 #define SCRIPT_ENDIANESS LITTLE
-
-// Global debug macro
-#define DEBUG YES
-
-#ifndef SCRIPT_DEBUG
-#define SCRIPT_DEBUG        YES
-#endif //< SCRIPT_DEBUG
 
 /** @brief The Memory Profiles 1-4 are used to signal that the system is
     memory constrained.
@@ -79,6 +76,9 @@
 // 
 #define SCRIPT_MAX_TEXT_LENGTH 
 
+// String that gets printed at the beginning of each new line.
+#define NEW_LINE_HEADER "\n| "
+
 // Max Script Operation name length in chars.
 #define SCRIPT_OPERATION_MAX_NAME_LENGTH 64
 
@@ -104,3 +104,4 @@
 #define SCRIPT_USING_PRINT        YES
 #define SCRIPT_USING_TOKEN        YES
 #define SCRIPT_USING_KEYBOARD     YES
+#define SCRIPT_USING_MIRROR       NO

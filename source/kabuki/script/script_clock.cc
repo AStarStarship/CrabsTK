@@ -1,8 +1,8 @@
-/** kabuki::script
+/** Kabuki Toolkit
 #include <script_utils.h>
 #include <script_clock.h>
     @version 0.x
-    @file    ~/source/kabuki/script/impl/script_timestamp.cc
+    @file    ~/source/kabuki/script/script_timestamp.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -19,8 +19,6 @@
 #include <stdafx.h>
 #include "clock.h"
 #include "text.h"
-#include "strand.h"
-#include "print.h"
 
 using namespace std;
 //using namespace std::chrono;
@@ -59,50 +57,7 @@ int32_t ClockGetMicroseconds (time_us_t timestamp)
     return (int32_t)((timestamp & 0xFFFFFFFF00000000) >> 32);
 }
 
-bool ClockPrintTimeStruct (tm* std_tm) {
-    if (std_tm == nullptr) {
-        cout << "Null tm*\n";
-        return false;
-    }
-    cout << std_tm->tm_year + kTimeEpoch << "-" << std_tm->tm_mon + 1 << "-"
-         << std_tm->tm_mday << "@" << std_tm->tm_hour << ":"
-         << std_tm->tm_min << ":" << std_tm->tm_sec;
-    return true;
-}
-
-bool ClockPrintTimeStruct (tm* std_tm, int32_t microseconds) {
-    if (std_tm == nullptr) {
-        cout << "Null tm*\n";
-        return false;
-    }
-    cout << std_tm->tm_year + kTimeEpoch << "-" << std_tm->tm_mon + 1 << "-"
-         << std_tm->tm_mday << "@" << std_tm->tm_hour << ":"
-         << std_tm->tm_min << ":" << std_tm->tm_sec << ":" << microseconds;
-    return true;
-}
-
-void ClockPrintTime (time_t t) {
-    tm std_tm;
-    ClockLocalTime (&std_tm, t);
-    ClockPrintTimeStruct (&std_tm);
-}
-
-void ClockPrintTimestamp (time_us_t timestamp) {
-    time_t t = ClockGetSeconds (timestamp);
-    tm std_tm;
-    ClockLocalTime (&std_tm, t);
-    int32_t microseconds = ClockGetMicroseconds (timestamp);
-    ClockPrintTimeStruct (&std_tm, microseconds);
-}
-
-void ClockPrintDateTime (time_t t) {
-    tm std_tm;
-    ClockLocalTime (&std_tm, t);
-    cout << std_tm.tm_hour << ":" << std_tm.tm_min << ":"
-        << std_tm.tm_sec;
-}
-
-char* ClockWriteTimeStructText (char* buffer, char* buffer_end, tm* std_tm) {
+char* StrandWriteTime (char* buffer, char* buffer_end, tm* std_tm) {
     if (buffer == nullptr) {
         return nullptr;
     }
@@ -113,43 +68,36 @@ char* ClockWriteTimeStructText (char* buffer, char* buffer_end, tm* std_tm) {
         return nullptr;
     }
 
-    buffer = TextWrite (buffer, buffer_end, std_tm->tm_year + kTimeEpoch);
+    buffer = StrandWrite (buffer, buffer_end, std_tm->tm_year + kTimeEpoch);
     if (buffer == nullptr) {
         return nullptr;
     }
     *buffer++ = '-';
-    buffer = TextWrite (buffer, buffer_end, std_tm->tm_mon + 1);
+    buffer = StrandWrite (buffer, buffer_end, std_tm->tm_mon + 1);
     if (buffer == nullptr) {
         return nullptr;
     }
     *buffer++ = '-';
-    buffer = TextWrite (buffer, buffer_end, std_tm->tm_mday);
+    buffer = StrandWrite (buffer, buffer_end, std_tm->tm_mday);
     if (buffer == nullptr) {
         return nullptr;
     }
     *buffer++ = '@';
-    buffer = TextWrite (buffer, buffer_end, std_tm->tm_hour);
+    buffer = StrandWrite (buffer, buffer_end, std_tm->tm_hour);
     if (buffer == nullptr) {
         return nullptr;
     }
     *buffer++ = ':';
-    buffer = TextWrite (buffer, buffer_end, std_tm->tm_min);
+    buffer = StrandWrite (buffer, buffer_end, std_tm->tm_min);
     if (buffer == nullptr) {
         return nullptr;
     }
     *buffer++ = ':';
-    buffer = TextWrite (buffer, buffer_end, std_tm->tm_sec);
+    buffer = StrandWrite (buffer, buffer_end, std_tm->tm_sec);
     if (buffer == nullptr) {
         return nullptr;
     }
     return buffer;
-}
-
-char* ClockWriteDateTimeText (char* buffer, char* buffer_end, time_t t) {
-    time (&t);
-    tm std_tm;
-    ClockLocalTime (&std_tm, t);
-    return (char*)ClockWriteTimeStructText (buffer, buffer_end, &std_tm);
 }
 
 int ClockNumDaysMonth (time_t t) {
@@ -252,12 +200,12 @@ int ClockCompareTimes (time_t t, int year, int month, int day,
     if (year - kTimeEpoch != std_tm.tm_year) {
         ++count;
         cout << "\n| Expecting year:" << year << " but found "
-            << std_tm.tm_year + kTimeEpoch << '\n';
+             << std_tm.tm_year + kTimeEpoch << '\n';
     }
     if (month != std_tm.tm_mon + 1) {
         ++count;
         cout << "\n| Expecting month:" << month << " but found "
-            << std_tm.tm_mon + 1 << '\n';
+             << std_tm.tm_mon + 1 << '\n';
     }
     if (day != std_tm.tm_mday) {
         ++count;
@@ -282,11 +230,11 @@ int ClockCompareTimes (time_t t, int year, int month, int day,
     return count;
 }
 
-const char* ClockReadTimeText (const char* input, int* hour, int* minute,
+const char* StrandReadTime (const char* input, int* hour, int* minute,
                                  int* second) {
     if (input == nullptr)
         return nullptr;
-    cout << input << ' ';
+    cout <<  input << ' ';
     char c;              //< The current char.
 
     int h,  //< Hour.
@@ -305,7 +253,7 @@ const char* ClockReadTimeText (const char* input, int* hour, int* minute,
         cout << "< Hours: " << h << " can't be > 23.\n";
         return 0;
     }
-    cout << h;
+    cout <<  h;
     c = *input++;
     if (!c || isspace (c))  // Case @HH
     {
@@ -323,7 +271,7 @@ const char* ClockReadTimeText (const char* input, int* hour, int* minute,
         if (tolower (c = *input++) == 'm')
             c = *input++;
         if (c && !isspace (c)) {
-            PrintBar ("invalid am format.");
+            cout << "\n| Invalid am format.";
             return 0;
         }
         // Case @HHAM
@@ -337,7 +285,7 @@ const char* ClockReadTimeText (const char* input, int* hour, int* minute,
         if (tolower (c = *input++) == 'm')
             c = *input++;
         if (c && !isspace (c)) {
-            PrintBar ("invalid pm format.");
+            Print ("\n| invalid pm format.");
             return 0;
         }
         // Case @HHPM
@@ -346,7 +294,7 @@ const char* ClockReadTimeText (const char* input, int* hour, int* minute,
         return input;
     }
     if (c != ':') {
-        PrintBar ("Expecting ':'.");
+        Print ("\n| Expecting ':'.");
         return 0;
     }
 
@@ -362,7 +310,7 @@ const char* ClockReadTimeText (const char* input, int* hour, int* minute,
         cout << "Minutes: " << m << " can't be >= 60\n";
         return 0;    //< 60 minutes in an hour.
     }
-    cout << ':' << m;
+    cout <<  ':' << m;
 
     input = StrandSkipNumbers (input);
     c = *input++;
@@ -412,7 +360,7 @@ const char* ClockReadTimeText (const char* input, int* hour, int* minute,
         cout << "\n< Seconds: " << s << " can't be >= 60\n";
         return 0;  //< 60 seconds in a minute.
     }
-    cout << ':' << s;
+    cout <<  ':' << s;
     input = StrandSkipNumbers (input);
     c = tolower (*input);
     if (!c || isspace (c)) {
@@ -444,7 +392,7 @@ const char* ClockReadTimeText (const char* input, int* hour, int* minute,
         c = *input++;
     if (!c || !isspace (c))        //< The space is not.
     {
-        PrintBar ("Invalid am in HH::MM:SS PM");
+        Print ("\n| Invalid am in HH::MM:SS PM");
         return nullptr;
     }
     *hour = h + 12;
@@ -453,20 +401,20 @@ const char* ClockReadTimeText (const char* input, int* hour, int* minute,
     return input;
 }
 
-char* ClockReadTime (char* input, int* hour, int* minute,
+char* StrandReadTime (char* input, int* hour, int* minute,
                       int* second) {
-    return (char*)ClockReadTimeText (input, hour, minute,
+    return (char*)StrandReadTime (input, hour, minute,
                                         second);
 }
 
-const char* ClockReadTimeStructText (const char* input, //char* buffer_end,
-                                        tm* std_tm) {
+const char* StrandReadTime (const char* input, //char* buffer_end,
+                                 tm* std_tm) {
     if (input == nullptr)
         return nullptr;
     if (std_tm == nullptr)
         return nullptr;
     cout << "\n< Parsing date: " << input
-        << "\n< Scanning: ";
+         << "\n< Scanning: ";
     input = StrandSkipZeros (input);
     char c = *input,    //< The current char.
         delimiter;     //< The delimiter.
@@ -477,7 +425,7 @@ const char* ClockReadTimeStructText (const char* input, //char* buffer_end,
         second = 0;
 
     if (c == '@') {
-        if (!(input = ClockReadTimeText (input, &hour, &minute,
+        if (!(input = StrandReadTime (input, &hour, &minute,
                                             &second)))
             return "Case @ invalid time";
         std_tm->tm_hour = hour;
@@ -487,7 +435,7 @@ const char* ClockReadTimeStructText (const char* input, //char* buffer_end,
         return input + 1;
     }
     if (c == '#') {
-        if (!(input = ClockReadTimeText (input, &hour, &minute,
+        if (!(input = StrandReadTime (input, &hour, &minute,
                                             &second)))
             return "Case @ invalid time";
         std_tm->tm_hour += hour;
@@ -504,23 +452,23 @@ const char* ClockReadTimeStructText (const char* input, //char* buffer_end,
 
                           // Scan value1
     if (!StrandRead (input, value1)) {
-        PrintBar ("Scan error at value1");
+        cout << Text ().Bar ("Scan error at value1");
         return 0;
     }
     if (value1 < 0) {
-        PrintBar ("Dates can't be negative.");
+        cout << Text ().Bar ("Dates can't be negative.");
         return 0;
     }
     input = StrandSkipNumbers (input);
     delimiter = *input++;
     //cout << " delimiter " << delimiter << ": ";
-    cout << value1 << delimiter;
+    cout <<  value1 << delimiter;
     if (delimiter == '@') {
         cout << " HH@ ";
 
-        if (!(input = ClockReadTimeText (input, &hour, &minute,
+        if (!(input = StrandReadTime (input, &hour, &minute,
                                             &second))) {
-            PrintBar ("Invalid time DD@");
+            cout << Text ().Bar ("Invalid time DD@");
             return 0;
         }
         std_tm->tm_mday = value1;
@@ -530,20 +478,20 @@ const char* ClockReadTimeStructText (const char* input, //char* buffer_end,
     // Scan value2.
     input = StrandSkipZeros (input);
     if (!StrandRead (input, value2)) {
-        PrintBar ("Failed scanning value2 of date.");
+        cout << Text ().Bar ("Failed scanning value2 of date.");
         return 0;
     }
     if (value2 < 0) {
-        PrintBar ("Day can't be negative.");
+        cout << Text ().Bar ("Day can't be negative.");
         return 0;  //< Invalid month and day.
     }
-    cout << value2;
+    cout <<  value2;
     input = StrandSkipNumbers (input);
     c = *input;
     if (c != delimiter) // Cases MM/DD and MM/YYyy
     {
         if (c == '@') {
-            if (!(input = ClockReadTimeText (input, &hour,
+            if (!(input = StrandReadTime (input, &hour,
                                                 &minute, &second))) {
                 cout << " invalid time ";
             }
@@ -568,11 +516,11 @@ const char* ClockReadTimeStructText (const char* input, //char* buffer_end,
              (value2 <= ClockNumDaysMonth (value1))) {
             cout << " MM/DD ";
             if (value1 > 11) {
-                PrintBar ("Invalid MM/DD@ month");
+                cout << Text ().Bar ("Invalid MM/DD@ month");
                 return nullptr;
             }
             if (value2 > ClockNumDaysMonth (value1)) {
-                PrintBar ("Invalid MM/DD@ day");
+                cout << Text ().Bar ("Invalid MM/DD@ day");
                 return nullptr;
             }
             std_tm->tm_mon = value1 - 1;
@@ -580,9 +528,9 @@ const char* ClockReadTimeStructText (const char* input, //char* buffer_end,
             std_tm->tm_hour = hour;
             std_tm->tm_min = minute;
             std_tm->tm_sec = second;
-            if (!(input = ClockReadTimeText (input, &hour,
+            if (!(input = StrandReadTime (input, &hour,
                                                 &minute, &second))) {
-                PrintBar ("Invalid MM/DD@");
+                cout << Text ().Bar ("Invalid MM/DD@");
                 return nullptr;
             }
 
@@ -592,9 +540,9 @@ const char* ClockReadTimeStructText (const char* input, //char* buffer_end,
             cout << " MM/YYyy\n";
             std_tm->tm_mon = value1 - 1;
             std_tm->tm_year = value2;
-            if (!(input = ClockReadTimeText (input, &hour,
+            if (!(input = StrandReadTime (input, &hour,
                                                 &minute, &second))) {
-                PrintBar ("Invalid MM/YYYY@ time");
+                cout << Text ().Bar ("Invalid MM/YYYY@ time");
                 return 0;
             }
 
@@ -614,14 +562,14 @@ const char* ClockReadTimeStructText (const char* input, //char* buffer_end,
         return 0;  //< Invalid format!
     }
     input = StrandSkipNumbers (input);
-    cout << delimiter << value3;
+    cout <<  delimiter << value3;
     // Now we need to check what format it is in.
 
     c = *input;
     if (c == '@') {
-        if (!(end = ClockReadTimeText (input, &hour, &minute,
+        if (!(end = StrandReadTime (input, &hour, &minute,
                                           &second))) {
-            PrintBar ("Invalid YYyy/MM/DD@ time.");
+            cout << Text ().Bar ("Invalid YYyy/MM/DD@ time.");
             return 0;
         }
     }
@@ -629,19 +577,19 @@ const char* ClockReadTimeStructText (const char* input, //char* buffer_end,
     std_tm->tm_min = minute;
     std_tm->tm_sec = second;
     if (isspace (*(++input))) {
-        PrintBar ("No date found.");
+        cout << Text ().Bar ("No date found.");
         return 0;
     }
     if (value1 > 11)  //< Case YYyy/MM/DD
     {
         cout << " YYyy/MM/DD\n";
         if (value2 == 0 || value2 > 12) {
-            PrintBar ("Invalid number of months");
+            cout << Text ().Bar ("Invalid number of months");
             return 0;              //< The day is not correct.
         }
 
         if (value2 > ClockNumDaysMonth (value2, value1)) {
-            PrintBar ("Invalid number of days");
+            cout << Text ().Bar ("Invalid number of days");
             return 0;              //< The day is not correct.
         } // 17/05/06
 
@@ -659,11 +607,11 @@ const char* ClockReadTimeStructText (const char* input, //char* buffer_end,
 
     // Else Case MM/DD/YYyy
     if (value1 > 11) {
-        PrintBar ("Invalid month.\n");
+        cout << Text ().Bar ("Invalid month.\n");
         return nullptr;
     }
     if (value2 > ClockNumDaysMonth (value1, value3)) {
-        PrintBar ("Invalid day.\n");
+        cout << Text ().Bar ("Invalid day.\n");
         return nullptr;
     }
     cout << " Found: MM/DD/YYyy\n";
@@ -678,42 +626,41 @@ const char* ClockReadTimeStructText (const char* input, //char* buffer_end,
 
 }
 
-char* ClockReadTimeStruct (char* input, tm* result) {
-    return (char*)ClockReadTimeStructText (input, result);
-}
-
-char* ClockTextWriteTime (char* buffer, char* buffer_end, time_t t) {
-    if (buffer == nullptr)
+char* TextWriteTime (char* begin, char* end, time_t t) {
+    if (begin == nullptr) {
         return nullptr;
-    //if (buffer_end == nullptr)
-    //    return nullptr;
-
-    ClockWriteDateTimeText (buffer, buffer_end, t);
-    return buffer;
+    }
+    if (begin > end) {
+        return nullptr;
+    }
+    time (&t);
+    tm std_tm;
+    ClockLocalTime (&std_tm, t);
+    return StrandWriteTime (begin, end, &std_tm);
 }
 
-const char* ClockReadUnixTimeText (const char* input, time_t& result) {
+const char* StrandReadTime (const char* begin, time_t& result) {
     time_t t;
     time (&t);
     tm std_tm;
     ClockLocalTime (&std_tm, t);
 
-    char* end = (char*)ClockReadTimeStructText (input, &std_tm);
+    char* end = (char*)StrandReadTime (begin, &std_tm);
 
     t = mktime (&std_tm);
-    cout << "\n|\n| Found ";
-    ClockPrintTimeStruct (&std_tm);
+    //cout << "\n|\n| Found ";
+    //cout << ClockPrintTimeStruct (&std_tm);
     char buffer[26];
-    ClockTextWriteTime (buffer, buffer + 26, t);
+    TextWriteTime (buffer, buffer + 26, t);
     char time_string[26];
-    ClockWriteDateTimeText (time_string, &time_string[0]  + 26, t);
-    cout << "\n| Unpacked: " << buffer;
+    TextWriteTime (time_string, &time_string[0]  + 26, t);
+    //cout << "\n| Unpacked: " << buffer;
     result = t;
     return end;
 }
 
-char* ClockReadUnixTime (char* input, time_t& result) {
-    return (char*)ClockReadUnixTimeText (input, result);
+char* StrandReadTime (char* input, time_t& result) {
+    return (char*)StrandReadTime (input, result);
 }
 
 void ClockZeroTime (tm* std_tm) {
@@ -730,6 +677,5 @@ void ClockZeroTime (tm* std_tm) {
     std_tm->tm_isdst = 0;
 }
 
-#endif   //< USE_MORE_ROM
-
+#endif  //< USE_MORE_ROM
 }       //< namespace _

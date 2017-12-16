@@ -26,8 +26,9 @@ TEST_GROUP (ID_TESTS) {
     }
 
     void teardown () {
-        std::cout << "\n| kabuki::id tests completed.";
-        PrintLine ('-');
+        std::cout << "\n| kabuki::id tests completed."
+                  << Text().Line ();
+        //system ("PAUSE")
     }
 };
 /*
@@ -55,12 +56,12 @@ TEST (ID_TESTS, UserListTests) {
         cout << "\n| Attempting to add \"" << handle << "\":\""
              << password << "\" at index:" << i;
         session = users.Register (handle, password);
-        users.Print ();
+        users.Print (txt);
         cout << "\n| index: " << session;
         CHECK_EQUAL (i + 1, session)
     }
 
-    users.Print ();
+    users.Print (txt);
 
     cout << "\n|\n| Creating invalid test users...";
 
@@ -74,7 +75,7 @@ TEST (ID_TESTS, UserListTests) {
         CHECK_EQUAL (-1, session)
     }
 
-    users.Print ();
+    users.Print (txt);
 
     cout << "\n|\n| Testing UserList::LogIn users...";
 

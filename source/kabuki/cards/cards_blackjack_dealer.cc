@@ -54,11 +54,11 @@ bool BlackjackDealer::RaiseAnte (int64_t value) {
     return true;
 }
 
-int BlackjackDealer::GetScore (int ace_value) {
+int BlackjackDealer::CalcScore (int ace_value) {
     int score = 0;  //< Always set the variable before you start using it!!!
 
     Card* card;
-    for (int i = 0; i < hand_.GetVisibleCards ().GetCount (); ++i) {
+    for (int i = 0; i < hand_.GetVisibleCards ().Length (); ++i) {
         card = hand_.GetVisibleCards ().GetCard (i);
         int denomination = card->GetDenomination ();
         score += ((denomination == Card::kAce)?ace_value:denomination);
@@ -134,21 +134,22 @@ bool BlackjackDealer::Wins (Hand& other) {
     return BlackjackCompareHands (hand_, other) > 0;
 }
 
-int BlackjackDealer::AddAiPlayer (id::User* user) {
+int BlackjackDealer::AddAgent (id::User* user) {
     Player* player = new BlackjackPlayerAi (user, GetStock ());
     players_.push_back (player);
     return players_.size () - 1;
 }
 
-void BlackjackDealer::PrintStats () {
-    PrintLine ('_');
-    cout << "\n| Ante: " << ante_ << ".\n" <<
-        "\n| Initial Stats:\n";
+Text& BlackjackDealer::PrintStats (Text& txt) {
+    txt << txt.Line ('_')
+        << "\n| Ante: " << ante_ << ""
+        << "\n| Initial Stats:";
+
     for (size_t i = 0; i < players_.size (); ++i) {
-        players_[i]->PrintStats ();
+        players_[i]->PrintStats (txt);
     }
-    PrintStats ();
-    cout << "\n| Starting round of Blackjack...\n\n";
+    PrintStats (txt);
+    return txt << "\n| Starting round of Blackjack...\n\n";
 }
 
 /*
@@ -160,15 +161,21 @@ void BlackjackDealer::PrintStats () {
     PrintLine ('~');
 }*/
 
-void BlackjackDealer::Print () {
-    for (size_t i = 0; i < players_.size (); ++i) {
-        players_[i]->Print ();
+Text& BlackjackDealer::Print (_::Text& txt) {
+    int num_players = GetPlayersCount ();
+    if (!num_players) {
+        return txt << "\n| Players: none";
     }
+    txt << "\n| Players:";
+    for (int i = 0; i < num_players - 1; ++i) {
+        players_[i]->Print (txt);
+    }
+    return players_[num_players - 1]->Print ();
 }
 
 const Operation* BlackjackDealer::Star (uint index, Expression* expr) {
     static const Operation This = { "BlackjackPlayer",
-        NumOperations (0), OperationFirst ('A'),
+        OperationCount (0), OperationFirst ('A'),
         "Player in a Blackjack game.", 0 };
     void* args[2];
     char handle[id::Handle::kMaxLength],
@@ -186,8 +193,8 @@ const Operation* BlackjackDealer::Star (uint index, Expression* expr) {
                 "Signals a player to \"hit\" and not take any more cards "
                 "this round given correct #session and #public_key.", 0 };
             if (!expr) return &OpA;
-            if (ExprArgs (expr, Params<2, SI4, UI8> (), Args (args, &session,
-                                                              &public_key))) {
+            if (ExpressionArgs (expr, Params<2, SI4, UI8> (),
+                                Args (args, &session, &public_key))) {
                 return expr->result;
             }
             player = dynamic_cast<BlackjackPlayer*> (GetPlayer (current_player_));
@@ -207,7 +214,7 @@ const Operation* BlackjackDealer::Star (uint index, Expression* expr) {
                 "Signals a player to \"hold\" and not take any more cards "
                 "this round given correct #session and #public_key.", 0 };
             if (!expr) return &OpB;
-            if (ExprArgs (expr, Params<2, SI4, UI8> (), Args (args, &session,
+            if (ExpressionArgs (expr, Params<2, SI4, UI8> (), Args (args, &session,
                 &public_key))) {
                 return expr->result;
             }
@@ -228,7 +235,7 @@ const Operation* BlackjackDealer::Star (uint index, Expression* expr) {
                        Params<0> (),
                 "Sends a message of 140 chars or less to this player.", 0 };
             if (!expr) return &OpC;
-            if (ExprArgs (expr, Params<2, 
+            if (ExpressionArgs (expr, Params<2, 
                           STR, id::Handle::kMaxLength, STR, 141> (),
                           Args (args, handle, tweet))) {
                 return expr->result;
@@ -241,7 +248,7 @@ const Operation* BlackjackDealer::Star (uint index, Expression* expr) {
                 Params<UI8> (),
                 "Attempts to buy the specified number of coins.", 0 };
             if (!expr) return &OpD;
-            if (ExprArgs (expr, Params<3, SI4, UI8, UI8> (),
+            if (ExpressionArgs (expr, Params<3, SI4, UI8, UI8> (),
                           Args (args, &session, &public_key, &num_points))) {
                 return expr->result;
             }
@@ -256,34 +263,38 @@ const Operation* BlackjackDealer::Star (uint index, Expression* expr) {
             return nullptr;
         }
     }
-    return Result (expr, Bin::kErrorInvalidOperation);
+    return nullptr;
 }
 
-const char* BlackjackDealer::Do (const char* text,
-                                         const char* text_end) {
+const char* BlackjackDealer::Sudo (const char* text, const char* strand_end) {
     const char* token_end;
+    int num_players;
+
     BlackjackPlayer* player = dynamic_cast<BlackjackPlayer*> (GetPlayer ());
-    text = TextSkipSpaces (text, text_end);
+    text = TextSkipSpaces (text, strand_end);
     if (!text) {
         return nullptr;
     }
     if (current_player_ < GetMinPlayers ()) {
         return "";
     }
-    token_end = TokenEnd (text, text_end);
-    if (TokenCompare (text, text_end, "BuyIn")) {
-        if (!player) {
-            cout << "\n| Error: no player is selected to BuyIn!";
+    token_end = TokenEnd (text, strand_end);
+    if (TokenCompare (text, strand_end, "in")) {
+        num_players = GetPlayersCount ();
+        if (num_players < BlackjackGame::kMinPlayers) {
         }
-    } else if (TokenCompare (text, text_end, "Raise")) {
         if (!player) {
-            cout << "\n| Error: no player is selected to Raise!";
+            cout << "\n| Error: no player is selected to buy in!";
         }
-    } else if (TokenCompare (text, text_end, "Hit")) {
+    } else if (TokenCompare (text, strand_end, "raise")) {
+        if (!player) {
+            cout << "\n| Error: no player is selected to raise!";
+        }
+    } else if (TokenCompare (text, strand_end, "hit")) {
         if (!player) {
             cout << "\n| Error: no player is selected to Hit!";
         }
-    } else if (TokenCompare (text, text_end, "Hold")) {
+    } else if (TokenCompare (text, strand_end, "hold")) {
         if (!player) {
             cout << "\n| Error: no player is selected to Hold!";
         }

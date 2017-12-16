@@ -1,4 +1,4 @@
-/** kabuki:cards
+/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/player.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -102,13 +102,13 @@ void Player::ResetWins () {
     num_wins_ = 0;    //< Reset the num_wins_.
 }
 
-void Player::Print () {
-    cout << "\n| "      << GetHandle ()
-         << " points: " << GetUser()->GetValue ()
-         << " wins  : " << num_wins_;
+_::Text& Player::Print (_::Text& txt) {
+    txt << "\n| "      << GetHandle ()
+        << " points: " << GetUser()->GetValue ()
+        << " wins  : " << num_wins_;
 
-    PrintLine ('-');
-    hand_.Print ();
+    PrintLine (txt);
+    return hand_.Print (txt);
 }
 
 }   //< namespace cards

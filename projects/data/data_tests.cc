@@ -14,28 +14,25 @@
              permissions and limitations under the License.
 */
 
-#include "../../../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
-#include "../../../../../../cpputest/include/CppUTest/TestHarness.h"
+#include "../../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
+#include "../../../../../cpputest/include/CppUTest/TestHarness.h"
 
-#include "../include/module.h"
+#include "../../source/kabuki/data/global.h"
 
 using namespace _;
 
-TEST_GROUP (AL_TESTS)
-{
-    void setup ()
-    {
-        std::cout << "\n|  + Running kabuki::al tests...\n";
+TEST_GROUP (SCRIPT_DATA_TESTS) {
+
+    void setup () {
+        Print (Text ().Line ());
+        Print ("\n|  + Running kabuki::data tests...");
     }
 
-    void teardown ()
-    {
-        std::cout << "| kabuki::al completed.\n";
+    void teardown () {
+        Print ("\n| kabuki::data completed.");
     }
 };
 
-TEST (AL_TESTS, AllTests)
-{
+TEST (SCRIPT_DATA_TESTS, AllTests) {
     
 }
-

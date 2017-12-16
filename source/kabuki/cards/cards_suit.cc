@@ -1,4 +1,4 @@
-/** kabuki:cards
+/** Kabuki Toolkit
     @file    ~/source/project/kabuki/cards_suit.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -170,7 +170,7 @@ int Suit::LoadCardImage (const char* directory) {
 //    return card_image_;
 //}
 
-void Suit::Print () {
+void Suit::Print (_::Text& txt) {
     cout << label_;
 }
 

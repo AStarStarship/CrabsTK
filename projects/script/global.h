@@ -32,10 +32,10 @@ class ChildOperand : public Operand {
 
     /** Handles Script Commands.
         @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text,
-                                    const char* text_end) {
+    virtual const char* Sudo (const char* text,
+                                    const char* strand_end) {
         return nullptr;
     }
     
@@ -44,7 +44,7 @@ class ChildOperand : public Operand {
         void* args[2];
 
         static const Operation This = { "Child",
-            NumOperations (2), OperationFirst ('A'),
+            OperationCount (2), OperationFirst ('A'),
             "A child Operand." };
 
         switch (index) {
@@ -56,7 +56,7 @@ class ChildOperand : public Operand {
                     "Description of function \'A\'.", 0 };
                 if (!expr) return &OpA;
 
-                if (ExprArgs (expr, OpA.params, 
+                if (ExpressionArgs (expr, OpA.params, 
                           Args (args, &test_ui1_, test_str_)))
                     return expr->result;
                     
@@ -72,7 +72,7 @@ class ChildOperand : public Operand {
                     "Description of function \'B\'.", 0 };
                 if (!expr) return &OpB;
 
-                if (ExprArgs (expr, OpB.params, Args (args, &test_flt_,
+                if (ExpressionArgs (expr, OpB.params, Args (args, &test_flt_,
                           test_str_)))
                     return expr->result;
 
@@ -108,10 +108,10 @@ class Parent : public Operand {
 
     /** Handles Script Commands.
         @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text,
-                                    const char* text_end) {
+    virtual const char* Sudo (const char* text,
+                                    const char* strand_end) {
         return nullptr;
     }
 
@@ -120,7 +120,7 @@ class Parent : public Operand {
         void* args[2];
 
         static const Operation This = { "Parent",
-            NumOperations (4), OperationFirst ('A'),
+            OperationCount (4), OperationFirst ('A'),
             "Root scope device.", 0 };
 
         switch (index) {
@@ -140,7 +140,7 @@ class Parent : public Operand {
                     "Description of functionA.", 0 };
                 if (!expr) return &OpC;
 
-                if (ExprArgs (expr, OpC.params, Args (args, &io_number_,
+                if (ExpressionArgs (expr, OpC.params, Args (args, &io_number_,
                                                        io_string_)))
                     return expr->result;
                   // function call here
@@ -155,7 +155,7 @@ class Parent : public Operand {
 
                 if (!expr) return &OpD;
 
-                if (ExprArgs (expr, OpD.params, Args (args, &io_number_,
+                if (ExpressionArgs (expr, OpD.params, Args (args, &io_number_,
                                                  io_string_)))
                     return expr->result;
 
@@ -191,7 +191,7 @@ class This : public Room {
     // Interprocess operations.
     virtual const Operation* Star (uint index, Expression* expr) {
         static const Operation This = { "Room",
-            NumOperations (1), OperationFirst ('A'),
+            OperationCount (1), OperationFirst ('A'),
             "Root scope device.", 0 };
 
         switch (index) {

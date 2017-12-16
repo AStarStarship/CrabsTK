@@ -153,10 +153,5 @@ void BlackjackPlayerAi::PlayRound () {
     }
 }
 
-const char* BlackjackPlayerAi::Do (const char* text,
-                                           const char* text_end) {
-    return nullptr;
-}
-
 }   //< namespace cards
 }   //< namespace kabuki

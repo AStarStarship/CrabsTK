@@ -1,4 +1,4 @@
-/** kabuki::data
+/** Kabuki Toolkit
     @file    ~/source/data/array.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -21,10 +21,11 @@
 namespace kabuki { namespace data {
 
 /** An array of like types that can auto-grow.
+    @todo This is an older data structure that needs to be replace this with 
+    _::Array.
     This class is used to save a little bit of ROM space over the std::vector.
     To use this class with anything other than POD types the class T must have
-    a overloaded operator= and operator==.
-*/
+    a overloaded operator= and operator==. */
 template<typename T>
 class Array {
     public:
@@ -72,7 +73,7 @@ class Array {
     }
 
     /** Gets the num_elements_. */
-    int GetCount () {
+    int Length () {
         return count_;
     }
 
@@ -145,7 +146,7 @@ class Array {
     /** Pushes the Array contents onto the Stack. */
     int Push (Array<T>& elements) {
         int count = count_,
-            other_count = elements.GetCount (),
+            other_count = elements.Length (),
             new_size = count + other_count;
         if (other_count <= 0) { // Nothing to do.
             return -1;

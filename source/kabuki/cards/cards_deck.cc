@@ -1,4 +1,4 @@
-/** kabuki:cards
+/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/deck_.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -245,7 +245,7 @@ void Deck::SetSuitDenominations (int column_0, int column_1, int column_2,
     spade_.SetDenomination   (column_4);
 }
 
-void Deck::Print () {
+void Deck::Print (_::Text& txt) {
     cout << "\n| Deck: num_cards_: " << pack_.size () << ", "
          << (aces_high_ ? "Aces high, " : "Aces low, ") 
          << (aces_high_ ? "Has Jokers" : "No Jokers");
@@ -253,7 +253,7 @@ void Deck::Print () {
     for (size_t i = 0; i < pack_.size (); ++i) {
         cout << "\n| " << i << ": ";
         Card* card = pack_[i];
-        card->Print ();
+        card->Print (txt);
     }
 }
 

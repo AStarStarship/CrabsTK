@@ -1,4 +1,4 @@
-/** kabuki:cards
+/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/card_stack.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -67,13 +67,10 @@ class CardStack {
     void Shuffle (Deck& deck);
 
     /** Returns the size of this stack. */
-    int GetSize ();
+    int GetSize () const;
 
     /** Returns the number of Card(s) in this stack. */
-    int GetCount ();
-    
-    /** Returns the maxNumCards. */
-    int GetMaxCards ();
+    int Length () const;
 
     /** Adds the card to top of the stack.
          @param card The Card to add.
@@ -149,10 +146,24 @@ class CardStack {
     bool IsEmpty ();
 
     /** Prints this object to the log. */
-    void Print ();
+    virtual _::Text& Print (_::Text& txt = _::Text ());
 
     /** Operator= makes this object = other object. */
     CardStack& operator= (const CardStack& other);
+
+    /** Abstract Script Operation(s).
+        @param index The index of the expression.
+        @param expr  The Expression to read and write from.
+        @return      Returns null upon success, a Set header upon query, and an 
+                     error_t ticket upon Read-Write failure. */
+    virtual const _::Operation* Star (uint index, _::Expression* expr);
+
+    /** Handles Text input.
+        @param text     Beginning of the Text buffer. 
+        @param strand_end End of the Text buffer.
+        @return Returns nil upon success and an error string upon failure. */
+    virtual const char* Sudo (const char* text,
+                            const char* strand_end);
 
     private:
 

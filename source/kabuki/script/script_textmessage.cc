@@ -1,4 +1,4 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
     @file    ~/source/kabuki/script/script_textmessage.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -18,6 +18,7 @@
 
 #include "textmessage.h"
 #include "expression.h"
+#include "params.h"
 #include "args.h"
 
 #if SCRIPT_USING_TEXT
@@ -41,13 +42,9 @@ TextMessage::TextMessage (const TextMessage& other) :
     // Nothing to do here. ({:-)+=<
 }
 
-const char* TextMessage::Do (const char* text, const char* text_end) {
-    return TextRead (text, text_end, GetBegin (), GetEnd ());
-}
-
-const _::Operation* TextMessage::Star (uint index, _::Expression* expr) {
+const Operation* TextMessage::Star (uint index, Expression* expr) {
     static const Operation This = { "TextMessage",
-        NumOperations (2), OperationFirst ('A'),
+        OperationCount (2), OperationFirst ('A'),
         "A text message.", 0
     };
     void* args[1];
@@ -60,8 +57,8 @@ const _::Operation* TextMessage::Star (uint index, _::Expression* expr) {
                 "Reads the message.", 0
             };
             if (!expr) return &OpA;
-            return ExprArgs (expr, Params<1, STR, Text::kSize> (),
-                             Args (args, GetBegin ()));
+            return ExpressionArgs (expr, Params<1, STR, Text::kSize> (),
+                                   Args (args, Text::GetBegin ()));
         }
         case 'B': {
             static const Operation OpB = { "Write",
@@ -69,11 +66,15 @@ const _::Operation* TextMessage::Star (uint index, _::Expression* expr) {
                 "Writes the message to the ether.", 0
             };
             if (!expr) return &OpB;
-            return ExprArgs (expr, Params<1, STR, Text::kSize> (),
-                             Args (args, GetBegin ()));
+            return ExpressionArgs (expr, Params<1, STR, Text::kSize> (),
+                                   Args (args, Text::GetBegin ()));
         }
     }
     return nullptr;
+}
+
+const char* TextMessage::Sudo (const char* text, const char* strand_end) {
+    return TextRead (text, strand_end, Text::GetBegin (), Text::GetEnd ());
 }
 
 TextMessage& TextMessage::operator= (const TextMessage& other) {

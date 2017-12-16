@@ -1,4 +1,4 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
     @file    ~/source/kabuki/script/script_hash.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>

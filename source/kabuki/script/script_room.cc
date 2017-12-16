@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/script_room.h
+    @file    ~/source/kabuki/script/script_room.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,9 +17,8 @@
 #include <stdafx.h>
 #include "room.h"
 #include "door.h"
-#include "args.h"
+#include "params.h"
 #include "text.h"
-#include "print.h"
 
 namespace _ {
 
@@ -51,19 +50,49 @@ const char* RequestText (Request r) {
     return RequestTexts ()[r];
 }
 
-Room::Room (const char* room_name) :
-    name_       ((room_name == nullptr) ? "Unnamed" : room_name),
-    this_       (nullptr),
-    xoff_       (nullptr),
-    device_     (nullptr),
-    devices_    (nullptr) {
+Room::Room (const char* room_name, int state_count) :
+    state_       (1),
+    state_count_ (state_count < 1 ? 1 :state_count),
+    name_        (!room_name ? "Unnamed" : room_name),
+    this_        (nullptr),
+    xoff_        (nullptr),
+    device_      (nullptr),
+    devices_     (nullptr) {
 }
 
 Room::~Room () {
 }
 
+int Room::GetState () {
+    return state_;
+}
+
+int Room::GetStateCount () {
+    return state_count_;
+}
+
+bool Room::SetState (int new_state) {
+    if (new_state < 0) {
+        return false;
+    }
+    if (new_state >= state_count_) {
+        return false;
+    }
+    state_ = new_state;
+    return true;
+}
+
 const char* Room::GetRoomName () {
     return name_;
+}
+
+bool Room::SetRoomName (const char* name) {
+    if (!name) {
+        return false;
+    }
+    delete name_;
+    name_ = StrandClone (name);
+    return true;
 }
 
 Request Room::HandleNextRequest (Request r) {
@@ -157,13 +186,13 @@ int Room::Main (const char** args, int args_count) {
     return 1;
 }
 
-const char* Room::Do (const char* text, const char* text_end) {
+const char* Room::Sudo (const char* text, const char* strand_end) {
     return nullptr;
 }
 
 const Operation* Room::Star (uint index, Expression* expr) {
     static const Operation star = { "Room",
-        NumOperations (0), OperationFirst (' '),
+        OperationCount (0), OperationFirst (' '),
         "A Chinese Room.", 0
     };
 
@@ -211,9 +240,8 @@ uintptr_t Room::GetSizeBytes () {
 }
 
 #if USE_MORE_ROM
-void Room::Print () {
-    PrintLine ();
-    std::cout << "\n| Room: ";
+Text& Room::Print (_::Text& txt) {
+    return txt.Line () << "\n| Room: ";
 }
 #endif  //< USE_MORE_ROM
 

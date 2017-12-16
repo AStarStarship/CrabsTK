@@ -23,10 +23,11 @@ using namespace std;
 namespace kabuki { namespace store {
 
 Item::Item (uid_t uid, const char* name, double cost, int64_t quantity) :
-    name_     (StrandClone (name)),
-    uid_      (uid),
+    name_     (StrandClone (name)         ),
+    uid_      (uid                        ),
     quantity_ (quantity < 0 ? 0 : quantity),
-    cost_     (cost) {
+    cost_     (cost                       ) {
+    // Nothing to do here! ({:->)+=<
 }
 
 Item::~Item () {
@@ -120,7 +121,7 @@ const char* Item::SetCost (double cost) {
     return nullptr;
 }
 
-double Item::GetCostTotal () const {
+double Item::GetTotalCost () const {
     return ((double)quantity_) * cost_;
 }
 
@@ -131,18 +132,19 @@ _::Text& Item::Print (_::Text& txt) {
         << "\n| Unique id    : " << uid_
         << "\n| Quantity     : " << quantity_
         << "\n| Cost per item: " << cost_
-        << "\n| Cost total   : " << GetCostTotal ();
+        << "\n| Cost total   : " << GetTotalCost ();
     return txt;
 }
 
-void Item::Print () {
-    cout << Print (Text ()).GetBegin ();
+Text& Item::Print (Text& txt) {
+    return txt << Print (txt);
 }
 
 const Operation* Item::Star (uint index, Expression* expr) {
     static const Operation This = { "Item",
         OperationCount (0), OperationFirst ('A'),
-        "A Inventory item.", 0 };
+        "A Inventory item.", 0
+    };
     //void* args[1];
     switch (index) {
         case '?': return ExpressionOperand (expr, &This);
@@ -157,11 +159,11 @@ const Operation* Item::Star (uint index, Expression* expr) {
     return nullptr;
 }
 
-const char* Item::Do (const char* text, const char* text_end) {
+const char* Item::Sudo (const char* text, const char* strand_end) {
     if (!text) {
         return nullptr;
     }
-    if (text > text_end) {
+    if (text > strand_end) {
         return nullptr;
     }
     const char* token;
@@ -172,45 +174,45 @@ const char* Item::Do (const char* text, const char* text_end) {
     int64_t quantity;
     double  cost;
 
-    while (++text <= text_end) {c = *text;
-        token = TextSkipSpaces (text, text_end);
+    while (++text <= strand_end) {c = *text;
+        token = TextSkipSpaces (text, strand_end);
         c = *text;
         if (c == '-') {
-            if (++text > text_end) {
+            if (++text > strand_end) {
                 return nullptr;
             }
             c = *text;
-            if (token = TokenEquals (token, text_end, "name")) {
-                if (!(token = TextRead (token + 1, text_end, buffer,
+            if (token = TokenEquals (token, strand_end, "name")) {
+                if (!(token = TextRead (token + 1, strand_end, buffer,
                                         buffer + kSize))) {
                     return nullptr;
                 }
                 SetName (buffer);
-            } else if (token = TokenEquals (token, text_end, "description")) {
-                if (!(token = TextRead (token + 1, text_end, buffer,
+            } else if (token = TokenEquals (token, strand_end, "description")) {
+                if (!(token = TextRead (token + 1, strand_end, buffer,
                                         buffer + kSize))) {
                     return nullptr;
                 }
                 SetDescription (buffer);
-            } else if (token = TokenEquals (token, text_end, "supply_uid")) {
-                if (!(token = TextRead (token + 1, text_end, buffer,
+            } else if (token = TokenEquals (token, strand_end, "supply_uid")) {
+                if (!(token = TextRead (token + 1, strand_end, buffer,
                                         buffer + kSize))) {
                     return nullptr;
                 }
                 SetSupplyUid (buffer);
                 return token;
-            } else if (token = TokenEquals (token, text_end, "uid")) {
-                if (!(token = TextRead (token + 1, text_end, uid))) {
+            } else if (token = TokenEquals (token, strand_end, "uid")) {
+                if (!(token = TextRead (token + 1, strand_end, uid))) {
                     return nullptr;
                 }
                 SetUid (uid);
-            } else if (token = TokenEquals (token, text_end, "quantity")) {
-                if (!(token = TextRead (token + 1, text_end, quantity))) {
+            } else if (token = TokenEquals (token, strand_end, "quantity")) {
+                if (!(token = TextRead (token + 1, strand_end, quantity))) {
                     return nullptr;
                 }
                 SetQuantity (quantity);
-            } else if (token = TokenEquals (token, text_end, "cost")) {
-                if (!(token = TextRead (token + 1, text_end, cost))) {
+            } else if (token = TokenEquals (token, strand_end, "cost")) {
+                if (!(token = TextRead (token + 1, strand_end, cost))) {
                     return nullptr;
                 }
                 SetCost (cost);
@@ -219,11 +221,11 @@ const char* Item::Do (const char* text, const char* text_end) {
             return nullptr;
         }
     }
-    if (token = TokenEquals (text, text_end, "set")) {
+    if (token = TokenEquals (text, strand_end, "set")) {
 
-    } else if (token = TokenEquals (text, text_end, "print")) {
-        Print ();
-    } else if (token = TokenEquals (text, text_end, "?")) {
+    } else if (token = TokenEquals (text, strand_end, "print")) {
+        cout << Print ();
+    } else if (token = TokenEquals (text, strand_end, "?")) {
         cout << Star (0, 0)->description;
     }
 }

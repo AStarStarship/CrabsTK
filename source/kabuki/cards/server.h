@@ -93,8 +93,8 @@ class Server : public _::Room {
     /** Gets the number of game tables on the server. */
     int GetNumTables ();
 
-    /** Adds a new CardGame to the games_. */
-    int AddGame (CardGame* game);
+    /** Adds a new Game to the games_. */
+    int AddGame (Game* game);
 
     /** Adds a new BlackjackGame.
         @return The index of the new game int he games_. */
@@ -115,14 +115,14 @@ class Server : public _::Room {
                           uint64_t value = 1 * 1000 * 1000);
 
     /** Prints this game out to the console. */
-    virtual void Print ();
+    virtual _::Text& Print (_::Text& txt = _::Text ());
 
     /** Handles Text input.
         @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text,
-                                    const char* text_end);
+    virtual const char* Sudo (const char* text,
+                                    const char* strand_end);
 
     /** Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
@@ -134,8 +134,9 @@ class Server : public _::Room {
     int                      state_;        //< Server state.
     uint32_t                 port_;         //< Server port number.
     id::UserList             users_;        //< Global list of User(s).
-    std::vector<CardGame*>   games_;        //< Array of CardGame.
+    std::vector<Game*>   games_;        //< Array of Game.
     char                   * directions_;   //< Console input directions.
+    store::Client            store_;        //< Store client.
 
 };      //< class Server
 }       //< namespace cards

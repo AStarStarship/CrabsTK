@@ -36,7 +36,7 @@ Client::~Client () {
 
 void Client::DeleteRemotePlayers () {
     for (int i = players_.size (); i > 0; --i) {
-        RemotePlayer* player = players_.back ();
+        PlayerProxy* player = players_.back ();
         players_.pop_back ();
         delete player;
     }
@@ -56,21 +56,20 @@ bool Client::SetState (int state) {
 
 void Client::PrintPlayers () {
     for (size_t i = 0; i < players_.size (); ++i) {
-        players_[i]->Print ();
+        players_[i]->Print (txt);
     }
 }
 
-void Client::PrintRoundStatsText () {
+void Client::PrintRoundStats () {
     PrintLine ('~');
     cout << "Round: " << round_number_ << "\n";
-
 
     PrintLine ('~');
 }
 
-void Client::Print () {
+Text& Client::Print (_::Text& txt) {
     PrintLine ('_');
-    cout << "\n| " << game_name_
+    txt << "\n| " << game_name_
          << "\n| Num Players : " << players_.size () 
          << " Max: " << players_.capacity ()
          << "\n| Round Number: " << round_number_
@@ -80,13 +79,19 @@ void Client::Print () {
     PrintLine ('_');
 }
 
+const char* Client::Sudo (const char* text, const char* strand_end) {
+    if (!(text = TextSkipSpaces (text, strand_end))) {
+        return nullptr;
+    }
+}
+
 const Operation* Client::Star (uint index, _::Expression* expr) {
     static const Operation This = { "CardsClient",
-        NumOperations (0), OperationFirst ('A'),
+        OperationCount (0), OperationFirst ('A'),
         "kabuki::cards Script client.", 0
     };
     void* args[4];
-    RemotePlayer* player;
+    PlayerProxy* player;
     switch (index) {
         case '?': return &This;
         case 'A': {
@@ -96,7 +101,7 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
             };
             if (!expr) return &OpA;
             byte state;
-            if (!ExprArgs (expr, Params<1, UI1> (), Args (args, &state)))
+            if (!ExpressionArgs (expr, Params<1, UI1> (), Args (args, &state)))
                 return expr->result;
             SetState (state);
             return nullptr;
@@ -108,7 +113,7 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
             };
             if (!expr) return &OpB;
             char buffer[kMaxMessageLength + 1];
-            if (!ExprArgs (expr, Params<1, STR, kMaxMessageLength + 1> (),
+            if (!ExpressionArgs (expr, Params<1, STR, kMaxMessageLength + 1> (),
                            Args (args, buffer)))
                 return expr->result;
             cout << buffer;
@@ -127,7 +132,7 @@ const Operation* Client::Star (uint index, _::Expression* expr) {
             int32_t player_number;
             char status[User::kMaxStatusLength + 1],
                  handle[Handle::kMaxLength];
-            if (!ExprArgs (expr, kRxHeaderC, Args (args, &player_number,
+            if (!ExpressionArgs (expr, kRxHeaderC, Args (args, &player_number,
                                                    status, handle)))
                 return expr->result;
             if (player_number < 0) {

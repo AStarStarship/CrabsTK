@@ -96,19 +96,16 @@ class Item : public _::Operand {
     virtual const char* SetCost (double value);
 
     /** Calculates the total cost of the Item's quantity times price. */
-    double GetCostTotal () const;
+    double GetTotalCost () const;
 
     /** Prints this object to the text. */
-    virtual _::Text& Print (_::Text& txt);
-
-    /** Prints this object to the text. */
-    virtual void Print ();
+    virtual _::Text& Print (_::Text& txt = _::Text ());
     
     /** Handles Script Commands.
         @param text     Beginning of the Text buffer.
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text, const char* text_end);
+    virtual const char* Sudo (const char* text, const char* strand_end);
 
     /** Abstract Script Operation(s).
         @param index The index of the expression.

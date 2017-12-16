@@ -1,10 +1,6 @@
-/** kabuki::script
-#include <script_log.h>
-#include <script_clock.h>
-#include <script_bin.h>
-#include <script_address.h>
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/impl/script_log.cc
+    @file    ~/source/kabuki/script/script_log.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 

@@ -1,6 +1,6 @@
-/** Kabuki Software Development Kit
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/KabukiSDK/data/iterator.h
+    @file    ~/source/kabuki/script/KabukiSDK/data/iterator.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -27,8 +27,8 @@ namespace _ {
 /** Interface for a generic iterator. */
 struct KABUKI Iterator {
 
-	/** Virtual destructor. */
-	virtual ~Iterator ();
+    /** Virtual destructor. */
+    virtual ~Iterator () = 0;
     
     /** Iterates over the next item.
         @return Pointer to the next object and nil when iteration is 

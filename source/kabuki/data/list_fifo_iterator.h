@@ -1,6 +1,6 @@
-/** kabuki::data
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/data/include/lllist_iterator.h
+    @file    ~/source/kabuki/data/lllist_iterator.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,8 +14,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef KABUKI_DATA_LLLISTITERATOR_H
-#define KABUKI_DATA_LLLISTITERATOR_H
+#ifndef HEADER_FOR_DATA_FIFOLIST
+#define HEADER_FOR_DATA_FIFOLIST
 
 #include "iterator.h"
 
@@ -183,4 +183,4 @@ class LLListIterator {
 
 }       //< namespace data
 }       //< namespace kabuki
-#endif  //< KABUKI_DATA_LLLISTITERATOR_H
+#endif  //< HEADER_FOR_DATA_FIFOLIST

@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/module_config.h
+    @file    ~/source/kabuki/script/config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -21,10 +21,9 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef SCRIPT_GLOBAL_H
-#define SCRIPT_GLOBAL_H
+#ifndef HEADER_FOR_SCRIPT_GLOBAL
+#define HEADER_FOR_SCRIPT_GLOBAL
 
-#include "text.h"
 #include "strand.h"
 #include "memory.h"
 #include "random.h"
@@ -37,9 +36,12 @@
 #include "event.h"
 #include "room.h"
 #include "expression.h"
-#include "window.h"
+#include "mirror.h"
 #include "args.h"
+#include "params.h"
 #include "keyboard.h"
-#include "print.h"
+#include "textmessage.h"
+#include "token.h"
+//#include "printer.h"
 
-#endif  //< SCRIPT_GLOBAL_H
+#endif  //< HEADER_FOR_SCRIPT_GLOBAL

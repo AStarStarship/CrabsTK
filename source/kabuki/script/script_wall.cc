@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/impl/script_wall.cc
+    @file    ~/source/kabuki/script/script_wall.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -88,9 +88,10 @@ bool Wall::CloseDoor (int index) {
     return false;
 }
 
-void Wall::Print () {
+_::Text& Wall::Print (_::Text& txt) {
     //printf ("\nDoor:\nis_dynamic %s\nnum_doors: %u\nmax_num_doors: %u\n", 
     //        is_dynamic ? "true" : "false", num_doors, max_num_doors);
+    return txt;
 }
 
 }       //< namespace _

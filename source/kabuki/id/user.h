@@ -111,22 +111,30 @@ class KABUKI User : _::Portal {
     /** Gets the Script Slot to send messages to this User. */
     _::Expression* GetSlot ();
 
+#if SCRIPT_USING_MIRROR
     /** Gets the Script Slot to send messages to this User. */
-    _::Window* GetWindow ();
+    _::Mirror* GetMirror ();
+#endif  //< SCRIPT_USING_MIRROR
 
     /** Returns true if this session and cypher match the same as the given
         one.  */
     bool IsAuthentic (int32_t session, uid_t public_key);
 
     /** Prints this object to a expression. */
-    virtual void Print ();
+    virtual _::Text& Print (_::Text& txt = _::Text ());
 
     /** Handles Text input.
         @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text,
-                                    const char* text_end);
+    virtual const char* Sudo (const char* text, const char* strand_end);
+
+    /** Abstract Script Operation(s).
+        @param index The index of the expression.
+        @param expr  The Expression to read and write from.
+        @return      Returns null upon success, a Set header upon query, and an 
+                     error_t ticket upon Read-Write failure. */
+    virtual const  _::Operation* Star (uint index, _::Expression* expr);
 
     private:
 

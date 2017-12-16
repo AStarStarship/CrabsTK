@@ -27,31 +27,31 @@ using namespace kabuki::cards;
 
 TEST_GROUP (CARDS_TESTS) {
     void setup () {
-        PrintLine (TextNewLine ());
+        cout << Text ();
     }
 
     void teardown () {
-        std::cout << "\n|\n| Test completed.";
-        PrintLine ();
+        Print ("\n|\n| Test completed.");
+        Print (Text().Line ());
     }
 };
 /*
 TEST (CARDS_TESTS, CardTests) {
     cout << "\n|\n| Testing kabuki::cards::Card class... "
-        << "\n|\n| Creating test Suit::Print ()...";
+        << "\n|\n| Creating test Suit::Print (_::Text& txt)...";
 
     Suit heart (Suit::kHeart, 0),
         diamond (Suit::kDiamond, 1),
         club (Suit::kClub, 2),
         spade (Suit::kSpade, 3);
     cout << "\n| ";
-    heart.Print ();
+    heart.Print (txt);
     cout << ", ";
-    diamond.Print ();
+    diamond.Print (txt);
     cout << ", ";
-    club.Print ();
+    club.Print (txt);
     cout << ", ";
-    spade.Print ();
+    spade.Print (txt);
 
     Card cards[5];
 
@@ -66,13 +66,13 @@ TEST (CARDS_TESTS, CardTests) {
     cout << "\n|\n| Testing Card::Print():void... ";
     for (int i = 0; i < 5; ++i) {
         cout << "\n| ";
-        cards[i].Print ();
+        cards[i].Print (txt);
     }
 
     cout << "\n|\n| Testing Print():void";
 
     for (int i = 0; i < 5; ++i) {
-        cards[i].Print ();
+        cards[i].Print (txt);
     }
 
     cout << "\n|\n| Testing Compare(const Card&):int... ";
@@ -94,13 +94,13 @@ TEST (CARDS_TESTS, CardTests) {
         PrintLine ("|\n|", '-');
         cout << "\n| Creating " << Suit::kFormatTexts[i] << " Deck...";
         pack.Set (Deck::kNoJokers, Deck::kAcesLow, (Suit::Format) i);
-        pack.Print ();
+        pack.Print (txt);
     }
     cout << "\n|\n| Testing kabuki::cards::Deck::Shuffle ()...\n|";
 
     CardStack stock (pack);
 
-    stock.Print ();
+    stock.Print (txt);
 
     cout << "\n|\n| Done testing kabuki::cards::Card class... ";
 }*/
@@ -119,39 +119,40 @@ TEST (CARDS_TESTS, ServerTests) {
     //int32_t session;
     //uid_t public_key;
 
-    PrintLine ();
-    cout << "\n| Testing kabuki::cards::Server...";
-    PrintLine ();
+    I () << Text ().Line ()
+         << "\n| Testing kabuki.cards.Server..."
+         << Text ().Line ();
 
-    //TextWrite (handle, handle + Handle::kDefaultMaxLength + 1, "Me");
-    //TextWrite (password, password + Handle::kDefaultMaxLength + 1, "Too");
+    //StrandWrite (handle, handle + Handle::kDefaultMaxLength + 1, "Me");
+    //StrandWrite (password, password + Handle::kDefaultMaxLength + 1, "Too");
 
     Server server;
 
-    cout << server.Star ('?', nullptr)->description;
-    cout << "\n|\n|";
+    I () << server.Star ('?', nullptr)->description
+         << "\n|\n|";
 
     server.Users ().Add ("Me", "Too");
-    server.Users ().Add ("Dealer1");
-    server.Users ().Print ();
-    server.Users ().Add ("Player1");
-    server.Users ().Add ("Player2");
-    server.Users ().Add ("Player3");
-    cout << "\n|\n|";
+    Print (server.Users ().Print ());
+    server.Users ().Add ("Marcus");
+    server.Users ().Add ("Duy");
+    server.Users ().Add ("Jo");
+
+    Print ("\n|\n|");
+
     server.AddBlackjackGame ();
     server.Users ().Add ("Player4");
     server.AddBlackjackGame ();
-    server.Print ();
+    I () << server.Print ();
     //KeyboardText ("\n< Enter your handle: ", handle,
     //              Handle::kDefaultMaxLength + 1);
     //KeyboardText ("\n< Enter your password: ", password,
     //              Password::kDefaultMaxLength + 1);
-    //cout << "\n| Registering @" << handle << " with password:\n\""
-    //     << password << '\"';
+    //txt << "\n| Registering @" << handle << " with password:\n\""
+    //    << password << '\"';
     //server.Users () = server.Users ().LogIn (handle, password);
-    cout << "\n|\n|";
+    I () << "\n|\n|";
     server.SetState (Server::kStateServingClients);
-    server.Print ();
+    Print (server.Print ());
     // Play-again loop.
     // A play-again loop goes in a loop where the user is asked if they want to
     // play again. The user can
@@ -160,9 +161,9 @@ TEST (CARDS_TESTS, ServerTests) {
         // Server is asynchronous so all we do is loop and wait for the state
         // to get set to 0.
         KeyboardText (server.GetDirections (), input, input + 141);
-        server.Do (input, input + 141);
+        I () << server.Sudo (input, input + 141);
     }
 
-    cout << "\n|\n| Done testing kabuki::cards::Server class... ";
+    I () << "\n|\n| Done testing kabuki::cards::Server class... ";
     system ("PAUSE");
 }

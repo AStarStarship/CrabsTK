@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/wall.h
+    @file    ~/source/kabuki/script/wall.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -88,7 +88,7 @@ class Wall : public Operation {
     bool CloseDoor (int index);
 
     /** Prints the given Door to the stdout. */
-    void Print ();
+    _::Text& Print (_::Text& txt = _::Text ());
 
     private:
 

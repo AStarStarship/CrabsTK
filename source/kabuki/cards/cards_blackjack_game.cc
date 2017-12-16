@@ -27,12 +27,12 @@ const int BlackjackGame::kDenominations[] = {
 BlackjackGame::BlackjackGame (id::UserList& users, id::User* dealer_user,
                               int64_t buy_in, int64_t ante, int64_t min_bet,
                               int min_players, int max_players) :
-    CardGame       (users, "Blackjack", min_players, max_players),
+    Game       (users, "Blackjack", min_players, max_players),
     round_number_  (0),
     pot_           (0),
     num_ai_players (0),
     dealer_ (new BlackjackDealer (dealer_user, buy_in, ante, min_bet, 
-             min_players, max_players)) {
+                                  min_players, max_players)) {
     RestartGame ();
 }
 
@@ -135,7 +135,7 @@ bool BlackjackGame::PlayGameInConsole () {
                 cout << "\n| ";
                 for (int i = 0; i < GetObservers ().size (); ++i) {
                     cout << "\n| " << i;
-                    observers_[i]->Print ();
+                    observers_[i]->Print (txt);
                 }
                 inputValid = true;
             } else if (StrandEquals (input, "hold")) {
@@ -171,15 +171,15 @@ bool BlackjackGame::PlayGameInConsole () {
             if (dealer_->Wins (observers_[0]->GetHand ())) //< If the dealer wins, it trumps all other players.
             {
                 cout << "\n|\n| Dealer wins ({:-()";
-                dealer_->Print ();
-                observers_[0]->Print ();
+                dealer_->Print (txt);
+                observers_[0]->Print (txt);
                 cout << "\n|";
                 dealer_->AddPoints (pot_);
                 dealer_->AddWin ();
             } else if (observers_[0]->Wins (dealer_->GetHand ())) {
                 cout << "\n|\n| Players wins!!!";
-                dealer_->Print ();
-                observers_[0]->Print ();
+                dealer_->Print (txt);
+                observers_[0]->Print (txt);
                 observers_[0]->AddPoints (pot_);
                 observers_[0]->AddWin ();
                 PrintLine ('$');
@@ -209,21 +209,20 @@ bool BlackjackGame::PlayGameInConsole () {
     return false;
 }*/
 
-void BlackjackGame::Print () {
-    PrintLine ('_');
-    cout << "\n|         Game: " << game_name_
-        << "\n| Num Observers: " << observers_.size ()
-        << " Min: " << GetMinPlayers ()
-        << " Max: " << GetMaxPlayers ()
-        << "\n| Num Observers: " << observers_.size ();
-
-    dealer_->Print ();
-    PrintLine ('_');
+Text& BlackjackGame::Print (_::Text& txt) {
+    return txt << txt.Line ('_')
+               << "\n|         Game: " << name_
+               << "\n| Num Observers: " << observers_.size ()
+               << " Min: " << GetMinPlayers ()
+               << " Max: " << GetMaxPlayers ()
+               << "\n| Num Observers: " << observers_.size ()
+               << dealer_->Print (txt)
+               << txt.Line ('_');
 }
 
 const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
     static const Operation This = { "Blackjack",
-        NumOperations (1), OperationFirst ('A'),
+        OperationCount (1), OperationFirst ('A'),
         "Insert directions on how to play blackjack here.", 0
     };
     void* args[1];
@@ -239,7 +238,7 @@ const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
                 "Adds the #user_session with #public_key to the list of game "
                 "observers pending authentication.", 0 };
             if (!expr) return &OpA;
-            if (ExprArgs (expr, Params<1, SI4> (), Args (args, &player_uid))) {
+            if (ExpressionArgs (expr, Params<1, SI4> (), Args (args, &player_uid))) {
                 return expr->result;
             }
             User* user = GetObservers ()[player_uid];
@@ -256,7 +255,7 @@ const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
                 "Triggers #user_session with #public_key to Leave the game "
                 "observer queue pending authentication.", 0 };
             if (!expr) return &OpB;
-            if (ExprArgs (expr, Params<2, UI8, UI8> (), Args (args, &session, 
+            if (ExpressionArgs (expr, Params<2, UI8, UI8> (), Args (args, &session, 
                                                               &public_key))) {
                 return expr->result;
             }
@@ -283,17 +282,17 @@ const _::Operation* BlackjackGame::Star (uint index, _::Expression* expr) {
     return Result (expr, Bin::kErrorInvalidIndex);
 }
 
-const char* BlackjackGame:: Do (const char* text,
-                                        const char* text_end) {
+const char* BlackjackGame:: Sudo (const char* text,
+                                        const char* strand_end) {
     if (!text) {
         return nullptr;
     }
-    if (text >= text_end) {
-        return "\n| Error: nil text_end pointer in Star (const char*, "
+    if (text >= strand_end) {
+        return "\n| Error: nil strand_end pointer in Star (const char*, "
                "const char*):const char*!";
     }
 
-    if (text > text_end) {
+    if (text > strand_end) {
         return "\n| Error: text buffer overflow in Star (const char*, "
                "const char*):const char*!";
     }

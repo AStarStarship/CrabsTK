@@ -29,17 +29,17 @@ Inventory::Inventory (const char* category) :
 
 Inventory::~Inventory () {
     // We used some dynamic memory for the name strings.
-    int count = GetCount ();
+    int count = Length ();
     if (count == 0) {
         return;
     }
-    for (int i = GetCount () - 1; i > 0; --i) {
+    for (int i = Length () - 1; i > 0; --i) {
         delete items_[i];
     }
     delete[] category_;
 }
 
-int Inventory::GetCount () {
+int Inventory::Length () {
     return items_.size ();
 }
 
@@ -49,7 +49,7 @@ const char* Inventory::Add (uid_t uid, const char* name, int64_t quantity,
         return "name can't be nil";
     }
     // Search for the item.
-    for (int i = GetCount () - 1; i > 0; --i) {
+    for (int i = Length () - 1; i > 0; --i) {
         Item* item = items_[i];
         if (StrandEquals (name, item->GetName ())) {
       // It's a duplicate so update the quantity and price.
@@ -65,9 +65,9 @@ const char* Inventory::Add (uid_t uid, const char* name, int64_t quantity,
     return nullptr;
 }
 
-double Inventory::GetCostTotal () {
+double Inventory::GetTotalCost () {
     double total = 0.0;
-    int count = GetCount ();
+    int count = Length ();
     if (!count) {
         return total;
     }
@@ -78,13 +78,22 @@ double Inventory::GetCostTotal () {
     return total;
 }
 
-char* Inventory::GetCategory () {
+const char* Inventory::GetCategory () {
     return category_;
 }
 
-int64_t Inventory::GetQuantityTotal () {
+const char* Inventory::SetCategory (const char* new_catetory) {
+    if (!new_catetory) {
+        return nullptr;
+    }
+    delete category_;
+    category_ = StrandClone (new_catetory);
+    return ;
+}
+
+int64_t Inventory::GetTotalQuantity () {
     int64_t quanity = 0;
-    for (int i = GetCount () - 1; i > 0; --i) {
+    for (int i = Length () - 1; i > 0; --i) {
         quanity += items_[i]->GetQuantity ();
     }
     return quanity;
@@ -102,59 +111,59 @@ void Inventory::WriteToOpenFile (std::ofstream& file) {
     }
 }*/
 
-void Inventory::Print () {
+Text& Inventory::Print (Text& txt) {
+    txt << "\n| Inventory Category: " << GetCategory ();
     enum { kSize = 32 };
     double quantity,   //< Temp var.
            price;      //< Temp var.
     char   buffer[kSize]; //< Temp buffer.
 
-    PrintCentered (category_, 20);
+    txt << txt.Centered (category_, 20)
+        << GetTotalQuantity ()
+        << txt.Centered (buffer, 20)
+        << txt.Centered ("", 20)
+        << GetTotalCost ()
+        << txt.Centered (buffer, 20, true)
+        << txt.Lines (4);
 
-    TextWrite (buffer, buffer + kSize, GetQuantityTotal ());
-    PrintCentered (buffer, 20);
-    PrintCentered ("", 20);
-    TextWrite (buffer, buffer + kSize, GetCostTotal ());
-    PrintCentered (buffer, 20, true);
-    PrintLines (4);
-    for (int i = 0; i < GetCount (); ++i) {
+    for (int i = 0; i < Length (); ++i) {
         Item* item = items_[i];
-        PrintCentered (item->GetName (), 20);
-        quantity = (double)item->GetQuantity ();
         price = item->GetCost ();
-        TextWrite (buffer, buffer + kSize, item->GetQuantity ());
-        PrintCentered (buffer, 20);
-        TextWrite (buffer, buffer + kSize, price);
-        PrintCentered (buffer, 20);
-        TextWrite (buffer, buffer + kSize, quantity * price);
-        PrintCentered (buffer, 20, true);
+        quantity = (double)item->GetQuantity ();
+        txt << txt.Centered (item->GetName (), 20)
+            << item->GetQuantity ()
+            << txt.Centered (buffer, 20)
+            << price
+            << txt.Centered (buffer, 20)
+            << quantity * price
+            << txt.Centered (buffer, 20, true);
     }
-    PrintBreak ("|", '-', 0);
+    return txt.Break ("|", '-', 0);
 }
 
-const char* Inventory::Do (const char* text, const char* text_end) {
-    if (!text) {
+const char* Inventory::Sudo (const char* strand, const char* strand_end) {
+    if (!strand) {
         return nullptr;
     }
-    if (text > text_end) {
+    if (strand > strand_end) {
         return nullptr;
     }
     const char* next_token;
-    if (*text == kLexicalDeilimiter) {
-        for (int i = GetCount () - 1; i > 0; --i) {
+    if (*strand == kLexicalDeilimiter) {
+        for (int i = Length () - 1; i > 0; --i) {
             Inventory* inventory = inventories_[i];
-            next_token = TokenEquals (text, text_end,
+            next_token = TokenEquals (strand, strand_end,
                                       inventory->GetCategory ());
             if (next_token) {
-                return inventory->Do (next_token + 1, text_end);
+                return inventory->Sudo (next_token + 1, strand_end);
             }
         }
     }
-    for (int i = GetCount () - 1; i > 0; --i) {
+    for (int i = Length () - 1; i > 0; --i) {
         Item* item = items_[i];
-        next_token = TokenEquals (text, text_end,
-                                  item->GetName ());
+        next_token = TokenEquals (strand, strand_end,  item->GetName ());
         if (next_token) {
-            return item->Do (next_token + 1, text_end);
+            return item->Sudo (next_token + 1, strand_end);
         }
     }
     return "couldn't find item or inventory";
@@ -167,7 +176,9 @@ const Operation* Inventory::Star (uint index, Expression* expr) {
     switch (index) {
         case '?': return ExpressionOperand (expr, &This);
         case 'A': {
-        
+            static const Operation OpA = { "Inventory",
+                OperationCount (0), OperationFirst ('A'),
+                "", 0 };
         }
     }
     return nullptr;

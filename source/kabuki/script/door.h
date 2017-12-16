@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/door.h
+    @file    ~/source/kabuki/script/door.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,10 +17,11 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef SCRIPT_DOOR_H
-#define SCRIPT_DOOR_H
+#ifndef HEADER_FOR_SCRIPT_DOOR
+#define HEADER_FOR_SCRIPT_DOOR
 
-#include "slot.h"
+#include "expression.h"
+#include "mirror.h"
 #include "tstack.h"
 #include "text.h"
 
@@ -89,10 +90,10 @@ class Door : public Operand {
 
     /** Handles Script Commands.
         @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text,
-                                    const char* text_end);
+    virtual const char* Sudo (const char* text,
+                                    const char* strand_end);
 
     /** Script expressions. */
     virtual const Operation* Star (uint index, Expression* expr);
@@ -123,4 +124,4 @@ static Door* DoorInit (int* buffer, uint_t slot_size) {
 }*/
 
 }       //< namespace _
-#endif  //< SCRIPT_DOOR_H
+#endif  //< HEADER_FOR_SCRIPT_DOOR

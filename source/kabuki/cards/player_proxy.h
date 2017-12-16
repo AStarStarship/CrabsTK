@@ -1,4 +1,4 @@
-/** kabuki:cards
+/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/player.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -16,23 +16,23 @@
 #ifndef KABUKI_CARDS_REMOTEPLAYER_H
 #define KABUKI_CARDS_REMOTEPLAYER_H
 
-#include "card_stack.h"
+#include "player.h"
 
 namespace kabuki { namespace cards {
 
 /** A Remote player in an abstract card game.
     It would be a poor design choice to allow the client app to have any data
-    about the other player's hands, so the RemotePlayer is on a need to know
+    about the other player's hands, so the PlayerProxy is on a need to know
     basis only.
 */
-class RemotePlayer: public _::Operation {
+class PlayerProxy: public Player {
     public:
 
     /** Default Constructor. */
-    RemotePlayer (Deck& pack);
+    PlayerProxy (Deck& pack);
     
     /** Virtual destructor. */
-    virtual ~RemotePlayer ();
+    virtual ~PlayerProxy ();
 
     /** Gets the Player's status_. */
     const char* GetDislpayName ();
@@ -85,14 +85,14 @@ class RemotePlayer: public _::Operation {
     int AddCard (byte pip, byte suit);
 
     /** Prints this object to the console. */
-    virtual void Print ();
+    virtual _::Text& Print (_::Text& txt = _::Text ());
 
     /** Script Operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
     protected:
 
-    char      * status_,        //< RemotePlayer's name.
+    char      * status_,        //< PlayerProxy's name.
               * handle_;        //< Display handle.
     bool        is_dealer_;     //< Flags if this player is the dealer.
     int32_t     state_,         //< The state of the player.
@@ -101,7 +101,7 @@ class RemotePlayer: public _::Operation {
     Deck      & pack_;          //< The pack of cards.
     CardStack   visible_cards_; //< Stock of Card(s) to draw from.
 
-};      //< class RemotePlayer
+};      //< class PlayerProxy
 }       //< namespace cards
 }       //< namespace kabuki
 #endif  //< KABUKI_CARDS_REMOTEPLAYER_H

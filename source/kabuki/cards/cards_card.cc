@@ -1,4 +1,4 @@
-/** kabuki:cards
+/** Kabuki Toolkit
     @file    ~/source/project/kabuki/cards_card.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -117,7 +117,7 @@ Card& Card::operator= (const Card& other) {
     return *this;
 }
 
-void Card::Print () {
+void Card::Print (_::Text& txt) {
     switch (pip_) {
         case 0:
         {

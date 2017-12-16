@@ -1,4 +1,4 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
     @file    ~/source/kabuki/script/text.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -24,31 +24,19 @@
 
 namespace _ {
 
-//hash16_t Hash16UI2 (uint16_t value, hash16_t hash);
-
-
-//hash16_t Hash16UI4 (uint32_t value, hash16_t hash);
-
-
-//hash16_t Hash16UI8 (uint64_t value, hash16_t hash);
-
 /** Hashes a single byte. */
 inline hash16_t Hash16 (char c, hash16_t hash) {
-    //PrintHex (c);
-    hash16_t cprime = c * kLargest16BitPrime;
-    return cprime + hash;
+    return (c * kLargest16BitPrime) + hash;
 }
 
 /** Hashes a single byte. */
 inline hash32_t Hash32 (char c, hash32_t hash) {
-    hash32_t cprime = c * kLargest32BitPrime;
-    return cprime + hash;
+    return (c * kLargest32BitPrime) + hash;
 }
 
 /** Hashes a single byte. */
 inline hash64_t Hash64 (char c, hash64_t hash) {
-    hash64_t cprime = c * kLargest64BitPrime;
-    return cprime + hash;
+    return (c * kLargest64BitPrime) + hash;
 }
 
 /** Hashes the given char using the primeHash function. */

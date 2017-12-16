@@ -87,14 +87,14 @@ int Server::GetNumTables () {
     return games_.size ();
 }
 
-int Server::AddGame (CardGame* game) {
+int Server::AddGame (Game* game) {
     games_.push_back (game);
     return GetNumTables () - 1;
 }
 
 int Server::AddBlackjackGame () {
     char handle[64];
-    TextWrite (TextWrite (handle, handle + 64, "Dealer"),
+    StrandWrite (StrandWrite (handle, handle + 64, "Dealer"),
                handle + 64, users_.PeekNextUid ());
     User* user = users_.GetUser (AddAgent (handle));
     if (!user) {
@@ -129,7 +129,7 @@ bool Server::SetDirections (const char* directions) {
     return true;
 }
 
-void Server::Print () {
+void Server::Print (_::Text& txt) {
     cout << "\n| Server: " << GetRoomName ();
 }
 
@@ -137,16 +137,16 @@ int Server::AddAgent (const char* handle_prefix,
                       double balance, uint64_t value) {
     char handle[32];
     char* token;
-    if (!(token = TextWrite (handle, handle + 32, handle_prefix))) {
+    if (!(token = StrandWrite (handle, handle + 32, handle_prefix))) {
         return -1;
     }
-    if (!TextWrite (token, handle + 32, users_.GetCount ())) {
+    if (!StrandWrite (token, handle + 32, users_.Length ())) {
         return -1;
     }
     return users_.Add (handle, password_.GetKey (), balance, value);
 }
 
-const char* Server::Do (const char* text, const char* text_end) {
+const char* Server::Sudo (const char* text, const char* strand_end) {
     const char* token_end;
     int         index;
     //char      handle[Handle::kMaxLength + 1],
@@ -160,17 +160,17 @@ const char* Server::Do (const char* text, const char* text_end) {
     if (!text) {
         return nullptr;
     }
-    if (text > text_end) {
+    if (text > strand_end) {
         return nullptr;
     }
     if (*text == '@') {
-        return users_.Do (text + 1, text_end);
-    } else if (token_end = TokenEquals (text, text_end, "exit")) {
+        return users_.Sudo (text + 1, strand_end);
+    } else if (token_end = TokenEquals (text, strand_end, "exit")) {
         return Exit ();
-    } else if (token_end = TokenEquals (text, text_end, "restart")) {
+    } else if (token_end = TokenEquals (text, strand_end, "restart")) {
         return Restart ();
-    } else if (token_end = TokenEquals (text, text_end, "add")) {
-        if (token_end = TokenEquals (token_end + 1, text_end, "blackjack")) {
+    } else if (token_end = TokenEquals (text, strand_end, "add")) {
+        if (token_end = TokenEquals (token_end + 1, strand_end, "blackjack")) {
             AddBlackjackGame ();
             return token_end;
         }
@@ -179,14 +179,14 @@ const char* Server::Do (const char* text, const char* text_end) {
              << "\n| \"blackjack\" until you program another game.";
 
         return nullptr;
-    } else if (token_end = TokenEquals (text, text_end, "remove")) {
-        if (!(token_end = TextRead (token_end + 1, text_end, index))) {
+    } else if (token_end = TokenEquals (text, strand_end, "remove")) {
+        if (!(token_end = TextRead (token_end + 1, strand_end, index))) {
             return nullptr;
         }
         RemoveGame (index);
         return token_end;
 
-    } else if (token_end = TokenEquals (text, text_end, "?")) {
+    } else if (token_end = TokenEquals (text, strand_end, "?")) {
         cout << Star ('?', nullptr)->description;
     }
     cout << "\n| Invalid input.";
@@ -263,7 +263,7 @@ const Operation* Server::Star (uint index, Expression* expr) {
                 "returns a #session_number and #public_key.", 0
             };
             if (!expr) return &OpA;
-            if (ExprArgs (expr, Params<2, STR, Handle::kMaxLength, STR,
+            if (ExpressionArgs (expr, Params<2, STR, Handle::kMaxLength, STR,
                 Password::kMaxLength> (), Args (args, handle, password)))
             {
                 return expr->result;
@@ -285,7 +285,7 @@ const Operation* Server::Star (uint index, Expression* expr) {
                 "public_key:STR.", 0 };
 
             if (!expr) return &OpB;
-            if (ExprArgs (expr, Params<2, STR, Handle::kMaxLength, STR,
+            if (ExpressionArgs (expr, Params<2, STR, Handle::kMaxLength, STR,
                 Password::kMaxLength> (), Args (args, handle, password))) {
                 return expr->result;
             }
@@ -314,7 +314,7 @@ const Operation* Server::Star (uint index, Expression* expr) {
                 "Attempts to delete with the given #handle and #password.", 0 };
 
             if (!expr) return &OpC;
-            if (ExprArgs (expr, Params<2, STR, Handle::kMaxLength, STR,
+            if (ExpressionArgs (expr, Params<2, STR, Handle::kMaxLength, STR,
                 Password::kMaxLength> (), Args (args, handle, password))) {
                 return expr->result;
             }

@@ -55,7 +55,7 @@ class KABUKI UserList : public _::Operand {
     uid_t PeekNextUid ();
 
     /** Gets the number of users in the list. */
-    int GetCount ();
+    int Length ();
 
     /** Gets the number of users in the list. */
     int GetSize ();
@@ -119,14 +119,14 @@ class KABUKI UserList : public _::Operand {
     virtual int Remove (const char* handle);
 
     /** Prints this object to the log. */
-    void Print ();
+    _::Text& Print (_::Text& txt = _::Text ());
 
     /** Handles Script Commands.
         @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text,
-                                    const char* text_end);
+    virtual const char* Sudo (const char* text,
+                                    const char* strand_end);
     
     /** An A*B abstract algebra Script Expression.
         @param index The index of the expression.

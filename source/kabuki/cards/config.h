@@ -18,8 +18,7 @@
 
 #include "../script/global.h"
 #include "../id/global.h"
-#include "../data/array.h"
-
-using namespace kabuki::data;
+#include "../data/global.h"
+#include "../store/global.h"
 
 #endif	//< KABUKI_CARDS_COFIG_H

@@ -1,6 +1,6 @@
-/** kabuki::data
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/data/include/binary_tree.h
+    @file    ~/source/data/include/tree_binary_iterator.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -14,8 +14,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef KABUKI_DATA_BINARYTREE_H
-#define KABUKI_DATA_BINARYTREE_H
+#ifndef HEADER_FOR_KABUKI_DATA_TREEBINARYITERATOR
+#define HEADER_FOR_KABUKI_DATA_TREEBINARYITERATOR
 
 #include "iterator.h"
 
@@ -25,7 +25,7 @@ namespace kabuki { namespace data {
              of me for how bad this is. */
 
 template<typename T>
-class BinaryTreeIterator {
+class TreeBinaryIterator {
     
     public:
     
@@ -171,4 +171,4 @@ class BinaryTreeIterator {
 };
 }       //< namespace data
 }       //< namespace kabuki
-#endif  //< KABUKI_DATA_BINARYTREE_H
+#endif  //< HEADER_FOR_KABUKI_DATA_TREEBINARYITERATOR

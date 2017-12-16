@@ -65,7 +65,7 @@ int CardStack::Compare (CardStack& other) {
 
 int CardStack::GetValue () {
     int total = 0;
-    for (int i = 0; i < GetCount (); ++i) {
+    for (int i = 0; i < Length (); ++i) {
         Card* card = cards_[i];
         total += card->GetDenomination ();
     }
@@ -79,7 +79,7 @@ void CardStack::Shuffle () {
     cards_.clear (); //< Delete all of the cards_ in this CardStack.
 
     // Then for each Card in the CardStack, 
-    for (int i = 0; i < GetCount (); ++i) {
+    for (int i = 0; i < Length (); ++i) {
         cards_.push_back (cards.TakeRandomCard ());
     }
 }
@@ -92,44 +92,40 @@ void CardStack::Shuffle (Deck& deck) {
         Card* card = deck.GetCard (i);
         unshuffled_cards.Push (deck.GetCard (i));
     }
-    unshuffled_cards.Print ();
+    cout << unshuffled_cards.Print ();
     cards_.reserve (num_cards);
     Clear ();
     //cout << "\n|\n Taking random cards\n|";
     for (int i = num_cards - 1; i >= 0; --i) {
         Card* card = unshuffled_cards.TakeRandomCard ();
         //cout << "\n| " << i << ".) Pushing ";
-        //card->Print ();
+        //card->Print (txt);
         cards_.push_back (card);
     }
     //cout << "\n|\n Shuffled cards:\n|";
-    //Print ();
+    //Print (txt);
     //cout << "\n|\n CardStack successfully shuffled! :-)\n|";
 }
 
-int CardStack::GetSize () {
+int CardStack::GetSize () const {
     return cards_.capacity ();
 }
 
-int CardStack::GetCount () {
+int CardStack::Length () const {
     return cards_.size ();
-}
-
-int CardStack::GetMaxCards () {
-    return cards_.capacity ();
 }
 
 int CardStack::Push (Card* card) {
     if (card == nullptr) {
         return -1;
     }
-    //cout << "\n| Pushing "; card->Print ();
+    //cout << "\n| Pushing "; card->Print (txt);
     cards_.push_back (card);
-    return GetCount ();
+    return Length ();
 }
 
 Card* CardStack::Draw () {
-    Card* card = cards_[GetCount ()];
+    Card* card = cards_[Length ()];
     cards_.pop_back ();
     return card;
 }
@@ -137,11 +133,11 @@ Card* CardStack::Draw () {
 int CardStack::InsertCard (Card* card, int index) {
     auto it = cards_.begin ();
     cards_.insert (it + index, card);
-    return GetCount ();
+    return Length ();
 }
 
 int CardStack::Push (CardStack& new_cards) {
-    size_t new_count = GetCount () + new_cards.GetCount ();
+    size_t new_count = Length () + new_cards.Length ();
     if (new_count > cards_.capacity ())
         return 1;
 
@@ -151,7 +147,7 @@ int CardStack::Push (CardStack& new_cards) {
     //     ++it) {
     //    cards_.push_back (*it);
     //}
-    return GetCount ();
+    return Length ();
 }
 
 int CardStack::DrawCards (CardStack& cards, int num_cards_take) {
@@ -159,10 +155,10 @@ int CardStack::DrawCards (CardStack& cards, int num_cards_take) {
         return -1;
     }
 
-    if (num_cards_take > cards.GetCount ())
+    if (num_cards_take > cards.Length ())
         return 1;
 
-    size_t value = GetCount () + num_cards_take;
+    size_t value = Length () + num_cards_take;
     if (value > cards_.capacity ())
         return 2;
 
@@ -174,7 +170,7 @@ int CardStack::DrawCards (CardStack& cards, int num_cards_take) {
 
 int CardStack::Count (Card* card) {
     int count = 0;
-    for (int i = 0; i < GetCount (); ++i) {
+    for (int i = 0; i < Length (); ++i) {
         count += cards_[i]->Equals (card)?1:0;
     }
     return count;
@@ -182,7 +178,7 @@ int CardStack::Count (Card* card) {
 
 int CardStack::Contains (Card* card) {
     int count = 0;
-    for (int i = 0; i < GetCount (); ++i) {
+    for (int i = 0; i < Length (); ++i) {
         if (cards_[i]->Equals (card)) {
             return true;
         }
@@ -192,7 +188,7 @@ int CardStack::Contains (Card* card) {
 
 bool CardStack::RemoveCard (Card* card) {
     int count = 0;
-    for (int i = 0; i < GetCount (); ++i) {
+    for (int i = 0; i < Length (); ++i) {
         if (cards_[i]->Equals (card)) {
             auto it = cards_.begin ();
             cards_.erase (it + i);
@@ -206,31 +202,31 @@ int CardStack::SetCards (CardStack& stack, int num_cards) {
     if (num_cards < 0) {
         return -1;
     }
-    if (num_cards > stack.GetCount ()) {
+    if (num_cards > stack.Length ()) {
         return 1;
     }
-    if (num_cards > GetCount ()) {
+    if (num_cards > Length ()) {
         return 3;
     }
     cards_.clear ();
 
     if (num_cards == 1) {
         cards_.push_back (stack.GetCard (0));
-        return GetCount ();
+        return Length ();
     }
 
     for (int i = 0; i < num_cards - 1; ++i)
         cards_.push_back (stack.GetCard (i));
 
     cards_.push_back (stack.GetCard (num_cards - 1));
-    return GetCount ();
+    return Length ();
 }
 
 int CardStack::TakeCards (CardStack& cards, int num_cards) {
     if (num_cards < 1)
         return -1;
 
-    int count = cards.GetCount ();
+    int count = cards.Length ();
     if (num_cards > count) {
         // Not enough cards_ on the stack.
         return 1;
@@ -244,11 +240,11 @@ int CardStack::TakeCards (CardStack& cards, int num_cards) {
         cards_.push_back (cards.TakeNextCard ());
     }
     cards_.push_back (cards.TakeNextCard ());
-    return GetCount ();
+    return Length ();
 }
 
 Card* CardStack::GetCard (int index) {
-    int num_cards = GetCount ();
+    int num_cards = Length ();
     if (num_cards == 0 || index >= num_cards) {
         return nullptr;
     }
@@ -257,7 +253,7 @@ Card* CardStack::GetCard (int index) {
 }
 
 Card* CardStack::TakeCard (int index) {
-    int num_cards = GetCount ();
+    int num_cards = Length ();
 
     if (num_cards <= 0 || index >= num_cards) // Arrays start at 0, so if we used cards_[num_cards], it would be out of bounds.
         return nullptr;
@@ -268,10 +264,10 @@ Card* CardStack::TakeCard (int index) {
 }
 
 Card* CardStack::TakeNextCard () {
-    if (GetCount () == 0) // Then there are no cards_ in the cards_.
+    if (Length () == 0) // Then there are no cards_ in the cards_.
         return nullptr;
 
-    int index = GetCount ();
+    int index = Length ();
     // Golden rule: If you use a variable in a function more than once, store a
     // local copy to get a performance increase.
     Card* next_card = cards_[index];
@@ -280,11 +276,11 @@ Card* CardStack::TakeNextCard () {
 }
 
 Card* CardStack::TakeRandomCard () {
-    if (GetCount () <= 0) // Then there are no cards_!
+    if (Length () <= 0) // Then there are no cards_!
         return nullptr;
 
     srand ((uint)time (nullptr));
-    int index = rand () % GetCount ();
+    int index = rand () % Length ();
     Card* card = cards_[index];
     cards_.erase (cards_.begin () + index);
     //cout << "\n| Taking card:" << index << ' ';
@@ -293,16 +289,16 @@ Card* CardStack::TakeRandomCard () {
 }
 
 bool CardStack::IsEmpty () {
-    return GetCount () == 0;
+    return Length () == 0;
 }
 
-void CardStack::Print () {
+_::Text& CardStack::Print (_::Text& txt) {
     PrintLine ('-', "\n>");
-    cout << "\n| CardStack: Count:" << GetCount ();
-    for (int i = 0; i < GetCount (); ++i) {
+    cout << "\n| CardStack: Count:" << Length ();
+    for (int i = 0; i < Length (); ++i) {
         cout << "\n| " << i << ".) ";
         Card* card = cards_[i];
-        card->Print ();
+        card->Print (txt);
     }
 }
 

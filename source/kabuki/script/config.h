@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/module_config.h
+    @file    ~/source/kabuki/script/config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -28,7 +28,7 @@
 #define MBED_OS          3  //< Arduino bare-metal OS type macro.
 #define ARDUINO          4  //< mbed OS type macro.
 #define MINGW32          5  //< Win32 OS type macro.
-#define WINDOWS          6  //< Windows Universal OS type macro.
+#define WINDOWS          6  //< Mirrors Universal OS type macro.
 #define ANDROID          7  //< Android OS type macro.
 #define LINUX            8  //< Linux OS type macro.
 #define OSX              9  //< OSX OS type macro.
@@ -203,7 +203,7 @@ static const uint64_t kLargest64BitPrime = 0xFFFFFFFFFFFFFFC5;
 
 //< A char with a single newline char.
 
-/** The level will more code creating a larger binary. Use one 
+/** The level will more code creating a larger binary. Use one
     underscore to use more memory, and two underscores to use even more. */
 #if SCRIPT_MEMORY_PROFILE == 1
 typedef int8_t   int_t;     //< Buffer signed index type.
@@ -245,5 +245,30 @@ typedef uint64_t data_t;    //< Default TData size.
   ClassName (const ClassName&) = delete;\
   void operator= (const ClassName&) = delete;
   //ClassName () = default //< Saw this once on the net but do we need it?
+
+
+#if SCRIPT_DEBUG
+#define PRINT (MESSAGE)\
+    std::cout << MESSAGE;
+
+#define PRINT_LINE(MESSAGE)\
+    std::cout << NEW_LINE_HEADER << MESSAGE;
+
+#define PAUSE (MESSAGE)\
+    std::cout << NEW_LINE_HEADER << MESSAGE; system ("PAUSE");
+
+#define PRINTF(...) { printf(__VA_ARGS__); }
+
+#else
+#define PRINT(MESSAGE)
+
+#define PRINT_LINE(MESSAGE)
+
+#define COUT_PAUSE(MESSAGE)
+
+
+#define PRINTF(...)
+
+#endif  //< SCRIPT_DEBUG
 
 #endif  //< SCRIPT_CONFIG_H

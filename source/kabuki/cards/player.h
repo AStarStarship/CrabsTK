@@ -1,4 +1,4 @@
-/** kabuki:cards
+/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/player.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -111,10 +111,10 @@ class Player : public _::Operand {
     virtual bool Wins (Hand& hand) = 0;
 
     /** Prints the abridged player stats to the console. */
-    virtual void PrintStats () = 0;
+    virtual _::Text& PrintStats (_::Text& txt) = 0;
 
     /** Prints the player to the console. */
-    virtual void Print () = 0;
+    virtual _::Text& Print (_::Text& txt = _::Text ()) = 0;
     
     /** Abstract Script Operation(s).
         @param index The index of the expression.
@@ -125,10 +125,10 @@ class Player : public _::Operand {
 
     /** Handles Text input.
         @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text,
-                                    const char* text_end) = 0;
+    virtual const char* Sudo (const char* text, const char* strand_end) = 0;
+
     protected:
 
     id::User * user_;       //< User attached to this Player.

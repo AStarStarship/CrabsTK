@@ -28,7 +28,7 @@ BlackjackCardCombo::~BlackjackCardCombo () {
 int BlackjackCardCombo::GetValue () {
     int total = 0;
     Card* card;
-    for (int i = 0; i < GetCount (); ++i) {
+    for (int i = 0; i < Length (); ++i) {
         card = GetCard (i);
         int pip = card->GetPip ();
 

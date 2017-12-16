@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/bout.h
+    @file    ~/source/kabuki/script/bout.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -62,16 +62,16 @@ struct KABUKI Bout {
 /** Get's the B-Output's buffer.*/
 KABUKI byte* BoutBuffer (Bout* bout);
 
-#if SCRIPT_DEBUG
-KABUKI const char* BoutErrorText (Bout::Error error);
+#if SCRIPT_USING_TEXT
+KABUKI const char* BoutError (Bout::Error error);
 
 /** Gets a a char for printing out the bout_state. */
-KABUKI const char* BoutStateText (Bout::State state);
-#endif  //< SCRIPT_DEBUG
+KABUKI const char* BoutState (Bout::State state);
 
-inline const char* BoutStateText (byte state) {
-    return BoutStateText ((Bout::State)state);
+inline const char* BoutState (byte state) {
+    return BoutState ((Bout::State)state);
 }
+#endif  //< SCRIPT_USING_TEXT
 
 /** Used to return an erroneous result from a B-Output.
 
@@ -79,7 +79,8 @@ inline const char* BoutStateText (byte state) {
     @return Returns a Static Error Operation Result. */
 inline const Operation* BoutResult (Bout* bout, Bout::Error error) {
 #if SCRIPT_DEBUG
-    std::cout << "\nBout " << BoutErrorText (error) << " Error!";
+    Text txt;
+    txt << "\n| Bout " << BoutError (error) << " Error!" << txt.Print ();
 #endif
     return reinterpret_cast<const Operation*> (1);
 }
@@ -94,7 +95,7 @@ inline const Operation* BoutResult (Bout* bout, Bout::Error error) {
 inline const Operation* BoutResult (Bout* bout, Bout::Error error,
                                     const uint_t* header) {
 #if SCRIPT_DEBUG
-    std::cout << "\nBout " << BoutErrorText (error) << " Error!";
+    std::cout << "\n| Bout " << BoutError (error) << " Error!";
 #endif  //< MEMORY_PROFILE >= USE_MORE_ROM
     return reinterpret_cast<const Operation*> (1);
 }
@@ -110,7 +111,7 @@ inline const Operation* BoutResult (Bout* bout, Bout::Error error,
                                     const uint_t* header,
                                     uint_t offset) {
 #if SCRIPT_DEBUG
-    std::cout << "\nBout " << BoutErrorText (error) << " Error!";
+    std::cout << "\n| Bout " << BoutError (error) << " Error!";
 #endif  //< MEMORY_PROFILE >= USE_MORE_ROM
     return reinterpret_cast<const Operation*> (1);
 }
@@ -127,7 +128,7 @@ inline const Operation* BoutResult (Bout* bout, Bout::Error error,
                                     uint_t offset,
                                     byte* address) {
 #if SCRIPT_DEBUG
-    std::cout << "\nBout " << BoutErrorText (error) << " Error!";
+    std::cout << "\n| Bout " << BoutError (error) << " Error!";
 #endif  //< MEMORY_PROFILE >= USE_MORE_ROM
     return reinterpret_cast<const Operation*> (1);
 }
@@ -148,11 +149,6 @@ KABUKI byte* BoutEndAddress (Bout* bout);
 /** Streams a B-Output byte.
     @param bout A B-Output abstract byte stream. */
 KABUKI int BoutStreamByte (Bout* bout);
-
-#if SCRIPT_DEBUG
-/** Prints the given B-Output to the stdout. */
-KABUKI void BoutPrint (Bout* bout);
-#endif  //< SCRIPT_DEBUG
 
 /** Writes a message with the given params to the given B-Output slot.
     @param bout   The B-Output socket to write to.
@@ -177,5 +173,20 @@ KABUKI void BoutRingBell (Bout* bout, const char* address);
 /** Sends a connection message to the given address. */
 KABUKI void BoutAckBack (Bout* bout, const char* address);
 
+#if SCRIPT_USING_TEXT
+/** Prints the Bin to the Text.
+    @param  bin The pin to print.
+    @param  txt The Text to print the bin to.
+    @return The txt. */
+KABUKI Text& BoutPrint (Bout* bout, Text& txt);
+#endif  //< SCRIPT_USING_TEXT
+
 }       //< namespace _
+
+#if SCRIPT_USING_TEXT
+/** Prints out the bin to the txt. */
+inline _::Text& operator<< (_::Text& txt, _::Bout* bout) {
+    return txt << _::BoutPrint (bout, txt);
+}
+#endif  //< SCRIPT_USING_TEXT
 #endif  //< HEADER_FOR___BOUT

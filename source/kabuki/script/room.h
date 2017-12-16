@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/room.h
+    @file    ~/source/kabuki/script/room.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef SCRIPT_ROOM_H
-#define SCRIPT_ROOM_H
+#ifndef HEADER_FOR_SCRIPT_ROOM
+#define HEADER_FOR_SCRIPT_ROOM
 
 #include "wall.h"
 #include "interrupts.h"
@@ -106,14 +106,14 @@ KABUKI const char* RequestText (Request r);
     2.  Jo needs to add a UART port out to his App so he adds a Bout with a 
         slot_size of 2KB.
         3.  Host adds the Mirror to the Program Stack.
-    4.  Jo needs to add a SPI IO device so he initializes a Window with 256
+    4.  Jo needs to add a SPI IO device so he initializes a Mirror with 256
         bytes.
-        5.  Host adds the new Window on top of the Mirror.
+        5.  Host adds the new Mirror on top of the Mirror.
     6.  Jo is out of memory in the Floor so he creates a Ceiling of size 2KB.
         7.  Host creates a Heap Block for the Ceiling.
     7.  Jo needs Interprocess communication to three threads: one MirrorIn,
-        one MirrorOut, and a Window of size 2KB.
-        8.  Host adds the MirrorIn, MirroOut, and Window to the Ceiling.
+        one MirrorOut, and a Mirror of size 2KB.
+        8.  Host adds the MirrorIn, MirroOut, and Mirror to the Ceiling.
     9.  Jo wants to add a Server so Jo creates Wall_1 with 1MB space.
         10. Host creates a Wall_1 with 1MB memory.
     11. Jo wants needs to distribute information to the end-users so Jo 
@@ -151,12 +151,21 @@ class Room: public Operand {
                      enable dynamic memory.
         @param size  The room size that is bounded between the kMinRoomSize and 
                      kMaxRoomSize. */
-    Room (const char* room_name = "chinese_room");
+    Room (const char* room_name = "chinese_room", int num_states = 2);
 
     /** Destructor. */
     virtual ~Room ();
+
+    /** Gets the Room state_. */
+    int GetState ();
+
+    /** Gets the Room state_. */
+    int GetStateCount ();
     
-    virtual const char* GetRoomName ();
+    const char* GetRoomName ();
+
+    /** Sets the Room state_. */
+    virtual bool SetRoomName (const char* name);
 
     /** Processes a request from another Room.
         @return Returns false upon success and true if there is an error. */
@@ -211,31 +220,37 @@ class Room: public Operand {
 
     /** Handles Script Commands.
         @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text,
-                                    const char* text_end);
+    virtual const char* Sudo (const char* text,
+                                    const char* strand_end);
 
     /** Script expressions. */
     virtual const Operation* Star (uint index, Expression* expr);
 
-#if USE_MORE_ROM
+#if SCRIPT_USING_TEXT
     /** Prints the Room to the stdout. */
-    virtual void Print ();
-#endif  //< USE_MORE_ROM
+    virtual _::Text& Print (_::Text& txt = _::Text ());
+#endif  //< SCRIPT_USING_TEXT
 
     protected:
-                             //! vtable pointer here in memory (usually).
-    const char   * name_;    //< Room Name.
-    TStack<Wall*>* walls_;   //< Walls in the Room.
-    Expression   * expr_;    //< Current Expression being executed.
-                             //< DC1: this.
-    Door         * this_;    //< DC2: The Door to this room.
-    Operand      * xoff_,    //< DC3: XOFF - XOFF handling device.
-                 * device_,  //< DC4: the current device control.
-                 * devices_; //< Pointer to the current device control.
+                                //! vtable pointer here in memory (usually).
+    int            state_count_,//< Number of FSM states.
+                   state_;      //< Room state.
+    const char   * name_;       //< Room Name.
+    TStack<Wall*>* walls_;      //< Walls in the Room.
+    Expression   * expr_;       //< Current Expression being executed.
+                                //< DC1: this.
+    Door         * this_;       //< DC2: The Door to this room.
+    Operand      * xoff_,       //< DC3: XOFF - XOFF handling device.
+                 * device_,     //< DC4: the current device control.
+                 * devices_;    //< Pointer to the current device control.
     uintptr_t buffer_[kFloorSizeWords]; //< Room Floor buffer.
 
+    private:
+
+    /** Sets the Room state_. */
+    bool SetState (int new_state);
 };
 
 /** Returns the Room-Level Script. */

@@ -100,20 +100,20 @@ class BlackjackPlayer : public Player {
     virtual bool Wins (Hand& hand);
 
     /** Prints the abridged player stats to the console. */
-    virtual void PrintStats ();
+    virtual _::Text& PrintStats (_::Text& txt);
 
     /** Prints the player to the console. */
-    virtual void Print ();
+    virtual _::Text& Print (_::Text& txt = _::Text ());
 
     /** Script operations. */
     virtual const _::Operation* Star (uint index, _::Expression* expr);
 
     /** Handles Text input.
         @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text,
-                                    const char* text_end);
+    virtual const char* Sudo (const char* text,
+                                    const char* strand_end);
     protected:
 
     CardStack& stock_; //< Stock of cards to draw from.

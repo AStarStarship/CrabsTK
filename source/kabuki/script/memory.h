@@ -1,4 +1,4 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
     @file    ~/source/kabuki/script/memory.h
     @author  Cale McCollough <https://calemccollough.github.io>
@@ -31,6 +31,21 @@ KABUKI int MemoryAlignToPowerOf2 (int value);
     operators. */
 inline const void* Pointer (const void* pointer) {
     return pointer;
+}
+
+/** Converts the value to a pointer. */
+inline std::uintptr_t PointerValue (const void* value) {
+    return reinterpret_cast<std::uintptr_t> (value);
+}
+
+/** Converts the value to a pointer. */
+inline void* PointerValue (std::uintptr_t value) {
+    return reinterpret_cast<void*> (value);
+}
+
+/** Converts the value to a pointer. */
+inline const void* PointerConst (std::uintptr_t value) {
+    return reinterpret_cast<const void*> (value);
 }
 
 template<typename T>
@@ -212,6 +227,35 @@ KABUKI int MemoryHexToByte (byte hex_byte);
 @return Returns -1 if c is not a hex byte.
 */
 KABUKI int MemoryHexToByte (uint16_t hex);
+
+/** Converts a single byte a one-byte hex representation. */
+KABUKI byte MemoryNibbleToLowerCaseHex (byte b);
+
+/** Converts a single byte a one-byte hex representation. */
+KABUKI byte MemoryNibbleToUpperCaseHex (byte b);
+
+/** Converts a single byte a two-byte hex representation. */
+KABUKI uint16_t MemoryByteToLowerCaseHex (byte b);
+
+/** Converts a single byte a two-byte hex representation. */
+KABUKI uint16_t MemoryByteToUpperCaseHex (byte b);
+
+/** Converts a single hex byte a byte.
+    @return Returns -1 if c is not a hex byte.
+*/
+KABUKI int MemoryHexToByte (byte c);
+
+/** Converts a single byte into a two-byte hex representation.
+    @return Returns -1 if c is not a hex byte.
+*/
+KABUKI int MemoryHexToByte (uint16_t h);
+
+/** Gets a randomly generated 32-bit hash. */
+template<typename T>
+KABUKI uint_t RandomHash () {
+    srand (time (0));
+    return static_cast<T> (rand ());
+}
 
 #endif  //< USE_MORE_ROM
 }       //< namespace _

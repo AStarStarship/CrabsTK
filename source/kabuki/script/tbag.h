@@ -1,6 +1,6 @@
-/** kabuki::script
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/include/book.h
+    @file    ~/source/kabuki/script/bag.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,12 +17,12 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef KABUKI_SCRIPT_BOOK_H
-#define KABUKI_SCRIPT_BOOK_H
+#ifndef HEADER_FOR_SCRIPT_TBAG
+#define HEADER_FOR_SCRIPT_TBAG
 
 #include "memory.h"
-#include "types.h"
 #if SCRIPT_USING_BAG
+#include "types.h"
 
 namespace _ {
 
@@ -247,7 +247,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
         *unsorted_indexes = 0;
         destination = keys - key_length;
 
-        TextWrite (destination, key);
+        StrandWrite (destination, key);
         printf ("Inserted key %s at GetAddress 0x%p\n", key, destination);
         SetPrint (collection);
         return 0;
@@ -318,7 +318,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
 
                 // Copy the key
                 value = key_offsets[num_items - 1] + key_length + 1;
-                TextWrite (keys - value, key);
+                StrandWrite (keys - value, key);
                 key_offsets[num_items] = value;
 
                 // Update the collision table.
@@ -371,7 +371,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
                 byte collision_index = unsorted_indexes[mid];
                 printf ("\n\ncollision_index: %u", collision_index);
 
-                TextWrite (keys - value, key);
+                StrandWrite (keys - value, key);
                 printf ("Inserting value: %u into index:%u "
                         ";:%u with other collision_index: %u\n", value,
                         index, num_items, collision_index);
@@ -423,7 +423,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
             Diff (collection, destination), hashes[mid]);
 
     // First copy the char and set the key offset.
-    TextWrite (destination, key);
+    StrandWrite (destination, key);
     key_offsets[num_items] = value;
 
     // Second move up the hashes and insert at the insertion point.
@@ -759,4 +759,4 @@ void BagPrint (Bag<TIndex, TKey, TData, THash>* collection) {
 
 }       //< namespace _
 #endif  //< SCRIPT_USING_BAG
-#endif  //< KABUKI_SCRIPT_BOOK_H
+#endif  //< HEADER_FOR_SCRIPT_TBAG

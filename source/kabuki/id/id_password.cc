@@ -1,4 +1,4 @@
-/** kabuki::pro
+/** Kabuki Toolkit
     @file    ~/source/kabuki/id/password.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -63,8 +63,8 @@ bool Password::Equals (const Password& other) {
     return StrandEquals (key_, other.key_);
 }
 
-void Password::Print () {
-    cout << key_;
+Text& Password::Print (Text& txt) {
+    return txt << key_;
 }
 
 }       //< id

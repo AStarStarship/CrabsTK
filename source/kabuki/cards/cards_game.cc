@@ -13,7 +13,7 @@
              permissions and limitations under the License.
 */
 
-#include "card_game.h"
+#include "game.h"
 
 using namespace std;
 using namespace _;
@@ -22,27 +22,27 @@ using namespace kabuki::id;
 namespace kabuki {
 namespace cards {
 
-CardGame::CardGame (UserList& users, const char* game_name, int min_players,
+Game::Game (UserList& users, const char* game_name, int min_players,
                     int max_players) :
     state_     (0),
-    game_name_ (game_name),
+    name_ (game_name),
     users_     (users),
     observers_ (max_players) {
 }
 
-CardGame::~CardGame () {
+Game::~Game () {
     // We don't delete the observers_.
 }
 
-const char* CardGame::GetGameName () {
-    return game_name_;
+const char* Game::GetName () {
+    return name_;
 }
 
-int32_t CardGame::GetState () {
+int32_t Game::GetState () {
     return state_;
 }
 
-bool CardGame::SetState (int state) {
+bool Game::SetState (int state) {
     if (state < 0) {
         return false;
     }
@@ -50,28 +50,25 @@ bool CardGame::SetState (int state) {
     return true;
 }
 
-int CardGame::GetNumPlayers () {
+int Game::GetNumPlayers () {
     return observers_.size ();
 }
 
-int CardGame::GetMinPlayers () {
+int Game::GetMinPlayers () {
     return min_players_;
 }
 
-int CardGame::GetMaxPlayers () {
+int Game::GetMaxPlayers () {
     return observers_.capacity ();
 }
 
-void CardGame::PrintObservers () {
+void Game::PrintObservers () {
     for (size_t i = 0; i < observers_.size (); ++i) {
-        observers_[i]->Print ();
+        cout << observers_[i]->Print ();
     }
 }
 
-void CardGame::Print () {
-}
-
-int CardGame::Join (User* user) {
+int Game::Join (User* user) {
     if (user == nullptr) {
         return -1;
     }
@@ -79,7 +76,7 @@ int CardGame::Join (User* user) {
     return observers_.size ();
 }
 
-int CardGame::Leave (User* user) {
+int Game::Leave (User* user) {
     for (int i = observers_.size (); i > 0; --i) {
         User* user = observers_[i];
         // user will never be nil.
@@ -92,13 +89,17 @@ int CardGame::Leave (User* user) {
     return -1;
 }
 
-std::vector<id::User*>& CardGame::GetObservers () {
+std::vector<id::User*>& Game::GetObservers () {
     return observers_;
 }
 
-const Operation* CardGame::Star (uint index, _::Expression* expr) {
-    static const Operation This = { "CardsClient",
-        NumOperations (0), OperationFirst ('A'),
+Text& Game::Print (Text& txt) {
+    txt << "\n| " << GetName ();
+}
+
+const Operation* Game::Star (uint index, Expression* expr) {
+    static const Operation This = { "Client",
+        OperationCount (0), OperationFirst ('A'),
         "kabuki::cards Script client.", 0
     };
     void* args[4];
@@ -112,8 +113,10 @@ const Operation* CardGame::Star (uint index, _::Expression* expr) {
             };
             if (!expr) return &OpA;
             byte state;
-            if (!ExprArgs (expr, Params<1, UI1> (), Args (args, &state)))
+            if (!ExpressionArgs (expr, Params<1, UI1> (), Args (args, &state)))
+            {
                 return expr->result;
+            }
             SetState (state);
             return nullptr;
         }
@@ -124,9 +127,10 @@ const Operation* CardGame::Star (uint index, _::Expression* expr) {
             };
             if (!expr) return &OpB;
             char buffer[kMaxMessageLength + 1];
-            if (!ExprArgs (expr, Params<1, STR, kMaxMessageLength + 1> (),
-                           Args (args, buffer)))
+            if (!ExpressionArgs (expr, Params<1, STR, kMaxMessageLength + 1> (),
+                                 Args (args, buffer))) {
                 return expr->result;
+            }
             cout << buffer;
             return nullptr;
         }
@@ -143,9 +147,10 @@ const Operation* CardGame::Star (uint index, _::Expression* expr) {
             int32_t player_number;
             char status[User::kMaxStatusLength + 1],
                  handle[Handle::kMaxLength];
-            if (!ExprArgs (expr, kRxHeaderC, Args (args, &player_number,
-                                                   status, handle)))
+            if (!ExpressionArgs (expr, kRxHeaderC, Args (args, &player_number,
+                                                   status, handle))) {
                 return expr->result;
+            }
             if (player_number < 0) {
                 return Result (expr, Bin::kErrorInvalidArgument,
                                Params<1, SI4> ());

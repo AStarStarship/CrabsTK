@@ -1,4 +1,4 @@
-/** kabuki::data
+/** Kabuki Toolkit
     @version 0.x
     @file    ~/source/data/include/binary_tree.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
@@ -14,8 +14,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef KABUKI_DATA_BINARYTREE_H
-#define KABUKI_DATA_BINARYTREE_H
+#ifndef HEADER_FOR_KABUKI_DATA_TREEBINARY
+#define HEADER_FOR_KABUKI_DATA_TREEBINARY
 
 #include "iterator.h"
 
@@ -121,4 +121,4 @@ class BinaryTree
 
 }       //< namespace data
 }       //< namespace kabuki
-#endif  //< KABUKI_DATA_BINARYTREE_H
+#endif  //< HEADER_FOR_KABUKI_DATA_TREEBINARY

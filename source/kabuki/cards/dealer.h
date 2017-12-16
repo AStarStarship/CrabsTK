@@ -1,4 +1,4 @@
-/** kabuki:cards
+/** Kabuki Toolkit
     @file    ~/source/kabuki/cards/dealer.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
@@ -36,12 +36,12 @@ class KABUKI Dealer : public Player {
     
     /** Constructor. */
     Dealer (id::User* user,
-            int64_t buy_in      = kDefaultAnte,
-            int64_t ante        = kDefaultAnte,
-            int64_t min_bet     = kDefaultMinBet,
-            int     min_players = kDefaultMinPlayers,
-            int     max_players = kDefaultMaxPlayer,
-            int     num_decks   = Deck::kDefaultNumDecks);
+            int64_t   buy_in      = kDefaultAnte,
+            int64_t   ante        = kDefaultAnte,
+            int64_t   min_bet     = kDefaultMinBet,
+            int       min_players = kDefaultMinPlayers,
+            int       max_players = kDefaultMaxPlayer,
+            int       num_decks   = Deck::kDefaultNumDecks);
     
     /** Destructor. */
     virtual ~Dealer ();
@@ -50,7 +50,7 @@ class KABUKI Dealer : public Player {
     int GetRoundNumber ();
 
     /** Gets the number of Players. */
-    int GetNumPlayers ();
+    int GetPlayersCount ();
 
     /** Creates and adds a mew player to the game from the given User. */
     virtual void AddPlayer (Player* player);
@@ -155,10 +155,10 @@ class KABUKI Dealer : public Player {
     virtual bool Wins (Hand& other) = 0;
 
     /** Prints the abridged player stats to the console. */
-    virtual void PrintStats () = 0;
+    virtual Text& PrintStats () = 0;
 
     /** Prints this object to the stdout. */
-    virtual void Print ();
+    virtual _::Text& Print (_::Text& txt = _::Text ());
     
     /** Abstract Script Operation(s).
         @param index The index of the expression.
@@ -169,10 +169,9 @@ class KABUKI Dealer : public Player {
 
     /** Handles Text input.
         @param text     Beginning of the Text buffer. 
-        @param text_end End of the Text buffer.
+        @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Do (const char* text,
-                                    const char* text_end);
+    virtual const char* Sudo (const char* strand, const char* strand_end);
 
     protected:
     

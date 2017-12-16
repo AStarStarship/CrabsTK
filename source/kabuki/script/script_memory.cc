@@ -1,7 +1,7 @@
-/** kabuki::script
+/** Kabuki Toolkit
 #include <script_utils.h>
     @version 0.x
-    @file    ~/source/kabuki/script/impl/script_utils.cc
+    @file    ~/source/kabuki/script/script_utils.cc
     @author  Cale McCollough <https://calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
