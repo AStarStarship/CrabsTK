@@ -16,7 +16,7 @@
 #ifndef KABUKI_CARDS_COFIG_H
 #define KABUKI_CARDS_COFIG_H
 
-#include "../script/global.h"
+#include "../config.h"
 #include "../id/global.h"
 #include "../data/global.h"
 #include "../store/global.h"

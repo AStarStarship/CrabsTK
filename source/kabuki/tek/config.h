@@ -1,5 +1,5 @@
 /** kabuki::tek
-    @file    ~/source/kabuki/tek/include/module_config.h
+    @file    ~/source/kabuki/tek/config.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -16,7 +16,7 @@
 #ifndef KABUKI_TEK_MODULE_COFIG_H
 #define KABUKI_TEK_MODULE_COFIG_H
 
-#include "../script/global.h"
+#include "../config.h"
 #include <mbed.h>
 
 using namespace _;

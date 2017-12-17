@@ -16,6 +16,6 @@
 #ifndef HEADER_FOR_KABUKI_DATA_CONFIG
 #define HEADER_FOR_KABUKI_DATA_CONFIG
 
-#include "../script/config.h"
+#include "../config.h"
 
 #endif  //< HEADER_FOR_KABUKI_DATA_CONFIG

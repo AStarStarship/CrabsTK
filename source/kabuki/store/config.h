@@ -16,7 +16,7 @@
 #ifndef HEADER_FOR_KABUKI_STORE_CONFIG
 #define HEADER_FOR_KABUKI_STORE_CONFIG
 
-#include "../script/global.h"
+#include "../config.h"
 #include "../id/global.h"
 
 #endif  //< HEADER_FOR_KABUKI_STORE_CONFIG

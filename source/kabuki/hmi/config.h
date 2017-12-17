@@ -16,6 +16,6 @@
 #ifndef KABUKI_HMI_MODULE_COFIG_H
 #define KABUKI_HMI_MODULE_COFIG_H
 
-#include "../script/global.h"
+#include "../config.h"
 
 #endif	//< KABUKI_HMI_MODULE_COFIG_H

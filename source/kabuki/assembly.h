@@ -85,6 +85,9 @@
 // Max Script Operation description length in chars.
 #define SCRIPT_OPERATION_MAX_DESCRIPTION_LENGTH 1024
 
+// Max Script address length.
+#define SCRIPT_MAX_ADDRESS_LENGTH 26
+
 // Sets any of the following macros to YES or NO.
 
 #define SCRIPT_USING_1_BYTE_TYPES YES

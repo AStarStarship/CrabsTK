@@ -1,5 +1,5 @@
 /** Kabuki Toolkit
-    @file    ~/source/kabuki/id/include/script_module.h
+    @file    ~/source/kabuki/id/config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -16,7 +16,7 @@
 #ifndef HEADER_FOR_KABUKI_ID_CONFIG
 #define HEADER_FOR_KABUKI_ID_CONFIG
 
-#include "../script/global.h"
+#include "../config.h"
 #include "../data/global.h"
 
 typedef uint64_t uid_t;

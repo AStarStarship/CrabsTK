@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/data/lllist.h
+    @file    ~/source/kabuki/data/list_fifo.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -69,11 +69,11 @@ class ListFifo: public _::Set {
         return true;
     }
 
-    bool Insert (T node) {
-        return Enqueue (link, head_);
+    const char* Enqueue (T node) {
+        return Insert (link, head_);
     }
 
-    bool Insert (T node, int index) {
+    const char* Insert (T node, int index) {
         return Insert (link, GetLink (index)) {
             if (link == head_) {
                 return false;
@@ -104,12 +104,12 @@ class ListFifo: public _::Set {
         return nullptr;
     }
 
-    bool Remove (T thisGuy)
+    const char* Remove (T thisGuy)
     {
         return Remove (find (ptr));
     }
 
-    bool Remove (int index) {
+    const char* Remove (int index) {
         if (index < 0) {
             return false;
         }
@@ -126,7 +126,7 @@ class ListFifo: public _::Set {
         return true;
     }
 
-    bool Remove (int begin, int end) {
+    const char* Remove (int begin, int end) {
         if (begin < 0) {
             return false;
         }
@@ -159,11 +159,14 @@ class ListFifo: public _::Set {
     }
 
     const char* Replace (int index, T new_data) {
-        if (index > 0 && index <= count_) {
-            linkAtIndex (index).setData (withThis);
-            return true;
+        if (index < 0) {
+            return false; 
         }
-        return false;
+        if (index <= count_) {
+            return false;
+        }
+        GetLink (index).SetData (withThis);
+        return true;
     }
 
     const char* KeepOnlyThese (const int* indexes, int indexes_count) {
@@ -238,15 +241,11 @@ class ListFifo: public _::Set {
         return count_;
     }
 
-    int GetMaxCount ()
+    int GetMaxCount () {
 
-    const char* RandomText (Text& txt, int num_chars) {
-        for (; i > 0; --i) {
-
-        }
     }
 
-    void IncreaseMaxCount (int increase) {
+    const char* IncreaseMaxCount (int increase) {
         if (increase < 0)
             return;
         max_size_ += increase;
@@ -265,17 +264,17 @@ class ListFifo: public _::Set {
     }
 
     Text& Print (Text& txt) {
-        return txt << "\n| ";
+        return txt << "\n| ListFifo";
     }
 
     private:
 
     const char* Add (T data, FifoNode* node) {
-        if ()
+        return "\n| Function not implemented!";
     }
 
-    bool Insert (T node, FifoNode* beforeHere) {
-        return false;
+    const char* Insert (T node, FifoNode* beforeHere) {
+        return "\n| Function not implemented!";
     }
 
     int       count_,

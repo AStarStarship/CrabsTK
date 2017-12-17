@@ -1,2 +1,0 @@
-/** kabuki::data Bootstrap
-*/

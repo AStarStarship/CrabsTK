@@ -1,5 +1,5 @@
 ﻿/** Kabuki Toolkit
-    @file    ~/source/kabuki/data/data_card_game.cc
+    @file    ~/source/kabuki/data/data_client.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,7 +17,6 @@
 #include "client.h"
 
 using namespace _;
-using namespace kabuki::id;
 
 namespace kabuki { namespace data {
 
