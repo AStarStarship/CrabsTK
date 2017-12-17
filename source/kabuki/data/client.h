@@ -22,7 +22,8 @@ namespace kabuki { namespace data {
 
 /** Security guard handle datagram encryption.
 */
-class Client : public _::Room {
+class Client : public _::Room { 
+
     public:
 
     typedef enum States {

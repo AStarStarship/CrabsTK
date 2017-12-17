@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef HEADER_FOR_SCRIPT_PRINTER
-#define HEADER_FOR_SCRIPT_PRINTER
+#ifndef HEADER_FOR_SCRIPT_DISPLAY
+#define HEADER_FOR_SCRIPT_DISPLAY
 
 #include "text.h"
 
@@ -28,90 +28,90 @@ namespace _ {
 
 /** Utility for printing text to the stdout.
 */
-struct Printer {
+struct Display {
 
-};  //< struct Printer
+};  //< struct Display
 
     /** Prints the Text to the stdout. */
-inline Printer I () {
-    return Printer ();
+inline Display I () {
+    return Display ();
 }
 
 }   //< namespace _
 
 /** Operation << writes a nil-terminated UTF-8 or ASCII string to the 
     printer. */
-inline _::Printer& operator<< (_::Printer& printer, _::Text& txt) {
+inline _::Display& operator<< (_::Display& printer, _::Text& txt) {
     std::cout << txt.GetBegin ();
     return printer;
 }
 
 /** Operation << writes a nil-terminated UTF-8 or ASCII string to the 
     printer. */
-inline _::Printer& operator<< (_::Printer& printer, const char* strand) {
+inline _::Display& operator<< (_::Display& printer, const char* strand) {
     std::cout << strand;
     return printer;
 }
 
 /** Operation << writes the given value to the printer. */
-inline _::Printer& operator<< (_::Printer& printer, int8_t value) {
+inline _::Display& operator<< (_::Display& printer, int8_t value) {
     std::cout << value;
     return printer;
 }
 
 /** Operation << writes the given value to the printer. */
-inline _::Printer& operator<< (_::Printer& printer, uint8_t value) {
+inline _::Display& operator<< (_::Display& printer, uint8_t value) {
     std::cout << value;
     return printer;
 }
 
 /** Operation << writes the given value to the printer. */
-inline _::Printer& operator<< (_::Printer& printer, int16_t value) {
+inline _::Display& operator<< (_::Display& printer, int16_t value) {
     std::cout << value;
     return printer;
 }
 
 /** Operation << writes the given value to the printer. */
-inline _::Printer& operator<< (_::Printer& printer, uint16_t value) {
+inline _::Display& operator<< (_::Display& printer, uint16_t value) {
     std::cout << value;
     return printer;
 }
 
 /** Operation << writes the given value to the printer. */
-inline _::Printer& operator<< (_::Printer& printer, int32_t value) {
+inline _::Display& operator<< (_::Display& printer, int32_t value) {
     std::cout << value;
     return printer;
 }
 
 /** Operation << writes the given value to the printer. */
-inline _::Printer& operator<< (_::Printer& printer, uint32_t value) {
+inline _::Display& operator<< (_::Display& printer, uint32_t value) {
     std::cout << value;
     return printer;
 }
 
 /** Operation << writes the given value to the printer. */
-inline _::Printer& operator<< (_::Printer& printer, int64_t value) {
+inline _::Display& operator<< (_::Display& printer, int64_t value) {
     std::cout << value;
     return printer;
 }
 
 /** Operation << writes the given value to the printer. */
-inline _::Printer& operator<< (_::Printer& printer, uint64_t value) {
+inline _::Display& operator<< (_::Display& printer, uint64_t value) {
     std::cout << value;
     return printer;
 }
 
 /** Operation << writes the given value to the printer. */
-inline _::Printer& operator<< (_::Printer& printer, float value) {
+inline _::Display& operator<< (_::Display& printer, float value) {
     std::cout << value;
     return printer;
 }
 
 /** Operation << writes the given value to the printer. */
-inline _::Printer& operator<< (_::Printer& printer, double value) {
+inline _::Display& operator<< (_::Display& printer, double value) {
     std::cout << value;
     return printer;
 }
 
 #endif  //< SCRIPT_USING_TEXT
-#endif  //< HEADER_FOR_SCRIPT_PRINTER
+#endif  //< HEADER_FOR_SCRIPT_DISPLAY

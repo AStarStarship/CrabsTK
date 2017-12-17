@@ -20,6 +20,7 @@
 #include "params.h"
 #include "hash.h"
 #include "slot.h"
+#include "display.h"
 
 namespace _ {
 
@@ -43,6 +44,64 @@ const char** BinState () {
     return kStateStrings;
 }
 #endif
+
+/** Used to return an erroneous result from a B-Output.
+
+    @param error The error type.
+    @return Returns a Static Error Operation Result. */
+inline const Operation* ErrorReport (Bin* bin, Error error) {
+#if SCRIPT_DEBUG
+    Text txt;
+    Display () << "\n| Bin " << ErrorString (error) << " Error!" << txt.Print ();
+#endif
+    return reinterpret_cast<const Operation*> (1);
+}
+
+/** Used to return an erroneous result from a B-Output.
+    @param  bin    The source Bin.
+    @param  error   The error type.
+    @param  header  The B-Sequence Header.
+    @param  offset  The offset to the type in error in the B-Sequence.
+    @param  address The address of the byte in error.
+    @return         Returns a Static Error Operation Result. */
+inline const Operation* ErrorReport (Bin* bin, Error error,
+                                    const uint_t* header) {
+#if SCRIPT_DEBUG
+    Display () << "\n| Bin " << ErrorString (error) << " Error!";
+#endif  //< MEMORY_PROFILE >= USE_MORE_ROM
+    return reinterpret_cast<const Operation*> (1);
+}
+
+/** Used to return an erroneous result from a B-Output.
+    @param  bin    The source Bin.
+    @param  error   The error type.
+    @param  header  The B-Sequence Header.
+    @param  offset  The offset to the type in error in the B-Sequence.
+    @param  address The address of the byte in error.
+    @return         Returns a Static Error Operation Result. */
+inline const Operation* ErrorReport (Bin* bin, Error error,
+                                    const uint_t* header,
+                                    uint_t offset) {
+#if SCRIPT_DEBUG
+    Display () << "\n| Bin " << ErrorString (error) << " Error!";
+#endif  //< MEMORY_PROFILE >= USE_MORE_ROM
+    return reinterpret_cast<const Operation*> (1);
+}
+
+/** Used to return an erroneous result from a B-Output.
+    @param  bin    The source Bin.
+    @param  error   The error type.
+    @param  header  The B-Sequence Header.
+    @param  offset  The offset to the type in error in the B-Sequence.
+    @param  address The address of the byte in error.
+    @return         Returns a Static Error Operation Result. */
+inline const Operation* ErrorReport (Bin* bin, Error error,
+                                    const uint_t* header,
+                                    uint_t offset,
+                                    byte* address) {
+    Display () << "\n| Bin " << ErrorString (error) << " Error!";
+    return reinterpret_cast<const Operation*> (1);
+}
 
 byte* BinBuffer (Bin* bin) {
     if (bin == nullptr)
@@ -101,7 +160,7 @@ int BinStreamByte (Bin* bin) {
         (end - start) + (open - begin) + 2;
 
     if (length < 1) {
-        BinResult (bin, kErrorBufferOverflow, Params<1, STR> (), 2, start);
+        ErrorReport (bin, kErrorBufferOverflow, Params<1, STR> (), 2, start);
         return -1;
     }
     //byte b = *cursor;
@@ -121,11 +180,11 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
         << txt.Pointer (bin) << BinPrint (bin, txt) << txt.Print ();
 #endif
     if (bin == nullptr)
-        return BinResult (bin, kErrorImplementation);
+        return ErrorReport (bin, kErrorImplementation);
     if (!params)
-        return BinResult (bin, kErrorImplementation);
+        return ErrorReport (bin, kErrorImplementation);
     if (!args)
-        return BinResult (bin, kErrorImplementation);
+        return ErrorReport (bin, kErrorImplementation);
     byte     //array_type,            //< The current type being read.
              ui1;                     //< Temp variable.
     uint16_t ui2;                     //< Temp variable.
@@ -182,7 +241,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #endif
         switch (type) {
             case NIL:
-                return BinResult (bin, kErrorInvalidType, params, index,
+                return ErrorReport (bin, kErrorInvalidType, params, index,
                                   start);
             case ADR:
             case STR: //< _R_e_a_d__S_t_r_i_n_g_-_8_____________________________
@@ -193,7 +252,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 // Load next pointer and increment args.
                 ui1_ptr = reinterpret_cast<byte*> (args[arg_index]);
                 if (ui1_ptr == nullptr)
-                    return BinResult (bin, kErrorImplementation, params, index, 
+                    return ErrorReport (bin, kErrorImplementation, params, index, 
                                       start);
 #if SCRIPT_DEBUG
                 printf ("\n| Reading STR:0x%p with max length:%u \"", ui1_ptr, 
@@ -211,7 +270,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 while ((ui1 != 0) && (count != 0)) {
                     --count;
                     if (count == 0) //< Reached count:0 before nil-term char.
-                        return BinResult (bin, kErrorBufferUnderflow,
+                        return ErrorReport (bin, kErrorBufferUnderflow,
                                           params, index, start);
                     ui1 = *start;       // Read byte from ring-buffer.
                     hash = Hash16 (ui1, hash);
@@ -251,7 +310,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 
                 while (ui2 != 0 && count != 0) {
                     if (count == 1)
-                        return BinResult (bin, kErrorBufferUnderflow, 
+                        return ErrorReport (bin, kErrorBufferUnderflow, 
                                           params, index, start);
                     --count;
                     //#if SCRIPT_DEBUG
@@ -269,7 +328,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 *ui2_ptr = ui2;
                 break;
 #else
-                return BinResult (bin, kErrorInvalidType, params, 
+                return ErrorReport (bin, kErrorInvalidType, params, 
                                   index, start);
 #endif
             case SI1: //< _R_e_a_d__1__B_y_t_e__T_y_p_e_s_______________________
@@ -277,7 +336,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             case BOL:
 #if SCRIPT_USING_1_BYTE_TYPES
                 if (length-- == 0)
-                    return BinResult (bin, kErrorBufferUnderflow, params,
+                    return ErrorReport (bin, kErrorBufferUnderflow, params,
                                       index, start);
 
                 // Load next pointer and increment args.
@@ -297,7 +356,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 *ui1_ptr = ui1;                     //< Write
                 break;
 #else
-                return BinResult (bin, kErrorInvalidType, params, 
+                return ErrorReport (bin, kErrorInvalidType, params, 
                                   index, start);
 #endif
             case SI2: //< _R_e_a_d__1_6_-_b_i_t__T_y_p_e_s______________________
@@ -305,7 +364,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             case HLF:
 #if SCRIPT_USING_2_BYTE_TYPES
                 if (length < 2)
-                    return BinResult (bin, kErrorBufferUnderflow, params,
+                    return ErrorReport (bin, kErrorBufferUnderflow, params,
                                       index, start);
                 length -= 2;
 
@@ -328,7 +387,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 *(ui1_ptr + 1) = ui1;               //< Write
                 break;
 #else
-                return BinResult (bin, kErrorInvalidType, params, 
+                return ErrorReport (bin, kErrorInvalidType, params, 
                                   index, start);
 #endif
             case SI4: //< _R_e_a_d__3_2_-_b_i_t__T_y_p_e_s______________________
@@ -337,7 +396,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             case TMS:
 #if SCRIPT_USING_4_BYTE_TYPES
                 if (length < 4)
-                    return BinResult (bin, kErrorBufferUnderflow, params, 
+                    return ErrorReport (bin, kErrorBufferUnderflow, params, 
                                       index, start);
                 length -= 4;
 
@@ -372,7 +431,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 *(ui1_ptr + 3) = ui1;               //< Write
                 break;
 #else
-                return BinResult (bin, kErrorInvalidType, params,
+                return ErrorReport (bin, kErrorInvalidType, params,
                                   index, start);
 #endif
             case TMU: //< _R_e_a_d__6_4_-_b_i_t__T_y_p_e_s______________________
@@ -381,7 +440,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
             case DBL:
 #if SCRIPT_USING_8_BYTE_TYPES
                 if (length < 8)
-                    return BinResult (bin, kErrorBufferUnderflow, params,
+                    return ErrorReport (bin, kErrorBufferUnderflow, params,
                                       index, start);
                 length -= 8;
 
@@ -440,7 +499,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 *(ui1_ptr + 7) = ui1;               //< Write
                 break;
 #else
-                return BinResult (bin, kErrorInvalidType, params,
+                return ErrorReport (bin, kErrorInvalidType, params,
                                   index, start);
 #endif
             case SV2: //< _R_e_a_d__2_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_______
@@ -449,12 +508,12 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                       // Load next pointer and increment args.
                 ui2_ptr = reinterpret_cast<uint16_t*> (args[arg_index]);
                 if (ui2_ptr == nullptr)
-                    return BinResult (bin, kErrorImplementation, params, index,
+                    return ErrorReport (bin, kErrorImplementation, params, index,
                                       start);
 
                 // Read byte 1
                 if (length-- == 0)
-                    return BinResult (bin, kErrorBufferUnderflow, params,
+                    return ErrorReport (bin, kErrorBufferUnderflow, params,
                                       index, start);
                 ui1 = *start;
                 if (++start >= end) start -= size;
@@ -468,7 +527,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 
                 // Read byte 2
                 if (--length == 0)
-                    return BinResult (bin, kErrorBufferUnderflow, params,
+                    return ErrorReport (bin, kErrorBufferUnderflow, params,
                                       index, start);
                 ui1 = *start;
                 if (++start >= end) start -= size;
@@ -483,13 +542,13 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 
                 // Read byte 3
                 if (--length == 0)
-                    return BinResult (bin, kErrorBufferUnderflow, params,
+                    return ErrorReport (bin, kErrorBufferUnderflow, params,
                                       index, start);
                 ui1 = *start;
                 if (++start >= end) start -= size;
                 hash = Hash16 (ui1, hash);
                 if ((ui1 >> 7) == 0)
-                    return BinResult (bin, kErrorVarintOverflow, params,
+                    return ErrorReport (bin, kErrorVarintOverflow, params,
                                       index, start);
                 ui2 |= ((uint16_t)(ui1 & 0x7F) << 14);
                 *ui2_ptr = UnpackSignedVarint<uint16_t> (ui2);
@@ -499,12 +558,12 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                       // Load next pointer and increment args.
                 ui2_ptr = reinterpret_cast<uint16_t*> (args[arg_index]);
                 if (ui2_ptr == nullptr)
-                    return BinResult (bin, kErrorImplementation, params, index,
+                    return ErrorReport (bin, kErrorImplementation, params, index,
                                       start);
 
                 // Read byte 1
                 if (length-- == 0)
-                    return BinResult (bin, kErrorBufferUnderflow, params,
+                    return ErrorReport (bin, kErrorBufferUnderflow, params,
                                       index, start);
                 ui1 = *start;
                 if (++start >= end) start -= size;
@@ -518,7 +577,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 
                 // Read byte 2
                 if (--length == 0)
-                    return BinResult (bin, kErrorBufferUnderflow, params,
+                    return ErrorReport (bin, kErrorBufferUnderflow, params,
                                       index, start);
                 ui1 = *start;
                 if (++start >= end) start -= size;
@@ -533,20 +592,20 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 
                 // Read byte 3
                 if (--length == 0)
-                    return BinResult (bin, kErrorBufferUnderflow, params,
+                    return ErrorReport (bin, kErrorBufferUnderflow, params,
                                       index, start);
                 ui1 = *start;
                 if (++start >= end) start -= size;
                 hash = Hash16 (ui1, hash);
                 if ((ui1 >> 7) == 0)
-                    return BinResult (bin, kErrorVarintOverflow, params,
+                    return ErrorReport (bin, kErrorVarintOverflow, params,
                                       index, start);
                 ui2 |= ((uint16_t)(ui1 & 0x7F) << 14);
                 *ui2_ptr = ui2;
                 break;
 #else
             case UV2:
-                return BinResult (bin, kErrorInvalidType, params, index,
+                return ErrorReport (bin, kErrorInvalidType, params, index,
                                   start);
 #endif
             case SV4: //< _R_e_a_d__4_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_______
@@ -555,7 +614,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                       // Load next pointer and increment args.
                 ui4_ptr = reinterpret_cast<uint32_t*> (args[arg_index]);
                 if (ui4_ptr == nullptr)
-                    return BinResult (bin, kErrorImplementation, params, index,
+                    return ErrorReport (bin, kErrorImplementation, params, index,
                                       start);
 
                 // Scan byte 1.
@@ -567,7 +626,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 count = 5; //< The max number of Varint4 bytes.
                 while (ui1 >> 7 == 0) {
                     if (length-- == 0)
-                        return BinResult (bin, kErrorBufferUnderflow,
+                        return ErrorReport (bin, kErrorBufferUnderflow,
                                           params, index, start);
                     ui1 = *start;
                     if (++start >= end) start -= size;
@@ -577,7 +636,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                     //< because we're packing them up and will overwrite.
                     ui2 += 7;
                     if (--count == 0)
-                        return BinResult (bin, kErrorVarintOverflow, params,
+                        return ErrorReport (bin, kErrorVarintOverflow, params,
                                           index, start);
                 }
                 if (count == 5)    //< If there is only one byte we need to
@@ -587,7 +646,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 *ui4_ptr = ui4;
                 break;
 #else
-                return BinResult (bin, kErrorInvalidType, params, index,
+                return ErrorReport (bin, kErrorInvalidType, params, index,
                                   start);
 #endif
             case SV8: //< _R_e_a_d__V_a_r_i_n_t__8______________________________
@@ -596,7 +655,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 // Load next pointer and increment args.
                 ui8_ptr = reinterpret_cast<uint64_t*> (args[arg_index]);
                 if (ui8_ptr == nullptr)
-                    return BinResult (bin, kErrorImplementation, params, index,
+                    return ErrorReport (bin, kErrorImplementation, params, index,
                                       start);
 
                 // Scan byte 1.
@@ -608,7 +667,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 count = 9; //< The max number of Varint8 bytes.
                 while (ui1 >> 7 == 0) {
                     if (length-- == 0)
-                        return BinResult (bin, kErrorBufferUnderflow,
+                        return ErrorReport (bin, kErrorBufferUnderflow,
                                           params, index, start);
                     ui1 = *start;
                     if (++start >= end) start -= size;
@@ -625,7 +684,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                     //< ui1 because we're packing them up and will overwrite.
                     ui2 += 7;
                     if (--count == 0)
-                        return BinResult (bin, kErrorVarintOverflow, params,
+                        return ErrorReport (bin, kErrorVarintOverflow, params,
                                           index, start);
                 }
                 if (count == 9)    //< If there is only one byte we need to
@@ -635,14 +694,14 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 *ui8_ptr = ui8;
                 break;
 #else
-                return BinResult (bin, kErrorInvalidType, params, index,
+                return ErrorReport (bin, kErrorInvalidType, params, index,
                                   start);
 #endif
             case BSC: //< _B_-_S_e_q_u_e_n_c_e__S_t_r_i_n_g_____________________
 #if USING_BSC
             ui1_ptr = reinterpret_cast<byte*> (args[arg_index]);
             if (ui1_ptr == nullptr)
-                return BinResult (bin, kErrorImplementation, params, index,
+                return ErrorReport (bin, kErrorImplementation, params, index,
                                   start);
             ui1 = *start;
 #endif 
@@ -654,22 +713,22 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                 switch ((type >> 5) & 0x3) {
                     case 0: {
                         if ((type < LST) && (type < MAP))
-                            return BinResult (bin, kErrorInvalidType, params, 
+                            return ErrorReport (bin, kErrorInvalidType, params, 
                                               index, start);
                         if (length < 1) // 1 byte for the width word.
-                            return BinResult (bin, kErrorBufferUnderflow,
+                            return ErrorReport (bin, kErrorBufferUnderflow,
                                               params, index, start);
 
                         ui1_ptr = reinterpret_cast<byte*> (args[arg_index]);
                         if (ui1_ptr == nullptr)
-                            return BinResult (bin, kErrorImplementation, params,
+                            return ErrorReport (bin, kErrorImplementation, params,
                                               index, start);
 
                         ui1 = *start;
                         if (++start >= end) start -= size;
                         hash = Hash16 (ui1, hash);
                         if (ui1 > length - 1)
-                            return BinResult (bin, kErrorBufferOverflow,
+                            return ErrorReport (bin, kErrorBufferOverflow,
                                               params, index, start);
                         length = length - count - 1;
                         count = (uintptr_t)ui1;
@@ -677,13 +736,13 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                     }
                     case 1: {
                         if (length < 2) // 2 byte for the width word.
-                            return BinResult (bin, kErrorBufferUnderflow,
+                            return ErrorReport (bin, kErrorBufferUnderflow,
                                               params, index, start);
                         length -= 2;
                         ui2_ptr = reinterpret_cast<uint16_t*> 
                                     (args[arg_index]);
                         if (ui2_ptr == nullptr)
-                            return BinResult (bin, kErrorImplementation, params,
+                            return ErrorReport (bin, kErrorImplementation, params,
                                               index, start);
 
                         for (temp = 0; temp <= sizeof (uint16_t); temp += 8) {
@@ -693,7 +752,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                             ui2 |= ((uint16_t)ui1) << temp;
                         }
                         if (ui2 > length)
-                            return BinResult (bin, kErrorBufferOverflow,
+                            return ErrorReport (bin, kErrorBufferOverflow,
                                               params, index, start);
                         length -= count;
                         count = (uintptr_t)ui2;
@@ -702,12 +761,12 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                     }
                     case 2: {
                         if (length < 4) // 4 byte for the width word.
-                            return BinResult (bin, kErrorBufferUnderflow,
+                            return ErrorReport (bin, kErrorBufferUnderflow,
                                               params, index, start);
                         length -= 4;
                         ui4_ptr = reinterpret_cast<uint32_t*> (args[arg_index]);
                         if (ui4_ptr == nullptr)
-                            return BinResult (bin, kErrorImplementation, params,
+                            return ErrorReport (bin, kErrorImplementation, params,
                                               index, start);
 
                         for (temp = 0; temp <= sizeof (uint32_t); temp += 8) {
@@ -717,7 +776,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                             ui4 |= ((uint32_t)ui1) << temp;
                         }
                         if (ui4 >= length)
-                            return BinResult (bin, kErrorBufferOverflow,
+                            return ErrorReport (bin, kErrorBufferOverflow,
                                               params, index, start);
                         length -= count;
                         count = (uintptr_t)ui4;
@@ -726,12 +785,12 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                     }
                     case 3: { // 8 byte for the width word.
                         if (length < 9)
-                            return BinResult (bin, kErrorBufferUnderflow,
+                            return ErrorReport (bin, kErrorBufferUnderflow,
                                               params, index, start);
                         length -= 8;
                         ui8_ptr = reinterpret_cast<uint64_t*> (args[arg_index]);
                         if (ui8_ptr == nullptr)
-                            return BinResult (bin, kErrorImplementation, params,
+                            return ErrorReport (bin, kErrorImplementation, params,
                                               index, start);
 
                         for (temp = 0; temp <= sizeof (uint64_t); temp += 8) {
@@ -741,7 +800,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                             ui8 |= ((uint64_t)ui1) << temp;
                         }
                         if (ui8 > length)
-                            return BinResult (bin, kErrorBufferOverflow,
+                            return ErrorReport (bin, kErrorBufferOverflow,
                                               params, index, start);
                         length -= count;
                         count = (uintptr_t)ui8;
@@ -749,12 +808,12 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                         break;
 
                     }
-                    default: return BinResult (bin, kErrorImplementation, params,
+                    default: return ErrorReport (bin, kErrorImplementation, params,
                                                index, start);
                 }
 
                 if (length < count)
-                    return BinResult (bin, kErrorBufferOverflow, params,
+                    return ErrorReport (bin, kErrorBufferOverflow, params,
                                       index, start);
                 if (count == 0)
                     break;          //< Not sure if this is an error.
@@ -796,7 +855,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
     printf ("\n| Hash expected: %x ", hash);
 #endif
     if (length < 2)
-        return BinResult (bin, kErrorBufferUnderflow, params, index,
+        return ErrorReport (bin, kErrorBufferUnderflow, params, index,
                           start);
     ui2 = *start;
     if (++start >= end) start -= size;
@@ -807,7 +866,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
     printf ("found: %x\n", ui2);
 #endif
     if (hash != ui2)
-        return BinResult (bin, kErrorInvalidHash, params, index,
+        return ErrorReport (bin, kErrorInvalidHash, params, index,
                           start);
 
 //#if SCRIPT_DEBUG

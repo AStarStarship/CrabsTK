@@ -28,7 +28,7 @@ const Operation* MirrorResult (Mirror* mirror, Error error) {
 }
 
 const Operation* MirrorResult (Mirror* mirror, Error error) {
-    return BoutResult (reinterpret_cast<Bout*> (mirror), error);
+    return Error (reinterpret_cast<Bout*> (mirror), error);
 }
 
 
@@ -402,7 +402,7 @@ const Operation* MirrorResult (Mirror* mirror, Error error) {
 }
 
 const Operation* MirrorResult (Mirror* mirror, Error error) {
-    return BoutResult (reinterpret_cast<Bout*> (mirror), error);
+    return Error (reinterpret_cast<Bout*> (mirror), error);
 }
 
 

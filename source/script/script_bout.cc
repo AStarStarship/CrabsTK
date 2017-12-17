@@ -35,10 +35,10 @@ namespace _ {
 
     @param error The error type.
     @return Returns a Static Error Operation Result. */
-inline const Operation* BoutResult (Bout* bout, Error error) {
+inline const Operation* ErrorReport (Bout* bout, Error error) {
 #if SCRIPT_DEBUG
     Text txt;
-    Printer () << "\n| Bout " << ErrorString (error) << " Error!" << txt.Print ();
+    Display () << "\n| Bout " << ErrorString (error) << " Error!" << txt.Print ();
 #endif
     return reinterpret_cast<const Operation*> (1);
 }
@@ -50,11 +50,11 @@ inline const Operation* BoutResult (Bout* bout, Error error) {
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-inline const Operation* BoutResult (Bout* bout, Error error,
+inline const Operation* ErrorReport (Bout* bout, Error error,
                                     const uint_t* header) {
 #if SCRIPT_DEBUG
-    Printer () << "\n| Bout " << ErrorString (error) << " Error!";
-#endif  //< MEMORY_PROFILE >= USE_MORE_ROM
+    Display () << "\n| Bout " << ErrorString (error) << " Error!";
+#endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
 
@@ -65,12 +65,12 @@ inline const Operation* BoutResult (Bout* bout, Error error,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-inline const Operation* BoutResult (Bout* bout, Error error,
+inline const Operation* ErrorReport (Bout* bout, Error error,
                                     const uint_t* header,
                                     uint_t offset) {
 #if SCRIPT_DEBUG
-    Printer () << "\n| Bout " << ErrorString (error) << " Error!";
-#endif  //< MEMORY_PROFILE >= USE_MORE_ROM
+    Display () << "\n| Bout " << ErrorString (error) << " Error!";
+#endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
 
@@ -81,11 +81,11 @@ inline const Operation* BoutResult (Bout* bout, Error error,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-inline const Operation* BoutResult (Bout* bout, Error error,
+inline const Operation* ErrorReport (Bout* bout, Error error,
                                     const uint_t* header,
                                     uint_t offset,
                                     byte* address) {
-    Printer () << "\n| Bout " << ErrorString (error) << " Error!";
+    Display () << "\n| Bout " << ErrorString (error) << " Error!";
     return reinterpret_cast<const Operation*> (1);
 }
 
@@ -153,7 +153,7 @@ int BoutStreamByte (Bout* bout) {
         (end - start) + (open - begin) + 2;
 
     if (length < 1) {
-        BoutResult (bout, kErrorBufferOverflow, Params<1, STR> (), 2,
+        ErrorReport (bout, kErrorBufferOverflow, Params<1, STR> (), 2,
                     start);
         return -1;
     }
@@ -173,11 +173,11 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
         << BoutPrint (bout, txt) << txt.Print ();
 #endif  //< SCRIPT_DEBUG
     if (!bout)
-        return BoutResult (bout, kErrorImplementation);
+        return ErrorReport (bout, kErrorImplementation);
     if (!params)
-        return BoutResult (bout, kErrorImplementation);
+        return ErrorReport (bout, kErrorImplementation);
     if (!args)
-        return BoutResult (bout, kErrorImplementation);
+        return ErrorReport (bout, kErrorImplementation);
 
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte //type,
@@ -224,7 +224,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 
     // Check if the buffer has enough room.
     if (space == 0)
-        return BoutResult (bout, kErrorBufferOverflow);
+        return ErrorReport (bout, kErrorBufferOverflow);
     --space;
     length = params[0];   //< Load the max char length.
     ++param;
@@ -244,14 +244,14 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             case ADR: //< _W_r_i_t_e__A_d_d_r_e_s_s__S_t_r_i_n_g________________
             case STR: //< _W_r_i_t_e__U_T_F_-_8__S_t_r_i_n_g____________________
                 if (space == 0)
-                    return BoutResult (bout, kErrorBufferOverflow, params,
+                    return ErrorReport (bout, kErrorBufferOverflow, params,
                                        index, start);
                 if (type != ADR) {
                     // We might not need to write anything if it's an ADR with null string.
                     length = params[++index]; //< Load the max char length.
                     ++num_params;
                 } else {
-                    length = kMaxAddresLength;
+                    length = kMaxAddressLength;
                 }
                 // Load the source data pointer and increment args.fs
                 ui1_ptr = reinterpret_cast<const byte*> (args[arg_index]);
@@ -263,7 +263,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 ui1 = *ui1_ptr;
                 while (ui1 != 0) {
                     if (space-- == 0)
-                        return BoutResult (bout, kErrorBufferOverflow,
+                        return ErrorReport (bout, kErrorBufferOverflow,
                                            params, index, start);
                     hash = Hash16 (ui1, hash);
 
@@ -283,12 +283,12 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             case ST2: //< _W_r_i_t_e__U_T_F_-_1_6__S_t_r_i_n_g__________________
 #if USING_UTF16
 #else
-                return BoutResult (bout, kErrorImplementation, params, index);
+                return ErrorReport (bout, kErrorImplementation, params, index);
 #endif  //< USING_UTF-16
             case ST4: //< _W_r_i_t_e__U_T_F_-_3_2__S_t_r_i_n_g__________________
 #if USING_UTF32
 #else
-                return BoutResult (bout, kErrorImplementation, params, index);
+                return ErrorReport (bout, kErrorImplementation, params, index);
 #endif  //< USING_UTF-32
             case SI1: //< _W_r_i_t_e__8_-_b_i_t__T_y_p_e_s______________________
             case UI1:
@@ -296,7 +296,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 #if SCRIPT_USING_1_BYTE_TYPES
                 // Check if the buffer has enough room.
                 if (space-- == 0)
-                    return BoutResult (bout, kErrorBufferOverflow, params,
+                    return ErrorReport (bout, kErrorBufferOverflow, params,
                                        index, start);
 
                 // Load pointer and read data to write.
@@ -318,7 +318,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 // Align the buffer to a word boundary and check if the 
                 // buffer has enough room.
                 if (space < sizeof (uint16_t))
-                    return BoutResult (bout, kErrorBufferOverflow,
+                    return ErrorReport (bout, kErrorBufferOverflow,
                                        params, index, start);
                 space -= sizeof (uint16_t);
 
@@ -353,7 +353,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 // has enough room.
 
                 if (space < sizeof (uint32_t))
-                    return BoutResult (bout, kErrorBufferOverflow, params,
+                    return ErrorReport (bout, kErrorBufferOverflow, params,
                                        index, start);
                 space -= sizeof (uint64_t);
 
@@ -398,7 +398,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 // Align the buffer to a word boundary and check if the buffer
                 // has enough room.
                 if (space < sizeof (uint64_t))
-                    return BoutResult (bout, kErrorBufferOverflow, params,
+                    return ErrorReport (bout, kErrorBufferOverflow, params,
                                        index, start);
                 space -= sizeof (uint64_t);
 
@@ -477,7 +477,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                       // Load next pointer value to write.
                 ui2_ptr = reinterpret_cast<const uint16_t*> (args[arg_index]);
                 if (ui2_ptr == nullptr)
-                    return BoutResult (bout, kErrorImplementation, params, index,
+                    return ErrorReport (bout, kErrorImplementation, params, index,
                                        start);
                 ui2 = *ui2_ptr;
 
@@ -485,7 +485,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 {
                     // Byte 1
                     if (space-- == 0)
-                        return BoutResult (bout, kErrorBufferOverflow,
+                        return ErrorReport (bout, kErrorBufferOverflow,
                                            params, index, start);
                     ui1 = ui2 & 0x7f;
                     ui2 = ui2 >> 7;
@@ -502,7 +502,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 
                     // Byte 2
                     if (--space == 0)
-                        return BoutResult (bout, kErrorBufferOverflow,
+                        return ErrorReport (bout, kErrorBufferOverflow,
                                            params, index, start);
                     ui1 = ui2 & 0x7f;
                     ui2 = ui2 >> 7;
@@ -519,7 +519,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 
                     // Byte 3
                     if (--space == 0)
-                        return BoutResult (bout, kErrorBufferOverflow,
+                        return ErrorReport (bout, kErrorBufferOverflow,
                                            params, index, start);
                     ui1 = ui2 & 0x7f;
                     ui1 |= 0x80;
@@ -547,7 +547,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 WriteVarint4: { //< Optimized manual do while loop.
                     ui2 = 5;
                     if (space == 0) //< @todo Benchmark to space--
-                        return BoutResult (bout, kErrorBufferOverflow,
+                        return ErrorReport (bout, kErrorBufferOverflow,
                                            params, index, start);
                     --space;    //< @todo Benchmark to space--
                     ui1 = ui4 & 0x7f;
@@ -564,7 +564,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                     hash = Hash16 (ui1, hash);
                     // This wont happen I don't think.
                     //if (--ui2 == 0)
-                    //    return BoutResult (kErrorVarintOverflow, params, index,
+                    //    return ErrorReport (kErrorVarintOverflow, params, index,
                     //                       start);
 
                     goto WriteVarint4;
@@ -589,7 +589,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                 {
                     ui2 = 8;            //< The max number of varint bytes - 1.
                     if (space <= 9)     //< @todo Benchmark to space--
-                        return BoutResult (bout, kErrorBufferOverflow,
+                        return ErrorReport (bout, kErrorBufferOverflow,
                                            params, index,
                                            start);
                     --space;            //< @todo Benchmark to space--
@@ -624,7 +624,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                       // Load pointer to data to write and get size.
                 ui1_ptr = reinterpret_cast<const byte*> (args[arg_index]);
                 if (ui1_ptr == nullptr)
-                    return BoutResult (bout, kErrorImplementation, params, index,
+                    return ErrorReport (bout, kErrorImplementation, params, index,
                                        start);
                 length = *param++;
                 Bout nested_bout;
@@ -638,11 +638,11 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
             default: {
                 obj_size_width = type >> 5;
                 if ((type >> 5) && type > OBJ)
-                    return BoutResult (bout, kErrorImplementation, params, index);
+                    return ErrorReport (bout, kErrorImplementation, params, index);
                 if ((type >> 7) && ((type & 0x1f) >= OBJ)) {
                     // Cannot have multi-dimensional arrays of objects!
                     type &= 0x1f;
-                    return BoutResult (bout, kErrorImplementation, params, index,
+                    return ErrorReport (bout, kErrorImplementation, params, index,
                                        start);
                 }
                 type = type & 0x1f;   //< Mask off lower 5 bits.
@@ -651,7 +651,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         ui1_ptr = reinterpret_cast<const byte*> 
                                   (args[arg_index]);
                         if (ui1_ptr == nullptr)
-                            return BoutResult (bout, kErrorImplementation, params,
+                            return ErrorReport (bout, kErrorImplementation, params,
                                                index, start);
                         ui1 = *ui1_ptr;
                         length = static_cast<uint_t>(ui1);
@@ -662,7 +662,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         ui2_ptr = reinterpret_cast<const uint16_t*>
                             (args[arg_index]);
                         if (ui2_ptr == nullptr)
-                            return BoutResult (bout, kErrorImplementation, params,
+                            return ErrorReport (bout, kErrorImplementation, params,
                                                index, start);
                         ui2 = *ui2_ptr;
                         length = static_cast<uint_t>(ui2);
@@ -675,7 +675,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         ui4_ptr = reinterpret_cast<const uint32_t*>
                             (args[arg_index]);
                         if (ui4_ptr == nullptr)
-                            return BoutResult (bout, kErrorImplementation, params,
+                            return ErrorReport (bout, kErrorImplementation, params,
                                                index, start);
                         ui4 = *ui4_ptr;
                         length = static_cast<uint_t>(ui4);
@@ -688,7 +688,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                         ui8_ptr = reinterpret_cast<const uint64_t*>
                             (args[arg_index]);
                         if (ui8_ptr == nullptr)
-                            return BoutResult (bout, kErrorImplementation, params,
+                            return ErrorReport (bout, kErrorImplementation, params,
                                                index, start);
                         ui8 = *ui8_ptr;
                         length = static_cast<uint_t>(ui8);
@@ -698,13 +698,13 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
                     default:
                     {  // This wont happen due to the & 0x3 bit mask
                        // but it stops the compiler from barking.
-                        return BoutResult (bout, kErrorImplementation, params,
+                        return ErrorReport (bout, kErrorImplementation, params,
                                            index, start);
                     }
 
                 }
                 if (space < length)
-                    return BoutResult (bout, kErrorBufferOverflow,
+                    return ErrorReport (bout, kErrorBufferOverflow,
                                        params, index, start);
                 if (length == 0)
                     break;          //< Not sure if this is an error.
@@ -736,7 +736,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
         ++arg_index;
     }
     if (space < 3)
-        return BoutResult (bout, kErrorBufferOverflow, params, index,
+        return ErrorReport (bout, kErrorBufferOverflow, params, index,
                            start);
     //space -= 2;   //< We don't need to save this variable.
     *stop = (byte)hash;
