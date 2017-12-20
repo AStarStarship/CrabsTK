@@ -38,8 +38,8 @@ bool Client::SetState (int state) {
     return true;
 }
 
-_::Text& Client::Print (_::Text& txt) {
-    return txt;
+_::Text& Client::Print (_::Text& text) {
+    return text;
 }
 
 const Operation* Client::Star (uint index, _::Expression* expr) {

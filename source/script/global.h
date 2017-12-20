@@ -28,7 +28,7 @@
 #include "memory.h"
 #include "random.h"
 #include "table.h"
-#include "log.h"
+#include "op.h"
 #include "tbook.h"
 #include "ascii.h"
 #include "color.h"
@@ -42,6 +42,5 @@
 #include "keyboard.h"
 #include "textmessage.h"
 #include "token.h"
-//#include "display.h"
 
 #endif  //< HEADER_FOR_SCRIPT_GLOBAL

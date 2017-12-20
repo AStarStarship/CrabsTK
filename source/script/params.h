@@ -39,14 +39,14 @@ KABUKI uint_t ParamsNumber (const uint_t* params, int param_number);
 
 #if SCRIPT_USING_TEXT
 /**  Prints out the parameters to the debug console. */
-KABUKI Text& ParamsPrint (const uint_t* prams, Text& txt);
+KABUKI Text& ParamsPrint (const uint_t* prams, Text& text);
 #endif  //< SCRIPT_USING_TEXT
 
 }       //< namespace _
 
 #if SCRIPT_USING_TEXT
 /**  Prints out the parameters to the debug console. */
-KABUKI _::Text& operator<< (_::Text& txt, const uint_t* params);
+KABUKI _::Text& operator<< (_::Text& text, const uint_t* params);
 #endif  //< SCRIPT_USING_TEXT
 
 #endif  //< HEADER_FOR_SCRIPT_PARAMS

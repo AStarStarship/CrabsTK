@@ -51,8 +51,8 @@ const char** BinState () {
     @return Returns a Static Error Operation Result. */
 inline const Operation* ErrorReport (Bin* bin, Error error) {
 #if SCRIPT_DEBUG
-    Text txt;
-    Display () << "\n| Bin " << ErrorString (error) << " Error!" << txt.Print ();
+    Text text;
+    Display () << "\n| Bin " << ErrorString (error) << " Error!" << text.Print ();
 #endif
     return reinterpret_cast<const Operation*> (1);
 }
@@ -175,9 +175,9 @@ bool BinIsReadable (Bin* bin) {
 
 const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #if SCRIPT_DEBUG
-    Text txt;
-    txt << "\n| Reading " << ParamsPrint (params, txt) << " from B-Input:"
-        << txt.Pointer (bin) << BinPrint (bin, txt) << txt.Print ();
+    Text text;
+    text << "\n| Reading " << ParamsPrint (params, text) << " from B-Input:"
+        << text.Pointer (bin) << BinPrint (bin, text) << text.Print ();
 #endif
     if (bin == nullptr)
         return ErrorReport (bin, kErrorImplementation);
@@ -881,16 +881,16 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 }
 
 #if SCRIPT_USING_TEXT
-Text& BinPrint (Bin* bin, Text& txt) {
+Text& BinPrint (Bin* bin, Text& text) {
     if (bin == nullptr) {
-        return txt << "\n| Error: Bin can't be null";
+        return text << "\n| Error: Bin can't be null";
     }
     uint_t size = bin->size;
-    return txt << txt.Line ('_')
-               << "\n| Bin:" << txt.Pointer (bin) << " size:" << bin->size
+    return text << text.Line ('_')
+               << "\n| Bin:" << text.Pointer (bin) << " size:" << bin->size
                << " start:"  << bin->start        << " stop:" << bin->stop
                << " read:"   << bin->read
-               << txt.Memory (BinBuffer (bin), size + sizeof (Bin));
+               << text.Memory (BinBuffer (bin), size + sizeof (Bin));
 }
 #endif  //< SCRIPT_USING_TEXT
 

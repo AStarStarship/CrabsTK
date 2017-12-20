@@ -37,8 +37,8 @@ namespace _ {
     @return Returns a Static Error Operation Result. */
 inline const Operation* ErrorReport (Bout* bout, Error error) {
 #if SCRIPT_DEBUG
-    Text txt;
-    Display () << "\n| Bout " << ErrorString (error) << " Error!" << txt.Print ();
+    Text text;
+    Display () << "\n| Bout " << ErrorString (error) << " Error!" << text.Print ();
 #endif
     return reinterpret_cast<const Operation*> (1);
 }
@@ -166,11 +166,11 @@ int BoutStreamByte (Bout* bout) {
 const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     
 #if SCRIPT_DEBUG
-    Text txt;
-    txt << "\n|\n|Writing "
-        << ParamsPrint (params, txt)
-        << " to B-Output:" << txt.Pointer (bout)
-        << BoutPrint (bout, txt) << txt.Print ();
+    Text text;
+    text << "\n|\n|Writing "
+        << ParamsPrint (params, text)
+        << " to B-Output:" << text.Pointer (bout)
+        << BoutPrint (bout, text) << text.Print ();
 #endif  //< SCRIPT_DEBUG
     if (!bout)
         return ErrorReport (bout, kErrorImplementation);
@@ -851,17 +851,17 @@ const Operation* BoutConnect (Bout* bout, const char* address) {
 }
 
 #if SCRIPT_USING_TEXT
-Text& BoutPrint (Bout* bout, Text& txt) {
-    txt << txt.Line ('_');
+Text& BoutPrint (Bout* bout, Text& text) {
+    text << text.Line ('_');
     if (!bout) {
-        return txt << "\n| Bout: NIL"
-            << txt.Line ('_');
+        return text << "\n| Bout: NIL"
+            << text.Line ('_');
     }
     int size = bout->size;
-    return txt << "\n| Bout:0x" << txt.Pointer (bout) << " size:" << size
+    return text << "\n| Bout:0x" << text.Pointer (bout) << " size:" << size
         << " start:" << bout->start << " stop:" << bout->stop
         << " read:" << bout->read
-        << txt.Memory (BoutBuffer (bout), size + 64);
+        << text.Memory (BoutBuffer (bout), size + 64);
     //< @todo remove the + 64.);
 }
 #endif  //< SCRIPT_USING_TEXT

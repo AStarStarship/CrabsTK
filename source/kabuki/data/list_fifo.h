@@ -263,8 +263,8 @@ class ListFifo: public _::Set {
         return objects;
     }
 
-    Text& Print (Text& txt) {
-        return txt << "\n| ListFifo";
+    Text& Print (Text& text) {
+        return text << "\n| ListFifo";
     }
 
     private:

@@ -85,7 +85,7 @@ KABUKI const Operation* OperationInvalid ();
 /** Prints the given Set to the std::out
     Quote: Wikipedia "In mathematics an operand is the object of a mathematical
     operation, i.e. it is the quantity that is operated on." */
-KABUKI Text& OperationPrint (const Operation* op, Text& txt);
+KABUKI Text& OperationPrint (const Operation* op, Text& text);
 #endif  //< SCRIPT_USING_TEXT
 
 }   //< namespace _
@@ -93,8 +93,8 @@ KABUKI Text& OperationPrint (const Operation* op, Text& txt);
 #if SCRIPT_USING_TEXT
 
 #include "text.h"
-/** Overloaded operator<< prints the given operation to the txt. */
-KABUKI _::Text& operator<< (_::Text& txt, const _::Operation* operation);
+/** Overloaded operator<< prints the given operation to the text. */
+KABUKI _::Text& operator<< (_::Text& text, const _::Operation* operation);
 
 #endif  //< SCRIPT_USING_TEXT
 #endif  //< HEADER_FOR_SCRIPT_OPERATION

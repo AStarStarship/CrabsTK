@@ -122,7 +122,7 @@
     <ProjectGuid>{6C739D2A-D229-4E66-BF9D-0F96A4403D27}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>KabukiTheaterTests</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <ProjectName>kabuki_toolkit</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

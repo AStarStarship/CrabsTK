@@ -92,16 +92,16 @@ KABUKI const Operation* BinRead (Bin* bin, const uint_t* params, void** args);
 #if SCRIPT_USING_TEXT
 /** Prints the Bin to the Text.
     @param  bin The pin to print.
-    @param  txt The Text to print the bin to.
-    @return The txt. */
-KABUKI Text& BinPrint (Bin* bin, Text& txt);
+    @param  text The Text to print the bin to.
+    @return The text. */
+KABUKI Text& BinPrint (Bin* bin, Text& text);
 #endif  //< SCRIPT_USING_TEXT
 }       //< namespace _
 
 #if SCRIPT_USING_TEXT
-/** Prints out the bin to the txt. */
-inline _::Text& operator<< (_::Text& txt, _::Bin* bin) {
-    return _::BinPrint (bin, txt);
+/** Prints out the bin to the text. */
+inline _::Text& operator<< (_::Text& text, _::Bin* bin) {
+    return _::BinPrint (bin, text);
 }
 #endif  //< SCRIPT_USING_TEXT
 

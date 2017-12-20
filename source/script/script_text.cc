@@ -26,6 +26,11 @@
 
 namespace _ {
 
+Text::Text () :
+    cursor_ (buffer_) {
+    // Nothing to do here ({:-)=+<
+}
+
 Text::Text (const char* strand) :
     cursor_ (buffer_) {
     if (!StrandWrite (buffer_, buffer_ + kSize, strand)) {
@@ -568,29 +573,38 @@ Text& Text::DateTime (time_t t) {
 }
 
 Text& Text::Print () {
-    std::cout << buffer_;
+    std::cout << this;
     return *this;
 }
 
-Text& Text::Error () {
-    std::cerr << buffer_;
+Text& Text::Print (Text& text) {
+    std::cout << (*this << text);
     return *this;
 }
 
-void Print (const char* strand) {
-    std::cout << strand;
+Text& Text::Print (const char* text) {
+    std::cout << (*this << text);
+    return *this;
 }
 
-void Print (Text& txt) {
-    std::cout << txt.GetBegin ();
+Text& Text::Err () {
+    std::cerr << this;
+    return *this;
 }
 
-void Error (const char* strand) {
-    std::cerr << strand;
+Text& Text::Err (const char* text) {
+    std::cerr << this;
+    return *this;
 }
 
-void Error (Text& txt) {
-    std::cerr << txt;
+Text& Text::Err (Text& text) {
+    std::cerr << this;
+    return *this;
+}
+
+Text& Text::Err (const char* text) {
+    std::cerr << (*this << text);
+    return *this;
 }
 
 #endif  //< SCRIPT_USING_TEXT

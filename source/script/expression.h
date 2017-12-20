@@ -237,20 +237,20 @@ KABUKI const Operation* ExpressionOperation (Expression* expr,
 
 #if SCRIPT_USING_TEXT
 /** Prints the Expression stack to the Text buffer */
-KABUKI Text& ExpressionPrint (Expression* expr, Text& txt);
+KABUKI Text& ExpressionPrint (Expression* expr, Text& text);
 
 /** Prints the Expression stack to the Text buffer */
-KABUKI Text& ExpressionPrintStack (Expression* expr, Text& txt);
+KABUKI Text& ExpressionPrintStack (Expression* expr, Text& text);
 
 /** Prints the Expression stack to the Text buffer */
-//KABUKI Text& ExpressionPrintStateStack (Expression* expr, Text& txt);
+//KABUKI Text& ExpressionPrintStateStack (Expression* expr, Text& text);
 #endif  //< SCRIPT_USING_TEXT
 
 }       //< namespace _
 
 #if SCRIPT_USING_TEXT
         /** Prints the given Expression to the Text buffer. */
-inline _::Text& operator<< (_::Text& txt, _::Expression* expr);
+inline _::Text& operator<< (_::Text& text, _::Expression* expr);
 #endif  //< SCRIPT_USING_TEXT
 
 #endif  //< HEADER_FOR___EXPRESSION

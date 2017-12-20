@@ -45,7 +45,7 @@ class Client : public _::Room {
     virtual bool SetState (int state);
 
     /** Prints this object to the console. */
-    virtual _::Text& Print (_::Text& txt = _::Text ());
+    virtual _::Text& Print (_::Text& text);
 
     /** Abstract Script Operation(s).
         @param index The index of the expression.

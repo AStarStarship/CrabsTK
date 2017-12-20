@@ -247,6 +247,12 @@ typedef uint64_t data_t;    //< Default TData size.
   void operator= (const ClassName&) = delete;
   //ClassName () = default //< Saw this once on the net but do we need it?
 
+#define SCRIPT_CLASS_BIN 1
+#define SCRIPT_CLASS_BOUT 2
+#define SCRIPT_CLASS_DISPLAY 3
+#define SCRIPT_CLASS_DOOR 4
+#define SCRIPT_CLASS_EXPRESSION 5
+#define SCRIPT_CLASS_
 
 #if SCRIPT_DEBUG
 #define PRINT (MESSAGE)\

@@ -35,13 +35,13 @@ const Operation* OperationInvalid () {
 }
 
 #if SCRIPT_USING_TEXT
-Text& OperationPrint (const Operation* operation, Text& txt) {
+Text& OperationPrint (const Operation* operation, Text& text) {
     if (!operation) {
-        return txt << "\n| Operation: null";
+        return text << "\n| Operation: null";
     }
-    return txt << "\n| Operation   :" << operation->name
-               << "\n| Params      :" << ParamsPrint (operation->params, txt)
-               << "\n| Result:     :" << ParamsPrint (operation->result, txt)
+    return text << "\n| Operation   :" << operation->name
+               << "\n| Params      :" << ParamsPrint (operation->params, text)
+               << "\n| Result:     :" << ParamsPrint (operation->result, text)
                << "\n| Metadata:   :" << operation->description
                << "\n| Evaluation  : @todo Print me!";
 }
@@ -52,8 +52,8 @@ Text& OperationPrint (const Operation* operation, Text& txt) {
 
 #if SCRIPT_USING_TEXT
 
-_::Text& operator<< (_::Text& txt, const _::Operation* operation) {
-    return OperationPrint (operation, txt);
+_::Text& operator<< (_::Text& text, const _::Operation* operation) {
+    return OperationPrint (operation, text);
 }
 
 #endif  //< SCRIPT_USING_TEXT

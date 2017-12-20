@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef HEADER_FOR_SCRIPT_ERRORS
-#define HEADER_FOR_SCRIPT_ERRORS
+#ifndef HEADER_FOR___ERROR
+#define HEADER_FOR___ERROR
 
 #include "config.h"
 
@@ -63,4 +63,4 @@ KABUKI const char* ErrorString (Error error);
 
 }       //< namespace _
 
-#endif  //< HEADER_FOR_SCRIPT_ERRORS
+#endif  //< HEADER_FOR___ERROR

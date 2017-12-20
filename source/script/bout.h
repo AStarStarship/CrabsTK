@@ -99,17 +99,17 @@ KABUKI void BoutAckBack (Bout* bout, const char* address);
 #if SCRIPT_USING_TEXT
 /** Prints the Bin to the Text.
     @param  bin The pin to print.
-    @param  txt The Text to print the bin to.
-    @return The txt. */
-KABUKI Text& BoutPrint (Bout* bout, Text& txt);
+    @param  text The Text to print the bin to.
+    @return The text. */
+KABUKI Text& BoutPrint (Bout* bout, Text& text);
 #endif  //< SCRIPT_USING_TEXT
 
 }       //< namespace _
 
 #if SCRIPT_USING_TEXT
-/** Prints out the bin to the txt. */
-inline _::Text& operator<< (_::Text& txt, _::Bout* bout) {
-    return txt << _::BoutPrint (bout, txt);
+/** Prints out the bin to the text. */
+inline _::Text& operator<< (_::Text& text, _::Bout* bout) {
+    return text << _::BoutPrint (bout, text);
 }
 #endif  //< SCRIPT_USING_TEXT
 

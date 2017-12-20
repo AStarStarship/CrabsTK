@@ -23,8 +23,6 @@
 #include "text.h"
 #include "hash.h"
 
-using namespace std;
-
 namespace _ {
 
 /** Used to return an erroneous result from a B-Input.
@@ -206,7 +204,7 @@ const Operation* Push (Expression* expr, Operand* operand) {
     }
 #if SCRIPT_DEBUG
     const Operation* op = operand->Star ('?', nullptr);
-    cout << "\n| Pushing " << op->name << " onto the stack";
+    Print (Text () << "\n| Pushing " << op->name << " onto the stack");
 #endif  //< SCRIPT_DEBUG
     uint_t stack_count = expr->stack_count;
     if (stack_count >= expr->stack_size) {
@@ -216,8 +214,8 @@ const Operation* Push (Expression* expr, Operand* operand) {
     expr->operand = operand;
     expr->stack_count = stack_count + 1;
 #if SCRIPT_DEBUG
-    Text txt;
-    txt << ExpressionPrintStack (expr, txt) << txt.Print ();
+    Text text;
+    Print (ExpressionPrintStack (expr, text));
 #endif  //< SCRIPT_DEBUG
     return nullptr;
 }
@@ -233,16 +231,16 @@ const Operation* Pop (Expression* expr) {
         return 0;
     }
 #if SCRIPT_DEBUG
-    Text txt;
-    txt << "\n| Popping " << OperandName (expr->operand)
+    Text text;
+    text << "\n| Popping " << OperandName (expr->operand)
         << " off the stack.";
 #endif  //< SCRIPT_DEBUG
     expr->operand = ExpressionStack (expr)[stack_count - 2];
     expr->stack_count = stack_count - 1;
 #if SCRIPT_DEBUG
-    txt << "\n| Top of stack is now " << OperandName (expr->operand)
-        << "."
-        << ExpressionPrintStack (expr, txt) << txt.Print ();
+    Display (text << "\n| Top of stack is now " << OperandName (expr->operand)
+             << "."
+             << ExpressionPrintStack (expr, text));
 #endif  //< SCRIPT_DEBUG
     return nullptr;
 }
@@ -357,24 +355,24 @@ const Operation* ExpressionScan (Expression* expr) {
     space  = SlotSpace (start, stop, size);
     length = size - space;
 #if SCRIPT_DEBUG
-    Text txt;
-    txt << "\n| Scanning Expression:0x" << txt.Pointer (start) 
+    Text text;
+    text << "\n| Scanning Expression:0x" << text.Pointer (start) 
         << " with length:" << length;
 #endif  //< SCRIPT_DEBUG
     for (; length != 0; --length) {
         b = *start;
         *write++ = b;
 #if SCRIPT_DEBUG
-        txt << txt.Line ('=')
+        text << text.Line ('=')
             << "\n| " << length << ":\'";
         if (b < 32 || b == 127) {
-            txt << AsciiText ((AsciiCode)b);
+            text << AsciiText ((AsciiCode)b);
         }
         else {
-            txt << b;
+            text << b;
         }
 
-        txt << "\' " << BinState ()[bin_state] << " state"
+        text << "\' " << BinState ()[bin_state] << " state"
              << Text ().Line ();
 #endif  //< SCRIPT_DEBUG
 
@@ -407,7 +405,7 @@ const Operation* ExpressionScan (Expression* expr) {
 
                 op = operand->Star ('?', nullptr);
 #if SCRIPT_DEBUG
-                txt << "\n| Current Operation is \"" << op->name << '\"';
+                text << "\n| Current Operation is \"" << op->name << '\"';
 #endif  //< SCRIPT_DEBUG
 
                 op = operand->Star (b, nullptr);
@@ -433,13 +431,13 @@ const Operation* ExpressionScan (Expression* expr) {
                     // It's an Operation.
                     // The software implementer pushes the Op on the stack.
 #if SCRIPT_DEBUG
-                    txt << "\n| Found Operation with params "
-                        << ParamsPrint (params, txt);
+                    text << "\n| Found Operation with params "
+                        << ParamsPrint (params, text);
 #endif  //< SCRIPT_DEBUG
                     result = ExpressionScanHeader (expr, params);
                     if (result) {
 #if SCRIPT_DEBUG
-                        txt << "Expression::Error reading address.";
+                        text << "Expression::Error reading address.";
 #endif  //< SCRIPT_DEBUG
                         return ExpressionForceDisconnect (expr, kErrorImplementation);
                     }
@@ -447,7 +445,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     operand = expr->operand;
                     if (!operand) {
 #if SCRIPT_DEBUG
-                        txt << "\n| Null operand found!";
+                        text << "\n| Null operand found!";
 #endif  //< SCRIPT_DEBUG
                         return ExpressionForceDisconnect (expr, kErrorInvalidOperand);
                     }
@@ -459,7 +457,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     bin_state = Bin::ArgsState;
                     type = *(++expr->header);   //< Setup to read first type.
 #if SCRIPT_DEBUG
-                    txt << "\n| Next TType to scan:\'" << TypeText (type)
+                    text << "\n| Next TType to scan:\'" << TypeText (type)
                         << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                     write += TypeAlign (write, type);
@@ -476,7 +474,7 @@ const Operation* ExpressionScan (Expression* expr) {
 
                 if (expr->params_left-- == 0) {
 #if SCRIPT_DEBUG
-                    txt << "\n| Params successfully scanned.";
+                    text << "\n| Params successfully scanned.";
 #endif  //< SCRIPT_DEBUG
 
                     break;
@@ -490,7 +488,7 @@ const Operation* ExpressionScan (Expression* expr) {
                 if (type <= ADR) {
                     if (type < ADR) {   // Address type.
 #if SCRIPT_DEBUG
-                        txt << "\n| Scanning address.";
+                        text << "\n| Scanning address.";
 #endif  //< SCRIPT_DEBUG
                         ErrorReport (expr, kErrorInvalidType);
                         ExpressionEnterState (expr, Bin::LockedState);
@@ -506,7 +504,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     // Read the max number of chars off the header.
                     bytes_left = *(++expr->header);
 #if SCRIPT_DEBUG
-                    txt << "\n| Scanning STR with max length "
+                    text << "\n| Scanning STR with max length "
                               << bytes_left;
 #endif  //< SCRIPT_DEBUG
                     ExpressionEnterState (expr, Bin::Utf8State);
@@ -514,7 +512,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     break;
                 } else if (type == ST2) { // UTF-16 string type.
 #if SCRIPT_DEBUG
-                    txt << "\n| Scanning ST2.";
+                    text << "\n| Scanning ST2.";
 #endif  //< SCRIPT_DEBUG
                     if (bytes_left == 1) {
                         expr->last_byte = b;
@@ -528,7 +526,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     break;
                 } else if (type == ST4) { // UTF-32 string type.
 #if SCRIPT_DEBUG
-                    txt << "\n| Scanning ST4.";
+                    text << "\n| Scanning ST4.";
 #endif  //< SCRIPT_DEBUG
                     // Read the max number of chars off the header.
                     bytes_left = *expr->header++ * 4;
@@ -537,20 +535,20 @@ const Operation* ExpressionScan (Expression* expr) {
                 } else if (type < DBL)  { // Plain-old-data type.
                     bytes_left = SizeOf (type);
 #if SCRIPT_DEBUG
-                    txt << "\n| Scanning POD." << " bytes_left:"
+                    text << "\n| Scanning POD." << " bytes_left:"
                               << bytes_left;
 #endif  //< SCRIPT_DEBUG
                     if (bytes_left == 1) {
                         // No need to enter a state because there is only one
                         // byte to parse and we already have the byte loaded.
 #if SCRIPT_DEBUG
-                        txt << "\n| Done scanning without state change for \""
+                        text << "\n| Done scanning without state change for \""
                                   << TypeText (type) << '\"';
 #endif  //< SCRIPT_DEBUG
                         // Setup to read the next type.
                         type = *(++expr->header);
 #if SCRIPT_DEBUG
-                        txt << "\n| Next TType to scan:\'" << TypeText (type)
+                        text << "\n| Next TType to scan:\'" << TypeText (type)
                             << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                         write += TypeAlign (write, type);
@@ -561,7 +559,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     break;
                 } else if (type < UV8)  { // Varint type.
 #if SCRIPT_DEBUG
-                    txt << "\n| Scanning Varint.";
+                    text << "\n| Scanning Varint.";
 #endif  //< SCRIPT_DEBUG
                     bytes_left = SizeOf (type);
                     ExpressionEnterState (expr, Bin::VarintState);
@@ -569,7 +567,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     break;
                 } else { // It's a TObject.
 #if SCRIPT_DEBUG
-                    txt << "\n| Scanning TObject.";
+                    text << "\n| Scanning TObject.";
 #endif  //< SCRIPT_DEBUG
                     // Multi-dimension arrays are parsed just like any other
                     // TObject.
@@ -627,7 +625,7 @@ const Operation* ExpressionScan (Expression* expr) {
                         bin_state = Bin::AddressState;
                         break;
                     }
-                    txt << "\n| Next TType to scan:\'" << TypeText (type)
+                    text << "\n| Next TType to scan:\'" << TypeText (type)
                         << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                     write += TypeAlign (write, type);
@@ -665,7 +663,7 @@ const Operation* ExpressionScan (Expression* expr) {
 
                 if (bytes_left == 1) {
 #if SCRIPT_DEBUG
-                    txt << "Checking last byte:";
+                    text << "Checking last byte:";
 #endif  //< SCRIPT_DEBUG
 
                     // @warning I am not current saving the offset. I'm not 
@@ -687,12 +685,12 @@ const Operation* ExpressionScan (Expression* expr) {
                 }
                 if (b > 127) {
 #if SCRIPT_DEBUG
-                    txt << "\n| Done scanning varint: ";
+                    text << "\n| Done scanning varint: ";
 #endif  //< SCRIPT_DEBUG
                     // Setup to read the next type.
                     type = *(++header);
 #if SCRIPT_DEBUG
-                    txt << "\n| Next TType to scan:\'" << TypeText (type)
+                    text << "\n| Next TType to scan:\'" << TypeText (type)
                         << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                     write += TypeAlign (write, type);
@@ -708,7 +706,7 @@ const Operation* ExpressionScan (Expression* expr) {
                 if (bytes_shift >= shift_bits) {
                     // Done shifting.
 #if SCRIPT_DEBUG
-                    txt << "\n| Loading object of size:" << bytes_left;
+                    text << "\n| Loading object of size:" << bytes_left;
 #endif  //< SCRIPT_DEBUG
                     ExpressionExitState (expr);
                     ExpressionEnterState (expr, Bin::PodState);
@@ -735,11 +733,11 @@ const Operation* ExpressionScan (Expression* expr) {
                     return ExpressionForceDisconnect (expr, kErrorInvalidHash);
                 }
 #if SCRIPT_DEBUG
-                txt << "\n| Success reading hash!";
+                text << "\n| Success reading hash!";
 #endif  //< SCRIPT_DEBUG
                 hash = kLargest16BitPrime; //< Reset hash to largest 16-bit prime.
 #if SCRIPT_DEBUG
-                txt << "\n| Resetting hash.\n";
+                text << "\n| Resetting hash.\n";
 #endif  //< SCRIPT_DEBUG
                 break;
             }
@@ -762,7 +760,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     bin_state = Bin::ErrorState;
                 } else {
 #if SCRIPT_DEBUG
-                    txt << "\n| Resetting hash.";
+                    text << "\n| Resetting hash.";
 #endif  //< SCRIPT_DEBUG
                     hash = kLargest16BitPrime; //< Reset hash to largest 16-bit prime.
                     expr->operand = expr->root;
@@ -770,7 +768,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     bin_state = Bin::AddressState;
                     ExpressionSetState (expr, Bin::AddressState);
 #if SCRIPT_DEBUG
-                    txt << "\n| Root scope: \""
+                    text << "\n| Root scope: \""
                               << OperandName (expr->operand) << '\"';
 #endif  //< SCRIPT_DEBUG
                 }
@@ -778,7 +776,7 @@ const Operation* ExpressionScan (Expression* expr) {
             }
             case  Bin::LockedState: {
 #if SCRIPT_DEBUG
-                txt << "Locked";
+                text << "Locked";
 #endif  //< SCRIPT_DEBUG
                 break;
             }
@@ -790,7 +788,7 @@ const Operation* ExpressionScan (Expression* expr) {
                 // parsing plain-old-data.
                 if (bytes_left == 0) {
 #if SCRIPT_DEBUG
-                    txt << "... done!";
+                    text << "... done!";
 #endif  //< SCRIPT_DEBUG
                     ExpressionExitState (expr);
                     bin_state = expr->bin_state;
@@ -798,7 +796,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     // Setup to read the next type.
                     type = *(++header);
 #if SCRIPT_DEBUG
-                    txt << "\n| Next TType to scan:\'" << TypeText (type)
+                    text << "\n| Next TType to scan:\'" << TypeText (type)
                         << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                     write += TypeAlign (write, type);
@@ -997,9 +995,9 @@ const Operation* ExpressionOperation (Expression* expr, const Operation* operati
 }
 
 #if SCRIPT_USING_TEXT
-Text& ExpressionPrintStack (Expression* expr, Text& txt) {
+Text& ExpressionPrintStack (Expression* expr, Text& text) {
     if (!expr) {
-        return txt;
+        return text;
     }
 
     uint_t i,
@@ -1008,40 +1006,40 @@ Text& ExpressionPrintStack (Expression* expr, Text& txt) {
     Operand* operand;
     Operand** stack = ExpressionStack (expr);
     stack_count = expr->stack_count;
-    txt << "\n| Operand stack_count:" << stack_count;
+    text << "\n| Operand stack_count:" << stack_count;
 
     if (stack_count == 1) {
-        return txt << "\n| Stack Item 1: " << OperandName (expr->root);
+        return text << "\n| Stack Item 1: " << OperandName (expr->root);
     }
     for (i = 0; i < stack_count - 1; ++i) {
-        txt << "\n| Stack Item " << i + 1 << ":\"";
+        text << "\n| Stack Item " << i + 1 << ":\"";
         operand = stack[i];
         op = operand->Star ('?', nullptr);
-        txt << op->name << '\"';
+        text << op->name << '\"';
     }
     op = expr->operand->Star ('?', nullptr);
-    return txt << "\n| Stack Item " << i + 1 << ":\"" << op->name << "\"";
+    return text << "\n| Stack Item " << i + 1 << ":\"" << op->name << "\"";
 }/*
 
-Text& ExpressionPrintStateStack (Expression* expr, Text& txt) {
-    txt << txt.Line ()
+Text& ExpressionPrintStateStack (Expression* expr, Text& text) {
+    text << text.Line ()
         << "\n| Expression State Stack:    ";
     if (!expr) {
         printf ("null");
-        return txt.Line ();
+        return text.Line ();
     }
-    return txt.Line ();
+    return text.Line ();
 }*/
 
-Text& ExpressionPrint (Expression* expr, Text& txt) {
-    txt << txt.Line ('~')
+Text& ExpressionPrint (Expression* expr, Text& text) {
+    text << text.Line ('~')
         << "\n| Stack:    ";
     if (!expr) {
-        return txt << "null" << txt.Line ('~');
+        return text << "null" << text.Line ('~');
     }
-    txt.Pointer (expr) << txt.Line ('_');
+    text.Pointer (expr) << text.Line ('_');
 
-    return txt << "\n| bytes_left  : " << expr->bytes_left
+    return text << "\n| bytes_left  : " << expr->bytes_left
                << "\n| header_size : " << expr->header_size
                << "\n| stack_count : " << expr->stack_count
                << "\n| stack_size  : " << expr->stack_size
@@ -1049,12 +1047,12 @@ Text& ExpressionPrint (Expression* expr, Text& txt) {
                << "\n| bout_state  : " << BoutState ()[expr->bout_state]
                << "\n| num_states  : " << expr->num_states
                << "\n| header_size : " << expr->header_size
-               << txt.Line ('-', "\n>")
-               << OperandPrint (expr->operand, txt)
+               << text.Line ('-', "\n>")
+               << OperandPrint (expr->operand, text)
                << "\n| header: " << expr->header_start
-               << txt.Line ('-', "\n>")
-               << ExpressionPrintStack (expr, txt)
-               << txt.Line ('~');
+               << text.Line ('-', "\n>")
+               << ExpressionPrintStack (expr, text)
+               << text.Line ('~');
     //system ("PAUSE");
 }
 
@@ -1062,7 +1060,7 @@ Text& ExpressionPrint (Expression* expr, Text& txt) {
 }       //< namespace _
 
 #if SCRIPT_USING_TEXT
-_::Text& operator<< (_::Text& txt, _::Expression* expr) {
-    return txt << ExpressionPrint (expr, txt);
+_::Text& operator<< (_::Text& text, _::Expression* expr) {
+    return text << ExpressionPrint (expr, text);
 }
 #endif //< SCRIPT_USING_TEXT

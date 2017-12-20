@@ -25,6 +25,5 @@
 #include "../script/global.h"
 
 using namespace _;
-using namespace std;
 
 #endif  //< HEADER_FOR_PROJECTS_GLOBAL

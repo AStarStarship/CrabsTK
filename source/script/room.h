@@ -230,7 +230,7 @@ class Room: public Operand {
 
 #if SCRIPT_USING_TEXT
     /** Prints the Room to the stdout. */
-    virtual _::Text& Print (_::Text& txt = _::Text ());
+    virtual _::Text& Print (_::Text& text);
 #endif  //< SCRIPT_USING_TEXT
 
     protected:

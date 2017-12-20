@@ -88,10 +88,10 @@ bool Wall::CloseDoor (int index) {
     return false;
 }
 
-_::Text& Wall::Print (_::Text& txt) {
+_::Text& Wall::Print (_::Text& text) {
     //printf ("\nDoor:\nis_dynamic %s\nnum_doors: %u\nmax_num_doors: %u\n", 
     //        is_dynamic ? "true" : "false", num_doors, max_num_doors);
-    return txt;
+    return text;
 }
 
 }       //< namespace _

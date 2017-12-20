@@ -22,11 +22,11 @@ using namespace std;
 
 TEST_GROUP (SCRIPT_TESTS) {
     void setup () {
-        cout << Text ();
+        cout << Text ().Line ();
     }
 
     void teardown () {
-        cout << Text ("\n| Test completed.\n|")
+        cout << "\n| Test completed.\n|"
              << Text ().Line ();
     }
 };

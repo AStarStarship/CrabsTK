@@ -14,22 +14,22 @@
              permissions and limitations under the License.
 */
 
-#include "../../../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
-#include "../../../../../cpputest/include/CppUTest/TestHarness.h"
+#include "global.h"
 
 #include "../../source/kabuki/data/global.h"
 
 using namespace _;
+using namespace std;
 
 TEST_GROUP (SCRIPT_DATA_TESTS) {
 
     void setup () {
-        Print (Text ().Line ());
-        Print ("\n|  + Running kabuki::data tests...");
+        cout << Text ().Line ();
+        cout << "\n|  + Running kabuki::data tests...";
     }
 
     void teardown () {
-        Print ("\n| kabuki::data completed.");
+        cout << "\n| kabuki::data completed.";
     }
 };
 

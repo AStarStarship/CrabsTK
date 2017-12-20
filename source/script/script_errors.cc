@@ -62,11 +62,4 @@ const char* ErrorString (Error error) {
     return ErrorString ()[error];
 }
 
-Error ErrorString (const char* error) {
-    intptr_t pointer_vector = error - ErrorString ()[0];
-    if (pointer_vector < 0) {
-        return kErrorImplementation;
-    }
-}
-
 }   //< namespace _

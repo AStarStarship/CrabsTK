@@ -240,8 +240,8 @@ uintptr_t Room::GetSizeBytes () {
 }
 
 #if USE_MORE_ROM
-Text& Room::Print (_::Text& txt) {
-    return txt.Line () << "\n| Room: ";
+Text& Room::Print (_::Text& text) {
+    return text.Line () << "\n| Room: ";
 }
 #endif  //< USE_MORE_ROM
 

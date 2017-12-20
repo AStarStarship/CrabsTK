@@ -21,7 +21,7 @@
 
 namespace _ {
 
-typedef enum {
+typedef enum AsciiCodes {
     NUL = 0,
     SOH,
     STX,
@@ -57,8 +57,8 @@ typedef enum {
     DEL = 127
 } AsciiCode;
 
-#if USE_MORE_ROM
+#if SCRIPT_USING_TEXT
 KABUKI const char* AsciiText (AsciiCode ascii_char);
-#endif  //< USE_MORE_ROM
+#endif  //< SCRIPT_USING_TEXT
 }       //< namespace ascii
 #endif  //< SCRIPT_ASCII_H

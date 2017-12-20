@@ -1176,7 +1176,7 @@ inline void** Args (void** ptrs, const void* a, const void* b,
 #if SCRIPT_USING_TEXT
 #include "text.h"
 /**  Prints out the parameters to the debug console. */
-KABUKI _::Text& operator<< (_::Text& txt, const uint_t* params);
+KABUKI _::Text& operator<< (_::Text& text, const uint_t* params);
 
 #endif  //< SCRIPT_USING_TEXT
 #endif  //< SCRIPT_ARGS_H

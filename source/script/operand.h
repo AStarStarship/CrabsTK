@@ -158,10 +158,10 @@ KABUKI uintptr_t OperandCount (Operand* op);
 
 #if SCRIPT_USING_TEXT
 /** Prints the Operand to the Text.
-    @param  txt     The Text to print to.
+    @param  text     The Text to print to.
     @param  operand The Operand to print.
-    @return txt. */
-KABUKI Text& OperandPrint (Operand* operand, Text& txt);
+    @return text. */
+KABUKI Text& OperandPrint (Operand* operand, Text& text);
 #endif  //< SCRIPT_USING_TEXT
 
 }   //< namespace _
@@ -169,8 +169,8 @@ KABUKI Text& OperandPrint (Operand* operand, Text& txt);
 #if SCRIPT_USING_TEXT
 #include "text.h"
 
-/** Overloaded operator<< prints the given operand to the txt. */
-KABUKI _::Text& operator<< (_::Text& txt, _::Operand* operand);
+/** Overloaded operator<< prints the given operand to the text. */
+KABUKI _::Text& operator<< (_::Text& text, _::Operand* operand);
 
 #endif  //< SCRIPT_USING_TEXT
 #endif  //< HEADER_FOR_SCRIPT_OPERAND

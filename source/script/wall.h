@@ -21,7 +21,7 @@
 #define SCRIPT_WALL_H
 
 #include "door.h"
-#include "log.h"
+#include "op.h"
 
 namespace _ {
 
@@ -88,7 +88,7 @@ class Wall : public Operation {
     bool CloseDoor (int index);
 
     /** Prints the given Door to the stdout. */
-    _::Text& Print (_::Text& txt = _::Text ());
+    _::Text& Print (_::Text& text);
 
     private:
 

@@ -107,7 +107,7 @@ struct Collection {
     virtual uintptr_t GetSizeWidth () = 0;
 
     /**  */
-    virtual Text& Print (Text& txt = Text ()) = 0;
+    virtual Text& Print (Text& text) = 0;
 };
 }       //< namespace _
 #endif  //< SCRIPT_COLLECTION_H

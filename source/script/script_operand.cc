@@ -41,9 +41,9 @@ uintptr_t OperandCount (Operand* operand) {
 
 #if SCRIPT_USING_TEXT
 
-Text& OperandPrint (Operand* operand, Text& txt) {
+Text& OperandPrint (Operand* operand, Text& text) {
     if (!operand) {
-        return txt << "\n| Error: Operand can't be nil";
+        return text << "\n| Error: Operand can't be nil";
     }
 
     /*
@@ -54,7 +54,7 @@ Text& OperandPrint (Operand* operand, Text& txt) {
     first_op = reinterpret_cast<uintptr_t>(operation->result),
     last_op = first_op + num_ops - 1;
     //const byte  * eval     = op->evaluation;
-    txt << operation->name
+    text << operation->name
     << "\n| Operation Count: " << num_ops << " First: " << first_op
     << '\'' << Char (first_op) << "\' Last:" << last_op << '\''
     << Char (last_op)
@@ -64,45 +64,45 @@ Text& OperandPrint (Operand* operand, Text& txt) {
 
     const _::Operation* operation = operand->Star ('?', nullptr);
     if (!operation) {
-        return txt << "\n| Error: invalid Operation!";
+        return text << "\n| Error: invalid Operation!";
     }
     uintptr_t num_ops = reinterpret_cast<uintptr_t>(operation->params),
         op_num = reinterpret_cast<uintptr_t>(operation->result),
         last_op = op_num + num_ops - 1;
     if (num_ops > _::kMaxNumParams) {
-        return txt << "\n| Error: Too many parameters!";
+        return text << "\n| Error: Too many parameters!";
     }
-    txt << "\n| Operand         :" << operation->name
-        << txt.Line ('-', "\n>");
+    text << "\n| Operand         :" << operation->name
+        << text.Line ('-', "\n>");
     for (; op_num <= last_op; ++op_num) {
         operation = operand->Star (op_num, nullptr);
-        txt << "\n| Operation \'" << txt.Char (op_num) << "\':" << op_num << ' '
+        text << "\n| Operation \'" << text.Char (op_num) << "\':" << op_num << ' '
             << operation
-            << txt.Line ('-', "\n>");
+            << text.Line ('-', "\n>");
     }
-    return txt;
+    return text;
 }
 
-Text& OperandPrint (Operand* root, const char_t* address, Text& txt) {
+Text& OperandPrint (Operand* root, const char_t* address, Text& text) {
     if (!address) {
-        return txt;
+        return text;
     }
     if (!root) {
-        return txt;
+        return text;
     }
     int index = *address++;
     const Operation* operation = root->Star (index, nullptr);
-    txt << operation->name;
+    text << operation->name;
     index = *address++;
     while (index) {
         operation = root->Star (index, nullptr);
         if (!operation) {
-            return txt;
+            return text;
         }
-        txt << '.' << operation->name;
+        text << '.' << operation->name;
         index = *address++;
     }
-    return txt;
+    return text;
 }
 #endif  //< SCRIPT_USING_TEXT
 
@@ -111,7 +111,7 @@ Text& OperandPrint (Operand* root, const char_t* address, Text& txt) {
 
 #if SCRIPT_USING_TEXT
 
-_::Text& operator<< (_::Text& txt, _::Operand* operand) {
-    return txt << OperandPrint (operand, txt);
+_::Text& operator<< (_::Text& text, _::Operand* operand) {
+    return text << OperandPrint (operand, text);
 }
 #endif  //< SCRIPT_USING_TEXT

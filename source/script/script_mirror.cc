@@ -103,9 +103,9 @@ const Operation* MirrorRead (Mirror* mirror, const uint_t* params, void** args) 
         length = MirrorLength (start, stop, size);
 
 #if SCRIPT_DEBUG
-    //Text txt ("\n\n| Reading Bin:");
+    //Text text ("\n\n| Reading Bin:");
     //    << ParamsPrint (params)
-    //Txt << "\n| begin: 0x" << Pointer (txt, begin) << " start:" << Diff (begin, start)
+    //Txt << "\n| begin: 0x" << Pointer (text, begin) << " start:" << Diff (begin, start)
     //    << " stop:" << Diff (begin, stop) << " end:" << Diff (begin, end)
     //    << " length:" << length;
 #endif
