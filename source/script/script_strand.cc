@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/script_strand.cc
+    @file    ~/source/script/script_strand.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -18,7 +18,7 @@
 
 #include "strand.h"
 #include "memory.h"
-#include "text.h"
+#include "strand.h"
 
 using namespace std;
 
@@ -48,15 +48,15 @@ int StrandLength (const char* strand) {
     if (strand == nullptr)
         return -1;
     int count = 0;
-    //cout << "Checking string length for " << string << '\n';
+    //std::cout << "Checking string length for " << string << '\n';
     char c = *strand;
-    //cout << c;
+    //std::cout << c;
     while (c != 0) {
         ++count;
         c = *(++strand);
-        //cout << c;
+        //std::cout << c;
     }
-    //cout << '\n';
+    //std::cout << '\n';
     return count;
 }
 
@@ -64,18 +64,18 @@ int StrandLength (const char* strand, char delimiter) {
     if (strand == nullptr)
         return -1;
     int count = 0;
-    //cout << "Checking string length for " << string << '\n';
+    //std::cout << "Checking string length for " << string << '\n';
     char c = *strand;
-    //cout << c;
+    //std::cout << c;
     while (!c) {
         if (c == delimiter) {
             return count;
         }
         ++count;
         c = *(++strand);
-        //cout << c;
+        //std::cout << c;
     }
-    //cout << '\n';
+    //std::cout << '\n';
     return -1;
 }
 
@@ -251,18 +251,18 @@ const char* StrandEquals (const char* strand, const char* query) {
         return nullptr;
     if (query == nullptr)
         return nullptr;
-    //cout << "\n| Comparing \"" << target << "\" to \"" << query << "\"";
+    //std::cout << "\n| Comparing \"" << target << "\" to \"" << query << "\"";
 
     char a = *strand,
          b = *query;
     while (a) {
-        cout << a;
+        std::cout << a;
         if (a != b) { // Not a hit.
-            //cout << "\n| But it's not a hit\n";
+            //std::cout << "\n| But it's not a hit\n";
             return nullptr;
         }
         if (b == 0) { // Hit!
-            //cout << "\n| Found hit at ";
+            //std::cout << "\n| Found hit at ";
             //PrintPointerNL (target);
             return strand;
         }
@@ -270,17 +270,17 @@ const char* StrandEquals (const char* strand, const char* query) {
         b = *(++query);
     }
     if (b != 0) {
-        cout << "\n| Not a hit: no nil-term char found";
+        std::cout << "\n| Not a hit: no nil-term char found";
         return nullptr;
     }
-    cout << "\n| Found hit at ";
+    std::cout << "\n| Found hit at ";
     //PrintPointerNL (target);
     return strand; //< Find hit!
 }
 
 const char* StrandEquals (const char* target, const char* query,
                             char delimiter) {
-    //cout << "Comparing \"" << target << "\" to \"" << query
+    //std::cout << "Comparing \"" << target << "\" to \"" << query
     //    << "\"\n";
     if (target == nullptr)
         return nullptr;
@@ -294,19 +294,19 @@ const char* StrandEquals (const char* target, const char* query,
          q = *query;
     while (i != delimiter) {
         if (i != q) { // Not a hit.
-            //cout << "\n| not a hit";
+            //std::cout << "\n| not a hit";
             return nullptr;
         }
-        //cout << i;
+        //std::cout << i;
         i = *(++target);
         q = *(++query);
     }
     if (q != delimiter) {
-        //cout << "\n| reached nil-term char but no q:\'" << q
+        //std::cout << "\n| reached nil-term char but no q:\'" << q
         //    << "\' is not the delimiter.";
         return nullptr;
     }
-    //cout << "\n| Found hit at ";
+    //std::cout << "\n| Found hit at ";
     //PrintPointerNL (target);
     return target; //< Find hit!
 }
@@ -468,7 +468,7 @@ const char* StrandSkipSpaces (const char* strand) {
     }
     char c = *strand;
     while (isspace (c)) {
-        //cout << '.';
+        //std::cout << '.';
         if (!c) { //< This isn't an error as far as I can see.
             return strand;
         }
@@ -478,43 +478,43 @@ const char* StrandSkipSpaces (const char* strand) {
     return strand;
 }
 
-const char* StrandRead (const char* target, char* text,
+const char* StrandRead (const char* target, char* strand,
                          char* strand_end, char delimiter) {
-    //cout << "\n| parse_string buffer_size: " << buffer_size
+    //std::cout << "\n| parse_string buffer_size: " << buffer_size
     //          << " delimiter " << delimiter << "\n| ";
     if (!target) {
-        cout << "\n| !target";
+        std::cout << "\n| !target";
         return nullptr;
     }
-    if (!text) {
-        cout << "\n| !text";
+    if (!strand) {
+        std::cout << "\n| !strand";
         return nullptr;
     }
-    if (text > strand_end) {
-        cout << "\n| destination > strand_end";
+    if (strand > strand_end) {
+        std::cout << "\n| destination > strand_end";
         return nullptr;
     }
-    //cout << delimiter;
+    //std::cout << delimiter;
     char c = *target; //< Current char from target.
     while (c) {
         if (c == delimiter) {
-            //cout << delimiter << " parsed.\n";
-            *text = 0;
+            //std::cout << delimiter << " parsed.\n";
+            *strand = 0;
             if (delimiter == 0) {
                 return target;
             }
             return target + 1;
         }
-        //cout << c;
+        //std::cout << c;
         if (target > strand_end) {
-            cout << "\n| Buffer overflow!";
+            std::cout << "\n| Buffer overflow!";
             return nullptr;
         }
-        *text++ = c;
+        *strand++ = c;
         c = *(++target);
     }
-    //cout << delimiter << " done.\n";
-    *text = 0;
+    //std::cout << delimiter << " done.\n";
+    *strand = 0;
     if (delimiter == 0) {
         return target;
     }
@@ -580,26 +580,26 @@ const char* TextNewLine () {
     return "\n| ";
 }
 
-const char* TextSkipSpaces (const char* text, const char* strand_end) {
-    if (!text) {
+const char* TextSkipSpaces (const char* strand, const char* strand_end) {
+    if (!strand) {
         return nullptr;
     }
-    if (text > strand_end) {
+    if (strand > strand_end) {
         return nullptr;
     }
-    //cout << "\n| Skipping spaces: ";
-    char c = *text;
+    //std::cout << "\n| Skipping spaces: ";
+    char c = *strand;
     while (isspace (c)) {
-        //cout << '.';
+        //std::cout << '.';
         if (!c) {
             return nullptr;
         }
-        if (++text > strand_end) {
+        if (++strand > strand_end) {
             return nullptr;
         }
-        c = *text;
+        c = *strand;
     }
-    return text;
+    return strand;
 }
 
 char* StrandWrite (char* target, char* target_end, const char* strand) {
@@ -612,19 +612,21 @@ char* StrandWrite (char* target, char* target_end, const char* strand) {
     if (!strand) {
         return nullptr;
     }
+    char* cursor = target;
     char c = *strand;
     ++strand;
     while (c) {
-        if (target > target_end) {
+        if (cursor > target_end) {
+            *target = 0; //< Replace the nil-term char.
             return nullptr;
         }
-        *target = c;
-        ++target;
+        *cursor = c;
+        ++cursor;
         c = *strand;
         ++strand;
     }
-    *target = 0;
-    return target;
+    *cursor = 0;
+    return cursor;
 }
 
 char* StrandWrite (char* target, char* target_end, const char* strand,
@@ -638,23 +640,26 @@ char* StrandWrite (char* target, char* target_end, const char* strand,
     if (!strand) {
         return nullptr;
     }
+    char* cursor = target;
     char s = *strand;
     while (s != delimiter) {
         if (!s) {
+            *target = 0; //< Replace the nil-term char.
             return nullptr;
         }
-        *target = s;
-        if (++target > target_end) {
+        *cursor = s;
+        if (++cursor > target_end) {
+            *target = 0; //< Replace the nil-term char.
             return nullptr;
         }
         ++strand;
         s = *strand;
     }
-    *target = s;
-    return target;
+    *cursor = s;
+    return cursor;
 }
 
-char* StrandWrite (char* target, char* target_end, const char* text,
+char* StrandWrite (char* target, char* target_end, const char* strand,
                  const char* strand_end) {
     if (target) {
         return nullptr;
@@ -662,28 +667,31 @@ char* StrandWrite (char* target, char* target_end, const char* text,
     if (target > target_end) {
         return nullptr;
     }
-    if (!text) {
+    if (!strand) {
         return nullptr;
     }
-    if (text > strand_end) {
+    if (strand > strand_end) {
         return nullptr;
     }
-    char t = *text;
+    char* cursor = target;
+    char t = *strand;
     while (t) {
-        *target = t;
-        if (++target > target_end) {
+        *cursor = t;
+        if (++cursor > target_end) {
+            *target = 0;
             return nullptr;
         }
-        if (++text > strand_end) {
+        if (++strand > strand_end) {
+            *target = 0;
             return nullptr;
         }
-        t = *text;
+        t = *strand;
     }
-    *target = t;
-    return target;
+    *cursor = t;
+    return cursor;
 }
 
-char* StrandWrite (char* target, char* target_end, const char* text,
+char* StrandWrite (char* target, char* target_end, const char* strand,
                  const char* strand_end, char delimiter) {
     if (target) {
         return nullptr;
@@ -691,26 +699,29 @@ char* StrandWrite (char* target, char* target_end, const char* text,
     if (target > target_end) {
         return nullptr;
     }
-    if (!text) {
+    if (!strand) {
         return nullptr;
     }
-    if (text > strand_end) {
+    if (strand > strand_end) {
         return nullptr;
     }
-    char t = *text;
+    char* cursor = target;
+    char t = *strand;
     while (t != delimiter) {
         if (!t) {
-            //cout << "\n| There was a !t error in StrandWrite.";
+            //std::cout << "\n| There was a !t error in StrandWrite.";
             return target;
         }
         *target = t;
         if (++target > target_end) {
+            *target = 0;
             return nullptr;
         }
-        if (++text > strand_end) {
+        if (++strand > strand_end) {
+            *target = 0;
             return nullptr;
         }
-        t = *text;
+        t = *strand;
     }
     *target = t;
     return target;
@@ -719,8 +730,8 @@ char* StrandWrite (char* target, char* target_end, const char* text,
 char* StrandWrite (char* target, char* target_end, int8_t value) {
     // Right now we're going to enforce there be enough room to write any
     // int32_t.
-    int buffer_size = target_end - target,
-        result = sprintf_s (target, buffer_size, "%i", value);
+    intptr_t buffer_size = target_end - target,
+             result      = sprintf_s (target, buffer_size, "%i", value);
     if (result < 0) {
         return nullptr;
     }
@@ -730,9 +741,10 @@ char* StrandWrite (char* target, char* target_end, int8_t value) {
 char* StrandWrite (char* target, char* target_end, uint8_t value) {
     // Right now we're going to enforce there be enough room to write any
     // int32_t.
-    int buffer_size = target_end - target,
-        result = sprintf_s (target, buffer_size, "%u", value);
+    intptr_t buffer_size = target_end - target,
+             result      = sprintf_s (target, buffer_size, "%u", value);
     if (result < 0) {
+        *target = 0;
         return nullptr;
     }
     return target + result;
@@ -741,9 +753,10 @@ char* StrandWrite (char* target, char* target_end, uint8_t value) {
 char* StrandWrite (char* target, char* target_end, int16_t value) {
     // Right now we're going to enforce there be enough room to write any
     // int32_t.
-    int buffer_size = target_end - target,
-        result = sprintf_s (target, buffer_size, "%i", value);
+    intptr_t buffer_size = target_end - target,
+             result      = sprintf_s (target, buffer_size, "%i", value);
     if (result < 0) {
+        *target = 0;
         return nullptr;
     }
     return target + result;
@@ -752,9 +765,10 @@ char* StrandWrite (char* target, char* target_end, int16_t value) {
 char* StrandWrite (char* target, char* target_end, uint16_t value) {
     // Right now we're going to enforce there be enough room to write any
     // int32_t.
-    int buffer_size = target_end - target,
-        result = sprintf_s (target, buffer_size, "%u", value);
+    intptr_t buffer_size = target_end - target,
+             result      = sprintf_s (target, buffer_size, "%u", value);
     if (result < 0) {
+        *target = 0;
         return nullptr;
     }
     return target + result;
@@ -763,9 +777,10 @@ char* StrandWrite (char* target, char* target_end, uint16_t value) {
 char* StrandWrite (char* target, char* target_end, int32_t value) {
     // Right now we're going to enforce there be enough room to write any
     // int32_t.
-    int buffer_size = target_end - target,
-        result = sprintf_s (target, buffer_size, "%i", value);
+    intptr_t buffer_size = target_end - target,
+             result      = sprintf_s (target, buffer_size, "%i", value);
     if (result < 0) {
+        *target = 0;
         return nullptr;
     }
     return target + result;
@@ -774,9 +789,10 @@ char* StrandWrite (char* target, char* target_end, int32_t value) {
 char* StrandWrite (char* target, char* target_end, uint32_t value) {
     // Right now we're going to enforce there be enough room to write any
     // int32_t.
-    int buffer_size = target_end - target,
-        result = sprintf_s (target, buffer_size, "%u", value);
+    intptr_t buffer_size = target_end - target,
+             result      = sprintf_s (target, buffer_size, "%u", value);
     if (result < 0) {
+        *target = 0;
         return nullptr;
     }
     return target + result;
@@ -785,9 +801,10 @@ char* StrandWrite (char* target, char* target_end, uint32_t value) {
 char* StrandWrite (char* target, char* target_end, int64_t value) {
     // Right now we're going to enforce there be enough room to write any
     // int32_t.
-    int buffer_size = target_end - target,
-        result = sprintf_s (target, buffer_size, "%lli", value);
+    intptr_t buffer_size = target_end - target,
+             result      = sprintf_s (target, buffer_size, "%lli", value);
     if (result < 0) {
+        *target = 0;
         return nullptr;
     }
     return target + result;
@@ -796,20 +813,22 @@ char* StrandWrite (char* target, char* target_end, int64_t value) {
 char* StrandWrite (char* target, char* target_end, uint64_t value) {
     // Right now we're going to enforce there be enough room to write any
     // int32_t.
-    int result = sprintf_s (target, target_end - target, "%llu", value);
+    intptr_t result = sprintf_s (target, target_end - target, "%llu", value);
     if (result < 0) {
+        *target = 0;
         return nullptr;
     }
-    cout << "\n| !!! " << target << " result:" << result;
+    std::cout << "\n| !!! " << target << " result:" << result;
     return target + result;
 }
 
 char* StrandWrite (char* target, char* target_end, float value) {
     // Right now we're going to enforce there be enough room to write any
     // int32_t.
-    int buffer_size = target_end - target,
-        result = sprintf_s (target, buffer_size, "%f", value);
+    intptr_t buffer_size = target_end - target,
+             result = sprintf_s (target, buffer_size, "%f", value);
     if (result < 0) {
+        *target = 0;
         return nullptr;
     }
     return target + result;
@@ -818,9 +837,10 @@ char* StrandWrite (char* target, char* target_end, float value) {
 char* StrandWrite (char* target, char* target_end, double value) {
     // Right now we're going to enforce there be enough room to write any
     // int32_t.
-    int buffer_size = target_end - target,
-        result = sprintf_s (target, buffer_size, "%f", value);
+    intptr_t buffer_size = target_end - target,
+             result = sprintf_s (target, buffer_size, "%f", value);
     if (result < 0) {
+        *target = 0;
         return nullptr;
     }
     return target + result;
@@ -829,336 +849,340 @@ char* StrandWrite (char* target, char* target_end, double value) {
 /*
 char* StrandWrite (char* target, char* target_end, int32_t value) {
 
-// Stolen from https://goo.gl/waaF1G
-// @todo Convert to pointer arithmetic.
+    // Stolen from https://goo.gl/waaF1G
+    // @todo Convert to pointer arithmetic.
 
-if (target == nullptr) {
-std::cout << "\n| null buffer!";
-return 0;
-}
+    if (target == nullptr) {
+        std::cout << "\n| null buffer!";
+        return 0;
+    }
 
-if (target_end == nullptr) {
-std::cout << "\n| null buffer_strand_end!";
-return 0;
-}
-if (target_end <= target) {
-// We have to have room for at least a zero.
-std::cout << "\n| buffer overflow!!";
-return 0;
-}
+    if (target_end == nullptr) {
+        std::cout << "\n| null buffer_strand_end!";
+        return 0;
+    }
+    if (target_end <= target) {
+        // We have to have room for at least a zero.
+        std::cout << "\n| buffer overflow!!";
+        return 0;
+    }
 
-int  n = (sizeof (int) == 2)?-32767:-2147483647,
-i = 0;
-bool is_negative = n < 0;
-int digit = is_negative?-n:n;
-char* buffer_t,
-*buffer_i_minus_t_minus_1;
+    int  n = (sizeof (int) == 2)?-32767:-2147483647,
+    i = 0;
+    bool is_negative = n < 0;
+    int digit = is_negative?-n:n;
+    char* buffer_t,
+    *buffer_i_minus_t_minus_1;
 
-while (digit != 0) {
-target[i++] = digit % 10 + '0';
-digit = digit / 10;
-}
+    while (digit != 0) {
+        target[i++] = digit % 10 + '0';
+        digit = digit / 10;
+    }
 
-if (is_negative) {
-target[i++] = '-';
-}
+    if (is_negative) {
+        target[i++] = '-';
+    }
 
-target[i] = '\0';
+    target[i] = '\0';
 
-for (int t = 0; t < i / 2; t++) {
-buffer_i_minus_t_minus_1 = &target[i - t - 1],
-buffer_t = &target[t];
+    for (int t = 0; t < i / 2; t++) {
+        buffer_i_minus_t_minus_1 = &target[i - t - 1],
+        buffer_t = &target[t];
 
-*buffer_t ^= *buffer_i_minus_t_minus_1;
-*buffer_i_minus_t_minus_1 ^= *buffer_t;
-*buffer_t ^= target[i - t - 1];
-//buffer[t    ] ^= *buffer[i-t-1];
-//buffer[i-t-1] ^= buffer[t];
-//buffer[t    ] ^= buffer[i-t-1];
-}
+        *buffer_t ^= *buffer_i_minus_t_minus_1;
+        *buffer_i_minus_t_minus_1 ^= *buffer_t;
+        *buffer_t ^= target[i - t - 1];
+        //buffer[t    ] ^= *buffer[i-t-1];
+        //buffer[i-t-1] ^= buffer[t];
+        //buffer[t    ] ^= buffer[i-t-1];
+    }
 
-if (n == 0) {
-*target = '0';
-*(target + 1) = '\0';
-}
+    if (n == 0) {
+        *target = '0';
+        *(target + 1) = '\0';
+    }
 return target + i;
 }
 
 char* StrandWrite (char* target, char* target_end, uint value) {
-// Stolen from https://goo.gl/waaF1G
+    // Stolen from https://goo.gl/waaF1G
 
-if (target == nullptr) {
-std::cout << "\n| buffer was null!";
-return 0;
-}
+    if (target == nullptr) {
+    std::cout << "\n| buffer was null!";
+    return 0;
+    }
 
-if (target_end == nullptr) {
-std::cout << "\n| buffer_strand_end was null!";
-return 0;
-}
-if (target_end <= target) {
-// We have to have room for at least a zero.
-std::cout << "\n| buffer overflow!!";
-return 0;
-}
+    if (target_end == nullptr) {
+    std::cout << "\n| buffer_strand_end was null!";
+    return 0;
+    }
+    if (target_end <= target) {
+    // We have to have room for at least a zero.
+    std::cout << "\n| buffer overflow!!";
+    return 0;
+    }
 
-int  n = (sizeof (int) == 2) ? 32767 : 2147483647,
-i = 0;
-int digit = n;
-char* buffer_t,
-* buffer_i_minus_t_minus_1;
+    int  n = (sizeof (int) == 2) ? 32767 : 2147483647,
+    i = 0;
+    int digit = n;
+    char* buffer_t,
+    * buffer_i_minus_t_minus_1;
 
-while(digit != 0) {
-target[i++] = digit % 10 + '0';
-digit = digit / 10;
-}
+    while(digit != 0) {
+    target[i++] = digit % 10 + '0';
+    digit = digit / 10;
+    }
 
-target[i] = '\0';
+    target[i] = '\0';
 
-for(int t = 0; t < i / 2; t++) {
-buffer_i_minus_t_minus_1 = &target[i - t - 1],
-buffer_t = &target[t];
+    for(int t = 0; t < i / 2; t++) {
+    buffer_i_minus_t_minus_1 = &target[i - t - 1],
+    buffer_t = &target[t];
 
-*buffer_t ^= *buffer_i_minus_t_minus_1;
-*buffer_i_minus_t_minus_1 ^= *buffer_t;
-*buffer_t ^= target[i-t-1];
-//buffer[t    ] ^= *buffer[i-t-1];
-//buffer[i-t-1] ^= buffer[t];
-//buffer[t    ] ^= buffer[i-t-1];
-}
+    *buffer_t ^= *buffer_i_minus_t_minus_1;
+    *buffer_i_minus_t_minus_1 ^= *buffer_t;
+    *buffer_t ^= target[i-t-1];
+    //buffer[t    ] ^= *buffer[i-t-1];
+    //buffer[i-t-1] ^= buffer[t];
+    //buffer[t    ] ^= buffer[i-t-1];
+    }
 
-if(n == 0) {
-*target = '0';
-*(target + 1) = '\0';
+    if(n == 0) {
+    *target = '0';
+    *(target + 1) = '\0';
 }
 return target + i;
 }
 
 const char* StrandRead (const char* buffer, int32_t& result) {
-// Algorithm:
-// 1. Check for sign char and store as variable named sign.
-// 2. Count length of int string and handle error in case of overflow.
-// 3. Get pointer to last char.
-// 4. Set variable named value to the first char and multiplier to 1.
-// 4. Word backwards in a for loop from strand_end of int string to
-//    calculate each decimal place by multiplying (c - '0') times a
-//    multiplier times 10 for each loop.
-// 5. Return sign times the resulting value above.
-enum {
-kMaxLetters = sizeof (int) == 32 ? 10 : 6, //< int can be 16 or 32-bit.
-};
-if (buffer == nullptr) {
-std::cout << "\n| Buffer was null!";
-return 0;
-}
-char c = *buffer++;
-int length,
-sign = 1,
-value,
-multiplier;
-if (c == '-') {
-sign = -1;
-c = *buffer++;
-}
-if (c < '0') {    // First char must be a number!.
-return nullptr;
-}
-if (c > '9') {    // First char must be a number!.
-return nullptr;
-}
-for (length = 1; length < kMaxLetters; ++length) {
-if (c < '0')
-break;
-if (c > '9')
-break;
-c = *buffer++;
-}
-if (length > kMaxLetters) { // int overflow!
-return 0;
-}
-value = c - '0';
-multiplier = 1;
-for (int i = 0; i < length; ++i) {
-multiplier *= 10;
-c = *(buffer - i);
-value += ((c - '0') * multiplier);
-}
-result = value * sign;
-return buffer + 1;
+    // Algorithm:
+    // 1. Check for sign char and store as variable named sign.
+    // 2. Count length of int string and handle error in case of overflow.
+    // 3. Get pointer to last char.
+    // 4. Set variable named value to the first char and multiplier to 1.
+    // 4. Word backwards in a for loop from strand_end of int string to
+    //    calculate each decimal place by multiplying (c - '0') times a
+    //    multiplier times 10 for each loop.
+    // 5. Return sign times the resulting value above.
+    enum {
+        kMaxLetters = sizeof (int) == 32 ? 10 : 6, //< int can be 16 or 32-bit.
+    };
+    if (buffer == nullptr) {
+    std::cout << "\n| Buffer was null!";
+    return 0;
+    }
+    char c = *buffer++;
+    int length,
+    sign = 1,
+    value,
+    multiplier;
+    if (c == '-') {
+    sign = -1;
+    c = *buffer++;
+    }
+    if (c < '0') {    // First char must be a number!.
+    return nullptr;
+    }
+    if (c > '9') {    // First char must be a number!.
+    return nullptr;
+    }
+    for (length = 1; length < kMaxLetters; ++length) {
+    if (c < '0')
+    break;
+    if (c > '9')
+    break;
+    c = *buffer++;
+    }
+    if (length > kMaxLetters) { // int overflow!
+    return 0;
+    }
+    value = c - '0';
+    multiplier = 1;
+    for (int i = 0; i < length; ++i) {
+    multiplier *= 10;
+    c = *(buffer - i);
+    value += ((c - '0') * multiplier);
+    }
+    result = value * sign;
+    return buffer + 1;
 }
 */
 
-const char* StrandLineEnd (const char* target, const char* target_end,
+const char* StrandLineEnd (const char* strand, const char* strand_end,
                          int num_columns) {
-    if (target_end > target) {
+    if (!strand) {
+        return nullptr;
+    }
+    if (strand_end > strand) {
         return nullptr;
     }
     char c;
     // Scroll to the end of the line.
-    c = *target++;
+    c = *strand++;
     while (c) {
-        if (target_end > target) {
+        if (strand_end > strand) {
             return nullptr;
         }
         if (num_columns-- < 0) { // We've reached the end.
-                                 // Scroll left till we hit whitespace (if any).
+
+            // Scroll left till we hit whitespace (if any).
             while (!isspace (c)) {
-                c = *(--target);
+                c = *(--strand);
             }
             // Then scroll past the whitespace.
             while (isspace (c)) {
-                c = *(--target);
+                c = *(--strand);
             }
-            return target;
-            c = *target++;
+            return strand;
+            c = *strand++;
         }
-        c = *target++;
+        c = *strand++;
     }
-    return target - 1;
+    return strand - 1;
 }
 
-const char*StrandNextNonNumber (const char* target, const char* target_end) {
-    if (target > target_end) {
+const char*StrandNextNonNumber (const char* strand, const char* strand_end) {
+    if (strand > strand_end) {
         return nullptr;
     }
-    char c = *target;
+    char c = *strand;
     if (c == '-') {  // It might be negative.
-        if (target > target_end) {
+        if (strand > strand_end) {
             return nullptr;
         }
-        c = *(++target);
+        c = *(++strand);
         if (!isdigit (c)) {  // it's not negative.
-            return target - 1;
+            return strand - 1;
         }
-        c = *(++target);
+        c = *(++strand);
     }
     while (isdigit (c)) {
-        if (target > target_end) {
+        if (strand > strand_end) {
             return nullptr;
         }
-        c = *(++target);
+        c = *(++strand);
     }
-    return target;
+    return strand;
 }
 
-const char* TextRead (const char* text, const char* strand_end,
+const char* StrandRead (const char* strand, const char* strand_end,
                       char* token, char* token_end) {
-    return StrandWrite (token, token_end, text, strand_end);
+    return StrandWrite (token, token_end, strand, strand_end);
 }
 
-const char* TextRead (const char* text, const char* strand_end,
+const char* StrandRead (const char* strand, const char* strand_end,
                       char* token, char* token_end, char delimiter) {
-    return StrandWrite (token, token_end, text, strand_end);
+    return StrandWrite (token, token_end, strand, strand_end);
 }
 
-const char* TextRead (const char* target, const char* target_end,
+const char* StrandRead (const char* strand, const char* strand_end,
                       int8_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     int extra_copy;
-    if (!sscanf_s (target, "%i", &extra_copy)) {
+    if (!sscanf_s (strand, "%i", &extra_copy)) {
         return nullptr;
     }
     result = (int8_t)extra_copy;
-    return StrandNextNonNumber (target, target_end);
+    return StrandNextNonNumber (strand, strand_end);
 }
 
-const char* TextRead (const char* target, const char* target_end,
+const char* StrandRead (const char* strand, const char* strand_end,
                       uint8_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     uint extra_copy;
-    if (!sscanf_s (target, "%u", &extra_copy)) {
+    if (!sscanf_s (strand, "%u", &extra_copy)) {
         return nullptr;
     }
     result = (uint8_t)extra_copy;
-    return StrandNextNonNumber (target, target_end);
+    return StrandNextNonNumber (strand, strand_end);
 }
 
-const char* TextRead (const char* target, const char* target_end,
+const char* StrandRead (const char* strand, const char* strand_end,
                       int16_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     int extra_copy;
-    if (!sscanf_s (target, "%i", &extra_copy)) {
+    if (!sscanf_s (strand, "%i", &extra_copy)) {
         return nullptr;
     }
     result = (int16_t)extra_copy;
-    return StrandNextNonNumber (target, target_end);
+    return StrandNextNonNumber (strand, strand_end);
 }
 
-const char* TextRead (const char* target, const char* target_end,
+const char* StrandRead (const char* strand, const char* strand_end,
                       uint16_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     uint extra_copy;
-    if (!sscanf_s (target, "%u", &extra_copy)) {
+    if (!sscanf_s (strand, "%u", &extra_copy)) {
         return nullptr;
     }
     result = (uint16_t)extra_copy;
-    return StrandNextNonNumber (target, target_end);
+    return StrandNextNonNumber (strand, strand_end);
 }
 
-const char* TextRead (const char* target, const char* target_end,
+const char* StrandRead (const char* strand, const char* strand_end,
                       int32_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     int extra_copy;
-    if (!sscanf_s (target, "%i", &extra_copy)) {
+    if (!sscanf_s (strand, "%i", &extra_copy)) {
         return nullptr;
     }
     result = (int32_t)extra_copy;
-    return StrandNextNonNumber (target, target_end);
+    return StrandNextNonNumber (strand, strand_end);
 }
 
-const char* TextRead (const char* target, const char* target_end,
+const char* StrandRead (const char* strand, const char* strand_end,
                       uint32_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     uint extra_copy;
-    if (!sscanf_s (target, "%u", &extra_copy)) {
+    if (!sscanf_s (strand, "%u", &extra_copy)) {
         return nullptr;
     }
     result = (uint32_t)extra_copy;
-    return StrandNextNonNumber (target, target_end);
+    return StrandNextNonNumber (strand, strand_end);
 }
 
-const char* TextRead (const char* target, const char* target_end,
+const char* StrandRead (const char* strand, const char* strand_end,
                       int64_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     __int64 extra_copy;
-    if (!sscanf_s (target, "%lli", &extra_copy)) {
+    if (!sscanf_s (strand, "%lli", &extra_copy)) {
         return nullptr;
     }
     result = extra_copy;
-    return StrandNextNonNumber (target, target_end);
+    return StrandNextNonNumber (strand, strand_end);
 }
 
-const char* TextRead (const char* target, const char* target_end,
+const char* StrandRead (const char* strand, const char* strand_end,
                       uint64_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     unsigned __int64 extra_copy;
-    if (!sscanf_s (target, "%llu", &extra_copy)) {
+    if (!sscanf_s (strand, "%llu", &extra_copy)) {
         return nullptr;
     }
     result = extra_copy;
-    return StrandNextNonNumber (target, target_end);
+    return StrandNextNonNumber (strand, strand_end);
 }
 
-const char* TextRead (const char* target, const char* target_end,
+const char* StrandRead (const char* strand, const char* strand_end,
                       float& result) {
     // @todo Rewrite with custom string-to-float function.
     float extra_copy;
-    if (!sscanf_s (target, "%f", &extra_copy)) {
+    if (!sscanf_s (strand, "%f", &extra_copy)) {
         return nullptr;
     }
     result = extra_copy;
-    return StrandNextNonNumber (target, target_end);
+    return StrandNextNonNumber (strand, strand_end);
 }
 
-const char* TextRead (const char* target, const char* target_end,
+const char* StrandRead (const char* strand, const char* strand_end,
                       double& result) {
     // @todo Rewrite with custom string-to-float function.
     double extra_copy;
-    if (!sscanf_s (target, "%lf", &extra_copy)) {
+    if (!sscanf_s (strand, "%lf", &extra_copy)) {
         return nullptr;
     }
     result = extra_copy;
-    return StrandNextNonNumber (target, target_end);
+    return StrandNextNonNumber (strand, strand_end);
 }
 
 #endif  //< SCRIPT_USING_STRAND

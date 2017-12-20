@@ -1,7 +1,7 @@
 /** Kabuki Toolkit
-    @file    ~/projects/kabuki_tester.cc
+    @file    ~/source/kabuki/config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -13,13 +13,9 @@
              permissions and limitations under the License.
 */
 
-#include "global.h"
+#ifndef HEADER_FOR_KABUKI_CONFIG
+#define HEADER_FOR_KABUKI_CONFIG
 
-int main (int args_count, char** args) {
-    Text txt;
-    txt << txt.Line ()
-        << "\n| Running Kabuki Toolkit unit tests..."
-        << txt.Line ()
-        << "\n|";
-    return CommandLineTestRunner::RunAllTests (args_count, args);
-}
+#include "script/global.h"
+
+#endif  //< HEADER_FOR_KABUKI_DATA_CONFIG

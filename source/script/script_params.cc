@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/script_args.cc
+    @file    ~/source/script/script_args.cc
     @author  Cale McCollough <https://calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -38,7 +38,7 @@ uint_t ParamsNumber (const uint_t* params, int param_number) {
                 param_number += 2;
                 break;
             } else if (value > 7) { // Gratuitous explanation points!
-                cout << "\n| Error";
+                std::cout << "\n| Error";
                 return NIL;
             }
             else {
@@ -71,7 +71,7 @@ Text& ParamsPrint (const uint_t* params, Text& text) {
         value = *params++;
         type = value & 0x1f;   //< Mask off type.
         value = value >> 5;     //< Shift over array type.
-        text << TypeText (value) << ", ";
+        text << TypeString (value) << ", ";
         if ((type >= STR) && (value <= ST4)) {
             if (value) {
                 return text << "\n| Error: arrays may only be created from POD types.";
@@ -168,7 +168,7 @@ Text& ParamsPrint (const uint_t* params, Text& text) {
     }
     // Do the last set without a comma.
     value = *params++;
-    text << TypeText (value) << ", ";
+    text << TypeString (value) << ", ";
     if ((value == STR) || (value == ST2) || (value == ST4)) {
         ++i;
         value = *params++;

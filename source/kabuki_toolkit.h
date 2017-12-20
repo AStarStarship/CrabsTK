@@ -1,6 +1,6 @@
-/** Kabuki Toolkit: Chinese Room
+/** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/kabuki_toolkit.h
+    @file    ~/source/kabuki_toolkit.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,7 +17,6 @@
 #ifndef HEADER_FOR_KABUKI_TOOLKIT
 #define HEADER_FOR_KABUKI_TOOLKIT
 
-#include "script/global.h"
-//#include "id/global.h"
+#include "data/global.h"
 
 #endif  //< HEADER_FOR_KABUKI_TOOLKIT

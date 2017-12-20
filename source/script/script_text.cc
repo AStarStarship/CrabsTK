@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/script_text.cc
+    @file    ~/source/script/script_text.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -15,7 +15,6 @@
 */
 
 #include <stdafx.h>
-
 #include "text.h"
 
 #if SCRIPT_USING_TEXT
@@ -28,14 +27,14 @@ namespace _ {
 
 Text::Text () :
     cursor_ (buffer_) {
-    // Nothing to do here ({:-)=+<
+    MemoryClear (buffer_, kSize);
+    *buffer_ = 0;
 }
 
 Text::Text (const char* strand) :
     cursor_ (buffer_) {
-    if (!StrandWrite (buffer_, buffer_ + kSize, strand)) {
-        *buffer_ = 0;
-    }
+    *buffer_ = 0;
+    StrandWrite (buffer_, buffer_ + kSize, strand);
 }
 
 Text::Text (const Text& other) :
@@ -45,17 +44,28 @@ Text::Text (const Text& other) :
     MemoryCopy (buffer_, cursor, other.buffer_, other_buffer_end);
 }
 
-void Text::Clear () {
+Text& Text::Clear () {
     *buffer_ = 0;
     cursor_ = buffer_;
+    return *this;
+}
+
+Text& Text::COut () {
+    std::cout << buffer_;
+    return Clear ();
+}
+
+Text& Text::CErr () {
+    std::cerr << buffer_;
+    return Clear ();
 }
 
 int Text::Length () const {
-    return cursor_ - buffer_;
+    return (int)(cursor_ - buffer_);
 }
 
 int Text::Space () const {
-    return (buffer_ + kSize) - cursor_;
+    return (int)((buffer_ + kSize) - cursor_);
 }
 
 void Text::Clone (const Text& other) {
@@ -96,29 +106,145 @@ Text& Text::operator= (const Text& other) {
     return *this;
 }
 
-Text& Text::Char (char c) {
-    char* cursor = cursor_;
-    if (cursor++ >= buffer_ + kSize) {
-        *this;
+Text& Text::Write (const char* strand) {
+    char* cursor = StrandWrite (cursor_, GetEnd (), strand);
+    if (!cursor) {
+        *cursor_ = 0;
+        return *this;
     }
-    *cursor = c;
     cursor_ = cursor;
     return *this;
 }
 
+Text& Text::Write (int8_t value) {
+    char* cursor = StrandWrite (cursor_, GetEnd (), value);
+    if (!cursor) {
+        return *this;
+    }
+    //std::cout << "\n| Write int8_t:" << buffer_;
+    cursor_ = cursor;
+    return *this;
+}
+
+Text& Text::Write (uint8_t value) {
+    char* cursor = StrandWrite (cursor_, GetEnd (), value);
+    if (!cursor) {
+        return *this;
+    }
+    //std::cout << "\n| Write uint8_t:" << buffer_;
+    cursor_ = cursor;
+    return *this;
+}
+
+Text& Text::Write (int16_t value) {
+    char* cursor = StrandWrite (cursor_, GetEnd (), value);
+    if (!cursor) {
+        return *this;
+    }
+    //std::cout << "\n| Write int16_t:" << buffer_;
+    cursor_ = cursor;
+    return *this;
+}
+
+Text& Text::Write (uint16_t value) {
+    char* cursor = StrandWrite (cursor_, GetEnd (), value);
+    if (!cursor) {
+        return *this;
+    }
+    //std::cout << "\n| Write uint16_t:" << buffer_;
+    cursor_ = cursor;
+    return *this;
+}
+
+Text& Text::Write (int32_t value) {
+    char* cursor = StrandWrite (cursor_, GetEnd (), value);
+    if (!cursor) {
+        return *this;
+    }
+    std::cout << "\n| Write int32_t:" << buffer_;
+    cursor_ = cursor;
+    return *this;
+}
+
+Text& Text::Write (uint32_t value) {
+    char* cursor = StrandWrite (cursor_, GetEnd (), value);
+    if (!cursor) {
+        return *this;
+    }
+    //std::cout << "\n| Write uint32_t:" << buffer_;
+    cursor_ = cursor;
+    return *this;
+}
+
+Text& Text::Write (int64_t value) {
+    char* cursor = StrandWrite (cursor_, GetEnd (), value);
+    if (!cursor) {
+        return *this;
+    }
+    //std::cout << "\n| Write int64_t:" << buffer_;
+    cursor_ = cursor;
+    return *this;
+}
+
+Text& Text::Write (uint64_t value) {
+    char* cursor = StrandWrite (cursor_, GetEnd (), value);
+    if (!cursor) {
+        return *this;
+    }
+    //std::cout << "\n| Write uint64_t:" << buffer_;
+    cursor_ = cursor;
+    return *this;
+}
+
+Text& Text::Write (float value) {
+    char* cursor = StrandWrite (cursor_, GetEnd (), value);
+    if (!cursor) {
+        *cursor_ = 0;
+        return *this;
+    }
+    //std::cout << "\n| Write float:" << buffer_;
+    cursor_ = cursor;
+    return *this;
+}
+
+Text& Text::Write (double value) {
+    char* cursor = StrandWrite (cursor_, GetEnd (), value);
+    if (!cursor) {
+        *cursor_ = 0;
+        return *this;
+    }
+    //std::cout << "\n| Write double:" << buffer_;
+    cursor_ = cursor;
+    return *this;
+}
+
+Text& Text::Write (Text& text) {
+    return Write (text.GetBegin ());
+}
+
 Text& Text::Line (char token, const char* header, int length) {
     char* cursor = cursor_,
+        * stop   = cursor,
         * end    = GetEnd ();
     if (cursor + length + 1 > end) {
         return *this;
     }
-    end = StrandWrite (cursor, end, header);
+    stop = StrandWrite (cursor, end, header);
+    if (!stop) {
+        //std::cout << "\n| Error writting header!";
+        return *this;
+    }
     //if (!end) { // This will never happen because we just checked the bounds.
     //    return *this;
     //}
-    for (; cursor <= end; ++cursor) {
+    length -= (int)(stop - cursor);
+    stop = ((cursor + length) > end) ? end : cursor + length;
+    
+    while (cursor <= stop) {
         *cursor++ = token;
     }
+    //std::cout << "\n| Wrote: " << cursor_;
+    cursor_ = cursor;
     return *this;
 }
 
@@ -130,6 +256,7 @@ Text& Text::Line (const char* strand, int num_columns) {
 
     while (cursor < end) {
         if (--num_columns <= 0) {
+            *cursor_ = 0;
             return *this;
         }
         char c = *read++;
@@ -138,14 +265,16 @@ Text& Text::Line (const char* strand, int num_columns) {
             read = cursor;
         }
         if (++cursor > end) {
+            *cursor_ = 0;
             return *this;
         }
     }
+    cursor_ = cursor;
     return *this;
 }
 
 Text& Text::Error (const char* message, const char* end_string) {
-    return *this << "\n| Error: " << message << end_string;
+    return Write ("\n| Error: ").Write (message).Write (end_string);
 }
 
 Text& Text::LineBreak (const char* message, int top_bottom_margin,
@@ -156,10 +285,14 @@ Text& Text::LineBreak (const char* message, int top_bottom_margin,
 }
 
 Text& Text::Lines (int num_rows) {
-    *this << '\r';
-    for (int i = 0; i < num_rows - 1; ++i) {
-        Char ('\n');
+    char* cursor = cursor_,
+        * end    = GetEnd (),
+        * stop   = cursor + num_rows + 1;
+    while (cursor < stop) {
+        *cursor++ = '\n';
     }
+    *cursor = 0;
+    cursor_ = cursor + 1;
     return *this;
 }
 
@@ -185,13 +318,18 @@ Text& Text::Pointer (void* pointer) {
     return *this;
 }
 
-//Text& Text::Char (char c) {
-//    if ((c > 0 && c < ' ') || c == 127) {
-//        *this << 1;
-//        return;
-//    }
-//    return *this << c;
-//}
+Text& Text::Print (char c) {
+    if (Space () < 1) {
+        return *this;
+    }
+    if (c < ' ') {
+        return *this;
+    }
+    if (c == 127) {
+        return *this;
+    }
+    return *this << c;
+}
 
 /*
 char CreateKeyValueFormatText (char* string, char column_width,
@@ -239,7 +377,7 @@ char CreateKeyValueFormatText (char* string, char column_width,
 }*/
 
 Text& Text::NumberLine (int index) {
-    Char ('\n');
+    Write ('\n');
     enum {
         kMaxBufferSize = (sizeof (int) == 2)
         ?7
@@ -259,7 +397,7 @@ Text& Text::NumberLine (int index) {
     for (int j = 0; j < lettersLeft; ++j) {
         *this << buffer[j];
     }
-    return Char ('\n');
+    return Write ('\n');
 }
 
 Text& Text::NewLine () {
@@ -273,14 +411,14 @@ Text& Text::Bar (const char* input) {
 Text& Text::Break (const char* header, char c, int num_lines,
                   int console_width) {
     for (int i = 0; i < num_lines; ++i) {
-        Char ('\n');
+        Write ('\n');
     }
     *this << header;
     int length = StrandLength (header);
     for (int i = 0; i < console_width - length; ++i) {
         *this << c;
     }
-    return Char ('\n');
+    return Write ('\n');
 }
 
 Text& Text::Centered (const char* string, int width) {
@@ -295,17 +433,17 @@ Text& Text::Centered (const char* string, int width) {
         if (length < 4) {
             // Then we're just going to write the first few letters.
             for (; length >= 0; --length) {
-                Char ('\n');
+                Write ('\n');
             }
         }
     }
     int offset = (width - length) >> 1; //< >> 1 to /2
     for (int i = 0; i < offset; ++i) {
-        Char ('\n');
+        Write ('\n');
     }
     printf (string);
     for (offset = width - length - offset; offset <= width; ++offset) {
-        Char ('\n');
+        Write ('\n');
     }
     return *this;
 }
@@ -362,11 +500,11 @@ Text& Text::Centered (const char* input, int width, bool is_last,
     }
     num_spaces = width - length - 1 - (is_last?1:0);
     for (int i = 0; i < num_spaces / 2; ++i) {
-        Char (' ');
+        Write (' ');
     }
     *this << input;
     for (int i = 0; i < num_spaces - (num_spaces / 2); ++i) {
-        Char (' ');
+        Write (' ');
     }
     if (is_last) {
         *this << column_delimeter << '\n';
@@ -406,7 +544,7 @@ Text& Text::Right (const char* strand, int num_columns) {
             i;
         //  left whitespace.
         for (i = num_left_spaces; i != 0; --i) {
-            Char (' ');
+            Write (' ');
         }
         //  input.
         for (i = row_length; i != 0; --i) {
@@ -429,7 +567,7 @@ Text& Text::Page (const char* input, int indentation,
         buffer[15];     //< The bullet buffer.
     if (!c || input == nullptr) { //< It's an empty input.
         for (int i = num_columns; i > 0; --i) {
-            Char (' ');
+            Write (' ');
         }
         *this << "\n|\n";
         return *this;
@@ -457,7 +595,7 @@ Text& Text::Page (const char* input, int indentation,
     int num_spaces = tab_size * indentation;
     while (c) {
         for (cursor = num_spaces; cursor > 0; --cursor)
-            Char (' ');
+            Write (' ');
         cursor = num_spaces;
         while (c && (cursor++ < num_columns)) {
             *this << c;
@@ -465,7 +603,7 @@ Text& Text::Page (const char* input, int indentation,
         }
         *this << " |\n";
     }
-    return  Char ('\n');
+    return  Write ('\n');
 }
 
 Text& Text::Memory (const void* address, const void* end) {
@@ -475,7 +613,7 @@ Text& Text::Memory (const void* address, const void* end) {
         //Right (i, 8);
         sprintf_s (cursor_, (buffer_ + kSize) - cursor_, "%i", 8);
     }
-    Char ('\n') << '|';
+    Write ('\n') << '|';
     for (int i = 0; i < 65; ++i) {
         *this << '_';
     }
@@ -483,7 +621,7 @@ Text& Text::Memory (const void* address, const void* end) {
     const char* chars = reinterpret_cast<const char*> (address);
     char temp;
     while (chars < end) {
-        Char ('\n') << '|';
+        Write ('\n') << '|';
         for (int i = 0; i < 64; ++i) {
             temp = *chars;
             if (chars >= end)
@@ -493,9 +631,9 @@ Text& Text::Memory (const void* address, const void* end) {
         }
         *this << "| " << Pointer (chars + Diff (address, end));// (chars - 64);
     }
-    Char ('\n') << '|';
+    Write ('\n') << '|';
     for (int i = 0; i < 64; ++i) {
-        Char ('_');
+        Write ('_');
     }
     return *this << "| " << Pointer (chars + Diff (address, end));
 }
@@ -599,11 +737,6 @@ Text& Text::Err (const char* text) {
 
 Text& Text::Err (Text& text) {
     std::cerr << this;
-    return *this;
-}
-
-Text& Text::Err (const char* text) {
-    std::cerr << (*this << text);
     return *this;
 }
 

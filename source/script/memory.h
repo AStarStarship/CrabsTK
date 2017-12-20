@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/memory.h
+    @file    ~/source/script/memory.h
     @author  Cale McCollough <https://calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -184,7 +184,7 @@ inline uintptr_t Diff (const void* begin, const void* end) {
 /** Overwrites the memory with zeros functionally identical to memset.
     @warning Sharp knives: Function used to make L3 compiler warnings stop
              barking on known safe memory blocks. Newbs have been warned. */
-KABUKI void MemoryClear (void* address, int size);
+KABUKI void MemoryClear (void* address, size_t size);
 
 /** Copies the source to the target functionally identical to memcpy.
     @warning Sharp knives: Function used to make L3 compiler warnings stop

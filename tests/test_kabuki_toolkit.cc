@@ -1,7 +1,6 @@
 /** Kabuki Toolkit
-    @version 0.x
-    @file    ~/source/kabuki/global.h
-    @author  Cale McCollough <calemccollough.github.io>
+    @file    ~/projects/kabuki_tester.cc
+    @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
@@ -14,16 +13,15 @@
              permissions and limitations under the License.
 */
 
-#pragma once
 #include <stdafx.h>
+#include "global.h"
 
-#ifndef HEADER_FOR_PROJECTS_GLOBAL
-#define HEADER_FOR_PROJECTS_GLOBAL
+int main (int args_count, char** args) {
+    Text text;
+    text << text.Line ()
+         << "\n| Running Kabuki Toolkit unit tests..."
+         << text.Line ()
+         << "\n|" << text.COut ();
 
-#include "../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
-#include "../../../cpputest/include/CppUTest/TestHarness.h"
-#include "../script/global.h"
-
-using namespace _;
-
-#endif  //< HEADER_FOR_PROJECTS_GLOBAL
+    return CommandLineTestRunner::RunAllTests (args_count, args);
+}

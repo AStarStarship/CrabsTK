@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/script_wall.cc
+    @file    ~/source/script/script_wall.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -26,12 +26,12 @@ Wall::~Wall () {
     }
 }
 
-Wall::Wall (uint_t size_bytes) :
+Wall::Wall (size_t size_bytes) :
     is_dynamic_ (true) {
     size_bytes = size_bytes < kMinSizeBytes ? (uint_t)kMinSizeBytes
                                             : size_bytes;
     size_bytes = AlignSize64 (size_bytes);
-    uint_t size_words = (size_bytes >> sizeof (uintptr_t)) + 3;
+    size_t size_words = (size_bytes >> sizeof (void*)) + 3;
     uintptr_t* buffer = new uintptr_t[size_words],
              * aligned_buffer = MemoryAlign64 (buffer);
     //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
@@ -42,7 +42,7 @@ Wall::Wall (uint_t size_bytes) :
     StackInit (buffer, size_bytes >> sizeof (uintptr_t));
 }
 
-Wall::Wall (uintptr_t* buffer, uint_t size_bytes) {
+Wall::Wall (uintptr_t* buffer, size_t size_bytes) {
     //byte* ptr     = reinterpret_cast<byte*> (buffer);//,
     //    * new_ptr = ptr + MemoryAlignOffset<uint64_t> (ptr),
     //    * end_ptr = ptr + size_bytes;

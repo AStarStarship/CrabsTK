@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/script_types.cc
+    @file    ~/source/script/script_types.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -194,7 +194,7 @@ bool TypeIsValid (const char* type_name) {
     return false;
 }
 
-const char* TypeText (uint_t type) {
+const char* TypeString (uint_t type) {
     if (type >= kInvalidType)
         return "Invalid";
     return TypeTexts ()[type];

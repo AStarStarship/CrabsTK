@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/tstack.h
+    @file    ~/source/script/tstack.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -111,7 +111,7 @@ T StackInsert (TStack<T, I>* stack, T item, T index) {
         return 0;
     }
     if (count == 1) {
-        stack->cout = 1;
+        stack->std::cout = 1;
         if (index == 1) {
             items[1] = item;
             return 1;

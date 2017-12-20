@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/array.h
+    @file    ~/source/script/array.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -123,7 +123,7 @@ I ArrayPush (TArray<I>* array, T item) {
     if (array == nullptr)
         return -1;
     I size = array->height,
-      cout = array->count;
+      std::cout = array->count;
     if (count >= size)
         return -2;
     T* items = &array->element_one;

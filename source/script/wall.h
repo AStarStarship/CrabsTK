@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/wall.h
+    @file    ~/source/script/wall.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -65,13 +65,13 @@ class Wall : public Operation {
     Wall (TStack<Door*>* doors);
 
     /** Constructs a wall from the given buffer. */
-    Wall (uint_t size_bytes = kMinSizeBytes);
+    Wall (size_t size_bytes = kMinSizeBytes);
 
     /** Constructs a wall from the given buffer. */
-    Wall (uintptr_t* buffer, uint_t size_bytes);
+    Wall (uintptr_t* buffer, size_t size_bytes);
 
     /** Gets the size of the wall in bytes. */
-    uintptr_t GetSizeBytes ();
+    size_t GetSizeBytes ();
 
     /** Gets a pointer to the array of pointers to Door(string). */
     TStack<Door*>* Doors ();
@@ -93,7 +93,7 @@ class Wall : public Operation {
     private:
 
     bool           is_dynamic_; //< Flag for if using dynamic memory.
-    uintptr_t      size_bytes_; //< Size of the Wall in bytes.
+    size_t         size_bytes_; //< Size of the Wall in bytes.
     uintptr_t    * buffer_;     //< The Wall's buffer.
     TStack<Door*>* doors_;      //< The doors in the room.
 };

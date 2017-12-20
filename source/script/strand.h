@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/strand.h
+    @file    ~/source/script/strand.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -27,9 +27,10 @@ namespace _ {
 /** String utilities.
     @ingroup Strand
 
-    A string is specifically a nil-terminated sequence of bytes. A strand
-    may or not be a string, and often is the case is a strand is a token
-    or a buffer overflow situation.
+    Definition:
+    Strands are definied as having a begining of a buffer, and end of a buffer,
+    and a nil-term char. A theoretical string, in contrast, does not have a 
+    buffer.
 */
 
 /** Writes the given std_tm to the char buffer. */
@@ -373,8 +374,8 @@ KABUKI const char* StrandNextNonNumber (const char* begin, const char* end);
     @param token     Beginning address of the token buffer.
     @param token_end End address of the token buffer.
     strands. */
-KABUKI const char* TextRead (const char* begin, const char* end, 
-                             char* token, char* token_end);
+KABUKI const char* StrandRead (const char* begin, const char* end, 
+                               char* token, char* token_end);
 
 /** Reads a explicitly-delineated token from the given text buffer.
     @param begin     Beginning address of the input buffer.
@@ -383,78 +384,78 @@ KABUKI const char* TextRead (const char* begin, const char* end,
     @param token_end End address of the token buffer.
     @param delimiter A NON-ZERO delimiter to separate the string text into
     strands. */
-KABUKI const char* TextRead (const char* text, const char* end, 
-                             char* token, char* token_end, char delimiter);
+KABUKI const char* StrandRead (const char* text, const char* end, 
+                               char* token, char* token_end, char delimiter);
 
 /** Reads a int8_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    End address of the buffer.
     @param result The number read. */
-KABUKI const char* TextRead (const char* begin, const char* end,
-                             int8_t& result);
+KABUKI const char* StrandRead (const char* begin, const char* end,
+                               int8_t& result);
 
 /** Reads a uint8_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    End address of the buffer.
     @param result The number read. */
-KABUKI const char* TextRead (const char* begin, const char* end,
-                             uint8_t& result);
+KABUKI const char* StrandRead (const char* begin, const char* end,
+                               uint8_t& result);
 
 /** Reads a int16_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    End address of the buffer.
     @param result The number read. */
-KABUKI const char* TextRead (const char* begin, const char* end,
+KABUKI const char* StrandRead (const char* begin, const char* end,
                              int16_t& result);
 
 /** Reads a uint16_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    End address of the buffer.
     @param result The number read. */
-KABUKI const char* TextRead (const char* begin, const char* end,
-                             uint16_t& result);
+KABUKI const char* StrandRead (const char* begin, const char* end,
+                               uint16_t& result);
 
 /** Reads a int32_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    End address of the buffer.
     @param result The number read. */
-KABUKI const char* TextRead (const char* begin, const char* end,
-                             int32_t& result);
+KABUKI const char* StrandRead (const char* begin, const char* end,
+                               int32_t& result);
 
 /** Reads a uint32_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    End address of the buffer.
     @param result The number read. */
-KABUKI const char* TextRead (const char* begin, const char* end,
-                             uint32_t& result);
+KABUKI const char* StrandRead (const char* begin, const char* end,
+                               uint32_t& result);
 
 /** Reads a int64_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    End address of the buffer.
     @param result The number read. */
-KABUKI const char* TextRead (const char* begin, const char* end, 
-                             int64_t& result);
+KABUKI const char* StrandRead (const char* begin, const char* end, 
+                               int64_t& result);
 
 /** Reads a uint64_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    End address of the buffer.
     @param result The number read. */
-KABUKI const char* TextRead (const char* begin, const char* end,
-                             uint64_t& result);
+KABUKI const char* StrandRead (const char* begin, const char* end,
+                               uint64_t& result);
 
 /** Reads a float from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    End address of the buffer.
     @param result The number read. */
-KABUKI const char* TextRead (const char* begin, const char* end,
-                             float& result);
+KABUKI const char* StrandRead (const char* begin, const char* end,
+                               float& result);
 
 /** Reads a double from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    End address of the buffer.
     @param result The number read. */
-KABUKI const char* TextRead (const char* begin, const char* end,
-                             double& result);
+KABUKI const char* StrandRead (const char* begin, const char* end,
+                               double& result);
 
 }       //< namespace _
 #endif  //< HEADER_FOR_SCRIPT_SCRIBBLE

@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/script_slot.cc
+    @file    ~/source/script/script_slot.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -21,14 +21,14 @@ namespace _ {
 
 uint_t SlotLength (byte* start, byte* stop, uint_t size) {
     if (start > stop)
-        return size - (start - stop);
-    return stop - start;
+        return (uint_t)(size - (start - stop));
+    return (uint_t)(stop - start);
 }
 
 uint_t SlotSpace (byte* start, byte* stop, uint_t size) {
     if (start > stop)
-        return start - stop;
-    return size - (stop - start);
+        return (uint_t)(start - stop);
+    return (uint_t)(size - (stop - start));
 }
 
 }       //< namespace _

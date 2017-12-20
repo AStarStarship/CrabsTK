@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/script_bout.cc
+    @file    ~/source/script/script_bout.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -25,7 +25,8 @@
 #include "text.h"
 #include "hash.h"
 #include "slot.h"
-#include "display.h"
+
+using namespace std;
 
 namespace _ {
 
@@ -36,9 +37,8 @@ namespace _ {
     @param error The error type.
     @return Returns a Static Error Operation Result. */
 inline const Operation* ErrorReport (Bout* bout, Error error) {
-#if SCRIPT_DEBUG
-    Text text;
-    Display () << "\n| Bout " << ErrorString (error) << " Error!" << text.Print ();
+#if SCRIPT_DEBUG == SCRIPT___BOUT
+    std::cout << "\n| Bout " << ErrorString (error) << " Error!" << text.Print ();
 #endif
     return reinterpret_cast<const Operation*> (1);
 }
@@ -53,7 +53,7 @@ inline const Operation* ErrorReport (Bout* bout, Error error) {
 inline const Operation* ErrorReport (Bout* bout, Error error,
                                     const uint_t* header) {
 #if SCRIPT_DEBUG
-    Display () << "\n| Bout " << ErrorString (error) << " Error!";
+    std::cout << "\n| Bout " << ErrorString (error) << " Error!";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
@@ -69,7 +69,7 @@ inline const Operation* ErrorReport (Bout* bout, Error error,
                                     const uint_t* header,
                                     uint_t offset) {
 #if SCRIPT_DEBUG
-    Display () << "\n| Bout " << ErrorString (error) << " Error!";
+    std::cout << "\n| Bout " << ErrorString (error) << " Error!";
 #endif  //< SCRIPT_DEBUG
     return reinterpret_cast<const Operation*> (1);
 }
@@ -85,7 +85,7 @@ inline const Operation* ErrorReport (Bout* bout, Error error,
                                     const uint_t* header,
                                     uint_t offset,
                                     byte* address) {
-    Display () << "\n| Bout " << ErrorString (error) << " Error!";
+    std::cout << "\n| Bout " << ErrorString (error) << " Error!";
     return reinterpret_cast<const Operation*> (1);
 }
 
@@ -149,7 +149,7 @@ int BoutStreamByte (Bout* bout) {
         *start = begin + bout->start,
         *cursor = start;
 
-    int length = start < open?open - start + 1:
+    int length = (int)(start < open) ? open - start + 1:
         (end - start) + (open - begin) + 2;
 
     if (length < 1) {
@@ -168,9 +168,9 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
 #if SCRIPT_DEBUG
     Text text;
     text << "\n|\n|Writing "
-        << ParamsPrint (params, text)
-        << " to B-Output:" << text.Pointer (bout)
-        << BoutPrint (bout, text) << text.Print ();
+         << ParamsPrint (params, text)
+         << " to B-Output:" << text.Pointer (bout)
+         << BoutPrint (bout, text) << text.COut ();
 #endif  //< SCRIPT_DEBUG
     if (!bout)
         return ErrorReport (bout, kErrorImplementation);
@@ -233,9 +233,11 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     for (index = 1; index <= num_params; ++index) {
         type = params[index];
 #if SCRIPT_DEBUG
-        printf ("\n| param:%2i TType:%s start:%u, stop:%u space:%u value:", 
-                arg_index + 1, TypeText (type), Diff (begin, start),
-                Diff (begin, stop), space);
+        text << "\n| param:" << arg_index + 1 << " type:" << TypeString (type) 
+             << " start:" << Diff (begin, start) 
+             << " stop:" << Diff (begin, stop) 
+             << " space:" << space;
+             //<< " value:" << value;
 #endif
         switch (type) {
             case NIL:

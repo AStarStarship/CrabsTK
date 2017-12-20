@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/script_keyboard.cc
+    @file    ~/source/script/script_keyboard.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -25,15 +25,15 @@ namespace _ {
 #if SCRIPT_USING_KEYBOARD
 
 char KeyboardChar (const char* header) {
-    cout << header;
+    std::cout << header;
     char c = getchar ();
-    cout << '\n';
+    std::cout << '\n';
     return c;
 }
 
 int KeyboardInt (const char* header) {
     int number;
-    cout << header;
+    std::cout << header;
     cin.clear ();
     cin >> number;
     return number;
@@ -41,7 +41,7 @@ int KeyboardInt (const char* header) {
 
 float KeyboardFloat (const char* header) {
     float number;
-    cout << header;
+    std::cout << header;
     cin.clear ();
     cin >> number;
     return number;
@@ -54,7 +54,7 @@ void KeyboardText (const char* header, char* target, char* target_end) {
     if (target > target_end) {
         return;
     }
-    cout << header;
+    std::cout << header;
     cin.get (target, target_end - target, '\n');
     cin.clear ();
     cin.ignore (target_end - target, '\n');

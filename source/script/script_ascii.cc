@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/ascii.h
+    @file    ~/source/script/ascii.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,6 +14,7 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
 #include "ascii.h"
 
 namespace _ {

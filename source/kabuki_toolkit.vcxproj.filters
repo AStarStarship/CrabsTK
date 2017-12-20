@@ -161,9 +161,6 @@
     <ClInclude Include="assembly.h">
       <Filter>source</Filter>
     </ClInclude>
-    <ClInclude Include="global.h">
-      <Filter>source</Filter>
-    </ClInclude>
     <ClInclude Include="kabuki_toolkit.h">
       <Filter>source</Filter>
     </ClInclude>
@@ -203,11 +200,14 @@
     <ClInclude Include="kabuki\data\iterator.h">
       <Filter>source\kabuki\data</Filter>
     </ClInclude>
-    <ClInclude Include="tests\global.h">
-      <Filter>source\tests</Filter>
-    </ClInclude>
     <ClInclude Include="script\op.h">
       <Filter>source\script</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\config.h">
+      <Filter>source\kabuki</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -289,26 +289,26 @@
     <ClCompile Include="stdafx.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="dllmain.cc">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="kabuki\data\data_client.cc">
       <Filter>source\kabuki\data</Filter>
     </ClCompile>
     <ClCompile Include="kabuki\data\data_server.cc">
       <Filter>source\kabuki\data</Filter>
     </ClCompile>
-    <ClCompile Include="tests\kabuki_data_tests.cc">
-      <Filter>source\tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\script_tests.cc">
-      <Filter>source\tests</Filter>
-    </ClCompile>
     <ClCompile Include="script\script_op.cc">
       <Filter>source\script</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_display.cc">
-      <Filter>source\script</Filter>
+    <ClCompile Include="dllmain.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\test_kabuki_toolkit.cc">
+      <Filter>source\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\test_kabuki_data.cc">
+      <Filter>source\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\script_tests.cc">
+      <Filter>source\tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

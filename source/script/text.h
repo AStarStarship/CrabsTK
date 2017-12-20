@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/text.h
+    @file    ~/source/script/text.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -35,8 +35,7 @@ class Text {
     public:
 
     enum {
-        kMixSize = 16,                   //< Min buffer size.
-        kSize    = SCRIPT_TEXT_SIZE_MAX, //< Size of the Text buffer.
+        kSize = SCRIPT_TEXT_SIZE_MAX, //< Size of the Text buffer.
     };
 
     /** Constructor creates a Text from the given strand. */
@@ -48,8 +47,14 @@ class Text {
     /** Constructor copies the other Text buffer up the cursor. */
     Text (const Text& other);
 
-    /** Clears the text buffer. */
-    void Clear ();
+    /** Clears the text buffer without overwriting it. */
+    Text& Clear ();
+
+    /** Prints the text buffer before clearing it. */
+    Text& COut ();
+
+    /** Prints the text buffer before clearing it. */
+    Text& CErr ();
 
     /** Gets the char count of the buffer in bytes. */
     int Length () const;
@@ -73,8 +78,70 @@ class Text {
         @return Returns false if the new_cursor is out of bounds. */
     bool SetCursor (char* new_cursor);
 
-    /** Writes the given char to the buffer. */
-    Text& Char (char c);
+    /** Writes the given value to the buffer_.
+        @param  Value to write.
+        @return Reference to *this. */
+    Text& Print (char value);
+    
+    /** Writes the given strand to the buffer_.
+        @param  Strand to write. 
+        @return Reference to *this. */
+    Text& Write (const char* strand);
+
+    /** Writes the given value to the buffer_.
+        @param  Value to write.
+        @return Reference to *this. */
+    Text& Write (int8_t value);
+
+    /** Writes the given value to the buffer_.
+        @param  Value to write.
+        @return Reference to *this. */
+    Text& Write (uint8_t value);
+
+    /** Writes the given value to the buffer_.
+        @param  Value to write.
+        @return Reference to *this. */
+    Text& Write (int16_t value);
+
+    /** Writes the given value to the buffer_.
+        @param  Value to write.
+        @return Reference to *this. */
+    Text& Write (uint16_t value);
+
+    /** Writes the given value to the buffer_.
+        @param  Value to write.
+        @return Reference to *this. */
+    Text& Write (int32_t value);
+
+    /** Writes the given value to the buffer_.
+        @param  Value to write.
+        @return Reference to *this. */
+    Text& Write (uint32_t value);
+
+    /** Writes the given value to the buffer_.
+        @param  Value to write.
+        @return Reference to *this. */
+    Text& Write (int64_t value);
+
+    /** Writes the given value to the buffer_.
+        @param  Value to write.
+        @return Reference to *this. */
+    Text& Write (uint64_t value);
+
+    /** Writes the given value to the buffer_.
+        @param  Strand to write.
+        @return Reference to *this. */
+    Text& Write (float value);
+
+    /** Writes the given value to the buffer_.
+        @param  Strand to write.
+        @return Reference to *this. */
+    Text& Write (double value);
+
+    /** Writes the given text to the buffer_.
+        @param  Strand to write.
+        @return Reference to *this. */
+    Text& Write (Text& text);
 
     /** Prints the given token a specified num_times. */
     Text& Line (char token = '-', const char* left_column_text = "\n|",
@@ -325,127 +392,70 @@ class Text {
 
 /** Operation << writes a nil-terminated UTF-8 or ASCII string to the 
     text. */
-inline _::Text& operator<< (std::ostream& out_stream, _::Text& text) {
-    out_stream << text.GetBegin ();
-    return text;
+inline std::ostream& operator<< (std::ostream& out_stream, _::Text& text) {
+    return out_stream << text.GetBegin ();
 }
 
 /** Operation << writes a nil-terminated UTF-8 or ASCII string to the 
     text. */
 inline _::Text& operator<< (_::Text& text_a, _::Text& text_b) {
-    // Do nothing.
-    return text_a;
+    return text_a.Write (text_b);
 }
 
 /** Operation << writes a nil-terminated UTF-8 or ASCII string to the 
     text. */
 inline _::Text& operator<< (_::Text& text, const char* strand) {
-    char* cursor = _::StrandWrite (text.GetBegin (), text.GetEnd (), strand);
-    if (cursor == nullptr) {
-        return text;
-    }
-    text.SetCursor (cursor + 1);
-    return text;
+    return text.Write (strand);
 }
 
 /** Operation << writes the given value to the text. */
 inline _::Text& operator<< (_::Text& text, int8_t value) {
-    char* cursor = _::StrandWrite (text.GetBegin (), text.GetEnd (), value);
-    if (cursor == nullptr) {
-        return text;
-    }
-    text.SetCursor (cursor + 1);
-    return text;
+    return text.Write (value);
 }
 
 /** Operation << writes the given value to the text. */
 inline _::Text& operator<< (_::Text& text, uint8_t value) {
-    char* cursor = _::StrandWrite (text.GetBegin (), text.GetEnd (), value);
-    if (cursor == nullptr) {
-        return text;
-    }
-    text.SetCursor (cursor + 1);
-    return text;
+    return text.Write (value);
 }
 
 /** Operation << writes the given value to the text. */
 inline _::Text& operator<< (_::Text& text, int16_t value) {
-    char* cursor = _::StrandWrite (text.GetBegin (), text.GetEnd (), value);
-    if (cursor == nullptr) {
-        return text;
-    }
-    text.SetCursor (cursor + 1);
-    return text;
+    return text.Write (value);
 }
 
 /** Operation << writes the given value to the text. */
 inline _::Text& operator<< (_::Text& text, uint16_t value) {
-    char* cursor = _::StrandWrite (text.GetBegin (), text.GetEnd (), value);
-    if (cursor == nullptr) {
-        return text;
-    }
-    text.SetCursor (cursor + 1);
-    return text;
+    return text.Write (value);
 }
 
 /** Operation << writes the given value to the text. */
 inline _::Text& operator<< (_::Text& text, int32_t value) {
-    char* cursor = _::StrandWrite (text.GetBegin (), text.GetEnd (), value);
-    if (cursor == nullptr) {
-        return text;
-    }
-    text.SetCursor (cursor + 1);
-    return text;
+    return text.Write (value);
 }
 
 /** Operation << writes the given value to the text. */
 inline _::Text& operator<< (_::Text& text, uint32_t value) {
-    char* cursor = _::StrandWrite (text.GetBegin (), text.GetEnd (), value);
-    if (cursor == nullptr) {
-        return text;
-    }
-    text.SetCursor (cursor + 1);
-    return text;
+    return text.Write (value);
 }
 
 /** Operation << writes the given value to the text. */
 inline _::Text& operator<< (_::Text& text, int64_t value) {
-    char* cursor = _::StrandWrite (text.GetBegin (), text.GetEnd (), value);
-    if (cursor == nullptr) {
-        return text;
-    }
-    text.SetCursor (cursor + 1);
-    return text;
+    return text.Write (value);
 }
 
 /** Operation << writes the given value to the text. */
 inline _::Text& operator<< (_::Text& text, uint64_t value) {
-    char* cursor = _::StrandWrite (text.GetBegin (), text.GetEnd (), value);
-    if (cursor == nullptr) {
-        return text;
-    }
-    text.SetCursor (cursor + 1);
-    return text;
+    return text.Write (value);
 }
 
 /** Operation << writes the given value to the text. */
 inline _::Text& operator<< (_::Text& text, float value) {
-    char* cursor = _::StrandWrite (text.GetBegin (), text.GetEnd (), value);
-    if (cursor == nullptr) {
-        return text;
-    }
-    text.SetCursor (cursor + 1);
-    return text;
+    return text.Write (value);
 }
 
 /** Operation << writes the given value to the text. */
 inline _::Text& operator<< (_::Text& text, double value) {
-    char* cursor = _::StrandWrite (text.GetBegin (), text.GetEnd (), value);
-    if (cursor == nullptr) {
-        return text;
-    }
-    text.SetCursor (cursor + 1);
-    return text;
+    return text.Write (value);
 }
 
 #endif  //< SCRIPT_USING_TEXT

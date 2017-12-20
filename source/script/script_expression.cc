@@ -1,6 +1,6 @@
     /** Kabuki Toolkit
         @version 0.x
-        @file    ~/source/kabuki/script/script_expression.cc
+        @file    ~/source/script/script_expression.cc
         @author  Cale McCollough <cale.mccollough@gmail.com>
         @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
                  All right reserved (R). Licensed under the Apache License, Version 
@@ -22,6 +22,8 @@
 #include "args.h"
 #include "text.h"
 #include "hash.h"
+
+using namespace std;
 
 namespace _ {
 
@@ -121,6 +123,9 @@ Expression* ExpressionInit (uintptr_t* buffer, uint_t buffer_size,
                             uint_t stack_size, Operand* root,
                             uintptr_t* unpacked_buffer,
                             uintptr_t unpacked_size) {
+#if SCRIPT_DEBUG
+    Text text;
+#endif  //< SCRIPT_DEBUG
     if (buffer == nullptr) {
         return nullptr;
 }
@@ -131,14 +136,12 @@ Expression* ExpressionInit (uintptr_t* buffer, uint_t buffer_size,
         stack_size = kMinStackSize;    //< Minimum stack size.
     }
     if (unpacked_buffer == nullptr) {
-#if SCRIPT_DEBUG 
-        cout << "\n| Error: unpacked_buffer was null!";
-#endif  //< SCRIPT_DEBUG
+        std::cout << "\n| Error: unpacked_buffer was null!";
     }
 
     if (root == nullptr) {
 #if SCRIPT_DEBUG
-        cout << "\n| Error: root can't be null.";
+        std::cout << "\n| Error: root can't be null.";
 #endif  //< SCRIPT_DEBUG
         return nullptr;
     }
@@ -157,13 +160,8 @@ Expression* ExpressionInit (uintptr_t* buffer, uint_t buffer_size,
     expr->num_states   = 0;
     expr->operand      = nullptr;
 #if SCRIPT_DEBUG
-    printf ("\n| Initializing Stack: "
-        "\n| sizeof (Stack): %u"
-        "\n| (stack_count * (2 * sizeof (void*))): %u"
-        "\n| stack_count: %u buffer_size: %u size: %u",
-        sizeof (Expression), (stack_size *
-        (2 * sizeof (void*))), stack_size,
-        buffer_size, size); 
+    text <<"\n| Initializing Stack with size:" << stack_size 
+         << " buffer_size:" << buffer_size << " size:" << size << text.COut ();
 #endif //< SCRIPT_DEBUG
     expr->bytes_left = 0;
     //uint_t offset = sizeof (Expression) + total_stack_size - sizeof (void*);
@@ -177,7 +175,9 @@ Expression* ExpressionInit (uintptr_t* buffer, uint_t buffer_size,
     expr->header = nullptr;
     expr->header_start = nullptr;
     expr->root = root;
-    printf ("expr->op: 0x%p", expr->operand);
+#if SCRIPT_DEBUG
+    text << "expr->op:0x" << text.Pointer (expr->operand) << text.COut ();
+#endif //< SCRIPT_DEBUG
     BinInit  (ExpressionBinAddress  (expr), size);
     BoutInit (ExpressionBoutAddress (expr), size);
     return expr;
@@ -203,8 +203,8 @@ const Operation* Push (Expression* expr, Operand* operand) {
         return ErrorReport (expr, kErrorInvalidOperand);
     }
 #if SCRIPT_DEBUG
-    const Operation* op = operand->Star ('?', nullptr);
-    Print (Text () << "\n| Pushing " << op->name << " onto the stack");
+    std::cout << "\n| Pushing " << operand->Star ('?', nullptr)->name 
+         << " onto the stack";
 #endif  //< SCRIPT_DEBUG
     uint_t stack_count = expr->stack_count;
     if (stack_count >= expr->stack_size) {
@@ -214,8 +214,7 @@ const Operation* Push (Expression* expr, Operand* operand) {
     expr->operand = operand;
     expr->stack_count = stack_count + 1;
 #if SCRIPT_DEBUG
-    Text text;
-    Print (ExpressionPrintStack (expr, text));
+    Text text = ExpressionPrintStack (expr, text).COut ();
 #endif  //< SCRIPT_DEBUG
     return nullptr;
 }
@@ -231,16 +230,15 @@ const Operation* Pop (Expression* expr) {
         return 0;
     }
 #if SCRIPT_DEBUG
-    Text text;
-    text << "\n| Popping " << OperandName (expr->operand)
-        << " off the stack.";
+    std::cout << "\n| Popping " << OperandName (expr->operand)
+         << " off the stack.";
 #endif  //< SCRIPT_DEBUG
     expr->operand = ExpressionStack (expr)[stack_count - 2];
     expr->stack_count = stack_count - 1;
 #if SCRIPT_DEBUG
-    Display (text << "\n| Top of stack is now " << OperandName (expr->operand)
-             << "."
-             << ExpressionPrintStack (expr, text));
+    Text text;
+    std::cout <<"\n| Top of stack is now " << OperandName (expr->operand)
+         << "." << ExpressionPrintStack (expr, text);
 #endif  //< SCRIPT_DEBUG
     return nullptr;
 }
@@ -251,7 +249,7 @@ byte ExpressionExitState (Expression* expr) {
     //    return  ErrorReport (ExpressionBin (expr), kErrorImplementation);
     //}
 #if SCRIPT_DEBUG
-    cout << "\n| Exiting " << BinState ()[expr->bin_state]
+    std::cout << "\n| Exiting " << BinState ()[expr->bin_state]
               << " state back to the " << BinState ()[expr->last_bin_state]
               << " state .";
 #endif  //< SCRIPT_DEBUG
@@ -269,7 +267,7 @@ const Operation* ExpressionSetState (Expression* expr, Bin::State state) {
         return ErrorReport (expr, kErrorObjectLocked);
     }
 #if SCRIPT_DEBUG
-    cout << "\n| Entering " << BinState ()[state]
+    std::cout << "\n| Entering " << BinState ()[state]
               << " state:" << state;
 #endif  //< SCRIPT_DEBUG
     expr->bin_state = state;
@@ -283,7 +281,7 @@ const Operation* ExpressionEnterState (Expression* expr,
     //    return  ErrorReport (ExpressionBin (expr), kErrorImplementation);
     //}
 #if SCRIPT_DEBUG
-    cout << "\n| Entering " << BinState ()[state]
+    std::cout << "\n| Entering " << BinState ()[state]
               << " state:" << state;
 #endif  //< SCRIPT_DEBUG
     expr->last_bin_state = expr->bin_state;
@@ -356,15 +354,15 @@ const Operation* ExpressionScan (Expression* expr) {
     length = size - space;
 #if SCRIPT_DEBUG
     Text text;
-    text << "\n| Scanning Expression:0x" << text.Pointer (start) 
-        << " with length:" << length;
+    std::cout << "\n| Scanning Expression:0x" << text.Pointer (start)
+         << " with length:" << length << text.Clear ();
 #endif  //< SCRIPT_DEBUG
     for (; length != 0; --length) {
         b = *start;
         *write++ = b;
 #if SCRIPT_DEBUG
         text << text.Line ('=')
-            << "\n| " << length << ":\'";
+            << "\n| " << length << ":\'" << text.Clear ();
         if (b < 32 || b == 127) {
             text << AsciiText ((AsciiCode)b);
         }
@@ -372,8 +370,8 @@ const Operation* ExpressionScan (Expression* expr) {
             text << b;
         }
 
-        text << "\' " << BinState ()[bin_state] << " state"
-             << Text ().Line ();
+        std::cout << "\' " << BinState ()[bin_state] << " state"
+             << Text ().Line () << text.Clear ();
 #endif  //< SCRIPT_DEBUG
 
         if (++start >= end) start -= size;
@@ -457,7 +455,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     bin_state = Bin::ArgsState;
                     type = *(++expr->header);   //< Setup to read first type.
 #if SCRIPT_DEBUG
-                    text << "\n| Next TType to scan:\'" << TypeText (type)
+                    text << "\n| Next TType to scan:\'" << TypeString (type)
                         << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                     write += TypeAlign (write, type);
@@ -543,12 +541,12 @@ const Operation* ExpressionScan (Expression* expr) {
                         // byte to parse and we already have the byte loaded.
 #if SCRIPT_DEBUG
                         text << "\n| Done scanning without state change for \""
-                                  << TypeText (type) << '\"';
+                                  << TypeString (type) << '\"';
 #endif  //< SCRIPT_DEBUG
                         // Setup to read the next type.
                         type = *(++expr->header);
 #if SCRIPT_DEBUG
-                        text << "\n| Next TType to scan:\'" << TypeText (type)
+                        text << "\n| Next TType to scan:\'" << TypeString (type)
                             << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                         write += TypeAlign (write, type);
@@ -625,7 +623,7 @@ const Operation* ExpressionScan (Expression* expr) {
                         bin_state = Bin::AddressState;
                         break;
                     }
-                    text << "\n| Next TType to scan:\'" << TypeText (type)
+                    text << "\n| Next TType to scan:\'" << TypeString (type)
                         << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                     write += TypeAlign (write, type);
@@ -690,7 +688,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     // Setup to read the next type.
                     type = *(++header);
 #if SCRIPT_DEBUG
-                    text << "\n| Next TType to scan:\'" << TypeText (type)
+                    text << "\n| Next TType to scan:\'" << TypeString (type)
                         << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                     write += TypeAlign (write, type);
@@ -796,7 +794,7 @@ const Operation* ExpressionScan (Expression* expr) {
                     // Setup to read the next type.
                     type = *(++header);
 #if SCRIPT_DEBUG
-                    text << "\n| Next TType to scan:\'" << TypeText (type)
+                    text << "\n| Next TType to scan:\'" << TypeString (type)
                         << "\' with alignment " << TypeAlign (write, type) << '.';
 #endif  //< SCRIPT_DEBUG
                     write += TypeAlign (write, type);
@@ -816,7 +814,7 @@ const Operation* ExpressionScan (Expression* expr) {
     }
     expr->hash = hash;
     expr->bytes_left = bytes_left;
-    bin->start = Diff (begin, start);
+    bin->start = (uint_t)Diff (begin, start);
     return nullptr;
 }
 
@@ -843,14 +841,14 @@ const uint_t* ExpressionHeaderStack (Expression* expr) {
 
 void ExpressionClose (Expression* expr) {
 #if SCRIPT_DEBUG
-    cout << "\n| Closing expression.";
+    std::cout << "\n| Closing expression.";
 #endif  //< SCRIPT_DEBUG
     expr->stack_count = 1;
 }
 
 void ExpressionCancel (Expression* expr) {
 #if SCRIPT_DEBUG
-    cout << "\n| Canceling expression.";
+    std::cout << "\n| Canceling expression.";
 #endif  //< SCRIPT_DEBUG
     expr->stack_count = 1;
     expr->bin_state = Bin::AddressState;
@@ -876,8 +874,8 @@ void ExpressionClear (Expression* expr) {
         return;
     }
     MemoryClear (start, stop - start);
-    bin->start = Diff (expr, begin);
-    bin->stop  = Diff (expr, start + 1);
+    bin->start = (uint_t)Diff (expr, begin);
+    bin->stop  = (uint_t)Diff (expr, start + 1);
 }
 
 void ExpressionRingBell (Expression* expr, const char* address) {

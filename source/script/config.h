@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/config.h
+    @file    ~/source/script/config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -247,12 +247,20 @@ typedef uint64_t data_t;    //< Default TData size.
   void operator= (const ClassName&) = delete;
   //ClassName () = default //< Saw this once on the net but do we need it?
 
-#define SCRIPT_CLASS_BIN 1
-#define SCRIPT_CLASS_BOUT 2
-#define SCRIPT_CLASS_DISPLAY 3
-#define SCRIPT_CLASS_DOOR 4
-#define SCRIPT_CLASS_EXPRESSION 5
-#define SCRIPT_CLASS_
+#define CLASS___BIN         1
+#define CLASS___BOUT        2
+#define CLASS___DISPLAY     3
+#define CLASS___DOOR        4
+#define CLASS___EXPRESSION  5
+#define CLASS___LIBRARY     6
+#define CLASS___ROOM        7
+#define CLASS___ARRAY       8
+#define CLASS___BAG         9
+#define CLASS___BOOK        10
+#define CLASS___TEXT        11
+#define CLASS___TEXTMESSAGE 12
+#define CLASS___STACK       13
+#define CLASS___WALL        14
 
 #if SCRIPT_DEBUG
 #define PRINT (MESSAGE)\

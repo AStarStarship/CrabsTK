@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/script_operand.cc
+    @file    ~/source/script/script_operand.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -76,9 +76,9 @@ Text& OperandPrint (Operand* operand, Text& text) {
         << text.Line ('-', "\n>");
     for (; op_num <= last_op; ++op_num) {
         operation = operand->Star (op_num, nullptr);
-        text << "\n| Operation \'" << text.Char (op_num) << "\':" << op_num << ' '
-            << operation
-            << text.Line ('-', "\n>");
+        text << "\n| Operation \'" << text.Write (op_num) << "\':" 
+             << op_num << ' ' << operation
+             << text.Line ('-', "\n>");
     }
     return text;
 }

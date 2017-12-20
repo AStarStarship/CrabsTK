@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/types.h
+    @file    ~/source/script/types.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -109,7 +109,7 @@ KABUKI const char** TypeTexts ();
 KABUKI bool TypeIsValid (const char* type_name);
 
 /** Returns the name of the given type. */
-KABUKI const char* TypeText (uint_t type);
+KABUKI const char* TypeString (uint_t type);
 
 /** Checks the last char of the token to check if it is a specified char. */
 template<char c>

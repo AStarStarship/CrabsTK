@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/operation.h
+    @file    ~/source/script/operation.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -43,13 +43,18 @@ struct KABUKI Operation {
 };
 
 /** Converts the value to a pointer. */
-inline const uint_t* OperationCount (std::uintptr_t value) {
+inline const uint_t* OperationCount (uint_t value) {
     return reinterpret_cast<const uint_t*> (value);
 }
 
+/** Converts the given value to a pointer. 
+inline uint_t OperationCount (const uint_t* params) {
+    return (uint_t)reinterpret_cast<uintptr_t> (params);
+}*/
+
 /** Converts the given value to a pointer. */
-inline uint OperationCount (const Operation& operation) {
-    return reinterpret_cast<uint>(operation.params);
+inline uint_t OperationCount (const Operation& operation) {
+    return (uint_t)reinterpret_cast<uintptr_t> (operation.params);
 }
 
 /** Converts the given value to a pointer. */
@@ -58,21 +63,26 @@ inline const uint_t* OperationFirst (uint_t value) {
     return reinterpret_cast<const uint_t*>(index);
 }
 
-/** Converts the given value to a pointer. */
-inline uint OperationFirst (const Operation* operaion) {
-    if (!operaion) {
+/** Converts the given value to a pointer. 
+inline uint_t OperationFirst (const uint_t* result) {
+    if (!result) {
         return 0;
     }
-    return reinterpret_cast<uint> (operaion->params);
+    return (uint_t)reinterpret_cast<uintptr_t> (result);
+}*/
+
+/** Converts the given value to a pointer. */
+inline uint_t OperationFirst (const Operation& operation) {
+    return (uint_t)reinterpret_cast<uintptr_t> (operation.result);
 }
 
 /** Converts the given value to a pointer. */
-inline uint OperationLast (const Operation* operaion) {
+inline uintptr_t OperationLast (const Operation* operaion) {
     if (!operaion) {
         return 0;
     }
-    return reinterpret_cast<uint> (operaion->params) +
-           reinterpret_cast<uint> (operaion->result);
+    return reinterpret_cast<uintptr_t> (operaion->params) +
+           reinterpret_cast<uintptr_t> (operaion->result);
 }
 
 /** Evaluated Nil Operation result. */
@@ -92,7 +102,6 @@ KABUKI Text& OperationPrint (const Operation* op, Text& text);
 
 #if SCRIPT_USING_TEXT
 
-#include "text.h"
 /** Overloaded operator<< prints the given operation to the text. */
 KABUKI _::Text& operator<< (_::Text& text, const _::Operation* operation);
 

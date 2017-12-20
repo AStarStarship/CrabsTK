@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/script_token.cc
+    @file    ~/source/script/script_token.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -83,18 +83,18 @@ const char* TokenEquals (const char* strand, const char* token) {
          b = *token;
     int  result;
 
-    //cout << "\n| Comparing \"" << strand << "\" to \"" << token << "\"";
+    //std::cout << "\n| Comparing \"" << strand << "\" to \"" << token << "\"";
 
     // token SHOULD be a nil-terminated string without whitespace.
     while (b) {
         result = b - a;
-        //cout << "\n| b - a = " << b << " - " << a << " = " << result;
+        //std::cout << "\n| b - a = " << b << " - " << a << " = " << result;
         if (result) {
-            //cout << " is not a hit.";
+            //std::cout << " is not a hit.";
             return nullptr;
         }
         if (!a) {
-            //cout << " is a partial match but !a.";
+            //std::cout << " is a partial match but !a.";
             return nullptr;
         }
         ++strand;
@@ -103,10 +103,10 @@ const char* TokenEquals (const char* strand, const char* token) {
         b = *token;
     }
     if (a && !isspace (a)) {
-        //cout << " is only a partial match but found " << (a ? "a" : "space");
+        //std::cout << " is only a partial match but found " << (a ? "a" : "space");
         return nullptr;
     }
-    //cout << " is a match!";
+    //std::cout << " is a match!";
     return strand;
 }
 
@@ -123,25 +123,25 @@ const char* TokenEquals (const char* text, const char* strand_end,
          b = *token;
     int  result;
 
-    cout << "\n| Comparing \"" << text << "\" to \"" << token << "\"";
+    std::cout << "\n| Comparing \"" << text << "\" to \"" << token << "\"";
 
     a = *text;
     b = *token;
     // token SHOULD be a nil-terminated string without whitespace.
     while (b) {
         result = b - a;
-        //cout << "\n| b - a = " << b << " - " << a << " = " << result;
+        //std::cout << "\n| b - a = " << b << " - " << a << " = " << result;
         if (result) {
-            cout << " has unmatched chars b - a = " << b << " - " << a << " = "
+            std::cout << " has unmatched chars b - a = " << b << " - " << a << " = "
                  << result;
             return nullptr;
         }
         if (!a) {
-            cout << " is a partial match but !a.";
+            std::cout << " is a partial match but !a.";
             return nullptr;
         }
         if (++text > strand_end) {
-            cout << " but text buffer overflowed!";
+            std::cout << " but text buffer overflowed!";
             return nullptr;
         }
         ++token;
@@ -149,10 +149,10 @@ const char* TokenEquals (const char* text, const char* strand_end,
         b = *token;
     }
     if (a && !isspace (a)) {
-        cout << " is only a partial match but found " << (a ? "a" : "space");
+        std::cout << " is only a partial match but found " << (a ? "a" : "space");
         return nullptr;
     }
-    cout << " is a match!";
+    std::cout << " is a match!";
     return text;
 }
 
@@ -171,19 +171,19 @@ const char* TokenRead (const char* text, const char* strand_end,
 
     char c = *text;
     while (c && !isspace (c)) {
-        cout << c;
+        std::cout << c;
         if (++text > strand_end) {
-            cout << " but text buffer overflowed!";
+            std::cout << " but text buffer overflowed!";
             return nullptr;
         }
         if (++target > target_end) {
-            cout << " but target buffer overflowed!";
+            std::cout << " but target buffer overflowed!";
             return nullptr;
         }
         *target = c;
         c = *text;
     }
-    cout << '\"';
+    std::cout << '\"';
     *target = 0;
     return text;
 
@@ -203,7 +203,7 @@ int TokenCompare (const char* strand, const char* token) {
         return 0 - *strand;
     }
 
-    //cout << "\n| Comparing \"" << text << "\" to \"" << token << "\"";
+    //std::cout << "\n| Comparing \"" << text << "\" to \"" << token << "\"";
     a = *strand;
     b = *token;
     if (!a) {
@@ -221,13 +221,13 @@ int TokenCompare (const char* strand, const char* token) {
     // token SHOULD be a nil-terminated string without whitespace.
     while (b) {
         result = b - a;
-        //cout << "\n| b - a = " << b << " - " << a << " = " << result;
+        //std::cout << "\n| b - a = " << b << " - " << a << " = " << result;
         if (result) {
-            //cout << " is not a hit.";
+            //std::cout << " is not a hit.";
             return result;
         }
         if (!a) {
-            //cout << " is a partial match but !a.";
+            //std::cout << " is a partial match but !a.";
             return result;
         }
         ++strand;
@@ -236,7 +236,7 @@ int TokenCompare (const char* strand, const char* token) {
         b = *token;
     }
     if (a && !isspace (a)) {
-        //cout << " is only a partial match but found " << (a?"a":"space");
+        //std::cout << " is only a partial match but found " << (a?"a":"space");
         return b - a;
     }
     return 0;
@@ -283,17 +283,17 @@ int TokenCompare (const char* text, const char* strand_end,
     // token SHOULD be a nil-terminated string without whitespace.
     while (b) {
         result = b - a;
-        //cout << "\n| b - a = " << b << " - " << a << " = " << result;
+        //std::cout << "\n| b - a = " << b << " - " << a << " = " << result;
         if (result) {
-            //cout << " is not a hit.";
+            //std::cout << " is not a hit.";
             return result;
         }
         if (!a) {
-            //cout << " is a partial match but !a.";
+            //std::cout << " is a partial match but !a.";
             return result;
         }
         if (++text > strand_end) {
-            //cout << " but buffer overflowed!";
+            //std::cout << " but buffer overflowed!";
             return result;
         }
         ++token;
@@ -301,10 +301,10 @@ int TokenCompare (const char* text, const char* strand_end,
         b = *token;
     }
     if (a && !isspace (a)) {
-        //cout << " is only a partial match but found " << (a?"a":"space");
+        //std::cout << " is only a partial match but found " << (a?"a":"space");
         return b - a;
     }
-    //cout << " is a match!";
+    //std::cout << " is a match!";
     return 0;
 }
 

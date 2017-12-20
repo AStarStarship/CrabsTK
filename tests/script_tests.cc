@@ -22,15 +22,53 @@ using namespace std;
 
 TEST_GROUP (SCRIPT_TESTS) {
     void setup () {
-        cout << Text ().Line ();
+        //std::cout << Text ().Line ();
     }
 
     void teardown () {
-        cout << "\n| Test completed.\n|"
-             << Text ().Line ();
+        //std::cout << "\n|\n| Test completed."
+        //     << Text ().Line ();
     }
 };
 
+
+#if     USING_SCRIPT_PROJECT
+#include "../pro/include/module.h"
+
+using namespace kabuki::_;
+using namespace kabuki::pro;
+
+class ChineseRoom : public Project
+{
+    public:
+
+    ChineseRoom () :
+        Project ("Chinese-Room")
+    {
+        PrintBreak ("<\n< Creating-Chinese Project...\n", '-');
+
+        AddSchedule ("Expression_Class");
+        Schedule* s = GetSchedule ("Expression_Class");
+        if (!s) {
+            std::cout << "<\n< Error: finding Expression_Class schedule.\n<\n";
+            return;
+        }
+        s->Add (new Task ("Finish unit tests for scanner. Test "
+                "memory alignment."));
+
+        AddSchedule ("Book_Class");
+        s = GetSchedule ("Book_Class");
+        if (!s) {
+            std::cout << "<\n< Error: finding Book_Class schedule.\n<\n";
+            return;
+        }
+        s->Add (new Task ("Finish Dictionary data functions. Use same "
+                "memory alignment algorithm as the scanner."));
+        Print ();
+        PrintBreak ("<\n< Done creating Chinese-Room Project...\n<", '-');
+    }
+};
+#endif  //< USING_SCRIPT_PROJECT
 /*
 TEST (SCRIPT_TESTS, BookTests) {
     PrintLineBreak ("\n|  + Running BookTests\n", 10);
@@ -129,7 +167,7 @@ template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
     time (&t);
     tm* moment = localtime (&t);
     if (!moment) {
-        cout << "\n|\n| Created invalid test moment: " << moment << '\n';
+        std::cout << "\n|\n| Created invalid test moment: " << moment << '\n';
         return 0;
     }
     moment->tm_year = year - TIME_EPOCH;
@@ -140,18 +178,18 @@ template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
     moment->tm_sec = second;
 
     if (!PrintDateTimeText (buffer, buffer_size, moment)) {
-        cout << "< Error making timestamp \n";
+        std::cout << "< Error making timestamp \n";
 
         return 0;
     }
-    cout << "< Creating test time: ";
+    std::cout << "< Creating test time: ";
     PrintDateTime (moment);
     t = mktime (moment);
     if (t < 0) {
-        cout << "< Invalid " << t << '\n';
+        std::cout << "< Invalid " << t << '\n';
         return 0;
     } else {
-        cout << '\n';
+        std::cout << '\n';
     }
     return t;
 }
@@ -163,7 +201,7 @@ TEST (SCRIPT_TESTS, ClockTests) {
     const char* result;
 
     PrintBreak ("<", '-');
-    cout << "< Testing date-time parser... \n";
+    std::cout << "< Testing date-time parser... \n";
 
     const char* strings[] = { "8/9\0",
         "08/09\0",
@@ -186,7 +224,7 @@ TEST (SCRIPT_TESTS, ClockTests) {
     };
     for (int i = 0; i < 18; ++i) {
         PrintBreak ("<", '-');
-        cout << "\n| " << i;
+        std::cout << "\n| " << i;
         time_t t = 0;
         result = ParseTimeText (strings[i], t);
         CompareTimes (t, 2017, 8, 9, 0, 0, 0);
@@ -222,7 +260,7 @@ TEST (SCRIPT_TESTS, ClockTests) {
     ParseTimeText ("2017-30-40", t);
     PrintBreak ("<", '-');
 
-    cout << "<\n< Done testing date parsing utils! :-)\n";
+    std::cout << "<\n< Done testing date parsing utils! :-)\n";
 }
 
 #if USING_TABLE
@@ -824,7 +862,9 @@ TEST (SCRIPT_TESTS, OperationTests) {
 }*/
 
 TEST (SCRIPT_TESTS, TextTests) {
-    cout << "\n|\n| Testing Token...";
+    std::cout << "\n|\n| Testing Token...\n|\n|";
+
+    std::cout << "\n|\n| Testing Token...";
 
     enum {
         kNumStrings = 5,
@@ -855,47 +895,17 @@ TEST (SCRIPT_TESTS, TextTests) {
         end = TokenEquals (buffer_a, buffer_a + kSize, buffer_b);
         CHECK (end != nullptr)
     }
-    cout << "\n|\n| Done testing kabuki::cards::Server class... ";
+
+    std::cout << "\n|\n| Testing Text write functions...";
+    std::cout << "\n|\n| Expecting string \"Testing 1, 2, 3\"...";
+
+    Text text;
+    text.Line () << "\n| Testing " << 1 << ", " << 2 << ", " << 3
+                 << text.COut ();
+
+    std::cout << "\n|\n| Done testing _::Text class...\n| ";
     system ("PAUSE");
 }
 
 
 #define USING_SCRIPT_PROJECT 0
-
-#if     USING_SCRIPT_PROJECT
-#include "../pro/include/module.h"
-
-using namespace kabuki::_;
-using namespace kabuki::pro;
-
-class ChineseRoom : public Project
-{
-    public:
-
-    ChineseRoom () :
-        Project ("Chinese-Room")
-    {
-        PrintBreak ("<\n< Creating-Chinese Project...\n", '-');
-
-        AddSchedule ("Expression_Class");
-        Schedule* s = GetSchedule ("Expression_Class");
-        if (!s) {
-            cout << "<\n< Error: finding Expression_Class schedule.\n<\n";
-            return;
-        }
-        s->Add (new Task ("Finish unit tests for scanner. Test "
-                          "memory alignment."));
-        
-        AddSchedule ("Book_Class");
-        s = GetSchedule ("Book_Class");
-        if (!s) {
-            cout << "<\n< Error: finding Book_Class schedule.\n<\n";
-            return;
-        }
-        s->Add (new Task ("Finish Dictionary data functions. Use same "
-                          "memory alignment algorithm as the scanner."));
-        Print ();
-        PrintBreak ("<\n< Done creating Chinese-Room Project...\n<", '-');
-    }
-};
-#endif  //< USING_SCRIPT_PROJECT

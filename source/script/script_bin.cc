@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/script_bin.cc
+    @file    ~/source/script/script_bin.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -20,7 +20,8 @@
 #include "params.h"
 #include "hash.h"
 #include "slot.h"
-#include "display.h"
+
+using namespace std;
 
 namespace _ {
 
@@ -52,7 +53,7 @@ const char** BinState () {
 inline const Operation* ErrorReport (Bin* bin, Error error) {
 #if SCRIPT_DEBUG
     Text text;
-    Display () << "\n| Bin " << ErrorString (error) << " Error!" << text.Print ();
+    std::cout << "\n| Bin " << ErrorString (error) << " Error!" << text.Print ();
 #endif
     return reinterpret_cast<const Operation*> (1);
 }
@@ -67,7 +68,7 @@ inline const Operation* ErrorReport (Bin* bin, Error error) {
 inline const Operation* ErrorReport (Bin* bin, Error error,
                                     const uint_t* header) {
 #if SCRIPT_DEBUG
-    Display () << "\n| Bin " << ErrorString (error) << " Error!";
+    std::cout << "\n| Bin " << ErrorString (error) << " Error!";
 #endif  //< MEMORY_PROFILE >= USE_MORE_ROM
     return reinterpret_cast<const Operation*> (1);
 }
@@ -83,7 +84,7 @@ inline const Operation* ErrorReport (Bin* bin, Error error,
                                     const uint_t* header,
                                     uint_t offset) {
 #if SCRIPT_DEBUG
-    Display () << "\n| Bin " << ErrorString (error) << " Error!";
+    std::cout << "\n| Bin " << ErrorString (error) << " Error!";
 #endif  //< MEMORY_PROFILE >= USE_MORE_ROM
     return reinterpret_cast<const Operation*> (1);
 }
@@ -99,7 +100,7 @@ inline const Operation* ErrorReport (Bin* bin, Error error,
                                     const uint_t* header,
                                     uint_t offset,
                                     byte* address) {
-    Display () << "\n| Bin " << ErrorString (error) << " Error!";
+    std::cout << "\n| Bin " << ErrorString (error) << " Error!";
     return reinterpret_cast<const Operation*> (1);
 }
 
@@ -156,7 +157,7 @@ int BinStreamByte (Bin* bin) {
         *start = begin + bin->start,
         *cursor = start;
 
-    int length = start < open?open - start + 1:
+    int length = (int)(start < open) ? open - start + 1:
         (end - start) + (open - begin) + 2;
 
     if (length < 1) {
@@ -177,7 +178,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #if SCRIPT_DEBUG
     Text text;
     text << "\n| Reading " << ParamsPrint (params, text) << " from B-Input:"
-        << text.Pointer (bin) << BinPrint (bin, text) << text.Print ();
+        << text.Pointer (bin) << BinPrint (bin, text) << text.COut ();
 #endif
     if (bin == nullptr)
         return ErrorReport (bin, kErrorImplementation);
@@ -235,9 +236,12 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
     for (index = 1; index <= num_params; ++index) {
         type   = params[index];
 #if SCRIPT_DEBUG
-        printf ("\n| param:%2u TType:%s  start:%u, stop:%u length:%u",
-                arg_index + 1,  TypeText (type), Diff (begin, start),
-                Diff (begin, stop), length);
+        text << "\n| param:" << arg_index + 1
+             << " type:"     << TypeString (type)
+             << " start:"    << Diff (begin, start)
+             << " stop:"     << Diff (begin, stop)
+             << " length:"   << length
+             << text.COut ();
 #endif
         switch (type) {
             case NIL:
@@ -255,8 +259,8 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
                     return ErrorReport (bin, kErrorImplementation, params, index, 
                                       start);
 #if SCRIPT_DEBUG
-                printf ("\n| Reading STR:0x%p with max length:%u \"", ui1_ptr, 
-                        count);
+                text << "\n| Reading STR:0x" << text.Pointer (ui1_ptr) << " with max "
+                        "length:" << count;
 #endif
                 // Read char.
                 ui1 = *start;
@@ -875,7 +879,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 //#endif
 
     // Convert pointer back to offset
-    bin->start = Diff (begin, start);
+    bin->start = (uint_t)Diff (begin, start);
 
     return 0;
 }

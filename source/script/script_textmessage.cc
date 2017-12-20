@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/script_textmessage.cc
+    @file    ~/source/script/script_textmessage.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -74,7 +74,7 @@ const Operation* TextMessage::Star (uint index, Expression* expr) {
 }
 
 const char* TextMessage::Sudo (const char* text, const char* strand_end) {
-    return TextRead (text, strand_end, Text::GetBegin (), Text::GetEnd ());
+    return StrandRead (text, strand_end, Text::GetBegin (), Text::GetEnd ());
 }
 
 TextMessage& TextMessage::operator= (const TextMessage& other) {

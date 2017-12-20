@@ -1,7 +1,7 @@
 /** Kabuki Toolkit
 #include <script_door.h>
     @version 0.x
-    @file    ~/source/kabuki/script/script_door.cc
+    @file    ~/source/script/script_door.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -47,7 +47,7 @@ Door::Door (const char* room_name, uintptr_t* buffer, uintptr_t size_bytes) {
         if (size_bytes < kMinDoorSize) {
             // @todo insert error code here
 #if SCRIPT_DEBUG
-            cout << "\n| Error: Door size_bytes < kMinDoorSize!";
+            std::cout << "\n| Error: Door size_bytes < kMinDoorSize!";
 #endif  //< SCRIPT_DEBUG
             return;
         }

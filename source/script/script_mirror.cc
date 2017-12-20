@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/script/mirror.h
+    @file    ~/source/script/mirror.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -116,7 +116,7 @@ const Operation* MirrorRead (Mirror* mirror, const uint_t* params, void** args) 
             ++param;
 #if SCRIPT_DEBUG
             printf ("\n| index %2u: %s  start: %u, stop: %u hash: ", index,
-                    TypeText (type), Diff (begin, start), Diff (begin, stop));
+                    TypeString (type), Diff (begin, start), Diff (begin, stop));
 #endif
 
             switch (type) {
@@ -153,7 +153,7 @@ const Operation* MirrorRead (Mirror* mirror, const uint_t* params, void** args) 
                         ++ui1_ptr;
                     }
 
-                    //cout << " done!\n";
+                    //std::cout << " done!\n";
 
                     if (type != ADR) {
                         *ui1_ptr = ui1;
@@ -388,7 +388,7 @@ const Operation* MirrorRead (Mirror* mirror, const uint_t* params, void** args) 
                 //std::cout << " |";
             }
         }
-        //cout << "\n| Done reading";
+        //std::cout << "\n| Done reading";
         //MirrorWipe (mirror);
 
         // Convert pointer back to offset
