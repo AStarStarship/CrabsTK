@@ -897,14 +897,10 @@ TEST (SCRIPT_TESTS, TextTests) {
     }
 
     std::cout << "\n|\n| Testing Text write functions...";
-    std::cout << "\n|\n| Expecting string \"Testing 1, 2, 3\"...";
+    std::cout << "\n|\n| Expecting string \"Testing 1, 2, 3\"..."
+                 "\n|\n| Found: \n|";
 
-    Text text;
-    text.Line () << "\n| Testing " << 1 << ", " << 2 << ", " << 3;
-
-    std::cout << "\n|\n| Found: \n|";
-        
-    text.COut ();
+    std::cout << (Text ().Line () << "\n| Testing " << 1 << ", " << 2 << ", " << 3);
 
     std::cout << "\n|\n| Done testing _::Text class...\n| ";
     system ("PAUSE");

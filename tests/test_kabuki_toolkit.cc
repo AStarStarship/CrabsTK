@@ -1,5 +1,5 @@
 /** Kabuki Toolkit
-    @file    ~/projects/kabuki_tester.cc
+    @file    ~/projects/test_kabuki_toolkit.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,10 +17,11 @@
 #include "global.h"
 
 int main (int args_count, char** args) {
-    Text text = Text ().Line ()
-         << "\n| Running Kabuki Toolkit unit tests..."
-         << text.Line ()
-         << "\n|\n|";
+    Text text ();
+    Dump (text << text.Line ()
+          << "\n| Running Kabuki Toolkit unit tests..."
+          << text.Line ()
+          << "\n|\n|");
     text.COut ();
 
     return CommandLineTestRunner::RunAllTests (args_count, args);

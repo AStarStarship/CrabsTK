@@ -52,8 +52,7 @@ const char** BinState () {
     @return Returns a Static Error Operation Result. */
 inline const Operation* ErrorReport (Bin* bin, Error error) {
 #if SCRIPT_DEBUG
-    Text text;
-    std::cout << "\n| Bin " << ErrorString (error) << " Error!" << text.Print ();
+    std::cout << "\n| Bin " << ErrorString (error) << " Error!";
 #endif
     return reinterpret_cast<const Operation*> (1);
 }
@@ -105,7 +104,7 @@ inline const Operation* ErrorReport (Bin* bin, Error error,
 }
 
 byte* BinBuffer (Bin* bin) {
-    if (bin == nullptr)
+    if (!bin)
         return nullptr;
     byte* ptr = reinterpret_cast<byte*> (bin);
     return ptr + sizeof (Bin);
@@ -130,20 +129,20 @@ Bin* BinInit (uintptr_t* buffer, uint_t size) {
 }
 
 uint_t BinSpace (Bin* bin) {
-    if (bin == nullptr) return ~0;
+    if (!bin) return ~0;
     byte* txb_ptr = reinterpret_cast<byte*>(bin);
     return SlotSpace (txb_ptr + bin->start, txb_ptr + bin->stop,
         bin->size);
 }
 
 uint_t BinBufferLength (Bin* bin) {
-    if (bin == nullptr) return ~0;
+    if (!bin) return ~0;
     byte* base = BinBuffer (bin);
     return SlotLength (base + bin->start, base + bin->stop, bin->size);
 }
 
 byte* BinEndAddress (Bin* bin) {
-    if (bin == nullptr) {
+    if (!bin) {
         return nullptr;
     }
     return reinterpret_cast<byte*>(bin) + (4 * sizeof (uint_t)) + bin->size;
@@ -177,10 +176,12 @@ bool BinIsReadable (Bin* bin) {
 const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 #if SCRIPT_DEBUG
     Text text;
-    text << "\n| Reading " << ParamsPrint (params, text) << " from B-Input:"
-        << text.Pointer (bin) << BinPrint (bin, text) << text.COut ();
+    cout << "\n| Reading " << ParamsPrint (params, text)
+        << " from B-Input:" << text.Pointer (bin)
+        << BinPrint (bin, text);
+    Dump (text);
 #endif
-    if (bin == nullptr)
+    if (!bin)
         return ErrorReport (bin, kErrorImplementation);
     if (!params)
         return ErrorReport (bin, kErrorImplementation);
@@ -189,10 +190,10 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
     byte     //array_type,            //< The current type being read.
              ui1;                     //< Temp variable.
     uint16_t ui2;                     //< Temp variable.
-#if SCRIPT_USING_VARINT4 || USING_AR4 || USING_BK4
+#if SCRIPT_USING_VARINT4
     uint32_t ui4;
 #endif
-#if SCRIPT_USING_VARINT8 || USING_AR8 || USING_BK8
+#if SCRIPT_USING_VARINT8
     uint64_t ui8;
 #endif
 
@@ -236,12 +237,11 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
     for (index = 1; index <= num_params; ++index) {
         type   = params[index];
 #if SCRIPT_DEBUG
-        text << "\n| param:" << arg_index + 1
-             << " type:"     << TypeString (type)
-             << " start:"    << Diff (begin, start)
-             << " stop:"     << Diff (begin, stop)
-             << " length:"   << length
-             << text.COut ();
+        Dump (text << "\n| param:" << arg_index + 1
+                   << " type:"     << TypeString (type)
+                   << " start:"    << Diff (begin, start)
+                   << " stop:"     << Diff (begin, stop)
+                   << " length:"   << length);
 #endif
         switch (type) {
             case NIL:
@@ -886,7 +886,7 @@ const Operation* BinRead (Bin* bin, const uint_t* params, void** args) {
 
 #if SCRIPT_USING_TEXT
 Text& BinPrint (Bin* bin, Text& text) {
-    if (bin == nullptr) {
+    if (!bin) {
         return text << "\n| Error: Bin can't be null";
     }
     uint_t size = bin->size;

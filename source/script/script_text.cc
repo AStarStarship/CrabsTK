@@ -58,16 +58,6 @@ Text& Text::Clear () {
     return *this;
 }
 
-Text& Text::COut () {
-    std::cout << buffer_;
-    return Clear ();
-}
-
-Text& Text::CErr () {
-    std::cerr << buffer_;
-    return Clear ();
-}
-
 int Text::Length () const {
     return (int)(cursor_ - buffer_);
 }
@@ -169,7 +159,7 @@ Text& Text::Write (int32_t value) {
     if (!cursor) {
         return *this;
     }
-    std::cout << "\n| Write int32_t:" << buffer_;
+    //std::cout << "\n| Write int32_t:" << buffer_;
     cursor_ = cursor;
     return *this;
 }
@@ -256,7 +246,7 @@ Text& Text::Line (char token, const char* header, int length) {
     return *this;
 }
 
-Text& Text::Line (const char* string, int num_columns) {
+Text& Text::StringLine (const char* string, int num_columns) {
     *this << Text ().Line ();
     char* cursor     = cursor_,
         * stop       = cursor + num_columns + 1, //< +1 for nil-term char.
@@ -722,36 +712,6 @@ Text& Text::DateTime (time_t t) {
     ClockLocalTime (&std_tm, t);
     return *this << std_tm.tm_hour << ":" << std_tm.tm_min << ":"
                  << std_tm.tm_sec;
-}
-
-Text& Text::Print () {
-    std::cout << this;
-    return *this;
-}
-
-Text& Text::Print (Text& text) {
-    std::cout << (*this << text);
-    return *this;
-}
-
-Text& Text::Print (const char* text) {
-    std::cout << (*this << text);
-    return *this;
-}
-
-Text& Text::Err () {
-    std::cerr << this;
-    return *this;
-}
-
-Text& Text::Err (const char* text) {
-    std::cerr << this;
-    return *this;
-}
-
-Text& Text::Err (Text& text) {
-    std::cerr << this;
-    return *this;
 }
 
 #endif  //< SCRIPT_USING_TEXT

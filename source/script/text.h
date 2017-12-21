@@ -50,12 +50,6 @@ class Text {
     /** Clears the text buffer without overwriting it. */
     Text& Clear ();
 
-    /** Prints the text buffer before clearing it. */
-    Text& COut ();
-
-    /** Prints the text buffer before clearing it. */
-    Text& CErr ();
-
     /** Gets the char count of the buffer in bytes. */
     int Length () const;
 
@@ -149,7 +143,7 @@ class Text {
 
     /** Prints an 80-char line of the char repeating with an underscore
         i.e. s_s_... */
-    Text& Line (const char* strand, int num_columns = 80);
+    Text& StringLine (const char* strand, int num_columns = 80);
 
     /** Prints a bunch of new lines followed by the given message and a line of
     the specified token. */
@@ -362,24 +356,6 @@ class Text {
 
     /** Overloaded operator= clones the other Text. */
     Text& operator= (const Text& other);
-    
-    /** Prints this Text to the stdout. */
-    Text& Print ();
-
-    /** Prints this Text to the stdout. */
-    Text& Print (Text& text);
-
-    /** Prints this Text to the stdout. */
-    Text& Print (const char* text);
-
-    /** Prints this Text to the stderr. */
-    Text& Err ();
-
-    /** Prints this Text to the stderr. */
-    Text& Err (Text& text);
-
-    /** Prints this Text to the stderr. */
-    Text& Err (const char* text);
 
     private:
 
@@ -387,16 +363,6 @@ class Text {
     char  buffer_[kSize]; //< Text buffer.
 
 };  //< struct Text
-
-inline Text& Out () {
-    std::cout << buffer_;
-    return Clear ();
-}
-
-inline Text& Err () {
-    std::cerr << buffer_;
-    return Clear ();
-}
 
 }   //< namespace _
 
@@ -467,6 +433,22 @@ inline _::Text& operator<< (_::Text& text, float value) {
 inline _::Text& operator<< (_::Text& text, double value) {
     return text.Write (value);
 }
+
+namespace _ {
+
+/** Prints this Text to the stdout. */
+inline void Dump (Text& text) {
+    std::cout << text;
+    text.Clear ();
+}
+
+/** Prints this Text to the stderr. */
+inline void Err (Text& text) {
+    std::cerr << text;
+    text.Clear ();
+}
+
+}   //< namespace _
 
 #endif  //< SCRIPT_USING_TEXT
 #endif  //< HEADER_FOR_SCRIPT_TEXT
