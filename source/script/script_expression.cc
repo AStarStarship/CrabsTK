@@ -176,7 +176,7 @@ Expression* ExpressionInit (uintptr_t* buffer, uint_t buffer_size,
     expr->header_start = nullptr;
     expr->root = root;
 #if SCRIPT_DEBUG
-    text << "expr->op:0x" << text.Pointer (expr->operand) << text.COut ();
+    Print (text << "expr->op:0x" << text.Pointer (expr->operand));
 #endif //< SCRIPT_DEBUG
     BinInit  (ExpressionBinAddress  (expr), size);
     BoutInit (ExpressionBoutAddress (expr), size);

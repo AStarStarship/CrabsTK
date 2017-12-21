@@ -27,7 +27,7 @@ namespace _ {
 /** Creates a timestamp of the current time. */
 
 enum {
-    kNumSecondsMin = 60 * 60,
+    kNumSecondsMin     = 60 * 60,
     kNumSecondsMinute = 60 * kNumSecondsMin,
     kNumSecondsPerDay = 24 * kNumSecondsMinute,
     kTimeEpoch = 1900,

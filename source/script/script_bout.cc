@@ -170,7 +170,7 @@ const Operation* BoutWrite (Bout* bout, const uint_t* params, void** args) {
     text << "\n|\n|Writing "
          << ParamsPrint (params, text)
          << " to B-Output:" << text.Pointer (bout)
-         << BoutPrint (bout, text) << text.COut ();
+         << BoutPrint (bout, text);
 #endif  //< SCRIPT_DEBUG
     if (!bout)
         return ErrorReport (bout, kErrorImplementation);
