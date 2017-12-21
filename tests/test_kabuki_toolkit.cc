@@ -17,11 +17,11 @@
 #include "global.h"
 
 int main (int args_count, char** args) {
-    Text text;
-    text << text.Line ()
+    Text text = Text ().Line ()
          << "\n| Running Kabuki Toolkit unit tests..."
          << text.Line ()
-         << "\n|" << text.COut ();
+         << "\n|\n|";
+    text.COut ();
 
     return CommandLineTestRunner::RunAllTests (args_count, args);
 }

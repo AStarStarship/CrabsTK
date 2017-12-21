@@ -61,6 +61,21 @@
 // Logical no.
 #define NO                          0
 
+#define CLASS___BIN         1
+#define CLASS___BOUT        2
+#define CLASS___DISPLAY     3
+#define CLASS___DOOR        4
+#define CLASS___EXPRESSION  5
+#define CLASS___LIBRARY     6
+#define CLASS___ROOM        7
+#define CLASS___ARRAY       8
+#define CLASS___BAG         9
+#define CLASS___BOOK        10
+#define CLASS___TEXT        11
+#define CLASS___TEXTMESSAGE 12
+#define CLASS___STACK       13
+#define CLASS___WALL        14
+
 #include <assembly.h>       //< Inline config stuff for your project.
 
 typedef const char* string_ptr;
@@ -246,21 +261,6 @@ typedef uint64_t data_t;    //< Default TData size.
   ClassName (const ClassName&) = delete;\
   void operator= (const ClassName&) = delete;
   //ClassName () = default //< Saw this once on the net but do we need it?
-
-#define CLASS___BIN         1
-#define CLASS___BOUT        2
-#define CLASS___DISPLAY     3
-#define CLASS___DOOR        4
-#define CLASS___EXPRESSION  5
-#define CLASS___LIBRARY     6
-#define CLASS___ROOM        7
-#define CLASS___ARRAY       8
-#define CLASS___BAG         9
-#define CLASS___BOOK        10
-#define CLASS___TEXT        11
-#define CLASS___TEXTMESSAGE 12
-#define CLASS___STACK       13
-#define CLASS___WALL        14
 
 #if SCRIPT_DEBUG
 #define PRINT (MESSAGE)\

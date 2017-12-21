@@ -900,8 +900,11 @@ TEST (SCRIPT_TESTS, TextTests) {
     std::cout << "\n|\n| Expecting string \"Testing 1, 2, 3\"...";
 
     Text text;
-    text.Line () << "\n| Testing " << 1 << ", " << 2 << ", " << 3
-                 << text.COut ();
+    text.Line () << "\n| Testing " << 1 << ", " << 2 << ", " << 3;
+
+    std::cout << "\n|\n| Found: \n|";
+        
+    text.COut ();
 
     std::cout << "\n|\n| Done testing _::Text class...\n| ";
     system ("PAUSE");

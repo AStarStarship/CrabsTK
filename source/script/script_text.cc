@@ -27,14 +27,22 @@ namespace _ {
 
 Text::Text () :
     cursor_ (buffer_) {
+#if SCRIPT_DEBUG == CLASS___TEXT
     MemoryClear (buffer_, kSize);
+#endif  //< SCRIPT_DEBUG == CLASS___TEXT
     *buffer_ = 0;
 }
 
 Text::Text (const char* strand) :
     cursor_ (buffer_) {
-    *buffer_ = 0;
-    StrandWrite (buffer_, buffer_ + kSize, strand);
+#if SCRIPT_DEBUG == CLASS___TEXT
+    MemoryClear (buffer_, kSize);
+#endif  //< SCRIPT_DEBUG == CLASS___TEXT
+    char* cursor = StrandWrite (buffer_, buffer_ + kSize, strand);
+    if (!cursor) {
+        *buffer_ = 0;
+    }
+    cursor_ = cursor;
 }
 
 Text::Text (const Text& other) :
@@ -248,27 +256,33 @@ Text& Text::Line (char token, const char* header, int length) {
     return *this;
 }
 
-Text& Text::Line (const char* strand, int num_columns) {
+Text& Text::Line (const char* string, int num_columns) {
     *this << Text ().Line ();
-    char* cursor = cursor_,
-        * end    = cursor + num_columns,
-        * read   = cursor;
+    char* cursor     = cursor_,
+        * stop       = cursor + num_columns + 1, //< +1 for nil-term char.
+        * end        = GetEnd ();
+    const char* read = string;
+    if (num_columns < 1) {
+        return *this;
+    }
+    if (!string) {
+        return *this;
+    }
+    if (cursor == end) {
+        return *this;
+    }
+    if (stop > end) { // Chop of some of the columns.
+        stop = end;
+    }
 
-    while (cursor < end) {
-        if (--num_columns <= 0) {
-            *cursor_ = 0;
-            return *this;
-        }
+    while (cursor < stop) {
         char c = *read++;
         if (!c) {
-            *cursor = '_';
-            read = cursor;
-        }
-        if (++cursor > end) {
-            *cursor_ = 0;
-            return *this;
+            *cursor++ = '_';
+            read = string;
         }
     }
+    *cursor_ = 0;
     cursor_ = cursor;
     return *this;
 }

@@ -388,6 +388,16 @@ class Text {
 
 };  //< struct Text
 
+inline Text& Out () {
+    std::cout << buffer_;
+    return Clear ();
+}
+
+inline Text& Err () {
+    std::cerr << buffer_;
+    return Clear ();
+}
+
 }   //< namespace _
 
 /** Operation << writes a nil-terminated UTF-8 or ASCII string to the 
