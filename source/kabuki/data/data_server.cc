@@ -26,31 +26,18 @@ Server::Server ():
 
 }
 
-const char* Server::Sudo (const char* strand, const char* strand_end) {
-    if (!strand) {
-        return nullptr;
-    }
-    if (strand > strand_end) {
-        return nullptr;
-    }
-    if (*strand == '.') {
-        //inventory_.Do (text + 1, strand_end);
-    }
-    return nullptr;
-}
-
-const Operation* Server::Star (uint index, Expression* expr) {
-    static const Operation This = { "kabuki.security.Server",
-        OperationCount (0), OperationFirst ('A'),
+const Op* Server::Star (wchar_t index, Expr* expr) {
+    static const Op This = { "kabuki.security.Server",
+        OpFirst ('A'), OpLast ('A'),
         "Datagram security server.", 0 };
     //void* args[1];
     switch (index) {
-        case '?': return ExpressionOperand (expr, &This);
+        case '?': return ExprQuery (expr, &This);
         case 'A': {
-            static const Operation Op65 = { "foo",
+            static const Op kOpA = { "foo",
                 Params<0> (), Params<0> (),
                 "Why does everyone use foo?", 0 };
-            if (!expr) return &Op65;
+            if (!expr) return &kOpA;
         }
     }
     return nullptr;

@@ -21,7 +21,7 @@
 #define SCRIPT_TLIST_H
 
 #include "set.h"
-#if SCRIPT_USING_LIST
+#if USING_SCRIPT_LIST
 
 namespace _ {
 
@@ -51,7 +51,7 @@ enum {
              to verify the integrity of the object.
     @warning The reservedNumOperands must be aligned to a 32-bit value, and it
              will get rounded up to the next higher multiple of 4.
-static Set* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t size)
+static Set* Init2 (char* buffer, byte max_size, uint16_t table_size, uint16_t size)
 {
     if (buffer == nullptr)
         return nullptr;
@@ -75,7 +75,7 @@ static Set* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t si
 */
 template<typename TIndex, typename TKey, typename TData, typename THash>
 TIndex SetInsert (Set<TIndex, TKey, TData, THash>* collection, byte type,
-               const byte* key, void* data, TIndex index) {
+               const char* key, void* data, TIndex index) {
     if (collection == nullptr) return 0;
     return ~0;
 }
@@ -189,6 +189,6 @@ template<typename TIndex, typename TKey, typename TData, typename THash>
 void SetPrint (Set<TIndex, TKey, TData, THash>* collection) {
 
 }
-#endif  //< SCRIPT_USING_LIST
+#endif  //< USING_SCRIPT_LIST
 }       //< namespace _
 #endif  //< SCRIPT_TLIST_H

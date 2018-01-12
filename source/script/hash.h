@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/script/text.h
+    @file    ~/source/script/hash.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef SCRIPT_HASH_H
-#define SCRIPT_HASH_H
+#ifndef HEADER_FOR_SCRIPT_HASH
+#define HEADER_FOR_SCRIPT_HASH
 
 #include "config.h"
 
@@ -49,4 +49,4 @@ KABUKI hash16_t Hash32 (const char* string, hash32_t hash = kLargest32BitPrime);
 KABUKI hash64_t Hash64 (const char* string, hash64_t hash = kLargest64BitPrime);
 
 }       //< namespace _
-#endif  //< SCRIPT_HASH_H
+#endif  //< HEADER_FOR_SCRIPT_HASH

@@ -19,11 +19,12 @@
 
 namespace _ {
 
-const char** ErrorString () {
+const char** ErrorStrings () {
     static const char* kErrors[] = {
-        "Input nil!",               //<  0
-        "Input too low!",           //<  1
-        "Input too high!",          //<  2
+        "Not an error",             //<  0
+        "Input nil",                //<  1
+        "Input too low",            //<  2
+        "Input too high",           //<  3
         "Buffer overflow",          //<  4
         "Buffer underflow",         //<  5
         "Varint overflow",          //<  6
@@ -39,13 +40,13 @@ const char** ErrorString () {
         "Too many pops",            //< 16
         "Text buffer overflow",     //< 17
         "Invalid error handler",    //< 18
-        "Invalid operation",        //< 19
+        "Invalid op",               //< 19
         "Array overflow",           //< 20
         "Invalid Set",              //< 21
         "Malformed UTF-8",          //< 22
         "Malformed UTF-16",         //< 23
         "Malformed UTF-32",         //< 24
-        "Bin Locked",               //< 25
+        "BIn Locked",               //< 25
         "Invalid args",             //< 26
         "Invalid credentials",      //< 27
         "Object locked"             //< 28
@@ -56,9 +57,9 @@ const char** ErrorString () {
 
 const char* ErrorString (Error error) {
     if (error >= kErrorImplementation) {
-        return ErrorString ()[kErrorImplementation];
+        return ErrorStrings ()[kErrorImplementation];
     }
-    return ErrorString ()[error];
+    return ErrorStrings ()[error];
 }
 
 }   //< namespace _

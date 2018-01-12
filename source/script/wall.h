@@ -52,7 +52,7 @@ namespace _ {
     @endcode
     
     */
-class Wall : public Operation {
+class Wall : public Op {
 
     public:
 
@@ -88,7 +88,7 @@ class Wall : public Operation {
     bool CloseDoor (int index);
 
     /** Prints the given Door to the stdout. */
-    _::Text& Print (_::Text& text);
+    _::Strand& Print (_::Strand& strand);
 
     private:
 

@@ -32,7 +32,7 @@
 // Choose X86, X64, ARM8, ARM16, ARM32, or ARM64
 #define SCRIPT_ACHITECTURE X86
 
-#define SCRIPT_WORD_SIZE 32
+#define WORD_SIZE 32
 
 #define SCRIPT_ENDIANESS LITTLE
 
@@ -59,7 +59,7 @@
 #define SCRIPT_MAX_PARAMS 26
 
 // The max char length.
-#define SCRIPT_TEXT_SIZE_MAX 2 * 1024
+#define SCRIPT_TEXT_SIZE_DEFAULT 2 * 1024
 
 // Max number of Slots.
 #define MAX_NUM_SLOTS 256
@@ -73,38 +73,36 @@
 // Max number of walls in this _::Room
 #define SCRIPT_MAX_WALLS 1024
 
-// 
-#define SCRIPT_MAX_TEXT_LENGTH 
+// The size of the default Text<> () buffer in bytes.
+#define SCRIPT_TEXT_SIZE 2048
+
+// Default init.
+#define SCRIPT_STRAND_INIT_BUFFER_SIZE 256
 
 // String that gets printed at the beginning of each new line.
 #define NEW_LINE_HEADER "\n| "
 
-// Max Script Operation name length in chars.
-#define SCRIPT_OPERATION_MAX_NAME_LENGTH 64
+// Max Script Op name length in chars.
+#define SCRIPT_OP_MAX_NAME_LENGTH 64
 
-// Max Script Operation description length in chars.
-#define SCRIPT_OPERATION_MAX_DESCRIPTION_LENGTH 1024
+// Max Script Op description length in chars.
+#define SCRIPT_OP_MAX_DESCRIPTION_LENGTH 1024
 
 // Max Script address length.
 #define SCRIPT_MAX_ADDRESS_LENGTH 26
 
+#define SCRIPT_MAX_KEY_LENGTH 64
+
 // Sets any of the following macros to YES or NO.
 
-#define SCRIPT_USING_1_BYTE_TYPES YES
-#define SCRIPT_USING_2_BYTE_TYPES YES
-#define SCRIPT_USING_4_BYTE_TYPES YES
-#define SCRIPT_USING_8_BYTE_TYPES YES
-#define SCRIPT_USING_VARINT2      YES
-#define SCRIPT_USING_VARINT4      YES
-#define SCRIPT_USING_VARINT8      YES
-#define SCRIPT_USING_ARRAY        NO
-#define SCRIPT_USING_BAG          NO
-#define SCRIPT_USING_BOOK         NO
-#define SCRIPT_USING_MAP          NO
-#define SCRIPT_USING_LIST         NO
-#define SCRIPT_USING_STRAND       YES
-#define SCRIPT_USING_TEXT         YES
-#define SCRIPT_USING_PRINT        YES
-#define SCRIPT_USING_TOKEN        YES
-#define SCRIPT_USING_KEYBOARD     YES
-#define SCRIPT_USING_MIRROR       NO
+#define USING_SCRIPT_1_BYTE_TYPES YES
+#define USING_SCRIPT_2_BYTE_TYPES YES
+#define USING_SCRIPT_4_BYTE_TYPES YES
+#define USING_SCRIPT_8_BYTE_TYPES YES
+#define USING_SCRIPT_OBJ          YES
+#define USING_SCRIPT_ARRAY        NO
+#define USING_SCRIPT_BAG          NO
+#define USING_SCRIPT_BOOK         NO
+#define USING_SCRIPT_MAP          NO
+#define USING_SCRIPT_LIST         NO
+#define USING_SCRIPT_TEXT      YES

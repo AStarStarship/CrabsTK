@@ -100,12 +100,12 @@ void rtc_write(time_t t) {
     LPC_RTC->CCR |= 2;
     
     // Set the RTC
-    LPC_RTC->SEC = timeinfo->tm_sec;
-    LPC_RTC->MIN = timeinfo->tm_min;
-    LPC_RTC->HOUR = timeinfo->tm_hour;
-    LPC_RTC->DOM = timeinfo->tm_mday;
+    LPC_RTC->SEC   = timeinfo->tm_sec;
+    LPC_RTC->MIN   = timeinfo->tm_min;
+    LPC_RTC->HOUR  = timeinfo->tm_hour;
+    LPC_RTC->DOM   = timeinfo->tm_mday;
     LPC_RTC->MONTH = timeinfo->tm_mon + 1;
-    LPC_RTC->YEAR = timeinfo->tm_year + 1900;
+    LPC_RTC->YEAR  = timeinfo->tm_year + 1900;
     
     // Restart clock
     LPC_RTC->CCR &= ~((uint32_t)2);*/

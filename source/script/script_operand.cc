@@ -16,16 +16,17 @@
 
 #include <stdafx.h>
 #include "operand.h"
+#include "token.h"
 
 namespace _ {
 
 const char* OperandName (Operand* operand) {
     if (!operand) {
-        return "null operand";
+        return "nil operand";
     }
-    const Operation* op = operand->Star ('?', nullptr);
+    const Op* op = operand->Star ('?', nullptr);
     if (op == nullptr) {
-        return "null op";
+        return "nil op";
     }
     return op->name;
 }
@@ -34,84 +35,96 @@ uintptr_t OperandCount (Operand* operand) {
     if (!operand) {
         return 0;
     }
-    const Operation* operation = operand->Star (0, nullptr);
-    return (operation == nullptr)?0:
-        reinterpret_cast<uintptr_t> (operation->params);
+    const Op* op = operand->Star (0, nullptr);
+    return (op == nullptr)?0:
+        reinterpret_cast<uintptr_t> (op->params);
 }
 
-#if SCRIPT_USING_TEXT
-
-Text& OperandPrint (Operand* operand, Text& text) {
+wchar_t OperandIndex (Operand* operand, char* begin, char* end) {
     if (!operand) {
-        return text << "\n| Error: Operand can't be nil";
+        return 0;
+    }
+    const Op* op = operand->Star ('?', nullptr);
+    if (!op) {
+        return 0;
+    }
+    wchar_t index = OpFirst (op),
+            last  = OpLast  (op);
+    if (!index) {
+        return 0;
+    }
+    for (; index <= last; ++index) {
+        if (OpEquals (operand->Star (index, nullptr), begin, end)) {
+            return index;
+        }
+    }
+    return 0;
+}
+
+#if USING_SCRIPT_TEXT
+
+Strand& OperandPrint (Operand* operand, Strand& strand) {
+    if (!operand) {
+        return strand << "\n| Error: Operand can't be nil";
     }
 
     /*
-    if (OperationCount (operation->params) < kMaxNumParams) {
+    if (OpCount (op->params) < kMaxNumParams) {
     // Print the Operand Header.
     //const uint_t* result   = op->result;
-    uintptr_t     num_ops = reinterpret_cast<uintptr_t>(operation->params),
-    first_op = reinterpret_cast<uintptr_t>(operation->result),
+    uintptr_t     num_ops = reinterpret_cast<uintptr_t>(op->params),
+    first_op = reinterpret_cast<uintptr_t>(op->result),
     last_op = first_op + num_ops - 1;
     //const byte  * eval     = op->evaluation;
-    text << operation->name
-    << "\n| Operation Count: " << num_ops << " First: " << first_op
+    text << op->name
+    << "\n| Op Count: " << num_ops << " First: " << first_op
     << '\'' << Char (first_op) << "\' Last:" << last_op << '\''
     << Char (last_op)
-    << "\'\n| Metadata:        " << operation->description;
+    << "\'\n| Metadata:        " << op->description;
     return;
     }*/
 
-    const _::Operation* operation = operand->Star ('?', nullptr);
-    if (!operation) {
-        return text << "\n| Error: invalid Operation!";
+    const _::Op* op = operand->Star ('?', nullptr);
+    if (!op) {
+        return strand << "\n| Error: invalid Op!";
     }
-    uintptr_t num_ops = reinterpret_cast<uintptr_t>(operation->params),
-        op_num = reinterpret_cast<uintptr_t>(operation->result),
-        last_op = op_num + num_ops - 1;
-    if (num_ops > _::kMaxNumParams) {
-        return text << "\n| Error: Too many parameters!";
+    uintptr_t num_ops = reinterpret_cast<uintptr_t>(op->params),
+              op_num = reinterpret_cast<uintptr_t>(op->result),
+              last_op = op_num + num_ops - 1;
+    if (num_ops > _::kParamsMax) {
+        return strand << "\n| Error: Too many parameters!";
     }
-    text << "\n| Operand         :" << operation->name
-        << text.Line ('-', "\n>");
+    strand << "\n| Operand         :" << op->name
+        << strand.Line ('-', "\n>");
     for (; op_num <= last_op; ++op_num) {
-        operation = operand->Star (op_num, nullptr);
-        text << "\n| Operation \'" << text.Write (op_num) << "\':" 
-             << op_num << ' ' << operation
-             << text.Line ('-', "\n>");
+        op = operand->Star (op_num, nullptr);
+        strand << "\n| Op \'" << strand.Write (op_num) << "\':" 
+             << op_num << ' ' << op
+             << strand.Line ('-', "\n>");
     }
-    return text;
+    return strand;
 }
 
-Text& OperandPrint (Operand* root, const char_t* address, Text& text) {
+Strand& OperandQuery (Operand* root, const char_t* address, Strand& strand) {
     if (!address) {
-        return text;
+        return strand;
     }
     if (!root) {
-        return text;
+        return strand;
     }
     int index = *address++;
-    const Operation* operation = root->Star (index, nullptr);
-    text << operation->name;
+    const Op* op = root->Star (index, nullptr);
+    strand << op->name;
     index = *address++;
     while (index) {
-        operation = root->Star (index, nullptr);
-        if (!operation) {
-            return text;
+        op = root->Star (index, nullptr);
+        if (!op) {
+            return strand;
         }
-        text << '.' << operation->name;
+        strand << '.' << op->name;
         index = *address++;
     }
-    return text;
+    return strand;
 }
-#endif  //< SCRIPT_USING_TEXT
-
-}   //< namespace _
-
-
-#if SCRIPT_USING_TEXT
-
-_::Text& operator<< (_::Text& text, _::Operand* operand) {
-    return text << OperandPrint (operand, text);
-}
-#endif  //< SCRIPT_USING_TEXT
+#endif  //< USING_SCRIPT_TEXT
+}       //< namespace _

@@ -31,7 +31,7 @@ namespace _ {
 
     Collision table works by using the maximum key value (i.e. 255 for a byte, 
     2^15-1 for a int16_t, etc). The collisionsList is a sequence of indexes
-    terminated by an invalid index > kMaxNumOperations. collissionsList[0] is an
+    terminated by an invalid index > kMaxNumOps. collissionsList[0] is an
     invalid index, so the collisionsList is searched from lower address up.
     
     # Memory Layout
@@ -104,7 +104,7 @@ enum {
     max_keys.
     @post    Users might want to call the isValid () function after 
              construction to verify the integrity of the object.
-    @warning The reservedNumOperations must be aligned to a 32-bit value, and 
+    @warning The reservedNumOps must be aligned to a 32-bit value, and 
              it will get rounded up to the next higher multiple of 4. */
 KABUKI Table* TableInit (uintptr_t* buffer, byte max_keys, uint16_t size_bytes);
     

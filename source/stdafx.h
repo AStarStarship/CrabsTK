@@ -18,7 +18,7 @@
 
 #ifdef WIN32
 #include "targetver.h"
-#define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Mirrors headers
+#define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Slots headers
 #define NOMINMAX
 #include <Windows.h>
 #endif
@@ -49,7 +49,3 @@
 #include <memory>
 #include <cassert>
 #include <functional>
-//#include <devguid.h>
-//#include <initguid.h>
-//#include <tchar.h>
-//#include <setupapi.h>

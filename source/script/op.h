@@ -17,25 +17,105 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef SCRIPT_LOG_H
-#define SCRIPT_LOG_H
+#ifndef HEADER_FOR_SCRIPT_OP
+#define HEADER_FOR_SCRIPT_OP
 
-#include "bout.h"
-#include "params.h"
-#include "args.h"
+#include "strand.h"
+#include "error.h"
 
 namespace _ {
 
-/** A general purpose op made from a Bout pointer. */
-struct KABUKI Op {
-    const char* address;
-    Bout* bout;
+enum {
+    kOpPush          = 0, //< Operation Type 0: Stack push .
+    kOpOperation     = 1, //< Operation Type 1: Abstract Operation.
+    KOpOperationPush = 2, //< Operation Type 2: Operation with stack push.
 };
 
-/** Initializes the buffer of given size in bytes. */
-KABUKI Op OpInit (uintptr_t* buffer, uint_t buffer_size);
+/** An expression Operation with name key, multiple input params,
+    result, and optional description of a data set.
+    @code
+    static const Op kThis = { "Key",
+        Params<1, 2>::Header, Params<1, 2>::Header,
+        "Description", 0, 0 };
 
-/** Returns a reference to the bout for this assembly.
+    static const Op member_device =   { "Key", 
+        NumOps (0), FirstOp ('A'),
+        "Description", 1, 0 };
+    @endcode */
+struct KABUKI Op {
+    const char   * name;        //< Op name.
+    const uint_t * params,      //< Op parameters or Operand data B-Seq.
+                 * result;      //< Op result B-Seq.
+    const char   * description; //< Op description.
+    int            type;        //< Type of Op: 0 for Operand.
+    const void   * evaluation;  //< Evaluated expression.
+};
+
+/** Compares the given Op's name to the given key. */
+inline bool OpEquals (const Op* op, const char* key) {
+    if (!op) {
+        return false;
+    }
+    return StrandEquals (op->name, key);
+}
+
+/** Compares the given Op's name to the given key. */
+inline bool OpEquals (const Op* op, const char* begin,
+                             const char* end) {
+    if (!op) {
+        return false;
+    }
+    return StrandEquals (begin, end, op->name);
+}
+
+/** Converts the given value to a pointer. */
+inline intptr_t OpCount (const Op& op) {
+    return op.result - op.params;
+}
+
+/** Converts the given value to a pointer. */
+inline const uint_t* OpFirst (wchar_t index) {
+    return reinterpret_cast<const uint_t*>(index);
+}
+
+/** Converts the given value to a pointer. */
+inline wchar_t OpFirst (const Op* op) {
+    if (!op) {
+        return 0;
+    }
+    return (wchar_t)reinterpret_cast<uintptr_t>(op->params);
+}
+
+/** Converts the given value to a pointer. */
+inline const uint_t* OpLast (wchar_t index) {
+    return reinterpret_cast<const uint_t*> (index);
+}
+
+/** Converts the given value to a pointer. */
+inline wchar_t OpLast (const Op* op) {
+    if (!op) {
+        return 0;
+    }
+    return (wchar_t)reinterpret_cast<uintptr_t>(op->result);
+}
+
+#if USING_SCRIPT_TEXT
+/** Prints the given Set to the strand.
+    Quote: Wikipedia "In mathematics an operand is the object of a mathematical
+    op, i.e. it is the quantity that is operated on." */
+KABUKI Strand& OpPrint (const Op* op, Strand& strand);
+#endif  //< USING_SCRIPT_TEXT
+
+/** A general purpose op made from a BOut pointer. 
+struct KABUKI Macro {
+    const char* address;
+    BOut* bout;
+};*/
+
+/** Initializes the buffer of given size in bytes. 
+KABUKI Macro MacroInit (uintptr_t* buffer, uint_t buffer_size);*/
+
+/** Returns a reference to the bout for this assembly. 
 template<uint_t kNumber>
 Log& RoomLog () {
     static uintptr_t buffer[kLogSize / sizeof (uintptr_t) + 1];
@@ -48,110 +128,114 @@ Log& LogInit () {
     static uintptr_t* buffer = WordBuffer<kNumber, kLogSize> ();
     static Log op = LogInit (buffer, kLogSize);
     return op;
+}*/
+
+inline const Op* OpError (void* source, Error error) {
+    return reinterpret_cast <const Op*> (error);
+}
+
+}   //< namespace _
+
+/** Overloaded operator<< prints the given op to the text. */
+KABUKI _::Strand& operator<< (_::Strand& strand, const _::Op* op);
+
+/** Macro << writes the given value to the op. 
+inline _::Macro& operator<< (_::Macro& op, int8_t value) {
+    void* args[1];
+    _::BOutWrite (op.bout,
+                  _::Params<2, _::STR, _::kAddressLengthMax, _::STR> (),
+                  _::Args (args, &value));
+    return op;
 } */
 
-/** Prints the given op to the stdout. */
-KABUKI void OpPrint (Op& op);
-
-}       //< namespace _
-
-/** Operation << writes the given value to the op. */
-inline _::Op& operator<< (_::Op& op, int8_t value) {
+/** Macro << writes the given value to the op. 
+inline _::Macro& operator<< (_::Macro& op, uint8_t value) {
     void* args[1];
-    _::BoutWrite (op.bout,
-                  _::Params<2, _::STR, _::kMaxAddressLength, _::STR> (),
+    _::BOutWrite (op.bout,
+                  _::Params<2, _::STR, _::kAddressLengthMax, _::UI1> (),
                   _::Args (args, &value));
     return op;
-}
+} */
 
-/** Operation << writes the given value to the op. */
-inline _::Op& operator<< (_::Op& op, uint8_t value) {
+/** Macro << writes the given value to the op.
+inline _::Macro& operator<< (_::Macro& op, int16_t value) {
     void* args[1];
-    _::BoutWrite (op.bout,
-                  _::Params<2, _::STR, _::kMaxAddressLength, _::UI1> (),
+    _::BOutWrite (op.bout,
+                  _::Params<2, _::STR, _::kAddressLengthMax, _::SI2> (),
                   _::Args (args, &value));
     return op;
-}
+} */
 
-/** Operation << writes the given value to the op. */
-inline _::Op& operator<< (_::Op& op, int16_t value) {
+/** Macro << writes the given value to the op.
+inline _::Macro& operator<< (_::Macro& op, uint16_t value) {
     void* args[1];
-    _::BoutWrite (op.bout,
-                  _::Params<2, _::STR, _::kMaxAddressLength, _::SI2> (),
+    _::BOutWrite (op.bout,
+                  _::Params<2, _::STR, _::kAddressLengthMax, _::UI2> (),
                   _::Args (args, &value));
     return op;
-}
+} */
 
-/** Operation << writes the given value to the op. */
-inline _::Op& operator<< (_::Op& op, uint16_t value) {
+/** Macro << writes the given value to the op.
+inline _::Macro& operator<< (_::Macro& op, int32_t value) {
     void* args[1];
-    _::BoutWrite (op.bout,
-                  _::Params<2, _::STR, _::kMaxAddressLength, _::UI2> (),
+    _::BOutWrite (op.bout,
+                  _::Params<2, _::STR, _::kAddressLengthMax, _::SI4> (),
                   _::Args (args, &value));
     return op;
-}
+} */
 
-/** Operation << writes the given value to the op. */
-inline _::Op& operator<< (_::Op& op, int32_t value) {
+/** Macro << writes the given value to the op.
+inline _::Macro& operator<< (_::Macro& op, uint32_t value) {
     void* args[1];
-    _::BoutWrite (op.bout,
-                  _::Params<2, _::STR, _::kMaxAddressLength, _::SI4> (),
+    _::BOutWrite (op.bout,
+                  _::Params<2, _::STR, _::kAddressLengthMax, _::UI4> (),
                   _::Args (args, &value));
     return op;
-}
+} */
 
-/** Operation << writes the given value to the op. */
-inline _::Op& operator<< (_::Op& op, uint32_t value) {
+/** Macro << writes the given value to the op.
+inline _::Macro& operator<< (_::Macro& op, int64_t value) {
     void* args[1];
-    _::BoutWrite (op.bout,
-                  _::Params<2, _::STR, _::kMaxAddressLength, _::UI4> (),
+    _::BOutWrite (op.bout,
+                  _::Params<2, _::STR, _::kAddressLengthMax, _::SI8> (),
                   _::Args (args, &value));
     return op;
-}
+} */
 
-/** Operation << writes the given value to the op. */
-inline _::Op& operator<< (_::Op& op, int64_t value) {
+/** Macro << writes the given value to the op.
+inline _::Macro& operator<< (_::Macro& op, uint64_t value) {
     void* args[1];
-    _::BoutWrite (op.bout,
-                  _::Params<2, _::STR, _::kMaxAddressLength, _::SI8> (),
+    _::BOutWrite (op.bout,
+                  _::Params<2, _::STR, _::kAddressLengthMax, _::UI8> (),
                   _::Args (args, &value));
     return op;
-}
+} */
 
-/** Operation << writes the given value to the op. */
-inline _::Op& operator<< (_::Op& op, uint64_t value) {
+/** Macro << writes the given value to the op.
+inline _::Macro& operator<< (_::Macro& op, float value) {
     void* args[1];
-    _::BoutWrite (op.bout,
-                  _::Params<2, _::STR, _::kMaxAddressLength, _::UI8> (),
+    _::BOutWrite (op.bout,
+                  _::Params<2, _::STR, _::kAddressLengthMax, _::FLT> (),
                   _::Args (args, &value));
     return op;
-}
+} */
 
-/** Operation << writes the given value to the op. */
-inline _::Op& operator<< (_::Op& op, float value) {
+/** Macro << writes the given value to the op.
+inline _::Macro& operator<< (_::Macro& op, double value) {
     void* args[1];
-    _::BoutWrite (op.bout,
-                  _::Params<2, _::STR, _::kMaxAddressLength, _::FLT> (),
+    _::BOutWrite (op.bout,
+                  _::Params<2, _::STR, _::kAddressLengthMax, _::DBL> (),
                   _::Args (args, &value));
     return op;
-}
+} */
 
-/** Operation << writes the given value to the op. */
-inline _::Op& operator<< (_::Op& op, double value) {
+/** Macro << prints a char to the op.
+inline _::Macro& operator<< (_::Macro& op, const char* string) {
     void* args[1];
-    _::BoutWrite (op.bout,
-                  _::Params<2, _::STR, _::kMaxAddressLength, _::DBL> (),
-                  _::Args (args, &value));
-    return op;
-}
-
-/** Operation << prints a char to the op. */
-inline _::Op& operator<< (_::Op& op, const char* string) {
-    void* args[1];
-    _::BoutWrite (op.bout,
-                  _::Params<2, _::STR, _::kMaxAddressLength, _::STR> (),
+    _::BOutWrite (op.bout,
+                  _::Params<2, _::STR, _::kAddressLengthMax, _::STR> (),
                   _::Args (args, string));
     return op;
-}
+} */
 
-#endif  //< SCRIPT_LOG_H
+#endif  //< HEADER_FOR_SCRIPT_OP

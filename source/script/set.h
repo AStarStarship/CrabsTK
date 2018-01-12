@@ -17,7 +17,7 @@
 #ifndef SCRIPT_COLLECTION_H
 #define SCRIPT_COLLECTION_H
 
-#include "types.h"
+#include "type.h"
 #include "text.h"
 
 namespace _ {
@@ -37,13 +37,13 @@ struct KABUKI Set {
 
 /** A Type-Value Tuple. */
 struct Tuple2 {
-    TType type;     //< The tuple type.
+    AsciiType type;     //< The tuple type.
     void* value;    //< The tuple value.
 };
 
 /** A Type-Value Tuple. */
 struct Tuple3 {
-    TType       type;  //< The tuple type.
+    AsciiType   type;  //< The tuple type.
     void      * value; //< The tuple value.
     const char* key;   //< The Tuple key.
 };
@@ -57,9 +57,9 @@ struct Tuple3 {
     |      Stack | STK  | A stack of POD number types.                 |
     |       List | LST  | A stack of Type-Value tuples.                |
     |        Map | MAP  | A one-to-one map of Id-{Type-Value} tuples.  |
-    |       Book | BOK  | An unordered map of Key-{Type-Value} tuples. |
+    |       Book | DIC  | An unordered map of Key-{Type-Value} tuples. |
     | Dictionary | DIC  | A one-to-one map of Key-{Type-Value} tuples. |
-    |   Observer | OBV  | A Observer with Subscriber List.             |
+    |   Observer | STC  | A Observer with Subscriber List.             |
 */
 struct Collection {
 
@@ -70,10 +70,10 @@ struct Collection {
     virtual void Wipe () = 0;
 
     /** Adds the given Tuple2 to this Set. */
-    virtual bool Add (TType type, void* data) = 0;
+    virtual bool Add (AsciiType type, void* data) = 0;
 
     /** Adds the given Tuple3 to this Set. */
-    virtual bool Add (TType type, void* data, const char* key) = 0;
+    virtual bool Add (AsciiType type, void* data, const char* key) = 0;
 
     /** Merges the given Set into this one. */
     virtual bool Merge (Collection* collection) = 0;
@@ -98,7 +98,7 @@ struct Collection {
     virtual uintptr_t FindIndex (const char* key) = 0;
 
     /** Returns true if this Set contains this given Type-Value. */
-    virtual uintptr_t FindIndex (TType type, void* data) = 0;
+    virtual uintptr_t FindIndex (AsciiType type, void* data) = 0;
 
     /** Gets the size_t of the object being stored. */
     virtual uintptr_t GetSize () = 0;
@@ -107,7 +107,7 @@ struct Collection {
     virtual uintptr_t GetSizeWidth () = 0;
 
     /**  */
-    virtual Text& Print (Text& text) = 0;
+    virtual Strand& Print (Strand& strand) = 0;
 };
 }       //< namespace _
 #endif  //< SCRIPT_COLLECTION_H

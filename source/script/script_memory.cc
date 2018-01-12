@@ -1,5 +1,4 @@
 /** Kabuki Toolkit
-#include <script_utils.h>
     @version 0.x
     @file    ~/source/script/script_utils.cc
     @author  Cale McCollough <https://calemccollough.github.io>
@@ -18,16 +17,28 @@
 #include <stdafx.h>
 #include "memory.h"
 
-using namespace std;
-
 namespace _ {
 
-int MemoryAlignToPowerOf2 (int value) {
+uint32_t MemoryAlignPowerOf2 (uint32_t value) {
     if (value < 0) {
         return 4;
     }
-    // @cite https://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2
-    uint v = (uint)value;
+    // 
+    --value;
+    value |= value >> 1;
+    value |= value >> 2;
+    value |= value >> 4;
+    value |= value >> 8;
+    value |= value >> 16;
+    ++value;
+    return value;
+}
+
+int32_t MemoryAlignPowerOf2 (int32_t value) {
+    if (value < 0) {
+        return 4;
+    }
+    uint32_t v = (uint32_t)value;
     --v;
     v |= v >> 1;
     v |= v >> 2;
@@ -35,7 +46,7 @@ int MemoryAlignToPowerOf2 (int value) {
     v |= v >> 8;
     v |= v >> 16;
     ++v;
-    return (int)value;
+    return (int32_t)value;
 }
 
 byte MemoryNibbleToLowerCaseHex (byte b) {
@@ -67,7 +78,9 @@ uint16_t MemoryByteToUpperCaseHex (byte b) {
 
 int MemoryHexToByte (byte c) {
     //printf ("toByte (byte c): %c ", c);
-    if (c < '0') return -1;
+    if (c < '0') {
+        return -1;
+    }
     if (c >= 'a') {
         if (c > 'f') return -1;
         //printf ("output!: %i \n", c - ('a' - 10));
@@ -101,14 +114,14 @@ int MemoryHexToByte (uint16_t h) {
 
 void MemoryClear (void* address, size_t size) {
     //memset (address, '0', size);
-    byte* ptr = reinterpret_cast<byte*> (address);
+    char* ptr = reinterpret_cast<char*> (address);
     for (; size; --size)
         *ptr++ = '\0';
     /* This code is designed to work like memcpy but is not working right now.
     uintptr_t lsb_mask = (1 << sizeof (long)) - 1,
-    msb_mask = ~lsb_mask,
-    adr_uint = reinterpret_cast<uintptr_t> (address),
-    adr_lsb  = adr_uint & lsb_mask;
+    msb_mask  = ~lsb_mask,
+    adr_uint  = reinterpret_cast<uintptr_t> (address),
+    adr_lsb   = adr_uint & lsb_mask;
     long* ptr = reinterpret_cast<long*> (adr_uint & msb_mask),
     * end = reinterpret_cast<long*> ((adr_uint + size) & lsb_mask);
     // Example: address 0x1
@@ -118,88 +131,83 @@ void MemoryClear (void* address, size_t size) {
     value &= value_mask;
     *ptr = value;
     ++ptr;
-    for (; ptr < end; ++ptr)
-    *ptr = 0;
+    for (; ptr < end; ++ptr) {
+        *ptr = 0;
+    }
     value = *ptr;
     value_mask = adr_uint & lsb_mask;
     value &= value_mask;
     *ptr = value;*/
 }
 
-byte* MemoryCopy (void* target, void* target_end, const void* memory, int size) {
+inline char* MemoryCopy (char* write, char* write_end, const char* read,
+    const char* read_end) {
     // @todo Optimize to write in words.
-    if (target == nullptr) {
-        return 0;
-    }
-    if (target_end == nullptr) {
-        return 0;
-    }
-    if (memory == nullptr) {
-        return 0;
-    }
-    byte* write = reinterpret_cast<byte*> (target),
-        * write_end = reinterpret_cast<byte*> (target_end);
-    if ((write_end - write) < size) {
+    if (!write) {
         return nullptr;
     }
-    const byte* read = reinterpret_cast<const byte*> (memory);
-    for (; size != 0; --size)
-        *write++ = *read++;
-    return write;
-}
+    if (write > write_end) {
+        return nullptr;
+    }
+    if (!read) {
+        return nullptr;
+    }
+    if (read > read_end) {
+        return nullptr;
+    }
 
-byte* MemoryCopy (void* target, void* target_end, const void* memory,
-                   const void* memory_end) {
-    // @todo Optimize to write in words.
-    if (target == nullptr) {
-        return 0;
-    }
-    if (target_end == nullptr) {
-        return 0;
-    }
-    if (memory == nullptr) {
-        return 0;
-    }
-    if (memory_end == nullptr) {
-        return 0;
-    }
-    byte      * write     = reinterpret_cast<     byte*> (target    ),
-              * write_end = reinterpret_cast<      byte*> (target_end);
-    const byte* read      = reinterpret_cast<const byte*> (memory    ),
-              * read_end  = reinterpret_cast<const byte*> (memory_end);
     size_t target_size = write_end - write,
-           memory_size = read_end - read;
-    if (target_size < memory_size) { // Buffer overflow!
+           read_size   = read_end  - read;
+    if (target_size < read_size) { // Buffer overflow!
         return nullptr;
     }
-    for (; memory_size != 0; --memory_size) {
+    for (; read_size != 0; --read_size) {
         *write++ = *read++;
     }
     return write;
 }
 
-byte* MemoryCopy (void* target, void* target_end, const void* memory,
-                  const void* memory_end, int size) {
+char* MemoryCopy (char* write, char* write_end, const char* read,
+                  int size) {
     // @todo Optimize to write in words.
-    if (target == nullptr) {
-        return 0;
+    if (!write) {
+        return nullptr;
     }
-    if (target_end == nullptr) {
-        return 0;
+    if (write > write_end) {
+        return nullptr;
     }
-    if (memory == nullptr) {
-        return 0;
+    if (!read) {
+        return nullptr;
     }
-    if (memory_end == nullptr) {
-        return 0;
-    }
-    byte* write = reinterpret_cast<byte*> (target),
-        *write_end = reinterpret_cast<byte*> (target_end);
     if ((write_end - write) < size) {
         return nullptr;
     }
-    const byte* read = reinterpret_cast<const byte*> (memory),
-        *read_end = reinterpret_cast<const byte*> (memory_end);
+    for (; size; --size) {
+        *write++ = *read++;
+    }
+    return write;
+}
+
+char* MemoryCopy (char* write, char* write_end, const char* read,
+                  const char* read_end, int size) {
+    // @todo Optimize to write in words.
+    if (!write) {
+        return nullptr;
+    }
+    if (write > write_end) {
+        return nullptr;
+    }
+    if (!read) {
+        return nullptr;
+    }
+    if (!read_end) {
+        return nullptr;
+    }
+    if ((write_end - write) < size) {
+        return nullptr;
+    }
+    const char* read     = reinterpret_cast<const char*> (read),
+              * read_end = reinterpret_cast<const char*> (read_end);
     if ((read_end - read) < size) {
         return nullptr;
     }

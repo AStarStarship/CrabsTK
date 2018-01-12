@@ -35,18 +35,12 @@ class Server: public _::Room {
     /* Constructs the default server. */
     Server ();
 
-    /** Handles Script Commands.
-        @param text     Beginning of the Text buffer.
-        @param strand_end End of the Text buffer.
-        @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Sudo (const char* text, const char* strand_end);
-
-    /** Abstract Script Operation(s).
+    /** Abstract Script Op(s).
         @param index The index of the expression.
-        @param expr  The Expression to read and write from.
-        @return      Returns null upon success, a Set header upon query, and an
+        @param expr  The Expr to read and write from.
+        @return      Returns nil upon success, a Set header upon query, and an
         error_t ticket upon Read-Write failure. */
-    virtual const _::Operation* Star (uint index, _::Expression* expr);
+    virtual const _::Op* Star (wchar_t index, _::Expr* expr);
 
     private:
 

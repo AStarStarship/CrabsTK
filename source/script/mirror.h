@@ -46,13 +46,13 @@ static const uintptr_t kMaxMirrorSize = ~((uintptr_t)0);
     @param  Start The start of the data.
     @param  Stop  The stop of the data.
     @param  Size The size of the buffer. */
-KABUKI uint_t MirrorLength (byte* start, byte* stop, uint_t size);
+KABUKI uint_t MirrorLength (char* start, char* stop, uint_t size);
 
 /** Calculates the space left in the given ring buffer.
     @param  Start The start of the data.
     @param  Stop  The stop of the data.
     @param  Size  The size of the buffer. */
-KABUKI uint_t MirrorSpace (byte* start, byte* stop, uint_t size);
+KABUKI uint_t MirrorSpace (char* start, char* stop, uint_t size);
 
 /** Checks if the given slot contains the specified address. */
 KABUKI void* MirrorContains (Mirror* mirror, void* address);
@@ -61,10 +61,10 @@ KABUKI void* MirrorContains (Mirror* mirror, void* address);
 KABUKI void MirrorWipe (Mirror* mirror);
 
 /** Copies a block from a ring-buffer to the given destination. */
-//KABUKI byte* MirrorWrite (Mirror* mirror, void* source, size_t size);
+//KABUKI char* MirrorWrite (Mirror* mirror, void* source, size_t size);
 
 /** Copies a block from a ring-buffer to the given destination. */
-//KABUKI byte* MirrorRead (Mirror* mirror, void* source, size_t size);
+//KABUKI char* MirrorRead (Mirror* mirror, void* source, size_t size);
 
 /** Gets the args from the b-sequence. */
 KABUKI const Operation* MirrorRead (Mirror* mirror, const uint_t* params,
@@ -127,7 +127,7 @@ KABUKI const Operation* MirrorResult (Mirror* mirror, Error error,
 KABUKI const Operation* MirrorResult (Mirror* mirror, Error error,
                                    const uint_t* header,
                                    uint_t offset,
-                                   byte* address);
+                                   char* address);
 
 /** Used to return an erroneous result from a B-Input.
     @param  bin     The source Mirror.
@@ -139,7 +139,7 @@ KABUKI const Operation* MirrorResult (Mirror* mirror, Error error,
 KABUKI const Operation* MirrorResult (Mirror* mirror, Error error,
                                    const uint_t* header,
                                    uint_t offset,
-                                   byte* address);
+                                   char* address);
 
 }       //< namespace _
 #endif  //< SCRIPT_USING_MIRROR

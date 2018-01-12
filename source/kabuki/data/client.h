@@ -45,20 +45,14 @@ class Client : public _::Room {
     virtual bool SetState (int state);
 
     /** Prints this object to the console. */
-    virtual _::Text& Print (_::Text& text);
+    virtual _::Strand& Print (_::Strand& strand);
 
-    /** Abstract Script Operation(s).
+    /** Abstract Script Op(s).
         @param index The index of the expression.
-        @param expr  The Expression to read and write from.
-        @return      Returns null upon success, a Set header upon query, and an 
+        @param expr  The Expr to read and write from.
+        @return      Returns nil upon success, a Set header upon query, and an 
                      error_t ticket upon Read-Write failure. */
-    virtual const _::Operation* Star (uint index, _::Expression* expr);
-
-    /** Handles Script Commands.
-        @param text     Beginning of the Text buffer. 
-        @param strand_end End of the Text buffer.
-        @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Sudo (const char* text, const char* strand_end);
+    virtual const _::Op* Star (wchar_t index, _::Expr* expr) = 0;
 
     private:
     

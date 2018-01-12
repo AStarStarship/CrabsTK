@@ -17,11 +17,10 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef HEADER_FOR___BIN
-#define HEADER_FOR___BIN
+#ifndef HEADER_FOR_SCRIPT_BIN
+#define HEADER_FOR_SCRIPT_BIN
 
-#include "operation.h"
-#include "text.h"
+#include "op.h"
 #include "slot.h"
 #include "error.h"
 
@@ -29,9 +28,9 @@ namespace _ {
 
 /** A*B B-Input Slot.
     A B-Input Slot is functionally identical to a input port in TCP. */
-struct KABUKI Bin {
+struct KABUKI BIn {
 
-    /** List of Finite Bin States.
+    /** List of Finite BIn States.
         @see Script Protocol RFC for list of states. */
     typedef enum States {
         AddressState = 0,   //< State  0: Scanning address.
@@ -43,66 +42,93 @@ struct KABUKI Bin {
         ObjectState,        //< State  6: 8-bit OB1 state.
         HashState,          //< State  7: Stand the 32-bit hash.
         ErrorState,         //< State  8: Handling an error state.
-        DisconnectedState,  //< State  9: Disconnected state.
+        kStateDisconnected,  //< State  9: Disconnected state.
         AckState,           //< State 10: Awaiting connection ACK.
         LockedState,        //< State 11: Locked state.
         PodState,           //< State 12: Scanning plain-old-data.
     } State;
 
     uint_t          size,   //< The size of the buffer.
-                    start;  //< The starting index of the ring buffer data.
+        start;  //< The starting index of the ring buffer data.
     volatile uint_t stop;   //< The stopping index of the ring buffer data.
     uint_t          read;   //< The read variable.
 };
 
+/** Copies the bin to the slot. */
+inline void BInSlot (BIn* bin, Slot& slot) {
+    if (!bin) {
+        return;
+    }
+    char* begin = reinterpret_cast<char*> (bin) + sizeof (BIn);
+    slot.begin = begin;
+    slot.start = begin + bin->start;
+    slot.stop = begin + bin->stop;
+    slot.end = begin + bin->size;
+}
+
 /** Get's the B-Input's buffer.*/
-KABUKI byte* BinBuffer (Bin* bin);
+inline char* BInBegin (BIn* bin) {
+    return reinterpret_cast<char*> (bin) + sizeof (BIn);
+}
 
-KABUKI byte* BinEndAddress (Bin* bin);
-
-#if SCRIPT_USING_TEXT
-/** Gets a a char for printing out the bin_state. */
-KABUKI const char** BinState ();
-#endif  //< SCRIPT_USING_TEXT
-
-/** Initializes the Bin struct KABUKI to an empty buffer. */
-KABUKI Bin* BinInit (uintptr_t* buffer, uint_t size);
+inline char* BInEnd (BIn* bin) {
+    // This will never be nil.
+    //if (!bin) {
+    //    return nullptr;
+    //}
+    return BInBegin (bin) + bin->size;
+}
 
 /** Gets the rx buffer length. */
-KABUKI uint_t BinSpace (Bin* bin);
+inline uint_t BInSpace (BIn* bin) {
+    if (!bin) {
+        return 0;
+    }
+    char* txb_ptr = reinterpret_cast<char*>(bin);
+    return SlotSpace (txb_ptr + bin->start, txb_ptr + bin->stop,
+                      bin->size);
+}
+
+inline uint_t BinBufferLength (BIn* bin) {
+    if (!bin) {
+        return ~0;
+    }
+    char* base = BInBegin (bin);
+    return SlotLength (base + bin->start, base + bin->stop, bin->size);
+}
+
+#if USING_SCRIPT_TEXT
+/** Gets a a char for printing out the bin_state. */
+KABUKI const char** BInState ();
+#endif  //< USING_SCRIPT_TEXT
+
+/** Initializes the BIn struct KABUKI to an empty buffer. */
+KABUKI BIn* BInInit (uintptr_t* buffer, uint_t size);
 
 /** Gets the end address of the rx buffer. */
-KABUKI byte* BinEndAddress (Bin* bin);
+KABUKI char* BInEnd (BIn* bin);
 
-/** Returns true if the Bin buffer contains any data.
+/** Returns true if the BIn buffer contains any data.
     @warning Function does not do any error checking for speed. */
-KABUKI bool BinIsReadable (Bin* bin);
+KABUKI bool BInIsReadable (BIn* bin);
 
-/** Scans a message with the given params to the given Bin.
-    The data in the Bin is word-aligned, unlike the Slot. It also 
+/** Scans a message with the given params to the given BIn.
+    The data in the BIn is word-aligned, unlike the Slot. It also
     doesn't have a hash with an escape sequence.
-    
-    @param rx The Bin socket.
+
+    @param rx The BIn socket.
     @param params The parameters.
     @param args   The arguments.
-    @return       Returns 0 upon success and an ErrorList ticket number upon 
+    @return       Returns 0 upon success and an ErrorList ticket number upon
                   failure. */
-KABUKI const Operation* BinRead (Bin* bin, const uint_t* params, void** args);
+KABUKI const Op* BInRead (BIn* bin, const uint_t* params, void** args);
 
-#if SCRIPT_USING_TEXT
-/** Prints the Bin to the Text.
+#if USING_SCRIPT_TEXT
+/** Prints the BIn to the Text.
     @param  bin The pin to print.
     @param  text The Text to print the bin to.
     @return The text. */
-KABUKI Text& BinPrint (Bin* bin, Text& text);
-#endif  //< SCRIPT_USING_TEXT
+KABUKI Strand& BInPrint (BIn* bin, Strand& strand);
+#endif  //< USING_SCRIPT_TEXT
 }       //< namespace _
-
-#if SCRIPT_USING_TEXT
-/** Prints out the bin to the text. */
-inline _::Text& operator<< (_::Text& text, _::Bin* bin) {
-    return _::BinPrint (bin, text);
-}
-#endif  //< SCRIPT_USING_TEXT
-
-#endif  //< HEADER_FOR___BIN
+#endif  //< HEADER_FOR_SCRIPT_BIN

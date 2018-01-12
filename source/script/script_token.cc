@@ -15,14 +15,9 @@
 */
 
 #include <stdafx.h>
-
 #include "token.h"
-
-#if SCRIPT_USING_TOKEN
-#include "strand.h"
+#if USING_SCRIPT_TEXT
 #include "text.h"
-
-using namespace std;
 
 namespace _ {
 
@@ -32,7 +27,7 @@ bool TokenQualifies (const char* strand) {
     }
     char c = *strand;
     while (c) {
-        if (!isspace (c)) {
+        if (!IsSpace (c)) {
             return true;
         }
         c = *(++strand);
@@ -49,14 +44,14 @@ bool TokenQualifies (const char* text, const char* strand_end) {
     }
     char c = *text;
     while (c) {
-        if (!isspace (c)) {
+        if (!IsSpace (c)) {
             // The token must end at or before the target_end.
             do {
                 if (++text > strand_end) {
                     return false;
                 }
                 c = *text;
-                if (!isspace (c)) {
+                if (!IsSpace (c)) {
                     return true;
                 }
             } while (c);
@@ -83,18 +78,26 @@ const char* TokenEquals (const char* strand, const char* token) {
          b = *token;
     int  result;
 
-    //std::cout << "\n| Comparing \"" << strand << "\" to \"" << token << "\"";
+    #if SCRIPT_DEBUG == SCRIPT_TOKEN
+    std::cout << "\n| Comparing \"" << strand << "\" to \"" << token << "\"";
+    #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
 
     // token SHOULD be a nil-terminated string without whitespace.
     while (b) {
         result = b - a;
-        //std::cout << "\n| b - a = " << b << " - " << a << " = " << result;
+        #if SCRIPT_DEBUG == SCRIPT_TOKEN
+        std::cout << "\n| b - a = " << b << " - " << a << " = " << result;
+        #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
         if (result) {
-            //std::cout << " is not a hit.";
+            #if SCRIPT_DEBUG == SCRIPT_TOKEN
+            std::cout << " is not a hit.";
+            #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
             return nullptr;
         }
         if (!a) {
-            //std::cout << " is a partial match but !a.";
+            #if SCRIPT_DEBUG == SCRIPT_TOKEN
+            std::cout << " is a partial match but !a.";
+            #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
             return nullptr;
         }
         ++strand;
@@ -102,17 +105,21 @@ const char* TokenEquals (const char* strand, const char* token) {
         a = *strand;
         b = *token;
     }
-    if (a && !isspace (a)) {
-        //std::cout << " is only a partial match but found " << (a ? "a" : "space");
+    if (a && !IsSpace (a)) {
+        #if SCRIPT_DEBUG == SCRIPT_TOKEN
+        std::cout << " is only a partial match but found " << (a ? "a" : "space");
+        #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
         return nullptr;
     }
-    //std::cout << " is a match!";
+    #if SCRIPT_DEBUG == SCRIPT_TOKEN
+    std::cout << " is a match!";
+    #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
     return strand;
 }
 
 const char* TokenEquals (const char* text, const char* strand_end,
                          const char* token) {
-    text = TextSkipSpaces (text, strand_end);
+    text = StrandSkipSpaces (text, strand_end);
     if (!text) {
         return nullptr;
     }
@@ -123,7 +130,9 @@ const char* TokenEquals (const char* text, const char* strand_end,
          b = *token;
     int  result;
 
+#if SCRIPT_DEBUG == SCRIPT_TOKEN
     std::cout << "\n| Comparing \"" << text << "\" to \"" << token << "\"";
+#endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
 
     a = *text;
     b = *token;
@@ -132,33 +141,43 @@ const char* TokenEquals (const char* text, const char* strand_end,
         result = b - a;
         //std::cout << "\n| b - a = " << b << " - " << a << " = " << result;
         if (result) {
+            #if SCRIPT_DEBUG == SCRIPT_TOKEN
             std::cout << " has unmatched chars b - a = " << b << " - " << a << " = "
                  << result;
+            #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
             return nullptr;
         }
         if (!a) {
+            #if SCRIPT_DEBUG == SCRIPT_TOKEN
             std::cout << " is a partial match but !a.";
+            #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
             return nullptr;
         }
         if (++text > strand_end) {
+            #if SCRIPT_DEBUG == SCRIPT_TOKEN
             std::cout << " but text buffer overflowed!";
+            #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
             return nullptr;
         }
         ++token;
         a = *text;
         b = *token;
     }
-    if (a && !isspace (a)) {
+    if (a && !IsSpace (a)) {
+        #if SCRIPT_DEBUG == SCRIPT_TOKEN
         std::cout << " is only a partial match but found " << (a ? "a" : "space");
+        #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
         return nullptr;
     }
+    #if SCRIPT_DEBUG == SCRIPT_TOKEN
     std::cout << " is a match!";
+    #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
     return text;
 }
 
 const char* TokenRead (const char* text, const char* strand_end,
                        char* target, char* target_end) {
-    text = TextSkipSpaces (text, strand_end);
+    text = StrandSkipSpaces (text, strand_end);
     if (!text) {
         return nullptr;
     }
@@ -170,20 +189,28 @@ const char* TokenRead (const char* text, const char* strand_end,
     }
 
     char c = *text;
-    while (c && !isspace (c)) {
+    while (c && !IsSpace (c)) {
+        #if SCRIPT_DEBUG == SCRIPT_TOKEN
         std::cout << c;
+        #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
         if (++text > strand_end) {
+            #if SCRIPT_DEBUG == SCRIPT_TOKEN
             std::cout << " but text buffer overflowed!";
+            #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
             return nullptr;
         }
         if (++target > target_end) {
+            #if SCRIPT_DEBUG == SCRIPT_TOKEN
             std::cout << " but target buffer overflowed!";
+            #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
             return nullptr;
         }
         *target = c;
         c = *text;
     }
+    #if SCRIPT_DEBUG == SCRIPT_TOKEN
     std::cout << '\"';
+    #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
     *target = 0;
     return text;
 
@@ -203,7 +230,9 @@ int TokenCompare (const char* strand, const char* token) {
         return 0 - *strand;
     }
 
-    //std::cout << "\n| Comparing \"" << text << "\" to \"" << token << "\"";
+    #if SCRIPT_DEBUG == SCRIPT_TOKEN
+    std::cout << "\n| Comparing \"" << text << "\" to \"" << token << "\"";
+    #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
     a = *strand;
     b = *token;
     if (!a) {
@@ -221,13 +250,19 @@ int TokenCompare (const char* strand, const char* token) {
     // token SHOULD be a nil-terminated string without whitespace.
     while (b) {
         result = b - a;
-        //std::cout << "\n| b - a = " << b << " - " << a << " = " << result;
+        #if SCRIPT_DEBUG == SCRIPT_TOKEN
+        std::cout << "\n| b - a = " << b << " - " << a << " = " << result;
+        #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
         if (result) {
-            //std::cout << " is not a hit.";
+            #if SCRIPT_DEBUG == SCRIPT_TOKEN
+            std::cout << " is not a hit.";
+            #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
             return result;
         }
         if (!a) {
-            //std::cout << " is a partial match but !a.";
+            #if SCRIPT_DEBUG == SCRIPT_TOKEN
+            std::cout << " is a partial match but !a.";
+            #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
             return result;
         }
         ++strand;
@@ -235,8 +270,10 @@ int TokenCompare (const char* strand, const char* token) {
         a = *strand;
         b = *token;
     }
-    if (a && !isspace (a)) {
-        //std::cout << " is only a partial match but found " << (a?"a":"space");
+    if (a && !IsSpace (a)) {
+        #if SCRIPT_DEBUG == SCRIPT_TOKEN
+        std::cout << " is only a partial match but found " << (a?"a":"space");
+        #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
         return b - a;
     }
     return 0;
@@ -283,28 +320,40 @@ int TokenCompare (const char* text, const char* strand_end,
     // token SHOULD be a nil-terminated string without whitespace.
     while (b) {
         result = b - a;
-        //std::cout << "\n| b - a = " << b << " - " << a << " = " << result;
+        #if SCRIPT_DEBUG == SCRIPT_TOKEN
+        std::cout << "\n| b - a = " << b << " - " << a << " = " << result;
+        #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
         if (result) {
-            //std::cout << " is not a hit.";
+            #if SCRIPT_DEBUG == SCRIPT_TOKEN
+            std::cout << " is not a hit.";
+            #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
             return result;
         }
         if (!a) {
-            //std::cout << " is a partial match but !a.";
+            #if SCRIPT_DEBUG == SCRIPT_TOKEN
+            std::cout << " is a partial match but !a.";
+            #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
             return result;
         }
         if (++text > strand_end) {
-            //std::cout << " but buffer overflowed!";
+            #if SCRIPT_DEBUG == SCRIPT_TOKEN
+            std::cout << " but buffer overflowed!";
+            #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
             return result;
         }
         ++token;
         a = *text;
         b = *token;
     }
-    if (a && !isspace (a)) {
-        //std::cout << " is only a partial match but found " << (a?"a":"space");
+    if (a && !IsSpace (a)) {
+        #if SCRIPT_DEBUG == SCRIPT_TOKEN
+        std::cout << " is only a partial match but found " << (a?"a":"space");
+        #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
         return b - a;
     }
-    //std::cout << " is a match!";
+    #if SCRIPT_DEBUG == SCRIPT_TOKEN
+    std::cout << " is a match!";
+    #endif  //< SCRIPT_DEBUG == SCRIPT_TOKEN
     return 0;
 }
 
@@ -316,7 +365,7 @@ const char* TokenEnd (const char* target) {
 
     char c = *target;
     while (c) {
-        if (isspace (c))
+        if (IsSpace (c))
             return target + 1;
         c = *(++target);
     }
@@ -332,11 +381,11 @@ const char* TokenEnd (const char* text, const char* strand_end) {
     if (text > strand_end) {
         return nullptr;
     }
-    text = TextSkipSpaces (text, strand_end);
+    text = StrandSkipSpaces (text, strand_end);
 
     char c = *text;
     while (c) {
-        if (isspace (c)) {
+        if (IsSpace (c)) {
             return text;
         }
         if (++text > strand_end) {
@@ -347,5 +396,5 @@ const char* TokenEnd (const char* text, const char* strand_end) {
     return text;
 }
 
-#endif  //< SCRIPT_USING_TOKEN
+#endif  //< USING_SCRIPT_TEXT
 }       //< namespace _

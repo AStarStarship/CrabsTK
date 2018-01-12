@@ -56,7 +56,7 @@ KABUKI const char* RequestText (Request r);
     in the room reads does manual optical character recognition with a pen and
     paper stack, some filing cabinets, and a library of books.
 
-    The size of the Expression Stack is defined by the Script Protocol to be a 
+    The size of the Expr Stack is defined by the Script Protocol to be a 
     a maximum of 2^15-1 expressions tall.
 
     # Memory Layout
@@ -103,17 +103,17 @@ KABUKI const char* RequestText (Request r);
         Kabuki Toolkit, starts his Apps, and makes a Room. Jo defines a Floor
         statically but is does not define any walls.
         2.  Host creates a memory stack without any heap space.
-    2.  Jo needs to add a UART port out to his App so he adds a Bout with a 
+    2.  Jo needs to add a UART port out to his App so he adds a BOut with a 
         slot_size of 2KB.
-        3.  Host adds the Mirror to the Program Stack.
-    4.  Jo needs to add a SPI IO device so he initializes a Mirror with 256
+        3.  Host adds the Slot to the Program Stack.
+    4.  Jo needs to add a SPI IO device so he initializes a Slot with 256
         bytes.
-        5.  Host adds the new Mirror on top of the Mirror.
+        5.  Host adds the new Slot on top of the Slot.
     6.  Jo is out of memory in the Floor so he creates a Ceiling of size 2KB.
         7.  Host creates a Heap Block for the Ceiling.
-    7.  Jo needs Interprocess communication to three threads: one MirrorIn,
-        one MirrorOut, and a Mirror of size 2KB.
-        8.  Host adds the MirrorIn, MirroOut, and Mirror to the Ceiling.
+    7.  Jo needs Interprocess communication to three threads: one SlotIn,
+        one SlotOut, and a Slot of size 2KB.
+        8.  Host adds the SlotIn, MirroOut, and Slot to the Ceiling.
     9.  Jo wants to add a Server so Jo creates Wall_1 with 1MB space.
         10. Host creates a Wall_1 with 1MB memory.
     11. Jo wants needs to distribute information to the end-users so Jo 
@@ -178,7 +178,7 @@ class Room: public Operand {
     void ProcessLog ();
 
     /** Prints the error log to a expression. */
-    void PrintErrors (Bout* bout);
+    void PrintErrors (BOut* bout);
 
     int_t GetNumWalls ();
 
@@ -194,7 +194,7 @@ class Room: public Operand {
     virtual void DiagnoseProblems ();
 
     /** Sets up the Room. */
-    virtual const Operation* Init (Expression* expr);
+    virtual const Op* Init (Expr* expr);
 
     /** Handler for shut down event. */
     virtual void ShutDown ();
@@ -209,7 +209,7 @@ class Room: public Operand {
     virtual void Crash ();
 
     /** Main program loop. */
-    virtual const Operation* Loop ();
+    virtual const Op* Loop ();
 
     /** Returns true if the Room is on. */
     virtual bool IsOn ();
@@ -226,12 +226,12 @@ class Room: public Operand {
                                     const char* strand_end);
 
     /** Script expressions. */
-    virtual const Operation* Star (uint index, Expression* expr);
+    virtual const Op* Star (wchar_t index, Expr* expr);
 
-#if SCRIPT_USING_TEXT
+#if USING_SCRIPT_TEXT
     /** Prints the Room to the stdout. */
-    virtual _::Text& Print (_::Text& text);
-#endif  //< SCRIPT_USING_TEXT
+    virtual _::Strand& Print (_::Strand& strand);
+#endif  //< USING_SCRIPT_TEXT
 
     protected:
                                 //! vtable pointer here in memory (usually).
@@ -239,7 +239,7 @@ class Room: public Operand {
                    state_;      //< Room state.
     const char   * name_;       //< Room Name.
     TStack<Wall*>* walls_;      //< Walls in the Room.
-    Expression   * expr_;       //< Current Expression being executed.
+    Expr   * expr_;       //< Current Expr being executed.
                                 //< DC1: this.
     Door         * this_;       //< DC2: The Door to this room.
     Operand      * xoff_,       //< DC3: XOFF - XOFF handling device.

@@ -36,7 +36,7 @@ namespace _ {
     @endcode */
 struct KABUKI Event {
     /** Virtual destructor. */
-    virtual ~Event ();
+    virtual ~Event () = 0;
 
     /** Triggers the event. */
     virtual void Trigger () = 0;

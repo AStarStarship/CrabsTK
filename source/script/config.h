@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef SCRIPT_HEADER_FOR___CONFIG
-#define SCRIPT_HEADER_FOR___CONFIG
+#ifndef SCRIPT_HEADER_FOR_SCRIPT_CONFIG
+#define SCRIPT_HEADER_FOR_SCRIPT_CONFIG
 
 // @todo Check all values of assembly_settings.inl, store them as an enum, 
 // then #undef them.
@@ -28,7 +28,7 @@
 #define MBED_OS          3  //< Arduino bare-metal OS type macro.
 #define ARDUINO          4  //< mbed OS type macro.
 #define MINGW32          5  //< Win32 OS type macro.
-#define WINDOWS          6  //< Mirrors Universal OS type macro.
+#define WINDOWS          6  //< Slots Universal OS type macro.
 #define ANDROID          7  //< Android OS type macro.
 #define LINUX            8  //< Linux OS type macro.
 #define OSX              9  //< OSX OS type macro.
@@ -61,20 +61,20 @@
 // Logical no.
 #define NO                          0
 
-#define CLASS___BIN         1
-#define CLASS___BOUT        2
-#define CLASS___DISPLAY     3
-#define CLASS___DOOR        4
-#define CLASS___EXPRESSION  5
-#define CLASS___LIBRARY     6
-#define CLASS___ROOM        7
-#define CLASS___ARRAY       8
-#define CLASS___BAG         9
-#define CLASS___BOOK        10
-#define CLASS___TEXT        11
-#define CLASS___TEXTMESSAGE 12
-#define CLASS___STACK       13
-#define CLASS___WALL        14
+#define SCRIPT_BIN                  1
+#define SCRIPT_BOUT                 2
+#define SCRIPT_DISPLAY              3
+#define SCRIPT_DOOR                 4
+#define SCRIPT_EXPRESSION           5
+#define SCRIPT_LIBRARY              6
+#define SCRIPT_ROOM                 7
+#define SCRIPT_ARRAY                8
+#define SCRIPT_BAG                  9
+#define SCRIPT_BOOK                 10
+#define SCRIPT_STRAND               11
+#define SCRIPT_TEXTMESSAGE          12
+#define SCRIPT_STACK                13
+#define SCRIPT_WALL                 14
 
 #include <assembly.h>       //< Inline config stuff for your project.
 
@@ -104,7 +104,7 @@ typedef uint32_t ticket_t;
 #error MAX_ERRORS must be greater than 0
 #endif
 
-#if SCRIPT_TEXT_SIZE_MAX < 0
+#if SCRIPT_TEXT_SIZE_DEFAULT < 0
 #error MAX_ERRORS must be greater than 0
 #endif
 
@@ -137,16 +137,16 @@ enum {
     kMaxFloorsCount  = SCRIPT_MAX_WALLS,  //< Size of the Room Floor (buffer).
     kMinSlotSize     = 128,               //< Min size of a Slot - 1.
     kMaxErrors       = SCRIPT_MAX_ERRORS, //< Max errors before blowing up.
-    kMaxNumParams    = SCRIPT_MAX_PARAMS, //< Max number of parameters.
-    kMaxTextLength       = SCRIPT_TEXT_SIZE_MAX, //< Max char length.
+    kParamsMax       = SCRIPT_MAX_PARAMS, //< Max number of parameters.
+    kWordAddressMask = sizeof (void*) - 1,//< For masking the word address.
     kTimeoutMicroseconds = COM_TIMEOUT_TICKS, //< Timeout time in microseconds.
-    kWordAddressMask = sizeof (void*) - 1,    //< For masking the word address.
-    kMaxAddressLength = SCRIPT_MAX_ADDRESS_LENGTH,//< Max address (ADR) length.
-    kMinStackSize    = 1,                 //< Min Expression stack size.
-    kOperationMaxNameLength = SCRIPT_OPERATION_MAX_NAME_LENGTH,
-    kOperationMaxDescriptionLength = SCRIPT_OPERATION_MAX_DESCRIPTION_LENGTH,
+    kAddressLengthMax = SCRIPT_MAX_ADDRESS_LENGTH,//< Max address (ADR) length.
+    kMinStackSize     = 1,                //< Min Expr stack size.
+    kOpNameLengthMax  = SCRIPT_OP_MAX_NAME_LENGTH,
+    kOpDescriptionLengthMax = SCRIPT_OP_MAX_DESCRIPTION_LENGTH,
 };
-}
+}   //< namespace _
+
 #undef MAX_ERRORS
 #undef MAX_NUM_PARAMS
 #undef MAX_STRING_LENGTH
@@ -286,4 +286,4 @@ typedef uint64_t data_t;    //< Default TData size.
 
 #endif  //< SCRIPT_DEBUG
 
-#endif  //< SCRIPT_HEADER_FOR___CONFIG
+#endif  //< SCRIPT_HEADER_FOR_SCRIPT_CONFIG

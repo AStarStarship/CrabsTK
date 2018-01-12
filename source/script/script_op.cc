@@ -3,36 +3,46 @@
     @file    ~/source/script/script_op.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version 
-             2.0 (the "License"); you may not use this file except in 
-             compliance with the License. You may obtain a copy of the License 
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             All right reserved (R). Licensed under the Apache License, Version
+             2.0 (the "License"); you may not use this file except in
+             compliance with the License. You may obtain a copy of the License
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
              required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
-             implied. See the License for the specific language governing 
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+             implied. See the License for the specific language governing
              permissions and limitations under the License.
-    @desc    Slot implementation split into three files, slot.h, 
-             monoid_rx.h, and monoid_tx.h because of the large read/write
-             functions.
 */
 
 #include <stdafx.h>
 #include "op.h"
+#include "bsq.h"
 
 namespace _ {
 
+#if USING_SCRIPT_TEXT
+Strand& OpPrint (const Op* op, Strand& strand) {
+    if (!op) {
+        return strand << "\n| Op: nil";
+    }
+    return strand << "\n| Op        :" << op->name
+                  << "\n| Params    :" << BsqPrint (op->params, strand)
+                  << "\n| Result:   :" << BsqPrint (op->result, strand)
+                  << "\n| Metadata: :" << op->description;
+}
+#endif  //< USING_SCRIPT_TEXT
+/*
 #if USE_MORE_ROM
 Op OpInit (uintptr_t* buffer, uint_t buffer_size) {
-    Bout* bout = BoutInit (buffer, buffer_size);
+    BOut* bout = BOutInit (buffer, buffer_size);
     Op log;
     log.bout = bout;
     return log;
 }
 
 void OpPrint (Op& log) {
-    /*
-    Bin    * bin = reinterpret_cast<Bin*> (log.bout);
+
+    BIn    * bin = reinterpret_cast<BIn*> (log.bout);
     void   * args[1];
     byte     type = 0,                                             
              ui1;
@@ -48,7 +58,7 @@ void OpPrint (Op& log) {
     double   dbl;
     char_t   index;
 
-    //if (BinReadChar (reinterpret_cast<Bin*> (log.bout), index))
+    //if (BinReadChar (reinterpret_cast<BIn*> (log.bout), index))
     //    return;
 
     char buffer[DBL_MAX_10_EXP + 2];
@@ -146,7 +156,17 @@ void OpPrint (Op& log) {
                 std::cout << si1;
             }
         }
-    }*/
+    }
 }   
-#endif  //< MEMORY_PROFILE > 2
-}       //< namespace _
+#endif  //< MEMORY_PROFILE > 2*/
+
+}   //< namespace _
+
+
+#if USING_SCRIPT_TEXT
+
+_::Strand& operator<< (_::Strand& strand, const _::Op* op) {
+    return OpPrint (op, strand);
+}
+
+#endif  //< USING_SCRIPT_TEXT

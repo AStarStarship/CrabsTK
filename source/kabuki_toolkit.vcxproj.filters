@@ -24,11 +24,14 @@
     <Filter Include="source\kabuki\id">
       <UniqueIdentifier>{b0a0e952-9956-4fbe-8f47-440cba033b7f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\kabuki\cards">
-      <UniqueIdentifier>{3ffe8b94-907b-413e-b3f0-104b27dbc215}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\tests">
       <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="projects\sloth">
+      <UniqueIdentifier>{fa4a9efd-aa8a-4975-9620-e71bb7c990f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="projects\NewFilter1">
+      <UniqueIdentifier>{1a467537-427a-4ced-9800-65c61d6b75f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,9 +59,6 @@
     <ClInclude Include="script\event.h">
       <Filter>source\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\expression.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\global.h">
       <Filter>source\script</Filter>
     </ClInclude>
@@ -71,28 +71,13 @@
     <ClInclude Include="script\iterator.h">
       <Filter>source\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\keyboard.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\library.h">
       <Filter>source\script</Filter>
     </ClInclude>
     <ClInclude Include="script\memory.h">
       <Filter>source\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\mirror.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\operand.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\operation.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\params.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\portal.h">
       <Filter>source\script</Filter>
     </ClInclude>
     <ClInclude Include="script\random.h">
@@ -107,9 +92,6 @@
     <ClInclude Include="script\slot.h">
       <Filter>source\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\strand.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\table.h">
       <Filter>source\script</Filter>
     </ClInclude>
@@ -120,12 +102,6 @@
       <Filter>source\script</Filter>
     </ClInclude>
     <ClInclude Include="script\tbook.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\text.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\textmessage.h">
       <Filter>source\script</Filter>
     </ClInclude>
     <ClInclude Include="script\tlist.h">
@@ -140,9 +116,6 @@
     <ClInclude Include="script\tstack.h">
       <Filter>source\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\types.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\wall.h">
       <Filter>source\script</Filter>
     </ClInclude>
@@ -150,9 +123,6 @@
       <Filter>source\script</Filter>
     </ClInclude>
     <ClInclude Include="script\args.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\ascii.h">
       <Filter>source\script</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
@@ -200,20 +170,38 @@
     <ClInclude Include="kabuki\data\iterator.h">
       <Filter>source\kabuki\data</Filter>
     </ClInclude>
-    <ClInclude Include="script\op.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
     <ClInclude Include="kabuki\config.h">
       <Filter>source\kabuki</Filter>
     </ClInclude>
     <ClInclude Include="global.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="script\console.h">
+      <Filter>source\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\strand.h">
+      <Filter>source\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\text.h">
+      <Filter>source\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\global.h">
+      <Filter>source\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="script\type.h">
+      <Filter>source\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\op.h">
+      <Filter>source\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\expr.h">
+      <Filter>source\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\bsq.h">
+      <Filter>source\script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="script\script_ascii.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
     <ClCompile Include="script\script_bin.cc">
       <Filter>source\script</Filter>
     </ClCompile>
@@ -232,31 +220,16 @@
     <ClCompile Include="script\script_errors.cc">
       <Filter>source\script</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_expression.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
     <ClCompile Include="script\script_hash.cc">
       <Filter>source\script</Filter>
     </ClCompile>
     <ClCompile Include="script\script_interrupts.cc">
       <Filter>source\script</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_keyboard.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
     <ClCompile Include="script\script_memory.cc">
       <Filter>source\script</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_mirror.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
     <ClCompile Include="script\script_operand.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_operation.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_params.cc">
       <Filter>source\script</Filter>
     </ClCompile>
     <ClCompile Include="script\script_room.cc">
@@ -265,22 +238,10 @@
     <ClCompile Include="script\script_slot.cc">
       <Filter>source\script</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_strand.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
     <ClCompile Include="script\script_table.cc">
       <Filter>source\script</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_text.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_textmessage.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
     <ClCompile Include="script\script_token.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_types.cc">
       <Filter>source\script</Filter>
     </ClCompile>
     <ClCompile Include="script\script_wall.cc">
@@ -295,20 +256,35 @@
     <ClCompile Include="kabuki\data\data_server.cc">
       <Filter>source\kabuki\data</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_op.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
     <ClCompile Include="dllmain.cc">
       <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\test_kabuki_toolkit.cc">
-      <Filter>source\tests</Filter>
     </ClCompile>
     <ClCompile Include="..\tests\test_kabuki_data.cc">
       <Filter>source\tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\tests\script_tests.cc">
+    <ClCompile Include="script\script_console.cc">
+      <Filter>source\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\test_script.cc">
       <Filter>source\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\test_global.cc">
+      <Filter>source\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="script\script_strand.cc">
+      <Filter>source\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\script_type.cc">
+      <Filter>source\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\script_op.cc">
+      <Filter>source\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\script_expr.cc">
+      <Filter>source\script</Filter>
+    </ClCompile>
+    <ClCompile Include="script\script_bsq.cc">
+      <Filter>source\script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/script/script/expression.h
+    @file    ~/source/script/script/expr.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -71,7 +71,7 @@ class Library: public Operand
     
     /** Attempts to add the Page data into the Object at the given BaseAddress.
         @return Returns nil upon success and an error char upon failure. */
-    const Operation* Add (byte type, const char* key, void* data) {
+    const Op* Add (byte type, const char* key, void* data) {
         TIndex size_of_type = getSizeOfType (type);
         if (size_of_type == 0)
         {
@@ -82,22 +82,22 @@ class Library: public Operand
      
     /** Attempts to insert the Page data into the Object at the given index.
         @return Returns nil upon success and an error char upon failure. */
-    const Operation* Insert (byte type, const char* key, void* data, TIndex index = 0) {
-        TIndex l_numOperations = numNumbers;
-        if (index > l_numOperations) index = l_numOperations;
+    const Op* Insert (byte type, const char* key, void* data, TIndex index = 0) {
+        TIndex l_numOps = numNumbers;
+        if (index > l_numOps) index = l_numOps;
 
         return 0;
     }
 
     /** Attempts to remove the Page data into the Object at the given index.
         @return Returns nil upon success and an error char upon failure. */
-    const Operation* Remove (TIndex index) {
+    const Op* Remove (TIndex index) {
         return 0;
     }
 
     /** Attempts to clear the page at the given index.
         @return Returns nil upon success and an error char upon failure. */
-    const Operation* Clear (TIndex index) {
+    const Op* Clear (TIndex index) {
         return 0;
     }
     
@@ -114,12 +114,12 @@ class Library: public Operand
     }
 
     /** gets the size of the item at the given index. */
-    byte GetOperationSize (TIndex index) {
+    byte GetOpSize (TIndex index) {
         return 0;
     }
 
     /** gets the size of the item at the given index. */
-    byte SetOperationSize (TIndex index, TData newSize) {
+    byte SetOpSize (TIndex index, TData newSize) {
         return 0;
     }
     
@@ -183,19 +183,24 @@ class Library: public Operand
         return nullptr;
     }
 
-    /** Abstract Script Operation(s).
+    /** Abstract Script Op(s).
         @param index The index of the expression.
-        @param expr  The Expression to read and write from.
-        @return      Returns null upon success, a Set header upon query, and an 
+        @param expr  The Expr to read and write from.
+        @return      Returns nil upon success, a Set header upon query, and an 
                      error_t ticket upon Read-Write failure. */
-    virtual const Operation* Star (uint index, Expression* expr) {
-        static const Operation This = { "Library",
-            OperationCount (0), FirstOperation ('A'),
-            "", 0 };
+    virtual const Op* Star (wchar_t index, Expr* expr) {
+        static const Op kThis = { "Library",
+            OpFirst ('A'), OpLast ('A'),
+            "", kOpOperand, 0 };
 
         switch (index) {
-            case 0:
+            case '?': return ExprEnquiry (expr, kThis);
+            case 'A': {
+                static const Op This = { "Foo",
+                    Params<0> (), Params<0> (),
+                    "Foo is getting old I know.", kOpOperation, 0 };
                 return 0;
+            }
             default:
                 return 0;
         }
@@ -226,7 +231,7 @@ template<typename TIndex, typename TKey, typename TData,
     uint MaxStackSize>
 KABUKI void Destruct (Library<TIndex, TKey, TData, TData, MaxStackSize>* r) {
     if (r == nullptr) return;
-    delete reinterpret_cast<byte*> (r);
+    delete reinterpret_cast<char*> (r);
 }
 #endif  //< MEMORY_PROFILE > 2
 }       //< namespace _

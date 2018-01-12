@@ -18,17 +18,15 @@
 #include <stdafx.h>
 #include "door.h"
 
-using namespace std;
-
 namespace _ {
 
-const Operation* DoorResult (Door* door, Door::Error error) {
+const Op* DoorResult (Door* door, Door::Error error) {
     return 0;
 }
 
 const char* DoorErrorText (Door::Error error) {
     static const char* strings[] = {
-        "Invalid operation",
+        "Invalid op",
         "Room error"
     };
 
@@ -85,7 +83,7 @@ slot_t Door::FindSlot (void* address) {
     return count;
 }
 
-const Operation* Door::ExecAll () {
+const Op* Door::ExecAll () {
     return 0;
 }
 
@@ -93,16 +91,17 @@ const char* Door::Sudo (const char* text, const char* strand_end) {
     return nullptr;
 }
 
-const Operation* Door::Star (uint index, Expression* expr) {
-    if (index < ' ') {
-        static const Operation star = { "Door", 
-            OperationCount (0), OperationFirst ('A'),
-            "A door in a Chinese room.", 0 };
-        return &star;
+const Op* Door::Star (wchar_t index, Expr* expr) {
+    static const Op kThis = { "Door",
+        OpFirst ('A'), OpFirst ('A' + slots_->count),
+        "A door in a Chinese room with a bunch of slots in it where "
+        "messages are passed.", kOpPush, 0 };
+    if (index == '?') {
+        return kThis;
     }
     index -= ' ';
     if (((slot_t)index) >= slots_->count)
-        return DoorResult (this, Door::kErrorInvalidOperation);
+        return DoorResult (this, Door::kErrorInvalidOp);
     return nullptr;
 }
 

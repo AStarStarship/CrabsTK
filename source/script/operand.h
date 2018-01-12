@@ -20,27 +20,27 @@
 #ifndef HEADER_FOR_SCRIPT_OPERAND
 #define HEADER_FOR_SCRIPT_OPERAND
 
-#include "operation.h"
+#include "op.h"
 
 namespace _ {
 
-struct KABUKI Expression;
+struct KABUKI Expr;
 
-/** Interface for an abstract A*B Operation operand.
+/** Interface for an abstract A*B Op operand.
     A Script Operand is an object that is being operated on.
     Let A be a set of states in a Chinese Room state machine.
     Let B be a set of bytes in a set of Abstract Serial Ports.
 
     @code
     +----------- Result: The set of finite states
-    | +--------- Operation
+    | +--------- Op
     | | +------- Set of finite states
-    | | | +----- Star Operation
+    | | | +----- Star Op
     | | | | +--- Operands (input values)
     | | | | |
     v v v v v
     A = A * B   
-        |<->|   Operation
+        |<->|   Op
     |<----->|   Evaluation
     @endcode
 
@@ -60,13 +60,13 @@ struct KABUKI Expression;
         void foo () {}     //< Classical foo.
         void bar () {}     //< Some people drink too much :-)
 
-        virtual const Operand* Star (uint index, Expression* expr) {
-            void* args[2];    //< An array of 2 void* for the Operation.
+        virtual const Operand* Star (wchar_t index, Expr* expr) {
+            void* args[2];    //< An array of 2 void* for the Op.
 
             switch (index)
             {
                 case '?': { 
-                    static const Operation o_header = 
+                    static const Op o_header = 
                     { 
                         "ChineseRoomExample", ConvertNumOperands (2), nullptr, 
                         "Description of ChineseRoomExample.", 0
@@ -76,7 +76,7 @@ struct KABUKI Expression;
                     return &o_header;
                 }
                 case 64: {
-                    static const Operation o_A = { "foo",
+                    static const Op o_A = { "foo",
                         Params<2, FLT, STR, kTextBufferSize> (),
                         Params<2, FLT, STR> (),
                         "Description of foo." };
@@ -94,7 +94,7 @@ struct KABUKI Expression;
                                                                 io_string_)));
                 }
                 case 65: {
-                    static const Operation o_B = { "bar",
+                    static const Op o_B = { "bar",
                         Params<2, FLT, STR, kTextBufferSize> (),
                         Params<2, FLT, STR> (),
                         "Description of bar."
@@ -115,12 +115,9 @@ struct KABUKI Expression;
             return nullptr;
         }
 
-        // Handles Script Commands.
-        virtual const char* Do (const char* text, const char* strand_end) = 0;
-
         private:
 
-        float io_number_;                   //< Example variable.
+        float io_number_;                 //< Example variable.
         byte io_string_[kTextBufferSize]; //< Example char.
     };
     @endcode
@@ -128,49 +125,51 @@ struct KABUKI Expression;
 
 struct KABUKI Operand {
 
-    /** Abstract Script Operation(s).
+    /** Abstract Script Op(s).
         @param index The index of the expression.
-        @param expr  The Expression to read and write from.
-        @return      Returns null upon success, a Set header upon query, and an 
+        @param expr  The Expr to read and write from.
+        @return      Returns nil upon success, a Set header upon query, and an 
                      error_t ticket upon Read-Write failure. */
-    virtual const Operation* Star (uint index, Expression* expr) = 0;
-
-    /** Handles Script Text Commands.
-        @param text     Beginning of the Text buffer. 
-        @param strand_end End of the Text buffer.
-        @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Sudo (const char* text, const char* strand_end) = 0;
+    virtual const Op* Star (wchar_t index, Expr* expr) = 0;
 };
 
 /** Returns the name of the given Operand. */
 KABUKI const char* OperandName (Operand* op);
 
-/** Queries the given Operand Operation Header.
-    @param  expr      The expression to write the query to. Set to nil to return
-                      operation.
-    @param  operation The Operation header.
-    @return Returns nil upon success and an error Operation upon failure. */
-KABUKI const Operation* OperandQuery (Expression* expr,
-                                      const Operation* operation);
-
-/** Gets the number of operations in the given expressions. */
+/** Gets the number of ops in the given expressions. */
 KABUKI uintptr_t OperandCount (Operand* op);
 
-#if SCRIPT_USING_TEXT
+/** Returns the index of the given Op using the given strand.
+    @param  key_begin Beginning of the key strand buffer.
+    @param  key_end   End of the key strand buffer.
+    @return A value printable Unicode char or invalid if the Operand doesn't 
+            Contain the given key. */
+KABUKI wchar_t OperandIndex (Operand* operand, char* key_begin, char* key_end);
+
+#if USING_SCRIPT_TEXT
+/** Queries the given Operand Op Header.
+    @param  expr The expression to write the query to. Set to nil to return
+                 op.
+    @param  op   The Op header.
+    @return Returns nil upon success and an error Op upon failure. 
+KABUKI const Op* OperandQuery (Expr* expr, const Op* op);*/
+
+/** Queries the */
+Strand& OperandQuery (Operand* root, const char_t* address, Strand& key);
+
 /** Prints the Operand to the Text.
     @param  text     The Text to print to.
     @param  operand The Operand to print.
     @return text. */
-KABUKI Text& OperandPrint (Operand* operand, Text& text);
-#endif  //< SCRIPT_USING_TEXT
+KABUKI Strand& OperandPrint (Operand* operand, Strand& strand);
+#endif  //< USING_SCRIPT_TEXT
 
 }   //< namespace _
 
-#if SCRIPT_USING_TEXT
-#include "text.h"
-
+#if USING_SCRIPT_TEXT 
 /** Overloaded operator<< prints the given operand to the text. */
-KABUKI _::Text& operator<< (_::Text& text, _::Operand* operand);
-
-#endif  //< SCRIPT_USING_TEXT
+inline _::Strand& operator<< (_::Strand& strand, _::Operand* operand) {
+    return strand << OperandPrint (operand, strand);
+}
+#endif  //< USING_SCRIPT_TEXT
 #endif  //< HEADER_FOR_SCRIPT_OPERAND

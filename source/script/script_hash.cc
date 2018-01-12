@@ -18,8 +18,6 @@
 
 #include "hash.h"
 
-using namespace std;
-
 namespace _ {
 
 hash16_t Hash16 (const char* string, hash16_t hash) {

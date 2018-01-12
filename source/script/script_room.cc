@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "room.h"
 #include "door.h"
-#include "params.h"
+#include "bsq.h"
 #include "text.h"
 
 namespace _ {
@@ -107,7 +107,7 @@ void Room::ProcessLog () {
 
 }
 
-void Room::PrintErrors (Bout* bout) {
+void Room::PrintErrors (BOut* bout) {
     //uint_t errorHeader[] = { 0 };
     //return a.prints (errorHeader);
 }
@@ -117,7 +117,7 @@ void Room::DiagnoseProblems () {
     //throw RoomCrashException ();
 }
 
-const Operation* Room::Init (Expression* expr) {
+const Op* Room::Init (Expr* expr) {
     if (expr != nullptr) {
         // @todo We need to load a stored Room state.
         return nullptr;
@@ -149,14 +149,14 @@ void Room::Crash () {
 #endif  //< SCRIPT_DEBUG
 }
 
-const Operation* Room::Loop () { return 0; }
+const Op* Room::Loop () { return 0; }
 
 bool Room::IsOn () {
     return true;
 }
 
 int Room::Main (const char** args, int args_count) {
-    const Operation* result = nullptr;
+    const Op* result = nullptr;
 #if SCRIPT_DEBUG
     std::cout << "Initializing Chinese Room with " << args_count << " args:\n";
 #endif  //< SCRIPT_DEBUG
@@ -190,15 +190,15 @@ const char* Room::Sudo (const char* text, const char* strand_end) {
     return nullptr;
 }
 
-const Operation* Room::Star (uint index, Expression* expr) {
-    static const Operation star = { "Room",
-        OperationCount (0), OperationFirst (' '),
-        "A Chinese Room.", 0
+const Op* Room::Star (wchar_t index, Expr* expr) {
+    static const Op kThis = { "Room",
+        OpFirst ('A'), OpLast ('A'),
+        "A Chinese Room.", kOpPush, 0
     };
 
     switch (index) {
         case '?': {
-            return &star;
+            return ExprQuery (expr, kThis);
         }
 
     }
@@ -240,8 +240,8 @@ uintptr_t Room::GetSizeBytes () {
 }
 
 #if USE_MORE_ROM
-Text& Room::Print (_::Text& text) {
-    return text.Line () << "\n| Room: ";
+Strand& Room::Print (_::Strand& strand) {
+    return strand.Line () << "\n| Room: ";
 }
 #endif  //< USE_MORE_ROM
 

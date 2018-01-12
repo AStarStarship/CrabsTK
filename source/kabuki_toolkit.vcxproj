@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\tests\global.h" />
     <ClInclude Include="assembly.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="kabuki\config.h" />
@@ -36,29 +37,25 @@
     <ClInclude Include="kabuki_toolkit.h" />
     <ClInclude Include="script\address.h" />
     <ClInclude Include="script\args.h" />
-    <ClInclude Include="script\ascii.h" />
     <ClInclude Include="script\bin.h" />
     <ClInclude Include="script\bout.h" />
     <ClInclude Include="script\clock.h" />
     <ClInclude Include="script\color.h" />
     <ClInclude Include="script\config.h" />
+    <ClInclude Include="script\expr.h" />
     <ClInclude Include="script\door.h" />
     <ClInclude Include="script\error.h" />
     <ClInclude Include="script\event.h" />
-    <ClInclude Include="script\expression.h" />
     <ClInclude Include="script\global.h" />
     <ClInclude Include="script\hash.h" />
     <ClInclude Include="script\interrupts.h" />
     <ClInclude Include="script\iterator.h" />
-    <ClInclude Include="script\keyboard.h" />
+    <ClInclude Include="script\console.h" />
     <ClInclude Include="script\library.h" />
-    <ClInclude Include="script\op.h" />
     <ClInclude Include="script\memory.h" />
-    <ClInclude Include="script\mirror.h" />
     <ClInclude Include="script\operand.h" />
-    <ClInclude Include="script\operation.h" />
-    <ClInclude Include="script\params.h" />
-    <ClInclude Include="script\portal.h" />
+    <ClInclude Include="script\op.h" />
+    <ClInclude Include="script\bsq.h" />
     <ClInclude Include="script\random.h" />
     <ClInclude Include="script\room.h" />
     <ClInclude Include="script\set.h" />
@@ -69,48 +66,42 @@
     <ClInclude Include="script\tbag.h" />
     <ClInclude Include="script\tbook.h" />
     <ClInclude Include="script\text.h" />
-    <ClInclude Include="script\textmessage.h" />
     <ClInclude Include="script\tlist.h" />
     <ClInclude Include="script\tmap.h" />
     <ClInclude Include="script\token.h" />
     <ClInclude Include="script\tstack.h" />
-    <ClInclude Include="script\types.h" />
+    <ClInclude Include="script\type.h" />
     <ClInclude Include="script\wall.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\tests\test_kabuki_data.cc" />
-    <ClCompile Include="..\tests\test_kabuki_toolkit.cc" />
-    <ClCompile Include="..\tests\script_tests.cc" />
+    <ClCompile Include="..\tests\test_global.cc" />
+    <ClCompile Include="..\tests\test_script.cc" />
     <ClCompile Include="dllmain.cc" />
     <ClCompile Include="kabuki\data\data_client.cc" />
     <ClCompile Include="kabuki\data\data_server.cc" />
-    <ClCompile Include="script\script_ascii.cc" />
     <ClCompile Include="script\script_bin.cc" />
     <ClCompile Include="script\script_bout.cc" />
     <ClCompile Include="script\script_clock.cc" />
     <ClCompile Include="script\script_color.cc" />
     <ClCompile Include="script\script_door.cc" />
     <ClCompile Include="script\script_errors.cc" />
-    <ClCompile Include="script\script_expression.cc" />
+    <ClCompile Include="script\script_expr.cc" />
     <ClCompile Include="script\script_hash.cc" />
     <ClCompile Include="script\script_interrupts.cc" />
-    <ClCompile Include="script\script_keyboard.cc" />
-    <ClCompile Include="script\script_op.cc" />
+    <ClCompile Include="script\script_console.cc" />
     <ClCompile Include="script\script_memory.cc" />
-    <ClCompile Include="script\script_mirror.cc" />
     <ClCompile Include="script\script_operand.cc" />
-    <ClCompile Include="script\script_operation.cc" />
-    <ClCompile Include="script\script_params.cc" />
+    <ClCompile Include="script\script_op.cc" />
+    <ClCompile Include="script\script_bsq.cc" />
     <ClCompile Include="script\script_room.cc" />
     <ClCompile Include="script\script_slot.cc" />
     <ClCompile Include="script\script_strand.cc" />
     <ClCompile Include="script\script_table.cc" />
-    <ClCompile Include="script\script_text.cc" />
-    <ClCompile Include="script\script_textmessage.cc" />
     <ClCompile Include="script\script_token.cc" />
-    <ClCompile Include="script\script_types.cc" />
+    <ClCompile Include="script\script_type.cc" />
     <ClCompile Include="script\script_wall.cc" />
     <ClCompile Include="stdafx.cc" />
   </ItemGroup>
@@ -191,7 +182,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Workspace\kabuki-toolkit\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

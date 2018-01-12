@@ -38,36 +38,7 @@ bool Client::SetState (int state) {
     return true;
 }
 
-_::Text& Client::Print (_::Text& text) {
-    return text;
-}
-
-const Operation* Client::Star (uint index, _::Expression* expr) {
-    static const Operation This = { "Client",
-        OperationCount (0), OperationFirst ('A'),
-        "Datagram security client.", 0 };
-    void* args[4];
-    switch (index) {
-        case '?': return &This;
-        case 'A': {
-            static const Operation OpA = { "SetState",
-                Params<1, UI1> (), Params<0> (),
-                "Sets the client state.", 0
-            };
-            if (!expr) return &OpA;
-            byte state;
-            if (!ExpressionArgs (expr, Params<1, UI1> (), Args (args, &state)))
-            {
-                return expr->result;
-            }
-            SetState (state);
-            return nullptr;
-        }
-    }
-    return nullptr;
-}
-
-const char* Client::Sudo (const char* strand, const char* strand_end) {
+_::Strand& Client::Print (_::Strand& strand) {
     return strand;
 }
 

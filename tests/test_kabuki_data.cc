@@ -20,12 +20,12 @@
 #include "../source/kabuki/data/global.h"
 
 using namespace _;
-using namespace std;
+
 
 TEST_GROUP (SCRIPT_DATA_TESTS) {
 
     void setup () {
-        std::cout << Text ().Line ();
+        Text<> ().Line () << std::cout;
         std::cout << "\n|  + Running kabuki::data tests...";
     }
 

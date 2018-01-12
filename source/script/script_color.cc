@@ -275,7 +275,7 @@ void ColorPrint (color_t color) {
     std::cout << "Color: "
                     "R("          << (color && 0x000000FF) 
                 << "), G("        << ((color && 0x0000FF00) >> 8)
-                << "), Bin(" << ((color && 0x00FF0000) >> 16)
+                << "), BIn(" << ((color && 0x00FF0000) >> 16)
                 << "), A("        << ((color && 0xFF000000) >> 24)
                 << ")\n"; 
 }

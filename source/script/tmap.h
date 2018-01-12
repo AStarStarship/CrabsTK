@@ -21,9 +21,9 @@
 #define SCRIPT_MAP_H
 
 #include "memory.h"
-#include "types.h"
+#include "type.h"
 
-#if SCRIPT_USING_MAP
+#if USING_SCRIPT_MAP
 
 namespace _ {
 
@@ -178,7 +178,7 @@ enum {
              to verify the integrity of the object.
     @warning The reservedNumOperands must be aligned to a 32-bit value, and it
              will get rounded up to the next higher multiple of 4.
-static Map* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t size)
+static Map* Init2 (char* buffer, byte max_size, uint16_t table_size, uint16_t size)
 {
     if (buffer == nullptr)
         return nullptr;
@@ -202,7 +202,7 @@ static Map* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t si
 */
 template<typename TIndex, typename TKey, typename TSize>
 TIndex MapInsert (Map<TIndex, TKey, TSize>* collection, byte type, 
-               const byte* key, void* data, TIndex index) {
+               const char* key, void* data, TIndex index) {
     if (collection == nullptr) return 0;
     return ~0;
 }
@@ -237,7 +237,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
         return ~0;
     //< We're out of buffered indexes.
 
-    byte* types = reinterpret_cast<byte*> (map) + 
+    char* types = reinterpret_cast<char*> (map) + 
                    sizeof (Map <TIndex, TKey, TSize>);
     TSize* data_offsets = reinterpret_cast<TSize*> (types + stack_height *
                                                     (sizeof (TKey)));
@@ -518,11 +518,11 @@ TIndex MapFind (Map<TIndex, TKey, TSize>* collection, const char* key) {
     TKey table_size = collection->table_size;
 
     const TSize* hashes = reinterpret_cast<const TSize*>
-        (reinterpret_cast<const byte*> (collection) +
+        (reinterpret_cast<const char*> (collection) +
          sizeof (Map<TIndex, TKey, TSize>));
     const TKey* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
                                                                 stack_height);
-    const byte* indexes = reinterpret_cast<const byte*>(key_offsets +
+    const char* indexes = reinterpret_cast<const char*>(key_offsets +
                                                         stack_height),
         *unsorted_indexes = indexes + stack_height,
         *collission_list = unsorted_indexes + stack_height;
@@ -569,7 +569,7 @@ TIndex MapFind (Map<TIndex, TKey, TSize>* collection, const char* key) {
 
             // Check for collisions
 
-            collisions = reinterpret_cast<const byte*>(key_offsets) +
+            collisions = reinterpret_cast<const char*>(key_offsets) +
                 stack_height * sizeof (uint16_t);
             index = collisions[mid];
 
@@ -662,7 +662,7 @@ void MapPrint (const Map<TIndex, TKey, TSize>* collection) {
     for (int i = 0; i < 79; ++i) putchar ('_');
     std::cout << '\n';
 
-    const byte* states = reinterpret_cast<const byte*> (collection) +
+    const char* states = reinterpret_cast<const char*> (collection) +
                          sizeof (Map <TIndex, TKey, TSize>);
     const TKey* key_offsets = reinterpret_cast<const TKey*> 
                               (states + stack_height);
@@ -714,7 +714,7 @@ void MapPrint (const Map<TIndex, TKey, TSize>* collection) {
     }
     PrintLine ('_');
 
-    PrintMemory (reinterpret_cast<const byte*> (collection) + 
+    PrintMemory (reinterpret_cast<const char*> (collection) + 
                  sizeof (Map<TIndex, TKey, TSize>), collection->size_bytes);
     std::cout << '\n';
 }
@@ -790,5 +790,5 @@ void MapPrint (Map<TIndex, TKey, TSize>* collection) {
 //}
 
 }       //< namespace _
-#endif  //< SCRIPT_USING_MAP
+#endif  //< USING_SCRIPT_MAP
 #endif  //< SCRIPT_MAP_H

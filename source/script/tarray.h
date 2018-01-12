@@ -18,7 +18,7 @@
 #define SCRIPT_ARRAY_H
 
 #include "tstack.h"
-#if SCRIPT_USING_ARRAY
+#if USING_SCRIPT_ARRAY
 namespace _ {
 
 /** A stack of 8, 16, 32, or 64 bit plain-old-data (POD) types.
@@ -72,7 +72,7 @@ I ArrayOffset (I* indexes, I num_numensions) {
     @param a    			 The array.
     @param item  The item to insert. 
     @param index The index to insert at.
-    @return Returns -1 if a is null and -2 if the array is full. */
+    @return Returns -1 if a is nil and -2 if the array is full. */
 template<typename T, typename I = int>
 T ArrayInsertElement (TArray<I>* array, T item, I* indexes, I num_numensions) {
     if (num_numensions <= 0)
@@ -152,7 +152,7 @@ T ArrayPop (TArray<I>* a) {
 /** Gets the element at the given index.
     @param  array    The array.
     @param  index The index of the element to get.
-    @return Returns -1 if a is null and -2 if the index is out of bounds. */
+    @return Returns -1 if a is nil and -2 if the index is out of bounds. */
 template<typename T, typename I = int>
 T ArrayGet (TArray<I>* a, T index) {
     if (a == nullptr)
@@ -163,5 +163,5 @@ T ArrayGet (TArray<I>* a, T index) {
 }
 
 }       //< namespace _
-#endif  //< SCRIPT_USING_ARRAY
+#endif  //< USING_SCRIPT_ARRAY
 #endif  //< SCRIPT_ARRAY_H

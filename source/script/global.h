@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/script/config.h
+    @file    ~/source/script/global.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -30,17 +30,16 @@
 #include "table.h"
 #include "op.h"
 #include "tbook.h"
-#include "ascii.h"
 #include "color.h"
 #include "address.h"
 #include "event.h"
 #include "room.h"
-#include "expression.h"
-#include "mirror.h"
+#include "expr.h"
+#include "slot.h"
 #include "args.h"
-#include "params.h"
-#include "keyboard.h"
-#include "textmessage.h"
+#include "bsq.h"
+#include "text.h"
 #include "token.h"
+#include "console.h"
 
 #endif  //< HEADER_FOR_SCRIPT_GLOBAL

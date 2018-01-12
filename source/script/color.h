@@ -47,7 +47,7 @@ typedef enum {
     Red         = 0x0000FF,
     Maroon      = 0x800000,
     Brown       = 0xA52A2A,
-    Black       = 0x000000      //< Black at the end as null-term char.
+    Black       = 0x000000      //< Black at the end as nil-term char.
 } PresetColor;
     
 enum {

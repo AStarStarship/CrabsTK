@@ -20,8 +20,8 @@
 #ifndef HEADER_FOR_SCRIPT_DOOR
 #define HEADER_FOR_SCRIPT_DOOR
 
-#include "expression.h"
-#include "mirror.h"
+#include "expr.h"
+#include "slot.h"
 #include "tstack.h"
 #include "text.h"
 
@@ -56,7 +56,7 @@ class Door : public Operand {
     public:
 
     typedef enum Errors {
-        kErrorInvalidOperation = 0,
+        kErrorInvalidOp = 0,
         kErrorImplementation
     } Error;
 
@@ -65,13 +65,13 @@ class Door : public Operand {
     };
 
     /** A door in a Chinese room. */
-    Door (const char* roomName = TextEmpty (), uintptr_t* buffer = nullptr,
+    Door (const char* roomName = StrandEmpty (), uintptr_t* buffer = nullptr,
           uintptr_t size_bytes = kMinDoorSize);
 
     /** Destructor. */
     virtual ~Door ();
 
-    /** Gets the Bout at the given index. */
+    /** Gets the BOut at the given index. */
     slot_t GetSlot (slot_t index);
 
     /** Address the given expr to the Door. */
@@ -86,7 +86,7 @@ class Door : public Operand {
     slot_t FindSlot (void* address);
 
     /** Executes all of the queued escape sequences. */
-    const Operation* ExecAll ();
+    const Op* ExecAll ();
 
     /** Handles Script Commands.
         @param text     Beginning of the Text buffer. 
@@ -96,7 +96,7 @@ class Door : public Operand {
                                     const char* strand_end);
 
     /** Script expressions. */
-    virtual const Operation* Star (uint index, Expression* expr);
+    virtual const Op* Star (wchar_t index, Expr* expr);
 
     private:
                                     //< vtable pointer here in memory.
@@ -104,8 +104,8 @@ class Door : public Operand {
     TStack<slot_t, slot_t>* slots_; //< The slots in the door.
 };
 
-/** Returns a Static Error Operation. */
-KABUKI const Operation* DoorResult (Door* door, Door::Error error);
+/** Returns a Static Error Op. */
+KABUKI const Op* DoorResult (Door* door, Door::Error error);
 
 KABUKI const char* DoorErrorText (Door::Error error);
 

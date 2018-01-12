@@ -20,9 +20,9 @@
 #ifndef HEADER_FOR_SCRIPT_TOKEN
 #define HEADER_FOR_SCRIPT_TOKEN
 
-#include "operation.h"
+#include "op.h"
 
-#if SCRIPT_USING_TOKEN
+#if USING_SCRIPT_TEXT
 
 namespace _ {
 
@@ -96,5 +96,5 @@ KABUKI const char* TokenEnd (const char* text, const char* strand_end);
 
 }   //< namespace _
 
-#endif  //< SCRIPT_USING_TOKEN
+#endif  //< USING_SCRIPT_TEXT
 #endif  //< HEADER_FOR_SCRIPT_TOKEN

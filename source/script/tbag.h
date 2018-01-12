@@ -21,8 +21,8 @@
 #define HEADER_FOR_SCRIPT_TBAG
 
 #include "memory.h"
-#if SCRIPT_USING_BAG
-#include "types.h"
+#if USING_SCRIPT_BAG
+#include "type.h"
 
 namespace _ {
 
@@ -148,7 +148,7 @@ enum {
              to verify the integrity of the object.
     @warning The reservedNumOperands must be aligned to a 32-bit value, and it
              will get rounded up to the next higher multiple of 4.
-static Bag* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t size)
+static Bag* Init2 (char* buffer, byte max_size, uint16_t table_size, uint16_t size)
 {
     if (buffer == nullptr)
         return nullptr;
@@ -172,7 +172,7 @@ static Bag* Init2 (byte* buffer, byte max_size, uint16_t table_size, uint16_t si
 */
 template<typename TIndex, typename TKey, typename TData>
 TIndex SetInsert (Bag<TIndex, TKey, TData, THash>* collection, byte type, 
-               const byte* key, void* data, TIndex index) {
+               const char* key, void* data, TIndex index) {
     if (collection == nullptr) return 0;
     return ~0;
 }
@@ -204,7 +204,7 @@ TIndex BagAdd (Bag<TIndex, TKey, TData, THash>* collection, const char* key,
     if (num_items >= max_items) return ~0;
     //< We're out of buffered indexes.
 
-    byte* states = reinterpret_cast<byte*> (collection) + 
+    char* states = reinterpret_cast<char*> (collection) + 
                    sizeof (Bag <TIndex, TKey, TData, THash>);
     TKey* key_offsets = reinterpret_cast<TKey*> (states + max_items);
     TData* data_offsets = reinterpret_cast<TData*> (states + max_items *
@@ -486,11 +486,11 @@ TIndex BagFind (Bag<TIndex, TKey, TData, THash>* collection, const char* key) {
     TKey table_size = collection->table_size;
 
     const THash* hashes = reinterpret_cast<const THash*>
-        (reinterpret_cast<const byte*> (collection) +
+        (reinterpret_cast<const char*> (collection) +
          sizeof (Bag<TIndex, TKey, TData, THash>));
     const TKey* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
                                                                 max_items);
-    const byte* indexes = reinterpret_cast<const byte*>(key_offsets +
+    const char* indexes = reinterpret_cast<const char*>(key_offsets +
                                                         max_items),
         *unsorted_indexes = indexes + max_items,
         *collission_list = unsorted_indexes + max_items;
@@ -537,7 +537,7 @@ TIndex BagFind (Bag<TIndex, TKey, TData, THash>* collection, const char* key) {
 
             // Check for collisions
 
-            collisions = reinterpret_cast<const byte*>(key_offsets) +
+            collisions = reinterpret_cast<const char*>(key_offsets) +
                 max_items * sizeof (uint16_t);
             index = collisions[mid];
 
@@ -630,7 +630,7 @@ void BagPrint (const Bag<TIndex, TKey, TData, THash>* collection) {
     for (int i = 0; i < 79; ++i) putchar ('_');
     std::cout << '\n';
 
-    const byte* states = reinterpret_cast<const byte*> (collection) +
+    const char* states = reinterpret_cast<const char*> (collection) +
                          sizeof (Bag <TIndex, TKey, TData, THash>);
     const TKey* key_offsets = reinterpret_cast<const TKey*> 
                               (states + max_items);
@@ -682,7 +682,7 @@ void BagPrint (const Bag<TIndex, TKey, TData, THash>* collection) {
     }
     PrintLine ('_');
 
-    PrintMemory (reinterpret_cast<const byte*> (collection) + 
+    PrintMemory (reinterpret_cast<const char*> (collection) + 
                  sizeof (Bag<TIndex, TKey, TData, THash>), collection->size);
     std::cout << '\n';
 }
@@ -758,5 +758,5 @@ void BagPrint (Bag<TIndex, TKey, TData, THash>* collection) {
 //}
 
 }       //< namespace _
-#endif  //< SCRIPT_USING_BAG
+#endif  //< USING_SCRIPT_BAG
 #endif  //< HEADER_FOR_SCRIPT_TBAG

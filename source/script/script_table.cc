@@ -18,7 +18,7 @@
 #include "table.h"
 #include "text.h"
 
-#if SCRIPT_USING_TABLE
+#if USING_SCRIPT_TABLE
 
 namespace _ {
 
@@ -54,11 +54,11 @@ byte TableAdd (Table* table, const char* key) {
     if (num_keys >= max_keys) return kInvalidIndex;
     //< We're out of buffered indexes.
 
-    hash16_t* hashes = reinterpret_cast<hash16_t*> (reinterpret_cast<byte*> (table) +
+    hash16_t* hashes = reinterpret_cast<hash16_t*> (reinterpret_cast<char*> (table) +
                                                     sizeof (Table));
     uint16_t* key_offsets = reinterpret_cast<uint16_t*> (hashes +
                                                          max_keys);
-    byte* indexes = reinterpret_cast<byte*> (key_offsets +
+    char* indexes = reinterpret_cast<char*> (key_offsets +
                                              max_keys),
         *unsorted_indexes = indexes + max_keys,
         *collission_list = unsorted_indexes + max_keys;
@@ -125,7 +125,7 @@ byte TableAdd (Table* table, const char* key) {
         high = num_keys,
         index;
 
-    byte* temp_ptr;
+    char* temp_ptr;
 
     while (low <= high) {
         mid = (low + high) >> 1;        //< Shift >> 1 to / 2
@@ -373,16 +373,16 @@ byte TableFind (const Table* table, const char* key) {
     uint16_t size = table->size;
 
     const hash16_t* hashes = reinterpret_cast<const hash16_t*>
-        (reinterpret_cast<const byte*> (table) +
+        (reinterpret_cast<const char*> (table) +
          sizeof (Table));
     const uint16_t* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
                                                                     max_keys);
-    const byte* indexes = reinterpret_cast<const byte*>(key_offsets +
+    const char* indexes = reinterpret_cast<const char*>(key_offsets +
                                                         max_keys),
         *unsorted_indexes = indexes + max_keys,
         *collission_list = unsorted_indexes + max_keys;
     const char* keys = reinterpret_cast<const char*> (table) + size - 1;
-    const byte* collisions,
+    const char* collisions,
         *temp_ptr;
 
     hash16_t hash = Hash16 (key);
@@ -437,7 +437,7 @@ byte TableFind (const Table* table, const char* key) {
 
             // Check for collisions
 
-            collisions = reinterpret_cast<const byte*>(key_offsets) +
+            collisions = reinterpret_cast<const char*>(key_offsets) +
                 max_keys * sizeof (uint16_t);
             index = collisions[mid];
 
@@ -446,7 +446,7 @@ byte TableFind (const Table* table, const char* key) {
                 //printf ("There was a collision so check the table\n");
 
                 // The collisionsList is a sequence of indexes terminated by
-                // an invalid index > kMaxNumOperations. collissionsList[0] is an 
+                // an invalid index > kMaxNumOps. collissionsList[0] is an 
                 // invalid index, so the collisionsList is searched from 
                 // lower address up.
 
@@ -533,10 +533,10 @@ void TablePrint (Table* table) {
     std::cout << '\n';
 
     hash16_t* hashes = reinterpret_cast<hash16_t*>
-        (reinterpret_cast<byte*>(table) +
+        (reinterpret_cast<char*>(table) +
          sizeof (Table));
     uint16_t* key_offsets = reinterpret_cast<uint16_t*>(hashes + max_keys);
-    byte* indexes = reinterpret_cast<byte*> (key_offsets + max_keys),
+    char* indexes = reinterpret_cast<char*> (key_offsets + max_keys),
         * unsorted_indexes = indexes + max_keys,
         * collission_list = unsorted_indexes + max_keys,
         * cursor;
@@ -586,4 +586,4 @@ void TablePrint (Table* table) {
 }
 #endif  //< USE_MORE_ROM
 }       //< namespace _
-#endif  //< SCRIPT_USING_TABLE
+#endif  //< USING_SCRIPT_TABLE

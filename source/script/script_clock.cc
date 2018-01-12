@@ -16,9 +16,9 @@
 
 #include <stdafx.h>
 #include "clock.h"
-#include "text.h"
+#include "console.h"
 
-using namespace std;
+
 //using namespace std::chrono;
 
 //using chrono_timestamp = std::chrono::time_point<std::chrono::system_clock,
@@ -28,7 +28,7 @@ namespace _ {
 #if USE_MORE_ROM
 
 std::tm* ClockLocalTime (std::tm* std_tm, std::time_t const& time) {
-    if (std_tm == nullptr)
+    if (!std_tm)
         return nullptr;
 #if (defined(__MINGW32__) || defined(__MINGW64__))
     memcpy (&tm_snapshot, ::localtime (&time), sizeof (std::tm));
@@ -56,43 +56,43 @@ int32_t ClockGetMicroseconds (time_us_t timestamp)
 }
 
 char* StrandWriteTime (char* buffer, char* buffer_end, tm* std_tm) {
-    if (buffer == nullptr) {
+    if (!buffer) {
         return nullptr;
     }
-    if (buffer_end <= buffer) {
+    if (buffer > buffer_end) {
         return nullptr;
     }
-    if (std_tm == nullptr) {
+    if (!std_tm) {
         return nullptr;
     }
 
     buffer = StrandWrite (buffer, buffer_end, std_tm->tm_year + kTimeEpoch);
-    if (buffer == nullptr) {
+    if (!buffer) {
         return nullptr;
     }
     *buffer++ = '-';
     buffer = StrandWrite (buffer, buffer_end, std_tm->tm_mon + 1);
-    if (buffer == nullptr) {
+    if (!buffer) {
         return nullptr;
     }
     *buffer++ = '-';
     buffer = StrandWrite (buffer, buffer_end, std_tm->tm_mday);
-    if (buffer == nullptr) {
+    if (!buffer) {
         return nullptr;
     }
     *buffer++ = '@';
     buffer = StrandWrite (buffer, buffer_end, std_tm->tm_hour);
-    if (buffer == nullptr) {
+    if (!buffer) {
         return nullptr;
     }
     *buffer++ = ':';
     buffer = StrandWrite (buffer, buffer_end, std_tm->tm_min);
-    if (buffer == nullptr) {
+    if (!buffer) {
         return nullptr;
     }
     *buffer++ = ':';
     buffer = StrandWrite (buffer, buffer_end, std_tm->tm_sec);
-    if (buffer == nullptr) {
+    if (!buffer) {
         return nullptr;
     }
     return buffer;
@@ -197,33 +197,45 @@ int ClockCompareTimes (time_t t, int year, int month, int day,
 
     if (year - kTimeEpoch != std_tm.tm_year) {
         ++count;
+    #if SCRIPT_DEBUG
         std::cout << "\n| Expecting year:" << year << " but found "
              << std_tm.tm_year + kTimeEpoch << '\n';
+    #endif  //< SCRIPT_DEBUG
     }
     if (month != std_tm.tm_mon + 1) {
         ++count;
+    #if SCRIPT_DEBUG
         std::cout << "\n| Expecting month:" << month << " but found "
              << std_tm.tm_mon + 1 << '\n';
+    #endif  //< SCRIPT_DEBUG
     }
     if (day != std_tm.tm_mday) {
         ++count;
+    #if SCRIPT_DEBUG
         std::cout << "\n| Expecting day:" << day << " but found "
             << std_tm.tm_mday << '\n';
+    #endif  //< SCRIPT_DEBUG
     }
     if (hour != std_tm.tm_hour) {
         ++count;
+    #if SCRIPT_DEBUG
         std::cout << "\n| Expecting hour:" << hour << " but found "
             << std_tm.tm_hour << '\n';
+    #endif  //< SCRIPT_DEBUG
     }
     if (minute != std_tm.tm_min) {
         ++count;
+    #if SCRIPT_DEBUG
         std::cout << "\n| Expecting minute:" << minute << " but found "
             << std_tm.tm_min << '\n';
+    #endif  //< SCRIPT_DEBUG
     }
     if (second != std_tm.tm_sec) {
         ++count;
+    #if SCRIPT_DEBUG
         std::cout << "\n| Expecting second:" << second << " but found "
             << std_tm.tm_sec << '\n';
+    #endif  //< SCRIPT_DEBUG
     }
     return count;
 }
@@ -232,44 +244,58 @@ const char* StrandReadTime (const char* input, int* hour, int* minute,
                                  int* second) {
     if (input == nullptr)
         return nullptr;
+#if SCRIPT_DEBUG
     std::cout <<  input << ' ';
+#endif  //< SCRIPT_DEBUG
     char c;              //< The current char.
 
     int h,  //< Hour.
         m,  //< Minute.
         s;  //< Second. 
     if (!StrandRead (++input, h)) {
+    #if SCRIPT_DEBUG
         std::cout << "\n| Invalid hour: " << h << "\n";
+    #endif  //< SCRIPT_DEBUG
         return 0;
     }
     input = StrandSkipNumbers (input);
     if (h < 0) {
+    #if SCRIPT_DEBUG
         std::cout << "\n| Hours: " << h << " can't be negative.\n";
+    #endif  //< SCRIPT_DEBUG
         return 0;
     }
     if (h > 23) {
+    #if SCRIPT_DEBUG
         std::cout << "\n| Hours: " << h << " can't be > 23.\n";
+    #endif  //< SCRIPT_DEBUG
         return 0;
     }
+#if SCRIPT_DEBUG
     std::cout <<  h;
+#endif  //< SCRIPT_DEBUG
     c = *input++;
-    if (!c || isspace (c))  // Case @HH
-    {
+    if (!c || IsSpace (c))  { // Case @HH
+    #if SCRIPT_DEBUG
         std::cout << " HH ";
+    #endif  //< SCRIPT_DEBUG
         // Then it's a single number, so create a time_t for the current 
         // user-time hour..
         *hour = h;
         return input;
     }
     c = tolower (c);
-    if (c == 'a') // Case @HHAm
-    {
+    if (c == 'a') { // Case @HHAm
+    #if SCRIPT_DEBUG
         std::cout << " HHam ";
+    #endif  //< SCRIPT_DEBUG
 
         if (tolower (c = *input++) == 'm')
             c = *input++;
-        if (c && !isspace (c)) {
+        if (c && !IsSpace (c)) {
+        #if SCRIPT_DEBUG
             std::cout << "\n| Invalid am format.";
+        #endif  //< SCRIPT_DEBUG
             return 0;
         }
         // Case @HHAM
@@ -278,21 +304,29 @@ const char* StrandReadTime (const char* input, int* hour, int* minute,
     }
     if (c == 'p')  //< Case @HHpm
     {
+    #if SCRIPT_DEBUG
         std::cout << " HHpm ";
+    #endif  //< SCRIPT_DEBUG
 
         if (tolower (c = *input++) == 'm')
             c = *input++;
-        if (c && !isspace (c)) {
+        if (c && !IsSpace (c)) {
+        #if SCRIPT_DEBUG
             std::cout << "\n| invalid pm format.";
+        #endif  //< SCRIPT_DEBUG
             return 0;
         }
         // Case @HHPM
+    #if SCRIPT_DEBUG
         std::cout << "< Case HHpm " << h + 12 << ":00:00\n";
+    #endif  //< SCRIPT_DEBUG
         *hour = h + 12;
         return input;
     }
     if (c != ':') {
+    #if SCRIPT_DEBUG
         std::cout << "\n| Expecting ':'.";
+    #endif  //< SCRIPT_DEBUG
         return 0;
     }
 
@@ -301,45 +335,58 @@ const char* StrandReadTime (const char* input, int* hour, int* minute,
     if (!StrandRead (input, m)) return 0;
     input = StrandSkipNumbers (input);
     if (m < 0) {
+    #if SCRIPT_DEBUG
         std::cout << "Minutes: " << m << " can't be negative\n";
+    #endif  //< SCRIPT_DEBUG
         return 0;
     }
     if (m >= 60) {
+    #if SCRIPT_DEBUG
         std::cout << "Minutes: " << m << " can't be >= 60\n";
+    #endif  //< SCRIPT_DEBUG
         return 0;    //< 60 minutes in an hour.
     }
+#if SCRIPT_DEBUG
     std::cout <<  ':' << m;
+#endif  //< SCRIPT_DEBUG
 
     input = StrandSkipNumbers (input);
     c = *input++;
-    if (!c || isspace (c)) // Case HH:MM
-    {
+    if (!c || IsSpace (c)) { // Case HH:MM
+    #if SCRIPT_DEBUG
         std::cout << " HH:MM ";
+    #endif  //< SCRIPT_DEBUG
         *hour = h;
         *minute = m;
         return input;
     }
     c = tolower (c);
-    if (c == 'a') // Case HH::MM AM
-    {
+    if (c == 'a') { // Case HH::MM AM
+    #if SCRIPT_DEBUG
         std::cout << " HH:MMam ";
+    #endif  //< SCRIPT_DEBUG
         c = *input++;
-        if (tolower (c) == 'm') //< The 'm' is optional.
+        if (tolower (c) == 'm') { //< The 'm' is optional.
             c = *input++;
-        if (c && !isspace (c))  //< The space is not.
+        }
+        if (c && !IsSpace (c)) { //< The space is not.
             return "Invalid am in HH::MM AM";
+        }
         *hour = h;
         *minute = m;
         return input;
     }
-    if (c == 'p')  // Case HH:MM PM
-    {
+    if (c == 'p')  { // Case HH:MM PM
+    #if SCRIPT_DEBUG
         std::cout << " HH:MMpm ";
+    #endif  //< SCRIPT_DEBUG
         c = *input++;
-        if (tolower (c) == 'm') //< The 'm' is optional.
+        if (tolower (c) == 'm') { //< The 'm' is optional.
             c = *input++;
-        if (c && !isspace (c))        //< The space is not.
+        }
+        if (c && !IsSpace (c)) { //< The space is not.
             return "Invalid am in HH::MM PM";
+        }
         *hour = h + 12;
         *minute = m;
         return input;
@@ -351,46 +398,64 @@ const char* StrandReadTime (const char* input, int* hour, int* minute,
     if (!StrandRead (input, s))
         return 0;
     if (s < 0) {
+    #if SCRIPT_DEBUG
         std::cout << "\n< Seconds: " << s << " can't be negative\n";
+    #endif  //< SCRIPT_DEBUG
         return 0;
     }
     if (s > 60) {
+    #if SCRIPT_DEBUG
         std::cout << "\n< Seconds: " << s << " can't be >= 60\n";
+    #endif  //< SCRIPT_DEBUG
         return 0;  //< 60 seconds in a minute.
     }
+#if SCRIPT_DEBUG
     std::cout <<  ':' << s;
+#endif  //< SCRIPT_DEBUG
     input = StrandSkipNumbers (input);
     c = tolower (*input);
-    if (!c || isspace (c)) {
+    if (!c || IsSpace (c)) {
+    #if SCRIPT_DEBUG
         std::cout << " HH:MM:SS ";
+    #endif  //< SCRIPT_DEBUG
         *hour = h;
         *minute = m;
         *second = s;
         return input;
     }
     if (c == 'a') {
+    #if SCRIPT_DEBUG
         std::cout << " HH:MM:SSam ";
+    #endif  //< SCRIPT_DEBUG
         c = *input++;
-        if (tolower (c) == 'm') //< The 'm' is optional.
+        if (tolower (c) == 'm') { //< The 'm' is optional.
             c = *input++;
-        if (!c || !isspace (c))        //< The space is not.
+        }
+        if (!c || !IsSpace (c)) {//< The space is not.
             return "Invalid am in HH::MM:SS AM";
+        }
         *hour = h;
         *minute = m;
         *second = s;
         return input;
     }
     if (c != 'p') {
+    #if SCRIPT_DEBUG
         std::cout << "\n< Expecting a PM but found : " << c << '\n';
+    #endif  //< SCRIPT_DEBUG
         return 0; // Format error!
     }
+#if SCRIPT_DEBUG
     std::cout << " HH:MM:SSpm ";
+#endif  //< SCRIPT_DEBUG
     c = tolower (*input++);
-    if (c == 'm') //< The 'm' is optional.
+    if (c == 'm') { //< The 'm' is optional.
         c = *input++;
-    if (!c || !isspace (c))        //< The space is not.
-    {
+    }
+    if (!c || !IsSpace (c)) { //< The space is not.
+    #if SCRIPT_DEBUG
         std::cout << "\n| Invalid am in HH::MM:SS PM";
+    #endif  //< SCRIPT_DEBUG
         return nullptr;
     }
     *hour = h + 12;
@@ -400,13 +465,15 @@ const char* StrandReadTime (const char* input, int* hour, int* minute,
 }
 
 const char* StrandReadTime (const char* input, //char* buffer_end,
-                                 tm* std_tm) {
+                            tm* std_tm) {
     if (input == nullptr)
         return nullptr;
     if (std_tm == nullptr)
         return nullptr;
+#if SCRIPT_DEBUG
     std::cout << "\n< Parsing date: " << input
          << "\n< Scanning: ";
+#endif  //< SCRIPT_DEBUG
     input = StrandSkipZeros (input);
     char c = *input,    //< The current char.
         delimiter;     //< The delimiter.
@@ -444,23 +511,33 @@ const char* StrandReadTime (const char* input, //char* buffer_end,
 
                           // Scan value1
     if (!StrandRead (input, value1)) {
-        std::cout << Text ().Bar ("Scan error at value1");
+    #if SCRIPT_DEBUG
+        ConsoleDump (Text<> ().Heading ("Scan error at value1"));
+    #endif  //< SCRIPT_DEBUG
         return 0;
     }
     if (value1 < 0) {
-        std::cout << Text ().Bar ("Dates can't be negative.");
+    #if SCRIPT_DEBUG
+        ConsoleDump (Text<> ().Heading ("Dates can't be negative."));
+    #endif  //< SCRIPT_DEBUG
         return 0;
     }
     input = StrandSkipNumbers (input);
     delimiter = *input++;
+#if SCRIPT_DEBUG
     //std::cout << " delimiter " << delimiter << ": ";
     std::cout <<  value1 << delimiter;
+#endif  //< SCRIPT_DEBUG
     if (delimiter == '@') {
+    #if SCRIPT_DEBUG
         std::cout << " HH@ ";
+    #endif  //< SCRIPT_DEBUG
 
         if (!(input = StrandReadTime (input, &hour, &minute,
                                             &second))) {
-            std::cout << Text ().Bar ("Invalid time DD@");
+        #if SCRIPT_DEBUG
+            ConsoleDump (Text<> ().Heading ("Invalid time DD@"));
+        #endif  //< SCRIPT_DEBUG
             return 0;
         }
         std_tm->tm_mday = value1;
@@ -470,14 +547,20 @@ const char* StrandReadTime (const char* input, //char* buffer_end,
     // Scan value2.
     input = StrandSkipZeros (input);
     if (!StrandRead (input, value2)) {
-        std::cout << Text ().Bar ("Failed scanning value2 of date.");
+    #if SCRIPT_DEBUG
+        ConsoleDump (Text<> ().Heading ("Failed scanning value2 of date."));
+    #endif  //< SCRIPT_DEBUG
         return 0;
     }
     if (value2 < 0) {
-        std::cout << Text ().Bar ("Day can't be negative.");
+    #if SCRIPT_DEBUG
+        ConsoleDump (Text<> ().Heading ("Day can't be negative."));
+    #endif  //< SCRIPT_DEBUG
         return 0;  //< Invalid month and day.
     }
+#if SCRIPT_DEBUG
     std::cout <<  value2;
+#endif  //< SCRIPT_DEBUG
     input = StrandSkipNumbers (input);
     c = *input;
     if (c != delimiter) // Cases MM/DD and MM/YYyy
@@ -485,12 +568,16 @@ const char* StrandReadTime (const char* input, //char* buffer_end,
         if (c == '@') {
             if (!(input = StrandReadTime (input, &hour,
                                                 &minute, &second))) {
+            #if SCRIPT_DEBUG
                 std::cout << " invalid time ";
+            #endif  //< SCRIPT_DEBUG
+                return nullptr;
             }
         }
-        if (!c || isspace (c)) // Case MM/DD
-        {
+        if (!c || IsSpace (c)) { // Case MM/DD
+        #if SCRIPT_DEBUG
             std::cout << " MM/DD\n";
+        #endif  //< SCRIPT_DEBUG
             is_last_year = ((value1 >= std_tm->tm_mon) &&
                 (value2 >= std_tm->tm_mday))?0:1;
             std_tm->tm_year += is_last_year;
@@ -506,41 +593,54 @@ const char* StrandReadTime (const char* input, //char* buffer_end,
         c = tolower (c);
         if ((value1 < 12) && (value2 > 0) &&
              (value2 <= ClockNumDaysMonth (value1))) {
+        #if SCRIPT_DEBUG
             std::cout << " MM/DD ";
+        #endif  //< SCRIPT_DEBUG
             if (value1 > 11) {
-                std::cout << Text ().Bar ("Invalid MM/DD@ month");
+            #if SCRIPT_DEBUG
+                ConsoleDump (Text<> ().Heading ("Invalid MM/DD@ month"));
+            #endif  //< SCRIPT_DEBUG
                 return nullptr;
             }
             if (value2 > ClockNumDaysMonth (value1)) {
-                std::cout << Text ().Bar ("Invalid MM/DD@ day");
+            #if SCRIPT_DEBUG
+                ConsoleDump (Text<> ().Heading ("Invalid MM/DD@ day"));
+            #endif  //< SCRIPT_DEBUG
                 return nullptr;
             }
-            std_tm->tm_mon = value1 - 1;
+            std_tm->tm_mon  = value1 - 1;
             std_tm->tm_mday = value2;
             std_tm->tm_hour = hour;
-            std_tm->tm_min = minute;
-            std_tm->tm_sec = second;
-            if (!(input = StrandReadTime (input, &hour,
-                                                &minute, &second))) {
-                std::cout << Text ().Bar ("Invalid MM/DD@");
+            std_tm->tm_min  = minute;
+            std_tm->tm_sec  = second;
+            if (!(input = StrandReadTime (input, &hour, &minute, &second))) {
+            #if SCRIPT_DEBUG
+                ConsoleDump (Text<> ().Heading ("Invalid MM/DD@"));
+            #endif  //< SCRIPT_DEBUG
                 return nullptr;
             }
 
             return input + 1;
         }
         if ((value1 < 12) && (value2 > ClockNumDaysMonth (value1))) {
+        #if SCRIPT_DEBUG
             std::cout << " MM/YYyy\n";
+        #endif  //< SCRIPT_DEBUG
             std_tm->tm_mon = value1 - 1;
             std_tm->tm_year = value2;
             if (!(input = StrandReadTime (input, &hour,
                                                 &minute, &second))) {
-                std::cout << Text ().Bar ("Invalid MM/YYYY@ time");
+            #if SCRIPT_DEBUG
+                ConsoleDump (Text<> ().Heading ("Invalid MM/YYYY@ time"));
+            #endif  //< SCRIPT_DEBUG
                 return 0;
             }
 
             return input + 1;
         }
+    #if SCRIPT_DEBUG
         std::cout << "\n< Invalid MM/DD or MM/YYyy format\n";
+    #endif  //< SCRIPT_DEBUG
         return nullptr;
     }
 
@@ -550,7 +650,9 @@ const char* StrandReadTime (const char* input, //char* buffer_end,
     c = *input;
     // Then there are 3 values and 2 delimiters.
     if (!isdigit (c) || !StrandRead (input, value3)) {
+    #if SCRIPT_DEBUG
         std::cout << "StrandRead error reading value3 of date. c: " << c << '\n';
+    #endif  //< SCRIPT_DEBUG
         return 0;  //< Invalid format!
     }
     input = StrandSkipNumbers (input);
@@ -561,27 +663,37 @@ const char* StrandReadTime (const char* input, //char* buffer_end,
     if (c == '@') {
         if (!(end = StrandReadTime (input, &hour, &minute,
                                           &second))) {
-            std::cout << Text ().Bar ("Invalid YYyy/MM/DD@ time.");
+        #if SCRIPT_DEBUG
+            ConsoleDump (Text<> ().Heading ("Invalid YYyy/MM/DD@ time."));
+        #endif  //< SCRIPT_DEBUG
             return 0;
         }
     }
     std_tm->tm_hour = hour;
     std_tm->tm_min = minute;
     std_tm->tm_sec = second;
-    if (isspace (*(++input))) {
-        std::cout << Text ().Bar ("No date found.");
+    if (IsSpace (*(++input))) {
+    #if SCRIPT_DEBUG
+        ConsoleDump (Text<> ().Heading ("No date found."));
+    #endif  //< SCRIPT_DEBUG
         return 0;
     }
     if (value1 > 11)  //< Case YYyy/MM/DD
     {
+    #if SCRIPT_DEBUG
         std::cout << " YYyy/MM/DD\n";
+    #endif  //< SCRIPT_DEBUG
         if (value2 == 0 || value2 > 12) {
-            std::cout << Text ().Bar ("Invalid number of months");
+        #if SCRIPT_DEBUG
+            ConsoleDump (Text<> ().Heading ("Invalid number of months"));
+        #endif  //< SCRIPT_DEBUG
             return 0;              //< The day is not correct.
         }
 
         if (value2 > ClockNumDaysMonth (value2, value1)) {
-            std::cout << Text ().Bar ("Invalid number of days");
+        #if SCRIPT_DEBUG
+            ConsoleDump (Text<> ().Heading ("Invalid number of days"));
+        #endif  //< SCRIPT_DEBUG
             return 0;              //< The day is not correct.
         } // 17/05/06
 
@@ -599,14 +711,20 @@ const char* StrandReadTime (const char* input, //char* buffer_end,
 
     // Else Case MM/DD/YYyy
     if (value1 > 11) {
-        std::cout << Text ().Bar ("Invalid month.\n");
+    #if SCRIPT_DEBUG
+        ConsoleDump (Text<> ().Heading ("Invalid month.\n"));
+    #endif  //< SCRIPT_DEBUG
         return nullptr;
     }
     if (value2 > ClockNumDaysMonth (value1, value3)) {
-        std::cout << Text ().Bar ("Invalid day.\n");
+    #if SCRIPT_DEBUG
+        ConsoleDump (Text<> ().Heading ("Invalid day.\n"));
+    #endif  //< SCRIPT_DEBUG
         return nullptr;
     }
+#if SCRIPT_DEBUG
     std::cout << " Found: MM/DD/YYyy\n";
+#endif  //< SCRIPT_DEBUG
     std_tm->tm_mon = value1 - 1;
     std_tm->tm_mday = value2;
     if (value3 < 100)
@@ -615,10 +733,9 @@ const char* StrandReadTime (const char* input, //char* buffer_end,
         std_tm->tm_year = value3 - kTimeEpoch;
 
     return input + 1;
-
 }
 
-char* TextWriteTime (char* begin, char* end, time_t t) {
+char* StrandWriteTime (char* begin, char* end, time_t t) {
     if (begin == nullptr) {
         return nullptr;
     }
@@ -643,9 +760,9 @@ const char* StrandReadTime (const char* begin, time_t& result) {
     //std::cout << "\n|\n| Found ";
     //std::cout << ClockPrintTimeStruct (&std_tm);
     char buffer[26];
-    TextWriteTime (buffer, buffer + 26, t);
+    StrandWriteTime (buffer, buffer + 26, t);
     char time_string[26];
-    TextWriteTime (time_string, &time_string[0]  + 26, t);
+    StrandWriteTime (time_string, &time_string[0]  + 26, t);
     //std::cout << "\n| Unpacked: " << buffer;
     result = t;
     return end;
@@ -654,14 +771,14 @@ const char* StrandReadTime (const char* begin, time_t& result) {
 void ClockZeroTime (tm* std_tm) {
     if (std_tm == nullptr)
         return;
-    std_tm->tm_sec = 0;
-    std_tm->tm_min = 0;
-    std_tm->tm_hour = 0;
-    std_tm->tm_mday = 0;
-    std_tm->tm_mon = 0;
-    std_tm->tm_year = 0;
-    std_tm->tm_wday = 0;
-    std_tm->tm_yday = 0;
+    std_tm->tm_sec   = 0;
+    std_tm->tm_min   = 0;
+    std_tm->tm_hour  = 0;
+    std_tm->tm_mday  = 0;
+    std_tm->tm_mon   = 0;
+    std_tm->tm_year  = 0;
+    std_tm->tm_wday  = 0;
+    std_tm->tm_yday  = 0;
     std_tm->tm_isdst = 0;
 }
 

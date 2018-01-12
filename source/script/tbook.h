@@ -20,10 +20,10 @@
 #ifndef HEADER_FOR_SCRIPT_TBOOK
 #define HEADER_FOR_SCRIPT_TBOOK
 
-#if SCRIPT_USING_BOOK
+#if USING_SCRIPT_BOOK
 
 #include "memory.h"
-#include "types.h"
+#include "type.h"
 #include "text.h"
 
 namespace _ {
@@ -221,7 +221,7 @@ Book<int8_t, uint16_t, uint16_t>* Book2Init (uintptr_t* buffer,
 /** Insets the given key-value pair.
 */
 template<typename TIndex, typename TKey, typename TData, typename T, TType kType>
-TIndex BookInsert (Book<TIndex, TKey, TData>* book,  const byte* key, T value, TIndex index) {
+TIndex BookInsert (Book<TIndex, TKey, TData>* book,  const char* key, T value, TIndex index) {
     if (book == nullptr) return 0;
     return ~0;
 }
@@ -251,7 +251,7 @@ TIndex BookAdd (Book<TIndex, TKey, TData>* book, const char* key, T data) {
     if (num_items >= stack_height) return ~0;
     //< We're out of buffered indexes.
 
-    byte* states = reinterpret_cast<byte*> (book) + 
+    char* states = reinterpret_cast<char*> (book) + 
                    sizeof (Book <TIndex, TKey, TData>);
     TKey* key_offsets = reinterpret_cast<TKey*> (states + stack_height);
     TData* data_offsets = reinterpret_cast<TData*> (states + stack_height *
@@ -540,7 +540,7 @@ TIndex BookFind (Book<TIndex, TKey, TData>* book, const char* key) {
     TKey table_size = book->table_size;
 
     const TData* hashes = reinterpret_cast<const TData*>
-        (reinterpret_cast<const byte*> (book) +
+        (reinterpret_cast<const char*> (book) +
          sizeof (Book<TIndex, TKey, TData>));
     const TKey* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
                                                                 stack_height);
@@ -685,7 +685,7 @@ void BookPrint (const Book<TIndex, TKey, TData>* book) {
     for (int i = 0; i < 79; ++i) putchar ('_');
     std::cout << '\n';
 #endif  //< SCRIPT_DEBUG
-    const byte* states = reinterpret_cast<const byte*> (book) +
+    const char* states = reinterpret_cast<const char*> (book) +
                          sizeof (Book <TIndex, TKey, TData>);
     const TKey* key_offsets = reinterpret_cast<const TKey*> 
                               (states + stack_height);
@@ -737,7 +737,7 @@ void BookPrint (const Book<TIndex, TKey, TData>* book) {
     }
     PrintLine ('_');
 
-    PrintMemory (reinterpret_cast<const byte*> (book) + 
+    PrintMemory (reinterpret_cast<const char*> (book) + 
                  sizeof (Book<TIndex, TKey, TData>), book->size);
     std::cout << '\n';
 }
@@ -767,7 +767,7 @@ template<typename TIndex, typename TKey, typename TData>
 void* BookContains (Book<TIndex, TKey, TData>* book, void* data) {
     if (book == nullptr) return false;
     if (data < book) return false;
-    byte* base = reinterpret_cast<byte*> (book);
+    char* base = reinterpret_cast<char*> (book);
     if (data < base)
         return nullptr;
     if (data > base + book->size_bytes)
@@ -812,5 +812,5 @@ void BookPrint (Book<TIndex, TKey, TData>* book) {
 //}
 
 }       //< namespace _
-#endif  //< SCRIPT_USING_BOOK
+#endif  //< USING_SCRIPT_BOOK
 #endif  //< HEADER_FOR_SCRIPT_TBOOK

@@ -87,7 +87,7 @@ template<typename T, typename I = int_t>
 T* StackBase (TStack<T, I>* stack) {
     if (stack == nullptr)
         return nullptr;
-    byte* address = reinterpret_cast<byte*> (stack) + sizeof (TStack<T, I>);
+    char* address = reinterpret_cast<char*> (stack) + sizeof (TStack<T, I>);
     return reinterpret_cast<T*> (address);
 }
 
@@ -95,7 +95,7 @@ T* StackBase (TStack<T, I>* stack) {
     @param a    			 The stack.
     @param item  The item to insert. 
     @param index The index to insert at.
-    @return -1 if a is null and -2 if the stack is full. */
+    @return -1 if a is nil and -2 if the stack is full. */
 template<typename T, typename I = int_t>
 T StackInsert (TStack<T, I>* stack, T item, T index) {
     if (stack == nullptr)
@@ -212,14 +212,14 @@ T StackPop (TStack<T, I>* stack) {
 /** Gets the element at the given index.
     @param  stack    The stack.
     @param  index The index of the element to get.
-    @return -1 if a is null and -2 if the index is out of bounds. */
+    @return -1 if a is nil and -2 if the index is out of bounds. */
 template<typename T, typename I = int_t>
 T StackGet (TStack<T, I>* stack, I index) {
     if (stack == nullptr)
         return 0;
     if (index >= stack->count)
         return 0;
-    byte* address = reinterpret_cast<byte*> (stack) + sizeof (TStack<T, I>);
+    char* address = reinterpret_cast<char*> (stack) + sizeof (TStack<T, I>);
     return reinterpret_cast<T*> (address)[index];
 }
 
@@ -229,8 +229,8 @@ template<typename T, typename I = int_t>
 bool StackContains (TStack<T, I>* stack, void* address) {
     if (stack == nullptr)
         return false;
-    byte* ptr = reinterpret_cast<byte*> (stack),
-        * adr = reinterpret_cast<byte*> (address);
+    char* ptr = reinterpret_cast<char*> (stack),
+        * adr = reinterpret_cast<char*> (address);
     if (adr < ptr)
         return false;
     if (adr >= ptr + stack->size_bytes)
