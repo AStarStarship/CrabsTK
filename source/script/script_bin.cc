@@ -153,7 +153,7 @@ bool BInIsReadable (BIn* bin) {
 const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
 #if SCRIPT_DEBUG
     Text<> text;
-    COut (text << "\n| Reading " << text.Params (params)
+    COut (text << "\n| Reading " << text.Bsq (params)
                << " from B-Input:" << text.Pointer (bin));
     COut (BInPrint (bin, text));
 #endif

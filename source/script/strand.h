@@ -663,19 +663,21 @@ class Strand {
     /** Prints the params.
         @params A B-Sequence header.
         @return A reference to *this. */
-    Strand& Params (const uint_t* params);
+    Strand& Bsq (const uint_t* params);
 
     /** Prints the given value in hex format. */
     template<typename Type>
     Strand& Hex (Type value) {
         char buffer[sizeof (Type) * 2 + 1];
         sprintf_s (buffer, "%x", &value);
-        std::cout << "0x";
-
+    #if SCRIPT_DEBUG == SCRIPT_STRAND
+        COut ("0x");
         int length = StrandLength (buffer);
         for (int i = 0; i < length; ++i)
-            std::cout << '0';
-        std::cout << buffer;
+            COut ('0');
+        COut (buffer);
+    #endif
+        return *this;
     }
 
     /** Prints an 80-char line of the number repeating with an underscore

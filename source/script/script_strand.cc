@@ -1608,7 +1608,7 @@ Strand& Strand::Hex (byte c) {
     return *this << (char)chars << ((char)(chars >> 8)) << ' ';
 }
 
-Strand& Strand::Params (const uint_t* params) {
+Strand& Strand::Bsq (const uint_t* params) {
     return BsqPrint (params, *this);
 }
 

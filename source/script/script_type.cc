@@ -59,10 +59,6 @@ uint_t TypeSize (uint_t type) {
     return kWidths[type];
 }
 
-bool TypeIsValid (uint_t type) {
-    return type > 31 ? false : true;
-}
-
 const char** TypeStrings () {
     static const char* kNames[] = {
         "NIL",  //<  0

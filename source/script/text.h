@@ -29,9 +29,8 @@ namespace _ {
 /** A fixed-size strand for writing text too.
     @warning Each size of Text uses up some ROM. This class works good when you 
              just use the default template parameter of kTextLengthMax. */
-template <size_t kSize_ = SCRIPT_TEXT_SIZE>
+template <size_t kSize_ = kTextSize>
 class Text: public Strand, public Operand {
-#undef SCRIPT_TEXT_SIZE
     public:
 
     enum {
@@ -51,31 +50,31 @@ class Text: public Strand, public Operand {
     virtual const Op* Star (wchar_t index, Expr* expr) {
         static const Op kThis = { "Text",
             OpFirst ('A'), OpFirst ('B'),
-            "A text message.", 0
+            "A text message.", '(', ')', nullptr
         };
         void* args[1];
 
         switch (index) {
-            case '?': return ExprOperand (expr, kThis);
+            case '?': return ExprQuery (expr, kThis);
             case 'A': {
-                static const Op kOpA = { "read",
-                    Params<1, STR, kSize> (), Params<0> (),
-                    "Reads the message.", kOpOperation, 0
+                static const Op kOpA = { "Read",
+                    _::Bsq<1, STR, kSize> (), _::Bsq<0> (),
+                    "Reads the message.", '(', ')', nullptr
                 };
                 if (!expr) return &kOpA;
-                return ExprArgs (expr, Params<1, STR, kSize> (),
-                                 Args (args, strand_.GetBegin ()));
+                return ExprArgs (expr, kOpA,
+                                 Args (args, buffer_));
             }
             case 'B': {
-                static const Op kOpB = { "write",
-                    Params<1, ADR, kAddressLengthMax> (), Params<0> (),
-                    "Writes the message to the given ADR.", kOpOperation, 0
+                static const Op kOpB = { "Write",
+                    _::Bsq<1, ADR, kAddressLengthMax> (), _::Bsq<0> (),
+                    "Writes the message to the given ADR.", '(', ')', nullptr
                 };
                 char address[kAddressLengthMax];
 
                 if (!expr) return &kOpB;
-                return ExprArgs (expr, Params<1, STR, kSize> (),
-                                 Args (args, strand_.GetBegin ()));
+                return ExprArgs (expr, kOpB,
+                                 Args (args, buffer_));
             }
         }
         return nullptr;

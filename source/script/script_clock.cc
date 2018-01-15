@@ -17,6 +17,7 @@
 #include <stdafx.h>
 #include "clock.h"
 #include "console.h"
+#include "text.h"
 
 
 //using namespace std::chrono;

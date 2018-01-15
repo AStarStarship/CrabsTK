@@ -357,7 +357,7 @@ TEST (SCRIPT_TESTS, ExprTests) {
     ExprPrint (expr);
 
     void*         args[4];
-    const uint_t* params         = Params <4, ADR, STR, 32, FLT, SI4> ();
+    const uint_t* params         = Bsq <4, ADR, STR, 32, FLT, SI4> ();
     const char    stx_expected[] = "Hello world!\0";
     const int     si4_expected   = 1;
     const float   flt_expected   = 1.0f;
@@ -448,14 +448,14 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
 
     BOut* bout = BOutInit (buffer, kBufferSize);
     
-    CHECK_EQUAL (0, BOutWrite (bout, Params<2, STR, 6, STR, 6> (),
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<2, STR, 6, STR, 6> (),
                                Args (args, expected_string1,
                                      expected_string2)))
     void** test = Args (args, found_string1, found_string2);
     printf ("\n| texpected_string1_start:%p texpected_string2_start:%p\n",
             &test[0], &test[1]);
     
-    CHECK_EQUAL (0, BOutRead (bout, Params<2, STR, 5, STR, 5> (),
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<2, STR, 5, STR, 5> (),
                               Args (args, found_string1, found_string2)))
 
     cout << "\nExpected 1: " << expected_string1
@@ -478,10 +478,10 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
            bol_found;
     byte   ui1_found;
 
-    CHECK_EQUAL (0, BOutWrite (bout, Params<4, SI1, SI1, UI1, BOL> (),
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<4, SI1, SI1, UI1, BOL> (),
                                Args (args, &si1_p_expected, &si1_n_expected, 
                                      &ui1_expected, &bol_expected)))
-    CHECK_EQUAL (0, BOutRead (bout, Params<4, SI1, SI1, UI1, BOL> (),
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<4, SI1, SI1, UI1, BOL> (),
                               Args (args, &si1_p_found, &si1_n_found,
                                     &ui1_found, &bol_found)))
     CHECK_EQUAL (si1_p_expected, si1_p_found)
@@ -515,10 +515,10 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
               << (hlf_expected >> 8)
               << '\n';
 
-    CHECK_EQUAL (0, BOutWrite (bout, Params<4, SI2, SI2, UI2, HLF> (),
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<4, SI2, SI2, UI2, HLF> (),
                            Args (args, &si2_p_expected, &si2_n_expected, 
                                  &ui2_expected, &hlf_expected)))
-    CHECK_EQUAL (0, BOutRead (bout, Params<4, SI2, SI2, UI2, HLF> (),
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<4, SI2, SI2, UI2, HLF> (),
                           Args (args, &si2_p_found, &si2_n_found, &ui2_found, 
                                 &hlf_found)))
     CHECK_EQUAL (si2_p_expected, si2_p_found)
@@ -540,11 +540,11 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     float                 flt_found;
     time_t                tms_found;
 
-    CHECK_EQUAL (0, BOutWrite (bout, Params<5, SI4, SI4, UI4, FLT, TMS> (),
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<5, SI4, SI4, UI4, FLT, TMS> (),
                                Args (args, &si4_p_expected, &si4_n_expected,
                                      &ui4_expected, &flt_expected, 
                                      &tms_expected)))
-    CHECK_EQUAL (0, BOutRead (bout, Params<5, SI4, SI4, UI4, FLT, TMS> (),
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<5, SI4, SI4, UI4, FLT, TMS> (),
                               Args (args, &si4_p_found, &si4_n_found,
                                     &ui4_found, &flt_found, &tms_found)))
     CHECK_EQUAL (si4_p_expected, si4_p_found)
@@ -569,11 +569,11 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
 
     bout = BOutInit (buffer, kBufferSize);
 
-    CHECK_EQUAL (0, BOutWrite (bout, Params<5, TMU, SI8, SI8, UI8, DBL> (),
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<5, TMU, SI8, SI8, UI8, DBL> (),
            Args (args, &tmu_expected, &si8_p_expected, &si8_n_expected,
                  &ui8_expected, &dbl_expected)))
 
-    CHECK_EQUAL (0, BOutRead (bout, Params<5, TMU, SI8, SI8, UI8, DBL> (),
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<5, TMU, SI8, SI8, UI8, DBL> (),
           Args (args, &tmu_found, &si8_p_found, &si8_n_found, &ui8_found,
                 &dbl_found)))
 
@@ -620,13 +620,13 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     };
 
     int16_t sv2_found[7];
-    CHECK_EQUAL (0, BOutWrite (bout, Params<7, SVI, SVI, SVI, SVI, SVI, SVI, 
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<7, SVI, SVI, SVI, SVI, SVI, SVI, 
                                             SVI> (),
                            Args (args, &sv2_expected[0], &sv2_expected[1],
                                  &sv2_expected[2], &sv2_expected[3],
                                  &sv2_expected[4], &sv2_expected[5],
                                  &sv2_expected[6])))
-    CHECK_EQUAL (0, BOutRead (bout, Params<7, SVI, SVI, SVI, SVI, SVI, SVI, 
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<7, SVI, SVI, SVI, SVI, SVI, SVI, 
                                            SVI>(),
                           Args (args, &sv2_found[0], &sv2_found[1], 
                                 &sv2_found[2], &sv2_found[3], 
@@ -645,10 +645,10 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     static const uint16_t uv2_expected[] = { 0, 1, 1 << 7, 1 << 14 };
 
     uint16_t uv2_found[4];
-    CHECK_EQUAL (0, BOutWrite (bout, Params<4, UVI, UVI, UVI, UVI> (),
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<4, UVI, UVI, UVI, UVI> (),
                            Args (args, &uv2_expected[0], &uv2_expected[1],
                                  &uv2_expected[2], &uv2_expected[3])))
-    CHECK_EQUAL (0, BOutRead (bout, Params<4, UVI, UVI, UVI, UVI> (),
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<4, UVI, UVI, UVI, UVI> (),
                           Args (args, &uv2_found[0], &uv2_found[1],
                                 &uv2_found[2], &uv2_found[3])))
     CHECK_EQUAL (uv2_expected[0], uv2_found[0])
@@ -663,7 +663,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
                                             1 << 21, -(1 << 21),
                                             1 << 28, -(1 << 28) };
     int32_t sv4_found[11];
-    CHECK_EQUAL (0, BOutWrite (bout, Params<11, SV4, SV4, SV4, SV4, SV4, SV4, 
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<11, SV4, SV4, SV4, SV4, SV4, SV4, 
                                             SV4, SV4, SV4, SV4, SV4> (),
                            Args (args, &sv4_expected[0], &sv4_expected[1],
                                  &sv4_expected[2], &sv4_expected[3],
@@ -671,7 +671,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
                                  &sv4_expected[6], &sv4_expected[7],
                                  &sv4_expected[8], &sv4_expected[9],
                                  &sv4_expected[10])))
-    CHECK_EQUAL (0, BOutRead (bout, Params<11, SV4, SV4, SV4, SV4, SV4, SV4, 
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<11, SV4, SV4, SV4, SV4, SV4, SV4, 
                                            SV4, SV4, SV4, SV4, SV4>(),
                           Args (args, &sv4_found[0], &sv4_found[1], 
                                 &sv4_found[2], &sv4_found[3],
@@ -696,11 +696,11 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     static const uint32_t uv4_expected[] = { 
         0, 1, 1 << 7, 1 << 14, 1 << 21, 1 << 28 };
     uint32_t uv4_found[6];
-    CHECK_EQUAL (0, BOutWrite (bout, Params<6, UV4, UV4, UV4, UV4, UV4, UV4> (),
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<6, UV4, UV4, UV4, UV4, UV4, UV4> (),
                            Args (args, &uv4_expected[0], &uv4_expected[1],
                                  &uv4_expected[2], &uv4_expected[3],
                                  &uv4_expected[4], &uv4_expected[5])))
-    CHECK_EQUAL (0, BOutRead (bout, Params<6, UV4, UV4, UV4, UV4, UV4, UV4> (),
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<6, UV4, UV4, UV4, UV4, UV4, UV4> (),
                             Args (args, &uv4_found[0], &uv4_found[1],
                                   &uv4_found[2], &uv4_found[3],
                                   &uv4_found[4], &uv4_found[5])))
@@ -724,7 +724,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
         ((int64_t)1) << 56, -(((int64_t)1) << 56)
     };
     int64_t sv8_found[19];
-    CHECK_EQUAL (0, BOutWrite (bout, Params<19, SV8, SV8, SV8, SV8, SV8, SV8,
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<19, SV8, SV8, SV8, SV8, SV8, SV8,
                                             SV8, SV8, SV8, SV8, SV8, SV8, SV8,
                                             SV8, SV8, SV8, SV8, SV8, SV8> (),
                            Args (args, &sv8_expected[0], &sv8_expected[1],
@@ -737,7 +737,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
                                  &sv8_expected[14], &sv8_expected[15],
                                  &sv8_expected[16], &sv8_expected[17],
                                  &sv8_expected[18])))
-    CHECK_EQUAL (0, BOutRead (bout, Params<19, SV8, SV8, SV8, SV8, SV8, SV8, 
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<19, SV8, SV8, SV8, SV8, SV8, SV8, 
                                            SV8, SV8, SV8, SV8, SV8, SV8, SV8,
                                            SV8, SV8, SV8, SV8, SV8, SV8> (),
                             Args (args, &sv8_found[0], &sv8_found[1],
@@ -780,7 +780,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
         ((uint64_t)1) << 56
     };
     uint64_t uv8_found[10];
-    CHECK_EQUAL (0, BOutWrite (bout, Params<10, UV8, UV8, UV8, UV8, UV8, UV8, 
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<10, UV8, UV8, UV8, UV8, UV8, UV8, 
                                             UV8, UV8, UV8, UV8> (),
                                Args (args, &uv8_expected[0], &uv8_expected[1],
                                      &uv8_expected[2], &uv8_expected[3],
@@ -789,7 +789,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
                                      &uv8_expected[8], &uv8_expected[9],
                                      &uv8_expected[10], &uv8_expected[11],
                                      &uv8_expected[12], &uv8_expected[13])))
-    CHECK_EQUAL (0, BOutRead (bout, Params<10, UV8, UV8, UV8, UV8, UV8, UV8, 
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<10, UV8, UV8, UV8, UV8, UV8, UV8, 
                                            UV8, UV8, UV8, UV8> (),
                               Args (args, &uv8_found[0], &uv8_found[1],
                                     &uv8_found[2], &uv8_found[3],
@@ -838,7 +838,7 @@ TEST (SCRIPT_TESTS, OpTests) {
     ExprRingBell (expr);
     ExprAckBack (expr);
     result = BOutWrite (bout,
-                        Params<4, ADR, UI1, STR, Parent::kTextBufferSize, 
+                        Bsq<4, ADR, UI1, STR, Parent::kTextBufferSize, 
                                 ADR> (),
                         Args (args, Address <'A', 'A', 'A'> (), 
                               &io_number_, Const ("Test"), 

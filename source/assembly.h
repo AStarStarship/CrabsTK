@@ -74,7 +74,7 @@
 #define SCRIPT_MAX_WALLS 1024
 
 // The size of the default Text<> () buffer in bytes.
-#define SCRIPT_TEXT_SIZE 2048
+#define SCRIPT_TEXT_LENGTH 2048
 
 // Default init.
 #define SCRIPT_STRAND_INIT_BUFFER_SIZE 256

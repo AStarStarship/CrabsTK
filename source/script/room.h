@@ -219,11 +219,10 @@ class Room: public Operand {
     virtual int Main (const char** args, int args_count);
 
     /** Handles Script Commands.
-        @param text     Beginning of the Text buffer. 
+        @param text     Beginning of the Text buffer.
         @param strand_end End of the Text buffer.
         @return Returns nil upon success and an error string upon failure. */
-    virtual const char* Sudo (const char* text,
-                                    const char* strand_end);
+    virtual char CommandNext ();
 
     /** Script expressions. */
     virtual const Op* Star (wchar_t index, Expr* expr);
@@ -239,7 +238,7 @@ class Room: public Operand {
                    state_;      //< Room state.
     const char   * name_;       //< Room Name.
     TStack<Wall*>* walls_;      //< Walls in the Room.
-    Expr   * expr_;       //< Current Expr being executed.
+    Expr         * expr_;       //< Current Expr being executed.
                                 //< DC1: this.
     Door         * this_;       //< DC2: The Door to this room.
     Operand      * xoff_,       //< DC3: XOFF - XOFF handling device.

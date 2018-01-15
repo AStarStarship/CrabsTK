@@ -25,29 +25,30 @@
 
 namespace _ {
 
-enum {
-    kOpPush          = 0, //< Operation Type 0: Stack push .
-    kOpOperation     = 1, //< Operation Type 1: Abstract Operation.
-    KOpOperationPush = 2, //< Operation Type 2: Operation with stack push.
-};
+//enum {
+//    kOpPush          = 0, //< Operation Type 0: Stack push .
+//    kOpOperation     = 1, //< Operation Type 1: Abstract Operation.
+//    KOpOperationPush = 2, //< Operation Type 2: Operation with stack push.
+//};
 
 /** An expression Operation with name key, multiple input params,
     result, and optional description of a data set.
     @code
     static const Op kThis = { "Key",
-        Params<1, 2>::Header, Params<1, 2>::Header,
-        "Description", 0, 0 };
+        Bsq<1, 2>::Header, Bsq<1, 2>::Header,
+        "Description", '}', ';', nullptr };
 
     static const Op member_device =   { "Key", 
         NumOps (0), FirstOp ('A'),
-        "Description", 1, 0 };
+        "Description", '}', ';', nullptr };
     @endcode */
 struct KABUKI Op {
     const char   * name;        //< Op name.
     const uint_t * params,      //< Op parameters or Operand data B-Seq.
                  * result;      //< Op result B-Seq.
     const char   * description; //< Op description.
-    int            type;        //< Type of Op: 0 for Operand.
+    wchar_t        pop,         //< Index of the Pop Operation
+                   close;       //< Index of the Close Operation
     const void   * evaluation;  //< Evaluated expression.
 };
 
@@ -143,7 +144,7 @@ KABUKI _::Strand& operator<< (_::Strand& strand, const _::Op* op);
 inline _::Macro& operator<< (_::Macro& op, int8_t value) {
     void* args[1];
     _::BOutWrite (op.bout,
-                  _::Params<2, _::STR, _::kAddressLengthMax, _::STR> (),
+                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::STR> (),
                   _::Args (args, &value));
     return op;
 } */
@@ -152,7 +153,7 @@ inline _::Macro& operator<< (_::Macro& op, int8_t value) {
 inline _::Macro& operator<< (_::Macro& op, uint8_t value) {
     void* args[1];
     _::BOutWrite (op.bout,
-                  _::Params<2, _::STR, _::kAddressLengthMax, _::UI1> (),
+                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::UI1> (),
                   _::Args (args, &value));
     return op;
 } */
@@ -161,7 +162,7 @@ inline _::Macro& operator<< (_::Macro& op, uint8_t value) {
 inline _::Macro& operator<< (_::Macro& op, int16_t value) {
     void* args[1];
     _::BOutWrite (op.bout,
-                  _::Params<2, _::STR, _::kAddressLengthMax, _::SI2> (),
+                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::SI2> (),
                   _::Args (args, &value));
     return op;
 } */
@@ -170,7 +171,7 @@ inline _::Macro& operator<< (_::Macro& op, int16_t value) {
 inline _::Macro& operator<< (_::Macro& op, uint16_t value) {
     void* args[1];
     _::BOutWrite (op.bout,
-                  _::Params<2, _::STR, _::kAddressLengthMax, _::UI2> (),
+                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::UI2> (),
                   _::Args (args, &value));
     return op;
 } */
@@ -179,7 +180,7 @@ inline _::Macro& operator<< (_::Macro& op, uint16_t value) {
 inline _::Macro& operator<< (_::Macro& op, int32_t value) {
     void* args[1];
     _::BOutWrite (op.bout,
-                  _::Params<2, _::STR, _::kAddressLengthMax, _::SI4> (),
+                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::SI4> (),
                   _::Args (args, &value));
     return op;
 } */
@@ -188,7 +189,7 @@ inline _::Macro& operator<< (_::Macro& op, int32_t value) {
 inline _::Macro& operator<< (_::Macro& op, uint32_t value) {
     void* args[1];
     _::BOutWrite (op.bout,
-                  _::Params<2, _::STR, _::kAddressLengthMax, _::UI4> (),
+                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::UI4> (),
                   _::Args (args, &value));
     return op;
 } */
@@ -197,7 +198,7 @@ inline _::Macro& operator<< (_::Macro& op, uint32_t value) {
 inline _::Macro& operator<< (_::Macro& op, int64_t value) {
     void* args[1];
     _::BOutWrite (op.bout,
-                  _::Params<2, _::STR, _::kAddressLengthMax, _::SI8> (),
+                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::SI8> (),
                   _::Args (args, &value));
     return op;
 } */
@@ -206,7 +207,7 @@ inline _::Macro& operator<< (_::Macro& op, int64_t value) {
 inline _::Macro& operator<< (_::Macro& op, uint64_t value) {
     void* args[1];
     _::BOutWrite (op.bout,
-                  _::Params<2, _::STR, _::kAddressLengthMax, _::UI8> (),
+                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::UI8> (),
                   _::Args (args, &value));
     return op;
 } */
@@ -215,7 +216,7 @@ inline _::Macro& operator<< (_::Macro& op, uint64_t value) {
 inline _::Macro& operator<< (_::Macro& op, float value) {
     void* args[1];
     _::BOutWrite (op.bout,
-                  _::Params<2, _::STR, _::kAddressLengthMax, _::FLT> (),
+                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::FLT> (),
                   _::Args (args, &value));
     return op;
 } */
@@ -224,7 +225,7 @@ inline _::Macro& operator<< (_::Macro& op, float value) {
 inline _::Macro& operator<< (_::Macro& op, double value) {
     void* args[1];
     _::BOutWrite (op.bout,
-                  _::Params<2, _::STR, _::kAddressLengthMax, _::DBL> (),
+                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::DBL> (),
                   _::Args (args, &value));
     return op;
 } */
@@ -233,7 +234,7 @@ inline _::Macro& operator<< (_::Macro& op, double value) {
 inline _::Macro& operator<< (_::Macro& op, const char* string) {
     void* args[1];
     _::BOutWrite (op.bout,
-                  _::Params<2, _::STR, _::kAddressLengthMax, _::STR> (),
+                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::STR> (),
                   _::Args (args, string));
     return op;
 } */

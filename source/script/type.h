@@ -107,7 +107,7 @@ enum {
 KABUKI uint_t TypeSize (uint_t type); */
 
 /** Returns true if the type is a valid list type. */
-KABUKI bool TypeIsValid (uint_t type) {
+inline bool TypeIsValid (uint_t type) {
     // @warning I'm not sure what I was thinking here.
     //if (type_name < TypeTexts ()[0] || type_name > TypeTexts ()[FS])
     //    return false;
@@ -119,7 +119,7 @@ KABUKI bool TypeIsValid (uint_t type) {
 KABUKI const char** TypeStrings ();
 
 /** Returns the name of the given type. */
-KABUKI const char* TypeString (uint_t type) {
+inline const char* TypeString (uint_t type) {
     if (type >= kTypeCount) {
         return "Invalid";
     }

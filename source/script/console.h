@@ -20,8 +20,7 @@
 #ifndef HEADER_FOR_SCRIPT_CONSOLE
 #define HEADER_FOR_SCRIPT_CONSOLE
 
-#include "strand.h"
-#include "args.h"
+#include "expr.h"
 
 #if USING_SCRIPT_TEXT
 
@@ -75,6 +74,156 @@ inline void COut (float value) {
 /** Prints the given value to the stdout. */
 inline void COut (double value) {
     std::cout << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void COutLine (int8_t value) {
+    std::cout << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void COutLine (uint8_t value) {
+    std::cout << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void COutLine (int16_t value) {
+    std::cout << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void COutLine (uint16_t value) {
+    std::cout << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void COutLine (int32_t value) {
+    std::cout << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void COutLine (uint32_t value) {
+    std::cout << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void COutLine (int64_t value) {
+    std::cout << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void COutLine (uint64_t value) {
+    std::cout << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void COutLine (float value) {
+    std::cout << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void COutLine (double value) {
+    std::cout << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErr (int8_t value) {
+    std::cerr << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErr (uint8_t value) {
+    std::cerr << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErr (int16_t value) {
+    std::cerr << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErr (uint16_t value) {
+    std::cerr << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErr (int32_t value) {
+    std::cerr << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErr (uint32_t value) {
+    std::cerr << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErr (int64_t value) {
+    std::cerr << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErr (uint64_t value) {
+    std::cerr << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErr (float value) {
+    std::cerr << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErr (double value) {
+    std::cerr << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErrLine (int8_t value) {
+    std::cerr << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErrLine (uint8_t value) {
+    std::cerr << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErrLine (int16_t value) {
+    std::cerr << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErrLine (uint16_t value) {
+    std::cerr << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErrLine (int32_t value) {
+    std::cerr << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErrLine (uint32_t value) {
+    std::cerr << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErrLine (int64_t value) {
+    std::cerr << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErrLine (uint64_t value) {
+    std::cerr << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErrLine (float value) {
+    std::cerr << "\n| " << value;
+}
+
+/** Prints the given value to the stdout. */
+inline void CErrLine (double value) {
+    std::cerr << "\n| " << value;
 }
 
 /** Reads a single char from the keyboard
@@ -153,21 +302,21 @@ class Console : public Strand, public Op {
     virtual const Op* Star (wchar_t index, Expr* expr) {
         static const Op kThis = { "Console",
             OpFirst ('A'), OpLast ('A'),
-            "A full-duplex computer text console.", kOpPush, nullptr
+            "A full-duplex computer text console.", '}', ';' , nullptr
         };
         void* args[1];
         switch (index) {
             case '?': return ExprQuery (expr, kThis);
             case 'A': {
                 static const Op kOpA = { "Foo",
-                    Bsq<1, SI4> (), Bsq<1, SI4> (),
+                    _::Bsq<1, SI4> (), _::Bsq<1, SI4> (),
                     "The classic one and only example function name.",
-                    kOpOperation, nullptr
+                    '(', ')', nullptr
                 };
-                int32_t value;
                 if (!expr) {
                     return &kOpA;
                 }
+                int32_t value;
                 if (ExprArgs (expr, kOpA, Args (args, &value))) {
                     return expr->result;
                 }

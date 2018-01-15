@@ -140,7 +140,7 @@ void MemoryClear (void* address, size_t size) {
     *ptr = value;*/
 }
 
-inline char* MemoryCopy (char* write, char* write_end, const char* read,
+char* MemoryCopy (char* write, char* write_end, const char* read,
     const char* read_end) {
     // @todo Optimize to write in words.
     if (!write) {
@@ -200,14 +200,13 @@ char* MemoryCopy (char* write, char* write_end, const char* read,
     if (!read) {
         return nullptr;
     }
-    if (!read_end) {
+    if (read > read_end) {
         return nullptr;
     }
+    // Check for room in both the read and write buffers.
     if ((write_end - write) < size) {
         return nullptr;
     }
-    const char* read     = reinterpret_cast<const char*> (read),
-              * read_end = reinterpret_cast<const char*> (read_end);
     if ((read_end - read) < size) {
         return nullptr;
     }

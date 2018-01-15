@@ -144,6 +144,7 @@ enum {
     kMinStackSize     = 1,                //< Min Expr stack size.
     kOpNameLengthMax  = SCRIPT_OP_MAX_NAME_LENGTH,
     kOpDescriptionLengthMax = SCRIPT_OP_MAX_DESCRIPTION_LENGTH,
+    kTextSize         = SCRIPT_TEXT_LENGTH, //< Max length of a Text.
 };
 }   //< namespace _
 
@@ -154,6 +155,7 @@ enum {
 #undef SCRIPT_LOG_SIZE
 #undef OPERATION_MAX_NAME_LENGTH
 #undef OPERATION_MAX_DESCRIPTION_LENGTH
+#undef SCRIPT_TEXT_LENGTH
 
 #define KABUKI
 

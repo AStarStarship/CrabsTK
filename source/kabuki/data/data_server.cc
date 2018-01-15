@@ -35,7 +35,7 @@ const Op* Server::Star (wchar_t index, Expr* expr) {
         case '?': return ExprQuery (expr, &This);
         case 'A': {
             static const Op kOpA = { "foo",
-                Params<0> (), Params<0> (),
+                Bsq<0> (), Bsq<0> (),
                 "Why does everyone use foo?", 0 };
             if (!expr) return &kOpA;
         }

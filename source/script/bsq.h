@@ -71,14 +71,14 @@ constexpr uint_t BsqSize (const uint_t* params) {
     return size;
 }
 
-/** Returns a static const Script B-Sequence header.
+/** Creates a immutable Script B-Sequence.
     C++11 variadic template to ensure only one copy in ROM 
     and to eliminate some redundant typing. */
 template<const uint_t... N>
 inline const uint_t* Bsq () {
-    static const uint_t kSize = BsqSize ({ N... }),
+    static const uint_t kSize = 0,//BsqSize ({ N... })
                         kList[sizeof... (N)] = { N... };
-    return &kSizes;
+    return &kSize;
 }
 
 /*< Returns the requested parameter number. */

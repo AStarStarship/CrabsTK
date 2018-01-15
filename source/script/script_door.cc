@@ -95,13 +95,14 @@ const Op* Door::Star (wchar_t index, Expr* expr) {
     static const Op kThis = { "Door",
         OpFirst ('A'), OpFirst ('A' + slots_->count),
         "A door in a Chinese room with a bunch of slots in it where "
-        "messages are passed.", kOpPush, 0 };
+        "messages are passed.",';', '}' , nullptr };
     if (index == '?') {
-        return kThis;
+        return ExprQuery (expr, kThis);
     }
     index -= ' ';
-    if (((slot_t)index) >= slots_->count)
+    if (((slot_t)index) >= slots_->count) {
         return DoorResult (this, Door::kErrorInvalidOp);
+    }
     return nullptr;
 }
 

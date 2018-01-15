@@ -186,14 +186,14 @@ int Room::Main (const char** args, int args_count) {
     return 1;
 }
 
-const char* Room::Sudo (const char* text, const char* strand_end) {
-    return nullptr;
+char Room::CommandNext () {
+    return 0;
 }
 
 const Op* Room::Star (wchar_t index, Expr* expr) {
     static const Op kThis = { "Room",
         OpFirst ('A'), OpLast ('A'),
-        "A Chinese Room.", kOpPush, 0
+        "A Chinese Room.", ';', '}', 0
     };
 
     switch (index) {

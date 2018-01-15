@@ -61,25 +61,25 @@ struct KABUKI Expr;
         void bar () {}     //< Some people drink too much :-)
 
         virtual const Operand* Star (wchar_t index, Expr* expr) {
+            static const Op kThis = { 
+                "ChineseRoomExample", ConvertNumOperands (2), nullptr, 
+                "Description of ChineseRoomExample.", '}', ';', nullptr
+            };
+
             void* args[2];    //< An array of 2 void* for the Op.
 
             switch (index)
             {
                 case '?': { 
-                    static const Op o_header = 
-                    { 
-                        "ChineseRoomExample", ConvertNumOperands (2), nullptr, 
-                        "Description of ChineseRoomExample.", 0
-                    };
 
                     // 63 is ASCII '?'
-                    return &o_header;
+                    return &kThis;
                 }
                 case 64: {
                     static const Op o_A = { "foo",
-                        Params<2, FLT, STR, kTextBufferSize> (),
-                        Params<2, FLT, STR> (),
-                        "Description of foo." };
+                        Bsq<2, FLT, STR, kTextBufferSize> (),
+                        Bsq<2, FLT, STR> (),
+                        "Description of foo.", '(', ';', nullptr };
 
                     // 66 is ASCII 'A'
                     if (!expr) return &o_A;
@@ -95,9 +95,9 @@ struct KABUKI Expr;
                 }
                 case 65: {
                     static const Op o_B = { "bar",
-                        Params<2, FLT, STR, kTextBufferSize> (),
-                        Params<2, FLT, STR> (),
-                        "Description of bar."
+                        Bsq<2, FLT, STR, kTextBufferSize> (),
+                        Bsq<2, FLT, STR> (),
+                        "Description of bar.", '(', ';', nullptr
                     };
                 
                     if (!io) return &o_B;

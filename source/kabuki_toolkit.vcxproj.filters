@@ -30,9 +30,6 @@
     <Filter Include="projects\sloth">
       <UniqueIdentifier>{fa4a9efd-aa8a-4975-9620-e71bb7c990f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="projects\NewFilter1">
-      <UniqueIdentifier>{1a467537-427a-4ced-9800-65c61d6b75f2}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="script\bin.h">

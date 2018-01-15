@@ -16,7 +16,6 @@
 
 #include <stdafx.h>
 #include "expr.h"
-#include "ascii.h"
 #include "clock.h"
 #include "bsq.h"
 #include "console.h"
@@ -31,9 +30,9 @@ namespace _ {
     @return Returns a Static Error Op Result. */
 inline const Op* ExprError (Expr* expr, Error error) {
     #if SCRIPT_DEBUG == SCRIPT_EXPR
-    Text<> text;
-    COut (text << "\n| Expr " << ErrorString (error)
-               << " Error!");
+    Text<> out;
+    COut (out << "\n| Expr " << ErrorString (error)
+              << " Error!");
     #endif
     return reinterpret_cast<const Op*> (1);
 }
@@ -49,8 +48,8 @@ inline const Op* ExprError (Expr* expr,
                                      Error error,
                                      const uint_t* header) {
     #if SCRIPT_DEBUG == SCRIPT_EXPR
-    Text<> text;
-    COut (text << "\n| Expr " << ErrorString (error)
+    Text<> out;
+    COut (out << "\n| Expr " << ErrorString (error)
           << " Error!");
     #endif
     return reinterpret_cast<const Op*> (1);
@@ -68,8 +67,8 @@ inline const Op* ExprError (Expr* expr,
                                 const uint_t* header,
                                 byte offset) {
     #if SCRIPT_DEBUG == SCRIPT_EXPR
-    Text<> text;
-    COut (text << "\n| Expr " << ErrorString (error)
+    Text<> out;
+    COut (out << "\n| Expr " << ErrorString (error)
           << " Error!");
     #endif
     return reinterpret_cast<const Op*> (1);
@@ -88,8 +87,8 @@ inline const Op* ExprError (Expr* expr,
                             byte offset,
                             char* address) {
     #if SCRIPT_DEBUG == SCRIPT_EXPR
-    Text<> text;
-    COut (text << "\n| Expr " << ErrorString (error)
+    Text<> out;
+    COut (out << "\n| Expr " << ErrorString (error)
           << " Error!");
     #endif
     return reinterpret_cast<const Op*> (1);
@@ -172,8 +171,8 @@ Expr* ExprInit (uintptr_t* buffer, uint_t buffer_size,  uint_t stack_size,
     SlotInit (&expr->slot, reinterpret_cast<char*> (expr) + sizeof (Expr) +
                     stack_size * sizeof (uint_t), unpacked_size);
     #if SCRIPT_DEBUG == SCRIPT_EXPR
-    Text<> text;
-    text << "expr->op:0x" << text.Pointer (expr->operand)
+    Text<> out;
+    out << "expr->op:0x" << out.Pointer (expr->operand)
            << std::cout ;
     #endif //< SCRIPT_DEBUG
     BInInit  (ExprBinAddress  (expr), size);
@@ -262,8 +261,8 @@ const Op* Push (Expr* expr, Operand* operand) {
     expr->operand = operand;
     expr->stack_count = stack_count + 1;
     #if SCRIPT_DEBUG == SCRIPT_EXPR
-    Text<> text;
-    COut (ExprPrintStack (expr, text));
+    Text<> out;
+    COut (ExprPrintStack (expr, out));
     #endif
     return nullptr;
 }
@@ -285,8 +284,8 @@ const Op* Pop (Expr* expr) {
     expr->operand = ExprStack (expr)[stack_count - 2];
     expr->stack_count = stack_count - 1;
     #if SCRIPT_DEBUG == SCRIPT_EXPR
-    Text<> text;
-    Strand sout = text;
+    Text<> out;
+    Strand sout = out;
     COut (sout << "\n| Top of stack is now " 
           << OperandName (expr->operand) << "." 
           << ExprPrintStack (expr, sout));
@@ -324,10 +323,10 @@ const Op* ExprUnpack (Expr* expr) {
                     * slot_start = expr->slot.start, //< Write cursor,
                     * slot_stop  = expr->slot.stop,
                     * slot_end   = expr->slot.end;
-    const Op * result;             //< The result of the Scan.
+    const Op        * result;      //< The result of the Scan.
     const uint_t    * header = expr->header;
     //< Header of the current Op being verified.
-
+    op = nullptr;
 //    if (input == nullptr) {
 //#if SCRIPT_DEBUG == SCRIPT_EXPR
 //        PrintDebug ("input = nil");
@@ -354,20 +353,20 @@ const Op* ExprUnpack (Expr* expr) {
     space  = SlotSpace (bin_start, bin_stop, size);
     length = size - space;
     #if SCRIPT_DEBUG == SCRIPT_EXPR
-    Text<> text;
-    text << "\n| Scanning Expr:0x" << text.Pointer (expr)
-         << " with length:" << length;
+    Text<> out;
+    COut (out << "\n| Scanning Expr:0x" << out.Pointer (expr)
+          << " with length:" << length);
     #endif
     for (; length != 0; --length) {
         b = *bin_start;
         *slot_start++ = b;
         #if SCRIPT_DEBUG == SCRIPT_EXPR
-        text << text.Line ('=')
-             << "\n| " << length << ":\'" << text.Clear ();
-             << ((b < 32 || b == 127) ? (text << AsciiText ((AsciiCode)b)) 
-                                      : (text << b))
-             << "\' " << BInState ()[bin_state] << " state"
-             << text.Line ());
+        COut (out << out.Line ('=')
+              << "\n| " << length << ":\'" << out.Clear ();
+              << ((b < 32 || b == 127) ? (out << AsciiText ((AsciiCode)b)) 
+                                       : (out << b))
+              << "\' " << BInState ()[bin_state] << " state"
+                  << out.Line ()));
         #endif
 
         if (++bin_start >= bin_end) bin_start -= size;
@@ -376,7 +375,7 @@ const Op* ExprUnpack (Expr* expr) {
             case BIn::AddressState: {
                 hash = Hash16 (b, hash);
                 #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut (text << "\n| hash:" << text.Hex (hash));
+                COut (out << "\n| hash:" << out.Hex (hash));
                 #endif
                 // When verifying an address, there is guaranteed to be an
                 // expr->op set. We are just looking for nil return values
@@ -384,11 +383,11 @@ const Op* ExprUnpack (Expr* expr) {
                 // pushing Star(string) on to the Star stack, and looking for
                 // the first procedure call.
                 //
-                if (b == BS) {
+                if (b == op->pop) {
                     Pop (expr);
                     break;
                 }
-                if (b == CR) {
+                if (b == op->close) {
                     Pop (expr);
                     expr->bytes_left = 1;
                     ExprSetState (expr, BIn::HashState);
@@ -399,7 +398,7 @@ const Op* ExprUnpack (Expr* expr) {
 
                 op = operand->Star ('?', nullptr);
                 #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut (text << "\n| Current Op is \"" << op->name << '\"');
+                COut (out << "\n| Current Op is \"" << op->name << '\"');
                 #endif
 
                 op = operand->Star (b, nullptr);
@@ -425,13 +424,13 @@ const Op* ExprUnpack (Expr* expr) {
                     // It's an Op.
                     // The software implementer pushes the Op on the stack.
                     #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (text << "\n| Found Op with params "
-                          << BsqPrint (params, text));
+                    COut (out << "\n| Found Op with params "
+                          << BsqPrint (params, out));
                     #endif
                     result = ExprScanHeader (expr, params);
                     if (result) {
                         #if SCRIPT_DEBUG == SCRIPT_EXPR
-                        COut (text << "Expr::Error reading address.");
+                        COut (out << "Expr::Error reading address.");
                         #endif
                         return ExprForceDisconnect (expr, kErrorImplementation);
                     }
@@ -439,7 +438,7 @@ const Op* ExprUnpack (Expr* expr) {
                     operand = expr->operand;
                     if (!operand) {
                         #if SCRIPT_DEBUG == SCRIPT_EXPR
-                        COut (text << "\n| Null operand found!");
+                        COut (out << "\n| Null operand found!");
                         #endif
                         return ExprForceDisconnect (expr, kErrorInvalidOperand);
                     }
@@ -451,7 +450,7 @@ const Op* ExprUnpack (Expr* expr) {
                     bin_state = BIn::ArgsState;
                     type = *(++expr->header);   //< Setup to read first type.
                     #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (text << "\n| Next TType to scan:\'" << TypeString (type)
+                    COut (out << "\n| Next TType to scan:\'" << TypeString (type)
                           << "\' with alignment "
                           << TypeAlign (slot_start, type) << '.');
                     #endif
@@ -469,14 +468,14 @@ const Op* ExprUnpack (Expr* expr) {
 
                 if (expr->params_left-- == 0) {
                     #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (text << "\n| Params successfully scanned.");
+                    COut (out << "\n| Bsq successfully scanned.");
                     #endif
 
                     break;
                 }
                 hash = Hash16 (b, hash);
                 #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut (text <<"\n| hash:" << text.Hex (hash));
+                COut (out <<"\n| hash:" << out.Hex (hash));
                 #endif
 
                 // Switch to next state
@@ -499,7 +498,7 @@ const Op* ExprUnpack (Expr* expr) {
                     // Read the max number of chars off the header.
                     bytes_left = *(++expr->header);
                     #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (text << "\n| Scanning STR with max length "
+                    COut (out << "\n| Scanning STR with max length "
                           << bytes_left);
                     #endif
                     ExprEnterState (expr, BIn::Utf8State);
@@ -508,20 +507,20 @@ const Op* ExprUnpack (Expr* expr) {
                 } else if (type < DBL)  { // Plain-old-data type.
                     bytes_left = TypeSize (type);
                     #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (text << "\n| Scanning POD with "
+                    COut (out << "\n| Scanning POD with "
                               << bytes_left << bytes_left);
                     #endif
                     if (bytes_left == 1) {
                         // No need to enter a state because there is only one
                         // byte to parse and we already have the byte loaded.
                         #if SCRIPT_DEBUG == SCRIPT_EXPR
-                        COut (text << "\n| Done scanning without state change "
+                        COut (out << "\n| Done scanning without state change "
                               "for \"" << TypeString (type) << '\"';
                         #endif
                         // Setup to read the next type.
                         type = *(++expr->header);
                         #if SCRIPT_DEBUG == SCRIPT_EXPR
-                        COut (text << "\n| Next TType to scan:\'" 
+                        COut (out << "\n| Next TType to scan:\'" 
                               << TypeString (type) << "\' with alignment "
                               << TypeAlign (slot_start, type) << '.');
                         #endif
@@ -606,7 +605,7 @@ const Op* ExprUnpack (Expr* expr) {
                 }
                 hash = Hash16 (b, hash);
                 #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut (text << "\n| hash:" << text.Hex (hash));
+                COut (out << "\n| hash:" << out.Hex (hash));
                 #endif
                 // Hash byte.
                 // Check if char terminated.
@@ -623,7 +622,7 @@ const Op* ExprUnpack (Expr* expr) {
                         break;
                     }
                     #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (text << "\n| Next TType to scan:\'" 
+                    COut (out << "\n| Next TType to scan:\'" 
                           << TypeString (type) << "\' with alignment "
                           << TypeAlign (slot_start, type) << '.');
                     #endif
@@ -636,7 +635,7 @@ const Op* ExprUnpack (Expr* expr) {
             case BIn::Utf16State: {
                 hash = Hash16 (b, hash);
                 #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut ("\n| hash:" << text.Hex (hash));
+                COut ("\n| hash:" << out.Hex (hash));
                 #endif
                 ExprExitState (expr);
                 break;
@@ -644,7 +643,7 @@ const Op* ExprUnpack (Expr* expr) {
             case BIn::Utf32State: {
                 hash = Hash16 (b, hash);
                 #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut ("\n| hash:" << text.Hex (hash));
+                COut ("\n| hash:" << out.Hex (hash));
                 #endif
                 ExprExitState (expr);
                 break;
@@ -652,7 +651,7 @@ const Op* ExprUnpack (Expr* expr) {
             case BIn::VarintState: {
                 hash = Hash16 (b, hash);
                 #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut ("\n| hash:" << text.Hex (hash));
+                COut ("\n| hash:" << out.Hex (hash));
                     #endif
                 // When verifying a varint, there is a max number of bytes for 
                 // the type (3, 5, or 9) but the varint may be complete before 
@@ -689,7 +688,7 @@ const Op* ExprUnpack (Expr* expr) {
                     // Setup to read the next type.
                     type = *(++header);
                     #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (text << "\n| Next TType to scan:\'" <<
+                    COut (out << "\n| Next TType to scan:\'" <<
                           TypeString (type) << "\' with alignment " <<
                           TypeAlign (slot_start, type) << '.');
                     #endif
@@ -701,12 +700,12 @@ const Op* ExprUnpack (Expr* expr) {
             case BIn::ObjectState: {
                 hash = Hash16 (b, hash);
                 #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut ("\n| hash:" << text.Hex (hash));
+                COut ("\n| hash:" << out.Hex (hash));
                 #endif
                 if (bytes_shift >= shift_bits) {
                     // Done shifting.
                     #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (text << "\n| Loading object of size:" << bytes_left);
+                    COut (out << "\n| Loading object of size:" << bytes_left);
                     #endif
                     ExprExitState (expr);
                     ExprEnterState (expr, BIn::PodState);
@@ -729,8 +728,8 @@ const Op* ExprUnpack (Expr* expr) {
                 if (hash != found_hash) {
                     #if SCRIPT_DEBUG == SCRIPT_EXPR
                     COut ("\n| Error: expecting hash:" <<
-                          text.Hex (hash) << " and found " << 
-                          text.Hex (found_hash));
+                          out.Hex (hash) << " and found " << 
+                          out.Hex (found_hash));
                     #endif
                     return ExprForceDisconnect (expr, kErrorInvalidHash);
                 }
@@ -747,7 +746,7 @@ const Op* ExprUnpack (Expr* expr) {
                 break;
             }
             case BIn::kStateDisconnected: {
-                if (b != _::BEL) {
+                if (b) {
                     ExprSetState (expr, BIn::ErrorState);
                     bin_state = BIn::ErrorState;
                 } else {
@@ -757,7 +756,7 @@ const Op* ExprUnpack (Expr* expr) {
                 break;
             }
             case  BIn::AckState: {
-                if (b != _::ACK) {
+                if (b) {
                     ExprSetState (expr, BIn::ErrorState);
                     bin_state = BIn::ErrorState;
                 } else {
@@ -770,13 +769,13 @@ const Op* ExprUnpack (Expr* expr) {
                     bin_state = BIn::AddressState;
                     ExprSetState (expr, BIn::AddressState);
                     #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (text << "\n| Root scope: \"" <<
+                    COut (out << "\n| Root scope: \"" <<
                           OperandName (expr->operand) << '\"');
                     #endif
                 }
                 break;
             }
-            case  BIn::LockedState: {
+            case BIn::LockedState: {
                 #if SCRIPT_DEBUG == SCRIPT_EXPR
                 COut ("Locked");
                 #endif
@@ -785,10 +784,10 @@ const Op* ExprUnpack (Expr* expr) {
             default: {
                 hash = Hash16 (b, hash);
                 #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut (text << "\n| hash:" << text.Hex (hash));
+                COut (out << "\n| hash:" << out.Hex (hash));
                 #endif
                 // parsing plain-old-data.
-                if (bytes_left == 0) {
+                if (!bytes_left) {
                     #if SCRIPT_DEBUG == SCRIPT_EXPR
                     COut ("... done!");
                     #endif
@@ -798,7 +797,7 @@ const Op* ExprUnpack (Expr* expr) {
                     // Setup to read the next type.
                     type = *(++header);
                     #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (text << "\n| Next TType to scan:\'" << TypeString (type)
+                    COut (out << "\n| Next TType to scan:\'" << TypeString (type)
                           << "\' with alignment " << TypeAlign (slot_start, type)
                           << '.');
                     #endif
@@ -808,7 +807,7 @@ const Op* ExprUnpack (Expr* expr) {
                 --bytes_left;
                 //b = input->Pull ();
                 #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut (text << "\n| Loading next byte:" << text.Hex (b));
+                COut (out << "\n| Loading next byte:" << out.Hex (b));
                 #endif
                 hash = Hash16 (b, hash);
                 *bin_start = b;
@@ -904,8 +903,8 @@ const Op* ExprQuery (Expr* expr, const Op& op) {
         uintptr_t num_ops  = (uintptr_t)op.params,
                   first_op = (uintptr_t)op.result;
         // @todo Write params to expr!
-        static const uint_t* header = Params<5, STR, kOpMaxNameLength, UV8, UV8,
-                                             STR, kOpMaxDescriptionLength> ();
+        static const uint_t* header = Bsq<5, STR, kOpNameLengthMax, UV8, UV8,
+                                             STR, kOpDescriptionLengthMax> ();
         return BOutWrite (ExprBOut (expr),
                           header,
                           Args (args, op.name, &num_ops, &first_op,
@@ -949,11 +948,11 @@ const Op* ExprQuery (Expr* expr, const Op* op) {
         void* args[2];
         uintptr_t num_ops  = (uintptr_t)op->params,
                   first_op = (uintptr_t)op->result;
-        return ExprResult (expr,
-                           Params<5, STR, kOpNameLengthMax, UV8, UV8,
+        return BOutWrite (ExprBOut (expr) ,
+                           Bsq<5, STR, kOpNameLengthMax, UV8, UV8,
                                   STR, kOpDescriptionLengthMax> (),
-                           Args (args, op->name, &num_ops,
-                                 &first_op, op->description));
+                           Args (args, op->name, &first_op,
+                                 &num_ops, op->description));
     }
     return op;
 }
@@ -1007,96 +1006,6 @@ Strand& ExprPrint (Expr* expr, Strand& strand) {
                   << strand.Line ('-', "\n>")
                   << ExprPrintStack (expr, strand)
                   << strand.Line ('~');
-}
-
-const char* ExprStar (Expr* expr, char* input, char* input_end) {
-    if (!expr) {
-        return nullptr;
-    }
-    if (!input) {
-        return nullptr;
-    }
-    if (input > input_end) {
-        return nullptr;
-    }
-    Operand* operand = expr->root;
-    // Assume root will never be nil.
-    const Op* op = operand->Star ('?', 0);
-    if (!op) {
-        return nullptr;
-    }
-    uint current = OpFirst (op),
-         last    = OpLast  (op);
-    while (current <= last) {
-        const char* input = TokenEquals (input, input_end, op->name);
-        if (input) {
-            if (op->type == kOpPush) {
-                operand->Star (current, expr);
-                operand = expr->operand;
-                const Op* op = operand->Star ('?', 0);
-                if (!op) {
-                    return nullptr;
-                }
-                current = OpFirst (op),
-                last    = OpLast (op);
-                break;
-            } else {
-                return SlotStar (&expr->slot, op->params, input, input_end);
-            }
-        } else {
-            ++current;
-        }
-    }
-    return nullptr;
-}
-/** Operates the console. */
-const char* ExprStar (Expr* expr, const char* input,
-                    const char* input_end) {
-    const char* cursor;
-    if (!expr) {
-        return nullptr;
-    }
-    if (!input) {   //< @todo Is this an error?
-        return nullptr;
-    }
-    if (input >= input_end) {
-        return nullptr;
-    }
-    Operand* operand = expr->operand;
-    const Op* op = operand->Star ('?', 0);
-    if (!op) {
-        return "Invalid Operand";
-    }
-    input = StrandSkipSpaces (input, input_end);
-    if (!input) {
-        return nullptr;
-    }
-    bool searching_operands = true;
-    while (searching_operands) {
-        wchar_t index = OpFirst (op),
-            last = OpLast (op);
-        for (; index <= last; ++index) {
-            op = operand->Star (index, 0);
-            if (op) {
-                // @todo The recursive solution is very elegant and easy, but 
-                // my bat senses say that it would be much more efficient to 
-                // use a loop based solution.
-                cursor = StrandEquals (input, input_end, op->name, '.');
-                if (cursor) {
-                    if (op->type == kOpPush) {
-                        operand->Star (index, expr);
-                        return ExprStar (expr, cursor, input_end);
-                    } else {
-                        return ExprParse (expr, cursor, input_end);
-                    }
-                }
-            }
-        }
-    }
-}
-
-char* ExprEvaluate (Expr* expr) {
-    return nullptr;
 }
 
 #endif  //< USING_SCRIPT_TEXT

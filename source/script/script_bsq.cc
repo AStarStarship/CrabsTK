@@ -64,10 +64,10 @@ Strand& BsqPrint (const uint_t* params, Strand& strand) {
     if (num_params > _::kParamsMax) {
         return strand << "\n| Invalid num_params: " << num_params;
     }
-    printf ("%u: ", num_params);
+    strand << num_params << ": ";
     for (i = 1; i < num_params; ++i) {
         value = *params++;
-        type = value & 0x1f;   //< Mask off type.
+        type = value & 0x1f;    //< Mask off type.
         value = value >> 5;     //< Shift over array type.
         strand << TypeString (value) << ", ";
         if (type >= STR) {
@@ -85,36 +85,30 @@ Strand& BsqPrint (const uint_t* params, Strand& strand) {
             // Then it's an array.
             ++i;
             switch (value) {        //< Print out the Array type.
-                case 0:
-                {
+                case 0: {
                     break;
                 }
-                case 1:
-                {
+                case 1: {
                     value = *params++;
                     strand << "UI1:" << value << ", ";
                     break;
                 }
-                case 2:
-                {
+                case 2: {
                     value = *params++;
                     strand << "UI2:" << value << ", ";
                     break;
                 }
-                case 3:
-                {
+                case 3: {
                     value = *params++;
                     strand << "UI4:" << value << ", ";
                     break;
                 }
-                case 4:
-                {
+                case 4: {
                     value = *params++;
                     strand << "UI8:" << value << ", ";
                     break;
                 }
-                case 5:
-                {
+                case 5: {
                     value = *params++;
                     if (value == 0) {
                         strand << "UI1:[0]";
@@ -129,8 +123,7 @@ Strand& BsqPrint (const uint_t* params, Strand& strand) {
                     strand << value << "]";
                     break;
                 }
-                case 6:
-                {
+                case 6: {
                     value = *params++;
                     if (value == 0) {
                         strand << "UI2:[0]";
@@ -145,8 +138,7 @@ Strand& BsqPrint (const uint_t* params, Strand& strand) {
                     strand << value << "]";
                     break;
                 }
-                case 7:
-                {
+                case 7: {
                     value = *params++;
                     if (value == 0) {
                         strand << "UI4:[0]";
@@ -170,7 +162,7 @@ Strand& BsqPrint (const uint_t* params, Strand& strand) {
     if (value == STR) {
         ++i;
         value = *params++;
-        printf ("%u", value);
+    strand << value;
     } else if (value > 31) {
         // Then it's an array.
         type = value & 0x1f;    //< Mask off type.
@@ -256,15 +248,6 @@ Strand& BsqPrint (const uint_t* params, Strand& strand) {
         }
     }
     return strand << '>';
-}
-
-Strand& BsqPrint (const uint_t* params, Strand& strand) {
-    if (!params) {
-        return strand;
-    }
-    uint_t params_count = *params++;
-    for (uint_t i = *params++; )
-    return strand;
 }
 #endif  //< USING_SCRIPT_TEXT
 

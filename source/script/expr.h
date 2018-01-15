@@ -228,6 +228,17 @@ inline const Op* ExprResult (Expr* expr, const Op& op, void** args) {
     return BOutWrite (ExprBOut (expr), op.result, args);
 }
 
+/** Writes the result to the Expr.
+@param  expr The resulting expression.
+@param  op   The Operation with result B-Sequence header.
+@param  args Pointers to the B-Sequence args. */
+inline const Op* ExprResult (Expr* expr, const Op* op, void** args) {
+    if (!op) {
+        return nullptr;
+    }
+    return BOutWrite (ExprBOut (expr), op->result, args);
+}
+
 /** Returns the Operand header or writes it to the Expr.
     @param expr   The expression to write the Op header to.
     @param header The Op header.
@@ -250,16 +261,7 @@ KABUKI Strand& ExprPrintStack (Expr* expr, Strand& strand);
 /** Prints the Expr stack to the Text buffer */
 //KABUKI Text& ExprPrintStateStack (Expr* expr, Text& text);
 
-/** Parses the given strand and turns it into Script Ops.
-    @param  expr  Expr to operate on.
-    @param  begin Beginning of the strand buffer.
-    @param  end   End of the strand buffer.
-    @return Returns nullptr upon success and an error string upon failure. */
-KABUKI const char* ExprStar (Expr* expr, const char* begin, const char* end);
-
 #endif  //< USING_SCRIPT_TEXT
-
-KABUKI char* ExprEvaluate (Expr* expr);
 
 }       //< namespace _
 

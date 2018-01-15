@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/script/script/expr.h
+    @file    ~/source/script/expr.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -126,46 +126,50 @@ class Library: public Operand
     /** Returns the data address of the given op if it exists.
         @return Returns a pointer to one of the ChineseRoom error strings upon failure. */
     void* GetDataAddress (TIndex index) {
-        #if _BufferUIntSize >= 64
-        IndexType64_t* UI8_ptr = (IndexType64_t*)address;
-        #elif _BufferUIntSize >= 32
-        IndexType32_t* UI4_ptr = (IndexType32_t*)address;
-        #elif _BufferUIntSize >= 16
-        IndexType16_t* UI2_ptr = (IndexType16_t*)address;
-        #elif _BufferUIntSize != 8
-        #error IndexType_t invalid size!
+        #if SCRIPT_MEMORY_PROFILE >= 64
+        Index64* UI8_ptr = (Index64*)address;
+        #elif SCRIPT_MEMORY_PROFILE >= 32
+        Index32* UI4_ptr = (Index32*)address;
+        #elif SCRIPT_MEMORY_PROFILE >= 16
+        Index16* UI2_ptr = (Index16*)address;
+        #elif SCRIPT_MEMORY_PROFILE != 8
+        #error Index_t invalid size!
         #endif
 
-        IndexType_t size = 0;
+        Index_t size = 0;
 
         byte type = (*address) & 0x1f;
 
-        switch (type)
-        {
-            case RS:
-                #if _BufferUIntSize >= 16
+        uint array_type = type >> 5;
+
+        switch (array_type) {
+            case 0:
+                #if SCRIPT_MEMORY_PROFILE >= 16
                 /// Library format: { UI1, UI1, UI2, UI2 }
                 return size + sizeof (Library) + * (address + 1) * 
                        sizeof (byte) + *(UI2_ptr + 2) + * (UI8_ptr + 4);
                 #else
                 return 0;
                 #endif
-            case GS:
-                #if _BufferUIntSize >= 32
+            case 1:
+                #if SCRIPT_MEMORY_PROFILE >= 32
                 /// Library format: { UI1, UI1, UI2, UI4 }
                 return size + sizeof (Bag32) + * (UI2_ptr + 2) * 
                        sizeof (byte) + * (UI4_ptr + 4) + * (UI8_ptr + 8);
                 #else
                 return 0;
                 #endif
-            case FS:
-                #if _BufferUIntSize >= 64
+            case 2:
+                #if SCRIPT_MEMORY_PROFILE >= 64
                 /// Library format: { UI2, UI2, UI4, UI8 }
                 return size + sizeof (Library) + * (UI2_ptr + 2) * 
                        sizeof (byte) + * (UI4_ptr + 4) + * (UI8_ptr + 8);
                 #else
                 return 0;
                 #endif
+            case 2: {
+                break;
+            }
         }
         return 0;
     }
@@ -197,8 +201,8 @@ class Library: public Operand
             case '?': return ExprEnquiry (expr, kThis);
             case 'A': {
                 static const Op This = { "Foo",
-                    Params<0> (), Params<0> (),
-                    "Foo is getting old I know.", kOpOperation, 0 };
+                    Bsq<0> (), Bsq<0> (),
+                    "Foo is getting old I know.", '(', ')', nullptr };
                 return 0;
             }
             default:
@@ -211,19 +215,19 @@ class Library: public Operand
 
     //NONCOPYABLE (Library)
 
-    int reserved;           //< Reserved for 64-bit memory alignment.
-    Library** root_;        //< Pointer to the dynamically allocated bags.
-    Library* bag_;          //< The currently selected bag.
-    uint_t index_,          //< The index of the currently selected bag.
-        height_,      //< The number of bags on the stack.
-        num_libraries_;     //< The number of libraries.
-    byte type_;             //< The current type of bag.
+    int       reserved;         //< Reserved for 64-bit memory alignment.
+    Library** root_;            //< Pointer to the dynamically allocated bags.
+    Library*  bag_;             //< Currently selected bag.
+    uint_t    index_,           //< Index of the currently selected bag.
+              height_,          //< Number of bags on the stack.
+              num_libraries_;   //< Number of libraries.
+    byte      type_;            //< Current type of bag.
+    TIndex    num_keys_,        //< Current number of Star members.
+              buffer_size_;     //< Current size of the header and names buffer in bytes.
+    TKey      header_size_,     //< Current size of the header and names in bytes.
+              collisions_size_; //< Current size of the header and names buffer in bytes.
+    TData     data_size_;       //< Current total size of the bag.
     //Bag<TIndex, TKey, TData, TData> bag;
-    TIndex num_keys_,       //< The current number of Star members.
-        buffer_size_;       //< The current size of the header and names buffer in bytes.
-    TKey header_size_,      //< The current size of the header and names in bytes.
-        collisions_size_;   //< The current size of the header and names buffer in bytes.
-    TData data_size_;       //< The current total size of the bag.
 };
 
 /** Destructs the given bag. */

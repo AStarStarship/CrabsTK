@@ -46,15 +46,7 @@ void SlotInit (Slot* slot, char* begin, uintptr_t size) {
 inline const Op* SlotError (Slot* slot, Error error,
                             const uint_t* header) {
 #if SCRIPT_DEBUG == SCRIPT_SLOT
-    std::cerr << "\n| " << ErrorStrings ()[error];
-#endif
-    return reinterpret_cast<const Op*> (error);
-}
-
-inline const Op* SlotError (Slot* slot, Error error,
-                            const uint_t* header) {
-#if SCRIPT_DEBUG == SCRIPT_SLOT
-    std::cerr << "\n| " << ErrorStrings ()[error];
+    CErrLine (ErrorStrings ()[error]);
 #endif
     return reinterpret_cast<const Op*> (error);
 }
@@ -63,7 +55,7 @@ inline const Op* SlotError (Slot* slot, Error error,
                             const uint_t* header,
                             byte offset) {
 #if SCRIPT_DEBUG == SCRIPT_SLOT
-    std::cerr << "\n| " << ErrorStrings ()[error];
+    CErrLine ("\n| " << ErrorStrings ()[error]);
 #endif
     return reinterpret_cast<const Op*> (error);
 }
@@ -73,14 +65,14 @@ inline const Op* SlotError (Slot* slot, Error error,
                             uint_t offset,
                             char* address) {
 #if SCRIPT_DEBUG == SCRIPT_SLOT
-    std::cerr << "\n| " << ErrorStrings ()[error];
+    CErrLine ("\n| " << ErrorStrings ()[error]);
 #endif
     return reinterpret_cast<const Op*> (error);
 }
 
 inline const Op* SlotError (Slot* slot, Error error) {
 #if SCRIPT_DEBUG == SCRIPT_SLOT
-    std::cerr << "\n| " << ErrorStrings ()[error];
+    CErrLine ("\n| " << ErrorStrings ()[error]);
 #endif
     return reinterpret_cast<const Op*> (error);
 }
@@ -215,6 +207,8 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
         * start = slot->start,        //< start of the data.
         * stop  = slot->stop;         //< stop of the data.
     const uint_t* param = params + 1; //< current param.
+
+    size = end - begin;
 
     length = SlotLength (start, stop, size);
 
@@ -613,7 +607,7 @@ const char* SlotStar (Slot* slot, const uint_t* params,
                 * slot_stop   = slot->stop,  //< stop of the data.
                 * slot_end    = slot->end;   //< end of the buffer.
     const uint_t* param       = params + 1;  //< current param.
-
+    size = slot_end - slot_begin;
     length = SlotLength (slot_cursor, slot_stop, size);
 
     #if SCRIPT_DEBUG == SCRIPT_SLOT
