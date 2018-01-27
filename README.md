@@ -8,16 +8,8 @@ formatted using the
 [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
 
 ## Script
-Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Protocol, is a 
-socket-based object-oriented software-defined networking protocol. It can be 
-described as a mix of network protocol with JavaScript, JSON, Lua Script, and 
-LISP with compression that can handle a lot more messages than 
-[Open Sound Control](https://en.wikipedia.org/wiki/Open_Sound_Control). Using 
-Script you can easily create higher-level ad-hoc network APIs using a 
-cross-language embedded-friendly abstract object stack with multiple expression 
-input and output parameter sockets that may change at runtime using sockets.
-Script is currently interpreted and we're looking for some help optimizing 
-away the virtual function overhead and translating Interprocess LISP to ASM.
+Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Protocol is a 
+socket-based object-oriented software-defined networking protocol and abstract stack machine. It can be described as a mix of network protocol with JavaScript, JSON, Lua Script, and LISP with data compression that can handle a lot more messages than  [Open Sound Control](https://en.wikipedia.org/wiki/Open_Sound_Control). Using  Script you can easily create higher-level software defined networks using a  cross-language embedded-friendly abstract object stack with multiple expression  input and output parameter sockets that may change at runtime using sockets. Script is currently interpreted and we're looking for some help optimizing  away the virtual function overhead and translating Interprocess LISP to ASM.
 
 ## Quick Links
 
@@ -29,32 +21,31 @@ away the virtual function overhead and translating Interprocess LISP to ASM.
   - *Official Kabuki Toolkit website. We are currently looking for someone to help
   us fix the CSS on the website. It only works right at < 1024 pixel width so 
   the problem is in the @media section.*
-* [Script Specification RFC](https://github.com/kabuki-starship/kabuki/wiki/Script-Specification-RFC)
+* [Script Specification RFC](https://github.com/kabuki-starship/kabuki-toolkit/wiki/Script-Specification-RFC)
   - *Release for Comment for Searle's Chinese Room, Interprocess, and Telemetry 
   Protocol (Script) and Group Automata Theorem*.
 
 ## SDK Modules
 
-| Name    | Description  |
-|:-------:|:-------------|
-| al      | Audio Library.|
-| app     | Application framework.|
-| code    | Coding utilities.|
-| data    | Data and data logging.|
-| gl      | Graphics Library.|
-| gui     | Graphical user interfaces.|
-| hmi     | Human-machine Interfaces.|
-| json    | JSON.|
-| id      | Identification.|
-| math    | Math.|
-| midi    | MIDI.|
-| tek     | Firmware toolkit.|
-| pro     | Projects, tasks, and scheduling.|
-| process | Threads and interprocess IO.|
-| script  | Chinese Room Automata.|
-| store   | Store and inventory.|
-| video   | Video.|
-| web     | WWW and IoT.|
+|   Name | Description  |
+|-------:|:-------------|
+|     al | Audio Library.|
+|    app | Application framework.|
+|   code | Coding utilities.|
+|   data | Data and data logging.|
+|     gl | Graphics Library.|
+|    gui | Graphical user interfaces.|
+|    hmi | Human-machine Interfaces.|
+|   json | JSON.|
+|     id | Identification.|
+|   math | Math.|
+|   midi | MIDI.|
+|    tek | Firmware toolkit.|
+|    pro | Projects, tasks, and scheduling.|
+| script | Chinese Room Automata.|
+|  store | Store and inventory.|
+|  video | Video.|
+|    web | WWW and IoT.|
 
 ### 3rd Party APIs
 
@@ -71,7 +62,6 @@ away the virtual function overhead and translating Interprocess LISP to ASM.
 * [RtMIDI](https://github.com/thestk/rtmidi)
 * [AStyle](http://astyle.sourceforge.net/)
 * [SFML (Replacing with SDL)](https://www.sfml-dev.org/)
-* [gflw (Replacing with SDL)](http://www.glfw.org/)
 
 ## Author
 
