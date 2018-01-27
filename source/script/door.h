@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/door.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -22,7 +22,7 @@
 
 #include "expr.h"
 #include "slot.h"
-#include "tstack.h"
+#include "stack.h"
 #include "text.h"
 
 namespace _ {
@@ -65,7 +65,7 @@ class Door : public Operand {
     };
 
     /** A door in a Chinese room. */
-    Door (const char* roomName = StrandEmpty (), uintptr_t* buffer = nullptr,
+    Door (const char* roomName = SlotEmpty (), uintptr_t* buffer = nullptr,
           uintptr_t size_bytes = kMinDoorSize);
 
     /** Destructor. */

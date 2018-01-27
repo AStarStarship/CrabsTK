@@ -3,7 +3,7 @@
     @version 0.x
     @file    ~/source/script/script_door.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -45,7 +45,7 @@ Door::Door (const char* room_name, uintptr_t* buffer, uintptr_t size_bytes) {
         if (size_bytes < kMinDoorSize) {
             // @todo insert error code here
 #if SCRIPT_DEBUG
-            std::cout << "\n| Error: Door size_bytes < kMinDoorSize!";
+            std::cout << "\nError: Door size_bytes < kMinDoorSize!";
 #endif  //< SCRIPT_DEBUG
             return;
         }

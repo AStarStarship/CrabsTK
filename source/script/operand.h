@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/operand.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -139,9 +139,9 @@ KABUKI const char* OperandName (Operand* op);
 /** Gets the number of ops in the given expressions. */
 KABUKI uintptr_t OperandCount (Operand* op);
 
-/** Returns the index of the given Op using the given strand.
-    @param  key_begin Beginning of the key strand buffer.
-    @param  key_end   End of the key strand buffer.
+/** Returns the index of the given Op using the given slot.
+    @param  key_begin Beginning of the key slot buffer.
+    @param  key_end   End of the key slot buffer.
     @return A value printable Unicode char or invalid if the Operand doesn't 
             Contain the given key. */
 KABUKI wchar_t OperandIndex (Operand* operand, char* key_begin, char* key_end);
@@ -155,21 +155,21 @@ KABUKI wchar_t OperandIndex (Operand* operand, char* key_begin, char* key_end);
 KABUKI const Op* OperandQuery (Expr* expr, const Op* op);*/
 
 /** Queries the */
-Strand& OperandQuery (Operand* root, const char_t* address, Strand& key);
+Slot& OperandQuery (Operand* root, const char_t* address, Slot& key);
 
 /** Prints the Operand to the Text.
     @param  text     The Text to print to.
     @param  operand The Operand to print.
     @return text. */
-KABUKI Strand& OperandPrint (Operand* operand, Strand& strand);
+KABUKI Slot& OperandPrint (Operand* operand, Slot& slot);
 #endif  //< USING_SCRIPT_TEXT
 
 }   //< namespace _
 
 #if USING_SCRIPT_TEXT 
 /** Overloaded operator<< prints the given operand to the text. */
-inline _::Strand& operator<< (_::Strand& strand, _::Operand* operand) {
-    return strand << OperandPrint (operand, strand);
+inline _::Slot& operator<< (_::Slot& slot, _::Operand* operand) {
+    return slot << OperandPrint (operand, slot);
 }
 #endif  //< USING_SCRIPT_TEXT
 #endif  //< HEADER_FOR_SCRIPT_OPERAND

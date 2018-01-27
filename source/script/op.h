@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/op.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -20,7 +20,6 @@
 #ifndef HEADER_FOR_SCRIPT_OP
 #define HEADER_FOR_SCRIPT_OP
 
-#include "strand.h"
 #include "error.h"
 
 namespace _ {
@@ -36,42 +35,26 @@ namespace _ {
     @code
     static const Op kThis = { "Key",
         Bsq<1, 2>::Header, Bsq<1, 2>::Header,
-        "Description", '}', ';', nullptr };
-
+        "Description", '}', ';', '-', nullptr };
     static const Op member_device =   { "Key", 
         NumOps (0), FirstOp ('A'),
-        "Description", '}', ';', nullptr };
+        "Description", '}', ';', '-', nullptr };
     @endcode */
 struct KABUKI Op {
     const char   * name;        //< Op name.
-    const uint_t * params,      //< Op parameters or Operand data B-Seq.
-                 * result;      //< Op result B-Seq.
+    const uint_t * in,          //< Input BSQ params or OpFirst.
+                 * out;         //< Output BSQ params or OpLast.
     const char   * description; //< Op description.
-    wchar_t        pop,         //< Index of the Pop Operation
-                   close;       //< Index of the Close Operation
-    const void   * evaluation;  //< Evaluated expression.
+    wchar_t        pop,         //< Index of the Pop Operation.
+                   close,       //< Index of the Close Operation.
+                   default_op,  //< Index of the Default Operation.
+                   separator;   //< Char that does not exist in this context.
+    const void   * evaluation;  //< Evaluated expression Slot.
 };
-
-/** Compares the given Op's name to the given key. */
-inline bool OpEquals (const Op* op, const char* key) {
-    if (!op) {
-        return false;
-    }
-    return StrandEquals (op->name, key);
-}
-
-/** Compares the given Op's name to the given key. */
-inline bool OpEquals (const Op* op, const char* begin,
-                             const char* end) {
-    if (!op) {
-        return false;
-    }
-    return StrandEquals (begin, end, op->name);
-}
 
 /** Converts the given value to a pointer. */
 inline intptr_t OpCount (const Op& op) {
-    return op.result - op.params;
+    return op.out - op.in;
 }
 
 /** Converts the given value to a pointer. */
@@ -84,7 +67,7 @@ inline wchar_t OpFirst (const Op* op) {
     if (!op) {
         return 0;
     }
-    return (wchar_t)reinterpret_cast<uintptr_t>(op->params);
+    return (wchar_t)reinterpret_cast<uintptr_t>(op->in);
 }
 
 /** Converts the given value to a pointer. */
@@ -97,146 +80,20 @@ inline wchar_t OpLast (const Op* op) {
     if (!op) {
         return 0;
     }
-    return (wchar_t)reinterpret_cast<uintptr_t>(op->result);
+    return (wchar_t)reinterpret_cast<uintptr_t>(op->out);
 }
 
 #if USING_SCRIPT_TEXT
-/** Prints the given Set to the strand.
+/** Prints the given Set to the slot.
     Quote: Wikipedia "In mathematics an operand is the object of a mathematical
     op, i.e. it is the quantity that is operated on." */
-KABUKI Strand& OpPrint (const Op* op, Strand& strand);
+KABUKI Slot& OpPrint (const Op* op, Slot& slot);
 #endif  //< USING_SCRIPT_TEXT
-
-/** A general purpose op made from a BOut pointer. 
-struct KABUKI Macro {
-    const char* address;
-    BOut* bout;
-};*/
-
-/** Initializes the buffer of given size in bytes. 
-KABUKI Macro MacroInit (uintptr_t* buffer, uint_t buffer_size);*/
-
-/** Returns a reference to the bout for this assembly. 
-template<uint_t kNumber>
-Log& RoomLog () {
-    static uintptr_t buffer[kLogSize / sizeof (uintptr_t) + 1];
-    static Log op = LogInit (buffer, kLogSize);
-    return op;
-}
-
-template<uint_t kNumber>
-Log& LogInit () {
-    static uintptr_t* buffer = WordBuffer<kNumber, kLogSize> ();
-    static Log op = LogInit (buffer, kLogSize);
-    return op;
-}*/
 
 inline const Op* OpError (void* source, Error error) {
     return reinterpret_cast <const Op*> (error);
 }
 
 }   //< namespace _
-
-/** Overloaded operator<< prints the given op to the text. */
-KABUKI _::Strand& operator<< (_::Strand& strand, const _::Op* op);
-
-/** Macro << writes the given value to the op. 
-inline _::Macro& operator<< (_::Macro& op, int8_t value) {
-    void* args[1];
-    _::BOutWrite (op.bout,
-                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::STR> (),
-                  _::Args (args, &value));
-    return op;
-} */
-
-/** Macro << writes the given value to the op. 
-inline _::Macro& operator<< (_::Macro& op, uint8_t value) {
-    void* args[1];
-    _::BOutWrite (op.bout,
-                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::UI1> (),
-                  _::Args (args, &value));
-    return op;
-} */
-
-/** Macro << writes the given value to the op.
-inline _::Macro& operator<< (_::Macro& op, int16_t value) {
-    void* args[1];
-    _::BOutWrite (op.bout,
-                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::SI2> (),
-                  _::Args (args, &value));
-    return op;
-} */
-
-/** Macro << writes the given value to the op.
-inline _::Macro& operator<< (_::Macro& op, uint16_t value) {
-    void* args[1];
-    _::BOutWrite (op.bout,
-                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::UI2> (),
-                  _::Args (args, &value));
-    return op;
-} */
-
-/** Macro << writes the given value to the op.
-inline _::Macro& operator<< (_::Macro& op, int32_t value) {
-    void* args[1];
-    _::BOutWrite (op.bout,
-                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::SI4> (),
-                  _::Args (args, &value));
-    return op;
-} */
-
-/** Macro << writes the given value to the op.
-inline _::Macro& operator<< (_::Macro& op, uint32_t value) {
-    void* args[1];
-    _::BOutWrite (op.bout,
-                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::UI4> (),
-                  _::Args (args, &value));
-    return op;
-} */
-
-/** Macro << writes the given value to the op.
-inline _::Macro& operator<< (_::Macro& op, int64_t value) {
-    void* args[1];
-    _::BOutWrite (op.bout,
-                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::SI8> (),
-                  _::Args (args, &value));
-    return op;
-} */
-
-/** Macro << writes the given value to the op.
-inline _::Macro& operator<< (_::Macro& op, uint64_t value) {
-    void* args[1];
-    _::BOutWrite (op.bout,
-                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::UI8> (),
-                  _::Args (args, &value));
-    return op;
-} */
-
-/** Macro << writes the given value to the op.
-inline _::Macro& operator<< (_::Macro& op, float value) {
-    void* args[1];
-    _::BOutWrite (op.bout,
-                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::FLT> (),
-                  _::Args (args, &value));
-    return op;
-} */
-
-/** Macro << writes the given value to the op.
-inline _::Macro& operator<< (_::Macro& op, double value) {
-    void* args[1];
-    _::BOutWrite (op.bout,
-                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::DBL> (),
-                  _::Args (args, &value));
-    return op;
-} */
-
-/** Macro << prints a char to the op.
-inline _::Macro& operator<< (_::Macro& op, const char* string) {
-    void* args[1];
-    _::BOutWrite (op.bout,
-                  _::Bsq<2, _::STR, _::kAddressLengthMax, _::STR> (),
-                  _::Args (args, string));
-    return op;
-} */
 
 #endif  //< HEADER_FOR_SCRIPT_OP

@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/script_expression.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
             All right reserved (R). Licensed under the Apache License, Version 
             2.0 (the "License"); you may not use this file except in 
             compliance with the License. You may obtain a copy of the License 
@@ -20,24 +20,22 @@
 #include "bsq.h"
 #include "console.h"
 #include "hash.h"
-#include "token.h"
 
 namespace _ {
 
 /** Used to return an erroneous result from a B-Input.
-
+    
     @param error The error type.
     @return Returns a Static Error Op Result. */
 inline const Op* ExprError (Expr* expr, Error error) {
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
-    Text<> out;
-    COut (out << "\n| Expr " << ErrorString (error)
-              << " Error!");
+    #if DEBUG_SCRIPT_EXPR
+    Write (out << "\nExpr " << ErrorString (error) << " Error!");
     #endif
     return reinterpret_cast<const Op*> (1);
 }
 
 /** Used to return an erroneous result from a B-Input.
+    
     @param  expr    The source Expr.
     @param  error   The error type.
     @param  header  The B-Sequence Header.
@@ -47,9 +45,9 @@ inline const Op* ExprError (Expr* expr, Error error) {
 inline const Op* ExprError (Expr* expr,
                                      Error error,
                                      const uint_t* header) {
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
+    #if DEBUG_SCRIPT_EXPR
     Text<> out;
-    COut (out << "\n| Expr " << ErrorString (error)
+    Write (out << "\nExpr " << ErrorString (error)
           << " Error!");
     #endif
     return reinterpret_cast<const Op*> (1);
@@ -66,9 +64,9 @@ inline const Op* ExprError (Expr* expr,
                                 Error error,
                                 const uint_t* header,
                                 byte offset) {
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
+    #if DEBUG_SCRIPT_EXPR
     Text<> out;
-    COut (out << "\n| Expr " << ErrorString (error)
+    Write (out << "\nExpr " << ErrorString (error)
           << " Error!");
     #endif
     return reinterpret_cast<const Op*> (1);
@@ -86,9 +84,9 @@ inline const Op* ExprError (Expr* expr,
                             const uint_t* header,
                             byte offset,
                             char* address) {
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
+    #if DEBUG_SCRIPT_EXPR
     Text<> out;
-    COut (out << "\n| Expr " << ErrorString (error)
+    Write (out << "\nExpr " << ErrorString (error)
           << " Error!");
     #endif
     return reinterpret_cast<const Op*> (1);
@@ -110,8 +108,9 @@ BIn* ExprBIn (Expr* expr) {
 }
 
 uintptr_t* ExprBOutAddress (Expr* expr) {
-    if (!expr)
+    if (!expr) {
         return nullptr;
+    }
     return reinterpret_cast<uintptr_t*>(expr) + expr->header_size;
 }
 
@@ -124,7 +123,7 @@ Expr* ExprInit (uintptr_t* buffer, uint_t buffer_size,  uint_t stack_size,
                 uintptr_t unpacked_size) {
     if (!buffer) {
         return nullptr;
-}
+    }
     if (buffer_size < Expr::kMinBufferSize) {
         return nullptr;
     }
@@ -132,12 +131,12 @@ Expr* ExprInit (uintptr_t* buffer, uint_t buffer_size,  uint_t stack_size,
         stack_size = kMinStackSize;    //< Minimum stack size.
     }
     if (unpacked_buffer == nullptr) {
-        std::cout << "\n| Error: unpacked_buffer was nil!";
+        Write ("\nError: unpacked_buffer was nil!");
     }
 
     if (root == nullptr) {
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
-        std::cout << "\n| Error: root can't be nil.";
+    #if DEBUG_SCRIPT_EXPR
+        Write ("\nError: root can't be nil.");
     #endif
         return nullptr;
     }
@@ -146,17 +145,17 @@ Expr* ExprInit (uintptr_t* buffer, uint_t buffer_size,  uint_t stack_size,
 
     uint_t total_stack_size = (stack_size - 1) * (2 * sizeof (Operand*));
     // Calculate the size of the Slot and Stack.
-    uint_t size = (buffer_size - sizeof (Expr) -
-           total_stack_size + 1) >> 1;  // >>1 to divide by 2
+    uint_t size = (buffer_size - sizeof (Expr) - total_stack_size + 1) >> 1;
+    //< >>1 to divide by 2
     expr->bout_state   = BOut::kStateDisconnected;
     expr->bin_state    = BIn::kStateDisconnected;
     expr->stack_count  = 1;
-    expr->type   = NIL;
+    expr->type         = NIL;
     expr->stack_size   = stack_size;
     expr->num_states   = 0;
     expr->operand      = nullptr;
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
-    std::cout << "\n| Initializing Stack with size:" << stack_size
+    #if DEBUG_SCRIPT_EXPR
+    std::cout << "\nInitializing Stack with size:" << stack_size
               << " buffer_size:" << buffer_size << " size:" << size;
     #endif //< SCRIPT_DEBUG
     expr->bytes_left = 0;
@@ -170,7 +169,7 @@ Expr* ExprInit (uintptr_t* buffer, uint_t buffer_size,  uint_t stack_size,
     expr->root = root;
     SlotInit (&expr->slot, reinterpret_cast<char*> (expr) + sizeof (Expr) +
                     stack_size * sizeof (uint_t), unpacked_size);
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
+    #if DEBUG_SCRIPT_EXPR
     Text<> out;
     out << "expr->op:0x" << out.Pointer (expr->operand)
            << std::cout ;
@@ -197,10 +196,11 @@ byte ExprExitState (Expr* expr) {
     //if (!expr) {
     //    return  ExprError (ExprBin (expr), kErrorImplementation);
     //}
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
-    std::cout << "\n| Exiting " << BInState ()[expr->bin_state]
-              << " state back to the " << BInState ()[expr->last_bin_state]
-              << " state .";
+    #if DEBUG_SCRIPT_EXPR
+    Text<> out;
+    Write (out "\nExiting " << BInState ()[expr->bin_state]
+          << " state back to the " << BInState ()[expr->last_bin_state]
+          << " state .");
     #endif
     byte state = expr->last_bin_state;
     expr->bin_state = state;
@@ -212,12 +212,13 @@ const Op* ExprSetState (Expr* expr, BIn::State state) {
     //if (!expr) {
     //    return  ExprError (ExprBin (expr), kErrorImplementation);
     //}
-    if (state == BIn::LockedState) {
+    if (state == BIn::kStateLocked) {
         return ExprError (expr, kErrorObjectLocked);
     }
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
-    std::cout << "\n| Entering " << BInState ()[state]
-              << " state:" << state;
+    #if DEBUG_SCRIPT_EXPR
+    Text<> out;
+    Write (out << "\nEntering " << BInState ()[state]
+              << " state:" << state);
     #endif
     expr->bin_state = state;
     return nullptr;
@@ -229,9 +230,10 @@ const Op* ExprEnterState (Expr* expr,
     //if (!expr) {
     //    return  ExprError (ExprBin (expr), kErrorImplementation);
     //}
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
-    std::cout << "\n| Entering " << BInState ()[state]
-              << " state:" << state;
+    #if DEBUG_SCRIPT_EXPR
+    Text<> out;
+    Write (out << "\nEntering " << BInState ()[state]
+              << " state:" << state);
     #endif
     expr->last_bin_state = expr->bin_state;
     expr->bin_state = state;
@@ -249,9 +251,10 @@ const Op* Push (Expr* expr, Operand* operand) {
     if (!operand) {
         return ExprError (expr, kErrorInvalidOperand);
     }
-    #if SCRIPT_DEBUG == SCRIPT_EXPR == SCRIPT_EXPRESSION
-    std::cout << "\n| Pushing " << operand->Star ('?', nullptr)->name 
-         << " onto the stack";
+    #if DEBUG_SCRIPT_EXPR == SCRIPT_EXPRESSION
+    Text<> out;
+    Write (out << "\nPushing " << operand->Star ('?', nullptr)->name
+          << " onto the stack");
     #endif
     uint_t stack_count = expr->stack_count;
     if (stack_count >= expr->stack_size) {
@@ -260,9 +263,8 @@ const Op* Push (Expr* expr, Operand* operand) {
     ExprStack (expr)[stack_count - 1] = expr->operand;
     expr->operand = operand;
     expr->stack_count = stack_count + 1;
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
-    Text<> out;
-    COut (ExprPrintStack (expr, out));
+    #if DEBUG_SCRIPT_EXPR
+    Write (ExprPrintStack (expr, out));
     #endif
     return nullptr;
 }
@@ -277,16 +279,15 @@ const Op* Pop (Expr* expr) {
         ExprClose (expr);
         return 0;
     }
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
-    std::cout << "\n| Popping " << OperandName (expr->operand)
-              << " off the stack.";
+    #if DEBUG_SCRIPT_EXPR
+    Text<> out;
+    Write ("\nPopping " << OperandName (expr->operand) << " off the stack.");
     #endif
     expr->operand = ExprStack (expr)[stack_count - 2];
     expr->stack_count = stack_count - 1;
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
-    Text<> out;
-    Strand sout = out;
-    COut (sout << "\n| Top of stack is now " 
+    #if DEBUG_SCRIPT_EXPR
+    Slot sout = out;
+    Write (sout << "\nTop of stack is now " 
           << OperandName (expr->operand) << "." 
           << ExprPrintStack (expr, sout));
     #endif
@@ -323,12 +324,12 @@ const Op* ExprUnpack (Expr* expr) {
                     * slot_start = expr->slot.start, //< Write cursor,
                     * slot_stop  = expr->slot.stop,
                     * slot_end   = expr->slot.end;
-    const Op        * result;      //< The result of the Scan.
+    const Op        * result;      //< Result of the Scan.
     const uint_t    * header = expr->header;
     //< Header of the current Op being verified.
     op = nullptr;
 //    if (input == nullptr) {
-//#if SCRIPT_DEBUG == SCRIPT_EXPR
+//#if DEBUG_SCRIPT_EXPR
 //        PrintDebug ("input = nil");
 //#endif
 //        return;
@@ -352,30 +353,30 @@ const Op* ExprUnpack (Expr* expr) {
     bin_stop   = bin_begin + bin->stop;
     space  = SlotSpace (bin_start, bin_stop, size);
     length = size - space;
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
+    #if DEBUG_SCRIPT_EXPR
     Text<> out;
-    COut (out << "\n| Scanning Expr:0x" << out.Pointer (expr)
+    Write (out << "\nScanning Expr:0x" << out.Pointer (expr)
           << " with length:" << length);
     #endif
     for (; length != 0; --length) {
         b = *bin_start;
         *slot_start++ = b;
-        #if SCRIPT_DEBUG == SCRIPT_EXPR
-        COut (out << out.Line ('=')
-              << "\n| " << length << ":\'" << out.Clear ();
+        #if DEBUG_SCRIPT_EXPR
+        Write (out << out.Line ('=') << "\n" << length
+              << ":\'"
               << ((b < 32 || b == 127) ? (out << AsciiText ((AsciiCode)b)) 
                                        : (out << b))
               << "\' " << BInState ()[bin_state] << " state"
-                  << out.Line ()));
+              << out.Line ()));
         #endif
 
         if (++bin_start >= bin_end) bin_start -= size;
         // Process the rest of the bytes in a loop to reduce setup overhead.
         switch (bin_state) {
-            case BIn::AddressState: {
+            case BIn::kStateAddress: {
                 hash = Hash16 (b, hash);
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut (out << "\n| hash:" << out.Hex (hash));
+                #if DEBUG_SCRIPT_EXPR
+                Write (out << "\nhash:" << out.Hex (hash));
                 #endif
                 // When verifying an address, there is guaranteed to be an
                 // expr->op set. We are just looking for nil return values
@@ -390,15 +391,15 @@ const Op* ExprUnpack (Expr* expr) {
                 if (b == op->close) {
                     Pop (expr);
                     expr->bytes_left = 1;
-                    ExprSetState (expr, BIn::HashState);
-                    bin_state = BIn::HashState;
+                    ExprSetState (expr, BIn::kStateVerifyingHash);
+                    bin_state = BIn::kStateVerifyingHash;
                     break;
                 }
                 operand = expr->operand;
 
                 op = operand->Star ('?', nullptr);
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut (out << "\n| Current Op is \"" << op->name << '\"');
+                #if DEBUG_SCRIPT_EXPR
+                Write (out << "\nCurrent Op is \"" << op->name << '\"');
                 #endif
 
                 op = operand->Star (b, nullptr);
@@ -418,40 +419,40 @@ const Op* ExprUnpack (Expr* expr) {
                     //return expr->result;
                     return ExprForceDisconnect (expr, kErrorInvalidOperand);
                 }
-                const uint_t* params = op->params;
+                const uint_t* params = op->in;
                 uintptr_t num_ops = reinterpret_cast<uintptr_t> (params);
                 if (num_ops > kParamsMax) {
                     // It's an Op.
                     // The software implementer pushes the Op on the stack.
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (out << "\n| Found Op with params "
+                    #if DEBUG_SCRIPT_EXPR
+                    Write (out << "\nFound Op with params "
                           << BsqPrint (params, out));
                     #endif
                     result = ExprScanHeader (expr, params);
                     if (result) {
-                        #if SCRIPT_DEBUG == SCRIPT_EXPR
-                        COut (out << "Expr::Error reading address.");
+                        #if DEBUG_SCRIPT_EXPR
+                        Write (out << "Expr::Error reading address.");
                         #endif
                         return ExprForceDisconnect (expr, kErrorImplementation);
                     }
 
                     operand = expr->operand;
                     if (!operand) {
-                        #if SCRIPT_DEBUG == SCRIPT_EXPR
-                        COut (out << "\n| Null operand found!");
+                        #if DEBUG_SCRIPT_EXPR
+                        Write (out << "\nNull operand found!");
                         #endif
                         return ExprForceDisconnect (expr, kErrorInvalidOperand);
                     }
-                    header = op->params;
+                    header = op->in;
                     expr->params_left = *header;
                     expr->header = header;      //< +1 to bypass the number of params
                     expr->header_start = header;    //< Used to print current header.
-                    ExprEnterState (expr, BIn::ArgsState);
-                    bin_state = BIn::ArgsState;
+                    ExprEnterState (expr, BIn::kStatePackedArgs);
+                    bin_state = BIn::kStatePackedArgs;
                     type = *(++expr->header);   //< Setup to read first type.
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (out << "\n| Next TType to scan:\'" << TypeString (type)
-                          << "\' with alignment "
+                    #if DEBUG_SCRIPT_EXPR
+                    Write (out << "\nNext TType to scan:\'" << 
+                          TypeString (type)  << "\' with alignment "
                           << TypeAlign (slot_start, type) << '.');
                     #endif
                     slot_start += TypeAlign (slot_start, type);
@@ -460,89 +461,89 @@ const Op* ExprUnpack (Expr* expr) {
                 op = operand->Star (b, expr);
                 break;
             }
-            case BIn::ArgsState: {
+            case BIn::kStatePackedArgs: {
                 // In this state, a procedure has been called to scan on a valid
                 // operand. This state is responsible for loading the next 
                 // header argument and checking for the end of the procedure 
                 // call.
 
                 if (expr->params_left-- == 0) {
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (out << "\n| Bsq successfully scanned.");
+                    #if DEBUG_SCRIPT_EXPR
+                    Write (out << "\nBSQ successfully scanned.");
                     #endif
 
                     break;
                 }
                 hash = Hash16 (b, hash);
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut (out <<"\n| hash:" << out.Hex (hash));
+                #if DEBUG_SCRIPT_EXPR
+                Write (out <<"\nhash:" << out.Hex (hash));
                 #endif
 
                 // Switch to next state
                 if (type <= ADR) {
                     if (type < ADR) {   // Address type.
-                        #if SCRIPT_DEBUG == SCRIPT_EXPR
-                        COut ("\n| Scanning address.");
+                        #if DEBUG_SCRIPT_EXPR
+                        Write ("\nScanning address.");
                         #endif
                         ExprError (expr, kErrorInvalidType);
-                        ExprEnterState (expr, BIn::LockedState);
-                        bin_state = BIn::LockedState;
+                        ExprEnterState (expr, BIn::kStateLocked);
+                        bin_state = BIn::kStateLocked;
                         break;
                     }
                     ExprEnterState (expr,
-                                            BIn::AddressState);
-                    bin_state = BIn::AddressState;
+                                            BIn::kStateAddress);
+                    bin_state = BIn::kStateAddress;
                     break;
 
                 } else if (type == STR) { // UTF-8/ASCII string type.
                     // Read the max number of chars off the header.
                     bytes_left = *(++expr->header);
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (out << "\n| Scanning STR with max length "
-                          << bytes_left);
+                    #if DEBUG_SCRIPT_EXPR
+                    Write (out << "\nScanning STR with max length " <<
+                          bytes_left);
                     #endif
-                    ExprEnterState (expr, BIn::Utf8State);
-                    bin_state = BIn::Utf8State;
+                    ExprEnterState (expr, BIn::kStatePackedUtf8);
+                    bin_state = BIn::kStatePackedUtf8;
                     break;
                 } else if (type < DBL)  { // Plain-old-data type.
                     bytes_left = TypeSize (type);
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (out << "\n| Scanning POD with "
+                    #if DEBUG_SCRIPT_EXPR
+                    Write (out << "\nScanning POD with "
                               << bytes_left << bytes_left);
                     #endif
                     if (bytes_left == 1) {
                         // No need to enter a state because there is only one
                         // byte to parse and we already have the byte loaded.
-                        #if SCRIPT_DEBUG == SCRIPT_EXPR
-                        COut (out << "\n| Done scanning without state change "
+                        #if DEBUG_SCRIPT_EXPR
+                        Write (out << "\nDone scanning without state change "
                               "for \"" << TypeString (type) << '\"';
                         #endif
                         // Setup to read the next type.
                         type = *(++expr->header);
-                        #if SCRIPT_DEBUG == SCRIPT_EXPR
-                        COut (out << "\n| Next TType to scan:\'" 
+                        #if DEBUG_SCRIPT_EXPR
+                        Write (out << "\nNext TType to scan:\'" 
                               << TypeString (type) << "\' with alignment "
                               << TypeAlign (slot_start, type) << '.');
                         #endif
                         slot_start += TypeAlign (slot_start, type);
                         break;
                     }
-                    ExprEnterState (expr, BIn::PodState);
-                    bin_state = BIn::PodState;
+                    ExprEnterState (expr, BIn::kStatePackedPod);
+                    bin_state = BIn::kStatePackedPod;
                     break;
                 } else if (type < UV8)  { // Varint type.
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut ("\n| Scanning Varint.");
+                    #if DEBUG_SCRIPT_EXPR
+                    Write ("\nScanning Varint.");
                     #endif
                     bytes_left = TypeSize (type);
-                    ExprEnterState (expr, BIn::VarintState);
-                    bin_state = BIn::VarintState;
+                    ExprEnterState (expr, BIn::kStatePackedVarint);
+                    bin_state = BIn::kStatePackedVarint;
                     break;
                 /*
                 } else if (type == ST2) { // UTF-16 string type.
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut ("\n| Scanning ST2.");
-                #endif
+                    #if DEBUG_SCRIPT_EXPR
+                    Write ("\nScanning ST2.");
+                    #endif
                     if (bytes_left == 1) {
                         expr->last_byte = b;
                         break;
@@ -555,16 +556,16 @@ const Op* ExprUnpack (Expr* expr) {
                     break;
                 }
                 else if (type == ST4) { // UTF-32 string type.
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut ("\n| Scanning ST4.");
-                #endif
+                    #if DEBUG_SCRIPT_EXPR
+                    Write ("\nScanning ST4.");
+                    #endif
                     // Read the max number of chars off the header.
                     bytes_left = *expr->header++ * 4;
                     ExprEnterState (expr, BIn::Utf32State);
                     bin_state = BIn::Utf32State;*/
                 } else { // It's not a POD type.
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut ("\n| Scanning TObject.");
+                    #if DEBUG_SCRIPT_EXPR
+                    Write ("\nScanning TObject.");
                     #endif
                     // Multi-dimension arrays are parsed just like any other
                     // TObject.
@@ -573,56 +574,56 @@ const Op* ExprUnpack (Expr* expr) {
                     if (array_type == 0) {
                         // We don't need to enter a state here because we
                         // already have the size_bytes. :-)
-                        bin_state = BIn::PodState;
+                        bin_state = BIn::kStatePackedPod;
                         break;
                     } else if (array_type == 1) {
                         bytes_shift = 0;
                         shift_bits  = 16;
-                        ExprEnterState (expr, BIn::ObjectState);
-                        bin_state = BIn::ObjectState;
+                        ExprEnterState (expr, BIn::kStatePackedObject);
+                        bin_state = BIn::kStatePackedObject;
                         break;
                     } else if (array_type == 2) {
                         bytes_shift = 0;
                         shift_bits  = 32;
-                        ExprEnterState (expr, BIn::ObjectState);
-                        bin_state = BIn::ObjectState;
+                        ExprEnterState (expr, BIn::kStatePackedObject);
+                        bin_state = BIn::kStatePackedObject;
                         break;
                     } else {    //< array_type == 3
                         bytes_shift = 0;
                         shift_bits  = 64;
-                        ExprEnterState (expr, BIn::ObjectState);
-                        bin_state = BIn::ObjectState;
+                        ExprEnterState (expr, BIn::kStatePackedObject);
+                        bin_state = BIn::kStatePackedObject;
                         break;
                     }
                 }
                 break;
             }
-            case BIn::Utf8State: {
+            case BIn::kStatePackedUtf8: {
                 if (bytes_left == 0) {
                     ExprError (expr, kErrorTextOverflow,
                             const_cast<const uint_t*>(expr->header), 0, bin_start);
                     break;
                 }
                 hash = Hash16 (b, hash);
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut (out << "\n| hash:" << out.Hex (hash));
+                #if DEBUG_SCRIPT_EXPR
+                Write (out << "\nhash:" << out.Hex (hash));
                 #endif
                 // Hash byte.
                 // Check if char terminated.
                 if (b == 0) {
                     // Check if there is another argument to scan.
                     ExprExitState (expr);
-                    bin_state = BIn::ArgsState;
+                    bin_state = BIn::kStatePackedArgs;
                     //< We can't go back from OBJ to POD for Text Types.
                     // Setup to read next type.
                     type = *(++expr->header);
                     if (expr->params_left == 0) {
-                        ExprSetState (expr, BIn::AddressState);
-                        bin_state = BIn::AddressState;
+                        ExprSetState (expr, BIn::kStateAddress);
+                        bin_state = BIn::kStateAddress;
                         break;
                     }
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (out << "\n| Next TType to scan:\'" 
+                    #if DEBUG_SCRIPT_EXPR
+                    Write (out << "\nNext TType to scan:\'" 
                           << TypeString (type) << "\' with alignment "
                           << TypeAlign (slot_start, type) << '.');
                     #endif
@@ -632,26 +633,26 @@ const Op* ExprUnpack (Expr* expr) {
                 --bytes_left;
                 break;
             }
-            case BIn::Utf16State: {
+            case BIn::kStatePackedUtf16: {
                 hash = Hash16 (b, hash);
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut ("\n| hash:" << out.Hex (hash));
+                #if DEBUG_SCRIPT_EXPR
+                Write ("\nhash:" << out.Hex (hash));
                 #endif
                 ExprExitState (expr);
                 break;
             }
-            case BIn::Utf32State: {
+            case BIn::kStatePackedUtf32: {
                 hash = Hash16 (b, hash);
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut ("\n| hash:" << out.Hex (hash));
+                #if DEBUG_SCRIPT_EXPR
+                Write ("\nhash:" << out.Hex (hash));
                 #endif
                 ExprExitState (expr);
                 break;
             }
-            case BIn::VarintState: {
+            case BIn::kStatePackedVarint: {
                 hash = Hash16 (b, hash);
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut ("\n| hash:" << out.Hex (hash));
+                #if DEBUG_SCRIPT_EXPR
+                Write ("\nhash:" << out.Hex (hash));
                     #endif
                 // When verifying a varint, there is a max number of bytes for 
                 // the type (3, 5, or 9) but the varint may be complete before 
@@ -660,8 +661,8 @@ const Op* ExprUnpack (Expr* expr) {
                 // Hash byte.
 
                 if (bytes_left == 1) {
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut ("Checking last byte:");
+                    #if DEBUG_SCRIPT_EXPR
+                    Write ("Checking last byte:");
                     #endif
 
                     // @warning I am not current saving the offset. I'm not 
@@ -675,20 +676,20 @@ const Op* ExprUnpack (Expr* expr) {
                         const uint_t* header =
                             const_cast<const uint_t*>(expr->header);
                         
-                        ExprEnterState (expr, BIn::ErrorState);
+                        ExprEnterState (expr, BIn::kStateHandlingError);
                         return ExprError (expr, kErrorVarintOverflow, header, 0, bin_start);
                     }
 
                     break;
                 }
                 if (b > 127) {
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut ("\n| Done scanning varint: ");
+                    #if DEBUG_SCRIPT_EXPR
+                    Write ("\nDone scanning varint: ");
                     #endif
                     // Setup to read the next type.
                     type = *(++header);
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (out << "\n| Next TType to scan:\'" <<
+                    #if DEBUG_SCRIPT_EXPR
+                    Write (out << "\nNext TType to scan:\'" <<
                           TypeString (type) << "\' with alignment " <<
                           TypeAlign (slot_start, type) << '.');
                     #endif
@@ -697,28 +698,28 @@ const Op* ExprUnpack (Expr* expr) {
                 --bytes_left;
                 break;
             }
-            case BIn::ObjectState: {
+            case BIn::kStatePackedObject: {
                 hash = Hash16 (b, hash);
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut ("\n| hash:" << out.Hex (hash));
+                #if DEBUG_SCRIPT_EXPR
+                Write ("\nhash:" << out.Hex (hash));
                 #endif
                 if (bytes_shift >= shift_bits) {
                     // Done shifting.
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (out << "\n| Loading object of size:" << bytes_left);
+                    #if DEBUG_SCRIPT_EXPR
+                    Write (out << "\nLoading object of size:" << bytes_left);
                     #endif
                     ExprExitState (expr);
-                    ExprEnterState (expr, BIn::PodState);
-                    bin_state = BIn::PodState;
+                    ExprEnterState (expr, BIn::kStatePackedPod);
+                    bin_state = BIn::kStatePackedPod;
                     break;
                 }
                 bytes_left &= ((uint_t)b) << bytes_shift;
                 shift_bits += 8;
                 break;
             }
-            case BIn::HashState: {
+            case BIn::kStateVerifyingHash: {
                 if (expr->bytes_left != 0) {  // One more byte to load.
-                    expr->last_byte = b;
+                    expr->last_byte  = b;
                     expr->bytes_left = 0;
                     break;
                 }
@@ -726,78 +727,78 @@ const Op* ExprUnpack (Expr* expr) {
                 found_hash = found_hash << 8;
                 found_hash |= expr->last_byte;
                 if (hash != found_hash) {
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut ("\n| Error: expecting hash:" <<
+                    #if DEBUG_SCRIPT_EXPR
+                    Write ("\nError: expecting hash:" <<
                           out.Hex (hash) << " and found " << 
                           out.Hex (found_hash));
                     #endif
                     return ExprForceDisconnect (expr, kErrorInvalidHash);
                 }
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut ("\n| Success reading hash!");
+                #if DEBUG_SCRIPT_EXPR
+                Write ("\nSuccess reading hash!");
                 #endif
                 hash = kLargest16BitPrime; //< Reset hash to largest 16-bit prime.
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut ("\n| Resetting hash.\n");
+                #if DEBUG_SCRIPT_EXPR
+                Write ("\nResetting hash.\n");
                 #endif
                 break;
             }
-            case BIn::ErrorState: {
+            case BIn::kStateHandlingError: {
                 break;
             }
             case BIn::kStateDisconnected: {
                 if (b) {
-                    ExprSetState (expr, BIn::ErrorState);
-                    bin_state = BIn::ErrorState;
+                    ExprSetState (expr, BIn::kStateHandlingError);
+                    bin_state = BIn::kStateHandlingError;
                 } else {
-                    ExprSetState (expr, BIn::AckState);
-                    bin_state = BIn::AckState;
+                    ExprSetState (expr, BIn::kStateAck);
+                    bin_state = BIn::kStateAck;
                 }
                 break;
             }
-            case  BIn::AckState: {
+            case  BIn::kStateAck: {
                 if (b) {
-                    ExprSetState (expr, BIn::ErrorState);
-                    bin_state = BIn::ErrorState;
+                    ExprSetState (expr, BIn::kStateHandlingError);
+                    bin_state = BIn::kStateHandlingError;
                 } else {
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut ("\n| Resetting hash.");
+                    #if DEBUG_SCRIPT_EXPR
+                    Write ("\nResetting hash.");
                     #endif
                     hash = kLargest16BitPrime; //< Reset hash to largest 16-bit prime.
                     expr->operand = expr->root;
                     expr->result = nullptr;
-                    bin_state = BIn::AddressState;
-                    ExprSetState (expr, BIn::AddressState);
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (out << "\n| Root scope: \"" <<
+                    bin_state = BIn::kStateAddress;
+                    ExprSetState (expr, BIn::kStateAddress);
+                    #if DEBUG_SCRIPT_EXPR
+                    Write (out << "\nRoot scope: \"" <<
                           OperandName (expr->operand) << '\"');
                     #endif
                 }
                 break;
             }
-            case BIn::LockedState: {
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut ("Locked");
+            case BIn::kStateLocked: {
+                #if DEBUG_SCRIPT_EXPR
+                Write ("Locked");
                 #endif
                 break;
             }
             default: {
                 hash = Hash16 (b, hash);
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut (out << "\n| hash:" << out.Hex (hash));
+                #if DEBUG_SCRIPT_EXPR
+                Write (out << "\nhash:" << out.Hex (hash));
                 #endif
                 // parsing plain-old-data.
                 if (!bytes_left) {
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut ("... done!");
+                    #if DEBUG_SCRIPT_EXPR
+                    Write ("... done!");
                     #endif
                     ExprExitState (expr);
                     bin_state = expr->bin_state;
 
                     // Setup to read the next type.
                     type = *(++header);
-                    #if SCRIPT_DEBUG == SCRIPT_EXPR
-                    COut (out << "\n| Next TType to scan:\'" << TypeString (type)
+                    #if DEBUG_SCRIPT_EXPR
+                    Write (out << "\nNext TType to scan:\'" << TypeString (type)
                           << "\' with alignment " << TypeAlign (slot_start, type)
                           << '.');
                     #endif
@@ -806,8 +807,8 @@ const Op* ExprUnpack (Expr* expr) {
                 }
                 --bytes_left;
                 //b = input->Pull ();
-                #if SCRIPT_DEBUG == SCRIPT_EXPR
-                COut (out << "\n| Loading next byte:" << out.Hex (b));
+                #if DEBUG_SCRIPT_EXPR
+                Write (out << "\nLoading next byte:" << out.Hex (b));
                 #endif
                 hash = Hash16 (b, hash);
                 *bin_start = b;
@@ -845,18 +846,18 @@ const uint_t* ExprHeaderStack (Expr* expr) {
 }
 
 void ExprClose (Expr* expr) {
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
-    COut ("\n| Closing expression.");
+    #if DEBUG_SCRIPT_EXPR
+    Write ("\nClosing expression.");
     #endif
     expr->stack_count = 1;
 }
 
 void ExprCancel (Expr* expr) {
-    #if SCRIPT_DEBUG == SCRIPT_EXPR
-    COut ("\n| Canceling expression.");
+    #if DEBUG_SCRIPT_EXPR
+    Write ("\nCanceling expression.");
     #endif
     expr->stack_count = 1;
-    expr->bin_state = BIn::AddressState;
+    expr->bin_state = BIn::kStateAddress;
     //ExprPush (expr->root);
 }
 
@@ -900,8 +901,8 @@ const Op* ExprForceDisconnect (Expr* expr, Error error) {
 const Op* ExprQuery (Expr* expr, const Op& op) {
     if (expr) {
         void    * args[2];
-        uintptr_t num_ops  = (uintptr_t)op.params,
-                  first_op = (uintptr_t)op.result;
+        uintptr_t num_ops  = (uintptr_t)op.in,
+                  first_op = (uintptr_t)op.out;
         // @todo Write params to expr!
         static const uint_t* header = Bsq<5, STR, kOpNameLengthMax, UV8, UV8,
                                              STR, kOpDescriptionLengthMax> ();
@@ -918,8 +919,9 @@ char* ExprBaseAddress (BIn* bin) {
 }
 
 uint_t ExprSpace (BIn* bin) {
-    if (bin == nullptr)
+    if (!bin) {
         return ~0;
+    }
 
     char* base = ExprBaseAddress (bin);
     return SlotSpace (base + bin->start, base + bin->stop, bin->size);
@@ -946,21 +948,19 @@ const Op* ExprQuery (Expr* expr, const Op* op) {
             return ExprError (expr, kErrorImplementation);
         }
         void* args[2];
-        uintptr_t num_ops  = (uintptr_t)op->params,
-                  first_op = (uintptr_t)op->result;
         return BOutWrite (ExprBOut (expr) ,
-                           Bsq<5, STR, kOpNameLengthMax, UV8, UV8,
-                                  STR, kOpDescriptionLengthMax> (),
-                           Args (args, op->name, &first_op,
-                                 &num_ops, op->description));
+                          Bsq<5, STR, kOpNameLengthMax, UV8, UV8,
+                              STR, kOpDescriptionLengthMax> (),
+                          Args (args, op->name, op->in,
+                                op->out, op->description));
     }
     return op;
 }
 
 #if USING_SCRIPT_TEXT
-Strand& ExprPrintStack (Expr* expr, Strand& strand) {
+Slot& ExprPrintStack (Expr* expr, Slot& slot) {
     if (!expr) {
-        return strand;
+        return slot;
     }
 
     uint_t i,
@@ -969,43 +969,43 @@ Strand& ExprPrintStack (Expr* expr, Strand& strand) {
     Operand* operand;
     Operand** stack = ExprStack (expr);
     stack_count = expr->stack_count;
-    strand << "\n| Operand stack_count:" << stack_count;
+    slot << "\nOperand stack_count:" << stack_count;
 
     if (stack_count == 1) {
-        return strand << "\n| Stack Item 1: " << OperandName (expr->root);
+        return slot << "\nStack Item 1: " << OperandName (expr->root);
     }
     for (i = 0; i < stack_count - 1; ++i) {
-        strand << "\n| Stack Item " << i + 1 << ":\"";
+        slot << "\nStack Item " << i + 1 << ":\"";
         operand = stack[i];
         op = operand->Star ('?', nullptr);
-        strand << op->name << '\"';
+        slot << op->name << '\"';
     }
     op = expr->operand->Star ('?', nullptr);
-    return strand << "\n| Stack Item " << i + 1 << ":\"" << op->name << "\"";
+    return slot << "\nStack Item " << i + 1 << ":\"" << op->name << "\"";
 }
 
-Strand& ExprPrint (Expr* expr, Strand& strand) {
-    strand << strand.Line ('~')
-        << "\n| Stack:    ";
+Slot& ExprPrint (Expr* expr, Slot& slot) {
+    slot << slot.Line ('~')
+           << "\nStack:    ";
     if (!expr) {
-        return strand << "nil" << strand.Line ('~');
+        return slot << "nil" << slot.Line ('~');
     }
-    strand.Pointer (expr) << strand.Line ('_');
+    slot.Pointer (expr) << slot.Line ('_');
 
-    return strand << "\n| bytes_left  : " << expr->bytes_left
-                  << "\n| header_size : " << expr->header_size
-                  << "\n| stack_count : " << expr->stack_count
-                  << "\n| stack_size  : " << expr->stack_size
-                  << "\n| bin_state   : " << BInState ()[expr->bin_state]
-                  << "\n| bout_state  : " << BOutState ()[expr->bout_state]
-                  << "\n| num_states  : " << expr->num_states
-                  << "\n| header_size : " << expr->header_size
-                  << strand.Line ('-', "\n>")
-                  << OperandPrint (expr->operand, strand)
-                  << "\n| header: " << expr->header_start
-                  << strand.Line ('-', "\n>")
-                  << ExprPrintStack (expr, strand)
-                  << strand.Line ('~');
+    return slot << "\nbytes_left  : " << expr->bytes_left
+                  << "\nheader_size : " << expr->header_size
+                  << "\nstack_count : " << expr->stack_count
+                  << "\nstack_size  : " << expr->stack_size
+                  << "\nbin_state   : " << BInState ()[expr->bin_state]
+                  << "\nbout_state  : " << BOutState ()[expr->bout_state]
+                  << "\nnum_states  : " << expr->num_states
+                  << "\nheader_size : " << expr->header_size
+                  << slot.Line ('-', "\n>")
+                  << OperandPrint (expr->operand, slot)
+                  << "\nheader: " << expr->header_start
+                  << slot.Line ('-', "\n>")
+                  << ExprPrintStack (expr, slot)
+                  << slot.Line ('~');
 }
 
 #endif  //< USING_SCRIPT_TEXT
@@ -1013,7 +1013,7 @@ Strand& ExprPrint (Expr* expr, Strand& strand) {
 }       //< namespace _
 
 #if USING_SCRIPT_TEXT
-_::Strand& operator<< (_::Strand& strand, _::Expr* expr) {
-    return ExprPrint (expr, strand);
+_::Slot& operator<< (_::Slot& slot, _::Expr* expr) {
+    return ExprPrint (expr, slot);
 }
 #endif //< USING_SCRIPT_TEXT

@@ -38,8 +38,8 @@ bool Client::SetState (int state) {
     return true;
 }
 
-_::Strand& Client::Print (_::Strand& strand) {
-    return strand;
+_::Slot& Client::Print (_::Slot& slot) {
+    return slot;
 }
 
 }       //< namespace data

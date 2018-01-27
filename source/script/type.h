@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/type.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -34,10 +34,10 @@ typedef enum AsciiTypes {
     TKN,        //< 3.  Nil-terminated ASCII, UTF-8, or UTF-32 string token.
     SI1,        //< 4.  8-bit signed integer.
     UI1,        //< 5.  8-bit unsigned integer.
-    BOL,        //< 6.  8-bit non-zero asserted boolean variable.
-    SI2,        //< 7.  16-bit signed integer.
-    UI2,        //< 8.  16-bit unsigned integer.
-    HLF,        //< 9.  16-bit floating-point number.
+    SI2,        //< 6.  16-bit signed integer.
+    UI2,        //< 7.  16-bit unsigned integer.
+    HLF,        //< 8.  16-bit floating-point number.
+    BOL,        //< 9.  16-bit or 32-bit boolean signed varint.
     SVI,        //< 10. 16-bit or 32-bit signed varint.
     UVI,        //< 11. 16-bit or 32-bit unsigned varint.
     SI4,        //< 12. 32-bit signed integer.
@@ -50,12 +50,12 @@ typedef enum AsciiTypes {
     DBL,        //< 19. 64-bit floating-point number.
     SV8,        //< 20. 64-bit signed varint.
     UV8,        //< 21. 64-bit unsigned varint.
-    DEC,        //< 22. 128-bit floating-point number compatible with C#.
+    DEC,        //< 22. 128-bit floating-point number.
     SIN,        //< 23. N-bit signed integer.
-    UIN,        //< 24. N-bit unsigned integer.
-    OBJ,        //< 25. N-byte object with size unknown at compile time.
+    UIN,        //< 24. N-bit unsigned integer or data structure.
+    OBJ,        //< 25. N-byte object with size not specified in BSQ.
     BSQ,        //< 26. B-Sequence.
-    ESC,        //< 27. Escape sequence of B-Sequences.
+    ESC,        //< 27. Escape sequence Expression.
     LST,        //< 28. Stack of Type-Value tuples.
     BOK,        //< 29. Multiset of unordered Key-{Type-Value} tuples.
     DIC,        //< 30. One-to-one map of Key-{Type-Value} tuples.
@@ -187,10 +187,6 @@ inline byte TypeCharCompareObject (char const b, char const c, char const d,
     return 0xff;
 }
 
-/** Returns the type from the given index.
-    @return A type 0-31 upon success and 0xff upon failure. */
-KABUKI byte BsqRead (const char* input, const char* input_end);
-
 /** Masks off the lower 5-LSb to get the type. */
 inline byte TypeMask (byte value) {
     return value & 0x1f;
@@ -212,7 +208,7 @@ inline bool TypeIsArray (uint_t type) {
     return type >= kTypeCount;
 }
 
-/** Returns true if the given type is a Bag type. */
+/** Returns true if the given type is a Bok type. */
 inline bool TypeIsSet (uint_t type) {
     return type >= kTypeCount;
 }

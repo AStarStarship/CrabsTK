@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/script_room.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -91,7 +91,7 @@ bool Room::SetRoomName (const char* name) {
         return false;
     }
     delete name_;
-    name_ = StrandClone (name);
+    name_ = SlotClone (name);
     return true;
 }
 
@@ -179,7 +179,7 @@ int Room::Main (const char** args, int args_count) {
             } while (!result);
             ShutDown ();
         } catch (RoomCrashException e) {
-            std::cout << "\n| Room crashed!\n";
+            std::cout << "\nRoom crashed!\n";
             return 3;
         }
     }
@@ -240,8 +240,8 @@ uintptr_t Room::GetSizeBytes () {
 }
 
 #if USE_MORE_ROM
-Strand& Room::Print (_::Strand& strand) {
-    return strand.Line () << "\n| Room: ";
+Slot& Room::Print (_::Slot& slot) {
+    return slot.Line () << "\nRoom: ";
 }
 #endif  //< USE_MORE_ROM
 

@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/script_args.cc
     @author  Cale McCollough <https://calemccollough.github.io>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
              2.0 (the "License"); you may not use this file except in
              compliance with the License. You may obtain a copy of the License
@@ -36,7 +36,7 @@ uint_t BsqParamNumber (const uint_t* params, int param_number) {
                 param_number += 2;
                 break;
             } else if (value > 7) { // Gratuitous explanation points!
-                std::cout << "\n| Error";
+                std::cout << "\nError";
                 return NIL;
             }
             else {
@@ -48,39 +48,39 @@ uint_t BsqParamNumber (const uint_t* params, int param_number) {
 }
 
 #if USING_SCRIPT_TEXT
-Strand& BsqPrint (const uint_t* params, Strand& strand) {
+Slot& BsqPrint (const uint_t* params, Slot& slot) {
     if (!params) {
-        return strand << "nil";
+        return slot << "nil";
     }
     if (params < (const uint_t*)256) {
-        return strand << reinterpret_cast<uintptr_t> (params) << '\n';
+        return slot << reinterpret_cast<uintptr_t> (params) << '\n';
     }
     uint_t num_params = *params++,
         i,
         type,
         value = 0;
 
-    strand << "Param<";
+    slot << "Param<";
     if (num_params > _::kParamsMax) {
-        return strand << "\n| Invalid num_params: " << num_params;
+        return slot << "\nInvalid num_params: " << num_params;
     }
-    strand << num_params << ": ";
+    slot << num_params << ": ";
     for (i = 1; i < num_params; ++i) {
         value = *params++;
         type = value & 0x1f;    //< Mask off type.
         value = value >> 5;     //< Shift over array type.
-        strand << TypeString (value) << ", ";
+        slot << TypeString (value) << ", ";
         if (type >= STR) {
             if (value) {
-                return strand << "\n| Error: arrays may only be created from POD types.";
+                return slot << "\nError: arrays may only be created from POD types.";
             }
             // Print out the max length of the string.
             ++i;
             value = *params++;
-            strand << value;
+            slot << value;
         } else if (value > 31) {
             if (value > 127) {      //< It's a multi-dimensional array.
-                strand << "Multi-dimensional Array:" << value << ", ";
+                slot << "Multi-dimensional Array:" << value << ", ";
             }
             // Then it's an array.
             ++i;
@@ -90,67 +90,67 @@ Strand& BsqPrint (const uint_t* params, Strand& strand) {
                 }
                 case 1: {
                     value = *params++;
-                    strand << "UI1:" << value << ", ";
+                    slot << "UI1:" << value << ", ";
                     break;
                 }
                 case 2: {
                     value = *params++;
-                    strand << "UI2:" << value << ", ";
+                    slot << "UI2:" << value << ", ";
                     break;
                 }
                 case 3: {
                     value = *params++;
-                    strand << "UI4:" << value << ", ";
+                    slot << "UI4:" << value << ", ";
                     break;
                 }
                 case 4: {
                     value = *params++;
-                    strand << "UI8:" << value << ", ";
+                    slot << "UI8:" << value << ", ";
                     break;
                 }
                 case 5: {
                     value = *params++;
                     if (value == 0) {
-                        strand << "UI1:[0]";
+                        slot << "UI1:[0]";
                         break;
                     }
-                    strand << "UI1:[" << value << ": ";
+                    slot << "UI1:[" << value << ": ";
                     for (uint_t i = value; i != 0; --i) {
                         value = *params++;
-                        strand << value << ", ";
+                        slot << value << ", ";
                     }
                     value = *params++;
-                    strand << value << "]";
+                    slot << value << "]";
                     break;
                 }
                 case 6: {
                     value = *params++;
                     if (value == 0) {
-                        strand << "UI2:[0]";
+                        slot << "UI2:[0]";
                         break;
                     }
-                    strand << "UI2:[" << value << ": ";
+                    slot << "UI2:[" << value << ": ";
                     for (uint_t i = value; i != 0; --i) {
                         value = *params++;
-                        strand << value << ", ";
+                        slot << value << ", ";
                     }
                     value = *params++;
-                    strand << value << "]";
+                    slot << value << "]";
                     break;
                 }
                 case 7: {
                     value = *params++;
                     if (value == 0) {
-                        strand << "UI4:[0]";
+                        slot << "UI4:[0]";
                         break;
                     }
-                    strand << "UI4:[" << value << ": ";
+                    slot << "UI4:[" << value << ": ";
                     for (uint_t i = value; i != 0; --i) {
                         value = *params++;
-                        strand << value << ", ";
+                        slot << value << ", ";
                     }
                     value = *params++;
-                    strand << value << "]";
+                    slot << value << "]";
                     break;
                 }
             }
@@ -158,11 +158,11 @@ Strand& BsqPrint (const uint_t* params, Strand& strand) {
     }
     // Do the last set without a comma.
     value = *params++;
-    strand << TypeString (value) << ", ";
+    slot << TypeString (value) << ", ";
     if (value == STR) {
         ++i;
         value = *params++;
-    strand << value;
+    slot << value;
     } else if (value > 31) {
         // Then it's an array.
         type = value & 0x1f;    //< Mask off type.
@@ -176,79 +176,81 @@ Strand& BsqPrint (const uint_t* params, Strand& strand) {
             case 1:
             {
                 value = *params++;
-                strand << "UI1:" << value << ", ";
+                slot << "UI1:" << value << ", ";
                 break;
             }
             case 2:
             {
                 value = *params++;
-                strand << "UI2:" << value << ", ";
+                slot << "UI2:" << value << ", ";
                 break;
             }
             case 3:
             {
                 value = *params++;
-                strand << "UI4:" << value << ", ";
+                slot << "UI4:" << value << ", ";
                 break;
             }
             case 4:
             {
                 value = *params++;
-                strand << "UI5:" << value << ", ";
+                slot << "UI5:" << value << ", ";
                 break;
             }
             case 5:
             {
                 value = *params++;
                 if (value == 0) {
-                    strand << "UI1:[0]";
+                    slot << "UI1:[0]";
                     break;
                 }
-                strand << "UI1:[" << value << ": ";
+                slot << "UI1:[" << value << ": ";
                 for (uint_t i = value; i != 0; --i) {
                     value = *params++;
-                    strand << value << ", ";
+                    slot << value << ", ";
                 }
                 value = *params++;
-                strand << value << "]";
+                slot << value << "]";
                 break;
             }
             case 6:
             {
                 value = *params++;
                 if (value == 0) {
-                    strand << "UI2:[0]";
+                    slot << "UI2:[0]";
                     break;
                 }
-                strand << "UI2:[" << value << ": ";
+                slot << "UI2:[" << value << ": ";
                 for (uint_t i = value; i != 0; --i) {
                     value = *params++;
-                    strand << value << ", ";
+                    slot << value << ", ";
                 }
                 value = *params++;
-                strand << value << "]";
+                slot << value << "]";
                 break;
             }
             case 7:
             {
                 value = *params++;
                 if (value == 0) {
-                    strand << "UI4:[0]";
+                    slot << "UI4:[0]";
                     break;
                 }
-                strand << "UI4:[" << value << ": ";
+                slot << "UI4:[" << value << ": ";
                 for (uint_t i = value; i != 0; --i) {
                     value = *params++;
-                    strand << value << ", ";
+                    slot << value << ", ";
                 }
                 value = *params++;
-                strand << value << "]";
+                slot << value << "]";
                 break;
             }
         }
     }
-    return strand << '>';
+    return slot << '>';
 }
 #endif  //< USING_SCRIPT_TEXT
 
 }       //< namespace _
+
+#undef DEBUG_SCRIPT_BSQ

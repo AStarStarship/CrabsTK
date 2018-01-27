@@ -23,24 +23,12 @@
     <ClInclude Include="assembly.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="kabuki\config.h" />
-    <ClInclude Include="kabuki\data\array.h" />
-    <ClInclude Include="kabuki\data\client.h" />
-    <ClInclude Include="kabuki\data\config.h" />
-    <ClInclude Include="kabuki\data\global.h" />
-    <ClInclude Include="kabuki\data\iterator.h" />
-    <ClInclude Include="kabuki\data\list_fifo.h" />
-    <ClInclude Include="kabuki\data\list_fifo_iterator.h" />
-    <ClInclude Include="kabuki\data\list_lifo.h" />
-    <ClInclude Include="kabuki\data\server.h" />
-    <ClInclude Include="kabuki\data\tree_binary.h" />
-    <ClInclude Include="kabuki\data\tree_binary_iterator.h" />
     <ClInclude Include="kabuki_toolkit.h" />
     <ClInclude Include="script\address.h" />
     <ClInclude Include="script\args.h" />
     <ClInclude Include="script\bin.h" />
     <ClInclude Include="script\bout.h" />
     <ClInclude Include="script\clock.h" />
-    <ClInclude Include="script\color.h" />
     <ClInclude Include="script\config.h" />
     <ClInclude Include="script\expr.h" />
     <ClInclude Include="script\door.h" />
@@ -60,34 +48,27 @@
     <ClInclude Include="script\room.h" />
     <ClInclude Include="script\set.h" />
     <ClInclude Include="script\slot.h" />
-    <ClInclude Include="script\strand.h" />
     <ClInclude Include="script\table.h" />
-    <ClInclude Include="script\tarray.h" />
-    <ClInclude Include="script\tbag.h" />
-    <ClInclude Include="script\tbook.h" />
-    <ClInclude Include="script\text.h" />
-    <ClInclude Include="script\tlist.h" />
-    <ClInclude Include="script\tmap.h" />
-    <ClInclude Include="script\token.h" />
-    <ClInclude Include="script\tstack.h" />
+    <ClInclude Include="script\array.h" />
+    <ClInclude Include="script\bok.h" />
+    <ClInclude Include="script\dic.h" />
+    <ClInclude Include="script\lst.h" />
+    <ClInclude Include="script\map.h" />
+    <ClInclude Include="script\stack.h" />
     <ClInclude Include="script\type.h" />
     <ClInclude Include="script\wall.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\tests\test_kabuki_data.cc" />
     <ClCompile Include="..\tests\test_global.cc" />
     <ClCompile Include="..\tests\test_script.cc" />
     <ClCompile Include="dllmain.cc" />
-    <ClCompile Include="kabuki\data\data_client.cc" />
-    <ClCompile Include="kabuki\data\data_server.cc" />
     <ClCompile Include="script\script_bin.cc" />
     <ClCompile Include="script\script_bout.cc" />
     <ClCompile Include="script\script_clock.cc" />
-    <ClCompile Include="script\script_color.cc" />
     <ClCompile Include="script\script_door.cc" />
-    <ClCompile Include="script\script_errors.cc" />
+    <ClCompile Include="script\script_error.cc" />
     <ClCompile Include="script\script_expr.cc" />
     <ClCompile Include="script\script_hash.cc" />
     <ClCompile Include="script\script_interrupts.cc" />
@@ -98,15 +79,12 @@
     <ClCompile Include="script\script_bsq.cc" />
     <ClCompile Include="script\script_room.cc" />
     <ClCompile Include="script\script_slot.cc" />
-    <ClCompile Include="script\script_strand.cc" />
-    <ClCompile Include="script\script_table.cc" />
-    <ClCompile Include="script\script_token.cc" />
     <ClCompile Include="script\script_type.cc" />
     <ClCompile Include="script\script_wall.cc" />
     <ClCompile Include="stdafx.cc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="kabuki\data\readme.md" />
+    <None Include="..\README.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

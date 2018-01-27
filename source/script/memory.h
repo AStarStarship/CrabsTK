@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/memory.h
     @author  Cale McCollough <https://calemccollough.github.io>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -11,8 +11,7 @@
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
              implied. See the License for the specific language governing 
-             permissions and limitations under the License.
-*/
+             permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
@@ -61,7 +60,8 @@ inline bool MemoryIsNaN (T value) {
                        ? (T)0xFF
                        : sizeof (T) == 4 ? (T)0xFFFF
                        : sizeof (T) == 2 ? (T)0xFFFFFFFF
-                       : sizeof (T) == 1 ? (T)0xFFFFFFFFFFFFFFFF:0;
+                       : sizeof (T) == 1 ? (T)0xFFFFFFFFFFFFFFFF
+                       : 0;
     return value == nan;
 }
 
@@ -240,8 +240,6 @@ KABUKI char* MemoryCopy (char* write, char* write_end, const char* memory,
 KABUKI char* MemoryCopy (char* write, char* write_end, const char* read,
                          const char* read_end, int size);
 
-#if USE_MORE_ROM
-
 /** Converts a single byte a one-byte hex representation. */
 KABUKI byte MemoryNibbleToLowerCaseHex (byte b);
 
@@ -293,6 +291,5 @@ KABUKI uint_t MemoryRandom () {
     return static_cast<T> (rand ());
 }
 
-#endif  //< USE_MORE_ROM
 }       //< namespace _
 #endif  //< HEADER_FOR_SCRIPT_MEMORY

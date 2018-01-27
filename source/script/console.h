@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/console.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -27,103 +27,103 @@
 namespace _ {
 
 /** Prints the given value to the stdout. */
-inline void COut (int8_t value) {
+inline void Write (int8_t value) {
     std::cout << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COut (uint8_t value) {
+inline void Write (uint8_t value) {
     std::cout << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COut (int16_t value) {
+inline void Write (int16_t value) {
     std::cout << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COut (uint16_t value) {
+inline void Write (uint16_t value) {
     std::cout << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COut (int32_t value) {
+inline void Write (int32_t value) {
     std::cout << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COut (uint32_t value) {
+inline void Write (uint32_t value) {
     std::cout << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COut (int64_t value) {
+inline void Write (int64_t value) {
     std::cout << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COut (uint64_t value) {
+inline void Write (uint64_t value) {
     std::cout << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COut (float value) {
+inline void Write (float value) {
     std::cout << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COut (double value) {
+inline void Write (double value) {
     std::cout << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COutLine (int8_t value) {
-    std::cout << "\n| " << value;
+inline void WriteLine (int8_t value) {
+    std::cout << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COutLine (uint8_t value) {
-    std::cout << "\n| " << value;
+inline void WriteLine (uint8_t value) {
+    std::cout << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COutLine (int16_t value) {
-    std::cout << "\n| " << value;
+inline void WriteLine (int16_t value) {
+    std::cout << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COutLine (uint16_t value) {
-    std::cout << "\n| " << value;
+inline void WriteLine (uint16_t value) {
+    std::cout << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COutLine (int32_t value) {
-    std::cout << "\n| " << value;
+inline void WriteLine (int32_t value) {
+    std::cout << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COutLine (uint32_t value) {
-    std::cout << "\n| " << value;
+inline void WriteLine (uint32_t value) {
+    std::cout << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COutLine (int64_t value) {
-    std::cout << "\n| " << value;
+inline void WriteLine (int64_t value) {
+    std::cout << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COutLine (uint64_t value) {
-    std::cout << "\n| " << value;
+inline void WriteLine (uint64_t value) {
+    std::cout << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COutLine (float value) {
-    std::cout << "\n| " << value;
+inline void WriteLine (float value) {
+    std::cout << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void COutLine (double value) {
-    std::cout << "\n| " << value;
+inline void WriteLine (double value) {
+    std::cout << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
@@ -177,53 +177,53 @@ inline void CErr (double value) {
 }
 
 /** Prints the given value to the stdout. */
-inline void CErrLine (int8_t value) {
-    std::cerr << "\n| " << value;
+inline void WriteLine (int8_t value) {
+    std::cerr << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void CErrLine (uint8_t value) {
-    std::cerr << "\n| " << value;
+inline void WriteLine (uint8_t value) {
+    std::cerr << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void CErrLine (int16_t value) {
-    std::cerr << "\n| " << value;
+inline void WriteLine (int16_t value) {
+    std::cerr << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void CErrLine (uint16_t value) {
-    std::cerr << "\n| " << value;
+inline void WriteLine (uint16_t value) {
+    std::cerr << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void CErrLine (int32_t value) {
-    std::cerr << "\n| " << value;
+inline void WriteLine (int32_t value) {
+    std::cerr << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void CErrLine (uint32_t value) {
-    std::cerr << "\n| " << value;
+inline void WriteLine (uint32_t value) {
+    std::cerr << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void CErrLine (int64_t value) {
-    std::cerr << "\n| " << value;
+inline void WriteLine (int64_t value) {
+    std::cerr << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void CErrLine (uint64_t value) {
-    std::cerr << "\n| " << value;
+inline void WriteLine (uint64_t value) {
+    std::cerr << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void CErrLine (float value) {
-    std::cerr << "\n| " << value;
+inline void WriteLine (float value) {
+    std::cerr << "\n" << value;
 }
 
 /** Prints the given value to the stdout. */
-inline void CErrLine (double value) {
-    std::cerr << "\n| " << value;
+inline void WriteLine (double value) {
+    std::cerr << "\n" << value;
 }
 
 /** Reads a single char from the keyboard
@@ -245,20 +245,21 @@ KABUKI float ConsoleReadFloat (const char* header);
     @param  target     Start of the buffer to read to.
     @param  target_end End of the buffer to read too.
     @return Returns a new char that you have to delete. */
-KABUKI void ConsoleReadStrand (const char* header, char* target,
+KABUKI void ConsoleReadSlot (const char* header, char* target,
                                char* target_end);
 
-/** Writes the given strand to the stdout. */
-KABUKI void ConsoleWrite (const char* strand);
+/** Writes the given slot to the stdout. */
+KABUKI void ConsoleWrite (const char* slot);
 
-/** Writes the given strand to the stdout. */
-KABUKI void ConsoleWrite (Strand& strand);
+/** Writes the given slot to the stdout. */
+KABUKI void ConsoleWrite (Slot& slot);
 
-/** Writes then clears the given strand to the stdout. */
-KABUKI void ConsoleDump  (Strand& strand);
+/** Writes then clears the given slot to the stdout. */
+KABUKI void ConsoleDump  (Slot& slot);
 
-/** Console for reading and writing to stdout and stderr.
-    Console writes to text buffer and prints to the std
+/** Console for reading and writing to stdout and stderr
+    
+    Console writes to text buffer and prints to the std.
 
     # Keyboard Console Input Example
 
@@ -268,7 +269,7 @@ KABUKI void ConsoleDump  (Strand& strand);
     < parent.child2.DoThat("Hello world!")
     @endcode
 */
-class Console : public Strand, public Op {
+class Console : public Slot, public Op {
     public:
 
     enum {
@@ -279,17 +280,17 @@ class Console : public Strand, public Op {
     };
 
     Console () :
-        Strand (kInitSize) {
+        Slot (kInitSize) {
 
     }
 
     Console (const Console& other) :
-        Strand (other) {
+        Slot (other) {
         // Nothing to do here! ({:->)-+=<
     }
 
     void PromptInput (const char* header) {
-        ConsoleReadStrand (header, input_buffer_,
+        ConsoleReadSlot (header, input_buffer_,
                            input_buffer_ + kInputBufferSize);
 
     }
@@ -302,7 +303,7 @@ class Console : public Strand, public Op {
     virtual const Op* Star (wchar_t index, Expr* expr) {
         static const Op kThis = { "Console",
             OpFirst ('A'), OpLast ('A'),
-            "A full-duplex computer text console.", '}', ';' , nullptr
+            "A full-duplex computer text console.", '}', ';', ' ', '-', nullptr
         };
         void* args[1];
         switch (index) {
@@ -311,7 +312,7 @@ class Console : public Strand, public Op {
                 static const Op kOpA = { "Foo",
                     _::Bsq<1, SI4> (), _::Bsq<1, SI4> (),
                     "The classic one and only example function name.",
-                    '(', ')', nullptr
+                    '(', ')', ' ', ' ', nullptr
                 };
                 if (!expr) {
                     return &kOpA;

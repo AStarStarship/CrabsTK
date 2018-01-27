@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/projects/script/script_tests.cc
     @author  Cale McCollough <calemccollough.github.io>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -21,6 +21,7 @@ using namespace _;
 
 TEST_GROUP (SCRIPT_TESTS) {
     void setup () {
+
     }
 
     void teardown () {
@@ -29,7 +30,7 @@ TEST_GROUP (SCRIPT_TESTS) {
 
 
 #if USING_SCRIPT_PROJECT
-#include "../pro/include/module.h"
+#include <kabuki/pro/global.h>
 
 using namespace kabuki::_;
 using namespace kabuki::pro;
@@ -64,18 +65,19 @@ class ChineseRoom : public Project
         PrintBreak ("<\n< Done creating Chinese-Room Project...\n<", '-');
     }
 };
+
 #endif  //< USING_SCRIPT_PROJECT
+
 /*
 TEST (SCRIPT_TESTS, BookTests) {
-    PrintLineBreak ("\n|  + Running BookTests\n", 10);
+    PrintLineBreak ("\n  + Running BookTests\n", 10);
 
-    PrintLineBreak ("\n|  - Running BookInit...\n", 5, ' ');
+    PrintLineBreak ("\n  - Running BookInit...\n", 5, ' ');
     int8_t index;
 
     enum {
         kBufferSize = 256,
         kBufferSizeWords = kBufferSize / sizeof (uintptr_t),
-
     };
 
     uintptr_t buffer[kBufferSizeWords];
@@ -154,6 +156,7 @@ TEST (SCRIPT_TESTS, BookTests) {
     index = Book2Add<uint8_t, UI1> (book, "test", (byte)0xFF);
     CHECK_EQUAL (index, -1)
 }
+
 template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
     uint second = 0>
     time_t TestTime (char* buffer, int buffer_size) {
@@ -163,7 +166,7 @@ template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
     time (&t);
     tm* moment = localtime (&t);
     if (!moment) {
-        cout << "\n|\n| Created invalid test moment: " << moment << '\n';
+        cout << "\n\n Created invalid test moment: " << moment << '\n';
         return 0;
     }
     moment->tm_year = year - TIME_EPOCH;
@@ -192,7 +195,7 @@ template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
 
 TEST (SCRIPT_TESTS, ClockTests) {
     time_t t,
-        t_found;
+           t_found;
     tm* lt;
     const char* result;
 
@@ -218,33 +221,34 @@ TEST (SCRIPT_TESTS, ClockTests) {
         "2017-08-09@00:00:00A\0",
         "2017-08-09@00:00:00a \0",
     };
+
     for (int i = 0; i < 18; ++i) {
         PrintBreak ("<", '-');
-        cout << "\n| " << i;
+        cout << "\n " << i;
         time_t t = 0;
         result = ParseTimeText (strings[i], t);
         CompareTimes (t, 2017, 8, 9, 0, 0, 0);
     }
     enum {
-        SIZE = 32
+        kSize = 32
     };
 
-    char timestamp[SIZE];
+    char timestamp[kSize];
     PrintBreak ("<", '-');
     PrintBreak ("<\n< Testing more valid input...\n");
     PrintBreak ("<", '-');
 
-    t = TestTime<8, 9, 17, 4, 20> (timestamp, SIZE);
+    t = TestTime<8, 9, 17, 4, 20> (timestamp, kSize);
     PrintTime (t);
     result = ParseTimeText (timestamp, t_found);
     CompareTimes (t, t_found);
 
-    t = TestTime<2020, 4, 20, 4, 20> (timestamp, SIZE);
+    t = TestTime<2020, 4, 20, 4, 20> (timestamp, kSize);
     PrintTime (t);
     result = ParseTimeText (timestamp, t_found);
     CompareTimes (t, t_found);
 
-    t = TestTime<1947, 12, 7, 23, 5, 7> (timestamp, SIZE);
+    t = TestTime<1947, 12, 7, 23, 5, 7> (timestamp, kSize);
     PrintTime (t);
     result = ParseTimeText (timestamp, t_found);
     CompareTimes (t, t_found);
@@ -259,12 +263,12 @@ TEST (SCRIPT_TESTS, ClockTests) {
     cout << "<\n< Done testing date parsing utils! :-)\n";
 }
 
-#if USING_TABLE
+#if USING_SCRIPT_TABLE
 TEST (SCRIPT_TESTS, TableTests) {
-    cout << "\n|  - Running TableTest...\n";
+    cout << "\n  - Running TableTest...\n";
     char_t index;
     uintptr_t buffer[128];
-    printf ("\n| &buffer[0]:%p &buffer[127]:%p\n", &buffer[0], &buffer[127]);
+    printf ("\n &buffer[0]:%p &buffer[127]:%p\n", &buffer[0], &buffer[127]);
     Table* table = TableInit (buffer, 8, 128);
 
     CHECK (table != nullptr)
@@ -338,11 +342,11 @@ TEST (SCRIPT_TESTS, TableTests) {
 
     TablePrint (table);
 }
-#endif  //< USING_TABLE
+#endif  //< USING_SCRIPT_TABLE
 
 TEST (SCRIPT_TESTS, ExprTests) {
     Text<> text;
-    cout << "\n| Running ExprTests...\n";
+    cout << "\n Running ExprTests...\n";
     enum {
         kBufferSize      = 256,
         kBufferSizeWords = kBufferSize / sizeof (uint_t)
@@ -370,8 +374,8 @@ TEST (SCRIPT_TESTS, ExprTests) {
     const Op* result = ExprResult (expr, params,
                                    Args (args, "C", &stx_expected,
                                          &si4_expected, &flt_expected));
-    text << "\n| Attempting to print Expr " << text.Pointer (ExprBOut (expr))
-         <<  ExprPrint (expr, text) << std::cout;
+    text << "\n Attempting to print Expr " << text.Pointer (ExprBOut (expr))
+         <<  ExprPrint (expr, text) << Write ();
     CHECK_EQUAL (0, ExprArgs (expr, params,
                               Args (args, &stx_found, &si4_found, &flt_found)));
 }
@@ -402,18 +406,18 @@ TEST (SCRIPT_TESTS, TextTests) {
         "Texting@",
     };
 
-    CHECK (!StrandEquals (strings[0], strings[1]))
-    CHECK (!StrandEquals (strings[0], strings[3]))
-    CHECK (StrandEquals (strings[0], strings[0]))
-    CHECK (!StrandEquals (strings[2], strings[3], '@'))
-    CHECK (StrandEquals (strings[2], strings[2], '@'))
+    CHECK (!SlotEquals (strings[0], strings[1]))
+    CHECK (!SlotEquals (strings[0], strings[3]))
+    CHECK (SlotEquals (strings[0], strings[0]))
+    CHECK (!SlotEquals (strings[2], strings[3], '@'))
+    CHECK (SlotEquals (strings[2], strings[2], '@'))
 
     // @todo Add Token module and TokenEquals here.
 #endif  //< USE_MORE_ROM
 }
 
 TEST (SCRIPT_TESTS, RoomTests) {
-    printf ("\n|  - Running RoomTestOne...\n");
+    printf ("\n  - Running RoomTestOne...\n");
 }
 
 TEST (SCRIPT_TESTS, ReadWriteTests) {
@@ -426,7 +430,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     //< It works right with an extra 4 elements but no less. Am I writing
     //< something to the end of the buffer???
 
-    PrintLineBreak ("\n|  - Running ReadWriteTests...", 5);
+    PrintLineBreak ("\n  - Running ReadWriteTests...", 5);
     cout << " kBufferSize: "     << kBufferSize 
               << " kElementsBuffer: " << kElementsBuffer;
 
@@ -441,9 +445,9 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     memset (found_string1, ' ', 6);
     memset (found_string2, ' ', 6);
 
-    printf ("\n| buffer_start:%p buffer_stop:%p\n", &buffer[0], 
+    printf ("\n buffer_start:%p buffer_stop:%p\n", &buffer[0], 
             &buffer[kBufferSize - 1]);
-    printf ("\n| &expected_string1[0]:%p &expected_string2[0]:%p\n", 
+    printf ("\n &expected_string1[0]:%p &expected_string2[0]:%p\n", 
             &expected_string1[0], &expected_string2[0]);
 
     BOut* bout = BOutInit (buffer, kBufferSize);
@@ -452,7 +456,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
                                Args (args, expected_string1,
                                      expected_string2)))
     void** test = Args (args, found_string1, found_string2);
-    printf ("\n| texpected_string1_start:%p texpected_string2_start:%p\n",
+    printf ("\n texpected_string1_start:%p texpected_string2_start:%p\n",
             &test[0], &test[1]);
     
     CHECK_EQUAL (0, BOutRead (bout, Bsq<2, STR, 5, STR, 5> (),
@@ -467,7 +471,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     //BOutPrint (bout);
     STRCMP_EQUAL (expected_string2, found_string2)
     
-    PrintLineBreak ("\n|  - Testing BOL/UI1/SI1...", 5);
+    PrintLineBreak ("\n  - Testing BOL/UI1/SI1...", 5);
 
     static const int8_t si1_p_expected = '+',
                         si1_n_expected = (int8_t)196;
@@ -489,7 +493,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (ui1_expected, ui1_found)
     CHECK_EQUAL (bol_expected, bol_found)
 
-    PrintLineBreak ("\n|  - Testing UI2/SI2/HLF...", 5);
+    PrintLineBreak ("\n  - Testing UI2/SI2/HLF...", 5);
 
     static const int16_t si2_p_expected = '+',
         si2_n_expected = (int16_t)(0xFF00 | '-');
@@ -526,7 +530,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (ui2_expected, ui2_found)
     CHECK_EQUAL (hlf_expected, hlf_found)
 
-    PrintLineBreak ("\n|  - Testing UI4/SI4/FLT/TMS...", 5);
+    PrintLineBreak ("\n  - Testing UI4/SI4/FLT/TMS...", 5);
 
     static const int32_t  si4_p_expected = '+',
                           si4_n_expected = (int32_t)(0xFFFFFF00 | '-');
@@ -552,7 +556,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (ui4_expected, ui4_found)
     CHECK_EQUAL (flt_expected, flt_found)
     
-    PrintLineBreak ("\n|  - Testing TMU/UI8/SI1/DBL...\n", 5);
+    PrintLineBreak ("\n  - Testing TMU/UI8/SI1/DBL...\n", 5);
 
     static const time_t tmu_expected = 0xE7;
     static const int64_t si8_p_expected = '+',
@@ -640,7 +644,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (sv2_expected[5], sv2_found[5])
     CHECK_EQUAL (sv2_expected[6], sv2_found[6])
 
-    PrintLineBreak ("\n|  - Testing UVI...\n", 5);
+    PrintLineBreak ("\n  - Testing UVI...\n", 5);
 
     static const uint16_t uv2_expected[] = { 0, 1, 1 << 7, 1 << 14 };
 
@@ -656,7 +660,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (uv2_expected[2], uv2_found[2])
     CHECK_EQUAL (uv2_expected[3], uv2_found[3])
     
-    PrintLineBreak ("\n|  - Testing SV4...\n", 5);
+    PrintLineBreak ("\n  - Testing SV4...\n", 5);
 
     static const int32_t sv4_expected[] = { 0, 1, -1, 1 << 7, -(1 << 7), 
                                             1 << 14, -(1 << 14),
@@ -691,7 +695,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (sv4_expected[9], sv4_found[9])
     CHECK_EQUAL (sv4_expected[10], sv4_found[10])
 
-    PrintLineBreak ("\n|  - Testing UV4...\n", 5);
+    PrintLineBreak ("\n  - Testing UV4...\n", 5);
 
     static const uint32_t uv4_expected[] = { 
         0, 1, 1 << 7, 1 << 14, 1 << 21, 1 << 28 };
@@ -711,7 +715,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
     CHECK_EQUAL (uv4_expected[4], uv4_found[4])
     CHECK_EQUAL (uv4_expected[5], uv4_found[5])
     
-    PrintLineBreak ("\n|  - Testing SV8...\n", 5);
+    PrintLineBreak ("\n  - Testing SV8...\n", 5);
 
     static const int64_t sv8_expected[] = {
         0, 1, -1, 1 << 7, -(1 << 7),
@@ -770,7 +774,7 @@ TEST (SCRIPT_TESTS, ReadWriteTests) {
         CHECK_EQUAL (sv8_expected[17], sv8_found[17])
         CHECK_EQUAL (sv8_expected[18], sv8_found[18])
 
-        PrintLineBreak ("\n|  - Testing UV8...\n", 5);
+        PrintLineBreak ("\n  - Testing UV8...\n", 5);
 
     static const uint64_t uv8_expected[] = {
         0, 1, 1 << 7, 1 << 14, 1 << 21,
@@ -818,7 +822,7 @@ TEST (SCRIPT_TESTS, OpTests) {
     };
     uintptr_t buffer[kBufferWords],
               unpacked_expr[kBufferWords];
-    printf ("\n|  - Running OpTests in address ranges: [0x%p:0x%p]\n",
+    printf ("\n  - Running OpTests in address ranges: [0x%p:0x%p]\n",
             &buffer[0], &buffer[kBufferWords-1]);
 
     This a;
@@ -827,7 +831,7 @@ TEST (SCRIPT_TESTS, OpTests) {
                                        unpacked_expr, kBufferSize);
     ExprPrint (expr);
 
-    cout << "\n|    Testing Root (@see \"a.h\")...\n";
+    cout << "\n    Testing Root (@see \"a.h\")...\n";
 
     void* args[4];
     uint8_t io_number_ = 98; //< ASCII:'b'
@@ -852,14 +856,14 @@ TEST (SCRIPT_TESTS, OpTests) {
     // Bypass handshake for testing purposes.
     ExprScan (expr);//, &slot);
     ExprPrint (expr);
-    cout << "\n| Done with Op tests.";
+    cout << "\n Done with Op tests.";
     system ("PAUSE");
-}*/
+}
 
 TEST (SCRIPT_TESTS, TextTests) {
-    std::cout << "\n|\n| Testing Token...\n|\n|";
+    Write () << "\n\n Testing Token...\n\n";
 
-    std::cout << "\n|\n| Testing Token...";
+    Write () << "\n\n Testing Token...";
 
     enum {
         kNumStrings = 5,
@@ -880,9 +884,9 @@ TEST (SCRIPT_TESTS, TextTests) {
          buffer_b[kSize];
 
     for (int i = 0; i < kNumStrings; ++i) {
-        end = StrandWrite (buffer_a, buffer_a + kSize, test_strings[i][0]);
+        end = SlotWrite (buffer_a, buffer_a + kSize, test_strings[i][0]);
         CHECK (end != nullptr)
-        end = StrandWrite (buffer_b, buffer_b + kSize, test_strings[i][0]);
+        end = SlotWrite (buffer_b, buffer_b + kSize, test_strings[i][0]);
         CHECK (end != nullptr)
 
         end = TokenEquals (buffer_a, buffer_b);
@@ -891,18 +895,44 @@ TEST (SCRIPT_TESTS, TextTests) {
         CHECK (end != nullptr)
     }
 
-    std::cout << "\n|\n| Testing Text write functions..."
-              << "\n|\n| Expecting Line() followed by \"Testing 1, 2, 3\"...";
+    Write () << "\n\n Testing Text write functions..."
+              << "\n\n Expecting Line() followed by \"Testing 1, 2, 3\"...";
     Text<> text;
-    text.Line () << "\n| Testing " << 1 << ", " << 2 << ", " << 3;
+    text.Line () << "\n Testing " << 1 << ", " << 2 << ", " << 3;
 
-    std::cout << "\n|\n| Wrote:\"" << text.GetBegin () << "\""
-              << "\n| Testing Text::Memory (void*, int size)...";
-    text.Memory (text.GetBegin (), text.GetEnd ()) << std::cout;
+    Write () << "\n\n Wrote:\"" << text.GetBegin () << "\""
+              << "\n Testing Text::Memory (void*, int size)...";
 
-    std::cout << "\n|\n| Done testing _::Text class...\n| ";
+    text.Memory (text.GetBegin (), text.GetEnd ()) << Write ();
+
+    Write () << "\n\n Done testing _::Text class...\n ";
     system ("PAUSE");
-}
+}*/
 
+TEST (SCRIPT_TESTS, TextTests) {
+
+    enum { kBufferSize = 2048 >> kWordSizeShift };
+
+    static Slot& write = WriteSet (kBufferSize);
+
+    write << "\n|\n| Testing Token...\n|\n|";
+    Dump ();
+
+    int8_t   a = 1;  //< 
+    uint8_t  b = 2;  //< 
+    int16_t  c = 3;  //< 
+    uint16_t d = 4;  //< 
+    int32_t  e = 5;  //< 
+    uint32_t f = 6;  //< 
+    int64_t  g = 7;  //< 
+    uint64_t h = 8;  //< 
+    time_t   i = 9;  //< 
+    float    i = 10; //< 
+    double   j = 11; //< 
+
+    write << "\n| a:" << a << " b:" << b << " c:" << c << " d:" << d
+          <<    " e:" << e << " f:" << f << " g:" << g << " h:" << h
+          <<    " i:" << i << " j:" << j;
+}
 
 #define USING_SCRIPT_PROJECT 0

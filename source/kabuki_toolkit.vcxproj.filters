@@ -30,6 +30,9 @@
     <Filter Include="projects\sloth">
       <UniqueIdentifier>{fa4a9efd-aa8a-4975-9620-e71bb7c990f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="projects\script_visualizer">
+      <UniqueIdentifier>{61ffc33f-ecae-42d0-9084-116c0a462bc3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="script\bin.h">
@@ -39,9 +42,6 @@
       <Filter>source\script</Filter>
     </ClInclude>
     <ClInclude Include="script\clock.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\color.h">
       <Filter>source\script</Filter>
     </ClInclude>
     <ClInclude Include="script\config.h">
@@ -92,27 +92,6 @@
     <ClInclude Include="script\table.h">
       <Filter>source\script</Filter>
     </ClInclude>
-    <ClInclude Include="script\tarray.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\tbag.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\tbook.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\tlist.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\tmap.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\token.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\tstack.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
     <ClInclude Include="script\wall.h">
       <Filter>source\script</Filter>
     </ClInclude>
@@ -134,39 +113,6 @@
     <ClInclude Include="stdafx.h">
       <Filter>source</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\data\list_fifo.h">
-      <Filter>source\kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\data\list_fifo_iterator.h">
-      <Filter>source\kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\data\list_lifo.h">
-      <Filter>source\kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\data\server.h">
-      <Filter>source\kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\data\tree_binary.h">
-      <Filter>source\kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\data\tree_binary_iterator.h">
-      <Filter>source\kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\data\array.h">
-      <Filter>source\kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\data\client.h">
-      <Filter>source\kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\data\config.h">
-      <Filter>source\kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\data\global.h">
-      <Filter>source\kabuki\data</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\data\iterator.h">
-      <Filter>source\kabuki\data</Filter>
-    </ClInclude>
     <ClInclude Include="kabuki\config.h">
       <Filter>source\kabuki</Filter>
     </ClInclude>
@@ -174,12 +120,6 @@
       <Filter>source</Filter>
     </ClInclude>
     <ClInclude Include="script\console.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\strand.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\text.h">
       <Filter>source\script</Filter>
     </ClInclude>
     <ClInclude Include="..\tests\global.h">
@@ -197,6 +137,24 @@
     <ClInclude Include="script\bsq.h">
       <Filter>source\script</Filter>
     </ClInclude>
+    <ClInclude Include="script\array.h">
+      <Filter>source\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\dic.h">
+      <Filter>source\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\bok.h">
+      <Filter>source\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\map.h">
+      <Filter>source\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\stack.h">
+      <Filter>source\script</Filter>
+    </ClInclude>
+    <ClInclude Include="script\lst.h">
+      <Filter>source\script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="script\script_bin.cc">
@@ -208,13 +166,7 @@
     <ClCompile Include="script\script_clock.cc">
       <Filter>source\script</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_color.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
     <ClCompile Include="script\script_door.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_errors.cc">
       <Filter>source\script</Filter>
     </ClCompile>
     <ClCompile Include="script\script_hash.cc">
@@ -235,29 +187,14 @@
     <ClCompile Include="script\script_slot.cc">
       <Filter>source\script</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_table.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_token.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
     <ClCompile Include="script\script_wall.cc">
       <Filter>source\script</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="kabuki\data\data_client.cc">
-      <Filter>source\kabuki\data</Filter>
-    </ClCompile>
-    <ClCompile Include="kabuki\data\data_server.cc">
-      <Filter>source\kabuki\data</Filter>
-    </ClCompile>
     <ClCompile Include="dllmain.cc">
       <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\test_kabuki_data.cc">
-      <Filter>source\tests</Filter>
     </ClCompile>
     <ClCompile Include="script\script_console.cc">
       <Filter>source\script</Filter>
@@ -267,9 +204,6 @@
     </ClCompile>
     <ClCompile Include="..\tests\test_global.cc">
       <Filter>source\tests</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_strand.cc">
-      <Filter>source\script</Filter>
     </ClCompile>
     <ClCompile Include="script\script_type.cc">
       <Filter>source\script</Filter>
@@ -283,10 +217,11 @@
     <ClCompile Include="script\script_bsq.cc">
       <Filter>source\script</Filter>
     </ClCompile>
+    <ClCompile Include="script\script_error.cc">
+      <Filter>source\script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="kabuki\data\readme.md">
-      <Filter>source\kabuki\data</Filter>
-    </None>
+    <None Include="..\README.md" />
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/script_slot.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -22,7 +22,251 @@
 
 namespace _ {
 
-void SlotInit (Slot* slot, char* begin, uintptr_t size) {
+Slot& WriteSet (Slot& slot) {
+    static Slot& slot_ = (slot.begin != slot_.begin) ?
+                         slot : slot_;
+    return slot_;
+}
+
+Slot& Out () {
+    static uintptr_t buffer;
+    static Slot empty_slot = {
+        reinterpret_cast<char*> (&buffer),
+        reinterpret_cast<char*> (&buffer),
+        reinterpret_cast<char*> (&buffer),
+        reinterpret_cast<char*> (&buffer) + sizeof (uintptr_t) - 1
+    };
+    static Slot& slot = WriteSet (empty_slot);
+    return slot;
+}
+
+Slot& WriteLine () {
+    return Out () << '\n';
+}
+
+Slot& Dump () {
+    Slot& write  = Out ();
+    char* begin,
+        * cursor = write.start,
+        * stop   = write.stop,
+        * end    = write.end;
+    while (cursor != stop) {
+        if (cursor > end) {
+            cursor == begin;
+        }
+        std::cerr << *cursor++;
+    }
+}
+
+Slot& Line (Slot& slot, char token, const char* header, int length) {
+    #if DEBUG_SCRIPT_SLOT
+    Write () << header << "Writing Line with length " << length;
+    #endif
+
+    char* begin  = slot.begin,
+        * start  = slot.start,
+        * cursor = slot.stop,
+        * end    = slot.end;
+
+    stop = SlotWrite (cursor, end, header);
+
+    if (!stop) {
+    #if DEBUG_SCRIPT_SLOT
+        Write () << "\n Error writing header!";
+    #endif
+        return slot;
+    }
+    #if DEBUG_SCRIPT_SLOT
+    Write () << "... wrote " << SlotLength (cursor) << " chars.";
+    #endif
+    stop = cursor + length;
+    if ((cursor + length) > end) {
+        stop = end;
+    }
+    #if DEBUG_SCRIPT_SLOT
+    Write () << "\n new_stop_length:" << stop - cursor;
+    #endif
+
+    while (cursor < stop) {
+        *cursor++ = token;
+    }
+    *cursor = 0;
+    #if DEBUG_SCRIPT_SLOT
+    Write () << "\n Wrote " << SlotLength (cursor_) << " chars: " 
+              << cursor_ << '\n';
+    #endif
+    cursor_ = cursor;
+    return slot;
+}
+
+Slot& LineString (Slot& slot, const char* string, int num_columns) {
+    //Line ();
+    char* begin     = slot.begin,
+        * cursor    = slot.start,
+        * last_char = cursor + num_columns + 1, //< +1 for nil-term char.
+        * end       = GetEnd ();
+
+    const char* read = string;
+    if (num_columns < 1) {
+        return slot;
+    }
+    if (!string) {
+        return slot;
+    }
+    if (cursor == end) {
+        return slot;
+    }
+    if (last_char > end) { // Chop of some of the columns.
+        last_char = end;
+    }
+
+    while (cursor < last_char) {
+        char c = *read++;
+        if (!c) {
+            *cursor++ = '_';
+            read = string;
+        }
+    }
+    *cursor_ = 0;
+    cursor_ = cursor;
+    return slot;
+}
+
+Slot& LineBreak (Slot& slot, const char* message, int top_bottom_margin,
+                           char c, int num_columns) {
+    Lines (slot, top_bottom_margin);
+    slot << "\n " << message;
+    return Line (slot, c, "\n", num_columns);
+}
+
+Slot& Lines (Slot& slot, int num_rows) {
+    char* cursor = slot.stop + 1,
+        * end    = slot.end,
+        * stop   = cursor + num_rows + 1;
+    while (cursor < stop) {
+        *cursor++ = '\n';
+    }
+    *cursor = 0;
+    cursor_ = cursor + 1;
+    return slot;
+}
+
+Slot& Hex (Slot& slot, const void* pointer) {
+    // @todo Replace with PrintHex.
+    int bytes_written = sprintf_s (cursor_, end_ - cursor_,
+                                   "0x%p", pointer);
+    cursor_ += bytes_written;
+    return slot;
+}
+
+Slot& Memory (Slot& slot, const void* address, const void* stop) {
+    // Todo: Rewrite with 
+    //
+    slot << "\n " << 0;
+    //  columns
+    for (int i = 8; i <= 66; i += 8) {
+        Right (slot, i, 8);
+    }
+    Out () << "\n|";
+    for (int i = 0; i < 65; ++i) {
+        slot << '_';
+    }
+
+    const char* chars = reinterpret_cast<const char*> (address);
+    char temp;
+    while (chars < stop) {
+        Out () << "\n|";
+        for (int i = 0; i < 64; ++i) {
+            temp = *chars;
+            if (chars >= stop)
+                temp = 'x';
+            putchar (temp);
+            ++chars;
+        }
+        slot << "| " << Hex (slot, chars + MemoryVector (address, stop));
+    }
+    Out () << "\n|";
+    for (int i = 0; i < 64; ++i) {
+        Out () << '_';
+    }
+    return slot << "| " << Hex (slot, chars + MemoryVector (address, stop));
+}
+
+Slot& Memory (Slot& slot, const void* address, int size) {
+    return Memory (slot, address, reinterpret_cast<const char*> (address) +
+                   size);
+}
+
+Slot& Hex (Slot& slot, byte c) {
+    uint16_t chars = MemoryByteToUpperCaseHex (c);
+    return slot << (char)chars << ((char)(chars >> 8)) << ' ';
+}
+
+Slot& WriteError (const char* message, const char* end_string) {
+    return Out () << "\n Error: " << message << end_string;
+}
+
+static const char kDigits0To99[] =
+    "0001020304050607080910111213141516171819"
+    "2021222324252627282930313233343536373839"
+    "4041424344454647484950515253545556575859"
+    "6061626364656667686970717273747576777879"
+    "8081828384858687888990919293949596979899";
+
+typedef long long int64_t;
+typedef unsigned long long uint64_t;
+
+// Formats value in reverse and returns the number of digits.
+template<typename UI>
+char* FormatUnsiged (UI value) {
+
+    enum {
+        // 
+        kMinBufferSize = std::numeric_limits<UI>::digits10 + 3
+    };
+
+    const char* digit;
+    char *buffer_end = buffer_ + kMinBufferSize - 1;
+
+    while (value >= 100) {
+        // Algorithm stolen fair and square from Alexandrescu's "Three 
+        // Optimization Tips for C++" and optimized by Cale McCollough.
+
+        unsigned index = static_cast<unsigned>((value % 100) << 1);
+        // << 1 to * 2
+        value /= 100;
+        digit = &kDigits0To99[index];
+        *(buffer_end - 1) = *(digit + 1);
+        *(buffer_end - 2) = *digit;
+        buffer_end -= 2;
+    }
+    if (value < 10) {
+        *(buffer_end - 1) = '0' + value;
+        return buffer_end;
+    }
+
+    unsigned index = static_cast<unsigned>(value * 2);
+    digit = &kDigits0To99[index];
+    *(buffer_end - 1) = *(digit + 1);
+    *(buffer_end - 2) = *digit;
+    buffer_end -= 2;
+    return buffer_end;
+}
+
+template<typename UI, typename SI>
+void FormatSigned (SI value) {
+    UI abs_value = static_cast<SI>(value);
+    bool negative = value < 0;
+    if (negative) {
+        abs_value = 0 - abs_value;
+    }
+    str_ = FormatUnsiged (abs_value);
+    if (negative) {
+        *--str_ = '-';
+    }
+}
+
+void SlotInit (Slot* slot, uintptr_t* begin, uintptr_t size) {
     if (!slot) {
         slot->begin = 0;
         slot->start = 0;
@@ -45,8 +289,8 @@ void SlotInit (Slot* slot, char* begin, uintptr_t size) {
 
 inline const Op* SlotError (Slot* slot, Error error,
                             const uint_t* header) {
-#if SCRIPT_DEBUG == SCRIPT_SLOT
-    CErrLine (ErrorStrings ()[error]);
+#if DEBUG_SCRIPT_SLOT
+    WriteLine () << ErrorStrings ()[error]);
 #endif
     return reinterpret_cast<const Op*> (error);
 }
@@ -54,8 +298,8 @@ inline const Op* SlotError (Slot* slot, Error error,
 inline const Op* SlotError (Slot* slot, Error error,
                             const uint_t* header,
                             byte offset) {
-#if SCRIPT_DEBUG == SCRIPT_SLOT
-    CErrLine ("\n| " << ErrorStrings ()[error]);
+#if DEBUG_SCRIPT_SLOT
+    WriteLine () << ErrorStrings ()[error];
 #endif
     return reinterpret_cast<const Op*> (error);
 }
@@ -64,22 +308,244 @@ inline const Op* SlotError (Slot* slot, Error error,
                             const uint_t* header,
                             uint_t offset,
                             char* address) {
-#if SCRIPT_DEBUG == SCRIPT_SLOT
-    CErrLine ("\n| " << ErrorStrings ()[error]);
+#if DEBUG_SCRIPT_SLOT
+    WriteLine () << ErrorStrings ()[error]);
 #endif
     return reinterpret_cast<const Op*> (error);
 }
 
 inline const Op* SlotError (Slot* slot, Error error) {
-#if SCRIPT_DEBUG == SCRIPT_SLOT
-    CErrLine ("\n| " << ErrorStrings ()[error]);
+#if DEBUG_SCRIPT_SLOT
+    WriteLine () << ErrorStrings ()[error]);
 #endif
     return reinterpret_cast<const Op*> (error);
 }
 
-const char* SlotStar (const char* args_cursor, const char* args_end,
-                       const uint_t* params, void** args) {
-    return nullptr;
+Slot& SlotWrite (Slot& slot, const char* strand) {
+    if (!strand) {
+        return slot;
+    }
+    char* cursor = slot.stop + 1,
+        * end    = slot.end;
+    char c = *strand;
+    ++strand;
+    while (c) {
+        if (cursor > end) {
+            cursor = slot.start;
+        }
+        *cursor = c;
+        ++cursor;
+        c = *strand;
+        ++strand;
+    }
+    *cursor = 0;
+    return slot;
+}
+
+/*
+Slot& SlotWrite (Slot& slot, const char* strand,
+                   char delimiter) {
+    if (!strand) {
+        return slot;
+    }
+    char* cursor = target;
+    char s = *strand;
+    while (s != delimiter) {
+        if (!s) {
+            *target = 0; //< Replace the nil-term char.
+            return slot;
+        }
+        *cursor = s;
+        if (++cursor > target_end) {
+            *target = 0; //< Replace the nil-term char.
+            return slot;
+        }
+        ++strand;
+        s = *strand;
+    }
+    *cursor = s;
+    return slot;
+}
+
+Slot& SlotWrite (Slot& slot, const char* strand,
+                   const char* strand_end) {
+    if (!strand) {
+        return slot;
+    }
+    if (strand > strand_end) {
+        return slot;
+    }
+    char* cursor = target;
+    char t = *strand;
+    while (t) {
+        *cursor = t;
+        if (++cursor > target_end) {
+            *target = 0;
+            return slot;
+        }
+        if (++strand > strand_end) {
+            *target = 0;
+            return slot;
+        }
+        t = *strand;
+    }
+    *cursor = t;
+    return slot;
+}
+
+Slot& SlotWrite (Slot& slot, const char* strand,
+                   const char* strand_end, char delimiter) {
+    if (target > target_end) {
+        return slot;
+    }
+    if (!strand) {
+        return slot;
+    }
+    if (strand > strand_end) {
+        return slot;
+    }
+    char* cursor = target;
+    char t = *strand;
+    while (t != delimiter) {
+        if (!t) {
+            //Write () << "\n There was a !t error in SlotWrite.";
+            return target;
+        }
+        *target = t;
+        if (++target > target_end) {
+            *target = 0;
+            return slot;
+        }
+        if (++strand > strand_end) {
+            *target = 0;
+            return slot;
+        }
+        t = *strand;
+    }
+    *target = t;
+    return target;
+}
+*/
+
+Slot& SlotWrite (Slot& slot, int8_t value) {
+    // Right now we're going to enforce there be enough room to write any
+    // int32_t.
+    intptr_t buffer_size = target_end - target,
+        result = sprintf_s (target, buffer_size, "%i", value);
+    if (result < 0) {
+        return slot;
+    }
+    return target + result;
+}
+
+Slot& SlotWrite (Slot& slot, uint8_t value) {
+    // Right now we're going to enforce there be enough room to write any
+    // int32_t.
+    enum { kStringSizeMax = 4 };
+
+    intptr_t buffer_size = target_end - target,
+        result = sprintf_s (target, buffer_size, "%u", value);
+    if (result < 0) {
+        *target = 0;
+        return slot;
+    }
+    return target + result;
+}
+
+Slot& SlotWrite (Slot& slot, int16_t value) {
+    // Right now we're going to enforce there be enough room to write any
+    // int32_t.
+    intptr_t buffer_size = target_end - target,
+        result = sprintf_s (target, buffer_size, "%i", value);
+    if (result < 0) {
+        *target = 0;
+        return slot;
+    }
+    return target + result;
+}
+
+Slot& SlotWrite (Slot& slot, uint16_t value) {
+    // Right now we're going to enforce there be enough room to write any
+    // int32_t.
+    intptr_t buffer_size = target_end - target,
+             result      = sprintf_s (target, buffer_size, "%u", value);
+    if (result < 0) {
+        *target = 0;
+        return slot;
+    }
+    return target + result;
+}
+
+Slot& SlotWrite (Slot& slot, int32_t value) {
+    // Right now we're going to enforce there be enough room to write any
+    // int32_t.
+    intptr_t buffer_size = target_end - target,
+             result = sprintf_s (target, buffer_size, "%i", value);
+    if (result < 0) {
+        *target = 0;
+        return slot;
+    }
+    return target + result;
+}
+
+Slot& SlotWrite (Slot& slot, uint32_t value) {
+    // Right now we're going to enforce there be enough room to write any
+    // int32_t.
+    intptr_t buffer_size = target_end - target,
+             result = sprintf_s (target, buffer_size, "%u", value);
+    if (result < 0) {
+        *target = 0;
+        return slot;
+    }
+    return target + result;
+}
+
+Slot& SlotWrite (Slot& slot, int64_t value) {
+    // Right now we're going to enforce there be enough room to write any
+    // int32_t.
+    intptr_t buffer_size = target_end - target,
+             result = sprintf_s (target, buffer_size, "%lli", value);
+    if (result < 0) {
+        *target = 0;
+        return slot;
+    }
+    return target + result;
+}
+
+Slot& SlotWrite (Slot& slot, uint64_t value) {
+    // Right now we're going to enforce there be enough room to write any
+    // int32_t.
+    intptr_t result = sprintf_s (target, target_end - target, "%llu", value);
+    if (result <= 0) {
+        *target = 0;
+        return slot;
+    }
+    Out () << "\n !!! " << target << " result:" << result;
+    return target + result;
+}
+
+Slot& SlotWrite (Slot& slot, float value) {
+    // Right now we're going to enforce there be enough room to write any
+    // int32_t.
+    intptr_t buffer_size = target_end - target,
+             result = sprintf_s (target, buffer_size, "%f", value);
+    if (result < 0) {
+        *target = 0;
+        return slot;
+    }
+    return target + result;
+}
+
+Slot& SlotWrite (Slot& slot, double value) {
+    // Right now we're going to enforce there be enough room to write any
+    // int32_t.
+    intptr_t buffer_size = target_end - target,
+             result = sprintf_s (target, buffer_size, "%f", value);
+    if (result < 0) {
+        *target = 0;
+        return slot;
+    }
+    return target + result;
 }
 
 void* SlotContains (Slot* slot, void* address) {
@@ -98,8 +564,9 @@ void* SlotContains (Slot* slot, void* address) {
 }
 
 void SlotWipe (Slot* slot) {
-    if (!slot)
+    if (!slot) {
         return;
+    }
     char* begin = reinterpret_cast<char*> (slot) + sizeof (Slot),
         * start = slot->start,
         * stop  = slot->stop,
@@ -173,7 +640,7 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
     if (!args) {
         return SlotError (slot, kErrorImplementation);
     }
-    const     uint_t* params = op.params;
+    const     uint_t* params = op.in;
     byte      ui1;     //< Temp variable to load most types.
     uint16_t  ui2;     //< Temp variable for working with UI2 types.
     #if USING_SCRIPT_4_BYTE_TYPES
@@ -198,8 +665,8 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
         return nullptr;
     }
 
-    #if SCRIPT_DEBUG == SCRIPT_SLOT
-    COut ("\n\n| Reading BIn: ");
+    #if DEBUG_SCRIPT_SLOT
+    Write () << "\n\nReading BIn: ";
     #endif
 
     char* begin = slot->begin,        //< Beginning of the buffer.
@@ -212,11 +679,11 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
 
     length = SlotLength (start, stop, size);
 
-    #if SCRIPT_DEBUG == SCRIPT_SLOT
+    #if DEBUG_SCRIPT_SLOT
     //Text<> text;
-    //text << "\n\n| Reading BIn:"
+    //text << "\n\nReading BIn:"
     //     << BsqPrint (params)
-    //     << "\n| begin: " << Pointer (text , begin) 
+    //     << "\nbegin: " << Pointer (text , begin) 
     //     << " start:"     << MemoryVector (begin, start)
     //     << " stop:"      << MemoryVector (begin, stop )
     //     << " end:"       << MemoryVector (begin, end  )
@@ -227,11 +694,11 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
     for (index = 0; index < num_params; ++index) {
         type = (byte)*param;
         ++param;
-    #if SCRIPT_DEBUG == SCRIPT_SLOT
-        std::cout << "\n| index " << index << ": " << TypeString (type) 
-                    << "  start:" << MemoryVector (begin, start)
-                    << ", stop:" << MemoryVector (begin, stop);
-    #endif
+        #if DEBUG_SCRIPT_SLOT
+        Write () << "\nindex " << index << ": " << TypeString (type) 
+                 << "  start:" << MemoryVector (begin, start)
+                 << ", stop:" << MemoryVector (begin, stop);
+        #endif
 
         switch (type) {
             case NIL:
@@ -243,7 +710,7 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
                 count = *param;
                 ++param;
 
-                //std::cout << "\n| Reading char with max length " << count;
+                //Write () << "\nReading char with max length " << count;
 
                 // Load next pointer and increment args.
                 ui1_ptr = reinterpret_cast<char*> (args[index]);
@@ -262,8 +729,8 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
                         return SlotError (slot, kErrorBufferUnderflow,
                                           params, index, start);
                     }
-                    #if SCRIPT_DEBUG == SCRIPT_SLOT
-                    COut (ui1);
+                    #if DEBUG_SCRIPT_SLOT
+                    Write () << ui1;
                     #endif
 
                     ui1 = *start;       // Read byte from ring-buffer.
@@ -274,8 +741,8 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
                     ++ui1_ptr;
                 }
                     
-                #if SCRIPT_DEBUG == SCRIPT_SLOT
-                COut (" done!\n");
+                #if DEBUG_SCRIPT_SLOT
+                Write () << " done!\n";
                 #endif
 
                 if (type == 0) {
@@ -536,13 +1003,13 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
                 break;
                 #endif
             }
-            #if SCRIPT_DEBUG == SCRIPT_SLOT
-            std::cout << " |";
+            #if DEBUG_SCRIPT_SLOT
+            Write () << " |";
             #endif
         }
     }
-    #if SCRIPT_DEBUG == SCRIPT_SLOT
-    std::cout << "\n| Done reading";
+    #if DEBUG_SCRIPT_SLOT
+    Write () << "\nDone reading";
     SlotWipe (slot);
     #endif
 
@@ -554,151 +1021,6 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
 
 const Op* SlotWrite (Slot* slot, const Op& op, void** args) {
     return nullptr;
-}
-
-const char* SlotStar (Slot* slot, const uint_t* params,
-                      const char* input, const char* input_end) {
-    if (!slot) {
-        return "slot can't be nil!";
-    }
-    if (!params) {
-        return "params can't be nil!";
-    }
-    
-    int8_t          si1;        //< Temp SI1 variable.
-    uint8_t         ui1;        //< Temp UI1 variable.
-    int16_t         si2;        //< Temp SI2 variable.
-    uint16_t        ui2;        //< Temp UI2 variable.
-    #if USING_SCRIPT_4_BYTE_TYPES
-    uint32_t        si4;        //< Temp SI4 variable.
-    uint32_t        ui4;        //< Temp UI4 variable.
-    #endif
-    #if USING_SCRIPT_8_BYTE_TYPES
-    uint64_t        si8;        //< Temp SI8 variable.
-    uint64_t        ui8;        //< Temp UI8 variable.
-    float           flt;        //< Temp FLT variable.
-    double          dbl;        //< Temp DBL variable.
-    #endif
-    const int8_t  * si1_ptr;    //< Temp pointer to SI1.
-    const uint8_t * ui1_ptr;    //< Pointer to a UI1.
-    const uint16_t* ui2_ptr;    //< Pointer to a UI2.
-    const uint32_t* ui4_ptr;    //< Pointer to a UI4.
-    const uint64_t* ui8_ptr;    //< Pointer to a UI8.
-    uint_t          type,       //< Current type being read.
-                    index,      //< Index in the escape sequence.
-                    num_params; //< Number of params.
-    uintptr_t       size,       //< Size of the ring buffer.
-                    length,     //< Length of the data in the buffer.
-                    count;      //< Argument length.
-    const char    * input_cursor;
-
-    num_params = *params;
-
-    if (!num_params) {
-        return nullptr;
-    }
-
-    #if SCRIPT_DEBUG == SCRIPT_SLOG
-    COut ("\n\n| Reading BIn: ");
-    #endif
-
-    char        * slot_begin  = slot->begin, //< Beginning of the buffer. 
-                * slot_cursor = slot->start, //< start of the data.
-                * slot_stop   = slot->stop,  //< stop of the data.
-                * slot_end    = slot->end;   //< end of the buffer.
-    const uint_t* param       = params + 1;  //< current param.
-    size = slot_end - slot_begin;
-    length = SlotLength (slot_cursor, slot_stop, size);
-
-    #if SCRIPT_DEBUG == SCRIPT_SLOT
-    Text<> text;
-    COut (text << "\n\n| Evaluating B-Sequence:"
-               << BsqPrint (params, text));
-    #endif
-    // When we scan, we are reading from the beginning of the BIn buffer.
-
-    for (index = 0; index < num_params; ++index) {
-        type = (byte)*param;
-        ++param;
-        #if SCRIPT_DEBUG == SCRIPT_SLOT
-        #endif
-
-        switch (type) {
-            case NIL:
-                return "type can't be nil!";
-            case ADR:
-            case STR:
-                
-                break;
-            #if USING_SCRIPT_1_BYTE_TYPES
-            case SI1:
-            case UI1:
-            case BOL: {
-                input_cursor = StrandRead (input, input_end, si1);
-                if (!input_cursor) {
-                    return "Error reading SI1";
-                }
-                *reinterpret_cast<int8_t*> (slot_cursor) = si1;
-                slot_cursor += sizeof (int8_t);
-                if (slot_cursor > slot_end) {
-                    slot_cursor = slot_begin;
-                }
-                break;
-            }
-            #else
-            case SI1:
-            case UI1:
-            case BOL:
-                return SlotError (slot, kErrorInvalidType);
-            #endif
-            case SI2:
-            case UI2:
-            case HLF:
-            #if WORD_SIZE <= 16
-            case SVI: //< Slots don't compress Varints.
-            case UVI:
-            #endif
-            #if USING_SCRIPT_2_BYTE_TYPES
-
-            #endif
-            case SI4:
-            case UI4:
-            case FLT:
-            case TMS:
-            #if WORD_SIZE > 16
-            case SVI: // Slots don't compress Varints.
-            case UVI:
-            #endif
-            #if USING_SCRIPT_4_BYTE_TYPES
-                
-            #else
-            return SlotError (slot, kErrorInvalidType);
-            #endif
-            case SI8:
-            case UI8:
-            case DBL:
-            case TMU:
-            case SV8:
-            case UV8:
-            #if USING_SCRIPT_8_BYTE_TYPES
-            input_cursor = StrandRead (input, input_end, ui8);
-            if (!input_cursor) {
-                return "Error reading UV8. (:(-+=<";
-            }
-            slot_cursor += MemoryAlign8 (slot_begin);
-            if (slot_cursor > slot_end) {
-                length -= (slot_end - slot_cursor) + 1;
-                slot_cursor = slot_begin;
-            }
-            #else
-            #endif
-            default: {
-            }
-        }
-        #if SCRIPT_DEBUG == SCRIPT_SLOT
-        COut (" |");
-        #endif
-    }
 }
 
 }       //< namespace _

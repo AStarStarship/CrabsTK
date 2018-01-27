@@ -1,3 +1,3 @@
 # kabuki::data
 
-The kabuki::data library contains some data structures for working with
+The kabuki::data library contains some data structures that use contiguitous memory.

@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/bin.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -33,23 +33,23 @@ struct KABUKI BIn {
     /** List of Finite BIn States.
         @see Script Protocol RFC for list of states. */
     typedef enum States {
-        AddressState = 0,   //< State  0: Scanning address.
-        ArgsState,          //< State  1: Scanning arguments.
-        Utf8State,          //< State  2: Scanning STR.
-        Utf16State,         //< State  3: Scanning ST2.
-        Utf32State,         //< State  4: Scanning ST8.
-        VarintState,        //< State  5: Scanning varint.
-        ObjectState,        //< State  6: 8-bit OB1 state.
-        HashState,          //< State  7: Stand the 32-bit hash.
-        ErrorState,         //< State  8: Handling an error state.
+        kStateAddress = 0,   //< State  0: Scanning address.
+        kStatePackedArgs,    //< State  1: Scanning arguments.
+        kStatePackedUtf8,    //< State  2: Scanning UTF-8 string.
+        kStatePackedUtf16,   //< State  3: Scanning UTF-16 string.
+        kStatePackedUtf32,   //< State  4: Scanning UTF-32 string.
+        kStatePackedVarint,  //< State  5: Scanning varint.
+        kStatePackedObject,  //< State  6: 8-bit OB1 state.
+        kStateVerifyingHash, //< State  7: Stand the 32-bit hash.
+        kStateHandlingError, //< State  8: Handling an error state.
         kStateDisconnected,  //< State  9: Disconnected state.
-        AckState,           //< State 10: Awaiting connection ACK.
-        LockedState,        //< State 11: Locked state.
-        PodState,           //< State 12: Scanning plain-old-data.
+        kStateAck,           //< State 10: Awaiting connection ACK.
+        kStateLocked,        //< State 11: Locked state.
+        kStatePackedPod,     //< State 12: Scanning plain-old-data.
     } State;
 
     uint_t          size,   //< The size of the buffer.
-        start;  //< The starting index of the ring buffer data.
+                    start;  //< The starting index of the ring buffer data.
     volatile uint_t stop;   //< The stopping index of the ring buffer data.
     uint_t          read;   //< The read variable.
 };
@@ -62,8 +62,8 @@ inline void BInSlot (BIn* bin, Slot& slot) {
     char* begin = reinterpret_cast<char*> (bin) + sizeof (BIn);
     slot.begin = begin;
     slot.start = begin + bin->start;
-    slot.stop = begin + bin->stop;
-    slot.end = begin + bin->size;
+    slot.stop  = begin + bin->stop;
+    slot.end   = begin + bin->size;
 }
 
 /** Get's the B-Input's buffer.*/
@@ -116,7 +116,7 @@ KABUKI bool BInIsReadable (BIn* bin);
     The data in the BIn is word-aligned, unlike the Slot. It also
     doesn't have a hash with an escape sequence.
 
-    @param rx The BIn socket.
+    @param rx     The BIn socket.
     @param params The parameters.
     @param args   The arguments.
     @return       Returns 0 upon success and an ErrorList ticket number upon
@@ -128,7 +128,7 @@ KABUKI const Op* BInRead (BIn* bin, const uint_t* params, void** args);
     @param  bin The pin to print.
     @param  text The Text to print the bin to.
     @return The text. */
-KABUKI Strand& BInPrint (BIn* bin, Strand& strand);
+KABUKI Slot& BInPrint (BIn* bin, Slot& slot);
 #endif  //< USING_SCRIPT_TEXT
 }       //< namespace _
 #endif  //< HEADER_FOR_SCRIPT_BIN

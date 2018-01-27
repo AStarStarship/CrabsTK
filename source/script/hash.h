@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/hash.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -25,7 +25,7 @@
 namespace _ {
 
 /** Hashes a single byte. */
-inline hash16_t Hash16 (char c, hash16_t hash) {
+inline uint16_t Hash16 (char c, uint16_t hash) {
     return (c * kLargest16BitPrime) + hash;
 }
 
@@ -40,10 +40,10 @@ inline hash64_t Hash64 (char c, hash64_t hash) {
 }
 
 /** Hashes the given char using the primeHash function. */
-KABUKI hash16_t Hash16 (const char* string, hash16_t hash = kLargest16BitPrime);
+KABUKI uint16_t Hash16 (const char* string, uint16_t hash = kLargest16BitPrime);
 
 /** Hashes the given char using the primeHash function. */
-KABUKI hash16_t Hash32 (const char* string, hash32_t hash = kLargest32BitPrime);
+KABUKI uint16_t Hash32 (const char* string, hash32_t hash = kLargest32BitPrime);
 
 /** Hashes the given char using the primeHash function. */
 KABUKI hash64_t Hash64 (const char* string, hash64_t hash = kLargest64BitPrime);

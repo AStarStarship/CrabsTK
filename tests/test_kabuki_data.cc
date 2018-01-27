@@ -26,11 +26,11 @@ TEST_GROUP (SCRIPT_DATA_TESTS) {
 
     void setup () {
         Text<> ().Line () << std::cout;
-        std::cout << "\n|  + Running kabuki::data tests...";
+        std::cout << "\n  + Running kabuki::data tests...";
     }
 
     void teardown () {
-        std::cout << "\n| kabuki::data completed.";
+        std::cout << "\n kabuki::data completed.";
     }
 };
 

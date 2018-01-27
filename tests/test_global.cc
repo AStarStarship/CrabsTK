@@ -1,7 +1,7 @@
 /** Kabuki Toolkit
     @file    ~/projects/test_kabuki_toolkit.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -21,11 +21,11 @@ int main (int args_count, char** args) {
     for (int i = 79; i > 0; --i) {
         std::cout << '-';
     }
-    std::cout << "\n| Kabuki Toolkit Tests\n|";
+    std::cout << "\n Kabuki Toolkit Tests\n";
     for (int i = 79; i > 0; --i) {
         std::cout << '-';
     }
-    std::cout << "\n|\n|";
+    std::cout << "\n\n";
     
     return CommandLineTestRunner::RunAllTests (args_count, args);
 }

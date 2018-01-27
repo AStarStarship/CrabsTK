@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/expr.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -84,33 +84,33 @@ struct Expr {
     } Error;
 
     enum {
-        kMinStackSize = 16,      //< Size of the expr stack.
-        kMinBufferSize = 2,      //< Min buffer size.
+        kMinStackSize = 16,       //< Size of the expr stack.
+        kMinBufferSize = 2,       //< Min buffer size.
     };
     
-    uint_t        size,          //< Offset to the BOut slot.
-                  header_size,   //< The total size of the header.   
-                  stack_count,   //< Stack Operand count.
-                  stack_size,    //< Stack Operand buffer size.
-                  type,          //< Current type being scanned.
-                  num_states,    //< Number of states on the state stack.
-                  bytes_left,    //< Countdown counter for parsing POD types.
-                  params_left;   //< Height of header and cursors stacks.
-    byte          bout_state,    //< BOut streaming state.
-                  bin_state,     //< Slot streaming state.
-                  last_bin_state,//< Last BIn state.
-                  last_byte;     //< Last byte read.
-    uint32_t      utf32_char;    //< Current UTF-32 char being scanned.
-    hash16_t      hash;          //< BIn data verification hash.
-    uint32_t      timeout_us ;   //< Timeout time in microseconds.
-    time_us_t     last_time;     //< Last time the Stack was scanned.
-    const Op    * result;        //< Result of the Expr.
-                                 //< expr is operating on.
-    const uint_t* header,        //< Pointer to the header being verified.
-                * header_start;  //< Start of the header being verified.
-    Operand     * operand,       //< Current script Operand.
-                * root;          //< Root-level scope Operand.
-    Slot          slot;          //< Slot for unpacking B-Sequences to.
+    uint_t        size,           //< Offset to the BOut slot.
+                  header_size,    //< The total size of the header.   
+                  stack_count,    //< Stack Operand count.
+                  stack_size,     //< Stack Operand buffer size.
+                  type,           //< Current type being scanned.
+                  num_states,     //< Number of states on the state stack.
+                  bytes_left,     //< Countdown counter for parsing POD types.
+                  params_left;    //< Height of header and cursors stacks.
+    byte          bout_state,     //< BOut streaming state.
+                  bin_state,      //< Slot streaming state.
+                  last_bin_state, //< Last BIn state.
+                  last_byte;      //< Last byte read.
+    wchar_t       current_char;   //< Current Unicode char being scanned.
+    hash16_t      hash;           //< Packed BSQ hash.
+    uint32_t      timeout_us;     //< Timeout time in microseconds.
+    time_us_t     last_time;      //< Last time the Stack was scanned.
+    const Op    * result;         //< Result of the Expr.
+    const uint_t* header,         //< Pointer to the header being verified.
+                * header_start;   //< Start of the header being verified.
+    Operand     * operand,        //< Current script Operand.
+                * root;           //< Root-level scope Operand.
+    Slot        * args;           //< Arguments slot for running
+    Slot          slot;           //< Slot for unpacking B-Sequences to.
 };
 
 /** Gets a pointer to the BIn slot. */
@@ -217,7 +217,7 @@ inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
 /** Pops the args off the Expr Args Stack. */
 inline const Op* ExprArgs (Expr* expr, const Op& op,
                            void** args) {
-    return BInRead (ExprBIn (expr), op.params, args);
+    return BInRead (ExprBIn (expr), op.in, args);
 }
 
 /** Writes the result to the Expr.
@@ -225,7 +225,7 @@ inline const Op* ExprArgs (Expr* expr, const Op& op,
     @param  op   The Operation with result B-Sequence header.
     @param  args Pointers to the B-Sequence args. */
 inline const Op* ExprResult (Expr* expr, const Op& op, void** args) {
-    return BOutWrite (ExprBOut (expr), op.result, args);
+    return BOutWrite (ExprBOut (expr), op.out, args);
 }
 
 /** Writes the result to the Expr.
@@ -236,7 +236,7 @@ inline const Op* ExprResult (Expr* expr, const Op* op, void** args) {
     if (!op) {
         return nullptr;
     }
-    return BOutWrite (ExprBOut (expr), op->result, args);
+    return BOutWrite (ExprBOut (expr), op->out, args);
 }
 
 /** Returns the Operand header or writes it to the Expr.
@@ -253,10 +253,10 @@ KABUKI const Op* ExprQuery (Expr* expr, const Op* op);
 
 #if USING_SCRIPT_TEXT
 /** Prints the Expr stack to the Text buffer */
-KABUKI Strand& ExprPrint (Expr* expr, Strand& strand);
+KABUKI Slot& ExprPrint (Expr* expr, Slot& slot);
 
 /** Prints the Expr stack to the Text buffer */
-KABUKI Strand& ExprPrintStack (Expr* expr, Strand& strand);
+KABUKI Slot& ExprPrintStack (Expr* expr, Slot& slot);
 
 /** Prints the Expr stack to the Text buffer */
 //KABUKI Text& ExprPrintStateStack (Expr* expr, Text& text);
@@ -267,7 +267,7 @@ KABUKI Strand& ExprPrintStack (Expr* expr, Strand& strand);
 
 #if USING_SCRIPT_TEXT
 /** Prints the given Expr to the Text buffer. */
-inline _::Strand& operator<< (_::Strand& strand, _::Expr* expr);
+inline _::Slot& operator<< (_::Slot& slot, _::Expr* expr);
 #endif
 
 #endif  //< HEADER_FOR_SCRIPT_EXPR

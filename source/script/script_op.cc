@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/script_op.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
              2.0 (the "License"); you may not use this file except in
              compliance with the License. You may obtain a copy of the License
@@ -21,14 +21,14 @@
 namespace _ {
 
 #if USING_SCRIPT_TEXT
-Strand& OpPrint (const Op* op, Strand& strand) {
+Slot& OpPrint (const Op* op, Slot& slot) {
     if (!op) {
-        return strand << "\n| Op: nil";
+        return slot << "\nOp: nil";
     }
-    return strand << "\n| Op        :" << op->name
-                  << "\n| Bsq    :" << BsqPrint (op->params, strand)
-                  << "\n| Result:   :" << BsqPrint (op->result, strand)
-                  << "\n| Metadata: :" << op->description;
+    return slot << "\nOp      :" << op->name
+                  << "\nBsq     :" << BsqPrint (op->in, slot)
+                  << "\nResult: :" << BsqPrint (op->out, slot)
+                  << "\nMetadata:" << op->description;
 }
 #endif  //< USING_SCRIPT_TEXT
 /*
@@ -41,11 +41,10 @@ Op OpInit (uintptr_t* buffer, uint_t buffer_size) {
 }
 
 void OpPrint (Op& log) {
-
     BIn    * bin = reinterpret_cast<BIn*> (log.bout);
     void   * args[1];
-    byte     type = 0,                                             
-             ui1;
+    byte     type = 0,
+    ui1;
     uint16_t ui2;
     uint32_t ui4;
     uint64_t ui8;
@@ -57,107 +56,87 @@ void OpPrint (Op& log) {
     float    flt;
     double   dbl;
     char_t   index;
-
     //if (BinReadChar (reinterpret_cast<BIn*> (log.bout), index))
     //    return;
-
     char buffer[DBL_MAX_10_EXP + 2];
-
     while (index ) {
-
         switch (type) {
             case STR: {
                 if (BinRead (bin, Bsq<2, ADR, STR> (), Args (args, &ui1,
-                    buffer)))
+                             buffer)))
                     return;
-                std::cout << buffer;
+                Write (buffer);
             }
             case SI1: {
                 if (BinRead (bin, Bsq<2, ADR, SI1> (), Args (args, &si1)))
                     return;
-                std::cout << si1;
+                Write (si1);
             }
-            case UI1:
-            {
+            case UI1: {
                 if (BinRead (bin, Bsq<2, ADR, UI1> (), Args (args, &ui1)))
                     return;
-                std::cout << si1;
+                Write (si1);
             }
-            case BOL:
-            {
+            case BOL: {
                 if (BinRead (bin, Bsq<2, ADR, SI1> (), Args (args, &si1)))
                     return;
-                std::cout << si1;
+                Write (si1);
             }
-            case SI2:
-            {
+            case SI2: {
                 if (BinRead (bin, Bsq<2, ADR, SI2> (), Args (args, &si2)))
                     return;
-                std::cout << si1;
+                Write (si1);
             }
-            case UI2:
-            {
-                if (BinRead (bin, Bsq<2, ADR, UI2> (), Args (args, &ui2,
-                    buffer)))
+            case UI2: {
+                if (BinRead (bin, Bsq<2, ADR, UI2> (), 
+                             Args (args, &ui2, buffer)))
                     return;
-                std::cout << si1;
+                Write (si1);
             }
-
-            case SI4:
-            {
-                if (BinRead (bin, Bsq<2, ADR, SI4> (), Args (args, &si4,
-                    buffer)))
+            case SI4: {
+                if (BinRead (bin, Bsq<2, ADR, SI4> (),
+                             Args (args, &si4, buffer)))
                     return;
-                std::cout << si1;
+                Write (si1;
             }
-
-            case UI4:
-            {
+            case UI4: {
                 if (BinRead (bin, Bsq<2, ADR, UI4> (), Args (args, &ui4)))
                     return;
-                std::cout << si1;
+                Write (si1;
             }
-
-            case SI8:
-            {
+            case SI8: {
                 if (BinRead (bin, Bsq<2, ADR, SI8> (), Args (args, &si8)))
                     return;
-                std::cout << si8;
+                Write (si8;
             }
-
-            case UI8:
-            {
+            case UI8: {
                 if (BinRead (bin, Bsq<2, ADR, UI8> (), Args (args, &ui8)))
-                    return;
-                std::cout << ui8;
+                 return;
+                Write (ui8;
             }
-            case TMS:
-            {
+            case TMS: {
                 if (BinRead (bin, Bsq<2, ADR, TMS> (), Args (args, &ui4)))
                     return;
                 ClockPrintTime (ui4);
             }
-            case TMU:
-            {
+            case TMU: {
                 if (BinRead (bin, Bsq<2, ADR, TMU> (), Args (args, &ui8)))
                     return;
                 ClockPrintTimestamp (ui8);
             }
-            case FLT:
-            {
+            case FLT: {
                 if (BinRead (bin, Bsq<2, ADR, FLT> (), Args (args, &flt)))
                     return;
-                std::cout << si1;
+                Write (si1;
             }
-            case DBL:
-            {
+            case DBL: {
                 if (BinRead (bin, Bsq<2, ADR, STR> (), Args (args, &dbl)))
                     return;
-                std::cout << si1;
+                Write (si1;
             }
         }
     }
-}   
+}
 #endif  //< MEMORY_PROFILE > 2*/
 
 }   //< namespace _
@@ -165,8 +144,8 @@ void OpPrint (Op& log) {
 
 #if USING_SCRIPT_TEXT
 
-_::Strand& operator<< (_::Strand& strand, const _::Op* op) {
-    return OpPrint (op, strand);
+_::Slot& operator<< (_::Slot& slot, const _::Op* op) {
+    return OpPrint (op, slot);
 }
 
 #endif  //< USING_SCRIPT_TEXT

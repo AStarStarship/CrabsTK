@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/wall.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -88,7 +88,7 @@ class Wall : public Op {
     bool CloseDoor (int index);
 
     /** Prints the given Door to the stdout. */
-    _::Strand& Print (_::Strand& strand);
+    _::Slot& Print (_::Slot& slot);
 
     private:
 

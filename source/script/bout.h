@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/bout.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -35,7 +35,7 @@ namespace _ {
     all sets may repeat some number of times.
 
     @code
-    ESC VU8 1 BS CR
+    
     @endcode
     A B-Output ring-buffer is identical in structure to an BOut ring-buffer, but
     the stop becomes volatile and start is not volatile. */
@@ -100,17 +100,18 @@ KABUKI void BOutAckBack (BOut* bout, const char* address);
 /** Prints the BIn to the Text.
     @param  bin The pin to print.
     @param  text The Text to print the bin to.
-    @return The text. */
-KABUKI Strand& BOutPrint (BOut* bout, Strand& strand);
+    @return The slot. */
+KABUKI Slot& BOutPrint (BOut* bout, Slot& slot);
 #endif  //< USING_SCRIPT_TEXT
 
 }       //< namespace _
 
 #if USING_SCRIPT_TEXT
 /** Prints out the bin to the text. */
-inline _::Strand& operator<< (_::Strand& strand, _::BOut* bout) {
-    return _::BOutPrint (bout, strand);
+inline _::Slot& operator<< (_::Slot& slot, _::BOut* bout) {
+    return _::BOutPrint (bout, slot);
 }
 #endif  //< USING_SCRIPT_TEXT
 
 #endif  //< HEADER_FOR_SCRIPT_BOUT
+#undef DEBUG_SCRIPT_BOUT

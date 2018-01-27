@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/script_bout.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in  
              compliance with the License. You may obtain a copy of the License 
@@ -21,7 +21,6 @@
 #include "bsq.h"
 #include "args.h"
 #include "address.h"
-#include "text.h"
 #include "hash.h"
 #include "slot.h"
 #include "memory.h"
@@ -31,16 +30,14 @@
 
 namespace _ {
 
-#if SCRIPT_DEBUG
-
 /** Used to return an erroneous result from a B-Output.
 
     @param error The error type.
     @return Returns a Static Error Op Result. */
 inline const Op* BOutError (BOut* bout, Error error) {
-#if SCRIPT_DEBUG == SCRIPT_BOUT
-    std::cerr << "\n| BOut " << ErrorString (error) << " Error!" << out.Print ();
-#endif
+    #if DEBUG_SCRIPT_BOUT == SCRIPT_BOUT
+    std::cerr << "\nBOut " << ErrorString (error) << " Error!" << out.Print ();
+    #endif
     return reinterpret_cast<const Op*> (1);
 }
 
@@ -53,9 +50,9 @@ inline const Op* BOutError (BOut* bout, Error error) {
     @return         Returns a Static Error Op Result. */
 inline const Op* BOutError (BOut* bout, Error error,
                             const uint_t* header) {
-#if SCRIPT_DEBUG
-    std::cerr << "\n| BOut " << ErrorString (error) << " Error!";
-#endif  //< SCRIPT_DEBUG
+    #if DEBUG_SCRIPT_BOUT
+    std::cerr << "\nBOut " << ErrorString (error) << " Error!";
+    #endif  //< DEBUG_SCRIPT_BOUT
     return reinterpret_cast<const Op*> (1);
 }
 
@@ -69,9 +66,9 @@ inline const Op* BOutError (BOut* bout, Error error,
 inline const Op* BOutError (BOut* bout, Error error,
                             const uint_t* header,
                             uint_t offset) {
-#if SCRIPT_DEBUG
-    std::cerr << "\n| BOut " << ErrorString (error) << " Error!";
-#endif  //< SCRIPT_DEBUG
+    #if DEBUG_SCRIPT_BOUT
+    std::cerr << "\nBOut " << ErrorString (error) << " Error!";
+    #endif  //< DEBUG_SCRIPT_BOUT
     return reinterpret_cast<const Op*> (1);
 }
 
@@ -86,18 +83,19 @@ inline const Op* BOutError (BOut* bout, Error error,
                             const uint_t* header,
                             uint_t offset,
                             char* address) {
-    std::cerr << "\n| BOut " << ErrorString (error) << " Error!";
+    #if DEBUG_SCRIPT_BOUT
+    std::cerr << "\nBOut " << ErrorString (error) << " Error!";
+    #endif  //< DEBUG_SCRIPT_BOUT
     return reinterpret_cast<const Op*> (1);
 }
 
 const char** BOutState () {
     static const char* strings[] = {
         "WritingState",
-        "LockedState"
+        "kStateLocked"
     };
     return strings;
 }
-#endif  //< SCRIPT_DEBUG
 
 char* BOutBuffer (BOut* bout) {
     if (!bout)
@@ -118,22 +116,25 @@ BOut* BOutInit (uintptr_t* buffer, uint_t size) {
     bout->stop  = 0;
     bout->read  = 0;
 
-#if SCRIPT_DEBUG
+    #if DEBUG_SCRIPT_BOUT
     MemoryClear (BOutBuffer (bout), size);
-   // BOutPrint (bout);
-#endif
+    #endif
     return bout;
 }
 
 uint_t BOutSpace (BOut* bout) {
-    if (!bout) return ~0;
+    if (!bout) {
+        return 0;
+    }
     char* txb_ptr = reinterpret_cast<char*>(bout);
     return SlotSpace (txb_ptr + bout->start, txb_ptr + bout->stop,
                       bout->size);
 }
 
 uint_t BOutBufferLength (BOut* bout) {
-    if (!bout) return ~0;
+    if (!bout) {
+        return 0;
+    }
     char* base = BOutBuffer (bout);
     return SlotLength (base + bout->start, base + bout->stop, bout->size);
 }
@@ -166,13 +167,13 @@ int BOutStreamByte (BOut* bout) {
 
 const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
     
-#if SCRIPT_DEBUG
+#if DEBUG_SCRIPT_BOUT
     Text<> out;
-    COut (out << "\n|\n|Writing "
+    Write (out << "\n\nWriting "
           << BsqPrint (params, out)
           << " to B-Output:" << out.Pointer (bout)
           << BOutPrint (bout, out));
-#endif  //< SCRIPT_DEBUG
+#endif  //< DEBUG_SCRIPT_BOUT
     if (!bout)
         return BOutError (bout, kErrorImplementation);
     if (!params)
@@ -224,7 +225,7 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
 #if USING_SCRIPT_8_BYTE_TYPES
     const uint64_t* ui8_ptr;            //< Pointer to a 8-byte type.
 #endif
-    hash16_t hash = kLargest16BitPrime; //< Reset hash to largest 16-bit prime.
+    uint16_t hash = kLargest16BitPrime; //< Reset hash to largest 16-bit prime.
 
     space = SlotSpace (start, stop, size);
 
@@ -238,8 +239,8 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
     // Write data.
     for (index = 1; index <= num_params; ++index) {
         type = params[index];
-#if SCRIPT_DEBUG
-        COut (out << "\n| param:" << arg_index + 1 << " type:" << TypeString (type) 
+#if DEBUG_SCRIPT_BOUT
+        Write (out << "\nparam:" << arg_index + 1 << " type:" << TypeString (type) 
               << " start:" << MemoryVector (begin, start) 
               << " stop:" << MemoryVector (begin, stop) 
               << " space:" << space);
@@ -253,7 +254,7 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
             case STR: //< _W_r_i_t_e__U_T_F_-_8__S_t_r_i_n_g____________________
                 if (space == 0)
                     return BOutError (bout, kErrorBufferOverflow, params,
-                                       index, start);
+                                      index, start);
                 if (type != ADR) {
                     // We might not need to write anything if it's an ADR with 
                     // nil string.
@@ -264,16 +265,16 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
                 }
                 // Load the source data pointer and increment args.fs
                 ui1_ptr = reinterpret_cast<const char*> (args[arg_index]);
-#if SCRIPT_DEBUG
-                COut (out << "\"" << ui1_ptr << "\"");
-#endif  //< SCRIPT_DEBUG
+#if DEBUG_SCRIPT_BOUT
+                Write (out << "\"" << ui1_ptr << "\"");
+#endif  //< DEBUG_SCRIPT_BOUT
 
                 // We know we will always have at least one nil-term char.
                 ui1 = *ui1_ptr;
                 while (ui1 != 0) {
                     if (space-- == 0)
                         return BOutError (bout, kErrorBufferOverflow,
-                                           params, index, start);
+                                          params, index, start);
                     hash = Hash16 (ui1, hash);
 
                     *stop = ui1;        // Write byte
@@ -497,7 +498,7 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
                     *stop = ui1;
                     if (++stop >= end) stop -= size;
                 }
-				break;
+                break;
             case SV8: //< _W_r_i_t_e__8_-_b_y_t_e__S_i_g_n_e_d__V_a_r_i_n_t_____
                 // Load number to write and increment args.
                 ui8_ptr = reinterpret_cast<const uint64_t*> (args[arg_index]);
@@ -651,10 +652,10 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
     *stop = (byte)(hash >> 8);
     if (++stop >= end) stop -= size;
     bout->stop = MemoryVector (begin, stop);
-#if SCRIPT_DEBUG
-    COut (out << "\n| Done writing to B-Output with the hash 0x" << out.Hex (hash)
+#if DEBUG_SCRIPT_BOUT
+    Write (out << "\nDone writing to B-Output with the hash 0x" << out.Hex (hash)
           << '.');
-#endif  //< SCRIPT_DEBUG
+#endif  //< DEBUG_SCRIPT_BOUT
     return 0;
 }
 
@@ -665,10 +666,10 @@ void BOutRingBell (BOut* bout, const char* address) {
     if (address == nullptr) {
         address = "";
     }
-#if SCRIPT_DEBUG
+#if DEBUG_SCRIPT_BOUT
     Text<> out;
-    COut (out << "\n|\n| Ringing BEL to address:" << address);
-#endif  //< SCRIPT_DEBUG
+    Write (out << "\n\nRinging BEL to address:" << address);
+#endif  //< DEBUG_SCRIPT_BOUT
 
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte c;
@@ -682,9 +683,9 @@ void BOutRingBell (BOut* bout, const char* address) {
         * stop  = begin + bout->stop;       //< Stop of the data.
     space = SlotSpace (start, stop, size);
     if (space == 0) {
-#if SCRIPT_DEBUG
-        COut (out << "\n| Buffer overflow!");
-#endif  //< SCRIPT_DEBUG
+#if DEBUG_SCRIPT_BOUT
+        Write (out << "\nBuffer overflow!");
+#endif  //< DEBUG_SCRIPT_BOUT
         return;
     }
     *stop = 0;
@@ -693,9 +694,9 @@ void BOutRingBell (BOut* bout, const char* address) {
     c = *address;
     while (c) {
         if (space == 0) {
-#if SCRIPT_DEBUG
-            std::cout << "\n| Buffer overflow!";
-#endif  //< SCRIPT_DEBUG
+#if DEBUG_SCRIPT_BOUT
+            std::cout << "\nBuffer overflow!";
+#endif  //< DEBUG_SCRIPT_BOUT
             return;
         }
         *stop = c;
@@ -713,9 +714,9 @@ void BOutAckBack (BOut* bout, const char* address) {
     if (address == nullptr) {
         address = "";
     }
-#if SCRIPT_DEBUG
-    std::cout << "\n|\n| Ringing BEL to address:" << address;
-#endif  //< SCRIPT_DEBUG
+#if DEBUG_SCRIPT_BOUT
+    std::cout << "\n\nRinging BEL to address:" << address;
+#endif  //< DEBUG_SCRIPT_BOUT
 
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte c;
@@ -729,9 +730,9 @@ void BOutAckBack (BOut* bout, const char* address) {
         * stop  = begin + bout->stop;       //< Stop of the data.
     space = SlotSpace (start, stop, size);
     if (space == 0) {
-#if SCRIPT_DEBUG
-        std::cout << "\n| Buffer overflow!";
-#endif  //< SCRIPT_DEBUG
+#if DEBUG_SCRIPT_BOUT
+        std::cout << "\nBuffer overflow!";
+#endif  //< DEBUG_SCRIPT_BOUT
         return;
     }
     *stop = 0;
@@ -740,9 +741,9 @@ void BOutAckBack (BOut* bout, const char* address) {
     c = *address;
     while (c) {
         if (space == 0) {
-#if SCRIPT_DEBUG
-            std::cout << "\n| Buffer overflow!";
-#endif  //< SCRIPT_DEBUG
+#if DEBUG_SCRIPT_BOUT
+            std::cout << "\nBuffer overflow!";
+#endif  //< DEBUG_SCRIPT_BOUT
             return;
         }
         *stop = c;
@@ -760,18 +761,20 @@ const Op* BOutConnect (BOut* bout, const char* address) {
 }
 
 #if USING_SCRIPT_TEXT
-Strand& BOutPrint (BOut* bout, Strand& strand) {
-    strand << strand.Line ('_');
+Slot& BOutPrint (BOut* bout, Slot& slot) {
+    slot << Line ('_', slot);
     if (!bout) {
-        return strand << "\n| BOut: NIL" << strand.Line ('_');
+        return slot << "\nBOut: NIL" << Line ('_', slot);
     }
     int size = bout->size;
-    return strand << "\n| BOut:0x" << strand.Pointer (bout) << " size:" << size
+    return slot << "\nBOut:" << Hex (bout, slot) << " size:" << size
                   << " start:" << bout->start << " stop:" << bout->stop
                   << " read:" << bout->read
-                  << strand.Memory (BOutBuffer (bout), size + 64);
+                  << Memory (BOutBuffer (bout), size + 64, slot);
     //< @todo remove the + 64.);
 }
 #endif  //< USING_SCRIPT_TEXT
 
 }       //< namespace _
+
+#undef DEBUG_SCRIPT_BOUT

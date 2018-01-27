@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/script_wall.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -88,10 +88,10 @@ bool Wall::CloseDoor (int index) {
     return false;
 }
 
-_::Strand& Wall::Print (_::Strand& strand) {
+_::Slot& Wall::Print (_::Slot& slot) {
     //printf ("\nDoor:\nis_dynamic %s\nnum_doors: %u\nmax_num_doors: %u\n", 
     //        is_dynamic ? "true" : "false", num_doors, max_num_doors);
-    return strand;
+    return slot;
 }
 
 }       //< namespace _

@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
              2.0 (the "License"); you may not use this file except in
              compliance with the License. You may obtain a copy of the License
@@ -17,8 +17,8 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef SCRIPT_HEADER_FOR_SCRIPT_CONFIG
-#define SCRIPT_HEADER_FOR_SCRIPT_CONFIG
+#ifndef HEADER_FOR_SCRIPT_CONFIG
+#define HEADER_FOR_SCRIPT_CONFIG
 
 // @todo Check all values of assembly_settings.inl, store them as an enum, 
 // then #undef them.
@@ -46,49 +46,97 @@
 
 #define LITTLE   1
 #define BIG      2   //< Don't ask me what they where thinking.
+                     //< "but I can read it easier"...
+                     //< READ IT EASIER?!?!?!
+                     //< CHANGE YOUR IDE/EDA TOOLS FOOL!!!
+                     //< DIPRA DIRPA!!!
+                     //< CLICK! BIG ENDIAN! BOOM!!!
+                     //< CLICK! LITTLE! ENDIAN! BOOM!!!
+                     //< YOUR AN IDIOT!!!
+                     //< MAYBE YOU SHOULD WRITE THIS BIG ENDIAN CRAP CODE IF 
+                     //< YOU LIKE IT SO MUCH!!! Just kidding. :-)
 
 // Executable assembly type macro.
 #define EXECECUTABLE                1
+
 // Statically linked library assembly type macro.
 #define STATICALlY_LINKED_LIBRARY   2
+
 // Dynamically linked library assembly type macro.
 #define DYNAMICALLY_LINKED_LIBRARY  3
+
 // Dynamically linked library assembly type macro.
 #define SINGLE_DLL                  4
 
 // Logical yes.
 #define YES                         1
+
 // Logical no.
 #define NO                          0
 
-#define SCRIPT_BIN                  1
-#define SCRIPT_BOUT                 2
-#define SCRIPT_DISPLAY              3
-#define SCRIPT_DOOR                 4
-#define SCRIPT_EXPRESSION           5
-#define SCRIPT_LIBRARY              6
-#define SCRIPT_ROOM                 7
-#define SCRIPT_ARRAY                8
-#define SCRIPT_BAG                  9
-#define SCRIPT_BOOK                 10
-#define SCRIPT_STRAND               11
-#define SCRIPT_TEXTMESSAGE          12
-#define SCRIPT_STACK                13
-#define SCRIPT_WALL                 14
+#define DEBUG_ALL                   54321
+#define SCRIPT_BIN                  54322
+#define SCRIPT_BOUT                 54323
+#define SCRIPT_DISPLAY              54324
+#define SCRIPT_DOOR                 54325
+#define SCRIPT_EXPRESSION           54326
+#define SCRIPT_LIBRARY              54327
+#define SCRIPT_ROOM                 54328
+#define SCRIPT_ARRAY                54329
+#define SCRIPT_BAG                  54320
+#define SCRIPT_BOOK                 54331
+#define SCRIPT_STRAND               54332
+#define SCRIPT_TEXT                 54333
+#define SCRIPT_STACK                54334
+#define SCRIPT_WALL                 54335
 
 #include <assembly.h>       //< Inline config stuff for your project.
 
-typedef const char* string_ptr;
-
-#if SCRIPT_CHAR_WIDTH == 8
-typedef uint8_t char_t;
-#elif SCRIPT_CHAR_WIDTH == 16
-typedef int16_t char_t;
-#elif SCRIPT_CHAR_WIDTH == 32
-typedef int32_t char_t;
-#else
-#error SCRIPT_CHAR_WIDTH must be 8, 16, or 32!
+#if SCRIPT_DEBUG == DEBUG_ALL
+#define DEBUG_SCRIPT_BIN 1
+#define DEBUG_SCRIPT_BOUT 1
+#define DEBUG_SCRIPT_DISPLAY 1
+#define DEBUG_SCRIPT_DOOR 1
+#define DEBUG_SCRIPT_EXPRESSION 1
+#define DEBUG_SCRIPT_LIBRARY 1
+#define DEBUG_SCRIPT_ROOM 1
+#define DEBUG_SCRIPT_ARRAY 1
+#define DEBUG_SCRIPT_BAG 1
+#define DEBUG_SCRIPT_BOOK 1
+#define DEBUG_SCRIPT_STRAND 1
+#define DEBUG_SCRIPT_TEXT 1
+#define DEBUG_SCRIPT_STACK 1
+#define DEBUG_SCRIPT_WALL 1
+#elif SCRIPT_DEBUG == SCRIPT_BIN
+#define DEBUG_SCRIPT_BIN 1
+#elif SCRIPT_DEBUG == SCRIPT_BOUT
+#define DEBUG_SCRIPT_BOUT 1
+#elif SCRIPT_DEBUG == SCRIPT_DISPLAY
+#define DEBUG_SCRIPT_DISPLAY 1
+#elif SCRIPT_DEBUG == SCRIPT_DOOR
+#define DEBUG_SCRIPT_DOOR 1
+#elif SCRIPT_DEBUG == SCRIPT_EXPRESSION
+#define DEBUG_SCRIPT_EXPRESSION 1
+#elif SCRIPT_DEBUG == SCRIPT_LIBRARY
+#define DEBUG_SCRIPT_LIBRARY 1
+#elif SCRIPT_DEBUG == SCRIPT_ROOM
+#define DEBUG_SCRIPT_ROOM 1
+#elif SCRIPT_DEBUG == SCRIPT_ARRAY
+#define DEBUG_SCRIPT_ARRAY 1
+#elif SCRIPT_DEBUG == SCRIPT_BAG
+#define DEBUG_SCRIPT_BAG 1
+#elif SCRIPT_DEBUG == SCRIPT_BOOK
+#define DEBUG_SCRIPT_BOOK 1
+#elif SCRIPT_DEBUG == SCRIPT_STRAND
+#define DEBUG_SCRIPT_STRAND 1
+#elif SCRIPT_DEBUG == SCRIPT_STACK
+#define DEBUG_SCRIPT_STACK 1
+#elif SCRIPT_DEBUG == SCRIPT_WALL
+#define DEBUG_SCRIPT_WALL 1
 #endif
+#undef SCRIPT_DEBUG
+
+typedef const char* string_ptr;
 
 #if SCRIPT_MAX_ERRORS < 0
 #error MAX_ERRORS must be greater than 0
@@ -117,16 +165,15 @@ typedef uint32_t ticket_t;
 #define BIG      2   //< Don't ask me what they where thinking.
 
 // Executable assembly type macro.
-#define EXECECUTABLE                1
+#define EXECECUTABLE               1
 // Statically linked library assembly type macro.
-#define STATICALlY_LINKED_LIBRARY   2
+#define STATICALlY_LINKED_LIBRARY  2
 // Dynamically linked library assembly type macro.
-#define DYNAMICALLY_LINKED_LIBRARY  3
+#define DYNAMICALLY_LINKED_LIBRARY 3
 // Dynamically linked library assembly type macro.
-#define SINGLE_DLL                  4
+#define SINGLE_DLL                 4
 
 namespace _ {
-
 enum {
     kNo              = 0,                 //< Script no/false value.
     kYes             = 1,                 //< Script yes/true value.
@@ -140,11 +187,18 @@ enum {
     kParamsMax       = SCRIPT_MAX_PARAMS, //< Max number of parameters.
     kWordAddressMask = sizeof (void*) - 1,//< For masking the word address.
     kTimeoutMicroseconds = COM_TIMEOUT_TICKS, //< Timeout time in microseconds.
-    kAddressLengthMax = SCRIPT_MAX_ADDRESS_LENGTH,//< Max address (ADR) length.
-    kMinStackSize     = 1,                //< Min Expr stack size.
-    kOpNameLengthMax  = SCRIPT_OP_MAX_NAME_LENGTH,
+    kAddressLengthMax= SCRIPT_MAX_ADDRESS_LENGTH, //< Max address (ADR) length.
+    kMinStackSize    = 1,                 //< Min Expr stack size.
+    kOpNameLengthMax = SCRIPT_OP_MAX_NAME_LENGTH,
+    // Max length of a Op description string.
     kOpDescriptionLengthMax = SCRIPT_OP_MAX_DESCRIPTION_LENGTH,
-    kTextSize         = SCRIPT_TEXT_LENGTH, //< Max length of a Text.
+    // Max length of a Text.
+    kTextSize        = SCRIPT_TEXT_LENGTH,
+    // Number of bits to shift to multiply or divide to get num_words.
+    kWordSizeShift   = (sizeof (void*) == 8) ? 3 : //< Shift left 3 to * by 8.
+                       (sizeof (void*) == 4) ? 2 : //< Shift right 2 to / by 4.
+                       1,
+    kDoubleSizeMax   = 3 + DBL_MANT_DIG - DBL_MIN_EXP
 };
 }   //< namespace _
 
@@ -187,15 +241,16 @@ enum {
 #endif
 
 /** Below are representations of not-a-numbers.
+    
     With signed integers, there is one additional negative number than positive
     numbers due to  the 0. In the SCRIPT Protocol, this number is used to mark
     invalid or corrupted data. If you are not using them and require the ROM
     space, it will not harm anything to comment them out.
+
     @code
     #include <iostream>
     #define NaN_SI4 0xFFFFFFF
     void BlowUp () { std::cout << "The sky is falling!"}
-
     if (-1 == NaN_SI4)
         BlowUp ();
     @endcode
@@ -266,7 +321,7 @@ typedef uint64_t data_t;    //< Default TData size.
 
 #if SCRIPT_DEBUG
 #define PRINT (MESSAGE)\
-    std::cout << MESSAGE;
+    Display (MESSAGE);
 
 #define PRINT_LINE(MESSAGE)\
     std::cout << NEW_LINE_HEADER << MESSAGE;
@@ -288,4 +343,4 @@ typedef uint64_t data_t;    //< Default TData size.
 
 #endif  //< SCRIPT_DEBUG
 
-#endif  //< SCRIPT_HEADER_FOR_SCRIPT_CONFIG
+#endif  //< HEADER_FOR_SCRIPT_CONFIG

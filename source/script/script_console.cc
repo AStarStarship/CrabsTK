@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/script_console.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -46,7 +46,7 @@ float ConsoleReadFloat (const char* header) {
     return number;
 }
 
-void ConsoleReadStrand (const char* header, char* target, char* target_end) {
+void ConsoleReadSlot (const char* header, char* target, char* target_end) {
     if (!target) {
         return;
     }
@@ -59,17 +59,17 @@ void ConsoleReadStrand (const char* header, char* target, char* target_end) {
     std::cin.ignore (target_end - target, '\n');
 }
 
-void ConsoleWrite (const char* strand) {
-    std::cout << strand;
+void ConsoleWrite (const char* slot) {
+    std::cout << slot;
 }
 
-void ConsoleWrite (Strand& strand) {
-    std::cout << strand.GetBegin ();
+void ConsoleWrite (Slot& slot) {
+    std::cout << slot.GetBegin ();
 }
 
-void ConsoleDump (Strand& strand) {
-    std::cout << strand.GetBegin ();
-    strand.Clear ();
+void ConsoleDump (Slot& slot) {
+    std::cout << slot.GetBegin ();
+    slot.Clear ();
 }
 
 #endif  //< USING_SCRIPT_TEXT

@@ -171,20 +171,20 @@ class ListFifo: public _::Set {
 
     const char* KeepOnlyThese (const int* indexes, int indexes_count) {
         if (!indexes) {
-            return "\n| indexes can't be nil!";
+            return "\n indexes can't be nil!";
         }
         if (indexes_count < 1) {
-            return "\n| indexes_count can't be negative!";
+            return "\n indexes_count can't be negative!";
         }
         if (indexes_count >= count_) {
-            return "\n| indexes_count to big!";
+            return "\n indexes_count to big!";
         }
         for (int i = 0; i < indexes_count; i++) {
             if (indexList[i] < 0) {
-                return "\n| indexes_count can't be negative!";
+                return "\n indexes_count can't be negative!";
             }
             if (indexList[i] >= count_) {
-                return "\n| indexes_count to big!";
+                return "\n indexes_count to big!";
             }
         }
 
@@ -264,17 +264,17 @@ class ListFifo: public _::Set {
     }
 
     Text& Print (Text& text) {
-        return text << "\n| ListFifo";
+        return text << "\n ListFifo";
     }
 
     private:
 
     const char* Add (T data, FifoNode* node) {
-        return "\n| Function not implemented!";
+        return "\n Function not implemented!";
     }
 
     const char* Insert (T node, FifoNode* beforeHere) {
-        return "\n| Function not implemented!";
+        return "\n Function not implemented!";
     }
 
     int       count_,

@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/bsq.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -21,7 +21,7 @@
 #define HEADER_FOR_SCRIPT_PARAMS
 
 #include "type.h"
-#include "strand.h"
+#include "slot.h"
 
 namespace _ {
 
@@ -84,12 +84,12 @@ inline const uint_t* Bsq () {
 /*< Returns the requested parameter number. */
 KABUKI uint_t BsqParamNumber (const uint_t* params, int param_number);
 
-KABUKI Strand& BsqPrint (const uint_t* params, Strand& strand);
+KABUKI Slot& BsqPrint (const uint_t* params, Slot& slot);
 
 #if USING_SCRIPT_TEXT
 /**  Prints out the parameters to the debug console. */
 
-/* Reads a b-sequences from the given strand.
+/* Reads a b-sequences from the given slot.
    @depreciated I don't think I need this code anymore because I use dictionaries to parse types.
 
 template<typename T>
@@ -105,7 +105,7 @@ const char* BsqRead (const char* input, const char* input_end,
         bsq = new 
     }
     const char* cursor = input;
-    cursor = StrandSkipSpaces (input, input_end);
+    cursor = SlotSkipSpaces (input, input_end);
 
     char d = *(input + 3);
     if ((input_end - input) < 5) {
@@ -114,7 +114,7 @@ const char* BsqRead (const char* input, const char* input_end,
         return 0;
     }
     uint_t params_count;
-    cursor = StrandRead (cursor, input_end, params_count);
+    cursor = SlotRead (cursor, input_end, params_count);
     if (!cursor) {
         return nullptr;
     }
@@ -247,8 +247,8 @@ const char* BsqRead (const char* input, const char* input_end,
 }       //< namespace _
 
 /**  Prints out the parameters to the debug console. */
-inline _::Strand& operator<< (_::Strand& strand, const uint_t* bsq) {
-    return BsqPrint (bsq, strand);
+inline _::Slot& operator<< (_::Slot& slot, const uint_t* bsq) {
+    return BsqPrint (bsq, slot);
 }
 #else
 }       //< namespace _

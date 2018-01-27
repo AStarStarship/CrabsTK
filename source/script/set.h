@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/collection.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -107,7 +107,7 @@ struct Collection {
     virtual uintptr_t GetSizeWidth () = 0;
 
     /**  */
-    virtual Strand& Print (Strand& strand) = 0;
+    virtual Slot& Print (Slot& slot) = 0;
 };
 }       //< namespace _
 #endif  //< SCRIPT_COLLECTION_H

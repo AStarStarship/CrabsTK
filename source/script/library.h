@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/script/expr.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -44,7 +44,7 @@ class Library: public Operand
 
     }
 
-    /** Returns true if the current Bag has a hash table. */
+    /** Returns true if the current Bok has a hash table. */
     bool HasHashTable () {
         return collisions_size_ != 0;
     }
@@ -227,7 +227,7 @@ class Library: public Operand
     TKey      header_size_,     //< Current size of the header and names in bytes.
               collisions_size_; //< Current size of the header and names buffer in bytes.
     TData     data_size_;       //< Current total size of the bag.
-    //Bag<TIndex, TKey, TData, TData> bag;
+    //Bok<TIndex, TKey, TData, TData> bag;
 };
 
 /** Destructs the given bag. */

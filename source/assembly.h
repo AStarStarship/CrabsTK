@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/source/assembly.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
              2.0 (the "License"); you may not use this file except in
              compliance with the License. You may obtain a copy of the License
@@ -80,7 +80,7 @@
 #define SCRIPT_STRAND_INIT_BUFFER_SIZE 256
 
 // String that gets printed at the beginning of each new line.
-#define NEW_LINE_HEADER "\n| "
+#define NEW_LINE_HEADER "\n"
 
 // Max Script Op name length in chars.
 #define SCRIPT_OP_MAX_NAME_LENGTH 64
@@ -92,6 +92,11 @@
 #define SCRIPT_MAX_ADDRESS_LENGTH 26
 
 #define SCRIPT_MAX_KEY_LENGTH 64
+
+/* Native string width: 8 for UTF-8, 16 for UTF-16, and 32 for UTF-32.
+   This macro dictates what unicode format strings will be unpacked to when 
+   unpacked from a BIn. */ 
+#define SCRIPT_NATIVE_STRING_WIDTH 8
 
 // Sets any of the following macros to YES or NO.
 
@@ -105,4 +110,4 @@
 #define USING_SCRIPT_BOOK         NO
 #define USING_SCRIPT_MAP          NO
 #define USING_SCRIPT_LIST         NO
-#define USING_SCRIPT_TEXT      YES
+#define USING_SCRIPT_TEXT         YES
