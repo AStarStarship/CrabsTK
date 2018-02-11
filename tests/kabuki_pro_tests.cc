@@ -1,4 +1,4 @@
-/** Kabuki Starship
+/** Kabuki Toolkit
     @version 0.x
     @file    ~/source/kabuki/pro/pro_files/pro_tests.cpp
     @author  Cale McCollough <calemccollough.github.io>

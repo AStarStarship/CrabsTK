@@ -15,9 +15,6 @@
     <Filter Include="source\kabuki">
       <UniqueIdentifier>{1cdb8a29-971f-44fe-b95b-f787485b81d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\script">
-      <UniqueIdentifier>{c9fed358-324c-4fa2-8799-73e59bffd98d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\kabuki\data">
       <UniqueIdentifier>{95171f9c-37ad-4a24-8e15-8dac5fafa5bf}</UniqueIdentifier>
     </Filter>
@@ -30,195 +27,225 @@
     <Filter Include="projects\sloth">
       <UniqueIdentifier>{fa4a9efd-aa8a-4975-9620-e71bb7c990f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="projects\script_visualizer">
-      <UniqueIdentifier>{61ffc33f-ecae-42d0-9084-116c0a462bc3}</UniqueIdentifier>
+    <Filter Include="source\crabs">
+      <UniqueIdentifier>{c9fed358-324c-4fa2-8799-73e59bffd98d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="projects\terminal">
+      <UniqueIdentifier>{141c22c3-7927-4379-8e32-8c4433886102}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="benchmarks">
+      <UniqueIdentifier>{93b92ae1-3612-4d6c-bfa0-83d695e651e9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="script\bin.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\bout.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\clock.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\config.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\door.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\error.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\event.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\global.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\hash.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\interrupts.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\iterator.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\library.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\memory.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\operand.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\random.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\room.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\set.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\slot.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\table.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\wall.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\address.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
-    <ClInclude Include="script\args.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>source</Filter>
     </ClInclude>
     <ClInclude Include="assembly.h">
       <Filter>source</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki_toolkit.h">
-      <Filter>source</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\config.h">
-      <Filter>source\kabuki</Filter>
     </ClInclude>
     <ClInclude Include="global.h">
       <Filter>source</Filter>
     </ClInclude>
-    <ClInclude Include="script\console.h">
-      <Filter>source\script</Filter>
-    </ClInclude>
     <ClInclude Include="..\tests\global.h">
       <Filter>source\tests</Filter>
     </ClInclude>
-    <ClInclude Include="script\type.h">
-      <Filter>source\script</Filter>
+    <ClInclude Include="crabs\array.h">
+      <Filter>source\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="script\op.h">
-      <Filter>source\script</Filter>
+    <ClInclude Include="crabs\bin.h">
+      <Filter>source\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="script\expr.h">
-      <Filter>source\script</Filter>
+    <ClInclude Include="crabs\bok.h">
+      <Filter>source\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="script\bsq.h">
-      <Filter>source\script</Filter>
+    <ClInclude Include="crabs\bout.h">
+      <Filter>source\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="script\array.h">
-      <Filter>source\script</Filter>
+    <ClInclude Include="crabs\bsq.h">
+      <Filter>source\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="script\dic.h">
-      <Filter>source\script</Filter>
+    <ClInclude Include="crabs\clock.h">
+      <Filter>source\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="script\bok.h">
-      <Filter>source\script</Filter>
+    <ClInclude Include="crabs\config.h">
+      <Filter>source\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="script\map.h">
-      <Filter>source\script</Filter>
+    <ClInclude Include="crabs\dic.h">
+      <Filter>source\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="script\stack.h">
-      <Filter>source\script</Filter>
+    <ClInclude Include="crabs\door.h">
+      <Filter>source\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="script\lst.h">
-      <Filter>source\script</Filter>
+    <ClInclude Include="crabs\error.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\event.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\expr.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\global.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\hash.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\interrupts.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\iterator.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\language.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\library.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\lst.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\map.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\memory.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\mirror.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\op.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\operand.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\random.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\room.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\set.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\slot.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\stack.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\table.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\text.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\type.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\wall.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\address.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\args.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\console.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\print.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\scan.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\benchmarks\itos_speed_test.h">
+      <Filter>benchmarks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="script\script_bin.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_bout.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_clock.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_door.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_hash.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_interrupts.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_memory.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_operand.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_room.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_slot.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="script\script_wall.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cc">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_console.cc">
-      <Filter>source\script</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\test_script.cc">
-      <Filter>source\tests</Filter>
-    </ClCompile>
     <ClCompile Include="..\tests\test_global.cc">
       <Filter>source\tests</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_type.cc">
-      <Filter>source\script</Filter>
+    <ClCompile Include="..\tests\test_crabs.cc">
+      <Filter>source\tests</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_op.cc">
-      <Filter>source\script</Filter>
+    <ClCompile Include="crabs\crabs_bin.cc">
+      <Filter>source\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_expr.cc">
-      <Filter>source\script</Filter>
+    <ClCompile Include="crabs\crabs_bout.cc">
+      <Filter>source\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_bsq.cc">
-      <Filter>source\script</Filter>
+    <ClCompile Include="crabs\crabs_bsq.cc">
+      <Filter>source\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="script\script_error.cc">
-      <Filter>source\script</Filter>
+    <ClCompile Include="crabs\crabs_clock.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_door.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_error.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_expr.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_hash.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_interrupts.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_memory.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_op.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_operand.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_room.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_slot.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_text.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_type.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_wall.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_console.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_print.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_scan.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\benchmarks\itos_speed_test.cc">
+      <Filter>benchmarks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

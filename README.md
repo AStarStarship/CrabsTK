@@ -1,55 +1,50 @@
-﻿﻿﻿﻿﻿# Kabuki Toolkit
+﻿*A modern cross-platform software and firmware toolkit with Embedded-C++1x Script VM for making intelligent connected technologies.*
 
-Kabuki Toolkit (KT) is an Apache 2.0 Licensed cross-platform software and 
-firmware toolkit with Embedded-C++1x core for making just about anything. KT 
-contains a compliant SCRIPT Protocol implementation built on top of some of the 
-best commercial friendly open-source libraries available on the internet all 
-formatted using the 
-[Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
+﻿﻿﻿﻿# Kabuki Toolkit (KT)
+
+KT is a compliant compliant Script implementation built on top of some of the  best commercial-friendly open-source C and C++ libraries formatted using the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
 
 ## Script
-Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Protocol is a 
-socket-based object-oriented software-defined networking protocol and abstract stack machine. It can be described as a mix of network protocol with JavaScript, JSON, Lua Script, and LISP with data compression that can handle a lot more messages than  [Open Sound Control](https://en.wikipedia.org/wiki/Open_Sound_Control). Using  Script you can easily create higher-level software defined networks using a  cross-language embedded-friendly abstract object stack with multiple expression  input and output parameter sockets that may change at runtime using sockets. Script is currently interpreted and we're looking for some help optimizing  away the virtual function overhead and translating Interprocess LISP to ASM.
+
+Script is a software-defined networking protocol and embedded-friendly language that facilitates artificial intelligence and machine learning (AIML) using functional programming and natural language processing (NLP).
 
 ## Quick Links
 
 * [FAQ](https://github.com/kabuki-starship/kabuki-toolkit/blob/master/docs/faq.md) 
-  *- Check here for the Kabuki Toolkit Wiki and GitHub repository!*
+  - *Frequently asked questions.*
 * [Quickstart Guide](https://github.com/kabuki-starship/kabuki-toolkit/blob/master/docs/quickstart-guide.md)
   - *Check here for the Kabuki Toolkit Wiki and GitHub repository!*
+* [Script Specification RFC](https://github.com/kabuki-starship/script/wiki/SCRIPT-Specification-RFC)
+  - *Release for Comment for Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification.*
 * [Kabuki Starship Website](https://kabuki-starship.github.io/)
-  - *Official Kabuki Toolkit website. We are currently looking for someone to help
-  us fix the CSS on the website. It only works right at < 1024 pixel width so 
-  the problem is in the @media section.*
-* [Script Specification RFC](https://github.com/kabuki-starship/kabuki-toolkit/wiki/SCRIPT-Specification-RFC)
-  - *Release for Comment for Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) 
-  Specification for Script and Interprocess LISP.
+  - *Official Kabuki Toolkit website. We are currently looking for someone to help us fix the CSS on the website. It only works right at < 1024 pixel width so the problem is in the @media section.*
 
 ## SDK Modules
 
-|   Name | Description  |
-|-------:|:-------------|
-|     al | Audio Library.|
-|    app | Application framework.|
-|   code | Coding utilities.|
-|   data | Data and data logging.|
-|     gl | Graphics Library.|
-|    gui | Graphical user interfaces.|
-|    hmi | Human-machine Interfaces.|
-|   json | JSON.|
-|     id | Identification.|
-|   math | Math.|
-|   midi | MIDI.|
-|    tek | Firmware toolkit.|
-|    pro | Projects, tasks, and scheduling.|
-| script | Chinese Room Automata.|
-|  store | Store and inventory.|
-|  video | Video.|
-|    web | WWW and IoT.|
+|  Name | Description    |
+|------:|:---------------|
+|    al | Audio library. |
+|   app | Application framework. |
+|  code | Coding utilities. |
+| crabs | Chinese room abstract stack machine. |
+|  data | Data and data logging. |
+|    gl | Graphics library. |
+|   gui | Graphical user interfaces. |
+|   hmi | Human-machine interfaces. |
+|    id | Identification. |
+| igeek | IGEEK interface. | 
+|  math | Math. |
+|  midi | MIDI. |
+|   tek | Firmware toolkit. |
+|   pro | Projects, tasks, and scheduling. |
+| store | Store and inventory. |
+| video | Video. |
+|   web | WWW and IoT. |
 
 ### 3rd Party APIs
 
 * [Google C++ API](https://github.com/Microsoft/cpprestsdk)
+* [SFML](https://www.sfml-dev.org/) (Might switch to SDL soon)
 * [ANGLE](https://github.com/google/angle)
 * [nanovg](https://github.com/memononen/nanovg)
 * [nanogui](https://github.com/wjakob/nanogui)
@@ -61,15 +56,14 @@ socket-based object-oriented software-defined networking protocol and abstract s
 * [PortAudio](http://www.portaudio.com/)
 * [RtMIDI](https://github.com/thestk/rtmidi)
 * [AStyle](http://astyle.sourceforge.net/)
-* [SFML (Replacing with SDL)](https://www.sfml-dev.org/)
 
 ## Author
 
 * [Cale McCollough](https://calemccollough.github.io) <[cale.mccollough@gmail.com](mailto:cale.mccollough@gmail.com)>
 
-## License
+## The License
 
-Copyright 2017 (C) [Cale McCollough](mailto:calemccollough@gmail.com) and contributors. All rights reserved (R).
+Copyright 2014-18 (C) [Cale McCollough](mailto:calemccollough@gmail.com) and contributors. All rights reserved (R).
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License [here](http://www.apache.org/licenses/LICENSE-2.0).
 

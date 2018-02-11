@@ -842,7 +842,6 @@ class Token {
     //                   reinterpret_cast<const char*> (address) + num_bytes);
     //}
 
-
     /** Prints the first whitespace or nil terminated token from the string.
         @param strand A nil-terminated string in ROM.
         @return A pointer to the end of the token or nil upon failure. */

@@ -17,13 +17,12 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef HEADER_FOR_PROJECTS_GLOBAL
-#define HEADER_FOR_PROJECTS_GLOBAL
+#ifndef HEADER_FOR_GLOBAL
+#define HEADER_FOR_GLOBAL
 
 #include "../../cpputest/include/CppUTest/CommandLineTestRunner.h"
 #include "../../cpputest/include/CppUTest/TestHarness.h"
-#include "../source/script/global.h"
 
-using namespace _;
+#include "../source/crabs/global.h"
 
-#endif  //< HEADER_FOR_PROJECTS_GLOBAL
+#endif  //< HEADER_FOR_GLOBAL

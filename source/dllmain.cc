@@ -1,5 +1,5 @@
 /** Kabuki Toolkit
-    @file    ~/source/script/dllmain.h
+    @file    ~/source/crabs/dllmain.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -14,7 +14,7 @@
 */
 
 #include <stdafx.h>
-#include <config.h>
+#include "crabs/config.h"
 
 #if KABUKI_DLL
 bool APIENTRY DllMain (HMODULE hModule,

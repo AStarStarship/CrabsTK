@@ -19,68 +19,76 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\benchmarks\itos_speed_test.h" />
     <ClInclude Include="..\tests\global.h" />
     <ClInclude Include="assembly.h" />
+    <ClInclude Include="crabs\address.h" />
+    <ClInclude Include="crabs\args.h" />
+    <ClInclude Include="crabs\array.h" />
+    <ClInclude Include="crabs\bin.h" />
+    <ClInclude Include="crabs\bok.h" />
+    <ClInclude Include="crabs\bout.h" />
+    <ClInclude Include="crabs\bsq.h" />
+    <ClInclude Include="crabs\clock.h" />
+    <ClInclude Include="crabs\config.h" />
+    <ClInclude Include="crabs\console.h" />
+    <ClInclude Include="crabs\dic.h" />
+    <ClInclude Include="crabs\door.h" />
+    <ClInclude Include="crabs\error.h" />
+    <ClInclude Include="crabs\event.h" />
+    <ClInclude Include="crabs\expr.h" />
+    <ClInclude Include="crabs\global.h" />
+    <ClInclude Include="crabs\hash.h" />
+    <ClInclude Include="crabs\interrupts.h" />
+    <ClInclude Include="crabs\iterator.h" />
+    <ClInclude Include="crabs\language.h" />
+    <ClInclude Include="crabs\library.h" />
+    <ClInclude Include="crabs\lst.h" />
+    <ClInclude Include="crabs\map.h" />
+    <ClInclude Include="crabs\memory.h" />
+    <ClInclude Include="crabs\mirror.h" />
+    <ClInclude Include="crabs\op.h" />
+    <ClInclude Include="crabs\operand.h" />
+    <ClInclude Include="crabs\print.h" />
+    <ClInclude Include="crabs\random.h" />
+    <ClInclude Include="crabs\room.h" />
+    <ClInclude Include="crabs\scan.h" />
+    <ClInclude Include="crabs\set.h" />
+    <ClInclude Include="crabs\slot.h" />
+    <ClInclude Include="crabs\stack.h" />
+    <ClInclude Include="crabs\table.h" />
+    <ClInclude Include="crabs\text.h" />
+    <ClInclude Include="crabs\type.h" />
+    <ClInclude Include="crabs\wall.h" />
     <ClInclude Include="global.h" />
-    <ClInclude Include="kabuki\config.h" />
-    <ClInclude Include="kabuki_toolkit.h" />
-    <ClInclude Include="script\address.h" />
-    <ClInclude Include="script\args.h" />
-    <ClInclude Include="script\bin.h" />
-    <ClInclude Include="script\bout.h" />
-    <ClInclude Include="script\clock.h" />
-    <ClInclude Include="script\config.h" />
-    <ClInclude Include="script\expr.h" />
-    <ClInclude Include="script\door.h" />
-    <ClInclude Include="script\error.h" />
-    <ClInclude Include="script\event.h" />
-    <ClInclude Include="script\global.h" />
-    <ClInclude Include="script\hash.h" />
-    <ClInclude Include="script\interrupts.h" />
-    <ClInclude Include="script\iterator.h" />
-    <ClInclude Include="script\console.h" />
-    <ClInclude Include="script\library.h" />
-    <ClInclude Include="script\memory.h" />
-    <ClInclude Include="script\operand.h" />
-    <ClInclude Include="script\op.h" />
-    <ClInclude Include="script\bsq.h" />
-    <ClInclude Include="script\random.h" />
-    <ClInclude Include="script\room.h" />
-    <ClInclude Include="script\set.h" />
-    <ClInclude Include="script\slot.h" />
-    <ClInclude Include="script\table.h" />
-    <ClInclude Include="script\array.h" />
-    <ClInclude Include="script\bok.h" />
-    <ClInclude Include="script\dic.h" />
-    <ClInclude Include="script\lst.h" />
-    <ClInclude Include="script\map.h" />
-    <ClInclude Include="script\stack.h" />
-    <ClInclude Include="script\type.h" />
-    <ClInclude Include="script\wall.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\benchmarks\itos_speed_test.cc" />
     <ClCompile Include="..\tests\test_global.cc" />
-    <ClCompile Include="..\tests\test_script.cc" />
+    <ClCompile Include="..\tests\test_crabs.cc" />
+    <ClCompile Include="crabs\crabs_bin.cc" />
+    <ClCompile Include="crabs\crabs_bout.cc" />
+    <ClCompile Include="crabs\crabs_bsq.cc" />
+    <ClCompile Include="crabs\crabs_clock.cc" />
+    <ClCompile Include="crabs\crabs_console.cc" />
+    <ClCompile Include="crabs\crabs_door.cc" />
+    <ClCompile Include="crabs\crabs_error.cc" />
+    <ClCompile Include="crabs\crabs_expr.cc" />
+    <ClCompile Include="crabs\crabs_hash.cc" />
+    <ClCompile Include="crabs\crabs_interrupts.cc" />
+    <ClCompile Include="crabs\crabs_memory.cc" />
+    <ClCompile Include="crabs\crabs_op.cc" />
+    <ClCompile Include="crabs\crabs_operand.cc" />
+    <ClCompile Include="crabs\crabs_print.cc" />
+    <ClCompile Include="crabs\crabs_room.cc" />
+    <ClCompile Include="crabs\crabs_scan.cc" />
+    <ClCompile Include="crabs\crabs_slot.cc" />
+    <ClCompile Include="crabs\crabs_text.cc" />
+    <ClCompile Include="crabs\crabs_type.cc" />
+    <ClCompile Include="crabs\crabs_wall.cc" />
     <ClCompile Include="dllmain.cc" />
-    <ClCompile Include="script\script_bin.cc" />
-    <ClCompile Include="script\script_bout.cc" />
-    <ClCompile Include="script\script_clock.cc" />
-    <ClCompile Include="script\script_door.cc" />
-    <ClCompile Include="script\script_error.cc" />
-    <ClCompile Include="script\script_expr.cc" />
-    <ClCompile Include="script\script_hash.cc" />
-    <ClCompile Include="script\script_interrupts.cc" />
-    <ClCompile Include="script\script_console.cc" />
-    <ClCompile Include="script\script_memory.cc" />
-    <ClCompile Include="script\script_operand.cc" />
-    <ClCompile Include="script\script_op.cc" />
-    <ClCompile Include="script\script_bsq.cc" />
-    <ClCompile Include="script\script_room.cc" />
-    <ClCompile Include="script\script_slot.cc" />
-    <ClCompile Include="script\script_type.cc" />
-    <ClCompile Include="script\script_wall.cc" />
     <ClCompile Include="stdafx.cc" />
   </ItemGroup>
   <ItemGroup>
@@ -166,7 +174,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>winmm.lib; CppUTestd.lib; CppUTest.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>A:\Workspace\cpputest\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>A:\Workspace\cpputest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
