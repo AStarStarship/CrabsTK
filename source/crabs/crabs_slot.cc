@@ -26,65 +26,17 @@
 #if CRABS_SEAM == 1
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
+#define PRINT_BSQ(bsq)\ {\
+    enum { kSize = 64*1024 }\
+    char bsq_buffer[kSize];\
+    \
+}
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
 #endif
 
 namespace _ {
-
-typedef long long int64_t;
-typedef unsigned long long uint64_t;
-
-// Formats value in reverse and returns the number of digits.
-template<typename UI>
-char* FormatUnsiged (UI value) {
-
-    enum {
-        // 
-        kMinBufferSize = std::numeric_limits<UI>::digits10 + 3
-    };
-
-    const char* digit;
-    char *buffer_end = buffer_ + kMinBufferSize - 1;
-
-    while (value >= 100) {
-        // Algorithm stolen fair and square from Alexandrescu's "Three 
-        // Optimization Tips for C++" and optimized by Cale McCollough.
-
-        unsigned index = static_cast<unsigned>((value % 100) << 1);
-        // << 1 to * 2
-        value /= 100;
-        digit = &kDigits0To99[index];
-        *(buffer_end - 1) = *(digit + 1);
-        *(buffer_end - 2) = *digit;
-        buffer_end -= 2;
-    }
-    if (value < 10) {
-        *(buffer_end - 1) = '0' + value;
-        return buffer_end;
-    }
-
-    unsigned index = static_cast<unsigned>(value * 2);
-    digit = &kDigits0To99[index];
-    *(buffer_end - 1) = *(digit + 1);
-    *(buffer_end - 2) = *digit;
-    buffer_end -= 2;
-    return buffer_end;
-}
-
-template<typename UI, typename SI>
-void FormatSigned (SI value) {
-    UI abs_value = static_cast<SI>(value);
-    bool negative = value < 0;
-    if (negative) {
-        abs_value = 0 - abs_value;
-    }
-    str_ = FormatUnsiged (abs_value);
-    if (negative) {
-        *--str_ = '-';
-    }
-}
 
 void SlotInit (Slot* slot, uintptr_t* begin, uintptr_t size) {
     if (!slot) {
@@ -110,18 +62,14 @@ void SlotInit (Slot* slot, uintptr_t* begin, uintptr_t size) {
 
 inline const Op* SlotError (Slot* slot, Error error,
                             const uint_t* header) {
-    #if CRABS_SEAM == 1
-    std::cout << '\n' << ErrorStrings ()[error];
-    #endif
+    PRINTF ("\n%s", ErrorStrings ()[error])
     return reinterpret_cast<const Op*> (error);
 }
 
 inline const Op* SlotError (Slot* slot, Error error,
                             const uint_t* header,
                             byte offset) {
-#if CRABS_SEAM == 1
-    std::cout << '\n' << ErrorStrings ()[error];
-#endif
+    PRINTF ("\n%s", ErrorStrings ()[error])
     return reinterpret_cast<const Op*> (error);
 }
 
@@ -129,16 +77,12 @@ inline const Op* SlotError (Slot* slot, Error error,
                             const uint_t* header,
                             uint_t offset,
                             char* address) {
-#if CRABS_SEAM == 1
-    std::cout << '\n' << ErrorStrings ()[error];
-#endif
+    PRINTF ("\n%s", ErrorStrings ()[error])
     return reinterpret_cast<const Op*> (error);
 }
 
 inline const Op* SlotError (Slot* slot, Error error) {
-#if CRABS_SEAM == 1
-    std::cout << '\n' << ErrorStrings ()[error];
-#endif
+    PRINTF ("\n%s", ErrorStrings ()[error])
     return reinterpret_cast<const Op*> (error);
 }
 
@@ -248,10 +192,10 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
     uint32_t* ui4_ptr; //< Pointer to a UI4.
     uint64_t* ui8_ptr; //< Pointer to a UI8.
     uint_t    type,    //< Current type being read.
-              length,  //< Length of the data in the buffer.
               index,   //< Index in the escape sequence.
               num_params = *params; //< Number of params.
-    intptr_t offset,  //< Offset to word align the current type.
+    uintptr_t  offset; //< Offset to word align the current type.
+    intptr_t length,   //< Length of the data in the buffer.
               count,   //< Argument length.
               size;    //< Size of the ring buffer.
 
@@ -259,9 +203,7 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
         return nullptr;
     }
 
-    #if CRABS_SEAM == 1
-    std::cout << "\n\nReading BIn: ";
-    #endif
+    PRINTF ("\n\nReading BIn: ")
 
     char* begin = slot->begin,        //< Beginning of the buffer.
         * end   = slot->end,          //< end of the buffer.
@@ -273,26 +215,16 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
 
     length = SlotLength (start, stop, size);
 
-    #if CRABS_SEAM == 1
-    //Text<> text;
-    //text << "\n\nReading BIn:"
-    //     << PrintBsq (params)
-    //     << "\nbegin: " << Pointer (text , begin) 
-    //     << " start:"     << MemoryVector (begin, start)
-    //     << " stop:"      << MemoryVector (begin, stop )
-    //     << " end:"       << MemoryVector (begin, end  )
-    //     << " length:"    << length;
-    #endif
+    PRINTF ("\n\nReading %I64u bytes.", length)
+    //PrintBsq (params)
     // When we scan, we are reading from the beginning of the BIn buffer.
 
     for (index = 0; index < num_params; ++index) {
         type = (byte)*param;
         ++param;
-        #if CRABS_SEAM == 1
-        std::cout << "\nindex " << index << ": " << TypeString (type) 
-                  << "  start:" << MemoryVector (begin, start)
-                  << ", stop:"  << MemoryVector (begin, stop);
-        #endif
+        PRINTF ("\nindex:%u:\"%s\", start:0x%I64i, stop:0x%I64i", index, 
+                TypeString (type), MemoryVector (begin, start),
+                MemoryVector (begin, stop))
 
         switch (type) {
             case NIL:
@@ -323,9 +255,7 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
                         return SlotError (slot, kErrorBufferUnderflow,
                                           params, index, start);
                     }
-                    #if CRABS_SEAM == 1
-                    std::cout << ui1;
-                    #endif
+                    PUTCHAR (ui1)
 
                     ui1 = *start;       // Read byte from ring-buffer.
                     if (++start > end) {
@@ -335,9 +265,7 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
                     ++ui1_ptr;
                 }
                     
-                #if CRABS_SEAM == 1
-                std::cout << " done!\n";
-                #endif
+                PRINTF (" done!\n")
 
                 if (type == 0) {
                     *ui1_ptr = ui1;
@@ -382,7 +310,7 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
                 //Read2ByteType:{
                     // Word-align
                     offset = MemoryAlign2 (start);
-                    if (length < offset + 2) {
+                    if ((uintptr_t)length < offset + 2) {
                         return SlotError (slot, kErrorBufferUnderflow,
                                                 params, index, start);
                     }
@@ -426,7 +354,7 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
                 //Read4ByteType:{
                     // Word-align
                     offset = MemoryAlign4 (start);
-                    if (length < offset + 4) {
+                    if ((uintptr_t)length < offset + 4) {
                         return SlotError (slot, kErrorBufferUnderflow,
                                           params, index, start);
                     }
@@ -463,11 +391,11 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
                 //Read8ByteType:{
                     // Word-align
                     offset = MemoryAlign8 (start);
-                    if (length < offset + sizeof (int64_t)) {
+                    if ((uintptr_t)length < offset + sizeof (int64_t)) {
                         return SlotError (slot, kErrorBufferUnderflow, 
                                             params, index, start);
                     }
-                    length -= (uint_t)(offset + sizeof (int64_t));
+                    length -= offset + sizeof (int64_t);
                     start  += offset;
                     if (start > end) {
                         start -= size; //< Bound
@@ -597,15 +525,11 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
                 break;
                 #endif
             }
-            #if CRABS_SEAM == 1
-            std::cout << " |";
-            #endif
+            PRINTF (" |")
         }
     }
-    #if CRABS_SEAM == 1
-    std::cout << "\nDone reading.";
-    SlotWipe (slot);
-    #endif
+    PRINTF ("\nDone reading.")
+    //SlotWipe (slot);
 
     // Convert pointer back to offset
     slot->start = start;

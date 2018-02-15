@@ -14,7 +14,21 @@
 */
 
 #include <stdafx.h>
-#include "global.h"
+#include "tests_global.h"
+
+int main (int args_count, char** args) {
+    std::cout << '|';
+    for (int i = 79; i > 0; --i) {
+        std::cout << '-';
+    }
+    std::cout << "\n| Kabuki Toolkit Tests\n|";
+    for (int i = 79; i > 0; --i) {
+        std::cout << '-';
+    }
+    std::cout << "\n|\n|";
+    return CommandLineTestRunner::RunAllTests (args_count, args);
+}
+
 /*
 HANDLE gDoneEvent;
 
@@ -41,19 +55,8 @@ VOID CALLBACK TimerRoutine (PVOID lpParam, BOOLEAN TimerOrWaitFired)
     }
 
     SetEvent (gDoneEvent);
-}*/
-
-int main (int args_count, char** args) {
-    std::cout << '|';
-    for (int i = 79; i > 0; --i) {
-        std::cout << '-';
-    }
-    std::cout << "\n| Kabuki Toolkit Tests\n|";
-    for (int i = 79; i > 0; --i) {
-        std::cout << '-';
-    }
-    std::cout << "\n|\n|";
-    /*
+}
+int main () {
     HANDLE hTimer = NULL;
     HANDLE hTimerQueue = NULL;
     int arg = 123;
@@ -95,5 +98,3 @@ int main (int args_count, char** args) {
     if (!DeleteTimerQueue (hTimerQueue))
         printf ("DeleteTimerQueue failed (%d)\n", GetLastError ());
     */
-    return CommandLineTestRunner::RunAllTests (args_count, args);
-}

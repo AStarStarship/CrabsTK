@@ -16,8 +16,9 @@
 
 #include <stdafx.h>
 #include "test_itos_script.h"
-#include "test_itos_sizelut.h"
-#include "../source/crabs/itos.h"
+#include "test_itos_competition.h"
+#include "../source/crabs/script_itos.h"
+#include "../source/crabs/script_itos2.h"
 
 using namespace _;
 using namespace std;
@@ -132,7 +133,7 @@ void TestItoSScript () {
 
     //PrintDigits99To99Lut ();
 
-    cout << "\n\nTesting Problem Childs...\n\n";
+    cout << "\n\nTesting Script ItoS 2...\n\n";
     for (int i = 0; i < 2; ++i) {
         value = problem_childs[i];
         for (unsigned j = 0; j < 2; ++j) {
@@ -146,13 +147,14 @@ void TestItoSScript () {
 
             sprintf_s (expecting, 24, "%I64u", value);
             cout << '\n' << i + 1 << ".) Expecting " << expecting << " with length "
-                << strlen (expecting);
+                << strlen (expecting) << '\n';
             PrintBinary (value);
-            result = Print (value, text + j, text + kSize);
+            result = PrintLd (value, text + j, text + kSize);
             if (!result) {
                 PRINT_PAUSE ("An error occurred :-(")
                     break;
             }
+            *result = 0;
             if (strcmp (expecting, text + j)) {
                 cout << "\n\nERROR: Expecting \"" << expecting << "\":"
                     << strlen (expecting) << " and found \""
@@ -176,13 +178,14 @@ void TestItoSScript () {
 
             sprintf_s (expecting, 24, "%I64u", value);
             cout << '\n' << i + 1 << ".) Expecting " << expecting << " with length "
-                << strlen (expecting);
+                << strlen (expecting) << '\n';
             PrintBinary (value);
-            result = Print (value, text + j, text + kSize);
+            result = PrintLd (value, text + j, text + kSize);
             if (!result) {
                 PRINT_PAUSE ("An error occurred :-(")
                     break;
             }
+            *result = 0;
             if (strcmp (expecting, text + j)) {
                 cout << "\n\nERROR: Expecting \"" << expecting << "\":"
                     << strlen (expecting) << " and found \""
@@ -205,13 +208,14 @@ void TestItoSScript () {
             value = distr (eng);
             sprintf_s (expecting, 24, "%I64u", value);
             cout << '\n' << i + 1 << ".) Expecting " << expecting << " with length "
-                << strlen (expecting);
+                << strlen (expecting) << '\n';
             PrintBinary (value);
-            result = Print (value, text + j, text + j + kSize);
+            result = PrintLd (value, text + j, text + j + kSize);
             if (!result) {
                 PRINT_PAUSE ("An error occurred :-(")
                     break;
             }
+            *result = 0;
             if (strcmp (expecting, text + j)) {
                 cout << "\n\nERROR: Expecting \"" << expecting << "\":"
                     << strlen (expecting) << " and found \"" << text + j << "\":"
@@ -220,6 +224,113 @@ void TestItoSScript () {
             }
         }
     }
+
+    cout << "\n\nTesting Problem Childs...\n\n";
+    for (int i = 0; i < 2; ++i) {
+        value = problem_childs[i];
+        for (unsigned j = 0; j < 2; ++j) {
+
+            // Write a bunches of xxxxxx to the buffer for debug purposes.
+            result = text;
+            for (int k = 24; k > 0; --k) {
+                *result++ = 'x';
+            }
+            *(text + 23) = 0;
+
+            sprintf_s (expecting, 24, "%I64u", value);
+            cout << '\n' << i + 1 << ".) Expecting " << expecting << " with length "
+                << strlen (expecting) << '\n';
+            PrintBinary (value);
+            result = PrintLud (value, text + j, text + kSize);
+            if (!result) {
+                PRINT_PAUSE ("An error occurred :-(")
+                    break;
+            }
+            *result = 0;
+            if (strcmp (expecting, text + j)) {
+                cout << "\n\nERROR: Expecting \"" << expecting << "\":"
+                    << strlen (expecting) << " and found \""
+                    << text + j << "\":" << strlen (text + j);
+                PRINT_PAUSE ("\n");
+            }
+        }
+    }
+
+    cout << "\n\nTesting edge conditions...\n\n";
+    for (int i = 0; i < 79; ++i) {
+        value = test_value[i];
+        for (unsigned j = 0; j < 2; ++j) {
+
+            // Write a bunches of xxxxxx to the buffer for debug purposes.
+            result = text;
+            for (int k = 24; k > 0; --k) {
+                *result++ = 'x';
+            }
+            *(text + 23) = 0;
+
+            sprintf_s (expecting, 24, "%I64u", value);
+            cout << '\n' << i + 1 << ".) Expecting " << expecting << " with length "
+                << strlen (expecting) << '\n';
+            PrintBinary (value);
+            result = PrintLud (value, text + j, text + kSize);
+            if (!result) {
+                PRINT_PAUSE ("An error occurred :-(")
+                    break;
+            }
+            *result = 0;
+            if (strcmp (expecting, text + j)) {
+                cout << "\n\nERROR: Expecting \"" << expecting << "\":"
+                    << strlen (expecting) << " and found \""
+                    << text + j << "\":" << strlen (text + j);
+                PRINT_PAUSE ("\n");
+            }
+        }
+    }
+
+    cout << "\n\nTesting random numbers...\n\n";
+
+    for (int i = 0; i < 0x00ffffff; ++i) {
+        for (unsigned j = 0; j < 2; ++j) {
+            // Write a bunches of xxxxxx to the buffer for debug purposes.
+            result = text + j;
+            for (int k = kSize; k > 0; --k) {
+                *result++ = 'x';
+            }
+            *result = 0;
+            value = distr (eng);
+            sprintf_s (expecting, 24, "%I64u", value);
+            cout << '\n' << i + 1 << ".) Expecting " << expecting << " with length "
+                << strlen (expecting) << '\n';
+            PrintBinary (value);
+            result = PrintLud (value, text + j, text + j + kSize);
+            if (!result) {
+                PRINT_PAUSE ("An error occurred :-(")
+                    break;
+            }
+            *result = 0;
+            if (strcmp (expecting, text + j)) {
+                cout << "\n\nERROR: Expecting \"" << expecting << "\":"
+                    << strlen (expecting) << " and found \"" << text + j << "\":"
+                    << strlen (text + j);
+                PRINT_PAUSE ("\n");
+            }
+        }
+    }
+    /*
+    cout << "\nTesting modulo trick";
+
+    for (unsigned int i = 1; i < 1000 * 1000; ++i) {
+        unsigned int a = i % 10,
+                     b = i & 0xffff;
+        // d_1 * 10^1 + d_0 * 10^0 = b_0 * 2^0 + b_1 * 2^1 + b_2* 10^3 + b_3 * 10
+        if (b >= 10) {
+            a = i % 10;
+        } else {
+            b = i & 0xf;
+        }
+        cout << "\n    " << i << ".) i % 10:" << a << " b:" << b;
+    }
+    system ("PAUSE");*/
 
     cout << "\n Done testing ItoS :)\n\n";
 }
@@ -250,10 +361,11 @@ void BenchmarkItoS () {
         cout << "Unable to open file";
         return;
     }
+
     cout << "\nAligned and Unaligned ItoS Benchmarks";
     file << "\nAligned and Unaligned ItoS Benchmarks";
-    cout << "\n#Bits, Null, Size LUT, Script\n";
-    file << "#Bits, Null, Size LUT, Script\n";
+    cout << "\n#Bits, Null, Size LUT, LUD, Ld, sprintf_s\n";
+    file << "#Bits, Null, Size LUT, Lud, Ld, sprintf_s\n";
     for (int num_bits = 1; num_bits <= 64; ++num_bits) {
         bits_mask = bits_mask << 1;
         value_mask = ~bits_mask;
@@ -287,8 +399,30 @@ void BenchmarkItoS () {
         start = high_resolution_clock::now ();
         for (count = kNumTests; count > 0; --count) {
             value = distr (eng) & value_mask;
-            result = Print (value, text, text + kSize);
-            result = Print (value, text + 1, text + kSize);
+            result = PrintLud (value, text, text + kSize);
+            result = PrintLud (value, text + 1, text + kSize);
+        }
+        stop = high_resolution_clock::now ();
+        delta = duration_cast<milliseconds> (stop - start).count ();
+        file << delta << ',';
+        cout << delta << ',';
+
+        start = high_resolution_clock::now ();
+        for (count = kNumTests; count > 0; --count) {
+            value = distr (eng) & value_mask;
+            result = PrintLd (value, text, text + kSize);
+            result = PrintLd (value, text + 1, text + kSize);
+        }
+        stop = high_resolution_clock::now ();
+        delta = duration_cast<milliseconds> (stop - start).count ();
+        file << delta << ',';
+        cout << delta << ',';
+
+        start = high_resolution_clock::now ();
+        for (count = kNumTests; count > 0; --count) {
+            value = distr (eng) & value_mask;
+            sprintf_s (text, kSize, "%I64u", value);
+            sprintf_s (text + 1, kSize, "%I64u", value);
         }
         stop = high_resolution_clock::now ();
         delta = duration_cast<milliseconds> (stop - start).count ();
@@ -298,8 +432,8 @@ void BenchmarkItoS () {
     bits_mask = ~(uint64_t)0;
     cout << "\nUnaligned ItoS Benchmarks";
     file << "\nUnaligned ItoS Benchmarks";
-    cout << "\n#Bits, Null, Size LUT, Script\n";
-    file << "#Bits, Null, Size LUT, Script\n";
+    cout << "\n#Bits, Null, Size LUT, LUD, Script, sprintf_s\n";
+    file << "#Bits, Null, Size LUT, LUD, Script, sprintf_s\n";
     for (int num_bits = 1; num_bits <= 64; ++num_bits) {
         bits_mask = bits_mask << 1;
         value_mask = ~bits_mask;
@@ -331,7 +465,27 @@ void BenchmarkItoS () {
         start = high_resolution_clock::now ();
         for (count = kNumTests; count > 0; --count) {
             value = distr (eng) & value_mask;
-            result = Print (value, text + 1, text + kSize);
+            result = PrintLud (value, text + 1, text + kSize);
+        }
+        stop = high_resolution_clock::now ();
+        delta = duration_cast<milliseconds> (stop - start).count ();
+        file << delta << ',';
+        cout << delta << ',';
+
+        start = high_resolution_clock::now ();
+        for (count = kNumTests; count > 0; --count) {
+            value = distr (eng) & value_mask;
+            result = PrintLd (value, text + 1, text + kSize);
+        }
+        stop = high_resolution_clock::now ();
+        delta = duration_cast<milliseconds> (stop - start).count ();
+        file << delta << ',';
+        cout << delta << ',';
+
+        start = high_resolution_clock::now ();
+        for (count = kNumTests; count > 0; --count) {
+            value = distr (eng) & value_mask;
+            sprintf_s (text + 1, kSize, "%I64u", value);
         }
         stop = high_resolution_clock::now ();
         delta = duration_cast<milliseconds> (stop - start).count ();
@@ -341,8 +495,8 @@ void BenchmarkItoS () {
     bits_mask = ~(uint64_t)0;
     cout << "\nAligned ItoS Benchmarks";
     file << "\nAligned ItoS Benchmarks";
-    cout << "\n#Bits, Null, Size LUT, Script\n";
-    file << "#Bits, Null, Size LUT, Script\n";
+    cout << "\n#Bits, Null, Size LUT, LUD, Script, sprintf_s\n";
+    file << "#Bits, Null, Size LUT, Script, sprintf_s\n";
     for (int num_bits = 1; num_bits <= 64; ++num_bits) {
         bits_mask = bits_mask << 1;
         value_mask = ~bits_mask;
@@ -374,7 +528,27 @@ void BenchmarkItoS () {
         start = high_resolution_clock::now ();
         for (count = kNumTests; count > 0; --count) {
             value = distr (eng) & value_mask;
-            result = Print (value, text, text + kSize);
+            result = PrintLud (value, text, text + kSize);
+        }
+        stop = high_resolution_clock::now ();
+        delta = duration_cast<milliseconds> (stop - start).count ();
+        file << delta << ',';
+        cout << delta << ',';
+
+        start = high_resolution_clock::now ();
+        for (count = kNumTests; count > 0; --count) {
+            value = distr (eng) & value_mask;
+            result = PrintLd (value, text, text + kSize);
+        }
+        stop = high_resolution_clock::now ();
+        delta = duration_cast<milliseconds> (stop - start).count ();
+        file << delta << ',';
+        cout << delta << ',';
+
+        start = high_resolution_clock::now ();
+        for (count = kNumTests; count > 0; --count) {
+            value = distr (eng) & value_mask;
+            sprintf_s (text, kSize, "%I64u", value);
         }
         stop = high_resolution_clock::now ();
         delta = duration_cast<milliseconds> (stop - start).count ();
@@ -417,7 +591,7 @@ void PrintDigits99To99Lut () {
             }
         }
     }
-    printf (" }; \n\n", digits);
+    std::cout << " }; \n\n", digits;
     system ("PAUSE");
 }
 

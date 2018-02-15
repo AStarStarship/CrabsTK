@@ -42,10 +42,11 @@ struct Slot {
 
 /** Shifts the overflow buffer to the begging of the ring buffer. */
 inline char* SlotOverflowShift (char* begin, char* end, char* cursor) {
+    size_t size;
     if (cursor <= end) {
         return cursor;
     }
-    size_t size = end - begin;
+    size = end - begin;
     while (++end > cursor) {
         *(end - size) = *end;
     }
@@ -62,22 +63,22 @@ KABUKI void SlotInit (Slot* slot, uintptr_t* buffer, uintptr_t size);
     @param  Start The start of the data.
     @param  Stop  The stop of the data.
     @param  Size  The size of the buffer. */
-inline uint_t SlotLength (char* start, char* stop, uint_t size) {
+inline intptr_t SlotLength (char* start, char* stop, uintptr_t size) {
     if (start > stop) {
-        return (uint_t)(size - (start - stop));
+        return size - (start - stop);
     }
-    return (uint_t)(stop - start);
+    return stop - start;
 }
 
 /** Calculates the space left in the given ring buffer.
     @param  Start The start of the data.
     @param  Stop  The stop of the data.
     @param  Size  The size of the buffer. */
-inline uint_t SlotSpace (char* start, char* stop, uint_t size) {
+inline intptr_t SlotSpace (char* start, char* stop, uintptr_t size) {
     if (start > stop) {
-        return (uint_t)(start - stop);
+        return start - stop;
     }
-    return (uint_t)(size - (stop - start));
+    return size - (stop - start);
 }
 
 /** Reads the given Operation input parameters from the slot to the args.

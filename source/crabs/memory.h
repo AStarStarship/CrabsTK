@@ -197,16 +197,14 @@ inline uintptr_t MemoryAlign8 (uintptr_t size) {
 }
 
 /** Calculates the difference between the begin and end address. */
-inline uintptr_t MemoryVector (void* begin, void* end) {
-    return static_cast<uintptr_t>(reinterpret_cast<char*> (end) -
-                                  reinterpret_cast<char*> (begin));
+inline intptr_t MemoryVector (void* begin, void* end) {
+    return reinterpret_cast<char*> (end) - reinterpret_cast<char*> (begin);
 }
 
 /** Calculates the difference between the begin and end address. */
-inline uintptr_t MemoryVector (const void* begin, const void* end) {
-    char* start = static_cast<char*> (const_cast<void*> (begin)),
-        *stop = static_cast<char*> (const_cast<void*> (end));
-    return static_cast<uintptr_t> (stop - start);
+inline intptr_t MemoryVector (const void* begin, const void* end) {
+    return reinterpret_cast<const char*> (end) -
+           reinterpret_cast<const char*> (begin);
 }
 
 /** Overwrites the memory with zeros functionally identical to memset. */

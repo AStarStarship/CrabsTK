@@ -500,7 +500,7 @@ const char* TextEquals (const char* text_a, const char* text_b) {
          b = *text_b;
     int  result;
     
-    PRINTF ("\nComparing \"%s\" to \"%s\"", text_b)
+    PRINTF ("\nComparing \"%s\" to \"%s\"", text_a, text_b)
 
     // text SHOULD be a nil-terminated string without whitespace.
     while (b) {

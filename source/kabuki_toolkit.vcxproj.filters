@@ -33,9 +33,6 @@
     <Filter Include="projects\terminal">
       <UniqueIdentifier>{141c22c3-7927-4379-8e32-8c4433886102}</UniqueIdentifier>
     </Filter>
-    <Filter Include="benchmarks">
-      <UniqueIdentifier>{93b92ae1-3612-4d6c-bfa0-83d695e651e9}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -49,9 +46,6 @@
     </ClInclude>
     <ClInclude Include="global.h">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tests\global.h">
-      <Filter>source\tests</Filter>
     </ClInclude>
     <ClInclude Include="crabs\array.h">
       <Filter>source\crabs</Filter>
@@ -167,8 +161,8 @@
     <ClInclude Include="crabs\scan.h">
       <Filter>source\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="..\benchmarks\itos_speed_test.h">
-      <Filter>benchmarks</Filter>
+    <ClInclude Include="..\tests\tests_global.h">
+      <Filter>source\tests</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -244,8 +238,8 @@
     <ClCompile Include="crabs\crabs_scan.cc">
       <Filter>source\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="..\benchmarks\itos_speed_test.cc">
-      <Filter>benchmarks</Filter>
+    <ClCompile Include="crabs\script_itos.cc">
+      <Filter>source\crabs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

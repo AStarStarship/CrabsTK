@@ -15,7 +15,7 @@
 */
 
 #include <stdafx.h>
-#include "global.h"
+#include "tests_global.h"
 
 using namespace _;
 
@@ -25,14 +25,41 @@ TEST_GROUP (CRABS_TESTS) {
     }
 
     void teardown () {
-        PAUSE
+        std::cout << "\n";
+        system ("PAUSE");
     }
 };
 
 #if CRABS_SEAM >= 1
-
 TEST (CRABS_TESTS, CrabsSeam1) {
-    char buffer[kSize];
+    enum {
+        kSize = 16,
+        kSlotSize = 2048,
+        kSlotSizeWords = kSlotSize >> kWordSizeShift
+    };
+
+    static const char* compare_strings[] = {
+        "Testing",
+        "Texting",
+        "Testing@",
+        "Texting@",
+    };
+    static const char string[] = "Testing one, two, three.";
+
+    static const char* right_string[] = {
+        "    Testing one, two, three.",
+        "Test...",
+        ".",
+        "..",
+        "...",
+        "T...",
+    };
+
+    uintptr_t slot_buffer[kSlotSizeWords];
+    Slot slot;
+    SlotInit (&slot, slot_buffer, kSlotSizeWords);
+
+    char buffer[kFloat64DigitsMax];
 
     std::cout << "\n|  - Running HexTest...";
     for (int i = 0; i < 16; ++i) {
@@ -51,13 +78,6 @@ TEST (CRABS_TESTS, CrabsSeam1) {
 
     std::cout << "\n| - Testing string utils...\n";
 
-    const char* compare_strings[] = {
-        "Testing",
-        "Texting",
-        "Testing@",
-        "Texting@",
-    };
-
     CHECK (!TextEquals (compare_strings[0], compare_strings[1]))
     CHECK (!TextEquals (compare_strings[0], compare_strings[3]))
     CHECK (TextEquals  (compare_strings[0], compare_strings[0]))
@@ -66,40 +86,30 @@ TEST (CRABS_TESTS, CrabsSeam1) {
 
     CHECK_EQUAL (9, TextLength ("123456789"))
     CHECK_EQUAL (9, TextLength ("123456789 ", ' '))
-
-    static const char test_string[] = "testing one, two, three.\0";
         
-    CHECK (TextFind (test_string, "one"))
-    CHECK (TextFind (test_string, "three."))
-
-    enum { kSize = 16 };
-
-    const char test_string[] = "Testing\0";
-    const char* right_strings[] = {
-        "   Testing"
-        "Test...",
-        ".",
-        "..",
-        "...",
-        "T...",
-    };
+    CHECK (TextFind (string, "one"))
+    CHECK (TextFind (string, "three."))
     
-    PrintRight (test_string, 10, buffer, buffer + kSize);
-    CHECK (buffer, right_strings[0])
+    PrintRight (string, 28, buffer, buffer + kFloat64DigitsMax);
+    STRCMP_EQUAL (right_string[0], buffer)
+    
+    PrintRight (string, 7, buffer, buffer + kFloat64DigitsMax);
+    STRCMP_EQUAL (right_string[1], buffer)
+    
+    PrintRight (string, 1, buffer, buffer + kFloat64DigitsMax);
+    STRCMP_EQUAL (right_string[2], buffer)
+    
+    PrintRight (string, 2, buffer, buffer + kFloat64DigitsMax);
+    STRCMP_EQUAL (right_string[3], buffer)
+    
+    PrintRight (string, 3, buffer, buffer + kFloat64DigitsMax);
+    STRCMP_EQUAL (right_string[4], buffer)
+    
+    PrintRight (string, 4, buffer, buffer + kFloat64DigitsMax);
+    STRCMP_EQUAL (right_string[5], buffer)
 
-    // @todo Add Text module and TextEquals here.
-}
-#endif  //< CRABS_SEAM >= 1
-
-#if CRABS_SEAM >= 2
-TEST (CRABS_TESTS, PrintTests) {
-
-    enum { kBufferSize = 2048 >> kWordSizeShift };
-
-    static Slot& write = PrintSet (kBufferSize);
-
-    write << "\n|\n| Testing Text...\n|\n|";
-    Dump ();
+    slot << "\n|\n| Testing Text...\n|\n|";
+    SlotDisplay (slot);
 
     int8_t   a = 1;  //< 
     uint8_t  b = 2;  //< 
@@ -109,13 +119,17 @@ TEST (CRABS_TESTS, PrintTests) {
     uint32_t f = 6;  //< 
     int64_t  g = 7;  //< 
     uint64_t h = 8;  //< 
-    time_t   i = 9;  //< 
-    float    i = 10; //< 
-    double   j = 11; //< 
+    float    i = 9; //< 
+    double   j = 10; //< 
 
-    Print () << "\n| a:" << a << " b:" << b << " c:" << c << " d:" << d
-             << " e:" << e << " f:" << f << " g:" << g << " h:" << h
-             << " i:" << i << " j:" << j;
+    slot << "\n| a:" << a << " b:" << b << " c:" << c << " d:" << d
+        << " e:" << e << " f:" << f << " g:" << g << " h:" << h
+        << " i:" << i << " j:" << j;
+}
+#endif  //< CRABS_SEAM >= 1
+
+#if CRABS_SEAM >= 2
+TEST (CRABS_TESTS, PrintTests) {
 }
 #endif      //< CRABS_SEAM >= 2
 

@@ -415,7 +415,7 @@ char* PrintRight (const char* token, int num_columns, char* text,
         return nullptr;
     }
     
-    PRINTF ("\nPrinting \"%s\" aligned right ", token, num_columns)
+    PRINTF ("\nPrinting \"%s\" aligned right %i columns", token, num_columns)
 
     intptr_t    length    = 0;     //< Length of the token.
     const char* token_end = token; //< Address of the last char.
