@@ -20,6 +20,15 @@
 
 #if CRABS_SEAM >= 2
 
+
+#if CRABS_SEAM == 2
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#endif
+
 namespace _ {
 
 const Op* DoorResult (Door* door, Door::Error error) {
@@ -126,4 +135,6 @@ static Door* DoorInit (uintptr_t* buffer, slot_t slot_size) {
 }*/
 
 }       //< namespace _
+#undef PRINTF
+#undef PUTCHAR
 #endif  //< CRABS_SEAM >= 2

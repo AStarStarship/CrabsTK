@@ -21,20 +21,17 @@
 
 #include "type.h"
 #include "text.h"
-#include "error.h"
-#include "memory.h"
+
+
+#if CRABS_SEAM == 1
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#endif
 
 namespace _ {
-
-const char* Digits0To99 () {
-    static const char kDigits0To99[] =
-        "0001020304050607080910111213141516171819"
-        "2021222324252627282930313233343536373839"
-        "4041424344454647484950515253545556575859"
-        "6061626364656667686970717273747576777879"
-        "8081828384858687888990919293949596979899";
-    return kDigits0To99;
-}
 
 typedef long long int64_t;
 typedef unsigned long long uint64_t;
@@ -251,12 +248,12 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
     uint32_t* ui4_ptr; //< Pointer to a UI4.
     uint64_t* ui8_ptr; //< Pointer to a UI8.
     uint_t    type,    //< Current type being read.
-              size,    //< Size of the ring buffer.
               length,  //< Length of the data in the buffer.
               index,   //< Index in the escape sequence.
               num_params = *params; //< Number of params.
-    uintptr_t offset,  //< Offset to word align the current type.
-              count;   //< Argument length.
+    intptr_t offset,  //< Offset to word align the current type.
+              count,   //< Argument length.
+              size;    //< Size of the ring buffer.
 
     if (!num_params) {
         return nullptr;
@@ -279,7 +276,7 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
     #if CRABS_SEAM == 1
     //Text<> text;
     //text << "\n\nReading BIn:"
-    //     << BsqPrint (params)
+    //     << PrintBsq (params)
     //     << "\nbegin: " << Pointer (text , begin) 
     //     << " start:"     << MemoryVector (begin, start)
     //     << " stop:"      << MemoryVector (begin, stop )
@@ -293,8 +290,8 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
         ++param;
         #if CRABS_SEAM == 1
         std::cout << "\nindex " << index << ": " << TypeString (type) 
-                 << "  start:" << MemoryVector (begin, start)
-                 << ", stop:" << MemoryVector (begin, stop);
+                  << "  start:" << MemoryVector (begin, start)
+                  << ", stop:"  << MemoryVector (begin, stop);
         #endif
 
         switch (type) {
@@ -382,14 +379,14 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
             case UVI:
             #endif
                 #if USING_CRABS_2_BYTE_TYPES
-                Read2ByteType:{
+                //Read2ByteType:{
                     // Word-align
                     offset = MemoryAlign2 (start);
                     if (length < offset + 2) {
                         return SlotError (slot, kErrorBufferUnderflow,
                                                 params, index, start);
                     }
-                    length -= offset + 2;
+                    length -= (uint_t)offset + 2;
                     start += offset;
                     if (start > end) {
                         start -= size;
@@ -407,7 +404,7 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
                         break;
                     }
                     *ui2_ptr = ui2;
-                }
+                //}
                 break;
                 #else
                 return SlotError (slot, kErrorInvalidType);
@@ -426,14 +423,14 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
             case FLT:
             case TMS:
                 #if USING_CRABS_4_BYTE_TYPES
-                Read4ByteType:{
+                //Read4ByteType:{
                     // Word-align
                     offset = MemoryAlign4 (start);
                     if (length < offset + 4) {
                         return SlotError (slot, kErrorBufferUnderflow,
                                           params, index, start);
                     }
-                    length -= offset + 4;
+                    length -= (uint_t)offset + 4;
                     start += offset;
                     if (start > end) {
                         start -= size;    //< Bound
@@ -452,7 +449,7 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
                     }
                     *ui4_ptr = ui1;                     //< Write
                     break;
-                }
+                //}
                 #else
                 return SlotError (slot, kErrorInvalidType);
                 #endif
@@ -463,14 +460,14 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
             case SV8:
             case UV8:
                 #if USING_CRABS_8_BYTE_TYPES
-                Read8ByteType:{
+                //Read8ByteType:{
                     // Word-align
                     offset = MemoryAlign8 (start);
                     if (length < offset + sizeof (int64_t)) {
                         return SlotError (slot, kErrorBufferUnderflow, 
                                             params, index, start);
                     }
-                    length -= offset + sizeof (int64_t);
+                    length -= (uint_t)(offset + sizeof (int64_t));
                     start  += offset;
                     if (start > end) {
                         start -= size; //< Bound
@@ -487,7 +484,7 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
                     if (ui8_ptr == 0) break;
                     *ui8_ptr = ui8;                     //< Write
                     break;
-                }
+                //}
                 #else
                 return SlotError (slot, kErrorInvalidType);
                 #endif
@@ -620,5 +617,31 @@ const Op* SlotWrite (Slot* slot, const Op& op, void** args) {
     return nullptr;
 }
 
+Slot& SlotWrite (Slot& slot, Slot& other) {
+    return slot;
+}
+
+void SlotDisplay (Slot& slot) {
+    char* begin,
+        * start = slot.start,
+        * stop  = slot.stop,
+        * end;
+    if (stop < start) {
+        begin = slot.begin;
+        end   = slot.end;
+        while (start <= end) {
+            std::cerr << *start++;
+        }
+        while (begin <= stop) {
+            std::cerr << *begin++;
+        }
+    }
+    while (start <= stop) {
+        std::cerr << *start++;
+    }
+}
+
 }       //< namespace _
+#undef PRINTF
+#undef PUTCHAR
 #endif  //< CRABS_SEAM >= 1

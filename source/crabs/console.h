@@ -28,233 +28,24 @@
 
 namespace _ {
 
-Slot& ConsoleSet (uintptr_t *buffer, uintptr_t buffer_size) {
+/** Gets or sets the Write buffer.
     
-    #if USING_DYNAMIC_MEMORY
-    static uintptr_t* the_buffer = nullptr;
-    static uintptr_t  the_buffer_size = kSlotBufferSizeRx +
-                                        kSlotBufferSizeTx + 1;
-    #else
-    enum { kBufferSizeWords = buffer_size >> kWordSizeShift };
-    static uintptr_t the_buffer[kBufferSizeWords];
-    #endif
-}
+    To use dynamic  memory input a nil buffer pointer and non-zero size. To 
+    delete the buffer enter 0 for the buffer size.
 
-Slot& Print () {
-    static uintptr_t buffer;
-    static Slot empty_slot = {
-        reinterpret_cast<char*> (&buffer),
-        reinterpret_cast<char*> (&buffer),
-        reinterpret_cast<char*> (&buffer),
-        reinterpret_cast<char*> (&buffer) + sizeof (uintptr_t) - 1
-    };
-    static Slot& slot = ConsoleSet (empty_slot);
-    return slot;
-}
+    @param buffer      The buffer, or nil to create dynamic buffer.
+    @param buffer_size The size of the buffer in bytes.
+    @return Returns a pointer to the buffer or a new buffer. */
+KABUKI BOut* ConsoleSet (uintptr_t *buffer, uintptr_t buffer_size);
 
-Slot& PrintLine () {
-    return Print () << '\n';
-}
+/** The primary out slot.
+    To set the Print () @see SlotWriteSet 
+*/
+KABUKI Slot& Print ();
 
-/** Prints the given value to the Printer. */
-inline void Write (int8_t value) {
-    Print () << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void Write (uint8_t value) {
-    Print () << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void Write (int16_t value) {
-    Print () << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void Write (uint16_t value) {
-    Print () << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void Write (int32_t value) {
-    Print () << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void Write (uint32_t value) {
-    Print () << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void Write (int64_t value) {
-    Print () << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void Write (uint64_t value) {
-    Print () << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void Write (float value) {
-    Print () << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void Write (double value) {
-    Print () << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (int8_t value) {
-    Print () << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (uint8_t value) {
-    Print () << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (int16_t value) {
-    Print () << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (uint16_t value) {
-    Print () << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (int32_t value) {
-    Print () << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (uint32_t value) {
-    Print () << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (int64_t value) {
-    Print () << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (uint64_t value) {
-    Print () << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (float value) {
-    Print () << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (double value) {
-    Print () << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void CErr (int8_t value) {
-    std::cerr << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void CErr (uint8_t value) {
-    std::cerr << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void CErr (int16_t value) {
-    std::cerr << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void CErr (uint16_t value) {
-    std::cerr << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void CErr (int32_t value) {
-    std::cerr << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void CErr (uint32_t value) {
-    std::cerr << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void CErr (int64_t value) {
-    std::cerr << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void CErr (uint64_t value) {
-    std::cerr << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void CErr (float value) {
-    std::cerr << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void CErr (double value) {
-    std::cerr << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (int8_t value) {
-    std::cerr << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (uint8_t value) {
-    std::cerr << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (int16_t value) {
-    std::cerr << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (uint16_t value) {
-    std::cerr << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (int32_t value) {
-    std::cerr << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (uint32_t value) {
-    std::cerr << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (int64_t value) {
-    std::cerr << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (uint64_t value) {
-    std::cerr << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (float value) {
-    std::cerr << '\n' << value;
-}
-
-/** Prints the given value to the Printer. */
-inline void WriteLine (double value) {
-    std::cerr << '\n' << value;
-}
+/** Dumps the Write Slot to the Console.
+    @return Returns the Write Slot. */
+KABUKI Slot& Scan ();
 
 /** Reads a single char from the keyboard
     @param header The header to print. */

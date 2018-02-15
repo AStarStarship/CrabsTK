@@ -20,7 +20,7 @@
 #ifndef HEADER_FOR_CRABS_CONFIG
 #define HEADER_FOR_CRABS_CONFIG
 
-#define CRABS_SEAM      1   //< Current seam number being debugged.
+#define CRABS_SEAM 1
 
 // @todo Check all values of assembly_settings.inl, store them as an enum, 
 // then #undef them.
@@ -144,9 +144,9 @@ enum {
                        (sizeof (void*) == 4) ? 2 : //< Shift right 2 to / by 4.
                        1,
     // Max length of a float-to-string + 1.
-    kStringFloatSizeMax    = 3 + FLT_MANT_DIG - FLT_MIN_EXP,
+    kkFloat32DigitsMax    = 4 + FLT_MANT_DIG - FLT_MIN_EXP,
     // Max length of a double-to-string + 1.
-    kStringDoubleSizeMax   = 3 + DBL_MANT_DIG - DBL_MIN_EXP,
+    kFloat64DigitsMax   = 4 + DBL_MANT_DIG - DBL_MIN_EXP,
 
     // Extra reserved memory at the end of BOut.
     kBOutOverflowSize = 32,
@@ -279,32 +279,5 @@ typedef uint64_t data_t;    //< Default TData size.
   ClassName (const ClassName&) = delete;\
   void operator= (const ClassName&) = delete;
   //ClassName () = default //< Saw this once on the net but do we need it?
-
-#define PAUSE std::cout << '\n'; system ("PAUSE");
-
-/*
-#if DEBUG
-#define PRINT (MESSAGE)\
-    Print () << MESSAGE;
-
-#define PRINT_LINE (MESSAGE)\
-    Print () << '\n' << MESSAGE;
-
-#define PRINT_PAUSE (MESSAGE)\
-    Print () << NEW_LINE_HEADER << MESSAGE; system ("PAUSE");
-
-#define PRINTF(s, ...) printf(s, __VA_ARGS__)
-
-#else
-#define PRINT(MESSAGE)
-
-#define PRINT_LINE(MESSAGE)
-
-#define COUT_PAUSE(MESSAGE)
-
-
-#define PRINTF(s, ...)
-#endif  //< DEBUG
-*/
 
 #endif  //< HEADER_FOR_CRABS_CONFIG

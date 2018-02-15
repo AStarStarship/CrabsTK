@@ -17,10 +17,21 @@
 #include <stdafx.h>
 #include "clock.h"
 
-#if USING_CRABS_CLOCK
+#if CRABS_SEAM >= 2
 
-#include "console.h"
+#include "print.h"
 #include "text.h"
+#include "bout.h"
+#include "scan.h"
+
+
+#if CRABS_SEAM == 2
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#endif
 
 
 //using namespace std::chrono;
@@ -70,32 +81,32 @@ char* SlotWriteTime (char* buffer, char* buffer_end, tm* std_tm) {
         return nullptr;
     }
 
-    buffer = Print (buffer, buffer_end, std_tm->tm_year + kTimeEpoch);
+    buffer = Print (std_tm->tm_year + kTimeEpoch, buffer, buffer_end);
     if (!buffer) {
         return nullptr;
     }
     *buffer++ = '-';
-    buffer = Print (buffer, buffer_end, std_tm->tm_mon + 1);
+    buffer = Print (std_tm->tm_mon + 1, buffer, buffer_end);
     if (!buffer) {
         return nullptr;
     }
     *buffer++ = '-';
-    buffer = Print (buffer, buffer_end, std_tm->tm_mday);
+    buffer = Print (std_tm->tm_mday, buffer, buffer_end);
     if (!buffer) {
         return nullptr;
     }
     *buffer++ = '@';
-    buffer = Print (buffer, buffer_end, std_tm->tm_hour);
+    buffer = Print (std_tm->tm_hour, buffer, buffer_end);
     if (!buffer) {
         return nullptr;
     }
     *buffer++ = ':';
-    buffer = Print (buffer, buffer_end, std_tm->tm_min);
+    buffer = Print (std_tm->tm_min, buffer, buffer_end);
     if (!buffer) {
         return nullptr;
     }
     *buffer++ = ':';
-    buffer = Print (buffer, buffer_end, std_tm->tm_sec);
+    buffer = Print (std_tm->tm_sec, buffer, buffer_end);
     if (!buffer) {
         return nullptr;
     }
@@ -161,33 +172,33 @@ int ClockCompareTimes (time_t time_a, time_t time_b) {
 
     if (moment_a.tm_year != moment_b.tm_year) {
         ++count;
-        Print () << "\ntm_year.a: " << moment_a.tm_year + kTimeEpoch
-               << " != tm_year.b: " << moment_b.tm_year + kTimeEpoch;
+        DEBUG4 ("\ntm_year.a: ", moment_a.tm_year + kTimeEpoch,
+                " != tm_year.b: ", moment_b.tm_year + kTimeEpoch)
     }
     if (moment_a.tm_mon != moment_b.tm_mon) {
         ++count;
-        Print () << "\ntm_mon.a: " << moment_a.tm_mon << " != tm_mon.b: "
-               << moment_b.tm_mon + 1;
+        DEBUG4 ("\ntm_mon.a: ", moment_a.tm_mon, " != tm_mon.b: ",
+                moment_b.tm_mon + 1)
     }
     if (moment_a.tm_mday != moment_b.tm_mday) {
         ++count;
-        Print () << "\ntm_mday.a: " << moment_a.tm_mday << " != tm_mday.b: "
-               << moment_b.tm_mday;
+        DEBUG4 ("\ntm_mday.a: ", moment_a.tm_mday, " != tm_mday.b: ",
+                moment_b.tm_mday)
     }
     if (moment_a.tm_hour != moment_b.tm_hour) {
         ++count;
-        Print () << "\ntm_hour.a: " << moment_a.tm_hour << " != tm_hour.b: "
-               << moment_b.tm_hour;
+        DEBUG4 ("\ntm_hour.a: ", moment_a.tm_hour, " != tm_hour.b: ",
+                moment_b.tm_hour)
     }
     if (moment_a.tm_min != moment_b.tm_min) {
         ++count;
-        Print () << "\ntm_min.a: " << moment_a.tm_min << " != tm_min.b: "
-               << moment_b.tm_min;
+        DEBUG4 ("\ntm_min.a: ", moment_a.tm_min, " != tm_min.b: ",
+                moment_b.tm_min)
     }
     if (moment_a.tm_sec != moment_b.tm_sec) {
         ++count;
-        Print () << "\ntm_sec.a: " << moment_a.tm_sec << " != tm_sec.b: "
-               << moment_b.tm_sec;
+        DEBUG4 ("\ntm_sec.a: ", moment_a.tm_sec, " != tm_sec.b: ",
+                moment_b.tm_sec)
     }
     return count;
 }
@@ -478,7 +489,7 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
     Print () << "\nParsing date: " << input
          << "\nScanning: ";
     #endif
-    input = TextSkipZeros (input);
+    input = TextSkipChar (input, '0');
     char c = *input,    //< The current char.
         delimiter;     //< The delimiter.
     const char* end;    //< Might not need
@@ -548,7 +559,7 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
         return input + 1;
     }
     // Scan value2.
-    input = TextSkipZeros (input);
+    input = TextSkipChar (input, '0');
     if (!Scan (input, value2)) {
         #if CRABS_DEBUG
         Print () << Heading ("Failed scanning value2 of date.");
@@ -600,15 +611,11 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
             Print () << " MM/DD ";
             #endif
             if (value1 > 11) {
-                #if CRABS_DEBUG
-                ConsoleDump (Text<> ().Heading ("Invalid MM/DD@ month"));
-                #endif
+                DEBUG ("\nInvalid MM/DD@ month")
                 return nullptr;
             }
             if (value2 > ClockNumDaysMonth (value1)) {
-                #if CRABS_DEBUG
-                ConsoleDump (Text<> ().Heading ("Invalid MM/DD@ day"));
-                #endif
+                DEBUG ("\nInvalid MM/DD@ day")
                 return nullptr;
             }
             std_tm->tm_mon  = value1 - 1;
@@ -617,9 +624,7 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
             std_tm->tm_min  = minute;
             std_tm->tm_sec  = second;
             if (!(input = SlotReadTime (input, &hour, &minute, &second))) {
-                #if CRABS_DEBUG
-                ConsoleDump (Text<> ().Heading ("Invalid MM/DD@"));
-                #endif
+                DEBUG ("\nInvalid MM/DD@")
                 return nullptr;
             }
 
@@ -633,33 +638,27 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
             std_tm->tm_year = value2;
             if (!(input = SlotReadTime (input, &hour,
                                                 &minute, &second))) {
-                #if CRABS_DEBUG
-                Print () << Heading ("Invalid MM/YYYY@ time");
-                #endif
+                DEBUG ("\nInvalid MM / YYYY@ time")
                 return 0;
             }
 
             return input + 1;
         }
-    #if CRABS_DEBUG
-        Print () << "\nInvalid MM/DD or MM/YYyy format\n";
-   #endif
+        DEBUG ("\nInvalid MM/DD or MM/YYyy format\n")
         return nullptr;
     }
 
     // Formats MM/DD/YYyy and YYyy/MM/DD
 
-    input = TextSkipZeros (++input);
+    input = TextSkipChar (++input, '0');
     c = *input;
     // Then there are 3 values and 2 delimiters.
     if (!isdigit (c) || !Scan (input, value3)) {
-    #if CRABS_DEBUG
-        Print () << "SlotRead error reading value3 of date. c: " << c << '\n';
-   #endif
+    DEBUG3 ("SlotRead error reading value3 of date. c: ", c, '\n')
         return 0;  //< Invalid format!
     }
     input = TextSkipNumbers (input);
-    Print () <<  delimiter << value3;
+    DEBUG2 (delimiter, value3)
     // Now we need to check what format it is in.
 
     c = *input;
@@ -695,7 +694,7 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
 
         if (value2 > ClockNumDaysMonth (value2, value1)) {
         #if CRABS_DEBUG
-            ConsoleDump (Text<> ().Heading ("Invalid number of days"));
+            DEBUG (PrintHeading ("Invalid number of days"));
        #endif
             return 0;              //< The day is not correct.
         } // 17/05/06
@@ -715,13 +714,13 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
     // Else Case MM/DD/YYyy
     if (value1 > 11) {
     #if CRABS_DEBUG
-        ConsoleDump (Text<> ().Heading ("Invalid month.\n"));
+        DEBUG (PrintHeading ("Invalid month.\n"));
    #endif
         return nullptr;
     }
     if (value2 > ClockNumDaysMonth (value1, value3)) {
     #if CRABS_DEBUG
-        ConsoleDump (Text<> ().Heading ("Invalid day.\n"));
+        DEBUG (PrintHeading ("Invalid day.\n"));
    #endif
         return nullptr;
     }
@@ -788,5 +787,6 @@ void ClockZeroTime (tm* std_tm) {
 #endif
 }       //< namespace _
 
-#undef DEBUG_CRABS_CLOCK
+#undef PRINTF
+#undef PUTCHAR
 #endif  //< CRABS_SEAM >= 2

@@ -22,6 +22,15 @@
 
 #include "text.h"
 
+
+#if CRABS_SEAM == 2
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#endif
+
 namespace _ {
 
 #if USING_CRABS_TEXT
@@ -119,7 +128,7 @@ Slot& Scan () {
         *end = write.end;
     while (cursor != stop) {
         if (cursor > end) {
-            cursor == begin;
+            cursor = begin;
         }
         std::cerr << *cursor++;
     }
@@ -127,4 +136,6 @@ Slot& Scan () {
 
 #endif
 }       //< namespace _
+#undef PRINTF
+#undef PUTCHAR
 #endif  //< CRABS_SEAM >= 2

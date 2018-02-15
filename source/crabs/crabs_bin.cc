@@ -16,17 +16,26 @@
 
 #include <stdafx.h>
 #include "bin.h"
+
+#if CRABS_SEAM >= 2
+
 #include "bout.h"
 #include "type.h"
 #include "bsq.h"
 #include "hash.h"
 #include "slot.h"
-/*
-#include "terminal.h"
-#include "error.h"
-*/
 
-#if CRABS_SEAM >= 2
+
+#if CRABS_SEAM == 2
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#define CLEAR(begin, end)\
+    while(begin <= end) { *begin++ = ' '; }
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#define CLEAR(begin, end)
+#endif
 
 namespace _ {
 
@@ -55,7 +64,7 @@ const char** BInStateStrings () {
 @param error The error type.
 @return Returns a Static Error Op Result. */
 inline const Op* BInError (BIn* bin, Error error) {
-    Print () << "\nBIn " << ErrorString (error) << " Error!";
+    PRINTF ("\nBIn %s error!", ErrorString (error))
     return reinterpret_cast<const Op*> (error);
 }
 
@@ -68,7 +77,7 @@ inline const Op* BInError (BIn* bin, Error error) {
     @return         Returns a Static Error Op Result. */
 inline const Op* BInError (BIn* bin, Error error,
                            const uint_t* header) {
-    Print () << "\nBIn " << ErrorString (error) << " Error!";
+    PRINTF ("\nBIn %s error!", ErrorString (error))
     return reinterpret_cast<const Op*> (error);
 }
 
@@ -82,7 +91,7 @@ inline const Op* BInError (BIn* bin, Error error,
 inline const Op* BInError (BIn* bin, Error error,
                            const uint_t* header,
                            uint_t offset) {
-    Print () << "\nBIn " << ErrorString (error) << " Error!";
+    PRINTF ("\nBIn %s error!", ErrorString (error))
     return reinterpret_cast<const Op*> (error);
 }
 
@@ -97,7 +106,7 @@ inline const Op* BInError (BIn* bin, Error error,
                            const uint_t* header,
                            uint_t offset,
                            char* address) {
-    Print () << "\nBIn " << ErrorString (error) << " Error!";
+    PRINTF ("\nBIn %s error!", ErrorString (error))
     return reinterpret_cast<const Op*> (error);
 }
 
@@ -194,13 +203,9 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
 
     for (index = 1; index <= num_params; ++index) {
         type = params[index];
-        #if CRABS_DEBUG == 1
-        Print () << "\nparam:" << arg_index + 1
-               << " type:" << TypeString (type)
-               << " start:" << MemoryVector (begin, start)
-               << " stop:" << MemoryVector (begin, stop)
-               << " length:" << length;
-        #endif
+        PRINTF ("\nparam:%u type:%s start:%i stop:%i length:%u", arg_index + 1,
+               TypeString (type), MemoryVector (begin, start),
+               MemoryVector (begin, stop), length)
         switch (type) {
             case NIL:
                 return BInError (bin, kErrorInvalidType, params, index,
@@ -216,19 +221,15 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
                 if (ui1_ptr == nullptr)
                     return BInError (bin, kErrorImplementation, params, index,
                                      start);
-                #if CRABS_DEBUG == 1
-                Print () << "\nReading STR:0x" << text.Pointer (ui1_ptr)
-                       << " with max length:" << count;
-                #endif
+                PRINTF ("\nReading STR:0x%p with length:%u", ui1_ptr,
+                        count)
                 // Read char.
                 ui1 = *start;
                 hash = Hash16 (ui1, hash);
                 if (++start >= end) start -= size;
                 *ui1_ptr = ui1;
                 ++ui1_ptr;
-            #if CRABS_DEBUG == 1
-                Write (ui1);
-            #endif
+                PUTCHAR (ui1)
                 while ((ui1 != 0) && (count != 0)) {
                     --count;
                     if (count == 0) //< Reached count:0 before nil-term char.
@@ -238,13 +239,9 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
                     hash = Hash16 (ui1, hash);
                     if (++start >= end) start -= size;
                     *ui1_ptr++ = ui1;   // Write byte to destination.
-                #if CRABS_DEBUG == 1
-                    Write (ui1);
-                #endif
+                    PUTCHAR (ui1)
                 }
-                #if CRABS_DEBUG == 1
-                Print () << "\" success!\n";
-                #endif
+                PRINTF ("\" success!\n")
                 if (type != ADR) {
                     *ui1_ptr = 0;
                     // No need to hash 0.
@@ -267,9 +264,7 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
 
                 // Byte 1
                 ui1 = *start;                       //< Read
-                #if CRABS_DEBUG == 1
-                Display (" \'" << ui1 << "\',");
-                #endif  //< CRABS_DEBUG
+                PRINTF (" \'%u\', ", ui1)
                 hash = Hash16 (ui1, hash);          //< Hash
                 if (++start >= end) start -= size;  //< Increment
                 *ui1_ptr = ui1;                     //< Write
@@ -439,10 +434,10 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
             case UV8:
                 // Load next pointer and increment args.
                 ui8_ptr = reinterpret_cast<uint64_t*> (args[arg_index]);
-                if (ui8_ptr == nullptr)
+                if (!ui8_ptr) {
                     return BInError (bin, kErrorImplementation, params, index,
                                      start);
-
+                }
                 // Scan byte 1.
                 ui1 = *start;
                 if (++start >= end) start -= size;
@@ -628,13 +623,9 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
             }
         }
         ++arg_index;
-        #if CRABS_DEBUG == 1
-        Print () << " |";
-        #endif  //< CRABS_DEBUG    
+        PRINTF (" |")
     }
-    #if CRABS_DEBUG == 1
-    Print () << "\nHash expected:" << Hex (hash);
-    #endif
+    PRINTF ("\nHash expected:0x%x", hash)
     if (length < 2)
         return BInError (bin, kErrorBufferUnderflow, params, index,
                          start);
@@ -643,17 +634,13 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
     ui1 = *start;
     if (++start >= end) start -= size;
     ui2 |= (((uint16_t)ui1) << 8);
-    #if CRABS_DEBUG == 1
-    Print () << "found:" << OutHex (ui2);
-    #endif
+    PRINTF ("found:0x%x", ui2)
     if (hash != ui2)
         return BInError (bin, kErrorInvalidHash, params, index,
                          start);
 
-    #if CRABS_DEBUG == 1
-    Print ("\nDone reading\n");
-    SlotClear (begin, bin->start, start, stop, end, size);
-    #endif
+    PRINTF ("\nDone reading\n")
+    CLEAR  (begin, end)
 
     // Convert pointer back to offset
     bin->start = (uint_t)MemoryVector (begin, start);
@@ -667,15 +654,17 @@ Slot& BInPrint (BIn* bin, Slot& slot) {
         return slot << "\nError: BIn can't be nil";
     }
     uint_t size = bin->size;
-    return slot << PrintLine (slot, '_')
-                << "\nBIn:"  << PrintHex (slot, bin) << " size:" << bin->size
-                << " start:" << bin->start      << " stop:" << bin->stop
+    return slot << PrintLine ('_', 80, slot)
+                << "\nBIn:"  << PrintHex (bin, slot) << " size:" << bin->size
+                << " start:" << bin->start           << " stop:" << bin->stop
                 << " read:"  << bin->read
-                << PrintMemory (slot, BInBegin (bin), size + sizeof (BIn));
+                << PrintMemory (BInBegin (bin), size + sizeof (BIn), slot);
 }
 #endif
 
 }       //< namespace _
 
-#undef CRABS_DEBUG == 1
+#undef PRINTF
+#undef PUTCHAR
+#undef CLEAR
 #endif  //< USING_CRABS_BIN

@@ -17,8 +17,17 @@
 #include <stdafx.h>
 
 #include "text.h"
+#include "memory.h"
 
 #if CRABS_SEAM >= 1
+
+#if CRABS_SEAM == 1
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#endif
 
 // Some of the Text functions will be required but not all of them.
 
@@ -135,19 +144,14 @@ int TextLength (const char* text, char delimiter) {
     }
     int count = 0;
     char c = *text;
-    #if CRABS_SEAM == 1
-    std::cout << "Checking string length for " << text << '\n' << c;
-    #endif
+    PRINTF ("\nChecking string length for %s. Found:\"", text)
     while (c > delimiter) {
         ++count;
         c = *(++text);
-        #if CRABS_SEAM == 1
-        std::cout << c;
-        #endif
+        PUTCHAR (c)
     }
-    #if CRABS_SEAM == 1
-    std::cout << '\n';
-    #endif
+    PUTCHAR ('\"')
+    PUTCHAR ('\n')
     return count;
 }
 
@@ -155,12 +159,12 @@ char* TextClone (const char* text, char delimiter) {
     if (!text) {
         text = "";
     }
-    int length = TextLength (text, delimiter);
+    int length = TextLength (text, delimiter) + 1;
     if (length < 0) {
         return nullptr;
     }
-    char* clone = new char[length + 1];
-    Print (clone, clone + length + 1, text, delimiter);
+    char* clone = new char[length];
+    MemoryCopy (clone, clone + length, text, text + length + 1);
     return clone;
 }
 
@@ -195,40 +199,28 @@ const char* TextEquals (const char* text_a, const char* text_b, char delimiter) 
     if (!text_b) {
         return nullptr;
     }
-    #if CRABS_SEAM == 1
-    std::cout << "\nComparing \"" << text_a << "\" to \"" << text_b << "\"";
-    #endif
+    PRINTF ("\nComparing \"%s\" to \"%s\"", text_a, text_b)
 
     char a = *text_a,
          b = *text_b;
     while (a > delimiter) {
-        #if CRABS_SEAM == 1
-        std::cout << a;
-        #endif
+        PUTCHAR (a)
         if (a != b) { // Not a hit.
-            #if CRABS_SEAM == 1
-            std::cout << "\nBut it's not a hit";
-            #endif
+            PRINTF ("\nBut it's not a hit")
             return nullptr;
         }
         if (b <= delimiter) { // Hit!
-            #if CRABS_SEAM == 1
-            printf ("\nFound hit at 0x%p", text_a);
-            #endif
+            PRINTF ("\nFound hit at 0x%p", text_a)
             return text_a;
         }
         a = *(++text_a);
         b = *(++text_b);
     }
     if (b > delimiter) {
-        #if CRABS_SEAM == 1
-        std::cout << "\nNot a hit: no nil-term char found";
-        #endif
+        PRINTF ("\nNot a hit: no nil-term char found")
         return nullptr;
     }
-    #if CRABS_SEAM == 1
     printf ("\nFound hit at 0x%p", text_a);
-    #endif
     return text_a; //< Find hit!
 }
 
@@ -243,26 +235,18 @@ const char* TextEquals (const char* text, const char* text_end,
     if (!string) {
         return nullptr;
     }
-    #if CRABS_SEAM == 1
-    std::cout << "\nComparing \"" << text << "\" to \"" << string << "\"";
-    #endif
+    PRINTF ("\nComparing \"%s\" to \"%s\"", text, string)
 
     char a = *text,
          b = *string;
     while (a > delimiter) {
-        #if CRABS_SEAM == 1
-        std::cout << a;
-        #endif
+        PUTCHAR (a)
         if (a != b) { // Not a hit.
-            #if CRABS_SEAM == 1
-            std::cout << "\nBut it's not a hit";
-            #endif
+            PRINTF ("\nBut it's not a hit")
             return nullptr;
         }
         if (b <= delimiter) { // Hit!
-            #if CRABS_SEAM == 1
-            printf ("\nFound hit at 0x%p", text);
-            #endif
+            PRINTF ("\nFound hit at 0x%p", text)
             return text;
         }
         if (text > text_end) {
@@ -272,14 +256,10 @@ const char* TextEquals (const char* text, const char* text_end,
         b = *(++string);
     }
     if (b > delimiter) {
-        #if CRABS_SEAM == 1
-        std::cout << "\nNot a hit: no nil-term char found";
-        #endif
+        PRINTF ("\nNot a hit: no nil-term char found")
         return nullptr;
     }
-    #if CRABS_SEAM == 1
-    printf ("\nFound hit at 0x%p.", text);
-    #endif
+    PRINTF ("\nFound hit at 0x%p.", text)
     return text;
 }
 
@@ -330,9 +310,7 @@ const char* TextSkipSpaces (const char* text) {
     }
     char c = *text;
     while (IsWhitespace (c)) {
-        #if CRABS_SEAM == 1
-        std::cout << '.';
-        #endif
+        PUTCHAR ('.')
         if (!c) { //< This isn't an error as far as I can see.
             return text;
         }
@@ -349,14 +327,10 @@ const char* TextSkipSpaces (const char* text, const char* text_end) {
     if (text > text_end) {
         return nullptr;
     }
-    #if CRABS_SEAM == 1
-    std::cout << "\nSkipping spaces: ";
-    #endif
+    PRINTF ("\nSkipping spaces: ")
     char c = *text;
     while (IsWhitespace (c)) {
-        #if CRABS_SEAM == 1
-        std::cout << '.';
-        #endif
+        PUTCHAR ('.')
         if (!c) {
             return nullptr;
         }
@@ -525,27 +499,19 @@ const char* TextEquals (const char* text_a, const char* text_b) {
     char a = *text_a,
          b = *text_b;
     int  result;
-
-#if CRABS_SEAM == 1
-    std::cout << "\nComparing \"" << text_a << "\" to \"" << text_b << "\"";
-#endif
+    
+    PRINTF ("\nComparing \"%s\" to \"%s\"", text_b)
 
     // text SHOULD be a nil-terminated string without whitespace.
     while (b) {
         result = b - a;
-    #if CRABS_SEAM == 1
-        std::cout << "\nb - a = " << b << " - " << a << " = " << result;
-    #endif
+        PRINTF ("\nb - a = %i - %i = %i", b, a, result)
         if (result) {
-        #if CRABS_SEAM == 1
-            std::cout << " is not a hit.";
-        #endif
+            PRINTF (" is not a hit.")
             return nullptr;
         }
         if (!a) {
-        #if CRABS_SEAM == 1
-            std::cout << " is a partial match but !a.";
-        #endif
+            PRINTF (" is a partial match but !a.")
             return nullptr;
         }
         ++text_a;
@@ -554,14 +520,10 @@ const char* TextEquals (const char* text_a, const char* text_b) {
         b = *text_b;
     }
     if (a && !IsWhitespace (a)) {
-    #if CRABS_SEAM == 1
-        std::cout << " is only a partial match but found " << (a ? "a" : "space");
-    #endif
+        PRINTF (" is only a partial match but found %s", (a ? "a" : "space"))
         return nullptr;
     }
-#if CRABS_SEAM == 1
-    std::cout << " is a match!";
-#endif
+    PRINTF (" is a match!")
     return text_a;
 }
 
@@ -579,9 +541,7 @@ int TextCompare (const char* text_a, const char* text_b) {
         return 0 - *text_a;
     }
 
-    #if CRABS_SEAM == 1
-    std::cout << "\nComparing \"" << text_a << "\" to \"" << text_b << "\"";
-    #endif
+    PRINTF ("\nComparing \"%s\" to \"%s\"", text_a, text_b)
     a = *text_a;
     b = *text_b;
     if (!a) {
@@ -599,19 +559,13 @@ int TextCompare (const char* text_a, const char* text_b) {
     // text SHOULD be a nil-terminated string without whitespace.
     while (b) {
         result = b - a;
-        #if CRABS_SEAM == 1
-        std::cout << "\nb - a = " << b << " - " << a << " = " << result;
-        #endif
+        PRINTF ("\nb - a = %i - %i = %i", b, a, result)
         if (result) {
-            #if CRABS_SEAM == 1
-            std::cout << " is not a hit.";
-            #endif
+            PRINTF (" is not a hit.")
             return result;
         }
         if (!a) {
-            #if CRABS_SEAM == 1
-            std::cout << " is a partial match but !a.";
-            #endif
+            PRINTF (" is a partial match but !a.")
             return result;
         }
         ++text_a;
@@ -620,10 +574,7 @@ int TextCompare (const char* text_a, const char* text_b) {
         b = *text_b;
     }
     if (a && !IsWhitespace (a)) {
-        #if CRABS_SEAM == 1
-        std::cout << " is only a partial match but found "
-                  << (a ? "a" : "space");
-        #endif
+        PRINTF (" is only a partial match but found %s", (a ? "a" : "space"))
         return b - a;
     }
     return 0;
@@ -670,25 +621,17 @@ int TextCompare (const char* text_a, const char* text_end,
     // text SHOULD be a nil-terminated string without whitespace.
     while (b) {
         result = b - a;
-        #if CRABS_SEAM == 1
-        std::cout << "\nb - a = " << b << " - " << a << " = " << result;
-        #endif
+        PRINTF ("\nb - a = %c - %c = %i", b, a, result)
         if (result) {
-            #if CRABS_SEAM == 1
-            std::cout << " is not a hit.";
-            #endif
+            PRINTF (" is not a hit.")
             return result;
         }
         if (!a) {
-            #if CRABS_SEAM == 1
-            std::cout << " is a partial match but !a.";
-            #endif
+            PRINTF (" is a partial match but !a.")
             return result;
         }
         if (++text_a > text_end) {
-            #if CRABS_SEAM == 1
-            std::cout << " but buffer overflowed!";
-            #endif
+            PRINTF (" but buffer overflowed!")
             return result;
         }
         ++text_b;
@@ -696,17 +639,15 @@ int TextCompare (const char* text_a, const char* text_end,
         b = *text_b;
     }
     if (a && !IsWhitespace (a)) {
-        #if CRABS_SEAM == 1
-        std::cout << " is only a partial match but found " << (a ? "a" : "space");
-        #endif
+        PRINTF (" is only a partial match but found %s", (a ? "a" : "space"))
         return b - a;
     }
-    #if CRABS_SEAM == 1
-    std::cout << " is a match!";
-    #endif
+    PRINTF (" is a match!")
     return 0;
 }
 
 }       //< namespace _
 #endif  //< USING_CRABS_TEXT
+#undef PRINTF
+#undef PUTCHAR
 #endif  //< CRABS_SEAM >= 1

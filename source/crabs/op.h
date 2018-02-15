@@ -90,18 +90,6 @@ inline wchar_t OpLast (const Op* op) {
     return (wchar_t)reinterpret_cast<uintptr_t>(op->out);
 }
 
-#if USING_CRABS_TEXT 
-/** Prints the given Set to the slot.
-    Quote: Wikipedia "In mathematics an operand is the object of a mathematical
-    op, i.e. it is the quantity that is operated on." */
-KABUKI Slot& OpPrint (const Op* op, Slot& slot);
-
-#endif
-
-inline const Op* OpError (void* source, Error error) {
-    return reinterpret_cast <const Op*> (error);
-}
-
 }       //< namespace _
 #endif  //< CRABS_SEAM >= 1
 #endif  //< HEADER_FOR_CRABS_OP

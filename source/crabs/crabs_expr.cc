@@ -24,6 +24,15 @@
 #include "console.h"
 #include "hash.h"
 
+
+#if CRABS_SEAM == 2
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#endif
+
 namespace _ {
 
 /** Used to return an erroneous result from a B-Input.
@@ -168,8 +177,9 @@ Expr* ExprInit (uintptr_t* buffer, uint_t buffer_size,  uint_t stack_size,
     expr->header       = nullptr;
     expr->header_start = nullptr;
     expr->root = root;
-    SlotInit (&expr->slot, reinterpret_cast<char*> (expr) + sizeof (Expr) +
-                    stack_size * sizeof (uint_t), unpacked_size);
+    uintptr_t base_ptr = reinterpret_cast<uintptr_t> (expr) + sizeof (Expr) +
+                         stack_size * sizeof (uint_t);
+    SlotInit (&expr->slot, reinterpret_cast<uintptr_t*> (base_ptr), unpacked_size);
     #if DEBUG_CRABS_EXPR
     Print () << "expr->op:" << OutHex (expr->operand);
     #endif
@@ -246,10 +256,8 @@ const Op* Push (Expr* expr, Operand* operand) {
     if (!operand) {
         return ExprError (expr, kErrorInvalidOperand);
     }
-    #if DEBUG_CRABS_EXPR == CRABS_EXPRESSION
-    Print () << "\nPushing " << operand->Star ('?', nullptr)->name
-           << " onto the stack");
-    #endif
+    DEBUG3 ("\nPushing ", operand->Star ('?', nullptr)->name,
+            " onto the stack");
     uint_t stack_count = expr->stack_count;
     if (stack_count >= expr->stack_size) {
         return ExprError (expr, kErrorStackOverflow);
@@ -419,7 +427,7 @@ const Op* ExprUnpack (Expr* expr) {
                     // The software implementer pushes the Op on the stack.
                     #if DEBUG_CRABS_EXPR
                     Print () << "\nFound Op with params "
-                          << BsqPrint (params, out));
+                          << PrintBsq (params, out));
                     #endif
                     result = ExprScanHeader (expr, params);
                     if (result) {
@@ -978,27 +986,27 @@ Slot& ExprPrintStack (Expr* expr, Slot& slot) {
 }
 
 Slot& ExprPrint (Expr* expr, Slot& slot) {
-    slot << PrintLine (slot, '~')
-           << "\nStack:    ";
+    PrintLine ('~', 80, slot) << "\nStack:    ";
+
     if (!expr) {
-        return slot << "nil" << PrintLine (slot, '~');
+        return slot << "nil" << PrintLine ('~', 80, slot);
     }
-    PrintHex (slot, expr) << PrintLine (slot, '_');
+    PrintHex (expr, slot) << PrintLine ('_', 80, slot);
 
     return slot << "\nbytes_left  : " << expr->bytes_left
-                  << "\nheader_size : " << expr->header_size
-                  << "\nstack_count : " << expr->stack_count
-                  << "\nstack_size  : " << expr->stack_size
-                  << "\nbin_state   : " << BInState ()[expr->bin_state]
-                  << "\nbout_state  : " << BOutState ()[expr->bout_state]
-                  << "\nnum_states  : " << expr->num_states
-                  << "\nheader_size : " << expr->header_size
-                  << PrintLine (slot, '-', "\n>")
-                  << OperandPrint (expr->operand, slot)
-                  << "\nheader: " << expr->header_start
-                  << PrintLine (slot, '-', "\n>")
-                  << ExprPrintStack (expr, slot)
-                  << PrintLine (slot, '~');
+                << "\nheader_size : " << expr->header_size
+                << "\nstack_count : " << expr->stack_count
+                << "\nstack_size  : " << expr->stack_size
+                << "\nbin_state   : " << BInStateStrings ()[expr->bin_state]
+                << "\nbout_state  : " << BOutStateStrings ()[expr->bout_state]
+                << "\nnum_states  : " << expr->num_states
+                << "\nheader_size : " << expr->header_size
+                << PrintLine ('-', 80, slot)
+                << PrintOperand (expr->operand, slot)
+                << "\nheader: " << expr->header_start
+                << PrintLine ('-', 80, slot)
+                << ExprPrintStack (expr, slot)
+                << PrintLine ('~', 80, slot);
 }
 
 #endif
@@ -1010,4 +1018,6 @@ _::Slot& operator<< (_::Slot& slot, _::Expr* expr) {
     return ExprPrint (expr, slot);
 }
 #endif //< USING_CRABS_TEXT
+#undef PRINTF
+#undef PUTCHAR
 #endif  //< CRABS_SEAM >= 2

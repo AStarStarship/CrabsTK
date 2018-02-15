@@ -17,7 +17,16 @@
 #include <stdafx.h>
 #include "wall.h"
 
-#if USING_CRABS_WALL
+#if CRABS_SEAM >= 3
+
+
+#if CRABS_SEAM == 2
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#endif
 
 namespace _ {
 
@@ -97,4 +106,6 @@ _::Slot& Wall::Print (_::Slot& slot) {
 }
 
 }       //< namespace _
-#endif  //< USING_CRABS_WALL
+#undef PRINTF
+#undef PUTCHAR
+#endif  //< CRABS_SEAM >= 3

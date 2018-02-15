@@ -33,7 +33,7 @@ KABUKI int32_t MemoryAlignPowerOf2 (int32_t value);
 
 /** Returns the given pointer for use with uncooperative overloaded
     operators. */
-inline const void* PrintMemory (const void* pointer) {
+inline const void* Pointer (const void* pointer) {
     return pointer;
 }
 
@@ -146,9 +146,11 @@ inline uintptr_t MemoryAlign8 (const char* ptr) {
 /** Word aligns the given byte pointer up in addresses.
     @param ptr Pointer to align.
     @return Next word aligned up pointer. */
-inline char* MemoryAlign (char* ptr) {
-    return ptr + (((~reinterpret_cast<uintptr_t> (ptr)) + 1) &
-                  (sizeof (char*) - 1));
+template<typename T>
+inline T* MemoryAlign (T* ptr) {
+    uintptr_t offset = MemoryAlignOffset<uintptr_t> (ptr);
+    char* aligned_ptr = reinterpret_cast<char*> (ptr) + offset;
+    return reinterpret_cast<T*> (aligned_ptr);
 }
 
 inline uintptr_t* MemoryAlign8 (uintptr_t* buffer) {
@@ -237,13 +239,6 @@ KABUKI char* MemoryCopy (char* write, char* write_end, const char* memory,
     @return Pointer to the last byte written or nil upon failure. */
 KABUKI char* MemoryCopy (char* write, char* write_end, const char* read,
                          const char* read_end, int size);
-
-/** Gets a randomly generated 32-bit hash. */
-template<typename T>
-KABUKI uint_t MemoryRandom () {
-    srand (time (0));
-    return static_cast<T> (rand ());
-}
 
 }       //< namespace _
 #endif  //< CRABS_SEAM >= 1

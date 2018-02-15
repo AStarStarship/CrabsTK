@@ -20,6 +20,15 @@
 
 #if CRABS_SEAM >= 1
 
+
+#if CRABS_SEAM == 2
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#endif
+
 // Some of the Text functions will be required but not all of them.
 
 #if USING_CRABS_TEXT
@@ -38,7 +47,7 @@ const char* Scan (const char* text, const char* text_end,
 }*/
 
 const char* Scan (const char* text, const char* text_end,
-                      int8_t& result) {
+                  int8_t& result) {
     // @todo Rewrite with custom string-to-integer function.
     int extra_copy;
     if (!sscanf_s (text, "%i", &extra_copy)) {
@@ -325,6 +334,164 @@ const char* Scan (const char* target, char* text,
     }
     return target + 1;
 }*/
+
+
+/* Reads a b-sequences from the given slot.
+   @depreciated I don't think I need this code anymore because I use dictionaries to parse types.
+
+template<typename T>
+const char* BsqRead (const char* input, const char* input_end,
+                     size_t buffer_count, uint_t* bsq = nullptr) {
+    if (!input) {
+        return 0;
+    }
+    if (input > input_end) {
+        return 0;
+    }
+    if (!bsq) {
+        bsq = new 
+    }
+    const char* cursor = input;
+    cursor = SlotSkipSpaces (input, input_end);
+
+    char d = *(input + 3);
+    if ((input_end - input) < 5) {
+        // We will always have at least 2 bytes in the buffer after any ESC.
+        // <4
+        return 0;
+    }
+    uint_t params_count;
+    cursor = SlotRead (cursor, input_end, params_count);
+    if (!cursor) {
+        return nullptr;
+    }
+    for (uint_t index = 0; index < params_count; ++index) {
+        char b = *(input + 1),
+             c = *(input + 2),
+             d = *(input + 3);
+
+        switch (*input++) {
+            case 'A': return TypeCharCompare<'D', 'R', ADR> (b, c, d);
+            case 'B': switch (b) {
+                case 'O': return TypeCharCompare<'L', BOL> (c, d);
+                case 'S': return TypeCharCompare<'C', BSQ> (c, d);
+                default: return 0;
+            }
+            case 'C': return 0;
+            case 'D': switch (b) {
+                case 'B': return TypeCharCompare<'L', DBL> (c, d);
+                case 'I': switch (c) {
+                    if (c != 'C') {
+                        return 0;
+                    }
+                    if (!IsSpace (*(input + 4))) {
+                        return 0;
+                    }
+                    if (c == '2') {
+                        return DIC;
+                    }
+                    if (c == '4') {
+                        return DIC;
+                    }
+                    if (c == '8') {
+                        return DIC;
+                    }
+                }
+            }
+            case 'E': {
+                if (b != 'S')
+                    return 0;
+                if (b != 'C')
+                    return 0;
+                return TypeCharCompareObject<'S', 'C', ESC> (b, c, d,
+                                                                 *(input + 4));
+            }
+            case 'F': return TypeCharCompare<'L', 'T', FLT> (b, c, d);
+            case 'G': return 0;
+            case 'H': return TypeCharCompare<'L', 'F', HLF> (b, c, d);
+            case 'I':
+            case 'J':
+            case 'K': return 0;
+            case 'L': return TypeCharCompareObject<'S', 'T', LST> (b, c, d,
+                                                                   *(input + 4));
+            case 'M': return TypeCharCompareObject<'A', 'P', MAP> (b, c, d,
+                                                                   *(input + 4));
+            case 'N': return TypeCharCompare<'I', 'L', NIL> (b, c, d);
+            case 'O': switch (b) {
+                case 'B': return TypeCharCompare<'J', OBJ> (c, d);
+            }
+            case 'P':
+            case 'Q':
+            case 'R': return 0;
+            case 'S': switch (b) {
+                case 'I': {
+                    if (!IsSpace (*(input + 4))) {
+                        return 0;
+                    }
+                    switch (c) {
+                        case '1': return SI1;
+                        case '2': return SI2;
+                        case '4': return SI4;
+                        case '8': return SI8;
+                        case 'N': return SIN;
+                        default: return 0;
+                    }
+                }
+                case 'T': return TypeCharCompare<'R', STR> (d, *(input + 4));
+                case 'V': {
+                    if (!IsSpace (*(input + 4))) {
+                        return 0;
+                    }
+                    switch (c) {
+
+                        case 'N': return SIN;
+                        case '8': return SV8;
+                        case 'I': return SVI;
+                        default: return 0;
+                    }
+                }
+                default: break;
+            }
+            case 'T': {
+                if (b != 'M') return 0;
+                switch (c) {
+                    case 'S': return TMS;
+                    case 'U': return TMU;
+                    default: return 0;
+                }
+            }
+            case 'U': switch (b) {
+                case 'I': {
+                    if (!IsSpace (d)) {
+                        return 0;
+                    }
+                    switch (c) {
+                        case '1': return UI1;
+                        case '2': return UI2;
+                        case '4': return UI4;
+                        case '8': return UI8;
+                        case 'N': return UIN;
+                        default: return 0;
+                    }
+                }
+                case 'V': {
+                    if (!IsSpace (d)) {
+                        return 0;
+                    }
+                    switch (c) {
+                        case '8': return UV8;
+                        case 'I': return UVI;
+                        default: return 0;
+                    }
+                }
+                default: return 0;
+            }
+        }
+    }
+    return cursor;
+}*/
 }       //< namespace _
 #endif  //< USING_CRABS_TEXT
+#undef PRINTF
+#undef PUTCHAR
 #endif  //< CRABS_SEAM >= 1

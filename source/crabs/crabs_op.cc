@@ -20,6 +20,17 @@
 #if CRABS_SEAM >= 1
 
 #include "bsq.h"
+#include "slot.h"
+#include "print.h"
+
+
+#if CRABS_SEAM == 2
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#endif
 
 namespace _ {
 
@@ -29,8 +40,8 @@ Slot& OpPrint (const Op* op, Slot& slot) {
         return slot << "\nOp: nil";
     }
     return slot << "\nOp      :" << op->name
-                << "\nBSQ     :" << BsqPrint (op->in, slot)
-                << "\nResult: :" << BsqPrint (op->out, slot)
+                << "\nBSQ     :" << PrintBsq (op->in, slot)
+                << "\nResult: :" << PrintBsq (op->out, slot)
                 << "\nMetadata:" << op->description;
 }
 #endif
@@ -152,4 +163,6 @@ _::Slot& operator<< (_::Slot& slot, const _::Op* op) {
 }
 
 #endif
+#undef PRINTF
+#undef PUTCHAR
 #endif  //< CRABS_SEAM >= 1

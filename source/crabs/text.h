@@ -42,9 +42,6 @@ enum {
     kMaxDigitsDouble = 3 + DBL_MANT_DIG - DBL_MIN_EXP,
 };
 
-/** String of of numbers 00, 01, ..., 99 for number printing shortcuts. */
-KABUKI const char* Digits0To99 ();
-
 /** Empty string. */
 KABUKI const char* TextEmpty ();
 

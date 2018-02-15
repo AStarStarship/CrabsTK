@@ -24,7 +24,7 @@
 
 #if CRABS_SEAM >= 2
 
-#include "slot.h"
+#include "print.h"
 
 namespace _ {
 
@@ -53,128 +53,13 @@ struct KABUKI BOut {
                     read;  //< Address that the BOut device is reading from.
 };
 
-/** Gets or sets the Write buffer.
-    
-    To use dynamic  memory input a nil buffer pointer and non-zero size. To 
-    delete the buffer enter 0 for the buffer size.
-
-    @param buffer      The buffer, or nil to create dynamic buffer.
-    @param buffer_size The size of the buffer in bytes.
-    @return Returns a pointer to the buffer or a new buffer. */
-KABUKI BOut* ConsoleSet (uintptr_t *buffer, uintptr_t buffer_size);
-
-/** The primary out slot.
-    To set the Print () @see SlotWriteSet 
-*/
-KABUKI Slot& Print ();
-
-/** Dumps the Write Slot to the Console.
-    @return Returns the Write Slot. */
-KABUKI Slot& Scan ();
-
-/** Writes the give value  to the Tx Terminal.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
-inline Slot& Print (uint8_t value) {
-    return Print (value, Print ());
-}
-
-/** Writes the give value  to the Tx Terminal.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
-inline Slot& Print (int8_t value) {
-    return Print (value, Print ());
-}
-
-/** Writes the give value  to the Tx Terminal.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
-inline Slot& Print (int16_t value) {
-    return Print (value, Print ());
-}
-
-/** Writes the give value  to the Tx Terminal.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
-inline Slot& Print (uint16_t value) {
-    return Print (value, Print ());
-}
-
-/** Writes the give value  to the Tx Terminal.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
-inline Slot& Print (int32_t value) {
-    return Print (value, Print ());
-}
-
-/** Writes the give value  to the Tx Terminal.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
-inline Slot& Print (uint32_t value) {
-    return Print (value, Print ());
-}
-
-/** Writes the give value  to the Tx Terminal.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
-inline Slot& Print (int64_t value) {
-    return Print (value, Print ());
-}
-
-/** Writes the give value  to the Tx Terminal.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
-inline Slot& Print (uint64_t value) {
-    return Print (value, Print ());
-}
-
-/** Writes the give value  to the Tx Terminal.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
-inline Slot& Print (float value) {
-    return Print (value, Print ());
-}
-
-/** Writes the give value  to the Tx Terminal.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
-inline Slot& Print (double value) {
-    return Print (value, Print ());
-}
-
-/** Writes the give value  to the Tx Terminal.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
-inline Slot& Print (const char* string) {
-    return Print (string, Print ());
-}
-
-inline Slot& PrintHex (char character) {
-    return PrintHex (character, Print ());
-}
-
-inline Slot& PrintHex (void* pointer) {
-    return PrintHex (pointer, Print ());
-}
-
 /** Get's the B-Output's buffer.*/
 KABUKI char* BOutBuffer (BOut* bout);
 
 #if USING_CRABS_TEXT
 
 /** Gets a a char for printing out the bout_state. */
-KABUKI const char** BOutState ();
+KABUKI const char** BOutStateStrings ();
 
 #endif
 

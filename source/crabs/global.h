@@ -22,7 +22,9 @@
 
 #include "config.h"
 
-#if CRABS_SEAM == 1
+#if CRABS_SEAM == 0
+#elif CRABS_SEAM == 1
+#include "print.h"
 #include "memory.h"
 #include "text.h"
 #elif CRABS_SEAM == 2
@@ -34,7 +36,7 @@
 #include "expr.h"
 #include "slot.h"
 #include "args.h"
-#include "terminal.h"
+#include "console.h"
 #include "bsq.h"
 #elif CRABS_SEAM == 3
 #include "table.h"

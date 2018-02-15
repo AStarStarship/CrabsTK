@@ -22,7 +22,7 @@
 
 #include "door.h"
 
-#if USING_CRABS_WALL
+#if CRABS_SEAM >= 3
 
 #include "op.h"
 

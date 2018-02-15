@@ -15,79 +15,25 @@
 */
 
 #include <stdafx.h>
-#include "itos.h"
+#include "print.h"
 
-#define DEBUG_SCRIPT_ITOS 0
+#if CRABS_SEAM >= 1 || CRABS_SEAM == 0
 
-#if DEBUG_SCRIPT_ITOS
+#if CRABS_SEAM == 1
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
 #define DEBUG_PRINTED(value, begin, end)\
-    sprintf_s (buffer, 24, "%I64u", value);\
-    *(end + 1) = 0;\
-    cout << "\n    Printed \"" << begin << '\"' << " value:\"" << buffer\
-    << "\":" << strlen (buffer);
-#define DEBUG(one)\
-    cout << one;
-#define DEBUG2(one, two)\
-    cout << one << two;
-#define DEBUG3(one, two, three)\
-    cout << one << two << three;
-#define DEBUG4(one, two, three, four)\
-    cout << one << two << three << four;
-#define DEBUG5(one, two, three, four, five)\
-    cout << one << two << three << four << five;
-#define DEBUG6(one, two, three, four, five, six)\
-    cout << one << two << three << four << five << six;
-#define DEBUG7(one, two, three, four, five, six, seven)\
-    cout << one << two << three << four << five << six << seven;
-#define DEBUG8(one, two, three, four, five, six, seven, eight)\
-    cout << one << two << three << four << five << six << seven << eight;
+    sprintf_s (buffer, 24, "%I64u", value); *(end + 1) = 0;\
+    printf ("\n    Printed \"%s\", value:\"%s\"\" with expected length of ",\
+            begin, buffer, strlen (buffer));
 #else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
 #define DEBUG_PRINTED(value, begin, end)
-#define DEBUG(one)
-#define DEBUG2(one, two)
-#define DEBUG3(one, two, three)
-#define DEBUG4(one, two, three, four)
-#define DEBUG5(one, two, three, four, five)
-#define DEBUG6(one, two, three, four, five, six)
-#define DEBUG7(one, two, three, four, five, six, seven)
-#define DEBUG8(one, two, three, four, five, six, seven, eight)
 #endif
-
-using namespace std;
-
 namespace _ {
 
-char* PrintFast (uint64_t value, char* text, char* text_end);
-
-char* Print (int64_t value, char* text, char* text_end) {
-    if (!text) {
-        return nullptr;
-    }
-    if (value < 0) {
-        *text++ = '-';
-        value = ~value + 1; // Uncomplement the negative value.
-    }
-    text = PrintFast (value, text, text_end);
-    if (!text) {
-        return text;
-    }
-    *text = 0;
-    return text;
-}
-
 char* Print (uint64_t value, char* text, char* text_end) {
-    if (!text) {
-        return nullptr;
-    }
-    text = PrintFast (value, text, text_end);
-    if (!text) {
-        return text;
-    }
-    *text = 0;
-    return text;
-}
-
-char* PrintFast (uint64_t value, char* text, char* text_end) {
     // Lookup table for powers of 10.
     static const uint64_t k10ToThe[20]{
         1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000,
@@ -111,42 +57,49 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
         0x3039, 0x3139, 0x3239, 0x3339, 0x3439, 0x3539, 0x3639, 0x3739, 0x3839,
         0x3939, };
 
-    uint16_t  * text16 = nullptr;
+    if (!text) {
+        return nullptr;
+    }
+    if (text > text_end) {
+        return nullptr;
+    }
+
+    uint16_t  * text16;
     char        index;
     uint16_t    digits;
     uint64_t    comparator,
                 offset;
-    #if DEBUG_SCRIPT_ITOS
+    #if CRABS_SEAM == 1
     char*       begin = text;
     char        buffer[24];
     #endif
-
-    /** 0000000000000000000000000001011101001000011101101110011111111111
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        3210987654321098765432109876543210987654321098765432109876543210
+    
+    /** 0000000000000000000000000000000000000000000000100100100111110000
+        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
         6666555555555544444444443333333333222222222211111111110000000000
+        3210987654321098765432109876543210987654321098765432109876543210
         |  |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |
-        0  9  8  7   6  5  4   3  2  1   0  9  8   7  6  5   4  3  2   1
         2  1  1  1   1  1  1   1  1  1   1  0  0   0  0  0   0  0  0   0
-        |-------------------------|----------------|-------------------|
-        |     Upper Chunk         |  Middle Chunk  |    Lower Chunk    |
+        0  9  8  7   6  5  4   3  2  1   0  9  8   7  6  5   4  3  2   1
+        |----------------------|-------------------|-------------------|
+        |     Upper Chunk      |   Middle Chunk    |    Lower Chunk    |
     */
     if (value >> 34) {
         if (value >> 60) {
-            DEBUG ("\n    Path 19 or 20: Range [9.22E+18, 18.4E+18] and ")
+            PRINTF ("\n    Path 19 or 20: Range [9.22E+18, 18.4E+18] and ")
             comparator = k10ToThe[19];
             if (value < comparator) {
                 if (text + 19 > text_end) {
                     return nullptr;
                 }
-                DEBUG ("Length:19 |")
+                PRINTF ("Length:19 |")
                 text_end = text + 18;
                 goto PrintOddDown;
             }
             if (text + 20 > text_end) {
                 return nullptr;
             }
-            DEBUG ("Length:20 |")
+            PRINTF ("Length:20 |")
             *text++ = '1';
             value -= comparator;
             // Length:19
@@ -154,10 +107,10 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             goto PrintOddUp;
         }
         else if (value >> 57) {
-            DEBUG ("\n    Path 18 or 19   [5.76E+17, 11.5E+17] and ")
+            PRINTF ("\n    Path 18 or 19   [5.76E+17, 11.5E+17] and ")
             comparator = k10ToThe[18];
             if (value >= comparator) { // Length:19
-                DEBUG ("Length:19")
+                PRINTF ("Length:19")
                 if (text + 20 > text_end) {
                     return nullptr;
                 }
@@ -170,15 +123,15 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             if (text + 18 > text_end) {
                 return nullptr;
             }
-            DEBUG ("Length:18")
+            PRINTF ("Length:18")
             text_end = text + 17;
             goto PrintEvenDown;
         }
         else if (value >> 54) {
-            DEBUG ("\n    Path 17 or 18 : Range [7.21E+16, 14.4E+16] and ")
+            PRINTF ("\n    Path 17 or 18 : Range [7.21E+16, 14.4E+16] and ")
             comparator = k10ToThe[17];
             if (value >= comparator) { // Length:18
-                DEBUG ("Length:18")
+                PRINTF ("Length:18")
                 if (text + 19 > text_end) {
                     return nullptr;
                 }
@@ -188,20 +141,20 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                 text_end = text + 16;
                 goto PrintOddUp;
             }
-            DEBUG ("Length:17")
+            PRINTF ("Length:17")
             text_end = text + 16;
             goto PrintOddDown;
         }
         else if (value >> 50) {
-            DEBUG ("\n    Path 16 or 17   [9.01E+15, 18.0E+15] and ")
+            PRINTF ("\n    Path 16 or 17   [9.01E+15, 18.0E+15] and ")
             comparator = k10ToThe[16];
             if (value < comparator) {
-                DEBUG ("Length:16")
+                PRINTF ("Length:16")
                 text_end = text + 15;
                 goto PrintEvenDown;
             }
             // @todo Optimize this path.
-            DEBUG ("Length:17")
+            PRINTF ("Length:17")
             if (text + 17 > text_end) {
                 return nullptr;
             }
@@ -212,13 +165,13 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             goto PrintEvenUp;
         }
         else if (value >> 47) {
-            DEBUG ("\n    Path 15 or 16    [5.63E+14, 11.3E+14] and ")
+            PRINTF ("\n    Path 15 or 16    [5.63E+14, 11.3E+14] and ")
             comparator = k10ToThe[15];
             if (value >= comparator) {
                 if (text + 17 > text_end) {
                     return nullptr;
                 }
-                DEBUG (" Length:16")
+                PRINTF (" Length:16")
                 *text++ = '1';
                 value -= comparator;
                 // Length:15
@@ -228,25 +181,25 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             if (text + 16 > text_end) {
                 return nullptr;
             }
-            DEBUG ("Length:15")
+            PRINTF ("Length:15")
             text_end = text + 14;
             goto PrintOddDown;
         }
         else if (value >> 44) {
-            DEBUG ("\n    Path 14 or 15   [7.04E+13, 14.1E+13] and ")
+            PRINTF ("\n    Path 14 or 15   [7.04E+13, 14.1E+13] and ")
             comparator = k10ToThe[14];
             if (value < comparator) {
                 if (text + 14 > text_end) {
                     return nullptr;
                 }
-                DEBUG2 (cout, "Length:14")
+                PRINTF ("Length:14")
                 text_end = text + 13;
                 goto PrintEvenDown;
             }
             if (text + 15 > text_end) {
                 return nullptr;
             }
-            DEBUG ("Length:15")
+            PRINTF ("Length:15")
             *text++ = '1';
             value -= comparator;
             // Length:14
@@ -254,17 +207,17 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             goto PrintEvenUp;
         }
         else if (value >> 40) {
-            DEBUG ("\n    Path 13 or 14 : Range 8.80E+12 | 17.6E+12] and ")
+            PRINTF ("\n    Path 13 or 14 : Range 8.80E+12 | 17.6E+12] and ")
             comparator = k10ToThe[13];
             if (value < comparator) {
                 if (text + 13 > text_end) {
                     return nullptr;
                 }
-                DEBUG ("Length:13")
+                PRINTF ("Length:13")
                 text_end = text + 12;
                 goto PrintOddDown;
             }
-            DEBUG ("Length:14")
+            PRINTF ("Length:14")
             if (text + 14 > text_end) {
                 return nullptr;
             }
@@ -275,10 +228,10 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             goto PrintOddUp;
         }
         else if (value >> 37) {
-            DEBUG ("\n    Path 12 or 13 : Range [5.50E+11, 11.0E+11] and ")
+            PRINTF ("\n    Path 12 or 13 : Range [5.50E+11, 11.0E+11] and ")
             comparator = k10ToThe[12];
             if (value >= comparator) {
-                DEBUG ("Length:13")
+                PRINTF ("Length:13")
                 if (text + 14 > text_end) {
                     return nullptr;
                 }
@@ -291,22 +244,22 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             if (text + 13 > text_end) {
                 return nullptr;
             }
-            DEBUG ("Length:12")
+            PRINTF ("Length:12")
             text_end = text + 11;
             goto PrintEvenDown;
         }
         else { // if (value >> 36) {
-            DEBUG ("\n    Path 11 or 12: Range [6.87E+10, 13.7E+10]")
+            PRINTF ("\n    Path 11 or 12: Range [6.87E+10, 13.7E+10]")
             comparator = k10ToThe[11];
             if (value < comparator) {
-                DEBUG ("Length:11")
+                PRINTF ("Length:11")
                 text_end = text + 10;
                 goto PrintOddDown;
             }
             if (text + 13 > text_end) {
                 return nullptr;
             }
-            DEBUG ("Length:12")
+            PRINTF ("Length:12")
             *text++ = '1';
             value -= comparator;
             // Length:11
@@ -316,10 +269,10 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
     }
     if (value >> 17) {
         if (value >> 30) {
-            DEBUG ("\n    Path 10 or 11: Range [8.59E+09, 17.2E+09] and ")
+            PRINTF ("\n    Path 10 or 11: Range [8.59E+09, 17.2E+09] and ")
             comparator = k10ToThe[10];
             if (value < comparator) {
-                DEBUG ("Length:10 |")
+                PRINTF ("Length:10 |")
                 if (text + 10 > text_end) {
                     return nullptr;
                 }
@@ -329,7 +282,7 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             if (text + 11 > text_end) {
                 return nullptr;
             }
-            DEBUG ("Length:11 |")
+            PRINTF ("Length:11 |")
             *text++ = '1';
             value -= comparator;
             // Length:10
@@ -337,17 +290,17 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             goto PrintEvenUp;
         }
         else if (value >> 27) {
-            DEBUG ("\n    Path 09 or 10: Range [5.37E+08, 10.7E+08] and ")
+            PRINTF ("\n    Path 09 or 10: Range [5.37E+08, 10.7E+08] and ")
             comparator = k10ToThe[9];
             if (value < comparator) {
-                DEBUG ("Length:9")
+                PRINTF ("Length:9")
                 if (text + 8 > text_end) {
                     return nullptr;
                 }
                 text_end = text + 8;
                 goto PrintOddDown;
             }
-            DEBUG ("Length:10 |")
+            PRINTF ("Length:10 |")
             if (text + 11 > text_end) {
                 return nullptr;
             }
@@ -358,17 +311,17 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             goto PrintOddUp;
         } 
         else if (value >> 24) {
-            DEBUG ("\n    Path 08 or 09: Range [6.71E+07, 13.4E+07 and ")
+            PRINTF ("\n    Path 08 or 09: Range [6.71E+07, 13.4E+07 and ")
             comparator = k10ToThe[8];
             if (value < comparator) {
                 if (text + 8 > text_end) {
                     return nullptr;
                 }
-                DEBUG ("Length:8 | ")
+                PRINTF ("Length:8 | ")
                 text_end = text + 7;
                 goto PrintEvenDown;
             }
-            DEBUG ("Length:9 | ")
+            PRINTF ("Length:9 | ")
             if (text + 9 > text_end) {
                 return nullptr;
             }
@@ -379,17 +332,17 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             goto PrintEvenUp;
         }
         else if (value >> 20) {
-            DEBUG ("\n    Path 07 or 08: Range [8.39E+06 | 16.8E+06]   and ")
+            PRINTF ("\n    Path 07 or 08: Range [8.39E+06 | 16.8E+06]   and ")
             comparator = k10ToThe[7];
             if (value < comparator) {
                 if (text + 8 > text_end) {
                     return nullptr;
                 }
-                DEBUG ("Length:7 | ")
+                PRINTF ("Length:7 | ")
                 text_end = text + 6;
                 goto PrintOddDown;
             }
-            DEBUG ("Length:8 | ")
+            PRINTF ("Length:8 | ")
             if (text + 8 > text_end) {
                 return nullptr;
             }
@@ -400,34 +353,24 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             goto PrintOddUp;
         }
         else { //if (value >> 14) {
-            /** 0000000000000000000000000000000000000000000000100100100111110000
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                3210987654321098765432109876543210987654321098765432109876543210
-                6666555555555544444444443333333333222222222211111111110000000000
-                |  |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |
-                0  9  8  7   6  5  4   3  2  1   0  9  8   7  6  5   4  3  2   1
-                2  1  1  1   1  1  1   1  1  1   1  0  0   0  0  0   0  0  0   0
-                |------------------------|-----------------|-------------------|
-                |     Upper Chunk        |  Middle Chunk   |    Lower Chunk    |
-            */
-            DEBUG ("\n    Path 06 or 07: Range [5.24E+05, 10.5E+05] and ")
+            PRINTF ("\n    Path 06 or 07: Range [5.24E+05, 10.5E+05] and ")
             comparator = k10ToThe[6];
             if (value >= comparator) {
-                DEBUG ("Length:7 |")
+                PRINTF ("Length:7 |")
                 if (text + 9 > text_end) {
                     return nullptr;
                 }
                 *text++ = '1';
-                // The next digit is '0' but it messes up the algoirhm and this 
+                // The next digit is '0' but it messes up the algorithm and this 
                 // branch is rarely executed so that optimization is thrown 
                 // out.
                 value -= comparator;
                 // Length:6
                 text_end = text + 5;
                 PrintEvenUp:
-                DEBUG ("\n    PrintEvenUp ")
+                PRINTF ("\n    PrintEvenUp ")
                 if (text && 0x1) {
-                    DEBUG2 ("unaligned value:", value)
+                    PRINTF ("unaligned value:%I64u", value)
                     offset = text_end - text;
                     comparator = k10ToThe[offset];
                     if (value < comparator) {
@@ -437,12 +380,13 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                         index = '1';
                         offset = comparator;
                         comparator = comparator << 1;
-                        DEBUG7 ("\n    index:", index, " comparator = ",
-                                comparator, "\n    offset:", offset)
+                        PRINTF ("\n    index:%c comparator:%I64u"
+                                " offset:%I64u", index, comparator, offset)
+
                         while (comparator < value) {
                             comparator += offset;
                             ++index;
-                            DEBUG4 ("\n    index:", index, " comparator = "
+                            PRINTF ("\n    index:%c comparator = ", index,
                                     comparator)
                         }
                         if (value == comparator) {
@@ -452,10 +396,10 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                             *text = index;
                             comparator -= offset;
                         }
-                        DEBUG6 ("\n    index:", index, " value - comparator = ",
-                                value, " - ", comparator)
+                        PRINTF ("\n    index:%c.) value - comparator = "
+                                "%I64u - %I64u", index, value, comparator)
                         value -= comparator;
-                        DEBUG2 (" = ", value)
+                        PRINTF (" = %I64u", value)
                     }
 
                     index = value % 10;
@@ -464,7 +408,7 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                     text16 = reinterpret_cast<uint16_t*> (text_end - 2);
                 }
                 else {
-                    DEBUG2 ("aligned value:", value)
+                    PRINTF ("aligned value:%I64u", value)
                     text16 = reinterpret_cast<uint16_t*> (text_end - 1);
                 }
                 offset = (text_end - text) >> 1;
@@ -481,12 +425,12 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             if (text + 6 > text_end) {
                 return nullptr;
             }
-            DEBUG ("Length:6 |")
+            PRINTF ("Length:6 |")
             text_end = text + 5;
             PrintEvenDown:
-            DEBUG ("\n    PrintEvenDown ")
+            PRINTF ("\n    PrintEvenDown ")
             if (text && 0x1) {
-                DEBUG2 ("unaligned value:", value)
+                PRINTF ("unaligned value:", value)
                 // Convert Most Significant Decimal (MSD).
                 index = '9';
                 offset = text_end - text;
@@ -497,12 +441,12 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                 while (value < comparator) {
                     comparator -= offset;
                     --index;
-                    DEBUG7 ("\n    index:", index, " value - comparator = ",
-                            value, " - ", comparator)
+                    PRINTF ("\n    index:%c.) value - comparator = "
+                            "%I64u - %I64u", value, comparator)
                 }
                 value  -= comparator;
                 *text++ = index;
-                DEBUG2 (" = ", value)
+                PRINTF (" = ", value)
 
                 // Convert Least Significant Decimal (LSD).
                 index = value % 10;
@@ -513,11 +457,11 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                 text16 = reinterpret_cast<uint16_t*> (text_end - 2);
             }
             else {
-                DEBUG2 ("aligned value:", value)
+                PRINTF ("aligned value:", value)
                 text16 = reinterpret_cast<uint16_t*> (text_end - 1);
             }
             offset = (text_end - text) >> 1;
-            DEBUG2 ("\n    number of times to loop:", offset)
+            PRINTF ("\n    number of times to loop:", offset)
             while (--offset > 0) {
                 index = value % 100;
                 value /= 100;
@@ -525,29 +469,29 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                 DEBUG_PRINTED (value, begin, text_end);
             }
             DEBUG_PRINTED (value, begin, text_end);
-            DEBUG2 ("\n    value:", value)
+            PRINTF ("\n    value:", value)
             *text16 = kDigits00To99[value];
             return text_end + 1;
         }
     }
     else {
         if (value >> 14) {
-            DEBUG ("\n    Path 05 or 06: Range [6.55E+04, 13.1E+04] | ")
+            PRINTF ("\n    Path 05 or 06: Range [6.55E+04, 13.1E+04] | ")
             comparator = k10ToThe[5];
             if (value >= comparator) {
                 if (text + 6 > text_end) {
                     return nullptr;
                 }
-                DEBUG ("Length:6 ")
+                PRINTF ("Length:6 ")
                 value -= comparator;
                 *text++ = '1';
                 // Length:5
                 text_end = text + 4;
 
                 PrintOddUp:
-                DEBUG ("\n    PrintOddUp ")
+                PRINTF ("\n    PrintOddUp ")
                 if (text && 0x1) {
-                    DEBUG2 ("unaligned value:", value)
+                    PRINTF ("unaligned value:%I64u", value)
                     DEBUG_PRINTED (value, begin, text_end);
                     offset = text_end - text;
                     comparator = k10ToThe[offset];
@@ -557,12 +501,12 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                         offset = comparator;
                         comparator += offset;
                         index = '1';
-                        DEBUG4 ("\n    index:\'", index, "\' comparator = ",
+                        PRINTF ("\n    index:\'%I64u\' comparator = ", index,
                                 comparator)
                         while (comparator < value) {
                             comparator += offset;
                             ++index;
-                            DEBUG4 ("\n    index:\'", index, "\' comparator = ",
+                            PRINTF ("\n    index:\'%c\' comparator = %I64u", index,
                                     comparator)
                         }
                         if (value == comparator) {
@@ -572,17 +516,16 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                             comparator -= offset;
                             *text = index;
                         }
-                        DEBUG4 ("\n    index:\'", index, 
-                                "\' value - comparator = ", value, " - ",
-                                comparator, " = ", value)
+                        PRINTF ("\n    index:\'%c\' value - comparator = %I64u "
+                                "- %I64u = %I64u", index, comparator, value)
                         value -= comparator;
-                        DEBUG2 (" = ", value)
+                        PRINTF (" = ", value)
                         DEBUG_PRINTED (value, begin, text_end);
                     }
                     text16 = reinterpret_cast<uint16_t*> (text_end - 1);
                 }
                 else {
-                    DEBUG2 ("aligned value:", value)
+                    PRINTF ("aligned value:", value)
                     index = value % 10;
                     *text_end = '0' + index;
                     value /= 10;
@@ -590,7 +533,7 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                     text16 = reinterpret_cast<uint16_t*> (text_end - 2);
                 }
                 offset = ((text_end - text) >> 1);
-                DEBUG2 ("\n    number of times to loop:", offset)
+                PRINTF ("\n    number of times to loop:", offset)
                 while (--offset > 0) {
                     index = value % 100;
                     *text16-- = kDigits00To99[index];
@@ -604,34 +547,34 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             if (text + 5 > text_end) {
                 return nullptr;
             }
-            DEBUG ("Length:5 ")
+            PRINTF ("Length:5 ")
             text_end = text + 4;
 
             PrintOddDown:
-            DEBUG ("\n    PrintOddDown ")
+            PRINTF ("\n    PrintOddDown ")
             if (text && 0x1) {
-                DEBUG2 ("unaligned value:", value)
+                PRINTF ("unaligned value:", value)
                 offset = text_end - text;
                 comparator = k10ToThe[offset + 1];
                 offset = k10ToThe[offset];
                 comparator -= offset;
-                DEBUG2 ("\n    comparator:", comparator)
+                PRINTF ("\n    comparator:", comparator)
                 index = '9';
                 while (value < comparator) {
-                    DEBUG6 ("\n    index:", index, " value:", value,
+                    PRINTF ("\n    index:", index, " value:", value,
                             " comparator:", comparator)
                     comparator -= offset;
                     --index;
                 }
                 *text++ = index;
                 value -= comparator;
-                DEBUG8 ("\n    index:", index, " value - comparator = ",
-                        value, " - ", comparator, " = ", value)
+                PRINTF ("\n    index:\'%c\' value - comparator = %I64u "
+                        "- %I64u = %I64u", index, comparator, value)
                 // Length:6
                 text16 = reinterpret_cast<uint16_t*> (text_end - 1);
             }
             else {
-                DEBUG2 ("aligned value:", value)
+                PRINTF ("aligned value:", value)
                 index = value % 10;
                 value /= 10;
                 *text_end = '0' + index;
@@ -639,24 +582,24 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                 text16 = reinterpret_cast<uint16_t*> (text_end - 2);
             }
             offset = (text_end - text) >> 1;
-            DEBUG2 ("\n    number of times to loop:", offset)
+            PRINTF ("\n    number of times to loop:", offset)
             while (offset-- > 0) {
-                DEBUG2 ("\n    value:", value)
+                PRINTF ("\n    value:", value)
                 index = value % 100;
                 *text16-- = kDigits00To99[index];
                 value /= 100;
                 DEBUG_PRINTED (value, begin, text_end);
             }
             *text16 = kDigits00To99[value];
-            DEBUG2 ("\n    value:", value)
+            PRINTF ("\n    value:", value)
             DEBUG_PRINTED (value, begin, text_end);
             return text_end + 1;
         }
         else if (value >> 10) {
-            DEBUG ("\n    Path 04 or 05: Range [8.19E+03, 16.4E+03] | ")
+            PRINTF ("\n    Path 04 or 05: Range [8.19E+03, 16.4E+03] | ")
             comparator = k10ToThe[4];
             if (value >= comparator) {
-                DEBUG ("Length:5 | ")
+                PRINTF ("Length:5 | ")
                 if (text + 4 > text_end) {
                     return nullptr;
                 }
@@ -668,13 +611,13 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                 if (text + 4 > text_end) {
                     return nullptr;
                 }
-                DEBUG ("Length:4 | ")
+                PRINTF ("Length:4 | ")
             }
             text_end = text + 3;
             index = value % 100;
             value /= 100;
             if (text && 0x1) {
-                DEBUG2 ("\n    Unaligned value:", value)
+                PRINTF ("\n    Unaligned value:", value)
                 digits = kDigits00To99[value];
                 *(text    ) = (char)digits;
                 *(text + 1) = (char)(digits >> 8);
@@ -683,17 +626,17 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                 *(text + 3) = (char)(digits >> 8);
                 return text_end + 1;
             }
-            DEBUG2 ("\n    Aligned value:", value)
+            PRINTF ("\n    Aligned value:", value)
             text16 = reinterpret_cast<uint16_t*> (text_end - 1);
             *(text16    ) = kDigits00To99[index];
             *(text16 - 1) = kDigits00To99[value];
             return text_end + 1;
         }
         else if (value >> 7) {
-            DEBUG ("\n    Path 03 or 04: Range [5.12E+02, 10.2E+02]")
+            PRINTF ("\n    Path 03 or 04: Range [5.12E+02, 10.2E+02]")
             comparator = k10ToThe[3];
             if (value >= comparator) {
-                DEBUG ("Length:4 |")
+                PRINTF ("Length:4 |")
                 if (text + 5 > text_end) {
                     return nullptr;
                 }
@@ -703,7 +646,7 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                 if (text + 5 > text_end) {
                     return nullptr;
                 }
-                DEBUG ("Length:3 |")
+                PRINTF ("Length:3 |")
             }
             index = value % 10;
             value /= 10;
@@ -714,9 +657,9 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             return text + 3;
         }
         else if (value >> 4) {
-            DEBUG ("\n    Path 02 or 03: Range [6.40E+01, 12.7E+01]")
+            PRINTF ("\n    Path 02 or 03: Range [6.40E+01, 12.7E+01]")
             if (value >= 100) { //Length:3
-                DEBUG ("Length 3 |")
+                PRINTF ("Length 3 |")
                 if (text + 4 > text_end) {
                     return nullptr;
                 }
@@ -726,7 +669,7 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                 *(text + 2) = (char)(value >> 8);
                 return text + 3;
             }
-            DEBUG ("Length 2 |")
+            PRINTF ("Length 2 |")
             if (text + 2 > text_end) {
                 return nullptr;
             }
@@ -736,9 +679,9 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
             return text + 2;
         }
         else { //if (value >> 4) {
-            DEBUG ("\n    Path 01 or 02: Range [0.00E+00, 15.0E+00]")
+            PRINTF ("\n    Path 01 or 02: Range [0.00E+00, 15.0E+00]")
             if (value >= 10) {
-                DEBUG ("Length 2 |")
+                PRINTF ("Length 2 |")
                 if (text + 3 > text_end) {
                     return nullptr;
                 }
@@ -747,7 +690,7 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
                 *(text + 1) = '0' + (char)(value - 10);
                 return text + 2;
             }
-            DEBUG ("Length 1 |")
+            PRINTF ("Length 1 |")
             if (text + 2 > text_end) {
                 return nullptr;
             }
@@ -758,4 +701,6 @@ char* PrintFast (uint64_t value, char* text, char* text_end) {
     return nullptr;
 }
 
-}        //< namespace _
+}       //< namespace _
+#endif  //< CRABS_SEAM >= 1 || CRABS_SEAM == 0
+#undef DEBUG_PRINTED

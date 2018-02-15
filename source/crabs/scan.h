@@ -35,11 +35,6 @@ namespace _ {
     the opposite of print.
 */
 
-enum {
-    kMaxDigitsFloat  = 3 + FLT_MANT_DIG - FLT_MIN_EXP,
-    kMaxDigitsDouble = 3 + DBL_MANT_DIG - DBL_MIN_EXP,
-};
-
 /** Converts the given string to a 8-bit signed integer.
     @param  text A nil-terminated string in ROM.
     @param  result  The result of the conversion.

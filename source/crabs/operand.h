@@ -20,7 +20,7 @@
 #ifndef HEADER_FOR_CRABS_OPERAND
 #define HEADER_FOR_CRABS_OPERAND
 
-#include "op.h"
+#include "slot.h"
 
 #if CRABS_SEAM >= 2
 
@@ -92,7 +92,7 @@ Slot& OperandQuery (Operand* root, const char* address, Slot& key);
     @param  text     The Text to print to.
     @param  operand The Operand to print.
     @return text. */
-KABUKI Slot& OperandPrint (Operand* operand, Slot& slot);
+KABUKI Slot& PrintOperand (Operand* operand, Slot& slot);
 #endif
 
 }   //< namespace _
@@ -100,7 +100,7 @@ KABUKI Slot& OperandPrint (Operand* operand, Slot& slot);
 #if USING_CRABS_TEXT 
 /** Overloaded operator<< prints the given operand to the text. */
 inline _::Slot& operator<< (_::Slot& slot, _::Operand* operand) {
-    return slot << OperandPrint (operand, slot);
+    return PrintOperand (operand, slot);
 }
 #endif
 #endif  //< CRABS_SEAM >= 2

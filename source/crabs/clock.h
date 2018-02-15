@@ -6,7 +6,7 @@
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless C
              required by applicable law or agreed to in writing, software
              distributed under the License is distributed on an "AS IS" BASIS,
              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
@@ -22,7 +22,7 @@
 
 #include "memory.h"
 
-#if USING_CRABS_CLOCK
+#if CRABS_SEAM >= 2
 
 /** Reads a time or time delta from a a char starting with an '@' sign..
     @param input  The char to parse.
@@ -81,6 +81,57 @@ inline time_us_t ClockTimestampNow () {
     return 0;
 }
 
+
+
+#if USING_CRABS_TEXT
+
+/** Portable std::tm. */
+KABUKI std::tm* ClockLocalTime (std::tm* std_tm, std::time_t const& time);
+
+/** Generates a timestamp from a Unix timestamp and 32-bit microsecond
+    timestamp.
+*/
+KABUKI time_us_t ClockPackTimestamp (time_t unixTime, int32_t microseconds);
+
+/** Gets the seconds since January 1, 1970. */
+KABUKI time_t ClockGetSeconds (time_us_t t);
+
+/** Gets the microsecond time. */
+KABUKI int32_t ClockGetMicroseconds (time_us_t timestamp);
+
+/** Gets the number of days in a months. 
+    @todo Maybe get some open-source date utility? */
+KABUKI int ClockNumDaysMonth (time_t t);
+
+/** Gets the number of days in a months. 
+    @param month The month index 0-11.
+    @param year   */
+KABUKI int ClockNumDaysMonth (int month, int year = 1);
+
+/** Gets the abbreviated day of the week char of the given day number 1-7. */ 
+KABUKI const char* ClockDayOfWeek (int day_number);
+
+/** Gets the abbreviated day of the week char of the given day number 1-7. */ 
+KABUKI char ClockDayOfWeekInitial (int day_number);
+
+/** Compares the two the time and prints the results. */
+KABUKI int ClockCompareTimes (time_t time_a, time_t time_b);
+
+/** Compares the given time_t to the time and prints the results. */
+KABUKI int ClockCompareTimes (time_t t, int year, int month, int day,
+                              int hour, int minute, int second);
+
+/** Zeros out the calendar_time struct.
+    @param calendar_time A calendar time struct to zero out. */
+KABUKI void ClockZeroTime (tm* std_tm);
+
+#endif
+
+}       //< namespace _
+#endif  //< CRABS_SEAM >= 2
+#endif  //< HEADER_FOR_CRABS_CLOCK
+
+/*
 HANDLE gDoneEvent;
 
 VOID CALLBACK TimerRoutine(PVOID lpParam, BOOLEAN TimerOrWaitFired)
@@ -155,53 +206,4 @@ int main()
         printf("DeleteTimerQueue failed (%d)\n", GetLastError());
 
     return 0;
-}
-
-
-#if USING_CRABS_TEXT
-
-/** Portable std::tm. */
-KABUKI std::tm* ClockLocalTime (std::tm* std_tm, std::time_t const& time);
-
-/** Generates a timestamp from a Unix timestamp and 32-bit microsecond
-    timestamp.
-*/
-KABUKI time_us_t ClockPackTimestamp (time_t unixTime, int32_t microseconds);
-
-/** Gets the seconds since January 1, 1970. */
-KABUKI time_t ClockGetSeconds (time_us_t t);
-
-/** Gets the microsecond time. */
-KABUKI int32_t ClockGetMicroseconds (time_us_t timestamp);
-
-/** Gets the number of days in a months. 
-    @todo Maybe get some open-source date utility? */
-KABUKI int ClockNumDaysMonth (time_t t);
-
-/** Gets the number of days in a months. 
-    @param month The month index 0-11.
-    @param year   */
-KABUKI int ClockNumDaysMonth (int month, int year = 1);
-
-/** Gets the abbreviated day of the week char of the given day number 1-7. */ 
-KABUKI const char* ClockDayOfWeek (int day_number);
-
-/** Gets the abbreviated day of the week char of the given day number 1-7. */ 
-KABUKI char ClockDayOfWeekInitial (int day_number);
-
-/** Compares the two the time and prints the results. */
-KABUKI int ClockCompareTimes (time_t time_a, time_t time_b);
-
-/** Compares the given time_t to the time and prints the results. */
-KABUKI int ClockCompareTimes (time_t t, int year, int month, int day,
-                              int hour, int minute, int second);
-
-/** Zeros out the calendar_time struct.
-    @param calendar_time A calendar time struct to zero out. */
-KABUKI void ClockZeroTime (tm* std_tm);
-
-#endif
-
-}       //< namespace _
-#endif  //< USING_CRABS_CLOCK
-#endif  //< HEADER_FOR_CRABS_CLOCK
+}*/

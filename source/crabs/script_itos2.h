@@ -16,14 +16,14 @@
 
 #include <stdafx.h>
 
-#ifndef HEADER_FOR_CRABS_ITOS
-#define HEADER_FOR_CRABS_ITOS
+#ifndef HEADER_FOR_SCRIPT_ITOS2
+#define HEADER_FOR_SCRIPT_ITOS2
 
 namespace _ {
-    
-char* Print (int64_t value, char* text, char* text_end);
 
-char* Print (uint64_t value, char* text, char* text_end);
+char* PrintLd (uint64_t value, char* text, char* text_end);
+
+char* PrintLd (int64_t value, char* text, char* text_end);
 
 }        //< namespace _
-#endif    //< HEADER_FOR_CRABS_ITOS
+#endif    //< HEADER_FOR_SCRIPT_ITOS

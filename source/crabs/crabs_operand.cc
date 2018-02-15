@@ -18,6 +18,18 @@
 #include "operand.h"
 
 #if CRABS_SEAM >= 2
+#include "op.h"
+#include "print.h"
+#include "text.h"
+
+
+#if CRABS_SEAM == 2
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#endif
 
 namespace _ {
 
@@ -55,7 +67,7 @@ wchar_t OperandIndex (Operand* operand, char* begin, char* end) {
         return 0;
     }
     for (; index <= last; ++index) {
-        if (OpEquals (operand->Star (index, nullptr), begin, end)) {
+        if (TextEquals (begin, end, operand->Star (index, nullptr)->name)) {
             return index;
         }
     }
@@ -64,26 +76,10 @@ wchar_t OperandIndex (Operand* operand, char* begin, char* end) {
 
 #if USING_CRABS_TEXT
 
-Slot& OperandPrint (Operand* operand, Slot& slot) {
+Slot& PrintOperand (Operand* operand, Slot& slot) {
     if (!operand) {
         return slot << "\nError: Operand can't be nil";
     }
-
-    /*
-    if (OpCount (op->params) < kMaxNumParams) {
-    // Print the Operand Header.
-    //const uint_t* result   = op->result;
-    uintptr_t     num_ops = reinterpret_cast<uintptr_t>(op->params),
-    first_op = reinterpret_cast<uintptr_t>(op->result),
-    last_op = first_op + num_ops - 1;
-    //const byte  * eval     = op->evaluation;
-    text << op->name
-    << "\nOp Count: " << num_ops << " First: " << first_op
-    << '\'' << Char (first_op) << "\' Last:" << last_op << '\''
-    << Char (last_op)
-    << "\'\nMetadata:        " << op->description;
-    return;
-    }*/
 
     const _::Op* op = operand->Star ('?', nullptr);
     if (!op) {
@@ -96,12 +92,12 @@ Slot& OperandPrint (Operand* operand, Slot& slot) {
         return slot << "\nError: Too many parameters!";
     }
     slot << "\nOperand         :" << op->name
-         << Line (slot, '-', "\n>");
+         << PrintLine ('-', 80, slot);
     for (; op_num <= last_op; ++op_num) {
-        op = operand->Star (op_num, nullptr);
-        slot << "\nOp \'" << slot.Write (op_num) << "\':" 
-             << op_num << ' ' << op
-             << Line (slot, '-', "\n>");
+        op = operand->Star ((wchar_t)op_num, nullptr);
+        slot << "\nOp \'" << op_num << "\':"
+             << op_num << ' ' << PrintOp (op, slot)
+             << PrintLine ('-', 80, slot);
     }
     return slot;
 }
@@ -129,4 +125,6 @@ Slot& OperandQuery (Operand* root, const char* address, Slot& slot) {
 }
 #endif
 }       //< namespace _
+#undef PRINTF
+#undef PUTCHAR
 #endif  //< CRABS_SEAM >= 2

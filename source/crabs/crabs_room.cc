@@ -17,7 +17,15 @@
 #include <stdafx.h>
 #include "room.h"
 
-#if USING_CRABS_ROOM
+#if CRABS_SEAM >= 3
+
+#if CRABS_SEAM == 3
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#endif
 
 #include "door.h"
 #include "bsq.h"
@@ -249,4 +257,6 @@ Slot& Room::Print (_::Slot& slot) {
 #endif
 
 }       //< namespace _
-#endif  //< USING_CRABS_ROOM
+#undef PRINTF
+#undef PUTCHAR
+#endif  //< CRABS_SEAM >= 3

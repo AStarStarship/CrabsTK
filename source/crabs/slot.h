@@ -32,7 +32,6 @@ namespace _ {
     pointers for the (buffer) begin and (data) start of the ring buffer and
     you may write packed data.
 
-
 */
 struct Slot {
     char* begin, //< Beginning of the ring buffer.
@@ -95,75 +94,12 @@ KABUKI const Op* SlotRead (Slot* slot, const Op& op, void** args);
     @return Nil upon success and an Error Operation upon failure. */
 KABUKI const Op* SlotWrite (Slot* slot, const Op& op, void** args);
 
+/** Write the contents of the other slot into the slot. */
+KABUKI Slot& SlotWrite (Slot& slot, Slot& other);
+
+KABUKI void SlotDisplay (Slot& slot);
+
 }       //< namespace _
-        
-/** Op << writes a nil-terminated UTF-8 or ASCII string to the slot. * /
-inline _::Slot& operator<< (_::Slot& text_a, _::Slot& text_b) {
-    return text_a.Write (text_b);
-}
-
-/** Op << writes a nil-terminated UTF-8 or ASCII string to the
-    slot. */
-inline _::Slot& operator<< (_::Slot& slot_a, _::Slot& slot_b) {
-    return slot_a;
-}
-
-/** Op << writes a nil-terminated UTF-8 or ASCII string to the
-    slot. */
-inline _::Slot& operator<< (_::Slot& slot, const char* string) {
-    return Print (string, slot);
-}
-
-/** Op << writes the given value to the slot. */
-inline _::Slot& operator<< (_::Slot& slot, int8_t value) {
-    return Print (value, slot);
-}
-
-/** Op << writes the given value to the slot. */
-inline _::Slot& operator<< (_::Slot& slot, uint8_t value) {
-    return Print (value, slot);
-}
-
-/** Op << writes the given value to the slot. */
-inline _::Slot& operator<< (_::Slot& slot, int16_t value) {
-    return Print (value, slot);
-}
-
-/** Op << writes the given value to the slot. */
-inline _::Slot& operator<< (_::Slot& slot, uint16_t value) {
-    return Print (value, slot);
-}
-
-/** Op << writes the given value to the slot. */
-inline _::Slot& operator<< (_::Slot& slot, int32_t value) {
-    return Print (value, slot);
-}
-
-/** Op << writes the given value to the slot. */
-inline _::Slot& operator<< (_::Slot& slot, uint32_t value) {
-    return Print (value, slot);
-}
-
-/** Op << writes the given value to the slot. */
-inline _::Slot& operator<< (_::Slot& slot, int64_t value) {
-    return Print (value, slot);
-}
-
-/** Op << writes the given value to the slot. */
-inline _::Slot& operator<< (_::Slot& slot, uint64_t value) {
-    return Print (value, slot);
-}
-
-/** Op << writes the given value to the slot. */
-inline _::Slot& operator<< (_::Slot& slot, float value) {
-    return Print (value, slot);
-}
-
-/** Op << writes the given value to the slot. */
-inline _::Slot& operator<< (_::Slot& slot, double value) {
-    return Print (value, slot);
-}
-
 
 #endif  //< CRABS_SEAM >= 1
 #endif  //< HEADER_FOR_CRABS_SLOT

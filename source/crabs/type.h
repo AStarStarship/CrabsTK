@@ -122,10 +122,7 @@ KABUKI const char** TypeStrings ();
 
 /** Returns the name of the given type. */
 inline const char* TypeString (uint_t type) {
-    if (type >= kTypeCount) {
-        return "Invalid";
-    }
-    return TypeStrings ()[type];
+    return TypeStrings ()[type & 0x1f];
 }
 
 /** Checks the last char of the text to check if it is a specified char. */

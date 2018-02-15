@@ -19,6 +19,15 @@
 
 #if CRABS_SEAM >= 1
 
+
+#if CRABS_SEAM == 2
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#endif
+
 namespace _ {
 
 uint32_t MemoryAlignPowerOf2 (uint32_t value) {
@@ -157,4 +166,6 @@ char* MemoryCopy (char* write, char* write_end, const char* read,
 }
 
 }       //< namespace _
+#undef PRINTF
+#undef PUTCHAR
 #endif  //< CRABS_SEAM >= 1

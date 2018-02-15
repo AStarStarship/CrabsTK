@@ -16,18 +16,22 @@
 
 #include <stdafx.h>
 #include "bout.h"
+
+#if CRABS_SEAM >= 2
+
 #include "memory.h"
 #include "type.h"
 #include "bsq.h"
 #include "hash.h"
 #include "args.h"
-/*
-#include "bin.h"
-#include "address.h"
-#include "hash.h"
-#include "console.h"*/
 
-#if CRABS_SEAM >= 2
+#if CRABS_SEAM == 2
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#endif
 
 namespace _ {
 
@@ -162,12 +166,7 @@ int BOutStreamByte (BOut* bout) {
 
 const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
     
-    #if CRABS_SEAM == 2
-    Print () << "\n\nWriting "
-          << BsqPrint (params, Print ())
-          << " to B-Output:" << PrintHex (bout)
-          << BOutPrint (bout, Print ());
-    #endif
+    DEBUG ("\n\nWriting ", PrintBsq (params), " to B-Output:", PrintHex (bout), BOutPrint (bout))
     if (!bout)
         return BOutError (bout, kErrorImplementation);
     if (!params)
@@ -233,13 +232,9 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
     // Write data.
     for (index = 1; index <= num_params; ++index) {
         type = params[index];
-#if CRABS_SEAM == 2
-        Print () << "\nparam:" << arg_index + 1 << " type:" << TypeString (type) 
-              << " start:" << MemoryVector (begin, start) 
-              << " stop:" << MemoryVector (begin, stop) 
-              << " space:" << space;
-             //<< " value:" << value;
-#endif
+        PRINTF ("\nparam: %u type: %s start:%i stop:%i space: %u", arg_index + 1,
+                TypeString (type), MemoryVector (begin, start), 
+                MemoryVector (begin, stop), space)
         switch (type) {
             case NIL:
                 break;
@@ -259,9 +254,7 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
                 }
                 // Load the source data pointer and increment args.fs
                 ui1_ptr = reinterpret_cast<const char*> (args[arg_index]);
-                #if CRABS_SEAM == 2
-                Print () << "\"" << ui1_ptr << '\"';
-                #endif
+                PRINTF ("\"%p", ui1_ptr);
 
                 // We know we will always have at least one nil-term char.
                 ui1 = *ui1_ptr;
@@ -646,10 +639,7 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
     *stop = (byte)(hash >> 8);
     if (++stop >= end) stop -= size;
     bout->stop = MemoryVector (begin, stop);
-    #if CRABS_SEAM == 2
-    Print () << "\nDone writing to B-Output with the hash 0x" << PrintHex (hash)
-          << '.';
-    #endif
+    PRINTF ("\nDone writing to B-Output with the hash 0x%x.", hash)
     return 0;
 }
 
@@ -660,9 +650,7 @@ void BOutRingBell (BOut* bout, const char* address) {
     if (address == nullptr) {
         address = "";
     }
-    #if CRABS_SEAM == 2
-    Print () << "\nRinging BEL to address:" << address;
-    #endif
+    PRINTF ("\nRinging BEL to address:0x%p", address)
 
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte c;
@@ -676,9 +664,7 @@ void BOutRingBell (BOut* bout, const char* address) {
         * stop  = begin + bout->stop;       //< Stop of the data.
     space = SlotSpace (start, stop, size);
     if (space == 0) {
-        #if CRABS_SEAM == 2
-        Print () << "\nBuffer overflow!";
-        #endif
+        PRINTF ("\nBuffer overflow!")
         return;
     }
     *stop = 0;
@@ -687,9 +673,7 @@ void BOutRingBell (BOut* bout, const char* address) {
     c = *address;
     while (c) {
         if (space == 0) {
-            #if CRABS_SEAM == 2
-            Print () << "\nBuffer overflow!";
-            #endif
+            PRINTF ("\nBuffer overflow!");
             return;
         }
         *stop = c;
@@ -707,9 +691,7 @@ void BOutAckBack (BOut* bout, const char* address) {
     if (address == nullptr) {
         address = "";
     }
-    #if CRABS_SEAM == 2
-    Print () << "\n\nRinging BEL to address:" << address;
-    #endif
+    PRINTF ("\n\nRinging BEL to address:0x%p", address)
 
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte c;
@@ -723,9 +705,7 @@ void BOutAckBack (BOut* bout, const char* address) {
         * stop  = begin + bout->stop;       //< Stop of the data.
     space = SlotSpace (start, stop, size);
     if (space == 0) {
-        #if CRABS_SEAM == 2
-        Print () << "\nBuffer overflow!";
-        #endif
+        PRINTF ("\nBuffer overflow!")
         return;
     }
     *stop = 0;
@@ -734,9 +714,7 @@ void BOutAckBack (BOut* bout, const char* address) {
     c = *address;
     while (c) {
         if (space == 0) {
-            #if CRABS_SEAM == 2
-            Print () << "\nBuffer overflow!";
-            #endif
+            PRINTF ("\nBuffer overflow!")
             return;
         }
         *stop = c;
@@ -763,9 +741,9 @@ void BInKeyStrokes () {
 
 #if USING_CRABS_TEXT
 Slot& BOutPrint (BOut* bout, Slot& slot) {
-    slot << PrintLine ('_', slot);
+    slot << PrintLine ('_', 80, slot);
     if (!bout) {
-        return slot << "\nBOut: NIL" << PrintLine (slot, '_');
+        return slot << "\nBOut: NIL" << PrintLine ('_', 80, slot);
     }
     int size = bout->size;
     return slot << "\nBOut:" << PrintHex (bout, slot) << " size:" << size
@@ -778,5 +756,6 @@ Slot& BOutPrint (BOut* bout, Slot& slot) {
 
 }       //< namespace _
 
-#undef CRABS_SEAM == 2
+#undef PRINTF
+#undef PUTCHAR
 #endif  //< CRABS_SEAM >= 2

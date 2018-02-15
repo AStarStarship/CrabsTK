@@ -22,7 +22,7 @@
 
 #include "wall.h"
 
-#if USING_CRABS_ROOM
+#if CRABS_SEAM >= 3
 
 #include "interrupts.h"
 
@@ -262,5 +262,5 @@ class Room: public Operand {
 //KABUKI Room* ChineseRoom (Room* room = nullptr);
 
 }       //< namespace _
-#endif  //< USING_CRABS_ROOM
+#endif  //< CRABS_SEAM >= 3
 #endif  //< CRABS_ROOM_HDi
