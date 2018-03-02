@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/projects/crabs/text_crabs.cc
+    @file    ~/tests/test_seam_1_4.cc
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -17,9 +17,11 @@
 #include <stdafx.h>
 #include "tests_global.h"
 
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
+
 using namespace _;
 
-TEST_GROUP (CRABS_TESTS) {
+TEST_GROUP (SEAM_1_5_TESTS) {
     void setup () {
 
     }
@@ -30,8 +32,7 @@ TEST_GROUP (CRABS_TESTS) {
     }
 };
 
-#if CRABS_SEAM >= 1
-TEST (CRABS_TESTS, CrabsSeam1) {
+TEST (SEAM_1_5_TESTS, CrabsSeam1) {
     enum {
         kSize = 16,
         kSlotSize = 2048,
@@ -126,15 +127,15 @@ TEST (CRABS_TESTS, CrabsSeam1) {
         << " e:" << e << " f:" << f << " g:" << g << " h:" << h
         << " i:" << i << " j:" << j;
 }
-#endif  //< CRABS_SEAM >= 1
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 
-#if CRABS_SEAM >= 2
-TEST (CRABS_TESTS, PrintTests) {
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+TEST (SEAM_1_4_TESTS, PrintTests) {
 }
-#endif      //< CRABS_SEAM >= 2
+#endif      //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 
-#if CRABS_SEAM >= 3
-TEST (CRABS_TESTS, BookTests) {
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+TEST (SEAM_1_4_TESTS, BookTests) {
     PrintLineBreak ("\n  + Running BookTests\n", 10);
 
     PrintLineBreak ("\n  - Running BookInit...\n", 5, ' ');
@@ -234,7 +235,7 @@ template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
         std::cout << "\n\n Created invalid test moment: " << moment << '\n';
         return 0;
     }
-    moment->tm_year = year - TIME_EPOCH;
+    moment->tm_year = year - kTimeEpoch;
     moment->tm_mon = month - 1;
     moment->tm_mday = day;
     moment->tm_hour = hour;
@@ -258,7 +259,7 @@ template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
     return t;
 }
 
-TEST (CRABS_TESTS, ClockTests) {
+TEST (SEAM_1_4_TESTS, ClockTests) {
     time_t t,
            t_found;
     tm* lt;
@@ -329,7 +330,7 @@ TEST (CRABS_TESTS, ClockTests) {
 }
 
 #if USING_CRABS_TABLE
-TEST (CRABS_TESTS, TableTests) {
+TEST (SEAM_1_4_TESTS, TableTests) {
     std::cout << "\n  - Running TableTest...\n";
     char_t index;
     uintptr_t buffer[128];
@@ -409,7 +410,7 @@ TEST (CRABS_TESTS, TableTests) {
 }
 #endif  //< USING_CRABS_TABLE
 
-TEST (CRABS_TESTS, ExprTests) {
+TEST (SEAM_1_4_TESTS, ExprTests) {
     Text<> text;
     std::cout << "\n Running ExprTests...\n";
     enum {
@@ -423,7 +424,7 @@ TEST (CRABS_TESTS, ExprTests) {
     Expr* expr = ExprInit (buffer, kBufferSize, 4, 
                                        &root, unpacked_buffer,
                                        kBufferSizeWords);
-    ExprPrint (expr);
+    PrintExpr (expr);
 
     void*         args[4];
     const uint_t* params         = Bsq <4, ADR, STR, 32, FLT, SI4> ();
@@ -440,16 +441,16 @@ TEST (CRABS_TESTS, ExprTests) {
                                    Args (args, "C", &stx_expected,
                                          &si4_expected, &flt_expected));
     text << "\n Attempting to print Expr " << PrintPointer (ExprBOut (expr))
-         <<  ExprPrint (expr, text) << Print ();
+         <<  PrintExpr (expr, text) << Print ();
     CHECK_EQUAL (0, ExprArgs (expr, params,
                               Args (args, &stx_found, &si4_found, &flt_found)));
 }
 
-TEST (CRABS_TESTS, RoomTests) {
+TEST (SEAM_1_4_TESTS, RoomTests) {
     printf ("\n  - Running RoomTestOne...\n");
 }
 
-TEST (CRABS_TESTS, ReadWriteTests) {
+TEST (SEAM_1_4_TESTS, ReadWriteTests) {
     enum {
         kBufferSize = 256,
         kElementsBuffer = kBufferSize / sizeof (uintptr_t)
@@ -843,7 +844,7 @@ TEST (CRABS_TESTS, ReadWriteTests) {
     CHECK_EQUAL (uv8_expected[9], uv8_found[9])
 }
 
-TEST (CRABS_TESTS, OpTests) {
+TEST (SEAM_1_4_TESTS, OpTests) {
     enum {
         kBufferSize = 2048,
         kBufferWords = kBufferSize / sizeof (uintptr_t),
@@ -858,7 +859,7 @@ TEST (CRABS_TESTS, OpTests) {
 
     Expr* expr = ExprInit (buffer, kBufferSize, kStackHeight, &a,
                                        unpacked_expr, kBufferSize);
-    ExprPrint (expr);
+    PrintExpr (expr);
 
     std::cout << "\n    Testing Root (@see \"a.h\")...\n";
 
@@ -879,20 +880,20 @@ TEST (CRABS_TESTS, OpTests) {
     BOutPrint (bout);
     CHECK (result == nullptr)
 
-    ExprPrint (expr);
+    PrintExpr (expr);
 
     //Slot slot (bin, bout);
     // Bypass handshake for testing purposes.
     ExprScan (expr);//, &slot);
-    ExprPrint (expr);
+    PrintExpr (expr);
     std::cout << "\n Done with Op tests.";
     system ("PAUSE");
 }
 
-TEST (CRABS_TESTS, TextTests) {
-    Print () << "\n\n Testing Text...\n\n";
+TEST (SEAM_1_4_TESTS, TextTests) {
+    PRINTF ("\n\n Testing Text...\n\n";
 
-    Print () << "\n\n Testing Text...";
+    PRINTF ("\n\n Testing Text...";
 
     enum {
         kNumStrings = 5,
@@ -924,17 +925,17 @@ TEST (CRABS_TESTS, TextTests) {
         CHECK (end != nullptr)
     }
 
-    Print () << "\n\n Testing Text write functions..."
+    PRINTF ("\n\n Testing Text write functions..."
               << "\n\n Expecting Line() followed by \"Testing 1, 2, 3\"...";
     Text<> text;
     PrintLine () << "\n Testing " << 1 << ", " << 2 << ", " << 3;
 
-    Print () << "\n\n Wrote:\"" << PrintGetBegin () << "\""
+    PRINTF ("\n\n Wrote:\"" << PrintGetBegin () << "\""
               << "\n Testing Text::Memory (void*, int size)...";
 
     PrintMemory (PrintGetBegin (), PrintGetEnd ()) << Print ();
 
-    Print () << "\n\n Done testing _::Text class...\n ";
+    PRINTF ("\n\n Done testing _::Text class...\n ";
     system ("PAUSE");
 }
-#endif      //< CRABS_SEAM >= 3
+#endif      //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 5

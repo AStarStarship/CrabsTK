@@ -21,7 +21,7 @@
 #define CRABS_TLIST_H
 
 #include "set.h"
-#if USING_CRABS_LIST
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
 
 namespace _ {
 
@@ -191,5 +191,5 @@ void SetPrint (Set<TIndex, TKey, TData, THash>* collection) {
 }
 
 }       //< namespace _
-#endif  //< USING_CRABS_LIST
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
 #endif  //< CRABS_TLIST_H

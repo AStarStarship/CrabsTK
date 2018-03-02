@@ -22,49 +22,21 @@
 
 #include "config.h"
 
-#if USING_CRABS_RANDOM
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 1
 
 namespace _ {
 
-/** Primes the randomizer with the current system time. */
-inline void PrimeRandomizer () {
-    srand ((uint)time (nullptr));
+inline uint64_t GetRandomUInt64 () {
+    std::random_device rd;
+    std::mt19937_64 eng (rd ());
+    std::uniform_int_distribution<unsigned long long> distr;
+    return distr (eng);
 }
 
-/** Gets a random number. */
-template<typename T>
-inline T NextRandom () {
-    auto random_number = rand ();
-    //enum {
-    //    kSize = sizeof (random_number),
-          //< Will be used for portable 32/64-bit clocks.
-    //};
-    
-    return static_cast<T>(random_number);
-}
-
-
-/** Gets a random number. */
-template<typename T>
-inline T Random () {
-    PrimeRandomizer ();
-    return NextRandom<T> ();
-}
-
-/** Gets a random number. */
-inline float RandomFloat () {
-    srand ((uint)time (nullptr));
-    uint32_t random = Random<uint32_t> ();
-    return *reinterpret_cast<float*> (&random);
-}
-
-/** Gets a random number. */
-inline double RandomDouble () {
-    srand ((uint)time (nullptr));
-    uint64_t random = Random<uint64_t> ();
-    return *reinterpret_cast<double*> (&random);
+inline int64_t GetRandomInt64 () {
+    return (int64_t)GetRandomUInt64 ();
 }
 
 }       //< namespace _
-#endif  //< USING_CRABS_RANDOM
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 1
 #endif  //< HEADER_FOR_CRABS_RANDOM

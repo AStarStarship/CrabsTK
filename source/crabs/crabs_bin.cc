@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "bin.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 #include "bout.h"
 #include "type.h"
@@ -26,7 +26,7 @@
 #include "slot.h"
 
 
-#if CRABS_SEAM == 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 5
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #define CLEAR(begin, end)\
@@ -154,11 +154,11 @@ bool BInIsReadable (BIn* bin) {
 }
 
 const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
-    #if CRABS_DEBUG == 1
-    Print () << "\nReading " << PrintBsq (params)
-             << " from B-Input:" << PrintHex (bin);
-    Write (BInPrint (bin, text));
-    #endif
+    PRINTF ("\nReading ")
+    PRINT_BSQ (params)
+    PRINTF (" from B-Input:0x%x", bin)
+    PRINT_BIN (bin)
+
     if (!bin) {
         return BInError (bin, kErrorImplementation);
     }
@@ -483,7 +483,7 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
                 #endif 
             default: {  //< It's an Array
                 #if CRABS_DEBUG == 1
-                Print () << "\nIt's an array!\n";
+                PRINTF ("\nIt's an array!\n";
                 #endif  //< CRABS_DEBUG
                 #if USING_CRABS_ARRAY
                 switch (type & 0x60) {

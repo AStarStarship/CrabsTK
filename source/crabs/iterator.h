@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#if USING_CRABS_ITERATOR
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >=5
 
 namespace _ {
 
@@ -43,5 +43,5 @@ struct KABUKI Iterator {
 };
 
 }       //< namespace _
-#endif  //< USING_CRABS_ITERATOR
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >=5
 #endif  //< CRABS_ITERATOR_H

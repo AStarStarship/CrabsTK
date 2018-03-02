@@ -22,7 +22,8 @@
 
 #include "memory.h"
 
-#if USING_CRABS_BOOK
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
+
 #include "type.h"
 
 namespace _ {
@@ -235,7 +236,7 @@ TIndex BagAdd (Bok<TIndex, TKey, TData, THash>* collection, const char* key,
         current_hash;
 
     if (key_length > value) {
-        Print () << "Buffer overflow\n";
+        PRINTF ("Buffer overflow\n";
         return ~((TIndex)0);
     }
 
@@ -258,11 +259,11 @@ TIndex BagAdd (Bok<TIndex, TKey, TData, THash>* collection, const char* key,
     // Calculate left over buffer size by looking up last char.
 
     if (key_length >= value) {
-        Print () << "Not enough room in buffer!\n";
+        PRINTF ("Not enough room in buffer!\n";
         return 0;   //< There isn't enough room left in the buffer.
     }
 
-    Print () << "Finding insert location... \n";
+    PRINTF ("Finding insert location... \n";
 
     int low = 0,
         mid,
@@ -284,7 +285,7 @@ TIndex BagAdd (Bok<TIndex, TKey, TData, THash>* collection, const char* key,
             low = mid + 1;
         } else    // Duplicate hash detected.
         {
-            Print () << "hash detected, ";
+            PRINTF ("hash detected, ";
 
             // Check for other collisions.
 
@@ -294,7 +295,7 @@ TIndex BagAdd (Bok<TIndex, TKey, TData, THash>* collection, const char* key,
 
             if (index < ~0)             //< There are other collisions.
             {
-                Print () << "with collisions, ";
+                PRINTF ("with collisions, ";
                 // There was a collision so check the table.
 
                 // The collisionsList is a sequence of indexes terminated 
@@ -316,7 +317,7 @@ TIndex BagAdd (Bok<TIndex, TKey, TData, THash>* collection, const char* key,
                 }
 
                 // Its a new collision!
-                Print () << "and new collision detected.\n";
+                PRINTF ("and new collision detected.\n";
 
                 // Copy the key
                 value = key_offsets[num_items - 1] + key_length + 1;
@@ -356,14 +357,14 @@ TIndex BagAdd (Bok<TIndex, TKey, TData, THash>* collection, const char* key,
 
             // But we still don't know if the char is a new collision.
 
-            Print () << "Checking if it's a collision... ";
+            PRINTF ("Checking if it's a collision... ";
 
             if (strcmp (key, keys - key_offsets[index]) != 0) {
                 // It's a new collision!
-                Print () << "It's a new collision!\n";
+                PRINTF ("It's a new collision!\n";
 
                 if (value < 3) {
-                    Print () << "Buffer overflow!\n";
+                    PRINTF ("Buffer overflow!\n";
                     return ~0;
                 }
 
@@ -406,11 +407,11 @@ TIndex BagAdd (Bok<TIndex, TKey, TData, THash>* collection, const char* key,
                 SetPrint (collection);
 
                 SetPrint (collection);
-                Print () << "Done inserting.\n";
+                PRINTF ("Done inserting.\n";
                 // Then it was a collision so the table doesn't contain string.
                 return num_items;
             }
-            Print () << "table already contains the key\n";
+            PRINTF ("table already contains the key\n";
             return index;
         }
     }
@@ -460,7 +461,7 @@ TIndex BagAdd (Bok<TIndex, TKey, TData, THash>* collection, const char* key,
     collection->num_items = num_items + 1;
 
     SetPrint (collection);
-    Print () << "Done inserting.\n";
+    PRINTF ("Done inserting.\n";
     PrintLine ();
 
     return num_items;
@@ -545,7 +546,7 @@ TIndex BagFind (Bok<TIndex, TKey, TData, THash>* collection, const char* key) {
 
             if (index < ~0) {
                 // There was a collision so check the table.
-                Print () << "There was a collision so check the table\n";
+                PRINTF ("There was a collision so check the table\n";
 
                 // The collisionsList is a sequence of indexes terminated by
                 // an invalid index > kMaxNumOperands. collissionsList[0] is an 
@@ -567,7 +568,7 @@ TIndex BagFind (Bok<TIndex, TKey, TData, THash>* collection, const char* key) {
                     ++temp_ptr;
                     index = *temp_ptr;
                 }
-                Print () << "Did not find \"" << key << "\"\n";
+                PRINTF ("Did not find \"" << key << "\"\n";
                 return ~((TIndex)0);
             }
 
@@ -586,15 +587,15 @@ TIndex BagFind (Bok<TIndex, TKey, TData, THash>* collection, const char* key) {
 
             if (strcmp (key, keys - key_offsets[index]) != 0) {
                 //< It was a collision so the table doesn't contain string.
-                Print () << " but it was a collision and did not find key.\n";
+                PRINTF (" but it was a collision and did not find key.\n";
                 return ~((TIndex)0);
             }
 
-            Print () << "and found key at mid: " << mid << '\n';
+            PRINTF ("and found key at mid: " << mid << '\n';
             return index;
         }
     }
-    Print () << "Did not find a hash for key \"" << key << "\"\n";
+    PRINTF ("Did not find a hash for key \"" << key << "\"\n";
     PrintLine ();
 
     return ~((TIndex)0);
@@ -627,10 +628,10 @@ void BagPrint (const Bok<TIndex, TKey, TData, THash>* collection) {
     printf ("\n;: %u max_items: %u  "
             "pile_size: %u  size: %u", num_items,
             max_items, pile_size, table_size);
-    Print () << '\n';
-    Print () << '|';
+    PRINTF ('\n';
+    PRINTF ('|';
     for (int i = 0; i < 79; ++i) putchar ('_');
-    Print () << '\n';
+    PRINTF ('\n';
 
     const char* states = reinterpret_cast<const char*> (collection) +
                          sizeof (Bok <TIndex, TKey, TData, THash>);
@@ -650,10 +651,10 @@ void BagPrint (const Bok<TIndex, TKey, TData, THash>* collection) {
 
     printf ("\n%3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
             "hash_e", "hash_u", "hash_s", "index_u", "collisions");
-   Print () << '|';
+   PRINTF ('|';
     for (int i = 0; i < 79; ++i)
         putchar ('_');
-    Print () << '\n';
+    PRINTF ('\n';
 
     for (TIndex i = 0; i < max_items; ++i) {
         // Print each record as a row.
@@ -680,13 +681,13 @@ void BagPrint (const Bok<TIndex, TKey, TData, THash>* collection) {
             }
         }
 
-        Print () << '\n';
+        PRINTF ('\n';
     }
     PrintLine ('_');
 
     PrintMemory (reinterpret_cast<const char*> (collection) + 
                  sizeof (Bok<TIndex, TKey, TData, THash>), collection->size);
-    Print () << '\n';
+    PRINTF ('\n';
 }
 
 /** Deletes the collection contents without wiping the contents. */
@@ -760,5 +761,5 @@ void BagPrint (Bok<TIndex, TKey, TData, THash>* collection) {
 //}
 
 }       //< namespace _
-#endif  //< USING_CRABS_BOOK
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
 #endif  //< HEADER_FOR_CRABS_TBAG

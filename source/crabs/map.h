@@ -22,7 +22,7 @@
 
 #include "memory.h"
 
-#if USING_CRABS_MAP
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
 
 #include "type.h"
 
@@ -266,7 +266,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
         current_mapping;
 
     if (key_length > value) {
-        Print () << "Buffer overflow\n";
+        PRINTF ("Buffer overflow\n";
         return ~((TIndex)0);
     }
 
@@ -289,11 +289,11 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
     // Calculate left over buffer size by looking up last char.
 
     if (key_length >= value) {
-        Print () << "Not enough room in buffer!\n";
+        PRINTF ("Not enough room in buffer!\n";
         return 0;   //< There isn't enough room left in the buffer.
     }
 
-    Print () << "Finding insert location... \n";
+    PRINTF ("Finding insert location... \n";
 
     int low = 0,
         mid,
@@ -315,17 +315,17 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
             low = mid + 1;
         } else    // Duplicate hash detected.
         {
-            Print () << "hash detected, ";
+            PRINTF ("hash detected, ";
 
             // Check for other collisions.
 
             index = indexes[mid];       //< Index in the collision table.
 
-            Print () << "index:" << index << '\n';
+            PRINTF ("index:" << index << '\n';
 
             if (index < ~0)             //< There are other collisions.
             {
-                Print () << "with collisions, ";
+                PRINTF ("with collisions, ";
                 // There was a collision so check the table.
 
                 // The collisionsList is a sequence of indexes terminated 
@@ -347,7 +347,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
                 }
 
                 // Its a new collision!
-                Print () << "and new collision detected.\n";
+                PRINTF ("and new collision detected.\n";
 
                 // Copy the key
                 value = key_offsets[num_items - 1] + key_length + 1;
@@ -387,14 +387,14 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
 
             // But we still don't know if the char is a new collision.
 
-            Print () << "Checking if it's a collision... ";
+            PRINTF ("Checking if it's a collision... ";
 
             if (strcmp (id, keys - key_offsets[index]) != 0) {
                 // It's a new collision!
-                Print () << "It's a new collision!\n";
+                PRINTF ("It's a new collision!\n";
 
                 if (value < 3) {
-                    Print () << "Buffer overflow!\n";
+                    PRINTF ("Buffer overflow!\n";
                     return ~0;
                 }
 
@@ -437,11 +437,11 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
                 MapPrint (map);
 
                 MapPrint (map);
-                Print () << "Done inserting.\n";
+                PRINTF ("Done inserting.\n";
                 // Then it was a collision so the table doesn't contain string.
                 return num_items;
             }
-            Print () << "table already contains the key\n";
+            PRINTF ("table already contains the key\n";
             return index;
         }
     }
@@ -491,7 +491,7 @@ TIndex MapAdd (Map<TIndex, TKey, TSize>* map, T id,
     map->num_items = num_items + 1;
 
     MapPrint (map);
-    Print () << "Done inserting.\n";
+    PRINTF ("Done inserting.\n";
     PrintLine ();
 
     return num_items;
@@ -576,7 +576,7 @@ TIndex MapFind (Map<TIndex, TKey, TSize>* collection, const char* key) {
 
             if (index < ~0) {
                 // There was a collision so check the table.
-                Print () << "There was a collision so check the table\n";
+                PRINTF ("There was a collision so check the table\n";
 
                 // The collisionsList is a sequence of indexes terminated by
                 // an invalid index > kMaxNumOperands. collissionsList[0] is an 
@@ -598,7 +598,7 @@ TIndex MapFind (Map<TIndex, TKey, TSize>* collection, const char* key) {
                     ++temp_ptr;
                     index = *temp_ptr;
                 }
-                Print () << "Did not find \"" << key << "\"\n";
+                PRINTF ("Did not find \"" << key << "\"\n";
                 return ~((TIndex)0);
             }
 
@@ -617,15 +617,15 @@ TIndex MapFind (Map<TIndex, TKey, TSize>* collection, const char* key) {
 
             if (strcmp (key, keys - key_offsets[index]) != 0) {
                 //< It was a collision so the table doesn't contain string.
-                Print () << " but it was a collision and did not find key.\n";
+                PRINTF (" but it was a collision and did not find key.\n";
                 return ~((TIndex)0);
             }
 
-            Print () << "and found key at mid: " << mid << '\n';
+            PRINTF ("and found key at mid: " << mid << '\n';
             return index;
         }
     }
-    Print () << "Did not find a hash for key \"" << key << "\"\n";
+    PRINTF ("Did not find a hash for key \"" << key << "\"\n";
     PrintLine ();
 
     return ~((TIndex)0);
@@ -658,10 +658,10 @@ void MapPrint (const Map<TIndex, TKey, TSize>* collection) {
     printf ("\n ;: %u stack_height: %u  "
             "pile_size: %u  size: %u", ;,
             stack_height, pile_size, table_size);
-    Print () << '\n';
-   Print () << '|';
+    PRINTF ('\n';
+   PRINTF ('|';
     for (int i = 0; i < 79; ++i) putchar ('_');
-    Print () << '\n';
+    PRINTF ('\n';
 
     const char* states = reinterpret_cast<const char*> (collection) +
                          sizeof (Map <TIndex, TKey, TSize>);
@@ -681,10 +681,10 @@ void MapPrint (const Map<TIndex, TKey, TSize>* collection) {
 
     printf ("\n %3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
             "hash_e", "hash_u", "hash_s", "index_u", "collisions");
-   Print () << '|';
+   PRINTF ('|';
     for (int i = 0; i < 79; ++i)
         putchar ('_');
-    Print () << '\n';
+    PRINTF ('\n';
 
     for (TIndex i = 0; i < stack_height; ++i) {
         // Print each record as a row.
@@ -711,13 +711,13 @@ void MapPrint (const Map<TIndex, TKey, TSize>* collection) {
             }
         }
 
-        Print () << '\n';
+        PRINTF ('\n';
     }
     PrintLine ('_');
 
     PrintMemory (reinterpret_cast<const char*> (collection) + 
                  sizeof (Map<TIndex, TKey, TSize>), collection->size_bytes);
-    Print () << '\n';
+    PRINTF ('\n';
 }
 
 /** Deletes the collection contents without wiping the contents. */
@@ -791,5 +791,5 @@ void MapPrint (Map<TIndex, TKey, TSize>* collection) {
 //}
 
 }       //< namespace _
-#endif  //< USING_CRABS_MAP
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
 #endif  //< CRABS_MAP_H

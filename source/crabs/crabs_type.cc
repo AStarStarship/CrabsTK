@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "type.h"
 
-#if CRABS_SEAM >= 1
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 
 namespace _ {
 
@@ -99,4 +99,4 @@ const char** TypeStrings () {
 }
 
 }       //< namespace _
-#endif  //< CRABS_SEAM >= 1
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4

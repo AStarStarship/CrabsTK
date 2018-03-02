@@ -17,10 +17,10 @@
 #include <stdafx.h>
 #include "wall.h"
 
-#if CRABS_SEAM >= 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 
 
-#if CRABS_SEAM == 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -41,10 +41,10 @@ Wall::Wall (size_t size_bytes) :
     is_dynamic_ (true) {
     size_bytes = size_bytes < kMinSizeBytes ? (uint_t)kMinSizeBytes
                                             : size_bytes;
-    size_bytes = MemoryAlign8 (size_bytes);
+    size_bytes = Align8 (size_bytes);
     size_t size_words = (size_bytes >> sizeof (void*)) + 3;
     uintptr_t* buffer = new uintptr_t[size_words],
-             * aligned_buffer = MemoryAlign8 (buffer);
+             * aligned_buffer = Align8 (buffer);
     //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
     //< on 16 and 32-bit systems.
     size_bytes -= sizeof (uintptr_t) * (aligned_buffer - buffer);
@@ -55,7 +55,7 @@ Wall::Wall (size_t size_bytes) :
 
 Wall::Wall (uintptr_t* buffer, size_t size_bytes) {
     //char* ptr     = reinterpret_cast<char*> (buffer);//,
-    //    * new_ptr = ptr + MemoryAlignOffset<uint64_t> (ptr),
+    //    * new_ptr = ptr + AlignOffset<uint64_t> (ptr),
     //    * end_ptr = ptr + size_bytes;
     enum {
         kBitsShift = sizeof (uintptr_t) == 2 ? 1
@@ -65,7 +65,7 @@ Wall::Wall (uintptr_t* buffer, size_t size_bytes) {
     //uint_t size_words = (size_bytes >> kBitsShift) + 3;
     //< Computer engineering voodoo for aligning to 64-bit boundary.
 
-    uintptr_t*aligned_buffer = MemoryAlign8 (buffer);
+    uintptr_t*aligned_buffer = Align8 (buffer);
     //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
     //< on 16 and 32-bit systems.
     size_bytes -= sizeof (uintptr_t) * (aligned_buffer - buffer);
@@ -108,4 +108,4 @@ _::Slot& Wall::Print (_::Slot& slot) {
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< CRABS_SEAM >= 3
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4

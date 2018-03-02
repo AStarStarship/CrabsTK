@@ -18,11 +18,11 @@
 
 int main (int args_count, char** args) {
     std::cout << '|';
-    for (int i = 79; i > 0; --i) {
+    for (int i = 81; i > 0; --i) {
         std::cout << '-';
     }
     std::cout << "\n| Kabuki Toolkit Tests\n|";
-    for (int i = 79; i > 0; --i) {
+    for (int i = 81; i > 0; --i) {
         std::cout << '-';
     }
     std::cout << "\n|\n|";

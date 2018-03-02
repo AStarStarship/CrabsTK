@@ -18,10 +18,10 @@
 #include <stdafx.h>
 #include "door.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 
-#if CRABS_SEAM == 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -56,7 +56,7 @@ Door::Door (const char* room_name, uintptr_t* buffer, uintptr_t size_bytes) {
         if (size_bytes < kMinDoorSize) {
             // @todo insert error code here
 #if CRABS_DEBUG
-            Print () << "\nError: Door size_bytes < kMinDoorSize!";
+            PRINTF ("\nError: Door size_bytes < kMinDoorSize!";
 #endif  //< CRABS_DEBUG
             return;
         }
@@ -137,4 +137,4 @@ static Door* DoorInit (uintptr_t* buffer, slot_t slot_size) {
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< CRABS_SEAM >= 2
+#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3

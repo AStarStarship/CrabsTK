@@ -17,14 +17,14 @@
 #include <stdafx.h>
 #include "op.h"
 
-#if CRABS_SEAM >= 1
+#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 #include "bsq.h"
 #include "slot.h"
 #include "print.h"
 
 
-#if CRABS_SEAM == 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -165,4 +165,4 @@ _::Slot& operator<< (_::Slot& slot, const _::Op* op) {
 #endif
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< CRABS_SEAM >= 1
+#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3

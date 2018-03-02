@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >=4
 
 namespace _ {
 
@@ -51,5 +51,5 @@ KABUKI uint16_t Hash32 (const char* string, hash32_t hash = kLargest32BitPrime);
 KABUKI hash64_t Hash64 (const char* string, hash64_t hash = kLargest64BitPrime);
 
 }       //< namespace _
-#endif  //< CRABS_SEAM >= 2
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >=4
 #endif  //< HEADER_FOR_CRABS_HASH

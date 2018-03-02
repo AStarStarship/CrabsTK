@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#if USING_CRABS_ADDRESS
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 
 namespace _ {
     
@@ -95,5 +95,5 @@ inline uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
 }
 
 }       //< namespace _
-#endif  //< USING_CRABS_ADDRESS
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 #endif  //< CRABS_ADDRESS_H

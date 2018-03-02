@@ -22,7 +22,7 @@
 
 #include "expr.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM == 1 && MINOR_MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 
 #if USING_CRABS_TEXT
 
@@ -161,5 +161,5 @@ class Console : public Slot, public Op {
 };      //< class Console
 }       //< namespace _
 #endif
-#endif  //< CRABS_SEAM >= 2
+#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 #endif  //< HEADER_FOR_CRABS_CONSOLE

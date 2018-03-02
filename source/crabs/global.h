@@ -22,13 +22,15 @@
 
 #include "config.h"
 
-#if CRABS_SEAM == 0
-#elif CRABS_SEAM == 1
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 1
+#include "print_itos.h"
+#include "random.h"
+#elif MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #include "print.h"
+#include "scan.h"
 #include "memory.h"
 #include "text.h"
-#elif CRABS_SEAM == 2
-#include "random.h"
+#elif MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 #include "op.h"
 #include "address.h"
 #include "event.h"
@@ -38,7 +40,10 @@
 #include "args.h"
 #include "console.h"
 #include "bsq.h"
-#elif CRABS_SEAM == 3
+#elif MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
+#include "bin.h"
+#include "bout.h"
+#elif MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
 #include "table.h"
 #include "lst.h"
 #include "map.h"

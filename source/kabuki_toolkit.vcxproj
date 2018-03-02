@@ -19,11 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\tests\stb_sprintf.h" />
     <ClInclude Include="..\tests\tests_global.h" />
     <ClInclude Include="assembly.h" />
     <ClInclude Include="crabs\address.h" />
+    <ClInclude Include="crabs\align.h" />
     <ClInclude Include="crabs\args.h" />
-    <ClInclude Include="crabs\array.h" />
     <ClInclude Include="crabs\bin.h" />
     <ClInclude Include="crabs\bok.h" />
     <ClInclude Include="crabs\bout.h" />
@@ -49,6 +50,7 @@
     <ClInclude Include="crabs\op.h" />
     <ClInclude Include="crabs\operand.h" />
     <ClInclude Include="crabs\print.h" />
+    <ClInclude Include="crabs\print_itos.h" />
     <ClInclude Include="crabs\random.h" />
     <ClInclude Include="crabs\room.h" />
     <ClInclude Include="crabs\scan.h" />
@@ -64,8 +66,14 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\tests\test_global.cc" />
-    <ClCompile Include="..\tests\test_crabs.cc" />
+    <ClCompile Include="..\tests\tests_global.cc" />
+    <ClCompile Include="..\tests\test_seam_1_1.cc" />
+    <ClCompile Include="..\tests\test_seam_1_2.cc" />
+    <ClCompile Include="..\tests\test_seam_1_3.cc" />
+    <ClCompile Include="..\tests\test_seam_1_4.cc" />
+    <ClCompile Include="..\tests\test_seam_1_5.cc" />
+    <ClCompile Include="..\tests\test_seam_1_6.cc" />
+    <ClCompile Include="crabs\crabs_align.cc" />
     <ClCompile Include="crabs\crabs_bin.cc" />
     <ClCompile Include="crabs\crabs_bout.cc" />
     <ClCompile Include="crabs\crabs_bsq.cc" />
@@ -86,7 +94,7 @@
     <ClCompile Include="crabs\crabs_text.cc" />
     <ClCompile Include="crabs\crabs_type.cc" />
     <ClCompile Include="crabs\crabs_wall.cc" />
-    <ClCompile Include="crabs\script_itos.cc" />
+    <ClCompile Include="crabs\print_itos.cc" />
     <ClCompile Include="dllmain.cc" />
     <ClCompile Include="stdafx.cc" />
   </ItemGroup>
@@ -213,7 +221,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -221,6 +229,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -23,7 +23,7 @@
 
 #include "config.h"
 
-#if CRABS_SEAM >= 1
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #if USING_CRABS_TEXT
 
 namespace _ {
@@ -40,142 +40,141 @@ namespace _ {
     @param  result  The result of the conversion.
     @return Returns a pointer to the next char after the end
             of the read number or nil upon failure. */
-KABUKI const char* Scan (const char* text, int8_t& result);
+KABUKI const char* Scan (int8_t& result, const char* text);
 
 /** Converts the given string to a 8-bit unsigned integer.
     @param  text A nil-terminated string in ROM.
     @param  result  The result of the conversion.
     @return Returns a pointer to the next char after the end
             of the read number or nil upon failure. */
-KABUKI const char* Scan (const char* text, uint8_t& result);
+KABUKI const char* Scan (uint8_t& result, const char* text);
 
 /** Converts the given string to a 16-bit signed integer.
     @param  text  A nil-terminated string in ROM.
     @param  result The result of the conversion.
     @return Returns a pointer to the next char after the end
             of the read number or nil upon failure. */
-KABUKI const char* Scan (const char* text, int16_t& result);
+KABUKI const char* Scan (int16_t& result, const char* text);
 
 /** Converts the given string to a 16-bit unsigned integer.
     @param  text  A nil-terminated string in ROM.
     @param  result The result of the conversion.
     @return Returns a pointer to the next char after the end
             of the read number or nil upon failure. */
-KABUKI const char* Scan (const char* text, uint16_t& result);
+KABUKI const char* Scan (uint16_t& result, const char* text);
 
 /** Converts the given string to a 32-bit signed integer.
     @param  text A nil-terminated string in ROM.
     @param  result  The result of the conversion.
     @return Returns a pointer to the next char after the end
             of the read number or nil upon failure. */
-KABUKI const char* Scan (const char* text, int32_t& result);
+KABUKI const char* Scan (int32_t& result, const char* text);
 
 /** Converts the given string to a 32-bit unsigned integer.
     @param  text  A nil-terminated string in ROM.
     @param  result The result of the conversion.
     @return Returns a pointer to the next char after the end
             of the read number or nil upon failure. */
-KABUKI const char* Scan (const char* text, uint32_t& result);
+KABUKI const char* Scan (uint32_t& result, const char* text);
 
 /** Converts the given string to a 64-bit signed integer.
     @param  text  A nil-terminated string in ROM.
     @param  result The result of the conversion.
     @return Returns a pointer to the next char after the end
             of the read number or nil upon failure. */
-KABUKI const char* Scan (const char* text, int64_t& result);
+KABUKI const char* Scan (int64_t& result, const char* text);
 
 /** Converts the given string to a 64-bit unsigned integer.
     @param  text  A nil-terminated string in ROM.
     @param  result The result of the conversion.
     @return Returns a pointer to the next char after the end
             of the read number or nil upon failure. */
-KABUKI const char* Scan (const char* text, uint64_t& result);
+KABUKI const char* Scan (uint64_t& result, const char* text);
 
 /** Converts the given string to a 32-bit floating-point number.
     @param  text  A nil-terminated string in ROM.
     @param  result The result of the conversion.
     @return Returns a pointer to the next char after the end
             of the read number or nil upon failure. */
-KABUKI const char* Scan (const char* text, float& result);
+KABUKI const char* Scan (float& result, const char* text);
 
 /** Converts the given string to a 64-bit floating-point number.
     @param  text  A nil-terminated string in ROM.
     @param  result The result of the conversion.
     @return Returns a pointer to the next char after the end
             of the read number or nil upon failure. */
-KABUKI const char* Scan (const char* text, double& result);
+KABUKI const char* Scan (double& result, const char* text);
 
 /** Reads a int8_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    The end address of the buffer.
     @param result The number read. */
-KABUKI const char* Scan (const char* text, const char* text_end,
-                             int8_t& result);
+KABUKI const char* Scan (int8_t& result, const char* text,
+                         const char* text_end);
 
 /** Reads a uint8_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    The end address of the buffer.
     @param result The number read. */
-KABUKI const char* Scan (const char* text, const char* text_end,
-                             uint8_t& result);
+KABUKI const char* Scan (uint8_t& result, const char* text,
+                         const char* text_end);
 
 /** Reads a int16_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    The end address of the buffer.
     @param result The number read. */
-KABUKI const char* Scan (const char* text, const char* text_end,
-                             int16_t& result);
+KABUKI const char* Scan (int16_t& result, const char* text,
+                         const char* text_end);
 
 /** Reads a uint16_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    The end address of the buffer.
     @param result The number read. */
-KABUKI const char* Scan (const char* text, const char* text_end,
-                             uint16_t& result);
+KABUKI const char* Scan (uint16_t& result, const char* text,
+                         const char* text_end);
 
 /** Reads a int32_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    The end address of the buffer.
     @param result The number read. */
-KABUKI const char* Scan (const char* text, const char* text_end,
-                             int32_t& result);
+KABUKI const char* Scan (int32_t& result, const char* text,
+                         const char* text_end);
 
 /** Reads a uint32_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    The end address of the buffer.
     @param result The number read. */
-KABUKI const char* Scan (const char* text, const char* text_end,
-                             uint32_t& result);
+KABUKI const char* Scan (uint32_t& result, const char* text,
+                         const char* text_end);
 
 /** Reads a int64_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    The end address of the buffer.
     @param result The number read. */
-KABUKI const char* Scan (const char* text, const char* text_end, 
-                               int64_t& result);
+KABUKI const char* Scan (int64_t& result, const char* text, const char* text_end);
 
 /** Reads a uint64_t from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    The end address of the buffer.
     @param result The number read. */
-KABUKI const char* Scan (const char* text, const char* text_end,
-                             uint64_t& result);
+KABUKI const char* Scan (uint64_t& result, const char* text,
+                         const char* text_end);
 
 /** Reads a float from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    The end address of the buffer.
     @param result The number read. */
-KABUKI const char* Scan (const char* text, const char* text_end,
-                             float& result);
+KABUKI const char* Scan (float& result, const char* text,
+                         const char* text_end);
 
 /** Reads a double from the given buffer in the form of an ASCII string.
     @param begin  Beginning address of the buffer.
     @param end    The end address of the buffer.
     @param result The number read. */
-KABUKI const char* Scan (const char* text, const char* text_end,
-                         double& result);
+KABUKI const char* Scan (double& result, const char* text,
+                         const char* text_end);
 
 }   //< namespace _
 #endif  //< USING_CRABS_TEXT
-#endif  //< CRABS_SEAM >= 1
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_SCAN

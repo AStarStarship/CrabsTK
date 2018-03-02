@@ -22,7 +22,7 @@
 
 #include "type.h"
 
-#if CRABS_SEAM >= 1
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 
 namespace _ {
 
@@ -86,5 +86,5 @@ inline const uint_t* Bsq () {
 KABUKI uint_t BsqParamNumber (const uint_t* bsq, int param_number);
 
 }       //< namespace _
-#endif  //< CRABS_SEAM >= 1
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_BSQ

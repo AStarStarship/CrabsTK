@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/crabs/crabs_timestamp.cc
+    @file    ~/source/crabs/crabs_clock.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -17,20 +17,21 @@
 #include <stdafx.h>
 #include "clock.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 #include "print.h"
 #include "text.h"
-#include "bout.h"
 #include "scan.h"
 
 
-#if CRABS_SEAM == 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
+#define PUTS(string) puts (string);
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
+#define PUTS(string)
 #endif
 
 
@@ -172,32 +173,32 @@ int ClockCompareTimes (time_t time_a, time_t time_b) {
 
     if (moment_a.tm_year != moment_b.tm_year) {
         ++count;
-        DEBUG4 ("\ntm_year.a: ", moment_a.tm_year + kTimeEpoch,
-                " != tm_year.b: ", moment_b.tm_year + kTimeEpoch)
+        PRINTF ("\ntm_year.a:%i != tm_year.b:%i ",
+                moment_a.tm_year + kTimeEpoch, moment_b.tm_year + kTimeEpoch)
     }
     if (moment_a.tm_mon != moment_b.tm_mon) {
         ++count;
-        DEBUG4 ("\ntm_mon.a: ", moment_a.tm_mon, " != tm_mon.b: ",
+        PRINTF ("\ntm_mon.a:%i != tm_mon.b:%i ", moment_a.tm_mon,
                 moment_b.tm_mon + 1)
     }
     if (moment_a.tm_mday != moment_b.tm_mday) {
         ++count;
-        DEBUG4 ("\ntm_mday.a: ", moment_a.tm_mday, " != tm_mday.b: ",
+        PRINTF ("\ntm_mday.a:%i != tm_mday.b:%i ", moment_a.tm_mday,
                 moment_b.tm_mday)
     }
     if (moment_a.tm_hour != moment_b.tm_hour) {
         ++count;
-        DEBUG4 ("\ntm_hour.a: ", moment_a.tm_hour, " != tm_hour.b: ",
+        PRINTF ("\ntm_hour.a:%i != tm_hour.b:%i ", moment_a.tm_hour,
                 moment_b.tm_hour)
     }
     if (moment_a.tm_min != moment_b.tm_min) {
         ++count;
-        DEBUG4 ("\ntm_min.a: ", moment_a.tm_min, " != tm_min.b: ",
+        PRINTF ("\ntm_min.a:%i != tm_min.b:%i", moment_a.tm_min,
                 moment_b.tm_min)
     }
     if (moment_a.tm_sec != moment_b.tm_sec) {
         ++count;
-        DEBUG4 ("\ntm_sec.a: ", moment_a.tm_sec, " != tm_sec.b: ",
+        PRINTF ("\ntm_sec.a:%i != tm_sec.b:%i ", moment_a.tm_sec,
                 moment_b.tm_sec)
     }
     return count;
@@ -212,174 +213,131 @@ int ClockCompareTimes (time_t t, int year, int month, int day,
 
     if (year - kTimeEpoch != std_tm.tm_year) {
         ++count;
-    #if CRABS_DEBUG
-        Print () << "\nExpecting year:" << year << " but found "
-               << std_tm.tm_year + kTimeEpoch;
-   #endif
+        PRINTF ("\nExpecting year:%i but found:%i.", year,
+                std_tm.tm_year + kTimeEpoch)
     }
     if (month != std_tm.tm_mon + 1) {
         ++count;
-    #if CRABS_DEBUG
-        Print () << "\nExpecting month:" << month << " but found "
-               << std_tm.tm_mon + 1;
-   #endif
+        PRINTF ("\nExpecting month:%i but found:%i.", month,
+                std_tm.tm_mon + 1)
     }
     if (day != std_tm.tm_mday) {
         ++count;
-    #if CRABS_DEBUG
-        Print () << "\nExpecting day:" << day << " but found "
-               << std_tm.tm_mday;
-   #endif
+        PRINTF ("\nExpecting day:%i but found:%i.", day,
+                std_tm.tm_mday)
     }
     if (hour != std_tm.tm_hour) {
         ++count;
-    #if CRABS_DEBUG
-        Print () << "\nExpecting hour:" << hour << " but found "
-               << std_tm.tm_hour;
+        PRINTF ("\nExpecting hour:%i but found:%i.", hour,
+                std_tm.tm_hour)
    #endif
     }
     if (minute != std_tm.tm_min) {
         ++count;
-    #if CRABS_DEBUG
-        Print () << "\nExpecting minute:" << minute << " but found "
-               << std_tm.tm_min;
-   #endif
+        PRINTF ("\nExpecting minute:%i but found:%i.", minute,
+                std_tm.tm_min)
     }
     if (second != std_tm.tm_sec) {
         ++count;
-    #if CRABS_DEBUG
-        Print () << "\nExpecting second:" << second << " but found "
-               << std_tm.tm_sec;
-   #endif
+        PRINTF ("\nExpecting second:%i but found:%i.", second,
+                std_tm.tm_sec)
     }
     return count;
 }
 
-const char* SlotReadTime (const char* input, int* hour, int* minute,
+const char* ScanTime (const char* input, int* hour, int* minute,
                                  int* second) {
     if (input == nullptr)
         return nullptr;
-    #if CRABS_DEBUG
-    Print () <<  input << ' ';
-   #endif
+
+    PRINTF ("%s ", input)
     char c;              //< The current char.
 
     int h,  //< Hour.
         m,  //< Minute.
         s;  //< Second. 
-    if (!Scan (++input, h)) {
-    #if CRABS_DEBUG
-        Print () << "\nInvalid hour: " << h;
-   #endif
+    if (!Scan (h, ++input)) {
+        PRINTF ("\nInvalid hour:%i", h)
         return 0;
     }
     input = TextSkipNumbers (input);
     if (h < 0) {
-    #if CRABS_DEBUG
-        Print () << "\nHours: " << h << " can't be negative.";
-   #endif
+        PRINTF ("\nHours:%i can't be negative.", h)
         return 0;
     }
     if (h > 23) {
-    #if CRABS_DEBUG
-        Print () << "\nHours: " << h << " can't be > 23.";
-   #endif
+        PRINTF ("\nHours:%i can't be > 23.", h)
         return 0;
     }
-    #if CRABS_DEBUG
-    Print () <<  h;
-    #endif
+    PRINTF ("%i", h)
     c = *input++;
     if (!c || IsWhitespace (c))  { // Case @HH
-        #if CRABS_DEBUG
-        Print () << " HH ";
-        #endif
+        PUTS (" HH ")
         // Then it's a single number, so create a time_t for the current 
         // user-time hour..
         *hour = h;
         return input;
     }
     c = tolower (c);
-    if (c == 'a') { // Case @HHAm
-        #if CRABS_DEBUG
-        Print () << " HHam ";
-        #endif
+    if (c == 'a') { // 
+        PUTS ("\nCase @HHAm\n HHam ")
 
         if (tolower (c = *input++) == 'm')
             c = *input++;
         if (c && !IsWhitespace (c)) {
-            #if CRABS_DEBUG
-            Print () << "\nInvalid am format.";
-            #endif
+            PUTS ("\nInvalid am format.")
             return 0;
         }
+        PUTS (" HHam ")
         // Case @HHAM
         *hour = h;
         return input;
     }
     if (c == 'p')  //< Case @HHpm
     {
-        #if CRABS_DEBUG
-        Print () << " HHpm ";
-        #endif
+        PUTS (" HHpm ")
 
         if (tolower (c = *input++) == 'm')
             c = *input++;
         if (c && !IsWhitespace (c)) {
-            #if CRABS_DEBUG
-            Print () << "\ninvalid pm format.";
-            #endif
+            PUTS ("\ninvalid pm format.")
             return 0;
         }
         // Case @HHPM
-        #if CRABS_DEBUG
-        Print () << "< Case HHpm " << h + 12 << ":00:00\n";
-        #endif
+        PRINTF ("< Case HHpm %i:00:00\n",  h + 12);
         *hour = h + 12;
         return input;
     }
     if (c != ':') {
-        #if CRABS_DEBUG
-        Print () << "\nExpecting ':'.";
-        #endif
+        PUTS ("\nExpecting ':'.");
         return 0;
     }
 
     // Cases HH:MM, HH::MMam, HH::MMpm, HH:MM:SS, HH:MM:SSam, and HH:MM:SSpm
 
-    if (!Scan (input, m)) return 0;
+    if (!Scan (m, input)) return 0;
     input = TextSkipNumbers (input);
     if (m < 0) {
-        #if CRABS_DEBUG
-        Print () << "\nMinutes: " << m << " can't be negative";
-        #endif
+        PRINTF ("\nMinutes:%i can't be negative!", m)
         return 0;
     }
     if (m >= 60) {
-        #if CRABS_DEBUG
-        Print () << "\nMinutes: " << m << " can't be >= 60";
-        #endif
+        PRINTF ("\nMinutes:%i can't be >= 60!", m)
         return 0;    //< 60 minutes in an hour.
     }
-    #if CRABS_DEBUG
-    Print () <<  ':' << m;
-    #endif
+    PRINTF (":%i", m)
 
     input = TextSkipNumbers (input);
     c = *input++;
     if (!c || IsWhitespace (c)) { // Case HH:MM
-        #if CRABS_DEBUG
-        Print () << " HH:MM ";
-        #endif
+        PUTS (" HH:MM ")
         *hour = h;
         *minute = m;
         return input;
     }
     c = tolower (c);
     if (c == 'a') { // Case HH::MM AM
-        #if CRABS_DEBUG
-        Print () << " HH:MMam ";
-        #endif
+        PUTS (" HH:MMam ")
         c = *input++;
         if (tolower (c) == 'm') { //< The 'm' is optional.
             c = *input++;
@@ -392,9 +350,7 @@ const char* SlotReadTime (const char* input, int* hour, int* minute,
         return input;
     }
     if (c == 'p')  { // Case HH:MM PM
-        #if CRABS_DEBUG
-        Print () << " HH:MMpm ";
-        #endif
+        PUTS (" HH:MMpm ")
         c = *input++;
         if (tolower (c) == 'm') { //< The 'm' is optional.
             c = *input++;
@@ -408,40 +364,30 @@ const char* SlotReadTime (const char* input, int* hour, int* minute,
     }
     if (c != ':') return 0;
 
-    // Cases HH:MM:SS, HH:MM:SSam, and HH:MM:SSpm
+    PUTS ("\n    Cases HH:MM:SS, HH:MM:SSam, and HH:MM:SSpm")
 
-    if (!Scan (input, s))
+    if (!Scan (s, input))
         return 0;
     if (s < 0) {
-        #if CRABS_DEBUG
-        Print () << "\nSeconds: " << s << " can't be negative";
-        #endif
+        PRINTF ("\nSeconds:%i can't be negative!", s)
         return 0;
     }
     if (s > 60) {
-        #if CRABS_DEBUG
-        Print () << "\nSeconds: " << s << " can't be >= 60";
-        #endif
+        PRINTF ("\nSeconds:%i can't be >= 60!", s)
         return 0;  //< 60 seconds in a minute.
     }
-    #if CRABS_DEBUG
-    Print () <<  ':' << s;
-    #endif
+    PRINTF (":%i", s)
     input = TextSkipNumbers (input);
     c = tolower (*input);
     if (!c || IsWhitespace (c)) {
-    #if CRABS_DEBUG
-        Print () << " HH:MM:SS ";
-   #endif
+        PUTS (" HH:MM:SS ")
         *hour = h;
         *minute = m;
         *second = s;
         return input;
     }
     if (c == 'a') {
-        #if CRABS_DEBUG
-        Print () << " HH:MM:SSam ";
-        #endif
+        PUTS (" HH:MM:SSam ")
         c = *input++;
         if (tolower (c) == 'm') { //< The 'm' is optional.
             c = *input++;
@@ -455,22 +401,16 @@ const char* SlotReadTime (const char* input, int* hour, int* minute,
         return input;
     }
     if (c != 'p') {
-        #if CRABS_DEBUG
-        Print () << "\nExpecting a PM but found : " << c;
-        #endif
+        PRINTF ("\nExpecting a PM but found:%c", c)
         return 0; // Format error!
     }
-    #if CRABS_DEBUG
-    Print () << " HH:MM:SSpm ";
-    #endif
+    PUTS (" HH:MM:SSpm ")
     c = tolower (*input++);
     if (c == 'm') { //< The 'm' is optional.
         c = *input++;
     }
     if (!c || !IsWhitespace (c)) { //< The space is not.
-        #if CRABS_DEBUG
-        Print () << "\nInvalid am in HH::MM:SS PM";
-        #endif
+        PUTS ("\nInvalid am in HH::MM:SS PM")
         return nullptr;
     }
     *hour = h + 12;
@@ -479,16 +419,18 @@ const char* SlotReadTime (const char* input, int* hour, int* minute,
     return input;
 }
 
-const char* SlotReadTime (const char* input, //char* buffer_end,
+const char* ScanTime (const char* input, //char* buffer_end,
                             tm* std_tm) {
-    if (input == nullptr)
+    if (!input) {
         return nullptr;
-    if (std_tm == nullptr)
+    }
+    if (!std_tm) {
         return nullptr;
-    #if CRABS_DEBUG
-    Print () << "\nParsing date: " << input
-         << "\nScanning: ";
-    #endif
+    }
+    PRINTF ("\nParsing date: %i:%i:%i@%i:%i:%i\nScanning: ",
+            std_tm->tm_year, std_tm->tm_mon, std_tm->tm_mday, std_tm->tm_hour,
+            std_tm->tm_min, std_tm->tm_sec)
+
     input = TextSkipChar (input, '0');
     char c = *input,    //< The current char.
         delimiter;     //< The delimiter.
@@ -499,7 +441,7 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
         second = 0;
 
     if (c == '@') {
-        if (!(input = SlotReadTime (input, &hour, &minute,
+        if (!(input = ScanTime (input, &hour, &minute,
                                             &second)))
             return "Case @ invalid time";
         std_tm->tm_hour = hour;
@@ -509,7 +451,7 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
         return input + 1;
     }
     if (c == '#') {
-        if (!(input = SlotReadTime (input, &hour, &minute,
+        if (!(input = ScanTime (input, &hour, &minute,
                                             &second)))
             return "Case @ invalid time";
         std_tm->tm_hour += hour;
@@ -525,33 +467,23 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
         is_last_year = 0; //< Flag for if the date was last year or not.
 
                           // Scan value1
-    if (!Scan (input, value1)) {
-        #if CRABS_DEBUG
-        Print () << Heading ("Scan error at value1");
-        #endif
+    if (!Scan (value1, input)) {
+        PRINTF ("Scan error at value1")
         return 0;
     }
     if (value1 < 0) {
-    #if CRABS_DEBUG
-        Print () << Heading ("Dates can't be negative.");
-   #endif
+        PUTS ("Dates can't be negative.")
         return 0;
     }
     input = TextSkipNumbers (input);
     delimiter = *input++;
-    #if CRABS_DEBUG
-    Print () <<  value1 << delimiter;
-    #endif
+    PRINTF ("%i%c", value1, delimiter)
     if (delimiter == '@') {
-        #if CRABS_DEBUG
-        Print () << " HH@ ";
-        #endif
+        PUTS (" HH@ ")
 
-        if (!(input = SlotReadTime (input, &hour, &minute,
+        if (!(input = ScanTime (input, &hour, &minute,
                                             &second))) {
-            #if CRABS_DEBUG
-            Print () << Heading ("Invalid time DD@");
-            #endif
+            PUTS ("Invalid time DD@")
             return 0;
         }
         std_tm->tm_mday = value1;
@@ -560,38 +492,28 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
     }
     // Scan value2.
     input = TextSkipChar (input, '0');
-    if (!Scan (input, value2)) {
-        #if CRABS_DEBUG
-        Print () << Heading ("Failed scanning value2 of date.");
-        #endif
+    if (!Scan (value2, input)) {
+        PUTS ("Failed scanning value2 of date.")
         return 0;
     }
     if (value2 < 0) {
-        #if CRABS_DEBUG
-        Print () << Heading ("Day can't be negative.");
-        #endif
+        PUTS ("Day can't be negative.")
         return 0;  //< Invalid month and day.
     }
-    #if CRABS_DEBUG
-    Print () <<  value2;
-    #endif
+    PRINTF ("%i", value2)
     input = TextSkipNumbers (input);
     c = *input;
     if (c != delimiter) // Cases MM/DD and MM/YYyy
     {
         if (c == '@') {
-            if (!(input = SlotReadTime (input, &hour,
+            if (!(input = ScanTime (input, &hour,
                                                 &minute, &second))) {
-                #if CRABS_DEBUG
-                Print () << " invalid time ";
-                #endif
+                PUTS (" invalid time ")
                 return nullptr;
             }
         }
         if (!c || IsWhitespace (c)) { // Case MM/DD
-            #if CRABS_DEBUG
-            Print () << " MM/DD\n";
-            #endif
+            PUTS (" MM/DD\n")
             is_last_year = ((value1 >= std_tm->tm_mon) &&
                 (value2 >= std_tm->tm_mday))?0:1;
             std_tm->tm_year += is_last_year;
@@ -607,15 +529,13 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
         c = tolower (c);
         if ((value1 < 12) && (value2 > 0) &&
              (value2 <= ClockNumDaysMonth (value1))) {
-            #if CRABS_DEBUG
-            Print () << " MM/DD ";
-            #endif
+            PUTS (" MM/DD ")
             if (value1 > 11) {
-                DEBUG ("\nInvalid MM/DD@ month")
+                PUTS ("\nInvalid MM/DD@ month")
                 return nullptr;
             }
             if (value2 > ClockNumDaysMonth (value1)) {
-                DEBUG ("\nInvalid MM/DD@ day")
+                PUTS ("\nInvalid MM/DD@ day")
                 return nullptr;
             }
             std_tm->tm_mon  = value1 - 1;
@@ -623,28 +543,26 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
             std_tm->tm_hour = hour;
             std_tm->tm_min  = minute;
             std_tm->tm_sec  = second;
-            if (!(input = SlotReadTime (input, &hour, &minute, &second))) {
-                DEBUG ("\nInvalid MM/DD@")
+            if (!(input = ScanTime (input, &hour, &minute, &second))) {
+                PUTS ("\nInvalid MM/DD@")
                 return nullptr;
             }
 
             return input + 1;
         }
         if ((value1 < 12) && (value2 > ClockNumDaysMonth (value1))) {
-            #if CRABS_DEBUG
-            Print () << " MM/YYyy\n";
-            #endif
+            PUTS (" MM/YYyy\n")
             std_tm->tm_mon = value1 - 1;
             std_tm->tm_year = value2;
-            if (!(input = SlotReadTime (input, &hour,
+            if (!(input = ScanTime (input, &hour,
                                                 &minute, &second))) {
-                DEBUG ("\nInvalid MM / YYYY@ time")
+                PUTS ("\nInvalid MM / YYYY@ time")
                 return 0;
             }
 
             return input + 1;
         }
-        DEBUG ("\nInvalid MM/DD or MM/YYyy format\n")
+        PUTS ("\nInvalid MM/DD or MM/YYyy format\n")
         return nullptr;
     }
 
@@ -653,21 +571,19 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
     input = TextSkipChar (++input, '0');
     c = *input;
     // Then there are 3 values and 2 delimiters.
-    if (!isdigit (c) || !Scan (input, value3)) {
-    DEBUG3 ("SlotRead error reading value3 of date. c: ", c, '\n')
+    if (!isdigit (c) || !Scan (value3, input)) {
+        PRINTF ("SlotRead error reading value3 of date. c: ", c, '\n')
         return 0;  //< Invalid format!
     }
     input = TextSkipNumbers (input);
-    DEBUG2 (delimiter, value3)
+    PRINTF ("%c%i", delimiter, value3)
     // Now we need to check what format it is in.
 
     c = *input;
     if (c == '@') {
-        if (!(end = SlotReadTime (input, &hour, &minute,
+        if (!(end = ScanTime (input, &hour, &minute,
                                           &second))) {
-        #if CRABS_DEBUG
-            Print () << Heading ("Invalid YYyy/MM/DD@ time.");
-       #endif
+            PUTS ("Invalid YYyy/MM/DD@ time.")
             return 0;
         }
     }
@@ -675,27 +591,19 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
     std_tm->tm_min = minute;
     std_tm->tm_sec = second;
     if (IsWhitespace (*(++input))) {
-        #if CRABS_DEBUG
-        Print () << Heading ("No date found.");
-        #endif
+        PUTS ("No date found.")
         return 0;
     }
     if (value1 > 11)  //< Case YYyy/MM/DD
     {
-        #if CRABS_DEBUG
-        Print () << " YYyy/MM/DD\n";
-        #endif
+        PUTS (" YYyy/MM/DD\n")
         if (value2 == 0 || value2 > 12) {
-            #if CRABS_DEBUG
-            Print () << Heading ("Invalid number of months");
-            #endif
+            PUTS ("Invalid number of months")
             return 0;              //< The day is not correct.
         }
 
         if (value2 > ClockNumDaysMonth (value2, value1)) {
-        #if CRABS_DEBUG
-            DEBUG (PrintHeading ("Invalid number of days"));
-       #endif
+            PUTS ("Invalid number of days")
             return 0;              //< The day is not correct.
         } // 17/05/06
 
@@ -713,20 +621,14 @@ const char* SlotReadTime (const char* input, //char* buffer_end,
 
     // Else Case MM/DD/YYyy
     if (value1 > 11) {
-    #if CRABS_DEBUG
-        DEBUG (PrintHeading ("Invalid month.\n"));
-   #endif
+        PUTS ("Invalid month.\n")
         return nullptr;
     }
     if (value2 > ClockNumDaysMonth (value1, value3)) {
-    #if CRABS_DEBUG
-        DEBUG (PrintHeading ("Invalid day.\n"));
-   #endif
+        PUTS ("Invalid day.\n");
         return nullptr;
     }
-#if CRABS_DEBUG
-    Print () << " Found: MM/DD/YYyy\n";
-#endif
+    PRINTF (" Found: MM/DD/YYyy\n")
     std_tm->tm_mon = value1 - 1;
     std_tm->tm_mday = value2;
     if (value3 < 100)
@@ -750,22 +652,22 @@ char* SlotWriteTime (char* begin, char* end, time_t t) {
     return SlotWriteTime (begin, end, &std_tm);
 }
 
-const char* SlotReadTime (const char* begin, time_t& result) {
+const char* ScanTime (const char* begin, time_t& result) {
     time_t t;
     time (&t);
     tm std_tm;
     ClockLocalTime (&std_tm, t);
 
-    char* end = (char*)SlotReadTime (begin, &std_tm);
+    char* end = (char*)ScanTime (begin, &std_tm);
 
     t = mktime (&std_tm);
-    //Print () << "\n\nFound ";
-    //Print () << ClockPrintTimeStruct (&std_tm);
+    //PRINTF ("\n\nFound ";
+    //PRINTF (ClockPrintTimeStruct (&std_tm);
     char buffer[26];
     SlotWriteTime (buffer, buffer + 26, t);
     char time_string[26];
     SlotWriteTime (time_string, &time_string[0]  + 26, t);
-    //Print () << "\nUnpacked: " << buffer;
+    //PRINTF ("\nUnpacked: " << buffer;
     result = t;
     return end;
 }
@@ -784,9 +686,40 @@ void ClockZeroTime (tm* std_tm) {
     std_tm->tm_isdst = 0;
 }
 
-#endif
+time_t ClockTime (int year, int month, int day, int  hour,
+                 int minute, int second) {
+    time_t t;
+    time (&t);
+    tm* moment = localtime (&t);
+    if (!moment) {
+        PUTS ("\n\n Created invalid test moment")
+        return 0;
+    }
+    moment->tm_year = year - kTimeEpoch;
+    moment->tm_mon = month - 1;
+    moment->tm_mday = day;
+    moment->tm_hour = hour;
+    moment->tm_min = minute;
+    moment->tm_sec = second;
+
+    if (!PrintTime (moment, buffer, buffer_size)) {
+        PRINTF ("\nError making timestamp")
+        return 0;
+    }
+    PRINTF ("\n Creating test time: ")
+    PrintTime (moment);
+    t = mktime (moment);
+    if (t < 0) {
+        PRINTF ("\n Invalid time:" << t << '\n')
+        return 0;
+    } else {
+        PUTCHAR ('\n')
+    }
+    return t;
+}
 }       //< namespace _
 
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< CRABS_SEAM >= 2
+#undef PUTS
+#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 2

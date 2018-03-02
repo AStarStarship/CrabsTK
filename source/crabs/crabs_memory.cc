@@ -17,10 +17,10 @@
 #include <stdafx.h>
 #include "memory.h"
 
-#if CRABS_SEAM >= 1
+#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 
-#if CRABS_SEAM == 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -30,7 +30,7 @@
 
 namespace _ {
 
-uint32_t MemoryAlignPowerOf2 (uint32_t value) {
+uint32_t AlignPowerOf2 (uint32_t value) {
    // @cite https://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2
     if (value < 0) {
         return 4;
@@ -46,7 +46,7 @@ uint32_t MemoryAlignPowerOf2 (uint32_t value) {
     return value;
 }
 
-int32_t MemoryAlignPowerOf2 (int32_t value) {
+int32_t AlignPowerOf2 (int32_t value) {
     if (value < 0) {
         return 4;
     }
@@ -168,4 +168,4 @@ char* MemoryCopy (char* write, char* write_end, const char* read,
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< CRABS_SEAM >= 1
+#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 1

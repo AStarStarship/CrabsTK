@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#if USING_CRABS_LIBRARY
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
 
 namespace _ {
 #if USING_CRABS_TEXT
@@ -241,5 +241,5 @@ KABUKI void Destruct (Library<TIndex, TKey, TData, TData, MaxStackSize>* r) {
 }
 #endif  //< CRABS_MEMORY_PROFILE > 2
 }       //< namespace _
-#endif  //< USING_CRABS_LIBRARY
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
 #endif  //< CRABS_LIBRARY_H

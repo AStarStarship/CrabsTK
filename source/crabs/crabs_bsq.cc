@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "bsq.h"
 
-#if CRABS_SEAM >= 1
+#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 namespace _ {
 
@@ -38,7 +38,7 @@ uint_t BsqParamNumber (const uint_t* params, int param_number) {
                 param_number += 2;
                 break;
             } else if (value > 7) { // Gratuitous explanation points!
-                //Print () << "\nError";
+                //PRINTF ("\nError";
                 return NIL;
             }
             else {
@@ -51,4 +51,4 @@ uint_t BsqParamNumber (const uint_t* params, int param_number) {
 
 }       //< namespace _
 
-#endif  //< CRABS_SEAM >= 1
+#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3

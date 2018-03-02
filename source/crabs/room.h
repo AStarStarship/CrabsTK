@@ -22,7 +22,7 @@
 
 #include "wall.h"
 
-#if CRABS_SEAM >= 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 
 #include "interrupts.h"
 
@@ -143,11 +143,11 @@ class Room: public Operand {
     } State;
 
     enum {
-        kFloorSizeWords = kStateFloorSize / sizeof (uintptr_t) + 2, //< +2 buffer.
+        kFloorSizeWords = kRoomFloorSize / sizeof (uintptr_t) + 2, //< +2 buffer.
         #ifndef CRABS_MAX_WALLS
-        kStateFloorSize = 1024,
+        kRoomFloorSize = 1024,
         #else
-        kStateFloorSize = CRABS_MAX_WALLS,
+        kRoomFloorSize = CRABS_MAX_WALLS,
         #undef ROOM_FLOOR_SIZE
         #endif
     }
@@ -262,5 +262,5 @@ class Room: public Operand {
 //KABUKI Room* ChineseRoom (Room* room = nullptr);
 
 }       //< namespace _
-#endif  //< CRABS_SEAM >= 3
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 #endif  //< CRABS_ROOM_HDi

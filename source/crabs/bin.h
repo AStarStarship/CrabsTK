@@ -22,14 +22,14 @@
 
 #include "config.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
 #include "slot.h"
 #include "op.h"
 
 namespace _ {
 
-/** List of Finite BIn States.
-@see Script Protocol RFC for list of states. */
+/** List of BIn States.
+    @see SCRIPT Specification RFC. */
 typedef enum BInStates {
     kBInStateAddress = 0,   //< State  0: Scanning address.
     kBInStatePackedArgs,    //< State  1: Scanning arguments.
@@ -139,5 +139,5 @@ KABUKI Slot& BInPrint (BIn* bin, Slot& slot);
 #endif
 
 }       //< namespace _
-#endif  //< CRABS_SEAM >= 2
+#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_BIN

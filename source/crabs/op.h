@@ -22,7 +22,7 @@
 
 #include "error.h"
 
-#if CRABS_SEAM >= 1
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 
 namespace _ {
 
@@ -91,5 +91,5 @@ inline wchar_t OpLast (const Op* op) {
 }
 
 }       //< namespace _
-#endif  //< CRABS_SEAM >= 1
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_OP

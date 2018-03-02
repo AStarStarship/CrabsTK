@@ -19,7 +19,15 @@
 #ifndef HEADER_FOR_TEST_ITOS_SIZELUT
 #define HEADER_FOR_TEST_ITOS_SIZELUT
 
-char* PrintSizeLut (uint64_t val, char* text, char* text_end);
+char* PrintNull (uint32_t value, char* text, char* text_end);
+
+char* PrintSprintf (uint32_t value, char* text, char* text_end);
+
+char* PrintStbSprintf (uint32_t value, char* text, char* text_end);
+
+char* PrintMsd10 (uint32_t value, char* text, char* text_end);
+
+char* PrintSizeLut (uint32_t val, char* text, char* text_end);
 
 void TestItoSSizeLut ();
 

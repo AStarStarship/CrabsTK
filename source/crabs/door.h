@@ -22,7 +22,7 @@
 
 #include "expr.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 
 #include "slot.h"
 #include "stack.h"
@@ -120,5 +120,5 @@ static Door* DoorInit (int* buffer, uint_t slot_size) {
 }*/
 
 }       //< namespace _
-#endif  //< CRABS_SEAM >= 2
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_DOOR

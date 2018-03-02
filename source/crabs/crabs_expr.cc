@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "expr.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 #include "clock.h"
 #include "bsq.h"
@@ -25,7 +25,7 @@
 #include "hash.h"
 
 
-#if CRABS_SEAM == 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -40,9 +40,7 @@ namespace _ {
     @param error The error type.
     @return Returns a Static Error Op Result. */
 inline const Op* ExprError (Expr* expr, Error error) {
-    #if DEBUG_CRABS_EXPR
-    Print () << "\nExpr " << ErrorString (error) << " Error!");
-    #endif
+    PRINTF ("\nExpr %s Error!", ErrorString (error))
     return reinterpret_cast<const Op*> (1);
 }
 
@@ -57,10 +55,7 @@ inline const Op* ExprError (Expr* expr, Error error) {
 inline const Op* ExprError (Expr* expr,
                                      Error error,
                                      const uint_t* header) {
-    #if DEBUG_CRABS_EXPR
-    Print () << "\nExpr " << ErrorString (error)
-           << " Error!";
-    #endif
+    PRINTF ("\nExpr %s Error!", ErrorString (error))
     return reinterpret_cast<const Op*> (1);
 }
 
@@ -75,10 +70,7 @@ inline const Op* ExprError (Expr* expr,
                                 Error error,
                                 const uint_t* header,
                                 byte offset) {
-    #if DEBUG_CRABS_EXPR
-    Print () << "\nExpr " << ErrorString (error)
-           << " Error!";
-    #endif
+    PRINTF ("\nExpr %s Error!", ErrorString (error))
     return reinterpret_cast<const Op*> (1);
 }
 
@@ -94,10 +86,7 @@ inline const Op* ExprError (Expr* expr,
                             const uint_t* header,
                             byte offset,
                             char* address) {
-    #if DEBUG_CRABS_EXPR
-    Print () << "\nExpr " << ErrorString (error)
-           << " Error!";
-    #endif
+    PRINTF ("\nExpr %s Error!", ErrorString (error))
     return reinterpret_cast<const Op*> (1);
 }
 
@@ -140,12 +129,12 @@ Expr* ExprInit (uintptr_t* buffer, uint_t buffer_size,  uint_t stack_size,
         stack_size = kMinStackSize;    //< Minimum stack size.
     }
     if (unpacked_buffer == nullptr) {
-        Print () << "\nError: unpacked_buffer was nil!";
+        PRINTF ("\nError: unpacked_buffer was nil!";
     }
 
     if (root == nullptr) {
     #if DEBUG_CRABS_EXPR
-        Print () << "\nError: root can't be nil.";
+        PRINTF ("\nError: root can't be nil.";
     #endif
         return nullptr;
     }
@@ -165,7 +154,7 @@ Expr* ExprInit (uintptr_t* buffer, uint_t buffer_size,  uint_t stack_size,
     expr->num_states   = 0;
     expr->operand      = nullptr;
     #if DEBUG_CRABS_EXPR
-    Print () << "\nInitializing Stack with size:" << stack_size
+    PRINTF ("\nInitializing Stack with size:" << stack_size
            << " buffer_size:" << buffer_size << " size:" << size;
     #endif
     expr->bytes_left = 0;
@@ -181,7 +170,7 @@ Expr* ExprInit (uintptr_t* buffer, uint_t buffer_size,  uint_t stack_size,
                          stack_size * sizeof (uint_t);
     SlotInit (&expr->slot, reinterpret_cast<uintptr_t*> (base_ptr), unpacked_size);
     #if DEBUG_CRABS_EXPR
-    Print () << "expr->op:" << OutHex (expr->operand);
+    PRINTF ("expr->op:" << OutHex (expr->operand);
     #endif
     BInInit  (ExprBinAddress  (expr), size);
     BOutInit (ExprBOutAddress (expr), size);
@@ -206,7 +195,7 @@ byte ExprExitState (Expr* expr) {
     //    return  ExprError (ExprBin (expr), kErrorImplementation);
     //}
     #if DEBUG_CRABS_EXPR
-    Print () << "\nExiting " << BInState ()[expr->bin_state]
+    PRINTF ("\nExiting " << BInState ()[expr->bin_state]
            << " state back to the " << BInState ()[expr->last_bin_state]
            << " state .";
     #endif
@@ -224,7 +213,7 @@ const Op* ExprSetState (Expr* expr, BInState state) {
         return ExprError (expr, kErrorObjectLocked);
     }
     #if DEBUG_CRABS_EXPR
-    Print () << "\nEntering " << BInState ()[state]
+    PRINTF ("\nEntering " << BInState ()[state]
            << " state:" << state;
     #endif
     expr->bin_state = state;
@@ -237,7 +226,7 @@ const Op* ExprEnterState (Expr* expr, BInState state) {
     //    return  ExprError (ExprBin (expr), kErrorImplementation);
     //}
     #if DEBUG_CRABS_EXPR
-    Print () << "\nEntering " << BInState ()[state]
+    PRINTF ("\nEntering " << BInState ()[state]
            << " state:" << state;
     #endif
     expr->last_bin_state = expr->bin_state;
@@ -266,7 +255,7 @@ const Op* Push (Expr* expr, Operand* operand) {
     expr->operand = operand;
     expr->stack_count = stack_count + 1;
     #if DEBUG_CRABS_EXPR
-    Print () << ExprPrintStack (expr, Print ());
+    PRINTF (ExprPrintStack (expr, Print ());
     #endif
     return nullptr;
 }
@@ -288,7 +277,7 @@ const Op* Pop (Expr* expr) {
     expr->stack_count = stack_count - 1;
     #if DEBUG_CRABS_EXPR
     Slot sout = out;
-    Print () << "\nTop of stack is now " 
+    PRINTF ("\nTop of stack is now " 
            << OperandName (expr->operand) << "." 
            << ExprPrintStack (expr, Print ());
     #endif
@@ -356,17 +345,17 @@ const Op* ExprUnpack (Expr* expr) {
     length = size - space;
     #if DEBUG_CRABS_EXPR
     Text<> out;
-    Print () << "\nScanning Expr:0x" << out.Pointer (expr)
+    PRINTF ("\nScanning Expr:0x" << out.Pointer (expr)
           << " with length:" << length);
     #endif
     for (; length != 0; --length) {
         b = *bin_start;
         *slot_start++ = b;
         #if DEBUG_CRABS_EXPR
-        Print () << out.Line ('=') << '\n' << length
+        PRINTF (out.Line ('=') << '\n' << length
               << ":\'"
-              << ((b < 32 || b == 127) ? (Print () << AsciiText ((AsciiCode)b)) 
-                                       : (Print () << b))
+              << ((b < 32 || b == 127) ? (PRINTF (AsciiText ((AsciiCode)b)) 
+                                       : (PRINTF (b))
               << "\' " << BInState ()[bin_state] << " state"
               << out.Line ()));
         #endif
@@ -377,7 +366,7 @@ const Op* ExprUnpack (Expr* expr) {
             case kBInStateAddress: {
                 hash = Hash16 (b, hash);
                 #if DEBUG_CRABS_EXPR
-                Print () << "\nhash:" << PrintHex (hash));
+                PRINTF ("\nhash:" << PrintHex (hash));
                 #endif
                 // When verifying an address, there is guaranteed to be an
                 // expr->op set. We are just looking for nil return values
@@ -400,7 +389,7 @@ const Op* ExprUnpack (Expr* expr) {
 
                 op = operand->Star ('?', nullptr);
                 #if DEBUG_CRABS_EXPR
-                Print () << "\nCurrent Op is \"" << op->name << '\"');
+                PRINTF ("\nCurrent Op is \"" << op->name << '\"');
                 #endif
 
                 op = operand->Star (b, nullptr);
@@ -426,13 +415,13 @@ const Op* ExprUnpack (Expr* expr) {
                     // It's an Op.
                     // The software implementer pushes the Op on the stack.
                     #if DEBUG_CRABS_EXPR
-                    Print () << "\nFound Op with params "
+                    PRINTF ("\nFound Op with params "
                           << PrintBsq (params, out));
                     #endif
                     result = ExprScanHeader (expr, params);
                     if (result) {
                         #if DEBUG_CRABS_EXPR
-                        Print () << "Expr::Error reading address.");
+                        PRINTF ("Expr::Error reading address.");
                         #endif
                         return ExprForceDisconnect (expr, kErrorImplementation);
                     }
@@ -440,7 +429,7 @@ const Op* ExprUnpack (Expr* expr) {
                     operand = expr->operand;
                     if (!operand) {
                         #if DEBUG_CRABS_EXPR
-                        Print () << "\nNull operand found!");
+                        PRINTF ("\nNull operand found!");
                         #endif
                         return ExprForceDisconnect (expr, kErrorInvalidOperand);
                     }
@@ -452,7 +441,7 @@ const Op* ExprUnpack (Expr* expr) {
                     bin_state = kBInStatePackedArgs;
                     type = *(++expr->header);   //< Setup to read first type.
                     #if DEBUG_CRABS_EXPR
-                    Print () << "\nNext TType to scan:\'" << 
+                    PRINTF ("\nNext TType to scan:\'" << 
                           TypeString (type)  << "\' with alignment "
                           << TypeAlign (slot_start, type) << '.');
                     #endif
@@ -470,7 +459,7 @@ const Op* ExprUnpack (Expr* expr) {
 
                 if (expr->params_left-- == 0) {
                     #if DEBUG_CRABS_EXPR
-                    Print () << "\nBSQ successfully scanned.");
+                    PRINTF ("\nBSQ successfully scanned.");
                     #endif
 
                     break;
@@ -500,7 +489,7 @@ const Op* ExprUnpack (Expr* expr) {
                     // Read the max number of chars off the header.
                     bytes_left = *(++expr->header);
                     #if DEBUG_CRABS_EXPR
-                    Print () << "\nScanning STR with max length " <<
+                    PRINTF ("\nScanning STR with max length " <<
                           bytes_left);
                     #endif
                     ExprEnterState (expr, kBInStatePackedUtf8);
@@ -509,20 +498,20 @@ const Op* ExprUnpack (Expr* expr) {
                 } else if (type < DBL)  { // Plain-old-data type.
                     bytes_left = TypeSize (type);
                     #if DEBUG_CRABS_EXPR
-                    Print () << "\nScanning POD with "
+                    PRINTF ("\nScanning POD with "
                               << bytes_left << bytes_left);
                     #endif
                     if (bytes_left == 1) {
                         // No need to enter a state because there is only one
                         // byte to parse and we already have the byte loaded.
                         #if DEBUG_CRABS_EXPR
-                        Print () << "\nDone scanning without state change "
+                        PRINTF ("\nDone scanning without state change "
                               "for \"" << TypeString (type) << '\"';
                         #endif
                         // Setup to read the next type.
                         type = *(++expr->header);
                         #if DEBUG_CRABS_EXPR
-                        Print () << "\nNext TType to scan:\'" 
+                        PRINTF ("\nNext TType to scan:\'" 
                               << TypeString (type) << "\' with alignment "
                               << TypeAlign (slot_start, type) << '.');
                         #endif
@@ -607,7 +596,7 @@ const Op* ExprUnpack (Expr* expr) {
                 }
                 hash = Hash16 (b, hash);
                 #if DEBUG_CRABS_EXPR
-                Print () << "\nhash:" << PrintHex (hash));
+                PRINTF ("\nhash:" << PrintHex (hash));
                 #endif
                 // Hash byte.
                 // Check if char terminated.
@@ -624,7 +613,7 @@ const Op* ExprUnpack (Expr* expr) {
                         break;
                     }
                     #if DEBUG_CRABS_EXPR
-                    Print () << "\nNext TType to scan:\'" 
+                    PRINTF ("\nNext TType to scan:\'" 
                           << TypeString (type) << "\' with alignment "
                           << TypeAlign (slot_start, type) << '.');
                     #endif
@@ -690,7 +679,7 @@ const Op* ExprUnpack (Expr* expr) {
                     // Setup to read the next type.
                     type = *(++header);
                     #if DEBUG_CRABS_EXPR
-                    Print () << "\nNext TType to scan:\'" <<
+                    PRINTF ("\nNext TType to scan:\'" <<
                           TypeString (type) << "\' with alignment " <<
                           TypeAlign (slot_start, type) << '.');
                     #endif
@@ -707,7 +696,7 @@ const Op* ExprUnpack (Expr* expr) {
                 if (bytes_shift >= shift_bits) {
                     // Done shifting.
                     #if DEBUG_CRABS_EXPR
-                    Print () << "\nLoading object of size:" << bytes_left);
+                    PRINTF ("\nLoading object of size:" << bytes_left);
                     #endif
                     ExprExitState (expr);
                     ExprEnterState (expr, kBInStatePackedPod);
@@ -771,7 +760,7 @@ const Op* ExprUnpack (Expr* expr) {
                     bin_state = kBInStateAddress;
                     ExprSetState (expr, kBInStateAddress);
                     #if DEBUG_CRABS_EXPR
-                    Print () << "\nRoot scope: \"" <<
+                    PRINTF ("\nRoot scope: \"" <<
                           OperandName (expr->operand) << '\"');
                     #endif
                 }
@@ -786,7 +775,7 @@ const Op* ExprUnpack (Expr* expr) {
             default: {
                 hash = Hash16 (b, hash);
                 #if DEBUG_CRABS_EXPR
-                Print () << "\nhash:" << PrintHex (hash));
+                PRINTF ("\nhash:" << PrintHex (hash));
                 #endif
                 // parsing plain-old-data.
                 if (!bytes_left) {
@@ -799,7 +788,7 @@ const Op* ExprUnpack (Expr* expr) {
                     // Setup to read the next type.
                     type = *(++header);
                     #if DEBUG_CRABS_EXPR
-                    Print () << "\nNext TType to scan:\'" << TypeString (type)
+                    PRINTF ("\nNext TType to scan:\'" << TypeString (type)
                           << "\' with alignment " << TypeAlign (slot_start, type)
                           << '.');
                     #endif
@@ -809,7 +798,7 @@ const Op* ExprUnpack (Expr* expr) {
                 --bytes_left;
                 //b = input->Pull ();
                 #if DEBUG_CRABS_EXPR
-                Print () << "\nLoading next byte:" << PrintHex (b));
+                PRINTF ("\nLoading next byte:" << PrintHex (b));
                 #endif
                 hash = Hash16 (b, hash);
                 *bin_start = b;
@@ -985,7 +974,7 @@ Slot& ExprPrintStack (Expr* expr, Slot& slot) {
     return slot << "\nStack Item " << i + 1 << ":\"" << op->name << "\"";
 }
 
-Slot& ExprPrint (Expr* expr, Slot& slot) {
+Slot& PrintExpr (Expr* expr, Slot& slot) {
     PrintLine ('~', 80, slot) << "\nStack:    ";
 
     if (!expr) {
@@ -1015,9 +1004,9 @@ Slot& ExprPrint (Expr* expr, Slot& slot) {
 
 #if USING_CRABS_TEXT
 _::Slot& operator<< (_::Slot& slot, _::Expr* expr) {
-    return ExprPrint (expr, slot);
+    return PrintExpr (expr, slot);
 }
 #endif //< USING_CRABS_TEXT
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< CRABS_SEAM >= 2
+#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3

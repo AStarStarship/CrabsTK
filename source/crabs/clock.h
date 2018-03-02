@@ -22,7 +22,7 @@
 
 #include "memory.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 /** Reads a time or time delta from a a char starting with an '@' sign..
     @param input  The char to parse.
@@ -125,10 +125,13 @@ KABUKI int ClockCompareTimes (time_t t, int year, int month, int day,
     @param calendar_time A calendar time struct to zero out. */
 KABUKI void ClockZeroTime (tm* std_tm);
 
-#endif
+#endif  //< #if USING_CRABS_TEXT
+
+KABUKI time_t ClockTime (int year, int month, int day, int  hour = 0,
+                         int minute = 0, int second = 0);
 
 }       //< namespace _
-#endif  //< CRABS_SEAM >= 2
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_CLOCK
 
 /*

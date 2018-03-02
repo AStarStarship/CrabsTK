@@ -1,12 +1,12 @@
-﻿*A modern cross-platform software and firmware toolkit with Embedded-C++1x Script VM for making intelligent connected technologies.*
+﻿*A *
 
-﻿﻿﻿﻿# Kabuki Toolkit (KT)
+﻿﻿﻿﻿# Kabuki Toolkit
 
-KT is a compliant compliant Script implementation built on top of some of the  best commercial-friendly open-source C and C++ libraries formatted using the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
+Kabuki Toolkit (KT) is a modern cross-platform Embedded-C++1x software and firmware toolkit for making intelligent connected technologies with Script and the Kabuki VM. KT is built on top of some of the  best commercial-friendly open-source C and C++ libraries formatted using the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html). #WorkInProgress
 
-## Script
+## Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification (Script)
 
-Script is a software-defined networking protocol and embedded-friendly language that facilitates artificial intelligence and machine learning (AIML) using functional programming and natural language processing (NLP).
+Script is a software-defined networking protocol and embedded-friendly family of languages that facilitates artificial intelligence and machine learning (AIML) using functional programming and natural language processing (NLP). Script is best described as a mix of JavaScript, Python, Lua, and LISP. JavaScript because it's synchronous with a round-robin scheduler, Python because it has native dictionaries, Lua because of Script's RPC nature, and Script has a rather unique dialect of LISP called Interprocess LISP. 
 
 ## Quick Links
 

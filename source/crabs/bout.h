@@ -22,7 +22,7 @@
 
 #include "op.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 
 #include "print.h"
 
@@ -115,6 +115,6 @@ inline _::Slot& operator<< (_::Slot& slot, _::BOut* bout) {
 }
 #endif
 
-#endif  //< CRABS_SEAM >= 2
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_BOUT
 #undef DEBUG_CRABS_BOUT

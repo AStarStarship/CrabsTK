@@ -22,7 +22,7 @@
 
 #include "bsq.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 namespace _ {
 
@@ -1190,5 +1190,5 @@ inline void** Args (void** ptrs,   const void* a, const void* b, const void* c,
 
 }       //< namespace _
 
-#endif  //< CRABS_SEAM >= 2
+#endif  //< MAJOR_SEAM == 1 && MINOR_MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 #endif  //< HEADER_FOR_CRABS_ARGS

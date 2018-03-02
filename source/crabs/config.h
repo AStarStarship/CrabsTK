@@ -20,8 +20,6 @@
 #ifndef HEADER_FOR_CRABS_CONFIG
 #define HEADER_FOR_CRABS_CONFIG
 
-#define CRABS_SEAM 1
-
 // @todo Check all values of assembly_settings.inl, store them as an enum, 
 // then #undef them.
 
@@ -43,10 +41,10 @@
 #define ARM32           5   //< ARM32 processor family macro.
 #define ARM64           6   //< ARM64 processor family macro.
 
-// Stupid dumb-face Big-Endian nonsense
+// Stupid dumb-face Big-Endian nonsense.
 
 #define LITTLE          1
-#define BIG      2          //< Don't ask me what they where thinking.
+#define BIG             2   //< Don't ask me what they where thinking.
                             //< "but I can read it easier"...
                             //< READ IT EASIER?!?!?!
                             //< FLIP IT AROUND IN YOUR DEV TOOL FOOL!!!
@@ -58,6 +56,8 @@
                             //< CODE IF YOU LIKE IT SO MUCH!!!
                             //< Just kidding. :-)
                             //< Not really. DIE BIG ENDIAN, DIE!!!
+#define YES             1   //< Logical yes.
+#define NO              0   //< Logical no.
 
 // Executable assembly type macro.
 #define EXECECUTABLE                1
@@ -70,12 +70,6 @@
 
 // Dynamically linked library assembly type macro.
 #define SINGLE_DLL                  4
-
-// Logical yes.
-#define YES                         1
-
-// Logical no.
-#define NO                          0
 
 #define LARGEST_INT                 2147483647  //< Use this for 32-bit CPUs
 
@@ -211,7 +205,7 @@ enum {
     @code
     #include <iostream>
     #define NaN_SI4 0xFFFFFFF
-    void BlowUp () { Print () << "The sky is falling!"}
+    void BlowUp () { PRINTF ("The sky is falling!"}
     if (-1 == NaN_SI4)
         BlowUp ();
     @endcode

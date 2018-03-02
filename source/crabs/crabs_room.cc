@@ -17,14 +17,16 @@
 #include <stdafx.h>
 #include "room.h"
 
-#if CRABS_SEAM >= 3
+#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
-#if CRABS_SEAM == 3
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
+#define PUTS(string) putsr(string);
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
+#define PUTS(string)
 #endif
 
 #include "door.h"
@@ -138,25 +140,25 @@ const Op* Room::Init (Expr* expr) {
 
 void Room::ShutDown () {
 #if CRABS_DEBUG
-    Print () << "\nShutting down...";
+    PRINTF ("\nShutting down...";
 #endif  //< CRABS_DEBUG
 }
 
 void Room::Sleep () {
 #if CRABS_DEBUG
-    Print () << "\nGoing to sleep...";
+    PRINTF ("\nGoing to sleep...";
 #endif  //< CRABS_DEBUG
 }
 
 void Room::Wake () {
 #if CRABS_DEBUG
-    Print () << "\nWaking up...";
+    PRINTF ("\nWaking up...";
 #endif  //< CRABS_DEBUG
 }
 
 void Room::Crash () {
 #if CRABS_DEBUG
-    Print () << "\nRoom crash!";
+    PRINTF ("\nRoom crash!";
 #endif  //< CRABS_DEBUG
 }
 
@@ -169,15 +171,15 @@ bool Room::IsOn () {
 int Room::Main (const char** args, int args_count) {
     const Op* result = nullptr;
 #if CRABS_DEBUG
-    Print () << "\nInitializing Chinese Room with " << args_count << " args:";
+    PRINTF ("\nInitializing Chinese Room with " << args_count << " args:";
 #endif  //< CRABS_DEBUG
     for (int i = 0; i < args_count; ++i) {
 #if CRABS_DEBUG
-        Print () << i << ": " << args[i] << '\n';
+        PRINTF (i << ": " << args[i] << '\n';
 #endif  //< CRABS_DEBUG
     }
 #if CRABS_DEBUG
-    Print () << '\n';
+    PRINTF ('\n';
 #endif  //< CRABS_DEBUG
     while (IsOn ()) {
         try {
@@ -190,7 +192,7 @@ int Room::Main (const char** args, int args_count) {
             } while (!result);
             ShutDown ();
         } catch (RoomCrashException e) {
-            Print () << "\nRoom crashed!";
+            PRINTF ("\nRoom crashed!";
             return 3;
         }
     }
@@ -242,7 +244,7 @@ bool Room::RemoveWall (int_t wall_number) {
 }
 
 uintptr_t Room::GetSizeBytes () {
-    uintptr_t count = kStateFloorSize;
+    uintptr_t count = kRoomFloorSize;
     for (int_t i = 0; i < walls_->count; ++i) {
         count += StackGet<Wall*> (walls_, i)->GetSizeBytes ();
     }
@@ -251,12 +253,12 @@ uintptr_t Room::GetSizeBytes () {
 }
 
 #if USING_CRABS_TEXT
-Slot& Room::Print (_::Slot& slot) {
-    return PrintLine (slot, ) << "\nRoom: ";
+Slot& Room::Print (Slot& slot) {
+    return slot << "\nRoom: ";
 }
 #endif
 
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< CRABS_SEAM >= 3
+#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3

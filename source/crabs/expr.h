@@ -19,7 +19,7 @@
 
 #include "operand.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 
 #include "bout.h"
 #include "bin.h"
@@ -217,7 +217,7 @@ inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
 /** Pops the args off the Expr Args Stack. */
 inline const Op* ExprArgs (Expr* expr, const Op& op,
                            void** args) {
-    return BInRead (ExprBIn (expr), op.in, args);
+    return SlotRead (ExprBIn (expr), op, args);
 }
 
 /** Writes the result to the Expr.
@@ -253,7 +253,7 @@ KABUKI const Op* ExprQuery (Expr* expr, const Op* op);
 
 #if USING_CRABS_TEXT
 /** Prints the Expr stack to the Text buffer */
-KABUKI Slot& ExprPrint (Expr* expr, Slot& slot);
+KABUKI Slot& PrintExpr (Expr* expr, Slot& slot);
 
 /** Prints the Expr stack to the Text buffer */
 KABUKI Slot& ExprPrintStack (Expr* expr, Slot& slot);
@@ -270,5 +270,5 @@ KABUKI Slot& ExprPrintStack (Expr* expr, Slot& slot);
 inline _::Slot& operator<< (_::Slot& slot, _::Expr* expr);
 #endif
 
-#endif  //< CRABS_SEAM >= 2
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_EXPR

@@ -19,7 +19,7 @@
 
 #include "type.h"
 
-#if USING_CRABS_SET
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
 
 #include "text.h"
 
@@ -113,5 +113,5 @@ struct Collection {
     virtual Slot& Print (Slot& slot) = 0;
 };
 }       //< namespace _
-#endif  //< USING_CRABS_SET
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
 #endif  //< CRABS_COLLECTION_H

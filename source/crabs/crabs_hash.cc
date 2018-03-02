@@ -18,7 +18,7 @@
 
 #include "hash.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 namespace _ {
 
@@ -79,4 +79,4 @@ uint16_t Hash16UI8 (uint64_t value, uint16_t hash) {
 }
 
 }       //< namespace _
-#endif  //< CRABS_SEAM >= 2
+#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 4

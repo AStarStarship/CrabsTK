@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "error.h"
 
-#if CRABS_SEAM >= 1
+#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 namespace _ {
 
@@ -65,4 +65,4 @@ const char* ErrorString (Error error) {
 }
 
 }   //< namespace _
-#endif  //< CRABS_SEAM >= 1
+#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3

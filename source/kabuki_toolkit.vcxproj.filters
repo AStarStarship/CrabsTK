@@ -21,9 +21,6 @@
     <Filter Include="source\kabuki\id">
       <UniqueIdentifier>{b0a0e952-9956-4fbe-8f47-440cba033b7f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\tests">
-      <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="projects\sloth">
       <UniqueIdentifier>{fa4a9efd-aa8a-4975-9620-e71bb7c990f3}</UniqueIdentifier>
     </Filter>
@@ -32,6 +29,15 @@
     </Filter>
     <Filter Include="projects\terminal">
       <UniqueIdentifier>{141c22c3-7927-4379-8e32-8c4433886102}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kabuki\aiml">
+      <UniqueIdentifier>{714fd075-a8a5-4b94-98a1-9cde36230270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="projects\script_itos_benchmark">
+      <UniqueIdentifier>{a66a4851-eef4-4a27-8043-28fb1440edb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests">
+      <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -46,9 +52,6 @@
     </ClInclude>
     <ClInclude Include="global.h">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\array.h">
-      <Filter>source\crabs</Filter>
     </ClInclude>
     <ClInclude Include="crabs\bin.h">
       <Filter>source\crabs</Filter>
@@ -162,7 +165,16 @@
       <Filter>source\crabs</Filter>
     </ClInclude>
     <ClInclude Include="..\tests\tests_global.h">
-      <Filter>source\tests</Filter>
+      <Filter>tests</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\align.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\print_itos.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tests\stb_sprintf.h">
+      <Filter>tests</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -171,12 +183,6 @@
     </ClCompile>
     <ClCompile Include="dllmain.cc">
       <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\test_global.cc">
-      <Filter>source\tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\test_crabs.cc">
-      <Filter>source\tests</Filter>
     </ClCompile>
     <ClCompile Include="crabs\crabs_bin.cc">
       <Filter>source\crabs</Filter>
@@ -238,8 +244,32 @@
     <ClCompile Include="crabs\crabs_scan.cc">
       <Filter>source\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\script_itos.cc">
+    <ClCompile Include="..\tests\test_seam_1_1.cc">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\tests_global.cc">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_align.cc">
       <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\print_itos.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\test_seam_1_6.cc">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\test_seam_1_5.cc">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\test_seam_1_4.cc">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\test_seam_1_3.cc">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\test_seam_1_2.cc">
+      <Filter>tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

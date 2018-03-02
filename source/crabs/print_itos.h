@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/crabs/itos.h
+    @file    ~/source/crabs/crabs_itos.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -16,14 +16,15 @@
 
 #include <stdafx.h>
 
-#ifndef HEADER_FOR_SCRIPT_ITOS2
-#define HEADER_FOR_SCRIPT_ITOS2
+#include "config.h"
+
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 1
 
 namespace _ {
 
-char* PrintLd (uint64_t value, char* text, char* text_end);
+KABUKI void PrintLine (char c = '-');
 
-char* PrintLd (int64_t value, char* text, char* text_end);
+KABUKI char* Print (uint32_t value, char* text, char* text_end);
 
-}        //< namespace _
-#endif    //< HEADER_FOR_SCRIPT_ITOS
+}       //< namespace _
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 1

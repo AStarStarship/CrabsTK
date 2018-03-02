@@ -22,7 +22,7 @@
 
 #include "memory.h"
 
-#if CRABS_SEAM >= 1
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 
 namespace _ {
 
@@ -67,27 +67,27 @@ typedef enum AsciiTypes {
 inline uintptr_t TypeAlign (char* cursor, uint_t type) {
 #if WORD_SIZE >= 32
     if (type <= BOL) {
-        return MemoryAlign2 (cursor);
+        return Align2 (cursor);
     }
     if (type <= UVI) {
-        return MemoryAlign4 (cursor);
+        return Align4 (cursor);
     }
 #else
     if (type <= UVI) {
-        return MemoryAlign2 (cursor);
+        return Align2 (cursor);
     }
     if (type <= TMS) {
-        return MemoryAlign4 (cursor);
+        return Align4 (cursor);
     }
 #endif
     if (type <= UV8) {
-        return MemoryAlign8 (cursor);
+        return Align8 (cursor);
     }
     type = type >> 6;
     switch (type) {
-        case 1: return MemoryAlign2 (cursor);
-        case 2: return MemoryAlign4 (cursor);
-        case 3: return MemoryAlign8 (cursor);
+        case 1: return Align2 (cursor);
+        case 2: return Align4 (cursor);
+        case 3: return Align8 (cursor);
     }
     return 0;
 }
@@ -249,5 +249,5 @@ inline T TypeUnpackVarint (T value) {
 KABUKI uint_t TypeSize (uint_t type);
 
 }       //< namespace _
-#endif  //< CRABS_SEAM >= 1
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 #endif  //< CRABS_TYPES_H

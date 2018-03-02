@@ -19,9 +19,9 @@
 #include "text.h"
 #include "memory.h"
 
-#if CRABS_SEAM >= 1
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
-#if CRABS_SEAM == 1
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -650,4 +650,4 @@ int TextCompare (const char* text_a, const char* text_end,
 #endif  //< USING_CRABS_TEXT
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< CRABS_SEAM >= 1
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

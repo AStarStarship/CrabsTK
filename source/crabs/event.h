@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#if USING_CRABS_EVENT
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >=5
 
 
 namespace _ {
@@ -43,12 +43,12 @@ struct KABUKI Event : public Operand {
 
     /** Triggers the event. */
     virtual void Trigger () = 0;
-	
-	virtual double GetProbability () = 0;
-	
-	virtual const Op* Star (wchar_t index, Expr* expr) = 0;
+    
+    virtual double GetProbability () = 0;
+    
+    virtual const Op* Star (wchar_t index, Expr* expr) = 0;
 };
 
 }       //< namespace _
-#endif  //< USING_CRABS_EVENT
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >=5
 #endif  //< CRABS_EVENT_H

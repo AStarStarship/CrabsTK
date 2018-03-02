@@ -19,7 +19,7 @@
 
 #include "config.h"
 
-#if USING_CRABS_LANGUAGE
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
 
 namespace _ {
 
@@ -44,5 +44,5 @@ struct Language {
 };
 
 }       //< namespace _
-#endif  //< USING_CRABS_LANGUAGE
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
 #endif  //< HEADER_FOR_CRABS_LANGUAGE

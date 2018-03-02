@@ -22,7 +22,7 @@
 
 #include "slot.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 
 namespace _ {
 
@@ -103,5 +103,5 @@ inline _::Slot& operator<< (_::Slot& slot, _::Operand* operand) {
     return PrintOperand (operand, slot);
 }
 #endif
-#endif  //< CRABS_SEAM >= 2
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_OPERAND

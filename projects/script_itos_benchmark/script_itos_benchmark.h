@@ -16,11 +16,17 @@
 
 #include <stdafx.h>
 
-#ifndef HEADER_FOR_TEST_ITOS_SIZELUT
-#define HEADER_FOR_TEST_ITOS_SIZELUT
+#ifndef HEADER_FOR_SCRIPT_ITOS_TESTS
+#define HEADER_FOR_SCRIPT_ITOS_TESTS
 
-char* PrintSizeLut (uint64_t val, char* text, char* text_end);
+char* PrintNil (uint32_t value, char* text, char* text_end);
 
-void TestItoSSizeLut ();
+char* PrintSprintf (uint32_t value, char* text, char* text_end);
 
-#endif //< HEADER_FOR_TEST_ITOS_SIZELUT
+char* PrintMod10 (uint32_t value, char* text, char* text_end);
+
+char* PrintMod100 (uint32_t val, char* text, char* text_end);
+
+void BenchmarkScriptItos ();
+
+#endif //< #ifndef HEADER_FOR_SCRIPT_ITOS_TESTS

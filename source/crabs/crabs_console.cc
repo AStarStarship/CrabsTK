@@ -18,12 +18,12 @@
 
 #include "console.h"
 
-#if CRABS_SEAM >= 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 #include "text.h"
 
 
-#if CRABS_SEAM == 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -60,19 +60,19 @@ Slot& Print () {
 }
 
 Slot& PrintLine () {
-    return Print () << '\n';
+    return PRINTF ('\n';
 }
 
 char ConsoleReadChar (const char* header) {
-    Print () << header;
+    PRINTF (header;
     char c = getchar ();
-    Print () << '\n';
+    PRINTF ('\n';
     return c;
 }
 
 int ConsoleReadInt (const char* header) {
     int number;
-    Print () << header;
+    PRINTF (header;
     std::cin.clear ();
     std::cin >> number;
     return number;
@@ -80,7 +80,7 @@ int ConsoleReadInt (const char* header) {
 
 float ConsoleReadFloat (const char* header) {
     float number;
-    Print () << header;
+    PRINTF (header;
     std::cin.clear ();
     std::cin >> number;
     return number;
@@ -93,14 +93,14 @@ void ConsoleReadSlot (const char* header, char* target, char* target_end) {
     if (target > target_end) {
         return;
     }
-    Print () << header;
+    PRINTF (header;
     std::cin.get (target, target_end - target, '\n');
     std::cin.clear ();
     std::cin.ignore (target_end - target, '\n');
 }
 
 void ConsoleWrite (const char* slot) {
-    Print () << slot;
+    PRINTF (slot;
 }
 
 void ConsoleWrite (Slot& slot) {
@@ -115,7 +115,7 @@ void ConsoleDump (Slot& slot) {
         if (start > stop) {
             start = slot.begin;
         }
-        Print () << *start++;
+        PRINTF (*start++;
     }
     slot.start = start;
 }
@@ -138,4 +138,4 @@ Slot& Scan () {
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< CRABS_SEAM >= 2
+#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3
