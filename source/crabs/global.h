@@ -37,21 +37,22 @@
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #include "op.h"
 #include "address.h"
-#include "event.h"
 #include "room.h"
 #include "expr.h"
 #include "slot.h"
 #include "args.h"
 #include "console.h"
 #include "bsq.h"
-#endif
-
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
 #include "bin.h"
 #include "bout.h"
 #endif
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#include "event.h"
+#include "interrupts.h"
+#endif
+
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
 #include "table.h"
 #include "lst.h"
 #include "map.h"

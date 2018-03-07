@@ -25,12 +25,19 @@
 #include "hash.h"
 
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
+#define PRINT_BSQ(header, bsq) {\
+    enum { kTextBufferSize = 1024 };\
+    char text_buffer[kTextBufferSize];\
+    PrintBsq (bsq, text_buffer, text_buffer + kTextBufferSize);\
+    printf   ("\n    %s%s", header, text_buffer);\
+}
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
+#define PRINT_BSQ(header, bsq)
 #endif
 
 namespace _ {
@@ -129,7 +136,7 @@ Expr* ExprInit (uintptr_t* buffer, uint_t buffer_size,  uint_t stack_size,
         stack_size = kMinStackSize;    //< Minimum stack size.
     }
     if (unpacked_buffer == nullptr) {
-        PRINTF ("\nError: unpacked_buffer was nil!";
+        PRINTF ("\nError: unpacked_buffer was nil!")
     }
 
     if (root == nullptr) {
@@ -245,8 +252,7 @@ const Op* Push (Expr* expr, Operand* operand) {
     if (!operand) {
         return ExprError (expr, kErrorInvalidOperand);
     }
-    DEBUG3 ("\nPushing ", operand->Star ('?', nullptr)->name,
-            " onto the stack");
+    PRINTF ("\nPushing %s onto the stack", operand->Star ('?', nullptr)->name);
     uint_t stack_count = expr->stack_count;
     if (stack_count >= expr->stack_size) {
         return ExprError (expr, kErrorStackOverflow);
@@ -270,9 +276,7 @@ const Op* Pop (Expr* expr) {
         ExprClose (expr);
         return 0;
     }
-    #if DEBUG_CRABS_EXPR
-    Print () < "\nPopping " << OperandName (expr->operand) << " off the stack.";
-    #endif
+    PRINTF ("\nPopping %s off the stack.", OperandName (expr->operand))
     expr->operand = ExprStack (expr)[stack_count - 2];
     expr->stack_count = stack_count - 1;
     #if DEBUG_CRABS_EXPR
@@ -343,11 +347,7 @@ const Op* ExprUnpack (Expr* expr) {
     bin_stop   = bin_begin + bin->stop;
     space  = SlotSpace (bin_start, bin_stop, size);
     length = size - space;
-    #if DEBUG_CRABS_EXPR
-    Text<> out;
-    PRINTF ("\nScanning Expr:0x" << out.Pointer (expr)
-          << " with length:" << length);
-    #endif
+    PRINTF ("\n    Scanning Expr:0x%p with length:%i", expr, length)
     for (; length != 0; --length) {
         b = *bin_start;
         *slot_start++ = b;
@@ -365,9 +365,7 @@ const Op* ExprUnpack (Expr* expr) {
         switch (bin_state) {
             case kBInStateAddress: {
                 hash = Hash16 (b, hash);
-                #if DEBUG_CRABS_EXPR
-                PRINTF ("\nhash:" << PrintHex (hash));
-                #endif
+                PRINTF ("\nhash:0x%x", hash)
                 // When verifying an address, there is guaranteed to be an
                 // expr->op set. We are just looking for nil return values
                 // from the Do (byte, Stack*): const Operand* function, 
@@ -388,9 +386,7 @@ const Op* ExprUnpack (Expr* expr) {
                 operand = expr->operand;
 
                 op = operand->Star ('?', nullptr);
-                #if DEBUG_CRABS_EXPR
-                PRINTF ("\nCurrent Op is \"" << op->name << '\"');
-                #endif
+                PRINTF ("\nCurrent Op is \"%s\"", op->name)
 
                 op = operand->Star (b, nullptr);
                 if (op == nullptr) {
@@ -414,10 +410,7 @@ const Op* ExprUnpack (Expr* expr) {
                 if (num_ops > kParamsMax) {
                     // It's an Op.
                     // The software implementer pushes the Op on the stack.
-                    #if DEBUG_CRABS_EXPR
-                    PRINTF ("\nFound Op with params "
-                          << PrintBsq (params, out));
-                    #endif
+                    PRINT_BSQ ("\nFound Op with params ", params)
                     result = ExprScanHeader (expr, params);
                     if (result) {
                         #if DEBUG_CRABS_EXPR
@@ -992,7 +985,7 @@ Slot& PrintExpr (Expr* expr, Slot& slot) {
                 << "\nheader_size : " << expr->header_size
                 << PrintLine ('-', 80, slot)
                 << PrintOperand (expr->operand, slot)
-                << "\nheader: " << expr->header_start
+                << "\nheader: " << PrintBsq (expr->header_start, slot)
                 << PrintLine ('-', 80, slot)
                 << ExprPrintStack (expr, slot)
                 << PrintLine ('~', 80, slot);

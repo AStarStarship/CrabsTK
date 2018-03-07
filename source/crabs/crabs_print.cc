@@ -24,7 +24,7 @@
 
 #include "text.h"
 #include "type.h"
-
+/** 
 void PrintBinary (uint32_t value) {
     enum { kSize = sizeof (uint32_t) * 8 };
     
@@ -35,7 +35,7 @@ void PrintBinary (uint32_t value) {
         value = value << 1;
     }
 }
-/** Don't think I need this anymore. It was for chopping off the MSD but it
+Don't think I need this anymore. It was for chopping off the MSD but it
     was so slow it makes me shutter.
 
 void PrintBinaryTable (uint32_t value) {
@@ -69,7 +69,8 @@ void PrintBinaryTable (uint32_t value) {
 
 namespace _ {
 
-char* Print (const char* string, char* buffer, char* buffer_end) {
+char* Print (const char* string, char* buffer, char* buffer_end, 
+             char delimiter) {
     if (!string) {
         return nullptr;
     }
@@ -87,47 +88,47 @@ char* Print (const char* string, char* buffer, char* buffer_end) {
         }
         c = *string++;
     }
-    *buffer = c;
+    *buffer = delimiter;
     return buffer;
 }
 
-char* Print (const char* text, const char* text_end, char* buffer,
-             char* buffer_end) {
+char* Print (const char* string, const char* string_end, char* buffer,
+             char* buffer_end, char delimiter) {
     if (buffer) {
         return nullptr;
     }
     if (buffer >= buffer_end) {
         return nullptr;
     }
-    if (!text) {
+    if (!string) {
         return nullptr;
     }
-    if (text >= text_end) {
+    if (string >= string_end) {
         return nullptr;
     }
     char* cursor = buffer;
-    char c = *text;
+    char c = *string;
     while (c) {
         if (!c) {
             return buffer;
         }
         *buffer = c;
         if (++buffer >= buffer_end) {
-            *buffer = 0;
+            *buffer = delimiter;
             return nullptr;
         }
-        if (++text >= text_end) {
-            *buffer = 0;
+        if (++string >= string_end) {
+            *buffer = delimiter;
             return nullptr;
         }
-        c = *text;
+        c = *string;
     }
-    *buffer = c;
+    *buffer = delimiter;
     return buffer;
 }
 
 char* PrintRight (const char* token, int num_columns, char* buffer, 
-                  char* buffer_end) {
+                  char* buffer_end, char delimiter) {
     char* start = buffer;
     if (!token) {
         return nullptr;
@@ -181,7 +182,7 @@ char* PrintRight (const char* token, int num_columns, char* buffer,
             //PUTCHAR ('.')
         }
         //PUTCHAR ('\"')
-        *buffer = 0;
+        *buffer = delimiter;
         return buffer;
     }
     //PRINTF ("\n Wrote:\"")
@@ -204,15 +205,15 @@ char* PrintRight (const char* token, int num_columns, char* buffer,
     return buffer_end;
 } 
 
-char* PrintCentered (const char* string, int num_columns, char* text,
-                     char* text_end) {
-    if (!text) {
-        return text;
+char* PrintCentered (const char* string, int num_columns, char* buffer,
+                     char* buffer_end, char delimiter) {
+    if (!buffer) {
+        return buffer;
     }
     if (!string) {
         return nullptr;
     }
-    if (text >= text_end) {
+    if (buffer >= buffer_end) {
         return nullptr;
     }
     if (num_columns < 2) {
@@ -231,54 +232,55 @@ char* PrintCentered (const char* string, int num_columns, char* text,
         }
         num_columns -= offset;
         while (num_columns-- > 0) {
-            *text++ = *string++;
+            *buffer++ = *string++;
         }
         while (offset-- > 0) {
-            *text++ = '.';
+            *buffer++ = '.';
         }
-        *text = 0;
-        return text;
+        *buffer = delimiter;
+        return buffer;
     }
     offset = (num_columns - length) >> 1; //< >> 1 to /2
     length = num_columns - length - offset;
     PRINTF ("\n    length:%i offset:%i", length, offset)
     
     while (length-- > 0) {
-        *text++ = ' ';
+        *buffer++ = ' ';
     }
     char c = *string++;
     while (c) {
-        *text++ = c;
+        *buffer++ = c;
         c = *string++;
     }
     while (offset-- > 0) {
-        *text++ = ' ';
+        *buffer++ = ' ';
     }
-    *text = c;
+    *buffer = delimiter;
     PRINTF ("\n    Printed:\"%s\"", string);
-    return text;
+    return buffer;
 }
 
-char* PrintLine (char c, int num_columns, char* text, char* text_end) {
-    if (!text) {
+char* PrintLine (char c, int num_columns, char* buffer, char* buffer_end,
+                 char delimiter) {
+    if (!buffer) {
         return nullptr;
     }
-    if (text + num_columns > text_end) {
+    if (buffer + num_columns > buffer_end) {
         return nullptr;
     }
     while (num_columns-- > 0) {
-        *text++ = c;
+        *buffer++ = c;
     }
-    *text = 0;
-    return text;
+    *buffer = delimiter;
+    return buffer;
 }
 
-char* PrintLine (const char* string, int num_columns, char* text,
-                 char* text_end) {
-    if (!text) {
+char* PrintLine (const char* string, int num_columns, char* buffer,
+                 char* buffer_end, char delimiter) {
+    if (!buffer) {
         return nullptr;
     }
-    if (text + num_columns > text_end) {
+    if (buffer + num_columns > buffer_end) {
         return nullptr;
     }
     const char* cursor = string;
@@ -287,10 +289,10 @@ char* PrintLine (const char* string, int num_columns, char* text,
         if (!c) {
             cursor = string;
         }
-        *text++ = c;
+        *buffer++ = c;
     }
-    *text = 0;
-    return text;
+    *buffer = delimiter;
+    return buffer;
 }
 
 /*
@@ -301,25 +303,26 @@ Slot& PrintLineBreak (const char* message, int top_bottom_margin,
     return PrintLine (message, top_bottom_margin, c, "\n", num_columns, slot);
 }*/
 
-char* PrintHex (char c, char* text, char* text_end) {
+char* PrintHex (char c, char* buffer, char* buffer_end, char delimiter) {
     enum { kHexStringLengthSizeMax = sizeof (void*) * 2 + 3 };
 
-    if (!text) {
+    if (!buffer) {
         return nullptr;
     }
-    if (text >= text_end) {
+    if (buffer >= buffer_end) {
         return nullptr;
     }
 
-    if (text_end - text < 2) {
+    if (buffer_end - buffer < 2) {
         return nullptr;
     }
-    *text++ = TextNibbleToUpperCaseHex (c);
-    *text = 0;
-    return text;
+    *buffer++ = TextNibbleToUpperCaseHex (c);
+    *buffer = delimiter;
+    return buffer;
 }
 
-char* PrintHex (uintptr_t value, char* buffer, char* buffer_end) {
+char* PrintHex (uintptr_t value, char* buffer, char* buffer_end, 
+                char delimiter) {
     enum { kHexStringLengthSizeMax = sizeof (void*) * 2 + 3 };
 
     if (!buffer) {
@@ -340,71 +343,57 @@ char* PrintHex (uintptr_t value, char* buffer, char* buffer_end) {
         c = TextNibbleToUpperCaseHex (c);
         *buffer++ = c;
     }
-    *buffer = 0;
+    *buffer = delimiter;
     return buffer;
 }
 
-Printer::Printer (char* cursor, size_t buffer_size) :
-    cursor (cursor),
-    end    (cursor + buffer_size) {
-    assert (cursor != nullptr);
-}
-
-Printer::Printer (char* cursor, char* end) :
-    cursor (cursor),
-    end    (end) {
-    assert (cursor != nullptr);
-    assert (end != nullptr);
-
-}
-
-
-char* PrintBinary (uint64_t value, char* text, char* text_end) {
-    if (!text) {
+char* PrintBinary (uint64_t value, char* buffer, char* buffer_end, 
+                   char delimiter) {
+    if (!buffer) {
         return nullptr;
     }
-    if (text + sizeof (uint64_t) * 8 >= text_end) {
+    if (buffer + sizeof (uint64_t) * 8 >= buffer_end) {
         return nullptr;
     }
 
     for (int i = 0; i < 64; ++i) {
-        *text++ = (char)('0' + (value >> 63));
+        *buffer++ = (char)('0' + (value >> 63));
         value = value << 1;
     }
-    *text = 0;
-    return text;
+    *buffer = delimiter;
+    return buffer;
 }
 
 
-char* Print (float value, char* buffer, char* buffer_end) {
+char* Print (float value, char* buffer, char* buffer_end, char delimiter) {
     // @todo Replace with GrisuX algorithm that uses the Script ItoS Algorithm.
     intptr_t buffer_size = buffer_end - buffer,
              result = sprintf_s (buffer, buffer_size, "%f", value);
     if (result < 0) {
-        *buffer = 0;
+        *buffer = delimiter;
         return nullptr;
     }
     buffer += result;
-    *buffer = 0;
+    *buffer = delimiter;
     return buffer;
 }
 
-char* Print (double value, char* buffer, char* buffer_end) {
+char* Print (double value, char* buffer, char* buffer_end, char delimiter) {
     // Right now we're going to enforce there be enough room to write any
     // int32_t.
     intptr_t buffer_size = buffer_end - buffer,
              result = sprintf_s (buffer, buffer_size, "%f", value);
     if (result < 0) {
-        *buffer = 0;
+        *buffer = delimiter;
         return nullptr;
     }
     buffer += result;
-    *buffer = 0;
+    *buffer = delimiter;
     return buffer;
 }
 
 char* PrintMemory (const void* token, const void* token_end, char* buffer,
-                   char* buffer_end) {
+                   char* buffer_end, char delimiter) {
     if (!token) {
         return nullptr;
     }
@@ -482,7 +471,21 @@ char* PrintMemory (const void* token, const void* token_end, char* buffer,
     }
     *buffer++ = '|';
     *buffer++ = ' ';
-    return PrintHex (address_ptr + size, buffer, buffer_end);
+    return PrintHex (address_ptr + size, buffer, buffer_end, delimiter);
+}
+
+Printer::Printer (char* cursor, size_t buffer_size) :
+    cursor (cursor),
+    end    (cursor + buffer_size) {
+    assert (cursor != nullptr);
+}
+
+Printer::Printer (char* cursor, char* end) :
+    cursor (cursor),
+    end    (end) {
+    assert (cursor != nullptr);
+    assert (end != nullptr);
+
 }
 
 }       //< namespace _

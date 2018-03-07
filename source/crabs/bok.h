@@ -22,7 +22,7 @@
 
 #include "memory.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
 
 #include "type.h"
 
@@ -761,5 +761,5 @@ void BagPrint (Bok<TIndex, TKey, TData, THash>* collection) {
 //}
 
 }       //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
 #endif  //< HEADER_FOR_CRABS_TBAG

@@ -30,8 +30,9 @@ constexpr uint_t BsqSize (const uint_t* params) {
     if (!params) {
         return 0;
     }
-    uint_t size = sizeof (uint_t),
-        count = *params++;
+    uint_t size  = sizeof (uint_t),
+           count = *params++;
+
     if (count > kParamsMax) {
         return 0;
     }
@@ -42,7 +43,6 @@ constexpr uint_t BsqSize (const uint_t* params) {
         if (param == NIL) { // This is illegal.
             return 0;
         }
-
         if (param <= TKN) {
             size += sizeof (uint_t);
             ++params;

@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #include "slot.h"
 #include "op.h"
 
@@ -139,5 +139,5 @@ KABUKI Slot& BInPrint (BIn* bin, Slot& slot);
 #endif
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_BIN

@@ -692,28 +692,28 @@ time_t ClockTime (int year, int month, int day, int  hour,
     time (&t);
     tm* moment = localtime (&t);
     if (!moment) {
-        PUTS ("\n\n Created invalid test moment")
+        PRINTF ("\n\n Created invalid test moment")
         return 0;
     }
     moment->tm_year = year - kTimeEpoch;
-    moment->tm_mon = month - 1;
+    moment->tm_mon  = month - 1;
     moment->tm_mday = day;
     moment->tm_hour = hour;
-    moment->tm_min = minute;
-    moment->tm_sec = second;
+    moment->tm_min  = minute;
+    moment->tm_sec  = second;
 
-    if (!PrintTime (moment, buffer, buffer_size)) {
-        PRINTF ("\nError making timestamp")
-        return 0;
-    }
-    PRINTF ("\n Creating test time: ")
-    PrintTime (moment);
+    //if (!PrintTime (moment, buffer, buffer_size)) {
+    //    PRINTF ("\nError making timestamp")
+    //    return 0;
+    //}
+   // PRINTF ("\n Creating test time: ")
+    //PrintTime (moment);
     t = mktime (moment);
     if (t < 0) {
-        PRINTF ("\n Invalid time:" << t << '\n')
+        ///PRINTF ("\n Invalid time:" << t << '\n')
         return 0;
     } else {
-        PUTCHAR ('\n')
+        //PUTCHAR ('\n')
     }
     return t;
 }

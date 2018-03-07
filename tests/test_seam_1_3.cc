@@ -34,234 +34,7 @@ using namespace _;
 void TestSeam1_3 () {
 
     printf ("\n    Testing SEAM_1_3... ");
-
-    enum {
-        kSize = 16,
-        kSlotSize = 2048,
-        kSlotSizeWords = kSlotSize >> kWordSizeShift
-    };
-
-    static const char* compare_strings[] = {
-        "Testing",
-        "Texting",
-        "Testing@",
-        "Texting@",
-    };
-    static const char string[] = "Testing one, two, three.";
-
-    static const char* right_string[] = {
-        "    Testing one, two, three.",
-        "Test...",
-        ".",
-        "..",
-        "...",
-        "T...",
-    };
-
-    uintptr_t slot_buffer[kSlotSizeWords];
-    Slot slot;
-    SlotInit (&slot, slot_buffer, kSlotSizeWords);
-
-    char buffer[kFloat64DigitsMax];
-
-    std::cout << "\n|  - Running HexTest...";
-    for (int i = 0; i < 16; ++i) {
-        int value = TextHexToByte (TextNibbleToLowerCaseHex (i));
-        CHECK_EQUAL (i, value)
-            value = TextHexToByte (TextNibbleToUpperCaseHex (i));
-        CHECK_EQUAL (i, value)
-    }
-
-    for (int i = 0; i < 256; ++i) {
-        int value = TextHexToByte (TextByteToLowerCaseHex (i));
-        CHECK_EQUAL (i, value)
-            value = TextHexToByte (TextByteToUpperCaseHex (i));
-        CHECK_EQUAL (i, value)
-    }
-
-    std::cout << "\n| - Testing string utils...\n";
-
-    CHECK (!TextEquals (compare_strings[0], compare_strings[1]))
-    CHECK (!TextEquals (compare_strings[0], compare_strings[3]))
-    CHECK (TextEquals  (compare_strings[0], compare_strings[0]))
-    CHECK (!TextEquals (compare_strings[2], compare_strings[3], '@'))
-    CHECK (TextEquals  (compare_strings[2], compare_strings[2], '@'))
-
-    CHECK_EQUAL (9, TextLength ("123456789"))
-    CHECK_EQUAL (9, TextLength ("123456789 ", ' '))
-        
-    CHECK (TextFind (string, "one"))
-    CHECK (TextFind (string, "three."))
-    
-    PrintRight (string, 28, buffer, buffer + kFloat64DigitsMax);
-    STRCMP_EQUAL (right_string[0], buffer)
-    
-    PrintRight (string, 7, buffer, buffer + kFloat64DigitsMax);
-    STRCMP_EQUAL (right_string[1], buffer)
-    
-    PrintRight (string, 1, buffer, buffer + kFloat64DigitsMax);
-    STRCMP_EQUAL (right_string[2], buffer)
-    
-    PrintRight (string, 2, buffer, buffer + kFloat64DigitsMax);
-    STRCMP_EQUAL (right_string[3], buffer)
-    
-    PrintRight (string, 3, buffer, buffer + kFloat64DigitsMax);
-    STRCMP_EQUAL (right_string[4], buffer)
-    
-    PrintRight (string, 4, buffer, buffer + kFloat64DigitsMax);
-    STRCMP_EQUAL (right_string[5], buffer)
-
-    slot << "\n|\n| Testing Text...\n|\n|";
-    SlotDisplay (slot);
-
-    int8_t   a = 1;  //< 
-    uint8_t  b = 2;  //< 
-    int16_t  c = 3;  //< 
-    uint16_t d = 4;  //< 
-    int32_t  e = 5;  //< 
-    uint32_t f = 6;  //< 
-    int64_t  g = 7;  //< 
-    uint64_t h = 8;  //< 
-    float    i = 9; //< 
-    double   j = 10; //< 
-
-    slot << "\n| a:" << a << " b:" << b << " c:" << c << " d:" << d
-        << " e:" << e << " f:" << f << " g:" << g << " h:" << h
-        << " i:" << i << " j:" << j;
-}
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
-
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
-TEST (SEAM_1_3_TESTS, PrintTests) {
-}
-#endif      //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
-
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
-TEST (SEAM_1_3_TESTS, BookTests) {
-    PrintLineBreak ("\n  + Running BookTests\n", 10);
-
-    PrintLineBreak ("\n  - Running BookInit...\n", 5, ' ');
-    int8_t index;
-
-    enum {
-        kBufferSize = 256,
-        kBufferSizeWords = kBufferSize / sizeof (uintptr_t),
-    };
-
-    uintptr_t buffer[kBufferSizeWords];
-
-    Book2* book = Book2Init (buffer, 8, kBufferSize, 128);
-
-    CHECK (book != nullptr)
-
-    index = Book2Add<uint8_t, UI1> (book, "D", (byte)0xFF);
-
-    CHECK_EQUAL (0, index)
-    Book2Print (book);
-    CHECK_EQUAL (0, index)
-    index = Book2Find (book, "D");
-    CHECK_EQUAL (0, index)
-    system ("PAUSE");
-    index = Book2Add<uint8_t, UI1> (book, "C", (byte)0xFF);
-    CHECK_EQUAL (1, index)
-    index = Book2Find (book, "D");
-    CHECK_EQUAL (0, index)
-    index = Book2Find (book, "C");
-    CHECK_EQUAL (1, index)
-
-    index = Book2Add<uint8_t, UI1> (book, "BIn", (byte)0xFF);
-    CHECK_EQUAL (2, index)
-    index = Book2Find (book, "D");
-    CHECK_EQUAL (0, index)
-    index = Book2Find (book, "C");
-    CHECK_EQUAL (1, index)
-    index = Book2Find (book, "BIn");
-    CHECK_EQUAL (2, index)
-
-    index = Book2Add<uint8_t, UI1> (book, "A", (byte)0xFF);
-    CHECK_EQUAL (3, index)
-    index = Book2Find (book, "D");
-    CHECK_EQUAL (0, index)
-    index = Book2Find (book, "C");
-    CHECK_EQUAL (1, index)
-    index = Book2Find (book, "BIn");
-    CHECK_EQUAL (2, index)
-    index = Book2Find (book, "A");
-    CHECK_EQUAL (3, index)
-
-    index = Book2Add<uint8_t, UI1> (book, "abc", (byte)0xFF);
-    CHECK_EQUAL (4, index)
-    index = Book2Find (book, "abc");
-    CHECK_EQUAL (4, index)
-
-    index = Book2Add<uint8_t, UI1> (book, "bac", (byte)0xFF);
-    CHECK_EQUAL (5, index)
-    index = Book2Find (book, "abc");
-    CHECK_EQUAL (4, index)
-    index = Book2Find (book, "bac");
-    CHECK_EQUAL (5, index)
-
-    index = Book2Add<uint8_t, UI1> (book, "cba", (byte)0xFF);
-    CHECK_EQUAL (6, index)
-    index = Book2Find (book, "abc");
-    CHECK_EQUAL (4, index)
-    index = Book2Find (book, "bac");
-    CHECK_EQUAL (5, index)
-    index = Book2Find (book, "cba");
-    CHECK_EQUAL (6, index)
-
-    index = Book2Add<uint8_t, UI1> (book, "cab", (byte)0xFF);
-    CHECK_EQUAL (7, index)
-    index = Book2Find (book, "abc");
-    CHECK_EQUAL (4, index)
-    index = Book2Find (book, "bac");
-    CHECK_EQUAL (5, index)
-    index = Book2Find (book, "cba");
-    CHECK_EQUAL (6, index)
-    index = Book2Find (book, "cab");
-    CHECK_EQUAL (7, index)
-
-    index = Book2Add<uint8_t, UI1> (book, "test", (byte)0xFF);
-    CHECK_EQUAL (index, -1)
-}
-
-template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
-    uint second = 0>
-    time_t TestTime (char* buffer, int buffer_size) {
-    if (buffer == nullptr)
-        return 0;
-    time_t t;
-    time (&t);
-    tm* moment = localtime (&t);
-    if (!moment) {
-        std::cout << "\n\n Created invalid test moment: " << moment << '\n';
-        return 0;
-    }
-    moment->tm_year = year - kTimeEpoch;
-    moment->tm_mon = month - 1;
-    moment->tm_mday = day;
-    moment->tm_hour = hour;
-    moment->tm_min = minute;
-    moment->tm_sec = second;
-
-    if (!PrintDateTimeText (buffer, buffer_size, moment)) {
-        std::cout << "\nError making timestamp";
-
-        return 0;
-    }
-    std::cout << "< Creating test time: ";
-    PrintDateTime (moment);
-    t = mktime (moment);
-    if (t < 0) {
-        std::cout << "< Invalid " << t << '\n';
-        return 0;
-    } else {
-        std::cout << '\n';
-    }
-    return t;
-}
-
-TEST (SEAM_1_3_TESTS, ClockTests) {
+    /*
     time_t t,
            t_found;
     tm* lt;
@@ -329,90 +102,8 @@ TEST (SEAM_1_3_TESTS, ClockTests) {
     PrintBreak ("<", '-');
 
     std::cout << "<\nDone testing date parsing utils! :-)\n";
-}
 
-#if USING_CRABS_TABLE
-TEST (SEAM_1_3_TESTS, TableTests) {
-    std::cout << "\n  - Running TableTest...\n";
-    char_t index;
-    uintptr_t buffer[128];
-    printf ("\n &buffer[0]:%p &buffer[127]:%p\n", &buffer[0], &buffer[127]);
-    Table* table = TableInit (buffer, 8, 128);
 
-    CHECK (table != nullptr)
-
-    index = TableAdd (table, "D");
-    CHECK_EQUAL (0, index)
-    index = TableFind (table, "D");
-    CHECK_EQUAL (0, index)
-
-    index = TableAdd (table, "C");
-    CHECK_EQUAL (1, index)
-    index = TableFind (table, "D");
-    CHECK_EQUAL (0, index)
-    index = TableFind (table, "C");
-    CHECK_EQUAL (1, index)
-
-    index = TableAdd (table, "BIn");
-    CHECK_EQUAL (2, index)
-    index = TableFind (table, "D");
-    CHECK_EQUAL (0, index)
-    index = TableFind (table, "C");
-    CHECK_EQUAL (1, index)
-    index = TableFind (table, "BIn");
-    CHECK_EQUAL (2, index)
-
-    index = TableAdd (table, "A");
-    CHECK_EQUAL (3, index)
-    index = TableFind (table, "D");
-    CHECK_EQUAL (0, index)
-    index = TableFind (table, "C");
-    CHECK_EQUAL (1, index)
-    index = TableFind (table, "BIn");
-    CHECK_EQUAL (2, index)
-    index = TableFind (table, "A");
-    CHECK_EQUAL (3, index)
-
-    index = TableAdd (table, "abc");
-    CHECK_EQUAL (4, index)
-    index = TableFind (table, "abc");
-    CHECK_EQUAL (4, index)
-
-    index = TableAdd (table, "bac");
-    CHECK_EQUAL (5, index)
-    index = TableFind (table, "abc");
-    CHECK_EQUAL (4, index)
-    index = TableFind (table, "bac");
-    CHECK_EQUAL (5, index)
-
-    index = TableAdd (table, "cba");
-    CHECK_EQUAL (6, index)
-    index = TableFind (table, "abc");
-    CHECK_EQUAL (4, index)
-    index = TableFind (table, "bac");
-    CHECK_EQUAL (5, index)
-    index = TableFind (table, "cba");
-    CHECK_EQUAL (6, index)
-
-    index = TableAdd (table, "cab");
-    CHECK_EQUAL (7, index)
-    index = TableFind (table, "abc");
-    CHECK_EQUAL (4, index)
-    index = TableFind (table, "bac");
-    CHECK_EQUAL (5, index)
-    index = TableFind (table, "cba");
-    CHECK_EQUAL (6, index)
-    index = TableFind (table, "cab");
-    CHECK_EQUAL (7, index)
-
-    index = TableAdd (table, "test");
-    CHECK_EQUAL (kInvalidIndex, index)
-
-    TablePrint (table);
-}
-#endif  //< USING_CRABS_TABLE
-
-TEST (SEAM_1_3_TESTS, ExprTests) {
     Text<> text;
     std::cout << "\n Running ExprTests...\n";
     enum {
@@ -446,13 +137,7 @@ TEST (SEAM_1_3_TESTS, ExprTests) {
          <<  PrintExpr (expr, text) << Print ();
     CHECK_EQUAL (0, ExprArgs (expr, params,
                               Args (args, &stx_found, &si4_found, &flt_found)));
-}
 
-TEST (SEAM_1_3_TESTS, RoomTests) {
-    printf ("\n  - Running RoomTestOne...\n");
-}
-
-TEST (SEAM_1_3_TESTS, ReadWriteTests) {
     enum {
         kBufferSize = 256,
         kElementsBuffer = kBufferSize / sizeof (uintptr_t)
@@ -844,9 +529,7 @@ TEST (SEAM_1_3_TESTS, ReadWriteTests) {
     CHECK_EQUAL (uv8_expected[7], uv8_found[7])
     CHECK_EQUAL (uv8_expected[8], uv8_found[8])
     CHECK_EQUAL (uv8_expected[9], uv8_found[9])
-}
-
-TEST (SEAM_1_3_TESTS, OpTests) {
+    
     enum {
         kBufferSize = 2048,
         kBufferWords = kBufferSize / sizeof (uintptr_t),
@@ -889,56 +572,7 @@ TEST (SEAM_1_3_TESTS, OpTests) {
     ExprScan (expr);//, &slot);
     PrintExpr (expr);
     std::cout << "\n Done with Op tests.";
-    system ("PAUSE");
-}
-
-TEST (SEAM_1_3_TESTS, TextTests) {
-    PRINTF ("\n\n Testing Text...\n\n";
-
-    PRINTF ("\n\n Testing Text...";
-
-    enum {
-        kNumStrings = 5,
-        kSize = 10,
-    };
-
-    static const char* test_strings[kNumStrings][2] = {
-        { "?"      , ""        },
-        { "?"      , "?"       },
-        { "? "     , "?"       },
-        { "Apples" , "Apples"  },
-        { "Apples" , "Apples"  },
-    };
-
-    const char* end;
-
-    char buffer_a[kSize],
-         buffer_b[kSize];
-
-    for (int i = 0; i < kNumStrings; ++i) {
-        end = SlotWrite (buffer_a, buffer_a + kSize, test_strings[i][0]);
-        CHECK (end != nullptr)
-        end = SlotWrite (buffer_b, buffer_b + kSize, test_strings[i][0]);
-        CHECK (end != nullptr)
-
-        end = TextEquals (buffer_a, buffer_b);
-        CHECK (end != nullptr)
-        end = TextEquals (buffer_a, buffer_a + kSize, buffer_b);
-        CHECK (end != nullptr)
-    }
-
-    PRINTF ("\n\n Testing Text write functions..."
-              << "\n\n Expecting Line() followed by \"Testing 1, 2, 3\"...";
-    Text<> text;
-    PrintLine () << "\n Testing " << 1 << ", " << 2 << ", " << 3;
-
-    PRINTF ("\n\n Wrote:\"" << PrintGetBegin () << "\""
-              << "\n Testing Text::Memory (void*, int size)...";
-
-    PrintMemory (PrintGetBegin (), PrintGetEnd ()) << Print ();
-
-    PRINTF ("\n\n Done testing _::Text class...\n ";
-    system ("PAUSE");
+    system ("PAUSE");*/
 }
 #undef PRINT_PAUSE
 #undef PRINTF

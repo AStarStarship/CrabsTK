@@ -39,20 +39,22 @@ namespace _ {
     @param text      Beginning address of the buffer.
     @param text_end  The end address of the buffer.
     @param string    The potentially unsafe string to write. */
-KABUKI char* Print (const char* string, char* text, char* text_end);
+KABUKI char* Print (const char* string, char* text, char* text_end,
+                    char delimiter = 0);
 
 /** Copies a char from the source to the text.
     @param text     Beginning address of the buffer.
     @param text_end The end address of the buffer.
     @param value    The potentially unsafe string to write. */
 KABUKI char* Print (const char* string, const char* string_end, char* text,
-                    char* text_end);
+                    char* text_end, char delimiter = 0);
 
 /** Writes the give value to the given buffer as an ASCII string.
     @param begin Beginning address of the buffer.
     @param end   The end address of the buffer.
     @param value The value to write. */
-inline char* Print (int32_t value, char* text, char* text_end) {
+inline char* Print (int32_t value, char* text, char* text_end,
+                    char delimiter = 0) {
     if (value >= 0) {
         return Print ((uint32_t)value, text, text_end);
     } else {
@@ -65,7 +67,8 @@ inline char* Print (int32_t value, char* text, char* text_end) {
     @param begin Beginning address of the buffer.
     @param end   The end address of the buffer.
     @param value The value to write. */
-inline char* Print (int64_t value, char* text, char* text_end) {
+inline char* Print (int64_t value, char* text, char* text_end,
+                    char delimiter = 0) {
     if (value >= 0) {
         return Print ((uint64_t)value, text, text_end);
     } else {
@@ -78,25 +81,27 @@ inline char* Print (int64_t value, char* text, char* text_end) {
     @param begin Beginning address of the buffer.
     @param end   The end address of the buffer.
     @param value The value to write. */
-KABUKI char* Print (float value, char* text, char* text_end);
+KABUKI char* Print (float value, char* text, char* text_end,
+                    char delimiter = 0);
 
 /** Writes the give value to the given buffer as an ASCII string.
     @param begin Beginning address of the buffer.
     @param end   The end address of the buffer.
     @param value The value to write. */
-KABUKI char* Print (double value, char* target, char* target_end);
+KABUKI char* Print (double value, char* target, char* target_end,
+                    char delimiter = 0);
 
 /** Prints the given string justified right to this string.
     @param input The string to print.
     @param num_columns The number of columns per row. */
 KABUKI char* PrintRight (const char* string, int num_columns, char* text,
-                         char* text_end);
+                         char* text_end, char delimiter = 0);
 
 /** Prints the given value justified right to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (int32_t value, int num_columns, char* text, 
-                         char* text_end) {
+                         char* text_end, char delimiter = 0) {
     char buffer[16];
     Print ((uint32_t)value, buffer, buffer + 16);
     return PrintRight (buffer, num_columns, text, text_end);
@@ -106,7 +111,7 @@ inline char* PrintRight (int32_t value, int num_columns, char* text,
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (uint32_t value, int num_columns, char* text, 
-                         char* text_end) {
+                         char* text_end, char delimiter = 0) {
     char buffer[16];
     Print ((uint32_t)value, buffer, buffer + 16);
     return PrintRight (buffer, num_columns, text, text_end);
@@ -116,7 +121,7 @@ inline char* PrintRight (uint32_t value, int num_columns, char* text,
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (int64_t value, int num_columns, char* text, 
-                         char* text_end) {
+                         char* text_end, char delimiter = 0) {
     char buffer[24];
     Print (value, buffer, buffer + 24);
     return PrintRight (buffer, num_columns, text, text_end);
@@ -126,7 +131,7 @@ inline char* PrintRight (int64_t value, int num_columns, char* text,
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (uint64_t value, int num_columns, char* text, 
-                         char* text_end) {
+                         char* text_end, char delimiter = 0) {
     char buffer[24];
     Print (value, buffer, buffer + 24);
     return PrintRight (buffer, num_columns, text, text_end);
@@ -136,7 +141,7 @@ inline char* PrintRight (uint64_t value, int num_columns, char* text,
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (float value, int num_columns, char* text, 
-                         char* text_end) {
+                         char* text_end, char delimiter = 0) {
     char buffer[kkFloat32DigitsMax];
     Print (value, buffer, buffer + kkFloat32DigitsMax);
     return PrintRight (buffer, num_columns, text, text_end);
@@ -146,7 +151,7 @@ inline char* PrintRight (float value, int num_columns, char* text,
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (double value, int num_columns, char* text, 
-                         char* text_end) {
+                         char* text_end, char delimiter = 0) {
     char buffer[kFloat64DigitsMax];
     Print (value, buffer, buffer + kFloat64DigitsMax);
     return PrintRight (buffer, num_columns, text, text_end);
@@ -157,13 +162,13 @@ inline char* PrintRight (double value, int num_columns, char* text,
     @param input The value to print.
     @param num_columns */
 KABUKI char* PrintCentered (const char* string, int num_columns, char* text,
-                            char* text_end);
+                            char* text_end, char delimiter = 0);
 
 /** Prints the given value justified center to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintCentered (int32_t value, int num_columns, char* text, 
-                         char* text_end) {
+                            char* text_end, char delimiter = 0) {
     char buffer[8];
     Print ((int64_t)value, buffer, buffer + 8);
     return PrintCentered (buffer, num_columns, text, text_end);
@@ -173,7 +178,7 @@ inline char* PrintCentered (int32_t value, int num_columns, char* text,
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintCentered (uint32_t value, int num_columns, char* text, 
-                         char* text_end) {
+                            char* text_end, char delimiter = 0) {
     char buffer[16];
     Print ((uint32_t)value, buffer, buffer + 16);
     return PrintCentered (buffer, num_columns, text, text_end);
@@ -183,7 +188,7 @@ inline char* PrintCentered (uint32_t value, int num_columns, char* text,
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintCentered (int64_t value, int num_columns, char* text, 
-                         char* text_end) {
+                            char* text_end, char delimiter = 0) {
     char buffer[16];
     Print (value, buffer, buffer + 16);
     return PrintCentered (buffer, num_columns, text, text_end);
@@ -193,7 +198,7 @@ inline char* PrintCentered (int64_t value, int num_columns, char* text,
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintCentered (uint64_t value, int num_columns, char* text, 
-                         char* text_end) {
+                            char* text_end, char delimiter = 0) {
     char buffer[24];
     Print (value, buffer, buffer + 24);
     return PrintCentered (buffer, num_columns, text, text_end);
@@ -203,7 +208,7 @@ inline char* PrintCentered (uint64_t value, int num_columns, char* text,
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintCentered (float value, int num_columns, char* text, 
-                         char* text_end) {
+                            char* text_end, char delimiter = 0) {
     char buffer[kkFloat32DigitsMax];
     Print (value, buffer, buffer + kkFloat32DigitsMax);
     return PrintCentered (buffer, num_columns, text, text_end);
@@ -213,7 +218,7 @@ inline char* PrintCentered (float value, int num_columns, char* text,
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintCentered (double value, int num_columns, char* text, 
-                         char* text_end) {
+                            char* text_end, char delimiter = 0) {
     char buffer[kFloat64DigitsMax];
     Print (value, buffer, buffer + kFloat64DigitsMax);
     return PrintCentered (buffer, num_columns, text, text_end);
@@ -221,11 +226,11 @@ inline char* PrintCentered (double value, int num_columns, char* text,
 
 /** Prints a string line of the char repeating. */
 KABUKI char* PrintLine (char c, int num_columns, char* text,
-                        char* text_end);
+                        char* text_end, char delimiter = 0);
 
 /** Prints a string line of the char repeating with an underscore. */
 KABUKI char* PrintLine (const char* string, int num_columns, char* text,
-                        char* text_end);
+                        char* text_end, char delimiter = 0);
 
 /** Prints the given byte in Hex.
     This function prints the hex in big endian.
@@ -233,25 +238,28 @@ KABUKI char* PrintLine (const char* string, int num_columns, char* text,
     @param  text_end End of the buffer.
     @return          Null upon failure or a pointer to the byte after the last 
                      byte written. */
-KABUKI char* PrintHex (char c, char* text, char* text_end);
+KABUKI char* PrintHex (char c, char* text, char* text_end, char delimiter = 0);
 
 /** Print's out the given word to the text buffer.
     @param  text     Beginning of the buffer.
     @param  text_end End of the buffer.
     @return          Null upon failure or a pointer to the byte after the last 
                      byte written. */
-KABUKI char* PrintHex (uintptr_t value, char* text, char* text_end);
-
+KABUKI char* PrintHex (uintptr_t value, char* text, char* text_end,
+                       char delimiter = 0);
+    
 /** Print's out the given word to the text buffer.
     @param  text     Beginning of the buffer.
     @param  text_end End of the buffer.
     @return          Null upon failure or a pointer to the byte after the last 
                      byte written. */
-inline char* PrintHex (const void* ptr, char* text, char* text_end) {
+inline char* PrintHex (const void* ptr, char* text, char* text_end,
+                       char delimiter = 0) {
     return PrintHex ((uintptr_t)ptr, text, text_end);
 }
 
-KABUKI char* PrintBinary (uint64_t value, char* text, char* text_end);
+KABUKI char* PrintBinary (uint64_t value, char* text, char* text_end, 
+                          char delimiter = 0);
 
 /** Prints out the contents of the address to the debug stream.
     @param begin    The beginning of the read buffer.
@@ -261,7 +269,7 @@ KABUKI char* PrintBinary (uint64_t value, char* text, char* text_end);
     @return          Null upon failure or a pointer to the byte after the last 
                      byte written. */
 KABUKI char* PrintMemory (const void* begin, const void* end, char* text,
-                          char* text_end);
+                          char* text_end, char delimiter = 0);
 
 /** Utility class for printing to strings.
     This class only stores the end of buffer pointer and a pointer to the write

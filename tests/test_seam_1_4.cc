@@ -130,14 +130,7 @@ void TestSeam1_4 {
         << " e:" << e << " f:" << f << " g:" << g << " h:" << h
         << " i:" << i << " j:" << j;
 }
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
-TEST (SEAM_1_4_TESTS, PrintTests) {
-}
-#endif      //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
-
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 TEST (SEAM_1_4_TESTS, BookTests) {
     PrintLineBreak ("\n  + Running BookTests\n", 10);
 
@@ -332,7 +325,6 @@ TEST (SEAM_1_4_TESTS, ClockTests) {
     std::cout << "<\nDone testing date parsing utils! :-)\n";
 }
 
-#if USING_CRABS_TABLE
 TEST (SEAM_1_4_TESTS, TableTests) {
     std::cout << "\n  - Running TableTest...\n";
     char_t index;
@@ -411,7 +403,6 @@ TEST (SEAM_1_4_TESTS, TableTests) {
 
     TablePrint (table);
 }
-#endif  //< USING_CRABS_TABLE
 
 TEST (SEAM_1_4_TESTS, ExprTests) {
     Text<> text;

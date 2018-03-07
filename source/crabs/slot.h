@@ -149,38 +149,6 @@ inline Slot& Print (uint32_t value, Slot& slot, char delimiter = 0) {
     @param value The value to write to the slot.
     @param slot  The slot tow rite to.
     @return The slot. */
-inline Slot& Print (int16_t value, Slot& slot, char delimiter = 0) {
-    return Print ((int64_t)value, slot, delimiter);
-}
-
-/** Writes the give value to the given buffer as an ASCII string.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
-inline Slot& Print (uint16_t value, Slot& slot, char delimiter = 0) {
-    return Print ((uint64_t)value, slot, delimiter);
-}
-
-/** Writes the give value to the given buffer as an ASCII string.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
-inline Slot& Print (int8_t value, Slot& slot, char delimiter = 0) {
-    return Print ((int64_t)value, slot, delimiter);
-}
-
-/** Writes the give value to the given buffer as an ASCII string.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
-inline Slot& Print (uint8_t value, Slot& slot, char delimiter = 0) {
-    return Print ((uint64_t)value, slot, delimiter);
-}
-
-/** Writes the give value to the given buffer as an ASCII string.
-    @param value The value to write to the slot.
-    @param slot  The slot tow rite to.
-    @return The slot. */
 KABUKI Slot& Print (float value, Slot& slot, char delimiter = 0);
 
 /** Writes the give value to the given buffer as an ASCII string.
@@ -194,47 +162,6 @@ KABUKI Slot& Print (double value, Slot& slot, char delimiter = 0);
     @param num_columns The number of columns per row. */
 KABUKI Slot& PrintRight (const char* string, int num_columns, Slot& slot,
                          char delimiter = 0);
-
-/** Prints the given value justified right to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row. */
-inline Slot& PrintRight (int8_t value, int num_columns, Slot& slot,
-                         char delimiter = 0) {
-    char buffer[8];
-    Print (value, buffer, buffer + 8);
-    return PrintRight (buffer, num_columns, slot, delimiter);
-}
-
-/** Prints the given value justified right to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row. */
-inline Slot& PrintRight (uint8_t value, int num_columns, Slot& slot,
-                         char delimiter = 0) {
-    char buffer[8];
-    Print (value, buffer, buffer + 8);
-    return PrintRight (buffer, num_columns, slot, delimiter);
-}
-
-/** Prints the given value justified right to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row. */
-inline Slot& PrintRight (int16_t value, int num_columns, Slot& slot,
-                         char delimiter = 0) {
-    char buffer[8];
-    Print (value, buffer, buffer + 8);
-    return PrintRight (buffer, num_columns, slot, delimiter);
-}
-
-/** Prints the given value justified right to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row.
-    @return Returns the slot. */
-inline Slot& PrintRight (uint16_t value, int num_columns, Slot& slot,
-                  char delimiter = 0) {
-    char buffer[8];
-    Print (value, buffer, buffer + 8);
-    return PrintRight (buffer, num_columns, slot, delimiter);
-}
 
 /** Prints the given value justified right to this string.
     @param value The char to print.
@@ -302,47 +229,6 @@ inline Slot& PrintRight (double value, int num_columns, Slot& slot,
     @param num_columns */
 KABUKI Slot& PrintCentered (const char* text, int num_columns, Slot& slot,
                             char delimiter = 0);
-
-/** Prints the given value justified center to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row. */
-inline Slot& PrintCentered (int8_t value, int num_columns, Slot& slot,
-                            char delimiter = 0) {
-    char buffer[8];
-    Print (value, buffer, buffer + 8);
-    return PrintCentered (buffer, num_columns, slot, delimiter);
-}
-
-/** Prints the given value justified center to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row. */
-inline Slot& PrintCentered (uint8_t value, int num_columns, Slot& slot,
-                            char delimiter = 0) {
-    char buffer[8];
-    Print (value, buffer, buffer + 8);
-    return PrintCentered (buffer, num_columns, slot, delimiter);
-}
-
-/** Prints the given value justified center to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row. */
-inline Slot& PrintCentered (int16_t value, int num_columns, Slot& slot,
-                         char delimiter = 0) {
-    char buffer[8];
-    Print (value, buffer, buffer + 8);
-    return PrintCentered (buffer, num_columns, slot, delimiter);
-}
-
-/** Prints the given value justified center to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row.
-    @return Returns the slot. */
-inline Slot& PrintCentered (uint16_t value, int num_columns, Slot& slot,
-                  char delimiter = 0) {
-    char buffer[8];
-    Print (value, buffer, buffer + 8);
-    return PrintCentered (buffer, num_columns, slot, delimiter);
-}
 
 /** Prints the given value justified center to this string.
     @param value The char to print.
@@ -475,38 +361,6 @@ inline _::Slot& operator<< (_::Slot& slot, const char* string) {
     @param  slot The slot.
     @param  value The value to write to the slot. 
     @return The slot. */
-inline _::Slot& operator<< (_::Slot& slot, int8_t value) {
-    return Print (value, slot);
-}
-
-/** Op << writes the given value to the slot.
-    @param  slot The slot.
-    @param  value The value to write to the slot. 
-    @return The slot. */
-inline _::Slot& operator<< (_::Slot& slot, uint8_t value) {
-    return Print (value, slot);
-}
-
-/** Op << writes the given value to the slot.
-    @param  slot The slot.
-    @param  value The value to write to the slot. 
-    @return The slot. */
-inline _::Slot& operator<< (_::Slot& slot, int16_t value) {
-    return Print (value, slot);
-}
-
-/** Op << writes the given value to the slot.
-    @param  slot The slot.
-    @param  value The value to write to the slot. 
-    @return The slot. */
-inline _::Slot& operator<< (_::Slot& slot, uint16_t value) {
-    return Print (value, slot);
-}
-
-/** Op << writes the given value to the slot.
-    @param  slot The slot.
-    @param  value The value to write to the slot. 
-    @return The slot. */
 inline _::Slot& operator<< (_::Slot& slot, int32_t value) {
     return Print (value, slot);
 }
@@ -549,11 +403,6 @@ inline _::Slot& operator<< (_::Slot& slot, float value) {
     @return The slot. */
 inline _::Slot& operator<< (_::Slot& slot, double value) {
     return Print (value, slot);
-}
-
-/**  Prints out the parameters to the debug console. */
-inline _::Slot& operator<< (_::Slot& slot, const uint_t* bsq) {
-    return PrintBsq (bsq, slot);
 }
 
 #endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

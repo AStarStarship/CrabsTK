@@ -209,4 +209,41 @@ int main()
         printf("DeleteTimerQueue failed (%d)\n", GetLastError());
 
     return 0;
+}
+
+
+template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
+    uint second = 0>
+    time_t TestTime (char* buffer, int buffer_size) {
+    if (buffer == nullptr)
+        return 0;
+    time_t t;
+    time (&t);
+    tm* moment = localtime (&t);
+    if (!moment) {
+        std::cout << "\n\n Created invalid test moment: " << moment << '\n';
+        return 0;
+    }
+    moment->tm_year = year - kTimeEpoch;
+    moment->tm_mon = month - 1;
+    moment->tm_mday = day;
+    moment->tm_hour = hour;
+    moment->tm_min = minute;
+    moment->tm_sec = second;
+
+    if (!PrintDateTimeText (buffer, buffer_size, moment)) {
+        std::cout << "\nError making timestamp";
+
+        return 0;
+    }
+    std::cout << "< Creating test time: ";
+    PrintDateTime (moment);
+    t = mktime (moment);
+    if (t < 0) {
+        std::cout << "< Invalid " << t << '\n';
+        return 0;
+    } else {
+        std::cout << '\n';
+    }
+    return t;
 }*/
