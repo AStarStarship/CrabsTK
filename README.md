@@ -1,8 +1,6 @@
-﻿*A *
+﻿﻿﻿﻿﻿# Kabuki Toolkit
 
-﻿﻿﻿﻿# Kabuki Toolkit
-
-Kabuki Toolkit (KT) is a modern cross-platform Embedded-C++1x software and firmware toolkit for making intelligent connected technologies with Script and the Kabuki VM. KT is built on top of some of the  best commercial-friendly open-source C and C++ libraries formatted using the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html). #WorkInProgress
+Kabuki Toolkit (KT) is a modern cross-platform C++1x software and firmware toolkit for making intelligent connected technologies with Script and the Kabuki VM. KT is built on top of some of the  best commercial-friendly open-source C and C++ libraries formatted using the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html). #WorkInProgress
 
 ## Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification (Script)
 

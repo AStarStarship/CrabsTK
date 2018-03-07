@@ -23,7 +23,7 @@
 
 #include "config.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >=2
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
 
 namespace _ {
 
@@ -180,5 +180,5 @@ KABUKI const char* TextFind (const char* text, const char* query,
                              char delimiter = 0);
 
 }   //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
 #endif  //< HEADER_FOR_CRABS_TEXT

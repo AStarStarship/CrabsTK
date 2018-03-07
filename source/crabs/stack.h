@@ -19,7 +19,7 @@
 
 #include "config.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 namespace _ {
 
@@ -241,5 +241,5 @@ bool StackContains (TStack<T, I>* stack, void* address) {
 }
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_STACK

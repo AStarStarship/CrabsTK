@@ -16,7 +16,7 @@
 
 #include <stdafx.h>
 #include "script_itos_benchmark.h"
-#include "../../source/crabs/print_itos.h"
+#include "../../source/crabs/script_itos.h"
 
 typedef unsigned int uint;
 
@@ -28,14 +28,14 @@ inline void PrintBinary (uint32_t value) {
 
     for (int i = kSize; i > 0; --i) {
         char c = (char)('0' + (value >> (kSize - 1)));
-        putchar (c);
+        cout << c;
         value = value << 1;
     }
 }
 
 void BenchmarkScriptItos () {
     enum {
-        kNumTests         = 500 * 1000 * 1000,
+        kNumTests         = 1000 * 1000 * 1000,
         kSize             = 24,
     };
 
@@ -208,12 +208,14 @@ void BenchmarkScriptItos () {
 
 void PrintDigits99To99Lut () {
     cout << "\n\nstatic const uint16_t kDigits00To99[100] = {\n    ";
+
     enum { kDigitsLast = ('9' << 8) | '9' };
+
     uint16_t digits,
              tick = 0,
              tick_count = 9;
     uint16_t tens,
-        ones;
+             ones;
     for (tens = '0'; tens <= '9'; ++tens) {
         for (ones = '0'; ones <= '9'; ++ones) {
             digits = (ones << 8) | tens;

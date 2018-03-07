@@ -20,12 +20,6 @@
     <ClInclude Include="assembly.h">
       <Filter>source</Filter>
     </ClInclude>
-    <ClInclude Include="script_itos_benchmark.h">
-      <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="script_itos_competition.h">
-      <Filter>source</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>source</Filter>
     </ClInclude>
@@ -40,13 +34,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="script_itos_competition.cc">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="script_itos_benchmark.cc">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\crabs\print_itos.cc">

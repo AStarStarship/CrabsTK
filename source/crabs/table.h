@@ -22,7 +22,7 @@
 
 #include "memory.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #include "operand.h"
 
 namespace _ {
@@ -616,7 +616,7 @@ KABUKI byte TableFind (const Table* table, const char* key) {
     return kInvalidIndex;
 }
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 /** Prints this object out to the console. */
 KABUKI void TablePrint (Table* table) {
     if (table == nullptr)
@@ -692,5 +692,5 @@ KABUKI void TablePrint (Table* table) {
 #endif
 
 }       //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_TABLE

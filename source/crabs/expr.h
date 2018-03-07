@@ -19,7 +19,7 @@
 
 #include "operand.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "bout.h"
 #include "bin.h"
@@ -251,7 +251,7 @@ KABUKI const Op* ExprQuery (Expr* expr, const Op& header);
     @return Returns the header if expr is nil. */
 KABUKI const Op* ExprQuery (Expr* expr, const Op* op);
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 /** Prints the Expr stack to the Text buffer */
 KABUKI Slot& PrintExpr (Expr* expr, Slot& slot);
 
@@ -265,10 +265,10 @@ KABUKI Slot& ExprPrintStack (Expr* expr, Slot& slot);
 
 }       //< namespace _
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 /** Prints the given Expr to the Text buffer. */
 inline _::Slot& operator<< (_::Slot& slot, _::Expr* expr);
 #endif
 
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_EXPR

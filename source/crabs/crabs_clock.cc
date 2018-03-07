@@ -17,14 +17,14 @@
 #include <stdafx.h>
 #include "clock.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "print.h"
 #include "text.h"
 #include "scan.h"
 
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #define PUTS(string) puts (string);
@@ -41,7 +41,7 @@
 //    std::chrono::microseconds>;
 namespace _ {
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 
 std::tm* ClockLocalTime (std::tm* std_tm, std::time_t const& time) {
     if (!std_tm)

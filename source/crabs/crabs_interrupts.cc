@@ -22,7 +22,7 @@
 
 namespace _ {
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 const char* RoomCrashException::what () const throw () {
     return "External crash";
 }

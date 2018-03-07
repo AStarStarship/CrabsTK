@@ -169,5 +169,5 @@ KABUKI char* MemoryCopy (char* write, char* write_end, const char* read,
                          const char* read_end, int size);
 
 }       //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_MEMORY

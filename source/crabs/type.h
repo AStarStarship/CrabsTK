@@ -22,7 +22,7 @@
 
 #include "memory.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 namespace _ {
 
@@ -249,5 +249,5 @@ inline T TypeUnpackVarint (T value) {
 KABUKI uint_t TypeSize (uint_t type);
 
 }       //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< CRABS_TYPES_H

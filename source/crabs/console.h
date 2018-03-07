@@ -24,7 +24,7 @@
 
 #if MAJOR_SEAM == 1 && MINOR_MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 
 namespace _ {
 

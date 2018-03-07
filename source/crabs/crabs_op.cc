@@ -17,14 +17,14 @@
 #include <stdafx.h>
 #include "op.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "bsq.h"
 #include "slot.h"
 #include "print.h"
 
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -34,7 +34,7 @@
 
 namespace _ {
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 Slot& OpPrint (const Op* op, Slot& slot) {
     if (!op) {
         return slot << "\nOp: nil";
@@ -46,7 +46,7 @@ Slot& OpPrint (const Op* op, Slot& slot) {
 }
 #endif
 /*
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 Op OpInit (uintptr_t* buffer, uint_t buffer_size) {
     BOut* bout = BOutInit (buffer, buffer_size);
     Op log;
@@ -156,7 +156,7 @@ void OpPrint (Op& log) {
 }   //< namespace _
 
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 
 _::Slot& operator<< (_::Slot& slot, const _::Op* op) {
     return OpPrint (op, slot);
@@ -165,4 +165,4 @@ _::Slot& operator<< (_::Slot& slot, const _::Op* op) {
 #endif
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4

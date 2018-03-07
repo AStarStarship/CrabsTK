@@ -22,7 +22,7 @@
 
 #include "slot.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 namespace _ {
 
@@ -77,7 +77,7 @@ KABUKI uintptr_t OperandCount (Operand* op);
             Contain the given key. */
 KABUKI wchar_t OperandIndex (Operand* operand, char* key_begin, char* key_end);
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 /** Queries the given Operand Op Header.
     @param  expr The expression to write the query to. Set to nil to return
                  op.
@@ -97,11 +97,11 @@ KABUKI Slot& PrintOperand (Operand* operand, Slot& slot);
 
 }   //< namespace _
 
-#if USING_CRABS_TEXT 
+#if USING_TEXT_SCRIPT 
 /** Overloaded operator<< prints the given operand to the text. */
 inline _::Slot& operator<< (_::Slot& slot, _::Operand* operand) {
     return PrintOperand (operand, slot);
 }
 #endif
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_OPERAND

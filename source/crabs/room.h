@@ -22,7 +22,7 @@
 
 #include "wall.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "interrupts.h"
 
@@ -143,14 +143,14 @@ class Room: public Operand {
     } State;
 
     enum {
-        kFloorSizeWords = kRoomFloorSize / sizeof (uintptr_t) + 2, //< +2 buffer.
         #ifndef CRABS_MAX_WALLS
         kRoomFloorSize = 1024,
         #else
         kRoomFloorSize = CRABS_MAX_WALLS,
         #undef ROOM_FLOOR_SIZE
         #endif
-    }
+        kFloorSizeWords = kRoomFloorSize / sizeof (uintptr_t) + 2, //< +2 buffer.
+    };
 
     /** Creates a Room with the given size.
         @param floor Buffer used to create the Wall Stack. Set to nullptr to 
@@ -233,7 +233,7 @@ class Room: public Operand {
     /** Script expressions. */
     virtual const Op* Star (wchar_t index, Expr* expr);
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
     /** Prints the Room to the stdout. */
     virtual _::Slot& Print (_::Slot& slot);
 #endif
@@ -262,5 +262,5 @@ class Room: public Operand {
 //KABUKI Room* ChineseRoom (Room* room = nullptr);
 
 }       //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< CRABS_ROOM_HDi

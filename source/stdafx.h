@@ -16,6 +16,10 @@
 
 #pragma once
 
+#define DEBUGGING  1
+#define MAJOR_SEAM 1
+#define MINOR_SEAM 2
+
 #ifdef WIN32
 #include "targetver.h"
 #define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Slots headers

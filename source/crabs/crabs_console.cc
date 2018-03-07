@@ -18,12 +18,12 @@
 
 #include "console.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "text.h"
 
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -33,7 +33,7 @@
 
 namespace _ {
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 
 Slot& ConsoleSet (uintptr_t *buffer, uintptr_t buffer_size) {
 
@@ -138,4 +138,4 @@ Slot& Scan () {
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4

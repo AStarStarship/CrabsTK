@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\tests\stb_sprintf.h" />
     <ClInclude Include="..\tests\tests_global.h" />
     <ClInclude Include="assembly.h" />
     <ClInclude Include="crabs\address.h" />
@@ -50,7 +49,7 @@
     <ClInclude Include="crabs\op.h" />
     <ClInclude Include="crabs\operand.h" />
     <ClInclude Include="crabs\print.h" />
-    <ClInclude Include="crabs\print_itos.h" />
+    <ClInclude Include="crabs\script_itos.h" />
     <ClInclude Include="crabs\random.h" />
     <ClInclude Include="crabs\room.h" />
     <ClInclude Include="crabs\scan.h" />
@@ -72,7 +71,6 @@
     <ClCompile Include="..\tests\test_seam_1_3.cc" />
     <ClCompile Include="..\tests\test_seam_1_4.cc" />
     <ClCompile Include="..\tests\test_seam_1_5.cc" />
-    <ClCompile Include="..\tests\test_seam_1_6.cc" />
     <ClCompile Include="crabs\crabs_align.cc" />
     <ClCompile Include="crabs\crabs_bin.cc" />
     <ClCompile Include="crabs\crabs_bout.cc" />
@@ -94,7 +92,7 @@
     <ClCompile Include="crabs\crabs_text.cc" />
     <ClCompile Include="crabs\crabs_type.cc" />
     <ClCompile Include="crabs\crabs_wall.cc" />
-    <ClCompile Include="crabs\print_itos.cc" />
+    <ClCompile Include="crabs\script_itos.cc" />
     <ClCompile Include="dllmain.cc" />
     <ClCompile Include="stdafx.cc" />
   </ItemGroup>
@@ -193,7 +191,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\cpputest\include;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\..\cpputest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "bin.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "bout.h"
 #include "type.h"
@@ -39,7 +39,7 @@
 
 namespace _ {
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 const char** BInStateStrings () {
     static const char* kStateStrings[] = {
         "Address",      //< 0
@@ -648,7 +648,7 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
     return 0;
 }
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 Slot& BInPrint (BIn* bin, Slot& slot) {
     if (!bin) {
         return slot << "\nError: BIn can't be nil";
@@ -667,4 +667,4 @@ Slot& BInPrint (BIn* bin, Slot& slot) {
 #undef PRINTF
 #undef PUTCHAR
 #undef CLEAR
-#endif  //< USING_CRABS_BIN
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

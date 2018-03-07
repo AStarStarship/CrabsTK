@@ -21,8 +21,9 @@
 #define HEADER_FOR_CRABS_SLOT
 
 #include "op.h"
+#include "print.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 namespace _ {
 
@@ -116,19 +117,19 @@ KABUKI Slot& Print (const char* string, Slot& slot, char delimiter = 0);
 KABUKI Slot& Print (const char* text, const char* text_end, Slot& slot,
                     char delimiter = 0);
 
-/** Writes the give value  to the given buffer as an ASCII string.
+/** Writes the give value to the given buffer as an ASCII string.
     @param value The value to write to the slot.
     @param slot  The slot tow rite to.
     @return The slot. */
 KABUKI Slot& Print (int64_t value, Slot& slot, char delimiter = 0);
 
-/** Writes the give value  to the given buffer as an ASCII string.
+/** Writes the give value to the given buffer as an ASCII string.
     @param value The value to write to the slot.
     @param slot  The slot tow rite to.
     @return The slot. */
 KABUKI Slot& Print (uint64_t value, Slot& slot, char delimiter = 0);
 
-/** Writes the give value  to the given buffer as an ASCII string.
+/** Writes the give value to the given buffer as an ASCII string.
     @param value The value to write to the slot.
     @param slot  The slot tow rite to.
     @return The slot. */
@@ -136,7 +137,7 @@ inline Slot& Print (int32_t value, Slot& slot, char delimiter = 0) {
     return Print ((int64_t)value, slot, delimiter);
 }
 
-/** Writes the give value  to the given buffer as an ASCII string.
+/** Writes the give value to the given buffer as an ASCII string.
     @param value The value to write to the slot.
     @param slot  The slot tow rite to.
     @return The slot. */
@@ -144,7 +145,7 @@ inline Slot& Print (uint32_t value, Slot& slot, char delimiter = 0) {
     return Print ((uint64_t)value, slot, delimiter);
 }
 
-/** Writes the give value  to the given buffer as an ASCII string.
+/** Writes the give value to the given buffer as an ASCII string.
     @param value The value to write to the slot.
     @param slot  The slot tow rite to.
     @return The slot. */
@@ -152,7 +153,7 @@ inline Slot& Print (int16_t value, Slot& slot, char delimiter = 0) {
     return Print ((int64_t)value, slot, delimiter);
 }
 
-/** Writes the give value  to the given buffer as an ASCII string.
+/** Writes the give value to the given buffer as an ASCII string.
     @param value The value to write to the slot.
     @param slot  The slot tow rite to.
     @return The slot. */
@@ -160,7 +161,7 @@ inline Slot& Print (uint16_t value, Slot& slot, char delimiter = 0) {
     return Print ((uint64_t)value, slot, delimiter);
 }
 
-/** Writes the give value  to the given buffer as an ASCII string.
+/** Writes the give value to the given buffer as an ASCII string.
     @param value The value to write to the slot.
     @param slot  The slot tow rite to.
     @return The slot. */
@@ -168,7 +169,7 @@ inline Slot& Print (int8_t value, Slot& slot, char delimiter = 0) {
     return Print ((int64_t)value, slot, delimiter);
 }
 
-/** Writes the give value  to the given buffer as an ASCII string.
+/** Writes the give value to the given buffer as an ASCII string.
     @param value The value to write to the slot.
     @param slot  The slot tow rite to.
     @return The slot. */
@@ -176,13 +177,13 @@ inline Slot& Print (uint8_t value, Slot& slot, char delimiter = 0) {
     return Print ((uint64_t)value, slot, delimiter);
 }
 
-/** Writes the give value  to the given buffer as an ASCII string.
+/** Writes the give value to the given buffer as an ASCII string.
     @param value The value to write to the slot.
     @param slot  The slot tow rite to.
     @return The slot. */
 KABUKI Slot& Print (float value, Slot& slot, char delimiter = 0);
 
-/** Writes the give value  to the given buffer as an ASCII string.
+/** Writes the give value to the given buffer as an ASCII string.
     @param value The value to write to the slot.
     @param slot  The slot tow rite to.
     @return The slot. */
@@ -555,5 +556,5 @@ inline _::Slot& operator<< (_::Slot& slot, const uint_t* bsq) {
     return PrintBsq (bsq, slot);
 }
 
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_SLOT

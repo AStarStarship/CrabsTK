@@ -22,7 +22,7 @@
 
 #include "op.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "print.h"
 
@@ -56,7 +56,7 @@ struct KABUKI BOut {
 /** Get's the B-Output's buffer.*/
 KABUKI char* BOutBuffer (BOut* bout);
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 
 /** Gets a a char for printing out the bout_state. */
 KABUKI const char** BOutStateStrings ();
@@ -98,7 +98,7 @@ KABUKI void BOutAckBack (BOut* bout, const char* address);
 /** */
 KABUKI void BInKeyStrokes ();
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 /** Prints the BIn to the Text.
     @param  bout The bout to print.
     @param  text The Text to print to the bout.
@@ -108,13 +108,13 @@ KABUKI Slot& BOutPrint (BOut* bout, Slot& slot);
 
 }       //< namespace _
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 /** Prints out the bin to the text. */
 inline _::Slot& operator<< (_::Slot& slot, _::BOut* bout) {
     return _::BOutPrint (bout, slot);
 }
 #endif
 
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_BOUT
 #undef DEBUG_CRABS_BOUT

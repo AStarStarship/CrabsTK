@@ -16,6 +16,9 @@
 
 #pragma once
 #include <stdafx.h>
+#include <assembly.h>
+
+#if RUN_UNIT_TESTS
 
 #ifndef HEADER_FOR_GLOBAL
 #define HEADER_FOR_GLOBAL
@@ -25,4 +28,12 @@
 
 #include "../source/crabs/global.h"
 
+void TestSeam1 ();
+void TestSeam1_1 ();
+void TestSeam1_2 ();
+void TestSeam1_3 ();
+void TestSeam1_4 ();
+void TestSeam1_5 ();
+
 #endif  //< HEADER_FOR_GLOBAL
+#endif  //< RUN_UNIT_TESTS

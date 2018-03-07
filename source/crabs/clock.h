@@ -83,7 +83,7 @@ inline time_us_t ClockTimestampNow () {
 
 
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 
 /** Portable std::tm. */
 KABUKI std::tm* ClockLocalTime (std::tm* std_tm, std::time_t const& time);
@@ -125,13 +125,13 @@ KABUKI int ClockCompareTimes (time_t t, int year, int month, int day,
     @param calendar_time A calendar time struct to zero out. */
 KABUKI void ClockZeroTime (tm* std_tm);
 
-#endif  //< #if USING_CRABS_TEXT
+#endif  //< #if USING_TEXT_SCRIPT
 
 KABUKI time_t ClockTime (int year, int month, int day, int  hour = 0,
                          int minute = 0, int second = 0);
 
 }       //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_CLOCK
 
 /*

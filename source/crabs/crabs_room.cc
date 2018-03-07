@@ -17,9 +17,9 @@
 #include <stdafx.h>
 #include "room.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #define PUTS(string) putsr(string);
@@ -252,7 +252,7 @@ uintptr_t Room::GetSizeBytes () {
     return count;
 }
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 Slot& Room::Print (Slot& slot) {
     return slot << "\nRoom: ";
 }
@@ -261,4 +261,4 @@ Slot& Room::Print (Slot& slot) {
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4

@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "bout.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "memory.h"
 #include "type.h"
@@ -25,7 +25,7 @@
 #include "hash.h"
 #include "args.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -114,7 +114,7 @@ BOut* BOutInit (uintptr_t* buffer, uint_t size) {
     bout->stop  = 0;
     bout->read  = 0;
 
-    #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+    #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
     MemoryClear (BOutBuffer (bout), size);
     #endif
     return bout;
@@ -739,7 +739,7 @@ void BInKeyStrokes () {
     }
 }
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 Slot& BOutPrint (BOut* bout, Slot& slot) {
     slot << PrintLine ('_', 80, slot);
     if (!bout) {
@@ -758,4 +758,4 @@ Slot& BOutPrint (BOut* bout, Slot& slot) {
 
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4

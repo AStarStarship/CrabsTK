@@ -18,10 +18,10 @@
 #include <stdafx.h>
 #include "door.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -137,4 +137,4 @@ static Door* DoorInit (uintptr_t* buffer, slot_t slot_size) {
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4

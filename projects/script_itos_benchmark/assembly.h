@@ -23,7 +23,7 @@
 
 #define MAJOR_SEAM 1
 
-#define MINOR_SEAM 2
+#define MINOR_SEAM 3
 
 // Choose BARE_METAL, MBED, MBED_OS, ARDUINO, MINGW32, WINDOWS, ANDROID,
 // LINUX, OSX, or IOS
@@ -118,5 +118,5 @@
 #define USING_CRABS_BOOK         NO
 #define USING_CRABS_LIST         NO
 #define USING_CRABS_DIC          NO
-#define USING_CRABS_TEXT         YES
+#define USING_TEXT_SCRIPT         YES
 #define USING_CRABS_EXCEPTIONS   YES

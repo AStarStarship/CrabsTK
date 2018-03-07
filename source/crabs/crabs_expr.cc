@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "expr.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "clock.h"
 #include "bsq.h"
@@ -25,7 +25,7 @@
 #include "hash.h"
 
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -947,7 +947,7 @@ const Op* ExprQuery (Expr* expr, const Op* op) {
     return op;
 }
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 Slot& ExprPrintStack (Expr* expr, Slot& slot) {
     if (!expr) {
         return slot;
@@ -1002,11 +1002,11 @@ Slot& PrintExpr (Expr* expr, Slot& slot) {
 
 }       //< namespace _
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 _::Slot& operator<< (_::Slot& slot, _::Expr* expr) {
     return PrintExpr (expr, slot);
 }
-#endif //< USING_CRABS_TEXT
+#endif //< USING_TEXT_SCRIPT
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4

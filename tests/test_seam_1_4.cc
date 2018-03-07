@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/tests/test_seam_1_3.cc
+    @file    ~/tests/test_seam_1_4.cc
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -15,24 +15,27 @@
 */
 
 #include <stdafx.h>
-#include "tests_global.h"
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
 
+#include "tests_global.h"
+
+
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PRINT_PAUSE(message)\
+    printf ("\n%s               ", message); system ("PAUSE");
+#else
+#define PRINTF(x, ...)
+#define PRINT_PAUSE(message)
+#endif
+
 using namespace _;
 
-TEST_GROUP (SEAM_1_4_TESTS) {
-    void setup () {
+void TestSeam1_4 {
 
-    }
+    printf ("\n    Testing SEAM_1_4... ");
 
-    void teardown () {
-        std::cout << "\n";
-        system ("PAUSE");
-    }
-};
-
-TEST (SEAM_1_4_TESTS, CrabsSeam1) {
     enum {
         kSize = 16,
         kSlotSize = 2048,
@@ -127,15 +130,15 @@ TEST (SEAM_1_4_TESTS, CrabsSeam1) {
         << " e:" << e << " f:" << f << " g:" << g << " h:" << h
         << " i:" << i << " j:" << j;
 }
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
-TEST (SEAM_1_3_TESTS, PrintTests) {
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+TEST (SEAM_1_4_TESTS, PrintTests) {
 }
-#endif      //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#endif      //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
-TEST (SEAM_1_3_TESTS, BookTests) {
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+TEST (SEAM_1_4_TESTS, BookTests) {
     PrintLineBreak ("\n  + Running BookTests\n", 10);
 
     PrintLineBreak ("\n  - Running BookInit...\n", 5, ' ');
@@ -259,7 +262,7 @@ template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
     return t;
 }
 
-TEST (SEAM_1_3_TESTS, ClockTests) {
+TEST (SEAM_1_4_TESTS, ClockTests) {
     time_t t,
            t_found;
     tm* lt;
@@ -330,7 +333,7 @@ TEST (SEAM_1_3_TESTS, ClockTests) {
 }
 
 #if USING_CRABS_TABLE
-TEST (SEAM_1_3_TESTS, TableTests) {
+TEST (SEAM_1_4_TESTS, TableTests) {
     std::cout << "\n  - Running TableTest...\n";
     char_t index;
     uintptr_t buffer[128];
@@ -410,7 +413,7 @@ TEST (SEAM_1_3_TESTS, TableTests) {
 }
 #endif  //< USING_CRABS_TABLE
 
-TEST (SEAM_1_3_TESTS, ExprTests) {
+TEST (SEAM_1_4_TESTS, ExprTests) {
     Text<> text;
     std::cout << "\n Running ExprTests...\n";
     enum {
@@ -446,11 +449,11 @@ TEST (SEAM_1_3_TESTS, ExprTests) {
                               Args (args, &stx_found, &si4_found, &flt_found)));
 }
 
-TEST (SEAM_1_3_TESTS, RoomTests) {
+TEST (SEAM_1_4_TESTS, RoomTests) {
     printf ("\n  - Running RoomTestOne...\n");
 }
 
-TEST (SEAM_1_3_TESTS, ReadWriteTests) {
+TEST (SEAM_1_4_TESTS, ReadWriteTests) {
     enum {
         kBufferSize = 256,
         kElementsBuffer = kBufferSize / sizeof (uintptr_t)
@@ -844,7 +847,7 @@ TEST (SEAM_1_3_TESTS, ReadWriteTests) {
     CHECK_EQUAL (uv8_expected[9], uv8_found[9])
 }
 
-TEST (SEAM_1_3_TESTS, OpTests) {
+TEST (SEAM_1_4_TESTS, OpTests) {
     enum {
         kBufferSize = 2048,
         kBufferWords = kBufferSize / sizeof (uintptr_t),
@@ -890,7 +893,7 @@ TEST (SEAM_1_3_TESTS, OpTests) {
     system ("PAUSE");
 }
 
-TEST (SEAM_1_3_TESTS, TextTests) {
+TEST (SEAM_1_4_TESTS, TextTests) {
     PRINTF ("\n\n Testing Text...\n\n";
 
     PRINTF ("\n\n Testing Text...";
@@ -938,4 +941,8 @@ TEST (SEAM_1_3_TESTS, TextTests) {
     PRINTF ("\n\n Done testing _::Text class...\n ";
     system ("PAUSE");
 }
-#endif      //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#undef PRINT_PAUSE
+#undef PRINTF
+#else
+void TestSeam1_4 () {}
+#endif      //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 5

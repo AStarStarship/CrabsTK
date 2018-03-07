@@ -170,11 +170,8 @@
     <ClInclude Include="crabs\align.h">
       <Filter>source\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\print_itos.h">
+    <ClInclude Include="crabs\script_itos.h">
       <Filter>source\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tests\stb_sprintf.h">
-      <Filter>tests</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -244,31 +241,28 @@
     <ClCompile Include="crabs\crabs_scan.cc">
       <Filter>source\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="..\tests\test_seam_1_1.cc">
-      <Filter>tests</Filter>
-    </ClCompile>
     <ClCompile Include="..\tests\tests_global.cc">
       <Filter>tests</Filter>
     </ClCompile>
     <ClCompile Include="crabs\crabs_align.cc">
       <Filter>source\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\print_itos.cc">
+    <ClCompile Include="..\tests\test_seam_1_1.cc">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\script_itos.cc">
       <Filter>source\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="..\tests\test_seam_1_6.cc">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\test_seam_1_5.cc">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tests\test_seam_1_4.cc">
+    <ClCompile Include="..\tests\test_seam_1_2.cc">
       <Filter>tests</Filter>
     </ClCompile>
     <ClCompile Include="..\tests\test_seam_1_3.cc">
       <Filter>tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\tests\test_seam_1_2.cc">
+    <ClCompile Include="..\tests\test_seam_1_4.cc">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\test_seam_1_5.cc">
       <Filter>tests</Filter>
     </ClCompile>
   </ItemGroup>

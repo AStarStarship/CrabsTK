@@ -17,11 +17,10 @@
 #include <stdafx.h>
 #include "slot.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "type.h"
 #include "text.h"
-
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
@@ -1447,4 +1446,4 @@ Slot& PrintOp (const Op* op, Slot& slot) {
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4

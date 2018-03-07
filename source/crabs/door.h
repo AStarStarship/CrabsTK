@@ -22,7 +22,7 @@
 
 #include "expr.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "slot.h"
 #include "stack.h"
@@ -97,7 +97,7 @@ class Door : public Operand {
     private:
                                     //< vtable pointer here in memory.
     uintptr_t* buffer_;             //< Pointer to dynamic buffer.
-    TStack<slot_t, slot_t>* slots_; //< The slots in the door.
+    TStack<slot_t, slot_t>* slots_; //< Slots in the door.
 };
 
 /** Returns a Static Error Op. */
@@ -120,5 +120,5 @@ static Door* DoorInit (int* buffer, uint_t slot_size) {
 }*/
 
 }       //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_DOOR

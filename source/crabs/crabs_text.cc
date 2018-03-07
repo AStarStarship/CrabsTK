@@ -16,12 +16,14 @@
 
 #include <stdafx.h>
 
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+
 #include "text.h"
 #include "memory.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if USING_TEXT_SCRIPT
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -31,7 +33,6 @@
 
 // Some of the Text functions will be required but not all of them.
 
-#if USING_CRABS_TEXT
 
 namespace _ {
 
@@ -144,14 +145,10 @@ int TextLength (const char* text, char delimiter) {
     }
     int count = 0;
     char c = *text;
-    PRINTF ("\nChecking string length for %s. Found:\"", text)
     while (c > delimiter) {
         ++count;
         c = *(++text);
-        PUTCHAR (c)
     }
-    PUTCHAR ('\"')
-    PUTCHAR ('\n')
     return count;
 }
 
@@ -647,7 +644,7 @@ int TextCompare (const char* text_a, const char* text_end,
 }
 
 }       //< namespace _
-#endif  //< USING_CRABS_TEXT
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< USING_TEXT_SCRIPT
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2

@@ -116,8 +116,6 @@ namespace _ {
 enum {
     kNo              = 0,                 //< Script no/false value.
     kYes             = 1,                 //< Script yes/true value.
-    kMajorVersion    = 0,                 //< Script version major.
-    kMinorVersion    = 9,                 //< Script version minor.
     //kMinFloorSize  = 256,               //< Min size of a room.
     //kMaxFloorSize  = 0x7FFFFFFC,        //< Max room size: 2GB - 7 bits.
     kMaxFloorsCount  = CRABS_MAX_WALLS,   //< Size of the Room Floor (buffer).
@@ -265,7 +263,7 @@ typedef uint64_t data_t;    //< Default TData size.
 #endif
 
 #if CRABS_MEMORY_PROFILE >= 3 || DEBUG
-#define USING_CRABS_TEXT 3
+#define USING_TEXT_SCRIPT 3
 #endif  //< CRABS_MEMORY_PROFILE >= 3
 
 /** Macro declares a class to be non-copyable. */

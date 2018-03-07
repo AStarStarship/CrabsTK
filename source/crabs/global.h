@@ -23,14 +23,18 @@
 #include "config.h"
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 1
-#include "print_itos.h"
+#include "script_itos.h"
 #include "random.h"
-#elif MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif
+
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
 #include "print.h"
 #include "scan.h"
 #include "memory.h"
 #include "text.h"
-#elif MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#endif
+
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #include "op.h"
 #include "address.h"
 #include "event.h"
@@ -40,10 +44,14 @@
 #include "args.h"
 #include "console.h"
 #include "bsq.h"
-#elif MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
+#endif
+
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
 #include "bin.h"
 #include "bout.h"
-#elif MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
+#endif
+
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
 #include "table.h"
 #include "lst.h"
 #include "map.h"

@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/tests/test_seam_1_4.cc
+    @file    ~/tests/test_seam_1_5.cc
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -15,127 +15,26 @@
 */
 
 #include <stdafx.h>
-#include "tests_global.h"
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
 
+#include "tests_global.h"
+
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PRINT_PAUSE(message)\
+    printf ("\n%s               ", message); system ("PAUSE");
+#else
+#define PRINTF(x, ...)
+#define PRINT_PAUSE(message)
+#endif
+
 using namespace _;
 
-TEST_GROUP (SEAM_1_5_TESTS) {
-    void setup () {
+void TestSeam1_5 () {
 
-    }
+    printf ("\n    Testing SEAM_1_5... ");
 
-    void teardown () {
-        std::cout << "\n";
-        system ("PAUSE");
-    }
-};
-
-TEST (SEAM_1_5_TESTS, CrabsSeam1) {
-    enum {
-        kSize = 16,
-        kSlotSize = 2048,
-        kSlotSizeWords = kSlotSize >> kWordSizeShift
-    };
-
-    static const char* compare_strings[] = {
-        "Testing",
-        "Texting",
-        "Testing@",
-        "Texting@",
-    };
-    static const char string[] = "Testing one, two, three.";
-
-    static const char* right_string[] = {
-        "    Testing one, two, three.",
-        "Test...",
-        ".",
-        "..",
-        "...",
-        "T...",
-    };
-
-    uintptr_t slot_buffer[kSlotSizeWords];
-    Slot slot;
-    SlotInit (&slot, slot_buffer, kSlotSizeWords);
-
-    char buffer[kFloat64DigitsMax];
-
-    std::cout << "\n|  - Running HexTest...";
-    for (int i = 0; i < 16; ++i) {
-        int value = TextHexToByte (TextNibbleToLowerCaseHex (i));
-        CHECK_EQUAL (i, value)
-            value = TextHexToByte (TextNibbleToUpperCaseHex (i));
-        CHECK_EQUAL (i, value)
-    }
-
-    for (int i = 0; i < 256; ++i) {
-        int value = TextHexToByte (TextByteToLowerCaseHex (i));
-        CHECK_EQUAL (i, value)
-            value = TextHexToByte (TextByteToUpperCaseHex (i));
-        CHECK_EQUAL (i, value)
-    }
-
-    std::cout << "\n| - Testing string utils...\n";
-
-    CHECK (!TextEquals (compare_strings[0], compare_strings[1]))
-    CHECK (!TextEquals (compare_strings[0], compare_strings[3]))
-    CHECK (TextEquals  (compare_strings[0], compare_strings[0]))
-    CHECK (!TextEquals (compare_strings[2], compare_strings[3], '@'))
-    CHECK (TextEquals  (compare_strings[2], compare_strings[2], '@'))
-
-    CHECK_EQUAL (9, TextLength ("123456789"))
-    CHECK_EQUAL (9, TextLength ("123456789 ", ' '))
-        
-    CHECK (TextFind (string, "one"))
-    CHECK (TextFind (string, "three."))
-    
-    PrintRight (string, 28, buffer, buffer + kFloat64DigitsMax);
-    STRCMP_EQUAL (right_string[0], buffer)
-    
-    PrintRight (string, 7, buffer, buffer + kFloat64DigitsMax);
-    STRCMP_EQUAL (right_string[1], buffer)
-    
-    PrintRight (string, 1, buffer, buffer + kFloat64DigitsMax);
-    STRCMP_EQUAL (right_string[2], buffer)
-    
-    PrintRight (string, 2, buffer, buffer + kFloat64DigitsMax);
-    STRCMP_EQUAL (right_string[3], buffer)
-    
-    PrintRight (string, 3, buffer, buffer + kFloat64DigitsMax);
-    STRCMP_EQUAL (right_string[4], buffer)
-    
-    PrintRight (string, 4, buffer, buffer + kFloat64DigitsMax);
-    STRCMP_EQUAL (right_string[5], buffer)
-
-    slot << "\n|\n| Testing Text...\n|\n|";
-    SlotDisplay (slot);
-
-    int8_t   a = 1;  //< 
-    uint8_t  b = 2;  //< 
-    int16_t  c = 3;  //< 
-    uint16_t d = 4;  //< 
-    int32_t  e = 5;  //< 
-    uint32_t f = 6;  //< 
-    int64_t  g = 7;  //< 
-    uint64_t h = 8;  //< 
-    float    i = 9; //< 
-    double   j = 10; //< 
-
-    slot << "\n| a:" << a << " b:" << b << " c:" << c << " d:" << d
-        << " e:" << e << " f:" << f << " g:" << g << " h:" << h
-        << " i:" << i << " j:" << j;
-}
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
-
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
-TEST (SEAM_1_4_TESTS, PrintTests) {
-}
-#endif      //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
-
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
-TEST (SEAM_1_4_TESTS, BookTests) {
     PrintLineBreak ("\n  + Running BookTests\n", 10);
 
     PrintLineBreak ("\n  - Running BookInit...\n", 5, ' ');
@@ -223,43 +122,7 @@ TEST (SEAM_1_4_TESTS, BookTests) {
     CHECK_EQUAL (index, -1)
 }
 
-template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
-    uint second = 0>
-    time_t TestTime (char* buffer, int buffer_size) {
-    if (buffer == nullptr)
-        return 0;
-    time_t t;
-    time (&t);
-    tm* moment = localtime (&t);
-    if (!moment) {
-        std::cout << "\n\n Created invalid test moment: " << moment << '\n';
-        return 0;
-    }
-    moment->tm_year = year - kTimeEpoch;
-    moment->tm_mon = month - 1;
-    moment->tm_mday = day;
-    moment->tm_hour = hour;
-    moment->tm_min = minute;
-    moment->tm_sec = second;
-
-    if (!PrintDateTimeText (buffer, buffer_size, moment)) {
-        std::cout << "\nError making timestamp";
-
-        return 0;
-    }
-    std::cout << "< Creating test time: ";
-    PrintDateTime (moment);
-    t = mktime (moment);
-    if (t < 0) {
-        std::cout << "< Invalid " << t << '\n';
-        return 0;
-    } else {
-        std::cout << '\n';
-    }
-    return t;
-}
-
-TEST (SEAM_1_4_TESTS, ClockTests) {
+TEST (SEAM_1_5_TESTS, ClockTests) {
     time_t t,
            t_found;
     tm* lt;
@@ -330,7 +193,7 @@ TEST (SEAM_1_4_TESTS, ClockTests) {
 }
 
 #if USING_CRABS_TABLE
-TEST (SEAM_1_4_TESTS, TableTests) {
+TEST (SEAM_1_5_TESTS, TableTests) {
     std::cout << "\n  - Running TableTest...\n";
     char_t index;
     uintptr_t buffer[128];
@@ -410,7 +273,7 @@ TEST (SEAM_1_4_TESTS, TableTests) {
 }
 #endif  //< USING_CRABS_TABLE
 
-TEST (SEAM_1_4_TESTS, ExprTests) {
+TEST (SEAM_1_5_TESTS, ExprTests) {
     Text<> text;
     std::cout << "\n Running ExprTests...\n";
     enum {
@@ -446,11 +309,11 @@ TEST (SEAM_1_4_TESTS, ExprTests) {
                               Args (args, &stx_found, &si4_found, &flt_found)));
 }
 
-TEST (SEAM_1_4_TESTS, RoomTests) {
+TEST (SEAM_1_5_TESTS, RoomTests) {
     printf ("\n  - Running RoomTestOne...\n");
 }
 
-TEST (SEAM_1_4_TESTS, ReadWriteTests) {
+TEST (SEAM_1_5_TESTS, ReadWriteTests) {
     enum {
         kBufferSize = 256,
         kElementsBuffer = kBufferSize / sizeof (uintptr_t)
@@ -844,7 +707,7 @@ TEST (SEAM_1_4_TESTS, ReadWriteTests) {
     CHECK_EQUAL (uv8_expected[9], uv8_found[9])
 }
 
-TEST (SEAM_1_4_TESTS, OpTests) {
+TEST (SEAM_1_5_TESTS, OpTests) {
     enum {
         kBufferSize = 2048,
         kBufferWords = kBufferSize / sizeof (uintptr_t),
@@ -890,7 +753,7 @@ TEST (SEAM_1_4_TESTS, OpTests) {
     system ("PAUSE");
 }
 
-TEST (SEAM_1_4_TESTS, TextTests) {
+TEST (SEAM_1_5_TESTS, TextTests) {
     PRINTF ("\n\n Testing Text...\n\n";
 
     PRINTF ("\n\n Testing Text...";
@@ -938,4 +801,9 @@ TEST (SEAM_1_4_TESTS, TextTests) {
     PRINTF ("\n\n Done testing _::Text class...\n ";
     system ("PAUSE");
 }
+
+#undef PRINT_PAUSE
+#undef PRINTF
+#else
+void TestSeam1_5 () {}
 #endif      //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 5

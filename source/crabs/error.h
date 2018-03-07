@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 
 namespace _ {
@@ -66,5 +66,5 @@ KABUKI const char** ErrorStrings ();
 KABUKI const char* ErrorString (Error error);
 
 }       //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_ERROR

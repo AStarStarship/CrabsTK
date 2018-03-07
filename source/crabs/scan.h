@@ -24,7 +24,7 @@
 #include "config.h"
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 
 namespace _ {
 
@@ -175,6 +175,6 @@ KABUKI const char* Scan (double& result, const char* text,
                          const char* text_end);
 
 }   //< namespace _
-#endif  //< USING_CRABS_TEXT
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< USING_TEXT_SCRIPT
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_SCAN

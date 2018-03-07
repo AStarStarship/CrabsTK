@@ -17,13 +17,13 @@
 #include <stdafx.h>
 #include "operand.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #include "op.h"
 #include "print.h"
 #include "text.h"
 
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -74,7 +74,7 @@ wchar_t OperandIndex (Operand* operand, char* begin, char* end) {
     return 0;
 }
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 
 Slot& PrintOperand (Operand* operand, Slot& slot) {
     if (!operand) {
@@ -127,4 +127,4 @@ Slot& OperandQuery (Operand* root, const char* address, Slot& slot) {
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4

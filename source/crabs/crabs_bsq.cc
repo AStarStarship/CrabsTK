@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "bsq.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 namespace _ {
 
@@ -51,4 +51,4 @@ uint_t BsqParamNumber (const uint_t* params, int param_number) {
 
 }       //< namespace _
 
-#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4

@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/crabs/print_itos.cc
+    @file    ~/source/crabs/script_itos.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -15,40 +15,14 @@
 */
 
 #include <stdafx.h>
-#include "print_itos.h"
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 1
 
+#include "script_itos.h"
+
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
+
 #define DEBUG 1
-
-inline void PrintBinary (uint32_t value) {
-    enum { kSize = sizeof (uint32_t) * 8 };
-    
-    std::cout << "\n    ";
-    for (int i = kSize; i > 0; --i) {
-        char c = (char)('0' + (value >> (kSize - 1)));
-        std::cout << c;
-        value = value << 1;
-    }
-}
-
-inline void PrintBinaryTable (uint32_t value) {
-    enum { kSize = sizeof (uint32_t) * 8 };
-
-    std::cout << "\n    ";
-    for (int i = kSize; i > 0; --i) {
-        char c = (char)('0' + (value >> (kSize - 1)));
-        std::cout << c;
-        value = value << 1;
-    }
-    std::cout << "\n    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-                 "\n    33222222222211111111110000000000"
-                 "\n    10987654321098765432109876543210"
-                 "\n    ||  |  |   |  |  |   |  |  |   |"
-                 "\n    |1  0  0   0  0  0   0  0  0   0"
-                 "\n    |0  9  8   7  6  5   4  3  2   1";
-}
 
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
@@ -58,23 +32,32 @@ inline void PrintBinaryTable (uint32_t value) {
             begin, buffer, (uint)strlen (buffer));
 #define PRINT_BINARY PrintBinary (value);
 #define PRINT_BINARY_TABLE PrintBinaryTable (value);
+#define PRINT_HEADER\
+    for (int i = 0; i < 10; ++i) {\
+        *(text + i) = 'x';\
+    }\
+    *(text + 21) = 0;\
+    char* begin = text;\
+    char buffer[256];\
+    sprintf_s (buffer, 256, "%u", value);\
+    printf ("Expecting %s:%u", buffer, (uint)strlen (buffer));
+#define PRINT_LINE\
+    std::cout << '\n';\
+    for (int i = 80; i > 0; --i)\
+        std::cout << '-';
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
 #define PRINT_PRINTED
-#define PRINT_BINARY
-#define PRINT_BINARY_TABLE
+#define PRINT_HEADER
+#define PRINT_LINE
 #endif
  
 namespace _ {
 
-void PrintLine (char c) {
-    std::cout << '\n';
-    for (int i = 80; i > 0; --i) 
-        std::cout << c;
-}
-
 char* Print (uint32_t value, char* text, char* text_end) {
+
+    PRINT_LINE
 
     // Lookup table for powers of 10.
     static const uint32_t k10ToThe[]{
@@ -115,15 +98,7 @@ char* Print (uint32_t value, char* text, char* text_end) {
               digits7and8;
     uint32_t  comparator;
 
-    #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
-    // Write a bunches of xxxxxx to the buffer for debug purposes.
-    for (int i = 0; i <= 21; ++i) {
-        *(text + i) = 'x';
-    }
-    *(text + 21) = 0;
-    char* begin = text;
-    char buffer[256];
-    #endif
+    PRINT_HEADER
 
     if (value < 10) {
         PRINTF ("\n    Range:[0, 9] length:1 ")
@@ -132,6 +107,7 @@ char* Print (uint32_t value, char* text, char* text_end) {
         }
         *text++ = '0' + (char)value;
         PRINT_PRINTED
+        *text = 0;
         return text;
     }
     if (value < 100) {
@@ -141,6 +117,7 @@ char* Print (uint32_t value, char* text, char* text_end) {
         }
         *reinterpret_cast<uint16_t*> (text) = kDigits00To99[value];
         PRINT_PRINTED
+        *(text + 2) = 0;
         return text + 2;
     }
     if (value >> 14) {
@@ -214,6 +191,7 @@ char* Print (uint32_t value, char* text, char* text_end) {
             *reinterpret_cast<uint16_t*> (text) = 
                 kDigits00To99[digits7and8];
             PRINT_PRINTED
+            *(text + 8) = 0;
             return text + 8;
         }
         else if (value >> 20) {
@@ -250,6 +228,7 @@ char* Print (uint32_t value, char* text, char* text_end) {
                 kDigits00To99[digits5and6];
             PRINT_PRINTED
             *text = (char)digits7and8 + '0';
+            *(text + 7) = 0;
             return text + 7;
         }
         else if (value >> 17) {
@@ -284,6 +263,7 @@ char* Print (uint32_t value, char* text, char* text_end) {
             PRINT_PRINTED
             *reinterpret_cast<uint16_t*> (text    ) = kDigits00To99[digits5and6];
             PRINT_PRINTED
+            *(text + 6) = 0;
             return text + 6;
         }
         else { // (value >> 14)
@@ -311,6 +291,7 @@ char* Print (uint32_t value, char* text, char* text_end) {
             *reinterpret_cast<uint16_t*> (text + 3) = 
                 kDigits00To99[digits1and2];
             PRINT_PRINTED
+            *(text + 5) = 0;
             return text + 5;
         }
     }
@@ -340,6 +321,7 @@ char* Print (uint32_t value, char* text, char* text_end) {
         PRINT_PRINTED
         *reinterpret_cast<uint16_t*> (text + 2) = kDigits00To99[digits1and2];
         PRINT_PRINTED
+        *(text + 4) = 0;
         return text + 4;
     }
     else {
@@ -355,6 +337,7 @@ char* Print (uint32_t value, char* text, char* text_end) {
             PRINT_PRINTED
             *text16 = (((uint16_t)'1') | (((uint16_t)'0') << 8));
             PRINT_PRINTED
+            *(text + 4) = 0;
             return text + 4;
         }
         PRINTF ("\n    Range:[100, 999] length:3")
@@ -366,11 +349,17 @@ char* Print (uint32_t value, char* text, char* text_end) {
         PRINT_PRINTED
         *reinterpret_cast<uint16_t*> (text + 1) = kDigits00To99[digits1and2];
         PRINT_PRINTED
+        *(text + 3) = 0;
         return text + 3;
     }
+}
+
+char* Print (uint64_t value, char* text, char* text_end) {
+    return nullptr;
 }
 
 }       //< namespace _
 #undef  PRINTF
 #undef  PRINT_PRINTED
+#undef  PRINT_HEADER
 #endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 1

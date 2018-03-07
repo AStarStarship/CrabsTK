@@ -19,7 +19,7 @@
 
 #include "op.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #include "bin.h"
 #include "bout.h"
 
@@ -143,5 +143,5 @@ KABUKI const Operation* MirrorResult (Mirror* mirror, Error error,
                                    char* address);
 
 }       //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_SCRIPT_MIRROR

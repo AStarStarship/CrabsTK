@@ -16,6 +16,32 @@
 #include <stdafx.h>
 #include "tests_global.h"
 
+#if MAJOR_SEAM >= 1
+TEST_GROUP (KabukiToolkitTests) {
+    void setup () {
+        puts ("\n\n\nTesting SEAM_1");
+    }
+
+    void teardown () {
+        std::cout << "\n\n";
+        system ("PAUSE");
+    }
+};
+
+void TestSeam1 () {
+    TestSeam1_1 ();
+    TestSeam1_2 ();
+    TestSeam1_3 ();
+    TestSeam1_4 ();
+    TestSeam1_5 ();
+}
+
+TEST (KabukiToolkitTests, MajorSeam1) {
+    TestSeam1 ();
+}
+
+#endif  //< #if MAJOR_SEAM >= 1
+
 int main (int args_count, char** args) {
     std::cout << '|';
     for (int i = 81; i > 0; --i) {
@@ -97,4 +123,5 @@ int main () {
     // Delete all timers in the timer queue.
     if (!DeleteTimerQueue (hTimerQueue))
         printf ("DeleteTimerQueue failed (%d)\n", GetLastError ());
-    */
+}
+*/

@@ -18,10 +18,10 @@
 
 #include "text.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -31,7 +31,7 @@
 
 // Some of the Text functions will be required but not all of them.
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 
 namespace _ {
 
@@ -488,7 +488,7 @@ const char* ScanBsq (const char* input, const char* input_end,
     return cursor;
 }*/
 }       //< namespace _
-#endif  //< USING_CRABS_TEXT
+#endif  //< USING_TEXT_SCRIPT
 #undef PRINTF
 #undef PUTCHAR
 #endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 2

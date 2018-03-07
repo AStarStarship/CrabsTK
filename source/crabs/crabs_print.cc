@@ -16,87 +16,87 @@
 
 #include <stdafx.h>
 
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+
 #include "print.h"
+
+#if USING_TEXT_SCRIPT
+
 #include "text.h"
 #include "type.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+void PrintBinary (uint32_t value) {
+    enum { kSize = sizeof (uint32_t) * 8 };
+    
+    std::cout << "\n    ";
+    for (int i = kSize; i > 0; --i) {
+        char c = (char)('0' + (value >> (kSize - 1)));
+        std::cout << c;
+        value = value << 1;
+    }
+}
+/** Don't think I need this anymore. It was for chopping off the MSD but it
+    was so slow it makes me shutter.
 
+void PrintBinaryTable (uint32_t value) {
+    enum { kSize = sizeof (uint32_t) * 8 };
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+    std::cout << "\n    ";
+    for (int i = kSize; i > 0; --i) {
+        char c = (char)('0' + (value >> (kSize - 1)));
+        std::cout << c;
+        value = value << 1;
+    }
+    std::cout << "\n    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                 "\n    33222222222211111111110000000000"
+                 "\n    10987654321098765432109876543210"
+                 "\n    ||  |  |   |  |  |   |  |  |   |"
+                 "\n    |1  0  0   0  0  0   0  0  0   0"
+                 "\n    |0  9  8   7  6  5   4  3  2   1";
+}*/
+
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
+#define PRINT_LINE\
+    std::cout << '\n';\
+    for (int i = 80; i > 0; --i) std::cout << '-';
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
+#define PRINT_LINE
 #endif
-
-#if USING_CRABS_TEXT
 
 namespace _ {
 
-char* Print (const char* string, char* target, char* target_end) {
+char* Print (const char* string, char* buffer, char* buffer_end) {
     if (!string) {
         return nullptr;
     }
-    if (!target) {
+    if (!buffer) {
         return nullptr;
     }
-    if (target > target_end) {
+    if (buffer >= buffer_end) {
         return nullptr;
     }
-    char* cursor = target;
-    char s = *string;
-    while (s) {
-        *cursor++ = s;
-        if (cursor > target_end) {
-            *target = 0; //< Replace the nil-term char.
+    char c = *string++;
+    while (c) {
+        *buffer++ = c;
+        if (buffer >= buffer_end) {
             return nullptr;
         }
-        s = *string++;
+        c = *string++;
     }
-    *cursor = s;
-    return cursor;
+    *buffer = c;
+    return buffer;
 }
 
-char* Print (const char* text, const char* text_end, char* target,
-             char* target_end) {
-    if (target) {
+char* Print (const char* text, const char* text_end, char* buffer,
+             char* buffer_end) {
+    if (buffer) {
         return nullptr;
     }
-    if (target > target_end) {
-        return nullptr;
-    }
-    if (!text) {
-        return nullptr;
-    }
-    if (text > text_end) {
-        return nullptr;
-    }
-    char* cursor = target;
-    char t = *text;
-    while (t) {
-        if (!t) {
-            return target;
-        }
-        *target = t;
-        if (++target > target_end) {
-            *target = 0;
-            return nullptr;
-        }
-        if (++text > text_end) {
-            *target = 0;
-            return nullptr;
-        }
-        t = *text;
-    }
-    *target = t;
-    return target;
-}
-
-char* PrintRight (const char* token, int num_columns, char* text, 
-                  char* text_end) {
-    if (!token) {
+    if (buffer >= buffer_end) {
         return nullptr;
     }
     if (!text) {
@@ -105,12 +105,45 @@ char* PrintRight (const char* token, int num_columns, char* text,
     if (text >= text_end) {
         return nullptr;
     }
-    if (text + num_columns > text_end) {
+    char* cursor = buffer;
+    char c = *text;
+    while (c) {
+        if (!c) {
+            return buffer;
+        }
+        *buffer = c;
+        if (++buffer >= buffer_end) {
+            *buffer = 0;
+            return nullptr;
+        }
+        if (++text >= text_end) {
+            *buffer = 0;
+            return nullptr;
+        }
+        c = *text;
+    }
+    *buffer = c;
+    return buffer;
+}
+
+char* PrintRight (const char* token, int num_columns, char* buffer, 
+                  char* buffer_end) {
+    char* start = buffer;
+    if (!token) {
+        return nullptr;
+    }
+    if (!buffer) {
+        return nullptr;
+    }
+    if (buffer >= buffer_end) {
+        return nullptr;
+    }
+    if (buffer + num_columns > buffer_end) {
         // Can't fit it in the buffer so this is an error.
         return nullptr;
     }
     
-    PRINTF ("\nPrinting \"%s\" aligned right %i columns", token, num_columns)
+    //PRINTF ("\n\nPrinting \"%s\" aligned right %i columns", token, num_columns)
 
     intptr_t    length    = 0;     //< Length of the token.
     const char* token_end = token; //< Address of the last char.
@@ -121,80 +154,112 @@ char* PrintRight (const char* token, int num_columns, char* text,
     while (*(++token_end));
     length = token_end - token;
 
-    if (!length) {
-        return text;
+    //PRINTF ("\n    Found length:%i", (int)length)
+
+    if (token == token_end) {
+        return buffer;
     }
-    PRINTF ("\n Wrote:\"")
+    
+    *(buffer + length) = 0;
     // If the length is less than the num_columns we need to print ".", "..", 
     // "..." or nothing and chop off some of the token.
     if (length > num_columns) {
+        //PRINTF ("\n Wrote with dots:\"")
         intptr_t num_dots = length - num_columns;
         if (num_dots > 3) {
             num_dots = 3;
         }
-        text_end = text + num_columns;
-        cursor = text_end - num_dots;
-        while (text < cursor) {
+        buffer_end = buffer + num_columns;
+        cursor = buffer_end - num_dots;
+        while (buffer < cursor) {
             c = *token++;
-            *text++ = c;
-            PUTCHAR (c)
+            *buffer++ = c;
+            //PUTCHAR (c)
         }
-        while (text < text_end) {
-            *text++ = '.';
-            PUTCHAR ('.')
+        while (buffer < buffer_end) {
+            *buffer++ = '.';
+            //PUTCHAR ('.')
         }
-        PUTCHAR ('\"')
-        return text + 1;
+        //PUTCHAR ('\"')
+        *buffer = 0;
+        return buffer;
     }
-    cursor = text + num_columns;
-    text_end = cursor - length;
-    while (cursor >= text_end) {
+    //PRINTF ("\n Wrote:\"")
+    cursor = buffer + num_columns;
+    buffer_end = cursor - length;
+    while (cursor >= buffer_end) {
         c = *token_end--;
         *cursor-- = c;
-        PUTCHAR (c)
+        //PUTCHAR (c)
     }
-    PUTCHAR ('\"')
-    text_end = cursor - num_columns;
+    //PUTCHAR ('\"')
+    buffer_end = cursor - num_columns;
     //#if MAJOR_SEAM == 1 && MINOR_SEAM == 1 
     //printf ("\ncursor:0x%p text:0x%x delta:%i", cursor, text, text, cursor);
     //#endif
-    while (cursor >= text) {
+    while (cursor >= buffer) {
         *cursor-- = ' ';
     }
-    text_end = text + num_columns;
-    return text_end;
-}
+    buffer_end = buffer + num_columns;
+    return buffer_end;
+} 
 
-char* PrintCentered (const char* string, int width, char* text, char* text_end) {
-    if (width < 2) {
-        //? Not sure if this is an error.
+char* PrintCentered (const char* string, int num_columns, char* text,
+                     char* text_end) {
+    if (!text) {
+        return text;
+    }
+    if (!string) {
+        return nullptr;
+    }
+    if (text >= text_end) {
+        return nullptr;
+    }
+    if (num_columns < 2) {
         return nullptr;
     }
     // We need to leave at least one space to the left and right of
-    int length = TextLength (string);
-    if (length < width - 2) {
-        // We need to write the ....
-        if (length < 4) {
-            // Then we're just going to write the first few letters.
-            for (; length >= 0; --length) {
-                *text++ = '\n';
-            }
-        }
-    }
-    int offset = (width - length) >> 1; //< >> 1 to /2
+    int length = TextLength (string),
+        offset;
+    PRINTF ("\n\n    Printing \"%s\":%i num_columns:%i", string, length,
+            num_columns)
 
-    for (int i = 0; i < offset; ++i) {
-        *text++ = '\n';
+    if (num_columns < length) {
+        offset = length - num_columns;
+        if (offset > 3) {
+            offset = 3;
+        }
+        num_columns -= offset;
+        while (num_columns-- > 0) {
+            *text++ = *string++;
+        }
+        while (offset-- > 0) {
+            *text++ = '.';
+        }
+        *text = 0;
+        return text;
     }
-    PRINTF (string);
-    for (offset = width - length - offset; offset <= width; ++offset) {
-        *text++ = '\n';
+    offset = (num_columns - length) >> 1; //< >> 1 to /2
+    length = num_columns - length - offset;
+    PRINTF ("\n    length:%i offset:%i", length, offset)
+    
+    while (length-- > 0) {
+        *text++ = ' ';
     }
+    char c = *string++;
+    while (c) {
+        *text++ = c;
+        c = *string++;
+    }
+    while (offset-- > 0) {
+        *text++ = ' ';
+    }
+    *text = c;
+    PRINTF ("\n    Printed:\"%s\"", string);
     return text;
 }
 
-char* PrintLine (char c, int num_columns, char* text,
-                 char* text_end) {
+char* PrintLine (char c, int num_columns, char* text, char* text_end) {
     if (!text) {
         return nullptr;
     }
@@ -204,7 +269,8 @@ char* PrintLine (char c, int num_columns, char* text,
     while (num_columns-- > 0) {
         *text++ = c;
     }
-    return text + 1;
+    *text = 0;
+    return text;
 }
 
 char* PrintLine (const char* string, int num_columns, char* text,
@@ -223,7 +289,8 @@ char* PrintLine (const char* string, int num_columns, char* text,
         }
         *text++ = c;
     }
-    return text + 1;
+    *text = 0;
+    return text;
 }
 
 /*
@@ -240,79 +307,55 @@ char* PrintHex (char c, char* text, char* text_end) {
     if (!text) {
         return nullptr;
     }
-    if (text > text_end) {
+    if (text >= text_end) {
         return nullptr;
     }
 
     if (text_end - text < 2) {
         return nullptr;
     }
-    *text = TextNibbleToUpperCaseHex (c);
-    return text + 1;
+    *text++ = TextNibbleToUpperCaseHex (c);
+    *text = 0;
+    return text;
 }
 
-char* PrintHex (uintptr_t value, char* text, char* text_end) {
+char* PrintHex (uintptr_t value, char* buffer, char* buffer_end) {
     enum { kHexStringLengthSizeMax = sizeof (void*) * 2 + 3 };
 
-    if (!text) {
+    if (!buffer) {
         return nullptr;
     }
-    if (text > text_end) {
-        return nullptr;
-    }
-
-    if (text_end - text < kHexStringLengthSizeMax) {
+    if (buffer > buffer_end) {
         return nullptr;
     }
 
+    if (buffer_end - buffer < kHexStringLengthSizeMax) {
+        return nullptr;
+    }
+    *buffer++ = '0';
+    *buffer++ = 'x';
     for (int num_bits_shift = 0; num_bits_shift < sizeof (void*) * 8;
          num_bits_shift += 8) {
         char c = (char)(value >> num_bits_shift);
         c = TextNibbleToUpperCaseHex (c);
-        *text++ = c;
+        *buffer++ = c;
     }
-    return text;
+    *buffer = 0;
+    return buffer;
 }
 
 Printer::Printer (char* cursor, size_t buffer_size) :
-    cursor_ (cursor),
-    end_    (cursor + buffer_size) {
+    cursor (cursor),
+    end    (cursor + buffer_size) {
     assert (cursor != nullptr);
 }
 
 Printer::Printer (char* cursor, char* end) :
-    cursor_ (cursor),
-    end_    (end) {
+    cursor (cursor),
+    end    (end) {
     assert (cursor != nullptr);
     assert (end != nullptr);
 
-}
-
-char* Printer::GetCursor () {
-    return cursor_;
-}
-
-char* Printer::GetEnd () {
-    return end_;
-}
-
-Printer& Printer::SetCurosr (char* cursor) {
-    if (!cursor) {
-        return *this;
-    }
-    cursor_ = cursor;
-    return *this;
-}
-
-char* Printer::SetEnd (char* end) {
-    if (!end) {
-        return end;
-    }
-    if (end <= cursor_) {
-        return nullptr;
-    }
-    end_ = end;
-    return end;
 }
 
 
@@ -328,40 +371,122 @@ char* PrintBinary (uint64_t value, char* text, char* text_end) {
         *text++ = (char)('0' + (value >> 63));
         value = value << 1;
     }
+    *text = 0;
     return text;
 }
 
-// @todo Move me to where I need to go!
-char* Print (uint64_t value, char* text, char* text_end) {
-    return nullptr;
-}
 
-
-char* Print (float value, char* target, char* target_end) {
+char* Print (float value, char* buffer, char* buffer_end) {
     // @todo Replace with GrisuX algorithm that uses the Script ItoS Algorithm.
-    intptr_t buffer_size = target_end - target,
-             result = sprintf_s (target, buffer_size, "%f", value);
+    intptr_t buffer_size = buffer_end - buffer,
+             result = sprintf_s (buffer, buffer_size, "%f", value);
     if (result < 0) {
-        *target = 0;
+        *buffer = 0;
         return nullptr;
     }
-    return target + result;
+    buffer += result;
+    *buffer = 0;
+    return buffer;
 }
 
-char* Print (double value, char* target, char* target_end) {
+char* Print (double value, char* buffer, char* buffer_end) {
     // Right now we're going to enforce there be enough room to write any
     // int32_t.
-    intptr_t buffer_size = target_end - target,
-             result = sprintf_s (target, buffer_size, "%f", value);
+    intptr_t buffer_size = buffer_end - buffer,
+             result = sprintf_s (buffer, buffer_size, "%f", value);
     if (result < 0) {
-        *target = 0;
+        *buffer = 0;
         return nullptr;
     }
-    return target + result;
+    buffer += result;
+    *buffer = 0;
+    return buffer;
+}
+
+char* PrintMemory (const void* token, const void* token_end, char* buffer,
+                   char* buffer_end) {
+    if (!token) {
+        return nullptr;
+    }
+    if (!buffer) {
+        return buffer;
+    }
+    if (buffer >= buffer_end) {
+        return nullptr;
+    }
+    char* buffer_begin = buffer;
+    const char* address_ptr     = reinterpret_cast<const char*> (token),
+              * address_end_ptr = reinterpret_cast<const char*> (token_end);
+    size_t      size            = address_end_ptr - address_ptr,
+                num_columns     = size / 64;
+    
+    //PRINTF ("\n    Printing Buffer with length:%i", TextLength (token))
+
+    if (size % 64 != 0) {
+        ++num_columns;
+    }
+    size += 81 * (num_columns + 2);
+    if (buffer + size >= buffer_end) {
+        PRINTF ("\n    ERROR: buffer isn't big enough!")
+        return nullptr;
+    }
+    *buffer++ = '\n';
+    *buffer++ = '|';
+
+    //  columns
+    *buffer++ = '0';
+    buffer = PrintRight (8, 7, buffer, buffer_end);
+    for (int i = 16; i <= 64; i += 8) {
+        buffer = PrintRight (i, 8, buffer, buffer_end);
+    }
+    *buffer++ = '|';
+    *buffer++ = '\n';
+    *buffer++ = '|';
+    for (int j = 8; j > 0; --j) {
+        for (int k = 7; k > 0; --k) {
+            *buffer++ = '-';
+        }
+        *buffer++ = '+';
+    }
+    *buffer++ = '|';
+    *buffer++ = ' ';
+        
+    buffer = PrintHex (address_ptr, buffer, buffer_end);
+    char c;
+    while (address_ptr < address_end_ptr) {
+        *buffer++ = '\n';
+        *buffer++ = '|';
+        for (int i = 0; i < 64; ++i) {
+            c = *address_ptr++;
+            if (address_ptr > address_end_ptr)
+                c = 'x';
+            if (c < ' ') {
+                c = ' ';
+            }
+            *buffer++ = c;
+        }
+        *buffer++ = '|';
+        *buffer++ = ' ';
+        buffer = PrintHex (address_ptr, buffer, buffer_end);
+        //PRINT_LINE
+        //PRINTF ("\n%s", buffer_begin)
+        //PRINT_LINE
+    }
+    *buffer++ = '\n';
+    *buffer++ = '|';
+    for (int j = 8; j > 0; --j) {
+        for (int k = 7; k > 0; --k) {
+            *buffer++ = '-';
+        }
+        *buffer++ = '+';
+    }
+    *buffer++ = '|';
+    *buffer++ = ' ';
+    return PrintHex (address_ptr + size, buffer, buffer_end);
 }
 
 }       //< namespace _
-#endif  //< USING_CRABS_TEXT
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< USING_TEXT_SCRIPT
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2

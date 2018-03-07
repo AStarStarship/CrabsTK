@@ -17,25 +17,25 @@
 #include <stdafx.h>
 #include "tests_global.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 1
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 1
 
 using namespace _;
 using namespace std;
 
+
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 1
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PRINT_PAUSE(message)\
     printf ("\n%s               ", message); system ("PAUSE");
+#else
+#define PRINTF(x, ...)
+#define PRINT_PAUSE(message)
+#endif
 
-TEST_GROUP (SEAM_1_2_TESTS) {
-    void setup () {
-        puts ("\n\n\nTesting SEAM_1_2");
-    }
+void TestSeam1_1 () {
 
-    void teardown () {
-        PRINT_PAUSE ("\n")
-    }
-};
+    printf ("\n    Testing SEAM_1_1... ");
 
-TEST (SEAM_1_2_TESTS, TestPrinter) {
     static const uint32_t k10ToThe[20] = {
         1,//< 10^0
         10,//< 10^1
@@ -81,18 +81,18 @@ TEST (SEAM_1_2_TESTS, TestPrinter) {
     };
 
     /*
-    printf ("\nTesting quick MSD lookup...\n    Length 1:");
+    PRINTF ("\nTesting quick MSD lookup...\n    Length 1:");
     static const uint32_t delta_one_bits[] = { 4, 7, 10, 14, 17, 20, 24, 27, 30 };
     uint32_t max,
              num_bits,
              msd_bit_range;
-    printf ("\n| Length | MSD Offset | Min Value  |"
+    PRINTF ("\n| Length | MSD Offset | Min Value  |"
             "\n|:------:|:----------:|:----------:|");
     for (int length = 3; length < 10; ++length) {
         num_bits = delta_one_bits[length - 2];
         msd_bit_range = (length == 10 || length == 20) ? 16: 8;
         for (uint32_t i = 1;  i <= 8; ++i) {
-            printf ("\n|   %u    |     %u      | %10u |", length, i, i << num_bits);
+            PRINTF ("\n|   %u    |     %u      | %10u |", length, i, i << num_bits);
         }
     }
     putchar ('\n');
@@ -117,15 +117,15 @@ TEST (SEAM_1_2_TESTS, TestPrinter) {
     std::mt19937_64 eng (rd ());
     std::uniform_int_distribution<uint32_t> distr;
 
-    printf ("\n\nTesting Script ItoS Algorithm...\n\n");
+    PRINTF ("\n\nTesting Script ItoS Algorithm...\n\n");
 
     //PrintDigits99To99Lut ();
 
-    printf ("\n\nTesting problem children...\n\n");
+    PRINTF ("\n\nTesting problem children...\n\n");
     for (int i = 0; i < kNumProblemChildren; ++i) {
         value = problem_children[i];
         sprintf_s (expecting, 24, "%u", value);
-        printf ("\n%i.) Expecting \"%s\":%u", i + 1, expecting,
+        PRINTF ("\n%i.) Expecting \"%s\":%u", i + 1, expecting,
                 (uint)strlen (expecting));
         result = Print (value, text, text + kSize);
         if (!result) {
@@ -134,20 +134,18 @@ TEST (SEAM_1_2_TESTS, TestPrinter) {
         }
         *result = 0;
         if (strcmp (expecting, text)) {
-            printf ("\n\nERROR: Expecting \"%s\":%u and found \"%s\":%u",
+            PRINTF ("\n\nERROR: Expecting \"%s\":%u and found \"%s\":%u",
                     expecting, (uint)strlen (expecting), text,
                     (uint)strlen (text));
             PRINT_PAUSE ("\n")
         }
-        PrintLine ();
     }
 
-    printf ("\n\nTesting edge conditions...\n\n");
+    PRINTF ("\n\nTesting edge conditions...\n\n");
     for (int i = 0; i < 28; ++i) {
         value = test_value[i];
         sprintf_s (expecting, 24, "%u", value);
-        printf ("\n%i.) Expecting \"%s\":%u", i + 1, expecting,
-                (uint)strlen (expecting));
+        PRINTF ("\n%i.) ", i + 1);
         result = Print (value, text, text + kSize);
         if (!result) {
             PRINT_PAUSE ("An error occurred :-(")
@@ -155,21 +153,18 @@ TEST (SEAM_1_2_TESTS, TestPrinter) {
         }
         *result = 0;
         if (strcmp (expecting, text)) {
-            printf ("\n\nERROR: Expecting \"%s\":%u and found \"%s\":%u",
+            PRINTF ("\n\nERROR: Expecting \"%s\":%u and found \"%s\":%u",
                     expecting, (uint)strlen (expecting), text,
                     (uint)strlen (text));
             PRINT_PAUSE ("\n")
         }
-        PrintLine ();
     }
 
-    printf ("\n\nTesting random numbers...\n\n");
+    PRINTF ("\n\nTesting random numbers...\n\n");
 
-    for (int i = 0; i < 0x00ffffff; ++i) {
+    for (int i = 0; i < 0x0000ffff; ++i) {
         value = distr (eng);
         sprintf_s (expecting, 24, "%u", value);
-        printf ("\n%i.) Expecting \"%s\":%u", i + 1, expecting,
-                (uint)strlen (expecting));
         result = Print (value, text, text + kSize);
         if (!result) {
             PRINT_PAUSE ("An error occurred :-(")
@@ -177,16 +172,18 @@ TEST (SEAM_1_2_TESTS, TestPrinter) {
         }
         *result = 0;
         if (strcmp (expecting, text)) {
-            printf ("\n\nERROR: Expecting \"%s\":%u and found \"%s\":%u",
+            PRINTF ("\n\nERROR: Expecting \"%s\":%u and found \"%s\":%u",
                     expecting, (uint)strlen (expecting), text,
                     (uint)strlen (text));
             PRINT_PAUSE ("\n")
         }
-        PrintLine ();
     }
 
-    printf ("\n Done testing ItoS :)\n\n");
+    PRINTF ("\n Done testing ItoS :)\n\n");
 }
 
 #undef PRINT_PAUSE
-#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
+#undef PRINTF
+#else
+void TestSeam1_1 () {}
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 1

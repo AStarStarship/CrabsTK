@@ -98,7 +98,7 @@ inline uint_t BinBufferLength (BIn* bin) {
     return SlotLength (base + bin->start, base + bin->stop, bin->size);
 }
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 /** Gets a a char for printing out the bin_state. */
 KABUKI const char** BInStateStrings ();
 
@@ -128,7 +128,7 @@ KABUKI bool BInIsReadable (BIn* bin);
                   failure. */
 KABUKI const Op* BInRead (BIn* bin, const uint_t* params, void** args);
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 
 /** Prints the BIn to the Text.
     @param  bin The pin to print.
@@ -139,5 +139,5 @@ KABUKI Slot& BInPrint (BIn* bin, Slot& slot);
 #endif
 
 }       //< namespace _
-#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_BIN

@@ -26,7 +26,7 @@
 
 namespace _ {
 
-#if USING_CRABS_TEXT
+#if USING_TEXT_SCRIPT
 /** Exception thrown to interrupt and crash the program. */
 struct KABUKI RoomCrashException : public std::exception {
     const char* what () const throw ();

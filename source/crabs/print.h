@@ -16,14 +16,14 @@
 
 #pragma once
 #include <stdafx.h>
+#include "script_itos.h"
+
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+
+#if USING_TEXT_SCRIPT
 
 #ifndef HEADER_FOR_CRABS_PRINT
 #define HEADER_FOR_CRABS_PRINT
-
-#include "print_itos.h"
-
-#if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
-#if USING_CRABS_TEXT
 
 namespace _ {
 
@@ -48,137 +48,43 @@ KABUKI char* Print (const char* string, char* text, char* text_end);
 KABUKI char* Print (const char* string, const char* string_end, char* text,
                     char* text_end);
 
-/** Writes the give value  to the given buffer as an ASCII string.
+/** Writes the give value to the given buffer as an ASCII string.
     @param begin Beginning address of the buffer.
     @param end   The end address of the buffer.
     @param value The value to write. */
-KABUKI char* Print (int64_t value, char* text, char* text_end) {
-    return Print ((uint64_t)value, text, text_end);
+inline char* Print (int32_t value, char* text, char* text_end) {
+    if (value >= 0) {
+        return Print ((uint32_t)value, text, text_end);
+    } else {
+        *text++ = '-';
+        return Print (~(uint32_t)value + 1, text, text_end);
+    }
 }
 
-/** Writes the give value  to the given buffer as an ASCII string.
+/** Writes the give value to the given buffer as an ASCII string.
+    @param begin Beginning address of the buffer.
+    @param end   The end address of the buffer.
+    @param value The value to write. */
+inline char* Print (int64_t value, char* text, char* text_end) {
+    if (value >= 0) {
+        return Print ((uint64_t)value, text, text_end);
+    } else {
+        *text++ = '-';
+        return Print (~(uint64_t)value + 1, text, text_end);
+    }
+}
+
+/** Writes the give value to the given buffer as an ASCII string.
     @param begin Beginning address of the buffer.
     @param end   The end address of the buffer.
     @param value The value to write. */
 KABUKI char* Print (float value, char* text, char* text_end);
 
-/** Writes the give value  to the given buffer as an ASCII string.
+/** Writes the give value to the given buffer as an ASCII string.
     @param begin Beginning address of the buffer.
     @param end   The end address of the buffer.
     @param value The value to write. */
 KABUKI char* Print (double value, char* target, char* target_end);
-
-/** Writes the give value  to the given buffer as an ASCII string.
-    @param begin Beginning address of the buffer.
-    @param end   The end address of the buffer.
-    @param value The value to write. */
-inline char* Print (int64_t value, char* text, char* text_end,
-                    char delimiter) {
-    if (value >= 0) {
-        return Print ((uint64_t)value, text, text_end);
-    }
-    *text++ = '-';
-    value = ~value + 1;
-    return Print ((uint64_t)value, text, text_end);
-}
-
-/** Writes the give value  to the given buffer as an ASCII string.
-    @param begin Beginning address of the buffer.
-    @param end   The end address of the buffer.
-    @param value The value to write. */
-inline char* Print (uint64_t value, char* text, char* text_end,
-                    char delimiter) {
-    text = Print (value, text, text_end);
-    if (!text) {
-        return nullptr;
-    }
-    *text = delimiter;
-    return text;
-}
-
-/** Writes the give value  to the given buffer as an ASCII string.
-    @param begin Beginning address of the buffer.
-    @param end   The end address of the buffer.
-    @param value The value to write. */
-inline char* Print (int32_t value, char* text, char* text_end,
-                    char delimiter) {
-    text = Print ((int64_t)value, text, text_end);
-    if (!text) {
-        return nullptr;
-    }
-    *text = delimiter;
-    return text;
-}
-
-/** Writes the give value  to the given buffer as an ASCII string.
-    @param begin Beginning address of the buffer.
-    @param end   The end address of the buffer.
-    @param value The value to write. */
-inline char* Print (uint32_t value, char* text, char* text_end,
-                    char delimiter) {
-    text = Print ((uint64_t)value, text, text_end);
-    if (!text) {
-        return nullptr;
-    }
-    *text = delimiter;
-    return text;
-}
-
-/** Writes the give value  to the given buffer as an ASCII string.
-    @param begin Beginning address of the buffer.
-    @param end   The end address of the buffer.
-    @param value The value to write. */
-inline char* Print (int16_t value, char* text, char* text_end,
-                    char delimiter) {
-    text = Print ((int64_t)value, text, text_end);
-    if (!text) {
-        return nullptr;
-    }
-    *text = delimiter;
-    return text + 1;
-}
-
-/** Writes the give value  to the given buffer as an ASCII string.
-    @param begin Beginning address of the buffer.
-    @param end   The end address of the buffer.
-    @param value The value to write. */
-inline char* Print (uint16_t value, char* text, char* text_end,
-                    char delimiter) {
-    text = Print ((uint64_t)value, text, text_end);
-    if (!text) {
-        return nullptr;
-    }
-    *text = delimiter;
-    return text;
-}
-
-/** Writes the give value  to the given buffer as an ASCII string.
-    @param begin Beginning address of the buffer.
-    @param end   The end address of the buffer.
-    @param value The value to write. */
-inline char* Print (int8_t value, char* text, char* text_end,
-                    char delimiter) {
-    text = Print ((int64_t)value, text, text_end);
-    if (!text) {
-        return nullptr;
-    }
-    *text = delimiter;
-    return text;
-}
-
-/** Writes the give value  to the given buffer as an ASCII string.
-    @param begin Beginning address of the buffer.
-    @param end   The end address of the buffer.
-    @param value The value to write. */
-inline char* Print (uint8_t value, char* text, char* text_end,
-                    char delimiter) {
-    text = Print ((uint64_t)value, text, text_end);
-    if (!text) {
-        return nullptr;
-    }
-    *text = delimiter;
-    return text;
-}
 
 /** Prints the given string justified right to this string.
     @param input The string to print.
@@ -187,67 +93,27 @@ KABUKI char* PrintRight (const char* string, int num_columns, char* text,
                          char* text_end);
 
 /** Prints the given value justified right to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row. */
-inline char* PrintRight (int8_t value, int num_columns, char* text,
-                         char* text_end) {
-    char buffer[8];
-    Print ((uint64_t)value, buffer, buffer + 8);
-    return PrintRight (buffer, num_columns, text, text_end);
-}
-
-/** Prints the given value justified right to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row. */
-inline char* PrintRight (uint8_t value, int num_columns, char* text,
-                         char* text_end) {
-    char buffer[8];
-    Print ((uint64_t)value, buffer, buffer + 8);
-    return PrintRight (buffer, num_columns, text, text_end);
-}
-
-/** Prints the given value justified right to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row. */
-inline char* PrintRight (int16_t value, int num_columns, char* text,
-                         char* text_end) {
-    char buffer[8];
-    Print ((uint64_t)value, buffer, buffer + 8);
-    return PrintRight (buffer, num_columns, text, text_end);
-}
-
-/** Prints the given value justified right to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row. */
-inline char* PrintRight (uint16_t value, int num_columns, char* text, 
-                         char* text_end) {
-    char buffer[8];
-    Print ((uint64_t)value, buffer, buffer + 8);
-    return PrintRight (buffer, num_columns, text, text_end);
-}
-
-/** Prints the given value justified right to this string.
-    @param value The char to print.
+    @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (int32_t value, int num_columns, char* text, 
                          char* text_end) {
     char buffer[16];
-    Print ((uint64_t)value, buffer, buffer + 16);
+    Print ((uint32_t)value, buffer, buffer + 16);
     return PrintRight (buffer, num_columns, text, text_end);
 }
 
 /** Prints the given value justified right to this string.
-    @param value The char to print.
+    @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (uint32_t value, int num_columns, char* text, 
                          char* text_end) {
     char buffer[16];
-    Print ((uint64_t)value, buffer, buffer + 16);
+    Print ((uint32_t)value, buffer, buffer + 16);
     return PrintRight (buffer, num_columns, text, text_end);
 }
 
 /** Prints the given value justified right to this string.
-    @param value The char to print.
+    @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (int64_t value, int num_columns, char* text, 
                          char* text_end) {
@@ -257,7 +123,7 @@ inline char* PrintRight (int64_t value, int num_columns, char* text,
 }
 
 /** Prints the given value justified right to this string.
-    @param value The char to print.
+    @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (uint64_t value, int num_columns, char* text, 
                          char* text_end) {
@@ -267,7 +133,7 @@ inline char* PrintRight (uint64_t value, int num_columns, char* text,
 }
 
 /** Prints the given value justified right to this string.
-    @param value The char to print.
+    @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (float value, int num_columns, char* text, 
                          char* text_end) {
@@ -277,7 +143,7 @@ inline char* PrintRight (float value, int num_columns, char* text,
 }
 
 /** Prints the given value justified right to this string.
-    @param value The char to print.
+    @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (double value, int num_columns, char* text, 
                          char* text_end) {
@@ -288,53 +154,13 @@ inline char* PrintRight (double value, int num_columns, char* text,
 
 /** Prints the given char centered with a horizontal page bar to the left
     and right of the row.
-    @param input The char to print.
+    @param input The value to print.
     @param num_columns */
 KABUKI char* PrintCentered (const char* string, int num_columns, char* text,
                             char* text_end);
 
 /** Prints the given value justified center to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row. */
-inline char* PrintCentered (int8_t value, int num_columns, char* text,
-                            char* text_end) {
-    char buffer[8];
-    Print ((int64_t)value, buffer, buffer + 8);
-    return PrintCentered (buffer, num_columns, text, text_end);
-}
-
-/** Prints the given value justified center to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row. */
-inline char* PrintCentered (uint8_t value, int num_columns, char* text, char* text_end,
-                         char delimiter) {
-    char buffer[8];
-    Print ((uint64_t)value, buffer, buffer + 8);
-    return PrintCentered (buffer, num_columns, text, text_end);
-}
-
-/** Prints the given value justified center to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row. */
-inline char* PrintCentered (int16_t value, int num_columns, char* text,
-                            char* text_end) {
-    char buffer[8];
-    Print ((int64_t)value, buffer, buffer + 8);
-    return PrintCentered (buffer, num_columns, text, text_end);
-}
-
-/** Prints the given value justified center to this string.
-    @param value The char to print.
-    @param num_columns The number of columns per row. */
-inline char* PrintCentered (uint16_t value, int num_columns, char* text, 
-                         char* text_end) {
-    char buffer[8];
-    Print ((uint64_t)value, buffer, buffer + 8);
-    return PrintCentered (buffer, num_columns, text, text_end);
-}
-
-/** Prints the given value justified center to this string.
-    @param value The char to print.
+    @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintCentered (int32_t value, int num_columns, char* text, 
                          char* text_end) {
@@ -344,17 +170,17 @@ inline char* PrintCentered (int32_t value, int num_columns, char* text,
 }
 
 /** Prints the given value justified center to this string.
-    @param value The char to print.
+    @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintCentered (uint32_t value, int num_columns, char* text, 
                          char* text_end) {
     char buffer[16];
-    Print ((uint64_t)value, buffer, buffer + 16);
+    Print ((uint32_t)value, buffer, buffer + 16);
     return PrintCentered (buffer, num_columns, text, text_end);
 }
 
 /** Prints the given value justified center to this string.
-    @param value The char to print.
+    @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintCentered (int64_t value, int num_columns, char* text, 
                          char* text_end) {
@@ -364,7 +190,7 @@ inline char* PrintCentered (int64_t value, int num_columns, char* text,
 }
 
 /** Prints the given value justified center to this string.
-    @param value The char to print.
+    @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintCentered (uint64_t value, int num_columns, char* text, 
                          char* text_end) {
@@ -374,7 +200,7 @@ inline char* PrintCentered (uint64_t value, int num_columns, char* text,
 }
 
 /** Prints the given value justified center to this string.
-    @param value The char to print.
+    @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintCentered (float value, int num_columns, char* text, 
                          char* text_end) {
@@ -384,7 +210,7 @@ inline char* PrintCentered (float value, int num_columns, char* text,
 }
 
 /** Prints the given value justified center to this string.
-    @param value The char to print.
+    @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintCentered (double value, int num_columns, char* text, 
                          char* text_end) {
@@ -416,9 +242,44 @@ KABUKI char* PrintHex (char c, char* text, char* text_end);
                      byte written. */
 KABUKI char* PrintHex (uintptr_t value, char* text, char* text_end);
 
+/** Print's out the given word to the text buffer.
+    @param  text     Beginning of the buffer.
+    @param  text_end End of the buffer.
+    @return          Null upon failure or a pointer to the byte after the last 
+                     byte written. */
+inline char* PrintHex (const void* ptr, char* text, char* text_end) {
+    return PrintHex ((uintptr_t)ptr, text, text_end);
+}
+
 KABUKI char* PrintBinary (uint64_t value, char* text, char* text_end);
 
+/** Prints out the contents of the address to the debug stream.
+    @param begin    The beginning of the read buffer.
+    @param text_end The end of the read buffer.
+    @param text     The beginning of the write buffer.
+    @param text_end The end of the write buffer.
+    @return          Null upon failure or a pointer to the byte after the last 
+                     byte written. */
+KABUKI char* PrintMemory (const void* begin, const void* end, char* text,
+                          char* text_end);
+
+/** Utility class for printing to strings.
+    This class only stores the end of buffer pointer and a pointer to the write
+    cursor. It is up the user to store start of buffer pointer and if they would
+    like to replace the cursor with the beginning of buffer pointer when they 
+    are done printing.
+*/
 struct Printer {
+    /** Initializes the Printer from the given buffer pointers.
+        @param begin The beginning of the buffer.
+        @param end   The end of the buffer. */
+    Printer (char* begin, size_t size);
+
+    /** Initializes the Printer from the given buffer pointers.
+        @param begin The beginning of the buffer. 
+        @param end   The end of the buffer. */
+    Printer (char* begin, char* end);
+
     char* cursor,  //< Write cursor pointer.
         * end;     //< End of buffer pointer.
 };
@@ -436,125 +297,79 @@ inline Printer PrinterInit (size_t buffer_size, char* buffer) {
 
 }       //< namespace _
 
-/** Op << writes a nil-terminated UTF-8 or ASCII string to the
+/** Writes a nil-terminated UTF-8 or ASCII string to the
     printer. */
 inline _::Printer& operator<< (_::Printer& printer, const char* string) {
-    char* cursor = _::Print (string, printer.cursor, printer.end);
-    printer.cursor = cursor;
+    printer.cursor = _::Print (string, printer.cursor, printer.end);
     return printer;
 }
 
-/** Op << writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, int8_t value) {
-    char* cursor = _::Print ((int64_t)value, printer.cursor,
-                             printer.end);
-    printer.cursor = cursor;
+/** Writes a nil-terminated UTF-8 or ASCII string to the
+    printer. */
+inline _::Printer& operator<< (_::Printer& printer, _::Printer& printer_b) {
+    printer.cursor = 0;
     return printer;
 }
 
-/** Op << writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, uint8_t value) {
-    char* cursor = _::Print ((uint64_t)value, printer.cursor,
-                                    printer.end);
-    printer.cursor = cursor;
-    return printer;
-}
-
-/** Op << writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, int16_t value) {
-    char* cursor = _::Print ((int64_t)value, printer.cursor,
-                             printer.end);
-    printer.cursor = cursor;
-    return printer;
-}
-
-/** Op << writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, uint16_t value) {
-    char* cursor = _::Print ((uint64_t)value, printer.cursor, printer.end);
-    printer.cursor = cursor;
-    return printer;
-}
-
-/** Op << writes the given value to the printer.
+/** Writes the given value to the printer.
     @param  printer The printer.
     @param  value The value to write to the printer. 
     @return The printer. */
 inline _::Printer& operator<< (_::Printer& printer, int32_t value) {
-    char* cursor = _::Print ((int64_t)value, printer.cursor,
-                             printer.end);
-    printer.cursor = cursor;
+    printer.cursor = _::Print (value, printer.cursor, printer.end);
     return printer;
 }
 
-/** Op << writes the given value to the printer.
+/** Writes the given value to the printer.
     @param  printer The printer.
     @param  value The value to write to the printer. 
     @return The printer. */
 inline _::Printer& operator<< (_::Printer& printer, uint32_t value) {
-    char* cursor = _::Print ((int64_t)value, printer.cursor,
-                             printer.end);
-    printer.cursor = cursor;
+    printer.cursor = _::Print (value, printer.cursor, printer.end);
     return printer;
 }
 
-/** Op << writes the given value to the printer.
+/** Writes the given value to the printer.
     @param  printer The printer.
     @param  value The value to write to the printer. 
     @return The printer. */
 inline _::Printer& operator<< (_::Printer& printer, int64_t value) {
-    char* cursor = _::Print (value, printer.cursor, printer.end);
-    printer.cursor = cursor;
+    printer.cursor = _::Print (value, printer.cursor, printer.end);
     return printer;
 }
 
-/** Op << writes the given value to the printer.
+/** Writes the given value to the printer.
     @param  printer The printer.
     @param  value The value to write to the printer. 
     @return The printer. */
 inline _::Printer& operator<< (_::Printer& printer, uint64_t value) {
-    char* cursor = _::Print (value, printer.cursor, printer.end);
-    printer.cursor = cursor;
+    printer.cursor = _::Print (value, printer.cursor, printer.end);
     return printer;
 }
 
-/** Op << writes the given value to the printer.
+/** Writes the given value to the printer.
     @param  printer The printer.
     @param  value The value to write to the printer. 
     @return The printer. */
 inline _::Printer& operator<< (_::Printer& printer, float value) {
-    char* cursor = _::Print (value, printer.cursor, printer.end);
-    printer.cursor = cursor;
+    printer.cursor = _::Print (value, printer.cursor, printer.end);
     return printer;
 }
 
-/** Op << writes the given value to the printer.
+/** Writes the given value to the printer.
     @param  printer The printer.
     @param  value The value to write to the printer. 
     @return The printer. */
 inline _::Printer& operator<< (_::Printer& printer, double value) {
-    char* cursor = _::Print (value, printer.cursor, printer.end);
-    printer.cursor = cursor;
+    printer.cursor = _::Print (value, printer.cursor, printer.end);
     return printer;
 }
 
 /**  Prints out the parameters to the debug console.
 inline _::Printer& operator<< (_::Printer& printer, const uint_t* bsq) {
-    char* cursor = _::Print (bsq, printer.cursor, printer.end);
-    printer.cursor = cursor;
+    printer.cursor = _::Print (bsq, printer.cursor, printer.end);
 } */
 
-#endif  //< USING_CRABS_TEXT
-#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_PRINT
+#endif  //< USING_TEXT_SCRIPT
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
