@@ -4,7 +4,7 @@ Kabuki Toolkit (KT) is a modern cross-platform C++1x software and firmware toolk
 
 ## Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification (Script)
 
-Script is a software-defined networking protocol and embedded-friendly family of languages that facilitates artificial intelligence and machine learning (AIML) using functional programming and natural language processing (NLP). Script is best described as a mix of JavaScript, Python, Lua, and LISP. JavaScript because it's asynchronous with a round-robin scheduler, Python because it has native dictionaries, Lua because of Script's RPC nature, and Script has a rather unique f of LISP called Interprocess LISP. 
+Script is a software-defined networking protocol and embedded-friendly family of languages that facilitates artificial intelligence and machine learning (AIML) using functional programming and natural language processing (NLP). Script is best described as a mix of JavaScript, Python, Lua, and LISP. JavaScript because it's asynchronous with a round-robin scheduler, Python because it has native dictionaries, Lua because of Script's RPC nature, and Script has a rather unique dialect of LISP called Interprocess LISP. 
 
 ## Quick Links
 
