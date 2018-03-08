@@ -82,6 +82,8 @@ inline const uint_t* Bsq () {
     return &kSize;
 }
 
+KABUKI char* PrintBsq (const uint_t* params, char* buffer, char* buffer_end);
+
 /*< Returns the requested parameter number. */
 KABUKI uint_t BsqParamNumber (const uint_t* bsq, int param_number);
 

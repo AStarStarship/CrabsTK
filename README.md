@@ -4,7 +4,9 @@ Kabuki Toolkit (KT) is a modern cross-platform C++1x software and firmware toolk
 
 ## Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification (Script)
 
-Script is a software-defined networking protocol and embedded-friendly family of languages that facilitates artificial intelligence and machine learning (AIML) using functional programming and natural language processing (NLP). Script is best described as a mix of JavaScript, Python, Lua, and LISP. JavaScript because it's asynchronous with a round-robin scheduler, Python because it has native dictionaries, Lua because of Script's RPC nature, and Script has a rather unique dialect of LISP called Interprocess LISP. 
+Script is a software-defined networking protocol and embedded-friendly family of languages that facilitates artificial intelligence and machine learning (AIML) using functional programming and natural language processing (NLP). Script is best described as a mix of JavaScript, Python, Lua, and LISP. JavaScript because it's asynchronous with a round-robin scheduler, Python because it has native dictionaries, Lua because of Script's RPC nature, and Script has a rather unique dialect of LISP called Interprocess LISP.
+
+The Chinese Room is a famous artificial intelligence philosophy thought experiment invented by the philosopher John Searle. The experiment highlights the difference between strong vs weak AI and how a normal everyday room in an office or network of rooms can form to create a turning equivalent machine that can fluently speak any language. Kabuki Script is the reference Script
 
 ## Quick Links
 
@@ -16,6 +18,8 @@ Script is a software-defined networking protocol and embedded-friendly family of
   - *Release for Comment for Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification.*
 * [Kabuki Starship Website](https://kabuki-starship.github.io/)
   - *Official Kabuki Toolkit website. We are currently looking for someone to help us fix the CSS on the website. It only works right at < 1024 pixel width so the problem is in the @media section.*
+* [Chinese Room Wiki](https://en.wikipedia.org/wiki/Chinese_room)
+  - *Good place to start learning some philosophy.*
 
 ## SDK Modules
 
@@ -30,13 +34,12 @@ Script is a software-defined networking protocol and embedded-friendly family of
 |   gui | Graphical user interfaces. |
 |   hmi | Human-machine interfaces. |
 |    id | Identification. |
-| igeek | IGEEK interface. | 
+| igeek | Interactive Genetic Environment for Kabuki. |
 |  math | Math. |
 |  midi | MIDI. |
 |   tek | Firmware toolkit. |
 |   pro | Projects, tasks, and scheduling. |
 | store | Store and inventory. |
-| video | Video. |
 |   web | WWW and IoT. |
 
 ### 3rd Party APIs

@@ -22,7 +22,6 @@
 
 #include "text.h"
 
-
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);

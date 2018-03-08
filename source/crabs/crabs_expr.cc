@@ -34,7 +34,8 @@
         kTextBufferSizeWords = kTextBufferSize >> kWordSizeShift\
      };\
     uintptr_t text_buffer[kTextBufferSizeWords];\
-    PrintBsq (bsq, text_buffer, text_buffer + kTextBufferSize);\
+    char* text_buffer_ptr = reinterpret_cast<char*>(text_buffer);\
+    PrintBsq (bsq, ,text_buffer_ptr, text_buffer_ptr + kTextBufferSize);\
     printf   ("\n    %s%s", header, text_buffer);\
 }
 #else
