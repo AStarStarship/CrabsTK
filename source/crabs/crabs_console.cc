@@ -37,42 +37,42 @@ namespace _ {
 
 Slot& ConsoleSet (uintptr_t *buffer, uintptr_t buffer_size) {
 
-#if USING_DYNAMIC_MEMORY
+    #if USING_DYNAMIC_MEMORY
     static uintptr_t* the_buffer = nullptr;
     static uintptr_t  the_buffer_size = kSlotBufferSizeRx +
-        kSlotBufferSizeTx + 1;
-#else
+                      kSlotBufferSizeTx + 1;
+    #else
     enum { kBufferSizeWords = buffer_size >> kWordSizeShift };
     static uintptr_t the_buffer[kBufferSizeWords];
-#endif
+    #endif
 }
 
 Slot& Print () {
-    static uintptr_t buffer;
-    static Slot empty_slot = {
-        reinterpret_cast<char*> (&buffer),
-        reinterpret_cast<char*> (&buffer),
-        reinterpret_cast<char*> (&buffer),
-        reinterpret_cast<char*> (&buffer) + sizeof (uintptr_t) - 1
-    };
-    static Slot& slot = ConsoleSet (empty_slot);
-    return slot;
+
+    #if USING_DYNAMIC_MEMORY
+    static uintptr_t* the_buffer = nullptr;
+    static uintptr_t  the_buffer_size = kSlotBufferSizeRx +
+                      kSlotBufferSizeTx + 1;
+    #else
+    enum { kBufferSizeWords = buffer_size >> kWordSizeShift };
+    static uintptr_t the_buffer[kBufferSizeWords];
+    #endif
 }
 
-Slot& PrintLine () {
-    return PRINTF ('\n';
-}
+//Slot& PrintLine () {
+//    return PUTCHAR ('\n')
+//}
 
 char ConsoleReadChar (const char* header) {
-    PRINTF (header;
+    std::cout << header;
     char c = getchar ();
-    PRINTF ('\n';
+    PUTCHAR ('\n')
     return c;
 }
 
 int ConsoleReadInt (const char* header) {
     int number;
-    PRINTF (header;
+    std::cout << header;
     std::cin.clear ();
     std::cin >> number;
     return number;
@@ -80,7 +80,7 @@ int ConsoleReadInt (const char* header) {
 
 float ConsoleReadFloat (const char* header) {
     float number;
-    PRINTF (header;
+    std::cout << header;
     std::cin.clear ();
     std::cin >> number;
     return number;
@@ -93,14 +93,14 @@ void ConsoleReadSlot (const char* header, char* target, char* target_end) {
     if (target > target_end) {
         return;
     }
-    PRINTF (header;
+    std::cout << header;
     std::cin.get (target, target_end - target, '\n');
     std::cin.clear ();
     std::cin.ignore (target_end - target, '\n');
 }
 
-void ConsoleWrite (const char* slot) {
-    PRINTF (slot;
+void ConsoleWrite (const char* string) {
+    //std::cout << string;
 }
 
 void ConsoleWrite (Slot& slot) {
@@ -115,7 +115,7 @@ void ConsoleDump (Slot& slot) {
         if (start > stop) {
             start = slot.begin;
         }
-        PRINTF (*start++;
+        PRINTF (*start++)
     }
     slot.start = start;
 }

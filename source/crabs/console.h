@@ -22,7 +22,7 @@
 
 #include "expr.h"
 
-#if MAJOR_SEAM == 1 && MINOR_MAJOR_SEAM == 1 && MINOR_SEAM >= 2
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #if USING_TEXT_SCRIPT
 
@@ -36,7 +36,7 @@ namespace _ {
     @param buffer      The buffer, or nil to create dynamic buffer.
     @param buffer_size The size of the buffer in bytes.
     @return Returns a pointer to the buffer or a new buffer. */
-KABUKI BOut* ConsoleSet (uintptr_t *buffer, uintptr_t buffer_size);
+KABUKI Slot& ConsoleSet (uintptr_t *buffer, uintptr_t buffer_size);
 
 /** The primary out slot.
     To set the Print () @see SlotWriteSet 
@@ -128,7 +128,8 @@ class Console : public Slot, public Op {
     virtual const Op* Star (wchar_t index, Expr* expr) {
         static const Op kThis = { "Console",
             OpFirst ('A'), OpLast ('A'),
-            "A full-duplex computer text console.", '}', ';', ' ', nullptr, nullptr
+            "A full-duplex computer text console.",
+            '}', ';', ' ', false, nullptr, nullptr
         };
         void* args[1];
         switch (index) {
@@ -137,7 +138,7 @@ class Console : public Slot, public Op {
                 static const Op kOpA = { "Foo",
                     Bsq<1, SI4> (), Bsq<1, SI4> (),
                     "The classic one and only example function name.",
-                    '(', ')', ' ', nullptr, nullptr
+                    '(', ')', ' ', false, nullptr, nullptr
                 };
                 if (!expr) {
                     return &kOpA;
@@ -161,5 +162,5 @@ class Console : public Slot, public Op {
 };      //< class Console
 }       //< namespace _
 #endif
-#endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 2
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
 #endif  //< HEADER_FOR_CRABS_CONSOLE

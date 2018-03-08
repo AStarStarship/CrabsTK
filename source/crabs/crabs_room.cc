@@ -191,8 +191,8 @@ int Room::Main (const char** args, int args_count) {
                 result = Loop ();
             } while (!result);
             ShutDown ();
-        } catch (RoomCrashException e) {
-            PRINTF ("\nRoom crashed!";
+        } catch (...) {
+            PRINTF ("\nRoom crashed!")
             return 3;
         }
     }

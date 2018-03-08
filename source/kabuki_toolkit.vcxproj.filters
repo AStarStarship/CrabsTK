@@ -92,9 +92,6 @@
     <ClInclude Include="crabs\hash.h">
       <Filter>source\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\interrupts.h">
-      <Filter>source\crabs</Filter>
-    </ClInclude>
     <ClInclude Include="crabs\iterator.h">
       <Filter>source\crabs</Filter>
     </ClInclude>

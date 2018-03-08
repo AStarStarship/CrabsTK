@@ -45,17 +45,7 @@
 
 #define LITTLE          1
 #define BIG             2   //< Don't ask me what they where thinking.
-                            //< "but I can read it easier"...
-                            //< READ IT EASIER?!?!?!
-                            //< FLIP IT AROUND IN YOUR DEV TOOL FOOL!!!
-                            //< DIPRA DIRPA!!!
-                            //< CLICK! BIG ENDIAN! BOOM!!!
-                            //< CLICK! LITTLE ENDIAN! BOOM!!!
-                            //< YOUR AN IDIOT!!!
-                            //< MAYBE YOU SHOULD WRITE THIS BIG ENDIAN CRAP 
-                            //< CODE IF YOU LIKE IT SO MUCH!!!
-                            //< Just kidding. :-)
-                            //< Not really. DIE BIG ENDIAN, DIE!!!
+
 #define YES             1   //< Logical yes.
 #define NO              0   //< Logical no.
 

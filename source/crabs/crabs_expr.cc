@@ -29,8 +29,11 @@
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #define PRINT_BSQ(header, bsq) {\
-    enum { kTextBufferSize = 1024 };\
-    char text_buffer[kTextBufferSize];\
+    enum {\
+        kTextBufferSize = 1024,\
+        kTextBufferSizeWords = kTextBufferSize >> kWordSizeShift\
+     };\
+    uintptr_t text_buffer[kTextBufferSizeWords];\
     PrintBsq (bsq, text_buffer, text_buffer + kTextBufferSize);\
     printf   ("\n    %s%s", header, text_buffer);\
 }
@@ -410,7 +413,9 @@ const Op* ExprUnpack (Expr* expr) {
                 if (num_ops > kParamsMax) {
                     // It's an Op.
                     // The software implementer pushes the Op on the stack.
+                    
                     PRINT_BSQ ("\nFound Op with params ", params)
+                    
                     result = ExprScanHeader (expr, params);
                     if (result) {
                         #if DEBUG_CRABS_EXPR

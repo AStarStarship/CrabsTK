@@ -16,7 +16,7 @@
 
 #include <stdafx.h>
 #include "script_itos_benchmark.h"
-#include "../../source/crabs/script_itos.h"
+#include "../../source/crabs/print_itos.h"
 
 typedef unsigned int uint;
 
@@ -28,7 +28,7 @@ inline void PrintBinary (uint32_t value) {
 
     for (int i = kSize; i > 0; --i) {
         char c = (char)('0' + (value >> (kSize - 1)));
-        cout << c;
+        putchar (c);
         value = value << 1;
     }
 }
@@ -39,10 +39,29 @@ void BenchmarkScriptItos () {
         kSize             = 24,
     };
 
+    // Lookup table for powers of 10.
+    static const uint32_t kPow10Ranges[11] {
+        0,
+        10,
+        100,
+        1000,
+        10000,
+        100000,
+        1000000,
+        10000000,
+        100000000,
+        1000000000,
+        ~(uint32_t)0
+    };
+
     //static const char kBenchmarkHeader[] = "\nScript ItoS Benchmarks,,,,"
     //                                       "\n#Bits, Null, sprintf_s, Mod10, "
     //                                       "Mod100, Script, % Faster\n";
-    static const char kBenchmarkHeader[] = "\nScript ItoS Benchmarks,,,,"
+    static const char kBenchmarkDecimalHeader[] =
+        "\nScript ItoS Benchmarks per Decimal,,,,"
+        "\n#Bits, Null, Mod10, "
+        "Mod100, Script, % Faster\n";
+    static const char kBenchmarkHeader[] = "\nScript ItoS Benchmarks per Bit,,,,"
                                            "\n#Bits, Null, Mod10, "
                                            "Mod100, Script, % Faster\n";
     char     text[kSize],
@@ -62,7 +81,8 @@ void BenchmarkScriptItos () {
     std::uniform_int_distribution<uint32_t> distr;
 
     double nil_time,
-             cpu_times[5];
+             cpu_times[5],
+             percent_faster;
 
     printf ("\n\nTesting random numbers...\n\n");
 
@@ -128,16 +148,94 @@ void BenchmarkScriptItos () {
         return;
     }
     
-    // Start weird fix for timer problem with 1 bit.
-    start = high_resolution_clock::now ();
-    for (count = kNumTests; count > 0; --count) {
-        result = PrintNil (0, text, text + kSize);
-    }
-    stop = high_resolution_clock::now ();
-    delta = duration_cast<milliseconds> (stop - start).count ();
-    // End weird fix.
+    
+    cout << kBenchmarkDecimalHeader;
+    file << kBenchmarkDecimalHeader;
 
-    cout << kBenchmarkHeader;
+    const uint32_t* power_of_ten = &kPow10Ranges[0];
+    uint32_t min,
+             max = *power_of_ten++,
+             range;
+    for (int num_digits = 1; num_digits <= 10; ++num_digits) {
+        uint32_t min   = max,
+                 max   = *power_of_ten++,
+                 range = max - min,
+                 last_value;
+        cout << "\n    Range:" << range;
+        uint32_t num_loops = kNumTests / range;
+        if (range > kNumTests) {
+            max = kNumTests;
+        }
+
+        file << num_digits << ",";
+        cout << '\n' << num_digits << ".) ";
+
+        start = high_resolution_clock::now ();
+        for (uint32_t j = num_loops; j > 0; --j) {
+            for (uint32_t value = min; value < max; ++value) {
+                result = PrintNil (value, text, text + kSize);
+            }
+        }
+        stop = high_resolution_clock::now ();
+        delta = duration_cast<milliseconds> (stop - start).count ();
+        nil_time = (double)delta;
+        file << delta << ',';
+        cout << delta << ',';
+
+        /*
+        start = high_resolution_clock::now ();
+        for (uint32_t j = num_loops; j > 0; --j) {
+            for (uint32_t value = min; value < max; ++value) {
+                result = PrintSprintf (value, text, text + kSize);
+            }
+        }
+        stop = high_resolution_clock::now ();
+        delta = duration_cast<milliseconds> (stop - start).count ();
+        cpu_times[0] = (double)delta;
+        file << delta << ',';
+        cout << delta << ',';*/
+
+        start = high_resolution_clock::now ();
+        for (uint32_t j = num_loops; j > 0; --j) {
+            for (uint32_t value = min; value < max; ++value) {
+                result = PrintMod10 (value, text, text + kSize);
+            }
+        }
+        stop = high_resolution_clock::now ();
+        delta = duration_cast<milliseconds> (stop - start).count ();
+        cpu_times[1] = (double)delta;
+        file << delta << ',';
+        cout << delta << ',';
+
+        start = high_resolution_clock::now ();
+        for (uint32_t j = num_loops; j > 0; --j) {
+            for (uint32_t value = min; value < max; ++value) {
+                result = PrintMod100 (value, text, text + kSize);
+            }
+        }
+        stop = high_resolution_clock::now ();
+        delta = duration_cast<milliseconds> (stop - start).count ();
+        cpu_times[2] = (double)delta;
+        file << delta << ',';
+        cout << delta << ',';
+
+        start = high_resolution_clock::now ();
+        for (uint32_t j = num_loops; j > 0; --j) {
+            for (uint32_t value = min; value < max; ++value) {
+                result = _::Print (value, text, text + kSize);
+            }
+        }
+        stop = high_resolution_clock::now ();
+        delta = duration_cast<milliseconds> (stop - start).count ();
+        cpu_times[3] = (double)delta;
+        file << delta << ',';
+        cout << delta << ',';
+        percent_faster = ((cpu_times[2] - nil_time) / (cpu_times[3] - nil_time)) - 1.0;
+        file << percent_faster << '\n';
+        cout << percent_faster;
+    }
+
+    cout << "\n\n" << kBenchmarkHeader;
     file << kBenchmarkHeader;
     for (int num_bits = 1; num_bits <= 32; ++num_bits) {
         bits_mask = bits_mask << 1;
@@ -199,7 +297,8 @@ void BenchmarkScriptItos () {
         cpu_times[3] = (double)delta;
         file << delta << ',';
         cout << delta << ',';
-        double percent_faster = ((cpu_times[2] - nil_time) / (cpu_times[3] - nil_time)) - 1.0;
+        double percent_faster = ((cpu_times[2] - nil_time) / 
+                                (cpu_times[3] - nil_time)) - 1.0;
         file << percent_faster << '\n';
         cout << percent_faster;
     }
@@ -208,14 +307,12 @@ void BenchmarkScriptItos () {
 
 void PrintDigits99To99Lut () {
     cout << "\n\nstatic const uint16_t kDigits00To99[100] = {\n    ";
-
     enum { kDigitsLast = ('9' << 8) | '9' };
-
     uint16_t digits,
              tick = 0,
              tick_count = 9;
     uint16_t tens,
-             ones;
+        ones;
     for (tens = '0'; tens <= '9'; ++tens) {
         for (ones = '0'; ones <= '9'; ++ones) {
             digits = (ones << 8) | tens;

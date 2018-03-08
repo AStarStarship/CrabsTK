@@ -16,6 +16,7 @@
 
 #include <stdafx.h>
 #include "bsq.h"
+#include "print.h"
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
@@ -47,6 +48,220 @@ uint_t BsqParamNumber (const uint_t* params, int param_number) {
         }
     }
     return params[i];
+}
+
+char* PrintBsq (const uint_t* params, char* buffer, char* buffer_end) {
+    if (!params) {
+        return nullptr;
+    }
+    if (!buffer) {
+        return buffer;
+    }
+    if (buffer >= buffer_end) {
+        return nullptr;
+    }
+
+    uint_t num_params = *params++,
+        i,
+        type,
+        value = 0;
+
+    Printer print (buffer, buffer_end);
+
+    print << "Param<";
+    if (num_params > _::kParamsMax) {
+        print << "\nInvalid num_params: " << num_params;
+        return buffer;
+    }
+    print << num_params << ": ";
+    for (i = 1; i < num_params; ++i) {
+        value = *params++;
+        type = value & 0x1f;    //< Mask off type.
+        value = value >> 5;     //< Shift over array type.
+        print << TypeString (value) << ", ";
+        if (type >= STR) {
+            if (value) {
+                print << "\nError: arrays may only be created from POD "
+                    "types.";
+                return buffer;
+            }
+            // Print out the max length of the string.
+            ++i;
+            value = *params++;
+            print << value;
+        }
+        else if (value > 31) {
+            if (value > 127) {      //< It's a multi-dimensional array.
+                print << "Multi-dimensional Array:" << value << ", ";
+            }
+            // Then it's an array.
+            ++i;
+            switch (value) {        //< Print out the Array type.
+                case 0: {
+                    break;
+                }
+                case 1: {
+                    value = *params++;
+                    print << "UI1:" << value << ", ";
+                    break;
+                }
+                case 2: {
+                    value = *params++;
+                    print << "UI2:" << value << ", ";
+                    break;
+                }
+                case 3: {
+                    value = *params++;
+                    print << "UI4:" << value << ", ";
+                    break;
+                }
+                case 4: {
+                    value = *params++;
+                    print << "UI8:" << value << ", ";
+                    break;
+                }
+                case 5: {
+                    value = *params++;
+                    if (value == 0) {
+                        print << "UI1:[0]";
+                        break;
+                    }
+                    print << "UI1:[" << value << ": ";
+                    for (uint_t i = value; i != 0; --i) {
+                        value = *params++;
+                        print << value << ", ";
+                    }
+                    value = *params++;
+                    print << value << "]";
+                    break;
+                }
+                case 6: {
+                    value = *params++;
+                    if (value == 0) {
+                        print << "UI2:[0]";
+                        break;
+                    }
+                    print << "UI2:[" << value << ": ";
+                    for (uint_t i = value; i != 0; --i) {
+                        value = *params++;
+                        print << value << ", ";
+                    }
+                    value = *params++;
+                    print << value << "]";
+                    break;
+                }
+                case 7: {
+                    value = *params++;
+                    if (value == 0) {
+                        print << "UI4:[0]";
+                        break;
+                    }
+                    print << "UI4:[" << value << ": ";
+                    for (uint_t i = value; i != 0; --i) {
+                        value = *params++;
+                        print << value << ", ";
+                    }
+                    value = *params++;
+                    print << value << "]";
+                    break;
+                }
+            }
+        }
+    }
+    // Do the last set without a comma.
+    value = *params++;
+    print << TypeString (value) << ", ";
+    if (value == STR) {
+        ++i;
+        value = *params++;
+        print << value;
+    }
+    else if (value > 31) {
+        // Then it's an array.
+        type = value & 0x1f;    //< Mask off type.
+        value = value >> 5;     //< Shift over array type.
+        ++i;
+        switch (value) {
+            case 0:
+            {
+                break;
+            }
+            case 1:
+            {
+                value = *params++;
+                print << "UI1:" << value << ", ";
+                break;
+            }
+            case 2:
+            {
+                value = *params++;
+                print << "UI2:" << value << ", ";
+                break;
+            }
+            case 3:
+            {
+                value = *params++;
+                print << "UI4:" << value << ", ";
+                break;
+            }
+            case 4:
+            {
+                value = *params++;
+                print << "UI5:" << value << ", ";
+                break;
+            }
+            case 5:
+            {
+                value = *params++;
+                if (value == 0) {
+                    print << "UI1:[0]";
+                    break;
+                }
+                print << "UI1:[" << value << ": ";
+                for (uint_t i = value; i != 0; --i) {
+                    value = *params++;
+                    print << value << ", ";
+                }
+                value = *params++;
+                print << value << "]";
+                break;
+            }
+            case 6:
+            {
+                value = *params++;
+                if (value == 0) {
+                    print << "UI2:[0]";
+                    break;
+                }
+                print << "UI2:[" << value << ": ";
+                for (uint_t i = value; i != 0; --i) {
+                    value = *params++;
+                    print << value << ", ";
+                }
+                value = *params++;
+                print << value << "]";
+                break;
+            }
+            case 7:
+            {
+                value = *params++;
+                if (value == 0) {
+                    print << "UI4:[0]";
+                    break;
+                }
+                print << "UI4:[" << value << ": ";
+                for (uint_t i = value; i != 0; --i) {
+                    value = *params++;
+                    print << value << ", ";
+                }
+                value = *params++;
+                print << value << "]";
+                break;
+            }
+        }
+    }
+    print << '>';
+    return buffer;
 }
 
 }       //< namespace _
