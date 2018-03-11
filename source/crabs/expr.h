@@ -217,7 +217,10 @@ inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
 /** Pops the args off the Expr Args Stack. */
 inline const Op* ExprArgs (Expr* expr, const Op& op,
                            void** args) {
-    return SlotRead (ExprBIn (expr), op, args);
+    BIn* bin = ExprBIn (expr);
+    Slot slot;
+    BInSlot (bin, slot);
+    return SlotRead (&slot, op, args);
 }
 
 /** Writes the result to the Expr.

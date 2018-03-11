@@ -35,8 +35,8 @@ namespace _ {
 
     @param buffer      The buffer, or nil to create dynamic buffer.
     @param buffer_size The size of the buffer in bytes.
-    @return Returns a pointer to the buffer or a new buffer. */
-KABUKI Slot& ConsoleSet (uintptr_t *buffer, uintptr_t buffer_size);
+    @return Returns a pointer to the buffer or a new buffer. 
+KABUKI Slot& ConsoleSet (uintptr_t *buffer, uintptr_t buffer_size);*/
 
 /** The primary out slot.
     To set the Print () @see SlotWriteSet 
@@ -85,9 +85,9 @@ KABUKI void ConsoleDump  (Slot& slot);
     # Keyboard Console Input Example
 
     @code
-    | Enter Command:
-    < parent child1.DoThis 1 2 3 DoThat "Example"
-    < parent.child2.DoThat("Hello world!")
+    Enter Command:
+    parent child1.DoThis 1 2 3 DoThat "Example"
+    parent.child2.DoThat("Hello world!")
     @endcode
 */
 class Console : public Slot, public Op {
@@ -127,28 +127,21 @@ class Console : public Slot, public Op {
                      error_t ticket upon Read-Write failure. */
     virtual const Op* Star (wchar_t index, Expr* expr) {
         static const Op kThis = { "Console",
-            OpFirst ('A'), OpLast ('A'),
-            "A full-duplex computer text console.",
+            OpFirst ('\n'), OpLast ('\n'),
+            "A text console.",
             '}', ';', ' ', false, nullptr, nullptr
         };
         void* args[1];
         switch (index) {
             case '?': return ExprQuery (expr, kThis);
-            case 'A': {
-                static const Op kOpA = { "Foo",
-                    Bsq<1, SI4> (), Bsq<1, SI4> (),
-                    "The classic one and only example function name.",
+            case '\n': {
+                static const Op kOpA = { "Print",
+                    Bsq<1, STR> (), Bsq<1, STR> (),
+                    "Prints a string to the console.",
                     '(', ')', ' ', false, nullptr, nullptr
                 };
-                if (!expr) {
-                    return &kOpA;
-                }
-                int32_t value;
-                if (ExprArgs (expr, kOpA, Args (args, &value))) {
-                    return expr->result;
-                }
-                // Function code goes here.
-                return ExprResult (expr, kOpA, Args (args, &value));
+                if (!expr) return &kOpA;
+                return ExprPrintString (expr);
             }
         }
         return nullptr;
@@ -162,5 +155,5 @@ class Console : public Slot, public Op {
 };      //< class Console
 }       //< namespace _
 #endif
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_CONSOLE

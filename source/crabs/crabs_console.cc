@@ -34,28 +34,24 @@ namespace _ {
 
 #if USING_TEXT_SCRIPT
 
-Slot& ConsoleSet (uintptr_t *buffer, uintptr_t buffer_size) {
-
-    #if USING_DYNAMIC_MEMORY
-    static uintptr_t* the_buffer = nullptr;
-    static uintptr_t  the_buffer_size = kSlotBufferSizeRx +
-                      kSlotBufferSizeTx + 1;
-    #else
-    enum { kBufferSizeWords = buffer_size >> kWordSizeShift };
-    static uintptr_t the_buffer[kBufferSizeWords];
-    #endif
-}
-
 Slot& Print () {
 
     #if USING_DYNAMIC_MEMORY
-    static uintptr_t* the_buffer = nullptr;
-    static uintptr_t  the_buffer_size = kSlotBufferSizeRx +
+    static uintptr_t* buffer = nullptr;
+    static uintptr_t  buffer_size = kSlotBufferSizeRx +
                       kSlotBufferSizeTx + 1;
+    static Slot& slot = SlotInit (reinterpret_cast<Slot&> (buffer),
+                                  buffer + sizeof (Slot), 
+                                  buffer_size - sizeof (Slot));
     #else
     enum { kBufferSizeWords = buffer_size >> kWordSizeShift };
-    static uintptr_t the_buffer[kBufferSizeWords];
+    static uintptr_t buffer[kBufferSizeWords];
+
+    static Slot& slot = SlotInit (reinterpret_cast<Slot&> (buffer),
+                                  buffer + sizeof (Slot), 
+                                  buffer_size - sizeof (Slot));
     #endif
+    return slot;
 }
 
 //Slot& PrintLine () {
@@ -120,17 +116,17 @@ void ConsoleDump (Slot& slot) {
 }
 
 Slot& Scan () {
-    Slot& write = Print ();
-    char* begin,
-        *cursor = write.start,
-        *stop = write.stop,
-        *end = write.end;
+    Slot& slot = Print ();
+    char*cursor = slot.start,
+        *stop = slot.stop,
+        *end = slot.end;
     while (cursor != stop) {
         if (cursor > end) {
-            cursor = begin;
+            cursor = slot.begin;
         }
         std::cerr << *cursor++;
     }
+    return slot;
 }
 
 #endif

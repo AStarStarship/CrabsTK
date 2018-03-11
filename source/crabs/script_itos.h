@@ -22,12 +22,6 @@
 
 namespace _ {
 
-/* Print a delimiter if the text pointer is not nil. */
-KABUKI char* PrintDelimiter (char* text);
-
-/* Print a delimiter if the text pointer is not nil. */
-KABUKI char* PrintDelimiter (char* text, char delimiter);
-
 /** Writes the give value to the given buffer as an ASCII string.
     @param value The value to write.
     @param begin Beginning address of the buffer.

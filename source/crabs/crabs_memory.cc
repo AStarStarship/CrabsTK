@@ -30,37 +30,6 @@
 
 namespace _ {
 
-uint32_t AlignPowerOf2 (uint32_t value) {
-   // @cite https://graphics.stanford.edu/~seander/bithacks.html#RoundUpPowerOf2
-    if (value < 0) {
-        return 4;
-    }
-    // 
-    --value;
-    value |= value >> 1;
-    value |= value >> 2;
-    value |= value >> 4;
-    value |= value >> 8;
-    value |= value >> 16;
-    ++value;
-    return value;
-}
-
-int32_t AlignPowerOf2 (int32_t value) {
-    if (value < 0) {
-        return 4;
-    }
-    uint32_t v = (uint32_t)value;
-    --v;
-    v |= v >> 1;
-    v |= v >> 2;
-    v |= v >> 4;
-    v |= v >> 8;
-    v |= v >> 16;
-    ++v;
-    return (int32_t)value;
-}
-
 void MemoryClear (void* address, size_t size) {
     //memset (address, '0', size);
     char* ptr = reinterpret_cast<char*> (address);

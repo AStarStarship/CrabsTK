@@ -32,6 +32,7 @@
 #include "scan.h"
 #include "memory.h"
 #include "text.h"
+#include "clock.h"
 #endif
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

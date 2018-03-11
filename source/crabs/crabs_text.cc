@@ -74,8 +74,11 @@ uint16_t TextByteToLowerCaseHex (byte b) {
 
 uint16_t TextByteToUpperCaseHex (byte b) {
     uint16_t value = TextNibbleToUpperCaseHex (b & 0xf);
+    PRINTF ("\n    First nibble:%c", value)
     value = value << 8;
-    value |= TextNibbleToUpperCaseHex (b >> 4);
+    uint16_t second_nibble = TextNibbleToUpperCaseHex (b >> 4);
+    PRINTF (" second nibble:%c", second_nibble)
+    value |= second_nibble;
     return value;
 }
 
@@ -96,14 +99,11 @@ int TextHexToByte (byte c) {
 }
 
 int TextHexToByte (uint16_t h) {
-    // Note: This works but the upper and lower are switched... pay no
-    // attention to the man behind the curtain #HandWave
-
-    int lowerValue = TextHexToByte (static_cast<byte> (h >> 8));
+    int lowerValue = TextHexToByte ((byte)(h >> 8));
 
     if (lowerValue < 0) return -1;
 
-    int upper_value = TextHexToByte (static_cast<byte> (h));
+    int upper_value = TextHexToByte ((byte)h);
     if (upper_value < 0) return -1;
 
     return lowerValue | (upper_value << 4);
@@ -217,7 +217,7 @@ const char* TextEquals (const char* text_a, const char* text_b, char delimiter) 
         PRINTF ("\nNot a hit: no nil-term char found")
         return nullptr;
     }
-    printf ("\nFound hit at 0x%p", text_a);
+    PRINTF ("\nFound hit at 0x%p", text_a);
     return text_a; //< Find hit!
 }
 

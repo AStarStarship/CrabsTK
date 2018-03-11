@@ -23,7 +23,7 @@
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PRINT_PAUSE(message)\
-    printf ("\n%s               ", message); system ("PAUSE");
+    printf ("\n\n%s\n", message); system ("PAUSE");
 #else
 #define PRINTF(x, ...)
 #define PRINT_PAUSE(message)
@@ -34,78 +34,14 @@ using namespace _;
 void TestSeam1_3 () {
 
     printf ("\n    Testing SEAM_1_3... ");
+
+    Console console ();
+
     /*
-    time_t t,
-           t_found;
-    tm* lt;
-    const char* result;
-
-    PrintBreak ("<", '-');
-    std::cout << "< Testing date-time parser... \n";
-
-    const char* strings[] = { "8/9\0",
-        "08/09\0",
-        "8/9/17\0",
-        "8/09/17\0",
-        "8/9/2017\0",
-        "8/09/2017\0",
-        "8/09/2017\0",
-        "08/9/2017\0",
-        "8/09/2017@00\0",
-        "8.09.2017@00AM\0",
-        "8/09/2017@00:00\0",
-        "8/09/17@00:0AM\0",
-        "8/09/2017@00:00:00\0",
-        "8/09/2017@00:00:00AM\0",
-        "2017-08-09@00:00:00AM\0",
-        "2017-08-09@00:00:00am\0",
-        "2017-08-09@00:00:00A\0",
-        "2017-08-09@00:00:00a \0",
-    };
-
-    for (int i = 0; i < 18; ++i) {
-        PrintBreak ("<", '-');
-        std::cout << "\n " << i;
-        time_t t = 0;
-        result = ParseTimeText (strings[i], t);
-        CompareTimes (t, 2017, 8, 9, 0, 0, 0);
-    }
-    enum {
-        kSize = 32
-    };
-
-    char timestamp[kSize];
-    PrintBreak ("<", '-');
-    PrintBreak ("<\nTesting more valid input...\n");
-    PrintBreak ("<", '-');
-
-    t = TestTime<8, 9, 17, 4, 20> (timestamp, kSize);
-    PrintTime (t);
-    result = ParseTimeText (timestamp, t_found);
-    CompareTimes (t, t_found);
-
-    t = TestTime<2020, 4, 20, 4, 20> (timestamp, kSize);
-    PrintTime (t);
-    result = ParseTimeText (timestamp, t_found);
-    CompareTimes (t, t_found);
-
-    t = TestTime<1947, 12, 7, 23, 5, 7> (timestamp, kSize);
-    PrintTime (t);
-    result = ParseTimeText (timestamp, t_found);
-    CompareTimes (t, t_found);
-
-    PrintBreak ("<", '-');
-    PrintBreak ("<\nTesting invalid input...\n", '-');
-    ParseTimeText ("cat", t);
-    PrintBreak ("<", '-');
-    ParseTimeText ("2017-30-40", t);
-    PrintBreak ("<", '-');
-
-    std::cout << "<\nDone testing date parsing utils! :-)\n";
 
 
     Text<> text;
-    std::cout << "\n Running ExprTests...\n";
+    PRINTF ("\n Running ExprTests...\n";
     enum {
         kBufferSize      = 256,
         kBufferSizeWords = kBufferSize / sizeof (uint_t)
@@ -148,7 +84,7 @@ void TestSeam1_3 () {
     //< something to the end of the buffer???
 
     PrintLineBreak ("\n  - Running ReadWriteTests...", 5);
-    std::cout << " kBufferSize: "     << kBufferSize 
+    PRINTF (" kBufferSize: "     << kBufferSize 
               << " kElementsBuffer: " << kElementsBuffer;
 
     void* args[19];
@@ -179,7 +115,7 @@ void TestSeam1_3 () {
     CHECK_EQUAL (0, BOutRead (bout, Bsq<2, STR, 5, STR, 5> (),
                               Args (args, found_string1, found_string2)))
 
-    std::cout << "\nExpected 1: " << expected_string1
+    PRINTF ("\nExpected 1: " << expected_string1
               << " Found 1: "     << found_string1
               << "\nExpected 2: " << expected_string2
               << " Found 2: "     << found_string2;
@@ -213,7 +149,7 @@ void TestSeam1_3 () {
     PrintLineBreak ("\n  - Testing UI2/SI2/HLF...", 5);
 
     static const int16_t si2_p_expected = '+',
-        si2_n_expected = (int16_t)(0xFF00 | '-');
+                         si2_n_expected = (int16_t)(0xFF00 | '-');
     static const uint16_t ui2_expected = '2',
         hlf_expected = 227;
 
@@ -222,7 +158,7 @@ void TestSeam1_3 () {
     uint16_t ui2_found,
         hlf_found;
 
-    std::cout << "Expecting "
+    PRINTF ("Expecting %u"
               << si2_p_expected
               << (si2_p_expected >> 8)
               << ' '
@@ -546,7 +482,7 @@ void TestSeam1_3 () {
                                        unpacked_expr, kBufferSize);
     PrintExpr (expr);
 
-    std::cout << "\n    Testing Root (@see \"a.h\")...\n";
+    PRINTF ("\n    Testing Root (@see \"a.h\")...\n";
 
     void* args[4];
     uint8_t io_number_ = 98; //< ASCII:'b'
@@ -571,8 +507,10 @@ void TestSeam1_3 () {
     // Bypass handshake for testing purposes.
     ExprScan (expr);//, &slot);
     PrintExpr (expr);
-    std::cout << "\n Done with Op tests.";
-    system ("PAUSE");*/
+    PRINTF ("\n Done with Op tests.")
+    */
+
+    PRINT_PAUSE ("\n\nDone Testing SEAM_1_3! ({:-)-+=<")
 }
 #undef PRINT_PAUSE
 #undef PRINTF

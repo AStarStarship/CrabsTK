@@ -58,13 +58,13 @@ void PrintBinaryTable (uint32_t value) {
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
-#define PRINT_LINE\
+#define PRINT_HEADING\
     std::cout << '\n';\
     for (int i = 80; i > 0; --i) std::cout << '-';
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
-#define PRINT_LINE
+#define PRINT_HEADING
 #endif
 
 namespace _ {
@@ -295,6 +295,110 @@ char* PrintLine (const char* string, int num_columns, char* buffer,
     return buffer;
 }
 
+char* PrintHex (uint8_t value, char* buffer, char* buffer_end,
+                char delimiter) {
+    enum { kHexStringLengthSizeMax = sizeof (uint8_t) * 2 + 3 };
+
+    if (!buffer) {
+        return nullptr;
+    }
+    if (buffer > buffer_end) {
+        return nullptr;
+    }
+
+    if (buffer_end - buffer < kHexStringLengthSizeMax) {
+        return nullptr;
+    }
+    *buffer++ = '0';
+    *buffer++ = 'x';
+    for (int num_bits_shift = 0; num_bits_shift < sizeof (uint8_t) * 8;
+         num_bits_shift += 8) {
+        char c = (char)(value >> num_bits_shift);
+        c = TextNibbleToUpperCaseHex (c);
+        *buffer++ = c;
+    }
+    *buffer = delimiter;
+    return buffer;
+}
+
+char* PrintHex (uint16_t value, char* buffer, char* buffer_end,
+                char delimiter) {
+    enum { kHexStringLengthSizeMax = sizeof (uint16_t) * 2 + 3 };
+
+    if (!buffer) {
+        return nullptr;
+    }
+    if (buffer > buffer_end) {
+        return nullptr;
+    }
+
+    if (buffer_end - buffer < kHexStringLengthSizeMax) {
+        return nullptr;
+    }
+    *buffer++ = '0';
+    *buffer++ = 'x';
+    for (int num_bits_shift = 0; num_bits_shift < sizeof (uint16_t) * 8;
+         num_bits_shift += 8) {
+        char c = (char)(value >> num_bits_shift);
+        c = TextNibbleToUpperCaseHex (c);
+        *buffer++ = c;
+    }
+    *buffer = delimiter;
+    return buffer;
+}
+
+char* PrintHex (uint32_t value, char* buffer, char* buffer_end,
+                char delimiter) {
+    enum { kHexStringLengthSizeMax = sizeof (uint32_t) * 2 + 3 };
+
+    if (!buffer) {
+        return nullptr;
+    }
+    if (buffer > buffer_end) {
+        return nullptr;
+    }
+
+    if (buffer_end - buffer < kHexStringLengthSizeMax) {
+        return nullptr;
+    }
+    *buffer++ = '0';
+    *buffer++ = 'x';
+    for (int num_bits_shift = 0; num_bits_shift < sizeof (uint32_t) * 8;
+         num_bits_shift += 8) {
+        char c = (char)(value >> num_bits_shift);
+        c = TextNibbleToUpperCaseHex (c);
+        *buffer++ = c;
+    }
+    *buffer = delimiter;
+    return buffer;
+}
+
+char* PrintHex (uint64_t value, char* buffer, char* buffer_end,
+                char delimiter) {
+    enum { kHexStringLengthSizeMax = sizeof (uint64_t) * 2 + 3 };
+
+    if (!buffer) {
+        return nullptr;
+    }
+    if (buffer > buffer_end) {
+        return nullptr;
+    }
+
+    if (buffer_end - buffer < kHexStringLengthSizeMax) {
+        return nullptr;
+    }
+    *buffer++ = '0';
+    *buffer++ = 'x';
+    for (int num_bits_shift = 0; num_bits_shift < sizeof (uint64_t) * 8;
+         num_bits_shift += 8) {
+        char c = (char)(value >> num_bits_shift);
+        c = TextNibbleToUpperCaseHex (c);
+        *buffer++ = c;
+    }
+    *buffer = delimiter;
+    return buffer;
+}
+
 /*
 Slot& PrintLineBreak (const char* message, int top_bottom_margin,
                       char c, int num_columns, Slot& slot) {
@@ -317,32 +421,6 @@ char* PrintHex (char c, char* buffer, char* buffer_end, char delimiter) {
         return nullptr;
     }
     *buffer++ = TextNibbleToUpperCaseHex (c);
-    *buffer = delimiter;
-    return buffer;
-}
-
-char* PrintHex (uintptr_t value, char* buffer, char* buffer_end, 
-                char delimiter) {
-    enum { kHexStringLengthSizeMax = sizeof (void*) * 2 + 3 };
-
-    if (!buffer) {
-        return nullptr;
-    }
-    if (buffer > buffer_end) {
-        return nullptr;
-    }
-
-    if (buffer_end - buffer < kHexStringLengthSizeMax) {
-        return nullptr;
-    }
-    *buffer++ = '0';
-    *buffer++ = 'x';
-    for (int num_bits_shift = 0; num_bits_shift < sizeof (void*) * 8;
-         num_bits_shift += 8) {
-        char c = (char)(value >> num_bits_shift);
-        c = TextNibbleToUpperCaseHex (c);
-        *buffer++ = c;
-    }
     *buffer = delimiter;
     return buffer;
 }
@@ -403,18 +481,18 @@ char* PrintMemory (const void* token, const void* token_end, char* buffer,
     if (buffer >= buffer_end) {
         return nullptr;
     }
-    char* buffer_begin = buffer;
+    char      * buffer_begin    = buffer;
     const char* address_ptr     = reinterpret_cast<const char*> (token),
               * address_end_ptr = reinterpret_cast<const char*> (token_end);
     size_t      size            = address_end_ptr - address_ptr,
-                num_columns     = size / 64;
-    
+                num_rows        = size / 64;
+        
     //PRINTF ("\n    Printing Buffer with length:%i", TextLength (token))
 
     if (size % 64 != 0) {
-        ++num_columns;
+        ++num_rows;
     }
-    size += 81 * (num_columns + 2);
+    size += 81 * (num_rows + 2);
     if (buffer + size >= buffer_end) {
         PRINTF ("\n    ERROR: buffer isn't big enough!")
         return nullptr;
@@ -457,9 +535,9 @@ char* PrintMemory (const void* token, const void* token_end, char* buffer,
         *buffer++ = '|';
         *buffer++ = ' ';
         buffer = PrintHex (address_ptr, buffer, buffer_end);
-        //PRINT_LINE
+        //PRINT_HEADING
         //PRINTF ("\n%s", buffer_begin)
-        //PRINT_LINE
+        //PRINT_HEADING
     }
     *buffer++ = '\n';
     *buffer++ = '|';

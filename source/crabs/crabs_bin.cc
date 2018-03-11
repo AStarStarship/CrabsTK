@@ -26,15 +26,35 @@
 #include "slot.h"
 
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#define DEBUG 1
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
-#define CLEAR(begin, end)\
-    while(begin <= end) { *begin++ = ' '; }
+#define CLEAR(begin, end) while(begin <= end) *begin++ = ' ';
+#define PRINT_BSQ(header, bsq) {\
+    enum {\
+        kBsqBufferSize = 1024,\
+        kBsqBufferSizeWords = kBsqBufferSize >> kWordSizeShift\
+     };\
+    char bsq_buffer[kBsqBufferSizeWords];\
+    PrintBsq (bsq, bsq_buffer, bsq_buffer + kBsqBufferSize);\
+    printf   ("\n    %s%s", header, bsq_buffer);\
+}
+#define PRINT_BIN(header, bin) {\
+    enum {\
+        kBInBufferSize = 1024,\
+        kBInBufferSizeWords = kBInBufferSize >> kWordSizeShift\
+     };\
+    char bin_buffer[kBInBufferSizeWords];\
+    BInPrint (bin, bin_buffer, bin_buffer + kBInBufferSize);\
+    printf   ("\n    %s%s", header, bin_buffer);\
+}
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
 #define CLEAR(begin, end)
+#define PRINT_BSQ(header, bsq)
+#define PRINT_BIN(header, bout)
 #endif
 
 namespace _ {
@@ -111,7 +131,7 @@ inline const Op* BInError (BIn* bin, Error error,
 }
 
 BIn* BInInit (uintptr_t* buffer, uint_t size) {
-    if (size < kMinSlotSize)
+    if (size < kSlotSizeMin)
         return nullptr;
     if (buffer == nullptr)
         return nullptr;
@@ -136,8 +156,8 @@ int BInStreamByte (BIn* bin) {
         *start = begin + bin->start,
         *cursor = start;
 
-    int length = (int)(start < open) ? open - start + 1 :
-        (end - start) + (open - begin) + 2;
+    int length = (int)((start < open) ? open - start + 1 :
+        (end - start) + (open - begin) + 2);
 
     if (length < 1) {
         BInError (bin, kErrorBufferOverflow, Bsq<1, STR> (), 2, start);
@@ -154,10 +174,9 @@ bool BInIsReadable (BIn* bin) {
 }
 
 const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
-    PRINTF ("\nReading ")
-    PRINT_BSQ (params)
-    PRINTF (" from B-Input:0x%x", bin)
-    PRINT_BIN (bin)
+#
+    PRINT_BSQ ("\nReading ", params)
+    PRINT_BIN (" from B-Input:0x%x", bin)
 
     if (!bin) {
         return BInError (bin, kErrorImplementation);
@@ -173,7 +192,7 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
     uint32_t  ui4;                  //< Temp variable.
     uint64_t  ui8;                  //< Temp variable.
     char*     ui1_ptr;              //< Pointer to a UI1.
-    uint16_t* ui2_ptr;              //< Pointer to a UI2.
+    //uint16_t* ui2_ptr;              //< Pointer to a UI2.
     uint32_t* ui4_ptr;              //< Pointer to a UI4.
     uint64_t* ui8_ptr;              //< Pointer to a UI1.
     uint_t    type,                 //< The current type being read.
@@ -197,15 +216,15 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
         *stop = begin + bin->stop;  //< The stop of the data.
                                     //const uint_t* param = params + 1; //< The current param.
 
-    length = SlotLength (start, stop, size);
+    length = (uint_t)SlotLength (start, stop, size);
 
     // When we scan, we are reading from the beginning of the Slot buffer.
 
     for (index = 1; index <= num_params; ++index) {
         type = params[index];
         PRINTF ("\nparam:%u type:%s start:%i stop:%i length:%u", arg_index + 1,
-               TypeString (type), MemoryVector (begin, start),
-               MemoryVector (begin, stop), length)
+               TypeString (type), (int)MemoryVector (begin, start),
+               (int)MemoryVector (begin, stop), length)
         switch (type) {
             case NIL:
                 return BInError (bin, kErrorInvalidType, params, index,
@@ -649,6 +668,28 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
 }
 
 #if USING_TEXT_SCRIPT
+char* BInPrint (BIn* bin, char* buffer, char* buffer_end) {
+    if (!bin) {
+        return nullptr;
+    }
+    if (!buffer) {
+        return buffer;
+    }
+    if (buffer >= buffer_end) {
+        return nullptr;
+    }
+    uint_t size = bin->size;
+    buffer = PrintLine ('_', 80, buffer, buffer_end);
+    Printer print (buffer, buffer_end);
+    print << "\nBIn:"  << PrintHex (bin, buffer, buffer_end) 
+          << " size:"  << bin->size
+          << " start:" << bin->start
+          << " stop:"  << bin->stop
+          << " read:"  << bin->read;
+    return PrintMemory (BInBegin (bin), size + sizeof (BIn), print.cursor,
+                        buffer_end);
+}
+
 Slot& BInPrint (BIn* bin, Slot& slot) {
     if (!bin) {
         return slot << "\nError: BIn can't be nil";
@@ -667,4 +708,7 @@ Slot& BInPrint (BIn* bin, Slot& slot) {
 #undef PRINTF
 #undef PUTCHAR
 #undef CLEAR
+#undef PRINT_BSQ
+#undef PRINT_BIN
+#undef DEBUG
 #endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

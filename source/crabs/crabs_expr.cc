@@ -33,10 +33,9 @@
         kTextBufferSize = 1024,\
         kTextBufferSizeWords = kTextBufferSize >> kWordSizeShift\
      };\
-    uintptr_t text_buffer[kTextBufferSizeWords];\
-    char* text_buffer_ptr = reinterpret_cast<char*>(text_buffer);\
-    PrintBsq (bsq, ,text_buffer_ptr, text_buffer_ptr + kTextBufferSize);\
-    printf   ("\n    %s%s", header, text_buffer);\
+    char bsq_buffer[kTextBufferSizeWords];\
+    PrintBsq (bsq, ,bsq_buffer, bsq_buffer + kTextBufferSize);\
+    printf   ("\n    %s%s", header, bsq_buffer);\
 }
 #else
 #define PRINTF(x, ...)
@@ -179,7 +178,7 @@ Expr* ExprInit (uintptr_t* buffer, uint_t buffer_size,  uint_t stack_size,
     expr->root = root;
     uintptr_t base_ptr = reinterpret_cast<uintptr_t> (expr) + sizeof (Expr) +
                          stack_size * sizeof (uint_t);
-    SlotInit (&expr->slot, reinterpret_cast<uintptr_t*> (base_ptr), unpacked_size);
+    SlotInit (expr->slot, reinterpret_cast<uintptr_t*> (base_ptr), unpacked_size);
     #if DEBUG_CRABS_EXPR
     PRINTF ("expr->op:" << OutHex (expr->operand);
     #endif
@@ -337,7 +336,7 @@ const Op* ExprUnpack (Expr* expr) {
     bin = ExprBIn (expr);
     size = bin->size;
     hash = expr->hash;
-    timestamp = ClockTimestampNow ();
+    timestamp = ClockNow ();
     delta_t = timestamp - expr->last_time;
 
     if (delta_t <= expr->timeout_us) {
@@ -349,7 +348,7 @@ const Op* ExprUnpack (Expr* expr) {
     bin_end    = bin_begin + size;
     bin_start  = bin_begin + bin->start;
     bin_stop   = bin_begin + bin->stop;
-    space  = SlotSpace (bin_start, bin_stop, size);
+    space  = (uint_t)SlotSpace (bin_start, bin_stop, size);
     length = size - space;
     PRINTF ("\n    Scanning Expr:0x%p with length:%i", expr, length)
     for (; length != 0; --length) {
@@ -415,7 +414,7 @@ const Op* ExprUnpack (Expr* expr) {
                     // It's an Op.
                     // The software implementer pushes the Op on the stack.
                     
-                    PRINT_BSQ ("\nFound Op with params ", params)
+                    //PRINT_BSQ ("\nFound Op with params ", params)
                     
                     result = ExprScanHeader (expr, params);
                     if (result) {
@@ -913,7 +912,7 @@ uint_t ExprSpace (BIn* bin) {
     }
 
     char* base = ExprBaseAddress (bin);
-    return SlotSpace (base + bin->start, base + bin->stop, bin->size);
+    return (uint_t)SlotSpace (base + bin->start, base + bin->stop, bin->size);
 }
 
 uintptr_t* ExprBaseAddress (void* ptr, uint_t rx_tx_offset) {

@@ -260,7 +260,7 @@ char* PrintBsq (const uint_t* params, char* buffer, char* buffer_end) {
             }
         }
     }
-    print << '>';
+    print << '>' << print;
     return buffer;
 }
 

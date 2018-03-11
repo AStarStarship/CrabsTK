@@ -16,9 +16,10 @@
 
 #include <stdafx.h>
 
-#include "text.h"
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#include "scan.h"
+#include "text.h"
 
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
@@ -36,220 +37,217 @@
 namespace _ {
 
 /*
-const char* Scan (
-                       char* text, char* text_end) {
-    return Print (text, text_end, text, text_end);
+const char* Scan (char* string, char* string_end) {
+    return Print (string, string_end);
 }
 
-const char* Scan (
-                      char* text, char* text_end, char delimiter) {
-    return Print (text, text_end, text, text_end);
+const char* Scan (char* string, char* string_end, char delimiter) {
+    return Print (string, string_end);
 }*/
 
-const char* Scan (int8_t& result, const char* text, const char* text_end) {
+const char* Scan (int8_t& result, const char* string, const char* string_end) {
     // @todo Rewrite with custom string-to-integer function.
     int extra_copy;
-    if (!sscanf_s (text, "%i", &extra_copy)) {
+    if (!sscanf_s (string, "%i", &extra_copy)) {
         return nullptr;
     }
     result = (int8_t)extra_copy;
-    return TextNextNonNumber (text, text_end);
+    return TextNextNonNumber (string, string_end);
 }
 
-const char* Scan (uint8_t& result, const char* text, const char* text_end) {
+const char* Scan (uint8_t& result, const char* string, const char* string_end) {
     // @todo Rewrite with custom string-to-integer function.
     uint extra_copy;
-    if (!sscanf_s (text, "%u", &extra_copy)) {
+    if (!sscanf_s (string, "%u", &extra_copy)) {
         return nullptr;
     }
     result = (uint8_t)extra_copy;
-    return TextNextNonNumber (text, text_end);
+    return TextNextNonNumber (string, string_end);
 }
 
-const char* Scan (int16_t& result, const char* text, const char* text_end) {
+const char* Scan (int16_t& result, const char* string, const char* string_end) {
     // @todo Rewrite with custom string-to-integer function.
     int extra_copy;
-    if (!sscanf_s (text, "%i", &extra_copy)) {
+    if (!sscanf_s (string, "%i", &extra_copy)) {
         return nullptr;
     }
     result = (int16_t)extra_copy;
-    return TextNextNonNumber (text, text_end);
+    return TextNextNonNumber (string, string_end);
 }
 
-const char* Scan (uint16_t& result, const char* text, const char* text_end) {
+const char* Scan (uint16_t& result, const char* string, const char* string_end) {
     // @todo Rewrite with custom string-to-integer function.
     uint extra_copy;
-    if (!sscanf_s (text, "%u", &extra_copy)) {
+    if (!sscanf_s (string, "%u", &extra_copy)) {
         return nullptr;
     }
     result = (uint16_t)extra_copy;
-    return TextNextNonNumber (text, text_end);
+    return TextNextNonNumber (string, string_end);
 }
 
-const char* Scan (int32_t& result, const char* text, const char* text_end) {
+const char* Scan (int32_t& result, const char* string, const char* string_end) {
     // @todo Rewrite with custom string-to-integer function.
     int extra_copy;
-    if (!sscanf_s (text, "%i", &extra_copy)) {
+    if (!sscanf_s (string, "%i", &extra_copy)) {
         return nullptr;
     }
     result = (int32_t)extra_copy;
-    return TextNextNonNumber (text, text_end);
+    return TextNextNonNumber (string, string_end);
 }
 
-const char* Scan (uint32_t& result, const char* text, const char* text_end) {
+const char* Scan (uint32_t& result, const char* string, const char* string_end) {
     // @todo Rewrite with custom string-to-integer function.
     uint extra_copy;
-    if (!sscanf_s (text, "%u", &extra_copy)) {
+    if (!sscanf_s (string, "%u", &extra_copy)) {
         return nullptr;
     }
     result = (uint32_t)extra_copy;
-    return TextNextNonNumber (text, text_end);
+    return TextNextNonNumber (string, string_end);
 }
 
-const char* Scan (int64_t& result, const char* text, const char* text_end) {
+const char* Scan (int64_t& result, const char* string, const char* string_end) {
     // @todo Rewrite with custom string-to-integer function.
     __int64 extra_copy;
-    if (!sscanf_s (text, "%lli", &extra_copy)) {
+    if (!sscanf_s (string, "%lli", &extra_copy)) {
         return nullptr;
     }
     result = extra_copy;
-    return TextNextNonNumber (text, text_end);
+    return TextNextNonNumber (string, string_end);
 }
 
-const char* Scan (uint64_t& result, const char* text, const char* text_end) {
+const char* Scan (uint64_t& result, const char* string, const char* string_end) {
     // @todo Rewrite with custom string-to-integer function.
     unsigned __int64 extra_copy;
-    if (!sscanf_s (text, "%llu", &extra_copy)) {
+    if (!sscanf_s (string, "%llu", &extra_copy)) {
         return nullptr;
     }
     result = extra_copy;
-    return TextNextNonNumber (text, text_end);
+    return TextNextNonNumber (string, string_end);
 }
 
-const char* Scan (float& result, const char* text, const char* text_end) {
+const char* Scan (float& result, const char* string, const char* string_end) {
     // @todo Rewrite with custom string-to-float function.
     float extra_copy;
-    if (!sscanf_s (text, "%f", &extra_copy)) {
+    if (!sscanf_s (string, "%f", &extra_copy)) {
         return nullptr;
     }
     result = extra_copy;
-    return TextNextNonNumber (text, text_end);
+    return TextNextNonNumber (string, string_end);
 }
 
-const char* Scan (double& result, const char* text, const char* text_end) {
-    // @todo Rewrite with custom string-to-float function.
-    double extra_copy;
-    if (!sscanf_s (text, "%lf", &extra_copy)) {
-        return nullptr;
-    }
-    result = extra_copy;
-    return TextNextNonNumber (text, text_end);
-}
-
-const char* Scan (int8_t& result, const char* text) {
-    // @todo Rewrite with custom string-to-integer function.
-    int extra_copy;
-    if (!sscanf_s (text, "%i", &extra_copy)) {
-        return nullptr;
-    }
-    result = (int8_t)extra_copy;
-    return TextSkipNumbers (text);
-}
-
-const char* Scan (uint8_t& result, const char* text) {
-    // @todo Rewrite with custom string-to-integer function.
-    uint extra_copy;
-    if (!sscanf_s (text, "%u", &extra_copy)) {
-        return nullptr;
-    }
-    result = (uint8_t)extra_copy;
-    return TextSkipNumbers (text);
-}
-
-const char* Scan (int16_t& result, const char* text) {
-    // @todo Rewrite with custom string-to-integer function.
-    int extra_copy;
-    if (!sscanf_s (text, "%i", &extra_copy)) {
-        return nullptr;
-    }
-    result = (int16_t)extra_copy;
-    return TextSkipNumbers (text);
-}
-
-const char* Scan (uint16_t& result, const char* text) {
-    // @todo Rewrite with custom string-to-integer function.
-    uint extra_copy;
-    if (!sscanf_s (text, "%u", &extra_copy)) {
-        return nullptr;
-    }
-    result = (uint16_t)extra_copy;
-    return TextSkipNumbers (text);
-}
-
-const char* Scan (int32_t& result, const char* text) {
-    // @todo Rewrite with custom string-to-integer function.
-    int extra_copy;
-    if (!sscanf_s (text, "%i", &extra_copy)) {
-        return nullptr;
-    }
-    result = (int32_t)extra_copy;
-    return TextSkipNumbers (text);
-}
-
-const char* Scan (uint32_t& result, const char* text) {
-    // @todo Rewrite with custom string-to-integer function.
-    uint extra_copy;
-    if (!sscanf_s (text, "%u", &extra_copy)) {
-        return nullptr;
-    }
-    result = (uint32_t)extra_copy;
-    return TextSkipNumbers (text);
-}
-
-const char* Scan (int64_t& result, const char* text) {
-    // @todo Rewrite with custom string-to-integer function.
-    int64_t extra_copy;
-    if (!sscanf_s (text, "%lli", &extra_copy)) {
-        return nullptr;
-    }
-    result = extra_copy;
-    return TextSkipNumbers (text);
-}
-
-const char* Scan (uint64_t& result, const char* text) {
-    // @todo Rewrite with custom string-to-integer function.
-    uint64_t extra_copy;
-    if (!sscanf_s (text, "%llu", &extra_copy)) {
-        return nullptr;
-    }
-    result = extra_copy;
-    return TextSkipNumbers (text);
-}
-
-const char* Scan (float& result, const char* text) {
-    // @todo Rewrite with custom string-to-float function.
-    float extra_copy;
-    if (!sscanf_s (text, "%f", &extra_copy)) {
-        return nullptr;
-    }
-    result = extra_copy;
-    return TextSkipNumbers (text);
-}
-
-const char* Scan (const char* string, double& result, const char* text) {
+const char* Scan (double& result, const char* string, const char* string_end) {
     // @todo Rewrite with custom string-to-float function.
     double extra_copy;
     if (!sscanf_s (string, "%lf", &extra_copy)) {
         return nullptr;
     }
     result = extra_copy;
+    return TextNextNonNumber (string, string_end);
+}
+
+const char* Scan (int8_t& result, const char* string) {
+    // @todo Rewrite with custom string-to-integer function.
+    int extra_copy;
+    if (!sscanf_s (string, "%i", &extra_copy)) {
+        return nullptr;
+    }
+    result = (int8_t)extra_copy;
     return TextSkipNumbers (string);
 }
+
+const char* Scan (uint8_t& result, const char* string) {
+    // @todo Rewrite with custom string-to-integer function.
+    uint extra_copy;
+    if (!sscanf_s (string, "%u", &extra_copy)) {
+        return nullptr;
+    }
+    result = (uint8_t)extra_copy;
+    return TextSkipNumbers (string);
+}
+
+const char* Scan (int16_t& result, const char* string) {
+    // @todo Rewrite with custom string-to-integer function.
+    int extra_copy;
+    if (!sscanf_s (string, "%i", &extra_copy)) {
+        return nullptr;
+    }
+    result = (int16_t)extra_copy;
+    return TextSkipNumbers (string);
+}
+
+const char* Scan (uint16_t& result, const char* string) {
+    // @todo Rewrite with custom string-to-integer function.
+    uint extra_copy;
+    if (!sscanf_s (string, "%u", &extra_copy)) {
+        return nullptr;
+    }
+    result = (uint16_t)extra_copy;
+    return TextSkipNumbers (string);
+}
+
+const char* Scan (int32_t& result, const char* string) {
+    // @todo Rewrite with custom string-to-integer function.
+    int extra_copy;
+    if (!sscanf_s (string, "%i", &extra_copy)) {
+        return nullptr;
+    }
+    result = (int32_t)extra_copy;
+    return TextSkipNumbers (string);
+}
+
+const char* Scan (uint32_t& result, const char* string) {
+    // @todo Rewrite with custom string-to-integer function.
+    uint extra_copy;
+    if (!sscanf_s (string, "%u", &extra_copy)) {
+        return nullptr;
+    }
+    result = (uint32_t)extra_copy;
+    return TextSkipNumbers (string);
+}
+
+const char* Scan (int64_t& result, const char* string) {
+    // @todo Rewrite with custom string-to-integer function.
+    int64_t extra_copy;
+    if (!sscanf_s (string, "%lli", &extra_copy)) {
+        return nullptr;
+    }
+    result = extra_copy;
+    return TextSkipNumbers (string);
+}
+
+const char* Scan (uint64_t& result, const char* string) {
+    // @todo Rewrite with custom string-to-integer function.
+    uint64_t extra_copy;
+    if (!sscanf_s (string, "%llu", &extra_copy)) {
+        return nullptr;
+    }
+    result = extra_copy;
+    return TextSkipNumbers (string);
+}
+
+const char* Scan (float& result, const char* string) {
+    float extra_copy;
+    if (!sscanf_s (string, "%f", &extra_copy)) {
+        return nullptr;
+    }
+    result = extra_copy;
+    return TextSkipNumbers (string);
+}
+
+const char* Scan (double& result, const char* string) {
+    float extra_copy;
+    if (!sscanf_s (string, "%f", &extra_copy)) {
+        return nullptr;
+    }
+    result = extra_copy;
+    return TextSkipNumbers (string);
+}
+
 /*
 const char* Scan (
                         char* target, char* target_end) {
-    text = TextSkipSpaces (text, text_end);
-    if (!text) {
+    string = TextSkipSpaces (string, string_end);
+    if (!string) {
         return nullptr;
     }
     if (!target) {
@@ -259,50 +257,50 @@ const char* Scan (
         return nullptr;
     }
 
-    char c = *text;
+    char c = *string;
     while (c && !IsWhitespace (c)) {
         #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
         std::cout << c;
         #endif
-        if (++text > text_end) {
+        if (++string > string_end) {
             #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
-            std::cout << " but text buffer overflowed!";
+            std::cout << " but string overflowed!";
             #endif
             return nullptr;
         }
         if (++target > target_end) {
             #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
-            std::cout << " but target buffer overflowed!";
+            std::cout << " but target string overflowed!";
             #endif
             return nullptr;
         }
         *target = c;
-        c = *text;
+        c = *string;
     }
     #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
     std::cout << '\"';
     #endif
     *target = 0;
-    return text;
+    return string;
 
 }
 
-const char* Scan (const char* target, char* text,
-                         char* text_end, char delimiter) {
+const char* Scan (const char* target, char* string,
+                         char* string_end, char delimiter) {
     #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
-    std::cout << "\nparse_string buffer_size: " << text_end - text
+    std::cout << "\nparse_string buffer_size: " << string_end - string
               << " delimiter " << delimiter << "\n";
     #endif
     if (!target) {
         std::cout << "\n!target";
         return nullptr;
     }
-    if (!text) {
-        std::cout << "\n!text";
+    if (!string) {
+        std::cout << "\n!string";
         return nullptr;
     }
-    if (text > text_end) {
-        std::cout << "\ndestination > text_end";
+    if (string > string_end) {
+        std::cout << "\ndestination > string_end";
         return nullptr;
     }
     //std::cout << delimiter;
@@ -310,22 +308,22 @@ const char* Scan (const char* target, char* text,
     while (c > delimiter) {
         if (c <= delimiter) {
             //std::cout << delimiter << " parsed.\n";
-            *text = 0;
+            *string = 0;
             if (delimiter == 0) {
                 return target;
             }
             return target + 1;
         }
         //std::cout << c;
-        if (target > text_end) {
+        if (target > string_end) {
             std::cout << "\nBuffer overflow!";
             return nullptr;
         }
-        *text++ = c;
+        *string++ = c;
         c = *(++target);
     }
     //std::cout << delimiter << " done.\n";
-    *text = 0;
+    *string = 0;
     if (delimiter == 0) {
         return target;
     }
@@ -353,7 +351,7 @@ const char* ScanBsq (const char* input, const char* input_end,
 
     char d = *(input + 3);
     if ((input_end - input) < 5) {
-        // We will always have at least 2 bytes in the buffer after any ESC.
+        // We will always have at least 2 bytes in the string after any ESC.
         // <4
         return 0;
     }

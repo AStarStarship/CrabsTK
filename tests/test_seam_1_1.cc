@@ -26,7 +26,7 @@ using namespace std;
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PRINT_PAUSE(message)\
-    printf ("\n%s               ", message); system ("PAUSE");
+    printf ("\n\n%s\n", message); system ("PAUSE");
 #else
 #define PRINTF(x, ...)
 #define PRINT_PAUSE(message)

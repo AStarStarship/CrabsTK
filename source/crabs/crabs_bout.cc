@@ -24,13 +24,34 @@
 #include "bsq.h"
 #include "hash.h"
 #include "args.h"
+#include "slot.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
+#define PRINT_BSQ(header, bsq) {\
+    enum {\
+        kBsqBufferSize = 1024,\
+        kBsqBufferSizeWords = kBsqBufferSize >> kWordSizeShift\
+     };\
+    char bsq_buffer[kBsqBufferSizeWords];\
+    PrintBsq (bsq, bsq_buffer, bsq_buffer + kBsqBufferSize);\
+    printf   ("\n    %s%s", header, bsq_buffer);\
+}
+#define PRINT_BOUT(header, bout) {\
+    enum {\
+        kBOutBufferSize = 1024,\
+        kBOutBufferSizeWords = kBOutBufferSize >> kWordSizeShift\
+     };\
+    char bout_buffer[kBOutBufferSizeWords];\
+    BOutPrint (bout, bout_buffer, bout_buffer + kBOutBufferSize);\
+    printf   ("\n    %s%s", header, bout_buffer);\
+}
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
+#define PRINT_BSQ(bsq)
+#define PRINT_BOUT(header, bout)
 #endif
 
 namespace _ {
@@ -86,7 +107,7 @@ inline const Op* BOutError (BOut* bout, Error error,
     return reinterpret_cast<const Op*> (1);
 }
 
-const char** BOutState () {
+const char** BOutStateStrings () {
     static const char* strings[] = {
         "WritingState",
         "kBInStateLocked"
@@ -102,7 +123,7 @@ char* BOutBuffer (BOut* bout) {
 }
 
 BOut* BOutInit (uintptr_t* buffer, uint_t size) {
-    if (size < kMinSlotSize)
+    if (size < kSlotSizeMin)
         return nullptr;
     if (buffer == nullptr)
         return nullptr;
@@ -125,8 +146,8 @@ uint_t BOutSpace (BOut* bout) {
         return 0;
     }
     char* txb_ptr = reinterpret_cast<char*>(bout);
-    return SlotSpace (txb_ptr + bout->start, txb_ptr + bout->stop,
-                      bout->size);
+    return (uint)SlotSpace (txb_ptr + bout->start, txb_ptr + bout->stop,
+                            bout->size);
 }
 
 uint_t BOutBufferLength (BOut* bout) {
@@ -134,7 +155,7 @@ uint_t BOutBufferLength (BOut* bout) {
         return 0;
     }
     char* base = BOutBuffer (bout);
-    return SlotLength (base + bout->start, base + bout->stop, bout->size);
+    return (uint)SlotLength (base + bout->start, base + bout->stop, bout->size);
 }
 
 char* BOutEndAddress (BOut* bout) {
@@ -166,7 +187,9 @@ int BOutStreamByte (BOut* bout) {
 
 const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
     
-    DEBUG ("\n\nWriting ", PrintBsq (params), " to B-Output:", PrintHex (bout), BOutPrint (bout))
+    PRINT_BSQ ("\n\nWriting ", params)
+    PRINT_BOUT (" to B-Output:%x", bout)
+
     if (!bout)
         return BOutError (bout, kErrorImplementation);
     if (!params)
@@ -201,8 +224,8 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
     }
     arg_index = 0;
     size = bout->size;
-    const uint_t* param = params,       //< Pointer to the current param.
-                * bsc_param;            //< Pointer to the current BSQ param.
+    const uint_t* param = params;       //< Pointer to the current param.
+                //* bsc_param;            //< Pointer to the current BSQ param.
     // Convert the socket offsets to pointers.
     char* begin = BOutBuffer (bout),    //< Beginning of the buffer.
         * end   = begin + size,         //< End of the buffer.
@@ -220,7 +243,7 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
 #endif
     uint16_t hash = kLargest16BitPrime; //< Reset hash to largest 16-bit prime.
 
-    space = SlotSpace (start, stop, size);
+    space = (uint_t)SlotSpace (start, stop, size);
 
     // Check if the buffer has enough room.
     if (space == 0)
@@ -233,8 +256,8 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
     for (index = 1; index <= num_params; ++index) {
         type = params[index];
         PRINTF ("\nparam: %u type: %s start:%i stop:%i space: %u", arg_index + 1,
-                TypeString (type), MemoryVector (begin, start), 
-                MemoryVector (begin, stop), space)
+                TypeString (type), (int)MemoryVector (begin, start), 
+                (int)MemoryVector (begin, stop), space)
         switch (type) {
             case NIL:
                 break;
@@ -638,7 +661,7 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
     if (++stop >= end) stop -= size;
     *stop = (byte)(hash >> 8);
     if (++stop >= end) stop -= size;
-    bout->stop = MemoryVector (begin, stop);
+    bout->stop = (uint_t)MemoryVector (begin, stop);
     PRINTF ("\nDone writing to B-Output with the hash 0x%x.", hash)
     return 0;
 }
@@ -662,7 +685,7 @@ void BOutRingBell (BOut* bout, const char* address) {
         * end   = begin + size,             //< End of the buffer.
         * start = begin + bout->start,      //< Start of the data.
         * stop  = begin + bout->stop;       //< Stop of the data.
-    space = SlotSpace (start, stop, size);
+    space = (uint_t)SlotSpace (start, stop, size);
     if (space == 0) {
         PRINTF ("\nBuffer overflow!")
         return;
@@ -681,7 +704,7 @@ void BOutRingBell (BOut* bout, const char* address) {
         ++address;
         c = *address;
     }
-    bout->stop = MemoryVector (begin, stop);
+    bout->stop = (uint_t)MemoryVector (begin, stop);
 }
 
 void BOutAckBack (BOut* bout, const char* address) {
@@ -703,7 +726,7 @@ void BOutAckBack (BOut* bout, const char* address) {
         * end   = begin + size,             //< End of the buffer.
         * start = begin + bout->start,      //< Start of the data.
         * stop  = begin + bout->stop;       //< Stop of the data.
-    space = SlotSpace (start, stop, size);
+    space = (uint_t)SlotSpace (start, stop, size);
     if (space == 0) {
         PRINTF ("\nBuffer overflow!")
         return;
@@ -722,24 +745,46 @@ void BOutAckBack (BOut* bout, const char* address) {
         ++address;
         c = *address;
     }
-    bout->stop = MemoryVector (begin, stop);
+    bout->stop = (uint_t)MemoryVector (begin, stop);
 }
 
 const Op* BOutConnect (BOut* bout, const char* address) {
     void* args[2];
     return BOutWrite (bout, Bsq <2, ADR, ADR> (),
-                      Args (args, address, 0 ()));
+                      Args (args, address, 0));
 }
 
 void BInKeyStrokes () {
     int current = -1;
     while (current >= 0) {
-        current = getch ();
+        current = _getch ();
         // @todo Do something with the char!
     }
 }
 
 #if USING_TEXT_SCRIPT
+char* BOutPrint (BOut* bout, char* buffer, char* buffer_end) {
+    if (!buffer) {
+        return buffer;
+    }
+    if (buffer >= buffer_end) {
+        return nullptr;
+    }
+    buffer = PrintLine ('_', 80, buffer, buffer_end);
+    if (!bout) {
+        return nullptr;
+    }
+    int size = bout->size;
+    Printer print (buffer, buffer_end);
+    print << "\nBOut:" << PrintHex (bout, print)
+          << " size:" << size
+          << " start:" << bout->start << " stop:" << bout->stop
+          << " read:"  << bout->read
+          << PrintMemory (BOutBuffer (bout), size + 64, print);
+    //< @todo remove the + 64.);
+    return print.cursor;
+}
+
 Slot& BOutPrint (BOut* bout, Slot& slot) {
     slot << PrintLine ('_', 80, slot);
     if (!bout) {

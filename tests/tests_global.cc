@@ -19,11 +19,10 @@
 #if MAJOR_SEAM >= 1
 TEST_GROUP (KabukiToolkitTests) {
     void setup () {
-        puts ("\n\n\nTesting SEAM_1");
     }
 
     void teardown () {
-        std::cout << "\n\n";
+        std::cout << '\n';
         system ("PAUSE");
     }
 };
@@ -47,7 +46,7 @@ int main (int args_count, char** args) {
     for (int i = 81; i > 0; --i) {
         std::cout << '-';
     }
-    std::cout << "\n| Kabuki Toolkit Tests\n|";
+    std::cout << "\nKabuki Toolkit Tests\n";
     for (int i = 81; i > 0; --i) {
         std::cout << '-';
     }

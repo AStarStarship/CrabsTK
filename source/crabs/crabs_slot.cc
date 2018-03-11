@@ -21,6 +21,7 @@
 
 #include "type.h"
 #include "text.h"
+#include "script_itos.h"
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
@@ -37,7 +38,31 @@
 
 namespace _ {
 
-void SlotInit (Slot* slot, uintptr_t* begin, uintptr_t size) {
+Slot& SlotInit (Slot& slot, uintptr_t* buffer, uintptr_t size) {
+    assert (buffer);
+    assert (size >= kSlotSizeMin);
+
+    char* begin_char = reinterpret_cast<char*> (buffer);
+    slot.begin = begin_char;
+    slot.start = begin_char;
+    slot.stop  = begin_char;
+    slot.end   = begin_char + size;
+    return slot;
+}
+
+Slot& SlotInit (uintptr_t* buffer, uintptr_t size) {
+    assert (size >= kSlotSizeMin);
+    char* begin = reinterpret_cast<char*> (buffer);
+    Slot* slot  = reinterpret_cast<Slot*> (buffer);
+    slot->begin  = 0;
+    slot->start  = 0;
+    slot->stop   = 0;
+    slot->end    = begin + size - sizeof (Slot) - 1;
+    return *slot;
+}
+
+/*
+void SlotInit (Slot* slot, uintptr_t* buffer, uintptr_t size) {
     if (!slot) {
         slot->begin = 0;
         slot->start = 0;
@@ -45,19 +70,19 @@ void SlotInit (Slot* slot, uintptr_t* begin, uintptr_t size) {
         slot->end   = 0;
         return;
     }
-    if (!begin) {
+    if (!buffer) {
         slot->begin = 0;
         slot->start = 0;
         slot->stop  = 0;
         slot->end   = 0;
         return;
     }
-    char* begin_char = reinterpret_cast<char*> (Align8 (begin));
+    char* begin_char = reinterpret_cast<char*> (buffer);
     slot->begin = begin_char;
     slot->start = begin_char;
     slot->stop  = begin_char;
     slot->end   = begin_char + size;
-}
+}*/
 
 inline const Op* SlotError (Slot* slot, Error error,
                             const uint_t* header) {
@@ -613,6 +638,14 @@ Slot& Print (const char* text, const char* text_end, Slot& slot, char delimiter)
     return slot;
 }
 
+Slot& Print (int32_t value, Slot& slot, char delimiter) {
+    return slot;
+}
+
+Slot& Print (uint32_t value, Slot& slot, char delimiter) {
+    return slot;
+}
+
 Slot& Print (int64_t value, Slot& slot, char delimiter) {
     enum {
         kSizeMax = 22,
@@ -871,6 +904,11 @@ Slot& PrintRight (const char* token, int num_columns, Slot& slot,
         }
     }
     slot.stop = cursor;
+    return slot;
+}
+
+Slot& PrintCentered (const char* text, int num_columns, Slot& slot,
+                     char delimiter) {
     return slot;
 }
 

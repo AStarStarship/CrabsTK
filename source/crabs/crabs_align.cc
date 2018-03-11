@@ -20,7 +20,7 @@
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -59,110 +59,6 @@ int32_t AlignPowerOf2 (int32_t value) {
     v |= v >> 16;
     ++v;
     return (int32_t)value;
-}
-
-void MemoryClear (void* address, size_t size) {
-    //memset (address, '0', size);
-    char* ptr = reinterpret_cast<char*> (address);
-    for (; size; --size)
-        *ptr++ = '\0';
-    /* This code is designed to work like memcpy but is not working right now.
-    uintptr_t lsb_mask = (1 << sizeof (long)) - 1,
-    msb_mask  = ~lsb_mask,
-    adr_uint  = reinterpret_cast<uintptr_t> (address),
-    adr_lsb   = adr_uint & lsb_mask;
-    long* ptr = reinterpret_cast<long*> (adr_uint & msb_mask),
-    * end = reinterpret_cast<long*> ((adr_uint + size) & lsb_mask);
-    // Example: address 0x1
-    // Mask off 0x1
-    long value = *ptr,
-    value_mask = adr_uint & lsb_mask;
-    value &= value_mask;
-    *ptr = value;
-    ++ptr;
-    for (; ptr < end; ++ptr) {
-        *ptr = 0;
-    }
-    value = *ptr;
-    value_mask = adr_uint & lsb_mask;
-    value &= value_mask;
-    *ptr = value;*/
-}
-
-char* MemoryCopy (char* write, char* write_end, const char* read,
-                  const char* read_end) {
-    // @todo Optimize to write in words.
-    if (!write) {
-        return nullptr;
-    }
-    if (write > write_end) {
-        return nullptr;
-    }
-    if (!read) {
-        return nullptr;
-    }
-    if (read > read_end) {
-        return nullptr;
-    }
-
-    size_t target_size = write_end - write,
-           read_size   = read_end  - read;
-    if (target_size < read_size) { // Buffer overflow!
-        return nullptr;
-    }
-    for (; read_size != 0; --read_size) {
-        *write++ = *read++;
-    }
-    return write;
-}
-
-char* MemoryCopy (char* write, char* write_end, const char* read,
-                  int size) {
-    // @todo Optimize to write in words.
-    if (!write) {
-        return nullptr;
-    }
-    if (write > write_end) {
-        return nullptr;
-    }
-    if (!read) {
-        return nullptr;
-    }
-    if ((write_end - write) < size) {
-        return nullptr;
-    }
-    for (; size; --size) {
-        *write++ = *read++;
-    }
-    return write;
-}
-
-char* MemoryCopy (char* write, char* write_end, const char* read,
-                  const char* read_end, int size) {
-    // @todo Optimize to write in words.
-    if (!write) {
-        return nullptr;
-    }
-    if (write > write_end) {
-        return nullptr;
-    }
-    if (!read) {
-        return nullptr;
-    }
-    if (read > read_end) {
-        return nullptr;
-    }
-    // Check for room in both the read and write buffers.
-    if ((write_end - write) < size) {
-        return nullptr;
-    }
-    if ((read_end - read) < size) {
-        return nullptr;
-    }
-    for (; size; --size) {
-        *write++ = *read++;
-    }
-    return write;
 }
 
 }       //< namespace _

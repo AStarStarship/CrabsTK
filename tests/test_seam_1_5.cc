@@ -23,7 +23,7 @@
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PRINT_PAUSE(message)\
-    printf ("\n%s               ", message); system ("PAUSE");
+    printf ("\n\n%s\n", message); system ("PAUSE");
 #else
 #define PRINTF(x, ...)
 #define PRINT_PAUSE(message)
@@ -58,7 +58,7 @@ void TestSeam1_5 () {
     CHECK_EQUAL (0, index)
     index = Book2Find (book, "D");
     CHECK_EQUAL (0, index)
-    system ("PAUSE");
+    PRINT_PAUSE ("\n");
     index = Book2Add<uint8_t, UI1> (book, "C", (byte)0xFF);
     CHECK_EQUAL (1, index)
     index = Book2Find (book, "D");
@@ -749,8 +749,7 @@ TEST (SEAM_1_5_TESTS, OpTests) {
     // Bypass handshake for testing purposes.
     ExprScan (expr);//, &slot);
     PrintExpr (expr);
-    std::cout << "\n Done with Op tests.";
-    system ("PAUSE");
+    PRINT_PAUSE ("\n Done with Op tests.")
 }
 
 TEST (SEAM_1_5_TESTS, TextTests) {
@@ -798,8 +797,7 @@ TEST (SEAM_1_5_TESTS, TextTests) {
 
     PrintMemory (PrintGetBegin (), PrintGetEnd ()) << Print ();
 
-    PRINTF ("\n\n Done testing _::Text class...\n ";
-    system ("PAUSE");
+    PRINT_PAUSE ("\n\n Done testing _::Text class...\n ";
 }
 
 #undef PRINT_PAUSE

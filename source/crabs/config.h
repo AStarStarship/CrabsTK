@@ -109,7 +109,7 @@ enum {
     //kMinFloorSize  = 256,               //< Min size of a room.
     //kMaxFloorSize  = 0x7FFFFFFC,        //< Max room size: 2GB - 7 bits.
     kMaxFloorsCount  = CRABS_MAX_WALLS,   //< Size of the Room Floor (buffer).
-    kMinSlotSize     = 128,               //< Min size of a Slot - 1.
+    kSlotSizeMin     = 128,               //< Min size of a Slot - 1.
     kMaxErrors       = CRABS_MAX_ERRORS,  //< Max errors before blowing up.
     kParamsMax       = CRABS_MAX_PARAMS,  //< Max number of parameters.
     kWordAddressMask = sizeof (void*) - 1,//< For masking the word address.

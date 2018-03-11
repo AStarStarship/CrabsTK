@@ -24,19 +24,24 @@
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PRINT_PAUSE(message)\
-    printf ("\n%s               ", message); system ("PAUSE");
+    printf ("\n\n%s\n", message); system ("PAUSE");
+#define PRINT_HEADING(message) \
+    std::cout << '\n';\
+    for (int i = 80; i > 80; --i) std::cout << '-';\
+    std::cout << '\n' << message;\
+    for (int i = 80; i > 80; --i) std::cout << '-';
 #else
 #define PRINTF(x, ...)
 #define PRINT_PAUSE(message)
+#define PRINT_HEADING(c)
 #endif
 
 using namespace _;
 
 void TestSeam1_2 () {
-
-    printf ("\n    Testing SEAM_1_2... ");
-
-    PRINTF ("\n\n Testing Text...");
+    
+    PRINT_HEADING ("Testing SEAM_1_2...")
+    PRINTF ("    Testing Text...");
 
     enum {
         kNumCompareStrings = 5,
@@ -97,30 +102,37 @@ void TestSeam1_2 () {
     }
 
     static const char kTesting123[] = "Testing 1, 2, 3\0";
-
-    PRINTF ("\n\n Testing Printer..."
-            "\n\n Expecting \"%s\"...", kTesting123);
+    
+    PRINT_HEADING ("    Testing Printer...")
+    PRINTF ("    Expecting \"%s\"...", kTesting123);
 
     printer << "Testing " << 1 << ", " << 2 << ", " << 3 << printer;
 
     STRCMP_EQUAL (kTesting123, buffer)
-
-    PRINTF ("\n    Running HexTest...");
+        
+    PRINT_HEADING ("    Running HexTest...")
     for (int i = 0; i < 16; ++i) {
         int value = TextHexToByte (TextNibbleToLowerCaseHex (i));
         CHECK_EQUAL (i, value)
-            value = TextHexToByte (TextNibbleToUpperCaseHex (i));
+        PRINTF ("\n    %i.) %i", i, value)
+        value = TextHexToByte (TextNibbleToUpperCaseHex (i));
+        PRINTF (" value is now:%i", value)
         CHECK_EQUAL (i, value)
     }
 
     for (int i = 0; i < 256; ++i) {
-        int value = TextHexToByte (TextByteToLowerCaseHex (i));
+        uint16_t c = TextByteToLowerCaseHex (i);
+        PRINTF ("\n    %i.) expecting: %x        TextByteToLowerCaseHex:%c%c",
+                i, i, (char)c, (char)(c >> 8))
+        int value = TextHexToByte (c);
+        PRINTF ("        TextHexToByte:%i", value)
         CHECK_EQUAL (i, value)
-            value = TextHexToByte (TextByteToUpperCaseHex (i));
+        value = TextHexToByte (TextByteToUpperCaseHex (i));
+        PRINTF ("     value is now:%i", value)
         CHECK_EQUAL (i, value)
     }
     
-    PRINTF ("\n\n    Testing string utils...\n");
+    PRINT_HEADING ("    Testing string utils...")
 
     CHECK (!TextEquals (kCompareStrings[0], kCompareStrings[1]))
     CHECK (!TextEquals (kCompareStrings[0], kCompareStrings[3]))
@@ -133,7 +145,8 @@ void TestSeam1_2 () {
         
     CHECK (TextFind (kTestingString, "one"))
     CHECK (TextFind (kTestingString, "three."))
-
+        
+    PRINT_HEADING ('-')
     PRINTF ("\n\n    Testing PrintRight...")
 
     CHECK (PrintRight (kTestingString, 28, buffer, buffer + kSize))
@@ -175,15 +188,78 @@ void TestSeam1_2 () {
 
     CHECK (PrintCentered (kStringNumbers, 6, buffer, buffer + kSize))
     STRCMP_EQUAL (kStringsCentered[3], buffer)
-
-    PRINTF ("\n\n Testing Text::Memory (void*, int size)...");
+        
+    PRINT_HEADING ('-')
+    PRINTF ("\n\n Testing Text::Memory (void*, int size)...")
 
     for (int i = 1; i <= kSize; ++i) {
         buffer_b[i - 1] = '0' + i % 10;
     }
     buffer_b[kSize - 1] = 0;
     CHECK (PrintMemory (buffer_b, buffer_b + 160, buffer, buffer + kSize))
-    PRINTF ("\n   Printed:\n%s", buffer)
+    PRINTF ("\n    Printed:\n%s", buffer)
+
+    PRINT_HEADING ('-')
+    PRINTF ("\n\n    Testing date-time parser...")
+    
+    time_t t,
+           t_found;
+    //tm* lt;
+    const char* result;
+
+    const char* strings[] = { "8/9\0",
+        "08/09\0",
+        "8/9/17\0",
+        "8/09/17\0",
+        "8/9/2017\0",
+        "8/09/2017\0",
+        "8/09/2017\0",
+        "08/9/2017\0",
+        "8/09/2017@00\0",
+        "8.09.2017@00AM\0",
+        "8/09/2017@00:00\0",
+        "8/09/17@00:0AM\0",
+        "8/09/2017@00:00:00\0",
+        "8/09/2017@00:00:00AM\0",
+        "2017-08-09@00:00:00AM\0",
+        "2017-08-09@00:00:00am\0",
+        "2017-08-09@00:00:00A\0",
+        "2017-08-09@00:00:00a \0",
+    };
+
+    for (int i = 0; i < 18; ++i) {
+        PRINT_HEADING ('-');
+        PRINTF ("\n    %i", i)
+        time_t t = 0;
+        result = ClockScan (t, strings[i]);
+        CHECK (ClockCompare (t, 2017, 8, 9, 0, 0, 0))
+    }
+
+    PRINTF ("\n\n    Testing more valid input...\n");
+
+    t = ClockTime (8, 9, 17, 4, 20);
+    ClockPrint (t, buffer, buffer + kSize);
+    result = ClockScan (t_found, buffer);
+    CHECK (ClockCompare (t_found, t))
+
+    t = ClockTime (2020, 4, 20, 4, 20);
+    ClockPrint (t, buffer, buffer + kSize);
+    result = ClockScan (t_found, buffer);
+    CHECK (ClockCompare (t, t_found))
+
+    t = ClockTime (1947, 12, 7, 23, 5, 7);
+    ClockPrint (t, buffer, buffer + kSize);
+    result = ClockScan (t_found, buffer);
+    CHECK (ClockCompare (t, t_found))
+
+    PRINT_HEADING ("\nTesting invalid input...\n");
+    ClockScan (t, "cat");
+
+    ClockScan (t, "2017-30-40");
+
+    PRINTF ("\nDone testing date parsing utils! :-)\n")
+
+    PRINT_PAUSE ("Done testing SEAM_1_2! ({:-)-+=<")
 }
 
 #undef PRINT_PAUSE

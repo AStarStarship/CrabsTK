@@ -30,7 +30,6 @@
     <ClInclude Include="crabs\bsq.h" />
     <ClInclude Include="crabs\clock.h" />
     <ClInclude Include="crabs\config.h" />
-    <ClInclude Include="crabs\console.h" />
     <ClInclude Include="crabs\dic.h" />
     <ClInclude Include="crabs\door.h" />
     <ClInclude Include="crabs\error.h" />
@@ -75,7 +74,6 @@
     <ClCompile Include="crabs\crabs_bout.cc" />
     <ClCompile Include="crabs\crabs_bsq.cc" />
     <ClCompile Include="crabs\crabs_clock.cc" />
-    <ClCompile Include="crabs\crabs_console.cc" />
     <ClCompile Include="crabs\crabs_door.cc" />
     <ClCompile Include="crabs\crabs_error.cc" />
     <ClCompile Include="crabs\crabs_expr.cc" />

@@ -98,15 +98,11 @@ const Op* Door::ExecAll () {
     return 0;
 }
 
-const char* Door::Sudo (const char* text, const char* text_end) {
-    return nullptr;
-}
-
 const Op* Door::Star (wchar_t index, Expr* expr) {
     static const Op kThis = { "Door",
         OpFirst ('A'), OpFirst ('A' + slots_->count),
         "A door in a Chinese room with a bunch of slots in it where "
-        "messages are passed.",'}', ';', ' ', nullptr, nullptr, nullptr };
+        "messages are passed.",'}', ';', ' ', false, nullptr, nullptr };
     if (index == '?') {
         return ExprQuery (expr, kThis);
     }

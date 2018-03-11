@@ -17,12 +17,11 @@
 #pragma once
 #include <stdafx.h>
 
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+
 #ifndef HEADER_FOR_CRABS_BIN
 #define HEADER_FOR_CRABS_BIN
 
-#include "config.h"
-
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #include "slot.h"
 #include "op.h"
 
@@ -86,8 +85,8 @@ inline uint_t BInSpace (BIn* bin) {
         return 0;
     }
     char* txb_ptr = reinterpret_cast<char*>(bin);
-    return SlotSpace (txb_ptr + bin->start, txb_ptr + bin->stop,
-                      bin->size);
+    return (uint_t)SlotSpace (txb_ptr + bin->start, txb_ptr + bin->stop,
+                              bin->size);
 }
 
 inline uint_t BinBufferLength (BIn* bin) {
@@ -95,7 +94,7 @@ inline uint_t BinBufferLength (BIn* bin) {
         return ~0;
     }
     char* base = BInBegin (bin);
-    return SlotLength (base + bin->start, base + bin->stop, bin->size);
+    return (uint_t)SlotLength (base + bin->start, base + bin->stop, bin->size);
 }
 
 #if USING_TEXT_SCRIPT
@@ -134,10 +133,16 @@ KABUKI const Op* BInRead (BIn* bin, const uint_t* params, void** args);
     @param  bin The pin to print.
     @param  text The Text to print the bin to.
     @return The text. */
+KABUKI char* BInPrint (BIn* bin, char* buffer, char* buffer_end);
+
+/** Prints the BIn to the Text.
+    @param  bin The pin to print.
+    @param  text The Text to print the bin to.
+    @return The text. */
 KABUKI Slot& BInPrint (BIn* bin, Slot& slot);
 
 #endif
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_BIN
+#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 3

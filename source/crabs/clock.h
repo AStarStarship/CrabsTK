@@ -22,7 +22,32 @@
 
 #include "memory.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+
+namespace _ {
+
+/** A date on a calendar.
+    Data structure is identical to std::tm and may be used interchangeably.
+*/
+struct Date {
+    int second,           //< Second of the minute [0, 60].
+        minute,           //< Minute of the hour [0, 59].
+        hour,             //< Hour of the day [0, 23].
+        month_day,        //< Day of the month [1, 31].
+        month,            //< Months since December [0, 11].
+        year,             //< Number of years since epoch. [1900, current]
+        week_day,         //< Day of the week [0, 6].
+        year_day,         //< Day since January first [0, 365].
+        daylight_savings; //< Flag for if it's daylight savings time (-1 if no).
+};
+
+#if USING_TEXT_SCRIPT
+
+/** Writes the given std_tm to the text buffer. */
+KABUKI char* ClockPrint (tm* std_tm, char* buffer, char* buffer_end);
+
+/** Writes the given time to the text buffer. */
+KABUKI char* ClockPrint (time_t t, char* buffer, char* buffer_end);
 
 /** Reads a time or time delta from a a char starting with an '@' sign..
     @param input  The char to parse.
@@ -43,54 +68,40 @@
     @4:20:00AM
     @16:20:00
     @endcode
+*/
+KABUKI const char* ClockScan (const char* input, int& hour, int& minute,
+                              int& second);
 
-KABUKI const char* TextReadTime (const char* input, int* hour, int* minute,
-                                  int* second);*/
+/** Converts a keyboard input to char and deletes the char.
+*/
+KABUKI const char* ClockScan (tm& std_tm, const char* input);
 
-/** Converts a keyboard input to char and deletes the char. 
+/** Converts a keyboard input to a time_t. */
+KABUKI const char* ClockScan (time_t& result, const char* input);
 
-KABUKI const char* TextReadTime (const char* input, tm* std_tm);*/
-
-/** Converts a keyboard input to a time_t.
-KABUKI const char* TextReadTime (const char* input, time_t& result); */
-
-/** Converts a keyboard input to a time_t.
-KABUKI char* TextReadTime (char* input, time_t& result); */
-
-/** Writes the given std_tm to the char buffer.
-KABUKI char* TextWriteTime (char* text, char* end, tm* std_tm); */
-
-/** Writes the given time to the char buffer.
-KABUKI char* TextWriteTime (char* text, char* end, time_t t); */
-
-namespace _ {
+#endif  //< #if USING_TEXT_SCRIPT
 
 /** Creates a timestamp of the current time. */
 
 enum {
-    kNumSecondsMin     = 60 * 60,
-    kNumSecondsMinute = 60 * kNumSecondsMin,
-    kNumSecondsPerDay = 24 * kNumSecondsMinute,
-    kTimeEpoch = 1900,
+    kSecondsPerMinute = 60,
+    kSecondsPerHour   = 60 * kSecondsPerMinute,
+    kSecondsPerDay    = 24 * kSecondsPerHour,
+    kTimeEpoch        = 1900,
 };
 
 /** Gets the current microsecond timestamp. */
-inline time_us_t ClockTimestampNow () {
+inline time_us_t ClockNow () {
     //std::chrono::microseconds us (1);
     //chrono_timestamp ts = time_point_cast<microseconds>(system_clock::now ());
     return 0;
 }
 
-
-
-#if USING_TEXT_SCRIPT
-
 /** Portable std::tm. */
 KABUKI std::tm* ClockLocalTime (std::tm* std_tm, std::time_t const& time);
 
 /** Generates a timestamp from a Unix timestamp and 32-bit microsecond
-    timestamp.
-*/
+    timestamp. */
 KABUKI time_us_t ClockPackTimestamp (time_t unixTime, int32_t microseconds);
 
 /** Gets the seconds since January 1, 1970. */
@@ -115,17 +126,15 @@ KABUKI const char* ClockDayOfWeek (int day_number);
 KABUKI char ClockDayOfWeekInitial (int day_number);
 
 /** Compares the two the time and prints the results. */
-KABUKI int ClockCompareTimes (time_t time_a, time_t time_b);
+KABUKI int ClockCompare (time_t time_a, time_t time_b);
 
 /** Compares the given time_t to the time and prints the results. */
-KABUKI int ClockCompareTimes (time_t t, int year, int month, int day,
-                              int hour, int minute, int second);
+KABUKI int ClockCompare (time_t t, int year, int month, int day,
+                         int hour, int minute, int second);
 
 /** Zeros out the calendar_time struct.
     @param calendar_time A calendar time struct to zero out. */
-KABUKI void ClockZeroTime (tm* std_tm);
-
-#endif  //< #if USING_TEXT_SCRIPT
+KABUKI void ClockZeroTime (tm& std_tm);
 
 KABUKI time_t ClockTime (int year, int month, int day, int  hour = 0,
                          int minute = 0, int second = 0);
@@ -135,42 +144,36 @@ KABUKI time_t ClockTime (int year, int month, int day, int  hour = 0,
 #endif  //< HEADER_FOR_CRABS_CLOCK
 
 /*
-HANDLE gDoneEvent;
+HANDLE done_event;
 
-VOID CALLBACK TimerRoutine(PVOID lpParam, BOOLEAN TimerOrWaitFired)
-{
-    if (lpParam == NULL)
-    {
+VOID CALLBACK TimerRoutine(PVOID lpParam, BOOLEAN TimerOrWaitFired) {
+    if (!lpParam) {
         printf("TimerRoutine lpParam is NULL\n");
     }
-    else
-    {
+    else {
         // lpParam points to the argument; in this case it is an int
 
-        printf("Timer routine called. Parameter is %d.\n", 
+        printf ("Timer routine called. Parameter is %d.\n", 
                 *(int*)lpParam);
-        if(TimerOrWaitFired)
-        {
+        if(TimerOrWaitFired) {
             printf("The wait timed out.\n");
         }
-        else
-        {
+        else {
             printf("The wait event was signaled.\n");
         }
     }
 
-    SetEvent(gDoneEvent);
+    SetEvent(done_event);
 }
 
-int main()
-{
+int main() {
     HANDLE hTimer = NULL;
     HANDLE hTimerQueue = NULL;
     int arg = 123;
 
     // Use an event object to track the TimerRoutine execution
-    gDoneEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
-    if (NULL == gDoneEvent)
+    done_event = CreateEvent(NULL, TRUE, FALSE, NULL);
+    if (NULL == done_event)
     {
         printf("CreateEvent failed (%d)\n", GetLastError());
         return 1;
@@ -199,10 +202,10 @@ int main()
     // Wait for the timer-queue thread to complete using an event 
     // object. The thread will signal the event at that time.
 
-    if (WaitForSingleObject(gDoneEvent, INFINITE) != WAIT_OBJECT_0)
+    if (WaitForSingleObject(done_event, INFINITE) != WAIT_OBJECT_0)
         printf("WaitForSingleObject failed (%d)\n", GetLastError());
 
-    CloseHandle(gDoneEvent);
+    CloseHandle(done_event);
 
     // Delete all timers in the timer queue.
     if (!DeleteTimerQueue(hTimerQueue))
@@ -210,40 +213,4 @@ int main()
 
     return 0;
 }
-
-
-template<uint year, uint month, uint day, uint  hour = 0, uint minute = 0,
-    uint second = 0>
-    time_t TestTime (char* buffer, int buffer_size) {
-    if (buffer == nullptr)
-        return 0;
-    time_t t;
-    time (&t);
-    tm* moment = localtime (&t);
-    if (!moment) {
-        std::cout << "\n\n Created invalid test moment: " << moment << '\n';
-        return 0;
-    }
-    moment->tm_year = year - kTimeEpoch;
-    moment->tm_mon = month - 1;
-    moment->tm_mday = day;
-    moment->tm_hour = hour;
-    moment->tm_min = minute;
-    moment->tm_sec = second;
-
-    if (!PrintDateTimeText (buffer, buffer_size, moment)) {
-        std::cout << "\nError making timestamp";
-
-        return 0;
-    }
-    std::cout << "< Creating test time: ";
-    PrintDateTime (moment);
-    t = mktime (moment);
-    if (t < 0) {
-        std::cout << "< Invalid " << t << '\n';
-        return 0;
-    } else {
-        std::cout << '\n';
-    }
-    return t;
-}*/
+*/

@@ -152,9 +152,6 @@
     <ClInclude Include="crabs\args.h">
       <Filter>source\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\console.h">
-      <Filter>source\crabs</Filter>
-    </ClInclude>
     <ClInclude Include="crabs\print.h">
       <Filter>source\crabs</Filter>
     </ClInclude>
@@ -227,9 +224,6 @@
       <Filter>source\crabs</Filter>
     </ClCompile>
     <ClCompile Include="crabs\crabs_wall.cc">
-      <Filter>source\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="crabs\crabs_console.cc">
       <Filter>source\crabs</Filter>
     </ClCompile>
     <ClCompile Include="crabs\crabs_print.cc">
