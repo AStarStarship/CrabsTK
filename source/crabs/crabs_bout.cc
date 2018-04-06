@@ -764,6 +764,7 @@ void BInKeyStrokes () {
 
 #if USING_TEXT_SCRIPT
 char* BOutPrint (BOut* bout, char* buffer, char* buffer_end) {
+    bool print_now = !buffer;
     if (!buffer) {
         return buffer;
     }

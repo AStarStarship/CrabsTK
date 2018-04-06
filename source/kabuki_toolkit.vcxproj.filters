@@ -167,6 +167,9 @@
     <ClInclude Include="crabs\script_itos.h">
       <Filter>source\crabs</Filter>
     </ClInclude>
+    <ClInclude Include="crabs\ascii.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cc">

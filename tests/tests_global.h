@@ -35,5 +35,173 @@ void TestSeam1_3 ();
 void TestSeam1_4 ();
 void TestSeam1_5 ();
 
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+
+using namespace _;
+
+/* Test Operand for multiple unit tests.
+    The name ChildOperand does not mean anything other than it is a child.  */
+class ChildOperand : public Operand {
+    public:
+    
+    // Chinese Room operations.
+    virtual const Op* Star (wchar_t index, Expr* expr) {
+        void* args[2];
+
+        static const Op This = { "Child",
+            OpFirst ('A'), OpLast ('B'),
+            "A child Operand." };
+
+        switch (index) {
+            case '?': return &This;
+            case 'A': {
+                static const Op OpA = { "SignedIntegerTests",
+                    Bsq<2, UI1, STR, kTextBufferSize> (),
+                    Bsq<2, UI1, STR> (),
+                    "Description of function \'A\'.", 0 };
+                if (!expr) return &OpA;
+
+                if (ExprArgs (expr, OpA, Args (args, &test_ui1_, 
+                                               test_str_)))
+                    return expr->result;
+                    
+                // Function logic here
+
+                return ExprResult (expr, OpA, Args (args, &test_ui1_,
+                                                       test_str_));
+            }
+            case 'B': {
+                static const Op OpB = { "FloatTests",
+                    Bsq<2, FLT, STR, kTextBufferSize> (),
+                    Bsq<2, FLT, STR> (),
+                    "Description of function \'B\'.", 0 };
+                if (!expr) return &OpB;
+
+                if (ExprArgs (expr, OpB, Args (args, &test_flt_, test_str_)))
+                    return expr->result;
+
+                return ExprResult (expr, OpB, Args (args, &test_flt_,
+                                                    test_str_));
+            }
+        }
+        return nullptr;
+    }
+    
+    private:
+
+    enum {
+        kTextBufferSize = 16         //< Example string buffer size.
+    };
+
+    uint8_t test_ui1_;                 //< Text UI1.
+    float test_flt_;                   //< Test FLT.
+    char test_str_[kTextBufferSize]; //< Test STR.
+};
+
+// Test child Operand.
+class Parent : public Operand {
+    public:
+
+    enum {
+        kTextBufferSize = 16         //< Example string buffer size.
+    };
+
+    // Interprocess operations.
+    virtual const Op* Star (wchar_t index, Expr* expr) {
+        void* args[2];
+
+        static const Op This = { "Parent",
+            OpFirst ('A'), OpLast ('D'),
+            "Root scope device.", 0 };
+
+        switch (index) {
+            case '?': return &This;
+            case 'A': {
+                if (!expr) return child_a.Star ('?', expr);
+                return Push (expr, &child_a);
+            }
+            case 'B': {
+                if (!expr) return child_b.Star ('?', expr);
+                return Push (expr, &child_b);
+            }
+            case 'C': {
+                static const Op OpC = { "FloatTests",
+                    Bsq<2, FLT, STR, kTextBufferSize> (),
+                    Bsq<2, FLT, STR> (),
+                    "Description of functionA.", 0 };
+                if (!expr) return &OpC;
+
+                if (ExprArgs (expr, OpC, Args (args, &io_number_,
+                                                       io_string_)))
+                    return expr->result;
+                  // function call here
+                return ExprResult (expr, OpC, Args (args, &io_number_,
+                                                    io_string_));
+            }
+            case 'D': {
+                static const Op OpD = { "SignedIntegerTests",
+                    Bsq<2, FLT, STR, kTextBufferSize> (),
+                    Bsq<2, FLT, STR> (),
+                    "Description of functionB.", 0 };
+
+                if (!expr) return &OpD;
+
+                if (ExprArgs (expr, OpD, Args (args, &io_number_, 
+                                                     io_string_)))
+                    return expr->result;
+
+                return ExprResult (expr, OpD, Args (args, &io_number_,
+                                   io_string_));
+            }
+        }
+        return nullptr;
+    }
+
+    private:
+    
+    ChildOperand child_a,                //< ChildOperand Expr in index 'A'.
+                 child_b;                //< ChildOperand Expr in index 'B'
+    float io_number_;                    //< Example variable.
+    char  io_string_[kTextBufferSize]; //< Example string.
+};
+
+// A test room that can fit in 1KB of RAM. 
+class This : public Room {
+    public:
+
+    enum {
+        kRoomSize = 1024
+    };
+
+    This ():
+        Room ("Test")
+    {
+        
+    }
+
+    // Interprocess operations.
+    virtual const Op* Star (wchar_t index, Expr* expr) {
+        static const Op This = { "Room",
+            OpFirst ('A'), OpLast ('A'),
+            "Root scope device.", 0 };
+
+        switch (index) {
+            case '?': return &This;
+            case 'A': {
+                if (!expr) return parent.Star ('?', nullptr);
+                return Push (expr, &parent);
+            }
+            default: {
+            }
+        }
+        return nullptr;
+    }
+
+    private:
+
+    Parent parent;
+};
+#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+
 #endif  //< HEADER_FOR_GLOBAL
 #endif  //< RUN_UNIT_TESTS

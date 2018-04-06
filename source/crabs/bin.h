@@ -24,6 +24,7 @@
 
 #include "slot.h"
 #include "op.h"
+#include "bin.h"
 
 namespace _ {
 
@@ -126,6 +127,10 @@ KABUKI bool BInIsReadable (BIn* bin);
     @return       Returns 0 upon success and an ErrorList ticket number upon
                   failure. */
 KABUKI const Op* BInRead (BIn* bin, const uint_t* params, void** args);
+
+inline const Op* BOutRead (BOut* bout, const uint_t* params, void** args) {
+    return BInRead (reinterpret_cast<BIn*> (bout), params, args);
+}
 
 #if USING_TEXT_SCRIPT
 

@@ -215,12 +215,24 @@ inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
 }*/
 
 /** Pops the args off the Expr Args Stack. */
+inline const Op* ExprArgs (Expr* expr, const uint_t* params,
+                           void** args) {
+    if (!params) {
+        return nullptr;
+    }
+    BIn* bin = ExprBIn (expr);
+    Slot slot;
+    BInSlot (bin, slot);
+    return SlotRead (&slot, params, args);
+}
+
+/** Pops the args off the Expr Args Stack. */
 inline const Op* ExprArgs (Expr* expr, const Op& op,
                            void** args) {
     BIn* bin = ExprBIn (expr);
     Slot slot;
     BInSlot (bin, slot);
-    return SlotRead (&slot, op, args);
+    return SlotRead (&slot, op.in, args);
 }
 
 /** Writes the result to the Expr.
@@ -229,6 +241,17 @@ inline const Op* ExprArgs (Expr* expr, const Op& op,
     @param  args Pointers to the B-Sequence args. */
 inline const Op* ExprResult (Expr* expr, const Op& op, void** args) {
     return BOutWrite (ExprBOut (expr), op.out, args);
+}
+
+/** Writes the result to the Expr.
+@param  expr The resulting expression.
+@param  op   The Operation with result B-Sequence header.
+@param  args Pointers to the B-Sequence args. */
+inline const Op* ExprResult (Expr* expr, const uint_t* params, void** args) {
+    if (!params) {
+        return nullptr;
+    }
+    return BOutWrite (ExprBOut (expr), params, args);
 }
 
 /** Writes the result to the Expr.

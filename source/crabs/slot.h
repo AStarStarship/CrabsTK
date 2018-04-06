@@ -54,6 +54,10 @@ inline char* SlotOverflowShift (char* begin, char* end, char* cursor) {
     return cursor - size;
 }
 
+inline void SlotClear (Slot& slot) {
+    slot.start = slot.end = slot.begin;
+}
+
 /** Initializes the ring buffer with the given buffer begin and size.
     @param slot  The slot to initialize.
     @param begin Pointer to the beginning of the ring buffer.
@@ -90,6 +94,13 @@ inline intptr_t SlotSpace (char* start, char* stop, uintptr_t size) {
     }
     return size - (stop - start);
 }
+
+/** Reads the given Operation input parameters from the slot to the args.
+    @param  slot The slot to read from.
+    @param  op   The Operation to get the in from.
+    @param  args The args array of pointers to write to.
+    @return Nil upon success and an Error Operation upon failure. */
+KABUKI const Op* SlotRead (Slot* slot, const uint_t* params, void** args);
 
 /** Reads the given Operation input parameters from the slot to the args.
     @param  slot The slot to read from.

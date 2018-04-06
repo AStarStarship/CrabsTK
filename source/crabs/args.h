@@ -797,22 +797,48 @@ inline void** Args (void** ptrs, const void* a, const void* b, const void* c,
 inline void** Args (void** ptrs, const void* a, const void* b, const void* c,
                     const void* d, const void* e, const void* f, const void* g,
                     const void* h, const void* i, const void* j, const void* k,
-                    const void* l, const void* m, const void* n, const void* o) {
+                    const void* l, const void* m, const void* n) {
     const void** const_ptrs = const_cast<const void**> (ptrs);
-    const_ptrs[0] = a;
-    const_ptrs[1] = b;
-    const_ptrs[2] = c;
-    const_ptrs[3] = d;
-    const_ptrs[4] = e;
-    const_ptrs[5] = f;
-    const_ptrs[6] = g;
-    const_ptrs[7] = h;
-    const_ptrs[8] = i;
-    const_ptrs[9] = j;
+    const_ptrs[0]  = a;
+    const_ptrs[1]  = b;
+    const_ptrs[2]  = c;
+    const_ptrs[3]  = d;
+    const_ptrs[4]  = e;
+    const_ptrs[5]  = f;
+    const_ptrs[6]  = g;
+    const_ptrs[7]  = h;
+    const_ptrs[8]  = i;
+    const_ptrs[9]  = j;
     const_ptrs[10] = k;
     const_ptrs[11] = l;
     const_ptrs[12] = m;
     const_ptrs[13] = n;
+
+    return const_cast<void**>(const_ptrs);
+}
+
+/** Sets the params to the given pointers corresponding to the index 1-26 of the
+    letters a-z. */
+inline void** Args (void** ptrs, const void* a, const void* b, const void* c,
+                    const void* d, const void* e, const void* f, const void* g,
+                    const void* h, const void* i, const void* j, const void* k,
+                    const void* l, const void* m, const void* n, const void* o) {
+    const void** const_ptrs = const_cast<const void**> (ptrs);
+    const_ptrs[0]  = a;
+    const_ptrs[1]  = b;
+    const_ptrs[2]  = c;
+    const_ptrs[3]  = d;
+    const_ptrs[4]  = e;
+    const_ptrs[5]  = f;
+    const_ptrs[6]  = g;
+    const_ptrs[7]  = h;
+    const_ptrs[8]  = i;
+    const_ptrs[9]  = j;
+    const_ptrs[10] = k;
+    const_ptrs[11] = l;
+    const_ptrs[12] = m;
+    const_ptrs[13] = n;
+    const_ptrs[14] = o;
 
     return const_cast<void**>(const_ptrs);
 }

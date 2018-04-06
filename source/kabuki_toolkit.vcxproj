@@ -24,6 +24,7 @@
     <ClInclude Include="crabs\address.h" />
     <ClInclude Include="crabs\align.h" />
     <ClInclude Include="crabs\args.h" />
+    <ClInclude Include="crabs\ascii.h" />
     <ClInclude Include="crabs\bin.h" />
     <ClInclude Include="crabs\bok.h" />
     <ClInclude Include="crabs\bout.h" />

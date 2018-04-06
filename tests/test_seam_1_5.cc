@@ -485,24 +485,24 @@ TEST (SEAM_1_5_TESTS, ReadWriteTests) {
     CHECK_EQUAL (ui8_expected, ui8_found)
     //CHECK_EQUAL (dbl_expected, dbl_found) //< @todo Fix me!
 
-    PrintLineBreak ("  - Testing PackSignedVarint and UnpackSignedVarint...\n", 5);
+    PrintLineBreak ("  - Testing PackSVI and UnpackSVI...\n", 5);
 
-    CHECK_EQUAL (1, UnpackSignedVarint<uint16_t> 
-                    (PackSignedVarint<uint16_t> (1)))
+    CHECK_EQUAL (1, UnpackSVI<uint16_t> 
+                    (PackSVI<uint16_t> (1)))
     printf ("Found: 0x%x\n", 
-            UnpackSignedVarint<uint16_t> (PackSignedVarint<uint16_t> (~0)));
-    CHECK_EQUAL (((uint16_t)~0), UnpackSignedVarint<uint16_t>
-                                 (PackSignedVarint <uint16_t> (~0)))
+            UnpackSVI<uint16_t> (PackSVI<uint16_t> (~0)));
+    CHECK_EQUAL (((uint16_t)~0), UnpackSVI<uint16_t>
+                                 (PackSVI <uint16_t> (~0)))
 
-    CHECK_EQUAL (1 << 30, UnpackSignedVarint<uint32_t>
-                          (PackSignedVarint <uint32_t> (1 << 30)))
-    CHECK_EQUAL (~0, UnpackSignedVarint<uint32_t>
-                     (PackSignedVarint <uint32_t> (~0)))
+    CHECK_EQUAL (1 << 30, UnpackSVI<uint32_t>
+                          (PackSVI <uint32_t> (1 << 30)))
+    CHECK_EQUAL (~0, UnpackSVI<uint32_t>
+                     (PackSVI <uint32_t> (~0)))
         
 
-    CHECK_EQUAL (((uint64_t)1) << 62, UnpackSignedVarint<uint64_t> (PackSignedVarint<uint64_t> (((uint64_t)1) << 62)))
-    CHECK_EQUAL (~0, UnpackSignedVarint<uint64_t> 
-                     (PackSignedVarint<uint64_t>(~0)))
+    CHECK_EQUAL (((uint64_t)1) << 62, UnpackSVI<uint64_t> (PackSVI<uint64_t> (((uint64_t)1) << 62)))
+    CHECK_EQUAL (~0, UnpackSVI<uint64_t> 
+                     (PackSVI<uint64_t>(~0)))
     
     PrintLineBreak ("  - Testing SVI...\n", 5);
 
@@ -553,23 +553,23 @@ TEST (SEAM_1_5_TESTS, ReadWriteTests) {
     CHECK_EQUAL (uv2_expected[2], uv2_found[2])
     CHECK_EQUAL (uv2_expected[3], uv2_found[3])
     
-    PrintLineBreak ("\n  - Testing SV4...\n", 5);
+    PrintLineBreak ("\n  - Testing SVI...\n", 5);
 
     static const int32_t sv4_expected[] = { 0, 1, -1, 1 << 7, -(1 << 7), 
                                             1 << 14, -(1 << 14),
                                             1 << 21, -(1 << 21),
                                             1 << 28, -(1 << 28) };
     int32_t sv4_found[11];
-    CHECK_EQUAL (0, BOutWrite (bout, Bsq<11, SV4, SV4, SV4, SV4, SV4, SV4, 
-                                            SV4, SV4, SV4, SV4, SV4> (),
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<11, SVI, SVI, SVI, SVI, SVI, SVI, 
+                                            SVI, SVI, SVI, SVI, SVI> (),
                            Args (args, &sv4_expected[0], &sv4_expected[1],
                                  &sv4_expected[2], &sv4_expected[3],
                                  &sv4_expected[4], &sv4_expected[5],
                                  &sv4_expected[6], &sv4_expected[7],
                                  &sv4_expected[8], &sv4_expected[9],
                                  &sv4_expected[10])))
-    CHECK_EQUAL (0, BOutRead (bout, Bsq<11, SV4, SV4, SV4, SV4, SV4, SV4, 
-                                           SV4, SV4, SV4, SV4, SV4>(),
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<11, SVI, SVI, SVI, SVI, SVI, SVI, 
+                                           SVI, SVI, SVI, SVI, SVI>(),
                           Args (args, &sv4_found[0], &sv4_found[1], 
                                 &sv4_found[2], &sv4_found[3],
                                 &sv4_found[4], &sv4_found[5],
@@ -588,16 +588,16 @@ TEST (SEAM_1_5_TESTS, ReadWriteTests) {
     CHECK_EQUAL (sv4_expected[9], sv4_found[9])
     CHECK_EQUAL (sv4_expected[10], sv4_found[10])
 
-    PrintLineBreak ("\n  - Testing UV4...\n", 5);
+    PrintLineBreak ("\n  - Testing UVI...\n", 5);
 
     static const uint32_t uv4_expected[] = { 
         0, 1, 1 << 7, 1 << 14, 1 << 21, 1 << 28 };
     uint32_t uv4_found[6];
-    CHECK_EQUAL (0, BOutWrite (bout, Bsq<6, UV4, UV4, UV4, UV4, UV4, UV4> (),
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<6, UVI, UVI, UVI, UVI, UVI, UVI> (),
                            Args (args, &uv4_expected[0], &uv4_expected[1],
                                  &uv4_expected[2], &uv4_expected[3],
                                  &uv4_expected[4], &uv4_expected[5])))
-    CHECK_EQUAL (0, BOutRead (bout, Bsq<6, UV4, UV4, UV4, UV4, UV4, UV4> (),
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<6, UVI, UVI, UVI, UVI, UVI, UVI> (),
                             Args (args, &uv4_found[0], &uv4_found[1],
                                   &uv4_found[2], &uv4_found[3],
                                   &uv4_found[4], &uv4_found[5])))
@@ -728,7 +728,7 @@ TEST (SEAM_1_5_TESTS, OpTests) {
 
     void* args[4];
     uint8_t io_number_ = 98; //< ASCII:'b'
-    BIn * bin  = ExprBin  (expr);
+    BIn * bin  = ExprBIn  (expr);
     BOut* bout = ExprBOut (expr);
     
     const Op* result;
@@ -747,7 +747,7 @@ TEST (SEAM_1_5_TESTS, OpTests) {
 
     //Slot slot (bin, bout);
     // Bypass handshake for testing purposes.
-    ExprScan (expr);//, &slot);
+    ExprUnpack (expr);//, &slot);
     PrintExpr (expr);
     PRINT_PAUSE ("\n Done with Op tests.")
 }

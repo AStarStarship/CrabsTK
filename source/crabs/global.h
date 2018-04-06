@@ -42,10 +42,10 @@
 #include "expr.h"
 #include "slot.h"
 #include "args.h"
-#include "console.h"
 #include "bsq.h"
 #include "bin.h"
 #include "bout.h"
+#include "ascii.h"
 #endif
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4

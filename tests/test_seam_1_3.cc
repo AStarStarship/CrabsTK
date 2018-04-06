@@ -24,9 +24,15 @@
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PRINT_PAUSE(message)\
     printf ("\n\n%s\n", message); system ("PAUSE");
+#define PRINT_HEADING(message) \
+    std::cout << '\n';\
+    for (int i = 80; i > 80; --i) std::cout << '-';\
+    std::cout << '\n' << message;\
+    for (int i = 80; i > 80; --i) std::cout << '-';
 #else
 #define PRINTF(x, ...)
 #define PRINT_PAUSE(message)
+#define PRINT_HEADING(message)
 #endif
 
 using namespace _;
@@ -35,27 +41,28 @@ void TestSeam1_3 () {
 
     printf ("\n    Testing SEAM_1_3... ");
 
-    Console console ();
-
-    /*
-
-
-    Text<> text;
-    PRINTF ("\n Running ExprTests...\n";
+    PRINT_HEADING ("Testing Expr...")
     enum {
-        kBufferSize      = 256,
-        kBufferSizeWords = kBufferSize / sizeof (uint_t)
+        kBufferSize      = 2048,
+        kBufferWords     = kBufferSize / sizeof (uintptr_t),
+        kStackHeight     = 8,
     };
+    
+    uintptr_t buffer[kBufferWords],
+              unpacked_buffer[kBufferWords];
+    Slot slot;
+    SlotInit (buffer, kBufferWords);
 
-    uintptr_t buffer[kBufferSizeWords],
-              unpacked_buffer[kBufferSizeWords];
+    slot << 'a' << "b" << "cd" << (int8_t)1 << (uint8_t)2 << 3;
+    PrintSlot (slot);
+
     This root;
     Expr* expr = ExprInit (buffer, kBufferSize, 4, 
-                                       &root, unpacked_buffer,
-                                       kBufferSizeWords);
-    PrintExpr (expr);
-
-    void*         args[4];
+                           &root, unpacked_buffer,
+                           kBufferWords);
+    PrintExpr (expr, slot);
+    
+    void* args[19];
     const uint_t* params         = Bsq <4, ADR, STR, 32, FLT, SI4> ();
     const char    stx_expected[] = "Hello world!\0";
     const int     si4_expected   = 1;
@@ -64,30 +71,21 @@ void TestSeam1_3 () {
     char stx_found[64];
     int si4_found;
     float flt_found;
-    expr->return_address = "A";
 
     const Op* result = ExprResult (expr, params,
                                    Args (args, "C", &stx_expected,
                                          &si4_expected, &flt_expected));
-    text << "\n Attempting to print Expr " << PrintPointer (ExprBOut (expr))
-         <<  PrintExpr (expr, text) << Print ();
-    CHECK_EQUAL (0, ExprArgs (expr, params,
-                              Args (args, &stx_found, &si4_found, &flt_found)));
+    PRINTF ("\n Attempting to print Expr 0x%p", ExprBOut (expr))
+    //PrintExpr (expr, text) << Print ();
+    result = ExprArgs (expr, params,
+                       Args (args, &stx_found, &si4_found, &flt_found));
+    CHECK_EQUAL (0, result);
 
-    enum {
-        kBufferSize = 256,
-        kElementsBuffer = kBufferSize / sizeof (uintptr_t)
-    };
-
-    uintptr_t buffer[kElementsBuffer + 4];  //< Something isn't aligned right.
     //< It works right with an extra 4 elements but no less. Am I writing
     //< something to the end of the buffer???
 
-    PrintLineBreak ("\n  - Running ReadWriteTests...", 5);
-    PRINTF (" kBufferSize: "     << kBufferSize 
-              << " kElementsBuffer: " << kElementsBuffer;
-
-    void* args[19];
+    PRINTF ("\n\n  - Running ReadWriteTests...\nkBufferSize: %i "
+            "kBufferWords: %i", kBufferSize, kBufferWords)
 
     const char expected_string1[] = "1234\0",
                expected_string2[] = "5678\0";
@@ -98,9 +96,9 @@ void TestSeam1_3 () {
     memset (found_string1, ' ', 6);
     memset (found_string2, ' ', 6);
 
-    printf ("\n buffer_start:%p buffer_stop:%p\n", &buffer[0], 
+    PRINTF ("\n buffer_start:%p buffer_stop:%p\n", &buffer[0], 
             &buffer[kBufferSize - 1]);
-    printf ("\n &expected_string1[0]:%p &expected_string2[0]:%p\n", 
+    PRINTF ("\n &expected_string1[0]:%p &expected_string2[0]:%p\n", 
             &expected_string1[0], &expected_string2[0]);
 
     BOut* bout = BOutInit (buffer, kBufferSize);
@@ -109,22 +107,21 @@ void TestSeam1_3 () {
                                Args (args, expected_string1,
                                      expected_string2)))
     void** test = Args (args, found_string1, found_string2);
-    printf ("\n texpected_string1_start:%p texpected_string2_start:%p\n",
+    PRINTF ("\n texpected_string1_start:%p texpected_string2_start:%p\n",
             &test[0], &test[1]);
     
     CHECK_EQUAL (0, BOutRead (bout, Bsq<2, STR, 5, STR, 5> (),
                               Args (args, found_string1, found_string2)))
 
-    PRINTF ("\nExpected 1: " << expected_string1
-              << " Found 1: "     << found_string1
-              << "\nExpected 2: " << expected_string2
-              << " Found 2: "     << found_string2;
+    PRINTF ("\nExpected 1:%s Found 1:%s\nExpected 2:%s Found 2:%s",
+            expected_string1, found_string1, expected_string2,
+            found_string2)
 
     STRCMP_EQUAL (expected_string1, found_string1)
     //BOutPrint (bout);
     STRCMP_EQUAL (expected_string2, found_string2)
     
-    PrintLineBreak ("\n  - Testing BOL/UI1/SI1...", 5);
+    PRINT_HEADING ("Testing BOL/UI1/SI1...")
 
     static const int8_t si1_p_expected = '+',
                         si1_n_expected = (int8_t)196;
@@ -146,19 +143,19 @@ void TestSeam1_3 () {
     CHECK_EQUAL (ui1_expected, ui1_found)
     CHECK_EQUAL (bol_expected, bol_found)
 
-    PrintLineBreak ("\n  - Testing UI2/SI2/HLF...", 5);
+    PRINT_HEADING ("Testing UI2/SI2/HLF...")
 
     static const int16_t si2_p_expected = '+',
                          si2_n_expected = (int16_t)(0xFF00 | '-');
     static const uint16_t ui2_expected = '2',
         hlf_expected = 227;
 
-    int16_t si2_p_found,
-        si2_n_found;
+    int16_t  si2_p_found,
+             si2_n_found;
     uint16_t ui2_found,
-        hlf_found;
+             hlf_found;
 
-    PRINTF ("Expecting %u"
+    /*PRINTF ("Expecting %u %u"
               << si2_p_expected
               << (si2_p_expected >> 8)
               << ' '
@@ -170,11 +167,11 @@ void TestSeam1_3 () {
               << ' '
               << hlf_expected
               << (hlf_expected >> 8)
-              << '\n';
+              << '\n';*/
 
     CHECK_EQUAL (0, BOutWrite (bout, Bsq<4, SI2, SI2, UI2, HLF> (),
-                           Args (args, &si2_p_expected, &si2_n_expected, 
-                                 &ui2_expected, &hlf_expected)))
+                               Args (args, &si2_p_expected, &si2_n_expected, 
+                                     &ui2_expected, &hlf_expected)))
     CHECK_EQUAL (0, BOutRead (bout, Bsq<4, SI2, SI2, UI2, HLF> (),
                           Args (args, &si2_p_found, &si2_n_found, &ui2_found, 
                                 &hlf_found)))
@@ -183,23 +180,23 @@ void TestSeam1_3 () {
     CHECK_EQUAL (ui2_expected, ui2_found)
     CHECK_EQUAL (hlf_expected, hlf_found)
 
-    PrintLineBreak ("\n  - Testing UI4/SI4/FLT/TMS...", 5);
+    PRINT_HEADING ("Testing UI4/SI4/FLT/TMS...")
 
     static const int32_t  si4_p_expected = '+',
                           si4_n_expected = (int32_t)(0xFFFFFF00 | '-');
     static const uint32_t ui4_expected = '4';
     static const uint32_t flt_value = '.';
-    static const float    flt_expected = *(float*)&flt_value;
+    static const float    flt_expected2 = *(float*)&flt_value;
     static const time_t   tms_expected = 0xE7;
+
     int32_t               si4_p_found,
                           si4_n_found;
     uint32_t              ui4_found;
-    float                 flt_found;
     time_t                tms_found;
 
     CHECK_EQUAL (0, BOutWrite (bout, Bsq<5, SI4, SI4, UI4, FLT, TMS> (),
                                Args (args, &si4_p_expected, &si4_n_expected,
-                                     &ui4_expected, &flt_expected, 
+                                     &ui4_expected, &flt_expected2, 
                                      &tms_expected)))
     CHECK_EQUAL (0, BOutRead (bout, Bsq<5, SI4, SI4, UI4, FLT, TMS> (),
                               Args (args, &si4_p_found, &si4_n_found,
@@ -207,9 +204,9 @@ void TestSeam1_3 () {
     CHECK_EQUAL (si4_p_expected, si4_p_found)
     CHECK_EQUAL (si4_n_expected, si4_n_found)
     CHECK_EQUAL (ui4_expected, ui4_found)
-    CHECK_EQUAL (flt_expected, flt_found)
+    CHECK_EQUAL (flt_expected2, flt_found)
     
-    PrintLineBreak ("\n  - Testing TMU/UI8/SI1/DBL...\n", 5);
+    PRINT_HEADING ("Testing TMU/UI8/SI1/DBL...\n")
 
     static const time_t tmu_expected = 0xE7;
     static const int64_t si8_p_expected = '+',
@@ -231,42 +228,40 @@ void TestSeam1_3 () {
                  &ui8_expected, &dbl_expected)))
 
     CHECK_EQUAL (0, BOutRead (bout, Bsq<5, TMU, SI8, SI8, UI8, DBL> (),
-          Args (args, &tmu_found, &si8_p_found, &si8_n_found, &ui8_found,
-                &dbl_found)))
+                              Args (args, &tmu_found, &si8_p_found, 
+                                    &si8_n_found, &ui8_found, &dbl_found)))
 
     CHECK_EQUAL (tmu_expected, tmu_found)
     CHECK_EQUAL (si8_p_expected, si8_p_found)
     // si8 and dbl are not working for some reason.
     //printf ("\n!!!    si8_n_expected: %i si8_n_found: %i\n\n",
-    //            si8_n_expected, si8_n_found);
+    //            si8_n_expected, si8_n_found); 
     //printf ("\n!!!    dbl_expected: %f dbl_found: %f\n\n", dbl_expected,
     //        dbl_found);
     //CHECK_EQUAL (si8_n_expected, si8_n_found) //< @todo Fix me!
     CHECK_EQUAL (ui8_expected, ui8_found)
     //CHECK_EQUAL (dbl_expected, dbl_found) //< @todo Fix me!
 
-    PrintLineBreak ("  - Testing PackSignedVarint and UnpackSignedVarint...\n", 5);
-
-    CHECK_EQUAL (1, UnpackSignedVarint<uint16_t> 
-                    (PackSignedVarint<uint16_t> (1)))
-    printf ("Found: 0x%x\n", 
-            UnpackSignedVarint<uint16_t> (PackSignedVarint<uint16_t> (~0)));
-    CHECK_EQUAL (((uint16_t)~0), UnpackSignedVarint<uint16_t>
-                                 (PackSignedVarint <uint16_t> (~0)))
-
-    CHECK_EQUAL (1 << 30, UnpackSignedVarint<uint32_t>
-                          (PackSignedVarint <uint32_t> (1 << 30)))
-    CHECK_EQUAL (~0, UnpackSignedVarint<uint32_t>
-                     (PackSignedVarint <uint32_t> (~0)))
-        
-
-    CHECK_EQUAL (((uint64_t)1) << 62, UnpackSignedVarint<uint64_t> (PackSignedVarint<uint64_t> (((uint64_t)1) << 62)))
-    CHECK_EQUAL (~0, UnpackSignedVarint<uint64_t> 
-                     (PackSignedVarint<uint64_t>(~0)))
+    PRINT_HEADING ("Testing PackSVI and UnpackSVI...")
     
-    PrintLineBreak ("  - Testing SVI...\n", 5);
+    CHECK_EQUAL (1, UnpackSVI (PackSVI ((int32_t)1)))
+    printf ("Found: 0x%x\n", 
+            UnpackSVI (PackSVI (~0)));
 
-    static const int16_t sv2_expected[] = {
+    CHECK_EQUAL (1 << 30, UnpackSVI (PackSVI (1 << 30)))
+    CHECK_EQUAL (~0, UnpackSVI (PackSVI (~0)))
+        
+    uint64_t ui8 = (uint64_t)1 << 62;
+    int64_t  si8 = (int64_t)ui8;
+    CHECK_EQUAL (si8, UnpackSV8 (PackSV8 (si8)))
+
+    ui8 = ~(uint64_t)0;
+    si8 = (int64_t)ui8;
+    CHECK_EQUAL (si8, UnpackSV8 (PackSV8 (si8)))
+    
+    PRINT_HEADING ("Testing SVI...\n")
+
+    static const int svi_expected[] = {
         0,
         1,
         -1,
@@ -276,28 +271,28 @@ void TestSeam1_3 () {
         -(1 << 14)
     };
 
-    int16_t sv2_found[7];
+    int16_t svi_found[7];
     CHECK_EQUAL (0, BOutWrite (bout, Bsq<7, SVI, SVI, SVI, SVI, SVI, SVI, 
                                             SVI> (),
-                           Args (args, &sv2_expected[0], &sv2_expected[1],
-                                 &sv2_expected[2], &sv2_expected[3],
-                                 &sv2_expected[4], &sv2_expected[5],
-                                 &sv2_expected[6])))
+                           Args (args, &svi_expected[0], &svi_expected[1],
+                                 &svi_expected[2], &svi_expected[3],
+                                 &svi_expected[4], &svi_expected[5],
+                                 &svi_expected[6])))
     CHECK_EQUAL (0, BOutRead (bout, Bsq<7, SVI, SVI, SVI, SVI, SVI, SVI, 
                                            SVI>(),
-                          Args (args, &sv2_found[0], &sv2_found[1], 
-                                &sv2_found[2], &sv2_found[3], 
-                                &sv2_found[4], &sv2_found[5],
-                                &sv2_found[6])))
-    CHECK_EQUAL (sv2_expected[0], sv2_found[0])
-    CHECK_EQUAL (sv2_expected[1], sv2_found[1])
-    CHECK_EQUAL (sv2_expected[2], sv2_found[2])
-    CHECK_EQUAL (sv2_expected[3], sv2_found[3])
-    CHECK_EQUAL (sv2_expected[4], sv2_found[4])
-    CHECK_EQUAL (sv2_expected[5], sv2_found[5])
-    CHECK_EQUAL (sv2_expected[6], sv2_found[6])
+                          Args (args, &svi_found[0], &svi_found[1], 
+                                &svi_found[2], &svi_found[3], 
+                                &svi_found[4], &svi_found[5],
+                                &svi_found[6])))
+    CHECK_EQUAL (svi_expected[0], svi_found[0])
+    CHECK_EQUAL (svi_expected[1], svi_found[1])
+    CHECK_EQUAL (svi_expected[2], svi_found[2])
+    CHECK_EQUAL (svi_expected[3], svi_found[3])
+    CHECK_EQUAL (svi_expected[4], svi_found[4])
+    CHECK_EQUAL (svi_expected[5], svi_found[5])
+    CHECK_EQUAL (svi_expected[6], svi_found[6])
 
-    PrintLineBreak ("\n  - Testing UVI...\n", 5);
+    PRINT_HEADING ("Testing UVI...")
 
     static const uint16_t uv2_expected[] = { 0, 1, 1 << 7, 1 << 14 };
 
@@ -313,23 +308,23 @@ void TestSeam1_3 () {
     CHECK_EQUAL (uv2_expected[2], uv2_found[2])
     CHECK_EQUAL (uv2_expected[3], uv2_found[3])
     
-    PrintLineBreak ("\n  - Testing SV4...\n", 5);
+    PRINT_HEADING ("\n  - Testing SVI...\n")
 
     static const int32_t sv4_expected[] = { 0, 1, -1, 1 << 7, -(1 << 7), 
                                             1 << 14, -(1 << 14),
                                             1 << 21, -(1 << 21),
                                             1 << 28, -(1 << 28) };
     int32_t sv4_found[11];
-    CHECK_EQUAL (0, BOutWrite (bout, Bsq<11, SV4, SV4, SV4, SV4, SV4, SV4, 
-                                            SV4, SV4, SV4, SV4, SV4> (),
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<11, SVI, SVI, SVI, SVI, SVI, SVI, 
+                                            SVI, SVI, SVI, SVI, SVI> (),
                            Args (args, &sv4_expected[0], &sv4_expected[1],
                                  &sv4_expected[2], &sv4_expected[3],
                                  &sv4_expected[4], &sv4_expected[5],
                                  &sv4_expected[6], &sv4_expected[7],
                                  &sv4_expected[8], &sv4_expected[9],
                                  &sv4_expected[10])))
-    CHECK_EQUAL (0, BOutRead (bout, Bsq<11, SV4, SV4, SV4, SV4, SV4, SV4, 
-                                           SV4, SV4, SV4, SV4, SV4>(),
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<11, SVI, SVI, SVI, SVI, SVI, SVI, 
+                                           SVI, SVI, SVI, SVI, SVI> (),
                           Args (args, &sv4_found[0], &sv4_found[1], 
                                 &sv4_found[2], &sv4_found[3],
                                 &sv4_found[4], &sv4_found[5],
@@ -348,16 +343,16 @@ void TestSeam1_3 () {
     CHECK_EQUAL (sv4_expected[9], sv4_found[9])
     CHECK_EQUAL (sv4_expected[10], sv4_found[10])
 
-    PrintLineBreak ("\n  - Testing UV4...\n", 5);
+    PRINT_HEADING ("Testing UVI...")
 
     static const uint32_t uv4_expected[] = { 
         0, 1, 1 << 7, 1 << 14, 1 << 21, 1 << 28 };
     uint32_t uv4_found[6];
-    CHECK_EQUAL (0, BOutWrite (bout, Bsq<6, UV4, UV4, UV4, UV4, UV4, UV4> (),
-                           Args (args, &uv4_expected[0], &uv4_expected[1],
-                                 &uv4_expected[2], &uv4_expected[3],
-                                 &uv4_expected[4], &uv4_expected[5])))
-    CHECK_EQUAL (0, BOutRead (bout, Bsq<6, UV4, UV4, UV4, UV4, UV4, UV4> (),
+    CHECK_EQUAL (0, BOutWrite (bout, Bsq<6, UVI, UVI, UVI, UVI, UVI, UVI> (),
+                               Args (args, &uv4_expected[0], &uv4_expected[1],
+                                     &uv4_expected[2], &uv4_expected[3],
+                                     &uv4_expected[4], &uv4_expected[5])))
+    CHECK_EQUAL (0, BOutRead (bout, Bsq<6, UVI, UVI, UVI, UVI, UVI, UVI> (),
                             Args (args, &uv4_found[0], &uv4_found[1],
                                   &uv4_found[2], &uv4_found[3],
                                   &uv4_found[4], &uv4_found[5])))
@@ -368,7 +363,7 @@ void TestSeam1_3 () {
     CHECK_EQUAL (uv4_expected[4], uv4_found[4])
     CHECK_EQUAL (uv4_expected[5], uv4_found[5])
     
-    PrintLineBreak ("\n  - Testing SV8...\n", 5);
+    PRINT_HEADING ("Testing SV8...")
 
     static const int64_t sv8_expected[] = {
         0, 1, -1, 1 << 7, -(1 << 7),
@@ -427,7 +422,7 @@ void TestSeam1_3 () {
         CHECK_EQUAL (sv8_expected[17], sv8_found[17])
         CHECK_EQUAL (sv8_expected[18], sv8_found[18])
 
-        PrintLineBreak ("\n  - Testing UV8...\n", 5);
+     PRINT_HEADING ("Testing UV8...")
 
     static const uint64_t uv8_expected[] = {
         0, 1, 1 << 7, 1 << 14, 1 << 21,
@@ -438,7 +433,7 @@ void TestSeam1_3 () {
     };
     uint64_t uv8_found[10];
     CHECK_EQUAL (0, BOutWrite (bout, Bsq<10, UV8, UV8, UV8, UV8, UV8, UV8, 
-                                            UV8, UV8, UV8, UV8> (),
+                                         UV8, UV8, UV8, UV8> (),
                                Args (args, &uv8_expected[0], &uv8_expected[1],
                                      &uv8_expected[2], &uv8_expected[3],
                                      &uv8_expected[4], &uv8_expected[5],
@@ -447,7 +442,7 @@ void TestSeam1_3 () {
                                      &uv8_expected[10], &uv8_expected[11],
                                      &uv8_expected[12], &uv8_expected[13])))
     CHECK_EQUAL (0, BOutRead (bout, Bsq<10, UV8, UV8, UV8, UV8, UV8, UV8, 
-                                           UV8, UV8, UV8, UV8> (),
+                                        UV8, UV8, UV8, UV8> (),
                               Args (args, &uv8_found[0], &uv8_found[1],
                                     &uv8_found[2], &uv8_found[3],
                                     &uv8_found[4], &uv8_found[5],
@@ -466,49 +461,45 @@ void TestSeam1_3 () {
     CHECK_EQUAL (uv8_expected[8], uv8_found[8])
     CHECK_EQUAL (uv8_expected[9], uv8_found[9])
     
-    enum {
-        kBufferSize = 2048,
-        kBufferWords = kBufferSize / sizeof (uintptr_t),
-        kStackHeight = 8,
-    };
-    uintptr_t buffer[kBufferWords],
-              unpacked_expr[kBufferWords];
+    uintptr_t buffer_b[kBufferWords];
     printf ("\n  - Running OpTests in address ranges: [0x%p:0x%p]\n",
             &buffer[0], &buffer[kBufferWords-1]);
 
     This a;
+    expr = ExprInit (buffer, kBufferSize, kStackHeight, &a,
+                     buffer_b, kBufferSize);
+    PrintExpr (expr, slot);
 
-    Expr* expr = ExprInit (buffer, kBufferSize, kStackHeight, &a,
-                                       unpacked_expr, kBufferSize);
-    PrintExpr (expr);
+    PRINTF ("\n    Testing Expr...\n")
 
-    PRINTF ("\n    Testing Root (@see \"a.h\")...\n";
-
-    void* args[4];
     uint8_t io_number_ = 98; //< ASCII:'b'
-    BIn * bin  = ExprBin  (expr);
-    BOut* bout = ExprBOut (expr);
+    BIn * bin  = ExprBIn  (expr);
+    bout = ExprBOut (expr);
     
-    const Op* result;
     ExprRingBell (expr);
     ExprAckBack (expr);
     result = BOutWrite (bout,
                         Bsq<4, ADR, UI1, STR, Parent::kTextBufferSize, 
                                 ADR> (),
                         Args (args, Address <'A', 'A', 'A'> (), 
-                              &io_number_, Const ("Test"), 
+                              &io_number_, "Test", 
                               Address<BS, CR> ()));
-    BOutPrint (bout);
+    
     CHECK (result == nullptr)
 
-    PrintExpr (expr);
+    enum { kCharCount = 2048 };
+    char text[kCharCount + 1];
+    BOutPrint (bout, text, text + kCharCount);
+
+    SlotClear (slot);
+    PrintExpr (expr, slot);
 
     //Slot slot (bin, bout);
     // Bypass handshake for testing purposes.
-    ExprScan (expr);//, &slot);
-    PrintExpr (expr);
+
+    ExprUnpack (expr);//, &slot);
+    PrintExpr (expr, slot);
     PRINTF ("\n Done with Op tests.")
-    */
 
     PRINT_PAUSE ("\n\nDone Testing SEAM_1_3! ({:-)-+=<")
 }

@@ -26,6 +26,64 @@
 
 namespace _ {
 
+#if WORD_SIZE == 16
+inline int16_t UnpackSVI (int16_t value) {
+    if (value < 0) {
+        uint16_t result = 0x8000
+        return result | ~(value - 1);
+    }
+    return value;
+}
+
+inline int16_t PackSVI (int16_t value) {
+    if (value < 0) {
+        uint16_t result = 1 << 15;
+        return result | ((~value + 1) << 1);
+    }
+    return value;
+}
+#else
+inline int32_t UnpackSVI (int32_t value) {
+    if (value < 0) {
+        uint32_t result = 0x80000000;
+        return result | ~(value - 1);
+    }
+    return value;
+}
+
+inline int32_t PackSVI (int32_t value) {
+    if (value < 0) {
+        int32_t result = 0x80000000;
+        return result | ((~value + 1) << 1);
+    }
+    return value;
+}
+#endif
+
+inline int64_t UnpackSV8 (int64_t value) {
+    if (value < 0) {
+        int64_t result = 0x8000000000000000;
+        return result | ~(value - 1);
+    }
+    return value;
+}
+
+
+inline int64_t PackSV8 (int64_t value) {
+    if (value < 0) {
+        int64_t result = 0x8000000000000000;
+        return result | ((~value + 1) << 1);
+    }
+    return value;
+}
+
+//template<typename T>
+//T UnpackSVI (T value) {
+//    T temp = value << sizeof (T) * 8 - 1;
+//    temp |= value;
+//    return temp;
+//}
+
 constexpr uint_t BsqSize (const uint_t* params) {
     if (!params) {
         return 0;

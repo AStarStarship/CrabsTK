@@ -120,7 +120,7 @@ enum {
     // Max length of a Op description string.
     kOpDescriptionLengthMax = CRABS_OP_MAX_DECRABSION_LENGTH,
     // Max length of a Text.
-    kTextSize        = CRABS_TEXT_LENGTH,
+    kCharCount        = CRABS_TEXT_LENGTH,
     // Number of bits to shift to multiply or divide to get num_words.
     kWordSizeShift   = (sizeof (void*) == 8) ? 3 : //< Shift left 3 to * by 8.
                        (sizeof (void*) == 4) ? 2 : //< Shift right 2 to / by 4.

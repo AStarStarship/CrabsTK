@@ -30,10 +30,14 @@
     for (int i = 80; i > 80; --i) std::cout << '-';\
     std::cout << '\n' << message;\
     for (int i = 80; i > 80; --i) std::cout << '-';
+#define PRINT_LINE\
+    std::cout << '\n';\
+    for (int i = 80; i > 0; --i) std::cout << '-';
 #else
 #define PRINTF(x, ...)
 #define PRINT_PAUSE(message)
 #define PRINT_HEADING(c)
+#define PRINT_LINE
 #endif
 
 using namespace _;
@@ -204,35 +208,36 @@ void TestSeam1_2 () {
     
     time_t t,
            t_found;
-    //tm* lt;
     const char* result;
 
+    // @note The following dates must be the current year to work right in order
+    //       to auto-detect the year.
     const char* strings[] = { "8/9\0",
         "08/09\0",
-        "8/9/17\0",
-        "8/09/17\0",
-        "8/9/2017\0",
-        "8/09/2017\0",
-        "8/09/2017\0",
-        "08/9/2017\0",
-        "8/09/2017@00\0",
-        "8.09.2017@00AM\0",
-        "8/09/2017@00:00\0",
-        "8/09/17@00:0AM\0",
-        "8/09/2017@00:00:00\0",
-        "8/09/2017@00:00:00AM\0",
-        "2017-08-09@00:00:00AM\0",
-        "2017-08-09@00:00:00am\0",
-        "2017-08-09@00:00:00A\0",
-        "2017-08-09@00:00:00a \0",
+        "8/9/18\0",
+        "8/09/18\0",
+        "8/9/2018\0",
+        "8/09/2018\0",
+        "8/09/2018\0",
+        "08/9/2018\0",
+        "8/09/2018@00\0",
+        "8.09.2018@00AM\0",
+        "8/09/2018@00:00\0",
+        "8/09/18@00:0AM\0",
+        "8/09/2018@00:00:00\0",
+        "8/09/2018@00:00:00AM\0",
+        "2018-08-09@00:00:00AM\0",
+        "2018-08-09@00:00:00am\0",
+        "2018-08-09@00:00:00A\0",
+        "2018-08-09@00:00:00a \0",
     };
 
     for (int i = 0; i < 18; ++i) {
-        PRINT_HEADING ('-');
+        PRINT_LINE ('-');
         PRINTF ("\n    %i", i)
         time_t t = 0;
         result = ClockScan (t, strings[i]);
-        CHECK (ClockCompare (t, 2017, 8, 9, 0, 0, 0))
+        CHECK (!ClockCompare (t, 2018, 8, 9, 0, 0, 0))
     }
 
     PRINTF ("\n\n    Testing more valid input...\n");

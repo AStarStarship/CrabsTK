@@ -28,11 +28,8 @@
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #define PRINT_DATE(date)\
-    printf ("%i/%i/%i@%i:%i:%i", date.tm_year + kTimeEpoch, date.tm_mon,\
+    printf ("%i/%i/%i@%i:%i:%i", date.tm_year + kTimeEpoch, date.tm_mon + 1,\
             date.tm_mday, date.tm_hour, date.tm_min, date.tm_sec);
-#define PRINT_TIME(year, month, day, hour, minute, second)\
-    printf ("%i/%i/%i@%i:%i:%i", year, month, day, hour, minute,\
-            second);
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
@@ -350,9 +347,10 @@ const char* ClockScan (tm& std_tm, const char* input) {
             }
         }
         if (!c || IsWhitespace (c)) {
-            PRINTF (" MM/DD\n")
-            is_last_year = ((value1 >= std_tm.tm_mon) &&
-                (value2 >= std_tm.tm_mday))?0:1;
+            PRINTF ("\n    Format is MM/DD and year is %i", 
+                    std_tm.tm_year + kTimeEpoch)
+            //is_last_year = ((value1 >= std_tm.tm_mon) &&
+            //    (value2 >= std_tm.tm_mday)) ? 0:1;
             std_tm.tm_year += is_last_year;
             std_tm.tm_mon = value1 - 1;
             std_tm.tm_mday = value2;
@@ -610,38 +608,38 @@ int ClockCompare (time_t time_a, time_t time_b) {
     ClockLocalTime (&date_a, time_a);
     ClockLocalTime (&date_b, time_b);
 
-    PRINTF ("\n    Comparing ")
+    PRINTF ("\n    Expecting Date:")
     PRINT_DATE (date_a)
-    PRINTF (" to ")
+    PRINTF (" and found:")
     PRINT_DATE (date_b)
 
     if (date_a.tm_year != date_b.tm_year) {
-        PRINTF ("\ntm_year.a:%i != tm_year.b:%i ",
+        PRINTF ("\n    tm_year.a:%i != tm_year.b:%i ",
                 date_a.tm_year + kTimeEpoch, date_b.tm_year + kTimeEpoch)
         return 1;
     }
     if (date_a.tm_mon != date_b.tm_mon) {
-        PRINTF ("\ntm_mon.a:%i != tm_mon.b:%i ", date_a.tm_mon,
+        PRINTF ("\n    tm_mon.a:%i != tm_mon.b:%i ", date_a.tm_mon,
                 date_b.tm_mon + 1)
         return 2;
     }
     if (date_a.tm_mday != date_b.tm_mday) {
-        PRINTF ("\ntm_mday.a:%i != tm_mday.b:%i ", date_a.tm_mday,
+        PRINTF ("\n    tm_mday.a:%i != tm_mday.b:%i ", date_a.tm_mday,
                 date_b.tm_mday)
         return 3;
     }
     if (date_a.tm_hour != date_b.tm_hour) {
-        PRINTF ("\ntm_hour.a:%i != tm_hour.b:%i ", date_a.tm_hour,
+        PRINTF ("\n    tm_hour.a:%i != tm_hour.b:%i ", date_a.tm_hour,
                 date_b.tm_hour)
         return 4;
     }
     if (date_a.tm_min != date_b.tm_min) {
-        PRINTF ("\ntm_min.a:%i != tm_min.b:%i", date_a.tm_min,
+        PRINTF ("\n    tm_min.a:%i != tm_min.b:%i", date_a.tm_min,
                 date_b.tm_min)
         return 5;
     }
     if (date_a.tm_sec != date_b.tm_sec) {
-        PRINTF ("\ntm_sec.a:%i != tm_sec.b:%i ", date_a.tm_sec,
+        PRINTF ("\n    tm_sec.a:%i != tm_sec.b:%i ", date_a.tm_sec,
                 date_b.tm_sec)
         return 6;
     }
@@ -653,39 +651,38 @@ int ClockCompare (time_t t, int year, int month, int day,
     tm  date_a;
     ClockLocalTime (&date_a, t);
 
-    PRINTF ("\n    Comparing ")
+    PRINTF ("\n    Expecting %i/%i/%i@%i:%i:%i and found ", year, month, day,
+            hour, minute, second)
     PRINT_DATE (date_a)
-    PRINTF (" to ")
-    PRINT_TIME (year, month, day, hour, minute, second)
 
     if (year - kTimeEpoch != date_a.tm_year) {
-        PRINTF ("\nExpecting year:%i but found:%i.", year,
+        PRINTF ("\n    Expecting year:%i but found:%i.", year,
                 date_a.tm_year + kTimeEpoch)
         return 1;
     }
-    if (month - 1 != date_a.tm_mon + 1) {
-        PRINTF ("\nExpecting month:%i but found:%i.", month,
+    if (month != date_a.tm_mon + 1) {
+        PRINTF ("\n    Expecting month:%i but found:%i.", month,
                 date_a.tm_mon + 1)
         return 2;
     }
     if (day != date_a.tm_mday) {
-        PRINTF ("\nExpecting day:%i but found:%i.", day,
+        PRINTF ("\n    Expecting day:%i but found:%i.", day,
                 date_a.tm_mday)
         return 3;
     }
     if (hour != date_a.tm_hour) {
-        PRINTF ("\nExpecting hour:%i but found:%i.", hour,
+        PRINTF ("\n    Expecting hour:%i but found:%i.", hour,
                 date_a.tm_hour)
         return 4;
    #endif
     }
     if (minute != date_a.tm_min) {
-        PRINTF ("\nExpecting minute:%i but found:%i.", minute,
+        PRINTF ("\n    Expecting minute:%i but found:%i.", minute,
                 date_a.tm_min)
         return 5;
     }
     if (second != date_a.tm_sec) {
-        PRINTF ("\nExpecting second:%i but found:%i.", second,
+        PRINTF ("\n    Expecting second:%i but found:%i.", second,
                 date_a.tm_sec)
         return 6;
     }

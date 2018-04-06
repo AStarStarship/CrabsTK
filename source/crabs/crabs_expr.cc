@@ -21,7 +21,6 @@
 
 #include "clock.h"
 #include "bsq.h"
-#include "console.h"
 #include "hash.h"
 
 
@@ -202,7 +201,7 @@ const Op* ExprReset (Expr* expr) {
 byte ExprExitState (Expr* expr) {
     // We are guaranteed expr is not nil at this point.
     //if (!expr) {
-    //    return  ExprError (ExprBin (expr), kErrorImplementation);
+    //    return  ExprError (ExprBIn (expr), kErrorImplementation);
     //}
     #if DEBUG_CRABS_EXPR
     PRINTF ("\nExiting " << BInState ()[expr->bin_state]
@@ -217,7 +216,7 @@ byte ExprExitState (Expr* expr) {
 const Op* ExprSetState (Expr* expr, BInState state) {
     // We are guaranteed expr is not nil at this point.
     //if (!expr) {
-    //    return  ExprError (ExprBin (expr), kErrorImplementation);
+    //    return  ExprError (ExprBIn (expr), kErrorImplementation);
     //}
     if (state == kBInStateLocked) {
         return ExprError (expr, kErrorObjectLocked);
@@ -233,7 +232,7 @@ const Op* ExprSetState (Expr* expr, BInState state) {
 const Op* ExprEnterState (Expr* expr, BInState state) {
     // We are guaranteed expr is not nil at this point.
     //if (!expr) {
-    //    return  ExprError (ExprBin (expr), kErrorImplementation);
+    //    return  ExprError (ExprBIn (expr), kErrorImplementation);
     //}
     #if DEBUG_CRABS_EXPR
     PRINTF ("\nEntering " << BInState ()[state]

@@ -195,14 +195,17 @@ bool SlotIsReadable (Slot* slot) {
     return start + size;
 }*/
 
-const Op* SlotRead (Slot* slot, const Op& op, void** args) {
+const Op* SlotRead (Slot* slot, const uint_t* params, void** args) {
     if (!slot) {
         return SlotError (slot, kErrorImplementation);
     }
-    if (!args) {
+    if (!params) {
+        ReturnError:
         return SlotError (slot, kErrorImplementation);
     }
-    const     uint_t* params = op.in;
+    if (!args) {
+        goto ReturnError;
+    }
     byte      ui1;     //< Temp variable to load most types.
     uint16_t  ui2;     //< Temp variable for working with UI2 types.
     #if USING_CRABS_4_BYTE_TYPES
@@ -559,6 +562,10 @@ const Op* SlotRead (Slot* slot, const Op& op, void** args) {
     slot->start = start;
 
     return 0;
+}
+
+const Op* SlotRead (Slot* slot, const Op& op, void** args) {
+    return SlotRead (slot, op.in, args);
 }
 
 const Op* SlotWrite (Slot* slot, const Op& op, void** args) {
