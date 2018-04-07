@@ -77,6 +77,17 @@ KABUKI void SlotInit (Slot* slot, uintptr_t* buffer, uintptr_t size); */
     @param  Start The start of the data.
     @param  Stop  The stop of the data.
     @param  Size  The size of the buffer. */
+inline intptr_t SlotLength (Slot& slot) {
+    if (slot.start > slot.stop) {
+        return (slot.end - slot.begin) - (slot.start - slot.stop);
+    }
+    return slot.stop - slot.start;
+}
+
+/** Calculates the used ring buffer space.
+    @param  Start The start of the data.
+    @param  Stop  The stop of the data.
+    @param  Size  The size of the buffer. */
 inline intptr_t SlotLength (char* start, char* stop, uintptr_t size) {
     if (start > stop) {
         return size - (start - stop);
@@ -349,6 +360,9 @@ inline Slot& PrintMemory (const void* address, int size, Slot& slot) {
 KABUKI Slot& PrintBsq (const uint_t* bsq, Slot& slot);
 
 KABUKI Slot& PrintOp (const Op* op, Slot& slot);
+
+/** Prints the slot to the console. */
+KABUKI void Print (Slot& slot);
 
 }       //< namespace _
         

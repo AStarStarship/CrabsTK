@@ -43,9 +43,9 @@ void TestSeam1_3 () {
 
     PRINT_HEADING ("Testing Expr...")
     enum {
-        kBufferSize      = 2048,
-        kBufferWords     = kBufferSize / sizeof (uintptr_t),
-        kStackHeight     = 8,
+        kBufferSize  = 2048,
+        kBufferWords = kBufferSize / sizeof (uintptr_t),
+        kStackHeight = 8,
     };
     
     uintptr_t buffer[kBufferWords],
@@ -53,8 +53,11 @@ void TestSeam1_3 () {
     Slot slot;
     SlotInit (buffer, kBufferWords);
 
-    slot << 'a' << "b" << "cd" << (int8_t)1 << (uint8_t)2 << 3;
-    PrintSlot (slot);
+    slot << 'a' << "b" << "cd" << (int8_t)1 << (uint8_t)2 << (int16_t)3
+         << (uint16_t)4 << (int32_t)5 << (uint32_t)6 << (int64_t)7 
+         << (uint64_t)8;
+
+    Print (slot);
 
     This root;
     Expr* expr = ExprInit (buffer, kBufferSize, 4, 
@@ -62,14 +65,14 @@ void TestSeam1_3 () {
                            kBufferWords);
     PrintExpr (expr, slot);
     
-    void* args[19];
+    void        * args[19];
     const uint_t* params         = Bsq <4, ADR, STR, 32, FLT, SI4> ();
     const char    stx_expected[] = "Hello world!\0";
     const int     si4_expected   = 1;
     const float   flt_expected   = 1.0f;
 
-    char stx_found[64];
-    int si4_found;
+    char  stx_found[64];
+    int   si4_found;
     float flt_found;
 
     const Op* result = ExprResult (expr, params,
@@ -208,18 +211,18 @@ void TestSeam1_3 () {
     
     PRINT_HEADING ("Testing TMU/UI8/SI1/DBL...\n")
 
-    static const time_t tmu_expected = 0xE7;
-    static const int64_t si8_p_expected = '+',
-        si8_n_expected = -(2*1024*1024);
+    static const time_t   tmu_expected = 0xE7;
+    static const int64_t  si8_p_expected = '+',
+                          si8_n_expected = -(2*1024*1024);
     static const uint64_t ui8_expected = '8';
     static const uint64_t dbl_value = '.';
-    static const double dbl_expected = 1.0;
+    static const double   dbl_expected = 1.0;
 
-    time_us_t tmu_found = 0;
-    int64_t si8_p_found = 0,
-        si8_n_found = 0;
-    uint64_t ui8_found = 0;
-    double dbl_found = 0.0;
+    time_us_t tmu_found   = 0;
+    int64_t   si8_p_found = 0,
+              si8_n_found = 0;
+    uint64_t  ui8_found   = 0;
+    double    dbl_found   = 0.0;
 
     bout = BOutInit (buffer, kBufferSize);
 

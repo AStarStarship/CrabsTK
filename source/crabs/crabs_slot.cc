@@ -24,12 +24,12 @@
 #include "script_itos.h"
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
+
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #define PRINT_BSQ(bsq)\ {\
     enum { kSize = 64*1024 }\
     char bsq_buffer[kSize];\
-    \
 }
 #else
 #define PRINTF(x, ...)
@@ -1486,6 +1486,19 @@ Slot& PrintOp (const Op* op, Slot& slot) {
         << "\nallowed_chars:" << op->allowed_chars
         << "\n description :\"" << op->description;
     return slot;
+}
+
+void Print (Slot& slot) {
+    intptr_t size = SlotLength (slot);
+    char* buffer = new char[size + 128];
+    Printer print (buffer, buffer + size + 129);
+    PrintLine ('_', 80, print);
+    print << "\nBOut:" << PrintHex (slot, print) << " size:" << size
+          << " start:" << slot->start << " stop:" << bout->stop
+          << " read:"  << slot->read
+          << PrintMemory (slot.start, size + 64, slot);
+    //< @todo remove the + 64.);
+}
 }
 
 }       //< namespace _
