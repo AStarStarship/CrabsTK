@@ -22,6 +22,8 @@
 #include "clock.h"
 #include "bsq.h"
 #include "hash.h"
+#include "hex.h"
+#include "line.h"
 
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
@@ -977,9 +979,10 @@ Slot& PrintExpr (Expr* expr, Slot& slot) {
     if (!expr) {
         return slot << "nil" << PrintLine ('~', 80, slot);
     }
-    PrintHex (expr, slot) << PrintLine ('_', 80, slot);
+    
 
-    return slot << "\nbytes_left  : " << expr->bytes_left
+    return slot << Hex<void*> (expr) << Line ('_', 80)
+                << "\nbytes_left  : " << expr->bytes_left
                 << "\nheader_size : " << expr->header_size
                 << "\nstack_count : " << expr->stack_count
                 << "\nstack_size  : " << expr->stack_size
@@ -987,8 +990,8 @@ Slot& PrintExpr (Expr* expr, Slot& slot) {
                 << "\nbout_state  : " << BOutStateStrings ()[expr->bout_state]
                 << "\nnum_states  : " << expr->num_states
                 << "\nheader_size : " << expr->header_size
-                << PrintLine ('-', 80, slot)
-                << PrintOperand (expr->operand, slot)
+                << Line ('-', 80)
+                << expr->operand
                 << "\nheader: " << PrintBsq (expr->header_start, slot)
                 << PrintLine ('-', 80, slot)
                 << ExprPrintStack (expr, slot)

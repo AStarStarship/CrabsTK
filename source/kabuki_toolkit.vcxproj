@@ -38,9 +38,11 @@
     <ClInclude Include="crabs\expr.h" />
     <ClInclude Include="crabs\global.h" />
     <ClInclude Include="crabs\hash.h" />
+    <ClInclude Include="crabs\hex.h" />
     <ClInclude Include="crabs\iterator.h" />
     <ClInclude Include="crabs\language.h" />
     <ClInclude Include="crabs\library.h" />
+    <ClInclude Include="crabs\line.h" />
     <ClInclude Include="crabs\lst.h" />
     <ClInclude Include="crabs\map.h" />
     <ClInclude Include="crabs\memory.h" />
@@ -70,6 +72,7 @@
     <ClCompile Include="..\tests\test_seam_1_3.cc" />
     <ClCompile Include="..\tests\test_seam_1_4.cc" />
     <ClCompile Include="..\tests\test_seam_1_5.cc" />
+    <ClCompile Include="crabs\crabs_line.cc" />
     <ClCompile Include="crabs\crabs_align.cc" />
     <ClCompile Include="crabs\crabs_bin.cc" />
     <ClCompile Include="crabs\crabs_bout.cc" />

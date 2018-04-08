@@ -345,61 +345,8 @@ inline char* PrintHex (const void* ptr, char* text, char* text_end,
     return PrintHex ((uintptr_t)ptr, text, text_end, delimiter);
 }
 
-template<typename T>
-inline Printer& PrintHex (T value, Printer& printer) {
-    char* cursor = PrintHex (value, printer.cursor, printer.end);
-    if (!cursor) {
-        return printer;
-    }
-    printer.cursor = cursor;
-    return printer;
-}
-
 KABUKI char* PrintBinary (uint64_t value, char* text, char* text_end, 
                           char delimiter = 0);
-
-/** Prints out the contents of the address to the debug stream.
-    @param begin    The beginning of the read buffer.
-    @param text_end The end of the read buffer.
-    @param text     The beginning of the write buffer.
-    @param text_end The end of the write buffer.
-    @return          Null upon failure or a pointer to the byte after the last 
-                     byte written. */
-KABUKI char* PrintMemory (const void* begin, const void* end, char* text,
-                          char* text_end, char delimiter = 0);
-
-/** Prints out the contents of the address to the debug stream.
-    @param begin    The beginning of the read buffer.
-    @param text_end The end of the read buffer.
-    @param text     The beginning of the write buffer.
-    @param text_end The end of the write buffer.
-    @return          Null upon failure or a pointer to the byte after the last 
-                     byte written. */
-inline char* PrintMemory (const void* begin, size_t size, char* text,
-                          char* text_end, char delimiter = 0) {
-    return PrintMemory (begin, reinterpret_cast<const char*> (begin) + size,
-                        text, text_end, delimiter);
-}
-
-inline Printer& PrintMemory (const void* begin, const void* end,
-                             Printer& printer) {
-    char* cursor = PrintMemory (begin, end, printer.cursor, printer.end);
-    if (!cursor) {
-        return printer;
-    }
-    printer.cursor = cursor;
-    return printer;
-}
-
-inline Printer& PrintMemory (const void* begin, size_t size,
-                             Printer& printer) {
-    char* cursor = PrintMemory (begin, size, printer.cursor, printer.end);
-    if (!cursor) {
-        return printer;
-    }
-    printer.cursor = cursor;
-    return printer;
-}
 
 inline Printer PrinterInit (char* buffer, char* buffer_end) {
     return { buffer, buffer_end };

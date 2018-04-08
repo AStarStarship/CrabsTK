@@ -15,13 +15,14 @@
 */
 
 #include <stdafx.h>
-#include "slot.h"
+#include "line.h"
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "type.h"
 #include "text.h"
 #include "script_itos.h"
+#include "hex.h"
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
 
@@ -1104,7 +1105,7 @@ Slot& PrintMemory (const void* address, const void* address_end, Slot& slot,
         if (cursor > end) {
             cursor = slot.begin;
         }
-        PrintHex (chars + (address_end_ptr - address_ptr), slot);
+        slot << Hex<const void*> (chars + (address_end_ptr - address_ptr));
     }
     *cursor++ = '\n';
     if (cursor > end) {
@@ -1125,7 +1126,8 @@ Slot& PrintMemory (const void* address, const void* address_end, Slot& slot,
     if (cursor > end) {
         cursor = slot.begin;
     }
-    return PrintHex (chars + (address_end_ptr - address_ptr), slot);
+    slot << Hex<const void*> (chars + (address_end_ptr - address_ptr));
+    return slot;
 }
 
 Slot& PrintError (const char* message, const char* end_string, Slot& slot) {
@@ -1492,13 +1494,12 @@ void Print (Slot& slot) {
     intptr_t size = SlotLength (slot);
     char* buffer = new char[size + 128];
     Printer print (buffer, buffer + size + 129);
-    PrintLine ('_', 80, print);
-    print << "\nBOut:" << PrintHex (slot, print) << " size:" << size
-          << " start:" << slot->start << " stop:" << bout->stop
-          << " read:"  << slot->read
-          << PrintMemory (slot.start, size + 64, slot);
+    print << Line ('_', 80)
+          << "\nBOut:" << Hex<void*> (&slot) << " size:" << size
+          << " start:" << slot.start << " stop:" << slot.stop
+          << " read:"  << size;
+    PrintMemory (slot.start, size + 64, slot);
     //< @todo remove the + 64.);
-}
 }
 
 }       //< namespace _

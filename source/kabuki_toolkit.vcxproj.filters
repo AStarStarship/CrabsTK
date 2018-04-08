@@ -170,6 +170,12 @@
     <ClInclude Include="crabs\ascii.h">
       <Filter>source\crabs</Filter>
     </ClInclude>
+    <ClInclude Include="crabs\hex.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\line.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cc">
@@ -258,6 +264,9 @@
     </ClCompile>
     <ClCompile Include="..\tests\test_seam_1_5.cc">
       <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_line.cc">
+      <Filter>source\crabs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

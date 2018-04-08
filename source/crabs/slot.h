@@ -22,6 +22,7 @@
 
 #include "op.h"
 #include "print.h"
+#include "memory.h"
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
@@ -341,17 +342,12 @@ KABUKI Slot& PrintHex (char c, Slot& slot, char delimiter = 0);
 /** Print's out the given pointer to the text. */
 KABUKI Slot& PrintHex (uintptr_t value, Slot& slot);
 
-/** Print's out the given pointer to the text. */
-inline Slot& PrintHex (const void* pointer, Slot& slot) {
-    return PrintHex (reinterpret_cast<uintptr_t> (pointer), slot);
-}
-
 /** Prints out the contents of the address to the debug stream. */
 KABUKI Slot& PrintMemory (const void* address, const void* end, Slot& slot,
                           char delimiter = 0);
 
 /** Prints out the contents of the address to the debug stream. */
-inline Slot& PrintMemory (const void* address, int size, Slot& slot) {
+inline Slot& PrintMemory (const void* address, intptr_t size, Slot& slot) {
     return PrintMemory (address, reinterpret_cast<const char*> (address) + size,
                         slot);
 }
@@ -433,6 +429,14 @@ inline _::Slot& operator<< (_::Slot& slot, float value) {
     @return The slot. */
 inline _::Slot& operator<< (_::Slot& slot, double value) {
     return Print (value, slot);
+}
+
+/** Op << writes the given value to the slot.
+    @param  slot The slot.
+    @param  value The value to write to the slot.
+    @return The slot. */
+inline _::Slot& operator<< (_::Slot& slot, _::Memory memory) {
+    return _::PrintMemory (memory.begin, memory.end, slot);
 }
 
 #endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

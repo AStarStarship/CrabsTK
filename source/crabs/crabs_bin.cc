@@ -24,6 +24,7 @@
 #include "bsq.h"
 #include "hash.h"
 #include "slot.h"
+#include "hex.h"
 
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
@@ -696,8 +697,8 @@ Slot& BInPrint (BIn* bin, Slot& slot) {
     }
     uint_t size = bin->size;
     return slot << PrintLine ('_', 80, slot)
-                << "\nBIn:"  << PrintHex (bin, slot) << " size:" << bin->size
-                << " start:" << bin->start           << " stop:" << bin->stop
+                << "\nBIn:"  << Hex<void*> (bin) << " size:" << bin->size
+                << " start:" << bin->start       << " stop:" << bin->stop
                 << " read:"  << bin->read
                 << PrintMemory (BInBegin (bin), size + sizeof (BIn), slot);
 }

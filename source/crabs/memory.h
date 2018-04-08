@@ -21,7 +21,7 @@
 #ifndef HEADER_FOR_CRABS_MEMORY
 #define HEADER_FOR_CRABS_MEMORY
 
-#include "config.h"
+#include "print.h"
 
 namespace _ {
 
@@ -72,7 +72,7 @@ T MemoryMax () {
 
 /** Creates/Gets a static buffer of the specified size. */
 template<uint_t kBufferSize>
-inline uintptr_t* Memory () {
+inline uintptr_t* Buffers () {
     static uintptr_t buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }
@@ -80,7 +80,7 @@ inline uintptr_t* Memory () {
 /** Creates/Gets one of n static buffers of the specified size. */
 template<uint_t kBufferNumber,
          uint_t kBufferSize>
-    inline uintptr_t* Memory () {
+    inline uintptr_t* Buffers () {
     static uintptr_t buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }
@@ -89,7 +89,7 @@ template<uint_t kBufferNumber,
 template<typename T,
          uint_t kBufferNumber,
          uint_t kBufferSize>
-inline T* Memory () {
+inline T* Buffers () {
     static T buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }
@@ -213,11 +213,11 @@ KABUKI void MemoryClear (void* address, size_t size);
 /** Copies the source to the target functionally identical to memcpy.
     @param  write     Beginning of the write buffer.
     @param  write_end End of the write buffer.
-    @param  read      Beginning of the read buffer.
-    @param  read_end  End of the read buffer.
+    @param  start     Beginning of the read buffer.
+    @param  stop      End of the read buffer.
     @return Pointer to the last byte written or nil upon failure. */
-KABUKI char* MemoryCopy (char* write, char* write_end, const char* read,
-                         const char* read_end);
+KABUKI char* MemoryCopy (char* write, char* write_end, const char* start,
+                         const char* stop);
 
 /** Copies the source to the target functionally identical to memcpy.
     @param  write     Beginning of the write buffer.
@@ -236,8 +236,59 @@ KABUKI char* MemoryCopy (char* write, char* write_end, const char* memory,
     @param  size      Number of bytes to copy.
     @return Pointer to the last byte written or nil upon failure. */
 KABUKI char* MemoryCopy (char* write, char* write_end, const char* read,
-                         const char* read_end, int size);
+                         const char* read_end, intptr_t size);
+
+/** Prints out the contents of the address to the debug stream.
+    @param begin    The beginning of the read buffer.
+    @param text_end The end of the read buffer.
+    @param text     The beginning of the write buffer.
+    @param text_end The end of the write buffer.
+    @return          Null upon failure or a pointer to the byte after the last 
+                     byte written. */
+KABUKI char* PrintMemory (const void* begin, const void* end, char* text,
+                          char* text_end, char delimiter = 0);
+
+/** Prints out the contents of the address to the debug stream.
+    @param begin    The beginning of the read buffer.
+    @param text_end The end of the read buffer.
+    @param text     The beginning of the write buffer.
+    @param text_end The end of the write buffer.
+    @return          Null upon failure or a pointer to the byte after the last 
+                     byte written. */
+inline char* PrintMemory (const void* begin, size_t size, char* text,
+                          char* text_end, char delimiter = 0) {
+    return PrintMemory (begin, reinterpret_cast<const char*> (begin) + size,
+                        text, text_end, delimiter);
+}
+
+inline Printer& PrintMemory (const void* begin, size_t size,
+                             Printer& printer) {
+}
+
+/** Utility class for printing a text line with operator<<. */
+class Memory {
+    public:
+
+    const char* begin, //< Begin of the socket.
+              * end;   //< End of the socket.
+
+    /** Constructor. */
+    Memory (const char* begin, const char* end);
+
+    /** Constructor. */
+    Memory (const char* begin, intptr_t size);
+};
 
 }       //< namespace _
+
+inline _::Printer& operator<< (_::Printer& print, _::Memory memory) {
+    char* cursor = _::PrintMemory (memory.begin, memory.end, print.cursor, print.end);
+    if (!cursor) {
+        return print;
+    }
+    print.cursor = cursor;
+    return print;
+}
+
 #endif  //< HEADER_FOR_CRABS_MEMORY
 #endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

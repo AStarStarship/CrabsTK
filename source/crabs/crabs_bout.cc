@@ -25,6 +25,7 @@
 #include "hash.h"
 #include "args.h"
 #include "slot.h"
+#include "hex.h"
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
@@ -777,7 +778,7 @@ char* BOutPrint (BOut* bout, char* buffer, char* buffer_end) {
     }
     int size = bout->size;
     Printer print (buffer, buffer_end);
-    print << "\nBOut:" << PrintHex (bout, print)
+    print << "\nBOut:" << Hex<void*> (bout)
           << " size:" << size
           << " start:" << bout->start << " stop:" << bout->stop
           << " read:"  << bout->read
@@ -792,10 +793,10 @@ Slot& BOutPrint (BOut* bout, Slot& slot) {
         return slot << "\nBOut: NIL" << PrintLine ('_', 80, slot);
     }
     int size = bout->size;
-    return slot << "\nBOut:" << PrintHex (bout, slot) << " size:" << size
+    return slot << "\nBOut:" << Hex<void*> (bout) << " size:" << size
                 << " start:" << bout->start << " stop:" << bout->stop
                 << " read:"  << bout->read
-                << PrintMemory (BOutBuffer (bout), size + 64, slot);
+                << Memory (BOutBuffer (bout), size + 64);
     //< @todo remove the + 64.);
 }
 #endif

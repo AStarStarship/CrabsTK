@@ -19,6 +19,7 @@
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
 
 #include "memory.h"
+#include "print.h"
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
@@ -107,31 +108,116 @@ char* MemoryCopy (char* write, char* write_end, const char* read,
 }
 
 char* MemoryCopy (char* write, char* write_end, const char* read,
-                  const char* read_end, int size) {
+                  const char* read_end, intptr_t size) {
     // @todo Optimize to write in words.
-    if (!write) {
+    if (!write || write > write_end || !read || read > read_end ||
+        (write_end - write) < size || (read_end - read) < size) {
         return nullptr;
     }
-    if (write > write_end) {
-        return nullptr;
-    }
-    if (!read) {
-        return nullptr;
-    }
-    if (read > read_end) {
-        return nullptr;
-    }
-    // Check for room in both the read and write buffers.
-    if ((write_end - write) < size) {
-        return nullptr;
-    }
-    if ((read_end - read) < size) {
-        return nullptr;
-    }
-    for (; size; --size) {
+    while (--size >= 0) {
         *write++ = *read++;
     }
     return write;
+}
+
+char* PrintMemory (const void* token, const void* token_end, char* buffer,
+                   char* buffer_end, char delimiter) {
+    if (!token) {
+        return nullptr;
+    }
+    if (!buffer) {
+        return buffer;
+    }
+    if (buffer >= buffer_end) {
+        return nullptr;
+    }
+    char      * buffer_begin    = buffer;
+    const char* address_ptr     = reinterpret_cast<const char*> (token),
+              * address_end_ptr = reinterpret_cast<const char*> (token_end);
+    size_t      size            = address_end_ptr - address_ptr,
+                num_rows        = size / 64;
+        
+    //PRINTF ("\n    Printing Buffer with length:%i", TextLength (token))
+
+    if (size % 64 != 0) {
+        ++num_rows;
+    }
+    size += 81 * (num_rows + 2);
+    if (buffer + size >= buffer_end) {
+        PRINTF ("\n    ERROR: buffer isn't big enough!")
+        return nullptr;
+    }
+    *buffer++ = '\n';
+    *buffer++ = '|';
+
+    //  columns
+    *buffer++ = '0';
+    buffer = PrintRight (8, 7, buffer, buffer_end);
+    for (int i = 16; i <= 64; i += 8) {
+        buffer = PrintRight (i, 8, buffer, buffer_end);
+    }
+    *buffer++ = '|';
+    *buffer++ = '\n';
+    *buffer++ = '|';
+    for (int j = 8; j > 0; --j) {
+        for (int k = 7; k > 0; --k) {
+            *buffer++ = '-';
+        }
+        *buffer++ = '+';
+    }
+    *buffer++ = '|';
+    *buffer++ = ' ';
+        
+    buffer = PrintHex (address_ptr, buffer, buffer_end);
+    char c;
+    while (address_ptr < address_end_ptr) {
+        *buffer++ = '\n';
+        *buffer++ = '|';
+        for (int i = 0; i < 64; ++i) {
+            c = *address_ptr++;
+            if (address_ptr > address_end_ptr)
+                c = 'x';
+            if (c < ' ') {
+                c = ' ';
+            }
+            *buffer++ = c;
+        }
+        *buffer++ = '|';
+        *buffer++ = ' ';
+        buffer = PrintHex (address_ptr, buffer, buffer_end);
+        //PRINT_HEADING
+        //PRINTF ("\n%s", buffer_begin)
+        //PRINT_HEADING
+    }
+    *buffer++ = '\n';
+    *buffer++ = '|';
+    for (int j = 8; j > 0; --j) {
+        for (int k = 7; k > 0; --k) {
+            *buffer++ = '-';
+        }
+        *buffer++ = '+';
+    }
+    *buffer++ = '|';
+    *buffer++ = ' ';
+    return PrintHex (address_ptr + size, buffer, buffer_end, delimiter);
+}
+
+Memory::Memory (const char* begin, const char* end) :
+    begin (begin),
+    end (end) {
+    if (!begin || !end || begin > end) {
+        begin = end = 0;
+        return;
+    }
+}
+
+Memory::Memory (const char* begin, intptr_t size) :
+    begin (begin),
+    end (begin + size) {
+    if (!begin || size < 0) {
+        end = begin;
+        return;
+    }
 }
 
 }       //< namespace _
