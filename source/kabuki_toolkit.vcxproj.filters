@@ -30,14 +30,14 @@
     <Filter Include="projects\terminal">
       <UniqueIdentifier>{141c22c3-7927-4379-8e32-8c4433886102}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\kabuki\aiml">
-      <UniqueIdentifier>{714fd075-a8a5-4b94-98a1-9cde36230270}</UniqueIdentifier>
-    </Filter>
     <Filter Include="projects\script_itos_benchmark">
       <UniqueIdentifier>{a66a4851-eef4-4a27-8043-28fb1440edb6}</UniqueIdentifier>
     </Filter>
     <Filter Include="tests">
       <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\kabuki\hmi">
+      <UniqueIdentifier>{714fd075-a8a5-4b94-98a1-9cde36230270}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +176,9 @@
     <ClInclude Include="crabs\line.h">
       <Filter>source\crabs</Filter>
     </ClInclude>
+    <ClInclude Include="crabs\right.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cc">
@@ -266,6 +269,9 @@
       <Filter>tests</Filter>
     </ClCompile>
     <ClCompile Include="crabs\crabs_line.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_right.cc">
       <Filter>source\crabs</Filter>
     </ClCompile>
   </ItemGroup>

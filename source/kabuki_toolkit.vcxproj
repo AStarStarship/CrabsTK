@@ -50,6 +50,7 @@
     <ClInclude Include="crabs\op.h" />
     <ClInclude Include="crabs\operand.h" />
     <ClInclude Include="crabs\print.h" />
+    <ClInclude Include="crabs\right.h" />
     <ClInclude Include="crabs\script_itos.h" />
     <ClInclude Include="crabs\random.h" />
     <ClInclude Include="crabs\room.h" />
@@ -87,6 +88,7 @@
     <ClCompile Include="crabs\crabs_op.cc" />
     <ClCompile Include="crabs\crabs_operand.cc" />
     <ClCompile Include="crabs\crabs_print.cc" />
+    <ClCompile Include="crabs\crabs_right.cc" />
     <ClCompile Include="crabs\crabs_room.cc" />
     <ClCompile Include="crabs\crabs_scan.cc" />
     <ClCompile Include="crabs\crabs_slot.cc" />

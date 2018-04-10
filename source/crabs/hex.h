@@ -32,23 +32,114 @@ template<typename T>
 class Hex {
     public:
 
-    T value;
+    T value;    //< Value to convert to hex.
 
+    /** Constructor saves value for use with operator overloads. */
     Hex (T value) :
         value (value) {
     }
 };
 
+/** Prints the given byte in Hex.
+    This function prints the hex in big endian.
+    @param  buffer     Beginning of the buffer.
+    @param  buffer_end End of the buffer.
+    @return            Null upon failure or a pointer to the byte after the 
+                       last byte written. */
+KABUKI char* PrintHex (char c, char* text, char* text_end, char delimiter = 0);
+
+/** Print's out the given word to the text buffer.
+    @param  buffer     Beginning of the buffer.
+    @param  buffer_end End of the buffer.
+    @return            Null upon failure or a pointer to the byte after the last 
+                       byte written. */
+KABUKI char* PrintHex (uint8_t value, char* buffer, char* buffer_end,
+                       char delimiter = 0);
+
+/** Print's out the given word to the text buffer.
+    @param  buffer     Beginning of the buffer.
+    @param  buffer_end End of the buffer.
+    @return            Null upon failure or a pointer to the byte after the last 
+                       byte written. */
+inline char* PrintHex (int8_t value, char* buffer, char* buffer_end,
+                       char delimiter = 0) {
+    return PrintHex ((uint8_t)value, buffer, buffer_end, delimiter);
+}
+
+/** Print's out the given word to the text buffer.
+    @param  buffer     Beginning of the buffer.
+    @param  buffer_end End of the buffer.
+    @return            Null upon failure or a pointer to the byte after the last 
+                       byte written. */
+KABUKI char* PrintHex (uint16_t value, char* buffer, char* buffer_end,
+                       char delimiter = 0);
+
+/** Print's out the given word to the text buffer.
+    @param  buffer     Beginning of the buffer.
+    @param  buffer_end End of the buffer.
+    @return            Null upon failure or a pointer to the byte after the last 
+                       byte written. */
+inline char* PrintHex (int16_t value, char* buffer, char* buffer_end,
+                       char delimiter = 0) {
+    return PrintHex ((uint16_t)value, buffer, buffer_end, delimiter);
+}
+
+/** Print's out the given word to the text buffer.
+    @param  buffer     Beginning of the buffer.
+    @param  buffer_end End of the buffer.
+    @return            Null upon failure or a pointer to the byte after the last 
+                       byte written. */
+KABUKI char* PrintHex (uint32_t value, char* buffer, char* buffer_end,
+                       char delimiter = 0);
+
+/** Print's out the given word to the text buffer.
+    @param  buffer     Beginning of the buffer.
+    @param  buffer_end End of the buffer.
+    @return            Null upon failure or a pointer to the byte after the last 
+                       byte written. */
+inline char* PrintHex (int32_t value, char* buffer, char* buffer_end,
+                       char delimiter = 0) {
+    return PrintHex ((uint32_t)value, buffer, buffer_end, delimiter);
+}
+
+/** Print's out the given word to the text buffer.
+    @param  buffer     Beginning of the buffer.
+    @param  buffer_end End of the buffer.
+    @return            Null upon failure or a pointer to the byte after the last 
+                       byte written. */
+KABUKI char* PrintHex (uint64_t value, char* buffer, char* buffer_end,
+                       char delimiter = 0);
+
+/** Print's out the given word to the text buffer.
+    @param  buffer     Beginning of the buffer.
+    @param  buffer_end End of the buffer.
+    @return            Null upon failure or a pointer to the byte after the last 
+                       byte written. */
+inline char* PrintHex (int64_t value, char* buffer, char* buffer_end,
+                       char delimiter = 0) {
+    return PrintHex ((uint64_t)value, buffer, buffer_end, delimiter);
+}
+    
+/** Print's out the given word to the text buffer.
+    @param  text     Beginning of the buffer.
+    @param  text_end End of the buffer.
+    @return          Null upon failure or a pointer to the byte after the last 
+                     byte written. */
+inline char* PrintHex (const void* ptr, char* text, char* text_end,
+                       char delimiter = 0) {
+    return PrintHex ((uintptr_t)ptr, text, text_end, delimiter);
+}
+
 }       //< namespace _
 
 template<typename T>
-inline _::Printer& operator<< (_::Printer& print, const _::Hex<T>& hex) {
+inline _::Printer& operator<< (_::Printer& print, _::Hex<T> hex) {
     print.cursor = _::PrintHex (hex, print.cursor, print.end, 0);
     return print;
 }
 
 template<typename T>
-inline _::Printer& operator<< (_::Slot& slot, const _::Hex<T>& hex) {
+inline _::Slot& operator<< (_::Slot& slot, _::Hex<T> hex) {
     return _::PrintHex (hex.value, slot);
 }
 

@@ -25,6 +25,7 @@
 #include "hash.h"
 #include "slot.h"
 #include "hex.h"
+#include "line.h"
 
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
@@ -696,11 +697,12 @@ Slot& BInPrint (BIn* bin, Slot& slot) {
         return slot << "\nError: BIn can't be nil";
     }
     uint_t size = bin->size;
-    return slot << PrintLine ('_', 80, slot)
-                << "\nBIn:"  << Hex<void*> (bin) << " size:" << bin->size
+    slot << Line ('_', 80);
+    return slot << Line ('_', 80) << "\nBIn:" << Hex<void*> (bin);
+    /* << " size:" << bin->size
                 << " start:" << bin->start       << " stop:" << bin->stop
                 << " read:"  << bin->read
-                << PrintMemory (BInBegin (bin), size + sizeof (BIn), slot);
+                << Memory (BInBegin (bin), size + sizeof (BIn));*/
 }
 #endif
 

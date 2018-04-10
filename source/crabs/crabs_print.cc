@@ -260,41 +260,6 @@ char* PrintCentered (const char* string, int num_columns, char* buffer,
     return buffer;
 }
 
-char* PrintLine (char c, int num_columns, char* buffer, char* buffer_end,
-                 char delimiter) {
-    if (!buffer) {
-        return nullptr;
-    }
-    if (buffer + num_columns > buffer_end) {
-        return nullptr;
-    }
-    while (num_columns-- > 0) {
-        *buffer++ = c;
-    }
-    *buffer = delimiter;
-    return buffer;
-}
-
-char* PrintLine (const char* string, int num_columns, char* buffer,
-                 char* buffer_end, char delimiter) {
-    if (!buffer) {
-        return nullptr;
-    }
-    if (buffer + num_columns > buffer_end) {
-        return nullptr;
-    }
-    const char* cursor = string;
-    while (num_columns-- > 0) {
-        char c = *string++;
-        if (!c) {
-            cursor = string;
-        }
-        *buffer++ = c;
-    }
-    *buffer = delimiter;
-    return buffer;
-}
-
 char* PrintHex (uint8_t value, char* buffer, char* buffer_end,
                 char delimiter) {
     enum { kHexStringLengthSizeMax = sizeof (uint8_t) * 2 + 3 };

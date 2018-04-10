@@ -97,10 +97,15 @@ KABUKI Slot& PrintOperand (Operand* operand, Slot& slot);
 
 }   //< namespace _
 
-#if USING_TEXT_SCRIPT 
+#if USING_TEXT_SCRIPT
 /** Overloaded operator<< prints the given operand to the text. */
 inline _::Slot& operator<< (_::Slot& slot, _::Operand* operand) {
     return PrintOperand (operand, slot);
+}
+
+/** Overloaded operator<< prints the given operand to the text. */
+inline _::Slot& operator<< (_::Slot& slot, _::Operand& operand) {
+    return PrintOperand (&operand, slot);
 }
 #endif
 #endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

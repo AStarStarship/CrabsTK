@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/crabs/hex.h
+    @file    ~/source/crabs/line.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -38,6 +38,18 @@ class Line {
     Line (char token, int column_count);
 };
 
+/** Prints a string line of the char repeating. */
+KABUKI char* PrintLine (char c, int num_columns, char* text,
+                        char* text_end, char delimiter = 0);
+
+/** Prints a string line of the char repeating. */
+KABUKI Slot& PrintLine (char c, int num_columns, Slot& slot,
+                        char delimiter = 0);
+
+/** Prints a string line of the char repeating with an underscore. */
+KABUKI char* PrintLine (const char* string, int num_columns, char* text,
+                        char* text_end, char delimiter = 0);
+
 }       //< namespace _
 
 inline _::Printer& operator<< (_::Printer& print, _::Line line) {
@@ -47,6 +59,10 @@ inline _::Printer& operator<< (_::Printer& print, _::Line line) {
         return print;
     print.cursor = cursor;
     return print;
+}
+
+inline _::Slot& operator<< (_::Slot& slot, _::Line line) {
+    return _::PrintLine (line.token, line.column_count, slot);
 }
 
 #endif  //< HEADER_FOR_CRABS_LINE

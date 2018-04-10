@@ -75,7 +75,7 @@ struct Expr {
 
     /** List of Expr Error Ops. */
     typedef enum Errors {
-        kErrorBufferOverflow  = 0,
+        kErrorBufferOverflow = 0,
         kErrorBufferUnderflow,
         kErrorInvalidOperand,
         kErrorStackOverflow,
@@ -92,7 +92,7 @@ struct Expr {
     };
     
     uint_t        size,           //< Offset to the BOut slot.
-                  header_size,    //< The total size of the header.   
+                  header_size,    //< The total size of the header.
                   stack_count,    //< Stack Operand count.
                   stack_size,     //< Stack Operand buffer size.
                   type,           //< Current type being scanned.
@@ -110,9 +110,9 @@ struct Expr {
     const Op    * result;         //< Result of the Expr.
     const uint_t* header,         //< Pointer to the header being verified.
                 * header_start;   //< Start of the header being verified.
-    Operand     * operand,        //< Current script Operand.
+    Operand     * operand,        //< Current Script Operand.
                 * root;           //< Root-level scope Operand.
-    Slot        * args;           //< Arguments slot for running
+    Slot        * args;           //< Arguments slot for running.
     Slot          slot;           //< Slot for unpacking B-Sequences to.
 };
 
