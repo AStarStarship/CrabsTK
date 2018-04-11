@@ -152,9 +152,6 @@
     <ClInclude Include="crabs\args.h">
       <Filter>source\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\print.h">
-      <Filter>source\crabs</Filter>
-    </ClInclude>
     <ClInclude Include="crabs\scan.h">
       <Filter>source\crabs</Filter>
     </ClInclude>
@@ -177,6 +174,15 @@
       <Filter>source\crabs</Filter>
     </ClInclude>
     <ClInclude Include="crabs\right.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\slot_print.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\printer.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="crabs\varint.h">
       <Filter>source\crabs</Filter>
     </ClInclude>
   </ItemGroup>
@@ -272,6 +278,9 @@
       <Filter>source\crabs</Filter>
     </ClCompile>
     <ClCompile Include="crabs\crabs_right.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_slot_print.cc">
       <Filter>source\crabs</Filter>
     </ClCompile>
   </ItemGroup>

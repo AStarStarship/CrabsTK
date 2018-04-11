@@ -28,11 +28,13 @@
 #endif
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
-#include "print.h"
+#include "printer.h"
 #include "scan.h"
 #include "memory.h"
 #include "text.h"
 #include "clock.h"
+#include "right.h"
+#include "hex.h"
 #endif
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

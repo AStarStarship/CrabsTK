@@ -45,6 +45,12 @@ void TestSeam1_5 () {
         kBufferSizeWords = kBufferSize / sizeof (uintptr_t),
     };
 
+    slot << 'a' << "b" << "cd" << (int8_t)1 << (uint8_t)2 << (int16_t)3
+         << (uint16_t)4 << (int32_t)5 << (uint32_t)6 << (int64_t)7 
+         << (uint64_t)8;
+
+    Print (slot);
+    
     uintptr_t buffer[kBufferSizeWords];
 
     Book2* book = Book2Init (buffer, 8, kBufferSize, 128);

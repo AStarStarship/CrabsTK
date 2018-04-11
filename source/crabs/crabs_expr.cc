@@ -901,7 +901,7 @@ const Op* ExprQuery (Expr* expr, const Op& op) {
         uintptr_t num_ops = (uintptr_t)op.in,
             first_op = (uintptr_t)op.out;
   // @todo Write params to expr!
-        static const uint_t* header = Bsq<5, STR, kOpNameLengthMax, UV8, UV8,
+        static const uint_t* header = Params<5, STR, kOpNameLengthMax, UV8, UV8,
             STR, kOpDescriptionLengthMax> ();
         return BOutWrite (ExprBOut (expr),
                           header,
@@ -946,7 +946,7 @@ const Op* ExprQuery (Expr* expr, const Op* op) {
         }
         void* args[2];
         return BOutWrite (ExprBOut (expr),
-                          Bsq<5, STR, kOpNameLengthMax, UV8, UV8,
+                          Params<5, STR, kOpNameLengthMax, UV8, UV8,
                           STR, kOpDescriptionLengthMax> (),
                           Args (args, op->name, op->in,
                           op->out, op->description));
@@ -955,9 +955,9 @@ const Op* ExprQuery (Expr* expr, const Op* op) {
 }
 
 #if USING_TEXT_SCRIPT
-Slot& ExprPrintStack (Expr* expr, Slot& slot) {
+Printer& ExprPrintStack (Expr* expr, Printer& print) {
     if (!expr) {
-        return slot;
+        return print;
     }
 
     uint_t i,
@@ -966,30 +966,30 @@ Slot& ExprPrintStack (Expr* expr, Slot& slot) {
     Operand* operand;
     Operand** stack = ExprStack (expr);
     stack_count = expr->stack_count;
-    slot << "\nOperand stack_count:" << stack_count;
+    print << "\nOperand stack_count:" << stack_count;
 
     if (stack_count == 1) {
-        return slot << "\nStack Item 1: " << OperandName (expr->root);
+        return print << "\nStack Item 1: " << OperandName (expr->root);
     }
     for (i = 0; i < stack_count - 1; ++i) {
-        slot << "\nStack Item " << i + 1 << ":\"";
+        print << "\nStack Item " << i + 1 << ":\"";
         operand = stack[i];
         op = operand->Star ('?', nullptr);
-        slot << op->name << '\"';
+        print << op->name << '\"';
     }
     op = expr->operand->Star ('?', nullptr);
-    return slot << "\nStack Item " << i + 1 << ":\"" << op->name << "\"";
+    return print << "\nStack Item " << i + 1 << ":\"" << op->name << "\"";
 }
 
-Slot& PrintExpr (Expr* expr, Slot& slot) {
-    PrintLine ('~', 80, slot) << "\nStack:    ";
+Printer& PrintExpr (Expr* expr, Printer& print) {
+    print << Line ('~', 80) << "\nStack:    ";
 
     if (!expr) {
-        return slot << "nil" << PrintLine ('~', 80, slot);
+        return print << "nil" << Line ('~', 80);
     }
     
 
-    return slot << Hex<void*> (expr) << Line ('_', 80)
+    return print << Hex<void*> (expr) << Line ('_', 80)
                 << "\nbytes_left : " << expr->bytes_left
                 << "\nheader_size: " << expr->header_size
                 << "\nstack_count: " << expr->stack_count
@@ -1000,10 +1000,10 @@ Slot& PrintExpr (Expr* expr, Slot& slot) {
                 << "\nheader_size: " << expr->header_size
                 << Line ('-', 80)
                 << expr->operand
-                << "\nheader     : " << PrintBsq (expr->header_start, slot)
-                << PrintLine ('-', 80, slot)
-                << ExprPrintStack (expr, slot)
-                << PrintLine ('~', 80, slot);
+                << "\nheader     : " << Bsq (expr->header_start)
+                << Line ('-', 80)
+                << ExprPrintStack (expr, print)
+                << Line ('~', 80);
 }
 
 #endif

@@ -19,7 +19,7 @@
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
 
-#include "print.h"
+#include "printer.h"
 
 #if USING_TEXT_SCRIPT
 
@@ -31,9 +31,7 @@ namespace _ {
 template<typename T = const char*>
 struct Right {
     
-    T           value;      //< 
-    const char* string;     //< Pointer to string to print.
-    bool        is_string;  //< Pointer for if it's a string or not.
+    T value; //< Value to print.
 
     Right (T value) :
         value (value),
@@ -118,76 +116,11 @@ inline char* PrintRight (double value, int num_columns, char* text,
 
 /** Writes a nil-terminated UTF-8 or ASCII string to the
     printer. */
-inline _::Printer& operator<< (_::Printer& printer, const char* string) {
-    printer.cursor = _::Print (string, printer.cursor, printer.end);
+template<typename T>
+inline _::Printer& operator<< (_::Printer& printer, _::Right<T> right) {
+    printer.cursor = _::PrintRight (right.value, printer.cursor, printer.end);
     return printer;
 }
-
-/** Writes a nil-terminated UTF-8 or ASCII string to the
-    printer. */
-inline _::Printer& operator<< (_::Printer& printer, _::Printer& printer_b) {
-    printer.cursor = 0;
-    return printer;
-}
-
-/** Writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, int32_t value) {
-    printer.cursor = _::Print (value, printer.cursor, printer.end);
-    return printer;
-}
-
-/** Writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, uint32_t value) {
-    printer.cursor = _::Print (value, printer.cursor, printer.end);
-    return printer;
-}
-
-/** Writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, int64_t value) {
-    printer.cursor = _::Print (value, printer.cursor, printer.end);
-    return printer;
-}
-
-/** Writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, uint64_t value) {
-    printer.cursor = _::Print (value, printer.cursor, printer.end);
-    return printer;
-}
-
-/** Writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, float value) {
-    printer.cursor = _::Print (value, printer.cursor, printer.end);
-    return printer;
-}
-
-/** Writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, double value) {
-    printer.cursor = _::Print (value, printer.cursor, printer.end);
-    return printer;
-}
-
-/**  Prints out the parameters to the debug console.
-inline _::Printer& operator<< (_::Printer& printer, const uint_t* bsq) {
-    printer.cursor = _::Print (bsq, printer.cursor, printer.end);
-} */
 
 #endif  //< HEADER_FOR_CRABS_RIGHT
 #endif  //< USING_TEXT_SCRIPT

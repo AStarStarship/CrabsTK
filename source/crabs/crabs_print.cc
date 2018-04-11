@@ -18,7 +18,7 @@
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
 
-#include "print.h"
+#include "printer.h"
 
 #if USING_TEXT_SCRIPT
 

@@ -19,7 +19,7 @@
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
 
-#include "print.h"
+#include "printer.h"
 #include "text.h"
 #include "scan.h"
 

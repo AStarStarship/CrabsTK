@@ -20,7 +20,7 @@
 #ifndef HEADER_FOR_CRABS_HEX
 #define HEADER_FOR_CRABS_HEX
 
-#include "print.h"
+#include "printer.h"
 #include "slot.h"
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
@@ -134,13 +134,10 @@ inline char* PrintHex (const void* ptr, char* text, char* text_end,
 
 template<typename T>
 inline _::Printer& operator<< (_::Printer& print, _::Hex<T> hex) {
-    print.cursor = _::PrintHex (hex, print.cursor, print.end, 0);
+    char* cursor = _::PrintHex (hex, print.cursor, print.end, 0);
+    if (!cursor) return print;
+    print.cursor = cursor;
     return print;
-}
-
-template<typename T>
-inline _::Slot& operator<< (_::Slot& slot, _::Hex<T> hex) {
-    return _::PrintHex (hex.value, slot);
 }
 
 #endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

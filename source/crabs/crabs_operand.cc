@@ -19,8 +19,9 @@
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #include "op.h"
-#include "print.h"
+#include "printer.h"
 #include "text.h"
+#include "line.h"
 
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
@@ -76,52 +77,52 @@ wchar_t OperandIndex (Operand* operand, char* begin, char* end) {
 
 #if USING_TEXT_SCRIPT
 
-Slot& PrintOperand (Operand* operand, Slot& slot) {
+Printer& PrintOperand (Operand* operand, Printer& print) {
     if (!operand) {
-        return slot << "\nError: Operand can't be nil";
+        return print << "\nError: Operand can't be nil";
     }
 
     const _::Op* op = operand->Star ('?', nullptr);
     if (!op) {
-        return slot << "\nError: invalid Op!";
+        return print << "\nError: invalid Op!";
     }
     uintptr_t num_ops = reinterpret_cast<uintptr_t>(op->in),
               op_num = reinterpret_cast<uintptr_t>(op->out),
               last_op = op_num + num_ops - 1;
     if (num_ops > _::kParamsMax) {
-        return slot << "\nError: Too many parameters!";
+        return print << "\nError: Too many parameters!";
     }
-    slot << "\nOperand         :" << op->name
-         << PrintLine ('-', 80, slot);
+    print << "\nOperand         :" << op->name
+          << Line ('-', 80);
     for (; op_num <= last_op; ++op_num) {
         op = operand->Star ((wchar_t)op_num, nullptr);
-        slot << "\nOp \'" << op_num << "\':"
-             << op_num << ' ' << PrintOp (op, slot)
-             << PrintLine ('-', 80, slot);
+        print << "\nOp \'" << op_num << "\':"
+             << op_num << ' ' << op
+             << Line ('-', 80);
     }
-    return slot;
+    return print;
 }
 
-Slot& OperandQuery (Operand* root, const char* address, Slot& slot) {
+Printer& OperandQuery (Operand* root, const char* address, Printer& print) {
     if (!address) {
-        return slot;
+        return print;
     }
     if (!root) {
-        return slot;
+        return print;
     }
     int index = *address++;
     const Op* op = root->Star (index, nullptr);
-    slot << op->name;
+    print << op->name;
     index = *address++;
     while (index) {
         op = root->Star (index, nullptr);
         if (!op) {
-            return slot;
+            return print;
         }
-        slot << '.' << op->name;
+        print << '.' << op->name;
         index = *address++;
     }
-    return slot;
+    return print;
 }
 #endif
 }       //< namespace _

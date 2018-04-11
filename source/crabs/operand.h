@@ -92,21 +92,17 @@ Slot& OperandQuery (Operand* root, const char* address, Slot& key);
     @param  text     The Text to print to.
     @param  operand The Operand to print.
     @return text. */
-KABUKI Slot& PrintOperand (Operand* operand, Slot& slot);
+KABUKI Printer& PrintOperand (Operand* operand, Printer& slot);
 #endif
 
 }   //< namespace _
 
 #if USING_TEXT_SCRIPT
 /** Overloaded operator<< prints the given operand to the text. */
-inline _::Slot& operator<< (_::Slot& slot, _::Operand* operand) {
-    return PrintOperand (operand, slot);
+inline _::Printer& operator<< (_::Printer& print, _::Operand* operand) {
+    return PrintOperand (operand, print);
 }
 
-/** Overloaded operator<< prints the given operand to the text. */
-inline _::Slot& operator<< (_::Slot& slot, _::Operand& operand) {
-    return PrintOperand (&operand, slot);
-}
 #endif
 #endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_OPERAND

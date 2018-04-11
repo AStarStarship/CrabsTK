@@ -24,8 +24,7 @@
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
-#include "print.h"
-#include "slot.h"
+#include "printer.h"
 
 namespace _ {
 

@@ -21,7 +21,7 @@
 
 #include "bsq.h"
 #include "slot.h"
-#include "print.h"
+#include "printer.h"
 
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
@@ -35,14 +35,14 @@
 namespace _ {
 
 #if USING_TEXT_SCRIPT
-Slot& OpPrint (const Op* op, Slot& slot) {
+Printer& OpPrint (const Op* op, Printer& print) {
     if (!op) {
-        return slot << "\nOp: nil";
+        return print << "\nOp: nil";
     }
-    return slot << "\nOp      :" << op->name
-                << "\nBSQ     :" << PrintBsq (op->in, slot)
-                << "\nResult: :" << PrintBsq (op->out, slot)
-                << "\nMetadata:" << op->description;
+    return print << "\nOp      :" << op->name
+                 << "\nBSQ     :" << Bsq (op->in)
+                 << "\nResult: :" << Bsq (op->out)
+                 << "\nMetadata:" << op->description;
 }
 #endif
 /*
@@ -158,8 +158,8 @@ void OpPrint (Op& log) {
 
 #if USING_TEXT_SCRIPT
 
-_::Slot& operator<< (_::Slot& slot, const _::Op* op) {
-    return OpPrint (op, slot);
+_::Printer& operator<< (_::Printer& print, const _::Op* op) {
+    return OpPrint (op, print);
 }
 
 #endif

@@ -162,7 +162,7 @@ int BInStreamByte (BIn* bin) {
         (end - start) + (open - begin) + 2);
 
     if (length < 1) {
-        BInError (bin, kErrorBufferOverflow, Bsq<1, STR> (), 2, start);
+        BInError (bin, kErrorBufferOverflow, Params<1, STR> (), 2, start);
         return -1;
     }
     //byte b = *cursor;

@@ -26,6 +26,7 @@
 #include "args.h"
 #include "slot.h"
 #include "hex.h"
+#include "line.h"
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
@@ -175,7 +176,7 @@ int BOutStreamByte (BOut* bout) {
                                           : (end - start) + (open - begin) + 2;
 
     if (length < 1) {
-        BOutError (bout, kErrorBufferOverflow, Bsq<1, STR> (), 2,
+        BOutError (bout, kErrorBufferOverflow, Params<1, STR> (), 2,
                    start);
         return -1;
     }
@@ -751,7 +752,7 @@ void BOutAckBack (BOut* bout, const char* address) {
 
 const Op* BOutConnect (BOut* bout, const char* address) {
     void* args[2];
-    return BOutWrite (bout, Bsq <2, ADR, ADR> (),
+    return BOutWrite (bout, Params <2, ADR, ADR> (),
                       Args (args, address, 0));
 }
 
@@ -782,18 +783,18 @@ char* BOutPrint (BOut* bout, char* buffer, char* buffer_end) {
           << " size:" << size
           << " start:" << bout->start << " stop:" << bout->stop
           << " read:"  << bout->read
-          << PrintMemory (BOutBuffer (bout), size + 64, print);
+          << Memory (BOutBuffer (bout), size + 64);
     //< @todo remove the + 64.);
     return print.cursor;
 }
 
-Slot& BOutPrint (BOut* bout, Slot& slot) {
-    slot << PrintLine ('_', 80, slot);
+Printer& BOutPrint (BOut* bout, Printer& print) {
+    print << Line ('_', 80);
     if (!bout) {
-        return slot << "\nBOut: NIL" << PrintLine ('_', 80, slot);
+        return print << "\nBOut: NIL" << Line ('_', 80);
     }
     int size = bout->size;
-    return slot << "\nBOut:" << Hex<void*> (bout) << " size:" << size
+    return print << "\nBOut:" << Hex<void*> (bout) << " size:" << size
                 << " start:" << bout->start << " stop:" << bout->stop
                 << " read:"  << bout->read
                 << Memory (BOutBuffer (bout), size + 64);

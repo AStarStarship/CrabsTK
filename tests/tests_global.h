@@ -56,8 +56,8 @@ class ChildOperand : public Operand {
             case '?': return &This;
             case 'A': {
                 static const Op OpA = { "SignedIntegerTests",
-                    Bsq<2, UI1, STR, kTextBufferSize> (),
-                    Bsq<2, UI1, STR> (),
+                    Params<2, UI1, STR, kTextBufferSize> (),
+                    Params<2, UI1, STR> (),
                     "Description of function \'A\'.", 0 };
                 if (!expr) return &OpA;
 
@@ -72,8 +72,8 @@ class ChildOperand : public Operand {
             }
             case 'B': {
                 static const Op OpB = { "FloatTests",
-                    Bsq<2, FLT, STR, kTextBufferSize> (),
-                    Bsq<2, FLT, STR> (),
+                    Params<2, FLT, STR, kTextBufferSize> (),
+                    Params<2, FLT, STR> (),
                     "Description of function \'B\'.", 0 };
                 if (!expr) return &OpB;
 
@@ -126,8 +126,8 @@ class Parent : public Operand {
             }
             case 'C': {
                 static const Op OpC = { "FloatTests",
-                    Bsq<2, FLT, STR, kTextBufferSize> (),
-                    Bsq<2, FLT, STR> (),
+                    Params<2, FLT, STR, kTextBufferSize> (),
+                    Params<2, FLT, STR> (),
                     "Description of functionA.", 0 };
                 if (!expr) return &OpC;
 
@@ -140,8 +140,8 @@ class Parent : public Operand {
             }
             case 'D': {
                 static const Op OpD = { "SignedIntegerTests",
-                    Bsq<2, FLT, STR, kTextBufferSize> (),
-                    Bsq<2, FLT, STR> (),
+                    Params<2, FLT, STR, kTextBufferSize> (),
+                    Params<2, FLT, STR> (),
                     "Description of functionB.", 0 };
 
                 if (!expr) return &OpD;

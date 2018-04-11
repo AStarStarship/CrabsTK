@@ -24,7 +24,7 @@
 
 #include "slot.h"
 #include "op.h"
-#include "bin.h"
+#include "bout.h"
 
 namespace _ {
 
@@ -55,18 +55,6 @@ struct KABUKI BIn {
     uint_t          read;   //< The read variable.
 };
 
-/** Copies the bin to the slot. */
-inline void BInSlot (BIn* bin, Slot& slot) {
-    if (!bin) {
-        return;
-    }
-    char* begin = reinterpret_cast<char*> (bin) + sizeof (BIn);
-    slot.begin  = begin;
-    slot.start  = begin + bin->start;
-    slot.stop   = begin + bin->stop;
-    slot.end    = begin + bin->size;
-}
-
 /** Get's the B-Input's buffer. */
 inline char* BInBegin (BIn* bin) {
     return reinterpret_cast<char*> (bin) + sizeof (BIn);
@@ -78,6 +66,28 @@ inline char* BInEnd (BIn* bin) {
     //    return nullptr;
     //}
     return reinterpret_cast<char*> (bin) + bin->size;
+}
+
+/** Calculates the used ring buffer space.
+    @param  Start The start of the data.
+    @param  Stop  The stop of the data.
+    @param  Size  The size of the buffer. */
+inline intptr_t SlotLength (char* start, char* stop, uintptr_t size) {
+    if (start > stop) {
+        return size - (start - stop);
+    }
+    return stop - start;
+}
+
+/** Calculates the space left in the given ring buffer.
+    @param  Start The start of the data.
+    @param  Stop  The stop of the data.
+    @param  Size  The size of the buffer. */
+inline intptr_t SlotSpace (char* start, char* stop, uintptr_t size) {
+    if (start > stop) {
+        return start - stop;
+    }
+    return size - (stop - start);
 }
 
 /** Gets the rx buffer length. */

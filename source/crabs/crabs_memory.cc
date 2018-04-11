@@ -19,7 +19,9 @@
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
 
 #include "memory.h"
-#include "print.h"
+#include "printer.h"
+#include "right.h"
+#include "hex.h"
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);

@@ -16,7 +16,7 @@
 
 #include <stdafx.h>
 #include "bsq.h"
-#include "print.h"
+#include "printer.h"
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
@@ -51,16 +51,6 @@ uint_t BsqParamNumber (const uint_t* params, int param_number) {
 }
 
 char* PrintBsq (const uint_t* params, char* buffer, char* buffer_end) {
-    if (!params) {
-        return nullptr;
-    }
-    if (!buffer) {
-        return buffer;
-    }
-    if (buffer >= buffer_end) {
-        return nullptr;
-    }
-
     uint_t num_params = *params++,
         i,
         type,

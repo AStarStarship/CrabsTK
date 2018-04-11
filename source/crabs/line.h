@@ -21,8 +21,7 @@
 #ifndef HEADER_FOR_CRABS_LINE
 #define HEADER_FOR_CRABS_LINE
 
-#include "print.h"
-#include "slot.h"
+#include "printer.h"
 
 
 namespace _ {
@@ -42,10 +41,6 @@ class Line {
 KABUKI char* PrintLine (char c, int num_columns, char* text,
                         char* text_end, char delimiter = 0);
 
-/** Prints a string line of the char repeating. */
-KABUKI Slot& PrintLine (char c, int num_columns, Slot& slot,
-                        char delimiter = 0);
-
 /** Prints a string line of the char repeating with an underscore. */
 KABUKI char* PrintLine (const char* string, int num_columns, char* text,
                         char* text_end, char delimiter = 0);
@@ -59,10 +54,6 @@ inline _::Printer& operator<< (_::Printer& print, _::Line line) {
         return print;
     print.cursor = cursor;
     return print;
-}
-
-inline _::Slot& operator<< (_::Slot& slot, _::Line line) {
-    return _::PrintLine (line.token, line.column_count, slot);
 }
 
 #endif  //< HEADER_FOR_CRABS_LINE

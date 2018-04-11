@@ -17,14 +17,25 @@
 #pragma once
 #include <stdafx.h>
 
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+
 #ifndef HEADER_FOR_CRABS_BSQ
 #define HEADER_FOR_CRABS_BSQ
 
 #include "type.h"
-
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#include "printer.h"
 
 namespace _ {
+
+/** Utility class for printing B-Sequences. */
+struct Bsq {
+    const uint_t* params;   //< Bsq params.
+
+    Bsq (const uint_t* params) :
+        params (params) {
+        // Nothing to do here! ({:-)-+=<
+    }
+};
 
 #if WORD_SIZE == 16
 inline int16_t UnpackSVI (int16_t value) {
@@ -134,7 +145,7 @@ constexpr uint_t BsqSize (const uint_t* params) {
     C++11 variadic template to ensure only one copy in ROM
     and to eliminate some redundant typing. */
 template<const uint_t... N>
-inline const uint_t* Bsq () {
+inline const uint_t* Params () {
     static const uint_t kSize = 0,//BsqSize ({ N... })
         kList[sizeof... (N)] = { N... };
     return &kSize;
@@ -146,5 +157,20 @@ KABUKI char* PrintBsq (const uint_t* params, char* buffer, char* buffer_end);
 KABUKI uint_t BsqParamNumber (const uint_t* bsq, int param_number);
 
 }       //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+
+/** . */
+inline _::Printer& PrintBsq (_::Printer& print, _::Bsq bsq) {
+    if (!bsq.params || !print.cursor || print.cursor >= print.end) {
+        return print;
+    }
+
+    char* cursor = _::PrintBsq (bsq.params, print.cursor, print.end);
+    if (!cursor) {
+        return print;
+    }
+    print.cursor = cursor;
+    return print;
+}
+
 #endif  //< HEADER_FOR_CRABS_BSQ
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

@@ -49,7 +49,7 @@
     <ClInclude Include="crabs\mirror.h" />
     <ClInclude Include="crabs\op.h" />
     <ClInclude Include="crabs\operand.h" />
-    <ClInclude Include="crabs\print.h" />
+    <ClInclude Include="crabs\printer.h" />
     <ClInclude Include="crabs\right.h" />
     <ClInclude Include="crabs\script_itos.h" />
     <ClInclude Include="crabs\random.h" />
@@ -57,10 +57,12 @@
     <ClInclude Include="crabs\scan.h" />
     <ClInclude Include="crabs\set.h" />
     <ClInclude Include="crabs\slot.h" />
+    <ClInclude Include="crabs\slot_print.h" />
     <ClInclude Include="crabs\stack.h" />
     <ClInclude Include="crabs\table.h" />
     <ClInclude Include="crabs\text.h" />
     <ClInclude Include="crabs\type.h" />
+    <ClInclude Include="crabs\varint.h" />
     <ClInclude Include="crabs\wall.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="stdafx.h" />
@@ -92,6 +94,7 @@
     <ClCompile Include="crabs\crabs_room.cc" />
     <ClCompile Include="crabs\crabs_scan.cc" />
     <ClCompile Include="crabs\crabs_slot.cc" />
+    <ClCompile Include="crabs\crabs_slot_print.cc" />
     <ClCompile Include="crabs\crabs_text.cc" />
     <ClCompile Include="crabs\crabs_type.cc" />
     <ClCompile Include="crabs\crabs_wall.cc" />
