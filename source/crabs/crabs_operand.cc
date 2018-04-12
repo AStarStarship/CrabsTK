@@ -75,7 +75,7 @@ wchar_t OperandIndex (Operand* operand, char* begin, char* end) {
     return 0;
 }
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 
 Printer& PrintOperand (Operand* operand, Printer& print) {
     if (!operand) {

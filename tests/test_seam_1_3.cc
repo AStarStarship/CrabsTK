@@ -45,17 +45,22 @@ void TestSeam1_3 () {
         kBufferSize  = 2048,
         kBufferWords = kBufferSize / sizeof (uintptr_t),
         kStackHeight = 8,
+        kPrintBufferSize = 4096,
     };
     
     uintptr_t buffer[kBufferWords],
               unpacked_buffer[kBufferWords];
+
     Slot slot (buffer, kBufferWords);
 
     This root;
     Expr* expr = ExprInit (buffer, kBufferSize, 4, 
                            &root, unpacked_buffer,
                            kBufferWords);
-    PrintExpr (expr, slot);
+
+    Printer print;
+
+    print << expr;
     
     void        * args[19];
     const uint_t* params         = Params <4, ADR, STR, 32, FLT, SI4> ();
@@ -113,7 +118,7 @@ void TestSeam1_3 () {
             found_string2)
 
     STRCMP_EQUAL (expected_string1, found_string1)
-    //BOutPrint (bout);
+    //Print (bout);
     STRCMP_EQUAL (expected_string2, found_string2)
     
     PRINT_HEADING ("Testing BOL/UI1/SI1...")
@@ -484,16 +489,16 @@ void TestSeam1_3 () {
 
     enum { kCharCount = 2048 };
     char text[kCharCount + 1];
-    BOutPrint (bout, text, text + kCharCount);
+    print << bout;
 
     slot.Clear ();
-    PrintExpr (expr, slot);
+    print << expr;
 
-    //Slot slot (bin, bout);
+    //Printer slot (bin, bout);
     // Bypass handshake for testing purposes.
 
     ExprUnpack (expr);//, &slot);
-    PrintExpr (expr, slot);
+    print << expr;
     PRINTF ("\n Done with Op tests.")
 
     PRINT_PAUSE ("\n\nDone Testing SEAM_1_3! ({:-)-+=<")

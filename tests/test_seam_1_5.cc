@@ -367,7 +367,7 @@ TEST (SEAM_1_5_TESTS, ReadWriteTests) {
               << " Found 2: "     << found_string2;
 
     STRCMP_EQUAL (expected_string1, found_string1)
-    //BOutPrint (bout);
+    //Print (bout);
     STRCMP_EQUAL (expected_string2, found_string2)
     
     PrintLineBreak ("\n  - Testing BOL/UI1/SI1...", 5);
@@ -746,7 +746,7 @@ TEST (SEAM_1_5_TESTS, OpTests) {
                         Args (args, Address <'A', 'A', 'A'> (), 
                               &io_number_, Const ("Test"), 
                               Address<BS, CR> ()));
-    BOutPrint (bout);
+    Print (bout);
     CHECK (result == nullptr)
 
     PrintExpr (expr);

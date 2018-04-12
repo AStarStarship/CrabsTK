@@ -34,7 +34,7 @@
 #define PRINT_BSQ(header, bsq) {\
     enum {\
         kBsqBufferSize = 1024,\
-        kBsqBufferSizeWords = kBsqBufferSize >> kWordSizeShift\
+        kBsqBufferSizeWords = kBsqBufferSize >> kWordBitCount\
      };\
     char bsq_buffer[kBsqBufferSizeWords];\
     PrintBsq (bsq, bsq_buffer, bsq_buffer + kBsqBufferSize);\
@@ -43,10 +43,10 @@
 #define PRINT_BOUT(header, bout) {\
     enum {\
         kBOutBufferSize = 1024,\
-        kBOutBufferSizeWords = kBOutBufferSize >> kWordSizeShift\
+        kBOutBufferSizeWords = kBOutBufferSize >> kWordBitCount\
      };\
     char bout_buffer[kBOutBufferSizeWords];\
-    BOutPrint (bout, bout_buffer, bout_buffer + kBOutBufferSize);\
+    Print (bout, bout_buffer, bout_buffer + kBOutBufferSize);\
     printf   ("\n    %s%s", header, bout_buffer);\
 }
 #else
@@ -190,7 +190,7 @@ int BOutStreamByte (BOut* bout) {
 const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
     
     PRINT_BSQ ("\n\nWriting ", params)
-    PRINT_BOUT (" to B-Output:%x", bout)
+    PRINT_BOUT (" to B-Output:", bout)
 
     if (!bout)
         return BOutError (bout, kErrorImplementation);
@@ -202,15 +202,15 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte //type,
         ui1;
-#if USING_CRABS_2_BYTE_TYPES
+    #if USING_CRABS_2_BYTE_TYPES
     uint16_t ui2;
-#endif
-#if USING_CRABS_4_BYTE_TYPES
+    #endif
+    #if USING_CRABS_4_BYTE_TYPES
     uint32_t ui4;
-#endif
-#if USING_CRABS_8_BYTE_TYPES
+    #endif
+    #if USING_CRABS_8_BYTE_TYPES
     uint64_t ui8;
-#endif
+    #endif
 
     uint_t   num_params,                //< Num params in the b-sequence.
              type,                      //< Current type.
@@ -222,27 +222,27 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
              value;                     //< Temp variable.
     num_params = params[0];
     if (num_params == 0) {
-        return 0;      //< Nothing to do.
+        return 0;                       //< Nothing to do.
     }
     arg_index = 0;
     size = bout->size;
     const uint_t* param = params;       //< Pointer to the current param.
-                //* bsc_param;            //< Pointer to the current BSQ param.
+                //* bsc_param;          //< Pointer to the current BSQ param.
     // Convert the socket offsets to pointers.
     char* begin = BOutBuffer (bout),    //< Beginning of the buffer.
         * end   = begin + size,         //< End of the buffer.
         * start = begin + bout->start,  //< Start of the data.
         * stop  = begin + bout->stop;   //< Stop of the data.
     const char* ui1_ptr;                //< Pointer to a 1-byte type.
-#if USING_CRABS_2_BYTE_TYPES
+    #if USING_CRABS_2_BYTE_TYPES
     const uint16_t* ui2_ptr;            //< Pointer to a 2-byte type.
-#endif
-#if USING_CRABS_4_BYTE_TYPES
+    #endif
+    #if USING_CRABS_4_BYTE_TYPES
     const uint32_t* ui4_ptr;            //< Pointer to a 4-byte type.
-#endif
-#if USING_CRABS_8_BYTE_TYPES
+    #endif
+    #if USING_CRABS_8_BYTE_TYPES
     const uint64_t* ui8_ptr;            //< Pointer to a 8-byte type.
-#endif
+    #endif
     uint16_t hash = kLargest16BitPrime; //< Reset hash to largest 16-bit prime.
 
     space = (uint_t)SlotSpace (start, stop, size);
@@ -764,8 +764,8 @@ void BInKeyStrokes () {
     }
 }
 
-#if USING_TEXT_SCRIPT
-char* BOutPrint (BOut* bout, char* buffer, char* buffer_end) {
+#if USING_PRINTER
+char* Print (BOut* bout, char* buffer, char* buffer_end) {
     bool print_now = !buffer;
     if (!buffer) {
         return buffer;
@@ -788,7 +788,7 @@ char* BOutPrint (BOut* bout, char* buffer, char* buffer_end) {
     return print.cursor;
 }
 
-Printer& BOutPrint (BOut* bout, Printer& print) {
+Printer& Print (Printer& print, BOut* bout) {
     print << Line ('_', 80);
     if (!bout) {
         return print << "\nBOut: NIL" << Line ('_', 80);

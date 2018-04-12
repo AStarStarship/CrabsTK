@@ -70,26 +70,27 @@ T MemoryMax () {
     return ~(T)0;
 }
 
-/** Creates/Gets a static buffer of the specified size. */
-template<uint_t kBufferSize>
-inline uintptr_t* Buffers () {
+/** Creates/Gets one of n static buffers of the specified size. */
+template<int kBufferNumber = 0,
+         size_t kBufferSize = kBufferSizeDefault>
+inline uintptr_t* BufferN () {
     static uintptr_t buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }
 
 /** Creates/Gets one of n static buffers of the specified size. */
-template<uint_t kBufferNumber,
-         uint_t kBufferSize>
-    inline uintptr_t* Buffers () {
-    static uintptr_t buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
+template<typename T = uintptr_t,
+    size_t kBufferSize = kBufferSizeDefaultWords>
+inline T* BufferT () {
+    static T buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }
 
 /** Creates/Gets one of n static buffers of the specified size. */
-template<typename T,
-         uint_t kBufferNumber,
-         uint_t kBufferSize>
-inline T* Buffers () {
+template<typename T = uintptr_t,
+    int    kBufferNumber = 0,
+    size_t kBufferSize = kBufferSizeDefaultWords>
+inline T* BufferTN () {
     static T buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
 }

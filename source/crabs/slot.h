@@ -45,12 +45,8 @@ struct Slot {
         
 
     /** Initializes the ring buffer with the given buffer begin and size.
-        @param slot  The slot to initialize.
         @param begin Pointer to the beginning of the ring buffer.
         @param size  The size of the ring buffer in bytes. */
-    Slot (uintptr_t* buffer, uintptr_t size);
-
-    /** Initializes the given buffer into . */
     Slot (uintptr_t* buffer, uintptr_t size);
 
     /** Initializes the slot from the BIn. */
@@ -58,6 +54,15 @@ struct Slot {
 
     /** Initializes the slot from the BIn. */
     Slot (BOut* bout);
+
+    /** Sets the ring buffer to the given buffer begin and size.
+        @param begin Pointer to the beginning of the ring buffer.
+        @param size  The size of the ring buffer in bytes. */
+    inline bool Set (uintptr_t* buffer, uintptr_t size) {
+        if (!buffer)
+            return false;
+        char* l_begin = reinterpret_cast<char*> (buffer);
+    }
 
     /** Checks if this slot contains the given address.
         @return Returns inputed address if this Slot contains the given address 
@@ -71,9 +76,6 @@ struct Slot {
 
     /** Zeros out the Slot. */
     void Wipe ();
-
-    /** Checks if this slot contains the given address. */
-    void* Contains (void* address);
 
     /** Checks if there is space in the buffer.
         @return True if the buffer has space. */
@@ -113,6 +115,8 @@ struct Slot {
 
     /** Copies the contents of the other slot into the slot. */
     const Op* Write (Slot& other);
+
+    private:
 };
 
 }       //< namespace _

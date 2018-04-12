@@ -77,7 +77,7 @@ KABUKI uintptr_t OperandCount (Operand* op);
             Contain the given key. */
 KABUKI wchar_t OperandIndex (Operand* operand, char* key_begin, char* key_end);
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 /** Queries the given Operand Op Header.
     @param  expr The expression to write the query to. Set to nil to return
                  op.
@@ -97,7 +97,7 @@ KABUKI Printer& PrintOperand (Operand* operand, Printer& slot);
 
 }   //< namespace _
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 /** Overloaded operator<< prints the given operand to the text. */
 inline _::Printer& operator<< (_::Printer& print, _::Operand* operand) {
     return PrintOperand (operand, print);

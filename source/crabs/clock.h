@@ -41,7 +41,7 @@ struct Date {
         daylight_savings; //< Flag for if it's daylight savings time (-1 if no).
 };
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 
 /** Writes the given std_tm to the text buffer. */
 KABUKI char* ClockPrint (tm* std_tm, char* buffer, char* buffer_end);
@@ -79,7 +79,7 @@ KABUKI const char* ClockScan (tm& std_tm, const char* input);
 /** Converts a keyboard input to a time_t. */
 KABUKI const char* ClockScan (time_t& result, const char* input);
 
-#endif  //< #if USING_TEXT_SCRIPT
+#endif  //< #if USING_PRINTER
 
 /** Creates a timestamp of the current time. */
 

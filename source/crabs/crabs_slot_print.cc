@@ -863,20 +863,6 @@ Slot& PrintLine (const char* text, const char* header, int length, Slot& slot) {
     return slot;
 }*/
 
-Slot& PrintOp (const Op* op, Slot& slot) {
-    slot << "\n Op:\n" << op->name << "\nparams_in:";
-
-    PrintBsq (op->in, slot);
-    slot << "\nparams_out:";
-    PrintBsq (op->out, slot);
-    slot << "\npop:" << op->pop << " close:" << op->close
-        << " default_op:" << op->default_op
-        << "\nignore_chars:" << op->ignore_chars
-        << "\nallowed_chars:" << op->allowed_chars
-        << "\n description :\"" << op->description;
-    return slot;
-}
-
 void Print (Slot& slot) {
     intptr_t size = SlotLength (slot);
     char* buffer = new char[size + 128];

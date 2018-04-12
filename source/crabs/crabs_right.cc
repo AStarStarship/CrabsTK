@@ -20,7 +20,7 @@
 
 #include "printer.h"
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 
 #include "text.h"
 #include "type.h"
@@ -452,5 +452,5 @@ Printer::Printer (char* cursor, char* end) :
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< USING_TEXT_SCRIPT
+#endif  //< USING_PRINTER
 #endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2

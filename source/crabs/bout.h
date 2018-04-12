@@ -56,7 +56,7 @@ struct KABUKI BOut {
 /** Get's the B-Output's buffer.*/
 KABUKI char* BOutBuffer (BOut* bout);
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 
 /** Gets a a char for printing out the bout_state. */
 KABUKI const char** BOutStateStrings ();
@@ -98,32 +98,20 @@ KABUKI void BOutAckBack (BOut* bout, const char* address);
 /** */
 KABUKI void BInKeyStrokes ();
 
-#if USING_TEXT_SCRIPT
-/** Prints the BIn to the Text.
-    @param  bout       The bout to print.
-    @param  buffer     Beginning of the write buffer.
-    @param  buffer_end End of the write buffer.
-    @return Pointer to the nil-term char or nil upon failure. */
-KABUKI char* BOutPrint (BOut* bout, char* buffer, char* buffer_end);
-
+#if USING_PRINTER
 /** Prints the BIn to the Text.
     @param  bout The bout to print.
     @param  text The Text to print to the bout.
     @return The slot. */
-KABUKI Slot& BOutPrint (BOut* bout, Slot& slot);
+KABUKI Printer& Print (Printer& print, BOut* bout);
 #endif
 
 }       //< namespace _
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 /** Prints out the bin to the text. */
 inline _::Printer& operator<< (_::Printer& print, _::BOut* bout) {
-    print.cursor = _::BOutPrint (bout, print.cursor, print.end);
-    return print;
-}
-/** Prints out the bin to the text. */
-inline _::Slot& operator<< (_::Slot& slot, _::BOut* bout) {
-    return _::BOutPrint (bout, slot);
+    return _::Print (print, bout);
 }
 #endif
 

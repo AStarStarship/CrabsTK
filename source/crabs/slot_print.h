@@ -259,10 +259,7 @@ inline Slot& PrintMemory (const void* address, intptr_t size, Slot& slot) {
                         slot);
 }
 
-/**  Prints out the parameters to the slot. */
-KABUKI Slot& PrintBsq (const uint_t* bsq, Slot& slot);
-
-KABUKI Slot& PrintOp (const Op* op, Slot& slot);
+KABUKI Slot& Print (const Op* op, Slot& slot);
 
 /** Prints the slot to the console. */
 KABUKI void Print (Slot& slot);

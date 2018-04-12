@@ -120,9 +120,9 @@ enum {
     // Max length of a Op description string.
     kOpDescriptionLengthMax = CRABS_OP_MAX_DECRABSION_LENGTH,
     // Max length of a Text.
-    kCharCount        = CRABS_TEXT_LENGTH,
+    kCharCount       = CRABS_TEXT_LENGTH,
     // Number of bits to shift to multiply or divide to get num_words.
-    kWordSizeShift   = (sizeof (void*) == 8) ? 3 : //< Shift left 3 to * by 8.
+    kWordBitCount    = (sizeof (void*) == 8) ? 3 : //< Shift left 3 to * by 8.
                        (sizeof (void*) == 4) ? 2 : //< Shift right 2 to / by 4.
                        1,
     // Max length of a float-to-string + 1.
@@ -139,7 +139,11 @@ enum {
     // Size of the KeyboardInBuffer.
     kSlotBufferSizeTx = CRABS_BUFFER_SIZE_TX,
 
-    kWindowSizeMin = 512
+    kWindowSizeMin = 512,
+
+    kBufferSizeDefault = 1024,
+    kBufferSizeDefaultWords = kBufferSizeDefault / sizeof (intptr_t) + 
+                              kBufferSizeDefault % sizeof (intptr_t) ? 1 : 0,
 };
 }   //< namespace _
 
@@ -253,7 +257,7 @@ typedef uint64_t data_t;    //< Default TData size.
 #endif
 
 #if CRABS_MEMORY_PROFILE >= 3 || DEBUG
-#define USING_TEXT_SCRIPT 3
+#define USING_PRINTER 3
 #endif  //< CRABS_MEMORY_PROFILE >= 3
 
 /** Macro declares a class to be non-copyable. */

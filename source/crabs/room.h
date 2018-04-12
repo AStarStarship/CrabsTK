@@ -233,9 +233,9 @@ class Room: public Operand {
     /** Script expressions. */
     virtual const Op* Star (wchar_t index, Expr* expr);
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
     /** Prints the Room to the stdout. */
-    virtual _::Slot& Print (_::Slot& slot);
+    virtual _::Printer& Print (_::Printer& print);
 #endif
 
     protected:

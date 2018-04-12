@@ -21,7 +21,7 @@
 #include "text.h"
 #include "memory.h"
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
@@ -646,5 +646,5 @@ int TextCompare (const char* text_a, const char* text_end,
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< USING_TEXT_SCRIPT
+#endif  //< USING_PRINTER
 #endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2

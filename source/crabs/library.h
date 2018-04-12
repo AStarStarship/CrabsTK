@@ -25,7 +25,7 @@
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
 
 namespace _ {
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 template<typename TIndex, typename TKey, typename TData,
          uint_t MaxStackHeight>
 class Library: public Operand

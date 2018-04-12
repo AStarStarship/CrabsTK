@@ -22,7 +22,7 @@
 #include "text.h"
 #include "script_itos.h"
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 
 #ifndef HEADER_FOR_CRABS_PRINT
 #define HEADER_FOR_CRABS_PRINT
@@ -47,7 +47,7 @@ struct Printer {
     /** Initializes the Printer from the given buffer pointers.
         @param begin The beginning of the buffer.
         @param end   The end of the buffer. */
-    Printer (char* begin, size_t size);
+    Printer (char* begin = BufferDefault (), size_t size = kBufferSizeDefault);
 
     /** Initializes the Printer from the given buffer pointers.
         @param begin The beginning of the buffer. 
@@ -271,5 +271,5 @@ inline _::Printer& operator<< (_::Printer& printer, const uint_t* bsq) {
 } */
 
 #endif  //< HEADER_FOR_CRABS_PRINT
-#endif  //< USING_TEXT_SCRIPT
+#endif  //< USING_PRINTER
 #endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2

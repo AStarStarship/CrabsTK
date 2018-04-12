@@ -151,15 +151,19 @@ inline const uint_t* Params () {
     return &kSize;
 }
 
+/**  Prints out the parameters. */
 KABUKI char* PrintBsq (const uint_t* params, char* buffer, char* buffer_end);
+
+/**  Prints out the parameters. */
+//KABUKI Printer& PrintBsq (const uint_t* bsq, Printer& print);
 
 /*< Returns the requested parameter number. */
 KABUKI uint_t BsqParamNumber (const uint_t* bsq, int param_number);
 
 }       //< namespace _
 
-/** . */
-inline _::Printer& PrintBsq (_::Printer& print, _::Bsq bsq) {
+/**  Prints out the parameters. */
+inline _::Printer& operator<< (_::Printer& print, _::Bsq bsq) {
     if (!bsq.params || !print.cursor || print.cursor >= print.end) {
         return print;
     }

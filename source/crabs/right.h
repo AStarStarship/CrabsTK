@@ -21,7 +21,7 @@
 
 #include "printer.h"
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 
 #ifndef HEADER_FOR_CRABS_RIGHT
 #define HEADER_FOR_CRABS_RIGHT
@@ -123,5 +123,5 @@ inline _::Printer& operator<< (_::Printer& printer, _::Right<T> right) {
 }
 
 #endif  //< HEADER_FOR_CRABS_RIGHT
-#endif  //< USING_TEXT_SCRIPT
+#endif  //< USING_PRINTER
 #endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2

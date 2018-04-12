@@ -112,7 +112,7 @@ struct Expr {
                 * header_start;   //< Start of the header being verified.
     Operand     * operand,        //< Current Script Operand.
                 * root;           //< Root-level scope Operand.
-    Slot        * args;           //< Arguments slot for running.
+    Slot        & args;           //< Arguments slot for running.
     Slot          slot;           //< Slot for unpacking B-Sequences to.
 };
 
@@ -217,22 +217,19 @@ inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
 /** Pops the args off the Expr Args Stack. */
 inline const Op* ExprArgs (Expr* expr, const uint_t* params,
                            void** args) {
-    if (!params) {
-        return nullptr;
-    }
-    BIn* bin = ExprBIn (expr);
-    Slot slot;
-    BInSlot (bin, slot);
-    return SlotRead (&slot, params, args);
+    assert (params);
+    assert (args);
+    Slot slot (ExprBIn (expr));
+    return slot.Read (params, args);
 }
 
 /** Pops the args off the Expr Args Stack. */
 inline const Op* ExprArgs (Expr* expr, const Op& op,
                            void** args) {
-    BIn* bin = ExprBIn (expr);
-    Slot slot;
-    BInSlot (bin, slot);
-    return SlotRead (&slot, op.in, args);
+    assert (expr);
+    assert (args);
+    Slot slot (ExprBIn (expr));
+    return slot.Read (op.in, args);
 }
 
 /** Writes the result to the Expr.
@@ -277,12 +274,12 @@ KABUKI const Op* ExprQuery (Expr* expr, const Op& header);
     @return Returns the header if expr is nil. */
 KABUKI const Op* ExprQuery (Expr* expr, const Op* op);
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 /** Prints the Expr stack to the Text buffer */
-KABUKI Slot& PrintExpr (Expr* expr, Slot& slot);
+KABUKI Printer& PrintExpr (Expr* expr, Printer& printer);
 
 /** Prints the Expr stack to the Text buffer */
-KABUKI Slot& ExprPrintStack (Expr* expr, Slot& slot);
+KABUKI Printer& ExprPrintStack (Expr* expr, Printer& printer);
 
 /** Prints the Expr stack to the Text buffer */
 //KABUKI Text& ExprPrintStateStack (Expr* expr, Text& text);
@@ -291,9 +288,9 @@ KABUKI Slot& ExprPrintStack (Expr* expr, Slot& slot);
 
 }       //< namespace _
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 /** Prints the given Expr to the Text buffer. */
-inline _::Slot& operator<< (_::Slot& slot, _::Expr* expr);
+inline _::Printer& operator<< (_::Printer& printer, _::Expr* expr);
 #endif
 
 #endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

@@ -34,8 +34,8 @@
 
 namespace _ {
 
-#if USING_TEXT_SCRIPT
-Printer& OpPrint (const Op* op, Printer& print) {
+#if USING_PRINTER
+Printer& Print (Printer& print, const Op* op) {
     if (!op) {
         return print << "\nOp: nil";
     }
@@ -46,7 +46,7 @@ Printer& OpPrint (const Op* op, Printer& print) {
 }
 #endif
 /*
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 Op OpInit (uintptr_t* buffer, uint_t buffer_size) {
     BOut* bout = BOutInit (buffer, buffer_size);
     Op log;
@@ -54,7 +54,7 @@ Op OpInit (uintptr_t* buffer, uint_t buffer_size) {
     return log;
 }
 
-void OpPrint (Op& log) {
+void Print (Op& log) {
     BIn    * bin = reinterpret_cast<BIn*> (log.bout);
     void   * args[1];
     byte     type = 0,
@@ -153,13 +153,25 @@ void OpPrint (Op& log) {
 }
 #endif  //< CRABS_MEMORY_PROFILE > 2*/
 
+#if USING_PRINTER
+Printer& Print (const Op* op, Printer& print) {
+    print << "\n Op:\n" << op->name << "\nparams_in:"
+          << Bsq (op->in)
+          << "\nparams_out:" << op->out
+          << "\npop:" << op->pop  << " close:" << op->close
+          << " default_op:"       << op->default_op
+          << "\nignore_chars :"   << op->ignore_chars
+          << "\nallowed_chars:"   << op->allowed_chars
+          << "\n description :\"" << op->description;
+    return print;
+}
+#endif
+
 }   //< namespace _
 
-
-#if USING_TEXT_SCRIPT
-
+#if USING_PRINTER
 _::Printer& operator<< (_::Printer& print, const _::Op* op) {
-    return OpPrint (op, print);
+    return Print (op, print);
 }
 
 #endif

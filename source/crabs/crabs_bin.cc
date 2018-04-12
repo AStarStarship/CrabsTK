@@ -26,6 +26,7 @@
 #include "slot.h"
 #include "hex.h"
 #include "line.h"
+#include "memory.h"
 
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
@@ -36,20 +37,18 @@
 #define PRINT_BSQ(header, bsq) {\
     enum {\
         kBsqBufferSize = 1024,\
-        kBsqBufferSizeWords = kBsqBufferSize >> kWordSizeShift\
+        kBsqBufferSizeWords = kBsqBufferSize >> kWordBitCount\
      };\
     char bsq_buffer[kBsqBufferSizeWords];\
     PrintBsq (bsq, bsq_buffer, bsq_buffer + kBsqBufferSize);\
     printf   ("\n    %s%s", header, bsq_buffer);\
 }
 #define PRINT_BIN(header, bin) {\
-    enum {\
-        kBInBufferSize = 1024,\
-        kBInBufferSizeWords = kBInBufferSize >> kWordSizeShift\
-     };\
-    char bin_buffer[kBInBufferSizeWords];\
-    BInPrint (bin, bin_buffer, bin_buffer + kBInBufferSize);\
-    printf   ("\n    %s%s", header, bin_buffer);\
+    enum { kBInBufferSize = 1024 };\
+    char bin_buffer[kBInBufferSize];\
+    Printer p (bin_buffer, kBInBufferSize);\
+    p << bin;\
+    printf   ("\n    %s0x%p%s", header, bin, bin_buffer);\
 }
 #else
 #define PRINTF(x, ...)
@@ -61,7 +60,7 @@
 
 namespace _ {
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 const char** BInStateStrings () {
     static const char* kStateStrings[] = {
         "Address",      //< 0
@@ -110,8 +109,7 @@ inline const Op* BInError (BIn* bin, Error error,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Op Result. */
-inline const Op* BInError (BIn* bin, Error error,
-                           const uint_t* header,
+inline const Op* BInError (BIn* bin, Error error, const uint_t* header,
                            uint_t offset) {
     PRINTF ("\nBIn %s error!", ErrorString (error))
     return reinterpret_cast<const Op*> (error);
@@ -178,7 +176,7 @@ bool BInIsReadable (BIn* bin) {
 const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
 #
     PRINT_BSQ ("\nReading ", params)
-    PRINT_BIN (" from B-Input:0x%x", bin)
+    PRINT_BIN (" from B-Input:", bin)
 
     if (!bin) {
         return BInError (bin, kErrorImplementation);
@@ -669,40 +667,20 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
     return 0;
 }
 
-#if USING_TEXT_SCRIPT
-char* BInPrint (BIn* bin, char* buffer, char* buffer_end) {
+#if USING_PRINTER
+Printer& Print (BIn* bin, Printer& print) {
     if (!bin) {
-        return nullptr;
+        return print;
     }
-    if (!buffer) {
-        return buffer;
-    }
-    if (buffer >= buffer_end) {
-        return nullptr;
-    }
+    Printer p;
+
     uint_t size = bin->size;
-    buffer = PrintLine ('_', 80, buffer, buffer_end);
-    Printer print (buffer, buffer_end);
-    print << "\nBIn:"  << PrintHex (bin, buffer, buffer_end) 
+    print << Line ('_', 80)
           << " size:"  << bin->size
           << " start:" << bin->start
           << " stop:"  << bin->stop
-          << " read:"  << bin->read;
-    return PrintMemory (BInBegin (bin), size + sizeof (BIn), print.cursor,
-                        buffer_end);
-}
-
-Slot& BInPrint (BIn* bin, Slot& slot) {
-    if (!bin) {
-        return slot << "\nError: BIn can't be nil";
-    }
-    uint_t size = bin->size;
-    slot << Line ('_', 80);
-    return slot << Line ('_', 80) << "\nBIn:" << Hex<void*> (bin);
-    /* << " size:" << bin->size
-                << " start:" << bin->start       << " stop:" << bin->stop
-                << " read:"  << bin->read
-                << Memory (BInBegin (bin), size + sizeof (BIn));*/
+          << " read:"  << bin->read
+          << Memory (BInBegin (bin), size + sizeof (BIn));
 }
 #endif
 

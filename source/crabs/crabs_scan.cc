@@ -32,7 +32,7 @@
 
 // Some of the Text functions will be required but not all of them.
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 
 namespace _ {
 
@@ -486,7 +486,7 @@ const char* ScanBsq (const char* input, const char* input_end,
     return cursor;
 }*/
 }       //< namespace _
-#endif  //< USING_TEXT_SCRIPT
+#endif  //< USING_PRINTER
 #undef PRINTF
 #undef PUTCHAR
 #endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 2

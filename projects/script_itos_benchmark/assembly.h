@@ -118,5 +118,5 @@
 #define USING_CRABS_BOOK         NO
 #define USING_CRABS_LIST         NO
 #define USING_CRABS_DIC          NO
-#define USING_TEXT_SCRIPT         YES
+#define USING_PRINTER         YES
 #define USING_CRABS_EXCEPTIONS   YES

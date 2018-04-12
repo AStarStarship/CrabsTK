@@ -43,7 +43,7 @@
 //    std::chrono::microseconds>;
 namespace _ {
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 
 std::tm* ClockLocalTime (std::tm* std_tm, std::time_t const& time) {
     if (!std_tm)

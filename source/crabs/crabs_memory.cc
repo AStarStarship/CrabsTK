@@ -33,6 +33,10 @@
 
 namespace _ {
 
+char* BufferDefault () {
+    return Buffer<> ();
+}
+
 void MemoryClear (void* address, size_t size) {
     //memset (address, '0', size);
     char* ptr = reinterpret_cast<char*> (address);

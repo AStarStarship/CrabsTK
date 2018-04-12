@@ -31,7 +31,7 @@
 #define PRINT_BSQ(header, bsq) {\
     enum {\
         kTextBufferSize = 1024,\
-        kTextBufferSizeWords = kTextBufferSize >> kWordSizeShift\
+        kTextBufferSizeWords = kTextBufferSize >> kWordBitCount\
      };\
     char bsq_buffer[kTextBufferSizeWords];\
     PrintBsq (bsq, ,bsq_buffer, bsq_buffer + kTextBufferSize);\
@@ -954,7 +954,7 @@ const Op* ExprQuery (Expr* expr, const Op* op) {
     return op;
 }
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 Printer& ExprPrintStack (Expr* expr, Printer& print) {
     if (!expr) {
         return print;
@@ -1010,11 +1010,11 @@ Printer& PrintExpr (Expr* expr, Printer& print) {
 
 }       //< namespace _
 
-#if USING_TEXT_SCRIPT
-_::Slot& operator<< (_::Slot& slot, _::Expr* expr) {
-    return PrintExpr (expr, slot);
+#if USING_PRINTER
+_::Printer& operator<< (_::Printer& print, _::Expr* expr) {
+    return PrintExpr (expr, print);
 }
-#endif //< USING_TEXT_SCRIPT
+#endif //< USING_PRINTER
 #undef PRINTF
 #undef PUTCHAR
 #endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4

@@ -39,6 +39,28 @@
 
 namespace _ {
 
+const Op* ReturnError (Slot* slot, Error error) {
+    PRINTF ("\n%s", ErrorStrings ()[error])
+    return reinterpret_cast<const Op*> (error);
+}
+
+const Op* ReturnError (Slot* slot, Error error, const uint_t* header) {
+    PRINTF ("\n%s", ErrorStrings ()[error])
+    return reinterpret_cast<const Op*> (error);
+}
+
+const Op* ReturnError (Slot* slot, Error error, const uint_t* header,
+                     byte offset) {
+    PRINTF ("\n%s", ErrorStrings ()[error])
+    return reinterpret_cast<const Op*> (error);
+}
+
+const Op* ReturnError (Slot* slot, Error error, const uint_t* header, uint_t offset,
+                     char* address) {
+    PRINTF ("\n%s", ErrorStrings ()[error])
+    return reinterpret_cast<const Op*> (error);
+}
+
 Slot::Slot (uintptr_t* buffer, uintptr_t size) {
     assert (buffer);
     assert (size >= kSlotSizeMin);
@@ -47,16 +69,6 @@ Slot::Slot (uintptr_t* buffer, uintptr_t size) {
     start = l_begin;
     stop  = l_begin;
     end   = l_begin + size;
-}
-
-Slot::Slot (uintptr_t* buffer, uintptr_t size) {
-    assert (size >= kSlotSizeMin);
-    char* l_begin = reinterpret_cast<char*> (buffer);
-    Slot* slot  = reinterpret_cast<Slot*> (buffer);
-    begin = l_begin;
-    start = l_begin;
-    stop  = l_begin;
-    end   = l_begin + size - sizeof (Slot) - 1;
 }
 
 Slot::Slot (BIn* bin) {
@@ -75,32 +87,6 @@ Slot::Slot (BOut* bout) {
     start = l_begin + bout->start;
     stop  = l_begin + bout->stop;
     end   = l_begin + bout->size;
-}
-
-inline const Op* SlotError (Slot* slot, Error error,
-                            const uint_t* header) {
-    PRINTF ("\n%s", ErrorStrings ()[error])
-    return reinterpret_cast<const Op*> (error);
-}
-
-inline const Op* SlotError (Slot* slot, Error error,
-                            const uint_t* header,
-                            byte offset) {
-    PRINTF ("\n%s", ErrorStrings ()[error])
-    return reinterpret_cast<const Op*> (error);
-}
-
-inline const Op* SlotError (Slot* slot, Error error,
-                            const uint_t* header,
-                            uint_t offset,
-                            char* address) {
-    PRINTF ("\n%s", ErrorStrings ()[error])
-    return reinterpret_cast<const Op*> (error);
-}
-
-inline const Op* SlotError (Slot* slot, Error error) {
-    PRINTF ("\n%s", ErrorStrings ()[error])
-    return reinterpret_cast<const Op*> (error);
 }
 
 void* Slot::Contains (void* address) {
@@ -135,6 +121,7 @@ const Op* Slot::Write (const uint_t* params, void** args) {
 
     assert (false);
     // @todo Write me!
+    return nullptr;
 }
 
 bool Slot::IsWritable () {
@@ -182,7 +169,7 @@ bool Slot::IsReadable () {
 const Op* Slot::Read (const uint_t* params, void** args) {
     if (!params) {
         ReturnError:
-        return SlotError (this, kErrorImplementation);
+        return ReturnError (this, kErrorImplementation);
     }
     if (!args) {
         goto ReturnError;
@@ -236,7 +223,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
 
         switch (type) {
             case NIL:
-                return SlotError (this, kErrorInvalidType);
+                return ReturnError (this, kErrorInvalidType);
             case ADR:    //< _R_e_a_d__S_t_r_i_n_g_-_1______________________
             case STR:
                 // Load buffered-type argument length and increment the 
@@ -260,7 +247,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
 
                 while (ui1 && count) {
                     if (count-- == 0)
-                        return SlotError (this, kErrorBufferUnderflow,
+                        return ReturnError (this, kErrorBufferUnderflow,
                                           params, index, l_start);
                     PUTCHAR (ui1)
 
@@ -282,7 +269,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
             case BOL:
                 #if USING_CRABS_1_BYTE_TYPES
                 if (length == 0) {
-                    return SlotError (this, kErrorBufferUnderflow, params, 
+                    return ReturnError (this, kErrorBufferUnderflow, params, 
                                       index, l_start);
                 }
                 --length;
@@ -303,7 +290,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                 }
                 break;
                 #else
-                return SlotError (this, kErrorInvalidType);
+                return ReturnError (this, kErrorInvalidType);
                 #endif
             case SI2:     //< _R_e_a_d__1_6_-_b_i_t__T_y_p_e_s______________
             case UI2:
@@ -317,7 +304,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                     // Word-align
                     offset = Align2 (l_start);
                     if ((uintptr_t)length < offset + 2) {
-                        return SlotError (this, kErrorBufferUnderflow,
+                        return ReturnError (this, kErrorBufferUnderflow,
                                                 params, index, l_start);
                     }
                     length -= (uint_t)offset + 2;
@@ -341,12 +328,12 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                 //}
                 break;
                 #else
-                return SlotError (this, kErrorInvalidType);
+                return ReturnError (this, kErrorInvalidType);
                 #endif
                 #if USING_CRABS_VARINT2
                 goto Read2ByteType;
                 #else
-                return SlotError (this, kErrorInvalidType);
+                return ReturnError (this, kErrorInvalidType);
                 #endif
             #if WORD_SIZE > 16
             case SVI:
@@ -361,7 +348,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                     // Word-align
                     offset = Align4 (l_start);
                     if ((uintptr_t)length < offset + 4) {
-                        return SlotError (this, kErrorBufferUnderflow,
+                        return ReturnError (this, kErrorBufferUnderflow,
                                           params, index, l_start);
                     }
                     length -= (uint_t)offset + 4;
@@ -385,7 +372,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                     break;
                 //}
                 #else
-                return SlotError (this, kErrorInvalidType);
+                return ReturnError (this, kErrorInvalidType);
                 #endif
             case SI8:     //< _R_e_a_d__6_4_-_b_i_t__T_y_p_e_s______________
             case UI8:
@@ -398,7 +385,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                     // Word-align
                     offset = Align8 (l_start);
                     if ((uintptr_t)length < offset + sizeof (int64_t)) {
-                        return SlotError (this, kErrorBufferUnderflow,
+                        return ReturnError (this, kErrorBufferUnderflow,
                                             params, index, l_start);
                     }
                     length -= offset + sizeof (int64_t);
@@ -420,7 +407,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                     break;
                 //}
                 #else
-                return SlotError (this, kErrorInvalidType);
+                return ReturnError (this, kErrorInvalidType);
                 #endif
             default: {
                 #if USING_CRABS_OBJ
@@ -428,18 +415,18 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                 type &= 0x1f;       //< Now type is the type 0-31
                 if (count && (type >= OBJ)) {
                     // Can't make arrays out of objects!
-                    return SlotError (this, kErrorInvalidType, params, index, l_start);
+                    return ReturnError (this, kErrorInvalidType, params, index, l_start);
                 }
                 // We don't care if it's a multidimensional array anymore.
                 ui1_ptr = reinterpret_cast<char*> (args[index]);
                 if (ui1_ptr == nullptr)
-                    return SlotError (this, kErrorImplementation, params, index, l_start);
+                    return ReturnError (this, kErrorImplementation, params, index, l_start);
                 count &= 0x3;
                 switch (count) {
                     case 0: { // It's a 8-bit count.
                         if (type >= LST) {
                             // LST, BOK, DIC, and MAP can't be 8-bit!
-                            return SlotError (this, kErrorInvalidType,
+                            return ReturnError (this, kErrorInvalidType,
                                                 params, index, l_start);
                         }
                         count = (uintptr_t)*ui1_ptr;
@@ -447,57 +434,57 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                     }
                     case 1: { // It's a 16-bit count.
                         if (length < 3) {
-                            return SlotError (this, kErrorBufferUnderflow,
+                            return ReturnError (this, kErrorBufferUnderflow,
                                               params, index, l_start);
                         }
                         count -= 2;
                         ui2_ptr = reinterpret_cast<uint16_t*> (ui1_ptr);
                         count = (uintptr_t)*ui2_ptr;
                         if (count > length) {
-                            return SlotError (this, kErrorBufferOverflow,
+                            return ReturnError (this, kErrorBufferOverflow,
                                               params, index, l_start);
                         }
                         break;
                     }
                     case 2: { // It's a 32-bit count.
                         if (length < 5) {
-                            return SlotError (this, kErrorBufferUnderflow,
+                            return ReturnError (this, kErrorBufferUnderflow,
                                               params, index, l_start);
                         }
                         count -= 4;
                         ui4_ptr = reinterpret_cast<uint32_t*> (ui1_ptr);
                         count = (uintptr_t)*ui4_ptr;
                         if (count > length) {
-                            return SlotError (this, kErrorBufferOverflow,
+                            return ReturnError (this, kErrorBufferOverflow,
                                               params, index, l_start);
                         }
                         break;
                     }
                     case 3: { // It's a 64-bit count.
                         if (length < 9) {
-                            return SlotError (this, kErrorBufferUnderflow,
+                            return ReturnError (this, kErrorBufferUnderflow,
                                               params, index, l_start);
                         }
                         count -= 8;
                         ui8_ptr = reinterpret_cast<uint64_t*> (ui1_ptr);
                         count = (uintptr_t)*ui8_ptr;
                         if (count > length) {
-                            return SlotError (this, kErrorBufferOverflow,
+                            return ReturnError (this, kErrorBufferOverflow,
                                               params, index, l_start);
                         }
                         break;
                     }
                     default: {
-                        return SlotError (this, kErrorImplementation, 
+                        return ReturnError (this, kErrorImplementation, 
                                           params, index, l_start);
                     }
                 }
                 if (length < count) {
-                    return SlotError (this, kErrorBufferOverflow, params, 
+                    return ReturnError (this, kErrorBufferOverflow, params, 
                                       index, l_start);
                 }
                 if (!count) {
-                    return SlotError (this, kErrorBufferOverflow, params, 
+                    return ReturnError (this, kErrorBufferOverflow, params, 
                                       index, l_start);
                 }
                 if (l_start + count >= l_end) {
@@ -541,10 +528,6 @@ const Op* Slot::Read (const uint_t* params, void** args) {
     start = l_start;
 
     return 0;
-}
-
-const Op* Slot::Write (const uint_t* params, void** args) {
-    return nullptr;// Write (SlotBout (bout), params, args);
 }
 
 const Op* Slot::Read (const Op& op, void** args) {

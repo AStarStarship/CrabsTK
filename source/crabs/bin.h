@@ -22,7 +22,6 @@
 #ifndef HEADER_FOR_CRABS_BIN
 #define HEADER_FOR_CRABS_BIN
 
-#include "slot.h"
 #include "op.h"
 #include "bout.h"
 
@@ -108,7 +107,7 @@ inline uint_t BinBufferLength (BIn* bin) {
     return (uint_t)SlotLength (base + bin->start, base + bin->stop, bin->size);
 }
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 /** Gets a a char for printing out the bin_state. */
 KABUKI const char** BInStateStrings ();
 
@@ -142,22 +141,22 @@ inline const Op* BOutRead (BOut* bout, const uint_t* params, void** args) {
     return BInRead (reinterpret_cast<BIn*> (bout), params, args);
 }
 
-#if USING_TEXT_SCRIPT
-
+#if USING_PRINTER
 /** Prints the BIn to the Text.
     @param  bin The pin to print.
     @param  text The Text to print the bin to.
     @return The text. */
-KABUKI char* BInPrint (BIn* bin, char* buffer, char* buffer_end);
-
-/** Prints the BIn to the Text.
-    @param  bin The pin to print.
-    @param  text The Text to print the bin to.
-    @return The text. */
-KABUKI Slot& BInPrint (BIn* bin, Slot& slot);
-
+KABUKI Printer& Print (Printer& printer, BIn* bin);
 #endif
 
 }       //< namespace _
+
+#if USING_PRINTER
+/** Prints out the bin to the text. */
+inline _::Printer& operator<< (_::Printer& print, _::BIn* bin) {
+    return _::Print (print, bin);
+}
+#endif
+
 #endif  //< HEADER_FOR_CRABS_BIN
 #endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 3

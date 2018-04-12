@@ -616,7 +616,7 @@ KABUKI byte TableFind (const Table* table, const char* key) {
     return kInvalidIndex;
 }
 
-#if USING_TEXT_SCRIPT
+#if USING_PRINTER
 /** Prints this object out to the console. */
 KABUKI void TablePrint (Table* table) {
     if (table == nullptr)

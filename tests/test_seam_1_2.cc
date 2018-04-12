@@ -91,7 +91,7 @@ void TestSeam1_2 () {
     char        buffer[kSize],
                 buffer_b[kSize];
 
-    Printer printer (buffer, kSize);
+    Printer print (buffer, kSize);
 
     for (int i = 0; i < kNumCompareStrings; ++i) {
         end = Print (test_strings[i][0], buffer, buffer + kSize);
@@ -110,7 +110,7 @@ void TestSeam1_2 () {
     PRINT_HEADING ("    Testing Printer...")
     PRINTF ("    Expecting \"%s\"...", kTesting123);
 
-    printer << "Testing " << 1 << ", " << 2 << ", " << 3 << printer;
+    print << "Testing " << 1 << ", " << 2 << ", " << 3 << print;
 
     STRCMP_EQUAL (kTesting123, buffer)
         
