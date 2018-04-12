@@ -95,7 +95,7 @@ KABUKI void BOutRingBell (BOut* bout, const char* address);
 /** Sends a connection message to the given address. */
 KABUKI void BOutAckBack (BOut* bout, const char* address);
 
-/** */
+/** . */
 KABUKI void BInKeyStrokes ();
 
 #if USING_PRINTER
@@ -103,7 +103,7 @@ KABUKI void BInKeyStrokes ();
     @param  bout The bout to print.
     @param  text The Text to print to the bout.
     @return The slot. */
-KABUKI Printer& Print (Printer& print, BOut* bout);
+KABUKI Printer& PrintBOut (Printer& print, BOut* bout);
 #endif
 
 }       //< namespace _
@@ -111,7 +111,7 @@ KABUKI Printer& Print (Printer& print, BOut* bout);
 #if USING_PRINTER
 /** Prints out the bin to the text. */
 inline _::Printer& operator<< (_::Printer& print, _::BOut* bout) {
-    return _::Print (print, bout);
+    return _::PrintBOut (print, bout);
 }
 #endif
 

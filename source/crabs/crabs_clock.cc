@@ -59,11 +59,11 @@ std::tm* ClockLocalTime (std::tm* std_tm, std::time_t const& time) {
 }
 
 /*
-char* ClockPrint (tm* std_tm, char* buffer, char* buffer_end) {
+char* PrintClock (tm* std_tm, char* buffer, char* buffer_end) {
     return nullptr;
 }
 
-char* ClockPrint (time_t t, char* buffer, char* buffer_end) {
+char* PrintClock (time_t t, char* buffer, char* buffer_end) {
     return nullptr;
 
 }
@@ -489,9 +489,9 @@ const char* ClockScan (time_t& result, const char* begin) {
     //PRINTF ("\n\nFound ";
     //PRINTF (ClockPrintTimeStruct (&std_tm);
     char buffer[26];
-    ClockPrint (t, buffer, buffer + 26);
+    PrintClock (t, buffer, buffer + 26);
     char time_string[26];
-    ClockPrint (t, time_string, &time_string[0]  + 26);
+    PrintClock (t, time_string, &time_string[0]  + 26);
     //PRINTF ("\nUnpacked: " << buffer;
     result = t;
     return end;
@@ -510,7 +510,7 @@ int32_t ClockGetMicroseconds (time_us_t timestamp) {
     return (int32_t)((timestamp & 0xFFFFFFFF00000000) >> 32);
 }
 
-char* ClockPrint (char* buffer, char* buffer_end, tm* std_tm) {
+char* PrintClock (char* buffer, char* buffer_end, tm* std_tm) {
     if (!buffer) {
         return nullptr;
     }
@@ -689,7 +689,7 @@ int ClockCompare (time_t t, int year, int month, int day,
     return 0;
 }
 
-char* ClockPrint (time_t t, char* buffer, char* end) {
+char* PrintClock (time_t t, char* buffer, char* end) {
     if (buffer == nullptr) {
         return nullptr;
     }
@@ -699,7 +699,7 @@ char* ClockPrint (time_t t, char* buffer, char* end) {
     time (&t);
     tm std_tm;
     ClockLocalTime (&std_tm, t);
-    return ClockPrint (buffer, end, &std_tm);
+    return PrintClock (buffer, end, &std_tm);
 }
 
 void ClockZeroTime (tm& std_tm) {
@@ -727,12 +727,12 @@ time_t ClockTime (int year, int month, int day, int  hour,
     moment.tm_min  = minute;
     moment.tm_sec  = second;
 
-    //if (!ClockPrint (moment, buffer, buffer_size)) {
+    //if (!PrintClock (moment, buffer, buffer_size)) {
     //    PRINTF ("\nError making timestamp")
     //    return 0;
     //}
    // PRINTF ("\n Creating test time: ")
-    //ClockPrint (moment);
+    //PrintClock (moment);
     t = mktime (&moment);
     if (t < 0) {
         ///PRINTF ("\n Invalid time:" << t << '\n')

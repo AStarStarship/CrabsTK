@@ -45,8 +45,8 @@
         kBOutBufferSize = 1024,\
         kBOutBufferSizeWords = kBOutBufferSize >> kWordBitCount\
      };\
-    char bout_buffer[kBOutBufferSizeWords];\
-    Print (bout, bout_buffer, bout_buffer + kBOutBufferSize);\
+    Printer print;\
+    PrintBOut (print, bout);\
     printf   ("\n    %s%s", header, bout_buffer);\
 }
 #else
@@ -190,6 +190,11 @@ int BOutStreamByte (BOut* bout) {
 const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
     
     PRINT_BSQ ("\n\nWriting ", params)
+        enum {
+        kBOutBufferSize = 1024,
+        kBOutBufferSizeWords = kBOutBufferSize >> kWordBitCount
+    };
+    char bout_buffer[kBOutBufferSizeWords];
     PRINT_BOUT (" to B-Output:", bout)
 
     if (!bout)
@@ -765,6 +770,7 @@ void BInKeyStrokes () {
 }
 
 #if USING_PRINTER
+/*
 char* Print (BOut* bout, char* buffer, char* buffer_end) {
     bool print_now = !buffer;
     if (!buffer) {
@@ -779,25 +785,23 @@ char* Print (BOut* bout, char* buffer, char* buffer_end) {
     }
     int size = bout->size;
     Printer print (buffer, buffer_end);
-    print << "\nBOut:" << Hex<void*> (bout)
+    print << "\nBOut:" << Hex<uintptr_t> (bout)
           << " size:" << size
           << " start:" << bout->start << " stop:" << bout->stop
           << " read:"  << bout->read
           << Memory (BOutBuffer (bout), size + 64);
     //< @todo remove the + 64.);
     return print.cursor;
-}
+}*/
 
-Printer& Print (Printer& print, BOut* bout) {
+Printer& PrintBOut (Printer& print, BOut* bout) {
+    assert (bout);
     print << Line ('_', 80);
-    if (!bout) {
-        return print << "\nBOut: NIL" << Line ('_', 80);
-    }
     int size = bout->size;
-    return print << "\nBOut:" << Hex<void*> (bout) << " size:" << size
-                << " start:" << bout->start << " stop:" << bout->stop
-                << " read:"  << bout->read
-                << Memory (BOutBuffer (bout), size + 64);
+    return print << "\nBOut:" << Hex<> (bout) << " size:" << size
+                 << " start:" << bout->start << " stop:" << bout->stop
+                 << " read:"  << bout->read
+                 << Memory (BOutBuffer (bout), size + 64);
     //< @todo remove the + 64.);
 }
 #endif

@@ -176,9 +176,9 @@ Expr* ExprInit (uintptr_t* buffer, uint_t buffer_size, uint_t stack_size,
     expr->header = nullptr;
     expr->header_start = nullptr;
     expr->root = root;
-    uintptr_t base_ptr = reinterpret_cast<uintptr_t> (expr) + sizeof (Expr) +
-        stack_size * sizeof (uint_t);
-    SlotInit (expr->slot, reinterpret_cast<uintptr_t*> (base_ptr), unpacked_size);
+    uintptr_t* base_ptr = reinterpret_cast<uintptr_t*> (expr) + sizeof (Expr) +
+                          stack_size * sizeof (uint_t);
+    expr->slot.Set (base_ptr, unpacked_size);
 #if DEBUG_CRABS_EXPR
     PRINTF ("expr->op:" << OutHex (expr->operand);
 #endif
@@ -989,7 +989,7 @@ Printer& PrintExpr (Expr* expr, Printer& print) {
     }
     
 
-    return print << Hex<void*> (expr) << Line ('_', 80)
+    return print << Hex<uintptr_t> (expr) << Line ('_', 80)
                 << "\nbytes_left : " << expr->bytes_left
                 << "\nheader_size: " << expr->header_size
                 << "\nstack_count: " << expr->stack_count

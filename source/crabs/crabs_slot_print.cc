@@ -868,7 +868,7 @@ void Print (Slot& slot) {
     char* buffer = new char[size + 128];
     Printer print (buffer, buffer + size + 129);
     print << Line ('_', 80)
-          << "\nBOut:" << Hex<void*> (&slot) << " size:" << size
+          << "\nBOut:" << Hex<uintptr_t> (&slot) << " size:" << size
           << " start:" << slot.start << " stop:" << slot.stop
           << " read:"  << size;
     PrintMemory (slot.start, size + 64, slot);

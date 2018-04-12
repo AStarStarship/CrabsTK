@@ -44,10 +44,10 @@ struct Date {
 #if USING_PRINTER
 
 /** Writes the given std_tm to the text buffer. */
-KABUKI char* ClockPrint (tm* std_tm, char* buffer, char* buffer_end);
+KABUKI char* PrintClock (tm* std_tm, char* buffer, char* buffer_end);
 
 /** Writes the given time to the text buffer. */
-KABUKI char* ClockPrint (time_t t, char* buffer, char* buffer_end);
+KABUKI char* PrintClock (time_t t, char* buffer, char* buffer_end);
 
 /** Reads a time or time delta from a a char starting with an '@' sign..
     @param input  The char to parse.

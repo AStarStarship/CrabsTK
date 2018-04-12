@@ -243,17 +243,17 @@ void TestSeam1_2 () {
     PRINTF ("\n\n    Testing more valid input...\n");
 
     t = ClockTime (8, 9, 17, 4, 20);
-    ClockPrint (t, buffer, buffer + kSize);
+    PrintClock (t, buffer, buffer + kSize);
     result = ClockScan (t_found, buffer);
     CHECK (ClockCompare (t_found, t))
 
     t = ClockTime (2020, 4, 20, 4, 20);
-    ClockPrint (t, buffer, buffer + kSize);
+    PrintClock (t, buffer, buffer + kSize);
     result = ClockScan (t_found, buffer);
     CHECK (ClockCompare (t, t_found))
 
     t = ClockTime (1947, 12, 7, 23, 5, 7);
-    ClockPrint (t, buffer, buffer + kSize);
+    PrintClock (t, buffer, buffer + kSize);
     result = ClockScan (t_found, buffer);
     CHECK (ClockCompare (t, t_found))
 

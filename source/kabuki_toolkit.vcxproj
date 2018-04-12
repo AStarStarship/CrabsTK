@@ -26,6 +26,7 @@
     <ClInclude Include="crabs\args.h" />
     <ClInclude Include="crabs\ascii.h" />
     <ClInclude Include="crabs\bin.h" />
+    <ClInclude Include="crabs\binary.h" />
     <ClInclude Include="crabs\bok.h" />
     <ClInclude Include="crabs\bout.h" />
     <ClInclude Include="crabs\bsq.h" />
@@ -75,6 +76,8 @@
     <ClCompile Include="..\tests\test_seam_1_3.cc" />
     <ClCompile Include="..\tests\test_seam_1_4.cc" />
     <ClCompile Include="..\tests\test_seam_1_5.cc" />
+    <ClCompile Include="crabs\crabs_binary.cc" />
+    <ClCompile Include="crabs\crabs_hex.cc" />
     <ClCompile Include="crabs\crabs_line.cc" />
     <ClCompile Include="crabs\crabs_align.cc" />
     <ClCompile Include="crabs\crabs_bin.cc" />

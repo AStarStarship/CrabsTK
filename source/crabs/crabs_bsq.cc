@@ -52,9 +52,9 @@ uint_t BsqParamNumber (const uint_t* params, int param_number) {
 
 char* PrintBsq (const uint_t* params, char* buffer, char* buffer_end) {
     uint_t num_params = *params++,
-        i,
-        type,
-        value = 0;
+           i,
+           type,
+           value = 0;
 
     Printer print (buffer, buffer_end);
 

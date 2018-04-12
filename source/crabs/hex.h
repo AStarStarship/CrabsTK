@@ -21,14 +21,13 @@
 #define HEADER_FOR_CRABS_HEX
 
 #include "printer.h"
-#include "slot.h"
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 namespace _ {
 
 /** Utility class for printing hex with operator<<. */
-template<typename T>
+template<typename T = uintptr_t>
 class Hex {
     public:
 
@@ -37,6 +36,29 @@ class Hex {
     /** Constructor saves value for use with operator overloads. */
     Hex (T value) :
         value (value) {
+    }
+
+    /** Constructor saves value for use with operator overloads. */
+    Hex (void* pointer) :
+        value (reinterpret_cast<T> (pointer)) {
+    }
+
+    Printer& Print (Printer& printer) {
+        enum { kSize = sizeof (T) * 2 + 2 };
+        char* l_cursor = printer.cursor;
+        intptr_t size = printer.end - l_cursor;
+        if (size <= kSize) return printer;
+        *l_cursor++ = '0';
+        *l_cursor++ = 'x';
+        for (int num_bits_shift = 0; num_bits_shift < sizeof (T) * 8;
+             num_bits_shift += 8) {
+            char c = (char)(value >> num_bits_shift);
+            c = TextNibbleToUpperCaseHex (c);
+            *l_cursor++ = c;
+        }
+        *l_cursor = 0;
+        printer.cursor = l_cursor;
+        return printer;
     }
 };
 
@@ -133,11 +155,8 @@ inline char* PrintHex (const void* ptr, char* text, char* text_end,
 }       //< namespace _
 
 template<typename T>
-inline _::Printer& operator<< (_::Printer& print, _::Hex<T> hex) {
-    char* cursor = _::PrintHex (hex, print.cursor, print.end, 0);
-    if (!cursor) return print;
-    print.cursor = cursor;
-    return print;
+inline _::Printer& operator<< (_::Printer& printer, _::Hex<T> value) {
+    return value.Print (printer);
 }
 
 #endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

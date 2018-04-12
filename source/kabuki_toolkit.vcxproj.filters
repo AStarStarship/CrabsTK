@@ -185,6 +185,9 @@
     <ClInclude Include="crabs\varint.h">
       <Filter>source\crabs</Filter>
     </ClInclude>
+    <ClInclude Include="crabs\binary.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cc">
@@ -281,6 +284,12 @@
       <Filter>source\crabs</Filter>
     </ClCompile>
     <ClCompile Include="crabs\crabs_slot_print.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_hex.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_binary.cc">
       <Filter>source\crabs</Filter>
     </ClCompile>
   </ItemGroup>

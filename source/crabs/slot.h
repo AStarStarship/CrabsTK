@@ -59,9 +59,11 @@ struct Slot {
         @param begin Pointer to the beginning of the ring buffer.
         @param size  The size of the ring buffer in bytes. */
     inline bool Set (uintptr_t* buffer, uintptr_t size) {
-        if (!buffer)
-            return false;
+        if (!buffer) return true;
         char* l_begin = reinterpret_cast<char*> (buffer);
+        begin = start = stop = l_begin;
+        end   = l_begin + size;
+        return false;
     }
 
     /** Checks if this slot contains the given address.
