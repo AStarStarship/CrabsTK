@@ -955,16 +955,15 @@ const Op* ExprQuery (Expr* expr, const Op* op) {
 }
 
 #if USING_PRINTER
-Printer& ExprPrintStack (Expr* expr, Printer& print) {
-    if (!expr) {
-        return print;
-    }
+Printer& PrintExprStack (Printer& print, Expr* expr) {
+    assert (expr);
 
-    uint_t i,
-        stack_count;
+    uint_t    i,
+              stack_count;
     const Op* op;
-    Operand* operand;
+    Operand * operand;
     Operand** stack = ExprStack (expr);
+
     stack_count = expr->stack_count;
     print << "\nOperand stack_count:" << stack_count;
 
@@ -981,40 +980,31 @@ Printer& ExprPrintStack (Expr* expr, Printer& print) {
     return print << "\nStack Item " << i + 1 << ":\"" << op->name << "\"";
 }
 
-Printer& PrintExpr (Expr* expr, Printer& print) {
-    print << Line ('~', 80) << "\nStack:    ";
+Printer& PrintExpr (Printer& print, Expr* expr) {
+    assert (expr);
 
-    if (!expr) {
-        return print << "nil" << Line ('~', 80);
-    }
-    
-
-    return print << Hex<uintptr_t> (expr) << Line ('_', 80)
-                << "\nbytes_left : " << expr->bytes_left
-                << "\nheader_size: " << expr->header_size
-                << "\nstack_count: " << expr->stack_count
-                << "\nstack_size : " << expr->stack_size
-                << "\nbin_state  : " << BInStateStrings ()[expr->bin_state]
-                << "\nbout_state : " << BOutStateStrings ()[expr->bout_state]
-                << "\nnum_states : " << expr->num_states
-                << "\nheader_size: " << expr->header_size
-                << Line ('-', 80)
-                << expr->operand
-                << "\nheader     : " << Bsq (expr->header_start)
-                << Line ('-', 80)
-                << ExprPrintStack (expr, print)
-                << Line ('~', 80);
+    return print << Line ('~', 80) << "\nStack:    "
+                 << Hex<uintptr_t> (expr) << Line ('_', 80)
+                 << "\nbytes_left : " << expr->bytes_left
+                 << "\nheader_size: " << expr->header_size
+                 << "\nstack_count: " << expr->stack_count
+                 << "\nstack_size : " << expr->stack_size
+                 << "\nbin_state  : " << BInStateStrings ()[expr->bin_state]
+                 << "\nbout_state : " << BOutStateStrings ()[expr->bout_state]
+                 << "\nnum_states : " << expr->num_states
+                 << "\nheader_size: " << expr->header_size
+                 << Line ('-', 80)
+                 << expr->operand
+                 << "\nheader     : " << Bsq (expr->header_start)
+                 << Line ('-', 80)
+                 << PrintExprStack (print, expr)
+                 << Line ('~', 80);
 }
 
 #endif
 
 }       //< namespace _
 
-#if USING_PRINTER
-_::Printer& operator<< (_::Printer& print, _::Expr* expr) {
-    return PrintExpr (expr, print);
-}
-#endif //< USING_PRINTER
 #undef PRINTF
 #undef PUTCHAR
 #endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4

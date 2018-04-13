@@ -14,8 +14,8 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_CRABS_EXPRESSION
-#define HEADER_FOR_CRABS_EXPRESSION
+#ifndef HEADER_FOR_CRABS_EXPR
+#define HEADER_FOR_CRABS_EXPR
 
 #include "operand.h"
 
@@ -276,13 +276,10 @@ KABUKI const Op* ExprQuery (Expr* expr, const Op* op);
 
 #if USING_PRINTER
 /** Prints the Expr stack to the Text buffer */
-KABUKI Printer& PrintExpr (Expr* expr, Printer& printer);
+KABUKI Printer& PrintExpr (Printer& printer, Expr* expr);
 
 /** Prints the Expr stack to the Text buffer */
-KABUKI Printer& ExprPrintStack (Expr* expr, Printer& printer);
-
-/** Prints the Expr stack to the Text buffer */
-//KABUKI Text& ExprPrintStateStack (Expr* expr, Text& text);
+KABUKI Printer& ExprPrintStack (Printer& printer, Expr* expr);
 
 #endif
 
@@ -290,7 +287,9 @@ KABUKI Printer& ExprPrintStack (Expr* expr, Printer& printer);
 
 #if USING_PRINTER
 /** Prints the given Expr to the Text buffer. */
-inline _::Printer& operator<< (_::Printer& printer, _::Expr* expr);
+inline _::Printer& operator<< (_::Printer& printer, _::Expr* expr) {
+    return PrintExpr (printer, expr);
+}
 #endif
 
 #endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

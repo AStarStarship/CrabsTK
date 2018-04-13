@@ -217,7 +217,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
     for (index = 0; index < num_params; ++index) {
         type = (byte)*param;
         ++param;
-        PRINTF ("\nindex:%:\"%s\", start:0x%i, stop:0x%i", (uint)index, 
+        PRINTF ("\nindex:%u:\"%s\", start:0x%i, stop:0x%i", (uint)index, 
                 TypeString (type), (int)MemoryVector (l_begin, l_start),
                 (int)MemoryVector (l_begin, l_stop))
 

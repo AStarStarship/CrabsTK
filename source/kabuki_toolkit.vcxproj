@@ -30,6 +30,7 @@
     <ClInclude Include="crabs\bok.h" />
     <ClInclude Include="crabs\bout.h" />
     <ClInclude Include="crabs\bsq.h" />
+    <ClInclude Include="crabs\center.h" />
     <ClInclude Include="crabs\clock.h" />
     <ClInclude Include="crabs\config.h" />
     <ClInclude Include="crabs\dic.h" />
@@ -77,6 +78,7 @@
     <ClCompile Include="..\tests\test_seam_1_4.cc" />
     <ClCompile Include="..\tests\test_seam_1_5.cc" />
     <ClCompile Include="crabs\crabs_binary.cc" />
+    <ClCompile Include="crabs\crabs_center.cc" />
     <ClCompile Include="crabs\crabs_hex.cc" />
     <ClCompile Include="crabs\crabs_line.cc" />
     <ClCompile Include="crabs\crabs_align.cc" />
@@ -92,7 +94,7 @@
     <ClCompile Include="crabs\crabs_memory.cc" />
     <ClCompile Include="crabs\crabs_op.cc" />
     <ClCompile Include="crabs\crabs_operand.cc" />
-    <ClCompile Include="crabs\crabs_print.cc" />
+    <ClCompile Include="crabs\crabs_printer.cc" />
     <ClCompile Include="crabs\crabs_right.cc" />
     <ClCompile Include="crabs\crabs_room.cc" />
     <ClCompile Include="crabs\crabs_scan.cc" />

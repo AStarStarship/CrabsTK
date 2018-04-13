@@ -39,118 +39,24 @@ class Binary {
     }
 
     Printer& Print (Printer& p) {
-        enum { kSize = sizeof (T) * 2 + 2 };
-        char* l_cursor = print.cursor;
-        intptr_t size = print.end - l_cursor;
-        if (size <= kSize) return print;
-        *l_cursor++ = '0';
-        *l_cursor++ = 'x';
-        for (int num_bits_shift = 0; num_bits_shift < sizeof (T) * 8;
-             num_bits_shift += 8) {
-            char c = (char)(value >> num_bits_shift);
-            c = TextNibbleToUpperCaseHex (c);
-            *l_cursor++ = c;
+        char* cursor = p.cursor;
+        if (cursor + sizeof (uint64_t) * 8 >= p.end) {
+            return nullptr;
         }
-        *l_cursor = 0;
-        print.cursor = l_cursor;
-        return print;
+
+        for (int i = 0; i < 64; ++i) {
+            *buffer++ = (char)('0' + (value >> 63));
+            value = value << 1;
+        }
+        *buffer = delimiter;
+        return buffer;
     }
 };
-
-/** Prints the given byte in Hex.
-    This function prints the hex in big endian.
-    @param  buffer     Beginning of the buffer.
-    @param  buffer_end End of the buffer.
-    @return            Null upon failure or a pointer to the byte after the 
-                       last byte written. */
-KABUKI char* PrintHex (char c, char* text, char* text_end, char delimiter = 0);
-
-/** Print's out the given word to the text buffer.
-    @param  buffer     Beginning of the buffer.
-    @param  buffer_end End of the buffer.
-    @return            Null upon failure or a pointer to the byte after the last 
-                       byte written. */
-KABUKI char* PrintHex (uint8_t value, char* buffer, char* buffer_end,
-                       char delimiter = 0);
-
-/** Print's out the given word to the text buffer.
-    @param  buffer     Beginning of the buffer.
-    @param  buffer_end End of the buffer.
-    @return            Null upon failure or a pointer to the byte after the last 
-                       byte written. */
-inline KABUKI char* PrintHex (int8_t value, char* buffer, char* buffer_end,
-                       char delimiter = 0) {
-    return PrintHex ((uint8_t)value, buffer, buffer_end, delimiter);
-}
-
-/** Print's out the given word to the text buffer.
-    @param  buffer     Beginning of the buffer.
-    @param  buffer_end End of the buffer.
-    @return            Null upon failure or a pointer to the byte after the last 
-                       byte written. */
-KABUKI char* PrintHex (uint16_t value, char* buffer, char* buffer_end,
-                       char delimiter = 0);
-
-/** Print's out the given word to the text buffer.
-    @param  buffer     Beginning of the buffer.
-    @param  buffer_end End of the buffer.
-    @return            Null upon failure or a pointer to the byte after the last 
-                       byte written. */
-inline KABUKI char* PrintHex (int16_t value, char* buffer, char* buffer_end,
-                       char delimiter = 0) {
-    return PrintHex ((uint16_t)value, buffer, buffer_end, delimiter);
-}
-
-/** Print's out the given word to the text buffer.
-    @param  buffer     Beginning of the buffer.
-    @param  buffer_end End of the buffer.
-    @return            Null upon failure or a pointer to the byte after the last 
-                       byte written. */
-KABUKI char* PrintHex (uint32_t value, char* buffer, char* buffer_end,
-                       char delimiter = 0);
-
-/** Print's out the given word to the text buffer.
-    @param  buffer     Beginning of the buffer.
-    @param  buffer_end End of the buffer.
-    @return            Null upon failure or a pointer to the byte after the last 
-                       byte written. */
-inline KABUKI char* PrintHex (int32_t value, char* buffer, char* buffer_end,
-                       char delimiter = 0) {
-    return PrintHex ((uint32_t)value, buffer, buffer_end, delimiter);
-}
-
-/** Print's out the given word to the text buffer.
-    @param  buffer     Beginning of the buffer.
-    @param  buffer_end End of the buffer.
-    @return            Null upon failure or a pointer to the byte after the last 
-                       byte written. */
-KABUKI char* PrintHex (uint64_t value, char* buffer, char* buffer_end,
-                       char delimiter = 0);
-
-/** Print's out the given word to the text buffer.
-    @param  buffer     Beginning of the buffer.
-    @param  buffer_end End of the buffer.
-    @return            Null upon failure or a pointer to the byte after the last 
-                       byte written. */
-inline KABUKI char* PrintHex (int64_t value, char* buffer, char* buffer_end,
-                       char delimiter = 0) {
-    return PrintHex ((uint64_t)value, buffer, buffer_end, delimiter);
-}
-
-/** Print's out the given word to the text buffer.
-    @param  text     Beginning of the buffer.
-    @param  text_end End of the buffer.
-    @return          Null upon failure or a pointer to the byte after the last 
-                     byte written. */
-inline KABUKI char* PrintHex (const void* ptr, char* text, char* text_end,
-                       char delimiter = 0) {
-    return PrintHex ((uintptr_t)ptr, text, text_end, delimiter);
-}
 
 }       //< namespace _
 
 template<typename T>
-inline _::Printer& operator<< (_::Printer& printer, _::Hex<T> value) {
+inline _::Printer& operator<< (_::Printer& printer, _::Binary<T> value) {
     return value.Print (printer);
 }
 

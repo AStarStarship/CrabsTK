@@ -188,6 +188,9 @@
     <ClInclude Include="crabs\binary.h">
       <Filter>source\crabs</Filter>
     </ClInclude>
+    <ClInclude Include="crabs\center.h">
+      <Filter>source\crabs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cc">
@@ -247,9 +250,6 @@
     <ClCompile Include="crabs\crabs_wall.cc">
       <Filter>source\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_print.cc">
-      <Filter>source\crabs</Filter>
-    </ClCompile>
     <ClCompile Include="crabs\crabs_scan.cc">
       <Filter>source\crabs</Filter>
     </ClCompile>
@@ -290,6 +290,12 @@
       <Filter>source\crabs</Filter>
     </ClCompile>
     <ClCompile Include="crabs\crabs_binary.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_center.cc">
+      <Filter>source\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="crabs\crabs_printer.cc">
       <Filter>source\crabs</Filter>
     </ClCompile>
   </ItemGroup>

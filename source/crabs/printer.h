@@ -195,6 +195,21 @@ inline Printer PrinterInit (size_t buffer_size, char* buffer) {
     return { buffer, buffer + buffer_size - 1 };
 }
 
+template<typename T>
+struct Number {
+    enum {
+        kSize = sizeof (T) == 8 ? 24 :
+        sizeof (T) == 4 ? 16 : 8
+    };
+    T value;    //< Value to print.
+    char string[kSize];
+
+    Number (T value) :
+        value (value) {
+        Print (value, string, string + kSize - 1);
+    }
+};
+
 }       //< namespace _
 
 /** Writes a nil-terminated UTF-8 or ASCII string to the

@@ -668,19 +668,17 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
 }
 
 #if USING_PRINTER
-Printer& Print (BIn* bin, Printer& print) {
-    if (!bin) {
-        return print;
-    }
-    Printer p;
+Printer& Print (Printer& print, BIn* bin) {
+    assert (bin);
 
+    Printer p;
     uint_t size = bin->size;
-    print << Line ('_', 80)
-          << " size:"  << bin->size
-          << " start:" << bin->start
-          << " stop:"  << bin->stop
-          << " read:"  << bin->read
-          << Memory (BInBegin (bin), size + sizeof (BIn));
+    return print << Line ('_', 80)
+                 << " size:"  << bin->size
+                 << " start:" << bin->start
+                 << " stop:"  << bin->stop
+                 << " read:"  << bin->read
+                 << Memory (BInBegin (bin), size + sizeof (BIn));
 }
 #endif
 
