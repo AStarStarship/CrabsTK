@@ -38,9 +38,9 @@ class Binary {
         value (value) {
     }
 
-    Printer& Print (Printer& p) {
-        char* cursor = p.cursor;
-        if (cursor + sizeof (uint64_t) * 8 >= p.end) {
+    Printer& Print (Printer& printer) {
+        char* cursor = printer.cursor;
+        if (cursor + sizeof (uint64_t) * 8 >= printer.end) {
             return nullptr;
         }
 

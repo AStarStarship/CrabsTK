@@ -118,10 +118,20 @@ struct Slot {
     /** Copies the contents of the other slot into the slot. */
     const Op* Write (Slot& other);
 
-    private:
+    #if USING_PRINTER
+    /** Prints a string rep of this object to the printer. */
+    Printer& Print (Printer& printer);
+    #endif
 };
 
 }       //< namespace _
+
+#if USING_PRINTER
+/** Prints out the bin to the text. */
+inline _::Printer& operator<< (_::Printer& printer, _::Slot& slot) {
+    return slot.Print (printer);
+}
+#endif
 
 #endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_SLOT

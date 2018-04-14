@@ -71,8 +71,8 @@ T MemoryMax () {
 }
 
 /** Creates/Gets one of n static buffers of the specified size. */
-template<int kBufferNumber = 0,
-         size_t kBufferSize = kBufferSizeDefault>
+template<int    kBufferNumber = 0,
+         size_t kBufferSize   = kBufferSizeDefault>
 inline uintptr_t* BufferN () {
     static uintptr_t buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;

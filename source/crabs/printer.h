@@ -40,22 +40,23 @@ namespace _ {
 /** Utility class for printing to strings.
     This class only stores the end of buffer pointer and a pointer to the write
     cursor. It is up the user to store start of buffer pointer and if they would
-    like to replace the cursor with the beginning of buffer pointer when they 
+    like to replace the cursor with the beginning of buffer pointer when they
     are done printing.
 */
 struct Printer {
+
+    char* cursor,  //< Write cursor pointer.
+        * end;     //< End of buffer pointer.
+
     /** Initializes the Printer from the given buffer pointers.
         @param begin The beginning of the buffer.
         @param end   The end of the buffer. */
     Printer (char* begin = BufferDefault (), size_t size = kBufferSizeDefault);
 
     /** Initializes the Printer from the given buffer pointers.
-        @param begin The beginning of the buffer. 
+        @param begin The beginning of the buffer.
         @param end   The end of the buffer. */
     Printer (char* begin, char* end);
-
-    char* cursor,  //< Write cursor pointer.
-        * end;     //< End of buffer pointer.
 };
 
 /** Copies a char from the source to the text.
@@ -80,7 +81,8 @@ inline char* Print (int32_t value, char* text, char* text_end,
                     char delimiter = 0) {
     if (value >= 0) {
         return Print ((uint32_t)value, text, text_end);
-    } else {
+    }
+    else {
         *text++ = '-';
         return Print (~(uint32_t)value + 1, text, text_end);
     }
@@ -94,7 +96,8 @@ inline char* Print (int64_t value, char* text, char* text_end,
                     char delimiter = 0) {
     if (value >= 0) {
         return Print ((uint64_t)value, text, text_end);
-    } else {
+    }
+    else {
         *text++ = '-';
         return Print (~(uint64_t)value + 1, text, text_end);
     }
@@ -124,7 +127,7 @@ KABUKI char* PrintCentered (const char* string, int num_columns, char* text,
 /** Prints the given value justified center to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
-inline char* PrintCentered (int32_t value, int num_columns, char* text, 
+inline char* PrintCentered (int32_t value, int num_columns, char* text,
                             char* text_end, char delimiter = 0) {
     char buffer[8];
     Print ((int64_t)value, buffer, buffer + 8);
@@ -134,7 +137,7 @@ inline char* PrintCentered (int32_t value, int num_columns, char* text,
 /** Prints the given value justified center to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
-inline char* PrintCentered (uint32_t value, int num_columns, char* text, 
+inline char* PrintCentered (uint32_t value, int num_columns, char* text,
                             char* text_end, char delimiter = 0) {
     char buffer[16];
     Print ((uint32_t)value, buffer, buffer + 16);
@@ -144,7 +147,7 @@ inline char* PrintCentered (uint32_t value, int num_columns, char* text,
 /** Prints the given value justified center to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
-inline char* PrintCentered (int64_t value, int num_columns, char* text, 
+inline char* PrintCentered (int64_t value, int num_columns, char* text,
                             char* text_end, char delimiter = 0) {
     char buffer[16];
     Print (value, buffer, buffer + 16);
@@ -154,7 +157,7 @@ inline char* PrintCentered (int64_t value, int num_columns, char* text,
 /** Prints the given value justified center to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
-inline char* PrintCentered (uint64_t value, int num_columns, char* text, 
+inline char* PrintCentered (uint64_t value, int num_columns, char* text,
                             char* text_end, char delimiter = 0) {
     char buffer[24];
     Print (value, buffer, buffer + 24);
@@ -164,7 +167,7 @@ inline char* PrintCentered (uint64_t value, int num_columns, char* text,
 /** Prints the given value justified center to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
-inline char* PrintCentered (float value, int num_columns, char* text, 
+inline char* PrintCentered (float value, int num_columns, char* text,
                             char* text_end, char delimiter = 0) {
     char buffer[kkFloat32DigitsMax];
     Print (value, buffer, buffer + kkFloat32DigitsMax);
@@ -174,14 +177,14 @@ inline char* PrintCentered (float value, int num_columns, char* text,
 /** Prints the given value justified center to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
-inline char* PrintCentered (double value, int num_columns, char* text, 
+inline char* PrintCentered (double value, int num_columns, char* text,
                             char* text_end, char delimiter = 0) {
     char buffer[kFloat64DigitsMax];
     Print (value, buffer, buffer + kFloat64DigitsMax);
     return PrintCentered (buffer, num_columns, text, text_end);
 }
 
-KABUKI char* PrintBinary (uint64_t value, char* text, char* text_end, 
+KABUKI char* PrintBinary (uint64_t value, char* text, char* text_end,
                           char delimiter = 0);
 
 inline Printer PrinterInit (char* buffer, char* buffer_end) {
@@ -210,7 +213,15 @@ struct Number {
     }
 };
 
-}       //< namespace _
+/** Utility class for printing. */
+struct Dump {
+
+    char* begin;    //< Begin of the Printer buffer.
+
+    Dump (char* begin = BufferDefault ());
+};
+
+}   //< namespace _
 
 /** Writes a nil-terminated UTF-8 or ASCII string to the
     printer. */
@@ -280,10 +291,13 @@ inline _::Printer& operator<< (_::Printer& printer, double value) {
     return printer;
 }
 
-/**  Prints out the parameters to the debug console.
-inline _::Printer& operator<< (_::Printer& printer, const uint_t* bsq) {
-    printer.cursor = _::Print (bsq, printer.cursor, printer.end);
-} */
+/**  Prints out the parameters to the debug console. */
+inline _::Printer& operator<< (_::Printer& printer, _::Dump dump) {
+    char* begin = dump.begin;
+    printer.cursor = begin;
+    std::cerr << begin;
+    return printer;
+}
 
 #endif  //< HEADER_FOR_CRABS_PRINT
 #endif  //< USING_PRINTER

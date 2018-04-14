@@ -23,6 +23,7 @@
 #include "text.h"
 #include "script_itos.h"
 #include "hex.h"
+#include "line.h"
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 
@@ -68,7 +69,7 @@ Slot::Slot (uintptr_t* buffer, uintptr_t size) {
     begin = l_begin;
     start = l_begin;
     stop  = l_begin;
-    end   = l_begin + size;
+    end   = l_begin + size - 1;
 }
 
 Slot::Slot (BIn* bin) {
@@ -167,13 +168,8 @@ bool Slot::IsReadable () {
 }*/
 
 const Op* Slot::Read (const uint_t* params, void** args) {
-    if (!params) {
-        ReturnError:
-        return ReturnError (this, kErrorImplementation);
-    }
-    if (!args) {
-        goto ReturnError;
-    }
+    assert (params);
+    assert (args);
     byte      ui1;     //< Temp variable to load most types.
     uint16_t  ui2;     //< Temp variable for working with UI2 types.
     #if USING_CRABS_4_BYTE_TYPES
@@ -189,14 +185,11 @@ const Op* Slot::Read (const uint_t* params, void** args) {
     uint_t    type,    //< Current type being read.
               index,   //< Index in the escape sequence.
               num_params = *params; //< Number of params.
+    assert (num_params);
     uintptr_t  offset; //< Offset to word align the current type.
     intptr_t length,   //< Length of the data in the buffer.
               count,   //< Argument length.
               size;    //< Size of the ring buffer.
-
-    if (!num_params) {
-        return nullptr;
-    }
 
     PRINTF ("\n\nReading BIn: ")
 
@@ -211,7 +204,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
     length = SlotLength (l_start, l_stop, size);
 
     PRINTF ("\n\nReading %i bytes.", (int)length)
-    //PrintBsq (params)
+    //PRINT_BSQ (params)
     // When we scan, we are reading from the beginning of the BIn buffer.
 
     for (index = 0; index < num_params; ++index) {
@@ -403,7 +396,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                     // Load next pointer and increment args.
                     ui8_ptr = reinterpret_cast<uint64_t*> (args[index]);
                     if (ui8_ptr == 0) break;
-                    *ui8_ptr = ui8;                     //< Write
+                    *ui8_ptr = ui8;  //< Write.
                     break;
                 //}
                 #else
@@ -435,42 +428,42 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                     case 1: { // It's a 16-bit count.
                         if (length < 3) {
                             return ReturnError (this, kErrorBufferUnderflow,
-                                              params, index, l_start);
+                                                params, index, l_start);
                         }
                         count -= 2;
                         ui2_ptr = reinterpret_cast<uint16_t*> (ui1_ptr);
                         count = (uintptr_t)*ui2_ptr;
                         if (count > length) {
                             return ReturnError (this, kErrorBufferOverflow,
-                                              params, index, l_start);
+                                                params, index, l_start);
                         }
                         break;
                     }
                     case 2: { // It's a 32-bit count.
                         if (length < 5) {
                             return ReturnError (this, kErrorBufferUnderflow,
-                                              params, index, l_start);
+                                                params, index, l_start);
                         }
                         count -= 4;
                         ui4_ptr = reinterpret_cast<uint32_t*> (ui1_ptr);
                         count = (uintptr_t)*ui4_ptr;
                         if (count > length) {
                             return ReturnError (this, kErrorBufferOverflow,
-                                              params, index, l_start);
+                                                params, index, l_start);
                         }
                         break;
                     }
                     case 3: { // It's a 64-bit count.
                         if (length < 9) {
                             return ReturnError (this, kErrorBufferUnderflow,
-                                              params, index, l_start);
+                                                params, index, l_start);
                         }
                         count -= 8;
                         ui8_ptr = reinterpret_cast<uint64_t*> (ui1_ptr);
                         count = (uintptr_t)*ui8_ptr;
                         if (count > length) {
                             return ReturnError (this, kErrorBufferOverflow,
-                                              params, index, l_start);
+                                                params, index, l_start);
                         }
                         break;
                     }
@@ -541,6 +534,19 @@ const Op* Slot::Write (const Op& op, void** args) {
 const Op* Slot::Write (Slot& other) {
     return nullptr;
 }
+
+#if USING_PRINTER
+Printer& Slot::Print (Printer& print) {
+    char* l_begin = begin,
+        * l_end   = end;
+    return print << Line ('_', 80)
+                 << "\nSlot: begin:" << Hex<> (l_begin)
+                 << " start:"        << Hex<> (start)
+                 << " stop:"         << Hex<> (stop)
+                 << " end:"          << Hex<> (l_end)
+                 << Memory (l_begin, l_end);
+}
+#endif
 
 }       //< namespace _
 #undef PRINTF

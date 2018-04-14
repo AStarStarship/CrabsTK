@@ -31,8 +31,8 @@ void TestSeam1 () {
     TestSeam1_1 ();
     TestSeam1_2 ();
     TestSeam1_3 ();
-    TestSeam1_4 ();
-    TestSeam1_5 ();
+    //TestSeam1_4 ();
+    //TestSeam1_5 ();
 }
 
 TEST (KabukiToolkitTests, MajorSeam1) {

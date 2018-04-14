@@ -297,32 +297,33 @@ const Op* ExprUnpack (Expr* expr) {
     }
 
     uint_t            size,        //< Size of the ring buffer.
-        space,       //< Space left in the right buffer.
-        length,      //< Length of the ring buffer data.
-        type,        //< Current type.
-        bytes_left,  //< Num bytes left to scan.
-        array_type,  //< The type of array.
-        shift_bits,  //< Num bytes left to scan.
-        bytes_shift; //< Num of bytes to shift to scan OBJ.
+                      space,       //< Space left in the right buffer.
+                      length,      //< Length of the ring buffer data.
+                      type,        //< Current type.
+                      bytes_left,  //< Num bytes left to scan.
+                      array_type,  //< The type of array.
+                      shift_bits,  //< Num bytes left to scan.
+                      bytes_shift; //< Num of bytes to shift to scan OBJ.
     byte              bin_state,   //< Current bin FSM state.
-        b;           //< Current byte being verified.
+                      b;           //< Current byte being verified.
     hash16_t          hash,        //< Expected hash of the B-Sequence.
-        found_hash;  //< Found B-Sequence hash.
+                      found_hash;  //< Found B-Sequence hash.
     time_us_t         timestamp,   //< Last time when the expression ran.
-        delta_t;     //< Time delta between the last timestamp.
+                      delta_t;     //< Time delta between the last timestamp.
     const Op        * op;          //< Current Op.
     Operand         * operand;     //< The operand.
     BIn             * bin;         //< BIn.
     char            * bin_begin,   //< Beginning of the ring buffer.
-        *bin_start,   //< Start of the ring buffer data.
-        *bin_stop,    //< Stop of the ring buffer data.
-        *bin_end,     //< End of the ring buffer.
-        *slot_begin = expr->slot.begin,
-        *slot_start = expr->slot.start, //< Write cursor,
-        *slot_stop = expr->slot.stop,
-        *slot_end = expr->slot.end;
+                    * bin_start,   //< Start of the ring buffer data.
+                    * bin_stop,    //< Stop of the ring buffer data.
+                    * bin_end,     //< End of the ring buffer.
+                    * slot_begin = expr->slot.begin,
+                    * slot_start = expr->slot.start, //< Write cursor,
+                    * slot_stop = expr->slot.stop,
+                    * slot_end = expr->slot.end;
     const Op        * result;      //< Result of the Scan.
     const uint_t    * header = expr->header;
+
     //< Header of the current Op being verified.
     op = nullptr;
 //    if (input == nullptr) {
@@ -556,11 +557,10 @@ const Op* ExprUnpack (Expr* expr) {
                 bin_state = BIn::Utf32State;*/
             }
             else { // It's not a POD type.
-            #if DEBUG_CRABS_EXPR
+                #if DEBUG_CRABS_EXPR
                 Write ("\nScanning TObject.");
-            #endif
-            // Multi-dimension arrays are parsed just like any other
-            // TObject.
+                #endif
+                // Multi-dimension arrays are parsed just like any other OBJ.
                 array_type &= 0x3;
                 bytes_left = b;
                 if (array_type == 0) {
@@ -600,11 +600,11 @@ const Op* ExprUnpack (Expr* expr) {
                         break;
                     }
                     hash = Hash16 (b, hash);
-                #if DEBUG_CRABS_EXPR
+                    #if DEBUG_CRABS_EXPR
                     PRINTF ("\nhash:" << PrintHex (hash));
-                #endif
-                // Hash byte.
-                // Check if char terminated.
+                    #endif
+                    // Hash byte.
+                    // Check if char terminated.
                     if (b == 0) {
                         // Check if there is another argument to scan.
                         ExprExitState (expr);
@@ -617,11 +617,11 @@ const Op* ExprUnpack (Expr* expr) {
                             bin_state = kBInStateAddress;
                             break;
                         }
-                    #if DEBUG_CRABS_EXPR
+                        #if DEBUG_CRABS_EXPR
                         PRINTF ("\nNext TType to scan:\'"
                                 << TypeString (type) << "\' with alignment "
                                 << TypeAlign (slot_start, type) << '.');
-                    #endif
+                        #endif
                         slot_start += TypeAlign (slot_start, type);
                         break;
                     }
@@ -984,7 +984,7 @@ Printer& PrintExpr (Printer& print, Expr* expr) {
     assert (expr);
 
     return print << Line ('~', 80) << "\nStack:    "
-                 << Hex<uintptr_t> (expr) << Line ('_', 80)
+                 << Hex<uintptr_t> (expr) << '\n' << Line ('_', 80)
                  << "\nbytes_left : " << expr->bytes_left
                  << "\nheader_size: " << expr->header_size
                  << "\nstack_count: " << expr->stack_count

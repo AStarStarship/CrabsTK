@@ -21,44 +21,52 @@
 namespace _ {
 
 Line::Line (char token, int column_count) :
-    column_count (column_count),
-    token (token) {
+    token (token),
+    column_count (column_count) {
     // Nothing to do here. ({:-)-+=<
 }
 
-char* PrintLine (char c, int num_columns, char* buffer, char* buffer_end,
-                 char delimiter) {
-    if (!buffer) {
-        return nullptr;
+Printer& Line::Print (Printer& printer) {
+    char* cursor = printer.cursor,
+        * end    = printer.end;
+    int l_column_count = column_count;
+    char l_token = token;
+    assert (cursor);
+    assert (cursor + l_column_count + 1 < end);
+
+    *cursor++ = '\n';
+
+    while (l_column_count-- > 0) {
+        *cursor++ = l_token;
     }
-    if (buffer + num_columns > buffer_end) {
-        return nullptr;
-    }
-    while (num_columns-- > 0) {
-        *buffer++ = c;
-    }
-    *buffer = delimiter;
-    return buffer;
+    *cursor = 0;
+    printer.cursor = cursor;
+    return printer;
 }
 
-char* PrintLine (const char* string, int num_columns, char* buffer,
-                 char* buffer_end, char delimiter) {
-    if (!buffer) {
-        return nullptr;
-    }
-    if (buffer + num_columns > buffer_end) {
-        return nullptr;
-    }
+StringLine::StringLine (const char* string, int column_count) :
+    string       (string),
+    column_count (column_count) {
+    // Nothing to do here. ({:-)-+=<
+}
+
+Printer& StringLine::Print (Printer& printer) {
+    char* cursor = printer.cursor,
+        * end    = printer.end;
+    int l_column_count = column_count;
+    assert (cursor);
+    assert (cursor + l_column_count + 1 < end);
+
     const char* cursor = string;
-    while (num_columns-- > 0) {
+    while (l_column_count-- > 0) {
         char c = *string++;
         if (!c) {
             cursor = string;
         }
-        *buffer++ = c;
+        *cursor++ = c;
     }
-    *buffer = delimiter;
-    return buffer;
+    *cursor = 0;
+    return printer;
 }
 
 }

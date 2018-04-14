@@ -34,14 +34,7 @@ struct Right {
     T value; //< Value to print.
 
     Right (T value) :
-        value (value),
-        is_string (false) {
-        // Nothing to do here. :-)
-    }
-
-    Right (const char* string) :
-        string (string),
-        is_string (true) {
+        value (value) {
         // Nothing to do here. :-)
     }
 };

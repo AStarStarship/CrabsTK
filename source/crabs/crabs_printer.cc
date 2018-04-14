@@ -138,6 +138,11 @@ Printer::Printer (char* cursor, char* end) :
     assert (end != nullptr);
 }
 
+Dump::Dump (char* begin) :
+    begin (begin) {
+    // Nothing to do here! ({:-)-+=<
+}
+
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR

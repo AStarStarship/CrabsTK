@@ -131,10 +131,8 @@ inline const Op* BInError (BIn* bin, Error error,
 }
 
 BIn* BInInit (uintptr_t* buffer, uint_t size) {
-    if (size < kSlotSizeMin)
-        return nullptr;
-    if (buffer == nullptr)
-        return nullptr;
+    assert (buffer);
+    assert (size >= kSlotSizeMin);
 
     BIn* bin = reinterpret_cast<BIn*> (buffer);
     bin->size = size - sizeof (BIn);
@@ -150,14 +148,14 @@ BIn* BInInit (uintptr_t* buffer, uint_t size) {
 
 int BInStreamByte (BIn* bin) {
 
-    char* begin = BInBegin (bin),
-        *end = begin + bin->size;
-    char* open = (char*)begin + bin->read,
-        *start = begin + bin->start,
-        *cursor = start;
+    char* begin  = BInBegin (bin),
+        * end    = begin + bin->size - 1;
+    char* open   = (char*)begin + bin->read,
+        * start  = begin + bin->start,
+        * cursor = start;
 
     int length = (int)((start < open) ? open - start + 1 :
-        (end - start) + (open - begin) + 2);
+                 (end - start) + (open - begin) + 2);
 
     if (length < 1) {
         BInError (bin, kErrorBufferOverflow, Params<1, STR> (), 2, start);
@@ -211,7 +209,7 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
     size = bin->size;
 
     char* begin = BInBegin (bin),     //< The beginning of the buffer.
-        *end = begin + size,       //< The end of the buffer.
+        *end = begin + size - 1,       //< The end of the buffer.
         *start = begin + bin->start, //< The start of the data.
         *stop = begin + bin->stop;  //< The stop of the data.
                                     //const uint_t* param = params + 1; //< The current param.
@@ -638,7 +636,7 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
                     ++ui1_ptr;
                 }
                 break;
-            #endif  //< CRABS_DEBUG    
+                #endif  //< CRABS_DEBUG    
             }
         }
         ++arg_index;

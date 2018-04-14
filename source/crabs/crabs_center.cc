@@ -17,6 +17,7 @@
 #include <stdafx.h>
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
 
+#include "center.h"
 #include "printer.h"
 #if USING_PRINTER
 
@@ -36,54 +37,61 @@
 
 namespace _ {
 
-char* PrintCentered (const char* string, int num_columns, char* buffer,
-                     char* buffer_end, char delimiter) {
-    assert (buffer);
+Center::Center (char* string, int num_columns) :
+    string (string),
+    num_columns (num_columns) {
     assert (string);
-    if (buffer >= buffer_end) {
-        return nullptr;
-    }
     assert (num_columns > 0);
+}
+
+Printer& Center::Print (Printer& printer) {
+    char* cursor = printer.cursor,
+        * end    = printer.end;
+    assert (cursor);
+    assert (string);
+    assert (cursor < end);
 
     // We need to leave at least one space to the left and right of
     int length = TextLength (string),
         offset;
     PRINTF ("\n\n    Printing \"%s\":%i num_columns:%i", string, length,
             num_columns)
-    
-    if (num_columns < length) {
-        offset = length - num_columns;
-        if (offset > 3) {
-            offset = 3;
+
+        if (num_columns < length) {
+            offset = length - num_columns;
+            if (offset > 3) {
+                offset = 3;
+            }
+            num_columns -= offset;
+            while (num_columns-- > 0) {
+                *cursor++ = *string++;
+            }
+            while (offset-- > 0) {
+                *cursor++ = '.';
+            }
+            *cursor = 0;
+            printer.cursor = cursor;
+            return printer;
         }
-        num_columns -= offset;
-        while (num_columns-- > 0) {
-            *buffer++ = *string++;
-        }
-        while (offset-- > 0) {
-            *buffer++ = '.';
-        }
-        *buffer = delimiter;
-        return buffer;
-    }
     offset = (num_columns - length) >> 1; //< >> 1 to /2
     length = num_columns - length - offset;
     PRINTF ("\n    length:%i offset:%i", length, offset)
-    
-    while (length-- > 0) {
-        *buffer++ = ' ';
-    }
+
+        while (length-- > 0) {
+            *cursor++ = ' ';
+        }
     char c = *string++;
     while (c) {
-        *buffer++ = c;
+        *cursor++ = c;
         c = *string++;
     }
     while (offset-- > 0) {
-        *buffer++ = ' ';
+        *cursor++ = ' ';
     }
-    *buffer = delimiter;
+    *cursor = 0;
     PRINTF ("\n    Printed:\"%s\"", string);
-    return buffer;
+    printer.cursor = cursor;
+    return printer;
 }
 
 }       //< namespace _

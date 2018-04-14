@@ -16,7 +16,7 @@
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
 
 #ifndef HEADER_FOR_CRABS_LINE
 #define HEADER_FOR_CRABS_LINE
@@ -26,35 +26,43 @@
 
 namespace _ {
 
-/** Utility class for printing a text line with operator<<. */
-class Line {
+/** Utility class for printing a single char token line with operator<<. */
+class KABUKI Line {
     public:
 
-    int  column_count; //< Column count.
     char token;        //< Character to print.
+    int  column_count; //< Column count.
 
-    /** Constructor. */
+                       /** Constructor. */
     Line (char token, int column_count);
+
+    /** Prints a string line of the char repeating. */
+    Printer& Print (Printer& printer);
 };
 
-/** Prints a string line of the char repeating. */
-KABUKI char* PrintLine (char c, int num_columns, char* text,
-                        char* text_end, char delimiter = 0);
+/** Utility class for printing a string line with operator<<. */
+class KABUKI StringLine {
+    public:
 
-/** Prints a string line of the char repeating with an underscore. */
-KABUKI char* PrintLine (const char* string, int num_columns, char* text,
-                        char* text_end, char delimiter = 0);
+    const char* string;       //< Character to print.
+    int         column_count; //< Column count.
+
+    /** Constructor. */
+    StringLine (const char* string, int column_count);
+
+    /** Prints a string line of the char repeating. */
+    Printer& Print (Printer& printer);
+};
 
 }       //< namespace _
 
-inline _::Printer& operator<< (_::Printer& print, _::Line line) {
-    char* cursor = _::PrintLine (line.token, line.column_count, print.cursor,
-                                 print.end);
-    if (!cursor)
-        return print;
-    print.cursor = cursor;
-    return print;
+inline _::Printer& operator<< (_::Printer& printer, _::Line line) {
+    return line.Print (printer);
+}
+
+inline _::Printer& operator<< (_::Printer& printer, _::StringLine line) {
+    return line.Print (printer);
 }
 
 #endif  //< HEADER_FOR_CRABS_LINE
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 2

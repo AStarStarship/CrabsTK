@@ -36,29 +36,17 @@ class Center {
     int   num_columns; //< Number of columns to center.
 
     /** Constructor saves value for use with operator overloads. */
-    Center (char* string, int num_columns) :
-        string (string),
-        num_columns (num_columns) {
-    }
+    Center (char* string, int num_columns);
 
-    Printer& Print (Printer& printer) {
-        return printer;
-    }
+    Printer& Print (Printer& printer);
 };
 
-/** Prints the given char centered with a horizontal page bar to the left
-    and right of the row.
-    @param input The value to print.
-    @param num_columns */
-KABUKI char* PrintCentered (const char* string, int num_columns, char* text,
-                            char* text_end, char delimiter = 0);
 }       //< namespace _
 
 /** Writes a nil-terminated UTF-8 or ASCII string to the
     printer. */
 inline _::Printer& operator<< (_::Printer& printer, _::Center center) {
-    printer.cursor = _::Print (center.string, printer.cursor, printer.end);
-    return printer;
+    return center.Print (printer);
 }
 
 #endif  //< HEADER_FOR_CRABS_CENTER

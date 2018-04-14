@@ -26,12 +26,16 @@
 #define PRINT_HEADING(message) \
     std::cout << '\n';\
     for (int i = 80; i > 80; --i) std::cout << '-';\
-    std::cout << '\n' << message;\
-    for (int i = 80; i > 80; --i) std::cout << '-';
+    std::cout << '\n' << message << '\n';\
+    for (int i = 80; i > 80; --i) std::cout << '-';\
+    std::cout << '\n';
+
+#define PRINT_SLOT print << slot << Dump ();
 #else
 #define PRINTF(x, ...)
 #define PRINT_PAUSE(message)
 #define PRINT_HEADING(message)
+#define PRINT_SLOT
 #endif
 
 using namespace _;
@@ -40,27 +44,30 @@ void TestSeam1_3 () {
 
     printf ("\n    Testing SEAM_1_3... ");
 
-    PRINT_HEADING ("Testing Expr...")
     enum {
         kBufferSize  = 2048,
         kBufferWords = kBufferSize / sizeof (uintptr_t),
         kStackHeight = 8,
         kPrintBufferSize = 4096,
     };
+
+    Printer print;
     
     uintptr_t buffer[kBufferWords],
               unpacked_buffer[kBufferWords];
 
-    Slot slot (buffer, kBufferWords);
+    PRINT_HEADING ("Creating test Slot...")
 
+    Slot slot (buffer, kBufferWords);
+    print << slot << Dump ();
+
+    PRINT_HEADING ("Testing Expr...")
     This root;
     Expr* expr = ExprInit (buffer, kBufferSize, 4, 
                            &root, unpacked_buffer,
                            kBufferWords);
-
-    Printer print;
-
-    print << expr;
+    BOut* bout = ExprBOut (expr);
+    PRINT_SLOT;
     
     void        * args[19];
     const uint_t* params         = Params <4, ADR, STR, 32, FLT, SI4> ();
@@ -75,14 +82,15 @@ void TestSeam1_3 () {
     const Op* result = ExprResult (expr, params,
                                    Args (args, "C", &stx_expected,
                                          &si4_expected, &flt_expected));
-    PRINTF ("\n Attempting to print Expr 0x%p", ExprBOut (expr))
+    PRINTF ("\n\n Printing...\n\n")
+    print << expr << Dump ();
+
+    PRINTF ("\n\n Attempting to print Expr\n\n")
     //PrintExpr (expr, text) << Print ();
     result = ExprArgs (expr, params,
                        Args (args, &stx_found, &si4_found, &flt_found));
-    CHECK_EQUAL (0, result);
+    CHECK_EQUAL (0, result)
 
-    //< It works right with an extra 4 elements but no less. Am I writing
-    //< something to the end of the buffer???
 
     PRINTF ("\n\n  - Running ReadWriteTests...\nkBufferSize: %i "
             "kBufferWords: %i", kBufferSize, kBufferWords)
@@ -101,7 +109,7 @@ void TestSeam1_3 () {
     PRINTF ("\n &expected_string1[0]:%p &expected_string2[0]:%p\n", 
             &expected_string1[0], &expected_string2[0]);
 
-    BOut* bout = BOutInit (buffer, kBufferSize);
+    bout = BOutInit (buffer, kBufferSize);
     
     CHECK_EQUAL (0, BOutWrite (bout, Params<2, STR, 6, STR, 6> (),
                                Args (args, expected_string1,
@@ -487,8 +495,6 @@ void TestSeam1_3 () {
     
     CHECK (result == nullptr)
 
-    enum { kCharCount = 2048 };
-    char text[kCharCount + 1];
     print << bout;
 
     slot.Clear ();

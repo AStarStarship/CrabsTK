@@ -22,7 +22,7 @@
 
 #include "printer.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
 
 namespace _ {
 
@@ -159,5 +159,5 @@ inline _::Printer& operator<< (_::Printer& printer, _::Hex<T> value) {
     return value.Print (printer);
 }
 
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
 #endif  //< HEADER_FOR_CRABS_HEX
