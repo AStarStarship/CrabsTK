@@ -128,76 +128,6 @@ void TestSeam1_5 () {
     CHECK_EQUAL (index, -1)
 }
 
-TEST (SEAM_1_5_TESTS, ClockTests) {
-    time_t t,
-           t_found;
-    tm* lt;
-    const char* result;
-
-    PrintBreak ("<", '-');
-    std::cout << "< Testing date-time parser... \n";
-
-    const char* strings[] = { "8/9\0",
-        "08/09\0",
-        "8/9/17\0",
-        "8/09/17\0",
-        "8/9/2017\0",
-        "8/09/2017\0",
-        "8/09/2017\0",
-        "08/9/2017\0",
-        "8/09/2017@00\0",
-        "8.09.2017@00AM\0",
-        "8/09/2017@00:00\0",
-        "8/09/17@00:0AM\0",
-        "8/09/2017@00:00:00\0",
-        "8/09/2017@00:00:00AM\0",
-        "2017-08-09@00:00:00AM\0",
-        "2017-08-09@00:00:00am\0",
-        "2017-08-09@00:00:00A\0",
-        "2017-08-09@00:00:00a \0",
-    };
-
-    for (int i = 0; i < 18; ++i) {
-        PrintBreak ("<", '-');
-        std::cout << "\n " << i;
-        time_t t = 0;
-        result = ParseTimeText (strings[i], t);
-        CompareTimes (t, 2017, 8, 9, 0, 0, 0);
-    }
-    enum {
-        kSize = 32
-    };
-
-    char timestamp[kSize];
-    PrintBreak ("<", '-');
-    PrintBreak ("<\nTesting more valid input...\n");
-    PrintBreak ("<", '-');
-
-    t = TestTime<8, 9, 17, 4, 20> (timestamp, kSize);
-    PrintTime (t);
-    result = ParseTimeText (timestamp, t_found);
-    CompareTimes (t, t_found);
-
-    t = TestTime<2020, 4, 20, 4, 20> (timestamp, kSize);
-    PrintTime (t);
-    result = ParseTimeText (timestamp, t_found);
-    CompareTimes (t, t_found);
-
-    t = TestTime<1947, 12, 7, 23, 5, 7> (timestamp, kSize);
-    PrintTime (t);
-    result = ParseTimeText (timestamp, t_found);
-    CompareTimes (t, t_found);
-
-    PrintBreak ("<", '-');
-    PrintBreak ("<\nTesting invalid input...\n", '-');
-    ParseTimeText ("cat", t);
-    PrintBreak ("<", '-');
-    ParseTimeText ("2017-30-40", t);
-    PrintBreak ("<", '-');
-
-    std::cout << "<\nDone testing date parsing utils! :-)\n";
-}
-
 #if USING_CRABS_TABLE
 TEST (SEAM_1_5_TESTS, TableTests) {
     std::cout << "\n  - Running TableTest...\n";
@@ -756,54 +686,6 @@ TEST (SEAM_1_5_TESTS, OpTests) {
     ExprUnpack (expr);//, &slot);
     PrintExpr (expr);
     PRINT_PAUSE ("\n Done with Op tests.")
-}
-
-TEST (SEAM_1_5_TESTS, TextTests) {
-    PRINTF ("\n\n Testing Text...\n\n";
-
-    PRINTF ("\n\n Testing Text...";
-
-    enum {
-        kNumStrings = 5,
-        kSize = 10,
-    };
-
-    static const char* test_strings[kNumStrings][2] = {
-        { "?"      , ""        },
-        { "?"      , "?"       },
-        { "? "     , "?"       },
-        { "Apples" , "Apples"  },
-        { "Apples" , "Apples"  },
-    };
-
-    const char* end;
-
-    char buffer_a[kSize],
-         buffer_b[kSize];
-
-    for (int i = 0; i < kNumStrings; ++i) {
-        end = SlotWrite (buffer_a, buffer_a + kSize, test_strings[i][0]);
-        CHECK (end != nullptr)
-        end = SlotWrite (buffer_b, buffer_b + kSize, test_strings[i][0]);
-        CHECK (end != nullptr)
-
-        end = TextEquals (buffer_a, buffer_b);
-        CHECK (end != nullptr)
-        end = TextEquals (buffer_a, buffer_a + kSize, buffer_b);
-        CHECK (end != nullptr)
-    }
-
-    PRINTF ("\n\n Testing Text write functions..."
-              << "\n\n Expecting Line() followed by \"Testing 1, 2, 3\"...";
-    Text<> text;
-    PrintLine () << "\n Testing " << 1 << ", " << 2 << ", " << 3;
-
-    PRINTF ("\n\n Wrote:\"" << PrintGetBegin () << "\""
-              << "\n Testing Text::Memory (void*, int size)...";
-
-    PrintMemory (PrintGetBegin (), PrintGetEnd ()) << Print ();
-
-    PRINT_PAUSE ("\n\n Done testing _::Text class...\n ";
 }
 
 #undef PRINT_PAUSE

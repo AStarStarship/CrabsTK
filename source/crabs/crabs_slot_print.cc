@@ -400,7 +400,7 @@ Slot& PrintLines (int num_rows, Slot& slot, char delimiter) {
 }
 
 Slot& PrintHex (char c, Slot& slot, char delimiter) {
-    uint16_t chars = TextByteToUpperCaseHex (c);
+    uint16_t chars = HexByteToUpperCase (c);
     return slot << (char)chars << ((char)(chars >> 8)) << ' ';
 }
 
@@ -434,7 +434,7 @@ Slot& PrintHex (uintptr_t value, Slot& slot) {
     for (int num_bits_shift = 0; num_bits_shift < sizeof (void*) * 8; 
          num_bits_shift += 8) {
         c = (char)(value >> num_bits_shift);
-        c = TextNibbleToUpperCaseHex (c);
+        c = HexNibbleToUpperCase (c);
         if (++cursor > end) {
             cursor = slot.begin;
         }

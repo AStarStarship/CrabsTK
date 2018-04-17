@@ -32,11 +32,11 @@ namespace _ {
 class Center {
     public:
 
-    char* string;      //< String to print center aligned.
+    const char* string;      //< String to print center aligned.
     int   num_columns; //< Number of columns to center.
 
     /** Constructor saves value for use with operator overloads. */
-    Center (char* string, int num_columns);
+    Center (const char* string, int num_columns);
 
     Printer& Print (Printer& printer);
 };

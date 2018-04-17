@@ -116,22 +116,22 @@ void TestSeam1_2 () {
         
     PRINT_HEADING ("    Running HexTest...")
     for (int i = 0; i < 16; ++i) {
-        int value = TextHexToByte (TextNibbleToLowerCaseHex (i));
+        int value = HexToByte (HexNibbleToLowerCase (i));
         CHECK_EQUAL (i, value)
         PRINTF ("\n    %i.) %i", i, value)
-        value = TextHexToByte (TextNibbleToUpperCaseHex (i));
+        value = HexToByte (HexNibbleToUpperCase (i));
         PRINTF (" value is now:%i", value)
         CHECK_EQUAL (i, value)
     }
 
     for (int i = 0; i < 256; ++i) {
-        uint16_t c = TextByteToLowerCaseHex (i);
-        PRINTF ("\n    %i.) expecting: %x        TextByteToLowerCaseHex:%c%c",
+        uint16_t c = HexByteToLowerCase (i);
+        PRINTF ("\n    %i.) expecting: %x        HexByteToLowerCase:%c%c",
                 i, i, (char)c, (char)(c >> 8))
-        int value = TextHexToByte (c);
-        PRINTF ("        TextHexToByte:%i", value)
+        int value = HexToByte (c);
+        PRINTF ("        HexToByte:%i", value)
         CHECK_EQUAL (i, value)
-        value = TextHexToByte (TextByteToUpperCaseHex (i));
+        value = HexToByte (HexByteToUpperCase (i));
         PRINTF ("     value is now:%i", value)
         CHECK_EQUAL (i, value)
     }
@@ -174,23 +174,22 @@ void TestSeam1_2 () {
 
     PRINTF ("\n\n    Testing PrintCentered...")
 
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i)
         PRINTF ("\n    %i.)\"%s\"", i, kStringsCentered[i]);
-    }
 
-    CHECK (PrintCentered (kStringNumbers, 10, buffer, buffer + kSize))
+    print.Set (buffer) << Center (kStringNumbers, 10);
     STRCMP_EQUAL (kStringNumbers, buffer)
-
-    CHECK (PrintCentered (kStringNumbers, 11, buffer, buffer + kSize))
+        
+    print.Set (buffer) << Center (kStringNumbers, 11);
     STRCMP_EQUAL (kStringsCentered[0], buffer)
-
-    CHECK (PrintCentered (kStringNumbers, 12, buffer, buffer + kSize))
+        
+    print.Set (buffer) << Center (kStringNumbers, 12);
     STRCMP_EQUAL (kStringsCentered[1], buffer)
-
-    CHECK (PrintCentered (kStringNumbers, 13, buffer, buffer + kSize))
+        
+    print.Set (buffer) << Center (kStringNumbers, 13);
     STRCMP_EQUAL (kStringsCentered[2], buffer)
-
-    CHECK (PrintCentered (kStringNumbers, 6, buffer, buffer + kSize))
+        
+    print.Set (buffer) << Center (kStringNumbers, 6);
     STRCMP_EQUAL (kStringsCentered[3], buffer)
         
     PRINT_HEADING ('-')

@@ -103,7 +103,7 @@ KABUKI void BInKeyStrokes ();
     @param  bout The bout to print.
     @param  text The Text to print to the bout.
     @return The slot. */
-KABUKI Printer& PrintBOut (Printer& print, BOut* bout);
+KABUKI Printer& PrintBOut (Printer& printer, BOut* bout);
 #endif
 
 }       //< namespace _

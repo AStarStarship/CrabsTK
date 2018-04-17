@@ -128,14 +128,23 @@ char* Print (double value, char* buffer, char* buffer_end, char delimiter) {
 Printer::Printer (char* cursor, size_t buffer_size) :
     cursor (cursor),
     end    (cursor + buffer_size) {
-    assert (cursor != nullptr);
+    assert (cursor);
+    assert (buffer_size);
 }
 
 Printer::Printer (char* cursor, char* end) :
     cursor (cursor),
     end    (end) {
-    assert (cursor != nullptr);
-    assert (end != nullptr);
+    assert (cursor);
+    assert (cursor < end);
+}
+
+Printer& Printer::Set (char* begin) {
+    assert (begin);
+    assert (begin < end);
+
+    cursor = begin;
+    return *this;
 }
 
 Dump::Dump (char* begin) :

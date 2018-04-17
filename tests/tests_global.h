@@ -32,10 +32,10 @@ void TestSeam1 ();
 void TestSeam1_1 ();
 void TestSeam1_2 ();
 void TestSeam1_3 ();
-void TestSeam1_4 ();
+//void TestSeam1_4 ();
 void TestSeam1_5 ();
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 using namespace _;
 
@@ -55,32 +55,32 @@ class ChildOperand : public Operand {
         switch (index) {
             case '?': return &This;
             case 'A': {
-                static const Op OpA = { "SignedIntegerTests",
-                    Params<2, UI1, STR, kTextBufferSize> (),
-                    Params<2, UI1, STR> (),
+                static const Op OpA = { "SignedVarintTests",
+                    Params<2, SVI, STR, kBufferSize> (),
+                    Params<2, SVI, STR> (),
                     "Description of function \'A\'.", 0 };
                 if (!expr) return &OpA;
 
-                if (ExprArgs (expr, OpA, Args (args, &test_ui1_, 
+                if (ExprArgs (expr, OpA, Args (args, &test_svi_,
                                                test_str_)))
                     return expr->result;
                     
                 // Function logic here
 
-                return ExprResult (expr, OpA, Args (args, &test_ui1_,
+                return ExprResult (expr, OpA, Args (args, &test_svi_,
                                                        test_str_));
             }
             case 'B': {
-                static const Op OpB = { "FloatTests",
-                    Params<2, FLT, STR, kTextBufferSize> (),
-                    Params<2, FLT, STR> (),
+                static const Op OpB = { "UnsignedVarintTests",
+                    Params<2, UVI, STR, kBufferSize> (),
+                    Params<2, UVI, STR> (),
                     "Description of function \'B\'.", 0 };
                 if (!expr) return &OpB;
 
-                if (ExprArgs (expr, OpB, Args (args, &test_flt_, test_str_)))
+                if (ExprArgs (expr, OpB, Args (args, &test_uvi_, test_str_)))
                     return expr->result;
 
-                return ExprResult (expr, OpB, Args (args, &test_flt_,
+                return ExprResult (expr, OpB, Args (args, &test_uvi_,
                                                     test_str_));
             }
         }
@@ -89,13 +89,11 @@ class ChildOperand : public Operand {
     
     private:
 
-    enum {
-        kTextBufferSize = 16         //< Example string buffer size.
-    };
+    enum { kBufferSize = 16 };   //< Example string buffer size.
 
-    uint8_t test_ui1_;                 //< Text UI1.
-    float test_flt_;                   //< Test FLT.
-    char test_str_[kTextBufferSize]; //< Test STR.
+    int  test_svi_;              //< Test SVI.
+    uint test_uvi_;              //< Test UVI.
+    char test_str_[kBufferSize]; //< Test STR.
 };
 
 // Test child Operand.
@@ -103,7 +101,7 @@ class Parent : public Operand {
     public:
 
     enum {
-        kTextBufferSize = 16         //< Example string buffer size.
+        kBufferSize = 16         //< Example string buffer size.
     };
 
     // Interprocess operations.
@@ -125,32 +123,32 @@ class Parent : public Operand {
                 return Push (expr, &child_b);
             }
             case 'C': {
-                static const Op OpC = { "FloatTests",
-                    Params<2, FLT, STR, kTextBufferSize> (),
-                    Params<2, FLT, STR> (),
+                static const Op OpC = { "UnsignedVarintTests",
+                    Params<2, UVI, STR, kBufferSize> (),
+                    Params<2, UVI, STR> (),
                     "Description of functionA.", 0 };
                 if (!expr) return &OpC;
 
-                if (ExprArgs (expr, OpC, Args (args, &io_number_,
+                if (ExprArgs (expr, OpC, Args (args, &svi_,
                                                        io_string_)))
                     return expr->result;
                   // function call here
-                return ExprResult (expr, OpC, Args (args, &io_number_,
+                return ExprResult (expr, OpC, Args (args, &svi_,
                                                     io_string_));
             }
             case 'D': {
-                static const Op OpD = { "SignedIntegerTests",
-                    Params<2, FLT, STR, kTextBufferSize> (),
-                    Params<2, FLT, STR> (),
+                static const Op OpD = { "SignedVarintTests",
+                    Params<2, SVI, STR, kBufferSize> (),
+                    Params<2, SVI, STR> (),
                     "Description of functionB.", 0 };
 
                 if (!expr) return &OpD;
 
-                if (ExprArgs (expr, OpD, Args (args, &io_number_, 
+                if (ExprArgs (expr, OpD, Args (args, &svi_, 
                                                      io_string_)))
                     return expr->result;
 
-                return ExprResult (expr, OpD, Args (args, &io_number_,
+                return ExprResult (expr, OpD, Args (args, &svi_,
                                    io_string_));
             }
         }
@@ -159,10 +157,11 @@ class Parent : public Operand {
 
     private:
     
-    ChildOperand child_a,                //< ChildOperand Expr in index 'A'.
-                 child_b;                //< ChildOperand Expr in index 'B'
-    float io_number_;                    //< Example variable.
-    char  io_string_[kTextBufferSize]; //< Example string.
+    ChildOperand child_a,                 //< ChildOperand Expr.
+                 child_b;                 //< ChildOperand Expr.
+    int          svi_;                    //< Example variable.
+    uint         uvi_;                    //< Example variable.
+    char         io_string_[kBufferSize]; //< Example string.
 };
 
 // A test room that can fit in 1KB of RAM. 
@@ -201,7 +200,7 @@ class This : public Room {
 
     Parent parent;
 };
-#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #endif  //< HEADER_FOR_GLOBAL
 #endif  //< RUN_UNIT_TESTS

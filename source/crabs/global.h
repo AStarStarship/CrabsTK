@@ -35,6 +35,7 @@
 #include "clock.h"
 #include "right.h"
 #include "hex.h"
+#include "center.h"
 #endif
 
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

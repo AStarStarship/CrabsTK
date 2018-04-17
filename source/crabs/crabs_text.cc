@@ -52,63 +52,6 @@ const char* TextNewLine () {
     return "\n";
 }
 
-byte TextNibbleToLowerCaseHex (byte b) {
-    if (b > 15) return 'f';
-    if (b > 9)
-        return b + ('a' - 10);
-    return b + '0';
-}
-
-byte TextNibbleToUpperCaseHex (byte b) {
-    if (b > 15) return 'F';
-    if (b > 9) return b + ('A' - 10);
-    return b + '0';
-}
-
-uint16_t TextByteToLowerCaseHex (byte b) {
-    uint16_t value = TextNibbleToLowerCaseHex (b & 0xf);
-    value = value << 8;
-    value |= TextNibbleToLowerCaseHex (b >> 4);
-    return value;
-}
-
-uint16_t TextByteToUpperCaseHex (byte b) {
-    uint16_t value = TextNibbleToUpperCaseHex (b & 0xf);
-    PRINTF ("\n    First nibble:%c", value)
-    value = value << 8;
-    uint16_t second_nibble = TextNibbleToUpperCaseHex (b >> 4);
-    PRINTF (" second nibble:%c", second_nibble)
-    value |= second_nibble;
-    return value;
-}
-
-int TextHexToByte (byte c) {
-    if (c < '0') {
-        return -1;
-    }
-    if (c >= 'a') {
-        if (c > 'f') return -1;
-        return c - ('a' - 10);
-    }
-    if (c >= 'A') {
-        if (c > 'F') return -1;
-        return c - ('A' - 10);
-    }
-    if (c > '9') return -1;
-    return c - '0';
-}
-
-int TextHexToByte (uint16_t h) {
-    int lowerValue = TextHexToByte ((byte)(h >> 8));
-
-    if (lowerValue < 0) return -1;
-
-    int upper_value = TextHexToByte ((byte)h);
-    if (upper_value < 0) return -1;
-
-    return lowerValue | (upper_value << 4);
-}
-
 const char* TextEnd (const char* text, char delimiter) {
     char c = *text;
     while (c > delimiter) {

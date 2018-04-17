@@ -126,18 +126,18 @@ char* MemoryCopy (char* write, char* write_end, const char* read,
     return write;
 }
 
-char* PrintMemory (const void* token, const void* token_end, char* buffer,
+char* PrintMemory (const void* token, const void* token_end, char* cursor,
                    char* buffer_end, char delimiter) {
     if (!token) {
         return nullptr;
     }
-    if (!buffer) {
-        return buffer;
+    if (!cursor) {
+        return cursor;
     }
-    if (buffer >= buffer_end) {
+    if (cursor >= buffer_end) {
         return nullptr;
     }
-    char      * buffer_begin    = buffer;
+    char      * buffer_begin    = cursor;
     const char* address_ptr     = reinterpret_cast<const char*> (token),
               * address_end_ptr = reinterpret_cast<const char*> (token_end);
     size_t      size            = address_end_ptr - address_ptr,
@@ -149,36 +149,36 @@ char* PrintMemory (const void* token, const void* token_end, char* buffer,
         ++num_rows;
     }
     size += 81 * (num_rows + 2);
-    if (buffer + size >= buffer_end) {
+    if (cursor + size >= buffer_end) {
         PRINTF ("\n    ERROR: buffer isn't big enough!")
         return nullptr;
     }
-    *buffer++ = '\n';
-    *buffer++ = '|';
+    *cursor++ = '\n';
+    *cursor++ = '|';
 
     //  columns
-    *buffer++ = '0';
-    buffer = PrintRight (8, 7, buffer, buffer_end);
+    *cursor++ = '0';
+    cursor = PrintRight (8, 7, cursor, buffer_end);
     for (int i = 16; i <= 64; i += 8) {
-        buffer = PrintRight (i, 8, buffer, buffer_end);
+        cursor = PrintRight (i, 8, cursor, buffer_end);
     }
-    *buffer++ = '|';
-    *buffer++ = '\n';
-    *buffer++ = '|';
+    *cursor++ = '|';
+    *cursor++ = '\n';
+    *cursor++ = '|';
     for (int j = 8; j > 0; --j) {
         for (int k = 7; k > 0; --k) {
-            *buffer++ = '-';
+            *cursor++ = '-';
         }
-        *buffer++ = '+';
+        *cursor++ = '+';
     }
-    *buffer++ = '|';
-    *buffer++ = ' ';
+    *cursor++ = '|';
+    *cursor++ = ' ';
         
-    buffer = PrintHex (address_ptr, buffer, buffer_end);
+    cursor = PrintHex (address_ptr, cursor, buffer_end);
     char c;
     while (address_ptr < address_end_ptr) {
-        *buffer++ = '\n';
-        *buffer++ = '|';
+        *cursor++ = '\n';
+        *cursor++ = '|';
         for (int i = 0; i < 64; ++i) {
             c = *address_ptr++;
             if (address_ptr > address_end_ptr)
@@ -186,26 +186,26 @@ char* PrintMemory (const void* token, const void* token_end, char* buffer,
             if (c < ' ') {
                 c = ' ';
             }
-            *buffer++ = c;
+            *cursor++ = c;
         }
-        *buffer++ = '|';
-        *buffer++ = ' ';
-        buffer = PrintHex (address_ptr, buffer, buffer_end);
+        *cursor++ = '|';
+        *cursor++ = ' ';
+        cursor = PrintHex (address_ptr, cursor, buffer_end);
         //PRINT_HEADING
         //PRINTF ("\n%s", buffer_begin)
         //PRINT_HEADING
     }
-    *buffer++ = '\n';
-    *buffer++ = '|';
+    *cursor++ = '\n';
+    *cursor++ = '|';
     for (int j = 8; j > 0; --j) {
         for (int k = 7; k > 0; --k) {
-            *buffer++ = '-';
+            *cursor++ = '-';
         }
-        *buffer++ = '+';
+        *cursor++ = '+';
     }
-    *buffer++ = '|';
-    *buffer++ = ' ';
-    return PrintHex (address_ptr + size, buffer, buffer_end, delimiter);
+    *cursor++ = '|';
+    *cursor++ = ' ';
+    return PrintHex (address_ptr + size, cursor, buffer_end, delimiter);
 }
 
 Memory::Memory (const char* begin, const char* end) :

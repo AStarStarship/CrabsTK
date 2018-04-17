@@ -84,48 +84,48 @@ inline char Char (T value) {
 }
 
 /** Converts a single byte a one-byte hex representation. */
-KABUKI byte TextNibbleToLowerCaseHex (byte b);
+KABUKI byte HexNibbleToLowerCase (byte b);
 
 /** Converts a single byte a one-byte hex representation. */
-KABUKI byte TextNibbleToUpperCaseHex (byte b);
+KABUKI byte HexNibbleToUpperCase (byte b);
 
 /** Converts a single byte a two-byte hex representation. */
-KABUKI uint16_t TextByteToLowerCaseHex (byte b);
+KABUKI uint16_t HexByteToLowerCase (byte b);
 
 /** Converts a single byte a two-byte hex representation. */
-KABUKI uint16_t TextByteToUpperCaseHex (byte b);
+KABUKI uint16_t HexByteToUpperCase (byte b);
 
 /** Converts a single hex byte a byte.
 @return Returns -1 if c is not a hex byte.
 */
-KABUKI int TextHexToByte (byte hex_byte);
+KABUKI int HexToByte (byte hex_byte);
 
 /** Converts a single byte into a two-byte hex representation.
 @return Returns -1 if c is not a hex byte.
 */
-KABUKI int TextHexToByte (uint16_t hex);
+KABUKI int HexToByte (uint16_t hex);
 
 /** Converts a single byte a one-byte hex representation. */
-KABUKI byte TextNibbleToLowerCaseHex (byte b);
+KABUKI byte HexNibbleToLowerCase (byte b);
 
 /** Converts a single byte a one-byte hex representation. */
-KABUKI byte TextNibbleToUpperCaseHex (byte b);
+KABUKI byte HexNibbleToUpperCase (byte b);
 
 /** Converts a single byte a two-byte hex representation. */
-KABUKI uint16_t TextByteToLowerCaseHex (byte b);
+KABUKI uint16_t HexByteToLowerCase (byte b);
 
 /** Converts a single byte a two-byte hex representation. */
-KABUKI uint16_t TextByteToUpperCaseHex (byte b);
+KABUKI uint16_t HexByteToUpperCase (byte b);
 
 /** Converts a single hex byte a byte.
     @return Returns -1 if c is not a hex byte.
 */
-KABUKI int TextHexToByte (byte c);
+KABUKI int HexToByte (byte c);
 
 /** Converts a single byte into a two-byte hex representation.
     @return Returns -1 if c is not a hex byte.
 */
-KABUKI int TextHexToByte (uint16_t h);
+KABUKI int HexToByte (uint16_t h);
 
 /** Scrolls over to the next double quote mark.
     @warning This function is only safe to use on ROM strings with a nil-term

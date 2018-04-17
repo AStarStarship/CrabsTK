@@ -27,18 +27,19 @@ Line::Line (char token, int column_count) :
 }
 
 Printer& Line::Print (Printer& printer) {
-    char* cursor = printer.cursor,
-        * end    = printer.end;
-    int l_column_count = column_count;
-    char l_token = token;
+    char* cursor = printer.cursor;
     assert (cursor);
-    assert (cursor + l_column_count + 1 < end);
+    char* end = printer.end;
+    int l_column_count = column_count;
+    if (cursor + l_column_count + 1 >= end)
+        return printer;
 
     *cursor++ = '\n';
 
-    while (l_column_count-- > 0) {
+    char l_token = token;
+    while (l_column_count-- > 0)
         *cursor++ = l_token;
-    }
+
     *cursor = 0;
     printer.cursor = cursor;
     return printer;
@@ -51,17 +52,18 @@ StringLine::StringLine (const char* string, int column_count) :
 }
 
 Printer& StringLine::Print (Printer& printer) {
-    char* cursor = printer.cursor,
-        * end    = printer.end;
-    int l_column_count = column_count;
+    char* cursor = printer.cursor;
     assert (cursor);
-    assert (cursor + l_column_count + 1 < end);
+    char* end    = printer.end;
+    int l_column_count = column_count;
+    if (cursor + l_column_count + 1 > end)
+        return printer;
 
-    const char* cursor = string;
+    const char* l_string = string;
     while (l_column_count-- > 0) {
-        char c = *string++;
+        char c = *l_string++;
         if (!c) {
-            cursor = string;
+            cursor = 0;
         }
         *cursor++ = c;
     }

@@ -39,93 +39,138 @@
 
 namespace _ {
 
+byte HexNibbleToLowerCase (byte b) {
+    b = b & 0xf;
+    if (b > 9)
+        return b + ('a' - 10);
+    return b + '0';
+}
 
-char* PrintHex (uint8_t value, char* buffer, char* buffer_end,
+byte HexNibbleToUpperCase (byte b) {
+    b = b & 0xf;
+    if (b > 9) return b + ('A' - 10);
+    return b + '0';
+}
+
+uint16_t HexByteToLowerCase (byte b) {
+    uint16_t value = HexNibbleToLowerCase (b & 0xf);
+    value = value << 8;
+    value |= HexNibbleToLowerCase (b >> 4);
+    return value;
+}
+
+uint16_t HexByteToUpperCase (byte b) {
+    uint16_t value = HexNibbleToUpperCase (b & 0xf);
+    PRINTF ("\n    First nibble:%c", value)
+        value = value << 8;
+    uint16_t second_nibble = HexNibbleToUpperCase (b >> 4);
+    PRINTF (" second nibble:%c", second_nibble)
+        value |= second_nibble;
+    return value;
+}
+
+int HexToByte (byte c) {
+    if (c < '0') {
+        return -1;
+    }
+    if (c >= 'a') {
+        if (c > 'f') return -1;
+        return c - ('a' - 10);
+    }
+    if (c >= 'A') {
+        if (c > 'F') return -1;
+        return c - ('A' - 10);
+    }
+    if (c > '9') return -1;
+    return c - '0';
+}
+
+int HexToByte (uint16_t h) {
+    int lowerValue = HexToByte ((byte)(h >> 8));
+
+    if (lowerValue < 0) return -1;
+
+    int upper_value = HexToByte ((byte)h);
+    if (upper_value < 0) return -1;
+
+    return lowerValue | (upper_value << 4);
+}
+
+
+char* PrintHex (uint8_t value, char* cursor, char* buffer_end,
                 char delimiter) {
     enum { kHexStringLengthSizeMax = sizeof (uint8_t) * 2 + 3 };
 
-    assert (buffer);
-    if (buffer >= buffer_end) {
+    assert (cursor);
+    if (cursor + kHexStringLengthSizeMax  >= buffer_end) {
         return nullptr;
     }
-    assert (buffer_end - buffer > kHexStringLengthSizeMax);
 
-    *buffer++ = '0';
-    *buffer++ = 'x';
-    for (int num_bits_shift = 0; num_bits_shift < sizeof (uint8_t) * 8;
-         num_bits_shift += 8) {
-        char c = (char)(value >> num_bits_shift);
-        c = TextNibbleToUpperCaseHex (c);
-        *buffer++ = c;
+    *cursor++ = '0';
+    *cursor++ = 'x';
+    for (int num_bits_shift = sizeof (uint8_t) * 8 - 4; num_bits_shift >= 0;
+         num_bits_shift -= 4) {
+        *cursor++ = HexNibbleToUpperCase ((byte)(value >> num_bits_shift));
     }
-    *buffer = delimiter;
-    return buffer;
+    *cursor = delimiter;
+    return cursor;
 }
 
-char* PrintHex (uint16_t value, char* buffer, char* buffer_end,
+char* PrintHex (uint16_t value, char* cursor, char* buffer_end,
                 char delimiter) {
     enum { kHexStringLengthSizeMax = sizeof (uint16_t) * 2 + 3 };
 
-    assert (buffer);
-    if (buffer >= buffer_end) {
+    assert (cursor);
+    if (cursor + kHexStringLengthSizeMax >= buffer_end) {
         return nullptr;
     }
-    assert (buffer_end - buffer > kHexStringLengthSizeMax);
 
-    *buffer++ = '0';
-    *buffer++ = 'x';
-    for (int num_bits_shift = 0; num_bits_shift < sizeof (uint16_t) * 8;
-         num_bits_shift += 8) {
-        char c = (char)(value >> num_bits_shift);
-        c = TextNibbleToUpperCaseHex (c);
-        *buffer++ = c;
+    *cursor++ = '0';
+    *cursor++ = 'x';
+    for (int num_bits_shift = sizeof (uint16_t) * 8 - 4; num_bits_shift >= 0;
+         num_bits_shift -= 4) {
+        *cursor++ = HexNibbleToUpperCase ((byte)(value >> num_bits_shift));
     }
-    *buffer = delimiter;
-    return buffer;
+    *cursor = delimiter;
+    return cursor;
 }
 
-char* PrintHex (uint32_t value, char* buffer, char* buffer_end,
+char* PrintHex (uint32_t value, char* cursor, char* buffer_end,
                 char delimiter) {
     enum { kHexStringLengthSizeMax = sizeof (uint32_t) * 2 + 3 };
 
-    assert (buffer);
-    if (buffer >= buffer_end) {
+    assert (cursor);
+    if (cursor + kHexStringLengthSizeMax >= buffer_end) {
         return nullptr;
     }
-    assert (buffer_end - buffer >= kHexStringLengthSizeMax);
 
-    *buffer++ = '0';
-    *buffer++ = 'x';
-    for (int num_bits_shift = 0; num_bits_shift < sizeof (uint32_t) * 8;
-         num_bits_shift += 8) {
-        char c = (char)(value >> num_bits_shift);
-        c = TextNibbleToUpperCaseHex (c);
-        *buffer++ = c;
+    *cursor++ = '0';
+    *cursor++ = 'x';
+    for (int num_bits_shift = sizeof (uint32_t) * 8 - 4; num_bits_shift >= 0;
+         num_bits_shift -= 4) {
+        *cursor++ = HexNibbleToUpperCase ((byte)(value >> num_bits_shift));
     }
-    *buffer = delimiter;
-    return buffer;
+    *cursor = delimiter;
+    return cursor;
 }
 
-char* PrintHex (uint64_t value, char* buffer, char* buffer_end,
+char* PrintHex (uint64_t value, char* cursor, char* buffer_end,
                 char delimiter) {
     enum { kHexStringLengthSizeMax = sizeof (uint64_t) * 2 + 3 };
 
-    assert (buffer);
-    if (buffer >= buffer_end) {
+    assert (cursor);
+    if (cursor + kHexStringLengthSizeMax >= buffer_end) {
         return nullptr;
     }
-    assert (buffer_end - buffer >= kHexStringLengthSizeMax);
 
-    *buffer++ = '0';
-    *buffer++ = 'x';
-    for (int num_bits_shift = 0; num_bits_shift < sizeof (uint64_t) * 8;
-         num_bits_shift += 8) {
-        char c = (char)(value >> num_bits_shift);
-        c = TextNibbleToUpperCaseHex (c);
-        *buffer++ = c;
+    *cursor++ = '0';
+    *cursor++ = 'x';
+    for (int num_bits_shift = sizeof (uint64_t) * 8 - 4; num_bits_shift >= 0;
+         num_bits_shift -= 4) {
+        *cursor++ = HexNibbleToUpperCase ((byte)(value >> num_bits_shift));
     }
-    *buffer = delimiter;
-    return buffer;
+    *cursor = delimiter;
+    return cursor;
 }
 
 char* PrintHex (char c, char* buffer, char* buffer_end, char delimiter) {
@@ -137,7 +182,7 @@ char* PrintHex (char c, char* buffer, char* buffer_end, char delimiter) {
     }
     assert (buffer_end - buffer > 2);
 
-    *buffer++ = TextNibbleToUpperCaseHex (c);
+    *buffer++ = HexNibbleToUpperCase (c);
     *buffer = delimiter;
     return buffer;
 }

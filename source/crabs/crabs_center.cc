@@ -37,7 +37,7 @@
 
 namespace _ {
 
-Center::Center (char* string, int num_columns) :
+Center::Center (const char* string, int num_columns) :
     string (string),
     num_columns (num_columns) {
     assert (string);
@@ -77,17 +77,16 @@ Printer& Center::Print (Printer& printer) {
     length = num_columns - length - offset;
     PRINTF ("\n    length:%i offset:%i", length, offset)
 
-        while (length-- > 0) {
-            *cursor++ = ' ';
-        }
+    while (length-- > 0)
+        *cursor++ = ' ';
+
     char c = *string++;
     while (c) {
         *cursor++ = c;
         c = *string++;
     }
-    while (offset-- > 0) {
+    while (offset-- > 0)
         *cursor++ = ' ';
-    }
     *cursor = 0;
     PRINTF ("\n    Printed:\"%s\"", string);
     printer.cursor = cursor;

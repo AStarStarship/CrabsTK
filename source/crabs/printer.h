@@ -57,6 +57,8 @@ struct Printer {
         @param begin The beginning of the buffer.
         @param end   The end of the buffer. */
     Printer (char* begin, char* end);
+
+    Printer& Set (char* begin);
 };
 
 /** Copies a char from the source to the text.
@@ -117,96 +119,17 @@ KABUKI char* Print (float value, char* text, char* text_end,
 KABUKI char* Print (double value, char* target, char* target_end,
                     char delimiter = 0);
 
-/** Prints the given char centered with a horizontal page bar to the left
-    and right of the row.
-    @param input The value to print.
-    @param num_columns */
-KABUKI char* PrintCentered (const char* string, int num_columns, char* text,
-                            char* text_end, char delimiter = 0);
-
-/** Prints the given value justified center to this string.
-    @param value The value to print.
-    @param num_columns The number of columns per row. */
-inline char* PrintCentered (int32_t value, int num_columns, char* text,
-                            char* text_end, char delimiter = 0) {
-    char buffer[8];
-    Print ((int64_t)value, buffer, buffer + 8);
-    return PrintCentered (buffer, num_columns, text, text_end);
-}
-
-/** Prints the given value justified center to this string.
-    @param value The value to print.
-    @param num_columns The number of columns per row. */
-inline char* PrintCentered (uint32_t value, int num_columns, char* text,
-                            char* text_end, char delimiter = 0) {
-    char buffer[16];
-    Print ((uint32_t)value, buffer, buffer + 16);
-    return PrintCentered (buffer, num_columns, text, text_end);
-}
-
-/** Prints the given value justified center to this string.
-    @param value The value to print.
-    @param num_columns The number of columns per row. */
-inline char* PrintCentered (int64_t value, int num_columns, char* text,
-                            char* text_end, char delimiter = 0) {
-    char buffer[16];
-    Print (value, buffer, buffer + 16);
-    return PrintCentered (buffer, num_columns, text, text_end);
-}
-
-/** Prints the given value justified center to this string.
-    @param value The value to print.
-    @param num_columns The number of columns per row. */
-inline char* PrintCentered (uint64_t value, int num_columns, char* text,
-                            char* text_end, char delimiter = 0) {
-    char buffer[24];
-    Print (value, buffer, buffer + 24);
-    return PrintCentered (buffer, num_columns, text, text_end);
-}
-
-/** Prints the given value justified center to this string.
-    @param value The value to print.
-    @param num_columns The number of columns per row. */
-inline char* PrintCentered (float value, int num_columns, char* text,
-                            char* text_end, char delimiter = 0) {
-    char buffer[kkFloat32DigitsMax];
-    Print (value, buffer, buffer + kkFloat32DigitsMax);
-    return PrintCentered (buffer, num_columns, text, text_end);
-}
-
-/** Prints the given value justified center to this string.
-    @param value The value to print.
-    @param num_columns The number of columns per row. */
-inline char* PrintCentered (double value, int num_columns, char* text,
-                            char* text_end, char delimiter = 0) {
-    char buffer[kFloat64DigitsMax];
-    Print (value, buffer, buffer + kFloat64DigitsMax);
-    return PrintCentered (buffer, num_columns, text, text_end);
-}
-
-KABUKI char* PrintBinary (uint64_t value, char* text, char* text_end,
-                          char delimiter = 0);
-
-inline Printer PrinterInit (char* buffer, char* buffer_end) {
-    return { buffer, buffer_end };
-}
-
-inline Printer PrinterInit (size_t buffer_size, char* buffer) {
-    if (buffer == nullptr) {
-        buffer = new char[buffer_size];
-    }
-    return { buffer, buffer + buffer_size - 1 };
-}
-
+/** Utility class for printing numbers. */
 template<typename T>
 struct Number {
     enum {
         kSize = sizeof (T) == 8 ? 24 :
-        sizeof (T) == 4 ? 16 : 8
+        sizeof (T) == 4 ? 16 : 8    //< Size of the text buffer in bytes.
     };
-    T value;    //< Value to print.
-    char string[kSize];
+    T value;            //< Value to print.
+    char string[kSize]; //< String buffer.
 
+    /** Constructor copies value and prints it to the string buffer. */
     Number (T value) :
         value (value) {
         Print (value, string, string + kSize - 1);

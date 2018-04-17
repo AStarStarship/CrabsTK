@@ -262,8 +262,7 @@ inline char* PrintMemory (const void* begin, size_t size, char* text,
                         text, text_end, delimiter);
 }
 
-inline Printer& PrintMemory (const void* begin, size_t size,
-                             Printer& printer) {
+inline Printer& PrintMemory (Printer& printer, const void* begin, size_t size) {
 }
 
 /** Utility class for printing a text line with operator<<. */

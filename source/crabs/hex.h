@@ -46,15 +46,14 @@ class Hex {
     Printer& Print (Printer& printer) {
         enum { kSize = sizeof (T) * 2 + 2 };
         char* l_cursor = printer.cursor;
-        intptr_t size = printer.end - l_cursor;
-        if (size <= kSize) return printer;
+        char* temp = l_cursor;
+        intptr_t space = printer.end - l_cursor;
+        if (space <= kSize) return printer;
         *l_cursor++ = '0';
         *l_cursor++ = 'x';
-        for (int num_bits_shift = 0; num_bits_shift < sizeof (T) * 8;
-             num_bits_shift += 8) {
-            char c = (char)(value >> num_bits_shift);
-            c = TextNibbleToUpperCaseHex (c);
-            *l_cursor++ = c;
+        for (int num_bits_shift = sizeof (T) * 8 - 4; num_bits_shift >= 0;
+             num_bits_shift -= 4) {
+            *l_cursor++ = HexNibbleToUpperCase ((byte)(value >> num_bits_shift));
         }
         *l_cursor = 0;
         printer.cursor = l_cursor;

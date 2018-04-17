@@ -47,7 +47,7 @@
      };\
     Printer print;\
     PrintBOut (print, bout);\
-    printf   ("\n    %s%s", header, bout_buffer);\
+    printf   ("\n    %s%s", header, BufferDefault ());\
 }
 #else
 #define PRINTF(x, ...)
@@ -118,10 +118,8 @@ const char** BOutStateStrings () {
 }
 
 char* BOutBuffer (BOut* bout) {
-    if (!bout)
-        return nullptr;
-    char* ptr = reinterpret_cast<char*> (bout);
-    return ptr + sizeof (BOut);
+    assert (bout);
+    return reinterpret_cast<char*> (bout) + sizeof (BOut);
 }
 
 BOut* BOutInit (uintptr_t* buffer, uint_t size) {
@@ -194,15 +192,11 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
         kBOutBufferSize = 1024,
         kBOutBufferSizeWords = kBOutBufferSize >> kWordBitCount
     };
-    char bout_buffer[kBOutBufferSizeWords];
     PRINT_BOUT (" to B-Output:", bout)
 
-    if (!bout)
-        return BOutError (bout, kErrorImplementation);
-    if (!params)
-        return BOutError (bout, kErrorImplementation);
-    if (!args)
-        return BOutError (bout, kErrorImplementation);
+    assert (bout);
+    assert (params);
+    assert (args);
 
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte //type,
@@ -796,13 +790,14 @@ char* Print (BOut* bout, char* buffer, char* buffer_end) {
 
 Printer& PrintBOut (Printer& print, BOut* bout) {
     assert (bout);
-    print << Line ('_', 80);
     int size = bout->size;
-    return print << "\nBOut:" << Hex<> (bout) << " size:" << size
+     print << Line ('_', 80) 
+                 << "\nBOut:" << Hex<> (bout) << " size:" << size
                  << " start:" << bout->start << " stop:" << bout->stop
                  << " read:"  << bout->read
-                 << Memory (BOutBuffer (bout), size + 64);
-    //< @todo remove the + 64.);
+                 << Memory (BOutBuffer (bout), size - 1);
+    printf ("\n!| cursor:%p", print.cursor);
+    return print;
 }
 #endif
 
