@@ -4,7 +4,7 @@ Kabuki Toolkit (KT) is a modern cross-platform C++1x software and firmware toolk
 
 ## Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification (Script)
 
-Script is a software-defined networking protocol and embedded-friendly family of languages that facilitates artificial intelligence and machine learning (AIML) using functional programming and natural language processing (NLP). Script is best described as a mix of JavaScript, Python, Lua, and LISP. JavaScript because it's asynchronous with a round-robin scheduler, Python because it has native dictionaries, Lua because of Script's RPC nature, and Script has a rather unique dialect of LISP called Interprocess LISP.
+Script is a software-defined networking protocol and embedded-friendly family of languages that facilitates artificial intelligence and machine learning (AIML) using functional programming and natural language processing (NLP). Script is best described as a mix of JavaScript, Python, and LISP. JavaScript because it's asynchronous with a round-robin scheduler, Python because it has native dictionaries, and Script has a rather unique dialect of LISP called Interprocess LISP.
 
 The Chinese Room is a famous artificial intelligence philosophy thought experiment invented by the philosopher John Searle. The experiment highlights the difference between strong vs weak AI and how a normal everyday room in an office or network of rooms can form to create a turning equivalent machine that can fluently speak any language. Kabuki Script is the reference Script
 
@@ -30,8 +30,6 @@ The Chinese Room is a famous artificial intelligence philosophy thought experime
 |  code | Coding utilities. |
 | crabs | Chinese room abstract stack machine. |
 |  data | Data and data logging. |
-|    gl | Graphics library. |
-|   gui | Graphical user interfaces. |
 |   hmi | Human-machine interfaces. |
 |    id | Identification. |
 | igeek | Interactive Genetic Environment for Kabuki. |
@@ -45,10 +43,8 @@ The Chinese Room is a famous artificial intelligence philosophy thought experime
 ### 3rd Party APIs
 
 * [Google C++ API](https://github.com/Microsoft/cpprestsdk)
-* [SFML](https://www.sfml-dev.org/) (Might switch to SDL soon)
+* [SFML](https://www.sfml-dev.org/)
 * [ANGLE](https://github.com/google/angle)
-* [nanovg](https://github.com/memononen/nanovg)
-* [nanogui](https://github.com/wjakob/nanogui)
 * [stb](https://github.com/nothings/stb)
 * [Maximilian](https://github.com/micknoise/Maximilian)
 * [Static Math](https://github.com/Morwenn/static_math)

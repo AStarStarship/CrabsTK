@@ -38,13 +38,6 @@ yourself for offline viewing. The UML diagrams can be found in the
     formatting the style. We need to export a Visual Studio C++ code format file
     and could use some help with that.
 
-* Where is the \_video code?
-    We're shooting for deep integration into [OpenCV](opencv.org). This process
-    has not yet begun. Please feel free to help us with this. Please note that
-    this SDK is required to be able to work with a C++ DLL for cross-platform
-    reasons. All code should have hardware and OS agnostic interface controllers
-    so developers can write the code once and it works on all platforms.
-
 * Is there any UML?
     We're using [StarUML 2.x](http://staruml.io/). The models can be found in
     the file "~/Documents/Kabuki Starship.mdj". Most of the included modules were
