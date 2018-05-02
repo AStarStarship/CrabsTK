@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="projects">
+      <UniqueIdentifier>{083ec160-d96a-4ccc-baab-527b8f65d5b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="projects\sloth">
+      <UniqueIdentifier>{fa4a9efd-aa8a-4975-9620-e71bb7c990f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="projects\terminal">
+      <UniqueIdentifier>{141c22c3-7927-4379-8e32-8c4433886102}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="projects\script_itos_benchmark">
+      <UniqueIdentifier>{a66a4851-eef4-4a27-8043-28fb1440edb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests">
+      <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="docs">
+      <UniqueIdentifier>{c0051d73-e769-4693-a78b-3f3d4bb3358f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="kabuki\toolkit">
+      <UniqueIdentifier>{fe9bdc01-bcec-4293-976e-e35e58ed2bbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\toolkit\math">
+      <UniqueIdentifier>{9bce5efa-3599-4215-8a83-b85948c8152d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\toolkit\crabs">
+      <UniqueIdentifier>{c9fed358-324c-4fa2-8799-73e59bffd98d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\toolkit\data">
+      <UniqueIdentifier>{95171f9c-37ad-4a24-8e15-8dac5fafa5bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\toolkit\hmi">
+      <UniqueIdentifier>{dc7254fd-1d80-4ff5-8e90-738488ac6ed2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

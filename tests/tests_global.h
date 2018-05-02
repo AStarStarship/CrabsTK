@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/source/kabuki/global.h
+    @file    ~/source/global.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 

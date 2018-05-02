@@ -1,0 +1,44 @@
+/** Kabuki Toolkit
+    @file    ~/library/kabuki/toolkit/midi/midi_map.cc
+    @author  Cale McCollough <calemccollough.github.io>
+    @license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
+*/
+
+#include <stdafx.h>
+
+#include "midi_map.h"
+
+namespace kabuki { namespace toolkit { namespace midi {
+
+MIDIMap::MIDIMap ()
+{
+}
+
+int MIDIMap::SetMap (int index, const byte* outputAddress)
+{
+    if (outputAddress == nullptr) return ~0;
+    if (index < 0) return index;
+    if (index > 127) return index;
+
+    out[index] = outputAddress;
+    return 0;
+}
+
+const byte* MIDIMap::MapParam (int index)
+{
+    if (index < 0) return nullptr;
+    if (index > 127) return nullptr;
+    return out[index];
+}
+
+}   //< namespace midi}       //< namespace toolkit
+}       //< namespace kabuki

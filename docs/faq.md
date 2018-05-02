@@ -7,9 +7,8 @@ yourself for offline viewing. The UML diagrams can be found in the
 # Frequently Asked Questions
 
 * Where should I start?
-     It is best to start with the [Example projects]
-     (https://github.com/Kabuki-Toolkit/kabuki/tree/master/Examples).
-     Just find a project that is kind of like what you want to do and modify it.
+     The best place to start is with the Quickstart Guide.
+     (https://github.com/CaleMcCollough/kabuki-script/wiki/02-quickstart-guide).
 
 * How do I get started as a developer?
    The best way to get started as a developer is to go through and clean up the

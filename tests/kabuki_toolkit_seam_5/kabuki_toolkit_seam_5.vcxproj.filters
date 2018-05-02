@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="projects">
+      <UniqueIdentifier>{083ec160-d96a-4ccc-baab-527b8f65d5b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests">
+      <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="docs">
+      <UniqueIdentifier>{c0051d73-e769-4693-a78b-3f3d4bb3358f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library">
+      <UniqueIdentifier>{34078e8c-5640-4dd1-81cf-0c2de5a82c91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library\kabuki">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="library\kabuki\toolkit">
+      <UniqueIdentifier>{336e7592-882d-482b-8dde-8d10a5600487}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library\kabuki\toolkit\pro">
+      <UniqueIdentifier>{95171f9c-37ad-4a24-8e15-8dac5fafa5bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library\kabuki\toolkit\id">
+      <UniqueIdentifier>{dc7254fd-1d80-4ff5-8e90-738488ac6ed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library\kabuki\toolkit\aiml">
+      <UniqueIdentifier>{9bce5efa-3599-4215-8a83-b85948c8152d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library\crabs">
+      <UniqueIdentifier>{c9fed358-324c-4fa2-8799-73e59bffd98d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

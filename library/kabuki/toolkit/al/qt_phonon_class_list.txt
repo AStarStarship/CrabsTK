@@ -1,0 +1,89 @@
+Phonon Module
+
+The Phonon module contains namespaces and classes for multimedia functionality. More...
+Namespaces
+
+Phonon::BackendCapabilities
+	
+
+Contains functions to describe the capabilities of the multimedia backend
+Classes
+
+Phonon::AudioDataOutput
+	
+
+Access to audio data
+
+Phonon::AudioOutput
+	
+
+Used to send data to audio output devices
+
+Phonon::BackendCapabilities::Notifier
+
+Phonon::Effect
+	
+
+Used to transform audio streams
+
+Phonon::EffectParameter
+	
+
+Describes one parameter of an effect
+
+Phonon::EffectWidget
+	
+
+Widget to control the parameters of an Effect
+
+Phonon::MediaController
+	
+
+Controls optional features of a media file/device
+
+Phonon::MediaNode
+	
+
+The base class for all nodes in a media graph
+
+Phonon::MediaObject
+	
+
+Interface for media playback
+
+Phonon::MediaSource
+	
+
+Multimedia data for media objects
+
+Phonon::ObjectDescription
+	
+
+Information about Phonon objects
+
+Phonon::Path
+	
+
+Describes connections between media nodes
+
+Phonon::SeekSlider
+	
+
+Slider for seeking to positions in media streams
+
+Phonon::VideoPlayer
+	
+
+Used to perform playback of video
+
+Phonon::VideoWidget
+	
+
+Widget that is used to display video
+
+Phonon::VideoWidgetInterface44
+
+Phonon::VolumeSlider
+	
+
+Slider that is used to control the volume of an audio output device
