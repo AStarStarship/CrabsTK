@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="projects">
+      <UniqueIdentifier>{083ec160-d96a-4ccc-baab-527b8f65d5b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="projects\script_itos_benchmark">
+      <UniqueIdentifier>{a66a4851-eef4-4a27-8043-28fb1440edb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests">
+      <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="library\crabs">
+      <UniqueIdentifier>{c9fed358-324c-4fa2-8799-73e59bffd98d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\kt_seam_1">
+      <UniqueIdentifier>{58e3107b-411d-4481-a099-45f432a5a8d2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\library\crabs\script_itos.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_align.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_bin.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_binary.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_bout.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_bsq.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_center.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_clock.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_door.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_error.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_expr.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_hash.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_hex.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_interrupts.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_line.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_memory.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_op.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_operand.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_printer.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_right.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_room.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_scan.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_slot.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_slot_print.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_text.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_type.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_wall.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\print64.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\stdafx.cc">
+      <Filter>library</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_1_1.cc">
+      <Filter>tests\kt_seam_1</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_1_2.cc">
+      <Filter>tests\kt_seam_1</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_1_3.cc">
+      <Filter>tests\kt_seam_1</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cc">
+      <Filter>tests\kt_seam_1</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_1.cc">
+      <Filter>tests\kt_seam_1</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\library\crabs\room.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\scan.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\script_itos.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\set.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\slot.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\stack.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\table.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\text.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\type.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\varint.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\wall.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\address.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\align.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\args.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\ascii.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\bin.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\binary.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\bok.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\bout.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\bsq.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\center.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\clock.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\config.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\dic.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\door.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\error.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\event.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\expr.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\global.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\hash.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\hex.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\interrupts.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\iterator.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\language.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\library.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\line.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\lst.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\map.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\memory.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\mirror.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\op.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\operand.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\printer.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\random.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\right.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\targetver.h">
+      <Filter>library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\assembly.h">
+      <Filter>library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\config.h">
+      <Filter>library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\global.h">
+      <Filter>library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\stdafx.h">
+      <Filter>library</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>tests\kt_seam_1</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>tests\kt_seam_1</Filter>
+    </ClInclude>
+    <ClInclude Include="test_seam_1.h">
+      <Filter>tests\kt_seam_1</Filter>
+    </ClInclude>
+    <ClInclude Include="assembly.h">
+      <Filter>tests\kt_seam_1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\array.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\library\crabs\readme.md">
+      <Filter>library\crabs</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -56,7 +56,7 @@
 #include "interrupts.h"
 #endif
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #include "table.h"
 #include "lst.h"
 #include "map.h"

@@ -22,7 +22,6 @@
 
 #include "config.h"
 
-
 namespace _ {
 
 /** @ingroup Stack

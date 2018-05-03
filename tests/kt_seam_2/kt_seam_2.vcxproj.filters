@@ -1,0 +1,629 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="projects">
+      <UniqueIdentifier>{083ec160-d96a-4ccc-baab-527b8f65d5b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="projects\terminal">
+      <UniqueIdentifier>{141c22c3-7927-4379-8e32-8c4433886102}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests">
+      <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="library\kabuki">
+      <UniqueIdentifier>{1cdb8a29-971f-44fe-b95b-f787485b81d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library\kabuki\hmi">
+      <UniqueIdentifier>{714fd075-a8a5-4b94-98a1-9cde36230270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library\crabs">
+      <UniqueIdentifier>{c9fed358-324c-4fa2-8799-73e59bffd98d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library\kabuki\midi">
+      <UniqueIdentifier>{d24e96f2-654e-4c69-bee4-1804c5686ebb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library\kabuki\app">
+      <UniqueIdentifier>{95171f9c-37ad-4a24-8e15-8dac5fafa5bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests\kt_seam_2">
+      <UniqueIdentifier>{cbcdbd24-b21a-4777-9053-3a5b06fc428b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\library\crabs\room.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\scan.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\script_itos.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\set.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\slot.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\slot_print.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\stack.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\table.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\text.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\type.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\varint.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\wall.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\address.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\align.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\args.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\ascii.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\bin.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\binary.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\bok.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\bout.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\bsq.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\center.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\clock.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\config.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\dic.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\door.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\error.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\event.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\expr.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\global.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\hash.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\hex.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\interrupts.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\iterator.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\language.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\library.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\line.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\lst.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\map.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\memory.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\mirror.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\op.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\operand.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\printer.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\random.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\right.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\page_button.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\parameter.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\parameter_set.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\radio_button.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\widget.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\widget_manager.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\widget_page.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\workspace.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\xy_control.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\adsr.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\button.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\button_dmx.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\button_dummy.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\button_event.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\button_macro.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\button_scroller.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\button_swap.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\channel_group.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\component.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\config.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\control_dmx.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\control_master.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\control_matrix.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\controller.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\device_button.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\event.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\isymmetric_controller.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\key_event.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\key_event_buffer.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\keyboard_realtime.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\midi_button.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\midi_control.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\midi_widget.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\mixer.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\mixer_channel.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\mixer_page.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\hmi\mode_button.h">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\controller.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\device.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\long_message.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\message.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\midi.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\midi_listener.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\midi_map.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\midi_note_listener.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\note.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\port.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\port_in.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\port_out.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\rtmidi.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\rtmidi_c.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\short_message.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\tempo_sync.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\midi\control.h">
+      <Filter>library\kabuki\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\app\key_listener.h">
+      <Filter>library\kabuki\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\app\process_tree.h">
+      <Filter>library\kabuki\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\app\app.h">
+      <Filter>library\kabuki\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\app\comparable.h">
+      <Filter>library\kabuki\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\app\console.h">
+      <Filter>library\kabuki\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\app\event.h">
+      <Filter>library\kabuki\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\app\event_sequence.h">
+      <Filter>library\kabuki\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\app\group.h">
+      <Filter>library\kabuki\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\app\realtime_app.h">
+      <Filter>library\kabuki\app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\app\clipboard.h">
+      <Filter>library\kabuki\app</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\library\crabs\script_itos.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_align.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_bin.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_binary.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_bout.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_bsq.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_center.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_clock.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_door.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_error.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_expr.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_hash.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_hex.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_interrupts.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_line.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_memory.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_op.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_operand.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_printer.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_right.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_room.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_scan.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_slot.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_slot_print.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_text.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_type.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_wall.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\print64.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_button.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_button_dmx.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_button_dummy.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_button_event.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_button_macro.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_button_midi.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_button_mode.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_button_page.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_button_radio.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_button_scroller.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_channel_group.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_component.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_control_dmx.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_control_matrix.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_control_midi.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_device_button.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_event.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_isymmetric_controller.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_key_event.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_keyboard_buffer.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_keyboard_realtime.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_mixer.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_mixer_channel.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_mixer_page.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_parameter.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_parameter_set.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_swap_button.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_widget.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_widget_midi.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_widget_page.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_workspace.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\hmi\hmi_xy_control.cc">
+      <Filter>library\kabuki\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\midi\midi_map.cc">
+      <Filter>library\kabuki\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\midi\rtmidi.cc">
+      <Filter>library\kabuki\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\midi\rtmidi_c.cc">
+      <Filter>library\kabuki\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\midi\tempo_sync.cc">
+      <Filter>library\kabuki\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\midi\midi_control.cc">
+      <Filter>library\kabuki\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\midi\midi_control_surface.cc">
+      <Filter>library\kabuki\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\midi\midi_device.cc">
+      <Filter>library\kabuki\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\midi\midi_long_message.cc">
+      <Filter>library\kabuki\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\midi\midi_message.cc">
+      <Filter>library\kabuki\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\midi\midi_port.cc">
+      <Filter>library\kabuki\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\midi\midi_port_in.cc">
+      <Filter>library\kabuki\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\midi\midi_port_out.cc">
+      <Filter>library\kabuki\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\midi\midi_short_message.cc">
+      <Filter>library\kabuki\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\midi\midi_target_device.cc">
+      <Filter>library\kabuki\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_2_1.cc">
+      <Filter>tests\kt_seam_2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\app\app.cc">
+      <Filter>library\kabuki\app</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\app\app_event_sequence.cc">
+      <Filter>library\kabuki\app</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\app\app_dllmain.cc">
+      <Filter>library\kabuki\app</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\app\app_process_tree.cc">
+      <Filter>library\kabuki\app</Filter>
+    </ClCompile>
+    <ClCompile Include="..\test_kabuki_toolkit.cc">
+      <Filter>tests</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
+    <None Include="..\..\library\crabs\readme.md">
+      <Filter>library\crabs</Filter>
+    </None>
+    <None Include="..\..\library\kabuki\toolkit\hmi\readme.md">
+      <Filter>library\kabuki\hmi</Filter>
+    </None>
+    <None Include="..\..\library\kabuki\toolkit\midi\readme.md">
+      <Filter>library\kabuki\midi</Filter>
+    </None>
+    <None Include="..\..\library\kabuki\toolkit\app\readme.md">
+      <Filter>library\kabuki\app</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\library\crabs\crabs_align.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_bin.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_binary.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_bout.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_bsq.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_center.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_clock.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_door.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_error.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_expr.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_hash.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_hex.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_interrupts.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_line.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_memory.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_op.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_operand.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_printer.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_right.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_room.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_scan.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_slot.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_slot_print.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_text.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_type.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_wall.cc" />
+    <ClCompile Include="..\..\library\crabs\print64.cc" />
+    <ClCompile Include="..\..\library\crabs\script_itos.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_account.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_address.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_authenticatordefault.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_date.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_email_address.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_entity.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_entity_group.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_entity_list.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_handle.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_hit.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_hit_list.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_library.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_name.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_oauth_account.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_organization.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_password.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_person.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_privilege.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_profile.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_relationship.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_roster.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_server.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_symbol.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_tag_library.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_user.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\id\id_user_list.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\pro\project_project.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\pro\project_schedule.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\pro\project_task.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\store\store_cart.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\store\store_client.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\store\store_inventory.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\store\store_item.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\store\store_server.cc" />
+    <ClCompile Include="..\kt_seam_1\test_seam_1_1.cc" />
+    <ClCompile Include="..\kt_seam_1\test_seam_1_2.cc" />
+    <ClCompile Include="..\kt_seam_1\test_seam_1_3.cc" />
+    <ClCompile Include="..\kt_seam_1\test_seam_1_4.cc" />
+    <ClCompile Include="..\kt_seam_1\test_seam_1_5.cc" />
+    <ClCompile Include="..\test_kt.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\library\crabs\readme.md" />
+    <None Include="..\..\library\kabuki\toolkit\id\readme.md" />
+    <None Include="..\..\library\kabuki\toolkit\pro\readme.md" />
+    <None Include="..\kt_seam_1\test_script.script" />
+    <None Include="..\readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\library\crabs\address.h" />
+    <ClInclude Include="..\..\library\crabs\align.h" />
+    <ClInclude Include="..\..\library\crabs\args.h" />
+    <ClInclude Include="..\..\library\crabs\array.h" />
+    <ClInclude Include="..\..\library\crabs\ascii.h" />
+    <ClInclude Include="..\..\library\crabs\bin.h" />
+    <ClInclude Include="..\..\library\crabs\binary.h" />
+    <ClInclude Include="..\..\library\crabs\book.h" />
+    <ClInclude Include="..\..\library\crabs\bout.h" />
+    <ClInclude Include="..\..\library\crabs\bsq.h" />
+    <ClInclude Include="..\..\library\crabs\center.h" />
+    <ClInclude Include="..\..\library\crabs\clock.h" />
+    <ClInclude Include="..\..\library\crabs\config.h" />
+    <ClInclude Include="..\..\library\crabs\dic.h" />
+    <ClInclude Include="..\..\library\crabs\door.h" />
+    <ClInclude Include="..\..\library\crabs\error.h" />
+    <ClInclude Include="..\..\library\crabs\event.h" />
+    <ClInclude Include="..\..\library\crabs\expr.h" />
+    <ClInclude Include="..\..\library\crabs\global.h" />
+    <ClInclude Include="..\..\library\crabs\hash.h" />
+    <ClInclude Include="..\..\library\crabs\hex.h" />
+    <ClInclude Include="..\..\library\crabs\interrupts.h" />
+    <ClInclude Include="..\..\library\crabs\iterator.h" />
+    <ClInclude Include="..\..\library\crabs\language.h" />
+    <ClInclude Include="..\..\library\crabs\library.h" />
+    <ClInclude Include="..\..\library\crabs\line.h" />
+    <ClInclude Include="..\..\library\crabs\list.h" />
+    <ClInclude Include="..\..\library\crabs\map.h" />
+    <ClInclude Include="..\..\library\crabs\memory.h" />
+    <ClInclude Include="..\..\library\crabs\mirror.h" />
+    <ClInclude Include="..\..\library\crabs\op.h" />
+    <ClInclude Include="..\..\library\crabs\operand.h" />
+    <ClInclude Include="..\..\library\crabs\printer.h" />
+    <ClInclude Include="..\..\library\crabs\random.h" />
+    <ClInclude Include="..\..\library\crabs\right.h" />
+    <ClInclude Include="..\..\library\crabs\room.h" />
+    <ClInclude Include="..\..\library\crabs\scan.h" />
+    <ClInclude Include="..\..\library\crabs\script_itos.h" />
+    <ClInclude Include="..\..\library\crabs\set.h" />
+    <ClInclude Include="..\..\library\crabs\slot.h" />
+    <ClInclude Include="..\..\library\crabs\slot_print.h" />
+    <ClInclude Include="..\..\library\crabs\stack.h" />
+    <ClInclude Include="..\..\library\crabs\table.h" />
+    <ClInclude Include="..\..\library\crabs\text.h" />
+    <ClInclude Include="..\..\library\crabs\type.h" />
+    <ClInclude Include="..\..\library\crabs\varint.h" />
+    <ClInclude Include="..\..\library\crabs\wall.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\account.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\address.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\authenticator.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\authenticator_default.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\config.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\date.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\email_address.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\entity.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\entity_group.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\entity_list.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\global.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\handle.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\hit.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\hit_list.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\id_server.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\library.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\name.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\oauth_account.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\organization.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\password.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\person.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\privilege.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\profile.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\relationship.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\role.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\roster.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\symbol.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\tag.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\tag_tibrary.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\uid_server.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\user.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\id\user_list.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\pro\config.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\pro\global.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\pro\project.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\pro\schedule.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\pro\task.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\store\cart.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\store\client.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\store\config.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\store\global.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\store\inventory.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\store\item.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\store\server.h" />
+    <ClInclude Include="..\test_kt.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{6A9E3B82-CE5F-4740-BB62-7EDAB43C6756}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>kabukitoolkit</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectName>kt_seam_3_tests</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(ProjectDir)../../cpputest/lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>winmm.lib; CppUTestd.lib; CppUTest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>A:\Workspace\cpputest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\..\cpputest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>winmm.lib;CppUTestd.lib;CppUTest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

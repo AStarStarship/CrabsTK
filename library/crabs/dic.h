@@ -20,7 +20,7 @@
 #ifndef HEADER_FOR_CRABS_TBOOK
 #define HEADER_FOR_CRABS_TBOOK
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "memory.h"
 #include "type.h"

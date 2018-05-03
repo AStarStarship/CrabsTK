@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 namespace _ {
 #if USING_PRINTER

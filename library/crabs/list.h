@@ -21,7 +21,7 @@
 #define CRABS_TLIST_H
 
 #include "set.h"
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 namespace _ {
 

@@ -41,19 +41,6 @@ class Axion1D {
     public:
 
     Axion1D (float& value);
-
-    float GetWeight ();
-
-    void SetWeight (float weight);
-
-    float GetValue ();
-
-    void SetValue (float& value);
-
-    private:
-
-    float_t weight_;
-    float_t x_n_minus_1_;
 };*/
 
 /** A Perceptron.
@@ -76,16 +63,29 @@ class Perceptron {
 
     Perceptron ();
 
-    void Connect (Axion1D* neuron);
+    void Connect (Perceptron* p);
 
-    void Disconnect (float_t& );
+    void Disconnect (Perceptron* p);
+
+    float_t GetWeight ();
+
+    void SetWeight (float_t weight);
+
+    float_t GetValue ();
+
+    void SetValue (float_t& value);
 
     void Update ();
 
     private:
 
-    std::vector<float_t&> x_;
     float_t y_;
+    std::vector<Perceptron*> x_;
+
+    private:
+
+    float_t weight_;
+    float_t x_n_minus_1_;
 };
 
 #endif  //< #fndef HEADER_FOR_PERCEPTRON

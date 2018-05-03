@@ -19,7 +19,7 @@
 
 #include "type.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "text.h"
 
@@ -110,7 +110,7 @@ struct Collection {
     virtual uintptr_t GetSizeWidth () = 0;
 
     /**  */
-    virtual Slot& Print (Slot& slot) = 0;
+    virtual Printer& Print (Printer& print) = 0;
 };
 }       //< namespace _
 #endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 6

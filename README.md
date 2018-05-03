@@ -21,24 +21,34 @@ The Chinese Room is a famous artificial intelligence philosophy thought experime
 * [Chinese Room Wiki](https://en.wikipedia.org/wiki/Chinese_room)
   - *Good place to start learning some philosophy.*
 
-## SDK Modules
+## kabuki Modules
 
-|  Name | Description    |
-|------:|:---------------|
-|    al | Audio library. |
-|   app | Application framework. |
-|  code | Coding utilities. |
-| crabs | Chinese room abstract stack machine. |
-|  data | Data and data logging. |
-|   hmi | Human-machine interfaces. |
-|    id | Identification. |
-| igeek | Interactive Genetic Environment for Kabuki. |
-|  math | Math. |
-|  midi | MIDI. |
-|   tek | Firmware toolkit. |
-|   pro | Projects, tasks, and scheduling. |
-| store | Store and inventory. |
-|   web | WWW and IoT. |
+|    Name | Description    |
+|--------:|:---------------|
+|     tek | Firmware toolkit. |
+| toolkit | General purpose SDK. |
+
+### kabuki::toolkit Modules
+
+|   Name | Description    |
+|-------:|:---------------|
+|     al | Audio library. |
+|    app | Application framework. |
+| client | Web client. |
+|   code | Coding utilities. |
+|  crabs | Chinese room abstract stack machine. |
+|   data | Data and logging. |
+|    hmi | Human-machine interfaces. |
+|     id | Identification. |
+|  igeek | Interactive Genetic Environment for Kabuki. |
+|   math | Math. |
+|   midi | MIDI. |
+|    pro | Projects, tasks, and scheduling. |
+|  store | Store and inventory. |
+
+### Kabuki Toolkit Major Seams
+
+![Kabuki Toolkit Package and Seam Diagram](https://raw.githubusercontent.com/kabuki-starship/kabuki-toolkit/master/docs/kt_package_diagram.jpg)
 
 ### 3rd Party APIs
 

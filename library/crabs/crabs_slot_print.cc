@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "line.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "slot_print.h"
 

@@ -17,13 +17,12 @@
 #pragma once
 #include <stdafx.h>
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #ifndef HEADER_FOR_CRABS_SLOT_PRINT
 #define HEADER_FOR_CRABS_SLOT_PRINT
 
 #include "slot.h"
-
 
 namespace _ {
 
@@ -282,7 +281,8 @@ inline _::Slot& operator<< (_::Slot& text_a, _::Slot& text_b) {
     @param  value The value to write to the slot. 
     @return The slot. */
 inline _::Slot& operator<< (_::Slot& slot, _::Slot& other) {
-    return SlotWrite (slot, other);
+    //return SlotWrite (slot, other);
+    return slot;
 }
 
 /** Op << writes a nil-terminated UTF-8 or ASCII string to the
@@ -357,4 +357,4 @@ inline _::Slot& operator<< (_::Slot& slot, _::Line line) {
 }
 
 #endif  //< HEADER_FOR_CRABS_SLOT_PRINT
-#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

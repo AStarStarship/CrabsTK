@@ -1,1 +1,0 @@
-The Kabuki Processing Unit is a stem for an open-source RISC-V based Tensor Processing Unit that has no work done on it. This is just to prepare for later.

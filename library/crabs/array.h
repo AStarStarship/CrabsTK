@@ -16,14 +16,14 @@
 #pragma once
 #include <stdafx.h>
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
-#ifndef HEADER_FOR_KABUKI_TOOLKIT_DATA_ARRAY
-#define HEADER_FOR_KABUKI_TOOLKIT_DATA_ARRAY
+#ifndef HEADER_FOR_CRABS_ARRAY
+#define HEADER_FOR_CRABS_ARRAY
 
 #include "config.h"
 
-namespace kt { namespace data {
+namespace _ {
 
 /** An array of like types that can auto-grow.
     @todo This is an older data structure that needs to be replace this with 
@@ -259,7 +259,6 @@ class Array {
     T*  elements_; //< The array.
 
 };      //< class Array
-}       //< namespace data
-}       //< namespace toolkit}       //< namespace kabuki
-#endif  //< HEADER_FOR_KABUKI_TOOLKIT_DATA_ARRAY
+}       //< namespace _
+#endif  //< HEADER_FOR_CRABS_ARRAY
 #endif  //< #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 1

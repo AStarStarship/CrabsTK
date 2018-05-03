@@ -22,7 +22,7 @@
 
 #include "memory.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 5
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 
 #include "type.h"
 
