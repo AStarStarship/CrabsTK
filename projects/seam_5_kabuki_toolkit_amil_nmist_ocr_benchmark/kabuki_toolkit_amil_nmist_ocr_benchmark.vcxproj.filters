@@ -188,7 +188,7 @@
     <ClInclude Include="..\..\library\kabuki\toolkit\aiml\perceptron_network.h">
       <Filter>kabuki\toolkit\aiml</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\library\kabuki\toolkit\aiml\asyncronous.h">
+    <ClInclude Include="..\..\library\kabuki\toolkit\aiml\synapse.h">
       <Filter>kabuki\toolkit\aiml</Filter>
     </ClInclude>
   </ItemGroup>
@@ -290,6 +290,9 @@
       <Filter>projects\seam_5_kabuki_toolkit_amil_nmist_ocr_benchmark</Filter>
     </ClCompile>
     <ClCompile Include="..\..\library\kabuki\toolkit\aiml\aiml_perceptron_network.cc">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\aiml_synapse.cc">
       <Filter>kabuki\toolkit\aiml</Filter>
     </ClCompile>
   </ItemGroup>

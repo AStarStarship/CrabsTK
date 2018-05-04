@@ -29,11 +29,11 @@ class Task
     
     /** Creates a task with the given fields and clones the strings. */
     Task (const char* summary = "", const char* details = "",  
-          float weight = 0.0f, int time_testimate_min = 60 * 60);
+          float weight_ = 0.0f, int time_testimate_min = 60 * 60);
 
     /** Creates a task with the given fields from strings this object now 
         owns and must delete. */
-    Task (char* summary, char* details, float weight, int time_estimate_min);
+    Task (char* summary, char* details, float weight_, int time_estimate_min);
     
     /** Destructor. */
     ~Task ();

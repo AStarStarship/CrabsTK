@@ -23,34 +23,23 @@
 
 namespace kabuki { namespace toolkit { namespace aiml {
 
-float_t kSynapseMax  = 1.0;
-float_t kSynapseMin  = -1.0;
-float_t kSynapseBias  = 0.0;
-float_t kSynapseNoiseMin = -0.05;
-float_t kSynapseNoiseMax = 0.05;
-
-float_t SynapseNoise (float_t min_value, float_t max_value){
-    static std::default_random_engine e;
-    static std::uniform_real_distribution<float_t> dis (min_value, max_value);
-    return dis (e);
-}
-
 Perceptron::Perceptron () :
-    y_ (kSynapseMin) {
+    axon_ (kSynapseMin) {
     // Nothing to do here! ({:->)-+=<
 }
-
-void Perceptron::Connect (Perceptron* synapse) {
-    x_.push_back (synapse);
-}
-
-void Perceptron::Disconnect (Perceptron* synapse) {
-    for (int i = x_.size () - 1; i > 0; --i) {
-        if (&x_[i] == synapse) {
-            x_.erase (x_.begin () + i);
-        }
+/*
+void Perceptron::Connect (Perceptron* p) {
+    assert (p);
+    int n = axon_.size ();
+    if (n == 0) {
+        return;
     }
-}
+    Synapse* s = axon_[0];
+    for (--n; n > 0; --n) {
+        value += s->GetWeight () * s->GetRx ()->GetValue ();
+        ++s;
+    }
+}*/
 
 float_t Perceptron::GetValue () {
     return value_;
@@ -61,15 +50,16 @@ void Perceptron::SetValue (float_t value) {
 }
 
 void Perceptron::Update () {
-    int n = x_.size ();
+    int n = axon_.size ();
     if (n == 0) {
         value_ = 0.0;
+        return;
     }
     float_t value = 0.0;
+    Synapse* s = axon_[0];
     for (--n; n > 0; --n) {
-        Synapse* synapse = &axion[0];
-        value += synapse->weight * synapse->rx->GetValue ();
-        ++synapse;
+        value += s->GetWeight () * s->GetRx ()->GetValue ();
+        ++s;
     }
 }
 

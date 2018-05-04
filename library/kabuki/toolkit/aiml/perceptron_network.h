@@ -33,7 +33,9 @@ class PerceptronNetwork {
 
     private:
 
-    std::vector<PerceptronLayer> layers;
+    PerceptronLayer              input_,  //< Input perceptron layer.
+                                 output_; //< Output perceptron layer.
+    std::vector<PerceptronLayer> layers;  //< 
 
 };
 

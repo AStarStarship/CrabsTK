@@ -61,7 +61,7 @@ class Persenseron2D {
 
     uint       width_,
                height_;
-    Axion_UI1* x_,
+    Axion_UI1* axon_,
              * y_;
 };
 

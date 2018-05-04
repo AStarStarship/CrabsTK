@@ -66,12 +66,12 @@
     <ClInclude Include="..\..\library\crabs\type.h" />
     <ClInclude Include="..\..\library\crabs\varint.h" />
     <ClInclude Include="..\..\library\crabs\wall.h" />
-    <ClInclude Include="..\..\library\kabuki\toolkit\aiml\asyncronous.h" />
     <ClInclude Include="..\..\library\kabuki\toolkit\aiml\perceptron_network.h" />
     <ClInclude Include="..\..\library\kabuki\toolkit\aiml\nmist_importer.h" />
     <ClInclude Include="..\..\library\kabuki\toolkit\aiml\perceptron.h" />
     <ClInclude Include="..\..\library\kabuki\toolkit\aiml\perceptron_layer.h" />
     <ClInclude Include="..\..\library\kabuki\toolkit\aiml\persenseron.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\aiml\synapse.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -108,6 +108,7 @@
     <ClCompile Include="..\..\library\kabuki\toolkit\aiml\aiml_mnist_importer.cc" />
     <ClCompile Include="..\..\library\kabuki\toolkit\aiml\aiml_perceptron.cc" />
     <ClCompile Include="..\..\library\kabuki\toolkit\aiml\aiml_perceptron_layer.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\aiml_synapse.cc" />
     <ClCompile Include="stdafx.cc" />
   </ItemGroup>
   <ItemGroup>

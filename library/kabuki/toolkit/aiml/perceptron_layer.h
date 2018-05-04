@@ -19,24 +19,34 @@
 
 #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
 
-namespace kabuki { namespace toolkit { namespace aiml {
+#ifndef HEADER_FOR_PERCEPTRON_LAYER
+#define HEADER_FOR_PERCEPTRON_LAYER
 
 #include "perceptron.h"
 
+namespace kabuki { namespace toolkit { namespace aiml {
+
 /** A layer in a Multi-layer Perceptron Network.
     Each Perceptron is individually controlled, but it is convenient to 
+
+    # Operational Steps
+
+    1.) 
 */
 class PerceptronLayer {
     public:
 
     PerceptronLayer (uint32_t neuron_count, float_t bias);
 
-    void Connect (PerceptronLayer* layer);
+    void Connect (Perceptron* p);
 
-    void Disconnect (PerceptronLayer* layer);
+    /** Fully connects the given layer. */
+    void AddLayer (PerceptronLayer* layer);
 
-    Perceptron* GetPerceptron (size_t index);
+    /** Gets the perceptron at the given index in the layer. */
+    Perceptron* GetPerceptron (uint32_t index);
 
+    /** Updates the values. */
     void Update ();
 
     private:
@@ -49,4 +59,5 @@ class PerceptronLayer {
 }   //< namespace aiml
 }   //< namespace toolkit
 }   //< namespace kabuki
+#endif  //< #ifndef HEADER_FOR_PERCEPTRON_LAYER
 #endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1

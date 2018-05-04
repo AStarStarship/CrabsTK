@@ -28,6 +28,27 @@ PerceptronLayer::PerceptronLayer (uint32_t neuron_count, float_t bias) :
     perceptrons_.reserve (neuron_count);
 }
 
+void PerceptronLayer::Connect (Perceptron* p) {
+    perceptrons_.push_back (p);
+}
+
+void PerceptronLayer::AddLayer (PerceptronLayer* layer) {
+    int n = perceptrons_.size ();
+    if (n == 0)
+        return;
+    Perceptron* p = &perceptrons_[0];
+    for (; n > 0; --n) {
+        perceptrons_.push_back (p);
+        ++p;
+    }
+}
+
+Perceptron* PerceptronLayer::GetPerceptron (uint32_t index) {
+    if (index >= perceptrons_.size ()) {
+        return nullptr;
+    return &perceptrons_[index];
+}
+
 void PerceptronLayer::Update () {
     int n = perceptrons_.size ();
     if (n == 0)

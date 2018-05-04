@@ -23,13 +23,13 @@ using namespace _;
 
 namespace kabuki { namespace pro {
 
-Task::Task (const char* summary, const char* details, float weight,
+Task::Task (const char* summary, const char* details, float weight_,
             int time_estimate_min) :
     summary_ (StringClone (summary)),
     details_ (StringClone (details)),
     result_ (nullptr),
     review_ (nullptr),
-    weight_ (weight),
+    weight_ (weight_),
     assessment_ (0.0f),
     grade_ (0.0f),
     time_estimate_ (time_estimate_min * 60),
@@ -40,7 +40,7 @@ Task::Task (const char* summary, const char* details, float weight,
     collisions_ (nullptr) {
 }
 
-Task::Task (char* summary, char* details, float weight, int time_estimate_min) :
+Task::Task (char* summary, char* details, float weight_, int time_estimate_min) :
     summary_ (summary_),
     details_ (details_),
     result_ (nullptr),

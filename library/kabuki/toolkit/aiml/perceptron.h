@@ -22,26 +22,9 @@
 #ifndef HEADER_FOR_PERCEPTRON
 #define HEADER_FOR_PERCEPTRON
 
-typedef float float_t;
-typedef unsigned int uint;
+#include "synapse.h"
 
 namespace kabuki { namespace toolkit { namespace aiml {
-
-static const float_t kSynapseMin,
-                     kSynapseMax,
-                     kSynapseBiase,
-                     kSynapseNoiseMin,
-                     kSynapseNoiseMax;
-
-float_t SynapseNoise (float_t min_value = kSynapseNoiseMin, 
-                      float_t max_value = kSynapseNoiseMax);
-
-class Perceptron;
-
-struct Synapse {
-    float_t     weight; //< Weight of the synanptic terminal connection.
-    Perceptron* rx;     //< rx synanptic terminal.
-};
 
 /** A Perceptron.
 
@@ -66,37 +49,25 @@ class Perceptron {
     Perceptron ();
 
     /** Gets the perceptron value. */
-    float_t GetWeight ();
-
-    /** Sets the perceptron value. */
-    void SetWeight (float_t weight);
-
-    /** Gets the perceptron value. */
     float_t GetValue ();
 
     /** Sets the perceptron value. */
     void SetValue (float_t value);
 
-    void Connect (Perceptron* layer);
-
-    void Disconnect (Perceptron* layer);
+    /** Connects the given perceptron. */
+    void Connect (Perceptron* p);
 
     void Update ();
 
     private:
 
-    float_t value_;
-    std::vector<Perceptron*> x_;
-
-    private:
-
-    float_t value_;
-    std::vector<Synapse> axion;   //< 
+    float_t               value_; //< Perceptron value.
+    std::vector<Synapse*> axon_;  //< Connected neurons.
 };
 
 }   //< namespace aiml
 }   //< namespace toolkit
 }   //< namespace kabuki
 
-#endif  //< #fndef HEADER_FOR_PERCEPTRON
+#endif  //< #ifndef HEADER_FOR_PERCEPTRON
 #endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1

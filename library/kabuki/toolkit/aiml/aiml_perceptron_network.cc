@@ -18,7 +18,7 @@
 
 #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
 
-#include "mlp_network.h"
+#include "perceptron_network.h"
 
 namespace kabuki { namespace toolkit { namespace aiml {
 
