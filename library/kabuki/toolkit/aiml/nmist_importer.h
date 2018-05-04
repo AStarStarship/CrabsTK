@@ -1,8 +1,26 @@
-
+/** Kabuki Toolkit
+    @version 0.x
+    @file    ~/library/kabuki/toolkit/aiml/nmist_importer.h
+    @author  Cale McCollough <cale.mccollough@gmail.com>
+    @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
+             All right reserved (R). Licensed under the Apache License, Version 
+             2.0 (the "License"); you may not use this file except in 
+             compliance with the License. You may obtain a copy of the License 
+             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
+             required by applicable law or agreed to in writing, software
+             distributed under the License is distributed on an "AS IS" BASIS,
+             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+             implied. See the License for the specific language governing 
+             permissions and limitations under the License.
+*/
 
 #pragma once
 #include <stdafx.h>
 using namespace std;
+
+#if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
+
+namespace kabuki { namespace toolkit { namespace aiml {
 
 uint32_t EndianSwap (uint32_t value) {
     uint32_t other_endian = value >> 24;
@@ -83,7 +101,10 @@ struct MnistImage {
 
 void MnistImport ();
 
-
+}   //< namespace aiml
+}   //< namespace toolkit
+}   //< namespace kabuki
+#endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
 
 /**  FILE FORMATS FOR THE MNIST DATABASE
 The data is stored in a very simple file format designed for storing vectors and multidimensional matrices. General info on this format is given at the end of this page, but you don't need to read that to use the data files.

@@ -65,14 +65,14 @@ void TestSeam1_3 () {
     CHECK_EQUAL (0, index)
     index = TableFind (table, "C");
     CHECK_EQUAL (1, index)
-
-    index = TableAdd (table, "BIn");
+    
+    index = TableAdd (table, "B");
     CHECK_EQUAL (2, index)
     index = TableFind (table, "D");
     CHECK_EQUAL (0, index)
     index = TableFind (table, "C");
     CHECK_EQUAL (1, index)
-    index = TableFind (table, "BIn");
+    index = TableFind (table, "B");
     CHECK_EQUAL (2, index)
 
     index = TableAdd (table, "A");
@@ -81,7 +81,7 @@ void TestSeam1_3 () {
     CHECK_EQUAL (0, index)
     index = TableFind (table, "C");
     CHECK_EQUAL (1, index)
-    index = TableFind (table, "BIn");
+    index = TableFind (table, "B");
     CHECK_EQUAL (2, index)
     index = TableFind (table, "A");
     CHECK_EQUAL (3, index)
@@ -859,7 +859,7 @@ void TestSeam1_3 () {
     ExprRingBell (expr);
     ExprAckBack (expr);
     result = BOutWrite (bout,
-                        Params<4, ADR, UI1, STR, Parent::kTextBufferSize,
+                        Params<4, ADR, UI1, STR, Parent::kPrinterBufferSize,
                         ADR> (),
                         Args (args, Address <'A', 'A', 'A'> (),
                         &io_number_, "Test",

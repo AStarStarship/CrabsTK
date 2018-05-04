@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="source">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="crabs">
       <UniqueIdentifier>{a1858cc5-bdf5-4842-98ba-c99ab7559375}</UniqueIdentifier>
     </Filter>
@@ -21,14 +17,15 @@
     <Filter Include="kabuki\toolkit\aiml">
       <UniqueIdentifier>{bbfe1e1b-e6b9-4b54-972a-db2ed4c19697}</UniqueIdentifier>
     </Filter>
+    <Filter Include="projects">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="projects\seam_5_kabuki_toolkit_amil_nmist_ocr_benchmark">
+      <UniqueIdentifier>{d420f19c-0f9b-4e07-b52e-a0a387a01565}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\library\kabuki\toolkit\aiml\nmist_importer.h">
       <Filter>kabuki\toolkit\aiml</Filter>
     </ClInclude>
@@ -36,9 +33,6 @@
       <Filter>kabuki\toolkit\aiml</Filter>
     </ClInclude>
     <ClInclude Include="..\..\library\kabuki\toolkit\aiml\perceptron_layer.h">
-      <Filter>kabuki\toolkit\aiml</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\library\kabuki\toolkit\aiml\perceptron_sensor.h">
       <Filter>kabuki\toolkit\aiml</Filter>
     </ClInclude>
     <ClInclude Include="..\..\library\crabs\random.h">
@@ -182,20 +176,23 @@
     <ClInclude Include="..\..\library\crabs\printer.h">
       <Filter>crabs</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\aiml\persenseron.h">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>projects\seam_5_kabuki_toolkit_amil_nmist_ocr_benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>projects\seam_5_kabuki_toolkit_amil_nmist_ocr_benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\aiml\perceptron_network.h">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\kabuki\toolkit\aiml\asyncronous.h">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\mnist_importer.cc">
-      <Filter>kabuki\toolkit\aiml</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\perceptron.cc">
-      <Filter>kabuki\toolkit\aiml</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\perceptron_layer.cc">
-      <Filter>kabuki\toolkit\aiml</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\library\crabs\script_itos.cc">
       <Filter>crabs</Filter>
     </ClCompile>
@@ -280,6 +277,21 @@
     <ClCompile Include="..\..\library\crabs\print64.cc">
       <Filter>crabs</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\aiml_perceptron_layer.cc">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\aiml_perceptron.cc">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\aiml_mnist_importer.cc">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cc">
+      <Filter>projects\seam_5_kabuki_toolkit_amil_nmist_ocr_benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\aiml_perceptron_network.cc">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\library\kabuki\toolkit\aiml\readme.md">
@@ -287,6 +299,9 @@
     </None>
     <None Include="..\..\library\crabs\readme.md">
       <Filter>crabs</Filter>
+    </None>
+    <None Include="readme.md">
+      <Filter>projects\seam_5_kabuki_toolkit_amil_nmist_ocr_benchmark</Filter>
     </None>
   </ItemGroup>
 </Project>

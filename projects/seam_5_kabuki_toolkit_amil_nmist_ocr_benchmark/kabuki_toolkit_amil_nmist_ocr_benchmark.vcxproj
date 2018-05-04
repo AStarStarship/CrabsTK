@@ -66,10 +66,12 @@
     <ClInclude Include="..\..\library\crabs\type.h" />
     <ClInclude Include="..\..\library\crabs\varint.h" />
     <ClInclude Include="..\..\library\crabs\wall.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\aiml\asyncronous.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\aiml\perceptron_network.h" />
     <ClInclude Include="..\..\library\kabuki\toolkit\aiml\nmist_importer.h" />
     <ClInclude Include="..\..\library\kabuki\toolkit\aiml\perceptron.h" />
     <ClInclude Include="..\..\library\kabuki\toolkit\aiml\perceptron_layer.h" />
-    <ClInclude Include="..\..\library\kabuki\toolkit\aiml\perceptron_sensor.h" />
+    <ClInclude Include="..\..\library\kabuki\toolkit\aiml\persenseron.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -102,14 +104,16 @@
     <ClCompile Include="..\..\library\crabs\crabs_wall.cc" />
     <ClCompile Include="..\..\library\crabs\print64.cc" />
     <ClCompile Include="..\..\library\crabs\script_itos.cc" />
-    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\mnist_importer.cc" />
-    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\perceptron.cc" />
-    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\perceptron_layer.cc" />
-    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\aiml_perceptron_network.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\aiml_mnist_importer.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\aiml_perceptron.cc" />
+    <ClCompile Include="..\..\library\kabuki\toolkit\aiml\aiml_perceptron_layer.cc" />
+    <ClCompile Include="stdafx.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\library\crabs\readme.md" />
     <None Include="..\..\library\kabuki\toolkit\aiml\readme.md" />
+    <None Include="readme.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -117,6 +121,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>scriptitosbenchmark</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectName>seam_5_kabuki_toolkit_amil_nmist_ocr_benchmark</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
