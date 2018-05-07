@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "bout.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 #include "memory.h"
 #include "type.h"
@@ -805,4 +805,4 @@ Printer& PrintBOut (Printer& print, BOut* bout) {
 
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

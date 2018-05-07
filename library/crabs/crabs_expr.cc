@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "expr.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 #include "clock.h"
 #include "bsq.h"
@@ -1007,4 +1007,4 @@ Printer& PrintExpr (Printer& print, Expr* expr) {
 
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

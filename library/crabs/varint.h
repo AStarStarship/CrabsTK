@@ -17,7 +17,7 @@
 #pragma once
 #include <stdafx.h>
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #ifndef HEADER_FOR_CRABS_BSQ
 #define HEADER_FOR_CRABS_BSQ
 
@@ -85,4 +85,4 @@ inline int64_t PackSV8 (int64_t value) {
 
 }       //< namespace _
 #endif  //< HEADER_FOR_CRABS_BSQ
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

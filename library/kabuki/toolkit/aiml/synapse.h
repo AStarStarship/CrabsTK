@@ -42,6 +42,9 @@ class Perceptron;
 class Synapse {
     public:
 
+    /** Constructs a Synapse with the given min/max noise range. */
+    Synapse (Perceptron* rx);
+
     /** Constructs a Synapse with the given weight. */
     Synapse (Perceptron* rx, float_t weight);
 
@@ -70,9 +73,8 @@ class Synapse {
     Perceptron* rx_;     //< rx synaptic terminal.
 };
 
-}   //< namespace aiml
-}   //< namespace toolkit
-}   //< namespace kabuki
-
+}       //< namespace aiml
+}       //< namespace toolkit
+}       //< namespace kabuki
 #endif  //< #ifndef HEADER_FOR_KABUKI_TOOLKIT_AIML_SYNAPSE
 #endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1

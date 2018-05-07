@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "wall.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
@@ -108,4 +108,4 @@ _::Slot& Wall::Print (_::Slot& slot) {
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

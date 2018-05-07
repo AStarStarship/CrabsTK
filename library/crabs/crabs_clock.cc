@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "clock.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 
 #include "printer.h"
 #include "text.h"

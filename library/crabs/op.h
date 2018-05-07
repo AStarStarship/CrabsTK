@@ -17,7 +17,7 @@
 #pragma once
 #include <stdafx.h>
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 #ifndef HEADER_FOR_CRABS_OP
 #define HEADER_FOR_CRABS_OP
@@ -97,5 +97,5 @@ inline _::Printer& operator<< (_::Printer print, const _::Op* op) {
     return Print (print, op);
 }
 
-#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_OP

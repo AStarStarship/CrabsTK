@@ -17,7 +17,7 @@
 #pragma once
 #include <stdafx.h>
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 #ifndef HEADER_FOR_CRABS_ADDRESS
 #define HEADER_FOR_CRABS_ADDRESS
@@ -97,4 +97,4 @@ inline uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
 
 }       //< namespace _
 #endif  //< HEADER_FOR_CRABS_ADDRESS
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

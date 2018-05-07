@@ -144,6 +144,9 @@ enum {
     kBufferSizeDefault = 1024,
     kBufferSizeDefaultWords = kBufferSizeDefault / sizeof (intptr_t) + 
                               kBufferSizeDefault % sizeof (intptr_t) ? 1 : 0,
+
+    kAutoSizeMin = 512,
+    kAutoSizeDefault = kAutoSizeMin * 4,
 };
 }   //< namespace _
 

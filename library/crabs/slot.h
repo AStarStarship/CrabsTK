@@ -26,7 +26,7 @@
 #include "bin.h"
 #include "bout.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 namespace _ {
 
@@ -138,5 +138,5 @@ inline _::Printer& operator<< (_::Printer& printer, _::Slot& slot) {
 }
 #endif
 
-#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_SLOT

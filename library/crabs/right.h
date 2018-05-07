@@ -17,7 +17,7 @@
 #pragma once
 #include <stdafx.h>
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 
 #include "printer.h"
 
@@ -117,4 +117,4 @@ inline _::Printer& operator<< (_::Printer& printer, _::Right<T> right) {
 
 #endif  //< HEADER_FOR_CRABS_RIGHT
 #endif  //< USING_PRINTER
-#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2

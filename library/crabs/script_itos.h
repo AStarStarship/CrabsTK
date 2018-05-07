@@ -16,7 +16,7 @@
 
 #include <stdafx.h>
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 1
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
 
 #include "config.h"
 
@@ -48,4 +48,4 @@ KABUKI char* Print (uint64_t value, char* text, char* text_end, char delimiter);
 
 }       //< namespace _
 
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 1
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1

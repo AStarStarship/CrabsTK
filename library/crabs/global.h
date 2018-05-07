@@ -22,12 +22,12 @@
 
 #include "config.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 1
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
 #include "script_itos.h"
 #include "random.h"
 #endif
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 #include "printer.h"
 #include "scan.h"
 #include "memory.h"
@@ -38,30 +38,35 @@
 #include "center.h"
 #endif
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#include "bsq.h"
+#include "list.h"
+#include "array.h"
+#include "book.h"
+#include "map.h"
+#include "dictionary.h"
+#endif
+
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#include "event.h"
+#include "interrupts.h"
 #include "op.h"
 #include "address.h"
 #include "room.h"
 #include "expr.h"
 #include "slot.h"
 #include "args.h"
-#include "bsq.h"
 #include "bin.h"
 #include "bout.h"
 #include "ascii.h"
 #endif
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 4
-#include "event.h"
-#include "interrupts.h"
-#endif
-
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #include "table.h"
-#include "lst.h"
+#include "list.h"
 #include "map.h"
-#include "bok.h"
-#include "dic.h"
+#include "book.h"
+#include "dictionary.h"
 #endif
 
 #endif  //< HEADER_FOR_CRABS_GLOBAL

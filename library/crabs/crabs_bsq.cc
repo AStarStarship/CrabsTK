@@ -18,7 +18,7 @@
 #include "bsq.h"
 #include "printer.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 namespace _ {
 
@@ -50,18 +50,16 @@ uint_t BsqParamNumber (const uint_t* params, int param_number) {
     return params[i];
 }
 
-char* PrintBsq (const uint_t* params, char* buffer, char* buffer_end) {
+Printer& PrintBsq (Printer& print, const uint_t* params) {
     uint_t num_params = *params++,
            i,
            type,
            value = 0;
 
-    Printer print (buffer, buffer_end);
-
     print << "Param<";
     if (num_params > _::kParamsMax) {
         print << "\nInvalid num_params: " << num_params;
-        return buffer;
+        return print;
     }
     print << num_params << ": ";
     for (i = 1; i < num_params; ++i) {
@@ -73,7 +71,7 @@ char* PrintBsq (const uint_t* params, char* buffer, char* buffer_end) {
             if (value) {
                 print << "\nError: arrays may only be created from POD "
                     "types.";
-                return buffer;
+                return print;
             }
             // Print out the max length of the string.
             ++i;
@@ -250,10 +248,10 @@ char* PrintBsq (const uint_t* params, char* buffer, char* buffer_end) {
             }
         }
     }
-    print << '>' << print;
-    return buffer;
+    print << '>';
+    return print;
 }
 
 }       //< namespace _
 
-#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

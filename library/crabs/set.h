@@ -19,7 +19,7 @@
 
 #include "type.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 #include "text.h"
 
@@ -113,5 +113,5 @@ struct Collection {
     virtual Printer& Print (Printer& print) = 0;
 };
 }       //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 6
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 6
 #endif  //< CRABS_COLLECTION_H

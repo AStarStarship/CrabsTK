@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "room.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
@@ -261,4 +261,4 @@ Printer& Room::Print (Printer& print) {
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

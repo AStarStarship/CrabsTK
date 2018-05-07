@@ -22,8 +22,8 @@ using namespace std;
 
 namespace kabuki { namespace toolkit { namespace aiml {
 
-uint32_t EndianSwap (uint32_t value) {
-    uint32_t other_endian = value >> 24;
+size_t EndianSwap (size_t value) {
+    size_t other_endian = value >> 24;
     other_endian |= (value & 0xff00) << 8;
     other_endian |= (value & 0xff0000) << 16;
     other_endian |= (value & 0xff) << 24;
@@ -52,7 +52,7 @@ uint32_t EndianSwap (uint32_t value) {
     xxxx     unsigned byte   ??               label
 */
 struct MnistLabels {
-    uint32_t magin_number,
+    size_t magin_number,
              item_count;
 };
 
@@ -81,14 +81,14 @@ struct MnistLabels {
     xxxx     unsigned byte   ??               pixel
     */
 struct MnistImages {
-    uint32_t magic_number,
+    size_t magic_number,
              item_count,
              row_count,
              column_count;
 };
 
 struct MnistDataSet {
-    uint32_t magin_number,
+    size_t magin_number,
              item_count,
              row_count,
              column_count;

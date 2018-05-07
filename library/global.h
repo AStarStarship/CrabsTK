@@ -45,12 +45,9 @@
 #include "kabuki/hmi/global.h"
 #include "kabuki/midi/global.h"
 #include "kabuki/serial/global.h"
-#include "kabuki/web/global.h"
 #elif MAJOR_SEAM >= 3
-#include "kabuki/app/global.h"
+#include "kabuki/pro/global.h"
 #elif MAJOR_SEAM >= 4
-#include "kabuki/id/global.h"
-#include "kabuki/data/global.h"
 #elif MAJOR_SEAM >= 5
 #include "ican3/global.h"
 #elif MAJOR_SEAM >= 6

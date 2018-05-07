@@ -16,7 +16,7 @@
 #pragma once
 #include <stdafx.h>
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 #ifndef HEADER_FOR_CRABS_ARRAY
 #define HEADER_FOR_CRABS_ARRAY
@@ -254,11 +254,9 @@ class Array {
 
     private:
 
-    int size_,     //< Max number of elements.
-        count_;    //< Number of elements.
-    T*  elements_; //< The array.
+    
 
 };      //< class Array
 }       //< namespace _
 #endif  //< HEADER_FOR_CRABS_ARRAY
-#endif  //< #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 1
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

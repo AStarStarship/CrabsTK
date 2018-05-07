@@ -22,14 +22,13 @@
 
 #include "config.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 1
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
 
 namespace _ {
-
 inline uint64_t GetRandomUInt64 () {
     std::random_device rd;
     std::mt19937_64 eng (rd ());
-    std::uniform_int_distribution<unsigned uint32_t uint32_t> distr;
+    std::uniform_int_distribution<uint64_t> distr;
     return distr (eng);
 }
 
@@ -38,5 +37,5 @@ inline int64_t GetRandomInt64 () {
 }
 
 }       //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 1
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
 #endif  //< HEADER_FOR_CRABS_RANDOM

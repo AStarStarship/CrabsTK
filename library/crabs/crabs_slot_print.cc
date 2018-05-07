@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "line.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 
 #include "slot_print.h"
 
@@ -953,4 +953,4 @@ Slot& PrintLine (char c, int num_columns, Slot& slot,
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< #if MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5

@@ -17,12 +17,12 @@
 #pragma once
 #include <stdafx.h>
 
-#ifndef CRABS_TYPES_H
-#define CRABS_TYPES_H
+#ifndef HEADER_FOR_CRABS_TYPES
+#define HEADER_FOR_CRABS_TYPES
 
 #include "memory.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 namespace _ {
 
@@ -249,5 +249,5 @@ inline T TypeUnpackVarint (T value) {
 KABUKI uint_t TypeSize (uint_t type);
 
 }       //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
-#endif  //< CRABS_TYPES_H
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< HEADER_FOR_CRABS_TYPES

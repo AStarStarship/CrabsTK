@@ -16,7 +16,7 @@
 #pragma once
 #include <stdafx.h>
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 #ifndef HEADER_FOR_CRABS_MEMORY
 #define HEADER_FOR_CRABS_MEMORY
@@ -162,4 +162,4 @@ KABUKI char* MemoryCopy (char* write, char* write_end, const char* memory,
 }       //< namespace _
 #endif  //< HEADER_FOR_CRABS_MEMORY
 
-#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

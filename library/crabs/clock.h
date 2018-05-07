@@ -22,7 +22,7 @@
 
 #include "memory.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 
 namespace _ {
 
@@ -140,7 +140,7 @@ KABUKI time_t ClockTime (int year, int month, int day, int  hour = 0,
                          int minute = 0, int second = 0);
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_CLOCK
 
 /*

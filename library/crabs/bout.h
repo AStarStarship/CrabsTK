@@ -22,7 +22,7 @@
 
 #include "op.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 #include "printer.h"
 
@@ -115,6 +115,6 @@ inline _::Printer& operator<< (_::Printer& print, _::BOut* bout) {
 }
 #endif
 
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_BOUT
 #undef DEBUG_CRABS_BOUT

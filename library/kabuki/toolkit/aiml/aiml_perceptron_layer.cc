@@ -22,46 +22,56 @@
 
 namespace kabuki { namespace toolkit { namespace aiml {
 
-PerceptronLayer::PerceptronLayer (uint32_t neuron_count, float_t bias) :
-    bias_ (bias),
-    next_layer_ (nullptr) {
+PerceptronLayer::PerceptronLayer (size_t neuron_count, float_t bias) :
+    bias_ (bias) {
     perceptrons_.reserve (neuron_count);
 }
 
-void PerceptronLayer::Connect (Perceptron* p) {
-    perceptrons_.push_back (p);
+float_t PerceptronLayer::GetBias () { return bias_; }
+
+void PerceptronLayer::SetBias (float_t value) { bias_ = value; }
+
+void PerceptronLayer::SetRx (Perceptron* p) {
+    
 }
 
-void PerceptronLayer::AddLayer (PerceptronLayer* layer) {
-    int n = perceptrons_.size ();
-    if (n == 0)
-        return;
-    Perceptron* p = &perceptrons_[0];
-    for (; n > 0; --n) {
-        perceptrons_.push_back (p);
-        ++p;
+void PerceptronLayer::SetRx (PerceptronLayer* layer) {
+    assert (layer);
+
+    for (auto node : nodes_) {
+        SetRx (&node);
     }
 }
 
-Perceptron* PerceptronLayer::GetPerceptron (uint32_t index) {
-    if (index >= perceptrons_.size ()) {
+void PerceptronLayer::AddNode (size_t perceptron_count, float_t bias) {
+    if (!perceptron_count)
+        return;
+    for (; perceptron_count > 0; --perceptron_count)
+        nodes_.push_back (PerceptronLayer (perceptron_count, bias));
+}
+
+Perceptron* PerceptronLayer::GetPerceptron (size_t index) {
+    if (index >= perceptrons_.size ())
         return nullptr;
     return &perceptrons_[index];
 }
 
+PerceptronLayer* PerceptronLayer::GetNode (size_t index) {
+    if (index >= perceptrons_.size ())
+        return nullptr;
+    return &nodes_[index];
+}
+
+size_t PerceptronLayer::GetPerceptronCount () { return perceptrons_.size (); }
+
+size_t PerceptronLayer::GetChildNodeCount () { return nodes_.size (); }
+
 void PerceptronLayer::Update () {
-    int n = perceptrons_.size ();
-    if (n == 0)
-        return;
-    for (--n; n > 0; --n) {
-        Perceptron* perceptron = &perceptrons_[0];
-        perceptron->Update ();
-        ++perceptron;
-    }
-    PerceptronLayer* next_layer = next_layer_;
-    if (!next_layer)
-        return;
-    next_layer->Update ();
+    for (auto perceptron : perceptrons_)
+        perceptron.Update ();
+
+    for (auto node: nodes_)
+        node.Update ();
 }
 
 }   //< namespace aiml

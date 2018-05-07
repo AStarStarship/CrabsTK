@@ -24,43 +24,40 @@
 namespace kabuki { namespace toolkit { namespace aiml {
 
 Perceptron::Perceptron () :
-    axon_ (kSynapseMin) {
+    x_ (nullptr) {
     // Nothing to do here! ({:->)-+=<
 }
-/*
-void Perceptron::Connect (Perceptron* p) {
-    assert (p);
-    int n = axon_.size ();
-    if (n == 0) {
-        return;
-    }
-    Synapse* s = axon_[0];
-    for (--n; n > 0; --n) {
-        value += s->GetWeight () * s->GetRx ()->GetValue ();
-        ++s;
-    }
-}*/
 
-float_t Perceptron::GetValue () {
-    return value_;
+float_t& Perceptron::GetY () {
+    return y_;
 }
 
-void Perceptron::SetValue (float_t value) {
-    value_ = value;
+void Perceptron::SetY (float_t& y) {
+    y_ = y;
+}
+
+float_t* Perceptron::GetX () {
+    return x_;
+}
+
+float_t* Perceptron::GetWeights () {
+    return &w_[0];
+}
+
+size_t Perceptron::GetAxionCount () {
+    w_.size ();
 }
 
 void Perceptron::Update () {
-    int n = axon_.size ();
-    if (n == 0) {
-        value_ = 0.0;
-        return;
-    }
-    float_t value = 0.0;
-    Synapse* s = axon_[0];
-    for (--n; n > 0; --n) {
-        value += s->GetWeight () * s->GetRx ()->GetValue ();
-        ++s;
-    }
+    size_t n = w_.size ();
+    assert (n);
+
+    float_t sum = 0.0;
+    float_t* x = x_,
+           * w = &w_[0];
+    for (--n; n > 0; --n)
+        sum += *x++ * *w++;
+    y_ = sum;
 }
 
 }   //< namespace aiml

@@ -25,11 +25,6 @@ struct Asyncronous {
     public:
 
     virtual void Update () = 0;
-
-    private:
-
-    std::vector<PerceptronLayer> layers;
-
 };
 
 }   //< namespace aiml

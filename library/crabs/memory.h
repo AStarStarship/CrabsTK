@@ -16,7 +16,7 @@
 #pragma once
 #include <stdafx.h>
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 
 #ifndef HEADER_FOR_CRABS_MEMORY
 #define HEADER_FOR_CRABS_MEMORY
@@ -291,4 +291,4 @@ inline _::Printer& operator<< (_::Printer& print, _::Memory memory) {
 }
 
 #endif  //< HEADER_FOR_CRABS_MEMORY
-#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

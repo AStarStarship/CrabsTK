@@ -35,39 +35,45 @@ namespace kabuki { namespace toolkit { namespace aiml {
     x_1 ---\        _________     _________
         w_1 \       | _____ |     |   ___ |
     x_2 -----\      | \     |     |   |   |
-        w_2   |-----|  \    |---->|   |   |----> Output Y
+        w_2   |-----|  \    |---->|   |   |----> Y Output
     ...      /      |  /    |  h  |   |   |
     x_n ----/       | /____ |     | __|0  |
         w_n         |_______|     |_______|
     @endcode
 */
 class Perceptron {
-
     public:
 
-    /** Default constructor. */
+    /** Constructs a unconnected Perceptron. */
     Perceptron ();
 
-    /** Gets the perceptron value. */
-    float_t GetValue ();
+    /** Gets the perceptron y. */
+    float_t& GetY ();
 
     /** Sets the perceptron value. */
-    void SetValue (float_t value);
+    void SetY (float_t& y);
 
-    /** Connects the given perceptron. */
-    void Connect (Perceptron* p);
+    /** Gets the perceptron x vector. */
+    float_t* GetX ();
 
+    /** Gets the perceptron weight vector. */
+    float_t* GetWeights ();
+
+    /** Gets the count of the axions. */
+    size_t GetAxionCount ();
+
+    /** Updates the Perceptron. */
     void Update ();
 
     private:
 
-    float_t               value_; //< Perceptron value.
-    std::vector<Synapse*> axon_;  //< Connected neurons.
+    float_t            & y_; //< Y output address vector.
+    float_t            * x_; //< X input values vector.
+    std::vector<float_t> w_; //< Weight input values vector.
 };
 
-}   //< namespace aiml
-}   //< namespace toolkit
-}   //< namespace kabuki
-
+}       //< namespace aiml
+}       //< namespace toolkit
+}       //< namespace kabuki
 #endif  //< #ifndef HEADER_FOR_PERCEPTRON
 #endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1

@@ -19,7 +19,7 @@
 
 #include "operand.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 #include "bout.h"
 #include "bin.h"
@@ -291,5 +291,5 @@ inline _::Printer& operator<< (_::Printer& printer, _::Expr* expr) {
 }
 #endif
 
-#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_EXPR

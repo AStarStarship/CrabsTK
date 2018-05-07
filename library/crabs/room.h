@@ -22,7 +22,7 @@
 
 #include "wall.h"
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 #include "interrupts.h"
 
@@ -262,5 +262,5 @@ class Room: public Operand {
 //KABUKI Room* ChineseRoom (Room* room = nullptr);
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< CRABS_ROOM_HDi

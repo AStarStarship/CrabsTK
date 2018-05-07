@@ -48,7 +48,7 @@ void MnistImport () {
         file >> labels.column_count;
         cout << " Height:" << labels.column_count;
         
-        uint32_t n = labels.item_count * labels.row_count *
+        size_t n = labels.item_count * labels.row_count *
                      labels.column_count;
         uint8_t* pixels = new uint8_t[n];
         for (; n > 0; --n)

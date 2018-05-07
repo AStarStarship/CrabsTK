@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="stdafx.cc">
+      <Filter>projects\seam_5_mnist_ocr_benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\library\kabuki\toolkit\aiml\aiml_perceptron_graph.cc">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\library\kabuki\toolkit\aiml\aiml_perceptron_layer.cc">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\library\kabuki\toolkit\aiml\aiml_synapse.cc">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\library\kabuki\toolkit\aiml\aiml_mnist_importer.cc">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\library\kabuki\toolkit\aiml\aiml_perceptron.cc">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClCompile>
+    <ClCompile Include="mnist_ocr_benchmarks.cc">
+      <Filter>projects\seam_5_mnist_ocr_benchmarks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\library\kabuki\toolkit\aiml\aiml_perceptron_graph_2d.cc">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>projects\seam_5_mnist_ocr_benchmarks</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>projects\seam_5_mnist_ocr_benchmarks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\library\kabuki\toolkit\aiml\asyncronous.h">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\library\kabuki\toolkit\aiml\nmist_importer.h">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\library\kabuki\toolkit\aiml\perceptron.h">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\library\kabuki\toolkit\aiml\perceptron_graph.h">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\library\kabuki\toolkit\aiml\synapse.h">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\library\kabuki\toolkit\aiml\perceptron_layer.h">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\library\kabuki\toolkit\math\softmax.h">
+      <Filter>kabuki\toolkit\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\library\kabuki\toolkit\math\config.h">
+      <Filter>kabuki\toolkit\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\library\kabuki\toolkit\aiml\perceptron_model.h">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\library\kabuki\toolkit\aiml\perceptron_graph_2d.h">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="kabuki">
+      <UniqueIdentifier>{c3ccbce6-9df4-41ae-be2f-47a24d02bb7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\toolkit">
+      <UniqueIdentifier>{44da20b0-a59c-4dc6-bd47-a8e2debd8c79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="projects">
+      <UniqueIdentifier>{a2c35839-8bde-4627-b4aa-8f7fe7560418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="projects\seam_5_mnist_ocr_benchmarks">
+      <UniqueIdentifier>{d1a38c9f-3f5c-45dd-89c4-d57e9fff557b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\toolkit\aiml">
+      <UniqueIdentifier>{e0e547c6-0430-4349-8489-b56a065d7876}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="docs">
+      <UniqueIdentifier>{979e914d-9374-45c2-9cf5-cee7e243f43e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\toolkit\math">
+      <UniqueIdentifier>{04262f75-34fd-4dfc-a47e-2d777259b8d1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\docs\development.md">
+      <Filter>docs</Filter>
+    </None>
+    <None Include="..\..\..\docs\faq.md">
+      <Filter>docs</Filter>
+    </None>
+    <None Include="..\..\..\docs\projects.md">
+      <Filter>docs</Filter>
+    </None>
+    <None Include="..\..\..\docs\quickstart_guide.md">
+      <Filter>docs</Filter>
+    </None>
+    <None Include="..\..\..\docs\readme.md">
+      <Filter>docs</Filter>
+    </None>
+    <None Include="..\..\..\library\kabuki\toolkit\aiml\readme.md">
+      <Filter>kabuki\toolkit\aiml</Filter>
+    </None>
+  </ItemGroup>
+</Project>

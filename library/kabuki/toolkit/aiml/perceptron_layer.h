@@ -23,6 +23,7 @@
 #define HEADER_FOR_PERCEPTRON_LAYER
 
 #include "perceptron.h"
+#include "asyncronous.h"
 
 namespace kabuki { namespace toolkit { namespace aiml {
 
@@ -36,28 +37,53 @@ namespace kabuki { namespace toolkit { namespace aiml {
 class PerceptronLayer {
     public:
 
-    PerceptronLayer (uint32_t neuron_count, float_t bias);
+    /** A group of one or more perceptrons with */
+    PerceptronLayer (size_t neuron_count, float_t bias);
 
-    void Connect (Perceptron* p);
+    /** Gets the node bias. */
+    float_t GetBias ();
+
+    /** Gets the node bias. */
+    void SetBias (float_t value);
+
+    /** Fully connects the perceptron to this layer. */
+    void SetRx (Perceptron* p);
 
     /** Fully connects the given layer. */
-    void AddLayer (PerceptronLayer* layer);
+    void SetRx (PerceptronLayer* node);
 
-    /** Gets the perceptron at the given index in the layer. */
-    Perceptron* GetPerceptron (uint32_t index);
+    /** Fully connects the given layer. */
+    void AddNode (size_t perceptron_count, float_t bias);
 
-    /** Updates the values. */
+    /** Gets a perceptron.
+        @param  index The index of the perceptron to return.
+        @return Nil if the perceptron does not exist. */
+    Perceptron* GetPerceptron (size_t index);
+
+    /** Gets a node.
+        @param  index The index of the node to return.
+        @return Nil if the perceptron does not exist. */
+    PerceptronLayer* GetNode (size_t index);
+
+    /** Gets the perceptron count. */
+    size_t GetPerceptronCount ();
+
+    /** Gets the perceptron count. */
+    size_t GetChildNodeCount ();
+
+    /** Updates the layer. */
     void Update ();
 
     private:
 
-    float_t                 bias_;        //< Layer bias value.
-    std::vector<Perceptron> perceptrons_; //< Layer perceptrons.
-    PerceptronLayer*        next_layer_;  //< Next layer in the list.
+    float_t                     bias_;        //< Layer bias value.
+    std::vector<float_t>        x_;           //< Input x vector.
+    std::vector<Perceptron>     perceptrons_; //< Layer perceptrons.
+    std::vector<PerceptronLayer> nodes_;      //< Vector of next layers in the list.
 };
 
-}   //< namespace aiml
-}   //< namespace toolkit
-}   //< namespace kabuki
+}       //< namespace aiml
+}       //< namespace toolkit
+}       //< namespace kabuki
 #endif  //< #ifndef HEADER_FOR_PERCEPTRON_LAYER
 #endif  //< #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1

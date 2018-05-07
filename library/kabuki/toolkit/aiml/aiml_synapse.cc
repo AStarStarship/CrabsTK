@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/library/kabuki/toolkit/aiml/aiml_perceptron_layer.cc
+    @file    ~/library/kabuki/toolkit/aiml/aiml_synapse.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -22,16 +22,22 @@
 
 namespace kabuki { namespace toolkit { namespace aiml {
 
-float_t kSynapseMax = 1.0;
-float_t kSynapseMin = -1.0;
-float_t kSynapseBias = 0.0;
-float_t kSynapseNoiseMin = -0.05;
-float_t kSynapseNoiseMax = 0.05;
+const float_t kSynapseMax      =  1.0f;
+const float_t kSynapseMin      = -1.0f;
+const float_t kSynapseBias     =  0.0f;
+const float_t kSynapseNoiseMin = -0.05f;
+const float_t kSynapseNoiseMax =  0.05f;
 
 float_t SynapseNoise (float_t min_value, float_t max_value) {
     static std::default_random_engine e;
     static std::uniform_real_distribution<float_t> dis (min_value, max_value);
     return dis (e);
+}
+
+Synapse::Synapse (Perceptron* rx) :
+    rx_ (rx),
+    weight_ (SynapseNoise ()) {
+    // Nothing to do here! :-)
 }
 
 Synapse::Synapse (Perceptron* rx, float_t weight) :
@@ -55,6 +61,7 @@ Synapse::Synapse (const Synapse& other) :
 float_t Synapse::GetWeight () { return weight_; }
 
 void Synapse::SetWeight (float_t weight) { weight_ = weight; }
+
 Perceptron* Synapse::GetRx () { return rx_; }
 
 void Synapse::SetRx (Perceptron* rx) {

@@ -35,34 +35,14 @@ template<typename T>
 class Persenseron {
     public:
 
-    Persenseron ();
+    /** Constructs a Persenseron from the given Perceptron. */
+    Persenseron (Perceptron* y);
 
     void Update ();
 
     private:
 
-    Perceptron* y_;
-};
-
-
-
-class Persenseron2D {
-    public:
-
-    Persenseron2D (uintptr_t width, uintptr_t height);
-
-    uintptr_t GetWidth ();
-
-    uintptr_t GetHeight ();
-
-    Persensron* GetPersenseron (uint x, uint y);
-
-    private:
-
-    uint       width_,
-               height_;
-    Axion_UI1* axon_,
-             * y_;
+    Perceptron* y_; //<
 };
 
 }       //< namespace aiml

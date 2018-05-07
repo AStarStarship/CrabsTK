@@ -16,7 +16,7 @@
 
 #include <stdafx.h>
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 
 #include "printer.h"
 
@@ -120,4 +120,4 @@ char* PrintRight (const char* token, int num_columns, char* buffer,
 #undef PRINTF
 #undef PUTCHAR
 #endif  //< USING_PRINTER
-#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2

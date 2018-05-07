@@ -16,7 +16,7 @@
 
 #include <stdafx.h>
 
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 
 #include "printer.h"
 
@@ -191,4 +191,4 @@ char* PrintHex (char c, char* buffer, char* buffer_end, char delimiter) {
 #undef PRINTF
 #undef PUTCHAR
 #endif  //< USING_PRINTER
-#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 2
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
