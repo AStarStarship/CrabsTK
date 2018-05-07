@@ -56,6 +56,14 @@ Object<TSize>* ObjectClone (Object<TSize>* object) {
     return *reinterpret_cast<TSize*> (buffer);
 }
 
+/** Stores and retreives the Object2 auto-size. */
+KABUKI uint16_t ObjectAutosize (uint16_t new_size);
+
+/** Stores and retreives the Object4 auto-size. */
+KABUKI uint32_t ObjectAutosize (uint32_t new_size);
+
+/** Stores and retreives the Object8 auto-size. */
+KABUKI uint64_t ObjectAutosize (uint64_t new_size);
 
 }       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

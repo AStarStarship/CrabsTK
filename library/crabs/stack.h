@@ -24,15 +24,6 @@
 
 namespace _ {
 
-/** Stores and retreives the Object2 auto-size. */
-KABUKI uint16_t ObjectAutosize (uint16_t new_size);
-
-/** Stores and retreives the Object4 auto-size. */
-KABUKI uint32_t ObjectAutosize (uint32_t new_size);
-
-/** Stores and retreives the Object8 auto-size. */
-KABUKI uint64_t ObjectAutosize (uint64_t new_size);
-
 /** @ingroup Stack
     Stack is an ASCII Object Data Type that is is designed to use a C-style 
     templated struct in C++ using no dynamic memory and with dynamic memory as 

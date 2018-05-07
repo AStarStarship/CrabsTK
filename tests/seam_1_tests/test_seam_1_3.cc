@@ -48,6 +48,14 @@ void TestSeam1_3 () {
 
     PRINTF ("\n\nTest _::Stack...\n\n");
 
+    static const int stack_test[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    Stack<int> stack ()
+
+    for (int i = 1; i < 10; ++i) {
+
+    }
+
     PRINT_PAUSE ("\n\nDone _::Stack!")
 
     PRINTF ("\n\nTest _::Array...\n\n");
