@@ -1,11 +1,14 @@
 # Human-Machine Interface Library
 
 The Human-Machine Interface (HMI) Library consists of classes that interface  
-humans with machines. The HMI 
+humans with machines.
+
+## Author
+
+* [Cale McCollough](https://calemccollough.github.io)
 
 ## License
-
-Copyright 2017 (C) [Cale McCollough](mailto:calemccollough@gmail.com)
+Copyright 2017-8 (C) [Cale McCollough](mailto:calemccollough@gmail.com)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

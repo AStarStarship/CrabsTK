@@ -1,9 +1,9 @@
 # app Module
 This module is contains the app module, system specific code, and an applcication
-framework based on [SFML](sfml-dev.org). 
+framework based on [SDL](libsdl.org). 
 
-## Authors
-* [Laurent Gomila](laurent@sfml-dev.org)
+## Author
+
 * [Cale McCollough](https://calemccollough.github.io)
 
 ## License

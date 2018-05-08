@@ -2,10 +2,11 @@
 This module is contains the kabuki::al Audio Library module and namespace. It has code for working with audio hardware using OpenALSoft and 3D audio.
 
 ## Authors
-* [Laurent Gomila](laurent@sfml-dev.org)
+
 * [Cale McCollough](https://calemccollough.github.io)
 
 ## License
+
 Copyright 2017 (C) [Cale McCollough](mailto:calemccollough@gmail.com)
 
 Licensed under the Apache License, Version 2.0 (the "License");
