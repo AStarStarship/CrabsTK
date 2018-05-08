@@ -47,7 +47,7 @@ The Chinese Room is a famous artificial intelligence philosophy thought experime
 |    pro | Projects, tasks, and scheduling library. |
 |  store | Store and inventory library. |
 
-### Kabuki VM Major Seams
+### Kabuki VM Package and Seam Diagram
 
 ![Kabuki VM Package and Seam Diagram](https://raw.githubusercontent.com/kabuki-starship/kabuki-toolkit/master/docs/kabuki_vm_package_diagram.jpg)
 
