@@ -48,7 +48,7 @@ The Chinese Room is a famous artificial intelligence philosophy thought experime
 
 ### Kabuki Toolkit Major Seams
 
-![Kabuki Toolkit Package and Seam Diagram](https://raw.githubusercontent.com/kabuki-starship/kabuki-toolkit/master/docs/kt_package_diagram.jpg)
+![Kabuki Toolkit Package and Seam Diagram](https://raw.githubusercontent.com/kabuki-starship/kabuki-toolkit/master/docs/kabuki_vm_package_diagram.jpg)
 
 ### 3rd Party APIs
 
