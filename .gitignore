@@ -37,6 +37,9 @@ CMakeFiles/
 # CMake Build Files
 Debug/
 
+# Wiki files
+wiki/
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*

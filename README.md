@@ -58,12 +58,13 @@ also included.*
 ### 3rd Party APIs
 
 * [Google C++ API](https://github.com/Microsoft/cpprestsdk)
-* [SFML](https://www.sfml-dev.org/)
 * [ANGLE](https://github.com/google/angle)
+* [SDL](https://www.libsdl.org/)
 * [stb](https://github.com/nothings/stb)
 * [Maximilian](https://github.com/micknoise/Maximilian)
 * [Static Math](https://github.com/Morwenn/static_math)
 * [mbed](https://www.mbed.com/en/)
+* [Serial Communication Library](https://github.com/wjwwood/serial)
 * [OpenAL-Soft](https://github.com/kcat/openal-soft)
 * [PortAudio](http://www.portaudio.com/)
 * [RtMIDI](https://github.com/thestk/rtmidi)
