@@ -20,7 +20,7 @@
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 
 #include "text.h"
-#include "script_itos.h"
+#include "script_itoa.h"
 
 #if USING_PRINTER
 

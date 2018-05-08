@@ -23,7 +23,7 @@
 #include "config.h"
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
-#include "script_itos.h"
+#include "script_itoa.h"
 #include "random.h"
 #endif
 
@@ -39,12 +39,13 @@
 #endif
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
-#include "bsq.h"
-#include "list.h"
-#include "array.h"
-#include "book.h"
-#include "map.h"
-#include "dictionary.h"
+#include "stack.h"
+//#include "array.h"
+//#include "bsq.h"
+//#include "list.h"
+//#include "book.h"
+//#include "map.h"
+//#include "dictionary.h"
 #endif
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
@@ -61,12 +62,8 @@
 #include "ascii.h"
 #endif
 
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #include "table.h"
-#include "list.h"
-#include "map.h"
-#include "book.h"
-#include "dictionary.h"
 #endif
 
 #endif  //< HEADER_FOR_CRABS_GLOBAL

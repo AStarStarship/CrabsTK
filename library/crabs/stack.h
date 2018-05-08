@@ -36,16 +36,16 @@ namespace _ {
     Stack Memory Layout
 
     @code
-        +================+
+        +----------------+
         |  Packed Stack  |  <-- Only if header_size = 0
-        |================|
+        |----------------|
         | 64-bit Aligned |
         |     Buffer     |
-        |================|
+        |----------------|
         | Stack Elements |
-     ^  |================|
+     ^  |----------------|
      |  |  Stack struct  |
-    0xN +================+
+    0xN +----------------+
     @endcode
 */
 template<typename T, typename I = int>
@@ -243,6 +243,11 @@ bool StackContains (TStack<T, I>* stack, void* address) {
     return true;
 }
 
+template<typename T, typename I = int, typename U = uint>
+uint StackSizeMinWords (I elements_count) {
+    return (sizeof (uintptr_t) * 8);
+}
+
 /** A stack of data.
 
     This is a wrapper class for the 
@@ -268,8 +273,12 @@ class Stack {
     /** Initializes an stack of n elements of the given type.
         @param buffer An stack of bytes large enough to fit the stack.
     */
-    Stack () {
-        StackInit<T, I> (T* buffer, I buffer_size);
+    Stack (I elements_count = 0) {
+        if (elements_count <= 0) {
+            StackInit<T, I> (new uintptr_t[ObjectAutoSize<I> ()], buffer_size_words);
+        }
+        I buffer_size_words = StackSizeMinWords (elements_count);
+        StackInit<T, I> (new uintptr_t[buffer_size_words], buffer_size_words);
     }
 
     uint_t StackCountMax () {

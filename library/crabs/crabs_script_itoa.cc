@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/libraries/crabs/script_itos.cc
+    @file    ~/libraries/crabs/script_itoa.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -18,7 +18,7 @@
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
 
-#include "script_itos.h"
+#include "script_itoa.h"
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
 

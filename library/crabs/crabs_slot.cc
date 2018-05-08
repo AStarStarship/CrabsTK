@@ -21,7 +21,7 @@
 
 #include "type.h"
 #include "text.h"
-#include "script_itos.h"
+#include "script_itoa.h"
 #include "hex.h"
 #include "line.h"
 

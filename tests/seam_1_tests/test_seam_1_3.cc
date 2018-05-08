@@ -17,6 +17,9 @@
 #include <stdafx.h>
 #include "../../library/crabs/global.h"
 
+#include "../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
+#include "../../../cpputest/include/CppUTest/TestHarness.h"
+
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
@@ -48,16 +51,20 @@ void TestSeam1_3 () {
 
     PRINTF ("\n\nTest _::Stack...\n\n");
 
-    static const int stack_test[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    static const int stack_exected[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-    Stack<int> stack ()
+    Stack<int> stack (10);
 
-    for (int i = 1; i < 10; ++i) {
+    for (int i = 0; i < 10; ++i)
+        stack.Push (1);
+    for (int i = 0; i < 10; ++i)
+        CHECK_EQUAL (i, stack.Pop ())
 
-    }
+    stack.Push (11);
+    CHECK_EQUAL (11, stack.Pop ())
 
     PRINT_PAUSE ("\n\nDone _::Stack!")
-
+    /*
     PRINTF ("\n\nTest _::Array...\n\n");
 
     PRINT_PAUSE ("\n\nDone _::Array!")
@@ -146,7 +153,7 @@ void TestSeam1_3 () {
     index = book.Add (book, "test", (byte)0xFF);
     CHECK_EQUAL (index, -1)
 
-    PRINT_PAUSE ("\n\nDone _::Book!")
+    PRINT_PAUSE ("\n\nDone _::Book!")*/
 
     PRINT_PAUSE ("\n\nDone Testing SEAM_1_3! ({:-)-+=<")
 }

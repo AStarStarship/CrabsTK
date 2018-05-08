@@ -1,6 +1,47 @@
 
+#include <stdafx.h>
+
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
+
+#include "script_itoa.h"
+
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 1
+
+#define DEBUG 1
+
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#define PRINT_PRINTED\
+    sprintf_s (buffer, 24, "%u", value); *text_end = 0;\
+    printf ("\n    Printed \"%s\" leaving value:\"%s\":%u",\
+            begin, buffer, (uint)strlen (buffer));
+#define PRINT_BINARY PrintBinary (value);
+#define PRINT_BINARY_TABLE PrintBinaryTable (value);
+#define PRINT_HEADER\
+    for (int i = 0; i < 10; ++i) {\
+        *(text + i) = 'x';\
+    }\
+    *(text + 21) = 0;\
+    char* begin = text;\
+    char buffer[256];\
+    sprintf_s (buffer, 256, "%u", value);\
+    printf ("Expecting %s:%u", buffer, (uint)strlen (buffer));
+#define PRINT_HEADING\
+    std::cout << '\n';\
+    for (int i = 80; i > 0; --i)\
+        std::cout << '-';
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#define PRINT_PRINTED
+#define PRINT_HEADER
+#define PRINT_HEADING
+#endif
+
+namespace _ {
+
 char* Print (uint64_t value, char* text, char* text_end) {
-    
+    return nullptr; /*
     // Lookup table for powers of 10.
     static const uint64_t k10ToThe[20]{
         1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000,
@@ -35,16 +76,16 @@ char* Print (uint64_t value, char* text, char* text_end) {
     char*       begin = text;
     char        buffer[24];
     #endif
-    /** 0000000000000000000000000000000000000000000000100100100111110000
-        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-        6666555555555544444444443333333333222222222211111111110000000000
-        3210987654321098765432109876543210987654321098765432109876543210
-        |  |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |
-        2  1  1  1   1  1  1   1  1  1   1  0  0   0  0  0   0  0  0   0
-        0  9  8  7   6  5  4   3  2  1   0  9  8   7  6  5   4  3  2   1
-        |----------------------------|-------------------|-------------|
-        |        Upper Chunk         |   Lower-Middle    | Lower Chunk |
-    */
+    // 0000000000000000000000000000000000000000000000100100100111110000
+    // bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+    // 6666555555555544444444443333333333222222222211111111110000000000
+    // 3210987654321098765432109876543210987654321098765432109876543210
+    // |  |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |
+    // 2  1  1  1   1  1  1   1  1  1   1  0  0   0  0  0   0  0  0   0
+    // 0  9  8  7   6  5  4   3  2  1   0  9  8   7  6  5   4  3  2   1
+    // |----------------------------|-------------------|-------------|
+    // |        Upper Chunk         |   Lower-Middle    | Lower Chunk |
+
     if (value >> 34) {
         if (value >> 60) {
             PRINTF ("\n    Path 19 or 20: Range [9.22E+18, 18.4E+18] and ")
@@ -252,7 +293,7 @@ char* Print (uint64_t value, char* text, char* text_end) {
             goto PrintMsdLookUpEven;
         }
         else if (value >> 27) {
-            PUTS ("\n    Length 09 or 10: Range [5.37E+08, 10.7E+08] and ")
+            PRINTF ("\n    Length 09 or 10: Range [5.37E+08, 10.7E+08] and ")
             comparator = k10ToThe[9];
             offset     = k10ToThe[8];
             if (value < comparator) {
@@ -274,7 +315,7 @@ char* Print (uint64_t value, char* text, char* text_end) {
             goto PrintMsdLookUpOdd;
         } 
         else if (value >> 24) {
-            PUTS ("\n    Length 08 or 09: Range [6.71E+07, 13.4E+07 and ")
+            PRINTF ("\n    Length 08 or 09: Range [6.71E+07, 13.4E+07 and ")
             comparator = k10ToThe[8];
             offset     = k10ToThe[7];
             if (value < comparator) {
@@ -296,7 +337,7 @@ char* Print (uint64_t value, char* text, char* text_end) {
             goto PrintMsdLookUpEven;
         }
         else if (value >> 20) {
-            PUTS ("\n    Length 07 or 08: Range [8.39E+06 | 16.8E+06]   and ")
+            PRINTF ("\n    Length 07 or 08: Range [8.39E+06 | 16.8E+06]   and ")
             comparator = k10ToThe[7];
             offset     = k10ToThe[6];
             if (value < comparator) {
@@ -318,7 +359,7 @@ char* Print (uint64_t value, char* text, char* text_end) {
             goto PrintMsdLookUpOdd;
         }
         else if (value >> 17) {
-            PUTS ("\n    Length 06 or 07: Range [5.24E+05, 10.5E+05] and ")
+            PRINTF ("\n    Length 06 or 07: Range [5.24E+05, 10.5E+05] and ")
             comparator = k10ToThe[6];
             offset     = k10ToThe[5];
             if (value >= comparator) {
@@ -369,7 +410,7 @@ char* Print (uint64_t value, char* text, char* text_end) {
             return text_end + 1;
         }
         else { // if (value >> 14) {
-            PUTS ("\n    Length 05 or 06: Range [6.55E+04, 13.1E+04] | ")
+            PRINTF ("\n    Length 05 or 06: Range [6.55E+04, 13.1E+04] | ")
             comparator = k10ToThe[5];
             offset     = k10ToThe[4];
             if (value >= comparator) {
@@ -431,7 +472,7 @@ char* Print (uint64_t value, char* text, char* text_end) {
     }
     else {
         if (value >> 10) {
-            PUTS ("\n    Length 04 or 05: Range [8.19E+03, 16.4E+03] | ")
+            PRINTF ("\n    Length 04 or 05: Range [8.19E+03, 16.4E+03] | ")
             comparator = k10ToThe[4];
             if (value >= comparator) {
                 PRINTF ("length:5 | ")
@@ -468,7 +509,7 @@ char* Print (uint64_t value, char* text, char* text_end) {
             return text_end + 1;
         }
         else if (value >> 7) {
-            PUTS ("\n    Length 03 or 04: Range [5.12E+02, 10.2E+02]")
+            PRINTF ("\n    Length 03 or 04: Range [5.12E+02, 10.2E+02]")
             comparator = k10ToThe[3];
             if (value >= comparator) {
                 PRINTF ("length:4 |")
@@ -492,7 +533,7 @@ char* Print (uint64_t value, char* text, char* text_end) {
             return text + 3;
         }
         else if (value >> 4) {
-            PUTS ("\n    Length 02 or 03: Range [6.40E+01, 12.7E+01]")
+            PRINTF ("\n    Length 02 or 03: Range [6.40E+01, 12.7E+01]")
             if (value >= 100) {
                 PRINTF ("Length 3 |")
                 if (text + 4 > text_end) {
@@ -514,7 +555,7 @@ char* Print (uint64_t value, char* text, char* text_end) {
             return text + 2;
         }
         else { //if (value >> 4) {
-            PUTS ("\n    Length 01 or 02: Range [0.00E+00, 15.0E+00]")
+            PRINTF ("\n    Length 01 or 02: Range [0.00E+00, 15.0E+00]")
             if (value >= 10) {
                 PRINTF ("Length 2 |")
                 if (text + 3 > text_end) {
@@ -533,5 +574,8 @@ char* Print (uint64_t value, char* text, char* text_end) {
             return text + 1;
         }
     }
-    return nullptr;
+    return nullptr; */
 }
+
+}       //< namespace _
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
