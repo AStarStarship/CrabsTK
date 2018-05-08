@@ -3747,7 +3747,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFjF8ck/HEAA0s="
 					},
-					"name": "kt_package_diagram",
+					"name": "kabuki_vm_package_diagram",
 					"visible": true,
 					"defaultDiagram": false,
 					"ownedViews": [

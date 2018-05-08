@@ -34,21 +34,26 @@ The Chinese Room is a famous artificial intelligence philosophy thought experime
 |-------:|:---------------|
 |     al | Audio library. |
 |    app | Application framework. |
-| client | Web client. |
-|   code | Coding utilities. |
-|  crabs | Chinese room abstract stack machine. |
-|   data | Data and logging. |
-|    hmi | Human-machine interfaces. |
-|     id | Identification. |
-|  igeek | Interactive Genetic Environment for Kabuki. |
-|   math | Math. |
-|   midi | MIDI. |
-|    pro | Projects, tasks, and scheduling. |
-|  store | Store and inventory. |
+|   code | Coding utilities library. |
+|  crabs | Chinese room abstract stack machine library. |
+|   data | Data and logging library. |
+|    hmi | Human-machine interfaces library. |
+|     id | Identification library. |
+|  igeek | Interactive Genetic Evolutionary Environment for Kabuki. |
+|      g | Graphics library. |
+|    gui | Graphical User Interface library. |
+|   math | Math library. |
+|   midi | MIDI library. |
+|    pro | Projects, tasks, and scheduling library. |
+|  store | Store and inventory library. |
 
-### Kabuki Toolkit Major Seams
+### Kabuki VM Major Seams
 
-![Kabuki Toolkit Package and Seam Diagram](https://raw.githubusercontent.com/kabuki-starship/kabuki-toolkit/master/docs/kabuki_vm_package_diagram.jpg)
+![Kabuki VM Package and Seam Diagram](https://raw.githubusercontent.com/kabuki-starship/kabuki-toolkit/master/docs/kabuki_vm_package_diagram.jpg)
+
+* **@note** *Package Diagram uses C++ dependency inclusion, meaning that when 
+a module/namespace is included all of the module's/namespace's dependencies are 
+also included.*
 
 ### 3rd Party APIs
 
