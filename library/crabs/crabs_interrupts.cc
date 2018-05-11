@@ -1,7 +1,7 @@
 /** Kabuki Toolkit
 #include <script_interrupts.h>
     @version 0.x
-    @file    ~/libraries/crabs/crabs_exceptions.cc
+    @file    ~/library/crabs/crabs_exceptions.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 

@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/libraries/crabs/crabs_utils.cc
+    @file    ~/library/crabs/crabs_utils.cc
     @author  Cale McCollough <https://calemccollough.github.io>
     @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 

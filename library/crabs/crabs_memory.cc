@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/libraries/crabs/crabs_utils.cc
+    @file    ~/library/crabs/crabs_utils.cc
     @author  Cale McCollough <https://calemccollough.github.io>
     @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -120,10 +120,22 @@ char* MemoryCopy (char* write, char* write_end, const char* read,
         (write_end - write) < size || (read_end - read) < size) {
         return nullptr;
     }
-    while (--size >= 0) {
+    while (size-- > 0) {
         *write++ = *read++;
     }
     return write;
+}
+
+char* MemoryCopy (void* write, size_t write_size, const void* read, size_t read_size) {
+    char* write_byte = reinterpret_cast<char*> (write);
+    const char* read_bytes = reinterpret_cast<const char*> (read);
+    // @todo Optimize to write in words.
+    if (!write || !read || write_size < read_size) {
+        return nullptr;
+    }
+    while (read_size-- > 0)
+        *write_byte++ = *read_bytes++;
+    return write_byte;
 }
 
 char* PrintMemory (const void* token, const void* token_end, char* cursor,

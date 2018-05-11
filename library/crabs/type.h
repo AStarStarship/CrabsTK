@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/libraries/crabs/type.h
+    @file    ~/library/crabs/type.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -81,13 +81,13 @@ inline uintptr_t TypeAlign (char* cursor, uint_t type) {
     }
 #endif
     if (type <= UV8) {
-        return Align8 (cursor);
+        return Align8<uintptr_t> (cursor);
     }
     type = type >> 6;
     switch (type) {
-        case 1: return Align2 (cursor);
-        case 2: return Align4 (cursor);
-        case 3: return Align8 (cursor);
+        case 1: return Align2<uintptr_t> (cursor);
+        case 2: return Align4<uintptr_t> (cursor);
+        case 3: return Align8<uintptr_t> (cursor);
     }
     return 0;
 }

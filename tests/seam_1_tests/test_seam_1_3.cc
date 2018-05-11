@@ -53,11 +53,11 @@ void TestSeam1_3 () {
 
     static const int stack_exected[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-    Stack<int> stack (10);
+    Stack<> stack (10);
 
-    for (int i = 0; i < 10; ++i)
+    for (intptr_t i = 0; i < 10; ++i)
         stack.Push (1);
-    for (int i = 0; i < 10; ++i)
+    for (intptr_t i = 0; i < 10; ++i)
         CHECK_EQUAL (i, stack.Pop ())
 
     stack.Push (11);

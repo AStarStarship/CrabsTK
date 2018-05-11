@@ -36,7 +36,7 @@ void TestSeam1_3 ();
 void TestSeam1_4 ();
 void TestSeam1_5 ();
 
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 using namespace _;
 
@@ -201,7 +201,7 @@ class This : public Room {
 
     Parent parent;
 };
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 #endif  //< HEADER_FOR_GLOBAL
 #endif  //< RUN_UNIT_TESTS
