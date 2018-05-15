@@ -58,37 +58,6 @@ std::tm* ClockLocalTime (std::tm* std_tm, std::time_t const& time) {
     return std_tm;
 }
 
-/*
-char* PrintClock (tm* std_tm, char* buffer, char* buffer_end) {
-    return nullptr;
-}
-
-char* PrintClock (time_t t, char* buffer, char* buffer_end) {
-    return nullptr;
-
-}
-
-const char* ClockScan (const char* input, int& hour, int& minute,
-                              int& second) {
-    return nullptr;
-
-}
-
-const char* ClockScan (tm& std_tm, const char* input) {
-    return nullptr;
-
-}
-
-const char* ClockScan (time_t& result, const char* input) {
-    return nullptr;
-
-}
-
-char* ClockScan (time_t& result, char* input) {
-    return nullptr;
-
-} */
-
 
 const char* ClockScan (const char* input, int& hour, int& minute,
                        int& second) {

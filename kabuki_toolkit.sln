@@ -13,6 +13,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "benchmark_ascii_crabs", "pr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "seam_1_tests", "tests\seam_1_tests\seam_1_tests.vcxproj", "{83390D1C-F176-4C07-8B6A-8C7F95C7C59F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{35CF95B5-D19A-4C31-A59B-86323A15BC59}"
+	ProjectSection(SolutionItems) = preProject
+		docs\development.md = docs\development.md
+		docs\faq.md = docs\faq.md
+		docs\kabuki_vm_package_diagram.jpg = docs\kabuki_vm_package_diagram.jpg
+		docs\projects.md = docs\projects.md
+		docs\quickstart_guide.md = docs\quickstart_guide.md
+		docs\readme.md = docs\readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

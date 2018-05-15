@@ -41,10 +41,10 @@ Wall::Wall (size_t size_bytes) :
     is_dynamic_ (true) {
     size_bytes = size_bytes < kMinSizeBytes ? (uint_t)kMinSizeBytes
                                             : size_bytes;
-    size_bytes = Align8 (size_bytes);
+    size_bytes = MemoryAlign8 (size_bytes);
     size_t size_words = (size_bytes >> sizeof (void*)) + 3;
     uintptr_t* buffer = new uintptr_t[size_words],
-             * aligned_buffer = Align8 (buffer);
+             * aligned_buffer = MemoryAlign8 (buffer);
     //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
     //< on 16 and 32-bit systems.
     size_bytes -= sizeof (uintptr_t) * (aligned_buffer - buffer);
@@ -65,7 +65,7 @@ Wall::Wall (uintptr_t* buffer, size_t size_bytes) {
     //uint_t size_words = (size_bytes >> kBitsShift) + 3;
     //< Computer engineering voodoo for aligning to 64-bit boundary.
 
-    uintptr_t*aligned_buffer = Align8 (buffer);
+    uintptr_t*aligned_buffer = MemoryAlign8 (buffer);
     //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
     //< on 16 and 32-bit systems.
     size_bytes -= sizeof (uintptr_t) * (aligned_buffer - buffer);

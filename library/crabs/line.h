@@ -33,7 +33,7 @@ class KABUKI Line {
     char token;        //< Character to print.
     int  column_count; //< Column count.
 
-                       /** Constructor. */
+    /** Constructor. */
     Line (char token, int column_count);
 
     /** Prints a string line of the char repeating. */

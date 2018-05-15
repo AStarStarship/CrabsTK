@@ -40,7 +40,7 @@
 
 using namespace _;
 
-void TestSeam1_3 () {
+void TestSeam_1_4 () {
 
     printf ("\n    Testing SEAM_1_3... ");
 
@@ -965,5 +965,5 @@ void TestSeam1_3 () {
 #undef PRINT_PAUSE
 #undef PRINTF
 #else
-void TestSeam1_3 () {}
+void TestSeam_1_4 () {}
 #endif      //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

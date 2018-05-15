@@ -43,9 +43,6 @@ struct Date {
 
 #if USING_PRINTER
 
-/** Writes the given std_tm to the text buffer. */
-KABUKI char* PrintClock (tm* std_tm, char* buffer, char* buffer_end);
-
 /** Writes the given time to the text buffer. */
 KABUKI char* PrintClock (time_t t, char* buffer, char* buffer_end);
 
@@ -138,7 +135,6 @@ KABUKI void ClockZeroTime (tm& std_tm);
 
 KABUKI time_t ClockTime (int year, int month, int day, int  hour = 0,
                          int minute = 0, int second = 0);
-
 }       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_CLOCK

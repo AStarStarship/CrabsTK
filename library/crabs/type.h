@@ -64,30 +64,30 @@ typedef enum AsciiTypes {
     MAP,        //< 31. One-to-one map of Id-{Type-Value} tuples.
 } AsciiType;
 
-inline uintptr_t TypeAlign (char* cursor, uint_t type) {
+inline char* TypeAlign (char* cursor, uint_t type) {
 #if WORD_SIZE >= 32
     if (type <= BOL) {
-        return Align2 (cursor);
+        return AlignToUI2 (cursor);
     }
     if (type <= UVI) {
-        return Align4 (cursor);
+        return AlignToUI4 (cursor);
     }
 #else
     if (type <= UVI) {
-        return Align2 (cursor);
+        return MemoryAlign2 (cursor);
     }
     if (type <= TMS) {
-        return Align4 (cursor);
+        return MemoryAlign4 (cursor);
     }
 #endif
     if (type <= UV8) {
-        return Align8<uintptr_t> (cursor);
+        return AlignToUI8<> (cursor);
     }
     type = type >> 6;
     switch (type) {
-        case 1: return Align2<uintptr_t> (cursor);
-        case 2: return Align4<uintptr_t> (cursor);
-        case 3: return Align8<uintptr_t> (cursor);
+        case 1: return AlignToUI2<> (cursor);
+        case 2: return AlignToUI4<> (cursor);
+        case 3: return AlignToUI8<> (cursor);
     }
     return 0;
 }

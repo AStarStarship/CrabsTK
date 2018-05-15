@@ -119,10 +119,7 @@
     <ClCompile Include="..\..\library\crabs\crabs_script_itoa_64.cc">
       <Filter>library\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\library\crabs\crabs_object.cc">
-      <Filter>library\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\library\crabs\crabs_script_itoa.cc">
+    <ClCompile Include="..\..\library\crabs\crabs_script_itoa_32.cc">
       <Filter>library\crabs</Filter>
     </ClCompile>
   </ItemGroup>
@@ -281,6 +278,9 @@
       <Filter>library\crabs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\library\crabs\script_itoa.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\list.h">
       <Filter>library\crabs</Filter>
     </ClInclude>
   </ItemGroup>

@@ -28,7 +28,7 @@
 
 namespace _ {
 
-/** A one-to-one map of unsigned integers to unsigned integers.
+/** A one-to-one map that does not use hash table.
 
     Maps share the same data structure as Books, Dictionary(s) and Lists. Maps
     like all Script Objects are required to are required to have a stack_height,
@@ -53,28 +53,28 @@ namespace _ {
     |               Header Buffer Space                 |
     |___________________________________________________|
     |_______                                            |
-    |_______   Buffer                                   |
+    |_______   Buffered indexes                         |
     |_______                           Corresponding    |
-    |_______ ^ Collision Table N         Indexes        |
+    |_______ ^ Collision Index N         Indexes        |
     |_______ | ...                                      |
-    |        | Collision Table 0                        |
+    |        | Collision Index 0                        |
     |___________________________________________________|
     |_______                                            |
-    |_______   Buffer                                   |
+    |_______   Buffered mappings                        |
     |_______                                            |
     |_______ ^ Sorted Mappings N          Mappings      |
     |_______ | ...                                      |
     |        | Sorted Mappings 1                        |
     |___________________________________________________|
     |_______                                            |
-    |_______   Buffer                                   |
+    |_______   Buffered offsets                         |
     |_______                                Data        |
     |_______ ^ Data Offset N              Offsets       |
     |_______ | ...                                      |
     |        | Data Offset 1                            |
     |___________________________________________________|
     |_______                                            |
-    |_______   Buffer Indexes                           |
+    |_______   Buffered types                           |
     |_______                               Type         |
     |_______ ^ Type byte N                 Bytes        |
     |_______ | ...                                      |
@@ -85,8 +85,8 @@ namespace _ {
     |___________________________________________________| 0x0
     @endcode
 
-    | TMap | Max Values | % Collisions (p) |           Overhead             |
-    |:----:|:----------:|:----------------:|:------------------------------:|
+    | Map | Max Values | % Collisions (p) |           Overhead             |
+    |:---:|:----------:|:----------------:|:------------------------------:|
     |  2  |     255    |    0.0001        | Ceiling (0.02*p*2^8)  = 2      |
     |  4  |     2^13   |      0.1         | Ceiling (0.04*p*2^13) = 327.68 |
     |  8  |     2^29   |    10^-16        | Ceiling (0.04*p*2^29) = 327.68 |
@@ -97,23 +97,22 @@ namespace _ {
 
     How to calculate size:
     The size of any size collection can be calculated as follows:
-    size = ; * (2*sizeof (TIndex) + sizeof (TSize)) + collissionSize +
+    size = ; * (2*sizeof (SI) + sizeof (TSize)) + collissionSize +
 
     # Cache Page Optimizations
-    In order to optimize the cache pages, we need to group hot data together.
-    ChineseRoom Objects work through calling by TIndex, or by key by using the
-    function '\"' (i.e. "foo" is TIndex 44).
 
-    # Hash Table Collisions.
-    Because there are no pointers in Script collections, the hash tables are done using
-    using a nil-terminated list in the Collision List. In the 
+    In order to optimize the cache pages, we need to group hot data together.
+    ChineseRoom Objects work through calling by SI, or by key by using the
+    function '\"' (i.e. "foo" is SI 44).
 
     # Use Case Scenario
+
     We are creating a plug-in DLL. We need to create a collection in the DLL code, and
     pass it over to the program. The DLL manages the memory for the collection. This
     collection might contain several million entries, and more than 4GB of data.
 
     ### Why So Many TMap Types?
+
     We are running in RAM, and a collection could contain millions of key-value pairs.
     Adding extra bytes would added megabytes of data we don't need. Also, on
     microcontrollers, especially 16-bit ones, will have very little RAM, so we
@@ -122,6 +121,7 @@ namespace _ {
     pair, so we need a 64-bit collection.
 
     # Design Strengths
+
     * Uses less memory.
     * Fast push back when within buffer size.
     * Faster inserts on small collections when within buffer size.
@@ -135,25 +135,24 @@ namespace _ {
     ;
     @endcode
 */
-template<typename TIndex, typename TOffset, typename TSize>
+template<typename SI, typename UI, typename TSize>
 struct KABUKI TMap {
-    TSize  size_bytes;   //< Total size of the set.
-    TOffset   table_size,   //< Size of the (optional) key strings in bytes.
-           pile_size;    //< Size of the (optional) collisions pile in bytes.
-    TIndex stack_height, //< Max number of items that can fit in the header.
-           num_items;    //< Number of items.
-           
+    TSize size_bytes;   //< Total size of the set.
+    UI    table_size,   //< Size of the (optional) key strings in bytes.
+          unused;       //< Size of the (optional) collisions pile in bytes.
+    SI    stack_height, //< Max number of items that can fit in the header.
+          num_items;    //< Number of items.
 };
 
 
-template<typename TIndex, typename TOffset, typename TSize>
+template<typename SI, typename UI, typename TSize>
 constexpr uint_t MapOverheadPerIndex () {
-        return sizeof (2 * sizeof (TIndex) + sizeof (TOffset) + sizeof (TSize) + 3);
+        return sizeof (2 * sizeof (SI) + sizeof (UI) + sizeof (TSize) + 3);
 };
 
-template<typename TIndex, typename TOffset, typename TSize>
-constexpr TSize MinSizeMap (TIndex num_items) {
-    return num_items * sizeof (2 * sizeof (TIndex) + sizeof (TOffset) + sizeof (TSize) + 3);
+template<typename SI, typename UI, typename TSize>
+constexpr TSize MinSizeMap (SI num_items) {
+    return num_items * sizeof (2 * sizeof (SI) + sizeof (UI) + sizeof (TSize) + 3);
 };
 
 enum {
@@ -192,25 +191,25 @@ static TMap* Init2 (char* buffer, byte max_size, uint16_t table_size, uint16_t s
 
 /** Insets the given key-value pair.
 */
-template<typename TIndex, typename TOffset, typename TSize>
-TIndex MapInsert (TMap<TIndex, TOffset, TSize>* collection, byte type, 
-               const char* key, void* data, TIndex index) {
+template<typename SI, typename UI, typename TSize>
+SI MapInsert (TMap<SI, UI, TSize>* collection, byte type, 
+               const char* key, void* data, SI index) {
     if (collection == nullptr) return 0;
     return ~0;
 }
 
-template<typename TIndex>
-TIndex MaxMapIndexes () {
+template<typename SI>
+SI MaxMapIndexes () {
     enum {
-        kMaxIndexes = sizeof (TIndex) == 1 ? 255 : sizeof (TIndex) == 2 ? 
-                       8 * 1024 : sizeof (TIndex) == 4 ? 512 * 1024 * 1024 : 0
+        kMaxIndexes = sizeof (SI) == 1 ? 255 : sizeof (SI) == 2 ? 
+                       8 * 1024 : sizeof (SI) == 4 ? 512 * 1024 * 1024 : 0
     };
     return kMaxIndexes;
 }
 
 /** Adds a key-value pair to the end of the collection. */
-template<typename TIndex, typename TOffset, typename TSize>
-TIndex MapAdd (TMap<TIndex, TOffset, TSize>* map, TIndex id, 
+template<typename SI, typename UI, typename TSize>
+SI MapAdd (TMap<SI, UI, TSize>* map, SI id, 
                 TType type, void* data) {
     if (map == nullptr)
         return 0;
@@ -219,32 +218,32 @@ TIndex MapAdd (TMap<TIndex, TOffset, TSize>* map, TIndex id,
 
     PrintLine (id);
 
-    TIndex num_items = map->num_items,
+    SI num_items = map->num_items,
         stack_height = map->stack->stack_height,
         temp;
 
-    TOffset table_size = map->table_size;
+    UI table_size = map->table_size;
 
     if (num_items >= stack_height)
         return ~0;
     //< We're out of buffered indexes.
 
     char* types = reinterpret_cast<char*> (map) + 
-                   sizeof (TMap <TIndex, TOffset, TSize>);
+                   sizeof (TMap <SI, UI, TSize>);
     TSize* data_offsets = reinterpret_cast<TSize*> (types + stack_height *
-                                                    (sizeof (TOffset)));
+                                                    (sizeof (UI)));
     TSize* hashes = reinterpret_cast<TSize*> (types + stack_height *
-                                              (sizeof (TOffset) + sizeof (TSize))),
+                                              (sizeof (UI) + sizeof (TSize))),
         * hash_ptr;
-    TIndex* indexes = reinterpret_cast<TIndex*> (types + stack_height *
-                                                 (sizeof (TOffset) + sizeof (TSize) + sizeof (TIndex))),
+    SI* indexes = reinterpret_cast<SI*> (types + stack_height *
+                                                 (sizeof (UI) + sizeof (TSize) + sizeof (SI))),
         *unsorted_indexes = indexes + stack_height,
         *collission_list = unsorted_indexes + stack_height;
     char* keys = reinterpret_cast<char*> (map) + table_size - 1,
         *destination;
 
     // Calculate space left.
-    TOffset value = table_size - stack_height * MapOverheadPerIndex<TIndex, TOffset, TSize> (),
+    UI value = table_size - stack_height * MapOverheadPerIndex<SI, UI, TSize> (),
         key_length = static_cast<uint16_t> (strlen (id)),
         pile_size;
 
@@ -254,11 +253,11 @@ TIndex MapAdd (TMap<TIndex, TOffset, TSize>* map, TIndex id,
             key_offsets, "keys", keys, "indexes", indexes, "value", value);
 
     TSize temp_id = Hash16 (id),
-        current_mapping;
+          current_mapping;
 
     if (key_length > value) {
         PRINTF ("Buffer overflow\n";
-        return ~((TIndex)0);
+        return ~((SI)0);
     }
 
     //print ();
@@ -291,7 +290,7 @@ TIndex MapAdd (TMap<TIndex, TOffset, TSize>* map, TIndex id,
         high = num_items,
         index;
 
-    TIndex* temp_ptr;
+    SI* temp_ptr;
 
     while (low <= high) {
         mid = (low + high) >> 1;        //< Shift >> 1 to / 2
@@ -326,7 +325,7 @@ TIndex MapAdd (TMap<TIndex, TOffset, TSize>* map, TIndex id,
                 temp = indexes[mid];
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;  //< Load the index in the collision table.
-                while (index < MaxMapIndexes<TIndex> ()) {
+                while (index < MaxMapIndexes<SI> ()) {
                     printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
                     if (strcmp (id, keys - key_offsets[index]) == 0) {
                         printf ("but table already contains key at "
@@ -494,32 +493,32 @@ TIndex MapAdd (TMap<TIndex, TOffset, TSize>* map, TIndex id,
 //}
 
 /** Returns  the given query char in the hash table. */
-template<typename TIndex, typename TOffset, typename TSize>
-TIndex MapFind (TMap<TIndex, TOffset, TSize>* collection, const char* key) {
+template<typename SI, typename UI, typename TSize>
+SI MapFind (TMap<SI, UI, TSize>* collection, const char* key) {
     if (collection == nullptr)
         return 0;
     PrintLineBreak ("Finding record...", 5);
-    TIndex index,
+    SI index,
         ; = collection->;,
         stack_height = collection->stack_height,
         temp;
 
     if (key == nullptr || ; == 0)
-        return ~((TIndex)0);
+        return ~((SI)0);
 
-    TOffset table_size = collection->table_size;
+    UI table_size = collection->table_size;
 
     const TSize* hashes = reinterpret_cast<const TSize*>
         (reinterpret_cast<const char*> (collection) +
-         sizeof (TMap<TIndex, TOffset, TSize>));
-    const TOffset* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
+         sizeof (TMap<SI, UI, TSize>));
+    const UI* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
                                                                 stack_height);
     const char* indexes = reinterpret_cast<const char*>(key_offsets +
                                                         stack_height),
         *unsorted_indexes = indexes + stack_height,
         *collission_list = unsorted_indexes + stack_height;
     const char* keys = reinterpret_cast<const char*> (collection) + table_size - 1;
-    const TIndex* collisions,
+    const SI* collisions,
         *temp_ptr;
 
     TSize hash = Hash16 (key);
@@ -529,7 +528,7 @@ TIndex MapFind (TMap<TIndex, TOffset, TSize>* collection, const char* key) {
     if (; == 1) {
         if (strcmp (key, keys - key_offsets[0]) != 0) {
             printf ("Did not find key %s\n", key);
-            return ~((TIndex)0);
+            return ~((SI)0);
         }
         printf ("Found key %s\n", key);
         PrintLine ();
@@ -578,7 +577,7 @@ TIndex MapFind (TMap<TIndex, TOffset, TSize>* collection, const char* key) {
 
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;
-                while (index < MaxMapIndexes<TIndex> ()) {
+                while (index < MaxMapIndexes<SI> ()) {
                     printf ("comparing to \"%s\"\n", keys -
                             key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
@@ -590,7 +589,7 @@ TIndex MapFind (TMap<TIndex, TOffset, TSize>* collection, const char* key) {
                     index = *temp_ptr;
                 }
                 PRINTF ("Did not find \"" << key << "\"\n";
-                return ~((TIndex)0);
+                return ~((SI)0);
             }
 
             // There were no collisions.
@@ -609,7 +608,7 @@ TIndex MapFind (TMap<TIndex, TOffset, TSize>* collection, const char* key) {
             if (strcmp (key, keys - key_offsets[index]) != 0) {
                 //< It was a collision so the table doesn't contain string.
                 PRINTF (" but it was a collision and did not find key.\n";
-                return ~((TIndex)0);
+                return ~((SI)0);
             }
 
             PRINTF ("and found key at mid: " << mid << '\n';
@@ -619,7 +618,7 @@ TIndex MapFind (TMap<TIndex, TOffset, TSize>* collection, const char* key) {
     PRINTF ("Did not find a hash for key \"" << key << "\"\n";
     PrintLine ();
 
-    return ~((TIndex)0);
+    return ~((SI)0);
 }
 
 //static byte Find2 (Map2* collection, const char* key) {
@@ -627,14 +626,14 @@ TIndex MapFind (TMap<TIndex, TOffset, TSize>* collection, const char* key) {
 //}
 
 /** Prints this object out to the console. */
-template<typename TIndex, typename TOffset, typename TSize>
-void MapPrint (const TMap<TIndex, TOffset, TSize>* collection) {
+template<typename SI, typename UI, typename TSize>
+void MapPrint (const TMap<SI, UI, TSize>* collection) {
     if (collection == nullptr) return;
-    TIndex ; = collection->;,
+    SI ; = collection->;,
            stack_height = collection->stack_height,
            collision_index,
            temp;
-    TOffset table_size = collection->table_size,
+    UI table_size = collection->table_size,
          pile_size = collection->pile_size;
     PrintLine ('_');
     
@@ -655,16 +654,16 @@ void MapPrint (const TMap<TIndex, TOffset, TSize>* collection) {
     PRINTF ('\n';
 
     const char* states = reinterpret_cast<const char*> (collection) +
-                         sizeof (TMap <TIndex, TOffset, TSize>);
-    const TOffset* key_offsets = reinterpret_cast<const TOffset*> 
+                         sizeof (TMap <SI, UI, TSize>);
+    const UI* key_offsets = reinterpret_cast<const UI*> 
                               (states + stack_height);
     const TSize* data_offsets = reinterpret_cast<const TSize*> 
-                                (states + stack_height *(sizeof (TOffset)));
+                                (states + stack_height *(sizeof (UI)));
     const TSize* hashes = reinterpret_cast<const TSize*> (states + stack_height *
-        (sizeof (TOffset) + sizeof (TSize)));
-    const TIndex* indexes = reinterpret_cast<const TIndex*> 
-                            (states + stack_height * (sizeof (TOffset) + 
-                             sizeof (TSize) + sizeof (TIndex))),
+        (sizeof (UI) + sizeof (TSize)));
+    const SI* indexes = reinterpret_cast<const SI*> 
+                            (states + stack_height * (sizeof (UI) + 
+                             sizeof (TSize) + sizeof (SI))),
         * unsorted_indexes = indexes + stack_height,
         * collission_list = unsorted_indexes + stack_height,
         *cursor;
@@ -677,7 +676,7 @@ void MapPrint (const TMap<TIndex, TOffset, TSize>* collection) {
         putchar ('_');
     PRINTF ('\n';
 
-    for (TIndex i = 0; i < stack_height; ++i) {
+    for (SI i = 0; i < stack_height; ++i) {
         // Print each record as a row.
         // @todo Change stack_height to ; after done debugging.
         collision_index = indexes[i];
@@ -707,29 +706,29 @@ void MapPrint (const TMap<TIndex, TOffset, TSize>* collection) {
     PrintLine ('_');
 
     PrintMemory (reinterpret_cast<const char*> (collection) + 
-                 sizeof (TMap<TIndex, TOffset, TSize>), collection->size_bytes);
+                 sizeof (TMap<SI, UI, TSize>), collection->size_bytes);
     PRINTF ('\n';
 }
 
 /** Deletes the collection contents without wiping the contents. */
-template<typename TIndex, typename TOffset, typename TSize>
-void Clear (TMap<TIndex, TOffset, TSize>* collection) {
+template<typename SI, typename UI, typename TSize>
+void Clear (TMap<SI, UI, TSize>* collection) {
     if (collection == nullptr) return;
     collection->; = 0;
     collection->pile_size = 0;
 }
 
 /** Deletes the collection contents by overwriting it with zeros. */
-template<typename TIndex, typename TOffset, typename TSize>
-void Wipe (TMap<TIndex, TOffset, TSize>* collection) {
+template<typename SI, typename UI, typename TSize>
+void Wipe (TMap<SI, UI, TSize>* collection) {
     if (collection == nullptr) return;
     TSize size = collection->size_bytes;
     memset (collection, 0, size);
 }
 
 /** Returns true if this expr contains only the given address. */
-template<typename TIndex, typename TOffset, typename TSize>
-bool Contains (TMap<TIndex, TOffset, TSize>* collection, void* data) {
+template<typename SI, typename UI, typename TSize>
+bool Contains (TMap<SI, UI, TSize>* collection, void* data) {
     if (collection == nullptr) return false;
     if (data < collection) return false;
     if (data > GetEndAddress()) return false;
@@ -737,8 +736,8 @@ bool Contains (TMap<TIndex, TOffset, TSize>* collection, void* data) {
 }
 
 /** Removes that object from the collection and copies it to the destination. */
-template<typename TIndex, typename TOffset, typename TSize>
-bool RemoveCopy (TMap<TIndex, TOffset, TSize>* collection, void* destination, 
+template<typename SI, typename UI, typename TSize>
+bool RemoveCopy (TMap<SI, UI, TSize>* collection, void* destination, 
                  size_t buffer_size, void* data)
 {
     if (collection == nullptr) return false;
@@ -747,33 +746,33 @@ bool RemoveCopy (TMap<TIndex, TOffset, TSize>* collection, void* destination,
 }
 
 /** Removes the item at the given address from the collection. */
-template<typename TIndex, typename TOffset, typename TSize>
-bool Remove (TMap<TIndex, TOffset, TSize>* collection, void* adress) {
+template<typename SI, typename UI, typename TSize>
+bool Remove (TMap<SI, UI, TSize>* collection, void* adress) {
     if (collection == nullptr) return false;
 
     return false;
 }
 
 /** Removes all but the given collection from the collection. */
-template<typename TIndex, typename TOffset, typename TSize>
-bool Retain (TMap<TIndex, TOffset, TSize>* collection) {
+template<typename SI, typename UI, typename TSize>
+bool Retain (TMap<SI, UI, TSize>* collection) {
     if (collection == nullptr) return false;
 
     return false;
 }
 
 /** Creates a collection from dynamic memory. */
-template<typename TIndex, typename TOffset, typename TSize, typename TSize>
-TMap<TIndex, TOffset, TSize, TSize>* MapCreate (TIndex buffered_indexes,
+template<typename SI, typename UI, typename TSize, typename TSize>
+TMap<SI, UI, TSize, TSize>* MapCreate (SI buffered_indexes,
                                                         TSize table_size,
                                                         TSize size) {
-    TMap<TIndex, TOffset, TSize, TSize>* collection = New<TMap, uint_t> ();
+    TMap<SI, UI, TSize, TSize>* collection = New<TMap, uint_t> ();
     return collection;
 }
 
 /** Prints the given TMap to the console. */
-template<typename TIndex, typename TOffset, typename TSize>
-void MapPrint (TMap<TIndex, TOffset, TSize>* collection) {
+template<typename SI, typename UI, typename TSize>
+void MapPrint (TMap<SI, UI, TSize>* collection) {
 
 }
 

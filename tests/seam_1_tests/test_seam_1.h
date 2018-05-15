@@ -29,12 +29,12 @@
 
 #include "../../library/crabs/global.h"
 
-void TestSeam1 ();
-void TestSeam1_1 ();
-void TestSeam1_2 ();
-void TestSeam1_3 ();
-void TestSeam1_4 ();
-void TestSeam1_5 ();
+void TestSeam_1 ();
+void TestSeam_1_1 ();
+void TestSeam_1_2 ();
+void TestSeam_1_3 ();
+void TestSeam_1_4 ();
+void TestSeam_1_5 ();
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 

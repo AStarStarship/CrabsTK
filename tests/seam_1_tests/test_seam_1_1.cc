@@ -33,7 +33,7 @@ using namespace std;
 #define PRINT_PAUSE(message)
 #endif
 
-void TestSeam1_1 () {
+void TestSeam_1_1 () {
 
     printf ("\n    Testing SEAM_1_1... ");
 
@@ -186,5 +186,5 @@ void TestSeam1_1 () {
 #undef PRINT_PAUSE
 #undef PRINTF
 #else
-void TestSeam1_1 () {}
+void TestSeam_1_1 () {}
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1

@@ -37,6 +37,15 @@ char* BufferDefault () {
     return Buffer<> ();
 }
 
+
+uintptr_t* MemoryCreate (uintptr_t size) {
+    return new uintptr_t[size];
+}
+
+void MemoryDestroy (uintptr_t* buffer) {
+    delete buffer;
+}
+
 void MemoryClear (void* address, size_t size) {
     //memset (address, '0', size);
     char* ptr = reinterpret_cast<char*> (address);

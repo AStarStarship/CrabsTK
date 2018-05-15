@@ -1,6 +1,7 @@
 ﻿﻿﻿﻿# 1 Overview
 
-All of the Kabuki Toolkit project files are broken at the moment because I deleted all the CMake files like an idiot.
+All of the Kabuki Toolkit project files are broken at the moment. I could 
+really use some help. The module and application framework is primo.
 
 ## I. Table of Content
 1. Overview

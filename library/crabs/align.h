@@ -38,7 +38,7 @@ KABUKI int32_t AlignPowerOf2 (int32_t value);
     @param  ptr The address to align.
     @return The offset to add to the ptr to word align it. */
 template<typename T>
-inline uintptr_t AlignOffset (const void* ptr) {
+inline uintptr_t Align8 (const void* ptr) {
     // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
     // This allows the algorithm to word align without any if statements.
     // The algorithm works the same for all memory widths as proven by the
@@ -56,7 +56,7 @@ inline uintptr_t AlignOffset (const void* ptr) {
 
 /** Calculates the offset to align the given pointer to a 16-bit word boundary.
     @return A vector you add to a pointer to align it. */
-inline uintptr_t Align2 (const char* ptr) {
+inline uintptr_t AlignToUI2 (const char* ptr) {
     // Mask off lower bit and add it to the ptr.
     uintptr_t value = reinterpret_cast<uintptr_t> (ptr);
     return value & 0x1;
@@ -64,34 +64,34 @@ inline uintptr_t Align2 (const char* ptr) {
 
 /** Aligns the given pointer to a 32-bit word boundary.
     @return A vector you add to a pointer to align it. */
-inline uintptr_t Align4 (const char* ptr) {
-    return AlignOffset<int32_t> (ptr);
+inline uintptr_t AlignToUI4 (const char* ptr) {
+    return Align8<int32_t> (ptr);
 }
 
 /** Aligns the given pointer to a 64-bit word boundary.
     @return A vector you add to a pointer to align it. */
-inline uintptr_t Align8 (const char* ptr) {
-    return AlignOffset<int64_t> (ptr);
+inline uintptr_t AlignToUI8 (const char* ptr) {
+    return Align8<int64_t> (ptr);
 }
 
 /** Word aligns the given byte pointer up in addresses.
     @param ptr Pointer to align.
     @return Next word aligned up pointer. */
 template<typename T>
-inline T* Align (T* ptr) {
-    uintptr_t offset = AlignOffset<uintptr_t> (ptr);
+inline T* MemoryAlign (T* ptr) {
+    uintptr_t offset = Align8<uintptr_t> (ptr);
     char* aligned_ptr = reinterpret_cast<char*> (ptr) + offset;
     return reinterpret_cast<T*> (aligned_ptr);
 }
 
-inline uintptr_t* Align8 (uintptr_t* buffer) {
+inline uintptr_t* AlignToUI8 (uintptr_t* buffer) {
     char* byte_ptr = reinterpret_cast<char*> (buffer);
     uintptr_t offset = (((~reinterpret_cast<uintptr_t> (buffer)) + 1) &
                         (sizeof (uint64_t) - 1));
     return reinterpret_cast<uintptr_t*> (byte_ptr + offset);
 }
 
-inline uintptr_t AlignSize (uintptr_t size) {
+inline uintptr_t AlignToWord (uintptr_t size) {
     // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
     // This allows the algorithm to word align without any if statements.
     // The algorithm works the same for all memory widths as proven by the
@@ -110,7 +110,7 @@ inline uintptr_t AlignSize (uintptr_t size) {
 
 
 //KABUKI uintptr_t AlignSize (uintptr_t size);
-inline uintptr_t Align8 (uintptr_t size) {
+inline uintptr_t AlignToUI8 (uintptr_t size) {
     // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
     // This allows the algorithm to word align without any if statements.
     // The algorithm works the same for all memory widths as proven by the

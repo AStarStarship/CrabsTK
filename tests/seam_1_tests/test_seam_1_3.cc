@@ -43,7 +43,9 @@
 
 using namespace _;
 
-void TestSeam1_3 () {
+void TestSeam_1_3 () {
+
+    int i = 0; //< Shared looping variable.
 
     PRINTF ("\nTesting SEAM_1_3... ");
 
@@ -51,35 +53,46 @@ void TestSeam1_3 () {
 
     PRINTF ("\n\nTest _::Stack...\n\n");
 
-    static const int stack_exected[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    Stack<> test_stack (10);
 
-    Stack<> stack (10);
-
-    for (intptr_t i = 0; i < 10; ++i)
-        stack.Push (1);
-    for (intptr_t i = 0; i < 10; ++i)
-        CHECK_EQUAL (i, stack.Pop ())
-
-    stack.Push (11);
-    CHECK_EQUAL (11, stack.Pop ())
+    for (i = 0; i <= 10; ++i)
+        test_stack.Push (i);
+    for (i = 10; i > 0; i--)
+        CHECK_EQUAL (i, test_stack.Pop ())
 
     PRINT_PAUSE ("\n\nDone _::Stack!")
-    /*
+
+        /*
     PRINTF ("\n\nTest _::Array...\n\n");
+    static const int array_3d_exected[2][2][2] = { { { 0, 1 }, { 2, 3 } },
+                                                   { { 4, 5 }, { 6, 7 } }
+                                                 };
 
+    const int* test = Dimensions<2, 2, 2> ();
+    Array<int> test_array (test);
+    *test_array.Elements () = { { { 0, 1 }, { 2, 3 } },
+                                { { 4, 5 }, { 6, 7 } }
+                              };
+    i = 0;
+    int* array_base = test_array.Elements ();
+    for (int z = 0; z < 2; ++z)
+        for (int y = 0; y < 2; ++y)
+            for (int x = 0; x < 2; ++x)
+                CHECK_EQUAL (i++, array_3d_exected[x][y][z])
+    
     PRINT_PAUSE ("\n\nDone _::Array!")
-
+    */
     PRINTF ("\n\nTest _::List...\n\n");
 
     PRINT_PAUSE ("\n\nDone _::List!")
+    
 
+    /*
     PRINTF ("\n\nTesting _::Book...\n\n");
 
-    PRINTF ("\n\nTesting BookInit...\n");
+    int16_t index;
 
-    int8_t index;
-
-    Book<int16_t, uint16_t, uint16_t> book (8, kBufferSize, 128);
+    Book2 book (8, kBufferSize);
 
     CHECK (book != nullptr)
 
@@ -160,5 +173,5 @@ void TestSeam1_3 () {
 #undef PRINT_PAUSE
 #undef PRINTF
 #else
-void TestSeam1_3 () {}
+void TestSeam_1_3 () {}
 #endif      //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

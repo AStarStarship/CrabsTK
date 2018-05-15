@@ -16,22 +16,19 @@
 
 #pragma once
 #include <stdafx.h>
-
-#ifndef CRABS_WALL_H
-#define CRABS_WALL_H
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#ifndef HEADER_FOR_CRABS_WALL
+#define HEADER_FOR_CRABS_WALL
 
 #include "door.h"
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 #include "op.h"
 
 namespace _ {
 
-/** A singled contiguous buffer in a Chinese Room.
+/** A memory aligned singled contiguous buffer in a Chinese Room.
     Only one single wall is required for a Chinese Room, but when more memory 
-    is needed a new Wall may be created and destroyed dynamically. This gives 
-    the user .
+    is needed a new Wall may be created and destroyed dynamically.
     
     @code
 
@@ -102,5 +99,5 @@ class Wall : public Op {
 };
 
 }       //< namespace _
+#endif  //< HEADER_FOR_CRABS_WALL
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
-#endif  //< CRABS_WALL_H

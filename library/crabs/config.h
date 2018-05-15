@@ -147,6 +147,8 @@ enum {
 
     kAutoSizeMin = 512,
     kAutoSizeDefault = kAutoSizeMin * 4,
+
+    kStackCountMaxDefault = 32,
 };
 }   //< namespace _
 

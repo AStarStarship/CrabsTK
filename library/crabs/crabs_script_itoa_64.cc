@@ -40,6 +40,8 @@
 
 namespace _ {
 
+/** @todo Update this algoirhm to Script itoa. */
+
 char* Print (uint64_t value, char* text, char* text_end) {
     return nullptr; /*
     // Lookup table for powers of 10.

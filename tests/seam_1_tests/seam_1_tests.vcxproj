@@ -42,12 +42,11 @@
     <ClCompile Include="..\..\library\crabs\crabs_scan.cc" />
     <ClCompile Include="..\..\library\crabs\crabs_slot.cc" />
     <ClCompile Include="..\..\library\crabs\crabs_slot_print.cc" />
-    <ClCompile Include="..\..\library\crabs\crabs_object.cc" />
     <ClCompile Include="..\..\library\crabs\crabs_text.cc" />
     <ClCompile Include="..\..\library\crabs\crabs_type.cc" />
     <ClCompile Include="..\..\library\crabs\crabs_wall.cc" />
     <ClCompile Include="..\..\library\crabs\crabs_script_itoa_64.cc" />
-    <ClCompile Include="..\..\library\crabs\crabs_script_itoa.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_script_itoa_32.cc" />
     <ClCompile Include="stdafx.cc" />
     <ClCompile Include="test_seam_1.cc" />
     <ClCompile Include="test_seam_1_1.cc" />
@@ -82,6 +81,7 @@
     <ClInclude Include="..\..\library\crabs\language.h" />
     <ClInclude Include="..\..\library\crabs\library.h" />
     <ClInclude Include="..\..\library\crabs\line.h" />
+    <ClInclude Include="..\..\library\crabs\list.h" />
     <ClInclude Include="..\..\library\crabs\map.h" />
     <ClInclude Include="..\..\library\crabs\memory.h" />
     <ClInclude Include="..\..\library\crabs\mirror.h" />

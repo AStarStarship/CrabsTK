@@ -295,7 +295,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                 #if USING_CRABS_2_BYTE_TYPES
                 //Read2ByteType:{
                     // Word-align
-                    offset = Align2 (l_start);
+                    offset = MemoryAlign2 (l_start);
                     if ((uintptr_t)length < offset + 2) {
                         return ReturnError (this, kErrorBufferUnderflow,
                                                 params, index, l_start);
@@ -339,7 +339,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                 #if USING_CRABS_4_BYTE_TYPES
                 //Read4ByteType:{
                     // Word-align
-                    offset = Align4 (l_start);
+                    offset = MemoryAlign4 (l_start);
                     if ((uintptr_t)length < offset + 4) {
                         return ReturnError (this, kErrorBufferUnderflow,
                                           params, index, l_start);
@@ -376,7 +376,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                 #if USING_CRABS_8_BYTE_TYPES
                 //Read8ByteType:{
                     // Word-align
-                    offset = Align8 (l_start);
+                    offset = MemoryAlign8 (l_start);
                     if ((uintptr_t)length < offset + sizeof (int64_t)) {
                         return ReturnError (this, kErrorBufferUnderflow,
                                             params, index, l_start);

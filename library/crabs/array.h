@@ -1,5 +1,5 @@
 /** Kabuki Toolkit
-    @file    ~/library/array.h
+    @file    ~/library/crabs/array.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -15,248 +15,199 @@
 
 #pragma once
 #include <stdafx.h>
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
-
-#ifndef HEADER_FOR_CRABS_ARRAY
-#define HEADER_FOR_CRABS_ARRAY
-
-#include "config.h"
+#if      MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#ifndef  HEADER_FOR_CRABS_ARRAY
+#define  HEADER_FOR_CRABS_ARRAY
+#include "stack.h"
 
 namespace _ {
 
-/** An array of like types that can auto-grow.
+/** @group Array 
+    @brief A multi-dimensional array.
+    @desc  ASCII array uses the same data structure as the
+*/
+template<typename T = intptr_t, typename UI = uint, typename SI = int>
+constexpr SI ArrayCountUpperLimit (SI dimension_count, SI element_count) {
+    UI header_size = sizeof (TArray<T, UI, SI>) + 
+                     Align8<SI> (dimension_count * sizeof (SI));
+    return (SI)(((~(UI)0) - 7) - header_size) / (UI)sizeof (T);
+}
+
+/** Returns the required size of the given array. */
+template<typename T = intptr_t, typename UI = uint, typename SI = int>
+constexpr SI ArrayElementCount (const SI* dimensions) {
+    assert (dimensions);
+    SI dimension_count = *dimensions++,
+       element_count  = *dimensions++;
+    if (--dimension_count < 0 || element_count < 0)
+        return -1;
+    UI size = dimension_count * sizeof (SI);
+    while (dimension_count-- > 0) {
+        SI current_dimension = *dimensions++;
+        if (current_dimension < 1)
+            return -1;
+        element_count *= current_dimension;
+    }
+    if (element_count > ArrayCountUpperLimit<T, UI, SI> ())
+        return -1;
+    return element_count * sizeof (T);
+}
+
+/** Returns the required size of the given array. */
+template<typename T = intptr_t, typename UI = uint, typename SI = int>
+constexpr UI ArraySize (const SI* dimensions) {
+    SI dimension_count = *dimensions++,
+       element_count   = *dimensions++;
+    UI header_size = sizeof (TArray<T, UI, SI>);
+    if (--dimension_count < 0)
+        return 0;
+    while (dimension_count-- > 0) {
+        SI current_dimension = *dimensions++;
+        if (current_dimension < 1)
+            return 0;
+        element_count *= current_dimension;
+    }
+    if (element_count > ArrayCountUpperLimit<T, UI, SI> ())
+        return 0;
+    return element_count * sizeof (T);
+}
+ 
+/** Initializes an stack of n elements of the given type.
+    @param buffer An stack of bytes large enough to fit the stack. */
+template<typename T = intptr_t, typename UI = uint, typename SI = int>
+TArray<T, UI, SI>* ArrayInit (const SI* dimensions) {
+    assert (dimensions);
+    SI dimension_count = *dimension;
+    if (dimension_count < 0 || dimension_count > kStackCountMax)
+        return nullptr;
+    UI size = (UI)sizeof (TArray<T, UI, SI>) + 
+              dimension_count * sizeof (T);
+    uintptr_t* buffer = new uintptr_t[size >> kWordBitCount];
+    TArray<T, UI, SI>* stack = reinterpret_cast<TArray<T, UI, SI>*> (buffer);
+    stack->size_array = 0;
+    stack->size_stack = size;
+    stack->count_max = dimension_count;
+    stack->count = 0;
+    return stack;
+}
+
+template<typename T = intptr_t, typename UI = uint, typename SI = int>
+SI ArrayElementCountMax () {
+    SI count_max = UnsignedMax<UI> () - (UI)sizeof (TArray<T, UI, SI>);
+}
+
+template<typename T = intptr_t, typename UI = uint, typename SI = int>
+TArray<T, UI, SI>* ArrayNew (const SI* dimensions) {
+    assert (dimensions);
+    const SI* cursor = dimensions;
+    SI count         = (*cursor++) - 1,
+       element_count = *cursor++,
+       index         = count;
+    while (index-- > 0) {
+        element_count *= *cursor++;
+    }
+    UI size = ((UI)element_count * (UI)sizeof (T));
+    
+}
+
+/** Gets the address of the packed array.
+    @param tarray ASCII Array data structure..
+    @return Pointer to the first element in the array. */
+template<typename T, typename SI = int, typename UI = uint>
+T* ArrayElements (TArray<T, UI, SI>* tarray) {
+    char* elements = reinterpret_cast<char*> (tarray) + tarray->size_stack;
+    return reinterpret_cast<T*> (elements);
+}
+
+template<typename T, typename SI = int, typename UI = uint>
+inline SI ObjectCountRound (SI count) {
+    enum {
+        kRoundEpochMask = (sizeof (SI) == 8) ? 7 :
+                          (sizeof (SI) == 4) ? 3 :
+                          (sizeof (SI) == 2) ? 1 : 0,
+    };
+    Align<SI> (count);
+}
+
+/** Creates a immutable array of dimensions. */
+template<const int... N>
+inline const int* Dimensions () {
+    static const int kCount = (int)sizeof... (N),
+                     kList[sizeof... (N)] = { N... };
+    return &kCount;
+}
+
+/** A multi-dimensional array that uses dynamic memory that can auto-grow.
+
+    An ASCII Stack struct is identical to an Array
+
     @todo This is an older data structure that needs to be replace this with 
     _::Array.
     This class is used to save a little bit of ROM space over the data::Array.
     To use this class with anything other than POD types the class T must have
     a overloaded operator= and operator==. */
-template<typename T>
+template<typename T, typename SI = int, typename UI = uint>
 class Array {
     public:
 
-    enum {
-        kMinSize = 4    //< Default and min size if none is entered.
-    };
-
     /** Initializes an array of n elements of the given type.
         @param max_elements The max number of elements in the array buffer. */
-    Array (int max_elements = kMinSize) :
-        size_     (max_elements < 1 ? 1 :max_elements),
-        count_    (0),
-        elements_ (new T[size_]) {
+    Array (SI demension_count = 1) :
+        buffer_ (ArrayNew<T, UI, SI> (1)) {
+
     }
 
-    /** Initializes an array of n elements of the given type and clears .
-        @param max_elements The max number of elements in the array buffer.
-        @param init_value The init value of the elements. */
-    Array (int max_elements, int init_value) :
-        size_     (max_elements < 1 ? 1 : max_elements),
-        count_    (0),
-        elements_ (new T[size_]) {
-        //memset (elements_, init_value, max_elements);
+    Array (const SI* dimensions) {
+        assert (dimensions);
     }
 
     /** Initializes an array of n elements of the given type.
         @param max_elements The max number of elements in the array buffer. */
-    Array (const Array& other) :
-        size_     (other.size_),
-        count_    (other.count_),
-        elements_ (new T[size_]) {
+    Array (const Array& other) {
         for (int i = count_ - 1; i >= 0; --i) {
             elements_[i] = other.elements_[i];
         }
     }
 
+    /** Deletes the dynamically allocated Array. */
     ~Array () {
-        delete[] elements_;
+        delete[] buffer_;
     }
 
-    /** Clears the array content by setting count_ to zero. */
-    void Clear () {
-        count_ = 0;
+    void Clone (Array<T, UI, SI>& other) {
+
     }
 
-    /** Gets the num_elements_. */
-    int Length () {
-        return count_;
+    /** Gets the number of dimensions. */
+    SI GetDimensionCount () {
+        return This ()->count;
     }
 
-    /** Gets the max elements that can fit in the current array memory. */
-    int GetSize () {
-        return size_;
-    }
-
-    /** Returns true if this Array contains the given value.
-         @warning Non-POD types must overload operator= and operator==. */
-    bool Contains (T& element) {
-        for (int i = 0; i < count_; ++i) {
-            if (elements_[i] == element) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /** Inserts the value into the given index into the array at the given,
-         index and shifts the contents at the index and above up one. */
-    int Insert (T value, int index) {
-        if (index < 0) {
-            return -1;
-        }
-        int count = count_,
-            size = size_;
-        
-        if (count >= size) {
-            return -2;
-        }
-        if (index > count) {
-            return -3;
-        }
-        if (index == size) {
-            Grow ();
-        }
-        T* array_ptr = elements_;
-        if (count == 0) {
-            array_ptr[0] = value;
-            count_ = 1;
-            return 1;
-        }
-        if (count == 1) {
-            if (index == 0) {
-                array_ptr[1] = array_ptr[0];
-                array_ptr[0] = value;
-            } else {
-                array_ptr[1] = value;
-            }
-            count_ = 2;
-            return 2;
-        }
-        for (int i = index; i <= count; ++i)
-            array_ptr[i + 1] = array_ptr[i];
-        array_ptr[index] = value;
-        //T* insert_point = array_ptr + index,
-        //  * end = array_ptr + num_elements;
-        //while (insert_point != end)
-        //    *end = *(--end);
-        count_ = count + 1;
-        return count + 1;
-    }
-
-    /** Pushes the element onto the Stack. */
-    int Push (T element) {
-        return Insert (element, count_);
-    }
-
-    /** Pushes the Array contents onto the Stack. */
-    int Push (Array<T>& elements) {
-        int count = count_,
-            other_count = elements.Length (),
-            new_size = count + other_count;
-        if (other_count <= 0) { // Nothing to do.
-            return -1;
-        }
-        if (new_size > size_) {
-            Grow (new_size);
-        }
-        T* ptr = &elements_[count],
-         * element = elements.elements_;
-        for (int i = 0; i < new_size; ++i) {
-            *ptr = *element++;
-        }
-        count_ = new_size;
-        return new_size;
-    }
-
-    /** Pops an element off the stack. */
-    T Pop () {
-        int count = count_;
-        if (count == 0)
-            return 0;
-        T element = elements_[count - 1];
-        count_ = count - 1;
-        return element;
-    }
-
-    /** Removes the given index from the array. */
-    bool Remove (int index) {
-        int count = count_;
-        if (count == 0)
-            return false;
-        if (count == 1) {
-            count_ = 0;
-            return false;
-        }
-        //T* end_address     = &array_[count - 1],
-        // * current_address = &array_[index];
-        //while (current_address != end_address) {
-        //    *current_address = *(++current_address);
-        //}
-        for (int i = index; i < count; ++i) {
-            elements_[i] = elements_[i + 1];
-        }
-        count_ = count - 1;
-        return true;
-    }
-
-    /** Returns true if this Array contains the given value.
-         @warning Non-POD types must overload operator= and operator==. */
-    bool RemoveFirstInstanceOf (T& element) {
-        for (int i = 0; i < count_; ++i) {
-            if (elements_[i] == element) {
-                return Remove (i);
-            }
-        }
-        return false;
-    }
-
-    /** Gets the Array element at the given index. */
-    inline T& Element (int index) {
-        static T nil = 0;
-        if (index < 0) {
-            return nil;
-        }
-        if (index >= size_) {
-            return nil;
-        }
-        return elements_[index];
-    }
-
-    /** Gets the Array element at the given index. */
-    inline T& operator[] (int index) {
-        return Element (index);
+    /** Gets the dimensions array. */
+    T* Dimension () {
+        return StackElements<T, UI, SI> (This ());
     }
 
     /** Gets the underlying array. */
-    T* GetArray () {
-        return elements_;
-    }
-
-    /** Doubles the size of the array. */
-    void Grow (int new_size = -1) {
-        int size = size_;
-        if (new_size < 0) { // Double in size.
-            new_size = size << 1; //< <<1 to *2
-        }
-        else if (new_size < size) { // Nothing to do :-)
-            return;
-        }
-        T* array_local = elements_,
-            *new_array = new T[new_size];
-        for (int i = 0; i < size; ++i) {
-            new_array[i] = array_local[i];
-        }
-        size_ = size << 1;
-        // Size should never be below 4.
-        delete[] array_local;
-        elements_ = new_array;
+    T* Elements () {
+        return ArrayElements<T, UI, SI> (This ());
     }
 
     private:
 
-    
+    uintptr_t* buffer_; //< Dynamically allocted word-aligned buffer.
 
+    inline TArray<T, UI, SI>* This () {
+        return reinterpret_cast<TArray<T, UI, SI>*> (buffer_);
+    }
 };      //< class Array
 }       //< namespace _
+
+template<typename T = intptr_t, typename UI = uint, typename SI = int>
+inline _::Array<T, UI, SI>& operator= (_::Array<T, UI, SI>& a,
+                                       _::Array<T, UI, SI>& b) {
+    a.Clone (b);
+    return a;
+}
 #endif  //< HEADER_FOR_CRABS_ARRAY
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

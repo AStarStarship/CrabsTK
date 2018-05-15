@@ -40,7 +40,7 @@
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #include "stack.h"
-//#include "array.h"
+#include "array.h"
 //#include "bsq.h"
 //#include "list.h"
 //#include "book.h"

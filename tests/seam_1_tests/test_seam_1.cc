@@ -27,16 +27,16 @@ TEST_GROUP (KabukiToolkitTests) {
     }
 };
 
-void TestSeam1 () {
-    TestSeam1_1 ();
-    TestSeam1_2 ();
-    TestSeam1_3 ();
-    //TestSeam1_4 ();
-    //TestSeam1_5 ();
+void TestSeam_1 () {
+    TestSeam_1_1 ();
+    TestSeam_1_2 ();
+    TestSeam_1_3 ();
+    //TestSeam_1_4 ();
+    //TestSeam_1_5 ();
 }
 
 TEST (KabukiToolkitTests, MajorSeam1) {
-    TestSeam1 ();
+    TestSeam_1 ();
 }
 
 #endif  //< #if MAJOR_SEAM >= 1

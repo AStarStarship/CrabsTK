@@ -40,7 +40,7 @@ TSize ObjectSize (Object<TSize>* object) {
     return *reinterpret_cast<TSize*> (object);
 }
 
-template<typename TSize = uint32_t, typename T = uintptr_t*>
+template<typename TSize = uint32_t, typename T = uintptr_t * >
 TSize ObjectSize (T* object) {
     return *reinterpret_cast<TSize*> (object);
 }
@@ -50,20 +50,25 @@ TSize ObjectSize (uintptr_t* buffer) {
     return *reinterpret_cast<TSize*> (buffer);
 }
 
-template<typename TSize = uint32_t>
-Object<TSize>* ObjectClone (Object<TSize>* object) {
-    
-    return *reinterpret_cast<TSize*> (buffer);
+/** Aligns the given word to 64-bit word boundry. */
+template<typename T>
+inline T WordAlign8 (T value) {
+    return value + (((~value) + 1) &
+                     (sizeof (T) - 1));
 }
 
-/** Stores and retreives the Object2 auto-size. */
-KABUKI uint16_t ObjectAutosize (uint16_t new_size);
-
-/** Stores and retreives the Object4 auto-size. */
-KABUKI uint32_t ObjectAutosize (uint32_t new_size);
-
-/** Stores and retreives the Object8 auto-size. */
-KABUKI uint64_t ObjectAutosize (uint64_t new_size);
+template<typename TSize = uint32_t>
+Object<TSize>* ObjectClone (Object<TSize>* object) {
+    assert (object);
+    TSize* size_ptr = reinterpret_cast<TSize*> (object);
+    TSize size = (*size_ptr) >> kWordBitCount;
+    uintptr_t* buffer = new uintptr_t[size],
+             * read = buffer,
+             * write = reinterpret_cast<uintptr_t*> (object);
+    for (; size > 0; size--)
+        *write++ = *read++;
+    return *reinterpret_cast<TSize*> (buffer);
+}
 
 }       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

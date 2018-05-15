@@ -31,6 +31,12 @@ KABUKI uint32_t AlignPowerOf2 (uint32_t value);
 /** Compute the next highest power of 2. */
 KABUKI int32_t AlignPowerOf2 (int32_t value);
 
+/** Creates a dynamic word-aligned buffer of the given size in bytes. */
+KABUKI uintptr_t* MemoryCreate (uintptr_t size_bytes);
+
+/** Destroys a dynamic buffer. */
+KABUKI void MemoryDestroy (uintptr_t* buffer);
+
 /** Returns the given pointer for use with uncooperative overloaded
     operators. */
 inline const void* Pointer (const void* pointer) {
@@ -102,13 +108,67 @@ inline T* MemoryOffset (void* base, uint_t offset) {
     return reinterpret_cast<T*>(reinterpret_cast<char*>(base) + offset);
 }
 
+/** Aligns the given pointer to a 64-bit boundary.
+    @param  ptr The address to align.
+    @return The aligned value. */
+template<typename T = uintptr_t>
+inline T Align (T value) {
+    // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
+    // This allows the algorithm to word align without any if statements.
+    // The algorithm works the same for all memory widths as proven by the
+    // truth table bellow.
+    //
+    // 3-bit example:
+    // ~000 = 111 => 000 + 111 + 1 = 0x1000
+    // ~001 = 110 => 001 + 110 + 1 = 0x1000
+    // ~010 = 101 => 010 + 101 + 1 = 0x1000
+    // ~011 = 100 => 011 + 100 + 1 = 0x1000
+    // ~100 = 011 => 100 + 011 + 1 = 0x1000
+    // ~101 = 010 => 101 + 010 + 1 = 0x1000
+    // ~110 = 001 => 110 + 001 + 1 = 0x1000
+    // ~111 = 000 => 111 + 000 + 1 = 0x1000 
+    //
+    // 2-bit example:
+    // ~00 = 11 => 00 + 11 + 1 = 0x100
+    // ~01 = 10 => 01 + 10 + 1 = 0x100
+    // ~10 = 01 => 10 + 01 + 1 = 0x100
+    // ~11 = 00 => 11 + 00 + 1 = 0x100
+    T offset = ((~value) + 1) & (sizeof (T) - 1);
+    return value + offset;
+}
+
 /** Returns the number to add to word-align the given pointer to a uint_t-bit
     boundary.
-    @author Algorithm by Cale McCollough (or as far as I know).
     @param  ptr The address to align.
-    @return The offset to add to the ptr to word align it. */
-template<typename UI, typename T>
-inline uintptr_t AlignOffset (const void* ptr) {
+    @return The aligned value. */
+template<typename T = uintptr_t>
+inline T Align2 (T value) {
+    return value + value & 0x1;
+}
+
+/** Returns the number to add to word-align the given pointer to a uint_t-bit
+    boundary.
+    @param  ptr The address to align.
+    @return The aligned value. */
+template<typename T = uintptr_t>
+inline T Align4 (T value) {
+    // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
+    // This allows the algorithm to word align without any if statements.
+    // The algorithm works the same for all memory widths as proven by the
+    // truth table bellow.
+    // ~00 = 11 => 00 + 11 + 1 = 0x100
+    // ~01 = 10 => 01 + 10 + 1 = 0x100
+    // ~10 = 01 => 10 + 01 + 1 = 0x100
+    // ~11 = 00 => 11 + 00 + 1 = 0x100
+    T offset = ((~value) + 1) & (sizeof (uint32_t) - 1);
+    return value + offset;
+}
+
+/** Aligns the given pointer to a 64-bit boundary.
+    @param  ptr The address to align.
+    @return The aligned value. */
+template<typename T = uintptr_t>
+inline T Align8 (T value) {
     // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
     // This allows the algorithm to word align without any if statements.
     // The algorithm works the same for all memory widths as proven by the
@@ -120,84 +180,46 @@ inline uintptr_t AlignOffset (const void* ptr) {
     // ~100 = 011 => 100 + 011 + 1 = 0x1000
     // ~101 = 010 => 101 + 010 + 1 = 0x1000
     // ~110 = 001 => 110 + 001 + 1 = 0x1000
-    // ~111 = 000 => 111 + 000 + 1 = 0x1000                 v--- Mask
-    return ((~reinterpret_cast<uintptr_t> (ptr)) + 1) & (sizeof (T) - 1);
+    // ~111 = 000 => 111 + 000 + 1 = 0x1000 
+    T offset = ((~value) + 1) & (sizeof (uint64_t) - 1);
+    return value + offset;
 }
 
-/** Calculates the offset to align the given pointer to a 16-bit word boundary.
-    @return A vector you add to a pointer to align it. */
-template<typename UI = uintptr_t>
-inline UI Align2 (const char* ptr) {
-    // Mask off lower bit and add it to the ptr.
+/** Aligns the given pointer to a 16-bit boundary. */
+template<typename T = char>
+inline T* AlignToUI2 (char* ptr) {
     uintptr_t value = reinterpret_cast<uintptr_t> (ptr);
-    return value & 0x1;
+    return reinterpret_cast<T*> (Align2<> (value));
 }
 
-/** Aligns the given pointer to a 32-bit word boundary.
-    @return A vector you add to a pointer to align it. */
-template<typename UI = uintptr_t>
-inline uintptr_t Align4 (const char* ptr) {
-    return AlignOffset<UI, int32_t> (ptr);
+/** Aligns the given pointer to a 16-bit boundary. */
+template<typename T = char>
+inline const T* AlignToUI2 (const char* ptr) {
+    uintptr_t value = reinterpret_cast<uintptr_t> (ptr);
+    return reinterpret_cast<const T*> (Align2<> (value));
 }
 
-/** Aligns the given pointer to a 64-bit word boundary.
-    @return A vector you add to a pointer to align it. */
-template<typename UI = uintptr_t>
-inline uintptr_t Align8 (const char* ptr) {
-    return AlignOffset<UI, int64_t> (ptr);
+/** Aligns the given pointer to a 32-bit word boundary. */
+template<typename T = char>
+inline T* AlignToUI4 (char* ptr) {
+    uintptr_t value = reinterpret_cast<uintptr_t> (ptr);
+    return reinterpret_cast<T*> (Align4<> (value));
 }
 
-inline uintptr_t* Align8 (uintptr_t* buffer) {
-    char* byte_ptr = reinterpret_cast<char*> (buffer);
-    uintptr_t offset = (((~reinterpret_cast<uintptr_t> (buffer)) + 1) &
-        (sizeof (uint64_t) - 1));
-    return reinterpret_cast<uintptr_t*> (byte_ptr + offset);
+/** Aligns the given pointer to a 64-bit boundary. */
+template<typename T = char>
+inline const T* AlignToUI8 (const void* ptr) {
+    uintptr_t value = reinterpret_cast<uintptr_t> (ptr);
+    value = Align8<> (value);
+    return reinterpret_cast<const T*> (value);
 }
 
-/** Word aligns the given byte pointer up in addresses.
-    @param ptr Pointer to align.
-    @return Next word aligned up pointer. */
-template<typename T>
-inline T* Align (T* ptr) {
-    uintptr_t offset = AlignOffset<UI, uintptr_t> (ptr);
-    char* aligned_ptr = reinterpret_cast<char*> (ptr) + offset;
-    return reinterpret_cast<T*> (aligned_ptr);
-}
-
-inline uintptr_t AlignSize (uintptr_t size) {
-    // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
-    // This allows the algorithm to word align without any if statements.
-    // The algorithm works the same for all memory widths as proven by the
-    // truth table bellow.
-    // ~000 = 111 => 000 + 111 + 1 = 0x1000
-    // ~001 = 110 => 001 + 110 + 1 = 0x1000
-    // ~010 = 101 => 010 + 101 + 1 = 0x1000
-    // ~011 = 100 => 011 + 100 + 1 = 0x1000
-    // ~100 = 011 => 100 + 011 + 1 = 0x1000
-    // ~101 = 010 => 101 + 010 + 1 = 0x1000
-    // ~110 = 001 => 110 + 001 + 1 = 0x1000
-    // ~111 = 000 => 111 + 000 + 1 = 0x1000
-    //                                       v----- Mask
-    return size + (((~size) + 1) & (sizeof (uintptr_t) - 1));
-}
-
-
-//KABUKI uintptr_t AlignSize (uintptr_t size);
-template<typename UI>
-inline UI Align8 (UI size) {
-    // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
-    // This allows the algorithm to word align without any if statements.
-    // The algorithm works the same for all memory widths as proven by the
-    // truth table bellow.
-    // ~000 = 111 => 000 + 111 + 1 = 0x1000
-    // ~001 = 110 => 001 + 110 + 1 = 0x1000
-    // ~010 = 101 => 010 + 101 + 1 = 0x1000
-    // ~011 = 100 => 011 + 100 + 1 = 0x1000
-    // ~100 = 011 => 100 + 011 + 1 = 0x1000
-    // ~101 = 010 => 101 + 010 + 1 = 0x1000
-    // ~110 = 001 => 110 + 001 + 1 = 0x1000
-    // ~111 = 000 => 111 + 000 + 1 = 0x1000    v----- Mask
-    return size + (((~size) + 1) & (sizeof (int64_t) - 1));
+/** Aligns the given pointer to a 64-bit boundary. */
+template<typename T = char>
+inline T* AlignToUI8 (void* ptr) {
+    uintptr_t value = reinterpret_cast<uintptr_t> (ptr);
+    value = Align8<> (value);
+    return reinterpret_cast<T*> (value);
 }
 
 /** Calculates the difference between the begin and end address. */
