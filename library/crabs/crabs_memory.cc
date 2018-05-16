@@ -102,7 +102,7 @@ char* MemoryCopy (char* write, char* write_end, const char* read,
 }
 
 char* MemoryCopy (char* write, char* write_end, const char* read,
-                  int size) {
+                  intptr_t size) {
     // @todo Optimize to write in words.
     if (!write) {
         return nullptr;

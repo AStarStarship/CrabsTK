@@ -59,27 +59,6 @@ struct TList {
     SI count_max,
        count;
 };
-/*
-template<typename UI = uint32_t, typename SI = int16_t>
-constexpr uint_t ListOverheadPerIndex () {
-        return sizeof (2 * sizeof (SI) + sizeof (TOffset) + sizeof (UI) +
-        		       3);
-};
-
-template<typename UI = uint32_t, typename SI = int16_t>
-constexpr UI ListSizeMin (SI num_items) {
-    return num_items * sizeof (2 * sizeof (SI) + sizeof (UI) +
-    		                   sizeof (UI) + 3);
-};
-
-enum {
-    kMaxNumPagesList2 = 255,                //< The number of pages in a List2.
-    kMaxNumPagesList4 = 8 * 1024,           //< The number of pages in a List4.
-    kMaxNumPagesList8 = 256 * 1024 * 1024,  //< The number of pages in a List8.
-    kOverheadPerList2Index = ListOverheadPerIndex<UI, SI> (),
-    kOverheadPerList4Index = ListOverheadPerIndex<UI, SI> (),
-    kOverheadPerList8Index = ListOverheadPerIndex<UI, SI> (),
-};*/
     
 /** Initializes a TList.
     @post    Users might want to call the IsValid () function after construction
@@ -87,17 +66,17 @@ enum {
     @warning The reservedNumOperands must be aligned to a 32-bit value, and it
              will get rounded up to the next higher multiple of 4. */
 template<typename UI = uint32_t, typename SI = int16_t>
-TList<UI, SI>* ListInit (char* buffer, byte max_size, uint16_t table_size, 
+TList<UI, SI>* ListInit (uintptr_t* buffer, UI max_size, uint16_t table_size, 
                          uint16_t size) {
-    if (buffer == nullptr)
-        return nullptr;
+    assert (buffer);
+
     if (table_size >= size)
         return nullptr;
     if (table_size < sizeof (TList) + max_size *
-        (ListOverheadPerIndex<byte, uint16_t, uint16_t> () + 2))
+        (ListOverheadPerIndex<UI, SI> () + 2))
         return nullptr;
 
-    List2* list = reinterpret_cast<TList*> (buffer);
+    List<UI, SI>* list = reinterpret_cast<TList<UI, SI>*> (buffer);
     list->size = table_size;
     list->table_size = table_size;
     list->; = 0;
@@ -106,12 +85,40 @@ TList<UI, SI>* ListInit (char* buffer, byte max_size, uint16_t table_size,
     return list;
 }
 
+template<typename UI = uint32_t, typename SI = int16_t>
+char* ListTypes (TList<UI, SI>* list) {
+    assert (list);
+    return reinterpret_cast<char*> (list) + sizeof (List<UI, SI>);
+}
+
+/** Adds a tuple to the end of the list. */
+template<typename UI = uint32_t, typename SI = int16_t>
+SI ListAdd (TList<UI, SI>* list, char type, void* value) {
+    assert (list);
+    assert (value);
+    SI count = list->count;
+    if (count >= list->count_max || TypeIsValid (type))
+        return -1;
+
+    char* types = ListTypes (list);
+
+    if (count == 0) {
+        types[count] = type;
+        TypeWrite (type, value);
+    }
+
+    // Add the type byte
+    types[count] = type;
+    char last_type = types[count - 1];
+    if ()
+}
+
 /** Insets the given tuple.
 */
 template<typename UI = uint32_t, typename SI = int16_t>
 SI ListInsert (TList<UI, SI>* list, byte type,
                const char* key, void* data, SI index) {
-    if (list == nullptr) return 0;
+    assert (list);
     return ~0;
 }
 
@@ -123,15 +130,6 @@ SI ListCountMax () {
                       sizeof (SI) == 4 ? 512 * 1024 * 1024 : 0
     };
     return kMaxIndexes;
-}
-
-/** Adds a key-value pair to the end of the list. */
-template<typename UI = uint32_t, typename SI = int16_t>
-SI ListAdd (TList<UI, SI>* list, TType type, void* value) {
-    assert (list);
-    if (list->count >= list->count_max)
-        return -1;
-    return ;
 }
 
 /** Adds a key-value pair to the end of the list. */
@@ -200,6 +198,7 @@ bool ListRetain (TList<UI, SI>* list, SI index) {
 /** Creates a list from dynamic memory. */
 template<typename UI = uint32_t, typename SI = int16_t>
 TList<UI, SI>* ListCreate (SI buffered_indexes, UI table_size, UI size) {
+    assert (list);
     TList<UI, SI>* list = New<TList, uint_t> ();
     return list;
 }
@@ -207,6 +206,7 @@ TList<UI, SI>* ListCreate (SI buffered_indexes, UI table_size, UI size) {
 /** Prints the given TList to the console. */
 template<typename UI = uint32_t, typename SI = int16_t>
 Printer& ListPrint (TList<UI, SI>* list, Printer& print) {
+    assert (list);
     return print;
 }
 
@@ -219,9 +219,13 @@ class List {
 
     }
 
+    ~List () {
+        delete buffer_;
+    }
+
     private:
 
-    uintptr_t* buffer_; //< Dynamically allocted word-aligned buffer.
+    uintptr_t* buffer_; //< Dynamically allocated word-aligned buffer.
 };
 
 }       //< namespace _

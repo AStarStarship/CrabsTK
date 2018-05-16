@@ -61,8 +61,8 @@ constexpr UI UnsignedMax () {
 /** An array of 8, 16, 32, or 64 bit plain-old-data (POD) types.
 
     An array may use two different memory layouts, one for a 1-d stack of a 
-    given types, and another for a multi-dimenional array that uses the 1-d
-    array in order to store the dimesions. The only differen between them is 
+    given types, and another for a multi-dimensional array that uses the 1-d
+    array in order to store the dimensions. The only different between them is 
     that the size_array variable gets set to 0.
     
     Stack Memory Layout
@@ -420,7 +420,7 @@ inline SI StackCountUpperBounds () {
 /** Doubles the size of the array until the max count is reached.
     @return Returns null if the count_max is greater than the amount of memory 
             that can fit in type UI, the unaltered buffer pointer if the Stack 
-            has grown to the count_max upper bounds, or a new dynmamically 
+            has grown to the count_max upper bounds, or a new dynamically 
             allocated buffer upon failure.. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 uintptr_t* StackGrow (uintptr_t* buffer) {

@@ -34,6 +34,7 @@
     <ClCompile Include="..\..\library\crabs\crabs_interrupts.cc" />
     <ClCompile Include="..\..\library\crabs\crabs_line.cc" />
     <ClCompile Include="..\..\library\crabs\crabs_memory.cc" />
+    <ClCompile Include="..\..\library\crabs\crabs_object.cc" />
     <ClCompile Include="..\..\library\crabs\crabs_op.cc" />
     <ClCompile Include="..\..\library\crabs\crabs_operand.cc" />
     <ClCompile Include="..\..\library\crabs\crabs_printer.cc" />

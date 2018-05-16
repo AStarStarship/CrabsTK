@@ -122,6 +122,9 @@
     <ClCompile Include="..\..\library\crabs\crabs_script_itoa_32.cc">
       <Filter>library\crabs</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_object.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\library\crabs\room.h">

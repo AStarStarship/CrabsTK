@@ -31,66 +31,53 @@ namespace _ {
     followed by objects which get created in text using Script Operations. */
 typedef enum AsciiTypes {
     NIL = 0,    //< 0.  NIL/nil/void type.
-    ADR,        //< 1.  UTF-8 Operand stack address.
-    STR,        //< 2.  Nil-terminated ASCII, UTF-8, or UTF-32 string.
-    TKN,        //< 3.  Nil-terminated ASCII, UTF-8, or UTF-32 string text.
-    SI1,        //< 4.  8-bit signed integer.
-    UI1,        //< 5.  8-bit unsigned integer.
-    SI2,        //< 6.  16-bit signed integer.
-    UI2,        //< 7.  16-bit unsigned integer.
-    HLF,        //< 8.  16-bit floating-point number.
-    BOL,        //< 9.  16-bit or 32-bit boolean signed varint.
-    SVI,        //< 10. 16-bit or 32-bit signed varint.
-    UVI,        //< 11. 16-bit or 32-bit unsigned varint.
-    SI4,        //< 12. 32-bit signed integer.
-    UI4,        //< 13. 32-bit unsigned integer.
-    FLT,        //< 14. 32-bit floating-point number.
-    TMS,        //< 15. 32-bit second since epoch timestamp.
-    TMU,        //< 16. 64-bit microsecond since epoch timestamp.
-    SI8,        //< 17. 64-bit signed integer.
-    UI8,        //< 18. 64-bit unsigned integer.
-    DBL,        //< 19. 64-bit floating-point number.
-    SV8,        //< 20. 64-bit signed varint.
-    UV8,        //< 21. 64-bit unsigned varint.
-    DEC,        //< 22. 128-bit floating-point number.
-    SIN,        //< 23. N-bit signed integer.
-    UIN,        //< 24. N-bit unsigned integer or data structure.
-    OBJ,        //< 25. N-byte object with size not specified in BSQ.
+    SI1,        //< 1.  8-bit signed integer.
+    UI1,        //< 2.  8-bit unsigned integer.
+    SI2,        //< 3.  16-bit signed integer.
+    UI2,        //< 4.  16-bit unsigned integer.
+    HLF,        //< 5.  16-bit floating-point number.
+    SVI,        //< 6.  16-bit or 32-bit signed varint.
+    UVI,        //< 7.  16-bit or 32-bit unsigned varint.
+    BOL,        //< 8.  16-bit or 32-bit boolean signed varint.
+    SI4,        //< 9.  32-bit signed integer.
+    UI4,        //< 10. 32-bit unsigned integer.
+    FLT,        //< 11. 32-bit floating-point number.
+    TMS,        //< 12. 32-bit second since epoch timestamp.
+    TMU,        //< 13. 64-bit microsecond since epoch timestamp.
+    SI8,        //< 14. 64-bit signed integer.
+    UI8,        //< 15. 64-bit unsigned integer.
+    DBL,        //< 16. 64-bit floating-point number.
+    SV8,        //< 17. 64-bit signed varint.
+    UV8,        //< 18. 64-bit unsigned varint.
+    DEC,        //< 19. 128-bit floating-point number.
+    OBJ,        //< 20. N-byte object with size not specified in BSQ.
+    SIN,        //< 21. N-bit signed integer.
+    UIN,        //< 22. N-bit unsigned integer or data structure.
+    ADR,        //< 23. UTF-8 Operand stack address.
+    STR,        //< 24. A UTF-8 string.
+    TKN,        //< 25. A UTF-8 string token without whitespace.
     BSQ,        //< 26. B-Sequence.
     ESC,        //< 27. Escape sequence Expression.
     LST,        //< 28. Stack of Type-Value tuples.
-    BOK,        //< 29. Multiset of unordered Key-{Type-Value} tuples.
-    DIC,        //< 30. One-to-one map of Key-{Type-Value} tuples.
-    MAP,        //< 31. One-to-one map of Id-{Type-Value} tuples.
+    MAP,        //< 29. One-to-one map of Id-{Type-Value} tuples.
+    BOK,        //< 30. Multiset of unordered Key-{Type-Value} tuples.
+    DIC,        //< 31. One-to-one map of Key-{Type-Value} tuples.
 } AsciiType;
 
-inline char* TypeAlign (char* cursor, uint_t type) {
-#if WORD_SIZE >= 32
-    if (type <= BOL) {
-        return AlignToUI2 (cursor);
-    }
-    if (type <= UVI) {
-        return AlignToUI4 (cursor);
-    }
-#else
-    if (type <= UVI) {
-        return MemoryAlign2 (cursor);
-    }
-    if (type <= TMS) {
-        return MemoryAlign4 (cursor);
-    }
-#endif
-    if (type <= UV8) {
-        return AlignToUI8<> (cursor);
-    }
-    type = type >> 6;
-    switch (type) {
-        case 1: return AlignToUI2<> (cursor);
-        case 2: return AlignToUI4<> (cursor);
-        case 3: return AlignToUI8<> (cursor);
-    }
-    return 0;
+enum {
+    kTypeLast2Byte = (sizeof (int) == 4) ? BOL : HLF,
+};
+
+/** Checks if the given type is valid.
+    @return False if the given type is an 8-bit LST, MAP, BOK, or DIC. */
+inline bool TypeIsValid (char type) {
+    if (type >= LST && type <= DIC)
+        return false;
+    return true;
 }
+
+/** Aligns the given pointer to the correct word boundary for the type. */
+void* TypeAlign (uint8_t type, void* value);
 
 /** An ROM string for one of the 32 types.
     C++11 variadic templates ensure there is only one copy in of the given
@@ -98,7 +85,7 @@ inline char* TypeAlign (char* cursor, uint_t type) {
 template<char kCharA_, char kCharB_, char kCharC_>
 inline uint32_t T () {
     return ((uint32_t)kCharA_) & (((uint32_t)kCharB_) << 8) &
-           (((uint32_t)kCharC_) << 16);
+        (((uint32_t)kCharC_) << 16);
 }
 
 enum {
@@ -106,15 +93,13 @@ enum {
 };
 
 /** Gets the width in bytes (1-8) of the given type.
-KABUKI uint_t TypeSize (uint_t type); */
+KABUKI uint_t TypeFixedSize (uint_t type); */
 
 /** Returns true if the type is a valid list type. */
-inline bool TypeIsValid (uint_t type) {
-    // @warning I'm not sure what I was thinking here.
-    //if (type_name < TypeTexts ()[0] || type_name > TypeTexts ()[FS])
-    //    return false;
-    //return true;
-    return false;
+inline bool TypeIsValid (char type) {
+    if (type >= 28 && type <= 31)
+        return false;
+    return true;
 }
 
 /** Returns a pointer to an array of pointers to the type names.*/
@@ -157,14 +142,14 @@ inline byte TypeCharCompare (char const b, char const c, char const d) {
         return 0xff;
     }
     if (IsDelimiter)
-    return kType_;
+        return kType_;
 }
 
 /** Checks the last two char(string) of the text to check if it is a specified
     char. */
 template<char kLetterTwo_, char kLetterThree_, AsciiType kType_>
 inline byte TypeCharCompareObject (char const b, char const c, char const d,
-                             char const e) {
+                                   char const e) {
     if (kLetterTwo_ != b) {
         return 0xff;
     }
@@ -215,8 +200,8 @@ inline bool TypeIsSet (uint_t type) {
 /** Converts from a 2's complement integer to a signed varint.
     @param value A 2's complement integer.
     @return An signed varint.
-    A signed varint is an complemented signed integer with the sign in the 
-    LSb. To convert a negative 2's complement value to positive invert the bits 
+    A signed varint is an complemented signed integer with the sign in the
+    LSb. To convert a negative 2's complement value to positive invert the bits
     and add one.
 */
 template<typename T>
@@ -246,7 +231,17 @@ inline T TypeUnpackVarint (T value) {
 }
 
 /** Returns the size or max size of the given type. */
-KABUKI uint_t TypeSize (uint_t type);
+KABUKI uint_t TypeFixedSize (uint_t type);
+
+/** Gets the next address that a data type may be stored at. */
+KABUKI void* TypeAlign (uint8_t type, void* value);
+
+KABUKI void* TypeWrite (uint8_t type, void* begin, void* end, const void* source);
+
+inline bool TypeIsObject (uint8_t type) {
+    if (type < OBJ) return false;
+    return true;
+}
 
 }       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

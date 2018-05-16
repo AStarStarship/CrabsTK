@@ -17,45 +17,9 @@
 #include <stdafx.h>
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
-#include "stack.h"
+#include "object.h"
 
 namespace _ {
-
-uint16_t ObjectAutoSize (uint16_t new_size) {
-    static uint16_t auto_size = kAutoSizeDefault;
-    if (new_size != 0) {
-        if (new_size < kAutoSizeMin) {
-            return 0;
-        }
-        auto_size = new_size;
-        return new_size;
-    }
-    return auto_size;
-}
-
-uint32_t ObjectAutoSize (uint32_t new_size) {
-    static uint32_t auto_size = kAutoSizeDefault;
-    if (new_size != 0) {
-        if (new_size < kAutoSizeMin) {
-            return 0;
-        }
-        auto_size = new_size;
-        return new_size;
-    }
-    return auto_size;
-}
-
-uint64_t ObjectAutoSize (uint64_t new_size) {
-    static uint64_t auto_size = kAutoSizeDefault;
-    if (new_size != 0) {
-        if (new_size < kAutoSizeMin) {
-            return 0;
-        }
-        auto_size = new_size;
-        return new_size;
-    }
-    return auto_size;
-}
 
 }       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

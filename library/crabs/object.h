@@ -17,7 +17,7 @@
 #ifndef HEADER_FOR_CRABS_OBJECT
 #define HEADER_FOR_CRABS_OBJECT
 
-#include "config.h"
+#include "type.h"
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
@@ -50,7 +50,7 @@ TSize ObjectSize (uintptr_t* buffer) {
     return *reinterpret_cast<TSize*> (buffer);
 }
 
-/** Aligns the given word to 64-bit word boundry. */
+/** Aligns the given word to 64-bit word boundary. */
 template<typename T>
 inline T WordAlign8 (T value) {
     return value + (((~value) + 1) &

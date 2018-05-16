@@ -252,7 +252,7 @@ KABUKI char* MemoryCopy (char* write, char* write_end, const char* start,
     @param  size      Number of bytes to copy.
     @return Pointer to the last byte written or nil upon failure. */
 KABUKI char* MemoryCopy (char* write, char* write_end, const char* memory,
-                         int size);
+                         intptr_t size);
 
 
 /** Copies the source to the target functionally identical to memcpy.

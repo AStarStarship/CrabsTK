@@ -497,7 +497,7 @@ const Op* ExprUnpack (Expr* expr) {
                 break;
             }
             else if (type < DBL) { // Plain-old-data type.
-                bytes_left = TypeSize (type);
+                bytes_left = TypeFixedSize (type);
             #if DEBUG_CRABS_EXPR
                 PRINTF ("\nScanning POD with "
                         << bytes_left << bytes_left);
@@ -527,7 +527,7 @@ const Op* ExprUnpack (Expr* expr) {
             #if DEBUG_CRABS_EXPR
                 Write ("\nScanning Varint.");
             #endif
-                bytes_left = TypeSize (type);
+                bytes_left = TypeFixedSize (type);
                 ExprEnterState (expr, kBInStatePackedVarint);
                 bin_state = kBInStatePackedVarint;
                 break;
