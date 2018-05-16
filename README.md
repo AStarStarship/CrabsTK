@@ -7,10 +7,8 @@
   /-|       |-\   | . \ (_| | |_) | |_| |   <| |   | | (_) | (_) | |   <| | |_ 
  / /-\     /-\ \  |_|\_\__,_|_.__/ \__,_|_|\_\_|   |_|\___/ \___/|_|_|\_\_|\__|
   / /-`---'-\ \  
-   /         \               ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪    
+   /         \                    ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪    
 ```
-
-# Kabuki Toolkit
 
 Kabuki Toolkit (KT) is a modern cross-platform C++1x software and firmware toolkit for making intelligent connected technologies with Script and the Kabuki VM. KT is built on top of some of the  best commercial-friendly open-source C and C++ libraries (soon to be) formatted using the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)(#WorkInProgress).
 
