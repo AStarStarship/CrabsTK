@@ -20,7 +20,6 @@
 
 #include "test_seam_1.h"
 
-
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PRINT_PAUSE(message)\
@@ -42,7 +41,18 @@
 
 using namespace _;
 
-void TestSeam_1_2 () {
+
+TEST_GROUP (SEAM_1_2) {
+    void setup () {
+    }
+
+    void teardown () {
+        std::cout << '\n';
+        system ("PAUSE");
+    }
+};
+
+TEST (SEAM_1_2, SEAM_1_2A) {
     
     PRINT_HEADING ("Testing SEAM_1_2...")
     PRINTF ("    Testing Text...");

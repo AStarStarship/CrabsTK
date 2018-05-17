@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/tests/kt_seam_1/test_seam_1.h
+    @file    ~/tests/seam_1/test_seam_1.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -28,13 +28,6 @@
 #include "../../../cpputest/include/CppUTest/TestHarness.h"
 
 #include "../../library/crabs/global.h"
-
-void TestSeam_1 ();
-void TestSeam_1_1 ();
-void TestSeam_1_2 ();
-void TestSeam_1_3 ();
-void TestSeam_1_4 ();
-void TestSeam_1_5 ();
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 

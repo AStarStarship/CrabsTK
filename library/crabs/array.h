@@ -29,7 +29,7 @@ namespace _ {
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 constexpr SI ArrayCountUpperLimit (SI dimension_count, SI element_count) {
     UI header_size = sizeof (TArray<T, UI, SI>) + 
-                     Align8<SI> (dimension_count * sizeof (SI));
+                     AlignUp<SI> (dimension_count * sizeof (SI));
     return (SI)(((~(UI)0) - 7) - header_size) / (UI)sizeof (T);
 }
 
@@ -126,7 +126,7 @@ inline SI ObjectCountRound (SI count) {
                           (sizeof (SI) == 4) ? 3 :
                           (sizeof (SI) == 2) ? 1 : 0,
     };
-    Align<SI> (count);
+    AlignUp<SI> (count);
 }
 
 /** Creates a immutable array of dimensions. */
@@ -193,6 +193,12 @@ class Array {
         return ArrayElements<T, UI, SI> (This ());
     }
 
+    /** Operator= overload. */
+    inline _::Array<T, UI, SI>& operator= (_::Array<T, UI, SI>& other) {
+        Clone (other);
+        return *this;
+    }
+
     private:
 
     uintptr_t* buffer_; //< Dynamically allocted word-aligned buffer.
@@ -202,12 +208,5 @@ class Array {
     }
 };      //< class Array
 }       //< namespace _
-
-template<typename T = intptr_t, typename UI = uint, typename SI = int>
-inline _::Array<T, UI, SI>& operator= (_::Array<T, UI, SI>& a,
-                                       _::Array<T, UI, SI>& b) {
-    a.Clone (b);
-    return a;
-}
 #endif  //< HEADER_FOR_CRABS_ARRAY
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

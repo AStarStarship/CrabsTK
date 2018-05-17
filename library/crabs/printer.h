@@ -51,7 +51,7 @@ struct Printer {
     /** Initializes the Printer from the given buffer pointers.
         @param begin The beginning of the buffer.
         @param end   The end of the buffer. */
-    Printer (char* begin = BufferDefault (), size_t size = kBufferSizeDefault);
+    Printer (char* begin = Print (), size_t size = kBufferSizeDefault);
 
     /** Initializes the Printer from the given buffer pointers.
         @param begin The beginning of the buffer.
@@ -60,6 +60,8 @@ struct Printer {
 
     Printer& Set (char* begin);
 };
+
+KABUKI Printer& Stx ();
 
 /** Copies a char from the source to the text.
     @param text      Beginning address of the buffer.
@@ -137,11 +139,11 @@ struct Number {
 };
 
 /** Utility class for printing. */
-struct Dump {
+struct Etx {
 
     char* begin;    //< Begin of the Printer buffer.
 
-    Dump (char* begin = BufferDefault ());
+    Etx (char* begin = Print ());
 };
 
 }   //< namespace _
@@ -215,8 +217,8 @@ inline _::Printer& operator<< (_::Printer& printer, double value) {
 }
 
 /**  Prints out the parameters to the debug console. */
-inline _::Printer& operator<< (_::Printer& printer, _::Dump dump) {
-    char* begin = dump.begin;
+inline _::Printer& operator<< (_::Printer& printer, _::Etx etx) {
+    char* begin = _::Stx ().cursor;
     printer.cursor = begin;
     std::cerr << begin;
     return printer;

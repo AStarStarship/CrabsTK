@@ -1,8 +1,7 @@
 /** Kabuki Toolkit
-    @version 0.x
-    @file    ~/tests/test_seam_1_3.cc
-    @author  Cale McCollough <calemccollough.github.io>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
+    @file    ~/tests/seam_1/test_seam_1.cc
+    @author  Cale McCollough <cale.mccollough@gmail.com>
+    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -15,12 +14,9 @@
 */
 
 #include <stdafx.h>
-#include "../../library/crabs/global.h"
+#include "test_seam_1.h"
 
-#include "../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
-#include "../../../cpputest/include/CppUTest/TestHarness.h"
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM >= 1
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf (format, __VA_ARGS__);
@@ -32,28 +28,41 @@
     std::cout << '\n' << message << '\n';\
     for (int i = 80; i > 80; --i) std::cout << '-';\
     std::cout << '\n';
-
-#define PRINT_SLOT print << slot << Dump ();
 #else
 #define PRINTF(x, ...)
 #define PRINT_PAUSE(message)
 #define PRINT_HEADING(message)
-#define PRINT_SLOT
+#endif
+
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#define PRINTF(format, ...) printf (format, __VA_ARGS__);
+#else
+#define PRINTF(x, ...)
 #endif
 
 using namespace _;
 
-void TestSeam_1_3 () {
+TEST_GROUP (SEAM_1_3) {
+    void setup () {
+    }
+
+    void teardown () {
+        std::cout << '\n';
+        system ("PAUSE");
+    }
+};
+
+TEST (SEAM_1_3, SEAM_1_3A) {
 
     int i = 0; //< Shared looping variable.
 
-    PRINTF ("\nTesting SEAM_1_3... ");
+    PRINT_HEADING ("\nTesting SEAM_1_3... ");
 
     PRINTF ("\n\nTesting ASCII Object Types");
 
     PRINTF ("\n\nTest _::Stack...\n\n");
 
-    Stack<> test_stack (10);
+    Stack<> test_stack (8);
 
     for (i = 0; i <= 10; ++i)
         test_stack.Push (i);
@@ -62,7 +71,7 @@ void TestSeam_1_3 () {
 
     PRINT_PAUSE ("\n\nDone _::Stack!")
 
-        /*
+    /*
     PRINTF ("\n\nTest _::Array...\n\n");
     static const int array_3d_exected[2][2][2] = { { { 0, 1 }, { 2, 3 } },
                                                    { { 4, 5 }, { 6, 7 } }
@@ -86,7 +95,6 @@ void TestSeam_1_3 () {
 
     PRINT_PAUSE ("\n\nDone _::List!")
     
-
     /*
     PRINTF ("\n\nTesting _::Book...\n\n");
 
@@ -170,8 +178,9 @@ void TestSeam_1_3 () {
 
     PRINT_PAUSE ("\n\nDone Testing SEAM_1_3! ({:-)-+=<")
 }
-#undef PRINT_PAUSE
+
+#endif  //< #if MAJOR_SEAM >= 1
+
 #undef PRINTF
-#else
-void TestSeam_1_3 () {}
-#endif      //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#undef PRINT_PAUSE
+#undef PRINT_HEADING

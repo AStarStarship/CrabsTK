@@ -33,9 +33,19 @@ using namespace std;
 #define PRINT_PAUSE(message)
 #endif
 
-void TestSeam_1_1 () {
+TEST_GROUP (SEAM_1_1) {
+    void setup () {
+    }
 
-    printf ("\n    Testing SEAM_1_1... ");
+    void teardown () {
+        std::cout << '\n';
+        system ("PAUSE");
+    }
+};
+
+TEST (SEAM_1_1, SEAM_1_1A) {
+
+    printf ("\n    Testing SEAM_1_1A... ");
 
     static const uint32_t k10ToThe[20] = {
         1,//< 10^0

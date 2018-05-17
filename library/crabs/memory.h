@@ -22,14 +22,9 @@
 #define HEADER_FOR_CRABS_MEMORY
 
 #include "printer.h"
+#include "align.h"
 
 namespace _ {
-
-/** Compute the next highest power of 2. */
-KABUKI uint32_t AlignPowerOf2 (uint32_t value);
-
-/** Compute the next highest power of 2. */
-KABUKI int32_t AlignPowerOf2 (int32_t value);
 
 /** Creates a dynamic word-aligned buffer of the given size in bytes. */
 KABUKI uintptr_t* MemoryCreate (uintptr_t size_bytes);
@@ -56,6 +51,10 @@ inline void* MemoryValue (std::uintptr_t value) {
 /** Converts the std::uintptr_t to a pointer. */
 inline const void* MemoryValueConst (std::uintptr_t value) {
     return reinterpret_cast<const void*> (value);
+}
+
+inline char* MemoryAdd (void* a, void* b) {
+    return (char*)((uintptr_t)a + (uintptr_t)b);
 }
 
 template<typename T>
@@ -108,127 +107,13 @@ inline T* MemoryOffset (void* base, uint_t offset) {
     return reinterpret_cast<T*>(reinterpret_cast<char*>(base) + offset);
 }
 
-/** Aligns the given pointer to a 64-bit boundary.
-    @param  ptr The address to align.
-    @return The aligned value. */
-template<typename T = uintptr_t>
-inline T Align (T value) {
-    // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
-    // This allows the algorithm to word align without any if statements.
-    // The algorithm works the same for all memory widths as proven by the
-    // truth table bellow.
-    //
-    // 3-bit example:
-    // ~000 = 111 => 000 + 111 + 1 = 0x1000
-    // ~001 = 110 => 001 + 110 + 1 = 0x1000
-    // ~010 = 101 => 010 + 101 + 1 = 0x1000
-    // ~011 = 100 => 011 + 100 + 1 = 0x1000
-    // ~100 = 011 => 100 + 011 + 1 = 0x1000
-    // ~101 = 010 => 101 + 010 + 1 = 0x1000
-    // ~110 = 001 => 110 + 001 + 1 = 0x1000
-    // ~111 = 000 => 111 + 000 + 1 = 0x1000 
-    //
-    // 2-bit example:
-    // ~00 = 11 => 00 + 11 + 1 = 0x100
-    // ~01 = 10 => 01 + 10 + 1 = 0x100
-    // ~10 = 01 => 10 + 01 + 1 = 0x100
-    // ~11 = 00 => 11 + 00 + 1 = 0x100
-    T offset = ((~value) + 1) & (sizeof (T) - 1);
-    return value + offset;
-}
-
-/** Returns the number to add to word-align the given pointer to a uint_t-bit
-    boundary.
-    @param  ptr The address to align.
-    @return The aligned value. */
-template<typename T = uintptr_t>
-inline T Align2 (T value) {
-    return value + value & 0x1;
-}
-
-/** Returns the number to add to word-align the given pointer to a uint_t-bit
-    boundary.
-    @param  ptr The address to align.
-    @return The aligned value. */
-template<typename T = uintptr_t>
-inline T Align4 (T value) {
-    // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
-    // This allows the algorithm to word align without any if statements.
-    // The algorithm works the same for all memory widths as proven by the
-    // truth table bellow.
-    // ~00 = 11 => 00 + 11 + 1 = 0x100
-    // ~01 = 10 => 01 + 10 + 1 = 0x100
-    // ~10 = 01 => 10 + 01 + 1 = 0x100
-    // ~11 = 00 => 11 + 00 + 1 = 0x100
-    T offset = ((~value) + 1) & (sizeof (uint32_t) - 1);
-    return value + offset;
-}
-
-/** Aligns the given pointer to a 64-bit boundary.
-    @param  ptr The address to align.
-    @return The aligned value. */
-template<typename T = uintptr_t>
-inline T Align8 (T value) {
-    // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
-    // This allows the algorithm to word align without any if statements.
-    // The algorithm works the same for all memory widths as proven by the
-    // truth table bellow.
-    // ~000 = 111 => 000 + 111 + 1 = 0x1000
-    // ~001 = 110 => 001 + 110 + 1 = 0x1000
-    // ~010 = 101 => 010 + 101 + 1 = 0x1000
-    // ~011 = 100 => 011 + 100 + 1 = 0x1000
-    // ~100 = 011 => 100 + 011 + 1 = 0x1000
-    // ~101 = 010 => 101 + 010 + 1 = 0x1000
-    // ~110 = 001 => 110 + 001 + 1 = 0x1000
-    // ~111 = 000 => 111 + 000 + 1 = 0x1000 
-    T offset = ((~value) + 1) & (sizeof (uint64_t) - 1);
-    return value + offset;
-}
-
-/** Aligns the given pointer to a 16-bit boundary. */
-template<typename T = char>
-inline T* AlignToUI2 (char* ptr) {
-    uintptr_t value = reinterpret_cast<uintptr_t> (ptr);
-    return reinterpret_cast<T*> (Align2<> (value));
-}
-
-/** Aligns the given pointer to a 16-bit boundary. */
-template<typename T = char>
-inline const T* AlignToUI2 (const char* ptr) {
-    uintptr_t value = reinterpret_cast<uintptr_t> (ptr);
-    return reinterpret_cast<const T*> (Align2<> (value));
-}
-
-/** Aligns the given pointer to a 32-bit word boundary. */
-template<typename T = char>
-inline T* AlignToUI4 (char* ptr) {
-    uintptr_t value = reinterpret_cast<uintptr_t> (ptr);
-    return reinterpret_cast<T*> (Align4<> (value));
-}
-
-/** Aligns the given pointer to a 64-bit boundary. */
-template<typename T = char>
-inline const T* AlignToUI8 (const void* ptr) {
-    uintptr_t value = reinterpret_cast<uintptr_t> (ptr);
-    value = Align8<> (value);
-    return reinterpret_cast<const T*> (value);
-}
-
-/** Aligns the given pointer to a 64-bit boundary. */
-template<typename T = char>
-inline T* AlignToUI8 (void* ptr) {
-    uintptr_t value = reinterpret_cast<uintptr_t> (ptr);
-    value = Align8<> (value);
-    return reinterpret_cast<T*> (value);
-}
-
 /** Calculates the difference between the begin and end address. */
-inline intptr_t MemoryVector (void* begin, void* end) {
+inline intptr_t MemorySize (void* begin, void* end) {
     return reinterpret_cast<char*> (end) - reinterpret_cast<char*> (begin);
 }
 
 /** Calculates the difference between the begin and end address. */
-inline intptr_t MemoryVector (const void* begin, const void* end) {
+inline intptr_t MemorySize (const void* begin, const void* end) {
     return reinterpret_cast<const char*> (end) -
            reinterpret_cast<const char*> (begin);
 }
@@ -242,8 +127,8 @@ KABUKI void MemoryClear (void* address, size_t size);
     @param  start     Beginning of the read buffer.
     @param  stop      End of the read buffer.
     @return Pointer to the last byte written or nil upon failure. */
-KABUKI char* MemoryCopy (char* write, char* write_end, const char* start,
-                         const char* stop);
+KABUKI char* MemoryCopy (void* write, void* write_end, const void* start,
+                         const void* stop);
 
 /** Copies the source to the target functionally identical to memcpy.
     @param  write     Beginning of the write buffer.
@@ -251,9 +136,8 @@ KABUKI char* MemoryCopy (char* write, char* write_end, const char* start,
     @param  read      Beginning of the read buffer.
     @param  size      Number of bytes to copy.
     @return Pointer to the last byte written or nil upon failure. */
-KABUKI char* MemoryCopy (char* write, char* write_end, const char* memory,
-                         intptr_t size);
-
+KABUKI char* MemoryCopy (void* write, void* write_end, const void* memory,
+                         size_t size);
 
 /** Copies the source to the target functionally identical to memcpy.
     @param  write     Beginning of the write buffer.
@@ -261,8 +145,17 @@ KABUKI char* MemoryCopy (char* write, char* write_end, const char* memory,
     @param  read      Beginning of the read buffer.
     @param  size      Number of bytes to copy.
     @return Pointer to the last byte written or nil upon failure. */
-KABUKI char* MemoryCopy (char* write, char* write_end, const char* read,
-                         const char* read_end, intptr_t size);
+KABUKI char* MemoryCopy (void* write, void* write_end, const void* read,
+                         size_t size);
+
+/** Copies the source to the target functionally identical to memcpy.
+    @param  write     Beginning of the write buffer.
+    @param  write_end End of the write buffer.
+    @param  read      Beginning of the read buffer.
+    @param  size      Number of bytes to copy.
+    @return Pointer to the last byte written or nil upon failure. */
+KABUKI char* MemoryCopy (void* write, void* write_end, const void* read,
+                         const void* read_end, size_t size);
 
 char* MemoryCopy (void* write, size_t write_size, const void* read,
                   size_t read_size);

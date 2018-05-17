@@ -92,16 +92,6 @@ enum {
     kTypeCount = 32,  //< The starting index of invalid types.
 };
 
-/** Gets the width in bytes (1-8) of the given type.
-KABUKI uint_t TypeFixedSize (uint_t type); */
-
-/** Returns true if the type is a valid list type. */
-inline bool TypeIsValid (char type) {
-    if (type >= 28 && type <= 31)
-        return false;
-    return true;
-}
-
 /** Returns a pointer to an array of pointers to the type names.*/
 KABUKI const char** TypeStrings ();
 
@@ -236,7 +226,7 @@ KABUKI uint_t TypeFixedSize (uint_t type);
 /** Gets the next address that a data type may be stored at. */
 KABUKI void* TypeAlign (uint8_t type, void* value);
 
-KABUKI void* TypeWrite (uint8_t type, void* begin, void* end, const void* source);
+KABUKI void* TypeWrite (uint8_t type, char* begin, char* end, const char* source);
 
 inline bool TypeIsObject (uint8_t type) {
     if (type < OBJ) return false;

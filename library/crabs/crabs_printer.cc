@@ -39,6 +39,19 @@
 
 namespace _ {
 
+Printer& Stx () {
+    static uintptr_t stx_etx[kBufferSizeDefaultWords];
+
+    uintptr_t begin = reinterpret_cast<uintptr_t> (&stx_etx[2]),
+              end;
+    end = reinterpret_cast<uintptr_t> (&stx_etx[kBufferSizeDefaultWords - 1]);
+    uintptr_t* cursor = &stx_etx[0];
+    *cursor++ = begin;
+    *cursor   = end;
+
+    return reinterpret_cast<Printer&> (stx_etx);
+}
+
 char* Print (const char* string, char* buffer, char* buffer_end, 
              char delimiter) {
     if (!string) {
@@ -147,7 +160,7 @@ Printer& Printer::Set (char* begin) {
     return *this;
 }
 
-Dump::Dump (char* begin) :
+Etx::Etx (char* begin) :
     begin (begin) {
     // Nothing to do here! ({:-)-+=<
 }

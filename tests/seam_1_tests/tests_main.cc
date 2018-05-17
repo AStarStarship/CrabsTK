@@ -1,5 +1,5 @@
 /** Kabuki Toolkit
-    @file    ~/projects/test_global.cc
+    @file    ~/tests/tests_main.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -14,32 +14,9 @@
 */
 
 #include <stdafx.h>
-#include "test_seam_1.h"
 
-#if MAJOR_SEAM >= 1
-TEST_GROUP (KabukiToolkitTests) {
-    void setup () {
-    }
-
-    void teardown () {
-        std::cout << '\n';
-        system ("PAUSE");
-    }
-};
-
-void TestSeam_1 () {
-    TestSeam_1_1 ();
-    TestSeam_1_2 ();
-    TestSeam_1_3 ();
-    //TestSeam_1_4 ();
-    //TestSeam_1_5 ();
-}
-
-TEST (KabukiToolkitTests, MajorSeam1) {
-    TestSeam_1 ();
-}
-
-#endif  //< #if MAJOR_SEAM >= 1
+#include "../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
+#include "../../../cpputest/include/CppUTest/TestHarness.h"
 
 int main (int args_count, char** args) {
     std::cout << '|';
@@ -51,7 +28,10 @@ int main (int args_count, char** args) {
         std::cout << '-';
     }
     std::cout << "\n|\n|";
-    return CommandLineTestRunner::RunAllTests (args_count, args);
+    MemoryLeakWarningPlugin::turnOffNewDeleteOverloads ();
+    int result = CommandLineTestRunner::RunAllTests (args_count, args);
+    system ("PAUSE");
+    return result;
 }
 
 /*

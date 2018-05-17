@@ -104,13 +104,7 @@
     <ClCompile Include="test_seam_1_2.cc">
       <Filter>tests\seam_1_tests</Filter>
     </ClCompile>
-    <ClCompile Include="test_seam_1_3.cc">
-      <Filter>tests\seam_1_tests</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cc">
-      <Filter>tests\seam_1_tests</Filter>
-    </ClCompile>
-    <ClCompile Include="test_seam_1.cc">
       <Filter>tests\seam_1_tests</Filter>
     </ClCompile>
     <ClCompile Include="test_seam_1_4.cc">
@@ -124,6 +118,12 @@
     </ClCompile>
     <ClCompile Include="..\..\library\crabs\crabs_object.cc">
       <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_1_3.cc">
+      <Filter>tests\seam_1_tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests_main.cc">
+      <Filter>tests\seam_1_tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

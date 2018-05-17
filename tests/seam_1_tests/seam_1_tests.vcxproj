@@ -49,7 +49,7 @@
     <ClCompile Include="..\..\library\crabs\crabs_script_itoa_64.cc" />
     <ClCompile Include="..\..\library\crabs\crabs_script_itoa_32.cc" />
     <ClCompile Include="stdafx.cc" />
-    <ClCompile Include="test_seam_1.cc" />
+    <ClCompile Include="tests_main.cc" />
     <ClCompile Include="test_seam_1_1.cc" />
     <ClCompile Include="test_seam_1_2.cc" />
     <ClCompile Include="test_seam_1_3.cc" />

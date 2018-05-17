@@ -47,10 +47,10 @@ namespace _ {
     |_______ ...               |   |     |
     |_______ Type byte N       |   |     |
     |_______ ...               |   |     |
-    |        Type byte 1       |   |     |
-    |==========================|   |     |    +
-    |   TList<UI, SI> Struct   |   v     v    |
-    +==========================+ ----------- 0xN
+    |        Type byte 1       |   |     |   ^ 0x(N+1)+sizeof (TList<UI, SI>)
+    |==========================|   |     |   | 
+    |   TList<UI, SI> Struct   |   v     v   ^
+    +==========================+ ----------- ^ 0xN
     @endcode
 */
 template<typename UI = uint32_t, typename SI = int16_t>
@@ -59,29 +59,41 @@ struct TList {
     SI count_max,
        count;
 };
-    
-/** Initializes a TList.
-    @post    Users might want to call the IsValid () function after construction
-             to verify the integrity of the object.
-    @warning The reservedNumOperands must be aligned to a 32-bit value, and it
-             will get rounded up to the next higher multiple of 4. */
-template<typename UI = uint32_t, typename SI = int16_t>
-TList<UI, SI>* ListInit (uintptr_t* buffer, UI max_size, uint16_t table_size, 
-                         uint16_t size) {
-    assert (buffer);
 
+template<typename UI = uint32_t, typename SI = int16_t>
+inline UI ListSizeMin (SI count_max) {
+    return sizeof (TList<UI, SI>) + count_max * (ListOverheadPerIndex<UI, SI> () + 2);
+}
+
+/** Creates a list from dynamic memory. */
+template<typename UI = uint32_t, typename SI = int16_t>
+uintptr_t* ListNew (SI count_max, UI size) {
+    assert (list);
+    if (size < ListSizeMin<UI, SI> ())
+        return nullptr;
+    uintptr_t* buffer = new uintptr_t[];
+    return list;
+}
+
+/** Initializes a TList from preallocated memory.
+    count_max must be in multiples of 4. Given there is a fixed size, both the 
+    count_max and size will be downsized to a multiple of 4 automatically.
+
+*/
+template<typename UI = uint32_t, typename SI = int16_t>
+TList<UI, SI>* ListInit (uintptr_t* buffer, UI size, SI count_max) {
+    if (!buffer) // This may be nullptr if ListNew<UI,SI> (SI, UI) failed.
+        return buffer;
     if (table_size >= size)
         return nullptr;
-    if (table_size < sizeof (TList) + max_size *
-        (ListOverheadPerIndex<UI, SI> () + 2))
+    if (table_size < ListSizeMin<UI, SI> ())
         return nullptr;
 
     List<UI, SI>* list = reinterpret_cast<TList<UI, SI>*> (buffer);
-    list->size = table_size;
+    list->size       = table_size;
     list->table_size = table_size;
-    list->; = 0;
-    list->max_items = max_size;
-    list->pile_size = 1;
+    list->count      = 0;
+    list->count_max  = count_max;
     return list;
 }
 
@@ -159,7 +171,8 @@ bool ListContains (TList<UI, SI>* list) {
     return false;
 }
 
-/** Returns true if this expr contains only the given address. */
+/** Returns true if this expr contains only the given address.
+    @return True if the data lies in the list's memory socket. */
 template<typename UI = uint32_t, typename SI = int16_t>
 bool ListContains (TList<UI, SI>* list, void* data) {
     assert (list);
@@ -172,7 +185,7 @@ bool ListContains (TList<UI, SI>* list, void* data) {
 
 /** Removes that object from the list and copies it to the destination. */
 template<typename UI = uint32_t, typename SI = int16_t>
-bool ListRemoveCopy (TList<UI, SI>* list, void* destination,
+bool ListRemoveAndCopy (TList<UI, SI>* list, void* destination,
                  size_t buffer_size, void* data) {
     assert (list);
 
@@ -195,14 +208,6 @@ bool ListRetain (TList<UI, SI>* list, SI index) {
     return false;
 }
 
-/** Creates a list from dynamic memory. */
-template<typename UI = uint32_t, typename SI = int16_t>
-TList<UI, SI>* ListCreate (SI buffered_indexes, UI table_size, UI size) {
-    assert (list);
-    TList<UI, SI>* list = New<TList, uint_t> ();
-    return list;
-}
-
 /** Prints the given TList to the console. */
 template<typename UI = uint32_t, typename SI = int16_t>
 Printer& ListPrint (TList<UI, SI>* list, Printer& print) {
@@ -215,8 +220,8 @@ template<typename UI = uint32_t, typename SI = int16_t>
 class List {
     public:
 
-    List () {
-
+    List (SI count_max) {
+        buffer_ = StackNew (count_max);
     }
 
     ~List () {

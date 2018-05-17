@@ -18,11 +18,10 @@
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
-#ifndef HEADER_FOR_CRABS_MEMORY
-#define HEADER_FOR_CRABS_MEMORY
+#ifndef HEADER_FOR_CRABS_ALIGN
+#define HEADER_FOR_CRABS_ALIGN
 
 #include "config.h"
-
 
 namespace _ {
 
@@ -32,17 +31,23 @@ KABUKI uint32_t AlignPowerOf2 (uint32_t value);
 /** Compute the next highest power of 2. */
 KABUKI int32_t AlignPowerOf2 (int32_t value);
 
-/** Returns the number to add to word-align the given pointer to a uint_t-bit
-    boundary.
-    @author Algorithm by Cale McCollough (or as far as I know).
+/** Aligns the given pointer up to a sizeof (T) byte boundary.
     @param  ptr The address to align.
-    @return The offset to add to the ptr to word align it. */
-template<typename T>
-inline uintptr_t Align8 (const void* ptr) {
+    @return The aligned value. */
+template<typename WordBoundary, typename I = uintptr_t>
+inline I AlignUp (I value) {
     // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
     // This allows the algorithm to word align without any if statements.
     // The algorithm works the same for all memory widths as proven by the
     // truth table bellow.
+    //
+    // 2-bit example:
+    // ~00 = 11 => 00 + 11 + 1 = 0x100
+    // ~01 = 10 => 01 + 10 + 1 = 0x100
+    // ~10 = 01 => 10 + 01 + 1 = 0x100
+    // ~11 = 00 => 11 + 00 + 1 = 0x100
+    //
+    // 3-bit example:
     // ~000 = 111 => 000 + 111 + 1 = 0x1000
     // ~001 = 110 => 001 + 110 + 1 = 0x1000
     // ~010 = 101 => 010 + 101 + 1 = 0x1000
@@ -50,116 +55,67 @@ inline uintptr_t Align8 (const void* ptr) {
     // ~100 = 011 => 100 + 011 + 1 = 0x1000
     // ~101 = 010 => 101 + 010 + 1 = 0x1000
     // ~110 = 001 => 110 + 001 + 1 = 0x1000
-    // ~111 = 000 => 111 + 000 + 1 = 0x1000                 v--- Mask
-    return ((~reinterpret_cast<uintptr_t> (ptr)) + 1) & (sizeof (T) - 1);
+    // ~111 = 000 => 111 + 000 + 1 = 0x1000
+    return value + ((~value) + 1) & (sizeof (WordBoundary) - 1);
+}
+
+template<typename WordBoundary = intptr_t, typename T = char>
+inline T* AlignUpPointer (void* pointer) {
+    uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
+    return reinterpret_cast<T*> (AlignUp<WordBoundary> (ptr));
+}
+
+/** Aligns the given pointer to the sizeof (WordBoundary) down..
+    @param  value The value to align.
+    @return The aligned value. */
+template<typename WordBoundary = intptr_t, typename I = uintptr_t>
+inline I AlignDown (I value) { //        v--- LSb Mask
+    return value - value & (sizeof (WordBoundary) - 1);
+}
+
+/** Aligns the given pointer to the sizeof (WordBoundary) down.
+    @param  pointer The pointer to align.
+    @return The aligned pointer. */
+template<typename WordBoundary = intptr_t, typename T = char>
+inline T* AlignDownPointer (T* pointer) {
+    uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
+    return reinterpret_cast<T*> (AlignDown<WordBoundary> (ptr));
+}
+
+/** Returns the number to add to word-align the given pointer to a uint_t-bit
+    boundary.
+    @param  ptr The address to align.
+    @return The aligned value. */
+template<typename T = uintptr_t>
+inline T AlignUp2 (T value) {
+    return value + value & 0x1;
 }
 
 /** Calculates the offset to align the given pointer to a 16-bit word boundary.
     @return A vector you add to a pointer to align it. */
-inline uintptr_t AlignToUI2 (const char* ptr) {
+template<typename T = void*>
+inline T* AlignUpPointer2 (T* pointer) {
     // Mask off lower bit and add it to the ptr.
-    uintptr_t value = reinterpret_cast<uintptr_t> (ptr);
-    return value & 0x1;
+    uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
+    return reinterpret_cast<T*> (ptr + ptr & 0x1);
 }
 
 /** Aligns the given pointer to a 32-bit word boundary.
     @return A vector you add to a pointer to align it. */
-inline uintptr_t AlignToUI4 (const char* ptr) {
-    return Align8<int32_t> (ptr);
+template<typename T = void*>
+inline T* AlignUpPointer4 (T* pointer) {
+    return reinterpret_cast<T*> (AlignUpPointer<int32_t> (pointer));
 }
 
 /** Aligns the given pointer to a 64-bit word boundary.
     @return A vector you add to a pointer to align it. */
-inline uintptr_t AlignToUI8 (const char* ptr) {
-    return Align8<int64_t> (ptr);
+template<typename T = void*>
+inline T* AlignUpPointer8 (T* pointer) {
+    uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
+    return reinterpret_cast<T*> (AlignUp<int64_t> (ptr));
 }
-
-/** Word aligns the given byte pointer up in addresses.
-    @param ptr Pointer to align.
-    @return Next word aligned up pointer. */
-template<typename T>
-inline T* MemoryAlign (T* ptr) {
-    uintptr_t offset = Align8<uintptr_t> (ptr);
-    char* aligned_ptr = reinterpret_cast<char*> (ptr) + offset;
-    return reinterpret_cast<T*> (aligned_ptr);
-}
-
-inline uintptr_t* AlignToUI8 (uintptr_t* buffer) {
-    char* byte_ptr = reinterpret_cast<char*> (buffer);
-    uintptr_t offset = (((~reinterpret_cast<uintptr_t> (buffer)) + 1) &
-                        (sizeof (uint64_t) - 1));
-    return reinterpret_cast<uintptr_t*> (byte_ptr + offset);
-}
-
-inline uintptr_t AlignToWord (uintptr_t size) {
-    // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
-    // This allows the algorithm to word align without any if statements.
-    // The algorithm works the same for all memory widths as proven by the
-    // truth table bellow.
-    // ~000 = 111 => 000 + 111 + 1 = 0x1000
-    // ~001 = 110 => 001 + 110 + 1 = 0x1000
-    // ~010 = 101 => 010 + 101 + 1 = 0x1000
-    // ~011 = 100 => 011 + 100 + 1 = 0x1000
-    // ~100 = 011 => 100 + 011 + 1 = 0x1000
-    // ~101 = 010 => 101 + 010 + 1 = 0x1000
-    // ~110 = 001 => 110 + 001 + 1 = 0x1000
-    // ~111 = 000 => 111 + 000 + 1 = 0x1000
-    //                                       v----- Mask
-    return size + (((~size) + 1) & (sizeof (uintptr_t) - 1));
-}
-
-
-//KABUKI uintptr_t AlignSize (uintptr_t size);
-inline uintptr_t AlignToUI8 (uintptr_t size) {
-    // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
-    // This allows the algorithm to word align without any if statements.
-    // The algorithm works the same for all memory widths as proven by the
-    // truth table bellow.
-    // ~000 = 111 => 000 + 111 + 1 = 0x1000
-    // ~001 = 110 => 001 + 110 + 1 = 0x1000
-    // ~010 = 101 => 010 + 101 + 1 = 0x1000
-    // ~011 = 100 => 011 + 100 + 1 = 0x1000
-    // ~100 = 011 => 100 + 011 + 1 = 0x1000
-    // ~101 = 010 => 101 + 010 + 1 = 0x1000
-    // ~110 = 001 => 110 + 001 + 1 = 0x1000
-    // ~111 = 000 => 111 + 000 + 1 = 0x1000
-    //                                         v----- Mask
-    return size + (((~size) + 1) & (sizeof (uint64_t) - 1));
-}
-
-/** Calculates the difference between the begin and end address. */
-inline intptr_t MemoryVector (void* begin, void* end) {
-    return reinterpret_cast<char*> (end) - reinterpret_cast<char*> (begin);
-}
-
-/** Calculates the difference between the begin and end address. */
-inline intptr_t MemoryVector (const void* begin, const void* end) {
-    return reinterpret_cast<const char*> (end) -
-           reinterpret_cast<const char*> (begin);
-}
-
-/** Overwrites the memory with zeros functionally identical to memset. */
-KABUKI void MemoryClear (void* address, size_t size);
-
-/** Copies the source to the target functionally identical to memcpy.
-    @param  write     Beginning of the write buffer.
-    @param  write_end End of the write buffer.
-    @param  read      Beginning of the read buffer.
-    @param  read_end  End of the read buffer.
-    @return Pointer to the last byte written or nil upon failure. */
-KABUKI char* MemoryCopy (char* write, char* write_end, const char* read,
-                         const char* read_end);
-
-/** Copies the source to the target functionally identical to memcpy.
-    @param  write     Beginning of the write buffer.
-    @param  write_end End of the write buffer.
-    @param  read      Beginning of the read buffer.
-    @param  size      Number of bytes to copy.
-    @return Pointer to the last byte written or nil upon failure. */
-KABUKI char* MemoryCopy (char* write, char* write_end, const char* memory,
-                         int size);
 
 }       //< namespace _
-#endif  //< HEADER_FOR_CRABS_MEMORY
+#endif  //< HEADER_FOR_CRABS_ALIGN
 
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

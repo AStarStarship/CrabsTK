@@ -40,7 +40,18 @@
 
 using namespace _;
 
-void TestSeam_1_4 () {
+
+TEST_GROUP (SEAM_1_4) {
+    void setup () {
+    }
+
+    void teardown () {
+        std::cout << '\n';
+        system ("PAUSE");
+    }
+};
+
+TEST (SEAM_1_4, SEAM_1_4A) {
 
     printf ("\n    Testing SEAM_1_3... ");
 

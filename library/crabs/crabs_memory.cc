@@ -33,11 +33,6 @@
 
 namespace _ {
 
-char* BufferDefault () {
-    return Buffer<> ();
-}
-
-
 uintptr_t* MemoryCreate (uintptr_t size) {
     return new uintptr_t[size];
 }
@@ -74,90 +69,82 @@ void MemoryClear (void* address, size_t size) {
     *ptr = value;*/
 }
 
-char* MemoryCopy (char* write, char* write_end, const char* read,
-                  const char* read_end) {
-    // @todo Optimize to write in words.
-    if (!write) {
-        return nullptr;
-    }
-    if (write > write_end) {
-        return nullptr;
-    }
-    if (!read) {
-        return nullptr;
-    }
-    if (read > read_end) {
-        return nullptr;
-    }
-
-    size_t target_size = write_end - write,
-           read_size   = read_end  - read;
-    if (target_size < read_size) { // Buffer overflow!
-        return nullptr;
-    }
-    for (; read_size != 0; --read_size) {
+/** Copies memory in word-aligned chucks. */
+char* MemoryCopyFast (char* write, char* write_end, const char* read,
+                      const char* read_end) {
+    // Algoirhm:
+    // 1.) Save return value.
+    // 2.) Align write pointer up and copy the unaligned bytes in the lower 
+    //     memory region.
+    // 3.) Align write_end pointer down and copy the unaligned bytes in the  
+    //     upper memory region.
+    // 4.) Copy the word-aligned middle region.
+    char* success = write_end + 1 ,
+        * aligned_pointer = AlignUpPointer<> (write);
+    while (write < aligned_pointer)
         *write++ = *read++;
-    }
-    return write;
+    aligned_pointer = AlignDownPointer<> (write_end);
+    while (write_end > aligned_pointer)
+        *write_end-- = *read_end--;
+
+    uintptr_t* words = reinterpret_cast<uintptr_t*> (write),
+             * words_end = reinterpret_cast<uintptr_t*> (write_end);
+    const uintptr_t* read_word = reinterpret_cast<const uintptr_t*> (read);
+    while (words < words_end)
+        *words++ = *read_word++;
+    return success;
 }
 
-char* MemoryCopy (char* write, char* write_end, const char* read,
-                  intptr_t size) {
-    // @todo Optimize to write in words.
-    if (!write) {
-        return nullptr;
-    }
-    if (write > write_end) {
-        return nullptr;
-    }
-    if (!read) {
-        return nullptr;
-    }
-    if ((write_end - write) < size) {
-        return nullptr;
-    }
-    for (; size; --size) {
-        *write++ = *read++;
-    }
-    return write;
+inline char* MemoryCopyFast (void* write, void* write_end, const void* read, 
+                             const void* read_end) {
+    return MemoryCopyFast (reinterpret_cast<char*> (write),
+                           reinterpret_cast<char*> (write_end),
+                           reinterpret_cast<const char*> (read),
+                           reinterpret_cast<const char*> (read_end));
 }
 
-char* MemoryCopy (char* write, char* write_end, const char* read,
-                  const char* read_end, intptr_t size) {
-    // @todo Optimize to write in words.
-    if (!write || write > write_end || !read || read > read_end ||
-        (write_end - write) < size || (read_end - read) < size) {
-        return nullptr;
-    }
-    while (size-- > 0) {
-        *write++ = *read++;
-    }
-    return write;
+char* MemoryCopy (void* write, void* write_end, const void* read,
+                  const void* read_end) {
+    assert (write);
+    assert (write > write_end);
+    assert (read);
+    assert (read > read_end);
+
+    if (MemorySize (write, write_end) < MemorySize (read, read_end))
+        return nullptr; //< Buffer overflow!
+    return MemoryCopyFast (write, write_end, read, read_end);
 }
 
-char* MemoryCopy (void* write, size_t write_size, const void* read, size_t read_size) {
-    char* write_byte = reinterpret_cast<char*> (write);
-    const char* read_bytes = reinterpret_cast<const char*> (read);
-    // @todo Optimize to write in words.
-    if (!write || !read || write_size < read_size) {
+char* MemoryCopy (void* write, void* write_end, const void* read,
+                  size_t byte_count) {
+    assert (write);
+    assert (write < write_end);
+    assert (read);
+
+    if (MemorySize (write, write_end) < byte_count) // Buffer overflow!
         return nullptr;
-    }
-    while (read_size-- > 0)
-        *write_byte++ = *read_bytes++;
-    return write_byte;
+
+    return MemoryCopy (write, write_end, read, 
+                       reinterpret_cast<const char*> (read) + byte_count);
+}
+
+char* MemoryCopy (void* write, size_t write_size, const void* read, 
+                  size_t read_size) {
+    assert (write);
+    assert (read);
+    if (write_size < read_size)
+        return nullptr;
+
+    return MemoryCopy (write, reinterpret_cast<char*> (write) + write_size,
+                       read , reinterpret_cast<const char*> (read) + read_size);
 }
 
 char* PrintMemory (const void* token, const void* token_end, char* cursor,
                    char* buffer_end, char delimiter) {
-    if (!token) {
-        return nullptr;
-    }
-    if (!cursor) {
-        return cursor;
-    }
-    if (cursor >= buffer_end) {
-        return nullptr;
-    }
+    assert (token);
+    assert (cursor);
+    assert (cursor < buffer_end);
+
     char      * buffer_begin    = cursor;
     const char* address_ptr     = reinterpret_cast<const char*> (token),
               * address_end_ptr = reinterpret_cast<const char*> (token_end);

@@ -97,58 +97,61 @@ void* TypeAlign (uint8_t type, void* value) {
     uint8_t* value_ptr = reinterpret_cast<uint8_t*> (value);
     #if WORD_SIZE == 2
     if (type <= HLF)
-        return Align2<> (value);
+        return AlignUpPointer2 (value);
     #else
     if (type <= BOL)
-        return Align2<> (value);
+        return AlignUpPointer2 (value);
     #endif
     if (type <= TMS)
-        return Align4<> (value);
+        return AlignUpPointer4 (value);
     if (type <= DEC)
-        return Align8<> (value);
+        return AlignUpPointer8 (value);
 
     switch (type >> 6) {
         case 0: return value;
-        case 1: return Align2<> (value);
-        case 2: return Align4<> (value);
-        case 3: return Align8<> (value);
+        case 1: return AlignUpPointer2<> (value);
+        case 2: return AlignUpPointer4<> (value);
+        case 3: return AlignUpPointer8<> (value);
     }
 }
 
-void* TypeWrite (uint8_t type, void* begin, void* end, const void* source) {
+void* TypeWrite (uint8_t type, char* begin, char* end, const char* source) {
+    // Algoirhm:
+    // 1.) Determine type
+    // 2.) Align begin pointer to type width.
+    // 3.) Check for enough room in begin-end socket.
+    // 4.) Use MemoryCopy to copy the data into the given begin-end socket.
+
     assert (begin);
     assert (source);
-    enum {
-        kLast2ByteType = sizeof (int) == 2 ? BOL : HLF,
-    };
 
-    uint8_t * target_1;
+    char * target_1;
     uint16_t* target_2;
     uint32_t* target_4;
     uint64_t* target_8;
 
-    const uint8_t * source_1;
+    const char * source_1;
     const uint16_t* source_2;
     const uint32_t* source_4;
     const uint64_t* source_8;
 
     if (type <= UI1) {
-        target_1 = reinterpret_cast<uint8_t*> (begin);
-        *target_1++ = *reinterpret_cast<const uint8_t*> (source);
+        target_1 = reinterpret_cast<char*> (begin);
+        *target_1++ = *reinterpret_cast<const char*> (source);
         return target_1;
     }
-    if (type <= kLast2ByteType) {
-        target_2 = reinterpret_cast<uint16_t*> (Align2<> (begin));
+    if (type <= kTypeLast2Byte) {
+        target_2 = reinterpret_cast<uint16_t*> (AlignUpPointer2<> (begin));
         *target_2++ = *reinterpret_cast<const uint16_t*> (source);
         return target_2;
     }
     if (type <= TMS) {
-        target_4 = reinterpret_cast<uint32_t*> (Align4<> (begin));
+        target_4 = reinterpret_cast<uint32_t*> (AlignUpPointer4 (begin));
         *target_4++ = *reinterpret_cast<const uint32_t*> (source);
         return target_4;
     }
     if (type <= DEC) {
-         target_8 = reinterpret_cast<uint64_t*> (Align8<> (begin));
+         target_8 = reinterpret_cast<uint64_t*> (AlignUpPointer8 (begin));
          source_8 = reinterpret_cast<const uint64_t*> (source);
         *target_8++ = *source_8++;
         if (type == DEC) {
@@ -159,19 +162,38 @@ void* TypeWrite (uint8_t type, void* begin, void* end, const void* source) {
     }
     char array_type = type >> 6;
     switch (array_type) {
-        case 0:
-            target_1 = reinterpret_cast<uint8_t*> (begin);
-            source_1 = reinterpret_cast<const uint8_t*> (source);
+        case 0: {
+            target_1 = reinterpret_cast<char*> (begin);
+            source_1 = reinterpret_cast<const char*> (source);
             uint8_t size_1 = *source_1++;
             *target_1++ = size_1;
             MemoryCopy (target_1, end, source, size_1 - 1);
             break;
-        case 1:
+        }
+        case 1: {
+            target_2 = reinterpret_cast<uint16_t*> (begin);
+            source_2 = reinterpret_cast<const uint16_t*> (source);
+            uint16_t size_2 = *source_2++;
+            *target_2++ = size_2;
+            MemoryCopy (target_2, end, source, size_2 - sizeof (int16_t));
             break;
-        case 2:
+        }
+        case 2: {
+            target_4 = reinterpret_cast<uint32_t*> (begin);
+            source_4 = reinterpret_cast<const uint32_t*> (source);
+            uint32_t size_4 = *source_4++;
+            *target_4++ = size_4;
+            MemoryCopy (target_4, end, source, size_4 - sizeof (int32_t));
             break;
-        case 3:
+        }
+        case 3: {
+            target_8 = reinterpret_cast<uint64_t*> (begin);
+            source_8 = reinterpret_cast<const uint64_t*> (source);
+            uint64_t size_8 = *source_8++;
+            *target_8++ = size_8;
+            MemoryCopy (target_8, end, source, size_8 - sizeof (int64_t));
             break;
+        }
     }
 }
 
