@@ -10,13 +10,13 @@
    /         \                    ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪    
 ```
 
-Kabuki Toolkit (KT) is a modern cross-platform C++1x software and firmware toolkit for making intelligent connected technologies with Script and the Kabuki VM. KT is built on top of some of the  best commercial-friendly open-source C and C++ libraries (soon to be) formatted using the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)(#WorkInProgress).
+Kabuki Toolkit (KT) is a modern cross-platform C++1x software and firmware toolkit for making intelligent connected technologies with ASCII Script. KT is built on top of some of the  best commercial-friendly open-source C and C++ libraries (soon to be) formatted using the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)(#WorkInProgress).
 
-## Script
+## ASCII Script
 
 Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification (Script) is a software-defined networking protocol (SDNP) and embedded-friendly family of languages that facilitates artificial intelligence and machine learning (AIML) using functional programming and natural language processing (NLP). Script is best described as a mix of JavaScript, Python, and LISP. JavaScript because it's asynchronous with a round-robin scheduler, Python because it has native dictionaries, and Script has a rather unique dialect of LISP called Interprocess LISP.
 
-The Chinese Room is a famous artificial intelligence philosophy thought experiment invented by the philosopher John Searle. The experiment highlights the difference between strong vs weak AI and how a normal everyday room in an office or network of rooms can form to create a turning equivalent machine that can fluently speak any language. Script being a SDNP can be used to create many programming languages but there is only one reference implementation, ASCII Script.
+The Chinese Room is a famous artificial intelligence philosophy thought experiment invented by the philosopher John Searle. The experiment highlights the difference between strong vs weak AI and how a normal everyday room in an office or network of rooms can form to create a turning equivalent machine that can fluently speak any language. Script being a SDNP can be used to create many programming languages but there is only one reference implementation, Automata Standard Code for Information Interchange (ASCII) Script.
 
 ## Quick Links
 
