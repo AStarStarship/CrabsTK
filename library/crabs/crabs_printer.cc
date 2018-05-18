@@ -39,27 +39,20 @@
 
 namespace _ {
 
-Printer& Stx () {
-    static uintptr_t stx_etx[kBufferSizeDefaultWords];
-
-    uintptr_t begin = reinterpret_cast<uintptr_t> (&stx_etx[2]),
-              end;
-    end = reinterpret_cast<uintptr_t> (&stx_etx[kBufferSizeDefaultWords - 1]);
-    uintptr_t* cursor = &stx_etx[0];
-    *cursor++ = begin;
-    *cursor   = end;
-
-    return reinterpret_cast<Printer&> (stx_etx);
+char* TextStart () {
+    static char buffer[kBufferSizeDefault];
+    return reinterpret_cast<char*> (buffer);
 }
 
-char* Print (const char* string, char* buffer, char* buffer_end, 
+char* TextEnd () {
+    return reinterpret_cast<char*> (TextStart ()[kBufferSizeDefault - 1]);
+}
+
+char* Print (char* buffer, char* buffer_end, const char* string, 
              char delimiter) {
-    if (!string) {
-        return nullptr;
-    }
-    if (!buffer) {
-        return nullptr;
-    }
+    assert (string);
+    assert (buffer);
+
     if (buffer >= buffer_end) {
         return nullptr;
     }
@@ -75,72 +68,81 @@ char* Print (const char* string, char* buffer, char* buffer_end,
     return buffer;
 }
 
-char* Print (const char* string, const char* string_end, char* buffer,
-             char* buffer_end, char delimiter) {
-    if (buffer) {
-        return nullptr;
-    }
-    if (buffer >= buffer_end) {
-        return nullptr;
-    }
-    if (!string) {
+char* Print (char* cursor, char* end, const char* string, 
+             const char* string_end, char delimiter) {
+    assert (string);
+    assert (string_end);
+    assert (cursor);
+    assert (end);
+
+    if (cursor >= end) {
         return nullptr;
     }
     if (string >= string_end) {
         return nullptr;
     }
-    char* cursor = buffer;
+
     char c = *string;
     while (c) {
         if (!c) {
-            return buffer;
+            return cursor;
         }
-        *buffer = c;
-        if (++buffer >= buffer_end) {
-            *buffer = delimiter;
+        *cursor = c;
+        if (++cursor >= end) {
+            *cursor = delimiter;
             return nullptr;
         }
         if (++string >= string_end) {
-            *buffer = delimiter;
+            *cursor = delimiter;
             return nullptr;
         }
         c = *string;
     }
-    *buffer = delimiter;
-    return buffer;
+    *cursor = delimiter;
+    return cursor;
 }
 
+char* Print (char* cursor, char* end, char character, char delimiter) {
+    assert (cursor);
+    assert (end);
 
-char* Print (float value, char* buffer, char* buffer_end, char delimiter) {
+    if (cursor + 1 >= end)
+        return nullptr;
+    *cursor++ = character;
+    *cursor = delimiter;
+    return cursor;
+}
+
+char* Print (char* cursor, char* end, float value, char delimiter) {
     // @todo Replace with GrisuX algorithm that uses the Script ItoS Algorithm.
-    intptr_t buffer_size = buffer_end - buffer,
-             result = sprintf_s (buffer, buffer_size, "%f", value);
+    intptr_t buffer_size = end - cursor,
+             result = sprintf_s (cursor, buffer_size, "%f", value);
     if (result < 0) {
-        *buffer = delimiter;
+        *cursor = delimiter;
         return nullptr;
     }
-    buffer += result;
-    *buffer = delimiter;
-    return buffer;
+    cursor += result;
+    *cursor = delimiter;
+    return cursor;
 }
 
-char* Print (double value, char* buffer, char* buffer_end, char delimiter) {
+char* Print (char* cursor, char* end, double value, char delimiter) {
     // Right now we're going to enforce there be enough room to write any
     // int32_t.
-    intptr_t buffer_size = buffer_end - buffer,
-             result = sprintf_s (buffer, buffer_size, "%f", value);
+    intptr_t buffer_size = end - cursor,
+             result = sprintf_s (cursor, buffer_size, "%f", value);
     if (result < 0) {
-        *buffer = delimiter;
+        *cursor = delimiter;
         return nullptr;
     }
-    buffer += result;
-    *buffer = delimiter;
-    return buffer;
+    cursor += result;
+    *cursor = delimiter;
+    return cursor;
 }
 
 Printer::Printer (char* cursor, size_t buffer_size) :
     cursor (cursor),
-    end    (cursor + buffer_size) {
+    end    (cursor + buffer_size - 1) {
     assert (cursor);
     assert (buffer_size);
 }
@@ -150,6 +152,12 @@ Printer::Printer (char* cursor, char* end) :
     end    (end) {
     assert (cursor);
     assert (cursor < end);
+}
+
+Printer::Printer (const Printer& other) :
+    cursor (other.cursor),
+    end    (other.end) {
+    // Nothing to do here! ({:-)-+=<
 }
 
 Printer& Printer::Set (char* begin) {

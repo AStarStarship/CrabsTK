@@ -38,8 +38,6 @@ inline char* Buffer () {
     return reinterpret_cast<char*> (buffer);
 }
 
-KABUKI char* Print ();
-
 /** String (STR) and Address (ADR) Text (TKN) utilities
     @ingroup Text
 

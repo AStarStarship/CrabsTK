@@ -42,67 +42,67 @@ struct Right {
 /** Prints the given string justified right to this string.
     @param input The string to print.
     @param num_columns The number of columns per row. */
-KABUKI char* PrintRight (const char* string, int num_columns, char* text,
-                         char* text_end, char delimiter = 0);
+KABUKI char* PrintRight (char* text, char* text_end, const char* string, 
+                         int num_columns, char delimiter = 0);
 
 /** Prints the given value justified right to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
-inline char* PrintRight (int32_t value, int num_columns, char* text, 
-                         char* text_end, char delimiter = 0) {
+inline char* PrintRight (char* text, char* text_end, int32_t value, 
+                         int num_columns, char delimiter = 0) {
     char buffer[16];
-    Print ((uint32_t)value, buffer, buffer + 16);
-    return PrintRight (buffer, num_columns, text, text_end);
+    Print (buffer, buffer + 16, (uint32_t)value);
+    return PrintRight (text, text_end, buffer, num_columns);
 }
 
 /** Prints the given value justified right to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
-inline char* PrintRight (uint32_t value, int num_columns, char* text, 
-                         char* text_end, char delimiter = 0) {
+inline char* PrintRight (char* text, char* text_end, uint32_t value,
+                         int num_columns, char delimiter = 0) {
     char buffer[16];
-    Print ((uint32_t)value, buffer, buffer + 16);
-    return PrintRight (buffer, num_columns, text, text_end);
+    Print (buffer, buffer + 16, (uint32_t)value);
+    return PrintRight (text, text_end, buffer, num_columns);
 }
 
 /** Prints the given value justified right to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
-inline char* PrintRight (int64_t value, int num_columns, char* text, 
-                         char* text_end, char delimiter = 0) {
+inline char* PrintRight (char* text, char* text_end, int64_t value,
+                         int num_columns, char delimiter = 0) {
     char buffer[24];
-    Print (value, buffer, buffer + 24);
-    return PrintRight (buffer, num_columns, text, text_end);
+    Print (buffer, buffer + 24, value);
+    return PrintRight (text, text_end, buffer, num_columns);
 }
 
 /** Prints the given value justified right to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
-inline char* PrintRight (uint64_t value, int num_columns, char* text, 
-                         char* text_end, char delimiter = 0) {
+inline char* PrintRight (char* text, char* text_end, uint64_t value, 
+                         int num_columns, char delimiter = 0) {
     char buffer[24];
-    Print (value, buffer, buffer + 24);
-    return PrintRight (buffer, num_columns, text, text_end);
+    Print (buffer, buffer + 24, value);
+    return PrintRight (text, text_end, buffer, num_columns);
 }
 
 /** Prints the given value justified right to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
-inline char* PrintRight (float value, int num_columns, char* text, 
-                         char* text_end, char delimiter = 0) {
+inline char* PrintRight (char* text, char* text_end, float value, 
+                         int num_columns, char delimiter = 0) {
     char buffer[kkFloat32DigitsMax];
-    Print (value, buffer, buffer + kkFloat32DigitsMax);
-    return PrintRight (buffer, num_columns, text, text_end);
+    Print (buffer, buffer + kkFloat32DigitsMax, value);
+    return PrintRight (text, text_end, buffer, num_columns);
 }
 
 /** Prints the given value justified right to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
-inline char* PrintRight (double value, int num_columns, char* text, 
-                         char* text_end, char delimiter = 0) {
+inline char* PrintRight (char* text, char* text_end, double value, 
+                         int num_columns, char delimiter = 0) {
     char buffer[kFloat64DigitsMax];
-    Print (value, buffer, buffer + kFloat64DigitsMax);
-    return PrintRight (buffer, num_columns, text, text_end);
+    Print (buffer, buffer + kFloat64DigitsMax, value);
+    return PrintRight (text, text_end, buffer, num_columns);
 }
 
 }       //< namespace _
@@ -111,8 +111,8 @@ inline char* PrintRight (double value, int num_columns, char* text,
     printer. */
 template<typename T>
 inline _::Printer& operator<< (_::Printer& printer, _::Right<T> right) {
-    printer.cursor = _::PrintRight (right.value, printer.cursor, printer.end);
-    return printer;
+    printer.cursor = _::PrintRight (printer.cursor, printer.end, right.value);
+    return print;
 }
 
 #endif  //< HEADER_FOR_CRABS_RIGHT

@@ -479,47 +479,41 @@ int32_t ClockGetMicroseconds (time_us_t timestamp) {
     return (int32_t)((timestamp & 0xFFFFFFFF00000000) >> 32);
 }
 
-char* PrintClock (char* buffer, char* buffer_end, tm* std_tm) {
-    if (!buffer) {
-        return nullptr;
-    }
-    if (buffer > buffer_end) {
-        return nullptr;
-    }
-    if (!std_tm) {
-        return nullptr;
-    }
+char* PrintClock (char* cursor, char* end, tm* std_tm) {
+    assert (cursor);
+    assert (std_tm);
+    assert (cursor > end);
 
-    buffer = Print (std_tm->tm_year + kTimeEpoch, buffer, buffer_end);
-    if (!buffer) {
+    cursor = Print (cursor, end, std_tm->tm_year + kTimeEpoch);
+    if (!cursor) {
         return nullptr;
     }
-    *buffer++ = '-';
-    buffer = Print (std_tm->tm_mon + 1, buffer, buffer_end);
-    if (!buffer) {
+    *cursor++ = '-';
+    cursor = Print (cursor, end, std_tm->tm_mon + 1);
+    if (!cursor) {
         return nullptr;
     }
-    *buffer++ = '-';
-    buffer = Print (std_tm->tm_mday, buffer, buffer_end);
-    if (!buffer) {
+    *cursor++ = '-';
+    cursor = Print (cursor, end, std_tm->tm_mday);
+    if (!cursor) {
         return nullptr;
     }
-    *buffer++ = '@';
-    buffer = Print (std_tm->tm_hour, buffer, buffer_end);
-    if (!buffer) {
+    *cursor++ = '@';
+    cursor = Print (cursor, end, std_tm->tm_hour);
+    if (!cursor) {
         return nullptr;
     }
-    *buffer++ = ':';
-    buffer = Print (std_tm->tm_min, buffer, buffer_end);
-    if (!buffer) {
+    *cursor++ = ':';
+    cursor = Print (cursor, end, std_tm->tm_min);
+    if (!cursor) {
         return nullptr;
     }
-    *buffer++ = ':';
-    buffer = Print (std_tm->tm_sec, buffer, buffer_end);
-    if (!buffer) {
+    *cursor++ = ':';
+    cursor = Print (cursor, end, std_tm->tm_sec);
+    if (!cursor) {
         return nullptr;
     }
-    return buffer;
+    return cursor;
 }
 
 int ClockNumDaysMonth (time_t t) {

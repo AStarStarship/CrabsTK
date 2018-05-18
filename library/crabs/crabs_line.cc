@@ -26,13 +26,13 @@ Line::Line (char token, int column_count) :
     // Nothing to do here. ({:-)-+=<
 }
 
-Printer& Line::Print (Printer& printer) {
-    char* cursor = printer.cursor;
+Printer& Line::Print (Printer& print) {
+    char* cursor = print.cursor;
     assert (cursor);
-    char* end = printer.end;
+    char* end = print.end;
     int l_column_count = column_count;
     if (cursor + l_column_count + 1 >= end)
-        return printer;
+        return print;
 
     *cursor++ = '\n';
 
@@ -41,8 +41,8 @@ Printer& Line::Print (Printer& printer) {
         *cursor++ = l_token;
 
     *cursor = 0;
-    printer.cursor = cursor;
-    return printer;
+    print.cursor = cursor;
+    return print;
 }
 
 StringLine::StringLine (const char* string, int column_count) :
@@ -51,13 +51,13 @@ StringLine::StringLine (const char* string, int column_count) :
     // Nothing to do here. ({:-)-+=<
 }
 
-Printer& StringLine::Print (Printer& printer) {
-    char* cursor = printer.cursor;
+Printer& StringLine::Print (Printer& print) {
+    char* cursor = print.cursor;
     assert (cursor);
-    char* end    = printer.end;
+    char* end    = print.end;
     int l_column_count = column_count;
     if (cursor + l_column_count + 1 > end)
-        return printer;
+        return print;
 
     const char* l_string = string;
     while (l_column_count-- > 0) {
@@ -68,7 +68,7 @@ Printer& StringLine::Print (Printer& printer) {
         *cursor++ = c;
     }
     *cursor = 0;
-    return printer;
+    return print;
 }
 
 }

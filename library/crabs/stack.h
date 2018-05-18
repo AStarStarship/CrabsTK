@@ -465,19 +465,23 @@ uintptr_t* StackGrow (uintptr_t* buffer) {
 
     T* source = StackElements (stack),
      * destination = StackElements (new_stack);
-    for (--count; count > 0; --count)
+    for (; count > 0; count--)
         *destination++ = *source++;
     delete buffer;
     return new_buffer;
 }
 
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
-Printer& StackPrint (TArray<T, UI, SI>& stack, Printer& print = Print ()) {
-    SI count = stack.count;
-    print << "\nStack: count: " << count << " count_max:" << stack.count_max
-          << " size:" << stack;
+Printer& StackPrint (TArray<T, UI, SI>* stack, Printer& print) {
+    assert (stack);
+    SI count = stack->count;
+    print << "\nStack: count: " << count << " count_max:" << stack->count_max
+          << " size_stack:" << stack->size_stack;
+    if (stack->size_array != 0)
+        print << " size_array:invalid";
+    T* elements = StackElements (stack);
     for (int i = 0; i < count; ++i)
-        print << '\n' << i + 1 << StackElements (stack)[i];
+        print << '\n' << i + 1 << ".) " << elements[i];
     return print;
 }
 
@@ -514,8 +518,6 @@ class Stack {
             count_max = 32;
         }
         UI size = StackSize<T, UI, SI> (count_max);
-        std::cout << "\n  Creating stack of count_max " << count_max 
-                  << " and size " << size;
         uintptr_t* buffer = new uintptr_t[size >> kWordBitCount];
         buffer_ = buffer;
         StackInit (buffer, size, count_max);
@@ -583,12 +585,13 @@ class Stack {
         @return The index of the newly stacked item. */
     SI Push (T item) {
         SI result = StackPush<T, UI, SI> (This (), item);
-        std::cout << "\n  Pushing " << item;
+        //std::count << "\n  Pushing " << item;
         if (result < 0) {
-            printf (" and growing.");
+            //printf (" and growing.");
             Grow ();
             SI result = StackPush<T, UI, SI> (This (), item);
-            Stx () << StackPrint (This ()) << Etx ();
+            Printer p;
+            StackPrint (This (), p) << Etx ();
             if (result < 0)
                 return -1;
             return result;
@@ -602,7 +605,7 @@ class Stack {
         @return The item popped off the stack. */
     inline T Pop () {
         T value = StackPop<T, UI, SI> (This ());
-        std::cout << "\n  Popping " << value;
+        //print << "\n  Popping " << value;
         return value;
     }
 
@@ -648,6 +651,10 @@ class Stack {
     inline Stack<T, UI, SI>& operator= (const Stack<T, UI, SI>& other) {
         Clone (other);
         return *this;
+    }
+
+    inline Printer& Print (Printer& print) {
+        return StackPrint (This (), print);
     }
 
     private:

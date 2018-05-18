@@ -15,10 +15,10 @@
 */
 
 #include <stdafx.h>
-#include "line.h"
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 
+#include "line.h"
 #include "slot_print.h"
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
@@ -57,7 +57,7 @@ void SlotDisplay (Slot& slot) {
     }
 }
 
-Slot& Print (const char* text, Slot& slot, char delimiter) {
+Slot& Print (Slot& slot, const char* text, char delimiter) {
     if (!text) {
         return slot;
     }
@@ -80,7 +80,8 @@ Slot& Print (const char* text, Slot& slot, char delimiter) {
     return slot;
 }
 
-Slot& Print (const char* text, const char* text_end, Slot& slot, char delimiter) {
+Slot& Print (Slot& slot, const char* text, const char* text_end, 
+             char delimiter) {
     if (!text) {
         return slot;
     }
@@ -106,15 +107,15 @@ Slot& Print (const char* text, const char* text_end, Slot& slot, char delimiter)
     return slot;
 }
 
-Slot& Print (int32_t value, Slot& slot, char delimiter) {
+Slot& Print (Slot& slot, char delimiter, int32_t value) {
     return slot;
 }
 
-Slot& Print (uint32_t value, Slot& slot, char delimiter) {
+Slot& Print (Slot& slot, uint32_t value, char delimiter) {
     return slot;
 }
 
-Slot& Print (int64_t value, Slot& slot, char delimiter) {
+Slot& Print (Slot& slot, int64_t value, char delimiter) {
     enum {
         kSizeMax = 22,
     };
@@ -139,13 +140,13 @@ Slot& Print (int64_t value, Slot& slot, char delimiter) {
             if (size < kSizeMax) {
                 return slot;
             }
-            cursor = Print (value, cursor, end + kSizeMax, delimiter);
+            cursor = Print (cursor, end, value + kSizeMax, delimiter);
             // Check if it was an Overflow Wraparound and shift the bytes into
             // the lower chunk if it was.
             cursor = SlotOverflowShift (begin, end, cursor);
         } else {
             end = slot.end;
-            cursor = Print (value, cursor, end + kSizeMax, delimiter);
+            cursor = Print (cursor, end, value + kSizeMax, delimiter);
         }
     }
     else {
@@ -157,7 +158,7 @@ Slot& Print (int64_t value, Slot& slot, char delimiter) {
         // 3b. There is no buffer overflow for this branch
         //     so just write the string like any old string.
         end = slot.end;
-        cursor = Print (value, cursor, end + kSizeMax, delimiter);
+        cursor = Print (cursor, end, value + kSizeMax, delimiter);
         if (!cursor) {
             return slot;
         }
@@ -167,7 +168,7 @@ Slot& Print (int64_t value, Slot& slot, char delimiter) {
     return slot;
 }
 
-Slot& Print (uint64_t value, Slot& slot, char delimiter) {
+Slot& Print (Slot& slot, uint64_t value, char delimiter) {
     enum {
         kSizeMax = 21,
     };
@@ -193,13 +194,13 @@ Slot& Print (uint64_t value, Slot& slot, char delimiter) {
                 // @todo Do I need to clear the buffer here in case of attack?
                 return slot;
             }
-            cursor = Print (value, cursor, end + kSizeMax, delimiter);
+            cursor = Print (cursor, end, value + kSizeMax, delimiter);
             // Check if it was an Overflow Wraparound and shift the bytes into
             // the lower chunk if it was.
             cursor = SlotOverflowShift (begin, end, cursor);
         }
         else {
-            cursor = Print (value, cursor, end + kSizeMax, delimiter);
+            cursor = Print (cursor, end, value + kSizeMax, delimiter);
         }
     }
     else {
@@ -211,7 +212,7 @@ Slot& Print (uint64_t value, Slot& slot, char delimiter) {
         // 3b. There is no buffer overflow for this branch
         //     so just write the string like any old string.
         end = slot.end;
-        cursor = Print (value, cursor, end + kSizeMax, delimiter);
+        cursor = Print (cursor, end, value + kSizeMax, delimiter);
         if (!cursor) {
             return slot;
         }
@@ -245,7 +246,7 @@ inline char* SlotLastAddress (Slot& slot, char* start, char*stop, char* end, int
     return stop + size;
 }*/
 
-Slot& Print (float value, Slot& slot, char delimiter) {
+Slot& Print (Slot& slot, float value, char delimiter) {
     char * begin,
          * start = slot.start,
          * cursor = slot.stop,
@@ -269,14 +270,14 @@ Slot& Print (float value, Slot& slot, char delimiter) {
                 // @todo Do I need to clear the buffer here in case of attack?
                 return slot;
             }
-            cursor = Print (value, cursor, end + kkFloat32DigitsMax, delimiter);
+            cursor = Print (cursor, end, value + kkFloat32DigitsMax, delimiter);
             // Check if it was an Overflow Wraparound and shift the bytes into
             // the lower chunk if it was.
             cursor = SlotOverflowShift (begin, end, cursor);
         }
         else {
             end = slot.end;
-            cursor = Print (value, cursor, end + kkFloat32DigitsMax, delimiter);
+            cursor = Print (cursor, end, value + kkFloat32DigitsMax, delimiter);
         }
     }
     else {
@@ -288,7 +289,7 @@ Slot& Print (float value, Slot& slot, char delimiter) {
         // 3b. There is no buffer overflow for this branch
         //     so just write the string like any old string
         end = slot.end;
-        cursor = Print (value, cursor, end + kkFloat32DigitsMax, delimiter);
+        cursor = Print (cursor, end, value + kkFloat32DigitsMax, delimiter);
         if (!cursor) {
             return slot;
         }
@@ -298,7 +299,7 @@ Slot& Print (float value, Slot& slot, char delimiter) {
     return slot;
 }
 
-Slot& Print (double value, Slot& slot, char delimiter) {
+Slot& Print (Slot& slot, double value, char delimiter) {
     char * begin,
          * start  = slot.start,
          * cursor = slot.stop,
@@ -320,14 +321,14 @@ Slot& Print (double value, Slot& slot, char delimiter) {
                 // @todo Do I need to clear the buffer here in case of attack?
                 return slot;
             }
-            cursor = Print (value, cursor, end + kFloat64DigitsMax, delimiter);
+            cursor = Print (cursor, end, value + kFloat64DigitsMax, delimiter);
             // Check if it was an Overflow Wraparound and shift the bytes into
             // the lower chunk if it was.
             cursor = SlotOverflowShift (begin, end, cursor);
         }
         else {
             end = slot.end;
-            cursor = Print (value, cursor, end + kFloat64DigitsMax, delimiter);
+            cursor = Print (cursor, end, value + kFloat64DigitsMax, delimiter);
         }
     }
     else {
@@ -339,14 +340,14 @@ Slot& Print (double value, Slot& slot, char delimiter) {
         // 3b. There is no buffer overflow for this branch
         //     so just write the string like any old string.
         end = slot.end;
-        cursor = Print (value, cursor, end + kFloat64DigitsMax);
+        cursor = Print (cursor, end, value + kFloat64DigitsMax);
     }
     // 4. Update the ring buffer stop.
     slot.stop = cursor;
     return slot;
 }
 
-Slot& PrintRight (const char* token, int num_columns, Slot& slot,
+Slot& PrintRight (Slot& slot, const char* token, int num_columns, 
                   char delimiter) {
     char* start  = slot.start,
         * cursor = slot.stop,
@@ -355,7 +356,7 @@ Slot& PrintRight (const char* token, int num_columns, Slot& slot,
     //char      c;
     if (cursor < start) {
         size = start - cursor;
-        slot.stop = PrintRight (token, num_columns, cursor, start - 1);
+        slot.stop = PrintRight (cursor, start - 1, token, num_columns);
         return slot;
     }
 
@@ -376,12 +377,12 @@ Slot& PrintRight (const char* token, int num_columns, Slot& slot,
     return slot;
 }
 
-Slot& PrintCentered (const char* text, int num_columns, Slot& slot,
+Slot& PrintCentered (Slot& slot, const char* text, int num_columns,
                      char delimiter) {
     return slot;
 }
 
-Slot& PrintLines (int num_rows, Slot& slot, char delimiter) {
+Slot& PrintLines (Slot& slot, int num_rows, char delimiter) {
     char* cursor = slot.stop + 1,
         *end = slot.end,
         *stop = cursor + num_rows + 1;
@@ -399,12 +400,12 @@ Slot& PrintLines (int num_rows, Slot& slot, char delimiter) {
     return slot;
 }
 
-Slot& PrintHex (char c, Slot& slot, char delimiter) {
+Slot& PrintHex (Slot& slot, char c, char delimiter) {
     uint16_t chars = HexByteToUpperCase (c);
     return slot << (char)chars << ((char)(chars >> 8)) << ' ';
 }
 
-Slot& PrintHex (uintptr_t value, Slot& slot) {
+Slot& PrintHex (Slot& slot, uintptr_t value) {
     enum { kHexStringLengthSizeMax = sizeof (void*) * 2 + 3 };
 
     // @todo Replace this with faster algorithm.
@@ -443,7 +444,7 @@ Slot& PrintHex (uintptr_t value, Slot& slot) {
     return slot;
 }
 
-Slot& PrintMemory (const void* address, const void* address_end, Slot& slot,
+Slot& PrintMemory (Slot& slot, const void* address, const void* address_end,
                    char delimiter) {
     slot << "\n " << 0;
     //  columns
@@ -517,11 +518,11 @@ Slot& PrintMemory (const void* address, const void* address_end, Slot& slot,
     return slot;
 }
 
-Slot& PrintError (const char* message, const char* end_string, Slot& slot) {
+Slot& PrintError (Slot& slot, const char* message, const char* end_string) {
     return slot << "\nError: " << message << end_string;
 }
 
-Slot& PrintBsq (const uint_t* params, Slot& slot) {
+Slot& PrintBsq (Slot& slot, const uint_t* params) {
     if (!params) {
         return slot << "nil";
     }
@@ -726,8 +727,7 @@ Slot& PrintBsq (const uint_t* params, Slot& slot) {
 }
 
 /*
-Slot& SlotWrite (Slot& slot, const char* text,
-                   char delimiter) {
+Slot& SlotWrite (Slot& slot, const char* text, char delimiter) {
     if (!text) {
         return slot;
     }
@@ -776,8 +776,8 @@ Slot& SlotWrite (Slot& slot, const char* text,
     return slot;
 }
 
-Slot& SlotWrite (Slot& slot, const char* text,
-                   const char* text_end, char delimiter) {
+Slot& SlotWrite (Slot& slot, const char* text, const char* text_end, 
+char delimiter) {
     if (target > target_end) {
         return slot;
     }

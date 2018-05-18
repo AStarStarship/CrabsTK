@@ -38,8 +38,8 @@
 
 namespace _ {
 
-char* PrintRight (const char* token, int num_columns, char* buffer, 
-                  char* buffer_end, char delimiter) {
+char* PrintRight (char* buffer, char* buffer_end, const char* token, 
+                  int num_columns, char delimiter) {
     char* start = buffer;
     if (!token) {
         return nullptr;

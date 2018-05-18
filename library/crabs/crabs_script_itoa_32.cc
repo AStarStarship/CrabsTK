@@ -55,7 +55,7 @@
  
 namespace _ {
 
-char* Print (uint32_t value, char* text, char* text_end) {
+char* Print (char* text, char* text_end, uint32_t value) {
 
     PRINT_HEADING
 
@@ -354,11 +354,17 @@ char* Print (uint32_t value, char* text, char* text_end) {
     }
 }
 
-char* Print (uint32_t value, char* text, char* text_end, char delimiter) {
-    text = Print (value, text, text_end);
-    if (!text) return nullptr;
-    *text++ = delimiter;
-    return text;
+char* Print (char* cursor, char* end, uint32_t value, char delimiter) {
+    assert (cursor);
+    assert (end);
+
+    cursor = Print (cursor, end, value);
+    if (!cursor) {
+        std::cout << "\n!!!!!!!";
+        return nullptr;
+    }
+    *cursor = delimiter;
+    return cursor;
 }
 
 }       //< namespace _

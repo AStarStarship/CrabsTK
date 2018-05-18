@@ -40,9 +40,9 @@
 
 namespace _ {
 
-/** @todo Update this algoirhm to Script itoa. */
+/** @todo Update this algorithm to Script itoa. */
 
-char* Print (uint64_t value, char* text, char* text_end) {
+char* Print (char* text, char* text_end, uint64_t value) {
     return nullptr; /*
     // Lookup table for powers of 10.
     static const uint64_t k10ToThe[20]{
@@ -577,6 +577,14 @@ char* Print (uint64_t value, char* text, char* text_end) {
         }
     }
     return nullptr; */
+}
+
+char* Print (char* cursor, char* end, uint64_t value, char delimiter) {
+    cursor = Print (cursor, end, value);
+    if (!cursor)
+        return nullptr;
+    *cursor = delimiter;
+    return cursor;
 }
 
 }       //< namespace _

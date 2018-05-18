@@ -226,7 +226,7 @@ KABUKI uint_t TypeFixedSize (uint_t type);
 /** Gets the next address that a data type may be stored at. */
 KABUKI void* TypeAlign (uint8_t type, void* value);
 
-KABUKI void* TypeWrite (uint8_t type, char* begin, char* end, const char* source);
+KABUKI char* TypeWrite (uint8_t type, char* begin, char* end, const char* source);
 
 inline bool TypeIsObject (uint8_t type) {
     if (type < OBJ) return false;

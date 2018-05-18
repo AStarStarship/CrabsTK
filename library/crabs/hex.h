@@ -48,7 +48,7 @@ class Hex {
         char* l_cursor = printer.cursor;
         char* temp = l_cursor;
         intptr_t space = printer.end - l_cursor;
-        if (space <= kSize) return printer;
+        if (space <= kSize) return print;
         *l_cursor++ = '0';
         *l_cursor++ = 'x';
         for (int num_bits_shift = sizeof (T) * 8 - 4; num_bits_shift >= 0;
@@ -57,7 +57,7 @@ class Hex {
         }
         *l_cursor = 0;
         printer.cursor = l_cursor;
-        return printer;
+        return print;
     }
 };
 

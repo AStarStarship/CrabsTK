@@ -26,25 +26,25 @@ namespace _ {
     @param value The value to write.
     @param begin Beginning address of the buffer.
     @param end   The end address of the buffer. */
-KABUKI char* Print (uint32_t value, char* text, char* text_end);
+KABUKI char* Print (char* text, char* text_end, uint32_t value);
 
 /** Writes the give value to the given buffer as an ASCII string.
     @param value The value to write.
     @param begin Beginning address of the buffer.
     @param end   The end address of the buffer. */
-KABUKI char* Print (uint64_t value, char* text, char* text_end);
+KABUKI char* Print (char* text, char* text_end, uint32_t value, char delimiter);
 
 /** Writes the give value to the given buffer as an ASCII string.
     @param value The value to write.
     @param begin Beginning address of the buffer.
     @param end   The end address of the buffer. */
-KABUKI char* Print (uint32_t value, char* text, char* text_end, char delimiter);
+KABUKI char* Print (char* text, char* text_end, uint64_t value);
 
 /** Writes the give value to the given buffer as an ASCII string.
     @param value The value to write.
     @param begin Beginning address of the buffer.
     @param end   The end address of the buffer. */
-KABUKI char* Print (uint64_t value, char* text, char* text_end, char delimiter);
+KABUKI char* Print (char* text, char* text_end, uint64_t value, char delimiter);
 
 }       //< namespace _
 

@@ -98,15 +98,15 @@ TEST (SEAM_1_2, SEAM_1_2A) {
     };
 
     const char* end;
-    char        buffer[kSize],
-                buffer_b[kSize];
+    char        buffer[kSize + 1],
+                buffer_b[kSize + 1];
 
     Printer print (buffer, kSize);
 
     for (int i = 0; i < kNumCompareStrings; ++i) {
-        end = Print (test_strings[i][0], buffer, buffer + kSize);
+        end = Print (buffer, buffer + kSize, test_strings[i][0]);
         CHECK (end)
-        end = Print (test_strings[i][0], buffer_b, buffer_b + kSize);
+        end = Print (buffer_b, buffer_b + kSize, test_strings[i][0]);
         CHECK (end)
 
         end = TextEquals (buffer, buffer_b);
@@ -120,7 +120,7 @@ TEST (SEAM_1_2, SEAM_1_2A) {
     PRINT_HEADING ("    Testing Printer...")
     PRINTF ("    Expecting \"%s\"...", kTesting123);
 
-    print << "Testing " << 1 << ", " << 2 << ", " << 3 << print;
+    print << "Testing " << 1 << ", " << 2 << ", " << 3 << Etx ();
 
     STRCMP_EQUAL (kTesting123, buffer)
         
@@ -163,23 +163,23 @@ TEST (SEAM_1_2, SEAM_1_2A) {
     PRINT_HEADING ('-')
     PRINTF ("\n\n    Testing PrintRight...")
 
-    CHECK (PrintRight (kTestingString, 28, buffer, buffer + kSize))
+    CHECK (PrintRight (buffer, buffer + kSize, kTestingString, 28))
     PRINTF ("\n    Wrote:\"%s\":%i", buffer, TextLength (buffer))
     STRCMP_EQUAL (kStringsRightAligned[0], buffer)
     
-    CHECK (PrintRight (kTestingString, 7, buffer, buffer + kSize))
+    CHECK (PrintRight (buffer, buffer + kSize, kTestingString, 7))
     STRCMP_EQUAL (kStringsRightAligned[1], buffer)
     
-    CHECK (PrintRight (kTestingString, 1, buffer, buffer + kSize))
+    CHECK (PrintRight (buffer, buffer + kSize, kTestingString, 1))
     STRCMP_EQUAL (kStringsRightAligned[2], buffer)
     
-    CHECK (PrintRight (kTestingString, 2, buffer, buffer + kSize))
+    CHECK (PrintRight (buffer, buffer + kSize, kTestingString, 2))
     STRCMP_EQUAL (kStringsRightAligned[3], buffer)
     
-    CHECK (PrintRight (kTestingString, 3, buffer, buffer + kSize))
+    CHECK (PrintRight (buffer, buffer + kSize, kTestingString, 3))
     STRCMP_EQUAL (kStringsRightAligned[4], buffer)
     
-    CHECK (PrintRight (kTestingString, 4, buffer, buffer + kSize))
+    CHECK (PrintRight (buffer, buffer + kSize, kTestingString, 4))
     STRCMP_EQUAL (kStringsRightAligned[5], buffer)
 
     PRINTF ("\n\n    Testing PrintCentered...")

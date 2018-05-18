@@ -37,13 +37,17 @@ namespace _ {
     @see ~/kabuki-toolkit/source/crabs/text.h
 */
 
+KABUKI char* TextStart ();
+
+KABUKI char* TextEnd ();
+
 /** Utility class for printing to strings.
     This class only stores the end of buffer pointer and a pointer to the write
     cursor. It is up the user to store start of buffer pointer and if they would
     like to replace the cursor with the beginning of buffer pointer when they
     are done printing.
 */
-struct Printer {
+struct KABUKI Printer {
 
     char* cursor,  //< Write cursor pointer.
         * end;     //< End of buffer pointer.
@@ -51,74 +55,77 @@ struct Printer {
     /** Initializes the Printer from the given buffer pointers.
         @param begin The beginning of the buffer.
         @param end   The end of the buffer. */
-    Printer (char* begin = Print (), size_t size = kBufferSizeDefault);
+    Printer (char* begin = TextStart (), size_t size = kBufferSizeDefault);
 
     /** Initializes the Printer from the given buffer pointers.
         @param begin The beginning of the buffer.
         @param end   The end of the buffer. */
     Printer (char* begin, char* end);
 
+    /** Clones the other print. */
+    Printer (const Printer& other);
+
     Printer& Set (char* begin);
 };
-
-KABUKI Printer& Stx ();
 
 /** Copies a char from the source to the text.
     @param text      Beginning address of the buffer.
     @param text_end  The end address of the buffer.
     @param string    The potentially unsafe string to write. */
-KABUKI char* Print (const char* string, char* text, char* text_end,
-                    char delimiter = 0);
+KABUKI char* Print (char* cursor, char* end, const char* string);
 
 /** Copies a char from the source to the text.
     @param text     Beginning address of the buffer.
     @param text_end The end address of the buffer.
     @param value    The potentially unsafe string to write. */
-KABUKI char* Print (const char* string, const char* string_end, char* text,
-                    char* text_end, char delimiter = 0);
+KABUKI char* Print (char* cursor, char* end, const char* string, 
+                    const char* string_end, char delimiter = 0);
 
-/** Writes the give value to the given buffer as an ASCII string.
-    @param begin Beginning address of the buffer.
-    @param end   The end address of the buffer.
-    @param value The value to write. */
-inline char* Print (int32_t value, char* text, char* text_end,
-                    char delimiter = 0) {
-    if (value >= 0) {
-        return Print ((uint32_t)value, text, text_end);
-    }
-    else {
-        *text++ = '-';
-        return Print (~(uint32_t)value + 1, text, text_end);
-    }
-}
-
-/** Writes the give value to the given buffer as an ASCII string.
-    @param begin Beginning address of the buffer.
-    @param end   The end address of the buffer.
-    @param value The value to write. */
-inline char* Print (int64_t value, char* text, char* text_end,
-                    char delimiter = 0) {
-    if (value >= 0) {
-        return Print ((uint64_t)value, text, text_end);
-    }
-    else {
-        *text++ = '-';
-        return Print (~(uint64_t)value + 1, text, text_end);
-    }
-}
-
-/** Writes the give value to the given buffer as an ASCII string.
-    @param begin Beginning address of the buffer.
-    @param end   The end address of the buffer.
-    @param value The value to write. */
-KABUKI char* Print (float value, char* text, char* text_end,
+/** Writes the give char to the given buffer.
+    @param begin     Beginning address of the buffer.
+    @param end       The end address of the buffer.
+    @param character The value to write. */
+KABUKI char* Print (char* cursor, char* end, char character,
                     char delimiter = 0);
 
 /** Writes the give value to the given buffer as an ASCII string.
     @param begin Beginning address of the buffer.
     @param end   The end address of the buffer.
     @param value The value to write. */
-KABUKI char* Print (double value, char* target, char* target_end,
+inline char* Print (char* cursor, char* end, int32_t value,
+                    char delimiter = 0) {
+    if (value >= 0) {
+        return Print (cursor, end, (uint32_t)value, delimiter);
+    }
+    *cursor++ = '-';
+    return Print (cursor, end, ~(uint32_t)value + 1, delimiter);
+}
+
+/** Writes the give value to the given buffer as an ASCII string.
+    @param begin Beginning address of the buffer.
+    @param end   The end address of the buffer.
+    @param value The value to write. */
+inline char* Print (char* cursor, char* end, int64_t value, char delimiter = 0)
+{
+    if (value >= 0) {
+        return Print (cursor, end, (uint64_t)value, delimiter);
+    }
+    *cursor++ = '-';
+    return Print (cursor, end, ~(uint64_t)value + 1, delimiter);
+}
+
+/** Writes the give value to the given buffer as an ASCII string.
+    @param begin Beginning address of the buffer.
+    @param end   The end address of the buffer.
+    @param value The value to write. */
+KABUKI char* Print (char* cursor, char* end, float value,
+                    char delimiter = 0);
+
+/** Writes the give value to the given buffer as an ASCII string.
+    @param begin Beginning address of the buffer.
+    @param end   The end address of the buffer.
+    @param value The value to write. */
+KABUKI char* Print (char* target, char* target_end, double value,
                     char delimiter = 0);
 
 /** Utility class for printing numbers. */
@@ -143,85 +150,87 @@ struct Etx {
 
     char* begin;    //< Begin of the Printer buffer.
 
-    Etx (char* begin = Print ());
+    Etx (char* begin = TextStart ());
 };
 
 }   //< namespace _
 
 /** Writes a nil-terminated UTF-8 or ASCII string to the
-    printer. */
-inline _::Printer& operator<< (_::Printer& printer, const char* string) {
-    printer.cursor = _::Print (string, printer.cursor, printer.end);
-    return printer;
+    print. */
+inline _::Printer& operator<< (_::Printer& print, const char* string) {
+    print.cursor = _::Print (print.cursor, print.end, string);
+    return print;
 }
 
-/** Writes a nil-terminated UTF-8 or ASCII string to the
-    printer. */
-inline _::Printer& operator<< (_::Printer& printer, _::Printer& printer_b) {
-    printer.cursor = 0;
-    return printer;
+/** Writes the given value to the print.
+    @param  printer The print.
+    @param  value The value to write to the print. 
+    @return The print. */
+inline _::Printer& operator<< (_::Printer& print, char value) {
+    print.cursor = _::Print (print.cursor, print.end, value, 0);
+    return print;
 }
 
-/** Writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, int32_t value) {
-    printer.cursor = _::Print (value, printer.cursor, printer.end);
-    return printer;
+/** Writes the given value to the print.
+    @param  printer The print.
+    @param  value The value to write to the print. 
+    @return The print. */
+inline _::Printer& operator<< (_::Printer& print, int32_t value) {
+    print.cursor = _::Print (print.cursor, print.end, value, 0);
+    return print;
 }
 
-/** Writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, uint32_t value) {
-    printer.cursor = _::Print (value, printer.cursor, printer.end);
-    return printer;
+/** Writes the given value to the print.
+    @param  printer The print.
+    @param  value The value to write to the print. 
+    @return The print. */
+inline _::Printer& operator<< (_::Printer& print, uint32_t value) {
+    print.cursor = _::Print (print.cursor, print.end, value, 0);
+    return print;
 }
 
-/** Writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, int64_t value) {
-    printer.cursor = _::Print (value, printer.cursor, printer.end);
-    return printer;
+/** Writes the given value to the print.
+    @param  printer The print.
+    @param  value The value to write to the print. 
+    @return The print. */
+inline _::Printer& operator<< (_::Printer& print, int64_t value) {
+    print.cursor = _::Print (print.cursor, print.end, value, 0);
+    return print;
 }
 
-/** Writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, uint64_t value) {
-    printer.cursor = _::Print (value, printer.cursor, printer.end);
-    return printer;
+/** Writes the given value to the print.
+    @param  printer The print.
+    @param  value The value to write to the print. 
+    @return The print. */
+inline _::Printer& operator<< (_::Printer& print, uint64_t value) {
+    print.cursor = _::Print (print.cursor, print.end, value, 0);
+    return print;
 }
 
-/** Writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, float value) {
-    printer.cursor = _::Print (value, printer.cursor, printer.end);
-    return printer;
+/** Writes the given value to the print.
+    @param  printer The print.
+    @param  value The value to write to the print. 
+    @return The print. */
+inline _::Printer& operator<< (_::Printer& print, float value) {
+    print.cursor = _::Print (print.cursor, print.end, value, 0);
+    return print;
 }
 
-/** Writes the given value to the printer.
-    @param  printer The printer.
-    @param  value The value to write to the printer. 
-    @return The printer. */
-inline _::Printer& operator<< (_::Printer& printer, double value) {
-    printer.cursor = _::Print (value, printer.cursor, printer.end);
-    return printer;
+/** Writes the given value to the print.
+    @param  printer The print.
+    @param  value The value to write to the print. 
+    @return The print. */
+inline _::Printer& operator<< (_::Printer& print, double value) {
+    print.cursor = _::Print (print.cursor, print.end, value, 0);
+    return print;
 }
 
 /**  Prints out the parameters to the debug console. */
-inline _::Printer& operator<< (_::Printer& printer, _::Etx etx) {
-    char* begin = _::Stx ().cursor;
-    printer.cursor = begin;
+inline _::Printer& operator<< (_::Printer& print, _::Etx etx) {
+    char* begin = _::TextStart ();
+    print.cursor = begin;
     std::cerr << begin;
-    return printer;
+    return print;
 }
 
 #endif  //< HEADER_FOR_CRABS_PRINT
