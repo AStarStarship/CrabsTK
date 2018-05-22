@@ -33,18 +33,18 @@
 
 namespace _ {
 
-uintptr_t* MemoryCreate (uintptr_t size) {
-    return new uintptr_t[size];
+uintptr_t* MemoryCreate (uintptr_t size_bytes) {
+    return new uintptr_t[size_bytes];
 }
 
 void MemoryDestroy (uintptr_t* buffer) {
     delete buffer;
 }
 
-void MemoryClear (void* address, size_t size) {
+void MemoryClear (void* address, size_t size_bytes) {
     //memset (address, '0', size);
     char* ptr = reinterpret_cast<char*> (address);
-    for (; size; --size)
+    for (; size_bytes; --size_bytes)
         *ptr++ = '\0';
     /* This code is designed to work like memcpy but is not working right now.
     uintptr_t lsb_mask = (1 << sizeof (uint32_t)) - 1,
@@ -103,25 +103,25 @@ inline char* MemoryCopyFast (void* write, void* write_end, const void* read,
                            reinterpret_cast<const char*> (read_end));
 }
 
-char* MemoryCopy (void* write, void* write_end, const void* read,
+char* MemoryCopy (void* cursor, void* end, const void* read,
                   const void* read_end) {
-    assert (write);
-    assert (write > write_end);
-    assert (read);
-    assert (read > read_end);
+    ASSERT (cursor)
+    ASSERT (cursor > end)
+    ASSERT (read)
+    ASSERT (read > read_end)
 
-    if (MemorySize (write, write_end) < MemorySize (read, read_end))
+    if (SocketSize (cursor, end) < SocketSize (read, read_end))
         return nullptr; //< Buffer overflow!
-    return MemoryCopyFast (write, write_end, read, read_end);
+    return MemoryCopyFast (cursor, end, read, read_end);
 }
 
 char* MemoryCopy (void* write, void* write_end, const void* read,
                   size_t byte_count) {
-    assert (write);
-    assert (write < write_end);
-    assert (read);
+    ASSERT (write)
+    ASSERT ((write < write_end))
+    ASSERT (read)
 
-    if ((size_t)MemorySize (write, write_end) < byte_count) // Buffer overflow!
+    if ((size_t)SocketSize (write, write_end) < byte_count) // Buffer overflow!
         return nullptr;
 
     return MemoryCopy (write, write_end, read, 
@@ -130,8 +130,8 @@ char* MemoryCopy (void* write, void* write_end, const void* read,
 
 char* MemoryCopy (void* write, size_t write_size, const void* read, 
                   size_t read_size) {
-    assert (write);
-    assert (read);
+    ASSERT (write);
+    ASSERT (read);
     if (write_size < read_size)
         return nullptr;
 
@@ -139,25 +139,25 @@ char* MemoryCopy (void* write, size_t write_size, const void* read,
                        read , reinterpret_cast<const char*> (read) + read_size);
 }
 
-char* PrintMemory (const void* token, const void* token_end, char* cursor,
-                   char* end, char delimiter) {
-    assert (token);
-    assert (cursor);
-    assert (cursor < end);
+char* PrintMemory (char* cursor, char* end, const void* token, 
+                   const void* token_end) {
+    ASSERT (token)
+    ASSERT (cursor)
+    ASSERT (cursor < end)
 
     char      * buffer_begin    = cursor;
     const char* address_ptr     = reinterpret_cast<const char*> (token),
               * address_end_ptr = reinterpret_cast<const char*> (token_end);
-    size_t      size            = address_end_ptr - address_ptr,
-                num_rows        = size / 64;
+    size_t      size_bytes            = address_end_ptr - address_ptr,
+                num_rows        = size_bytes / 64;
         
     //PRINTF ("\n    Printing Buffer with length:%i", TextLength (token))
 
-    if (size % 64 != 0) {
+    if (size_bytes % 64 != 0) {
         ++num_rows;
     }
-    size += 81 * (num_rows + 2);
-    if (cursor + size >= end) {
+    size_bytes += 81 * (num_rows + 2);
+    if (cursor + size_bytes >= end) {
         PRINTF ("\n    ERROR: buffer isn't big enough!")
         return nullptr;
     }
@@ -213,10 +213,10 @@ char* PrintMemory (const void* token, const void* token_end, char* cursor,
     }
     *cursor++ = '|';
     *cursor++ = ' ';
-    return PrintHex (address_ptr + size, cursor, end, delimiter);
+    return PrintHex (address_ptr + size_bytes, cursor, end, 0);
 }
 
-Memory::Memory (const char* begin, const char* end) :
+Socket::Socket (char* begin, char* end) :
     begin (begin),
     end (end) {
     if (!begin || !end || begin > end) {
@@ -225,13 +225,25 @@ Memory::Memory (const char* begin, const char* end) :
     }
 }
 
-Memory::Memory (const char* begin, intptr_t size) :
+Socket::Socket (char* begin, intptr_t size_bytes) :
     begin (begin),
-    end (begin + size) {
-    if (!begin || size < 0) {
+    end (begin + size_bytes) {
+    if (!begin || size_bytes < 0) {
         end = begin;
         return;
     }
+}
+
+Socket::Socket (const Socket& other) :
+    begin (other.begin),
+    end   (other.end) {
+    // Nothing to do here! ({:-)-+=<
+}
+
+Socket& Socket::operator= (const Socket& other) {
+    begin = other.begin;
+    end   = other.end;
+    return *this;
 }
 
 }       //< namespace _

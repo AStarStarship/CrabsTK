@@ -19,7 +19,7 @@
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #define PUTS(string) putsr(string);
@@ -253,7 +253,7 @@ uintptr_t Room::GetSizeBytes () {
 }
 
 #if USING_PRINTER
-Printer& Room::Print (Printer& print) {
+Printer Room::Print (Printer print) {
     return print << "\nRoom: ";
 }
 #endif

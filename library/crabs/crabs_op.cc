@@ -24,7 +24,7 @@
 #include "printer.h"
 
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -35,7 +35,7 @@
 namespace _ {
 
 #if USING_PRINTER
-Printer& Print (Printer& print, const Op* op) {
+Printer Print (Printer print, const Op* op) {
     if (!op) {
         return print << "\nOp: nil";
     }
@@ -154,7 +154,7 @@ void Print (Op& log) {
 #endif  //< CRABS_MEMORY_PROFILE > 2*/
 
 #if USING_PRINTER
-Printer& Print (const Op* op, Printer& print) {
+Printer Print (const Op* op, Printer print) {
     print << "\n Op:\n" << op->name << "\nparams_in:"
           << Bsq (op->in)
           << "\nparams_out:" << op->out

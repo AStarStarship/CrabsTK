@@ -120,5 +120,5 @@ static Door* DoorInit (int* buffer, uint_t slot_size) {
 }*/
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #endif  //< HEADER_FOR_CRABS_DOOR

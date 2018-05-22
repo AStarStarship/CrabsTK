@@ -101,7 +101,7 @@ char* PrintHex (uint8_t value, char* cursor, char* buffer_end,
                 char delimiter) {
     enum { kHexStringLengthSizeMax = sizeof (uint8_t) * 2 + 3 };
 
-    assert (cursor);
+    ASSERT (cursor);
     if (cursor + kHexStringLengthSizeMax  >= buffer_end) {
         return nullptr;
     }
@@ -120,7 +120,7 @@ char* PrintHex (uint16_t value, char* cursor, char* buffer_end,
                 char delimiter) {
     enum { kHexStringLengthSizeMax = sizeof (uint16_t) * 2 + 3 };
 
-    assert (cursor);
+    ASSERT (cursor);
     if (cursor + kHexStringLengthSizeMax >= buffer_end) {
         return nullptr;
     }
@@ -139,7 +139,7 @@ char* PrintHex (uint32_t value, char* cursor, char* buffer_end,
                 char delimiter) {
     enum { kHexStringLengthSizeMax = sizeof (uint32_t) * 2 + 3 };
 
-    assert (cursor);
+    ASSERT (cursor);
     if (cursor + kHexStringLengthSizeMax >= buffer_end) {
         return nullptr;
     }
@@ -158,7 +158,7 @@ char* PrintHex (uint64_t value, char* cursor, char* buffer_end,
                 char delimiter) {
     enum { kHexStringLengthSizeMax = sizeof (uint64_t) * 2 + 3 };
 
-    assert (cursor);
+    ASSERT (cursor);
     if (cursor + kHexStringLengthSizeMax >= buffer_end) {
         return nullptr;
     }
@@ -176,11 +176,11 @@ char* PrintHex (uint64_t value, char* cursor, char* buffer_end,
 char* PrintHex (char c, char* buffer, char* buffer_end, char delimiter) {
     enum { kHexStringLengthSizeMax = sizeof (void*) * 2 + 3 };
 
-    assert (buffer);
+    ASSERT (buffer);
     if (buffer >= buffer_end) {
         return nullptr;
     }
-    assert (buffer_end - buffer > 2);
+    ASSERT ((buffer_end - buffer > 2))
 
     *buffer++ = HexNibbleToUpperCase (c);
     *buffer = delimiter;
@@ -191,4 +191,4 @@ char* PrintHex (char c, char* buffer, char* buffer_end, char delimiter) {
 #undef PRINTF
 #undef PUTCHAR
 #endif  //< USING_PRINTER
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

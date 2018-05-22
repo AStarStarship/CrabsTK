@@ -143,5 +143,5 @@ KABUKI const Op* MirrorResult (Mirror* mirror, Error error,
                                    char* address);
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #endif  //< HEADER_FOR_SCRIPT_MIRROR

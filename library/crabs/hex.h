@@ -43,12 +43,12 @@ class Hex {
         value (reinterpret_cast<T> (pointer)) {
     }
 
-    Printer& Print (Printer& printer) {
+    Printer Print (Printer printer) {
         enum { kSize = sizeof (T) * 2 + 2 };
         char* l_cursor = printer.cursor;
         char* temp = l_cursor;
         intptr_t space = printer.end - l_cursor;
-        if (space <= kSize) return print;
+        if (space <= kSize) return out_;
         *l_cursor++ = '0';
         *l_cursor++ = 'x';
         for (int num_bits_shift = sizeof (T) * 8 - 4; num_bits_shift >= 0;
@@ -57,7 +57,7 @@ class Hex {
         }
         *l_cursor = 0;
         printer.cursor = l_cursor;
-        return print;
+        return out_;
     }
 };
 
@@ -158,5 +158,5 @@ inline _::Printer& operator<< (_::Printer& printer, _::Hex<T> value) {
     return value.Print (printer);
 }
 
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_HEX

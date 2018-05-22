@@ -146,7 +146,7 @@ inline const Op* BOutRead (BOut* bout, const uint_t* params, void** args) {
     @param  bin The pin to print.
     @param  text The Text to print the bin to.
     @return The text. */
-KABUKI Printer& Print (Printer& printer, BIn* bin);
+KABUKI Printer Print (Printer printer, BIn* bin);
 #endif
 
 }       //< namespace _

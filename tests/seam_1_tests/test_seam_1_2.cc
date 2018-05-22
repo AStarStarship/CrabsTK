@@ -101,7 +101,7 @@ TEST (SEAM_1_2, SEAM_1_2A) {
     char        buffer[kSize + 1],
                 buffer_b[kSize + 1];
 
-    Printer print (buffer, kSize);
+    Printer out_ (buffer, kSize);
 
     for (int i = 0; i < kNumCompareStrings; ++i) {
         end = Print (buffer, buffer + kSize, test_strings[i][0]);
@@ -120,7 +120,7 @@ TEST (SEAM_1_2, SEAM_1_2A) {
     PRINT_HEADING ("    Testing Printer...")
     PRINTF ("    Expecting \"%s\"...", kTesting123);
 
-    print << "Testing " << 1 << ", " << 2 << ", " << 3 << Etx ();
+    COUT << "Testing " << 1 << ", " << 2 << ", " << -3;
 
     STRCMP_EQUAL (kTesting123, buffer)
         
@@ -187,19 +187,19 @@ TEST (SEAM_1_2, SEAM_1_2A) {
     for (int i = 0; i < 4; ++i)
         PRINTF ("\n    %i.)\"%s\"", i, kStringsCentered[i]);
 
-    print.Set (buffer) << Center (kStringNumbers, 10);
+    out_.Set (buffer) << Center (kStringNumbers, 10);
     STRCMP_EQUAL (kStringNumbers, buffer)
         
-    print.Set (buffer) << Center (kStringNumbers, 11);
+    out_.Set (buffer) << Center (kStringNumbers, 11);
     STRCMP_EQUAL (kStringsCentered[0], buffer)
         
-    print.Set (buffer) << Center (kStringNumbers, 12);
+    out_.Set (buffer) << Center (kStringNumbers, 12);
     STRCMP_EQUAL (kStringsCentered[1], buffer)
         
-    print.Set (buffer) << Center (kStringNumbers, 13);
+    out_.Set (buffer) << Center (kStringNumbers, 13);
     STRCMP_EQUAL (kStringsCentered[2], buffer)
         
-    print.Set (buffer) << Center (kStringNumbers, 6);
+    out_.Set (buffer) << Center (kStringNumbers, 6);
     STRCMP_EQUAL (kStringsCentered[3], buffer)
         
     PRINT_HEADING ('-')

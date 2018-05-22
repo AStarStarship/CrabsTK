@@ -20,6 +20,12 @@
 #ifndef HEADER_FOR_CRABS_CONFIG
 #define HEADER_FOR_CRABS_CONFIG
 
+#define ASSERT(condition)\
+if ((uintptr_t)(condition) == 0) {\
+    printf ("\nAssertion failed at line %d in \"%s\"", __LINE__, __FILE__);\
+    while (1);\
+}
+
 // @todo Check all values of assembly_settings.inl, store them as an enum, 
 // then #undef them.
 
@@ -65,6 +71,12 @@
 
 #include <assembly.h>       //< Inline config stuff for your project.
 
+#if CRABS_FORCE_WORD_ALIGN
+#define ALIGN_POINTER(pointer)\
+    pointer = MemoryAlign<;
+#else
+#define ALIGN_POINTER(pointer)
+#endif
 typedef const char* string_ptr;
 
 #if CRABS_MAX_ERRORS < 0

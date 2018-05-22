@@ -28,15 +28,15 @@ namespace _ {
 
 /** Shifts the overflow buffer to the begging of the ring buffer. */
 inline char* SlotOverflowShift (char* begin, char* end, char* cursor) {
-    size_t size;
+    size_t size_bytes;
     if (cursor <= end) {
         return cursor;
     }
-    size = end - begin;
+    size_bytes = end - begin;
     while (++end > cursor) {
-        *(end - size) = *end;
+        *(end - size_bytes) = *end;
     }
-    return cursor - size;
+    return cursor - size_bytes;
 }
 
 /** Copies a char from the source to the text.
@@ -253,8 +253,8 @@ KABUKI Slot& PrintMemory (const void* address, const void* end, Slot& slot,
                           char delimiter = 0);
 
 /** Prints out the contents of the address to the debug stream. */
-inline Slot& PrintMemory (const void* address, intptr_t size, Slot& slot) {
-    return PrintMemory (address, reinterpret_cast<const char*> (address) + size,
+inline Slot& PrintMemory (const void* address, intptr_t size_bytes, Slot& slot) {
+    return PrintMemory (address, reinterpret_cast<const char*> (address) + size_bytes,
                         slot);
 }
 
@@ -343,7 +343,7 @@ inline _::Slot& operator<< (_::Slot& slot, double value) {
     @param  slot The slot.
     @param  value The value to write to the slot.
     @return The slot. */
-inline _::Slot& operator<< (_::Slot& slot, _::Memory memory) {
+inline _::Slot& operator<< (_::Slot& slot, _::Socket memory) {
     return _::PrintMemory (memory.begin, memory.end, slot);
 }
 

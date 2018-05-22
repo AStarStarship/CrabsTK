@@ -19,15 +19,15 @@
 #include "../../../cpputest/include/CppUTest/TestHarness.h"
 
 int main (int args_count, char** args) {
-    std::cout << '|';
+    std::cout << '+';
     for (int i = 81; i > 0; --i) {
         std::cout << '-';
     }
-    std::cout << "\nKabuki Toolkit Tests\n";
+    std::cout << "\n| Kabuki Toolkit Tests\n+";
     for (int i = 81; i > 0; --i) {
         std::cout << '-';
     }
-    std::cout << "\n|\n|";
+    std::cout << '\n';
     MemoryLeakWarningPlugin::turnOffNewDeleteOverloads ();
     int result = CommandLineTestRunner::RunAllTests (args_count, args);
     system ("PAUSE");

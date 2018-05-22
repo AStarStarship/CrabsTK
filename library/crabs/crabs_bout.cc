@@ -28,7 +28,7 @@
 #include "hex.h"
 #include "line.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #define PRINT_BSQ(header, bsq) {\
@@ -118,7 +118,7 @@ const char** BOutStateStrings () {
 }
 
 char* BOutBuffer (BOut* bout) {
-    assert (bout);
+    ASSERT (bout);
     return reinterpret_cast<char*> (bout) + sizeof (BOut);
 }
 
@@ -194,9 +194,9 @@ const Op* BOutWrite (BOut* bout, const uint_t* params, void** args) {
     };
     PRINT_BOUT (" to B-Output:", bout)
 
-    assert (bout);
-    assert (params);
-    assert (args);
+    ASSERT (bout);
+    ASSERT (params);
+    ASSERT (args);
 
     // Temp variables packed into groups of 8 bytes for memory alignment.
     byte //type,
@@ -788,8 +788,8 @@ char* Print (BOut* bout, char* buffer, char* buffer_end) {
     return print.cursor;
 }*/
 
-Printer& PrintBOut (Printer& print, BOut* bout) {
-    assert (bout);
+Printer PrintBOut (Printer print, BOut* bout) {
+    ASSERT (bout);
     int size = bout->size;
      print << Line ('_', 80) 
                  << "\nBOut:" << Hex<> (bout) << " size:" << size

@@ -40,16 +40,16 @@ namespace _ {
 Center::Center (const char* string, int num_columns) :
     string (string),
     num_columns (num_columns) {
-    assert (string);
-    assert (num_columns > 0);
+    ASSERT (string);
+    ASSERT (num_columns > 0);
 }
 
-Printer& Center::Print (Printer& print) {
-    char* cursor = print.cursor,
-        * end    = print.end;
-    assert (cursor);
-    assert (string);
-    assert (cursor < end);
+Printer Center::Print (Printer out_) {
+    char* cursor = out_.cursor,
+        * end    = out_.end;
+    ASSERT (cursor);
+    ASSERT (string);
+    ASSERT ((cursor < end))
 
     // We need to leave at least one space to the left and right of
     int length = TextLength (string),
@@ -70,8 +70,8 @@ Printer& Center::Print (Printer& print) {
                 *cursor++ = '.';
             }
             *cursor = 0;
-            print.cursor = cursor;
-            return print;
+            out_.cursor = cursor;
+            return out_;
         }
     offset = (num_columns - length) >> 1; //< >> 1 to /2
     length = num_columns - length - offset;
@@ -89,12 +89,12 @@ Printer& Center::Print (Printer& print) {
         *cursor++ = ' ';
     *cursor = 0;
     PRINTF ("\n    Printed:\"%s\"", string);
-    print.cursor = cursor;
-    return print;
+    out_.cursor = cursor;
+    return out_;
 }
 
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
 #endif  //< USING_PRINTER
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

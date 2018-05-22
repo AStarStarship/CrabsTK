@@ -85,4 +85,4 @@ inline int64_t PackSV8 (int64_t value) {
 
 }       //< namespace _
 #endif  //< HEADER_FOR_CRABS_BSQ
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

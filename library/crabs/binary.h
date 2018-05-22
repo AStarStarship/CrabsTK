@@ -38,7 +38,7 @@ class Binary {
         value (value) {
     }
 
-    Printer& Print (Printer& printer) {
+    Printer Print (Printer printer) {
         char* cursor = printer.cursor;
         if (cursor + sizeof (uint64_t) * 8 >= printer.end) {
             return nullptr;
@@ -60,5 +60,5 @@ inline _::Printer& operator<< (_::Printer& printer, _::Binary<T> value) {
     return value.Print (printer);
 }
 
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_BINARY

@@ -722,8 +722,8 @@ void Clear (TMap<SI, UI, TSize>* collection) {
 template<typename SI, typename UI, typename TSize>
 void Wipe (TMap<SI, UI, TSize>* collection) {
     if (collection == nullptr) return;
-    TSize size = collection->size_bytes;
-    memset (collection, 0, size);
+    TSize size_bytes = collection->size_bytes;
+    memset (collection, 0, size_bytes);
 }
 
 /** Returns true if this expr contains only the given address. */
@@ -765,7 +765,7 @@ bool Retain (TMap<SI, UI, TSize>* collection) {
 template<typename SI, typename UI, typename TSize, typename TSize>
 TMap<SI, UI, TSize, TSize>* MapCreate (SI buffered_indexes,
                                                         TSize table_size,
-                                                        TSize size) {
+                                                        TSize size_bytes) {
     TMap<SI, UI, TSize, TSize>* collection = New<TMap, uint_t> ();
     return collection;
 }
@@ -781,5 +781,5 @@ void MapPrint (TMap<SI, UI, TSize>* collection) {
 //}
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 6
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #endif  //< CRABS_MAP_H

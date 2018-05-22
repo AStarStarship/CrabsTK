@@ -177,4 +177,4 @@ KABUKI const char* Scan (double& result, const char* text,
 }   //< namespace _
 #endif  //< USING_PRINTER
 #endif  //< HEADER_FOR_CRABS_SCAN
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

@@ -91,6 +91,24 @@ inline T AlignUp2 (T value) {
     return value + value & 0x1;
 }
 
+/** Returns the number to add to word-align the given pointer to a uint_t-bit
+    boundary.
+    @param  ptr The address to align.
+    @return The aligned value. */
+template<typename T = uintptr_t>
+inline T AlignUp4 (T value) {
+    return AlignUp<uint32_t, T> (value);
+}
+
+/** Returns the number to add to word-align the given pointer to a uint_t-bit
+    boundary.
+    @param  ptr The address to align.
+    @return The aligned value. */
+template<typename T = uintptr_t>
+inline T AlignUp8 (T value) {
+    return AlignUp<uint64_t, T> (value);
+}
+
 /** Calculates the offset to align the given pointer to a 16-bit word boundary.
     @return A vector you add to a pointer to align it. */
 template<typename T = void*>
@@ -118,4 +136,4 @@ inline T* AlignUpPointer8 (T* pointer) {
 }       //< namespace _
 #endif  //< HEADER_FOR_CRABS_ALIGN
 
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

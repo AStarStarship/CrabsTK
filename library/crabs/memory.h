@@ -26,6 +26,37 @@
 
 namespace _ {
 
+/** A managed general purpose memory socket.
+    A socket is just a hole in something for fitting somehting in, like a light 
+    or electric socket. A socket of memory is just a block of memory you fit 
+    something in. A network socket is a socket for interprocess communication,
+    which is usually impmemented with a ring buffer 
+    (@see ~/library/crabs/slot.h) .
+
+    On Intel CPUs you mamy pass back two regiseter-sized return paramters and 
+    4 on ARM without using the hardware assisted stack. This class is intended
+    to use pass by value and return by value. This programming method works 
+    best with C-style functions to bypass the this pointer.
+*/
+class Socket {
+    public:
+
+    char* begin, //< Begin of the socket.
+        * end;   //< End of the socket.
+
+    /** Constructor. */
+    Socket (char* begin, char* end);
+
+    /** Constructor. */
+    Socket (char* begin, intptr_t size_bytes);
+
+    /** Clones the other memory. */
+    Socket (const Socket& other);
+
+    /** C++ operator= overload. */
+    Socket& operator= (const Socket& other);
+};
+
 /** Creates a dynamic word-aligned buffer of the given size in bytes. */
 KABUKI uintptr_t* MemoryCreate (uintptr_t size_bytes);
 
@@ -34,7 +65,7 @@ KABUKI void MemoryDestroy (uintptr_t* buffer);
 
 /** Returns the given pointer for use with uncooperative overloaded
     operators. */
-inline const void* Pointer (const void* pointer) {
+inline const void* Ptr (const void* pointer) {
     return pointer;
 }
 
@@ -57,6 +88,9 @@ inline char* MemoryAdd (void* a, void* b) {
     return (char*)((uintptr_t)a + (uintptr_t)b);
 }
 
+/** Checks if the given value is Not-a-Number.
+    @param value 
+*/
 template<typename T>
 inline bool MemoryIsNaN (T value) {
     static const T nan = (sizeof (T) == 8) 
@@ -68,11 +102,11 @@ inline bool MemoryIsNaN (T value) {
     return value == nan;
 }
 
-/* Returns the inverse of the given value.
-For code metadata purposes. */
-template<typename T>
-T MemoryMax () {
-    return ~(T)0;
+/** Returns the inverse of the given value.
+    For code metadata purposes. */
+template<typename UI>
+inline UI UnsignedUpperBounds () {
+    return ~(UI)0;
 }
 
 /** Creates/Gets one of n static buffers of the specified size. */
@@ -85,7 +119,7 @@ inline uintptr_t* BufferN () {
 
 /** Creates/Gets one of n static buffers of the specified size. */
 template<typename T = uintptr_t,
-    size_t kBufferSize = kBufferSizeDefaultWords>
+         size_t kBufferSize = kBufferSizeDefaultWords>
 inline T* BufferT () {
     static T buffer[(kBufferSize / sizeof (uintptr_t)) + 1];
     return buffer;
@@ -108,18 +142,18 @@ inline T* MemoryOffset (void* base, uint_t offset) {
 }
 
 /** Calculates the difference between the begin and end address. */
-inline intptr_t MemorySize (void* begin, void* end) {
+inline intptr_t SocketSize (void* begin, void* end) {
     return reinterpret_cast<char*> (end) - reinterpret_cast<char*> (begin);
 }
 
 /** Calculates the difference between the begin and end address. */
-inline intptr_t MemorySize (const void* begin, const void* end) {
+inline intptr_t SocketSize (const void* begin, const void* end) {
     return reinterpret_cast<const char*> (end) -
            reinterpret_cast<const char*> (begin);
 }
 
 /** Overwrites the memory with zeros functionally identical to memset. */
-KABUKI void MemoryClear (void* address, size_t size);
+KABUKI void MemoryClear (void* address, size_t size_bytes);
 
 /** Copies the source to the target functionally identical to memcpy.
     @param  write     Beginning of the write buffer.
@@ -127,7 +161,7 @@ KABUKI void MemoryClear (void* address, size_t size);
     @param  start     Beginning of the read buffer.
     @param  stop      End of the read buffer.
     @return Pointer to the last byte written or nil upon failure. */
-KABUKI char* MemoryCopy (void* write, void* write_end, const void* start,
+KABUKI char* MemoryCopy (void* begin, void* end, const void* start,
                          const void* stop);
 
 /** Copies the source to the target functionally identical to memcpy.
@@ -136,8 +170,8 @@ KABUKI char* MemoryCopy (void* write, void* write_end, const void* start,
     @param  read      Beginning of the read buffer.
     @param  size      Number of bytes to copy.
     @return Pointer to the last byte written or nil upon failure. */
-KABUKI char* MemoryCopy (void* write, void* write_end, const void* memory,
-                         size_t size);
+KABUKI char* MemoryCopy (void* begin, void* end, const void* memory,
+                         size_t size_bytes);
 
 /** Copies the source to the target functionally identical to memcpy.
     @param  write     Beginning of the write buffer.
@@ -145,30 +179,21 @@ KABUKI char* MemoryCopy (void* write, void* write_end, const void* memory,
     @param  read      Beginning of the read buffer.
     @param  size      Number of bytes to copy.
     @return Pointer to the last byte written or nil upon failure. */
-KABUKI char* MemoryCopy (void* write, void* write_end, const void* read,
-                         size_t size);
+KABUKI char* MemoryCopy (void* cursor, void* end, const void* read,
+                         size_t size_bytes);
 
-/** Copies the source to the target functionally identical to memcpy.
-    @param  write     Beginning of the write buffer.
-    @param  write_end End of the write buffer.
-    @param  read      Beginning of the read buffer.
-    @param  size      Number of bytes to copy.
-    @return Pointer to the last byte written or nil upon failure. */
-KABUKI char* MemoryCopy (void* write, void* write_end, const void* read,
-                         const void* read_end, size_t size);
-
-char* MemoryCopy (void* write, size_t write_size, const void* read,
+char* MemoryCopy (void* begin, size_t write_size, const void* read,
                   size_t read_size);
 
 /** Prints out the contents of the address to the debug stream.
     @param begin    The beginning of the read buffer.
     @param text_end The end of the read buffer.
-    @param text     The beginning of the write buffer.
-    @param text_end The end of the write buffer.
-    @return          Null upon failure or a pointer to the byte after the last 
-                     byte written. */
-KABUKI char* PrintMemory (const void* begin, const void* end, char* text,
-                          char* text_end, char delimiter = 0);
+    @param start    The beginning of the write buffer.
+    @param stop     The end of the write buffer.
+    @return         Null upon failure or a pointer to the byte after the last 
+                    byte written. */
+KABUKI char* PrintMemory (char* cursor, char* end, const void* start,
+                          const void* stop);
 
 /** Prints out the contents of the address to the debug stream.
     @param begin    The beginning of the read buffer.
@@ -177,39 +202,29 @@ KABUKI char* PrintMemory (const void* begin, const void* end, char* text,
     @param text_end The end of the write buffer.
     @return          Null upon failure or a pointer to the byte after the last 
                      byte written. */
-inline char* PrintMemory (const void* begin, size_t size, char* text,
-                          char* text_end, char delimiter = 0) {
-    return PrintMemory (begin, reinterpret_cast<const char*> (begin) + size,
-                        text, text_end, delimiter);
+inline char* PrintMemory (char* cursor, char* end, const void* start, 
+                          size_t size_bytes) {
+    return PrintMemory (cursor, end, start, 
+                        reinterpret_cast<const char*> (start) + size_bytes);
 }
 
-inline Printer& PrintMemory (Printer& printer, const void* begin, size_t size) {
+/** Prints the given memory socket. */
+inline Printer PrintMemory (Printer printer, const void* begin, 
+                            size_t size_bytes) {
+    return printer;
 }
-
-/** Utility class for printing a text line with operator<<. */
-class Memory {
-    public:
-
-    const char* begin, //< Begin of the socket.
-              * end;   //< End of the socket.
-
-    /** Constructor. */
-    Memory (const char* begin, const char* end);
-
-    /** Constructor. */
-    Memory (const char* begin, intptr_t size);
-};
 
 }       //< namespace _
 
-inline _::Printer& operator<< (_::Printer& print, _::Memory memory) {
-    char* cursor = _::PrintMemory (memory.begin, memory.end, print.cursor, print.end);
+inline _::Printer& operator<< (_::Printer& out_, _::Socket& memory) {
+    char* cursor = _::PrintMemory (out_.cursor, out_.end, memory.begin, 
+                                   memory.end);
     if (!cursor) {
-        return print;
+        return out_;
     }
-    print.cursor = cursor;
-    return print;
+    out_.cursor = cursor;
+    return out_;
 }
 
 #endif  //< HEADER_FOR_CRABS_MEMORY
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

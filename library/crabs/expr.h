@@ -217,8 +217,8 @@ inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
 /** Pops the args off the Expr Args Stack. */
 inline const Op* ExprArgs (Expr* expr, const uint_t* params,
                            void** args) {
-    assert (params);
-    assert (args);
+    ASSERT (params);
+    ASSERT (args);
     Slot slot (ExprBIn (expr));
     return slot.Read (params, args);
 }
@@ -226,8 +226,8 @@ inline const Op* ExprArgs (Expr* expr, const uint_t* params,
 /** Pops the args off the Expr Args Stack. */
 inline const Op* ExprArgs (Expr* expr, const Op& op,
                            void** args) {
-    assert (expr);
-    assert (args);
+    ASSERT (expr);
+    ASSERT (args);
     Slot slot (ExprBIn (expr));
     return slot.Read (op.in, args);
 }
@@ -276,10 +276,10 @@ KABUKI const Op* ExprQuery (Expr* expr, const Op* op);
 
 #if USING_PRINTER
 /** Prints the Expr stack to the Text buffer */
-KABUKI Printer& PrintExpr (Printer& printer, Expr* expr);
+KABUKI Printer PrintExpr (Printer printer, Expr* expr);
 
 /** Prints the Expr stack to the Text buffer */
-KABUKI Printer& PrintExprStack (Printer& printer, Expr* expr);
+KABUKI Printer PrintExprStack (Printer printer, Expr* expr);
 #endif
 
 }       //< namespace _
@@ -291,5 +291,5 @@ inline _::Printer& operator<< (_::Printer& printer, _::Expr* expr) {
 }
 #endif
 
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #endif  //< HEADER_FOR_CRABS_EXPR

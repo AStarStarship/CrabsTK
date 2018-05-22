@@ -241,5 +241,5 @@ KABUKI void Destruct (Library<TIndex, TKey, TData, TData, MaxStackSize>* r) {
 }
 #endif  //< CRABS_MEMORY_PROFILE > 2
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #endif  //< CRABS_LIBRARY_H

@@ -70,7 +70,7 @@ class Cart: public _::Op {
     const char* SetName (const char* new_name);
 
     /** Prints this object to the printer. */
-    _::Printer& Print (_::Printer& printer = _::Printer());
+    _::Printer&& Print (_::Printer&& printer = _::Printer&());
 
     /** Parses Script Text Commands.
         @param text     Beginning of the Text buffer.

@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/library/crabs/script_itoa.cc
+    @file    ~/library/crabs/crabs_print_ui4.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -18,7 +18,7 @@
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
 
-#include "script_itoa.h"
+#include "print_int.h"
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
 
@@ -41,7 +41,7 @@
     char buffer[256];\
     sprintf_s (buffer, 256, "%u", value);\
     printf ("Expecting %s:%u", buffer, (uint)strlen (buffer));
-#define PRINT_HEADING\
+#define PRINT_HEADING\ 
     std::cout << '\n';\
     for (int i = 80; i > 0; --i)\
         std::cout << '-';
@@ -55,7 +55,7 @@
  
 namespace _ {
 
-char* Print (char* text, char* text_end, uint32_t value) {
+char* Print (char* cursor, char* end, uint32_t value) {
 
     PRINT_HEADING
 
@@ -82,10 +82,10 @@ char* Print (char* text, char* text_end, uint32_t value) {
 
     static const char kMsbShift[] = { 4, 7, 11, 14, 17, 21, 24, 27, 30, };
 
-    if (!text) {
+    if (!cursor) {
         return nullptr;
     }
-    if (text >= text_end) {
+    if (cursor >= end) {
         return nullptr;
     }
 
@@ -102,39 +102,39 @@ char* Print (char* text, char* text_end, uint32_t value) {
 
     if (value < 10) {
         PRINTF ("\n    Range:[0, 9] length:1 ")
-        if (text + 1 >= text_end) {
+        if (cursor + 1 >= end) {
             return nullptr;
         }
-        *text++ = '0' + (char)value;
+        *cursor++ = '0' + (char)value;
         PRINT_PRINTED
-        *text = 0;
-        return text;
+        *cursor = 0;
+        return cursor;
     }
     if (value < 100) {
         PRINTF ("\n    Range:[10, 99] length:2 ")
-        if (text + 2 >= text_end) {
+        if (cursor + 2 >= end) {
             return nullptr;
         }
-        *reinterpret_cast<uint16_t*> (text) = kDigits00To99[value];
+        *reinterpret_cast<uint16_t*> (cursor) = kDigits00To99[value];
         PRINT_PRINTED
-        *(text + 2) = 0;
-        return text + 2;
+        *(cursor + 2) = 0;
+        return cursor + 2;
     }
     if (value >> 14) {
         if (value >> 27) {
             if (value >> 30) {
                 PRINTF ("\n    Range:[1073741824, 4294967295] length:10")
                 Print10:
-                if (text + 10 >= text_end) {
+                if (cursor + 10 >= end) {
                     return nullptr;
                 }
                 comparator = 100000000;
                 digits1and2 = (uint16_t)(value / comparator);
                 PRINTF ("\n    digits1and2:%u", digits1and2)
                 value -= digits1and2 * comparator;
-                *reinterpret_cast<uint16_t*> (text) = kDigits00To99[digits1and2];
+                *reinterpret_cast<uint16_t*> (cursor) = kDigits00To99[digits1and2];
                 PRINT_PRINTED
-                text += 2;
+                cursor += 2;
                 goto Print8;
             }
             else {
@@ -144,12 +144,12 @@ char* Print (char* text, char* text_end, uint32_t value) {
                     goto Print10;
                 }
                 PRINTF ("\n    Range:[134217727, 999999999] length:9")
-                if (text + 9 >= text_end) {
+                if (cursor + 9 >= end) {
                     return nullptr;
                 }
                 comparator = 100000000;
                 digit = (char)(value / comparator);
-                *text++ = digit + '0';
+                *cursor++ = digit + '0';
                 PRINT_PRINTED
                 value -= comparator * digit;
                 goto Print8;
@@ -159,15 +159,15 @@ char* Print (char* text, char* text_end, uint32_t value) {
             comparator = k10ToThe[8];
             if (value >= comparator) {
                 PRINTF ("\n    Range:[100000000, 134217728] length:9")
-                if (text + 9 >= text_end) {
+                if (cursor + 9 >= end) {
                     return nullptr;
                 }
-                *text++ = '1';
+                *cursor++ = '1';
                 PRINT_PRINTED
                 value -= comparator;
             }
             PRINTF ("\n    Range:[16777216, 9999999] length:8")
-            if (text + 8 >= text_end) {
+            if (cursor + 8 >= end) {
                 return nullptr;
             }
             Print8:
@@ -179,35 +179,35 @@ char* Print (char* text, char* text_end, uint32_t value) {
             digits3and4 = digits1and2 / 100;
             digits5and6 -= 100 * digits7and8;
             digits1and2 -= 100 * digits3and4;
-            *reinterpret_cast<uint16_t*> (text + 6) = 
+            *reinterpret_cast<uint16_t*> (cursor + 6) = 
                 kDigits00To99[digits1and2];
             PRINT_PRINTED
-            *reinterpret_cast<uint16_t*> (text + 4) = 
+            *reinterpret_cast<uint16_t*> (cursor + 4) = 
                 kDigits00To99[digits3and4];
             PRINT_PRINTED
-            *reinterpret_cast<uint16_t*> (text + 2) = 
+            *reinterpret_cast<uint16_t*> (cursor + 2) = 
                 kDigits00To99[digits5and6];
             PRINT_PRINTED
-            *reinterpret_cast<uint16_t*> (text) = 
+            *reinterpret_cast<uint16_t*> (cursor) = 
                 kDigits00To99[digits7and8];
             PRINT_PRINTED
-            *(text + 8) = 0;
-            return text + 8;
+            *(cursor + 8) = 0;
+            return cursor + 8;
         }
         else if (value >> 20) {
             comparator = 10000000;
             if (value >= comparator) {
                 PRINTF ("\n    Range:[10000000, 16777215] length:8")
-                if (text + 8 >= text_end) {
+                if (cursor + 8 >= end) {
                     return nullptr;
                 }
-                *text++ = '1';
+                *cursor++ = '1';
                 PRINT_PRINTED
                 value -= comparator;
             }
             else {
                 PRINTF ("\n    Range:[1048576, 9999999] length:7")
-                if (text + 7 >= text_end) {
+                if (cursor + 7 >= end) {
                     return nullptr;
                 }
             }
@@ -218,33 +218,33 @@ char* Print (char* text, char* text_end, uint32_t value) {
             digits3and4 = digits1and2 / 100;
             digits5and6 -= 100 * digits7and8;
             digits1and2 -= 100 * digits3and4;;
-            *reinterpret_cast<uint16_t*> (text + 5) = 
+            *reinterpret_cast<uint16_t*> (cursor + 5) = 
                 kDigits00To99[digits1and2];
             PRINT_PRINTED
-            *reinterpret_cast<uint16_t*> (text + 3) = 
+            *reinterpret_cast<uint16_t*> (cursor + 3) = 
                 kDigits00To99[digits3and4];
             PRINT_PRINTED
-            *reinterpret_cast<uint16_t*> (text + 1) = 
+            *reinterpret_cast<uint16_t*> (cursor + 1) = 
                 kDigits00To99[digits5and6];
             PRINT_PRINTED
-            *text = (char)digits7and8 + '0';
-            *(text + 7) = 0;
-            return text + 7;
+            *cursor = (char)digits7and8 + '0';
+            *(cursor + 7) = 0;
+            return cursor + 7;
         }
         else if (value >> 17) {
             comparator = 1000000;
             if (value >= comparator) {
                 PRINTF ("\n    Range:[100000, 1048575] length:7")
-                if (text + 7 >= text_end) {
+                if (cursor + 7 >= end) {
                     return nullptr;
                 }
-                *text++ = '1';
+                *cursor++ = '1';
                 PRINT_PRINTED
                 value -= comparator;
             }
             else {
                 PRINTF ("\n    Range:[131072, 999999] length:6")
-                if (text + 6 >= text_end) {
+                if (cursor + 6 >= end) {
                     return nullptr;
                 }
             }
@@ -256,15 +256,15 @@ char* Print (char* text, char* text_end, uint32_t value) {
             digits3and4 = digits1and2 / 100;
             digits5and6 -= 100 * digits7and8;
             digits1and2 -= 100 * digits3and4;
-            text16 = reinterpret_cast<uint16_t*> (text + 6);
-            *reinterpret_cast<uint16_t*> (text + 4) = kDigits00To99[digits1and2];
+            text16 = reinterpret_cast<uint16_t*> (cursor + 6);
+            *reinterpret_cast<uint16_t*> (cursor + 4) = kDigits00To99[digits1and2];
             PRINT_PRINTED
-            *reinterpret_cast<uint16_t*> (text + 2) = kDigits00To99[digits3and4];
+            *reinterpret_cast<uint16_t*> (cursor + 2) = kDigits00To99[digits3and4];
             PRINT_PRINTED
-            *reinterpret_cast<uint16_t*> (text    ) = kDigits00To99[digits5and6];
+            *reinterpret_cast<uint16_t*> (cursor    ) = kDigits00To99[digits5and6];
             PRINT_PRINTED
-            *(text + 6) = 0;
-            return text + 6;
+            *(cursor + 6) = 0;
+            return cursor + 6;
         }
         else { // (value >> 14)
             if (value >= 100000) {
@@ -272,99 +272,93 @@ char* Print (char* text, char* text_end, uint32_t value) {
                 goto Print6;
             }
             PRINTF ("\n    Range:[10000, 65535] length:5")
-            if (text + 5 >= text_end) {
+            if (cursor + 5 >= end) {
                 return nullptr;
             }
             digits5and6 = 10000;
             digit = (uint8_t)(value / digits5and6);
             value -= digits5and6 * digit;
-            *text = digit + '0';
+            *cursor = digit + '0';
             PRINT_PRINTED
             digits1and2 = (uint16_t)value;
             digits5and6 = 100;
             digits3and4 = digits1and2 / digits5and6;
             digits1and2 -= digits3and4 * digits5and6;
-            *reinterpret_cast<uint16_t*> (text + 1) = 
+            *reinterpret_cast<uint16_t*> (cursor + 1) = 
                 kDigits00To99[digits3and4];
             PRINT_PRINTED
                 PRINTF ("\n    digits1and2:%u", digits1and2)
-            *reinterpret_cast<uint16_t*> (text + 3) = 
+            *reinterpret_cast<uint16_t*> (cursor + 3) = 
                 kDigits00To99[digits1and2];
             PRINT_PRINTED
-            *(text + 5) = 0;
-            return text + 5;
+            *(cursor + 5) = 0;
+            return cursor + 5;
         }
     }
     digits1and2 = (uint16_t)value;
     if (value >> 10) {
         digits5and6 = 10000;
         if (digits1and2 >= digits5and6) {
-            if (text + 5 >= text_end) {
+            if (cursor + 5 >= end) {
                 return nullptr;
             }
             PRINTF ("\n    Range:[10000, 16383] length:5")
-            *text++ = '1';
+            *cursor++ = '1';
             PRINT_PRINTED
             digits1and2 -= digits5and6;
 
         }
         else {
             PRINTF ("\n    Range:[1024, 9999] length:4")
-            if (text + 4 >= text_end) {
+            if (cursor + 4 >= end) {
                 return nullptr;
             }
         }
         digits5and6 = 100;
         digits3and4 = digits1and2 / digits5and6;
         digits1and2 -= digits3and4 * digits5and6;
-        *reinterpret_cast<uint16_t*> (text    ) = kDigits00To99[digits3and4];
+        *reinterpret_cast<uint16_t*> (cursor    ) = kDigits00To99[digits3and4];
         PRINT_PRINTED
-        *reinterpret_cast<uint16_t*> (text + 2) = kDigits00To99[digits1and2];
+        *reinterpret_cast<uint16_t*> (cursor + 2) = kDigits00To99[digits1and2];
         PRINT_PRINTED
-        *(text + 4) = 0;
-        return text + 4;
+        *(cursor + 4) = 0;
+        return cursor + 4;
     }
     else {
-        if (text + 4 >= text_end) {
+        if (cursor + 4 >= end) {
             return nullptr;
         }
         digits3and4 = 1000;
         if (digits1and2 >= digits3and4) {
             PRINTF ("\n    Range:[1000, 1023] length:4")
             digits1and2 -= digits3and4;
-            text16 = reinterpret_cast<uint16_t*> (text + 2);
+            text16 = reinterpret_cast<uint16_t*> (cursor + 2);
             *text16-- = kDigits00To99[digits1and2];
             PRINT_PRINTED
             *text16 = (((uint16_t)'1') | (((uint16_t)'0') << 8));
             PRINT_PRINTED
-            *(text + 4) = 0;
-            return text + 4;
+            *(cursor + 4) = 0;
+            return cursor + 4;
         }
         PRINTF ("\n    Range:[100, 999] length:3")
         digits1and2 = (uint16_t)value;
         digits3and4 = 100;
         digit = (char)(digits1and2 / digits3and4);
         digits1and2 -= digit * digits3and4;
-        *text = digit + '0';
+        *cursor = digit + '0';
         PRINT_PRINTED
-        *reinterpret_cast<uint16_t*> (text + 1) = kDigits00To99[digits1and2];
+        *reinterpret_cast<uint16_t*> (cursor + 1) = kDigits00To99[digits1and2];
         PRINT_PRINTED
-        *(text + 3) = 0;
-        return text + 3;
+        *(cursor + 3) = 0;
+        return cursor + 3;
     }
 }
 
-char* Print (char* cursor, char* end, uint32_t value, char delimiter) {
-    assert (cursor);
-    assert (end);
-
-    cursor = Print (cursor, end, value);
-    if (!cursor) {
-        std::cout << "\n!!!!!!!";
-        return nullptr;
-    }
-    *cursor = delimiter;
-    return cursor;
+char* Print (char* cursor, char* end, int32_t value)  {
+    if (value >= 0)
+        return Print (cursor, end, (uint32_t)value);
+    *cursor++ = '-';
+    return Print (cursor, end, (uint32_t)(value * -1));
 }
 
 }       //< namespace _

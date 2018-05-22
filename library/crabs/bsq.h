@@ -99,7 +99,7 @@ constexpr uint_t BsqSize (const uint_t* params) {
     if (!params) {
         return 0;
     }
-    uint_t size  = sizeof (uint_t),
+    uint_t size_bytes  = sizeof (uint_t),
            count = *params++;
 
     if (count > kParamsMax) {
@@ -113,15 +113,15 @@ constexpr uint_t BsqSize (const uint_t* params) {
             return 0;
         }
         if (param <= TKN) {
-            size += sizeof (uint_t);
+            size_bytes += sizeof (uint_t);
             ++params;
         }
         if (param == SIN) {
-            size += sizeof (uint_t);
+            size_bytes += sizeof (uint_t);
             ++params;
         }
         if (param == UIN) {
-            size += sizeof (uint_t);
+            size_bytes += sizeof (uint_t);
             ++params;
         }
         if (param >= LST && param <= MAP) { // This is illegal.
@@ -136,9 +136,9 @@ constexpr uint_t BsqSize (const uint_t* params) {
                 params += param + 1; // for the dimension count.
             }
         }
-        size += sizeof (uint_t);
+        size_bytes += sizeof (uint_t);
     }
-    return size;
+    return size_bytes;
 }
 
 /** Creates a immutable Script B-Sequence.
@@ -152,10 +152,10 @@ inline const uint_t* Params () {
 }
 
 /**  Prints out the parameters. */
-KABUKI Printer& PrintBsq (Printer& print, const uint_t* params);
+KABUKI Printer PrintBsq (Printer out_, const uint_t* params);
 
 /**  Prints out the parameters. */
-//KABUKI Printer& PrintBsq (const uint_t* bsq, Printer& print);
+//KABUKI Printer PrintBsq (const uint_t* bsq, Printer print);
 
 /*< Returns the requested parameter number. */
 KABUKI uint_t BsqParamNumber (const uint_t* bsq, int param_number);
@@ -163,13 +163,13 @@ KABUKI uint_t BsqParamNumber (const uint_t* bsq, int param_number);
 }       //< namespace _
 
 /**  Prints out the parameters. */
-_::Printer& operator<< (_::Printer& print, _::Bsq bsq) {
-    if (!bsq.params || !print.cursor || print.cursor >= print.end) {
-        return print;
+_::Printer& operator<< (_::Printer& out_, _::Bsq bsq) {
+    if (!bsq.params || !out_.cursor || out_.cursor >= out_.end) {
+        return out_;
     }
 
-    return _::PrintBsq (print, bsq.params);
+    return _::PrintBsq (out_, bsq.params);
 }
 
 #endif  //< HEADER_FOR_CRABS_BSQ
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

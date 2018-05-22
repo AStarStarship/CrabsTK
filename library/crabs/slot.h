@@ -125,7 +125,7 @@ struct Slot {
 
     #if USING_PRINTER
     /** Prints a string rep of this object to the printer. */
-    Printer& Print (Printer& printer);
+    Printer Print (Printer printer);
     #endif
 };
 
@@ -138,5 +138,5 @@ inline _::Printer& operator<< (_::Printer& printer, _::Slot& slot) {
 }
 #endif
 
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #endif  //< HEADER_FOR_CRABS_SLOT

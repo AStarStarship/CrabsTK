@@ -97,4 +97,4 @@ inline uint64_t PackAddress (uint64_t a, uint64_t b, uint64_t c, uint64_t d,
 
 }       //< namespace _
 #endif  //< HEADER_FOR_CRABS_ADDRESS
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5

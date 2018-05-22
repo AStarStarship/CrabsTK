@@ -28,7 +28,7 @@ Line::Line (char token, int column_count) :
 
 Printer& Line::Print (Printer& print) {
     char* cursor = print.cursor;
-    assert (cursor);
+    ASSERT (cursor);
     char* end = print.end;
     int l_column_count = column_count;
     if (cursor + l_column_count + 1 >= end)
@@ -53,7 +53,7 @@ StringLine::StringLine (const char* string, int column_count) :
 
 Printer& StringLine::Print (Printer& print) {
     char* cursor = print.cursor;
-    assert (cursor);
+    ASSERT (cursor);
     char* end    = print.end;
     int l_column_count = column_count;
     if (cursor + l_column_count + 1 > end)
@@ -72,4 +72,4 @@ Printer& StringLine::Print (Printer& print) {
 }
 
 }
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

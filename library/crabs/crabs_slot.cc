@@ -21,11 +21,11 @@
 
 #include "type.h"
 #include "text.h"
-#include "script_itoa.h"
+#include "print_int.h"
 #include "hex.h"
 #include "line.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
@@ -63,8 +63,8 @@ const Op* ReturnError (Slot* slot, Error error, const uint_t* header, uint_t off
 }
 
 Slot::Slot (uintptr_t* buffer, uintptr_t size) {
-    assert (buffer);
-    assert (size >= kSlotSizeMin);
+    ASSERT (buffer);
+    ASSERT (size >= kSlotSizeMin);
     char* l_begin = reinterpret_cast<char*> (buffer);
     begin = l_begin;
     start = l_begin;
@@ -73,7 +73,7 @@ Slot::Slot (uintptr_t* buffer, uintptr_t size) {
 }
 
 Slot::Slot (BIn* bin) {
-    assert (bin);
+    ASSERT (bin);
     char* l_begin = reinterpret_cast<char*> (bin) + sizeof (BIn);
     begin = l_begin;
     start = l_begin + bin->start;
@@ -82,7 +82,7 @@ Slot::Slot (BIn* bin) {
 }
 
 Slot::Slot (BOut* bout) {
-    assert (bout);
+    ASSERT (bout);
     char* l_begin = reinterpret_cast<char*> (bout) + sizeof (BIn);
     begin = l_begin;
     start = l_begin + bout->start;
@@ -117,10 +117,10 @@ void Slot::Wipe () {
 }
 
 const Op* Slot::Write (const uint_t* params, void** args) {
-    assert (params);
-    assert (args);
+    ASSERT (params);
+    ASSERT (args);
 
-    assert (false);
+    ASSERT (false);
     // @todo Write me!
     return nullptr;
 }
@@ -168,8 +168,8 @@ bool Slot::IsReadable () {
 }*/
 
 const Op* Slot::Read (const uint_t* params, void** args) {
-    assert (params);
-    assert (args);
+    ASSERT (params);
+    ASSERT (args);
     byte      ui1;     //< Temp variable to load most types.
     uint16_t  ui2;     //< Temp variable for working with UI2 types.
     #if USING_CRABS_4_BYTE_TYPES
@@ -185,7 +185,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
     uint_t    type,    //< Current type being read.
               index,   //< Index in the escape sequence.
               num_params = *params; //< Number of params.
-    assert (num_params);
+    ASSERT (num_params);
     uintptr_t  offset; //< Offset to word align the current type.
     intptr_t length,   //< Length of the data in the buffer.
               count,   //< Argument length.
@@ -541,7 +541,7 @@ const Op* Slot::Write (const char* message) {
 }
 
 #if USING_PRINTER
-Printer& Slot::Print (Printer& print) {
+Printer Slot::Print (Printer print) {
     char* l_begin = begin,
         * l_end   = end;
     return print << Line ('_', 80)

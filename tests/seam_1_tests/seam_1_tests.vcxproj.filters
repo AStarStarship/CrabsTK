@@ -80,9 +80,6 @@
     <ClCompile Include="..\..\library\crabs\crabs_room.cc">
       <Filter>library\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\library\crabs\crabs_scan.cc">
-      <Filter>library\crabs</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\library\crabs\crabs_slot.cc">
       <Filter>library\crabs</Filter>
     </ClCompile>
@@ -110,12 +107,6 @@
     <ClCompile Include="test_seam_1_4.cc">
       <Filter>tests\seam_1_tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\library\crabs\crabs_script_itoa_64.cc">
-      <Filter>library\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\library\crabs\crabs_script_itoa_32.cc">
-      <Filter>library\crabs</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\library\crabs\crabs_object.cc">
       <Filter>library\crabs</Filter>
     </ClCompile>
@@ -124,6 +115,18 @@
     </ClCompile>
     <ClCompile Include="tests_main.cc">
       <Filter>tests\seam_1_tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_scanner.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_print_ui4.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_print_ui8.cc">
+      <Filter>library\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\library\crabs\crabs_print_flt.cc">
+      <Filter>library\crabs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,9 +244,6 @@
     <ClInclude Include="..\..\library\crabs\operand.h">
       <Filter>library\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\library\crabs\printer.h">
-      <Filter>library\crabs</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\library\crabs\random.h">
       <Filter>library\crabs</Filter>
     </ClInclude>
@@ -280,10 +280,13 @@
     <ClInclude Include="..\..\library\crabs\object.h">
       <Filter>library\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\library\crabs\script_itoa.h">
+    <ClInclude Include="..\..\library\crabs\list.h">
       <Filter>library\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\library\crabs\list.h">
+    <ClInclude Include="..\..\library\crabs\printer.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\print_to_ascii.h">
       <Filter>library\crabs</Filter>
     </ClInclude>
   </ItemGroup>

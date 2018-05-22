@@ -262,5 +262,5 @@ class Room: public Operand {
 //KABUKI Room* ChineseRoom (Room* room = nullptr);
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #endif  //< CRABS_ROOM_HDi

@@ -194,7 +194,7 @@ class This : public Room {
 
     Parent parent;
 };
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 
 #endif  //< HEADER_FOR_GLOBAL
 #endif  //< RUN_UNIT_TESTS

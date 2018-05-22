@@ -24,7 +24,7 @@
 #include "line.h"
 
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -35,27 +35,27 @@
 namespace _ {
 
 const char* OperandName (Operand* operand) {
-    assert (operand);
+    ASSERT (operand);
     const Op* op = operand->Star ('?', nullptr);
-    assert (op);
+    ASSERT (op);
 
     return op->name;
 }
 
 uintptr_t OperandCount (Operand* operand) {
-    assert (operand);
+    ASSERT (operand);
     const Op* op = operand->Star (0, nullptr);
     return (op == nullptr)?0:
         reinterpret_cast<uintptr_t> (op->in);
 }
 
 wchar_t OperandIndex (Operand* operand, char* begin, char* end) {
-    assert (operand);
+    ASSERT (operand);
     const Op* op = operand->Star ('?', nullptr);
-    assert (op);
+    ASSERT (op);
     wchar_t index = OpFirst (op),
             last  = OpLast  (op);
-    assert (index);
+    ASSERT (index);
     for (; index <= last; ++index) {
         if (TextEquals (begin, end, operand->Star (index, nullptr)->name)) {
             return index;
@@ -66,11 +66,11 @@ wchar_t OperandIndex (Operand* operand, char* begin, char* end) {
 
 #if USING_PRINTER
 
-Printer& PrintOperand (Printer& print, Operand* operand) {
-    assert (operand);
+Printer PrintOperand (Printer print, Operand* operand) {
+    ASSERT (operand);
 
     const _::Op* op = operand->Star ('?', nullptr);
-    assert (op);
+    ASSERT (op);
 
     uintptr_t num_ops = reinterpret_cast<uintptr_t>(op->in),
               op_num = reinterpret_cast<uintptr_t>(op->out),
@@ -90,8 +90,8 @@ Printer& PrintOperand (Printer& print, Operand* operand) {
 }
 
 Slot& OperandQuery (Operand* root, const char* address, Slot& slot) {
-    assert (address);
-    assert (root);
+    ASSERT (address);
+    ASSERT (root);
 
     int index = *address++;
     const Op* op = root->Star (index, nullptr);
@@ -101,7 +101,7 @@ Slot& OperandQuery (Operand* root, const char* address, Slot& slot) {
     index = *address++;
     while (index) {
         op = root->Star (index, nullptr);
-        assert (op);
+        ASSERT (op);
         printer << '.' << op->name;
         index = *address++;
     }

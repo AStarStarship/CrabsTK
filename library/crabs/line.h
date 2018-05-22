@@ -65,4 +65,4 @@ inline _::Printer& operator<< (_::Printer& printer, _::StringLine line) {
 }
 
 #endif  //< HEADER_FOR_CRABS_LINE
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

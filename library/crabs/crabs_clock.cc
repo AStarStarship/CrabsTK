@@ -480,9 +480,9 @@ int32_t ClockGetMicroseconds (time_us_t timestamp) {
 }
 
 char* PrintClock (char* cursor, char* end, tm* std_tm) {
-    assert (cursor);
-    assert (std_tm);
-    assert (cursor > end);
+    ASSERT (cursor);
+    ASSERT (std_tm);
+    ASSERT ((cursor > end))
 
     cursor = Print (cursor, end, std_tm->tm_year + kTimeEpoch);
     if (!cursor) {

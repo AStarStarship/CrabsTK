@@ -103,7 +103,7 @@ KABUKI void BInKeyStrokes ();
     @param  bout The bout to print.
     @param  text The Text to print to the bout.
     @return The slot. */
-KABUKI Printer& PrintBOut (Printer& printer, BOut* bout);
+KABUKI Printer PrintBOut (Printer printer, BOut* bout);
 #endif
 
 }       //< namespace _
@@ -115,6 +115,6 @@ inline _::Printer& operator<< (_::Printer& print, _::BOut* bout) {
 }
 #endif
 
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #endif  //< HEADER_FOR_CRABS_BOUT
 #undef DEBUG_CRABS_BOUT

@@ -25,7 +25,7 @@
 #include "hex.h"
 #include "line.h"
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #define PRINT_BSQ(header, bsq) {\
@@ -955,8 +955,8 @@ const Op* ExprQuery (Expr* expr, const Op* op) {
 }
 
 #if USING_PRINTER
-Printer& PrintExprStack (Printer& print, Expr* expr) {
-    assert (expr);
+Printer PrintExprStack (Printer print, Expr* expr) {
+    ASSERT (expr);
 
     uint_t    i,
               stack_count;
@@ -980,8 +980,8 @@ Printer& PrintExprStack (Printer& print, Expr* expr) {
     return print << "\nStack Item " << i + 1 << ":\"" << op->name << "\"";
 }
 
-Printer& PrintExpr (Printer& print, Expr* expr) {
-    assert (expr);
+Printer PrintExpr (Printer print, Expr* expr) {
+    ASSERT (expr);
 
     return print << Line ('~', 80) << "\nStack:    "
                  << Hex<uintptr_t> (expr) << '\n' << Line ('_', 80)

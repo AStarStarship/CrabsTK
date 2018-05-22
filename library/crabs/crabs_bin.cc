@@ -29,7 +29,7 @@
 #include "memory.h"
 
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define DEBUG 1
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
@@ -131,8 +131,8 @@ inline const Op* BInError (BIn* bin, Error error,
 }
 
 BIn* BInInit (uintptr_t* buffer, uint_t size) {
-    assert (buffer);
-    assert (size >= kSlotSizeMin);
+    ASSERT (buffer);
+    ASSERT (size >= kSlotSizeMin);
 
     BIn* bin = reinterpret_cast<BIn*> (buffer);
     bin->size = size - sizeof (BIn);
@@ -666,8 +666,8 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
 }
 
 #if USING_PRINTER
-Printer& Print (Printer& print, BIn* bin) {
-    assert (bin);
+Printer Print (Printer print, BIn* bin) {
+    ASSERT (bin);
 
     Printer p;
     uint_t size = bin->size;
@@ -688,4 +688,4 @@ Printer& Print (Printer& print, BIn* bin) {
 #undef PRINT_BSQ
 #undef PRINT_BIN
 #undef DEBUG
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5

@@ -18,23 +18,23 @@
 
 #if MAJOR_SEAM >= 1
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf (format, __VA_ARGS__);
 #define PRINT_PAUSE(message)\
     printf ("\n\n%s\n", message); system ("PAUSE");
 #define PRINT_HEADING(message) \
-    std::cout << '\n';\
+    std::cerr << '\n';\
     for (int i = 80; i > 80; --i) std::cout << '-';\
-    std::cout << '\n' << message << '\n';\
+    std::cerr << '\n' << message << "\n|";\
     for (int i = 80; i > 80; --i) std::cout << '-';\
-    std::cout << '\n';
+    std::cerr << '\n';
 #else
 #define PRINTF(x, ...)
 #define PRINT_PAUSE(message)
 #define PRINT_HEADING(message)
 #endif
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf (format, __VA_ARGS__);
 #else
 #define PRINTF(x, ...)
@@ -56,18 +56,26 @@ TEST (SEAM_1_3, SEAM_1_3A) {
 
     int i = 0; //< Shared looping variable.
 
+    PRINT_HEADING ("\nTesting COut ().Print ()... ");
+
+    COUT << "Testing " << 1 << ", 2, " << -3;
+    
     PRINT_HEADING ("\nTesting SEAM_1_3... ");
 
     PRINTF ("\n\nTesting ASCII Object Types");
 
     PRINTF ("\n\nTest _::Stack...\n\n");
 
-    Stack<> test_stack (8);
+    Stack<> stack (8);
 
     for (i = 0; i <= 10; ++i)
-        test_stack.Push (i);
+        stack.Push (i);
     for (i = 10; i > 0; i--)
-        CHECK_EQUAL (i, test_stack.Pop ())
+        CHECK_EQUAL (i, stack.Pop ())
+
+    PRINTF ("\nPrinting Stack...\n");
+
+    COUT << stack;
 
     PRINT_PAUSE ("\n\nDone _::Stack!")
 
@@ -76,7 +84,6 @@ TEST (SEAM_1_3, SEAM_1_3A) {
     static const int array_3d_exected[2][2][2] = { { { 0, 1 }, { 2, 3 } },
                                                    { { 4, 5 }, { 6, 7 } }
                                                  };
-
     const int* test = Dimensions<2, 2, 2> ();
     Array<int> test_array (test);
     *test_array.Elements () = { { { 0, 1 }, { 2, 3 } },
@@ -92,6 +99,14 @@ TEST (SEAM_1_3, SEAM_1_3A) {
     PRINT_PAUSE ("\n\nDone _::Array!")
     */
     PRINTF ("\n\nTest _::List...\n\n");
+
+    List<> list;
+
+    const char* test_strings[] = {
+        "Test"
+    };
+
+    list.Push (STR, test_strings[0]);
 
     PRINT_PAUSE ("\n\nDone _::List!")
     

@@ -72,7 +72,7 @@ inline const uint_t* OpFirst (wchar_t index) {
 
 /** Converts the given value to a pointer. */
 inline wchar_t OpFirst (const Op* op) {
-    assert (op);
+    ASSERT (op);
     return (wchar_t)reinterpret_cast<uintptr_t>(op->in);
 }
 
@@ -83,19 +83,19 @@ inline const uint_t* OpLast (wchar_t index) {
 
 /** Converts the given value to a pointer. */
 inline wchar_t OpLast (const Op* op) {
-    assert (op);
+    ASSERT (op);
     return (wchar_t)reinterpret_cast<uintptr_t>(op->out);
 }
 
 #if USING_PRINTER
-Printer& Print (Printer& print, const Op* op);
+Printer Print (Printer print, const Op* op);
 #endif
 
 }       //< namespace _
 
-inline _::Printer& operator<< (_::Printer print, const _::Op* op) {
+inline _::Printer& operator<< (_::Printer& print, const _::Op* op) {
     return Print (print, op);
 }
 
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #endif  //< HEADER_FOR_CRABS_OP

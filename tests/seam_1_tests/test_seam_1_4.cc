@@ -19,7 +19,7 @@
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PRINT_PAUSE(message)\
     printf ("\n\n%s\n", message); system ("PAUSE");

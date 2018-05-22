@@ -22,54 +22,81 @@
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 
 namespace _ {
+
 /** An ASCII Object.
-
-
-
-    @code
-    ;
-    @endcode
+    The definition of an ASCII Objects is an object that start with a 8, 16, 
+    32, or 64-bit word that stores the size of the object in bytes.
 */
-template<typename TSize>
-struct KABUKI Object {
+template<typename UI>
+struct KABUKI AObject {
     uintptr_t *buffer;
 };
 
-template<typename TSize = uint32_t>
-TSize ObjectSize (Object<TSize>* object) {
-    return *reinterpret_cast<TSize*> (object);
-}
-
-template<typename TSize = uint32_t, typename T = uintptr_t * >
-TSize ObjectSize (T* object) {
-    return *reinterpret_cast<TSize*> (object);
-}
-
-template<typename TSize = uint32_t>
-TSize ObjectSize (uintptr_t* buffer) {
-    return *reinterpret_cast<TSize*> (buffer);
+/** Returns the object size. */
+template<typename UI = uint32_t>
+UI ObjectSize (void* object) {
+    return *reinterpret_cast<UI*> (object);
 }
 
 /** Aligns the given word to 64-bit word boundary. */
 template<typename T>
 inline T WordAlign8 (T value) {
-    return value + (((~value) + 1) &
-                     (sizeof (T) - 1));
+    return value + (((~value) + 1) & (sizeof (T) - 1));
 }
 
-template<typename TSize = uint32_t>
-Object<TSize>* ObjectClone (Object<TSize>* object) {
-    assert (object);
-    TSize* size_ptr = reinterpret_cast<TSize*> (object);
-    TSize size = (*size_ptr) >> kWordBitCount;
-    uintptr_t* buffer = new uintptr_t[size],
+/** Clones the other object. */
+template<typename UI = uint32_t>
+AObject<UI>* ObjectClone (AObject<UI>* object) {
+    ASSERT (object);
+    UI* size_ptr  = reinterpret_cast<UI*> (object);
+    UI size_bytes = (*size_ptr) >> kWordBitCount;
+    uintptr_t* buffer = new uintptr_t[size_bytes],
              * read = buffer,
              * write = reinterpret_cast<uintptr_t*> (object);
-    for (; size > 0; size--)
+    for (; size_bytes > 0; size_bytes--)
         *write++ = *read++;
-    return *reinterpret_cast<TSize*> (buffer);
+    return *reinterpret_cast<UI*> (buffer);
+}
+
+/** Returns the last byte in the data array. */
+template<typename UI>
+inline const char* ObjectEnd (type_t type, const char* object) {
+    ASSERT (object)
+    if (type <= SI1)
+        return object;
+    if (type <= kTypeLast2Byte)
+        return object + 1;
+    if (type <= TMS)
+        return object + 3;
+    if (type <= UV8)
+        return object + 7;
+    if (type == DEC)
+        return object + 15;
+    switch (type >> 6) {
+        case 0: return object + *object - 1;
+        case 1: return object + *reinterpret_cast<const uint16_t*> (object) - 1;
+        case 3: return object + *reinterpret_cast<const uint32_t*> (object) - 1;
+        case 4: return object + *reinterpret_cast<const uint64_t*> (object) - 1;
+    }
+    return nullptr; //< Will never happen.
+}
+
+/** Returns the last byte in the data array. */
+template<typename UI>
+inline char* ObjectEnd (type_t type, char* object) {
+    return const_cast<char*> (ObjectEnd<UI> (type, (const char*)object));
+}
+
+template<typename T, typename UI = uint, typename SI = int>
+inline SI ObjectCountRound (SI count) {
+    enum {
+        kRoundEpochMask = (sizeof (SI) == 8) ? 7 :
+        (sizeof (SI) == 4) ? 3 :
+        (sizeof (SI) == 2) ? 1 : 0,
+    };
+    AlignUp<SI> (count);
 }
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_OBJECT

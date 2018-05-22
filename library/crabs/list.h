@@ -17,11 +17,12 @@
 #pragma once
 #include <stdafx.h>
 
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #ifndef HEADER_FOR_CRABS_LIST
 #define HEADER_FOR_CRABS_LIST
 
 #include "set.h"
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#include "align.h"
 
 namespace _ {
 
@@ -47,192 +48,348 @@ namespace _ {
     |_______ ...               |   |     |
     |_______ Type byte N       |   |     |
     |_______ ...               |   |     |
-    |        Type byte 1       |   |     |   ^ 0x(N+1)+sizeof (TList<UI, SI>)
+    |        Type byte 1       |   |     |   ^ 0x(N+1)+sizeof (AsciiList<UI, SI>)
     |==========================|   |     |   | 
-    |   TList<UI, SI> Struct   |   v     v   ^
+    | AsciiList<UI, SI> Struct |   v     v   ^
     +==========================+ ----------- ^ 0xN
     @endcode
 */
 template<typename UI = uint32_t, typename SI = int16_t>
-struct TList {
-    UI size;
+struct AsciiList {
+    UI size_bytes;
     SI count_max,
        count;
 };
 
+/** Returns the minmum count to align the data struct to a 64-bit boundary. */
+template<typename UI = uint32_t, typename SI = int16_t>
+SI ListCountMaxMin () {
+    return 8 / sizeof (SI);
+}
+
 template<typename UI = uint32_t, typename SI = int16_t>
 inline UI ListSizeMin (SI count_max) {
-    return sizeof (TList<UI, SI>) + count_max * (ListOverheadPerIndex<UI, SI> () + 2);
+    return (UI)sizeof (AsciiList<UI, SI>) +  ((UI)count_max << 1); // << 2 to * 2.
 }
 
-/** Creates a list from dynamic memory. */
-template<typename UI = uint32_t, typename SI = int16_t>
-uintptr_t* ListNew (SI count_max, UI size) {
-    assert (list);
-    if (size < ListSizeMin<UI, SI> ())
-        return nullptr;
-    uintptr_t* buffer = new uintptr_t[];
-    return list;
-}
-
-/** Initializes a TList from preallocated memory.
+/** Initializes a AsciiList from preallocated memory.
     count_max must be in multiples of 4. Given there is a fixed size, both the 
-    count_max and size will be downsized to a multiple of 4 automatically.
-
-*/
+    count_max and size will be downsized to a multiple of 4 automatically. */
 template<typename UI = uint32_t, typename SI = int16_t>
-TList<UI, SI>* ListInit (uintptr_t* buffer, UI size, SI count_max) {
+AsciiList<UI, SI>* ListInit (uintptr_t* buffer, UI size_bytes, SI count_max) {
     if (!buffer) // This may be nullptr if ListNew<UI,SI> (SI, UI) failed.
-        return buffer;
-    if (table_size >= size)
-        return nullptr;
-    if (table_size < ListSizeMin<UI, SI> ())
         return nullptr;
 
-    List<UI, SI>* list = reinterpret_cast<TList<UI, SI>*> (buffer);
-    list->size       = table_size;
-    list->table_size = table_size;
+    AsciiList<UI, SI>* list = reinterpret_cast<AsciiList<UI, SI>*> (buffer);
+    list->size_bytes = size_bytes;
     list->count      = 0;
     list->count_max  = count_max;
     return list;
 }
 
+/** Creates a list from dynamic memory. */
 template<typename UI = uint32_t, typename SI = int16_t>
-char* ListTypes (TList<UI, SI>* list) {
-    assert (list);
-    return reinterpret_cast<char*> (list) + sizeof (List<UI, SI>);
+uintptr_t* ListNew (UI size_bytes, SI count_max) {
+    count_max = AlignUp8<SI> (count_max);
+    if (size_bytes < ListSizeMin<UI, SI> (count_max))
+        return nullptr;
+    uintptr_t* buffer = new uintptr_t[size_bytes >> kWordBitCount];
+    ListInit<UI, SI> (buffer, size_bytes, count_max);
+    return buffer;
 }
 
-/** Adds a tuple to the end of the list. */
+/** Returns the type bytes array. */
 template<typename UI = uint32_t, typename SI = int16_t>
-SI ListAdd (TList<UI, SI>* list, char type, void* value) {
-    assert (list);
-    assert (value);
+type_t* ListTypes (AsciiList<UI, SI>* list) {
+    ASSERT (list)
+    return reinterpret_cast<type_t*> (list) + sizeof (AsciiList<UI, SI>);
+}
+
+/** Gets a pointer to the begging of the data buffer. */
+template<typename UI = uint32_t, typename SI = int16_t>
+inline char* ListDataBegin (AsciiList<UI, SI>* list) {
+    ASSERT (list)
+    return reinterpret_cast<char*> (list) + list->count_max * sizeof (SI);
+}
+
+/** Gets the base element 0 of the list's offset array. */
+template<typename UI = uint32_t, typename SI = int16_t>
+inline UI* ListOffsets (AsciiList<UI, SI>* list) {
+    char* base = reinterpret_cast<char*> (list);
+    return reinterpret_cast<UI*> (base + list->count_max);
+}
+
+/** Returns the last byte in the data array. */
+template<typename UI = uint32_t, typename SI = int16_t>
+inline char* ListDataStop (AsciiList<UI, SI>* list, SI index) {
+    ASSERT (list)
+    SI count = list->count;
+    if (count == 0)
+        return nullptr;
+    type_t* types = ListTypes<UI, SI> (list);
+    type_t  type  = types[index];
+    UI* offsets = ListOffsets<UI, SI> (list);
+    UI offset = offsets[index];
+    char* pointer = reinterpret_cast<char*> (list) + offset;
+    return ObjectEnd<UI> (type, pointer);
+}
+
+/** Returns the last byte in the data array. */
+template<typename UI = uint32_t, typename SI = int16_t>
+inline char* ListDataStop (AsciiList<UI, SI>* list) {
+    ASSERT (list);
+    return ListDataStop<UI, SI> (list, list->count - 1);
+}
+
+/** Returns the last byte in the data array. */
+template<typename UI = uint32_t, typename SI = int16_t>
+inline char* ListDataEnd (AsciiList<UI, SI>* list) {
+    ASSERT (list)
+    return reinterpret_cast<char*> (list) + list->size_bytes - 1;
+}
+
+/** Returns the last byte in the data array. */
+template<typename UI = uint32_t, typename SI = int16_t>
+inline char* ListDataEnd (AsciiList<UI, SI>* list, SI index) {
+    ASSERT (list)
+    if (index < 0 || index >= index->count)
+        return nullptr;
+    return reinterpret_cast<char*> (list) + list->size_bytes - 1;
+}
+
+/** Returns a pointer to the begging of the data buffer. */
+template<typename UI = uint32_t, typename SI = int16_t>
+Socket ListDataVector (AsciiList<UI, SI>* list) {
+    return Socket (ListDataBegin<UI, SI> (list), ListDataEnd<UI, SI> (list));
+}
+
+/** Insets the given type-value tuple. */
+template<typename UI = uint32_t, typename SI = int16_t>
+SI ListInsert (AsciiList<UI, SI>* list, type_t type, const void* value, SI index) {
+    ASSERT (list)
+    if (value == nullptr)
+        return -1;
     SI count = list->count;
     if (count >= list->count_max || TypeIsValid (type))
         return -1;
 
-    char* types = ListTypes (list);
+    type_t* types = ListTypes<UI, SI> (list);
 
+    // 1. Check if the count is zero and do add at the begin.
     if (count == 0) {
-        types[count] = type;
-        TypeWrite (type, value);
+        types[index] = type;
+        Write (ListDataBegin<UI, SI> (list), ListDataEnd<UI, SI> (list), type, 
+               value);
+        return 0;
     }
 
+    types += index;
+
+    // 2. Shift up the types.
+    type_t* types_cursor = types + count - 1;
+    while (types_cursor > types)
+        *types_cursor-- = *types_cursor;
+
     // Add the type byte
-    types[count] = type;
-    char last_type = types[count - 1];
-    if ()
+    *types = type;
+
+    // Shift up the offsets.
+    UI* offsets_begin  = ListOffsets<UI, SI> (list),
+      * offsets_cursor = offsets_begin + count;
+
+    while (offsets_cursor > offsets_begin)
+        *offsets_cursor-- = *offsets_cursor;
+
+    char* aligned_begin  = AlignUpPointer8<> (ListDataStop<UI, SI> (list) + 1);
+
+    if (!Write (aligned_begin, ListDataEnd<UI, SI> (list), type, value))
+        return -1;
+    list->count = ++count;
+    return count;
 }
 
-/** Insets the given tuple.
-*/
+/** Adds a type-value to the end of the list. */
 template<typename UI = uint32_t, typename SI = int16_t>
-SI ListInsert (TList<UI, SI>* list, byte type,
-               const char* key, void* data, SI index) {
-    assert (list);
-    return ~0;
+inline SI ListPush (AsciiList<UI, SI>* list, type_t type, const void* value) {
+    return ListInsert<UI, SI> (list, type, value, list->count - 1);
 }
 
+/** Returns the max count an array can handle. */
 template<typename UI = uint32_t, typename SI = int16_t>
 SI ListCountMax () {
     enum {
         kMaxIndexes = sizeof (SI) == 1 ? 120 :
                       sizeof (SI) == 2 ? 8 * 1024 : 
-                      sizeof (SI) == 4 ? 512 * 1024 * 1024 : 0
+                      sizeof (SI) == 4 ? 512 * 1024 * 1024 : 0,
     };
     return kMaxIndexes;
 }
 
-/** Adds a key-value pair to the end of the list. */
-//byte Add2 (List2* list, const char* key, byte data) {
-//    return ListAdd<byte, uint16_t, uint16_t> (list, key, UI1, &data);
-//}
-
 /** Deletes the list contents without wiping the contents. */
 template<typename UI = uint32_t, typename SI = int16_t>
-void ListClear (TList<UI, SI>* list) {
-    assert (list);
+void ListClear (AsciiList<UI, SI>* list) {
+    ASSERT (list)
     list->count = 0;
 }
 
 /** Deletes the list contents by overwriting it with zeros. */
 template<typename UI = uint32_t, typename SI = int16_t>
-void ListWipe (TList<UI, SI>* list) {
-    assert (list);
+void ListWipe (AsciiList<UI, SI>* list) {
+    ASSERT (list)
     list->count = 0;
-    UI size = list->size - sizeof (TList<UI, SI>);
-    memset (reinterpret_cast<char*> (list) + sizeof (TList<UI, SI>), 0, size);
-}
-
-template<typename UI = uint32_t, typename SI = int16_t>
-bool ListContains (TList<UI, SI>* list) {
-    assert (list);
-    return false;
+    UI size_bytes = list->size_bytes - sizeof (AsciiList<UI, SI>);
+    memset (reinterpret_cast<char*> (list) + sizeof (AsciiList<UI, SI>), 0, size_bytes);
 }
 
 /** Returns true if this expr contains only the given address.
-    @return True if the data lies in the list's memory socket. */
+    @warning This funciton assumes that the member you're checking for came 
+             from Kabuki Toolkit. If it's you're own code calling this, you are
+             required to ensure the value came from a ASCII List.
+    @return  True if the data lies in the list's memory socket. */
 template<typename UI = uint32_t, typename SI = int16_t>
-bool ListContains (TList<UI, SI>* list, void* data) {
-    assert (list);
-    if (reinterpret_cast<char*> (data) < reinterpret_cast<char*> (list))
+bool ListContains (AsciiList<UI, SI>* list, void* address) {
+    ASSERT (list)
+    if (reinterpret_cast<char*> (address) < reinterpret_cast<char*> (list))
         return false;
-    if (reinterpret_cast<char*> (data) > ListEndByte())
+    if (reinterpret_cast<char*> (address) > ListEndByte())
         return false;
     return true;
 }
 
-/** Removes that object from the list and copies it to the destination. */
+/** Removes the item at the given address from the list. */
 template<typename UI = uint32_t, typename SI = int16_t>
-bool ListRemoveAndCopy (TList<UI, SI>* list, void* destination,
-                 size_t buffer_size, void* data) {
-    assert (list);
+bool ListRemove (AsciiList<UI, SI>* list, SI index) {
+    ASSERT (list)
+    SI count = list->count;
+    if (index < 0 || index >= count) {
+        return false;
+    }
+    
+    type_t* cursor = ListTypes<UI, SI> (list),
+           * end    = cursor + (count - index);
+    type_t type_to_remove = *cursor;
+    for (; cursor < end; ++cursor)
+        *cursor++ = cursor;
+    cursor = ListTypes<UI, SI> (list);
+    UI* data_cursor = ListOffsets<UI, SI> (list);
+    return false;
+}
 
+/** Finds a tuple that contains the given pointer. */
+template<typename UI = uint32_t, typename SI = int16_t>
+bool ListFind (AsciiList<UI, SI>* list, void* adress) {
+    ASSERT (list)
+    UI* offsets = ListOffsets<UI, SI> (list),
+      * offset_end = offsets +  list->count;
+    while (offsets < offset_end) {
+        char* begin = reinterpret_cast<char*> (list) + *offsets++,
+            * end   = ListDataStop<UI, SI> (list, index);
+        if (reinterpret_cast<char*> (address) >= begin &&
+            reinterpret_cast<char*> (address) <= end)
+            return true;
+    }
     return false;
 }
 
 /** Removes the item at the given address from the list. */
 template<typename UI = uint32_t, typename SI = int16_t>
-bool ListRemove (TList<UI, SI>* list, void* adress) {
-    assert (list);
-
-    return false;
+bool ListRemove (AsciiList<UI, SI>* list, void* adress) {
+    return ListRemove<UI, SI> (list, ListFind (list, address));
 }
 
-/** Removes all but the given list from the list. */
+/** Prints the given AsciiList to the console. */
 template<typename UI = uint32_t, typename SI = int16_t>
-bool ListRetain (TList<UI, SI>* list, SI index) {
-    assert (list);
-
-    return false;
+Printer ListPrint (AsciiList<UI, SI>* list, Printer out_) {
+    ASSERT (list)
+    
+    SI count = list->count;
+    out_ << "\n\nList:\ncount:" << count << " count_max:" << count_max;
+    for (SI index = 0; index < count; ++index) {
+        type_t type = ListTypes<UI, SI> (list)[index];
+        out_ << "\n" << index << ".) type:" << TypeString (type)
+              << " value:" << TypePrint (type, ListValue<UI, SI> (list, count), 
+                                         out_);
+    }
+    return out_;
 }
 
-/** Prints the given TList to the console. */
-template<typename UI = uint32_t, typename SI = int16_t>
-Printer& ListPrint (TList<UI, SI>* list, Printer& print) {
-    assert (list);
-    return print;
-}
-
-/** C++ Wrapper class for TList that uses dynamic memory. */
+/** ASCII List that uses dynamic memory. */
 template<typename UI = uint32_t, typename SI = int16_t>
 class List {
     public:
 
-    List (SI count_max) {
-        buffer_ = StackNew (count_max);
+    /** constructs a List with the given size_bytes and count_max. 
+        size_bytes and count_max both get rounded down to a multiple of 64 
+        before allocating the buffer. If the count_max is not enough for the 
+        buffer then the size_bytes will be increased to the minimum size to
+        make a valid ASCII List. */
+    List (UI size_bytes = 2048, SI count_max = 0) {
+        if (count_max == 0)
+            count_max = ListCountMaxMin<UI, SI> ();
+        buffer_ = ListNew<UI, SI> (size_bytes, count_max);
     }
 
+    /** Deletes the dyncamically allocated buffer. */
     ~List () {
         delete buffer_;
+    }
+
+    inline SI Push (type_t type, const void* data) {
+        return ListPush<UI, SI> (This (), type, data);
+    }
+
+    /** Inserts the given type-value tuple in the list at the given index. */
+    inline SI Insert (byte type, void* data, SI index) {
+        return ListInsert<UI, SI> (This (), type, data, index);
+    }
+
+    /** Returns the maximum count of the give list in the curent memory 
+        profile. */
+    inline SI CountMax () {
+        return ListCountMax<UI, SI> ();
+    }
+
+    void Clear (AsciiList<UI, SI>* list) {
+        ListClear<UI, SI> (This ());
+    }
+
+    /** Deletes the list contents by overwriting it with zeros. */
+    inline void Wipe () {
+        ListWipe<UI, SI> (This ());
+    }
+
+    inline bool Contains (AsciiList<UI, SI>* list) {
+        return ListContains<UI, SI> (This ());
+    }
+
+    /** Returns true if this expr contains only the given address.
+        @warning This funciton assumes that the member you're checking for came
+                 from Kabuki Toolkit. If it's you're own code calling this, you 
+                 are required to ensure the value came from a ASCII List.
+        @return  True if the data lies in the list's memory socket. */
+    inline bool Contains (AsciiList<UI, SI>* list, void* data) {
+        return ListContains<UI, SI> (This (), data);
+    }
+
+    /** Removes the item at the given address from the list. */
+    inline bool Remove (AsciiList<UI, SI>* list, void* adress) {
+        return ListRemove<UI, SI> (This (), adress);
+    }
+
+    /** Prints the given AsciiList to the console. */
+    inline Printer Print (AsciiList<UI, SI>* list, Printer out_) {
+        return ListPrint<UI, SI> (This (), Printer out_);
     }
 
     private:
 
     uintptr_t* buffer_; //< Dynamically allocated word-aligned buffer.
+
+    inline AsciiList<UI, SI>* This () {
+        return reinterpret_cast<AsciiList<UI, SI>*> (buffer_);
+    }
 };
 
 }       //< namespace _
-#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #endif  //< HEADER_FOR_CRABS_LIST
+#endif  //< MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

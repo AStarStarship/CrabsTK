@@ -23,7 +23,7 @@
 #include "config.h"
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
-#include "script_itoa.h"
+#include "print_int.h"
 #include "random.h"
 #endif
 
@@ -41,8 +41,8 @@
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #include "stack.h"
 #include "array.h"
+#include "list.h"
 //#include "bsq.h"
-//#include "list.h"
 //#include "book.h"
 //#include "map.h"
 //#include "dictionary.h"

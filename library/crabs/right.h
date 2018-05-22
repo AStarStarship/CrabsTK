@@ -51,7 +51,7 @@ KABUKI char* PrintRight (char* text, char* text_end, const char* string,
 inline char* PrintRight (char* text, char* text_end, int32_t value, 
                          int num_columns, char delimiter = 0) {
     char buffer[16];
-    Print (buffer, buffer + 16, (uint32_t)value);
+    Print (buffer, buffer + 15, (uint32_t)value);
     return PrintRight (text, text_end, buffer, num_columns);
 }
 
@@ -61,7 +61,7 @@ inline char* PrintRight (char* text, char* text_end, int32_t value,
 inline char* PrintRight (char* text, char* text_end, uint32_t value,
                          int num_columns, char delimiter = 0) {
     char buffer[16];
-    Print (buffer, buffer + 16, (uint32_t)value);
+    Print (buffer, buffer + 15, (uint32_t)value);
     return PrintRight (text, text_end, buffer, num_columns);
 }
 
@@ -71,7 +71,7 @@ inline char* PrintRight (char* text, char* text_end, uint32_t value,
 inline char* PrintRight (char* text, char* text_end, int64_t value,
                          int num_columns, char delimiter = 0) {
     char buffer[24];
-    Print (buffer, buffer + 24, value);
+    Print (buffer, buffer + 23, value);
     return PrintRight (text, text_end, buffer, num_columns);
 }
 
@@ -81,7 +81,7 @@ inline char* PrintRight (char* text, char* text_end, int64_t value,
 inline char* PrintRight (char* text, char* text_end, uint64_t value, 
                          int num_columns, char delimiter = 0) {
     char buffer[24];
-    Print (buffer, buffer + 24, value);
+    Print (buffer, buffer + 23, value);
     return PrintRight (text, text_end, buffer, num_columns);
 }
 
@@ -112,7 +112,7 @@ inline char* PrintRight (char* text, char* text_end, double value,
 template<typename T>
 inline _::Printer& operator<< (_::Printer& printer, _::Right<T> right) {
     printer.cursor = _::PrintRight (printer.cursor, printer.end, right.value);
-    return print;
+    return out_;
 }
 
 #endif  //< HEADER_FOR_CRABS_RIGHT

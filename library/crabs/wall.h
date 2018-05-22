@@ -100,4 +100,4 @@ class Wall : public Op {
 
 }       //< namespace _
 #endif  //< HEADER_FOR_CRABS_WALL
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5

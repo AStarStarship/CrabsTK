@@ -101,12 +101,6 @@ struct TArray {
        count;      //< Element count.
 };
 
-/** Aligns the given count_max to a 64-bit word-boundary. */
-template<typename T = intptr_t, typename I = int>
-I AlignSigned (I count_max) {
-
-}
-
 /** Gets the size of a Stack with the given count_max. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 inline UI StackSize (SI count_max) {
@@ -177,13 +171,13 @@ inline UI StackCountMax (SI count_max) {
     @param buffer An stack of bytes large enough to fit the stack.
     @return A dynamically allocated buffer. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
-uintptr_t* StackInit (uintptr_t* buffer, UI size) {
-    assert (buffer);
+uintptr_t* StackInit (uintptr_t* buffer, UI size_bytes) {
+    ASSERT (buffer);
 
     TArray<T, UI, SI>* stack = reinterpret_cast<TArray<T, UI, SI>*> (buffer);
     stack->size_array = 0;
-    stack->size_stack = size;
-    stack->count_max = (size - sizeof (TArray<T, UI, SI>)) >> kWordBitCount;
+    stack->size_stack = size_bytes;
+    stack->count_max = (size_bytes - sizeof (TArray<T, UI, SI>)) >> kWordBitCount;
     stack->count = 0;
     return buffer;
 }
@@ -193,27 +187,27 @@ uintptr_t* StackInit (uintptr_t* buffer, UI size) {
     @param buffer An stack of bytes large enough to fit the stack.
     @return A dynamically allocated buffer. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
-uintptr_t* StackInit (uintptr_t* buffer, UI size, SI count_max) {
-    assert (buffer);
+uintptr_t* StackInit (uintptr_t* buffer, UI size_bytes, SI count_max) {
+    ASSERT (buffer);
 
     TArray<T, UI, SI>* stack = reinterpret_cast<TArray<T, UI, SI>*> (buffer);
     stack->size_array = 0;
-    stack->size_stack = size;
-    stack->count_max = (size - sizeof (TArray<T, UI, SI>)) >> kWordBitCount;
+    stack->size_stack = size_bytes;
+    stack->count_max = (size_bytes - sizeof (TArray<T, UI, SI>)) >> kWordBitCount;
     stack->count = 0;
     return buffer;
 }
 
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 uintptr_t* StackClone (TArray<T, UI, SI>* stack) {
-    assert (stack);
-    UI size = stack->size_stack >> kWordBitCount;
-    uintptr_t other_buffer = new uintptr_t[size];
+    ASSERT (stack);
+    UI size_bytes = stack->size_stack >> kWordBitCount;
+    uintptr_t other_buffer = new uintptr_t[size_bytes];
     uintptr* source = reinterpret_cast<uintptr_t*> (stack)
            * destination = other_buffer;
     UI data_amount = (stack->count * sizeof (T) + sizeof (TArray<T, UI, SI>)) >>
                      kWordBitCount;
-    size -= data_amount;
+    size_bytes -= data_amount;
     while (data_amount-- > 0)
         *destination++ = *source++;
     return destination;
@@ -221,8 +215,8 @@ uintptr_t* StackClone (TArray<T, UI, SI>* stack) {
 
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 uintptr_t* StackClone (TArray<T, UI, SI>* stack, TArray<T, UI, SI>* other) {
-    assert (stack);
-    assert (other);
+    ASSERT (stack);
+    ASSERT (other);
 
     UI this_size   = stack->size_stack,
        other_size  = other->size_stack;
@@ -232,13 +226,13 @@ uintptr_t* StackClone (TArray<T, UI, SI>* stack, TArray<T, UI, SI>* other) {
 
     // We've got enough room in the stack's memory.
 
-    uintptr * read  = reinterpret_cast<uintptr_t*> (StackElements (stack)),
-            * write = reinterpret_cast<uintptr_t*> (StackElements (other));
+    uintptr_t* read  = reinterpret_cast<uintptr_t*> (StackElements (stack)),
+             * write = reinterpret_cast<uintptr_t*> (StackElements (other));
 
     SI count = other->count;
     stack->count = count;
-    UI data_amount = (count * sizeof (T)) >> kWordBitCount;
-    while (data_amount-- > 0)
+    uintptr_t* write_end = write + ((count * sizeof (T)) >> kWordBitCount);
+    while (write < write_end)
         *write++ = *read++;
     return reinterpret_cast<uintptr_t*> (stack);
 }
@@ -246,9 +240,16 @@ uintptr_t* StackClone (TArray<T, UI, SI>* stack, TArray<T, UI, SI>* other) {
 /** Returns the first element in the Stack vector. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 T* StackElements (TArray<T, UI, SI>* stack) {
-    assert (stack);
+    ASSERT (stack);
     return reinterpret_cast<T*> (reinterpret_cast<char*> (stack) + 
                                  sizeof (TArray<T, UI, SI>));
+}
+
+/** Returns the first element in the Stack vector. */
+template<typename T = intptr_t, typename UI = uint, typename SI = int>
+T* StackElementsEnd (TArray<T, UI, SI>* stack) {
+    ASSERT (stack);
+    return StackElements<T, UI, SI> (stack) + stack->count - 1;
 }
 
 /** Inserts the item into the stack at the given index.
@@ -258,10 +259,10 @@ T* StackElements (TArray<T, UI, SI>* stack) {
     @return -1 if a is nil and -2 if the stack is full. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 T StackInsert (TArray<T, UI, SI>* stack, T item, T index) {
-    assert (stack);
-    SI size = stack->count_max,
+    ASSERT (stack);
+    SI size_bytes = stack->count_max,
         count = stack->count;
-    if (count >= size)
+    if (count >= size_bytes)
         return -2;
     T* items = StackElements<T, UI, SI> (This ());
     if (index == count) {
@@ -306,7 +307,7 @@ T StackInsert (TArray<T, UI, SI>* stack, T item, T index) {
     @return True if the index is out of bounds. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 bool StackRemove (TArray<T, UI, SI>* stack, SI index) {
-    assert (stack);
+    ASSERT (stack);
     SI count = stack->count;
     T value;
     if (count == 0) // Nothing to remove!
@@ -339,7 +340,7 @@ bool StackRemove (TArray<T, UI, SI>* stack, SI index) {
     @return The index of the newly stacked item. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 SI StackPush (TArray<T, UI, SI>* stack, T item) {
-    assert (stack);
+    ASSERT (stack);
     SI count_max = stack->count_max,
        count     = stack->count;
     if (count >= count_max)
@@ -356,7 +357,7 @@ SI StackPush (TArray<T, UI, SI>* stack, T item) {
     @return The item popped off the stack. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 T StackPop (TArray<T, UI, SI>* stack) {
-    assert (stack);
+    ASSERT (stack);
     SI count = stack->count;
     if (count == 0) return 0;
     T* items = StackElements<T, UI, SI> (stack);
@@ -371,7 +372,7 @@ T StackPop (TArray<T, UI, SI>* stack) {
     @return The item popped off the stack. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 T StackPeek (TArray<T, UI, SI>* stack) {
-    assert (stack);
+    ASSERT (stack);
     SI count = stack->count;
     if (count == 0) return 0;
     T* items = StackElements<T, UI, SI> (This ());
@@ -385,7 +386,7 @@ T StackPeek (TArray<T, UI, SI>* stack) {
     @return -1 if a is nil and -2 if the index is out of bounds. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 T StackGet (TArray<T, UI, SI>* stack, SI index) {
-    assert (stack);
+    ASSERT (stack);
     if (index >= stack->count)
         return 0;
     char* address = reinterpret_cast<char*> (stack) + sizeof (TArray<T, UI, SI>);
@@ -396,12 +397,12 @@ T StackGet (TArray<T, UI, SI>* stack, SI index) {
     @return false upon failure. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 bool StackContains (TArray<T, UI, SI>* stack, void* address) {
-    assert (stack);
+    ASSERT (stack);
     char* ptr = reinterpret_cast<char*> (stack),
         *adr = reinterpret_cast<char*> (address);
     if (adr < ptr)
         return false;
-    if (adr >= ptr + stack->size)
+    if (adr >= ptr + stack->size_bytes)
         return false;
     return true;
 }
@@ -434,7 +435,7 @@ inline SI StackCountUpperBounds () {
             allocated buffer upon failure.. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 uintptr_t* StackGrow (uintptr_t* buffer) {
-    assert (buffer);
+    ASSERT (buffer);
 
     static SI count_max_auto_size_init = kStackCountMaxDefault;
 
@@ -472,17 +473,22 @@ uintptr_t* StackGrow (uintptr_t* buffer) {
 }
 
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
-Printer& StackPrint (TArray<T, UI, SI>* stack, Printer& print) {
-    assert (stack);
-    SI count = stack->count;
-    print << "\nStack: count: " << count << " count_max:" << stack->count_max
-          << " size_stack:" << stack->size_stack;
-    if (stack->size_array != 0)
-        print << " size_array:invalid";
-    T* elements = StackElements (stack);
-    for (int i = 0; i < count; ++i)
-        print << '\n' << i + 1 << ".) " << elements[i];
-    return print;
+Printer PrintStack (Printer out_, TArray<T, UI, SI>* tarray) {
+    ASSERT (tarray);
+    UI size_array = tarray->size_array;
+    SI count = tarray->count;
+    if (size_array != 0)
+        return out_ << "\n\nStack: count: Invalid size_array!";
+    out_ << "\n\nStack: count: " << count 
+          << " count_max:" << tarray->count_max
+          << " size_stack:" << tarray->size_stack;
+    if (tarray->size_array != 0)
+        out_ << " size_array:invalid";
+    T* elements = StackElements (tarray);
+    for (int i = 0; i < count; ++i) {
+        out_ << '\n' << i + 1 << ".) " << elements[i];
+    }
+    return out_;
 }
 
 /** A stack of data.
@@ -517,10 +523,10 @@ class Stack {
         if (count_max == 0) {
             count_max = 32;
         }
-        UI size = StackSize<T, UI, SI> (count_max);
-        uintptr_t* buffer = new uintptr_t[size >> kWordBitCount];
+        UI size_bytes = StackSize<T, UI, SI> (count_max);
+        uintptr_t* buffer = new uintptr_t[size_bytes >> kWordBitCount];
         buffer_ = buffer;
-        StackInit (buffer, size, count_max);
+        StackInit (buffer, size_bytes, count_max);
     }
 
     Stack (const Stack& other) :
@@ -552,7 +558,7 @@ class Stack {
 
     /** Gets the size of the entire Stack, including header, in bytes. */
     inline UI GetSize () {
-        return This ()->size;
+        return This ()->size_bytes;
     }
     
     /** Gets the min size of the entire Stack, including header, in bytes. */
@@ -591,7 +597,7 @@ class Stack {
             Grow ();
             SI result = StackPush<T, UI, SI> (This (), item);
             Printer p;
-            StackPrint (This (), p) << Etx ();
+            COUT << this;
             if (result < 0)
                 return -1;
             return result;
@@ -648,30 +654,41 @@ class Stack {
         return true;
     }
 
+    /** Prints this object to the given Printer. */
+    inline Printer Print (Printer out_) {
+        return Print (This (), out_);
+    }
+
+    inline TArray<T, UI, SI>* This () {
+        return reinterpret_cast<TArray<T, UI, SI>*> (buffer_);
+    }
+
     inline Stack<T, UI, SI>& operator= (const Stack<T, UI, SI>& other) {
         Clone (other);
         return *this;
-    }
-
-    inline Printer& Print (Printer& print) {
-        return StackPrint (This (), print);
     }
 
     private:
 
     uintptr_t* buffer_; //< Word-aligned socket for the stack.
 
-    inline TArray<T, UI, SI>* This () {
-        return reinterpret_cast<TArray<T, UI, SI>*> (buffer_);
-    }
-
     inline void SetBuffer (TArray<T, UI, SI>* tarray) {
-        assert (tarray);
+        ASSERT (tarray);
         buffer_ = reinterpret_cast<uintptr_t*> (tarray);
     }
 };
 
 }       //< namespace _
 
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+template<typename T = intptr_t, typename UI = uint, typename SI = int>
+inline _::Printer& operator<< (_::Printer& printer, _::Stack<T, UI, SI>* stack) {
+    return _::PrintArray<T, UI, SI> (printer, stack->This ());
+}
+
+template<typename T = intptr_t, typename UI = uint, typename SI = int>
+inline _::Printer& operator<< (_::Printer& printer, _::Stack<T, UI, SI>& stack) {
+    return _::PrintArray<T, UI, SI> (printer, stack.This ());
+}
+
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_STACK

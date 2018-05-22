@@ -20,9 +20,11 @@
 #ifndef HEADER_FOR_CRABS_TYPES
 #define HEADER_FOR_CRABS_TYPES
 
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+
 #include "memory.h"
 
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+typedef uint8_t type_t;
 
 namespace _ {
 
@@ -70,14 +72,14 @@ enum {
 
 /** Checks if the given type is valid.
     @return False if the given type is an 8-bit LST, MAP, BOK, or DIC. */
-inline bool TypeIsValid (char type) {
+inline bool TypeIsValid (type_t type) {
     if (type >= LST && type <= DIC)
         return false;
     return true;
 }
 
 /** Aligns the given pointer to the correct word boundary for the type. */
-void* TypeAlign (uint8_t type, void* value);
+void* TypeAlign (type_t type, void* value);
 
 /** An ROM string for one of the 32 types.
     C++11 variadic templates ensure there is only one copy in of the given
@@ -96,8 +98,13 @@ enum {
 KABUKI const char** TypeStrings ();
 
 /** Returns the name of the given type. */
-inline const char* TypeString (uint_t type) {
+inline const char* TypeString (type_t type) {
     return TypeStrings ()[type & 0x1f];
+}
+
+/** Returns the name of the given type. */
+inline const char* TypeString (uint_t type) {
+    return TypeString ((uint8_t)type);
 }
 
 /** Checks the last char of the text to check if it is a specified char. */
@@ -166,17 +173,6 @@ inline byte TypeMask (byte value) {
     return value & 0x1f;
 }
 
-/** Returns true if this type has a buffer.
-inline bool TypeHasLength (uint_t type) {
-    switch (type) {
-        case STR: return true;
-        case ST2: return true;
-        case ST4: return true;
-        case OBJ: return true;
-    }
-    return false;
-} */
-
 /** Returns true if the given type is an Array type. */
 inline bool TypeIsArray (uint_t type) {
     return type >= kTypeCount;
@@ -188,11 +184,11 @@ inline bool TypeIsSet (uint_t type) {
 }
 
 /** Converts from a 2's complement integer to a signed varint.
-    @param value A 2's complement integer.
-    @return An signed varint.
     A signed varint is an complemented signed integer with the sign in the
     LSb. To convert a negative 2's complement value to positive invert the bits
     and add one.
+    @param  value A 2's complement integer.
+    @return An signed varint.
 */
 template<typename T>
 inline T TypePackVarint (T value) {
@@ -206,9 +202,9 @@ inline T TypePackVarint (T value) {
 }
 
 /** Converts from a signed varint to a 2's complement signed integer.
+    A varint is an complemented signed integer with the sign in the LSb.
     @param  A signed integer casted as an unsigned integer.
-    @return Returns a standard signed integer cased as unsigned.
-    A varint is an complemented signed integer with the sign in the LSb. */
+    @return Returns a standard signed integer cased as unsigned. */
 template<typename T>
 inline T TypeUnpackVarint (T value) {
     T sign_bit = value << (sizeof (T) * 8 - 1);
@@ -224,15 +220,17 @@ inline T TypeUnpackVarint (T value) {
 KABUKI uint_t TypeFixedSize (uint_t type);
 
 /** Gets the next address that a data type may be stored at. */
-KABUKI void* TypeAlign (uint8_t type, void* value);
+KABUKI void* TypeAlign (type_t type, void* value);
 
-KABUKI char* TypeWrite (uint8_t type, char* begin, char* end, const char* source);
+/** Writes the given value to the socket. */
+KABUKI char* Write (char* begin, char* end, type_t type, const void* source);
 
-inline bool TypeIsObject (uint8_t type) {
+/** Returns true if the given type is an ASCII Object. */
+inline bool TypeIsObject (type_t type) {
     if (type < OBJ) return false;
     return true;
 }
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_TYPES

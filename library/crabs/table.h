@@ -163,7 +163,7 @@ KABUKI byte TableAdd (Table* table, const char* key) {
         pile_size,
         key_length = static_cast<uint16_t> (SlotLength (key));
 
-    #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+    #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
     PRINTF (PrintLine () << "Adding Key " << key << ':' << key_length
         << '\n' << PrintRight ("hashes"     , 20) << ':' << PrintHex (hashes)
         << '\n' << PrintRight ("key_offsets", 20) << ':' << PrintHex (key_offsets)
@@ -176,13 +176,13 @@ KABUKI byte TableAdd (Table* table, const char* key) {
         current_hash;
 
     if (key_length > value) {
-    #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+    #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
         Write ("Buffer overflow\n");
     #endif
         return ~(byte)0;
     }
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
     TablePrint (table);
 #endif
 
@@ -195,7 +195,7 @@ KABUKI byte TableAdd (Table* table, const char* key) {
         destination = keys - key_length;
 
         SlotWrite (destination, key);
-    #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+    #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
         PRINTF ("\nInserted key " << key << " at GetAddress "
                  << out.Pointer (destination));
         TablePrint (table, out);
@@ -206,13 +206,13 @@ KABUKI byte TableAdd (Table* table, const char* key) {
     // Calculate left over buffer size by looking up last char.
 
     if (key_length >= value) {
-    #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+    #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
         Print ("Not enough room in buffer!\n");
     #endif
         return 0;   //< There isn't enough room left in the buffer.
     }
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
     Write ("Finding insert location... \n");
 #endif
 
@@ -227,7 +227,7 @@ KABUKI byte TableAdd (Table* table, const char* key) {
         mid = (low + high) >> 1;        //< Shift >> 1 to / 2
 
         current_hash = hashes[mid];
-    #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+    #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
         Write ("high: " << high << " mid: " << mid < " low " << low << " hash: "
               << current_hash);
     #endif
@@ -240,7 +240,7 @@ KABUKI byte TableAdd (Table* table, const char* key) {
         }
         else    // Duplicate hash detected.
         {
-        #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+        #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
             Write ("hash detected, ");
         #endif
 
@@ -248,12 +248,12 @@ KABUKI byte TableAdd (Table* table, const char* key) {
 
             index = indexes[mid];       //< Index in the collision table.
 
-        #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+        #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
             PRINTF ("index:" << index);
         #endif
 
             if (index != kInvalidIndex) { //< There are other collisions.
-            #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+            #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
                 Write ("with collisions, ");
             #endif
                 // There was a collision so check the table.
@@ -266,11 +266,11 @@ KABUKI byte TableAdd (Table* table, const char* key) {
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;  //< Load the index in the collision table.
                 while (index < kInvalidIndex) {
-                #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+                #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
                     Write ("comparing to \"" << keys - key_offsets[index] << "\" ");
                 #endif
                     if (SlotEquals (key, keys - key_offsets[index])) {
-                    #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+                    #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
                         PRINTF ("but table already contains key at "
                               "offset:" << index);
                     #endif
@@ -281,7 +281,7 @@ KABUKI byte TableAdd (Table* table, const char* key) {
                 }
 
                 // Its a new collision!
-            #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+            #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
                 Write ("and new collision detected.\n");
             #endif
 
@@ -304,7 +304,7 @@ KABUKI byte TableAdd (Table* table, const char* key) {
                 *temp_ptr = num_keys;
 
                 table->pile_size = pile_size + 1;
-            #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+            #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
                 Write ("\ncollision index: " << temp);
             #endif
                 // Store the collision index.
@@ -318,7 +318,7 @@ KABUKI byte TableAdd (Table* table, const char* key) {
                 //< Add the newest char to the end.
                 indexes[num_keys] = num_keys;
 
-            #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+            #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
                 TablePrint (table);
                 Write ("Done inserting.\n";
             #endif
@@ -329,17 +329,17 @@ KABUKI byte TableAdd (Table* table, const char* key) {
 
             index = unsorted_indexes[mid];
 
-        #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+        #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
             Write ("Checking if " << index << " is a collision...";
         #endif
             if (!SlotEquals (key, keys - key_offsets[index])) {
                 // It's a new collision!
-            #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+            #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
                 Write ("It's a new collision!\n";
             #endif
 
                 if (value < 3) {
-                #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+                #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
                     Write ("Buffer overflow!\n";
                 #endif
                     return kInvalidIndex;
@@ -350,7 +350,7 @@ KABUKI byte TableAdd (Table* table, const char* key) {
 
                 byte collision_index = unsorted_indexes[mid];
                 SlotWrite (keys - value, key);
-            #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+            #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
                 PRINTF ("Inserting value: " << value << " into index:" <<
                       index << "num_keys:" << num_keys <<
                       " with other collision_index:" << collision_index);
@@ -381,14 +381,14 @@ KABUKI byte TableAdd (Table* table, const char* key) {
 
                 table->num_keys = num_keys + 1;
 
-            #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+            #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
                 TablePrint (table);
                 Write ("Done inserting.\n";
             #endif
                 // Then it was a collision so the table doesn't contain string.
                 return num_keys;
             }
-        #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+        #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
             Write ("table already contains the key";
         #endif
             return index;
@@ -400,7 +400,7 @@ KABUKI byte TableAdd (Table* table, const char* key) {
     value = key_offsets[num_keys - 1] + key_length + 1;
     destination = keys - value;
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
     Write ("\nThe hash " << PrintHex (hash) << " was not in the table so inserting "
           << key << "into mid:" << mid <<
           " at index " << destination - reinterpret_cast<char*> (table) <<
@@ -414,14 +414,14 @@ KABUKI byte TableAdd (Table* table, const char* key) {
     // Second move up the hashes and insert at the insertion point.
     uint16_t* hash_ptr = hashes + num_keys;
     //*test = hashes;
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
     Write ("l_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u\n",
           num_keys, hashes - reinterpret_cast<uint16_t*> (table),
           hash_ptr - reinterpret_cast<uint16_t*> (table), hashes + mid -
           reinterpret_cast<uint16_t*> (table));
 #endif
     hashes += mid;
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
     TablePrint (table);
 #endif
     while (hash_ptr > hashes) {
@@ -446,7 +446,7 @@ KABUKI byte TableAdd (Table* table, const char* key) {
 
     table->num_keys = num_keys + 1;
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
     TablePrint (table);
     Write ("Done inserting.\n");
     PrintLine ();
@@ -461,7 +461,7 @@ template<typename Index, typename UI>
 KABUKI byte TableFind (const Table* table, const char* key) {
     if (table == nullptr)
         return 0;
-    #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+    #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
     PrintLineBreak ("Finding record...", 5);
     #endif
     int index,
@@ -489,23 +489,23 @@ KABUKI byte TableFind (const Table* table, const char* key) {
 
     uint16_t hash = Hash16 (key);
 
-    #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+    #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
     Write ("\nSearching for key \"%s\" with hash 0x%x\n", key, hash);
     #endif
 
     if (num_keys == 1) {
-        #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+        #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
         Write ("Comparing keys - key_offsets[0] - this %u\n%s\n", (keys -
               key_offsets[0]) - reinterpret_cast<const char*> (table), keys -
               key_offsets[0]);
         #endif
         if (!SlotEquals (key, keys - key_offsets[0])) {
-            #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+            #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
             Write ("Did not find key %s\n", key);
             #endif
             return kInvalidIndex;
         }
-        #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+        #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
         Write ("Found key %s\n", key);
         PrintLine ();
         #endif
@@ -523,7 +523,7 @@ KABUKI byte TableFind (const Table* table, const char* key) {
         mid = (low + high) >> 1;    //< >> 1 to /2
 
         uint16_t current_hash = hashes[mid];
-        #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+        #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
         Write ("low: %i mid: %i high %i hashes[mid]:%x\n", low, mid,
               high, hashes[mid]);
         #endif
@@ -559,12 +559,12 @@ KABUKI byte TableFind (const Table* table, const char* key) {
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;
                 while (index != kInvalidIndex) {
-                    #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+                    #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
                     Write ("comparing to \"%s\"\n", keys -
                           key_offsets[index]);
                     #endif
                     if (SlotEquals (key, keys - key_offsets[index])) {
-                    #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+                    #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
                         Write ("Table already contains key at offset:"
                               "%u.\n", index);
                     #endif
@@ -573,7 +573,7 @@ KABUKI byte TableFind (const Table* table, const char* key) {
                     ++temp_ptr;
                     index = *temp_ptr;
                 }
-                #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+                #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
                 Write ("Did not find " << key << '\n';
                 #endif
                 return kInvalidIndex;
@@ -587,7 +587,7 @@ KABUKI byte TableFind (const Table* table, const char* key) {
             indexes += max_keys;
             index = unsorted_indexes[mid];
 
-            #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+            #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
             PRINTF ("\nmid:" << mid << "-" << hashes[mid] << 
                   " unsorted_indexes: " << index << " key:\"" << 
                   keys - key_offsets[index] << "\" hash:" << 
@@ -596,19 +596,19 @@ KABUKI byte TableFind (const Table* table, const char* key) {
 
             if (!SlotEquals (key, keys - key_offsets[index])) {
                 //< It was a collision so the table doesn't contain string.
-                #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+                #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
                 Write (" but it was a collision and did not find key.");
                 #endif
                 return kInvalidIndex;
             }
 
-        #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+        #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
             Write ("; found key at mid: " << mid << '\n';
         #endif
             return index;
         }
     }
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 5
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
     Write ("; didn't find a hash for key " << key << '\n';
 #endif
     PrintLine ();
@@ -692,5 +692,5 @@ KABUKI void TablePrint (Table* table) {
 #endif
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #endif  //< HEADER_FOR_CRABS_TABLE

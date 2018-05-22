@@ -17,53 +17,46 @@
 #ifndef HEADER_FOR_GLOBAL
 #define HEADER_FOR_GLOBAL
 
-#ifndef LARGEST_INT
-// Largest value possible to store in int type.
-#define LARGEST_INT            2147483647   //< Use this for 32-bit CPUs
-//#define LARGEST_INT          32767        //< Use this for 16-bit CPUs
-#endif
-#define USING_KABUKI_CRABS     1
-#define USING_KABUKI_SERIAL    2
-#define USING_KABUKI_WEB       3
-#define USING_KABUKI_DATA      4
-#define USING_KABUKI_STORE     4
-#define USING_KABUKI_MATH      5
-#define USING_KABUKI_ID        6
-#define USING_KABUKI_PRO       7
-#define USING_KABUKI_HMI       8
-#define USING_KABUKI_MIDI      8
-#define USING_KABUKI_AL        9
-#define USING_KABUKI_APP       10
-#define USING_KABUKI_SLOTH     11
-#define USING_KABUKI_FILE      11
-#define USING_KABUKI_AIML      17
-#define USING_ALL              LARGEST_INT  //< Largest signed integer 2^31-1.
+#define USING_KABUKI_CRABS      1
+#define USING_KABUKI_SERIAL     2
+#define USING_KABUKI_WEB        3
+#define USING_KABUKI_DATA       4
+#define USING_KABUKI_STORE      4
+#define USING_KABUKI_MATH       5
+#define USING_KABUKI_ID         6
+#define USING_KABUKI_PRO        7
+#define USING_KABUKI_HMI        8
+#define USING_KABUKI_MIDI       8
+#define USING_KABUKI_AL         9
+#define USING_KABUKI_APP        10
+#define USING_KABUKI_SLOTH      11
+#define USING_KABUKI_FILE       11
+#define USING_KABUKI_AIML       17
+#define USING_ALL               LARGEST_INT  //< Largest signed integer 2^31-1.
 
 #include "crabs/global.h"
-
 #if MAJOR_SEAM >= 2
-#include "kabuki/hmi/global.h"
-#include "kabuki/midi/global.h"
-#include "kabuki/serial/global.h"
+#include "kabuki/toolkit/hmi/global.h"
+#include "kabuki/toolkit/midi/global.h"
+#include "kabuki/toolkit/serial/global.h"
 #elif MAJOR_SEAM >= 3
-#include "kabuki/pro/global.h"
+#include "kabuki/toolkit/pro/global.h"
 #elif MAJOR_SEAM >= 4
 #elif MAJOR_SEAM >= 5
-#include "ican3/global.h"
 #elif MAJOR_SEAM >= 6
-#include "kabuki/al/global.h"
+#include "kabuki/toolkit/al/global.h"
 #elif MAJOR_SEAM >= 7
-#include "kabuki/code/global.h"
-#include "kabuki/file/global.h"
+#include "kabuki/toolkit/code/global.h"
+#include "kabuki/toolkit/file/global.h"
 #elif MAJOR_SEAM >= 8
-#include "kabuki/gl/global.h"
-#include "kabuki/gui/global.h"
+#include "kabuki/toolkit/gl/global.h"
+#include "kabuki/toolkit/gui/global.h"
 #elif MAJOR_SEAM >= 9
 #include "kabuki/math/global.h"
-#include "kabuki/pro/global.h"
+#include "kabuki/toolkit/pro/global.h"
 #elif MAJOR_SEAM >= 10
-#include "kabuki/store/global.h"
+#include "kabuki/toolkit/store/global.h"
 #elif MAJOR_SEAM >= 18
-#include "kabuki/aiml/global.h"
+#include "kabuki/toolkit/aiml/global.h"
 #endif
 #endif  //< HEADER_FOR_GLOBAL
