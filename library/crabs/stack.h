@@ -473,22 +473,22 @@ uintptr_t* StackGrow (uintptr_t* buffer) {
 }
 
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
-Printer PrintStack (Printer out_, TArray<T, UI, SI>* tarray) {
+Printer& PrintStack (Printer& print, TArray<T, UI, SI>* tarray) {
     ASSERT (tarray);
     UI size_array = tarray->size_array;
     SI count = tarray->count;
     if (size_array != 0)
-        return out_ << "\n\nStack: count: Invalid size_array!";
-    out_ << "\n\nStack: count: " << count 
+        return print << "\n\nStack: count: Invalid size_array!";
+    print << "\n\nStack: count: " << count 
           << " count_max:" << tarray->count_max
           << " size_stack:" << tarray->size_stack;
     if (tarray->size_array != 0)
-        out_ << " size_array:invalid";
+        print << " size_array:invalid";
     T* elements = StackElements (tarray);
     for (int i = 0; i < count; ++i) {
-        out_ << '\n' << i + 1 << ".) " << elements[i];
+        print << '\n' << i + 1 << ".) " << elements[i];
     }
-    return out_;
+    return print;
 }
 
 /** A stack of data.
@@ -596,7 +596,6 @@ class Stack {
             //printf (" and growing.");
             Grow ();
             SI result = StackPush<T, UI, SI> (This (), item);
-            Printer p;
             COUT << this;
             if (result < 0)
                 return -1;
@@ -655,7 +654,7 @@ class Stack {
     }
 
     /** Prints this object to the given Printer. */
-    inline Printer Print (Printer out_) {
+    inline Printer& Print (Printer out_) {
         return Print (This (), out_);
     }
 
@@ -679,16 +678,6 @@ class Stack {
 };
 
 }       //< namespace _
-
-template<typename T = intptr_t, typename UI = uint, typename SI = int>
-inline _::Printer& operator<< (_::Printer& printer, _::Stack<T, UI, SI>* stack) {
-    return _::PrintArray<T, UI, SI> (printer, stack->This ());
-}
-
-template<typename T = intptr_t, typename UI = uint, typename SI = int>
-inline _::Printer& operator<< (_::Printer& printer, _::Stack<T, UI, SI>& stack) {
-    return _::PrintArray<T, UI, SI> (printer, stack.This ());
-}
 
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_STACK

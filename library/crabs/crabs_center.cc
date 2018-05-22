@@ -44,9 +44,9 @@ Center::Center (const char* string, int num_columns) :
     ASSERT (num_columns > 0);
 }
 
-Printer Center::Print (Printer out_) {
-    char* cursor = out_.cursor,
-        * end    = out_.end;
+Printer& Center::Print (Printer& print) {
+    char* cursor = print.cursor,
+        * end    = print.end;
     ASSERT (cursor);
     ASSERT (string);
     ASSERT ((cursor < end))
@@ -70,8 +70,8 @@ Printer Center::Print (Printer out_) {
                 *cursor++ = '.';
             }
             *cursor = 0;
-            out_.cursor = cursor;
-            return out_;
+            print.cursor = cursor;
+            return print;
         }
     offset = (num_columns - length) >> 1; //< >> 1 to /2
     length = num_columns - length - offset;
@@ -89,8 +89,8 @@ Printer Center::Print (Printer out_) {
         *cursor++ = ' ';
     *cursor = 0;
     PRINTF ("\n    Printed:\"%s\"", string);
-    out_.cursor = cursor;
-    return out_;
+    print.cursor = cursor;
+    return print;
 }
 
 }       //< namespace _

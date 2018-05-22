@@ -101,7 +101,7 @@ TEST (SEAM_1_2, SEAM_1_2A) {
     char        buffer[kSize + 1],
                 buffer_b[kSize + 1];
 
-    Printer out_ (buffer, kSize);
+    Printer print (buffer, kSize);
 
     for (int i = 0; i < kNumCompareStrings; ++i) {
         end = Print (buffer, buffer + kSize, test_strings[i][0]);
@@ -187,19 +187,19 @@ TEST (SEAM_1_2, SEAM_1_2A) {
     for (int i = 0; i < 4; ++i)
         PRINTF ("\n    %i.)\"%s\"", i, kStringsCentered[i]);
 
-    out_.Set (buffer) << Center (kStringNumbers, 10);
+    print.Set (buffer) << Center (kStringNumbers, 10);
     STRCMP_EQUAL (kStringNumbers, buffer)
         
-    out_.Set (buffer) << Center (kStringNumbers, 11);
+    print.Set (buffer) << Center (kStringNumbers, 11);
     STRCMP_EQUAL (kStringsCentered[0], buffer)
         
-    out_.Set (buffer) << Center (kStringNumbers, 12);
+    print.Set (buffer) << Center (kStringNumbers, 12);
     STRCMP_EQUAL (kStringsCentered[1], buffer)
         
-    out_.Set (buffer) << Center (kStringNumbers, 13);
+    print.Set (buffer) << Center (kStringNumbers, 13);
     STRCMP_EQUAL (kStringsCentered[2], buffer)
         
-    out_.Set (buffer) << Center (kStringNumbers, 6);
+    print.Set (buffer) << Center (kStringNumbers, 6);
     STRCMP_EQUAL (kStringsCentered[3], buffer)
         
     PRINT_HEADING ('-')

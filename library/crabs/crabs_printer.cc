@@ -39,23 +39,29 @@
 
 namespace _ {
 
-Printer::Printer (char* cursor, size_t buffer_size) :
-    cursor (cursor),
-    end (cursor + buffer_size - 1) {
-    ASSERT (cursor)
+Printer::Printer (char* begin, size_t buffer_size) :
+    cursor (begin),
+    end    (begin + buffer_size - 1) {
+    ASSERT (begin)
     ASSERT (buffer_size)
 }
 
 Printer::Printer (char* begin, char* end) :
     cursor (begin),
-    end (end) {
+    end    (end) {
+    ASSERT (begin)
     ASSERT (cursor < end)
 }
 
 Printer::Printer (const Printer& other) :
     cursor (other.cursor),
-    end (other.end) {
-    // Nothing to do here! ({:-)-+=<
+    end    (other.end) {
+    ASSERT (cursor)
+    ASSERT (end)
+}
+
+Printer& Printer::Set (char* new_cursor) {
+    cursor = new_cursor;
 }
 
 char* Print (char* cursor, char* end, const char* string) {
@@ -69,36 +75,33 @@ char* Print (char* cursor, char* end, const char* string) {
     char c = *string++;
     while (c) {
         *cursor++ = c;
-        if (cursor >= end) {
+        if (cursor >= end)
             return nullptr;
-        }
         c = *string++;
     }
     *cursor = 0;
     return cursor;
 }
 
-char* Print (char* cursor, char* end, const char* string, const char* string_end) {
+char* Print (char* cursor, char* end, const char* string, 
+             const char* string_end) {
     ASSERT (string)
     ASSERT (string_end)
     ASSERT (cursor)
     ASSERT (end);
 
-    if (cursor >= end) {
+    if (cursor >= end)
         cursor = nullptr;
-    }
-    if (string >= string_end) {
+    if (string >= string_end)
         return nullptr;
-    }
 
     char c = *string;
     while (c) {
-        if (!c) {
+        if (!c)
             return nullptr;
-        }
         *cursor = c;
         if (++cursor >= end) {
-            *cursor = 0;
+            *end = 0;
             return nullptr;
         }
         if (++string >= string_end) {

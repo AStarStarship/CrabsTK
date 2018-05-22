@@ -151,8 +151,8 @@ inline const uint_t* Params () {
     return &kSize;
 }
 
-/**  Prints out the parameters. */
-KABUKI Printer PrintBsq (Printer out_, const uint_t* params);
+/** Prints out the BSQ parameters. */
+KABUKI _::Printer& PrintBsq (_::Printer& printer, const uint_t* params);
 
 /**  Prints out the parameters. */
 //KABUKI Printer PrintBsq (const uint_t* bsq, Printer print);
@@ -163,12 +163,8 @@ KABUKI uint_t BsqParamNumber (const uint_t* bsq, int param_number);
 }       //< namespace _
 
 /**  Prints out the parameters. */
-_::Printer& operator<< (_::Printer& out_, _::Bsq bsq) {
-    if (!bsq.params || !out_.cursor || out_.cursor >= out_.end) {
-        return out_;
-    }
-
-    return _::PrintBsq (out_, bsq.params);
+inline _::Printer& operator<< (_::Printer& printer, _::Bsq bsq) {
+    return _::PrintBsq (printer, bsq.params);
 }
 
 #endif  //< HEADER_FOR_CRABS_BSQ

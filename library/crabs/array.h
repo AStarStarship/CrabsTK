@@ -140,17 +140,17 @@ SI* ArrayDimensionsEnd (TArray<T, UI, SI>* tarray) {
 
 /** Prints the TArray to the Printer. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
-Printer PrintArray (Printer out_, TArray<T, UI, SI>* tarray) {
+Printer& PrintArray (Printer& print, TArray<T, UI, SI>* tarray) {
     ASSERT (tarray)
     UI size_array = tarray->size_array;
     SI count = tarray->count;
     if (size_array == 0) {
-        return PrintStack<T, UI, SI> (out_, tarray);
+        return PrintStack<T, UI, SI> (print, tarray);
     }
     if (count <= 0)
-        return out_ << "Array: Error! Dimension count must be positive!";
+        print << "Array: Error! Dimension count must be positive!";
 
-    out_ << "\n\nArray: dimension_count: " << count 
+    print << "\n\nArray: dimension_count: " << count 
           << " count_max:"  << tarray->count_max 
           << " size_stack:" << tarray->size_stack
           << " size_array:" << tarray->size_array << "\nDimensions:\n";
@@ -163,13 +163,13 @@ Printer PrintArray (Printer out_, TArray<T, UI, SI>* tarray) {
         SI dimension = *dimensions++;
         element_count *= dimension;
         if (element_count > ArrayElementCountMax<T, UI, SI> ())
-            return out_ << "Max element count exceeded";
+            return print << "Max element count exceeded";
         if (dimensions == dimensions_end)
-            out_ << dimension << '\n';
+            print << dimension << '\n';
         else
-            out_ << dimension << ", ";
+            print << dimension << ", ";
     }
-    return out_;
+    return print;
 }
 
 /** Creates a immutable array of dimensions. */
@@ -254,5 +254,16 @@ class Array {
     uintptr_t* buffer_; //< Dynamically allocted word-aligned buffer.
 };      //< class Array
 }       //< namespace _
+
+template<typename T = intptr_t, typename UI = uint, typename SI = int>
+inline _::Printer& operator<< (_::Printer& printer, _::Stack<T, UI, SI>* stack) {
+    return _::PrintArray<T, UI, SI> (printer, stack->This ());
+}
+
+template<typename T = intptr_t, typename UI = uint, typename SI = int>
+inline _::Printer& operator<< (_::Printer& printer, _::Stack<T, UI, SI>& stack) {
+    return _::PrintArray<T, UI, SI> (printer, stack.This ());
+}
+
 #endif  //< HEADER_FOR_CRABS_ARRAY
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

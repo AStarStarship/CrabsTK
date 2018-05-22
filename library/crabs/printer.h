@@ -17,8 +17,11 @@
 #include <stdafx.h>
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
+#ifndef HEADER_FOR_CRABS_PRINTER
+#define HEADER_FOR_CRABS_PRINTER
 
 #include "print_to_ascii.h"
+#include "text.h"
 
 namespace _ {
 
@@ -49,6 +52,8 @@ struct KABUKI Printer {
 
     /** Clones the other print. */
     Printer (const Printer& other);
+
+    Printer& Set (char* cursor);
 };
 
 /** Utility class for printing numbers. */
@@ -91,7 +96,7 @@ class Console {
     }
 
     /** Gets the Printer. */
-    inline Printer Print () {
+    inline Printer& Print () {
         return out_;
     }
 
@@ -128,144 +133,109 @@ KABUKI char* Print (char* cursor, char* end, char character);
     @param  printer The print.
     @param  value   The value to print. 
     @return The printer. */
-inline _::Printer& operator<< (_::Printer& p, const char* string) {
-    char* cursor = _::Print (p.cursor, p.end, string);
+inline _::Printer& operator<< (_::Printer& printer, const char* string) {
+    char* cursor = _::Print (printer.cursor, printer.end, string);
     if (!cursor)
-        return p;
-    p.cursor = cursor;
-    return p;
+        return printer;
+    printer.cursor = cursor;
+    return printer;
 }
 
 /** Writes the given value to the print.
     @param  printer The print.
     @param  value   The value to print. 
     @return The printer. */
-inline _::Printer& operator<< (_::Printer& p, char value) {
-    char* cursor = _::Print (p.cursor, p.end, value);
+inline _::Printer& operator<< (_::Printer& printer, char value) {
+    char* cursor = _::Print (printer.cursor, printer.end, value);
     if (!cursor)
-        return p;
-    p.cursor = cursor;
-    return p;
-}
-
-/** Writes the given value to the print.
-    @param  print The Printer to print to.
-    @param  value The value to write to the print. 
-    @return The print. */
-inline _::Printer& operator<< (_::Printer& p, int32_t value) {
-    char* cursor = _::Print (p.cursor, p.end, value);
-    if (!cursor)
-        return p;
-    p.cursor = cursor;
-    return p;
+        return printer;
+    printer.cursor = cursor;
+    return printer;
 }
 
 /** Writes the given value to the print.
     @param  printer The print.
     @param  value The value to write to the print. 
     @return The print. */
-inline _::Printer& operator<< (_::Printer& p, uint32_t value) {
-    char* cursor = _::Print (p.cursor, p.end, value);
+inline _::Printer& operator<< (_::Printer& printer, int32_t value) {
+    char* cursor = _::Print (printer.cursor, printer.end, value);
     if (!cursor)
-        return p;
-    p.cursor = cursor;
-    return p;
+        return printer;
+    printer.cursor = cursor;
+    return printer;
 }
 
 /** Writes the given value to the print.
     @param  printer The print.
     @param  value The value to write to the print. 
     @return The print. */
-inline _::Printer& operator<< (_::Printer& p, int64_t value) {
-    char* cursor = _::Print (p.cursor, p.end, value);
+inline _::Printer& operator<< (_::Printer& printer, uint32_t value) {
+    char* cursor = _::Print (printer.cursor, printer.end, value);
     if (!cursor)
-        return p;
-    p.cursor = cursor;
-    return p;
+        return printer;
+    printer.cursor = cursor;
+    return printer;
 }
 
 /** Writes the given value to the print.
     @param  printer The print.
     @param  value The value to write to the print. 
     @return The print. */
-inline _::Printer& operator<< (_::Printer& p, uint64_t value) {
-    char* cursor = _::Print (p.cursor, p.end, value);
+inline _::Printer& operator<< (_::Printer& printer, int64_t value) {
+    char* cursor = _::Print (printer.cursor, printer.end, value);
     if (!cursor)
-        return p;
-    p.cursor = cursor;
-    return p;
+        return printer;
+    printer.cursor = cursor;
+    return printer;
 }
 
 /** Writes the given value to the print.
     @param  printer The print.
     @param  value The value to write to the print. 
     @return The print. */
-inline _::Printer& operator<< (_::Printer& p, int32_t value) {
-    char* cursor = _::Print (p.cursor, p.end, value);
+inline _::Printer& operator<< (_::Printer& printer, uint64_t value) {
+    char* cursor = _::Print (printer.cursor, printer.end, value);
     if (!cursor)
-        return p;
-    p.cursor = cursor;
-    return p;
+        return printer;
+    printer.cursor = cursor;
+    return printer;
 }
 
 /** Writes the given value to the print.
     @param  printer The print.
     @param  value The value to write to the print. 
     @return The print. */
-inline _::Printer& operator<< (_::Printer& p, uint32_t value) {
-    char* cursor = _::Print (p.cursor, p.end, value);
+inline _::Printer& operator<< (_::Printer& printer, float value) {
+    char* cursor = _::Print (printer.cursor, printer.end, value);
     if (!cursor)
-        return p;
-    p.cursor = cursor;
-    return p;
+        return printer;
+    printer.cursor = cursor;
+    return printer;
 }
 
 /** Writes the given value to the print.
     @param  printer The print.
     @param  value The value to write to the print. 
     @return The print. */
-inline _::Printer& operator<< (_::Printer& p, int64_t value) {
-    char* cursor = _::Print (p.cursor, p.end, value);
+inline _::Printer& operator<< (_::Printer printer, float value) {
+    char* cursor = _::Print (printer.cursor, printer.end, value);
     if (!cursor)
-        return p;
-    p.cursor = cursor;
-    return p;
+        return printer;
+    printer.cursor = cursor;
+    return printer;
 }
 
 /** Writes the given value to the print.
     @param  printer The print.
     @param  value The value to write to the print. 
     @return The print. */
-inline _::Printer& operator<< (_::Printer& p, uint64_t value) {
-    char* cursor = _::Print (p.cursor, p.end, value);
+inline _::Printer& operator<< (_::Printer& printer, double value) {
+    char* cursor = _::Print (printer.cursor, printer.end, value);
     if (!cursor)
-        return p;
-    p.cursor = cursor;
-    return p;
+        return printer;
+    printer.cursor = cursor;
+    return printer;
 }
 
-/** Writes the given value to the print.
-    @param  printer The print.
-    @param  value The value to write to the print. 
-    @return The print. */
-inline _::Printer& operator<< (_::Printer& p, float value) {
-    char* cursor = _::Print (p.cursor, p.end, value);
-    if (!cursor)
-        return p;
-    p.cursor = cursor;
-    return p;
-}
-
-/** Writes the given value to the print.
-    @param  printer The print.
-    @param  value The value to write to the print. 
-    @return The print. */
-inline _::Printer& operator<< (_::Printer& p, double value) {
-    char* cursor = _::Print (p.cursor, p.end, value);
-    if (!cursor)
-        return p;
-    p.cursor = cursor;
-    return p;
-}
-
+#endif  //< #if HEADER_FOR_CRABS_PRINTER
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1

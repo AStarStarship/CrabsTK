@@ -50,37 +50,37 @@ uint_t BsqParamNumber (const uint_t* params, int param_number) {
     return params[i];
 }
 
-Printer PrintBsq (Printer out_, const uint_t* params) {
+Printer& PrintBsq (Printer& print, const uint_t* params) {
     uint_t num_params = *params++,
            i,
            type,
            value = 0;
 
-    out_ << "Param<";
+    print << "Param<";
     if (num_params > _::kParamsMax) {
-        out_ << "\nInvalid num_params: " << num_params;
-        return out_;
+        print << "\nInvalid num_params: " << num_params;
+        return print;
     }
-    out_ << num_params << ": ";
+    print << num_params << ": ";
     for (i = 1; i < num_params; ++i) {
         value = *params++;
         type = value & 0x1f;    //< Mask off type.
         value = value >> 5;     //< Shift over array type.
-        out_ << TypeString ((type_t)value) << ", ";
+        print << TypeString ((type_t)value) << ", ";
         if (type >= STR) {
             if (value) {
-                out_ << "\nError: arrays may only be created from POD "
+                print << "\nError: arrays may only be created from POD "
                          "types.";
-                return out_;
+                return print;
             }
             // Print out the max length of the string.
             ++i;
             value = *params++;
-            out_ << value;
+            print << value;
         }
         else if (value > 31) {
             if (value > 127) {      //< It's a multi-dimensional array.
-                out_ << "Multi-dimensional Array:" << value << ", ";
+                print << "Multi-dimensional Array:" << value << ", ";
             }
             // Then it's an array.
             ++i;
@@ -90,67 +90,67 @@ Printer PrintBsq (Printer out_, const uint_t* params) {
                 }
                 case 1: {
                     value = *params++;
-                    out_ << "UI1:" << value << ", ";
+                    print << "UI1:" << value << ", ";
                     break;
                 }
                 case 2: {
                     value = *params++;
-                    out_ << "UI2:" << value << ", ";
+                    print << "UI2:" << value << ", ";
                     break;
                 }
                 case 3: {
                     value = *params++;
-                    out_ << "UI4:" << value << ", ";
+                    print << "UI4:" << value << ", ";
                     break;
                 }
                 case 4: {
                     value = *params++;
-                    out_ << "UI8:" << value << ", ";
+                    print << "UI8:" << value << ", ";
                     break;
                 }
                 case 5: {
                     value = *params++;
                     if (value == 0) {
-                        out_ << "UI1:[0]";
+                        print << "UI1:[0]";
                         break;
                     }
-                    out_ << "UI1:[" << value << ": ";
+                    print << "UI1:[" << value << ": ";
                     for (uint_t i = value; i != 0; --i) {
                         value = *params++;
-                        out_ << value << ", ";
+                        print << value << ", ";
                     }
                     value = *params++;
-                    out_ << value << "]";
+                    print << value << "]";
                     break;
                 }
                 case 6: {
                     value = *params++;
                     if (value == 0) {
-                        out_ << "UI2:[0]";
+                        print << "UI2:[0]";
                         break;
                     }
-                    out_ << "UI2:[" << value << ": ";
+                    print << "UI2:[" << value << ": ";
                     for (uint_t i = value; i != 0; --i) {
                         value = *params++;
-                        out_ << value << ", ";
+                        print << value << ", ";
                     }
                     value = *params++;
-                    out_ << value << "]";
+                    print << value << "]";
                     break;
                 }
                 case 7: {
                     value = *params++;
                     if (value == 0) {
-                        out_ << "UI4:[0]";
+                        print << "UI4:[0]";
                         break;
                     }
-                    out_ << "UI4:[" << value << ": ";
+                    print << "UI4:[" << value << ": ";
                     for (uint_t i = value; i != 0; --i) {
                         value = *params++;
-                        out_ << value << ", ";
+                        print << value << ", ";
                     }
                     value = *params++;
-                    out_ << value << "]";
+                    print << value << "]";
                     break;
                 }
             }
@@ -158,11 +158,11 @@ Printer PrintBsq (Printer out_, const uint_t* params) {
     }
     // Do the last set without a comma.
     value = *params++;
-    out_ << TypeString (value) << ", ";
+    print << TypeString (value) << ", ";
     if (value == STR) {
         ++i;
         value = *params++;
-        out_ << value;
+        print << value;
     }
     else if (value > 31) {
         // Then it's an array.
@@ -170,86 +170,78 @@ Printer PrintBsq (Printer out_, const uint_t* params) {
         value = value >> 5;     //< Shift over array type.
         ++i;
         switch (value) {
-            case 0:
-            {
+            case 0: {
                 break;
             }
-            case 1:
-            {
+            case 1: {
                 value = *params++;
-                out_ << "UI1:" << value << ", ";
+                print << "UI1:" << value << ", ";
                 break;
             }
-            case 2:
-            {
+            case 2: {
                 value = *params++;
-                out_ << "UI2:" << value << ", ";
+                print << "UI2:" << value << ", ";
                 break;
             }
-            case 3:
-            {
+            case 3: {
                 value = *params++;
-                out_ << "UI4:" << value << ", ";
+                print << "UI4:" << value << ", ";
                 break;
             }
-            case 4:
-            {
+            case 4: {
                 value = *params++;
-                out_ << "UI5:" << value << ", ";
+                print << "UI5:" << value << ", ";
                 break;
             }
-            case 5:
-            {
+            case 5: {
                 value = *params++;
                 if (value == 0) {
-                    out_ << "UI1:[0]";
+                    print << "UI1:[0]";
                     break;
                 }
-                out_ << "UI1:[" << value << ": ";
+                print << "UI1:[" << value << ": ";
                 for (uint_t i = value; i != 0; --i) {
                     value = *params++;
-                    out_ << value << ", ";
+                    print << value << ", ";
                 }
                 value = *params++;
-                out_ << value << "]";
+                print << value << "]";
                 break;
             }
-            case 6:
-            {
+            case 6: {
                 value = *params++;
                 if (value == 0) {
-                    out_ << "UI2:[0]";
+                    print << "UI2:[0]";
                     break;
                 }
-                out_ << "UI2:[" << value << ": ";
+                print << "UI2:[" << value << ": ";
                 for (uint_t i = value; i != 0; --i) {
                     value = *params++;
-                    out_ << value << ", ";
+                    print << value << ", ";
                 }
                 value = *params++;
-                out_ << value << "]";
+                print << value << "]";
                 break;
             }
-            case 7:
-            {
+            case 7: {
                 value = *params++;
                 if (value == 0) {
-                    out_ << "UI4:[0]";
+                    print << "UI4:[0]";
                     break;
                 }
-                out_ << "UI4:[" << value << ": ";
+                print << "UI4:[" << value << ": ";
                 for (uint_t i = value; i != 0; --i) {
                     value = *params++;
-                    out_ << value << ", ";
+                    print << value << ", ";
                 }
                 value = *params++;
-                out_ << value << "]";
+                print << value << "]";
                 break;
             }
         }
     }
-    out_ << '>';
-    return out_;
+    print << '>';
+    return print;
 }
 
 }       //< namespace _

@@ -18,7 +18,7 @@
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
 
-#include "print_int.h"
+#include "print_to_ascii.h"
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
 

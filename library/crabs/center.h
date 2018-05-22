@@ -38,7 +38,7 @@ class Center {
     /** Constructor saves value for use with operator overloads. */
     Center (const char* string, int num_columns);
 
-    Printer Print (Printer printer);
+    Printer& Print (Printer& printer);
 };
 
 }       //< namespace _
