@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/library/crabs/memory.h
     @author  Cale McCollough <https://calemccollough.github.io>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -27,16 +27,11 @@
 namespace _ {
 
 /** A managed general purpose memory socket.
-    A socket is just a hole in something for fitting somehting in, like a light 
+    A socket is just a hole in something for fitting something in, like a light 
     or electric socket. A socket of memory is just a block of memory you fit 
     something in. A network socket is a socket for interprocess communication,
-    which is usually impmemented with a ring buffer 
-    (@see ~/library/crabs/slot.h) .
-
-    On Intel CPUs you mamy pass back two regiseter-sized return paramters and 
-    4 on ARM without using the hardware assisted stack. This class is intended
-    to use pass by value and return by value. This programming method works 
-    best with C-style functions to bypass the this pointer.
+    which is usually implemented with a ring buffer 
+    (@see ~/library/crabs/slot.h).
 */
 class Socket {
     public:

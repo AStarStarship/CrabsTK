@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/library/crabs/memory.h
     @author  Cale McCollough <https://calemccollough.github.io>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -16,7 +16,7 @@
 #pragma once
 #include <stdafx.h>
 
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 
 #ifndef HEADER_FOR_CRABS_ALIGN
 #define HEADER_FOR_CRABS_ALIGN
@@ -136,4 +136,4 @@ inline T* AlignUpPointer8 (T* pointer) {
 }       //< namespace _
 #endif  //< HEADER_FOR_CRABS_ALIGN
 
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2

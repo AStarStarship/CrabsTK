@@ -87,5 +87,6 @@ char* PrintBinary (uint64_t value, char* buffer, char* buffer_end,
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
+#undef PRINT_HEADING
 #endif  //< USING_PRINTER
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

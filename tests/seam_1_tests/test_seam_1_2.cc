@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/tests/test_seam_1_2.cc
     @author  Cale McCollough <calemccollough.github.io>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -55,11 +55,11 @@ TEST_GROUP (SEAM_1_2) {
 TEST (SEAM_1_2, SEAM_1_2A) {
     
     PRINT_HEADING ("Testing SEAM_1_2...")
-    PRINTF ("    Testing Text...");
+    PRINTF ("\n\nTesting Text...");
 
     enum {
         kNumCompareStrings = 5,
-        kSize = 1024,
+        kSize = 2048,
     };
 
     static const char* test_strings[kNumCompareStrings][2] = {
@@ -120,7 +120,7 @@ TEST (SEAM_1_2, SEAM_1_2A) {
     PRINT_HEADING ("    Testing Printer...")
     PRINTF ("    Expecting \"%s\"...", kTesting123);
 
-    COUT << "Testing " << 1 << ", " << 2 << ", " << -3;
+    print.Set (buffer) << "Testing " << 1 << ", " << 2 << ", " << 3;
 
     STRCMP_EQUAL (kTesting123, buffer)
         
@@ -203,13 +203,13 @@ TEST (SEAM_1_2, SEAM_1_2A) {
     STRCMP_EQUAL (kStringsCentered[3], buffer)
         
     PRINT_HEADING ('-')
-    PRINTF ("\n\n Testing Text::Memory (void*, int size)...")
+    PRINTF ("\n\n Testing PrintMemory (void*, int size)...")
 
     for (int i = 1; i <= kSize; ++i) {
         buffer_b[i - 1] = '0' + i % 10;
     }
-    buffer_b[kSize - 1] = 0;
-    CHECK (PrintMemory (buffer_b, buffer_b + 160, buffer, buffer + kSize))
+    buffer_b[kSize] = 0;
+    CHECK (PrintMemory (buffer, buffer + kSize, buffer_b, buffer_b + 160))
     PRINTF ("\n    Printed:\n%s", buffer)
 
     PRINT_HEADING ('-')

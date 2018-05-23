@@ -97,8 +97,7 @@ int HexToByte (uint16_t h) {
 }
 
 
-char* PrintHex (uint8_t value, char* cursor, char* buffer_end,
-                char delimiter) {
+char* PrintHex (char* cursor, char* buffer_end, uint8_t value) {
     enum { kHexStringLengthSizeMax = sizeof (uint8_t) * 2 + 3 };
 
     ASSERT (cursor);
@@ -112,12 +111,11 @@ char* PrintHex (uint8_t value, char* cursor, char* buffer_end,
          num_bits_shift -= 4) {
         *cursor++ = HexNibbleToUpperCase ((byte)(value >> num_bits_shift));
     }
-    *cursor = delimiter;
+    *cursor = 0;
     return cursor;
 }
 
-char* PrintHex (uint16_t value, char* cursor, char* buffer_end,
-                char delimiter) {
+char* PrintHex (char* cursor, char* buffer_end, uint16_t value) {
     enum { kHexStringLengthSizeMax = sizeof (uint16_t) * 2 + 3 };
 
     ASSERT (cursor);
@@ -131,12 +129,11 @@ char* PrintHex (uint16_t value, char* cursor, char* buffer_end,
          num_bits_shift -= 4) {
         *cursor++ = HexNibbleToUpperCase ((byte)(value >> num_bits_shift));
     }
-    *cursor = delimiter;
+    *cursor = 0;
     return cursor;
 }
 
-char* PrintHex (uint32_t value, char* cursor, char* buffer_end,
-                char delimiter) {
+char* PrintHex (char* cursor, char* buffer_end, uint32_t value) {
     enum { kHexStringLengthSizeMax = sizeof (uint32_t) * 2 + 3 };
 
     ASSERT (cursor);
@@ -150,16 +147,15 @@ char* PrintHex (uint32_t value, char* cursor, char* buffer_end,
          num_bits_shift -= 4) {
         *cursor++ = HexNibbleToUpperCase ((byte)(value >> num_bits_shift));
     }
-    *cursor = delimiter;
+    *cursor = 0;
     return cursor;
 }
 
-char* PrintHex (uint64_t value, char* cursor, char* buffer_end,
-                char delimiter) {
+char* PrintHex (char* cursor, char* end, uint64_t value) {
     enum { kHexStringLengthSizeMax = sizeof (uint64_t) * 2 + 3 };
 
     ASSERT (cursor);
-    if (cursor + kHexStringLengthSizeMax >= buffer_end) {
+    if ((end - cursor) < kHexStringLengthSizeMax) {
         return nullptr;
     }
 
@@ -169,21 +165,21 @@ char* PrintHex (uint64_t value, char* cursor, char* buffer_end,
          num_bits_shift -= 4) {
         *cursor++ = HexNibbleToUpperCase ((byte)(value >> num_bits_shift));
     }
-    *cursor = delimiter;
+    *cursor = 0;
     return cursor;
 }
 
-char* PrintHex (char c, char* buffer, char* buffer_end, char delimiter) {
+char* PrintHex (char* buffer, char* end, char c) {
     enum { kHexStringLengthSizeMax = sizeof (void*) * 2 + 3 };
 
     ASSERT (buffer);
-    if (buffer >= buffer_end) {
+    if (buffer >= end) {
         return nullptr;
     }
-    ASSERT ((buffer_end - buffer > 2))
+    ASSERT ((end - buffer > 2))
 
     *buffer++ = HexNibbleToUpperCase (c);
-    *buffer = delimiter;
+    *buffer = 0;
     return buffer;
 }
 

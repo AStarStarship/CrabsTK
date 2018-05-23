@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/library/crabs/crabs_utils.cc
     @author  Cale McCollough <https://calemccollough.github.io>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -72,7 +72,7 @@ void MemoryClear (void* address, size_t size_bytes) {
 /** Copies memory in word-aligned chucks. */
 char* MemoryCopyFast (char* write, char* write_end, const char* read,
                       const char* read_end) {
-    // Algoirhm:
+    // Algorithm:
     // 1.) Save return value.
     // 2.) Align write pointer up and copy the unaligned bytes in the lower 
     //     memory region.
@@ -139,28 +139,26 @@ char* MemoryCopy (void* write, size_t write_size, const void* read,
                        read , reinterpret_cast<const char*> (read) + read_size);
 }
 
-char* PrintMemory (char* cursor, char* end, const void* token, 
-                   const void* token_end) {
-    ASSERT (token)
+char* PrintMemory (char* cursor, char* end, const void* start, 
+                   const void* stop) {
+    ASSERT (start)
     ASSERT (cursor)
     ASSERT (cursor < end)
 
     char      * buffer_begin    = cursor;
-    const char* address_ptr     = reinterpret_cast<const char*> (token),
-              * address_end_ptr = reinterpret_cast<const char*> (token_end);
-    size_t      size_bytes            = address_end_ptr - address_ptr,
-                num_rows        = size_bytes / 64;
-        
-    //PRINTF ("\n    Printing Buffer with length:%i", TextLength (token))
+    const char* address_ptr     = reinterpret_cast<const char*> (start),
+              * address_end_ptr = reinterpret_cast<const char*> (stop);
+    size_t      size_bytes      = address_end_ptr - address_ptr,
+                num_rows        = size_bytes / 64 + 
+                                  (size_bytes % 64 != 0) ? 1 : 0;
 
-    if (size_bytes % 64 != 0) {
-        ++num_rows;
-    }
-    size_bytes += 81 * (num_rows + 2);
-    if (cursor + size_bytes >= end) {
-        PRINTF ("\n    ERROR: buffer isn't big enough!")
+    intptr_t num_bytes = 81 * (num_rows + 2);
+    if ((end - cursor) <= num_bytes) {
+        PRINTF ("\n    ERROR: buffer overflow trying to fit %i in %i bytes!",
+                (int)num_bytes, (int)(end - cursor))
         return nullptr;
     }
+    size_bytes += num_bytes;
     *cursor++ = '\n';
     *cursor++ = '|';
 
@@ -182,7 +180,9 @@ char* PrintMemory (char* cursor, char* end, const void* token,
     *cursor++ = '|';
     *cursor++ = ' ';
         
-    cursor = PrintHex (address_ptr, cursor, end);
+    cursor = PrintHex (cursor, end, address_ptr);
+
+    PRINTF ("\nBuffer space left:%i", (int)(end - cursor))
     char c;
     while (address_ptr < address_end_ptr) {
         *cursor++ = '\n';
@@ -198,7 +198,7 @@ char* PrintMemory (char* cursor, char* end, const void* token,
         }
         *cursor++ = '|';
         *cursor++ = ' ';
-        cursor = PrintHex (address_ptr, cursor, end);
+        cursor = PrintHex (cursor, end, address_ptr);
         //PRINT_HEADING
         //PRINTF ("\n%s", buffer_begin)
         //PRINT_HEADING
@@ -213,7 +213,7 @@ char* PrintMemory (char* cursor, char* end, const void* token,
     }
     *cursor++ = '|';
     *cursor++ = ' ';
-    return PrintHex (address_ptr + size_bytes, cursor, end, 0);
+    return PrintHex (cursor, end, address_ptr + size_bytes);
 }
 
 Socket::Socket (char* begin, char* end) :
@@ -249,5 +249,4 @@ Socket& Socket::operator= (const Socket& other) {
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-
 #endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 1

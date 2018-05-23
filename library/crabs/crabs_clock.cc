@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/library/crabs/crabs_clock.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
              2.0 (the "License"); you may not use this file except in
              compliance with the License. You may obtain a copy of the License
@@ -482,7 +482,7 @@ int32_t ClockGetMicroseconds (time_us_t timestamp) {
 char* PrintClock (char* cursor, char* end, tm* std_tm) {
     ASSERT (cursor);
     ASSERT (std_tm);
-    ASSERT ((cursor > end))
+    ASSERT (cursor < end)
 
     cursor = Print (cursor, end, std_tm->tm_year + kTimeEpoch);
     if (!cursor) {
@@ -727,4 +727,5 @@ time_t ClockTime (uint year, uint month, uint day, uint hour, uint minute,
 
 #undef PRINTF
 #undef PUTCHAR
+#undef PRINT_DATE
 #endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 2

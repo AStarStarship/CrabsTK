@@ -57,22 +57,22 @@ Printer& Center::Print (Printer& print) {
     PRINTF ("\n\n    Printing \"%s\":%i num_columns:%i", string, length,
             num_columns)
 
-        if (num_columns < length) {
-            offset = length - num_columns;
-            if (offset > 3) {
-                offset = 3;
-            }
-            num_columns -= offset;
-            while (num_columns-- > 0) {
-                *cursor++ = *string++;
-            }
-            while (offset-- > 0) {
-                *cursor++ = '.';
-            }
-            *cursor = 0;
-            print.cursor = cursor;
-            return print;
+    if (num_columns < length) {
+        offset = length - num_columns;
+        if (offset > 3) {
+            offset = 3;
         }
+        num_columns -= offset;
+        while (num_columns-- > 0) {
+            *cursor++ = *string++;
+        }
+        while (offset-- > 0) {
+            *cursor++ = '.';
+        }
+        *cursor = 0;
+        print.cursor = cursor;
+        return print;
+    }
     offset = (num_columns - length) >> 1; //< >> 1 to /2
     length = num_columns - length - offset;
     PRINTF ("\n    length:%i offset:%i", length, offset)

@@ -14,11 +14,11 @@
 */
 
 #include <stdafx.h>
+
+#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
 #include "test_seam_1.h"
 
-#if MAJOR_SEAM >= 1
-
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf (format, __VA_ARGS__);
 #define PRINT_PAUSE(message)\
     printf ("\n\n%s\n", message); system ("PAUSE");
@@ -32,12 +32,6 @@
 #define PRINTF(x, ...)
 #define PRINT_PAUSE(message)
 #define PRINT_HEADING(message)
-#endif
-
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
-#define PRINTF(format, ...) printf (format, __VA_ARGS__);
-#else
-#define PRINTF(x, ...)
 #endif
 
 using namespace _;
@@ -194,8 +188,8 @@ TEST (SEAM_1_3, SEAM_1_3A) {
     PRINT_PAUSE ("\n\nDone Testing SEAM_1_3! ({:-)-+=<")
 }
 
-#endif  //< #if MAJOR_SEAM >= 1
 
 #undef PRINTF
 #undef PRINT_PAUSE
 #undef PRINT_HEADING
+#endif  //< #if MAJOR_SEAM >= 1

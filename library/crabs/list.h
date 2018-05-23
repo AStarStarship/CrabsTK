@@ -2,7 +2,7 @@
     @version 0.x
     @file    ~/libraries/crabs/list.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
+    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -61,7 +61,7 @@ struct AsciiList {
        count;
 };
 
-/** Returns the minmum count to align the data struct to a 64-bit boundary. */
+/** Returns the minimum count to align the data struct to a 64-bit boundary. */
 template<typename UI = uint32_t, typename SI = int16_t>
 SI ListCountMaxMin () {
     return 8 / sizeof (SI);
@@ -69,7 +69,8 @@ SI ListCountMaxMin () {
 
 template<typename UI = uint32_t, typename SI = int16_t>
 inline UI ListSizeMin (SI count_max) {
-    return (UI)sizeof (AsciiList<UI, SI>) +  ((UI)count_max << 1); // << 2 to * 2.
+    return (UI)sizeof (AsciiList<UI, SI>) +  ((UI)count_max << 1);
+    // << 2 to * 2.
 }
 
 /** Initializes a AsciiList from preallocated memory.
@@ -242,7 +243,7 @@ void ListWipe (AsciiList<UI, SI>* list) {
 }
 
 /** Returns true if this expr contains only the given address.
-    @warning This funciton assumes that the member you're checking for came 
+    @warning This function assumes that the member you're checking for came 
              from Kabuki Toolkit. If it's you're own code calling this, you are
              required to ensure the value came from a ASCII List.
     @return  True if the data lies in the list's memory socket. */
@@ -329,7 +330,7 @@ class List {
         buffer_ = ListNew<UI, SI> (size_bytes, count_max);
     }
 
-    /** Deletes the dyncamically allocated buffer. */
+    /** Deletes the dynamically allocated buffer. */
     ~List () {
         delete buffer_;
     }
@@ -343,7 +344,7 @@ class List {
         return ListInsert<UI, SI> (This (), type, data, index);
     }
 
-    /** Returns the maximum count of the give list in the curent memory 
+    /** Returns the maximum count of the give list in the current memory 
         profile. */
     inline SI CountMax () {
         return ListCountMax<UI, SI> ();
@@ -363,22 +364,22 @@ class List {
     }
 
     /** Returns true if this expr contains only the given address.
-        @warning This funciton assumes that the member you're checking for came
+        @warning This function assumes that the member you're checking for came
                  from Kabuki Toolkit. If it's you're own code calling this, you 
                  are required to ensure the value came from a ASCII List.
         @return  True if the data lies in the list's memory socket. */
-    inline bool Contains (AsciiList<UI, SI>* list, void* data) {
+    inline bool Contains (void* data) {
         return ListContains<UI, SI> (This (), data);
     }
 
     /** Removes the item at the given address from the list. */
-    inline bool Remove (AsciiList<UI, SI>* list, void* adress) {
+    inline bool Remove (void* adress) {
         return ListRemove<UI, SI> (This (), adress);
     }
 
     /** Prints the given AsciiList to the console. */
-    inline Printer Print (AsciiList<UI, SI>* list, Printer out_) {
-        return ListPrint<UI, SI> (This (), Printer out_);
+    inline Printer& Print (Printer& printer) {
+        return ListPrint<UI, SI> (printer, This ());
     }
 
     private:

@@ -62,6 +62,7 @@ Printer::Printer (const Printer& other) :
 
 Printer& Printer::Set (char* new_cursor) {
     cursor = new_cursor;
+    return *this;
 }
 
 char* Print (char* cursor, char* end, const char* string) {
