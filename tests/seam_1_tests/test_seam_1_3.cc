@@ -192,4 +192,4 @@ TEST (SEAM_1_3, SEAM_1_3A) {
 #undef PRINTF
 #undef PRINT_PAUSE
 #undef PRINT_HEADING
-#endif  //< #if MAJOR_SEAM >= 1
+#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3

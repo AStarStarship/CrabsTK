@@ -18,7 +18,7 @@
 
 #define DEBUGGING  1
 #define MAJOR_SEAM 1
-#define MINOR_SEAM 2
+#define MINOR_SEAM 3
 
 #ifdef WIN32
 #include "targetver.h"
