@@ -18,7 +18,7 @@
 #include "bsq.h"
 #include "printer.h"
 
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 namespace _ {
 

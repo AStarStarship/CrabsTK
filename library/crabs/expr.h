@@ -276,10 +276,10 @@ KABUKI const Op* ExprQuery (Expr* expr, const Op* op);
 
 #if USING_PRINTER
 /** Prints the Expr stack to the Text buffer */
-KABUKI Printer PrintExpr (Printer printer, Expr* expr);
+KABUKI Printer& PrintExpr (Printer& printer, Expr* expr);
 
 /** Prints the Expr stack to the Text buffer */
-KABUKI Printer PrintExprStack (Printer printer, Expr* expr);
+KABUKI Printer& PrintExprStack (Printer& printer, Expr* expr);
 #endif
 
 }       //< namespace _

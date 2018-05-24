@@ -484,32 +484,32 @@ char* PrintClock (char* cursor, char* end, tm* std_tm) {
     ASSERT (std_tm);
     ASSERT (cursor < end)
 
-    cursor = Print (cursor, end, std_tm->tm_year + kTimeEpoch);
+    cursor = Out (cursor, end, std_tm->tm_year + kTimeEpoch);
     if (!cursor) {
         return nullptr;
     }
     *cursor++ = '-';
-    cursor = Print (cursor, end, std_tm->tm_mon + 1);
+    cursor = Out (cursor, end, std_tm->tm_mon + 1);
     if (!cursor) {
         return nullptr;
     }
     *cursor++ = '-';
-    cursor = Print (cursor, end, std_tm->tm_mday);
+    cursor = Out (cursor, end, std_tm->tm_mday);
     if (!cursor) {
         return nullptr;
     }
     *cursor++ = '@';
-    cursor = Print (cursor, end, std_tm->tm_hour);
+    cursor = Out (cursor, end, std_tm->tm_hour);
     if (!cursor) {
         return nullptr;
     }
     *cursor++ = ':';
-    cursor = Print (cursor, end, std_tm->tm_min);
+    cursor = Out (cursor, end, std_tm->tm_min);
     if (!cursor) {
         return nullptr;
     }
     *cursor++ = ':';
-    cursor = Print (cursor, end, std_tm->tm_sec);
+    cursor = Out (cursor, end, std_tm->tm_sec);
     if (!cursor) {
         return nullptr;
     }

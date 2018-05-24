@@ -866,7 +866,7 @@ Slot& PrintLine (const char* text, const char* header, int length, Slot& slot) {
 void Print (Slot& slot) {
     intptr_t size = SlotLength (slot);
     char* buffer = new char[size + 128];
-    Printer print (buffer, buffer + size + 129);
+    Printer& print (buffer, buffer + size + 129);
     print << Line ('_', 80)
           << "\nBOut:" << Hex<uintptr_t> (&slot) << " size:" << size
           << " start:" << slot.start << " stop:" << slot.stop

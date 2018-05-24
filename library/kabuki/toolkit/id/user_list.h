@@ -119,7 +119,7 @@ class KABUKI UserList : public _::Operand {
     virtual int Remove (const char* handle);
 
     /** Prints this object to the log. */
-    _::Text& Print (_::Text& txt = _::Text ());
+    _::Text& Out (_::Text& txt = _::Text ());
 
     /** Handles Script Commands.
         @param text     Beginning of the Text buffer. 

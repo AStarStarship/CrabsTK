@@ -67,7 +67,7 @@ class KABUKI Password {
     bool Equals (const Password& p);
 
     /** Prints this object to a expression. */
-    _::Text& Print (_::Text& txt = _::Text ());
+    _::Text& Out (_::Text& txt = _::Text ());
 
     private:
 

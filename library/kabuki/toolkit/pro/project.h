@@ -161,7 +161,7 @@ class Project
                            letters, lower case letters, stars, dashes etc.
         @param spaces_per_tab The number of spaces in a tab.
     */
-    void Print (int indent_level   = 0, char bullet_type = '1', 
+    void Out (int indent_level   = 0, char bullet_type = '1', 
                 int spaces_per_tab = 4);
     
     /** Parses keyboard input from the user.

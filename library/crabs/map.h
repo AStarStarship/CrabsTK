@@ -137,7 +137,7 @@ namespace _ {
 */
 template<typename SI, typename UI, typename TSize>
 struct KABUKI TMap {
-    TSize size_bytes;   //< Total size of the set.
+    TSize size;   //< Total size of the set.
     UI    table_size,   //< Size of the (optional) key strings in bytes.
           unused;       //< Size of the (optional) collisions pile in bytes.
     SI    stack_height, //< Max number of items that can fit in the header.
@@ -193,7 +193,7 @@ static TMap* Init2 (char* buffer, byte max_size, uint16_t table_size, uint16_t s
 */
 template<typename SI, typename UI, typename TSize>
 SI MapInsert (TMap<SI, UI, TSize>* collection, byte type, 
-               const char* key, void* data, SI index) {
+               const char* key, void* value, SI index) {
     if (collection == nullptr) return 0;
     return ~0;
 }
@@ -210,7 +210,7 @@ SI MaxMapIndexes () {
 /** Adds a key-value pair to the end of the collection. */
 template<typename SI, typename UI, typename TSize>
 SI MapAdd (TMap<SI, UI, TSize>* map, SI id, 
-                TType type, void* data) {
+                TType type, void* value) {
     if (map == nullptr)
         return 0;
     if (id == nullptr)
@@ -706,7 +706,7 @@ void MapPrint (const TMap<SI, UI, TSize>* collection) {
     PrintLine ('_');
 
     PrintMemory (reinterpret_cast<const char*> (collection) + 
-                 sizeof (TMap<SI, UI, TSize>), collection->size_bytes);
+                 sizeof (TMap<SI, UI, TSize>), collection->size);
     PRINTF ('\n';
 }
 
@@ -722,23 +722,23 @@ void Clear (TMap<SI, UI, TSize>* collection) {
 template<typename SI, typename UI, typename TSize>
 void Wipe (TMap<SI, UI, TSize>* collection) {
     if (collection == nullptr) return;
-    TSize size_bytes = collection->size_bytes;
-    memset (collection, 0, size_bytes);
+    TSize size = collection->size;
+    memset (collection, 0, size);
 }
 
 /** Returns true if this expr contains only the given address. */
 template<typename SI, typename UI, typename TSize>
-bool Contains (TMap<SI, UI, TSize>* collection, void* data) {
+bool Contains (TMap<SI, UI, TSize>* collection, void* value) {
     if (collection == nullptr) return false;
-    if (data < collection) return false;
-    if (data > GetEndAddress()) return false;
+    if (value < collection) return false;
+    if (value > GetEndAddress()) return false;
     return true;
 }
 
 /** Removes that object from the collection and copies it to the destination. */
 template<typename SI, typename UI, typename TSize>
 bool RemoveCopy (TMap<SI, UI, TSize>* collection, void* destination, 
-                 size_t buffer_size, void* data)
+                 size_t buffer_size, void* value)
 {
     if (collection == nullptr) return false;
 
@@ -765,7 +765,7 @@ bool Retain (TMap<SI, UI, TSize>* collection) {
 template<typename SI, typename UI, typename TSize, typename TSize>
 TMap<SI, UI, TSize, TSize>* MapCreate (SI buffered_indexes,
                                                         TSize table_size,
-                                                        TSize size_bytes) {
+                                                        TSize size) {
     TMap<SI, UI, TSize, TSize>* collection = New<TMap, uint_t> ();
     return collection;
 }

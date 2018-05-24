@@ -58,20 +58,23 @@ TEST (SEAM_1_3, SEAM_1_3A) {
 
     PRINTF ("\n\nTesting ASCII Object Types");
 
-    PRINTF ("\n\nTest _::Stack...\n\n");
+    PRINTF ("\n\nTesting _::Stack...\n\nPushing items on to the Stack...\n");
 
     Stack<> stack (8);
 
     for (i = 0; i <= 10; ++i)
         stack.Push (i);
-    for (i = 10; i > 0; i--)
-        CHECK_EQUAL (i, stack.Pop ())
-
-    PRINTF ("\nPrinting Stack...\n");
 
     COUT << stack;
 
-    PRINT_PAUSE ("\n\nDone _::Stack!")
+    PRINTF ("\nPopping itmes off the Stack...\n");
+
+    for (i = 10; i > 0; i--)
+        CHECK_EQUAL (i, stack.Pop ())
+
+    COUT << stack;
+
+    PRINTF ("\n\nDone _::Stack!")
 
     /*
     PRINTF ("\n\nTest _::Array...\n\n");
@@ -92,17 +95,35 @@ TEST (SEAM_1_3, SEAM_1_3A) {
     
     PRINT_PAUSE ("\n\nDone _::Array!")
     */
+
     PRINTF ("\n\nTest _::List...\n\n");
 
-    List<> list;
+    List<> list (36);
+
+    PRINTF ("\nPushing items on to the List stack...\n");
 
     const char* test_strings[] = {
-        "Test"
+        "Test",
+        " 1, ",
+        " 2, ",
+        " 3"
     };
 
-    list.Push (STR, test_strings[0]);
+    const int test_ints[] = { 1, 2, 3, 4 };
+    const float test_floats[] = { 0.0, 1.0, 2.0, 3.0 };
 
-    PRINT_PAUSE ("\n\nDone _::List!")
+    const int list_test_count = 4;
+    for (int i = 0; i < list_test_count; ++i) {
+        COUT << "\ni:" << i * 12 << " through " << i * 12 + 11 << '\n' << list;
+        list.Push (STR, test_strings[i]);
+        list.Push (SVI, &test_ints[i]);
+        list.Push (FLT, &test_floats[i]);
+    }
+
+    for (int i = (list_test_count * 3) - 1; i > 0; --i)
+        list.Pop ();
+
+    PRINTF ("\n\nDone _::List!")
     
     /*
     PRINTF ("\n\nTesting _::Book...\n\n");

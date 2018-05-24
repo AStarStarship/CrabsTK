@@ -67,7 +67,7 @@ class Inventory : public _::Op {
     int64_t GetTotalQuantity ();
 
     /** Prints the list to the console. */
-    _::Text& Print (_::Text& txt);
+    _::Text& Out (_::Text& txt);
 
     /** Parses Script Text Commands.
         @param text     Beginning of the Text buffer.

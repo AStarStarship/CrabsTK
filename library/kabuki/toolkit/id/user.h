@@ -121,7 +121,7 @@ class KABUKI User : _::Portal {
     bool IsAuthentic (int32_t session, uid_t public_key);
 
     /** Prints this object to a expression. */
-    virtual _::Text& Print (_::Text& txt = _::Text ());
+    virtual _::Text& Out (_::Text& txt = _::Text ());
 
     /** Handles Text input.
         @param text     Beginning of the Text buffer. 

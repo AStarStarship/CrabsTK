@@ -43,7 +43,7 @@ class Socket {
     Socket (char* begin, char* end);
 
     /** Constructor. */
-    Socket (char* begin, intptr_t size_bytes);
+    Socket (char* begin, intptr_t size);
 
     /** Clones the other memory. */
     Socket (const Socket& other);
@@ -53,7 +53,7 @@ class Socket {
 };
 
 /** Creates a dynamic word-aligned buffer of the given size in bytes. */
-KABUKI uintptr_t* MemoryCreate (uintptr_t size_bytes);
+KABUKI uintptr_t* MemoryCreate (uintptr_t size);
 
 /** Destroys a dynamic buffer. */
 KABUKI void MemoryDestroy (uintptr_t* buffer);
@@ -148,7 +148,7 @@ inline intptr_t SocketSize (const void* begin, const void* end) {
 }
 
 /** Overwrites the memory with zeros functionally identical to memset. */
-KABUKI void MemoryClear (void* address, size_t size_bytes);
+KABUKI void MemoryClear (void* address, size_t size);
 
 /** Copies the source to the target functionally identical to memcpy.
     @param  write     Beginning of the write buffer.
@@ -166,7 +166,7 @@ KABUKI char* MemoryCopy (void* begin, void* end, const void* start,
     @param  size      Number of bytes to copy.
     @return Pointer to the last byte written or nil upon failure. */
 KABUKI char* MemoryCopy (void* begin, void* end, const void* memory,
-                         size_t size_bytes);
+                         size_t size);
 
 /** Copies the source to the target functionally identical to memcpy.
     @param  write     Beginning of the write buffer.
@@ -175,7 +175,7 @@ KABUKI char* MemoryCopy (void* begin, void* end, const void* memory,
     @param  size      Number of bytes to copy.
     @return Pointer to the last byte written or nil upon failure. */
 KABUKI char* MemoryCopy (void* cursor, void* end, const void* read,
-                         size_t size_bytes);
+                         size_t size);
 
 char* MemoryCopy (void* begin, size_t write_size, const void* read,
                   size_t read_size);
@@ -198,14 +198,14 @@ KABUKI char* PrintMemory (char* cursor, char* end, const void* start,
     @return          Null upon failure or a pointer to the byte after the last 
                      byte written. */
 inline char* PrintMemory (char* cursor, char* end, const void* start, 
-                          size_t size_bytes) {
+                          size_t size) {
     return PrintMemory (cursor, end, start, 
-                        reinterpret_cast<const char*> (start) + size_bytes);
+                        reinterpret_cast<const char*> (start) + size);
 }
 
 /** Prints the given memory socket. */
-inline Printer PrintMemory (Printer printer, const void* begin, 
-                            size_t size_bytes) {
+inline Printer& PrintMemory (Printer& printer, const void* begin, 
+                            size_t size) {
     return printer;
 }
 

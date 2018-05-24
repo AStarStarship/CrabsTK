@@ -137,7 +137,7 @@ TEST (SEAM_1_1, SEAM_1_1A) {
         sprintf_s (expecting, 24, "%u", value);
         PRINTF ("\n%i.) Expecting \"%s\":%u", i + 1, expecting,
                 (uint)strlen (expecting));
-        result = Print (text, text + kSize, value);
+        result = Out (text, text + kSize, value);
         if (!result) {
             PRINT_PAUSE ("An error occurred :-(")
             break;
@@ -156,7 +156,7 @@ TEST (SEAM_1_1, SEAM_1_1A) {
         value = test_value[i];
         sprintf_s (expecting, 24, "%u", value);
         PRINTF ("\n%i.) ", i + 1);
-        result = Print (text, text + kSize, value);
+        result = Out (text, text + kSize, value);
         if (!result) {
             PRINT_PAUSE ("An error occurred :-(")
             break;
@@ -175,7 +175,7 @@ TEST (SEAM_1_1, SEAM_1_1A) {
     for (int i = 0; i < 0x0000ffff; ++i) {
         value = distr (eng);
         sprintf_s (expecting, 24, "%u", value);
-        result = Print (text, text + kSize, value);
+        result = Out (text, text + kSize, value);
         if (!result) {
             PRINT_PAUSE ("An error occurred :-(")
             break;

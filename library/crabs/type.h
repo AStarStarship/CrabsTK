@@ -28,42 +28,52 @@ typedef uint8_t type_t;
 
 namespace _ {
 
+/** A type-value tuple. */
+struct KABUKI TypeValue {
+    type_t      type;  //< ASCII Type.
+    const void* value; //< Pointer to the value data.
+
+    /** Stores the type and value. */
+    TypeValue (type_t type, const void* value = nullptr);
+};
+
 /** List of the 32 ASCII Data Types.
     Types are organized with types that are allowed in text B-Sequences first,
-    followed by objects which get created in text using Script Operations. */
+    followed by objects which get created in text using Script Operations.
+*/
 typedef enum AsciiTypes {
-    NIL = 0,    //< 0.  NIL/nil/void type.
-    SI1,        //< 1.  8-bit signed integer.
-    UI1,        //< 2.  8-bit unsigned integer.
-    SI2,        //< 3.  16-bit signed integer.
-    UI2,        //< 4.  16-bit unsigned integer.
-    HLF,        //< 5.  16-bit floating-point number.
-    SVI,        //< 6.  16-bit or 32-bit signed varint.
-    UVI,        //< 7.  16-bit or 32-bit unsigned varint.
-    BOL,        //< 8.  16-bit or 32-bit boolean signed varint.
-    SI4,        //< 9.  32-bit signed integer.
-    UI4,        //< 10. 32-bit unsigned integer.
-    FLT,        //< 11. 32-bit floating-point number.
-    TMS,        //< 12. 32-bit second since epoch timestamp.
-    TMU,        //< 13. 64-bit microsecond since epoch timestamp.
-    SI8,        //< 14. 64-bit signed integer.
-    UI8,        //< 15. 64-bit unsigned integer.
-    DBL,        //< 16. 64-bit floating-point number.
-    SV8,        //< 17. 64-bit signed varint.
-    UV8,        //< 18. 64-bit unsigned varint.
-    DEC,        //< 19. 128-bit floating-point number.
-    OBJ,        //< 20. N-byte object with size not specified in BSQ.
-    SIN,        //< 21. N-bit signed integer.
-    UIN,        //< 22. N-bit unsigned integer or data structure.
-    ADR,        //< 23. UTF-8 Operand stack address.
-    STR,        //< 24. A UTF-8 string.
-    TKN,        //< 25. A UTF-8 string token without whitespace.
-    BSQ,        //< 26. B-Sequence.
-    ESC,        //< 27. Escape sequence Expression.
-    LST,        //< 28. Stack of Type-Value tuples.
-    MAP,        //< 29. One-to-one map of Id-{Type-Value} tuples.
-    BOK,        //< 30. Multiset of unordered Key-{Type-Value} tuples.
-    DIC,        //< 31. One-to-one map of Key-{Type-Value} tuples.
+    NIL = 0, //< 0.  NIL/nil/void type.
+    SI1,     //< 1.  8-bit signed integer.
+    UI1,     //< 2.  8-bit unsigned integer.
+    SI2,     //< 3.  16-bit signed integer.
+    UI2,     //< 4.  16-bit unsigned integer.
+    HLF,     //< 5.  16-bit floating-point number.
+    BOL,     //< 6.  16-bit or 32-bit boolean signed varint.
+    SVI,     //< 7.  16-bit or 32-bit signed varint.
+    UVI,     //< 8.  16-bit or 32-bit unsigned varint.
+    SI4,     //< 9.  32-bit signed integer.
+    UI4,     //< 10. 32-bit unsigned integer.
+    FLT,     //< 11. 32-bit floating-point number.
+    TMS,     //< 12. 32-bit second since epoch timestamp.
+    TMU,     //< 13. 64-bit microsecond since epoch timestamp.
+    SI8,     //< 14. 64-bit signed integer.
+    UI8,     //< 15. 64-bit unsigned integer.
+    DBL,     //< 16. 64-bit floating-point number.
+    SV8,     //< 17. 64-bit signed varint.
+    UV8,     //< 18. 64-bit unsigned varint.
+    DEC,     //< 19. 128-bit floating-point number.
+    OBJ,     //< 20. N-byte object with size not specified in BSQ.
+    SIN,     //< 21. N-bit signed integer.
+    UIN,     //< 22. N-bit unsigned integer.
+    ADR,     //< 23. UTF-8 Operand stack address.
+    STR,     //< 24. A UTF-8 string.
+    TKN,     //< 25. A UTF-8 string token without whitespace.
+    BSQ,     //< 26. B-Sequence.
+    EXP,     //< 27. Script Expression.
+    LST,     //< 28. Stack of Type-Value tuples.
+    MAP,     //< 29. One-to-one map of Id-{Type-Value} tuples.
+    BOK,     //< 30. Multiset of unordered Key-{Type-Value} tuples.
+    DIC,     //< 31. One-to-one map of Key-{Type-Value} tuples.
 } AsciiType;
 
 enum {
@@ -87,7 +97,7 @@ void* TypeAlign (type_t type, void* value);
 template<char kCharA_, char kCharB_, char kCharC_>
 inline uint32_t T () {
     return ((uint32_t)kCharA_) & (((uint32_t)kCharB_) << 8) &
-        (((uint32_t)kCharC_) << 16);
+           (((uint32_t)kCharC_) << 16);
 }
 
 enum {
@@ -231,6 +241,26 @@ inline bool TypeIsObject (type_t type) {
     return true;
 }
 
+/** Returns true if the given type is a string type. */
+inline bool TypeIsString (type_t type) {
+    type &= 0x1f;
+    if (type >= ADR && type <= TKN)
+        return true;
+    return false;
+}
+
+/** Prints th given type or type-value.
+    @param printer The printer to print to.
+    @param type    The type to print.
+    @param value   The value to print or nil. */
+KABUKI Printer& PrintType (Printer& printer, type_t type, const void* value);
+
 }       //< namespace _
+
+inline _::Printer& operator<< (_::Printer& printer, 
+                               const _::TypeValue& type_value) {
+    return _::PrintType (printer, type_value.type, type_value.value);
+}
+
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_TYPES

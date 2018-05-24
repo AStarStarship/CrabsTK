@@ -19,23 +19,23 @@
 
 #define USING_KABUKI_CRABS      1
 #define USING_KABUKI_SERIAL     2
-#define USING_KABUKI_WEB        3
-#define USING_KABUKI_DATA       4
+#define USING_KABUKI_DATA       3
 #define USING_KABUKI_STORE      4
 #define USING_KABUKI_MATH       5
 #define USING_KABUKI_ID         6
 #define USING_KABUKI_PRO        7
 #define USING_KABUKI_HMI        8
-#define USING_KABUKI_MIDI       8
-#define USING_KABUKI_AL         9
-#define USING_KABUKI_APP        10
-#define USING_KABUKI_SLOTH      11
-#define USING_KABUKI_FILE       11
-#define USING_KABUKI_AIML       17
+#define USING_KABUKI_MIDI       9
+#define USING_KABUKI_AL         10
+#define USING_KABUKI_APP        11
+#define USING_KABUKI_SLOTH      12
+#define USING_KABUKI_FILE       13
+#define USING_KABUKI_AIML       14
 #define USING_ALL               LARGEST_INT  //< Largest signed integer 2^31-1.
 
+#if MAJOR_SEAM >= 1
 #include "crabs/global.h"
-#if MAJOR_SEAM >= 2
+#elif MAJOR_SEAM >= 2
 #include "kabuki/toolkit/hmi/global.h"
 #include "kabuki/toolkit/midi/global.h"
 #include "kabuki/toolkit/serial/global.h"
@@ -58,5 +58,5 @@
 #include "kabuki/toolkit/store/global.h"
 #elif MAJOR_SEAM >= 18
 #include "kabuki/toolkit/aiml/global.h"
-#endif
-#endif  //< HEADER_FOR_GLOBAL
+#endif  //< #if MAJOR_SEAM >= 2
+#endif  //< #ifndef HEADER_FOR_GLOBAL

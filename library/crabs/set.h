@@ -31,7 +31,7 @@ namespace _ {
 */
 template<typename TIndex, typename TKey, typename TData, typename THash>
 struct KABUKI Set {
-    TData  size_bytes;       //< Total size of the set.
+    TData  size;       //< Total size of the set.
     TKey   table_size, //< Size of the (optional) key strings in bytes.
            pile_size;  //< Size of the (optional) collisions pile in bytes.
     TIndex num_items,  //< Number of items.
@@ -73,10 +73,10 @@ struct Collection {
     virtual void Wipe () = 0;
 
     /** Adds the given Tuple2 to this Set. */
-    virtual bool Push (AsciiType type, void* data) = 0;
+    virtual bool Push (AsciiType type, void* value) = 0;
 
     /** Adds the given Tuple3 to this Set. */
-    virtual bool Push (AsciiType type, void* data, const char* key) = 0;
+    virtual bool Push (AsciiType type, void* value, const char* key) = 0;
 
     /** Merges the given Set into this one. */
     virtual bool Merge (Collection* collection) = 0;
@@ -101,7 +101,7 @@ struct Collection {
     virtual uintptr_t FindIndex (const char* key) = 0;
 
     /** Returns true if this Set contains this given Type-Value. */
-    virtual uintptr_t FindIndex (AsciiType type, void* data) = 0;
+    virtual uintptr_t FindIndex (AsciiType type, void* value) = 0;
 
     /** Gets the size_t of the object being stored. */
     virtual uintptr_t GetSize () = 0;
@@ -110,7 +110,7 @@ struct Collection {
     virtual uintptr_t GetSizeWidth () = 0;
 
     /**  */
-    virtual Printer Print (Printer out_) = 0;
+    virtual Printer& Out (Printer& out_) = 0;
 };
 }       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5

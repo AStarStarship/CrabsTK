@@ -54,7 +54,7 @@ TEST_GROUP (SEAM_1_2) {
 
 TEST (SEAM_1_2, SEAM_1_2A) {
     
-    PRINT_HEADING ("Testing SEAM_1_2...")
+    PRINT_HEADING ("Testing SEAM_1_2A...")
     PRINTF ("\n\nTesting Text...");
 
     enum {
@@ -104,9 +104,9 @@ TEST (SEAM_1_2, SEAM_1_2A) {
     Printer print (buffer, kSize);
 
     for (int i = 0; i < kNumCompareStrings; ++i) {
-        end = Print (buffer, buffer + kSize, test_strings[i][0]);
+        end = Out (buffer, buffer + kSize, test_strings[i][0]);
         CHECK (end)
-        end = Print (buffer_b, buffer_b + kSize, test_strings[i][0]);
+        end = Out (buffer_b, buffer_b + kSize, test_strings[i][0]);
         CHECK (end)
 
         end = TextEquals (buffer, buffer_b);

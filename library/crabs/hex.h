@@ -43,7 +43,7 @@ class Hex {
         value (reinterpret_cast<T> (pointer)) {
     }
 
-    Printer& Print (Printer& printer) {
+    Printer& Out (Printer& printer) {
         enum { kSize = sizeof (T) * 2 + 2 };
         char* l_cursor = printer.cursor;
         char* temp = l_cursor;
@@ -146,7 +146,7 @@ inline char* PrintHex (char* text, char* text_end, const void* ptr) {
 
 template<typename T>
 inline _::Printer& operator<< (_::Printer& printer, _::Hex<T> value) {
-    return value.Print (printer);
+    return value.Out (printer);
 }
 
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

@@ -88,7 +88,7 @@ inline wchar_t OpLast (const Op* op) {
 }
 
 #if USING_PRINTER
-Printer Print (Printer print, const Op* op);
+Printer& Print (Printer& print, const Op* op);
 #endif
 
 }       //< namespace _

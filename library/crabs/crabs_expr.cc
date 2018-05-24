@@ -955,7 +955,7 @@ const Op* ExprQuery (Expr* expr, const Op* op) {
 }
 
 #if USING_PRINTER
-Printer PrintExprStack (Printer print, Expr* expr) {
+Printer& PrintExprStack (Printer& print, Expr* expr) {
     ASSERT (expr);
 
     uint_t    i,
@@ -980,7 +980,7 @@ Printer PrintExprStack (Printer print, Expr* expr) {
     return print << "\nStack Item " << i + 1 << ":\"" << op->name << "\"";
 }
 
-Printer PrintExpr (Printer print, Expr* expr) {
+Printer& PrintExpr (Printer& print, Expr* expr) {
     ASSERT (expr);
 
     return print << Line ('~', 80) << "\nStack:    "

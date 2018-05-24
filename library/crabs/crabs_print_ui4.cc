@@ -55,7 +55,7 @@
  
 namespace _ {
 
-char* Print (char* cursor, char* end, uint32_t value) {
+char* Out (char* cursor, char* end, uint32_t value) {
 
     PRINT_HEADING
 
@@ -354,11 +354,11 @@ char* Print (char* cursor, char* end, uint32_t value) {
     }
 }
 
-char* Print (char* cursor, char* end, int32_t value)  {
+char* Out (char* cursor, char* end, int32_t value)  {
     if (value >= 0)
-        return Print (cursor, end, (uint32_t)value);
+        return Out (cursor, end, (uint32_t)value);
     *cursor++ = '-';
-    return Print (cursor, end, (uint32_t)(value * -1));
+    return Out (cursor, end, (uint32_t)(value * -1));
 }
 
 }       //< namespace _

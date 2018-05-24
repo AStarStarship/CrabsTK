@@ -147,7 +147,7 @@ class Task
     static const char* GetHelpString ();
     
     /** Prints the Task to the console. */
-    void Print (int indentation = 0, int index = 0);
+    void Out (int indentation = 0, int index = 0);
 
     /** Parse a text command stream (possibly from the user). */
     const char* Command (char* input);

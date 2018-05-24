@@ -51,7 +51,7 @@ KABUKI char* PrintRight (char* text, char* text_end, const char* string,
 inline char* PrintRight (char* text, char* text_end, int32_t value, 
                          int num_columns, char delimiter = 0) {
     char buffer[16];
-    Print (buffer, buffer + 15, (uint32_t)value);
+    Out (buffer, buffer + 15, (uint32_t)value);
     return PrintRight (text, text_end, buffer, num_columns);
 }
 
@@ -61,7 +61,7 @@ inline char* PrintRight (char* text, char* text_end, int32_t value,
 inline char* PrintRight (char* text, char* text_end, uint32_t value,
                          int num_columns, char delimiter = 0) {
     char buffer[16];
-    Print (buffer, buffer + 15, (uint32_t)value);
+    Out (buffer, buffer + 15, (uint32_t)value);
     return PrintRight (text, text_end, buffer, num_columns);
 }
 
@@ -71,7 +71,7 @@ inline char* PrintRight (char* text, char* text_end, uint32_t value,
 inline char* PrintRight (char* text, char* text_end, int64_t value,
                          int num_columns, char delimiter = 0) {
     char buffer[24];
-    Print (buffer, buffer + 23, value);
+    Out (buffer, buffer + 23, value);
     return PrintRight (text, text_end, buffer, num_columns);
 }
 
@@ -81,7 +81,7 @@ inline char* PrintRight (char* text, char* text_end, int64_t value,
 inline char* PrintRight (char* text, char* text_end, uint64_t value, 
                          int num_columns, char delimiter = 0) {
     char buffer[24];
-    Print (buffer, buffer + 23, value);
+    Out (buffer, buffer + 23, value);
     return PrintRight (text, text_end, buffer, num_columns);
 }
 
@@ -91,7 +91,7 @@ inline char* PrintRight (char* text, char* text_end, uint64_t value,
 inline char* PrintRight (char* text, char* text_end, float value, 
                          int num_columns, char delimiter = 0) {
     char buffer[kkFloat32DigitsMax];
-    Print (buffer, buffer + kkFloat32DigitsMax, value);
+    Out (buffer, buffer + kkFloat32DigitsMax, value);
     return PrintRight (text, text_end, buffer, num_columns);
 }
 
@@ -101,7 +101,7 @@ inline char* PrintRight (char* text, char* text_end, float value,
 inline char* PrintRight (char* text, char* text_end, double value, 
                          int num_columns, char delimiter = 0) {
     char buffer[kFloat64DigitsMax];
-    Print (buffer, buffer + kFloat64DigitsMax, value);
+    Out (buffer, buffer + kFloat64DigitsMax, value);
     return PrintRight (text, text_end, buffer, num_columns);
 }
 

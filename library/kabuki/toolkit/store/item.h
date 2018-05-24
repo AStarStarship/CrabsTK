@@ -99,7 +99,7 @@ class Item : public _::Op {
     double GetTotalCost () const;
 
     /** Prints this object to the text. */
-    virtual _::Printer&& Print (_::Printer&& printer = _::Printer& ());
+    virtual _::Printer&& Out (_::Printer&& printer = _::Printer& ());
     
     /** Handles Script Commands.
         @param text     Beginning of the Text buffer.

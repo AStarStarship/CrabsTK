@@ -49,11 +49,11 @@ template<typename UI = uint32_t>
 AObject<UI>* ObjectClone (AObject<UI>* object) {
     ASSERT (object);
     UI* size_ptr  = reinterpret_cast<UI*> (object);
-    UI size_bytes = (*size_ptr) >> kWordBitCount;
-    uintptr_t* buffer = new uintptr_t[size_bytes],
+    UI size = (*size_ptr) >> kWordBitCount;
+    uintptr_t* buffer = new uintptr_t[size],
              * read = buffer,
              * write = reinterpret_cast<uintptr_t*> (object);
-    for (; size_bytes > 0; size_bytes--)
+    for (; size > 0; --size)
         *write++ = *read++;
     return *reinterpret_cast<UI*> (buffer);
 }

@@ -38,7 +38,7 @@ class Binary {
         value (value) {
     }
 
-    Printer Print (Printer printer) {
+    Printer& Out (Printer& printer) {
         char* cursor = printer.cursor;
         if (cursor + sizeof (uint64_t) * 8 >= printer.end) {
             return nullptr;
@@ -57,7 +57,7 @@ class Binary {
 
 template<typename T>
 inline _::Printer& operator<< (_::Printer& printer, _::Binary<T> value) {
-    return value.Print (printer);
+    return value.Out (printer);
 }
 
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

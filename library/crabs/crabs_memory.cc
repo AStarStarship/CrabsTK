@@ -33,18 +33,18 @@
 
 namespace _ {
 
-uintptr_t* MemoryCreate (uintptr_t size_bytes) {
-    return new uintptr_t[size_bytes];
+uintptr_t* MemoryCreate (uintptr_t size) {
+    return new uintptr_t[size];
 }
 
 void MemoryDestroy (uintptr_t* buffer) {
     delete buffer;
 }
 
-void MemoryClear (void* address, size_t size_bytes) {
+void MemoryClear (void* address, size_t size) {
     //memset (address, '0', size);
     char* ptr = reinterpret_cast<char*> (address);
-    for (; size_bytes; --size_bytes)
+    for (; size; --size)
         *ptr++ = '\0';
     /* This code is designed to work like memcpy but is not working right now.
     uintptr_t lsb_mask = (1 << sizeof (uint32_t)) - 1,
@@ -106,9 +106,9 @@ inline char* MemoryCopyFast (void* write, void* write_end, const void* read,
 char* MemoryCopy (void* cursor, void* end, const void* read,
                   const void* read_end) {
     ASSERT (cursor)
-    ASSERT (cursor > end)
+    ASSERT (cursor < end)
     ASSERT (read)
-    ASSERT (read > read_end)
+    ASSERT (read < read_end)
 
     if (SocketSize (cursor, end) < SocketSize (read, read_end))
         return nullptr; //< Buffer overflow!
@@ -148,9 +148,9 @@ char* PrintMemory (char* cursor, char* end, const void* start,
     char      * buffer_begin    = cursor;
     const char* address_ptr     = reinterpret_cast<const char*> (start),
               * address_end_ptr = reinterpret_cast<const char*> (stop);
-    size_t      size_bytes      = address_end_ptr - address_ptr,
-                num_rows        = size_bytes / 64 + 
-                                  (size_bytes % 64 != 0) ? 1 : 0;
+    size_t      size      = address_end_ptr - address_ptr,
+                num_rows        = size / 64 + 
+                                  (size % 64 != 0) ? 1 : 0;
 
     intptr_t num_bytes = 81 * (num_rows + 2);
     if ((end - cursor) <= num_bytes) {
@@ -158,7 +158,7 @@ char* PrintMemory (char* cursor, char* end, const void* start,
                 (int)num_bytes, (int)(end - cursor))
         return nullptr;
     }
-    size_bytes += num_bytes;
+    size += num_bytes;
     *cursor++ = '\n';
     *cursor++ = '|';
 
@@ -213,7 +213,7 @@ char* PrintMemory (char* cursor, char* end, const void* start,
     }
     *cursor++ = '|';
     *cursor++ = ' ';
-    return PrintHex (cursor, end, address_ptr + size_bytes);
+    return PrintHex (cursor, end, address_ptr + size);
 }
 
 Socket::Socket (char* begin, char* end) :
@@ -225,10 +225,10 @@ Socket::Socket (char* begin, char* end) :
     }
 }
 
-Socket::Socket (char* begin, intptr_t size_bytes) :
+Socket::Socket (char* begin, intptr_t size) :
     begin (begin),
-    end (begin + size_bytes) {
-    if (!begin || size_bytes < 0) {
+    end (begin + size) {
+    if (!begin || size < 0) {
         end = begin;
         return;
     }

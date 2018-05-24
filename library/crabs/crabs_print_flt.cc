@@ -36,7 +36,7 @@
 
 namespace _ {
 
-char* Print (char* cursor, char* end, float value) {
+char* Out (char* cursor, char* end, float value) {
     // @todo Replace with GrisuX algorithm that uses the Script ItoS Algorithm.
     intptr_t buffer_size = end - cursor,
              result = sprintf_s (cursor, buffer_size, "%f", value);
@@ -49,7 +49,7 @@ char* Print (char* cursor, char* end, float value) {
     return cursor;
 }
 
-char* Print (char* cursor, char* end, double value) {
+char* Out (char* cursor, char* end, double value) {
     // Right now we're going to enforce there be enough room to write any
     // int32_t.
     intptr_t buffer_size = end - cursor,

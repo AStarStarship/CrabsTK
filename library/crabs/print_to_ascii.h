@@ -32,34 +32,34 @@ namespace _ {
     @param value The value to write.
     @param begin Beginning address of the buffer.
     @param end   The end address of the buffer. */
-KABUKI char* Print (char* cursor, char* end, uint32_t value);
+KABUKI char* Out (char* cursor, char* end, uint32_t value);
 
 /** Writes the give value to the given buffer as an ASCII string.
-    @param  print The Printer to print to.
+    @param  print The Printer& to print to.
     @param value The value to write. */
-KABUKI char* Print (char* cursor, char* end, int32_t value);
+KABUKI char* Out (char* cursor, char* end, int32_t value);
 
 /** Writes the give value to the given buffer as an ASCII string.
-    @param  print The Printer to print to.
+    @param  print The Printer& to print to.
     @param end   The end address of the buffer. */
-KABUKI char* Print (char* cursor, char* end, uint64_t value);
+KABUKI char* Out (char* cursor, char* end, uint64_t value);
 
 /** Writes the give value to the given buffer as an ASCII string.
-    @param  print The Printer to print to.
+    @param  print The Printer& to print to.
     @param value The value to write. */
-KABUKI char* Print (char* cursor, char* end, int64_t value);
-
-/** Writes the give value to the given buffer as an ASCII string.
-    @param begin Beginning address of the buffer.
-    @param end   The end address of the buffer.
-    @param value The value to write. */
-KABUKI char* Print (char* cursor, char* end, float value);
+KABUKI char* Out (char* cursor, char* end, int64_t value);
 
 /** Writes the give value to the given buffer as an ASCII string.
     @param begin Beginning address of the buffer.
     @param end   The end address of the buffer.
     @param value The value to write. */
-KABUKI char* Print (char* cursor, char* end, double value);
+KABUKI char* Out (char* cursor, char* end, float value);
+
+/** Writes the give value to the given buffer as an ASCII string.
+    @param begin Beginning address of the buffer.
+    @param end   The end address of the buffer.
+    @param value The value to write. */
+KABUKI char* Out (char* cursor, char* end, double value);
 
 }   //< namespace _
 

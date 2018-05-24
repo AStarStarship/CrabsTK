@@ -235,7 +235,7 @@ TEST (SEAM_1_4, SEAM_1_4A) {
         kPrintBufferSize = 4096,
     };
 
-    Printer print;
+    Printer& print;
     
     uintptr_t buffer[kBufferWords],
               unpacked_buffer[kBufferWords];
@@ -420,7 +420,7 @@ TEST (SEAM_1_4, SEAM_1_4A) {
     slot.Clear ();
     print << expr;
 
-    //Printer slot (bin, bout);
+    //Printer& slot (bin, bout);
     // Bypass handshake for testing purposes.
 
     ExprUnpack (expr);//, &slot);
@@ -434,7 +434,7 @@ TEST (SEAM_1_4, SEAM_1_4A) {
         kPrintBufferSize = 4096,
     };
 
-    Printer print;
+    Printer& print;
 
     uintptr_t buffer[kBufferWords],
         unpacked_buffer[kBufferWords];
@@ -883,7 +883,7 @@ TEST (SEAM_1_4, SEAM_1_4A) {
     slot.Clear ();
     print << expr;
 
-    //Printer slot (bin, bout);
+    //Printer& slot (bin, bout);
     // Bypass handshake for testing purposes.
 
     ExprUnpack (expr);//, &slot);

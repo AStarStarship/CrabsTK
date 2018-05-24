@@ -108,7 +108,7 @@ class Schedule
     static const char* GetHelpString ();
      
     /** Prints the Schedule to the console. */
-    void Print (int indentation = 0);
+    void Out (int indentation = 0);
     
     /** Parse char input, possibly from the keyboard.
         @param input The (possibly keyboard) input from the user.

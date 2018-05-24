@@ -125,7 +125,7 @@ struct Slot {
 
     #if USING_PRINTER
     /** Prints a string rep of this object to the printer. */
-    Printer Print (Printer printer);
+    Printer& Print (Printer& printer);
     #endif
 };
 

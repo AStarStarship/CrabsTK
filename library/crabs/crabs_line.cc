@@ -26,7 +26,7 @@ Line::Line (char token, int column_count) :
     // Nothing to do here. ({:-)-+=<
 }
 
-Printer& Line::Print (Printer& print) {
+Printer& Line::Out (Printer& print) {
     char* cursor = print.cursor;
     ASSERT (cursor);
     char* end = print.end;
@@ -51,7 +51,7 @@ StringLine::StringLine (const char* string, int column_count) :
     // Nothing to do here. ({:-)-+=<
 }
 
-Printer& StringLine::Print (Printer& print) {
+Printer& StringLine::Out (Printer& print) {
     char* cursor = print.cursor;
     ASSERT (cursor);
     char* end    = print.end;

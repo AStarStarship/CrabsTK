@@ -28,15 +28,15 @@ namespace _ {
 
 /** Shifts the overflow buffer to the begging of the ring buffer. */
 inline char* SlotOverflowShift (char* begin, char* end, char* cursor) {
-    size_t size_bytes;
+    size_t size;
     if (cursor <= end) {
         return cursor;
     }
-    size_bytes = end - begin;
+    size = end - begin;
     while (++end > cursor) {
-        *(end - size_bytes) = *end;
+        *(end - size) = *end;
     }
-    return cursor - size_bytes;
+    return cursor - size;
 }
 
 /** Copies a char from the source to the text.
@@ -45,51 +45,51 @@ inline char* SlotOverflowShift (char* begin, char* end, char* cursor) {
     @param string    The potentially unsafe string to write.
     @param delimiter A NON-ZERO delimiter to separate the string text into
                      texts. */
-KABUKI Slot& Print (const char* string, Slot& slot, char delimiter = 0);
+KABUKI Slot& Out (const char* string, Slot& slot, char delimiter = 0);
 
 /** Copies a char from the source to the text.
     @param begin     Beginning address of the buffer.
     @param end       The end address of the buffer.
     @param value     The potentially unsafe string to write.
     @param delimiter The last char to print . */
-KABUKI Slot& Print (const char* text, const char* text_end, Slot& slot,
+KABUKI Slot& Out (const char* text, const char* text_end, Slot& slot,
                     char delimiter = 0);
 
 /** Writes the give value to the given buffer as an ASCII string.
     @param  value The value to write to the slot.
     @param  slot  The slot tow rite to.
     @return The slot. */
-KABUKI Slot& Print (int32_t value, Slot& slot, char delimiter = 0);
+KABUKI Slot& Out (int32_t value, Slot& slot, char delimiter = 0);
 
 /** Writes the give value to the given buffer as an ASCII string.
     @param  value The value to write to the slot.
     @param  slot  The slot to write to.
     @return The slot. */
-KABUKI Slot& Print (uint32_t value, Slot& slot, char delimiter = 0);
+KABUKI Slot& Out (uint32_t value, Slot& slot, char delimiter = 0);
 
 /** Writes the give value to the given buffer as an ASCII string.
     @param  value The value to write to the slot.
     @param  slot  The slot tow rite to.
     @return The slot. */
-KABUKI Slot& Print (int64_t value, Slot& slot, char delimiter = 0);
+KABUKI Slot& Out (int64_t value, Slot& slot, char delimiter = 0);
 
 /** Writes the give value to the given buffer as an ASCII string.
     @param  value The value to write to the slot.
     @param  slot  The slot to write to.
     @return The slot. */
-KABUKI Slot& Print (uint64_t value, Slot& slot, char delimiter = 0);
+KABUKI Slot& Out (uint64_t value, Slot& slot, char delimiter = 0);
 
 /** Writes the give value to the given buffer as an ASCII string.
     @param  value The value to write to the slot.
     @param  slot  The slot tow rite to.
     @return The slot. */
-KABUKI Slot& Print (float value, Slot& slot, char delimiter = 0);
+KABUKI Slot& Out (float value, Slot& slot, char delimiter = 0);
 
 /** Writes the give value to the given buffer as an ASCII string.
     @param  value The value to write to the slot.
     @param  slot  The slot tow rite to.
     @return The slot. */
-KABUKI Slot& Print (double value, Slot& slot, char delimiter = 0);
+KABUKI Slot& Out (double value, Slot& slot, char delimiter = 0);
 
 /** Prints the given string justified right to this string.
     @param input The string to print.
@@ -103,7 +103,7 @@ KABUKI Slot& PrintRight (const char* string, int num_columns, Slot& slot,
 inline Slot& PrintRight (int32_t value, int num_columns, Slot& slot,
                          char delimiter = 0) {
     char buffer[16];
-    Print (value, buffer, buffer + 16);
+    Out (value, buffer, buffer + 16);
     return PrintRight (buffer, num_columns, slot, delimiter);
 }
 
@@ -113,7 +113,7 @@ inline Slot& PrintRight (int32_t value, int num_columns, Slot& slot,
 inline Slot& PrintRight (uint32_t value, int num_columns, Slot& slot,
                          char delimiter = 0) {
     char buffer[16];
-    Print (value, buffer, buffer + 16);
+    Out (value, buffer, buffer + 16);
     return PrintRight (buffer, num_columns, slot, delimiter);
 }
 
@@ -123,7 +123,7 @@ inline Slot& PrintRight (uint32_t value, int num_columns, Slot& slot,
 inline Slot& PrintRight (int64_t value, int num_columns, Slot& slot,
                          char delimiter = 0) {
     char buffer[24];
-    Print (value, buffer, buffer + 24);
+    Out (value, buffer, buffer + 24);
     return PrintRight (buffer, num_columns, slot, delimiter);
 }
 
@@ -133,7 +133,7 @@ inline Slot& PrintRight (int64_t value, int num_columns, Slot& slot,
 inline Slot& PrintRight (uint64_t value, int num_columns, Slot& slot,
                          char delimiter = 0) {
     char buffer[24];
-    Print (value, buffer, buffer + 24);
+    Out (value, buffer, buffer + 24);
     return PrintRight (buffer, num_columns, slot, delimiter);
 }
 
@@ -143,7 +143,7 @@ inline Slot& PrintRight (uint64_t value, int num_columns, Slot& slot,
 inline Slot& PrintRight (float value, int num_columns, Slot& slot,
                          char delimiter = 0) {
     char buffer[kkFloat32DigitsMax];
-    Print (value, buffer, buffer + kkFloat32DigitsMax);
+    Out (value, buffer, buffer + kkFloat32DigitsMax);
     return PrintRight (buffer, num_columns, slot, delimiter);
 }
 
@@ -153,7 +153,7 @@ inline Slot& PrintRight (float value, int num_columns, Slot& slot,
 inline Slot& PrintRight (double value, int num_columns, Slot& slot,
                          char delimiter = 0) {
     char buffer[kFloat64DigitsMax];
-    Print (value, buffer, buffer + kFloat64DigitsMax);
+    Out (value, buffer, buffer + kFloat64DigitsMax);
     return PrintRight (buffer, num_columns, slot, delimiter);
 }
 
@@ -170,7 +170,7 @@ KABUKI Slot& PrintCentered (const char* text, int num_columns, Slot& slot,
 inline Slot& PrintCentered (int32_t value, int num_columns, Slot& slot,
                             char delimiter = 0) {
     char buffer[16];
-    Print (value, buffer, buffer + 16);
+    Out (value, buffer, buffer + 16);
     return PrintCentered (buffer, num_columns, slot, delimiter);
 }
 
@@ -180,7 +180,7 @@ inline Slot& PrintCentered (int32_t value, int num_columns, Slot& slot,
 inline Slot& PrintCentered (uint32_t value, int num_columns, Slot& slot,
                             char delimiter = 0) {
     char buffer[16];
-    Print (value, buffer, buffer + 16);
+    Out (value, buffer, buffer + 16);
     return PrintCentered (buffer, num_columns, slot, delimiter);
 }
 
@@ -190,7 +190,7 @@ inline Slot& PrintCentered (uint32_t value, int num_columns, Slot& slot,
 inline Slot& PrintCentered (int64_t value, int num_columns, Slot& slot,
                             char delimiter = 0) {
     char buffer[24];
-    Print (value, buffer, buffer + 24);
+    Out (value, buffer, buffer + 24);
     return PrintCentered (buffer, num_columns, slot, delimiter);
 }
 
@@ -200,7 +200,7 @@ inline Slot& PrintCentered (int64_t value, int num_columns, Slot& slot,
 inline Slot& PrintCentered (uint64_t value, int num_columns, Slot& slot,
                             char delimiter = 0) {
     char buffer[24];
-    Print (value, buffer, buffer + 24);
+    Out (value, buffer, buffer + 24);
     return PrintCentered (buffer, num_columns, slot, delimiter);
 }
 
@@ -210,7 +210,7 @@ inline Slot& PrintCentered (uint64_t value, int num_columns, Slot& slot,
 inline Slot& PrintCentered (float value, int num_columns, Slot& slot,
                             char delimiter = 0) {
     char buffer[kkFloat32DigitsMax];
-    Print (value, buffer, buffer + kkFloat32DigitsMax);
+    Out (value, buffer, buffer + kkFloat32DigitsMax);
     return PrintCentered (buffer, num_columns, slot, delimiter);
 }
 
@@ -220,7 +220,7 @@ inline Slot& PrintCentered (float value, int num_columns, Slot& slot,
 inline Slot& PrintCentered (double value, int num_columns, Slot& slot,
                             char delimiter = 0) {
     char buffer[kFloat64DigitsMax];
-    Print (value, buffer, buffer + kFloat64DigitsMax);
+    Out (value, buffer, buffer + kFloat64DigitsMax);
     return PrintCentered (buffer, num_columns, slot, delimiter);
 }
 
@@ -253,15 +253,15 @@ KABUKI Slot& PrintMemory (const void* address, const void* end, Slot& slot,
                           char delimiter = 0);
 
 /** Prints out the contents of the address to the debug stream. */
-inline Slot& PrintMemory (const void* address, intptr_t size_bytes, Slot& slot) {
-    return PrintMemory (address, reinterpret_cast<const char*> (address) + size_bytes,
+inline Slot& PrintMemory (const void* address, intptr_t size, Slot& slot) {
+    return PrintMemory (address, reinterpret_cast<const char*> (address) + size,
                         slot);
 }
 
-KABUKI Slot& Print (const Op* op, Slot& slot);
+KABUKI Slot& Out (const Op* op, Slot& slot);
 
 /** Prints the slot to the console. */
-KABUKI void Print (Slot& slot);
+KABUKI void Out (Slot& slot);
 
 /** Prints a string line of the char repeating. */
 KABUKI Slot& PrintLine (char c, int num_columns, Slot& slot,
@@ -288,7 +288,7 @@ inline _::Slot& operator<< (_::Slot& slot, _::Slot& other) {
 /** Op << writes a nil-terminated UTF-8 or ASCII string to the
     slot. */
 inline _::Slot& operator<< (_::Slot& slot, const char* string) {
-    return Print (string, slot);
+    return Out (string, slot);
 }
 
 /** Op << writes the given value to the slot.
@@ -296,7 +296,7 @@ inline _::Slot& operator<< (_::Slot& slot, const char* string) {
     @param  value The value to write to the slot. 
     @return The slot. */
 inline _::Slot& operator<< (_::Slot& slot, int32_t value) {
-    return Print (value, slot);
+    return Out (value, slot);
 }
 
 /** Op << writes the given value to the slot.
@@ -304,7 +304,7 @@ inline _::Slot& operator<< (_::Slot& slot, int32_t value) {
     @param  value The value to write to the slot. 
     @return The slot. */
 inline _::Slot& operator<< (_::Slot& slot, uint32_t value) {
-    return Print (value, slot);
+    return Out (value, slot);
 }
 
 /** Op << writes the given value to the slot.
@@ -312,7 +312,7 @@ inline _::Slot& operator<< (_::Slot& slot, uint32_t value) {
     @param  value The value to write to the slot. 
     @return The slot. */
 inline _::Slot& operator<< (_::Slot& slot, int64_t value) {
-    return Print (value, slot);
+    return Out (value, slot);
 }
 
 /** Op << writes the given value to the slot.
@@ -320,7 +320,7 @@ inline _::Slot& operator<< (_::Slot& slot, int64_t value) {
     @param  value The value to write to the slot. 
     @return The slot. */
 inline _::Slot& operator<< (_::Slot& slot, uint64_t value) {
-    return Print (value, slot);
+    return Out (value, slot);
 }
 
 /** Op << writes the given value to the slot.
@@ -328,7 +328,7 @@ inline _::Slot& operator<< (_::Slot& slot, uint64_t value) {
     @param  value The value to write to the slot. 
     @return The slot. */
 inline _::Slot& operator<< (_::Slot& slot, float value) {
-    return Print (value, slot);
+    return Out (value, slot);
 }
 
 /** Op << writes the given value to the slot.
@@ -336,7 +336,7 @@ inline _::Slot& operator<< (_::Slot& slot, float value) {
     @param  value The value to write to the slot. 
     @return The slot. */
 inline _::Slot& operator<< (_::Slot& slot, double value) {
-    return Print (value, slot);
+    return Out (value, slot);
 }
 
 /** Op << writes the given value to the slot.

@@ -253,7 +253,7 @@ uintptr_t Room::GetSizeBytes () {
 }
 
 #if USING_PRINTER
-Printer Room::Print (Printer print) {
+Printer& Room::Print (Printer& print) {
     return print << "\nRoom: ";
 }
 #endif

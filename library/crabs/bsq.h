@@ -17,7 +17,7 @@
 #pragma once
 #include <stdafx.h>
 
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 
 #ifndef HEADER_FOR_CRABS_BSQ
 #define HEADER_FOR_CRABS_BSQ
@@ -155,7 +155,7 @@ inline const uint_t* Params () {
 KABUKI _::Printer& PrintBsq (_::Printer& printer, const uint_t* params);
 
 /**  Prints out the parameters. */
-//KABUKI Printer PrintBsq (const uint_t* bsq, Printer print);
+//KABUKI Printer& PrintBsq (const uint_t* bsq, Printer& print);
 
 /*< Returns the requested parameter number. */
 KABUKI uint_t BsqParamNumber (const uint_t* bsq, int param_number);

@@ -24,8 +24,10 @@ namespace _ {
 
 /** @group Array 
     @brief A multi-dimensional array.
-    @desc  ASCII array uses the same data structure as the
-*/
+    @desc  ASCII Array uses the same data structure as the ASCII Stack, the 
+           difference being that the size_array of the Stack is set to 0 for 
+           the Stack and the Array has a packed multi-dimensional array after 
+           the stack of dimensions. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 constexpr SI ArrayCountUpperLimit (SI dimension_count, SI element_count) {
     UI header_size = sizeof (TArray<T, UI, SI>) + 
@@ -41,7 +43,7 @@ constexpr SI ArrayElementCount (const SI* dimensions) {
        element_count  = *dimensions++;
     if (--dimension_count < 0 || element_count < 0)
         return -1;
-    UI size_bytes = dimension_count * sizeof (SI);
+    UI size = dimension_count * sizeof (SI);
     while (dimension_count-- > 0) {
         SI current_dimension = *dimensions++;
         if (current_dimension < 1)
@@ -80,12 +82,12 @@ TArray<T, UI, SI>* ArrayInit (const SI* dimensions) {
     SI dimension_count = *dimension;
     if (dimension_count < 0 || dimension_count > kStackCountMax)
         return nullptr;
-    UI size_bytes = (UI)sizeof (TArray<T, UI, SI>) + 
+    UI size = (UI)sizeof (TArray<T, UI, SI>) + 
               dimension_count * sizeof (T);
-    uintptr_t* buffer = new uintptr_t[size_bytes >> kWordBitCount];
+    uintptr_t* buffer = new uintptr_t[size >> kWordBitCount];
     TArray<T, UI, SI>* stack = reinterpret_cast<TArray<T, UI, SI>*> (buffer);
     stack->size_array = 0;
-    stack->size_stack = size_bytes;
+    stack->size_stack = size;
     stack->count_max = dimension_count;
     stack->count = 0;
     return stack;
@@ -106,7 +108,7 @@ TArray<T, UI, SI>* ArrayNew (const SI* dimensions) {
        index         = count;
     while (index-- > 0)
         element_count *= *cursor++;
-    UI size_bytes = ((UI)element_count * (UI)sizeof (T));
+    UI size = ((UI)element_count * (UI)sizeof (T));
     
 }
 

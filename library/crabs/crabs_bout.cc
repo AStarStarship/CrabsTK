@@ -45,7 +45,7 @@
         kBOutBufferSize = 1024,\
         kBOutBufferSizeWords = kBOutBufferSize >> kWordBitCount\
      };\
-    Printer print;\
+    Printer& print;\
     PrintBOut (print, bout);\
     printf   ("\n    %s%s", header, BufferDefault ());\
 }
@@ -778,7 +778,7 @@ char* Print (BOut* bout, char* buffer, char* buffer_end) {
         return nullptr;
     }
     int size = bout->size;
-    Printer print (buffer, buffer_end);
+    Printer& print (buffer, buffer_end);
     print << "\nBOut:" << Hex<uintptr_t> (bout)
           << " size:" << size
           << " start:" << bout->start << " stop:" << bout->stop
@@ -788,7 +788,7 @@ char* Print (BOut* bout, char* buffer, char* buffer_end) {
     return print.cursor;
 }*/
 
-Printer PrintBOut (Printer print, BOut* bout) {
+Printer& PrintBOut (Printer& print, BOut* bout) {
     ASSERT (bout);
     int size = bout->size;
      print << Line ('_', 80) 

@@ -21,6 +21,12 @@
 
 namespace _ {
 
+TypeValue::TypeValue (type_t type, const void* value) :
+    type (type),
+    value (value) {
+    // Nothing to do here! ({:-)-+=<
+}
+
 uint_t TypeFixedSize (uint_t type) {
     static const int8_t kWidths[] = {
         0,  //< NIL: 0
@@ -52,31 +58,31 @@ uint_t TypeFixedSize (uint_t type) {
 const char** TypeStrings () {
     static const char* kNames[] = {
         "NIL",  //<  0
-        "ADR",  //<  1
-        "STR",  //<  2
-        "TKN",  //<  3
-        "BOL",  //<  4
-        "SI1",  //<  5
-        "UI1",  //<  6
-        "SI2",  //<  7
-        "UI2",  //<  8
-        "HLF",  //<  9
-        "SVI",  //< 10
-        "UVI",  //< 11
-        "SI4",  //< 12
-        "UI4",  //< 13
-        "FLT",  //< 14
-        "TMS",  //< 15
-        "SI8",  //< 16
-        "UI8",  //< 17
-        "DBL",  //< 18
-        "TMU",  //< 19
-        "SV8",  //< 20
-        "UV8",  //< 21
-        "DEC",  //< 22
-        "OBJ",  //< 23
-        "SIN",  //< 24
-        "UIN",  //< 25
+        "SI1",  //<  1
+        "UI1",  //<  2
+        "SI2",  //<  3
+        "UI2",  //<  4
+        "HLF",  //<  5
+        "BOL",  //<  6
+        "SVI",  //<  7
+        "UVI",  //<  8
+        "SI4",  //<  9
+        "UI4",  //< 10
+        "FLT",  //< 11
+        "TMS",  //< 12
+        "TMU",  //< 13
+        "SI8",  //< 14
+        "UI8",  //< 15
+        "DBL",  //< 16
+        "SV8",  //< 17
+        "UV8",  //< 18
+        "DEC",  //< 19
+        "OBJ",  //< 20
+        "SIN",  //< 21
+        "UIN",  //< 22
+        "ADR",  //< 23
+        "STR",  //< 24
+        "TKN",  //< 25
         "BSQ",  //< 26
         "ESC",  //< 27
         "LST",  //< 28
@@ -91,7 +97,7 @@ void* TypeAlign (type_t type, void* value) {
     ASSERT (value);
     if (type == 0)
         return nullptr;
-    uint_t size_bytes = TypeFixedSize (type);
+    uint_t size = TypeFixedSize (type);
     if (type <= UI1)
         return value;
     type_t* value_ptr = reinterpret_cast<type_t*> (value);
@@ -199,6 +205,58 @@ char* Write (char* begin, char* end, type_t type, const void* source) {
         }
     }
     return nullptr;
+}
+
+template<typename UI>
+UI ObjectSize (Printer&printer, type_t type, const void* value) {
+
+}
+
+Printer& PrintTypePod (Printer& printer, type_t type, const void* value) {
+    ASSERT (value)
+    
+    switch (type & 0xf) {
+        case NIL: {
+            return printer << "Error";
+
+        }
+        case SI1: return printer << *reinterpret_cast<const int8_t*> (value);
+        case UI1: return printer << *reinterpret_cast<const uint8_t*> (value);
+        case SI2: return printer << *reinterpret_cast<const int16_t*> (value);
+        case UI2: return printer << *reinterpret_cast<const uint16_t*> (value);
+        case HLF: return printer << "Not implmemented yet.";
+        case SVI: return printer << *reinterpret_cast<const int*> (value);
+        case UVI: return printer << *reinterpret_cast<const uint*> (value);
+        case BOL: return printer << *reinterpret_cast<const bool*> (value);
+        case SI4: return printer << *reinterpret_cast<const int32_t*> (value);
+        case UI4: return printer << *reinterpret_cast<const uint32_t*> (value);
+        case FLT: return printer << *reinterpret_cast<const float*> (value);
+        case TMS: return printer << *reinterpret_cast<const int*> (value);
+        case TMU: return printer << *reinterpret_cast<const int*> (value);
+        case SI8: return printer << *reinterpret_cast<const int64_t*> (value);
+        case UI8: return printer << *reinterpret_cast<const uint64_t*> (value);
+        case DBL: return printer << *reinterpret_cast<const double*> (value);
+        case SV8: return printer << *reinterpret_cast<const int64_t*> (value);
+        case UV8: return printer << *reinterpret_cast<const uint64_t*> (value);
+        case DEC: return printer << "Not implmemented yet.";
+    }
+    return printer;
+}
+
+Printer& PrintType (Printer& printer, type_t type, const void* value) {
+    ASSERT (value)
+
+    if (type <= DEC)
+        return PrintTypePod (printer, type, value) << ':' << TypeString (type);
+
+    if (!TypeIsValid (type))
+        return printer << "Illegal type";
+
+    if (TypeIsString (type))
+        return printer << '\"' << reinterpret_cast<const char*> (value) << "\":" 
+                       << TypeString (type);
+    return PrintTypePod (printer, type & 0x1f, value) << "b:" << 
+           TypeString (type);
 }
 
 }       //< namespace _

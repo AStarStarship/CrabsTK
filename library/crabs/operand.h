@@ -92,7 +92,7 @@ Slot& OperandQuery (Operand* root, const char* address, Slot& key);
     @param  text     The Text to print to.
     @param  operand The Operand to print.
     @return text. */
-KABUKI Printer PrintOperand (Printer slot, Operand* operand);
+KABUKI Printer& PrintOperand (Printer& slot, Operand* operand);
 #endif
 
 }   //< namespace _

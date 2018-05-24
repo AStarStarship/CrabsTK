@@ -46,7 +46,7 @@
 #define PRINT_BIN(header, bin) {\
     enum { kBInBufferSize = 1024 };\
     char bin_buffer[kBInBufferSize];\
-    Printer p (bin_buffer, kBInBufferSize);\
+    Printer& p (bin_buffer, kBInBufferSize);\
     p << bin;\
     printf   ("\n    %s0x%p%s", header, bin, bin_buffer);\
 }
@@ -666,10 +666,10 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
 }
 
 #if USING_PRINTER
-Printer Print (Printer print, BIn* bin) {
+Printer& Print (Printer& print, BIn* bin) {
     ASSERT (bin);
 
-    Printer p;
+    Printer& p;
     uint_t size = bin->size;
     return print << Line ('_', 80)
                  << " size:"  << bin->size

@@ -66,7 +66,7 @@ wchar_t OperandIndex (Operand* operand, char* begin, char* end) {
 
 #if USING_PRINTER
 
-Printer PrintOperand (Printer print, Operand* operand) {
+Printer& PrintOperand (Printer& print, Operand* operand) {
     ASSERT (operand);
 
     const _::Op* op = operand->Star ('?', nullptr);
@@ -96,7 +96,7 @@ Slot& OperandQuery (Operand* root, const char* address, Slot& slot) {
     int index = *address++;
     const Op* op = root->Star (index, nullptr);
     char buffer[1024];
-    Printer printer (buffer, 1024);
+    Printer& printer (buffer, 1024);
     printer << op->name;
     index = *address++;
     while (index) {

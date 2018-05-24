@@ -541,7 +541,7 @@ const Op* Slot::Write (const char* message) {
 }
 
 #if USING_PRINTER
-Printer Slot::Print (Printer print) {
+Printer& Slot::Print (Printer& print) {
     char* l_begin = begin,
         * l_end   = end;
     return print << Line ('_', 80)

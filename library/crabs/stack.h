@@ -171,13 +171,13 @@ inline UI StackCountMax (SI count_max) {
     @param buffer An stack of bytes large enough to fit the stack.
     @return A dynamically allocated buffer. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
-uintptr_t* StackInit (uintptr_t* buffer, UI size_bytes) {
+uintptr_t* StackInit (uintptr_t* buffer, UI size) {
     ASSERT (buffer);
 
     TArray<T, UI, SI>* stack = reinterpret_cast<TArray<T, UI, SI>*> (buffer);
     stack->size_array = 0;
-    stack->size_stack = size_bytes;
-    stack->count_max = (size_bytes - sizeof (TArray<T, UI, SI>)) >> kWordBitCount;
+    stack->size_stack = size;
+    stack->count_max = (size - sizeof (TArray<T, UI, SI>)) >> kWordBitCount;
     stack->count = 0;
     return buffer;
 }
@@ -187,13 +187,13 @@ uintptr_t* StackInit (uintptr_t* buffer, UI size_bytes) {
     @param buffer An stack of bytes large enough to fit the stack.
     @return A dynamically allocated buffer. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
-uintptr_t* StackInit (uintptr_t* buffer, UI size_bytes, SI count_max) {
+uintptr_t* StackInit (uintptr_t* buffer, UI size, SI count_max) {
     ASSERT (buffer);
 
     TArray<T, UI, SI>* stack = reinterpret_cast<TArray<T, UI, SI>*> (buffer);
     stack->size_array = 0;
-    stack->size_stack = size_bytes;
-    stack->count_max = (size_bytes - sizeof (TArray<T, UI, SI>)) >> kWordBitCount;
+    stack->size_stack = size;
+    stack->count_max = (size - sizeof (TArray<T, UI, SI>)) >> kWordBitCount;
     stack->count = 0;
     return buffer;
 }
@@ -201,13 +201,13 @@ uintptr_t* StackInit (uintptr_t* buffer, UI size_bytes, SI count_max) {
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 uintptr_t* StackClone (TArray<T, UI, SI>* stack) {
     ASSERT (stack);
-    UI size_bytes = stack->size_stack >> kWordBitCount;
-    uintptr_t other_buffer = new uintptr_t[size_bytes];
+    UI size = stack->size_stack >> kWordBitCount;
+    uintptr_t other_buffer = new uintptr_t[size];
     uintptr* source = reinterpret_cast<uintptr_t*> (stack)
            * destination = other_buffer;
     UI data_amount = (stack->count * sizeof (T) + sizeof (TArray<T, UI, SI>)) >>
                      kWordBitCount;
-    size_bytes -= data_amount;
+    size -= data_amount;
     while (data_amount-- > 0)
         *destination++ = *source++;
     return destination;
@@ -260,9 +260,9 @@ T* StackElementsEnd (TArray<T, UI, SI>* stack) {
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 T StackInsert (TArray<T, UI, SI>* stack, T item, T index) {
     ASSERT (stack);
-    SI size_bytes = stack->count_max,
+    SI size = stack->count_max,
         count = stack->count;
-    if (count >= size_bytes)
+    if (count >= size)
         return -2;
     T* items = StackElements<T, UI, SI> (This ());
     if (index == count) {
@@ -276,7 +276,7 @@ T StackInsert (TArray<T, UI, SI>* stack, T item, T index) {
         return 0;
     }
     if (count == 1) {
-        stack->Print () = 1;
+        stack->Out () = 1;
         if (index == 1) {
             items[1] = item;
             return 1;
@@ -301,37 +301,38 @@ T StackInsert (TArray<T, UI, SI>* stack, T item, T index) {
     return count;
 }
 
+/** Removes an element from the given array. */
+template<typename T = intptr_t, typename SI = intptr_t>
+inline SI ArrayRemove (T* elements, SI size, SI index) {
+    ASSERT (elements)
+    if (index < 0)
+        return index;
+    if (size < 0)
+        return size;
+    if (size == 1)
+        return 1;
+    if (index >= size)
+        return index * -1;
+    elements += index;
+    T* elements_end = elements + --size;
+    while (elements < elements_end)
+        *(elements - 1) = *elements--;
+    return size;
+}
+
 /** Removes the given index from the stack.
     @param  a     The stack.
     @param  index The index the item to remove.
     @return True if the index is out of bounds. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
-bool StackRemove (TArray<T, UI, SI>* stack, SI index) {
+SI StackRemove (TArray<T, UI, SI>* stack, SI index) {
     ASSERT (stack);
-    SI count = stack->count;
-    T value;
-    if (count == 0) // Nothing to remove!
-        return false;
-    if (index >= count)
-        return false;
-
-    T* items = StackElements<T, UI, SI> (This ());
-    if (count == index - 1) {
-        stack->count = count - 1;
-        value = items[count - 1];
-        return true;
-    }
-    // Move all of the elements after the index down one.
-    T* insert_point = StackElements<T, UI, SI> (This ()) + index,
-        *end = StackElements<T, UI, SI> (This ()) + count - 1;
-    while (insert_point != end) {
-        value = *end;
-        *(end - 1) = value;
-        --end;
-    }
-    stack->count = count - 1;
-
-    return true;
+    SI result = ArrayRemove<T, SI> (StackElements<T, UI, SI> (stack), 
+                                    stack->count, index);
+    if (result < 0)
+        return result;
+    stack->count = result;
+    return result;
 }
 
 /** Adds the given item to the end of the stack.
@@ -402,7 +403,7 @@ bool StackContains (TArray<T, UI, SI>* stack, void* address) {
         *adr = reinterpret_cast<char*> (address);
     if (adr < ptr)
         return false;
-    if (adr >= ptr + stack->size_bytes)
+    if (adr >= ptr + stack->size)
         return false;
     return true;
 }
@@ -523,10 +524,10 @@ class Stack {
         if (count_max == 0) {
             count_max = 32;
         }
-        UI size_bytes = StackSize<T, UI, SI> (count_max);
-        uintptr_t* buffer = new uintptr_t[size_bytes >> kWordBitCount];
+        UI size = StackSize<T, UI, SI> (count_max);
+        uintptr_t* buffer = new uintptr_t[size >> kWordBitCount];
         buffer_ = buffer;
-        StackInit (buffer, size_bytes, count_max);
+        StackInit (buffer, size, count_max);
     }
 
     Stack (const Stack& other) :
@@ -558,7 +559,7 @@ class Stack {
 
     /** Gets the size of the entire Stack, including header, in bytes. */
     inline UI GetSize () {
-        return This ()->size_bytes;
+        return This ()->size;
     }
     
     /** Gets the min size of the entire Stack, including header, in bytes. */
@@ -596,7 +597,7 @@ class Stack {
             //printf (" and growing.");
             Grow ();
             SI result = StackPush<T, UI, SI> (This (), item);
-            COUT << this;
+            //COUT << this;
             if (result < 0)
                 return -1;
             return result;
@@ -654,8 +655,8 @@ class Stack {
     }
 
     /** Prints this object to the given Printer. */
-    inline Printer& Print (Printer out_) {
-        return Print (This (), out_);
+    inline Printer& Out (Printer& out_) {
+        return Out (This (), out_);
     }
 
     inline TArray<T, UI, SI>* This () {

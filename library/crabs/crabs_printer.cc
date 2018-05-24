@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/library/crabs/crabs_text.cc
+    @file    ~/library/crabs/crabs_printer.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -65,7 +65,7 @@ Printer& Printer::Set (char* new_cursor) {
     return *this;
 }
 
-char* Print (char* cursor, char* end, const char* string) {
+char* Out (char* cursor, char* end, const char* string) {
     ASSERT (cursor)
     ASSERT (string)
 
@@ -84,7 +84,7 @@ char* Print (char* cursor, char* end, const char* string) {
     return cursor;
 }
 
-char* Print (char* cursor, char* end, const char* string, 
+char* Out (char* cursor, char* end, const char* string, 
              const char* string_end) {
     ASSERT (string)
     ASSERT (string_end)
@@ -115,7 +115,7 @@ char* Print (char* cursor, char* end, const char* string,
     return cursor;
 }
 
-char* Print (char* cursor, char* end, char character) {
+char* Out (char* cursor, char* end, char character) {
     ASSERT (cursor)
     ASSERT (end);
 
@@ -127,9 +127,10 @@ char* Print (char* cursor, char* end, char character) {
     return cursor;
 }
 
-}       //< namespace _
+} //< namespace _
 
 #undef PRINTF
 #undef PUTCHAR
+#undef PRINT_HEADING
 #endif  //< USING_PRINTER
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2

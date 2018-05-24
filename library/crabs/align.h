@@ -56,7 +56,10 @@ inline I AlignUp (I value) {
     // ~101 = 010 => 101 + 010 + 1 = 0x1000
     // ~110 = 001 => 110 + 001 + 1 = 0x1000
     // ~111 = 000 => 111 + 000 + 1 = 0x1000
-    return value + ((~value) + 1) & (sizeof (WordBoundary) - 1);
+    printf ("\nAligning value %u", (uint)value);
+    value += ((~value) + 1) & (sizeof (WordBoundary) - 1);
+    printf ("\n with result %u.", (uint)value);
+    return value;
 }
 
 template<typename WordBoundary = intptr_t, typename T = char>
@@ -91,7 +94,7 @@ inline T AlignUp2 (T value) {
     return value + value & 0x1;
 }
 
-/** Returns the number to add to word-align the given pointer to a uint_t-bit
+/** Returns the number to add to word-align the given pointer to a uint_t-bit 
     boundary.
     @param  ptr The address to align.
     @return The aligned value. */
@@ -100,7 +103,7 @@ inline T AlignUp4 (T value) {
     return AlignUp<uint32_t, T> (value);
 }
 
-/** Returns the number to add to word-align the given pointer to a uint_t-bit
+/** Returns the number to add to word-align the given pointer to a uint_t-bit 
     boundary.
     @param  ptr The address to align.
     @return The aligned value. */
