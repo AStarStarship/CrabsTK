@@ -97,6 +97,9 @@ void* TypeAlign (type_t type, void* value) {
     ASSERT (value);
     if (type == 0)
         return nullptr;
+    if (!TypeIsValid (type))
+        return nullptr;
+
     uint_t size = TypeFixedSize (type);
     if (type <= UI1)
         return value;
@@ -122,47 +125,56 @@ void* TypeAlign (type_t type, void* value) {
     return 0;
 }
 
-char* Write (char* begin, char* end, type_t type, const void* source) {
+template<typename T>
+char* WriteType (char* begin, char* end, type_t type, const void* value) {
+    return nullptr;
+}
+
+char* Write (char* begin, char* end, type_t type, const void* value) {
     // Algorithm:
-    // 1.) Determine type
+    // 1.) Determine type.
     // 2.) Align begin pointer to type width.
     // 3.) Check for enough room in begin-end socket.
     // 4.) Use MemoryCopy to copy the data into the given begin-end socket.
 
     ASSERT (begin)
-    ASSERT (source)
+    ASSERT (value)
+    if (!TypeIsValid (type))
+        return nullptr;
 
-    char    * target_1;
-    uint16_t* target_2;
-    uint32_t* target_4;
+    char    * target_1,
+            * target_1_end;
+    char16_t* target_2,
+            * target_2_end;
+    char32_t* target_4;
     uint64_t* target_8;
 
     const char    * source_1;
-    const uint16_t* source_2;
-    const uint32_t* source_4;
+    const char16_t* source_2;
+    const char32_t* source_4;
     const uint64_t* source_8;
 
     if (type <= UI1) {
         target_1    = reinterpret_cast<char*> (begin);
-        *target_1++ = *reinterpret_cast<const char*> (source);
+        *target_1++ = *reinterpret_cast<const char*> (value);
         return target_1;
     }
     if (type <= kTypeLast2Byte) {
-        target_1 = AlignUpPointer2<> (begin);
-        target_2 = reinterpret_cast<uint16_t*> (target_1);
-        *target_2++ = *reinterpret_cast<const uint16_t*> (source);
+        target_1 = AlignUpPointer2<char> (begin);
+        target_2 = reinterpret_cast<char16_t*> (target_1);
+        *target_2++ = *reinterpret_cast<const char16_t*> (value);
         return reinterpret_cast<char*> (target_2);
     }
     if (type <= TMS) {
-        target_1 = AlignUpPointer4<> (begin);
-        target_4 = reinterpret_cast<uint32_t*> (target_1);
-        *target_4++ = *reinterpret_cast<const uint32_t*> (source);
+        target_1 = AlignUpPointer4<char> (begin);
+        target_4 = reinterpret_cast<char32_t*> (target_1);
+        *target_4++ = *reinterpret_cast<const char32_t*> (value);
         return reinterpret_cast<char*> (target_4);
     }
     if (type <= DEC) {
-        target_1 = AlignUpPointer8<> (begin);
+        target_1 = AlignUpPointer8<char> (begin);
          target_8 = reinterpret_cast<uint64_t*> (target_1);
-         source_8 = reinterpret_cast<const uint64_t*> (source);
+         source_8 = reinterpret_cast<const uint64_t*> (value);
         *target_8++ = *source_8++;
         if (type == DEC) {
             *target_8++ = *source_8;
@@ -170,61 +182,132 @@ char* Write (char* begin, char* end, type_t type, const void* source) {
         }
         return reinterpret_cast<char*> (target_8);
     }
+    if (TypeIsString (type)) {
+        switch (type >> 6) {
+            case 0: {
+                source_1 = reinterpret_cast<const char*> (value);
+                uint8_t length = TextLength<uint8_t, char> (source_1);
+                target_1 = AlignUpPointer2<char> (begin);
+                target_1_end = reinterpret_cast<char*> (end);
+                if (target_1_end - target_1 == 0)
+                    return nullptr;
+                *target_1++ = (char)length;
+                target_1 = Print (target_1, target_1_end,
+                                  reinterpret_cast<const char*> (value));
+                return reinterpret_cast<char*> (target_1);
+            }
+            case 1: return nullptr;
+            case 2: {
+                source_1 = reinterpret_cast<const char*> (value);
+                uint16_t length = TextLength<uint16_t, char> (source_1);
+                target_2 = AlignUpPointer2<char16_t> (begin);
+                target_2_end = reinterpret_cast<char16_t*> (end);
+                if (target_2_end - target_2 == 0)
+                    return nullptr;
+                *target_2++ = (char16_t)length;
+                target_2 = Print (target_2, target_2_end,
+                                  reinterpret_cast<const char16_t*> (value));
+                return reinterpret_cast<char*> (target_2);
+            }
+            case 3: {
+                source_2 = reinterpret_cast<const char16_t*> (value);
+                uint16_t length = TextLength<uint16_t, char16_t> (source_2);
+                target_4 = AlignUpPointer4<char32_t> (begin);
+                *target_4++ = (char32_t)length;
+                target_2 = Print (reinterpret_cast<char16_t*> (target_4),
+                                  reinterpret_cast<char16_t*> (end),
+                                  reinterpret_cast<const char16_t*> (value));
+                return reinterpret_cast<char*> (target_2);
+            }
+            case 4: {
+                source_1 = reinterpret_cast<const char*> (value);
+                uint32_t length = TextLength<uint16_t, char> (source_1);
+                target_4 = AlignUpPointer4<char32_t> (begin);
+                *target_4++ = (char32_t)length;
+                target_1 = Print (reinterpret_cast<char*> (target_4),
+                                  reinterpret_cast<char*> (end),
+                                  reinterpret_cast<const char*> (value));
+                return reinterpret_cast<char*> (target_1);
+            }
+            case 5: {
+                source_2 = reinterpret_cast<const char16_t*> (value);
+                uint32_t length = TextLength<uint32_t, char16_t> (source_2);
+                target_4 = AlignUpPointer4<char32_t> (begin);
+                *target_4++ = (char32_t)length;
+                target_2 = Print (reinterpret_cast<char16_t*> (target_4),
+                                  reinterpret_cast<char16_t*> (end),
+                                  reinterpret_cast<const char16_t*> (value));
+                return reinterpret_cast<char*> (target_2);
+            }
+            case 6: {
+                source_1 = reinterpret_cast<const char*> (value);
+                uint64_t length = TextLength<uint64_t, char> (source_1);
+                target_8 = AlignUpPointer8<uint64_t> (begin);
+                *target_8++ = (uint64_t)length;
+                target_1 = Print (reinterpret_cast<char*> (target_8),
+                                  reinterpret_cast<char*> (end),
+                                  reinterpret_cast<const char*> (value));
+                return reinterpret_cast<char*> (target_1);
+            }
+            case 7: {
+                source_2 = reinterpret_cast<const char16_t*> (value);
+                uint64_t length = TextLength<uint64_t, char16_t> (source_2);
+                target_8 = AlignUpPointer8<uint64_t> (begin);
+                *target_8++ = (uint64_t)length;
+                target_2 = Print (reinterpret_cast<char16_t*> (target_8),
+                                  reinterpret_cast<char16_t*> (end),
+                                  reinterpret_cast<const char16_t*> (value));
+                return reinterpret_cast<char*> (target_2);
+            }
+        }
+    }
     char array_type = type >> 6;
     switch (array_type) {
         case 0: {
             target_1 = reinterpret_cast<char*> (begin);
-            source_1 = reinterpret_cast<const char*> (source);
+            source_1 = reinterpret_cast<const char*> (value);
             type_t size_1 = *source_1++;
             *target_1++ = size_1;
-            return MemoryCopy (target_1, end, source, size_1 - 1);
+            return MemoryCopy (target_1, end, value, size_1 - 1);
         }
         case 1: {
-            target_2 = reinterpret_cast<uint16_t*> (begin);
-            source_2 = reinterpret_cast<const uint16_t*> (source);
-            uint16_t size_2 = *source_2++;
+            target_2 = reinterpret_cast<char16_t*> (begin);
+            source_2 = reinterpret_cast<const char16_t*> (value);
+            char16_t size_2 = *source_2++;
             *target_2++ = size_2;
-            return MemoryCopy (target_2, end, source, 
+            return MemoryCopy (target_2, end, value, 
                                size_2 - sizeof (int16_t));
         }
         case 2: {
-            target_4 = reinterpret_cast<uint32_t*> (begin);
-            source_4 = reinterpret_cast<const uint32_t*> (source);
-            uint32_t size_4 = *source_4++;
+            target_4 = reinterpret_cast<char32_t*> (begin);
+            source_4 = reinterpret_cast<const char32_t*> (value);
+            char32_t size_4 = *source_4++;
             *target_4++ = size_4;
-            return MemoryCopy (target_4, end, source, 
+            return MemoryCopy (target_4, end, value, 
                                size_4 - sizeof (int32_t));
         }
         case 3: {
             target_8 = reinterpret_cast<uint64_t*> (begin);
-            source_8 = reinterpret_cast<const uint64_t*> (source);
+            source_8 = reinterpret_cast<const uint64_t*> (value);
             uint64_t size_8 = *source_8++;
             *target_8++ = size_8;
-            return MemoryCopy (target_8, end, source, 
+            return MemoryCopy (target_8, end, value, 
                                size_8 - sizeof (int64_t));
         }
     }
     return nullptr;
 }
 
-template<typename UI>
-UI ObjectSize (Printer&printer, type_t type, const void* value) {
-
-}
-
 Printer& PrintTypePod (Printer& printer, type_t type, const void* value) {
     ASSERT (value)
     
     switch (type & 0xf) {
-        case NIL: {
-            return printer << "Error";
-
-        }
+        case NIL: return printer << "Error";
         case SI1: return printer << *reinterpret_cast<const int8_t*> (value);
         case UI1: return printer << *reinterpret_cast<const uint8_t*> (value);
         case SI2: return printer << *reinterpret_cast<const int16_t*> (value);
         case UI2: return printer << *reinterpret_cast<const uint16_t*> (value);
-        case HLF: return printer << "Not implmemented yet.";
+        case HLF: return printer << "not_implemented_yet";
         case SVI: return printer << *reinterpret_cast<const int*> (value);
         case UVI: return printer << *reinterpret_cast<const uint*> (value);
         case BOL: return printer << *reinterpret_cast<const bool*> (value);
@@ -238,7 +321,7 @@ Printer& PrintTypePod (Printer& printer, type_t type, const void* value) {
         case DBL: return printer << *reinterpret_cast<const double*> (value);
         case SV8: return printer << *reinterpret_cast<const int64_t*> (value);
         case UV8: return printer << *reinterpret_cast<const uint64_t*> (value);
-        case DEC: return printer << "Not implmemented yet.";
+        case DEC: return printer << "not_implemented_yet";
     }
     return printer;
 }
@@ -250,11 +333,12 @@ Printer& PrintType (Printer& printer, type_t type, const void* value) {
         return PrintTypePod (printer, type, value) << ':' << TypeString (type);
 
     if (!TypeIsValid (type))
-        return printer << "Illegal type";
+        return printer << "illegal_type";
 
     if (TypeIsString (type))
         return printer << '\"' << reinterpret_cast<const char*> (value) << "\":" 
                        << TypeString (type);
+
     return PrintTypePod (printer, type & 0x1f, value) << "b:" << 
            TypeString (type);
 }

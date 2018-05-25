@@ -110,7 +110,7 @@ struct Collection {
     virtual uintptr_t GetSizeWidth () = 0;
 
     /**  */
-    virtual Printer& Out (Printer& out_) = 0;
+    virtual Printer& Print (Printer& out_) = 0;
 };
 }       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5

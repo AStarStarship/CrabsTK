@@ -44,7 +44,7 @@ Center::Center (const char* string, int num_columns) :
     ASSERT (num_columns > 0);
 }
 
-Printer& Center::Out (Printer& print) {
+Printer& Center::Print (Printer& print) {
     char* cursor = print.cursor,
         * end    = print.end;
     ASSERT (cursor);

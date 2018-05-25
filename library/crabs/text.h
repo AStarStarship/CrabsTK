@@ -42,88 +42,40 @@ inline char* Buffer () {
     @ingroup Text
 
     A String is nil-terminated in the SCRIPT Protocol and is double-quote-
-    terminated in Interprocess LISP. In Interprocess LISP we will end up 
+    terminated in Interprocess LISP. In Interprocess LISP we will end up
     running all the bytes through the Expression Interpreter, thus need these
-    utilities to work with nil-terminated strings and whitespace delimited 
+    utilities to work with nil-terminated strings and whitespace delimited
     tokens and not Interprocess LISP.
 */
 
 enum {
-    kMaxDigitsFloat  = 3 + FLT_MANT_DIG - FLT_MIN_EXP,
+    kMaxDigitsFloat = 3 + FLT_MANT_DIG - FLT_MIN_EXP,
     kMaxDigitsDouble = 3 + DBL_MANT_DIG - DBL_MIN_EXP,
 };
 
 /** Empty string. */
-KABUKI const char* TextEmpty ();
+KABUKI const char* Empty ();
 
 /** New line string. */
-KABUKI const char* TextCR ();
+KABUKI const char* NewLine ();
 
 /** Error header string. */
-KABUKI const char* TextErrorHeader ();
+KABUKI const char* ErrorHeader ();
 
 /** New line and vertical bar "\n// " string. */
-KABUKI const char* TextNewLine ();
+KABUKI const char* NewLine ();
 
 /** Checks if the given character is whitespace.
 */
 inline bool IsWhitespace (char character) {
-    if (character == 0) {
-        return false;
-    }
     return character <= ' ';
 }
 
 /** Converts the given value to a printable char if it's non-printable. */
-template<typename T>
-inline char Char (T value) {
-    if (value < 32) return ' ';
+inline char Char (char value) {
+    if (value < 32 || value == 127) return ' ';
     return value;
 }
-
-/** Converts a single byte a one-byte hex representation. */
-KABUKI byte HexNibbleToLowerCase (byte b);
-
-/** Converts a single byte a one-byte hex representation. */
-KABUKI byte HexNibbleToUpperCase (byte b);
-
-/** Converts a single byte a two-byte hex representation. */
-KABUKI uint16_t HexByteToLowerCase (byte b);
-
-/** Converts a single byte a two-byte hex representation. */
-KABUKI uint16_t HexByteToUpperCase (byte b);
-
-/** Converts a single hex byte a byte.
-@return Returns -1 if c is not a hex byte.
-*/
-KABUKI int HexToByte (byte hex_byte);
-
-/** Converts a single byte into a two-byte hex representation.
-@return Returns -1 if c is not a hex byte.
-*/
-KABUKI int HexToByte (uint16_t hex);
-
-/** Converts a single byte a one-byte hex representation. */
-KABUKI byte HexNibbleToLowerCase (byte b);
-
-/** Converts a single byte a one-byte hex representation. */
-KABUKI byte HexNibbleToUpperCase (byte b);
-
-/** Converts a single byte a two-byte hex representation. */
-KABUKI uint16_t HexByteToLowerCase (byte b);
-
-/** Converts a single byte a two-byte hex representation. */
-KABUKI uint16_t HexByteToUpperCase (byte b);
-
-/** Converts a single hex byte a byte.
-    @return Returns -1 if c is not a hex byte.
-*/
-KABUKI int HexToByte (byte c);
-
-/** Converts a single byte into a two-byte hex representation.
-    @return Returns -1 if c is not a hex byte.
-*/
-KABUKI int HexToByte (uint16_t h);
 
 /** Scrolls over to the next double quote mark.
     @warning This function is only safe to use on ROM strings with a nil-term
@@ -134,7 +86,33 @@ KABUKI const char* TextEnd (const char* text, char delimiter = 0);
     @return  Returns -1 if the text char is nil.
     @warning This function is only safe to use on ROM strings with a nil-term
              char. */
+template<typename UI = uint, typename char_t = char>
+KABUKI UI TextLength (const char_t* text, char_t delimiter = 0) {
+    ASSERT (text)
+    UI count = 0;
+    char_t c = *text;
+    while (c > delimiter) {
+        UI upper_bounds = 0;          //< Faster to make from instructions then 
+        upper_bounds = ~upper_bounds; //< load from ROM.
+        if (count == upper_bounds)
+            return 0;
+        ++count;
+        c = *(++text);
+    }
+    return count;
+}
+
+/** Gets the length of the given char.
+    @return  Returns -1 if the text char is nil.
+    @warning This function is only safe to use on ROM strings with a nil-term
+             char. */
 KABUKI int TextLength (const char* text, char delimiter = 0);
+
+/** Gets the length of the given char.
+    @return  Returns -1 if the text char is nil.
+    @warning This function is only safe to use on ROM strings with a nil-term
+             char. */
+KABUKI int TextLength (const char16_t* text, char16_t delimiter = 0);
 
 /** Clones the given string with given NON-ZERO delimiter.
     @param  A nil-terminated string in ROM.
@@ -151,7 +129,7 @@ KABUKI const char* TextLineEnd (const char* text, const char* text_end,
 
 /** Returns the pointer to the next char in the char that is not an ASCII
 number.
-@return A pointer to the next non-number in the text char. */
+    @return A pointer to the next non-number in the text char. */
 KABUKI const char* TextNextNonNumber (const char* text, const char* text_end,
                                       char delimiter = 0);
 

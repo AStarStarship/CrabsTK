@@ -41,19 +41,13 @@ namespace _ {
 char* PrintRight (char* buffer, char* buffer_end, const char* token, 
                   int num_columns, char delimiter) {
     char* start = buffer;
-    if (!token) {
+    ASSERT (token)
+    ASSERT (buffer)
+
+    if (buffer >= buffer_end)
         return nullptr;
-    }
-    if (!buffer) {
+    if (buffer + num_columns > buffer_end)
         return nullptr;
-    }
-    if (buffer >= buffer_end) {
-        return nullptr;
-    }
-    if (buffer + num_columns > buffer_end) {
-        // Can't fit it in the buffer so this is an error.
-        return nullptr;
-    }
     
     //PRINTF ("\n\nPrinting \"%s\" aligned right %i columns", token, num_columns)
 
@@ -106,9 +100,7 @@ char* PrintRight (char* buffer, char* buffer_end, const char* token,
     }
     //PUTCHAR ('\"')
     buffer_end = cursor - num_columns;
-    //#if MAJOR_SEAM == 1 && MINOR_SEAM == 1 
-    //printf ("\ncursor:0x%p text:0x%x delta:%i", cursor, text, text, cursor);
-    //#endif
+    //PRINTF ("\ncursor:0x%p text:0x%x delta:%i", cursor, text, text, cursor)
     while (cursor >= buffer) {
         *cursor-- = ' ';
     }

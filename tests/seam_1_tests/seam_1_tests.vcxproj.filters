@@ -148,9 +148,6 @@
     <ClInclude Include="..\..\library\crabs\table.h">
       <Filter>library\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\library\crabs\text.h">
-      <Filter>library\crabs</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\library\crabs\type.h">
       <Filter>library\crabs</Filter>
     </ClInclude>
@@ -287,6 +284,9 @@
       <Filter>library\crabs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\library\crabs\print_to_ascii.h">
+      <Filter>library\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\library\crabs\text.h">
       <Filter>library\crabs</Filter>
     </ClInclude>
   </ItemGroup>

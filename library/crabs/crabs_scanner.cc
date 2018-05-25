@@ -258,7 +258,7 @@ const char* Scan (
     }
 
     char c = *string;
-    while (c && !IsWhitespace (c)) {
+    while (c && !IsWhitespace<> (c)) {
         #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
         std::cout << c;
         #endif

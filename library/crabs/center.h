@@ -38,7 +38,7 @@ class Center {
     /** Constructor saves value for use with operator overloads. */
     Center (const char* string, int num_columns);
 
-    Printer& Out (Printer& printer);
+    Printer& Print (Printer& printer);
 };
 
 }       //< namespace _
@@ -46,7 +46,7 @@ class Center {
 /** Writes a nil-terminated UTF-8 or ASCII string to the
     printer. */
 inline _::Printer& operator<< (_::Printer& printer, _::Center center) {
-    return center.Out (printer);
+    return center.Print (printer);
 }
 
 #endif  //< HEADER_FOR_CRABS_CENTER

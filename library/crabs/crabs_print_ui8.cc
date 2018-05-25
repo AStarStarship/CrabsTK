@@ -57,7 +57,7 @@ namespace _ {
 
 /** @todo Update this algorithm to Script itoa. */
 
-char* Out (char* cursor, char* end, uint64_t value) {
+char* Print (char* cursor, char* end, uint64_t value) {
     ASSERT (cursor)
     ASSERT (end) 
     int chars_printed = sprintf_s (cursor, end  - cursor, "%llu", value);
@@ -598,11 +598,11 @@ char* Out (char* cursor, char* end, uint64_t value) {
     return nullptr; */
 }
 
-char* Out (char* cursor, char* end, int64_t value) {
+char* Print (char* cursor, char* end, int64_t value) {
     if (value >= 0)
-        return Out (cursor, end, (uint64_t)value);
+        return Print (cursor, end, (uint64_t)value);
     *cursor++ = '-';
-    return Out (cursor, end, (uint64_t)(value * -1));
+    return Print (cursor, end, (uint64_t)(value * -1));
 }
 
 }       //< namespace _

@@ -114,8 +114,17 @@ inline T AlignUp8 (T value) {
 
 /** Calculates the offset to align the given pointer to a 16-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template<typename T = void*>
-inline T* AlignUpPointer2 (T* pointer) {
+template<typename T = void>
+inline T* AlignUpPointer2 (void* pointer) {
+    // Mask off lower bit and add it to the ptr.
+    uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
+    return reinterpret_cast<T*> (ptr + ptr & 0x1);
+}
+
+/** Calculates the offset to align the given pointer to a 16-bit word boundary.
+    @return A vector you add to a pointer to align it. */
+template<typename T = void>
+inline T* AlignUpPointer2 (const void* pointer) {
     // Mask off lower bit and add it to the ptr.
     uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
     return reinterpret_cast<T*> (ptr + ptr & 0x1);
@@ -123,17 +132,32 @@ inline T* AlignUpPointer2 (T* pointer) {
 
 /** Aligns the given pointer to a 32-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template<typename T = void*>
-inline T* AlignUpPointer4 (T* pointer) {
+template<typename T = void>
+inline T* AlignUpPointer4 (void* pointer) {
     return reinterpret_cast<T*> (AlignUpPointer<int32_t> (pointer));
+}
+
+/** Aligns the given pointer to a 32-bit word boundary.
+    @return A vector you add to a pointer to align it. */
+template<typename T = void>
+inline T* AlignUpPointer4 (const void* pointer) {
+    return reinterpret_cast<const T*> (AlignUpPointer<int32_t> (pointer));
 }
 
 /** Aligns the given pointer to a 64-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template<typename T = void*>
-inline T* AlignUpPointer8 (T* pointer) {
+template<typename T = void>
+inline T* AlignUpPointer8 (void* pointer) {
     uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
     return reinterpret_cast<T*> (AlignUp<int64_t> (ptr));
+}
+
+/** Aligns the given pointer to a 64-bit word boundary.
+    @return A vector you add to a pointer to align it. */
+template<typename T = void>
+inline T* AlignUpPointer8 (const void* pointer) {
+    uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
+    return reinterpret_cast<const T*> (AlignUp<int64_t> (ptr));
 }
 
 }       //< namespace _

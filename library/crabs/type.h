@@ -83,7 +83,8 @@ enum {
 /** Checks if the given type is valid.
     @return False if the given type is an 8-bit LST, MAP, BOK, or DIC. */
 inline bool TypeIsValid (type_t type) {
-    if (type >= LST && type <= DIC)
+    if (type >= LST && type <= DIC || 
+        (type >= (ADR + 32) && type <= (TKN + 32)))
         return false;
     return true;
 }
@@ -247,6 +248,13 @@ inline bool TypeIsString (type_t type) {
     if (type >= ADR && type <= TKN)
         return true;
     return false;
+}
+
+/** Checks if the given type is UTF-16.
+    @param  type The type to check.
+    @return True if the given type is UTF-16. */
+inline bool TypeIsUtf16 (type_t type) {
+    return (bool)(type & 0x20);
 }
 
 /** Prints th given type or type-value.

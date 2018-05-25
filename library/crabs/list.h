@@ -273,7 +273,8 @@ SI ListInsert (AsciiList<UI, SI>* list, type_t type, const void* value, SI index
     while (offsets_cursor > offsets_begin)
         *offsets_cursor-- = *offsets_cursor;
 
-    char* aligned_begin  = AlignUpPointer8<> (ListDataStop<UI, SI> (list) + 1);
+    char* aligned_begin = ListDataStop<UI, SI> (list) + 1;
+    aligned_begin = AlignUpPointer8<char> (aligned_begin);
 
     if (!Write (aligned_begin, ListDataEnd<UI, SI> (list), type, value))
         return -1;
@@ -466,7 +467,7 @@ class List {
     }
 
     /** Prints the given AsciiList to the console. */
-    inline Printer& Out (Printer& printer) {
+    inline Printer& Print (Printer& printer) {
         return PrintList<UI, SI> (printer, This ());
     }
 
@@ -485,7 +486,7 @@ class List {
 /** Overloaded operator<< prints the list. */
 template<typename UI = uint32_t, typename SI = int16_t>
 inline _::Printer& operator<< (_::Printer& printer, _::List<UI, SI>& list) {
-    return list.Out (printer);
+    return list.Print (printer);
 }
 
 /** Overloaded operator<< prints the list. */

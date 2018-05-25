@@ -26,6 +26,50 @@
 
 namespace _ {
 
+/** Converts a single byte a one-byte hex representation. */
+KABUKI byte HexNibbleToLowerCase (byte b);
+
+/** Converts a single byte a one-byte hex representation. */
+KABUKI byte HexNibbleToUpperCase (byte b);
+
+/** Converts a single byte a two-byte hex representation. */
+KABUKI uint16_t HexByteToLowerCase (byte b);
+
+/** Converts a single byte a two-byte hex representation. */
+KABUKI uint16_t HexByteToUpperCase (byte b);
+
+/** Converts a single hex byte a byte.
+@return Returns -1 if c is not a hex byte.
+*/
+KABUKI int HexToByte (byte hex_byte);
+
+/** Converts a single byte into a two-byte hex representation.
+@return Returns -1 if c is not a hex byte.
+*/
+KABUKI int HexToByte (uint16_t hex);
+
+/** Converts a single byte a one-byte hex representation. */
+KABUKI byte HexNibbleToLowerCase (byte b);
+
+/** Converts a single byte a one-byte hex representation. */
+KABUKI byte HexNibbleToUpperCase (byte b);
+
+/** Converts a single byte a two-byte hex representation. */
+KABUKI uint16_t HexByteToLowerCase (byte b);
+
+/** Converts a single byte a two-byte hex representation. */
+KABUKI uint16_t HexByteToUpperCase (byte b);
+
+/** Converts a single hex byte a byte.
+    @return Returns -1 if c is not a hex byte.
+*/
+KABUKI int HexToByte (byte c);
+
+/** Converts a single byte into a two-byte hex representation.
+    @return Returns -1 if c is not a hex byte.
+*/
+KABUKI int HexToByte (uint16_t h);
+
 /** Utility class for printing hex with operator<<. */
 template<typename T = uintptr_t>
 class Hex {
@@ -43,7 +87,7 @@ class Hex {
         value (reinterpret_cast<T> (pointer)) {
     }
 
-    Printer& Out (Printer& printer) {
+    Printer& Print (Printer& printer) {
         enum { kSize = sizeof (T) * 2 + 2 };
         char* l_cursor = printer.cursor;
         char* temp = l_cursor;
@@ -146,7 +190,7 @@ inline char* PrintHex (char* text, char* text_end, const void* ptr) {
 
 template<typename T>
 inline _::Printer& operator<< (_::Printer& printer, _::Hex<T> value) {
-    return value.Out (printer);
+    return value.Print (printer);
 }
 
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

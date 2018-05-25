@@ -153,7 +153,7 @@ enum {
     // Extra reserved memory at the end of BOut.
     kBOutOverflowSize = 32,
 
-    // Size of the Display Out Slot.
+    // Size of the Display Print Slot.
     kSlotBufferSizeRx = CRABS_BUFFER_SIZE_RX,
 
     // Size of the KeyboardInBuffer.

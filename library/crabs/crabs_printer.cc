@@ -65,7 +65,7 @@ Printer& Printer::Set (char* new_cursor) {
     return *this;
 }
 
-char* Out (char* cursor, char* end, const char* string) {
+char* Print (char* cursor, char* end, const char* string) {
     ASSERT (cursor)
     ASSERT (string)
 
@@ -84,7 +84,26 @@ char* Out (char* cursor, char* end, const char* string) {
     return cursor;
 }
 
-char* Out (char* cursor, char* end, const char* string, 
+char16_t* Print (char16_t* cursor, char16_t* end, const char16_t* string) {
+    ASSERT (cursor)
+        ASSERT (string)
+
+        if (cursor >= end) {
+            return nullptr;
+        }
+
+    char16_t c = *string++;
+    while (c) {
+        *cursor++ = c;
+        if (cursor >= end)
+            return nullptr;
+        c = *string++;
+    }
+    *cursor = 0;
+    return cursor;
+}
+
+char* Print (char* cursor, char* end, const char* string, 
              const char* string_end) {
     ASSERT (string)
     ASSERT (string_end)
@@ -115,7 +134,7 @@ char* Out (char* cursor, char* end, const char* string,
     return cursor;
 }
 
-char* Out (char* cursor, char* end, char character) {
+char* Print (char* cursor, char* end, char character) {
     ASSERT (cursor)
     ASSERT (end);
 

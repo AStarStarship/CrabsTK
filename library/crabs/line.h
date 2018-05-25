@@ -37,7 +37,7 @@ class KABUKI Line {
     Line (char token, int column_count);
 
     /** Prints a string line of the char repeating. */
-    Printer& Out (Printer& printer);
+    Printer& Print (Printer& printer);
 };
 
 /** Utility class for printing a string line with operator<<. */
@@ -51,17 +51,17 @@ class KABUKI StringLine {
     StringLine (const char* string, int column_count);
 
     /** Prints a string line of the char repeating. */
-    Printer& Out (Printer& printer);
+    Printer& Print (Printer& printer);
 };
 
 }       //< namespace _
 
 inline _::Printer& operator<< (_::Printer& printer, _::Line line) {
-    return line.Out (printer);
+    return line.Print (printer);
 }
 
 inline _::Printer& operator<< (_::Printer& printer, _::StringLine line) {
-    return line.Out (printer);
+    return line.Print (printer);
 }
 
 #endif  //< HEADER_FOR_CRABS_LINE

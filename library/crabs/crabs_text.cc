@@ -36,20 +36,16 @@
 
 namespace _ {
 
-const char* TextEmpty () {
+const char* Empty () {
     return "";
 }
 
-const char* TextCR () {
+const char* NewLine () {
     return "\n";
 }
 
-const char* TextErrorHeader () {
+const char* ErrorHeader () {
     return "\nError: ";
-}
-
-const char* TextNewLine () {
-    return "\n";
 }
 
 const char* TextEnd (const char* text, char delimiter) {
@@ -83,11 +79,20 @@ const char* TextEnd (const char* text, const char* text_end, char delimiter) {
 }
 
 int TextLength (const char* text, char delimiter) {
-    if (!text) {
-        return -1;
-    }
+    ASSERT (text)
     int count = 0;
     char c = *text;
+    while (c > delimiter) {
+        ++count;
+        c = *(++text);
+    }
+    return count;
+}
+
+int TextLength (const char16_t* text, char16_t delimiter) {
+    ASSERT (text)
+    int count = 0;
+    char16_t c = *text;
     while (c > delimiter) {
         ++count;
         c = *(++text);

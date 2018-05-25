@@ -104,14 +104,10 @@ TEST (SEAM_1_2, SEAM_1_2A) {
     Printer print (buffer, kSize);
 
     for (int i = 0; i < kNumCompareStrings; ++i) {
-        end = Out (buffer, buffer + kSize, test_strings[i][0]);
-        CHECK (end)
-        end = Out (buffer_b, buffer_b + kSize, test_strings[i][0]);
+        end = Print (buffer, buffer + kSize, test_strings[i][0]);
         CHECK (end)
 
         end = TextEquals (buffer, buffer_b);
-        CHECK (end)
-        end = TextEquals (buffer, buffer + kSize, buffer_b);
         CHECK (end)
     }
 
@@ -150,9 +146,9 @@ TEST (SEAM_1_2, SEAM_1_2A) {
 
     CHECK (!TextEquals (kCompareStrings[0], kCompareStrings[1]))
     CHECK (!TextEquals (kCompareStrings[0], kCompareStrings[3]))
-    CHECK (TextEquals  (kCompareStrings[0], kCompareStrings[0]))
+    CHECK (TextEquals (kCompareStrings[0], kCompareStrings[0]))
     CHECK (!TextEquals (kCompareStrings[2], kCompareStrings[3], '@'))
-    CHECK (TextEquals  (kCompareStrings[2], kCompareStrings[2], '@'))
+    CHECK (TextEquals (kCompareStrings[2], kCompareStrings[2], '@'))
 
     CHECK_EQUAL (9, TextLength ("123456789"))
     CHECK_EQUAL (9, TextLength ("123456789 ", ' '))

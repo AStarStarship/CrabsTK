@@ -276,7 +276,7 @@ T StackInsert (TArray<T, UI, SI>* stack, T item, T index) {
         return 0;
     }
     if (count == 1) {
-        stack->Out () = 1;
+        stack->Print () = 1;
         if (index == 1) {
             items[1] = item;
             return 1;
@@ -655,8 +655,8 @@ class Stack {
     }
 
     /** Prints this object to the given Printer. */
-    inline Printer& Out (Printer& out_) {
-        return Out (This (), out_);
+    inline Printer& Print (Printer& out_) {
+        return Print (This (), out_);
     }
 
     inline TArray<T, UI, SI>* This () {
