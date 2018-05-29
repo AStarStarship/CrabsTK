@@ -30,11 +30,13 @@
     for (int i = 80; i > 0; --i) std::cout << '-';
 #define PRINT_TYPE(type, value)\
     Console<> ().Out () << TypeValue (type, value);
+#define WIPE ListWipe<UI, SI> (list);
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
 #define PRINT_HEADING
 #define PRINT_TYPE(type, value)
+#define WIPE(buffer, size)
 #endif
 
 #include "set.h"
@@ -96,6 +98,15 @@ constexpr UI ListSizeMin (SI count_max) {
     // << 2 to * 4.
 }
 
+/** Deletes the list contents by overwriting it with zeros. */
+template<typename UI = uint32_t, typename SI = int16_t>
+void ListWipe (AsciiList<UI, SI>* list) {
+    ASSERT (list)
+        list->count = 0;
+    UI size = list->size - sizeof (AsciiList<UI, SI>);
+    memset (reinterpret_cast<char*> (list) + sizeof (AsciiList<UI, SI>), 0, size);
+}
+
 /** Initializes a AsciiList from preallocated memory.
     count_max must be in multiples of 4. Given there is a fixed size, both the 
     count_max and size will be downsized to a multiple of 4 automatically. */
@@ -123,6 +134,7 @@ AsciiList<UI, SI>* ListInit (uintptr_t* buffer, UI size, SI count_max)
     list->size = size;
     list->count      = 0;
     list->count_max  = count_max;
+    WIPE
     return list;
 }
 
@@ -138,6 +150,7 @@ uintptr_t* ListNew (SI count_max, UI size) {
     list->size = size;
     list->count = 0;
     list->count_max = count_max;
+    WIPE
     return buffer;
 }
 
@@ -153,6 +166,7 @@ inline uintptr_t* ListNew (SI count_max) {
     list->size = size;
     list->count = 0;
     list->count_max = count_max;
+    WIPE
     return buffer;
 }
 
@@ -167,36 +181,15 @@ type_t* ListTypes (AsciiList<UI, SI>* list) {
 template<typename UI = uint32_t, typename SI = int16_t>
 inline char* ListDataBegin (AsciiList<UI, SI>* list) {
     ASSERT (list)
-    return reinterpret_cast<char*> (list) + list->count_max * sizeof (SI);
+    return reinterpret_cast<char*> (list) + list->count_max * (sizeof (SI) + 1);
 }
 
 /** Gets the base element 0 of the list's offset array. */
 template<typename UI = uint32_t, typename SI = int16_t>
 inline UI* ListOffsets (AsciiList<UI, SI>* list) {
-    char* base = reinterpret_cast<char*> (list);
-    return reinterpret_cast<UI*> (base + list->count_max);
-}
-
-/** Returns the last byte in the data array. */
-template<typename UI = uint32_t, typename SI = int16_t>
-inline char* ListDataStop (AsciiList<UI, SI>* list, SI index) {
-    ASSERT (list)
-    SI count = list->count;
-    if (count == 0)
-        return nullptr;
-    type_t* types = ListTypes<UI, SI> (list);
-    type_t  type  = types[index];
-    UI* offsets = ListOffsets<UI, SI> (list);
-    UI offset = offsets[index];
-    char* pointer = reinterpret_cast<char*> (list) + offset;
-    return ObjectEnd<UI> (type, pointer);
-}
-
-/** Returns the last byte in the data array. */
-template<typename UI = uint32_t, typename SI = int16_t>
-inline char* ListDataStop (AsciiList<UI, SI>* list) {
-    ASSERT (list);
-    return ListDataStop<UI, SI> (list, list->count - 1);
+    uintptr_t ptr = reinterpret_cast<uintptr_t> (list) + 
+                    sizeof (AsciiList<UI, SI>) + list->count_max;
+    return reinterpret_cast<UI*> (ptr);
 }
 
 /** Returns the last byte in the data array. */
@@ -221,61 +214,111 @@ Socket ListDataVector (AsciiList<UI, SI>* list) {
     return Socket (ListDataBegin<UI, SI> (list), ListDataEnd<UI, SI> (list));
 }
 
-/** Insets the given type-value tuple. */
+/** Returns the last byte in the data array. */
+template<typename UI = uint32_t, typename SI = int16_t>
+inline char* ListDataStop (AsciiList<UI, SI>* list, SI index = -1) {
+    ASSERT (list)
+    SI count = list->count;
+    if (count == 0) {
+        if (index != -1)
+            return nullptr;
+        return ListDataBegin<UI, SI> (list);
+    }
+    type_t type = ListTypes<UI, SI> (list)[index];
+    UI offset = ListOffsets<UI, SI> (list)[index];
+    PRINTF ("!offset %u", offset)
+    char* pointer = reinterpret_cast<char*> (list) + offset;
+    return ObjectEnd<UI> (pointer, type);
+}
+
+template<typename UI = uint32_t, typename SI = int16_t>
+void ListDataSpaceBelow (AsciiList<UI, SI>* list, SI index, Socket& free_space) {
+    ASSERT (list)
+    char* data_stop;
+    if (index == 0) {
+        data_stop = ListDataBegin<UI, SI> (list);
+        free_space.begin = free_space.end = data_stop;
+        return;
+    }
+    ASSERT (index >= 0 && index <= list->count)
+    if (index == list->count) {
+        free_space.begin = ListDataStop<UI, SI> (list);
+        free_space.end   = ListDataEnd <UI, SI> (list);
+        return;
+    }
+    data_stop = ListDataStop<UI, SI> (list, index);
+    UI* offsets = ListOffsets<UI, SI> (list);
+    UI offset_low = offsets[index],
+       offset_high = offsets[index + 1];
+}
+
+/** Insets the given type-value tuple.
+    @return -1 upon failure or the index upon success. */
 template<typename UI = uint32_t, typename SI = int16_t>
 SI ListInsert (AsciiList<UI, SI>* list, type_t type, const void* value, SI index) {
     ASSERT (list)
+    ASSERT (value)
     PRINTF ("\nInserting type:")
     PRINT_TYPE (type, value)
     PRINTF (" into index:%i", index)
-
-    if (value == nullptr) {
-        PRINTF (" 111111111111111111111111")
+    
+    SI count     = list->count,
+       count_max = list->count_max;
+    if (count >= count_max || index > count || !TypeIsValid (type) ||
+        index < 0) {
+        PRINTF ("\nError inserting type:%s into index %i", TypeString (type),
+                (int)index);
         return -1;
     }
-    if (index < 0) {
-        PRINTF (" 222222222222222222222222")
-        return index;
-    }
-    SI count = list->count;
-    if (count >= list->count_max || index > count || !TypeIsValid (type)) {
-        PRINTF (" 333333333333333333333333333333");
-        return -1;
-    }
-    PRINTF (" when count is %i", (int) count)
+    PRINTF (" when count is %i", (int)count)
 
     type_t* types = ListTypes<UI, SI> (list);
 
-    // 1. Check if the count is zero and do add at the begin.
-    if (count == 0) {
-        PRINTF ("\nInserting first element.")
-        types[0] = type;
-        Write (ListDataBegin<UI, SI> (list), ListDataEnd<UI, SI> (list), type, 
-               value);
-        list->count = 1;
-        return 0;
+    // 1. Check for stack push operation.
+    if (index == count) {
+        PRINTF ("\nPushing element...")
+        // Push type onto the top of the type stack.
+        types[index] = type;
+        //  Push the offset onto the top of the offset stack.
+        char* data_stop = ListDataStop<UI, SI> (list, count - 1);
+        PRINTF ("\n  Aligning up data_stop from %i to ", (int)MemoryVector(list, data_stop))
+        data_stop = TypeAlignUpPointer<char> (data_stop, type);
+        PRINTF ("%i", (int)MemoryVector (list, data_stop))
+        UI stop_offset = (UI)(data_stop - reinterpret_cast<char*> (list));
+        ListOffsets<UI, SI> (list)[index] = stop_offset;
+        // Write the value to the top of the value stack.
+        PRINTF (" leaving %i bytes.", (int)(ListDataEnd<UI, SI> (list) - data_stop))
+        if (!Write (data_stop, ListDataEnd<UI, SI> (list), type,
+            value))
+            return -2;
+        list->count = count + 1;
+        return index;
     }
 
-    types += index;
-
     // 2. Shift up the types.
-    type_t* types_cursor = types + count - 1;
-    while (types_cursor > types)
-        *types_cursor-- = *types_cursor;
+    ArrayInsert<type_t, SI> (types, count, type, index);
 
-    // Add the type byte
-    *types = type;
+    // 3. Calculate the offset to insert at.
+    char* aligned_begin = ListDataStop<UI, SI> (list, index);
+    PRINTF ("\nListDataStop<UI, SI> (list) starts as %p then is aligned to ", aligned_begin)
+    aligned_begin = TypeAlignUpPointer<char> (aligned_begin, type);
+    PRINTF ("%p", aligned_begin)
 
-    // Shift up the offsets.
-    UI* offsets_begin  = ListOffsets<UI, SI> (list),
-      * offsets_cursor = offsets_begin + count;
+    // 4. Insert the offset.
+    PRINTF ("\nInserting into ")
+    ArrayInsert<UI, SI> (ListOffsets<UI, SI> (list), count, type, index);
 
-    while (offsets_cursor > offsets_begin)
-        *offsets_cursor-- = *offsets_cursor;
+    UI space_needed = ObjectSize<UI> (value, type);
 
-    char* aligned_begin = ListDataStop<UI, SI> (list) + 1;
-    aligned_begin = AlignUpPointer8<char> (aligned_begin);
+    // 5. Check if there is enough room to insert the value without shifting up any data.
+    Socket free_space;
+    ListDataSpaceBelow<UI, SI> (list, index, free_space);
+    if (Write (free_space.begin, free_space.end, type, value))
+        return index;
 
+    // 6. Shift up the data enough to fit the new value.
+
+    // 5. Write the value to the data socket.
     if (!Write (aligned_begin, ListDataEnd<UI, SI> (list), type, value))
         return -1;
     list->count = ++count;
@@ -310,15 +353,6 @@ template<typename UI = uint32_t, typename SI = int16_t>
 void ListClear (AsciiList<UI, SI>* list) {
     ASSERT (list)
     list->count = 0;
-}
-
-/** Deletes the list contents by overwriting it with zeros. */
-template<typename UI = uint32_t, typename SI = int16_t>
-void ListWipe (AsciiList<UI, SI>* list) {
-    ASSERT (list)
-    list->count = 0;
-    UI size = list->size - sizeof (AsciiList<UI, SI>);
-    memset (reinterpret_cast<char*> (list) + sizeof (AsciiList<UI, SI>), 0, size);
 }
 
 /** Returns true if this expr contains only the given address.
@@ -373,7 +407,7 @@ const void* ListValue (AsciiList<UI, SI>* list, SI index) {
     ASSERT (list)
     if (index < 0 || index >= list->count)
         return nullptr;
-    return reinterpret_cast<const char*> (list) + 
+    return reinterpret_cast<char*> (list) +
            ListOffsets<UI, SI> (list)[index];
 }
 

@@ -90,7 +90,7 @@ inline bool TypeIsValid (type_t type) {
 }
 
 /** Aligns the given pointer to the correct word boundary for the type. */
-void* TypeAlign (type_t type, void* value);
+KABUKI void* TypeAlign (type_t type, void* value);
 
 /** An ROM string for one of the 32 types.
     C++11 variadic templates ensure there is only one copy in of the given
@@ -262,6 +262,35 @@ inline bool TypeIsUtf16 (type_t type) {
     @param type    The type to print.
     @param value   The value to print or nil. */
 KABUKI Printer& PrintType (Printer& printer, type_t type, const void* value);
+
+inline int TypeSizeWidthCode (type_t type) {
+    return type >> 6;
+}
+
+template<typename T>
+T* TypeAlignUpPointer (void* pointer, type_t type) {
+    if (type <= UI1) {
+        return reinterpret_cast<T*> (pointer);
+    }
+    else if (type <= kTypeLast2Byte) {
+        return AlignUpPointer2<T> (pointer);
+    }
+    else if (type <= TMS) {
+        return AlignUpPointer4<T> (pointer);
+    }
+    else if (type <= DEC) {
+        return AlignUpPointer8<T> (pointer);
+    }
+    else {
+        switch (type >> 6) {
+            case 0: return reinterpret_cast<T*> (pointer);
+            case 1: return AlignUpPointer2<T> (pointer);
+            case 2: return AlignUpPointer4<T> (pointer);
+            case 3: return AlignUpPointer8<T> (pointer);
+        }
+    }
+    return nullptr;
+}
 
 }       //< namespace _
 

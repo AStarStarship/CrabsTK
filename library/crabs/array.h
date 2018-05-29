@@ -183,7 +183,6 @@ inline const int* Dimensions () {
 }
 
 /** A multi-dimensional array that uses dynamic memory that can auto-grow.
-
     An ASCII Stack struct is identical to an Array
 
     @todo This is an older data structure that needs to be replace this with 

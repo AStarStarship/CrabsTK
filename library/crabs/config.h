@@ -20,8 +20,12 @@
 #ifndef HEADER_FOR_CRABS_CONFIG
 #define HEADER_FOR_CRABS_CONFIG
 
+inline bool Assert (bool condition) {
+    return !condition;
+}
+
 #define ASSERT(condition)\
-if ((uintptr_t)(condition) == 0) {\
+if (Assert (condition)) {\
     printf ("\nAssertion failed at line %d in \"%s\"", __LINE__, __FILE__);\
     while (1);\
 }
@@ -161,7 +165,7 @@ enum {
 
     kWindowSizeMin = 512,
 
-    kBufferSizeDefault = 1024,
+    kBufferSizeDefault = 64 * 1024,
     kBufferSizeDefaultWords = kBufferSizeDefault / sizeof (intptr_t) + 
                               kBufferSizeDefault % sizeof (intptr_t) ? 1 : 0,
 

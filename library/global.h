@@ -14,6 +14,8 @@
              permissions and limitations under the License.
 */
 
+#include <stdafx.h>
+
 #ifndef HEADER_FOR_GLOBAL
 #define HEADER_FOR_GLOBAL
 

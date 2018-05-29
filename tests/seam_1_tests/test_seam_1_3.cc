@@ -74,7 +74,7 @@ TEST (SEAM_1_3, SEAM_1_3A) {
 
     COUT << stack;
 
-    PRINTF ("\n\nDone _::Stack!")
+    PRINTF ("\n\nDone testing _::Stack!")
 
     /*
     PRINTF ("\n\nTest _::Array...\n\n");
@@ -94,13 +94,49 @@ TEST (SEAM_1_3, SEAM_1_3A) {
                 CHECK_EQUAL (i++, array_3d_exected[x][y][z])
     
     PRINT_PAUSE ("\n\nDone _::Array!")
+    PRINT_HEADING ("\n\nTest _::MemoryCopy...\n\n");
+
+    enum { kTestCharsCount = 256 * 1024 };
+    char test_chars[kTestCharsCount];
+    for (int i = kTestCharsCount - 1; i > 0; --i)
+        test_chars[i] = i % 256;
+    char test_chars_result[kTestCharsCount * 2];
+    for (int i = 15; i > 0; --i) {
+        char* result = MemoryCopy (test_chars_result + i, kTestCharsCount,
+                                   test_chars_result, kTestCharsCount);
+        CHECK (result)
+        CHECK (!MemoryCompare (test_chars_result + i, kTestCharsCount,
+                               test_chars_result, kTestCharsCount))
+    }
+
+
+    PRINTF ("\n\nDone testing _::MemoryCopy!")
     */
 
-    PRINTF ("\n\nTest _::List...\n\n");
+    PRINT_HEADING ("\n\nTest _::List...\n\n");
 
-    List<> list (36);
+    List<> list (36, 960);
+    CHECK (list.This ())
 
     PRINTF ("\nPushing items on to the List stack...\n");
+
+    const int test_ints[] = { '1', '2', '3', '4' };
+
+    const int list_test_count = 12;
+    for (int i = 0; i < 4; ) {
+        COUT << "\ni:" << i;
+        list.Push (SVI, &test_ints[i++]);
+        COUT << '\n' << list << '\n'
+             << "\n\n" << Socket (list.This (), list.This ()->size);
+    }
+    system ("PAUSE");
+    const float test_floats[] = { 9.0, 10.0, 11.0, 12.0 };
+    for (int i = 0; i < 4; ) {
+        COUT << "\ni:" << i + 4;
+        list.Push (FLT, &test_floats[i++]);
+        COUT << '\n' << list << '\n'
+             << "\n\n" << Socket (list.This (), list.This ()->size);
+    }
 
     const char* test_strings[] = {
         "Test",
@@ -108,19 +144,14 @@ TEST (SEAM_1_3, SEAM_1_3A) {
         " 2, ",
         " 3"
     };
-
-    const int test_ints[] = { 1, 2, 3, 4 };
-    const float test_floats[] = { 0.0, 1.0, 2.0, 3.0 };
-
-    const int list_test_count = 4;
-    for (int i = 0; i < list_test_count; ++i) {
-        COUT << "\ni:" << i * 12 << " through " << i * 12 + 11 << '\n' << list;
-        list.Push (STR, test_strings[i]);
-        list.Push (SVI, &test_ints[i]);
-        list.Push (FLT, &test_floats[i]);
+    for (int i = 0; i < 4; ) {
+        COUT << "\ni:" << i + 8;
+        list.Push (STR, test_strings[i++]);
+        COUT << '\n' << list << '\n'
+             << "\n\n" << Socket (list.This (), list.This ()->size);
     }
 
-    for (int i = (list_test_count * 3) - 1; i > 0; --i)
+    for (int i = list_test_count - 1; i > 0; --i)
         list.Pop ();
 
     PRINTF ("\n\nDone _::List!")

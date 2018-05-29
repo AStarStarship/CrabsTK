@@ -69,9 +69,23 @@ void MemoryClear (void* address, size_t size) {
     *ptr = value;*/
 }
 
-/** Copies memory in word-aligned chucks. */
-char* MemoryCopyFast (char* write, char* write_end, const char* read,
-                      const char* read_end) {
+char* MemoryCopy (void* begin, void* end, const void* start,
+                  const void* stop) {
+    ASSERT (begin)
+    ASSERT (start)
+
+    char      * begin_ptr = reinterpret_cast<char      *> (begin),
+              * end_ptr   = reinterpret_cast<char      *> (end);
+    const char* start_ptr = reinterpret_cast<const char*> (start),
+              * stop_ptr  = reinterpret_cast<const char*> (stop);
+
+    if (begin_ptr >= end_ptr || start_ptr >= stop_ptr)
+        return nullptr;
+
+    // Debug stuff.
+    char* begin_copy = begin_ptr,
+        * end_copy   = end_ptr;
+
     // Algorithm:
     // 1.) Save return value.
     // 2.) Align write pointer up and copy the unaligned bytes in the lower 
@@ -79,64 +93,39 @@ char* MemoryCopyFast (char* write, char* write_end, const char* read,
     // 3.) Align write_end pointer down and copy the unaligned bytes in the  
     //     upper memory region.
     // 4.) Copy the word-aligned middle region.
-    char* success = write_end + 1 ,
-        * aligned_pointer = AlignUpPointer<> (write);
-    while (write < aligned_pointer)
-        *write++ = *read++;
-    aligned_pointer = AlignDownPointer<> (write_end);
-    while (write_end > aligned_pointer)
-        *write_end-- = *read_end--;
+    char* success = end_ptr ,
+        * aligned_pointer = AlignUpPointer<> (begin_ptr);
+    while (begin_ptr < aligned_pointer)
+        *begin_ptr++ = *start_ptr++;
+    aligned_pointer = AlignDownPointer<> (end_ptr);
+    while (end_ptr > aligned_pointer)
+        *end_ptr-- = *stop_ptr--;
 
-    uintptr_t* words = reinterpret_cast<uintptr_t*> (write),
-             * words_end = reinterpret_cast<uintptr_t*> (write_end);
-    const uintptr_t* read_word = reinterpret_cast<const uintptr_t*> (read);
+    uintptr_t      * words     = reinterpret_cast<uintptr_t      *> (begin_ptr),
+                   * words_end = reinterpret_cast<uintptr_t      *> (end_ptr);
+    const uintptr_t* read_word = reinterpret_cast<const uintptr_t*> (start_ptr);
+
     while (words < words_end)
         *words++ = *read_word++;
+
+    COUT << Socket (begin_copy, end_copy);
+
     return success;
 }
 
-inline char* MemoryCopyFast (void* write, void* write_end, const void* read, 
-                             const void* read_end) {
-    return MemoryCopyFast (reinterpret_cast<char*> (write),
-                           reinterpret_cast<char*> (write_end),
-                           reinterpret_cast<const char*> (read),
-                           reinterpret_cast<const char*> (read_end));
-}
-
-char* MemoryCopy (void* cursor, void* end, const void* read,
-                  const void* read_end) {
-    ASSERT (cursor)
-    ASSERT (cursor < end)
-    ASSERT (read)
-    ASSERT (read < read_end)
-
-    if (SocketSize (cursor, end) < SocketSize (read, read_end))
-        return nullptr; //< Buffer overflow!
-    return MemoryCopyFast (cursor, end, read, read_end);
-}
-
-char* MemoryCopy (void* write, void* write_end, const void* read,
-                  size_t byte_count) {
-    ASSERT (write)
-    ASSERT ((write < write_end))
-    ASSERT (read)
-
-    if ((size_t)SocketSize (write, write_end) < byte_count) // Buffer overflow!
-        return nullptr;
-
-    return MemoryCopy (write, write_end, read, 
-                       reinterpret_cast<const char*> (read) + byte_count);
-}
-
-char* MemoryCopy (void* write, size_t write_size, const void* read, 
-                  size_t read_size) {
-    ASSERT (write);
-    ASSERT (read);
-    if (write_size < read_size)
-        return nullptr;
-
-    return MemoryCopy (write, reinterpret_cast<char*> (write) + write_size,
-                       read , reinterpret_cast<const char*> (read) + read_size);
+bool MemoryCompare (const void* begin, const void* end, const void* start,
+                     const void* stop) {
+    const char* begin_ptr = reinterpret_cast<const char*> (begin),
+              * end_ptr   = reinterpret_cast<const char*> (end),
+              * start_ptr = reinterpret_cast<const char*> (start),
+              * stop_ptr  = reinterpret_cast<const char*> (stop);
+    while (begin_ptr < end_ptr) {
+        char a = *begin_ptr++,
+             b = *end_ptr++;
+        if (a != b)
+            return false;
+    }
+    return true;
 }
 
 char* PrintMemory (char* cursor, char* end, const void* start, 
@@ -164,18 +153,20 @@ char* PrintMemory (char* cursor, char* end, const void* start,
 
     //  columns
     *cursor++ = '0';
-    cursor = PrintRight (cursor, end, 8, 7);
-    for (int i = 16; i <= 64; i += 8) {
+    cursor = PrintRight (cursor, end, 8, 8);
+    *cursor++ = ' ';
+    for (int i = 16; i <= 56; i += 8) {
         cursor = PrintRight (cursor, end, i, 8);
     }
+    for (int j = 8; j > 0; --j)
+        *cursor++ = ' ';
     *cursor++ = '|';
     *cursor++ = '\n';
     *cursor++ = '|';
     for (int j = 8; j > 0; --j) {
-        for (int k = 7; k > 0; --k) {
-            *cursor++ = '-';
-        }
         *cursor++ = '+';
+        for (int k = 7; k > 0; --k)
+            *cursor++ = '-';
     }
     *cursor++ = '|';
     *cursor++ = ' ';
@@ -199,37 +190,38 @@ char* PrintMemory (char* cursor, char* end, const void* start,
         *cursor++ = '|';
         *cursor++ = ' ';
         cursor = PrintHex (cursor, end, address_ptr);
-        //PRINT_HEADING
-        //PRINTF ("\n%s", buffer_begin)
-        //PRINT_HEADING
     }
     *cursor++ = '\n';
     *cursor++ = '|';
     for (int j = 8; j > 0; --j) {
+        *cursor++ = '+';
         for (int k = 7; k > 0; --k) {
             *cursor++ = '-';
         }
-        *cursor++ = '+';
     }
     *cursor++ = '|';
     *cursor++ = ' ';
     return PrintHex (cursor, end, address_ptr + size);
 }
 
-Socket::Socket (char* begin, char* end) :
-    begin (begin),
-    end (end) {
+Socket::Socket () {
+    // Nothing to do here! ({:-)-+=<
+}
+
+Socket::Socket (void* begin, void* end) :
+    begin (reinterpret_cast<char*> (begin)),
+    end   (reinterpret_cast<char*> (end  )) {
     if (!begin || !end || begin > end) {
         begin = end = 0;
         return;
     }
 }
 
-Socket::Socket (char* begin, intptr_t size) :
-    begin (begin),
-    end (begin + size) {
+Socket::Socket (void* begin, intptr_t size) :
+    begin (reinterpret_cast<char*> (begin)),
+    end   (reinterpret_cast<char*> (begin) + size) {
     if (!begin || size < 0) {
-        end = begin;
+        end = reinterpret_cast<char*> (begin);
         return;
     }
 }

@@ -26,24 +26,26 @@
 
 namespace _ {
 
-/** A managed general purpose memory socket.
+/** A managed general purpose (i.e. not just for networking) memory socket.
     A socket is just a hole in something for fitting something in, like a light 
     or electric socket. A socket of memory is just a block of memory you fit 
     something in. A network socket is a socket for interprocess communication,
     which is usually implemented with a ring buffer 
     (@see ~/library/crabs/slot.h).
 */
-class Socket {
-    public:
+struct Socket {
 
     char* begin, //< Begin of the socket.
         * end;   //< End of the socket.
 
-    /** Constructor. */
-    Socket (char* begin, char* end);
+    /** Constructs an uninitilaied socket. */
+    Socket ();
 
     /** Constructor. */
-    Socket (char* begin, intptr_t size);
+    Socket (void* begin, void* end);
+
+    /** Constructor. */
+    Socket (void* begin, intptr_t size);
 
     /** Clones the other memory. */
     Socket (const Socket& other);
@@ -137,12 +139,12 @@ inline T* MemoryOffset (void* base, uint_t offset) {
 }
 
 /** Calculates the difference between the begin and end address. */
-inline intptr_t SocketSize (void* begin, void* end) {
+inline intptr_t MemoryVector (void* begin, void* end) {
     return reinterpret_cast<char*> (end) - reinterpret_cast<char*> (begin);
 }
 
 /** Calculates the difference between the begin and end address. */
-inline intptr_t SocketSize (const void* begin, const void* end) {
+inline intptr_t MemoryVector (const void* begin, const void* end) {
     return reinterpret_cast<const char*> (end) -
            reinterpret_cast<const char*> (begin);
 }
@@ -151,10 +153,10 @@ inline intptr_t SocketSize (const void* begin, const void* end) {
 KABUKI void MemoryClear (void* address, size_t size);
 
 /** Copies the source to the target functionally identical to memcpy.
-    @param  write     Beginning of the write buffer.
-    @param  write_end End of the write buffer.
-    @param  start     Beginning of the read buffer.
-    @param  stop      End of the read buffer.
+    @param  begin Beginning of the write buffer.
+    @param  end   End of the write buffer.
+    @param  start Start of the read buffer.
+    @param  stop  Stop of the read buffer.
     @return Pointer to the last byte written or nil upon failure. */
 KABUKI char* MemoryCopy (void* begin, void* end, const void* start,
                          const void* stop);
@@ -165,20 +167,38 @@ KABUKI char* MemoryCopy (void* begin, void* end, const void* start,
     @param  read      Beginning of the read buffer.
     @param  size      Number of bytes to copy.
     @return Pointer to the last byte written or nil upon failure. */
-KABUKI char* MemoryCopy (void* begin, void* end, const void* memory,
-                         size_t size);
+inline char* MemoryCopy (void* begin, void* end, const void* read,
+                         size_t read_size) {
+    return MemoryCopy (begin, end, read, 
+                       reinterpret_cast<const char*> (read) + read_size);
+}
 
-/** Copies the source to the target functionally identical to memcpy.
-    @param  write     Beginning of the write buffer.
-    @param  write_end End of the write buffer.
-    @param  read      Beginning of the read buffer.
-    @param  size      Number of bytes to copy.
-    @return Pointer to the last byte written or nil upon failure. */
-KABUKI char* MemoryCopy (void* cursor, void* end, const void* read,
-                         size_t size);
+inline char* MemoryCopy (void* begin, size_t write_size, const void* read,
+                         size_t read_size) {
+    return MemoryCopy (begin, reinterpret_cast<char*> (begin) + write_size,
+                       read, reinterpret_cast<const char*> (read) + read_size);
+}
 
-char* MemoryCopy (void* begin, size_t write_size, const void* read,
-                  size_t read_size);
+/** Compares the two memory sockets.
+    @param  begin The beginning of buffer a.
+    @param  end   The end of buffer a.
+    @param  start Start of buffer b.
+    @param  stop  Stop of buffer b.
+    @return True if they are the same and false if they are not. */
+KABUKI bool MemoryCompare (const void* begin, const void* end, const void* start,
+                           const void* stop);
+
+inline bool MemoryCompare (void* begin, void* end, const void* read,
+                           size_t read_size) {
+    return MemoryCompare (begin, end, read,
+                          reinterpret_cast<const char*> (read) + read_size);
+}
+
+inline bool MemoryCompare (void* begin, size_t write_size, const void* read,
+                         size_t read_size) {
+    return MemoryCompare (begin, reinterpret_cast<char*> (begin) + write_size,
+                          read, reinterpret_cast<const char*> (read) + read_size);
+}
 
 /** Prints out the contents of the address to the debug stream.
     @param begin    The beginning of the read buffer.
@@ -204,21 +224,36 @@ inline char* PrintMemory (char* cursor, char* end, const void* start,
 }
 
 /** Prints the given memory socket. */
-inline Printer& PrintMemory (Printer& printer, const void* begin, 
-                            size_t size) {
+inline Printer& PrintMemory (Printer& printer, const void* start,
+                             size_t size) {
+    char* result = PrintMemory (printer.cursor, printer.end, start,
+                                reinterpret_cast<const char*> (start) + size);
+    if (result == nullptr)
+        return printer;
+    printer.cursor = result;
     return printer;
 }
 
 }       //< namespace _
 
-inline _::Printer& operator<< (_::Printer& out_, _::Socket& memory) {
-    char* cursor = _::PrintMemory (out_.cursor, out_.end, memory.begin, 
+inline _::Printer& operator<< (_::Printer& print, _::Socket& memory) {
+    char* cursor = _::PrintMemory (print.cursor, print.end, memory.begin, 
                                    memory.end);
     if (!cursor) {
-        return out_;
+        return print;
     }
-    out_.cursor = cursor;
-    return out_;
+    print.cursor = cursor;
+    return print;
+}
+
+inline _::Printer& operator<< (_::Printer& print, _::Socket memory) {
+    char* cursor = _::PrintMemory (print.cursor, print.end, memory.begin,
+                                   memory.end);
+    if (!cursor) {
+        return print;
+    }
+    print.cursor = cursor;
+    return print;
 }
 
 #endif  //< HEADER_FOR_CRABS_MEMORY

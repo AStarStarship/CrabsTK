@@ -34,8 +34,27 @@ struct KABUKI AObject {
 
 /** Returns the object size. */
 template<typename UI = uint32_t>
-UI ObjectSize (void* object) {
-    return *reinterpret_cast<UI*> (object);
+UI ObjectSize (const void* object, type_t type) {
+    ASSERT (object)
+    if (type == 0)
+        return 0;
+    if (type <= SI1)
+        return 1;
+    if (type <= kTypeLast2Byte)
+        return 2;
+    if (type <= TMS)
+        return 4;
+    if (type <= UV8)
+        return 8;
+    if (type == DEC)
+        return 16;
+    switch (type >> 6) {
+        case 0: return (UI)*reinterpret_cast<const uint8_t *> (object);
+        case 1: return (UI)*reinterpret_cast<const uint16_t*> (object);
+        case 3: return (UI)*reinterpret_cast<const uint32_t*> (object);
+        case 4: return (UI)*reinterpret_cast<const uint64_t*> (object);
+    }
+    return 0;
 }
 
 /** Aligns the given word to 64-bit word boundary. */
@@ -60,39 +79,22 @@ AObject<UI>* ObjectClone (AObject<UI>* object) {
 
 /** Returns the last byte in the data array. */
 template<typename UI>
-inline const char* ObjectEnd (type_t type, const char* object) {
-    ASSERT (object)
-    if (type <= SI1)
-        return object;
-    if (type <= kTypeLast2Byte)
-        return object + 1;
-    if (type <= TMS)
-        return object + 3;
-    if (type <= UV8)
-        return object + 7;
-    if (type == DEC)
-        return object + 15;
-    switch (type >> 6) {
-        case 0: return object + *object - 1;
-        case 1: return object + *reinterpret_cast<const uint16_t*> (object) - 1;
-        case 3: return object + *reinterpret_cast<const uint32_t*> (object) - 1;
-        case 4: return object + *reinterpret_cast<const uint64_t*> (object) - 1;
-    }
-    return nullptr; //< Will never happen.
+inline char* ObjectEnd (type_t type, char* object) {
+    return object + ObjectSize<UI> (object, type);
 }
 
 /** Returns the last byte in the data array. */
-template<typename UI>
-inline char* ObjectEnd (type_t type, char* object) {
-    return const_cast<char*> (ObjectEnd<UI> (type, (const char*)object));
+template<typename UI, typename T = char*>
+inline T* ObjectEnd (T* object, type_t type) {
+    return object + ObjectSize<UI> (object, type);
 }
 
 template<typename T, typename UI = uint, typename SI = int>
 inline SI ObjectCountRound (SI count) {
     enum {
         kRoundEpochMask = (sizeof (SI) == 8) ? 7 :
-        (sizeof (SI) == 4) ? 3 :
-        (sizeof (SI) == 2) ? 1 : 0,
+                          (sizeof (SI) == 4) ? 3 :
+                          (sizeof (SI) == 2) ? 1 : 0,
     };
     AlignUp<SI> (count);
 }

@@ -253,53 +253,60 @@ T* StackElementsEnd (TArray<T, UI, SI>* stack) {
 }
 
 /** Inserts the item into the stack at the given index.
-    @param a    			 The stack.
+    @warning Function does not check for bounds and pushing to the top
+             if the Stack (@see SI StackInsert<UI, SI> (T*, SI, T, SI)).
+    @param items Pointer to element 0 of the array.
     @param item  The item to insert.
     @param index The index to insert at.
     @return -1 if a is nil and -2 if the stack is full. */
-template<typename T = intptr_t, typename UI = uint, typename SI = int>
-T StackInsert (TArray<T, UI, SI>* stack, T item, T index) {
-    ASSERT (stack);
-    SI size = stack->count_max,
-        count = stack->count;
-    if (count >= size)
-        return -2;
-    T* items = StackElements<T, UI, SI> (This ());
+template<typename T = intptr_t, typename SI = int>
+inline SI ArrayInsert (T* items, SI count, T item, SI index) {
+    T* target = items + index,
+     * end    = items + count;
+    // Shift the elements up.
+    while (target < end)
+        *end-- = *end;
+    *target = item;
+    return count + 1;
+}
+
+/** Inserts the item into the stack at the given index.
+    @param items Pointer to element 0 of the array.
+    @param item  The item to insert.
+    @param index The index to insert at.
+    @return -1 if a is nil and -2 if the stack is full. */
+template<typename T = intptr_t, typename SI = int>
+inline SI ArrayAdd (T* items, SI count, T item, SI index) {
+    ASSERT (items);
+    if (index < 0 || index > count)
+        return -1;
     if (index == count) {
         items[count] = item;
-        stack->count = count + 1;
-        return count;
-    }
-    if (count == 0) {
-        *items = item;
-        stack->count = 1;
-        return 0;
+        return count + 1;
     }
     if (count == 1) {
-        stack->Print () = 1;
-        if (index == 1) {
-            items[1] = item;
-            return 1;
-        }
-        else {
-            items[1] = items[0];
-            items[0] = item;
-            return 1;
-        }
+        items[1] = items[0];
+        items[0] = item;
+        return 1;
     }
-    // Common Case:
-    // First move stack up one starting at index.
-    T* insert_point = items + index,
-        *end = items + count - 1;
-    T value;
-    while (insert_point != end) {
-        value = *end;
-        *(end + 1) = value;
-        --end;
-    }
-    stack->count = count + 1;
-    return count;
+    return ArrayInsert<T, SI> (T, count, item, index);
 }
+
+/** Inserts the item into the stack at the given index.
+    @param a    			 The stack.
+    @param item  The item to insert.
+    @param index The index to insert at.
+    @return -1 if a is nil and -2 if the stack is full.
+template<typename T = intptr_t, typename UI = uint, typename SI = int>
+T ArrayAdd (TArray<T, UI, SI>* stack, T item, T index) {
+    ASSERT (stack);
+    SI count_max  = stack->count_max,
+       count = stack->count;
+    if (count >= count_max)
+        return -1;
+    T* items = StackElements<T, UI, SI> (This ());
+    return ArrayAdd<T, SI> (items, count, item, index);
+} */
 
 /** Removes an element from the given array. */
 template<typename T = intptr_t, typename SI = intptr_t>
@@ -315,8 +322,8 @@ inline SI ArrayRemove (T* elements, SI size, SI index) {
         return index * -1;
     elements += index;
     T* elements_end = elements + --size;
-    while (elements < elements_end)
-        *(elements - 1) = *elements--;
+    while (elements <= elements_end)
+        *elements++ = *elements;
     return size;
 }
 
@@ -577,7 +584,7 @@ class Stack {
         @param index The index to insert at.
         @return -1 if a is nil and -2 if the stack is full. */
     T Insert (T item, T index) {
-        return StackInsert<T, UI, SI> (This (), item, index);
+        return Array<T, UI, SI> (This (), item, index);
     }
 
     /** Removes the given index from the stack.

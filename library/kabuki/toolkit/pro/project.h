@@ -17,7 +17,6 @@
 #ifndef KABUKI_PRO_PROJECT_H
 #define KABUKI_PRO_PROJECT_H
 
-#include "../data/array.h"
 #include "task.h"
 #include "schedule.h"
 

@@ -58,15 +58,15 @@ inline I AlignUp (I value) {
     // ~111 = 000 => 111 + 000 + 1 = 0x1000
     printf ("\nAligning value %u", (uint)value);
     value += ((~value) + 1) & (sizeof (WordBoundary) - 1);
-    printf ("\n with result %u.", (uint)value);
+    printf (" with result %u.", (uint)value);
     return value;
 }
-
+/*
 template<typename WordBoundary = intptr_t, typename T = char>
 inline T* AlignUpPointer (void* pointer) {
     uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
     return reinterpret_cast<T*> (AlignUp<WordBoundary> (ptr));
-}
+}*/
 
 /** Aligns the given pointer to the sizeof (WordBoundary) down..
     @param  value The value to align.
@@ -114,7 +114,7 @@ inline T AlignUp8 (T value) {
 
 /** Calculates the offset to align the given pointer to a 16-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template<typename T = void>
+template<typename T = char>
 inline T* AlignUpPointer2 (void* pointer) {
     // Mask off lower bit and add it to the ptr.
     uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
@@ -123,7 +123,7 @@ inline T* AlignUpPointer2 (void* pointer) {
 
 /** Calculates the offset to align the given pointer to a 16-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template<typename T = void>
+template<typename T = char>
 inline T* AlignUpPointer2 (const void* pointer) {
     // Mask off lower bit and add it to the ptr.
     uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
@@ -132,21 +132,22 @@ inline T* AlignUpPointer2 (const void* pointer) {
 
 /** Aligns the given pointer to a 32-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template<typename T = void>
+template<typename T = char>
 inline T* AlignUpPointer4 (void* pointer) {
-    return reinterpret_cast<T*> (AlignUpPointer<int32_t> (pointer));
+    int32_t* test = AlignUpPointer<int32_t> (pointer);
+    return reinterpret_cast<T*> (test);
 }
 
 /** Aligns the given pointer to a 32-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template<typename T = void>
+template<typename T = char>
 inline T* AlignUpPointer4 (const void* pointer) {
     return reinterpret_cast<const T*> (AlignUpPointer<int32_t> (pointer));
 }
 
 /** Aligns the given pointer to a 64-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template<typename T = void>
+template<typename T = char>
 inline T* AlignUpPointer8 (void* pointer) {
     uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
     return reinterpret_cast<T*> (AlignUp<int64_t> (ptr));
@@ -154,10 +155,28 @@ inline T* AlignUpPointer8 (void* pointer) {
 
 /** Aligns the given pointer to a 64-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template<typename T = void>
+template<typename T = char>
 inline T* AlignUpPointer8 (const void* pointer) {
     uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
     return reinterpret_cast<const T*> (AlignUp<int64_t> (ptr));
+}
+
+/** Aligns the given pointer to a word boundary.
+    @return A vector you add to a pointer to align it. */
+template<typename T = char>
+inline T* AlignUpPointer (const void* pointer) {
+    uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
+    ptr += ((~ptr) + 1) & (sizeof (T) - 1);
+    return reinterpret_cast<T*> (ptr);
+}
+
+/** Aligns the given pointer to a word boundary.
+    @return A vector you add to a pointer to align it. */
+template<typename T = char>
+inline T* AlignUpPointer (void* pointer) {
+    uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
+    ptr += ((~ptr) + 1) & (sizeof (T) - 1);
+    return reinterpret_cast<T*> (ptr);
 }
 
 }       //< namespace _
