@@ -38,7 +38,7 @@ struct Socket {
     char* begin, //< Begin of the socket.
         * end;   //< End of the socket.
 
-    /** Constructs an uninitilaied socket. */
+    /** Constructs an uninitialized socket. */
     Socket ();
 
     /** Constructor. */
@@ -153,37 +153,37 @@ inline intptr_t MemoryVector (const void* begin, const void* end) {
 KABUKI void MemoryClear (void* address, size_t size);
 
 /** Copies the source to the target functionally identical to memcpy.
-    @param  begin Beginning of the write buffer.
-    @param  end   End of the write buffer.
-    @param  start Start of the read buffer.
-    @param  stop  Stop of the read buffer.
+    @param  begin The begin of the write buffer.
+    @param  end   The end of the write buffer.
+    @param  start The start of the read buffer.
+    @param  stop  The stop of the read buffer.
     @return Pointer to the last byte written or nil upon failure. */
 KABUKI char* MemoryCopy (void* begin, void* end, const void* start,
                          const void* stop);
 
 /** Copies the source to the target functionally identical to memcpy.
-    @param  write     Beginning of the write buffer.
-    @param  write_end End of the write buffer.
-    @param  read      Beginning of the read buffer.
+    @param  begin The begin of the write buffer.
+    @param  end   The end of the write buffer.
+    @param  start The start of the read buffer.
     @param  size      Number of bytes to copy.
     @return Pointer to the last byte written or nil upon failure. */
-inline char* MemoryCopy (void* begin, void* end, const void* read,
+inline char* MemoryCopy (void* begin, void* end, const void* start,
                          size_t read_size) {
-    return MemoryCopy (begin, end, read, 
-                       reinterpret_cast<const char*> (read) + read_size);
+    return MemoryCopy (begin, end, start,
+                       reinterpret_cast<const char*> (start) + read_size);
 }
 
 inline char* MemoryCopy (void* begin, size_t write_size, const void* read,
                          size_t read_size) {
-    return MemoryCopy (begin, reinterpret_cast<char*> (begin) + write_size,
+    return MemoryCopy (begin, reinterpret_cast<char*> (begin) + write_size, 
                        read, reinterpret_cast<const char*> (read) + read_size);
 }
 
 /** Compares the two memory sockets.
     @param  begin The beginning of buffer a.
     @param  end   The end of buffer a.
-    @param  start Start of buffer b.
-    @param  stop  Stop of buffer b.
+    @param  start The start of buffer b.
+    @param  stop  The stop of buffer b.
     @return True if they are the same and false if they are not. */
 KABUKI bool MemoryCompare (const void* begin, const void* end, const void* start,
                            const void* stop);

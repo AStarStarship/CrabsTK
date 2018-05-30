@@ -67,7 +67,7 @@ TEST (SEAM_1_3, SEAM_1_3A) {
 
     COUT << stack;
 
-    PRINTF ("\nPopping itmes off the Stack...\n");
+    PRINTF ("\nPopping items off the Stack...\n");
 
     for (i = 10; i > 0; i--)
         CHECK_EQUAL (i, stack.Pop ())
@@ -94,23 +94,6 @@ TEST (SEAM_1_3, SEAM_1_3A) {
                 CHECK_EQUAL (i++, array_3d_exected[x][y][z])
     
     PRINT_PAUSE ("\n\nDone _::Array!")
-    PRINT_HEADING ("\n\nTest _::MemoryCopy...\n\n");
-
-    enum { kTestCharsCount = 256 * 1024 };
-    char test_chars[kTestCharsCount];
-    for (int i = kTestCharsCount - 1; i > 0; --i)
-        test_chars[i] = i % 256;
-    char test_chars_result[kTestCharsCount * 2];
-    for (int i = 15; i > 0; --i) {
-        char* result = MemoryCopy (test_chars_result + i, kTestCharsCount,
-                                   test_chars_result, kTestCharsCount);
-        CHECK (result)
-        CHECK (!MemoryCompare (test_chars_result + i, kTestCharsCount,
-                               test_chars_result, kTestCharsCount))
-    }
-
-
-    PRINTF ("\n\nDone testing _::MemoryCopy!")
     */
 
     PRINT_HEADING ("\n\nTest _::List...\n\n");
@@ -129,7 +112,6 @@ TEST (SEAM_1_3, SEAM_1_3A) {
         COUT << '\n' << list << '\n'
              << "\n\n" << Socket (list.This (), list.This ()->size);
     }
-    system ("PAUSE");
     const float test_floats[] = { 9.0, 10.0, 11.0, 12.0 };
     for (int i = 0; i < 4; ) {
         COUT << "\ni:" << i + 4;
@@ -149,6 +131,7 @@ TEST (SEAM_1_3, SEAM_1_3A) {
         list.Push (STR, test_strings[i++]);
         COUT << '\n' << list << '\n'
              << "\n\n" << Socket (list.This (), list.This ()->size);
+        system ("PAUSE");
     }
 
     for (int i = list_test_count - 1; i > 0; --i)

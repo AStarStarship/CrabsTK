@@ -137,13 +137,10 @@ const char* TextSkipNumbers (const char* text, char delimiter) {
     return text;
 }
 
-const char* TextEquals (const char* text_a, const char* text_b, char delimiter) {
-    if (!text_a) {
-        return nullptr;
-    }
-    if (!text_b) {
-        return nullptr;
-    }
+const char* TextEquals (const char* text_a, const char* text_b, 
+                        char delimiter) {
+    ASSERT (text_a)
+    ASSERT (text_b)
     PRINTF ("\nComparing \"%s\" to \"%s\"", text_a, text_b)
 
     char a = *text_a,

@@ -73,7 +73,7 @@ inline T* AlignUpPointer (void* pointer) {
     @return The aligned value. */
 template<typename WordBoundary = intptr_t, typename I = uintptr_t>
 inline I AlignDown (I value) { //        v--- LSb Mask
-    return value - value & (sizeof (WordBoundary) - 1);
+    return value & ~(sizeof (WordBoundary) - 1);
 }
 
 /** Aligns the given pointer to the sizeof (WordBoundary) down.

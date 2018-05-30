@@ -79,12 +79,15 @@ char* MemoryCopy (void* begin, void* end, const void* start,
     const char* start_ptr = reinterpret_cast<const char*> (start),
               * stop_ptr  = reinterpret_cast<const char*> (stop);
 
+    PRINTF ("\nCopying %i bytes from %p and writing to %p",
+        (int)(stop_ptr - start_ptr), begin_ptr, stop_ptr)
+
     if (begin_ptr >= end_ptr || start_ptr >= stop_ptr)
         return nullptr;
 
     // Debug stuff.
-    char* begin_copy = begin_ptr,
-        * end_copy   = end_ptr;
+    char* begin_debug = begin_ptr,
+        * end_debug   = end_ptr;
 
     // Algorithm:
     // 1.) Save return value.
@@ -95,11 +98,15 @@ char* MemoryCopy (void* begin, void* end, const void* start,
     // 4.) Copy the word-aligned middle region.
     char* success = end_ptr ,
         * aligned_pointer = AlignUpPointer<> (begin_ptr);
+    PRINTF ("\n  AlignUpPointer<> (begin_ptr):0x%p", aligned_pointer)
     while (begin_ptr < aligned_pointer)
         *begin_ptr++ = *start_ptr++;
     aligned_pointer = AlignDownPointer<> (end_ptr);
+    PRINTF ("\n  AlignDownPointer<> (begin_ptr):0x%p", aligned_pointer)
     while (end_ptr > aligned_pointer)
         *end_ptr-- = *stop_ptr--;
+    PRINTF ("\n  Down-stage pointers are now begin_ptr:0x%p end_ptr:0x%p", 
+            begin_ptr, end_ptr)
 
     uintptr_t      * words     = reinterpret_cast<uintptr_t      *> (begin_ptr),
                    * words_end = reinterpret_cast<uintptr_t      *> (end_ptr);
@@ -108,7 +115,7 @@ char* MemoryCopy (void* begin, void* end, const void* start,
     while (words < words_end)
         *words++ = *read_word++;
 
-    COUT << Socket (begin_copy, end_copy);
+    COUT << Socket (begin_debug, end_debug);
 
     return success;
 }
