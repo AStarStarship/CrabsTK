@@ -16,25 +16,26 @@
 
 #pragma once
 #include <stdafx.h>
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
-
-#include "printer.h"
-
-#if USING_PRINTER
-
 #ifndef HEADER_FOR_CRABS_RIGHT
 #define HEADER_FOR_CRABS_RIGHT
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
+// Dependencies:
+#include "printer.h"
+#include "hex.h"
+// End dependencies.
+#if USING_PRINTER
 
 namespace _ {
 
+/** Utility class for printing strings justified right. */
 template<typename T = const char*>
 struct Right {
-    
-    T value; //< Value to print.
+    T   value;        //< Value to print.
+    int column_count; //< Column count.
 
-    Right (T value) :
-        value (value) {
+    Right (T value, int column_count) :
+        value        (value       ),
+        column_count (column_count) {
         // Nothing to do here. :-)
     }
 };
@@ -43,13 +44,13 @@ struct Right {
     @param input The string to print.
     @param num_columns The number of columns per row. */
 KABUKI char* PrintRight (char* text, char* text_end, const char* string, 
-                         int num_columns, char delimiter = 0);
+                         int num_columns);
 
 /** Prints the given value justified right to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (char* text, char* text_end, int32_t value, 
-                         int num_columns, char delimiter = 0) {
+                         int num_columns) {
     char buffer[16];
     Print (buffer, buffer + 15, (uint32_t)value);
     return PrintRight (text, text_end, buffer, num_columns);
@@ -59,7 +60,7 @@ inline char* PrintRight (char* text, char* text_end, int32_t value,
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (char* text, char* text_end, uint32_t value,
-                         int num_columns, char delimiter = 0) {
+                         int num_columns) {
     char buffer[16];
     Print (buffer, buffer + 15, (uint32_t)value);
     return PrintRight (text, text_end, buffer, num_columns);
@@ -69,7 +70,7 @@ inline char* PrintRight (char* text, char* text_end, uint32_t value,
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (char* text, char* text_end, int64_t value,
-                         int num_columns, char delimiter = 0) {
+                         int num_columns) {
     char buffer[24];
     Print (buffer, buffer + 23, value);
     return PrintRight (text, text_end, buffer, num_columns);
@@ -79,7 +80,7 @@ inline char* PrintRight (char* text, char* text_end, int64_t value,
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (char* text, char* text_end, uint64_t value, 
-                         int num_columns, char delimiter = 0) {
+                         int num_columns) {
     char buffer[24];
     Print (buffer, buffer + 23, value);
     return PrintRight (text, text_end, buffer, num_columns);
@@ -89,17 +90,27 @@ inline char* PrintRight (char* text, char* text_end, uint64_t value,
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (char* text, char* text_end, float value, 
-                         int num_columns, char delimiter = 0) {
+                         int num_columns) {
     char buffer[kkFloat32DigitsMax];
     Print (buffer, buffer + kkFloat32DigitsMax, value);
     return PrintRight (text, text_end, buffer, num_columns);
+}
+
+template<typename T>
+char* PrintRight (char* begin, char* end, Hex<T> value,
+                         int num_columns) {
+    char* result = PrintHex (begin, end, value.value);
+    if (!result)
+        return printer;
+    printer.cursor = result;
+    return result;
 }
 
 /** Prints the given value justified right to this string.
     @param value The value to print.
     @param num_columns The number of columns per row. */
 inline char* PrintRight (char* text, char* text_end, double value, 
-                         int num_columns, char delimiter = 0) {
+                         int num_columns) {
     char buffer[kFloat64DigitsMax];
     Print (buffer, buffer + kFloat64DigitsMax, value);
     return PrintRight (text, text_end, buffer, num_columns);
@@ -111,8 +122,12 @@ inline char* PrintRight (char* text, char* text_end, double value,
     printer. */
 template<typename T>
 inline _::Printer& operator<< (_::Printer& printer, _::Right<T> right) {
-    printer.cursor = _::PrintRight (printer.cursor, printer.end, right.value);
-    return out_;
+    char* result = _::PrintRight (printer.cursor, printer.end, right.value,
+                                  right.column_count);
+    if (!result)
+        return printer;
+    printer.cursor = result;
+    return printer;
 }
 
 #endif  //< HEADER_FOR_CRABS_RIGHT

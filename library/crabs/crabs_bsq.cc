@@ -15,10 +15,11 @@
 */
 
 #include <stdafx.h>
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+// Dependencies:
 #include "bsq.h"
 #include "printer.h"
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+// End dependencies.
 
 namespace _ {
 

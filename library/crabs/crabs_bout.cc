@@ -15,10 +15,9 @@
 */
 
 #include <stdafx.h>
-#include "bout.h"
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
-
+// Dependencies:
+#include "bout.h"
 #include "memory.h"
 #include "type.h"
 #include "bsq.h"
@@ -27,7 +26,7 @@
 #include "slot.h"
 #include "hex.h"
 #include "line.h"
-
+// End dependencies.
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);

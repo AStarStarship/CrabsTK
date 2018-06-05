@@ -18,7 +18,9 @@
 #if      MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 #ifndef  HEADER_FOR_CRABS_ARRAY
 #define  HEADER_FOR_CRABS_ARRAY
+// Dependencies:
 #include "stack.h"
+// End dependencies.
 
 namespace _ {
 
@@ -30,8 +32,8 @@ namespace _ {
            the stack of dimensions. */
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 constexpr SI ArrayCountUpperLimit (SI dimension_count, SI element_count) {
-    UI header_size = sizeof (TArray<T, UI, SI>) + 
-                     AlignUp<SI> (dimension_count * sizeof (SI));
+    UI header_size = (UI)(sizeof (TArray<T, UI, SI>) + 
+                          AlignUp<SI> (dimension_count * sizeof (SI)));
     return (SI)(((~(UI)0) - 7) - header_size) / (UI)sizeof (T);
 }
 

@@ -15,14 +15,12 @@
 */
 
 #include <stdafx.h>
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
-
+// Dependencies:
 #include "text.h"
 #include "memory.h"
-
+// End dependencies.
 #if USING_PRINTER
-
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
@@ -32,7 +30,6 @@
 #endif
 
 // Some of the Text functions will be required but not all of them.
-
 
 namespace _ {
 

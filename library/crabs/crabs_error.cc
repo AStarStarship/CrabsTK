@@ -15,9 +15,10 @@
 */
 
 #include <stdafx.h>
-#include "error.h"
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+// Dependencies:
+#include "error.h"
+// End dependencies.
 
 namespace _ {
 

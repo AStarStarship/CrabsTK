@@ -16,13 +16,12 @@
 
 #pragma once
 #include <stdafx.h>
-
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #ifndef HEADER_FOR_CRABS_HASH
 #define HEADER_FOR_CRABS_HASH
-
+// Dependencies:
 #include "config.h"
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+// End dependencies.
 
 namespace _ {
 

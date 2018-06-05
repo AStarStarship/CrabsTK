@@ -15,13 +15,13 @@
 */
 
 #include <stdafx.h>
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
 #ifndef HEADER_FOR_CRABS_PRINTER
 #define HEADER_FOR_CRABS_PRINTER
-
+// Dependencies:
 #include "print_to_ascii.h"
 #include "text.h"
+// End dependencies.
 
 namespace _ {
 

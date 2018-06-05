@@ -14,14 +14,15 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #ifndef CRABS_COLLECTION_H
 #define CRABS_COLLECTION_H
-
+// Dependencies:
 #include "type.h"
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
-
 #include "text.h"
+// End dependencies.
 
 namespace _ {
 /**
@@ -34,8 +35,8 @@ struct KABUKI Set {
     TData  size;       //< Total size of the set.
     TKey   table_size, //< Size of the (optional) key strings in bytes.
            pile_size;  //< Size of the (optional) collisions pile in bytes.
-    TIndex num_items,  //< Number of items.
-           max_items;  //< Max number of items that can fit in the header.
+    TIndex item_count,  //< Number of items.
+           count_max;  //< Max number of items that can fit in the header.
 };
 
 /** A Type-Value Tuple. */
@@ -60,7 +61,7 @@ struct Tuple3 {
     |      Stack | STK  | A stack of POD number types.                 |
     |       List | LST  | A stack of Type-Value tuples.                |
     |        Map | MAP  | A one-to-one map of Id-{Type-Value} tuples.  |
-    |       Book | DIC  | An unordered map of Key-{Type-Value} tuples. |
+    |       Multimap | DIC  | An unordered map of Key-{Type-Value} tuples. |
     | Dictionary | DIC  | A one-to-one map of Key-{Type-Value} tuples. |
     |   Observer | STC  | A Observer with Subscriber List.             |
 */

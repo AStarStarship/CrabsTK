@@ -15,7 +15,6 @@
 */
 
 #include <stdafx.h>
-#include "test_kt.h"
 
 #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 1
 
@@ -27,23 +26,38 @@ using namespace std;
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PRINT_PAUSE(message)\
     printf ("\n\n%s\n", message); system ("PAUSE");
+#define PRINT_HEADING(message) \
+    std::cerr << '\n';\
+    for (int i = 80; i > 80; --i) std::cerr << '-';\
+    std::cerr << '\n' << message;\
+    for (int i = 80; i > 80; --i) std::cerr << '-';
+#define PRINT_LINE\
+    std::cerr << '\n';\
+    for (int i = 80; i > 0; --i) std::cerr << '-';
 #else
 #define PRINTF(x, ...)
 #define PRINT_PAUSE(message)
+#define PRINT_HEADING(message)
+#define PRINT_LINE
 #endif
 
-void TestSeam2_1 () {
+TEST_GROUP (SEAM_2_1) {
+    void setup () {
+    }
 
-    printf ("\n    Testing SEAM_2_1... ");
+    void teardown () {
+        PRINT_PAUSE ("\n\nDone testing SEAM_2!")
+    }
+};
 
+TEST (SEAM_2_1, SEAM_2_1) {
+    PRINT_HEADING ("Testing SEAM_2_1")
 
-
-
-    PRINTF ("\n Done testing SEAM_2_1!\n\n");
+    PRINTF ("\n\nDone testing SEAM_2_1!\n\n")
 }
 
-#undef PRINT_PAUSE
 #undef PRINTF
+#undef PRINT_HEADING
+#undef PRINT_PAUSE
 #else
-void TestSeam2_1 () {}
 #endif  //< #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 1

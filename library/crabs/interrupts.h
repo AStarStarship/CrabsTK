@@ -16,12 +16,11 @@
 
 #pragma once
 #include <stdafx.h>
-
 #ifndef CRABS_EXCEPTIONS_H
 #define CRABS_EXCEPTIONS_H
-
+// Dependencies:
 #include "config.h"
-
+// End dependencies.
 #if USING_CRABS_INTERRUPTS
 
 namespace _ {

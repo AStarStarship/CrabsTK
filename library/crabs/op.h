@@ -16,14 +16,13 @@
 
 #pragma once
 #include <stdafx.h>
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
-
 #ifndef HEADER_FOR_CRABS_OP
 #define HEADER_FOR_CRABS_OP
-
+// Dependencies:
 #include "error.h"
 #include "printer.h"
+// End dependencies.
 
 namespace _ {
 

@@ -17,13 +17,12 @@
 
 #pragma once
 #include <stdafx.h>
-
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
 #ifndef HEADER_FOR_CRABS_SCAN
 #define HEADER_FOR_CRABS_SCAN
-
+// Dependencies:
 #include "config.h"
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
+// End dependencies.
 #if USING_PRINTER
 
 namespace _ {

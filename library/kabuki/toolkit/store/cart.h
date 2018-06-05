@@ -35,8 +35,8 @@ class Cart: public _::Op {
         kLexicalDeilimiter = '.'  //< Delimiter for identifying nested objects.
     };
 
-    /** Default constructor creates a cart with max_items and given name. */
-    Cart (const char* name, int max_items = kDefaultSize);
+    /** Default constructor creates a cart with count_max and given name. */
+    Cart (const char* name, int count_max = kDefaultSize);
 
     /** Destructs the dynamic memory. */
     ~Cart ();

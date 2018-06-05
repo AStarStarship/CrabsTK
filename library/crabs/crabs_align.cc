@@ -18,7 +18,9 @@
 #include "memory.h"
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
-
+// Dependencies:
+// None
+// End dependencies.
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);

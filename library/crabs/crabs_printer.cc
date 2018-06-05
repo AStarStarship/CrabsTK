@@ -15,16 +15,13 @@
 */
 
 #include <stdafx.h>
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
-
+// Dependencies:
 #include "printer.h"
-
 #if USING_PRINTER
-
 #include "text.h"
 #include "type.h"
-
+// End dependencies.
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);

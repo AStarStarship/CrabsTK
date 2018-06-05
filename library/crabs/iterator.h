@@ -16,13 +16,12 @@
 
 #pragma once
 #include <stdafx.h>
-
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #ifndef CRABS_ITERATOR_H
 #define CRABS_ITERATOR_H
-
+// Dependencies:
 #include "config.h"
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
+// End dependencies.
 
 namespace _ {
 

@@ -14,12 +14,14 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #ifndef HEADER_FOR_CRABS_OBJECT
 #define HEADER_FOR_CRABS_OBJECT
-
+// Dependencies:
 #include "type.h"
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+// End dependencies.
 
 namespace _ {
 

@@ -66,11 +66,13 @@
     <ClInclude Include="..\..\library\crabs\ascii.h" />
     <ClInclude Include="..\..\library\crabs\bin.h" />
     <ClInclude Include="..\..\library\crabs\binary.h" />
+    <ClInclude Include="..\..\library\crabs\multimap.h" />
     <ClInclude Include="..\..\library\crabs\bout.h" />
     <ClInclude Include="..\..\library\crabs\bsq.h" />
     <ClInclude Include="..\..\library\crabs\center.h" />
     <ClInclude Include="..\..\library\crabs\clock.h" />
     <ClInclude Include="..\..\library\crabs\config.h" />
+    <ClInclude Include="..\..\library\crabs\dictionary.h" />
     <ClInclude Include="..\..\library\crabs\door.h" />
     <ClInclude Include="..\..\library\crabs\error.h" />
     <ClInclude Include="..\..\library\crabs\event.h" />

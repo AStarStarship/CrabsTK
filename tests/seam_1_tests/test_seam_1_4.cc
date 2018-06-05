@@ -134,9 +134,9 @@ TEST (SEAM_1_4, SEAM_1_4A) {
 
     TablePrint (table);
 
-    PrintLineBreak ("\n  + Running BookTests\n", 10);
+    PrintLineBreak ("\n  + Running MultimapTests\n", 10);
 
-    PrintLineBreak ("\n  - Running BookInit...\n", 5, ' ');
+    PrintLineBreak ("\n  - Running MultimapInit...\n", 5, ' ');
     int8_t index;
 
     enum {
@@ -152,78 +152,78 @@ TEST (SEAM_1_4, SEAM_1_4A) {
     
     uintptr_t buffer[kBufferSizeWords];
 
-    Book2* book = Book2Init (buffer, 8, kBufferSize, 128);
+    Multimap2* multimap = Multimap2Init (buffer, 8, kBufferSize, 128);
 
-    CHECK (book != nullptr)
+    CHECK (multimap != nullptr)
 
-    index = Book2Add<uint8_t, UI1> (book, "D", (byte)0xFF);
+    index = Multimap2Add<uint8_t, UI1> (multimap, "D", (byte)0xFF);
 
     CHECK_EQUAL (0, index)
-    Book2Print (book);
+    Multimap2Print (multimap);
     CHECK_EQUAL (0, index)
-    index = Book2Find (book, "D");
+    index = Multimap2Find (multimap, "D");
     CHECK_EQUAL (0, index)
     PRINT_PAUSE ("\n");
-    index = Book2Add<uint8_t, UI1> (book, "C", (byte)0xFF);
+    index = Multimap2Add<uint8_t, UI1> (multimap, "C", (byte)0xFF);
     CHECK_EQUAL (1, index)
-    index = Book2Find (book, "D");
+    index = Multimap2Find (multimap, "D");
     CHECK_EQUAL (0, index)
-    index = Book2Find (book, "C");
+    index = Multimap2Find (multimap, "C");
     CHECK_EQUAL (1, index)
 
-    index = Book2Add<uint8_t, UI1> (book, "BIn", (byte)0xFF);
+    index = Multimap2Add<uint8_t, UI1> (multimap, "BIn", (byte)0xFF);
     CHECK_EQUAL (2, index)
-    index = Book2Find (book, "D");
+    index = Multimap2Find (multimap, "D");
     CHECK_EQUAL (0, index)
-    index = Book2Find (book, "C");
+    index = Multimap2Find (multimap, "C");
     CHECK_EQUAL (1, index)
-    index = Book2Find (book, "BIn");
+    index = Multimap2Find (multimap, "BIn");
     CHECK_EQUAL (2, index)
 
-    index = Book2Add<uint8_t, UI1> (book, "A", (byte)0xFF);
+    index = Multimap2Add<uint8_t, UI1> (multimap, "A", (byte)0xFF);
     CHECK_EQUAL (3, index)
-    index = Book2Find (book, "D");
+    index = Multimap2Find (multimap, "D");
     CHECK_EQUAL (0, index)
-    index = Book2Find (book, "C");
+    index = Multimap2Find (multimap, "C");
     CHECK_EQUAL (1, index)
-    index = Book2Find (book, "BIn");
+    index = Multimap2Find (multimap, "BIn");
     CHECK_EQUAL (2, index)
-    index = Book2Find (book, "A");
+    index = Multimap2Find (multimap, "A");
     CHECK_EQUAL (3, index)
 
-    index = Book2Add<uint8_t, UI1> (book, "abc", (byte)0xFF);
+    index = Multimap2Add<uint8_t, UI1> (multimap, "abc", (byte)0xFF);
     CHECK_EQUAL (4, index)
-    index = Book2Find (book, "abc");
+    index = Multimap2Find (multimap, "abc");
     CHECK_EQUAL (4, index)
 
-    index = Book2Add<uint8_t, UI1> (book, "bac", (byte)0xFF);
+    index = Multimap2Add<uint8_t, UI1> (multimap, "bac", (byte)0xFF);
     CHECK_EQUAL (5, index)
-    index = Book2Find (book, "abc");
+    index = Multimap2Find (multimap, "abc");
     CHECK_EQUAL (4, index)
-    index = Book2Find (book, "bac");
+    index = Multimap2Find (multimap, "bac");
     CHECK_EQUAL (5, index)
 
-    index = Book2Add<uint8_t, UI1> (book, "cba", (byte)0xFF);
+    index = Multimap2Add<uint8_t, UI1> (multimap, "cba", (byte)0xFF);
     CHECK_EQUAL (6, index)
-    index = Book2Find (book, "abc");
+    index = Multimap2Find (multimap, "abc");
     CHECK_EQUAL (4, index)
-    index = Book2Find (book, "bac");
+    index = Multimap2Find (multimap, "bac");
     CHECK_EQUAL (5, index)
-    index = Book2Find (book, "cba");
+    index = Multimap2Find (multimap, "cba");
     CHECK_EQUAL (6, index)
 
-    index = Book2Add<uint8_t, UI1> (book, "cab", (byte)0xFF);
+    index = Multimap2Add<uint8_t, UI1> (multimap, "cab", (byte)0xFF);
     CHECK_EQUAL (7, index)
-    index = Book2Find (book, "abc");
+    index = Multimap2Find (multimap, "abc");
     CHECK_EQUAL (4, index)
-    index = Book2Find (book, "bac");
+    index = Multimap2Find (multimap, "bac");
     CHECK_EQUAL (5, index)
-    index = Book2Find (book, "cba");
+    index = Multimap2Find (multimap, "cba");
     CHECK_EQUAL (6, index)
-    index = Book2Find (book, "cab");
+    index = Multimap2Find (multimap, "cab");
     CHECK_EQUAL (7, index)
 
-    index = Book2Add<uint8_t, UI1> (book, "test", (byte)0xFF);
+    index = Multimap2Add<uint8_t, UI1> (multimap, "test", (byte)0xFF);
     CHECK_EQUAL (index, -1)
 
 

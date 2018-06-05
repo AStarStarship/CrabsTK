@@ -17,12 +17,11 @@
 #pragma once
 #include <stdafx.h>
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
-
 #ifndef HEADER_FOR_CRABS_LINE
 #define HEADER_FOR_CRABS_LINE
-
+// Dependencies:
 #include "printer.h"
-
+// End dependencies.
 
 namespace _ {
 

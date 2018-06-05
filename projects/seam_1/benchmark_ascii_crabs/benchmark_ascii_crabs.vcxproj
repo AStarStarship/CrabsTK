@@ -18,6 +18,17 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\benchmark_ascii_crabs.cc" />
+    <ClCompile Include="source\stdafx.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\stdafx.h" />
+    <ClInclude Include="source\targetver.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{13A5C38A-A043-496A-8E4E-E291E8C635CE}</ProjectGuid>
@@ -146,14 +157,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="benchmark_ascii_crabs.cc" />
-    <ClCompile Include="stdafx.cc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

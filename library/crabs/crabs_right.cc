@@ -15,15 +15,12 @@
 */
 
 #include <stdafx.h>
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
-
+// Dependencies:
 #include "printer.h"
-
-#if USING_PRINTER
-
 #include "type.h"
-
+// End dependencies.
+#if USING_PRINTER
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
@@ -39,7 +36,7 @@
 namespace _ {
 
 char* PrintRight (char* buffer, char* buffer_end, const char* token, 
-                  int num_columns, char delimiter) {
+                  int num_columns) {
     char* start = buffer;
     ASSERT (token)
     ASSERT (buffer)
@@ -87,7 +84,7 @@ char* PrintRight (char* buffer, char* buffer_end, const char* token,
             //PUTCHAR ('.')
         }
         //PUTCHAR ('\"')
-        *buffer = delimiter;
+        *buffer = 0;
         return buffer;
     }
     //PRINTF ("\n Wrote:\"")
@@ -111,5 +108,6 @@ char* PrintRight (char* buffer, char* buffer_end, const char* token,
 }       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
+#undef PRINT_HEADING
 #endif  //< USING_PRINTER
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2

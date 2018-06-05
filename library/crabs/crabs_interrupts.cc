@@ -16,8 +16,9 @@
 */
 
 #include <stdafx.h>
+// Dependencies:
 #include "interrupts.h"
-
+// End dependencies.
 #if USING_CRABS_INTERRUPTS
 
 namespace _ {

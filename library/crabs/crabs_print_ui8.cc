@@ -15,15 +15,12 @@
 */
 
 #include <stdafx.h>
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
-
+// Dependencies:
 #include "print_to_ascii.h"
-
+// End dependencies.
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
-
 #define DEBUG 1
-
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #define PRINT_PRINTED\
@@ -49,6 +46,8 @@
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
 #define PRINT_PRINTED
+#define PRINT_BINARY
+#define PRINT_BINARY_TABLE
 #define PRINT_HEADER
 #define PRINT_HEADING
 #endif
@@ -606,4 +605,10 @@ char* Print (char* cursor, char* end, int64_t value) {
 }
 
 }       //< namespace _
+#undef PRINTF
+#undef PUTCHAR
+#undef PRINT_BINARY
+#undef PRINT_BINARY_TABLE
+#undef PRINT_PRINTED
+#undef PRINT_HEADING
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1

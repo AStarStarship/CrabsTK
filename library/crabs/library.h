@@ -16,13 +16,12 @@
 
 #pragma once
 #include <stdafx.h>
-
-#ifndef CRABS_LIBRARY_H
-#define CRABS_LIBRARY_H
-
-#include "config.h"
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#ifndef HEADER_FOR_CRABS_LIBRARY
+#define HEADER_FOR_CRABS_LIBRARY
+// Dependencies:
+#include "config.h"
+// End dependencies.
 
 namespace _ {
 #if USING_PRINTER
@@ -242,4 +241,4 @@ KABUKI void Destruct (Library<TIndex, TKey, TData, TData, MaxStackSize>* r) {
 #endif  //< CRABS_MEMORY_PROFILE > 2
 }       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
-#endif  //< CRABS_LIBRARY_H
+#endif  //< HEADER_FOR_CRABS_LIBRARY

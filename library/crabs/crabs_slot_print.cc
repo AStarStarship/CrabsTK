@@ -15,14 +15,12 @@
 */
 
 #include <stdafx.h>
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
-
+// Dependencies:
 #include "line.h"
 #include "slot_print.h"
-
+// End dependencies.
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 5
-
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #define PRINT_BSQ(bsq)\ {\
@@ -35,7 +33,6 @@
 #endif
 
 namespace _ {
-
 
 void SlotDisplay (Slot& slot) {
     char* begin,

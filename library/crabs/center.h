@@ -16,15 +16,13 @@
 
 #pragma once
 #include <stdafx.h>
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
-
-#include "printer.h"
-
-#if USING_PRINTER
-
 #ifndef HEADER_FOR_CRABS_CENTER
 #define HEADER_FOR_CRABS_CENTER
+// Dependencies:
+#include "printer.h"
+// End dependencies.
+#if USING_PRINTER
 
 namespace _ {
 
@@ -49,6 +47,6 @@ inline _::Printer& operator<< (_::Printer& printer, _::Center center) {
     return center.Print (printer);
 }
 
-#endif  //< HEADER_FOR_CRABS_CENTER
 #endif  //< USING_PRINTER
+#endif  //< HEADER_FOR_CRABS_CENTER
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

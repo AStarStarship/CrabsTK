@@ -16,10 +16,9 @@
 
 #pragma once
 #include <stdafx.h>
-
 #ifndef HEADER_FOR_CRABS_GLOBAL
 #define HEADER_FOR_CRABS_GLOBAL
-
+// Dependencies:
 #include "config.h"
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
@@ -39,12 +38,13 @@
 #endif
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#include "ascii.h"
 #include "stack.h"
 #include "array.h"
+#include "bsq.h"
 #include "list.h"
-//#include "bsq.h"
-//#include "book.h"
-//#include "map.h"
+#include "map.h"
+//#include "multimap.h"
 //#include "dictionary.h"
 #endif
 
@@ -59,11 +59,11 @@
 #include "args.h"
 #include "bin.h"
 #include "bout.h"
-#include "ascii.h"
 #endif
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #include "table.h"
 #endif
+// End dependencies.
 
 #endif  //< HEADER_FOR_CRABS_GLOBAL

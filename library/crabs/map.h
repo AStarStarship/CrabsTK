@@ -1,6 +1,6 @@
 /** Kabuki Toolkit
     @version 0.x
-    @file    ~/library/crabs/tmap.h
+    @file    ~/library/crabs/map.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
@@ -16,21 +16,42 @@
 
 #pragma once
 #include <stdafx.h>
-
-#ifndef CRABS_MAP_H
-#define CRABS_MAP_H
-
-#include "memory.h"
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
-
+#ifndef HEADER_FOR_CRAPS_MAP
+#define HEADER_FOR_CRAPS_MAP
+// Dependencies:
+#include "memory.h"
 #include "type.h"
+// End dependencies.
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#ifndef PRINTF
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#define PRINT_HEADING {\
+    std::cout << '\n';\
+    for (int i = 80; i > 0; --i) std::cout << '-';\
+}
+#define PRINT_TYPE(type, value)\
+    Console<> ().Out () << TypeValue (type, value);
+#define WIPE MapWipe<UI, SI> (map);
+#define PRINT_LINE(token) {\
+    for (int cout_123 = 80; count > 0; --count) std::cout << (char)token;\
+}
+#endif
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#define PRINT_HEADING
+#define PRINT_TYPE(type, value)
+#define WIPE(buffer, size)
+#define PRINT_LINE(token)
+#endif
 
 namespace _ {
 
 /** A one-to-one map that does not use hash table.
 
-    Maps share the same data structure as Books, Dictionary(s) and Lists. Maps
+    Maps share the same data structure as Multimaps, Dictionary(s) and Lists. Maps
     like all Script Objects are required to are required to have a stack_height,
     size_bytes, and header_size that is a multiple of 8 as well as being .
 
@@ -40,49 +61,33 @@ namespace _ {
     # TMap Data Structure
 
     @code
-    _____________________________________________________ 
-    |                                                   |
-    |                 Data Buffer Space                 |
-    |___________________________________________________|
-    |_______                                            | 
-    |_______   Data N                                   | 
-    |_______ ^ ...                       Data Table     | 
-    |_______ | Data 0                                   | 
-    |___________________________________________________|
-    |                                                   |
-    |               Header Buffer Space                 |
-    |___________________________________________________|
-    |_______                                            |
-    |_______   Buffered indexes                         |
-    |_______                           Corresponding    |
-    |_______ ^ Collision Index N         Indexes        |
-    |_______ | ...                                      |
-    |        | Collision Index 0                        |
-    |___________________________________________________|
-    |_______                                            |
-    |_______   Buffered mappings                        |
-    |_______                                            |
-    |_______ ^ Sorted Mappings N          Mappings      |
-    |_______ | ...                                      |
-    |        | Sorted Mappings 1                        |
-    |___________________________________________________|
-    |_______                                            |
-    |_______   Buffered offsets                         |
-    |_______                                Data        |
-    |_______ ^ Data Offset N              Offsets       |
-    |_______ | ...                                      |
-    |        | Data Offset 1                            |
-    |___________________________________________________|
-    |_______                                            |
-    |_______   Buffered types                           |
-    |_______                               Type         |
-    |_______ ^ Type byte N                 Bytes        |
-    |_______ | ...                                      |
-    |        | Type byte 1                              |
-    |___________________________________________________|
-    |                                                   |  ^
-    |                    Header                         |  |
-    |___________________________________________________| 0x0
+    +==========================+ -----------
+    |_______ Buffer            |   ^     ^
+    |_______ ...               |   |     |
+    |_______ Data N            |  Data   |
+    |_______ ...               |   |     |
+    |_______ Data 0            |   v     |
+    |==========================| -----   |
+    |_______ count_max         |   ^     |
+    |_______ ...               |   |     |
+    |_______ Sorted Mappings N |   |     |
+    |_______ ...               |   |     |
+    |        Sorted Mappings 1 |   |     |
+    |==========================|   |     |
+    |_______ count_max         |   |    Size
+    |_______ ...               |   |     |
+    |_______ Data Offset N     |   |     |
+    |_______ ...               | Header  |
+    |        Data Offset 1     |   |     |
+    |==========================|   |     |
+    |_______ count_max         |   |     |
+    |_______ ...               |   |     |
+    |_______ Type byte N       |   |     |
+    |_______ ...               |   |     |
+    |        Type byte 1       |   |     |   ^ Up in addresses
+    |==========================|   |     |   | 
+    |  TSparseArray<UI, SI> Struct |   v     v   ^
+    +==========================+ ----------- ^ 0xN
     @endcode
 
     | Map | Max Values | % Collisions (p) |           Overhead             |
@@ -96,8 +101,8 @@ namespace _ {
     for a key, there might or might not be a hash table.
 
     How to calculate size:
-    The size of any size collection can be calculated as follows:
-    size = ; * (2*sizeof (SI) + sizeof (TSize)) + collissionSize +
+    The size of any size map can be calculated as follows:
+    size = ; * (2*sizeof (SI) + sizeof (UI)) + collissionSize +
 
     # Cache Page Optimizations
 
@@ -107,163 +112,198 @@ namespace _ {
 
     # Use Case Scenario
 
-    We are creating a plug-in DLL. We need to create a collection in the DLL code, and
-    pass it over to the program. The DLL manages the memory for the collection. This
-    collection might contain several million entries, and more than 4GB of data.
+    We are creating a plug-in DLL. We need to create a map in the DLL code, and
+    pass it over to the program. The DLL manages the memory for the map. This
+    map might contain several million entries, and more than 4GB of data.
 
     ### Why So Many TMap Types?
 
-    We are running in RAM, and a collection could contain millions of key-value pairs.
+    We are running in RAM, and a map could contain millions of key-value pairs.
     Adding extra bytes would added megabytes of data we don't need. Also, on
     microcontrollers, especially 16-bit ones, will have very little RAM, so we
     need an 16-bit object. It is easy to imagine a complex AI software using
     more than 4GB RAM, or the need to attach a DVD ISO image as a key-value
-    pair, so we need a 64-bit collection.
+    pair, so we need a 64-bit map.
 
     # Design Strengths
 
     * Uses less memory.
     * Fast push back when within buffer size.
     * Faster inserts on small collections when within buffer size.
+    * 64-bit memory alignment ensures highest performace on Intel.
+    * Mandating zeros in buffered memory space can serve help sanatize input.
 
     # Design Weaknesses
+
     * Slow insert in large collections.
     * Slow at growing large collections when buffer runs out.
+    * Applications with billions of items may have too much memory overhead.
     * More complicated.
 
     @code
-    ;
+    .
+    .
+    .
     @endcode
 */
-template<typename SI, typename UI, typename TSize>
-struct KABUKI TMap {
-    TSize size;   //< Total size of the set.
-    UI    table_size,   //< Size of the (optional) key strings in bytes.
-          unused;       //< Size of the (optional) collisions pile in bytes.
-    SI    stack_height, //< Max number of items that can fit in the header.
-          num_items;    //< Number of items.
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
+struct TMap {
+    UI size;       //< ASCII Object size.
+    SI table_size, /*< Size of the key strings in bytes.
+                       Set to 0 for ASCII Map. */
+       pile_size;  /*< Size of the collisions pile in bytes.
+                       Set to 0 for ASCII Map and ASCII Multimap. */
+    I  count,      //< Element count.
+       count_max;  //< Max count of items that can fit in the socket.
 };
 
-
-template<typename SI, typename UI, typename TSize>
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
 constexpr uint_t MapOverheadPerIndex () {
-        return sizeof (2 * sizeof (SI) + sizeof (UI) + sizeof (TSize) + 3);
+        return sizeof (2 * sizeof (SI) + sizeof (UI) + sizeof (UI) + 3);
 };
 
-template<typename SI, typename UI, typename TSize>
-constexpr TSize MinSizeMap (SI num_items) {
-    return num_items * sizeof (2 * sizeof (SI) + sizeof (UI) + sizeof (TSize) + 3);
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
+constexpr UI MapSizeRequired (SI count) {
+    return count * sizeof (2 (sizeof (SI) + sizeof (UI)) + 3);
 };
 
 enum {
     kMaxNumPagesMap2 = 255,                //< The number of pages in a Map2.
     kMaxNumPagesMap4 = 8 * 1024,           //< The number of pages in a Map4.
     kMaxNumPagesMap8 = 256 * 1024 * 1024,  //< The number of pages in a Map8.
-    kOverheadPerMap2Index = MapOverheadPerIndex<byte, uint16_t, uint16_t> (),
-    kOverheadPerMap4Index = MapOverheadPerIndex<byte, uint16_t, uint16_t> (),
-    kOverheadPerMap8Index = MapOverheadPerIndex<byte, uint16_t, uint16_t> (),
+    kOverheadPerMap2Index = MapOverheadPerIndex<uint16_t, int16_t, int8_t> (),
+    kOverheadPerMap4Index = MapOverheadPerIndex<uint32_t, int32_t, int16_t> (),
+    kOverheadPerMap8Index = MapOverheadPerIndex<uint64_t, int64_t, int32_t> (),
 };
     
-/** Initializes a TMap.
+/** Initializes a TMap from a word-aligned buffer.
     @post    Users might want to call the IsValid () function after construction
              to verify the integrity of the object.
     @warning The reservedNumOperands must be aligned to a 32-bit value, and it
              will get rounded up to the next higher multiple of 4.
-static TMap* Init2 (char* buffer, byte max_size, uint16_t table_size, uint16_t size)
-{
-    if (buffer == nullptr)
-        return nullptr;
+*/
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
+TMap<UI, SI, I>* MapInit (uintptr_t* buffer, UI size, I count_max) {
+    ASSERT (buffer)
+        
     if (table_size >= size)
         return nullptr;
-    if (table_size < sizeof (TMap) + max_size *
-        (MapOverheadPerIndex<byte, uint16_t, uint16_t, uint16_t> () + 2))
+    UI kSizeMin = sizeof (TMap<UI, SI, I>) + count_max *
+                  (MapOverheadPerIndex<UI, SI, I> () + 2);
+    if (table_size < kSizeMin)
         return nullptr;
 
-    Map2* collection = reinterpret_cast<TMap*> (buffer);
-    collection->size = table_size;
-    collection->table_size = table_size;
-    collection->; = 0;
-    collection->stack_height = max_size;
-    collection->pile_size = 1;
-    return collection;
+    Map<UI, SI, I>* map = reinterpret_cast<TMap*> (buffer);
+    map->size = table_size;
+    map->table_size = table_size;
+    map->pile_size  = 1;
+    map->count_max  = count_max;
+    map->count      = 0;
+    return map;
 }
-*/
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
+inline UI MapSizeBoundsLower () {
+    return 64;
+}
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
+inline UI MapSizeBoundsUpper () {
+    UI bounds_upper = 0;
+    bounds_upper = ~bounds_upper;
+    return bounds_upper - 7;
+}
 
-/** Insets the given key-value pair.
-*/
-template<typename SI, typename UI, typename TSize>
-SI MapInsert (TMap<SI, UI, TSize>* collection, byte type, 
-               const char* key, void* value, SI index) {
-    if (collection == nullptr) return 0;
-    return ~0;
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
+inline SI MapCountBoundsLower () {
+    return 8 / sizeof (UI);
+}
+
+/** Creates a map from dynamic memory. */
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
+uintptr_t* MapNew (UI size = 0, I count_max = 0) {
+    size      = AlignDown<int64_t, UI> (size);
+    count_max = AlignDown<int64_t, SI> (count_max);
+    UI size_min  = MapSizeBoundsLower<UI, SI, I> ();
+    SI count_min = MapCountBoundsLower<UI, SI, I> ();
+    if (size < size_min || count_max < count_min) {
+        size = size_min;
+        count_max = size_min;
+    }
+
+    uintptr_t* buffer = new uintptr_t[size >> kWordBitCount];
+    TMap<UI, SI, I>* map = reinterpret_cast<TMap<UI, SI, I>*> (buffer);
+    map->size = size;
+    map->table_size = 0;
+    map->pile_size  = 0;
+    map->count      = 0;
+    map->count_max  = count_max;
+    return buffer;
 }
 
 template<typename SI>
-SI MaxMapIndexes () {
+SI MapCountUpperBounds () {
     enum {
-        kMaxIndexes = sizeof (SI) == 1 ? 255 : sizeof (SI) == 2 ? 
-                       8 * 1024 : sizeof (SI) == 4 ? 512 * 1024 * 1024 : 0
+        kCountUpperBounds = sizeof (SI) == 1 ? 120 :
+                            sizeof (SI) == 2 ? 8 * 1024 : 
+                            sizeof (SI) == 4 ? 512 * 1024 * 1024 : 0
     };
-    return kMaxIndexes;
+    return CountUpperBounds;
 }
 
-/** Adds a key-value pair to the end of the collection. */
-template<typename SI, typename UI, typename TSize>
-SI MapAdd (TMap<SI, UI, TSize>* map, SI id, 
-                TType type, void* value) {
-    if (map == nullptr)
-        return 0;
-    if (id == nullptr)
-        return 0;
+/** Insets the given key-type-value typle.
+*/
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
+SI MapInsert (TMap<UI, SI, I>* map, void* value, type_t type, SI index) {
+    ASSERT (map)
+    ASSERT (value)
 
-    PrintLine (id);
+    PRINT_LINE (id);
 
-    SI num_items = map->num_items,
-        stack_height = map->stack->stack_height,
-        temp;
+    SI count = map->count,
+       count = map->stack->count,
+       temp;
 
     UI table_size = map->table_size;
 
-    if (num_items >= stack_height)
+    if (count >= count)
         return ~0;
     //< We're out of buffered indexes.
 
     char* types = reinterpret_cast<char*> (map) + 
-                   sizeof (TMap <SI, UI, TSize>);
-    TSize* data_offsets = reinterpret_cast<TSize*> (types + stack_height *
+                   sizeof (TMap <UI, SI, I>);
+    UI  * data_offsets = reinterpret_cast<UI*> (types + count *
                                                     (sizeof (UI)));
-    TSize* hashes = reinterpret_cast<TSize*> (types + stack_height *
-                                              (sizeof (UI) + sizeof (TSize))),
+    UI  * hashes = reinterpret_cast<UI*> (types + count *
+                                          (sizeof (UI) + sizeof (UI))),
         * hash_ptr;
-    SI* indexes = reinterpret_cast<SI*> (types + stack_height *
-                                                 (sizeof (UI) + sizeof (TSize) + sizeof (SI))),
-        *unsorted_indexes = indexes + stack_height,
-        *collission_list = unsorted_indexes + stack_height;
+    SI  * indexes = reinterpret_cast<SI*> (types + count *
+                                          (sizeof (UI) + 2 * sizeof (SI))),
+        * unsorted_indexes = indexes + count,
+        * collission_list = unsorted_indexes + count;
     char* keys = reinterpret_cast<char*> (map) + table_size - 1,
-        *destination;
+        * destination;
 
     // Calculate space left.
-    UI value = table_size - stack_height * MapOverheadPerIndex<SI, UI, TSize> (),
-        key_length = static_cast<uint16_t> (strlen (id)),
-        pile_size;
+    UI value = table_size - count * MapOverheadPerIndex<UI, SI, I> (),
+       key_length = static_cast<uint16_t> (strlen (id)),
+       pile_size;
 
-    PrintLine ();
-    printf ("Adding Key %s\n%20s: 0x%p\n%20s: %p\n%20s: 0x%p\n"
+    PRINT_LINE ('-');
+    PRINTF ("\nAdding Key %s\n%20s: 0x%p\n%20s: %p\n%20s: 0x%p"
             "%20s: %p\n%20s: %u\n", id, "hashes", hashes, "key_offsets",
-            key_offsets, "keys", keys, "indexes", indexes, "value", value);
+            key_offsets, "keys", keys, "indexes", indexes, "value", value)
 
-    TSize temp_id = Hash16 (id),
+    UI temp_id = Hash16 (id),
           current_mapping;
 
     if (key_length > value) {
-        PRINTF ("Buffer overflow\n";
+        PRINTF ("\nBuffer overflow!")
         return ~((SI)0);
     }
 
     //print ();
 
-    if (num_items == 0) {
-        map->num_items = 1;
+    if (count == 0) {
+        map->count = 1;
         *hashes = temp_id;
         *key_offsets = static_cast<uint16_t> (key_length);
         *indexes = ~0;
@@ -271,7 +311,7 @@ SI MapAdd (TMap<SI, UI, TSize>* map, SI id,
         destination = keys - key_length;
 
         SlotWrite (destination, id);
-        printf ("Inserted key %s at GetAddress 0x%p\n", id, destination);
+        PRINTF ("\nInserted key %s at GetAddress 0x%p", id, destination)
         MapPrint (map);
         return 0;
     }
@@ -279,15 +319,15 @@ SI MapAdd (TMap<SI, UI, TSize>* map, SI id,
     // Calculate left over buffer size by looking up last char.
 
     if (key_length >= value) {
-        PRINTF ("Not enough room in buffer!\n";
+        PRINTF ("\nNot enough room in buffer!")
         return 0;   //< There isn't enough room left in the buffer.
     }
 
-    PRINTF ("Finding insert location... \n";
+    PRINTF ("\nFinding insert location...")
 
-    int low = 0,
+    SI low = 0,
         mid,
-        high = num_items,
+        high = count,
         index;
 
     SI* temp_ptr;
@@ -296,26 +336,25 @@ SI MapAdd (TMap<SI, UI, TSize>* map, SI id,
         mid = (low + high) >> 1;        //< Shift >> 1 to / 2
 
         current_mapping = hashes[mid];
-        printf ("high: %i mid: %i low %i hash: %x\n", high, mid, low,
-                current_mapping);
+        PRINTF ("\nhigh: %i mid: %i low %i hash: %x", high, mid, low,
+                current_mapping)
 
         if (current_mapping > temp_id) {
             high = mid - 1;
         } else if (current_mapping < temp_id) {
             low = mid + 1;
-        } else    // Duplicate hash detected.
-        {
-            PRINTF ("hash detected, ";
+        } else {
+            PRINTF (" duplicate hash detected, ")
 
             // Check for other collisions.
 
             index = indexes[mid];       //< Index in the collision table.
 
-            PRINTF ("index:" << index << '\n';
+            PRINTF ("index:%i", (int)index)
 
             if (index < ~0)             //< There are other collisions.
             {
-                PRINTF ("with collisions, ";
+                PRINTF ("with collisions, ")
                 // There was a collision so check the table.
 
                 // The collisionsList is a sequence of indexes terminated 
@@ -325,10 +364,10 @@ SI MapAdd (TMap<SI, UI, TSize>* map, SI id,
                 temp = indexes[mid];
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;  //< Load the index in the collision table.
-                while (index < MaxMapIndexes<SI> ()) {
-                    printf ("comparing to \"%s\"\n", keys - key_offsets[index]);
+                while (index < MapCountUpperBounds<SI> ()) {
+                    PRINTF ("\ncomparing to \"%s\"", keys - key_offsets[index]);
                     if (strcmp (id, keys - key_offsets[index]) == 0) {
-                        printf ("but table already contains key at "
+                        PRINTF ("but table already contains key at "
                                 "offset: %u.\n", index);
                         return index;
                     }
@@ -337,12 +376,12 @@ SI MapAdd (TMap<SI, UI, TSize>* map, SI id,
                 }
 
                 // Its a new collision!
-                PRINTF ("and new collision detected.\n";
+                PRINTF (" new collision detected.")
 
                 // Copy the key
-                value = key_offsets[num_items - 1] + key_length + 1;
+                value = key_offsets[count - 1] + key_length + 1;
                 SlotWrite (keys - value, id);
-                key_offsets[num_items] = value;
+                key_offsets[count] = value;
 
                 // Update the collision table.
                 pile_size = map->pile_size;
@@ -355,107 +394,107 @@ SI MapAdd (TMap<SI, UI, TSize>* map, SI id,
                     *collission_list = *(collission_list - 1);
                     --collission_list;
                 }
-                *temp_ptr = num_items;
+                *temp_ptr = count;
 
                 map->pile_size = pile_size + 1;
-                printf ("\n\ncollision index: %u\n", temp);
+                PRINTF ("\ncollision index: %u", temp)
                 // Store the collision index.
-                indexes[num_items] = temp;   //< Store the collision index
-                map->num_items = num_items + 1;
-                hashes[num_items] = ~0;      //< TMap the last hash to 0xFFFF
+                indexes[count] = temp;   //< Store the collision index
+                map->count = count + 1;
+                hashes[count] = ~0;      //< TMap the last hash to 0xFFFF
 
                 // Move collisions pointer to the unsorted_indexes.
-                indexes += stack_height;
+                indexes += count;
 
                 //< Add the newest char to the end.
-                indexes[num_items] = num_items;
+                indexes[count] = count;
 
                 MapPrint (map);
-                printf ("Done inserting.\n");
-                return num_items;
+                PRINTF ("\nDone inserting.")
+                return count;
             }
 
             // But we still don't know if the char is a new collision.
 
-            PRINTF ("Checking if it's a collision... ";
+            PRINTF ("\nChecking if it's a collision... ")
 
             if (strcmp (id, keys - key_offsets[index]) != 0) {
                 // It's a new collision!
-                PRINTF ("It's a new collision!\n";
+                PRINTF ("It's a new collision!")
 
                 if (value < 3) {
-                    PRINTF ("Buffer overflow!\n";
+                    PRINTF ("Buffer overflow!")
                     return ~0;
                 }
 
                 // Get offset to write the key too.
-                value = key_offsets[num_items - 1] + key_length + 1;
+                value = key_offsets[count - 1] + key_length + 1;
 
-                byte collision_index = unsorted_indexes[mid];
-                printf ("\n\ncollision_index: %u", collision_index);
+                type_t collision_index = unsorted_indexes[mid];
+                PRINTF ("\n\ncollision_index: %u", collision_index)
 
                 SlotWrite (keys - value, id);
-                printf ("Inserting value: %u into index:%u "
-                        "num_items:%u with other collision_index: %u\n", value,
-                        index, num_items, collision_index);
-                key_offsets[num_items] = value;
+                PRINTF ("\nInserting value: %u into index:%u "
+                        "count:%u with other collision_index: %u", value,
+                        index, count, collision_index)
+                key_offsets[count] = value;
 
                 pile_size = map->pile_size;
-                indexes[mid] = static_cast<byte> (pile_size);
-                indexes[num_items] = static_cast<byte> (pile_size);
+                indexes[mid] = static_cast<type_t> (pile_size);
+                indexes[count] = static_cast<type_t> (pile_size);
 
                 // Insert the collision into the collision table.
                 temp_ptr = &collission_list[pile_size];
                 // Move collisions pointer to the unsorted_indexes.
-                indexes += stack_height;
+                indexes += count;
                 *temp_ptr = collision_index;
                 ++temp_ptr;
-                *temp_ptr = num_items;
+                *temp_ptr = count;
                 ++temp_ptr;
                 *temp_ptr = ~0;
                 map->pile_size = pile_size + 3;
-                //< Added one term-byte and two indexes.
+                //< Added one term-type_t and two indexes.
 
                 // Add the newest key at the end.
-                indexes[num_items] = num_items;
+                indexes[count] = count;
 
                 // TMap the last hash to 0xFFFF
-                hashes[num_items] = ~0;
+                hashes[count] = ~0;
 
-                map->num_items = num_items + 1;
-
-                MapPrint (map);
+                map->count = count + 1;
 
                 MapPrint (map);
-                PRINTF ("Done inserting.\n";
+
+                MapPrint (map);
+                PRINTF ("\nDone inserting.")
                 // Then it was a collision so the table doesn't contain string.
-                return num_items;
+                return count;
             }
-            PRINTF ("table already contains the key\n";
+            PRINTF ("\nTable already contains the key")
             return index;
         }
     }
 
     // The id was not in the table.
 
-    value = key_offsets[num_items - 1] + key_length + 1;
+    value = key_offsets[count - 1] + key_length + 1;
     destination = keys - value;
 
-    printf ("The id 0x%x was not in the table so inserting %s into mid:"
-            " %i at index %u before hash 0x%x \n", temp_id, id, mid,
-            Diff (map, destination), hashes[mid]);
+    PRINTF ("\nThe id 0x%x was not in the table so inserting %s into mid:"
+            " %i at index %u before hash 0x%x", temp_id, id, mid,
+            Diff (map, destination), hashes[mid])
 
     // First copy the char and set the key offset.
     SlotWrite (destination, id);
-    key_offsets[num_items] = value;
+    key_offsets[count] = value;
 
     // Second move up the hashes and insert at the insertion point.
     hash_ptr = hashes;
-    hash_ptr += num_items;
+    hash_ptr += count;
     //*test = hashes;
-    printf ("l_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u\n",
-        num_items, Diff (collection, hashes),
-            Diff (collection, hash_ptr), Diff (collection, hashes + mid));
+    PRINTF ("\nl_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u",
+            count, Diff (map, hashes), Diff (map, hash_ptr), 
+            Diff (map, hashes + mid))
     hashes += mid;
     MapPrint (map);
     while (hash_ptr > hashes) {
@@ -465,321 +504,217 @@ SI MapAdd (TMap<SI, UI, TSize>* map, SI id,
     *hashes = temp_id;
     
     // Mark as not having any collisions.
-    indexes[num_items] = ~0;
+    indexes[count] = ~0;
     
     // Move up the sorted indexes and insert the unsorted index (which is 
-    // the current num_items).
-    indexes += stack_height + mid;
-    temp_ptr = indexes + num_items;
+    // the current count).
+    indexes += count + mid;
+    temp_ptr = indexes + count;
 
     while (temp_ptr > indexes) {
         *temp_ptr = *(temp_ptr - 1);
         --temp_ptr;
     }
-    *temp_ptr = num_items;
+    *temp_ptr = count;
 
-    map->num_items = num_items + 1;
+    map->count = count + 1;
 
     MapPrint (map);
-    PRINTF ("Done inserting.\n";
-    PrintLine ();
+    PRINTF ("\nDone inserting.")
+    PRINT_LINE ('-')
 
-    return num_items;
+    return count;
 }
 
-/** Adds a key-value pair to the end of the collection. */
-//byte Add2 (Map2* collection, const char* key, byte data) {
-//    return MapAdd<byte, uint16_t, uint16_t, uint16_t> (collection, key, UI1, &data);
-//}
+/** Deletes the map contents without wiping the contents. */
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
+void MapClear (TMap<UI, SI, I>* map) {
+    ASSERT (map)
 
-/** Returns  the given query char in the hash table. */
-template<typename SI, typename UI, typename TSize>
-SI MapFind (TMap<SI, UI, TSize>* collection, const char* key) {
-    if (collection == nullptr)
-        return 0;
-    PrintLineBreak ("Finding record...", 5);
-    SI index,
-        ; = collection->;,
-        stack_height = collection->stack_height,
-        temp;
-
-    if (key == nullptr || ; == 0)
-        return ~((SI)0);
-
-    UI table_size = collection->table_size;
-
-    const TSize* hashes = reinterpret_cast<const TSize*>
-        (reinterpret_cast<const char*> (collection) +
-         sizeof (TMap<SI, UI, TSize>));
-    const UI* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
-                                                                stack_height);
-    const char* indexes = reinterpret_cast<const char*>(key_offsets +
-                                                        stack_height),
-        *unsorted_indexes = indexes + stack_height,
-        *collission_list = unsorted_indexes + stack_height;
-    const char* keys = reinterpret_cast<const char*> (collection) + table_size - 1;
-    const SI* collisions,
-        *temp_ptr;
-
-    TSize hash = Hash16 (key);
-
-    printf ("\nSearching for key \"%s\" with hash 0x%x\n", key, hash);
-
-    if (; == 1) {
-        if (strcmp (key, keys - key_offsets[0]) != 0) {
-            printf ("Did not find key %s\n", key);
-            return ~((SI)0);
-        }
-        printf ("Found key %s\n", key);
-        PrintLine ();
-        return 0;
-    }
-
-    // Perform a binary search to find the first instance of the hash the 
-    // binary search yields. If the mid is odd, we need to subtract the 
-    // sizeof (TSize*) in order to get the right pointer address.
-    int low = 0,
-        mid,
-        high = ; - 1;
-
-    while (low <= high) {
-        mid = (low + high) >> 1;    //< >> 1 to /2
-
-        TSize current_hash = hashes[mid];
-        printf ("low: %i mid: %i high %i hashes[mid]:%x\n", low, mid,
-                high, hashes[mid]);
-
-        if (current_hash > hash) {
-            high = mid - 1;
-        } else if (current_hash < hash) {
-            low = mid + 1;
-        } else {
-            // Duplicate hash found.
-            printf ("\nFound same hash at mid:%i hash:%x offset for key: "
-                    "%s\n", mid, hashes[mid], key);
-
-            // Check for collisions
-
-            collisions = reinterpret_cast<const char*>(key_offsets) +
-                stack_height * sizeof (uint16_t);
-            index = collisions[mid];
-
-            if (index < ~0) {
-                // There was a collision so check the table.
-                PRINTF ("There was a collision so check the table\n";
-
-                // The collisionsList is a sequence of indexes terminated by
-                // an invalid index > kMaxNumOperands. collissionsList[0] is an 
-                // invalid index, so the collisionsList is searched from 
-                // lower address up.
-
-                temp = indexes[mid];
-
-                temp_ptr = collission_list + temp;
-                index = *temp_ptr;
-                while (index < MaxMapIndexes<SI> ()) {
-                    printf ("comparing to \"%s\"\n", keys -
-                            key_offsets[index]);
-                    if (strcmp (key, keys - key_offsets[index]) == 0) {
-                        printf ("but table already contains key at offset:"
-                                "%u.\n", index);
-                        return index;
-                    }
-                    ++temp_ptr;
-                    index = *temp_ptr;
-                }
-                PRINTF ("Did not find \"" << key << "\"\n";
-                return ~((SI)0);
-            }
-
-            // There were no collisions.
-
-            // But we still don't know if the char is new or a collision.
-
-            // Move collisions pointer to the unsorted indexes.
-            indexes += stack_height;
-            index = unsorted_indexes[mid];
-
-            printf ("\n!!!mid: %i-%x unsorted_indexes: %u key: %s\n"
-                    "hash: %x\n", mid, hashes[mid], index, keys -
-                    key_offsets[index], Hash16 (keys -
-                                                key_offsets[index]));
-
-            if (strcmp (key, keys - key_offsets[index]) != 0) {
-                //< It was a collision so the table doesn't contain string.
-                PRINTF (" but it was a collision and did not find key.\n";
-                return ~((SI)0);
-            }
-
-            PRINTF ("and found key at mid: " << mid << '\n';
-            return index;
-        }
-    }
-    PRINTF ("Did not find a hash for key \"" << key << "\"\n";
-    PrintLine ();
-
-    return ~((SI)0);
+    map->count     = 0;
+    map->pile_size = 0;
 }
 
-//static byte Find2 (Map2* collection, const char* key) {
-//    return MapFind<byte, uint16_t, uint16_t, uint16_t> (collection, key);
-//}
+/** Deletes the map contents by overwriting it with zeros. */
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
+void MapWipe (TMap<UI, SI, I>* map) {
+    ASSERT (map)
+
+    UI size = map->size;
+    MemoryWipe (reinterpret_cast<char*> (map) + sizeof (TMap<UI, SI, I>), size);
+}
+
+/** Returns true if this expr contains only the given address. */
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
+bool MapContains (TMap<UI, SI, I>* map, void* value) {
+    ASSERT (map)
+
+    if (value < map) return false;
+    if (value > GetEndAddress()) return false;
+    return true;
+}
+
+/** Removes the item at the given address from the map. */
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
+bool MapRemove (TMap<UI, SI, I>* map, void* adress) {
+    ASSERT (map)
+
+    return false;
+}
 
 /** Prints this object out to the console. */
-template<typename SI, typename UI, typename TSize>
-void MapPrint (const TMap<SI, UI, TSize>* collection) {
-    if (collection == nullptr) return;
-    SI ; = collection->;,
-           stack_height = collection->stack_height,
-           collision_index,
-           temp;
-    UI table_size = collection->table_size,
-         pile_size = collection->pile_size;
-    PrintLine ('_');
-    
-    if (sizeof (TSize) == 2)
-        printf ("\n Map2: %p\n", collection);
-    else if (sizeof (TSize) == 4)
-        printf ("\n Map4: %p\n", collection);
-    else if (sizeof (TSize) == 8)
-        printf ("\n Map8: %p\n", collection);
-    else
-        printf ("\n Invalid TMap type: %p\n", collection);
-    printf ("\n ;: %u stack_height: %u  "
-            "pile_size: %u  size: %u", ;,
-            stack_height, pile_size, table_size);
-    PRINTF ('\n';
-   PRINTF ('|';
-    for (int i = 0; i < 79; ++i) putchar ('_');
-    PRINTF ('\n';
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
+Printer& MapPrint (Printer& print, const TMap<UI, SI, I>* map) {
+    ASSERT (map)
 
-    const char* states = reinterpret_cast<const char*> (collection) +
-                         sizeof (TMap <SI, UI, TSize>);
-    const UI* key_offsets = reinterpret_cast<const UI*> 
-                              (states + stack_height);
-    const TSize* data_offsets = reinterpret_cast<const TSize*> 
-                                (states + stack_height *(sizeof (UI)));
-    const TSize* hashes = reinterpret_cast<const TSize*> (states + stack_height *
-        (sizeof (UI) + sizeof (TSize)));
-    const SI* indexes = reinterpret_cast<const SI*> 
-                            (states + stack_height * (sizeof (UI) + 
-                             sizeof (TSize) + sizeof (SI))),
-        * unsorted_indexes = indexes + stack_height,
-        * collission_list = unsorted_indexes + stack_height,
-        *cursor;
-    const char* keys = reinterpret_cast<const char*> (collection) + table_size - 1;
+    SI count = map->count,
+       collision_index,
+       temp;
+    UI table_size = map->table_size,
+       pile_size  = map->pile_size;
 
-    printf ("\n %3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
-            "hash_e", "hash_u", "hash_s", "index_u", "collisions");
-   PRINTF ('|';
+    print << '_';
+
+    print << "\nMap" << sizeof (UI) << ": " << Hex<> (map)
+          << " count:" << count << "pile_size:" << pile_size 
+          << " size:" << map->size;
+    print << "\n|";
     for (int i = 0; i < 79; ++i)
-        putchar ('_');
-    PRINTF ('\n';
+        print << '_';
+    print << '\n';
 
-    for (SI i = 0; i < stack_height; ++i) {
+    const char* states = reinterpret_cast<const char*> (map) +
+                         sizeof (TMap <UI, SI, I>);
+    const UI* key_offsets = reinterpret_cast<const UI*> (states + count);
+    const UI* data_offsets = reinterpret_cast<const UI*> 
+                                (states + count *sizeof (UI));
+    const UI* hashes = reinterpret_cast<const UI*> (states + count *
+        (sizeof (UI) + sizeof (UI)));
+    const SI* indexes = reinterpret_cast<const SI*> 
+                            (states + count * (sizeof (UI) + 
+                             sizeof (UI) + sizeof (SI))),
+        * unsorted_indexes = indexes + count,
+        * collission_list = unsorted_indexes + count,
+        *cursor;
+    const char* keys = reinterpret_cast<const char*> (map) + table_size - 1;
+    print << "\n " << Right<> ("i"         ,  3) << Right<> ("key"    , 10)
+                   << Right<> ("offset"    ,  8) << Right<> ("hash_e" , 10) 
+                   << Right<> ("hash_s"    , 10) << Right<> ("index_u", 10)
+                   << Right<> ("collisions", 11);
+   print << '|';
+    for (int i = 0; i < 79; ++i)
+        print << '_';
+    print << '\n';
+
+    for (SI i = 0; i < count; ++i) {
         // Print each record as a row.
         // @todo Change stack_height to ; after done debugging.
         collision_index = indexes[i];
-        printf ("\n %3i %9s %7u %9x %9x %9x %9u %10u: ", i,
-                keys - key_offsets[i], key_offsets[i],
-                Hash16 (keys - key_offsets[i]),
-                hashes[unsorted_indexes[i]], hashes[i],
-                unsorted_indexes[i], collision_index);
+        print << Right<SI> (i, 3) 
+              << Right<SI> (keys - key_offsets[i], 10)
+              << Right<SI> (key_offsets[i],  8)
+              << Right<Hex<UI>> (Hash16 (keys - key_offsets[i]), 10)
+              << Right<Hex<UI>> (hashes[unsorted_indexes[i]], 10)
+              << Right<Hex<UI>> (hashes[i], 10)
+              << Right<UI> (unsorted_indexes[i], 10)
+              << Right<UI> (collision_index, 11);
 
-        if (collision_index != ~0 && i < ;) {
+        if (collision_index != ~0 && i < item_count) {
             // Print collisions.
             cursor = &collission_list[collision_index];
             temp = *cursor;
             ++cursor;
-            printf ("%u", temp);
+            print << temp;
             while (temp != ~0) {
                 temp = *cursor;
                 ++cursor;
                 if (temp == ~0)
                     break;
-                printf (", %u", temp);
+                print << ", " << temp;
             }
         }
 
-        PRINTF ('\n';
+        print << '_';
     }
-    PrintLine ('_');
 
-    PrintMemory (reinterpret_cast<const char*> (collection) + 
-                 sizeof (TMap<SI, UI, TSize>), collection->size);
-    PRINTF ('\n';
+    return print << '_' 
+                 << Socket (reinterpret_cast<const char*> (map) , map->size)
+                 << '\n';
 }
 
-/** Deletes the collection contents without wiping the contents. */
-template<typename SI, typename UI, typename TSize>
-void Clear (TMap<SI, UI, TSize>* collection) {
-    if (collection == nullptr) return;
-    collection->; = 0;
-    collection->pile_size = 0;
-}
+/** C++ Wrapper for the AsciiMap that uses dynamic memory and auto-grows.
 
-/** Deletes the collection contents by overwriting it with zeros. */
-template<typename SI, typename UI, typename TSize>
-void Wipe (TMap<SI, UI, TSize>* collection) {
-    if (collection == nullptr) return;
-    TSize size = collection->size;
-    memset (collection, 0, size);
-}
+    @code
+    .
+    .
+    .
+    @endcode
+*/
+template<typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
+class Map {
+    public:
 
-/** Returns true if this expr contains only the given address. */
-template<typename SI, typename UI, typename TSize>
-bool Contains (TMap<SI, UI, TSize>* collection, void* value) {
-    if (collection == nullptr) return false;
-    if (value < collection) return false;
-    if (value > GetEndAddress()) return false;
-    return true;
-}
+    /** Constructs a Map with the given count_max.
+        If count_max is less than 0 it will be set to the default value. IF the 
+        */
+    Map (UI size = 0, I count_max = 0) :
+        buffer (MapNew<UI, SI, I> (size, count_max)) {
+        // Nothing to do here! ({:-)-+=<
+    }
 
-/** Removes that object from the collection and copies it to the destination. */
-template<typename SI, typename UI, typename TSize>
-bool RemoveCopy (TMap<SI, UI, TSize>* collection, void* destination, 
-                 size_t buffer_size, void* value)
-{
-    if (collection == nullptr) return false;
+    /** Destructs the dynamically allocated buffer. */
+    ~Map () {
+        delete buffer;
+    }
 
-    return false;
-}
+    inline bool Remove (void* adress) {
+        return MapRemove<UI, SI, I> (This (), adress);
+    }
 
-/** Removes the item at the given address from the collection. */
-template<typename SI, typename UI, typename TSize>
-bool Remove (TMap<SI, UI, TSize>* collection, void* adress) {
-    if (collection == nullptr) return false;
+    /** Checks if the map contains the given pointer. 
+        @return True if the pointer lies in this socket. */
+    inline bool Contains (void* value) {
+        return MapContains<UI, SI, I> (This (), value);
+    }
 
-    return false;
-}
+    /** Wipes the map by overwriting it with zeros. */
+    inline void Wipe () {
+        MapWipe<UI, SI, I> (This ());
+    }
 
-/** Removes all but the given collection from the collection. */
-template<typename SI, typename UI, typename TSize>
-bool Retain (TMap<SI, UI, TSize>* collection) {
-    if (collection == nullptr) return false;
+    static inline SI CountUpperBounds () {
+        return MapCountUpperBounds<UI, SI, I> ();
+    }
 
-    return false;
-}
+    inline SI Insert (void* value, SI index, type_t type) {
+        return MapInsert<UI, SI, I> (This (), value, type, index);
+    }
 
-/** Creates a collection from dynamic memory. */
-template<typename SI, typename UI, typename TSize, typename TSize>
-TMap<SI, UI, TSize, TSize>* MapCreate (SI buffered_indexes,
-                                                        TSize table_size,
-                                                        TSize size) {
-    TMap<SI, UI, TSize, TSize>* collection = New<TMap, uint_t> ();
-    return collection;
-}
+    /** Clears the list. */
+    inline void Clear () {
+        MapClear<UI, SI, I> (This ());
+    }
 
-/** Prints the given TMap to the console. */
-template<typename SI, typename UI, typename TSize>
-void MapPrint (TMap<SI, UI, TSize>* collection) {
+    /** Prints this object to a printer. */
+    inline Printer& Print (Printer& printer) {
+        return MapPrint<UI, SI, I> (print, This ());
+    }
 
-}
+    private:
 
-//void MapPrint (Map2* collection) {
-//    return MapPrint<byte, uint16_t, uint16_t, uint16_t> (collection);
-//}
+    uintptr_t* buffer;
 
+    /** Returns the buffer casted as a TMap<UI, SI, I>*. */
+    inline TMap<UI, SI, I>* This () {
+        return reinterpret_cast<TMap<UI, SI, I>*> (buffer);
+    }
+};      //< class Map
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
-#endif  //< CRABS_MAP_H
+#endif  //< HEADER_FOR_CRAPS_MAP
+#undef  PRINTF
+#undef  PUTCHAR
+#undef  PRINT_HEADING
+#undef  PRINT_TYPE
+#undef  WIPE
+#undef  PRINT_LINE
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

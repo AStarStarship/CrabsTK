@@ -15,16 +15,15 @@
 */
 
 #include <stdafx.h>
-#include "expr.h"
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
-
+// Dependencies:
+#include "expr.h"
 #include "clock.h"
 #include "bsq.h"
 #include "hash.h"
 #include "hex.h"
 #include "line.h"
-
+// End dependencies.
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);

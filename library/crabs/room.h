@@ -16,15 +16,13 @@
 
 #pragma once
 #include <stdafx.h>
-
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #ifndef HEADER_FOR_CRABS_ROOM
 #define HEADER_FOR_CRABS_ROOM
-
+// Dependencies:
 #include "wall.h"
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
-
 #include "interrupts.h"
+// End dependencies.
 
 namespace _ {
 
@@ -57,7 +55,7 @@ KABUKI const char* RequestText (Request r);
     An Chinese Room works the same way as in the Chinese Room thought 
     experiment. An Room receives a message through a slot in the door, the man
     in the room reads does manual optical character recognition with a pen and
-    paper stack, some filing cabinets, and a library of books.
+    paper stack, some filing cabinets, and a library of multimaps.
 
     The size of the Expr Stack is defined by the Script Protocol to be a 
     a maximum of 2^15-1 expressions tall.

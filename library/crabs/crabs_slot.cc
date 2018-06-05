@@ -15,15 +15,15 @@
 */
 
 #include <stdafx.h>
-#include "slot.h"
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
-
+// Dependencies:
+#include "slot.h"
 #include "type.h"
 #include "text.h"
 #include "print_int.h"
 #include "hex.h"
 #include "line.h"
+// End dependencies.
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 

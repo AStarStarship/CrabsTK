@@ -16,17 +16,15 @@
 
 #pragma once
 #include <stdafx.h>
-
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #ifndef HEADER_FOR_CRABS_DOOR
 #define HEADER_FOR_CRABS_DOOR
-
+// Dependencies:
 #include "expr.h"
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
-
 #include "slot.h"
 #include "stack.h"
 #include "text.h"
+// End dependencies.
 
 namespace _ {
 

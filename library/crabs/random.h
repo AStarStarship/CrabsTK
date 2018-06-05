@@ -16,13 +16,12 @@
 
 #pragma once
 #include <stdafx.h>
-
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
 #ifndef HEADER_FOR_CRABS_RANDOM
 #define HEADER_FOR_CRABS_RANDOM
-
+// Dependencies:
 #include "config.h"
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
+// End dependencies.
 
 namespace _ {
 inline uint64_t GetRandomUInt64 () {

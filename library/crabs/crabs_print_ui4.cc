@@ -15,15 +15,12 @@
 */
 
 #include <stdafx.h>
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
-
+// Dependencies:
 #include "print_to_ascii.h"
-
+// End dependencies.
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
-
 #define DEBUG 1
-
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #define PRINT_PRINTED\

@@ -15,10 +15,10 @@
 */
 
 #include <stdafx.h>
-
-#include "hash.h"
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+// Dependencies:
+#include "hash.h"
+// End dependencies.
 
 namespace _ {
 

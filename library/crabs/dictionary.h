@@ -16,92 +16,92 @@
 
 #pragma once
 #include <stdafx.h>
-
-#ifndef HEADER_FOR_CRABS_TBOOK
-#define HEADER_FOR_CRABS_TBOOK
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
-
+#ifndef HEADER_FOR_CRABS_BOOK
+#define HEADER_FOR_CRABS_BOOK
+// Dependencies:
 #include "memory.h"
 #include "type.h"
-#include "text.h"
+// End dependencies.
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#ifndef PRINTF
+#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#define PUTCHAR(c) putchar(c);
+#define PRINT_HEADING\
+    std::cout << '\n';\
+    for (int i = 80; i > 0; --i) std::cout << '-';
+#endif
+#else
+#define PRINTF(x, ...)
+#define PUTCHAR(c)
+#define PRINT_HEADING
+#endif
 
 namespace _ {
 
 /** A one-to-one map of Key-{Type-Value} tuples.
-    A Dic is a hash-table that uses contiguous memory. The memory layout is
-    the same for all of the Dic types as depicted below:
+    In mathematics, a tuple is a finite ordered list (sequence) of elements. A Dictionary is a hash-table that uses contiguous memory. The memory layout is
+    the same for all of the Dictionary types as depicted below:
 
     @code
-    _____________________________________________________
-    |                                                   |
-    |                 Data Buffer Space                 |
-    |___________________________________________________|
-    |_______                                            | 
-    |_______   Data N                                   | 
-    |_______ ^ ...                       Data Table     | 
-    |_______ | Data 0                                   | 
-    |___________________________________________________|
-    |_______ | Key 1                                    |
-    |_______ | ...                         Keys         | 
-    |_______ v Key N                                    |
-    |___________________________________________________|
-    |                                                   |
-    |               Header Buffer Space                 |
-    |___________________________________________________|
-    |_______                                            | 
-    |_______   Collision List N         Hash Table      | 
-    |_______ ^ ...                       Collision      | 
-    |_______ | Collision List 0             List        | 
-    |___________________________________________________|
-    |_______                                            |
-    |_______   Buffer Indexes                           |
-    |_______                            Hash Table      |
-    |_______ ^ Collision Index N         Collision      |
-    |_______ | ...                        Indexes       |
-    |        | Collision Index 0                        |
-    |___________________________________________________|
-    |_______                                            |
-    |_______   Buffer Indexes                           |
-    |_______                            Hash Table      |
-    |_______ ^ Collision Table N       Corresponding    |
-    |_______ | ...                         Hash         |
-    |        | Collision Table 0          Indexes       |
-    |___________________________________________________|
-    |_______                                            |
-    |_______   Buffer Indexes                           |
-    |_______                                            |
-    |_______ ^ Sorted Hash N               Hashes       |
-    |_______ | ...                                      |
-    |        | Sorted Hash 1                            |
-    |___________________________________________________|
-    |_______                                            |
-    |_______   Buffer Indexes                           |
-    |_______                                Data        |
-    |_______ ^ Data Offset N              Offsets       |
-    |_______ | ...                                      |
-    |        | Data Offset 1                            |
-    |___________________________________________________|
-    |_______                                            |
-    |_______   Buffer Indexes                           |
-    |_______                                Key         |
-    |_______ ^ Key Offset N               Offsets       |
-    |_______ | ...                                      |
-    |        | Key Offset 1                             |
-    |___________________________________________________|
-    |_______                                            |
-    |_______   Buffer Indexes                           |
-    |_______                               State        |
-    |_______ ^ State byte N                Byte         |
-    |_______ | ...                                      |
-    |        | State byte 1                             |
-    |___________________________________________________|
-    |                                                   |  ^
-    |                    Header                         |  |
-    |___________________________________________________| 0x0
+    +==========================+ -----------
+    |_______ Buffer            |   ^     ^
+    |_______ ...               |   |     |
+    |_______ Data N            |  Data   |
+    |_______ ...               |   |     |
+    |_______ Data 0            |   v     |
+    |==========================| -----   |
+    |        Key 1             |   ^     |
+    |        ...               |   |     |
+    |        Key N             |   |     |
+    |vvvvvvvvvvvvvvvvvvvvvvvvvv|   |     |
+    |        buffer            |   |     |
+    |^^^^^^^^^^^^^^^^^^^^^^^^^^|   |     |
+    |_______ Collision N       |   |     |
+    |_______ ...               |   |     |
+    |        Collision 1       |   |     |
+    |==========================|   |     |
+    |_______ count_max         |   |     |
+    |_______ ...               |   |     |
+    |_______ Collision Index N |   |     |
+    |_______ ...               |   |     |
+    |        Collision Index 1 |   |     |
+    |==========================|   |    Size
+    |_______ count_max         |   |     |
+    |_______ ...               |   |     |
+    |_______ Collision Table N |   |     |
+    |_______ ...               |   |     |
+    |        Collision Table 1 |   |     |
+    |==========================| Header  |
+    |_______ count_max         |   |     |
+    |_______ ...               |   |     |
+    |_______ Key Offset N      |   |     |
+    |_______ ...               |   |     |
+    |        Key Offset 1      |   |     |
+    |==========================|   |     |
+    |_______ count_max         |   |     |
+    |_______ ...               |   |     |
+    |_______ Sorted Mappings N |   |     |
+    |_______ ...               |   |     |
+    |        Sorted Mappings 1 |   |     |
+    |==========================|   |     |
+    |_______ count_max         |   |     |
+    |_______ ...               |   |     |
+    |_______ Data Offset N     |   |     |
+    |_______ ...               |   |     |
+    |        Data Offset 1     |   |     |
+    |==========================|   |     |
+    |_______ count_max         |   |     |
+    |_______ ...               |   |     |
+    |_______ Type byte N       |   |     |
+    |_______ ...               |   |     |
+    |        Type byte 1       |   |     |   ^ Up in addresses
+    |==========================|   |     |   |
+    |  TMapKey<UI, SI> Struct  |   v     v   ^
+    +==========================+ ----------- ^ 0xN
     @endcode
 
-    | Dic | Max Values | % Collisions (p) |           Overhead             |
+    | Dictionary | Max Values | % Collisions (p) |           Overhead             |
     |:----:|:----------:|:----------------:|:------------------------------:|
     |  2   |     255    |    0.0001        | Ceiling (0.02*p*2^8)  = 2      |
     |  4   |     2^13   |      0.1         | Ceiling (0.04*p*2^13) = 327.68 |
@@ -112,30 +112,30 @@ namespace _ {
     for a key, there might or might not be a hash table.
 
     How to calculate size:
-    The size of any size book can be calculated as follows:
-    size = ; * (2*sizeof (TIndex) + sizeof (TData)) + collissionSize +
+    The size of any size dictionary can be calculated as follows:
+    size = ; * (2*sizeof (I) + sizeof (UI)) + collissionSize +
 
     # Cache Page Optimizations
     In order to optimize the cache pages, we need to group hot data together.
-    ChineseRoom Objects work through calling by TIndex, or by key by using the
-    function '\"' (i.e. "foo" is TIndex 44).
+    ChineseRoom Objects work through calling by I, or by key by using the
+    function '\"' (i.e. "foo" is I 44).
 
     # Hash Table Collisions.
     Because there are no pointers in Script collections, the hash tables are done using
     using a nil-terminated list in the Collision List. In the 
 
     # Use Case Scenario
-    We are creating a plug-in DLL. We need to create a book in the DLL code, and
-    pass it over to the program. The DLL manages the memory for the book. This
-    book might contain several million entries, and more than 4GB of data.
+    We are creating a plug-in DLL. We need to create a dictionary in the DLL code, and
+    pass it over to the program. The DLL manages the memory for the dictionary. This
+    dictionary might contain several million entries, and more than 4GB of data.
 
-    ### Why So Many Dic Types?
-    We are running in RAM, and a book could contain millions of key-value pairs.
+    ### Why So Many Dictionary Types?
+    We are running in RAM, and a dictionary could contain millions of key-value pairs.
     Adding extra bytes would added megabytes of data we don't need. Also, on
     microcontrollers, especially 16-bit ones, will have very little RAM, so we
     need an 16-bit object. It is easy to imagine a complex AI software using
     more than 4GB RAM, or the need to attach a DVD ISO image as a key-value
-    pair, so we need a 64-bit book.
+    pair, so we need a 64-bit dictionary.
 
     # Design Strengths
     * Uses less memory.
@@ -151,27 +151,27 @@ namespace _ {
     ;
     @endcode
 */
-template<typename TIndex, typename TKey, typename TData>
-struct KABUKI Dic {
-    TData  size;        //< Total size of the set.
-    TKey   table_size,  //< Size of the (optional) key strings in bytes.
-           pile_size;   //< Size of the (optional) collisions pile in bytes.
-    TIndex num_items,   //< Number of items.
-           stack_height;   //< Max number of items that can fit in the header.
+template<typename UI, typename SI, typename I>
+struct KABUKI TKeyTuple {
+    UI  size;         //< Total size of the set.
+    SI   table_size,   //< Size of the (optional) key strings in bytes.
+           pile_size;    //< Size of the (optional) collisions pile in bytes.
+    I item_count,   //< Number of items.
+           count; //< Max number of items that can fit in the header.
 };
 
-using Dic2    = Dic<int8_t , uint16_t, uint16_t>;
-using Dic4    = Dic<int16_t, uint16_t, uint32_t>;
-using Dic8    = Dic<int32_t, uint32_t, uint64_t>;
+using Dic2    = Dictionary<int8_t , uint16_t, uint16_t>;
+using Dic4    = Dictionary<int16_t, uint16_t, uint32_t>;
+using Dic8    = Dictionary<int32_t, uint32_t, uint64_t>;
 
-template<typename TIndex, typename TKey, typename TData>
+template<typename UI, typename SI, typename I>
 constexpr uint_t DicOverheadPerIndex () {
-        return sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
+        return sizeof (2 * sizeof (I) + sizeof (SI) + sizeof (UI) + 3);
 };
 
-template<typename TIndex, typename TKey, typename TData>
-constexpr TData MinSizeDic (TIndex num_items) {
-    return num_items * sizeof (2 * sizeof (TIndex) + sizeof (TKey) + sizeof (TData) + 3);
+template<typename UI, typename SI, typename I>
+constexpr UI MinSizeDic (I item_count) {
+    return item_count * sizeof (2 * sizeof (I) + sizeof (SI) + sizeof (UI) + 3);
 };
 
 enum {
@@ -183,94 +183,95 @@ enum {
     kOverheadPerDic8Index = DicOverheadPerIndex<uint32_t, uint32_t, uint64_t> (),
 };
 
-/** Initializes a Dic.
+/** Initializes a Dictionary.
     @post    Users might want to call the IsValid () function after construction
              to verify the integrity of the object.
     @warning The reservedNumOperands must be aligned to a 32-bit value, and it
              will get rounded up to the next higher multiple of 4. */
-template<typename TIndex, typename TKey, typename TData>
-Dic<TIndex, TKey, TData>* DicInit (uintptr_t* buffer, byte max_size,
+template<typename UI, typename SI, typename I>
+Dictionary<UI, SI, I>* DictionaryInit (uintptr_t* buffer, byte max_size,
                                      uint16_t table_size, uint16_t size) {
     if (buffer == nullptr)
         return nullptr;
-    if (table_size >= (size - sizeof (Dic<TIndex, TKey, TData>)))
+    if (table_size >= (size - sizeof (Dictionary<UI, SI, I>)))
         return nullptr;
-    if (table_size < sizeof (Dic<TIndex, TKey, TData>) + max_size *
+    if (table_size < sizeof (Dictionary<UI, SI, I>) + max_size *
         (DicOverheadPerIndex<byte, uint16_t, uint16_t> () + 2))
         return nullptr;
 
-    Dic<TIndex, TKey, TData>* book = 
-        reinterpret_cast<Dic<TIndex, TKey, TData>*> (buffer);
-    book->size = table_size;
-    book->table_size = table_size;
-    book->num_items = 0;
-    book->stack_height = max_size;
-    book->pile_size = 1;
-    return book;
+    Dictionary<UI, SI, I>* dictionary = 
+        reinterpret_cast<Dictionary<UI, SI, I>*> (buffer);
+    dictionary->size = table_size;
+    dictionary->table_size = table_size;
+    dictionary->item_count = 0;
+    dictionary->count = max_size;
+    dictionary->pile_size = 1;
+    return dictionary;
 }
 
 
-Dic<int8_t, uint16_t, uint16_t>* Dic2Init (uintptr_t* buffer,
+Dictionary< uint16_t, uint16_t, int8_t>* DictionaryInit (uintptr_t* buffer,
                                                     byte max_size,
                                                     uint16_t table_size,
                                                     uint16_t size) {
-    return DicInit<int8_t, uint16_t, uint16_t> (buffer, max_size, table_size,
+    return DictionaryInit< uint16_t, uint16_t, int8_t> (buffer, max_size, table_size,
                                                  size);
 }
 
 /** Insets the given key-value pair.
 */
-template<typename TIndex, typename TKey, typename TData, typename T, TType kType>
-TIndex DicInsert (Dic<TIndex, TKey, TData>* book,  const char* key, T value, TIndex index) {
-    if (book == nullptr) return 0;
+template<typename UI, typename SI, typename I, typename T, TType kType>
+I DictionaryInsert (Dictionary<UI, SI, I>* dictionary,  const char* key, 
+                    T value, I index) {
+    if (dictionary == nullptr) return 0;
     return ~0;
 }
 
-template<typename TIndex>
-TIndex MaxDicIndexes () {
-    //return sizeof (TIndex) == 1 ? 255 : sizeof (TIndex) == 2 ? 8 * 1024 : 
-    //                                    sizeof (TIndex) == 4 ? 512 * 1024 * 1024
+template<typename I>
+I DictionaryCountUpperBounds () {
+    //return sizeof (I) == 1 ? 255 : sizeof (I) == 2 ? 8 * 1024 : 
+    //                                    sizeof (I) == 4 ? 512 * 1024 * 1024
     //                            : 0;
-    return ~(TIndex)0;
+    return ~(I)0;
 }
 
-/** Adds a key-value pair to the end of the book. */
-template<typename TIndex, typename TKey, typename TData, typename T, TType type>
-TIndex DicAdd (Dic<TIndex, TKey, TData>* book, const char* key, T data) {
-    if (book == nullptr) return 0;
+/** Adds a key-value pair to the end of the dictionary. */
+template<typename UI, typename SI, typename I, typename T, TType type>
+I DictionaryAdd (Dictionary<UI, SI, I>* dictionary, const char* key, T data) {
+    if (dictionary == nullptr) return 0;
     if (key == nullptr) return 0;
 
     PrintLine (key);
 
-    TIndex num_items = book->num_items,
-        stack_height = book->stack_height,
+    I item_count = dictionary->item_count,
+        count = dictionary->count,
         temp;
 
-    TKey table_size = book->table_size;
+    SI table_size = dictionary->table_size;
 
-    if (num_items >= stack_height) return ~0;
+    if (item_count >= count) return ~0;
     //< We're out of buffered indexes.
 
-    char* states = reinterpret_cast<char*> (book) + 
-                   sizeof (Dic <TIndex, TKey, TData>);
-    TKey* key_offsets = reinterpret_cast<TKey*> (states + stack_height);
-    TData* data_offsets = reinterpret_cast<TData*> (states + stack_height *
-                                                    (sizeof (TKey)));
-    TData* hashes = reinterpret_cast<TData*> (states + stack_height *
-                                              (sizeof (TKey) + sizeof (TData))),
+    char* states = reinterpret_cast<char*> (dictionary) + 
+                   sizeof (Dictionary <UI, SI, I>);
+    SI* key_offsets = reinterpret_cast<SI*> (states + count);
+    UI* data_offsets = reinterpret_cast<UI*> (states + count *
+                                                    (sizeof (SI)));
+    UI* hashes = reinterpret_cast<UI*> (states + count *
+                                              (sizeof (SI) + sizeof (UI))),
          * hash_ptr;
-    TIndex* indexes = reinterpret_cast<TIndex*> (states + stack_height *
-                                                 (sizeof (TKey) + 
-                                                  sizeof (TData) +
-                                                  sizeof (TIndex))),
-        *unsorted_indexes = indexes + stack_height,
-        *collission_list = unsorted_indexes + stack_height;
-    char* keys = reinterpret_cast<char*> (book) + table_size - 1,
+    I* indexes = reinterpret_cast<I*> (states + count *
+                                                 (sizeof (SI) + 
+                                                  sizeof (UI) +
+                                                  sizeof (I))),
+        *unsorted_indexes = indexes + count,
+        *collission_list = unsorted_indexes + count;
+    char* keys = reinterpret_cast<char*> (dictionary) + table_size - 1,
         *destination;
 
     // Calculate space left.
-    TKey value = table_size - stack_height * DicOverheadPerIndex<TIndex, TKey,
-                                                                  TData> (),
+    SI value = table_size - count * DicOverheadPerIndex<I, SI,
+                                                                  UI> (),
          key_length = static_cast<uint16_t> (SlotLength (key)),
          pile_size;
 
@@ -279,18 +280,18 @@ TIndex DicAdd (Dic<TIndex, TKey, TData>* book, const char* key, T data) {
             "%20s: %p\n%20s: %u\n", key, "hashes", hashes, "key_offsets",
             key_offsets, "keys", keys, "indexes", indexes, "value", value);
 
-    TData hash = Hash16 (key),
+    UI hash = Hash16 (key),
         current_hash;
 
     if (key_length > value) {
         PRINTF ("Buffer overflow\n";
-        return ~((TIndex)0);
+        return ~((I)0);
     }
 
     //print ();
 
-    if (num_items == 0) {
-        book->num_items = 1;
+    if (item_count == 0) {
+        dictionary->item_count = 1;
         *hashes = hash;
         *key_offsets = static_cast<uint16_t> (key_length);
         *indexes = ~0;
@@ -299,7 +300,7 @@ TIndex DicAdd (Dic<TIndex, TKey, TData>* book, const char* key, T data) {
 
         SlotWrite (destination, key);
         PRINTF ("\nInserted key %s at GetAddress 0x%p", key, destination);
-        DicPrint (book);
+        DicPrint (dictionary);
         return 0;
     }
 
@@ -314,10 +315,10 @@ TIndex DicAdd (Dic<TIndex, TKey, TData>* book, const char* key, T data) {
 
     int low = 0,
         mid,
-        high = num_items,
+        high = item_count,
         index;
 
-    TIndex* temp_ptr;
+    I* temp_ptr;
 
     while (low <= high) {
         mid = (low + high) >> 1;        //< Shift >> 1 to / 2
@@ -352,7 +353,7 @@ TIndex DicAdd (Dic<TIndex, TKey, TData>* book, const char* key, T data) {
                 temp = indexes[mid];
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;  //< Load the index in the collision table.
-                while (index < MaxDicIndexes<TIndex> ()) {
+                while (index < MaxDicIndexes<I> ()) {
                     PRINTF ("comparing to \"%s\"", keys - key_offsets[index]);
                     if (strcmp (key, keys - key_offsets[index]) == 0) {
                         PRINTF (" but table already contains key at "
@@ -367,12 +368,12 @@ TIndex DicAdd (Dic<TIndex, TKey, TData>* book, const char* key, T data) {
                 PRINTF ("and new collision detected.";
 
                 // Copy the key
-                value = key_offsets[num_items - 1] + key_length + 1;
+                value = key_offsets[item_count - 1] + key_length + 1;
                 SlotWrite (keys - value, key);
-                key_offsets[num_items] = value;
+                key_offsets[item_count] = value;
 
                 // Update the collision table.
-                pile_size = book->pile_size;
+                pile_size = dictionary->pile_size;
                 // Shift the collisions table up one element and insert 
                 // the unsorted collision index.
                 // Then move to the top of the collisions list.
@@ -382,24 +383,24 @@ TIndex DicAdd (Dic<TIndex, TKey, TData>* book, const char* key, T data) {
                     *collission_list = *(collission_list - 1);
                     --collission_list;
                 }
-                *temp_ptr = num_items;
+                *temp_ptr = item_count;
 
-                book->pile_size = pile_size + 1;
+                dictionary->pile_size = pile_size + 1;
                 PRINTF ("\ncollision index: %u", temp);
                 // Store the collision index.
-                indexes[num_items] = temp;   //< Store the collision index
-                book->num_items = num_items + 1;
-                hashes[num_items] = ~0;      //< Dic the last hash to 0xFFFF
+                indexes[item_count] = temp;   //< Store the collision index
+                dictionary->item_count = item_count + 1;
+                hashes[item_count] = ~0;      //< Dictionary the last hash to 0xFFFF
 
                                             // Move collisions pointer to the unsorted_indexes.
-                indexes += stack_height;
+                indexes += count;
 
                 //< Add the newest char to the end.
-                indexes[num_items] = num_items;
+                indexes[item_count] = item_count;
 
-                DicPrint (book);
+                DicPrint (dictionary);
                 PRINTF ("Done inserting.\n");
-                return num_items;
+                return item_count;
             }
 
             // But we still don't know if the char is a new collision.
@@ -416,47 +417,47 @@ TIndex DicAdd (Dic<TIndex, TKey, TData>* book, const char* key, T data) {
                 }
 
                 // Get offset to write the key too.
-                value = key_offsets[num_items - 1] + key_length + 1;
+                value = key_offsets[item_count - 1] + key_length + 1;
 
                 byte collision_index = unsorted_indexes[mid];
                 PRINTF ("\n\ncollision_index: %u", collision_index);
 
                 SlotWrite (keys - value, key);
                 PRINTF ("Inserting value: %u into index:%u "
-                        "num_items:%u with other collision_index: %u\n", value,
-                        index, num_items, collision_index);
-                key_offsets[num_items] = value;
+                        "item_count:%u with other collision_index: %u\n", value,
+                        index, item_count, collision_index);
+                key_offsets[item_count] = value;
 
-                pile_size = book->pile_size;
+                pile_size = dictionary->pile_size;
                 indexes[mid] = static_cast<byte> (pile_size);
-                indexes[num_items] = static_cast<byte> (pile_size);
+                indexes[item_count] = static_cast<byte> (pile_size);
 
                 // Insert the collision into the collision table.
                 temp_ptr = &collission_list[pile_size];
                 // Move collisions pointer to the unsorted_indexes.
-                indexes += stack_height;
+                indexes += count;
                 *temp_ptr = collision_index;
                 ++temp_ptr;
-                *temp_ptr = num_items;
+                *temp_ptr = item_count;
                 ++temp_ptr;
                 *temp_ptr = ~0;
-                book->pile_size = pile_size + 3;
+                dictionary->pile_size = pile_size + 3;
                 //< Added one term-byte and two indexes.
 
                 // Add the newest key at the end.
-                indexes[num_items] = num_items;
+                indexes[item_count] = item_count;
 
-                // Dic the last hash to 0xFFFF
-                hashes[num_items] = ~0;
+                // Dictionary the last hash to 0xFFFF
+                hashes[item_count] = ~0;
 
-                book->num_items = num_items + 1;
+                dictionary->item_count = item_count + 1;
 
-                DicPrint (book);
+                DicPrint (dictionary);
 
-                DicPrint (book);
+                DicPrint (dictionary);
                 PRINTF ("Done inserting.\n";
                 // Then it was a collision so the table doesn't contain string.
-                return num_items;
+                return item_count;
             }
             PRINTF ("table already contains the key\n";
             return index;
@@ -465,26 +466,26 @@ TIndex DicAdd (Dic<TIndex, TKey, TData>* book, const char* key, T data) {
 
     // The hash was not in the table.
 
-    value = key_offsets[num_items - 1] + key_length + 1;
+    value = key_offsets[item_count - 1] + key_length + 1;
     destination = keys - value;
 
     PRINTF ("The hash 0x%x was not in the table so inserting %s into mid:"
             " %i at index %u before hash 0x%x \n", hash, key, mid,
-            Diff (book, destination), hashes[mid]);
+            Diff (dictionary, destination), hashes[mid]);
 
     // First copy the char and set the key offset.
     SlotWrite (destination, key);
-    key_offsets[num_items] = value;
+    key_offsets[item_count] = value;
 
     // Second move up the hashes and insert at the insertion point.
     hash_ptr = hashes;
-    hash_ptr += num_items;
+    hash_ptr += item_count;
     //*test = hashes;
     PRINTF ("l_numkeys: %u, hashes: %u hash_ptr: %u insert_ptr: %u\n",
-            num_items, Diff (book, hashes),
-            Diff (book, hash_ptr), Diff (book, hashes + mid));
+            item_count, Diff (dictionary, hashes),
+            Diff (dictionary, hash_ptr), Diff (dictionary, hashes + mid));
     hashes += mid;
-    DicPrint (book);
+    DicPrint (dictionary);
     while (hash_ptr > hashes) {
         *hash_ptr = *(hash_ptr - 1);
         --hash_ptr;
@@ -492,74 +493,70 @@ TIndex DicAdd (Dic<TIndex, TKey, TData>* book, const char* key, T data) {
     *hashes = hash;
     
     // Mark as not having any collisions.
-    indexes[num_items] = ~0;
+    indexes[item_count] = ~0;
     
     // Move up the sorted indexes and insert the unsorted index (which is 
     // the current ;).
-    indexes += stack_height + mid;
-    temp_ptr = indexes + num_items;
+    indexes += count + mid;
+    temp_ptr = indexes + item_count;
 
     while (temp_ptr > indexes) {
         *temp_ptr = *(temp_ptr - 1);
         --temp_ptr;
     }
-    *temp_ptr = num_items;
+    *temp_ptr = item_count;
 
-    book->num_items = num_items + 1;
+    dictionary->item_count = item_count + 1;
 
-    DicPrint (book);
+    DicPrint (dictionary);
     PRINTF ("Done inserting.\n";
     PrintLine ();
 
-    return num_items;
+    return item_count;
 }
 
-template<typename T, TType kType>
-int8_t Dic2Add (Dic2* book, const char* key, T data) {
-    return DicAdd<int8_t, uint16_t, uint16_t, T, kType> (book, key, data);
-}
-/** Adds a key-value pair to the end of the book. */
-//byte Add2 (Dic2* book, const char* key, byte data) {
-//    return DicAdd<byte, uint16_t, uint16_t, uint16_t> (book, key, UI1, &data);
+/** Adds a key-value pair to the end of the dictionary. */
+//byte Add2 (Dic2* dictionary, const char* key, byte data) {
+//    return DicAdd<byte, uint16_t, uint16_t, uint16_t> (dictionary, key, UI1, &data);
 //}
 
 /** Returns  the given query char in the hash table. */
-template<typename TIndex, typename TKey, typename TData>
-TIndex DicFind (Dic<TIndex, TKey, TData>* book, const char* key) {
-    if (book == nullptr)
+template<typename UI, typename SI, typename I>
+I DictionaryFind (Dictionary<UI, SI, I>* dictionary, const char* key) {
+    if (dictionary == nullptr)
         return 0;
     PrintLineBreak ("Finding record...", 5);
-    TIndex index,
-        num_items = book->num_items,
-        stack_height = book->stack_height,
+    I index,
+        item_count = dictionary->item_count,
+        count = dictionary->count,
         temp;
 
-    if (key == nullptr || num_items == 0)
-        return ~((TIndex)0);
+    if (key == nullptr || item_count == 0)
+        return ~((I)0);
 
-    TKey table_size = book->table_size;
+    SI table_size = dictionary->table_size;
 
-    const TData* hashes = reinterpret_cast<const TData*>
-        (reinterpret_cast<const char*> (book) +
-         sizeof (Dic<TIndex, TKey, TData>));
-    const TKey* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
-                                                                stack_height);
-    const TIndex* indexes = reinterpret_cast<const TIndex*>(key_offsets +
-                                                            stack_height),
-        *unsorted_indexes = indexes + stack_height,
-        *collission_list = unsorted_indexes + stack_height;
-    const char* keys = reinterpret_cast<const char*> (book) + table_size - 1;
-    const TIndex* collisions,
+    const UI* hashes = reinterpret_cast<const UI*>
+        (reinterpret_cast<const char*> (dictionary) +
+         sizeof (Dictionary<UI, SI, I>));
+    const SI* key_offsets = reinterpret_cast<const uint16_t*>(hashes +
+                                                                count);
+    const I* indexes = reinterpret_cast<const I*>(key_offsets +
+                                                            count),
+        *unsorted_indexes = indexes + count,
+        *collission_list = unsorted_indexes + count;
+    const char* keys = reinterpret_cast<const char*> (dictionary) + table_size - 1;
+    const I* collisions,
                 * temp_ptr;
 
-    TData hash = Hash16 (key);
+    UI hash = Hash16 (key);
 
     PRINTF ("\nSearching for key \"%s\" with hash 0x%x\n", key, hash);
 
-    if (num_items == 1) {
+    if (item_count == 1) {
         if (!SlotEquals (key, keys - key_offsets[0])) {
             PRINTF ("Did not find key %s\n", key);
-            return ~((TIndex)0);
+            return ~((I)0);
         }
         PRINTF ("Found key %s\n", key);
         PrintLine ();
@@ -568,15 +565,15 @@ TIndex DicFind (Dic<TIndex, TKey, TData>* book, const char* key) {
 
     // Perform a binary search to find the first instance of the hash the 
     // binary search yields. If the mid is odd, we need to subtract the 
-    // sizeof (TData*) in order to get the right pointer address.
+    // sizeof (UI*) in order to get the right pointer address.
     int low = 0,
         mid,
-        high = num_items - 1;
+        high = item_count - 1;
 
     while (low <= high) {
         mid = (low + high) >> 1;    //< >> 1 to /2
 
-        TData current_hash = hashes[mid];
+        UI current_hash = hashes[mid];
         PRINTF ("low: %i mid: %i high %i hashes[mid]:%x\n", low, mid,
                 high, hashes[mid]);
 
@@ -590,8 +587,8 @@ TIndex DicFind (Dic<TIndex, TKey, TData>* book, const char* key) {
                     "%s\n", mid, hashes[mid], key);
 
             // Check for collisions
-            collisions = reinterpret_cast<const TIndex*>(key_offsets) +
-                stack_height * sizeof (TKey);;
+            collisions = reinterpret_cast<const I*>(key_offsets) +
+                count * sizeof (SI);;
             index = collisions[mid];
 
             if (index < ~0) {
@@ -607,7 +604,7 @@ TIndex DicFind (Dic<TIndex, TKey, TData>* book, const char* key) {
 
                 temp_ptr = collission_list + temp;
                 index = *temp_ptr;
-                while (index < MaxDicIndexes<TIndex> ()) {
+                while (index < MaxDicIndexes<I> ()) {
                     PRINTF ("comparing to \"%s\"\n", keys -
                             key_offsets[index]);
                     if (!SlotEquals (key, keys - key_offsets[index])) {
@@ -619,7 +616,7 @@ TIndex DicFind (Dic<TIndex, TKey, TData>* book, const char* key) {
                     index = *temp_ptr;
                 }
                 PRINTF ("Did not find \"" << key << "\"\n";
-                return ~((TIndex)0);
+                return ~((I)0);
             }
 
             // There were no collisions.
@@ -627,7 +624,7 @@ TIndex DicFind (Dic<TIndex, TKey, TData>* book, const char* key) {
             // But we still don't know if the char is new or a collision.
 
             // Move collisions pointer to the unsorted indexes.
-            indexes += stack_height;
+            indexes += count;
             index = unsorted_indexes[mid];
 
             PRINTF ("\n!!!mid: %i-%x unsorted_indexes: %u key: %s\n"
@@ -638,7 +635,7 @@ TIndex DicFind (Dic<TIndex, TKey, TData>* book, const char* key) {
             if (!SlotEquals (key, keys - key_offsets[index]) != 0) {
                 //< It was a collision so the table doesn't contain string.
                 PRINTF (" but it was a collision and did not find key.\n";
-                return ~((TIndex)0);
+                return ~((I)0);
             }
 
             PRINTF ("and found key at mid: " << mid << '\n';
@@ -648,58 +645,55 @@ TIndex DicFind (Dic<TIndex, TKey, TData>* book, const char* key) {
     PRINTF ("Did not find a hash for key \"" << key << "\"\n";
     PrintLine ();
 
-    return ~((TIndex)0);
-}
-
-int8_t Dic2Find (Dic2* book, const char* key) {
-    return DicFind<int8_t, uint16_t, uint16_t> (book, key);
+    return ~((I)0);
 }
 
 /** Prints this object out to the console. */
-template<typename TIndex, typename TKey, typename TData>
-void DicPrint (const Dic<TIndex, TKey, TData>* book) {
-    if (book == nullptr) return;
-    TIndex num_items = book->num_items,
-           stack_height = book->stack_height,
+template<typename UI, typename SI, typename I>
+void DictionaryPrint (const Dictionary<UI, SI, I>* dictionary) {
+    ASSERT (dictionary)
+
+    I item_count = dictionary->item_count,
+           count = dictionary->count,
            collision_index,
            temp;
-    TKey table_size = book->table_size,
-         pile_size = book->pile_size;
+    SI table_size = dictionary->table_size,
+         pile_size = dictionary->pile_size;
 
 #if CRABS_DEBUG
     PrintLine ('_');
     
-    if (sizeof (TData) == 2)
-        PRINTF ("\nDic2: %p\n", book);
-    else if (sizeof (TData) == 4)
-        PRINTF ("\nDic4: %p\n", book);
-    else if (sizeof (TData) == 8)
-        PRINTF ("\nDic8: %p\n", book);
+    if (sizeof (UI) == 2)
+        PRINTF ("\nDic2: %p\n", dictionary);
+    else if (sizeof (UI) == 4)
+        PRINTF ("\nDic4: %p\n", dictionary);
+    else if (sizeof (UI) == 8)
+        PRINTF ("\nDic8: %p\n", dictionary);
     else
-        PRINTF ("\nInvalid Dic type: %p\n", book);
+        PRINTF ("\nInvalid Dictionary type: %p\n", dictionary);
     PRINTF ("\n;: %u stack_height: %u  "
-            "pile_size: %u  size: %u", num_items,
+            "pile_size: %u  size: %u", item_count,
             stack_height, pile_size, table_size);
     PRINTF ('\n';
     PRINTF ('|';
     for (int i = 0; i < 79; ++i) putchar ('_');
     PRINTF ('\n';
 #endif  //< CRABS_DEBUG
-    const char* states = reinterpret_cast<const char*> (book) +
-                         sizeof (Dic <TIndex, TKey, TData>);
-    const TKey* key_offsets = reinterpret_cast<const TKey*> 
-                              (states + stack_height);
-    //const TData* data_offsets = reinterpret_cast<const TData*>
-    //                            (states + stack_height *(sizeof (TKey)));
-    const TData* hashes = reinterpret_cast<const TData*> (states + stack_height *
-        (sizeof (TKey) + sizeof (TData)));
-    const TIndex* indexes = reinterpret_cast<const TIndex*> 
-                            (states + stack_height * (sizeof (TKey) + 
-                             sizeof (TData) + sizeof (TIndex))),
-        * unsorted_indexes = indexes + stack_height,
-        * collission_list = unsorted_indexes + stack_height,
+    const char* states = reinterpret_cast<const char*> (dictionary) +
+                         sizeof (Dictionary <UI, SI, I>);
+    const SI* key_offsets = reinterpret_cast<const SI*> 
+                              (states + count);
+    //const UI* data_offsets = reinterpret_cast<const UI*>
+    //                            (states + stack_height *(sizeof (SI)));
+    const UI* hashes = reinterpret_cast<const UI*> (states + count *
+        (sizeof (SI) + sizeof (UI)));
+    const I* indexes = reinterpret_cast<const I*> 
+                            (states + count * (sizeof (SI) + 
+                             sizeof (UI) + sizeof (I))),
+        * unsorted_indexes = indexes + count,
+        * collission_list = unsorted_indexes + count,
         *cursor;
-    const char* keys = reinterpret_cast<const char*> (book) + table_size - 1;
+    const char* keys = reinterpret_cast<const char*> (dictionary) + table_size - 1;
 
     PRINTF ("\n%3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
             "hash_e", "hash_u", "hash_s", "index_u", "collisions");
@@ -708,7 +702,7 @@ void DicPrint (const Dic<TIndex, TKey, TData>* book) {
         putchar ('_');
     PRINTF ('\n';
 
-    for (TIndex i = 0; i < stack_height; ++i) {
+    for (I i = 0; i < count; ++i) {
         // Print each record as a row.
         // @todo Change stack_height to ; after done debugging.
         collision_index = indexes[i];
@@ -718,7 +712,7 @@ void DicPrint (const Dic<TIndex, TKey, TData>* book) {
                 hashes[unsorted_indexes[i]], hashes[i],
                 unsorted_indexes[i], collision_index);
 
-        if (collision_index != ~0 && i < num_items) {
+        if (collision_index != ~0 && i < item_count) {
             // Print collisions.
             cursor = &collission_list[collision_index];
             temp = *cursor;
@@ -737,80 +731,70 @@ void DicPrint (const Dic<TIndex, TKey, TData>* book) {
     }
     PrintLine ('_');
 
-    PrintMemory (reinterpret_cast<const char*> (book) + 
-                 sizeof (Dic<TIndex, TKey, TData>), book->size);
+    PrintMemory (reinterpret_cast<const char*> (dictionary) + 
+                 sizeof (Dictionary<UI, SI, I>), dictionary->size);
     PUTCHAR ('\n')
 }
 
-void Dic2Print (const Dic2* book) {
-    DicPrint<int8_t, uint16_t, uint16_t> (book);
+/** Deletes the dictionary contents without wiping the contents. */
+template<typename UI, typename SI, typename I>
+void DictionaryClear (Dictionary<UI, SI, I>* dictionary) {
+    ASSERT (dictionary)
+
+    dictionary->item_count = 0;
+    dictionary->pile_size = 0;
 }
 
-/** Deletes the book contents without wiping the contents. */
-template<typename TIndex, typename TKey, typename TData>
-void DicClear (Dic<TIndex, TKey, TData>* book) {
-    if (book == nullptr) return;
-    book->num_items = 0;
-    book->pile_size = 0;
-}
+/** Deletes the dictionary contents by overwriting it with zeros. */
+template<typename UI, typename SI, typename I>
+void DictionaryWipe (Dictionary<UI, SI, I>* dictionary) {
+    ASSERT (dictionary)
 
-/** Deletes the book contents by overwriting it with zeros. */
-template<typename TIndex, typename TKey, typename TData>
-void DicWipe (Dic<TIndex, TKey, TData>* book) {
-    if (book == nullptr) return;
-    TData size = book->size;
-    memset (book, 0, size);
+    UI size = dictionary->size;
+    memset (dictionary, 0, size);
 }
 
 /** Returns true if this expr contains only the given address. */
-template<typename TIndex, typename TKey, typename TData>
-void* DicContains (Dic<TIndex, TKey, TData>* book, void* data) {
-    if (book == nullptr) return false;
-    if (data < book) return false;
-    char* base = reinterpret_cast<char*> (book);
+template<typename UI, typename SI, typename I>
+void* DictionaryContains (Dictionary<UI, SI, I>* dictionary, void* data) {
+    ASSERT (dictionary)
+
+    if (data < dictionary) return false;
+    char* base = reinterpret_cast<char*> (dictionary);
     if (data < base)
         return nullptr;
-    if (data > base + book->size_bytes)
+    if (data > base + dictionary->size_bytes)
         return nullptr;
     return data;
 }
 
-/** Removes that object from the book and copies it to the destination. */
-template<typename TIndex, typename TKey, typename TData>
-bool DicRemoveCopy (Dic<TIndex, TKey, TData>* book, void* destination,
-                 size_t buffer_size, void* data)
-{
-    if (book == nullptr) return false;
+/** Removes that object from the dictionary and copies it to the destination. */
+template<typename UI, typename SI, typename I>
+bool DictionaryRemoveCopy (Dictionary<UI, SI, I>* dictionary, void* destination,
+                 size_t buffer_size, void* data) {
+    ASSERT (dictionary)
 
     return false;
 }
 
-/** Removes the item at the given address from the book. */
-template<typename TIndex, typename TKey, typename TData>
-bool DicRemove (Dic<TIndex, TKey, TData>* book, void* adress) {
-    if (book == nullptr) return false;
+/** Removes the item at the given address from the dictionary. */
+template<typename UI, typename SI, typename I>
+bool DictionaryRemove (Dictionary<UI, SI, I>* dictionary, void* adress) {
+    ASSERT (dictionary)
 
     return false;
 }
 
-/** Removes all but the given book from the book. */
-template<typename TIndex, typename TKey, typename TData>
-bool DicRetain (Dic<TIndex, TKey, TData>* book) {
-    if (book == nullptr) return false;
-
-    return false;
+/** Prints the given Dictionary to the console. */
+template<typename UI, typename SI, typename I>
+Printer& DictionaryPrint (Printer& print, Dictionary<UI, SI, I>* dictionary) {
+    return print;
 }
 
-/** Prints the given Dic to the console. */
-template<typename TIndex, typename TKey, typename TData>
-void DicPrint (Dic<TIndex, TKey, TData>* book) {
-
-}
-
-//void DicPrint (Dic2* book) {
-//    return DicPrint<byte, uint16_t, uint16_t, uint16_t> (book);
+//void DicPrint (Dic2* dictionary) {
+//    return DicPrint<byte, uint16_t, uint16_t, uint16_t> (dictionary);
 //}
 
 }       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 6
-#endif  //< HEADER_FOR_CRABS_TBOOK
+#endif  //< HEADER_FOR_CRABS_BOOK

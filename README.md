@@ -7,16 +7,22 @@
   /-|       |-\   | . \ (_| | |_) | |_| |   <| |   | | (_) | (_) | |   <| | |_ 
  / /-\     /-\ \  |_|\_\__,_|_.__/ \__,_|_|\_\_|   |_|\___/ \___/|_|_|\_\_|\__|
   / /-`---'-\ \  
-   /         \                       ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪
+   /         \                    ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪
 ```
 
-Kabuki Toolkit (KT) is a modern cross-platform C++1x software and firmware toolkit for making intelligent connected technologies with ASCII Script. KT is built on top of some of the  best commercial-friendly open-source C and C++ libraries (soon to be) formatted using the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)(#WorkInProgress).
+Kabuki Toolkit (KT) is a modern cross-platform C++1x software and firmware toolkit for making intelligent connected technologies with ASCII Script. KT is built on top of some of the  best commercial-friendly open-source C and C++ libraries (soon to be) formatted using the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html) using The Sloth. #CodeSloth
 
 ## ASCII Script
 
-Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification (Script) is a software-defined networking protocol (SDNP) and embedded-friendly family of languages that facilitates artificial intelligence and machine learning (AIML) using functional programming and natural language processing (NLP). Script is best described as a mix of JavaScript, Python, and LISP. JavaScript because it's asynchronous with a round-robin scheduler, Python because it has native dictionaries, and Script has a rather unique dialect of LISP called Interprocess LISP.
+[]()
 
-The Chinese Room is a famous artificial intelligence philosophy thought experiment invented by the philosopher John Searle. The experiment highlights the difference between strong vs weak AI and how a normal everyday room in an office or network of rooms can form to create a turning equivalent machine that can fluently speak any language. Script being a SDNP can be used to create many programming languages but there is only one reference implementation, Automata Standard Code for Information Interchange (ASCII) Script.
+Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification (Script) is a software-defined networking protocol (SDNP) and embedded-friendly family of languages that facilitates artificial intelligence and machine learning (AIML) using functional programming and natural language processing (NLP) using the Chinese Room Abstract Stack Machine (Crabs) #WorkInProgress. The Script SDNP has the unique ability to allow multiple programming and domain specific languages simultaneously but there is only one reference implementation: Automata Standard Code for Information Interchange (ASCII) Script. ASCII Script is best described as a mix of JavaScript, Python, and LISP. JavaScript because it's asynchronous with a round-robin scheduler, Python because it has native dictionaries, and Script has a rather unique dialect of LISP called Interprocess LISP. Interprocess LISP is a hybrid procedural LISP that allows for sequential programming to be mixed with LISP using a simple set of powerful rules for parsing symbols and handling unexpected tokens.
+
+ASCII Script differentiates itself from the other languages in that it supports all of the C++ data types using the ASCII Data Types. The ASCII Data Types is a light-weight standalone-alone C++ Standard Template Library replacement that works with or without dynamic memory using all contiguous data structures that make creating connected technologies as fast and easy as writing HTML/JavaScript. The most unique and interesting property of the ASCII Data Types are that they work identically on 16-bit, 32-bit, 64-bit, and n-bit processors. The contiguous data structures allow for the creation of infinite caches for **BLAZING** fast performance using less memory. ASCII Data Structures may also be copied byte-by-byte from one system to another without converting to and from JSON or XML.
+
+### Chinese Room Abstract Stack Machine
+
+The [Chinese Room Wiki](https://en.wikipedia.org/wiki/Chinese_room) is a famous artificial intelligence philosophy thought experiment invented by the philosopher John Searle; it is a great place to start learning some philosophy, especially if you're into AI. The experiment highlights the difference between strong vs weak AI and how a normal everyday room in an office or network of rooms can form to create a turning equivalent machine that can fluently speak any language.
 
 ## Quick Links
 
@@ -28,7 +34,7 @@ The Chinese Room is a famous artificial intelligence philosophy thought experime
   - *Release for Comment for Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification.*
 * [Kabuki Starship Website](https://kabuki-starship.github.io/)
   - *Official Kabuki Toolkit website. We are currently looking for someone to help us fix the CSS on the website. It only works right at < 1024 pixel width so the problem is in the @media section.*
-* [Chinese Room Wiki](https://en.wikipedia.org/wiki/Chinese_room)
+* 
   - *Good place to start learning some philosophy.*
 
 ## kabuki Modules
@@ -40,28 +46,29 @@ The Chinese Room is a famous artificial intelligence philosophy thought experime
 
 ### kabuki::toolkit Modules
 
-|   Name | Description    |
-|-------:|:---------------|
-|     al | Audio library. |
-|    app | Application framework. |
-|   code | Code tools. |
-|  crabs | Chinese room abstract stack machine. |
-|   data | Data and logging. |
-|    hmi | Human-machine interfaces. |
-|     id | Identification. |
-|     gl | Graphics library. |
-|    gui | Graphical User Interfaces. |
-|   math | Math. |
-|   midi | MIDI. |
-|    pro | Projects, tasks, and scheduling. |
-|  store | Store and inventory. |
+|                    Name | Description |
+|------------------------:|:------------|
+|   crabs (::_ namespace) | Chinese room abstract stack machine. |
+|             kabuki::tek | Firmware toolkit. |
+|     kabuki::toolkit::al | Audio library. |
+|    kabuki::toolkit::app | Application framework. |
+|   kabuki::toolkit::code | Code tools. |
+|   kabuki::toolkit::data | Data and logging. |
+|    kabuki::toolkit::hmi | Human-machine interfaces. |
+|     kabuki::toolkit::id | Identification. |
+|     kabuki::toolkit::gl | Graphics library. |
+|    kabuki::toolkit::gui | Graphical User Interfaces. |
+|   kabuki::toolkit::math | Math. |
+|   kabuki::toolkit::midi | MIDI. |
+|    kabuki::toolkit::pro | Projects, tasks, and scheduling. |
+|  kabuki::toolkit::store | Store and inventory. |
 
 ### 3rd Party APIs
 
-* [Google C++ API](https://github.com/Microsoft/cpprestsdk)
+* [AStyle](http://astyle.sourceforge.net/)
+* [Google C++ API](https://github.com/google/google-api-cpp-client)
 * [ANGLE](https://github.com/google/angle)
 * [SDL](https://www.libsdl.org/)
-* [stb](https://github.com/nothings/stb)
 * [Static Math](https://github.com/Morwenn/static_math)
 * [mbed](https://www.mbed.com/en/)
 * [OpenAL-Soft](https://github.com/kcat/openal-soft)
@@ -69,7 +76,6 @@ The Chinese Room is a famous artificial intelligence philosophy thought experime
 * [Maximilian](https://github.com/micknoise/Maximilian)
 * [RtMIDI](https://github.com/thestk/rtmidi)
 * [Serial Communication Library](https://github.com/wjwwood/serial)
-* [AStyle](http://astyle.sourceforge.net/)
 
 ### Kabuki VM Package and Seam Diagram
 

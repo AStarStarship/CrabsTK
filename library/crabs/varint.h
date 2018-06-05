@@ -16,12 +16,12 @@
 
 #pragma once
 #include <stdafx.h>
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #ifndef HEADER_FOR_CRABS_BSQ
 #define HEADER_FOR_CRABS_BSQ
-
+// Dependencies:
 #include "config.h"
+// End dependencies.
 
 namespace _ {
 

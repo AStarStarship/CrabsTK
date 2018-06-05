@@ -20,8 +20,9 @@
 
 #ifndef HEADER_FOR_CRABS_ALIGN
 #define HEADER_FOR_CRABS_ALIGN
-
+// Dependencies:
 #include "config.h"
+// End dependencies.
 
 namespace _ {
 
@@ -32,22 +33,25 @@ KABUKI uint32_t AlignPowerOf2 (uint32_t value);
 KABUKI int32_t AlignPowerOf2 (int32_t value);
 
 /** Aligns the given pointer up to a sizeof (T) byte boundary.
+
+    Algorithm works by inverting the bits, mask of the LSbs and adding 1.
+    This allows the algorithm to word align without any if statements.
+    The algorithm works the same for all memory widths as proven by the
+    truth tables bellow.
+
     @param  ptr The address to align.
-    @return The aligned value. */
-template<typename WordBoundary, typename I = uintptr_t>
-inline I AlignUp (I value) {
-    // Algorithm works by inverting the bits, mask of the LSbs and adding 1.
-    // This allows the algorithm to word align without any if statements.
-    // The algorithm works the same for all memory widths as proven by the
-    // truth table bellow.
-    //
-    // 2-bit example:
-    // ~00 = 11 => 00 + 11 + 1 = 0x100
-    // ~01 = 10 => 01 + 10 + 1 = 0x100
-    // ~10 = 01 => 10 + 01 + 1 = 0x100
-    // ~11 = 00 => 11 + 00 + 1 = 0x100
-    //
-    // 3-bit example:
+    @return The aligned value.
+
+    @code
+    // The convention KT uses is that the usigned size always omes first 
+    // becuase it's the first byte of an ASCII Object.
+    int32_t signed_example = 7;
+    signed_example = AlignUp<int64_t, uint32_t, int32_t> (signed_example);
+
+    uint16_t unsigned_example = 3;
+    unsgiend_example = AlignUp<int32_t, uint16_t, uint16_t> (unsigned_example);
+
+    // 64-bit alignment example:
     // ~000 = 111 => 000 + 111 + 1 = 0x1000
     // ~001 = 110 => 001 + 110 + 1 = 0x1000
     // ~010 = 101 => 010 + 101 + 1 = 0x1000
@@ -56,17 +60,25 @@ inline I AlignUp (I value) {
     // ~101 = 010 => 101 + 010 + 1 = 0x1000
     // ~110 = 001 => 110 + 001 + 1 = 0x1000
     // ~111 = 000 => 111 + 000 + 1 = 0x1000
-    printf ("\nAligning value %u", (uint)value);
-    value += ((~value) + 1) & (sizeof (WordBoundary) - 1);
-    printf (" with result %u.", (uint)value);
+    // //
+    // 32-bit alignment example:
+    // ~00 = 11 => 00 + 11 + 1 = 0x100
+    // ~01 = 10 => 01 + 10 + 1 = 0x100
+    // ~10 = 01 => 10 + 01 + 1 = 0x100
+    // ~11 = 00 => 11 + 00 + 1 = 0x100
+    // //
+    // 16-bit alignment example:
+    // ~0 = 1 => 0 + 1 = 1
+    // ~1 = 0 => 1 + 0 = 0
+    // //
+    // 8-bit example:
+    // value + ((~value) + 1) & (sizeof (int8_t) - 1) = value
+    @endcode */
+template<typename WordBoundary, typename UI = intptr_t, typename I = uintptr_t>
+inline I AlignUp (I value) {
+    value += ((~(UI)value) + 1) & (sizeof (WordBoundary) - 1);
     return value;
 }
-/*
-template<typename WordBoundary = intptr_t, typename T = char>
-inline T* AlignUpPointer (void* pointer) {
-    uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
-    return reinterpret_cast<T*> (AlignUp<WordBoundary> (ptr));
-}*/
 
 /** Aligns the given pointer to the sizeof (WordBoundary) down..
     @param  value The value to align.
@@ -83,33 +95,6 @@ template<typename WordBoundary = intptr_t, typename T = char>
 inline T* AlignDownPointer (T* pointer) {
     uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
     return reinterpret_cast<T*> (AlignDown<WordBoundary> (ptr));
-}
-
-/** Returns the number to add to word-align the given pointer to a uint_t-bit
-    boundary.
-    @param  ptr The address to align.
-    @return The aligned value. */
-template<typename T = uintptr_t>
-inline T AlignUp2 (T value) {
-    return value + value & 0x1;
-}
-
-/** Returns the number to add to word-align the given pointer to a uint_t-bit 
-    boundary.
-    @param  ptr The address to align.
-    @return The aligned value. */
-template<typename T = uintptr_t>
-inline T AlignUp4 (T value) {
-    return AlignUp<uint32_t, T> (value);
-}
-
-/** Returns the number to add to word-align the given pointer to a uint_t-bit 
-    boundary.
-    @param  ptr The address to align.
-    @return The aligned value. */
-template<typename T = uintptr_t>
-inline T AlignUp8 (T value) {
-    return AlignUp<uint64_t, T> (value);
 }
 
 /** Calculates the offset to align the given pointer to a 16-bit word boundary.

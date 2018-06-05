@@ -16,13 +16,6 @@
 
 #include <stdafx.h>
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
-
-#include "center.h"
-#include "printer.h"
-#if USING_PRINTER
-
-#include "type.h"
-
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
@@ -34,6 +27,12 @@
 #define PUTCHAR(c)
 #define PRINT_HEADING
 #endif
+
+// Dependencies:
+#include "center.h"
+#include "type.h"
+// End dependencies.
+#if USING_PRINTER
 
 namespace _ {
 

@@ -15,10 +15,9 @@
 */
 
 #include <stdafx.h>
-#include "bin.h"
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
-
+// Dependencies:
+#include "bin.h"
 #include "bout.h"
 #include "type.h"
 #include "bsq.h"
@@ -27,7 +26,7 @@
 #include "hex.h"
 #include "line.h"
 #include "memory.h"
-
+// End dependencies.
 
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define DEBUG 1

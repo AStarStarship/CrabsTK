@@ -14,18 +14,19 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
 #ifndef HEADER_FOR_CRABS_EXPR
 #define HEADER_FOR_CRABS_EXPR
-
-#include "operand.h"
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
-
+// Dependencies:
+#include "operand.h"
 #include "bout.h"
 #include "bin.h"
 #include "error.h"
 #include "args.h"
 #include "bsq.h"
+// End dependencies.
 
 namespace _ {
 

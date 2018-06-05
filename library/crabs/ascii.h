@@ -48,12 +48,12 @@ enum {
     CAN,        //< 24
     EM,         //< 25
     SUB,        //< 26
-    //ESC,      //< 27
+    ESC,        //< 27
     FS,         //< 28
     GS,         //< 29
     RS,         //< 30
     US,         //< 31
-    DEL = 128
+    DEL = 127
 };
 }       //< namespace _
 #endif  //< HEADER_FOR_CRABS_ASCII

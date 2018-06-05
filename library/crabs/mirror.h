@@ -14,14 +14,16 @@
              permissions and limitations under the License.
 */
 
+#pragma once
+#include <stdafx.h>
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #ifndef HEADER_FOR_SCRIPT_MIRROR
 #define HEADER_FOR_SCRIPT_MIRROR
-
+// Dependencies:
 #include "op.h"
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #include "bin.h"
 #include "bout.h"
+// End dependencies.
 
 namespace _ {
 

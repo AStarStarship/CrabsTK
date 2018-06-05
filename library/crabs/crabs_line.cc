@@ -15,8 +15,10 @@
 */
 
 #include <stdafx.h>
-#include "line.h"
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+// Dependencies:
+#include "line.h"
+// End dependencies.
 
 namespace _ {
 

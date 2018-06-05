@@ -11,15 +11,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="benchmark_ascii_crabs.cc">
+    <None Include="readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\stdafx.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cc">
+    <ClCompile Include="source\benchmark_ascii_crabs.cc">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
+    <ClInclude Include="source\stdafx.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\targetver.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

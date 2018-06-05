@@ -15,23 +15,23 @@
 */
 
 #include <stdafx.h>
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
-
+// Dependencies:
 #include "print_to_ascii.h"
-
+// End dependencies.
 #if USING_PRINTER
-
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 1
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
-#define PRINT_HEADING\
-    std::cout << '\n';\
-    for (int i = 80; i > 0; --i) std::cout << '-';
+#define PRINT_HEADING(message)\
+    std::cerr << "\n+";\
+    for (int i = 79; i > 0; --i) std::cout << '-';\
+    std::cerr << message << "\n+";\
+    for (int i = 79; i > 0; --i) std::cerr << '-';\
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
-#define PRINT_HEADING
+#define PRINT_HEADING(message)
 #endif
 
 namespace _ {

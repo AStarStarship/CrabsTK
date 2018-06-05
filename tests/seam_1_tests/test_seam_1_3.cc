@@ -14,20 +14,17 @@
 */
 
 #include <stdafx.h>
-
 #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+// Dependencies:
 #include "test_seam_1.h"
-
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
-#define PRINTF(format, ...) printf (format, __VA_ARGS__);
-#define PRINT_PAUSE(message)\
-    printf ("\n\n%s\n", message); system ("PAUSE");
-#define PRINT_HEADING(message) \
-    std::cerr << '\n';\
-    for (int i = 80; i > 80; --i) std::cout << '-';\
-    std::cerr << '\n' << message << "\n|";\
-    for (int i = 80; i > 80; --i) std::cout << '-';\
-    std::cerr << '\n';
+#define PRINTF(format, ...)  printf (format, __VA_ARGS__);
+#define PRINT_PAUSE(message) printf ("\n\n%s\n", message); system ("PAUSE");
+#define PRINT_HEADING(message)\
+    std::cerr << "\n+";\
+    for (int i = 79; i > 0; --i) std::cerr << '-';\
+    std::cerr << "| " << message << "\n+";\
+    for (int i = 79; i > 0; --i) std::cerr << '-';
 #else
 #define PRINTF(x, ...)
 #define PRINT_PAUSE(message)
@@ -96,25 +93,25 @@ TEST (SEAM_1_3, SEAM_1_3A) {
     PRINT_PAUSE ("\n\nDone _::Array!")
     */
 
-    PRINT_HEADING ("\n\nTest _::List...\n\n");
+    PRINT_HEADING ("\n\nTest _::List...\n\n")
 
     List<> list (36, 960);
     CHECK (list.This ())
 
-    PRINTF ("\nPushing items on to the List stack...\n");
+    PRINTF ("\nPushing items on to the List stack...\n")
 
     const int test_ints[] = { '1', '2', '3', '4' };
 
     const int list_test_count = 12;
     for (int i = 0; i < 4; ) {
-        COUT << "\ni:" << i;
+        PRINTF ("\ni%i:", i)
         list.Push (SVI, &test_ints[i++]);
         COUT << '\n' << list << '\n'
              << "\n\n" << Socket (list.This (), list.This ()->size);
     }
     const float test_floats[] = { 9.0, 10.0, 11.0, 12.0 };
     for (int i = 0; i < 4; ) {
-        COUT << "\ni:" << i + 4;
+        PRINTF ("\ni%i:", i)
         list.Push (FLT, &test_floats[i++]);
         COUT << '\n' << list << '\n'
              << "\n\n" << Socket (list.This (), list.This ()->size);
@@ -127,7 +124,7 @@ TEST (SEAM_1_3, SEAM_1_3A) {
         " 3"
     };
     for (int i = 0; i < 4; ) {
-        COUT << "\ni:" << i + 8;
+        PRINTF ("\ni%i:", i)
         list.Push (STR, test_strings[i++]);
         COUT << '\n' << list << '\n'
              << "\n\n" << Socket (list.This (), list.This ()->size);
@@ -137,92 +134,101 @@ TEST (SEAM_1_3, SEAM_1_3A) {
     for (int i = list_test_count - 1; i > 0; --i)
         list.Pop ();
 
-    PRINTF ("\n\nDone _::List!")
-    
+    PRINTF ("\n\nDone testing _::List!")
+   
+    PRINTF ("\n\nTesting _::Map...\n\n")
+
+    Map<> map;
+
+    PRINTF ("\n\nDone testing _::Map!")
+
     /*
-    PRINTF ("\n\nTesting _::Book...\n\n");
+    
+    PRINTF ("\n\nTesting _::Dictionary...\n\n")
+    PRINTF ("\n\nDone testing _::Dictionary!")
+
+    PRINTF ("\n\nTesting _::Multimap...\n\n")
 
     int16_t index;
 
-    Book2 book (8, kBufferSize);
+    Multimap2 multimap (8, kBufferSize);
 
-    CHECK (book != nullptr)
+    CHECK (multimap != nullptr)
 
-    index = book.Add (book, "D", (byte)0xFF);
+    index = multimap.Add (multimap, "D", (byte)0xFF);
 
     CHECK_EQUAL (0, index)
-    book.Print (book);
+    multimap.Print (multimap);
     CHECK_EQUAL (0, index)
-    index = book.Find (book, "D");
+    index = multimap.Find (multimap, "D");
     CHECK_EQUAL (0, index)
     PRINT_PAUSE ("\n");
-    index = book.Add (book, "C", (byte)0xFF);
+    index = multimap.Add (multimap, "C", (byte)0xFF);
     CHECK_EQUAL (1, index)
-    index = book.Find (book, "D");
+    index = multimap.Find (multimap, "D");
     CHECK_EQUAL (0, index)
-    index = book.Find (book, "C");
+    index = multimap.Find (multimap, "C");
     CHECK_EQUAL (1, index)
 
-    index = book.Add (book, "BIn", (byte)0xFF);
+    index = multimap.Add (multimap, "BIn", (byte)0xFF);
     CHECK_EQUAL (2, index)
-    index = book.Find (book, "D");
+    index = multimap.Find (multimap, "D");
     CHECK_EQUAL (0, index)
-    index = book.Find (book, "C");
+    index = multimap.Find (multimap, "C");
     CHECK_EQUAL (1, index)
-    index = book.Find (book, "BIn");
+    index = multimap.Find (multimap, "BIn");
     CHECK_EQUAL (2, index)
 
-    index = book.Add (book, "A", (byte)0xFF);
+    index = multimap.Add (multimap, "A", (byte)0xFF);
     CHECK_EQUAL (3, index)
-    index = book.Find (book, "D");
+    index = multimap.Find (multimap, "D");
     CHECK_EQUAL (0, index)
-    index = book.Find (book, "C");
+    index = multimap.Find (multimap, "C");
     CHECK_EQUAL (1, index)
-    index = book.Find (book, "BIn");
+    index = multimap.Find (multimap, "BIn");
     CHECK_EQUAL (2, index)
-    index = book.Find (book, "A");
+    index = multimap.Find (multimap, "A");
     CHECK_EQUAL (3, index)
 
-    index = book.Add (book, "abc", (byte)0xFF);
+    index = multimap.Add (multimap, "abc", (byte)0xFF);
     CHECK_EQUAL (4, index)
-    index = book.Find (book, "abc");
+    index = multimap.Find (multimap, "abc");
     CHECK_EQUAL (4, index)
 
-    index = book.Add (book, "bac", (byte)0xFF);
+    index = multimap.Add (multimap, "bac", (byte)0xFF);
     CHECK_EQUAL (5, index)
-    index = book.Find (book, "abc");
+    index = multimap.Find (multimap, "abc");
     CHECK_EQUAL (4, index)
-    index = book.Find (book, "bac");
+    index = multimap.Find (multimap, "bac");
     CHECK_EQUAL (5, index)
 
-    index = book.Add (book, "cba", (byte)0xFF);
+    index = multimap.Add (multimap, "cba", (byte)0xFF);
     CHECK_EQUAL (6, index)
-    index = book.Find (book, "abc");
+    index = multimap.Find (multimap, "abc");
     CHECK_EQUAL (4, index)
-    index = book.Find (book, "bac");
+    index = multimap.Find (multimap, "bac");
     CHECK_EQUAL (5, index)
-    index = book.Find (book, "cba");
+    index = multimap.Find (multimap, "cba");
     CHECK_EQUAL (6, index)
 
-    index = book.Add (book, "cab", (byte)0xFF);
+    index = multimap.Add (multimap, "cab", (byte)0xFF);
     CHECK_EQUAL (7, index)
-    index = book.Find (book, "abc");
+    index = multimap.Find (multimap, "abc");
     CHECK_EQUAL (4, index)
-    index = book.Find (book, "bac");
+    index = multimap.Find (multimap, "bac");
     CHECK_EQUAL (5, index)
-    index = book.Find (book, "cba");
+    index = multimap.Find (multimap, "cba");
     CHECK_EQUAL (6, index)
-    index = book.Find (book, "cab");
+    index = multimap.Find (multimap, "cab");
     CHECK_EQUAL (7, index)
 
-    index = book.Add (book, "test", (byte)0xFF);
+    index = multimap.Add (multimap, "test", (byte)0xFF);
     CHECK_EQUAL (index, -1)
 
-    PRINT_PAUSE ("\n\nDone _::Book!")*/
+    PRINT_PAUSE ("\n\nDone _::Multimap!")*/
 
     PRINT_PAUSE ("\n\nDone Testing SEAM_1_3! ({:-)-+=<")
 }
-
 
 #undef PRINTF
 #undef PRINT_PAUSE

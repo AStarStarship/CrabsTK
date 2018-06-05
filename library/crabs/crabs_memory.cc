@@ -15,15 +15,15 @@
 */
 
 #include <stdafx.h>
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
-
+// Dependencies:
 #include "memory.h"
 #include "printer.h"
 #include "right.h"
 #include "hex.h"
-
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 2
+#include "ascii.h"
+// End dependencies.
+#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #else
@@ -84,6 +84,16 @@ char* MemoryCopy (void* begin, void* end, const void* start,
 
     if (begin_ptr >= end_ptr || start_ptr >= stop_ptr)
         return nullptr;
+    intptr_t read_size = stop_ptr - start_ptr,
+             write_size = end_ptr - begin_ptr;
+    if (write_size < read_size)
+        return nullptr;
+
+    if (read_size < (2 * sizeof (void*) + 1)) {
+        while (start_ptr < stop_ptr)
+            *begin_ptr++ = *start_ptr++;
+        return begin_ptr;
+    }
 
     // Debug stuff.
     char* begin_debug = begin_ptr,
@@ -165,7 +175,7 @@ char* PrintMemory (char* cursor, char* end, const void* start,
     for (int i = 16; i <= 56; i += 8) {
         cursor = PrintRight (cursor, end, i, 8);
     }
-    for (int j = 8; j > 0; --j)
+    for (int j = 6; j > 0; --j)
         *cursor++ = ' ';
     *cursor++ = '|';
     *cursor++ = '\n';
@@ -189,9 +199,10 @@ char* PrintMemory (char* cursor, char* end, const void* start,
             c = *address_ptr++;
             if (address_ptr > address_end_ptr)
                 c = 'x';
-            if (c < ' ') {
+            else if (!c || c == TAB)
                 c = ' ';
-            }
+            else if (c < ' ')
+                c = DEL;
             *cursor++ = c;
         }
         *cursor++ = '|';

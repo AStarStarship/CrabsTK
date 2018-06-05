@@ -16,13 +16,12 @@
 
 #pragma once
 #include <stdafx.h>
-
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #ifndef HEADER_FOR_CRABS_TYPES
 #define HEADER_FOR_CRABS_TYPES
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
-
+// Dependencies:
 #include "memory.h"
+// End dependencies.
 
 typedef uint8_t type_t;
 
@@ -39,8 +38,7 @@ struct KABUKI TypeValue {
 
 /** List of the 32 ASCII Data Types.
     Types are organized with types that are allowed in text B-Sequences first,
-    followed by objects which get created in text using Script Operations.
-*/
+    followed by objects which get created in text using Script Operations. */
 typedef enum AsciiTypes {
     NIL = 0, //< 0.  NIL/nil/void type.
     SI1,     //< 1.  8-bit signed integer.
@@ -61,10 +59,10 @@ typedef enum AsciiTypes {
     DBL,     //< 16. 64-bit floating-point number.
     SV8,     //< 17. 64-bit signed varint.
     UV8,     //< 18. 64-bit unsigned varint.
-    DEC,     //< 19. 128-bit floating-point number.
-    OBJ,     //< 20. N-byte object with size not specified in BSQ.
-    SIN,     //< 21. N-bit signed integer.
-    UIN,     //< 22. N-bit unsigned integer.
+    U16,     //< 19. 128-bit unsigned integer.
+    DEC,     //< 20. 128-bit floating-point number.
+    U32,     //< 21. 256-bit unsigned integer.
+    OBJ,     //< 22. N-byte object.
     ADR,     //< 23. UTF-8 Operand stack address.
     STR,     //< 24. A UTF-8 string.
     TKN,     //< 25. A UTF-8 string token without whitespace.
@@ -269,27 +267,23 @@ inline int TypeSizeWidthCode (type_t type) {
 
 template<typename T>
 T* TypeAlignUpPointer (void* pointer, type_t type) {
-    if (type <= UI1) {
+    if (type <= UI1)
         return reinterpret_cast<T*> (pointer);
-    }
-    else if (type <= kTypeLast2Byte) {
+    else if (type <= kTypeLast2Byte)
         return AlignUpPointer2<T> (pointer);
-    }
-    else if (type <= TMS) {
+    else if (type <= TMS)
         return AlignUpPointer4<T> (pointer);
-    }
-    else if (type <= DEC) {
+    else if (type <= DEC)
         return AlignUpPointer8<T> (pointer);
-    }
-    else {
-        switch (type >> 6) {
-            case 0: return reinterpret_cast<T*> (pointer);
-            case 1: return AlignUpPointer2<T> (pointer);
-            case 2: return AlignUpPointer4<T> (pointer);
-            case 3: return AlignUpPointer8<T> (pointer);
-        }
-    }
-    return nullptr;
+    // else it's an ASCII Object.
+    uintptr_t ptr  = reinterpret_cast<uintptr_t> (pointer),
+              mask = (type >> 6);
+    if (mask == 0)
+        return reinterpret_cast<T*> (ptr);
+    ptr += ((~ptr) + 1) & mask;
+    printf ("\npointer:0x%p type:%u mask:%u result = %p", pointer, 
+            (uint)(type >> 6), (uint)mask, reinterpret_cast<T*> (ptr));
+    return reinterpret_cast<T*> (ptr);
 }
 
 }       //< namespace _

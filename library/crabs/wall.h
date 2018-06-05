@@ -19,10 +19,10 @@
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #ifndef HEADER_FOR_CRABS_WALL
 #define HEADER_FOR_CRABS_WALL
-
+// Dependencies:
 #include "door.h"
-
 #include "op.h"
+// End dependencies.
 
 namespace _ {
 

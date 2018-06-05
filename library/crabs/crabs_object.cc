@@ -16,8 +16,9 @@
 
 #include <stdafx.h>
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
-
+// Dependencies:
 #include "object.h"
+// End dependencies.
 
 namespace _ {
 

@@ -15,15 +15,14 @@
 */
 
 #include <stdafx.h>
-#include "clock.h"
 
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
-
+// Dependencies:
+#include "clock.h"
 #include "printer.h"
 #include "text.h"
 #include "scan.h"
-
-
+// End dependencies.
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 2
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
@@ -35,7 +34,6 @@
 #define PUTCHAR(c)
 #define PRINT_DATE(date)
 #endif
-
 
 //using namespace std::chrono;
 

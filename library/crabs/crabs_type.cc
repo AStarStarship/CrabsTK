@@ -15,10 +15,11 @@
 */
 
 #include <stdafx.h>
+#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+// Dependencies:
 #include "type.h"
 #include "hex.h"
-
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+// End dependencies.
 
 namespace _ {
 
@@ -245,9 +246,10 @@ Printer& PrintType (Printer& printer, type_t type, const void* value) {
     if (!TypeIsValid (type))
         return printer << "illegal_type";
 
-    if (TypeIsString (type))
-        return printer << '\"' << reinterpret_cast<const char*> (value) << "\":" 
+    if (TypeIsString (type)) {
+        return printer << '\"' << *reinterpret_cast<const char*> (value) << reinterpret_cast<const char*> (value) << "\":"
                        << TypeString (type);
+    }
 
     return PrintTypePod (printer, type & 0x1f, value) << "b:"
         << TypeString (type);

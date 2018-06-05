@@ -14,16 +14,17 @@
              permissions and limitations under the License.
 */
 
+#pragma once
 #include <stdafx.h>
-
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #ifndef HEADER_FOR_CRABS_STACK
 #define HEADER_FOR_CRABS_STACK
-
+// Dependencies:
 #include "config.h"
 #include "memory.h"
 #include "object.h"
 #include "printer.h"
+// End dependencies.
 
 namespace _ {
 
