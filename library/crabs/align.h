@@ -74,10 +74,40 @@ KABUKI int32_t AlignPowerOf2 (int32_t value);
     // 8-bit example:
     // value + ((~value) + 1) & (sizeof (int8_t) - 1) = value
     @endcode */
-template<typename WordBoundary, typename UI = intptr_t, typename I = uintptr_t>
-inline I AlignUp (I value) {
-    value += ((~(UI)value) + 1) & (sizeof (WordBoundary) - 1);
-    return value;
+template<typename WordBoundary, typename UI = uintptr_t, typename I = uintptr_t>
+inline I AlignUpOffset (I value) {
+    UI result = (~(UI)value) + 1;
+    return result & (sizeof (WordBoundary) - 1);
+}
+
+template<typename WordBoundary, typename UI = uintptr_t, typename I = intptr_t>
+inline I AlignUpSigned (I value) {
+    UI offset = ((~(UI)value) + 1) & (sizeof (WordBoundary) - 1);
+    return value + offset;
+}
+
+template<typename WordBoundary, typename UI = uintptr_t>
+inline UI AlignUpUnsigned (UI value) {
+    UI offset = ((~value) + 1) & (sizeof (WordBoundary) - 1);
+    return value + offset;
+}
+
+template<typename WordBoundary>
+inline uintptr_t AlignUpOffset (const void* value) {
+    uintptr_t result = (~reinterpret_cast<uintptr_t> (value)) + 1;
+    return result & (sizeof (WordBoundary) - 1);
+}
+
+inline uintptr_t AlignUpOffset2 (const void* value) {
+    return reinterpret_cast<uintptr_t> (value) & 1;
+}
+
+inline uintptr_t AlignUpOffset4 (const void* value) {
+    return ((~reinterpret_cast<uintptr_t> (value)) + 1) & 3;
+}
+
+inline uintptr_t AlignUpOffset8 (const void* value) {
+    return ((~reinterpret_cast<uintptr_t> (value)) + 1) & 7;
 }
 
 /** Aligns the given pointer to the sizeof (WordBoundary) down..
@@ -135,7 +165,7 @@ inline T* AlignUpPointer4 (const void* pointer) {
 template<typename T = char>
 inline T* AlignUpPointer8 (void* pointer) {
     uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
-    return reinterpret_cast<T*> (AlignUp<int64_t> (ptr));
+    return reinterpret_cast<T*> (AlignUpUnsigned<int64_t> (ptr));
 }
 
 /** Aligns the given pointer to a 64-bit word boundary.
@@ -143,7 +173,7 @@ inline T* AlignUpPointer8 (void* pointer) {
 template<typename T = char>
 inline T* AlignUpPointer8 (const void* pointer) {
     uintptr_t ptr = reinterpret_cast<uintptr_t> (pointer);
-    return reinterpret_cast<const T*> (AlignUp<int64_t> (ptr));
+    return reinterpret_cast<const T*> (AlignUpUnsigned<int64_t> (ptr));
 }
 
 /** Aligns the given pointer to a word boundary.

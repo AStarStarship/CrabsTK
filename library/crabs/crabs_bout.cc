@@ -30,24 +30,10 @@
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
-#define PRINT_BSQ(header, bsq) {\
-    enum {\
-        kBsqBufferSize = 1024,\
-        kBsqBufferSizeWords = kBsqBufferSize >> kWordBitCount\
-     };\
-    char bsq_buffer[kBsqBufferSizeWords];\
-    PrintBsq (bsq, bsq_buffer, bsq_buffer + kBsqBufferSize);\
-    printf   ("\n    %s%s", header, bsq_buffer);\
-}
-#define PRINT_BOUT(header, bout) {\
-    enum {\
-        kBOutBufferSize = 1024,\
-        kBOutBufferSizeWords = kBOutBufferSize >> kWordBitCount\
-     };\
-    Printer& print;\
-    PrintBOut (print, bout);\
-    printf   ("\n    %s%s", header, BufferDefault ());\
-}
+#define PRINT_BSQ(header, bsq)\
+    Console<> ().Out () << header << '\n' << Bsq (bsq);
+#define PRINT_BOUT(header, bout)\
+    Console<> ().Out () << "\n" << header << '\n' << bout;
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
@@ -794,7 +780,7 @@ Printer& PrintBOut (Printer& print, BOut* bout) {
                  << "\nBOut:" << Hex<> (bout) << " size:" << size
                  << " start:" << bout->start << " stop:" << bout->stop
                  << " read:"  << bout->read
-                 << Memory (BOutBuffer (bout), size - 1);
+                 << Socket (BOutBuffer (bout), size - 1);
     printf ("\n!| cursor:%p", print.cursor);
     return print;
 }
@@ -804,4 +790,6 @@ Printer& PrintBOut (Printer& print, BOut* bout) {
 
 #undef PRINTF
 #undef PUTCHAR
+#undef PRINT_BSQ
+#undef PRINT_BOUT
 #endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

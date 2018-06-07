@@ -45,11 +45,11 @@ namespace _ {
 
     @code
 
-    |=============|
+    +=============+
     |    slots    |
     |=============|
     | Door struct |
-    |=============|
+    +=============+
 
     @endcode
 */
@@ -66,7 +66,7 @@ class Door : public Operand {
     };
 
     /** A door in a Chinese room. */
-    Door (const char* roomName = TextEmpty (), uintptr_t* buffer = nullptr,
+    Door (const char* roomName = nullptr, uintptr_t* buffer = nullptr,
           uintptr_t size_bytes = kMinDoorSize);
 
     /** Destructor. */
@@ -93,9 +93,9 @@ class Door : public Operand {
     virtual const Op* Star (wchar_t index, Expr* expr);
 
     private:
-                                    //< vtable pointer here in memory.
-    uintptr_t* buffer_;             //< Pointer to dynamic buffer.
-    TStack<slot_t, slot_t>* slots_; //< Slots in the door.
+    
+    uintptr_t* buffer_;                    //< Pointer to dynamic buffer.
+    TArray<slot_t, uint_t, int_t>* slots_; //< Slots in the door.
 };
 
 /** Returns a Static Error Op. */

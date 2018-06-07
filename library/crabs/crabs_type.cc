@@ -167,7 +167,7 @@ char* Write (char* begin, char* end, type_t type, const void* value) {
         *target_1++ = *reinterpret_cast<const char*> (value);
         return target_1;
     }
-    if (type <= kTypeLast2Byte) {
+    if (type <= BOL) {
         char16_t* target_2 = AlignUpPointer2<char16_t> (begin);
         *target_2++ = *reinterpret_cast<const char16_t*> (value);
         return reinterpret_cast<char*> (target_2);

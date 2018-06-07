@@ -37,31 +37,24 @@ The [Chinese Room Wiki](https://en.wikipedia.org/wiki/Chinese_room) is a famous 
 * 
   - *Good place to start learning some philosophy.*
 
-## kabuki Modules
+### Kabuki Toolkit Modules
 
-|    Name | Description    |
-|--------:|:---------------|
-|     tek | Firmware toolkit. |
-| toolkit | General purpose SDK. |
-
-### kabuki::toolkit Modules
-
-|                    Name | Description |
-|------------------------:|:------------|
-|   crabs (::_ namespace) | Chinese room abstract stack machine. |
-|             kabuki::tek | Firmware toolkit. |
-|     kabuki::toolkit::al | Audio library. |
-|    kabuki::toolkit::app | Application framework. |
-|   kabuki::toolkit::code | Code tools. |
-|   kabuki::toolkit::data | Data and logging. |
-|    kabuki::toolkit::hmi | Human-machine interfaces. |
-|     kabuki::toolkit::id | Identification. |
-|     kabuki::toolkit::gl | Graphics library. |
-|    kabuki::toolkit::gui | Graphical User Interfaces. |
-|   kabuki::toolkit::math | Math. |
-|   kabuki::toolkit::midi | MIDI. |
-|    kabuki::toolkit::pro | Projects, tasks, and scheduling. |
-|  kabuki::toolkit::store | Store and inventory. |
+|       Namespace | Module | Description |
+|----------------:|:------:|:------------|
+|               _ | crabs  | Chinese room abstract stack machine. |
+|          kabuki |  tek   | Firmware toolkit. |
+| kabuki::toolkit |   al   | Audio library. |
+| kabuki::toolkit |  app   | Application framework. |
+| kabuki::toolkit | code   | Code tools. |
+| kabuki::toolkit | data   | Data and logging. |
+| kabuki::toolkit |  hmi   | Human-machine interfaces. |
+| kabuki::toolkit |   id   | Identification. |
+| kabuki::toolkit |   gl   | Graphics library. |
+| kabuki::toolkit |  gui   | Graphical User Interfaces. |
+| kabuki::toolkit | math   | Math. |
+| kabuki::toolkit | midi   | MIDI. |
+| kabuki::toolkit |  pro   | Projects, tasks, and scheduling. |
+| kabuki::toolkit | store  | Store and inventory. |
 
 ### 3rd Party APIs
 

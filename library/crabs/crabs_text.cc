@@ -33,18 +33,6 @@
 
 namespace _ {
 
-const char* Empty () {
-    return "";
-}
-
-const char* NewLine () {
-    return "\n";
-}
-
-const char* ErrorHeader () {
-    return "\nError: ";
-}
-
 const char* TextEnd (const char* text, char delimiter) {
     char c = *text;
     while (c > delimiter) {
@@ -98,22 +86,17 @@ int TextLength (const char16_t* text, char16_t delimiter) {
 }
 
 char* TextClone (const char* text, char delimiter) {
-    if (!text) {
-        text = "";
-    }
+    ASSERT (text)
     int length = TextLength (text, delimiter) + 1;
-    if (length < 0) {
+    if (length < 0)
         return nullptr;
-    }
     char* clone = new char[length];
     MemoryCopy (clone, clone + length, text, text + length + 1);
     return clone;
 }
 
 const char* TextSkipNumbers (const char* text, char delimiter) {
-    if (!text) {
-        return nullptr;
-    }
+    ASSERT (text)
     char c = *text;
     if (c <= delimiter) {
         return text;

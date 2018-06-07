@@ -184,7 +184,7 @@ class Room: public Operand {
     /** Prints the error log to a expression. */
     void PrintErrors (BOut* bout);
 
-    int_t GetNumWalls ();
+    int_t WallCount ();
 
     Wall* GetWall (int_t wall_number);
 
@@ -231,23 +231,23 @@ class Room: public Operand {
     /** Script expressions. */
     virtual const Op* Star (wchar_t index, Expr* expr);
 
-#if USING_PRINTER
+    #if USING_PRINTER
     /** Prints the Room to the stdout. */
     virtual _::Printer& Print (_::Printer& print);
-#endif
+    #endif
 
     protected:
-                                //! vtable pointer here in memory (usually).
-    int            state_count_,//< Number of FSM states.
-                   state_;      //< Room state.
-    const char   * name_;       //< Room Name.
-    TStack<Wall*>* walls_;      //< Walls in the Room.
-    Expr         * expr_;       //< Current Expr being executed.
-                                //< DC1: this.
-    Door         * this_;       //< DC2: The Door to this room.
-    Operand      * xoff_,       //< DC3: XOFF - XOFF handling device.
-                 * device_,     //< DC4: the current device control.
-                 * devices_;    //< Pointer to the current device control.
+
+    int            state_count_, //< Number of FSM states.
+                   state_;       //< Room state.
+    const char   * name_;        //< Room Name.
+    TArray<Wall*, uint_t, int_t>* walls_; //< Walls in the Room.
+    Expr         * expr_;        //< Current Expr being executed.
+                                 //< DC1: this.
+    Door         * this_;        //< DC2: The Door to this room.
+    Operand      * xoff_,        //< DC3: XOFF - XOFF handling device.
+                 * device_,      //< DC4: the current device control.
+                 * devices_;     //< Pointer to the current device control.
     uintptr_t buffer_[kFloorSizeWords]; //< Room Floor buffer.
 
     private:

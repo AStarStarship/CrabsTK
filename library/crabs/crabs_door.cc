@@ -54,9 +54,7 @@ Door::Door (const char* room_name, uintptr_t* buffer, uintptr_t size_bytes) {
     } else {
         if (size_bytes < kMinDoorSize) {
             // @todo insert error code here
-#if CRABS_DEBUG
-            PRINTF ("\nError: Door size_bytes < kMinDoorSize!";
-#endif  //< CRABS_DEBUG
+            PRINTF ("\nError: Door size_bytes < kMinDoorSize!")
             return;
         }
     }
@@ -71,15 +69,15 @@ Door::~Door () {
 }
 
 slot_t Door::GetSlot (slot_t index) {
-    return StackGet<slot_t, slot_t> (slots_, index);
+    return StackGet<slot_t, uint_t, int_t> (slots_, index);
 }
 
 slot_t Door::AddSlot (slot_t slot) {
-    return StackPush<slot_t, slot_t> (slots_, slot);
+    return StackPush<slot_t, uint_t, int_t> (slots_, slot);
 }
 
 bool Door::Contains (void* address) {
-    return StackContains<slot_t, slot_t> (slots_, address);
+    return StackContains<slot_t, uint_t, int_t> (slots_, address);
 }
 
 slot_t Door::FindSlot (void* address) {
@@ -87,7 +85,7 @@ slot_t Door::FindSlot (void* address) {
     for (slot_t i = 0; i < count; ++i) {
         //Slot* slot = nullptr; //< @todo fix me!
         
-        if (StackContains<slot_t, slot_t> (slots_, address))
+        if (StackContains<slot_t, uint_t, int_t> (slots_, address))
             return i;
     }
     return count;

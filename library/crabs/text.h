@@ -52,17 +52,27 @@ enum {
     kMaxDigitsDouble = 3 + DBL_MANT_DIG - DBL_MIN_EXP,
 };
 
-/** Empty string. */
-KABUKI const char* Empty ();
+/** Empty string.
+    @warning This will generate a duplicate copy of the */
+template<typename Char>
+inline const char* Empty () {
+    static const Char kString[] = { '\0' };
+    return kString;
+}
 
 /** New line string. */
-KABUKI const char* NewLine ();
+template<typename Char>
+inline const char* NewLine () {
+    static const Char kString[] = { '\n' };
+    return kString;
+}
 
 /** Error header string. */
-KABUKI const char* ErrorHeader ();
-
-/** New line and vertical bar "\n// " string. */
-KABUKI const char* NewLine ();
+template<typename Char>
+inline const char* ErrorHeader () {
+    static const Char kString[] = { '\n', 'E', 'r', 'r', 'o', 'r', ':', '\0' };
+    return kString;
+}
 
 /** Checks if the given character is whitespace.
 */

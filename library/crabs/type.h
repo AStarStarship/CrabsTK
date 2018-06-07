@@ -46,22 +46,22 @@ typedef enum AsciiTypes {
     SI2,     //< 3.  16-bit signed integer.
     UI2,     //< 4.  16-bit unsigned integer.
     HLF,     //< 5.  16-bit floating-point number.
-    BOL,     //< 6.  16-bit or 32-bit boolean signed varint.
-    SVI,     //< 7.  16-bit or 32-bit signed varint.
-    UVI,     //< 8.  16-bit or 32-bit unsigned varint.
-    SI4,     //< 9.  32-bit signed integer.
-    UI4,     //< 10. 32-bit unsigned integer.
+    BOL,     //< 6.  32-bit non-zero true boolean as signed integer.
+    SI4,     //< 7.  32-bit signed integer.
+    UI4,     //< 8.  32-bit unsigned integer.
+    SVI,     //< 9.  32-bit signed varint.
+    UVI,     //< 10. 32-bit unsigned varint.
     FLT,     //< 11. 32-bit floating-point number.
     TMS,     //< 12. 32-bit second since epoch timestamp.
     TMU,     //< 13. 64-bit microsecond since epoch timestamp.
     SI8,     //< 14. 64-bit signed integer.
     UI8,     //< 15. 64-bit unsigned integer.
-    DBL,     //< 16. 64-bit floating-point number.
-    SV8,     //< 17. 64-bit signed varint.
-    UV8,     //< 18. 64-bit unsigned varint.
-    U16,     //< 19. 128-bit unsigned integer.
-    DEC,     //< 20. 128-bit floating-point number.
-    U32,     //< 21. 256-bit unsigned integer.
+    SV8,     //< 16. 64-bit signed varint.
+    UV8,     //< 17. 64-bit unsigned varint.
+    DBL,     //< 18. 64-bit floating-point number.
+    DEC,     //< 19. 128-bit floating-point number.
+    SIN,     //< 20. 2^(4+N)-bit signed integer, where 0 <= N <= 7.
+    UIN,     //< 21. 2^(4+N)-bit unsigned integer, where 0 <= N <= 7.
     OBJ,     //< 22. N-byte object.
     ADR,     //< 23. UTF-8 Operand stack address.
     STR,     //< 24. A UTF-8 string.
@@ -73,10 +73,6 @@ typedef enum AsciiTypes {
     BOK,     //< 30. Multiset of unordered Key-{Type-Value} tuples.
     DIC,     //< 31. One-to-one map of Key-{Type-Value} tuples.
 } AsciiType;
-
-enum {
-    kTypeLast2Byte = (sizeof (int) == 4) ? BOL : HLF,
-};
 
 /** Checks if the given type is valid.
     @return False if the given type is an 8-bit LST, MAP, BOK, or DIC. */
@@ -265,24 +261,30 @@ inline int TypeSizeWidthCode (type_t type) {
     return type >> 6;
 }
 
-template<typename T>
+template<typename T = char>
 T* TypeAlignUpPointer (void* pointer, type_t type) {
     if (type <= UI1)
         return reinterpret_cast<T*> (pointer);
-    else if (type <= kTypeLast2Byte)
+    else if (type <= HLF)
         return AlignUpPointer2<T> (pointer);
     else if (type <= TMS)
         return AlignUpPointer4<T> (pointer);
     else if (type <= DEC)
         return AlignUpPointer8<T> (pointer);
     // else it's an ASCII Object.
+    // | Code | Binary | Mask needed |
+    // |:----:|:------:|:-----------:|
+    // |  0   | 0b'00  |   0b'000    |
+    // |  1   | 0b'01  |   0b'001    |
+    // |  2   | 0b'10  |   0b'011    |
+    // |  3   | 0b'11  |   0b'111    |
     uintptr_t ptr  = reinterpret_cast<uintptr_t> (pointer),
               mask = (type >> 6);
-    if (mask == 0)
-        return reinterpret_cast<T*> (ptr);
+    if (mask == 2)
+        return AlignUpPointer4<T> (pointer);
+    if (mask == 3)
+        return AlignUpPointer8<T> (pointer);
     ptr += ((~ptr) + 1) & mask;
-    printf ("\npointer:0x%p type:%u mask:%u result = %p", pointer, 
-            (uint)(type >> 6), (uint)mask, reinterpret_cast<T*> (ptr));
     return reinterpret_cast<T*> (ptr);
 }
 

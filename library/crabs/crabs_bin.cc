@@ -27,28 +27,15 @@
 #include "line.h"
 #include "memory.h"
 // End dependencies.
-
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define DEBUG 1
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
 #define CLEAR(begin, end) while(begin <= end) *begin++ = ' ';
-#define PRINT_BSQ(header, bsq) {\
-    enum {\
-        kBsqBufferSize = 1024,\
-        kBsqBufferSizeWords = kBsqBufferSize >> kWordBitCount\
-     };\
-    char bsq_buffer[kBsqBufferSizeWords];\
-    PrintBsq (bsq, bsq_buffer, bsq_buffer + kBsqBufferSize);\
-    printf   ("\n    %s%s", header, bsq_buffer);\
-}
-#define PRINT_BIN(header, bin) {\
-    enum { kBInBufferSize = 1024 };\
-    char bin_buffer[kBInBufferSize];\
-    Printer& p (bin_buffer, kBInBufferSize);\
-    p << bin;\
-    printf   ("\n    %s0x%p%s", header, bin, bin_buffer);\
-}
+#define PRINT_BSQ(header, bsq)\
+    Console<> ().Out () << header << '\n' << Bsq (bsq);
+#define PRINT_BIN(header, bin)\
+    Console<> ().Out () << header << '\n' << bin;
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
@@ -171,7 +158,6 @@ bool BInIsReadable (BIn* bin) {
 }
 
 const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
-#
     PRINT_BSQ ("\nReading ", params)
     PRINT_BIN (" from B-Input:", bin)
 
@@ -498,9 +484,7 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
                 ui1 = *start;
                 #endif 
             default: {  //< It's an Array
-                #if CRABS_DEBUG == 1
-                PRINTF ("\nIt's an array!\n";
-                #endif  //< CRABS_DEBUG
+                PRINTF ("\nIt's an array!\n")
                 #if USING_CRABS_ARRAY
                 switch (type & 0x60) {
                     case 0: {
@@ -668,14 +652,13 @@ const Op* BInRead (BIn* bin, const uint_t* params, void** args) {
 Printer& Print (Printer& print, BIn* bin) {
     ASSERT (bin);
 
-    Printer& p;
     uint_t size = bin->size;
     return print << Line ('_', 80)
                  << " size:"  << bin->size
                  << " start:" << bin->start
                  << " stop:"  << bin->stop
                  << " read:"  << bin->read
-                 << Memory (BInBegin (bin), size + sizeof (BIn));
+                 << Socket (BInBegin (bin), size + sizeof (BIn));
 }
 #endif
 

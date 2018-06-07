@@ -59,10 +59,7 @@ inline char* BInBegin (BIn* bin) {
 }
 
 inline char* BInEnd (BIn* bin) {
-    // This will never be nil.
-    //if (!bin) {
-    //    return nullptr;
-    //}
+    ASSERT (bin)
     return reinterpret_cast<char*> (bin) + bin->size;
 }
 
@@ -71,9 +68,7 @@ inline char* BInEnd (BIn* bin) {
     @param  Stop  The stop of the data.
     @param  Size  The size of the buffer. */
 inline intptr_t SlotLength (char* start, char* stop, uintptr_t size) {
-    if (start > stop) {
-        return size - (start - stop);
-    }
+    ASSERT (start < stop)
     return stop - start;
 }
 
@@ -82,26 +77,20 @@ inline intptr_t SlotLength (char* start, char* stop, uintptr_t size) {
     @param  Stop  The stop of the data.
     @param  Size  The size of the buffer. */
 inline intptr_t SlotSpace (char* start, char* stop, uintptr_t size) {
-    if (start > stop) {
-        return start - stop;
-    }
+    ASSERT (start < stop)
     return size - (stop - start);
 }
 
 /** Gets the rx buffer length. */
 inline uint_t BInSpace (BIn* bin) {
-    if (!bin) {
-        return 0;
-    }
+    ASSERT (bin)
     char* txb_ptr = reinterpret_cast<char*>(bin);
     return (uint_t)SlotSpace (txb_ptr + bin->start, txb_ptr + bin->stop,
                               bin->size);
 }
 
 inline uint_t BinBufferLength (BIn* bin) {
-    if (!bin) {
-        return ~0;
-    }
+    ASSERT (bin)
     char* base = BInBegin (bin);
     return (uint_t)SlotLength (base + bin->start, base + bin->stop, bin->size);
 }
@@ -111,8 +100,7 @@ inline uint_t BinBufferLength (BIn* bin) {
 KABUKI const char** BInStateStrings ();
 
 /** Pulls the keyboard input into the ring buffer. */
-//KABUKI void BInKeyboard ();
-
+//KABUKI void BInKeyboard ()
 #endif
 
 /** Initializes the BIn struct KABUKI to an empty buffer. */

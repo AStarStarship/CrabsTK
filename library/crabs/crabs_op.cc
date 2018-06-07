@@ -32,6 +32,7 @@
 
 namespace _ {
 
+
 #if USING_PRINTER
 Printer& Print (Printer& print, const Op* op) {
     if (!op) {
@@ -149,30 +150,10 @@ void Print (Op& log) {
         }
     }
 }
-#endif  //< CRABS_MEMORY_PROFILE > 2*/
-
-#if USING_PRINTER
-Printer& Print (const Op* op, Printer& print) {
-    print << "\n Op:\n" << op->name << "\nparams_in:"
-          << Bsq (op->in)
-          << "\nparams_out:" << op->out
-          << "\npop:" << op->pop  << " close:" << op->close
-          << " default_op:"       << op->default_op
-          << "\nignore_chars :"   << op->ignore_chars
-          << "\nallowed_chars:"   << op->allowed_chars
-          << "\n description :\"" << op->description;
-    return print;
-}
-#endif
+#endif */
 
 }   //< namespace _
 
-#if USING_PRINTER
-_::Printer& operator<< (_::Printer& print, const _::Op* op) {
-    return Print (op, print);
-}
-
-#endif
 #undef PRINTF
 #undef PUTCHAR
 #endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

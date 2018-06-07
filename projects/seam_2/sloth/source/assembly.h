@@ -21,10 +21,6 @@
              in this file. Please see config.h for configuration details.
 */
 
-#define MAJOR_SEAM 1
-
-#define MINOR_SEAM 3
-
 // Choose BARE_METAL, MBED, MBED_OS, ARDUINO, MINGW32, WINDOWS, ANDROID,
 // LINUX, OSX, or IOS
 #define CRABS_PLATFORM MBED

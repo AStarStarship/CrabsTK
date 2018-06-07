@@ -27,15 +27,8 @@
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
-#define PRINT_BSQ(header, bsq) {\
-    enum {\
-        kTextBufferSize = 1024,\
-        kTextBufferSizeWords = kTextBufferSize >> kWordBitCount\
-     };\
-    char bsq_buffer[kTextBufferSizeWords];\
-    PrintBsq (bsq, ,bsq_buffer, bsq_buffer + kTextBufferSize);\
-    printf   ("\n    %s%s", header, bsq_buffer);\
-}
+#define PRINT_BSQ(header, bsq) \
+    Console<> ().Out () << header << '\n' << Bsq (bsq);
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
@@ -142,9 +135,7 @@ Expr* ExprInit (uintptr_t* buffer, uint_t buffer_size, uint_t stack_size,
     }
 
     if (root == nullptr) {
-    #if DEBUG_CRABS_EXPR
-        PRINTF ("\nError: root can't be nil.";
-    #endif
+        PRINTF ("\nError: root can't be nil.")
         return nullptr;
     }
 
@@ -443,7 +434,7 @@ const Op* ExprUnpack (Expr* expr) {
                                 TypeString (type) << "\' with alignment "
                                 << TypeAlign (slot_start, type) << '.');
                     #endif
-                        slot_start += TypeAlign (slot_start, type);
+                        slot_start = TypeAlignUpPointer<char> (slot_start, (type_t)type);
                         break;
                     }
                     op = operand->Star (b, expr);
@@ -487,27 +478,20 @@ const Op* ExprUnpack (Expr* expr) {
             else if (type == STR) { // UTF-8/ASCII string type.
              // Read the max number of chars off the header.
                 bytes_left = *(++expr->header);
-            #if DEBUG_CRABS_EXPR
-                PRINTF ("\nScanning STR with max length " <<
-                        bytes_left);
-            #endif
+                PRINTF ("\nScanning STR with max length %u",
+                        (uint)bytes_left);
                 ExprEnterState (expr, kBInStatePackedUtf8);
                 bin_state = kBInStatePackedUtf8;
                 break;
             }
             else if (type < DBL) { // Plain-old-data type.
                 bytes_left = TypeFixedSize (type);
-            #if DEBUG_CRABS_EXPR
-                PRINTF ("\nScanning POD with "
-                        << bytes_left << bytes_left);
-            #endif
+                PRINTF ("\nScanning POD with bytes_left:%u", (uint) bytes_left);
                 if (bytes_left == 1) {
                     // No need to enter a state because there is only one
                     // byte to parse and we already have the byte loaded.
-                #if DEBUG_CRABS_EXPR
                     PRINTF ("\nDone scanning without state change "
-                            "for \"" << TypeString (type) << '\"';
-                #endif
+                            "for \"%s\"", TypeString (type))
                 // Setup to read the next type.
                     type = *(++expr->header);
                 #if DEBUG_CRABS_EXPR
@@ -515,7 +499,7 @@ const Op* ExprUnpack (Expr* expr) {
                             << TypeString (type) << "\' with alignment "
                             << TypeAlign (slot_start, type) << '.');
                 #endif
-                    slot_start += TypeAlign (slot_start, type);
+                    slot_start = TypeAlignUpPointer<> (slot_start, (type_t)type);
                     break;
                 }
                 ExprEnterState (expr, kBInStatePackedPod);
@@ -621,7 +605,7 @@ const Op* ExprUnpack (Expr* expr) {
                                 << TypeString (type) << "\' with alignment "
                                 << TypeAlign (slot_start, type) << '.');
                         #endif
-                        slot_start += TypeAlign (slot_start, type);
+                        slot_start = TypeAlignUpPointer<> (slot_start, (type_t)type);
                         break;
                     }
                     --bytes_left;
@@ -681,13 +665,14 @@ const Op* ExprUnpack (Expr* expr) {
                         Write ("\nDone scanning varint: ");
                     #endif
                     // Setup to read the next type.
-                        type = *(++header);
+                    type = *(++header);
                     #if DEBUG_CRABS_EXPR
                         PRINTF ("\nNext TType to scan:\'" <<
                                 TypeString (type) << "\' with alignment " <<
                                 TypeAlign (slot_start, type) << '.');
                     #endif
-                        slot_start += TypeAlign (slot_start, type);
+                    slot_start = TypeAlignUpPointer<> (slot_start, 
+                                                        (type_t)type);
                     }
                     --bytes_left;
                     break;
@@ -798,7 +783,7 @@ const Op* ExprUnpack (Expr* expr) {
                                 << "\' with alignment " << TypeAlign (slot_start, type)
                                 << '.');
                     #endif
-                        slot_start += TypeAlign (slot_start, type);
+                        slot_start = TypeAlignUpPointer<> (slot_start, (type_t)type);
                         break;
                     }
                     --bytes_left;
@@ -982,22 +967,23 @@ Printer& PrintExprStack (Printer& print, Expr* expr) {
 Printer& PrintExpr (Printer& print, Expr* expr) {
     ASSERT (expr);
 
-    return print << Line ('~', 80) << "\nStack:    "
-                 << Hex<uintptr_t> (expr) << '\n' << Line ('_', 80)
-                 << "\nbytes_left : " << expr->bytes_left
-                 << "\nheader_size: " << expr->header_size
-                 << "\nstack_count: " << expr->stack_count
-                 << "\nstack_size : " << expr->stack_size
-                 << "\nbin_state  : " << BInStateStrings ()[expr->bin_state]
-                 << "\nbout_state : " << BOutStateStrings ()[expr->bout_state]
-                 << "\nnum_states : " << expr->num_states
-                 << "\nheader_size: " << expr->header_size
-                 << Line ('-', 80)
-                 << expr->operand
-                 << "\nheader     : " << Bsq (expr->header_start)
-                 << Line ('-', 80)
-                 << PrintExprStack (print, expr)
-                 << Line ('~', 80);
+    print << Line ('~', 80)
+          << "\nStack:    " << Hex<uintptr_t> (expr) << '\n' << Line ('_', 80)
+          << "\nbytes_left : " << expr->bytes_left
+          << "\nheader_size: " << expr->header_size
+          << "\nstack_count: " << expr->stack_count
+          << "\nstack_size : " << expr->stack_size
+          << "\nbin_state  : " << BInStateStrings ()[expr->bin_state]
+          << "\nbout_state : " << BOutStateStrings ()[expr->bout_state]
+          << "\nnum_states : " << expr->num_states
+          << "\nheader_size: " << expr->header_size
+          << Line ('-', 80)
+          << expr->operand
+          << "\nheader     : " << Bsq (expr->header_start)
+          << Line ('-', 80);
+    PrintExprStack (print, expr);
+    print << Line ('~', 80);
+    return print;
 }
 
 #endif

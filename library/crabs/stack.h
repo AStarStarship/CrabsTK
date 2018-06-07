@@ -142,7 +142,7 @@ inline SI StackCountMax () {
 /*
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 SI StackCountMax () {
-    return (SI)((UnsignedMax<UI> () - (UI)sizeof (TStack<T, UI, SI>)) /
+    return (SI)((UnsignedMax<UI> () - (UI)sizeof (TArray<T, UI, SI>)) /
         (UI)sizeof (T));
 }*/
 
@@ -161,7 +161,7 @@ inline UI StackCountMax (SI count_max) {
         kStackCountMax = (UnsignedMax<UI> () - (UI)sizeof (TArray<T, UI, SI>)) / 
                           (UI)sizeof (T),
     };
-    count_max = AlignUp<SI> (count_max);
+    count_max = AlignUpSigned<SI, UI, SI> (count_max);
     if (count_max > kStackCountMax)
         count_max = kStackCountMax;
     return count_max;
@@ -178,7 +178,8 @@ uintptr_t* StackInit (uintptr_t* buffer, UI size) {
     TArray<T, UI, SI>* stack = reinterpret_cast<TArray<T, UI, SI>*> (buffer);
     stack->size_array = 0;
     stack->size_stack = size;
-    stack->count_max = (size - sizeof (TArray<T, UI, SI>)) >> kWordBitCount;
+    SI count_max = (SI)((size - sizeof (TArray<T, UI, SI>)) >> kWordBitCount);
+    stack->count_max = count_max;
     stack->count = 0;
     return buffer;
 }
@@ -411,7 +412,7 @@ bool StackContains (TArray<T, UI, SI>* stack, void* address) {
         *adr = reinterpret_cast<char*> (address);
     if (adr < ptr)
         return false;
-    if (adr >= ptr + stack->size)
+    if (adr >= ptr + stack->size_array)
         return false;
     return true;
 }

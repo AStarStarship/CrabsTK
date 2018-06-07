@@ -18,6 +18,8 @@
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 // Dependencies:
 #include "wall.h"
+#include "align.h"
+#include "stack.h"
 // End dependencies.
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
@@ -40,15 +42,15 @@ Wall::Wall (size_t size_bytes) :
     is_dynamic_ (true) {
     size_bytes = size_bytes < kMinSizeBytes ? (uint_t)kMinSizeBytes
                                             : size_bytes;
-    size_bytes = MemoryAlign8 (size_bytes);
+    size_bytes = AlignUpUnsigned<int64_t, size_t> (size_bytes);
     size_t size_words = (size_bytes >> sizeof (void*)) + 3;
     uintptr_t* buffer = new uintptr_t[size_words],
-             * aligned_buffer = MemoryAlign8 (buffer);
+             * aligned_buffer = AlignUpPointer8<uintptr_t> (buffer);
     //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
     //< on 16 and 32-bit systems.
     size_bytes -= sizeof (uintptr_t) * (aligned_buffer - buffer);
     buffer_ = buffer;
-    doors_ = reinterpret_cast<TStack<Door*>*> (aligned_buffer);
+    doors_ = reinterpret_cast<TArray<Door*>*> (aligned_buffer);
     StackInit (buffer, size_bytes >> sizeof (uintptr_t));
 }
 
@@ -64,16 +66,16 @@ Wall::Wall (uintptr_t* buffer, size_t size_bytes) {
     //uint_t size_words = (size_bytes >> kBitsShift) + 3;
     //< Computer engineering voodoo for aligning to 64-bit boundary.
 
-    uintptr_t*aligned_buffer = MemoryAlign8 (buffer);
+    uintptr_t*aligned_buffer = AlignUpPointer8<uintptr_t> (buffer);
     //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
     //< on 16 and 32-bit systems.
     size_bytes -= sizeof (uintptr_t) * (aligned_buffer - buffer);
     buffer_ = buffer;
-    doors_ = reinterpret_cast<TStack<Door*>*> (aligned_buffer);
+    doors_ = reinterpret_cast<TArray<Door*>*> (aligned_buffer);
     StackInit (buffer, size_bytes >> sizeof (uintptr_t));
 }
 
-Wall::Wall (TStack<Door*>* doors) {
+Wall::Wall (TArray<Door*>* doors) {
     
 }
 
@@ -81,7 +83,7 @@ uintptr_t Wall::GetSizeBytes () {
     return size_bytes_;
 }
 
-TStack<Door*>* Wall::Doors () {
+TArray<Door*>* Wall::Doors () {
     return doors_;
 }
 

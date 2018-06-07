@@ -300,8 +300,6 @@ SI MapInsert (TMap<UI, SI, I>* map, void* value, type_t type, SI index) {
         return ~((SI)0);
     }
 
-    //print ();
-
     if (count == 0) {
         map->count = 1;
         *hashes = temp_id;
@@ -348,12 +346,11 @@ SI MapInsert (TMap<UI, SI, I>* map, void* value, type_t type, SI index) {
 
             // Check for other collisions.
 
-            index = indexes[mid];       //< Index in the collision table.
+            index = indexes[mid]; //< Index in the collision table.
 
             PRINTF ("index:%i", (int)index)
 
-            if (index < ~0)             //< There are other collisions.
-            {
+            if (index < ~0) { //< There are other collisions.
                 PRINTF ("with collisions, ")
                 // There was a collision so check the table.
 

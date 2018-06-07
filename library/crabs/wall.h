@@ -32,27 +32,25 @@ namespace _ {
     
     @code
 
-    |==============|
+    +==============+
     |  Terminals   |
-    |      |       |
     |      v       |
-    |==============|
+    |vvvvvvvvvvvvvv|
     |    Buffer    |
-    |==============|
+    |^^^^^^^^^^^^^^|
     |      ^       |
-    |      |       |
     |  TSTack of   |
     |    Doors     |
     |   Offsets    |
     |==============|
     |    Header    |
-    |==============|
+    +==============+
 
 
     @endcode
     
     */
-class Wall : public Op {
+class Wall {
 
     public:
 
@@ -62,7 +60,7 @@ class Wall : public Op {
 
     virtual ~Wall ();
 
-    Wall (TStack<Door*>* doors);
+    Wall (TArray<Door*>* doors);
 
     /** Constructs a wall from the given buffer. */
     Wall (size_t size_bytes = kMinSizeBytes);
@@ -74,7 +72,7 @@ class Wall : public Op {
     size_t GetSizeBytes ();
 
     /** Gets a pointer to the array of pointers to Door(string). */
-    TStack<Door*>* Doors ();
+    TArray<Door*>* Doors ();
 
     /** Gets the Door from the Door at the given index. */
     Door* GetDoor (int index);
@@ -95,7 +93,7 @@ class Wall : public Op {
     bool           is_dynamic_; //< Flag for if using dynamic memory.
     size_t         size_bytes_; //< Size of the Wall in bytes.
     uintptr_t    * buffer_;     //< The Wall's buffer.
-    TStack<Door*>* doors_;      //< The doors in the room.
+    TArray<Door*>* doors_;      //< The doors in the room.
 };
 
 }       //< namespace _

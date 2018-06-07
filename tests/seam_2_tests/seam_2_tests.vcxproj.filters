@@ -21,6 +21,12 @@
     <Filter Include="tests\seam_2_tests">
       <UniqueIdentifier>{cbcdbd24-b21a-4777-9053-3a5b06fc428b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="library\kabuki\toolkit">
+      <UniqueIdentifier>{8950a476-f6e1-41ef-a367-0127bce3491f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library\kabuki\toolkit\code">
+      <UniqueIdentifier>{36a7f387-fbef-41f1-9598-3fd364c78b9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />

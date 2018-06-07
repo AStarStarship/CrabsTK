@@ -17,10 +17,10 @@
 #pragma once
 #include <stdafx.h>
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
-#ifndef CRABS_EVENT_H
-#define CRABS_EVENT_H
+#ifndef HEADER_FOR_CRABS_EVENT
+#define HEADER_FOR_CRABS_EVENT
 // Dependencies:
-#include "config.h"
+#include "operand.h"
 // End dependencies.
 
 namespace _ {
@@ -34,7 +34,8 @@ namespace _ {
             // ...
         }
     };
-    @endcode */
+    @endcode
+*/
 struct KABUKI Event : public Operand {
     /** Virtual destructor. */
     virtual ~Event () = 0;
@@ -44,9 +45,10 @@ struct KABUKI Event : public Operand {
     
     virtual double GetProbability () = 0;
     
+    /** Script operations. */
     virtual const Op* Star (wchar_t index, Expr* expr) = 0;
 };
 
 }       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >=5
-#endif  //< CRABS_EVENT_H
+#endif  //< HEADER_FOR_CRABS_EVENT

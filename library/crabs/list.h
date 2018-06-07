@@ -82,7 +82,7 @@ struct TList {
 
 /** Returns the minimum count to align the data struct to a 64-bit boundary. */
 template<typename UI = uint32_t, typename SI = int16_t>
-SI ListCountMaxMin () {
+SI ListCountMaxBoundsLower () {
     return 8 / sizeof (SI);
 }
 
@@ -102,7 +102,7 @@ constexpr UI ListSizeMin (SI count_max) {
 template<typename UI = uint32_t, typename SI = int16_t>
 void ListWipe (TList<UI, SI>* list) {
     ASSERT (list)
-        list->count = 0;
+    list->count = 0;
     UI size = list->size - sizeof (TList<UI, SI>);
     memset (reinterpret_cast<char*> (list) + sizeof (TList<UI, SI>), 0, size);
 }
@@ -111,16 +111,15 @@ void ListWipe (TList<UI, SI>* list) {
     count_max must be in multiples of 4. Given there is a fixed size, both the 
     count_max and size will be downsized to a multiple of 4 automatically. */
 template<typename UI = uint32_t, typename SI = int16_t>
-TList<UI, SI>* ListInit (uintptr_t* buffer, UI size, SI count_max) 
-{
+TList<UI, SI>* ListInit (uintptr_t* buffer, UI size, SI count_max)  {
     if (!buffer) // This may be nullptr if ListNew<UI,SI> (SI, UI) failed.
         return nullptr;
     PRINTF ("\n  Initializing List with size_bytes:%u and count_max:%i", 
             (uint)size, (int)count_max)
-    SI count_max_min = ListCountMaxMin<UI, SI> ();
-    if (count_max < count_max_min) {
-        PRINTF ("\n count_max == 0 and is now %i", (int)count_max_min)
-        count_max = count_max_min;
+    SI count_max_bounds_lower = ListCountMaxBoundsLower<UI, SI> ();
+    if (count_max < count_max_bounds_lower) {
+        PRINTF ("\n count_max == 0 and is now %i", (int)count_max_bounds_lower)
+        count_max = count_max_bounds_lower;
     } else {
         PRINTF ("\ncount_max was %i ", (int)count_max)
         count_max = AlignUp8<SI> (count_max);
@@ -134,14 +133,15 @@ TList<UI, SI>* ListInit (uintptr_t* buffer, UI size, SI count_max)
     list->size = size;
     list->count      = 0;
     list->count_max  = count_max;
-    WIPE
+    //WIPE
+    ListWipe<UI, SI> (list);
     return list;
 }
 
 /** Creates a list from dynamic memory. */
 template<typename UI = uint32_t, typename SI = int16_t>
 uintptr_t* ListNew (SI count_max, UI size) {
-    count_max = AlignUp<uint64_t, UI, SI> (count_max);
+    count_max = AlignUpUnsigned<uint64_t, UI, SI> (count_max);
     if (size < ListSizeMin<UI, SI> (count_max))
         return nullptr;
     uintptr_t* buffer = new uintptr_t[size >> kWordBitCount];
@@ -150,7 +150,8 @@ uintptr_t* ListNew (SI count_max, UI size) {
     list->size = size;
     list->count = 0;
     list->count_max = count_max;
-    WIPE
+    //WIPE
+    ListWipe<UI, SI> (list);
     return buffer;
 }
 
@@ -166,7 +167,8 @@ inline uintptr_t* ListNew (SI count_max) {
     list->size = size;
     list->count = 0;
     list->count_max = count_max;
-    WIPE
+    //WIPE
+    ListWipe<UI, SI> (list);
     return buffer;
 }
 
@@ -417,7 +419,7 @@ Printer& PrintList (Printer& printer, TList<UI, SI>* list) {
     ASSERT (list)
     
     SI count = list->count;
-    printer << "\n\nList: size_bytes:" << list->size << " count:" << count 
+    printer << "\n\nList: size:" << list->size << " count:" << count 
             << " count_max:" << list->count_max;
     for (SI index = 0; index < count; ++index) {
         printer << '\n' << index << ".) "

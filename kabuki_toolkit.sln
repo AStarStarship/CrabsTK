@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "seam_2", "seam_2", "{1F9233
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "seam_2_tests", "tests\seam_2_tests\seam_2_tests.vcxproj", "{A9E2FA3B-B575-4969-8453-2E532EA57D71}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kabuki_toolkit_updater", "projects\seam_2\kabuki_toolkit_updater\kabuki_toolkit_updater.vcxproj", "{B5B67309-62EC-48FE-AC5D-66FFC2B7DC99}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sloth", "projects\seam_2\sloth\sloth.vcxproj", "{B5B67309-62EC-48FE-AC5D-66FFC2B7DC99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,7 +45,6 @@ Global
 		{13A5C38A-A043-496A-8E4E-E291E8C635CE}.Release|x86.ActiveCfg = Release|Win32
 		{13A5C38A-A043-496A-8E4E-E291E8C635CE}.Release|x86.Build.0 = Release|Win32
 		{83390D1C-F176-4C07-8B6A-8C7F95C7C59F}.Debug|x64.ActiveCfg = Debug|x64
-		{83390D1C-F176-4C07-8B6A-8C7F95C7C59F}.Debug|x64.Build.0 = Debug|x64
 		{83390D1C-F176-4C07-8B6A-8C7F95C7C59F}.Debug|x64.Deploy.0 = Debug|x64
 		{83390D1C-F176-4C07-8B6A-8C7F95C7C59F}.Debug|x86.ActiveCfg = Debug|Win32
 		{83390D1C-F176-4C07-8B6A-8C7F95C7C59F}.Debug|x86.Build.0 = Debug|Win32
@@ -64,6 +63,7 @@ Global
 		{A9E2FA3B-B575-4969-8453-2E532EA57D71}.Release|x86.ActiveCfg = Release|Win32
 		{A9E2FA3B-B575-4969-8453-2E532EA57D71}.Release|x86.Build.0 = Release|Win32
 		{B5B67309-62EC-48FE-AC5D-66FFC2B7DC99}.Debug|x64.ActiveCfg = Debug|x64
+		{B5B67309-62EC-48FE-AC5D-66FFC2B7DC99}.Debug|x64.Build.0 = Debug|x64
 		{B5B67309-62EC-48FE-AC5D-66FFC2B7DC99}.Debug|x86.ActiveCfg = Debug|Win32
 		{B5B67309-62EC-48FE-AC5D-66FFC2B7DC99}.Debug|x86.Build.0 = Debug|Win32
 		{B5B67309-62EC-48FE-AC5D-66FFC2B7DC99}.Release|x64.ActiveCfg = Release|x64

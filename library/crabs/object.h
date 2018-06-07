@@ -42,7 +42,7 @@ UI ObjectSize (const void* object, type_t type) {
         return 0;
     if (type <= SI1)
         return 1;
-    if (type <= kTypeLast2Byte)
+    if (type <= BOL)
         return 2;
     if (type <= TMS)
         return 4;
@@ -50,6 +50,9 @@ UI ObjectSize (const void* object, type_t type) {
         return 8;
     if (type == DEC)
         return 16;
+    type_t type_bits = type & 0x1F;
+    if (type_bits == SIN || type_bits == UIN)
+        return 4 + (type >> 5);
     switch (type >> 6) {
         case 0: return (UI)*reinterpret_cast<const uint8_t *> (object);
         case 1: return (UI)*reinterpret_cast<const uint16_t*> (object);
@@ -98,7 +101,7 @@ inline SI ObjectCountRound (SI count) {
                           (sizeof (SI) == 4) ? 3 :
                           (sizeof (SI) == 2) ? 1 : 0,
     };
-    AlignUp<SI> (count);
+    SI count_aligned = AlignUpSigned<SI> (count);
 }
 
 }       //< namespace _

@@ -64,6 +64,18 @@ wchar_t OperandIndex (Operand* operand, char* begin, char* end) {
 }
 
 #if USING_PRINTER
+/*
+Printer& Print (Printer& print, const Operand* op) {
+    print << "\n Op:\n" << op->name << "\nparams_in:"
+          << Bsq (op->in)
+          << "\nparams_out:" << op->out
+          << "\npop:" << op->pop  << " close:" << op->close
+          << " default_op:"       << op->default_op
+          << "\nignore_chars :"   << op->ignore_chars
+          << "\nallowed_chars:"   << op->allowed_chars
+          << "\n description :\"" << op->description;
+    return print;
+}*/
 
 Printer& PrintOperand (Printer& print, Operand* operand) {
     ASSERT (operand);
@@ -95,13 +107,12 @@ Slot& OperandQuery (Operand* root, const char* address, Slot& slot) {
     int index = *address++;
     const Op* op = root->Star (index, nullptr);
     char buffer[1024];
-    Printer& printer (buffer, 1024);
-    printer << op->name;
+    PRINTF ("%s", op->name)
     index = *address++;
     while (index) {
         op = root->Star (index, nullptr);
         ASSERT (op);
-        printer << '.' << op->name;
+        PRINTF (".%s", op->name)
         index = *address++;
     }
     slot.Write (buffer);

@@ -1,14 +1,14 @@
-# Kabuki Toolkit Updater
+# Kabuki Sloth
 
-There is nothing in this folder as of this time. Please come back soon. Thanks.
-
-## Author
-
-* [Cale McCollough](https://calemccollough.github.io)
+Kabuki Sloth is a early-stage utility for integrating multiple APIs into a modern C++ SDK with a unified styleguide. Sloth accomplishes this goal use Sloth Scripts. Sloth Scripts start out by downloading a git repository, and performing a series of non-destructure refactoring and formatting operations in stages that allow the code to be verified as passing the unit test.
 
 ## Author
 
 * [Cale McCollough](https://calemccollough.github.io)
+
+### Third-party Libraries
+
+* 
 
 ## License
 Copyright 2017-8 (C) [Cale McCollough](mailto:calemccollough@gmail.com)

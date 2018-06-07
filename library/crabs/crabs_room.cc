@@ -18,6 +18,10 @@
 #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 // Dependencies:
 #include "room.h"
+#include "door.h"
+#include "bsq.h"
+#include "text.h"
+#include "stack.h"
 // End dependencies.
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
@@ -29,9 +33,6 @@
 #define PUTS(string)
 #endif
 
-#include "door.h"
-#include "bsq.h"
-#include "text.h"
 
 namespace _ {
 
@@ -170,17 +171,11 @@ bool Room::IsOn () {
 
 int Room::Main (const char** args, int args_count) {
     const Op* result = nullptr;
-#if CRABS_DEBUG
-    PRINTF ("\nInitializing Chinese Room with " << args_count << " args:";
-#endif  //< CRABS_DEBUG
+    PRINTF ("\nInitializing Chinese Room with %i args:", args_count)
     for (int i = 0; i < args_count; ++i) {
-#if CRABS_DEBUG
-        PRINTF (i << ": " << args[i] << '\n';
-#endif  //< CRABS_DEBUG
+        PRINTF ("\n%i:\"%s\"", i, args[i])
     }
-#if CRABS_DEBUG
-    PRINTF ('\n';
-#endif  //< CRABS_DEBUG
+    PUTCHAR ('\n')
     while (IsOn ()) {
         try {
             result = Init (nullptr);
@@ -218,8 +213,8 @@ const Op* Room::Star (wchar_t index, Expr* expr) {
     return 0;
 }
 
-int_t Room::GetNumWalls () {
-    return 0;
+int_t Room::WallCount () {
+    return walls_->count;
 }
 
 Wall* Room::GetWall (int_t wall_number) {
@@ -227,26 +222,26 @@ Wall* Room::GetWall (int_t wall_number) {
         return nullptr;
     if (wall_number >= walls_->count)
         return nullptr;
-    return StackGet<Wall*> (walls_, wall_number);
+    return StackGet<Wall*, uint_t, int_t> (walls_, wall_number);
 }
 
 Wall* Room::AddWall (Wall* new_wall) {
     if (new_wall == nullptr)
         return nullptr;
-    if (walls_->count >= walls_->height)
+    if (walls_->count >= walls_->count_max)
         return nullptr;
     StackPush<Wall*> (walls_, new_wall);
     return new_wall;
 }
 
 bool Room::RemoveWall (int_t wall_number) {
-    return StackRemove<Wall*> (walls_, wall_number);
+    return StackRemove<Wall*, uint_t, int_t> (walls_, wall_number);
 }
 
 uintptr_t Room::GetSizeBytes () {
     uintptr_t count = kRoomFloorSize;
     for (int_t i = 0; i < walls_->count; ++i) {
-        count += StackGet<Wall*> (walls_, i)->GetSizeBytes ();
+        count += StackGet<Wall*, uint_t, int_t> (walls_, i)->GetSizeBytes ();
     }
     // @todo Add all memory we used in bytes here.
     return count;

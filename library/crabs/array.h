@@ -15,7 +15,7 @@
 
 #pragma once
 #include <stdafx.h>
-#if      MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
+#if      MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
 #ifndef  HEADER_FOR_CRABS_ARRAY
 #define  HEADER_FOR_CRABS_ARRAY
 // Dependencies:
@@ -33,7 +33,7 @@ namespace _ {
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 constexpr SI ArrayCountUpperLimit (SI dimension_count, SI element_count) {
     UI header_size = (UI)(sizeof (TArray<T, UI, SI>) + 
-                          AlignUp<SI> (dimension_count * sizeof (SI)));
+                          AlignUpSigned<SI> (dimension_count * sizeof (SI)));
     return (SI)(((~(UI)0) - 7) - header_size) / (UI)sizeof (T);
 }
 
@@ -269,4 +269,4 @@ inline _::Printer& operator<< (_::Printer& printer, _::Stack<T, UI, SI>& stack) 
 }
 
 #endif  //< HEADER_FOR_CRABS_ARRAY
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

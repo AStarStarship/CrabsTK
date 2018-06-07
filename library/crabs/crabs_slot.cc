@@ -29,13 +29,12 @@
 
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
-#define PRINT_BSQ(bsq)\ {\
-    enum { kSize = 64*1024 }\
-    char bsq_buffer[kSize];\
-}
+#define PRINT_BSQ(bsq)\
+    Console<> ().Out () << header << '\n' << Bsq (bsq);
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
+#define PRINT_BSQ
 #endif
 
 namespace _ {
@@ -292,42 +291,42 @@ const Op* Slot::Read (const uint_t* params, void** args) {
             case SVI:
             case UVI:
             #endif
-                #if USING_CRABS_2_BYTE_TYPES
-                //Read2ByteType:{
-                    // Word-align
-                    offset = MemoryAlign2 (l_start);
-                    if ((uintptr_t)length < offset + 2) {
-                        return ReturnError (this, kErrorBufferUnderflow,
-                                                params, index, l_start);
-                    }
-                    length -= (uint_t)offset + 2;
-                    l_start += offset;
-                    if (l_start > l_end) {
-                        l_start -= size;
-                    }
-                    // Read from buffer and write to the stack:
-                    ui2_ptr = reinterpret_cast<uint16_t*>(l_start);
-                    ui2 = *ui2_ptr;
-                    l_start += sizeof (uint16_t);
-                    if (l_start > l_end) {
-                        l_start -= size;
-                    }
-                    // Load next pointer and increment args.
-                    ui2_ptr = reinterpret_cast<uint16_t*> (args[index]);
-                    if (!ui2_ptr) {
-                        break;
-                    }
-                    *ui2_ptr = ui2;
-                //}
-                break;
-                #else
-                return ReturnError (this, kErrorInvalidType);
-                #endif
-                #if USING_CRABS_VARINT2
-                goto Read2ByteType;
-                #else
-                return ReturnError (this, kErrorInvalidType);
-                #endif
+            #if USING_CRABS_2_BYTE_TYPES
+            //Read2ByteType:{
+                // Word-align
+                offset = AlignUpOffset2 (l_start);
+                if ((uintptr_t)length < offset + 2) {
+                    return ReturnError (this, kErrorBufferUnderflow,
+                                            params, index, l_start);
+                }
+                length -= (uint_t)offset + 2;
+                l_start += offset;
+                if (l_start > l_end) {
+                    l_start -= size;
+                }
+                // Read from buffer and write to the stack:
+                ui2_ptr = reinterpret_cast<uint16_t*>(l_start);
+                ui2 = *ui2_ptr;
+                l_start += sizeof (uint16_t);
+                if (l_start > l_end) {
+                    l_start -= size;
+                }
+                // Load next pointer and increment args.
+                ui2_ptr = reinterpret_cast<uint16_t*> (args[index]);
+                if (!ui2_ptr) {
+                    break;
+                }
+                *ui2_ptr = ui2;
+            //}
+            break;
+            #else
+            return ReturnError (this, kErrorInvalidType);
+            #endif
+            #if USING_CRABS_VARINT2
+            goto Read2ByteType;
+            #else
+            return ReturnError (this, kErrorInvalidType);
+            #endif
             #if WORD_SIZE > 16
             case SVI:
             case UVI:
@@ -339,7 +338,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                 #if USING_CRABS_4_BYTE_TYPES
                 //Read4ByteType:{
                     // Word-align
-                    offset = MemoryAlign4 (l_start);
+                    offset = AlignUpOffset4 (l_start);
                     if ((uintptr_t)length < offset + 4) {
                         return ReturnError (this, kErrorBufferUnderflow,
                                           params, index, l_start);
@@ -376,7 +375,7 @@ const Op* Slot::Read (const uint_t* params, void** args) {
                 #if USING_CRABS_8_BYTE_TYPES
                 //Read8ByteType:{
                     // Word-align
-                    offset = MemoryAlign8 (l_start);
+                    offset = AlignUpOffset8 (l_start);
                     if ((uintptr_t)length < offset + sizeof (int64_t)) {
                         return ReturnError (this, kErrorBufferUnderflow,
                                             params, index, l_start);
@@ -549,7 +548,7 @@ Printer& Slot::Print (Printer& print) {
                  << " start:"        << Hex<> (start)
                  << "\nstop:"        << Hex<> (stop)
                  << " end:"          << Hex<> (l_end)
-                 << Memory (l_begin, l_end);
+                 << Socket (l_begin, l_end);
 }
 #endif
 
