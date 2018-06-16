@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="tests">
+      <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="tests\seam_1_tests">
+      <UniqueIdentifier>{58e3107b-411d-4481-a099-45f432a5a8d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library">
+      <UniqueIdentifier>{9bc019ff-a30a-4203-9b96-89ec7647df96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library\crabs">
+      <UniqueIdentifier>{c9fed358-324c-4fa2-8799-73e59bffd98d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="test_seam_1_1.cc">
+      <Filter>tests\seam_1_tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_1_2.cc">
+      <Filter>tests\seam_1_tests</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cc">
+      <Filter>tests\seam_1_tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_1_4.cc">
+      <Filter>tests\seam_1_tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_1_3.cc">
+      <Filter>tests\seam_1_tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests_main.cc">
+      <Filter>tests\seam_1_tests</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>tests\seam_1_tests</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>tests\seam_1_tests</Filter>
+    </ClInclude>
+    <ClInclude Include="test_seam_1.h">
+      <Filter>tests\seam_1_tests</Filter>
+    </ClInclude>
+    <ClInclude Include="assembly.h">
+      <Filter>tests\seam_1_tests</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

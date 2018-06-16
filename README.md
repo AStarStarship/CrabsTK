@@ -10,19 +10,43 @@
    /         \                    ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪
 ```
 
-Kabuki Toolkit (KT) is a modern cross-platform C++1x software and firmware toolkit for making intelligent connected technologies with ASCII Script. KT is built on top of some of the  best commercial-friendly open-source C and C++ libraries (soon to be) formatted using the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html) using The Sloth. #CodeSloth
+Kabuki Toolkit (KT) is a cross-platform `Modern C++` Firmware-to-Software Development Kit (F2SDK) for making intelligent connected technologies with *Script* and the *Kabuki VM*. KT is built on top of some of the  best commercial-friendly open-source `C/C++` with `Modern-C++` formatted with the [`Google C++ Style Guide`](https://google.github.io/styleguide/cppguide.html). **#WorkInProgress** **#CodeSloth**
 
-## ASCII Script
+[![GitHub version](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit.svg)](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit)
 
-[]()
+## `Modern C++`
 
-Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification (Script) is a software-defined networking protocol (SDNP) and embedded-friendly family of languages that facilitates artificial intelligence and machine learning (AIML) using functional programming and natural language processing (NLP) using the Chinese Room Abstract Stack Machine (Crabs) #WorkInProgress. The Script SDNP has the unique ability to allow multiple programming and domain specific languages simultaneously but there is only one reference implementation: Automata Standard Code for Information Interchange (ASCII) Script. ASCII Script is best described as a mix of JavaScript, Python, and LISP. JavaScript because it's asynchronous with a round-robin scheduler, Python because it has native dictionaries, and Script has a rather unique dialect of LISP called Interprocess LISP. Interprocess LISP is a hybrid procedural LISP that allows for sequential programming to be mixed with LISP using a simple set of powerful rules for parsing symbols and handling unexpected tokens.
+`Modern C++` isn't just a buzz-word, it's a way of life. `Modern C++` means many things, but arguably most importantly that:
 
-ASCII Script differentiates itself from the other languages in that it supports all of the C++ data types using the ASCII Data Types. The ASCII Data Types is a light-weight standalone-alone C++ Standard Template Library replacement that works with or without dynamic memory using all contiguous data structures that make creating connected technologies as fast and easy as writing HTML/JavaScript. The most unique and interesting property of the ASCII Data Types are that they work identically on 16-bit, 32-bit, 64-bit, and n-bit processors. The contiguous data structures allow for the creation of infinite caches for **BLAZING** fast performance using less memory. ASCII Data Structures may also be copied byte-by-byte from one system to another without converting to and from JSON or XML.
+1.  A detailed best practice style guide and coding conventions are used. **✓**
+2.  The code uses C++1x language features **where appropriate**. **✓**
+3.  The code performs as much functionality at compile time as possible. **✓**
+4.  The code uses a standardized set of general purpose data structures such as std or crabs. **✓**
+6.  Code repositories use Issue Driven Development or competing best practice in order to remain agile and the master branch always passes an automated unit test script. **/**
+7.  The code uses *Stack Programming* techniques to minimizes the use of dynamic memory by keeping as much data as possible in the CPU registers and on the hardware-assisted stack. **✓**
+8.  Smart pointers are used when dynamic memory is required unless performance is critical. **✓**
+10. Primary SDK is programed with cross-platform with cross-language bindings. **/**
+11. API documents are automatically generated using metadata tags such as Doxygen. **✓**
+12. Code uses structured programming with the exception of performance critical applications. **✓**
+13. Libraries may integrate `Antiquated-C++`, meaning `C++` code that is not modern, but `Antiquated-C++` is wrapped with `Modern-C++ Adapters` and are segregated from the `Modern-C++` code and marked. **/**
 
-### Chinese Room Abstract Stack Machine
+| Key |        Meaning        |
+|:---:|:---------------------:|
+|  ✓ |      Implemented       |
+|  ✕ |     Not Implemented    |
+|  /  | Partially implemented |
 
-The [Chinese Room Wiki](https://en.wikipedia.org/wiki/Chinese_room) is a famous artificial intelligence philosophy thought experiment invented by the philosopher John Searle; it is a great place to start learning some philosophy, especially if you're into AI. The experiment highlights the difference between strong vs weak AI and how a normal everyday room in an office or network of rooms can form to create a turning equivalent machine that can fluently speak any language.
+## Script
+
+Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification (Script) defines a software-defined networking protocol (SDNP) and embedded-friendly family of languages that facilitates artificial intelligence using functional programming and natural language processing (NLP) ala the Chinese Room Abstract Stack Machine (Crabs) (**#WorkInProgress**). The Script SDNP has the unique ability to allow multiple programming languages simultaneously, but there is only one reference implementation: **Automata Standard Code for Information Interchange (ASCII) Script**. ASCII Script is best described as a mix of JavaScript with Lua and LISP. ASCII Script supports all of the C++ data types along with native dictionaries and maps that use contiguous memory and an asynchronous round-robin scheduler for **BLAZING** fast performance and with minimum overhead. ASCII Script allows for procedural programming to be mixed with LISP-style expressions using a simple set of powerful rules for on-pass parsing symbols as fast as possible and handling unexpected tokens.
+
+### The Chinese Room
+
+The [Chinese Room](https://en.wikipedia.org/wiki/Chinese_room) is a famous artificial intelligence philosophy thought experiment invented by the American philosopher John Searle; it is a great place to start learning some philosophy and is a subject usually discussed in most introductory AI classes. The experiment highlights the difference between strong vs weak AI and how a normal everyday room in an office or network of rooms can form to create a turning equivalent machine that can fluently speak any language. Script utilizes philosophy mimicry in order to mimic the Chinese Room as much as is helpful, functional, and sane to produce some delightfully geeky, clean, fast, and classy code.
+
+## Kabuki Theater
+
+Kabuki Toolkit is named after a famous artificial intelligence theory of consciousness called the Kabuki Theater Model of Consciousness. The Kabuki Theater concept is that our lucid consciousness is like viewing a Kabuki Theater in person; each actor on stage close up looks rather simple and imperfect, but when you put all of the actors and props on stage and place the viewer in a dark stage with stage lights focused on tiny portions of the stage in a controlled manner, it creates a Gestalt perception of consciousness where the whole is greater than the sum of the parts. On stage there are so many interesting things to look at that are far enough away you can't see their real-life imperfections, and it creates an illusion of lucid consciousness from your mind bouncing around all of the trippy stage props resulting in a saturation of the mind's short-term memory that tricks the mind into thinking it is a fluid experience.
 
 ## Quick Links
 
@@ -37,56 +61,53 @@ The [Chinese Room Wiki](https://en.wikipedia.org/wiki/Chinese_room) is a famous 
 * 
   - *Good place to start learning some philosophy.*
 
-### Kabuki Toolkit Modules
+## Kabuki Toolkit Modules
 
-|       Namespace | Module | Description |
-|----------------:|:------:|:------------|
-|               _ | crabs  | Chinese room abstract stack machine. |
-|          kabuki |  tek   | Firmware toolkit. |
-| kabuki::toolkit |   al   | Audio library. |
-| kabuki::toolkit |  app   | Application framework. |
-| kabuki::toolkit | code   | Code tools. |
-| kabuki::toolkit | data   | Data and logging. |
-| kabuki::toolkit |  hmi   | Human-machine interfaces. |
-| kabuki::toolkit |   id   | Identification. |
-| kabuki::toolkit |   gl   | Graphics library. |
-| kabuki::toolkit |  gui   | Graphical User Interfaces. |
-| kabuki::toolkit | math   | Math. |
-| kabuki::toolkit | midi   | MIDI. |
-| kabuki::toolkit |  pro   | Projects, tasks, and scheduling. |
-| kabuki::toolkit | store  | Store and inventory. |
+| Module | Description |
+|:------:|:------------|
+| crabs  | Chinese Room Abstract Stack Machine. |
+| tek    | Firmware Toolkit. |
+| ai     | Artificial Intelligence Library. |
+| al     | Audio Library. |
+| app    | Application Framework. |
+| data   | Data and logging Library. |
+| hmi    | Human-Machine Interfaces. |
+| id     | Identification Library. |
+| gl     | Graphics Library. |
+| gui    | Graphical User Interface library. |
+| math   | Math library. |
+| midi   | Musical Instrument Digital Interface. |
+| pro    | Project and scheduling library. |
+| store  | Store and inventory library. |
 
 ### 3rd Party APIs
 
-* [AStyle](http://astyle.sourceforge.net/)
-* [Google C++ API](https://github.com/google/google-api-cpp-client)
+* [Google `C++` API](https://github.com/google/google-api-cpp-client)
+* [Skia](https://github.com/google/skia)
+* [PLplot](https://github.com/PLplot/PLplot)
 * [ANGLE](https://github.com/google/angle)
 * [SDL](https://www.libsdl.org/)
 * [Static Math](https://github.com/Morwenn/static_math)
-* [mbed](https://www.mbed.com/en/)
 * [OpenAL-Soft](https://github.com/kcat/openal-soft)
 * [PortAudio](http://www.portaudio.com/)
 * [Maximilian](https://github.com/micknoise/Maximilian)
 * [RtMIDI](https://github.com/thestk/rtmidi)
 * [Serial Communication Library](https://github.com/wjwwood/serial)
+* [mbed](https://www.mbed.com/en/)
+* [boost filesystem](https://github.com/boostorg/filesystem)
 
-### Kabuki VM Package and Seam Diagram
+### Kabuki VM Seam Package Diagram
 
 ![Kabuki VM Package and Seam Diagram](https://raw.githubusercontent.com/kabuki-starship/kabuki-toolkit/master/docs/kabuki_vm_package_diagram.jpg)
 
-**@note** *Package Diagram uses C++ dependency inclusion, meaning that when 
-a module/namespace is included all of the module's/namespace's dependencies are 
-also included.*
+**@note** *Package Diagram uses `C++` dependency inclusion, meaning that when a module/namespace is included all of the module's/namespace's dependencies are also included.*
 
-## Author
+## Authors
 
-* [Cale McCollough](https://calemccollough.github.io) <[cale.mccollough@gmail.com](mailto:cale.mccollough@gmail.com)>
-* Your name could be here.
+* [Cale McCollough](https://calemccollough.github.io) <[cale.mccollough@gmail.com](mailto:cale.mccollough@gmail.com)>, and authors of third-party APIs.
 
 ## The License
 
 Copyright 2014-18 (C) [Cale McCollough](mailto:calemccollough@gmail.com) and contributors. All rights reserved (R).
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License [here](http://www.apache.org/licenses/LICENSE-2.0).
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0). Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
