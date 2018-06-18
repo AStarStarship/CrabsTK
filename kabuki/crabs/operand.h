@@ -50,7 +50,7 @@ struct KABUKI Expr;
     Star* on top of. This object is now selected, and agents can now call
     functions of this object via the Data Controller (DC).
 
-    @see _::Console for example of how to use Operand interface.
+    @see Console for example of how to use Operand interface.
 */
 
 struct KABUKI Operand {
@@ -93,12 +93,12 @@ Slot& OperandQuery(Operand* root, const char* address, Slot& key);
 KABUKI Printer& PrintOperand(Printer& slot, Operand* operand);
 #endif
 
-}       //< namespace _ {
+}  // namespace _
 
 #if USING_PRINTER
 /* Overloaded operator<< prints the given operand to the text. */
 inline _::Printer& operator<<(_::Printer& printer, _::Operand* operand) {
-  return PrintOperand(printer, operand);
+  return _::PrintOperand(printer, operand);
 }
 
 #endif

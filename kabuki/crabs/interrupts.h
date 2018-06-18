@@ -31,6 +31,6 @@ struct KABUKI RoomCrashException : public std::exception {
   const char* what() const throw();
 };
 #endif
-}       //< namespace _ {
+}       //< namespace _
 #endif  //< USING_CRABS_INTERRUPTS
 #endif  //< CRABS_EXCEPTIONS_H

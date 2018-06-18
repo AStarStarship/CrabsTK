@@ -198,6 +198,120 @@
     <ClInclude Include="stdafx.h">
       <Filter>kabuki</Filter>
     </ClInclude>
+    <ClInclude Include="toolkit\hmi\isymmetric_controller.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\key_event.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\key_event_buffer.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\keyboard_buffer.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\midi_button.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\midi_control.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\mixer.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\mixer_channel.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\mixer_page.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\mode_button.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\parameter.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\parameter_set.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\set.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\widget.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\widget_manager.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\widget_midi.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\widget_page.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\workspace.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\xy_control.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\adsr.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\button.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\button_dmx.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\button_dummy.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\button_event.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\button_macro.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\button_page.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\button_radio.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\button_scroller.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\button_swap.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\channel_group.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\component.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\config.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\control_dmx.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\control_master.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\control_matrix.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\controller.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\device_button.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="toolkit\hmi\event.h">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="crabs\crabs_align.cc">
@@ -290,10 +404,112 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>kabuki</Filter>
     </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_button_mode.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_button_page.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_button_radio.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_button_scroller.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_channel_group.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_component.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_control_dmx.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_control_matrix.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_control_midi.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_device_button.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_event.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_isymmetric_controller.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_key_event.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_keyboard_buffer.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_keyboard_realtime.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_mixer.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_mixer_channel.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_mixer_page.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_parameter.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_parameter_set.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_set.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_swap_button.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_widget.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_widget_midi.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_widget_page.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_workspace.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_xy_control.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_button.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_button_dmx.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_button_dummy.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_button_event.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_button_macro.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="toolkit\hmi\hmi_button_midi.cc">
+      <Filter>kabuki\toolkit\hmi</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="crabs\readme.md">
       <Filter>kabuki\crabs</Filter>
+    </None>
+    <None Include="toolkit\hmi\readme.md">
+      <Filter>kabuki\toolkit\hmi</Filter>
     </None>
   </ItemGroup>
 </Project>

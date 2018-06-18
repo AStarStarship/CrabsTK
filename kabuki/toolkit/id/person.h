@@ -31,7 +31,7 @@ class KABUKI Person : public Entity {
   Person();
   /**Creates a person with no name. */
 
-  void Print(_::Log& log);
+  void Print(Log& log);
   /** Prints this object to a expression. */
 
  private:

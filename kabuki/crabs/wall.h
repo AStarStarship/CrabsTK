@@ -90,7 +90,7 @@ class Wall {
   bool CloseDoor(int index);
 
   /* Prints the given Door to the stdout. */
-  _::Slot& Print(_::Slot& slot);
+  Slot& Print(Slot& slot);
 
  private:
   bool is_dynamic_;       //< Flag for if using dynamic memory.

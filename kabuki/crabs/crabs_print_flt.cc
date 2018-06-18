@@ -63,7 +63,7 @@ char* Print(char* cursor, char* end, double value) {
   return cursor;
 }
 
-}       //< namespace _ {
+}       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
 #endif  //< USING_PRINTER

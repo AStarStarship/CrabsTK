@@ -71,7 +71,7 @@ constexpr UI UnsignedMax() {
     given types, and another for a multi-dimensional array that uses the 1-d
     array in order to store the dimensions. The only different between them is
     that the size_array variable gets set to 0.
-    
+    
 
 
 
@@ -110,7 +110,7 @@ constexpr UI UnsignedMax() {
     0xN +-----------------+
     @endcode
 */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
 struct TArray {
   UI size_array,   //< Used for multi-dimensional array.
       size_stack;  //< Total size of the Stack in 64-bit aligned bytes.
@@ -119,20 +119,19 @@ struct TArray {
 };
 
 /* Gets the size of a Stack with the given count_max. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline UI StackSize(SI count_max) {
-  enum { kCountMaxMin = sizeof(uint64_t) / sizeof(TextWord4) };
+  enum { kCountMaxMin = sizeof(uint64_t) / sizeof(T) };
   if (count_max < kCountMaxMin) count_max = kCountMaxMin;
-  return sizeof(TArray<TextWord4, UI, SI>) + sizeof(TextWord4) * count_max;
+  return sizeof(TArray<T, UI, SI>) + sizeof(T) * count_max;
 }
 
 /* Gets the min size of a Stack. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline UI StackSizeMin() {
   enum {
-    kStackCountMin = sizeof(TextWord4) > 8 ? 1 : 8 / sizeof(TextWord4),
-    kStackCountMaxMin =
-        sizeof(TArray<TextWord4, UI, SI>) + sizeof(TextWord4) * kStackCountMin,
+    kStackCountMin = sizeof(T) > 8 ? 1 : 8 / sizeof(T),
+    kStackCountMaxMin = sizeof(TArray<T, UI, SI>) + sizeof(T) * kStackCountMin,
   };
   return kStackCountMaxMin;
 }
@@ -146,10 +145,9 @@ inline UI StackSize (SI count) {
 
 /* Gets the max number of elements in an stack with the specific index
     width. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline SI StackCountMax() {
-  return (SI)((((~(UI)0) - 7) - (UI)sizeof(TArray<TextWord4, UI, SI>)) /
-              (UI)sizeof(TextWord4));
+  return (SI)((((~(UI)0) - 7) - (UI)sizeof(TArray<T, UI, SI>)) / (UI)sizeof(T));
 }
 
 /*
@@ -159,21 +157,19 @@ SI StackCountMax () {
         (UI)sizeof (T));
 }*/
 
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline UI StackSizeMin(SI count_max) {
-  SI count_upper_bounds = StackCountMax<TextWord4, UI, SI>();
+  SI count_upper_bounds = StackCountMax<T, UI, SI>();
   if (count_max > count_upper_bounds) count_max = count_upper_bounds;
-  return (UI)(sizeof(TArray<TextWord4, UI, SI>) +
-              count_max * sizeof(TextWord4));
+  return (UI)(sizeof(TArray<T, UI, SI>) + count_max * sizeof(T));
 }
 
 /* Rounds up the count to the 64-bit align the value. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline UI StackCountMax(SI count_max) {
   enum {
     kStackCountMax =
-        (UnsignedMax<UI>() - (UI)sizeof(TArray<TextWord4, UI, SI>)) /
-        (UI)sizeof(TextWord4),
+        (UnsignedMax<UI>() - (UI)sizeof(TArray<T, UI, SI>)) / (UI)sizeof(T),
   };
   count_max = AlignUpSigned<SI, UI, SI>(count_max);
   if (count_max > kStackCountMax) count_max = kStackCountMax;
@@ -184,16 +180,14 @@ inline UI StackCountMax(SI count_max) {
     8 bytes.
     @param buffer An stack of bytes large enough to fit the stack.
     @return A dynamically allocated buffer. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
 uintptr_t* StackInit(uintptr_t* buffer, UI size) {
   ASSERT(buffer);
 
-  TArray<TextWord4, UI, SI>* stack =
-      reinterpret_cast<TArray<TextWord4, UI, SI>*>(buffer);
+  TArray<T, UI, SI>* stack = reinterpret_cast<TArray<T, UI, SI>*>(buffer);
   stack->size_array = 0;
   stack->size_stack = size;
-  SI count_max =
-      (SI)((size - sizeof(TArray<TextWord4, UI, SI>)) >> kWordBitCount);
+  SI count_max = (SI)((size - sizeof(TArray<T, UI, SI>)) >> kWordBitCount);
   stack->count_max = count_max;
   stack->count = 0;
   return buffer;
@@ -203,38 +197,34 @@ uintptr_t* StackInit(uintptr_t* buffer, UI size) {
     8 bytes.
     @param buffer An stack of bytes large enough to fit the stack.
     @return A dynamically allocated buffer. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
 uintptr_t* StackInit(uintptr_t* buffer, UI size, SI count_max) {
   ASSERT(buffer);
 
-  TArray<TextWord4, UI, SI>* stack =
-      reinterpret_cast<TArray<TextWord4, UI, SI>*>(buffer);
+  TArray<T, UI, SI>* stack = reinterpret_cast<TArray<T, UI, SI>*>(buffer);
   stack->size_array = 0;
   stack->size_stack = size;
-  stack->count_max =
-      (size - sizeof(TArray<TextWord4, UI, SI>)) >> kWordBitCount;
+  stack->count_max = (size - sizeof(TArray<T, UI, SI>)) >> kWordBitCount;
   stack->count = 0;
   return buffer;
 }
 
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
-uintptr_t* StackClone(TArray<TextWord4, UI, SI>* stack) {
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
+uintptr_t* StackClone(TArray<T, UI, SI>* stack) {
   ASSERT(stack);
   UI size = stack->size_stack >> kWordBitCount;
   uintptr_t other_buffer = new uintptr_t[size];
   uintptr* source = reinterpret_cast<uintptr_t*>(stack)* destination =
       other_buffer;
   UI data_amount =
-      (stack->count * sizeof(TextWord4) + sizeof(TArray<TextWord4, UI, SI>)) >>
-      kWordBitCount;
+      (stack->count * sizeof(T) + sizeof(TArray<T, UI, SI>)) >> kWordBitCount;
   size -= data_amount;
   while (data_amount-- > 0) *destination++ = *source++;
   return destination;
 }
 
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
-uintptr_t* StackClone(TArray<TextWord4, UI, SI>* stack,
-                      TArray<TextWord4, UI, SI>* other) {
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
+uintptr_t* StackClone(TArray<T, UI, SI>* stack, TArray<T, UI, SI>* other) {
   ASSERT(stack);
   ASSERT(other);
 
@@ -249,24 +239,24 @@ uintptr_t* StackClone(TArray<TextWord4, UI, SI>* stack,
 
   SI count = other->count;
   stack->count = count;
-  uintptr_t* write_end = write + ((count * sizeof(TextWord4)) >> kWordBitCount);
+  uintptr_t* write_end = write + ((count * sizeof(T)) >> kWordBitCount);
   while (write < write_end) *write++ = *read++;
   return reinterpret_cast<uintptr_t*>(stack);
 }
 
 /* Returns the first element in the Stack vector. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
-TextWord4* StackElements(TArray<TextWord4, UI, SI>* stack) {
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
+T* StackElements(TArray<T, UI, SI>* stack) {
   ASSERT(stack);
-  return reinterpret_cast<TextWord4*>(reinterpret_cast<char*>(stack) +
-                                      sizeof(TArray<TextWord4, UI, SI>));
+  return reinterpret_cast<T*>(reinterpret_cast<char*>(stack) +
+                              sizeof(TArray<T, UI, SI>));
 }
 
 /* Returns the first element in the Stack vector. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
-TextWord4* StackElementsEnd(TArray<TextWord4, UI, SI>* stack) {
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
+T* StackElementsEnd(TArray<T, UI, SI>* stack) {
   ASSERT(stack);
-  return StackElements<TextWord4, UI, SI>(stack) + stack->count - 1;
+  return StackElements<T, UI, SI>(stack) + stack->count - 1;
 }
 
 /* Inserts the item into the stack at the given index.
@@ -276,9 +266,9 @@ TextWord4* StackElementsEnd(TArray<TextWord4, UI, SI>* stack) {
     @param item  The item to insert.
     @param index The index to insert at.
     @return -1 if a is nil and -2 if the stack is full. */
-template <typename TextWord4 = intptr_t, typename SI = int>
-inline SI ArrayInsert(TextWord4* items, SI count, TextWord4 item, SI index) {
-  TextWord4 *target = items + index, *end = items + count;
+template <typename T = intptr_t, typename SI = int>
+inline SI ArrayInsert(T* items, SI count, T item, SI index) {
+  T *target = items + index, *end = items + count;
   // Shift the elements up.
   while (target < end) *end-- = *end;
   *target = item;
@@ -290,8 +280,8 @@ inline SI ArrayInsert(TextWord4* items, SI count, TextWord4 item, SI index) {
     @param item  The item to insert.
     @param index The index to insert at.
     @return -1 if a is nil and -2 if the stack is full. */
-template <typename TextWord4 = intptr_t, typename SI = int>
-inline SI ArrayAdd(TextWord4* items, SI count, TextWord4 item, SI index) {
+template <typename T = intptr_t, typename SI = int>
+inline SI ArrayAdd(T* items, SI count, T item, SI index) {
   ASSERT(items);
   if (index < 0 || index > count) return -1;
   if (index == count) {
@@ -303,7 +293,7 @@ inline SI ArrayAdd(TextWord4* items, SI count, TextWord4 item, SI index) {
     items[0] = item;
     return 1;
   }
-  return ArrayInsert<TextWord4, SI>(TextWord4, count, item, index);
+  return ArrayInsert<T, SI>(T, count, item, index);
 }
 
 /* Inserts the item into the stack at the given index.
@@ -323,15 +313,15 @@ T ArrayAdd (TArray<T, UI, SI>* stack, T item, T index) {
 } */
 
 /* Removes an element from the given array. */
-template <typename TextWord4 = intptr_t, typename SI = intptr_t>
-inline SI ArrayRemove(TextWord4* elements, SI size, SI index) {
+template <typename T = intptr_t, typename SI = intptr_t>
+inline SI ArrayRemove(T* elements, SI size, SI index) {
   ASSERT(elements)
   if (index < 0) return index;
   if (size < 0) return size;
   if (size == 1) return 1;
   if (index >= size) return index * -1;
   elements += index;
-  TextWord4* elements_end = elements + --size;
+  T* elements_end = elements + --size;
   while (elements <= elements_end) *elements++ = *elements;
   return size;
 }
@@ -340,11 +330,11 @@ inline SI ArrayRemove(TextWord4* elements, SI size, SI index) {
     @param  a     The stack.
     @param  index The index the item to remove.
     @return True if the index is out of bounds. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
-SI StackRemove(TArray<TextWord4, UI, SI>* stack, SI index) {
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
+SI StackRemove(TArray<T, UI, SI>* stack, SI index) {
   ASSERT(stack);
-  SI result = ArrayRemove<TextWord4, SI>(
-      StackElements<TextWord4, UI, SI>(stack), stack->count, index);
+  SI result =
+      ArrayRemove<T, SI>(StackElements<T, UI, SI>(stack), stack->count, index);
   if (result < 0) return result;
   stack->count = result;
   return result;
@@ -354,12 +344,12 @@ SI StackRemove(TArray<TextWord4, UI, SI>* stack, SI index) {
     @param  a    The stack.
     @param  item The item to push onto the stack.
     @return The index of the newly stacked item. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
-SI StackPush(TArray<TextWord4, UI, SI>* stack, TextWord4 item) {
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
+SI StackPush(TArray<T, UI, SI>* stack, T item) {
   ASSERT(stack);
   SI count_max = stack->count_max, count = stack->count;
   if (count >= count_max) return -1;
-  TextWord4* items = StackElements<TextWord4, UI, SI>(stack);
+  T* items = StackElements<T, UI, SI>(stack);
   items[count] = item;
   stack->count = count + 1;
   return count;
@@ -369,14 +359,14 @@ SI StackPush(TArray<TextWord4, UI, SI>* stack, TextWord4 item) {
     @note We do not delete the item at the
     @param  a The stack.
     @return The item popped off the stack. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
-TextWord4 StackPop(TArray<TextWord4, UI, SI>* stack) {
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
+T StackPop(TArray<T, UI, SI>* stack) {
   ASSERT(stack);
   SI count = stack->count;
   if (count == 0) return 0;
-  TextWord4* items = StackElements<TextWord4, UI, SI>(stack);
+  T* items = StackElements<T, UI, SI>(stack);
   stack->count = count - 1;
-  TextWord4 item = items[count - 1];
+  T item = items[count - 1];
   return item;
 }
 
@@ -384,13 +374,13 @@ TextWord4 StackPop(TArray<TextWord4, UI, SI>* stack) {
     @note We do not delete the item at the
     @param  a The stack.
     @return The item popped off the stack. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
-TextWord4 StackPeek(TArray<TextWord4, UI, SI>* stack) {
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
+T StackPeek(TArray<T, UI, SI>* stack) {
   ASSERT(stack);
   SI count = stack->count;
   if (count == 0) return 0;
-  TextWord4* items = StackElements<TextWord4, UI, SI>(This());
-  TextWord4 item = items[stack->count - 1];
+  T* items = StackElements<T, UI, SI>(This());
+  T item = items[stack->count - 1];
   return item;
 }
 
@@ -398,19 +388,18 @@ TextWord4 StackPeek(TArray<TextWord4, UI, SI>* stack) {
     @param  stack    The stack.
     @param  index The index of the element to get.
     @return -1 if a is nil and -2 if the index is out of bounds. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
-TextWord4 StackGet(TArray<TextWord4, UI, SI>* stack, SI index) {
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
+T StackGet(TArray<T, UI, SI>* stack, SI index) {
   ASSERT(stack);
   if (index >= stack->count) return 0;
-  char* address =
-      reinterpret_cast<char*>(stack) + sizeof(TArray<TextWord4, UI, SI>);
-  return reinterpret_cast<TextWord4*>(address)[index];
+  char* address = reinterpret_cast<char*>(stack) + sizeof(TArray<T, UI, SI>);
+  return reinterpret_cast<T*>(address)[index];
 }
 
 /* Returns true if the given stack contains the given address.
     @return false upon failure. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
-bool StackContains(TArray<TextWord4, UI, SI>* stack, void* address) {
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
+bool StackContains(TArray<T, UI, SI>* stack, void* address) {
   ASSERT(stack);
   char *ptr = reinterpret_cast<char*>(stack),
        *adr = reinterpret_cast<char*>(address);
@@ -419,9 +408,9 @@ bool StackContains(TArray<TextWord4, UI, SI>* stack, void* address) {
   return true;
 }
 
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline UI StackSizeWords(SI count) {
-  return StackSizeMin<TextWord4, UI, SI>(count) / sizeof(uintptr_t);
+  return StackSizeMin<T, UI, SI>(count) / sizeof(uintptr_t);
 }
 
 /* The upper bounds defines exactly how many elements can fit into a space
@@ -429,15 +418,14 @@ inline UI StackSizeWords(SI count) {
     @warning Anything above this threshold may cause a critical error; AND
              sizeof (T) must be 1, 2, 4, or 8.
 */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline SI StackCountUpperBounds() {
   enum {
-    kShift = (sizeof(TextWord4) == 8) ? 3 :             //< Used to divide by 8.
-                 (sizeof(TextWord4) == 4) ? 2 :         //< Used to divide by 4.
-                     (sizeof(TextWord4) == 2) ? 1 : 0,  //< Used to divide by 2.
+    kShift = (sizeof(T) == 8) ? 3 :             //< Used to divide by 8.
+                 (sizeof(T) == 4) ? 2 :         //< Used to divide by 4.
+                     (sizeof(T) == 2) ? 1 : 0,  //< Used to divide by 2.
   };
-  return (SI)((((~(UI)0) - 7) - (UI)sizeof(TArray<TextWord4, UI, SI>)) /
-              (UI)sizeof(TextWord4));
+  return (SI)((((~(UI)0) - 7) - (UI)sizeof(TArray<T, UI, SI>)) / (UI)sizeof(T));
 }
 
 /* Doubles the size of the array until the max count is reached.
@@ -445,45 +433,41 @@ inline SI StackCountUpperBounds() {
             that can fit in type UI, the unaltered buffer pointer if the Stack
             has grown to the count_max upper bounds, or a new dynamically
             allocated buffer upon failure.. */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
 uintptr_t* StackGrow(uintptr_t* buffer) {
   ASSERT(buffer);
 
   static SI count_max_auto_size_init = kStackCountMaxDefault;
 
-  TArray<TextWord4, UI, SI>* stack =
-      reinterpret_cast<TArray<TextWord4, UI, SI>*>(buffer);
+  TArray<T, UI, SI>* stack = reinterpret_cast<TArray<T, UI, SI>*>(buffer);
   SI count_max = stack->count_max,
-     count_uppoer_bounds = StackCountUpperBounds<TextWord4, UI, SI>();
+     count_uppoer_bounds = StackCountUpperBounds<T, UI, SI>();
   if (count_max > count_uppoer_bounds) return nullptr;
   if (count_max == count_uppoer_bounds) return buffer;
   count_max += count_max;
   if (count_max > count_uppoer_bounds) count_max = count_uppoer_bounds;
-  UI new_size =
-         sizeof(TArray<TextWord4, UI, SI>) + count_max * sizeof(TextWord4),
-     word_count;
+  UI new_size = sizeof(TArray<T, UI, SI>) + count_max * sizeof(T), word_count;
   if ((new_size & 0x7) == 0)
     word_count = new_size >> kWordBitCount;
   else
     word_count = (new_size >> kWordBitCount) + 1;
   uintptr_t* new_buffer = new uintptr_t[word_count];
-  TArray<TextWord4, UI, SI>* new_stack =
-      reinterpret_cast<TArray<TextWord4, UI, SI>*>(new_buffer);
+  TArray<T, UI, SI>* new_stack =
+      reinterpret_cast<TArray<T, UI, SI>*>(new_buffer);
   new_stack->size_array = 0;
   new_stack->size_stack = new_size;
   SI count = stack->count;
   new_stack->count = count;
   new_stack->count_max = count_max;
 
-  TextWord4 *source = StackElements(stack),
-            *destination = StackElements(new_stack);
+  T *source = StackElements(stack), *destination = StackElements(new_stack);
   for (; count > 0; count--) *destination++ = *source++;
   delete buffer;
   return new_buffer;
 }
 
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
-Printer& PrintStack(Printer& print, TArray<TextWord4, UI, SI>* tarray) {
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
+Printer& PrintStack(Printer& print, TArray<T, UI, SI>* tarray) {
   ASSERT(tarray);
   UI size_array = tarray->size_array;
   SI count = tarray->count;
@@ -491,7 +475,7 @@ Printer& PrintStack(Printer& print, TArray<TextWord4, UI, SI>* tarray) {
   print << "\n\nStack: count: " << count << " count_max:" << tarray->count_max
         << " size_stack:" << tarray->size_stack;
   if (tarray->size_array != 0) print << " size_array:invalid";
-  TextWord4* elements = StackElements(tarray);
+  T* elements = StackElements(tarray);
   for (int i = 0; i < count; ++i) {
     print << '\n' << i + 1 << ".) " << elements[i];
   }
@@ -517,7 +501,7 @@ Printer& PrintStack(Printer& print, TArray<TextWord4, UI, SI>* tarray) {
     +----------------+ 0x0
     @endcode
 */
-template <typename TextWord4 = intptr_t, typename UI = uint, typename SI = int>
+template <typename T = intptr_t, typename UI = uint, typename SI = int>
 class Stack {
  public:
   /* Initializes an stack of n elements of the given type.
@@ -529,7 +513,7 @@ class Stack {
     if (count_max == 0) {
       count_max = 32;
     }
-    UI size = StackSize<TextWord4, UI, SI>(count_max);
+    UI size = StackSize<T, UI, SI>(count_max);
     uintptr_t* buffer = new uintptr_t[size >> kWordBitCount];
     buffer_ = buffer;
     StackInit(buffer, size, count_max);
@@ -544,50 +528,46 @@ class Stack {
   /* Deallocates the buffer_. */
   ~Stack() { delete[] buffer_; }
 
-  Stack<TextWord4, UI, SI>& Clone() { StackClone<TextWord4, UI, SI>(This()); }
+  Stack<T, UI, SI>& Clone() { StackClone<T, UI, SI>(This()); }
 
-  Stack<TextWord4, UI, SI>& Clone(Stack<TextWord4, UI, SI>& other) {
-    StackClone<TextWord4, UI, SI>(This(), *other);
+  Stack<T, UI, SI>& Clone(Stack<T, UI, SI>& other) {
+    StackClone<T, UI, SI>(This(), *other);
   }
 
   /* Gets the max number of elements in an stack with the specific index
       width. */
-  inline SI GetElementsMax() { return StackCountMax<TextWord4, UI, SI>(); }
+  inline SI GetElementsMax() { return StackCountMax<T, UI, SI>(); }
 
   /* Gets the size of the entire Stack, including header, in bytes. */
   inline UI GetSize() { return This()->size; }
 
   /* Gets the min size of the entire Stack, including header, in bytes. */
-  inline UI GetSizeMin() { return StackSizeMin<TextWord4, UI, SI>(); }
+  inline UI GetSizeMin() { return StackSizeMin<T, UI, SI>(); }
 
   /* Gets a pointer to the first element in the stack. */
-  inline TextWord4* Elements() { return StackBegin<TextWord4, UI, SI>(This()); }
+  inline T* Elements() { return StackBegin<T, UI, SI>(This()); }
 
   /* Inserts the item into the stack at the given index.
       @param item  The item to insert.
       @param index The index to insert at.
       @return -1 if a is nil and -2 if the stack is full. */
-  TextWord4 Insert(TextWord4 item, TextWord4 index) {
-    return Array<TextWord4, UI, SI>(This(), item, index);
-  }
+  T Insert(T item, T index) { return Array<T, UI, SI>(This(), item, index); }
 
   /* Removes the given index from the stack.
       @param  index The index the item to remove.
       @return True if the index is out of bounds. */
-  bool Remove(SI index) {
-    return StackRemove<TextWord4, UI, SI>(This(), index);
-  }
+  bool Remove(SI index) { return StackRemove<T, UI, SI>(This(), index); }
 
   /* Adds the given item to the end of the stack.
       @param  item The item to push onto the stack.
       @return The index of the newly stacked item. */
-  SI Push(TextWord4 item) {
-    SI result = StackPush<TextWord4, UI, SI>(This(), item);
+  SI Push(T item) {
+    SI result = StackPush<T, UI, SI>(This(), item);
     // std::count << "\n  Pushing " << item;
     if (result < 0) {
       // printf (" and growing.");
       Grow();
-      SI result = StackPush<TextWord4, UI, SI>(This(), item);
+      SI result = StackPush<T, UI, SI>(This(), item);
       // COUT << this;
       if (result < 0) return -1;
       return result;
@@ -599,8 +579,8 @@ class Stack {
       @note We do not delete the item at the
       @param  a The stack.
       @return The item popped off the stack. */
-  inline TextWord4 Pop() {
-    TextWord4 value = StackPop<TextWord4, UI, SI>(This());
+  inline T Pop() {
+    T value = StackPop<T, UI, SI>(This());
     // print << "\n  Popping " << value;
     return value;
   }
@@ -609,19 +589,17 @@ class Stack {
       @note We do not delete the item at the
       @param  a The stack.
       @return The item popped off the stack. */
-  inline TextWord4 Peek() { return StackPeek<TextWord4, UI, SI>(This()); }
+  inline T Peek() { return StackPeek<T, UI, SI>(This()); }
 
   /* Gets the element at the given index.
       @param  index The index of the element to get.
       @return -1 if a is nil and -2 if the index is out of bounds. */
-  inline TextWord4 Element(SI index) {
-    return StackGet<TextWord4, UI, SI>(This(), index);
-  }
+  inline T Element(SI index) { return StackGet<T, UI, SI>(This(), index); }
 
   /* Returns true if the given stack contains the given address.
       @return false upon failure. */
   inline bool Contains(void* address) {
-    return StackContains<TextWord4, UI, SI>(This(), address);
+    return StackContains<T, UI, SI>(This(), address);
   }
 
   /* Resizes the stack to the new_count. */
@@ -643,12 +621,11 @@ class Stack {
   /* Prints this object to the given Printer. */
   inline Printer& Print(Printer& out_) { return Print(This(), out_); }
 
-  inline TArray<TextWord4, UI, SI>* This() {
-    return reinterpret_cast<TArray<TextWord4, UI, SI>*>(buffer_);
+  inline TArray<T, UI, SI>* This() {
+    return reinterpret_cast<TArray<T, UI, SI>*>(buffer_);
   }
 
-  inline Stack<TextWord4, UI, SI>& operator=(
-      const Stack<TextWord4, UI, SI>& other) {
+  inline Stack<T, UI, SI>& operator=(const Stack<T, UI, SI>& other) {
     Clone(other);
     return *this;
   }
@@ -656,13 +633,13 @@ class Stack {
  private:
   uintptr_t* buffer_;  //< Word-aligned socket for the stack.
 
-  inline void SetBuffer(TArray<TextWord4, UI, SI>* tarray) {
+  inline void SetBuffer(TArray<T, UI, SI>* tarray) {
     ASSERT(tarray);
     buffer_ = reinterpret_cast<uintptr_t*>(tarray);
   }
 };
 
-}       //< namespace _
+}  // namespace _
 
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_STACK

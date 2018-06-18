@@ -55,7 +55,7 @@ class KABUKI Handle {
   bool Equals(const char* handle);
 
   /** Prints this object to the log. */
-  _::Text& Out(_::Text& txt = _::Text());
+  Text& Out(Text& txt = Text());
 
  private:
   char* key_;                     //< Unique string key.

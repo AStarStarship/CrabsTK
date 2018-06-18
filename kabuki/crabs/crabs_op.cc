@@ -150,7 +150,7 @@ void Print (Op& log) {
 }
 #endif */
 
-}       //< namespace _ {
+}       //< namespace _
 
 #undef PRINTF
 #undef PUTCHAR

@@ -27,7 +27,7 @@ namespace _ {
 /** A user account on a computer.
     A user does not necessarily have an account. Some accounts are and any user
     can use. i.e. the guest account. */
-class KABUKI User : _::Portal {
+class KABUKI User : Portal {
  public:
   enum {
     kDefaultMinDislpayNameLength = 2,  //< Default max display name length.
@@ -109,11 +109,11 @@ class KABUKI User : _::Portal {
   bool Equals(User* user);
 
   /** Gets the Script Slot to send messages to this User. */
-  _::Expression* GetSlot();
+  Expression* GetSlot();
 
 #if SCRIPT_USING_MIRROR
   /** Gets the Script Slot to send messages to this User. */
-  _::Mirror* GetMirror();
+  Mirror* GetMirror();
 #endif  //< SCRIPT_USING_MIRROR
 
   /** Returns true if this session and cypher match the same as the given
@@ -121,7 +121,7 @@ class KABUKI User : _::Portal {
   bool IsAuthentic(int32_t session, uid_t public_key);
 
   /** Prints this object to a expression. */
-  virtual _::Text& Out(_::Text& txt = _::Text());
+  virtual Text& Out(Text& txt = Text());
 
   /** Handles Text input.
       @param text     Beginning of the Text buffer.
@@ -134,7 +134,7 @@ class KABUKI User : _::Portal {
       @param expr  The Expression to read and write from.
       @return      Returns null upon success, a Set header upon query, and an
                    error_t ticket upon Read-Write failure. */
-  virtual const _::Operation* Star(uint index, _::Expression* expr);
+  virtual const Operation* Star(uint index, Expression* expr);
 
  private:
   Handle handle_;                 //< User's handle (i.e. key).
@@ -147,7 +147,7 @@ class KABUKI User : _::Portal {
       response_;                  //< Gets user abstract response code.
   double balance_;                //< Abstract user account balance or money.
   int64_t value_;                 //< Abstract account value, points, or coins.
-  _::Expression* slot_;           //< Portal to User's machine.
+  Expression* slot_;           //< Portal to User's machine.
 
 };  //< class User
 }       // namespace _

@@ -1,5 +1,5 @@
 /** Kabuki Toolkit
-    @file    ~/source/kabuki/store/store_item.cc
+    @file    $kabuki-toolkit/kabuki/toolkit/store/store_item.cc
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 

@@ -61,7 +61,7 @@ class KABUKI HitList {
   const char* GetSubcategoryImageName(const char* string);
 
   /** Prints this object to the log. */
-  void Print(_::Log& log);
+  void Print(Log& log);
 
  private:
   uint32_t uid = 0;

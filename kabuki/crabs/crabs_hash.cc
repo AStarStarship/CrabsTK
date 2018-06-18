@@ -78,5 +78,5 @@ uint16_t Hash16UI8(uint64_t value, uint16_t hash) {
   return hash;
 }
 
-}       //< namespace _ {
+}       //< namespace _
 #endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

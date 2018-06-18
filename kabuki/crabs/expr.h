@@ -38,12 +38,12 @@ namespace _ {
     App/Driver/User writes to the end of the Tx buffer and the driver reads from
     the beginning. The user writes are synchronous and the driver reads are
     asynchronous.
-    
+    
 
 
 
     # Ring Buffer Streaming Diagram
-    
+    
 
 
 
@@ -56,18 +56,18 @@ namespace _ {
     BIn   |>-Buffer->|>-Async Portal Tx->|>-Sync User Writes->|>-Buffer->|
           |__________|___________________|____________________|__________|
     @endcode
-    
+    
 
 
 
     Almost all block of memory in Script has something that grows up and another
     that grows down.
-    
+    
 
 
 
     # Stack Memory Layout
-    
+    
 
 
 
@@ -225,7 +225,7 @@ inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
    const char* cursor = ArgsParse (expr->args_cursor, expr->args_end,
                                    params, args);
    if (!cursor) {
-       
+       
 
 
 
@@ -298,12 +298,12 @@ KABUKI Printer& PrintExpr(Printer& printer, Expr* expr);
 KABUKI Printer& PrintExprStack(Printer& printer, Expr* expr);
 #endif
 
-}       //< namespace _ {
+}  // namespace _
 
 #if USING_PRINTER
 /* Prints the given Expr to the Text buffer. */
 inline _::Printer& operator<<(_::Printer& printer, _::Expr* expr) {
-  return PrintExpr(printer, expr);
+  return _::PrintExpr(printer, expr);
 }
 #endif
 

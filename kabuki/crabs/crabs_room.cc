@@ -213,7 +213,7 @@ uintptr_t Room::GetSizeBytes() {
 Printer& Room::Print(Printer& print) { return print << "\nRoom: "; }
 #endif
 
-}       //< namespace _ {
+}       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
 #endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

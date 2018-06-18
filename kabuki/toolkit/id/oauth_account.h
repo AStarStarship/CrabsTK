@@ -31,7 +31,7 @@ class OAuthAccount {
   OAuthAccount();
 
   /** Prints this object to a expression. */
-  void Print(_::Log& log);
+  void Print(Log& log);
 };
 
 }       // namespace _

@@ -129,7 +129,7 @@ char* Print(char* cursor, char* end, char character) {
   return cursor;
 }
 
-}       //< namespace _ {
+}       //< namespace _
 
 #undef PRINTF
 #undef PUTCHAR

@@ -85,7 +85,7 @@ char* PrintBinary(uint64_t value, char* buffer, char* buffer_end,
   return buffer;
 }
 
-}       //< namespace _ {
+}       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
 #undef PRINT_HEADING

@@ -63,6 +63,6 @@ KABUKI const char** ErrorStrings();
 /* Returns one of the Errors () strings. */
 KABUKI const char* ErrorString(Error error);
 
-}       //< namespace _ {
+}       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #endif  //< HEADER_FOR_CRABS_ERROR

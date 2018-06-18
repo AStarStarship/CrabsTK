@@ -26,9 +26,12 @@
 #if MAJOR_SEAM == 1 && MINOR_SEAM == 3
 #define PRINTF(format, ...) printf(format, __VA_ARGS__);
 #define PUTCHAR(c) putchar(c);
+#define PRINT_MEMORY(begin, end) \
+  { Console<>().Out() << Socket(begin, end); }
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
+#define PRINT_MEMORY(begin, end)
 #endif
 
 namespace _ {
@@ -110,7 +113,7 @@ char* MemoryCopy(void* begin, void* end, const void* start, const void* stop) {
 
   while (words < words_end) *words++ = *read_word++;
 
-  COUT << Socket(begin_debug, end_debug);
+  PRINT_MEMORY(begin_debug, end_debug)
 
   return success;
 }
@@ -154,9 +157,7 @@ char* PrintMemory(char* cursor, char* end, const void* start,
   *cursor++ = '0';
   cursor = PrintRight(cursor, end, 8, 8);
   *cursor++ = ' ';
-  for (int i = 16; i <= 56; i += 8) {
-    cursor = PrintRight(cursor, end, i, 8);
-  }
+  for (int i = 16; i <= 56; i += 8) cursor = PrintRight(cursor, end, i, 8);
   for (int j = 6; j > 0; --j) *cursor++ = ' ';
   *cursor++ = '|';
   *cursor++ = '\n';
@@ -233,7 +234,7 @@ Socket& Socket::operator=(const Socket& other) {
   return *this;
 }
 
-}       //< namespace _ {
+}  // namespace _
 #undef PRINTF
 #undef PUTCHAR
 #endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 1

@@ -49,6 +49,6 @@ KABUKI uint16_t Hash32(const char* string, hash32_t hash = kLargest32BitPrime);
 /* Hashes the given char using the primeHash function. */
 KABUKI hash64_t Hash64(const char* string, hash64_t hash = kLargest64BitPrime);
 
-}       //< namespace _ {
+}       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_HASH

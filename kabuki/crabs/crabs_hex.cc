@@ -179,7 +179,7 @@ char* PrintHex(char* buffer, char* end, char c) {
   return buffer;
 }
 
-}       //< namespace _ {
+}       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
 #endif  //< USING_PRINTER

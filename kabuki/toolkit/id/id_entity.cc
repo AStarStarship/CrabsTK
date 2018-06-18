@@ -25,14 +25,14 @@ const char* Entity::GetFirstName() { return first_name_; }
 
 void Entity::SetFirstName(const char* string) {
   delete first_name_;
-  first_name_ = _::StringClone(string);
+  first_name_ = StringClone(string);
 }
 
 const char* Entity::GetLastName() { return last_name_; }
 
 void Entity::SetLastName(const char* string) {
   delete last_name_;
-  last_name_ = _::StringClone(string);
+  last_name_ = StringClone(string);
 }
 
 bool Entity::Query(const char* query) {
@@ -65,7 +65,7 @@ bool Entity::Query(const char* query) {
   return false;
 }
 
-void Entity::Print(_::Log& log) { log << "Entity: "; }
+void Entity::Print(Log& log) { log << "Entity: "; }
 
 }       // namespace _
 #endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2

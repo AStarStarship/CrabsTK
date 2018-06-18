@@ -84,17 +84,15 @@ inline char* MemoryAdd(void* a, void* b) {
 /* Checks if the given value is Not-a-Number.
     @param value
 */
-template <typename TextWord4>
-inline bool MemoryIsNaN(TextWord4 value) {
-  static const TextWord4 nan =
-      (sizeof(TextWord4) == 8)
-          ? (TextWord4)0xFF
-          : sizeof(TextWord4) == 4
-                ? (TextWord4)0xFFFF
-                : sizeof(TextWord4) == 2
-                      ? (TextWord4)0xFFFFFFFF
-                      : sizeof(TextWord4) == 1 ? (TextWord4)0xFFFFFFFFFFFFFFFF
-                                               : 0;
+template <typename T>
+inline bool MemoryIsNaN(T value) {
+  static const T nan =
+      (sizeof(T) == 8)
+          ? (T)0xFF
+          : sizeof(T) == 4
+                ? (T)0xFFFF
+                : sizeof(T) == 2 ? (T)0xFFFFFFFF
+                                 : sizeof(T) == 1 ? (T)0xFFFFFFFFFFFFFFFF : 0;
   return value == nan;
 }
 
@@ -113,26 +111,25 @@ inline uintptr_t* BufferN() {
 }
 
 /* Creates/Gets one of n static buffers of the specified size. */
-template <typename TextWord4 = uintptr_t,
-          size_t kBufferSize = kBufferSizeDefaultWords>
-inline TextWord4* BufferT() {
-  static TextWord4 buffer[(kBufferSize / sizeof(uintptr_t)) + 1];
+template <typename T = uintptr_t, size_t kBufferSize = kBufferSizeDefaultWords>
+inline T* BufferT() {
+  static T buffer[(kBufferSize / sizeof(uintptr_t)) + 1];
   return buffer;
 }
 
 /* Creates/Gets one of n static buffers of the specified size. */
-template <typename TextWord4 = uintptr_t, int kBufferNumber = 0,
+template <typename T = uintptr_t, int kBufferNumber = 0,
           size_t kBufferSize = kBufferSizeDefaultWords>
-inline TextWord4* BufferTN() {
-  static TextWord4 buffer[(kBufferSize / sizeof(uintptr_t)) + 1];
+inline T* BufferTN() {
+  static T buffer[(kBufferSize / sizeof(uintptr_t)) + 1];
   return buffer;
 }
 
 /* reinterpret_cast(string) a the given base and offset to an object pointer.
  */
-template <typename TextWord4>
-inline TextWord4* MemoryOffset(void* base, uint_t offset) {
-  return reinterpret_cast<TextWord4*>(reinterpret_cast<char*>(base) + offset);
+template <typename T>
+inline T* MemoryOffset(void* base, uint_t offset) {
+  return reinterpret_cast<T*>(reinterpret_cast<char*>(base) + offset);
 }
 
 /* Calculates the difference between the begin and end address. */
@@ -229,7 +226,7 @@ inline Printer& PrintMemory(Printer& printer, const void* start, size_t size) {
   return printer;
 }
 
-}  // namespace _ {
+}  // namespace _
 
 inline _::Printer& operator<<(_::Printer& print, _::Socket& memory) {
   char* cursor =

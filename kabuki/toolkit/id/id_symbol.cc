@@ -67,7 +67,7 @@ void Word::SetFormat(const char* format) {
   if (format == nullptr) return;
   if (format_ == nullptr) return;
   delete format_;
-  format_ = _::StringClone(format);
+  format_ = StringClone(format);
 }
 
 bool Word::IsValid(const char* string) {
@@ -120,7 +120,7 @@ bool Word::MakeMandatory(int start_index, int stop_index, int num_instances,
   return true;
 }
 
-void Word::Print(_::Log& log) { log << "Word: "; }
+void Word::Print(Log& log) { log << "Word: "; }
 
 }       // namespace _
 #endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2

@@ -69,7 +69,7 @@ class KABUKI Password {
   bool Equals(const Password& p);
 
   /** Prints this object to a expression. */
-  _::Text& Out(_::Text& txt = _::Text());
+  Text& Out(Text& txt = Text());
 
  private:
   char* key_;                     //< Unencrypted password.

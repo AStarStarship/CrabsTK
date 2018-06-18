@@ -220,9 +220,9 @@ Dictionary<uint16_t, uint16_t, int8_t>* DictionaryInit(uintptr_t* buffer,
 
 /* Insets the given key-value pair.
  */
-template <typename UI, typename SI, typename I, typename TextWord4, TType kType>
-I DictionaryInsert(Dictionary<UI, SI, I>* dictionary, const char* key,
-                   TextWord4 value, I index) {
+template <typename UI, typename SI, typename I, typename T, TType kType>
+I DictionaryInsert(Dictionary<UI, SI, I>* dictionary, const char* key, T value,
+                   I index) {
   if (dictionary == nullptr) return 0;
   return ~0;
 }
@@ -236,9 +236,8 @@ I DictionaryCountUpperBounds() {
 }
 
 /* Adds a key-value pair to the end of the dictionary. */
-template <typename UI, typename SI, typename I, typename TextWord4, TType type>
-I DictionaryAdd(Dictionary<UI, SI, I>* dictionary, const char* key,
-                TextWord4 data) {
+template <typename UI, typename SI, typename I, typename T, TType type>
+I DictionaryAdd(Dictionary<UI, SI, I>* dictionary, const char* key, T data) {
   if (dictionary == nullptr) return 0;
   if (key == nullptr) return 0;
 
@@ -630,7 +629,7 @@ I DictionaryFind(Dictionary<UI, SI, I>* dictionary, const char* key) {
 
 /* Prints this object out to the console. */
 template <typename UI, typename SI, typename I>
-Printer& DicPrint(_::Printer& print, const Dictionary<UI, SI, I>* dictionary) {
+Printer& DicPrint(Printer& print, const Dictionary<UI, SI, I>* dictionary) {
   ASSERT(dictionary)
 
   I item_count = dictionary->item_count, count = dictionary->count,
@@ -754,6 +753,6 @@ Printer& DicPrint(Printer& print, Dictionary<UI, SI, I>* dictionary) {
   return print;
 }
 
-}       //< namespace _ {
+}  // namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 6
 #endif  //< HEADER_FOR_CRABS_BOOK

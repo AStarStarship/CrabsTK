@@ -16,6 +16,6 @@
 #ifndef HEADER_FOR_KABUKI_CONFIG
 #define HEADER_FOR_KABUKI_CONFIG
 
-#include "../config.h"
+#include "crabs/global.h"
 
 #endif  //< HEADER_FOR_KABUKI_DATA_CONFIG

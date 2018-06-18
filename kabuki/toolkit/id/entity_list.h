@@ -43,7 +43,7 @@ class KABUKI EntityList {
   Entity* Find(const char* string);
 
   /** Prints this object to the log. */
-  void Print(_::Log& log);
+  void Print(Log& log);
 
  private:
   data::Array<Entity*>* entities_;  //< The list of entities.

@@ -21,7 +21,7 @@ namespace _ {
 
 Profile::Profile() {}
 
-void Profile::Print(_::Log& log) {}
+void Profile::Print(Log& log) {}
 
 }       // namespace _
 #endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2

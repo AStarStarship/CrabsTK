@@ -43,7 +43,7 @@ Entity* EntityList::Find(const char* query) {
   return nullptr;  // static website guest entities
 }
 
-void EntityList::Print(_::Log& log) {
+void EntityList::Print(Log& log) {
   log << "Number of Accounts: " << entities_->GetCount() << (char)13;
 
   for (int i = 0; i < entities_->GetSize(); i++) {

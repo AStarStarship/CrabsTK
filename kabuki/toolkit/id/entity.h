@@ -47,7 +47,7 @@ class KABUKI Entity {
   bool Query(const char* query);
 
   /** Prints this object to a expression. */
-  void Print(_::Log& log);
+  void Print(Log& log);
 
  private:
   char *first_name_,             //< The entity's first name.

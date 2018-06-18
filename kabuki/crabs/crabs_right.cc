@@ -104,7 +104,7 @@ char* PrintRight(char* buffer, char* buffer_end, const char* token,
   return buffer_end;
 }
 
-}       //< namespace _ {
+}       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
 #undef PRINT_HEADING

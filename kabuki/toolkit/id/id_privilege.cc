@@ -36,7 +36,7 @@ bool Privilage::SetPrivilageLevel(Privilages privilages) {
   return true;
 }
 
-void Privilage::Print(_::Log& log) {}
+void Privilage::Print(Log& log) {}
 
 }       // namespace _
 #endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2

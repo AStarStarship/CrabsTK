@@ -603,7 +603,7 @@ char* Print(char* cursor, char* end, int64_t value) {
   return Print(cursor, end, (uint64_t)(value * -1));
 }
 
-}       //< namespace _ {
+}       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
 #undef PRINT_BINARY

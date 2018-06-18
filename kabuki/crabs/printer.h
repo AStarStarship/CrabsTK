@@ -26,27 +26,27 @@
 namespace _ {
 
 /* ASCII printing utilities
-    @ingroup Printer
+@ingroup Printer
 */
 
 /* Utility class for printing strings.
-    This class only stores the end of buffer pointer and a pointer to the write
-    cursor. It is up the user to store start of buffer pointer and if they would
-    like to replace the cursor with the beginning of buffer pointer when they
-    are done printing.
+This class only stores the end of buffer pointer and a pointer to the write
+cursor. It is up the user to store start of buffer pointer and if they would
+like to replace the cursor with the beginning of buffer pointer when they
+are done printing.
 */
 struct KABUKI Printer {
   char *cursor,  //< Write cursor pointer.
       *end;      //< End of buffer pointer.
 
   /* Initializes the Printer& from the given buffer pointers.
-      @param begin The beginning of the buffer.
-      @param end   The end of the buffer. */
+  @param begin The beginning of the buffer.
+  @param end   The end of the buffer. */
   Printer(char* begin, size_t size);
 
   /* Initializes the Printer& from the given buffer pointers.
-      @param begin The beginning of the buffer.
-      @param end   The end of the buffer. */
+  @param begin The beginning of the buffer.
+  @param end   The end of the buffer. */
   Printer(char* begin, char* end);
 
   /* Clones the other print. */
@@ -56,23 +56,20 @@ struct KABUKI Printer {
 };
 
 /* Utility class for printing numbers. */
-template <typename TextWord4>
+template <typename T>
 struct Number {
   enum {
-    kSize = sizeof(TextWord4) == 2
-                ? 8
-                : sizeof(TextWord4) == 4
-                      ? 16
-                      : 24,  //< Size of the text buffer in bytes.
+    kSize =
+        sizeof(T) == 2
+            ? 8
+            : sizeof(T) == 4 ? 16 : 24,  //< Size of the text buffer in bytes.
   };
 
-  TextWord4 value;     //< Value to print.
+  T value;             //< Value to print.
   char string[kSize];  //< String buffer.
 
   /* Constructor copies value and prints it to the string buffer. */
-  Number(TextWord4 value) : value(value) {
-    Print(value, string, string + kSize - 1);
-  }
+  Number(T value) : value(value) { Print(value, string, string + kSize - 1); }
 };
 
 /* Utility class for printing to the CRABS Output. */
@@ -96,39 +93,39 @@ class Console {
   char buffer_[kSize];  //< Console buffer.
 };
 
-#define COUT ::_::Console<>().Out()
+#define COUT ::Console<>().Out()
 
 /* Copies a char from the source to the text.
-    @param text   Beginning address of the buffer.
-    @param end    The end address of the buffer.
-    @param string The potentially unsafe string to write. */
+@param text   Beginning address of the buffer.
+@param end    The end address of the buffer.
+@param string The potentially unsafe string to write. */
 KABUKI char* Print(char* cursor, char* end, const char* string);
 
 /* Copies a char from the source to the text.
-    @param text   Beginning address of the buffer.
-    @param end    The end address of the buffer.
-    @param string The potentially unsafe string to write. */
+@param text   Beginning address of the buffer.
+@param end    The end address of the buffer.
+@param string The potentially unsafe string to write. */
 KABUKI char16_t* Print(char16_t* cursor, char16_t* end, const char16_t* string);
 
 /* Copies a char from the source to the text.
-    @param text   Beginning address of the buffer.
-    @param end    The end address of the buffer.
-    @param value The potentially unsafe string to write. */
+@param text   Beginning address of the buffer.
+@param end    The end address of the buffer.
+@param value The potentially unsafe string to write. */
 KABUKI char* Print(char* cursor, char* end, const char* string,
                    const char* string_end);
 
 /* Writes the give char to the given buffer.
-    @param begin     Beginning address of the buffer.
-    @param end       The end address of the buffer.
-    @param character The value to write. */
+@param begin     Beginning address of the buffer.
+@param end       The end address of the buffer.
+@param character The value to write. */
 KABUKI char* Print(char* cursor, char* end, char character);
 
-}       //< namespace _ {
+}  // namespace _
 
 /* Writes a nil-terminated UTF-8 or ASCII string to the print.
-    @param  printer The print.
-    @param  value   The value to print.
-    @return The printer. */
+@param  printer The print.
+@param  value   The value to print.
+@return The printer. */
 inline _::Printer& operator<<(_::Printer& printer, const char* string) {
   char* cursor = _::Print(printer.cursor, printer.end, string);
   if (!cursor) return printer;
@@ -137,9 +134,9 @@ inline _::Printer& operator<<(_::Printer& printer, const char* string) {
 }
 
 /* Writes the given value to the print.
-    @param  printer The print.
-    @param  value   The value to print.
-    @return The printer. */
+@param  printer The print.
+@param  value   The value to print.
+@return The printer. */
 inline _::Printer& operator<<(_::Printer& printer, char value) {
   char* cursor = _::Print(printer.cursor, printer.end, value);
   if (!cursor) return printer;
@@ -148,9 +145,9 @@ inline _::Printer& operator<<(_::Printer& printer, char value) {
 }
 
 /* Writes the given value to the print.
-    @param  printer The print.
-    @param  value The value to write to the print.
-    @return The print. */
+@param  printer The print.
+@param  value The value to write to the print.
+@return The print. */
 inline _::Printer& operator<<(_::Printer& printer, uint8_t value) {
   char* cursor = _::Print(printer.cursor, printer.end, value);
   if (!cursor) return printer;
@@ -159,9 +156,9 @@ inline _::Printer& operator<<(_::Printer& printer, uint8_t value) {
 }
 
 /* Writes the given value to the print.
-    @param  printer The print.
-    @param  value The value to write to the print.
-    @return The print. */
+@param  printer The print.
+@param  value The value to write to the print.
+@return The print. */
 inline _::Printer& operator<<(_::Printer& printer, int16_t value) {
   char* cursor = _::Print(printer.cursor, printer.end, value);
   if (!cursor) return printer;
@@ -170,9 +167,9 @@ inline _::Printer& operator<<(_::Printer& printer, int16_t value) {
 }
 
 /* Writes the given value to the print.
-    @param  printer The print.
-    @param  value The value to write to the print.
-    @return The print. */
+@param  printer The print.
+@param  value The value to write to the print.
+@return The print. */
 inline _::Printer& operator<<(_::Printer& printer, uint16_t value) {
   char* cursor = _::Print(printer.cursor, printer.end, value);
   if (!cursor) return printer;
@@ -181,9 +178,9 @@ inline _::Printer& operator<<(_::Printer& printer, uint16_t value) {
 }
 
 /* Writes the given value to the print.
-    @param  printer The print.
-    @param  value The value to write to the print.
-    @return The print. */
+@return The print.
+@param  printer The print.
+@param  value The value to write to the print. */
 inline _::Printer& operator<<(_::Printer& printer, int32_t value) {
   char* cursor = _::Print(printer.cursor, printer.end, value);
   if (!cursor) return printer;
@@ -192,9 +189,9 @@ inline _::Printer& operator<<(_::Printer& printer, int32_t value) {
 }
 
 /* Writes the given value to the print.
-    @param  printer The print.
-    @param  value The value to write to the print.
-    @return The print. */
+@return The print.
+@param  printer The print.
+@param  value The value to write to the print. */
 inline _::Printer& operator<<(_::Printer& printer, uint32_t value) {
   char* cursor = _::Print(printer.cursor, printer.end, value);
   if (!cursor) return printer;
@@ -203,9 +200,9 @@ inline _::Printer& operator<<(_::Printer& printer, uint32_t value) {
 }
 
 /* Writes the given value to the print.
-    @param  printer The print.
-    @param  value The value to write to the print.
-    @return The print. */
+@return The print.
+@param  printer The print.
+@param  value The value to write to the print. */
 inline _::Printer& operator<<(_::Printer& printer, int64_t value) {
   char* cursor = _::Print(printer.cursor, printer.end, value);
   if (!cursor) return printer;
@@ -214,9 +211,10 @@ inline _::Printer& operator<<(_::Printer& printer, int64_t value) {
 }
 
 /* Writes the given value to the print.
-    @param  printer The print.
-    @param  value The value to write to the print.
-    @return The print. */
+@return The print.
+@desc
+@param  printer The print.
+@param  value The value to write to the print. */
 inline _::Printer& operator<<(_::Printer& printer, uint64_t value) {
   char* cursor = _::Print(printer.cursor, printer.end, value);
   if (!cursor) return printer;
@@ -225,9 +223,10 @@ inline _::Printer& operator<<(_::Printer& printer, uint64_t value) {
 }
 
 /* Writes the given value to the print.
-    @param  printer The print.
-    @param  value The value to write to the print.
-    @return The print. */
+@return The print.
+@desc
+@param  printer The print.
+@param  value The value to write to the print. */
 inline _::Printer& operator<<(_::Printer& printer, float value) {
   char* cursor = _::Print(printer.cursor, printer.end, value);
   if (!cursor) return printer;
@@ -236,9 +235,9 @@ inline _::Printer& operator<<(_::Printer& printer, float value) {
 }
 
 /* Writes the given value to the print.
-    @param  printer The print.
-    @param  value The value to write to the print.
-    @return The print. */
+@param  printer The print.
+@param  value The value to write to the print.
+@return The print. */
 inline _::Printer& operator<<(_::Printer& printer, double value) {
   char* cursor = _::Print(printer.cursor, printer.end, value);
   if (!cursor) return printer;

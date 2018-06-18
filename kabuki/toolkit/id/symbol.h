@@ -85,7 +85,7 @@ class Word {
                      const char* descstring);
 
   /** Prints this object to a expression. */
-  void Print(_::Log& log);
+  void Print(Log& log);
 
  private:
   int num_illegal_char_ranges_,    //< The number of illegal char ranges.
@@ -93,11 +93,11 @@ class Word {
       min_length_,                 //< The min length of a valid symbol.
       max_length_;                 //< The max length of a valid symbol.
                                    /*
-                                   _::Range<char_t> illegal_chars_,     //< A 2 column table of ints that
+                                   Range<char_t> illegal_chars_,     //< A 2 column table of ints that
                                    represents all of illegal char ranges.
-                                   _::Range<char_t> mandatory_chars_,   //< A 3 column table of ints that
+                                   Range<char_t> mandatory_chars_,   //< A 3 column table of ints that
                                    represents all of mandatory char ranges and how many are mandatory.
-                                   _::Range<char_t> mustStartWithChars; //< A 2 column table of ints that
+                                   Range<char_t> mustStartWithChars; //< A 2 column table of ints that
                                    represents the range (string) of chars that the symbol must start with.
                                  
                                    const char* illegal_dhars_desc,     //< An array of strings that describes

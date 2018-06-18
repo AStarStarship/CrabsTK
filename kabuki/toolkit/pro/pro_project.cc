@@ -20,7 +20,7 @@
 
 namespace _ {
 
-Project* Pop(_::Stack<Project*>* stack, const char* result) {
+Project* Pop(Stack<Project*>* stack, const char* result) {
   ASSERT(stack)
   ASSERT(result == nullptr)
   if (strcmp("", result)) {
@@ -473,5 +473,5 @@ const char* Project::Command(char* input, Stack<Project*>* stack) {
   return "The Project does not contain the given key in this scope.";
 }
 
-}       //< namespace _
+}  // namespace _
 #endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2

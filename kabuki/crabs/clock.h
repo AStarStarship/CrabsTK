@@ -134,7 +134,7 @@ KABUKI void ClockZeroTime(tm& std_tm);
 
 KABUKI time_t ClockTime(int year, int month, int day, int hour = 0,
                         int minute = 0, int second = 0);
-}       //< namespace _ {
+}       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_CLOCK
 

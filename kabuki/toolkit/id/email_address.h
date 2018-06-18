@@ -43,7 +43,7 @@ class KABUKI EmailAddress {
   /** Maps a domain to the given map??? */
 
   /** Prints this object to a expression. */
-  void Print(_::Log& log);
+  void Print(Log& log);
 
  private:
   char address_;  //< The email address.

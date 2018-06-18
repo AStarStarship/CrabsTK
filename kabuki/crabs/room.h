@@ -44,7 +44,7 @@ enum {
  */
 KABUKI const char** RoomStateTexts();
 
-/* Returns a pointer to an array of pointers to the _::Request strings. */
+/* Returns a pointer to an array of pointers to the Request strings. */
 KABUKI const char** RequestTexts();
 
 /* Gets the response char corresponding to the given request. */
@@ -237,7 +237,7 @@ class Room : public Operand {
 
 #if USING_PRINTER
   /* Prints the Room to the stdout. */
-  virtual _::Printer& Print(_::Printer& print);
+  virtual Printer& Print(Printer& print);
 #endif
 
  protected:

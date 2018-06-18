@@ -30,7 +30,7 @@ class KABUKI Name {
   Name();
 
   /** Writes this object to the given text. */
-  void Write(_::Text& text);
+  void Write(Text& text);
 };
 
 }       // namespace _

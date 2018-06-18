@@ -52,7 +52,7 @@ class KABUKI Roster {
   User* Find(const char* query);
 
   /** Prints this object to a expression. */
-  void Print(_::Log& log);
+  void Print(Log& log);
 
  private:
   data::Array<User*> users_;

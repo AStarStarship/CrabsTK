@@ -59,15 +59,15 @@ User* Roster::Find(const char* username) {
 
 int Roster::GetCount() { return users_.GetCount(); }
 
-void Roster::Print(_::Log& log) {
-  /// This method creates a char of the users.Print (_::Log& log)
+void Roster::Print(Log& log) {
+  /// This method creates a char of the users.Print (Log& log)
   /// strings separated by spaces
 
   log << "Number of Users: " << users_.GetCount() << "\n";
 
   for (int index = 0; index < users_.GetCount(); index++) {
     /// Iterated through the indexes array and write the
-    /// Print (_::Log& log) strings to the returnString
+    /// Print (Log& log) strings to the returnString
     log << "User " << (index + 1) << ": "
         << users_[index]->GetUsername().GetKey() << "\n";
   }

@@ -61,9 +61,9 @@ UI ObjectSize(const void* object, type_t type) {
 }
 
 /* Aligns the given word to 64-bit word boundary. */
-template <typename TextWord4>
-inline TextWord4 WordAlign8(TextWord4 value) {
-  return value + (((~value) + 1) & (sizeof(TextWord4) - 1));
+template <typename T>
+inline T WordAlign8(T value) {
+  return value + (((~value) + 1) & (sizeof(T) - 1));
 }
 
 /* Clones the other object. */
@@ -85,12 +85,12 @@ inline char* ObjectEnd(type_t type, char* object) {
 }
 
 /* Returns the last byte in the data array. */
-template <typename UI, typename TextWord4 = char*>
-inline TextWord4* ObjectEnd(TextWord4* object, type_t type) {
+template <typename UI, typename T = char*>
+inline T* ObjectEnd(T* object, type_t type) {
   return object + ObjectSize<UI>(object, type);
 }
 
-template <typename TextWord4, typename UI = uint, typename SI = int>
+template <typename T, typename UI = uint, typename SI = int>
 inline SI ObjectCountRound(SI count) {
   enum {
     kRoundEpochMask = (sizeof(SI) == 8)
@@ -100,6 +100,6 @@ inline SI ObjectCountRound(SI count) {
   SI count_aligned = AlignUpSigned<SI>(count);
 }
 
-}  // namespace _ {
+}  // namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_OBJECT

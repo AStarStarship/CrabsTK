@@ -83,13 +83,13 @@ int Wall::OpenDoor(Door* door) { return 0; }
 
 bool Wall::CloseDoor(int index) { return false; }
 
-_::Slot& Wall::Print(_::Slot& slot) {
+Slot& Wall::Print(Slot& slot) {
   // printf ("\nDoor:\nis_dynamic %s\nnum_doors: %u\nmax_num_doors: %u\n",
   //        is_dynamic ? "true" : "false", num_doors, max_num_doors);
   return slot;
 }
 
-}       //< namespace _ {
+}       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5

@@ -28,26 +28,25 @@
 namespace _ {
 
 /* Utility class for printing strings justified right. */
-template <typename TextWord4 = const char*>
+template <typename T = const char*>
 struct Right {
-  TextWord4 value;   //< Value to print.
+  T value;           //< Value to print.
   int column_count;  //< Column count.
 
-  Right(TextWord4 value, int column_count)
-      : value(value), column_count(column_count) {
+  Right(T value, int column_count) : value(value), column_count(column_count) {
     // Nothing to do here. :-)
   }
 };
 
 /* Prints the given string justified right to this string.
-    @param input The string to print.
-    @param num_columns The number of columns per row. */
+@param input The string to print.
+@param num_columns The number of columns per row. */
 KABUKI char* PrintRight(char* text, char* text_end, const char* string,
                         int num_columns);
 
 /* Prints the given value justified right to this string.
-    @param value The value to print.
-    @param num_columns The number of columns per row. */
+@param value The value to print.
+@param num_columns The number of columns per row. */
 inline char* PrintRight(char* text, char* text_end, int32_t value,
                         int num_columns) {
   char buffer[16];
@@ -56,8 +55,8 @@ inline char* PrintRight(char* text, char* text_end, int32_t value,
 }
 
 /* Prints the given value justified right to this string.
-    @param value The value to print.
-    @param num_columns The number of columns per row. */
+@param value The value to print.
+@param num_columns The number of columns per row. */
 inline char* PrintRight(char* text, char* text_end, uint32_t value,
                         int num_columns) {
   char buffer[16];
@@ -66,8 +65,8 @@ inline char* PrintRight(char* text, char* text_end, uint32_t value,
 }
 
 /* Prints the given value justified right to this string.
-    @param value The value to print.
-    @param num_columns The number of columns per row. */
+@param value The value to print.
+@param num_columns The number of columns per row. */
 inline char* PrintRight(char* text, char* text_end, int64_t value,
                         int num_columns) {
   char buffer[24];
@@ -76,8 +75,8 @@ inline char* PrintRight(char* text, char* text_end, int64_t value,
 }
 
 /* Prints the given value justified right to this string.
-    @param value The value to print.
-    @param num_columns The number of columns per row. */
+@param value The value to print.
+@param num_columns The number of columns per row. */
 inline char* PrintRight(char* text, char* text_end, uint64_t value,
                         int num_columns) {
   char buffer[24];
@@ -86,8 +85,8 @@ inline char* PrintRight(char* text, char* text_end, uint64_t value,
 }
 
 /* Prints the given value justified right to this string.
-    @param value The value to print.
-    @param num_columns The number of columns per row. */
+@param value The value to print.
+@param num_columns The number of columns per row. */
 inline char* PrintRight(char* text, char* text_end, float value,
                         int num_columns) {
   char buffer[kkFloat32DigitsMax];
@@ -95,9 +94,8 @@ inline char* PrintRight(char* text, char* text_end, float value,
   return PrintRight(text, text_end, buffer, num_columns);
 }
 
-template <typename TextWord4>
-char* PrintRight(char* begin, char* end, Hex<TextWord4> value,
-                 int num_columns) {
+template <typename T>
+char* PrintRight(char* begin, char* end, Hex<T> value, int num_columns) {
   char* result = PrintHex(begin, end, value.value);
   if (!result) return printer;
   printer.cursor = result;
@@ -105,8 +103,8 @@ char* PrintRight(char* begin, char* end, Hex<TextWord4> value,
 }
 
 /* Prints the given value justified right to this string.
-    @param value The value to print.
-    @param num_columns The number of columns per row. */
+@param value The value to print.
+@param num_columns The number of columns per row. */
 inline char* PrintRight(char* text, char* text_end, double value,
                         int num_columns) {
   char buffer[kFloat64DigitsMax];
@@ -114,12 +112,11 @@ inline char* PrintRight(char* text, char* text_end, double value,
   return PrintRight(text, text_end, buffer, num_columns);
 }
 
-}       //< namespace _
+}  // namespace _
 
-/* Writes a nil-terminated UTF-8 or ASCII string to the
-    printer. */
-template <typename TextWord4>
-inline _::Printer& operator<<(_::Printer& printer, _::Right<TextWord4> right) {
+/* Writes a UTF-8 or ASCII string to the printer. */
+template <typename T>
+inline _::Printer& operator<<(_::Printer& printer, _::Right<T> right) {
   char* result = _::PrintRight(printer.cursor, printer.end, right.value,
                                right.column_count);
   if (!result) return printer;

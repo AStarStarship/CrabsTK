@@ -46,10 +46,10 @@ class TagLibrary {
   int GetNumTags();
 
   /** Prints this object to a Expression. */
-  _::Text& Print(_::Text& txt);
+  Text& Print(Text& txt);
 
  private:
-  data::Array<id::Tag*> tags;  //< Collection of tag strings.
+  data::Array<Tag*> tags;  //< Collection of tag strings.
 };
 }       // namespace _
 #endif  //< HEADER_FOR_KT_ID_TAGLIBRARY

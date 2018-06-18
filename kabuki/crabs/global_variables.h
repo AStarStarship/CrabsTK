@@ -34,6 +34,6 @@ class KABUKI GlobalVariables {
 
 GlobalVariables* GlobalVaraibles
 
-}       //< namespace _ {
+}       //< namespace _
 #endif  //< #ifndef HEADER_FOR_CRABS_GLOBAL_VARIABLES
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

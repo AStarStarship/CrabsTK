@@ -494,7 +494,7 @@ class List {
   uintptr_t* buffer_;  //< Dynamically allocated word-aligned buffer.
 };
 
-}  // namespace _ {
+}  // namespace _
 
 /* Overloaded operator<< prints the list. */
 template <typename UI = uint32_t, typename SI = int16_t>
@@ -505,7 +505,7 @@ inline _::Printer& operator<<(_::Printer& printer, _::List<UI, SI>& list) {
 /* Overloaded operator<< prints the list. */
 template <typename UI = uint32_t, typename SI = int16_t>
 inline _::Printer& operator<<(_::Printer& printer, _::TList<UI, SI>* list) {
-  return PrintList<UI, SI>(printer, list);
+  return _::PrintList<UI, SI>(printer, list);
 }
 
 #undef PRINTF

@@ -128,7 +128,7 @@ const char* HitList::GetSubcategoryImageName(const char* string) {
   return result_;
 }
 
-void HitList::Print(_::Log& log) {}
+void HitList::Print(Log& log) {}
 
 void HitList::LoadTestHits() {
   patches.Clear();

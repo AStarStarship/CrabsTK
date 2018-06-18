@@ -147,7 +147,7 @@ inline const uint_t* Params() {
 }
 
 /* Prints out the BSQ parameters. */
-KABUKI _::Printer& PrintBsq(_::Printer& printer, const uint_t* params);
+KABUKI Printer& PrintBsq(Printer& printer, const uint_t* params);
 
 /*  Prints out the parameters. */
 // KABUKI Printer& PrintBsq (const uint_t* bsq, Printer& print);
@@ -155,7 +155,7 @@ KABUKI _::Printer& PrintBsq(_::Printer& printer, const uint_t* params);
 /*< Returns the requested parameter number. */
 KABUKI uint_t BsqParamNumber(const uint_t* bsq, int param_number);
 
-}  // namespace _ {
+}  // namespace _
 
 /*  Prints out the parameters. */
 inline _::Printer& operator<<(_::Printer& printer, _::Bsq bsq) {

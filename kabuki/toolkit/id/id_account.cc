@@ -55,7 +55,7 @@ Roster& Account::GetUsers() { return users_; }
 
 void Account::AddUser(User& user) { users_.Add(user); }
 
-void Account::Print(_::Log& log) {
+void Account::Print(Log& log) {
   log << "Account Name: " << name_.GetKey()
       << " Password: " << password_.GetKey();
 }

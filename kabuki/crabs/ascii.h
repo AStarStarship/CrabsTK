@@ -55,5 +55,5 @@ enum {
   US,       //< 31
   DEL = 127
 };
-}       //< namespace _ {
+}       //< namespace _
 #endif  //< HEADER_FOR_CRABS_ASCII

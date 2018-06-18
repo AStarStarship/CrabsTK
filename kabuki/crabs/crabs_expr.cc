@@ -950,7 +950,7 @@ Printer& PrintExpr(Printer& print, Expr* expr) {
 
 #endif
 
-}       //< namespace _ {
+}       //< namespace _
 
 #undef PRINTF
 #undef PUTCHAR

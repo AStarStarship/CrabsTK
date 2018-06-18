@@ -54,7 +54,7 @@ class IdServer {
   int RegisterEvent();
 
   /** Prints this object to the console. */
-  void Print(_::Log& log);
+  void Print(Log& log);
 
  private:
   uid_t num_events_;        //< The global number of event created.

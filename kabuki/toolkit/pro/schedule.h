@@ -29,7 +29,11 @@ namespace _ {
     and it can repeat x number of times. Multiple Schedule(string) can be
    combined to create a Calendar. Schedules are designed to minimize the human
    time to insert and manipulate the calendar.
-    
+    
+
+
+
+
 
 
 
@@ -37,19 +41,31 @@ namespace _ {
     day. Given 100 years in a life and 365 days in a year, 5*100*365 < 200K
     Tasks in a normal person's lifetime. Maybe 1M Task(string) tops per
    lifetime.
-    
+    
+
+
+
+
 
 
 
     Where does the Calendar live?
     The calendar lives in the cloud in an SQL database.
-    
+    
+
+
+
+
 
 
 
     How is it loaded?
     It is loaded chunks at a time.
-    
+    
+
+
+
+
 
 
 
@@ -64,11 +80,19 @@ namespace _ {
     When the users has to sit there. When would this happen? Using a very
     large array and inserting into it. That could be a buzz kill. Other than
     that, optimize for developer time. Memory footprint doesn't matter.
-    
+    
 
 
 
-    
+
+
+
+
+    
+
+
+
+
 
 
 
@@ -139,7 +163,7 @@ class Schedule {
       *readme_;            //< Readme for the Schedule.
   int color_,              //< Initial color of all of the Tasks.
       num_repeats_;        //< Number of times the Schedule repeats.
-  _::Array<Task*> tasks_;  //< Array of Task pointers.
+  Array<Task*> tasks_;  //< Array of Task pointers.
 };
 }       //< namespace _
 #endif  //< HEADER_FOR_KT_PRO_SCHEDULE

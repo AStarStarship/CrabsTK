@@ -31,7 +31,7 @@ class KABUKI Profile {
   Profile();
 
   /** Prints this object to the console. */
-  _::Printer& Print(_::Printer& print);
+  Printer& Print(Printer& print);
 
  private:
 };

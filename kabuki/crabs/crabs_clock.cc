@@ -616,7 +616,7 @@ int ClockCompare(time_t t, int year, int month, int day, int hour, int minute,
     PRINTF("\n    Expecting hour:%i but found:%i.", hour, date_a.tm_hour)
     return 4;
 #endif
-  }       //< namespace _ {
+  }       //< namespace _
   if (minute != date_a.tm_min) {
     PRINTF("\n    Expecting minute:%i but found:%i.", minute, date_a.tm_min)
     return 5;
@@ -699,7 +699,7 @@ time_t ClockTime(uint year, uint month, uint day, uint hour, uint minute,
   return t;
 }
 
-}       //< namespace _ {
+}       //< namespace _
 
 #undef PRINTF
 #undef PUTCHAR

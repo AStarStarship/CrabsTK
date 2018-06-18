@@ -481,7 +481,7 @@ const char* ScanBsq (const char* input, const char* input_end,
     }
     return cursor;
 }*/
-}       //< namespace _ {
+}       //< namespace _
 #endif  //< USING_PRINTER
 #undef PRINTF
 #undef PUTCHAR

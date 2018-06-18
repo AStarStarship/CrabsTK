@@ -88,10 +88,10 @@ inline wchar_t OpLast(const Op* op) {
 Printer& Print(Printer& print, const Op* op);
 #endif
 
-}       //< namespace _ {
+}  // namespace _
 
 inline _::Printer& operator<<(_::Printer& print, const _::Op* op) {
-  return Print(print, op);
+  return _::Print(print, op);
 }
 
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5

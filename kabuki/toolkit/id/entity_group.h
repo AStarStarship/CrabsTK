@@ -44,7 +44,7 @@ class KABUKI EntityGroup {
   virtual int Search(const char* string);
 
   /** Prints this object to a expression. */
-  virtual void Print(_::Log& log);
+  virtual void Print(Log& log);
 
  private:
   char *name_,                      //< The name of the entity group.

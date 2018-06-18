@@ -21,7 +21,7 @@ namespace _ {
 
 Person::Person() {}
 
-void Person::Print(_::Log& log) { log << "Person: "; }
+void Person::Print(Log& log) { log << "Person: "; }
 
 }       // namespace _
 #endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2

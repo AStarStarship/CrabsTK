@@ -50,6 +50,6 @@ struct KABUKI Event : public Operand {
   virtual const Op* Star(wchar_t index, Expr* expr) = 0;
 };
 
-}       //< namespace _ {
+}       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >=5
 #endif  //< HEADER_FOR_CRABS_EVENT

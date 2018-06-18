@@ -531,7 +531,7 @@ Printer& Slot::Print(Printer& print) {
 }
 #endif
 
-}       //< namespace _ {
+}       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
 #endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

@@ -37,12 +37,12 @@ typedef enum BOutStates {
 
     The BOut ring buffer is defined as being contiguous
 
-    
+    
 
 
 
     @code
-    
+    
 
 
 
@@ -110,7 +110,7 @@ KABUKI void BInKeyStrokes();
 KABUKI Printer& PrintBOut(Printer& printer, BOut* bout);
 #endif
 
-}       //< namespace _ {
+}  // namespace _
 
 #if USING_PRINTER
 /* Prints out the bin to the text. */

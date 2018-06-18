@@ -52,7 +52,7 @@ Printer& PrintBsq(Printer& print, const uint_t* params) {
   uint_t num_params = *params++, i, type, value = 0;
 
   print << "Param<";
-  if (num_params > _::kParamsMax) {
+  if (num_params > kParamsMax) {
     print << "\nInvalid num_params: " << num_params;
     return print;
   }
@@ -237,6 +237,6 @@ Printer& PrintBsq(Printer& print, const uint_t* params) {
   return print;
 }
 
-}       //< namespace _ {
+}       //< namespace _
 
 #endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3

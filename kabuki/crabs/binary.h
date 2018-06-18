@@ -26,13 +26,13 @@
 namespace _ {
 
 /* Utility class for printing hex with operator<<. */
-template <typename TextWord4>
+template <typename T>
 class Binary {
  public:
-  TextWord4 value;  //< Value to convert to binary.
+  T value;  //< Value to convert to binary.
 
   /* Constructor saves value for use with operator overloads. */
-  Binary(TextWord4 value) : value(value) {}
+  Binary(T value) : value(value) {}
 
   Printer& Print(Printer& printer) {
     char* cursor = printer.cursor;
@@ -49,10 +49,10 @@ class Binary {
   }
 };
 
-}       //< namespace _ {
+}  // namespace _
 
-template <typename TextWord4>
-inline _::Printer& operator<<(_::Printer& printer, _::Binary<TextWord4> value) {
+template <typename T>
+inline Printer& operator<<(Printer& printer, Binary<T> value) {
   return value.Print(printer);
 }
 

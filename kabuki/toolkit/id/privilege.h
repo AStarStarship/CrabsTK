@@ -38,7 +38,7 @@ class KABUKI Privilege {
   Privileges SetPrivilegeLevel(Privileges privileges);
 
   /** Prints this object to a expression. */
-  void Print(_::Log& log);
+  void Print(Log& log);
 
  private:
   int num_privileges;      //< The number of privileges.

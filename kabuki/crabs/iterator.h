@@ -40,6 +40,6 @@ struct KABUKI Iterator {
   virtual bool IsDone() = 0;
 };
 
-}       //< namespace _ {
+}       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >=5
 #endif  //< CRABS_ITERATOR_H

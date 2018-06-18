@@ -1,5 +1,5 @@
 /** Kabuki Toolkit
-    @file    ~/source/kabuki/store/config.h
+    @file    $kabuki-toolkit/kabuki/toolkit/store/config.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version 

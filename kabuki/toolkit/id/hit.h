@@ -104,7 +104,7 @@ class KABUKI Hit {
   const char* ToJson();
 
   /** Prints this object to the given text buffer. */
-  _::Printer Print(_::Printer print);
+  Printer Print(Printer print);
 
  private:
   const char *name_,         //< The name of the hit.

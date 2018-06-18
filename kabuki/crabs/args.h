@@ -1212,7 +1212,7 @@ inline void** Args(void** ptrs, const void* a, const void* b, const void* c,
   return const_cast<void**>(const_ptrs);
 }
 
-}       //< namespace _ {
+}       //< namespace _
 
 #endif  //< MAJOR_SEAM == 1 && MINOR_MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_ARGS

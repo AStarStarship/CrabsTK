@@ -33,7 +33,7 @@ class KABUKI Organization : public Entity {
   Organization();
 
   /** Prints this object to a expression. */
-  void Print(_::Log& log);
+  void Print(Log& log);
 
  private:
 };

@@ -32,7 +32,7 @@ namespace _ {
     @see ~/kabuki-toolkit/source/crabs/text.h
 */
 
-}       //< namespace _ {
+}       //< namespace _
 
 #endif  //< #ifndef HEADER_FOR_CRABS_PRINT_INT
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1

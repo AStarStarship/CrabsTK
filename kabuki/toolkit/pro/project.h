@@ -25,19 +25,19 @@
 namespace _ {
 
 class Project;
-using ProjectArray = _::Stack<Schedule*>;
-using ScheduleArray = _::Stack<Project*>;
+using ProjectArray = Stack<Schedule*>;
+using ScheduleArray = Stack<Project*>;
 
 /* Pops a Project pointer off the stack. */
-Project* Pop(_::Stack<Project*>* stack, const char* result);
+Project* Pop(Stack<Project*>* stack, const char* result);
 
 /* Pushes a Project pointer onto the stack. */
-const char* Push(_::Stack<Project*>* stack, Project* project);
+const char* Push(Stack<Project*>* stack, Project* project);
 
 /* A tree-like Project in the system that can be scheduled.
     An Project can be a person or virtual entity. An Project is identified by
    their unique key. */
-class Project : public _::Operand {
+class Project : public Operand {
  public:
   enum {
     INIT_NUM_SCHEDULES = 4,    //< The initial number of Schedule(string).
@@ -163,7 +163,7 @@ class Project : public _::Operand {
            int spaces_per_tab = 4);
 
   /* Script operations. */
-  virtual const _::Op* Star(wchar_t index, _::Expr* expr);
+  virtual const Op* Star(wchar_t index, Expr* expr);
 
  private:
   char *key_,                 //< Entity key.
@@ -173,6 +173,6 @@ class Project : public _::Operand {
   ProjectArray* projects_;    //< Child projects.
 };
 
-}       //< namespace _
+}  // namespace _
 #endif  //< HEADER_FOR_KT_PRO_PROJECT_H
 #endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 1

@@ -138,6 +138,6 @@ KABUKI const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
 KABUKI const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
                               uint_t offset, char* address);
 
-}       //< namespace _ {
+}       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #endif  //< HEADER_FOR_SCRIPT_MIRROR

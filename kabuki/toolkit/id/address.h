@@ -78,7 +78,7 @@ class KABUKI Address {
   void SetType(AddressType t);
 
   /** Prints this object to a Expression. */
-  void Print(_::Log& log);
+  void Print(Log& log);
 
  private:
   char *street_,      //< The street address.
@@ -89,6 +89,6 @@ class KABUKI Address {
   AddressType type_;  //< The type of address
 };
 
-}       // namespace _
+}  // namespace _
 #endif  //< HEADER_FOR_KT_ID_ADDRESS
 #endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2

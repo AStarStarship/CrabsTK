@@ -78,13 +78,13 @@ Printer& Print (Printer& print, const Operand* op) {
 Printer& PrintOperand(Printer& print, Operand* operand) {
   ASSERT(operand);
 
-  const _::Op* op = operand->Star('?', nullptr);
+  const Op* op = operand->Star('?', nullptr);
   ASSERT(op);
 
   uintptr_t num_ops = reinterpret_cast<uintptr_t>(op->in),
             op_num = reinterpret_cast<uintptr_t>(op->out),
             last_op = op_num + num_ops - 1;
-  if (num_ops > _::kParamsMax) {
+  if (num_ops > kParamsMax) {
     return print << "\nError: Too many parameters!";
   }
   print << "\nOperand         :" << op->name << Line('-', 80);
@@ -115,7 +115,7 @@ Slot& OperandQuery(Operand* root, const char* address, Slot& slot) {
   return slot;
 }
 #endif
-}       //< namespace _ {
+}       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
 #endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

@@ -65,5 +65,5 @@ const char* ErrorString(Error error) {
   return ErrorStrings()[error];
 }
 
-}       //< namespace _ {
+}       //< namespace _
 #endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4

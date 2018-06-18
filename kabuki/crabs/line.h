@@ -51,7 +51,7 @@ class KABUKI StringLine {
   Printer& Print(Printer& printer);
 };
 
-}       //< namespace _ {
+}  // namespace _
 
 inline _::Printer& operator<<(_::Printer& printer, _::Line line) {
   return line.Print(printer);

@@ -29,11 +29,12 @@ namespace _ {
     handles and passwords using the type parameter. This makes it very
     easy to create UserList subclasses for customizing format rules.
     @todo This class needs to use a Script Dictionary.
-    
+    
+
     Users may login and out. When a User logs out the pointer and class gets
     deleted.
 */
-class KABUKI UserList : public _::Operand {
+class KABUKI UserList : public Operand {
  public:
   enum {
     kDefaultMaxUsers = 1024,
@@ -120,7 +121,7 @@ class KABUKI UserList : public _::Operand {
   virtual int Remove(const char* handle);
 
   /** Prints this object to the log. */
-  _::Text& Out(_::Text& txt = _::Text());
+  Text& Out(Text& txt = Text());
 
   /** Handles Script Commands.
       @param text     Beginning of the Text buffer.
@@ -133,7 +134,7 @@ class KABUKI UserList : public _::Operand {
       @param expr  The Expression to read and write from.
       @return      Returns null upon success, a Set header upon query, and an
                    error_t ticket upon Read-Write failure. */
-  virtual const _::Operation* Star(uint index, _::Expression* expr);
+  virtual const Operation* Star(uint index, Expression* expr);
 
  private:
   int num_users_;                 //< Number of users logged in.

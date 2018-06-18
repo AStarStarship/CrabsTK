@@ -27,11 +27,11 @@ int IdServer::NumEvents() { return num_events_; }
 
 int IdServer::RegisterKey(char* key) {
   if (strlen(key) > kMaxKeyLength) return -1;
-  return ids_.Push(_::StringClone(key));
+  return ids_.Push(StringClone(key));
 }
 
 int IdServer::RegisterKey(const char* key) {
-  return RegisterKey(_::StringClone(key));
+  return RegisterKey(StringClone(key));
 }
 
 int IdServer::Find(const char* key) {
@@ -43,7 +43,7 @@ int IdServer::Find(const char* key) {
 
 int IdServer::RegisterEvent() { return num_events_++; }
 
-void IdServer::Print(_::Log& log) {
+void IdServer::Print(Log& log) {
   std::cout << "\n| Id Server:"
             << "\n| num_events: " << num_events_
             << "\n| Registered Handles: \n";

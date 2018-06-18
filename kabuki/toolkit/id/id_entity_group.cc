@@ -20,12 +20,12 @@
 namespace _ {
 
 EntityGroup::EntityGroup(const char* name)
-    : name_(_::StringClone(name == nullptr ? "" : name)) {}
+    : name_(StringClone(name == nullptr ? "" : name)) {}
 
 const char* EntityGroup::GetName() { return name_; }
 
 void EntityGroup::SetName(const char* string) {
-  name_ = _::StringClone(string);
+  name_ = StringClone(string);
 }
 
 void EntityGroup::ApplyPrivilege(const char* privileges) {
@@ -35,7 +35,7 @@ void EntityGroup::ApplyPrivilege(const char* privileges) {
 
 int EntityGroup::Search(const char* string) { return 0; }
 
-void EntityGroup::Print(_::Log& log) { log << "Group: " << name_ << " "; }
+void EntityGroup::Print(Log& log) { log << "Group: " << name_ << " "; }
 
 }       // namespace _
 #endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2

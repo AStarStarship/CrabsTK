@@ -59,7 +59,7 @@ class KABUKI Account {
   void AddUser(User& user);
 
   /** Prints this object to the log. */
-  _::Printer Print(_::Printer& printer);
+  Printer Print(Printer& printer);
 
  private:
   Handle name_;        //< Account handle/name.

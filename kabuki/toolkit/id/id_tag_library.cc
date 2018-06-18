@@ -38,7 +38,7 @@ void TagLibrary::Sort() {
 
 int TagLibrary::GetNumTags() { return tags_.count; }
 
-void TagLibrary::Print(_::Log& log) {}
+void TagLibrary::Print(Log& log) {}
 
 }       // namespace _
 #endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2

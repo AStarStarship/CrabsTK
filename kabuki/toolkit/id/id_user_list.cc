@@ -263,7 +263,7 @@ int UserList::Remove(const char* handle) {
   return num_users;
 }
 
-_::Text& UserList::Print(_::Text& txt) {
+Text& UserList::Print(Text& txt) {
   txt << "\n| UserList: Count:" << Length() << " Size:" << users_.capacity();
 
   for (int i = 0; i < Length(); i++) {
@@ -340,8 +340,8 @@ const char* UserList::Sudo(const char* text, const char* strand_end) {
   return nullptr;
 }
 
-const _::Operation* UserList::Star(uint index, _::Expression* expr) {
-  static const _::Operation This{"UserList", OperationCount(0),
+const Operation* UserList::Star(uint index, Expression* expr) {
+  static const Operation This{"UserList", OperationCount(0),
                                  OperationFirst('A'),
                                  "A session handling user list.", 0};
   // void* args[1];

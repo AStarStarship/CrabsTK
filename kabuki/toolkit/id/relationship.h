@@ -30,7 +30,7 @@ class KABUKI Relationship {
   Relationship();
 
   /** Prints this object to a expression. */
-  void Print(_::Log& log);
+  void Print(Log& log);
 
  private:
   const char* type_;

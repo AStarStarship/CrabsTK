@@ -37,7 +37,7 @@ class KABUKI Date {
   void SetTime(time_t t);
 
   /** Prints this object to the log. */
-  void Print(_::Log& log);
+  void Print(Log& log);
 
  private:
   time_t time;  //< The data time.

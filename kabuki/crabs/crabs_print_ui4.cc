@@ -341,7 +341,7 @@ char* Print(char* cursor, char* end, int32_t value) {
   return Print(cursor, end, (uint32_t)(value * -1));
 }
 
-}       //< namespace _ {
+}       //< namespace _
 #undef PRINTF
 #undef PRINT_PRINTED
 #undef PRINT_HEADER

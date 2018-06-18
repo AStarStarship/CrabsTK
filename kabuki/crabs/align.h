@@ -122,80 +122,80 @@ inline I AlignDown(I value) {  //        v--- LSb Mask
 /* Aligns the given pointer to the sizeof (WordBoundary) down.
     @param  pointer The pointer to align.
     @return The aligned pointer. */
-template <typename WordBoundary = intptr_t, typename TextWord4 = char>
-inline TextWord4* AlignDownPointer(TextWord4* pointer) {
+template <typename WordBoundary = intptr_t, typename T = char>
+inline T* AlignDownPointer(T* pointer) {
   uintptr_t ptr = reinterpret_cast<uintptr_t>(pointer);
-  return reinterpret_cast<TextWord4*>(AlignDown<WordBoundary>(ptr));
+  return reinterpret_cast<T*>(AlignDown<WordBoundary>(ptr));
 }
 
 /* Calculates the offset to align the given pointer to a 16-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template <typename TextWord4 = char>
-inline TextWord4* AlignUpPointer2(void* pointer) {
+template <typename T = char>
+inline T* AlignUpPointer2(void* pointer) {
   // Mask off lower bit and add it to the ptr.
   uintptr_t ptr = reinterpret_cast<uintptr_t>(pointer);
-  return reinterpret_cast<TextWord4*>(ptr + ptr & 0x1);
+  return reinterpret_cast<T*>(ptr + ptr & 0x1);
 }
 
 /* Calculates the offset to align the given pointer to a 16-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template <typename TextWord4 = char>
-inline TextWord4* AlignUpPointer2(const void* pointer) {
+template <typename T = char>
+inline T* AlignUpPointer2(const void* pointer) {
   // Mask off lower bit and add it to the ptr.
   uintptr_t ptr = reinterpret_cast<uintptr_t>(pointer);
-  return reinterpret_cast<TextWord4*>(ptr + ptr & 0x1);
+  return reinterpret_cast<T*>(ptr + ptr & 0x1);
 }
 
 /* Aligns the given pointer to a 32-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template <typename TextWord4 = char>
-inline TextWord4* AlignUpPointer4(void* pointer) {
+template <typename T = char>
+inline T* AlignUpPointer4(void* pointer) {
   int32_t* test = AlignUpPointer<int32_t>(pointer);
-  return reinterpret_cast<TextWord4*>(test);
+  return reinterpret_cast<T*>(test);
 }
 
 /* Aligns the given pointer to a 32-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template <typename TextWord4 = char>
-inline TextWord4* AlignUpPointer4(const void* pointer) {
-  return reinterpret_cast<const TextWord4*>(AlignUpPointer<int32_t>(pointer));
+template <typename T = char>
+inline T* AlignUpPointer4(const void* pointer) {
+  return reinterpret_cast<const T*>(AlignUpPointer<int32_t>(pointer));
 }
 
 /* Aligns the given pointer to a 64-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template <typename TextWord4 = char>
-inline TextWord4* AlignUpPointer8(void* pointer) {
+template <typename T = char>
+inline T* AlignUpPointer8(void* pointer) {
   uintptr_t ptr = reinterpret_cast<uintptr_t>(pointer);
-  return reinterpret_cast<TextWord4*>(AlignUpUnsigned<int64_t>(ptr));
+  return reinterpret_cast<T*>(AlignUpUnsigned<int64_t>(ptr));
 }
 
 /* Aligns the given pointer to a 64-bit word boundary.
     @return A vector you add to a pointer to align it. */
-template <typename TextWord4 = char>
-inline TextWord4* AlignUpPointer8(const void* pointer) {
+template <typename T = char>
+inline T* AlignUpPointer8(const void* pointer) {
   uintptr_t ptr = reinterpret_cast<uintptr_t>(pointer);
-  return reinterpret_cast<const TextWord4*>(AlignUpUnsigned<int64_t>(ptr));
+  return reinterpret_cast<const T*>(AlignUpUnsigned<int64_t>(ptr));
 }
 
 /* Aligns the given pointer to a word boundary.
     @return A vector you add to a pointer to align it. */
-template <typename TextWord4 = char>
-inline TextWord4* AlignUpPointer(const void* pointer) {
+template <typename T = char>
+inline T* AlignUpPointer(const void* pointer) {
   uintptr_t ptr = reinterpret_cast<uintptr_t>(pointer);
-  ptr += ((~ptr) + 1) & (sizeof(TextWord4) - 1);
-  return reinterpret_cast<TextWord4*>(ptr);
+  ptr += ((~ptr) + 1) & (sizeof(T) - 1);
+  return reinterpret_cast<T*>(ptr);
 }
 
 /* Aligns the given pointer to a word boundary.
     @return A vector you add to a pointer to align it. */
-template <typename TextWord4 = char>
-inline TextWord4* AlignUpPointer(void* pointer) {
+template <typename T = char>
+inline T* AlignUpPointer(void* pointer) {
   uintptr_t ptr = reinterpret_cast<uintptr_t>(pointer);
-  ptr += ((~ptr) + 1) & (sizeof(TextWord4) - 1);
-  return reinterpret_cast<TextWord4*>(ptr);
+  ptr += ((~ptr) + 1) & (sizeof(T) - 1);
+  return reinterpret_cast<T*>(ptr);
 }
 
-}       //< namespace _ {
+}  // namespace _
 #endif  //< HEADER_FOR_CRABS_ALIGN
 
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2

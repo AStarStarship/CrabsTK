@@ -29,5 +29,5 @@ const char* RoomCrashException::what() const throw() {
 }
 #endif
 
-}       //< namespace _ {
+}       //< namespace _
 #endif  //< USING_CRABS_INTERRUPTS

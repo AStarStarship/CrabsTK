@@ -45,7 +45,7 @@ Download CMake Executables (Building CMake is outside of the scope of this Guide
 
 ## Step 2
 
-Open a console in the ~/source/kabuki folder and build the Kabuki Toolkit Library with the command:
+Open a console in the $kabuki-toolkit/kabuki/toolkit folder and build the Kabuki Toolkit Library with the command:
 
 ```
 cmake ./

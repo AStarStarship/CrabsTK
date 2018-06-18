@@ -75,7 +75,7 @@ char EmailAddressmapToDomain (Match match)
 }
     */
 
-void EmailAddress::Print(_::Log& log) {}
+void EmailAddress::Print(Log& log) {}
 
 }       // namespace _
 #endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2

@@ -136,12 +136,12 @@ inline const Op* BOutRead(BOut* bout, const uint_t* params, void** args) {
 KABUKI Printer& Print(Printer& printer, BIn* bin);
 #endif
 
-}       //< namespace _ {
+}  // namespace _
 
 #if USING_PRINTER
 /* Prints out the bin to the text. */
 inline _::Printer& operator<<(_::Printer& print, _::BIn* bin) {
-  return _::Print(print, bin);
+  return Print(print, bin);
 }
 #endif
 

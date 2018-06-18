@@ -1,5 +1,5 @@
 /** Kabuki Toolkit
-    @file    ~/source/kabuki/store/inventory.h
+    @file    $kabuki-toolkit/kabuki/toolkit/store/inventory.h
     @author  Cale McCollough <calemccollough.github.io>
     @license Copyright (C) 2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 

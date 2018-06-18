@@ -93,7 +93,7 @@ KABUKI void* TypeAlign(type_t type, void* value);
     C++11 variadic templates ensure there is only one copy in of the given
     string in ROM. */
 template <char kCharA_, char kCharB_, char kCharC_>
-inline uint32_t TextWord4() {
+inline uint32_t T() {
   return ((uint32_t)kCharA_) & (((uint32_t)kCharB_) << 8) &
          (((uint32_t)kCharC_) << 16);
 }
@@ -188,12 +188,11 @@ inline bool TypeIsSet(uint_t type) { return type >= kTypeCount; }
     @param  value A 2's complement integer.
     @return An signed varint.
 */
-template <typename TextWord4>
-inline TextWord4 TypePackVarint(TextWord4 value) {
-  TextWord4 sign_bit =
-      value >> ((sizeof(TextWord4) * 8 - 1));  //< Extract the sign bit.
+template <typename T>
+inline T TypePackVarint(T value) {
+  T sign_bit = value >> ((sizeof(T) * 8 - 1));  //< Extract the sign bit.
   if (sign_bit != 0) {
-    TextWord4 uncomplemented = (~value) + 1;
+    T uncomplemented = (~value) + 1;
     return sign_bit | (uncomplemented << 1);
   }
   // Else don't complemented.
@@ -204,9 +203,9 @@ inline TextWord4 TypePackVarint(TextWord4 value) {
     A varint is an complemented signed integer with the sign in the LSb.
     @param  A signed integer casted as an unsigned integer.
     @return Returns a standard signed integer cased as unsigned. */
-template <typename TextWord4>
-inline TextWord4 TypeUnpackVarint(TextWord4 value) {
-  TextWord4 sign_bit = value << (sizeof(TextWord4) * 8 - 1);
+template <typename T>
+inline T TypeUnpackVarint(T value) {
+  T sign_bit = value << (sizeof(T) * 8 - 1);
   value = value >> 1;
   if (sign_bit) {
     value = ~(value - 1);
@@ -250,16 +249,16 @@ KABUKI Printer& PrintType(Printer& printer, type_t type, const void* value);
 
 inline int TypeSizeWidthCode(type_t type) { return type >> 6; }
 
-template <typename TextWord4 = char>
-TextWord4* TypeAlignUpPointer(void* pointer, type_t type) {
+template <typename T = char>
+T* TypeAlignUpPointer(void* pointer, type_t type) {
   if (type <= UI1)
-    return reinterpret_cast<TextWord4*>(pointer);
+    return reinterpret_cast<T*>(pointer);
   else if (type <= HLF)
-    return AlignUpPointer2<TextWord4>(pointer);
+    return AlignUpPointer2<T>(pointer);
   else if (type <= TMS)
-    return AlignUpPointer4<TextWord4>(pointer);
+    return AlignUpPointer4<T>(pointer);
   else if (type <= DEC)
-    return AlignUpPointer8<TextWord4>(pointer);
+    return AlignUpPointer8<T>(pointer);
   // else it's an ASCII Object.
   // | Code | Binary | Mask needed |
   // |:----:|:------:|:-----------:|
@@ -268,10 +267,10 @@ TextWord4* TypeAlignUpPointer(void* pointer, type_t type) {
   // |  2   | 0b'10  |   0b'011    |
   // |  3   | 0b'11  |   0b'111    |
   uintptr_t ptr = reinterpret_cast<uintptr_t>(pointer), mask = (type >> 6);
-  if (mask == 2) return AlignUpPointer4<TextWord4>(pointer);
-  if (mask == 3) return AlignUpPointer8<TextWord4>(pointer);
+  if (mask == 2) return AlignUpPointer4<T>(pointer);
+  if (mask == 3) return AlignUpPointer8<T>(pointer);
   ptr += ((~ptr) + 1) & mask;
-  return reinterpret_cast<TextWord4*>(ptr);
+  return reinterpret_cast<T*>(ptr);
 }
 
 }  // namespace _

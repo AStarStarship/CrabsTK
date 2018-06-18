@@ -62,7 +62,7 @@ int32_t AlignPowerOf2(int32_t value) {
   return (int32_t)value;
 }
 
-}       //< namespace _ {
+}       //< namespace _
 #undef PRINTF
 #undef PUTCHAR
 #endif  //< MAJOR_SEAM == 1 && MINOR_SEAM >= 2

@@ -45,6 +45,6 @@ struct Language {
       lowercase_end;        //< Last lowercase Unicode char index.
 };
 
-}       //< namespace _ {
+}       //< namespace _
 #endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
 #endif  //< HEADER_FOR_CRABS_LANGUAGE

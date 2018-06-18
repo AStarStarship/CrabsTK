@@ -25,7 +25,7 @@ time_t Date::GetTime() { return time; }
 
 void Date::SetTime(time_t t) { time = t; }
 
-void Date::Print(_::Log& log) {}
+void Date::Print(Log& log) {}
 
-}       // namespace _
+}  // namespace _
 #endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2

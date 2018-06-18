@@ -14,9 +14,9 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KT_PRO_MODULE_H
-#define HEADER_FOR_KT_PRO_MODULE_H
+#ifndef HEADER_FOR_KABUKI_TOOLKIT_PRO_MODULE_H
+#define HEADER_FOR_KABUKI_TOOLKIT_PRO_MODULE_H
 
 #include "../config.h"
 
-#endif  //< HEADER_FOR_KT_PRO_MODULE_H
+#endif  //< HEADER_FOR_KABUKI_TOOLKIT_PRO_MODULE_H

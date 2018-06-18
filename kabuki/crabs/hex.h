@@ -70,26 +70,26 @@ KABUKI int HexToByte(byte c);
 KABUKI int HexToByte(uint16_t h);
 
 /* Utility class for printing hex with operator<<. */
-template <typename TextWord4 = uintptr_t>
+template <typename T = uintptr_t>
 class Hex {
  public:
-  TextWord4 value;  //< Value to convert to hex.
+  T value;  //< Value to convert to hex.
 
   /* Constructor saves value for use with operator overloads. */
-  Hex(TextWord4 value) : value(value) {}
+  Hex(T value) : value(value) {}
 
   /* Constructor saves value for use with operator overloads. */
-  Hex(void* pointer) : value(reinterpret_cast<TextWord4>(pointer)) {}
+  Hex(void* pointer) : value(reinterpret_cast<T>(pointer)) {}
 
   Printer& Print(Printer& printer) {
-    enum { kSize = sizeof(TextWord4) * 2 + 2 };
+    enum { kSize = sizeof(T) * 2 + 2 };
     char* l_cursor = printer.cursor;
     char* temp = l_cursor;
     intptr_t space = printer.end - l_cursor;
     if (space <= kSize) return printer;
     *l_cursor++ = '0';
     *l_cursor++ = 'x';
-    for (int num_bits_shift = sizeof(TextWord4) * 8 - 4; num_bits_shift >= 0;
+    for (int num_bits_shift = sizeof(T) * 8 - 4; num_bits_shift >= 0;
          num_bits_shift -= 4) {
       *l_cursor++ = HexNibbleToUpperCase((byte)(value >> num_bits_shift));
     }
@@ -180,10 +180,10 @@ inline char* PrintHex(char* text, char* text_end, const void* ptr) {
   return PrintHex(text, text_end, (uintptr_t)ptr);
 }
 
-}       //< namespace _ {
+}  // namespace _
 
-template <typename TextWord4>
-inline _::Printer& operator<<(_::Printer& printer, _::Hex<TextWord4> value) {
+template <typename T>
+inline _::Printer& operator<<(_::Printer& printer, _::Hex<T> value) {
   return value.Print(printer);
 }
 

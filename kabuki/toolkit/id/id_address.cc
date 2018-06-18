@@ -36,53 +36,53 @@ Address::Address() {
 
 Address::Address(const char* street, const char* city, const char* state,
                  const char* zip, const char* country, AddressType type)
-    : street_(_::StringClone(street)),
-      city_(_::StringClone(city)),
-      state_(_::StringClone(state)),
-      zip_(_::StringClone(zip)),
-      country_(_::StringClone(country)),
+    : street_(StringClone(street)),
+      city_(StringClone(city)),
+      state_(StringClone(state)),
+      zip_(StringClone(zip)),
+      country_(StringClone(country)),
       type_(type) {}
 
 const char* Address::GetStreet() { return street_; }
 
 void Address::SetStreet(const char* string) {
   delete street_;
-  street_ = _::StringClone(string);
+  street_ = StringClone(string);
 }
 
 const char* Address::GetCity() { return city_; }
 
 void Address::SetCity(const char* string) {
   delete city_;
-  city_ = _::StringClone(string);
+  city_ = StringClone(string);
 }
 
 const char* Address::GetState() { return state_; }
 
 void Address::SetState(const char* string) {
   delete state_;
-  state_ = _::StringClone(string);
+  state_ = StringClone(string);
 }
 
 const char* Address::GetZip() { return zip_; }
 
 void Address::SetZip(const char* string) {
   delete zip_;
-  zip_ = _::StringClone(string);
+  zip_ = StringClone(string);
 }
 
 const char* Address::GetCountry() { return country_; }
 
 void Address::SetCountry(const char* string) {
   delete country_;
-  country_ = _::StringClone(string);
+  country_ = StringClone(string);
 }
 
 AddressType Address::GetType() { return type_; }
 
 void Address::SetType(AddressType t) { type_ = t; }
 
-void Address::Print(_::Log& log) {
+void Address::Print(Log& log) {
   log << "Address:"
       << "\n Street         : " << street_ << "\n City           : " << city_
       << "\n State/Province : " << state_ << "\n Zip/Postal Code: " << zip_

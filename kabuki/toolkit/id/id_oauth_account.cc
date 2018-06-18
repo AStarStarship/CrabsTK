@@ -21,7 +21,7 @@ namespace _ {
 
 OAuthAccount::OAuthAccount() {}
 
-void OAuthAccount::Print(_::Log& log) {}
+void OAuthAccount::Print(Log& log) {}
 
 }       // namespace _
 #endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2
