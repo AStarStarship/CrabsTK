@@ -1,35 +1,32 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/libraries/crabs/bag.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough
-   <calemccollough@gmail.com>; All right reserved (R). Licensed under the Apache
-   License, Version 2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    ~/libraries/crabs/bag.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
 #ifndef HEADER_FOR_CRABS_BOOK
 #define HEADER_FOR_CRABS_BOOK
 // Dependencies:
 #include "memory.h"
 #include "type.h"
 // End dependencies.
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if SEAM_MAJOR == 0 && SEAM_MINOR == 3
 #ifndef PRINTF
-#define PRINTF(format, ...) printf(format, __VA_ARGS__);
-#define PUTCHAR(c) putchar(c);
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PUTCHAR(c) putchar(c)
 #define PRINT_HEADING \
   std::cout << '\n';  \
-  for (int i = 80; i > 0; --i) std::cout << '-';
+  for (int i = 80; i > 0; --i) std::cout << '-'
 #endif
 #else
 #define PRINTF(x, ...)
@@ -44,8 +41,14 @@ namespace _ {
 
 
 
+
+
+
     @ingroup Book
     
+
+
+
 
 
 
@@ -622,7 +625,7 @@ void MultimapPrint(const TMap<SI, I>* multimap) {
                              sizeof (UI) + sizeof (I))),
         * unsorted_indexes = indexes + count_max,
         * collission_list = unsorted_indexes + count_max,
-        *cursor;
+        *begin;
     const char* keys = reinterpret_cast<const char*> (multimap) + table_size - 1;
 
     PRINTF ("\n%3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset",
@@ -643,13 +646,13 @@ void MultimapPrint(const TMap<SI, I>* multimap) {
 
     if (collision_index != ~0 && i < item_count) {
       // Print collisions.
-      cursor = &collission_list[collision_index];
-      temp = *cursor;
-      ++cursor;
+      begin = &collission_list[collision_index];
+      temp = *begin;
+      ++begin;
       PRINTF("%u", temp);
       while (temp != ~0) {
-        temp = *cursor;
-        ++cursor;
+        temp = *begin;
+        ++begin;
         if (temp == ~0) break;
         PRINTF(", %u", temp);
       }
@@ -723,7 +726,7 @@ TMap<SI, I>* MultimapCreate(I buffered_indexes, UI table_size, UI size) {
 
 /* Prints the given TMultimap to the console. */
 template <typename UI, typename SI, typename I>
-Printer& MultimapPrint(Printer& print, TMap<SI, I>* multimap) {}
+Printer1& MultimapPrint(Printer1& print, TMap<SI, I>* multimap) {}
 
 /* C++ Wrapper class for an ASCII Multimap that uses dynamic memory and can
     auto-grow. */
@@ -801,7 +804,7 @@ class Multimap {
   }
 
   /* Prints the given TMultimap to the console. */
-  inline Printer& Print(Printer& printer) {
+  inline Printer1& Print(Printer1& printer) {
     auto multimap = reinterpret_cast<Multimap<SI, I>>(buffer_);
     return MultimapPrint<SI, I>(multimap);
   }
@@ -816,10 +819,10 @@ using Multimap2 = TMap<byte, uint16_t, uint16_t>;
 using Multimap4 = TMap<uint16_t, uint16_t, uint32_t>;
 using Multimap8 = TMap<uint32_t, uint32_t, uint64_t>;
 
-}       //< namespace _
+}   //< namespace _
 
 #undef PRINTF
 #undef PUTCHAR
 #undef PRINT_HEADING
 #endif  //< HEADER_FOR_CRABS_BOOK
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0

@@ -1,34 +1,31 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/kabuki-toolkit/kabuki/crabs/crabs_slot.cc
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/crabs_slot.cc
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
 #include "hex.h"
 #include "line.h"
-#include "print_int.h"
+#include "print_integer.h"
 #include "slot.h"
 #include "text.h"
 #include "type.h"
 // End dependencies.
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
+#if SEAM_MAJOR == 0 && SEAM_MINOR == 4
 
-#define PRINTF(format, ...) printf(format, __VA_ARGS__);
-#define PUTCHAR(c) putchar(c);
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PUTCHAR(c) putchar(c)
 #define PRINT_BSQ(bsq) Console<>().Out() << header << '\n' << Bsq(bsq);
 #else
 #define PRINTF(x, ...)
@@ -523,7 +520,7 @@ const Op* Slot::Write(Slot& other) { return nullptr; }
 const Op* Slot::Write(const char* message) { return nullptr; }
 
 #if USING_PRINTER
-Printer& Slot::Print(Printer& print) {
+Printer1& Slot::Print(Printer1& print) {
   char *l_begin = begin, *l_end = end;
   return print << Line('_', 80) << "\nSlot: begin:" << Hex<>(l_begin)
                << " start:" << Hex<>(start) << "\nstop:" << Hex<>(stop)
@@ -531,7 +528,7 @@ Printer& Slot::Print(Printer& print) {
 }
 #endif
 
-}       //< namespace _
+}   //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

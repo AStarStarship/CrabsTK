@@ -1,8 +1,8 @@
 /** Kabuki Toolkit
-    @version 0.x
-    @file    ~/libraries/stdafx.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
+@version 0.x
+@file    ~/libraries/stdafx.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version 
              2.0 (the "License"); you may not use this file except in 
              compliance with the License. You may obtain a copy of the License 
@@ -17,8 +17,8 @@
 #pragma once
 
 #define DEBUGGING  1
-#define MAJOR_SEAM 1
-#define MINOR_SEAM 3
+#define SEAM_MAJOR 1
+#define SEAM_MINOR 3
 
 #ifdef WIN32
 #include "targetver.h"

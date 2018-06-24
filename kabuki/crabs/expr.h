@@ -1,24 +1,21 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/kabuki-toolkit/kabuki/crabs/expr.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/expr.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
 #ifndef HEADER_FOR_CRABS_EXPR
 #define HEADER_FOR_CRABS_EXPR
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
 #include "args.h"
 #include "bin.h"
@@ -38,12 +35,20 @@ namespace _ {
     App/Driver/User writes to the end of the Tx buffer and the driver reads from
     the beginning. The user writes are synchronous and the driver reads are
     asynchronous.
-    
+    
+
+
+
+
 
 
 
     # Ring Buffer Streaming Diagram
-    
+    
+
+
+
+
 
 
 
@@ -56,18 +61,30 @@ namespace _ {
     BIn   |>-Buffer->|>-Async Portal Tx->|>-Sync User Writes->|>-Buffer->|
           |__________|___________________|____________________|__________|
     @endcode
-    
+    
+
+
+
+
 
 
 
     Almost all block of memory in Script has something that grows up and another
     that grows down.
-    
+    
+
+
+
+
 
 
 
     # Stack Memory Layout
-    
+    
+
+
+
+
 
 
 
@@ -225,7 +242,11 @@ inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
    const char* cursor = ArgsParse (expr->args_cursor, expr->args_end,
                                    params, args);
    if (!cursor) {
-       
+       
+
+
+
+
 
 
 
@@ -292,20 +313,20 @@ KABUKI const Op* ExprQuery(Expr* expr, const Op* op);
 
 #if USING_PRINTER
 /* Prints the Expr stack to the Text buffer */
-KABUKI Printer& PrintExpr(Printer& printer, Expr* expr);
+KABUKI Printer1& PrintExpr(Printer1& printer, Expr* expr);
 
 /* Prints the Expr stack to the Text buffer */
-KABUKI Printer& PrintExprStack(Printer& printer, Expr* expr);
+KABUKI Printer1& PrintExprStack(Printer1& printer, Expr* expr);
 #endif
 
-}  // namespace _
+}   //< namespace _
 
 #if USING_PRINTER
 /* Prints the given Expr to the Text buffer. */
-inline _::Printer& operator<<(_::Printer& printer, _::Expr* expr) {
+inline _::Printer1& operator<<(_::Printer1& printer, _::Expr* expr) {
   return _::PrintExpr(printer, expr);
 }
 #endif
 
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 #endif  //< HEADER_FOR_CRABS_EXPR

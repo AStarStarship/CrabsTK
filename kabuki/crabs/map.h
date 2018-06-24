@@ -1,36 +1,33 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/kabuki-toolkit/kabuki/crabs/map.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/map.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
 #ifndef HEADER_FOR_CRAPS_MAP
 #define HEADER_FOR_CRAPS_MAP
 // Dependencies:
 #include "memory.h"
 #include "type.h"
 // End dependencies.
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if SEAM_MAJOR == 0 && SEAM_MINOR == 3
 #ifndef PRINTF
-#define PRINTF(format, ...) printf(format, __VA_ARGS__);
-#define PUTCHAR(c) putchar(c);
-#define PRINT_HEADING                              \
-  {                                                \
-    std::cout << '\n';                             \
-    for (int i = 80; i > 0; --i) std::cout << '-'; \
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PUTCHAR(c) putchar(c)
+#define PRINT_HEADING                             \
+  {                                               \
+    std::cout << '\n';                            \
+    for (int i = 80; i > 0; --i) std::cout << '-' \
   }
 #define PRINT_TYPE(type, value) Console<>().Out() << TypeValue(type, value);
 #define WIPE MapWipe<UI, SI>(map);
@@ -556,7 +553,7 @@ bool MapRemove(TMap<UI, SI, I>* map, void* adress) {
 
 /* Prints this object out to the console. */
 template <typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
-Printer& MapPrint(Printer& print, const TMap<UI, SI, I>* map) {
+Printer1& MapPrint(Printer1& print, const TMap<UI, SI, I>* map) {
   ASSERT(map)
 
   SI count = map->count, collision_index, temp;
@@ -580,7 +577,7 @@ Printer& MapPrint(Printer& print, const TMap<UI, SI, I>* map) {
   const SI *indexes = reinterpret_cast<const SI*>(
                states + count * (sizeof(UI) + sizeof(UI) + sizeof(SI))),
            *unsorted_indexes = indexes + count,
-           *collission_list = unsorted_indexes + count, *cursor;
+           *collission_list = unsorted_indexes + count, *begin;
   const char* keys = reinterpret_cast<const char*>(map) + table_size - 1;
   print << "\n " << Right<>("i", 3) << Right<>("key", 10)
         << Right<>("offset", 8) << Right<>("hash_e", 10)
@@ -603,13 +600,13 @@ Printer& MapPrint(Printer& print, const TMap<UI, SI, I>* map) {
 
     if (collision_index != ~0 && i < item_count) {
       // Print collisions.
-      cursor = &collission_list[collision_index];
-      temp = *cursor;
-      ++cursor;
+      begin = &collission_list[collision_index];
+      temp = *begin;
+      ++begin;
       print << temp;
       while (temp != ~0) {
-        temp = *cursor;
-        ++cursor;
+        temp = *begin;
+        ++begin;
         if (temp == ~0) break;
         print << ", " << temp;
       }
@@ -669,7 +666,7 @@ class Map {
   inline void Clear() { MapClear<UI, SI, I>(This()); }
 
   /* Prints this object to a printer. */
-  inline Printer& Print(Printer& printer) {
+  inline Printer1& Print(Printer1& printer) {
     return MapPrint<UI, SI, I>(print, This());
   }
 
@@ -681,7 +678,7 @@ class Map {
     return reinterpret_cast<TMap<UI, SI, I>*>(buffer);
   }
 };  //< class Map
-}       //< namespace _
+}  // namespace _
 #endif  //< HEADER_FOR_CRAPS_MAP
 #undef PRINTF
 #undef PUTCHAR
@@ -689,4 +686,4 @@ class Map {
 #undef PRINT_TYPE
 #undef WIPE
 #undef PRINT_LINE
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0

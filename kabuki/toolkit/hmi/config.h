@@ -1,7 +1,7 @@
 /* Kabuki Toolkit
-    @file    ~/source/hmi/hmi_config.h
-    @author  Cale McCollough <calemccollough.github.io>
-    @license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
+@file    ~/source/hmi/hmi_config.h
+@author  Cale McCollough <calemccollough.github.io>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
              2.0 (the "License"); you may not use this file except in
              compliance with the License. You may obtain a copy of the License
@@ -15,11 +15,11 @@
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2
+#if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
 #ifndef HEADER_FOR_KABUKI_HMI_MODULE_COFIG
 #define HEADER_FOR_KABUKI_HMI_MODULE_COFIG
 
 #include "../config.h"
 
 #endif  //< HEADER_FOR_KABUKI_HMI_MODULE_COFIG
-#endif  //< #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 2
+#endif  //< #if SEAM_MAJOR >= 2 && SEAM_MINOR >= 0

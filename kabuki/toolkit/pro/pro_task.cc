@@ -15,7 +15,7 @@
 */
 
 #include <stdafx.h>
-#if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 1
+#if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
 #include "task.h"
 
 namespace _ {
@@ -338,4 +338,4 @@ const char* Task::Command(char* input) {
 }
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 1
+#endif  //< #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0

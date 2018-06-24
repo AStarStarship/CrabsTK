@@ -1,21 +1,18 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/kabuki-toolkit/kabuki/crabs/crabs_bin.cc
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/crabs_bin.cc
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
 #include "bin.h"
 #include "bout.h"
@@ -27,10 +24,10 @@
 #include "slot.h"
 #include "type.h"
 // End dependencies.
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
+#if SEAM_MAJOR == 0 && SEAM_MINOR == 4
 #define DEBUG 1
-#define PRINTF(format, ...) printf(format, __VA_ARGS__);
-#define PUTCHAR(c) putchar(c);
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PUTCHAR(c) putchar(c)
 #define CLEAR(begin, end) \
   while (begin <= end) *begin++ = ' ';
 #define PRINT_BSQ(header, bsq) Console<>().Out() << header << '\n' << Bsq(bsq);
@@ -131,7 +128,7 @@ BIn* BInInit(uintptr_t* buffer, uint_t size) {
 int BInStreamByte(BIn* bin) {
   char *begin = BInBegin(bin), *end = begin + bin->size - 1;
   char *open = (char*)begin + bin->read, *start = begin + bin->start,
-       *cursor = start;
+       *begin = start;
 
   int length = (int)((start < open) ? open - start + 1
                                     : (end - start) + (open - begin) + 2);
@@ -141,9 +138,9 @@ int BInStreamByte(BIn* bin) {
     return -1;
   }
   // byte b = *cursor;
-  bin->stop = (++cursor >= end)
+  bin->stop = (++begin >= end)
                   ? static_cast<uint_t>(MemoryVector(begin, end))
-                  : static_cast<uint_t>(MemoryVector(begin, cursor));
+                  : static_cast<uint_t>(MemoryVector(begin, begin));
   return 0;
 }
 
@@ -597,7 +594,7 @@ const Op* BInRead(BIn* bin, const uint_t* params, void** args) {
 }
 
 #if USING_PRINTER
-Printer& Print(Printer& print, BIn* bin) {
+Printer1& Print(Printer1& print, BIn* bin) {
   ASSERT(bin);
 
   uint_t size = bin->size;
@@ -608,7 +605,7 @@ Printer& Print(Printer& print, BIn* bin) {
 }
 #endif
 
-}       //< namespace _
+}   //< namespace _
 
 #undef PRINTF
 #undef PUTCHAR
@@ -616,4 +613,4 @@ Printer& Print(Printer& print, BIn* bin) {
 #undef PRINT_BSQ
 #undef PRINT_BIN
 #undef DEBUG
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

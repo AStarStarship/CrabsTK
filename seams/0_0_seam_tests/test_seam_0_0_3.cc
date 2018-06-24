@@ -1,7 +1,7 @@
 /* Kabuki Toolkit
-    @file    ~/tests/seam_1/test_seam_1.cc
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
+@file    ~/tests/seam_1/test_seam_1.cc
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
              2.0 (the "License"); you may not use this file except in
              compliance with the License. You may obtain a copy of the License
@@ -14,11 +14,11 @@
 */
 
 #include <stdafx.h>
-#if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#if SEAM_MAJOR >= 1 && SEAM_MINOR >= 3
 // Dependencies:
-#include "test_seam_1.h"
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
-#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#include "test_seam_0.h"
+#if SEAM_MAJOR == 0 && SEAM_MINOR == 3
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
   printf("\n\n%s\n", message); \
   system("PAUSE");
@@ -93,6 +93,10 @@ TEST(SEAM_1_3, SEAM_1_3A) {
 
 
 
+
+
+
+
   PRINT_PAUSE ("\n\nDone Array!")
   */
 
@@ -147,6 +151,10 @@ TEST(SEAM_1_3, SEAM_1_3A) {
 
   /*
   
+
+
+
+
 
 
 
@@ -242,4 +250,4 @@ TEST(SEAM_1_3, SEAM_1_3A) {
 #undef PRINTF
 #undef PRINT_PAUSE
 #undef PRINT_HEADING
-#endif  //< #if MAJOR_SEAM >= 1 && MINOR_SEAM >= 3
+#endif  //< #if SEAM_MAJOR >= 1 && SEAM_MINOR >= 3

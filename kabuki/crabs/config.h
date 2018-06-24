@@ -1,18 +1,15 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/kabuki-toolkit/library/crabs/config.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    $kabuki-toolkit/library/crabs/config.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
@@ -20,19 +17,19 @@
 #ifndef HEADER_FOR_CRABS_CONFIG
 #define HEADER_FOR_CRABS_CONFIG
 
-inline bool Assert(bool condition) { return !condition; }
-
-#define ASSERT(condition)                                                  \
-  if (Assert(condition)) {                                                 \
-    printf("\nAssertion failed at line %d in \"%s\"", __LINE__, __FILE__); \
-    while (1)                                                              \
-      ;                                                                    \
-  }
-
 inline bool ErrorDisplay(int line, const char* file) {
   printf("\nError at line %d in \"%s\"", line, file);
   return true;
 }
+inline bool Assert(bool condition) { return !condition; }
+inline bool AssertPrintLAndLock() {
+  printf("\nAssertion failed at line %d in \"%s\"", __LINE__, __FILE__);
+  while (1)
+    ;
+}
+
+#define ASSERT(condition) \
+  if (Assert(condition)) AssertPrintLAndLock();
 
 //#define ERROR(condition) \
 //  ((uintptr_t)(condition) == 0) ? ErrorDisplay(__LINE__, __FILE__) : false
@@ -66,6 +63,10 @@ inline bool ErrorDisplay(int line, const char* file) {
 #define YES 1  //< Logical yes.
 #define NO 0   //< Logical no.
 
+#define UTF8 1   //< flag for UTF-8.
+#define UTF16 2  //< Flag for UTF-16.
+#define UTF32 3  //< Flag for UTF-32.
+
 // Executable assembly type macro.
 #define EXECECUTABLE 1
 
@@ -82,11 +83,24 @@ inline bool ErrorDisplay(int line, const char* file) {
 
 #include <assembly.h>  //< Inline config stuff for your project.
 
-#if CRABS_FORCE_WORD_ALIGN
-#define ALIGN_POINTER(pointer) pointer = MemoryAlign < ;
-#else
-#define ALIGN_POINTER(pointer)
+#if CRABS_NATIVE_UTF == UTF8
+typename char char_t;
+#elif CRABS_NATIVE_UTF == UTF16
+typename char16_t char_t;
+#elif CRABS_NATIVE_UTF == UTF32
 #endif
+
+#undef UTF8
+#undef UTF16
+#undef UTF32
+#undef USE_UTF8
+#undef USE_UTF16
+
+//#if CRABS_FORCE_WORD_ALIGN
+//#define ALIGN_POINTER(pointer) pointer = MemoryAlign < ;
+//#else
+//#define ALIGN_POINTER(pointer)
+//#endif
 typedef const char* string_ptr;
 
 #if CRABS_MAX_ERRORS < 0
@@ -174,7 +188,8 @@ enum {
 
   kStackCountMaxDefault = 32,
 };
-}  // namespace _ {
+
+}  // namespace _
 
 #undef MAX_ERRORS
 #undef MAX_NUM_PARAMS
@@ -218,7 +233,7 @@ enum { kMaxNumSlots = 0xffffffff };
     @code
     #include <iostream>
     #define NaN_SI4 0xFFFFFFF
-    void BlowUp () { PRINTF ("The sky is falling!"}
+    void BlowUp () { PRINTF ("The sky is falling!");
     if (-1 == NaN_SI4)
         BlowUp ();
     @endcode

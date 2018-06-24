@@ -1,27 +1,24 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/kabuki-toolkit/kabuki/crabs/op.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/op.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
 #ifndef HEADER_FOR_CRABS_OP
 #define HEADER_FOR_CRABS_OP
 // Dependencies:
 #include "error.h"
-#include "printer.h"
+#include "utf8.h"
 // End dependencies.
 
 namespace _ {
@@ -85,14 +82,14 @@ inline wchar_t OpLast(const Op* op) {
 }
 
 #if USING_PRINTER
-Printer& Print(Printer& print, const Op* op);
+Printer1& Print(Printer1& print, const Op* op);
 #endif
 
-}  // namespace _
+}   //< namespace _
 
-inline _::Printer& operator<<(_::Printer& print, const _::Op* op) {
+inline _::Printer1& operator<<(_::Printer1& print, const _::Op* op) {
   return _::Print(print, op);
 }
 
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
 #endif  //< HEADER_FOR_CRABS_OP

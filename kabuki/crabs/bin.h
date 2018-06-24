@@ -1,22 +1,19 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/kabuki-toolkit/kabuki/crabs/bin.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/bin.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 #ifndef HEADER_FOR_CRABS_BIN
 #define HEADER_FOR_CRABS_BIN
 // Dependencies:
@@ -133,17 +130,17 @@ inline const Op* BOutRead(BOut* bout, const uint_t* params, void** args) {
     @param  bin The pin to print.
     @param  text The Text to print the bin to.
     @return The text. */
-KABUKI Printer& Print(Printer& printer, BIn* bin);
+KABUKI Printer1& Print(Printer1& printer, BIn* bin);
 #endif
 
-}  // namespace _
+}   //< namespace _
 
 #if USING_PRINTER
 /* Prints out the bin to the text. */
-inline _::Printer& operator<<(_::Printer& print, _::BIn* bin) {
+inline _::Printer1& operator<<(_::Printer1& print, _::BIn* bin) {
   return Print(print, bin);
 }
 #endif
 
 #endif  //< HEADER_FOR_CRABS_BIN
-#endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

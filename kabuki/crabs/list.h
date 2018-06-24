@@ -1,22 +1,19 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/libraries/crabs/list.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    ~/libraries/crabs/list.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
 #ifndef HEADER_FOR_CRABS_LIST
 #define HEADER_FOR_CRABS_LIST
 // Dependencies:
@@ -24,13 +21,13 @@
 #include "set.h"
 #include "stack.h"
 // End dependencies.
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if SEAM_MAJOR == 0 && SEAM_MINOR == 3
 #ifndef PRINTF
-#define PRINTF(format, ...) printf(format, __VA_ARGS__);
-#define PUTCHAR(c) putchar(c);
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PUTCHAR(c) putchar(c)
 #define PRINT_HEADING \
   std::cout << '\n';  \
-  for (int i = 80; i > 0; --i) std::cout << '-';
+  for (int i = 80; i > 0; --i) std::cout << '-'
 #define PRINT_TYPE(type, value) Console<>().Out() << TypeValue(type, value);
 #define WIPE ListWipe<UI, SI>(list);
 #endif
@@ -45,7 +42,7 @@
 namespace _ {
 
 /* An ASCII List header.
-Like all ASCII Object Types, the size may only be 16-bit, 32-bit, or
+Like most ASCII Object Types, the size may only be 16-bit, 32-bit, or
 64-bit. The unsigned value must be twice the width of the signed value.
 
 @code
@@ -73,7 +70,7 @@ Like all ASCII Object Types, the size may only be 16-bit, 32-bit, or
 @endcode
 */
 template <typename UI = uint32_t, typename SI = int16_t>
-struct TList {
+struct CList {
   UI size;
   SI count_max, count;
 };
@@ -91,25 +88,25 @@ the largest_expected_type.
 template <typename UI = uint32_t, typename SI = int16_t,
           size_t largest_expected_type = sizeof(intptr_t)>
 constexpr UI ListSizeMin(SI count_max) {
-  return (UI)sizeof(TList<UI, SI>) +
+  return (UI)sizeof(CList<UI, SI>) +
          (UI)(count_max * (largest_expected_type + sizeof(UI) + 1));
   // << 2 to * 4.
 }
 
 /* Deletes the list contents by overwriting it with zeros. */
 template <typename UI = uint32_t, typename SI = int16_t>
-void ListWipe(TList<UI, SI>* list) {
+void ListWipe(CList<UI, SI>* list) {
   ASSERT(list)
   list->count = 0;
-  UI size = list->size - sizeof(TList<UI, SI>);
-  memset(reinterpret_cast<char*>(list) + sizeof(TList<UI, SI>), 0, size);
+  UI size = list->size - sizeof(CList<UI, SI>);
+  memset(reinterpret_cast<char*>(list) + sizeof(CList<UI, SI>), 0, size);
 }
 
 /* Initializes a AsciiList from preallocated memory.
 count_max must be in multiples of 4. Given there is a fixed size, both the
 count_max and size will be downsized to a multiple of 4 automatically. */
 template <typename UI = uint32_t, typename SI = int16_t>
-TList<UI, SI>* ListInit(uintptr_t* buffer, UI size, SI count_max) {
+CList<UI, SI>* ListInit(uintptr_t* buffer, UI size, SI count_max) {
   if (!buffer)  // This may be nullptr if ListNew<UI,SI> (SI, UI) failed.
     return nullptr;
   PRINTF("\n  Initializing List with size_bytes:%u and count_max:%i",
@@ -127,7 +124,7 @@ TList<UI, SI>* ListInit(uintptr_t* buffer, UI size, SI count_max) {
   // count_max = AlignUp8<SI> (count_max);
   // PRINTF ("\n  Aligning up to count_max:%i", (int)count_max)
 
-  TList<UI, SI>* list = reinterpret_cast<TList<UI, SI>*>(buffer);
+  CList<UI, SI>* list = reinterpret_cast<CList<UI, SI>*>(buffer);
   list->size = size;
   list->count = 0;
   list->count_max = count_max;
@@ -143,7 +140,7 @@ uintptr_t* ListNew(SI count_max, UI size) {
   if (size < ListSizeMin<UI, SI>(count_max)) return nullptr;
   uintptr_t* buffer = new uintptr_t[size >> kWordBitCount];
 
-  TList<UI, SI>* list = reinterpret_cast<TList<UI, SI>*>(buffer);
+  CList<UI, SI>* list = reinterpret_cast<CList<UI, SI>*>(buffer);
   list->size = size;
   list->count = 0;
   list->count_max = count_max;
@@ -160,7 +157,7 @@ inline uintptr_t* ListNew(SI count_max) {
   UI size = ListSizeMin<UI, SI, largest_expected_type>(count_max);
   uintptr_t* buffer = new uintptr_t[size >> kWordBitCount];
 
-  TList<UI, SI>* list = reinterpret_cast<TList<UI, SI>*>(buffer);
+  CList<UI, SI>* list = reinterpret_cast<CList<UI, SI>*>(buffer);
   list->size = size;
   list->count = 0;
   list->count_max = count_max;
@@ -171,36 +168,36 @@ inline uintptr_t* ListNew(SI count_max) {
 
 /* Returns the type bytes array. */
 template <typename UI = uint32_t, typename SI = int16_t>
-type_t* ListTypes(TList<UI, SI>* list) {
+type_t* ListTypes(CList<UI, SI>* list) {
   ASSERT(list)
-  return reinterpret_cast<type_t*>(list) + sizeof(TList<UI, SI>);
+  return reinterpret_cast<type_t*>(list) + sizeof(CList<UI, SI>);
 }
 
 /* Gets a pointer to the begging of the data buffer. */
 template <typename UI = uint32_t, typename SI = int16_t>
-inline char* ListDataBegin(TList<UI, SI>* list) {
+inline char* ListDataBegin(CList<UI, SI>* list) {
   ASSERT(list)
   return reinterpret_cast<char*>(list) + list->count_max * (sizeof(SI) + 1);
 }
 
 /* Gets the base element 0 of the list's offset array. */
 template <typename UI = uint32_t, typename SI = int16_t>
-inline UI* ListOffsets(TList<UI, SI>* list) {
-  uintptr_t ptr = reinterpret_cast<uintptr_t>(list) + sizeof(TList<UI, SI>) +
+inline UI* ListOffsets(CList<UI, SI>* list) {
+  uintptr_t ptr = reinterpret_cast<uintptr_t>(list) + sizeof(CList<UI, SI>) +
                   list->count_max;
   return reinterpret_cast<UI*>(ptr);
 }
 
 /* Returns the last byte in the data array. */
 template <typename UI = uint32_t, typename SI = int16_t>
-inline char* ListDataEnd(TList<UI, SI>* list) {
+inline char* ListDataEnd(CList<UI, SI>* list) {
   ASSERT(list)
   return reinterpret_cast<char*>(list) + list->size - 1;
 }
 
 /* Returns the last byte in the data array. */
 template <typename UI = uint32_t, typename SI = int16_t>
-inline char* ListDataEnd(TList<UI, SI>* list, SI index) {
+inline char* ListDataEnd(CList<UI, SI>* list, SI index) {
   ASSERT(list)
   if (index < 0 || index >= index->count) return nullptr;
   return reinterpret_cast<char*>(list) + list->size - 1;
@@ -208,13 +205,13 @@ inline char* ListDataEnd(TList<UI, SI>* list, SI index) {
 
 /* Returns a pointer to the begging of the data buffer. */
 template <typename UI = uint32_t, typename SI = int16_t>
-Socket ListDataVector(TList<UI, SI>* list) {
+Socket ListDataVector(CList<UI, SI>* list) {
   return Socket(ListDataBegin<UI, SI>(list), ListDataEnd<UI, SI>(list));
 }
 
 /* Returns the last byte in the data array. */
 template <typename UI = uint32_t, typename SI = int16_t>
-inline char* ListDataStop(TList<UI, SI>* list, SI index = -1) {
+inline char* ListDataStop(CList<UI, SI>* list, SI index = -1) {
   ASSERT(list)
   SI count = list->count;
   if (count == 0) {
@@ -229,7 +226,7 @@ inline char* ListDataStop(TList<UI, SI>* list, SI index = -1) {
 }
 
 template <typename UI = uint32_t, typename SI = int16_t>
-void ListDataSpaceBelow(TList<UI, SI>* list, SI index, Socket& free_space) {
+void ListDataSpaceBelow(CList<UI, SI>* list, SI index, Socket& free_space) {
   ASSERT(list)
   char* data_stop;
   if (index == 0) {
@@ -251,7 +248,7 @@ void ListDataSpaceBelow(TList<UI, SI>* list, SI index, Socket& free_space) {
 /* Insets the given type-value tuple.
     @return -1 upon failure or the index upon success. */
 template <typename UI = uint32_t, typename SI = int16_t>
-SI ListInsert(TList<UI, SI>* list, type_t type, const void* value, SI index) {
+SI ListInsert(CList<UI, SI>* list, type_t type, const void* value, SI index) {
   ASSERT(list)
   ASSERT(value)
   PRINTF("\nInserting type:")
@@ -320,13 +317,13 @@ SI ListInsert(TList<UI, SI>* list, type_t type, const void* value, SI index) {
 
 /* Adds a type-value to the end of the list. */
 template <typename UI = uint32_t, typename SI = int16_t>
-inline SI ListPush(TList<UI, SI>* list, type_t type, const void* value) {
+inline SI ListPush(CList<UI, SI>* list, type_t type, const void* value) {
   return ListInsert<UI, SI>(list, type, value, list->count);
 }
 
 /* Removes a type-value to the end of the list. */
 template <typename UI = uint32_t, typename SI = int16_t>
-inline SI ListPop(TList<UI, SI>* list) {
+inline SI ListPop(CList<UI, SI>* list) {
   return ListRemove<UI, SI>(list, list->count - 1);
 }
 
@@ -345,7 +342,7 @@ SI ListCountMax() {
 
 /* Deletes the list contents without wiping the contents. */
 template <typename UI = uint32_t, typename SI = int16_t>
-void ListClear(TList<UI, SI>* list) {
+void ListClear(CList<UI, SI>* list) {
   ASSERT(list)
   list->count = 0;
 }
@@ -357,7 +354,7 @@ void ListClear(TList<UI, SI>* list) {
 from Kabuki Toolkit. If it's you're own code calling this, you are
 required to ensure the value came from a ASCII List. */
 template <typename UI = uint32_t, typename SI = int16_t>
-bool ListContains(TList<UI, SI>* list, void* address) {
+bool ListContains(CList<UI, SI>* list, void* address) {
   ASSERT(list)
   if (reinterpret_cast<char*>(address) < reinterpret_cast<char*>(list))
     return false;
@@ -367,7 +364,7 @@ bool ListContains(TList<UI, SI>* list, void* address) {
 
 /* Removes the item at the given address from the list. */
 template <typename UI = uint32_t, typename SI = int16_t>
-SI ListRemove(TList<UI, SI>* list, SI index) {
+SI ListRemove(CList<UI, SI>* list, SI index) {
   SI count = list->count;
   ArrayRemove<UI, SI>(ListOffsets<UI, SI>(list), count, index);
   return ArrayRemove<type_t, SI>(ListTypes<UI, SI>(list), count, index);
@@ -375,7 +372,7 @@ SI ListRemove(TList<UI, SI>* list, SI index) {
 
 /* Finds a tuple that contains the given pointer. */
 template <typename UI = uint32_t, typename SI = int16_t>
-SI ListFind(TList<UI, SI>* list, void* adress) {
+SI ListFind(CList<UI, SI>* list, void* adress) {
   ASSERT(list)
   UI *offsets = ListOffsets<UI, SI>(list), *offset_end = offsets + list->count;
   while (offsets < offset_end) {
@@ -390,14 +387,14 @@ SI ListFind(TList<UI, SI>* list, void* adress) {
 
 /* Removes the item at the given address from the list. */
 template <typename UI = uint32_t, typename SI = int16_t>
-bool ListRemove(TList<UI, SI>* list, void* adress) {
+bool ListRemove(CList<UI, SI>* list, void* adress) {
   return ListRemove<UI, SI>(list, ListFind(list, address));
 }
 
 /* Returns the value at the given index.
     @return Returns nil if the index is out of the count range. */
 template <typename UI = uint32_t, typename SI = int16_t>
-const void* ListValue(TList<UI, SI>* list, SI index) {
+const void* ListValue(CList<UI, SI>* list, SI index) {
   ASSERT(list)
   if (index < 0 || index >= list->count) return nullptr;
   return reinterpret_cast<char*>(list) + ListOffsets<UI, SI>(list)[index];
@@ -405,7 +402,7 @@ const void* ListValue(TList<UI, SI>* list, SI index) {
 
 /* Prints the given AsciiList to the console. */
 template <typename UI = uint32_t, typename SI = int16_t>
-Printer& PrintList(Printer& printer, TList<UI, SI>* list) {
+Printer1& PrintList(Printer1& printer, CList<UI, SI>* list) {
   ASSERT(list)
 
   SI count = list->count;
@@ -455,7 +452,7 @@ class List {
   inline SI CountMax() { return ListCountMax<UI, SI>(); }
 
   /* Clears the list without overwriting the contents. */
-  void Clear(TList<UI, SI>* list) { ListClear<UI, SI>(This()); }
+  void Clear(CList<UI, SI>* list) { ListClear<UI, SI>(This()); }
 
   /* Deletes the list contents by overwriting it with zeros. */
   inline void Wipe() { ListWipe<UI, SI>(This()); }
@@ -481,13 +478,13 @@ class List {
   inline SI Pop() { return ListPop<UI, SI>(This()); }
 
   /* Prints the given AsciiList to the console. */
-  inline Printer& Print(Printer& printer) {
+  inline Printer1& Print(Printer1& printer) {
     return PrintList<UI, SI>(printer, This());
   }
 
   /* Returns the contiugous ASCII List buffer_. */
-  inline TList<UI, SI>* This() {
-    return reinterpret_cast<TList<UI, SI>*>(buffer_);
+  inline CList<UI, SI>* This() {
+    return reinterpret_cast<CList<UI, SI>*>(buffer_);
   }
 
  private:
@@ -498,13 +495,13 @@ class List {
 
 /* Overloaded operator<< prints the list. */
 template <typename UI = uint32_t, typename SI = int16_t>
-inline _::Printer& operator<<(_::Printer& printer, _::List<UI, SI>& list) {
+inline _::Printer1& operator<<(_::Printer1& printer, _::List<UI, SI>& list) {
   return list.Print(printer);
 }
 
 /* Overloaded operator<< prints the list. */
 template <typename UI = uint32_t, typename SI = int16_t>
-inline _::Printer& operator<<(_::Printer& printer, _::TList<UI, SI>* list) {
+inline _::Printer1& operator<<(_::Printer1& printer, _::CList<UI, SI>* list) {
   return _::PrintList<UI, SI>(printer, list);
 }
 
@@ -514,4 +511,4 @@ inline _::Printer& operator<<(_::Printer& printer, _::TList<UI, SI>* list) {
 #undef PRINT_TYPE
 #undef WIPE
 #endif  //< HEADER_FOR_CRABS_LIST
-#endif  //< MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0

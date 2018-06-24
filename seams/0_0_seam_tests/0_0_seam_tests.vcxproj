@@ -21,7 +21,7 @@
   <ItemGroup>
     <None Include="..\..\kabuki\crabs\readme.md" />
     <None Include="..\..\kabuki\toolkit\pro\readme.md" />
-    <None Include="test_script.script" />
+    <None Include="test_script.s2" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\kabuki\crabs\address.h" />
@@ -33,9 +33,9 @@
     <ClInclude Include="..\..\kabuki\crabs\binary.h" />
     <ClInclude Include="..\..\kabuki\crabs\bout.h" />
     <ClInclude Include="..\..\kabuki\crabs\bsq.h" />
-    <ClInclude Include="..\..\kabuki\crabs\center.h" />
     <ClInclude Include="..\..\kabuki\crabs\clock.h" />
     <ClInclude Include="..\..\kabuki\crabs\config.h" />
+    <ClInclude Include="..\..\kabuki\crabs\console.h" />
     <ClInclude Include="..\..\kabuki\crabs\dictionary.h" />
     <ClInclude Include="..\..\kabuki\crabs\door.h" />
     <ClInclude Include="..\..\kabuki\crabs\error.h" />
@@ -51,25 +51,27 @@
     <ClInclude Include="..\..\kabuki\crabs\library.h" />
     <ClInclude Include="..\..\kabuki\crabs\line.h" />
     <ClInclude Include="..\..\kabuki\crabs\list.h" />
+    <ClInclude Include="..\..\kabuki\crabs\loom.h" />
     <ClInclude Include="..\..\kabuki\crabs\map.h" />
     <ClInclude Include="..\..\kabuki\crabs\memory.h" />
     <ClInclude Include="..\..\kabuki\crabs\mirror.h" />
     <ClInclude Include="..\..\kabuki\crabs\multimap.h" />
+    <ClInclude Include="..\..\kabuki\crabs\number.h" />
     <ClInclude Include="..\..\kabuki\crabs\object.h" />
     <ClInclude Include="..\..\kabuki\crabs\op.h" />
     <ClInclude Include="..\..\kabuki\crabs\operand.h" />
-    <ClInclude Include="..\..\kabuki\crabs\printer.h" />
-    <ClInclude Include="..\..\kabuki\crabs\print_int.h" />
-    <ClInclude Include="..\..\kabuki\crabs\print_to_ascii.h" />
+    <ClInclude Include="..\..\kabuki\crabs\utf.h" />
+    <ClInclude Include="..\..\kabuki\crabs\utf32.h" />
+    <ClInclude Include="..\..\kabuki\crabs\utf16.h" />
+    <ClInclude Include="..\..\kabuki\crabs\utf8.h" />
+    <ClInclude Include="..\..\kabuki\crabs\print_integer.h" />
+    <ClInclude Include="..\..\kabuki\crabs\print_floating_point.h" />
     <ClInclude Include="..\..\kabuki\crabs\random.h" />
-    <ClInclude Include="..\..\kabuki\crabs\right.h" />
     <ClInclude Include="..\..\kabuki\crabs\room.h" />
-    <ClInclude Include="..\..\kabuki\crabs\scan.h" />
     <ClInclude Include="..\..\kabuki\crabs\set.h" />
     <ClInclude Include="..\..\kabuki\crabs\slot.h" />
     <ClInclude Include="..\..\kabuki\crabs\stack.h" />
     <ClInclude Include="..\..\kabuki\crabs\table.h" />
-    <ClInclude Include="..\..\kabuki\crabs\text.h" />
     <ClInclude Include="..\..\kabuki\crabs\type.h" />
     <ClInclude Include="..\..\kabuki\crabs\varint.h" />
     <ClInclude Include="..\..\kabuki\crabs\wall.h" />
@@ -81,15 +83,13 @@
     <ClInclude Include="assembly.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="test_seam_1.h" />
+    <ClInclude Include="test_seam_0.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\kabuki\crabs\crabs_align.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_bin.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_binary.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_bout.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_bsq.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_center.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_clock.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_door.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_error.cc" />
@@ -102,15 +102,9 @@
     <ClCompile Include="..\..\kabuki\crabs\crabs_object.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_op.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_operand.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_printer.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_print_flt.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_print_ui4.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_print_ui8.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_right.cc" />
+    <ClCompile Include="..\..\kabuki\crabs\crabs_utf.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_room.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_scanner.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_slot.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_text.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_type.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_wall.cc" />
     <ClCompile Include="..\..\kabuki\toolkit\pro\pro_project.cc" />
@@ -118,10 +112,11 @@
     <ClCompile Include="..\..\kabuki\toolkit\pro\pro_task.cc" />
     <ClCompile Include="stdafx.cc" />
     <ClCompile Include="tests_main.cc" />
-    <ClCompile Include="test_seam_1_1.cc" />
-    <ClCompile Include="test_seam_1_2.cc" />
-    <ClCompile Include="test_seam_1_3.cc" />
-    <ClCompile Include="test_seam_1_4.cc" />
+    <ClCompile Include="test_seam_0_0_0.cc" />
+    <ClCompile Include="test_seam_0_0_1.cc" />
+    <ClCompile Include="test_seam_0_0_2.cc" />
+    <ClCompile Include="test_seam_0_0_3.cc" />
+    <ClCompile Include="test_seam_0_0_4.cc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

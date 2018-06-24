@@ -1,12 +1,12 @@
 ```
  /\
 ( /   @ @    ()   
- \  __| |__  /    ██████╗██████╗  █████╗ ██████╗ ███████╗
-  -/   "   \-    ██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔════╝
- /-|       |-\   ██║     ██████╔╝███████║██████╔╝███████╗
-/ /-\     /-\ \  ██║     ██╔══██╗██╔══██║██╔══██╗╚════██║
- / /-`---'-\ \   ╚██████╗██║  ██║██║  ██║██████╔╝███████║
-  /         \     ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝
+ \  __| |__  /      ██████╗██████╗  █████╗ ██████╗ ███████╗
+  -/   "   \-      ██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔════╝
+ /-|       |-\     ██║     ██████╔╝███████║██████╔╝███████╗
+/ /-\     /-\ \    ██║     ██╔══██╗██╔══██║██╔══██╗╚════██║
+ / /-`---'-\ \     ╚██████╗██║  ██║██║  ██║██████╔╝███████║
+  /         \       ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝
 ```
 
 # Chinese Room Abstract Stack Machine (Crabs) API Overview
@@ -16,10 +16,65 @@ how the minor seams are organized.
 
 ## Minor Seams
 
-1. Develops the Script Integer-to-ASCII (**itoa**) algorithm, the fastest integer to string algorithm in the world.
-2. Develops the Printer, Scanner and Clock modules.
-3. Develops the ASCII Data Types.
-4. Develops the BIn, BOut, Slot, Expr,
+### SEAM_0_0_0
+
+Seam develops the Script Integer-to-ASCII (**itoa**) algorithm, the fastest integer to string algorithm in the world.
+
+#### Seam Modules
+
+* `kabuki`
+  * `crabs`
+
+### SEAM_0_0_1
+
+Currently does not exist but in the near future will contain the Grisu-X algorithm with Script itoa algorithm.
+
+#### Seam Modules
+
+* `kabuki`
+  * `crabs`
+
+### SEAM_0_0_2
+
+Develops the Universal Text Printer (UTF), Universal Text Scanner (UTS), and Clock submodules.
+
+#### Seam Modules
+
+* `kabuki`
+  * `crabs`
+
+### SEAM_0_0_3
+
+Develops the ASCII Data Types.
+
+#### Seam Modules
+
+* `kabuki`
+  * `crabs`
+
+
+### SEAM_0_0_4
+
+Develops the BIn, BOut, Slot, Expr,
+
+#### Seam Modules
+
+* `kabuki`
+  * `crabs`
+
+### SEAM 0_0_5
+
+Seam develops the Hardware Abstraction Layer.
+
+#### Seam Modules
+
+* `kabuki`
+  * `crabs`
+  * `drivers`
+  * `features`
+  * `hal`
+  * `platform`
+
 
 ## Author
 

@@ -1,29 +1,26 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/kabuki-toolkit/kabuki/crabs/stack.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/stack.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
 #ifndef HEADER_FOR_CRABS_STACK
 #define HEADER_FOR_CRABS_STACK
 // Dependencies:
 #include "config.h"
 #include "memory.h"
 #include "object.h"
-#include "printer.h"
+#include "utf8.h"
 // End dependencies.
 
 namespace _ {
@@ -71,7 +68,14 @@ constexpr UI UnsignedMax() {
     given types, and another for a multi-dimensional array that uses the 1-d
     array in order to store the dimensions. The only different between them is
     that the size_array variable gets set to 0.
-    
+    
+
+
+
+
+
+
+
 
 
 
@@ -94,7 +98,7 @@ constexpr UI UnsignedMax() {
         |----------------|
         | Stack Elements |
      ^  |----------------|
-     |  |  TArray struct |
+     |  |  CArray struct |
     0xN +----------------+
     @endcode
 
@@ -106,12 +110,12 @@ constexpr UI UnsignedMax() {
         |-----------------|
         | Dimension Stack |
      ^  |-----------------|
-     |  |  TArray struct  |
+     |  |  CArray struct  |
     0xN +-----------------+
     @endcode
 */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-struct TArray {
+struct CArray {
   UI size_array,   //< Used for multi-dimensional array.
       size_stack;  //< Total size of the Stack in 64-bit aligned bytes.
   SI count_max,    //< Max element count.
@@ -123,7 +127,7 @@ template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline UI StackSize(SI count_max) {
   enum { kCountMaxMin = sizeof(uint64_t) / sizeof(T) };
   if (count_max < kCountMaxMin) count_max = kCountMaxMin;
-  return sizeof(TArray<T, UI, SI>) + sizeof(T) * count_max;
+  return sizeof(CArray<T, UI, SI>) + sizeof(T) * count_max;
 }
 
 /* Gets the min size of a Stack. */
@@ -131,7 +135,7 @@ template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline UI StackSizeMin() {
   enum {
     kStackCountMin = sizeof(T) > 8 ? 1 : 8 / sizeof(T),
-    kStackCountMaxMin = sizeof(TArray<T, UI, SI>) + sizeof(T) * kStackCountMin,
+    kStackCountMaxMin = sizeof(CArray<T, UI, SI>) + sizeof(T) * kStackCountMin,
   };
   return kStackCountMaxMin;
 }
@@ -139,7 +143,7 @@ inline UI StackSizeMin() {
 /*
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 inline UI StackSize (SI count) {
-    UI size = sizeof (TArray<T, UI, SI>) + (sizeof (T) * 8) * count;
+    UI size = sizeof (CArray<T, UI, SI>) + (sizeof (T) * 8) * count;
     return MemoryAlign8<UI> (size);
 }*/
 
@@ -147,13 +151,13 @@ inline UI StackSize (SI count) {
     width. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline SI StackCountMax() {
-  return (SI)((((~(UI)0) - 7) - (UI)sizeof(TArray<T, UI, SI>)) / (UI)sizeof(T));
+  return (SI)((((~(UI)0) - 7) - (UI)sizeof(CArray<T, UI, SI>)) / (UI)sizeof(T));
 }
 
 /*
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
 SI StackCountMax () {
-    return (SI)((UnsignedMax<UI> () - (UI)sizeof (TArray<T, UI, SI>)) /
+    return (SI)((UnsignedMax<UI> () - (UI)sizeof (CArray<T, UI, SI>)) /
         (UI)sizeof (T));
 }*/
 
@@ -161,7 +165,7 @@ template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline UI StackSizeMin(SI count_max) {
   SI count_upper_bounds = StackCountMax<T, UI, SI>();
   if (count_max > count_upper_bounds) count_max = count_upper_bounds;
-  return (UI)(sizeof(TArray<T, UI, SI>) + count_max * sizeof(T));
+  return (UI)(sizeof(CArray<T, UI, SI>) + count_max * sizeof(T));
 }
 
 /* Rounds up the count to the 64-bit align the value. */
@@ -169,7 +173,7 @@ template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline UI StackCountMax(SI count_max) {
   enum {
     kStackCountMax =
-        (UnsignedMax<UI>() - (UI)sizeof(TArray<T, UI, SI>)) / (UI)sizeof(T),
+        (UnsignedMax<UI>() - (UI)sizeof(CArray<T, UI, SI>)) / (UI)sizeof(T),
   };
   count_max = AlignUpSigned<SI, UI, SI>(count_max);
   if (count_max > kStackCountMax) count_max = kStackCountMax;
@@ -184,10 +188,10 @@ template <typename T = intptr_t, typename UI = uint, typename SI = int>
 uintptr_t* StackInit(uintptr_t* buffer, UI size) {
   ASSERT(buffer);
 
-  TArray<T, UI, SI>* stack = reinterpret_cast<TArray<T, UI, SI>*>(buffer);
+  CArray<T, UI, SI>* stack = reinterpret_cast<CArray<T, UI, SI>*>(buffer);
   stack->size_array = 0;
   stack->size_stack = size;
-  SI count_max = (SI)((size - sizeof(TArray<T, UI, SI>)) >> kWordBitCount);
+  SI count_max = (SI)((size - sizeof(CArray<T, UI, SI>)) >> kWordBitCount);
   stack->count_max = count_max;
   stack->count = 0;
   return buffer;
@@ -201,30 +205,30 @@ template <typename T = intptr_t, typename UI = uint, typename SI = int>
 uintptr_t* StackInit(uintptr_t* buffer, UI size, SI count_max) {
   ASSERT(buffer);
 
-  TArray<T, UI, SI>* stack = reinterpret_cast<TArray<T, UI, SI>*>(buffer);
+  CArray<T, UI, SI>* stack = reinterpret_cast<CArray<T, UI, SI>*>(buffer);
   stack->size_array = 0;
   stack->size_stack = size;
-  stack->count_max = (size - sizeof(TArray<T, UI, SI>)) >> kWordBitCount;
+  stack->count_max = (size - sizeof(CArray<T, UI, SI>)) >> kWordBitCount;
   stack->count = 0;
   return buffer;
 }
 
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-uintptr_t* StackClone(TArray<T, UI, SI>* stack) {
+uintptr_t* StackClone(CArray<T, UI, SI>* stack) {
   ASSERT(stack);
   UI size = stack->size_stack >> kWordBitCount;
   uintptr_t other_buffer = new uintptr_t[size];
   uintptr* source = reinterpret_cast<uintptr_t*>(stack)* destination =
       other_buffer;
   UI data_amount =
-      (stack->count * sizeof(T) + sizeof(TArray<T, UI, SI>)) >> kWordBitCount;
+      (stack->count * sizeof(T) + sizeof(CArray<T, UI, SI>)) >> kWordBitCount;
   size -= data_amount;
   while (data_amount-- > 0) *destination++ = *source++;
   return destination;
 }
 
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-uintptr_t* StackClone(TArray<T, UI, SI>* stack, TArray<T, UI, SI>* other) {
+uintptr_t* StackClone(CArray<T, UI, SI>* stack, CArray<T, UI, SI>* other) {
   ASSERT(stack);
   ASSERT(other);
 
@@ -246,15 +250,15 @@ uintptr_t* StackClone(TArray<T, UI, SI>* stack, TArray<T, UI, SI>* other) {
 
 /* Returns the first element in the Stack vector. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-T* StackElements(TArray<T, UI, SI>* stack) {
+T* StackElements(CArray<T, UI, SI>* stack) {
   ASSERT(stack);
   return reinterpret_cast<T*>(reinterpret_cast<char*>(stack) +
-                              sizeof(TArray<T, UI, SI>));
+                              sizeof(CArray<T, UI, SI>));
 }
 
 /* Returns the first element in the Stack vector. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-T* StackElementsEnd(TArray<T, UI, SI>* stack) {
+T* StackElementsEnd(CArray<T, UI, SI>* stack) {
   ASSERT(stack);
   return StackElements<T, UI, SI>(stack) + stack->count - 1;
 }
@@ -302,7 +306,7 @@ inline SI ArrayAdd(T* items, SI count, T item, SI index) {
     @param index The index to insert at.
     @return -1 if a is nil and -2 if the stack is full.
 template<typename T = intptr_t, typename UI = uint, typename SI = int>
-T ArrayAdd (TArray<T, UI, SI>* stack, T item, T index) {
+T ArrayAdd (CArray<T, UI, SI>* stack, T item, T index) {
     ASSERT (stack);
     SI count_max  = stack->count_max,
        count = stack->count;
@@ -331,7 +335,7 @@ inline SI ArrayRemove(T* elements, SI size, SI index) {
     @param  index The index the item to remove.
     @return True if the index is out of bounds. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-SI StackRemove(TArray<T, UI, SI>* stack, SI index) {
+SI StackRemove(CArray<T, UI, SI>* stack, SI index) {
   ASSERT(stack);
   SI result =
       ArrayRemove<T, SI>(StackElements<T, UI, SI>(stack), stack->count, index);
@@ -345,7 +349,7 @@ SI StackRemove(TArray<T, UI, SI>* stack, SI index) {
     @param  item The item to push onto the stack.
     @return The index of the newly stacked item. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-SI StackPush(TArray<T, UI, SI>* stack, T item) {
+SI StackPush(CArray<T, UI, SI>* stack, T item) {
   ASSERT(stack);
   SI count_max = stack->count_max, count = stack->count;
   if (count >= count_max) return -1;
@@ -360,7 +364,7 @@ SI StackPush(TArray<T, UI, SI>* stack, T item) {
     @param  a The stack.
     @return The item popped off the stack. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-T StackPop(TArray<T, UI, SI>* stack) {
+T StackPop(CArray<T, UI, SI>* stack) {
   ASSERT(stack);
   SI count = stack->count;
   if (count == 0) return 0;
@@ -375,7 +379,7 @@ T StackPop(TArray<T, UI, SI>* stack) {
     @param  a The stack.
     @return The item popped off the stack. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-T StackPeek(TArray<T, UI, SI>* stack) {
+T StackPeek(CArray<T, UI, SI>* stack) {
   ASSERT(stack);
   SI count = stack->count;
   if (count == 0) return 0;
@@ -389,17 +393,17 @@ T StackPeek(TArray<T, UI, SI>* stack) {
     @param  index The index of the element to get.
     @return -1 if a is nil and -2 if the index is out of bounds. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-T StackGet(TArray<T, UI, SI>* stack, SI index) {
+T StackGet(CArray<T, UI, SI>* stack, SI index) {
   ASSERT(stack);
   if (index >= stack->count) return 0;
-  char* address = reinterpret_cast<char*>(stack) + sizeof(TArray<T, UI, SI>);
+  char* address = reinterpret_cast<char*>(stack) + sizeof(CArray<T, UI, SI>);
   return reinterpret_cast<T*>(address)[index];
 }
 
 /* Returns true if the given stack contains the given address.
     @return false upon failure. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-bool StackContains(TArray<T, UI, SI>* stack, void* address) {
+bool StackContains(CArray<T, UI, SI>* stack, void* address) {
   ASSERT(stack);
   char *ptr = reinterpret_cast<char*>(stack),
        *adr = reinterpret_cast<char*>(address);
@@ -425,7 +429,7 @@ inline SI StackCountUpperBounds() {
                  (sizeof(T) == 4) ? 2 :         //< Used to divide by 4.
                      (sizeof(T) == 2) ? 1 : 0,  //< Used to divide by 2.
   };
-  return (SI)((((~(UI)0) - 7) - (UI)sizeof(TArray<T, UI, SI>)) / (UI)sizeof(T));
+  return (SI)((((~(UI)0) - 7) - (UI)sizeof(CArray<T, UI, SI>)) / (UI)sizeof(T));
 }
 
 /* Doubles the size of the array until the max count is reached.
@@ -439,21 +443,21 @@ uintptr_t* StackGrow(uintptr_t* buffer) {
 
   static SI count_max_auto_size_init = kStackCountMaxDefault;
 
-  TArray<T, UI, SI>* stack = reinterpret_cast<TArray<T, UI, SI>*>(buffer);
+  CArray<T, UI, SI>* stack = reinterpret_cast<CArray<T, UI, SI>*>(buffer);
   SI count_max = stack->count_max,
      count_uppoer_bounds = StackCountUpperBounds<T, UI, SI>();
   if (count_max > count_uppoer_bounds) return nullptr;
   if (count_max == count_uppoer_bounds) return buffer;
   count_max += count_max;
   if (count_max > count_uppoer_bounds) count_max = count_uppoer_bounds;
-  UI new_size = sizeof(TArray<T, UI, SI>) + count_max * sizeof(T), word_count;
+  UI new_size = sizeof(CArray<T, UI, SI>) + count_max * sizeof(T), word_count;
   if ((new_size & 0x7) == 0)
     word_count = new_size >> kWordBitCount;
   else
     word_count = (new_size >> kWordBitCount) + 1;
   uintptr_t* new_buffer = new uintptr_t[word_count];
-  TArray<T, UI, SI>* new_stack =
-      reinterpret_cast<TArray<T, UI, SI>*>(new_buffer);
+  CArray<T, UI, SI>* new_stack =
+      reinterpret_cast<CArray<T, UI, SI>*>(new_buffer);
   new_stack->size_array = 0;
   new_stack->size_stack = new_size;
   SI count = stack->count;
@@ -467,7 +471,7 @@ uintptr_t* StackGrow(uintptr_t* buffer) {
 }
 
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-Printer& PrintStack(Printer& print, TArray<T, UI, SI>* tarray) {
+Printer1& PrintStack(Printer1& print, CArray<T, UI, SI>* tarray) {
   ASSERT(tarray);
   UI size_array = tarray->size_array;
   SI count = tarray->count;
@@ -619,10 +623,10 @@ class Stack {
   }
 
   /* Prints this object to the given Printer. */
-  inline Printer& Print(Printer& out_) { return Print(This(), out_); }
+  inline Printer1& Print(Printer1& out_) { return Print(This(), out_); }
 
-  inline TArray<T, UI, SI>* This() {
-    return reinterpret_cast<TArray<T, UI, SI>*>(buffer_);
+  inline CArray<T, UI, SI>* This() {
+    return reinterpret_cast<CArray<T, UI, SI>*>(buffer_);
   }
 
   inline Stack<T, UI, SI>& operator=(const Stack<T, UI, SI>& other) {
@@ -633,13 +637,13 @@ class Stack {
  private:
   uintptr_t* buffer_;  //< Word-aligned socket for the stack.
 
-  inline void SetBuffer(TArray<T, UI, SI>* tarray) {
+  inline void SetBuffer(CArray<T, UI, SI>* tarray) {
     ASSERT(tarray);
     buffer_ = reinterpret_cast<uintptr_t*>(tarray);
   }
 };
 
-}  // namespace _
+}   //< namespace _
 
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
 #endif  //< HEADER_FOR_CRABS_STACK
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3

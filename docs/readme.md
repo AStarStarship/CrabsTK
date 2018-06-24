@@ -1,6 +1,6 @@
 # Kabuki Toolkit Documentation
 
-Please see `~/kabuki-toolkit/docs/kabuki-toolkit.mdj` for [StarUML](http://staruml.io) for object models. Some of the docs are currently in .docx format. These documents need to be converted into Markdown format as soon as possible and more code samples added. There is a productivity programming multimap in here too which is undergoing some changes at the moment. We're focusing on making money through saving time.
+Please see `$kabuki-toolkit/docs/kabuki-toolkit.mdj` for [StarUML](http://staruml.io) for object models. Some of the docs are currently in .docx format. These documents need to be converted into Markdown format as soon as possible and more code samples added. There is a productivity programming multimap in here too which is undergoing some changes at the moment. We're focusing on making money through saving time.
 
 ## Organization
 

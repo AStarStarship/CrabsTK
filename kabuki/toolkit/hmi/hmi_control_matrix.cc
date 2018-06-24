@@ -1,7 +1,7 @@
 /* Kabuki Toolkit
-    @file    ~/source/hmi/hmi_control_matrix.cc
-    @author  Cale McCollough <calemccollough.github.io>
-    @license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
+@file    ~/source/hmi/hmi_control_matrix.cc
+@author  Cale McCollough <calemccollough.github.io>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
              2.0 (the "License"); you may not use this file except in
              compliance with the License. You may obtain a copy of the License
@@ -14,9 +14,9 @@
 */
 
 #include <stdafx.h>
-#if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2
-#if MAJOR_SEAM == 2 && MINOR_SEAM == 2
-#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
+#if SEAM_MAJOR == 2 && SEAM_MINOR == 2
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
   printf("\n\n%s\n", message); \
   system("PAUSE");
@@ -29,13 +29,13 @@
 
 namespace _ {
 
-ControlMatrix::ControlMatrix(int num_columns, int num_rows_) {
-  num_columns_ = _::boundRange(num_columns, MinNumColumns, MaxNumColumns);
+ControlMatrix::ControlMatrix(int column_count, int num_rows_) {
+  num_columns_ = _::boundRange(column_count, MinNumColumns, MaxNumColumns);
   num_rows_ = _::boundRange(num_rows_, MinNumRows, MaxNumRows);
 
   rows = new ParameterSet[num_rows_];
 
-  for (int i = 0; i < num_rows_; ++i) rows[i] = ParameterSet(num_columns);
+  for (int i = 0; i < num_rows_; ++i) rows[i] = ParameterSet(column_count);
 }
 
 ControlMatrix::ControlMatrix(const ControlMatrix& o)
@@ -83,4 +83,4 @@ void ControlMatrix::Print() const {
 }
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2
+#endif  //< #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0

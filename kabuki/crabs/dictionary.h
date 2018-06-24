@@ -1,35 +1,32 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/libraries/crabs/dictionary.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough
-   <calemccollough@gmail.com>; All right reserved (R). Licensed under the Apache
-   License, Version 2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    ~/libraries/crabs/dictionary.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
 #ifndef HEADER_FOR_CRABS_BOOK
 #define HEADER_FOR_CRABS_BOOK
 // Dependencies:
 #include "memory.h"
 #include "type.h"
 // End dependencies.
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 3
+#if SEAM_MAJOR == 0 && SEAM_MINOR == 3
 #ifndef PRINTF
-#define PRINTF(format, ...) printf(format, __VA_ARGS__);
-#define PUTCHAR(c) putchar(c);
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PUTCHAR(c) putchar(c)
 #define PRINT_HEADING \
   std::cout << '\n';  \
-  for (int i = 80; i > 0; --i) std::cout << '-';
+  for (int i = 80; i > 0; --i) std::cout << '-'
 #endif
 #else
 #define PRINTF(x, ...)
@@ -629,7 +626,7 @@ I DictionaryFind(Dictionary<UI, SI, I>* dictionary, const char* key) {
 
 /* Prints this object out to the console. */
 template <typename UI, typename SI, typename I>
-Printer& DicPrint(Printer& print, const Dictionary<UI, SI, I>* dictionary) {
+Printer1& DicPrint(Printer1& print, const Dictionary<UI, SI, I>* dictionary) {
   ASSERT(dictionary)
 
   I item_count = dictionary->item_count, count = dictionary->count,
@@ -658,7 +655,7 @@ Printer& DicPrint(Printer& print, const Dictionary<UI, SI, I>* dictionary) {
   const I *indexes = reinterpret_cast<const I*>(
               states + count * (sizeof(SI) + sizeof(UI) + sizeof(I))),
           *unsorted_indexes = indexes + count,
-          *collission_list = unsorted_indexes + count, *cursor;
+          *collission_list = unsorted_indexes + count, *begin;
   const char* keys = reinterpret_cast<const char*>(dictionary) + table_size - 1;
 
   PRINTF("\n%3s%10s%8s%10s%10s%10s%10s%11s\n", "i", "key", "offset", "hash_e",
@@ -679,13 +676,13 @@ Printer& DicPrint(Printer& print, const Dictionary<UI, SI, I>* dictionary) {
 
     if (collision_index != ~0 && i < item_count) {
       // Print collisions.
-      cursor = &collission_list[collision_index];
-      temp = *cursor;
-      ++cursor;
+      begin = &collission_list[collision_index];
+      temp = *begin;
+      ++begin;
       PRINTF("%u@", temp)
       while (temp != ~0) {
-        temp = *cursor;
-        ++cursor;
+        temp = *begin;
+        ++begin;
         if (temp == ~0) break;
         PRINTF(", %u$", temp)
       }
@@ -749,10 +746,10 @@ bool DicRemove(Dictionary<UI, SI, I>* dictionary, void* adress) {
 
 /* Prints the given Dictionary to the console. */
 template <typename UI, typename SI, typename I>
-Printer& DicPrint(Printer& print, Dictionary<UI, SI, I>* dictionary) {
+Printer1& DicPrint(Printer1& print, Dictionary<UI, SI, I>* dictionary) {
   return print;
 }
 
-}  // namespace _
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 6
+}   //< namespace _
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
 #endif  //< HEADER_FOR_CRABS_BOOK

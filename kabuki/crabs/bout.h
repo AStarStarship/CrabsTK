@@ -1,27 +1,24 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/kabuki-toolkit/kabuki/crabs/bout.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/bout.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 #ifndef HEADER_FOR_CRABS_BOUT
 #define HEADER_FOR_CRABS_BOUT
 // Dependencies:
 #include "op.h"
-#include "printer.h"
+#include "utf8.h"
 // End dependencies.
 
 namespace _ {
@@ -37,12 +34,28 @@ typedef enum BOutStates {
 
     The BOut ring buffer is defined as being contiguous
 
-    
+    
+
+
+
+
+
+
+
+
 
 
 
     @code
-    
+    
+
+
+
+
+
+
+
+
 
 
 
@@ -107,18 +120,18 @@ KABUKI void BInKeyStrokes();
     @param  bout The bout to print.
     @param  text The Text to print to the bout.
     @return The slot. */
-KABUKI Printer& PrintBOut(Printer& printer, BOut* bout);
+KABUKI Printer1& PrintBOut(Printer1& printer, BOut* bout);
 #endif
 
-}  // namespace _
+}   //< namespace _
 
 #if USING_PRINTER
 /* Prints out the bin to the text. */
-inline _::Printer& operator<<(_::Printer& print, _::BOut* bout) {
+inline _::Printer1& operator<<(_::Printer1& print, _::BOut* bout) {
   return _::PrintBOut(print, bout);
 }
 #endif
 
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 #endif  //< HEADER_FOR_CRABS_BOUT
 #undef DEBUG_CRABS_BOUT

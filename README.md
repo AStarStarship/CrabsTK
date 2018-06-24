@@ -10,7 +10,12 @@
    /         \                    ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪
 ```
 
-Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) for making intelligent connected technologies with the Chinse Room Abstract Stack Machine (crabs). KT has a Mostly-C-Core with Modern-C++ wrappers and cross-language bindings to facilitate rapid prototyping of connected hardware, software, games, websites, robots, creative coding, and the Internet-of-Things (IoT).
+Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) for 32-bit and 64-bit processors featuring the F2 Foundational Framework that provides:
+
+* UML-compatible interface for cross-language bindings.
+* Reduced compile time using hidden C++ template implementations hidden behind a C ABI with object-oriented wrapper classes.
+* Seamless operation across assembly boundary.
+* Page-Major-Minor Seam (PMMS) Unit Tests provides debug information customized for each seam.
 
 [![GitHub version](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit.svg)](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit)
 
@@ -40,7 +45,7 @@ Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2
 | gl     | Graphics Library. |
 | gui    | Graphical User Interface library. |
 | math   | Math library. |
-| pl     | Plotting library. }
+| pl     | Plotting library. |
 | midi   | Musical Instrument Digital Interface. |
 | pro    | Project and scheduling library. |
 | store  | Store and inventory library. |

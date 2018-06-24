@@ -28,7 +28,7 @@
     <None Include="..\..\kabuki\toolkit\pro\readme.md">
       <Filter>kabuki\toolkit\pro</Filter>
     </None>
-    <None Include="test_script.script">
+    <None Include="test_script.s2">
       <Filter>seam_tests</Filter>
     </None>
   </ItemGroup>
@@ -99,25 +99,10 @@
     <ClInclude Include="..\..\kabuki\crabs\operand.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\print_int.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\print_to_ascii.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\printer.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\kabuki\crabs\random.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\right.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\kabuki\crabs\room.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\scan.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\kabuki\crabs\set.h">
@@ -130,9 +115,6 @@
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\kabuki\crabs\table.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\text.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\kabuki\crabs\type.h">
@@ -171,9 +153,6 @@
     <ClInclude Include="..\..\kabuki\crabs\bsq.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\center.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\kabuki\crabs\clock.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
@@ -201,24 +180,45 @@
     <ClInclude Include="targetver.h">
       <Filter>seam_tests</Filter>
     </ClInclude>
-    <ClInclude Include="test_seam_1.h">
-      <Filter>seam_tests</Filter>
-    </ClInclude>
     <ClInclude Include="assembly.h">
       <Filter>seam_tests</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\kabuki\crabs\print_integer.h">
+      <Filter>kabuki\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\crabs\print_floating_point.h">
+      <Filter>kabuki\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="test_seam_0.h">
+      <Filter>seam_tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\crabs\loom.h">
+      <Filter>kabuki\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\crabs\number.h">
+      <Filter>kabuki\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\crabs\console.h">
+      <Filter>kabuki\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\crabs\utf8.h">
+      <Filter>kabuki\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\crabs\utf16.h">
+      <Filter>kabuki\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\crabs\utf32.h">
+      <Filter>kabuki\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\crabs\utf.h">
+      <Filter>kabuki\crabs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_binary.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\kabuki\crabs\crabs_bout.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\kabuki\crabs\crabs_bsq.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_center.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\kabuki\crabs\crabs_clock.cc">
@@ -257,31 +257,10 @@
     <ClCompile Include="..\..\kabuki\crabs\crabs_operand.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_print_flt.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_print_ui4.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_print_ui8.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_printer.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_right.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\kabuki\crabs\crabs_room.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_scanner.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\kabuki\crabs\crabs_slot.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_text.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\kabuki\crabs\crabs_type.cc">
@@ -308,20 +287,26 @@
     <ClCompile Include="stdafx.cc">
       <Filter>seam_tests</Filter>
     </ClCompile>
-    <ClCompile Include="test_seam_1_1.cc">
-      <Filter>seam_tests</Filter>
-    </ClCompile>
-    <ClCompile Include="test_seam_1_2.cc">
-      <Filter>seam_tests</Filter>
-    </ClCompile>
-    <ClCompile Include="test_seam_1_3.cc">
-      <Filter>seam_tests</Filter>
-    </ClCompile>
-    <ClCompile Include="test_seam_1_4.cc">
-      <Filter>seam_tests</Filter>
-    </ClCompile>
     <ClCompile Include="tests_main.cc">
       <Filter>seam_tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_0_0_0.cc">
+      <Filter>seam_tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_0_0_1.cc">
+      <Filter>seam_tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_0_0_2.cc">
+      <Filter>seam_tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_0_0_3.cc">
+      <Filter>seam_tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_0_0_4.cc">
+      <Filter>seam_tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\kabuki\crabs\crabs_utf.cc">
+      <Filter>kabuki\crabs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

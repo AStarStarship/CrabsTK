@@ -1,21 +1,19 @@
 /* Kabuki Toolkit
-    @file    ~/kabuki-toolkit/kabuki/crabs/array.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
+@file    $kabuki-toolkit/kabuki/crabs/array.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License.
 */
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
 #ifndef HEADER_FOR_CRABS_ARRAY
 #define HEADER_FOR_CRABS_ARRAY
 // Dependencies:
@@ -32,7 +30,7 @@ namespace _ {
            the stack of dimensions. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 constexpr SI ArrayCountUpperLimit(SI dimension_count, SI element_count) {
-  UI header_size = (UI)(sizeof(TArray<T, UI, SI>) +
+  UI header_size = (UI)(sizeof(CArray<T, UI, SI>) +
                         AlignUpSigned<SI>(dimension_count * sizeof(SI)));
   return (SI)(((~(UI)0) - 7) - header_size) / (UI)sizeof(T);
 }
@@ -57,7 +55,7 @@ constexpr SI ArrayElementCount(const SI* dimensions) {
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 constexpr UI ArraySize(const SI* dimensions) {
   SI dimension_count = *dimensions++, element_count = *dimensions++;
-  UI header_size = sizeof(TArray<T, UI, SI>);
+  UI header_size = sizeof(CArray<T, UI, SI>);
   if (--dimension_count < 0) return 0;
   while (dimension_count-- > 0) {
     SI current_dimension = *dimensions++;
@@ -71,13 +69,13 @@ constexpr UI ArraySize(const SI* dimensions) {
 /* Initializes an stack of n elements of the given type.
     @param buffer An stack of bytes large enough to fit the stack. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-TArray<T, UI, SI>* ArrayInit(const SI* dimensions) {
+CArray<T, UI, SI>* ArrayInit(const SI* dimensions) {
   ASSERT(dimensions);
   SI dimension_count = *dimension;
   if (dimension_count < 0 || dimension_count > kStackCountMax) return nullptr;
-  UI size = (UI)sizeof(TArray<T, UI, SI>) + dimension_count * sizeof(T);
+  UI size = (UI)sizeof(CArray<T, UI, SI>) + dimension_count * sizeof(T);
   uintptr_t* buffer = new uintptr_t[size >> kWordBitCount];
-  TArray<T, UI, SI>* stack = reinterpret_cast<TArray<T, UI, SI>*>(buffer);
+  CArray<T, UI, SI>* stack = reinterpret_cast<CArray<T, UI, SI>*>(buffer);
   stack->size_array = 0;
   stack->size_stack = size;
   stack->count_max = dimension_count;
@@ -87,15 +85,15 @@ TArray<T, UI, SI>* ArrayInit(const SI* dimensions) {
 
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 SI ArrayElementCountMax() {
-  return (UnsignedMax<UI>() - (UI)sizeof(TArray<T, UI, SI>)) / sizeof(T);
+  return (UnsignedMax<UI>() - (UI)sizeof(CArray<T, UI, SI>)) / sizeof(T);
 }
 
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-TArray<T, UI, SI>* ArrayNew(const SI* dimensions) {
+CArray<T, UI, SI>* ArrayNew(const SI* dimensions) {
   ASSERT(dimensions);
-  const SI* cursor = dimensions;
-  SI count = (*cursor++) - 1, element_count = *cursor++, index = count;
-  while (index-- > 0) element_count *= *cursor++;
+  const SI* begin = dimensions;
+  SI count = (*begin++) - 1, element_count = *begin++, index = count;
+  while (index-- > 0) element_count *= *begin++;
   UI size = ((UI)element_count * (UI)sizeof(T));
 }
 
@@ -103,7 +101,7 @@ TArray<T, UI, SI>* ArrayNew(const SI* dimensions) {
     @param tarray ASCII Array data structure..
     @return Pointer to the first element in the array. */
 template <typename T, typename UI = uint, typename SI = int>
-T* ArrayElements(TArray<T, UI, SI>* tarray) {
+T* ArrayElements(CArray<T, UI, SI>* tarray) {
   char* elements = reinterpret_cast<char*>(tarray) + tarray->size_stack;
   return reinterpret_cast<T*>(elements);
 }
@@ -112,8 +110,8 @@ T* ArrayElements(TArray<T, UI, SI>* tarray) {
     @param tarray ASCII Array data structure..
     @return Pointer to the first element in the array. */
 template <typename T, typename UI = uint, typename SI = int>
-SI* ArrayDimensions(TArray<T, UI, SI>* tarray) {
-  char* elements = reinterpret_cast<char*>(tarray) + sizeof(TArray<T, UI, SI>);
+SI* ArrayDimensions(CArray<T, UI, SI>* tarray) {
+  char* elements = reinterpret_cast<char*>(tarray) + sizeof(CArray<T, UI, SI>);
   return reinterpret_cast<SI*>(elements);
 }
 
@@ -121,14 +119,14 @@ SI* ArrayDimensions(TArray<T, UI, SI>* tarray) {
     @param tarray ASCII Array data structure..
     @return Pointer to the first element in the array. */
 template <typename T, typename UI = uint, typename SI = int>
-SI* ArrayDimensionsEnd(TArray<T, UI, SI>* tarray) {
+SI* ArrayDimensionsEnd(CArray<T, UI, SI>* tarray) {
   ASSERT(tarray)
   return ArrayDimensions<T, UI, SI>(tarray) + tarray->count - 1;
 }
 
-/* Prints the TArray to the Printer. */
+/* Prints the CArray to the Printer. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-Printer& PrintArray(Printer& print, TArray<T, UI, SI>* tarray) {
+Printer1& PrintArray(Printer1& print, CArray<T, UI, SI>* tarray) {
   ASSERT(tarray)
   UI size_array = tarray->size_array;
   SI count = tarray->count;
@@ -215,8 +213,8 @@ class Array {
     return *this;
   }
 
-  inline TArray<T, UI, SI>* This() {
-    return reinterpret_cast<TArray<T, UI, SI>*>(buffer_);
+  inline CArray<T, UI, SI>* This() {
+    return reinterpret_cast<CArray<T, UI, SI>*>(buffer_);
   }
 
  private:
@@ -225,14 +223,16 @@ class Array {
 }  // namespace _
 
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-inline _::Printer& operator<<(_::Printer& printer, _::Stack<T, UI, SI>* stack) {
+inline _::Printer1& operator<<(_::Printer1& printer,
+                               _::Stack<T, UI, SI>* stack) {
   return _::PrintArray<T, UI, SI>(printer, stack->This());
 }
 
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-inline _::Printer& operator<<(_::Printer& printer, _::Stack<T, UI, SI>& stack) {
+inline _::Printer1& operator<<(_::Printer1& printer,
+                               _::Stack<T, UI, SI>& stack) {
   return _::PrintArray<T, UI, SI>(printer, stack.This());
 }
 
 #endif  //< HEADER_FOR_CRABS_ARRAY
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3

@@ -1,26 +1,23 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    ~/kabuki-toolkit/kabuki/crabs/type.h
+@file    $kabuki-toolkit/kabuki/crabs/type.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
-@license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-          All right reserved (R). Licensed under the Apache License, Version
-          2.0 (the "License"); you may not use this file except in
-          compliance with the License. You may obtain a copy of the License
-          [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-          required by applicable law or agreed to in writing, software
-          distributed under the License is distributed on an "AS IS" BASIS,
-          WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-          implied. See the License for the specific language governing
-          permissions and limitations under the License.
-*/
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 3
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
 #ifndef HEADER_FOR_CRABS_TYPES
 #define HEADER_FOR_CRABS_TYPES
 // Dependencies:
-#include "memory.h"
+#include "config.h"
 // End dependencies.
 /* @tag Comment may be wrapped around
 like this.
@@ -30,6 +27,11 @@ like this.
 typedef uint8_t type_t;
 
 namespace _ {
+
+enum {
+  kMaxDigitsFloat = 3 + FLT_MANT_DIG - FLT_MIN_EXP,
+  kMaxDigitsDouble = 3 + DBL_MANT_DIG - DBL_MIN_EXP,
+};
 
 /* A type-value tuple. */
 struct KABUKI TypeValue {
@@ -69,7 +71,7 @@ typedef enum AsciiTypes {
   BSQ,      //< 22. B-Sequence.
   OBJ,      //< 23. N-byte object.
   STA,      //< 24. String array.
-  SET,      //< 25. A unique set of Type-Value records
+  SET,      //< 25. A unique set of Type-Value records.
   TBL,      //< 26. A sorted sequencential hash table.
   EXP,      //< 27. Script Expression.
   LST,      //< 28. Set or multiset of Type-Value tuples.
@@ -112,65 +114,6 @@ inline const char* TypeString(type_t type) {
 
 /* Returns the name of the given type. */
 inline const char* TypeString(uint_t type) { return TypeString((uint8_t)type); }
-
-/* Checks the last char of the text to check if it is a specified char. */
-
-template <char kChar_, AsciiType kType_>
-inline char TypeCharCompare(char const text) {
-  if (text != kChar_) return 0xff;
-  return kType_;
-}
-
-/* Checks the last char of the text to check if it is a specified char. */
-template <char kChar_, AsciiType kType_>
-inline bool TypeCharCompare(char const text, char const d) {
-  if (text != kChar_) {
-    return 0xff;
-  }
-  return kType_;
-}
-
-/* Checks the last two char(string) of the text to check if it is a specified
-    char. */
-template <char kLetterTwo_, char kLetterThree_, AsciiType kType_>
-inline byte TypeCharCompare(char const b, char const c, char const d) {
-  if (kLetterTwo_ != b) {
-    return 0xff;
-  }
-  if (kLetterThree_ != c) {
-    return 0xff;
-  }
-  if (!IsSpace(d)) {
-    return 0xff;
-  }
-  if (IsDelimiter) return kType_;
-}
-
-/* Checks the last two char(string) of the text to check if it is a specified
-    char. */
-template <char kLetterTwo_, char kLetterThree_, AsciiType kType_>
-inline byte TypeCharCompareObject(char const b, char const c, char const d,
-                                  char const e) {
-  if (kLetterTwo_ != b) {
-    return 0xff;
-  }
-  if (kLetterThree_ != c) {
-    return 0xff;
-  }
-  if (!IsSpace(e)) {
-    return 0xff;
-  }
-  if (d == '2') {
-    return kType_;
-  }
-  if (d == '4') {
-    return kType_;
-  }
-  if (d == '8') {
-    return kType_;
-  }
-  return 0xff;
-}
 
 /* Masks off the lower 5-LSb to get the type. */
 inline byte TypeMask(byte value) { return value & 0x1f; }
@@ -245,7 +188,7 @@ inline bool TypeIsUtf16(type_t type) { return (bool)(type & 0x20); }
     @param printer The printer to print to.
     @param type    The type to print.
     @param value   The value to print or nil. */
-KABUKI Printer& PrintType(Printer& printer, type_t type, const void* value);
+KABUKI Printer1& PrintType(Printer1& printer, type_t type, const void* value);
 
 inline int TypeSizeWidthCode(type_t type) { return type >> 6; }
 
@@ -275,10 +218,10 @@ T* TypeAlignUpPointer(void* pointer, type_t type) {
 
 }  // namespace _
 
-inline _::Printer& operator<<(_::Printer& printer,
-                              const _::TypeValue& type_value) {
+inline _::Printer1& operator<<(_::Printer1& printer,
+                               const _::TypeValue& type_value) {
   return _::PrintType(printer, type_value.type, type_value.value);
 }
 
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
 #endif  //< HEADER_FOR_CRABS_TYPES

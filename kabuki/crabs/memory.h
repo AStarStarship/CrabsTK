@@ -1,26 +1,23 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/kabuki-toolkit/kabuki/crabs/memory.h
-    @author  Cale McCollough <https://calemccollough.github.io>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License. */
+@version 0.x
+@file    ~/kabuki-toolkit/kabuki/crabs/memory.h
+@author  Cale McCollough <https://calemccollough.github.io>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 2
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
 #ifndef HEADER_FOR_CRABS_MEMORY
 #define HEADER_FOR_CRABS_MEMORY
 // Dependencies:
 #include "align.h"
-#include "printer.h"
 // End dependencies.
 
 namespace _ {
@@ -194,59 +191,7 @@ inline bool MemoryCompare(void* begin, size_t write_size, const void* read,
                        reinterpret_cast<const char*>(read) + read_size);
 }
 
-/* Prints out the contents of the address to the debug stream.
-    @param begin    The beginning of the read buffer.
-    @param text_end The end of the read buffer.
-    @param start    The beginning of the write buffer.
-    @param stop     The end of the write buffer.
-    @return         Null upon failure or a pointer to the byte after the last
-                    byte written. */
-KABUKI char* PrintMemory(char* cursor, char* end, const void* start,
-                         const void* stop);
-
-/* Prints out the contents of the address to the debug stream.
-    @param begin    The beginning of the read buffer.
-    @param text_end The end of the read buffer.
-    @param text     The beginning of the write buffer.
-    @param text_end The end of the write buffer.
-    @return          Null upon failure or a pointer to the byte after the last
-                     byte written. */
-inline char* PrintMemory(char* cursor, char* end, const void* start,
-                         size_t size) {
-  return PrintMemory(cursor, end, start,
-                     reinterpret_cast<const char*>(start) + size);
-}
-
-/* Prints the given memory socket. */
-inline Printer& PrintMemory(Printer& printer, const void* start, size_t size) {
-  char* result = PrintMemory(printer.cursor, printer.end, start,
-                             reinterpret_cast<const char*>(start) + size);
-  if (result == nullptr) return printer;
-  printer.cursor = result;
-  return printer;
-}
-
 }  // namespace _
 
-inline _::Printer& operator<<(_::Printer& print, _::Socket& memory) {
-  char* cursor =
-      _::PrintMemory(print.cursor, print.end, memory.begin, memory.end);
-  if (!cursor) {
-    return print;
-  }
-  print.cursor = cursor;
-  return print;
-}
-
-inline _::Printer& operator<<(_::Printer& print, _::Socket memory) {
-  char* cursor =
-      _::PrintMemory(print.cursor, print.end, memory.begin, memory.end);
-  if (!cursor) {
-    return print;
-  }
-  print.cursor = cursor;
-  return print;
-}
-
 #endif  //< HEADER_FOR_CRABS_MEMORY
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2

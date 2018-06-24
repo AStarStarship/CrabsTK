@@ -1,8 +1,8 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/libraries/pro/impl/project.cc
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+@version 0.x
+@file    ~/libraries/pro/impl/project.cc
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
              2.0 (the "License"); you may not use this file except in
              compliance with the License. You may obtain a copy of the License
@@ -15,7 +15,7 @@
 */
 
 #include <stdafx.h>
-#if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 1
+#if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
 #include "project.h"
 
 namespace _ {
@@ -473,5 +473,5 @@ const char* Project::Command(char* input, Stack<Project*>* stack) {
   return "The Project does not contain the given key in this scope.";
 }
 
-}  // namespace _
-#endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2
+}   //< namespace _
+#endif  //< #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0

@@ -1,21 +1,18 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/kabuki-toolkit/kabuki/crabs/crabs_expression.cc
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-            All right reserved (R). Licensed under the Apache License, Version
-            2.0 (the "License"); you may not use this file except in
-            compliance with the License. You may obtain a copy of the License
-            [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-            required by applicable law or agreed to in writing, software
-            distributed under the License is distributed on an "AS IS" BASIS,
-            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-            implied. See the License for the specific language governing
-            permissions and limitations under the License.
-*/
+@version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/crabs_expression.cc
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
 #include "bsq.h"
 #include "clock.h"
@@ -24,9 +21,9 @@
 #include "hex.h"
 #include "line.h"
 // End dependencies.
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
-#define PRINTF(format, ...) printf(format, __VA_ARGS__);
-#define PUTCHAR(c) putchar(c);
+#if SEAM_MAJOR == 0 && SEAM_MINOR == 4
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PUTCHAR(c) putchar(c)
 #define PRINT_BSQ(header, bsq) Console<>().Out() << header << '\n' << Bsq(bsq);
 #else
 #define PRINTF(x, ...)
@@ -905,7 +902,7 @@ const Op* ExprQuery(Expr* expr, const Op* op) {
 }
 
 #if USING_PRINTER
-Printer& PrintExprStack(Printer& print, Expr* expr) {
+Printer1& PrintExprStack(Printer1& print, Expr* expr) {
   ASSERT(expr);
 
   uint_t i, stack_count;
@@ -929,7 +926,7 @@ Printer& PrintExprStack(Printer& print, Expr* expr) {
   return print << "\nStack Item " << i + 1 << ":\"" << op->name << "\"";
 }
 
-Printer& PrintExpr(Printer& print, Expr* expr) {
+Printer1& PrintExpr(Printer1& print, Expr* expr) {
   ASSERT(expr);
 
   print << Line('~', 80) << "\nStack:    " << Hex<uintptr_t>(expr) << '\n'
@@ -950,8 +947,8 @@ Printer& PrintExpr(Printer& print, Expr* expr) {
 
 #endif
 
-}       //< namespace _
+}   //< namespace _
 
 #undef PRINTF
 #undef PUTCHAR
-#endif  //> #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

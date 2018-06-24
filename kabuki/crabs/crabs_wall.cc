@@ -1,29 +1,26 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/kabuki-toolkit/kabuki/crabs/crabs_wall.cc
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/crabs_wall.cc
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
 #include "align.h"
 #include "stack.h"
 #include "wall.h"
 // End dependencies.
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
-#define PRINTF(format, ...) printf(format, __VA_ARGS__);
-#define PUTCHAR(c) putchar(c);
+#if SEAM_MAJOR == 0 && SEAM_MINOR == 4
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PUTCHAR(c) putchar(c)
 #else
 #define PRINTF(x, ...)
 #define PUTCHAR(c)
@@ -48,7 +45,7 @@ Wall::Wall(size_t size_bytes) : is_dynamic_(true) {
   //< on 16 and 32-bit systems.
   size_bytes -= sizeof(uintptr_t) * (aligned_buffer - buffer);
   buffer_ = buffer;
-  doors_ = reinterpret_cast<TArray<Door*>*>(aligned_buffer);
+  doors_ = reinterpret_cast<CArray<Door*>*>(aligned_buffer);
   StackInit(buffer, size_bytes >> sizeof(uintptr_t));
 }
 
@@ -67,15 +64,15 @@ Wall::Wall(uintptr_t* buffer, size_t size_bytes) {
   //< on 16 and 32-bit systems.
   size_bytes -= sizeof(uintptr_t) * (aligned_buffer - buffer);
   buffer_ = buffer;
-  doors_ = reinterpret_cast<TArray<Door*>*>(aligned_buffer);
+  doors_ = reinterpret_cast<CArray<Door*>*>(aligned_buffer);
   StackInit(buffer, size_bytes >> sizeof(uintptr_t));
 }
 
-Wall::Wall(TArray<Door*>* doors) {}
+Wall::Wall(CArray<Door*>* doors) {}
 
 uintptr_t Wall::GetSizeBytes() { return size_bytes_; }
 
-TArray<Door*>* Wall::Doors() { return doors_; }
+CArray<Door*>* Wall::Doors() { return doors_; }
 
 Door* Wall::GetDoor(int index) { return 0; }
 
@@ -89,7 +86,7 @@ Slot& Wall::Print(Slot& slot) {
   return slot;
 }
 
-}       //< namespace _
+}   //< namespace _
 #undef PRINTF
 #undef PUTCHAR
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

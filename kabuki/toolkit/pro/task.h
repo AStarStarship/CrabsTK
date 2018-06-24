@@ -16,7 +16,7 @@
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 1
+#if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
 #ifndef HEADER_FOR_KT_PRO_TASK
 #define HEADER_FOR_KT_PRO_TASK
 #include "config.h"
@@ -173,4 +173,4 @@ class Task {
 };
 }       //< namespace _
 #endif  //< HEADER_FOR_KT_PRO_TASK
-#endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 1
+#endif  //< #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0

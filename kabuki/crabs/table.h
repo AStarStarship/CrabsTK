@@ -1,36 +1,33 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/kabuki-toolkit/kabuki/crabs/table.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/table.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
 #ifndef HEADER_FOR_CRABS_TABLE
 #define HEADER_FOR_CRABS_TABLE
 // Dependencies:
 #include "memory.h"
 #include "operand.h"
 // End dependencies.
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 4
+#if SEAM_MAJOR == 0 && SEAM_MINOR == 3
 #ifndef PRINTF
-#define PRINTF(format, ...) printf(format, __VA_ARGS__);
-#define PUTCHAR(c) putchar(c);
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PUTCHAR(c) putchar(c)
 #define PRINT_HEADING                              \
   {                                                \
     std::cout << '\n';                             \
-    for (int i = 80; i > 0; --i) std::cout << '-'; \
+    for (int i = 80; i > 0; --i) std::cout << '-' \
   }
 #define PRINT_TYPE(type, value) Console<>().Out() << TypeValue(type, value);
 #define WIPE MapWipe<UI, SI>(map);
@@ -39,7 +36,7 @@
     for (int cout_123 = 80; count > 0; --count) std::cout << (char)token; \
   }
 #endif
-#define PRINT_TABLE #if MAJOR_SEAM == 1 && MINOR_SEAM == 4
+#define PRINT_TABLE #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
 
 #else
 #define PRINTF(x, ...)
@@ -63,6 +60,11 @@ namespace _ {
     collissionsList[0] is an invalid index, so the collisionsList is searched
     from lower address up.
     
+
+
+
+
+
 
 
 
@@ -552,7 +554,7 @@ KABUKI byte TableFind(const Table<UI, SI>* table, const char* key) {
 #if USING_PRINTER
 /* Prints this object out to the console. */
 template <typename UI, typename SI>
-Printer& TablePrint(Printer& print, Table<UI, SI>* table) {
+Printer1& TablePrint(Printer1& print, Table<UI, SI>* table) {
   ASSERT(table)
   SI count = table->count, count_max = table->count_max, collision_index, temp;
   UI size = table->size, size_pile = table->size_pile;
@@ -568,7 +570,7 @@ Printer& TablePrint(Printer& print, Table<UI, SI>* table) {
   uint16_t* key_offsets = reinterpret_cast<uint16_t*>(hashes + count_max);
   char *indexes = reinterpret_cast<char*>(key_offsets + count_max),
        *unsorted_indexes = indexes + count_max,
-       *collission_list = unsorted_indexes + count_max, *cursor;
+       *collission_list = unsorted_indexes + count_max, *begin;
   char* keys = reinterpret_cast<char*>(table) + size - 1;
 
   print << '\n'
@@ -591,13 +593,13 @@ Printer& TablePrint(Printer& print, Table<UI, SI>* table) {
 
     if ((collision_index != kInvalidIndex) && (i < count)) {
       // Print collisions.
-      cursor = &collission_list[collision_index];
-      temp = *cursor;
-      ++cursor;
+      begin = &collission_list[collision_index];
+      temp = *begin;
+      ++begin;
       print << temp;
       while (temp != kInvalidIndex) {
-        temp = *cursor;
-        ++cursor;
+        temp = *begin;
+        ++begin;
         if (temp != kInvalidIndex) print << ", " << temp;
       }
     }
@@ -610,6 +612,6 @@ Printer& TablePrint(Printer& print, Table<UI, SI>* table) {
 }
 #endif
 
-}       //< namespace _
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
+}   //< namespace _
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
 #endif  //< HEADER_FOR_CRABS_TABLE

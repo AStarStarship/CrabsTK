@@ -1,30 +1,27 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/tests/test_seam_1_1.cc
-    @author  Cale McCollough <calemccollough.github.io>
-    @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    $kabuki-toolkit/seams/0_0_seam_tests/test_seam_0_0_0.cc
+@author  Cale McCollough <calemccollough.github.io>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 #include "../../kabuki/crabs/global.h"
-#include "test_seam_1.h"
+#include "test_seam_0.h"
 
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
 
 using namespace _;
 using namespace std;
 
-#if MAJOR_SEAM == 1 && MINOR_SEAM == 1
-#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#if SEAM_MAJOR == 0 && SEAM_MINOR == 0
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
   printf("\n\n%s\n", message); \
   system("PAUSE");
@@ -33,16 +30,10 @@ using namespace std;
 #define PRINT_PAUSE(message)
 #endif
 
-TEST_GROUP(SEAM_1_1){void setup(){}
+TEST_GROUP(SEAM_0_0){void setup(){} void teardown(){PRINT_PAUSE("\n")}};
 
-                     void teardown(){std::cout << '\n';
-system("PAUSE");
-}
-}
-;
-
-TEST(SEAM_1_1, SEAM_1_1A) {
-  printf("\n    Testing SEAM_1_1A... ");
+TEST(SEAM_0_0, SEAM_0_0_0) {
+  printf("\n    Testing SEAM_0_0... ");
 
   static const uint32_t k10ToThe[20] = {
       1,           //< 10^0
@@ -207,4 +198,4 @@ TEST(SEAM_1_1, SEAM_1_1A) {
 #undef PRINTF
 #else
 void TestSeam_1_1() {}
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 1
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0

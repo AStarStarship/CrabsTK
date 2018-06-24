@@ -1,8 +1,8 @@
 /** Kabuki Toolkit
-    @version 0.x
-    @file    ~/source/assembly.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
+@version 0.x
+@file    ~/source/assembly.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
              2.0 (the "License"); you may not use this file except in
              compliance with the License. You may obtain a copy of the License
@@ -21,9 +21,9 @@
              in this file. Please see config.h for configuration details.
 */
 
-#define MAJOR_SEAM 1
+#define SEAM_MAJOR 1
 
-#define MINOR_SEAM 3
+#define SEAM_MINOR 3
 
 // Choose BARE_METAL, MBED, MBED_OS, ARDUINO, MINGW32, WINDOWS, ANDROID,
 // LINUX, OSX, or IOS

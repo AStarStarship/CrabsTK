@@ -1,22 +1,19 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/kabuki-toolkit/kabuki/crabs/room.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/room.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 4
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 #ifndef HEADER_FOR_CRABS_ROOM
 #define HEADER_FOR_CRABS_ROOM
 // Dependencies:
@@ -65,24 +62,19 @@ KABUKI const char* RequestText(Request r);
     vice versa.
 
     @code
-        |=======================|
+        +-----------------------+
         |          Heap         |
         |         Wall 1        |
         |         Wall 2        |
         |          ...          |
         |         Wall N        |
-        |           |           |
-        |           v           |
-        |=======================|
+        |vvvvvvvvvvvvvvvvvvvvvvv|
         |     Unused Memory     |
-        |=======================|
-        |           ^           |
-        |           |           |
+        |^^^^^^^^^^^^^^^^^^^^^^^|
         |     Program Stack     |
-        |=======================|
-    +/- |                       |
+    +/- |-----------------------|
      |  | Floor (Static Memory) |
-    0xN |=======================|
+    0xN +-----------------------+
     @endcode
 
     There are multiple doors in a Chinese Room that lead to other Chinese Rooms.
@@ -92,7 +84,14 @@ KABUKI const char* RequestText(Request r);
     # Doors
 
     There are two ways to access Doors in the CR. in the Root Scope, there are
-    
+    
+
+
+
+
+
+
+
 
 
 
@@ -128,7 +127,14 @@ KABUKI const char* RequestText(Request r);
         16. Host receives login attempt from Sam and opens a Door for him.
     17. Sam needs to get the values Jo stored in step 11 so Same sends a
         Dictionary GET request.
-        
+        
+
+
+
+
+
+
+
 
 
 
@@ -237,14 +243,14 @@ class Room : public Operand {
 
 #if USING_PRINTER
   /* Prints the Room to the stdout. */
-  virtual Printer& Print(Printer& print);
+  virtual Printer1& Print(Printer1& print);
 #endif
 
  protected:
   int state_count_,                      //< Number of FSM states.
       state_;                            //< Room state.
   const char* name_;                     //< Room Name.
-  TArray<Wall*, uint_t, int_t>* walls_;  //< Walls in the Room.
+  CArray<Wall*, uint_t, int_t>* walls_;  //< Walls in the Room.
   Expr* expr_;                           //< Current Expr being executed.
                                          //< DC1: this.
   Door* this_;                           //< DC2: The Door to this room.
@@ -261,6 +267,6 @@ class Room : public Operand {
 /* Returns the Room-Level Script. */
 // KABUKI Room* ChineseRoom (Room* room = nullptr);
 
-}       //< namespace _
-#endif  //< #if MAJOR_SEAM > 1 || MAJOR_SEAM == 1 && MINOR_SEAM >= 5
+}  // namespace _
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 #endif  //< CRABS_ROOM_HDi

@@ -14,9 +14,9 @@
 */
 
 #include <stdafx.h>
-#if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2
-#if MAJOR_SEAM == 2 && MINOR_SEAM == 2
-#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
+#if SEAM_MAJOR == 2 && SEAM_MINOR == 2
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
   printf("\n\n%s\n", message); \
   system("PAUSE");
@@ -117,4 +117,4 @@ Printer& XyControl::Print() {
 }
 
 }       //< namespace _
-#endif  //< #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2
+#endif  //< #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0

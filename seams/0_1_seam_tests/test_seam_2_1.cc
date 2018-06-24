@@ -1,8 +1,8 @@
 /* Kabuki Toolkit
-    @version 0.x
-    @file    ~/tests/test_seam_1_1.cc
-    @author  Cale McCollough <calemccollough.github.io>
-    @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+@version 0.x
+@file    ~/tests/test_seam_1_1.cc
+@author  Cale McCollough <calemccollough.github.io>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
              2.0 (the "License"); you may not use this file except in
              compliance with the License. You may obtain a copy of the License
@@ -16,14 +16,14 @@
 
 #include <stdafx.h>
 
-#if MAJOR_SEAM >= 2 && MINOR_SEAM >= 2
+#if SEAM_MAJOR >= 2 && SEAM_MINOR >= 0
 
 using namespace _;
 using namespace std;
 
 
-#if MAJOR_SEAM == 2 && MINOR_SEAM == 2
-#define PRINTF(format, ...) printf(format, __VA_ARGS__);
+#if SEAM_MAJOR == 2 && SEAM_MINOR == 2
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)\
     printf ("\n\n%s\n", message); system ("PAUSE");
 #define PRINT_HEADING(message) \
@@ -60,4 +60,4 @@ TEST (SEAM_2_1, SEAM_2_1) {
 #undef PRINT_HEADING
 #undef PRINT_PAUSE
 #else
-#endif  //< #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 2
+#endif  //< #if SEAM_MAJOR >= 2 && SEAM_MINOR >= 0
