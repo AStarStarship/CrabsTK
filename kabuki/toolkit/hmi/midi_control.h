@@ -69,7 +69,7 @@ class KABUKI MidiControl : public Parameter<int> {
   void PrintRow() const override;
 
   /* Prints this object to the stdout. */
-  _::Printer& Print(_::Printer& print) const;
+  _::Utf& Print(_::Utf& print) const;
 
  private:
   uint16_t cc_;  //< The control change (CC) parameter.

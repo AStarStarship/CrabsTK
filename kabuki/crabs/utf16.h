@@ -16,14 +16,14 @@ specific language governing permissions and limitations under the License. */
 #ifndef HEADER_FOR_CRABS_PRINT_UTF16
 #define HEADER_FOR_CRABS_PRINT_UTF16
 // Dependencies:
-#include "config.h"
+#include "clock.h"
 // End dependencies.
 #if USING_UTF16
 
 namespace _ {
 
 /* UTF-8 printing utilities
-@ingroup Printer
+@ingroup Utf
 */
 
 /* Checks if the given character is whitespace.
@@ -36,23 +36,18 @@ KABUKI char16_t PrintableChar(char16_t value);
 /* Scrolls over to the next double quote mark.
 @warning This function is only safe to use on ROM strings with a nil-term
 char16_t. */
-KABUKI const char16_t* TextEnd(const char16_t* text, char16_t delimiter = 0);
+KABUKI const char16_t* TextEnd(const char16_t* text);
 
 /* Gets the length of the given char16_t.
 @return  Returns -1 if the text char16_t is nil.
 @warning This function is only safe to use on ROM strings with a nil-term
 char16_t. */
-KABUKI int TextLength(const char16_t* text, char16_t delimiter = 0);
+KABUKI int TextLength(const char16_t* text);
 
-/* Clones the given string with given NON-ZERO delimiter.
+/* Clones the given string.
 @param  A nil-terminated string in ROM.
 @return Returns a new copy you must delete. */
 KABUKI char16_t* TextClone(const char16_t* text);
-
-/* Clones the given string with given NON-ZERO delimiter.
-@param  A nil-terminated string in ROM.
-@return Returns a new copy you must delete. */
-KABUKI char16_t* TextClone(const char16_t* text, char16_t delimiter);
 
 /* Returns a pointer to the char16_t at the end of the line. */
 KABUKI const char16_t* TextLineEnd(const char16_t* text, int column_count);
@@ -75,17 +70,14 @@ KABUKI const char16_t* TextSkipSpaces(const char16_t* text);
 
 /* Compares the source and query char16_t as nil-terminated strings. */
 KABUKI const char16_t* TextEquals(const char16_t* text_a,
-                                  const char16_t* text_b,
-                                  char16_t delimiter = 0);
+                                  const char16_t* text_b);
 
 /* Searches the given char16_t for the given char16_t.
 @param  text      The char16_t to search.
 @param  query      The char16_t to search for.
-@param  delimiter The delimiter for the text, Example: '\"'
 @return Returns nil if the parsing failed and a pointer to the first char16_t
 after the end of the text upon success. */
-KABUKI const char16_t* TextFind(const char16_t* begin, const char16_t* query,
-                                char16_t delimiter = 0);
+KABUKI const char16_t* TextFind(const char16_t* begin, const char16_t* query);
 
 /* Printrs the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -491,6 +483,58 @@ byte written.
 @param size  The size of the read buffer. */
 KABUKI char16_t* PrintMemory(char16_t* begin, char16_t* end, const void* start,
                              size_t size);
+
+/* Writes the given time to the text buffer.
+@return Null upon failure or a pointer to the byte after the last
+byte written.
+@param begin The beginning of the write buffer.
+@param time  The time to print.
+@param end   The end of the write buffer. */
+KABUKI char16_t* Print(char16_t* begin, char16_t* end, Tms t);
+
+/* Writes the given time to the text buffer.
+@return Null upon failure or a pointer to the byte after the last
+byte written.
+@param begin The beginning of the write buffer.
+@param time  The time to print.
+@param end   The end of the write buffer. */
+KABUKI char16_t* Print(char16_t* begin, char16_t* end, Tme t);
+
+/* Writes the given time to the text buffer.
+@return Null upon failure or a pointer to the byte after the last
+byte written.
+@param begin The beginning of the write buffer.
+@param time  The time to print.
+@param end   The end of the write buffer. */
+KABUKI char16_t* Print(char16_t* begin, char16_t* end, Tss t);
+
+/* Prints a line of the given column_count.
+@return Returns a pointer to the next char16_t after the end of the read number
+or nil upon failure.
+@param begin The beginning of the write buffer.
+@param end   The end of the write buffer.
+@param token The token to print.
+@param column_count The number of tokens to print. */
+KABUKI char16_t* PrintLine(char16_t* cursor, char16_t* end, char16_t token,
+                           int column_count);
+
+/* Prints a line of the given column_count.
+@return Returns a pointer to the next char16_t after the end of the read number
+or nil upon failure.
+@param begin  The beginning of the write buffer.
+@param end    The end of the write buffer.
+@param string The string to print.
+@param column_count The number of columns. */
+KABUKI char16_t* PrintLineString(char16_t* cursor, char16_t* end,
+                                 const char16_t* string, int column_count);
+
+/* Converts the given string to a 8-bit signed integer.
+@param  text A nil-terminated string in ROM.
+@param  result  The result of the conversion.
+@return Returns a pointer to the next char16_t after the end
+of the read number or nil upon failure. */
+KABUKI const char16_t* TextScan(const char16_t* begin, int8_t& result);
+
 /* Converts the given string to a 8-bit signed integer.
 @param  text A nil-terminated string in ROM.
 @param  result  The result of the conversion.
@@ -562,7 +606,7 @@ of the read number or nil upon failure. */
 KABUKI const char16_t* TextScan(const char16_t* text, double& result);
 
 /* ASCII printing utilities
-@ingroup Printer
+@ingroup Utf
 */
 
 /* Utility class for printing strings.
@@ -571,91 +615,91 @@ begin. It is up the user to store start of buffer pointer and if they would
 like to replace the begin with the beginning of buffer pointer when they
 are done printing.
 */
-struct KABUKI Printer2 {
+struct KABUKI Utf16 {
   char16_t *begin,  //< Write begin pointer.
       *end;         //< End of buffer pointer.
 
-  /* Initializes the Printer& from the given buffer pointers.
+  /* Initializes the Utf& from the given buffer pointers.
   @param begin The beginning of the buffer.
   @param end   The end of the buffer. */
-  Printer2(char16_t* begin, size_t size);
+  Utf16(char16_t* begin, size_t size);
 
-  /* Initializes the Printer& from the given buffer pointers.
+  /* Initializes the Utf& from the given buffer pointers.
   @param begin The beginning of the buffer.
   @param end   The end of the buffer. */
-  Printer2(char16_t* begin, char16_t* end);
+  Utf16(char16_t* begin, char16_t* end);
 
   /* Clones the other print. */
-  Printer2(const Printer2& other);
+  Utf16(const Utf16& other);
 
   /* Sets the begin pointer to the new_pointer. */
-  inline Printer2& Set(char16_t* new_pointer);
+  inline Utf16& Set(char16_t* new_pointer);
 
   /* Prints the given value as hex. */
-  inline Printer2& Hex(int8_t value);
+  inline Utf16& Hex(int8_t value);
 
   /* Prints the given value as hex. */
-  inline Printer2& Hex(uint8_t value);
+  inline Utf16& Hex(uint8_t value);
 
   /* Prints the given value as hex. */
-  inline Printer2& Hex(int16_t value);
+  inline Utf16& Hex(int16_t value);
 
   /* Prints the given value as hex. */
-  inline Printer2& Hex(uint16_t value);
+  inline Utf16& Hex(uint16_t value);
 
   /* Prints the given value as hex. */
-  inline Printer2& Hex(int32_t value);
+  inline Utf16& Hex(int32_t value);
 
   /* Prints the given value as hex. */
-  inline Printer2& Hex(uint32_t value);
+  inline Utf16& Hex(uint32_t value);
 
   /* Prints the given value as hex. */
-  inline Printer2& Hex(int64_t value);
+  inline Utf16& Hex(int64_t value);
 
   /* Prints the given value as hex. */
-  inline Printer2& Hex(uint64_t value);
+  inline Utf16& Hex(uint64_t value);
 
   /* Prints the given value as hex. */
-  inline Printer2& Hex(float value);
+  inline Utf16& Hex(float value);
 
   /* Prints the given value as hex. */
-  inline Printer2& Hex(double value);
+  inline Utf16& Hex(double value);
 
   /* Prints the given pointer as hex. */
-  inline Printer2& Hex(const void* pointer);
+  inline Utf16& Hex(const void* pointer);
 
   /* Prints the given value as binary. */
-  inline Printer2& Binary(int8_t value);
+  inline Utf16& Binary(int8_t value);
 
   /* Prints the given value as binary. */
-  inline Printer2& Binary(uint8_t value);
+  inline Utf16& Binary(uint8_t value);
 
   /* Prints the given value as binary. */
-  inline Printer2& Binary(int16_t value);
+  inline Utf16& Binary(int16_t value);
 
   /* Prints the given value as binary. */
-  inline Printer2& Binary(uint16_t value);
+  inline Utf16& Binary(uint16_t value);
 
   /* Prints the given value as binary. */
-  inline Printer2& Binary(int32_t value);
+  inline Utf16& Binary(int32_t value);
 
   /* Prints the given value as binary. */
-  inline Printer2& Binary(uint32_t value);
+  inline Utf16& Binary(uint32_t value);
 
   /* Prints the given value as binary. */
-  inline Printer2& Binary(int64_t value);
+  inline Utf16& Binary(int64_t value);
 
   /* Prints the given value as binary. */
-  inline Printer2& Binary(uint64_t value);
+  inline Utf16& Binary(uint64_t value);
 
   /* Prints the given value as binary. */
-  inline Printer2& Binary(float value);
+  inline Utf16& Binary(float value);
 
   /* Prints the given value as binary. */
-  inline Printer2& Binary(double value);
+  inline Utf16& Binary(double value);
 
   /* Prints the given pointer as binary. */
-  inline Printer2& Binary(const void* pointer);
+  inline Utf16& Binary(const void* pointer);
 };
 
 /* Utility class for printing numbers. */
@@ -695,28 +739,28 @@ class Text2 {
 };
 
 /* Utility class for printing hex with operator<<. */
-class Center2 {
+class Utf16Center {
  public:
   /* Prints the value to the text buffer. */
-  Center2(const char16_t* string, int column_count);
+  Utf16Center(const char16_t* string, int column_count);
 
   /* Prints the value to the text buffer. */
-  Center2(int32_t value, int column_count);
+  Utf16Center(int32_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Center2(uint32_t value, int column_count);
+  Utf16Center(uint32_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Center2(int64_t value, int column_count);
+  Utf16Center(int64_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Center2(uint64_t value, int column_count);
+  Utf16Center(uint64_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Center2(float value, int column_count);
+  Utf16Center(float value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Center2(double value, int column_count);
+  Utf16Center(double value, int column_count);
 
   /* Gets the number string. */
   const char16_t* GetString();
@@ -731,28 +775,28 @@ class Center2 {
 };
 
 /* Utility class for printing hex with operator<<. */
-class Right2 {
+class Utf16Right {
  public:
   /* Prints the value to the text buffer. */
-  Right2(const char16_t* string, int column_count);
+  Utf16Right(const char16_t* string, int column_count);
 
   /* Prints the value to the text buffer. */
-  Right2(int32_t value, int column_count);
+  Utf16Right(int32_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Right2(uint32_t value, int column_count);
+  Utf16Right(uint32_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Right2(int64_t value, int column_count);
+  Utf16Right(int64_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Right2(uint64_t value, int column_count);
+  Utf16Right(uint64_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Right2(float value, int column_count);
+  Utf16Right(float value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Right2(double value, int column_count);
+  Utf16Right(double value, int column_count);
 
   /* Gets the number string. */
   const char16_t* GetString();
@@ -772,81 +816,81 @@ class Right2 {
 @param  printer The printer.
 @param  value   The value to print.
 @return The printer. */
-KABUKI _::Printer2& operator<<(_::Printer2& printer, const char16_t* string);
+KABUKI _::Utf16& operator<<(_::Utf16& printer, const char16_t* string);
 
 /* Writes the given value to the print.
 @param  printer The printer.
 @param  value   The value to print.
 @return The printer. */
-KABUKI _::Printer2& operator<<(_::Printer2& printer, char16_t value);
+KABUKI _::Utf16& operator<<(_::Utf16& printer, char16_t value);
 
 /* Writes the given value to the print.
 @param  printer The printer.
 @param  value The value to write to the print.
 @return The printer. */
-KABUKI _::Printer2& operator<<(_::Printer2& printer, uint8_t value);
+KABUKI _::Utf16& operator<<(_::Utf16& printer, uint8_t value);
 
 /* Writes the given value to the print.
 @param  printer The printer.
 @param  value The value to write to the print.
 @return The printer. */
-KABUKI _::Printer2& operator<<(_::Printer2& printer, int16_t value);
+KABUKI _::Utf16& operator<<(_::Utf16& printer, int16_t value);
 
 /* Writes the given value to the print.
 @param  printer The printer.
 @param  value The value to write to the print.
 @return The printer. */
-KABUKI _::Printer2& operator<<(_::Printer2& printer, uint16_t value);
+KABUKI _::Utf16& operator<<(_::Utf16& printer, uint16_t value);
 
 /* Writes the given value to the print.
 @return The printer.
 @param  printer The printer.
 @param  value The value to write to the print. */
-KABUKI _::Printer2& operator<<(_::Printer2& printer, int32_t value);
+KABUKI _::Utf16& operator<<(_::Utf16& printer, int32_t value);
 
 /* Writes the given value to the print.
 @return The printer.
 @param  printer The printer.
 @param  value The value to write to the print. */
-KABUKI _::Printer2& operator<<(_::Printer2& printer, uint32_t value);
+KABUKI _::Utf16& operator<<(_::Utf16& printer, uint32_t value);
 
 /* Writes the given value to the print.
 @return The printer.
 @param  printer The printer.
 @param  value The value to write to the print. */
-KABUKI _::Printer2& operator<<(_::Printer2& printer, int64_t value);
+KABUKI _::Utf16& operator<<(_::Utf16& printer, int64_t value);
 
 /* Writes the given value to the print.
 @return The printer.
 @desc
 @param  printer The printer.
 @param  value The value to write to the print. */
-KABUKI _::Printer2& operator<<(_::Printer2& printer, uint64_t value);
+KABUKI _::Utf16& operator<<(_::Utf16& printer, uint64_t value);
 
 /* Writes the given value to the print.
 @return The printer.
 @desc
 @param  printer The printer.
 @param  value The value to write to the print. */
-KABUKI _::Printer2& operator<<(_::Printer2& printer, float value);
+KABUKI _::Utf16& operator<<(_::Utf16& printer, float value);
 
 /* Writes the given value to the print.
 @return The printer.
 @param  printer The printer.
 @param  value The value to write to the print. */
-KABUKI _::Printer2& operator<<(_::Printer2& printer, double value);
+KABUKI _::Utf16& operator<<(_::Utf16& printer, double value);
 
 /* Writes the given value to the print.
 @return The printer.
 @param  printer The printer.
 @param  value The value to write to the print justified center. */
-KABUKI _::Printer2& operator<<(_::Printer2& printer, _::Center2 item);
+KABUKI _::Utf16& operator<<(_::Utf16& printer, _::Utf16Center item);
 
 /* Writes the given value to the print jusified right.
 @return The printer.
 @param  printer The printer.
 @param  value The value to write to the print. */
-KABUKI _::Printer2& operator<<(_::Printer2& printer, _::Right2 item);
+KABUKI _::Utf16& operator<<(_::Utf16& printer, _::Utf16Right item);
 
 #endif  //< #if USING_UTF16
 #endif  //< #if HEADER_FOR_CRABS_PRINT_UTF16

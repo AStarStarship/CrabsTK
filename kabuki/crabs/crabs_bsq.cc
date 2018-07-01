@@ -14,6 +14,7 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
 // Dependencies:
+#include "assert.h"
 #include "bsq.h"
 #include "utf8.h"
 // End dependencies.
@@ -45,7 +46,7 @@ uint_t BsqParamNumber(const uint_t* params, int param_number) {
   return params[i];
 }
 
-Printer1& PrintBsq(Printer1& print, const uint_t* params) {
+Utf8& PrintBsq(Utf8& print, const uint_t* params) {
   uint_t num_params = *params++, i, type, value = 0;
 
   print << "Param<";
@@ -234,6 +235,6 @@ Printer1& PrintBsq(Printer1& print, const uint_t* params) {
   return print;
 }
 
-}   //< namespace _
+}  // namespace _
 
 #endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3

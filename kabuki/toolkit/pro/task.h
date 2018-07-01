@@ -80,49 +80,49 @@ class Task {
   bool SetGrade(float new_value);
 
   /* Gets the time_estimate. */
-  time_t GetTimeEstimate();
+  Tms GetTimeEstimate();
 
   /* Sets the time_estimate.
       @param time The new time_estimate.
       @return Returns null upon success and a pointer to an error char upon
      failure. */
-  void SetTimeEstimate(time_t time);
+  void SetTimeEstimate(Tms time);
 
   /* Gets the time_begins. */
-  time_t GetTimeBegins();
+  Tms GetTimeBegins();
 
   /* Sets the time_begins.
       @param time The new time_begins.
       @return Returns null upon success and a pointer to an error char upon
      failure. */
-  const char* SetTimeBegins(time_t time);
+  const char* SetTimeBegins(Tms time);
 
   /* Gets the end time. */
-  time_t GetTimeEnds();
+  Tms GetTimeEnds();
 
   /* Sets the time_ends.
       @param time The new time_ends.
       @return Returns null upon success and a pointer to an error char upon
      failure. */
-  const char* SetTimeEnds(time_t time);
+  const char* SetTimeEnds(Tms time);
 
   /* Gets the time_started. */
-  time_t GetTimeStarted();
+  Tms GetTimeStarted();
 
   /* Sets the time_started.
       @param time The new time_started.
       @return Returns null upon success and a pointer to an error char upon
      failure. */
-  const char* SetTimeStarted(time_t time);
+  const char* SetTimeStarted(Tms time);
 
   /* Gets the stop time. */
-  time_t GetTimeStopped();
+  Tms GetTimeStopped();
 
   /* Sets the time_stopped.
       @param time The new time_stopped.
       @return Returns null upon success and a pointer to an error char upon
      failure. */
-  const char* SetTimeStopped(time_t time);
+  const char* SetTimeStopped(Tms time);
 
   /* Starts the task and saves the start time. */
   void Start();
@@ -145,7 +145,7 @@ class Task {
   Task* Collision();
 
   /* Returns true if the event contains the given time. */
-  bool Contains(time_t t);
+  bool Contains(Tms t);
 
   /* Prints the help menu. */
   static const char* GetHelpString();
@@ -164,7 +164,7 @@ class Task {
   float weight_,          //< Weight of the task.
       assessment_,        //< User's self-assessed grade.
       grade_;             //< Reviewed grade.
-  time_t time_estimate_,  //< Amount of time it is estimated this will take.
+  Tms time_estimate_,  //< Amount of time it is estimated this will take.
       time_begins_,       //< Time the task begins.
       time_ends_,         //< Time the task was finished ends.
       time_started_,      //< Time the user started the task.

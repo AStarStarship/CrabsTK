@@ -14,22 +14,23 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
+#include "ascii_data_types.h"
+#include "assert.h"
 #include "hex.h"
 #include "line.h"
 #include "print_integer.h"
 #include "slot.h"
 #include "text.h"
-#include "type.h"
 // End dependencies.
 
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
 
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #define PRINT_BSQ(bsq) Console<>().Out() << header << '\n' << Bsq(bsq);
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #define PRINT_BSQ
 #endif
 
@@ -201,8 +202,8 @@ const Op* Slot::Read(const uint_t* params, void** args) {
     type = (byte)*param;
     ++param;
     PRINTF("\nindex:%u:\"%s\", start:0x%i, stop:0x%i", (uint)index,
-           TypeString(type), (int)MemoryVector(l_begin, l_start),
-           (int)MemoryVector(l_begin, l_stop))
+           TypeString(type), (int)SocketSize(l_begin, l_start),
+           (int)SocketSize(l_begin, l_stop))
 
     switch (type) {
       case NIL:
@@ -232,7 +233,7 @@ const Op* Slot::Read(const uint_t* params, void** args) {
           if (count-- == 0)
             return ReturnError(this, kErrorBufferUnderflow, params, index,
                                l_start);
-          PUTCHAR(ui1)
+          PRINT(ui1)
 
           ui1 = *l_start;  // Read byte from ring-buffer.
           if (++l_start > l_end) l_start -= size;
@@ -519,8 +520,8 @@ const Op* Slot::Write(Slot& other) { return nullptr; }
 
 const Op* Slot::Write(const char* message) { return nullptr; }
 
-#if USING_PRINTER
-Printer1& Slot::Print(Printer1& print) {
+#if CRABS_UTF
+Utf8& Slot::Print(Utf8& print) {
   char *l_begin = begin, *l_end = end;
   return print << Line('_', 80) << "\nSlot: begin:" << Hex<>(l_begin)
                << " start:" << Hex<>(start) << "\nstop:" << Hex<>(stop)
@@ -528,7 +529,7 @@ Printer1& Slot::Print(Printer1& print) {
 }
 #endif
 
-}   //< namespace _
+}  // namespace _
 #undef PRINTF
-#undef PUTCHAR
+#undef PRINT
 #endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

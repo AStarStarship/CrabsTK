@@ -19,7 +19,7 @@
 #define DEBUGGING 1
 #define SEAM_MAJOR 2
 #define SEAM_MINOR 1
-
+/*
 #ifdef WIN32
 #include "targetver.h"
 #define WIN32_LEAN_AND_MEAN  // Exclude rarely-used stuff from Slots headers
@@ -54,3 +54,4 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+*/

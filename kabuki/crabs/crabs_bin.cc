@@ -14,27 +14,28 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
+#include "ascii_data_types.h"
+#include "assert.h"
 #include "bin.h"
 #include "bout.h"
 #include "bsq.h"
 #include "hash.h"
 #include "hex.h"
 #include "line.h"
-#include "memory.h"
 #include "slot.h"
-#include "type.h"
+#include "socket.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
 #define DEBUG 1
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #define CLEAR(begin, end) \
   while (begin <= end) *begin++ = ' ';
 #define PRINT_BSQ(header, bsq) Console<>().Out() << header << '\n' << Bsq(bsq);
 #define PRINT_BIN(header, bin) Console<>().Out() << header << '\n' << bin;
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #define CLEAR(begin, end)
 #define PRINT_BSQ(header, bsq)
 #define PRINT_BIN(header, bout)
@@ -42,7 +43,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-#if USING_PRINTER
+#if CRABS_UTF
 const char** BInStateStrings() {
   static const char* kStateStrings[] = {
       "Address",       //< 0
@@ -138,9 +139,8 @@ int BInStreamByte(BIn* bin) {
     return -1;
   }
   // byte b = *cursor;
-  bin->stop = (++begin >= end)
-                  ? static_cast<uint_t>(MemoryVector(begin, end))
-                  : static_cast<uint_t>(MemoryVector(begin, begin));
+  bin->stop = (++begin >= end) ? static_cast<uint_t>(SocketSize(begin, end))
+                               : static_cast<uint_t>(SocketSize(begin, begin));
   return 0;
 }
 
@@ -196,8 +196,8 @@ const Op* BInRead(BIn* bin, const uint_t* params, void** args) {
   for (index = 1; index <= num_params; ++index) {
     type = params[index];
     PRINTF("\nparam:%u type:%s start:%i stop:%i length:%u", arg_index + 1,
-           TypeString(type), (int)MemoryVector(begin, start),
-           (int)MemoryVector(begin, stop), length)
+           TypeString(type), (int)SocketSize(begin, start),
+           (int)SocketSize(begin, stop), length)
     switch (type) {
       case NIL:
         return BInError(bin, kErrorInvalidType, params, index, start);
@@ -218,7 +218,7 @@ const Op* BInRead(BIn* bin, const uint_t* params, void** args) {
         if (++start >= end) start -= size;
         *ui1_ptr = ui1;
         ++ui1_ptr;
-        PUTCHAR(ui1)
+        PRINT(ui1)
         while ((ui1 != 0) && (count != 0)) {
           --count;
           if (count == 0)  //< Reached count:0 before nil-term char.
@@ -227,7 +227,7 @@ const Op* BInRead(BIn* bin, const uint_t* params, void** args) {
           hash = Hash16(ui1, hash);
           if (++start >= end) start -= size;
           *ui1_ptr++ = ui1;  // Write byte to destination.
-          PUTCHAR(ui1)
+          PRINT(ui1)
         }
         PRINTF("\" success!\n")
         if (type != ADR) {
@@ -588,13 +588,13 @@ const Op* BInRead(BIn* bin, const uint_t* params, void** args) {
   CLEAR(begin, end)
 
   // Convert pointer back to offset
-  bin->start = (uint_t)MemoryVector(begin, start);
+  bin->start = (uint_t)SocketSize(begin, start);
 
   return 0;
 }
 
-#if USING_PRINTER
-Printer1& Print(Printer1& print, BIn* bin) {
+#if CRABS_UTF
+Utf8& Print(Utf8& print, BIn* bin) {
   ASSERT(bin);
 
   uint_t size = bin->size;
@@ -605,10 +605,10 @@ Printer1& Print(Printer1& print, BIn* bin) {
 }
 #endif
 
-}   //< namespace _
+}  // namespace _
 
 #undef PRINTF
-#undef PUTCHAR
+#undef PRINT
 #undef CLEAR
 #undef PRINT_BSQ
 #undef PRINT_BIN

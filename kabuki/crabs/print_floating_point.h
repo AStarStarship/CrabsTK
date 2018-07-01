@@ -17,16 +17,19 @@ specific language governing permissions and limitations under the License. */
 #ifndef HEADER_FOR_CRABS_PRINT_FLOATING_POINT
 #define HEADER_FOR_CRABS_PRINT_FLOATING_POINT
 // Dependencies:
+#include <stdio.h>
 #include "config.h"
 // End dependencies.
-#if USING_PRINTER
+#if CRABS_UTF
 
 namespace _ {
 
 /* Writes the give value to the given buffer as an ASCII string.
-    @param begin Beginning address of the buffer.
-    @param end   The end address of the buffer.
-    @param value The value to write. */
+@warning This function is slow right now because it's using
+sprintf but GrisuX coming soon.
+@param begin Beginning address of the buffer.
+@param end   The end address of the buffer.
+@param value The value to write. */
 template <typename Char>
 Char* Print(Char* begin, Char* end, float value) {
   // @todo Replace with GrisuX algorithm that uses the Script itoa Algorithm.
@@ -38,7 +41,7 @@ Char* Print(Char* begin, Char* end, float value) {
     delete buffer;
     return nullptr;
   }
-  Char* buffer_cursor = buffer;
+  char* buffer_cursor = buffer;
   for (; count > 0; --count) *begin++ = *buffer_cursor++;
   *begin = 0;
   delete buffer;
@@ -46,29 +49,35 @@ Char* Print(Char* begin, Char* end, float value) {
 }
 
 /* Writes the give value to the given buffer as an ASCII string.
-    @param begin Beginning address of the buffer.
-    @param end   The end address of the buffer.
-    @param value The value to write. */
+@warning This function is slow right now because it's using
+sprintf but GrisuX coming soon.
+@param begin Beginning address of the buffer.
+@param end   The end address of the buffer.
+@param value The value to write. */
 template <typename Char>
-Char* Print(Char* begin, Char* end, double value) {
+Char* Print(Char* cursor, Char* end, double value) {
   // Right now we're going to enforce there be enough room to write any
   // int32_t.
-  intptr_t buffer_size = end - begin;
+  intptr_t buffer_size = end - cursor;
   char* buffer = new char[buffer_size];
   int count = sprintf_s(buffer, buffer_size, "%f", value);
   if (count < 0) {
-    *begin = 0;
+    *cursor = 0;
     delete buffer;
     return nullptr;
   }
-  Char* buffer_cursor = buffer;
-  for (; count > 0; --count) *begin++ = *buffer_cursor++;
-  *begin = 0;
-  return begin;
+  char* read = buffer;
+  char c = *read++;
+  while (c) {
+    *cursor++ = c;
+    c = *read++;
+  }
+  *cursor = 0;
+  return cursor;
 }
 
 }  // namespace _
 
 #endif  //< HEADER_FOR_CRABS_PRINT_FLOATING_POINT
-#endif  //< USING_PRINTER
+#endif  //< CRABS_UTF
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >=

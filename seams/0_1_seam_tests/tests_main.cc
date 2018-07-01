@@ -19,15 +19,15 @@
 #include "../../../cpputest/include/CppUTest/TestHarness.h"
 
 int main(int args_count, char** args) {
-  std::cout << '+';
+  Print ('+');
   for (int i = 81; i > 0; --i) {
-    std::cout << '-';
+    Print ('-');
   }
   std::cout << "\n| Kabuki Toolkit Tests\n+";
   for (int i = 81; i > 0; --i) {
-    std::cout << '-';
+    Print ('-');
   }
-  std::cout << '\n';
+  Print ('\n');
   MemoryLeakWarningPlugin::turnOffNewDeleteOverloads();
   int result = CommandLineTestRunner::RunAllTests(args_count, args);
   system("PAUSE");
@@ -39,20 +39,20 @@ HANDLE gDoneEvent;
 
 VOID CALLBACK TimerRoutine (PVOID lpParam, BOOLEAN TimerOrWaitFired) {
     if (lpParam == NULL) {
-        printf ("TimerRoutine lpParam is NULL\n");
+        Printf ("TimerRoutine lpParam is NULL\n");
     }
     else
     {
         // lpParam points to the argument; in this case it is an int
 
-        printf ("Timer routine called. Parameter is %d.\n",
+        Printf ("Timer routine called. Parameter is %d.\n",
                 *(int*)lpParam);
         if (TimerOrWaitFired) {
-            printf ("The wait timed out.\n");
+            Printf ("The wait timed out.\n");
         }
         else
         {
-            printf ("The wait event was signaled.\n");
+            Printf ("The wait event was signaled.\n");
         }
     }
 
@@ -66,38 +66,38 @@ int main () {
     // Use an event object to track the TimerRoutine execution
     gDoneEvent = CreateEvent (NULL, TRUE, FALSE, NULL);
     if (!gDoneEvent) {
-        printf ("CreateEvent failed (%d)\n", GetLastError ());
+        Printf ("CreateEvent failed (%d)\n", GetLastError ());
         return 1;
     }
 
     // Create the timer queue.
     hTimerQueue = CreateTimerQueue ();
     if (hTimerQueue) {
-        printf ("CreateTimerQueue failed (%d)\n", GetLastError ());
+        Printf ("CreateTimerQueue failed (%d)\n", GetLastError ());
         return 2;
     }
 
     // Set a timer to call the timer routine in 10 seconds.
     if (!CreateTimerQueueTimer (&hTimer, hTimerQueue,
         (WAITORTIMERCALLBACK)TimerRoutine, &arg, 10000, 0, 0)) {
-        printf ("CreateTimerQueueTimer failed (%d)\n", GetLastError ());
+        Printf ("CreateTimerQueueTimer failed (%d)\n", GetLastError ());
         return 3;
     }
 
     // TODO: Do other useful work here
 
-    printf ("Call timer routine in 10 seconds...\n");
+    Printf ("Call timer routine in 10 seconds...\n");
 
     // Wait for the timer-queue thread to complete using an event
     // object. The thread will signal the event at that time.
 
     if (WaitForSingleObject (gDoneEvent, INFINITE) != WAIT_OBJECT_0)
-        printf ("WaitForSingleObject failed (%d)\n", GetLastError ());
+        Printf ("WaitForSingleObject failed (%d)\n", GetLastError ());
 
     CloseHandle (gDoneEvent);
 
     // Delete all timers in the timer queue.
     if (!DeleteTimerQueue (hTimerQueue))
-        printf ("DeleteTimerQueue failed (%d)\n", GetLastError ());
+        Printf ("DeleteTimerQueue failed (%d)\n", GetLastError ());
 }
 */

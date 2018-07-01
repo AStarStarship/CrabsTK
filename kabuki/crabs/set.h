@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #define CRABS_COLLECTION_H
 // Dependencies:
 #include "text.h"
-#include "type.h"
+#include "ascii_data_types.h"
 // End dependencies.
 
 namespace _ {
@@ -38,13 +38,13 @@ struct KABUKI Set {
 
 /* A Type-Value Tuple. */
 struct Tuple2 {
-  AsciiType type;  //< The tuple type.
+  StdType type;  //< The tuple type.
   void* value;     //< The tuple value.
 };
 
 /* A Type-Value Tuple. */
 struct Tuple3 {
-  AsciiType type;   //< The tuple type.
+  StdType type;   //< The tuple type.
   void* value;      //< The tuple value.
   const char* key;  //< The Tuple key.
 };
@@ -70,10 +70,10 @@ struct Collection {
   virtual void Wipe() = 0;
 
   /* Adds the given Tuple2 to this Set. */
-  virtual bool Push(AsciiType type, void* value) = 0;
+  virtual bool Push(StdType type, void* value) = 0;
 
   /* Adds the given Tuple3 to this Set. */
-  virtual bool Push(AsciiType type, void* value, const char* key) = 0;
+  virtual bool Push(StdType type, void* value, const char* key) = 0;
 
   /* Merges the given Set into this one. */
   virtual bool Merge(Collection* collection) = 0;
@@ -98,7 +98,7 @@ struct Collection {
   virtual uintptr_t FindIndex(const char* key) = 0;
 
   /* Returns true if this Set contains this given Type-Value. */
-  virtual uintptr_t FindIndex(AsciiType type, void* value) = 0;
+  virtual uintptr_t FindIndex(StdType type, void* value) = 0;
 
   /* Gets the size_t of the object being stored. */
   virtual uintptr_t GetSize() = 0;
@@ -107,7 +107,7 @@ struct Collection {
   virtual uintptr_t GetSizeWidth() = 0;
 
   /*  */
-  virtual Printer1& Print(Printer1& out_) = 0;
+  virtual Utf8& Print(Utf8& out_) = 0;
 };
 }   //< namespace _
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3

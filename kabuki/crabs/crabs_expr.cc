@@ -14,6 +14,7 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
+#include "assert.h"
 #include "bsq.h"
 #include "clock.h"
 #include "expr.h"
@@ -22,12 +23,12 @@ specific language governing permissions and limitations under the License. */
 #include "line.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #define PRINT_BSQ(header, bsq) Console<>().Out() << header << '\n' << Bsq(bsq);
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #define PRINT_BSQ(header, bsq)
 #endif
 
@@ -268,27 +269,27 @@ const Op* ExprUnpack(Expr* expr) {
     return ExprError(expr, kErrorImplementation);
   }
 
-  uint_t size,          //< Size of the ring buffer.
-      space,            //< Space left in the right buffer.
-      length,           //< Length of the ring buffer data.
-      type,             //< Current type.
-      bytes_left,       //< Num bytes left to scan.
-      array_type,       //< The type of array.
-      shift_bits,       //< Num bytes left to scan.
-      bytes_shift;      //< Num of bytes to shift to scan OBJ.
-  byte bin_state,       //< Current bin FSM state.
-      b;                //< Current byte being verified.
-  hash16_t hash,        //< Expected hash of the B-Sequence.
-      found_hash;       //< Found B-Sequence hash.
-  time_us_t timestamp,  //< Last time when the expression ran.
-      delta_t;          //< Time delta between the last timestamp.
-  const Op* op;         //< Current Op.
-  Operand* operand;     //< The operand.
-  BIn* bin;             //< BIn.
-  char *bin_begin,      //< Beginning of the ring buffer.
-      *bin_start,       //< Start of the ring buffer data.
-      *bin_stop,        //< Stop of the ring buffer data.
-      *bin_end,         //< End of the ring buffer.
+  uint_t size,       //< Size of the ring buffer.
+      space,         //< Space left in the right buffer.
+      length,        //< Length of the ring buffer data.
+      type,          //< Current type.
+      bytes_left,    //< Num bytes left to scan.
+      array_type,    //< The type of array.
+      shift_bits,    //< Num bytes left to scan.
+      bytes_shift;   //< Num of bytes to shift to scan OBJ.
+  byte bin_state,    //< Current bin FSM state.
+      b;             //< Current byte being verified.
+  hash16_t hash,     //< Expected hash of the B-Sequence.
+      found_hash;    //< Found B-Sequence hash.
+  Tme timestamp,     //< Last time when the expression ran.
+      delta_t;       //< Time delta between the last timestamp.
+  const Op* op;      //< Current Op.
+  Operand* operand;  //< The operand.
+  BIn* bin;          //< BIn.
+  char *bin_begin,   //< Beginning of the ring buffer.
+      *bin_start,    //< Start of the ring buffer data.
+      *bin_stop,     //< Stop of the ring buffer data.
+      *bin_end,      //< End of the ring buffer.
           *slot_begin = expr->slot.begin,
           *slot_start = expr->slot.start,  //< Write cursor,
               *slot_stop = expr->slot.stop, *slot_end = expr->slot.end;
@@ -773,7 +774,7 @@ const Op* ExprUnpack(Expr* expr) {
   //
   expr->hash = hash;
   expr->bytes_left = bytes_left;
-  bin->start = (uint_t)MemoryVector(bin_begin, bin_start);
+  bin->start = (uint_t)SocketSize(bin_begin, bin_start);
   return nullptr;
 }
 
@@ -825,13 +826,13 @@ void ExprClear(Expr* expr) {
 
   if (start == stop) return;  //< Nothing to do.
   if (start > stop) {
-    MemoryClear(start, end - start);
-    MemoryClear(begin, start - begin);
+    SocketClear(start, end - start);
+    SocketClear(begin, start - begin);
     return;
   }
-  MemoryClear(start, stop - start);
-  bin->start = (uint_t)MemoryVector(expr, begin);
-  bin->stop = (uint_t)MemoryVector(expr, start + 1);
+  SocketClear(start, stop - start);
+  bin->start = (uint_t)SocketSize(expr, begin);
+  bin->stop = (uint_t)SocketSize(expr, start + 1);
 }
 
 void ExprRingBell(Expr* expr, const char* address) {
@@ -901,8 +902,8 @@ const Op* ExprQuery(Expr* expr, const Op* op) {
   return op;
 }
 
-#if USING_PRINTER
-Printer1& PrintExprStack(Printer1& print, Expr* expr) {
+#if CRABS_UTF
+Utf8& PrintExprStack(Utf8& print, Expr* expr) {
   ASSERT(expr);
 
   uint_t i, stack_count;
@@ -926,7 +927,7 @@ Printer1& PrintExprStack(Printer1& print, Expr* expr) {
   return print << "\nStack Item " << i + 1 << ":\"" << op->name << "\"";
 }
 
-Printer1& PrintExpr(Printer1& print, Expr* expr) {
+Utf8& PrintExpr(Utf8& print, Expr* expr) {
   ASSERT(expr);
 
   print << Line('~', 80) << "\nStack:    " << Hex<uintptr_t>(expr) << '\n'
@@ -947,8 +948,8 @@ Printer1& PrintExpr(Printer1& print, Expr* expr) {
 
 #endif
 
-}   //< namespace _
+}  // namespace _
 
 #undef PRINTF
-#undef PUTCHAR
+#undef PRINT
 #endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

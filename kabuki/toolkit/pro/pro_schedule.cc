@@ -60,7 +60,7 @@ bool Schedule::Remove(int index) { return tasks_.Remove(index); }
 
 void Schedule::Add(Task* task) { tasks_.Add(task); }
 
-Task* Schedule::Find(time_t event_time) {
+Task* Schedule::Find(Tms event_time) {
   // @todo Replace me with std::map!
   for (int i = 0; i < tasks_.GetCount(); ++i) {
     Task* task = tasks_[i];

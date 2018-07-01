@@ -14,18 +14,19 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
+#include "assert.h"
 #include "line.h"
 #include "op.h"
 #include "operand.h"
-#include "utf8.h"
 #include "text.h"
+#include "utf8.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #endif
 
 namespace _ {
@@ -58,9 +59,9 @@ wchar_t OperandIndex(Operand* operand, char* begin, char* end) {
   return 0;
 }
 
-#if USING_PRINTER
+#if CRABS_UTF
 /*
-Printer& Print (Printer& print, const Operand* op) {
+Utf& Print (Utf& print, const Operand* op) {
     print << "\n Op:\n" << op->name << "\nparams_in:"
           << Bsq (op->in)
           << "\nparams_out:" << op->out
@@ -72,7 +73,7 @@ Printer& Print (Printer& print, const Operand* op) {
     return print;
 }*/
 
-Printer1& PrintOperand(Printer1& print, Operand* operand) {
+Utf8& PrintOperand(Utf8& print, Operand* operand) {
   ASSERT(operand);
 
   const Op* op = operand->Star('?', nullptr);
@@ -112,7 +113,7 @@ Slot& OperandQuery(Operand* root, const char* address, Slot& slot) {
   return slot;
 }
 #endif
-}   //< namespace _
+}  // namespace _
 #undef PRINTF
-#undef PUTCHAR
+#undef PRINT
 #endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

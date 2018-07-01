@@ -12,20 +12,23 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
+#include <random>
+#include "../../kabuki/crabs/assert.h"
 #include "../../kabuki/crabs/global.h"
 #include "test_seam_0.h"
 
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
 
 using namespace _;
-using namespace std;
 
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 0
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PRINT(item) Print(item);
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
-  printf("\n\n%s\n", message); \
-  system("PAUSE");
+  Printf("\n\n%s\n", message); \
+  Pause();
 #else
+#define PRINT(item)
 #define PRINTF(x, ...)
 #define PRINT_PAUSE(message)
 #endif
@@ -33,7 +36,7 @@ using namespace std;
 TEST_GROUP(SEAM_0_0){void setup(){} void teardown(){PRINT_PAUSE("\n")}};
 
 TEST(SEAM_0_0, SEAM_0_0_0) {
-  printf("\n    Testing SEAM_0_0... ");
+  PRINT("\n    Testing SEAM_0_0... ");
 
   static const uint32_t k10ToThe[20] = {
       1,           //< 10^0
@@ -115,7 +118,7 @@ TEST(SEAM_0_0, SEAM_0_0_0) {
   num_bits);
       }
   }
-  putchar ('\n');
+  Print ('\n');
   system ("PAUSE");*/
 
   static const uint32_t problem_children[] = {
@@ -155,7 +158,7 @@ TEST(SEAM_0_0, SEAM_0_0_0) {
     }
   }
 
-  PRINTF("\n\nTesting edge conditions...\n\n");
+  PRINT("\n\nTesting edge conditions...\n\n");
   for (int i = 0; i < 28; ++i) {
     value = test_value[i];
     sprintf_s(expecting, 24, "%u", value);
@@ -194,8 +197,9 @@ TEST(SEAM_0_0, SEAM_0_0_0) {
   PRINTF("\n Done testing ItoS :)\n\n");
 }
 
-#undef PRINT_PAUSE
+#undef PRINT
 #undef PRINTF
+#undef PRINT_PAUSE
 #else
 void TestSeam_1_1() {}
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0

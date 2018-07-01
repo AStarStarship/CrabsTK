@@ -49,6 +49,87 @@ struct Socket {
   Socket& operator=(const Socket& other);
 };
 
+typedef void (*Destructor)(uintptr_t* buffer, intptr_t size);
+
+inline KABUKI void DestructorNoOp(uintptr_t* buffer, intptr_t size);
+
+inline KABUKI void DestructorDeleteBuffer(uintptr_t* buffer, intptr_t size);
+
+/* A word-aligned ASCII Object with a size that is a positive integer multiple
+of 8.
+All ASCII Objects have to be ASCII Objects may only use 16-bit, 32-bit, and
+64-bit signed integers for their size. The minimum and maximum bounds of size of
+ASCII objects are defined by the minimu size required to store the header with
+minimum item count, and the highest positive integer multiple of 8. The fastest
+way to covert the upper bounds is to invert the bits and subtract 7 as follows:
+
+@code
+int16_t upper_bounds_si2 = (~(int16_t)0) - 7;
+int32_t upper_bounds_si4 = (~(int32_t)0) - 7;
+int64_t upper_bounds_si8 = (~(int64_t)0) - 7;
+@endcode
+*/
+template <typename Size>
+class KABUKI TObject {
+ public:
+  /* Constructs a buffer with either stically or dynamically allocated memory
+  based on if buffer is nil. */
+  TObject(Size size, uintptr_t* buffer = nullptr) : Buffer(size, buffer) {}
+
+  /* Destructor deletes dynamic memory if is_dynamic_ is true. */
+  ~TObject() {
+    if (destruct_) destruct_(object_, size_);
+  }
+
+  /* Returns the buffer_. */
+  uintptr_t* GetBuffer() {
+    ASSERT(size > 0);
+    size_ = size;
+    if (!(size & kWordBitCount)) {
+      size = size >> kWordBitCount;
+    } else {
+      size = (size >> kWordBitCount) + 1;
+    }
+    if (!buffer) {
+      buffer = new uintptr_t[size];
+    }
+    object_ = buffer;
+  }
+
+  /* Gets is_dynamic_. */
+  bool IsDynamic() { return destruct_ != &BufferDestructorNoOp; }
+
+  /* Gets the size_. */
+  Size GetSize() { return *reinterpret_cast<SI*>(object_); }
+
+  /* Gets the buffer as a Socket. */
+  Socket GetSocket() { return object_; }
+
+  /* Doubles the size of the buffer and copyes the given byte_count.
+  @return A positive size of the new buffer upon success and -1 upon failure.
+  @param byte_count The number of bytes to copy after growing the buffer. */
+  Size Grow(Size byte_count);
+
+  /* Shrinks the buffer to the given size and if the memory is dynamic copies
+  it to a new heap block.
+  @return A positive size of the new buffer size upon success and -1 upon
+  failure.
+  @param size The size in bytes. */
+  Size Shrink(Size size) {
+    if (size < 0 || size > SignedMax<Size>()) return -1;
+  }
+
+  /* Shrinks the buffer to the given size without copying it.
+  @return A positive size of the new buffer size upon success and -1 upon
+  failure.
+  @param size The size in bytes. */
+  Size ShrinkInPlace(Size size);
+
+ private:
+  uintptr_t* object_;    //< Pointer to the bBuffer.
+  Destructor destruct_;  //< Pointer to the destructor.
+};
+
 /* Creates a dynamic word-aligned buffer of the given size in bytes. */
 KABUKI uintptr_t* MemoryCreate(uintptr_t size);
 
@@ -76,57 +157,6 @@ inline const void* MemoryValueConst(std::uintptr_t value) {
 
 inline char* MemoryAdd(void* a, void* b) {
   return (char*)((uintptr_t)a + (uintptr_t)b);
-}
-
-/* Checks if the given value is Not-a-Number.
-    @param value
-*/
-template <typename T>
-inline bool MemoryIsNaN(T value) {
-  static const T nan =
-      (sizeof(T) == 8)
-          ? (T)0xFF
-          : sizeof(T) == 4
-                ? (T)0xFFFF
-                : sizeof(T) == 2 ? (T)0xFFFFFFFF
-                                 : sizeof(T) == 1 ? (T)0xFFFFFFFFFFFFFFFF : 0;
-  return value == nan;
-}
-
-/* Returns the inverse of the given value.
-    For code metadata purposes. */
-template <typename UI>
-inline UI UnsignedUpperBounds() {
-  return ~(UI)0;
-}
-
-/* Creates/Gets one of n static buffers of the specified size. */
-template <int kBufferNumber = 0, size_t kBufferSize = kBufferSizeDefault>
-inline uintptr_t* BufferN() {
-  static uintptr_t buffer[(kBufferSize / sizeof(uintptr_t)) + 1];
-  return buffer;
-}
-
-/* Creates/Gets one of n static buffers of the specified size. */
-template <typename T = uintptr_t, size_t kBufferSize = kBufferSizeDefaultWords>
-inline T* BufferT() {
-  static T buffer[(kBufferSize / sizeof(uintptr_t)) + 1];
-  return buffer;
-}
-
-/* Creates/Gets one of n static buffers of the specified size. */
-template <typename T = uintptr_t, int kBufferNumber = 0,
-          size_t kBufferSize = kBufferSizeDefaultWords>
-inline T* BufferTN() {
-  static T buffer[(kBufferSize / sizeof(uintptr_t)) + 1];
-  return buffer;
-}
-
-/* reinterpret_cast(string) a the given base and offset to an object pointer.
- */
-template <typename T>
-inline T* MemoryOffset(void* base, uint_t offset) {
-  return reinterpret_cast<T*>(reinterpret_cast<char*>(base) + offset);
 }
 
 /* Calculates the difference between the begin and end address. */
@@ -189,6 +219,36 @@ inline bool MemoryCompare(void* begin, size_t write_size, const void* read,
                           uintptr_t read_size) {
   return MemoryCompare(begin, reinterpret_cast<char*>(begin) + write_size, read,
                        reinterpret_cast<const char*>(read) + read_size);
+}
+
+/* Checks if the given value is Not-a-Number.
+@param value
+*/
+template <typename T>
+inline bool MemoryIsNaN(T value) {
+  static const T nan =
+      (sizeof(T) == 8)
+          ? (T)0xFF
+          : sizeof(T) == 4
+                ? (T)0xFFFF
+                : sizeof(T) == 2 ? (T)0xFFFFFFFF
+                                 : sizeof(T) == 1 ? (T)0xFFFFFFFFFFFFFFFF : 0;
+  return value == nan;
+}
+
+/* Returns the inverse of the given value.
+For code metadata purposes. */
+template <typename UI>
+inline UI UnsignedMax() {
+  UI max = 0;
+  return ~max;
+}
+
+/* reinterpret_cast(string) a the given base and offset to an object pointer.
+ */
+template <typename T>
+inline T* MemoryOffset(void* base, uint_t offset) {
+  return reinterpret_cast<T*>(reinterpret_cast<char*>(base) + offset);
 }
 
 }  // namespace _

@@ -24,9 +24,9 @@ using namespace _;
 using namespace std;
 
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 0
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
-  printf("\n\n%s\n", message); \
+  Printf("\n\n%s\n", message); \
   system("PAUSE");
 #else
 #define PRINTF(x, ...)
@@ -35,6 +35,6 @@ using namespace std;
 
 TEST_GROUP(SEAM_0_1){void setup(){} void teardown(){PRINT_PAUSE("\n")}};
 
-TEST(SEAM_0_1, SEAM_0_1_0) { printf("\n    Testing SEAM_0_0... "); }
+TEST(SEAM_0_1, SEAM_0_1_0) { Printf("\n    Testing SEAM_0_0... "); }
 
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 1

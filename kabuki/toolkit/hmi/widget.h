@@ -127,7 +127,7 @@ class KABUKI Widget : public _::Op {
   virtual const _::Op* Star(wchar_t index, _::Expression* io);
 
   /* Prints this object to a terminal. */
-  inline _::Printer& Print(_::Printer& print) const;
+  inline _::Utf& Print(_::Utf& print) const;
 
  private:
   const char *widget_name_,            //< This Widget's name.

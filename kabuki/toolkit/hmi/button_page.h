@@ -57,7 +57,7 @@ class KABUKI PageButton : public Button {
   void SetPage(WidgetPage* newPage);
 
   /* Prints this object to a terminal. */
-  _::Printer& Print(_::Printer& print) const;
+  _::Utf& Print(_::Utf& print) const;
 
  private:
   WidgetPage* thisPage;  //< The page to load.

@@ -23,17 +23,17 @@ specific language governing permissions and limitations under the License. */
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 3
 #ifndef PRINTF
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #define PRINT_HEADING \
-  std::cout << '\n';  \
+  Print('\n');        \
   for (int i = 80; i > 0; --i) std::cout << '-'
 #define PRINT_TYPE(type, value) Console<>().Out() << TypeValue(type, value);
 #define WIPE ListWipe<UI, SI>(list);
 #endif
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #define PRINT_HEADING
 #define PRINT_TYPE(type, value)
 #define WIPE(buffer, size)
@@ -273,9 +273,9 @@ SI ListInsert(CList<UI, SI>* list, type_t type, const void* value, SI index) {
     //  Push the offset onto the top of the offset stack.
     char* data_stop = ListDataStop<UI, SI>(list, count - 1);
     PRINTF("\n  Aligning data_stop from %i to ",
-           (int)MemoryVector(list, data_stop))
+           (int)SocketSize(list, data_stop))
     data_stop = TypeAlignUpPointer<char>(data_stop, type);
-    PRINTF("%i", (int)MemoryVector(list, data_stop))
+    PRINTF("%i", (int)SocketSize(list, data_stop))
     UI stop_offset = (UI)(data_stop - reinterpret_cast<char*>(list));
     ListOffsets<UI, SI>(list)[index] = stop_offset;
     // Write the value to the top of the value stack.
@@ -402,7 +402,7 @@ const void* ListValue(CList<UI, SI>* list, SI index) {
 
 /* Prints the given AsciiList to the console. */
 template <typename UI = uint32_t, typename SI = int16_t>
-Printer1& PrintList(Printer1& printer, CList<UI, SI>* list) {
+Utf8& PrintList(Utf8& printer, CList<UI, SI>* list) {
   ASSERT(list)
 
   SI count = list->count;
@@ -422,7 +422,7 @@ template <typename UI = uint32_t, typename SI = int16_t>
 class List {
  public:
   /* Constructs a list with a given count_max with estimated size_bytes. */
-  List(SI count_max = 0) : buffer_(ListNew<UI, SI>(count_max)) {
+  List(SI count_max = 0) : ascii_obj_(ListNew<UI, SI>(count_max)) {
     // Nothing to do here! (:-)|==<,
   }
 
@@ -431,20 +431,20 @@ class List {
   before allocating the buffer. If the count_max is not enough for the
   buffer then the size_bytes will be increased to the minimum size to
   make a valid ASCII List. */
-  List(SI count_max, UI size) : buffer_(ListNew<UI, SI>(count_max, size)) {
+  List(SI count_max, UI size) : ascii_obj_(ListNew<UI, SI>(count_max, size)) {
     // Nothing to do here! (:-)+==<
   }
 
   /* Deletes the dynamically allocated buffer. */
-  ~List() { delete[] buffer_; }
+  ~List() { delete[] ascii_obj_; }
 
   inline SI Push(type_t type, const void* value) {
-    return ListPush<UI, SI>(This(), type, value);
+    return ListPush<UI, SI>(Object(), type, value);
   }
 
   /* Inserts the given type-value tuple in the list at the given index. */
   inline SI Insert(byte type, void* value, SI index) {
-    return ListInsert<UI, SI>(This(), type, value, index);
+    return ListInsert<UI, SI>(Object(), type, value, index);
   }
 
   /* Returns the maximum count of the give list in the current memory
@@ -452,10 +452,10 @@ class List {
   inline SI CountMax() { return ListCountMax<UI, SI>(); }
 
   /* Clears the list without overwriting the contents. */
-  void Clear(CList<UI, SI>* list) { ListClear<UI, SI>(This()); }
+  void Clear(CList<UI, SI>* list) { ListClear<UI, SI>(Object()); }
 
   /* Deletes the list contents by overwriting it with zeros. */
-  inline void Wipe() { ListWipe<UI, SI>(This()); }
+  inline void Wipe() { ListWipe<UI, SI>(Object()); }
 
   /* Returns true if this expr contains only the given address.
       @warning This function assumes that the member you're checking for came
@@ -463,50 +463,50 @@ class List {
                are required to ensure the value came from a ASCII List.
       @return  True if the data lies in the list's memory socket. */
   inline bool Contains(void* value) {
-    return ListContains<UI, SI>(This(), value);
+    return ListContains<UI, SI>(Object(), value);
   }
 
   /* Removes the item at the given address from the list. */
   inline bool Remove(void* adress) {
-    return ListRemove<UI, SI>(This(), adress);
+    return ListRemove<UI, SI>(Object(), adress);
   }
 
   /* Removes the item at the given address from the list. */
-  inline bool Remove(SI index) { return ListRemove<UI, SI>(This(), index); }
+  inline bool Remove(SI index) { return ListRemove<UI, SI>(Object(), index); }
 
   /* Removes the last item from the list. */
-  inline SI Pop() { return ListPop<UI, SI>(This()); }
+  inline SI Pop() { return ListPop<UI, SI>(Object()); }
 
   /* Prints the given AsciiList to the console. */
-  inline Printer1& Print(Printer1& printer) {
-    return PrintList<UI, SI>(printer, This());
+  inline Utf8& Print(Utf8& printer) {
+    return PrintList<UI, SI>(printer, Object());
   }
 
   /* Returns the contiugous ASCII List buffer_. */
-  inline CList<UI, SI>* This() {
-    return reinterpret_cast<CList<UI, SI>*>(buffer_);
+  inline CList<UI, SI>* Object() {
+    return reinterpret_cast<CList<UI, SI>*>(ascii_obj_);
   }
 
  private:
-  uintptr_t* buffer_;  //< Dynamically allocated word-aligned buffer.
+  uintptr_t* ascii_obj_;  //< Dynamically allocated word-aligned buffer.
 };
 
 }  // namespace _
 
 /* Overloaded operator<< prints the list. */
 template <typename UI = uint32_t, typename SI = int16_t>
-inline _::Printer1& operator<<(_::Printer1& printer, _::List<UI, SI>& list) {
+inline _::Utf8& operator<<(_::Utf8& printer, _::List<UI, SI>& list) {
   return list.Print(printer);
 }
 
 /* Overloaded operator<< prints the list. */
 template <typename UI = uint32_t, typename SI = int16_t>
-inline _::Printer1& operator<<(_::Printer1& printer, _::CList<UI, SI>* list) {
+inline _::Utf8& operator<<(_::Utf8& printer, _::CList<UI, SI>* list) {
   return _::PrintList<UI, SI>(printer, list);
 }
 
 #undef PRINTF
-#undef PUTCHAR
+#undef PRINT
 #undef PRINT_HEADING
 #undef PRINT_TYPE
 #undef WIPE

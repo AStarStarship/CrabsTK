@@ -17,25 +17,9 @@ specific language governing permissions and limitations under the License. */
 #ifndef HEADER_FOR_CRABS_CONFIG
 #define HEADER_FOR_CRABS_CONFIG
 
-inline bool ErrorDisplay(int line, const char* file) {
-  printf("\nError at line %d in \"%s\"", line, file);
-  return true;
-}
-inline bool Assert(bool condition) { return !condition; }
-inline bool AssertPrintLAndLock() {
-  printf("\nAssertion failed at line %d in \"%s\"", __LINE__, __FILE__);
-  while (1)
-    ;
-}
-
-#define ASSERT(condition) \
-  if (Assert(condition)) AssertPrintLAndLock();
-
-//#define ERROR(condition) \
-//  ((uintptr_t)(condition) == 0) ? ErrorDisplay(__LINE__, __FILE__) : false
-
-// @todo Check all values of assembly_settings.inl, store them as an enum,
-// then #undef them.
+#define ASSERT_FREEZE 0  //< Flag to trigger a crash upon failed assert.
+#define ASSERT_LOG 0  //< Flag for if to log the failed assert but do not crash.
+#define ASSERT_DNC 1  //< Flag for Do Not Care (DNC) upon failed assert.
 
 #define BARE_METAL 1       //< Bare metal (i.e. No OS) OS type macro.
 #define BARE_METAL_MBED 2  //< mbed bare-metal OS type macro.
@@ -83,25 +67,44 @@ inline bool AssertPrintLAndLock() {
 
 #include <assembly.h>  //< Inline config stuff for your project.
 
-#if CRABS_NATIVE_UTF == UTF8
-typename char char_t;
-#elif CRABS_NATIVE_UTF == UTF16
-typename char16_t char_t;
-#elif CRABS_NATIVE_UTF == UTF32
+#if CRABS_UTF == UTF8
+#if USING_UTF8 == 0
+#warning You have the CRABS_UTF set to UTF8 but USING_UTF8 is 0!
+#ifdef USING_UTF8
+#undef USING_UTF8
+#endif
+#define USING_UTF8 YES
+#endif
+typedef char char_t;
+#elif CRABS_UTF == UTF16
+#if USING_UTF16 == 0
+#warning You have the CRABS_UTF set to UTF8 but USING_UTF8 is 0!
+#ifdef USING_UTF16
+#undef USING_UTF16
+#endif
+#define USING_UTF16 YES
+#endif
+typedef char16_t char_t;
+#elif CRABS_UTF == UTF32
+#if USING_UTF32 == 0
+#warning You have the CRABS_UTF set to UTF8 but USING_UTF8 is 0!
+#ifdef USING_UTF32
+#undef USING_UTF32
+#endif
+#define USING_UTF32 YES
+#endif
+typedef char32_t char_t;
 #endif
 
-#undef UTF8
-#undef UTF16
-#undef UTF32
-#undef USE_UTF8
-#undef USE_UTF16
-
-//#if CRABS_FORCE_WORD_ALIGN
-//#define ALIGN_POINTER(pointer) pointer = MemoryAlign < ;
-//#else
-//#define ALIGN_POINTER(pointer)
-//#endif
-typedef const char* string_ptr;
+#if CRABS_STRING_SIZE == 1
+typedef int8_t schar_t;
+#elif CRABS_STRING_SIZE == 2
+typedef int16_t schar_t;
+#elif CRABS_STRING_SIZE == 4
+typedef int32_t schar_t;
+#elif CRABS_STRING_SIZE == 8
+typedef int64_t schar_t;
+#endif
 
 #if CRABS_MAX_ERRORS < 0
 #error MAX_ERRORS must be greater than 0
@@ -161,10 +164,6 @@ enum {
   kWordBitCount = (sizeof(void*) == 8) ? 3 :      //< Shift left 3 to * by 8.
                       (sizeof(void*) == 4) ? 2 :  //< Shift right 2 to / by 4.
                           1,
-  // Max length of a float-to-string + 1.
-  kkFloat32DigitsMax = 4 + FLT_MANT_DIG - FLT_MIN_EXP,
-  // Max length of a double-to-string + 1.
-  kFloat64DigitsMax = 4 + DBL_MANT_DIG - DBL_MIN_EXP,
 
   // Extra reserved memory at the end of BOut.
   kBOutOverflowSize = 32,
@@ -187,6 +186,7 @@ enum {
   kAutoSizeDefault = kAutoSizeMin * 4,
 
   kStackCountMaxDefault = 32,
+  kCpuCacheLineSize = 64,
 };
 
 }  // namespace _
@@ -211,7 +211,10 @@ typedef uint32_t word_t;
 typedef unsigned char byte;
 typedef unsigned int uint;
 
-typedef int64_t time_us_t;  //< A 64-bit microseconds since epoch timestamp.
+typedef int32_t Tms;  //< A 32-bit seconds since epoch timestamp.
+typedef int64_t Tme;  //< A 64-bit seconds since epoch timestamp.
+
+typedef uint8_t type_t;  //< ASCII Data Type byte.
 
 #if MAX_NUM_SLOTS <= 255
 typedef byte slot_t;
@@ -293,7 +296,7 @@ typedef uint64_t data_t;    //< Default TData size.
 #endif
 
 #if CRABS_MEMORY_PROFILE >= 3 || DEBUG
-#define USING_PRINTER 3
+#define CRABS_UTF 3
 #endif  //< CRABS_MEMORY_PROFILE >= 3
 
 /* Macro declares a class to be non-copyable. */

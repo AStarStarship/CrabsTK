@@ -19,7 +19,7 @@ specific language governing permissions and limitations under the License. */
 // Dependencies:
 #include "bin.h"
 #include "bout.h"
-#include "memory.h"
+#include "socket.h"
 #include "op.h"
 #include "utf8.h"
 // End dependencies.
@@ -116,17 +116,17 @@ struct Slot {
   /* Copies the contents of the other slot into the slot. */
   const Op* Write(Slot& other);
 
-#if USING_PRINTER
+#if CRABS_UTF
   /* Prints a string rep of this object to the printer. */
-  Printer1& Print(Printer1& printer);
+  Utf8& Print(Utf8& printer);
 #endif
 };
 
 }   //< namespace _
 
-#if USING_PRINTER
+#if CRABS_UTF
 /* Prints out the bin to the text. */
-inline _::Printer1& operator<<(_::Printer1& printer, _::Slot& slot) {
+inline _::Utf8& operator<<(_::Utf8& printer, _::Slot& slot) {
   return slot.Print(printer);
 }
 #endif

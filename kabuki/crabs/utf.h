@@ -13,11 +13,8 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#ifndef HEADER_FOR_CRABS_PRINTER
-#define HEADER_FOR_CRABS_PRINTER
-// Dependencies:
-#include "config.h"
-// End dependencies.
+#ifndef HEADER_FOR_CRABS_UTF
+#define HEADER_FOR_CRABS_UTF
 
 #if USING_UTF8
 #include "utf8.h"
@@ -29,20 +26,30 @@ specific language governing permissions and limitations under the License. */
 #include "utf32.h"
 #endif
 
+#if CRABS_UTF
 namespace _ {
-#if CRABS_NATIVE_UTF == UTF8
-using Printer = Printer1;
-using Center = Center1;
-using Right = Right1;
-#elif CRABS_NATIVE_UTF == UTF16
-using Printer = Printer2;
-using Center = Center2;
-using Right = Right2;
-#elif CRABS_NATIVE_UTF == UTF32
-using Printer = Printer4;
-using Center = Center4;
-using Right = Right4;
+#if CRABS_UTF == UTF8
+using Utf = Utf8;
+using Center = Utf8Center;
+using Right = Utf8Right;
+using Line = Utf8Line;
+using LineString = Utf8LineString;
+#elif CRABS_UTF == UTF16
+using Utf = Utf16;
+using Center = Utf16Center;
+using Right = Utf16Right;
+using Line = Utf16Line;
+using LineString = Utf16LineString;
+#elif CRABS_UTF == UTF32
+using Utf = Utf32;
+using Center = Utf32Center;
+using Right = Utf32Right;
+using Line = Utf32Line;
+using LineString = Utf32LineString;
 #endif
 }  // namespace _
-#endif  //< #if HEADER_FOR_CRABS_PRINTER
+#endif
+#undef PRINT
+#undef PRINTF
+#endif  //< #if HEADER_FOR_CRABS_UTF
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2

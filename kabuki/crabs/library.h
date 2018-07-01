@@ -21,7 +21,7 @@ specific language governing permissions and limitations under the License. */
 // End dependencies.
 
 namespace _ {
-#if USING_PRINTER
+#if CRABS_UTF
 template <typename TIndex, typename TKey, typename TData, uint_t MaxStackHeight>
 class Library : public Operand {
  public:

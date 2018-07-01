@@ -19,8 +19,8 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-const char** ErrorStrings() {
-  static const char* kErrors[] = {
+const char_t** ErrorStrings() {
+  static const char_t* kErrors[] = {
       "Not an error",             //<  0
       "Input nil",                //<  1
       "Input too low",            //<  2
@@ -55,12 +55,12 @@ const char** ErrorStrings() {
   return kErrors;
 }
 
-const char* ErrorString(Error error) {
+const char_t* ErrorString(Error error) {
   if (error >= kErrorImplementation) {
     return ErrorStrings()[kErrorImplementation];
   }
   return ErrorStrings()[error];
 }
 
-}   //< namespace _
+}  // namespace _
 #endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

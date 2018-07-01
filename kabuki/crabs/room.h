@@ -84,7 +84,12 @@ KABUKI const char* RequestText(Request r);
     # Doors
 
     There are two ways to access Doors in the CR. in the Root Scope, there are
-    
+    
+
+
+
+
+
 
 
 
@@ -127,7 +132,12 @@ KABUKI const char* RequestText(Request r);
         16. Host receives login attempt from Sam and opens a Door for him.
     17. Sam needs to get the values Jo stored in step 11 so Same sends a
         Dictionary GET request.
-        
+        
+
+
+
+
+
 
 
 
@@ -241,9 +251,9 @@ class Room : public Operand {
   /* Script expressions. */
   virtual const Op* Star(wchar_t index, Expr* expr);
 
-#if USING_PRINTER
+#if CRABS_UTF
   /* Prints the Room to the stdout. */
-  virtual Printer1& Print(Printer1& print);
+  virtual Utf8& Print(Utf8& print);
 #endif
 
  protected:
@@ -257,7 +267,7 @@ class Room : public Operand {
   Operand *xoff_,                        //< DC3: XOFF - XOFF handling device.
       *device_,                          //< DC4: the current device control.
       *devices_;  //< Pointer to the current device control.
-  uintptr_t buffer_[kFloorSizeWords];  //< Room Floor buffer.
+  uintptr_t ascii_obj_[kFloorSizeWords];  //< Room Floor buffer.
 
  private:
   /* Sets the Room state_. */

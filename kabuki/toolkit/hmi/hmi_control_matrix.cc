@@ -16,9 +16,9 @@
 #include <stdafx.h>
 #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
 #if SEAM_MAJOR == 2 && SEAM_MINOR == 2
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
-  printf("\n\n%s\n", message); \
+  Printf("\n\n%s\n", message); \
   system("PAUSE");
 #else
 #define PRINTF(x, ...)
@@ -66,16 +66,16 @@ ParameterSet* ControlMatrix::GetRow(int row) {
 
 void ControlMatrix::Print() const {
   _::printLine('-', Parameter<int>::MacroHeaderLength);
-  printf("Control Grid: rows = % , columns = %i\n", num_rows_, num_columns_);
+  Printf("Control Grid: rows = % , columns = %i\n", num_rows_, num_columns_);
   _::printLine('-', Parameter<int>::MacroHeaderLength);
   printMacroHeader();
   _::printNL();
   printLine('-', Parameter<int>::MacroHeaderLength);
 
-  printf("!!!!num_rows_ = %i\n", num_rows_);
+  Printf("!!!!num_rows_ = %i\n", num_rows_);
 
   for (int i = 0; i < num_rows_; ++i) {
-    printf("Row %i:\n", i);
+    Printf("Row %i:\n", i);
     rows[i].Print();
   }
 

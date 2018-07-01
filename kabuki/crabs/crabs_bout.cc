@@ -15,24 +15,25 @@ specific language governing permissions and limitations under the License. */
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
 #include "args.h"
+#include "ascii_data_types.h"
+#include "assert.h"
 #include "bout.h"
 #include "bsq.h"
 #include "hash.h"
 #include "hex.h"
 #include "line.h"
-#include "memory.h"
 #include "slot.h"
-#include "type.h"
+#include "socket.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #define PRINT_BSQ(header, bsq) Console<>().Out() << header << '\n' << Bsq(bsq);
 #define PRINT_BOUT(header, bout) \
   Console<>().Out() << "\n" << header << '\n' << bout;
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #define PRINT_BSQ(header, bsq)
 #define PRINT_BOUT(header, bout)
 #endif
@@ -147,9 +148,8 @@ int BOutStreamByte(BOut* bout) {
     return -1;
   }
   // byte b = *cursor;
-  bout->stop = (++begin > end)
-                   ? static_cast<uint_t>(MemoryVector(begin, end))
-                   : static_cast<uint_t>(MemoryVector(begin, begin));
+  bout->stop = (++begin > end) ? static_cast<uint_t>(SocketSize(begin, end))
+                               : static_cast<uint_t>(SocketSize(begin, begin));
   return 0;
 }
 
@@ -224,8 +224,8 @@ const Op* BOutWrite(BOut* bout, const uint_t* params, void** args) {
   for (index = 1; index <= num_params; ++index) {
     type = params[index];
     PRINTF("\nparam: %u type: %s start:%i stop:%i space: %u", arg_index + 1,
-           TypeString(type), (int)MemoryVector(begin, start),
-           (int)MemoryVector(begin, stop), space)
+           TypeString(type), (int)SocketSize(begin, start),
+           (int)SocketSize(begin, stop), space)
     switch (type) {
       case NIL:
         break;
@@ -604,7 +604,7 @@ const Op* BOutWrite(BOut* bout, const uint_t* params, void** args) {
   if (++stop >= end) stop -= size;
   *stop = (byte)(hash >> 8);
   if (++stop >= end) stop -= size;
-  bout->stop = (uint_t)MemoryVector(begin, stop);
+  bout->stop = (uint_t)SocketSize(begin, stop);
   PRINTF("\nDone writing to B-Output with the hash 0x%x.", hash)
   return 0;
 }
@@ -646,7 +646,7 @@ void BOutRingBell(BOut* bout, const char* address) {
     ++address;
     c = *address;
   }
-  bout->stop = (uint_t)MemoryVector(begin, stop);
+  bout->stop = (uint_t)SocketSize(begin, stop);
 }
 
 void BOutAckBack(BOut* bout, const char* address) {
@@ -687,7 +687,7 @@ void BOutAckBack(BOut* bout, const char* address) {
     ++address;
     c = *address;
   }
-  bout->stop = (uint_t)MemoryVector(begin, stop);
+  bout->stop = (uint_t)SocketSize(begin, stop);
 }
 
 const Op* BOutConnect(BOut* bout, const char* address) {
@@ -703,7 +703,7 @@ void BInKeyStrokes() {
   }
 }
 
-#if USING_PRINTER
+#if CRABS_UTF
 /*
 char* Print (BOut* bout, char* buffer, char* buffer_end) {
     bool print_now = !buffer;
@@ -718,7 +718,7 @@ char* Print (BOut* bout, char* buffer, char* buffer_end) {
         return nullptr;
     }
     int size = bout->size;
-    Printer& print (buffer, buffer_end);
+    Utf& print (buffer, buffer_end);
     print << "\nBOut:" << Hex<uintptr_t> (bout)
           << " size:" << size
           << " start:" << bout->start << " stop:" << bout->stop
@@ -728,21 +728,21 @@ char* Print (BOut* bout, char* buffer, char* buffer_end) {
     return print.cursor;
 }*/
 
-Printer1& PrintBOut(Printer1& print, BOut* bout) {
+Utf8& PrintBOut(Utf8& print, BOut* bout) {
   ASSERT(bout);
   int size = bout->size;
   print << Line('_', 80) << "\nBOut:" << Hex<>(bout) << " size:" << size
         << " start:" << bout->start << " stop:" << bout->stop
         << " read:" << bout->read << Socket(BOutBuffer(bout), size - 1);
-  printf("\n!| cursor:%p", print.begin);
+  Printf("\n!| cursor:%p", print.begin);
   return print;
 }
 #endif
 
-}   //< namespace _
+}  // namespace _
 
 #undef PRINTF
-#undef PUTCHAR
+#undef PRINT
 #undef PRINT_BSQ
 #undef PRINT_BOUT
 #endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

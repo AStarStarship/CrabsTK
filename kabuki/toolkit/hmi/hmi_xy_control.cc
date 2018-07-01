@@ -16,9 +16,9 @@
 #include <stdafx.h>
 #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
 #if SEAM_MAJOR == 2 && SEAM_MINOR == 2
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
-  printf("\n\n%s\n", message); \
+  Printf("\n\n%s\n", message); \
   system("PAUSE");
 #else
 #define PRINTF(x, ...)
@@ -111,7 +111,7 @@ bool XyControl::SetBottomBound(int newBounds) {
   return true;
 }
 
-Printer& XyControl::Print() {
+Utf& XyControl::Print() {
   string temp = "XyControl:\nx: " + x + "  y: " + y + "\n";
   slot.prints(temp);
 }

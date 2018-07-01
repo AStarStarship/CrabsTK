@@ -14,8 +14,11 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
 // Dependencies:
+#include "align.h"
+#include "ascii_data_types.h"
+#include "assert.h"
 #include "hex.h"
-#include "type.h"
+#include "socket.h"
 // End dependencies.
 
 namespace _ {
@@ -53,43 +56,17 @@ uint_t TypeFixedSize(uint_t type) {
   return kWidths[type];
 }
 
-const char** TypeStrings() {
-  static const char* kNames[] = {
-      "NIL",  //<  0
-      "SI1",  //<  1
-      "UI1",  //<  2
-      "SI2",  //<  3
-      "UI2",  //<  4
-      "HLF",  //<  5
-      "BOL",  //<  6
-      "SVI",  //<  7
-      "UVI",  //<  8
-      "SI4",  //<  9
-      "UI4",  //< 10
-      "FLT",  //< 11
-      "TMS",  //< 12
-      "TMU",  //< 13
-      "SI8",  //< 14
-      "UI8",  //< 15
-      "DBL",  //< 16
-      "SV8",  //< 17
-      "UV8",  //< 18
-      "DEC",  //< 19
-      "OBJ",  //< 20
-      "SIN",  //< 21
-      "UIN",  //< 22
-      "ADR",  //< 23
-      "STR",  //< 24
-      "TKN",  //< 25
-      "BSQ",  //< 26
-      "ESC",  //< 27
-      "LST",  //< 28
-      "BOK",  //< 29
-      "DIC",  //< 30
-      "MAP",  //< 31
-  };
-  return kNames;
-}
+const char** TypeStrings() { return TypeStrings<char>(); }
+
+const char* TypeString(type_t type) { return TypeStrings()[type & 0x1f]; }
+
+const char* TypeString(uint_t type) { return TypeString((uint8_t)type); }
+
+byte TypeMask(byte value) { return value & 0x1f; }
+
+bool TypeIsArray(uint_t type) { return type >= kTypeCount; }
+
+bool TypeIsSet(uint_t type) { return type >= kTypeCount; }
 
 void* TypeAlign(type_t type, void* value) {
   ASSERT(value);
@@ -119,23 +96,24 @@ void* TypeAlign(type_t type, void* value) {
   }
   return 0;
 }
-
-template <typename UI, typename Char>
+/*
+template <typename Char, typename UI>
 inline char* WriteString(char* begin, char* end, const void* value) {
   begin = AlignUpPointer<char>(begin);
   if (end - begin < 2 * sizeof(UI)) return nullptr;
   const Char* source = reinterpret_cast<const Char*>(value);
-  UI length = TextLength<UI, Char>(source);
+  UI length = TextLength<Char, UI>(source);
   UI* target = reinterpret_cast<UI*>(begin);
   *target++ = length;
   return MemoryCopy(target, end, value, length + sizeof(Char));
-}
+}*/
+
 template <typename UI>
 inline char* WriteObject(char* begin, char* end, const void* value) {
   UI* target = AlignUpPointer<UI>(begin);
   const UI* source = reinterpret_cast<const UI*>(value);
   UI size = *source++;
-  if (size < sizeof(UI)) return nullptr;
+  if (size < sizeof(UI) || size >=) return nullptr;
   *target++ = size;
   return MemoryCopy(target, end, value, size - sizeof(UI));
 }
@@ -147,9 +125,9 @@ char* Write(char* begin, char* end, type_t type, const void* value) {
   // 3.) Check for enough room in begin-end socket.
   // 4.) Use MemoryCopy to copy the data into the given begin-end socket.
 
-  ASSERT(begin)
-  ASSERT(end)
-  ASSERT(value)
+  ASSERT(begin);
+  ASSERT(end);
+  ASSERT(value);
   if (!TypeIsValid(type)) return nullptr;
 
   if (type <= UI1) {
@@ -180,20 +158,30 @@ char* Write(char* begin, char* end, type_t type, const void* value) {
   if (TypeIsString(type)) {
     switch (type >> 6) {
       case 0:
+        return Print<char>(begin, end, reinterpret_cast<const char*>(value));
       case 1:
-        return WriteString<uint8_t, char>(begin, end, value);
+        return Print<char>(begin, end, reinterpret_cast<const char*>(value));
       case 2:
-        return WriteString<uint16_t, char>(begin, end, value);
+        return Print<char>(begin, end, reinterpret_cast<const char*>(value));
       case 3:
-        return WriteString<uint16_t, char16_t>(begin, end, value);
+        return reinterpret_cast<char*>(
+            Print<char16_t>(reinterpret_cast<uint16_t*>(begin),
+                            reinterpret_cast<uint16_t*>(end),
+                            reinterpret_cast<const uint16_t*>(value)));
       case 4:
-        return WriteString<uint32_t, char>(begin, end, value);
+        return Print<char>(begin, end, reinterpret_cast<const char*>(value));
       case 5:
-        return WriteString<uint32_t, char16_t>(begin, end, value);
+        return reinterpret_cast<char*>(
+            Print<char16_t>(reinterpret_cast<uint16_t*>(begin),
+                            reinterpret_cast<uint16_t*>(end),
+                            reinterpret_cast<const uint16_t*>(value)));
       case 6:
-        return WriteString<uint64_t, char>(begin, end, value);
+        return Print<char>(begin, end, reinterpret_cast<const char*>(value));
       case 7:
-        return WriteString<uint64_t, char16_t>(begin, end, value);
+        return reinterpret_cast<char*>(
+            Print<char16_t>(reinterpret_cast<uint16_t*>(begin),
+                            reinterpret_cast<uint16_t*>(end),
+                            reinterpret_cast<const uint16_t*>(value)));
     }
   }
   char array_type = type >> 6;
@@ -210,65 +198,53 @@ char* Write(char* begin, char* end, type_t type, const void* value) {
   return nullptr;
 }
 
-Printer1& PrintTypePod(Printer1& printer, type_t type, const void* value) {
-  if (!value) return printer << "Nil";
-  switch (type & 0x1f) {
-    case NIL:
-      return printer << "Error";
-    case SI1:
-      return printer << *reinterpret_cast<const int8_t*>(value);
-    case UI1:
-      return printer << *reinterpret_cast<const uint8_t*>(value);
-    case SI2:
-      return printer << *reinterpret_cast<const int16_t*>(value);
-    case UI2:
-      return printer << *reinterpret_cast<const uint16_t*>(value);
-    case HLF:
-      return printer << "not_implemented";
-    case BOL:
-      return printer << *reinterpret_cast<const bool*>(value);
-    case SI4:
-      return printer << *reinterpret_cast<const int32_t*>(value);
-    case UI4:
-      return printer << *reinterpret_cast<const uint32_t*>(value);
-    case FLT:
-      return printer << *reinterpret_cast<const float*>(value);
-    case TMS:
-      return printer << *reinterpret_cast<const int*>(value);
-    case TMU:
-      return printer << *reinterpret_cast<const int64_t*>(value);
-    case SI8:
-      return printer << *reinterpret_cast<const int64_t*>(value);
-    case UI8:
-      return printer << *reinterpret_cast<const uint64_t*>(value);
-    case DBL:
-      return printer << *reinterpret_cast<const double*>(value);
-    // case SV8:
-    //  return printer << *reinterpret_cast<const int64_t*>(value);
-    // case UV8:
-    //  return printer << *reinterpret_cast<const uint64_t*>(value);
-    case DEC:
-      return printer << "not_implemented";
-  }
-  return printer;
+bool TypeIsObject(type_t type) {
+  if (type < OBJ) return false;
+  return true;
 }
 
-Printer1& PrintType(Printer1& printer, type_t type, const void* value) {
-  ASSERT(value)
-
-  if (type <= DEC)
-    return PrintTypePod(printer, type, value) << ':' << TypeString(type);
-
-  if (!TypeIsValid(type)) return printer << "illegal_type";
-
-  if (TypeIsString(type)) {
-    return printer << '\"' << *reinterpret_cast<const char*>(value)
-                   << reinterpret_cast<const char*>(value)
-                   << "\":" << TypeString(type);
-  }
-
-  return PrintTypePod(printer, type & 0x1f, value) << "b:" << TypeString(type);
+bool TypeIsString(type_t type) {
+  type &= 0x1f;
+  if (type >= ADR && type <= TKN) return true;
+  return false;
 }
 
-}   //< namespace _
+bool TypeIsUtf16(type_t type) { return (bool)(type & 0x20); }
+
+inline int TypeSizeWidthCode(type_t type) { return type >> 6; }
+
+}  // namespace _
+
+#if USING_UTF8
+namespace _ {
+char* Print(char* begin, char* end, type_t type, const void* value) {
+  return Print<char>(begin, end, type, value);
+}  // namespace _
+_::Utf8& operator<<(_::Utf8& utf, const _::TypeValue& item) {
+  return utf.Set(_::Print(utf.begin, utf.end, item.type, item.value));
+}
+#endif
+#if USING_UTF16
+namespace _ {
+char16_t* Print(char16_t* begin, char16_t* end, type_t type,
+                const void* value) {
+  return Print<char16_t>(begin, end, type, value);
+}
+}  // namespace _
+_::Utf16& operator<<(_::Utf16& utf, const _::TypeValue& item) {
+  return utf.Set(_::Print(utf.begin, utf.end, item.type, item.value));
+}
+#endif
+#if USING_UTF32
+namespace _ {
+char32_t* Print(char32_t* begin, char32_t* end, type_t type,
+                const void* value) {
+  return Print<char32_t>(begin, end, type, value);
+}
+}  // namespace _
+_::Utf32& operator<<(_::Utf32& utf, const _::TypeValue& item) {
+  return utf.Set(_::Print(utf.begin, utf.end, item.type, item.value));
+}
+#endif
+
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3

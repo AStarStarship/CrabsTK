@@ -12,18 +12,18 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#include "memory.h"
+#include "socket.h"
 
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
 // Dependencies:
 // None
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 3
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #endif
 
 namespace _ {
@@ -61,5 +61,5 @@ int32_t AlignPowerOf2(int32_t value) {
 
 }  // namespace _
 #undef PRINTF
-#undef PUTCHAR
+#undef PRINT
 #endif  //< SEAM_MAJOR == 0 && SEAM_MINOR >= 2

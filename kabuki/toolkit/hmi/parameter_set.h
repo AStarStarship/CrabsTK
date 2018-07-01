@@ -62,7 +62,7 @@ class KABUKI ParameterSet {
   size_type getNumParams() const;
   //< gets the number of parameters in the set.
 
-  _::Printer& Print(_::Printer& print) const;
+  _::Utf& Print(_::Utf& print) const;
   /* Prints this object to a string. */
 
  private:

@@ -144,7 +144,7 @@ class Schedule {
       @return Returns a pointer to an Event that starts at the given time, and
                a new  Task if no containing Event(string) match the event_time.
    */
-  Task* Find(time_t event_time);
+  Task* Find(Tms event_time);
 
   /* Gets the help menu. */
   static const char* GetHelpString();

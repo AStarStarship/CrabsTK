@@ -17,20 +17,20 @@ specific language governing permissions and limitations under the License. */
 #ifndef HEADER_FOR_CRABS_BOOK
 #define HEADER_FOR_CRABS_BOOK
 // Dependencies:
-#include "memory.h"
-#include "type.h"
+#include "socket.h"
+#include "ascii_data_types.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 3
 #ifndef PRINTF
 #define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINT(c) putchar(c)
 #define PRINT_HEADING \
-  std::cout << '\n';  \
+  putchar ('\n');  \
   for (int i = 80; i > 0; --i) std::cout << '-'
 #endif
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #define PRINT_HEADING
 #endif
 
@@ -626,7 +626,7 @@ I DictionaryFind(Dictionary<UI, SI, I>* dictionary, const char* key) {
 
 /* Prints this object out to the console. */
 template <typename UI, typename SI, typename I>
-Printer1& DicPrint(Printer1& print, const Dictionary<UI, SI, I>* dictionary) {
+Utf8& DicPrint(Utf8& print, const Dictionary<UI, SI, I>* dictionary) {
   ASSERT(dictionary)
 
   I item_count = dictionary->item_count, count = dictionary->count,
@@ -663,7 +663,7 @@ Printer1& DicPrint(Printer1& print, const Dictionary<UI, SI, I>* dictionary) {
     PRINTF ('|';
     for (int i = 0; i < 79; ++i)
         putchar ('_');
-    PUTCHAR ('\n')
+    PRINT ('\n')
 
     for (I i = 0; i < count; ++i) {
     // Print each record as a row.
@@ -694,7 +694,7 @@ Printer1& DicPrint(Printer1& print, const Dictionary<UI, SI, I>* dictionary) {
 
     PrintMemory (reinterpret_cast<const char*> (dictionary) + 
                  sizeof (Dictionary<UI, SI, I>), dictionary->size);
-    PUTCHAR ('\n')
+    PRINT ('\n')
 }
 
 /* Deletes the dictionary contents without wiping the contents. */
@@ -746,7 +746,7 @@ bool DicRemove(Dictionary<UI, SI, I>* dictionary, void* adress) {
 
 /* Prints the given Dictionary to the console. */
 template <typename UI, typename SI, typename I>
-Printer1& DicPrint(Printer1& print, Dictionary<UI, SI, I>* dictionary) {
+Utf8& DicPrint(Utf8& print, Dictionary<UI, SI, I>* dictionary) {
   return print;
 }
 

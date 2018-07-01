@@ -31,7 +31,7 @@ class ControlMaster {
   ControlMaster();
 
   /* Prints this object to a terminal. */
-  inline Printer& Print(Printer& printer) const;
+  inline Utf& Print(Utf& printer) const;
 
  private:
   Parameter<int>*a, *b, *c, *d;

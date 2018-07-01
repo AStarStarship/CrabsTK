@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/memory.h
+@file    $kabuki-toolkit/kabuki/crabs/socket.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -77,6 +77,20 @@ template <typename WordBoundary, typename UI = uintptr_t,
 inline I AlignUpOffset(I value) {
   UI result = (~(UI)value) + 1;
   return result & (sizeof(WordBoundary) - 1);
+}
+
+template <int boundary = 8, typename UI = uintptr_t, typename I = uintptr_t>
+inline I AlignUp(I value) {
+  UI result = (~(UI)value) + 1;
+  return result & (((I)boundary) - 1);
+}
+
+/* Aligns the given pointer to a power of two boundary.
+@warning Function does not check if the boundary is a power of 2! */
+template <typename T = char, uintptr_t boundary = kCpuCacheLineSize>
+inline T* AlignUp(void* pointer) {
+  uintptr_t value = reinterpret_cast<uintptr_t>(pointer);
+  return reinterpret_cast<T*>(value + (((~value) + 1) & (boundary - 1)));
 }
 
 template <typename WordBoundary, typename UI = uintptr_t, typename I = intptr_t>
@@ -191,6 +205,12 @@ inline T* AlignUpPointer(void* pointer) {
   uintptr_t ptr = reinterpret_cast<uintptr_t>(pointer);
   ptr += ((~ptr) + 1) & (sizeof(T) - 1);
   return reinterpret_cast<T*>(ptr);
+}
+
+/* Aligns the given word to 64-bit word boundary. */
+template <typename T>
+inline T WordAlign8(T value) {
+  return value + (((~value) + 1) & (sizeof(T) - 1));
 }
 
 }  // namespace _

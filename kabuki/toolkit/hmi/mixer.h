@@ -113,7 +113,7 @@ class KABUKI Mixer {
   void Print(int start_channel, int stop_channel);
 
   /* Prints this object to a terminal. */
-  Printer& Print(Printer& printer);
+  Utf& Print(Utf& printer);
 
  private:
   int num_channels_,        //< number of active channels in the mixer.

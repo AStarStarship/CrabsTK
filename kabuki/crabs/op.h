@@ -81,13 +81,13 @@ inline wchar_t OpLast(const Op* op) {
   return (wchar_t) reinterpret_cast<uintptr_t>(op->out);
 }
 
-#if USING_PRINTER
-Printer1& Print(Printer1& print, const Op* op);
+#if CRABS_UTF
+Utf8& Print(Utf8& print, const Op* op);
 #endif
 
 }   //< namespace _
 
-inline _::Printer1& operator<<(_::Printer1& print, const _::Op* op) {
+inline _::Utf8& operator<<(_::Utf8& print, const _::Op* op) {
   return _::Print(print, op);
 }
 

@@ -103,7 +103,7 @@ class KABUKI HmiComponent {
   int Compare(const char* s) const;
 
   /* Prints this object to a string. */
-  virtual _::PrinterN& Print(_::Printer& print) const;
+  virtual _::UtfN& Print(_::Utf& print) const;
 
  private:
   uid_t uid_,          //< Unique id.

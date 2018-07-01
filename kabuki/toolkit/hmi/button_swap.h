@@ -42,7 +42,7 @@ class KABUKI ButtonSwap : public Button {
   ~ButtonSwap();
 
   /* Prints this object to the stdout. */
-  void Print(_::Printer printer) const;
+  void Print(_::Utf printer) const;
 
  private:
   uint32_t mode;                     //< Index of the current Button.

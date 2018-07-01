@@ -42,7 +42,7 @@ class KABUKI Project {
   int GetNumWidgets();
 
   /* Prints this object to the terminal. */
-  _::Printer& Print(_::Printer& print);
+  _::Utf& Print(_::Utf& print);
 
  private:
   _::Array<Widget*> widgets;  //< The array of Widgets.

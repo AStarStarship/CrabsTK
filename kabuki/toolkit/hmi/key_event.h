@@ -226,7 +226,7 @@ class KeyEvent {
   byte GetVKCode();
 
   /* Prints this object to a Expression. */
-  inline _::Printer& Print(_::Printer& print) const;
+  inline _::Utf& Print(_::Utf& print) const;
 
  private:
   byte key;  //< VK keyboard code of the event.

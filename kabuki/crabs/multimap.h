@@ -17,20 +17,20 @@ specific language governing permissions and limitations under the License. */
 #ifndef HEADER_FOR_CRABS_BOOK
 #define HEADER_FOR_CRABS_BOOK
 // Dependencies:
-#include "memory.h"
-#include "type.h"
+#include "ascii_data_types.h"
+#include "socket.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 3
 #ifndef PRINTF
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #define PRINT_HEADING \
-  std::cout << '\n';  \
+  Print('\n');        \
   for (int i = 80; i > 0; --i) std::cout << '-'
 #endif
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #define PRINT_HEADING
 #endif
 
@@ -44,8 +44,16 @@ namespace _ {
 
 
 
+
+
+
+
     @ingroup Book
     
+
+
+
+
 
 
 
@@ -609,7 +617,7 @@ void MultimapPrint(const TMap<SI, I>* multimap) {
       item_count, count_max, size_pile, table_size);
     PRINTF ('\n';
     PRINTF ('|';
-    for (int i = 0; i < 79; ++i) putchar ('_');
+    for (int i = 0; i < 79; ++i) Print ('_');
     PRINTF ('\n';
 
     const char* states = reinterpret_cast<const char*> (multimap) +
@@ -632,7 +640,7 @@ void MultimapPrint(const TMap<SI, I>* multimap) {
             "hash_e", "hash_u", "hash_s", "index_u", "collisions");
    PRINTF ('|';
     for (int i = 0; i < 79; ++i)
-        putchar ('_');
+        Print ('_');
     PRINTF ('\n';
 
     for (I i = 0; i < count_max; ++i) {
@@ -726,7 +734,7 @@ TMap<SI, I>* MultimapCreate(I buffered_indexes, UI table_size, UI size) {
 
 /* Prints the given TMultimap to the console. */
 template <typename UI, typename SI, typename I>
-Printer1& MultimapPrint(Printer1& print, TMap<SI, I>* multimap) {}
+Utf8& MultimapPrint(Utf8& print, TMap<SI, I>* multimap) {}
 
 /* C++ Wrapper class for an ASCII Multimap that uses dynamic memory and can
     auto-grow. */
@@ -736,7 +744,7 @@ class Multimap {
   Multimap(UI size) { MultimapInit<UI, SI, I> }
 
   /* Deletes the multimap and it's dynamic memory. */
-  ~Multimap() { delete buffer_; }
+  ~Multimap() { delete ascii_obj_; }
 
   constexpr uint_t MultimapOverheadPerIndex() {
     return MultimapOverheadPerIndex<SI, I>();
@@ -749,68 +757,68 @@ class Multimap {
   /* Insets the given key-value pair.
    */
   inline I Insert(byte type, const char* key, void* data, I index) {
-    auto multimap = reinterpret_cast<Multimap<SI, I>>(buffer_);
+    auto multimap = reinterpret_cast<Multimap<SI, I>>(ascii_obj_);
     return MultimapInsert<SI, I>(multimap, type, key, data, index);
   }
 
   inline I IndexMax() { return MultimapIndexMax<SI, I>(); }
 
   inline I Add(const char* key, TType type, void* data) {
-    auto multimap = reinterpret_cast<Multimap<SI, I>>(buffer_);
+    auto multimap = reinterpret_cast<Multimap<SI, I>>(ascii_obj_);
     return MultimapAdd<SI, I>(multimap, key, type, data);
   }
 
   /* Returns  the given query char in the hash table. */
   inline I Find(const char* key) {
-    auto multimap = reinterpret_cast<Multimap<SI, I>>(buffer_);
+    auto multimap = reinterpret_cast<Multimap<SI, I>>(ascii_obj_);
     return MultimapFind(multimap, key);
   }
 
   /* Deletes the multimap contents without wiping the contents. */
   inline void Clear() {
-    auto multimap = reinterpret_cast<Multimap<SI, I>>(buffer_);
+    auto multimap = reinterpret_cast<Multimap<SI, I>>(ascii_obj_);
     return MultimapClear<SI, I>(multimap);
   }
 
   /* Deletes the multimap contents by overwriting it with zeros. */
   inline void Wipe() {
-    auto multimap = reinterpret_cast<Multimap<SI, I>>(buffer_);
+    auto multimap = reinterpret_cast<Multimap<SI, I>>(ascii_obj_);
     return Wipe<SI, I>(multimap);
   }
 
   /* Returns true if this expr contains only the given address. */
   inline bool Contains(void* data) {
-    auto multimap = reinterpret_cast<Multimap<SI, I>>(buffer_);
+    auto multimap = reinterpret_cast<Multimap<SI, I>>(ascii_obj_);
     return MultimapContains<SI, I>(multimap, void* data);
   }
 
   /* Removes that object from the multimap and copies it to the destination. */
   inline bool MultimapRemoveCopy(void* destination, size_t buffer_size,
                                  void* data) {
-    auto multimap = reinterpret_cast<Multimap<SI, I>>(buffer_);
+    auto multimap = reinterpret_cast<Multimap<SI, I>>(ascii_obj_);
     return;
   }
 
   /* Removes the item at the given address from the multimap. */
   inline bool MultimapRemove(void* adress) {
-    auto multimap = reinterpret_cast<Multimap<SI, I>>(buffer_);
+    auto multimap = reinterpret_cast<Multimap<SI, I>>(ascii_obj_);
     return MultimapRemove<SI, I>(multimap);
   }
 
   /* Removes all but the given multimap from the multimap. */
   inline bool Retain() {
-    auto multimap = reinterpret_cast<Multimap<SI, I>>(buffer_);
+    auto multimap = reinterpret_cast<Multimap<SI, I>>(ascii_obj_);
     return MultimapRetain<SI, I>(multimap);
   }
 
   /* Prints the given TMultimap to the console. */
-  inline Printer1& Print(Printer1& printer) {
-    auto multimap = reinterpret_cast<Multimap<SI, I>>(buffer_);
+  inline Utf8& Print(Utf8& printer) {
+    auto multimap = reinterpret_cast<Multimap<SI, I>>(ascii_obj_);
     return MultimapPrint<SI, I>(multimap);
   }
 
  private:
-  uintptr_t* buffer_;  //< Dynamic memory buffer.
+  uintptr_t* ascii_obj_;  //< Dynamic memory buffer.
 
   TMap
 };
@@ -819,10 +827,10 @@ using Multimap2 = TMap<byte, uint16_t, uint16_t>;
 using Multimap4 = TMap<uint16_t, uint16_t, uint32_t>;
 using Multimap8 = TMap<uint32_t, uint32_t, uint64_t>;
 
-}   //< namespace _
+}  // namespace _
 
 #undef PRINTF
-#undef PUTCHAR
+#undef PRINT
 #undef PRINT_HEADING
 #endif  //< HEADER_FOR_CRABS_BOOK
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0

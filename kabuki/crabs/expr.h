@@ -138,7 +138,7 @@ struct Expr {
   wchar_t current_char;  //< Current Unicode char being scanned.
   hash16_t hash;         //< Packed BSQ hash.
   uint32_t timeout_us;   //< Timeout time in microseconds.
-  time_us_t last_time;   //< Last time the Stack was scanned.
+  Tme last_time;   //< Last time the Stack was scanned.
   const Op* result;      //< Result of the Expr.
   const uint_t *header,  //< Pointer to the header being verified.
       *header_start;     //< Start of the header being verified.
@@ -311,19 +311,19 @@ KABUKI const Op* ExprQuery(Expr* expr, const Op& header);
     @return Returns the header if expr is nil. */
 KABUKI const Op* ExprQuery(Expr* expr, const Op* op);
 
-#if USING_PRINTER
+#if CRABS_UTF
 /* Prints the Expr stack to the Text buffer */
-KABUKI Printer1& PrintExpr(Printer1& printer, Expr* expr);
+KABUKI Utf8& PrintExpr(Utf8& printer, Expr* expr);
 
 /* Prints the Expr stack to the Text buffer */
-KABUKI Printer1& PrintExprStack(Printer1& printer, Expr* expr);
+KABUKI Utf8& PrintExprStack(Utf8& printer, Expr* expr);
 #endif
 
 }   //< namespace _
 
-#if USING_PRINTER
+#if CRABS_UTF
 /* Prints the given Expr to the Text buffer. */
-inline _::Printer1& operator<<(_::Printer1& printer, _::Expr* expr) {
+inline _::Utf8& operator<<(_::Utf8& printer, _::Expr* expr) {
   return _::PrintExpr(printer, expr);
 }
 #endif

@@ -15,14 +15,15 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
+#include "assert.h"
 #include "door.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #endif
 
 namespace _ {
@@ -55,7 +56,7 @@ Door::Door(const char* room_name, uintptr_t* buffer, uintptr_t size_bytes) {
 }
 
 Door::~Door() {
-  if (buffer_) delete[] buffer_;
+  if (ascii_obj_) delete[] ascii_obj_;
 }
 
 slot_t Door::GetSlot(slot_t index) {
@@ -122,7 +123,7 @@ static Door* DoorInit (uintptr_t* buffer, slot_t slot_size) {
     w->door_one = nullptr;
 }*/
 
-}   //< namespace _
+}  // namespace _
 #undef PRINTF
-#undef PUTCHAR
+#undef PRINT
 #endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

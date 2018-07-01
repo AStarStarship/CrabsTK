@@ -18,6 +18,9 @@ project directory into the source code root. This files gets
 look in your source code root before looking in this file. Please see
 config.h for configuration details. */
 
+//< #define CRABS_ASSERT to ASSERT_FREEZE, ASSERT_LOG, or ASSERT_DNC.
+#define CRABS_ASSERT ASSERT_FREEZE
+
 // Choose BARE_METAL, MBED, MBED_OS, ARDUINO, MINGW32, WINDOWS, ANDROID,
 // LINUX, OSX, or IOS.
 #define CRABS_PLATFORM MBED
@@ -29,12 +32,13 @@ config.h for configuration details. */
 
 #define CRABS_FORCE_WORD_ALIGN YES
 
-#define CRABS_ENDIANESS LITTLE
+#define CPU_ENDIANESS LITTLE
 
 #define USING_UTF8 YES
-#define USING_UTF16 YES
-#define USING_UTF32 YES
-#define CRABS_NATIVE_UTF UTF8
+#define USING_UTF16 NO
+#define USING_UTF32 NO
+#define CRABS_UTF UTF8  //< Set to UTF8, UTF16, or UTF32 only, usually UTF8.
+#define CRABS_STRING_SIZE 4  //< Set to 1, 2, 4, or 8 bytes only, usualy 4.
 
 /* @brief The Memory Profiles 1-4 are used to signal that the system is
 memory constrained.
@@ -112,9 +116,10 @@ addresses, use CRABS_MEMORY_PROFILE 3.
 #define USING_CRABS_4_BYTE_TYPES YES
 #define USING_CRABS_8_BYTE_TYPES YES
 #define USING_CRABS_OBJ YES
+#define USING_CRABS_STACK NO
+#define USING_CRABS_LOOM NO
 #define USING_CRABS_ARRAY NO
 #define USING_CRABS_BOOK NO
 #define USING_CRABS_LIST NO
 #define USING_CRABS_DIC NO
-#define USING_PRINTER YES
-#define USING_CRABS_EXCEPTIONS YES
+#define USING_CRABS_EXCEPTIONS NO

@@ -29,6 +29,7 @@
     <ClInclude Include="..\..\kabuki\crabs\args.h" />
     <ClInclude Include="..\..\kabuki\crabs\array.h" />
     <ClInclude Include="..\..\kabuki\crabs\ascii.h" />
+    <ClInclude Include="..\..\kabuki\crabs\assert.h" />
     <ClInclude Include="..\..\kabuki\crabs\bin.h" />
     <ClInclude Include="..\..\kabuki\crabs\binary.h" />
     <ClInclude Include="..\..\kabuki\crabs\bout.h" />
@@ -36,11 +37,13 @@
     <ClInclude Include="..\..\kabuki\crabs\clock.h" />
     <ClInclude Include="..\..\kabuki\crabs\config.h" />
     <ClInclude Include="..\..\kabuki\crabs\console.h" />
-    <ClInclude Include="..\..\kabuki\crabs\dictionary.h" />
+    <ClInclude Include="..\..\kabuki\crabs\crabs_lock.cc" />
+    <ClInclude Include="..\..\kabuki\crabs\dic.h" />
     <ClInclude Include="..\..\kabuki\crabs\door.h" />
     <ClInclude Include="..\..\kabuki\crabs\error.h" />
     <ClInclude Include="..\..\kabuki\crabs\event.h" />
     <ClInclude Include="..\..\kabuki\crabs\expr.h" />
+    <ClInclude Include="..\..\kabuki\crabs\floor.h" />
     <ClInclude Include="..\..\kabuki\crabs\global.h" />
     <ClInclude Include="..\..\kabuki\crabs\global_variables.h" />
     <ClInclude Include="..\..\kabuki\crabs\hash.h" />
@@ -49,11 +52,11 @@
     <ClInclude Include="..\..\kabuki\crabs\iterator.h" />
     <ClInclude Include="..\..\kabuki\crabs\language.h" />
     <ClInclude Include="..\..\kabuki\crabs\library.h" />
-    <ClInclude Include="..\..\kabuki\crabs\line.h" />
     <ClInclude Include="..\..\kabuki\crabs\list.h" />
+    <ClInclude Include="..\..\kabuki\crabs\lock.h" />
     <ClInclude Include="..\..\kabuki\crabs\loom.h" />
     <ClInclude Include="..\..\kabuki\crabs\map.h" />
-    <ClInclude Include="..\..\kabuki\crabs\memory.h" />
+    <ClInclude Include="..\..\kabuki\crabs\socket.h" />
     <ClInclude Include="..\..\kabuki\crabs\mirror.h" />
     <ClInclude Include="..\..\kabuki\crabs\multimap.h" />
     <ClInclude Include="..\..\kabuki\crabs\number.h" />
@@ -61,6 +64,7 @@
     <ClInclude Include="..\..\kabuki\crabs\op.h" />
     <ClInclude Include="..\..\kabuki\crabs\operand.h" />
     <ClInclude Include="..\..\kabuki\crabs\utf.h" />
+    <ClInclude Include="..\..\kabuki\crabs\utfn.h" />
     <ClInclude Include="..\..\kabuki\crabs\utf32.h" />
     <ClInclude Include="..\..\kabuki\crabs\utf16.h" />
     <ClInclude Include="..\..\kabuki\crabs\utf8.h" />
@@ -72,7 +76,7 @@
     <ClInclude Include="..\..\kabuki\crabs\slot.h" />
     <ClInclude Include="..\..\kabuki\crabs\stack.h" />
     <ClInclude Include="..\..\kabuki\crabs\table.h" />
-    <ClInclude Include="..\..\kabuki\crabs\type.h" />
+    <ClInclude Include="..\..\kabuki\crabs\ascii_data_types.h" />
     <ClInclude Include="..\..\kabuki\crabs\varint.h" />
     <ClInclude Include="..\..\kabuki\crabs\wall.h" />
     <ClInclude Include="..\..\kabuki\toolkit\pro\config.h" />
@@ -87,25 +91,29 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\kabuki\crabs\crabs_align.cc" />
+    <ClCompile Include="..\..\kabuki\crabs\crabs_assert.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_bin.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_bout.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_bsq.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_clock.cc" />
+    <ClCompile Include="..\..\kabuki\crabs\crabs_console.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_door.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_error.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_expr.cc" />
+    <ClCompile Include="..\..\kabuki\crabs\crabs_floor.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_hash.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_hex.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_interrupts.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_line.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_memory.cc" />
+    <ClCompile Include="..\..\kabuki\crabs\crabs_socket.cc" />
+    <ClCompile Include="..\..\kabuki\crabs\crabs_number.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_object.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_op.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_operand.cc" />
+    <ClCompile Include="..\..\kabuki\crabs\crabs_random.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_utf.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_room.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_slot.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_type.cc" />
+    <ClCompile Include="..\..\kabuki\crabs\crabs_ascii_data_types.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_wall.cc" />
     <ClCompile Include="..\..\kabuki\toolkit\pro\pro_project.cc" />
     <ClCompile Include="..\..\kabuki\toolkit\pro\pro_schedule.cc" />

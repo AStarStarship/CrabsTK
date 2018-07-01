@@ -17,16 +17,16 @@ specific language governing permissions and limitations under the License. */
 #ifndef HEADER_FOR_CRAPS_MAP
 #define HEADER_FOR_CRAPS_MAP
 // Dependencies:
-#include "memory.h"
-#include "type.h"
+#include "ascii_data_types.h"
+#include "socket.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 3
 #ifndef PRINTF
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #define PRINT_HEADING                             \
   {                                               \
-    std::cout << '\n';                            \
+    Print('\n');                                  \
     for (int i = 80; i > 0; --i) std::cout << '-' \
   }
 #define PRINT_TYPE(type, value) Console<>().Out() << TypeValue(type, value);
@@ -38,7 +38,7 @@ specific language governing permissions and limitations under the License. */
 #endif
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #define PRINT_HEADING
 #define PRINT_TYPE(type, value)
 #define WIPE(buffer, size)
@@ -553,7 +553,7 @@ bool MapRemove(TMap<UI, SI, I>* map, void* adress) {
 
 /* Prints this object out to the console. */
 template <typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
-Printer1& MapPrint(Printer1& print, const TMap<UI, SI, I>* map) {
+Utf8& MapPrint(Utf8& print, const TMap<UI, SI, I>* map) {
   ASSERT(map)
 
   SI count = map->count, collision_index, temp;
@@ -642,46 +642,46 @@ class Map {
   ~Map() { delete buffer; }
 
   inline bool Remove(void* adress) {
-    return MapRemove<UI, SI, I>(This(), adress);
+    return MapRemove<UI, SI, I>(Object(), adress);
   }
 
   /* Checks if the map contains the given pointer.
       @return True if the pointer lies in this socket. */
   inline bool Contains(void* value) {
-    return MapContains<UI, SI, I>(This(), value);
+    return MapContains<UI, SI, I>(Object(), value);
   }
 
   /* Wipes the map by overwriting it with zeros. */
-  inline void Wipe() { MapWipe<UI, SI, I>(This()); }
+  inline void Wipe() { MapWipe<UI, SI, I>(Object()); }
 
   static inline SI CountUpperBounds() {
     return MapCountUpperBounds<UI, SI, I>();
   }
 
   inline SI Insert(void* value, SI index, type_t type) {
-    return MapInsert<UI, SI, I>(This(), value, type, index);
+    return MapInsert<UI, SI, I>(Object(), value, type, index);
   }
 
   /* Clears the list. */
-  inline void Clear() { MapClear<UI, SI, I>(This()); }
+  inline void Clear() { MapClear<UI, SI, I>(Object()); }
 
   /* Prints this object to a printer. */
-  inline Printer1& Print(Printer1& printer) {
-    return MapPrint<UI, SI, I>(print, This());
+  inline Utf8& Print(Utf8& printer) {
+    return MapPrint<UI, SI, I>(print, Object());
   }
 
  private:
   uintptr_t* buffer;
 
   /* Returns the buffer casted as a TMap<UI, SI, I>*. */
-  inline TMap<UI, SI, I>* This() {
+  inline TMap<UI, SI, I>* Object() {
     return reinterpret_cast<TMap<UI, SI, I>*>(buffer);
   }
 };  //< class Map
 }  // namespace _
 #endif  //< HEADER_FOR_CRAPS_MAP
 #undef PRINTF
-#undef PUTCHAR
+#undef PRINT
 #undef PRINT_HEADING
 #undef PRINT_TYPE
 #undef WIPE

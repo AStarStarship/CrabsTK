@@ -16,9 +16,9 @@
 #include <stdafx.h>
 #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
 #if SEAM_MAJOR == 2 && SEAM_MINOR == 2
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
-  printf("\n\n%s\n", message); \
+  Printf("\n\n%s\n", message); \
   system("PAUSE");
 #else
 #define PRINTF(x, ...)
@@ -80,14 +80,14 @@ void MidiControl::Trigger() {
 /* Returns the header for toStringRow (). */
 void MidiControl::PrintHeaderString() const {
   Parameter<int>::PrintHeaderString();
-  printf("CC |");
+  Printf("CC |");
 }
 
 /* Returns cc_ text representation of this Control in cc_ row format without
  * headers. */
 void MidiControl::PrintRow() const {
   return Parameter<int>::PrintRow();
-  printf("%3i|", cc_);
+  Printf("%3i|", cc_);
 }
 
 void MidiControl::Print() const {}

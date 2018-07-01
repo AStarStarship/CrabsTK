@@ -107,38 +107,38 @@ bool Task::SetGrade(float new_grade) {
   return true;
 }
 
-time_t Task::GetTimeEstimate() { return time_estimate_; }
+Tms Task::GetTimeEstimate() { return time_estimate_; }
 
-void Task::SetTimeEstimate(time_t time) { time_estimate_ = time; }
+void Task::SetTimeEstimate(Tms time) { time_estimate_ = time; }
 
-time_t Task::GetTimeBegins() { return time_begins_; }
+Tms Task::GetTimeBegins() { return time_begins_; }
 
-const char* Task::SetTimeBegins(time_t time) {
+const char* Task::SetTimeBegins(Tms time) {
   if (time >= time_ends_ && time_ends_ != 0)
     return "time_begins_ must be before time_ends_";
   time_begins_ = time;
   return 0;
 }
 
-time_t Task::GetTimeEnds() { return time_ends_; }
+Tms Task::GetTimeEnds() { return time_ends_; }
 
-const char* Task::SetTimeEnds(time_t time) {
+const char* Task::SetTimeEnds(Tms time) {
   if (time < time_ends_) return "time_ends_ must be after time_begans";
   time_ends_ = time;
   return 0;
 }
 
-time_t Task::GetTimeStarted() { return time_started_; }
+Tms Task::GetTimeStarted() { return time_started_; }
 
-const char* Task::SetTimeStarted(time_t time) {
+const char* Task::SetTimeStarted(Tms time) {
   if (time < time_stopped_) return "Start time must be before stop time";
   time_stopped_ = time;
   return 0;
 }
 
-time_t Task::GetTimeStopped() { return time_stopped_; }
+Tms Task::GetTimeStopped() { return time_stopped_; }
 
-const char* Task::SetTimeStopped(time_t time) {
+const char* Task::SetTimeStopped(Tms time) {
   if (time <= time_started_) return "time_stopped_ must be after time_started_";
   time_stopped_ = time;
   return 0;
@@ -166,7 +166,7 @@ Task* Task::Collision() { return collisions_; }
 
 bool Task::IsDone() { return summary_ != 0; }
 
-bool Task::Contains(time_t t) {
+bool Task::Contains(Tms t) {
   if (t < time_begins_) return false;
   if (time_stopped_ != 0) {
     if (t > time_stopped_) return false;
@@ -180,7 +180,7 @@ bool Task::Contains(time_t t) {
 
 void Task::Print(int indentation, int index) {
   PrintBreak();
-  printf("| Task (%3f): %string", weight_, summary_);
+  Printf("| Task (%3f): %string", weight_, summary_);
   PrintBreak("\n|", '-');
   std::cout << "| Begins: ";
   PrintDateTime(time_begins_);
@@ -237,7 +237,7 @@ const char* Task::Command(char* input) {
       *buffer;   //< String buffer.
   int value;     //< Value to (possibly) be parsed and temp value.
   float number;  //< A number to (possibly) be parsed.
-  time_t time;   //< Time to (possibly) be parsed.
+  Tms time;   //< Time to (possibly) be parsed.
   if (input == nullptr) return "Task input was null";
   input = SkipSpaces(input);
   c = *input;

@@ -15,15 +15,16 @@ specific language governing permissions and limitations under the License. */
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
 #include "align.h"
+#include "assert.h"
 #include "stack.h"
 #include "wall.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #endif
 
 namespace _ {
@@ -44,7 +45,7 @@ Wall::Wall(size_t size_bytes) : is_dynamic_(true) {
   //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
   //< on 16 and 32-bit systems.
   size_bytes -= sizeof(uintptr_t) * (aligned_buffer - buffer);
-  buffer_ = buffer;
+  ascii_obj_ = buffer;
   doors_ = reinterpret_cast<CArray<Door*>*>(aligned_buffer);
   StackInit(buffer, size_bytes >> sizeof(uintptr_t));
 }
@@ -63,7 +64,7 @@ Wall::Wall(uintptr_t* buffer, size_t size_bytes) {
   //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
   //< on 16 and 32-bit systems.
   size_bytes -= sizeof(uintptr_t) * (aligned_buffer - buffer);
-  buffer_ = buffer;
+  ascii_obj_ = buffer;
   doors_ = reinterpret_cast<CArray<Door*>*>(aligned_buffer);
   StackInit(buffer, size_bytes >> sizeof(uintptr_t));
 }
@@ -81,12 +82,12 @@ int Wall::OpenDoor(Door* door) { return 0; }
 bool Wall::CloseDoor(int index) { return false; }
 
 Slot& Wall::Print(Slot& slot) {
-  // printf ("\nDoor:\nis_dynamic %s\nnum_doors: %u\nmax_num_doors: %u\n",
+  // Printf ("\nDoor:\nis_dynamic %s\nnum_doors: %u\nmax_num_doors: %u\n",
   //        is_dynamic ? "true" : "false", num_doors, max_num_doors);
   return slot;
 }
 
-}   //< namespace _
+}  // namespace _
 #undef PRINTF
-#undef PUTCHAR
+#undef PRINT
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

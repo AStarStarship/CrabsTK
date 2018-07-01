@@ -16,7 +16,7 @@ specific language governing permissions and limitations under the License. */
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
 // Dependencies:
 #include "hex.h"
-#if USING_PRINTER
+#if CRABS_UTF
 // End dependencies.
 
 namespace _ {
@@ -77,6 +77,6 @@ int HexToByte(uint16_t h) {
 
 }  // namespace _
 #undef PRINTF
-#undef PUTCHAR
-#endif  //< USING_PRINTER
+#undef PRINT
+#endif  //< CRABS_UTF
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2

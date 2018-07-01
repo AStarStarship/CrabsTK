@@ -15,24 +15,24 @@ specific language governing permissions and limitations under the License. */
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
 // Dependencies:
 #include "utf8.h"
-#include "type.h"
+#include "ascii_data_types.h"
 // End dependencies.
-#if USING_PRINTER
+#if CRABS_UTF
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 2
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #define PRINT_HEADING \
-  std::cout << '\n';  \
+  Print ('\n');  \
   for (int i = 80; i > 0; --i) std::cout << '-'
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #define PRINT_HEADING
 #endif
 
 namespace _ {}  // namespace _
 #undef PRINTF
-#undef PUTCHAR
+#undef PRINT
 #undef PRINT_HEADING
-#endif  //< USING_PRINTER
+#endif  //< CRABS_UTF
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2

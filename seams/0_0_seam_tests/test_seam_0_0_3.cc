@@ -18,9 +18,9 @@
 // Dependencies:
 #include "test_seam_0.h"
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 3
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
-  printf("\n\n%s\n", message); \
+  Printf("\n\n%s\n", message); \
   system("PAUSE");
 #define PRINT_HEADING(message)                   \
   std::cerr << "\n+";                            \
@@ -37,7 +37,7 @@ using namespace _;
 
 TEST_GROUP(SEAM_1_3){void setup(){}
 
-                     void teardown(){std::cout << '\n';
+                     void teardown(){Print('\n');
 system("PAUSE");
 }
 }
@@ -86,7 +86,9 @@ TEST(SEAM_1_3, SEAM_1_3A) {
       for (int y = 0; y < 2; ++y)
           for (int x = 0; x < 2; ++x)
               CHECK_EQUAL (i++, array_3d_exected[x][y][z])
-  
+  
+
+
 
 
 
@@ -150,7 +152,9 @@ TEST(SEAM_1_3, SEAM_1_3A) {
   PRINTF("\n\nDone testing Map!")
 
   /*
-  
+  
+
+
 
 
 

@@ -62,7 +62,7 @@ class KABUKI ControlMatrix {
   ParameterSet* GetRow(int row);
 
   /* Prints this object to a string. */
-  _::Printer& Print(_::Printer& print) const;
+  _::Utf& Print(_::Utf& print) const;
 
  private:
   int num_rows_,        //< Number of rows.

@@ -16,9 +16,9 @@
 #include <stdafx.h>
 #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
 #if SEAM_MAJOR == 2 && SEAM_MINOR == 2
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
-  printf("\n\n%s\n", message); \
+  Printf("\n\n%s\n", message); \
   system("PAUSE");
 #else
 #define PRINTF(x, ...)
@@ -142,7 +142,7 @@ void IsymmetricController::depressModeButton(ParameterSet *thisLayer,
                                              Mode thisMode) {
   // this function switches thisLayer's current mode
 
-  time_t currentTime = time(nullptr), doubleClickVector;
+  Tms currentTime = time(nullptr), doubleClickVector;
 
   doubleClickVector = currentTime - thisLayer->LastModePress();
 
@@ -299,7 +299,7 @@ const Op *IsymmetricController::op(_::Expression *io, byte index) {
 /* Returns a text representation of this object. */
 void IsymmetricController::print() {
   _::printLine('~');
-  printf("Symmetrical Control Surface:\n");
+  Printf("Symmetrical Control Surface:\n");
   _::printLine('~');
 
   a->print();

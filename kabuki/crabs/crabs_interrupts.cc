@@ -17,14 +17,15 @@ specific language governing permissions and limitations under the License. */
 #include "interrupts.h"
 // End dependencies.
 #if USING_CRABS_INTERRUPTS
+#include <cassert>
 
 namespace _ {
 
-#if USING_PRINTER
+#if CRABS_UTF
 const char* RoomCrashException::what() const throw() {
   return "External crash";
 }
 #endif
 
-}   //< namespace _
+}  // namespace _
 #endif  //< USING_CRABS_INTERRUPTS

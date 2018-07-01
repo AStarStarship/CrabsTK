@@ -94,7 +94,7 @@ class KABUKI WidgetPage {
   const char* GetType();
 
   /* Prints this object to a terminal. */
-  _::Printer& Print(_::Printer& print) const;
+  _::Utf& Print(_::Utf& print) const;
 
  private:
   int num_control_pairs_;       //< Number of BoundedControl/Button pairs.

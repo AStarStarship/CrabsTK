@@ -86,7 +86,7 @@ class Door : public Operand {
   virtual const Op* Star(wchar_t index, Expr* expr);
 
  private:
-  uintptr_t* buffer_;                     //< Pointer to dynamic buffer.
+  uintptr_t* ascii_obj_;                  //< Pointer to dynamic buffer.
   CArray<slot_t, uint_t, int_t>* slots_;  //< Slots in the door.
 };
 

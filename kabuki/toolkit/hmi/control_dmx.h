@@ -46,7 +46,7 @@ class KABUKI ControlDmx : public Parameter<int> {
   virtual void Trigger() {}
 
   /* Prints this object to a string. */
-  _::Printer& Print(_::Printer& print) const;
+  _::Utf& Print(_::Utf& print) const;
 
 };  //< class ControlDmx
 }       //< namespace _

@@ -21,15 +21,13 @@ specific language governing permissions and limitations under the License. */
 // End dependencies.
 
 namespace _ {
-inline uint64_t GetRandomUInt64() {
-  std::random_device rd;
-  std::mt19937_64 eng(rd());
-  std::uniform_int_distribution<uint64_t> distr;
-  return distr(eng);
-}
 
-inline int64_t GetRandomInt64() { return (int64_t)GetRandomUInt64(); }
+/* Gets a uniform random uint64_t. */
+inline uint64_t GetRandomUInt64();
 
-}   //< namespace _
+/* Gets a uniform random int64_t. */
+inline int64_t GetRandomInt64();
+
+}  // namespace _
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
 #endif  //< HEADER_FOR_CRABS_RANDOM

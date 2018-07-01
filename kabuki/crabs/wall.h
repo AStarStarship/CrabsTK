@@ -26,10 +26,9 @@ namespace _ {
 /* A memory aligned singled contiguous buffer in a Chinese Room.
 Only one single wall is required for a Chinese Room, but when more memory is
 needed a new Wall may be created and destroyed dynamically.
-    
 
 @code
-+==============+
++--------------+
 |  Terminals   |
 |      v       |
 |vvvvvvvvvvvvvv|
@@ -39,9 +38,9 @@ needed a new Wall may be created and destroyed dynamically.
 |  TSTack of   |
 |    Doors     |
 |   Offsets    |
-|==============|
+|--------------|
 |    Header    |
-+==============+
++--------------+
 @endcode
 */
 class Wall {
@@ -83,10 +82,10 @@ class Wall {
  private:
   bool is_dynamic_;       //< Flag for if using dynamic memory.
   size_t size_bytes_;     //< Size of the Wall in bytes.
-  uintptr_t* buffer_;     //< The Wall's buffer.
+  uintptr_t* ascii_obj_;  //< The Wall's buffer.
   CArray<Door*>* doors_;  //< The doors in the room.
 };
 
-}   //< namespace _
+}  // namespace _
 #endif  //< HEADER_FOR_CRABS_WALL
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

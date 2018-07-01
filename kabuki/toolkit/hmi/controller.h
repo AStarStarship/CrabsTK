@@ -93,7 +93,7 @@ class KABUKI Controller {
   int SetDoublePressTime(double newTime);
 
   /* Prints this object to a string. */
-  _::Printer& Print(_::Printer& print) const;
+  _::Utf& Print(_::Utf& print) const;
 
  private:
   int common_channel_,     //< Common MIDI Channel  (0)

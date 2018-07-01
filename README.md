@@ -12,10 +12,26 @@
 
 Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) for 32-bit and 64-bit processors featuring the F2 Foundational Framework that provides:
 
-* UML-compatible interface for cross-language bindings.
-* Reduced compile time using hidden C++ template implementations hidden behind a C ABI with object-oriented wrapper classes.
+* Optimal cache performance from contiguous ROM-able ASCII Data Structures.
+* Rapid compile time using C ABI with hidden C++ template implementations and UML-compatible object-oriented wrapper classes.
 * Seamless operation across assembly boundary.
 * Page-Major-Minor Seam (PMMS) Unit Tests provides debug information customized for each seam.
+* Code automatically formatted to Google C++ Style Guide upon save.
+
+## ASCII Data types
+
+ASCII Data Types provide a suitable replacement for the C++ std library that allows for the optional use of dynamic memory and:
+
+* All of the C++ POD types.
+* UTF-8, UTF-16, and UTF-32 strings.
+* Year 2038-safe Timestamps - 32-bit and 64-bit timestamps along with 64-bit microseconds timestamps (32-bits for seconds and 32-bits for microseconds) using a 10-year epoch.
+* Stack - A stack of POD types.
+* Array - A multidimension array with Stack of dimensions.
+* Loom - An array of strings.
+* Table - A hash table of contiguous mappings.
+* Map - A sparse associated array of unsigned integers to ASCII Data Types.
+* Multidict - A multidictionary (i.e. unordered map) without hash table.
+* Dictionary - A dictionary of ASCII Data Types with hash table.
 
 [![GitHub version](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit.svg)](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit)
 

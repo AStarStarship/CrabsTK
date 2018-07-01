@@ -18,8 +18,8 @@ specific language governing permissions and limitations under the License. */
 #define HEADER_FOR_CRABS_STACK
 // Dependencies:
 #include "config.h"
-#include "memory.h"
 #include "object.h"
+#include "socket.h"
 #include "utf8.h"
 // End dependencies.
 
@@ -34,7 +34,7 @@ namespace _ {
 
 /* Returns the maximum value of the given signed type. */
 template <typename SI>
-constexpr SI SignedMax() {
+constexpr SI NanSigned() {
   enum {
     kMax = (sizeof(SI) == 1)
                ? 0x78
@@ -68,7 +68,8 @@ constexpr UI UnsignedMax() {
     given types, and another for a multi-dimensional array that uses the 1-d
     array in order to store the dimensions. The only different between them is
     that the size_array variable gets set to 0.
-    
+    
+
 
 
 
@@ -383,7 +384,7 @@ T StackPeek(CArray<T, UI, SI>* stack) {
   ASSERT(stack);
   SI count = stack->count;
   if (count == 0) return 0;
-  T* items = StackElements<T, UI, SI>(This());
+  T* items = StackElements<T, UI, SI>(Object());
   T item = items[stack->count - 1];
   return item;
 }
@@ -471,7 +472,7 @@ uintptr_t* StackGrow(uintptr_t* buffer) {
 }
 
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
-Printer1& PrintStack(Printer1& print, CArray<T, UI, SI>* tarray) {
+Utf8& PrintStack(Utf8& print, CArray<T, UI, SI>* tarray) {
   ASSERT(tarray);
   UI size_array = tarray->size_array;
   SI count = tarray->count;
@@ -519,7 +520,7 @@ class Stack {
     }
     UI size = StackSize<T, UI, SI>(count_max);
     uintptr_t* buffer = new uintptr_t[size >> kWordBitCount];
-    buffer_ = buffer;
+    ascii_obj_ = buffer;
     StackInit(buffer, size, count_max);
   }
 
@@ -530,12 +531,12 @@ class Stack {
         count_max(other.count) {}
 
   /* Deallocates the buffer_. */
-  ~Stack() { delete[] buffer_; }
+  ~Stack() { delete[] ascii_obj_; }
 
-  Stack<T, UI, SI>& Clone() { StackClone<T, UI, SI>(This()); }
+  Stack<T, UI, SI>& Clone() { StackClone<T, UI, SI>(Object()); }
 
   Stack<T, UI, SI>& Clone(Stack<T, UI, SI>& other) {
-    StackClone<T, UI, SI>(This(), *other);
+    StackClone<T, UI, SI>(Object(), *other);
   }
 
   /* Gets the max number of elements in an stack with the specific index
@@ -543,35 +544,35 @@ class Stack {
   inline SI GetElementsMax() { return StackCountMax<T, UI, SI>(); }
 
   /* Gets the size of the entire Stack, including header, in bytes. */
-  inline UI GetSize() { return This()->size; }
+  inline UI GetSize() { return Object()->size; }
 
   /* Gets the min size of the entire Stack, including header, in bytes. */
   inline UI GetSizeMin() { return StackSizeMin<T, UI, SI>(); }
 
   /* Gets a pointer to the first element in the stack. */
-  inline T* Elements() { return StackBegin<T, UI, SI>(This()); }
+  inline T* Elements() { return StackBegin<T, UI, SI>(Object()); }
 
   /* Inserts the item into the stack at the given index.
       @param item  The item to insert.
       @param index The index to insert at.
       @return -1 if a is nil and -2 if the stack is full. */
-  T Insert(T item, T index) { return Array<T, UI, SI>(This(), item, index); }
+  T Insert(T item, T index) { return Array<T, UI, SI>(Object(), item, index); }
 
   /* Removes the given index from the stack.
       @param  index The index the item to remove.
       @return True if the index is out of bounds. */
-  bool Remove(SI index) { return StackRemove<T, UI, SI>(This(), index); }
+  bool Remove(SI index) { return StackRemove<T, UI, SI>(Object(), index); }
 
   /* Adds the given item to the end of the stack.
       @param  item The item to push onto the stack.
       @return The index of the newly stacked item. */
   SI Push(T item) {
-    SI result = StackPush<T, UI, SI>(This(), item);
+    SI result = StackPush<T, UI, SI>(Object(), item);
     // std::count << "\n  Pushing " << item;
     if (result < 0) {
-      // printf (" and growing.");
+      // Printf (" and growing.");
       Grow();
-      SI result = StackPush<T, UI, SI>(This(), item);
+      SI result = StackPush<T, UI, SI>(Object(), item);
       // COUT << this;
       if (result < 0) return -1;
       return result;
@@ -584,7 +585,7 @@ class Stack {
       @param  a The stack.
       @return The item popped off the stack. */
   inline T Pop() {
-    T value = StackPop<T, UI, SI>(This());
+    T value = StackPop<T, UI, SI>(Object());
     // print << "\n  Popping " << value;
     return value;
   }
@@ -593,40 +594,40 @@ class Stack {
       @note We do not delete the item at the
       @param  a The stack.
       @return The item popped off the stack. */
-  inline T Peek() { return StackPeek<T, UI, SI>(This()); }
+  inline T Peek() { return StackPeek<T, UI, SI>(Object()); }
 
   /* Gets the element at the given index.
       @param  index The index of the element to get.
       @return -1 if a is nil and -2 if the index is out of bounds. */
-  inline T Element(SI index) { return StackGet<T, UI, SI>(This(), index); }
+  inline T Element(SI index) { return StackGet<T, UI, SI>(Object(), index); }
 
   /* Returns true if the given stack contains the given address.
       @return false upon failure. */
   inline bool Contains(void* address) {
-    return StackContains<T, UI, SI>(This(), address);
+    return StackContains<T, UI, SI>(Object(), address);
   }
 
   /* Resizes the stack to the new_count. */
   inline bool Resize(SI new_count) {
-    uintptr_t* buffer = StackResize(This());
+    uintptr_t* buffer = StackResize(Object());
     if (!buffer) return false;
-    buffer_ = buffer;
+    ascii_obj_ = buffer;
     return true;
   }
 
   /* Doubles the size of the stack. */
   inline bool Grow() {
-    uintptr_t* buffer = StackGrow(buffer_);
+    uintptr_t* buffer = StackGrow(ascii_obj_);
     if (!buffer) return false;
-    buffer_ = buffer;
+    ascii_obj_ = buffer;
     return true;
   }
 
-  /* Prints this object to the given Printer. */
-  inline Printer1& Print(Printer1& out_) { return Print(This(), out_); }
+  /* Prints this object to the given Utf. */
+  inline Utf8& Print(Utf8& out_) { return Print(Object(), out_); }
 
-  inline CArray<T, UI, SI>* This() {
-    return reinterpret_cast<CArray<T, UI, SI>*>(buffer_);
+  inline CArray<T, UI, SI>* Object() {
+    return reinterpret_cast<CArray<T, UI, SI>*>(ascii_obj_);
   }
 
   inline Stack<T, UI, SI>& operator=(const Stack<T, UI, SI>& other) {
@@ -635,15 +636,15 @@ class Stack {
   }
 
  private:
-  uintptr_t* buffer_;  //< Word-aligned socket for the stack.
+  uintptr_t* ascii_obj_;  //< Word-aligned socket for the stack.
 
   inline void SetBuffer(CArray<T, UI, SI>* tarray) {
     ASSERT(tarray);
-    buffer_ = reinterpret_cast<uintptr_t*>(tarray);
+    ascii_obj_ = reinterpret_cast<uintptr_t*>(tarray);
   }
 };
 
-}   //< namespace _
+}  // namespace _
 
 #endif  //< HEADER_FOR_CRABS_STACK
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3

@@ -17,74 +17,107 @@ specific language governing permissions and limitations under the License. */
 #ifndef HEADER_FOR_CRABS_OBJECT
 #define HEADER_FOR_CRABS_OBJECT
 // Dependencies:
-#include "type.h"
+#include "align.h"
+#include "assert.h"
 // End dependencies.
+
+typedef void (*Destructor)(uintptr_t* buffer);
 
 namespace _ {
 
-/* An ASCII Object.
-    The definition of an ASCII Objects is an object that start with a 8, 16,
-    32, or 64-bit word that stores the size of the object in bytes.
-*/
-template <typename UI>
-struct KABUKI AObject {
-  uintptr_t* buffer;
+typedef void (*Destructor)(uintptr_t* buffer);
+
+/* Deletes the buffer. */
+KABUKI void Delete(uintptr_t* buffer);
+
+/* C header for an ASCII Object with programmable destructor. */
+struct CObj {
+  uintptr_t* ascii_obj_;   //< Pointer to the contiguous ASCII Object.
+  Destructor destructor_;  //< Pointer to the destructor.
 };
 
-/* Returns the object size. */
-template <typename UI = uint32_t>
-UI ObjectSize(const void* object, type_t type) {
-  ASSERT(object)
-  if (type == 0) return 0;
-  if (type <= SI1) return 1;
-  if (type <= BOL) return 2;
-  if (type <= TMS) return 4;
-  if (type <= DBL) return 8;
-  if (type <= DEC) return 16;
-  if ((type & 0x1F) == UIX) return 32 + (type >> 5);
-  if ((type >> 5) == 1) {
-  }
-  switch (type >> 6) {
-    case 0:
-      return (UI) * reinterpret_cast<const uint8_t*>(object);
-    case 1:
-      return (UI) * reinterpret_cast<const uint16_t*>(object);
-    case 2:
-      return (UI) * reinterpret_cast<const uint32_t*>(object);
-    case 3:
-      return (UI) * reinterpret_cast<const uint64_t*>(object);
-  }
-  return 0;
+/* Deletes an ASCII object. */
+KABUKI void ObjectDelete(CObj object);
+
+/* Checks if the value is a valid object index, that it's 7 less than the max
+value or less. */
+inline KABUKI bool ObjectCountIsValid(int8_t value, int8_t count_min = 1);
+
+/* Checks if the value is a valid object index, that it's 7 less than the max
+value or less. */
+inline KABUKI bool ObjectCountIsValid(int16_t value, int16_t count_min = 1);
+
+/* Checks if the value is a valid index, that it's 7 less than the max
+value or less. */
+inline KABUKI bool ObjectCountIsValid(int32_t value, int32_t count_min = 1);
+
+/* Checks if the value is a valid index, that it's 7 less than the max
+value or less. */
+inline KABUKI bool ObjectCountIsValid(int64_t value, int64_t count_min = 1);
+
+/* Checks if the value is a valid object size, that it's an even multiple of
+8. */
+inline KABUKI bool ObjectSizeIsValid(int16_t value, int16_t count_min = 1);
+
+/* Checks if the value is a valid object size, that it's an even multiple of
+8. */
+inline KABUKI bool ObjectSizeIsValid(int32_t value, int32_t count_min = 1);
+
+/* Checks if the value is a valid object size, that it's an even multiple of
+8. */
+inline KABUKI bool ObjectSizeIsValid(int64_t value, int64_t count_min = 1);
+
+/* Clones the given ASCII Object. */
+KABUKI uintptr_t* ObjectClone(uintptr_t* ascii_object, int8_t size);
+
+/* Clones the given ASCII Object. */
+KABUKI uintptr_t* ObjectClone(uintptr_t* ascii_object, int16_t size);
+
+/* Clones the given ASCII Object. */
+KABUKI uintptr_t* ObjectClone(uintptr_t* ascii_object, int32_t size);
+
+/* Clones the given ASCII Object. */
+KABUKI uintptr_t* ObjectClone(uintptr_t* ascii_object, int64_t size);
+
+template <typename SI>
+inline bool ObjectSizeIsValid(SI size, SI size_min) {
+  SI bounds_upper = 0;
+  bounds_upper = (~bounds_upper) - 7;
+  return (size >= size_min) && (size <= bounds_upper);
 }
 
-/* Aligns the given word to 64-bit word boundary. */
-template <typename T>
-inline T WordAlign8(T value) {
-  return value + (((~value) + 1) & (sizeof(T) - 1));
+template <typename SI>
+inline bool ObjectCountIsValid(SI index, SI count_min) {
+  return (index >= count_min) && ((size & 7) == 0) && ((size >> 3) == 0);
 }
 
-/* Clones the other object. */
-template <typename UI = uint32_t>
-AObject<UI>* ObjectClone(AObject<UI>* object) {
+/* Returns the ASCII Object size. */
+template <typename Size>
+inline Size ObjectSize(const void* object) {
   ASSERT(object);
-  UI* size_ptr = reinterpret_cast<UI*>(object);
-  UI size = (*size_ptr) >> kWordBitCount;
-  uintptr_t *buffer = new uintptr_t[size], *read = buffer,
-            *write = reinterpret_cast<uintptr_t*>(object);
-  for (; size > 0; --size) *write++ = *read++;
-  return *reinterpret_cast<UI*>(buffer);
+  return *reinterpret_cast<Size*>(object);
 }
 
-/* Returns the last byte in the data array. */
-template <typename UI>
-inline char* ObjectEnd(type_t type, char* object) {
-  return object + ObjectSize<UI>(object, type);
+template <typename Size>
+uintptr_t* ObjectNew(Size size, Size size_min) {
+  if (size < size_min) return nullptr;
+
+  if (!ObjectSizeIsValid<Size>(size, size_min)) return nullptr;
+
+  size = AlignUp<8, uint16_t, int16_t>(size);
+  uintptr_t* buffer = new uintptr_t[size >> kWordBitCount];
+  *reinterpret_cast<int16_t*>(buffer) = size;
+  return buffer;
 }
 
-/* Returns the last byte in the data array. */
-template <typename UI, typename T = char*>
-inline T* ObjectEnd(T* object, type_t type) {
-  return object + ObjectSize<UI>(object, type);
+/* Clones the other ASCII Object. */
+template <typename Size = int32_t>
+uintptr_t* ObjectClone(uintptr_t* buffer, Size size) {
+  ASSERT(buffer);
+  uintptr_t* clone = new uintptr_t[size >> kWordBitCount];
+  SocketCopy(clone, size, buffer, size);
+  *reinterpret_cast<Size*>(buffer) = size;
+  return clone;
 }
 
 template <typename T, typename UI = uint, typename SI = int>
@@ -97,6 +130,66 @@ inline SI ObjectCountRound(SI count) {
   SI count_aligned = AlignUpSigned<SI>(count);
 }
 
-}   //< namespace _
+/* A word-aligned ASCII Object with a size that is a positive integer multiple
+of 8.
+ASCII Objects may only use 16-bit, 32-bit, and 64-bit signed integers for their
+size. The minimum and maximum bounds of size of ASCII objects are defined by the
+minimu size required to store the header with minimum item count, and the
+highest positive integer multiple of 8. The fastest way to covert the upper
+bounds is to invert the bits and subtract 7 as follows:
+
+@code
+int16_t upper_bounds_si2 = (~(int16_t)0) - 7;
+int32_t upper_bounds_si4 = (~(int32_t)0) - 7;
+int64_t upper_bounds_si8 = (~(int64_t)0) - 7;
+@endcode
+*/
+template <typename Size>
+class KABUKI Obj {
+ public:
+  /* Constructs a buffer with either stically or dynamically allocated memory
+  based on if buffer is nil. */
+  Obj(Destructor destructor = nullptr)
+      : Buffer(size, buffer), destructor_(destructor) {
+    // Nothing to do here! ({:-)-/==<
+  }
+
+  /* Constructs a buffer with either stically or dynamically allocated memory
+  based on if buffer is nil. */
+  Obj(Size size, Destructor destructor = nullptr) : Buffer(size, buffer) {}
+
+  /* Constructs a buffer with either stically or dynamically allocated memory
+  based on if buffer is nil. */
+  Obj(Size size, uintptr_t* buffer, Destructor destructor = nullptr)
+      : Buffer(size, buffer) {}
+
+  /* Destructor deletes dynamic memory if is_dynamic_ is true. */
+  ~Obj() {
+    if (destructor_) destructor_(ascii_obj_, size_);
+  }
+
+  /* Returns the buffer_. */
+  uintptr_t* GetBuffer() { return ascii_obj_.ascii_obj_; }
+
+  /* Gets the size_. */
+  Size GetSize() { return ObjectSize<Size>(ascii_obj_.GetBuffer()); }
+
+  /* Gets the buffer as a Socket. */
+  Socket GetSocket() { return ObjectSocket<Size>(Object()); }
+
+  /* Doubles the size of the buffer and copyes the given byte_count.
+  @return A positive size of the new buffer upon success and -1 upon failure.
+  @param byte_count The number of bytes to copy after growing the buffer. */
+  Size Grow(Size new_size) {
+    return ObjectGrow<Size>(ascii_obj_.ascii_obj_, new_size);
+  }
+
+  inline CObj& Object() { return ascii_obj_; }
+
+ private:
+  CObj ascii_obj_;  //< ASCII Object header.
+};
+
+}  // namespace _
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
 #endif  //< HEADER_FOR_CRABS_OBJECT

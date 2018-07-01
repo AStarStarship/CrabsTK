@@ -20,6 +20,11 @@
 #define SEAM_MAJOR 0
 #define SEAM_MINOR 2
 
+#include <cstdarg>
+#include <cstdint>
+
+/*
+
 #ifdef WIN32
 #include "targetver.h"
 #define WIN32_LEAN_AND_MEAN  // Exclude rarely-used stuff from Slots headers
@@ -34,7 +39,6 @@
 #include <chrono>
 #include <cmath>
 #include <cstddef>
-#include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -53,4 +57,4 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
-#include <vector>
+#include <vector>*/

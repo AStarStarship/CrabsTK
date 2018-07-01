@@ -55,11 +55,11 @@ typedef enum ScriptError {
 } Error;
 
 /* Returns an array or string pointers for the KabukiError(s). */
-KABUKI const char** ErrorStrings();
+KABUKI const char_t** ErrorStrings();
 
 /* Returns one of the Errors () strings. */
-KABUKI const char* ErrorString(Error error);
+KABUKI const char_t* ErrorString(Error error);
 
-}   //< namespace _
+}  // namespace _
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 #endif  //< HEADER_FOR_CRABS_ERROR

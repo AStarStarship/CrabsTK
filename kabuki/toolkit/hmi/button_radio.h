@@ -42,7 +42,7 @@ class ButtonRadio : public HmiComponent {
   void Hit();
 
   /* Prints this object to a string. */
-  _::Printer& Print(_::Printer& print) const;
+  _::Utf& Print(_::Utf& print) const;
 
  private:
   int index;             //< The index of the radio button.

@@ -49,7 +49,7 @@ class WidgetMidi : public Widget {
 
   int SetDoublePressTime(timestamp_t new_time);
 
-  _::Printer& Print(_::Printer& print);
+  _::Utf& Print(_::Utf& print);
 };
 }       //< namespace _
 }  //< namespace kt

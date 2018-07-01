@@ -68,7 +68,7 @@ class KABUKI MIDIButton : public MidiControl, public Button {
   void PrintRow() const override;
 
   /* Prints this object to a string. */
-  _::Printer& Print(_::Printer& print) const;
+  _::Utf& Print(_::Utf& print) const;
 
  private:
   MidiControl* control_;  //< This Button's MidiControl.

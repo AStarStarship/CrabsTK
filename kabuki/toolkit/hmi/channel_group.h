@@ -43,7 +43,7 @@ class KABUKI ChannelGroup {
   bool RemoveChannel(uint_t index);
 
   /* Prints this object to a string. */
-  _::Printer& Print(_::Printer& print) const;
+  _::Utf& Print(_::Utf& print) const;
 
  private:
   _::Array<const byte*> channels_;  //< List of Script address for the channels.

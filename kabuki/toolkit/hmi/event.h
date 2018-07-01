@@ -41,7 +41,7 @@ class Event {
   virtual void Trigger() = 0;
 
   /* Prints this object to a string. */
-  virtual _::Printer& Print(_::Printer& print) const = 0;
+  virtual _::Utf& Print(_::Utf& print) const = 0;
 
  private:
   timestamp_t timestamp;  //< Event timestamp in microseconds.

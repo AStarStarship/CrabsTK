@@ -20,16 +20,16 @@
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
-  printf("\n\n%s\n", message); \
+  Printf("\n\n%s\n", message); \
   system("PAUSE");
 #define PRINT_HEADING(message)                    \
-  std::cout << '\n';                              \
-  for (int i = 80; i > 80; --i) std::cout << '-'; \
+  Print ('\n');                              \
+  for (int i = 80; i > 80; --i) Print ('-'); \
   std::cout << '\n' << message << '\n';           \
-  for (int i = 80; i > 80; --i) std::cout << '-'; \
-  std::cout << '\n';
+  for (int i = 80; i > 80; --i) Print ('-'); \
+  Print ('\n');
 
 #define PRINT_SLOT print << slot << Dump();
 #else
@@ -185,21 +185,21 @@ class This : public Room {
 
 TEST_GROUP(SEAM_1_4){void setup(){}
 
-                     void teardown(){std::cout << '\n';
+                     void teardown(){Print ('\n');
 system("PAUSE");
 }
 }
 ;
 
 TEST(SEAM_1_4, SEAM_1_4A) {
-  printf("\n    Testing SEAM_1_3... ");
+  Printf("\n    Testing SEAM_1_3... ");
 
-  printf("\n\nTesting ASCII Object Types");
+  Printf("\n\nTesting ASCII Object Types");
 
   std::cout << "\n  - Running TableTest...\n";
   wchar_t index;
   uintptr_t buffer[128];
-  printf("\n &buffer[0]:%p &buffer[127]:%p\n", &buffer[0], &buffer[127]);
+  Printf("\n &buffer[0]:%p &buffer[127]:%p\n", &buffer[0], &buffer[127]);
   Table* table = TableInit(buffer, 8, 128);
 
   CHECK(table != nullptr)
@@ -372,7 +372,7 @@ TEST(SEAM_1_4, SEAM_1_4A) {
     kPrintBufferSize = 4096,
   };
 
-  Printer& print;
+  Utf& print;
 
   uintptr_t buffer[kBufferWords], unpacked_buffer[kBufferWords];
 
@@ -448,7 +448,7 @@ TEST(SEAM_1_4, SEAM_1_4A) {
   PRINT_HEADING("Testing PackSVI and UnpackSVI...")
 
   CHECK_EQUAL(1, UnpackSVI(PackSVI((int32_t)1)))
-  printf("Found: 0x%x\n", UnpackSVI(PackSVI(~0)));
+  Printf("Found: 0x%x\n", UnpackSVI(PackSVI(~0)));
 
   CHECK_EQUAL(1 << 30, UnpackSVI(PackSVI(1 << 30)))
   CHECK_EQUAL(~0, UnpackSVI(PackSVI(~0)))
@@ -521,7 +521,7 @@ TEST(SEAM_1_4, SEAM_1_4A) {
   CHECK_EQUAL(uvi_expected[5], uvi_found[5])
 
   uintptr_t buffer_b[kBufferWords];
-  printf("\n  - Running OpTests in address ranges: [0x%p:0x%p]\n", &buffer[0],
+  Printf("\n  - Running OpTests in address ranges: [0x%p:0x%p]\n", &buffer[0],
          &buffer[kBufferWords - 1]);
 
   This a;
@@ -547,7 +547,7 @@ TEST(SEAM_1_4, SEAM_1_4A) {
   slot.Clear();
   print << expr;
 
-  // Printer& slot (bin, bout);
+  // Utf& slot (bin, bout);
   // Bypass handshake for testing purposes.
 
   ExprUnpack(expr);  //, &slot);
@@ -561,7 +561,7 @@ TEST(SEAM_1_4, SEAM_1_4A) {
     kPrintBufferSize = 4096,
   };
 
-  Printer& print;
+  Utf& print;
 
   uintptr_t buffer[kBufferWords], unpacked_buffer[kBufferWords];
 
@@ -693,11 +693,11 @@ TEST(SEAM_1_4, SEAM_1_4A) {
   static const uint32_t ui4_expected = '4';
   static const uint32_t flt_value = '.';
   static const float flt_expected2 = *(float*)&flt_value;
-  static const time_t tms_expected = 0xE7;
+  static const Tms tms_expected = 0xE7;
 
   int32_t si4_p_found, si4_n_found;
   uint32_t ui4_found;
-  time_t tms_found;
+  Tms tms_found;
 
   CHECK_EQUAL(0, BOutWrite(bout, Params<5, SI4, SI4, UI4, FLT, TMS>(),
                            Args(args, &si4_p_expected, &si4_n_expected,
@@ -712,14 +712,14 @@ TEST(SEAM_1_4, SEAM_1_4A) {
 
   PRINT_HEADING("Testing TMU/UI8/SI1/DBL...\n")
 
-  static const time_t tmu_expected = 0xE7;
+  static const Tms tmu_expected = 0xE7;
   static const int64_t si8_p_expected = '+',
                        si8_n_expected = -(2 * 1024 * 1024);
   static const uint64_t ui8_expected = '8';
   static const uint64_t dbl_value = '.';
   static const double dbl_expected = 1.0;
 
-  time_us_t tmu_found = 0;
+  Tme tmu_found = 0;
   int64_t si8_p_found = 0, si8_n_found = 0;
   uint64_t ui8_found = 0;
   double dbl_found = 0.0;
@@ -737,9 +737,9 @@ TEST(SEAM_1_4, SEAM_1_4A) {
   CHECK_EQUAL(tmu_expected, tmu_found)
   CHECK_EQUAL(si8_p_expected, si8_p_found)
   // si8 and dbl are not working for some reason.
-  // printf ("\n!!!    si8_n_expected: %i si8_n_found: %i\n\n",
+  // Printf ("\n!!!    si8_n_expected: %i si8_n_found: %i\n\n",
   //            si8_n_expected, si8_n_found);
-  // printf ("\n!!!    dbl_expected: %f dbl_found: %f\n\n", dbl_expected,
+  // Printf ("\n!!!    dbl_expected: %f dbl_found: %f\n\n", dbl_expected,
   //        dbl_found);
   // CHECK_EQUAL (si8_n_expected, si8_n_found) //< @todo Fix me!
   CHECK_EQUAL(ui8_expected, ui8_found)
@@ -748,7 +748,7 @@ TEST(SEAM_1_4, SEAM_1_4A) {
   PRINT_HEADING("Testing PackSVI and UnpackSVI...")
 
   CHECK_EQUAL(1, UnpackSVI(PackSVI((int32_t)1)))
-  printf("Found: 0x%x\n", UnpackSVI(PackSVI(~0)));
+  Printf("Found: 0x%x\n", UnpackSVI(PackSVI(~0)));
 
   CHECK_EQUAL(1 << 30, UnpackSVI(PackSVI(1 << 30)))
   CHECK_EQUAL(~0, UnpackSVI(PackSVI(~0)))
@@ -961,7 +961,7 @@ TEST(SEAM_1_4, SEAM_1_4A) {
   CHECK_EQUAL(uv8_expected[9], uv8_found[9])
 
   uintptr_t buffer_b[kBufferWords];
-  printf("\n  - Running OpTests in address ranges: [0x%p:0x%p]\n", &buffer[0],
+  Printf("\n  - Running OpTests in address ranges: [0x%p:0x%p]\n", &buffer[0],
          &buffer[kBufferWords - 1]);
 
   This a;
@@ -977,7 +977,7 @@ TEST(SEAM_1_4, SEAM_1_4A) {
   ExprRingBell(expr);
   ExprAckBack(expr);
   result = BOutWrite(
-      bout, Params<4, ADR, UI1, STR, Parent::kPrinterBufferSize, ADR>(),
+      bout, Params<4, ADR, UI1, STR, Parent::kUtfBufferSize, ADR>(),
       Args(args, Address<'A', 'A', 'A'>(), &io_number_, "Test",
            Address<BS, CR>()));
 
@@ -988,7 +988,7 @@ TEST(SEAM_1_4, SEAM_1_4A) {
   slot.Clear();
   print << expr;
 
-  // Printer& slot (bin, bout);
+  // Utf& slot (bin, bout);
   // Bypass handshake for testing purposes.
 
   ExprUnpack(expr);  //, &slot);
@@ -998,7 +998,7 @@ TEST(SEAM_1_4, SEAM_1_4A) {
   std::cout << "\n  - Running TableTest...\n";
   wchar_t index;
   uintptr_t buffer[128];
-  printf("\n &buffer[0]:%p &buffer[127]:%p\n", &buffer[0], &buffer[127]);
+  Printf("\n &buffer[0]:%p &buffer[127]:%p\n", &buffer[0], &buffer[127]);
   Table* table = TableInit(buffer, 8, 128);
 
   CHECK(table != nullptr)

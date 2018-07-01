@@ -13,17 +13,18 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#ifndef HEADER_FOR_CRABS_PRINT_UTF8
-#define HEADER_FOR_CRABS_PRINT_UTF8
+#ifndef HEADER_FOR_CRABS_UTF8
+#define HEADER_FOR_CRABS_UTF8
 // Dependencies:
-#include "config.h"
+#include "ascii_data_types.h"
+#include "clock.h"
 // End dependencies.
 #if USING_UTF8
 
 namespace _ {
 
 /* UTF-8 printing utilities.
-@ingroup Printer
+@ingroup Utf8
 */
 
 /* Checks if the given character is whitespace.
@@ -31,37 +32,35 @@ namespace _ {
 KABUKI bool IsWhitespace(char character);
 
 /* Converts the given value to a printable char if it's non-printable. */
-KABUKI char Char(char value);
+KABUKI char PrintableChar(char value);
 
 /* Scrolls over to the next double quote mark.
 @warning This function is only safe to use on ROM strings with a nil-term
 char. */
-KABUKI const char* TextEnd(const char* text, char delimiter = 0);
+KABUKI const char* TextEnd(const char* text);
 
 /* Gets the length of the given char.
 @return  Returns -1 if the text char is nil.
 @warning This function is only safe to use on ROM strings with a nil-term
 char. */
-KABUKI int TextLength(const char* text, char delimiter = 0);
+KABUKI int TextLength(const char* text);
 
-/* Clones the given string with given NON-ZERO delimiter.
+/* Clones the given string.
 @param  A nil-terminated string in ROM.
 @return Returns a new copy you must delete. */
-KABUKI char* TextClone(const char* text, char delimiter = 0);
+KABUKI char* TextClone(const char* text);
 
 /* Returns a pointer to the char at the end of the line. */
-KABUKI const char* TextLineEnd(const char* text, int column_count,
-                               char delimiter = 0);
+KABUKI const char* TextLineEnd(const char* text, int column_count);
 
 /* Returns a pointer to the char at the end of the row. */
 KABUKI const char* TextLineEnd(const char* text, const char* text_end,
-                               int column_count, char delimiter = 0);
+                               int column_count);
 
 /* Returns the pointer to the next char in the char that is not an ASCII
 number.
 @return A pointer to the next non-number in the text char. */
-KABUKI const char* TextNumberEnd(const char* text, const char* text_end,
-                                 char delimiter = 0);
+KABUKI const char* TextNumberEnd(const char* text, const char* text_end);
 
 /* Returns the pointer to the next char in the char that is not an ASCII
 number.
@@ -81,21 +80,18 @@ KABUKI const char* TextSkipSpaces(const char* text);
 KABUKI const char* TextSkipSpaces(const char* text, const char* text_end);
 
 /* Compares the source and query char as nil-terminated strings. */
-KABUKI const char* TextEquals(const char* text_a, const char* text_b,
-                              char delimiter = 0);
+KABUKI const char* TextEquals(const char* text_a, const char* text_b);
 
 /* Compares the source and query char as nil-terminated strings. */
 KABUKI const char* TextEquals(const char* text, const char* text_end,
-                              const char* query, char delimiter = 0);
+                              const char* query);
 
 /* Searches the given char for the given char.
 @param  text      The char to search.
 @param  query      The char to search for.
-@param  delimiter The delimiter for the text, Example: '\"'
 @return Returns nil if the parsing failed and a pointer to the first char
 after the end of the text upon success. */
-KABUKI const char* TextFind(const char* text, const char* query,
-                            char delimiter = 0);
+KABUKI const char* TextFind(const char* text, const char* query);
 
 /* Printrs the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -308,15 +304,7 @@ upon success.
 @param begin  The beginning address of the buffer.
 @param end    The end address of the buffer.
 @param string The potentially unsafe string to write. */
-KABUKI char* PrintHex(char* begin, char* end, const char* string);
-
-/* Writes the give char to the given buffer in hex form.
-@return Returns nil upon buffer overflow and a pointer to the nil-term char
-upon success.
-@param begin The beginning address of the buffer.
-@param end The end address of the buffer.
-@param value The value to print. */
-KABUKI char* PrintHex(char* begin, char* end, uint8_t value);
+KABUKI char* PrintHex(char* begin, char* end, const void* pointer);
 
 /* Writes the give char to the given buffer in hex form.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -397,14 +385,6 @@ upon success.
 @param end    The end address of the buffer.
 @param pointer The pointer to print to hex. */
 KABUKI char* PrintBinary(char* begin, char* end, const void* pointer);
-
-/* Writes the give char to the given buffer in binary form.
-@return Returns nil upon buffer overflow and a pointer to the nil-term char
-upon success.
-@param begin     Beginning address of the buffer.
-@param end       The end address of the buffer.
-@param character The value to write. */
-KABUKI char* PrintBinary(char* begin, char* end, char character);
 
 /* Writes the give char to the given buffer in binary form.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -490,7 +470,7 @@ KABUKI char* PrintBinary(char* begin, char* end, double value);
 KABUKI char* PrintMemory(char* begin, char* end, const void* start,
                          size_t size);
 
-/* Prints out the contents of the address to the printer buffer.
+/* Prints out the contents of the address to the utf buffer.
 @return Null upon failure or a pointer to the byte after the last
 byte written.
 @param begin The beginning of the write buffer.
@@ -499,18 +479,45 @@ byte written.
 @param stop  The end of the read buffer. */
 KABUKI char* PrintMemory(char* begin, char* end, const void* start,
                          const void* stop);
+
+/* Prints a line of the given column_count.
+@return Returns a pointer to the next char after the end of the read number or
+nil upon failure.
+@param begin The beginning of the write buffer.
+@param end   The end of the write buffer.
+@param token The token to print.
+@param column_count The number of tokens to print. */
+KABUKI char* PrintLine(char* cursor, char* end, char token, int column_count);
+
+/* Prints a line of the given column_count.
+@return Returns a pointer to the next char after the end of the read number or
+nil upon failure.
+@param begin  The beginning of the write buffer.
+@param end    The end of the write buffer.
+@param string The string to print.
+@param column_count The number of columns. */
+KABUKI char* PrintLineString(char* cursor, char* end, const char* string,
+                             int column_count);
+
 /* Converts the given string to a 8-bit signed integer.
+@return Null upon failure or a pointer to the byte after the last
+byte written.
 @param  text A nil-terminated string in ROM.
-@param  result  The result of the conversion.
-@return Returns a pointer to the next char after the end
-of the read number or nil upon failure. */
+@param  result  The result of the conversion. */
+KABUKI const char* TextScan(const char* begin, int8_t& result);
+
+/* Converts the given string to a 8-bit signed integer.
+@return Null upon failure or a pointer to the byte after the last
+byte written.
+@param  text A nil-terminated string in ROM.
+@param  result  The result of the conversion. */
 KABUKI const char* TextScan(const char* text, int8_t& result);
 
 /* Converts the given string to a 8-bit unsigned integer.
+@return Null upon failure or a pointer to the byte after the last
+byte written.
 @param  text A nil-terminated string in ROM.
-@param  result  The result of the conversion.
-@return Returns a pointer to the next char after the end
-of the read number or nil upon failure. */
+@param  result  The result of the conversion. */
 KABUKI const char* TextScan(const char* text, uint8_t& result);
 
 /* Converts the given string to a 16-bit signed integer.
@@ -569,160 +576,125 @@ KABUKI const char* TextScan(const char* text, float& result);
 of the read number or nil upon failure. */
 KABUKI const char* TextScan(const char* text, double& result);
 
-/* Reads a time or time delta from a a char starting with an '@' sign.
-@brief
-@code
-@4        (This is 4AM)
-@4PM      (No space required)
-@4:20P    (Or M)
-@4:20 PM
-@16:20
-@4:20 am
-@4:20a.m.
-@4:20:00
-@4:20:00AM
-@16:20:00
-@endcode
-
-@param input  The char to parse.
-@param hour   The location to write the number of hours to.
-@param minute The location to write the number of minutes to.
-@param Second The location to write the number of seconds to. */
-KABUKI const char* TextScanTime(const char* string, int& hour, int& minute,
-                                int& second);
-
-/* Converts a keyboard input to char and deletes the char.
-@return Nil upon buffer failure or char directly after the end of the
-timestamp upon success.
- */
-KABUKI const char* TextScanTime(const char* string, TimeSeconds& time);
-
-/* Converts a keyboard input to a time_t. */
-KABUKI const char* TextScanTime(const char* string, time_t& result);
-
-/* ASCII printing utilities
-@ingroup Printer
-*/
-
 /* Utility class for printing strings.
 This class only stores the end of buffer pointer and a pointer to the write
 begin. It is up the user to store start of buffer pointer and if they would
 like to replace the begin with the beginning of buffer pointer when they
 are done printing.
 */
-struct KABUKI Printer1 {
+struct KABUKI Utf8 {
   char *begin,  //< Write begin pointer.
       *end;     //< End of buffer pointer.
 
-  /* Initializes the Printer& from the given buffer pointers.
+  /* Initializes the Utf& from the given buffer pointers.
   @param begin The beginning of the buffer.
   @param end   The end of the buffer. */
-  Printer1(char* begin, size_t size);
+  Utf8(char* begin, size_t size);
 
-  /* Initializes the Printer& from the given buffer pointers.
+  /* Initializes the Utf& from the given buffer pointers.
   @param begin The beginning of the buffer.
   @param end   The end of the buffer. */
-  Printer1(char* begin, char* end);
+  Utf8(char* begin, char* end);
 
   /* Clones the other print. */
-  Printer1(const Printer1& other);
+  Utf8(const Utf8& other);
 
   /* Sets the begin pointer to the new_pointer. */
-  inline Printer1& Set(char* new_pointer);
+  inline Utf8& Set(char* new_pointer);
 
   /* Prints the given value as hex. */
-  inline Printer1& Hex(int8_t value);
+  inline Utf8& Hex(int8_t value);
 
   /* Prints the given value as hex. */
-  inline Printer1& Hex(uint8_t value);
+  inline Utf8& Hex(uint8_t value);
 
   /* Prints the given value as hex. */
-  inline Printer1& Hex(int16_t value);
+  inline Utf8& Hex(int16_t value);
 
   /* Prints the given value as hex. */
-  inline Printer1& Hex(uint16_t value);
+  inline Utf8& Hex(uint16_t value);
 
   /* Prints the given value as hex. */
-  inline Printer1& Hex(int32_t value);
+  inline Utf8& Hex(int32_t value);
 
   /* Prints the given value as hex. */
-  inline Printer1& Hex(uint32_t value);
+  inline Utf8& Hex(uint32_t value);
 
   /* Prints the given value as hex. */
-  inline Printer1& Hex(int64_t value);
+  inline Utf8& Hex(int64_t value);
 
   /* Prints the given value as hex. */
-  inline Printer1& Hex(uint64_t value);
+  inline Utf8& Hex(uint64_t value);
 
   /* Prints the given value as hex. */
-  inline Printer1& Hex(float value);
+  inline Utf8& Hex(float value);
 
   /* Prints the given value as hex. */
-  inline Printer1& Hex(double value);
+  inline Utf8& Hex(double value);
 
   /* Prints the given pointer as hex. */
-  inline Printer1& Hex(const void* pointer);
+  inline Utf8& Hex(const void* pointer);
 
   /* Prints the given value as binary. */
-  inline Printer1& Binary(int8_t value);
+  inline Utf8& Binary(int8_t value);
 
   /* Prints the given value as binary. */
-  inline Printer1& Binary(uint8_t value);
+  inline Utf8& Binary(uint8_t value);
 
   /* Prints the given value as binary. */
-  inline Printer1& Binary(int16_t value);
+  inline Utf8& Binary(int16_t value);
 
   /* Prints the given value as binary. */
-  inline Printer1& Binary(uint16_t value);
+  inline Utf8& Binary(uint16_t value);
 
   /* Prints the given value as binary. */
-  inline Printer1& Binary(int32_t value);
+  inline Utf8& Binary(int32_t value);
 
   /* Prints the given value as binary. */
-  inline Printer1& Binary(uint32_t value);
+  inline Utf8& Binary(uint32_t value);
 
   /* Prints the given value as binary. */
-  inline Printer1& Binary(int64_t value);
+  inline Utf8& Binary(int64_t value);
 
   /* Prints the given value as binary. */
-  inline Printer1& Binary(uint64_t value);
+  inline Utf8& Binary(uint64_t value);
 
   /* Prints the given value as binary. */
-  inline Printer1& Binary(float value);
+  inline Utf8& Binary(float value);
 
   /* Prints the given value as binary. */
-  inline Printer1& Binary(double value);
+  inline Utf8& Binary(double value);
 
   /* Prints the given pointer as binary. */
-  inline Printer1& Binary(const void* pointer);
+  inline Utf8& Binary(const void* pointer);
 };
 
 /* Utility class for printing numbers. */
-class Text1 {
+class Utf8Text {
  public:
   /* Default constructor does nothing. */
-  Text1();
+  Utf8Text();
 
   /* Prints the value to the text buffer. */
-  Text1(char character);
+  Utf8Text(char character);
 
   /* Prints the value to the text buffer. */
-  Text1(int32_t value);
+  Utf8Text(int32_t value);
 
   /* Prints the value to the text buffer. */
-  Text1(uint32_t value);
+  Utf8Text(uint32_t value);
 
   /* Prints the value to the text buffer. */
-  Text1(int64_t value);
+  Utf8Text(int64_t value);
 
   /* Prints the value to the text buffer. */
-  Text1(uint64_t value);
+  Utf8Text(uint64_t value);
 
   /* Prints the value to the text buffer. */
-  Text1(float value);
+  Utf8Text(float value);
 
   /* Prints the value to the text buffer. */
-  Text1(double value);
+  Utf8Text(double value);
 
   /* Gets the number string. */
   const char* GetString();
@@ -734,28 +706,28 @@ class Text1 {
 };
 
 /* Utility class for printing hex with operator<<. */
-class Center1 {
+class Utf8Center {
  public:
   /* Prints the value to the text buffer. */
-  Center1(const char* string, int column_count);
+  Utf8Center(const char* string, int column_count);
 
   /* Prints the value to the text buffer. */
-  Center1(int32_t value, int column_count);
+  Utf8Center(int32_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Center1(uint32_t value, int column_count);
+  Utf8Center(uint32_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Center1(int64_t value, int column_count);
+  Utf8Center(int64_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Center1(uint64_t value, int column_count);
+  Utf8Center(uint64_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Center1(float value, int column_count);
+  Utf8Center(float value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Center1(double value, int column_count);
+  Utf8Center(double value, int column_count);
 
   /* Gets the number string. */
   const char* GetString();
@@ -765,33 +737,33 @@ class Center1 {
 
  private:
   const char* string;  //< Pointer to the string.
-  Text1 number;        //< Pointer to a pointer to print.
+  Utf8Text number;     //< Pointer to a pointer to print.
   int column_count;    //< Number of columns to center.
 };
 
 /* Utility class for printing hex with operator<<. */
-class Right1 {
+class Utf8Right {
  public:
   /* Prints the value to the text buffer. */
-  Right1(const char* string, int column_count);
+  Utf8Right(const char* string, int column_count);
 
   /* Prints the value to the text buffer. */
-  Right1(int32_t value, int column_count);
+  Utf8Right(int32_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Right1(uint32_t value, int column_count);
+  Utf8Right(uint32_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Right1(int64_t value, int column_count);
+  Utf8Right(int64_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Right1(uint64_t value, int column_count);
+  Utf8Right(uint64_t value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Right1(float value, int column_count);
+  Utf8Right(float value, int column_count);
 
   /* Prints the value to the text buffer. */
-  Right1(double value, int column_count);
+  Utf8Right(double value, int column_count);
 
   /* Gets the number string. */
   const char* GetString();
@@ -801,92 +773,125 @@ class Right1 {
 
  private:
   const char* string;  //< Pointer to the string.
-  Text1 number;        //< Pointer to a pointer to print.
+  Utf8Text number;     //< Pointer to a pointer to print.
   int column_count;    //< Number of columns to center.
+};
+
+/* Utility class for printing a single char token line with operator<<. */
+struct KABUKI Utf8Line {
+  char token;        //< Character to print.
+  int column_count;  //< Column count.
+
+  /* Constructor. */
+  Utf8Line(char token, int column_count);
+};
+
+/* Utility class for printing a string line with operator<<. */
+struct KABUKI Utf8LineString {
+  const char* string;  //< Character to print.
+  int column_count;    //< Column count.
+
+  /* Constructor. */
+  Utf8LineString(const char* string, int column_count);
+};
+
+class KABUKI Utf8String {
+ public:
+  Utf8String();
+
+  ~Utf8String();
+
+ private:
 };
 
 }  // namespace _
 
 /* Writes a nil-terminated UTF-8 or ASCII string to the print.
-@param  printer The printer.
+@param  utf The utf.
 @param  value   The value to print.
-@return The printer. */
-KABUKI _::Printer1& operator<<(_::Printer1& printer, const char* string);
+@return The utf. */
+KABUKI _::Utf8& operator<<(_::Utf8& utf, const char* string);
 
 /* Writes the given value to the print.
-@param  printer The printer.
+@param  utf The utf.
 @param  value   The value to print.
-@return The printer. */
-KABUKI _::Printer1& operator<<(_::Printer1& printer, char value);
+@return The utf. */
+KABUKI _::Utf8& operator<<(_::Utf8& utf, char value);
 
 /* Writes the given value to the print.
-@param  printer The printer.
+@param  utf The utf.
 @param  value The value to write to the print.
-@return The printer. */
-KABUKI _::Printer1& operator<<(_::Printer1& printer, uint8_t value);
+@return The utf. */
+KABUKI _::Utf8& operator<<(_::Utf8& utf, uint8_t value);
 
 /* Writes the given value to the print.
-@param  printer The printer.
+@param  utf The utf.
 @param  value The value to write to the print.
-@return The printer. */
-KABUKI _::Printer1& operator<<(_::Printer1& printer, int16_t value);
+@return The utf. */
+KABUKI _::Utf8& operator<<(_::Utf8& utf, int16_t value);
 
 /* Writes the given value to the print.
-@param  printer The printer.
+@param  utf The utf.
 @param  value The value to write to the print.
-@return The printer. */
-KABUKI _::Printer1& operator<<(_::Printer1& printer, uint16_t value);
+@return The utf. */
+KABUKI _::Utf8& operator<<(_::Utf8& utf, uint16_t value);
 
 /* Writes the given value to the print.
-@return The printer.
-@param  printer The printer.
+@return The utf.
+@param  utf The utf.
 @param  value The value to write to the print. */
-KABUKI _::Printer1& operator<<(_::Printer1& printer, int32_t value);
+KABUKI _::Utf8& operator<<(_::Utf8& utf, int32_t value);
 
 /* Writes the given value to the print.
-@return The printer.
-@param  printer The printer.
+@return The utf.
+@param  utf The utf.
 @param  value The value to write to the print. */
-KABUKI _::Printer1& operator<<(_::Printer1& printer, uint32_t value);
+KABUKI _::Utf8& operator<<(_::Utf8& utf, uint32_t value);
 
 /* Writes the given value to the print.
-@return The printer.
-@param  printer The printer.
+@return The utf.
+@param  utf The utf.
 @param  value The value to write to the print. */
-KABUKI _::Printer1& operator<<(_::Printer1& printer, int64_t value);
+KABUKI _::Utf8& operator<<(_::Utf8& utf, int64_t value);
 
 /* Writes the given value to the print.
-@return The printer.
+@return The utf.
 @desc
-@param  printer The printer.
+@param  utf The utf.
 @param  value The value to write to the print. */
-KABUKI _::Printer1& operator<<(_::Printer1& printer, uint64_t value);
+KABUKI _::Utf8& operator<<(_::Utf8& utf, uint64_t value);
 
 /* Writes the given value to the print.
-@return The printer.
+@return The utf.
 @desc
-@param  printer The printer.
+@param  utf The utf.
 @param  value The value to write to the print. */
-KABUKI _::Printer1& operator<<(_::Printer1& printer, float value);
+KABUKI _::Utf8& operator<<(_::Utf8& utf, float value);
 
 /* Writes the given value to the print.
-@return The printer.
-@param  printer The printer.
+@return The utf.
+@param  utf The utf.
 @param  value The value to write to the print. */
-KABUKI _::Printer1& operator<<(_::Printer1& printer, double value);
+KABUKI _::Utf8& operator<<(_::Utf8& utf, double value);
 
 /* Writes the given value to the print.
-@return The printer.
-@param  printer The printer.
-@param  value The value to write to the print justified center. */
-KABUKI _::Printer1& operator<<(_::Printer1& printer, _::Center1 item);
+@return The utf.
+@param  utf The utf.
+@param  item The item to write to print. */
+KABUKI _::Utf8& operator<<(_::Utf8& utf, _::Utf8Center item);
 
 /* Writes the given value to the print jusified right.
-@return The printer.
-@param  printer The printer.
-@param  value The value to write to the print. */
-KABUKI _::Printer1& operator<<(_::Printer1& printer, _::Right1 item);
+@return The utf.
+@param  utf The utf.
+@param  item The item to print. */
+KABUKI _::Utf8& operator<<(_::Utf8& utf, _::Utf8Right item);
+
+/* Prints a line of the given column_count to the utf. */
+KABUKI _::Utf8& operator<<(_::Utf8& utf, _::Utf8Line line);
+
+/* Prints a line string of the given column_count to the utf. */
+KABUKI _::Utf8& operator<<(_::Utf8& utf, _::Utf8LineString line);
 
 #endif  //< #if USING_UTF8
-#endif  //< #if HEADER_FOR_CRABS_PRINT_UTF8
+#endif  //< #if HEADER_FOR_CRABS_UTF8
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2

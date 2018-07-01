@@ -17,16 +17,16 @@ specific language governing permissions and limitations under the License. */
 #ifndef HEADER_FOR_CRABS_TABLE
 #define HEADER_FOR_CRABS_TABLE
 // Dependencies:
-#include "memory.h"
+#include "socket.h"
 #include "operand.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 3
 #ifndef PRINTF
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #define PRINT_HEADING                              \
   {                                                \
-    std::cout << '\n';                             \
+    Print ('\n');                             \
     for (int i = 80; i > 0; --i) std::cout << '-' \
   }
 #define PRINT_TYPE(type, value) Console<>().Out() << TypeValue(type, value);
@@ -40,7 +40,7 @@ specific language governing permissions and limitations under the License. */
 
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #define PRINT_HEADING(heading)
 #define PRINT_TYPE(type, value)
 #define WIPE(buffer, size)
@@ -551,10 +551,10 @@ KABUKI byte TableFind(const Table<UI, SI>* table, const char* key) {
   return kInvalidIndex;
 }
 
-#if USING_PRINTER
+#if CRABS_UTF
 /* Prints this object out to the console. */
 template <typename UI, typename SI>
-Printer1& TablePrint(Printer1& print, Table<UI, SI>* table) {
+Utf8& TablePrint(Utf8& print, Table<UI, SI>* table) {
   ASSERT(table)
   SI count = table->count, count_max = table->count_max, collision_index, temp;
   UI size = table->size, size_pile = table->size_pile;

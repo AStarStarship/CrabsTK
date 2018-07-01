@@ -16,9 +16,9 @@
 #include <stdafx.h>
 #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
 #if SEAM_MAJOR == 2 && SEAM_MINOR == 2
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
-  printf("\n\n%s\n", message); \
+  Printf("\n\n%s\n", message); \
   system("PAUSE");
 #else
 #define PRINTF(x, ...)
@@ -60,15 +60,15 @@ bool ChannelGroup::RemoveChannel(uint_t index) {
 
 void ChannelGroup::Print() const {
   size_t l_size = channels_.size();
-  printf("ChannelGroup: size=%u\n", l_size);
+  Printf("ChannelGroup: size=%u\n", l_size);
 
   for (size_t i = 0; i < l_size; ++i) {
-    printf("%9u: ");
+    Printf("%9u: ");
     const byte* ch = channels_[i];
     char c;
     do {
       c = *ch;
-      printf("%u ", c);
+      Printf("%u ", c);
       ++ch;
     } while (c != 0);
     PrintNL();

@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #define HEADER_FOR_CRABS_BSQ
 // Dependencies:
 #include "utf8.h"
-#include "type.h"
+#include "ascii_data_types.h"
 // End dependencies.
 
 namespace _ {
@@ -144,10 +144,10 @@ inline const uint_t* Params() {
 }
 
 /* Prints out the BSQ parameters. */
-KABUKI Printer1& PrintBsq(Printer1& printer, const uint_t* params);
+KABUKI Utf8& PrintBsq(Utf8& printer, const uint_t* params);
 
 /*  Prints out the parameters. */
-// KABUKI Printer& PrintBsq (const uint_t* bsq, Printer& print);
+// KABUKI Utf& PrintBsq (const uint_t* bsq, Utf& print);
 
 /*< Returns the requested parameter number. */
 KABUKI uint_t BsqParamNumber(const uint_t* bsq, int param_number);
@@ -155,7 +155,7 @@ KABUKI uint_t BsqParamNumber(const uint_t* bsq, int param_number);
 }   //< namespace _
 
 /*  Prints out the parameters. */
-inline _::Printer1& operator<<(_::Printer1& printer, _::Bsq bsq) {
+inline _::Utf8& operator<<(_::Utf8& printer, _::Bsq bsq) {
   return _::PrintBsq(printer, bsq.params);
 }
 

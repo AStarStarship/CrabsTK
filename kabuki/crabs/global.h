@@ -29,9 +29,11 @@ specific language governing permissions and limitations under the License. */
 #endif
 
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#include "assert.h"
 #include "clock.h"
+#include "console.h"
 #include "hex.h"
-#include "memory.h"
+#include "socket.h"
 #include "utf.h"
 #endif
 

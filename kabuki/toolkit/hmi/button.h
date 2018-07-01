@@ -119,7 +119,7 @@ doublePressTime = DefaultDoublePressTime);
     virtual int GetMaxWordValue() const = 0;
     /*< gets the max value of a Parameter<int> word. */
 
-    virtual _::Printer & Print(_::Printer & print) const = 0;
+    virtual _::Utf & Print(_::Utf & print) const = 0;
     /*< Prints this object to the stdout. */
   };
 

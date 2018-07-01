@@ -21,30 +21,34 @@
 #include "test_seam_0.h"
 
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 2
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PRINT(item) Print(item)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
-  printf("\n\n%s\n", message); \
+  Printf("\n\n%s\n", message); \
   system("PAUSE");
-#define PRINT_HEADING(message)                    \
-  std::cout << '\n';                              \
-  for (int i = 80; i > 80; --i) std::cout << '-'; \
-  std::cout << '\n' << message;                   \
-  for (int i = 80; i > 80; --i) std::cout << '-'
-#define PRINT_LINE   \
-  std::cout << '\n'; \
-  for (int i = 80; i > 0; --i) std::cout << '-'
+#define PRINT_HEADING(message)              \
+  Print('\n');                              \
+  for (int i = 80; i > 80; --i) Print('-'); \
+  Print('\n');                              \
+  Printf(message);                          \
+  Print('\n');                              \
+  for (int i = 80; i > 80; --i) Print('-')
+#define PRINT_LINE(c) \
+  Print('\n');        \
+  for (int i = 80; i > 0; --i) Print(c);
 #else
+#define PRINT(item)
 #define PRINTF(x, ...)
 #define PRINT_PAUSE(message)
 #define PRINT_HEADING(c)
-#define PRINT_LINE
+#define PRINT_LINE(c)
 #endif
 
 using namespace _;
 
 TEST_GROUP(SEAM_1_2){void setup(){}
 
-                     void teardown(){std::cout << '\n';
+                     void teardown(){Print('\n');
 system("PAUSE");
 }
 }
@@ -53,7 +57,7 @@ system("PAUSE");
 TEST(SEAM_1_2, SEAM_1_2A) {
   PRINT_HEADING("Testing SEAM_1_2A...");
   PRINTF("\n\nTesting Text...");
-
+#if CRABS_UTF
   enum {
     kCompareStringsCount = 5,
     kSize = 2048,
@@ -88,7 +92,7 @@ TEST(SEAM_1_2, SEAM_1_2A) {
   const char* end;
   char buffer[kSize + 1], buffer_b[kSize + 1];
 
-  Printer1 print(buffer, kSize);
+  Utf8 utf(buffer, kSize);
 
   for (int i = 0; i < kCompareStringsCount; ++i) {
     end = Print(buffer, buffer + kSize, test_strings[i][0]);
@@ -100,10 +104,10 @@ TEST(SEAM_1_2, SEAM_1_2A) {
 
   static const char kTesting123[] = "Testing 1, 2, 3\0";
 
-  PRINT_HEADING("    Testing Printer...");
+  PRINT_HEADING("    Testing Utf...");
   PRINTF("    Expecting \"%s\"...", kTesting123);
 
-  print.Set(buffer) << "Testing " << 1 << ", " << 2 << ", " << 3;
+  utf.Set(buffer) << "Testing " << 1 << ", " << 2 << ", " << 3;
 
   STRCMP_EQUAL(kTesting123, buffer);
 
@@ -134,16 +138,15 @@ TEST(SEAM_1_2, SEAM_1_2A) {
   CHECK(!TextEquals(kCompareStrings[0], kCompareStrings[1]));
   CHECK(!TextEquals(kCompareStrings[0], kCompareStrings[3]));
   CHECK(TextEquals(kCompareStrings[0], kCompareStrings[0]));
-  CHECK(!TextEquals(kCompareStrings[2], kCompareStrings[3], '@'));
-  CHECK(TextEquals(kCompareStrings[2], kCompareStrings[2], '@'));
+  CHECK(!TextEquals(kCompareStrings[2], kCompareStrings[3]));
+  CHECK(TextEquals(kCompareStrings[2], kCompareStrings[2]));
 
   CHECK_EQUAL(9, TextLength("123456789"));
-  CHECK_EQUAL(9, TextLength("123456789 ", ' '));
 
   CHECK(TextFind(kTestingString, "one"));
   CHECK(TextFind(kTestingString, "three."));
 
-  PRINT_HEADING('-');
+  PRINT('-');
   PRINTF("\n\n    Testing PrintRight...");
 
   CHECK(PrintRight(buffer, buffer + kSize, kTestingString, 28));
@@ -170,35 +173,33 @@ TEST(SEAM_1_2, SEAM_1_2A) {
   for (int i = 0; i < 4; ++i)
     PRINTF("\n    %i.)\"%s\"", i, kStringsCentered[i]);
 
-  print.Set(buffer) << Center1(kStringNumbers, 10);
+  utf.Set(buffer) << Center(kStringNumbers, 10);
   STRCMP_EQUAL(kStringNumbers, buffer);
 
-  print.Set(buffer) << Center(kStringNumbers, 11);
+  utf.Set(buffer) << Center(kStringNumbers, 11);
   STRCMP_EQUAL(kStringsCentered[0], buffer);
 
-  print.Set(buffer) << Center(kStringNumbers, 12);
+  utf.Set(buffer) << Center(kStringNumbers, 12);
   STRCMP_EQUAL(kStringsCentered[1], buffer);
 
-  print.Set(buffer) << Center(kStringNumbers, 13);
+  utf.Set(buffer) << Center(kStringNumbers, 13);
   STRCMP_EQUAL(kStringsCentered[2], buffer);
 
-  print.Set(buffer) << Center(kStringNumbers, 6);
+  utf.Set(buffer) << Center(kStringNumbers, 6);
   STRCMP_EQUAL(kStringsCentered[3], buffer);
 
-  PRINT_HEADING('-');
+  PRINT_LINE('-');
   PRINTF("\n\n Testing PrintMemory (void*, int size)...");
 
-  for (int i = 1; i <= kSize; ++i) {
-    buffer_b[i - 1] = '0' + i % 10;
-  }
+  for (int i = 1; i <= kSize; ++i) buffer_b[i - 1] = '0' + i % 10;
   buffer_b[kSize] = 0;
   CHECK(PrintMemory(buffer, buffer + kSize, buffer_b, buffer_b + 160));
   PRINTF("\n    Printed:\n%s", buffer);
 
-  PRINT_HEADING('-');
+  PRINT_LINE('-');
   PRINTF("\n\n    Testing TextScanTime...");
 
-  time_t t, t_found;
+  Tms t, t_found;
   const char* result;
 
   // @note The following dates must be the current day to work right in order
@@ -227,32 +228,32 @@ TEST(SEAM_1_2, SEAM_1_2A) {
   for (int i = 0; i < 18; ++i) {
     PRINT_LINE('-');
     PRINTF("\n    %i", i);
-    time_t t = 0;
-    result = TextScanTime(t, strings[i]);
+    Tms t = 0;
+    result = TextScanTime(strings[i], t);
     // CHECK (!ClockCompare (t, 2018, 8, 9, 0, 0, 0))
   }
 
   PRINTF("\n\n    Testing more valid input...\n");
 
-  t = ClockTime(8, 9, 17, 4, 20);
-  PrintClock(t, buffer, buffer + kSize);
-  result = TextScanTime(t_found, buffer);
+  t = ClockTimeTMS(8, 9, 17, 4, 20);
+  Print(buffer, buffer + kSize, t);
+  result = TextScanTime(buffer, t_found);
   CHECK(ClockCompare(t_found, t))
 
-  t = ClockTime(2020, 4, 20, 4, 20);
-  PrintClock(t, buffer, buffer + kSize);
-  result = TextScanTime(t_found, buffer);
+  t = ClockTimeTMS(2020, 4, 20, 4, 20);
+  Print(buffer, buffer + kSize, t);
+  result = TextScanTime(buffer, t_found);
   CHECK(ClockCompare(t, t_found))
 
-  t = ClockTime(1947, 12, 7, 23, 5, 7);
-  PrintClock(t, buffer, buffer + kSize);
-  result = TextScanTime(t_found, buffer);
+  t = ClockTimeTMS(1947, 12, 7, 23, 5, 7);
+  Print(buffer, buffer + kSize, t);
+  result = TextScanTime(buffer, t_found);
   CHECK(ClockCompare(t, t_found));
 
   PRINT_HEADING("\nTesting invalid input...\n");
-  TextScanTime(t, "cat");
+  TextScanTime("cat", t);
 
-  TextScanTime(t, "2017-30-40");
+  TextScanTime("2017-30-40", t);
 
   PRINTF("\nDone testing date parsing utils! :-)\n");
 
@@ -269,15 +270,15 @@ TEST(SEAM_1_2, SEAM_1_2A) {
 
   for (int i = 0; i < kTestCharsOffsetCount; ++i) {
     for (int j = 0; j < kTestCharsCount; ++j) test_chars[j] = (char)(j % 256);
-    char* result = MemoryCopy(test_chars_result + i, kTestCharsCount,
+    char* result = SocketCopy(test_chars_result + i, kTestCharsCount,
                               test_chars, kTestCharsCount);
     CHECK(result);
-    CHECK(!MemoryCompare(test_chars + i, kTestCharsCount, test_chars_result,
+    CHECK(!SocketCompare(test_chars + i, kTestCharsCount, test_chars_result,
                          kTestCharsCount));
   }
 
   PRINTF("\n\nDone testing MemoryCopy!");
-
+#endif  //< #if CRABS_UTF
   PRINT_PAUSE("Done testing SEAM_1_2! ({:-)-+=<");
 }
 

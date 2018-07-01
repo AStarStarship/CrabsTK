@@ -120,7 +120,7 @@ class KABUKI Parameter : public HmiComponent {
   virtual void PrintRow() const;
 
   /* Prints this object to a string. */
-  _::Printer& Print(_::Printer& print) const;
+  _::Utf& Print(_::Utf& print) const;
 
  private:
   const uint16_t* channel_;  //< Output channel.

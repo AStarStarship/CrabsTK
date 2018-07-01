@@ -16,9 +16,9 @@
 #include <stdafx.h>
 #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
 #if SEAM_MAJOR == 2 && SEAM_MINOR == 2
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
-  printf("\n\n%s\n", message); \
+  Printf("\n\n%s\n", message); \
   system("PAUSE");
 #else
 #define PRINTF(x, ...)
@@ -160,21 +160,21 @@ void ButtonMacro::trigger() {
 }
 
 void ButtonMacro::printHeaderString() const {
-  printf(
+  Printf(
       "|    Parameter<int>    |Action|Step | CC  | Ch  |Value| min | max |Init "
       "|# Bits|\n");
 }
 
 void ButtonMacro::printRow() const {
   Parameter<int>::printRow();
-  printf("   | %10s | %5 |\n%s\n", actionString(), stepSize(), listString());
+  Printf("   | %10s | %5 |\n%s\n", actionString(), stepSize(), listString());
 }
 
 void ButtonMacro::print() const {
   printLine('~', Parameter<int>::MacroHeaderLength);
-  printf("Macro Control:\n ");
+  Printf("Macro Control:\n ");
   printLine('~', Parameter<int>::MacroHeaderLength);
-  printf(Parameter<int>::MacroHeader);
+  Printf(Parameter<int>::MacroHeader);
   printNL();
   printLine('~', Parameter<int>::MacroHeaderLength) + toStringRow() +
       listString();

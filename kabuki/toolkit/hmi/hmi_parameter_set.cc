@@ -16,9 +16,9 @@
 #include <stdafx.h>
 #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
 #if SEAM_MAJOR == 2 && SEAM_MINOR == 2
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
-  printf("\n\n%s\n", message); \
+  Printf("\n\n%s\n", message); \
   system("PAUSE");
 #else
 #define PRINTF(x, ...)
@@ -113,20 +113,20 @@ void ParameterSet::print() const {
   cout << Parameter<T>::MacroHeader << '\n';
   _::printLine('~', Parameter<T>::MacroHeaderLength);
 
-  printf("numParams = %i", numParams);
+  Printf("numParams = %i", numParams);
   for (size_type i = 0; i < numParams; ++i) {
     auto currentControl = controls[i];
 
     if (currentControl == nullptr)
-      printf(
+      Printf(
           "| nullptr  |      |      |      |     |     |       |    |        | "
           "     |\n");
     else {
       currentControl->printRow();
-      putchar('\n');
+      Print('\n');
     }
   }
-  printf("!!!!!!!!!!!!!!!!!!!");
+  Printf("!!!!!!!!!!!!!!!!!!!");
   _::printLine('~');
 }
 

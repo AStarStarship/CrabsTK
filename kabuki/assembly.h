@@ -34,13 +34,13 @@
 
 #define CRABS_FORCE_WORD_ALIGN NO
 
-#define CRABS_ENDIANESS LITTLE
+#define CPU_ENDIANESS LITTLE
 
 /* @brief The Memory Profiles 1-4 are used to signal that the system is
     memory constrained.
-    For constrained memory devices, use CRABS_MEMORY_PROFILE 1. For most uses use
-    CRABS_MEMORY_PROFILE 2. For applications that require 64-bit memory addresses, use
-    CRABS_MEMORY_PROFILE 3.
+    For constrained memory devices, use CRABS_MEMORY_PROFILE 1. For most uses
+   use CRABS_MEMORY_PROFILE 2. For applications that require 64-bit memory
+   addresses, use CRABS_MEMORY_PROFILE 3.
 
     @code
     | RUL | sizeof (uint_t) | #bits Unit |
@@ -94,8 +94,8 @@
 #define CRABS_MAX_KEY_LENGTH 64
 
 /* Native string width: 8 for UTF-8, 16 for UTF-16, and 32 for UTF-32.
-    This macro dictates what Unicode format strings will be unpacked to when 
-    unpacked from a BIn. */ 
+    This macro dictates what Unicode format strings will be unpacked to when
+    unpacked from a BIn. */
 #define CRABS_NATIVE_STRING_WIDTH 8
 
 // Size or new size of the Rx/Keyboard buffer.
@@ -106,15 +106,15 @@
 
 // Sets any of the following macros to YES or NO.
 
-#define USING_DYNAMIC_MEMORY     YES
+#define USING_DYNAMIC_MEMORY YES
 #define USING_CRABS_1_BYTE_TYPES YES
 #define USING_CRABS_2_BYTE_TYPES YES
 #define USING_CRABS_4_BYTE_TYPES YES
 #define USING_CRABS_8_BYTE_TYPES YES
-#define USING_CRABS_OBJ          YES
-#define USING_CRABS_ARRAY        NO
-#define USING_CRABS_BOOK         NO
-#define USING_CRABS_LIST         NO
-#define USING_CRABS_DIC          NO
-#define USING_PRINTER            YES
-#define USING_CRABS_EXCEPTIONS   YES
+#define USING_CRABS_OBJ YES
+#define USING_CRABS_ARRAY NO
+#define USING_CRABS_BOOK NO
+#define USING_CRABS_LIST NO
+#define USING_CRABS_DIC NO
+#define USING_PRINTER YES
+#define USING_CRABS_EXCEPTIONS YES

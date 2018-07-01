@@ -66,7 +66,7 @@ class KABUKI ModeButton : public Button {
   int SetFocusPage(ControlsPage* page);
 
   /* Prints this object to a terminal. */
-  _::Printer& Print(_::Printer& print);
+  _::Utf& Print(_::Utf& print);
 
  private:
   Device* device_;      //< Device to load for this macro.

@@ -14,6 +14,7 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
+#include "assert.h"
 #include "bsq.h"
 #include "door.h"
 #include "room.h"
@@ -21,12 +22,12 @@ specific language governing permissions and limitations under the License. */
 #include "text.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #define PUTS(string) putsr(string);
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #define PUTS(string)
 #endif
 
@@ -146,7 +147,7 @@ int Room::Main(const char** args, int args_count) {
   for (int i = 0; i < args_count; ++i) {
     PRINTF("\n%i:\"%s\"", i, args[i])
   }
-  PUTCHAR('\n')
+  PRINT('\n')
   while (IsOn()) {
     try {
       result = Init(nullptr);
@@ -206,11 +207,11 @@ uintptr_t Room::GetSizeBytes() {
   return count;
 }
 
-#if USING_PRINTER
-Printer1& Room::Print(Printer1& print) { return print << "\nRoom: "; }
+#if CRABS_UTF
+Utf8& Room::Print(Utf8& print) { return print << "\nRoom: "; }
 #endif
 
-}   //< namespace _
+}  // namespace _
 #undef PRINTF
-#undef PUTCHAR
+#undef PRINT
 #endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

@@ -34,7 +34,7 @@
 
 #define CRABS_FORCE_WORD_ALIGN YES
 
-#define CRABS_ENDIANESS LITTLE
+#define CPU_ENDIANESS LITTLE
 
 /* @brief The Memory Profiles 1-4 are used to signal that the system is
     memory constrained.

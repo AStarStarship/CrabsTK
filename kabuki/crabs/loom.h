@@ -113,7 +113,7 @@ Char* LoomString(CLoom* loom, SI index) {
 }
 
 template <typename UI, typename SI, typename Char>
-SI LoomPrint(Printer1& print, CLoom* loom, const Char* strand) {
+SI LoomPrint(Utf8& print, CLoom* loom, const Char* strand) {
   ASSERT(loom)
   ASSERT(strand)
   SI count = loom->count;

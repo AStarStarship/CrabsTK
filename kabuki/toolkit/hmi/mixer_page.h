@@ -50,7 +50,7 @@ class KABUKI MixerPage {
   MixerChannel* GetChannel(int index);
 
   /* Prints this object to a terminal. */
-  _::Printer& Print(_::Printer& print);
+  _::Utf& Print(_::Utf& print);
 
  private:
   int starting_index_;  //< Starting index of this page this MixerPage.

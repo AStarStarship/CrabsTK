@@ -73,7 +73,7 @@ struct KABUKI BOut {
 /* Get's the B-Output's buffer.*/
 KABUKI char* BOutBuffer(BOut* bout);
 
-#if USING_PRINTER
+#if CRABS_UTF
 
 /* Gets a a char for printing out the bout_state. */
 KABUKI const char** BOutStateStrings();
@@ -115,19 +115,19 @@ KABUKI void BOutAckBack(BOut* bout, const char* address);
 /* . */
 KABUKI void BInKeyStrokes();
 
-#if USING_PRINTER
+#if CRABS_UTF
 /* Prints the BIn to the Text.
     @param  bout The bout to print.
     @param  text The Text to print to the bout.
     @return The slot. */
-KABUKI Printer1& PrintBOut(Printer1& printer, BOut* bout);
+KABUKI Utf8& PrintBOut(Utf8& printer, BOut* bout);
 #endif
 
 }   //< namespace _
 
-#if USING_PRINTER
+#if CRABS_UTF
 /* Prints out the bin to the text. */
-inline _::Printer1& operator<<(_::Printer1& print, _::BOut* bout) {
+inline _::Utf8& operator<<(_::Utf8& print, _::BOut* bout) {
   return _::PrintBOut(print, bout);
 }
 #endif

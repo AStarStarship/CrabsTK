@@ -1,6 +1,6 @@
 ```
  /\
-( /   @ @    ()   
+( /   @ @    ()
  \  __| |__  /      ██████╗██████╗  █████╗ ██████╗ ███████╗
   -/   "   \-      ██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔════╝
  /-|       |-\     ██║     ██████╔╝███████║██████╔╝███████╗
@@ -36,7 +36,7 @@ Currently does not exist but in the near future will contain the Grisu-X algorit
 
 ### SEAM_0_0_2
 
-Develops the Universal Text Printer (UTF), Universal Text Scanner (UTS), and Clock submodules.
+Develops the Universal Text Formatter (UTF), which contains all of the essential tools to print and scan plain-old-data types in UTF-8, UTF-16, and UTF-32, the end-product of the seam is the Clock utilities for printing and scanning timestamps.
 
 #### Seam Modules
 

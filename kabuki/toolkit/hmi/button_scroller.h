@@ -78,7 +78,7 @@ class KABUKI ButtonScroller : public HmiComponent {
   int Press(int index);
 
   /* Prints this object to a string. */
-  Printer& Print(Printer& printer) const;
+  Utf& Print(Utf& printer) const;
 
  private:
   int current_index_,           //< Index of the first visible button.

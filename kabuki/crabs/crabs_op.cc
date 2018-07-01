@@ -14,23 +14,24 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
+#include "assert.h"
 #include "bsq.h"
 #include "op.h"
-#include "utf8.h"
 #include "slot.h"
+#include "utf8.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT(c) Print(c)
 #else
 #define PRINTF(x, ...)
-#define PUTCHAR(c)
+#define PRINT(c)
 #endif
 
 namespace _ {
 
-#if USING_PRINTER
-Printer1& Print(Printer1& print, const Op* op) {
+#if CRABS_UTF
+Utf8& Print(Utf8& print, const Op* op) {
   if (!op) {
     return print << "\nOp: nil";
   }
@@ -40,7 +41,7 @@ Printer1& Print(Printer1& print, const Op* op) {
 }
 #endif
 /*
-#if USING_PRINTER
+#if CRABS_UTF
 Op OpInit (uintptr_t* buffer, uint_t buffer_size) {
     BOut* bout = BOutInit (buffer, buffer_size);
     Op log;
@@ -147,8 +148,8 @@ void Print (Op& log) {
 }
 #endif */
 
-}   //< namespace _
+}  // namespace _
 
 #undef PRINTF
-#undef PUTCHAR
+#undef PRINT
 #endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

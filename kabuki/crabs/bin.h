@@ -92,7 +92,7 @@ inline uint_t BinBufferLength(BIn* bin) {
   return (uint_t)SlotLength(base + bin->start, base + bin->stop, bin->size);
 }
 
-#if USING_PRINTER
+#if CRABS_UTF
 /* Gets a a char for printing out the bin_state. */
 KABUKI const char** BInStateStrings();
 
@@ -125,19 +125,19 @@ inline const Op* BOutRead(BOut* bout, const uint_t* params, void** args) {
   return BInRead(reinterpret_cast<BIn*>(bout), params, args);
 }
 
-#if USING_PRINTER
+#if CRABS_UTF
 /* Prints the BIn to the Text.
     @param  bin The pin to print.
     @param  text The Text to print the bin to.
     @return The text. */
-KABUKI Printer1& Print(Printer1& printer, BIn* bin);
+KABUKI Utf8& Print(Utf8& printer, BIn* bin);
 #endif
 
 }   //< namespace _
 
-#if USING_PRINTER
+#if CRABS_UTF
 /* Prints out the bin to the text. */
-inline _::Printer1& operator<<(_::Printer1& print, _::BIn* bin) {
+inline _::Utf8& operator<<(_::Utf8& print, _::BIn* bin) {
   return Print(print, bin);
 }
 #endif

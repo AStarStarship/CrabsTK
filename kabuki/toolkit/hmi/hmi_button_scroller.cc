@@ -16,9 +16,9 @@
 #include <stdafx.h>
 #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
 #if SEAM_MAJOR == 2 && SEAM_MINOR == 2
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
-  printf("\n\n%s\n", message); \
+  Printf("\n\n%s\n", message); \
   system("PAUSE");
 #else
 #define PRINTF(x, ...)
@@ -129,26 +129,26 @@ void ButtonScroller::scrollDown(int numTimes) {
 void ButtonScroller::print() const {
   int i;
 
-  printf(
+  Printf(
       "Controls:::ButtonScroller %s \n_numVisibleButtons: %i, size (): "
       "\nVisible Buttons: ",
       getLabel(), numVisibleButtons, getNumButtons());
 
   for (i = 0; i < numVisibleButtons; ++i) {
     if (buttons[i] == nullptr) {
-      printf("\n");
+      Printf("\n");
       break;
     }
 
-    printf(buttons[i]->getLabel());
+    Printf(buttons[i]->getLabel());
 
     if (i != numVisibleButtons - 1)
-      printf(" -> ");
+      Printf(" -> ");
     else
-      printf("\n");
+      Printf("\n");
   }
 
-  if (i == 0) printf("Empty\n");
+  if (i == 0) Printf("Empty\n");
 }
 
 }       //< namespace _

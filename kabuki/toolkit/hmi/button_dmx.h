@@ -76,7 +76,7 @@ class KABUKI DMXButton : public Parameter<int>, public Button {
   int GetMaxWordValue() const override;
 
   /* Prints this object to the stdout. */
-  _::Printer& Print(_::Printer& print) const override;
+  _::Utf& Print(_::Utf& print) const override;
 
  private:
   ButtonAction action_;    //< Type of action this button performs (i.e.
