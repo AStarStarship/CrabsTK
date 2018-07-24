@@ -12,22 +12,24 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#include "align.h"
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
 #include "clock.h"
 #include "floor.h"
+#include "tsocket.h"
 
 namespace _ {
 
-Floor* FloorInit() {
-  static char buffer[sizeof(Floor) + 64];
-  Floor* floor = AlignUp<Floor>(buffer);
+char FloorInit(uintptr_t* buffer) { return 0; }
+
+Floor* FloorInit(Floor* floor) {
   floor->epoch = kClockEpochInit;
   return floor;
 }
 
-Floor* Global() {
-  static Floor* floor = FloorInit();
-  return floor;
+inline Floor* Global() {
+  static TSocket<kFloorSize, kCpuCacheLineSize> floor_socket;
+  return floor_socket.Start<Floor>();
 }
 
 }  // namespace _
+#endif  // #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2

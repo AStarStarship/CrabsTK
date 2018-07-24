@@ -19,22 +19,21 @@ specific language governing permissions and limitations under the License. */
 #include "config.h"
 
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#include "print_integer.h"
 #include "random.h"
+#include "tinteger.h"
 #endif
 
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#include "print_floating_point.h"
-#include "random.h"
+#include "number.h"
+#include "tfloating_point.h"
 #endif
 
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#include "assert.h"
 #include "clock.h"
-#include "console.h"
+#include "debug.h"
 #include "hex.h"
 #include "socket.h"
-#include "utf.h"
+#include "str.h"
 #endif
 
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3

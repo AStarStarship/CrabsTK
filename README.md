@@ -1,4 +1,4 @@
-﻿
+
 ```
   /\
  ( /   @ @    ()   _  __     _           _    _   _____           _ _    _ _   
@@ -6,32 +6,33 @@
    \/   "   \/    | ' // _` | '_ \| | | | |/ / |   | |/ _ \ / _ \| | |/ / | __|
   /-|       |-\   | . \ (_| | |_) | |_| |   <| |   | | (_) | (_) | |   <| | |_
  / /-\     /-\ \  |_|\_\__,_|_.__/ \__,_|_|\_\_|   |_|\___/ \___/|_|_|\_\_|\__|
-  / /-`---'-\ \  
-   /         \                    ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪
+ / /-`---'-\ \  
+  /         \                    ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪
 ```
 
-Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) for 32-bit and 64-bit processors featuring the F2 Foundational Framework that provides:
+Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) for 32-bit and 64-bit processors (and 16-bit processors with some modification) featuring the F2 Foundational Framework that provides:
 
-* Optimal cache performance from contiguous ROM-able ASCII Data Structures.
-* Rapid compile time using C ABI with hidden C++ template implementations and UML-compatible object-oriented wrapper classes.
-* Seamless operation across assembly boundary.
-* Page-Major-Minor Seam (PMMS) Unit Tests provides debug information customized for each seam.
-* Code automatically formatted to Google C++ Style Guide upon save.
+* Modern Embedded-C++1x with Doxygen API docs.
+* ASCII Data Types operate seamlessly across assembly boundary with optimal RAM usage and CPU cache performance from ROM-able ASCII Contiguous Objects.
+* Rapid compile time using Chinese Room Abstract Stack Machine (Crabs) C Application Binary Interface (ABI) and ASCII Data Types with semi-hidden C++ templates and UML-compatible object-oriented wrapper classes.
+* Page-Major-Minor Seam (PMMS) Unit Tests provides debug information customized for each minor seam, major, and page seams.
+* Code automatically formatted to Google C++ Style Guide upon save and formatted to not fight clang-format.
 
-## ASCII Data types
+## ASCII Data Types
 
-ASCII Data Types provide a suitable replacement for the C++ std library that allows for the optional use of dynamic memory and:
+ASCII Data Types provide a suitable replacement for the C++ std library suitable for embedded systems that facilitates:
 
 * All of the C++ POD types.
-* UTF-8, UTF-16, and UTF-32 strings.
-* Year 2038-safe Timestamps - 32-bit and 64-bit timestamps along with 64-bit microseconds timestamps (32-bits for seconds and 32-bits for microseconds) using a 10-year epoch.
-* Stack - A stack of POD types.
-* Array - A multidimension array with Stack of dimensions.
-* Loom - An array of strings.
-* Table - A hash table of contiguous mappings.
-* Map - A sparse associated array of unsigned integers to ASCII Data Types.
-* Multidict - A multidictionary (i.e. unordered map) without hash table.
-* Dictionary - A dictionary of ASCII Data Types with hash table.
+* Year 2038-safe Timestamps - 32-bit and 64-bit seconds timestamps along with 64-bit programmable sub-second timestamps using 32-bits for seconds and 32-bits sub-second tick.
+* Contiguous Objects
+  * UTF-8, UTF-16, and UTF-32 strings.
+  * Stack - A stack of POD types as array.
+  * Array - A multidimension array with Stack of dimensions.
+  * Loom - A homogenous array of UTF-8, UTF-16, or UTF-32 strings.
+  * Table - A hash table of contiguous mappings.
+  * Map - A sparse map of unsigned integers to ASCII Data Types.
+  * Book - A multidictionary (i.e. unordered map) without hash table.
+  * Dictionary - A dictionary of ASCII Data Types with hash table.
 
 [![GitHub version](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit.svg)](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit)
 
@@ -52,14 +53,14 @@ ASCII Data Types provide a suitable replacement for the C++ std library that all
 |:------:|:------------|
 | crabs  | Chinese Room Abstract Stack Machine. |
 | tek    | Firmware Toolkit. |
-| ai     | Artificial Intelligence Library. |
-| al     | Audio Library. |
+| ai     | Artificial Intelligence library. |
+| al     | Audio library. |
 | app    | Application Framework. |
-| data   | Data and logging Library. |
+| data   | Data and logging library. |
 | hmi    | Human-Machine Interfaces. |
-| id     | Identification and authorization Library. |
-| gl     | Graphics Library. |
-| gui    | Graphical User Interface library. |
+| id     | Identification and authorization library. |
+| gl     | Graphics library. |
+| gui    | Graphical User Interface. |
 | math   | Math library. |
 | pl     | Plotting library. |
 | midi   | Musical Instrument Digital Interface. |
@@ -85,9 +86,10 @@ ASCII Data Types provide a suitable replacement for the C++ std library that all
 
 **@note** *Package Diagram uses `C++` dependency inclusion, meaning that when a module/namespace is included all of the module's/namespace's dependencies are also included.*
 
-## Authors
+## Author
 
-* [Cale McCollough](https://calemccollough.github.io) <[cale.mccollough@gmail.com](mailto:cale.mccollough@gmail.com)>, and authors of third-party APIs.
+* [Cale McCollough](https://calemccollough.github.io) <[cale.mccollough@gmail.com](mailto:cale.mccollough@gmail.com)>
+* Authors of third-party APIs attributed in source headers.
 
 ## The License
 

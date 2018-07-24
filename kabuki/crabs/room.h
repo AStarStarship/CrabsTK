@@ -48,106 +48,65 @@ KABUKI const char** RequestTexts();
 KABUKI const char* RequestText(Request r);
 
 /* A Chinese Room.
-    An Chinese Room works the same way as in the Chinese Room thought
-    experiment. An Room receives a message through a slot in the door, the man
-    in the room reads does manual optical character recognition with a pen and
-    paper stack, some filing cabinets, and a library of multimaps.
-
-    The size of the Expr Stack is defined by the Script Protocol to be a
-    a maximum of 2^15-1 expressions tall.
-
-    # Memory Layout
-
-    Some systems have the stack grow up from the bottom and heap grow up and
-    vice versa.
-
-    @code
-        +-----------------------+
-        |          Heap         |
-        |         Wall 1        |
-        |         Wall 2        |
-        |          ...          |
-        |         Wall N        |
-        |vvvvvvvvvvvvvvvvvvvvvvv|
-        |     Unused Memory     |
-        |^^^^^^^^^^^^^^^^^^^^^^^|
-        |     Program Stack     |
-    +/- |-----------------------|
-     |  | Floor (Static Memory) |
-    0xN +-----------------------+
-    @endcode
-
-    There are multiple doors in a Chinese Room that lead to other Chinese Rooms.
-    Each door has multiple slots in lead to the same room. These slots are the
-    various IO ports of the system.
-
-    # Doors
-
-    There are two ways to access Doors in the CR. in the Root Scope, there are
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @code
-    Use Case Scenario:
-    Actors: Jo  - The app developer.
-            Sam - The end-user.
-
-    1.  Jo is creating an App and needs to make a Chinese Room so Jo downloads
-        Kabuki Toolkit, starts his Apps, and makes a Room. Jo defines a Floor
-        statically but is does not define any walls.
-        2.  Host creates a memory stack without any heap space.
-    2.  Jo needs to add a UART port out to his App so he adds a BOut with a
-        slot_size of 2KB.
-        3.  Host adds the Slot to the Program Stack.
-    4.  Jo needs to add a SPI IO device so he newializes a Slot with 256
-        bytes.
-        5.  Host adds the new Slot on top of the Slot.
-    6.  Jo is out of memory in the Floor so he creates a Ceiling of size 2KB.
-        7.  Host creates a Heap Block for the Ceiling.
-    7.  Jo needs Interprocess communication to three threads: one SlotIn,
-        one SlotOut, and a Slot of size 2KB.
-        8.  Host adds the SlotIn, MirroOut, and Slot to the Ceiling.
-    9.  Jo wants to add a Server so Jo creates Wall_1 with 1MB space.
-        10. Host creates a Wall_1 with 1MB memory.
-    11. Jo wants needs to distribute information to the end-users so Jo
-        creates Dictionary in Wall_1 with some keys and values.
-        12. Host creates dictionary and adds keys and values.
-    13. Jo complies the program and launches the server.
-        14. Host loads.
-    15. Sam launches Jo's app and connections to the Host.
-        16. Host receives login attempt from Sam and opens a Door for him.
-    17. Sam needs to get the values Jo stored in step 11 so Same sends a
-        Dictionary GET request.
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+An Chinese Room works the same way as in the Chinese Room thought
+experiment. An Room receives a message through a slot in the door, the man
+in the room reads does manual optical character recognition with a pen and
+paper stack, some filing cabinets, and a library of multimaps.
+  The size of the Expr Stack is defined by the Script Protocol to be a
+a maximum of 2^15-1 expressions tall.
+# Memory Layout
+Some systems have the stack grow up from the bottom and heap grow up and
+vice versa.
+@code
+    +-----------------------+
+    |          Heap         |
+    |         Wall 1        |
+    |         Wall 2        |
+    |          ...          |
+    |         Wall N        |
+    |vvvvvvvvvvvvvvvvvvvvvvv|
+    |     Unused Memory     |
+    |^^^^^^^^^^^^^^^^^^^^^^^|
+    |     Program Stack     |
++/- |-----------------------|
+  |  | Floor (Static Memory) |
+0xN +-----------------------+
+@endcode
+There are multiple doors in a Chinese Room that lead to other Chinese Rooms.
+Each door has multiple slots in lead to the same room. These slots are the
+various IO ports of the system.
+# Doors
+There are two ways to access Doors in the CR. in the Root Scope, there are:
+@code
+Use Case Scenario:
+Actors: Jo  - The app developer.
+        Sam - The end-user.
+1.  Jo is creating an App and needs to make a Chinese Room so Jo downloads
+    Kabuki Toolkit, starts his Apps, and makes a Room. Jo defines a Floor
+    statically but is does not define any walls.
+    2.  Host creates a memory stack without any heap space.
+2.  Jo needs to add a UART port out to his App so he adds a BOut with a
+    slot_size of 2KB.
+    3.  Host adds the Slot to the Program Stack.
+4.  Jo needs to add a SPI IO device so he newializes a Slot with 256
+    bytes.
+    5.  Host adds the new Slot on top of the Slot.
+6.  Jo is out of memory in the Floor so he creates a Ceiling of size 2KB.
+    7.  Host creates a Heap Block for the Ceiling.
+7.  Jo needs Interprocess communication to three threads: one SlotIn,
+    one SlotOut, and a Slot of size 2KB.
+    8.  Host adds the SlotIn, MirroOut, and Slot to the Ceiling.
+9.  Jo wants to add a Server so Jo creates Wall_1 with 1MB space.
+    10. Host creates a Wall_1 with 1MB memory.
+11. Jo wants needs to distribute information to the end-users so Jo
+    creates Dictionary in Wall_1 with some keys and values.
+    12. Host creates dictionary and adds keys and values.
+13. Jo complies the program and launches the server.
+    14. Host loads.
+15. Sam launches Jo's app and connections to the Host.
+    16. Host receives login attempt from Sam and opens a Door for him.
+17. Sam needs to get the values Jo stored in step 11 so Same sends a
+    Dictionary GET request.
     @endcode
 */
 class Room : public Operand {
@@ -251,7 +210,7 @@ class Room : public Operand {
   /* Script expressions. */
   virtual const Op* Star(wchar_t index, Expr* expr);
 
-#if CRABS_UTF
+#if CRABS_TEXT
   /* Prints the Room to the stdout. */
   virtual Utf8& Print(Utf8& print);
 #endif
@@ -266,8 +225,8 @@ class Room : public Operand {
   Door* this_;                           //< DC2: The Door to this room.
   Operand *xoff_,                        //< DC3: XOFF - XOFF handling device.
       *device_,                          //< DC4: the current device control.
-      *devices_;  //< Pointer to the current device control.
-  uintptr_t ascii_obj_[kFloorSizeWords];  //< Room Floor buffer.
+      *devices_;                     //< Pointer to the current device control.
+  uintptr_t begin[kFloorSizeWords];  //< Room Floor buffer.
 
  private:
   /* Sets the Room state_. */

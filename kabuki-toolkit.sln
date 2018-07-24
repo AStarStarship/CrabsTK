@@ -19,8 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kabuki-toolkit", "kabuki-to
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kabuki-toolkit", "kabuki\kabuki-toolkit.vcxproj", "{4EE9D839-2648-4DFD-8F3A-E9E063FA40A3}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_0_script_itoa_benchmark", "seams\0_0_benchmark_script_itoa\0_0_script_itoa_benchmark.vcxproj", "{B5B67309-62EC-48FE-AC5D-66FFC2B7DC99}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_0_benchmark_ascii_crabs", "seams\0_0_benchmark_ascii_crabs\0_0_benchmark_ascii_crabs.vcxproj", "{13A5C38A-A043-496A-8E4E-E291E8C635CE}"
@@ -31,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_1_seam_tests", "seams\0_1
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_0_seam_tests", "seams\0_0_seam_tests\0_0_seam_tests.vcxproj", "{A2320CC1-0592-43E3-9BA6-1BCEA634DD07}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "experiments", "seams\experiments\experiments.vcxproj", "{AEA9B1A4-B7A0-4863-B870-136BAD00CDB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -39,13 +39,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4EE9D839-2648-4DFD-8F3A-E9E063FA40A3}.Debug|x64.ActiveCfg = Debug|x64
-		{4EE9D839-2648-4DFD-8F3A-E9E063FA40A3}.Debug|x86.ActiveCfg = Debug|Win32
-		{4EE9D839-2648-4DFD-8F3A-E9E063FA40A3}.Debug|x86.Build.0 = Debug|Win32
-		{4EE9D839-2648-4DFD-8F3A-E9E063FA40A3}.Release|x64.ActiveCfg = Release|x64
-		{4EE9D839-2648-4DFD-8F3A-E9E063FA40A3}.Release|x64.Build.0 = Release|x64
-		{4EE9D839-2648-4DFD-8F3A-E9E063FA40A3}.Release|x86.ActiveCfg = Release|Win32
-		{4EE9D839-2648-4DFD-8F3A-E9E063FA40A3}.Release|x86.Build.0 = Release|Win32
 		{B5B67309-62EC-48FE-AC5D-66FFC2B7DC99}.Debug|x64.ActiveCfg = Debug|x64
 		{B5B67309-62EC-48FE-AC5D-66FFC2B7DC99}.Debug|x86.ActiveCfg = Debug|Win32
 		{B5B67309-62EC-48FE-AC5D-66FFC2B7DC99}.Debug|x86.Build.0 = Debug|Win32
@@ -82,6 +75,14 @@ Global
 		{A2320CC1-0592-43E3-9BA6-1BCEA634DD07}.Release|x64.Build.0 = Release|x64
 		{A2320CC1-0592-43E3-9BA6-1BCEA634DD07}.Release|x86.ActiveCfg = Release|Win32
 		{A2320CC1-0592-43E3-9BA6-1BCEA634DD07}.Release|x86.Build.0 = Release|Win32
+		{AEA9B1A4-B7A0-4863-B870-136BAD00CDB7}.Debug|x64.ActiveCfg = Debug|x64
+		{AEA9B1A4-B7A0-4863-B870-136BAD00CDB7}.Debug|x64.Build.0 = Debug|x64
+		{AEA9B1A4-B7A0-4863-B870-136BAD00CDB7}.Debug|x86.ActiveCfg = Debug|Win32
+		{AEA9B1A4-B7A0-4863-B870-136BAD00CDB7}.Debug|x86.Build.0 = Debug|Win32
+		{AEA9B1A4-B7A0-4863-B870-136BAD00CDB7}.Release|x64.ActiveCfg = Release|x64
+		{AEA9B1A4-B7A0-4863-B870-136BAD00CDB7}.Release|x64.Build.0 = Release|x64
+		{AEA9B1A4-B7A0-4863-B870-136BAD00CDB7}.Release|x86.ActiveCfg = Release|Win32
+		{AEA9B1A4-B7A0-4863-B870-136BAD00CDB7}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,12 +90,12 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{ACE36A12-D38F-4923-9E8A-E2DD9C4E49AC} = {993284EE-28CA-4D64-B4C2-14D2A7315029}
 		{35CF95B5-D19A-4C31-A59B-86323A15BC59} = {993284EE-28CA-4D64-B4C2-14D2A7315029}
-		{4EE9D839-2648-4DFD-8F3A-E9E063FA40A3} = {993284EE-28CA-4D64-B4C2-14D2A7315029}
 		{B5B67309-62EC-48FE-AC5D-66FFC2B7DC99} = {ACE36A12-D38F-4923-9E8A-E2DD9C4E49AC}
 		{13A5C38A-A043-496A-8E4E-E291E8C635CE} = {ACE36A12-D38F-4923-9E8A-E2DD9C4E49AC}
 		{9322CAEA-711A-42B0-AFE3-D4F56C4D40BB} = {ACE36A12-D38F-4923-9E8A-E2DD9C4E49AC}
 		{A9E2FA3B-B575-4969-8453-2E532EA57D71} = {ACE36A12-D38F-4923-9E8A-E2DD9C4E49AC}
 		{A2320CC1-0592-43E3-9BA6-1BCEA634DD07} = {ACE36A12-D38F-4923-9E8A-E2DD9C4E49AC}
+		{AEA9B1A4-B7A0-4863-B870-136BAD00CDB7} = {ACE36A12-D38F-4923-9E8A-E2DD9C4E49AC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5BAE086E-1F80-43C0-8709-6E87D4D05BC0}

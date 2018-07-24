@@ -21,7 +21,7 @@ specific language governing permissions and limitations under the License. */
 #include "bout.h"
 #include "socket.h"
 #include "op.h"
-#include "utf8.h"
+#include "str1.h"
 // End dependencies.
 
 namespace _ {
@@ -116,7 +116,7 @@ struct Slot {
   /* Copies the contents of the other slot into the slot. */
   const Op* Write(Slot& other);
 
-#if CRABS_UTF
+#if CRABS_TEXT
   /* Prints a string rep of this object to the printer. */
   Utf8& Print(Utf8& printer);
 #endif
@@ -124,7 +124,7 @@ struct Slot {
 
 }   //< namespace _
 
-#if CRABS_UTF
+#if CRABS_TEXT
 /* Prints out the bin to the text. */
 inline _::Utf8& operator<<(_::Utf8& printer, _::Slot& slot) {
   return slot.Print(printer);

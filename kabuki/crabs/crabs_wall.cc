@@ -15,7 +15,7 @@ specific language governing permissions and limitations under the License. */
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
 #include "align.h"
-#include "assert.h"
+#include "debug.h"
 #include "stack.h"
 #include "wall.h"
 // End dependencies.
@@ -45,7 +45,7 @@ Wall::Wall(size_t size_bytes) : is_dynamic_(true) {
   //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
   //< on 16 and 32-bit systems.
   size_bytes -= sizeof(uintptr_t) * (aligned_buffer - buffer);
-  ascii_obj_ = buffer;
+  begin = buffer;
   doors_ = reinterpret_cast<CArray<Door*>*>(aligned_buffer);
   StackInit(buffer, size_bytes >> sizeof(uintptr_t));
 }
@@ -64,7 +64,7 @@ Wall::Wall(uintptr_t* buffer, size_t size_bytes) {
   //< Shift 3 to divide by 8. The extra 3 elements are for aligning memory
   //< on 16 and 32-bit systems.
   size_bytes -= sizeof(uintptr_t) * (aligned_buffer - buffer);
-  ascii_obj_ = buffer;
+  begin = buffer;
   doors_ = reinterpret_cast<CArray<Door*>*>(aligned_buffer);
   StackInit(buffer, size_bytes >> sizeof(uintptr_t));
 }

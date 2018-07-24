@@ -311,7 +311,7 @@ KABUKI const Op* ExprQuery(Expr* expr, const Op& header);
     @return Returns the header if expr is nil. */
 KABUKI const Op* ExprQuery(Expr* expr, const Op* op);
 
-#if CRABS_UTF
+#if CRABS_TEXT
 /* Prints the Expr stack to the Text buffer */
 KABUKI Utf8& PrintExpr(Utf8& printer, Expr* expr);
 
@@ -321,7 +321,7 @@ KABUKI Utf8& PrintExprStack(Utf8& printer, Expr* expr);
 
 }   //< namespace _
 
-#if CRABS_UTF
+#if CRABS_TEXT
 /* Prints the given Expr to the Text buffer. */
 inline _::Utf8& operator<<(_::Utf8& printer, _::Expr* expr) {
   return _::PrintExpr(printer, expr);

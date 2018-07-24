@@ -21,20 +21,20 @@
 
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PRINT_PAUSE(message)   \
+#define PAUSE(message)   \
   Printf("\n\n%s\n", message); \
   system("PAUSE");
-#define PRINT_HEADING(message)                    \
-  Print ('\n');                              \
-  for (int i = 80; i > 80; --i) Print ('-'); \
-  std::cout << '\n' << message << '\n';           \
-  for (int i = 80; i > 80; --i) Print ('-'); \
-  Print ('\n');
+#define PRINT_HEADING(message)              \
+  Print('\n');                              \
+  for (int i = 80; i > 80; --i) Print('-'); \
+  std::cout << '\n' << message << '\n';     \
+  for (int i = 80; i > 80; --i) Print('-'); \
+  Print('\n');
 
 #define PRINT_SLOT print << slot << Dump();
 #else
 #define PRINTF(x, ...)
-#define PRINT_PAUSE(message)
+#define PAUSE(message)
 #define PRINT_HEADING(message)
 #define PRINT_SLOT
 #endif
@@ -181,20 +181,20 @@ class This : public Room {
  private:
   Parent parent;
 };
-}   //< namespace _
+}  // namespace _
 
 TEST_GROUP(SEAM_1_4){void setup(){}
 
-                     void teardown(){Print ('\n');
+                     void teardown(){Print('\n');
 system("PAUSE");
 }
 }
 ;
 
 TEST(SEAM_1_4, SEAM_1_4A) {
-  Printf("\n    Testing SEAM_1_3... ");
+  Printf("\n    Testing SEAM_0_0_4... ");
 
-  Printf("\n\nTesting ASCII Object Types");
+  Printf("\n\nTesting ASCII OBJ Types");
 
   std::cout << "\n  - Running TableTest...\n";
   wchar_t index;
@@ -302,7 +302,7 @@ TEST(SEAM_1_4, SEAM_1_4A) {
   CHECK_EQUAL(0, index)
   index = Multimap2Find(multimap, "D");
   CHECK_EQUAL(0, index)
-  PRINT_PAUSE("\n");
+  PAUSE("\n");
   index = Multimap2Add<uint8_t, UI1>(multimap, "C", (byte)0xFF);
   CHECK_EQUAL(1, index)
   index = Multimap2Find(multimap, "D");
@@ -976,10 +976,10 @@ TEST(SEAM_1_4, SEAM_1_4A) {
 
   ExprRingBell(expr);
   ExprAckBack(expr);
-  result = BOutWrite(
-      bout, Params<4, ADR, UI1, STR, Parent::kUtfBufferSize, ADR>(),
-      Args(args, Address<'A', 'A', 'A'>(), &io_number_, "Test",
-           Address<BS, CR>()));
+  result =
+      BOutWrite(bout, Params<4, ADR, UI1, STR, Parent::kUtfBufferSize, ADR>(),
+                Args(args, Address<'A', 'A', 'A'>(), &io_number_, "Test",
+                     Address<BS, CR>()));
 
   CHECK(result == nullptr)
 
@@ -1076,9 +1076,9 @@ TEST(SEAM_1_4, SEAM_1_4A) {
 
   PRINTF("\n\n Testing VTable...\n\n")
 
-  PRINT_PAUSE("\n\nDone Testing SEAM_1_3! ({:-)-+=<")
+  PAUSE("\n\nDone Testing SEAM_0_0_4! ({:-)-+=<")
 }
-#undef PRINT_PAUSE
+#undef PAUSE
 #undef PRINTF
 #else
 void TestSeam_1_4() {}

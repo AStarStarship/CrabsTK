@@ -21,7 +21,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-#if CRABS_UTF
+#if CRABS_TEXT
 const char* RoomCrashException::what() const throw() {
   return "External crash";
 }

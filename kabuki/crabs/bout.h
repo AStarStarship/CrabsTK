@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #define HEADER_FOR_CRABS_BOUT
 // Dependencies:
 #include "op.h"
-#include "utf8.h"
+#include "str1.h"
 // End dependencies.
 
 namespace _ {
@@ -73,7 +73,7 @@ struct KABUKI BOut {
 /* Get's the B-Output's buffer.*/
 KABUKI char* BOutBuffer(BOut* bout);
 
-#if CRABS_UTF
+#if CRABS_TEXT
 
 /* Gets a a char for printing out the bout_state. */
 KABUKI const char** BOutStateStrings();
@@ -115,7 +115,7 @@ KABUKI void BOutAckBack(BOut* bout, const char* address);
 /* . */
 KABUKI void BInKeyStrokes();
 
-#if CRABS_UTF
+#if CRABS_TEXT
 /* Prints the BIn to the Text.
     @param  bout The bout to print.
     @param  text The Text to print to the bout.
@@ -125,7 +125,7 @@ KABUKI Utf8& PrintBOut(Utf8& printer, BOut* bout);
 
 }   //< namespace _
 
-#if CRABS_UTF
+#if CRABS_TEXT
 /* Prints out the bin to the text. */
 inline _::Utf8& operator<<(_::Utf8& print, _::BOut* bout) {
   return _::PrintBOut(print, bout);

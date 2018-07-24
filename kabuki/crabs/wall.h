@@ -82,7 +82,7 @@ class Wall {
  private:
   bool is_dynamic_;       //< Flag for if using dynamic memory.
   size_t size_bytes_;     //< Size of the Wall in bytes.
-  uintptr_t* ascii_obj_;  //< The Wall's buffer.
+  uintptr_t* begin;       //< The Wall's buffer.
   CArray<Door*>* doors_;  //< The doors in the room.
 };
 

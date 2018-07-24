@@ -16,7 +16,7 @@ specific language governing permissions and limitations under the License. */
 // Dependencies:
 #include "align.h"
 #include "ascii_data_types.h"
-#include "assert.h"
+#include "debug.h"
 #include "hex.h"
 #include "socket.h"
 // End dependencies.
@@ -109,7 +109,7 @@ inline char* WriteString(char* begin, char* end, const void* value) {
 }*/
 
 template <typename UI>
-inline char* WriteObject(char* begin, char* end, const void* value) {
+inline char* WriteObj(char* begin, char* end, const void* value) {
   UI* target = AlignUpPointer<UI>(begin);
   const UI* source = reinterpret_cast<const UI*>(value);
   UI size = *source++;
@@ -187,18 +187,18 @@ char* Write(char* begin, char* end, type_t type, const void* value) {
   char array_type = type >> 6;
   switch (array_type) {
     case 0:
-      return WriteObject<uint8_t>(begin, end, value);
+      return WriteObj<uint8_t>(begin, end, value);
     case 1:
-      return WriteObject<uint16_t>(begin, end, value);
+      return WriteObj<uint16_t>(begin, end, value);
     case 2:
-      return WriteObject<uint32_t>(begin, end, value);
+      return WriteObj<uint32_t>(begin, end, value);
     case 3:
-      return WriteObject<uint64_t>(begin, end, value);
+      return WriteObj<uint64_t>(begin, end, value);
   }
   return nullptr;
 }
 
-bool TypeIsObject(type_t type) {
+bool TypeIsObj(type_t type) {
   if (type < OBJ) return false;
   return true;
 }

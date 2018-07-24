@@ -21,7 +21,7 @@ specific language governing permissions and limitations under the License. */
 // End dependencies.
 
 namespace _ {
-#if CRABS_UTF
+#if CRABS_TEXT
 template <typename TIndex, typename TKey, typename TData, uint_t MaxStackHeight>
 class Library : public Operand {
  public:
@@ -50,7 +50,7 @@ class Library : public Operand {
   /* Gets the data size in bytes. */
   uint_t GetDataSize() { return data_size_; }
 
-  /* Attempts to add the Page data into the Object at the given BaseAddress.
+  /* Attempts to add the Page data into the Obj at the given BaseAddress.
       @return Returns nil upon success and an error char upon failure. */
   const Op* Add(byte type, const char* key, void* data) {
     TIndex size_of_type = getSizeOfType(type);
@@ -60,7 +60,7 @@ class Library : public Operand {
     return 0;
   }
 
-  /* Attempts to insert the Page data into the Object at the given index.
+  /* Attempts to insert the Page data into the Obj at the given index.
       @return Returns nil upon success and an error char upon failure. */
   const Op* Insert(byte type, const char* key, void* data, TIndex index = 0) {
     TIndex l_numOps = numNumbers;
@@ -69,7 +69,7 @@ class Library : public Operand {
     return 0;
   }
 
-  /* Attempts to remove the Page data into the Object at the given index.
+  /* Attempts to remove the Page data into the Obj at the given index.
       @return Returns nil upon success and an error char upon failure. */
   const Op* Remove(TIndex index) { return 0; }
 

@@ -14,10 +14,10 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
 // Dependencies:
-#include "utf8.h"
+#include "str1.h"
 #include "ascii_data_types.h"
 // End dependencies.
-#if CRABS_UTF
+#if CRABS_TEXT
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 2
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT(c) Print(c)
@@ -34,5 +34,5 @@ namespace _ {}  // namespace _
 #undef PRINTF
 #undef PRINT
 #undef PRINT_HEADING
-#endif  //< CRABS_UTF
+#endif  //< CRABS_TEXT
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2

@@ -19,7 +19,7 @@ specific language governing permissions and limitations under the License. */
 // Dependencies:
 #include "align.h"
 #include "config.h"
-#include "utfn.h"
+#include "ttext.h"
 // End dependencies.
 /* @tag Comment may be wrapped around
 like this.
@@ -100,7 +100,7 @@ enum {
   kTypeCount = 32,  //< The starting index of invalid types.
 };
 
-template <typename Char>
+template <typename Char = char>
 const Char** TypeStrings() {
   static const Char* kNames[] = {
       "NIL",  //<  0
@@ -143,19 +143,19 @@ const Char** TypeStrings() {
 KABUKI const char** TypeStrings();
 
 /* Returns the name of the given type. */
-inline KABUKI const char* TypeString(type_t type);
+KABUKI inline const char* TypeString(type_t type);
 
 /* Returns the name of the given type. */
-inline KABUKI const char* TypeString(uint_t type);
+KABUKI inline const char* TypeString(uint_t type);
 
 /* Masks off the lower 5-LSb to get the type. */
-inline KABUKI byte TypeMask(byte value);
+KABUKI inline byte TypeMask(byte value);
 
 /* Returns true if the given type is an Array type. */
-inline KABUKI bool TypeIsArray(uint_t type);
+KABUKI inline bool TypeIsArray(uint_t type);
 
 /* Returns true if the given type is a BOK type. */
-inline KABUKI bool TypeIsSet(uint_t type);
+KABUKI inline bool TypeIsSet(uint_t type);
 
 /* Returns the size or max size of the given type. */
 KABUKI uint_t TypeFixedSize(uint_t type);
@@ -166,18 +166,18 @@ KABUKI void* TypeAlign(type_t type, void* value);
 /* Writes the given value to the socket. */
 KABUKI char* Write(char* begin, char* end, type_t type, const void* source);
 
-/* Returns true if the given type is an ASCII Object. */
-inline KABUKI bool TypeIsObject(type_t type);
+/* Returns true if the given type is an ASCII OBJ. */
+KABUKI inline bool TypeIsObj(type_t type);
 
 /* Returns true if the given type is a string type. */
-inline KABUKI bool TypeIsString(type_t type);
+KABUKI inline bool TypeIsString(type_t type);
 
 /* Checks if the given type is UTF-16.
     @param  type The type to check.
     @return True if the given type is UTF-16. */
-inline KABUKI bool TypeIsUtf16(type_t type);
+KABUKI inline bool TypeIsUtf16(type_t type);
 
-inline KABUKI int TypeSizeWidthCode(type_t type);
+KABUKI inline int TypeSizeWidthCode(type_t type);
 
 template <typename T = char>
 T* TypeAlignUpPointer(void* pointer, type_t type) {
@@ -189,7 +189,7 @@ T* TypeAlignUpPointer(void* pointer, type_t type) {
     return AlignUpPointer4<T>(pointer);
   else if (type <= DEC)
     return AlignUpPointer8<T>(pointer);
-  // else it's an ASCII Object.
+  // else it's an ASCII OBJ.
   // | Code | Binary | Mask needed |
   // |:----:|:------:|:-----------:|
   // |  0   | 0b'00  |   0b'000    |
@@ -203,7 +203,7 @@ T* TypeAlignUpPointer(void* pointer, type_t type) {
   return reinterpret_cast<T*>(ptr);
 }
 
-template <typename Char>
+template <typename Char = char>
 Char* PrintTypePod(Char* cursor, Char* end, type_t type, const void* value) {
   if (!value) return printer << "Nil";
   switch (type & 0x1f) {
@@ -253,7 +253,7 @@ Char* PrintTypePod(Char* cursor, Char* end, type_t type, const void* value) {
   return nullptr;
 }
 
-template <typename Char>
+template <typename Char = char>
 Char* Print(Char* cursor, Char* end, type_t type, const void* value) {
   if (cursor == nullptr) return nullptr;
   ASSERT(cursor < end);

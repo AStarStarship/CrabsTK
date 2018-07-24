@@ -16,7 +16,7 @@ specific language governing permissions and limitations under the License. */
 // Dependencies:
 #include "args.h"
 #include "ascii_data_types.h"
-#include "assert.h"
+#include "debug.h"
 #include "bout.h"
 #include "bsq.h"
 #include "hash.h"
@@ -127,8 +127,8 @@ uint_t BOutBufferLength(BOut* bout) {
   if (!bout) {
     return 0;
   }
-  char* base = BOutBuffer(bout);
-  return (uint)SlotLength(base + bout->start, base + bout->stop, bout->size);
+  char* begin = BOutBuffer(bout);
+  return (uint)SlotLength(begin + bout->start, begin + bout->stop, bout->size);
 }
 
 char* BOutEndAddress(BOut* bout) {
@@ -148,8 +148,8 @@ int BOutStreamByte(BOut* bout) {
     return -1;
   }
   // byte b = *cursor;
-  bout->stop = (++begin > end) ? static_cast<uint_t>(SocketSize(begin, end))
-                               : static_cast<uint_t>(SocketSize(begin, begin));
+  bout->stop = (++begin > end) ? static_cast<uint_t>(Size(begin, end))
+                               : static_cast<uint_t>(Size(begin, begin));
   return 0;
 }
 
@@ -224,8 +224,8 @@ const Op* BOutWrite(BOut* bout, const uint_t* params, void** args) {
   for (index = 1; index <= num_params; ++index) {
     type = params[index];
     PRINTF("\nparam: %u type: %s start:%i stop:%i space: %u", arg_index + 1,
-           TypeString(type), (int)SocketSize(begin, start),
-           (int)SocketSize(begin, stop), space)
+           TypeString(type), (int)Size(begin, start),
+           (int)Size(begin, stop), space)
     switch (type) {
       case NIL:
         break;
@@ -604,7 +604,7 @@ const Op* BOutWrite(BOut* bout, const uint_t* params, void** args) {
   if (++stop >= end) stop -= size;
   *stop = (byte)(hash >> 8);
   if (++stop >= end) stop -= size;
-  bout->stop = (uint_t)SocketSize(begin, stop);
+  bout->stop = (uint_t)Size(begin, stop);
   PRINTF("\nDone writing to B-Output with the hash 0x%x.", hash)
   return 0;
 }
@@ -646,7 +646,7 @@ void BOutRingBell(BOut* bout, const char* address) {
     ++address;
     c = *address;
   }
-  bout->stop = (uint_t)SocketSize(begin, stop);
+  bout->stop = (uint_t)Size(begin, stop);
 }
 
 void BOutAckBack(BOut* bout, const char* address) {
@@ -687,7 +687,7 @@ void BOutAckBack(BOut* bout, const char* address) {
     ++address;
     c = *address;
   }
-  bout->stop = (uint_t)SocketSize(begin, stop);
+  bout->stop = (uint_t)Size(begin, stop);
 }
 
 const Op* BOutConnect(BOut* bout, const char* address) {
@@ -703,7 +703,7 @@ void BInKeyStrokes() {
   }
 }
 
-#if CRABS_UTF
+#if CRABS_TEXT
 /*
 char* Print (BOut* bout, char* buffer, char* buffer_end) {
     bool print_now = !buffer;

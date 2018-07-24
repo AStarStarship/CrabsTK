@@ -14,12 +14,12 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
-#include "assert.h"
+#include "debug.h"
 #include "line.h"
 #include "op.h"
 #include "operand.h"
 #include "text.h"
-#include "utf8.h"
+#include "str1.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
@@ -59,7 +59,7 @@ wchar_t OperandIndex(Operand* operand, char* begin, char* end) {
   return 0;
 }
 
-#if CRABS_UTF
+#if CRABS_TEXT
 /*
 Utf& Print (Utf& print, const Operand* op) {
     print << "\n Op:\n" << op->name << "\nparams_in:"

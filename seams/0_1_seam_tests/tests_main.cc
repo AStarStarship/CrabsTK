@@ -91,8 +91,8 @@ int main () {
     // Wait for the timer-queue thread to complete using an event
     // object. The thread will signal the event at that time.
 
-    if (WaitForSingleObject (gDoneEvent, INFINITE) != WAIT_OBJECT_0)
-        Printf ("WaitForSingleObject failed (%d)\n", GetLastError ());
+    if (WaitForSingleObj (gDoneEvent, INFINITE) != WAIT_OBJECT_0)
+        Printf ("WaitForSingleObj failed (%d)\n", GetLastError ());
 
     CloseHandle (gDoneEvent);
 

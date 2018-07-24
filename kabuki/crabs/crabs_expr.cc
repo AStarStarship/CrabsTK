@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
-#include "assert.h"
+#include "debug.h"
 #include "bsq.h"
 #include "clock.h"
 #include "expr.h"
@@ -195,7 +195,7 @@ const Op* ExprSetState(Expr* expr, BInState state) {
   //    return  ExprError (ExprBIn (expr), kErrorImplementation);
   //}
   if (state == kBInStateLocked) {
-    return ExprError(expr, kErrorObjectLocked);
+    return ExprError(expr, kErrorObjLocked);
   }
 #if DEBUG_CRABS_EXPR
     PRINTF ("\nEntering " << BInState ()[state]
@@ -522,7 +522,7 @@ const Op* ExprUnpack(Expr* expr) {
                           bin_state = BIn::Utf32State;*/
                     } else {  // It's not a POD type.
 #if DEBUG_CRABS_EXPR
-                      Write("\nScanning TObject.");
+                      Write("\nScanning TObj.");
 #endif
                       // Multi-dimension arrays are parsed just like any other
                       // OBJ.
@@ -536,20 +536,20 @@ const Op* ExprUnpack(Expr* expr) {
                       } else if (array_type == 1) {
                         bytes_shift = 0;
                         shift_bits = 16;
-                        ExprEnterState(expr, kBInStatePackedObject);
-                        bin_state = kBInStatePackedObject;
+                        ExprEnterState(expr, kBInStatePackedObj);
+                        bin_state = kBInStatePackedObj;
                         break;
                       } else if (array_type == 2) {
                         bytes_shift = 0;
                         shift_bits = 32;
-                        ExprEnterState(expr, kBInStatePackedObject);
-                        bin_state = kBInStatePackedObject;
+                        ExprEnterState(expr, kBInStatePackedObj);
+                        bin_state = kBInStatePackedObj;
                         break;
                       } else {  //< array_type == 3
                         bytes_shift = 0;
                         shift_bits = 64;
-                        ExprEnterState(expr, kBInStatePackedObject);
-                        bin_state = kBInStatePackedObject;
+                        ExprEnterState(expr, kBInStatePackedObj);
+                        bin_state = kBInStatePackedObj;
                         break;
                       }
                     }
@@ -654,7 +654,7 @@ const Op* ExprUnpack(Expr* expr) {
         --bytes_left;
         break;
       }
-      case kBInStatePackedObject: {
+      case kBInStatePackedObj: {
         hash = Hash16(b, hash);
 #if DEBUG_CRABS_EXPR
         Write("\nhash:" << PrintHex(hash));
@@ -774,7 +774,7 @@ const Op* ExprUnpack(Expr* expr) {
   //
   expr->hash = hash;
   expr->bytes_left = bytes_left;
-  bin->start = (uint_t)SocketSize(bin_begin, bin_start);
+  bin->start = (uint_t)Size(bin_begin, bin_start);
   return nullptr;
 }
 
@@ -831,8 +831,8 @@ void ExprClear(Expr* expr) {
     return;
   }
   SocketClear(start, stop - start);
-  bin->start = (uint_t)SocketSize(expr, begin);
-  bin->stop = (uint_t)SocketSize(expr, start + 1);
+  bin->start = (uint_t)Size(expr, begin);
+  bin->stop = (uint_t)Size(expr, start + 1);
 }
 
 void ExprRingBell(Expr* expr, const char* address) {
@@ -870,8 +870,8 @@ uint_t ExprSpace(BIn* bin) {
     return ~0;
   }
 
-  char* base = ExprBaseAddress(bin);
-  return (uint_t)SlotSpace(base + bin->start, base + bin->stop, bin->size);
+  char* begin = ExprBaseAddress(bin);
+  return (uint_t)SlotSpace(begin + bin->start, begin + bin->stop, bin->size);
 }
 
 uintptr_t* ExprBaseAddress(void* ptr, uint_t rx_tx_offset) {
@@ -902,7 +902,7 @@ const Op* ExprQuery(Expr* expr, const Op* op) {
   return op;
 }
 
-#if CRABS_UTF
+#if CRABS_TEXT
 Utf8& PrintExprStack(Utf8& print, Expr* expr) {
   ASSERT(expr);
 

@@ -19,7 +19,7 @@
 #include "test_seam_0.h"
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 3
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PRINT_PAUSE(message)   \
+#define PAUSE(message)   \
   Printf("\n\n%s\n", message); \
   system("PAUSE");
 #define PRINT_HEADING(message)                   \
@@ -29,7 +29,7 @@
   for (int i = 79; i > 0; --i) std::cerr << '-';
 #else
 #define PRINTF(x, ...)
-#define PRINT_PAUSE(message)
+#define PAUSE(message)
 #define PRINT_HEADING(message)
 #endif
 
@@ -50,9 +50,9 @@ TEST(SEAM_1_3, SEAM_1_3A) {
 
   COUT << "Testing " << 1 << ", 2, " << -3;
 
-  PRINT_HEADING("\nTesting SEAM_1_3... ");
+  PRINT_HEADING("\nTesting SEAM_0_0_3... ");
 
-  PRINTF("\n\nTesting ASCII Object Types");
+  PRINTF("\n\nTesting ASCII OBJ Types");
 
   PRINTF("\n\nTesting Stack...\n\nPushing items on to the Stack...\n");
 
@@ -86,7 +86,7 @@ TEST(SEAM_1_3, SEAM_1_3A) {
       for (int y = 0; y < 2; ++y)
           for (int x = 0; x < 2; ++x)
               CHECK_EQUAL (i++, array_3d_exected[x][y][z])
-  
+  
 
 
 
@@ -99,7 +99,9 @@ TEST(SEAM_1_3, SEAM_1_3A) {
 
 
 
-  PRINT_PAUSE ("\n\nDone Array!")
+
+
+  PAUSE ("\n\nDone Array!")
   */
 
   PRINT_HEADING("\n\nTest List...\n\n")
@@ -152,7 +154,9 @@ TEST(SEAM_1_3, SEAM_1_3A) {
   PRINTF("\n\nDone testing Map!")
 
   /*
-  
+  
+
+
 
 
 
@@ -183,7 +187,7 @@ TEST(SEAM_1_3, SEAM_1_3A) {
   CHECK_EQUAL (0, index)
   index = multimap.Find (multimap, "D");
   CHECK_EQUAL (0, index)
-  PRINT_PAUSE ("\n");
+  PAUSE ("\n");
   index = multimap.Add (multimap, "C", (byte)0xFF);
   CHECK_EQUAL (1, index)
   index = multimap.Find (multimap, "D");
@@ -246,12 +250,12 @@ TEST(SEAM_1_3, SEAM_1_3A) {
   index = multimap.Add (multimap, "test", (byte)0xFF);
   CHECK_EQUAL (index, -1)
 
-  PRINT_PAUSE ("\n\nDone Multimap!")*/
+  PAUSE ("\n\nDone Multimap!")*/
 
-  PRINT_PAUSE("\n\nDone Testing SEAM_1_3! ({:-)-+=<")
+  PAUSE("\n\nDone Testing SEAM_1_3! ({:-)-+=<")
 }
 
 #undef PRINTF
-#undef PRINT_PAUSE
+#undef PAUSE
 #undef PRINT_HEADING
 #endif  //< #if SEAM_MAJOR >= 1 && SEAM_MINOR >= 3

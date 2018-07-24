@@ -13,6 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
 #ifndef HEADER_FOR_CRABS_FLOOR
 #define HEADER_FOR_CRABS_FLOOR
 #include "config.h"
@@ -29,11 +30,9 @@ struct KABUKI Floor {
 };
 
 /* Returns the the global Floor. */
-KABUKI Floor* FloorInit();
-
-/* Returns the the global Floor. */
-inline KABUKI Floor* Global();
+KABUKI inline Floor* Global();
 
 }  // namespace _
 
-#endif  //< #if HEADER_FOR_CRABS_FLOOR
+#endif  // #if HEADER_FOR_CRABS_FLOOR
+#endif  // #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2

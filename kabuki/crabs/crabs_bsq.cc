@@ -14,9 +14,9 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
 // Dependencies:
-#include "assert.h"
+#include "debug.h"
 #include "bsq.h"
-#include "utf8.h"
+#include "str1.h"
 // End dependencies.
 
 namespace _ {

@@ -14,11 +14,11 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
-#include "assert.h"
+#include "debug.h"
 #include "bsq.h"
 #include "op.h"
 #include "slot.h"
-#include "utf8.h"
+#include "str1.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
@@ -30,7 +30,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-#if CRABS_UTF
+#if CRABS_TEXT
 Utf8& Print(Utf8& print, const Op* op) {
   if (!op) {
     return print << "\nOp: nil";
@@ -41,7 +41,7 @@ Utf8& Print(Utf8& print, const Op* op) {
 }
 #endif
 /*
-#if CRABS_UTF
+#if CRABS_TEXT
 Op OpInit (uintptr_t* buffer, uint_t buffer_size) {
     BOut* bout = BOutInit (buffer, buffer_size);
     Op log;
@@ -64,7 +64,7 @@ void Print (Op& log) {
     uint64_t si8;
     float    flt;
     double   dbl;
-    char_t   index;
+    char   index;
     //if (BinReadChar (reinterpret_cast<BIn*> (log.bout), index))
     //    return;
     char buffer[DBL_MAX_10_EXP + 2];

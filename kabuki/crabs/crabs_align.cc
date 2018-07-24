@@ -12,19 +12,11 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#include "socket.h"
 
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-// Dependencies:
-// None
-// End dependencies.
-#if SEAM_MAJOR == 0 && SEAM_MINOR == 3
-#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PRINT(c) Print(c)
-#else
-#define PRINTF(x, ...)
-#define PRINT(c)
-#endif
+#include "align.h"
+#include "socket.h"
+#include "talign.h"
 
 namespace _ {
 
@@ -58,6 +50,38 @@ int32_t AlignPowerOf2(int32_t value) {
   ++v;
   return (int32_t)value;
 }
+
+uintptr_t* AlignUpCacheLine(uintptr_t* buffer) {
+  return AlignUp<kCpuCacheLineSize, uintptr_t>(buffer);
+}
+
+char* AlignUpPointerWord(char* pointer) {
+  return AlignUpPointerWord<char>(pointer);
+}
+
+const char* AlignUpPointerWord(const char* pointer) {
+  return AlignUpPointerWord<char>(pointer);
+}
+
+char* AlignDownPointerWord(char* pointer) {
+  return AlignDownPointer<char>(pointer);
+}
+
+const char* AlignDownPointerWord(const char* pointer) {
+  return AlignDownPointer<char>(pointer);
+}
+
+uintptr_t* AlignUp(uintptr_t* pointer, uintptr_t boundary_bit_count) {
+  return AlignUp<uintptr_t>(pointer, boundary_bit_count);
+}
+
+int8_t AlignUp(int8_t value) { return AlignUp<8, int8_t>(value); }
+
+int16_t AlignUp(int16_t value) { return AlignUp<8, int16_t>(value); }
+
+int32_t AlignUp(int32_t value) { return AlignUp<8, int32_t>(value); }
+
+int64_t AlignUp(int64_t value) { return AlignUp<8, int64_t>(value); }
 
 }  // namespace _
 #undef PRINTF

@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
-#include "assert.h"
+#include "debug.h"
 #include "bsq.h"
 #include "door.h"
 #include "room.h"
@@ -207,7 +207,7 @@ uintptr_t Room::GetSizeBytes() {
   return count;
 }
 
-#if CRABS_UTF
+#if CRABS_TEXT
 Utf8& Room::Print(Utf8& print) { return print << "\nRoom: "; }
 #endif
 

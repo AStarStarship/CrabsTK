@@ -24,7 +24,7 @@ using namespace std;
 
 #if SEAM_MAJOR == 2 && SEAM_MINOR == 2
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PRINT_PAUSE(message)\
+#define PAUSE(message)\
     Printf ("\n\n%s\n", message); system ("PAUSE");
 #define PRINT_HEADING(message) \
     std::cerr << '\n';\
@@ -36,7 +36,7 @@ using namespace std;
     for (int i = 80; i > 0; --i) std::cerr << '-';
 #else
 #define PRINTF(x, ...)
-#define PRINT_PAUSE(message)
+#define PAUSE(message)
 #define PRINT_HEADING(message)
 #define PRINT_LINE
 #endif
@@ -46,7 +46,7 @@ TEST_GROUP (SEAM_2_1) {
     }
 
     void teardown () {
-        PRINT_PAUSE ("\n\nDone testing SEAM_2!")
+        PAUSE ("\n\nDone testing SEAM_2!")
     }
 };
 
@@ -58,6 +58,6 @@ TEST (SEAM_2_1, SEAM_2_1) {
 
 #undef PRINTF
 #undef PRINT_HEADING
-#undef PRINT_PAUSE
+#undef PAUSE
 #else
 #endif  //< #if SEAM_MAJOR >= 2 && SEAM_MINOR >= 0

@@ -21,16 +21,16 @@
 
 using namespace _;
 
-int main(int args_count, char** args) {
-  Print('+');
-  for (int i = 81; i > 0; --i) {
-    Print('-');
-  }
-  Printf("\n| Kabuki Toolkit Tests\n+");
-  for (int i = 81; i > 0; --i) {
-    Print('-');
-  }
-  Print('\n');
+int main(int args_count, char** args) { /*
+                                          Print('+');
+                                          for (int i = 81; i > 0; --i) {
+                                            Print('-');
+                                          }
+                                          Printf("\n| Kabuki Toolkit Tests\n+");
+                                          for (int i = 81; i > 0; --i) {
+                                            Print('-');
+                                          }
+                                          Print('\n');*/
   MemoryLeakWarningPlugin::turnOffNewDeleteOverloads();
   int result = CommandLineTestRunner::RunAllTests(args_count, args);
   system("PAUSE");
@@ -94,8 +94,8 @@ int main () {
     // Wait for the timer-queue thread to complete using an event
     // object. The thread will signal the event at that time.
 
-    if (WaitForSingleObject (gDoneEvent, INFINITE) != WAIT_OBJECT_0)
-        Printf ("WaitForSingleObject failed (%d)\n", GetLastError ());
+    if (WaitForSingleObj (gDoneEvent, INFINITE) != WAIT_OBJECT_0)
+        Printf ("WaitForSingleObj failed (%d)\n", GetLastError ());
 
     CloseHandle (gDoneEvent);
 

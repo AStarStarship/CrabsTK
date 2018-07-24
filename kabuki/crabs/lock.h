@@ -19,10 +19,10 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* Locks the processor. */
-inline KABUKI void RoomLock();
+KABUKI inline void RoomLock();
 
 /* Unlocks the processor. */
-inline KABUKI void RoomUnlock();
+KABUKI inline void RoomUnlock();
 
 }  // namespace _
 

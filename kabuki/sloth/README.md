@@ -26,7 +26,7 @@
               `~'
 ```
 
-# #Sloth
+# sloth API
 
 Sloth is a utility for integrating multiple C++ APIs into a single SDK with a unified style sheet.
 

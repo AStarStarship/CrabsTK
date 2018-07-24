@@ -177,7 +177,7 @@ class Array {
  public:
   /* Initializes an array of n elements of the given type.
       @param max_elements The max number of elements in the array buffer. */
-  Array(SI demension_count = 1) : ascii_obj_(ArrayNew<T, UI, SI>(1)) {}
+  Array(SI demension_count = 1) : begin(ArrayNew<T, UI, SI>(1)) {}
 
   /* Initializes an array of n elements of the given type.
       @param max_elements The max number of elements in the array buffer. */
@@ -186,26 +186,26 @@ class Array {
         size_stack(other.size_stack),
         count_max(other.count_max),
         count(other.count) {
-    SI *elements_other = StackElements<SI, UI, SI>(other.Object()),
-       *element = StackElements<SI, UI, SI>(Object()),
-       *elements_end = StackElementsEnd<SI, UI, SI>(Object());
+    SI *elements_other = StackElements<SI, UI, SI>(other.Obj()),
+       *element = StackElements<SI, UI, SI>(Obj()),
+       *elements_end = StackElementsEnd<SI, UI, SI>(Obj());
     while (element < elements_end) *element++ = *elements_other++;
   }
 
   /* Deletes the dynamically allocated Array. */
-  ~Array() { delete[] ascii_obj_; }
+  ~Array() { delete[] begin; }
 
   /* Clones the other object; upsizing the buffer only if required. */
   void Clone(Array<T, UI, SI>& other) {}
 
   /* Gets the number of dimensions. */
-  SI GetDimensionCount() { return Object()->count; }
+  SI GetDimensionCount() { return Obj()->count; }
 
   /* Gets the dimensions array. */
-  T* Dimension() { return StackElements<T, UI, SI>(Object()); }
+  T* Dimension() { return StackElements<T, UI, SI>(Obj()); }
 
   /* Gets the underlying array. */
-  T* Elements() { return ArrayElements<T, UI, SI>(Object()); }
+  T* Elements() { return ArrayElements<T, UI, SI>(Obj()); }
 
   /* Operator= overload. */
   inline Array<T, UI, SI>& operator=(Array<T, UI, SI>& other) {
@@ -213,23 +213,23 @@ class Array {
     return *this;
   }
 
-  inline CArray<T, UI, SI>* Object() {
-    return reinterpret_cast<CArray<T, UI, SI>*>(ascii_obj_);
+  inline CArray<T, UI, SI>* Obj() {
+    return reinterpret_cast<CArray<T, UI, SI>*>(begin);
   }
 
  private:
-  uintptr_t* ascii_obj_;  //< Dynamically allocted word-aligned buffer.
-};                        //< class Array
+  uintptr_t* begin;  //< Dynamically allocted word-aligned buffer.
+};                   //< class Array
 }  // namespace _
 
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline _::Utf8& operator<<(_::Utf8& printer, _::Stack<T, UI, SI>* stack) {
-  return _::PrintArray<T, UI, SI>(printer, stack->Object());
+  return _::PrintArray<T, UI, SI>(printer, stack->Obj());
 }
 
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline _::Utf8& operator<<(_::Utf8& printer, _::Stack<T, UI, SI>& stack) {
-  return _::PrintArray<T, UI, SI>(printer, stack.Object());
+  return _::PrintArray<T, UI, SI>(printer, stack.Obj());
 }
 
 #endif  //< HEADER_FOR_CRABS_ARRAY

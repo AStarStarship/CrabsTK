@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 #include <random>
-#include "../../kabuki/crabs/assert.h"
+#include "../../kabuki/crabs/debug.h"
 #include "../../kabuki/crabs/global.h"
 #include "test_seam_0.h"
 
@@ -22,18 +22,18 @@ specific language governing permissions and limitations under the License. */
 using namespace _;
 
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 0
-#define PRINT(item) Print(item);
+#define PRINT(item)  // Print(item);
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PRINT_PAUSE(message)   \
+#define PAUSE(message)         \
   Printf("\n\n%s\n", message); \
   Pause();
 #else
 #define PRINT(item)
 #define PRINTF(x, ...)
-#define PRINT_PAUSE(message)
+#define PAUSE(message)
 #endif
 
-TEST_GROUP(SEAM_0_0){void setup(){} void teardown(){PRINT_PAUSE("\n")}};
+TEST_GROUP(SEAM_0_0){void setup(){} void teardown(){PAUSE("\n")}};
 
 TEST(SEAM_0_0, SEAM_0_0_0) {
   PRINT("\n    Testing SEAM_0_0... ");
@@ -147,14 +147,14 @@ TEST(SEAM_0_0, SEAM_0_0_0) {
            (uint)strlen(expecting));
     result = Print(text, text + kSize, value);
     if (!result) {
-      PRINT_PAUSE("An error occurred :-(")
+      PAUSE("An error occurred :-(")
       break;
     }
     *result = 0;
     if (strcmp(expecting, text)) {
       PRINTF("\n\nERROR: Expecting \"%s\":%u and found \"%s\":%u", expecting,
              (uint)strlen(expecting), text, (uint)strlen(text));
-      PRINT_PAUSE("\n")
+      PAUSE("\n")
     }
   }
 
@@ -165,14 +165,14 @@ TEST(SEAM_0_0, SEAM_0_0_0) {
     PRINTF("\n%i.) ", i + 1);
     result = Print(text, text + kSize, value);
     if (!result) {
-      PRINT_PAUSE("An error occurred :-(")
+      PAUSE("An error occurred :-(")
       break;
     }
     *result = 0;
     if (strcmp(expecting, text)) {
       PRINTF("\n\nERROR: Expecting \"%s\":%u and found \"%s\":%u", expecting,
              (uint)strlen(expecting), text, (uint)strlen(text));
-      PRINT_PAUSE("\n")
+      PAUSE("\n")
     }
   }
 
@@ -183,23 +183,33 @@ TEST(SEAM_0_0, SEAM_0_0_0) {
     sprintf_s(expecting, 24, "%u", value);
     result = Print(text, text + kSize, value);
     if (!result) {
-      PRINT_PAUSE("An error occurred :-(")
+      PAUSE("An error occurred :-(")
       break;
     }
     *result = 0;
     if (strcmp(expecting, text)) {
       PRINTF("\n\nERROR: Expecting \"%s\":%u and found \"%s\":%u", expecting,
              (uint)strlen(expecting), text, (uint)strlen(text));
-      PRINT_PAUSE("\n")
+      PAUSE("\n")
     }
   }
 
   PRINTF("\n Done testing ItoS :)\n\n");
+
+  PRINTF("\nTesting ScanUnsigned<Char, I> (const Char*, const char*, I);");
+
+  for (int i = 0; i < 1 << 6; ++i) {
+    uint32_t result, value = distr(eng);
+    char buffer[25];
+    Print(buffer, buffer + 24, value);
+    CHECK(Scan(buffer, result));
+    CHECK_EQUAL(value, result);
+  }
 }
 
 #undef PRINT
 #undef PRINTF
-#undef PRINT_PAUSE
+#undef PAUSE
 #else
 void TestSeam_1_1() {}
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0

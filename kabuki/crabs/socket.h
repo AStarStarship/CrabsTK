@@ -50,26 +50,41 @@ struct Socket {
   Socket& operator=(const Socket& other);
 };
 
+/* Creates a block of dynamic memory. */
+KABUKI inline uintptr_t* New(intptr_t size);
+
 /* Converts the pointer to a std::uintptr_t. */
-inline KABUKI uintptr_t UIntPtr(const void* value);
+KABUKI inline uintptr_t UIntPtr(const void* value);
 
 /* Converts the std::uintptr_t to a pointer. */
-inline KABUKI void* VoidPtr(uintptr_t value);
+KABUKI inline void* VoidPtr(uintptr_t value);
 
 /* Converts the std::uintptr_t to a pointer. */
-inline KABUKI const void* ConstVoidPtr(uintptr_t value);
+KABUKI inline const void* ConstVoidPtr(uintptr_t value);
 
 /* Calculates the difference between the begin and end address. */
-inline KABUKI intptr_t SocketSize(const void* begin, const void* end);
+KABUKI inline intptr_t SizeOf(const void* begin, const void* end);
 
 /* Overwrites the memory with zeros functionally identical to memset. */
 KABUKI char* SocketClear(char* begin, char* end, intptr_t size);
+
+/* Overwrites the memory with zeros functionally identical to memset. */
+KABUKI char* SocketClear(void* begin, intptr_t size, intptr_t byte_count);
 
 /* Overwrites the memory with zeros functionally identical to memset.
 @return False upon failure. */
 KABUKI bool SocketWipe(void* begin, void* end, intptr_t size);
 
-inline KABUKI char* SocketCopy(void* begin, intptr_t size, const void* read,
+KABUKI char* SocketCopy(void* begin, intptr_t size, const void* read,
+                        intptr_t read_size);
+
+/* Copies the source to the target functionally identical to memcpy.
+@param  begin The begin of the write buffer.
+@param  end   The end of the write buffer.
+@param  start The start of the read buffer.
+@param  size      Number of bytes to copy.
+@return Pointer to the last byte written or nil upon failure. */
+KABUKI inline char* SocketCopy(void* begin, void* end, const void* start,
                                intptr_t read_size);
 
 /* Copies the source to the target functionally identical to memcpy.
@@ -78,48 +93,35 @@ inline KABUKI char* SocketCopy(void* begin, intptr_t size, const void* read,
     @param  start The start of the read buffer.
     @param  stop  The stop of the read buffer.
     @return Pointer to the last byte written or nil upon failure. */
-inline KABUKI char* SocketCopy(void* begin, void* end, const void* start,
+KABUKI inline char* SocketCopy(void* begin, void* end, const void* start,
                                const void* stop);
 
-/* Copies the source to the target functionally identical to memcpy.
-    @param  begin The begin of the write buffer.
-    @param  end   The end of the write buffer.
-    @param  start The start of the read buffer.
-    @param  size      Number of bytes to copy.
-    @return Pointer to the last byte written or nil upon failure. */
-inline KABUKI char* SocketCopy(void* begin, void* end, const void* start,
-                               intptr_t read_size);
-
 /* Compares the two memory sockets.
-    @param  begin The beginning of buffer a.
-    @param  end   The end of buffer a.
-    @param  start The start of buffer b.
-    @param  stop  The stop of buffer b.
+    @param  begin_a The beginning of Socket A.
+    @param  end_a   The end of Socket A.
+    @param  begin_b The start of Socket B.
+    @param  stop_b  The stop of Socket B.
     @return True if they are the same and false if they are not. */
 KABUKI bool SocketCompare(const void* begin, const void* end, const void* start,
                           const void* stop);
 
-inline KABUKI bool SocketCompare(void* begin, void* end, const void* read,
-                                 uintptr_t read_size);
+/* Compares the two memory sockets.
+@param  begin_a The beginning of Socket A.
+@param  end_a   The end of Socket A.
+@param  begin_a The start of Socket B.
+@param  size_b  The size of Socket B.
+@return True if they are the same and false if they are not. */
+KABUKI inline bool SocketCompare(const void* begin_a, void* end_a,
+                                 const void* begin_b, intptr_t read_size);
 
-inline KABUKI bool SocketCompare(void* begin, size_t write_size,
-                                 const void* read, uintptr_t read_size);
-
-template <typename T>
-inline T* Ptr(const void* ptr) {
-  return reinterpret_cast<T*>(ptr);
-}
-
-/* Utility function for syntactical sugar creating a pointer from a base plus
-offset.
-@return Pointer of the type specified by template paramter T.
-@param base The base address.
-@param offset The offset.
-*/
-template <typename T>
-inline T* Ptr(const void* base, intptr_t offset) {
-  return reinterpret_cast<T*>(reinterpret_cast<uintptr_t>(base) + offset);
-}
+/* Compares the two memory sockets.
+@param  begin_a The beginning of buffer a.
+@param  size_a  The size of Socket A .
+@param  begin_a The start of buffer b.
+@param  size_b  The size of Socket B.
+@return True if they are the same and false if they are not. */
+KABUKI inline bool SocketCompare(const void* begin_a, intptr_t size_a,
+                                 const void* begin_b, intptr_t size_b);
 
 }  // namespace _
 

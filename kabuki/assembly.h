@@ -32,9 +32,9 @@
 
 #define WORD_SIZE 64
 
-#define CRABS_FORCE_WORD_ALIGN NO
+#define FORCE_WORD_ALIGN NO
 
-#define CPU_ENDIANESS LITTLE
+#define BIG_ENDIAN IS_NOT_STUPID
 
 /* @brief The Memory Profiles 1-4 are used to signal that the system is
     memory constrained.

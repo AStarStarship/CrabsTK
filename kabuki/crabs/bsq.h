@@ -17,8 +17,8 @@ specific language governing permissions and limitations under the License. */
 #ifndef HEADER_FOR_CRABS_BSQ
 #define HEADER_FOR_CRABS_BSQ
 // Dependencies:
-#include "utf8.h"
 #include "ascii_data_types.h"
+#include "str1.h"
 // End dependencies.
 
 namespace _ {
@@ -152,12 +152,26 @@ KABUKI Utf8& PrintBsq(Utf8& printer, const uint_t* params);
 /*< Returns the requested parameter number. */
 KABUKI uint_t BsqParamNumber(const uint_t* bsq, int param_number);
 
-}   //< namespace _
+}  // namespace _
 
+#if USING_UTF8
 /*  Prints out the parameters. */
 inline _::Utf8& operator<<(_::Utf8& printer, _::Bsq bsq) {
   return _::PrintBsq(printer, bsq.params);
 }
+#endif  //< USING_UTF8
+#if USING_UTF16
+/*  Prints out the parameters. */
+inline _::Utf16& operator<<(_::Utf16& printer, _::Bsq bsq) {
+  return _::PrintBsq(printer, bsq.params);
+}
+#endif  //< USING_UTF16
+#if USING_UTF32
+/*  Prints out the parameters. */
+inline _::Utf32& operator<<(_::Utf32& printer, _::Bsq bsq) {
+  return _::PrintBsq(printer, bsq.params);
+}
+#endif  //< USING_UTF8
 
 #endif  //< HEADER_FOR_CRABS_BSQ
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3

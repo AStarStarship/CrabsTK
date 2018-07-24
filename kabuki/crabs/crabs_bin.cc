@@ -15,10 +15,10 @@ specific language governing permissions and limitations under the License. */
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
 #include "ascii_data_types.h"
-#include "assert.h"
 #include "bin.h"
 #include "bout.h"
 #include "bsq.h"
+#include "debug.h"
 #include "hash.h"
 #include "hex.h"
 #include "line.h"
@@ -26,7 +26,6 @@ specific language governing permissions and limitations under the License. */
 #include "socket.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
-#define DEBUG 1
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT(c) Print(c)
 #define CLEAR(begin, end) \
@@ -43,7 +42,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-#if CRABS_UTF
+#if CRABS_TEXT
 const char** BInStateStrings() {
   static const char* kStateStrings[] = {
       "Address",       //< 0
@@ -52,7 +51,7 @@ const char** BInStateStrings() {
       "UTF-16",        //< 3
       "UTF-32",        //< 4
       "Varint",        //< 5
-      "Object",        //< 6
+      "Obj",           //< 6
       "Hash",          //< 7
       "Error",         //< 8
       "Disconnected",  //< 9
@@ -139,8 +138,8 @@ int BInStreamByte(BIn* bin) {
     return -1;
   }
   // byte b = *cursor;
-  bin->stop = (++begin >= end) ? static_cast<uint_t>(SocketSize(begin, end))
-                               : static_cast<uint_t>(SocketSize(begin, begin));
+  bin->stop = (++begin >= end) ? static_cast<uint_t>(Size(begin, end))
+                               : static_cast<uint_t>(Size(begin, begin));
   return 0;
 }
 
@@ -196,8 +195,8 @@ const Op* BInRead(BIn* bin, const uint_t* params, void** args) {
   for (index = 1; index <= num_params; ++index) {
     type = params[index];
     PRINTF("\nparam:%u type:%s start:%i stop:%i length:%u", arg_index + 1,
-           TypeString(type), (int)SocketSize(begin, start),
-           (int)SocketSize(begin, stop), length)
+           TypeString(type), (int)Size(begin, start), (int)Size(begin, stop),
+           length)
     switch (type) {
       case NIL:
         return BInError(bin, kErrorInvalidType, params, index, start);
@@ -588,12 +587,12 @@ const Op* BInRead(BIn* bin, const uint_t* params, void** args) {
   CLEAR(begin, end)
 
   // Convert pointer back to offset
-  bin->start = (uint_t)SocketSize(begin, start);
+  bin->start = (uint_t)Size(begin, start);
 
   return 0;
 }
 
-#if CRABS_UTF
+#if CRABS_TEXT
 Utf8& Print(Utf8& print, BIn* bin) {
   ASSERT(bin);
 

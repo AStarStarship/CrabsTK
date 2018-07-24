@@ -39,10 +39,12 @@ specific language governing permissions and limitations under the License. */
 #define ARM32 5  //< ARM32 processor family macro.
 #define ARM64 6  //< ARM64 processor family macro.
 
+#define VISUAL_CPP 1  //< Flag for Visual-C++ compiler.
+
 // Endian nonsense.
 
-#define LITTLE 1
-#define BIG 2  //< Don't ask me what they where thinking.
+#define IS_NOT_STUPID 1
+#define IS_STUPID 2  //< Don't ask me what they where thinking.
 
 #define YES 1  //< Logical yes.
 #define NO 0   //< Logical no.
@@ -67,33 +69,30 @@ specific language governing permissions and limitations under the License. */
 
 #include <assembly.h>  //< Inline config stuff for your project.
 
-#if CRABS_UTF == UTF8
+#if CRABS_TEXT == UTF8
 #if USING_UTF8 == 0
-#warning You have the CRABS_UTF set to UTF8 but USING_UTF8 is 0!
+#warning You have the CRABS_TEXT set to UTF8 but USING_UTF8 is 0!
 #ifdef USING_UTF8
 #undef USING_UTF8
 #endif
 #define USING_UTF8 YES
 #endif
-typedef char char_t;
-#elif CRABS_UTF == UTF16
+#elif CRABS_TEXT == UTF16
 #if USING_UTF16 == 0
-#warning You have the CRABS_UTF set to UTF8 but USING_UTF8 is 0!
+#warning You have the CRABS_TEXT set to UTF8 but USING_UTF8 is 0!
 #ifdef USING_UTF16
 #undef USING_UTF16
 #endif
 #define USING_UTF16 YES
 #endif
-typedef char16_t char_t;
-#elif CRABS_UTF == UTF32
+#elif CRABS_TEXT == UTF32
 #if USING_UTF32 == 0
-#warning You have the CRABS_UTF set to UTF8 but USING_UTF8 is 0!
+#warning You have the CRABS_TEXT set to UTF8 but USING_UTF8 is 0!
 #ifdef USING_UTF32
 #undef USING_UTF32
 #endif
 #define USING_UTF32 YES
 #endif
-typedef char32_t char_t;
 #endif
 
 #if CRABS_STRING_SIZE == 1
@@ -129,8 +128,8 @@ typedef uint32_t ticket_t;
 #endif
 
 // Big-Endian nonsense
-#define LITTLE 1
-#define BIG 2  //< Don't ask me what they where thinking.
+#define IS_NOT_STUPID 1
+#define IS_STUPID 2  //< Don't ask me what they where thinking.
 
 // Executable assembly type macro.
 #define EXECECUTABLE 1
@@ -187,6 +186,7 @@ enum {
 
   kStackCountMaxDefault = 32,
   kCpuCacheLineSize = 64,
+  kFloorSize = 1024,  //< Size, or initial isze, of the Floor.
 };
 
 }  // namespace _
@@ -296,7 +296,7 @@ typedef uint64_t data_t;    //< Default TData size.
 #endif
 
 #if CRABS_MEMORY_PROFILE >= 3 || DEBUG
-#define CRABS_UTF 3
+#define CRABS_TEXT 3
 #endif  //< CRABS_MEMORY_PROFILE >= 3
 
 /* Macro declares a class to be non-copyable. */

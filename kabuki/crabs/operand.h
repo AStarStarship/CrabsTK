@@ -72,7 +72,7 @@ KABUKI uintptr_t OperandCount(Operand* op);
             Contain the given key. */
 KABUKI wchar_t OperandIndex(Operand* operand, char* key_begin, char* key_end);
 
-#if CRABS_UTF
+#if CRABS_TEXT
 /* Queries the given Operand Op Header.
     @param  expr The expression to write the query to. Set to nil to return
                  op.
@@ -92,7 +92,7 @@ KABUKI Utf8& PrintOperand(Utf8& slot, Operand* operand);
 
 }   //< namespace _
 
-#if CRABS_UTF
+#if CRABS_TEXT
 /* Overloaded operator<< prints the given operand to the text. */
 inline _::Utf8& operator<<(_::Utf8& printer, _::Operand* operand) {
   return _::PrintOperand(printer, operand);

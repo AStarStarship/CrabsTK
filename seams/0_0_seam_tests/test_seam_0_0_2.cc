@@ -1,63 +1,51 @@
 /* Kabuki Toolkit
 @version 0.x
 @file    ~/tests/test_seam_1_2.cc
-@author  Cale McCollough <calemccollough.github.io>
-@license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
 
+#include <random>
 #include "test_seam_0.h"
 
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 2
 #define PRINT(item) Print(item)
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PRINT_PAUSE(message)   \
-  Printf("\n\n%s\n", message); \
-  system("PAUSE");
-#define PRINT_HEADING(message)              \
-  Print('\n');                              \
-  for (int i = 80; i > 80; --i) Print('-'); \
-  Print('\n');                              \
-  Printf(message);                          \
-  Print('\n');                              \
-  for (int i = 80; i > 80; --i) Print('-')
-#define PRINT_LINE(c) \
-  Print('\n');        \
-  for (int i = 80; i > 0; --i) Print(c);
+#define PAUSE(message) Pause(message)
+#define PRINT_HEADING(message) PrintHeading(message)
+#define PRINT_LINE(c) PrintLine(c);
 #else
 #define PRINT(item)
 #define PRINTF(x, ...)
-#define PRINT_PAUSE(message)
+#define PAUSE(message)
 #define PRINT_HEADING(c)
 #define PRINT_LINE(c)
 #endif
 
 using namespace _;
 
-TEST_GROUP(SEAM_1_2){void setup(){}
+TEST_GROUP(SEAM_0_0_2){void setup(){}
 
-                     void teardown(){Print('\n');
-system("PAUSE");
+                       void teardown(){Pause("\n");
 }
 }
 ;
 
-TEST(SEAM_1_2, SEAM_1_2A) {
-  PRINT_HEADING("Testing SEAM_1_2A...");
+TEST(SEAM_0_0_2, SEAM_0_0_2A) {
+  PRINT_HEADING("Testing SEAM_0_0_2...");
+
   PRINTF("\n\nTesting Text...");
-#if CRABS_UTF
+#if CRABS_TEXT
   enum {
     kCompareStringsCount = 5,
     kSize = 2048,
@@ -146,7 +134,6 @@ TEST(SEAM_1_2, SEAM_1_2A) {
   CHECK(TextFind(kTestingString, "one"));
   CHECK(TextFind(kTestingString, "three."));
 
-  PRINT('-');
   PRINTF("\n\n    Testing PrintRight...");
 
   CHECK(PrintRight(buffer, buffer + kSize, kTestingString, 28));
@@ -170,8 +157,9 @@ TEST(SEAM_1_2, SEAM_1_2A) {
 
   PRINTF("\n\n    Testing PrintCentered...");
 
-  for (int i = 0; i < 4; ++i)
+  for (int i = 0; i < 4; ++i) {
     PRINTF("\n    %i.)\"%s\"", i, kStringsCentered[i]);
+  }
 
   utf.Set(buffer) << Center(kStringNumbers, 10);
   STRCMP_EQUAL(kStringNumbers, buffer);
@@ -277,12 +265,12 @@ TEST(SEAM_1_2, SEAM_1_2A) {
                          kTestCharsCount));
   }
 
-  PRINTF("\n\nDone testing MemoryCopy!");
-#endif  //< #if CRABS_UTF
-  PRINT_PAUSE("Done testing SEAM_1_2! ({:-)-+=<");
+  PRINTF("\n\nDone testing MemoryCopy!\n");
+#endif  //< #if CRABS_TEXT
+  PAUSE("Done testing SEAM_0_0_2! ({:-)-+=<");
 }
 
-#undef PRINT_PAUSE
+#undef PAUSE
 #undef PRINTF
 #else
 void TestSeam_1_2() {}

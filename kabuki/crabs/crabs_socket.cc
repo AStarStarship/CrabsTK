@@ -14,18 +14,18 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
 // Dependencies:
-#include "assert.h"
-#include "console.h"
+#include "align.h"
+#include "debug.h"
 #include "hex.h"
 #include "socket.h"
-#include "utfn.h"
+#include "ttext.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 2
 #define PRINT(item) Print(item)
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define SOCKET_SAVE(cursor, end_ptr) Socket socket_to_print(cursor, end_ptr);
+#define SOCKET_SAVE(cursor, end_a) Socket socket_to_print(cursor, end_a);
 #define SOCKET_PRINT \
-  Str<>(&COut) << Socket(socket_to_print.cursor, socket_to_print.end_ptr);
+  TStr<>(&COut) << Socket(socket_to_print.cursor, socket_to_print.end_a);
 #else
 #define PRINT(item)
 #define PRINTF(x, ...)
@@ -35,7 +35,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-uintptr_t* MemoryCreate(uintptr_t size) { return new uintptr_t[size]; }
+uintptr_t* New(intptr_t size) { return new uintptr_t[size]; }
 
 void MemoryDestroy(uintptr_t* buffer) { delete buffer; }
 
@@ -43,35 +43,34 @@ uintptr_t UIntPtr(const void* value) {
   return reinterpret_cast<uintptr_t>(value);
 }
 
-void* VoidPtr(std::uintptr_t value) { return reinterpret_cast<void*>(value); }
+void* VoidPtr(uintptr_t value) { return reinterpret_cast<void*>(value); }
 
-const void* ConstVoidPtr(std::uintptr_t value) {
+const void* ConstVoidPtr(uintptr_t value) {
   return reinterpret_cast<const void*>(value);
 }
 
-intptr_t SocketSize(void* begin, void* end) {
+intptr_t SizeOf(void* begin, void* end) {
   return reinterpret_cast<char*>(end) - reinterpret_cast<char*>(begin);
 }
 
-intptr_t SocketSize(const void* begin, const void* end) {
+intptr_t SizeOf(const void* begin, const void* end) {
   return reinterpret_cast<const char*>(end) -
          reinterpret_cast<const char*>(begin);
 }
 
-char* SocketClear(char* cursor, char* end, intptr_t count) {
+char* SocketClear(char* cursor, char* end, intptr_t byte_count) {
   ASSERT(cursor);
-  ASSERT(count > 0);
-  ASSERT(size > 0);
+  ASSERT(byte_count > 0);
 
-  if ((end - cursor) < count) {
+  if ((end - cursor) < byte_count) {
     PRINT("\nBuffer overflow!");
     return nullptr;
   }
-  end = cursor + count;
+  end = cursor + byte_count;
 
-  PRINTF("\nFilling %i bytes from %p", (int)count, cursor);
+  PRINTF("\nFilling %i bytes from %p", (int)byte_count, cursor);
 
-  if (count < (2 * sizeof(void*) + 1)) {
+  if (byte_count < (2 * sizeof(void*) + 1)) {
     while (cursor < end) *cursor++ = 0;
     return cursor;
   }
@@ -83,9 +82,9 @@ char* SocketClear(char* cursor, char* end, intptr_t count) {
   // 3.) Align write_end pointer down and copy the unaligned bytes in the
   //     upper memory region.
   // 4.) Copy the word-aligned middle region.
-  char *success = end, *aligned_pointer = AlignUpPointer<>(cursor);
+  char *success = end, *aligned_pointer = AlignUpPointerWord(cursor);
   while (cursor < aligned_pointer) *cursor++ = 0;
-  aligned_pointer = AlignDownPointer<>(end);
+  aligned_pointer = AlignDownPointerWord(end);
   while (end > aligned_pointer) *end-- = 0;
 
   uintptr_t *words = reinterpret_cast<uintptr_t*>(cursor),
@@ -95,8 +94,14 @@ char* SocketClear(char* cursor, char* end, intptr_t count) {
 
   return success;
 }
+char* SocketClear(void* cursor, intptr_t size, intptr_t count) {
+  return SocketClear(reinterpret_cast<char*>(cursor),
+                     reinterpret_cast<char*>(cursor) + size, count);
+}
+
 bool SocketWipe(void* cursor, void* end, intptr_t count) {
-  return SocketClear (Ptr<char> (cursor), Ptr<char> (end), count), count) != nullptr;
+  return SocketClear(reinterpret_cast<char*>(cursor),
+                     reinterpret_cast<char*>(end), count) != nullptr;
 }
 
 char* SocketCopy(void* begin, intptr_t size, const void* read,
@@ -107,8 +112,8 @@ char* SocketCopy(void* begin, intptr_t size, const void* read,
   ASSERT(read_size > 0);
 
   if (size < read_size) return nullptr;
-  char *cursor = Ptr<char>(begin), *end_ptr = cursor + size;
-  const char *start_ptr = Ptr<const char>(read),
+  char *cursor = reinterpret_cast<char*>(begin), *end_ptr = cursor + size;
+  const char *start_ptr = reinterpret_cast<const char*>(read),
              *stop_ptr = start_ptr + read_size;
 
   if (read_size < (2 * sizeof(void*) + 1)) {
@@ -130,10 +135,10 @@ char* SocketCopy(void* begin, intptr_t size, const void* read,
   // 3.) Align write_end pointer down and copy the unaligned bytes in the
   //     upper memory region.
   // 4.) Copy the word-aligned middle region.
-  char *success = end_ptr, *aligned_pointer = AlignUpPointer<>(cursor);
+  char *success = end_ptr, *aligned_pointer = AlignUpPointerWord(cursor);
   PRINTF("\n  AlignUpPointer<> (begin):0x%p", aligned_pointer);
   while (cursor < aligned_pointer) *cursor++ = *start_ptr++;
-  aligned_pointer = AlignDownPointer<>(end_ptr);
+  aligned_pointer = AlignDownPointerWord(end_ptr);
   PRINTF("\n  AlignDownPointer<> (begin):0x%p", aligned_pointer);
   while (end_ptr > aligned_pointer) *end_ptr-- = *stop_ptr--;
   PRINTF("\n  Down-stage pointers are now begin:0x%p end:0x%p", cursor,
@@ -148,40 +153,40 @@ char* SocketCopy(void* begin, intptr_t size, const void* read,
   return success;
 }
 
-char* SocketCopy(void* begin, void* end, const void* start,
+char* SocketCopy(void* begin, void* end, const void* begin_read,
                  intptr_t read_size) {
-  return SocketCopy(begin, SocketSize(begin, end), start, read_size);
+  return SocketCopy(begin, SizeOf(begin, end), begin_read, read_size);
 }
 
-char* SocketCopy(void* begin, void* end, const void* start, const void* stop) {
-  return SocketCopy(begin, SocketSize(begin, end), start,
-                    SocketSize(start, stop));
+char* SocketCopy(void* begin, void* end, const void* begin_read,
+                 const void* read_end) {
+  return SocketCopy(begin, SizeOf(begin, end), begin_read,
+                    SizeOf(begin_read, read_end));
 }
 
-bool SocketCompare(const void* begin, const void* end, const void* start,
-                   const void* stop) {
-  const char *begin_ptr = reinterpret_cast<const char*>(begin),
-             *end_ptr = reinterpret_cast<const char*>(end),
-             *start_ptr = reinterpret_cast<const char*>(start),
-             *stop_ptr = reinterpret_cast<const char*>(stop);
-  if ((begin_ptr - end_ptr) != (stop_ptr - start_ptr)) return false;
-  while (begin_ptr < end_ptr) {
-    char a = *begin_ptr++, b = *end_ptr++;
+bool SocketCompare(const void* begin_a, intptr_t size_a, const void* begin_b,
+                   intptr_t size_b) {
+  if (size_a != size_b) return false;
+  const char *cursor_a = reinterpret_cast<const char*>(begin_a),
+             *end_a = cursor_a + size_a,
+             *cursor_b = reinterpret_cast<const char*>(begin_b),
+             *end_b = cursor_b + size_b;
+  while (cursor_a < end_a) {
+    char a = *cursor_a++, b = *end_a++;
     if (a != b) return false;
   }
   return true;
 }
 
-bool SocketCompare(void* begin, void* end, const void* read,
-                   uintptr_t read_size) {
-  return SocketCompare(begin, end, read,
-                       reinterpret_cast<const char*>(read) + read_size);
+bool SocketCompare(const void* begin, const void* end, const void* start,
+                   const void* stop) {
+  return SocketCompare(begin, SizeOf(begin, end), start, SizeOf(start, stop));
 }
 
-bool SocketCompare(void* begin, size_t write_size, const void* read,
-                   uintptr_t read_size) {
-  return SocketCompare(begin, reinterpret_cast<char*>(begin) + write_size, read,
-                       reinterpret_cast<const char*>(read) + read_size);
+bool SocketCompare(const void* begin_a, void* end_a, const void* begin_b,
+                   intptr_t size_b) {
+  return SocketCompare(begin_a, end_a, begin_a,
+                       reinterpret_cast<const char*>(begin_b) + size_b);
 }
 
 Socket::Socket() {
@@ -215,11 +220,11 @@ Socket& Socket::operator=(const Socket& other) {
   return *this;
 }
 
-void DestructorNoOp(uintptr_t* buffer, intptr_t size) {
+void DestructorNoOp(uintptr_t* buffer) {
   // Nothing to do here! ({:-)+==<
 }
 
-void DestructorDeleteBuffer(uintptr_t* buffer, intptr_t size) {
+void DestructorDeleteBuffer(uintptr_t* buffer) {
   ASSERT(buffer);
   delete buffer;
 }

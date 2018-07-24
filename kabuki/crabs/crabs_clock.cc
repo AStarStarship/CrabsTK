@@ -16,43 +16,38 @@ specific language governing permissions and limitations under the License. */
 
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
 // Dependencies:
-#include "assert.h"
 #include "clock.h"
-#include "console.h"
+#include "debug.h"
 #include "floor.h"
 #include "lock.h"
-#include "utfn.h"
+#include "tclock.h"
+#include "ttext.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 2
 #define PRINT(item) Print(item)
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT_DATE(date)                                                    \
+  Printf("%i/%i/%i@%i:%i:%i", date.year + kSecondsPerEpoch, date.month + 1, \
+         date.day, date.hour, date.minute, date.second);
 #else
 #define PRINTF(value, ...)
 #define PRINT(item)
+#define PRINT_DATE(date)
 #endif
 
 namespace _ {
 
-template <typename Time>
-Time ClockOffset(Clock& clock) {
-  Time t = (clock.year - Global()->epoch) * kSecondsPerYear +
-           (clock.day - 1) * kSecondsPerDay + clock.hour * kSecondsPerHour +
-           clock.minute * kSecondsPerMinute + clock.second;
+template <typename SI = Tms>
+SI StampTime(Clock& clock) {
+  SI t = (clock.year - kClockEpochInit) * kSecondsPerYear +
+         (clock.day - 1) * kSecondsPerDay + clock.hour * kSecondsPerHour +
+         clock.minute * kSecondsPerMinute + clock.second;
   return t;
 }
 
-Clock::Clock(Tms time) { ClockInit(*this, time); }
-
-Clock::Clock(Tme time) { ClockInit(*this, time); }
-
-void Clock::SetTicks(uint32_t t) { ticks = t; }
-
-void Clock::SetTicks(uint32_t t, uint32_t updates_per_second) {
-  ticks = t;
-  ticks_max = updates_per_second;
-}
-
-void Clock::SetTime(Tms t) {
+template <typename SI>
+void ClockSet(Clock* clock, SI t) {
+  ASSERT(clock);
   // Algoirhm:
   // 1. Using manual modulo convert in the following order:
   //   a. Year based on seconds per year.
@@ -61,19 +56,28 @@ void Clock::SetTime(Tms t) {
   //   d. Hour.
   //   e. Minute.
   //   f. Second.
-  int value = t / kSecondsPerYear;
+  SI value = t / kSecondsPerYear;
   t -= value * kSecondsPerYear;
-  year = value + ClockEpoch();
+  clock->year = (int)(value + ClockEpoch());
   value = t / kSecondsPerDay;
   t -= value * kSecondsPerDay;
-  day = value;
+  clock->day = (int)value;
   value = t / kSecondsPerHour;
   t -= value * kSecondsPerHour;
-  hour = value;
+  clock->hour = (int)value;
   value = t / kSecondsPerMinute;
-  minute = value;
-  second = t - value * kSecondsPerMinute;
+  clock->minute = (int)value;
+  clock->second = (int)(t - value * kSecondsPerMinute);
 }
+
+Clock::Clock() { ClockInit(*this, 0); }
+
+Clock::Clock(Tms time) { ClockInit(*this, time); }
+
+Clock::Clock(Tme time) { ClockInit(*this, time); }
+
+void Clock::SetTime(Tms t) { ClockSet<Tms>(this, t); }
+void Clock::SetTime(Tme t) { ClockSet<Tme>(this, t); }
 
 const int16_t* ClockLastDayOfMonth() {
   static const int16_t kMonthDayOfYear[12] = {31,  59,  90,  120, 151, 181,
@@ -126,7 +130,7 @@ Clock* ClockInit(Clock& clock, SI t) {
   return &clock;
 }
 
-int16_t ClockEpoch() { return Global()->epoch; }
+int16_t ClockEpoch() { return kClockEpochInit; }
 
 Clock* ClockInit(Clock& clock, Tms t) { return ClockInit<Tms>(clock, t); }
 
@@ -147,7 +151,7 @@ Clock* ClockInit(Clock& clock) {
 
 void ClockEpochUpdate() {
   // RoomLock();
-  Global()->epoch += 10;
+  // kClockEpochInit += 10;
   // RoomUnlock();
 }
 
@@ -158,9 +162,9 @@ Tme ClockNow() {
   return (Tme)t;
 }
 
-Tms ClockTMS(Clock& clock) { return ClockOffset<Tms>(clock); }
+Tms ClockTMS(Clock& clock) { return StampTime<Tms>(clock); }
 
-Tme ClockTME(Clock& clock) { return ClockOffset<Tme>(clock); }
+Tme ClockTME(Clock& clock) { return StampTime<Tme>(clock); }
 
 int ClockMonthDayCount(Tms t) {
   Clock date(t);
@@ -335,8 +339,9 @@ Tme ClockTimeTME(int year, int month, int day, int hour, int minute,
                  int second) {
   return ClockTime<Tms>(year, month, day, hour, minute, second);
 }
+
 /*
-template <typename Char>
+template <typename Char = char>
 Char* Print(Char* cursor, Char* end, Tss& t) {
   Clock clock(t.seconds);
   cursor = Print<Char>(cursor, end, clock);
@@ -368,20 +373,20 @@ const char* TextScanTime(const char* string, int& hour, int& minute,
   return TextScanTime<char>(string, hour, minute, second);
 }
 
-const char* TextScan(const char* string, Clock& clock) {
-  return TextScan<char>(string, clock);
+const char* Scan(const char* string, Clock& clock) {
+  return Scan<char>(string, clock);
 }
 
-const char* TextScan(const char* string, Tss& result) {
-  return TextScanTime<char, Tss>(string, result);
+const char* Scan(const char* string, Tss& t) {
+  return TextScanTime<char>(string, t);
 }
 
-const char* TextScanTime(const char* string, Tms& result) {
-  return TextScanTime<char, Tms>(string, result);
+const char* TextScanTime(const char* string, Tms& t) {
+  return TextScanTime<char, Tms>(string, t);
 }
 
-const char* TextScanTime(const char* string, Tme& result) {
-  return TextScanTime<char, Tme>(string, result);
+const char* TextScanTime(const char* string, Tme& t) {
+  return TextScanTime<char, Tme>(string, t);
 }
 
 #endif
@@ -456,11 +461,11 @@ const char32_t* TextScanTime(const char32_t* string, int& hour, int& minute,
   return TextScanTime<char32_t>(string, hour, minute, second);
 }
 
-const char32_t* TextScan(const char32_t* string, Clock& time) {
+const char32_t* Scan(const char32_t* string, Clock& time) {
   return TextScanTime<char32_t>(string, time);
 }
 
-const char32_t* TextScan(const char32_t* string, Tss& result) {
+const char32_t* Scan(const char32_t* string, Tss& result) {
   return TextScanTime<char32_t, Tss>(string, result);
 }
 

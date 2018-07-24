@@ -15,7 +15,7 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
-#include "assert.h"
+#include "debug.h"
 #include "door.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
@@ -56,7 +56,7 @@ Door::Door(const char* room_name, uintptr_t* buffer, uintptr_t size_bytes) {
 }
 
 Door::~Door() {
-  if (ascii_obj_) delete[] ascii_obj_;
+  if (begin) delete[] begin;
 }
 
 slot_t Door::GetSlot(slot_t index) {

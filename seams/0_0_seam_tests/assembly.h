@@ -25,20 +25,27 @@ config.h for configuration details. */
 // LINUX, OSX, or IOS.
 #define CRABS_PLATFORM MBED
 
+// Maximum string length of an allowed ASCII TKN (Token) that is at least big
+// enough to print the largest integer or floating-point ASCII token (i.e.
+// "string" but there is no nil-term char and thus is a token) to.
+#define CRABS_TOKEN_CHAR_COUNT_MAX 24
+
 // Choose X86, X64, ARM8, ARM16, ARM32, or ARM64
 #define CRABS_ACHITECTURE X86
 
-#define WORD_SIZE 64
+#define WORD_SIZE 64  //< CPU word size.
 
-#define CRABS_FORCE_WORD_ALIGN YES
+#define FORCE_WORD_ALIGN YES
 
-#define CPU_ENDIANESS LITTLE
+// Macro defines the CPU endianess; set to IS_STUPID for little endian CPUS and
+// IS_NOT_STUPID for big endian CPUs.
+#define BIG_ENDIAN IS_STUPID
 
 #define USING_UTF8 YES
 #define USING_UTF16 NO
 #define USING_UTF32 NO
-#define CRABS_UTF UTF8  //< Set to UTF8, UTF16, or UTF32 only, usually UTF8.
-#define CRABS_STRING_SIZE 4  //< Set to 1, 2, 4, or 8 bytes only, usualy 4.
+#define CRABS_TEXT UTF8  //< Set to UTF8, UTF16, or UTF32 only, usually UTF8.
+#define CRABS_STRING_SIZE 4  //< Set to 1, 2, or 4 (bytes) only, usualy 4.
 
 /* @brief The Memory Profiles 1-4 are used to signal that the system is
 memory constrained.
@@ -108,8 +115,21 @@ addresses, use CRABS_MEMORY_PROFILE 3.
 // Size or new size of the Tx/Console buffer.
 #define CRABS_BUFFER_SIZE_TX 1024
 
-// Sets any of the following macros to YES or NO.
+// Debug flag instructs the ASEERT macro to print an error.
+#define CRABS_ASSERT_PRINT YES
 
+// Debug flag instructs the behavior of the ASSERT macro to freeze; if
+// CRABS_ASSERT_PAUSE then that macro is overriden
+#define CRABS_ASSERT_FREEZE YES
+
+// Debug flag instructs the behavior of the ASSERT macro to pause; if
+// CRABS_ASSERT_FREEZE is YES then this macro is overriden.
+#define CRABS_ASSERT_PAUSE YES
+
+// Flag for if you're using Visual C++ or not.
+#define CPP_COMPILER VISUAL_CPP
+
+// Sets any of the following macros to YES or NO.
 #define USING_DYNAMIC_MEMORY YES
 #define USING_CRABS_1_BYTE_TYPES YES
 #define USING_CRABS_2_BYTE_TYPES YES

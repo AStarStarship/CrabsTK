@@ -15,10 +15,10 @@ specific language governing permissions and limitations under the License. */
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
 // Dependencies:
 #include "ascii_data_types.h"
-#include "assert.h"
+#include "debug.h"
 #include "hex.h"
 #include "line.h"
-#include "print_integer.h"
+#include "tinteger.h"
 #include "slot.h"
 #include "text.h"
 // End dependencies.
@@ -202,8 +202,8 @@ const Op* Slot::Read(const uint_t* params, void** args) {
     type = (byte)*param;
     ++param;
     PRINTF("\nindex:%u:\"%s\", start:0x%i, stop:0x%i", (uint)index,
-           TypeString(type), (int)SocketSize(l_begin, l_start),
-           (int)SocketSize(l_begin, l_stop))
+           TypeString(type), (int)Size(l_begin, l_start),
+           (int)Size(l_begin, l_stop))
 
     switch (type) {
       case NIL:
@@ -520,7 +520,7 @@ const Op* Slot::Write(Slot& other) { return nullptr; }
 
 const Op* Slot::Write(const char* message) { return nullptr; }
 
-#if CRABS_UTF
+#if CRABS_TEXT
 Utf8& Slot::Print(Utf8& print) {
   char *l_begin = begin, *l_end = end;
   return print << Line('_', 80) << "\nSlot: begin:" << Hex<>(l_begin)

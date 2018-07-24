@@ -47,7 +47,7 @@ typedef enum ScriptError {
   kErrorMalformedUtf8,        //< Script Error 21: Malformed UTF-8.
   kErrorMalformedUtf16,       //< Script Error 22: Malformed UTF-16.
   kErrorMalformedUtf32,       //< Script Error 23: Malformed UTF-32.
-  kErrorObjectLocked,         //< Script Error 24: Object locked.
+  kErrorObjLocked,         //< Script Error 24: Obj locked.
   kErrorInvalidArgs,          //< Script Error 25: Invalid args.
   kErrorAuthenticationError,  //< Script Error 26: Authentication error.
   kErrorRoomNotFound,         //< Script Error 27: Room not found.
@@ -55,10 +55,10 @@ typedef enum ScriptError {
 } Error;
 
 /* Returns an array or string pointers for the KabukiError(s). */
-KABUKI const char_t** ErrorStrings();
+KABUKI const char** ErrorStrings();
 
 /* Returns one of the Errors () strings. */
-KABUKI const char_t* ErrorString(Error error);
+KABUKI const char* ErrorString(Error error);
 
 }  // namespace _
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4

@@ -9,13 +9,13 @@ U| |_  u |  _|"   \/ _ \/     | |   \| |\| | \| |_) |/  |  _|" <\___ \/
 ```
 # Kabuki VM Platform
 
-The Kabuki VM Features are based on mbed, an IoT platform similar to Arduino for ARM, adapted to work on x64 processors. Starting from the lowest going to highest levels the major components are:
+The Kabuki VM Features are based on mbed, an IoT platform similar to Arduino but for ARM, adapted to work on x64 processors. Starting from the lowest going to highest levels the major components are:
 
 1. **Hardware Abstraction Layer (HAL)** - Abstracts away the hardware to create a low-level virtual machine.
    1. Abstract hardware model for common processor peripherals.
    2. Hardware agnostic code shared between targets processors.
    3. Target implementations for various processors.
-2. **Platform** - Platform such as an operating system or bare-metal firmware that creates a higher-level virtual machine.
+2. **Platform** - Platform such as an operating system or bare-metal firmware that creates a high-level VM from the low-level VM.
    1. Platform abstraction layer for common platform features.
    2. Platform agnostic code shared between platforms.
    3. Platform implementation.
@@ -23,7 +23,11 @@ The Kabuki VM Features are based on mbed, an IoT platform similar to Arduino for
    1. Feature model with common interface for features.
    2. Feature framework shares cross-platform code between features.
    3. Feature implementation.
-4. **Toolkit Modules** - Cross-platform toolkit built on top of the features.
+4. **Chinese Room Abstract Stack Machine (Crabs)**
+  1. Stack Machine built on the HAL, Platform, and Features.
+5. **Tek**
+  1. Technology built with Crabs.
+6. **Toolkit Modules** - Cross-platform toolkit built on top of the features.
    1. Module model.
    3. Crabs layer.
    3. Module implementation.

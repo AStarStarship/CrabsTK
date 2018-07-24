@@ -12,9 +12,11 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 1
 #include <cfloat>
+#include <cmath>
 #include "number.h"
+#include "tnumber.h"
 
 namespace _ {
 
@@ -73,6 +75,18 @@ bool IsNaN(int64_t value) { return value > NanUnsigned<int64_t>(); }
 
 bool IsNaN(uint64_t value) { return value > NanUnsigned<uint64_t>(); }
 
+bool IsNaN(float value) { return isnan(value); }
+
+bool IsNaN(double value) { return isnan(value); }
+
+bool IsFinite(float value) { return isfinite(value); }
+
+bool IsFinite(double value) { return isfinite(value); }
+
+bool IsInfinite(float value) { return isinf(value); }
+
+bool IsInfinite(double value) { return isinf(value); }
+
 bool IsPowerOfTen(int8_t value) {
   return IsPowerOfTenSigned<uint8_t, int8_t>(value);
 }
@@ -97,6 +111,97 @@ bool IsPowerOfTen(int64_t value) {
 
 bool IsPowerOfTen(uint64_t value) { return IsPowerOfTen<uint64_t>(value); }
 
+/* Masks the lower bits using faster bit shifting.
+@brief The algoirhm has you enter the highest bit rather than bit count because
+it would introduct an extra instruction and you should do that manually if you
+wish to do so.
+@param value The value to mask.
+@param mab The Most Significant bit, or one less than the number of bits to
+mask off. */
+template <typename UI>
+inline UI Mask(UI value, int left_shift_bits, int right_shift_bits) {
+  value = value << left_shift_bits;
+  return value >> right_shift_bits;
+}
+
+template <typename UI>
+inline UI Mask(UI value, UI msb) {
+  enum {
+    kUIBitCount = sizeof(UI) * 8,
+
+  };
+  return Mask<UI> (kUIBitCount - msb;
+  return value >> msb;
+}
+
+float Ceiling(float value) {
+  enum {
+    kFpBits = sizeof(float) * 8 - 1,
+    kMaskExponent = 127,
+    kMantissaBitCount = 24,
+    kMantissaBits = 23
+  };
+
+  uint32_t integer = *reinterpret_cast<float*>(&value);
+
+  // Extract sign, exponent and mantissa
+  // Bias is removed from exponent
+  uint32_t sign = integer >> kFpBits,
+           exponent_mask = Mask(integer, kMantissaBits),
+           exponent = ((integer & 0x7fffffff) >> kMantissaBits) - kMaskExponent,
+           mantissa = integer & 0x7fffff, comparator;
+
+  // Is the exponent less than zero?
+  if (exponent < 0) {
+    // In this case, x is in the open interval (-1, 1)
+    if (value <= 0.0f)
+      return 0.0f;
+    else
+      return 1.0f;
+  } else {
+    // Construct a bit mask that will mask off the
+    // fractional part of the mantissa
+    uint32_t mask = 0x7fffff >> exponent;
+
+    // Is x already an integer (i.e. are all the
+    // fractional bits zero?)
+    if ((mantissa & mask) == 0)
+      return value;
+    else {
+      // If x is positive, we need to add 1 to it
+      // before clearing the fractional bits
+      if (!sign) {
+        mantissa += 1 << (kMantissaBits - exponent);
+
+        // Force compiler to create the mask without a LDR instruciton.
+        comparator = 1;
+        comparator = comparator << kFpBits;
+
+        // Did the mantissa overflow?
+        if (mantissa & comparator) {
+          // The mantissa can only overflow if all the
+          // integer bits were previously 1 -- so we can
+          // just clear out the mantissa and increment
+          // the exponent
+          mantissa = 0;
+          exponent++;
+        }
+      }
+
+      // Clear the fractional bits
+      mantissa &= ~mask;
+    }
+  }
+
+  // Put sign, exponent and mantissa together again
+  integer = (sign << kFpBits) | ((exponent + kMaskExponent) << kMantissaBits) |
+            mantissa;
+
+  return *reinterpret_cast<uint32_t*>(&integer);
+}
+
+float Ceiling(float value) { return 0.0; }
+
 }  // namespace _
 
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 1

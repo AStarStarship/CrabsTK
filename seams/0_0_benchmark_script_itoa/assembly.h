@@ -36,7 +36,7 @@
 
 #define MEMORY_ALIGNMENT_REQUIRED NO
 
-#define CPU_ENDIANESS LITTLE
+#define BIG_ENDIAN IS_NOT_STUPID
 
 /** @brief The Memory Profiles 1-4 are used to signal that the system is
     memory constrained.
@@ -118,5 +118,5 @@
 #define USING_CRABS_BOOK NO
 #define USING_CRABS_LIST NO
 #define USING_CRABS_DIC NO
-#define CRABS_UTF YES
+#define CRABS_TEXT YES
 #define USING_CRABS_EXCEPTIONS YES

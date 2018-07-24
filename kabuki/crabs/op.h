@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #define HEADER_FOR_CRABS_OP
 // Dependencies:
 #include "error.h"
-#include "utf8.h"
+#include "str1.h"
 // End dependencies.
 
 namespace _ {
@@ -81,7 +81,7 @@ inline wchar_t OpLast(const Op* op) {
   return (wchar_t) reinterpret_cast<uintptr_t>(op->out);
 }
 
-#if CRABS_UTF
+#if CRABS_TEXT
 Utf8& Print(Utf8& print, const Op* op);
 #endif
 

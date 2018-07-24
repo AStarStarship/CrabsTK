@@ -18,7 +18,7 @@
 
 #define SEAM_PAGE 0
 #define SEAM_MAJOR 0
-#define SEAM_MINOR 2
+#define SEAM_MINOR 1
 
 #include <cstdarg>
 #include <cstdint>

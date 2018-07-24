@@ -32,7 +32,7 @@ typedef enum BInStates {
   kBInStatePackedUtf16,    //< State  3: Scanning UTF-16 string.
   kBInStatePackedUtf32,    //< State  4: Scanning UTF-32 string.
   kBInStatePackedVarint,   //< State  5: Scanning varint.
-  kBInStatePackedObject,   //< State  6: 8-bit OB1 state.
+  kBInStatePackedObj,      //< State  6: 8-bit OB1 state.
   kBInStateVerifyingHash,  //< State  7: Verifying the 32-bit hash.
   kBInStateHandlingError,  //< State  8: Handling an error state.
   kBInStateDisconnected,   //< State  9: Disconnected state.
@@ -88,11 +88,11 @@ inline uint_t BInSpace(BIn* bin) {
 
 inline uint_t BinBufferLength(BIn* bin) {
   ASSERT(bin)
-  char* base = BInBegin(bin);
-  return (uint_t)SlotLength(base + bin->start, base + bin->stop, bin->size);
+  char* begin = BInBegin(bin);
+  return (uint_t)SlotLength(begin + bin->start, begin + bin->stop, bin->size);
 }
 
-#if CRABS_UTF
+#if CRABS_TEXT
 /* Gets a a char for printing out the bin_state. */
 KABUKI const char** BInStateStrings();
 
@@ -125,17 +125,32 @@ inline const Op* BOutRead(BOut* bout, const uint_t* params, void** args) {
   return BInRead(reinterpret_cast<BIn*>(bout), params, args);
 }
 
-#if CRABS_UTF
+#if USING_UTF8
 /* Prints the BIn to the Text.
     @param  bin The pin to print.
     @param  text The Text to print the bin to.
     @return The text. */
 KABUKI Utf8& Print(Utf8& printer, BIn* bin);
+#endif  //< #if USING_UTF8
+#if USING_UTF16
+/* Prints the BIn to the Text.
+@param  bin The pin to print.
+@param  text The Text to print the bin to.
+@return The text. */
+KABUKI Utf16& Print(Utf16& printer, BIn* bin);
+#endif  //< #if USING_UTF16
+#if USING_UTF32
+/* Prints the BIn to the Text.
+@param  bin The pin to print.
+@param  text The Text to print the bin to.
+@return The text. */
+KABUKI Utf32& Print(Utf32& printer, BIn* bin);
+#endif  //< #if USING_UTF32
 #endif
 
-}   //< namespace _
+}  // namespace _
 
-#if CRABS_UTF
+#if CRABS_TEXT
 /* Prints out the bin to the text. */
 inline _::Utf8& operator<<(_::Utf8& print, _::BIn* bin) {
   return Print(print, bin);

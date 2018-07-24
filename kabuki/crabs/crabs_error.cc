@@ -19,8 +19,8 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-const char_t** ErrorStrings() {
-  static const char_t* kErrors[] = {
+const char** ErrorStrings() {
+  static const char* kErrors[] = {
       "Not an error",             //<  0
       "Input nil",                //<  1
       "Input too low",            //<  2
@@ -49,13 +49,13 @@ const char_t** ErrorStrings() {
       "BIn Locked",               //< 25
       "Invalid args",             //< 26
       "Invalid credentials",      //< 27
-      "Object locked"             //< 28
+      "Obj locked"             //< 28
       "Implementation error",     //< 29
   };
   return kErrors;
 }
 
-const char_t* ErrorString(Error error) {
+const char* ErrorString(Error error) {
   if (error >= kErrorImplementation) {
     return ErrorStrings()[kErrorImplementation];
   }
