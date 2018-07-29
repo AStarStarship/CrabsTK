@@ -11,14 +11,13 @@
 
 # Chinese Room Abstract Stack Machine (Crabs) API Overview
 
-The easiest way to get up to speed with how Crabs works is by learning about
-how the minor seams are organized.
+The easiest way to get up to speed with how Crabs works is by learning about how the minor seams are organized.
 
 ## Minor Seams
 
 ### SEAM_0_0_0
 
-Seam develops the Script Integer-to-ASCII (**itoa**) algorithm, the fastest integer to string algorithm in the world.
+Seam develops the Script Integer-to-ASCII (**itoa**) algorithm, the fastest integer to string algorithm in the world along with corresponding string-to-integer functions.
 
 #### Seam Modules
 
@@ -27,7 +26,7 @@ Seam develops the Script Integer-to-ASCII (**itoa**) algorithm, the fastest inte
 
 ### SEAM_0_0_1
 
-Currently does not exist but in the near future will contain the Grisu-X algorithm with Script itoa algorithm.
+Seam contains 
 
 #### Seam Modules
 

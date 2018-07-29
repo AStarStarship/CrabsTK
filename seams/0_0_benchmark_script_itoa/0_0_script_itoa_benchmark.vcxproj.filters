@@ -17,18 +17,39 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="assembly.h">
-      <Filter>source</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>source</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="assembly.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="script_itos_benchmark.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="print_itos.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="print_mlsd.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="print_mlsd2.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="print_mod100sc.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="script_itos_competition.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="script_itos_benchmark.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cc">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

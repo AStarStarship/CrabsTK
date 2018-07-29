@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    ~/tests/test_seam_1_1.cc
+@file    ~/tests/test_seam_0_0_1.cc
 @author  Cale McCollough <calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -15,12 +15,16 @@
 */
 
 #include <stdafx.h>
-#include <stdio.h>
-#include <random>
-#include "../../kabuki/crabs/global.h"
-#include "test_seam_0.h"
 
 #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 1
+
+#include <stdio.h>
+#include <cmath>
+#include <random>
+
+#include "../../kabuki/crabs/global.h"
+#include "../../kabuki/crabs/number.h"
+#include "test_seam_0.h"
 
 using namespace _;
 using namespace std;
@@ -43,39 +47,52 @@ TEST(SEAM_0_1, SEAM_0_1_0) {
   // Setup C++1x random number generator.
   std::random_device rd;
   std::mt19937_64 eng(rd());
-  std::uniform_int_distribution<uint32_t> distr;
+  std::uniform_int_distribution<uint64_t> distr;
 
-  PRINTF("\n\nTesting float scan functions...\n");
+  uint64_t value;
+  double dbl_expected, dbl_found;
 
-  for (int i = 0; i < 1 << 20; ++i) {
-    uint32_t value;
-    float flt_expected, flt_found;
-    do {
-      value = distr(eng);
-      flt_expected = static_cast<float>(value);
-    } while (!IsFinite(flt_expected));
-    char buffer[25];
-    Print(buffer, buffer + 24, flt_expected);
-    CHECK(scanf_s("%f", &flt_found));
-    CHECK_EQUAL(value, flt_expected);
-  }
-
-  PRINTF("\n\nTesting float scan functions...\n");
+  PRINTF("\n\nTesting Float Ceiling<Float, UI> (Float)...\n");
 
   for (int i = 0; i < 1 << 20; ++i) {
-    uint32_t value;
-    float flt_expected, flt_found;
     do {
       value = distr(eng);
-      flt_expected = static_cast<float>(value);
-    } while (!IsFinite(flt_expected));
-    char buffer[25];
-    sprintf_s(buffer, 24, "%f", flt_expected);
-    CHECK(Scan(buffer, flt_expected));
-    CHECK_EQUAL(value, flt_expected);
+      dbl_expected = static_cast<double>(value);
+    } while (!IsFinite(dbl_expected));
+    dbl_found = Ceiling(dbl_expected);
+    dbl_expected = ceil(dbl_expected);
+    CHECK_EQUAL(dbl_expected, dbl_found);
   }
 
-  PAUSE("Done testing SEAM_0_0_2! ({:-)-+=<");
+  PRINTF("\n\nTesting float Char* Print<Char> (Char*, Char*, float&)...\n");
+
+  for (int i = 0; i < 1 << 20; ++i) {
+    do {
+      value = distr(eng);
+      dbl_expected = static_cast<double>(value);
+    } while (!IsFinite(dbl_expected));
+    char buffer[25];
+    Print(buffer, buffer + 24, dbl_expected);
+    CHECK(scanf_s("%lf", &dbl_found));
+    CHECK_EQUAL(value, dbl_expected);
+  }
+
+  PRINTF(
+      "\n\nTesting const Char* Scan<Char> (const Char*, const Char*, float&) "
+      "functions...\n");
+
+  for (int i = 0; i < 1 << 20; ++i) {
+    do {
+      value = distr(eng);
+      dbl_expected = static_cast<double>(value);
+    } while (!IsFinite(dbl_expected));
+    char buffer[24];
+    sprintf_s(buffer, 24, "%f", dbl_expected);
+    CHECK(Scan(buffer, dbl_expected));
+    CHECK_EQUAL(value, dbl_expected);
+  }
+
+  PAUSE("Done testing SEAM_0_0_2! (:-)=-=<");
 }
 
 #endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 1

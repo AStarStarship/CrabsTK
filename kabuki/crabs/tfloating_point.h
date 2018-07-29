@@ -28,6 +28,7 @@ specific language governing permissions and limitations under the License. */
 #define PRINT(item)
 #define PRINTF(x, ...)
 #endif
+
 #if CRABS_TEXT
 
 namespace _ {
@@ -72,12 +73,14 @@ int k_comp(int e, int alpha, int gamma) {
   return static_cast<int>(Ceiling(x));
 }
 
-#define TEN7 10000000
-void Cut(FloatingPoint D, uint32_t parts[3]) {
-  parts[2] = (D.f % (TEN7 >> D.e)) << D.e;
-  uint64_t tmp = D.f / (TEN7 >> D.e);
-  parts[1] = tmp % TEN7;
-  parts[0] = tmp / TEN7;
+void Cut(FloatingPoint fp, uint32_t parts[3]) {
+  uint32_t msd, lsd, ten_7 = 10000000;
+  parts[2] = (fp.f % (ten_7 >> fp.e)) << fp.e;
+  uint64_t tmp = fp.f / (ten_7 >> fp.e);
+  msd = (uint32_t)(tmp / ten_7);
+  lsd = (uint32_t)(tmp - msd * ten_7);
+  parts[1] = lsd;  // tmp % ten_7;
+  parts[0] = msd;  // tmp / ten_7;
 }
 
 /*
@@ -91,7 +94,7 @@ void grisu(double v, char* buffer) {
   FloatingPoint c_mk = cached_power(mk);
   FloatingPoint D = Multiply(w, c_mk);
   Cut(D, ps);
-  sprintf(buffer, "%u%07u%07ue%d", ps[0], ps[1], ps[2], -mk);
+  sprintf_s(buffer, 256, "%u%07u%07ue%d", ps[0], ps[1], ps[2], -mk);
 }
 
 int digit_gen_no_div(FloatingPoint D, char* buffer) {
@@ -123,13 +126,14 @@ int digit_gen_no_div(FloatingPoint D, char* buffer) {
   return i;
 }*/
 
-int digit_gen_mix(FloatingPoint d, char* buffer) {
+template <typename Char>
+int GenerateDigitsMix(FloatingPoint d, Char* buffer, Char* end) {
   FloatingPoint one;
   one.f = ((uint64_t)1) << -d.e;
   one.e = d.e;
   uint32_t part1 = d.f >> -one.e;
   uint64_t f = d.f & (one.f - 1);
-  int i = sprintf(buffer, "%u", part1);
+  int i = Print<Char>(buffer, end, part1);
   buffer[i++] = '.';
   while (i < 19) {
     f *= 10;
@@ -139,20 +143,19 @@ int digit_gen_mix(FloatingPoint d, char* buffer) {
   return i;
 }
 
-#define TEN9 1000000000
-
-void GenerateDigits(FloatingPoint mp, FloatingPoint delta, char* buffer,
+template <typename Char>
+void GenerateDigits(FloatingPoint mp, FloatingPoint delta, Char* buffer,
                     int* length, int* k) {
-  uint32_t div;
+  uint32_t div, ten_9 = 1000000000;
   int d, kappa;
   FloatingPoint one;
   one.f = ((uint64_t)1) << -mp.e;
   one.e = mp.e;
-  uint32_t p1 = mp.f >> -one.e;
+  uint32_t p1 = (uint32_t)(mp.f >> -one.e);
   uint64_t p2 = mp.f & (one.f - 1);
   *length = 0;
   kappa = 10;
-  div = TEN9;
+  div = ten_9;
   while (kappa > 0) {
     d = p1 / div;
     if (d || *length) buffer[(*length)++] = '0' + d;
@@ -166,7 +169,7 @@ void GenerateDigits(FloatingPoint mp, FloatingPoint delta, char* buffer,
   }
   do {
     p2 *= 10;
-    d = p2 >> -one.e;
+    d = (uint32_t)(p2 >> -one.e);
     if (d || *length) buffer[(*length)++] = '0' + d;
     p2 &= one.f - 1;
     kappa--;

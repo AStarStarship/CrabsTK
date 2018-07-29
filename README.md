@@ -15,7 +15,7 @@ Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2
 * Modern Embedded-C++1x with Doxygen API docs.
 * ASCII Data Types operate seamlessly across assembly boundary with optimal RAM usage and CPU cache performance from ROM-able ASCII Contiguous Objects.
 * Rapid compile time using Chinese Room Abstract Stack Machine (Crabs) C Application Binary Interface (ABI) and ASCII Data Types with semi-hidden C++ templates and UML-compatible object-oriented wrapper classes.
-* Page-Major-Minor Seam (PMMS) Unit Tests provides debug information customized for each minor seam, major, and page seams.
+* Page-Major-Minor Seam (PMMS) Unit Tests provides debug information customized for each minor, major, and page seams.
 * Code automatically formatted to Google C++ Style Guide upon save and formatted to not fight clang-format.
 
 ## ASCII Data Types
@@ -24,15 +24,19 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
 
 * All of the C++ POD types.
 * Year 2038-safe Timestamps - 32-bit and 64-bit seconds timestamps along with 64-bit programmable sub-second timestamps using 32-bits for seconds and 32-bits sub-second tick.
+* All data types are 64-bit aligned so they may be rapidly copied from one system to another on homo-endian system, meaning same endian as opposed to hetero-endian which means mixed-endian.
+* Optional MSB variant encoding provides fast data compression similar to UTF-8.
 * Contiguous Objects
   * UTF-8, UTF-16, and UTF-32 strings.
-  * Stack - A stack of POD types as array.
-  * Array - A multidimension array with Stack of dimensions.
+  * Stack - A stack of POD types in the form of a bounded-sized array.
+  * Array - A multidimensional array with Stack of dimensions.
   * Loom - A homogenous array of UTF-8, UTF-16, or UTF-32 strings.
   * Table - A hash table of contiguous mappings.
   * Map - A sparse map of unsigned integers to ASCII Data Types.
   * Book - A multidictionary (i.e. unordered map) without hash table.
   * Dictionary - A dictionary of ASCII Data Types with hash table.
+  * B-Sequence - Describes the order and maximum sizes of a byte sequence of ASCII Data Types.
+  * Expression - Asynchronous Chinese Room Script Expressions capable of concurrently executing scripts in multiple language in real-time.
 
 [![GitHub version](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit.svg)](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit)
 
@@ -52,18 +56,18 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
 | Module | Description |
 |:------:|:------------|
 | crabs  | Chinese Room Abstract Stack Machine. |
-| tek    | Firmware Toolkit. |
+| tek    | Firmware toolkit. |
 | ai     | Artificial Intelligence library. |
 | al     | Audio library. |
-| app    | Application Framework. |
+| app    | Application framework. |
 | data   | Data and logging library. |
-| hmi    | Human-Machine Interfaces. |
+| hmi    | Human-Machine interface. |
 | id     | Identification and authorization library. |
 | gl     | Graphics library. |
-| gui    | Graphical User Interface. |
+| gui    | Graphical user interface. |
 | math   | Math library. |
 | pl     | Plotting library. |
-| midi   | Musical Instrument Digital Interface. |
+| midi   | Musical instrument digital interface. |
 | pro    | Project and scheduling library. |
 | store  | Store and inventory library. |
 

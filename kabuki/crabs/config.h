@@ -71,7 +71,7 @@ specific language governing permissions and limitations under the License. */
 
 #if CRABS_TEXT == UTF8
 #if USING_UTF8 == 0
-#warning You have the CRABS_TEXT set to UTF8 but USING_UTF8 is 0!
+//#error You have the CRABS_TEXT set to UTF8 but USING_UTF8 is 0!
 #ifdef USING_UTF8
 #undef USING_UTF8
 #endif
