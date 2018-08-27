@@ -13,14 +13,14 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
-#ifndef HEADER_FOR_CRABS_DOOR
-#define HEADER_FOR_CRABS_DOOR
+#if SEAM >= SEAM_0_0_4
+#ifndef INCLUDED_CRABS_DOOR
+#define INCLUDED_CRABS_DOOR
 // Dependencies:
 #include "expr.h"
 #include "slot.h"
-#include "stack.h"
-#include "text.h"
+#include "tstk.h"
+#include "tstr.h"
 // End dependencies.
 
 namespace _ {
@@ -110,5 +110,5 @@ static Door* DoorInit (int* buffer, uint_t slot_size) {
 }*/
 
 }  // namespace _
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
-#endif  //< HEADER_FOR_CRABS_DOOR
+#endif  //< #if SEAM >= SEAM_0_0_4
+#endif  //< INCLUDED_CRABS_DOOR

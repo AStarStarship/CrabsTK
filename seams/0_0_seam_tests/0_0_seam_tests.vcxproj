@@ -31,12 +31,14 @@
     <ClInclude Include="..\..\kabuki\crabs\ascii.h" />
     <ClInclude Include="..\..\kabuki\crabs\ascii_data_types.h" />
     <ClInclude Include="..\..\kabuki\crabs\bin.h" />
+    <ClInclude Include="..\..\kabuki\crabs\binary_32.h" />
     <ClInclude Include="..\..\kabuki\crabs\bout.h" />
     <ClInclude Include="..\..\kabuki\crabs\bsq.h" />
     <ClInclude Include="..\..\kabuki\crabs\buffer.h" />
     <ClInclude Include="..\..\kabuki\crabs\clock.h" />
     <ClInclude Include="..\..\kabuki\crabs\config.h" />
     <ClInclude Include="..\..\kabuki\crabs\debug.h" />
+    <ClInclude Include="..\..\kabuki\crabs\decimal.h" />
     <ClInclude Include="..\..\kabuki\crabs\door.h" />
     <ClInclude Include="..\..\kabuki\crabs\error.h" />
     <ClInclude Include="..\..\kabuki\crabs\event.h" />
@@ -51,12 +53,9 @@
     <ClInclude Include="..\..\kabuki\crabs\library.h" />
     <ClInclude Include="..\..\kabuki\crabs\lock.h" />
     <ClInclude Include="..\..\kabuki\crabs\mirror.h" />
-    <ClInclude Include="..\..\kabuki\crabs\number.h" />
     <ClInclude Include="..\..\kabuki\crabs\obj.h" />
     <ClInclude Include="..\..\kabuki\crabs\op.h" />
     <ClInclude Include="..\..\kabuki\crabs\operand.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tfloating_point.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tinteger.h" />
     <ClInclude Include="..\..\kabuki\crabs\random.h" />
     <ClInclude Include="..\..\kabuki\crabs\room.h" />
     <ClInclude Include="..\..\kabuki\crabs\slot.h" />
@@ -66,21 +65,23 @@
     <ClInclude Include="..\..\kabuki\crabs\str2.h" />
     <ClInclude Include="..\..\kabuki\crabs\str4.h" />
     <ClInclude Include="..\..\kabuki\crabs\talign.h" />
+    <ClInclude Include="..\..\kabuki\crabs\tascii_data_types.h" />
     <ClInclude Include="..\..\kabuki\crabs\tclock.h" />
+    <ClInclude Include="..\..\kabuki\crabs\tdecimal.h" />
     <ClInclude Include="..\..\kabuki\crabs\tdic.h" />
     <ClInclude Include="..\..\kabuki\crabs\tlom.h" />
     <ClInclude Include="..\..\kabuki\crabs\tlst.h" />
     <ClInclude Include="..\..\kabuki\crabs\tmap.h" />
     <ClInclude Include="..\..\kabuki\crabs\tmud.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tnumber.h" />
     <ClInclude Include="..\..\kabuki\crabs\tobj.h" />
     <ClInclude Include="..\..\kabuki\crabs\tset.h" />
     <ClInclude Include="..\..\kabuki\crabs\tsocket.h" />
     <ClInclude Include="..\..\kabuki\crabs\tstk.h" />
+    <ClInclude Include="..\..\kabuki\crabs\tstr.h" />
     <ClInclude Include="..\..\kabuki\crabs\ttbl.h" />
-    <ClInclude Include="..\..\kabuki\crabs\ttext.h" />
     <ClInclude Include="..\..\kabuki\crabs\varint.h" />
     <ClInclude Include="..\..\kabuki\crabs\wall.h" />
+    <ClInclude Include="..\..\kabuki\seams.h" />
     <ClInclude Include="assembly.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -94,6 +95,7 @@
     <ClCompile Include="..\..\kabuki\crabs\crabs_bsq.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_clock.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_debug.cc" />
+    <ClCompile Include="..\..\kabuki\crabs\crabs_decimal.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_door.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_error.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_expr.cc" />
@@ -102,7 +104,6 @@
     <ClCompile Include="..\..\kabuki\crabs\crabs_hex.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_interrupts.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_lock.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_number.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_obj.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_op.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_operand.cc" />
@@ -250,7 +251,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)./;$(ProjectDir)../../kabuki/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

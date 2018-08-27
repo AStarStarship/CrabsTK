@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#ifndef HEADER_FOR_CRABS_TEXT
-#define HEADER_FOR_CRABS_TEXT
+#if SEAM >= SEAM_0_0_2
+#ifndef INCLUDED_CRABS_TEXT
+#define INCLUDED_CRABS_TEXT
 // Dependencies:
 #include "config.h"
 // End dependencies.
@@ -35,5 +35,5 @@ inline char* Buffer() {
 }
 
 }  // namespace _
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#endif  //< HEADER_FOR_CRABS_TEXT
+#endif  //< #if SEAM >= SEAM_0_0_2
+#endif  //< INCLUDED_CRABS_TEXT

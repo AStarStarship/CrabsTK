@@ -12,15 +12,14 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#if SEAM >= SEAM_0_0_4
 // Dependencies:
-#include "debug.h"
 #include "bsq.h"
 #include "clock.h"
+#include "debug.h"
 #include "expr.h"
 #include "hash.h"
 #include "hex.h"
-#include "line.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
@@ -952,4 +951,4 @@ Utf8& PrintExpr(Utf8& print, Expr* expr) {
 
 #undef PRINTF
 #undef PRINT
-#endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#endif  //> #if SEAM >= SEAM_0_0_4

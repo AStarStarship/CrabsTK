@@ -1,5 +1,4 @@
-/* Kabuki Toolkit
-@version 0.x
+/* Kabuki Toolkit @version 0.x
 @file    $kabuki-toolkit/kabuki/crabs/crabs_utils.cc
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -13,7 +12,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#if SEAM >= SEAM_0_0_1
 #include "align.h"
 #include "socket.h"
 #include "talign.h"
@@ -52,7 +51,7 @@ int32_t AlignPowerOf2(int32_t value) {
 }
 
 uintptr_t* AlignUpCacheLine(uintptr_t* buffer) {
-  return AlignUp<kCpuCacheLineSize, uintptr_t>(buffer);
+  return AlignUp<kCpuCacheLineSize>(buffer);
 }
 
 char* AlignUpPointerWord(char* pointer) {
@@ -86,4 +85,4 @@ int64_t AlignUp(int64_t value) { return AlignUp<8, int64_t>(value); }
 }  // namespace _
 #undef PRINTF
 #undef PRINT
-#endif  //< SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  //< SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 1

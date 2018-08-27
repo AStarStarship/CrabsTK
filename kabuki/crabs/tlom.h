@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
-#ifndef HEADER_FOR_CRABS_VARINT
-#define HEADER_FOR_CRABS_VARINT
+#if SEAM >= SEAM_0_0_3
+#ifndef INCLUDED_CRABS_VARINT
+#define INCLUDED_CRABS_VARINT
 // Dependencies:
 #include "config.h"
 // End dependencies.
@@ -127,5 +127,5 @@ SI LoomPrint(Utf8& print, CLoom* loom, const Char* strand) {
 }
 
 }  // namespace _
-#endif  //< HEADER_FOR_CRABS_VARINT
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
+#endif  //< INCLUDED_CRABS_VARINT
+#endif  //< #if SEAM >= SEAM_0_0_3

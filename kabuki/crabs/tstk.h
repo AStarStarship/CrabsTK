@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
-#ifndef HEADER_FOR_CRABS_STACK
-#define HEADER_FOR_CRABS_STACK
+#if SEAM >= SEAM_0_0_3
+#ifndef INCLUDED_CRABS_STACK
+#define INCLUDED_CRABS_STACK
 // Dependencies:
 #include "config.h"
 #include "obj.h"
@@ -652,5 +652,5 @@ class Stack {
 
 }  // namespace _
 
-#endif  //< HEADER_FOR_CRABS_STACK
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
+#endif  //< INCLUDED_CRABS_STACK
+#endif  //< #if SEAM >= SEAM_0_0_3

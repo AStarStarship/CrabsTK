@@ -12,15 +12,14 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#if SEAM >= SEAM_0_0_1
 // Dependencies:
 #include "ascii.h"
 #include "debug.h"
 #include "hex.h"
 #include "socket.h"
-#include "tfloating_point.h"
-#include "tinteger.h"
-#include "ttext.h"
+#include "tdecimal.h"
+#include "tstr.h"
 // End dependencies.
 
 #if CRABS_TEXT
@@ -1887,4 +1886,4 @@ _::Utf32& operator<<(_::Utf32& utf, _::Utf32Right item) {
 #undef PRINTF
 #undef PRINT
 #undef PRINT_HEADING
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  //< #if SEAM >= SEAM_0_0_2

@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
+#if SEAM >= SEAM_0_0_3
 // Dependencies:
 #include "align.h"
 #include "ascii_data_types.h"
@@ -22,6 +22,12 @@ specific language governing permissions and limitations under the License. */
 // End dependencies.
 
 namespace _ {
+
+bool TypeIsValid(type_t type) {
+  if (type >= LST && type <= DIC || (type >= (ADR + 32) && type <= (TKN + 32)))
+    return false;
+  return true;
+}
 
 TypeValue::TypeValue(type_t type, const void* value)
     : type(type), value(value) {
@@ -41,7 +47,7 @@ uint_t TypeFixedSize(uint_t type) {
       4,   //< UI4: 8
       4,   //< FLT: 9
       4,   //< TMS: 10
-      8,   //< TMU: 11
+      8,   //< TME: 11
       8,   //< SI8: 12
       8,   //< UI8: 13
       8,   //< DBL: 14
@@ -247,4 +253,4 @@ _::Utf32& operator<<(_::Utf32& utf, const _::TypeValue& item) {
 }
 #endif
 
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
+#endif  //< #if SEAM >= SEAM_0_0_3

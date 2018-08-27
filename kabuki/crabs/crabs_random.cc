@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#ifndef HEADER_FOR_CRABS_RANDOM
-#define HEADER_FOR_CRABS_RANDOM
+#if SEAM >= SEAM_0_0_0
+#ifndef INCLUDED_CRABS_RANDOM
+#define INCLUDED_CRABS_RANDOM
 // Dependencies:
 #include <random>
 #include "config.h"
@@ -33,5 +33,5 @@ uint64_t GetRandomUInt64() {
 inline int64_t GetRandomInt64() { return (int64_t)GetRandomUInt64(); }
 
 }  // namespace _
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#endif  //< HEADER_FOR_CRABS_RANDOM
+#endif  //< #if SEAM >= SEAM_0_0_0
+#endif  //< INCLUDED_CRABS_RANDOM

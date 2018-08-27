@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#ifndef HEADER_FOR_CRABS_HASH
-#define HEADER_FOR_CRABS_HASH
+#if SEAM >= SEAM_0_0_0
+#ifndef INCLUDED_CRABS_HASH
+#define INCLUDED_CRABS_HASH
 // Dependencies:
 #include "config.h"
 // End dependencies.
@@ -47,5 +47,5 @@ KABUKI uint16_t Hash32(const char* string, hash32_t hash = kLargest32BitPrime);
 KABUKI hash64_t Hash64(const char* string, hash64_t hash = kLargest64BitPrime);
 
 }   //< namespace _
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#endif  //< HEADER_FOR_CRABS_HASH
+#endif  //< #if SEAM >= SEAM_0_0_0
+#endif  //< INCLUDED_CRABS_HASH

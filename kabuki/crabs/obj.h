@@ -14,9 +14,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#ifndef HEADER_FOR_CRABS_OBJ
-#define HEADER_FOR_CRABS_OBJ
+#if SEAM >= SEAM_0_0_2
+#ifndef INCLUDED_CRABS_OBJ
+#define INCLUDED_CRABS_OBJ
 // Dependencies:
 #include "align.h"
 #include "debug.h"
@@ -76,5 +76,5 @@ KABUKI uintptr_t* ObjClone(uintptr_t* ascii_object, int32_t size);
 KABUKI uintptr_t* ObjClone(uintptr_t* ascii_object, int64_t size);
 
 }  // namespace _
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#endif  //< HEADER_FOR_CRABS_OBJ
+#endif  //< #if SEAM >= SEAM_0_0_2
+#endif  //< INCLUDED_CRABS_OBJ

@@ -14,14 +14,14 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #include <ctime>
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#if SEAM >= SEAM_0_0_2
 // Dependencies:
 #include "clock.h"
 #include "debug.h"
 #include "floor.h"
 #include "lock.h"
 #include "tclock.h"
-#include "ttext.h"
+#include "tstr.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 2
 #define PRINT(item) Print(item)

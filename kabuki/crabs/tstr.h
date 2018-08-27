@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/ttext.h
+@file    $kabuki-toolkit/kabuki/crabs/tstr.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,18 +12,15 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#ifndef HEADER_FOR_CRABS_UTFN
-#define HEADER_FOR_CRABS_UTFN
+#if SEAM >= SEAM_0_0_2
+#ifndef INCLUDED_CRABS_UTFN
+#define INCLUDED_CRABS_UTFN
 // Dependencies:
 #include "config.h"
 #include "debug.h"
 #include "socket.h"
-#include "tfloating_point.h"
-#include "tinteger.h"
+#include "tdecimal.h"
 #include "tobj.h"
-
-#include <iostream>
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 2
 #define PRINT(c) Print(c)
@@ -1441,5 +1438,5 @@ KABUKI _::TUtf<Char>& operator<<(_::TUtf<Char>& utf,
 #undef PRINTF
 #undef PRINT_HEADING
 #undef PRINT_FLOAT_BINARY
-#endif  //< #if HEADER_FOR_CRABS_UTFN
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  //< #if INCLUDED_CRABS_UTFN
+#endif  //< #if SEAM >= SEAM_0_0_2

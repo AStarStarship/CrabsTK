@@ -1,5 +1,4 @@
-/* Kabuki Toolkit
-@version 0.x
+/* Kabuki Toolkit @version 0.x
 @file    $kabuki-toolkit/kabuki/crabs/crabs_console.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -88,6 +87,52 @@ void PrintHeading(const char* heading, int line_count, int width, char token,
   Print('\n');
   PrintLine(width, token, '+');
   Print('\n');
+}
+
+template <typename UI>
+void PrintBinaryUnsigned(UI value) {
+  enum { kSize = sizeof(UI) * 8 };
+
+  for (int i = kSize; i > 0; --i) {
+    char c = (char)('0' + (value >> (kSize - 1)));
+    Print(c);
+    value = value << 1;
+  }
+}
+
+template <typename SI, typename UI>
+void PrintBinarySigned(SI value) {
+  return PrintBinaryUnsigned<UI>((UI)value);
+}
+
+void PrintBinary(uint8_t value) { return PrintBinaryUnsigned<uint8_t>(value); }
+
+void PrintBinary(int8_t value) {
+  return PrintBinarySigned<int8_t, uint8_t>(value);
+}
+
+void PrintBinary(uint16_t value) {
+  return PrintBinaryUnsigned<uint16_t>(value);
+}
+
+void PrintBinary(int16_t value) {
+  return PrintBinarySigned<int16_t, uint16_t>(value);
+}
+
+void PrintBinary(uint32_t value) {
+  return PrintBinaryUnsigned<uint32_t>(value);
+}
+
+void PrintBinary(int32_t value) {
+  return PrintBinarySigned<int32_t, uint32_t>(value);
+}
+
+void PrintBinary(uint64_t value) {
+  return PrintBinaryUnsigned<uint64_t>(value);
+}
+
+void PrintBinary(int64_t value) {
+  return PrintBinarySigned<int64_t, uint64_t>(value);
 }
 
 void Pause() {

@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#ifndef HEADER_FOR_SCRIPT_MIRROR
-#define HEADER_FOR_SCRIPT_MIRROR
+#if SEAM >= SEAM_0_0_0
+#ifndef INCLUDED_SCRIPT_MIRROR
+#define INCLUDED_SCRIPT_MIRROR
 // Dependencies:
 #include "bin.h"
 #include "bout.h"
@@ -136,5 +136,5 @@ KABUKI const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
                               uint_t offset, char* address);
 
 }   //< namespace _
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#endif  //< HEADER_FOR_SCRIPT_MIRROR
+#endif  //< #if SEAM >= SEAM_0_0_0
+#endif  //< INCLUDED_SCRIPT_MIRROR

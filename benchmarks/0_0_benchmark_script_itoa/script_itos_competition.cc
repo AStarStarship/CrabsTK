@@ -1,6 +1,7 @@
 /** Kabuki Toolkit @version 0.x
-@file     ~/tests/script_itos_competition.cc
-@author  Cale McCollough <cale.mccollough@gmail.com>
+@file     ~/tests/script_itos_competition.ccCopyright(c) 2014
+@author  Florian Loitsch, Milo Yip (miloyip@gmail.com) and Cale McCollough
+<cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance with the License.
@@ -181,7 +182,15 @@ char* PrintMod100(uint32_t value, char* text, char* text_end) {
 
 /*
 char* PrintMod100B (uint32_t value, char* text, char* text_end) {
-    
+    
+
+
+
+
+
+
+
+
     // Lookup table of ASCII char pairs for 00, 01, ..., 99.
     static const uint16_t kDigits00To99[100] = {
         0x3030, 0x3130, 0x3230, 0x3330, 0x3430, 0x3530, 0x3630, 0x3730, 0x3830,

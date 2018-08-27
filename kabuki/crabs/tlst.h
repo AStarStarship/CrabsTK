@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#ifndef HEADER_FOR_CRABS_LIST
-#define HEADER_FOR_CRABS_LIST
+#if SEAM >= SEAM_0_0_0
+#ifndef INCLUDED_CRABS_LIST
+#define INCLUDED_CRABS_LIST
 // Dependencies:
 #include "align.h"
 #include "set.h"
@@ -510,5 +510,5 @@ inline _::Utf8& operator<<(_::Utf8& printer, _::CList<UI, SI>* list) {
 #undef PRINT_HEADING
 #undef PRINT_TYPE
 #undef WIPE
-#endif  //< HEADER_FOR_CRABS_LIST
+#endif  //< INCLUDED_CRABS_LIST
 #endif  //< SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0

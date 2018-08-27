@@ -13,8 +13,8 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#ifndef HEADER_FOR_SCRIPT_ITOS_TESTS
-#define HEADER_FOR_SCRIPT_ITOS_TESTS
+#ifndef INCLUDED_SCRIPT_ITOS_TESTS
+#define INCLUDED_SCRIPT_ITOS_TESTS
 
 char* PrintNil(uint32_t value, char* text, char* text_end);
 
@@ -26,4 +26,4 @@ char* PrintMod100(uint32_t val, char* text, char* text_end);
 
 void BenchmarkScriptItos();
 
-#endif  //< #ifndef HEADER_FOR_SCRIPT_ITOS_TESTS
+#endif  //< #ifndef INCLUDED_SCRIPT_ITOS_TESTS

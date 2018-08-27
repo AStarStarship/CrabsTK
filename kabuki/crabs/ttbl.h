@@ -1,5 +1,4 @@
-/* Kabuki Toolkit
-@version 0.x
+/* Kabuki Toolkit @version 0.x
 @file    $kabuki-toolkit/kabuki/crabs/table.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -13,20 +12,20 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
-#ifndef HEADER_FOR_CRABS_TABLE
-#define HEADER_FOR_CRABS_TABLE
+#if SEAM >= SEAM_0_0_3
+#ifndef INCLUDED_CRABS_TABLE
+#define INCLUDED_CRABS_TABLE
 // Dependencies:
-#include "socket.h"
 #include "operand.h"
+#include "socket.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 3
 #ifndef PRINTF
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT(c) Print(c)
-#define PRINT_HEADING                              \
-  {                                                \
-    Print ('\n');                             \
+#define PRINT_HEADING                             \
+  {                                               \
+    Print('\n');                                  \
     for (int i = 80; i > 0; --i) std::cout << '-' \
   }
 #define PRINT_TYPE(type, value) Console<>().Out() << TypeValue(type, value);
@@ -59,14 +58,7 @@ namespace _ {
     terminated by an invalid index that is greater than kMaxNumOps.
     collissionsList[0] is an invalid index, so the collisionsList is searched
     from lower address up.
-    
-
-
-
-
-
-
-
+    
 
     # Memory Layout
 
@@ -612,6 +604,6 @@ Utf8& TablePrint(Utf8& print, Table<UI, SI>* table) {
 }
 #endif
 
-}   //< namespace _
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
-#endif  //< HEADER_FOR_CRABS_TABLE
+}  // namespace _
+#endif  //< #if SEAM >= SEAM_0_0_3
+#endif  //< INCLUDED_CRABS_TABLE

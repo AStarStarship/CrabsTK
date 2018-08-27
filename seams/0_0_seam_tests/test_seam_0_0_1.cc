@@ -16,14 +16,14 @@
 
 #include <stdafx.h>
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 1
+#if SEAM >= SEAM_0_0_1
 
 #include <stdio.h>
 #include <cmath>
 #include <random>
 
 #include "../../kabuki/crabs/global.h"
-#include "../../kabuki/crabs/number.h"
+#include "../../kabuki/crabs/decimal.h"
 #include "test_seam_0.h"
 
 using namespace _;
@@ -95,4 +95,4 @@ TEST(SEAM_0_1, SEAM_0_1_0) {
   PAUSE("Done testing SEAM_0_0_2! (:-)=-=<");
 }
 
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 1
+#endif  //< #if SEAM >= SEAM_0_0_1

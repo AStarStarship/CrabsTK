@@ -1,5 +1,5 @@
-/* Kabuki Toolkit
-@file    $kabuki-toolkit/kabuki/crabs/array.h
+/* Kabuki Toolkit @version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/crabs_console.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -8,16 +8,15 @@ You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
 Unless required by applicable law or agreed to in writing, software distributed
 under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
-specific language governing permissions and limitations under the License.
-*/
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
-#ifndef HEADER_FOR_CRABS_ARRAY
-#define HEADER_FOR_CRABS_ARRAY
+#if SEAM >= SEAM_0_0_3
+#ifndef INCLUDED_CRABS_ARRAY
+#define INCLUDED_CRABS_ARRAY
 // Dependencies:
-#include "stack.h"
+#include "tstk.h"
 // End dependencies.
 
 namespace _ {
@@ -232,5 +231,5 @@ inline _::Utf8& operator<<(_::Utf8& printer, _::Stack<T, UI, SI>& stack) {
   return _::PrintArray<T, UI, SI>(printer, stack.Obj());
 }
 
-#endif  //< HEADER_FOR_CRABS_ARRAY
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
+#endif  //< INCLUDED_CRABS_ARRAY
+#endif  //< #if SEAM >= SEAM_0_0_3

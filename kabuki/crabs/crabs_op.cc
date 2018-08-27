@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#if SEAM >= SEAM_0_0_4
 // Dependencies:
 #include "debug.h"
 #include "bsq.h"
@@ -128,8 +128,8 @@ void Print (Op& log) {
                     return;
                 ClockPrintTime (ui4);
             }
-            case TMU: {
-                if (BinRead (bin, Params<2, ADR, TMU> (), Args (args, &ui8)))
+            case TME: {
+                if (BinRead (bin, Params<2, ADR, TME> (), Args (args, &ui8)))
                     return;
                 ClockPrintTimestamp (ui8);
             }
@@ -152,4 +152,4 @@ void Print (Op& log) {
 
 #undef PRINTF
 #undef PRINT
-#endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#endif  //> #if SEAM >= SEAM_0_0_4

@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
-#ifndef HEADER_FOR_CRABS_WALL
-#define HEADER_FOR_CRABS_WALL
+#if SEAM >= SEAM_0_0_4
+#ifndef INCLUDED_CRABS_WALL
+#define INCLUDED_CRABS_WALL
 // Dependencies:
 #include "door.h"
 #include "op.h"
@@ -87,5 +87,5 @@ class Wall {
 };
 
 }  // namespace _
-#endif  //< HEADER_FOR_CRABS_WALL
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#endif  //< INCLUDED_CRABS_WALL
+#endif  //< #if SEAM >= SEAM_0_0_4

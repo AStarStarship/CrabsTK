@@ -1,18 +1,14 @@
-/** Kabuki Toolkit
-    @version 0.x
-    @file    ~/source/aiml/include/agent.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+/** Kabuki Toolkit @version 0.x
+@file    $kabuki-toolkit/kabuki/f2sdk/aiml/include/agent.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #ifndef KABUKI_AIML_AGENT_H
 #define KABUKI_AIML_AGENT_H
@@ -20,16 +16,16 @@
 //#include "module_config.h"
 
 namespace kabuki { namespace aiml {
-    
+
 // The comments below have code taken from the book Artificial Intelligence (3rd Edition) and we're porting the code into our toolkit.
 
 // # Section 1
 
-// ## Chapter 2 - Intelligent Agents 
+// ## Chapter 2 - Intelligent Agents
 
 /** Invoked for each new percept and returns an action each time.
     Figure 2.7 The TABLE-DRIVEN-AGENT program is invoked for each new percept and returns an action each time. It retains the complete percept sequence in memory.
-    
+
     Figure 2.2 A vacuum-cleaner world with just two locations.
     Percept sequence Action
     [A, Clean] Right
@@ -44,16 +40,16 @@ namespace kabuki { namespace aiml {
     [A, Clean], [A, Clean], [A, Dirty] Suck
     ...
     ...
-    
+
     Figure 2.3 Partial tabulation of a simple agent function for the vacuum-cleaner world
     shown in Figure 2.2.
 
     @group TableDrivenAgent
 
     @return An Action
-    @const percepts A sequence, initially empty 
+    @const percepts A sequence, initially empty
     @const table, a table of actions, indexed by percept sequences, initially fully specified.
-    
+
     @code
     append percept to the end of percepts
     action <- LOOKUP (percepts, table)
@@ -90,7 +86,7 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 
-/** 
+/**
     Figure 3.1 A simple problem-solving agent. It first formulates a goal and a problem, searches for a sequence of actions that would solve the problem, and then executes the actions one at a time. When this is complete, it formulates another goal and starts over.
     @code
     function SIMPLE-PROBLEM-SOLVING-AGENT(percept ) returns an action
@@ -98,7 +94,7 @@ persistent: rules, a set of condition–action rules
     @const state, some description of the current world state
     @const goal , a goal, initially null
     @const problem, a problem formulation
-    
+
     state←UPDATE-STATE(state, percept )
     if seq is empty then
         goal ←FORMULATE-GOAL(state)
@@ -117,17 +113,17 @@ persistent: rules, a set of condition–action rules
     @code
     function TREE-SEARCH(problem) returns a solution, or failure
     initialize the frontier using the initial state of problem
-    
+
     loop do
     if the frontier is empty then return failure
         choose a leaf node and remove it from the frontier
         if the node contains a goal state then return the corresponding solution
         expand the chosen node, adding the resulting nodes to the frontier
-    
+
     function GRAPH-SEARCH(problem) returns a solution, or failure
     initialize the frontier using the initial state of problem
     initialize the explored set to be empty
-    
+
     loop do
         if the frontier is empty then return failure
         choose a leaf node and remove it from the frontier
@@ -152,13 +148,13 @@ persistent: rules, a set of condition–action rules
 /** Figure 3.11 Breadth-first search on a graph.
     @code
     function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
-    
+
     node ←a node with STATE = problem.INITIAL-STATE, PATH-COST = 0
-    
+
     if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
     frontier ←a FIFO queue with node as the only element
     explored ←an empty set
-    
+
     loop do
         if EMPTY?( frontier) then return failure
         node←POP( frontier ) // chooses the shallowest node in frontier
@@ -175,11 +171,11 @@ persistent: rules, a set of condition–action rules
 
     @code
     function UNIFORM-COST-SEARCH(problem) returns a solution, or failure
-    
+
     node ←a node with STATE = problem.INITIAL-STATE, PATH-COST = 0
     frontier ←a priority queue ordered by PATH-COST, with node as the only element
     explored ←an empty set
-    
+
     loop do
         if EMPTY?( frontier) then return failure
         node←POP( frontier ) // chooses the lowest-cost node in frontier
@@ -199,7 +195,7 @@ persistent: rules, a set of condition–action rules
     @code
     function DEPTH-LIMITED-SEARCH(problem, limit ) returns a solution, or failure/cutoff
         return RECURSIVE-DLS(MAKE-NODE(problem.INITIAL-STATE), problem, limit )
-    
+
     function RECURSIVE-DLS(node, problem, limit ) returns a solution, or failure/cutoff
         if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
         else if limit = 0 then return cutoff
@@ -227,10 +223,10 @@ persistent: rules, a set of condition–action rules
 /** Figure 3.26 The algorithm for recursive best-first search.
 
     @code
-    
+
     function RECURSIVE-BEST-FIRST-SEARCH(problem) returns a solution, or failure
         return RBFS(problem,MAKE-NODE(problem.INITIAL-STATE),∞)
-        
+
     function RBFS(problem, node, f limit ) returns a solution, or failure and a new f-cost limit
         if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
         successors ←[ ]
@@ -274,7 +270,7 @@ persistent: rules, a set of condition–action rules
     function GENETIC-ALGORITHM(population, FITNESS-FN) returns an individual
     inputs: population, a set of individuals
         FITNESS-FN, a function that measures the fitness of an individual
-    
+
     repeat
         new population ←empty set
         for i = 1 to SIZE(population) do
@@ -286,10 +282,10 @@ persistent: rules, a set of condition–action rules
             population ←new population
     until some individual is fit enough, or enough time has elapsed
     return the best individual in population, according to FITNESS-FN
-    
+
     function REPRODUCE(x , y) returns an individual
         inputs: x , y, parent individuals
-        
+
         n←LENGTH(x ); c←random number from 1 to n
         return APPEND(SUBSTRING(x, 1, c), SUBSTRING(y, c + 1, n))
     @endcode
@@ -300,7 +296,7 @@ persistent: rules, a set of condition–action rules
     @code
     function AND-OR-GRAPH-SEARCH(problem) returns a conditional plan, or failure
         OR-SEARCH(problem.INITIAL-STATE, problem, [ ])
-        
+
     function OR-SEARCH(state, problem, path) returns a conditional plan, or failure
         if problem.GOAL-TEST(state) then return the empty plan
         if state is on path then return failure
@@ -308,7 +304,7 @@ persistent: rules, a set of condition–action rules
             plan ←AND-SEARCH(RESULTS(state, action), problem, [state | path])
             if plan = failure then return [action | plan]
         return failure
-    
+
     function AND-SEARCH(states, problem, path) returns a conditional plan, or failure
     for each si in states do
         plani←OR-SEARCH(si, problem, path)
@@ -360,7 +356,7 @@ persistent: rules, a set of condition–action rules
     a←an action b in ACTIONS(s) that minimizes LRTA*-COST(s, b, result [s, b],H)
     s ←s
     return a
-    
+
     function LRTA*-COST(s, a, s,H) returns a cost estimate
         if s is undefined then return h(s)
         else return c(s, a, s) + H[s]
@@ -375,14 +371,14 @@ persistent: rules, a set of condition–action rules
     function MINIMAX-DECISION(state) returns an action
     return argmax
     a ∈ ACTIONS(s) MIN-VALUE(RESULT(state, a))
-    
+
     function MAX-VALUE(state) returns a utility value
     if TERMINAL-TEST(state) then return UTILITY(state)
     v ←−∞
     for each a in ACTIONS(state) do
         v ←MAX(v, MIN-VALUE(RESULT(s, a)))
     return v
-    
+
     function MIN-VALUE(state) returns a utility value
     if TERMINAL-TEST(state) then return UTILITY(state)
     v←∞
@@ -399,7 +395,7 @@ persistent: rules, a set of condition–action rules
     function ALPHA-BETA-SEARCH(state) returns an action
     v ←MAX-VALUE(state,−∞,+∞)
     return the action in ACTIONS(state) with value v
-    
+
     function MAX-VALUE(state,α, β) returns a utility value
     if TERMINAL-TEST(state) then return UTILITY(state)
     v ←−∞
@@ -408,7 +404,7 @@ persistent: rules, a set of condition–action rules
         if v ≥ β then return v
         α←MAX(α, v)
     return v
-    
+
     function MIN-VALUE(state,α, β) returns a utility value
     if TERMINAL-TEST(state) then return UTILITY(state)
     v ←+∞
@@ -428,7 +424,7 @@ persistent: rules, a set of condition–action rules
     function AC-3(csp) returns false if an inconsistency is found and true otherwise
     inputs: csp, a binary CSP with components (X, D, C)
     local variables: queue, a queue of arcs, initially all the arcs in csp
-    
+
     while queue is not empty do
         (Xi, Xj)←REMOVE-FIRST(queue)
         if REVISE(csp, Xi, Xj ) then
@@ -436,7 +432,7 @@ persistent: rules, a set of condition–action rules
             for each Xk in Xi.NEIGHBORS - {Xj} do
                 add (Xk, Xi) to queue
     return true
-    
+
     function REVISE(csp, Xi, Xj ) returns true iff we revise the domain of Xi
 
     revised ←false
@@ -453,7 +449,7 @@ persistent: rules, a set of condition–action rules
     @code
     function BACKTRACKING-SEARCH(csp) returns a solution, or failure
         return BACKTRACK({ }, csp)
-        
+
     function BACKTRACK(assignment, csp) returns a solution, or failure
         if assignment is complete then return assignment
         var ←SELECT-UNASSIGNED-VARIABLE(csp)
@@ -476,7 +472,7 @@ persistent: rules, a set of condition–action rules
     @codefunction MIN-CONFLICTS(csp,max steps) returns a solution or failure
     inputs: csp, a constraint satisfaction problem
             max steps, the number of steps allowed before giving up
-            
+
         current ←an initial complete assignment for csp
         for i = 1 to max steps do
             if current is a solution for csp then return current
@@ -492,7 +488,7 @@ persistent: rules, a set of condition–action rules
     @code
     function TREE-CSP-SOLVER(csp) returns a solution, or failure
         inputs: csp, a CSP with components X, D, C
-        
+
         n←number of variables in X
         assignment ←an empty assignment
         root ←any variable in X
@@ -515,7 +511,7 @@ persistent: rules, a set of condition–action rules
     function KB-AGENT(percept ) returns an action
         persistent: KB, a knowledge base
             t , a counter, initially 0, indicating time
-        
+
         TELL(KB,MAKE-PERCEPT-SENTENCE(percept , t ))
         action ←ASK(KB,MAKE-ACTION-QUERY(t ))
         TELL(KB,MAKE-ACTION-SENTENCE(action, t ))
@@ -524,14 +520,14 @@ persistent: rules, a set of condition–action rules
     @endcode
 */
 /**  Figure 7.7 A BNF (Backus–Naur Form) grammar of sentences in propositional logic, along with operator precedences, from highest to lowest.
-| 
+|
 |  Logic Type         | Logic |
 |--------------------:|:------|
 | Sentence            | → AtomicSentence OR ComplexSentence
 | AtomicSentence      | → True OR False OR P OR Q OR R OR . . . |
 | ComplexSentence     | → ( Sentence ) OR [ Sentence ] OR ¬Sentence OR Sentence ∧ Sentence OR Sentence ∨ Sentence OR Sentence ⇒ Sentence OR Sentence ⇔ Sentence |
 | OPERATOR PRECEDENCE | : ¬, ∧, ∨,⇒,⇔
-    
+
 
 */
 
@@ -544,7 +540,7 @@ persistent: rules, a set of condition–action rules
             α, the query, a sentence in propositional logic
         symbols←a list of the proposition symbols in KB and α
         return TT-CHECK-ALL(KB,α, symbols,{ })
-        
+
         function TT-CHECK-ALL(KB,α, symbols ,model ) returns true or false
             if EMPTY?(symbols) then
                 if PL-TRUE?(KB,model ) then return PL-TRUE?(α,model )
@@ -591,7 +587,7 @@ persistent: rules, a set of condition–action rules
             new ←new ∪ resolvents
         if new ⊆ clauses then return false
         clauses ←clauses ∪new
-    
+
     @endcode
 */
 
@@ -621,11 +617,11 @@ persistent: rules, a set of condition–action rules
     @code
     function DPLL-SATISFIABLE?(s) returns true or false
         inputs: s, a sentence in propositional logic
-        
+
         clauses ←the set of clauses in the CNF representation of s
         symbols←a list of the proposition symbols in s
         return DPLL(clauses, symbols,{ })
-        
+
     function DPLL(clauses, symbols,model ) returns true or false
         if every clause in clauses is true in model then return true
         if some clause in clauses is false in model then return false
@@ -646,7 +642,7 @@ persistent: rules, a set of condition–action rules
         inputs: clauses, a set of clauses in propositional logic
                 p, the probability of choosing to do a “random walk” move, typically around 0.5
                 max flips, number of flips allowed before giving up
-                
+
         model ←a random assignment of true/false to the symbols in clauses
         for i= 1to max flips do
             if model satisfies clauses then return model
@@ -665,7 +661,7 @@ persistent: rules, a set of condition–action rules
         persistent: KB, a knowledge base, initially the atemporal “wumpus physics”
                 t , a counter, initially 0, indicating time
                 plan, an action sequence, initially empty
-        
+
         TELL(KB,MAKE-PERCEPT-SENTENCE(percept , t ))
         TELL the KB the temporal “physics” sentences for time t
         safe ←{[x , y] : ASK(KB,OKt
@@ -689,12 +685,12 @@ persistent: rules, a set of condition–action rules
             TELL(KB,MAKE-ACTION-SENTENCE(action, t ))
             t ←t + 1
         return action
-        
+
     function PLAN-ROUTE(current,goals,allowed) returns an action sequence
         inputs: current , the agent’s current position
             goals, a set of squares; try to plan a route to one of them
             allowed, a set of squares that can form part of the route
-            
+
         problem ←ROUTE-PROBLEM(current , goals,allowed)
         return A*-GRAPH-SEARCH(problem)
     @endcode
@@ -749,7 +745,7 @@ persistent: rules, a set of condition–action rules
         else if LIST?(x ) and LIST?(y) then
             return UNIFY(x .REST, y.REST, UNIFY(x .FIRST, y.FIRST, θ))
         else return failure
-        
+
     function UNIFY-VAR(var, x , θ) returns a substitution
         if {var/val} ∈ θ then return UNIFY(val , x , θ)
         else if {x/val} ∈ θ then return UNIFY(var, val , θ)
@@ -766,7 +762,7 @@ persistent: rules, a set of condition–action rules
                 α, the query, an atomic sentence
 
                 local variables: new, the new sentences inferred on each iteration
-                
+
         repeat until new is empty
             new ←{}
             for each rule in KB do
@@ -792,13 +788,13 @@ persistent: rules, a set of condition–action rules
     @code
     function FOL-BC-ASK(KB, query) returns a generator of substitutions
         return FOL-BC-OR(KB, query,{ })
-        
+
     generator FOL-BC-OR(KB, goal , θ) yields a substitution
         for each rule (lhs ⇒ rhs) in FETCH-RULES-FOR-GOAL(KB, goal ) do
             (lhs, rhs)←STANDARDIZE-VARIABLES((lhs, rhs))
             for each θ in FOL-BC-AND(KB, lhs, UNIFY(rhs, goal , θ)) do
                 yield θ
-        
+
     generator FOL-BC-AND(KB, goals, θ) yields a substitution
         if θ = failure then return
         else if LENGTH(goals) = 0 then yield θ
@@ -815,7 +811,7 @@ persistent: rules, a set of condition–action rules
 
     @code
     procedure APPEND(ax , y, az , continuation)
-    
+
         trail ←GLOBAL-TRAIL-POINTER()
         if ax = [ ] and UNIFY(y, az ) then CALL(continuation)
         RESET-TRAIL(trail )
@@ -830,7 +826,7 @@ persistent: rules, a set of condition–action rules
 
     @code
     function GRAPHPLAN(problem) returns solution or failure
-    
+
         graph ←INITIAL-PLANNING-GRAPH(problem)
         goals ←CONJUNCTS(problem.GOAL)
         nogoods ←an empty hash table
@@ -849,7 +845,7 @@ persistent: rules, a set of condition–action rules
 
     @code
     function HIERARCHICAL-SEARCH(problem, hierarchy) returns a solution, or failure
-    
+
         frontier ←a FIFO queue with [Act] as the only element
         loop do
             if EMPTY?( frontier) then return failure
@@ -868,11 +864,11 @@ persistent: rules, a set of condition–action rules
 
     @code
     function ANGELIC-SEARCH(problem, hierarchy, initialPlan ) returns solution or fail
-    
+
         frontier ←a FIFO queue with initialPlan as the only element
         loop do
         if EMPTY?( frontier) then return fail
-            plan ←POP( frontier) // chooses the shallowest node in frontier 
+            plan ←POP( frontier) // chooses the shallowest node in frontier
             if REACH+(problem.INITIAL-STATE, plan) intersects problem.GOAL then
                 if plan is primitive then return plan // REACH+ is exact for primitive plans
                 guaranteed ←REACH−(problem.INITIAL-STATE, plan) ∩ problem.GOAL
@@ -883,9 +879,9 @@ persistent: rules, a set of condition–action rules
                 prefix ,suffix ←the action subsequences before and after hla in plan
                 for each sequence in REFINEMENTS(hla, outcome, hierarchy) do
                     frontier ←INSERT(APPEND(prefix , sequence, suffix), frontier)
-        
+
     function DECOMPOSE(hierarchy, s0 , plan, sf ) returns a solution
-    
+
         solution ←an empty plan
         while plan is not empty do
             action ←REMOVE-LAST(plan)
@@ -909,7 +905,7 @@ persistent: rules, a set of condition–action rules
     function DT-AGENT(percept ) returns an action
         persistent: belief state, probabilistic beliefs about the current state of the world
                     action, the agent’s action
-                    
+
         update belief state based on action and percept
         calculate outcome probabilities for actions,
             given action descriptions and current belief state
@@ -928,13 +924,13 @@ persistent: rules, a set of condition–action rules
         inputs: X, the query variable
                 e, observed values for variables E
                 bn, a Bayes net with variables {X} ∪ E ∪ Y // Y = hidden variables
-                
+
         Q(X)←a distribution over X, initially empty
         for each value xi of X do
             Q(xi)←ENUMERATE-ALL(bn.VARS, exi )
                 where exi is e extended with X = xi
         return NORMALIZE(Q(X))
-        
+
     function ENUMERATE-ALL(vars, e) returns a real number
         if EMPTY?(vars) then return 1.0
         Y ←FIRST(vars)
@@ -952,7 +948,7 @@ persistent: rules, a set of condition–action rules
         inputs: X, the query variable
                 e, observed values for variables E
                 bn, a Bayesian network specifying joint distribution P(X1,... , Xn)
-                
+
         factors ←[ ]
         for each var in ORDER(bn.VARS) do
             factors ←[MAKE-FACTOR(var , e)|factors]
@@ -966,7 +962,7 @@ persistent: rules, a set of condition–action rules
     @code
     function PRIOR-SAMPLE(bn) returns an event sampled from the prior specified by bn
         inputs: bn, a Bayesian network specifying joint distribution P(X1, . . . , Xn)
-        
+
         x←an event with n elements
         foreach variable Xi in X1, . . . , Xn do
             x[i]←a random sample from P(Xi | parents(Xi))
@@ -983,7 +979,7 @@ persistent: rules, a set of condition–action rules
                 bn, a Bayesian network
                 N, the total number of samples to be generated
         local variables: N, a vector of counts for each value of X, initially zero
-        
+
         for j = 1 to N do
             x←PRIOR-SAMPLE(bn)
             if x is consistent with e then
@@ -1001,14 +997,14 @@ persistent: rules, a set of condition–action rules
                 bn, a Bayesian network specifying joint distribution P(X1, . . . , Xn)
                 N, the total number of samples to be generated
         local variables: W, a vector of weighted counts for each value of X, initially zero
-        
+
         for j = 1 to N do
             x,w ←WEIGHTED-SAMPLE(bn, e)
             W[x ]←W[x] + w where x is the value of X in x
         return NORMALIZE(W)
-        
+
     function WEIGHTED-SAMPLE(bn, e) returns an event and a weight
-    
+
         w ←1; x←an event with n elements initialized from e
         foreach variable Xi in X1, . . . , Xn do
             if Xi is an evidence variable with value xi in e
@@ -1045,7 +1041,7 @@ persistent: rules, a set of condition–action rules
         local variables: fv, a vector of forward messages for steps 0, . . . , t
                 b, a representation of the backward message, initially all 1s
                 sv, a vector of smoothed estimates for steps 1, . . . , t
-                
+
         fv[0]←prior
         for i= 1to t do
             fv[i]←FORWARD(fv[i − 1], ev[i])
@@ -1068,7 +1064,7 @@ persistent: rules, a set of condition–action rules
                 B, the d-step backward transformation matrix, initially the identity matrix
                 et−d:t, double-ended list of evidence from t − d to t, initially empty
         local variables: Ot−d,Ot, diagonal matrices containing the sensor model information
-        
+
         add et to the end of et−d:t
         Ot←diagonal matrix containing P(et|Xt)
         if t > d then
@@ -1092,10 +1088,10 @@ persistent: rules, a set of condition–action rules
                 dbn, a DBN with prior P(X0), transition model P(X1|X0), sensor model P(E1|X1)
         persistent: S, a vector of samples of size N, initially generated from P(X0)
         local variables: W, a vector of weights of size N
-        
+
         for i = 1 to N do
             S[i ]←sample from P(X1 | X0 = S[i ]) // step 1
-            W[i ]←P(e | X1 = S[i]) // step 2 
+            W[i ]←P(e | X1 = S[i]) // step 2
         S ←WEIGHTED-SAMPLE-WITH-REPLACEMENT(N, S,W) // step 3
         return S
     @endcode
@@ -1108,7 +1104,7 @@ persistent: rules, a set of condition–action rules
     @code
     function INFORMATION-GATHERING-AGENT(percept ) returns an action
         persistent: D, a decision network
-        
+
         integrate percept into D
         j ←the value that maximizes VPI (Ej) / Cost (Ej )
         if VPI (Ej) > Cost (Ej )
@@ -1126,13 +1122,13 @@ persistent: rules, a set of condition–action rules
                 , the maximum error allowed in the utility of any state
         local variables: U, U, vectors of utilities for states in S, initially zero
                 δ, the maximum change in the utility of any state in an iteration
-                
+
         repeat
             U ←U; δ←0
             for each state s in S do
                 U[s]←R(s) + γ max
                 a∈A(s)
-                
+
                 s
                 P(s | s, a) U[s]
             if |U[s] − U[s]| > δ then δ ←|U[s] − U[s]|
@@ -1148,25 +1144,25 @@ persistent: rules, a set of condition–action rules
         inputs: mdp, an MDP with states S, actions A(s), transition model P(s | s, a)
         local variables: U, a vector of utilities for states in S, initially zero
                 π, a policy vector indexed by state, initially random
-        
+
         repeat
             U ←POLICY-EVALUATION(π,U,mdp)
             unchanged?←true
             for each state s in S do
                 if max
                     a ∈A(s)
-                    
+
                     s
                     P(s
                      | s, a) U[s
-                    ] > 
+                    ] >
                     s
                     P(s
                      | s, π[s]) U[s
                     ] then do
                     π[s]←argmax
                     a ∈A(s)
-                    
+
                     s
                     P(s
                      | s, a) U[s
@@ -1185,7 +1181,7 @@ persistent: rules, a set of condition–action rules
             sensor model P(e | s), rewards R(s), discount γ
             , the maximum error allowed in the utility of any state
         local variables: U, U, sets of plans p with associated utility vectors αp
-        
+
         U←a set containing just the empty plan [ ], with α[ ](s)= R(s)
         repeat
             U ←U
@@ -1204,7 +1200,7 @@ persistent: rules, a set of condition–action rules
     @code
     function DECISION-TREE-LEARNING(examples, attributes, parent examples) returns
         a tree
-        
+
         if examples is empty then return PLURALITY-VALUE(parent examples)
         else if all examples have the same classification then return the classification
         else if attributes is empty then return PLURALITY-VALUE(examples)
@@ -1223,19 +1219,19 @@ persistent: rules, a set of condition–action rules
 
     @code
     function CROSS-VALIDATION-WRAPPER(Learner , k, examples) returns a hypothesis
-    
+
         local variables: errT, an array, indexed by size, storing training-set error rates
                 errV , an array, indexed by size, storing validation-set error rates
-        
+
         for size = 1 to∞ do
             errT[size], errV [size]←CROSS-VALIDATION(Learner , size, k, examples)
             if errT has converged then do
                 best size←the value of size with minimum errV [size]
                 return Learner (best size, examples)
-        
+
     function CROSS-VALIDATION(Learner , size, k, examples) returns two values:
                 average training set error rate, average validation set error rate
-                
+
         fold errT ←0; fold errV ←0
         for fold = 1 to k do
             training set , validation set ←PARTITION(examples, fold , k)
@@ -1250,7 +1246,7 @@ persistent: rules, a set of condition–action rules
 
     @code
     function DECISION-LIST-LEARNING(examples) returns a decision list, or failure
-    
+
         if examples is empty then return the trivial decision list No
         t ←a test that matches a nonempty subset examplest of examples
             such that the members of examplest are all positive or all negative
@@ -1268,31 +1264,31 @@ persistent: rules, a set of condition–action rules
         inputs: examples, a set of examples, each with input vector x and output vector y
                 network , a multilayer network with L layers, weights wi,j , activation function g
         local variables: Δ, a vector of errors, indexed by network node
-        
+
         repeat
             for each weight wi,j in network do
                 wi,j ←a small random number
             for each example (x, y) in examples do
-            
+
                 // Propagate the inputs forward to compute the outputs
-                
+
                 for each node i in the input layer do
                     ai←xi
                 for  = 2 to L do
                 for each node j in layer  do
                     inj ←i wi,j ai
                     aj ←g(inj)
-                
+
                 // Propagate deltas backward from output layer to input layer
-                
+
                 for each node j in the output layer do
                     Δ[j]←g(inj) × (yj − aj)
                 for  = L − 1 to 1 do
                     for each node i in layer  do
                         Δ[i]←g(ini)j wi,j Δ[j]
-                
+
                 // Update every weight in network using deltas
-                
+
                 for each weight wi,j in network do
                 wi,j ←wi,j + α × ai × Δ[j]
         until some stopping criterion is satisfied
@@ -1310,7 +1306,7 @@ persistent: rules, a set of condition–action rules
         local variables: w, a vector of N example weights, initially 1/N
                 h, a vector of K hypotheses
                 z, a vector of K hypothesis weights
-                
+
         for k = 1 to K do
             h[k]←L(examples,w)
             error ←0
@@ -1350,14 +1346,14 @@ persistent: rules, a set of condition–action rules
     @code
     function VERSION-SPACE-LEARNING(examples) returns a version space
         local variables: V, the version space: the set of all hypotheses
-        
+
         V ←the set of all hypotheses
         for each example e in examples do
             if V is not empty then V ←VERSION-SPACE-UPDATE(V, e)
         return V
-        
+
         function VERSION-SPACE-UPDATE(V, e) returns an updated version space
-        
+
         V ←{h ∈V : h is consistent with e}
     @endcode
 */
@@ -1368,16 +1364,16 @@ persistent: rules, a set of condition–action rules
     function MINIMAL-CONSISTENT-DET(E,A) returns a set of attributes
         inputs: E, a set of examples
                 A, a set of attributes, of size n
-                
+
         for i = 0 to n do
             for each subset Ai of A of size i do
                 if CONSISTENT-DET?(Ai,E) then return Ai
-        
+
     function CONSISTENT-DET?(A,E) returns a truth value
         inputs: A, a set of attributes
                 E, a set of examples
         local variables: H, a hash table
-        
+
         for each example e in E do
             if some example in H has the same values as e for the attributes A
                 but a different classification then return false
@@ -1393,18 +1389,18 @@ persistent: rules, a set of condition–action rules
         inputs: examples, set of examples
                 target, a literal for the goal predicate
         local variables: clauses, set of clauses, initially empty
-        
+
         while examples contains positive examples do
             clause←NEW-CLAUSE(examples, target)
             remove positive examples covered by clause from examples
             add clause to clauses
         return clauses
-        
+
     function NEW-CLAUSE(examples, target) returns a Horn clause
         local variables: clause, a clause with target as head and an empty body
                 l , a literal to be added to the clause
                 extended examples, a set of examples with values for new variables
-        
+
         extended examples ←examples
         while extended examples contains negative examples do
             l ←CHOOSE-LITERAL(NEW-LITERALS(clause), extended examples)
@@ -1412,9 +1408,9 @@ persistent: rules, a set of condition–action rules
             extended examples ←set of examples created by applying EXTEND-EXAMPLE
                 to each example in extended examples
         return clause
-    
+
     function EXTEND-EXAMPLE(example, literal ) returns a set of examples
-    
+
         if example satisfies literal
             then return the set of examples created by extending example with
                 each possible constant value for each new variable in literal
@@ -1435,7 +1431,7 @@ persistent: rules, a set of condition–action rules
                 Nsa , a table of frequencies for state–action pairs, initially zero
                 Ns|sa , a table of outcome frequencies given state–action pairs, initially zero
                 s, a, the previous state and action, initially null
-                
+
         if s is new then U[s]←r ; R[s]←r 
         if s is not null then
             increment Nsa [s, a] and Ns|sa [s, s, a]
@@ -1456,7 +1452,7 @@ persistent: rules, a set of condition–action rules
                 U, a table of utilities, initially empty
                 Ns, a table of frequencies for states, initially zero
                 s, a, r , the previous state, action, and reward, initially null
-                
+
         if s is new then U[s]←r 
         if s is not null then
             increment Ns[s]
@@ -1474,7 +1470,7 @@ persistent: rules, a set of condition–action rules
         persistent: Q, a table of action values indexed by state and action, initially zero
             Nsa , a table of frequencies for state–action pairs, initially zero
             s, a, r , the previous state, action, and reward, initially null
-        
+
         if TERMINAL?(s) then Q[s,None]←r 
         if s is not null then
             increment Nsa [s, a]
@@ -1509,19 +1505,19 @@ persistent: rules, a set of condition–action rules
 
     @code
     function CYK-PARSE(words, grammar ) returns P, a table of probabilities
-    
+
         N ←LENGTH(words)
         M ←the number of nonterminal symbols in grammar
         P ←an array of size [M, N, N], initially all 0
-        
+
         // Insert lexical rules for each word
-        
+
         for i = 1 to N do
             for each rule of form (X → wordsi [p]) do
                 P[X, i, 1]←p
-        
+
         // Combine first and second parts of right-hand sides of rules, from short to long
-        
+
         for length = 2 to N do
             for start = 1 to N − length + 1 do
                 for len1 = 1 to N − 1 do
@@ -1548,7 +1544,7 @@ persistent: rules, a set of condition–action rules
     local variables: W, a vector of weights of size N
             S, a temporary vector of particles of size N
             W, a vector of weights of size N
-            
+
     if S is empty then // initialization phase
         for i = 1 to N do
             S[i]←sample from P(X0)

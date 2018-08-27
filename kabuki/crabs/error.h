@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
-#ifndef HEADER_FOR_CRABS_ERROR
-#define HEADER_FOR_CRABS_ERROR
+#if SEAM >= SEAM_0_0_4
+#ifndef INCLUDED_CRABS_ERROR
+#define INCLUDED_CRABS_ERROR
 // Dependencies:
 #include "config.h"
 // End dependencies.
@@ -61,5 +61,5 @@ KABUKI const char** ErrorStrings();
 KABUKI const char* ErrorString(Error error);
 
 }  // namespace _
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
-#endif  //< HEADER_FOR_CRABS_ERROR
+#endif  //< #if SEAM >= SEAM_0_0_4
+#endif  //< INCLUDED_CRABS_ERROR

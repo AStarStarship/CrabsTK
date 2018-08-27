@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
-#ifndef HEADER_FOR_CRABS_ROOM
-#define HEADER_FOR_CRABS_ROOM
+#if SEAM >= SEAM_0_0_4
+#ifndef INCLUDED_CRABS_ROOM
+#define INCLUDED_CRABS_ROOM
 // Dependencies:
 #include "interrupts.h"
 #include "wall.h"
@@ -237,5 +237,5 @@ class Room : public Operand {
 // KABUKI Room* ChineseRoom (Room* room = nullptr);
 
 }  // namespace _
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#endif  //< #if SEAM >= SEAM_0_0_4
 #endif  //< CRABS_ROOM_HDi

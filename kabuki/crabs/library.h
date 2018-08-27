@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#ifndef HEADER_FOR_CRABS_LIBRARY
-#define HEADER_FOR_CRABS_LIBRARY
+#if SEAM >= SEAM_0_0_0
+#ifndef INCLUDED_CRABS_LIBRARY
+#define INCLUDED_CRABS_LIBRARY
 // Dependencies:
 #include "config.h"
 // End dependencies.
@@ -207,5 +207,5 @@ KABUKI void Destruct(Library<TIndex, TKey, TData, TData, MaxStackSize>* r) {
 }
 #endif  //< CRABS_MEMORY_PROFILE > 2
 }   //< namespace _
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#endif  //< HEADER_FOR_CRABS_LIBRARY
+#endif  //< #if SEAM >= SEAM_0_0_0
+#endif  //< INCLUDED_CRABS_LIBRARY

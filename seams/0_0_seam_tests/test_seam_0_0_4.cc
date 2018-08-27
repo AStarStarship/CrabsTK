@@ -17,7 +17,7 @@
 #include <stdafx.h>
 #include "test_seam_0.h"
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#if SEAM >= SEAM_0_0_4
 
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
@@ -710,7 +710,7 @@ TEST(SEAM_1_4, SEAM_1_4A) {
   CHECK_EQUAL(ui4_expected, ui4_found)
   CHECK_EQUAL(flt_expected2, flt_found)
 
-  PRINT_HEADING("Testing TMU/UI8/SI1/DBL...\n")
+  PRINT_HEADING("Testing TME/UI8/SI1/DBL...\n")
 
   static const Tms tmu_expected = 0xE7;
   static const int64_t si8_p_expected = '+',
@@ -726,11 +726,11 @@ TEST(SEAM_1_4, SEAM_1_4A) {
 
   bout = BOutInit(buffer, kBufferSize);
 
-  CHECK_EQUAL(0, BOutWrite(bout, Params<5, TMU, SI8, SI8, UI8, DBL>(),
+  CHECK_EQUAL(0, BOutWrite(bout, Params<5, TME, SI8, SI8, UI8, DBL>(),
                            Args(args, &tmu_expected, &si8_p_expected,
                                 &si8_n_expected, &ui8_expected, &dbl_expected)))
 
-  CHECK_EQUAL(0, BOutRead(bout, Params<5, TMU, SI8, SI8, UI8, DBL>(),
+  CHECK_EQUAL(0, BOutRead(bout, Params<5, TME, SI8, SI8, UI8, DBL>(),
                           Args(args, &tmu_found, &si8_p_found, &si8_n_found,
                                &ui8_found, &dbl_found)))
 
@@ -1082,4 +1082,4 @@ TEST(SEAM_1_4, SEAM_1_4A) {
 #undef PRINTF
 #else
 void TestSeam_1_4() {}
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#endif  //< #if SEAM >= SEAM_0_0_4

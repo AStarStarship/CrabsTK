@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#ifndef HEADER_FOR_CRABS_LANGUAGE
-#define HEADER_FOR_CRABS_LANGUAGE
+#if SEAM >= SEAM_0_0_0
+#ifndef INCLUDED_CRABS_LANGUAGE
+#define INCLUDED_CRABS_LANGUAGE
 // Dependencies:
 #include "config.h"
 // End dependencies.
@@ -43,5 +43,5 @@ struct Language {
 };
 
 }   //< namespace _
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#endif  //< HEADER_FOR_CRABS_LANGUAGE
+#endif  //< #if SEAM >= SEAM_0_0_0
+#endif  //< INCLUDED_CRABS_LANGUAGE

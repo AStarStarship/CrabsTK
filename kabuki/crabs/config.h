@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    $kabuki-toolkit/library/crabs/config.h
+@file    $kabuki-toolkit/kabuki/crabs/config.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,8 +14,8 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#ifndef HEADER_FOR_CRABS_CONFIG
-#define HEADER_FOR_CRABS_CONFIG
+#ifndef INCLUDED_CRABS_CONFIG
+#define INCLUDED_CRABS_CONFIG
 
 #define ASSERT_FREEZE 0  //< Flag to trigger a crash upon failed assert.
 #define ASSERT_LOG 0  //< Flag for if to log the failed assert but do not crash.
@@ -305,4 +305,4 @@ typedef uint64_t data_t;    //< Default TData size.
   void operator=(const ClassName&) = delete;
     // ClassName () = default //< Saw this once on the net but do we need it?
 
-#endif  //< HEADER_FOR_CRABS_CONFIG
+#endif  //< INCLUDED_CRABS_CONFIG

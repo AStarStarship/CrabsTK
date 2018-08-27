@@ -13,22 +13,22 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#ifndef HEADER_FOR_CRABS_GLOBAL
-#define HEADER_FOR_CRABS_GLOBAL
+#ifndef INCLUDED_CRABS_GLOBAL
+#define INCLUDED_CRABS_GLOBAL
 // Dependencies:
 #include "config.h"
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
+#if SEAM >= SEAM_0_0_0
 #include "random.h"
-#include "tinteger.h"
+#include "tint.h"
 #endif
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#include "number.h"
-#include "tfloating_point.h"
+#if SEAM >= SEAM_0_0_0
+#include "decimal.h"
+#include "tfp.h"
 #endif
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#if SEAM >= SEAM_0_0_2
 #include "clock.h"
 #include "debug.h"
 #include "hex.h"
@@ -36,7 +36,7 @@ specific language governing permissions and limitations under the License. */
 #include "str.h"
 #endif
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
+#if SEAM >= SEAM_0_0_3
 #include "array.h"
 #include "ascii.h"
 #include "bsq.h"
@@ -47,7 +47,7 @@ specific language governing permissions and limitations under the License. */
 //#include "dictionary.h"
 #endif
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#if SEAM >= SEAM_0_0_4
 #include "address.h"
 #include "args.h"
 #include "bin.h"
@@ -60,9 +60,9 @@ specific language governing permissions and limitations under the License. */
 #include "slot.h"
 #endif
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 5
+#if SEAM >= SEAM_0_0_5
 #include "table.h"
 #endif
 // End dependencies.
 
-#endif  //< HEADER_FOR_CRABS_GLOBAL
+#endif  //< INCLUDED_CRABS_GLOBAL

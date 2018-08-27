@@ -14,12 +14,12 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#ifndef HEADER_FOR_CRABS_TCLOCK
-#define HEADER_FOR_CRABS_TCLOCK
+#if SEAM >= SEAM_0_0_2
+#ifndef INCLUDED_CRABS_TCLOCK
+#define INCLUDED_CRABS_TCLOCK
 // Dependencies:
 #include "debug.h"
-#include "ttext.h"
+#include "tstr.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 2
 #define PRINT(item)  // Print(item)
@@ -488,5 +488,5 @@ const Char* TextScanTime(const Char* begin, Tss& result) {
 
 #undef PRINT
 #undef PRINTF
-#endif  //< #ifndef HEADER_FOR_CRABS_TCLOCK
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  //< #ifndef INCLUDED_CRABS_TCLOCK
+#endif  //< #if SEAM >= SEAM_0_0_2

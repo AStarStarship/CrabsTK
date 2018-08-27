@@ -14,9 +14,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#ifndef HEADER_FOR_CRABS_CLOCK
-#define HEADER_FOR_CRABS_CLOCK
+#if SEAM >= SEAM_0_0_2
+#ifndef INCLUDED_CRABS_CLOCK
+#define INCLUDED_CRABS_CLOCK
 // Dependencies:
 #include "config.h"
 // End dependencies.
@@ -385,5 +385,5 @@ KABUKI const char32_t* TextScanTime(const char32_t* input, Tme& result);
 
 #undef PRINT
 #undef PRINTF
-#endif  //< #ifndef HEADER_FOR_CRABS_CLOCK
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  //< #ifndef INCLUDED_CRABS_CLOCK
+#endif  //< #if SEAM >= SEAM_0_0_2

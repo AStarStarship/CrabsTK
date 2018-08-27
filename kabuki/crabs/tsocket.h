@@ -13,12 +13,12 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#ifndef HEADER_FOR_CRABS_MEMORY
-#define HEADER_FOR_CRABS_MEMORY
+#if SEAM >= SEAM_0_0_1
+#ifndef INCLUDED_CRABS_MEMORY
+#define INCLUDED_CRABS_MEMORY
 // Dependencies:
 #include "align.h"
-#include "number.h"
+#include "decimal.h"
 // End dependencies.
 
 namespace _ {
@@ -83,5 +83,5 @@ uintptr_t* New(uintptr_t* buffer, intptr_t size) {
 
 }  // namespace _
 
-#endif  //< HEADER_FOR_CRABS_MEMORY
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  //< INCLUDED_CRABS_MEMORY
+#endif  //< #if SEAM >= SEAM_0_0_1

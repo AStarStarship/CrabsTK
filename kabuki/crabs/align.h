@@ -1,5 +1,4 @@
-/* Kabuki Toolkit
-@version 0.x
+/* Kabuki Toolkit @version 0.x
 @file    $kabuki-toolkit/kabuki/crabs/socket.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -14,10 +13,10 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#if SEAM >= SEAM_0_0_1
 
-#ifndef HEADER_FOR_CRABS_ALIGN
-#define HEADER_FOR_CRABS_ALIGN
+#ifndef INCLUDED_CRABS_ALIGN
+#define INCLUDED_CRABS_ALIGN
 // Dependencies:
 #include "config.h"
 // End dependencies.
@@ -62,6 +61,6 @@ KABUKI inline int32_t AlignUp(int32_t value);
 KABUKI inline int64_t AlignUp(int64_t value);
 
 }  // namespace _
-#endif  //< HEADER_FOR_CRABS_ALIGN
+#endif  //< INCLUDED_CRABS_ALIGN
 
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  //< #if SEAM >= SEAM_0_0_1

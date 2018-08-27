@@ -1,6 +1,5 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/args.h
+/* Kabuki Toolkit @version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/crabs_console.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -9,14 +8,13 @@ You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
 Unless required by applicable law or agreed to in writing, software distributed
 under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
-specific language governing permissions and limitations under the License.
-*/
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
-#ifndef HEADER_FOR_CRABS_ARGS
-#define HEADER_FOR_CRABS_ARGS
+#if SEAM >= SEAM_0_0_4
+#ifndef INCLUDED_CRABS_ARGS
+#define INCLUDED_CRABS_ARGS
 // Dependencies:
 #include "bsq.h"
 // End dependencies.
@@ -1210,7 +1208,7 @@ inline void** Args(void** ptrs, const void* a, const void* b, const void* c,
   return const_cast<void**>(const_ptrs);
 }
 
-}   //< namespace _
+}  // namespace _
 
 #endif  //< SEAM_MAJOR == 0 && MINOR_MAJOR_SEAM == 1 && SEAM_MINOR >= 4
-#endif  //< HEADER_FOR_CRABS_ARGS
+#endif  //< INCLUDED_CRABS_ARGS

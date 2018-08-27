@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#if SEAM >= SEAM_0_0_2
 
 #include <random>
 #include "test_seam_0.h"
@@ -274,4 +274,4 @@ TEST(SEAM_0_0_2, SEAM_0_0_2A) {
 #undef PRINTF
 #else
 void TestSeam_1_2() {}
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  //< #if SEAM >= SEAM_0_0_2

@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
+#if SEAM >= SEAM_0_0_3
 #ifndef CRABS_COLLECTION_H
 #define CRABS_COLLECTION_H
 // Dependencies:
@@ -110,5 +110,5 @@ struct Collection {
   virtual Utf8& Print(Utf8& out_) = 0;
 };
 }   //< namespace _
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
+#endif  //< #if SEAM >= SEAM_0_0_3
 #endif  //< CRABS_COLLECTION_H

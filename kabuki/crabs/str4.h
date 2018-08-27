@@ -12,9 +12,9 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#ifndef HEADER_FOR_CRABS_PRINT_UTF32
-#define HEADER_FOR_CRABS_PRINT_UTF32
+#if SEAM >= SEAM_0_0_2
+#ifndef INCLUDED_CRABS_PRINT_UTF32
+#define INCLUDED_CRABS_PRINT_UTF32
 // Dependencies:
 #include "clock.h"
 // End dependencies.
@@ -985,5 +985,5 @@ KABUKI _::Utf32& operator<<(_::Utf32& printer, _::Utf32Center item);
 KABUKI _::Utf32& operator<<(_::Utf32& printer, _::Utf32Right item);
 
 #endif  //< #if USING_UTF32
-#endif  //< #if HEADER_FOR_CRABS_PRINT_UTF32
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  //< #if INCLUDED_CRABS_PRINT_UTF32
+#endif  //< #if SEAM >= SEAM_0_0_2

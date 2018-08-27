@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
-#ifndef HEADER_FOR_CRABS_BSQ
-#define HEADER_FOR_CRABS_BSQ
+#if SEAM >= SEAM_0_0_3
+#ifndef INCLUDED_CRABS_BSQ
+#define INCLUDED_CRABS_BSQ
 // Dependencies:
 #include "ascii_data_types.h"
 #include "str1.h"
@@ -173,5 +173,5 @@ inline _::Utf32& operator<<(_::Utf32& printer, _::Bsq bsq) {
 }
 #endif  //< USING_UTF8
 
-#endif  //< HEADER_FOR_CRABS_BSQ
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
+#endif  //< INCLUDED_CRABS_BSQ
+#endif  //< #if SEAM >= SEAM_0_0_3

@@ -32,7 +32,7 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
   * UTF-8, UTF-16, and UTF-32 strings.
   * Stack - A stack of POD types in the form of a bounded-sized array.
   * Array - A multidimensional array with Stack of dimensions.
-  * Loom - A homogenous array of UTF-8, UTF-16, or UTF-32 strings.
+  * Loom - A homogeneous array of UTF-8, UTF-16, or UTF-32 strings.
   * Table - A hash table of contiguous mappings.
   * Map - A sparse map of unsigned integers to ASCII Data Types.
   * Book - A multidictionary (i.e. unordered map) without hash table.

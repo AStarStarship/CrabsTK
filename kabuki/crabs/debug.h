@@ -1,6 +1,5 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/library/crabs/debug.h
+/* Kabuki Toolkit @version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/debug.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,8 +13,8 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#ifndef HEADER_FOR_CRABS_DEBUG
-#define HEADER_FOR_CRABS_DEBUG
+#ifndef INCLUDED_CRABS_DEBUG
+#define INCLUDED_CRABS_DEBUG
 
 #include "config.h"
 
@@ -97,6 +96,30 @@ KABUKI bool Assert(bool condition);
 KABUKI bool AssertHandle(int line, const char* file,
                          const char* message = nullptr);
 
+/* Prints a 8-bit binary value to the console. */
+KABUKI void PrintBinary(uint8_t value);
+
+/* Prints a 8-bit binary value to the console. */
+KABUKI void PrintBinary(int8_t value);
+
+/* Prints a 16-bit binary value to the console. */
+KABUKI void PrintBinary(uint16_t value);
+
+/* Prints a 16-bit binary value to the console. */
+KABUKI void PrintBinary(int16_t value);
+
+/* Prints a 32-bit binary value to the console. */
+KABUKI void PrintBinary(uint32_t value);
+
+/* Prints a 32-bit binary value to the console. */
+KABUKI void PrintBinary(int32_t value);
+
+/* Prints a 64-bit binary value to the console. */
+KABUKI void PrintBinary(uint64_t value);
+
+/* Prints a 64-bit binary value to the console. */
+KABUKI void PrintBinary(int64_t value);
+
 }  // namespace _
 
 #if CRABS_ASSERT_PRINT || CRABS_ASSERT_PAUSE || CRABS_ASSERT_FREEZE
@@ -114,4 +137,4 @@ KABUKI bool AssertHandle(int line, const char* file,
 
 #define DEBUG(condition, message) \
   if (Assert(condition)) AssertHandle(__LINE__, __FILE__, message)
-#endif  //< HEADER_FOR_CRABS_DEBUG
+#endif  //< INCLUDED_CRABS_DEBUG

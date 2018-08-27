@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
+#if SEAM >= SEAM_0_0_3
 // Dependencies:
 #include "hash.h"
 // End dependencies.
@@ -76,4 +76,4 @@ uint16_t Hash16UI8(uint64_t value, uint16_t hash) {
 }
 
 }   //< namespace _
-#endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
+#endif  //> #if SEAM >= SEAM_0_0_3

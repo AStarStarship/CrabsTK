@@ -12,16 +12,14 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#if SEAM >= SEAM_0_0_4
 // Dependencies:
 #include "debug.h"
-#include "line.h"
 #include "op.h"
 #include "operand.h"
-#include "text.h"
 #include "str1.h"
 // End dependencies.
-#if SEAM_MAJOR == 0 && SEAM_MINOR == 4
+#if SEAM == SEAM_0_0_4
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT(c) Print(c)
 #else
@@ -77,6 +75,7 @@ Utf8& PrintOperand(Utf8& print, Operand* operand) {
   ASSERT(operand);
 
   const Op* op = operand->Star('?', nullptr);
+
   ASSERT(op);
 
   uintptr_t num_ops = reinterpret_cast<uintptr_t>(op->in),
@@ -116,4 +115,4 @@ Slot& OperandQuery(Operand* root, const char* address, Slot& slot) {
 }  // namespace _
 #undef PRINTF
 #undef PRINT
-#endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#endif  //> #if SEAM >= SEAM_0_0_4

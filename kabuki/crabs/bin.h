@@ -1,6 +1,5 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/bin.h
+/* Kabuki Toolkit @version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/crabs_console.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,9 +12,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
-#ifndef HEADER_FOR_CRABS_BIN
-#define HEADER_FOR_CRABS_BIN
+#if SEAM >= SEAM_0_0_4
+#ifndef INCLUDED_CRABS_BIN
+#define INCLUDED_CRABS_BIN
 // Dependencies:
 #include "bout.h"
 #include "op.h"
@@ -157,5 +156,5 @@ inline _::Utf8& operator<<(_::Utf8& print, _::BIn* bin) {
 }
 #endif
 
-#endif  //< HEADER_FOR_CRABS_BIN
-#endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#endif  //< INCLUDED_CRABS_BIN
+#endif  //> #if SEAM >= SEAM_0_0_4

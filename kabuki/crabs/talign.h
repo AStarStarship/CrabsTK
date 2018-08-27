@@ -14,10 +14,10 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#if SEAM >= SEAM_0_0_1
 
-#ifndef HEADER_FOR_CRABS_TALIGN
-#define HEADER_FOR_CRABS_TALIGN
+#ifndef INCLUDED_CRABS_TALIGN
+#define INCLUDED_CRABS_TALIGN
 // Dependencies:
 #include "config.h"
 // End dependencies.
@@ -73,9 +73,12 @@ inline I AlignUpOffset(I value) {
   return result & (sizeof(WordBoundary) - 1);
 }
 
-template <int kBitCount = 8, typename I = uintptr_t>
-inline I AlignUp(I value) {
-  return value + ((~value) + 1) & ((I)(kBitCount - 1));
+/* Aligns the given pointer to a power of two boundary. */
+template <int kBitCount = 8, typename UI = uintptr_t, typename SI = intptr_t>
+inline UI AlignUp(UI value) {
+  SI signed_value = (SI)value;
+  UI offset = (UI)((-value) & (kBitCount - 1));
+  return value + offset;
 }
 
 /* Aligns the given pointer to a power of two boundary.
@@ -249,6 +252,6 @@ inline T WordAlign8(T value) {
 }
 
 }  // namespace _
-#endif  //< HEADER_FOR_CRABS_TALIGN
+#endif  //< INCLUDED_CRABS_TALIGN
 
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  //< #if SEAM >= SEAM_0_0_1

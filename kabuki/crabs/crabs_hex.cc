@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#if SEAM >= SEAM_0_0_2
 // Dependencies:
 #include "hex.h"
 #if CRABS_TEXT
@@ -79,4 +79,4 @@ int HexToByte(uint16_t h) {
 #undef PRINTF
 #undef PRINT
 #endif  //< CRABS_TEXT
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  //< #if SEAM >= SEAM_0_0_2

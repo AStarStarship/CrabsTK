@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#ifndef HEADER_FOR_CRABS_TOBJ
-#define HEADER_FOR_CRABS_TOBJ
+#if SEAM >= SEAM_0_0_2
+#ifndef INCLUDED_CRABS_TOBJ
+#define INCLUDED_CRABS_TOBJ
 // Dependencies:
 #include "debug.h"
 #include "obj.h"
@@ -154,5 +154,5 @@ class TObj {
 };
 
 }  // namespace _
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#endif  //< HEADER_FOR_CRABS_TOBJ
+#endif  //< #if SEAM >= SEAM_0_0_2
+#endif  //< INCLUDED_CRABS_TOBJ

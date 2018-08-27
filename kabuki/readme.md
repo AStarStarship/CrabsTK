@@ -1,4 +1,4 @@
-# `$kabuki-toolkit/library`
+# `$kabuki-toolkit/kabuki`
 
 This folder contains the Kabuki Toolkit library source code, a Visual Studio 2017 Project (kabuki_toolkit.sln), Eclipse Project, and CMake Project (CMakeLists.txt). Please @see `$kabuki-toolkit/docs/quickstart-guide.md`.
 

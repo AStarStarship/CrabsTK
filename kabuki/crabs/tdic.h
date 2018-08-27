@@ -1,5 +1,4 @@
-/* Kabuki Toolkit
-@version 0.x
+/* Kabuki Toolkit @version 0.x
 @file    ~/libraries/crabs/dictionary.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -13,19 +12,19 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
-#ifndef HEADER_FOR_CRABS_BOOK
-#define HEADER_FOR_CRABS_BOOK
+#if SEAM >= SEAM_0_0_3
+#ifndef INCLUDED_CRABS_BOOK
+#define INCLUDED_CRABS_BOOK
 // Dependencies:
-#include "socket.h"
 #include "ascii_data_types.h"
+#include "socket.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 3
 #ifndef PRINTF
 #define PRINTF(format, ...) printf(format, __VA_ARGS__)
 #define PRINT(c) putchar(c)
 #define PRINT_HEADING \
-  putchar ('\n');  \
+  putchar('\n');      \
   for (int i = 80; i > 0; --i) std::cout << '-'
 #endif
 #else
@@ -750,6 +749,6 @@ Utf8& DicPrint(Utf8& print, Dictionary<UI, SI, I>* dictionary) {
   return print;
 }
 
-}   //< namespace _
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 3
-#endif  //< HEADER_FOR_CRABS_BOOK
+}  // namespace _
+#endif  //< #if SEAM >= SEAM_0_0_3
+#endif  //< INCLUDED_CRABS_BOOK

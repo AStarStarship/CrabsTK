@@ -13,8 +13,8 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#ifndef HEADER_FOR_TEST_ITOS_SIZELUT
-#define HEADER_FOR_TEST_ITOS_SIZELUT
+#ifndef INCLUDED_TEST_ITOS_SIZELUT
+#define INCLUDED_TEST_ITOS_SIZELUT
 
 char* PrintNull(uint32_t value, char* text, char* text_end);
 
@@ -28,4 +28,4 @@ char* PrintSizeLut(uint32_t val, char* text, char* text_end);
 
 void TestItoSSizeLut();
 
-#endif  //< HEADER_FOR_TEST_ITOS_SIZELUT
+#endif  //< INCLUDED_TEST_ITOS_SIZELUT

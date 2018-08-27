@@ -12,15 +12,14 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#if SEAM >= SEAM_0_0_4
 // Dependencies:
+#include "align.h"
 #include "ascii_data_types.h"
 #include "debug.h"
 #include "hex.h"
-#include "line.h"
-#include "tinteger.h"
 #include "slot.h"
-#include "text.h"
+#include "tstr.h"
 // End dependencies.
 
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
@@ -360,7 +359,7 @@ const Op* Slot::Read(const uint_t* params, void** args) {
       case SI8:  //< _R_e_a_d__6_4_-_b_i_t__T_y_p_e_s______________
       case UI8:
       case DBL:
-      case TMU:
+      case TME:
 #if USING_CRABS_8_BYTE_TYPES
         // Read8ByteType:{
         // Word-align
@@ -532,4 +531,4 @@ Utf8& Slot::Print(Utf8& print) {
 }  // namespace _
 #undef PRINTF
 #undef PRINT
-#endif  //> #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#endif  //> #if SEAM >= SEAM_0_0_4

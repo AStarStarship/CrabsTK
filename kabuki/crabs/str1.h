@@ -12,9 +12,9 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#ifndef HEADER_FOR_CRABS_UTF8
-#define HEADER_FOR_CRABS_UTF8
+#if SEAM >= SEAM_0_0_2
+#ifndef INCLUDED_CRABS_UTF8
+#define INCLUDED_CRABS_UTF8
 // Dependencies:
 #include "ascii_data_types.h"
 #include "clock.h"
@@ -900,5 +900,5 @@ KABUKI _::Utf8& operator<<(_::Utf8& utf, _::Utf8Line line);
 KABUKI _::Utf8& operator<<(_::Utf8& utf, _::Utf8LineString line);
 
 #endif  //< #if USING_UTF8
-#endif  //< #if HEADER_FOR_CRABS_UTF8
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  //< #if INCLUDED_CRABS_UTF8
+#endif  //< #if SEAM >= SEAM_0_0_2

@@ -19,12 +19,12 @@
 
 #include <assembly.h>
 
-#ifndef HEADER_FOR_SEAMS_0_0_SEAM_TESTS_TEST_SEAM_0
-#define HEADER_FOR_SEAMS_0_0_SEAM_TESTS_TEST_SEAM_0
+#ifndef INCLUDED_SEAMS_0_0_SEAM_TESTS_TEST_SEAM_0
+#define INCLUDED_SEAMS_0_0_SEAM_TESTS_TEST_SEAM_0
 
 #include "../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
 #include "../../../cpputest/include/CppUTest/TestHarness.h"
 
 #include "../../kabuki/crabs/global.h"
 
-#endif  //< HEADER_FOR_SEAMS_0_0_SEAM_TESTS_TEST_SEAM_0
+#endif  //< INCLUDED_SEAMS_0_0_SEAM_TESTS_TEST_SEAM_0

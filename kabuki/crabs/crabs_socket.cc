@@ -12,13 +12,13 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#if SEAM >= SEAM_0_0_1
 // Dependencies:
 #include "align.h"
 #include "debug.h"
 #include "hex.h"
 #include "socket.h"
-#include "ttext.h"
+#include "tstr.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 2
 #define PRINT(item) Print(item)
@@ -234,4 +234,4 @@ void DestructorDeleteBuffer(uintptr_t* buffer) {
 #undef PRINTF
 #undef SOCKET_SAVE
 #undef SOCKET_PRINT
-#endif  //< SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  //< SEAM_MAJOR == 0 && SEAM_MINOR >= 1

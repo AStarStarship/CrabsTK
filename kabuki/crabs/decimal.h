@@ -1,6 +1,5 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/script_itoa.h
+/* Kabuki Toolkit @version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/decimal.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,16 +11,35 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 1
-#ifndef HEADER_FOR_CRABS_NUMBER
-#define HEADER_FOR_CRABS_NUMBER
+#if SEAM >= SEAM_0_0_1
+#ifndef INCLUDED_CRABS_NUMBER
+#define INCLUDED_CRABS_NUMBER
 #include "config.h"
 
 namespace _ {
 
+/* Utility class for cache aligning and packing LUTs for printing integers and
+floating-point numbers. */
+inline const uint16_t* PuffDigits();
+
+/* Exponents for the Grisu algorithm. */
+inline const uint16_t* PuffExponents();
+
+/*  */
+inline const uint64_t* PuffPow10();
+
+inline const uint64_t* PuffPow10(const uint16_t* packed_grisu_lut);
+
+inline char* Print(char* begin, uint16_t chars);
+
+inline char* Print(char* begin, char first, char second);
+
+inline char* Print(char* begin, char* end, char first, char second, char third);
+
 /* Gets the maximum number of digits required to represent a float as in
 ASCII. */
 KABUKI inline int FloatDigitsMax();
+
 /* Gets the maximum number of digits required to represent a double as in
 ASCII. */
 KABUKI inline int DoubleDigitsMax();
@@ -94,37 +112,17 @@ KABUKI inline bool IsInfinite(float value);
 /* Checks if the given value is not NaN or +/- Infinity. */
 KABUKI inline bool IsInfinite(double value);
 
-/* Checks if the given value is an even power of 2. */
-KABUKI bool IsPowerOfTen(int8_t value);
-
-/* Checks if the given value is an even power of 2. */
-KABUKI bool IsPowerOfTen(uint8_t value);
-
-/* Checks if the given value is an even power of 2. */
-KABUKI bool IsPowerOfTen(int16_t value);
-
-/* Checks if the given value is an even power of 2. */
-KABUKI bool IsPowerOfTen(uint16_t value);
-
-/* Checks if the given value is an even power of 2. */
-KABUKI bool IsPowerOfTen(int32_t value);
-
-/* Checks if the given value is an even power of 2. */
-KABUKI bool IsPowerOfTen(uint32_t value);
-
-/* Checks if the given value is an even power of 2. */
-KABUKI bool IsPowerOfTen(int64_t value);
-
-/* Checks if the given value is an even power of 2. */
-KABUKI bool IsPowerOfTen(uint64_t value);
-
 /* Returns the ceiling of of the given value to the next highest up integer. */
 KABUKI float Ceiling(float value);
 
 /* Returns the ceiling of of the given value to the next highest up integer. */
 KABUKI double Ceiling(double value);
 
+/* Returns the most significant bit (MSb) by scanning from the most to the least
+significant bit. */
+KABUKI int RSB(uint64_t value);
+
 }  // namespace _
 
-#endif  //< #if HEADER_FOR_CRABS_NUMBER
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 1
+#endif  //< #if INCLUDED_CRABS_NUMBER
+#endif  //< #if SEAM >= SEAM_0_0_1

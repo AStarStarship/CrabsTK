@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#ifndef HEADER_FOR_CRABS_EXPR
-#define HEADER_FOR_CRABS_EXPR
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#ifndef INCLUDED_CRABS_EXPR
+#define INCLUDED_CRABS_EXPR
+#if SEAM >= SEAM_0_0_4
 // Dependencies:
 #include "args.h"
 #include "bin.h"
@@ -328,5 +328,5 @@ inline _::Utf8& operator<<(_::Utf8& printer, _::Expr* expr) {
 }
 #endif
 
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
-#endif  //< HEADER_FOR_CRABS_EXPR
+#endif  //< #if SEAM >= SEAM_0_0_4
+#endif  //< INCLUDED_CRABS_EXPR

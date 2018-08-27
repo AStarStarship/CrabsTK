@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#if SEAM >= SEAM_0_0_4
 // Dependencies:
 #include "ascii_data_types.h"
 #include "bin.h"
@@ -375,7 +375,7 @@ const Op* BInRead(BIn* bin, const uint_t* params, void** args) {
 #else
         return BInError(bin, kErrorInvalidType, params, index, start);
 #endif
-      case TMU:  //< _R_e_a_d__6_4_-_b_i_t__T_y_p_e_s______________________
+      case TME:  //< _R_e_a_d__6_4_-_b_i_t__T_y_p_e_s______________________
       case SI8:
       case UI8:
       case DBL:
@@ -612,4 +612,4 @@ Utf8& Print(Utf8& print, BIn* bin) {
 #undef PRINT_BSQ
 #undef PRINT_BIN
 #undef DEBUG
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
+#endif  //< #if SEAM >= SEAM_0_0_4

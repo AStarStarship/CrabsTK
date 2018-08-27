@@ -17,7 +17,7 @@ specific language governing permissions and limitations under the License. */
 #include "../../kabuki/crabs/global.h"
 #include "test_seam_0.h"
 
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
+#if SEAM >= SEAM_0_0_0
 
 using namespace _;
 
@@ -212,4 +212,4 @@ TEST(SEAM_0_0, SEAM_0_0_0) {
 #undef PAUSE
 #else
 void TestSeam_1_1() {}
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
+#endif  //< #if SEAM >= SEAM_0_0_0

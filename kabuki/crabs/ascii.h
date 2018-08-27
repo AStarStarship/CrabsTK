@@ -1,7 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/socket.h
-@author  Cale McCollough <https://calemccollough.github.io>
+/* Kabuki Toolkit @version 0.x
+@file    $kabuki-toolkit/kabuki/crabs/crabs_console.cc
+@author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance with the License.
@@ -14,8 +13,8 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#ifndef HEADER_FOR_CRABS_ASCII
-#define HEADER_FOR_CRABS_ASCII
+#ifndef INCLUDED_CRABS_ASCII
+#define INCLUDED_CRABS_ASCII
 
 namespace _ {
 enum {
@@ -54,4 +53,4 @@ enum {
   DEL = 127
 };
 }  // namespace _
-#endif  //< HEADER_FOR_CRABS_ASCII
+#endif  //< INCLUDED_CRABS_ASCII

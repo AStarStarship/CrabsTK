@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#ifndef HEADER_FOR_CRAPS_MAP
-#define HEADER_FOR_CRAPS_MAP
+#if SEAM >= SEAM_0_0_0
+#ifndef INCLUDED_CRAPS_MAP
+#define INCLUDED_CRAPS_MAP
 // Dependencies:
 #include "ascii_data_types.h"
 #include "socket.h"
@@ -679,11 +679,11 @@ class Map {
   }
 };  //< class Map
 }  // namespace _
-#endif  //< HEADER_FOR_CRAPS_MAP
+#endif  //< INCLUDED_CRAPS_MAP
 #undef PRINTF
 #undef PRINT
 #undef PRINT_HEADING
 #undef PRINT_TYPE
 #undef WIPE
 #undef PRINT_LINE
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
+#endif  //< #if SEAM >= SEAM_0_0_0

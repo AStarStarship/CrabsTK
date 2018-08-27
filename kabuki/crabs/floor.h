@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
-#ifndef HEADER_FOR_CRABS_FLOOR
-#define HEADER_FOR_CRABS_FLOOR
+#if SEAM >= SEAM_0_0_2
+#ifndef INCLUDED_CRABS_FLOOR
+#define INCLUDED_CRABS_FLOOR
 #include "config.h"
 
 namespace _ {
@@ -34,5 +34,5 @@ KABUKI inline Floor* Global();
 
 }  // namespace _
 
-#endif  // #if HEADER_FOR_CRABS_FLOOR
-#endif  // #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+#endif  // #if INCLUDED_CRABS_FLOOR
+#endif  // #if SEAM >= SEAM_0_0_2

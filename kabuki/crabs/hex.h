@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#ifndef HEADER_FOR_CRABS_HEX
-#define HEADER_FOR_CRABS_HEX
+#if SEAM >= SEAM_0_0_0
+#ifndef INCLUDED_CRABS_HEX
+#define INCLUDED_CRABS_HEX
 // Dependencies:
 #include "config.h"
 // End dependencies.
@@ -57,16 +57,14 @@ KABUKI uint16_t HexByteToLowerCase(byte b);
 KABUKI uint16_t HexByteToUpperCase(byte b);
 
 /* Converts a single hex byte a byte.
-    @return Returns -1 if c is not a hex byte.
-*/
+    @return Returns -1 if c is not a hex byte. */
 KABUKI int HexToByte(byte c);
 
 /* Converts a single byte into a two-byte hex representation.
-    @return Returns -1 if c is not a hex byte.
-*/
+    @return Returns -1 if c is not a hex byte. */
 KABUKI int HexToByte(uint16_t h);
 
 }  // namespace _
 
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#endif  //< HEADER_FOR_CRABS_HEX
+#endif  //< INCLUDED_CRABS_HEX
+#endif  //< #if SEAM >= SEAM_0_0_0

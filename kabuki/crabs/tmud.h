@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
-#ifndef HEADER_FOR_CRABS_BOOK
-#define HEADER_FOR_CRABS_BOOK
+#if SEAM >= SEAM_0_0_0
+#ifndef INCLUDED_CRABS_BOOK
+#define INCLUDED_CRABS_BOOK
 // Dependencies:
 #include "ascii_data_types.h"
 #include "socket.h"
@@ -37,7 +37,8 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* A multismap created from contiguous memory.
-    
+    
+
 
 
 
@@ -51,7 +52,8 @@ namespace _ {
 
 
     @ingroup Book
-    
+    
+
 
 
 
@@ -836,5 +838,5 @@ using Multimap8 = TMap<uint32_t, uint32_t, uint64_t>;
 #undef PRINTF
 #undef PRINT
 #undef PRINT_HEADING
-#endif  //< HEADER_FOR_CRABS_BOOK
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
+#endif  //< INCLUDED_CRABS_BOOK
+#endif  //< #if SEAM >= SEAM_0_0_0

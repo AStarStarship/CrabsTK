@@ -12,8 +12,8 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#ifndef HEADER_FOR_CRABS_LOCK
-#define HEADER_FOR_CRABS_LOCK
+#ifndef INCLUDED_CRABS_LOCK
+#define INCLUDED_CRABS_LOCK
 #include "config.h"
 
 namespace _ {
@@ -26,4 +26,4 @@ KABUKI inline void RoomUnlock();
 
 }  // namespace _
 
-#endif  //< #if HEADER_FOR_CRABS_LOCK
+#endif  //< #if INCLUDED_CRABS_LOCK

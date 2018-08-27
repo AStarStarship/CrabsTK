@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
-#ifndef HEADER_FOR_CRABS_SLOT
-#define HEADER_FOR_CRABS_SLOT
+#if SEAM >= SEAM_0_0_4
+#ifndef INCLUDED_CRABS_SLOT
+#define INCLUDED_CRABS_SLOT
 // Dependencies:
 #include "bin.h"
 #include "bout.h"
@@ -131,5 +131,5 @@ inline _::Utf8& operator<<(_::Utf8& printer, _::Slot& slot) {
 }
 #endif
 
-#endif  //< #if SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 4
-#endif  //< HEADER_FOR_CRABS_SLOT
+#endif  //< #if SEAM >= SEAM_0_0_4
+#endif  //< INCLUDED_CRABS_SLOT

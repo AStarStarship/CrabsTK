@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include "script_itos_benchmark.h"
 #include <stdafx.h>
-#include "../../kabuki/crabs/tinteger.h"
+#include "../../kabuki/crabs/tint.h"
 
 typedef unsigned int uint;
 
