@@ -54,7 +54,7 @@ inline uint64_t BSRHack(uint64_t n) {
   return n - (n >> 1);
 }
 
-void BenchmarkMSBAsserted() {
+void BenchmarkBSR() {
   enum {
     kLoopCount = 1000 * 1000 * 1000,
     kSize = 24,
@@ -70,7 +70,7 @@ void BenchmarkMSBAsserted() {
 
   std::random_device rd;
   std::mt19937_64 eng(rd());
-  std::uniform_int_distribution<uint32_t> distr;
+  std::uniform_int_distribution<uint32_t> random_ui4;
 
   double nil_time, cpu_times[5], percent_faster;
 
@@ -94,7 +94,7 @@ void BenchmarkMSBAsserted() {
 
   for (uint32_t j = kLoopCount; j > 0; --j) {
     for (uint32_t k = 0; k < 32; ++k) {
-      spinner4 += ((uint32_t)1) << k;
+      spinner4 += random_ui4(eng);
     }
   }
   stop = high_resolution_clock::now();
@@ -106,7 +106,7 @@ void BenchmarkMSBAsserted() {
   start = high_resolution_clock::now();
   for (uint32_t j = kLoopCount; j > 0; --j) {
     for (uint32_t k = 0; k < 32; ++k) {
-      spinner4 += RSB(((uint32_t)1) << k);
+      spinner4 += BSR(random_ui4(eng));
     }
   }
   stop = high_resolution_clock::now();
@@ -117,9 +117,7 @@ void BenchmarkMSBAsserted() {
 
   start = high_resolution_clock::now();
   for (uint32_t j = kLoopCount; j > 0; --j) {
-    for (uint32_t k = 0; k < 32; ++k) {
-      spinner4 += BSRHack(1 << k);
-    }
+    spinner4 += BSRHack(random_ui4(eng));
   }
   stop = high_resolution_clock::now();
   delta = duration_cast<milliseconds>(stop - start).count();
@@ -128,9 +126,8 @@ void BenchmarkMSBAsserted() {
   cout << delta << ',';
 
   start = high_resolution_clock::now();
-  for (count = kLoopCount; count > 0; --count) {
-    value = distr(eng) & value_mask;
-    result = _::Print<char>(text, text + kSize, value);
+  for (int count = kLoopCount; count > 0; --count) {
+    spinner4 += BSRLoop(random_ui4(eng));
   }
   stop = high_resolution_clock::now();
   delta = duration_cast<milliseconds>(stop - start).count();
@@ -146,7 +143,7 @@ void BenchmarkMSBAsserted() {
 }
 
 int main() {
-  BenchmarkScriptItos();
+  BenchmarkBSR();
   putchar('\n');
   system("PAUSE");
   return 0;

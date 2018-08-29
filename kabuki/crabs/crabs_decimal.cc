@@ -11,14 +11,10 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
+#include <cmath>
 
 #include "decimal.h"
 #include "tdecimal.h"
-
-#include <cmath>
-
-//#include <cfloat>
-//#include <memory>
 
 #if SEAM == SEAM_0_0_0
 #include "debug.h"
@@ -258,7 +254,9 @@ const uint64_t* PufLutPow10(char* puff_lut) {
 
 int FloatDigitsMax() { return 8; }  //< 3 + FLT_MANT_DIG - FLT_MIN_EXP;
 
-inline uint32_t Value(float value) { return *reinterpret_cast<float*>(&value); }
+inline uint32_t Value(float value) {
+  return *reinterpret_cast<uint32_t*>(&value);
+}
 
 inline uint64_t Value(double value) {
   return *reinterpret_cast<uint64_t*>(&value);
@@ -512,9 +510,15 @@ void digit_gen(diy_fp Mp, diy_fp delta, char* buffer, int* len, int* K) {
   *K += kappa;
 }
 
-float Ceiling(float value) { return Ceiling<float, uint32_t>(value); }
+float Ceiling(float value) {
+  // return Ceiling<float, uint32_t>(value);
+  return ceil(value);
+}
 
-double Ceiling(double value) { return Ceiling<double, uint64_t>(value); }
+double Ceiling(double value) {
+  // return Ceiling<double, uint64_t>(value);
+  return ceil(value);
+}
 
 union float_int {
   float f;

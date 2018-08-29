@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 #include "tdecimal.h"
 #include "tobj.h"
 // End dependencies.
-#if SEAM_MAJOR == 0 && SEAM_MINOR == 2
+#if SEAM == SEAM_0_0_2
 #define PRINT(c) Print(c)
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_HEADING(heading) PrintHeading(heading)

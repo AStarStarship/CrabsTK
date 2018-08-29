@@ -19,24 +19,20 @@ specific language governing permissions and limitations under the License. */
 #include "config.h"
 
 #if SEAM >= SEAM_0_0_0
-#include "random.h"
-#include "tint.h"
-#endif
-
-#if SEAM >= SEAM_0_0_0
 #include "decimal.h"
-#include "tfp.h"
+#include "random.h"
 #endif
 
-#if SEAM >= SEAM_0_0_2
+#if SEAM >= SEAM_0_0_1
 #include "clock.h"
 #include "debug.h"
+#include "decimal.h"
 #include "hex.h"
 #include "socket.h"
 #include "str.h"
 #endif
 
-#if SEAM >= SEAM_0_0_3
+#if SEAM >= SEAM_0_0_2
 #include "array.h"
 #include "ascii.h"
 #include "bsq.h"
@@ -47,7 +43,7 @@ specific language governing permissions and limitations under the License. */
 //#include "dictionary.h"
 #endif
 
-#if SEAM >= SEAM_0_0_4
+#if SEAM >= SEAM_0_0_3
 #include "address.h"
 #include "args.h"
 #include "bin.h"
@@ -60,7 +56,7 @@ specific language governing permissions and limitations under the License. */
 #include "slot.h"
 #endif
 
-#if SEAM >= SEAM_0_0_5
+#if SEAM >= SEAM_0_0_4
 #include "table.h"
 #endif
 // End dependencies.

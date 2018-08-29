@@ -15,32 +15,33 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_SEAMS
 #define INCLUDED_SEAMS
 
+#define SEAM_0_0_0 1
+#define SEAM_0_0_1 2
+#define SEAM_0_0_2 3
+#define SEAM_0_0_3 4
+#define SEAM_0_0_4 5
+#define SEAM_0_0_5 6
+#define SEAM_0_0_6 7
+#define SEAM_0_0_7 8
+
 #if SEAM_PAGE == 0
 #if SEAM_MAJOR == 0
 #if SEAM_MINOR == 0
-#define SEAM_0_0_0 1
 #define SEAM 1
 #elif SEAM_MINOR == 1
 #define SEAM 2
-#define SEAM_0_0_1 2
 #elif SEAM_MINOR == 2
 #define SEAM 3
-#define SEAM_0_0_2 3
 #elif SEAM_MINOR == 3
 #define SEAM 4
-#define SEAM_0_0_3 4
 #elif SEAM_MINOR == 4
 #define SEAM 5
-#define SEAM_0_0_4 5
 #elif SEAM_MINOR == 5
 #define SEAM 6
-#define SEAM_0_0_5 6
 #elif SEAM_MINOR == 6
 #define SEAM 7
-#define SEAM_0_0_6 7
 #elif SEAM_MINOR == 7
 #define SEAM 8
-#define SEAM_0_0_7 8
 #endif
 #endif  //< #if SEAM_MAJOR == 0
 #endif  //< #if SEAM_PAGE == 0

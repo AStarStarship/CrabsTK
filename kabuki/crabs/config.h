@@ -1,5 +1,4 @@
-/* Kabuki Toolkit
-@version 0.x
+/* Kabuki Toolkit @version 0.x
 @file    $kabuki-toolkit/kabuki/crabs/config.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -61,9 +60,6 @@ specific language governing permissions and limitations under the License. */
 
 // Dynamically linked library assembly type macro.
 #define DYNAMICALLY_LINKED_LIBRARY 3
-
-// Dynamically linked library assembly type macro.
-#define SINGLE_DLL 4
 
 #define LARGEST_INT 2147483647  //< Use this for 32-bit CPUs
 
