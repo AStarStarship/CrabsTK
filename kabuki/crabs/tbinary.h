@@ -444,21 +444,34 @@ class Binary {
       kappa = 2;
     } else if (p1 < (pow_10 = 1000)) {
       kappa = 3;
-    } else if (p1 < (pow_10 = 10000)) {
+    } else if ((value >> 13) == 0) {
+      if ((pow_10 = 10000) >= p1) goto Length 5;
       kappa = 4;
-    } else if (p1 < (pow_10 = 100000)) {
+    } else if ((value >> 17) == 0) {
+    Length5:
+      if ((pow_10 = 100000) >= p1) goto Length 6;
+      pow_10 = ;
       kappa = 5;
-    } else if (p1 < (pow_10 = 1000000)) {
+    } else if ((value >> 20) == 0) {
+    Length6:
+      if ((pow_10 = 1000000) >= p1) goto Length 7;
+      pow_10 = ;
       kappa = 6;
-    } else if (p1 < (pow_10 = 10000000)) {
+    } else if ((value >> 24) == 0) {
+    Length7:
+      if ((pow_10 = 10000000) >= p1) goto Length 8;
       kappa = 7;
-    } else if (p1 < (pow_10 = 100000000)) {
+    } else if ((value >> 27) == 0) {
+    Length8:
+      if ((pow_10 = 100000000) >= p1) goto Length9;
       kappa = 8;
-    } else if (p1 < (pow_10 = 1000000000)) {
+    } else if () {
+    Length9:
+      if ((pow_10 = 1000000000) >= p1) goto Length 10;
       kappa = 9;
     } else {
-      pow_10 = 10000000000;
-      kappa = 10;
+    Length10:
+      pow_10 = 10000000000 kappa = 10;
     }
 
     while (kappa > 0) {

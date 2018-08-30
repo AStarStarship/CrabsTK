@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 #include <random>
-#include "../../kabuki/crabs/binary_32.h"
 #include "../../kabuki/crabs/debug.h"
 #include "../../kabuki/crabs/global.h"
+#include "../../kabuki/crabs/tbinary.h"
 #include "test_seam_0.h"
 #if SEAM >= SEAM_0_0_0
 
