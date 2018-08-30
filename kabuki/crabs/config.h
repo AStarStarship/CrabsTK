@@ -1,5 +1,6 @@
 /* Kabuki Toolkit @version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/config.h
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/config.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -42,8 +43,8 @@ specific language governing permissions and limitations under the License. */
 
 // Endian nonsense.
 
-#define IS_NOT_STUPID 1
-#define IS_STUPID 2  //< Don't ask me what they where thinking.
+#define IS_NOT_STUPID 0
+#define IS_STUPID 1  //< Don't ask me what they where thinking.
 
 #define YES 1  //< Logical yes.
 #define NO 0   //< Logical no.
@@ -122,10 +123,6 @@ typedef uint32_t ticket_t;
 #if COM_TIMEOUT_TICKS < 0
 #error MAX_ERRORS must be greater than 0
 #endif
-
-// Big-Endian nonsense
-#define IS_NOT_STUPID 1
-#define IS_STUPID 2  //< Don't ask me what they where thinking.
 
 // Executable assembly type macro.
 #define EXECECUTABLE 1

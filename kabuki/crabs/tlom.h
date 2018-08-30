@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/loom.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/loom.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_3
+#if SEAM >= SEAM_0_0_2
 #ifndef INCLUDED_CRABS_VARINT
 #define INCLUDED_CRABS_VARINT
 // Dependencies:
@@ -128,4 +128,4 @@ SI LoomPrint(Utf8& print, CLoom* loom, const Char* strand) {
 
 }  // namespace _
 #endif  //< INCLUDED_CRABS_VARINT
-#endif  //< #if SEAM >= SEAM_0_0_3
+#endif  //< #if SEAM >= SEAM_0_0_2

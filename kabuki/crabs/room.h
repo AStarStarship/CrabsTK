@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/room.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/room.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_4
+#if SEAM >= SEAM_0_0_3
 #ifndef INCLUDED_CRABS_ROOM
 #define INCLUDED_CRABS_ROOM
 // Dependencies:
@@ -237,5 +237,5 @@ class Room : public Operand {
 // KABUKI Room* ChineseRoom (Room* room = nullptr);
 
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_4
+#endif  //< #if SEAM >= SEAM_0_0_3
 #endif  //< CRABS_ROOM_HDi

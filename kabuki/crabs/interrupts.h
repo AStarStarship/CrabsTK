@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/interrupts.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/interrupts.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -28,6 +28,6 @@ struct KABUKI RoomCrashException : public std::exception {
   const char* what() const throw();
 };
 #endif
-}   //< namespace _
+}  // namespace _
 #endif  //< USING_CRABS_INTERRUPTS
 #endif  //< CRABS_EXCEPTIONS_H

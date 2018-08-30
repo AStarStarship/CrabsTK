@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 //#include <cmath>
 //#include <random>
 
-#include "../../kabuki/crabs/decimal.h"
+#include "../../kabuki/crabs/binary_64.h"
 #include "../../kabuki/crabs/global.h"
 #include "test_seam_0.h"
 

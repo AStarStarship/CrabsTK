@@ -1,5 +1,6 @@
 /* Kabuki Toolkit @version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/crabs_decimal.cc
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/crabs_decimal.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,8 +14,8 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #include <cmath>
 
-#include "decimal.h"
-#include "tdecimal.h"
+#include "binary_64.h"
+#include "tbinary.h"
 
 #if SEAM == SEAM_0_0_0
 #include "debug.h"
@@ -60,8 +61,8 @@ inline void PrintBinaryTable(uint32_t value) {
   Char buffer[256];                    \
   sprintf_s(buffer, 256, "%u", value); \
   Printf("Expecting %s:%u", buffer, (uint)strlen(buffer));
-#define PRINT_HEADING \
-  Print('\n');        \
+#define BEGIN_PUFF_ALGORITHM \
+  Print('\n');               \
   for (int i = 80; i > 0; --i) Print('-')
 #else
 #define PRINT(item)
@@ -152,9 +153,9 @@ char puff_lut[2 * 100 + (8 + 2) * 87];
 
 const uint16_t* PuffDigits() {}
 
-inline const uint16_t* PuffExponents() {}
+inline const uint16_t* IEEE754Exponents() {}
 
-inline const uint64_t* PuffPow10() {}
+inline const uint64_t* Binary64Pow10() {}
 
 void NumberRealLutGenerate(char* buffer, size_t size) {
   /* Lookup table of ASCII Char pairs for 00, 01, ..., 99 in little-endian

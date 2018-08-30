@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/crabs_errors.cc
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/crabs_errors.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -49,7 +49,7 @@ const char** ErrorStrings() {
       "BIn Locked",               //< 25
       "Invalid args",             //< 26
       "Invalid credentials",      //< 27
-      "Obj locked"             //< 28
+      "Obj locked"                //< 28
       "Implementation error",     //< 29
   };
   return kErrors;

@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/map.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/map.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,14 +13,14 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_0
+#if SEAM >= SEAM_0_0_2
 #ifndef INCLUDED_CRAPS_MAP
 #define INCLUDED_CRAPS_MAP
 // Dependencies:
 #include "ascii_data_types.h"
 #include "socket.h"
 // End dependencies.
-#if SEAM_MAJOR == 0 && SEAM_MINOR == 3
+#if SEAM == SEAM_0_0_2
 #ifndef PRINTF
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT(c) Print(c)
@@ -686,4 +686,4 @@ class Map {
 #undef PRINT_TYPE
 #undef WIPE
 #undef PRINT_LINE
-#endif  //< #if SEAM >= SEAM_0_0_0
+#endif  //< #if SEAM >= SEAM_0_0_2

@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/error.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/error.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -47,7 +47,7 @@ typedef enum ScriptError {
   kErrorMalformedUtf8,        //< Script Error 21: Malformed UTF-8.
   kErrorMalformedUtf16,       //< Script Error 22: Malformed UTF-16.
   kErrorMalformedUtf32,       //< Script Error 23: Malformed UTF-32.
-  kErrorObjLocked,         //< Script Error 24: Obj locked.
+  kErrorObjLocked,            //< Script Error 24: Obj locked.
   kErrorInvalidArgs,          //< Script Error 25: Invalid args.
   kErrorAuthenticationError,  //< Script Error 26: Authentication error.
   kErrorRoomNotFound,         //< Script Error 27: Room not found.

@@ -1,18 +1,14 @@
-/** Kabuki Toolkit
-    @version 0.x
-    @file    ~/library/kabuki/toolkit/aiml/perceptron.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2014-2017-2018 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version 
-             2.0 (the "License"); you may not use this file except in 
-             compliance with the License. You may obtain a copy of the License 
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless 
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
-             implied. See the License for the specific language governing 
-             permissions and limitations under the License.
-*/
+/** Kabuki Toolkit @version 0.x
+@file    $kabuki-toolkit/kabuki/f2sdk/aiml/perceptron.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
@@ -26,7 +22,7 @@ typedef float        float_t;
 typedef unsigned int uint;
 
 namespace _ {
- 
+
 static const float_t kSynapseMin,      //< Synapse value min.
                      kSynapseMax,      //< Synapse value max.
                      kSynapseBias,     //< Synapse bias.
@@ -34,7 +30,7 @@ static const float_t kSynapseMin,      //< Synapse value min.
                      kSynapseNoiseMax; //< Max synapse noise.
 
 /** Generates uniform random noise in the given range. */
-float_t SynapseNoise (float_t min_value = kSynapseNoiseMin, 
+float_t SynapseNoise (float_t min_value = kSynapseNoiseMin,
                       float_t max_value = kSynapseNoiseMax);
 class Perceptron;
 

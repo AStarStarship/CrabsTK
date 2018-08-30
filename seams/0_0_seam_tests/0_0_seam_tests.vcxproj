@@ -38,7 +38,7 @@
     <ClInclude Include="..\..\kabuki\crabs\clock.h" />
     <ClInclude Include="..\..\kabuki\crabs\config.h" />
     <ClInclude Include="..\..\kabuki\crabs\debug.h" />
-    <ClInclude Include="..\..\kabuki\crabs\decimal.h" />
+    <ClInclude Include="..\..\kabuki\crabs\binary_64.h" />
     <ClInclude Include="..\..\kabuki\crabs\door.h" />
     <ClInclude Include="..\..\kabuki\crabs\error.h" />
     <ClInclude Include="..\..\kabuki\crabs\event.h" />
@@ -56,6 +56,7 @@
     <ClInclude Include="..\..\kabuki\crabs\obj.h" />
     <ClInclude Include="..\..\kabuki\crabs\op.h" />
     <ClInclude Include="..\..\kabuki\crabs\operand.h" />
+    <ClInclude Include="..\..\kabuki\crabs\public.h" />
     <ClInclude Include="..\..\kabuki\crabs\random.h" />
     <ClInclude Include="..\..\kabuki\crabs\room.h" />
     <ClInclude Include="..\..\kabuki\crabs\slot.h" />
@@ -67,7 +68,7 @@
     <ClInclude Include="..\..\kabuki\crabs\talign.h" />
     <ClInclude Include="..\..\kabuki\crabs\tascii_data_types.h" />
     <ClInclude Include="..\..\kabuki\crabs\tclock.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tdecimal.h" />
+    <ClInclude Include="..\..\kabuki\crabs\tbinary.h" />
     <ClInclude Include="..\..\kabuki\crabs\tdic.h" />
     <ClInclude Include="..\..\kabuki\crabs\tlom.h" />
     <ClInclude Include="..\..\kabuki\crabs\tlst.h" />
@@ -95,7 +96,7 @@
     <ClCompile Include="..\..\kabuki\crabs\crabs_bsq.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_clock.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_debug.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_decimal.cc" />
+    <ClCompile Include="..\..\kabuki\crabs\crabs_binary_64.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_door.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_error.cc" />
     <ClCompile Include="..\..\kabuki\crabs\crabs_expr.cc" />

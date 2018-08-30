@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/random.hf
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/random.hf
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,6 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_0
 #ifndef INCLUDED_CRABS_RANDOM
 #define INCLUDED_CRABS_RANDOM
 // Dependencies:
@@ -29,5 +28,4 @@ inline uint64_t GetRandomUInt64();
 inline int64_t GetRandomInt64();
 
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_0
 #endif  //< INCLUDED_CRABS_RANDOM

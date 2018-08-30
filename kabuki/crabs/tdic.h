@@ -1,4 +1,5 @@
 /* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
 @file    ~/libraries/crabs/dictionary.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -12,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_3
+#if SEAM >= SEAM_0_0_2
 #ifndef INCLUDED_CRABS_BOOK
 #define INCLUDED_CRABS_BOOK
 // Dependencies:

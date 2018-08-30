@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/hash.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/hash.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -46,6 +46,6 @@ KABUKI uint16_t Hash32(const char* string, hash32_t hash = kLargest32BitPrime);
 /* Hashes the given char using the primeHash function. */
 KABUKI hash64_t Hash64(const char* string, hash64_t hash = kLargest64BitPrime);
 
-}   //< namespace _
+}  // namespace _
 #endif  //< #if SEAM >= SEAM_0_0_0
 #endif  //< INCLUDED_CRABS_HASH

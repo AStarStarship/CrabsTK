@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/utf.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/utf.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_2
+#if SEAM >= SEAM_0_0_1
 #ifndef INCLUDED_CRABS_UTF
 #define INCLUDED_CRABS_UTF
 
@@ -52,4 +52,4 @@ using LineString = Utf32LineString;
 #undef PRINT
 #undef PRINTF
 #endif  //< #if INCLUDED_CRABS_UTF
-#endif  //< #if SEAM >= SEAM_0_0_2
+#endif  //< #if SEAM >= SEAM_0_0_1

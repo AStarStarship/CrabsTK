@@ -1,5 +1,5 @@
-/* Kabuki Toolkit
-@version 0.x
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
 @file    ~/kabuki-toolkit/kabuki/crabs/socket.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #define INCLUDED_CRABS_MEMORY
 // Dependencies:
 #include "align.h"
-#include "decimal.h"
+#include "binary_64.h"
 // End dependencies.
 
 namespace _ {

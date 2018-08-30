@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/tstr.h
+@file    ~/kabuki/crabs/tstr.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -19,13 +19,13 @@ specific language governing permissions and limitations under the License. */
 #include "config.h"
 #include "debug.h"
 #include "socket.h"
-#include "tdecimal.h"
+#include "tbinary.h"
 #include "tobj.h"
 // End dependencies.
 #if SEAM == SEAM_0_0_2
 #define PRINT(c) Print(c)
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PRINT_HEADING(heading) PrintHeading(heading)
+#define BEGIN_PUFF_ALGORITHM(heading) PrintHeading(heading)
 #define PRINT_FLOAT_BINARY(integer, decimals, decimal_count)             \
   Printf("\nFound bit_pattern:0b\'");                                    \
   uint32_t bits_1234567890 = integer;                                    \

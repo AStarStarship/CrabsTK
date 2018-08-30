@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/expr.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/expr.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -35,7 +35,7 @@ namespace _ {
     App/Driver/User writes to the end of the Tx buffer and the driver reads from
     the beginning. The user writes are synchronous and the driver reads are
     asynchronous.
-    
+    
 
 
 
@@ -44,7 +44,7 @@ namespace _ {
 
 
     # Ring Buffer Streaming Diagram
-    
+    
 
 
 
@@ -61,7 +61,7 @@ namespace _ {
     BIn   |>-Buffer->|>-Async Portal Tx->|>-Sync User Writes->|>-Buffer->|
           |__________|___________________|____________________|__________|
     @endcode
-    
+    
 
 
 
@@ -71,7 +71,7 @@ namespace _ {
 
     Almost all block of memory in Script has something that grows up and another
     that grows down.
-    
+    
 
 
 
@@ -80,7 +80,7 @@ namespace _ {
 
 
     # Stack Memory Layout
-    
+    
 
 
 
@@ -138,7 +138,7 @@ struct Expr {
   wchar_t current_char;  //< Current Unicode char being scanned.
   hash16_t hash;         //< Packed BSQ hash.
   uint32_t timeout_us;   //< Timeout time in microseconds.
-  Tme last_time;   //< Last time the Stack was scanned.
+  Tme last_time;         //< Last time the Stack was scanned.
   const Op* result;      //< Result of the Expr.
   const uint_t *header,  //< Pointer to the header being verified.
       *header_start;     //< Start of the header being verified.
@@ -242,7 +242,7 @@ inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
    const char* cursor = ArgsParse (expr->args_cursor, expr->args_end,
                                    params, args);
    if (!cursor) {
-       
+       
 
 
 
@@ -319,7 +319,7 @@ KABUKI Utf8& PrintExpr(Utf8& printer, Expr* expr);
 KABUKI Utf8& PrintExprStack(Utf8& printer, Expr* expr);
 #endif
 
-}   //< namespace _
+}  // namespace _
 
 #if CRABS_TEXT
 /* Prints the given Expr to the Text buffer. */

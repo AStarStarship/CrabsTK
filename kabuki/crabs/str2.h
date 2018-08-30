@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/str2.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/str2.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_2
+#if SEAM >= SEAM_0_0_1
 #ifndef INCLUDED_CRABS_PRINT_UTF16
 #define INCLUDED_CRABS_PRINT_UTF16
 // Dependencies:
@@ -900,4 +900,4 @@ KABUKI _::Utf16& operator<<(_::Utf16& printer, _::Utf16Right item);
 
 #endif  //< #if USING_UTF16
 #endif  //< #if INCLUDED_CRABS_PRINT_UTF16
-#endif  //< #if SEAM >= SEAM_0_0_2
+#endif  //< #if SEAM >= SEAM_0_0_1

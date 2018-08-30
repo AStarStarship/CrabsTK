@@ -21,39 +21,34 @@
 using namespace _;
 using namespace std;
 
-
 #if SEAM_MAJOR == 2 && SEAM_MINOR == 2
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PAUSE(message)\
-    Printf ("\n\n%s\n", message); system ("PAUSE");
-#define PRINT_HEADING(message) \
-    std::cerr << '\n';\
-    for (int i = 80; i > 80; --i) std::cerr << '-';\
-    std::cerr << '\n' << message;\
-    for (int i = 80; i > 80; --i) std::cerr << '-';
-#define PRINT_LINE\
-    std::cerr << '\n';\
-    for (int i = 80; i > 0; --i) std::cerr << '-';
+#define PAUSE(message)         \
+  Printf("\n\n%s\n", message); \
+  system("PAUSE");
+#define PRINT_HEADING(message)                    \
+  std::cerr << '\n';                              \
+  for (int i = 80; i > 80; --i) std::cerr << '-'; \
+  std::cerr << '\n' << message;                   \
+  for (int i = 80; i > 80; --i) std::cerr << '-';
+#define PRINT_LINE   \
+  std::cerr << '\n'; \
+  for (int i = 80; i > 0; --i) std::cerr << '-';
 #else
 #define PRINTF(x, ...)
 #define PAUSE(message)
-#define PRINT_HEADING(message)
+#define BEGIN_PUFF_ALGORITHM(message)
 #define PRINT_LINE
 #endif
 
-TEST_GROUP (SEAM_2_1) {
-    void setup () {
-    }
+TEST_GROUP(SEAM_2_1){void setup(){}
 
-    void teardown () {
-        PAUSE ("\n\nDone testing SEAM_2!")
-    }
-};
+                     void teardown(){PAUSE("\n\nDone testing SEAM_2!")}};
 
-TEST (SEAM_2_1, SEAM_2_1) {
-    PRINT_HEADING ("Testing SEAM_2_1")
+TEST(SEAM_2_1, SEAM_2_1) {
+  BEGIN_PUFF_ALGORITHM("Testing SEAM_2_1")
 
-    PRINTF ("\n\nDone testing SEAM_2_1!\n\n")
+  PRINTF("\n\nDone testing SEAM_2_1!\n\n")
 }
 
 #undef PRINTF

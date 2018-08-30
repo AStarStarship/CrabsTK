@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/expr.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/expr.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -206,6 +206,6 @@ KABUKI void Destruct(Library<TIndex, TKey, TData, TData, MaxStackSize>* r) {
   delete reinterpret_cast<char*>(r);
 }
 #endif  //< CRABS_MEMORY_PROFILE > 2
-}   //< namespace _
+}  // namespace _
 #endif  //< #if SEAM >= SEAM_0_0_0
 #endif  //< INCLUDED_CRABS_LIBRARY

@@ -1,5 +1,5 @@
-/* Kabuki Toolkit
-@version 0.x
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
 @file    ~/library/script/mirror.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -135,6 +135,6 @@ KABUKI const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
 KABUKI const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
                               uint_t offset, char* address);
 
-}   //< namespace _
+}  // namespace _
 #endif  //< #if SEAM >= SEAM_0_0_0
 #endif  //< INCLUDED_SCRIPT_MIRROR

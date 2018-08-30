@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    $kabuki-toolkit/0_seam_tests/test_seam_0.h
+@file    ~/0_seam_tests/test_seam_0.h
 @author  Cale McCollough <calemccollough.github.io>
 @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version

@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/bout.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/bout.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -34,7 +34,7 @@ typedef enum BOutStates {
 
     The BOut ring buffer is defined as being contiguous
 
-    
+    
 
 
 
@@ -47,7 +47,7 @@ typedef enum BOutStates {
 
 
     @code
-    
+    
 
 
 
@@ -123,7 +123,7 @@ KABUKI void BInKeyStrokes();
 KABUKI Utf8& PrintBOut(Utf8& printer, BOut* bout);
 #endif
 
-}   //< namespace _
+}  // namespace _
 
 #if CRABS_TEXT
 /* Prints out the bin to the text. */

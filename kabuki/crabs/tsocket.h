@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #define INCLUDED_CRABS_MEMORY
 // Dependencies:
 #include "align.h"
-#include "decimal.h"
+#include "binary_64.h"
 // End dependencies.
 
 namespace _ {

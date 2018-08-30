@@ -17,7 +17,8 @@ specific language governing permissions and limitations under the License. */
 
 namespace kabuki { namespace aiml {
 
-// The comments below have code taken from the book Artificial Intelligence (3rd Edition) and we're porting the code into our toolkit.
+// The comments below have code taken from the book Artificial Intelligence
+// (3rd Edition) and we're porting the code into our toolkit.
 
 // # Section 1
 

@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/crabs_bsq.cc
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/crabs_bsq.cc
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,8 +14,8 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM >= SEAM_0_0_3
 // Dependencies:
-#include "debug.h"
 #include "bsq.h"
+#include "debug.h"
 #include "str1.h"
 // End dependencies.
 

@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/operand.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/operand.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_0
+#if SEAM >= SEAM_0_0_2
 #ifndef INCLUDED_CRABS_OPERAND
 #define INCLUDED_CRABS_OPERAND
 // Dependencies:
@@ -90,7 +90,7 @@ Slot& OperandQuery(Operand* root, const char* address, Slot& key);
 KABUKI Utf8& PrintOperand(Utf8& slot, Operand* operand);
 #endif
 
-}   //< namespace _
+}  // namespace _
 
 #if CRABS_TEXT
 /* Overloaded operator<< prints the given operand to the text. */

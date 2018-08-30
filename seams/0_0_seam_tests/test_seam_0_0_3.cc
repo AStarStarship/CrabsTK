@@ -1,5 +1,5 @@
 /* Kabuki Toolkit
-@file    $kabuki-toolkit/0_seam_tests/test_seam_0_.cc
+@file    ~/0_seam_tests/test_seam_0_.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -86,7 +86,8 @@ TEST(SEAM_1_3, SEAM_1_3A) {
       for (int y = 0; y < 2; ++y)
           for (int x = 0; x < 2; ++x)
               CHECK_EQUAL (i++, array_3d_exected[x][y][z])
-  
+  
+
 
 
 
@@ -154,7 +155,8 @@ TEST(SEAM_1_3, SEAM_1_3A) {
   PRINTF("\n\nDone testing Map!")
 
   /*
-  
+  
+
 
 
 

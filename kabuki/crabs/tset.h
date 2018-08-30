@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/collection.h
+@file    ~/kabuki/crabs/collection.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,12 +13,12 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_3
+#if SEAM >= SEAM_0_0_2
 #ifndef CRABS_COLLECTION_H
 #define CRABS_COLLECTION_H
 // Dependencies:
-#include "text.h"
 #include "ascii_data_types.h"
+#include "text.h"
 // End dependencies.
 
 namespace _ {
@@ -39,12 +39,12 @@ struct KABUKI Set {
 /* A Type-Value Tuple. */
 struct Tuple2 {
   StdType type;  //< The tuple type.
-  void* value;     //< The tuple value.
+  void* value;   //< The tuple value.
 };
 
 /* A Type-Value Tuple. */
 struct Tuple3 {
-  StdType type;   //< The tuple type.
+  StdType type;     //< The tuple type.
   void* value;      //< The tuple value.
   const char* key;  //< The Tuple key.
 };
@@ -109,6 +109,6 @@ struct Collection {
   /*  */
   virtual Utf8& Print(Utf8& out_) = 0;
 };
-}   //< namespace _
-#endif  //< #if SEAM >= SEAM_0_0_3
+}  // namespace _
+#endif  //< #if SEAM >= SEAM_0_0_2
 #endif  //< CRABS_COLLECTION_H

@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/crabs_printer1.cc
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/crabs_str.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #include "debug.h"
 #include "hex.h"
 #include "socket.h"
-#include "tdecimal.h"
+#include "tbinary.h"
 #include "tstr.h"
 // End dependencies.
 

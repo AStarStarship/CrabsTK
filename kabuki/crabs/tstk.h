@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/stack.h
+@file    ~/kabuki/crabs/stack.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_3
+#if SEAM >= SEAM_0_0_2
 #ifndef INCLUDED_CRABS_STACK
 #define INCLUDED_CRABS_STACK
 // Dependencies:
@@ -68,7 +68,7 @@ constexpr UI UnsignedMax() {
     given types, and another for a multi-dimensional array that uses the 1-d
     array in order to store the dimensions. The only different between them is
     that the size_array variable gets set to 0.
-    
+    
 
 
 
@@ -653,4 +653,4 @@ class Stack {
 }  // namespace _
 
 #endif  //< INCLUDED_CRABS_STACK
-#endif  //< #if SEAM >= SEAM_0_0_3
+#endif  //< #if SEAM >= SEAM_0_0_2

@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/event.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/event.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -23,7 +23,7 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* Interface for a temporal event in a Bayesian net.
-    
+    
 
 
 
@@ -49,6 +49,6 @@ struct KABUKI Event : public Operand {
   virtual const Op* Star(wchar_t index, Expr* expr) = 0;
 };
 
-}   //< namespace _
+}  // namespace _
 #endif  //< #if SEAM >= SEAM_0_0_4
 #endif  //< INCLUDED_CRABS_EVENT

@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/crabs_bout.cc
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/crabs_bout.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -16,9 +16,9 @@ specific language governing permissions and limitations under the License. */
 // Dependencies:
 #include "args.h"
 #include "ascii_data_types.h"
-#include "debug.h"
 #include "bout.h"
 #include "bsq.h"
+#include "debug.h"
 #include "hash.h"
 #include "hex.h"
 #include "line.h"
@@ -224,8 +224,8 @@ const Op* BOutWrite(BOut* bout, const uint_t* params, void** args) {
   for (index = 1; index <= num_params; ++index) {
     type = params[index];
     PRINTF("\nparam: %u type: %s start:%i stop:%i space: %u", arg_index + 1,
-           TypeString(type), (int)Size(begin, start),
-           (int)Size(begin, stop), space)
+           TypeString(type), (int)Size(begin, start), (int)Size(begin, stop),
+           space)
     switch (type) {
       case NIL:
         break;

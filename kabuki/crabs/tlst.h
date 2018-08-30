@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_0
+#if SEAM >= SEAM_0_0_2
 #ifndef INCLUDED_CRABS_LIST
 #define INCLUDED_CRABS_LIST
 // Dependencies:
@@ -21,7 +21,7 @@ specific language governing permissions and limitations under the License. */
 #include "set.h"
 #include "stack.h"
 // End dependencies.
-#if SEAM_MAJOR == 0 && SEAM_MINOR == 3
+#if SEAM == SEAM_0_0_2
 #ifndef PRINTF
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT(c) Print(c)
@@ -272,8 +272,7 @@ SI ListInsert(CList<UI, SI>* list, type_t type, const void* value, SI index) {
     types[index] = type;
     //  Push the offset onto the top of the offset stack.
     char* data_stop = ListDataStop<UI, SI>(list, count - 1);
-    PRINTF("\n  Aligning data_stop from %i to ",
-           (int)Size(list, data_stop))
+    PRINTF("\n  Aligning data_stop from %i to ", (int)Size(list, data_stop))
     data_stop = TypeAlignUpPointer<char>(data_stop, type);
     PRINTF("%i", (int)Size(list, data_stop))
     UI stop_offset = (UI)(data_stop - reinterpret_cast<char*>(list));
@@ -467,9 +466,7 @@ class List {
   }
 
   /* Removes the item at the given address from the list. */
-  inline bool Remove(void* adress) {
-    return ListRemove<UI, SI>(Obj(), adress);
-  }
+  inline bool Remove(void* adress) { return ListRemove<UI, SI>(Obj(), adress); }
 
   /* Removes the item at the given address from the list. */
   inline bool Remove(SI index) { return ListRemove<UI, SI>(Obj(), index); }
@@ -511,4 +508,4 @@ inline _::Utf8& operator<<(_::Utf8& printer, _::CList<UI, SI>* list) {
 #undef PRINT_TYPE
 #undef WIPE
 #endif  //< INCLUDED_CRABS_LIST
-#endif  //< SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 0
+#endif  //< #if SEAM >= SEAM_0_0_0

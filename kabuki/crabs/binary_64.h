@@ -1,5 +1,6 @@
 /* Kabuki Toolkit @version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/decimal.h
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/binary_64.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -11,24 +12,12 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_1
-#ifndef INCLUDED_CRABS_NUMBER
-#define INCLUDED_CRABS_NUMBER
+#if SEAM >= SEAM_0_0_0
+#ifndef INCLUDED_CRABS_BINARY_32
+#define INCLUDED_CRABS_BINARY_32
 #include "config.h"
 
 namespace _ {
-
-/* Utility class for cache aligning and packing LUTs for printing integers and
-floating-point numbers. */
-inline const uint16_t* PuffDigits();
-
-/* Exponents for the Grisu algorithm. */
-inline const uint16_t* PuffExponents();
-
-/*  */
-inline const uint64_t* PuffPow10();
-
-inline const uint64_t* PuffPow10(const uint16_t* packed_grisu_lut);
 
 inline char* Print(char* begin, uint16_t chars);
 
@@ -124,5 +113,5 @@ KABUKI int RSB(uint64_t value);
 
 }  // namespace _
 
-#endif  //< #if INCLUDED_CRABS_NUMBER
-#endif  //< #if SEAM >= SEAM_0_0_1
+#endif  //< #if INCLUDED_CRABS_BINARY_32
+#endif  //< #if SEAM >= SEAM_0_0_0

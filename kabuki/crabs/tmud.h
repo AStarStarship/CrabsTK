@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_0
+#if SEAM >= SEAM_0_0_2
 #ifndef INCLUDED_CRABS_BOOK
 #define INCLUDED_CRABS_BOOK
 // Dependencies:
@@ -37,35 +37,7 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* A multismap created from contiguous memory.
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
     @ingroup Book
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
     A multimap is like a Python dictionary or C++ map, the difference being a
    TMultimap can contain nested TMultimap (string). The key design difference
    between both Python dictionaries and C++ maps are Sets do not contains
@@ -839,4 +811,4 @@ using Multimap8 = TMap<uint32_t, uint32_t, uint64_t>;
 #undef PRINT
 #undef PRINT_HEADING
 #endif  //< INCLUDED_CRABS_BOOK
-#endif  //< #if SEAM >= SEAM_0_0_0
+#endif  //< #if SEAM >= SEAM_0_0_2

@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/table.h
+@file    ~/kabuki/crabs/table.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,7 +12,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_3
+#if SEAM >= SEAM_0_0_2
 #ifndef INCLUDED_CRABS_TABLE
 #define INCLUDED_CRABS_TABLE
 // Dependencies:
@@ -59,6 +59,7 @@ namespace _ {
     collissionsList[0] is an invalid index, so the collisionsList is searched
     from lower address up.
     
+
 
     # Memory Layout
 
@@ -605,5 +606,5 @@ Utf8& TablePrint(Utf8& print, Table<UI, SI>* table) {
 #endif
 
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_3
+#endif  //< #if SEAM >= SEAM_0_0_2
 #endif  //< INCLUDED_CRABS_TABLE

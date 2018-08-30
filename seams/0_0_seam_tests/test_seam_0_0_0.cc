@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    $kabuki-toolkit/seams/0_0_seam_tests/test_seam_0_0_0.cc
+@file    ~/seams/0_0_seam_tests/test_seam_0_0_0.cc
 @author  Cale McCollough <calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,10 +13,10 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 #include <random>
+#include "../../kabuki/crabs/binary_32.h"
 #include "../../kabuki/crabs/debug.h"
 #include "../../kabuki/crabs/global.h"
 #include "test_seam_0.h"
-
 #if SEAM >= SEAM_0_0_0
 
 using namespace _;

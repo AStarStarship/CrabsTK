@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/crabs_text.cc
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/crabs_text.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,15 +14,15 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM >= SEAM_0_0_2
 // Dependencies:
-#include "str1.h"
 #include "ascii_data_types.h"
+#include "str1.h"
 // End dependencies.
 #if CRABS_TEXT
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 2
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT(c) Print(c)
 #define PRINT_HEADING \
-  Print ('\n');  \
+  Print('\n');        \
   for (int i = 80; i > 0; --i) std::cout << '-'
 #else
 #define PRINTF(x, ...)

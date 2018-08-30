@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/clock.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/clock.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_2
+#if SEAM >= SEAM_0_0_1
 #ifndef INCLUDED_CRABS_TCLOCK
 #define INCLUDED_CRABS_TCLOCK
 // Dependencies:
@@ -489,4 +489,4 @@ const Char* TextScanTime(const Char* begin, Tss& result) {
 #undef PRINT
 #undef PRINTF
 #endif  //< #ifndef INCLUDED_CRABS_TCLOCK
-#endif  //< #if SEAM >= SEAM_0_0_2
+#endif  //< #if SEAM >= SEAM_0_0_1

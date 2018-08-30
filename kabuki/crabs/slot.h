@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    $kabuki-toolkit/kabuki/crabs/slot.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit
+@file    ~/kabuki/crabs/slot.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,14 +13,14 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_4
+#if SEAM >= SEAM_0_0_3
 #ifndef INCLUDED_CRABS_SLOT
 #define INCLUDED_CRABS_SLOT
 // Dependencies:
 #include "bin.h"
 #include "bout.h"
-#include "socket.h"
 #include "op.h"
+#include "socket.h"
 #include "str1.h"
 // End dependencies.
 
@@ -122,7 +122,7 @@ struct Slot {
 #endif
 };
 
-}   //< namespace _
+}  // namespace _
 
 #if CRABS_TEXT
 /* Prints out the bin to the text. */
@@ -131,5 +131,5 @@ inline _::Utf8& operator<<(_::Utf8& printer, _::Slot& slot) {
 }
 #endif
 
-#endif  //< #if SEAM >= SEAM_0_0_4
+#endif  //< #if SEAM >= SEAM_0_0_3
 #endif  //< INCLUDED_CRABS_SLOT

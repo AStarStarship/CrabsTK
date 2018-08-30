@@ -11,9 +11,6 @@
     <Filter Include="kabuki\crabs">
       <UniqueIdentifier>{c9fed358-324c-4fa2-8799-73e59bffd98d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="seam_tests">
-      <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="kabuki\platform_win32">
       <UniqueIdentifier>{01e58df6-5bcf-4913-9d37-fb7bc2fd5863}</UniqueIdentifier>
     </Filter>
@@ -23,10 +20,13 @@
     <Filter Include="kabuki\tek">
       <UniqueIdentifier>{861ae69b-6629-4c67-bdc2-4d1d4d6e77be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="0_0_seam_tests">
+      <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="test_script.s2">
-      <Filter>seam_tests</Filter>
+      <Filter>0_0_seam_tests</Filter>
     </None>
     <None Include="..\..\kabuki\README.md">
       <Filter>kabuki</Filter>
@@ -37,24 +37,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
-      <Filter>seam_tests</Filter>
+      <Filter>0_0_seam_tests</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>seam_tests</Filter>
+      <Filter>0_0_seam_tests</Filter>
     </ClInclude>
     <ClInclude Include="assembly.h">
-      <Filter>seam_tests</Filter>
+      <Filter>0_0_seam_tests</Filter>
     </ClInclude>
     <ClInclude Include="test_seam_0.h">
-      <Filter>seam_tests</Filter>
+      <Filter>0_0_seam_tests</Filter>
     </ClInclude>
     <ClInclude Include="..\..\kabuki\seams.h">
       <Filter>kabuki</Filter>
     </ClInclude>
     <ClInclude Include="..\..\kabuki\crabs\debug.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\decimal.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\kabuki\crabs\door.h">
@@ -141,9 +138,6 @@
     <ClInclude Include="..\..\kabuki\crabs\tclock.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\tdecimal.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\kabuki\crabs\tdic.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
@@ -222,36 +216,42 @@
     <ClInclude Include="..\..\kabuki\crabs\binary_32.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\kabuki\crabs\public.h">
+      <Filter>kabuki\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\crabs\binary_64.h">
+      <Filter>kabuki\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\crabs\tbinary.h">
+      <Filter>kabuki\crabs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cc">
-      <Filter>seam_tests</Filter>
+      <Filter>0_0_seam_tests</Filter>
     </ClCompile>
     <ClCompile Include="tests_main.cc">
-      <Filter>seam_tests</Filter>
+      <Filter>0_0_seam_tests</Filter>
     </ClCompile>
     <ClCompile Include="test_seam_0_0_0.cc">
-      <Filter>seam_tests</Filter>
+      <Filter>0_0_seam_tests</Filter>
     </ClCompile>
     <ClCompile Include="test_seam_0_0_1.cc">
-      <Filter>seam_tests</Filter>
+      <Filter>0_0_seam_tests</Filter>
     </ClCompile>
     <ClCompile Include="test_seam_0_0_2.cc">
-      <Filter>seam_tests</Filter>
+      <Filter>0_0_seam_tests</Filter>
     </ClCompile>
     <ClCompile Include="test_seam_0_0_3.cc">
-      <Filter>seam_tests</Filter>
+      <Filter>0_0_seam_tests</Filter>
     </ClCompile>
     <ClCompile Include="test_seam_0_0_4.cc">
-      <Filter>seam_tests</Filter>
+      <Filter>0_0_seam_tests</Filter>
     </ClCompile>
     <ClCompile Include="..\..\kabuki\crabs\crabs_clock.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\kabuki\crabs\crabs_debug.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_decimal.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\kabuki\crabs\crabs_door.cc">
@@ -321,6 +321,9 @@
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\kabuki\crabs\crabs_bsq.cc">
+      <Filter>kabuki\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\kabuki\crabs\crabs_binary_64.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
   </ItemGroup>
