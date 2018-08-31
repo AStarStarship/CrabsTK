@@ -14,7 +14,7 @@ Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2
 
 * Modern Embedded-C++1x with Doxygen API docs.
 * ASCII Data Types operate seamlessly across assembly boundary with optimal RAM usage and CPU cache performance from ROM-able ASCII Contiguous Objects.
-* Rapid compile time using Chinese Room Abstract Stack Machine (Crabs) C Application Binary Interface (ABI) and ASCII Data Types with semi-hidden C++ templates and UML-compatible object-oriented wrapper classes.
+* Rapid compile time using C Application Binary Interface (ABI) with semi-hidden C++ templates and UML-compatible object-oriented wrapper classes.
 * Page-Major-Minor Seam (PMMS) Unit Tests provides debug information customized for each minor, major, and page seams.
 * Code automatically formatted to Google C++ Style Guide upon save and formatted to not fight clang-format.
 * Deep Internet-of-Things integration using the Script Software Defined Networking Protocol.
