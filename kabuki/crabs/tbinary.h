@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@link    https://github.com/kabuki-starship/kabuki-toolkit
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    ~/kabuki/crabs/tbinary.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -84,7 +84,8 @@ namespace _ {
 /** @ingroup Utf */
 
 /* Prints a two decimals to the buffer.
-If the SEAM == SEAM_0_0_0 (which is the value 1), then */
+If the SEAM == SEAM_0_0_0 (1), then this function will print debug data.
+@warning This function DOES NOT do any error checking! */
 template <typename Char = char>
 inline void PrintDecimals(uint16_t* buffer, uint16_t decimal_pair) {
 #if ALIGN_MEMORY
@@ -105,19 +106,60 @@ inline void PrintDecimals(uint16_t* buffer, uint16_t decimal_pair) {
   PRINT_PRINTED;
 }
 
-/* Prints a single decimal to the buffer. */
+/* Prints a single decimal to the buffer.
+If the SEAM == SEAM_0_0_0 (1), then this function will print debug data.
+@warning This function DOES NOT do any error checking! */
 template <typename Char = char>
-inline void PrintDecimal(uint16_t* cursor, char digit) {
-  *cursor = '0' + digit;
+inline void PrintDecimal(void* cursor, Char digit) {
+  *reinterpret_cast<uint16_t*>(cursor) = '0' + digit;
   PRINT_PRINTED;
 }
 
-/* Prints a single decimal to the buffer. */
+/* Prints a single decimal to the buffer.
+If the SEAM == SEAM_0_0_0 (1), then this function will print debug data.
+@warning This function DOES NOT do any error checking! */
 template <typename Char = char>
 inline Char* PrintOne(Char* cursor) {
   *cursor++ = '1';
   PRINT_PRINTED;
-  return cursor
+  return cursor;
+}
+
+/* Prints two chars to the console.
+@warning This function DOES NOT do any error checking! */
+template <typename Char = char, typename DChar = uint16_t>
+inline void PrintDecimals(Char* cursor, Char a, Char b) {
+  DChar b_shifted = ((DChar)('0' + b) << (sizeof (DChar) * 2);
+  *reinterpret_cast<DChar*>(cursor) = ((DChar)('0' + a)) | b_shifted;
+  PRINT_PRINTED;
+}
+
+/* Prints two chars to the console.
+@warning This function DOES NOT do any error checking! */
+template <typename Char = char, typename DChar = uint16_t>
+inline void PrintDecimals(Char* cursor, Char a, Char b, Char c) {
+  enum { kSizeBits = sizeof(DChar) * 8 };
+  DChar upper_bits = ((DChar)('0' + b)) << kSizeBits;
+  upper_bits |= ((DChar)('0' + c)) << (2 * kSizeBits);
+  *reinterpret_cast<DChar*>(cursor) = ((DChar)('0' + a)) | upper_bits;
+  PRINT_PRINTED;
+}
+
+/* Prints two chars to the console.
+@warning This function DOES NOT do any error checking! */
+template <typename Char = char, typename DChar = uint16_t>
+inline void PrintDigits(Char* cursor, Char a, Char b) {
+  DChar upper_bits = ((DChar)b) << (sizeof(DChar) * 2);
+  *reinterpret_cast<DChar*>(cursor) = ((DChar)a) | upper_bits;
+  PRINT_PRINTED;
+}
+
+/* Prints two chars to the console.
+@warning This function DOES NOT do any error checking! */
+template <typename Char = char>
+Char* PrintNil(Char* cursor) {
+  *cursor = 0;
+  return cursor;
 }
 
 /* Writes the give value to the given buffer as an ASCII string.
@@ -130,7 +172,6 @@ Char* Print(Char* cursor, Char* end, UI value) {
   if (!cursor || cursor >= end) return nullptr;
 
   Char digit;
-  uint16_t* ui2_ptr;
   uint32_t value_ui4, scalar;
   uint16_t digits1and2, digits3and4, digits5and6, digits7and8;
 
@@ -139,154 +180,148 @@ Char* Print(Char* cursor, Char* end, UI value) {
     if (value < 10) {
       PRINT("\n    Range:[0, 9] length:1 ");
       if (cursor + 1 >= end) return nullptr;
-      *cursor = '0' + (Char)value;
-      PRINT_PRINTED;
-      *(cursor + 1) = 0;
+      PrintDecimal(cursor, (Char)value);
+      *cursor = 0;
       return cursor;
     } else if (value < 100) {
       PRINT("\n    Range:[10, 99] length:2 ");
       if (cursor + 2 >= end) return nullptr;
-      *reinterpret_cast<uint16_t*>(cursor) = kDigits00To99[value];
-      PRINT_PRINTED;
+      PrintDecimals(cursor, kDigits00To99[value]);
       *(cursor + 2) = 0;
       return cursor + 2;
-    } else if ((value >> 10) == 0) {
-      if (cursor + 4 >= end) return nullptr;
-      digits1and2 = (uint16_t)value;
-      digits3and4 = 1000;
-      if (digits1and2 >= digits3and4) {
-        PRINT("\n    Range:[1000, 1023] length:4");
-        digits1and2 -= digits3and4;
+    } else {
+      if ((value >> 10) == 0) {
+        if (cursor + 4 >= end) return nullptr;
+        digits1and2 = (uint16_t)value;
+        digits3and4 = 1000;
+        if (digits1and2 >= digits3and4) {
+          PRINT("\n    Range:[1000, 1023] length:4");
+          digits1and2 -= digits3and4;
+          PrintDecimals(cursor + 2, kDigits00To99[digits1and2]);
+          PrintDigits(cursor + 4, '1', '0');
+          *(cursor + 4) = 0;
+          return cursor + 4;
+        }
+        PRINT("\n    Range:[100, 999] length:3");
+        digits1and2 = (uint16_t)value;
+        digits3and4 = 100;
+        digit = (Char)(digits1and2 / digits3and4);
+        digits1and2 -= digit * digits3and4;
+        PrintDecimal(cursor, digit);
+        PrintDecimals(cursor + 1, kDigits00To99[digits1and2]);
+        *(cursor + 3) = 0;
+        return cursor + 3;
+      } else if ((value >> 13) == 0) {
+        digits5and6 = 10000;
+        digits1and2 = (uint16_t)value;
+        if (digits1and2 >= digits5and6) {
+          if (cursor + 5 >= end) return nullptr;
+          PRINT("\n    Range:[10000, 16383] length:5");
+          *cursor = PrintOne(cursor);
+          digits1and2 -= digits5and6;
+
+        } else {
+          PRINT("\n    Range:[1024, 9999] length:4");
+          if (cursor + 4 >= end) return nullptr;
+        }
+        digits5and6 = 100;
+        digits3and4 = digits1and2 / digits5and6;
+        digits1and2 -= digits3and4 * digits5and6;
+        PrintDecimals(cursor, kDigits00To99[digits3and4]);
         PrintDecimals(cursor + 2, kDigits00To99[digits1and2]);
-        PrintDecimals (cursor + 4, (((uint16_t)'1') | (((uint16_t)'0') << 8));
         *(cursor + 4) = 0;
         return cursor + 4;
-      }
-      PRINT("\n    Range:[100, 999] length:3");
-      digits1and2 = (uint16_t)value;
-      digits3and4 = 100;
-      digit = (Char)(digits1and2 / digits3and4);
-      digits1and2 -= digit * digits3and4;
-      PrintDecimal(cursor, digit);
-      PrintDecimals(cursor + 1, kDigits00To99[digits1and2]);
-      *(cursor + 3) = 0;
-      return cursor + 3;
-    } else if ((value >> 13) == 0) {
-      digits5and6 = 10000;
-      digits1and2 = (uint16_t)value;
-      if (digits1and2 >= digits5and6) {
+      } else if (value >> 14) {
+        if (value >= 100000) {
+          PRINT("\n    Range:[65536, 131071] length:6");
+          goto Print6;
+        }
+        PRINT("\n    Range:[10000, 65535] length:5");
         if (cursor + 5 >= end) return nullptr;
-        PRINT("\n    Range:[10000, 16383] length:5");
-        *cursor = PrintOne(cursor);
-        digits1and2 -= digits5and6;
-
-      } else {
-        PRINT("\n    Range:[1024, 9999] length:4");
-        if (cursor + 4 >= end) return nullptr;
-      }
-      digits5and6 = 100;
-      digits3and4 = digits1and2 / digits5and6;
-      digits1and2 -= digits3and4 * digits5and6;
-      PrintDecimals(cursor, kDigits00To99[digits3and4]);
-      PrintDecimals(cursor + 2, kDigits00To99[digits1and2]);
-      *(cursor + 4) = 0;
-      return cursor + 4;
-    } else if (value >> 14) {
-      if (value >= 100000) {
-        PRINT("\n    Range:[65536, 131071] length:6");
-        goto Print6;
-      }
-      PRINT("\n    Range:[10000, 65535] length:5");
-      if (cursor + 5 >= end) return nullptr;
-      value_ui4 = (uint32_t)value;
-      digits5and6 = 10000;
-      digit = (uint8_t)(value_ui4 / digits5and6);
-      value_ui4 -= digits5and6 * digit;
-      PrintDecimal(*cursor, digits);
-      digits1and2 = (uint16_t)value_ui4;
-      digits5and6 = 100;
-      digits3and4 = digits1and2 / digits5and6;
-      digits1and2 -= digits3and4 * digits5and6;
-      PrintDecimals(cursor + 1, kDigits00To99[digits3and4]);
-      PRINTF("\n    digits1and2:%u", digits1and2);
-      *reinterpret_cast<uint16_t*>(cursor + 3) = kDigits00To99[digits1and2]);
-      PRINT_PRINTED;
-      *(cursor + 5) = 0;
-      return cursor + 5;
-    } else if ((value >> 20) == 0) {
-      comparator = 1000000;
-      if (value >= comparator) {
-        PRINT("\n    Range:[100000, 1048575] length:7");
-        if (cursor + 7 >= end) return nullptr;
-        cursor = PrintOne(cursor);
-        value -= comparator;
-      } else {
-        PRINT("\n    Range:[131072, 999999] length:6");
-        if (cursor + 6 >= end) return nullptr;
-      }
-    Print6:
-      value_ui4 = (uint32_t)value;
-      scalar = 10000;
-      digits5and6 = (uint16_t)(value_ui4 / scalar);
-      digits1and2 = value_ui4 - scalar * digits5and6;
-      digits7and8 = digits5and6 / 100;
-      digits3and4 = digits1and2 / 100;
-      digits5and6 -= 100 * digits7and8;
-      digits1and2 -= 100 * digits3and4;
-      ui2_ptr = reinterpret_cast<uint16_t*>(cursor + 6);
-      PrintDecimals(cursor + 4, kDigits00To99[digits1and2]);
-      PrintDecimals(cursor + 2, kDigits00To99[digits3and4]);
-      PrintDecimals(cursor, kDigits00To99[digits5and6]);
-      *(cursor + 6) = 0;
-      return cursor + 6;
-    } else if ((value_ui4 >> 24) == 0) {
-      comparator = 10000000;
-      if (value_ui4 >= comparator) goto Print8;
-      PRINT("\n    Range:[1048576, 9999999] length:7");
-      if (cursor + 7 >= end) return nullptr;
-      scalar = 10000;
-      digits5and6 = (uint16_t)(value_ui4 / scalar);
-      digits1and2 = value_ui4 - scalar * digits5and6;
-      digits7and8 = digits5and6 / 100;
-      digits3and4 = digits1and2 / 100;
-      digits5and6 -= 100 * digits7and8;
-      digits1and2 -= 100 * digits3and4;
-      PrintDecimals(cursor + 5, kDigits00To99[digits1and2]);
-      PrintDecimals(cursor + 3, kDigits00To99[digits3and4]);
-      PrintDecimals(cursor + 1, kDigits00To99[digits5and6]);
-      PrintDecimals(cursor, (digits7and8 + '0') << 8);
-      return cursor + 7;
-    } else {
-    Print8:
-      PRINTF("\n    Printing 8 decimals...");
-      if (cursor + 8 >= end) return nullptr;
-
-      comparator = 100000000;
-      scalar = value / comparator;
-      value -= scalar * comparator;
-
-      scalar = 10000;
-
-      if (value > comparator) {
-        digits5and6 = (uint16_t)(value / scalar);
-        digits1and2 = value - scalar * digits5and6;
-      } else {
         value_ui4 = (uint32_t)value;
+        digits5and6 = 10000;
+        digit = (uint8_t)(value_ui4 / digits5and6);
+        value_ui4 -= digits5and6 * digit;
+        PrintDecimal(cursor, digits);
+        digits5and6 = 100;
+        digits3and4 = ((uint16_t)value_ui4) / digits5and6;
+        digits1and2 -= digits3and4 * digits5and6;
+        PrintDecimals(cursor + 1, kDigits00To99[digits3and4]);
+        PrintDecimals(cursor + 3, kDigits00To99[digits1and2]);
+        return PrintNil<Char>(cursor + 5);
+      } else if ((value >> 20) == 0) {
+        comparator = 1000000;
+        if (value >= comparator) {
+          PRINT("\n    Range:[100000, 1048575] length:7");
+          if (cursor + 7 >= end) return nullptr;
+          cursor = PrintOne(cursor);
+          value -= comparator;
+        } else {
+          PRINT("\n    Range:[131072, 999999] length:6");
+          if (cursor + 6 >= end) return nullptr;
+        }
+      Print6:
+        value_ui4 = (uint32_t)value;
+        scalar = 10000;
         digits5and6 = (uint16_t)(value_ui4 / scalar);
         digits1and2 = value_ui4 - scalar * digits5and6;
+        digits7and8 = digits5and6 / 100;
+        digits3and4 = digits1and2 / 100;
+        digits5and6 -= 100 * digits7and8;
+        digits1and2 -= 100 * digits3and4;
+        PrintDecimals(cursor + 2, kDigits00To99[digits3and4]);
+        PrintDecimals(cursor + 4, kDigits00To99[digits1and2]);
+        PrintDecimals(cursor, kDigits00To99[digits5and6]);
+        return PrintNil<Char>(cursor + 6);
+      } else if ((value >> 24) == 0) {
+        comparator = 10000000;
+        if (value_ui4 >= comparator) goto Print8;
+        PRINT("\n    Range:[1048576, 9999999] length:7");
+        if (cursor + 7 >= end) return nullptr;
+        scalar = 10000;
+        digits5and6 = (uint16_t)(value_ui4 / scalar);
+        digits1and2 = value_ui4 - scalar * digits5and6;
+        digits7and8 = digits5and6 / 100;
+        digits3and4 = digits1and2 / 100;
+        digits5and6 -= 100 * digits7and8;
+        digits1and2 -= 100 * digits3and4;
+        PrintDecimals(cursor + 1, kDigits00To99[digits5and6]);
+        PrintDecimals(cursor + 3, kDigits00To99[digits3and4]);
+        PrintDecimals(cursor + 5, kDigits00To99[digits1and2]);
+        PrintDecimals(cursor, (digits7and8 + '0') << 8);
+        return PrintNil<Char>(cursor + 7);
+      } else {
+      Print8:
+        PRINTF("\n    Printing 8 decimals...");
+        if (cursor + 8 >= end) return nullptr;
+
+        comparator = 100000000;
+        scalar = value / comparator;
+        value -= scalar * comparator;
+
+        scalar = 10000;
+
+        if (value > comparator) {
+          digits5and6 = (uint16_t)(value / scalar);
+          digits1and2 = value - scalar * digits5and6;
+        } else {
+          value_ui4 = (uint32_t)value;
+          digits5and6 = (uint16_t)(value_ui4 / scalar);
+          digits1and2 = value_ui4 - scalar * digits5and6;
+        }
+        digits7and8 = digits5and6 / 100;
+        digits3and4 = digits1and2 / 100;
+        digits5and6 -= 100 * digits7and8;
+        digits1and2 -= 100 * digits3and4;
+        PrintDecimals(cursor + 2, kDigits00To99[digits5and6]);
+        PrintDecimals(cursor + 4, kDigits00To99[digits3and4]);
+        PrintDecimals(cursor + 6, kDigits00To99[digits1and2]);
+        PrintDecimals(cursor, kDigits00To99[digits7and8]);
+        PRINTF("\n    value is now %");
       }
-      digits7and8 = digits5and6 / 100;
-      digits3and4 = digits1and2 / 100;
-      digits5and6 -= 100 * digits7and8;
-      digits1and2 -= 100 * digits3and4;
-      PrintDecimals(cursor + 6, kDigits00To99[digits1and2]);
-      PrintDecimals(cursor + 4, kDigits00To99[digits3and4]);
-      PrintDecimals(cursor + 2, kDigits00To99[digits5and6]);
-      PrintDecimals(cursor, kDigits00To99[digits7and8]);
-      PRINTF("\n    Value is now %")
     }
   } while (value > comparator);
-}  // namespace _
+}
 
 /* Writes the give value to the given buffer as an ASCII string.
 @param  print The Utf& to print to.
@@ -308,22 +343,31 @@ Char* Print(Char* begin, Char* end, int64_t value) {
   return Print<Char>(begin, end, (uint64_t)(-value));
 }
 
-/* A decimal number. */
+/* A decimal number in floating-point format. */
 template <typename Float, typename UI>
 class Binary {
  public:
   enum {
+    kSize = sizeof(Float),
+    kSizeBits = kSize * 8,
     kStringLengthMax = 24,
     kExponentSize =
         (sizeof(Float) == 2)
             ? 5
             : (sizeof(Float) == 4) ? 8 : (sizeof(Float) == 8) ? 11 : 15,
-    kBitCount = sizeof(Float) * 8,
-    kSignificandSize = kBitCount - kExponentSize - 1,
-    kExponentMaskUnshifted = (~((uint32_t)0)) >> (32 - kExponentSize),
-    kExponentBias = kExponentMaskUnshifted + kSignificandSize,
+    kCoefficientSize = kSizeBits - kExponentSize - 1,
+    kExponentMaskUnshifted = (~((uint32_t)0)) >> (kSizeBits - kExponentSize),
+    kExponentBias = kExponentMaskUnshifted + kCoefficientSize,
     kExponentMin = -kExponentBias,
   };
+
+  inline static UI Coefficient(UI decimal) {
+    return (decimal << (kExponentSize + 1)) >> (kExponentSize + 1);
+  }
+
+  inline static UI Exponent(UI decimal) {
+    return (decimal << (kExponentSize + 1)) >> (kExponentSize + 1);
+  }
 
   /* Constructs an uninitized floating-point number. */
   Binary() {}
@@ -333,15 +377,14 @@ class Binary {
     UI ui = *reinterpret_cast<UI*>(&binary);
     uint32_t biased_e = ui << 1;  //< Get rid of sign bit.
     // Get rid of the integral portion.
-    biased_e = biased_e >> ((sizeof(Float) * 8) - kExponentSize);
-    uint64_t significand =
-        ui << (kExponentSize + 1);  // Get rid of the sign and exponent.
-    significand = significand >> (kExponentSize + 1);
+    biased_e = biased_e >> (kSizeBits - kExponentSize);
+    // Get rid of the sign and exponent.
+    uint64_t coefficient = Coefficient<UI>(word);
     if (biased_e != 0) {
-      f = significand + (((UI)1) << kExponentSize);
+      f = coefficient + (((UI)1) << kExponentSize);
       e = biased_e - kExponentBias;
     } else {
-      f = significand;
+      f = coefficient;
       e = kExponentMin + 1;
     }
   }
@@ -396,8 +439,8 @@ class Binary {
       res.f <<= 1;
       --res.e;
     }
-    res.f <<= (kDiySignificandSize - kSignificandSize - 2);
-    res.e = res.e - (kDiySignificandSize - kSignificandSize - 2);
+    res.f <<= (kDiySignificandSize - kCoefficientSize - 2);
+    res.e = res.e - (kDiySignificandSize - kCoefficientSize - 2);
     return res;
 #endif
   }
@@ -420,87 +463,85 @@ class Binary {
   }
 
   /* Rounds the Grisu estimation. */
-  inline void Round(char* buffer, char* lsd, uint64_t delta, uint64_t rest,
+  inline void Round(char& lsd, uint64_t delta, uint64_t rest,
                     uint64_t ten_kappa, uint64_t wp_w) {
     while (rest < wp_w && (delta - rest) >= ten_kappa &&
            (rest + ten_kappa < wp_w ||  /// closer
             (wp_w - rest) > (rest + ten_kappa - wp_w))) {
-      *lsd = (*lsd) - 1;
+      --lsd;
       rest += ten_kappa;
     }
   }
 
   /* Prints the integer portion of the floating-point number. */
-  inline char* DigitGen(char* cursor, char* end, const Binary& w,
-                        const Binary& m_plus, uint64_t delta, int32_t& k) {
+  inline char* PrintDecimals(char* cursor, char* end, const Binary& w,
+                             const Binary& m_plus, uint64_t delta, int32_t& k) {
     const Binary one(((uint64_t)1) << -m_plus.e, m_plus.e) const FP wp_w =
-        Mp - W;
-    uint32_t pow_10, p1 = static_cast<uint32_t>(Mp.f >> -one.e);
-    uint64_t p2 = Mp.f & (one.f - 1);
+        m_plus - w;
+    uint32_t pow_10, p_1 = static_cast<uint32_t>(m_plus.f >> -one.e);
+    uint64_t p_2 = m_plus.f & (one.f - 1);
 
-    if (p1 < (pow_10 = 10)) {
+    if (p_1 < (pow_10 = 10)) {
       kappa = 1;
-    } else if (p1 < (pow_10 = 100)) {
+    } else if (p_1 < (pow_10 = 100)) {
       kappa = 2;
-    } else if (p1 < (pow_10 = 1000)) {
-      kappa = 3;
-    } else if ((value >> 13) == 0) {
-      if ((pow_10 = 10000) >= p1) goto Length 5;
-      kappa = 4;
-    } else if ((value >> 17) == 0) {
-    Length5:
-      if ((pow_10 = 100000) >= p1) goto Length 6;
-      pow_10 = ;
-      kappa = 5;
-    } else if ((value >> 20) == 0) {
-    Length6:
-      if ((pow_10 = 1000000) >= p1) goto Length 7;
-      pow_10 = ;
-      kappa = 6;
-    } else if ((value >> 24) == 0) {
-    Length7:
-      if ((pow_10 = 10000000) >= p1) goto Length 8;
-      kappa = 7;
-    } else if ((value >> 27) == 0) {
-    Length8:
-      if ((pow_10 = 100000000) >= p1) goto Length9;
-      kappa = 8;
-    } else if () {
-    Length9:
-      if ((pow_10 = 1000000000) >= p1) goto Length 10;
-      kappa = 9;
     } else {
-    Length10:
-      pow_10 = 10000000000 kappa = 10;
+      if ((value >> 10) == 0) {
+        kappa = 3;
+        pow_10 = 1000;
+      } else if (!(value >> 13)) {
+        kappa = 4;
+        pow_10 = 10000;
+      } else if (!(value >> 17)) {
+        kappa = 5;
+        pow_10 = 100000;
+      } else if (!(value >> 20)) {
+        kappa = 6;
+        pow_10 = 1000000;
+      } else if (!(value >> 24)) {
+        kappa = 7;
+        pow_10 = 10000000;
+      } else if (!(value >> 27)) {
+        kappa = 8;
+        pow_10 = 100000000;
+      } else if (!(value >> 30)) {
+        kappa = 9;
+        pow_10 = 1000000000;
+      } else {
+        kappa = 10;
+        pow_10 = 10000000000;
+      }
+      if (p_1 >= pow_10) {
+        ++kappa;
+        pow_10 *= 10;
+      }
     }
-
     while (kappa > 0) {
       uint32_t d;
-      d = p1 / pow_10;
-      p1 -= d * pow_10;
+      d = p_1 / pow_10;
+      p_1 -= d * pow_10;
 
-      if (d || (cursor != end)) *cursor++ = '0' + static_cast<char>(d);
+      if (d || (cursor < end)) cursor = PrintDecimal(cursor, d);
       --kappa;
-      UI tmp = (static_cast<uint64_t>(p1) << -one.e) + p2;
+      UI tmp = (static_cast<uint64_t>(p_1) << -one.e) + p_2;
       if (tmp <= delta) {
         *k += kappa;
-        UI pow_10 = IEEE754Pow10(kappa);
-        Round(cursor, end, delta, tmp, pow_10 << -one.e, wp_w.f);
+        UI pow_10 = BinaryPow10(kappa);
+        Round(delta, tmp, pow_10 << -one.e, wp_w.f);
         return;
       }
     }
 
-    // kappa = 0
-    for (;;) {
-      p2 *= 10;
+    for (;;) {  // kappa = 0
+      p_2 *= 10;
       delta *= 10;
-      char d = static_cast<char>(p2 >> -one.e);
+      char d = static_cast<char>(p_2 >> -one.e);
       if (d || (cursor != end)) *cursor++ = '0' + d;
-      p2 &= one.f - 1;
+      p_2 &= one.f - 1;
       --kappa;
-      if (p2 < delta) {
+      if (p_2 < delta) {
         *k += kappa;
-        Round(cursor, end, delta, p2, one.f, wp_w.f * IEEE754Pow10(-kappa));
+        Round(delta, p_2, one.f, wp_w.f * BinaryPow10(-kappa));
         return;
       }
     }
@@ -508,8 +549,8 @@ class Binary {
     // Load integer pow_10 from the i-cache.
     switch (kappa) {
       case 1:
-        d = p1;
-        p1 = 0;
+        d = p_1;
+        p_1 = 0;
         break;
       case 2:
         pow_10 = 10;
@@ -541,7 +582,7 @@ class Binary {
     }
   }
 
-  inline Binary IEEE754Pow10(int32_t e, int32_t& k) {
+  inline Binary BinaryPow10(int32_t e, int32_t& k) {
     // int32_t k = static_cast<int32_t>(ceil((-61 - e) *
     // 0.30102999566398114))
     // + 374; dk must be positive, so can do ceiling in positive.
@@ -556,53 +597,26 @@ class Binary {
 
     ASSERT(index < 87);
 
-    uint16_t* exponents = &PuffExponents()[index];
-    uint16_t exponent = *exponents;
-    uint64_t pow_10 = IEEE754Pow10(exponents);
-    return Binary(pow_10, exponents);
+    // Save exponent pointer and offset to Binary.
+    uint16_t* exponents = &Exponents()[index];
+    return Binary(BinaryPow10(exponents), *exponents);
   }
 
-  inline char* Print(char* begin, char* end, Float value, int32_t& k) {
+  inline Char* Print(Char* begin, Char* end, Float value, int32_t& k) {
     const Binary v(value);
     Binary minus, plus;
     v.NormalizedBoundaries(&minus, &plus);
 
-    const Binary c_mk = IEEE754Pow10(plus.e, k);
+    const Binary c_mk = BinaryPow10(plus.e, k);
 
     const Binary W = v.Normalize() * c_mk;
-    Binary Wp = plus * c_mk, Wm = minus * c_mk;
-    Wm.f++;
-    Wp.f--;
-    return DigitGen(begin, end, W, Wp, Wp.f - Wm.f, k);
+    Binary w_plus = plus * c_mk, w_minus = minus * c_mk;
+    w_minus.f++;
+    w_plus.f--;
+    return PrintDecimals(begin, end, W, w_plus, w_plus.f - w_minus.f, k);
   }
 
-  inline void WriteExponent(char* buffer, int32_t k) {
-    if (k < 0) {
-      *buffer++ = '-';
-      k = -k;
-    }
-
-    if (k < 10) {
-      *buffer++ = '0' + static_cast<char>(k);
-    }
-    const uint16_t* digits_lut = DigitsLut();
-    if (k < 100) {
-      const char* d = digits_lut + k;
-      *buffer++ = d[0];
-      *buffer++ = d[1];
-    } else {  // if (k <= 1000
-      *buffer++ = '0' + static_cast<char>(k / 100);
-      k %= 100;
-      const uint16_t* digits_lut = DigitsLut();
-      const char* d = digits_lut + k;
-      *buffer++ = d[0];
-      *buffer++ = d[1];
-    }
-
-    *buffer = '\0';
-  }
-
-  inline void Standardize(char* begin, int32_t length, int32_t k) {
+  inline void Standardize(char* begin, char* end, int32_t length, int32_t k) {
     const int32_t kk = length + k;  // 10^(kk-1) <= v < 10^kk
 
     if (length <= kk && kk <= 21) {  // 1234e7 -> 12340000000
@@ -624,21 +638,21 @@ class Binary {
     } else if (length == 1) {
       // 1e30
       begin[1] = 'e';
-      WriteExponent(kk - 1, &begin[2]);
+      WriteExponent(begin + 2, end, kk - 1);
     } else {
       // 1234e30 -> 1.234e33
       SocketMove(&begin[2], &begin[1], length - 1);
       begin[1] = '.';
       begin[length + 1] = 'e';
-      WriteExponent(kk - 1, &begin[length + 2]);
+      Print(length + 2, end, kk - 1);
     }
   }
 };
 
-// using Binary64 = Binary<quad, uint128_t>;
-using Binary64 = Binary<double, uint64_t>;
-using Binary32 = Binary<float, uint32_t>;
 // using Binary16 = Binary<half, uint32_t>;
+using Binary32 = Binary<float, uint32_t>;
+using Binary64 = Binary<double, uint64_t>;
+// using Binary128 = Binary<quad, uint128_t>;
 
 /* Checks if the given char is a digit of a number.
 @return True if it is a digit. */
@@ -781,7 +795,8 @@ const Char* Scan(const Char* begin, float& result) {
   };
 
   static const uint32_t kIEEE754Pow10[] = {
-      10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};
+      10,      100,      1000,      10000,      100000,
+      1000000, 10000000, 100000000, 1000000000, 1000000001};
 
   uint32_t integer,    //< Integer portion in Binary.
       sign,            //< Sign in Binary32 format.
@@ -945,4 +960,5 @@ ScanDecimals:
 #undef PRINT_PRINTED
 #undef PRINT_HEADER
 #undef PRINT_HEADING
+#undef BEGIN_PUFF_ALGORITHM
 #endif  //< #if INCLUDED_CRABS_TDECIMAL

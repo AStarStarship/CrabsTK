@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@link    https://github.com/kabuki-starship/kabuki-toolkit
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    ~/kabuki/crabs/crabs_decimal.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -424,11 +424,11 @@ template <typename Float, typename UI>
 Float Ceiling(Float value) {
   UI integer = *reinterpret_cast<UI*>(&value);
 
-  // Extract sign, exponent and mantissa bias is removed from exponent.
+  // Extract sign, exponent and coefficient bias is removed from exponent.
   UI sign = integer >> kFpBits,
      exponent_mask = ShiftLeftRight<UI>(integer, 1, kMantissaBitCount),
      exponent = ((integer & 0x7fffffff) >> kMantissaMSb) - kExponentMask,
-     mantissa = integer & 0x7fffff, comparator;
+     coefficient = integer & 0x7fffff, comparator;
 
   if (exponent < 0) {  // value is in the open interval (-1, 1)
     if (value <= 0.0)
@@ -436,37 +436,37 @@ Float Ceiling(Float value) {
     else
       return 1.0;
   } else {
-    // Mask the fractional part of the mantissa.
+    // Mask the fractional part of the coefficient.
     UI mask = CreateMaskLSb<UI>(kMantissaMSb) >>
               exponent;  //< mask should be 0x7fffff
 
-    if ((mantissa & mask) == 0)  // The fractional bits zero so it's an integer.
+    if ((coefficient & mask) == 0)  // The mantissa is zero so it's an integer.
       return value;
     else {
       if (sign == 0) {
         // It's positive so add 1 to it before clearing the fractional bits.
-        mantissa += ((UI)1) << (kMantissaMSb - exponent);
+        coefficient += ((UI)1) << (kMantissaMSb - exponent);
 
         comparator = PowerOf2<UI>(kFpBits);
 
-        // Check for mantissa overflow...
-        if (mantissa & comparator) {
-          // The mantissa can only overflow if all the integer bits were
-          // previously 1, so we can just clear out the mantissa and increment
-          // the exponent.
-          mantissa = 0;
+        // Check for coefficient overflow...
+        if (coefficient & comparator) {
+          // The coefficient can only overflow if all the integer bits were
+          // previously 1, so we can just clear out the coefficient and
+          // increment the exponent.
+          coefficient = 0;
           ++exponent;
         }
       }
 
       // Clear the fractional bits.
-      mantissa &= ~mask;
+      coefficient &= ~mask;
     }
   }
 
-  // Put sign, exponent and mantissa together again
+  // Put sign, exponent and coefficient together again
   integer = (sign << kFpBits) | ((exponent + kExponentMask) << kMantissaMSb) |
-            mantissa;
+            coefficient;
 
   return *reinterpret_cast<Float*>(&integer);
 }
@@ -530,11 +530,11 @@ inline float myceil(float x) {
   float_int val;
   val.f = x;
 
-  // Extract sign, exponent and mantissa
+  // Extract sign, exponent and coefficient
   // Bias is removed from exponent
   int sign = val.i >> 31;
   int exponent = ((val.i & 0x7fffffff) >> 23) - 127;
-  int mantissa = val.i & 0x7fffff;
+  int coefficient = val.i & 0x7fffff;
 
   // Is the exponent less than zero?
   if (exponent < 0) {
@@ -545,37 +545,37 @@ inline float myceil(float x) {
       return 1.0f;
   } else {
     // Construct a bit mask that will mask off the
-    // fractional part of the mantissa
+    // fractional part of the coefficient
     int mask = 0x7fffff >> exponent;
 
     // Is x already an integer (i.e. are all the
     // fractional bits zero?)
-    if ((mantissa & mask) == 0)
+    if ((coefficient & mask) == 0)
       return x;
     else {
       // If x is positive, we need to add 1 to it
       // before clearing the fractional bits
       if (!sign) {
-        mantissa += 1 << (23 - exponent);
+        coefficient += 1 << (23 - exponent);
 
-        // Did the mantissa overflow?
-        if (mantissa & 0x800000) {
-          // The mantissa can only overflow if all the
+        // Did the coefficient overflow?
+        if (coefficient & 0x800000) {
+          // The coefficient can only overflow if all the
           // integer bits were previously 1 -- so we can
-          // just clear out the mantissa and increment
+          // just clear out the coefficient and increment
           // the exponent
-          mantissa = 0;
+          coefficient = 0;
           exponent++;
         }
       }
 
       // Clear the fractional bits
-      mantissa &= ~mask;
+      coefficient &= ~mask;
     }
   }
 
-  // Put sign, exponent and mantissa together again
-  val.i = (sign << 31) | ((exponent + 127) << 23) | mantissa;
+  // Put sign, exponent and coefficient together again
+  val.i = (sign << 31) | ((exponent + 127) << 23) | coefficient;
 
   return val.f;
 }
@@ -587,3 +587,4 @@ inline float myceil(float x) {
 #undef PRINT_PRINTED
 #undef PRINT_HEADER
 #undef PRINT_HEADING
+#undef BEGIN_PUFF_ALGORITHM

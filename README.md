@@ -10,7 +10,7 @@
   /         \                    ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪
 ```
 
-Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) for 32-bit and 64-bit processors (and 16-bit processors with some modification) featuring the F2 Foundational Framework that provides:
+Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) for 32-bit and 64-bit processors featuring the Chinese Room Abstract Stack Machine (Crabs) that provides:
 
 * Modern Embedded-C++1x with Doxygen API docs.
 * ASCII Data Types operate seamlessly across assembly boundary with optimal RAM usage and CPU cache performance from ROM-able ASCII Contiguous Objects.
@@ -19,6 +19,7 @@ Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2
 * Code automatically formatted to Google C++ Style Guide upon save and formatted to not fight clang-format.
 * Deep Internet-of-Things integration using the Script Software Defined Networking Protocol.
 * Artificial Intelligence and Deep Learning library with graph-based neural-intelligent networks coming soon.
+* Modeled after AI philosophy and ASCII mimicry.
 
 ## ASCII Data Types
 
@@ -44,9 +45,9 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
 
 ## Quick Links
 
-* [FAQ](https://github.com/kabuki-starship/kabuki-toolkit/blob/master/docs/faq.md)
+* [FAQ](https://github.com/kabuki-starship/kabuki-toolkit.git/blob/master/docs/faq.md)
   - *Frequently asked questions.*
-* [Quickstart Guide](https://github.com/kabuki-starship/kabuki-toolkit/blob/master/docs/quickstart-guide.md)
+* [Quickstart Guide](https://github.com/kabuki-starship/kabuki-toolkit.git/blob/master/docs/quickstart-guide.md)
   - *Check here for the Kabuki Toolkit Wiki and GitHub repository!*
 * [Script Specification RFC](https://github.com/kabuki-starship/script/wiki/SCRIPT-Specification-RFC)
   - *Release for Comment for Searle's Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification.*

@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@link    https://github.com/kabuki-starship/kabuki-toolkit
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    ~/kabuki/crabs/bout.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -34,7 +34,7 @@ typedef enum BOutStates {
 
     The BOut ring buffer is defined as being contiguous
 
-    
+    
 
 
 
@@ -47,7 +47,7 @@ typedef enum BOutStates {
 
 
     @code
-    
+    
 
 
 

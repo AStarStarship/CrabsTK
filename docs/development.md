@@ -40,4 +40,4 @@ In order to prevent valuable wasted programming hours on formatting, it is requi
 
 The development is enumerated into major and minor seams that get tested in  order from SEAM_01_01_01 through SEAM_P_M_m, where P, M and m are the number of  Page, Major and minor  seams respectively.
 
-A Minor Seam is defined as a collection of one or more classes, and a Major Seam is defined a s collection of one or more namespaces or C modules. Seams  should contain the fewest number of seams as possible, and the seams should as  decoupled as possible. For details about what each seams is and does, please  see the [GitHub Projects](https://github.com/kabuki-starship/kabuki-toolkit/projects).
+A Minor Seam is defined as a collection of one or more classes, and a Major Seam is defined a s collection of one or more namespaces or C modules. Seams  should contain the fewest number of seams as possible, and the seams should as  decoupled as possible. For details about what each seams is and does, please  see the [GitHub Projects](https://github.com/kabuki-starship/kabuki-toolkit.git/projects).

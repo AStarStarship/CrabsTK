@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@link    https://github.com/kabuki-starship/kabuki-toolkit
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    ~/kabuki/crabs/crabs_bsq.cc
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;

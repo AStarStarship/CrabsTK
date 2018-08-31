@@ -1,5 +1,5 @@
-/* Kabuki Toolkit
-@version 0.x
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    ~/seams/0_0_seam_tests/test_seam_0_0_0.cc
 @author  Cale McCollough <calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -19,21 +19,24 @@ specific language governing permissions and limitations under the License. */
 #include "test_seam_0.h"
 #if SEAM >= SEAM_0_0_0
 
-using namespace _;
-
-#if SEAM_MAJOR == 0 && SEAM_MINOR == 0
+#if SEAM == SEAM_0_0_0
 #define PRINT(item)  // Print(item);
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PAUSE(message)         \
   Printf("\n\n%s\n", message); \
-  Pause();
+  Pause()
 #else
 #define PRINT(item)
 #define PRINTF(x, ...)
 #define PAUSE(message)
 #endif
 
-TEST_GROUP(SEAM_0_0){void setup(){} void teardown(){PAUSE("\n")}};
+using namespace _;
+
+TEST_GROUP(SEAM_0_0){void setup(){} void teardown(){PAUSE("\n");
+}
+}
+;
 
 TEST(SEAM_0_0, SEAM_0_0_0) {
   PRINT("\n    Testing SEAM_0_0... ");
@@ -147,14 +150,14 @@ TEST(SEAM_0_0, SEAM_0_0_0) {
            (uint)strlen(expecting));
     result = Print(text, text + kSize, value);
     if (!result) {
-      PAUSE("An error occurred :-(")
+      PAUSE("An error occurred :-(");
       break;
     }
     *result = 0;
     if (strcmp(expecting, text)) {
       PRINTF("\n\nERROR: Expecting \"%s\":%u and found \"%s\":%u", expecting,
              (uint)strlen(expecting), text, (uint)strlen(text));
-      PAUSE("\n")
+      PAUSE("\n");
     }
   }
 
@@ -165,14 +168,14 @@ TEST(SEAM_0_0, SEAM_0_0_0) {
     PRINTF("\n%i.) ", i + 1);
     result = Print(text, text + kSize, value);
     if (!result) {
-      PAUSE("An error occurred :-(")
+      PAUSE("An error occurred :-(");
       break;
     }
     *result = 0;
     if (strcmp(expecting, text)) {
       PRINTF("\n\nERROR: Expecting \"%s\":%u and found \"%s\":%u", expecting,
              (uint)strlen(expecting), text, (uint)strlen(text));
-      PAUSE("\n")
+      PAUSE("\n");
     }
   }
 
@@ -183,14 +186,14 @@ TEST(SEAM_0_0, SEAM_0_0_0) {
     sprintf_s(expecting, 24, "%u", value);
     result = Print(text, text + kSize, value);
     if (!result) {
-      PAUSE("An error occurred :-(")
+      PAUSE("An error occurred :-(");
       break;
     }
     *result = 0;
     if (strcmp(expecting, text)) {
       PRINTF("\n\nERROR: Expecting \"%s\":%u and found \"%s\":%u", expecting,
              (uint)strlen(expecting), text, (uint)strlen(text));
-      PAUSE("\n")
+      PAUSE("\n");
     }
   }
 

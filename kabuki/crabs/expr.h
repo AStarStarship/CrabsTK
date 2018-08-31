@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@link    https://github.com/kabuki-starship/kabuki-toolkit
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    ~/kabuki/crabs/expr.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -43,8 +43,12 @@ namespace _ {
 
 
 
+
+
     # Ring Buffer Streaming Diagram
     
+
+
 
 
 
@@ -69,6 +73,8 @@ namespace _ {
 
 
 
+
+
     Almost all block of memory in Script has something that grows up and another
     that grows down.
     
@@ -79,8 +85,12 @@ namespace _ {
 
 
 
+
+
     # Stack Memory Layout
     
+
+
 
 
 
@@ -243,6 +253,8 @@ inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
                                    params, args);
    if (!cursor) {
        
+
+
 
 
 
