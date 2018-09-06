@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_CRABS_TCLOCK
 #define INCLUDED_CRABS_TCLOCK
 // Dependencies:
-#include "debug.h"
+#include "test.h"
 #include "tstr.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 2
@@ -35,7 +35,7 @@ namespace _ {
 
 template <typename Char = char>
 Char* Print(Char* cursor, Char* end, Clock& clock) {
-  // The way the print funcitons are setup, we return a nil-term char so we
+  // The way the print functions are setup, we return a nil-term char so we
   // don't have to check to write a single char in this
   ASSERT(cursor);
   ASSERT(cursor < end);
@@ -63,7 +63,7 @@ Char* Print(Char* cursor, Char* end, Clock& clock) {
 
 template <typename Char = char>
 Char* Print(Char* cursor, Char* end, Tss& t) {
-  // The way the print funcitons are setup, we return a nil-term char so we
+  // The way the print functions are setup, we return a nil-term char so we
   // don't have to check to write a single char in this
   ASSERT(cursor);
   ASSERT(cursor < end);
@@ -86,7 +86,7 @@ const Char* TextScanTime(const Char* string, int& hour, int& minute,
   int h,   //< Hour.
       m,   //< Minute.
       s;   //< Second.
-  if (!TextScanSigned<Char>(++string, h)) {
+  if (!ScanSigned<Char>(++string, h)) {
     PRINTF("\nInvalid hour:%i", h);
     return nullptr;
   }
@@ -142,7 +142,7 @@ const Char* TextScanTime(const Char* string, int& hour, int& minute,
       "\nCases HH:MM, HH::MMam, HH::MMpm, HH:MM:SS, HH:MM:SSam, and "
       "HH:MM:SSpm");
 
-  if (!TextScanSigned<Char>(string, m)) return nullptr;
+  if (!ScanSigned<Char>(string, m)) return nullptr;
   string = TextSkipNumbers<Char>(string);
   if (m < 0) {
     PRINTF("\nMinutes:%i can't be negative!", m);
@@ -195,7 +195,7 @@ const Char* TextScanTime(const Char* string, int& hour, int& minute,
 
   PRINT("\n    Cases HH:MM:SS, HH:MM:SSam, and HH:MM:SSpm");
 
-  if (!TextScanSigned<Char>(string, s)) return nullptr;
+  if (!ScanSigned<Char>(string, s)) return nullptr;
   if (s < 0) {
     PRINTF("\nSeconds:%i can't be negative!", s);
     return nullptr;
@@ -288,7 +288,7 @@ const Char* Scan(const Char* cursor, Clock& clock) {
       is_last_year = 0;  //< Flag for if the date was last year or not.
 
   // Scan value1
-  if (!TextScanSigned<Char>(cursor, value1)) {
+  if (!ScanSigned<Char>(cursor, value1)) {
     PRINT("Scan error at value1");
     return nullptr;
   }
@@ -313,7 +313,7 @@ const Char* Scan(const Char* cursor, Clock& clock) {
   }
   // Scan value2.
   cursor = TextSkipChar<Char>(cursor, '0');
-  if (!TextScanSigned<Char>(cursor, value2)) {
+  if (!ScanSigned<Char>(cursor, value2)) {
     PRINT("Failed scanning value2 of date.");
     return nullptr;
   }
@@ -394,7 +394,7 @@ const Char* Scan(const Char* cursor, Clock& clock) {
   cursor = TextSkipChar<Char>(++cursor, '0');
   c = *cursor;
   // Then there are 3 values and 2 delimiters.
-  if (!IsDigit<Char>(c) || !TextScanSigned<Char>(cursor, value3)) {
+  if (!IsDigit<Char>(c) || !ScanSigned<Char>(cursor, value3)) {
     PRINTF("\n    SlotRead error reading value3 of date. %c: ", c);
     return nullptr;  //< Invalid format!
   }

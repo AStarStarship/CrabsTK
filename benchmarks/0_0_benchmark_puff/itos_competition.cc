@@ -11,8 +11,8 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
+#include "itos_competition.h"
 #include <stdafx.h>
-#include "print_itos.h"
 
 using namespace std;
 
@@ -183,6 +183,7 @@ char* PrintMod100(uint32_t value, char* text, char* text_end) {
 /*
 char* PrintMod100B (uint32_t value, char* text, char* text_end) {
     
+
 
 
 

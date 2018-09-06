@@ -39,13 +39,13 @@ enum {
 
 /* Returns an array of pointers to strings that describe the program states.
  */
-KABUKI const char** RoomStateTexts();
+DLL const char** RoomStateTexts();
 
 /* Returns a pointer to an array of pointers to the Request strings. */
-KABUKI const char** RequestTexts();
+DLL const char** RequestTexts();
 
 /* Gets the response char corresponding to the given request. */
-KABUKI const char* RequestText(Request r);
+DLL const char* RequestText(Request r);
 
 /* A Chinese Room.
 An Chinese Room works the same way as in the Chinese Room thought
@@ -234,7 +234,7 @@ class Room : public Operand {
 };
 
 /* Returns the Room-Level Script. */
-// KABUKI Room* ChineseRoom (Room* room = nullptr);
+// DLL Room* ChineseRoom (Room* room = nullptr);
 
 }  // namespace _
 #endif  //< #if SEAM >= SEAM_0_0_3

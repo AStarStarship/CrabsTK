@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="f2_foundational_framework">
+      <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="binary.h">
+      <Filter>f2_foundational_framework</Filter>
+    </ClInclude>
+    <ClInclude Include="console.h">
+      <Filter>f2_foundational_framework</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>f2_foundational_framework</Filter>
+    </ClInclude>
+    <ClInclude Include="public.h">
+      <Filter>f2_foundational_framework</Filter>
+    </ClInclude>
+    <ClInclude Include="rng.h">
+      <Filter>f2_foundational_framework</Filter>
+    </ClInclude>
+    <ClInclude Include="seams.h">
+      <Filter>f2_foundational_framework</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>f2_foundational_framework</Filter>
+    </ClInclude>
+    <ClInclude Include="stopwatch.h">
+      <Filter>f2_foundational_framework</Filter>
+    </ClInclude>
+    <ClInclude Include="talign.h">
+      <Filter>f2_foundational_framework</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>f2_foundational_framework</Filter>
+    </ClInclude>
+    <ClInclude Include="tbinary.h">
+      <Filter>f2_foundational_framework</Filter>
+    </ClInclude>
+    <ClInclude Include="test.h">
+      <Filter>f2_foundational_framework</Filter>
+    </ClInclude>
+    <ClInclude Include="trng.h">
+      <Filter>f2_foundational_framework</Filter>
+    </ClInclude>
+    <ClInclude Include="tunique.h">
+      <Filter>f2_foundational_framework</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="f2_binary.cc">
+      <Filter>f2_foundational_framework</Filter>
+    </ClCompile>
+    <ClCompile Include="f2_console.cc">
+      <Filter>f2_foundational_framework</Filter>
+    </ClCompile>
+    <ClCompile Include="f2_foundational_framework.cc">
+      <Filter>f2_foundational_framework</Filter>
+    </ClCompile>
+    <ClCompile Include="f2_rng.cc">
+      <Filter>f2_foundational_framework</Filter>
+    </ClCompile>
+    <ClCompile Include="f2_test.cc">
+      <Filter>f2_foundational_framework</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cc">
+      <Filter>f2_foundational_framework</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_0_0_0.cc">
+      <Filter>f2_foundational_framework</Filter>
+    </ClCompile>
+    <ClCompile Include="test_seam_0_0_1.cc">
+      <Filter>f2_foundational_framework</Filter>
+    </ClCompile>
+    <ClCompile Include="tests_main.cc">
+      <Filter>f2_foundational_framework</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

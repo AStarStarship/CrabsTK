@@ -34,7 +34,9 @@ typedef enum BOutStates {
 
     The BOut ring buffer is defined as being contiguous
 
-    
+    
+
+
 
 
 
@@ -47,7 +49,9 @@ typedef enum BOutStates {
 
 
     @code
-    
+    
+
+
 
 
 
@@ -63,7 +67,7 @@ typedef enum BOutStates {
 
     A B-Output ring-buffer is identical in structure to an BOut ring-buffer, but
     the stop becomes volatile and start is not volatile. */
-struct KABUKI BOut {
+struct DLL BOut {
   uint_t size;            //< Size of the B-Output.
   volatile uint_t start;  //< Starting index of the ring-buffer data.
   uint_t stop,            //< Stopping index of the ring-buffer data.
@@ -71,56 +75,56 @@ struct KABUKI BOut {
 };
 
 /* Get's the B-Output's buffer.*/
-KABUKI char* BOutBuffer(BOut* bout);
+DLL char* BOutBuffer(BOut* bout);
 
 #if CRABS_TEXT
 
 /* Gets a a char for printing out the bout_state. */
-KABUKI const char** BOutStateStrings();
+DLL const char** BOutStateStrings();
 
 #endif
 
 /* Initializes the B-Output buffer with the given buffer size. */
-KABUKI BOut* BOutInit(uintptr_t* buffer, uint_t size);
+DLL BOut* BOutInit(uintptr_t* buffer, uint_t size);
 
 /* Calculates the space left in the given ring buffer.
     @param  bout The B-Output buffer. */
-KABUKI uint_t BOutSpace(BOut* bout);
+DLL uint_t BOutSpace(BOut* bout);
 
 /* Gets the B-Output. */
-KABUKI uint_t BOutBufferLength(BOut* bout);
+DLL uint_t BOutBufferLength(BOut* bout);
 
 /* Gets the end address of the tx buffer. */
-KABUKI char* BOutEndAddress(BOut* bout);
+DLL char* BOutEndAddress(BOut* bout);
 
 /* Streams a B-Output byte.
     @param bout A B-Output abstract byte stream. */
-KABUKI int BOutStreamByte(BOut* bout);
+DLL int BOutStreamByte(BOut* bout);
 
 /* Writes a message with the given params to the given B-Output slot.
     @param bout   The B-Output socket to write to.
     @param params The escape sequence to write.
     @param args   The array of pointers to the stuff to write. */
-KABUKI const Op* BOutWrite(BOut* bout, const uint_t* params, void** args);
+DLL const Op* BOutWrite(BOut* bout, const uint_t* params, void** args);
 
 /* Sends a connection message to the given address. */
-KABUKI const Op* BOutConnect(BOut* bout, const char* address);
+DLL const Op* BOutConnect(BOut* bout, const char* address);
 
 /* Sends a connection message to the given address. */
-KABUKI void BOutRingBell(BOut* bout, const char* address);
+DLL void BOutRingBell(BOut* bout, const char* address);
 
 /* Sends a connection message to the given address. */
-KABUKI void BOutAckBack(BOut* bout, const char* address);
+DLL void BOutAckBack(BOut* bout, const char* address);
 
 /* . */
-KABUKI void BInKeyStrokes();
+DLL void BInKeyStrokes();
 
 #if CRABS_TEXT
 /* Prints the BIn to the Text.
     @param  bout The bout to print.
     @param  text The Text to print to the bout.
     @return The slot. */
-KABUKI Utf8& PrintBOut(Utf8& printer, BOut* bout);
+DLL Utf8& PrintBOut(Utf8& printer, BOut* bout);
 #endif
 
 }  // namespace _

@@ -144,13 +144,13 @@ inline const uint_t* Params() {
 }
 
 /* Prints out the BSQ parameters. */
-KABUKI Utf8& PrintBsq(Utf8& printer, const uint_t* params);
+DLL Utf8& PrintBsq(Utf8& printer, const uint_t* params);
 
 /*  Prints out the parameters. */
-// KABUKI Utf& PrintBsq (const uint_t* bsq, Utf& print);
+// DLL Utf& PrintBsq (const uint_t* bsq, Utf& print);
 
 /*< Returns the requested parameter number. */
-KABUKI uint_t BsqParamNumber(const uint_t* bsq, int param_number);
+DLL uint_t BsqParamNumber(const uint_t* bsq, int param_number);
 
 }  // namespace _
 

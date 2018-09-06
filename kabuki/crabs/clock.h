@@ -28,7 +28,7 @@ the C++ stadard library.
 Data structure is identical to std::tm with the exection that it has an
 additional microseconds from start of second varable.
 */
-struct KABUKI Clock {
+struct DLL Clock {
   int second,  //< Second of the minute [0, 59].
       minute,  //< Minute of the hour [0, 59].
       hour,    //< Hour of the day [0, 23].
@@ -93,78 +93,78 @@ enum ClockConstants {
 };
 
 /* Gets the 32-bit TMS clock epoch. */
-KABUKI inline int16_t ClockEpoch();
+DLL inline int16_t ClockEpoch();
 
 /* Lookup table for converting from day-of-year to month. */
-KABUKI inline const int16_t* ClockLastDayOfMonth();
+DLL inline const int16_t* ClockLastDayOfMonth();
 
 /* Lookup table for converting from day-of-year to month. */
-KABUKI inline const int16_t* ClockLastDayOfMonthLeapYear();
+DLL inline const int16_t* ClockLastDayOfMonthLeapYear();
 
 /* Returns which month the given day is in based on the year. */
-KABUKI inline int MonthByDay(int day, int year);
+DLL inline int MonthByDay(int day, int year);
 
 /* Inializes the clock from the given timesamp. */
-KABUKI Clock* ClockInit(Clock& clock, Tms time);
+DLL Clock* ClockInit(Clock& clock, Tms time);
 
 /* Inializes the clock from the given timesamp. */
-KABUKI Clock* ClockInit(Clock& clock, Tme time);
+DLL Clock* ClockInit(Clock& clock, Tme time);
 
 /* Inializes the clock from the given 64-bit microsecond timesamp. */
-KABUKI Tss& StopwatchInit(Tss& clock, Tms t, uint32_t ticks);
+DLL Tss& StopwatchInit(Tss& clock, Tms t, uint32_t ticks);
 
 /* Inializes the clock from the given timesamp. */
-KABUKI Clock* ClockInit(Clock& clock);
+DLL Clock* ClockInit(Clock& clock);
 
 /* Gets the current microsecond timestamp. */
-KABUKI inline Tme ClockNow();
+DLL inline Tme ClockNow();
 
 /* Calculates the seconds from epoch from the clock and stores it to the result.
  */
-KABUKI inline Tms ClockTMS(Clock& clock);
+DLL inline Tms ClockTMS(Clock& clock);
 
 /* Calculates the seconds from epoch from the clock and stores it to the result.
  */
-KABUKI inline Tme ClockTME(Clock& clock);
+DLL inline Tme ClockTME(Clock& clock);
 
 /* Gets the number of days in a months.
     @todo Maybe get some open-source date utility? */
-KABUKI int ClockMonthDayCount(Tms t);
+DLL int ClockMonthDayCount(Tms t);
 
 /* Gets the number of days in a months.
 @param month The month index 0-11.
 @param year   */
-KABUKI int ClockMonthDayCount(int month, int year);
+DLL int ClockMonthDayCount(int month, int year);
 
 /* Gets the abbreviated day of the week char of the given day number 1-7. */
-KABUKI const char* ClockWeekDay(int day_number);
+DLL const char* ClockWeekDay(int day_number);
 
 /* Gets the abbreviated day of the week char of the given day number 1-7. */
-KABUKI char ClockDayOfWeekInitial(int day_number);
+DLL char ClockDayOfWeekInitial(int day_number);
 
 /* Compares the two the time and prints the results. */
-KABUKI int ClockCompare(Tms a, Tms b);
+DLL int ClockCompare(Tms a, Tms b);
 
 /* Compares the two the time and prints the results. */
-KABUKI int ClockCompare(Tms a, Tms b);
+DLL int ClockCompare(Tms a, Tms b);
 
 /* Compares the two the time and prints the results. */
-KABUKI int ClockCompare(Clock& clock, Clock& other);
+DLL int ClockCompare(Clock& clock, Clock& other);
 
 /* Compares the given Tms to the time and prints the results. */
-KABUKI int ClockCompare(Clock& clock, int year, int month, int day, int hour,
+DLL int ClockCompare(Clock& clock, int year, int month, int day, int hour,
                         int minute, int second);
 
 /* Zeros out the struct values.
     @param calendar_time A calendar time struct to zero out. */
-KABUKI void ClockZeroTime(Clock& seconds);
+DLL void ClockZeroTime(Clock& seconds);
 
 /* Creates a 32-bit seconds timestamp.  */
-KABUKI Tms ClockTimeTMS(int year, int month, int day, int hour = 0,
+DLL Tms ClockTimeTMS(int year, int month, int day, int hour = 0,
                         int minute = 0, int second = 0);
 
 /* Creates a 64-bit seconds timestamp.  */
-KABUKI Tme ClockTimeTME(int year, int month, int day, int hour = 0,
+DLL Tme ClockTimeTME(int year, int month, int day, int hour = 0,
                         int minute = 0, int second = 0);
 
 #if USING_UTF8
@@ -174,7 +174,7 @@ byte written.
 @param begin The beginning of the write buffer.
 @param time  The time to print.
 @param end   The end of the write buffer. */
-KABUKI char* Print(char* begin, char* end, Clock& clock);
+DLL char* Print(char* begin, char* end, Clock& clock);
 
 /* Writes the given time to the text buffer.
 @return Null upon failure or a pointer to the byte after the last
@@ -182,7 +182,7 @@ byte written.
 @param begin The beginning of the write buffer.
 @param end   The end of the write buffer.
 @param t     The 64-bit stopwatch timestamp. */
-KABUKI char* Print(char* begin, char* end, Tss& t);
+DLL char* Print(char* begin, char* end, Tss& t);
 
 /* Writes the given time to the text buffer.
 @return Null upon failure or a pointer to the byte after the last
@@ -190,7 +190,7 @@ byte written.
 @param begin The beginning of the write buffer.
 @param time  The time to print.
 @param end   The end of the write buffer. */
-KABUKI char* PrintTime(char* begin, char* end, Tms time);
+DLL char* PrintTime(char* begin, char* end, Tms time);
 
 /* Writes the given time to the text buffer.
 @return Null upon failure or a pointer to the byte after the last
@@ -198,7 +198,7 @@ byte written.
 @param begin The beginning of the write buffer.
 @param time  The time to print.
 @param end   The end of the write buffer. */
-KABUKI char* PrintTime(char* begin, char* end, Tme time);
+DLL char* PrintTime(char* begin, char* end, Tme time);
 
 /* Reads a time or time delta from a a char starting with an '@' sign.
 @brief
@@ -219,23 +219,23 @@ KABUKI char* PrintTime(char* begin, char* end, Tme time);
 @param hour   The location to write the number of hours to.
 @param minute The location to write the number of minutes to.
 @param Second The location to write the number of seconds to. */
-KABUKI const char* TextScanTime(const char* string, int& hour, int& minute,
+DLL const char* TextScanTime(const char* string, int& hour, int& minute,
                                 int& second);
 
 /* Converts a keyboard input to char and deletes the char.
 @return Nil upon buffer failure or char directly after the end of the
 timestamp upon success.
 */
-KABUKI const char* Scan(const char* string, Clock& clock);
+DLL const char* Scan(const char* string, Clock& clock);
 
 /* Converts a keyboard input to a Tss. */
-KABUKI const char* Scan(const char* string, Tss& result);
+DLL const char* Scan(const char* string, Tss& result);
 
 /* Converts a keyboard input to a Tms. */
-KABUKI const char* TextScanTime(const char* string, Tms& result);
+DLL const char* TextScanTime(const char* string, Tms& result);
 
 /* Converts a keyboard input to a Tme. */
-KABUKI const char* TextScanTime(const char* string, Tme& result);
+DLL const char* TextScanTime(const char* string, Tme& result);
 
 #endif  //< #if USING_UTF8
 
@@ -247,7 +247,7 @@ byte written.
 @param begin The beginning of the write buffer.
 @param time  The time to print.
 @param end   The end of the write buffer. */
-KABUKI char16_t* Print(char16_t* begin, char16_t* end, Clock& clock);
+DLL char16_t* Print(char16_t* begin, char16_t* end, Clock& clock);
 
 /* Writes the given time to the text buffer.
 @return Null upon failure or a pointer to the byte after the last
@@ -255,7 +255,7 @@ byte written.
 @param begin The beginning of the write buffer.
 @param time  The time to print.
 @param end   The end of the write buffer. */
-KABUKI char16_t* Print(char16_t* begin, char16_t* end, Tss& t);
+DLL char16_t* Print(char16_t* begin, char16_t* end, Tss& t);
 
 /* Writes the given time to the text buffer.
 @return Null upon failure or a pointer to the byte after the last
@@ -263,7 +263,7 @@ byte written.
 @param begin The beginning of the write buffer.
 @param time  The time to print.
 @param end   The end of the write buffer. */
-KABUKI char16_t* PrintTime(char16_t* begin, char16_t* end, Tms time);
+DLL char16_t* PrintTime(char16_t* begin, char16_t* end, Tms time);
 
 /* Writes the given time to the text buffer.
 @return Null upon failure or a pointer to the byte after the last
@@ -271,7 +271,7 @@ byte written.
 @param begin The beginning of the write buffer.
 @param time  The time to print.
 @param end   The end of the write buffer. */
-KABUKI char16_t* Print(char16_t* begin, char16_t* end, Tme time);
+DLL char16_t* Print(char16_t* begin, char16_t* end, Tme time);
 
 /* Reads a time or time delta from a a char16_t starting with an '@' sign.
 @brief
@@ -292,23 +292,23 @@ KABUKI char16_t* Print(char16_t* begin, char16_t* end, Tme time);
 @param hour   The location to write the number of hours to.
 @param minute The location to write the number of minutes to.
 @param Second The location to write the number of seconds to. */
-KABUKI const char16_t* TextScanTime(const char16_t* string, int& hour,
+DLL const char16_t* TextScanTime(const char16_t* string, int& hour,
                                     int& minute, int& second);
 
 /* Converts a keyboard input to char16_t and deletes the char16_t.
 @return Nil upon buffer failure or char16_t directly after the end of the
 timestamp upon success.
 */
-KABUKI const char16_t* Scan(const char16_t* string, Clock& time);
+DLL const char16_t* Scan(const char16_t* string, Clock& time);
 
 /* Converts a keyboard input to a Tss. */
-KABUKI const char16_t* Scan(const char16_t* string, Tss& result);
+DLL const char16_t* Scan(const char16_t* string, Tss& result);
 
 /* Converts a keyboard input to a Tms. */
-KABUKI const char16_t* TextScanTime(const char16_t* string, Tms& result);
+DLL const char16_t* TextScanTime(const char16_t* string, Tms& result);
 
 /* Converts a keyboard input to a Tme. */
-KABUKI const char16_t* TextScanTime(const char16_t* string, Tme& result);
+DLL const char16_t* TextScanTime(const char16_t* string, Tme& result);
 
 #endif  //< #if USING_UTF16
 #if USING_UTF32
@@ -318,7 +318,7 @@ byte written.
 @param begin The beginning of the write buffer.
 @param time  The time to print.
 @param end   The end of the write buffer. */
-KABUKI char32_t* Print(char32_t* begin, char32_t* end, Clock& clock);
+DLL char32_t* Print(char32_t* begin, char32_t* end, Clock& clock);
 
 /* Writes the given time to the text buffer.
 @return Null upon failure or a pointer to the byte after the last
@@ -326,7 +326,7 @@ byte written.
 @param begin The beginning of the write buffer.
 @param time  The time to print.
 @param end   The end of the write buffer. */
-KABUKI char32_t* Print(char32_t* begin, char32_t* end, Tss& time);
+DLL char32_t* Print(char32_t* begin, char32_t* end, Tss& time);
 
 /* Writes the given time to the text buffer.
 @return Null upon failure or a pointer to the byte after the last
@@ -334,7 +334,7 @@ byte written.
 @param begin The beginning of the write buffer.
 @param time  The time to print.
 @param end   The end of the write buffer. */
-KABUKI char32_t* PrintTime(char32_t* begin, char32_t* end, Tms time);
+DLL char32_t* PrintTime(char32_t* begin, char32_t* end, Tms time);
 
 /* Writes the given time to the text buffer.
 @return Null upon failure or a pointer to the byte after the last
@@ -342,7 +342,7 @@ byte written.
 @param begin The beginning of the write buffer.
 @param time  The time to print.
 @param end   The end of the write buffer. */
-KABUKI char32_t* PrintTime(char32_t* begin, char32_t* end, Tme time);
+DLL char32_t* PrintTime(char32_t* begin, char32_t* end, Tme time);
 
 /* Reads a time or time delta from a a char starting with an '@' sign..
 @param input  The char to parse.
@@ -364,21 +364,21 @@ KABUKI char32_t* PrintTime(char32_t* begin, char32_t* end, Tme time);
 @16:20:00
 @endcode
 */
-KABUKI const char32_t* TextScanTime(const char32_t* input, int& hour,
+DLL const char32_t* TextScanTime(const char32_t* input, int& hour,
                                     int& minute, int& second);
 
 /* Converts a keyboard input to char and deletes the char.
  */
-KABUKI const char32_t* Scan(const char32_t* input, Clock& time);
+DLL const char32_t* Scan(const char32_t* input, Clock& time);
 
 /* Converts a keyboard input to a Tms. */
-KABUKI const char32_t* Scan(const char32_t* input, Tss& result);
+DLL const char32_t* Scan(const char32_t* input, Tss& result);
 
 /* Converts a keyboard input to a Tms. */
-KABUKI const char32_t* TextScanTime(const char32_t* input, Tms& result);
+DLL const char32_t* TextScanTime(const char32_t* input, Tms& result);
 
 /* Converts a keyboard input to a Tms. */
-KABUKI const char32_t* TextScanTime(const char32_t* input, Tme& result);
+DLL const char32_t* TextScanTime(const char32_t* input, Tme& result);
 
 #endif  //< #if USING_UTF32
 }  // namespace _

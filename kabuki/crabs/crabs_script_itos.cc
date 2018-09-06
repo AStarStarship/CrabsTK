@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/crabs/decimal_32.h
+@file    ~/kabuki/crabs/crabs_script_itos.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,43 +14,23 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#ifndef INCLUDED_CRABS_BINARY_32
-#define INCLUDED_CRABS_BINARY_32
+#ifndef INCLUDED_CRABS_SCRIPT_ITOS
+#define INCLUDED_CRABS_SCRIPT_ITOS
 
 #include "config.h"
 
 #if WORD_SIZE == 32
 #if SEAM == SEAM_0_0_0
-#include "binary_64.h"
+#include <cstdio>
+#include <cstring>
 
-namespace _ {
-inline void PrintBinaryTable(uint32_t value) {
-  enum { kSize = sizeof(uint32_t) * 8 };
-
-  Print("\n    ");
-  for (int i = kSize; i > 0; --i) {
-    char c = (char)('0' + (value >> (kSize - 1)));
-    Print(c);
-    value = value << 1;
-  }
-
-  Print(
-      "\n    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-      "\n    33222222222211111111110000000000"
-      "\n    10987654321098765432109876543210"
-      "\n    ||  |  |   |  |  |   |  |  |   |"
-      "\n    |1  0  0   0  0  0   0  0  0   0"
-      "\n    |0  9  8   7  6  5   4  3  2   1");
-}
-}  // namespace _
-
-#define PRINT(item) Print(item)
-#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PUTCHAR(item) putchar(item)
+#define PRINTF(format, ...) printf(format, __VA_ARGS__)
 #define PRINT_PRINTED                                                   \
   ;                                                                     \
   sprintf_s(buffer, 24, "%u", value);                                   \
   *end = 0;                                                             \
-  Printf("\n    Printed \"%s\" leaving value:\"%s\":%u", begin, buffer, \
+  printf("\n    Printed \"%s\" leaving value:\"%s\":%u", begin, buffer, \
          (uint)strlen(buffer))
 #define PRINT_BINARY \
   Print("\n    ");   \
@@ -61,15 +41,15 @@ inline void PrintBinaryTable(uint32_t value) {
     *(cursor + i) = 'x';               \
   }                                    \
   *(cursor + 21) = 0;                  \
-  Char* begin = cursor;                \
-  Char buffer[256];                    \
+  char* begin = cursor;                \
+  char buffer[256];                    \
   sprintf_s(buffer, 256, "%u", value); \
-  Printf("Expecting %s:%u", buffer, (uint)strlen(buffer));
+  printf("Expecting %s:%u", buffer, (uint)strlen(buffer));
 #define PRINT_HEADING \
-  Print('\n');        \
-  for (int i = 80; i > 0; --i) Print('-')
+  putchar('\n');      \
+  for (int i = 80; i > 0; --i) putchar('-')
 #else
-#define PRINT(item)
+#define PUTCHAR(item)
 #define PRINTF(x, ...)
 #define PRINT_PRINTED ;
 #define PRINT_HEADER
@@ -105,7 +85,7 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
   PRINT_HEADER;
 
   if (value < 10) {
-    PRINT("\n    Range:[0, 9] length:1 ");
+    PUTCHAR("\n    Range:[0, 9] length:1 ");
     if (cursor + 1 >= end) {
       return nullptr;
     }
@@ -115,7 +95,7 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
     return cursor;
   }
   if (value < 100) {
-    PRINT("\n    Range:[10, 99] length:2 ");
+    PUTCHAR("\n    Range:[10, 99] length:2 ");
     if (cursor + 2 >= end) {
       return nullptr;
     }
@@ -127,7 +107,7 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
   if (value >> 14) {
     if (value >> 27) {
       if (value >> 30) {
-        PRINT("\n    Range:[1073741824, 4294967295] length:10");
+        PUTCHAR("\n    Range:[1073741824, 4294967295] length:10");
       Print10:
         if (cursor + 10 >= end) {
           return nullptr;
@@ -143,10 +123,10 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
       } else {
         comparator = 1000000000;
         if (value >= comparator) {
-          PRINT("\n    Range:[100000000, 1073741823] length:10");
+          PUTCHAR("\n    Range:[100000000, 1073741823] length:10");
           goto Print10;
         }
-        PRINT("\n    Range:[134217727, 999999999] length:9");
+        PUTCHAR("\n    Range:[134217727, 999999999] length:9");
         if (cursor + 9 >= end) {
           return nullptr;
         }
@@ -160,7 +140,7 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
     } else if (value >> 24) {
       comparator = 100000000;
       if (value >= comparator) {
-        PRINT("\n    Range:[100000000, 134217728] length:9");
+        PUTCHAR("\n    Range:[100000000, 134217728] length:9");
         if (cursor + 9 >= end) {
           return nullptr;
         }
@@ -168,7 +148,7 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
         PRINT_PRINTED;
         value -= comparator;
       }
-      PRINT("\n    Range:[16777216, 9999999] length:8");
+      PUTCHAR("\n    Range:[16777216, 9999999] length:8");
       if (cursor + 8 >= end) {
         return nullptr;
       }
@@ -194,7 +174,7 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
     } else if (value >> 20) {
       comparator = 10000000;
       if (value >= comparator) {
-        PRINT("\n    Range:[10000000, 16777215] length:8");
+        PUTCHAR("\n    Range:[10000000, 16777215] length:8");
         if (cursor + 8 >= end) {
           return nullptr;
         }
@@ -202,7 +182,7 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
         PRINT_PRINTED;
         value -= comparator;
       } else {
-        PRINT("\n    Range:[1048576, 9999999] length:7");
+        PUTCHAR("\n    Range:[1048576, 9999999] length:7");
         if (cursor + 7 >= end) {
           return nullptr;
         }
@@ -226,7 +206,7 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
     } else if (value >> 17) {
       comparator = 1000000;
       if (value >= comparator) {
-        PRINT("\n    Range:[100000, 1048575] length:7");
+        PUTCHAR("\n    Range:[100000, 1048575] length:7");
         if (cursor + 7 >= end) {
           return nullptr;
         }
@@ -234,7 +214,7 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
         PRINT_PRINTED;
         value -= comparator;
       } else {
-        PRINT("\n    Range:[131072, 999999] length:6");
+        PUTCHAR("\n    Range:[131072, 999999] length:6");
         if (cursor + 6 >= end) {
           return nullptr;
         }
@@ -258,10 +238,10 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
       return cursor + 6;
     } else {  // (value >> 14)
       if (value >= 100000) {
-        PRINT("\n    Range:[65536, 131071] length:6");
+        PUTCHAR("\n    Range:[65536, 131071] length:6");
         goto Print6;
       }
-      PRINT("\n    Range:[10000, 65535] length:5");
+      PUTCHAR("\n    Range:[10000, 65535] length:5");
       if (cursor + 5 >= end) {
         return nullptr;
       }
@@ -290,13 +270,13 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
       if (cursor + 5 >= end) {
         return nullptr;
       }
-      PRINT("\n    Range:[10000, 16383] length:5");
+      PUTCHAR("\n    Range:[10000, 16383] length:5");
       *cursor++ = '1';
       PRINT_PRINTED;
       digits1and2 -= digits5and6;
 
     } else {
-      PRINT("\n    Range:[1024, 9999] length:4");
+      PUTCHAR("\n    Range:[1024, 9999] length:4");
       if (cursor + 4 >= end) {
         return nullptr;
       }
@@ -316,7 +296,7 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
     }
     digits3and4 = 1000;
     if (digits1and2 >= digits3and4) {
-      PRINT("\n    Range:[1000, 1023] length:4");
+      PUTCHAR("\n    Range:[1000, 1023] length:4");
       digits1and2 -= digits3and4;
       text16 = reinterpret_cast<uint16_t*>(cursor + 2);
       *text16-- = kDigits00To99[digits1and2];
@@ -326,7 +306,7 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
       *(cursor + 4) = 0;
       return cursor + 4;
     }
-    PRINT("\n    Range:[100, 999] length:3");
+    PUTCHAR("\n    Range:[100, 999] length:3");
     digits1and2 = (uint16_t)value;
     digits3and4 = 100;
     digit = (Char)(digits1and2 / digits3and4);
@@ -340,4 +320,4 @@ Char* Print(Char* cursor, Char* end, uint32_t value) {
   }
 }
 #endif  //< #if WORD_SIZE == 32
-#endif  //< INCLUDED_CRABS_BINARY_32
+#endif  //< INCLUDED_CRABS_SCRIPT_ITOS

@@ -91,12 +91,12 @@ class Door : public Operand {
 };
 
 /* Returns a Static Error Op. */
-KABUKI const Op* DoorResult(Door* door, Door::Error error);
+DLL const Op* DoorResult(Door* door, Door::Error error);
 
-KABUKI const char* DoorErrorText(Door::Error error);
+DLL const char* DoorErrorText(Door::Error error);
 
 /* Returns the main door of the room.
-KABUKI Door& Doors (); */
+DLL Door& Doors (); */
 
 /* Initializes a Door at the beginning of the given buffer.
 static Door* DoorInit (int* buffer, uint_t slot_size) {

@@ -13,10 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#include "debug.h"
-
 #include <conio.h>
 #include <cstdio>
+#include "test.h"
 
 namespace _ {
 
@@ -136,9 +135,33 @@ void PrintBinary(int64_t value) {
   return PrintBinarySigned<int64_t, uint64_t>(value);
 }
 
+void PrintHex(uint8_t value) { return PrintHex<uint8_t>(value); }
+
+void PrintHex(int8_t value) { return PrintHex<int8_t, uint8_t>(value); }
+
+void PrintHex(uint16_t value) { return PrintHex<uint16_t>(value); }
+
+void PrintHex(int16_t value) { return PrintHex<int16_t, uint16_t>(value); }
+
+void PrintHex(uint32_t value) { return PrintHex<uint32_t>(value); }
+
+void PrintHex(int32_t value) { return PrintHex<int32_t, uint32_t>(value); }
+
+void PrintHex(uint64_t value) { return PrintHex<uint64_t>(value); }
+
+void PrintHex(int64_t value) { return PrintHex<int64_t, uint64_t>(value); }
+
+void PrintHex(float value) {
+  uint32_t value_ui4;
+  value_ui4 = *reinterpret_cast<uint32_t*>(&value);
+  return PrintHex<uint32_t>(value);
+}
+
+int KeyboardRead() { return _getch(); }
+
 void Pause() {
   Print("\nPress any key to continue...");
-  while (_getch() < 0)
+  while (KeyboardRead() < 0)
     ;
 }
 

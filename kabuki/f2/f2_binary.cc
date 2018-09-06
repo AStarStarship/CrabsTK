@@ -14,32 +14,14 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #include <cmath>
 
-#include "binary_64.h"
+#include "binary.h"
 #include "tbinary.h"
 
-#if SEAM == SEAM_0_0_0
-#include "debug.h"
-namespace _ {
-inline void PrintBinaryTable(uint32_t value) {
-  enum { kSize = sizeof(uint32_t) * 8 };
+#if SEAM <= 1
+#include "test.h"
+#endif
 
-  Print("\n    ");
-  for (int i = kSize; i > 0; --i) {
-    char c = (char)('0' + (value >> (kSize - 1)));
-    Print(c);
-    value = value << 1;
-  }
-
-  Print(
-      "\n    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-      "\n    33222222222211111111110000000000"
-      "\n    10987654321098765432109876543210"
-      "\n    ||  |  |   |  |  |   |  |  |   |"
-      "\n    |1  0  0   0  0  0   0  0  0   0"
-      "\n    |0  9  8   7  6  5   4  3  2   1");
-}
-}  // namespace _
-
+#if SEAM == 1
 #define PRINT(item) Print(item)
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PRINTED                                                   \
@@ -72,6 +54,20 @@ inline void PrintBinaryTable(uint32_t value) {
 #define PRINT_HEADING
 #endif
 
+#ifdef __LITTLE_ENDIAN
+#define HI(x) *(1 + (int32_t*)&x)
+#define LO(x) *(int32_t*)&x
+#define HI_P(x) *(1 + (int32_t*)x)
+#define LO_P(x) *(int32_t*)x
+#else
+#define HI(x) *(int32_t*)&x
+#define LO(x) *(1 + (int32_t*)&x)
+#define HI_P(x) *(int32_t*)x
+#define LO_P(x) *(1 + (int32_t*)x)
+#endif
+
+namespace _ {
+
 inline void FloatBytes(float value, char& byte_0, char& byte_1, char& byte_2,
                        char& byte_3) {
   uint32_t ui_value = *reinterpret_cast<uint32_t*>(&value);
@@ -80,8 +76,6 @@ inline void FloatBytes(float value, char& byte_0, char& byte_1, char& byte_2,
   byte_2 = (char)(ui_value >> 16);
   byte_3 = (char)(ui_value >> 24);
 }
-
-namespace _ {
 
 char* Print(char* begin, uint16_t chars) {
 #if ALIGN_MEMORY
@@ -120,7 +114,7 @@ char* Print(char* begin, char* end, char byte_0, char byte_1, char byte_2) {
     case 1: {
       uint32_t* ptr = reinterpret_cast<uint32_t*>(begin) - 1;
       uint32_t word = (*ptr) & ((uint32_t)0xff)
-                                   << 24;  //< Mask off byte_0 byte.
+                                   << 24;  //< Mask off byte_0 uint8_t.
       *ptr = word;
       begin[3] = 0;
       return &begin[4];
@@ -135,7 +129,7 @@ char* Print(char* begin, char* end, char byte_0, char byte_1, char byte_2) {
       *begin = byte_0;
       uint32_t* ptr = reinterpret_cast<uint32_t*>(begin) - 1;
       uint32_t word = (*ptr) & ((uint32_t)0xff)
-                                   << 24;  //< Mask off byte_0 byte.
+                                   << 24;  //< Mask off byte_0 uint8_t.
       word |= ((uint32_t)byte_0) | ((uint32_t)byte_0) << 8 |
               ((uint32_t)byte_0) << 16;  //< OR together three.
       begin[3] = 0
@@ -151,13 +145,7 @@ char* Print(char* begin, char* end, char byte_0, char byte_1, char byte_2) {
 
 char puff_lut[2 * 100 + (8 + 2) * 87];
 
-const uint16_t* PuffDigits() {}
-
-inline const uint16_t* IEEE754Exponents() {}
-
-inline const uint64_t* Binary64Pow10() {}
-
-void NumberRealLutGenerate(char* buffer, size_t size) {
+const uint16_t* BinaryLut() {
   /* Lookup table of ASCII Char pairs for 00, 01, ..., 99 in little-endian
   format. */
   static const uint16_t kDigits00To99[100] = {
@@ -186,7 +174,8 @@ void NumberRealLutGenerate(char* buffer, size_t size) {
       534,   561,   588,   614,   641,   667,   694,   720,   747,   774,  800,
       827,   853,   880,   907,   933,   960,   986,   1013,  1039,  1066};
 
-  /* Precomputed powers of ten integral portions: 10^-348, 10^-340, ..., 10^340.
+  /* Precomputed IEEE 754 powers of ten integral portions:
+  10^-348, 10^-340, ..., 10^340.
   Size bytes is 87 elements * 8 bytes/element = 696 bytes. */
   static const uint64_t kCachedPowersF[] = {
       0xfa8fd5a0081c0288, 0xbaaee17fa23ebf76, 0x8b16fb203055ac76,
@@ -218,13 +207,24 @@ void NumberRealLutGenerate(char* buffer, size_t size) {
       0xe7109bfba19c0c9d, 0xac2820d9623bf429, 0x80444b5e7aa7cf85,
       0xbf21e44003acdd2d, 0x8e679c2f5e44ff8f, 0xd433179d9c8cb841,
       0x9e19db92b4e31ba9, 0xeb96bf6ebadf77d9, 0xaf87023b9bf0ee6b};
+  return kDigits00To99;
+}
 
+inline const uint16_t* IEEE754Exponents(const char* lut) {
+  return reinterpret_cast<const uint16_t*>(lut + 100);
+}
+
+inline const uint16_t* IEEE754Pow10(const char* lut) {
+  return reinterpret_cast<const uint16_t*>(lut) + 100;
+}
+
+void NumberRealLutGenerate(char* lut, size_t size) {
   enum { kFpPowersCount = 87 };
 
   ASSERT(size);
 
   if (size != ((100 + kFpPowersCount) * 2 + kFpPowersCount * 8)) return;
-  uint16_t* ui2_ptr = reinterpret_cast<uint16_t*>(buffer);
+  uint16_t* ui2_ptr = reinterpret_cast<uint16_t*>(lut);
 
   for (char tens = '0'; tens <= '9'; ++tens)
     for (int ones = '0'; ones <= '9'; ++ones)
@@ -234,11 +234,11 @@ void NumberRealLutGenerate(char* buffer, size_t size) {
       *ui2_ptr++ = (ones << 8) | tens;
 #endif
 
-  for (int i = 0; i < 87; ++i) *ui2_ptr = kCachedPowersE[i];
+  for (int i = 0; i < 87; ++i) *ui2_ptr = IEEE754Pow10E()[i];
 
   uint64_t* ui8_ptr = reinterpret_cast<uint64_t*>(ui2_ptr);
 
-  for (int i = 0; i < 87; ++i) *ui8_ptr = kCachedPowersF[i];
+  for (int i = 0; i < 87; ++i) *ui8_ptr = IEEE754Pow10F()[i];
 }
 
 const uint16_t* DigitsLut(const char* puff_lut) {
@@ -322,56 +322,6 @@ bool IsInfinite(float value) { return isinf(value); }
 
 bool IsInfinite(double value) { return isinf(value); }
 
-/* Checks if the given value is an even power of 2.
-KABUKI bool IsPowerOfTen (int8_t value);* /
-
-/* Checks if the given value is an even power of 2.
-KABUKI bool IsPowerOfTen (uint8_t value); */
-
-/* Checks if the given value is an even power of 2.
-KABUKI bool IsPowerOfTen (int16_t value); */
-
-/* Checks if the given value is an even power of 2.
-KABUKI bool IsPowerOfTen (uint16_t value); */
-
-/* Checks if the given value is an even power of 2.
-KABUKI bool IsPowerOfTen (int32_t value); */
-
-/* Checks if the given value is an even power of 2.
-KABUKI bool IsPowerOfTen (uint32_t value); */
-
-/* Checks if the given value is an even power of 2.
-KABUKI bool IsPowerOfTen (int64_t value); */
-
-/* Checks if the given value is an even power of 2.
-KABUKI bool IsPowerOfTen (uint64_t value); */
-
-/*
-bool IsPowerOfTen(int8_t value) {
-  return IsPowerOfTenSigned<uint8_t, int8_t>(value);
-}
-
-bool IsPowerOfTen(uint8_t value) { return IsPowerOfTen<uint8_t>(value); }
-
-bool IsPowerOfTen(int16_t value) {
-  return IsPowerOfTenSigned<uint16_t, int16_t>(value);
-}
-
-bool IsPowerOfTen(uint16_t value) { return IsPowerOfTen<uint16_t>(value); }
-
-bool IsPowerOfTen(int32_t value) {
-  return IsPowerOfTenSigned<uint32_t, int32_t>(value);
-}
-
-bool IsPowerOfTen(uint32_t value) { return IsPowerOfTen<uint32_t>(value); }
-
-bool IsPowerOfTen(int64_t value) {
-  return IsPowerOfTenSigned<uint64_t, int64_t>(value);
-}
-
-bool IsPowerOfTen(uint64_t value) { return IsPowerOfTen<uint64_t>(value); }
-*/
-
 /* Masks the lower bits using faster bit shifting.
 @brief The algoirhm has you enter the highest bit rather than bit count because
 it would introduct an extra instruction and you should do that manually if you
@@ -416,168 +366,58 @@ uint64_t ComputePow10(int e, int alpha, int gamma) {
   return *reinterpret_cast<uint64_t*>(&pow_10);
 }
 
-/* Calculates the ceiling of the given value to the next highest integer.
-@warning I jacked this off StackOverflow and have not tested it.
-@param value The value to take the ceiling of.
-@return The ceiling to the next highest integer. */
-template <typename Float, typename UI>
-Float Ceiling(Float value) {
-  UI integer = *reinterpret_cast<UI*>(&value);
+uint8_t HexNibbleToLowerCase(uint8_t b) {
+  b = b & 0xf;
+  if (b > 9) return b + ('a' - 10);
+  return b + '0';
+}
 
-  // Extract sign, exponent and coefficient bias is removed from exponent.
-  UI sign = integer >> kFpBits,
-     exponent_mask = ShiftLeftRight<UI>(integer, 1, kMantissaBitCount),
-     exponent = ((integer & 0x7fffffff) >> kMantissaMSb) - kExponentMask,
-     coefficient = integer & 0x7fffff, comparator;
+uint8_t HexNibbleToUpperCase(uint8_t b) {
+  b = b & 0xf;
+  if (b > 9) return b + ('A' - 10);
+  return b + '0';
+}
 
-  if (exponent < 0) {  // value is in the open interval (-1, 1)
-    if (value <= 0.0)
-      return 0.0;
-    else
-      return 1.0;
-  } else {
-    // Mask the fractional part of the coefficient.
-    UI mask = CreateMaskLSb<UI>(kMantissaMSb) >>
-              exponent;  //< mask should be 0x7fffff
+uint16_t HexByteToLowerCase(uint8_t b) {
+  uint16_t value = HexNibbleToLowerCase(b & 0xf);
+  value = value << 8;
+  value |= HexNibbleToLowerCase(b >> 4);
+  return value;
+}
 
-    if ((coefficient & mask) == 0)  // The mantissa is zero so it's an integer.
-      return value;
-    else {
-      if (sign == 0) {
-        // It's positive so add 1 to it before clearing the fractional bits.
-        coefficient += ((UI)1) << (kMantissaMSb - exponent);
+uint16_t HexByteToUpperCase(uint8_t b) {
+  uint16_t value = HexNibbleToUpperCase(b & 0xf);
+  value = value << 8;
+  uint16_t second_nibble = HexNibbleToUpperCase(b >> 4);
+  value |= second_nibble;
+  return value;
+}
 
-        comparator = PowerOf2<UI>(kFpBits);
-
-        // Check for coefficient overflow...
-        if (coefficient & comparator) {
-          // The coefficient can only overflow if all the integer bits were
-          // previously 1, so we can just clear out the coefficient and
-          // increment the exponent.
-          coefficient = 0;
-          ++exponent;
-        }
-      }
-
-      // Clear the fractional bits.
-      coefficient &= ~mask;
-    }
+int HexToByte(uint8_t c) {
+  if (c < '0') {
+    return -1;
   }
-
-  // Put sign, exponent and coefficient together again
-  integer = (sign << kFpBits) | ((exponent + kExponentMask) << kMantissaMSb) |
-            coefficient;
-
-  return *reinterpret_cast<Float*>(&integer);
-}
-
-struct diy_fp {
-  uint64_t f;
-  int32_t e;
-};
-
-#define TEN9 1000000000
-
-void digit_gen(diy_fp Mp, diy_fp delta, char* buffer, int* len, int* K) {
-  uint32_t div;
-  int32_t d, kappa;
-  diy_fp one;
-  one.f = ((uint64_t)1) << -Mp.e;
-  one.e = Mp.e;
-  uint32_t p1 = (uint32_t)(Mp.f >> -one.e);
-  uint64_t p2 = Mp.f & (one.f - 1);
-  *len = 0;
-  kappa = 10;
-  div = TEN9;
-  while (kappa > 0) {
-    d = p1 / div;
-    if (d || *len) buffer[(*len)++] = '0' + d;
-    p1 %= div;
-    kappa--;
-    div /= 10;
-    if ((((uint64_t)p1) << -one.e) + p2 <= delta.f) {
-      *K += kappa;
-      return;
-    }
+  if (c >= 'a') {
+    if (c > 'f') return -1;
+    return c - ('a' - 10);
   }
-  do {
-    p2 *= 10;
-    d = (uint32_t)(p2 >> -one.e);
-    if (d || *len) buffer[(*len)++] = '0' + d;
-    p2 &= one.f - 1;
-    kappa--;
-    delta.f *= 10;
-  } while (p2 > delta.f);
-  *K += kappa;
-}
-
-float Ceiling(float value) {
-  // return Ceiling<float, uint32_t>(value);
-  return ceil(value);
-}
-
-double Ceiling(double value) {
-  // return Ceiling<double, uint64_t>(value);
-  return ceil(value);
-}
-
-union float_int {
-  float f;
-  int i;
-};
-
-inline float myceil(float x) {
-  float_int val;
-  val.f = x;
-
-  // Extract sign, exponent and coefficient
-  // Bias is removed from exponent
-  int sign = val.i >> 31;
-  int exponent = ((val.i & 0x7fffffff) >> 23) - 127;
-  int coefficient = val.i & 0x7fffff;
-
-  // Is the exponent less than zero?
-  if (exponent < 0) {
-    // In this case, x is in the open interval (-1, 1)
-    if (x <= 0.0f)
-      return 0.0f;
-    else
-      return 1.0f;
-  } else {
-    // Construct a bit mask that will mask off the
-    // fractional part of the coefficient
-    int mask = 0x7fffff >> exponent;
-
-    // Is x already an integer (i.e. are all the
-    // fractional bits zero?)
-    if ((coefficient & mask) == 0)
-      return x;
-    else {
-      // If x is positive, we need to add 1 to it
-      // before clearing the fractional bits
-      if (!sign) {
-        coefficient += 1 << (23 - exponent);
-
-        // Did the coefficient overflow?
-        if (coefficient & 0x800000) {
-          // The coefficient can only overflow if all the
-          // integer bits were previously 1 -- so we can
-          // just clear out the coefficient and increment
-          // the exponent
-          coefficient = 0;
-          exponent++;
-        }
-      }
-
-      // Clear the fractional bits
-      coefficient &= ~mask;
-    }
+  if (c >= 'A') {
+    if (c > 'F') return -1;
+    return c - ('A' - 10);
   }
+  if (c > '9') return -1;
+  return c - '0';
+}
 
-  // Put sign, exponent and coefficient together again
-  val.i = (sign << 31) | ((exponent + 127) << 23) | coefficient;
+int HexToByte(uint16_t h) {
+  int lowerValue = HexToByte((uint8_t)(h >> 8));
 
-  return val.f;
+  if (lowerValue < 0) return -1;
+
+  int upper_value = HexToByte((uint8_t)h);
+  if (upper_value < 0) return -1;
+
+  return lowerValue | (upper_value << 4);
 }
 
 }  // namespace _

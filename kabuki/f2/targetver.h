@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/crabs/crabs_random.cc
+@file    ~/library/targetver.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,26 +12,10 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
-#include <stdafx.h>
-#if SEAM >= SEAM_0_0_0
-#ifndef INCLUDED_CRABS_RANDOM
-#define INCLUDED_CRABS_RANDOM
-// Dependencies:
-#include <random>
-#include "config.h"
-// End dependencies.
 
-namespace _ {
+// Including SDKDDKVer.h defines the highest available Slots platform.
 
-uint64_t GetRandomUInt64() {
-  std::random_device rd;
-  std::mt19937_64 eng(rd());
-  std::uniform_int_distribution<uint64_t> distr;
-  return distr(eng);
-}
+// If you wish to build your application for a previous Slots platform, include WinSDKVer.h and
+// set the _WIN32_WINNT macro to the platform you wish to support before including SDKDDKVer.h.
 
-inline int64_t GetRandomInt64() { return (int64_t)GetRandomUInt64(); }
-
-}  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_0
-#endif  //< INCLUDED_CRABS_RANDOM
+#include <SDKDDKVer.h>

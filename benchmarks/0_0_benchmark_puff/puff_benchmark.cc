@@ -11,9 +11,9 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
-#include "script_itos_benchmark.h"
 #include <stdafx.h>
 #include "../../kabuki/crabs/tint.h"
+#include "script_itos_benchmark.h"
 
 typedef unsigned int uint;
 
@@ -147,7 +147,7 @@ void BenchmarkScriptItos() {
     start = high_resolution_clock::now();
     for (uint32_t j = num_loops; j > 0; --j) {
       for (uint32_t value = min; value < max; ++value) {
-        result = PrintNil(value, text, text + kSize);
+        result = PrintNil<>(value, text, text + kSize);
       }
     }
     stop = high_resolution_clock::now();

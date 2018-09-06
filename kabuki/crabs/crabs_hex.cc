@@ -13,70 +13,12 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_2
 // Dependencies:
 #include "hex.h"
 #if CRABS_TEXT
 // End dependencies.
 
-namespace _ {
-
-byte HexNibbleToLowerCase(byte b) {
-  b = b & 0xf;
-  if (b > 9) return b + ('a' - 10);
-  return b + '0';
-}
-
-byte HexNibbleToUpperCase(byte b) {
-  b = b & 0xf;
-  if (b > 9) return b + ('A' - 10);
-  return b + '0';
-}
-
-uint16_t HexByteToLowerCase(byte b) {
-  uint16_t value = HexNibbleToLowerCase(b & 0xf);
-  value = value << 8;
-  value |= HexNibbleToLowerCase(b >> 4);
-  return value;
-}
-
-uint16_t HexByteToUpperCase(byte b) {
-  uint16_t value = HexNibbleToUpperCase(b & 0xf);
-  value = value << 8;
-  uint16_t second_nibble = HexNibbleToUpperCase(b >> 4);
-  value |= second_nibble;
-  return value;
-}
-
-int HexToByte(byte c) {
-  if (c < '0') {
-    return -1;
-  }
-  if (c >= 'a') {
-    if (c > 'f') return -1;
-    return c - ('a' - 10);
-  }
-  if (c >= 'A') {
-    if (c > 'F') return -1;
-    return c - ('A' - 10);
-  }
-  if (c > '9') return -1;
-  return c - '0';
-}
-
-int HexToByte(uint16_t h) {
-  int lowerValue = HexToByte((byte)(h >> 8));
-
-  if (lowerValue < 0) return -1;
-
-  int upper_value = HexToByte((byte)h);
-  if (upper_value < 0) return -1;
-
-  return lowerValue | (upper_value << 4);
-}
-
-}  // namespace _
+namespace _ {}  // namespace _
 #undef PRINTF
 #undef PRINT
 #endif  //< CRABS_TEXT
-#endif  //< #if SEAM >= SEAM_0_0_2

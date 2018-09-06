@@ -1,5 +1,5 @@
-/* Kabuki Toolkit
-@version 0.x
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    ~/library/targetver.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
@@ -18,7 +18,8 @@
 
 // Including SDKDDKVer.h defines the highest available Slots platform.
 
-// If you wish to build your application for a previous Slots platform, include WinSDKVer.h and
-// set the _WIN32_WINNT macro to the platform you wish to support before including SDKDDKVer.h.
+// If you wish to build your application for a previous Slots platform, include
+// WinSDKVer.h and set the _WIN32_WINNT macro to the platform you wish to
+// support before including SDKDDKVer.h.
 
 #include <SDKDDKVer.h>

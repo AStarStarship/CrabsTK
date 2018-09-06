@@ -17,7 +17,7 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_CRABS_TOBJ
 #define INCLUDED_CRABS_TOBJ
 // Dependencies:
-#include "debug.h"
+#include "test.h"
 #include "obj.h"
 // End dependencies.
 

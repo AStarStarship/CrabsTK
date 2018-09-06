@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM >= SEAM_0_0_4
 // Dependencies:
-#include "debug.h"
+#include "test.h"
 #include "door.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
@@ -106,7 +106,7 @@ const Op* Door::Star(wchar_t index, Expr* expr) {
 }
 
 /*
-KABUKI Door& Doors () {
+DLL Door& Doors () {
     static Door front_door;
     return front_door;
 }*/

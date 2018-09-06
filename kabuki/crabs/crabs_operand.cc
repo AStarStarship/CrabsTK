@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #if SEAM >= SEAM_0_0_4
 // Dependencies:
-#include "debug.h"
+#include "test.h"
 #include "op.h"
 #include "operand.h"
 #include "str1.h"

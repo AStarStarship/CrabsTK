@@ -16,7 +16,7 @@ specific language governing permissions and limitations under the License. */
 // Dependencies:
 #include "bsq.h"
 #include "clock.h"
-#include "debug.h"
+#include "test.h"
 #include "expr.h"
 #include "hash.h"
 #include "hex.h"

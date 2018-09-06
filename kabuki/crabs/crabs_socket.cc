@@ -15,7 +15,7 @@ specific language governing permissions and limitations under the License. */
 #if SEAM >= SEAM_0_0_1
 // Dependencies:
 #include "align.h"
-#include "debug.h"
+#include "test.h"
 #include "hex.h"
 #include "socket.h"
 #include "tstr.h"

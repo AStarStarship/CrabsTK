@@ -32,7 +32,7 @@ namespace _ {
     @endcode
 */
 template <const char... N>
-KABUKI const char* Address() {
+DLL const char* Address() {
   static const char path[sizeof...(N)] = {N...};
   static const char term_char = 0;
   return path;

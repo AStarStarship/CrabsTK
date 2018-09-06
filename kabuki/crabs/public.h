@@ -21,7 +21,7 @@ specific language governing permissions and limitations under the License. */
 
 #include "binary_64.h"
 #include "clock.h"
-#include "debug.h"
+#include "test.h"
 #include "hex.h"
 #include "socket.h"
 #include "str.h"

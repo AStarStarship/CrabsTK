@@ -23,20 +23,22 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* Interface for a temporal event in a Bayesian net.
-    
+    
+
+
 
 
 
     @code
     #include <script/Event.h>
-    struct KABUKI Example: public Event {
+    struct DLL Example: public Event {
         virtual void Trigger () {
             // ...
         }
     };
     @endcode
 */
-struct KABUKI Event : public Operand {
+struct DLL Event : public Operand {
   /* Virtual destructor. */
   virtual ~Event() = 0;
 

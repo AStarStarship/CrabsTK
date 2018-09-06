@@ -43,7 +43,7 @@ typedef enum BInStates {
 
 /* A*B B-Input Slot.
     A B-Input Slot is functionally identical to a input port in TCP. */
-struct KABUKI BIn {
+struct DLL BIn {
   uint_t size,           //< The size of the buffer.
       start;             //< The starting index of the ring buffer data.
   volatile uint_t stop;  //< The stopping index of the ring buffer data.
@@ -94,21 +94,21 @@ inline uint_t BinBufferLength(BIn* bin) {
 
 #if CRABS_TEXT
 /* Gets a a char for printing out the bin_state. */
-KABUKI const char** BInStateStrings();
+DLL const char** BInStateStrings();
 
 /* Pulls the keyboard input into the ring buffer. */
-// KABUKI void BInKeyboard ()
+// DLL void BInKeyboard ()
 #endif
 
-/* Initializes the BIn struct KABUKI to an empty buffer. */
-KABUKI BIn* BInInit(uintptr_t* buffer, uint_t size);
+/* Initializes the BIn struct DLL to an empty buffer. */
+DLL BIn* BInInit(uintptr_t* buffer, uint_t size);
 
 /* Gets the end address of the rx buffer. */
-KABUKI char* BInEnd(BIn* bin);
+DLL char* BInEnd(BIn* bin);
 
 /* Returns true if the BIn buffer contains any data.
     @warning Function does not do any error checking for speed. */
-KABUKI bool BInIsReadable(BIn* bin);
+DLL bool BInIsReadable(BIn* bin);
 
 /* Scans a message with the given params to the given BIn.
     The data in the BIn is word-aligned, unlike the Slot. It also
@@ -119,7 +119,7 @@ KABUKI bool BInIsReadable(BIn* bin);
     @param args   The arguments.
     @return       Returns 0 upon success and an ErrorList ticket number upon
                   failure. */
-KABUKI const Op* BInRead(BIn* bin, const uint_t* params, void** args);
+DLL const Op* BInRead(BIn* bin, const uint_t* params, void** args);
 
 inline const Op* BOutRead(BOut* bout, const uint_t* params, void** args) {
   return BInRead(reinterpret_cast<BIn*>(bout), params, args);
@@ -130,21 +130,21 @@ inline const Op* BOutRead(BOut* bout, const uint_t* params, void** args) {
     @param  bin The pin to print.
     @param  text The Text to print the bin to.
     @return The text. */
-KABUKI Utf8& Print(Utf8& printer, BIn* bin);
+DLL Utf8& Print(Utf8& printer, BIn* bin);
 #endif  //< #if USING_UTF8
 #if USING_UTF16
 /* Prints the BIn to the Text.
 @param  bin The pin to print.
 @param  text The Text to print the bin to.
 @return The text. */
-KABUKI Utf16& Print(Utf16& printer, BIn* bin);
+DLL Utf16& Print(Utf16& printer, BIn* bin);
 #endif  //< #if USING_UTF16
 #if USING_UTF32
 /* Prints the BIn to the Text.
 @param  bin The pin to print.
 @param  text The Text to print the bin to.
 @return The text. */
-KABUKI Utf32& Print(Utf32& printer, BIn* bin);
+DLL Utf32& Print(Utf32& printer, BIn* bin);
 #endif  //< #if USING_UTF32
 #endif
 

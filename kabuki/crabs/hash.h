@@ -38,13 +38,13 @@ inline hash64_t Hash64(char c, hash64_t hash) {
 }
 
 /* Hashes the given char using the primeHash function. */
-KABUKI uint16_t Hash16(const char* string, uint16_t hash = kLargest16BitPrime);
+DLL uint16_t Hash16(const char* string, uint16_t hash = kLargest16BitPrime);
 
 /* Hashes the given char using the primeHash function. */
-KABUKI uint16_t Hash32(const char* string, hash32_t hash = kLargest32BitPrime);
+DLL uint16_t Hash32(const char* string, hash32_t hash = kLargest32BitPrime);
 
 /* Hashes the given char using the primeHash function. */
-KABUKI hash64_t Hash64(const char* string, hash64_t hash = kLargest64BitPrime);
+DLL hash64_t Hash64(const char* string, hash64_t hash = kLargest64BitPrime);
 
 }  // namespace _
 #endif  //< #if SEAM >= SEAM_0_0_0

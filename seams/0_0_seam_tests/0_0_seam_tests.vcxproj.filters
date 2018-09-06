@@ -8,31 +8,19 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="kabuki\crabs">
-      <UniqueIdentifier>{c9fed358-324c-4fa2-8799-73e59bffd98d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="kabuki\platform_win32">
-      <UniqueIdentifier>{01e58df6-5bcf-4913-9d37-fb7bc2fd5863}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="kabuki\features">
-      <UniqueIdentifier>{054ad2b2-63f8-42a0-8cee-b9947e1399ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="kabuki\tek">
-      <UniqueIdentifier>{861ae69b-6629-4c67-bdc2-4d1d4d6e77be}</UniqueIdentifier>
-    </Filter>
     <Filter Include="0_0_seam_tests">
       <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\f2">
+      <UniqueIdentifier>{bf4eaa44-93da-40d5-b92d-992f938e44e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\crabs">
+      <UniqueIdentifier>{b24abc50-1aa7-4ebf-8b17-28642b880959}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="test_script.s2">
       <Filter>0_0_seam_tests</Filter>
-    </None>
-    <None Include="..\..\kabuki\README.md">
-      <Filter>kabuki</Filter>
-    </None>
-    <None Include="..\..\kabuki\crabs\README.md">
-      <Filter>kabuki\crabs</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -48,182 +36,23 @@
     <ClInclude Include="test_seam_0.h">
       <Filter>0_0_seam_tests</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\kabuki\seams.h">
-      <Filter>kabuki</Filter>
+    <ClInclude Include="..\..\kabuki\f2\talign.h">
+      <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\debug.h">
-      <Filter>kabuki\crabs</Filter>
+    <ClInclude Include="..\..\kabuki\f2\tbinary.h">
+      <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\door.h">
-      <Filter>kabuki\crabs</Filter>
+    <ClInclude Include="..\..\kabuki\f2\test.h">
+      <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\error.h">
-      <Filter>kabuki\crabs</Filter>
+    <ClInclude Include="..\..\kabuki\f2\console.h">
+      <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\event.h">
-      <Filter>kabuki\crabs</Filter>
+    <ClInclude Include="..\..\kabuki\f2\binary.h">
+      <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\expr.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\floor.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\global.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\hash.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\hex.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\interrupts.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\iterator.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\language.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\library.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\lock.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\mirror.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\obj.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\op.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\operand.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\random.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\room.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\slot.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\socket.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\str.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\str1.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\str2.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\str4.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\talign.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\tascii_data_types.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\tclock.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\tdic.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\tlom.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\tlst.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\tmap.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\tmud.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\tobj.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\tset.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\tsocket.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\tstk.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\tstr.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\ttbl.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\varint.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\wall.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\address.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\align.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\args.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\array.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\ascii.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\ascii_data_types.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\bin.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\bout.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\bsq.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\buffer.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\clock.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\config.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\binary_32.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\public.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\binary_64.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\crabs\tbinary.h">
-      <Filter>kabuki\crabs</Filter>
+    <ClInclude Include="..\..\kabuki\f2\ttest.h">
+      <Filter>kabuki\f2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -248,83 +77,20 @@
     <ClCompile Include="test_seam_0_0_4.cc">
       <Filter>0_0_seam_tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_clock.cc">
-      <Filter>kabuki\crabs</Filter>
+    <ClCompile Include="..\..\kabuki\f2\f2_foundational_framework.cc">
+      <Filter>kabuki\f2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_debug.cc">
-      <Filter>kabuki\crabs</Filter>
+    <ClCompile Include="..\..\kabuki\f2\f2_binary.cc">
+      <Filter>kabuki\f2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_door.cc">
-      <Filter>kabuki\crabs</Filter>
+    <ClCompile Include="..\..\kabuki\f2\f2_rng.cc">
+      <Filter>kabuki\f2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_error.cc">
-      <Filter>kabuki\crabs</Filter>
+    <ClCompile Include="..\..\kabuki\f2\f2_test.cc">
+      <Filter>kabuki\f2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_expr.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_floor.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_hash.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_hex.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_interrupts.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_lock.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_obj.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_op.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_operand.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_random.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_right.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_room.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_slot.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_socket.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_str.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_wall.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_align.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_ascii_data_types.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_bin.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_bout.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_bsq.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_binary_64.cc">
-      <Filter>kabuki\crabs</Filter>
+    <ClCompile Include="..\..\kabuki\f2\f2_console.cc">
+      <Filter>kabuki\f2</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

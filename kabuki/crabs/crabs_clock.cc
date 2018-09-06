@@ -17,11 +17,10 @@ specific language governing permissions and limitations under the License. */
 #if SEAM >= SEAM_0_0_2
 // Dependencies:
 #include "clock.h"
-#include "debug.h"
-#include "floor.h"
+#include "test.h"
 #include "lock.h"
+#include "tbinary.h"
 #include "tclock.h"
-#include "tstr.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 2
 #define PRINT(item) Print(item)

@@ -201,7 +201,7 @@ class Library : public Operand {
 
 /* Destructs the given bag. */
 template <typename TIndex, typename TKey, typename TData, uint MaxStackSize>
-KABUKI void Destruct(Library<TIndex, TKey, TData, TData, MaxStackSize>* r) {
+DLL void Destruct(Library<TIndex, TKey, TData, TData, MaxStackSize>* r) {
   if (r == nullptr) return;
   delete reinterpret_cast<char*>(r);
 }

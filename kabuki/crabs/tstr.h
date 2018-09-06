@@ -17,9 +17,9 @@ specific language governing permissions and limitations under the License. */
 #define INCLUDED_CRABS_UTFN
 // Dependencies:
 #include "config.h"
-#include "debug.h"
 #include "socket.h"
 #include "tbinary.h"
+#include "test.h"
 #include "tobj.h"
 // End dependencies.
 #if SEAM == SEAM_0_0_2
@@ -651,37 +651,6 @@ Char* PrintCenter(Char* cursor, Char* end, const Char* string,
   return cursor;
 }
 
-template <typename Char, typename UI>
-Char* PrintHex(Char* cursor, Char* end, UI value) {
-  enum { kHexStringLengthSizeMax = sizeof(UI) * 2 + 3 };
-
-  ASSERT(cursor);
-  if (cursor + kHexStringLengthSizeMax >= end) return nullptr;
-
-  *cursor++ = '0';
-  *cursor++ = 'x';
-  for (int num_bits_shift = sizeof(UI) * 8 - 4; num_bits_shift >= 0;
-       num_bits_shift -= 4) {
-    *cursor++ = HexNibbleToUpperCase((uint8_t)(value >> num_bits_shift));
-  }
-  *cursor = 0;
-  return cursor;
-}
-
-template <typename Char, typename T>
-Char* PrintBinary(Char* cursor, Char* end, T value) {
-  if (cursor + sizeof(uint64_t) * 8 >= end) {
-    return nullptr;
-  }
-
-  for (int i = 0; i < sizeof(T) * 8; ++i) {
-    *cursor++ = (char)('0' + (value >> (sizeof(T) * 8 - 1)));
-    value = value << 1;
-  }
-  *cursor = 0;
-  return cursor;
-}
-
 template <typename Char = char>
 Char* PrintLine(Char* cursor, Char* end, Char token, int column_count) {
   ASSERT(cursor);
@@ -797,154 +766,6 @@ Char Lowercase(Char c) {
   if ((c & 0x3f) == 3) return c - 64;
   return c;
 }
-
-/* Utility class for printing strings.
-This class only stores the end of buffer pointer and a pointer to the write
-begin. It is up the user to store start of buffer pointer and if they would
-like to replace the begin with the beginning of buffer pointer when they
-are done printing.
-*/
-template <typename Char = char>
-struct KABUKI TUtf {
-  Char *begin,  //< Write begin pointer.
-      *end;     //< End of buffer pointer.
-
-  /* Initializes the Utf& from the given buffer pointers.
-  @param begin The beginning of the buffer.
-  @param end   The end of the buffer. */
-  TUtf(Char* begin, intptr_t size)
-      : begin(begin), end(Ptr<Char>(begin, size - 1)) {
-    ASSERT(begin);
-    ASSERT(ObjSizeIsValid(size, 8));
-  }
-
-  /* Initializes the Utf& from the given buffer pointers.
-  @param begin The beginning of the buffer.
-  @param end   The end of the buffer. */
-  TUtf(Char* begin, Char* end) {}
-
-  /* Clones the other print. */
-  TUtf(const TUtf& other)
-      : begin(other.begin), end(other.end) {  // Nothing to do here!.
-  }
-
-  /* Sets the begin pointer to the new_pointer. */
-  inline TUtf& Set(Char* new_pointer) {
-    if (!new_pointer) return *this;
-    begin = new_pointer;
-    return *this;
-  }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(int8_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(uint8_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(int16_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(uint16_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(int32_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(uint32_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(int64_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(uint64_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(float value) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(double value) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
-
-  /* Prints the given pointer as hex. */
-  inline TUtf& Hex(const void* pointer) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(int8_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(uint8_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(int16_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(uint16_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(int32_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(uint32_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(int64_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(uint64_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(float value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(double value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given pointer as binary. */
-  inline TUtf& Binary(const void* pointer) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-};
 
 /* A UTF-8, UTF-16, or UTF-32 Text token without any whitespace. */
 template <typename Char = char>
@@ -1171,6 +992,154 @@ inline Char* StrStop(uintptr_t* begin) {
   Char* start = reinterpret_cast<Char*>(address);
   return reinterpret_cast<Char*>(address) + (size >> kWordBitCount);
 }
+
+/* Utility class for printing strings.
+This class only stores the end of buffer pointer and a pointer to the write
+begin. It is up the user to store start of buffer pointer and if they would
+like to replace the begin with the beginning of buffer pointer when they
+are done printing.
+*/
+template <typename Char = char>
+struct TUtf {
+  Char *begin,  //< Write begin pointer.
+      *end;     //< End of buffer pointer.
+
+  /* Initializes the Utf& from the given buffer pointers.
+  @param begin The beginning of the buffer.
+  @param end   The end of the buffer. */
+  TUtf(Char* begin, intptr_t size)
+      : begin(begin), end(Ptr<Char>(begin, size - 1)) {
+    ASSERT(begin);
+    ASSERT(ObjSizeIsValid(size, 8));
+  }
+
+  /* Initializes the Utf& from the given buffer pointers.
+  @param begin The beginning of the buffer.
+  @param end   The end of the buffer. */
+  TUtf(Char* begin, Char* end) {}
+
+  /* Clones the other print. */
+  TUtf(const TUtf& other)
+      : begin(other.begin), end(other.end) {  // Nothing to do here!.
+  }
+
+  /* Sets the begin pointer to the new_pointer. */
+  inline TUtf& Set(Char* new_pointer) {
+    if (!new_pointer) return *this;
+    begin = new_pointer;
+    return *this;
+  }
+
+  /* Prints the given value as hex. */
+  inline TUtf& Hex(int8_t value) {
+    return Set(PrintHex<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as hex. */
+  inline TUtf& Hex(uint8_t value) {
+    return Set(PrintHex<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as hex. */
+  inline TUtf& Hex(int16_t value) {
+    return Set(PrintHex<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as hex. */
+  inline TUtf& Hex(uint16_t value) {
+    return Set(PrintHex<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as hex. */
+  inline TUtf& Hex(int32_t value) {
+    return Set(PrintHex<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as hex. */
+  inline TUtf& Hex(uint32_t value) {
+    return Set(PrintHex<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as hex. */
+  inline TUtf& Hex(int64_t value) {
+    return Set(PrintHex<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as hex. */
+  inline TUtf& Hex(uint64_t value) {
+    return Set(PrintHex<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as hex. */
+  inline TUtf& Hex(float value) {
+    return Set(PrintHex<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as hex. */
+  inline TUtf& Hex(double value) {
+    return Set(PrintHex<Char>(begin, end, value));
+  }
+
+  /* Prints the given pointer as hex. */
+  inline TUtf& Hex(const void* pointer) {
+    return Set(PrintHex<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as binary. */
+  inline TUtf& Binary(int8_t value) {
+    return Set(Binary<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as binary. */
+  inline TUtf& Binary(uint8_t value) {
+    return Set(Binary<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as binary. */
+  inline TUtf& Binary(int16_t value) {
+    return Set(Binary<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as binary. */
+  inline TUtf& Binary(uint16_t value) {
+    return Set(Binary<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as binary. */
+  inline TUtf& Binary(int32_t value) {
+    return Set(Binary<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as binary. */
+  inline TUtf& Binary(uint32_t value) {
+    return Set(Binary<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as binary. */
+  inline TUtf& Binary(int64_t value) {
+    return Set(Binary<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as binary. */
+  inline TUtf& Binary(uint64_t value) {
+    return Set(Binary<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as binary. */
+  inline TUtf& Binary(float value) {
+    return Set(Binary<Char>(begin, end, value));
+  }
+
+  /* Prints the given value as binary. */
+  inline TUtf& Binary(double value) {
+    return Set(Binary<Char>(begin, end, value));
+  }
+
+  /* Prints the given pointer as binary. */
+  inline TUtf& Binary(const void* pointer) {
+    return Set(Binary<Char>(begin, end, value));
+  }
+};
 
 /* A string that is statically or dynamically allocated and can do "stuff"
 upon destruct.

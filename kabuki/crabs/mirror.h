@@ -26,7 +26,7 @@ namespace _ {
 
 /* A Mirror in a Chinese Room.
     A Mirror */
-struct KABUKI Mirror {
+struct DLL Mirror {
   uint_t size,  //< The size of the buffer.
       start,    //< The starting index of the ring buffer data.
       stop,     //< The stopping index of the ring buffer data.
@@ -46,34 +46,34 @@ static const uintptr_t kMaxMirrorSize = ~((uintptr_t)0);
     @param  Start The start of the data.
     @param  Stop  The stop of the data.
     @param  Size The size of the buffer. */
-KABUKI uint_t MirrorLength(char* start, char* stop, uint_t size);
+DLL uint_t MirrorLength(char* start, char* stop, uint_t size);
 
 /* Calculates the space left in the given ring buffer.
     @param  Start The start of the data.
     @param  Stop  The stop of the data.
     @param  Size  The size of the buffer. */
-KABUKI uint_t MirrorSpace(char* start, char* stop, uint_t size);
+DLL uint_t MirrorSpace(char* start, char* stop, uint_t size);
 
 /* Checks if the given slot contains the specified address. */
-KABUKI void* MirrorContains(Mirror* mirror, void* address);
+DLL void* MirrorContains(Mirror* mirror, void* address);
 
 /* Clears the ring buffer by writing zeros to it. */
-KABUKI void MirrorWipe(Mirror* mirror);
+DLL void MirrorWipe(Mirror* mirror);
 
 /* Copies a block from a ring-buffer to the given destination. */
-// KABUKI char* MirrorWrite (Mirror* mirror, void* source, size_t size);
+// DLL char* MirrorWrite (Mirror* mirror, void* source, size_t size);
 
 /* Copies a block from a ring-buffer to the given destination. */
-// KABUKI char* MirrorRead (Mirror* mirror, void* source, size_t size);
+// DLL char* MirrorRead (Mirror* mirror, void* source, size_t size);
 
 /* Gets the args from the b-sequence. */
-KABUKI const Op* MirrorRead(Mirror* mirror, const uint_t* params, void** args);
+DLL const Op* MirrorRead(Mirror* mirror, const uint_t* params, void** args);
 
 /* Posts a evaluated result to the b-sequence. */
-// KABUKI const Op* MirrorWrite (Mirror* mirror, const uint_t* params,
+// DLL const Op* MirrorWrite (Mirror* mirror, const uint_t* params,
 //                                   void** args);
 
-KABUKI bool MirrorIsReadable(Mirror* mirror);
+DLL bool MirrorIsReadable(Mirror* mirror);
 
 /* Used to return an erroneous result from a B-Input.
     @param  bin     The source Mirror.
@@ -82,7 +82,7 @@ KABUKI bool MirrorIsReadable(Mirror* mirror);
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Op* MirrorResult(Mirror* mirror, Error error,
+DLL const Op* MirrorResult(Mirror* mirror, Error error,
                               const uint_t* header);
 /* Used to return an erroneous result from a B-Input.
     @param  bin     The source Mirror.
@@ -91,7 +91,7 @@ KABUKI const Op* MirrorResult(Mirror* mirror, Error error,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Op* MirrorResult(Mirror* mirror, Error error,
+DLL const Op* MirrorResult(Mirror* mirror, Error error,
                               const uint_t* header);
 
 /* Used to return an erroneous result from a B-Input.
@@ -101,7 +101,7 @@ KABUKI const Op* MirrorResult(Mirror* mirror, Error error,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
+DLL const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
                               byte offset);
 
 /* Used to return an erroneous result from a B-Input.
@@ -111,7 +111,7 @@ KABUKI const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-// KABUKI const Op* MirrorResult (Mirror* mirror, Error error,
+// DLL const Op* MirrorResult (Mirror* mirror, Error error,
 //                                   const uint_t* header,
 //                                   uint_t offset);
 
@@ -122,7 +122,7 @@ KABUKI const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
+DLL const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
                               uint_t offset, char* address);
 
 /* Used to return an erroneous result from a B-Input.
@@ -132,7 +132,7 @@ KABUKI const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-KABUKI const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
+DLL const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
                               uint_t offset, char* address);
 
 }  // namespace _

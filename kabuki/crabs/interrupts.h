@@ -13,8 +13,8 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#ifndef CRABS_EXCEPTIONS_H
-#define CRABS_EXCEPTIONS_H
+#ifndef INCLUDED_CRABS_EXCEPTIONS
+#define INCLUDED_CRABS_EXCEPTIONS
 // Dependencies:
 #include "config.h"
 // End dependencies.
@@ -24,10 +24,10 @@ namespace _ {
 
 #if USING_TEXT_SCRIPT
 /* Exception thrown to interrupt and crash the program. */
-struct KABUKI RoomCrashException : public std::exception {
+struct DLL RoomCrashException : public std::exception {
   const char* what() const throw();
 };
 #endif
 }  // namespace _
 #endif  //< USING_CRABS_INTERRUPTS
-#endif  //< CRABS_EXCEPTIONS_H
+#endif  //< INCLUDED_CRABS_EXCEPTIONS

@@ -19,102 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\kabuki\crabs\README.md" />
-    <None Include="..\..\kabuki\README.md" />
     <None Include="test_script.s2" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\kabuki\crabs\address.h" />
-    <ClInclude Include="..\..\kabuki\crabs\align.h" />
-    <ClInclude Include="..\..\kabuki\crabs\args.h" />
-    <ClInclude Include="..\..\kabuki\crabs\array.h" />
-    <ClInclude Include="..\..\kabuki\crabs\ascii.h" />
-    <ClInclude Include="..\..\kabuki\crabs\ascii_data_types.h" />
-    <ClInclude Include="..\..\kabuki\crabs\bin.h" />
-    <ClInclude Include="..\..\kabuki\crabs\binary_32.h" />
-    <ClInclude Include="..\..\kabuki\crabs\bout.h" />
-    <ClInclude Include="..\..\kabuki\crabs\bsq.h" />
-    <ClInclude Include="..\..\kabuki\crabs\buffer.h" />
-    <ClInclude Include="..\..\kabuki\crabs\clock.h" />
-    <ClInclude Include="..\..\kabuki\crabs\config.h" />
-    <ClInclude Include="..\..\kabuki\crabs\debug.h" />
-    <ClInclude Include="..\..\kabuki\crabs\binary_64.h" />
-    <ClInclude Include="..\..\kabuki\crabs\door.h" />
-    <ClInclude Include="..\..\kabuki\crabs\error.h" />
-    <ClInclude Include="..\..\kabuki\crabs\event.h" />
-    <ClInclude Include="..\..\kabuki\crabs\expr.h" />
-    <ClInclude Include="..\..\kabuki\crabs\floor.h" />
-    <ClInclude Include="..\..\kabuki\crabs\global.h" />
-    <ClInclude Include="..\..\kabuki\crabs\hash.h" />
-    <ClInclude Include="..\..\kabuki\crabs\hex.h" />
-    <ClInclude Include="..\..\kabuki\crabs\interrupts.h" />
-    <ClInclude Include="..\..\kabuki\crabs\iterator.h" />
-    <ClInclude Include="..\..\kabuki\crabs\language.h" />
-    <ClInclude Include="..\..\kabuki\crabs\library.h" />
-    <ClInclude Include="..\..\kabuki\crabs\lock.h" />
-    <ClInclude Include="..\..\kabuki\crabs\mirror.h" />
-    <ClInclude Include="..\..\kabuki\crabs\obj.h" />
-    <ClInclude Include="..\..\kabuki\crabs\op.h" />
-    <ClInclude Include="..\..\kabuki\crabs\operand.h" />
-    <ClInclude Include="..\..\kabuki\crabs\public.h" />
-    <ClInclude Include="..\..\kabuki\crabs\random.h" />
-    <ClInclude Include="..\..\kabuki\crabs\room.h" />
-    <ClInclude Include="..\..\kabuki\crabs\slot.h" />
-    <ClInclude Include="..\..\kabuki\crabs\socket.h" />
-    <ClInclude Include="..\..\kabuki\crabs\str.h" />
-    <ClInclude Include="..\..\kabuki\crabs\str1.h" />
-    <ClInclude Include="..\..\kabuki\crabs\str2.h" />
-    <ClInclude Include="..\..\kabuki\crabs\str4.h" />
-    <ClInclude Include="..\..\kabuki\crabs\talign.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tascii_data_types.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tclock.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tbinary.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tdic.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tlom.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tlst.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tmap.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tmud.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tobj.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tset.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tsocket.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tstk.h" />
-    <ClInclude Include="..\..\kabuki\crabs\tstr.h" />
-    <ClInclude Include="..\..\kabuki\crabs\ttbl.h" />
-    <ClInclude Include="..\..\kabuki\crabs\varint.h" />
-    <ClInclude Include="..\..\kabuki\crabs\wall.h" />
-    <ClInclude Include="..\..\kabuki\seams.h" />
+    <ClInclude Include="..\..\kabuki\f2\binary.h" />
+    <ClInclude Include="..\..\kabuki\f2\console.h" />
+    <ClInclude Include="..\..\kabuki\f2\test.h" />
+    <ClInclude Include="..\..\kabuki\f2\talign.h" />
+    <ClInclude Include="..\..\kabuki\f2\tbinary.h" />
+    <ClInclude Include="..\..\kabuki\f2\ttest.h" />
     <ClInclude Include="assembly.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="test_seam_0.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\kabuki\crabs\crabs_align.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_ascii_data_types.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_bin.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_bout.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_bsq.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_clock.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_debug.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_binary_64.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_door.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_error.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_expr.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_floor.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_hash.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_hex.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_interrupts.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_lock.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_obj.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_op.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_operand.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_random.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_right.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_room.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_slot.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_socket.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_str.cc" />
-    <ClCompile Include="..\..\kabuki\crabs\crabs_wall.cc" />
+    <ClCompile Include="..\..\kabuki\f2\f2_binary.cc" />
+    <ClCompile Include="..\..\kabuki\f2\f2_console.cc" />
+    <ClCompile Include="..\..\kabuki\f2\f2_test.cc" />
+    <ClCompile Include="..\..\kabuki\f2\f2_foundational_framework.cc" />
+    <ClCompile Include="..\..\kabuki\f2\f2_rng.cc" />
     <ClCompile Include="stdafx.cc" />
     <ClCompile Include="tests_main.cc" />
     <ClCompile Include="test_seam_0_0_0.cc" />
@@ -199,7 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)/../../library/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

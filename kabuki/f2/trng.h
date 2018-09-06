@@ -15,17 +15,6 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 #ifndef INCLUDED_CRABS_RANDOM
 #define INCLUDED_CRABS_RANDOM
-// Dependencies:
-#include "config.h"
-// End dependencies.
 
-namespace _ {
-
-/* Gets a uniform random uint64_t. */
-inline uint64_t GetRandomUInt64();
-
-/* Gets a uniform random int64_t. */
-inline int64_t GetRandomInt64();
-
-}  // namespace _
-#endif  //< INCLUDED_CRABS_RANDOM
+namespace _ {}  // namespace _
+#endif          //< INCLUDED_CRABS_RANDOM

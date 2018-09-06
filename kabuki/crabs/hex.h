@@ -20,51 +20,7 @@ specific language governing permissions and limitations under the License. */
 #include "config.h"
 // End dependencies.
 
-namespace _ {
-
-/* Converts a single byte a one-byte hex representation. */
-KABUKI byte HexNibbleToLowerCase(byte b);
-
-/* Converts a single byte a one-byte hex representation. */
-KABUKI byte HexNibbleToUpperCase(byte b);
-
-/* Converts a single byte a two-byte hex representation. */
-KABUKI uint16_t HexByteToLowerCase(byte b);
-
-/* Converts a single byte a two-byte hex representation. */
-KABUKI uint16_t HexByteToUpperCase(byte b);
-
-/* Converts a single hex byte a byte.
-@return Returns -1 if c is not a hex byte.
-*/
-KABUKI int HexToByte(byte hex_byte);
-
-/* Converts a single byte into a two-byte hex representation.
-@return Returns -1 if c is not a hex byte.
-*/
-KABUKI int HexToByte(uint16_t hex);
-
-/* Converts a single byte a one-byte hex representation. */
-KABUKI byte HexNibbleToLowerCase(byte b);
-
-/* Converts a single byte a one-byte hex representation. */
-KABUKI byte HexNibbleToUpperCase(byte b);
-
-/* Converts a single byte a two-byte hex representation. */
-KABUKI uint16_t HexByteToLowerCase(byte b);
-
-/* Converts a single byte a two-byte hex representation. */
-KABUKI uint16_t HexByteToUpperCase(byte b);
-
-/* Converts a single hex byte a byte.
-    @return Returns -1 if c is not a hex byte. */
-KABUKI int HexToByte(byte c);
-
-/* Converts a single byte into a two-byte hex representation.
-    @return Returns -1 if c is not a hex byte. */
-KABUKI int HexToByte(uint16_t h);
-
-}  // namespace _
+namespace _ {}  // namespace _
 
 #endif  //< INCLUDED_CRABS_HEX
 #endif  //< #if SEAM >= SEAM_0_0_0

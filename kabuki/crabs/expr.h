@@ -35,7 +35,8 @@ namespace _ {
     App/Driver/User writes to the end of the Tx buffer and the driver reads from
     the beginning. The user writes are synchronous and the driver reads are
     asynchronous.
-    
+    
+
 
 
 
@@ -46,7 +47,8 @@ namespace _ {
 
 
     # Ring Buffer Streaming Diagram
-    
+    
+
 
 
 
@@ -65,7 +67,8 @@ namespace _ {
     BIn   |>-Buffer->|>-Async Portal Tx->|>-Sync User Writes->|>-Buffer->|
           |__________|___________________|____________________|__________|
     @endcode
-    
+    
+
 
 
 
@@ -77,7 +80,8 @@ namespace _ {
 
     Almost all block of memory in Script has something that grows up and another
     that grows down.
-    
+    
+
 
 
 
@@ -88,7 +92,8 @@ namespace _ {
 
 
     # Stack Memory Layout
-    
+    
+
 
 
 
@@ -159,25 +164,25 @@ struct Expr {
 };
 
 /* Gets a pointer to the BIn slot. */
-KABUKI uintptr_t* ExprBinAddress(Expr* expr);
+DLL uintptr_t* ExprBinAddress(Expr* expr);
 
 /* Gets the expr's buffer. */
-KABUKI char* ExprBuffer(Expr* expr);
+DLL char* ExprBuffer(Expr* expr);
 
 /* Gets a pointer to the BIn slot. */
-KABUKI BIn* ExprBIn(Expr* expr);
+DLL BIn* ExprBIn(Expr* expr);
 
 /* Gets a pointer to the BOut slot. */
-KABUKI uintptr_t* ExprBOutAddress(Expr* expr);
+DLL uintptr_t* ExprBOutAddress(Expr* expr);
 
 /* Gets a pointer to the BOut slot. */
-KABUKI BOut* ExprBOut(Expr* expr);
+DLL BOut* ExprBOut(Expr* expr);
 
 /* Creates a Stack with equal sized rx and tx slots.
     @param root The root-scope device.
     @param unpacked_buffer The word-aligned expression buffer.
     @param unpacked_size   Size of the unpacked buffer. */
-KABUKI Expr* ExprInit(uintptr_t* buffer, uint_t buffer_size, uint_t stack_count,
+DLL Expr* ExprInit(uintptr_t* buffer, uint_t buffer_size, uint_t stack_count,
                       Operand* root, uintptr_t* unpacked_buffer,
                       uintptr_t unpacked_size);
 
@@ -187,72 +192,73 @@ inline Operand** ExprStack(Expr* expr) {
 }
 
 /* Returns true if the Stack uses dynamic memory. */
-// KABUKI bool ExprIsDynamic (Expr* expr);
+// DLL bool ExprIsDynamic (Expr* expr);
 
-KABUKI char* ExprEndAddress(Expr* expr);
+DLL char* ExprEndAddress(Expr* expr);
 
 /* Resets this Stack to the newial state. */
-KABUKI const Op* ExprReset(Expr* expr);
+DLL const Op* ExprReset(Expr* expr);
 
 /* Pushes the operand at the given index of the current
     device control onto the stack.
     @return Returns nil upon success and a pointer to a char
             upon failure. */
-KABUKI const Op* Push(Expr* expr, Operand* operand);
+DLL const Op* Push(Expr* expr, Operand* operand);
 
 /* Attempts to pop an Star off the stack and returns a pointer to a
     char upon failure. */
-KABUKI const Op* Pop(Expr* expr);
+DLL const Op* Pop(Expr* expr);
 
 /* Exits the current state. */
-KABUKI byte ExprExitState(Expr* expr);
+DLL byte ExprExitState(Expr* expr);
 
 /* Sets the new state onto the expression stack.
-KABUKI const Op* ExprSetState (Expr* expr, BInState state); */
+DLL const Op* ExprSetState (Expr* expr, BInState state); */
 
 /* Saves the current bin_state and sets the bin_state to the new state. */
-KABUKI const Op* ExprEnterState(Expr* expr, BInState state);
+DLL const Op* ExprEnterState(Expr* expr, BInState state);
 
 /* Streams a B-Output byte. */
-KABUKI byte ExprStreamBOut(Expr* expr);
+DLL byte ExprStreamBOut(Expr* expr);
 
 /* Scans the BOut buffer and marks the data as being ready to execute.
     @param a The Stack to scan. */
-KABUKI const Op* ExprUnpack(Expr* expr);  // , Portal* io);
+DLL const Op* ExprUnpack(Expr* expr);  // , Portal* io);
 
 /* Returns true if the given Stack contains the given address. */
-KABUKI bool ExprContains(Expr* expr, void* address);
+DLL bool ExprContains(Expr* expr, void* address);
 
 /* Pushes a header onto the scan stack.*/
-KABUKI const Op* ExprScanHeader(Expr* expr, const uint_t* header);
+DLL const Op* ExprScanHeader(Expr* expr, const uint_t* header);
 
 /* Gets the base address of the header stack. */
-KABUKI const uint_t* ExprHeaderStack(Expr* expr);
+DLL const uint_t* ExprHeaderStack(Expr* expr);
 
 /* Closes the current expr and cues it for execution. */
-KABUKI void ExprClose(Expr* expr);
+DLL void ExprClose(Expr* expr);
 
 /* Cancels the current expr. */
-KABUKI void ExprCancel(Expr* expr);
+DLL void ExprCancel(Expr* expr);
 
 /* Cancels the current expr and writes zeros to the buffer. */
-KABUKI void ExprClear(Expr* expr);
+DLL void ExprClear(Expr* expr);
 
 /* Script Bell Op rings the bell of the given address. */
-KABUKI void ExprRingBell(Expr* expr, const char* address = "");
+DLL void ExprRingBell(Expr* expr, const char* address = "");
 
 /* Script Ack-back Op replies an ACK to a Bell Op. */
-KABUKI void ExprAckBack(Expr* expr, const char* address = "");
+DLL void ExprAckBack(Expr* expr, const char* address = "");
 
 /* Disconnects the expression. */
-KABUKI const Op* ExprForceDisconnect(Expr* expr, Error error);
+DLL const Op* ExprForceDisconnect(Expr* expr, Error error);
 
 /* Reads the Expr args from the expr->slot.
 inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
    const char* cursor = ArgsParse (expr->args_cursor, expr->args_end,
                                    params, args);
    if (!cursor) {
-       
+       
+
 
 
 
@@ -315,20 +321,20 @@ inline const Op* ExprResult(Expr* expr, const Op* op, void** args) {
     @param expr   The expression to write the Op header to.
     @param header The Op header.
     @return Returns the header if expr is nil. */
-KABUKI const Op* ExprQuery(Expr* expr, const Op& header);
+DLL const Op* ExprQuery(Expr* expr, const Op& header);
 
 /* Returns the Op header or writes it to the Expr.
     @param expr   The expression to write the Op header to.
     @param op     The Op header.
     @return Returns the header if expr is nil. */
-KABUKI const Op* ExprQuery(Expr* expr, const Op* op);
+DLL const Op* ExprQuery(Expr* expr, const Op* op);
 
 #if CRABS_TEXT
 /* Prints the Expr stack to the Text buffer */
-KABUKI Utf8& PrintExpr(Utf8& printer, Expr* expr);
+DLL Utf8& PrintExpr(Utf8& printer, Expr* expr);
 
 /* Prints the Expr stack to the Text buffer */
-KABUKI Utf8& PrintExprStack(Utf8& printer, Expr* expr);
+DLL Utf8& PrintExprStack(Utf8& printer, Expr* expr);
 #endif
 
 }  // namespace _

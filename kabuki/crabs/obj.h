@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #define INCLUDED_CRABS_OBJ
 // Dependencies:
 #include "align.h"
-#include "debug.h"
+#include "test.h"
 // End dependencies.
 
 typedef void (*Destructor)(uintptr_t* buffer);

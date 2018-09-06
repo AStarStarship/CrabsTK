@@ -15,7 +15,7 @@ specific language governing permissions and limitations under the License. */
 #if SEAM >= SEAM_0_0_3
 // Dependencies:
 #include "bsq.h"
-#include "debug.h"
+#include "test.h"
 #include "str1.h"
 // End dependencies.
 

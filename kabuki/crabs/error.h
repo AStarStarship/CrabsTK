@@ -55,10 +55,10 @@ typedef enum ScriptError {
 } Error;
 
 /* Returns an array or string pointers for the KabukiError(s). */
-KABUKI const char** ErrorStrings();
+DLL const char** ErrorStrings();
 
 /* Returns one of the Errors () strings. */
-KABUKI const char* ErrorString(Error error);
+DLL const char* ErrorString(Error error);
 
 }  // namespace _
 #endif  //< #if SEAM >= SEAM_0_0_4

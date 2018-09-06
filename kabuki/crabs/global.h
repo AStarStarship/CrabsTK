@@ -19,35 +19,50 @@ specific language governing permissions and limitations under the License. */
 #include "config.h"
 
 #if SEAM >= SEAM_0_0_0
+#if SEAM == SEAM_0_0_0
+#include "test.h"
+#include "random.h"
+#include "tbinary.h"
+#else
+#include "binary_32.h"
 #include "binary_64.h"
 #include "random.h"
 #endif
+#endif
 
 #if SEAM >= SEAM_0_0_1
+#if SEAM == SEAM_0_0_1
+#include "test.h"
+#else
 #include "binary_64.h"
 #include "clock.h"
-#include "debug.h"
 #include "hex.h"
 #include "socket.h"
 #include "str.h"
 #endif
+#endif
 
 #if SEAM >= SEAM_0_0_2
+#if SEAM == SEAM_0_0_2
 #include "array.h"
 #include "ascii.h"
 #include "bsq.h"
+#include "test.h"
 #include "list.h"
 #include "map.h"
 #include "stack.h"
 //#include "multimap.h"
 //#include "dictionary.h"
 #endif
+#endif
 
 #if SEAM >= SEAM_0_0_3
+#if SEAM == SEAM_0_0_3
 #include "address.h"
 #include "args.h"
 #include "bin.h"
 #include "bout.h"
+#include "test.h"
 #include "event.h"
 #include "expr.h"
 #include "interrupts.h"
@@ -55,9 +70,13 @@ specific language governing permissions and limitations under the License. */
 #include "room.h"
 #include "slot.h"
 #endif
+#endif
 
 #if SEAM >= SEAM_0_0_4
+#if SEAM == SEAM_0_0_4
+#include "test.h"
 #include "table.h"
+#endif
 #endif
 // End dependencies.
 

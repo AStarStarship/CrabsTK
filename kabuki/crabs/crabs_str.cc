@@ -15,7 +15,7 @@ specific language governing permissions and limitations under the License. */
 #if SEAM >= SEAM_0_0_1
 // Dependencies:
 #include "ascii.h"
-#include "debug.h"
+#include "test.h"
 #include "hex.h"
 #include "socket.h"
 #include "tbinary.h"
@@ -320,35 +320,35 @@ char* PrintLineString(char* cursor, char* end, const char* string,
 }
 
 const char* Scan(const char* string, int8_t& result) {
-  return TextScanSigned<char, int8_t, uint8_t>(string, result);
+  return ScanSigned<char, int8_t, uint8_t>(string, result);
 }
 
 const char* Scan(const char* string, uint8_t& result) {
-  return TextScanUnsigned<char, uint8_t>(string, result);
+  return ScanUnsined<char, uint8_t>(string, result);
 }
 
 const char* Scan(const char* string, int16_t& result) {
-  return TextScanSigned<char, int16_t, uint16_t>(string, result);
+  return ScanSigned<char, int16_t, uint16_t>(string, result);
 }
 
 const char* Scan(const char* string, uint16_t& result) {
-  return TextScanUnsigned<char, uint16_t>(string, result);
+  return ScanUnsined<char, uint16_t>(string, result);
 }
 
 const char* Scan(const char* string, int32_t& result) {
-  return TextScanSigned<char, int32_t, uint32_t>(string, result);
+  return ScanSigned<char, int32_t, uint32_t>(string, result);
 }
 
 const char* Scan(const char* string, uint32_t& result) {
-  return TextScanUnsigned<char, uint32_t>(string, result);
+  return ScanUnsined<char, uint32_t>(string, result);
 }
 
 const char* Scan(const char* string, int64_t& result) {
-  return TextScanSigned<char, int64_t, uint64_t>(string, result);
+  return ScanSigned<char, int64_t, uint64_t>(string, result);
 }
 
 const char* Scan(const char* string, uint64_t& result) {
-  return TextScanUnsigned<char, uint64_t>(string, result);
+  return ScanUnsined<char, uint64_t>(string, result);
 }
 
 const char* Scan(const char* string, float& result) {
@@ -960,35 +960,35 @@ char16_t* PrintMemory(char16_t* begin, char16_t* end, const void* start,
 }  // namespace _
 
 const char16_t* Scan(const char16_t* string, int8_t& result) {
-  return TextScanSigned<char16_t, int8_t>(string, result);
+  return ScanSigned<char16_t, int8_t>(string, result);
 }
 
 const char16_t* Scan(const char16_t* string, uint8_t& result) {
-  return TextScanUnsigned<char16_t, uint8_t>(string, result);
+  return ScanUnsined<char16_t, uint8_t>(string, result);
 }
 
 const char16_t* Scan(const char16_t* string, int16_t& result) {
-  return TextScanSigned<char16_t, int16_t>(string, result);
+  return ScanSigned<char16_t, int16_t>(string, result);
 }
 
 const char16_t* Scan(const char16_t* string, uint16_t& result) {
-  return TextScanUnsigned<char16_t, uint16_t>(string, result);
+  return ScanUnsined<char16_t, uint16_t>(string, result);
 }
 
 const char16_t* Scan(const char16_t* string, int32_t& result) {
-  return TextScanSigned<char16_t, int32_t>(string, result);
+  return ScanSigned<char16_t, int32_t>(string, result);
 }
 
 const char16_t* Scan(const char16_t* string, uint32_t& result) {
-  return TextScanUnsigned<char16_t, uint32_t>(string, result);
+  return ScanUnsined<char16_t, uint32_t>(string, result);
 }
 
 const char16_t* Scan(const char16_t* string, int64_t& result) {
-  return TextScanSigned<char16_t, int64_t>(string, result);
+  return ScanSigned<char16_t, int64_t>(string, result);
 }
 
 const char16_t* Scan(const char16_t* string, uint64_t& result) {
-  return TextScanUnsigned<char16_t, uint64_t>(string, result);
+  return ScanUnsined<char16_t, uint64_t>(string, result);
 }
 
 const char16_t* Scan(const char16_t* string, float& result) {
@@ -1580,35 +1580,35 @@ char32_t* PrintMemory(char32_t* begin, char32_t* end, const void* start,
 }
 
 const char32_t* Scan(const char32_t* string, int8_t& result) {
-  return TextScanSigned<char32_t, int8_t>(string, result);
+  return ScanSigned<char32_t, int8_t>(string, result);
 }
 
 const char32_t* Scan(const char32_t* string, uint8_t& result) {
-  return TextScanUnsigned<char32_t, uint8_t>(string, result);
+  return ScanUnsined<char32_t, uint8_t>(string, result);
 }
 
 const char32_t* Scan(const char32_t* string, int16_t& result) {
-  return TextScanSigned<char32_t, int16_t>(string, result);
+  return ScanSigned<char32_t, int16_t>(string, result);
 }
 
 const char32_t* Scan(const char32_t* string, uint16_t& result) {
-  return TextScanUnsigned<char32_t, uint16_t>(string, result);
+  return ScanUnsined<char32_t, uint16_t>(string, result);
 }
 
 const char32_t* Scan(const char32_t* string, int32_t& result) {
-  return TextScanSigned<char32_t, int32_t>(string, result);
+  return ScanSigned<char32_t, int32_t>(string, result);
 }
 
 const char32_t* Scan(const char32_t* string, uint32_t& result) {
-  return TextScanUnsigned<char32_t, uint32_t>(string, result);
+  return ScanUnsined<char32_t, uint32_t>(string, result);
 }
 
 const char32_t* Scan(const char32_t* string, int64_t& result) {
-  return TextScanSigned<char32_t, int64_t>(string, result);
+  return ScanSigned<char32_t, int64_t>(string, result);
 }
 
 const char32_t* Scan(const char32_t* string, uint64_t& result) {
-  return TextScanUnsigned<char32_t, uint64_t>(string, result);
+  return ScanUnsined<char32_t, uint64_t>(string, result);
 }
 
 const char32_t* Scan(const char32_t* string, float& result) {

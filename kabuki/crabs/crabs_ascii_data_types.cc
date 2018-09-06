@@ -16,7 +16,7 @@ specific language governing permissions and limitations under the License. */
 // Dependencies:
 #include "align.h"
 #include "ascii_data_types.h"
-#include "debug.h"
+#include "test.h"
 #include "hex.h"
 #include "socket.h"
 // End dependencies.

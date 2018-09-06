@@ -15,7 +15,7 @@ specific language governing permissions and limitations under the License. */
 #if SEAM >= SEAM_0_0_4
 // Dependencies:
 #include "bsq.h"
-#include "debug.h"
+#include "test.h"
 #include "door.h"
 #include "room.h"
 #include "stack.h"

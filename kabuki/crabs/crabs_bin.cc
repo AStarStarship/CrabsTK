@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #include "bin.h"
 #include "bout.h"
 #include "bsq.h"
-#include "debug.h"
+#include "test.h"
 #include "hash.h"
 #include "hex.h"
 #include "line.h"
