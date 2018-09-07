@@ -67,7 +67,7 @@ typedef enum BOutStates {
 
     A B-Output ring-buffer is identical in structure to an BOut ring-buffer, but
     the stop becomes volatile and start is not volatile. */
-struct DLL BOut {
+struct API BOut {
   uint_t size;            //< Size of the B-Output.
   volatile uint_t start;  //< Starting index of the ring-buffer data.
   uint_t stop,            //< Stopping index of the ring-buffer data.
@@ -75,56 +75,56 @@ struct DLL BOut {
 };
 
 /* Get's the B-Output's buffer.*/
-DLL char* BOutBuffer(BOut* bout);
+API char* BOutBuffer(BOut* bout);
 
 #if CRABS_TEXT
 
 /* Gets a a char for printing out the bout_state. */
-DLL const char** BOutStateStrings();
+API const char** BOutStateStrings();
 
 #endif
 
 /* Initializes the B-Output buffer with the given buffer size. */
-DLL BOut* BOutInit(uintptr_t* buffer, uint_t size);
+API BOut* BOutInit(uintptr_t* buffer, uint_t size);
 
 /* Calculates the space left in the given ring buffer.
     @param  bout The B-Output buffer. */
-DLL uint_t BOutSpace(BOut* bout);
+API uint_t BOutSpace(BOut* bout);
 
 /* Gets the B-Output. */
-DLL uint_t BOutBufferLength(BOut* bout);
+API uint_t BOutBufferLength(BOut* bout);
 
 /* Gets the end address of the tx buffer. */
-DLL char* BOutEndAddress(BOut* bout);
+API char* BOutEndAddress(BOut* bout);
 
 /* Streams a B-Output byte.
     @param bout A B-Output abstract byte stream. */
-DLL int BOutStreamByte(BOut* bout);
+API int BOutStreamByte(BOut* bout);
 
 /* Writes a message with the given params to the given B-Output slot.
     @param bout   The B-Output socket to write to.
     @param params The escape sequence to write.
     @param args   The array of pointers to the stuff to write. */
-DLL const Op* BOutWrite(BOut* bout, const uint_t* params, void** args);
+API const Op* BOutWrite(BOut* bout, const uint_t* params, void** args);
 
 /* Sends a connection message to the given address. */
-DLL const Op* BOutConnect(BOut* bout, const char* address);
+API const Op* BOutConnect(BOut* bout, const char* address);
 
 /* Sends a connection message to the given address. */
-DLL void BOutRingBell(BOut* bout, const char* address);
+API void BOutRingBell(BOut* bout, const char* address);
 
 /* Sends a connection message to the given address. */
-DLL void BOutAckBack(BOut* bout, const char* address);
+API void BOutAckBack(BOut* bout, const char* address);
 
 /* . */
-DLL void BInKeyStrokes();
+API void BInKeyStrokes();
 
 #if CRABS_TEXT
 /* Prints the BIn to the Text.
     @param  bout The bout to print.
     @param  text The Text to print to the bout.
     @return The slot. */
-DLL Utf8& PrintBOut(Utf8& printer, BOut* bout);
+API Utf8& PrintBOut(Utf8& printer, BOut* bout);
 #endif
 
 }  // namespace _

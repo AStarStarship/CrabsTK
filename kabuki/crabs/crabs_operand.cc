@@ -50,7 +50,7 @@ wchar_t OperandIndex(Operand* operand, char* begin, char* end) {
   wchar_t index = OpFirst(op), last = OpLast(op);
   ASSERT(index);
   for (; index <= last; ++index) {
-    if (TextEquals(begin, end, operand->Star(index, nullptr)->name)) {
+    if (StringEquals(begin, end, operand->Star(index, nullptr)->name)) {
       return index;
     }
   }

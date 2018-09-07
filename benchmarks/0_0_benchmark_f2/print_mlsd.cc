@@ -1,6 +1,6 @@
-/** Kabuki Toolkit
-    @version 0.x
-    @file    ~/source/crabs/print_itos.cc
+/** Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    ~/benchmarks/0_0_benchmark_f2/print_mlsd.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,37 +12,11 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#include "print_itos.h"
+#include "itos_algorithms.h"
 
-#if DEBUG
+#if SEAM == SEAM_0_0_0
 
-inline void PrintBinary(uint32_t value) {
-  enum { kSize = sizeof(uint32_t) * 8 };
-
-  std::cout << "\n    ";
-  for (int i = kSize; i > 0; --i) {
-    char c = (char)('0' + (value >> (kSize - 1)));
-    std::cout << c;
-    value = value << 1;
-  }
-}
-
-inline void PrintBinaryTable(uint32_t value) {
-  enum { kSize = sizeof(uint32_t) * 8 };
-
-  std::cout << "\n    ";
-  for (int i = kSize; i > 0; --i) {
-    char c = (char)('0' + (value >> (kSize - 1)));
-    std::cout << c;
-    value = value << 1;
-  }
-  std::cout << "\n    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-               "\n    33222222222211111111110000000000"
-               "\n    10987654321098765432109876543210"
-               "\n    ||  |  |   |  |  |   |  |  |   |"
-               "\n    |1  0  0   0  0  0   0  0  0   0"
-               "\n    |0  9  8   7  6  5   4  3  2   1";
-}
+#include "../../kabuki/f2/ttest.h"
 
 #define PRINTF(format, ...) printf(format, __VA_ARGS__)
 #define PUTCHAR(c) putchar(c)
@@ -62,11 +36,6 @@ inline void PrintBinaryTable(uint32_t value) {
 #endif
 
 namespace _ {
-
-void PrintLine(char c) {
-  std::cout << '\n';
-  for (int i = 80; i > 0; --i) std::cout << c;
-}
 
 char* PrintMsld(uint32_t value, char* text, char* text_end) {
   // Lookup table for powers of 10.
@@ -95,10 +64,7 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
       4, 7, 10, 14, 17, 20, 24, 27, 30,
   };
 
-  if (!text) {
-    return nullptr;
-  }
-  if (text >= text_end) {
+  if (!text || text >= text_end) {
     return nullptr;
   }
 
@@ -109,7 +75,7 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
   uint16_t digits;  //<
   uint32_t comparator, offset;
 
-#if PAGE_SEAM == 0 && MAJOR_SEAM == 0 && MINOR_SEAM == 0
+#if SEAM == SEAM_0_0_0
   // Write a bunches of xxxxxx to the buffer for debug purposes.
   for (int i = 0; i <= 21; ++i) {
     *(text + i) = 'x';
@@ -120,18 +86,14 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
 #endif
   if (value < 10) {
     PRINTF("\n    Range:[0, 9] length:1 ");
-    if (text + 1 >= text_end) {
-      return nullptr;
-    }
+    if (text + 1 >= text_end) return nullptr;
     *text++ = '0' + (char)value;
     PRINT_PRINTED;
     return text;
   }
   if (value < 100) {
     PRINTF("\n    Range:[10, 99] length:2 ");
-    if (text + 2 >= text_end) {
-      return nullptr;
-    }
+    if (text + 2 >= text_end) return nullptr;
     *reinterpret_cast<uint16_t*>(text) = kDigits00To99[value];
     PRINT_PRINTED;
     return text + 2;
@@ -140,9 +102,7 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
     offset = 1000;
     if (value >= offset) {
       PRINTF("\n    Range:[1000, 1023] length:4 ");
-      if (text + 4 >= text_end) {
-        return nullptr;
-      }
+      if (text + 4 >= text_end) return nullptr;
       *text++ = '1';
       *text++ = '0';
       value -= offset;
@@ -151,9 +111,7 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
       return text + 2;
     }
     PRINTF("\n    Range:[100, 999] length:3 ");
-    if (text + 3 >= text_end) {
-      return nullptr;
-    }
+    if (text + 3 >= text_end) return nullptr;
     text_end = text + 3;
   Print3:
     PRINTF("\n    Print3:%u", value);
@@ -199,9 +157,7 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
       length = 7;
       index = 2 + (char)(value >> 21);
     } else {  // if (value >> 17) {
-      if (text + 6 >= text_end) {
-        return nullptr;
-      }
+      if (text + 6 >= text_end) return nullptr;
       text16 = reinterpret_cast<uint16_t*>(text + 4);
       *text16-- = kDigits00To99[value % 100];
       value /= 100;
@@ -212,9 +168,7 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
   } else if (value >> 14) {
     comparator = k10ToThe[5];
     if (value >= comparator) {
-      if (text + 6 >= text_end) {
-        return nullptr;
-      }
+      if (text + 6 >= text_end) return nullptr;
       text_end = text + 7;
       PRINTF("\n    Range:[100000, 131071] length:6");
       value -= comparator;
@@ -227,9 +181,7 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
         if (value < 1000) goto PrintZeros4;
       }
     } else {
-      if (text + 5 >= text_end) {
-        return nullptr;
-      }
+      if (text + 5 >= text_end) return nullptr;
       text_end = text + 7;
       PRINTF("\n    Range:[16384, 100000] length:5");
     }
@@ -242,9 +194,7 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
     power_of_ten = &k10ToThe[4];
     comparator = *power_of_ten;
     if (value >= comparator) {
-      if (text + 5 >= text_end) {
-        return nullptr;
-      }
+      if (text + 5 >= text_end) return nullptr;
       text_end = text + 6;
       PRINTF("\n    Range:[10000, 16383] length:5");
       value -= comparator;
@@ -268,9 +218,7 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
         goto Print3;
       }
     } else {
-      if (text + 4 >= text_end) {
-        return nullptr;
-      }
+      if (text + 4 >= text_end) return nullptr;
       text_end = text + 5;
       PRINTF("\n    Range:[1024, 9999] length:4");
     }
@@ -286,9 +234,7 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
   comparator = *power_of_ten--;
   offset = *power_of_ten--;
   if (value >= comparator) {
-    if (text >= text_end) {
-      return nullptr;
-    }
+    if (text >= text_end) return nullptr;
     text_end = text + length + 1;
     PRINTF("\n    Range:[%u, %u] length:%u offset:%u", comparator,
            (1 << (kMsbShift[length - 1])) - 1, (uint)length, offset);
@@ -309,9 +255,7 @@ char* PrintMsld(uint32_t value, char* text, char* text_end) {
     PRINTF("\n    Range:[%u, %u] length:%u comparator:%u offset:%u",
            1 << (kMsbShift[length - 2]), comparator, (uint)length, comparator,
            offset);
-    if (text + length >= text_end) {
-      return nullptr;
-    }
+    if (text + length >= text_end) return nullptr;
     text_end = text + length;
   }
   value /= 100;

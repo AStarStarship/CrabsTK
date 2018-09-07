@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/stdafx.h
+@file    ~/kabuki/f2/stdafx.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,14 +13,29 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 
-#define DLL
+#include <cstdarg>
+#include <cstdint>
+
+typedef unsigned int uint;
+
+#define API
 
 #define SEAM_PAGE 0
 #define SEAM_MAJOR 0
 #define SEAM_MINOR 0
 
+#define SEAM_0_0_0 1
+#define SEAM_0_0_1 2
+#define SEAM_0_0_2 3
+#define SEAM_COUNT 3
+
+#define WORD_SIZE 64
+
 #ifndef INCLUDED_SEAMS
 #define INCLUDED_SEAMS
+
+#define APP_EXIT_SUCCESS 0
+#define APP_EXIT_FAILURE 1
 
 #if SEAM_PAGE == 0
 #if SEAM_MAJOR == 0
@@ -30,37 +45,20 @@ specific language governing permissions and limitations under the License. */
 #elif SEAM_MINOR == 1
 #define SEAM_0_0_1
 #define SEAM 2
-#elif SEAM_MINOR == 2
-#define SEAM_0_0_2
-#define SEAM 3
-#elif SEAM_MINOR == 3
-#define SEAM_0_0_3
-#define SEAM 4
-#elif SEAM_MINOR == 4
-#define SEAM_0_0_4
-#define SEAM 5
-#elif SEAM_MINOR == 5
-#define SEAM_0_0_5
-#define SEAM 6
-#elif SEAM_MINOR == 6
-#define SEAM_0_0_6
-#define SEAM 7
-#elif SEAM_MINOR == 7
-#define SEAM_0_0_7
-#define SEAM 8
-#endif
-#endif
-#if SEAM_MAJOR == 1
-#if SEAM_MINOR == 0
-#define SEAM_0_1_0
-#define SEAM 9
 #endif
 #endif  //< #if SEAM_MAJOR == 0
 #endif  //< #if SEAM_PAGE == 0
 
-#define SEAM_COUNT 9
+#if SEAM > 0 && SEAM <= SEAM_COUNT
+#define DEBUG 1
+#endif
 
-#include <cstdarg>
-#include <cstdint>
+#endif  //< #if INCLUDED_SEAMS
 
-typedef unsigned int uint;
+#if COMPILER == VISUAL_CPP
+#define FORMAT_SI8 "%I64i"
+#define FORMAT_UI8 "%I64u"
+#else
+#define FORMAT_SI8 "%lld"
+#define FORMAT_UI8 "%llu"
+#endif

@@ -15,6 +15,15 @@
     <Filter Include="kabuki\f2">
       <UniqueIdentifier>{a1858cc5-bdf5-4842-98ba-c99ab7559375}</UniqueIdentifier>
     </Filter>
+    <Filter Include="0_0_benchmark_puff\itos">
+      <UniqueIdentifier>{8fae8fd7-c32b-41a0-8b0c-6289abf72963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="0_0_benchmark_puff\msba">
+      <UniqueIdentifier>{9ab2123d-b104-4eed-997c-8896b42bb942}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="0_0_benchmark_puff\align">
+      <UniqueIdentifier>{0d3a2cf1-9f70-40cd-821c-3efe9db213db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="print_mlsd2.cc">
@@ -23,16 +32,19 @@
     <ClCompile Include="print_mod100sc.cc">
       <Filter>0_0_benchmark_puff</Filter>
     </ClCompile>
-    <ClCompile Include="puff_benchmark.cc">
-      <Filter>0_0_benchmark_puff</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cc">
       <Filter>0_0_benchmark_puff</Filter>
     </ClCompile>
-    <ClCompile Include="itos_competition.cc">
+    <ClCompile Include="print_mlsd.cc">
       <Filter>0_0_benchmark_puff</Filter>
     </ClCompile>
-    <ClCompile Include="print_mlsd.cc">
+    <ClCompile Include="benchmark_msba.cc">
+      <Filter>0_0_benchmark_puff</Filter>
+    </ClCompile>
+    <ClCompile Include="itos_algorithms.cc">
+      <Filter>0_0_benchmark_puff</Filter>
+    </ClCompile>
+    <ClCompile Include="benchmark_itos.cc">
       <Filter>0_0_benchmark_puff</Filter>
     </ClCompile>
     <ClCompile Include="..\..\kabuki\f2\f2_binary.cc">
@@ -41,19 +53,13 @@
     <ClCompile Include="..\..\kabuki\f2\f2_console.cc">
       <Filter>kabuki\f2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\kabuki\f2\f2_foundational_framework.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\f2\f2_rng.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\kabuki\f2\f2_test.cc">
       <Filter>kabuki\f2</Filter>
     </ClCompile>
     <ClCompile Include="..\..\kabuki\f2\stdafx.cc">
       <Filter>kabuki\f2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\kabuki\f2\tests_main.cc">
+    <ClCompile Include="..\..\kabuki\f2\f2_benchmark.cc">
       <Filter>kabuki\f2</Filter>
     </ClCompile>
   </ItemGroup>
@@ -64,10 +70,7 @@
     <ClInclude Include="targetver.h">
       <Filter>0_0_benchmark_puff</Filter>
     </ClInclude>
-    <ClInclude Include="itos_competition.h">
-      <Filter>0_0_benchmark_puff</Filter>
-    </ClInclude>
-    <ClInclude Include="print_itos.h">
+    <ClInclude Include="itos_algorithms.h">
       <Filter>0_0_benchmark_puff</Filter>
     </ClInclude>
     <ClInclude Include="..\..\kabuki\f2\global.h">
@@ -76,13 +79,7 @@
     <ClInclude Include="..\..\kabuki\f2\public.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\kabuki\f2\rng.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\kabuki\f2\stdafx.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\f2\stopwatch.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
     <ClInclude Include="..\..\kabuki\f2\talign.h">
@@ -94,10 +91,10 @@
     <ClInclude Include="..\..\kabuki\f2\tbinary.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\kabuki\f2\test.h">
+    <ClInclude Include="..\..\kabuki\f2\tconsole.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\kabuki\f2\trng.h">
+    <ClInclude Include="..\..\kabuki\f2\test.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
     <ClInclude Include="..\..\kabuki\f2\ttest.h">
@@ -109,5 +106,10 @@
     <ClInclude Include="..\..\kabuki\f2\console.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\kabuki\f2\readme.md">
+      <Filter>kabuki\f2</Filter>
+    </None>
   </ItemGroup>
 </Project>

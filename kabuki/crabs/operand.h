@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-struct DLL Expr;
+struct API Expr;
 
 /* Interface for an abstract A*B Op operand.
     A Script Operand is an object that is being operated on.
@@ -50,7 +50,7 @@ struct DLL Expr;
     @see Console for example of how to use Operand interface.
 */
 
-struct DLL Operand {
+struct API Operand {
   /* Abstract Script Op(s).
       @param index The index of the expression.
       @param expr  The Expr to read and write from.
@@ -60,17 +60,17 @@ struct DLL Operand {
 };
 
 /* Returns the name of the given Operand. */
-DLL const char* OperandName(Operand* op);
+API const char* OperandName(Operand* op);
 
 /* Gets the number of ops in the given expressions. */
-DLL uintptr_t OperandCount(Operand* op);
+API uintptr_t OperandCount(Operand* op);
 
 /* Returns the index of the given Op using the given slot.
     @param  key_begin Beginning of the key slot buffer.
     @param  key_end   End of the key slot buffer.
     @return A value printable Unicode char or invalid if the Operand doesn't
             Contain the given key. */
-DLL wchar_t OperandIndex(Operand* operand, char* key_begin, char* key_end);
+API wchar_t OperandIndex(Operand* operand, char* key_begin, char* key_end);
 
 #if CRABS_TEXT
 /* Queries the given Operand Op Header.
@@ -78,7 +78,7 @@ DLL wchar_t OperandIndex(Operand* operand, char* key_begin, char* key_end);
                  op.
     @param  op   The Op header.
     @return Returns nil upon success and an error Op upon failure.
-DLL const Op* OperandQuery (Expr* expr, const Op* op);*/
+API const Op* OperandQuery (Expr* expr, const Op* op);*/
 
 /* Queries the operand for the given ??? @todo fix me */
 Slot& OperandQuery(Operand* root, const char* address, Slot& key);
@@ -87,7 +87,7 @@ Slot& OperandQuery(Operand* root, const char* address, Slot& key);
     @param  text     The Text to print to.
     @param  operand The Operand to print.
     @return text. */
-DLL Utf8& PrintOperand(Utf8& slot, Operand* operand);
+API Utf8& PrintOperand(Utf8& slot, Operand* operand);
 #endif
 
 }  // namespace _

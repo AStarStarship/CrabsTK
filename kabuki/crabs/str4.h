@@ -71,11 +71,11 @@ KABUKI const char32_t* TextSkipSpaces(const char32_t* begin,
                                       const char32_t* text_end);
 
 /* Compares the source and query char32_t as nil-terminated strings. */
-KABUKI const char32_t* TextEquals(const char32_t* text_a,
+KABUKI const char32_t* StringEquals(const char32_t* text_a,
                                   const char32_t* text_b);
 
 /* Compares the source and query char32_t as nil-terminated strings. */
-KABUKI const char32_t* TextEquals(const char32_t* begin, const char32_t* end,
+KABUKI const char32_t* StringEquals(const char32_t* begin, const char32_t* end,
                                   const char32_t* query);
 
 /* Searches the given char32_t for the given char32_t.
@@ -83,7 +83,7 @@ KABUKI const char32_t* TextEquals(const char32_t* begin, const char32_t* end,
 @param  query The char32_t to search for.
 @return Returns nil if the parsing failed and a pointer to the first char32_t
 after the end of the text upon success. */
-KABUKI const char32_t* TextFind(const char32_t* begin, const char32_t* query);
+KABUKI const char32_t* StringFind(const char32_t* begin, const char32_t* query);
 
 /* Printrs the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char32_t

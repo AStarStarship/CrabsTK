@@ -10,16 +10,16 @@
   /         \                    ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪
 ```
 
-Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) for 32-bit and 64-bit processors featuring the Chinese Room Abstract Stack Machine (Crabs) that provides:
+Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) for 32-bit and 64-bit processors featuring the F2 Foundational Framework (F2) and Chinese Room Abstract Stack Machine (Crabs) that provides:
 
-* Modern Embedded-C++1x with Doxygen API docs.
+* Page-Major-Minor Seam (PMMS) Unit Tests provides in-order unit tests with debug information customized for each minor, major, and page seams.
+* Modern C/Embedded-C++1x core with Doxygen API docs.
 * ASCII Data Types operate seamlessly across assembly boundary with optimal RAM usage and CPU cache performance from ROM-able ASCII Contiguous Objects.
 * Rapid compile time using C Application Binary Interface (ABI) with semi-hidden C++ templates and UML-compatible object-oriented wrapper classes.
-* Page-Major-Minor Seam (PMMS) Unit Tests provides debug information customized for each minor, major, and page seams.
 * Code automatically formatted to Google C++ Style Guide upon save and formatted to not fight clang-format.
 * Deep Internet-of-Things integration using the Script Software Defined Networking Protocol.
 * Artificial Intelligence and Deep Learning library with graph-based neural-intelligent networks coming soon.
-* Modeled after AI philosophy and ASCII mimicry.
+* Modeled after AI philosophy and ASCII mimicry of the Chinese Room Thought Experiment.
 
 ## ASCII Data Types
 
@@ -27,7 +27,7 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
 
 * All of the C++ POD types.
 * Year 2038-safe Timestamps - 32-bit and 64-bit seconds timestamps along with 64-bit programmable sub-second timestamps using 32-bits for seconds and 32-bits sub-second tick.
-* All data types are 64-bit aligned so they may be rapidly copied from one system to another on homo-endian system, meaning same endian as opposed to hetero-endian which means mixed-endian.
+* All data types are 64-bit aligned so they may be rapidly copied from one system to another on homo-endian system.
 * Optional MSB variant encoding provides fast data compression similar to UTF-8.
 * Contiguous Objects
   * UTF-8, UTF-16, and UTF-32 strings.

@@ -17,21 +17,40 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_CRABS_TEST
 #define INCLUDED_CRABS_TEST
 
-/* Function pointer for a unit test for a minor seam.
-@return Nil upon success or a pointer to an error string upon failure.
-@param  seam       The contiguous SEAM index.
-@param  seam_minor The minor seam number.
-*/
-typedef const char*(SeamMinorTest)(int seam, int seam_minor,
-                                   const char* header);
+namespace _ {
+/* Clas for storing information about a failed assertion. */
+struct Assertion {
+  int line;             //< The line the assertion failed at.
+  const char* file;     //< The file the assertion occurred at.
+  const char* message;  //< An optional message to print.
+
+  /* Constructs all of the data fields the given arguments.
+  @param line    The line the assertion failed at.
+  @param file    The file the assertion occurred at.
+  @param message An optional message to print. */
+  Assertion(int line = 0, const char* file = nullptr,
+            const char* message = nullptr);
+
+  /* Checks if the assertion failed.
+  @return True if the assertion failed.
+  @desc   Algorithm works by checking if the file pointer is null. */
+  bool Failed();
+};
+}  // namespace _
+
+typedef _::Assertion (*SeamMinorTest)(const char* args, int arg_count);
 
 namespace _ {
 
 /* Assert function to assist in casting boolean types. */
-DLL bool Assert(bool condition);
+API bool Assert(bool condition);
 
-/* Prints a debug statement and locks up the system. */
-DLL bool AssertHandle(int line, const char* file,
+/* Handles an assert by printing a debug statement and locks up the system.
+@return True upon failure.
+@param  line    The line the program failed at.
+@param  file    The file the error occured at.
+@param  message An optional message to print. */
+API bool AssertHandle(int line, const char* file,
                       const char* message = nullptr);
 
 }  // namespace _
@@ -52,16 +71,5 @@ DLL bool AssertHandle(int line, const char* file,
 #define TEST(condition, message) \
   if (Assert(condition))         \
   AssertHandle(__LINE__, __FILE__, message == nullptr ? "" : message)
-#endif
 
-#if SEAM > 0 && SEAM <= SEAM_COUNT
-
-struct ErrorAssert {
-  int line;
-  const char* file;
-  const char* message;
-
-  ErrorAssert();
-};
-
-#endif
+#endif  //< #ifndef INCLUDED_CRABS_TEST

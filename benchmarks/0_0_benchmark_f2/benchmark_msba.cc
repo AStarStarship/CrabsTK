@@ -13,8 +13,8 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-typedef unsigned int uint;
-
+#include <chrono>
+#include <random>
 using namespace std;
 using namespace std::chrono;
 
@@ -142,7 +142,7 @@ void BenchmarkBSR() {
   file.close();
 }
 
-int main() {
+Assertion TestMSbAsserted() {
   BenchmarkBSR();
   putchar('\n');
   system("PAUSE");

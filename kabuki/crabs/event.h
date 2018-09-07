@@ -31,14 +31,14 @@ namespace _ {
 
     @code
     #include <script/Event.h>
-    struct DLL Example: public Event {
+    struct API Example: public Event {
         virtual void Trigger () {
             // ...
         }
     };
     @endcode
 */
-struct DLL Event : public Operand {
+struct API Event : public Operand {
   /* Virtual destructor. */
   virtual ~Event() = 0;
 

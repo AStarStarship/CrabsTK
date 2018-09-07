@@ -22,6 +22,4 @@ specific language governing permissions and limitations under the License. */
 #include "../../../cpputest/include/CppUTest/CommandLineTestRunner.h"
 #include "../../../cpputest/include/CppUTest/TestHarness.h"
 
-#include "../../kabuki/crabs/global.h"
-
 #endif  //< INCLUDED_SEAMS_0_0_SEAM_TESTS_TEST_SEAM_0

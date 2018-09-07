@@ -25,41 +25,41 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* Compute the next highest power of 2. */
-DLL inline uint32_t AlignPowerOf2(uint32_t value);
+API inline uint32_t AlignPowerOf2(uint32_t value);
 
 /* Compute the next highest power of 2. */
-DLL inline int32_t AlignPowerOf2(int32_t value);
+API inline int32_t AlignPowerOf2(int32_t value);
 
 /* Aligns the given buffer pointer up to a cache line boundary (64 bytes). */
-DLL inline uintptr_t* AlignUpCacheLine(uintptr_t* buffer);
+API inline uintptr_t* AlignUpCacheLine(uintptr_t* buffer);
 
 /* Aligns the given pointer up to a word boandard. */
-DLL char* AlignUpPointerWord(char* pointer);
+API char* AlignUpPointerWord(char* pointer);
 
 /* Aligns the given pointer up to a word boandard. */
-DLL const char* AlignUpPointerWord(const char* pointer);
+API const char* AlignUpPointerWord(const char* pointer);
 
 /* Aligns the pointer down to a word boundary. */
-DLL char* AlignDownPointerWord(char* pointer);
+API char* AlignDownPointerWord(char* pointer);
 
 /* Aligns the pointer down to a word boundary. */
-DLL const char* AlignDownPointerWord(const char* pointer);
+API const char* AlignDownPointerWord(const char* pointer);
 
 /* Aligns up the pointer to the given boundary_bit_count. */
-DLL inline uintptr_t* AlignUp(uintptr_t* pointer,
+API inline uintptr_t* AlignUp(uintptr_t* pointer,
                                  uintptr_t boundary_bit_count);
 
 /* Aligns the given value up to an 8-byte boundary. */
-DLL inline int8_t AlignUp(int8_t value);
+API inline int8_t AlignUp(int8_t value);
 
 /* Aligns the given value up to an 16-byte boundary. */
-DLL int16_t AlignUp(int16_t value);
+API int16_t AlignUp(int16_t value);
 
 /* Aligns the given value up to an 32-byte boundary. */
-DLL inline int32_t AlignUp(int32_t value);
+API inline int32_t AlignUp(int32_t value);
 
 /* Aligns the given value up to an 64-byte boundary. */
-DLL inline int64_t AlignUp(int64_t value);
+API inline int64_t AlignUp(int64_t value);
 
 }  // namespace _
 #endif  //< INCLUDED_CRABS_ALIGN

@@ -106,7 +106,7 @@ const Op* Door::Star(wchar_t index, Expr* expr) {
 }
 
 /*
-DLL Door& Doors () {
+API Door& Doors () {
     static Door front_door;
     return front_door;
 }*/

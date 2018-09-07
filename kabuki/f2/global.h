@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/crabs/global.h
+@file    ~/kabuki/f2/global.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,11 +13,14 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#ifndef INCLUDED_CRABS_PUBLIC
-#define INCLUDED_CRABS_PUBLIC
-// Dependencies:
-#include "binary.h"
-#include "random.h"
-// End dependencies.
+#ifndef INCLUDED_F2_GLOBAL
+#define INCLUDED_F2_GLOBAL
 
-#endif  //< INCLUDED_CRABS_PUBLIC
+#include "console.h"
+#include "talign.h"
+#include "tbinary.h"
+#if DEBUG
+#include "ttest.h"
+#endif
+
+#endif  //< INCLUDED_F2_GLOBAL

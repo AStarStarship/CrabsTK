@@ -79,10 +79,10 @@ KABUKI const char* TextSkipSpaces(const char* text);
 KABUKI const char* TextSkipSpaces(const char* text, const char* text_end);
 
 /* Compares the source and query char as nil-terminated strings. */
-KABUKI const char* TextEquals(const char* text_a, const char* text_b);
+KABUKI const char* StringEquals(const char* text_a, const char* text_b);
 
 /* Compares the source and query char as nil-terminated strings. */
-KABUKI const char* TextEquals(const char* text, const char* text_end,
+KABUKI const char* StringEquals(const char* text, const char* text_end,
                               const char* query);
 
 /* Searches the given char for the given char.
@@ -90,7 +90,7 @@ KABUKI const char* TextEquals(const char* text, const char* text_end,
 @param  query      The char to search for.
 @return Returns nil if the parsing failed and a pointer to the first char
 after the end of the text upon success. */
-KABUKI const char* TextFind(const char* text, const char* query);
+KABUKI const char* StringFind(const char* text, const char* query);
 
 /* Printrs the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char

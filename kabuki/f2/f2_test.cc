@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/crabs/f2_test.cc
+@file    ~/kabuki/f2/f2_test.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,31 +13,29 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#include "console.h"
 #include "ttest.h"
 
-namespace _ {
+#include "console.h"
 
-bool AssertDisplay(int line, const char* file) {
-  Printf("\nError at line %d in \"%s\"", line, file);
-  Pause();
-  return true;
-}
+namespace _ {
 
 bool Assert(bool condition) { return !condition; }
 
 bool AssertHandle(int line, const char* file, const char* message) {
-#if CRABS_ASSERT_PRINT
-  Printf("\n%s\n,Assertion failed at line %d in \"%s\"", line, file);
-#endif
-#if CRABS_ASSERT_FREEZE
-  while (1)
-    ;
-#elif CRABS_ASSERT_PAUSE
+  if (message)
+    Printf("\n%s\n,Assertion failed at line %d in \"%s\" with message:\n%s",
+           line, file, message);
+  else
+    Printf("\nAssertion failed at line %d in \"%s\"", line, file);
   Pause();
-#endif
+  return true;
 }
 
-ErrorAssert::ErrorAssert() {}
+Assertion::Assertion(int line, const char* file, const char* message)
+    : line(line), file(file), message(message) {
+  // Nothing to do here! ({:-)-+=<
+}
+
+bool Assertion::Failed() { return file != nullptr; }
 
 }  // namespace _

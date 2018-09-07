@@ -23,27 +23,21 @@
     <ClInclude Include="console.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="public.h" />
-    <ClInclude Include="rng.h" />
-    <ClInclude Include="seams.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="stopwatch.h" />
     <ClInclude Include="talign.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="tbinary.h" />
     <ClInclude Include="test.h" />
-    <ClInclude Include="trng.h" />
-    <ClInclude Include="tunique.h" />
+    <ClInclude Include="ttest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="f2_binary.cc" />
     <ClCompile Include="f2_console.cc" />
-    <ClCompile Include="f2_foundational_framework.cc" />
-    <ClCompile Include="f2_rng.cc" />
     <ClCompile Include="f2_test.cc" />
     <ClCompile Include="stdafx.cc" />
-    <ClCompile Include="tests_main.cc" />
-    <ClCompile Include="test_seam_0_0_0.cc" />
-    <ClCompile Include="test_seam_0_0_1.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

@@ -23,7 +23,7 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* Interface for a generic iterator. */
-struct DLL Iterator {
+struct API Iterator {
   /* Virtual destructor. */
   virtual ~Iterator() = 0;
 

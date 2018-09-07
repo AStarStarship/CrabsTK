@@ -123,8 +123,8 @@ namespace _ {
   done using using a nil-terminated list in the Collision List. In the
 
   # Use Case Scenario
-  We are creating a plug-in DLL. We need to create a dictionary in the DLL
-  code, and pass it over to the program. The DLL manages the memory for the
+  We are creating a plug-in API. We need to create a dictionary in the API
+  code, and pass it over to the program. The API manages the memory for the
   dictionary. This dictionary might contain several million entries, and more
   than 4GB of data.
 

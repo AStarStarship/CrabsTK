@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/crabs/tbinary.h
+@file    ~/kabuki/f2/tbinary.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -19,55 +19,53 @@ specific language governing permissions and limitations under the License. */
 #include "binary.h"
 
 #if SEAM == 1
-#include <cstdio>
-#include <cstring>
+
+#include "console.h"
 
 namespace _ {
-inline void PrintPuffItoSDebug(uint64_t value) {
-  enum { kSize = sizeof(uint64_t) * 8 };
 
-  printf("\n    ");
-  for (int i = kSize; i > 0; --i) {
-    char c = (char)('0' + (value >> (kSize - 1)));
-    putchar(c);
-    value = value << 1;
-  }
-  printf(
-      "\n    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-      "\n    6666555555555544444444443333333333222222222211111111110000000000"
-      "\n    3210987654321098765432109876543210987654321098765432109876543210"
-      "\n    |  |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |"
-      "\n    2  1  1  1   1  1  1   1  1  1   1  0  0   0  0  0   0  0  0   0"
-      "\n    0  9  8  7   6  5  4   3  2  1   0  9  8   7  6  5   4  3  2   1");
-}
+template <typename UI>
+inline void PrinttoSDebug(UI value) {
+  enum { kSize = sizeof(UI) * 8 };
 
-inline void PrintPuffItoSDebug(uint32_t value) {
-  enum { kSize = sizeof(uint32_t) * 8 };
+  static const char* debug_table =
+      sizeof(UI) == 8
+          ? "\n    "
+            "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            "\n    "
+            "6666555555555544444444443333333333222222222211111111110000000000"
+            "\n    "
+            "3210987654321098765432109876543210987654321098765432109876543210"
+            "\n    |  |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |  |  "
+            "|   |"
+            "\n    2  1  1  1   1  1  1   1  1  1   1  0  0   0  0  0   0  0  "
+            "0   0"
+            "\n    0  9  8  7   6  5  4   3  2  1   0  9  8   7  6  5   4  3  "
+            "2   1"
+          : "\n    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            "\n    33222222222211111111110000000000"
+            "\n    10987654321098765432109876543210"
+            "\n    ||  |  |   |  |  |   |  |  |   |"
+            "\n    |1  0  0   0  0  0   0  0  0   0"
+            "\n    |0  9  8   7  6  5   4  3  2   1"
 
-  printf("\n    ");
-  for (int i = kSize; i > 0; --i) {
-    char c = (char)('0' + (value >> (kSize - 1)));
-    putchar(c);
-    value = value << 1;
-  }
-
-  printf(
-      "\n    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-      "\n    33222222222211111111110000000000"
-      "\n    10987654321098765432109876543210"
-      "\n    ||  |  |   |  |  |   |  |  |   |"
-      "\n    |1  0  0   0  0  0   0  0  0   0"
-      "\n    |0  9  8   7  6  5   4  3  2   1");
+          Printf("\n    ");
+  PrintBinary<char, UI>(value);
+  Printf(debug_table);
 }
 
 static char* buffer_begin = 0;
 
+template <typename UI>
 inline void PrintPrinted(char* cursor) {
-  printf("\n    Printed \"%s\" leaving value:\"%s\"", buffer_begin, cursor);
+  static const char* format = (sizeof(UI) == 8) ? FORMAT_UI8 : "%i";
+
+  Printf("\n    Printed \"%s\" leaving value:\"%s\"", buffer_begin, cursor);
   char* start = cursor;
   while (*cursor++)
     ;
-  printf(":%i", (int)(cursor - start));
+  Print(':');
+  Printf(format, cursor - start);
 }
 
 }  // namespace _
@@ -87,7 +85,7 @@ inline void PrintPrinted(char* cursor) {
   char* begin = cursor;                                 \
   char buffer[256];                                     \
   sprintf_s(buffer, 256, "%u", value);                  \
-  printf("Expecting %s:%u", buffer, (uint)strlen(buffer));
+  Printf("Expecting %s:%u", buffer, (uint)strlen(buffer));
 #define BEGIN_PUFF_ITOS_ALGORITHM \
   putchar('\n');                  \
   for (int32_t i = 80; i > 0; --i) putchar('-')
@@ -99,7 +97,72 @@ inline void PrintPrinted(char* cursor) {
 #define PRINT_HEADING
 #endif
 
-namespace _ {
+namespace _ { /* Prints a Unicode string to the given buffer.
+ @return Nil upon failure or a pointer to the nil-term Char upon succes.
+ @param  cursor The beginning of the buffer.
+ @param  end    The last byte in the buffer.
+ @param  string The string to print.
+ @desc   This algoihrm is designed to fail if the buffer is not a valid buffer
+ with one or more bytes in it, or if string is nil. */
+template <typename Char = char>
+Char* Print(Char* cursor, Char* end, const Char* string) {
+  ASSERT(cursor);
+  ASSERT(string);
+
+  if (cursor >= end) return nullptr;
+
+  char c = *string++;
+  while (c) {
+    *cursor++ = c;
+    if (cursor >= end) return nullptr;
+    c = *string++;
+  }
+  *cursor = 0;
+  return cursor;
+}
+
+/* Prints a Unicode Char to the given buffer.
+@return Nil upon failure or a pointer to the nil-term Char upon succes.
+@param  cursor    The beginning of the buffer.
+@param  size      The size of the buffer in Char(s).
+@param  string    The string to print.
+@desc   This algoihrm is designed to fail if the buffer is not a valid buffer
+with one or more bytes in it. */
+template <typename Char = char>
+Char* Print(Char* cursor, intptr_t size, Char character) {
+  return Print<Char>(cursor, cursor + size, character);
+}
+
+/* Prints a Unicode Char to the given buffer.
+@return Nil upon failure or a pointer to the nil-term Char upon succes.
+@param  cursor    The beginning of the buffer.
+@param  end       The last byte in the buffer.
+@param  character The Char to print.
+@desc   This algoihrm is designed to fail if the buffer is not a valid buffer
+with one or more bytes in it. */
+template <typename Char = char>
+Char* PrintChar(Char* cursor, Char* end, Char character) {
+  ASSERT(cursor);
+  ASSERT(end);
+
+  if (cursor + 1 >= end) return nullptr;
+
+  *cursor++ = character;
+  *cursor = 0;
+  return cursor;
+}
+
+/* Prints a Unicode Char to the given buffer.
+@return Nil upon failure or a pointer to the nil-term Char upon succes.
+@param  cursor    The beginning of the buffer.
+@param  size      The size of the buffer in Char(s).
+@param  character The Char to print.
+@desc   This algoihrm is designed to fail if the buffer is not a valid buffer
+with one or more bytes in it. */
+template <typename Char = char>
+Char* PrintChar(Char* cursor, intptr_t size, Char character) {
+  return PrintChar<Char>(cursor, cursor + size, character);
+}
 
 template <typename Char, typename UI>
 Char* PrintHex(Char* cursor, Char* end, UI value) {
@@ -132,153 +195,106 @@ Char* PrintBinary(Char* cursor, Char* end, T value) {
   return cursor;
 }
 
-/* Utility class for printing strings.
-This class only stores the end of buffer pointer and a pointer to the write
-begin. It is up the user to store start of buffer pointer and if they would
-like to replace the begin with the beginning of buffer pointer when they
-are done printing.
-*/
 template <typename Char = char>
-struct TUtf {
-  Char *begin,  //< Write begin pointer.
-      *end;     //< End of buffer pointer.
-
-  /* Initializes the Utf& from the given buffer pointers.
-  @param begin The beginning of the buffer.
-  @param end   The end of the buffer. */
-  TUtf(Char* begin, intptr_t size)
-      : begin(begin), end(Ptr<Char>(begin, size - 1)) {
-    ASSERT(begin);
-    ASSERT(ObjSizeIsValid(size, 8));
+int StringCompare(const Char* text_a, const Char* text_b) {
+  int a, b, result;
+  if (!text_a) {
+    if (!text_b) return 0;
+    return *text_a;
   }
+  if (!text_b) return 0 - *text_a;
 
-  /* Initializes the Utf& from the given buffer pointers.
-  @param begin The beginning of the buffer.
-  @param end   The end of the buffer. */
-  TUtf(Char* begin, Char* end) {}
-
-  /* Clones the other print. */
-  TUtf(const TUtf& other)
-      : begin(other.begin), end(other.end) {  // Nothing to do here!.
+  PRINTF("\nComparing \"%s\" to \"%s\"", text_a, text_b);
+  a = *text_a;
+  b = *text_b;
+  if (!a) {
+    if (!a) return 0;
+    return b;
   }
-
-  /* Sets the begin pointer to the new_pointer. */
-  inline TUtf& Set(Char* new_pointer) {
-    if (!new_pointer) return *this;
-    begin = new_pointer;
-    return *this;
+  if (!b) {
+    if (!a) return 0;  //< I like !t code rather than !c code. :-)
+    return 0 - a;
   }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(int8_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
+  // text SHOULD be a nil-terminated string without whitespace.
+  while (b) {
+    result = b - a;
+    PRINTF("\nb - a = %i - %i = %i", b, a, result);
+    if (result) {
+      PRINTF(" is not a hit.");
+      return result;
+    }
+    if (!a) {
+      PRINTF(" is a partial match but !a.");
+      return result;
+    }
+    ++text_a;
+    ++text_b;
+    a = *text_a;
+    b = *text_b;
   }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(uint8_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
+  if (a && !IsWhitespace<Char>(a)) {
+    PRINTF(" is only a partial match but found %s", (a ? "a" : "space"));
+    return b - a;
   }
+  return 0;
+}
 
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(int16_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
+template <typename Char = char>
+int StringCompare(const Char* cursor, const Char* end, const Char* query) {
+  Char a = *cursor, b = *query;
+  int result;
 
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(uint16_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
+  if (!cursor) {
+    if (!query) return 0;
+    a = 0;
+    b = *query;
+    return b - a;
   }
+  if (!query) {
+    a = *cursor;
+    b = 0;
+    return b - a;
+  }
+  if (cursor > end) return *query;
 
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(int32_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
+  // Algorithm combines loops for better performance.
+  a = *cursor;
+  b = *query;
+  if (!a) {
+    if (!b) return 0;
+    return b;
   }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(uint32_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
+  if (!b) {
+    if (!a) return 0;
+    return 0 - a;
   }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(int64_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
+  // text SHOULD be a nil-terminated string without whitespace.
+  while (b) {
+    result = b - a;
+    PRINTF("\nb - a = %c - %c = %i", b, a, result);
+    if (result) {
+      PRINTF(" is not a hit.");
+      return result;
+    }
+    if (!a) {
+      PRINTF(" is a partial match but !a.");
+      return result;
+    }
+    if (++cursor >= end) {
+      PRINTF(" but buffer overflowed!");
+      return result;
+    }
+    ++query;
+    a = *cursor;
+    b = *query;
   }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(uint64_t value) {
-    return Set(PrintHex<Char>(begin, end, value));
+  if (a && !IsWhitespace<Char>(a)) {
+    PRINTF(" is only a partial match but found %s", (a ? "a" : "space"));
+    return b - a;
   }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(float value) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as hex. */
-  inline TUtf& Hex(double value) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
-
-  /* Prints the given pointer as hex. */
-  inline TUtf& Hex(const void* pointer) {
-    return Set(PrintHex<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(int8_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(uint8_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(int16_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(uint16_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(int32_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(uint32_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(int64_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(uint64_t value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(float value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given value as binary. */
-  inline TUtf& Binary(double value) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-
-  /* Prints the given pointer as binary. */
-  inline TUtf& Binary(const void* pointer) {
-    return Set(Binary<Char>(begin, end, value));
-  }
-};
+  PRINTF(" is a match!");
+  return 0;
+}
 
 /* Prints a two decimals to the buffer.
 If the SEAM == SEAM_0_0_0 (1), then this function will print debug data.
@@ -956,7 +972,7 @@ class Binary {
   int32_t e;
 
   Binary NormalizeBoundary() const {
-    int = RSB(0);
+    int = MSbAsserted(0);
 #if defined(_MSC_VER) && defined(_M_AMD64)
     unsigned long index;  //< This is Microsoft's fault.
     _BitScanReverse64(&index, f);
@@ -981,7 +997,8 @@ class Binary {
     UI l_f,   //< Local copy of f.
         l_e;  //< Local copy of e.
     Binary pl = Binary((l_f << 1) + 1, l_e - 1).NormalizeBoundary();
-    const uint64_t kHiddenBit = ((uint64_t)1) << 52;  //< 0x0010000000000000
+    const uint64_t kHiddenBit = ((uint64_t)1)
+                                << kMantissaSize;  //< 0x0010000000000000
     Binary mi = (f == kHiddenBit) ? Binary((l_f << 2) - 1, e - 2)
                                   : Binary((l_f << 1) - 1, e - 1);
     mi.f <<= mi.e - pl.e;
@@ -1201,104 +1218,3 @@ using Binary64 = Binary<double, uint64_t>;
 #undef PRINT_HEADING
 #undef BEGIN_PUFF_ITOS_ALGORITHM
 #endif  //< #if INCLUDED_CRABS_TDECIMAL
-
-/* Writes a nil-terminated UTF-8 or ASCII string to the print.
-@param  utf The utf.
-@param  value   The value to print.
-@return The utf. */
-template <typename Char = char>
-DLL _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, const Char* string) {
-  return utf.Set(_::Print<Char>(utf.begin, utf.end, string));
-}
-
-/* Writes the given value to the print.
-@param  utf The utf.
-@param  value   The value to print.
-@return The utf. */
-template <typename Char = char>
-DLL _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, Char c) {
-  return utf.Set(_::Print<Char>(utf.begin, utf.end, c));
-}
-
-/* Writes the given value to the print.
-@param  utf The utf.
-@param  value The value to write to the print.
-@return The utf. */
-template <typename Char = char>
-DLL _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, uint8_t value) {
-  return utf.Set(_::Print<Char>(utf.begin, utf.end, value));
-}
-
-/* Writes the given value to the print.
-@param  utf The utf.
-@param  value The value to write to the print.
-@return The utf. */
-template <typename Char = char>
-DLL _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, int16_t value) {
-  return utf.Set(_::Print<Char>(utf.begin, utf.end, value));
-}
-
-/* Writes the given value to the print.
-@param  utf The utf.
-@param  value The value to write to the print.
-@return The utf. */
-template <typename Char = char>
-DLL _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, uint16_t value) {
-  return utf.Set(_::Print<Char>(utf.begin, utf.end, value));
-}
-
-/* Writes the given value to the print.
-@return The utf.
-@param  utf The utf.
-@param  value The value to write to the print. */
-template <typename Char = char>
-DLL _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, int32_t value) {
-  return utf.Set(_::Print<Char>(utf.begin, utf.end, value));
-}
-
-/* Writes the given value to the print.
-@return The utf.
-@param  utf The utf.
-@param  value The value to write to the print. */
-template <typename Char = char>
-DLL _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, uint32_t value) {
-  return utf.Set(_::Print<Char>(utf.begin, utf.end, value));
-}
-
-/* Writes the given value to the print.
-@return The utf.
-@param  utf The utf.
-@param  value The value to write to the print. */
-template <typename Char = char>
-DLL _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, int64_t value) {
-  return utf.Set(_::Print<Char>(utf.begin, utf.end, value));
-}
-
-/* Writes the given value to the print.
-@return The utf.
-@desc
-@param  utf The utf.
-@param  value The value to write to the print. */
-template <typename Char = char>
-DLL _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, uint64_t value) {
-  return utf.Set(_::Print<Char>(utf.begin, utf.end, value));
-}
-
-/* Writes the given value to the print.
-@return The utf.
-@desc
-@param  utf The utf.
-@param  value The value to write to the print. */
-template <typename Char = char>
-DLL _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, float value) {
-  return utf.Set(_::Print<Char>(utf.begin, utf.end, value));
-}
-
-/* Writes the given value to the print.
-@return The utf.
-@param  utf The utf.
-@param  value The value to write to the print. */
-template <typename Char = char>
-DLL _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, double value) {
-  return utf.Set(_::Print<Char>(utf.begin, utf.end, value));
-}

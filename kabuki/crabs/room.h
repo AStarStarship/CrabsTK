@@ -39,13 +39,13 @@ enum {
 
 /* Returns an array of pointers to strings that describe the program states.
  */
-DLL const char** RoomStateTexts();
+API const char** RoomStateTexts();
 
 /* Returns a pointer to an array of pointers to the Request strings. */
-DLL const char** RequestTexts();
+API const char** RequestTexts();
 
 /* Gets the response char corresponding to the given request. */
-DLL const char* RequestText(Request r);
+API const char* RequestText(Request r);
 
 /* A Chinese Room.
 An Chinese Room works the same way as in the Chinese Room thought
@@ -234,7 +234,7 @@ class Room : public Operand {
 };
 
 /* Returns the Room-Level Script. */
-// DLL Room* ChineseRoom (Room* room = nullptr);
+// API Room* ChineseRoom (Room* room = nullptr);
 
 }  // namespace _
 #endif  //< #if SEAM >= SEAM_0_0_3

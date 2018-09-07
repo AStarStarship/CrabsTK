@@ -16,10 +16,10 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_CRABS_UTFN
 #define INCLUDED_CRABS_UTFN
 // Dependencies:
+#include "../f2/test.h"
 #include "config.h"
 #include "socket.h"
 #include "tbinary.h"
-#include "test.h"
 #include "tobj.h"
 // End dependencies.
 #if SEAM == SEAM_0_0_2
@@ -243,14 +243,14 @@ const Char* TextSkipSpaces(const Char* cursor, const Char* end) {
   while (IsWhitespace(c)) {
     PRINT('.');
     if (!c) return nullptr;
-    if (++cursor > end) return nullptr;
+    if (++cursor >= end) return nullptr;
     c = *cursor;
   }
   return cursor;
 }
 
 template <typename Char = char>
-const Char* TextEquals(const Char* text_a, const Char* text_b) {
+const Char* StringEquals(const Char* text_a, const Char* text_b) {
   ASSERT(text_a);
   ASSERT(text_b);
   PRINTF("\nComparing \"%s\" to \"%s\"", text_a, text_b);
@@ -278,7 +278,8 @@ const Char* TextEquals(const Char* text_a, const Char* text_b) {
 }
 
 template <typename Char = char>
-const Char* TextEquals(const Char* cursor, const Char* end, const Char* query) {
+const Char* StringEquals(const Char* cursor, const Char* end,
+                         const Char* query) {
   if (!cursor) return nullptr;
   ASSERT(cursor < end);
   if (!query) return nullptr;
@@ -330,121 +331,20 @@ bool TextQualifies(const Char* cursor, const Char* end) {
     if (!IsWhitespace<Char>(c)) {
       // The text must end at or before the target_end.
       do {
-        if (++cursor > end) return false;
+        if (++cursor >= end) return false;
         c = *cursor;
         if (!IsWhitespace<Char>(c)) return true;
       } while (c);
       return true;
     }
-    if (++cursor > end) return false;
+    if (++cursor >= end) return false;
     c = *cursor;
   }
   return false;
 }
 
 template <typename Char = char>
-int TextCompare(const Char* text_a, const Char* text_b) {
-  int a, b, result;
-  if (!text_a) {
-    if (!text_b) return 0;
-    return *text_a;
-  }
-  if (!text_b) return 0 - *text_a;
-
-  PRINTF("\nComparing \"%s\" to \"%s\"", text_a, text_b);
-  a = *text_a;
-  b = *text_b;
-  if (!a) {
-    if (!a) return 0;
-    return b;
-  }
-  if (!b) {
-    if (!a) return 0;  //< I like !t code rather than !c code. :-)
-    return 0 - a;
-  }
-  // text SHOULD be a nil-terminated string without whitespace.
-  while (b) {
-    result = b - a;
-    PRINTF("\nb - a = %i - %i = %i", b, a, result);
-    if (result) {
-      PRINTF(" is not a hit.");
-      return result;
-    }
-    if (!a) {
-      PRINTF(" is a partial match but !a.");
-      return result;
-    }
-    ++text_a;
-    ++text_b;
-    a = *text_a;
-    b = *text_b;
-  }
-  if (a && !IsWhitespace<Char>(a)) {
-    PRINTF(" is only a partial match but found %s", (a ? "a" : "space"));
-    return b - a;
-  }
-  return 0;
-}
-
-template <typename Char = char>
-int TextCompare(const Char* cursor, const Char* end, const Char* query) {
-  Char a = *cursor, b = *query;
-  int result;
-
-  if (!cursor) {
-    if (!query) return 0;
-    a = 0;
-    b = *query;
-    return b - a;
-  }
-  if (!query) {
-    a = *cursor;
-    b = 0;
-    return b - a;
-  }
-  if (cursor > end) return *query;
-
-  // Algorithm combines loops for better performance.
-  a = *cursor;
-  b = *query;
-  if (!a) {
-    if (!b) return 0;
-    return b;
-  }
-  if (!b) {
-    if (!a) return 0;
-    return 0 - a;
-  }
-  // text SHOULD be a nil-terminated string without whitespace.
-  while (b) {
-    result = b - a;
-    PRINTF("\nb - a = %c - %c = %i", b, a, result);
-    if (result) {
-      PRINTF(" is not a hit.");
-      return result;
-    }
-    if (!a) {
-      PRINTF(" is a partial match but !a.");
-      return result;
-    }
-    if (++cursor > end) {
-      PRINTF(" but buffer overflowed!");
-      return result;
-    }
-    ++query;
-    a = *cursor;
-    b = *query;
-  }
-  if (a && !IsWhitespace<Char>(a)) {
-    PRINTF(" is only a partial match but found %s", (a ? "a" : "space"));
-    return b - a;
-  }
-  PRINTF(" is a match!");
-  return 0;
-}
-
-template <typename Char = char>
-const Char* TextFind(const Char* cursor, const Char* query) {
+const Char* StringFind(const Char* cursor, const Char* query) {
   ASSERT(cursor);
   ASSERT(query);
 
@@ -467,9 +367,8 @@ const Char* TextFind(const Char* cursor, const Char* query) {
       while (string == t) {
         string = *(++cursor);
         t = *(++begin);
-        if (t == 0) {             // Once we've reached the delimiter
-          return start_of_query;  // it's a match!
-        }
+        if (t == 0)  // Once we've reached the delimiter it's a match!
+          return start_of_query;
         if (!string)  // We've reached the end of Char without a hit.
           return nullptr;
       }
@@ -495,37 +394,6 @@ const Char* TextSkipCharsInRange(const Char* cursor, Char lower_bounds,
 template <typename Char = char>
 inline const Char* TextSkipNumbers(const Char* cursor) {
   return TextSkipCharsInRange<Char>(cursor, '0', '9');
-}
-
-template <typename Char = char>
-Char* Print(Char* cursor, Char* end, const Char* string) {
-  ASSERT(cursor);
-  ASSERT(string);
-
-  if (cursor >= end) {
-    return nullptr;
-  }
-
-  char c = *string++;
-  while (c) {
-    *cursor++ = c;
-    if (cursor >= end) return nullptr;
-    c = *string++;
-  }
-  *cursor = 0;
-  return cursor;
-}
-
-template <typename Char = char>
-Char* PrintChar(Char* cursor, Char* end, Char character) {
-  ASSERT(cursor);
-  ASSERT(end);
-
-  if (cursor + 1 >= end) return nullptr;
-
-  *cursor++ = character;
-  *cursor = 0;
-  return cursor;
 }
 
 /* Prints the given token aligned right the given column_count.
@@ -951,7 +819,7 @@ template <typename Char = char>
 void COut(uintptr_t* buffer) {
   if (!buffer) return;
   uintptr_t address = reinterpret_cast<uintptr_t>(buffer) + sizeof(SI);
-  Print(reinterpret_cast<const char*>(address));
+  Print<Char>(reinterpret_cast<const char*>(address));
 }
 
 /* Buffer destructor prints the buffer to the console and deletes the
@@ -960,7 +828,7 @@ template <typename Char = char>
 void COutAuto(uintptr_t* buffer) {
   if (!buffer) return;
   uintptr_t address = reinterpret_cast<uintptr_t>(buffer) + sizeof(SI);
-  Print(reinterpret_cast<const char*>(address));
+  Print<Char>(reinterpret_cast<const char*>(address));
   delete[] buffer;
 }
 

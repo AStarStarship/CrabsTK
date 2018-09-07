@@ -111,8 +111,8 @@ namespace _ {
 
     # Use Case Scenario
 
-    We are creating a plug-in DLL. We need to create a map in the DLL code, and
-    pass it over to the program. The DLL manages the memory for the map. This
+    We are creating a plug-in API. We need to create a map in the API code, and
+    pass it over to the program. The API manages the memory for the map. This
     map might contain several million entries, and more than 4GB of data.
 
     ### Why So Many TMap Types?

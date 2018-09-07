@@ -69,7 +69,7 @@ KABUKI const char16_t* TextSkipChar(const char16_t* text, char16_t skip_char);
 KABUKI const char16_t* TextSkipSpaces(const char16_t* text);
 
 /* Compares the source and query char16_t as nil-terminated strings. */
-KABUKI const char16_t* TextEquals(const char16_t* text_a,
+KABUKI const char16_t* StringEquals(const char16_t* text_a,
                                   const char16_t* text_b);
 
 /* Searches the given char16_t for the given char16_t.
@@ -77,7 +77,7 @@ KABUKI const char16_t* TextEquals(const char16_t* text_a,
 @param  query      The char16_t to search for.
 @return Returns nil if the parsing failed and a pointer to the first char16_t
 after the end of the text upon success. */
-KABUKI const char16_t* TextFind(const char16_t* begin, const char16_t* query);
+KABUKI const char16_t* StringFind(const char16_t* begin, const char16_t* query);
 
 /* Printrs the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t

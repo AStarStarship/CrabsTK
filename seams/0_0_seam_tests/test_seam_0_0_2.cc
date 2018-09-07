@@ -16,14 +16,15 @@ specific language governing permissions and limitations under the License. */
 #if SEAM >= SEAM_0_0_2
 
 #include <random>
-#include "test_seam_0.h"
+
+#include "../../kabuki/crabs/global.h"
 
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 2
 #define PRINT(item) Print(item)
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PAUSE(message) Pause(message)
 #define PRINT_HEADING(message) PrintHeading(message)
-#define PRINT_LINE(c) PrintLine(c);
+#define PRINT_LINE(c) PrintLine(c)
 #else
 #define PRINT(item)
 #define PRINTF(x, ...)
@@ -86,7 +87,7 @@ TEST(SEAM_0_0_2, SEAM_0_0_2A) {
     end = Print(buffer, buffer + kSize, test_strings[i][0]);
     CHECK(end);
 
-    end = TextEquals(buffer, test_strings[i][0]);
+    end = StringEquals(buffer, test_strings[i][0]);
     CHECK(end);
   }
 
@@ -123,16 +124,16 @@ TEST(SEAM_0_0_2, SEAM_0_0_2A) {
 
   PRINT_HEADING("    Testing string utils...");
 
-  CHECK(!TextEquals(kCompareStrings[0], kCompareStrings[1]));
-  CHECK(!TextEquals(kCompareStrings[0], kCompareStrings[3]));
-  CHECK(TextEquals(kCompareStrings[0], kCompareStrings[0]));
-  CHECK(!TextEquals(kCompareStrings[2], kCompareStrings[3]));
-  CHECK(TextEquals(kCompareStrings[2], kCompareStrings[2]));
+  CHECK(!StringEquals(kCompareStrings[0], kCompareStrings[1]));
+  CHECK(!StringEquals(kCompareStrings[0], kCompareStrings[3]));
+  CHECK(StringEquals(kCompareStrings[0], kCompareStrings[0]));
+  CHECK(!StringEquals(kCompareStrings[2], kCompareStrings[3]));
+  CHECK(StringEquals(kCompareStrings[2], kCompareStrings[2]));
 
   CHECK_EQUAL(9, TextLength("123456789"));
 
-  CHECK(TextFind(kTestingString, "one"));
-  CHECK(TextFind(kTestingString, "three."));
+  CHECK(StringFind(kTestingString, "one"));
+  CHECK(StringFind(kTestingString, "three."));
 
   PRINTF("\n\n    Testing PrintRight...");
 
@@ -267,7 +268,7 @@ TEST(SEAM_0_0_2, SEAM_0_0_2A) {
 
   PRINTF("\n\nDone testing MemoryCopy!\n");
 #endif  //< #if CRABS_TEXT
-  PAUSE("Done testing SEAM_0_0_2! ({:-)-+=<");
+  PAUSE("Done testing SEAM_0_0_2! (:-)-+=<");
 }
 
 #undef PAUSE

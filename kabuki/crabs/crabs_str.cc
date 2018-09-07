@@ -15,10 +15,8 @@ specific language governing permissions and limitations under the License. */
 #if SEAM >= SEAM_0_0_1
 // Dependencies:
 #include "ascii.h"
-#include "test.h"
 #include "hex.h"
 #include "socket.h"
-#include "tbinary.h"
 #include "tstr.h"
 // End dependencies.
 
@@ -81,13 +79,13 @@ const char* TextSkipSpaces(const char* text, const char* text_end) {
   return TextSkipSpaces<char>(text, text_end);
 }
 
-const char* TextEquals(const char* text_a, const char* text_b) {
-  return TextEquals<char>(text_a, text_b);
+const char* StringEquals(const char* text_a, const char* text_b) {
+  return StringEquals<char>(text_a, text_b);
 }
 
-const char* TextEquals(const char* text, const char* text_end,
-                       const char* query) {
-  return TextEquals<char>(text, text_end, query);
+const char* StringEquals(const char* text, const char* text_end,
+                         const char* query) {
+  return StringEquals<char>(text, text_end, query);
 }
 
 bool TextQualifies(const char* text) { return TextQualifies<char>(text); }
@@ -96,16 +94,17 @@ bool TextQualifies(const char* text, const char* text_end) {
   return TextQualifies<char>(text, text_end);
 }
 
-int TextCompare(const char* text_a, const char* text_b) {
-  return TextCompare<char>(text_a, text_b);
+int StringCompare(const char* text_a, const char* text_b) {
+  return StringCompare<char>(text_a, text_b);
 }
 
-int TextCompare(const char* text_a, const char* text_end, const char* text_b) {
-  return TextCompare<char>(text_a, text_end, text_b);
+int StringCompare(const char* text_a, const char* text_end,
+                  const char* text_b) {
+  return StringCompare<char>(text_a, text_end, text_b);
 }
 
-const char* TextFind(const char* text, const char* query) {
-  return TextFind<char>(text, query);
+const char* StringFind(const char* text, const char* query) {
+  return StringFind<char>(text, query);
 }
 
 char* Print(char* begin, char* end, const char* string) {
@@ -696,13 +695,13 @@ const char16_t* TextSkipSpaces(const char16_t* text, const char16_t* text_end) {
   return TextSkipSpaces<char16_t>(text, text_end);
 }
 
-const char16_t* TextEquals(const char16_t* text_a, const char16_t* text_b) {
-  return TextEquals<char16_t>(text_a, text_b);
+const char16_t* StringEquals(const char16_t* text_a, const char16_t* text_b) {
+  return StringEquals<char16_t>(text_a, text_b);
 }
 
-const char16_t* TextEquals(const char16_t* text, const char16_t* text_end,
-                           const char16_t* query) {
-  return TextEquals<char16_t>(text, text_end, query);
+const char16_t* StringEquals(const char16_t* text, const char16_t* text_end,
+                             const char16_t* query) {
+  return StringEquals<char16_t>(text, text_end, query);
 }
 
 bool TextQualifies(const char16_t* text) {
@@ -713,17 +712,17 @@ bool TextQualifies(const char16_t* text, const char16_t* text_end) {
   return TextQualifies<char16_t>(text, text_end);
 }
 
-int TextCompare(const char16_t* text_a, const char16_t* text_b) {
-  return TextCompare<char16_t>(text_a, text_b);
+int StringCompare(const char16_t* text_a, const char16_t* text_b) {
+  return StringCompare<char16_t>(text_a, text_b);
 }
 
-int TextCompare(const char16_t* text_a, const char16_t* text_end,
-                const char16_t* text_b) {
-  return TextCompare<char16_t>(text_a, text_end, text_b);
+int StringCompare(const char16_t* text_a, const char16_t* text_end,
+                  const char16_t* text_b) {
+  return StringCompare<char16_t>(text_a, text_end, text_b);
 }
 
-const char16_t* TextFind(const char16_t* text, const char16_t* query) {
-  return TextFind<char16_t>(text, query);
+const char16_t* StringFind(const char16_t* text, const char16_t* query) {
+  return StringFind<char16_t>(text, query);
 }
 
 char16_t* Print(char16_t* begin, char16_t* end, const char16_t* string) {
@@ -1318,13 +1317,13 @@ const char32_t* TextSkipSpaces(const char32_t* text, const char32_t* text_end) {
   return TextSkipSpaces<char32_t>(text, text_end);
 }
 
-const char32_t* TextEquals(const char32_t* text_a, const char32_t* text_b) {
-  return TextEquals<char32_t>(text_a, text_b);
+const char32_t* StringEquals(const char32_t* text_a, const char32_t* text_b) {
+  return StringEquals<char32_t>(text_a, text_b);
 }
 
-const char32_t* TextEquals(const char32_t* cursor, const char32_t* end,
-                           const char32_t* text_b) {
-  return TextEquals<char32_t>(cursor, end, text_b);
+const char32_t* StringEquals(const char32_t* cursor, const char32_t* end,
+                             const char32_t* text_b) {
+  return StringEquals<char32_t>(cursor, end, text_b);
 }
 
 bool TextQualifies(const char32_t* text) {
@@ -1335,17 +1334,17 @@ bool TextQualifies(const char32_t* text, const char32_t* text_end) {
   return TextQualifies<char32_t>(text, text_end);
 }
 
-int TextCompare(const char32_t* text_a, const char32_t* text_b) {
-  return TextCompare<char32_t>(text_a, text_b);
+int StringCompare(const char32_t* text_a, const char32_t* text_b) {
+  return StringCompare<char32_t>(text_a, text_b);
 }
 
-int TextCompare(const char32_t* text_a, const char32_t* text_end,
-                const char32_t* text_b) {
-  return TextCompare<char32_t>(text_a, text_end, text_b);
+int StringCompare(const char32_t* text_a, const char32_t* text_end,
+                  const char32_t* text_b) {
+  return StringCompare<char32_t>(text_a, text_end, text_b);
 }
 
-const char32_t* TextFind(const char32_t* text, const char32_t* query) {
-  return TextFind<char32_t>(text, query);
+const char32_t* StringFind(const char32_t* text, const char32_t* query) {
+  return StringFind<char32_t>(text, query);
 }
 
 char32_t* Print(char32_t* begin, char32_t* end, const char32_t* string) {

@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/crabs/talign.h
+@file    ~/kabuki/f2/talign.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,9 +13,6 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-// Dependencies:
-#include "config.h"
-// End dependencies.
 
 #ifndef INCLUDED_CRABS_TALIGN
 #define INCLUDED_CRABS_TALIGN
@@ -23,47 +20,46 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* Aligns the given pointer up to a sizeof (T) byte boundary.
+@return The aligned value.
+@param  ptr The address to align.
+@desc Algorithm works by inverting the bits, mask of the LSbs and adding 1.
+This allows the algorithm to word align without any if statements. The
+algorithm works the same for all memory widths as proven by the truth
+tables bellow.
 
-    Algorithm works by inverting the bits, mask of the LSbs and adding 1.
-    This allows the algorithm to word align without any if statements.
-    The algorithm works the same for all memory widths as proven by the
-    truth tables bellow.
 
-    @param  ptr The address to align.
-    @return The aligned value.
+@code
+// The convention KT uses is that the usigned size always omes first
+// becuase it's the first byte of an ASCII OBJ.
+int32_t signed_example = 7;
+signed_example = AlignUp<int64_t, uint32_t, int32_t> (signed_example);
 
-    @code
-    // The convention KT uses is that the usigned size always omes first
-    // becuase it's the first byte of an ASCII OBJ.
-    int32_t signed_example = 7;
-    signed_example = AlignUp<int64_t, uint32_t, int32_t> (signed_example);
+uint16_t unsigned_example = 3;
+unsgiend_example = AlignUp<int32_t, uint16_t, uint16_t> (unsigned_example);
 
-    uint16_t unsigned_example = 3;
-    unsgiend_example = AlignUp<int32_t, uint16_t, uint16_t> (unsigned_example);
-
-    // 64-bit alignment example:
-    // ~000 = 111 => 000 + 111 + 1 = 0x1000
-    // ~001 = 110 => 001 + 110 + 1 = 0x1000
-    // ~010 = 101 => 010 + 101 + 1 = 0x1000
-    // ~011 = 100 => 011 + 100 + 1 = 0x1000
-    // ~100 = 011 => 100 + 011 + 1 = 0x1000
-    // ~101 = 010 => 101 + 010 + 1 = 0x1000
-    // ~110 = 001 => 110 + 001 + 1 = 0x1000
-    // ~111 = 000 => 111 + 000 + 1 = 0x1000
-    // //
-    // 32-bit alignment example:
-    // ~00 = 11 => 00 + 11 + 1 = 0x100
-    // ~01 = 10 => 01 + 10 + 1 = 0x100
-    // ~10 = 01 => 10 + 01 + 1 = 0x100
-    // ~11 = 00 => 11 + 00 + 1 = 0x100
-    // //
-    // 16-bit alignment example:
-    // ~0 = 1 => 0 + 1 = 1
-    // ~1 = 0 => 1 + 0 = 0
-    // //
-    // 8-bit example:
-    // value + ((~value) + 1) & (sizeof (int8_t) - 1) = value
-    @endcode */
+// 64-bit alignment example:
+// ~000 = 111 => 000 + 111 + 1 = 0x1000
+// ~001 = 110 => 001 + 110 + 1 = 0x1000
+// ~010 = 101 => 010 + 101 + 1 = 0x1000
+// ~011 = 100 => 011 + 100 + 1 = 0x1000
+// ~100 = 011 => 100 + 011 + 1 = 0x1000
+// ~101 = 010 => 101 + 010 + 1 = 0x1000
+// ~110 = 001 => 110 + 001 + 1 = 0x1000
+// ~111 = 000 => 111 + 000 + 1 = 0x1000
+// //
+// 32-bit alignment example:
+// ~00 = 11 => 00 + 11 + 1 = 0x100
+// ~01 = 10 => 01 + 10 + 1 = 0x100
+// ~10 = 01 => 10 + 01 + 1 = 0x100
+// ~11 = 00 => 11 + 00 + 1 = 0x100
+// //
+// 16-bit alignment example:
+// ~0 = 1 => 0 + 1 = 1
+// ~1 = 0 => 1 + 0 = 0
+// //
+// 8-bit example:
+// value + ((~value) + 1) & (sizeof (int8_t) - 1) = value
+@endcode */
 template <typename WordBoundary, typename UI = uintptr_t,
           typename I = uintptr_t>
 inline I AlignUpOffset(I value) {

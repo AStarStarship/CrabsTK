@@ -1,5 +1,6 @@
 /** Kabuki Toolkit @version 0.x
-@file    ~/kabuki/crabs/crabs_console.cc
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    ~/benchmarks/0_0_benchmark_f2/itos/print_mod100sc.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -11,9 +12,9 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#include "print_itos.h"
+#include "itos_algorithms.h"
 
-#if DEBUG
+#if SEAM == 2
 inline void PrintBinary(uint32_t value) {
   enum { kSize = sizeof(uint32_t) * 8 };
 
@@ -68,9 +69,9 @@ void PrintLine(char c) {
 
 char* Print(uint32_t value, char* text, char* text_end) {
   // Lookup table for powers of 10.
-  static const uint32_t k10ToThe[]{1,         10,         100,         1000,
-                                   10000,     100000,     1000000,     10000000,
-                                   100000000, 1000000000, ~(uint32_t)0};
+  static const uint32_t k10ToThe[]{1,         10,        100,     1000,
+                                   10000,     100000,    1000000, 10000000,
+                                   100000000, 1000000000};
 
   /** Lookup table of ASCII char pairs for 00, 01, ..., 99.
       To convert this algorithm to big-endian, flip the digit pair bytes. */
@@ -109,9 +110,7 @@ char* Print(uint32_t value, char* text, char* text_end) {
 
 #if DEBUG
   // Write a bunches of xxxxxx to the buffer for debug purposes.
-  for (int i = 0; i <= 21; ++i) {
-    *(text + i) = 'x';
-  }
+  for (int i = 0; i <= 21; ++i) *(text + i) = 'x';
   *(text + 21) = 0;
   char* begin = text;
   char buffer[256];

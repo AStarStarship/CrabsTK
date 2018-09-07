@@ -13,46 +13,90 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
+
 #ifndef INCLUDED_F2_TTEST
 #define INCLUDED_F2_TTEST
 
-#include <chrono>
-#include <random>
 #include "test.h"
 
-template <typename UI, typename SI, typename Float>
-class SeamMinor {
+#include "tconsole.h"
+
+namespace _ {
+
+class SeamMajor {
  public:
-  SeamMinor() {}
+  SeamMajor(SeamMinorTest** minor_seam, size_t minor_seam_count)
+      : minor_seam(minor_seam), minor_seam_count(minor_seam_count) {}
 
-  ErrorAssert* Run() {
-    auto start = high_resolution_clock::now(),
-         stop = high_resolution_clock::now();
-    auto delta = duration_cast<milliseconds>(stop - start).count();
+  /* Runs a unit minor_seam with the given global parameter list.
+  @return Nil upon success or an Assertion with debug info upon failure.
+  @param  args      An array of string argumetns.
+  @param  arg_count The number of arguments. */
+  Assertion Run(const char* args, int arg_count, int seam_page,
+                int seam_major) {
+    enum { kSize = 128 };
+    char buffer[kSize];
+    char *cursor, *end = buffer + kSize - 1;
+    cursor = Print(buffer, end, "Testing Major Seam ");
+    cursor = Print(cursor, end, seam_major);
+    PrintHeading(buffer);
+    for (int seam_minor = 0; seam_minor < kSeamCount; seam_minor++) {
+      cursor = Print(buffer, end, "Testing SEAM_");
+      cursor = Print(cursor, end, seam_page);
+      cursor = Print(cursor, end, '_');
+      cursor = Print(cursor, end, seam_major);
+      cursor = Print(cursor, end, '_');
+      cursor = Print(cursor, end, seam_minor);
+      PrintHeading(buffer);
+      Assertion assertion = (*minor_seam[seam_minor])(args, arg_count);
+      if (assertion.Failed()) return assertion;
+      Printf("\n\nDone testing SEAM_%i_%i_%i", seam_page, seam_major,
+             seam_minor);
+    }
+    Print("\n\nDone testing Major Seam");
+    Print(seam_major);
+    Print('\n', '\n');
+    return Assertion();
+  }
 
-    const ErrorAssert* result = test_seam(const char* args, int arg_count);
+  template <const char... N>
+  static inline SeamMinor MinorSeams(size_t& seam_count) {
+    static SeamMinorTest* minor_seams[sizeof...(N)] = {N...};
+    return SeamMajor(minor_seams, sizeof...(N));
   }
 
  private:
-  int seam,                                               //< SEAM
-      seam_page,                                          //< SEAM_PAGE
-      seam_major,                                         //< SEAM_MAJOR
-      seam_minor;                                         //< SEAM_MINOR
-  SeamMinorTest<uint32_t, int32_t, float> test_seam_32;   //< 32-bit unit tests.
-  SeamMinorTest<uint64_t, int64_t, double> test_seam_64;  //< 64-bit unit tests.
+  /* Array of unit tests for each minor seam. */
+  SeamMinorTest** minor_seam;  //< Array of function pointers.
+  size_t minor_seam_count;     //< Minor seam count.
 };
 
-template <>
-class SeamMajor {
- public:
-  SeamMajor() {}
-
-  const char* Run() {}
-
- private:
-  static SeamMinor test[SEAM_COUNT];  //< Array
+Assertion TestSEAM_0_0_0(const char* args, int arg_count) {
+  return Assertion();
 }
 
+Assertion TestSEAM_0_0_1(const char* args, int arg_count) {
+  return Assertion();
+}
+
+template <const char* kName, const char* kHeading = "">
+int RunUnitTests(const char* args, int arg_count) {
+  PrintHeading(kName);
+  Print('\n');
+  Print(kHeading);
+  Print('\n');
+  PrintLine();
+  PrintLn();
+  if (assertion.) {
+    Print("\nUnit tests failed.");
+    return APP_;
+  }
+  Pause("Completed running unit tests successsfully! :-)");
+  return APP_EXIT_SUCCESS;
+}
+
+// static SeamMajor seam_1 =
+//   SeamMajor::SeamMinor<&TestSEAM_0_0_0, &TestSEAM_0_0_1>();
 }  // namespace _
 
 #endif  //< INCLUDED_F2_TTEST

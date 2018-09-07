@@ -29,7 +29,7 @@ void Printf(const char* format, ...) {
 }
 
 void PrintfLn(const char* format, ...) {
-  PrintLn('\n');
+  PrintLn();
   va_list arg;
   va_start(arg, format);
   vfprintf(stdout, format, arg);
@@ -170,7 +170,7 @@ void Pause(const char* message) {
   Pause();
 }
 
-bool AssertDisplay(int line, const char* file) {
+bool AssertHandle(int line, const char* file) {
   Printf("\nError at line %d in \"%s\"", line, file);
   Pause();
   return true;

@@ -12,8 +12,9 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
-#include "../../kabuki/crabs/tint.h"
-#include "script_itos_benchmark.h"
+
+#include "../../kabuki/f2/tbinary.h"
+#include "itos_algorithms.h"
 
 typedef unsigned int uint;
 

@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 
-#define DLL
+#define API
 
 #define SEAM_PAGE 0
 #define SEAM_MAJOR 0
@@ -55,7 +55,7 @@ specific language governing permissions and limitations under the License. */
 #endif
 #if SEAM_MAJOR == 1
 #if SEAM_MINOR == 0
-#define SEAM_0_1_0
+#define SEAM_0_1_0 9
 #define SEAM 9
 #endif
 #endif  //< #if SEAM_MAJOR == 0

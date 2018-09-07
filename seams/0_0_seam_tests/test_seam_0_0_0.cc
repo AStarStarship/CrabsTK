@@ -13,17 +13,12 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 #include <random>
-#include "test_seam_0.h"
+#include "../../kabuki/f2/global.h"
 
 #if SEAM == SEAM_0_0_0
-using namespace _;
+namespace _ {
 
-TEST_GROUP(SEAM_0_0){void setup(){} void teardown(){Pause("\n");
-}
-}
-;
-
-TEST(SEAM_0_0, SEAM_0_0_0) {
+const char* TestSEAM_0_0_0 {
   Print("\n    Testing SEAM_0_0... ");
 
   static const uint64_t k10ToThe[20] = {
@@ -195,4 +190,5 @@ TEST(SEAM_0_0, SEAM_0_0_0) {
   Printf("\n Done testing ItoS :)\n\n");
 }
 
+}  // namespace _
 #endif  //< #if SEAM == SEAM_0_0_0

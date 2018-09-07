@@ -164,25 +164,25 @@ struct Expr {
 };
 
 /* Gets a pointer to the BIn slot. */
-DLL uintptr_t* ExprBinAddress(Expr* expr);
+API uintptr_t* ExprBinAddress(Expr* expr);
 
 /* Gets the expr's buffer. */
-DLL char* ExprBuffer(Expr* expr);
+API char* ExprBuffer(Expr* expr);
 
 /* Gets a pointer to the BIn slot. */
-DLL BIn* ExprBIn(Expr* expr);
+API BIn* ExprBIn(Expr* expr);
 
 /* Gets a pointer to the BOut slot. */
-DLL uintptr_t* ExprBOutAddress(Expr* expr);
+API uintptr_t* ExprBOutAddress(Expr* expr);
 
 /* Gets a pointer to the BOut slot. */
-DLL BOut* ExprBOut(Expr* expr);
+API BOut* ExprBOut(Expr* expr);
 
 /* Creates a Stack with equal sized rx and tx slots.
     @param root The root-scope device.
     @param unpacked_buffer The word-aligned expression buffer.
     @param unpacked_size   Size of the unpacked buffer. */
-DLL Expr* ExprInit(uintptr_t* buffer, uint_t buffer_size, uint_t stack_count,
+API Expr* ExprInit(uintptr_t* buffer, uint_t buffer_size, uint_t stack_count,
                       Operand* root, uintptr_t* unpacked_buffer,
                       uintptr_t unpacked_size);
 
@@ -192,65 +192,65 @@ inline Operand** ExprStack(Expr* expr) {
 }
 
 /* Returns true if the Stack uses dynamic memory. */
-// DLL bool ExprIsDynamic (Expr* expr);
+// API bool ExprIsDynamic (Expr* expr);
 
-DLL char* ExprEndAddress(Expr* expr);
+API char* ExprEndAddress(Expr* expr);
 
 /* Resets this Stack to the newial state. */
-DLL const Op* ExprReset(Expr* expr);
+API const Op* ExprReset(Expr* expr);
 
 /* Pushes the operand at the given index of the current
     device control onto the stack.
     @return Returns nil upon success and a pointer to a char
             upon failure. */
-DLL const Op* Push(Expr* expr, Operand* operand);
+API const Op* Push(Expr* expr, Operand* operand);
 
 /* Attempts to pop an Star off the stack and returns a pointer to a
     char upon failure. */
-DLL const Op* Pop(Expr* expr);
+API const Op* Pop(Expr* expr);
 
 /* Exits the current state. */
-DLL byte ExprExitState(Expr* expr);
+API byte ExprExitState(Expr* expr);
 
 /* Sets the new state onto the expression stack.
-DLL const Op* ExprSetState (Expr* expr, BInState state); */
+API const Op* ExprSetState (Expr* expr, BInState state); */
 
 /* Saves the current bin_state and sets the bin_state to the new state. */
-DLL const Op* ExprEnterState(Expr* expr, BInState state);
+API const Op* ExprEnterState(Expr* expr, BInState state);
 
 /* Streams a B-Output byte. */
-DLL byte ExprStreamBOut(Expr* expr);
+API byte ExprStreamBOut(Expr* expr);
 
 /* Scans the BOut buffer and marks the data as being ready to execute.
     @param a The Stack to scan. */
-DLL const Op* ExprUnpack(Expr* expr);  // , Portal* io);
+API const Op* ExprUnpack(Expr* expr);  // , Portal* io);
 
 /* Returns true if the given Stack contains the given address. */
-DLL bool ExprContains(Expr* expr, void* address);
+API bool ExprContains(Expr* expr, void* address);
 
 /* Pushes a header onto the scan stack.*/
-DLL const Op* ExprScanHeader(Expr* expr, const uint_t* header);
+API const Op* ExprScanHeader(Expr* expr, const uint_t* header);
 
 /* Gets the base address of the header stack. */
-DLL const uint_t* ExprHeaderStack(Expr* expr);
+API const uint_t* ExprHeaderStack(Expr* expr);
 
 /* Closes the current expr and cues it for execution. */
-DLL void ExprClose(Expr* expr);
+API void ExprClose(Expr* expr);
 
 /* Cancels the current expr. */
-DLL void ExprCancel(Expr* expr);
+API void ExprCancel(Expr* expr);
 
 /* Cancels the current expr and writes zeros to the buffer. */
-DLL void ExprClear(Expr* expr);
+API void ExprClear(Expr* expr);
 
 /* Script Bell Op rings the bell of the given address. */
-DLL void ExprRingBell(Expr* expr, const char* address = "");
+API void ExprRingBell(Expr* expr, const char* address = "");
 
 /* Script Ack-back Op replies an ACK to a Bell Op. */
-DLL void ExprAckBack(Expr* expr, const char* address = "");
+API void ExprAckBack(Expr* expr, const char* address = "");
 
 /* Disconnects the expression. */
-DLL const Op* ExprForceDisconnect(Expr* expr, Error error);
+API const Op* ExprForceDisconnect(Expr* expr, Error error);
 
 /* Reads the Expr args from the expr->slot.
 inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
@@ -321,20 +321,20 @@ inline const Op* ExprResult(Expr* expr, const Op* op, void** args) {
     @param expr   The expression to write the Op header to.
     @param header The Op header.
     @return Returns the header if expr is nil. */
-DLL const Op* ExprQuery(Expr* expr, const Op& header);
+API const Op* ExprQuery(Expr* expr, const Op& header);
 
 /* Returns the Op header or writes it to the Expr.
     @param expr   The expression to write the Op header to.
     @param op     The Op header.
     @return Returns the header if expr is nil. */
-DLL const Op* ExprQuery(Expr* expr, const Op* op);
+API const Op* ExprQuery(Expr* expr, const Op* op);
 
 #if CRABS_TEXT
 /* Prints the Expr stack to the Text buffer */
-DLL Utf8& PrintExpr(Utf8& printer, Expr* expr);
+API Utf8& PrintExpr(Utf8& printer, Expr* expr);
 
 /* Prints the Expr stack to the Text buffer */
-DLL Utf8& PrintExprStack(Utf8& printer, Expr* expr);
+API Utf8& PrintExprStack(Utf8& printer, Expr* expr);
 #endif
 
 }  // namespace _

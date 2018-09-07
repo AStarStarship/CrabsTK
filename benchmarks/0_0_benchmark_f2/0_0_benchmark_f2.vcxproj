@@ -19,18 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\kabuki\f2\f2_benchmark.cc" />
     <ClCompile Include="..\..\kabuki\f2\f2_binary.cc" />
     <ClCompile Include="..\..\kabuki\f2\f2_console.cc" />
-    <ClCompile Include="..\..\kabuki\f2\f2_foundational_framework.cc" />
-    <ClCompile Include="..\..\kabuki\f2\f2_rng.cc" />
     <ClCompile Include="..\..\kabuki\f2\f2_test.cc" />
     <ClCompile Include="..\..\kabuki\f2\stdafx.cc" />
-    <ClCompile Include="..\..\kabuki\f2\tests_main.cc" />
-    <ClCompile Include="itos_competition.cc" />
+    <ClCompile Include="benchmark_msba.cc" />
+    <ClCompile Include="itos_algorithms.cc" />
     <ClCompile Include="print_mlsd.cc" />
     <ClCompile Include="print_mlsd2.cc" />
     <ClCompile Include="print_mod100sc.cc" />
-    <ClCompile Include="puff_benchmark.cc" />
+    <ClCompile Include="benchmark_itos.cc" />
     <ClCompile Include="stdafx.cc" />
   </ItemGroup>
   <ItemGroup>
@@ -38,19 +37,19 @@
     <ClInclude Include="..\..\kabuki\f2\console.h" />
     <ClInclude Include="..\..\kabuki\f2\global.h" />
     <ClInclude Include="..\..\kabuki\f2\public.h" />
-    <ClInclude Include="..\..\kabuki\f2\rng.h" />
     <ClInclude Include="..\..\kabuki\f2\stdafx.h" />
-    <ClInclude Include="..\..\kabuki\f2\stopwatch.h" />
     <ClInclude Include="..\..\kabuki\f2\talign.h" />
     <ClInclude Include="..\..\kabuki\f2\targetver.h" />
     <ClInclude Include="..\..\kabuki\f2\tbinary.h" />
+    <ClInclude Include="..\..\kabuki\f2\tconsole.h" />
     <ClInclude Include="..\..\kabuki\f2\test.h" />
-    <ClInclude Include="..\..\kabuki\f2\trng.h" />
     <ClInclude Include="..\..\kabuki\f2\ttest.h" />
-    <ClInclude Include="itos_competition.h" />
-    <ClInclude Include="print_itos.h" />
+    <ClInclude Include="itos_algorithms.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\kabuki\f2\readme.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -58,7 +57,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>scriptitosbenchmark</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
-    <ProjectName>0_0_benchmark_puff</ProjectName>
+    <ProjectName>0_0_benchmark_f2</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

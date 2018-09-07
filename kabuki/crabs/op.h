@@ -42,7 +42,7 @@ struct BOut;
         NumOps (0), FirstOp ('A'),
         "Description", '}', ';', ' ', true, nullptr, "-", nullptr };
     @endcode */
-struct DLL Op {
+struct API Op {
   const char* name;          //< Op name.
   const uint_t *in,          //< Input BSQ params or OpFirst.
       *out;                  //< Output BSQ params or OpLast.
