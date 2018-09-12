@@ -13,14 +13,12 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
+
 #ifndef INCLUDED_F2_GLOBAL
 #define INCLUDED_F2_GLOBAL
 
-#include "console.h"
 #include "talign.h"
-#include "tbinary.h"
-#if DEBUG
+#include "trng.h"
 #include "ttest.h"
-#endif
 
 #endif  //< INCLUDED_F2_GLOBAL

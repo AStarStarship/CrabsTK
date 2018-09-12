@@ -13,112 +13,139 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
+#if SEAM >= SEAM_0_0_0
 #include "tconsole.h"
-
-//#include "test.h"
 
 #include <conio.h>
 #include <cstdio>
 
 namespace _ {
 
-inline void Print(char c) { putchar(c); }
+inline COut Print(char c) { putchar(c); }
 
-inline void Print(char first, char second) {
+inline COut Print(char first, char second) {
   Print(first);
   Print(second);
+  return COut();
 }
 
-inline void Print(char first, char second, char third) {
+inline COut Print(char first, char second, char third) {
   Print(first);
   Print(second);
   Print(third);
+  return COut();
 }
 
-void PrintLn(char c) { Print('\n', c); }
+COut PrintLn(char c) {
+  Print('\n', c);
+  return COut();
+}
 
-void PrintLn(char first, char second) { Print('\n', first, second); }
+COut PrintLn(char first, char second) { return Print('\n', first, second); }
 
-void Printf(const char* format, ...) {
+COut Printf(const char* format, ...) {
   va_list arg;
   va_start(arg, format);
   vfprintf(stdout, format, arg);
   va_end(arg);
+  return COut();
 }
 
-void PrintfLn(const char* format, ...) {
+COut PrintfLn(const char* format, ...) {
   PrintLn();
   va_list arg;
   va_start(arg, format);
   vfprintf(stdout, format, arg);
   va_end(arg);
+  return COut();
 }
 
-void Print(const char* string) { Printf(string); }
+COut Print(const char* string) { return Printf(string); }
 
-void Print(int64_t value) { Printf(FORMAT_SI8, value); }
-
-void Print(int32_t value) {
-#if SEAM == SEAM_0_0_0
-  Printf("%i", value);
-#else
-  Print((int64_t)value);
-#endif
+COut Print(const char* string, char delimiter) {
+  Printf(string);
+  return Print(delimiter);
 }
 
-void Print(uint64_t value) {
+COut Print(uint64_t value) {
 #if SEAM == SEAM_0_0_0
-  Printf(FORMAT_UI8, value);
+  return Printf(FORMAT_UI8, value);
 #else
   enum { kSize = 24 };
   char buffer[kSize];
   Print<>(buffer, kSize, value);
-  Print(buffer);
+  return Print(buffer);
 #endif
 }
 
-void Print(uint32_t value) {
+COut Print(uint32_t value) {
 #if SEAM == SEAM_0_0_0
-  Printf("%u", value);
+  return Printf("%u", value);
 #else
-  Print((uint64_t)value);
+  return Print((uint64_t)value);
 #endif
 }
 
-void Print(float value) {
+COut Print(int64_t value) {
+#if SEAM == SEAM_0_0_0
+  return Printf(FORMAT_SI8, value);
+#else
+  enum { kSize = 24 };
+  char buffer[kSize];
+  Print<>(buffer, kSize, value);
+  return Print(buffer);
+#endif
+}
+
+COut Print(int32_t value) {
+#if SEAM == SEAM_0_0_0
+  return Printf("%i", value);
+#else
+  return Print((int64_t)value);
+#endif
+}
+
+COut Print(float value) {
 #if SEAM < SEAM_0_0_3
-  Printf("%f", value);
+  return Printf("%f", value);
 #else
   enum { kSize = 16 };
   char buffer[kSize];
   Print<>(buffer, kSize, value);
-  Print(buffer);
+  return Print(buffer);
 #endif
 }
 
-void Print(double value) {
+COut Print(double value) {
 #if SEAM < SEAM_0_0_3
-  Printf("%f", value);
+  return Printf("%f", value);
 #else
   enum { kSize = 24 };
   char buffer[kSize];
   Print<>(buffer, kSize, value);
-  Print(buffer);
+  return Print(buffer);
 #endif
 }
 
-void PrintLn(const char* string) {
+COut PrintLn(const char* string) {
   Print('\n');
-  Print(string);
+  return Print(string);
 }
 
-void PrintLine(int width, char token, char first_token) {
+COut PrintIndent(int count) {
+  Print('\n');
+  while (--count > 0) Print(' ');
+  return COut();
+}
+
+COut PrintLine(int width, char token, char first_token) {
   if (width < 1) return;
   Print(first_token);
   while (width-- > 0) Print(token);
+  return COut();
 }
 
-void PrintHeading(const char* heading, int line_count, int width, char token,
+COut PrintHeading(const char* heading, int line_count, int width, char token,
                   char first_token) {
   if (line_count < 1 || width < 1) return;
   while (line_count-- > 0) Print('\n');
@@ -127,11 +154,11 @@ void PrintHeading(const char* heading, int line_count, int width, char token,
   Print(heading);
   Print('\n');
   PrintLine(width, token, '+');
-  Print('\n');
+  return Print('\n');
 }
 
 template <typename UI>
-void PrintBinaryUnsigned(UI value) {
+COut PrintBinaryUnsigned(UI value) {
   enum { kSize = sizeof(UI) * 8 };
 
   for (int i = kSize; i > 0; --i) {
@@ -139,94 +166,103 @@ void PrintBinaryUnsigned(UI value) {
     Print(c);
     value = value << 1;
   }
+  return COut();
 }
 
 template <typename SI, typename UI>
-void PrintBinarySigned(SI value) {
+COut PrintBinarySigned(SI value) {
   return PrintBinaryUnsigned<UI>((UI)value);
 }
 
-void PrintBinary(uint8_t value) { return PrintBinaryUnsigned<uint8_t>(value); }
+COut PrintBinary(uint8_t value) { return PrintBinaryUnsigned<uint8_t>(value); }
 
-void PrintBinary(int8_t value) {
+COut PrintBinary(int8_t value) {
   return PrintBinarySigned<int8_t, uint8_t>(value);
 }
 
-void PrintBinary(uint16_t value) {
+COut PrintBinary(uint16_t value) {
   return PrintBinaryUnsigned<uint16_t>(value);
 }
 
-void PrintBinary(int16_t value) {
+COut PrintBinary(int16_t value) {
   return PrintBinarySigned<int16_t, uint16_t>(value);
 }
 
-void PrintBinary(uint32_t value) {
+COut PrintBinary(uint32_t value) {
   return PrintBinaryUnsigned<uint32_t>(value);
 }
 
-void PrintBinary(int32_t value) {
+COut PrintBinary(int32_t value) {
   return PrintBinarySigned<int32_t, uint32_t>(value);
 }
 
-void PrintBinary(uint64_t value) {
+COut PrintBinary(uint64_t value) {
   return PrintBinaryUnsigned<uint64_t>(value);
 }
 
-void PrintBinary(int64_t value) {
+COut PrintBinary(int64_t value) {
   return PrintBinarySigned<int64_t, uint64_t>(value);
 }
 
-void PrintBinary(float value) {
-  PrintBinaryUnsigned<uint32_t>(*reinterpret_cast<uint32_t*>(&value));
+COut PrintBinary(float value) {
+  return PrintBinaryUnsigned<uint32_t>(*reinterpret_cast<uint32_t*>(&value));
 }
 
-void PrintBinary(double value) {
-  PrintBinaryUnsigned<uint64_t>(*reinterpret_cast<uint64_t*>(&value));
+COut PrintBinary(double value) {
+  return PrintBinaryUnsigned<uint64_t>(*reinterpret_cast<uint64_t*>(&value));
 }
 
-void PrintBinary(void* ptr) {
+COut PrintBinary(void* ptr) {
   return PrintBinaryUnsigned<uintptr_t>(*reinterpret_cast<uintptr_t*>(&ptr));
 }
 
-void PrintHex(uint8_t value) { return PrintHex<uint8_t>(value); }
+COut PrintHex(uint8_t value) { return PrintHex<uint8_t>(value); }
 
-void PrintHex(int8_t value) { return PrintHex<uint8_t>((int8_t)value); }
+COut PrintHex(int8_t value) { return PrintHex<uint8_t>((int8_t)value); }
 
-void PrintHex(uint16_t value) { return PrintHex<uint16_t>(value); }
+COut PrintHex(uint16_t value) { return PrintHex<uint16_t>(value); }
 
-void PrintHex(int16_t value) { return PrintHex<uint16_t>((uint16_t)value); }
+COut PrintHex(int16_t value) { return PrintHex<uint16_t>((uint16_t)value); }
 
-void PrintHex(uint32_t value) { return PrintHex<uint32_t>(value); }
+COut PrintHex(uint32_t value) { return PrintHex<uint32_t>(value); }
 
-void PrintHex(int32_t value) { return PrintHex<uint32_t>((uint32_t)value); }
+COut PrintHex(int32_t value) { return PrintHex<uint32_t>((uint32_t)value); }
 
-void PrintHex(uint64_t value) { return PrintHex<uint64_t>(value); }
+COut PrintHex(uint64_t value) { return PrintHex<uint64_t>(value); }
 
-void PrintHex(int64_t value) { return PrintHex<uint64_t>((uint64_t)value); }
+COut PrintHex(int64_t value) { return PrintHex<uint64_t>((uint64_t)value); }
 
-void PrintHex(float value) {
+COut PrintHex(float value) {
   return PrintHex<uint32_t>(*reinterpret_cast<uint32_t*>(&value));
 }
 
-void PrintHex(double value) {
+COut PrintHex(double value) {
   return PrintHex<uint64_t>(*reinterpret_cast<uint64_t*>(&value));
 }
 
-void PrintHex(void* ptr) {
+COut PrintHex(void* ptr) {
   return PrintHex<uintptr_t>(*reinterpret_cast<uintptr_t*>(&ptr));
 }
 
-int KeyboardRead() { return _getch(); }
+int CInKey() { return _getch(); }
 
-void Pause() {
-  Print("\nPress any key to continue...");
-  while (KeyboardRead() < 0)
+void Pause(const char* message) {
+  if (!message) message = "";
+  Printf("\n\n%s\nPress any key to continue...", message);
+  while (CInKey() < 0)
     ;
 }
 
-void Pause(const char* message) {
-  Printf("\n\n%s", message);
-  Pause();
+void Pausef(const char* format, ...) {
+  PrintLn();
+  va_list arg;
+  va_start(arg, format);
+  vfprintf(stdout, format, arg);
+  va_end(arg);
+
+  Pause("\nPress any key to continue...");
+  while (CInKey() < 0)
+    ;
 }
 
 COut::COut() {}
@@ -251,97 +287,190 @@ COut::COut(float value) { Print(value); }
 
 COut::COut(double value) { Print(value); }
 
-inline COut COut::Print(char c) { Print(c); }
-
-inline COut COut::Print(char first, char second) { Print(first, second); }
-
-inline COut COut::Print(char first, char second, char third) {
-  Print(first, second, third);
+inline COut& COut::Print(char c) {
+  Print(c);
+  return *this;
 }
 
-inline COut COut::Print(const char* string) { Print(string); }
+inline COut& COut::Print(char first, char second) {
+  Print(first, second);
+  return *this;
+}
 
-inline COut COut::Print(int64_t value) { Print(value); }
+inline COut& COut::Print(char first, char second, char third) {
+  Print(first, second, third);
+  return *this;
+}
 
-inline COut COut::Print(uint64_t value) { Print(value); }
+inline COut& COut::Print(const char* string) {
+  Print(string);
+  return *this;
+}
 
-inline COut COut::Print(int32_t value) { Print(value); }
+inline COut& COut::Print(int64_t value) {
+  Print(value);
+  return *this;
+}
 
-inline COut COut::Print(uint32_t value) { Print(value); }
+inline COut& COut::Print(uint64_t value) {
+  Print(value);
+  return *this;
+}
 
-inline COut COut::Print(float value) { Print(value); }
+inline COut& COut::Print(int32_t value) {
+  Print(value);
+  return *this;
+}
 
-inline COut COut::Print(double value) { Print(value); }
+inline COut& COut::Print(uint32_t value) {
+  Print(value);
+  return *this;
+}
 
-COut COut::PrintLn(char c) { PrintLn(c); }
+inline COut& COut::Print(float value) {
+  Print(value);
+  return *this;
+}
 
-COut COut::PrintLn(char first, char second) { PrintLn(first, second); }
+inline COut& COut::Print(double value) {
+  Print(value);
+  return *this;
+}
 
-COut COut::PrintLn(const char* string) { PrintLn(string); }
+COut& COut::PrintLn(char c) {
+  PrintLn(c);
+  return *this;
+}
 
-COut COut::Printf(const char* format, ...) {
+COut& COut::PrintLn(char first, char second) {
+  return PrintLn(first, second);
+  return *this;
+}
+
+COut& COut::PrintLn(const char* string) {
+  return PrintLn(string);
+  return *this;
+}
+
+COut& COut::Printf(const char* format, ...) {
   va_list arg;
   va_start(arg, format);
   vfprintf(stdout, format, arg);
   va_end(arg);
+  return *this;
 }
 
-COut COut::PrintfLn(const char* format, ...) {
+COut& COut::PrintfLn(const char* format, ...) {
   Print();
   va_list arg;
   va_start(arg, format);
   vfprintf(stdout, format, arg);
   va_end(arg);
+  return *this;
 }
 
-COut COut::Line(int width, char token, char first_token) {
+COut& COut::Line(int width, char token, char first_token) {
   PrintLine(width, token, first_token);
+  return *this;
 }
 
-COut COut::Heading(const char* heading, int line_count, int width, char token,
-                   char first_token) {
+COut& COut::Heading(const char* heading, int line_count, int width, char token,
+                    char first_token) {
   PrintHeading(heading, line_count, width, token, first_token);
+  return *this;
 }
 
-COut COut::Binary(uint8_t value) { PrintBinary(value); }
+COut& COut::Binary(uint8_t value) {
+  PrintBinary(value);
+  return *this;
+}
 
-COut COut::Binary(int8_t value) { PrintBinary(value); }
+COut& COut::Binary(int8_t value) {
+  PrintBinary(value);
+  return *this;
+}
 
-COut COut::Binary(uint16_t value) { PrintBinary(value); }
+COut& COut::Binary(uint16_t value) {
+  PrintBinary(value);
+  return *this;
+}
 
-COut COut::Binary(int16_t value) { PrintBinary(value); }
+COut& COut::Binary(int16_t value) {
+  PrintBinary(value);
+  return *this;
+}
 
-COut COut::Binary(uint32_t value) { PrintBinary(value); }
+COut& COut::Binary(uint32_t value) {
+  PrintBinary(value);
+  return *this;
+}
 
-COut COut::Binary(int32_t value) { PrintBinary(value); }
+COut& COut::Binary(int32_t value) {
+  PrintBinary(value);
+  return *this;
+}
 
-COut COut::Binary(uint64_t value) { PrintBinary(value); }
+COut& COut::Binary(uint64_t value) {
+  PrintBinary(value);
+  return *this;
+}
 
-COut COut::Binary(int64_t value) { PrintBinary(value); }
+COut& COut::Binary(int64_t value) {
+  PrintBinary(value);
+  return *this;
+}
 
-COut COut::Hex(uint8_t value) { PrintHex(value); }
+COut& COut::Hex(uint8_t value) {
+  PrintHex(value);
+  return *this;
+}
 
-COut COut::Hex(int8_t value) { PrintHex(value); }
+COut& COut::Hex(int8_t value) {
+  PrintHex(value);
+  return *this;
+}
 
-COut COut::Hex(uint16_t value) { PrintHex(value); }
+COut& COut::Hex(uint16_t value) {
+  PrintHex(value);
+  return *this;
+}
 
-COut COut::Hex(int16_t value) { PrintHex(value); }
+COut& COut::Hex(int16_t value) {
+  PrintHex(value);
+  return *this;
+}
 
-COut COut::Hex(uint32_t value) { PrintHex(value); }
+COut& COut::Hex(uint32_t value) {
+  PrintHex(value);
+  return *this;
+}
 
-COut COut::Hex(int32_t value) { PrintHex(value); }
+COut& COut::Hex(int32_t value) {
+  PrintHex(value);
+  return *this;
+}
 
-COut COut::Hex(uint64_t value) { PrintHex(value); }
+COut& COut::Hex(uint64_t value) {
+  PrintHex(value);
+  return *this;
+}
 
-COut COut::Hex(int64_t value) { PrintHex(value); }
+COut& COut::Hex(int64_t value) {
+  PrintHex(value);
+  return *this;
+}
 
-inline COut COut::Hex(float value) { PrintHex(value); }
+inline COut& COut::Hex(float value) {
+  PrintHex(value);
+  return *this;
+}
 
-inline COut COut::Hex(double value) { PrintHex(value); }
+inline COut& COut::Hex(double value) {
+  PrintHex(value);
+  return *this;
+}
 
-COut COut::Pause() { Pause(); }
-
-COut COut::Pause(const char* message) { Pause(message); }
+COut& COut::Pause(const char* message) { Pause(message); }
 
 CHex::CHex(uint8_t value) { PrintHex(value); }
 
@@ -388,3 +517,64 @@ CBinary::CBinary(double value) { PrintBinary(value); }
 CBinary::CBinary(void* ptr) { PrintBinary(ptr); }
 
 }  // namespace _
+
+_::COut& operator<<(_::COut& cout, const char* string) {
+  _::Print(string);
+  return cout;
+}
+
+_::COut& operator<<(_::COut& cout, char c) {
+  _::Print(c);
+  return cout;
+}
+
+_::COut& operator<<(_::COut& cout, uint8_t value) {
+  _::Print(value);
+  return cout;
+}
+
+_::COut& operator<<(_::COut& cout, int16_t value) {
+  _::Print(value);
+  return cout;
+}
+
+_::COut& operator<<(_::COut& cout, uint16_t value) {
+  _::Print(value);
+  return cout;
+}
+
+_::COut& operator<<(_::COut& cout, int32_t value) {
+  _::Print(value);
+  return cout;
+}
+
+_::COut& operator<<(_::COut& cout, uint32_t value) {
+  _::Print(value);
+  return cout;
+}
+
+_::COut& operator<<(_::COut& cout, int64_t value) {
+  _::Print(value);
+  return cout;
+}
+
+_::COut& operator<<(_::COut& cout, uint64_t value) {
+  _::Print(value);
+  return cout;
+}
+
+_::COut& operator<<(_::COut& cout, float value) {
+  _::Print(value);
+  return cout;
+}
+
+_::COut& operator<<(_::COut& cout, double value) {
+  _::Print(value);
+  return cout;
+}
+
+_::COut& operator<<(_::COut& cout, _::CHex item) { return cout; }
+
+_::COut& operator<<(_::COut& cout, _::CBinary item) { return cout; }
+
+#endif  //< #if SEAM >= SEAM_0_0_0

@@ -13,58 +13,62 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
+
+#if SEAM >= SEAM_0_0_1
 #ifndef INCLUDED_CRABS_RNGUNIFORM
 #define INCLUDED_CRABS_RNGUNIFORM
-#include <memory>
+
 namespace _ {
 
 /* Gets a random generator device seed. */
-inline uint RandomizeDevice();
+API inline uint RandomizeSeed();
 
 /* Gets a random 8-bit/1-byte unsigned integer. */
-inline uint8_t Random(uint8_t min, uint8_t max);
+API inline uint8_t Random(uint8_t min, uint8_t max);
 
 /* Gets a random 8-bit/1-byte signed integer. */
-inline uint8_t Random(int8_t min, int8_t max);
+API inline uint8_t Random(int8_t min, int8_t max);
 
 /* Gets a random 16-bit/2-byte unsigned integer. */
-inline uint16_t Random(uint16_t min, uint16_t max);
+API inline uint16_t Random(uint16_t min, uint16_t max);
 
 /* Gets a random 16-bit/2-byte signed integer. */
-inline uint16_t Random(int16_t min, int16_t max);
+API inline uint16_t Random(int16_t min, int16_t max);
 
 /* Gets a random 32-bit/4-byte unsigned integer. */
-inline uint32_t Random(uint32_t min, uint32_t max);
+API inline uint32_t Random(uint32_t min, uint32_t max);
 
 /* Gets a random 64-bit/8-byte unsigned integer. */
-inline uint64_t Random(uint64_t min, uint64_t max);
+API inline uint64_t Random(uint64_t min, uint64_t max);
 
 /* Gets a random 64-bit/8-byte signed integer. */
-inline uint64_t Random(int64_t min, int64_t max);
+API inline uint64_t Random(int64_t min, int64_t max);
 
 /* Gets a random 8-bit/1-byte unsigned integer. */
-inline uint8_t RandomUI1();
+API inline uint8_t RandomUI1();
 
 /* Gets a random 8-bit/1-byte signed integer. */
-inline int8_t RandomSI1();
+API inline int8_t RandomSI1();
 
 /* Gets a random 16-bit/2-byte unsigned integer. */
-inline uint16_t RandomUI2();
+API inline uint16_t RandomUI2();
 
 /* Gets a random 16-bit/2-byte signed integer. */
-inline int16_t RandomSI2();
+API inline int16_t RandomSI2();
 
 /* Gets a random 32-bit/4-byte unsigned integer. */
-inline uint32_t RandomUI4();
+API inline uint32_t RandomUI4();
 
 /* Gets a random 32-bit/4-byte signed integer. */
-inline int32_t RandomSI4();
+API inline int32_t RandomSI4();
 
 /* Gets a random 64-bit/8-byte unsigned integer. */
-inline uint64_t RandomUI8();
+API inline uint64_t RandomUI8();
 
 /* Gets a random 64-bit/8-byte signed integer. */
-inline uint64_t RandomSI8();
+API inline uint64_t RandomSI8();
 
 }  // namespace _
 #endif  //< INCLUDED_CRABS_RNGUNIFORM
+
+#endif  //< #if SEAM >= SEAM_0_0_1

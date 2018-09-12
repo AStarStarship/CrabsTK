@@ -14,8 +14,9 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
+#if SEAM >= SEAM_0_0_1
 #ifndef INCLUDED_CRABS_TALIGN
-#define INCLUDED_CRABS_TALIGN
+#define INCLUDED_CRABS_TALIGN 1
 
 namespace _ {
 
@@ -247,3 +248,5 @@ inline T WordAlign8(T value) {
 
 }  // namespace _
 #endif  //< INCLUDED_CRABS_TALIGN
+
+#endif  //< #if SEAM >= SEAM_0_0_1

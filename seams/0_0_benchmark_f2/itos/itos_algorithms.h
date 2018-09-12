@@ -1,6 +1,6 @@
 /** Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/benchmarks/script_itos_tests.h
+@file    ~/seams/0_0_benchmark_f2/itos_algoihrms.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,29 +13,45 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
+#if SEAM >= SEAM_0_0_1
 #ifndef INCLUDED_SCRIPT_ITOS_TESTS
 #define INCLUDED_SCRIPT_ITOS_TESTS
 
-char* PrintNil(uint32_t value, char* text, char* text_end);
+#include "config.h"
 
-char* PrintSprintf(uint32_t value, char* text, char* text_end);
+TestCase PrintNil(const char* args);
 
-char* PrintMod10(uint32_t value, char* text, char* text_end);
+char* PrintNil(char* begin, char* end, uint32_t value);
 
-char* PrintMod100(uint32_t val, char* text, char* text_end);
+char* PrintSprintf(char* begin, char* end, uint32_t value);
 
-char* PrintNull(uint32_t value, char* text, char* text_end);
+TestCase PrintSprintf(const char* args);
 
-char* PrintSprintf(uint32_t value, char* text, char* text_end);
+char* PrintMod10(char* begin, char* end, uint32_t value);
 
-char* PrintStbSprintf(uint32_t value, char* text, char* text_end);
+TestCase PrintMod10(const char* args);
 
-char* PrintMsd10(uint32_t value, char* text, char* text_end);
+char* PrintMod100(char* begin, char* end, uint32_t value);
 
-char* PrintSizeLut(uint32_t val, char* text, char* text_end);
+TestCase PrintMod100(const char* args);
+
+char* PrintSprintf(char* begin, char* end, uint32_t value);
+
+TestCase PrintSprintf(const char* args);
+
+char* PrintStbSprintf(char* begin, char* end, uint32_t value);
+
+TestCase PrintStbSprintf(const char* args);
+
+char* PrintMsd10(char* begin, char* end, uint32_t value);
+
+TestCase PrintMsd10(const char* args);
+
+char* PrintSizeLut(char* begin, char* end, uint32_t value);
 
 void TestItoSSizeLut();
 
 void BenchmarkScriptItos();
 
 #endif  //< #ifndef INCLUDED_SCRIPT_ITOS_TESTS
+#endif  //< #if SEAM >= SEAM_0_0_1

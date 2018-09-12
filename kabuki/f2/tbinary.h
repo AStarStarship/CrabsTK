@@ -12,10 +12,12 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
-
 #include <stdafx.h>
-#ifndef INCLUDED_CRABS_TDECIMAL
-#define INCLUDED_CRABS_TDECIMAL
+
+#if SEAM >= SEAM_0_0_0
+#ifndef INCLUDED_CRABS_TBINARY
+#define INCLUDED_CRABS_TBINARY 1
+
 #include "binary.h"
 
 #if SEAM == 1
@@ -28,7 +30,7 @@ template <typename UI>
 inline void PrinttoSDebug(UI value) {
   enum { kSize = sizeof(UI) * 8 };
 
-  static const char* debug_table =
+  const char* debug_table =
       sizeof(UI) == 8
           ? "\n    "
             "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
@@ -36,21 +38,21 @@ inline void PrinttoSDebug(UI value) {
             "6666555555555544444444443333333333222222222211111111110000000000"
             "\n    "
             "3210987654321098765432109876543210987654321098765432109876543210"
-            "\n    |  |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |  |  "
-            "|   |"
-            "\n    2  1  1  1   1  1  1   1  1  1   1  0  0   0  0  0   0  0  "
-            "0   0"
-            "\n    0  9  8  7   6  5  4   3  2  1   0  9  8   7  6  5   4  3  "
-            "2   1"
+            "\n    "
+            "|  |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |"
+            "\n    "
+            "2  1  1  1   1  1  1   1  1  1   1  0  0   0  0  0   0  0  0   0"
+            "\n    "
+            "0  9  8  7   6  5  4   3  2  1   0  9  8   7  6  5   4  3  2   1"
           : "\n    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
             "\n    33222222222211111111110000000000"
             "\n    10987654321098765432109876543210"
             "\n    ||  |  |   |  |  |   |  |  |   |"
             "\n    |1  0  0   0  0  0   0  0  0   0"
-            "\n    |0  9  8   7  6  5   4  3  2   1"
+            "\n    |0  9  8   7  6  5   4  3  2   1";
 
-          Printf("\n    ");
-  PrintBinary<char, UI>(value);
+  PrintIndent(4);
+  PrintBinary<UI>(value);
   Printf(debug_table);
 }
 
@@ -75,7 +77,7 @@ inline void PrintPrinted(char* cursor) {
 #define PRINT_PRINTED PrintPrinted(begin, begin, value);
 
 #define PRINT_BINARY \
-  Print("\n    ");   \
+  PrintIndent(4);    \
   PrintBinary(value);
 #define PRINT_BINARY_TABLE PrintBinaryTable(value);
 #define PRINT_HEADER                                    \
@@ -1217,4 +1219,6 @@ using Binary64 = Binary<double, uint64_t>;
 #undef PRINT_HEADER
 #undef PRINT_HEADING
 #undef BEGIN_PUFF_ITOS_ALGORITHM
-#endif  //< #if INCLUDED_CRABS_TDECIMAL
+#endif  //< #if INCLUDED_CRABS_TBINARY
+
+#endif  //< #if SEAM >= SEAM_0_0_0

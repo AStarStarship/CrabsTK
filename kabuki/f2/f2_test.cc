@@ -13,17 +13,103 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
+#if SEAM >= SEAM_0_0_0
 #include "ttest.h"
 
 #include "console.h"
 
 namespace _ {
 
+SeamMajor::SeamMajor(int seam_page, int seam_major, TestCase* minor_seams,
+                     int minor_seam_count)
+    : seam_page_(seam_page),
+      seam_major_(seam_major),
+      minor_seam_count_(minor_seam_count),
+      minor_seams_(minor_seams) {}
+
+TestResult SeamMajor::Run(const char* args) {
+  enum { kSize = 128 };
+  char buffer[kSize];
+  char *cursor, *end = buffer + kSize - 1;
+  int seam_page = seam_page_, seam_major = seam_major_;
+  cursor = Print(buffer, end, "Testing Major Seam ");
+  cursor = Print(cursor, end, seam_major);
+  PrintHeading(buffer);
+  for (int seam_minor = 0; seam_minor < kSeamCount; seam_minor++) {
+    cursor = Print(buffer, end, "Testing SEAM_");
+    cursor = Print(cursor, end, seam_page);
+    cursor = Print(cursor, end, '_');
+    cursor = Print(cursor, end, seam_major);
+    cursor = Print(cursor, end, '_');
+    cursor = Print(cursor, end, seam_minor);
+    PrintHeading(buffer);
+    TestResult result = minor_seams_[seam_minor](args);
+    if (result.Failed()) return result;
+    Printf("\n\nDone testing SEAM_%i_%i_%i", seam_page, seam_major, seam_minor);
+  }
+  Print("\n\nDone testing Major Seam");
+  Print(seam_major);
+  Print('\n', '\n');
+  return TestResult();
+}
+
+int& SeamMajor::GetMinorSeamCount() { return minor_seam_count_; }
+
+SeamPage::SeamPage(int seam_page, SeamMajor** seam_majors, int seam_major_count)
+    : seam_page_(seam_page),
+      major_seam_count_(seam_major_count),
+      major_seams_(seam_majors) {}
+
+TestResult SeamPage::Run(const char* args) {
+  Print("\n\nTesting SEAM_").Print(seam_page_);
+  int seam_major_count = major_seam_count_;
+  if (seam_major_count <= 1) return major_seams_[0]->Run(args);
+
+  SeamMajor **cursor = major_seams_, **end = cursor + seam_major_count - 1;
+  while (cursor < end) (cursor++)[0]->Run(args);
+  Print("\n\nDone testing SEAM_").Print(seam_page_);
+  return TestResult();
+}
+
+int& SeamPage::GetMajorSeamCount() { return major_seam_count_; }
+
+UnitTest::UnitTest(SeamPage** page_seams, int page_seam_count, const char* name,
+                   const char* description)
+    : page_seams_(page_seams),
+      page_seam_count_(page_seam_count),
+      name_(name),
+      description_(description) {}
+
+int UnitTest::Run(const char* args) {
+  PrintHeading(name_);
+  Print('\n');
+  Print(description_);
+  Print('\n');
+  PrintLine();
+  PrintLn();
+  for (int i = 0; i < page_seam_count_; ++i) page_seams_[i]->Run(args);
+  TestResult result = ;
+  if (result.Failed()) {
+    Print("\nUnit tests failed.");
+    return APP_EXIT_FAILURE;
+  }
+  Pause("Completed running unit tests successsfully! :-)");
+  return APP_EXIT_SUCCESS;
+}
+
+int& UnitTest::GetPageSeamCount() { return page_seam_count_; }
+
+TestResult TestRun(TestCase test_case, const char* args) {
+  TestResult result = test_case(nullptr);
+  if (!args) args = "";
+  return TestResult();
+}
+
 bool Assert(bool condition) { return !condition; }
 
-bool AssertHandle(int line, const char* file, const char* message) {
+bool AssertHandle(const char* file, int line, const char* message) {
   if (message)
-    Printf("\n%s\n,Assertion failed at line %d in \"%s\" with message:\n%s",
+    Printf("\n%s\n,TestResult failed at line %d in \"%s\" with message:\n%s",
            line, file, message);
   else
     Printf("\nAssertion failed at line %d in \"%s\"", line, file);
@@ -31,11 +117,16 @@ bool AssertHandle(int line, const char* file, const char* message) {
   return true;
 }
 
-Assertion::Assertion(int line, const char* file, const char* message)
-    : line(line), file(file), message(message) {
+TestResult::TestResult(const char* name, int line, const char* message)
+    : name(name), message(message), line(line) {
   // Nothing to do here! ({:-)-+=<
 }
 
-bool Assertion::Failed() { return file != nullptr; }
+TestResult::TestResult(const TestResult& other)
+    : name(other.name), message(other.message), line(other.line) {}
+
+bool TestResult::Failed() { return name != nullptr; }
 
 }  // namespace _
+
+#endif  //< #if SEAM >= SEAM_0_0_0

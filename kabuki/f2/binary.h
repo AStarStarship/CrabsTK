@@ -12,8 +12,10 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
+
+#if SEAM >= SEAM_0_0_0
 #ifndef INCLUDED_CRABS_BINARY
-#define INCLUDED_CRABS_BINARY
+#define INCLUDED_CRABS_BINARY 1
 
 #ifndef API
 #define API
@@ -179,3 +181,5 @@ API int HexToByte(uint16_t h);
 }  // namespace _
 
 #endif  //< #if INCLUDED_CRABS_BINARY
+
+#endif  //< #if SEAM >= SEAM_0_0_0

@@ -11,15 +11,19 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
-#include "itos_algorithms.h"
 #include <stdafx.h>
+
+#if SEAM >= SEAM_0_0_1
+#include "itos_algorithms.h"
+
+#include "debug_itos_header.h"
 
 using namespace std;
 
 #define PRINT_PAUSE(message) \
   // cout << '\n' << message << "               "; system ("PAUSE");
 
-char* PrintNil(uint32_t value, char* text, char* text_end) {
+char* PrintNil(char* text, char* text_end, uint32_t value) {
   if (!text) {
     return nullptr;
   }
@@ -29,7 +33,7 @@ char* PrintNil(uint32_t value, char* text, char* text_end) {
   return text;
 }
 
-char* PrintSprintf(uint32_t value, char* text, char* text_end) {
+char* PrintSprintf(char* text, char* text_end, uint32_t value) {
   char buffer[24];
   if (!text) {
     return nullptr;
@@ -41,7 +45,7 @@ char* PrintSprintf(uint32_t value, char* text, char* text_end) {
   return text;
 }
 
-char* PrintMod10(uint32_t value, char* text, char* text_end) {
+char* PrintMod10(char* text, char* text_end, uint32_t value) {
   static const char kDigits00To99[201] = {
       "00010203040506070809"
       "10111213141516171819"
@@ -182,15 +186,7 @@ char* PrintMod100(uint32_t value, char* text, char* text_end) {
 
 /*
 char* PrintMod100B (uint32_t value, char* text, char* text_end) {
-    
-
-
-
-
-
-
-
-
+    
 
 
     // Lookup table of ASCII char pairs for 00, 01, ..., 99.
@@ -311,4 +307,5 @@ void TestPrintMod100() {
   // cout << "\n Done testing ItoS :)\n\n";
 }
 
-#undef PRINT_PAUSE
+#include "debug_itos_footer.h"
+#endif  //< #if SEAM >= SEAM_0_0_1

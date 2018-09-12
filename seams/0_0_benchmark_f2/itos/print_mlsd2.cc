@@ -1,6 +1,6 @@
 /** Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/benchmarks/0_0_benchmark_f2/itos/print_mod100sc.cc
+@file    ~/source/crabs/print_itos.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,66 +12,21 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
+
+#if SEAM >= SEAM_0_0_1
 #include "itos_algorithms.h"
 
-#if SEAM == 2
-inline void PrintBinary(uint32_t value) {
-  enum { kSize = sizeof(uint32_t) * 8 };
+#include "../../kabuki/f2/tbinary.h"
 
-  std::cout << "\n    ";
-  for (int i = kSize; i > 0; --i) {
-    char c = (char)('0' + (value >> (kSize - 1)));
-    std::cout << c;
-    value = value << 1;
-  }
-}
-
-inline void PrintBinaryTable(uint32_t value) {
-  enum { kSize = sizeof(uint32_t) * 8 };
-
-  std::cout << "\n    ";
-  for (int i = kSize; i > 0; --i) {
-    char c = (char)('0' + (value >> (kSize - 1)));
-    std::cout << c;
-    value = value << 1;
-  }
-  std::cout << "\n    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-               "\n    33222222222211111111110000000000"
-               "\n    10987654321098765432109876543210"
-               "\n    ||  |  |   |  |  |   |  |  |   |"
-               "\n    |1  0  0   0  0  0   0  0  0   0"
-               "\n    |0  9  8   7  6  5   4  3  2   1";
-}
-
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
-#define PRINT_PRINTED                                                   \
-  sprintf_s(buffer, 24, "%u", value);                                   \
-  *text_end = 0;                                                        \
-  printf("\n    Printed \"%s\" leaving value:\"%s\":%u", begin, buffer, \
-         (uint)strlen(buffer))
-#define PRINT_BINARY PrintBinary(value)
-#define PRINT_BINARY_TABLE PrintBinaryTable(value)
-#else
-#define PRINTF(x, ...)
-#define PUTCHAR(c)
-#define PRINT_PRINTED
-#define PRINT_BINARY
-#define PRINT_BINARY_TABLE
-#endif
+#include "debug_itos_header.h"
 
 namespace _ {
 
-void PrintLine(char c) {
-  std::cout << '\n';
-  for (int i = 80; i > 0; --i) std::cout << c;
-}
-
 char* Print(uint32_t value, char* text, char* text_end) {
   // Lookup table for powers of 10.
-  static const uint32_t k10ToThe[]{1,         10,        100,     1000,
-                                   10000,     100000,    1000000, 10000000,
-                                   100000000, 1000000000};
+  static const uint32_t k10ToThe[]{1,         10,         100,         1000,
+                                   10000,     100000,     1000000,     10000000,
+                                   100000000, 1000000000, ~(uint32_t)0};
 
   /** Lookup table of ASCII char pairs for 00, 01, ..., 99.
       To convert this algorithm to big-endian, flip the digit pair bytes. */
@@ -110,7 +65,9 @@ char* Print(uint32_t value, char* text, char* text_end) {
 
 #if DEBUG
   // Write a bunches of xxxxxx to the buffer for debug purposes.
-  for (int i = 0; i <= 21; ++i) *(text + i) = 'x';
+  for (int i = 0; i <= 21; ++i) {
+    *(text + i) = 'x';
+  }
   *(text + 21) = 0;
   char* begin = text;
   char buffer[256];
@@ -171,14 +128,12 @@ char* Print(uint32_t value, char* text, char* text_end) {
     smallest_value = 1 << (kRangeShift[length - 2]);
     largest_value = (~(uint32_t)0) >> (32 - (kRangeShift[length - 1]));
 
-    printf("\n    B. Range:[%u, %u]:%u comparator:%u", smallest_value,
+    PRINTF("\n    B. Range:[%u, %u]:%u comparator:%u", smallest_value,
            largest_value, largest_value - smallest_value, comparator);
 
     range = (double)(largest_value - smallest_value);
-    lower_probability =
-        100.0 * (1.0 - ((double)(comparator - smallest_value)) / range);
-    upper_probability =
-        100.0 * (1.0 - ((double)(largest_value - comparator)) / range);
+    lower_probability = 100.0 * ((double)(comparator - smallest_value)) / range;
+    upper_probability = 100.0 * ((double)(largest_value - comparator)) / range;
 #endif
     if (value >= comparator) {
       PRINTF("\n    B. Range:[%u, %u] length:%u probablity:%f%%", comparator,
@@ -190,7 +145,7 @@ char* Print(uint32_t value, char* text, char* text_end) {
     } else {
       PRINTF("\n    B. Range:[%u, %u] length:%u probablity:%f%%",
              1 << (kRangeShift[length - 2]), comparator, (uint)length,
-             lower_probability);
+             lower_probability)
     }
     text16 = reinterpret_cast<uint16_t*>(text + 2);
     *text16-- = kDigits00To99[digits];
@@ -227,14 +182,12 @@ char* Print(uint32_t value, char* text, char* text_end) {
   smallest_value = 1 << (kRangeShift[length - 2]);
   largest_value = (~(uint32_t)0) >> (32 - (kRangeShift[length - 1]));
 
-  printf("\n    Range:[%u, %u]:%u comparator:%u", smallest_value, largest_value,
+  Printf("\n    Range:[%u, %u]:%u comparator:%u", smallest_value, largest_value,
          largest_value - smallest_value, comparator);
 
   range = (double)(largest_value - smallest_value);
-  lower_probability =
-      100.0 * (1.0 - ((double)(comparator - smallest_value)) / range);
-  upper_probability =
-      100.0 * (1.0 - ((double)(largest_value - comparator)) / range);
+  lower_probability = 100.0 * ((double)(comparator - smallest_value)) / range;
+  upper_probability = 100.0 * ((double)(largest_value - comparator)) / range;
 #endif
 
   if (value >= comparator) {
@@ -242,73 +195,102 @@ char* Print(uint32_t value, char* text, char* text_end) {
       return nullptr;
     }
     text_end = text + length + 1;
-    PRINTF("\n    A.) Range:[%u, %u] length:%u probablity:%f%%", comparator,
+    text16 = reinterpret_cast<uint16_t*>(text_end - 2);
+    PRINTF("\n    Range:[%u, %u] length:%u probablity:%f%%", comparator,
            (1 << (kRangeShift[length - 1])) - 1, (uint)length,
-           lower_probability);
+           lower_probability)
     value -= comparator;
     *text++ = '1';
-    PRINT_PRINTED;
-    text16 = reinterpret_cast<uint16_t*>(text_end - 2);
     *text16-- = kDigits00To99[digits];
     PRINT_PRINTED;
-    value /= 100;
-    length -= 2;
-    if (length & 1) goto OddLoop;
+    offset = *power_of_ten;
+    if (value < offset) {
+      value /= 100;
+      PRINTF("\n    A.) Found a 0");
+      if (length & 1) {
+        PRINTF(" and printed a 0");
+        length -= 3;
+        *text = '0';
+        PRINT_PRINTED
+        goto PrintLoop;
+      }
+      length -= 2;
+      goto PrintLoop;
+    }
   } else {
-    PRINTF("\n    B.) Range:[%u, %u] length:%u probablity:%f%%",
+    PRINTF("\n    Range:[%u, %u] length:%u probablity:%f%%",
            1 << (kRangeShift[length - 2]), comparator, (uint)length,
            lower_probability);
     if (text + length >= text_end) {
       return nullptr;
     }
     text_end = text + length;
-    value /= 100;
     text16 = reinterpret_cast<uint16_t*>(text_end - 2);
     *text16-- = kDigits00To99[digits];
     PRINT_PRINTED;
-    length -= 2;
-    if (length & 1) {
-    OddLoop:
-      PRINTF("\n\n    Odd modulo 100 loop with value:%u and length:%u", value,
-             (uint)length);
-      --length;
-      while (length > 0) {
-        index = value % 100;
-        digits = kDigits00To99[index];
-        *text16-- = digits;
-        value /= 100;
-        length -= 2;
-        PRINTF("\n    [%u]:%c%c value:%u", (uint)length, (uint)index,
-               (char)(digits >> 8), value);
+  }
+  value /= 100;
+  length -= 2;
+  if (length & 1) {
+    PRINTF("\n\n    Converting MSD:%u with length:%u", value, (uint)length);
+    index = kMsbShift[length - 2];
+    PRINTF("\n    Shifting >> %u bits to equal %u", (uint)index,
+           value >> index);
+    PRINT_BINARY_TABLE;
+    index = (value >> index) + 2;
+    power_of_ten -= 2;
+    offset = *power_of_ten--;
+    comparator = index * offset;
+    PRINTF("\n    value:%u comparator:%u offset:%u\n    Searching:", value,
+           comparator, offset);
+    while (comparator < value) {
+      comparator += offset;
+      ++index;
+      PRINTF("\n    [%c]:%u", index + '0', comparator);
+    }
+    while (comparator > value) {
+      comparator -= offset;
+      --index;
+      PRINTF("\n    [%c]:%u", index + '0', comparator);
+    }
+    value -= comparator;
+    *text++ = index + '0';
+    --length;
+    PRINT_PRINTED;
+    offset = *power_of_ten--;
+    if (value < offset) {
+      PRINTF("\n    B.) Found a 0");
+      if (length & 1) {
+        PRINTF(" and printed a 0");
+        *text = '0';
         PRINT_PRINTED;
+        goto PrintLoop;
       }
-      text = reinterpret_cast<char*>(text16) + 1;
-      *text = (char)value + '0';
-      PRINTF("\n    [%u]:%c final", (uint)length, (char)value + '0');
-      PRINT_PRINTED;
-      return text_end;
+      goto PrintLoop;
     }
   }
-
-  PRINTF("\n\n    Even modulo 100 loop with value:%u and length:%u", value,
+PrintLoop:
+  PRINTF("\n\n    Entering modulo 100 loop with value:%u and length:%u", value,
          (uint)length);
   length -= 2;
   while (length > 0) {
-    index = value % 100;
     digits = kDigits00To99[value % 100];
     *text16-- = digits;
     value /= 100;
     length -= 2;
-    PRINTF("\n    [%u]:%u", (uint)length, (uint)index);
+    PRINTF("\n    [%u]:%c%c value:%u", (uint)length, (char)digits,
+           (char)(digits >> 8), value);
     PRINT_PRINTED;
   }
   digits = kDigits00To99[value];
   *text16 = digits;
-  PRINTF("\n    [%u]:%u final", (uint)length, (uint)value);
+  PRINTF("\n    [%u]:%c%c value:%u", (uint)length, (char)digits,
+         (char)(digits >> 8), value);
   PRINT_PRINTED;
   return text_end;
 }
 
 }  // namespace _
-#undef PRINTF
-#undef PRINT_PRINTED
+
+#include "debug_itos_footer.h"
+#endif  //< #if SEAM >= SEAM_0_0_1

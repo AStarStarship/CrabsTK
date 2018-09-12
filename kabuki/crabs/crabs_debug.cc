@@ -157,11 +157,11 @@ void PrintHex(float value) {
   return PrintHex<uint32_t>(value);
 }
 
-int KeyboardRead() { return _getch(); }
+int CInChar() { return _getch(); }
 
 void Pause() {
   Print("\nPress any key to continue...");
-  while (KeyboardRead() < 0)
+  while (CInChar() < 0)
     ;
 }
 
@@ -180,7 +180,7 @@ bool Assert(bool condition) { return !condition; }
 
 bool AssertHandle(int line, const char* file, const char* message) {
 #if CRABS_ASSERT_PRINT
-  Printf("\n%s\n,Assertion failed at line %d in \"%s\"", line, file);
+  Printf("\n%s\n,TestCase failed at line %d in \"%s\"", line, file);
 #endif
 #if CRABS_ASSERT_FREEZE
   while (1)

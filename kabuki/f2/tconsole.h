@@ -14,8 +14,9 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
+#if SEAM >= SEAM_0_0_0
 #ifndef INCLUDED_CRABS_TCONSOLE
-#define INCLUDED_CRABS_TCONSOLE
+#define INCLUDED_CRABS_TCONSOLE 1
 
 #include "console.h"
 
@@ -25,21 +26,21 @@ namespace _ {
 
 /* Prints the following value to the console in Hex. */
 template <typename UI>
-Char* PrintHex(UI value) {
+COut PrintHex(UI value) {
   enum { kHexStringLengthSizeMax = sizeof(UI) * 2 + 3 };
 
   ASSERT(cursor);
   if (cursor + kHexStringLengthSizeMax >= end) return nullptr;
 
-  Print('0');
-  Print('x');
+  Print('0', 'x');
   for (int num_bits_shift = sizeof(UI) * 8 - 4; num_bits_shift >= 0;
-       num_bits_shift -= 4) {
+       num_bits_shift -= 4)
     Print(HexNibbleToUpperCase((uint8_t)(value >> num_bits_shift)));
-  }
-  *cursor = 0;
-  return cursor;
+  return COut();
 }
 
 }  // namespace _
+
 #endif  //< INCLUDED_CRABS_TCONSOLE
+
+#endif  //< #if SEAM >= SEAM_0_0_0

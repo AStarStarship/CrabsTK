@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/ttest.h
+@file    ~/kabuki/f2/f2_benchmark.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -11,74 +11,80 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
-#pragma once
 #include <stdafx.h>
-#ifndef INCLUDED_F2_TTEST
-#define INCLUDED_F2_TTEST
+
+#if SEAM >= SEAM_0_0_1
+#include "tbenchmark.h"
+
+#include "trng.h"
+#include "ttest.h"
 
 #include <chrono>
+#include <fstream>
+#include <iostream>
 #include <random>
-#include "test.h"
 
-template <typename UI = uint64_t, typename SI = int64_t,
-          typename Float = double, typename Char = char>
-class SeamMinor {
- public:
-  SeamMinor() {}
+using namespace std;
+using namespace std::chrono;
 
-  ErrorAssert* Run() {
-    auto start = high_resolution_clock::now(),
-         stop = high_resolution_clock::now();
-    auto delta = duration_cast<milliseconds>(stop - start).count();
+namespace _ {
 
-    const ErrorAssert* result = stop = high_resolution_clock::now();
-    delta = duration_cast<milliseconds>(stop - start).count();
+BenchmarkCase::BenchmarkCase(const char* name, TestCase* cases, int count)
+    : name(name), cases(cases), count(count) {}
 
-    return test_seam(const Char* args, int arg_count);
-    ;
+TestResult BenchmarkCase::Run(const char* args) {
+  double nil_reading;
+  int i;
+  int columns_max;
+  ASSERT(ScanUnsigned<>(args, columns_max));
+
+  for (i = 0; i < count; ++i) {
+    TestResult result = (*cases[i])(nullptr);
+    Print(result.name);
+    if (i < count) Print(',', ' ');
   }
-
- private:
-  int seam,        //< SEAM
-      seam_page,   //< SEAM_PAGE
-      seam_major,  //< SEAM_MAJOR
-      seam_minor;  //< SEAM_MINOR
-  SeamMinorTest<UI, SI, Float, Char> test_seam;
-  //< Minor seam unit tests.
-};
-
-template <typename UI = uint64_t, typename SI = int64_t,
-          typename Float = double, typename Char = char>
-class SeamMajor {
- public:
-  SeamMajor() {}
-
-  /* Inserts a new Minor Seam into this Major Seam*/
-  const Char* Insert(SeamMinorTest<UI, SI, Float, Char>* new_test, int seam) {
-    c(seam >= 0 && seam <= kSeamCount);
-    SeamMinor<UI, SI, Float, Char>**cursor = &test[0],
-                             **target = &test[seam - 1];
-    SeamMinor<UI, SI, Float, Char>* current;
-    bool run_tests = true;
-    while (cursor < target) {
-      run_tests = (*cursor++) == nullptr;
-      if (!run_tests) break;
-    }
-    cursor = &tests[kSeamCount - 1];
-    while (cursor > target) {
-      run_tests = (*cursor--) == nullptr;
-      if (!run_tests) break;
-    }
-    ASSERT(*target == nullptr, "Attempted to insert same target twice!")
-    *target = new_test;
+  for (; i < columns_max; ++i) Print(',');
+  Print();
+  for (i = 0; i < count; ++i) {
+    TestResult result = (*cases[i])(nullptr);
+    if (i < count) Print(',', ' ');
   }
+  Print();
 
- private:
-  /* Array of unit tests for each minor seam.
-  Please note that static memory initizes as all zeros. */
-  static SeamMinor<UI, SI, Float, Char>* test[kSeamCount];
-};
+  return TestResult();
+}
+
+int BenchmarkCase::GetCount() {}
+
+Benchmark::Benchmark(const char* name, const char* filename,
+                     BenchmarkCase* groups, int count)
+    : name(name), filename(filename), groups(groups), count(count) {
+  ASSERT(count > 0);
+  int l_test_count_max = 0;
+  for (intptr_t i = 0; i < count; ++i) {
+  }
+}
+
+TestResult Benchmark::Run(const char* args) {
+  std::ofstream out(filename);
+
+  auto* coutbuf = std::cout.rdbuf();
+  std::cout.rdbuf(out.rdbuf());
+
+  for (size_t i = 1; i < count; ++i) {
+    BenchmarkCase group = groups[i];
+    TestResult result = group.Run(args);
+    ASSERT(result.name);
+    Print(result.name);
+  }
+  BenchmarkCase *cursor = groups, *end = groups + count - 1;
+  while (cursor <= end) {
+    (cursor++)->Run(args);
+  }
+  std::cout.rdbuf(coutbuf);
+  return TestResult();
+}
 
 }  // namespace _
 
-#endif  //< INCLUDED_F2_TTEST
+#endif  //< #if SEAM >= SEAM_0_0_1

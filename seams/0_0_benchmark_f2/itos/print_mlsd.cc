@@ -12,28 +12,11 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
+
+#if SEAM >= SEAM_0_0_1
 #include "itos_algorithms.h"
 
-#if SEAM == SEAM_0_0_0
-
-#include "../../kabuki/f2/ttest.h"
-
-#define PRINTF(format, ...) printf(format, __VA_ARGS__)
-#define PUTCHAR(c) putchar(c)
-#define PRINT_PRINTED                                                   \
-  sprintf_s(buffer, 24, "%u", value);                                   \
-  *text_end = 0;                                                        \
-  printf("\n    Printed \"%s\" leaving value:\"%s\":%u", begin, buffer, \
-         (uint)strlen(buffer))
-#define PRINT_BINARY PrintBinary(value)
-#define PRINT_BINARY_TABLE PrintBinaryTable(value)
-#else
-#define PRINTF(x, ...)
-#define PUTCHAR(c)
-#define PRINT_PRINTED
-#define PRINT_BINARY
-#define PRINT_BINARY_TABLE
-#endif
+#include "debug_itos_header.h"
 
 namespace _ {
 
@@ -393,5 +376,6 @@ NextMsd:
 }
 
 }  // namespace _
-#undef PRINTF
-#undef PRINT_PRINTED
+
+#include "debug_itos_footer.h"
+#endif  //< #if SEAM >= SEAM_0_0_1

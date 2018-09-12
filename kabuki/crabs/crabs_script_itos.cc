@@ -33,7 +33,7 @@ specific language governing permissions and limitations under the License. */
   printf("\n    Printed \"%s\" leaving value:\"%s\":%u", begin, buffer, \
          (uint)strlen(buffer))
 #define PRINT_BINARY \
-  Print("\n    ");   \
+  PrintIndent(4);   \
   PrintBinary(value);
 #define PRINT_BINARY_TABLE PrintBinaryTable(value);
 #define PRINT_HEADER                   \

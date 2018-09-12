@@ -22,11 +22,11 @@
     <None Include="test_script.s2">
       <Filter>0_0_seam_tests</Filter>
     </None>
-    <None Include="..\..\kabuki\f2\readme.md">
-      <Filter>kabuki\f2</Filter>
-    </None>
     <None Include="..\..\kabuki\crabs\README.md">
       <Filter>kabuki\crabs</Filter>
+    </None>
+    <None Include="..\..\kabuki\f2\readme.md">
+      <Filter>kabuki\f2</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -41,36 +41,6 @@
     </ClInclude>
     <ClInclude Include="test_seam_0.h">
       <Filter>0_0_seam_tests</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\f2\binary.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\f2\console.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\f2\global.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\f2\public.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\f2\stdafx.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\f2\talign.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\f2\targetver.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\f2\tbinary.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\f2\test.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\kabuki\f2\ttest.h">
-      <Filter>kabuki\f2</Filter>
     </ClInclude>
     <ClInclude Include="..\..\kabuki\crabs\door.h">
       <Filter>kabuki\crabs</Filter>
@@ -228,7 +198,46 @@
     <ClInclude Include="..\..\kabuki\crabs\clock.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\public.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\rng.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\talign.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\targetver.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\tbenchmark.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\tbinary.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\kabuki\f2\tconsole.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\test.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\trng.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\ttest.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\benchmark.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\binary.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\console.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\global.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
   </ItemGroup>
@@ -253,24 +262,6 @@
     </ClCompile>
     <ClCompile Include="test_seam_0_0_4.cc">
       <Filter>0_0_seam_tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\f2\f2_binary.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\f2\f2_console.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\f2\f2_foundational_framework.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\f2\f2_test.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\f2\stdafx.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\kabuki\f2\tests_main.cc">
-      <Filter>kabuki\f2</Filter>
     </ClCompile>
     <ClCompile Include="..\..\kabuki\crabs\crabs_obj.cc">
       <Filter>kabuki\crabs</Filter>
@@ -349,6 +340,21 @@
     </ClCompile>
     <ClCompile Include="..\..\kabuki\crabs\crabs_lock.cc">
       <Filter>kabuki\crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\kabuki\f2\f2_benchmark.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\kabuki\f2\f2_binary.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\kabuki\f2\f2_console.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\kabuki\f2\f2_rng.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\kabuki\f2\f2_test.cc">
+      <Filter>kabuki\f2</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

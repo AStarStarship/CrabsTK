@@ -12,16 +12,16 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
+
+#if SEAM >= SEAM_0_0_0
 #include <cmath>
 
-#include "binary.h"
 #include "tbinary.h"
 
-#if SEAM <= 1
-#include "test.h"
-#endif
+#include "ttest.h"
 
-#if SEAM == 1
+#if SEAM == SEAM_0_0_0
+
 #define PRINT(item) Print(item)
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PRINTED                                                   \
@@ -31,7 +31,7 @@ specific language governing permissions and limitations under the License. */
   Printf("\n    Printed \"%s\" leaving value:\"%s\":%u", begin, buffer, \
          (uint)strlen(buffer))
 #define PRINT_BINARY \
-  Print("\n    ");   \
+  PrintIndent(4);    \
   PrintBinary(value);
 #define PRINT_BINARY_TABLE PrintBinaryTable(value);
 #define PRINT_HEADER                   \
@@ -145,6 +145,8 @@ char* Print(char* begin, char* end, char byte_0, char byte_1, char byte_2) {
 
 char puff_lut[2 * 100 + (8 + 2) * 87];
 
+constexpr intptr_t IEEE754LutElementCount() { return 87; }
+
 const uint16_t* BinaryLut() {
   /* Lookup table of ASCII Char pairs for 00, 01, ..., 99 in little-endian
   format. */
@@ -210,6 +212,13 @@ const uint16_t* BinaryLut() {
   return kDigits00To99;
 }
 
+const uint16_t* IEEE754Pow10E() { return BinaryLut() + 100; }
+
+const uint64_t* IEEE754Pow10F() {
+  return reinterpret_cast<const uint64_t*>(BinaryLut() + 100 +
+                                           IEEE754LutElementCount());
+}
+
 inline const uint16_t* IEEE754Exponents(const char* lut) {
   return reinterpret_cast<const uint16_t*>(lut + 100);
 }
@@ -219,11 +228,10 @@ inline const uint16_t* IEEE754Pow10(const char* lut) {
 }
 
 void NumberRealLutGenerate(char* lut, size_t size) {
-  enum { kFpPowersCount = 87 };
-
   ASSERT(size);
-
-  if (size != ((100 + kFpPowersCount) * 2 + kFpPowersCount * 8)) return;
+  int iee754_pow_10_count = IEEE754LutElementCount();
+  if (size != ((100 + iee754_pow_10_count) * 2 + iee754_pow_10_count * 8))
+    return;
   uint16_t* ui2_ptr = reinterpret_cast<uint16_t*>(lut);
 
   for (char tens = '0'; tens <= '9'; ++tens)
@@ -276,7 +284,7 @@ int DoubleDigitsMax() { return 16; }  //< 3 + DBL_MANT_DIG - DBL_MIN_EXP;
 
 double DoubleDecimalPower(int decimal_count) {
   if (decimal_count < 0 || decimal_count > DoubleDigitsMax()) return 0.0;
-  return PuffDigits()[decimal_count];
+  return BinaryLut()[decimal_count];
 }
 
 template <typename UI>
@@ -428,3 +436,5 @@ int HexToByte(uint16_t h) {
 #undef PRINT_HEADER
 #undef PRINT_HEADING
 #undef BEGIN_PUFF_ALGORITHM
+
+#endif  //< #if SEAM >= SEAM_0_0_0

@@ -1,6 +1,6 @@
-/** Kabuki Toolkit
-    @version 0.x
-    @file    ~/tests/script_itos_benchmark.cc
+/** Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    ~/tests/script_itos_benchmark.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,20 +13,27 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
+#if SEAM >= SEAM_0_0_1
+#include "../../kabuki/f2/ttest.h"
+
 #include <chrono>
+#include <fstream>
 #include <random>
+
+using namespace _;
 using namespace std;
 using namespace std::chrono;
 
 uint32_t BSR(uint32_t value) {
-#if defined(_MSC_VER) && defined(_M_AMD64)
-  __asm("BSR ");
-#else
-  __asm("BSR ");
-#endif
+  //#if defined(_MSC_VER) && defined(_M_AMD64)
+  //  __asm("BSR ");
+  //#else
+  //  __asm("BSR ");
+  //#endif
+  return 0;
 }
 
-inline uint32_t BSRLop(uint32_t n) {
+inline uint32_t BSRLoop(uint32_t n) {
   int shift = 31;
   uint32_t shift_count = 31;
   while (shift-- > 0) {
@@ -79,11 +86,11 @@ void BenchmarkBSR() {
   ofstream file("0_0_benchmark_rsb.csv");
 
   if (!file.is_open()) {
-    cout << "Unable to open file";
+    Print("Unable to open file");
     return;
   }
 
-  cout << kBenchmarkHeader;
+  Print(kBenchmarkHeader);
   file << kBenchmarkHeader;
 
   uint32_t spinner4 = 0;
@@ -101,7 +108,7 @@ void BenchmarkBSR() {
   delta = duration_cast<milliseconds>(stop - start).count();
   nil_time = (double)delta;
   file << delta << ',';
-  cout << delta << ',';
+  COut(delta).Print(',');
 
   start = high_resolution_clock::now();
   for (uint32_t j = kLoopCount; j > 0; --j) {
@@ -113,7 +120,7 @@ void BenchmarkBSR() {
   delta = duration_cast<milliseconds>(stop - start).count();
   cpu_times[1] = (double)delta;
   file << delta << ',';
-  cout << delta << ',';
+  COut(delta).Print(',');
 
   start = high_resolution_clock::now();
   for (uint32_t j = kLoopCount; j > 0; --j) {
@@ -123,7 +130,7 @@ void BenchmarkBSR() {
   delta = duration_cast<milliseconds>(stop - start).count();
   cpu_times[2] = (double)delta;
   file << delta << ',';
-  cout << delta << ',';
+  COut(delta).Print(',');
 
   start = high_resolution_clock::now();
   for (int count = kLoopCount; count > 0; --count) {
@@ -133,18 +140,19 @@ void BenchmarkBSR() {
   delta = duration_cast<milliseconds>(stop - start).count();
   cpu_times[3] = (double)delta;
   file << delta << ',';
-  cout << delta << ',';
+  COut(delta).Print(',');
 
   double percent_faster =
       ((cpu_times[2] - nil_time) / (cpu_times[3] - nil_time)) - 1.0;
   file << percent_faster << '\n';
-  cout << percent_faster;
+  COut(percent_faster);
   file.close();
 }
 
-Assertion TestMSbAsserted() {
+TestCase TestMSbAsserted() {
   BenchmarkBSR();
-  putchar('\n');
-  system("PAUSE");
+  Pause("\n");
   return 0;
 }
+
+#endif  //< #if SEAM >= SEAM_0_0_1

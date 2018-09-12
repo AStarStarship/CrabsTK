@@ -13,6 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
+
 #if SEAM >= SEAM_0_0_2
 #ifndef INCLUDED_CRABS_VARINT
 #define INCLUDED_CRABS_VARINT

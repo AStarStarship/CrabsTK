@@ -1,5 +1,6 @@
 /* Kabuki Toolkit @version 0.x
-@file    ~/kabuki/seams.h
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    ~/kabuki/crabs/trng.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -11,38 +12,28 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
+#include <stdafx.h>
 
-#ifndef INCLUDED_SEAMS
-#define INCLUDED_SEAMS
+#if SEAM >= SEAM_0_0_1
+#ifndef INCLUDED_CRAB_TRNG
+#define INCLUDED_CRAB_TRNG
 
-#define SEAM_0_0_0 1
-#define SEAM_0_0_1 2
-#define SEAM_0_0_2 3
-#define SEAM_0_0_3 4
-#define SEAM_0_0_4 5
-#define SEAM_0_0_5 6
-#define SEAM_0_0_6 7
-#define SEAM_0_0_7 8
+namespace _ {
 
-#if SEAM_PAGE == 0
-#if SEAM_MAJOR == 0
-#if SEAM_MINOR == 0
-#define SEAM 1
-#elif SEAM_MINOR == 1
-#define SEAM 2
-#elif SEAM_MINOR == 2
-#define SEAM 3
-#elif SEAM_MINOR == 3
-#define SEAM 4
-#elif SEAM_MINOR == 4
-#define SEAM 5
-#elif SEAM_MINOR == 5
-#define SEAM 6
-#elif SEAM_MINOR == 6
-#define SEAM 7
-#elif SEAM_MINOR == 7
-#define SEAM 8
-#endif
-#endif  //< #if SEAM_MAJOR == 0
-#endif  //< #if SEAM_PAGE == 0
-#endif  //< INCLUDED_SEAMS
+/* Interface for a random number generator.
+@theory Random number generation takes enough CPU cycles that use of an
+interface does not effect performance but also allows for hiding of the
+C++ standard library implmentation. */
+template <typename T>
+struct RNG {
+  /* Seets the RNG. */
+  virtual void Seed(uint32_t seed) = 0;
+
+  /* Returns the next random number. */
+  virtual T Next() = 0;
+};
+
+}  // namespace _
+#endif  //< INCLUDED_CRAB_TRNG
+
+#endif  //< #if SEAM >= SEAM_0_0_1

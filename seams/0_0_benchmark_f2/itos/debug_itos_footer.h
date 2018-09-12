@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/stdafx.cc
+@file    ~/seams/0_0_benchmark_f2/itos/debug_itos_footer.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -11,16 +11,17 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
+#pragma once
+
 #include <stdafx.h>
-#include "global.h"
 
-#if SEAM > 0 && SEAM <= SEAM_COUNT
+#if SEAM >= SEAM_0_0_0
 
-using namespace _;
+#undef PRINT
+#undef PRINTF
+#undef PRINT_PRINTED
+#undef PRINT_HEADER
+#undef PRINT_HEADING
+#undef BEGIN_PUFF_ITOS_ALGORITHM
 
-/* Main program entry.
-@return APP_EXIT_SUCCESS upon success and APP_EXIT_FAILURE upon failure. */
-int main(const char* args, int arg_count) {
-  return RunUnitTests<"F2 Foundation Framework">(args, arg_count);
-}
-#endif
+#endif  //< #if SEAM >= SEAM_0_0_0
