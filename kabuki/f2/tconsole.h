@@ -29,9 +29,6 @@ template <typename UI>
 COut PrintHex(UI value) {
   enum { kHexStringLengthSizeMax = sizeof(UI) * 2 + 3 };
 
-  ASSERT(cursor);
-  if (cursor + kHexStringLengthSizeMax >= end) return nullptr;
-
   Print('0', 'x');
   for (int num_bits_shift = sizeof(UI) * 8 - 4; num_bits_shift >= 0;
        num_bits_shift -= 4)

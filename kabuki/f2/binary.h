@@ -13,7 +13,6 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_0
 #ifndef INCLUDED_CRABS_BINARY
 #define INCLUDED_CRABS_BINARY 1
 
@@ -99,6 +98,10 @@ API inline bool IsInfinite(float value);
 /* Checks if the given value is not NaN or +/- Infinity. */
 API inline bool IsInfinite(double value);
 
+/* Gets the packed IEEE754 LUT for printing integers and floating-point numbers.
+ */
+API inline const uint16_t* IEEE754LUT();
+
 /* Returns the ceiling of of the given value to the next highest up integer. */
 API float Ceiling(float value);
 
@@ -181,5 +184,3 @@ API int HexToByte(uint16_t h);
 }  // namespace _
 
 #endif  //< #if INCLUDED_CRABS_BINARY
-
-#endif  //< #if SEAM >= SEAM_0_0_0

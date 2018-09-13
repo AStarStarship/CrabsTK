@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="kabuki">
+      <UniqueIdentifier>{58ff8d3d-99fd-4ef7-9c48-3640089083ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="kabuki\f2">
+      <UniqueIdentifier>{a1858cc5-bdf5-4842-98ba-c99ab7559375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="source\itos">
+      <UniqueIdentifier>{8fae8fd7-c32b-41a0-8b0c-6289abf72963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\align">
+      <UniqueIdentifier>{0d3a2cf1-9f70-40cd-821c-3efe9db213db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\msbasserted">
+      <UniqueIdentifier>{9ab2123d-b104-4eed-997c-8896b42bb942}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\ftos">
+      <UniqueIdentifier>{acf88f04-8009-49c2-abbc-2ea3966e91bc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\kabuki\f2\f2_binary.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\kabuki\f2\f2_console.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\kabuki\f2\f2_test.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\kabuki\f2\f2_benchmark.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="itos\itos_algorithms.cc">
+      <Filter>source\itos</Filter>
+    </ClCompile>
+    <ClCompile Include="itos\print_mlsd.cc">
+      <Filter>source\itos</Filter>
+    </ClCompile>
+    <ClCompile Include="itos\print_mlsd2.cc">
+      <Filter>source\itos</Filter>
+    </ClCompile>
+    <ClCompile Include="itos\print_mod100sc.cc">
+      <Filter>source\itos</Filter>
+    </ClCompile>
+    <ClCompile Include="itos\benchmark_itos.cc">
+      <Filter>source\itos</Filter>
+    </ClCompile>
+    <ClCompile Include="msbasserted\benchmark_msbasserted.cc">
+      <Filter>source\msbasserted</Filter>
+    </ClCompile>
+    <ClCompile Include="align\benchmark_align.cc">
+      <Filter>source\align</Filter>
+    </ClCompile>
+    <ClCompile Include="ftos\benchmark_ftos.cc">
+      <Filter>source\ftos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\kabuki\f2\f2_rng.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\global.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\public.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\talign.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\targetver.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\tbinary.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\tconsole.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\test.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\ttest.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\binary.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\console.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\tbenchmark.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="itos\itos_algorithms.h">
+      <Filter>source\itos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\benchmark.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\rng.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\kabuki\f2\trng.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="itos\debug_itos_footer.h">
+      <Filter>source\itos</Filter>
+    </ClInclude>
+    <ClInclude Include="itos\debug_itos_header.h">
+      <Filter>source\itos</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\kabuki\f2\readme.md">
+      <Filter>kabuki\f2</Filter>
+    </None>
+    <None Include="readme.md">
+      <Filter>source</Filter>
+    </None>
+  </ItemGroup>
+</Project>

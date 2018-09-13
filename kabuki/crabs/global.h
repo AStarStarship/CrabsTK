@@ -18,11 +18,10 @@ specific language governing permissions and limitations under the License. */
 // Dependencies:
 #include "config.h"
 
+#include "../f2/global.h"
+
 #if SEAM >= SEAM_0_0_0
 #if SEAM == SEAM_0_0_0
-#include "test.h"
-#include "random.h"
-#include "tbinary.h"
 #else
 #include "binary_32.h"
 #include "binary_64.h"
@@ -47,10 +46,10 @@ specific language governing permissions and limitations under the License. */
 #include "array.h"
 #include "ascii.h"
 #include "bsq.h"
-#include "test.h"
 #include "list.h"
 #include "map.h"
 #include "stack.h"
+#include "test.h"
 //#include "multimap.h"
 //#include "dictionary.h"
 #endif
@@ -62,20 +61,20 @@ specific language governing permissions and limitations under the License. */
 #include "args.h"
 #include "bin.h"
 #include "bout.h"
-#include "test.h"
 #include "event.h"
 #include "expr.h"
 #include "interrupts.h"
 #include "op.h"
 #include "room.h"
 #include "slot.h"
+#include "test.h"
 #endif
 #endif
 
 #if SEAM >= SEAM_0_0_4
 #if SEAM == SEAM_0_0_4
-#include "test.h"
 #include "table.h"
+#include "test.h"
 #endif
 #endif
 // End dependencies.

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="seams">
+      <UniqueIdentifier>{f16f7950-0912-46ce-bb1f-a6860afe1d27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seams\0_0_benchmark_crabs">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\stdafx.cc">
+      <Filter>seams\0_0_benchmark_crabs</Filter>
+    </ClCompile>
+    <ClCompile Include="source\benchmark_ascii_crabs.cc">
+      <Filter>seams\0_0_benchmark_crabs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\stdafx.h">
+      <Filter>seams\0_0_benchmark_crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="source\targetver.h">
+      <Filter>seams\0_0_benchmark_crabs</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

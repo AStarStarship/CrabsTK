@@ -13,39 +13,37 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_0
 #include "ttest.h"
 
 #include "console.h"
 
 namespace _ {
 
-SeamMajor::SeamMajor(int seam_page, int seam_major, TestCase* minor_seams,
-                     int minor_seam_count)
-    : seam_page_(seam_page),
-      seam_major_(seam_major),
-      minor_seam_count_(minor_seam_count),
-      minor_seams_(minor_seams) {}
+SeamMajor::SeamMajor(TestCase* minor_seams, int minor_count)
+    : minor_seams_(minor_seams), minor_count_(minor_count) {}
 
-TestResult SeamMajor::Run(const char* args) {
+TestResult SeamMajor::Run(const char* args, int seam_layer, int seam_major) {
   enum { kSize = 128 };
   char buffer[kSize];
-  char *cursor, *end = buffer + kSize - 1;
-  int seam_page = seam_page_, seam_major = seam_major_;
-  cursor = Print(buffer, end, "Testing Major Seam ");
-  cursor = Print(cursor, end, seam_major);
+  char *end = buffer + kSize - 1,
+       *cursor = Print<>(buffer, end, "Testing Major SEAM_");
+  cursor = Print<uint, int>(cursor, end, seam_layer);
+  cursor = Print<>(cursor, end, '_');
+  cursor = Print<uint, int>(cursor, end, seam_major);
+  cursor = Print<>(cursor, end, "_x");
   PrintHeading(buffer);
-  for (int seam_minor = 0; seam_minor < kSeamCount; seam_minor++) {
-    cursor = Print(buffer, end, "Testing SEAM_");
-    cursor = Print(cursor, end, seam_page);
-    cursor = Print(cursor, end, '_');
-    cursor = Print(cursor, end, seam_major);
-    cursor = Print(cursor, end, '_');
-    cursor = Print(cursor, end, seam_minor);
+  for (int seam_minor = 0; seam_minor < kSeamCount; ++seam_minor) {
+    cursor = Print<>(buffer, end, "Testing SEAM_");
+    cursor = Print<uint, int>(cursor, end, seam_layer);
+    cursor = Print<>(cursor, end, '_');
+    cursor = Print<uint, int>(cursor, end, seam_major);
+    cursor = Print<>(cursor, end, '_');
+    cursor = Print<uint, int>(cursor, end, seam_minor);
     PrintHeading(buffer);
     TestResult result = minor_seams_[seam_minor](args);
     if (result.Failed()) return result;
-    Printf("\n\nDone testing SEAM_%i_%i_%i", seam_page, seam_major, seam_minor);
+    Printf("\n\nDone testing SEAM_%i_%i_%i", seam_layer, seam_major,
+           seam_minor);
   }
   Print("\n\nDone testing Major Seam");
   Print(seam_major);
@@ -53,51 +51,41 @@ TestResult SeamMajor::Run(const char* args) {
   return TestResult();
 }
 
-int& SeamMajor::GetMinorSeamCount() { return minor_seam_count_; }
+int& SeamMajor::GetMinorSeamCount() { return minor_count_; }
 
-SeamPage::SeamPage(int seam_page, SeamMajor** seam_majors, int seam_major_count)
-    : seam_page_(seam_page),
-      major_seam_count_(seam_major_count),
-      major_seams_(seam_majors) {}
+SeamLayer::SeamLayer(SeamMajor** seam_majors, int seam_major_count)
+    : major_seams_(seam_majors), major_count(seam_major_count) {}
 
-TestResult SeamPage::Run(const char* args) {
-  Print("\n\nTesting SEAM_").Print(seam_page_);
-  int seam_major_count = major_seam_count_;
-  if (seam_major_count <= 1) return major_seams_[0]->Run(args);
-
-  SeamMajor **cursor = major_seams_, **end = cursor + seam_major_count - 1;
-  while (cursor < end) (cursor++)[0]->Run(args);
-  Print("\n\nDone testing SEAM_").Print(seam_page_);
+TestResult SeamLayer::Run(const char* args, int seam_layer) {
+  Print("\n\nTesting SEAM_").Print(seam_layer);
+  int seam_major_count = major_count;
+  ASSERT(seam_major_count >= 1);
+  for (int i = 0; i < seam_major_count; ++i)
+    major_seams_[i]->Run(args, seam_layer, i);
+  Print("\n\nDone testing SEAM_").Print(seam_layer);
   return TestResult();
 }
 
-int& SeamPage::GetMajorSeamCount() { return major_seam_count_; }
+int& SeamLayer::GetMajorSeamCount() { return major_count; }
 
-UnitTest::UnitTest(SeamPage** page_seams, int page_seam_count, const char* name,
-                   const char* description)
-    : page_seams_(page_seams),
-      page_seam_count_(page_seam_count),
-      name_(name),
-      description_(description) {}
+UnitTest::UnitTest(SeamLayer** page_seams, int layer_count)
+    : page_seams_(page_seams), layer_count_(layer_count) {}
 
-int UnitTest::Run(const char* args) {
-  PrintHeading(name_);
-  Print('\n');
-  Print(description_);
-  Print('\n');
+int UnitTest::Run(const char* args, const char* name, const char* description) {
+  if (!name) name = "Foo";
+  if (!description) description = "Bar";
+  PrintHeading(name).Print('\n') << description << '\n';
   PrintLine();
   PrintLn();
-  for (int i = 0; i < page_seam_count_; ++i) page_seams_[i]->Run(args);
-  TestResult result = ;
-  if (result.Failed()) {
-    Print("\nUnit tests failed.");
-    return APP_EXIT_FAILURE;
+  for (int i = 0; i < layer_count_; ++i) {
+    TestResult result = page_seams_[i]->Run(args, i);
+    if (result.Failed()) return APP_EXIT_FAILURE;
   }
   Pause("Completed running unit tests successsfully! :-)");
   return APP_EXIT_SUCCESS;
 }
 
-int& UnitTest::GetPageSeamCount() { return page_seam_count_; }
+int& UnitTest::GetPageSeamCount() { return layer_count_; }
 
 TestResult TestRun(TestCase test_case, const char* args) {
   TestResult result = test_case(nullptr);
@@ -106,6 +94,73 @@ TestResult TestRun(TestCase test_case, const char* args) {
 }
 
 bool Assert(bool condition) { return !condition; }
+
+bool Compare(const char* a, const char* b, const char* message) {
+  return StringCompare<>(a, b) == 0;
+}
+
+bool Compare(uint8_t a, uint8_t b, const char* message) {
+  if (a == b) return true;
+  Print("\nExpecting:").Print(a) << " but found:" << b;
+  return false;
+}
+
+bool Compare(int8_t a, int8_t b, const char* message) {
+  if (a == b) return true;
+  Print("\nExpecting:").Print(a) << " but found:" << b;
+  return false;
+}
+
+bool Compare(uint8_t a, uint8_t b, const char* message) {
+  if (a == b) return true;
+  Print("\nExpecting:").Print(a) << " but found:" << b;
+  return false;
+}
+
+bool Compare(int16_t a, int16_t b, const char* message) {
+  if (a == b) return true;
+  Print("\nExpecting:").Print(a) << " but found:" << b;
+  return false;
+}
+
+bool Compare(uint16_t a, uint16_t b, const char* message) {
+  if (a == b) return true;
+  Print("\nExpecting:").Print(a) << " but found:" << b;
+  return false;
+}
+
+bool Compare(int32_t a, int32_t b, const char* message) {
+  if (a == b) return true;
+  Print("\nExpecting:").Print(a) << " but found:" << b;
+  return false;
+}
+
+bool Compare(uint32_t a, uint32_t b, const char* message) {
+  if (a == b) return true;
+  Print("\nExpecting:").Print(a) << " but found:" << b;
+  return false;
+}
+bool Compare(int64_t a, int64_t b, const char* message) {
+  if (a == b) return true;
+  Print("\nExpecting:").Print(a) << " but found:" << b;
+  return false;
+}
+
+bool Compare(float a, float b, const char* message) {
+  if (a == b) return true;
+  Print("\nExpecting:").Print(a) << " but found:" << b;
+  return false;
+}
+
+bool Compare(double a, double b, const char* message) {
+  if (a == b) return true;
+  if (message)
+    Print("\nERROR:").Print(message) << '\n';
+  else
+    Print("\nERROR: ");
+  Print("Expecting:").Print(a) << " but found:" << b;
+  return false;
+}
 
 bool AssertHandle(const char* file, int line, const char* message) {
   if (message)
@@ -118,15 +173,17 @@ bool AssertHandle(const char* file, int line, const char* message) {
 }
 
 TestResult::TestResult(const char* name, int line, const char* message)
-    : name(name), message(message), line(line) {
+    : name(name), description(message), line(line) {
   // Nothing to do here! ({:-)-+=<
 }
 
 TestResult::TestResult(const TestResult& other)
-    : name(other.name), message(other.message), line(other.line) {}
+    : name(other.name), description(other.description), line(other.line) {}
 
 bool TestResult::Failed() { return name != nullptr; }
 
-}  // namespace _
+int TestResult::Quit() {
+  return Failed() ? APP_EXIT_FAILURE : APP_EXIT_SUCCESS;
+}
 
-#endif  //< #if SEAM >= SEAM_0_0_0
+}  // namespace _

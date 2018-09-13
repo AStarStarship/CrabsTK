@@ -14,7 +14,6 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_0
 #ifndef INCLUDED_CRABS_CONSOLE
 #define INCLUDED_CRABS_CONSOLE 1
 
@@ -511,5 +510,3 @@ API inline _::COut& operator<<(_::COut& cout, _::CHex item);
 API inline _::COut& operator<<(_::COut& cout, _::CBinary item);
 
 #endif  //< #ifndef INCLUDED_F2_CONSOLE
-
-#endif  //< #if SEAM >= SEAM_0_0_0

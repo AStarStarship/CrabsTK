@@ -13,12 +13,11 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_0
-#include <cmath>
-
 #include "tbinary.h"
 
 #include "ttest.h"
+
+#include <cmath>
 
 #if SEAM == SEAM_0_0_0
 
@@ -43,7 +42,7 @@ specific language governing permissions and limitations under the License. */
   Char buffer[256];                    \
   sprintf_s(buffer, 256, "%u", value); \
   Printf("Expecting %s:%u", buffer, (uint)strlen(buffer));
-#define BEGIN_PUFF_ALGORITHM \
+#define BEGIN_ITOS_ALGORITHM \
   Print('\n');               \
   for (int i = 80; i > 0; --i) Print('-')
 #else
@@ -147,7 +146,7 @@ char puff_lut[2 * 100 + (8 + 2) * 87];
 
 constexpr intptr_t IEEE754LutElementCount() { return 87; }
 
-const uint16_t* BinaryLut() {
+const uint16_t* IEEE754LUT() {
   /* Lookup table of ASCII Char pairs for 00, 01, ..., 99 in little-endian
   format. */
   static const uint16_t kDigits00To99[100] = {
@@ -212,10 +211,10 @@ const uint16_t* BinaryLut() {
   return kDigits00To99;
 }
 
-const uint16_t* IEEE754Pow10E() { return BinaryLut() + 100; }
+const uint16_t* IEEE754Pow10E() { return IEEE754LUT() + 100; }
 
 const uint64_t* IEEE754Pow10F() {
-  return reinterpret_cast<const uint64_t*>(BinaryLut() + 100 +
+  return reinterpret_cast<const uint64_t*>(IEEE754LUT() + 100 +
                                            IEEE754LutElementCount());
 }
 
@@ -229,7 +228,7 @@ inline const uint16_t* IEEE754Pow10(const char* lut) {
 
 void NumberRealLutGenerate(char* lut, size_t size) {
   ASSERT(size);
-  int iee754_pow_10_count = IEEE754LutElementCount();
+  intptr_t iee754_pow_10_count = IEEE754LutElementCount();
   if (size != ((100 + iee754_pow_10_count) * 2 + iee754_pow_10_count * 8))
     return;
   uint16_t* ui2_ptr = reinterpret_cast<uint16_t*>(lut);
@@ -284,7 +283,7 @@ int DoubleDigitsMax() { return 16; }  //< 3 + DBL_MANT_DIG - DBL_MIN_EXP;
 
 double DoubleDecimalPower(int decimal_count) {
   if (decimal_count < 0 || decimal_count > DoubleDigitsMax()) return 0.0;
-  return BinaryLut()[decimal_count];
+  return IEEE754LUT()[decimal_count];
 }
 
 template <typename UI>
@@ -435,6 +434,4 @@ int HexToByte(uint16_t h) {
 #undef PRINT_PRINTED
 #undef PRINT_HEADER
 #undef PRINT_HEADING
-#undef BEGIN_PUFF_ALGORITHM
-
-#endif  //< #if SEAM >= SEAM_0_0_0
+#undef BEGIN_ITOS_ALGORITHM

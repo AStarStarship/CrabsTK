@@ -14,13 +14,12 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_1
 #ifndef INCLUDED_F2_PUBLIC
 #define INCLUDED_F2_PUBLIC
 
 #include "binary.h"
 #include "console.h"
-#if SEAM <= SEAM_COUNT
+#if SEAM <= SEAM_N
 #include "test.h"
 #endif
 

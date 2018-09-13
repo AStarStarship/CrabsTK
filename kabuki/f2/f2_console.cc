@@ -106,7 +106,7 @@ COut Print(int32_t value) {
 }
 
 COut Print(float value) {
-#if SEAM < SEAM_0_0_3
+#if SEAM == SEAM_0_0_0
   return Printf("%f", value);
 #else
   enum { kSize = 16 };
@@ -117,7 +117,7 @@ COut Print(float value) {
 }
 
 COut Print(double value) {
-#if SEAM < SEAM_0_0_3
+#if SEAM == SEAM_0_0_0
   return Printf("%f", value);
 #else
   enum { kSize = 24 };
@@ -139,7 +139,7 @@ COut PrintIndent(int count) {
 }
 
 COut PrintLine(int width, char token, char first_token) {
-  if (width < 1) return;
+  if (width < 1) return COut();
   Print(first_token);
   while (width-- > 0) Print(token);
   return COut();
@@ -147,7 +147,7 @@ COut PrintLine(int width, char token, char first_token) {
 
 COut PrintHeading(const char* heading, int line_count, int width, char token,
                   char first_token) {
-  if (line_count < 1 || width < 1) return;
+  if (line_count < 1 || width < 1) return COut();
   while (line_count-- > 0) Print('\n');
   PrintLine(width, token, '+');
   Print("\n| ");

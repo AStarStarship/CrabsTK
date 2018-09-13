@@ -14,7 +14,6 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_0
 #ifndef INCLUDED_F2_TTEST
 #define INCLUDED_F2_TTEST 1
 
@@ -24,22 +23,20 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 template <TestCase... N>
-static inline SeamMajor MajorSeams(int seam_page, int seam_major,
-                                   int& minor_seam_count) {
+static inline SeamMajor MajorSeams(int seam_layer, int seam_major,
+                                   int& minor_count) {
   static TestCase major_seams[sizeof...(N)] = {N...};
-  minor_seam_count = sizeof...(N);
-  return SeamMajor(seam_page, seam_major, major_seams, sizeof...(N));
+  minor_count = sizeof...(N);
+  return SeamMajor(seam_layer, seam_major, major_seams, sizeof...(N));
 }
 
 template <SeamMajor*... N>
-static inline SeamPage PageSeams(int seam_page, int& page_seam_count) {
+static inline SeamLayer PageSeams(int seam_layer, int& layer_count) {
   static SeamMajor* page_seams[sizeof...(N)] = {N...};
-  page_seam_count = sizeof...(N);
-  return SeamPage(seam_page, page_seams, sizeof...(N));
+  layer_count = sizeof...(N);
+  return SeamLayer(seam_layer, page_seams, sizeof...(N));
 }
 
 }  // namespace _
 
 #endif  //< INCLUDED_F2_TTEST
-
-#endif  //< #if SEAM >= SEAM_0_0_0

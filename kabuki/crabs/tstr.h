@@ -64,12 +64,6 @@ const Char* StringError() {
   return kString;
 }
 
-/* Checks if the given character is whitespace. */
-template <typename Char = char>
-inline bool IsWhitespace(Char character) {
-  return character <= ' ';
-}
-
 /* Converts the given value to a printable char if it's non-printable. */
 template <typename Char = char>
 inline Char PrintableChar(Char value) {
@@ -342,44 +336,6 @@ bool TextQualifies(const Char* cursor, const Char* end) {
     c = *cursor;
   }
   return false;
-}
-
-template <typename Char = char>
-const Char* StringFind(const Char* cursor, const Char* query) {
-  ASSERT(cursor);
-  ASSERT(query);
-
-  Char string = *cursor,  //< Current cursor Char.
-      t = *query,         //< Current query Char.
-      c = t;              //< The first Char of the query we're searching for.
-  if (c == 0)             //< We're not allowing empty queries.
-    return nullptr;
-  const Char *start_of_query, *begin = cursor;
-  query = TextSkipSpaces(query);
-
-  // Scroll through each Char and match it to the query Char.
-  while (string) {
-    if (string == c) {  // The first Char matches:
-                        // Setup to compare the strings;
-      start_of_query = cursor;
-      begin = query;
-      t = c;
-      // check the rest of the Char:
-      while (string == t) {
-        string = *(++cursor);
-        t = *(++begin);
-        if (t == 0)  // Once we've reached the delimiter it's a match!
-          return start_of_query;
-        if (!string)  // We've reached the end of Char without a hit.
-          return nullptr;
-      }
-    }
-    // The Char did not match so repeat the process for each Char.
-    string = *(++cursor);
-    t = *(++begin);
-  }
-  // If we haven't found it by now it's not in the cursor.
-  return nullptr;
 }
 
 template <typename Char = char>
