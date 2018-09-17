@@ -191,7 +191,7 @@ system("PAUSE");
 }
 ;
 
-COMPARE(SEAM_1_4, SEAM_1_4A) {
+TEST(SEAM_1_4, SEAM_1_4A) {
   Printf("\n    Testing SEAM_0_0_4... ");
 
   Printf("\n\nTesting ASCII OBJ Types");

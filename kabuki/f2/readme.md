@@ -1,6 +1,6 @@
 # F2 Foundational Framework
 
-*A Modern-C++11 nanoframework and unit testing framework for C++ with Page-Major-Minor Seam System and ultra-fast number printing and scanning.*
+***A modern C++ nanoframework for rapid compilation and benchmarking with LMM seam tree unit tests.***
 
 ## Quick Links
 

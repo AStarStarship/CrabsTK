@@ -38,6 +38,7 @@
     <ClInclude Include="..\..\kabuki\f2\trng.h" />
     <ClInclude Include="..\..\kabuki\f2\ttest.h" />
     <ClInclude Include="assembly.h" />
+    <ClInclude Include="seams.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="test_seam_0.h" />

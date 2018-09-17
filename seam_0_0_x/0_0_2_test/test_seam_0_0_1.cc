@@ -35,7 +35,7 @@ using namespace std;
 
 TEST_GROUP(SEAM_0_1){void setup(){} void teardown(){PAUSE("\n")}};
 
-COMPARE(SEAM_0_1, SEAM_0_1_0) {
+TEST(SEAM_0_1, SEAM_0_1_0) {
   Printf("\n    Testing SEAM_0_0_1... ");
 
   // Setup C++1x random number generator.

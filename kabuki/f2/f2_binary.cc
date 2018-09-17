@@ -208,6 +208,10 @@ const uint16_t* IEEE754LUT() {
       0xe7109bfba19c0c9d, 0xac2820d9623bf429, 0x80444b5e7aa7cf85,
       0xbf21e44003acdd2d, 0x8e679c2f5e44ff8f, 0xd433179d9c8cb841,
       0x9e19db92b4e31ba9, 0xeb96bf6ebadf77d9, 0xaf87023b9bf0ee6b};
+
+  static const uint32_t kIEEE754Pow10[] = {
+      0,      1,       10,       100,       1000,      10000,
+      100000, 1000000, 10000000, 100000000, 1000000000};
   return kDigits00To99;
 }
 

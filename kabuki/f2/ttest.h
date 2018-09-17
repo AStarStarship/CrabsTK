@@ -37,6 +37,13 @@ static inline SeamLayer PageSeams(int seam_layer, int& layer_count) {
   return SeamLayer(seam_layer, page_seams, sizeof...(N));
 }
 
+template <typename Char>
+bool Test(const Char* a, const Char* b) {
+  char c = StringCompare<Char>(a, b);
+  if (!c) return false;  //< Bad !c, burn your tiki toarches elsewhere!
+  Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
+}
+
 }  // namespace _
 
 #endif  //< INCLUDED_F2_TTEST

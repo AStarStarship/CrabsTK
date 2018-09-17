@@ -14,8 +14,8 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#ifndef INCLUDED_CRABS_TEST
-#define INCLUDED_CRABS_TEST 1
+#ifndef INCLUDED_KABUKI_F2_TEST
+#define INCLUDED_KABUKI_F2_TEST 1
 
 namespace _ {
 
@@ -125,77 +125,144 @@ class API UnitTest {
 @param condition The condition to check. */
 API bool Assert(bool condition);
 
-/* Compare function to assist in casting boolean types.
+/* Tests if the given arguments are equal.
 @return false if the condition is false.
 @param  a Parameter a.
 @param  b Parameter b. */
-API bool Compare(const char* a, const char* b, const char* message = nullptr);
+API bool Test(const char* a, const char* b);
 
-/* Compare function to assist in casting boolean types.
+/* Tests if the two pointers are equal.
 @return false if the condition is false.
 @param  a Parameter a.
 @param  b Parameter b. */
-API bool Compare(uint8_t a, uint8_t b, const char* message = nullptr);
+API bool Test(const void* a, const void* b);
 
-/* Compare function to assist in casting boolean types.
+/* Tests if the given arguments are equal.
 @return false if the condition is false.
 @param  a Parameter a.
 @param  b Parameter b. */
-API bool Compare(int8_t a, int8_t b, const char* message = nullptr);
+API bool Test(uint8_t a, uint8_t b);
 
-/* Compare function to assist in casting boolean types.
+/* Tests if the given arguments are equal.
 @return false if the condition is false.
 @param  a Parameter a.
 @param  b Parameter b. */
-API bool Compare(uint8_t a, uint8_t b, const char* message = nullptr);
+API bool Test(int8_t a, int8_t b);
 
-/* Compare function to assist in casting boolean types.
+/* Tests if the given arguments are equal.
 @return false if the condition is false.
 @param  a Parameter a.
 @param  b Parameter b. */
-API bool Compare(int16_t a, int16_t b, const char* message = nullptr);
+API bool Test(uint8_t a, uint8_t b);
 
-/* Compare function to assist in casting boolean types.
+/* Tests if the given arguments are equal.
 @return false if the condition is false.
 @param  a Parameter a.
 @param  b Parameter b. */
-API bool Compare(uint16_t a, uint16_t b, const char* message = nullptr);
+API bool Test(int16_t a, int16_t b);
 
-/* Compare function to assist in casting boolean types.
+/* Tests if the given arguments are equal.
 @return false if the condition is false.
 @param  a Parameter a.
 @param  b Parameter b. */
-API bool Compare(int32_t a, int32_t b, const char* message = nullptr);
+API bool Test(uint16_t a, uint16_t b);
 
-/* Compare function to assist in casting boolean types.
+/* Tests if the given arguments are equal.
 @return false if the condition is false.
 @param  a Parameter a.
 @param  b Parameter b. */
-API bool Compare(uint32_t a, uint32_t b, const char* message = nullptr);
+API bool Test(int32_t a, int32_t b);
 
-/* Compare function to assist in casting boolean types.
+/* Tests if the given arguments are equal.
 @return false if the condition is false.
 @param  a Parameter a.
 @param  b Parameter b. */
-API bool Compare(int64_t a, int64_t b, const char* message = nullptr);
+API bool Test(uint32_t a, uint32_t b);
 
-/* Compare function to assist in casting boolean types.
+/* Tests if the given arguments are equal.
 @return false if the condition is false.
 @param  a Parameter a.
 @param  b Parameter b. */
-API bool Compare(uint64_t a, uint64_t b, const char* message = nullptr);
+API bool Test(int64_t a, int64_t b);
 
-/* Compare function to assist in casting boolean types.
+/* Tests if the given arguments are equal.
 @return false if the condition is false.
 @param  a Parameter a.
 @param  b Parameter b. */
-API bool Compare(float a, float b, const char* message = nullptr);
+API bool Test(uint64_t a, uint64_t b);
 
-/* Compare function to assist in casting boolean types.
+/* Tests if the given arguments are equal.
 @return false if the condition is false.
 @param  a Parameter a.
 @param  b Parameter b. */
-API bool Compare(double a, double b, const char* message = nullptr);
+API bool Test(float a, float b);
+
+/* Tests if the given arguments are equal.
+@return false if the condition is false.
+@param  a Parameter a.
+@param  b Parameter b. */
+API bool Test(double a, double b);
+
+/* Tests if the two pointers are equal.
+@return false if the condition is false.
+@param  value The value to test.  */
+API bool Test(const void* value);
+
+/* Test function to assist in casting boolean types.
+@return false if the condition is false.
+@param  value The value to test.
+@param  b Parameter b. */
+API bool Test(uint8_t value, uint8_t b);
+
+/* Test function to assist in casting boolean types.
+@return false if the condition is false.
+@param  value The value to test. */
+API bool Test(int8_t value);
+
+/* Test function to assist in casting boolean types.
+@return false if the condition is false.
+@param  value The value to test. */
+API bool Test(uint8_t value);
+
+/* Test function to assist in casting boolean types.
+@return false if the condition is false.
+@param  value The value to test. */
+API bool Test(int16_t value);
+
+/* Test function to assist in casting boolean types.
+@return false if the condition is false.
+@param  value The value to test. */
+API bool Test(uint16_t value);
+
+/* Test function to assist in casting boolean types.
+@return false if the condition is false.
+@param  value The value to test. */
+API bool Test(int32_t value);
+
+/* Test function to assist in casting boolean types.
+@return false if the condition is false.
+@param  value The value to test. */
+API bool Test(uint32_t value);
+
+/* Test function to assist in casting boolean types.
+@return false if the condition is false.
+@param  value The value to test. */
+API bool Test(int64_t value);
+
+/* Test function to assist in casting boolean types.
+@return false if the condition is false.
+@param  value The value to test. */
+API bool Test(uint64_t value);
+
+/* Test function to assist in casting boolean types.
+@return false if the condition is false.
+@param  value The value to test. */
+API bool Test(float value);
+
+/* Test function to assist in casting boolean types.
+@return false if the condition is false.
+@param  value The value to test. */
+API bool Test(double value);
 
 /* Handles an assert by printing a debug statement and locks up the system.
 @return True upon failure.
@@ -208,26 +275,17 @@ API bool AssertHandle(const char* file, int line,
 
 typedef _::TestResult (*TestCase)(const char* args);
 
-#if CRABS_ASSERT_PRINT || CRABS_ASSERT_PAUSE || CRABS_ASSERT_FREEZE
-#define ASSERT(condition)
-#else
+#if SEAM > 0 && SEAM <= SEAM_N
 #define ASSERT(condition) \
-  if (Assert(condition)) AssertHandle(__FILE__, __LINE__)
-#define COMPARE(a, b, message) \
-  if (Compare(a, b, message)) AssertHandle(__FILE__, __LINE__)
-#endif
-#if CRABS_ASSERT_PRINT || CRABS_ASSERT_PAUSE || CRABS_ASSERT_FREEZE
-#define ASSERT(condition)
-#define ASSERT(condition)
+  if (Assert(condition)) _::AssertHandle(__FILE__, __LINE__)
+#define CHECK(item) \
+  if (Test(item)) _::AssertHandle(__FILE__, __LINE__)
+#define TEST(a, b) \
+  if (Test(a, b)) _::AssertHandle(__FILE__, __LINE__)
 #else
-#define ASSERT(condition) \
-  if (Assert(condition)) AssertHandle(__FILE__, __LINE__)
-#define COMPARE(a, b, message) \
-  if (Compare(a, b, message)) AssertHandle(__FILE__, __LINE__)
+#define ASSERT(condition)
+#define CHECK(item)
+#define TEST(a, b)
 #endif
 
-#define COMPARE(a, b, message) \
-  if (Compare(a, b, message))  \
-  AssertHandle(__FILE__, __LINE__, message == nullptr ? "" : message)
-
-#endif  //< #ifndef INCLUDED_CRABS_TEST
+#endif  //< #ifndef INCLUDED_KABUKI_F2_TEST

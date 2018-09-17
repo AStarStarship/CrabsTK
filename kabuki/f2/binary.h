@@ -102,6 +102,14 @@ API inline bool IsInfinite(double value);
  */
 API inline const uint16_t* IEEE754LUT();
 
+/* Gets the packed IEEE754 LUT for printing integers and floating-point numbers.
+ */
+API inline const uint16_t* IEEE754Pow10E();
+
+/* Gets the packed IEEE754 LUT for printing integers and floating-point numbers.
+ */
+API inline const uint64_t* IEEE754Pow10F();
+
 /* Returns the ceiling of of the given value to the next highest up integer. */
 API float Ceiling(float value);
 

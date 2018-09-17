@@ -43,7 +43,7 @@ system("PAUSE");
 }
 ;
 
-COMPARE(SEAM_1_3, SEAM_1_3A) {
+TEST(SEAM_1_3, SEAM_1_3A) {
   int i = 0;  //< Shared looping variable.
 
   PRINT_HEADING("\nTesting COut ().Print ()... ");

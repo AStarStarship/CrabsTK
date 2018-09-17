@@ -42,7 +42,7 @@ TEST_GROUP(SEAM_0_0_2){void setup(){}
 }
 ;
 
-COMPARE(SEAM_0_0_2, SEAM_0_0_2A) {
+TEST(SEAM_0_0_2, SEAM_0_0_2A) {
   PRINT_HEADING("Testing SEAM_0_0_2...");
 
   PRINTF("\n\nTesting Text...");

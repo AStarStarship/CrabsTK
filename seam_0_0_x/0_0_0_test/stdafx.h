@@ -36,9 +36,6 @@ enum { kSeamCount = SEAM_N };
 #ifndef INCLUDED_SEAMS
 #define INCLUDED_SEAMS
 
-#define APP_EXIT_SUCCESS 0
-#define APP_EXIT_FAILURE 1
-
 #if SEAM_LAYER == 0
 #if SEAM_MAJOR == 0
 #if SEAM_MINOR == 0
@@ -55,7 +52,11 @@ enum { kSeamCount = SEAM_N };
 #define DEBUG 1
 #endif
 
+#define APP_EXIT_SUCCESS 0
+#define APP_EXIT_FAILURE 1
+
 #if COMPILER == VISUAL_CPP
+#define getch() _getch();
 #define FORMAT_SI8 "%I64i"
 #define FORMAT_UI8 "%I64u"
 #else

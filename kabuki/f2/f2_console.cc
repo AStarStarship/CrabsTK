@@ -212,7 +212,7 @@ COut PrintBinary(double value) {
   return PrintBinaryUnsigned<uint64_t>(*reinterpret_cast<uint64_t*>(&value));
 }
 
-COut PrintBinary(void* ptr) {
+COut PrintBinary(const void* ptr) {
   return PrintBinaryUnsigned<uintptr_t>(*reinterpret_cast<uintptr_t*>(&ptr));
 }
 
@@ -460,6 +460,11 @@ COut& COut::Hex(int64_t value) {
   return *this;
 }
 
+COut& COut::Hex(const void* pointer) {
+  PrintHex(pointer);
+  return *this;
+}
+
 inline COut& COut::Hex(float value) {
   PrintHex(value);
   return *this;
@@ -471,6 +476,8 @@ inline COut& COut::Hex(double value) {
 }
 
 COut& COut::Pause(const char* message) { Pause(message); }
+
+CHex::CHex(const void* ptr) { PrintHex(ptr); }
 
 CHex::CHex(uint8_t value) { PrintHex(value); }
 
@@ -492,8 +499,6 @@ CHex::CHex(float value) { PrintHex(value); }
 
 CHex::CHex(double value) { PrintHex(value); }
 
-CHex::CHex(void* ptr) { PrintHex(ptr); }
-
 CBinary::CBinary(uint8_t value) { PrintBinary(value); }
 
 CBinary::CBinary(int8_t value) { PrintBinary(value); }
@@ -514,7 +519,7 @@ CBinary::CBinary(float value) { PrintBinary(value); }
 
 CBinary::CBinary(double value) { PrintBinary(value); }
 
-CBinary::CBinary(void* ptr) { PrintBinary(ptr); }
+CBinary::CBinary(const void* ptr) { PrintBinary(ptr); }
 
 }  // namespace _
 
@@ -573,8 +578,8 @@ _::COut& operator<<(_::COut& cout, double value) {
   return cout;
 }
 
-_::COut& operator<<(_::COut& cout, _::CHex item) { return cout; }
+_::COut& operator<<(_::COut& cout, _::CHex& item) { return cout; }
 
-_::COut& operator<<(_::COut& cout, _::CBinary item) { return cout; }
+_::COut& operator<<(_::COut& cout, _::CBinary& item) { return cout; }
 
 #endif  //< #if SEAM >= SEAM_0_0_0

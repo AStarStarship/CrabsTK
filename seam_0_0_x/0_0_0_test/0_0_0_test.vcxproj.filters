@@ -78,6 +78,9 @@
     <ClInclude Include="..\..\kabuki\f2\global.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
+    <ClInclude Include="seams.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cc">

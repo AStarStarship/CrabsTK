@@ -13,9 +13,11 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#include <random>
+#include <seamsh.h>
 
 #include "../../kabuki/f2/global.h"
+
+#include <random>
 
 #if SEAM == SEAM_0_0_0
 #define PRINT(item) Print(item)
@@ -122,22 +124,24 @@ const char* TestSEAM_0_0_0() {
   enum { kNumProblemChildren = 0, kSize = 24 };
 
   char text[kSize + 1], expecting[kSize + 1];
+  char buffer[kSize];
   char* result;
-  uint64_t value;
+  uint64_t result_ui8, expected_ui8;
+  double dbl_expected, dbl_found;
 
   // Setup C++1x random number generator.
   std::random_device rd;
   std::mt19937_64 eng(rd());
   std::uniform_int_distribution<uint64_t> distr;
 
-  PRINT("\nTesting ScanUnsigned<Char, I> (const Char*, const char*, I);");
+  PRINT("\nTesting ScanUnsigned<UI, Char> (const Char*, const char*, I);");
 
   for (int i = 0; i < 1 << 6; ++i) {
-    uint64_t result, value = distr(eng);
-    char buffer[25];
-    Print<uint, int>(buffer, buffer + 24, value);
-    Assert(Scan(buffer, result));
-    COMPARE(value, result);
+    expected_ui8 = distr(eng);
+    Print<uint64_t, char, uint16_t>(buffer, buffer + 24, expected_ui8);
+    const char* test = Scan<uint64_t, char>(buffer, result_ui8);
+    CHECK(test);
+    TEST(expected_ui8, result_ui8);
   }
 
   PRINT("\n\nTesting Script ItoS Algorithm...\n\n");
@@ -147,17 +151,18 @@ const char* TestSEAM_0_0_0() {
   PRINT("\n\nTesting problem children...\n\n");
 
   for (int i = 0; i < kNumProblemChildren; ++i) {
-    value = problem_children[i];
-    sprintf_s(expecting, 24, "%llu", value);
+    expected_ui8 = problem_children[i];
+    sprintf_s(expecting, 24, "%llu", expected_ui8);
     PRINTF("\n%i.) Expecting \"%s\":%llu", i + 1, expecting,
            (uint)strlen(expecting));
-    result = Print<uint, int>(text, text + kSize - 1, value);
+    result =
+        Print<uint64_t, char, uint16_t>(text, text + kSize - 1, expected_ui8);
     if (!result) {
       PAUSE("An error occurred :-(");
       break;
     }
     *result = 0;
-    if (strcmp(expecting, text)) {
+    if (StringCompare(expecting, text)) {
       PAUSEF("\n\nERROR: Expecting \"%s\":%llu and found \"%s\":%llu",
              expecting, (uint)strlen(expecting), text, (uint)strlen(text));
     }
@@ -165,10 +170,11 @@ const char* TestSEAM_0_0_0() {
 
   PRINT("\n\nTesting edge conditions...\n\n");
   for (int i = 0; i < 28; ++i) {
-    value = test_value[i];
-    sprintf_s(expecting, 24, "%llu", value);
+    expected_ui8 = test_value[i];
+    sprintf_s(expecting, 24, "%llu", expected_ui8);
     PRINTF("\n%i.) ", i + 1);
-    result = Print<uint, int>(text, text + kSize - 1, value);
+    result =
+        Print<uint64_t, char, uint16_t>(text, text + kSize - 1, expected_ui8);
     if (!result) {
       PAUSE("An error occurred :-(");
       break;
@@ -183,15 +189,16 @@ const char* TestSEAM_0_0_0() {
   PRINTF("\n\nTesting random numbers...\n\n");
 
   for (int i = 0; i < 0x0000ffff; ++i) {
-    value = distr(eng);
-    sprintf_s(expecting, 24, "%llu", value);
-    result = Print<uint, int>(text, text + kSize - 1, value);
+    expected_ui8 = distr(eng);
+    sprintf_s(expecting, 24, "%llu", expected_ui8);
+    result =
+        Print<uint64_t, char, uint16_t>(text, text + kSize - 1, expected_ui8);
     if (!result) {
       PAUSE("An error occurred :-(");
       break;
     }
     *result = 0;
-    if (strcmp(expecting, text)) {
+    if (StringCompare(expecting, text)) {
       PAUSEF("\n\nERROR: Expecting \"%s\":%llu and found \"%s\":%llu",
              expecting, (uint)strlen(expecting), text, (uint)strlen(text));
     }
@@ -199,32 +206,28 @@ const char* TestSEAM_0_0_0() {
 
   PRINT("\n Done testing ItoS :)\n\n");
 
-  uint64_t value;
-  double dbl_expected, dbl_found;
-
   PRINT("\n\nTesting Float Ceiling<Float, UI> (Float)...\n");
 
   for (int i = 0; i < 1 << 20; ++i) {
     do {
-      value = distr(eng);
-      dbl_expected = static_cast<double>(value);
+      expected_ui8 = distr(eng);
+      dbl_expected = static_cast<double>(expected_ui8);
     } while (!IsFinite(dbl_expected));
     dbl_found = Ceiling(dbl_expected);
     dbl_expected = ceil(dbl_expected);
-    COMPARE(dbl_expected, dbl_found);
+    TEST(dbl_expected, dbl_found);
   }
 
   PRINT("\n\nTesting float Char* Print<Char> (Char*, Char*, float&)...\n");
 
   for (int i = 0; i < 1 << 20; ++i) {
     do {
-      value = distr(eng);
-      dbl_expected = static_cast<double>(value);
+      expected_ui8 = distr(eng);
+      dbl_expected = static_cast<double>(expected_ui8);
     } while (!IsFinite(dbl_expected));
-    char buffer[25];
-    Binary<>::Print<>(buffer, buffer + 24, dbl_expected);
-    COMPARE(scanf_s("%lf", &dbl_found));
-    COMPARE(*reinterpret_cast<double*>(&value), dbl_expected);
+    Print<double, uint64_t, char, uint16_t>(buffer, buffer + 24, dbl_expected);
+    TEST(0, scanf_s("%lf", &dbl_found));
+    TEST(dbl_expected, dbl_found);
   }
 
   PRINTF(
@@ -233,13 +236,12 @@ const char* TestSEAM_0_0_0() {
 
   for (int i = 0; i < 1 << 20; ++i) {
     do {
-      value = distr(eng);
-      dbl_expected = static_cast<double>(value);
+      expected_ui8 = distr(eng);
+      dbl_expected = static_cast<double>(expected_ui8);
     } while (!IsFinite(dbl_expected));
-    char buffer[24];
     sprintf_s(buffer, 24, "%f", dbl_expected);
-    COMPARE(Scan(buffer, dbl_expected));
-    COMPARE(value, dbl_expected);
+    TEST(0, Scan(buffer, dbl_found));
+    TEST(dbl_expected, dbl_found);
   }
 }
 

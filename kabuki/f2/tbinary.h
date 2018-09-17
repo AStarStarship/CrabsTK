@@ -2,7 +2,6 @@
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    ~/kabuki/f2/tbinary.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
-         
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance with the License.
@@ -95,15 +94,18 @@ inline void PrintPrinted(char* cursor) {
 #define BEGIN_ITOS_ALGORITHM
 #endif
 
-namespace _ { /* Prints a Unicode string to the given buffer.
- @return Nil upon failure or a pointer to the nil-term Char upon succes.
- @param  cursor The beginning of the buffer.
- @param  end    The last byte in the buffer.
- @param  string The string to print.
- @desc   This algoihrm is designed to fail if the buffer is not a valid buffer
+namespace _ {
+
+/* Prints a Unicode string to the given buffer.
+ @return Nil upon failure or a pointer to the nil-term Char upon success.
+ @param  cursor    The beginning of the buffer.
+ @param  end       The last byte in the buffer.
+ @param  string    The string to print.
+ @param  delimiter The delimiter to print (usually nil).
+ @desc   This algorithm is designed to fail if the buffer is not a valid buffer
  with one or more bytes in it, or if string is nil. */
 template <typename Char = char>
-Char* Print(Char* cursor, Char* end, const Char* string) {
+Char* Print(Char* cursor, Char* end, const Char* string, Char delimiter = 0) {
   ASSERT(cursor);
   ASSERT(string);
 
@@ -115,12 +117,26 @@ Char* Print(Char* cursor, Char* end, const Char* string) {
     if (cursor >= end) return nullptr;
     c = *string++;
   }
-  *cursor = 0;
+  *cursor = delimiter;
   return cursor;
 }
 
+/* Prints a Unicode string to the given buffer.
+@return Nil upon failure or a pointer to the nil-term Char upon success.
+@param  cursor    The beginning of the buffer.
+@param  size      The size of the buffer in Char(s).
+@param  string    The string to print.
+@param  delimiter The delimiter to print (usually nil).
+@desc   This algoihrm is designed to fail if the buffer is not a valid buffer
+with one or more bytes in it, or if string is nil. */
+template <typename Char = char>
+Char* Print(Char* cursor, intptr_t size, const Char* string,
+            Char delimiter = 0) {
+  return Print<Char>(cursor, cursor + size - 1, string, delimiter);
+}
+
 /* Prints a Unicode Char to the given buffer.
-@return Nil upon failure or a pointer to the nil-term Char upon succes.
+@return Nil upon failure or a pointer to the nil-term Char upon success.
 @param  cursor    The beginning of the buffer.
 @param  end       The last byte in the buffer.
 @param  character The Char to print.
@@ -139,7 +155,7 @@ Char* Print(Char* cursor, Char* end, Char character) {
 }
 
 /* Prints a Unicode Char to the given buffer.
-@return Nil upon failure or a pointer to the nil-term Char upon succes.
+@return Nil upon failure or a pointer to the nil-term Char upon success.
 @param  cursor    The beginning of the buffer.
 @param  size      The size of the buffer in Char(s).
 @param  string    The string to print.
@@ -151,7 +167,7 @@ Char* Print(Char* cursor, intptr_t size, Char character) {
 }
 
 /* Prints a Unicode Char to the given buffer.
-@return Nil upon failure or a pointer to the nil-term Char upon succes.
+@return Nil upon failure or a pointer to the nil-term Char upon success.
 @param  cursor    The beginning of the buffer.
 @param  size      The size of the buffer in Char(s).
 @param  character The Char to print.
@@ -162,6 +178,7 @@ Char* PrintChar(Char* cursor, intptr_t size, Char character) {
   return PrintChar<Char>(cursor, cursor + size, character);
 }
 
+/* Prints a hex value to the Console. */
 template <typename Char, typename UI>
 Char* PrintHex(Char* cursor, Char* end, UI value) {
   enum { kHexStringLengthSizeMax = sizeof(UI) * 2 + 3 };
@@ -200,7 +217,8 @@ inline bool IsWhitespace(Char character) {
 }
 
 template <typename Char = char>
-int StringCompare(const Char* string_a, const Char* string_b) {
+const Char* StringCompare(const Char* string_a, const Char* string_b,
+                          Char delimiter = 0) {
   int a, b, result;
   if (!string_a) {
     if (!string_b) return 0;
@@ -219,7 +237,7 @@ int StringCompare(const Char* string_a, const Char* string_b) {
     if (!a) return 0;  //< I like !t code rather than !c code. :-)
     return 0 - a;
   }
-  // text SHOULD be a nil-terminated string without whitespace.
+  // string_b SHOULD be a nil-terminated string without whitespace.
   while (b) {
     result = b - a;
     PRINTF("\nb - a = %i - %i = %i", b, a, result);
@@ -227,8 +245,8 @@ int StringCompare(const Char* string_a, const Char* string_b) {
       PRINTF(" is not a hit.");
       return result;
     }
-    if (!a) {
-      PRINTF(" is a partial match but !a.");
+    if (a <= delimiter) {
+      PRINTF(" is a partial match but a reached a delimiter first.");
       return result;
     }
     ++string_a;
@@ -236,8 +254,8 @@ int StringCompare(const Char* string_a, const Char* string_b) {
     a = *string_a;
     b = *string_b;
   }
-  if (a && !IsWhitespace<Char>(a)) {
-    PRINTF(" is only a partial match but found %s", (a ? "a" : "space"));
+  if (a > delimiter) {
+    PRINTF(" is only a partial match but b reached a delimiter first.");
     return b - a;
   }
   return 0;
@@ -427,7 +445,7 @@ success.
 @param  end    The end address of the buffer. */
 template <typename UI = uint64_t, typename Char = char,
           typename DChar = uint16_t>
-static Char* Print(Char* cursor, Char* end, UI value) {
+Char* Print(Char* cursor, Char* end, UI value) {
   BEGIN_ITOS_ALGORITHM;
 
   if (!cursor || cursor >= end) return nullptr;
@@ -607,6 +625,17 @@ inline Char* Print(Char* buffer, Char* end, SI value) {
   return Print<Char, DChar, UI>(buffer, end, Negative(value));
 }
 
+/* Writes the give value to the given buffer as an ASCII string.
+@return Nil upon buffer overflow and a pointer to the nil-term Char upon
+success.
+@param  print The Utf& to print to.
+@param value The value to write. */
+template <typename UI = uint64_t, typename SI = int64_t, typename Char = char,
+          typename DChar = uint16_t>
+inline Char* Print(Char* buffer, intptr_t size, SI value) {
+  return Print<UI, SI, Char, DChar>(buffer, buffer + size, value);
+}
+
 /* Scans the given buffer for an unsigned integer (UI).
 @return Nil if there is no UI to scan.
 @param buffer The beginning of the buffer.
@@ -642,17 +671,6 @@ const Char* Scan(const Char* buffer, UI& result) {
   PRINTF("\nvalue:%u", (uint)value);
   result = value;
   return end;
-}
-
-/* Writes the give value to the given buffer as an ASCII string.
-@return Nil upon buffer overflow and a pointer to the nil-term Char upon
-success.
-@param  print The Utf& to print to.
-@param value The value to write. */
-template <typename Char = char, typename DChar = uint16_t,
-          typename UI = uint64_t>
-inline Char* Print(Char* buffer, intptr_t size, UI value) {
-  return Print<Char, DChar, UI>(buffer, buffer + size, value);
 }
 
 /* Scans the given buffer for an Signed Integer (SI).
@@ -810,10 +828,6 @@ class Binary {
       kCharCountMax = 9,  // < (1 + [p*log_10(2)], where p = 32
     };
 
-    static const uint32_t kIEEE754Pow10[] = {
-        10,      100,      1000,      10000,      100000,
-        1000000, 10000000, 100000000, 1000000000, 1000000001};
-
     uint32_t integer,  //< Integer portion in Binary.
         sign,          //< Sign in Binary32 format.
         ui_value,      //< Unsigned value.
@@ -855,7 +869,7 @@ class Binary {
       PRINTF("\nvalue:%u", (uint)ui_value);
     }
 
-    integer = unsigned_integer;
+    // integer = unsigned_integer;
 
     PRINTF("\nfound %i and pointed at \'%c\'", integer, *end);
 
@@ -919,7 +933,7 @@ class Binary {
     // greater than one then subtract the equivalent of one until the value
     // is zero.
 
-    uint32_t one = kIEEE754Pow10[length - 1], bit_pattern = 0;
+    uint32_t one = IEEE754Pow10E()[length - 1], bit_pattern = 0;
     PRINT('\n');
     int32_t bit_shift_count = 0;
     while ((ui_value != 0) && (++bit_shift_count < 24)) {
@@ -960,12 +974,12 @@ class Binary {
 
     if (signed_value < -128 || signed_value > 127) {
       PRINTF("\nExponent out of range!");
-      result = result_flt;
+      // result = result_flt;
       return end;
     }
 
     // We're finally done so store the result.
-    result = result_flt;
+    // result = result_flt;
 
     return end;
   }
@@ -1153,7 +1167,7 @@ class Binary {
     ASSERT(index < 87);
 
     // Save exponents pointer and offset to avoid creating base pointer again.
-    uint16_t* exponents = &Exponents()[index];
+    uint16_t* exponents = &IEEE754Pow10E()[index];
     return Binary(IEEE754Pow10(exponents), *exponents);
   }
 
@@ -1205,6 +1219,19 @@ class Binary {
     }
   }
 };
+
+template <typename Float = double, typename UI = uint64_t, typename Char = char,
+          typename DChar = uint16_t>
+inline Char* Print(Char* buffer, Char* end, Float value) {
+  return Binary<Float, UI>::Print<Char, DChar>(buffer, end, value);
+}
+
+template <typename Float = double, typename UI = uint64_t, typename Char = char,
+          typename DChar = uint16_t>
+inline Char* Print(Char* buffer, intptr_t size, Float value) {
+  return Binary<Float, UI>::Print<Char, DChar>(buffer, buffer + size - 1,
+                                               value);
+}
 
 // using Binary16 = Binary<half, uint32_t>; //< Comming soon.
 using Binary32 = Binary<float, uint32_t>;

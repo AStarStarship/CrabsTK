@@ -7,18 +7,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="f2_nano.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="seams.h">
+      <Filter>source</Filter>
+    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>source</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="maze_agent.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="maze.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cc">
+      <Filter>source</Filter>
+    </ClCompile>
     <ClCompile Include="stdafx.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="main.cc">
+    <ClCompile Include="f2_nano.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="maze.cc">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

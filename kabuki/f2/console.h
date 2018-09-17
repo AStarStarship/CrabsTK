@@ -191,6 +191,9 @@ struct API COut {
   /* Prints a 64-bit binary value to the console. */
   inline COut& Hex(int64_t value);
 
+  /* Prints a pointer to the console. */
+  inline COut& Hex(const void* ptr);
+
   /* Prints a 32-bit floating-point number to the console. */
   inline COut& Hex(float value);
 
@@ -202,28 +205,31 @@ struct API COut {
 };
 
 struct API CHex {
-  /* Prints a 8-bit binary value to the console in hex. */
+  /* Prints a pointer to the console in hex. */
+  CHex(const void* pointer);
+
+  /* Prints a 8-bit hex value to the console in hex. */
   CHex(uint8_t value);
 
-  /* Prints a 8-bit binary value to the console in hex. */
+  /* Prints a 8-bit hex value to the console in hex. */
   CHex(int8_t value);
 
-  /* Prints a 16-bit binary value to the console in hex. */
+  /* Prints a 16-bit hex value to the console in hex. */
   CHex(uint16_t value);
 
-  /* Prints a 16-bit binary value to the console in hex. */
+  /* Prints a 16-bit hex value to the console in hex. */
   CHex(int16_t value);
 
-  /* Prints a 32-bit binary value to the console in hex. */
+  /* Prints a 32-bit hex value to the console in hex. */
   CHex(uint32_t value);
 
-  /* Prints a 32-bit binary value to the console in hex. */
+  /* Prints a 32-bit hex value to the console in hex. */
   CHex(int32_t value);
 
-  /* Prints a 64-bit binary value to the console in hex. */
+  /* Prints a 64-bit hex value to the console in hex. */
   CHex(uint64_t value);
 
-  /* Prints a 64-bit binary value to the console in hex. */
+  /* Prints a 64-bit hex value to the console in hex. */
   CHex(int64_t value);
 
   /* Prints a 32-bit floating-point number to the console in hex. */
@@ -231,9 +237,6 @@ struct API CHex {
 
   /* Prints a 64-bit floating-point number to the console in hex. */
   CHex(double value);
-
-  /* Prints a pointer to the console in hex. */
-  CHex(void* pointer);
 };
 
 struct API CBinary {
@@ -268,7 +271,7 @@ struct API CBinary {
   CBinary(double value);
 
   /* Prints a pointer to the console in binary. */
-  CBinary(void* pointer);
+  CBinary(const void* pointer);
 };
 
 /* Prints a single char to the console. */
@@ -390,7 +393,7 @@ API COut PrintBinary(float value);
 API COut PrintBinary(double value);
 
 /* Prints a pointer to the console in binary. */
-API COut PrintBinary(void* value);
+API COut PrintBinary(const void* value);
 
 /* Prints a 8-bit binary value to the console to hex. */
 API COut PrintHex(uint8_t value);
@@ -423,7 +426,7 @@ API COut PrintHex(float value);
 API COut PrintHex(double value);
 
 /* Prints a pointer to the console in hex. */
-API COut PrintHex(void* value);
+API COut PrintHex(const void* value);
 
 /* Reads the current key depressed on the keyboard.
 @return A negative number (typically 1) if no keys are pressed. */
@@ -501,12 +504,12 @@ API inline _::COut& operator<<(_::COut& cout, double value);
 @The cout.
 @param  cout The cout.
 @param  item The item to write to print. */
-API inline _::COut& operator<<(_::COut& cout, _::CHex item);
+API inline _::COut& operator<<(_::COut& cout, _::CHex&& item);
 
 /* Writes the given value to the print jusified right.
 @The cout.
 @param  cout The cout.
 @param  item The item to print. */
-API inline _::COut& operator<<(_::COut& cout, _::CBinary item);
+API inline _::COut& operator<<(_::COut& cout, _::CBinary& item);
 
 #endif  //< #ifndef INCLUDED_F2_CONSOLE
