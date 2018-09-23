@@ -1,4 +1,4 @@
-
+  
 ```
   /\
  ( /   @ @    ()   _  __     _           _    _   _____           _ _    _ _   
@@ -12,8 +12,8 @@
 
 Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) for 32-bit and 64-bit processors featuring the F2 Foundational Framework (F2) and Chinese Room Abstract Stack Machine (Crabs) that provides:
 
-* Page-Major-Minor Seam (PMMS) Unit Tests provides in-order unit tests with debug information customized for each minor, major, and page seams.
-* Modern C/Embedded-C++1x core with Doxygen API docs.
+* Seam Tree Unit Tests provides in-order unit tests similar to a bulleted list with debug information customized for each seams increment, groups of seams, and groups of groups of seams.
+* Modern Embedded-C++1x core with Doxygen API docs.
 * ASCII Data Types operate seamlessly across assembly boundary with optimal RAM usage and CPU cache performance from ROM-able ASCII Contiguous Objects.
 * Rapid compile time using C Application Binary Interface (ABI) with semi-hidden C++ templates and UML-compatible object-oriented wrapper classes.
 * Code automatically formatted to Google C++ Style Guide upon save and formatted to not fight clang-format.

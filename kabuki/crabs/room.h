@@ -116,7 +116,7 @@ class Room : public Operand {
   typedef enum States {
     kStateBooting = 0,
     kStateGoingToSleep,
-    kStateShuttingDown,
+    kShutdown,
   } State;
 
   enum {

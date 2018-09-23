@@ -1,6 +1,6 @@
 # F2 Foundational Framework
 
-***A modern C++ nanoframework for rapid compilation and benchmarking with LMM seam tree unit tests.***
+***A modern C++ nanoframework for rapid compilation and benchmarking with Layered Seam Tree (LST) unit tests.***
 
 ## Quick Links
 
