@@ -13,9 +13,10 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_1
+#if SEAM >= SEAM_0_0_02
 #include "tbenchmark.h"
 
+#include "tbinary.h"
 #include "trng.h"
 #include "ttest.h"
 
@@ -87,4 +88,4 @@ TestResult Benchmark::Run(const char* args) {
 
 }  // namespace _
 
-#endif  //< #if SEAM >= SEAM_0_0_1
+#endif  //< #if SEAM >= SEAM_0_0_02

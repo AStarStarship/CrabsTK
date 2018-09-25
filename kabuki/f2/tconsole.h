@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_0
+#if SEAM >= SEAM_0_0_02
 #ifndef INCLUDED_CRABS_TCONSOLE
 #define INCLUDED_CRABS_TCONSOLE 1
 
@@ -40,4 +40,4 @@ COut PrintHex(UI value) {
 
 #endif  //< INCLUDED_CRABS_TCONSOLE
 
-#endif  //< #if SEAM >= SEAM_0_0_0
+#endif  //< #if SEAM >= SEAM_0_0_02

@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_1
+#if SEAM >= SEAM_0_0_02
 #ifndef INCLUDED_CRABS_TALIGN
 #define INCLUDED_CRABS_TALIGN 1
 
@@ -30,8 +30,8 @@ tables bellow.
 
 
 @code
-// The convention KT uses is that the usigned size always omes first
-// becuase it's the first byte of an ASCII OBJ.
+// The convention KT uses is that the unsigned size always comes first
+// because it's the first byte of an ASCII OBJ.
 int32_t signed_example = 7;
 signed_example = AlignUp<int64_t, uint32_t, int32_t> (signed_example);
 
@@ -249,4 +249,4 @@ inline T WordAlign8(T value) {
 }  // namespace _
 #endif  //< INCLUDED_CRABS_TALIGN
 
-#endif  //< #if SEAM >= SEAM_0_0_1
+#endif  //< #if SEAM >= SEAM_0_0_02

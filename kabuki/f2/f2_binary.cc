@@ -19,7 +19,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <cmath>
 
-#if SEAM == SEAM_0_0_0
+#if SEAM == SEAM_0_0_02
 
 #define PRINT(item) Print(item)
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
@@ -66,6 +66,17 @@ specific language governing permissions and limitations under the License. */
 #endif
 
 namespace _ {
+
+bool ArgsToString(int args_count, char** args) {
+  if (args_count <= 1) return false;
+  if (args_count == 2) return true;
+  for (int i = 2; i < args_count; ++i) {
+    char* cursor = args[i];
+    while (*cursor) cursor--;
+    *cursor = ' ';
+  }
+  return true;
+}
 
 inline void FloatBytes(float value, char& byte_0, char& byte_1, char& byte_2,
                        char& byte_3) {
@@ -301,7 +312,9 @@ inline SI NanSigned() {
 }
 
 bool IsNaNPositive(int8_t value) { return value > NanUnsigned<int8_t>(); }
+
 bool IsNaNNegative(int8_t value) { return value > NanUnsigned<int8_t>(); }
+
 bool IsNaN(int8_t value) {
   return (value > NanUnsigned<int8_t>()) &&
          (value > NanSigned<int8_t, uint8_t>());
@@ -334,12 +347,12 @@ bool IsInfinite(float value) { return isinf(value); }
 bool IsInfinite(double value) { return isinf(value); }
 
 /* Masks the lower bits using faster bit shifting.
-@brief The algoirhm has you enter the highest bit rather than bit count because
-it would introduct an extra instruction and you should do that manually if you
+@brief The algorithm has you enter the highest bit rather than bit count because
+it would introduce an extra instruction and you should do that manually if you
 wish to do so.
 @param value The value to mask.
-@param mab The Most Significant bit, or one less than the number of bits to
-mask off. */
+@param left_bits Number of bits to shift left.
+@param right_bits Number of bits to shift right. */
 template <typename UI>
 inline UI ShiftLeftRight(UI value, int left_bits, int right_bits) {
   value = value << left_bits;
@@ -361,9 +374,9 @@ inline UI MaskLSb(UI value, UI msb_zero_count) {
   return value & CreateMaskLSb<UI>(msb_zero_count);
 }
 
-/* Retruns 2^n.
-@brief Funciton forces the compiler to create the mask without a LDR
-instruciton. */
+/* Returns 2^n.
+@brief Function forces the compiler to create the mask without a LDR
+instruction. */
 template <typename I>
 inline I PowerOf2(I n) {
   I value = 1;
@@ -375,6 +388,41 @@ uint64_t ComputePow10(int e, int alpha, int gamma) {
       alpha_minus_e_plus_63 = static_cast<double>(alpha - e + 63),
          ceiling = Ceiling(alpha_minus_e_plus_63 * pow_10);
   return *reinterpret_cast<uint64_t*>(&pow_10);
+}
+
+template <typename UI, typename Float>
+float TCeiling(Float f) {
+  UI f_floor = static_cast<UI>(f);
+  if (f - static_cast<Float>(f_floor) = 0) return f;
+  return static_cast<Float>(f_floor + 1);
+}
+
+double Ceiling(double value) { return TCeiling<uint64_t, double>(value); }
+
+float Ceiling(float value) { return TCeiling<uint32_t, float>(value); }
+
+int MSbAsserted(uint8_t value) { return MSbAssertedReverse<uint8_t>(value); }
+
+int MSbAsserted(int8_t value) {
+  return MSbAssertedReverse<uint8_t>((uint8_t)value);
+}
+
+int MSbAsserted(uint16_t value) { return MSbAssertedReverse<uint16_t>(value); }
+
+int MSbAsserted(int16_t value) {
+  return MSbAssertedReverse<uint16_t>((uint16_t)value);
+}
+
+int MSbAsserted(uint32_t value) { return MSbAssertedReverse<uint32_t>(value); }
+
+int MSbAsserted(int32_t value) {
+  return MSbAssertedReverse<uint32_t>((uint32_t)value);
+}
+
+int MSbAsserted(uint64_t value) { return MSbAssertedReverse<uint64_t>(value); }
+
+int MSbAsserted(int64_t value) {
+  return MSbAssertedReverse<uint64_t>((uint64_t)value);
 }
 
 uint8_t HexNibbleToLowerCase(uint8_t b) {

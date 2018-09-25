@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_1
+#if SEAM >= SEAM_0_0_02
 #ifndef INCLUDED_CRAB_TRNG
 #define INCLUDED_CRAB_TRNG
 
@@ -23,10 +23,10 @@ namespace _ {
 /* Interface for a random number generator.
 @theory Random number generation takes enough CPU cycles that use of an
 interface does not effect performance but also allows for hiding of the
-C++ standard library implmentation. */
+C++ standard library implementation. */
 template <typename T>
 struct RNG {
-  /* Seets the RNG. */
+  /* Sets the RNG. */
   virtual void Seed(uint32_t seed) = 0;
 
   /* Returns the next random number. */
@@ -36,4 +36,4 @@ struct RNG {
 }  // namespace _
 #endif  //< INCLUDED_CRAB_TRNG
 
-#endif  //< #if SEAM >= SEAM_0_0_1
+#endif  //< #if SEAM >= SEAM_0_0_02

@@ -62,7 +62,7 @@ class API SeamMajor {
 
   /* Runs a unit minor_seams with the given global parameter list.
   @return Nil upon success or an TestCase with debug info upon failure.
-  @param  args      An array of string argumetns.
+  @param  args      An array of string arguments.
   @param  arg_count The number of arguments
   @param  seam_layer The seam layer index.
   @praam  seam_major The seam major index. */
@@ -86,7 +86,7 @@ class API SeamLayer {
 
   /* Runs a page seam unit test with the given global parameter list.
   @return Nil upon success or an TestCase with debug info upon failure.
-  @param  args      An array of string argumetns.
+  @param  args      An array of string arguments.
   @param  arg_count The number of arguments. */
   TestResult Run(const char* args, int seam_layer);
 
@@ -107,7 +107,7 @@ class API UnitTest {
 
   /* Runs a unit test with the given global parameter list.
   @return APP_EXIT_SUCCESS upon success or APP_EXIT_FAILURE upon failure.
-  @param  args      An array of string argumetns.
+  @param  args      An array of string arguments.
   @param  arg_count The number of arguments. */
   int Run(const char* args, const char* name = nullptr,
           const char* description = nullptr);
@@ -267,7 +267,7 @@ API bool Test(double value);
 /* Handles an assert by printing a debug statement and locks up the system.
 @return True upon failure.
 @param  line    The line the program failed at.
-@param  file    The file the error occured at.
+@param  file    The file the error occurred at.
 @param  message An optional message to print. */
 API bool AssertHandle(const char* file, int line,
                       const char* message = nullptr);

@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_1
+#if SEAM >= SEAM_0_0_0
 #ifndef INCLUDED_CRABS_RNGUNIFORM
 #define INCLUDED_CRABS_RNGUNIFORM
 

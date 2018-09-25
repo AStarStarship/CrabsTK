@@ -19,10 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="f2_pico.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="f2_pico.cc" />
+    <ClCompile Include="main.cc" />
     <ClCompile Include="stdafx.cc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

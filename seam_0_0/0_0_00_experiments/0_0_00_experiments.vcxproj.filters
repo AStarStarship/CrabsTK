@@ -13,9 +13,18 @@
     <ClInclude Include="targetver.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="f2_pico.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cc">
+      <Filter>source</Filter>
+    </ClCompile>
     <ClCompile Include="stdafx.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="f2_pico.cc">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

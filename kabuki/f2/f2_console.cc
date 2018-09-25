@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_0
+#if SEAM >= SEAM_0_0_02
 #include "tconsole.h"
 
 #include <conio.h>
@@ -582,4 +582,4 @@ _::COut& operator<<(_::COut& cout, _::CHex& item) { return cout; }
 
 _::COut& operator<<(_::COut& cout, _::CBinary& item) { return cout; }
 
-#endif  //< #if SEAM >= SEAM_0_0_0
+#endif  //< #if SEAM >= SEAM_0_0_02

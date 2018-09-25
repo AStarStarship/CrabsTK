@@ -14,13 +14,21 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 
 #ifndef INCLUDED_CRABS_BINARY
-#define INCLUDED_CRABS_BINARY 1
+#define INCLUDED_CRABS_BINARY 2
 
 #ifndef API
 #define API
 #endif
 
+typedef unsigned int uint;
+
 namespace _ {
+
+/* Converts int main(int,char**) arguments back into a string.
+@return false if there are no args to convert.
+@param arg_count The number of arguments.
+@param args      The arguments. */
+bool ArgsToString(int args_count, char** args);
 
 /* Gets the maximum number of digits required to represent a float as in
 ASCII. */
@@ -110,43 +118,43 @@ API inline const uint16_t* IEEE754Pow10E();
  */
 API inline const uint64_t* IEEE754Pow10F();
 
-/* Returns the ceiling of of the given value to the next highest up integer. */
+/* Returns the ceiling of the given value to the next highest up integer. */
 API float Ceiling(float value);
 
-/* Returns the ceiling of of the given value to the next highest up integer. */
+/* Returns the ceiling of the given value to the next highest up integer. */
 API double Ceiling(double value);
 
 /* Gets the Most Significant Asserted Bit (MSbAsserted).
 @return A negative number if value is zero and the highest bit. */
-API int32_t MSbAsserted(uint8_t value);
+API int MSbAsserted(uint8_t value);
 
 /* Gets the Most Significant Asserted Bit (MSbAsserted).
 @return A negative number if value is zero and the highest bit. */
-API int32_t MSbAsserted(int8_t value);
+API int MSbAsserted(int8_t value);
 
 /* Gets the Most Significant Asserted Bit (MSbAsserted).
 @return A negative number if value is zero and the highest bit. */
-API int32_t MSbAsserted(uint16_t value);
+API int MSbAsserted(uint16_t value);
 
 /* Gets the Most Significant Asserted Bit (MSbAsserted).
 @return A negative number if value is zero and the highest bit. */
-API int32_t MSbAsserted(int16_t value);
+API int MSbAsserted(int16_t value);
 
 /* Gets the Most Significant Asserted Bit (MSbAsserted).
 @return A negative number if value is zero and the highest bit. */
-API int32_t MSbAsserted(uint32_t value);
+API int MSbAsserted(uint32_t value);
 
 /* Gets the Most Significant Asserted Bit (MSbAsserted).
 @return A negative number if value is zero and the highest bit. */
-API int32_t MSbAsserted(int32_t value);
+API int MSbAsserted(int32_t value);
 
 /* Gets the Most Significant Asserted Bit (MSbAsserted).
 @return A negative number if value is zero and the highest bit. */
-API int64_t MSbAsserted(uint64_t value);
+API int MSbAsserted(uint64_t value);
 
 /* Gets the Most Significant Asserted Bit (MSbAsserted).
 @return A negative number if value is zero and the highest bit. */
-API int64_t MSbAsserted(int64_t value);
+API int MSbAsserted(int64_t value);
 
 /* Converts a single uint8_t a one-uint8_t hex representation. */
 API uint8_t HexNibbleToLowerCase(uint8_t b);

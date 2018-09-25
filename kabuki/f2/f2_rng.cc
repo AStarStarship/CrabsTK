@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_1
+#if SEAM >= SEAM_0_0_02
 #ifndef INCLUDED_CRABS_RANDOM
 #define INCLUDED_CRABS_RANDOM
 
@@ -107,4 +107,4 @@ uint64_t RandomSI8() { return Random<uint64_t>(); }
 }  // namespace _
 #endif  //< INCLUDED_CRABS_RANDOM
 
-#endif  //< #if SEAM >= SEAM_0_0_1
+#endif  //< #if SEAM >= SEAM_0_0_02

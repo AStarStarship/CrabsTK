@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_1
+#if SEAM >= SEAM_0_0_02
 #ifndef INCLUDED_F2_TBENCHMARK
 #define INCLUDED_F2_TBENCHMARK
 
@@ -31,4 +31,4 @@ TestResult BenchmarkCaseLoop(const char* args) {
 }  // namespace _
 
 #endif  //< INCLUDED_F2_TBENCHMARK
-#endif  //< #if SEAM >= SEAM_0_0_1
+#endif  //< #if SEAM >= SEAM_0_0_02

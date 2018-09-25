@@ -127,7 +127,7 @@ Char* Print(Char* cursor, Char* end, const Char* string, Char delimiter = 0) {
 @param  size      The size of the buffer in Char(s).
 @param  string    The string to print.
 @param  delimiter The delimiter to print (usually nil).
-@desc   This algoihrm is designed to fail if the buffer is not a valid buffer
+@desc   This algorithm is designed to fail if the buffer is not a valid buffer
 with one or more bytes in it, or if string is nil. */
 template <typename Char = char>
 Char* Print(Char* cursor, intptr_t size, const Char* string,
@@ -140,7 +140,7 @@ Char* Print(Char* cursor, intptr_t size, const Char* string,
 @param  cursor    The beginning of the buffer.
 @param  end       The last byte in the buffer.
 @param  character The Char to print.
-@desc   This algoihrm is designed to fail if the buffer is not a valid buffer
+@desc   This algorithm is designed to fail if the buffer is not a valid buffer
 with one or more bytes in it. */
 template <typename Char = char>
 Char* Print(Char* cursor, Char* end, Char character) {
@@ -159,7 +159,7 @@ Char* Print(Char* cursor, Char* end, Char character) {
 @param  cursor    The beginning of the buffer.
 @param  size      The size of the buffer in Char(s).
 @param  string    The string to print.
-@desc   This algoihrm is designed to fail if the buffer is not a valid buffer
+@desc   This algorithm is designed to fail if the buffer is not a valid buffer
 with one or more bytes in it. */
 template <typename Char = char>
 Char* Print(Char* cursor, intptr_t size, Char character) {
@@ -171,7 +171,7 @@ Char* Print(Char* cursor, intptr_t size, Char character) {
 @param  cursor    The beginning of the buffer.
 @param  size      The size of the buffer in Char(s).
 @param  character The Char to print.
-@desc   This algoihrm is designed to fail if the buffer is not a valid buffer
+@desc   This algorithm is designed to fail if the buffer is not a valid buffer
 with one or more bytes in it. */
 template <typename Char = char>
 Char* PrintChar(Char* cursor, intptr_t size, Char character) {
@@ -441,7 +441,7 @@ bool IsDigit(Char c) {
 /* Prints the give value to the given buffer as a Unicode string.
 @return Nil upon buffer overflow and a pointer to the nil-term Char upon
 success.
-@param  cursor The begining of the buffer.
+@param  cursor The beginning of the buffer.
 @param  end    The end address of the buffer. */
 template <typename UI = uint64_t, typename Char = char,
           typename DChar = uint16_t>
@@ -615,7 +615,7 @@ inline uint64_t Negative(uint64_t value) {
 /* Writes the give value to the given buffer as an ASCII string.
 @return Nil upon buffer overflow and a pointer to the nil-term Char upon
 success.
-@param  print The Utf& to print to.
+@param  print The text formatter to print to.
 @param value The value to write. */
 template <typename UI = uint64_t, typename SI = int64_t, typename Char = char,
           typename DChar = uint16_t>
@@ -628,7 +628,7 @@ inline Char* Print(Char* buffer, Char* end, SI value) {
 /* Writes the give value to the given buffer as an ASCII string.
 @return Nil upon buffer overflow and a pointer to the nil-term Char upon
 success.
-@param  print The Utf& to print to.
+@param  print The text formatter to print to.
 @param value The value to write. */
 template <typename UI = uint64_t, typename SI = int64_t, typename Char = char,
           typename DChar = uint16_t>
@@ -671,6 +671,15 @@ const Char* Scan(const Char* buffer, UI& result) {
   PRINTF("\nvalue:%u", (uint)value);
   result = value;
   return end;
+}
+
+/* Searches for the highest MSb asserted.
+@return -1 */
+template <typename UI>
+int MSbAssertedReverse(UI value) {
+  for (int i = sizeof(UI) * 8 - 1; i > 0; --i)
+    if ((value >> i) != 0) return i;
+  return -1;
 }
 
 /* Scans the given buffer for an Signed Integer (SI).
@@ -745,7 +754,7 @@ class Binary {
     return (decimal << (kExponentSizeBits + 1)) >> (kExponentSizeBits + 1);
   }
 
-  /* Constructs an uninitized floating-point number. */
+  /* Constructs an uninitialized floating-point number. */
   Binary() {}
 
   /* Converts a Float to a Binary*/
@@ -813,9 +822,9 @@ class Binary {
     return (SI)(nan << (sizeof(UI) * 8 - 1));
   }
 
-  /* Non-working algoihrm DOES NOT converts a string-to-float.
+  /* Non-working algorithm DOES NOT converts a string-to-float.
   @return nil if there is no number to scan or pointer to the next char after
-  the the end of the scanned number upon success.
+  the end of the scanned number upon success.
   @brief Algorithm uses a 32-bit unsigned value to scan the floating-point
   number, which can only have 10 digits max, so the maximum floating-point
   number digit count we can scan is 9 digits long.*/
@@ -831,7 +840,7 @@ class Binary {
     uint32_t integer,  //< Integer portion in Binary.
         sign,          //< Sign in Binary32 format.
         ui_value,      //< Unsigned value.
-        pow_10;        //< Power of 10 for ocnverting integers.
+        pow_10;        //< Power of 10 for converting integers.
 
     // Scan sign of number:
 
@@ -842,7 +851,7 @@ class Binary {
       sign = 0;
     }
 
-    PRINTF("\nScannign intger portion:%i", static_cast<int32_t>(result));
+    PRINTF("\nScanning integer portion:%i", static_cast<int32_t>(result));
 
     const Char* cursor = buffer;
     Char c = *cursor++;
@@ -927,9 +936,9 @@ class Binary {
     }
     PRINTF("\nFound integer_value:%u", (uint)ui_value);
 
-    PRINTF("\nConverting bit_pattern backwarards:");
+    PRINTF("\nConverting bit_pattern backwards:");
 
-    // Convert decimals to base 2 by multiply in a loop the intger value is
+    // Convert decimals to base 2 by multiply in a loop the integer value is
     // greater than one then subtract the equivalent of one until the value
     // is zero.
 
@@ -949,7 +958,7 @@ class Binary {
     }
     PRINTF("'b0");
     PRINT_FLOAT_BINARY(integer, ui_value, length);
-    // Now check for the exponenet.
+    // Now check for the exponent.
 
     ui_value |= integer << length;
 
@@ -962,7 +971,7 @@ class Binary {
       return end;
     }
 
-    // @todo This is no doubt optimizable, not sure how much it would help
+    // @todo This is no doubt optimization, not sure how much it would help
     // though.
     int32_t signed_value;
     buffer = ScanSigned<int32_t, uint32_t, Char>(end, signed_value);
@@ -1233,11 +1242,11 @@ inline Char* Print(Char* buffer, intptr_t size, Float value) {
                                                value);
 }
 
-// using Binary16 = Binary<half, uint32_t>; //< Comming soon.
+// using Binary16 = Binary<half, uint32_t>; //< Coming soon.
 using Binary32 = Binary<float, uint32_t>;
 using Binary64 = Binary<double, uint64_t>;
 // using Binary128 = Binary<quad, uint128_t>;
-//< Comming soon but not in Visual-C++ due to lack of 128-bit integer support.
+//< Coming soon but not in Visual-C++ due to lack of 128-bit integer support.
 
 }  // namespace _
 
