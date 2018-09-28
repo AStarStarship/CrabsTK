@@ -25,7 +25,7 @@ specific language governing permissions and limitations under the License. */
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define SOCKET_SAVE(cursor, end_a) Socket socket_to_print(cursor, end_a);
 #define SOCKET_PRINT \
-  TStr<>(&COut) << Socket(socket_to_print.cursor, socket_to_print.end_a);
+  TStr<>(&Console) << Socket(socket_to_print.cursor, socket_to_print.end_a);
 #else
 #define PRINT(item)
 #define PRINTF(x, ...)

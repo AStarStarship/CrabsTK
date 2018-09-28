@@ -14,8 +14,9 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
+#if SEAM >= SEAM_00_00_00__00_00
 #ifndef INCLUDED_KABUKI_F2_TEST
-#define INCLUDED_KABUKI_F2_TEST 1
+#define INCLUDED_KABUKI_F2_TEST SEAM_00_00_00__00_00
 
 namespace _ {
 
@@ -23,102 +24,26 @@ namespace _ {
 struct API TestResult {
   const char *name,  //< The file the assertion occurred at.
       *description;  //< An optional description to print.
-  int line;          //< The line the assertion failed at.
-
-  /* Constructs all of the data fields the given arguments.
-  @param name    The file the assertion occurred at.
-  @param line    The line the assertion failed at.
-  @param description An optional description to print. */
-  TestResult(const char* name = nullptr, int line = 0,
-             const char* description = nullptr);
-
-  /* Copy constructor clones the other object. */
-  TestResult(const TestResult& other);
-
-  /* Checks if the assertion failed.
-  @return True if the assertion failed.
-  @desc   Algorithm works by checking if the file pointer is null. */
-  bool Failed();
-
-  /* Returns app exit code for when tests fail. */
-  int Quit();
+  int code,          //< The test result code.
+      line;          //< The line the assertion failed at.
 };
+
+int TestFailure()
+
 }  // namespace _
 
-typedef _::TestResult (*TestCase)(const char* args);
+typedef const char* (*SeamNode)(_::TestResult& test_result, const char* args);
 
 namespace _ {
 
-/* A Major Seam in a Layer-Major-Minor Seam Tree. */
-class API SeamMajor {
- public:
-  /* Constructs a SeamMajor from the an array of count TestCase function
-  pointers.
-  @param seam_layer  The page seam number.
-  @param seam_major The major seam number.
-  @param major_seams Array of pointers to SeamMajor(s).
-  @param major_seam_count The number of major seams. */
-  SeamMajor(TestCase* minor_seams, int minor_count);
+/* Tests an array of SeamNode(s).
+@return 0 upon success or an app exit code upon failure. */
+int Test(TestResult& test_result, const char* args, SeamNode* seams,
+         int node_count);
 
-  /* Runs a unit minor_seams with the given global parameter list.
-  @return Nil upon success or an TestCase with debug info upon failure.
-  @param  args      An array of string arguments.
-  @param  arg_count The number of arguments
-  @param  seam_layer The seam layer index.
-  @praam  seam_major The seam major index. */
-  TestResult Run(const char* args, int seam_layer, int seam_major);
-
-  /* Gets a reference to the major_seam_. */
-  int& GetMinorSeamCount();
-
- private:
-  TestCase* minor_seams_;  //< Array of function pointers.
-  int minor_count_;        //< Minor seam count.
-};
-
-class API SeamLayer {
- public:
-  /* Constructs a SeamMajor from the an array of count SeamMajor(s).
-  @param page_seam The major seam index that is zero or more.
-  @param major_seams Array of pointers to SeamMajor(s).
-  @param major_seam_count The number of major seams. */
-  SeamLayer(SeamMajor** major_seams, int major_seam_count);
-
-  /* Runs a page seam unit test with the given global parameter list.
-  @return Nil upon success or an TestCase with debug info upon failure.
-  @param  args      An array of string arguments.
-  @param  arg_count The number of arguments. */
-  TestResult Run(const char* args, int seam_layer);
-
-  /* Gets a reference to the major_count. */
-  int& GetMajorSeamCount();
-
- private:
-  SeamMajor** major_seams_;  //< Array of SeamMajor(s).
-  int major_count;           //< Major seam count.
-};
-
-class API UnitTest {
- public:
-  /* Constructs a UnitTest from the an array of count SeamLayer(s).
-  @param page_seams Array of pointers to SeamLayer(s).
-  @param layer_count The number of page seams. */
-  UnitTest(SeamLayer** page_seams_, int layer_count);
-
-  /* Runs a unit test with the given global parameter list.
-  @return APP_EXIT_SUCCESS upon success or APP_EXIT_FAILURE upon failure.
-  @param  args      An array of string arguments.
-  @param  arg_count The number of arguments. */
-  int Run(const char* args, const char* name = nullptr,
-          const char* description = nullptr);
-
-  /* Gets a reference to the layer_count_. */
-  int& GetPageSeamCount();
-
- private:
-  SeamLayer** page_seams_;  //< Array of SeamLayer pointers.
-  int layer_count_;         //< Page seam count.
-};
+void TestSeamTreeEnd(const char* function_name) {
+  Print("\nDone testing ", function_name, ". (:-)-+=<");
+}
 
 /* Assert check if the given condition is true
 @return false if the condition is false.
@@ -273,19 +198,18 @@ API bool AssertHandle(const char* file, int line,
                       const char* message = nullptr);
 }  // namespace _
 
-typedef _::TestResult (*TestCase)(const char* args);
-
 #if SEAM > 0 && SEAM <= SEAM_N
 #define ASSERT(condition) \
   if (Assert(condition)) _::AssertHandle(__FILE__, __LINE__)
-#define CHECK(item) \
+#define TEST1(item) \
   if (Test(item)) _::AssertHandle(__FILE__, __LINE__)
 #define TEST(a, b) \
   if (Test(a, b)) _::AssertHandle(__FILE__, __LINE__)
 #else
 #define ASSERT(condition)
-#define CHECK(item)
+#define TEST1(item)
 #define TEST(a, b)
 #endif
 
 #endif  //< #ifndef INCLUDED_KABUKI_F2_TEST
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

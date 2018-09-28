@@ -13,22 +13,11 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
+#if SEAM >= SEAM_00_00_00__00_00
 #ifndef INCLUDED_CRABS_BINARY
-#define INCLUDED_CRABS_BINARY 2
-
-#ifndef API
-#define API
-#endif
-
-typedef unsigned int uint;
+#define INCLUDED_CRABS_BINARY SEAM_00_00_00__00_00
 
 namespace _ {
-
-/* Converts int main(int,char**) arguments back into a string.
-@return false if there are no args to convert.
-@param arg_count The number of arguments.
-@param args      The arguments. */
-bool ArgsToString(int args_count, char** args);
 
 /* Gets the maximum number of digits required to represent a float as in
 ASCII. */
@@ -200,3 +189,4 @@ API int HexToByte(uint16_t h);
 }  // namespace _
 
 #endif  //< #if INCLUDED_CRABS_BINARY
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

@@ -20,8 +20,8 @@ specific language governing permissions and limitations under the License. */
 
 #include "../f2/global.h"
 
-#if SEAM >= SEAM_0_0_0
-#if SEAM == SEAM_0_0_0
+#if SEAM >= SEAM_0_0_00
+#if SEAM == SEAM_0_0_00
 #else
 #include "binary_32.h"
 #include "binary_64.h"

@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_0
+#if SEAM >= SEAM_0_0_00
 #ifndef INCLUDED_SCRIPT_MIRROR
 #define INCLUDED_SCRIPT_MIRROR
 // Dependencies:
@@ -82,8 +82,7 @@ API bool MirrorIsReadable(Mirror* mirror);
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-API const Op* MirrorResult(Mirror* mirror, Error error,
-                              const uint_t* header);
+API const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header);
 /* Used to return an erroneous result from a B-Input.
     @param  bin     The source Mirror.
     @param  error   The error type.
@@ -91,8 +90,7 @@ API const Op* MirrorResult(Mirror* mirror, Error error,
     @param  offset  The offset to the type in error in the B-Sequence.
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
-API const Op* MirrorResult(Mirror* mirror, Error error,
-                              const uint_t* header);
+API const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header);
 
 /* Used to return an erroneous result from a B-Input.
     @param  bin     The source Mirror.
@@ -102,7 +100,7 @@ API const Op* MirrorResult(Mirror* mirror, Error error,
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
 API const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
-                              byte offset);
+                           byte offset);
 
 /* Used to return an erroneous result from a B-Input.
     @param  bin     The source Mirror.
@@ -123,7 +121,7 @@ API const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
 API const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
-                              uint_t offset, char* address);
+                           uint_t offset, char* address);
 
 /* Used to return an erroneous result from a B-Input.
     @param  bin     The source Mirror.
@@ -133,7 +131,7 @@ API const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
     @param  address The address of the byte in error.
     @return         Returns a Static Error Operation Result. */
 API const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
-                              uint_t offset, char* address);
+                           uint_t offset, char* address);
 
 }  // namespace _
 #endif  //< #if SEAM >= SEAM_0_0_0

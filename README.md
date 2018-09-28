@@ -9,24 +9,23 @@
  / /-`---'-\ \  
   /         \                    ♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪
 ```
+Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) and Virtual Machine for 32-bit and 64-bit processors featuring the F2 Foundational Framework (F2), Chinese Room Abstract Stack Machine (Crabs), and Kabuki Virtual Machine (VM) that provides:
 
-Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) for 32-bit and 64-bit processors featuring the F2 Foundational Framework (F2) and Chinese Room Abstract Stack Machine (Crabs) that provides:
-
-* Seam Tree Unit Tests provides in-order unit tests similar to a bulleted list with debug information customized for each seams increment, groups of seams, and groups of groups of seams.
+* Layer SI Unit Seam Tree Unit Tests provides in-order unit tests similar to a bulleted list in Layer-Milli-Micro-Nano-Pico-Femto order with debug information customized for Seam and Seam Tree Branch.
 * Modern Embedded-C++1x core with Doxygen API docs.
 * ASCII Data Types operate seamlessly across assembly boundary with optimal RAM usage and CPU cache performance from ROM-able ASCII Contiguous Objects.
 * Rapid compile time using C Application Binary Interface (ABI) with semi-hidden C++ templates and UML-compatible object-oriented wrapper classes.
 * Code automatically formatted to Google C++ Style Guide upon save and formatted to not fight clang-format.
 * Deep Internet-of-Things integration using the Script Software Defined Networking Protocol.
 * Artificial Intelligence and Deep Learning library with graph-based neural-intelligent networks coming soon.
-* Modeled after AI philosophy and ASCII mimicry of the Chinese Room Thought Experiment.
+* Modeled after AI philosophy and ASCII mimicry of the Chinese Room Thought Experiment and C0 Control Codes.
 
 ## ASCII Data Types
 
 ASCII Data Types provide a suitable replacement for the C++ std library suitable for embedded systems that facilitates:
 
 * All of the C++ POD types.
-* Year 2038-safe Timestamps - 32-bit and 64-bit seconds timestamps along with 64-bit programmable sub-second timestamps using 32-bits for seconds and 32-bits sub-second tick.
+* Year 2038-safe 32-bit, 64- bit and dual-32-bit with 16-year epoch and sub-second tick timestamps.
 * All data types are 64-bit aligned so they may be rapidly copied from one system to another on homo-endian system.
 * Optional MSB variant encoding provides fast data compression similar to UTF-8.
 * Contiguous Objects
@@ -38,7 +37,7 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
   * Map - A sparse map of unsigned integers to ASCII Data Types.
   * Book - A multidictionary (i.e. unordered map) without hash table.
   * Dictionary - A dictionary of ASCII Data Types with hash table.
-  * B-Sequence - Describes the order and maximum sizes of a byte sequence of ASCII Data Types.
+  * B-Sequence - Describes the order and maximum sizes of a Byte-Sequence of ASCII Data Types.
   * Expression - Asynchronous Chinese Room Script Expressions capable of concurrently executing scripts in multiple language in real-time.
 
 [![GitHub version](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit.svg)](https://badge.fury.io/gh/kabuki-starship%2Fkabuki-toolkit)

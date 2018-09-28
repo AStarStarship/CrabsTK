@@ -14,6 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
+#if SEAM >= SEAM_00_00_00__00_01
 #ifndef INCLUDED_CRABS_TBINARY
 #define INCLUDED_CRABS_TBINARY 1
 
@@ -806,10 +807,8 @@ class Binary {
     }
     int32_t length, k;
     char* cursor = Print<Char, DChar>(buffer, end, value, &length, k);
-    Standardize(buffer, length, k);
-    return cursor;
+    return Standardize(buffer, length, k);
   }
-
   template <typename UI = uintptr_t>
   inline UI NaNUnsigned() {
     UI nan = 0;
@@ -827,7 +826,7 @@ class Binary {
   the end of the scanned number upon success.
   @brief Algorithm uses a 32-bit unsigned value to scan the floating-point
   number, which can only have 10 digits max, so the maximum floating-point
-  number digit count we can scan is 9 digits long.*/
+  number digit count we can scan is 9 digits long.
   template <typename Char = char>
   const Char* Scan(const Char* buffer, Float& result) {
     ASSERT(buffer);
@@ -991,7 +990,7 @@ class Binary {
     // result = result_flt;
 
     return end;
-  }
+  }*/
 
  private:
   UI f;
@@ -1019,6 +1018,7 @@ class Binary {
   kDpSignificandMask = 0x000FFFFFFFFFFFFF,
   kDpHiddenBit = 0x0010000000000000;*/
 
+  /* Normalizes the boundaries.
   inline void NormalizedBoundaries(Binary& m_minus, Binary& m_plus) const {
     UI l_f,   //< Local copy of f.
         l_e;  //< Local copy of e.
@@ -1033,7 +1033,7 @@ class Binary {
     *m_minus = mi;
   }
 
-  /* Rounds the Grisu estimation closer to the inside of the squeeze. */
+  /* Rounds the Grisu estimation closer to the inside of the squeeze.
   template <typename Char>
   inline void Round(Char& lsd, uint64_t delta, uint64_t rest,
                     uint64_t ten_kappa, uint64_t wp_w) {
@@ -1043,9 +1043,10 @@ class Binary {
       --lsd;
       rest += ten_kappa;
     }
-  }
+  } */
 
-  /* Prints the integer portion of the floating-point number. */
+  /* Prints the integer portion of the floating-point number.
+  @return Nil upon failure or a pointer to the nil-term Char upon success.
   template <typename Char>
   inline Char* PrintDecimals(Char* cursor, Char* end, const Binary& w,
                              const Binary& m_plus, uint64_t delta, int32_t& k) {
@@ -1111,7 +1112,7 @@ class Binary {
       p_2 *= 10;
       delta *= 10;
       char d = static_cast<char>(p_2 >> -one.e);
-      if (curosr >= end) return nullptr;
+      if (cursor >= end) return nullptr;
       if (d) *cursor++ = '0' + d;
       p_2 &= one.f - 1;
       --kappa;
@@ -1196,50 +1197,57 @@ class Binary {
   }
 
   template <typename Char = char, typename DChar = uint16_t>
-  inline void Standardize(Char* buffer, Char* end, int32_t length, int32_t k) {
+  inline Char* Standardize(Char* buffer, Char* end, int32_t length, int32_t k) {
     const int32_t kk = length + k;  // 10^(kk-1) <= v < 10^kk
-
+    Char* nil_term_char;
     if (length <= kk && kk <= 21) {  // 1234e7 -> 12340000000
       for (int32_t i = length; i < kk; i++) buffer[i] = '0';
       buffer[kk] = '.';
       buffer[kk + 1] = '0';
-      buffer[kk + 2] = '\0';
+      nil_term_char = &buffer[kk + 2];
+      *nil_term_char = '\0';
+      return nil_term_char;
     } else if (0 < kk && kk <= 21) {  // 1234e-2 -> 12.34
       SocketMove(&buffer[kk + 1], &buffer[kk], length - kk);
       buffer[kk] = '.';
-      buffer[length + 1] = '\0';
+      nil_term_char = &buffer[length + 1];
+      *nil_term_char = '\0';
+      return nil_term_char;
     } else if (-6 < kk && kk <= 0) {  // 1234e-6 -> 0.001234
       const int32_t offset = 2 - kk;
       SocketMove(&buffer[offset], &buffer[0], length);
       buffer[0] = '0';
       buffer[1] = '.';
       for (int32_t i = 2; i < offset; i++) buffer[i] = '0';
-      buffer[length + offset] = 0;
+      nil_term_char = &buffer[length + offset];
+      *nil_term_char = 0;
+      return nil_term_char;
     } else if (length == 1) {
       // 1e30
       buffer[1] = 'e';
-      Print<Char, DChar>(buffer + 2, end, kk - 1);
-    } else {
-      // 1234e30 -> 1.234e33
-      SocketMove(&buffer[2], &buffer[1], length - 1);
-      buffer[1] = '.';
-      buffer[length + 1] = 'e';
-      Print<Char, DChar>(length + 2, end, kk - 1);
+      return Print<Char, DChar>(buffer + 2, end, kk - 1);
     }
-  }
+    // else 1234e30 -> 1.234e33
+    SocketMove(&buffer[2], &buffer[1], length - 1);
+    buffer[1] = '.';
+    buffer[length + 1] = 'e';
+    return Print<Char, DChar>(length + 2, end, kk - 1);
+  } */
 };
 
 template <typename Float = double, typename UI = uint64_t, typename Char = char,
           typename DChar = uint16_t>
 inline Char* Print(Char* buffer, Char* end, Float value) {
-  return Binary<Float, UI>::Print<Char, DChar>(buffer, end, value);
+  // return Binary<Float, UI>::Print<Char, DChar>(buffer, end, value);
+  return nullptr;
 }
 
 template <typename Float = double, typename UI = uint64_t, typename Char = char,
           typename DChar = uint16_t>
 inline Char* Print(Char* buffer, intptr_t size, Float value) {
-  return Binary<Float, UI>::Print<Char, DChar>(buffer, buffer + size - 1,
-                                               value);
+  // return Binary<Float, UI>::Print<Char, DChar>(buffer, buffer + size - 1,
+  //                                             value);
+  return nullptr;
 }
 
 // using Binary16 = Binary<half, uint32_t>; //< Coming soon.
@@ -1255,3 +1263,4 @@ using Binary64 = Binary<double, uint64_t>;
 #undef PRINT_PRINTED
 #undef BEGIN_ITOS_ALGORITHM
 #endif  //< #if INCLUDED_CRABS_TBINARY
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

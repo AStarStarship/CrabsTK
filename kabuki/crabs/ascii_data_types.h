@@ -18,7 +18,6 @@ specific language governing permissions and limitations under the License. */
 #define INCLUDED_CRABS_TYPES
 // Dependencies:
 #include "align.h"
-#include "config.h"
 #include "tstr.h"
 // End dependencies.
 /* @tag Comment may be wrapped around
@@ -68,7 +67,7 @@ typedef enum AsciiTypes {
   TKN,      //< 23. A UTF-8 string token without whitespace.
   BSQ,      //< 24. B-Sequence.
   LOM,      //< 25. A loom of UTF-8, UTF-16, or UTF-32 strings.
-  TBL,      //< 26. A sorted sequencential hash table.
+  TBL,      //< 26. A hash table.
   EXP,      //< 27. Script Expression.
   LST,      //< 28. Set or multiset of Type-Value tuples.
   MAP,      //< 29. One-to-one map of Integer-{Type-Value} records.
@@ -137,7 +136,7 @@ nil upon failure.
 @param value   The value to print or nil. */
 KABUKI char* Print(char* begin, char* end, type_t type, const void* value);
 }  // namespace _
-/* Writes the given value to the print jusified right.
+/* Writes the given value to the print justified right.
 @return The utf.
 @param  utf The utf.
 @param  item The item to print. */
@@ -172,7 +171,7 @@ of the read number or nil upon failure.
 KABUKI char16_t* Print(char16_t* begin, char16_t* end, type_t type,
                        const void* value);
 }  // namespace _
-/* Writes the given value to the print jusified right.
+/* Writes the given value to the print justified right.
 @return The utf.
 @param  utf The utf.
 @param  item The item to print. */

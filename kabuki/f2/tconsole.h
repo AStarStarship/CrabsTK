@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/talign.h
+@file    ~/kabuki/f2/tconsole.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_02
+#if SEAM >= SEAM_00_00_00__00_01
 #ifndef INCLUDED_CRABS_TCONSOLE
 #define INCLUDED_CRABS_TCONSOLE 1
 
@@ -26,18 +26,18 @@ namespace _ {
 
 /* Prints the following value to the console in Hex. */
 template <typename UI>
-COut PrintHex(UI value) {
+Console PrintHex(UI value) {
   enum { kHexStringLengthSizeMax = sizeof(UI) * 2 + 3 };
 
   Print('0', 'x');
   for (int num_bits_shift = sizeof(UI) * 8 - 4; num_bits_shift >= 0;
        num_bits_shift -= 4)
     Print(HexNibbleToUpperCase((uint8_t)(value >> num_bits_shift)));
-  return COut();
+  return Console();
 }
 
 }  // namespace _
 
 #endif  //< INCLUDED_CRABS_TCONSOLE
 
-#endif  //< #if SEAM >= SEAM_0_0_02
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

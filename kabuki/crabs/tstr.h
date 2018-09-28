@@ -773,7 +773,7 @@ struct KABUKI TLineString {
 /* Buffer destructor prints the buffer to the console without deleting the
  * buffer. */
 template <typename Char = char>
-void COut(uintptr_t* buffer) {
+void Console(uintptr_t* buffer) {
   if (!buffer) return;
   uintptr_t address = reinterpret_cast<uintptr_t>(buffer) + sizeof(SI);
   Print<Char>(reinterpret_cast<const char*>(address));
@@ -979,7 +979,7 @@ For this reason the destructor is programmable.
 If it is null then the memory is treated as statically allocated memory.
 
 @code
-Str<> (&COut) << "Hello world!";
+Str<> (&Console) << "Hello world!";
 @endcode
 
 # Dynamic Allocated Strings
@@ -1094,7 +1094,7 @@ TUtf<Char> Print(Destructor* mh) {
 
 }  // namespace _
 
-#define COUT ::_::TStr<>(&COut).Print();
+#define COUT ::_::TStr<>(&Console).Print();
 
 /* Writes a nil-terminated UTF-8 or ASCII string to the print.
 @param  utf The utf.

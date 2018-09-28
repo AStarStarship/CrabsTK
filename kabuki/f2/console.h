@@ -14,194 +14,203 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
+#if SEAM >= SEAM_00_00_00__00_01
 #ifndef INCLUDED_CRABS_CONSOLE
 #define INCLUDED_CRABS_CONSOLE 1
 
 namespace _ {
 
-struct API COut {
+/* Converts int main(int,char**) arguments back into a string.
+@return false if there are no args to convert.
+@param arg_count The number of arguments.
+@param args      The arguments. */
+bool ConsoleArgs(int args_count, char** args);
+
+class API Console {
+ public:
   /* Default constructor does nothing. */
-  COut();
+  Console();
 
   /* Prints a single char to the console. */
-  COut(char c);
+  Console(char c);
 
   /* Prints a single char to the console. */
-  COut(char first, char second);
+  Console(char first, char second);
 
   /* Prints a single char to the console. */
-  COut(char first, char second, char third);
+  Console(char first, char second, char third);
 
   /* Prints a single string to the console. */
-  COut(const char* string);
+  Console(const char* string);
 
   /* Writes the give char to the given buffer.
   @return Returns nil upon buffer overflow and a pointer to the nil-term char
   upon success.
   @param value The value to print. */
-  COut(int64_t value);
+  Console(int64_t value);
 
   /* Writes the give char to the given buffer.
   @return Returns nil upon buffer overflow and a pointer to the nil-term char
   upon success.
   @param value The value to print. */
-  COut(uint64_t value);
+  Console(uint64_t value);
 
   /* Writes the give char to the given buffer.
   @return Returns nil upon buffer overflow and a pointer to the nil-term char
   upon success.
   @param value The value to print. */
-  COut(int32_t value);
+  Console(int32_t value);
 
   /* Writes the give char to the given buffer.
   @return Returns nil upon buffer overflow and a pointer to the nil-term char
   upon success.
   @param value The value to print. */
-  COut(uint32_t value);
+  Console(uint32_t value);
 
   /* Writes the give char to the given buffer.
   @return Returns nil upon buffer overflow and a pointer to the nil-term char
   upon success.
   @param value The value to print. */
-  COut(float value);
+  Console(float value);
 
   /* Writes the give char to the given buffer.
   @return Returns nil upon buffer overflow and a pointer to the nil-term char
   upon success.
   @param value The value to print. */
-  COut(double value);
+  Console(double value);
 
   /* Prints a single char to the console. */
-  inline COut& Print(char c = '\n');
+  inline Console& Print(char c = '\n');
 
   /* Prints a single char to the console. */
-  inline COut& Print(char first, char second);
+  inline Console& Print(char first, char second);
 
   /* Prints a single char to the console. */
-  inline COut& Print(char first, char second, char third);
+  inline Console& Print(char first, char second, char third);
 
   /* Prints a single string to the console. */
-  inline COut& Print(const char* string);
+  inline Console& Print(const char* string);
 
   /* Writes the give char to the given buffer.
   @return Returns nil upon buffer overflow and a pointer to the nil-term char
   upon success.
   @param value The value to print. */
-  inline COut& Print(int64_t value);
+  inline Console& Print(int64_t value);
 
   /* Writes the give char to the given buffer.
   @return Returns nil upon buffer overflow and a pointer to the nil-term char
   upon success.
   @param value The value to print. */
-  inline COut& Print(uint64_t value);
+  inline Console& Print(uint64_t value);
 
   /* Writes the give char to the given buffer.
   @return Returns nil upon buffer overflow and a pointer to the nil-term char
   upon success.
   @param value The value to print. */
-  inline COut& Print(int32_t value);
+  inline Console& Print(int32_t value);
 
   /* Writes the give char to the given buffer.
   @return Returns nil upon buffer overflow and a pointer to the nil-term char
   upon success.
   @param value The value to print. */
-  inline COut& Print(uint32_t value);
+  inline Console& Print(uint32_t value);
 
   /* Writes the give char to the given buffer.
   @return Returns nil upon buffer overflow and a pointer to the nil-term char
   upon success.
   @param value The value to print. */
-  inline COut& Print(float value);
+  inline Console& Print(float value);
 
   /* Writes the give char to the given buffer.
   @return Returns nil upon buffer overflow and a pointer to the nil-term char
   upon success.
   @param value The value to print. */
-  inline COut& Print(double value);
+  inline Console& Print(double value);
 
   /* Prints a new line followed by a single char to the console. */
-  inline COut& PrintLn(char c = '\n');
+  inline Console& PrintLn(char c = '\n');
 
   /* Prints a new line followed by a single char to the console. */
-  inline COut& PrintLn(char first, char second);
+  inline Console& PrintLn(char first, char second);
 
   /* Prints a new line followed by a single string to the console. */
-  inline COut& PrintLn(const char* string);
+  inline Console& PrintLn(const char* string);
 
   /* Prints a formatted string to the console. */
-  inline COut& Printf(const char* format, ...);
+  inline Console& Printf(const char* format, ...);
 
   /* Prints a new line followed by a formatted string to the console. */
-  inline COut& PrintfLn(const char* format, ...);
+  inline Console& PrintfLn(const char* format, ...);
 
   /* Prints the given token char a specified number of times. */
-  inline COut& Line(int width = 80, char token = '-', char first_token = '-');
-
-  /* Prints a the given line_count of new lines follwed by a PrintLine, the
-  heading, follwed by another PrintLine. */
-  inline COut& Heading(const char* heading = nullptr, int line_count = 5,
-                       int width = 80, char token = '-',
+  inline Console& Line(int width = 80, char token = '-',
                        char first_token = '-');
 
-  /* Prints a 8-bit binary value to the console. */
-  inline COut& Binary(uint8_t value);
+  /* Prints a the given line_count of new lines followed by a PrintLine, the
+  heading, followed by another PrintLine. */
+  inline Console& Heading(const char* heading = nullptr, int line_count = 5,
+                          int width = 80, char token = '-',
+                          char first_token = '-');
 
   /* Prints a 8-bit binary value to the console. */
-  inline COut& Binary(int8_t value);
-
-  /* Prints a 16-bit binary value to the console. */
-  inline COut& Binary(uint16_t value);
-
-  /* Prints a 16-bit binary value to the console. */
-  inline COut& Binary(int16_t value);
-
-  /* Prints a 32-bit binary value to the console. */
-  inline COut& Binary(uint32_t value);
-
-  /* Prints a 32-bit binary value to the console. */
-  inline COut& Binary(int32_t value);
-
-  /* Prints a 64-bit binary value to the console. */
-  inline COut& Binary(uint64_t value);
-
-  /* Prints a 64-bit binary value to the console. */
-  inline COut& Binary(int64_t value);
+  inline Console& Binary(uint8_t value);
 
   /* Prints a 8-bit binary value to the console. */
-  inline COut& Hex(uint8_t value);
+  inline Console& Binary(int8_t value);
+
+  /* Prints a 16-bit binary value to the console. */
+  inline Console& Binary(uint16_t value);
+
+  /* Prints a 16-bit binary value to the console. */
+  inline Console& Binary(int16_t value);
+
+  /* Prints a 32-bit binary value to the console. */
+  inline Console& Binary(uint32_t value);
+
+  /* Prints a 32-bit binary value to the console. */
+  inline Console& Binary(int32_t value);
+
+  /* Prints a 64-bit binary value to the console. */
+  inline Console& Binary(uint64_t value);
+
+  /* Prints a 64-bit binary value to the console. */
+  inline Console& Binary(int64_t value);
 
   /* Prints a 8-bit binary value to the console. */
-  inline COut& Hex(int8_t value);
+  inline Console& Hex(uint8_t value);
+
+  /* Prints a 8-bit binary value to the console. */
+  inline Console& Hex(int8_t value);
 
   /* Prints a 16-bit binary value to the console. */
-  inline COut& Hex(uint16_t value);
+  inline Console& Hex(uint16_t value);
 
   /* Prints a 16-bit binary value to the console. */
-  inline COut& Hex(int16_t value);
+  inline Console& Hex(int16_t value);
 
   /* Prints a 32-bit binary value to the console. */
-  inline COut& Hex(uint32_t value);
+  inline Console& Hex(uint32_t value);
 
   /* Prints a 32-bit binary value to the console. */
-  inline COut& Hex(int32_t value);
+  inline Console& Hex(int32_t value);
 
   /* Prints a 64-bit binary value to the console. */
-  inline COut& Hex(uint64_t value);
+  inline Console& Hex(uint64_t value);
 
   /* Prints a 64-bit binary value to the console. */
-  inline COut& Hex(int64_t value);
+  inline Console& Hex(int64_t value);
 
   /* Prints a pointer to the console. */
-  inline COut& Hex(const void* ptr);
+  inline Console& Hex(const void* ptr);
 
   /* Prints a 32-bit floating-point number to the console. */
-  inline COut& Hex(float value);
+  inline Console& Hex(float value);
 
   /* Prints a 64-bit floating-point number to the console. */
-  inline COut& Hex(double value);
+  inline Console& Hex(double value);
 
-  /* Prints a message then pauses the application until a key is presssed. */
-  inline COut& Pause(const char* message = "");
+  /* Prints a message then pauses the application until a key is pressed. */
+  inline Console& Pause(const char* message = "");
 };
 
 struct API CHex {
@@ -275,158 +284,165 @@ struct API CBinary {
 };
 
 /* Prints a single char to the console. */
-API inline COut Print(char c = '\n');
+API inline Console Print(char c);
 
 /* Prints a single char to the console. */
-API COut Print(char first, char second);
+API Console Print(char first, char second);
 
 /* Prints a single char to the console. */
-API COut Print(char first, char second, char third);
+API Console Print(char first, char second, char third);
 
 /* Prints a single string to the console. */
-API COut Print(const char* string);
+API Console Print(const char* string);
 
 /* Prints a single string to the console followed by the given delimiter. */
-API COut Print(const char* string, char delimiter);
+API Console Print(const char* string, char delimiter);
+
+/* Prints two strings. */
+API Console Print(const char* a, const char* b);
+
+/* Prints three strings. */
+API Console Print(const char* a, const char* b, const char* c);
 
 /* Writes the give char to the given buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
 upon success.
 @param value The value to print. */
-API COut Print(int64_t value);
+API Console Print(int64_t value);
 
 /* Writes the give char to the given buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
 upon success.
 @param value The value to print. */
-API COut Print(uint64_t value);
+API Console Print(uint64_t value);
 
 /* Writes the give char to the given buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
 upon success.
 @param value The value to print. */
-API COut Print(int32_t value);
+API Console Print(int32_t value);
 
 /* Writes the give char to the given buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
 upon success.
 @param value The value to print. */
-API COut Print(uint32_t value);
+API Console Print(uint32_t value);
 
 /* Writes the give char to the given buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
 upon success.
 @param value The value to print. */
-API COut Print(float value);
+API Console Print(float value);
 
 /* Writes the give char to the given buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
 upon success.
 @param value The value to print. */
-API COut Print(double value);
+API Console Print(double value);
 
 /* Prints a new line followed by a single char to the console. */
-API inline COut PrintLn(char c = '\n');
+API inline Console PrintLn(char c = '\n');
 
 /* Prints a new line followed by a single char to the console. */
-API inline COut PrintLn(char first, char second);
+API inline Console PrintLn(char first, char second);
 
 /* Prints a new line followed by a single string to the console. */
-API inline COut PrintLn(const char* string);
+API inline Console PrintLn(const char* string);
 
 /* Prints a formatted string to the console. */
-API COut Printf(const char* format, ...);
+API Console Printf(const char* format, ...);
 
 /* Prints a new line followed by a formatted string to the console. */
-API COut PrintfLn(const char* format, ...);
+API Console PrintfLn(const char* format, ...);
 
 /* Prints a new line followed by the given number of spaces.
 @param The number of spaces to indent. */
-API COut PrintIndent(int count = 1);
+API Console PrintIndent(int count = 1);
 
 /* Prints the given token char a specified number of times. */
-API COut PrintLine(int width = 80, char token = '-', char first_token = '-');
+API Console PrintLine(int width = 80, char token = '-', char first_token = '-');
 
-/* Prints a the given line_count of new lines follwed by a PrintLine, the
-heading, follwed by another PrintLine.
+/* Prints a the given line_count of new lines followed by a PrintLine, the
+heading, followed by another PrintLine.
 @param heading The heading to print.
 @param line_count The number of new lines before the heading to print.
 @param width The width of the line to print.
 @param first_token The first token to print. */
-API COut PrintHeading(const char* heading = nullptr, int line_count = 5,
-                      int width = 80, char token = '-', char first_token = '+');
+API Console PrintHeading(const char* heading = nullptr, int line_count = 5,
+                         int width = 80, char token = '-',
+                         char first_token = '+');
 
-/* Prints a message then pauses the application until a key is presssed. */
+/* Prints a message then pauses the application until a key is pressed. */
 API void Pause(const char* message = "");
 
-/* Prints a message then pauses the application until a key is presssed. */
+/* Prints a message then pauses the application until a key is pressed. */
 API void Pausef(const char* message, ...);
 
 /* Prints a 8-bit binary value to the console. */
-API COut PrintBinary(uint8_t value);
+API Console PrintBinary(uint8_t value);
 
 /* Prints a 8-bit binary value to the console. */
-API COut PrintBinary(int8_t value);
+API Console PrintBinary(int8_t value);
 
 /* Prints a 16-bit binary value to the console. */
-API COut PrintBinary(uint16_t value);
+API Console PrintBinary(uint16_t value);
 
 /* Prints a 16-bit binary value to the console. */
-API COut PrintBinary(int16_t value);
+API Console PrintBinary(int16_t value);
 
 /* Prints a 32-bit binary value to the console. */
-API COut PrintBinary(uint32_t value);
+API Console PrintBinary(uint32_t value);
 
 /* Prints a 32-bit binary value to the console. */
-API COut PrintBinary(int32_t value);
+API Console PrintBinary(int32_t value);
 
 /* Prints a 64-bit binary value to the console. */
-API COut PrintBinary(uint64_t value);
+API Console PrintBinary(uint64_t value);
 
 /* Prints a 64-bit binary value to the console. */
-API COut PrintBinary(int64_t value);
+API Console PrintBinary(int64_t value);
 
 /* Prints a 32-bit floating-point number to the console in binary. */
-API COut PrintBinary(float value);
+API Console PrintBinary(float value);
 
 /* Prints a 64-bit floating-point number to the console in binary. */
-API COut PrintBinary(double value);
+API Console PrintBinary(double value);
 
 /* Prints a pointer to the console in binary. */
-API COut PrintBinary(const void* value);
+API Console PrintBinary(const void* value);
 
 /* Prints a 8-bit binary value to the console to hex. */
-API COut PrintHex(uint8_t value);
+API Console PrintHex(uint8_t value);
 
 /* Prints a 8-bit binary value to the console to hex. */
-API COut PrintHex(int8_t value);
+API Console PrintHex(int8_t value);
 
 /* Prints a 16-bit binary value to the console to hex. */
-API COut PrintHex(uint16_t value);
+API Console PrintHex(uint16_t value);
 
 /* Prints a 16-bit binary value to the console to hex. */
-API COut PrintHex(int16_t value);
+API Console PrintHex(int16_t value);
 
 /* Prints a 32-bit binary value to the console to hex. */
-API COut PrintHex(uint32_t value);
+API Console PrintHex(uint32_t value);
 
 /* Prints a 32-bit binary value to the console to hex. */
-API COut PrintHex(int32_t value);
+API Console PrintHex(int32_t value);
 
 /* Prints a 64-bit binary value to the console to hex. */
-API COut PrintHex(uint64_t value);
+API Console PrintHex(uint64_t value);
 
 /* Prints a 64-bit binary value to the console to hex. */
-API COut PrintHex(int64_t value);
+API Console PrintHex(int64_t value);
 
 /* Prints a 32-bit floating-point number to the console in hex. */
-API COut PrintHex(float value);
+API Console PrintHex(float value);
 
 /* Prints a 64-bit floating-point number to the console in hex. */
-API COut PrintHex(double value);
+API Console PrintHex(double value);
 
 /* Prints a pointer to the console in hex. */
-API COut PrintHex(const void* value);
+API Console PrintHex(const void* value);
 
 /* Reads the current key depressed on the keyboard.
 @return A negative number (typically 1) if no keys are pressed. */
@@ -438,78 +454,79 @@ API int CInKey();
 @The cout.
 @param  cout  The cout.
 @param  value The value to print. */
-API inline _::COut& operator<<(_::COut& cout, const char* string);
+API inline _::Console& operator<<(_::Console& cout, const char* string);
 
 /* Writes the given value to the print.
 @The cout.
 @param  cout The cout.
 @param  value   The value to print. */
-API inline _::COut& operator<<(_::COut& cout, char c);
+API inline _::Console& operator<<(_::Console& cout, char c);
 
 /* Writes the given value to the print.
 @The cout.
 @param  cout The cout.
 @param  value The value to write to the print. */
-API inline _::COut& operator<<(_::COut& cout, uint8_t value);
+API inline _::Console& operator<<(_::Console& cout, uint8_t value);
 
 /* Writes the given value to the print.
 @The cout.
 @param  cout The cout.
 @param  value The value to write to the print. */
-API inline _::COut& operator<<(_::COut& cout, int16_t value);
+API inline _::Console& operator<<(_::Console& cout, int16_t value);
 
 /* Writes the given value to the print.
 @The cout.
 @param  cout The cout.
 @param  value The value to write to the print. */
-API inline _::COut& operator<<(_::COut& cout, uint16_t value);
+API inline _::Console& operator<<(_::Console& cout, uint16_t value);
 
 /* Writes the given value to the print.
 @The cout.
 @param  cout The cout.
 @param  value The value to write to the print. */
-API inline _::COut& operator<<(_::COut& cout, int32_t value);
+API inline _::Console& operator<<(_::Console& cout, int32_t value);
 
 /* Writes the given value to the print.
 @The cout.
 @param  cout The cout.
 @param  value The value to write to the print. */
-API inline _::COut& operator<<(_::COut& cout, uint32_t value);
+API inline _::Console& operator<<(_::Console& cout, uint32_t value);
 
 /* Writes the given value to the print.
 @The cout.
 @param  cout The cout.
 @param  value The value to write to the print. */
-API inline _::COut& operator<<(_::COut& cout, int64_t value);
+API inline _::Console& operator<<(_::Console& cout, int64_t value);
 
 /* Writes the given value to the print.
 @The cout.
 @param  cout The cout.
 @param  value The value to write to the print. */
-API inline _::COut& operator<<(_::COut& cout, uint64_t value);
+API inline _::Console& operator<<(_::Console& cout, uint64_t value);
 
 /* Writes the given value to the print.
 @The cout.
 @param  cout The cout.
 @param  value The value to write to the print. */
-API inline _::COut& operator<<(_::COut& cout, float value);
+API inline _::Console& operator<<(_::Console& cout, float value);
 
 /* Writes the given value to the print.
 @The cout.
 @param  cout The cout.
 @param  value The value to write to the print. */
-API inline _::COut& operator<<(_::COut& cout, double value);
+API inline _::Console& operator<<(_::Console& cout, double value);
 
 /* Writes the given value to the print.
 @The cout.
 @param  cout The cout.
 @param  item The item to write to print. */
-API inline _::COut& operator<<(_::COut& cout, _::CHex&& item);
+API inline _::Console& operator<<(_::Console& cout, _::CHex& item);
 
-/* Writes the given value to the print jusified right.
+/* Writes the given value to the print justified right.
 @The cout.
 @param  cout The cout.
 @param  item The item to print. */
-API inline _::COut& operator<<(_::COut& cout, _::CBinary& item);
+API inline _::Console& operator<<(_::Console& cout, _::CBinary& item);
 
 #endif  //< #ifndef INCLUDED_F2_CONSOLE
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

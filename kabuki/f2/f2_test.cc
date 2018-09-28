@@ -13,16 +13,15 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
+#if SEAM >= SEAM_00_00_00__00_01
 #include "ttest.h"
 
 #include "console.h"
 
 namespace _ {
 
-SeamMajor::SeamMajor(TestCase* minor_seams, int minor_count)
-    : minor_seams_(minor_seams), minor_count_(minor_count) {}
-
-TestResult SeamMajor::Run(const char* args, int seam_layer, int seam_major) {
+const char* Test(TestResult& test_result, const char* args, SeamNode* seams,
+                 int node_count) {
   enum { kSize = 128 };
   char buffer[kSize];
   char *end = buffer + kSize - 1,
@@ -40,7 +39,7 @@ TestResult SeamMajor::Run(const char* args, int seam_layer, int seam_major) {
     cursor = Print<>(cursor, end, '_');
     cursor = Print<uint, int>(cursor, end, seam_minor);
     PrintHeading(buffer);
-    TestResult result = minor_seams_[seam_minor](args);
+    TestResult result = scrums_[seam_minor](args);
     if (result.Failed()) return result;
     Printf("\n\nDone testing SEAM_%i_%i_%i", seam_layer, seam_major,
            seam_minor);
@@ -51,47 +50,7 @@ TestResult SeamMajor::Run(const char* args, int seam_layer, int seam_major) {
   return TestResult();
 }
 
-int& SeamMajor::GetMinorSeamCount() { return minor_count_; }
-
-SeamLayer::SeamLayer(SeamMajor** seam_majors, int seam_major_count)
-    : major_seams_(seam_majors), major_count(seam_major_count) {}
-
-TestResult SeamLayer::Run(const char* args, int seam_layer) {
-  Print("\n\nTesting SEAM_").Print(seam_layer);
-  int seam_major_count = major_count;
-  ASSERT(seam_major_count >= 1);
-  for (int i = 0; i < seam_major_count; ++i)
-    major_seams_[i]->Run(args, seam_layer, i);
-  Print("\n\nDone testing SEAM_").Print(seam_layer);
-  return TestResult();
-}
-
-int& SeamLayer::GetMajorSeamCount() { return major_count; }
-
-UnitTest::UnitTest(SeamLayer** page_seams, int layer_count)
-    : page_seams_(page_seams), layer_count_(layer_count) {}
-
-int UnitTest::Run(const char* args, const char* name, const char* description) {
-  if (!name) name = "Foo";
-  if (!description) description = "Bar";
-  PrintHeading(name).Print('\n') << description << '\n';
-  PrintLine();
-  PrintLn();
-  for (int i = 0; i < layer_count_; ++i) {
-    TestResult result = page_seams_[i]->Run(args, i);
-    if (result.Failed()) return APP_EXIT_FAILURE;
-  }
-  Pause("Completed running unit tests successfully! :-)");
-  return APP_EXIT_SUCCESS;
-}
-
-int& UnitTest::GetPageSeamCount() { return layer_count_; }
-
-TestResult TestRun(TestCase test_case, const char* args) {
-  TestResult result = test_case(nullptr);
-  if (!args) args = "";
-  return TestResult();
-}
+int& Sprint::GetScrumCount() { return seam_count_; }
 
 bool Assert(bool condition) { return !condition; }
 
@@ -104,7 +63,8 @@ bool Test(const char32_t* a, const char32_t* b) { return Test<char32_t>(a, b); }
 bool Test(const void* a, const void* b) {
   if (a == b) return true;
   CHex test(b);
-  Print("\nERROR: Expecting:").Hex(a) << "\n           Found:" << CHex(b);
+  Print("\nERROR: Expecting:").Hex(a)
+      << "\n           Found:" << test;  // CHex (b);
   return false;
 }
 
@@ -244,18 +204,5 @@ bool AssertHandle(const char* file, int line, const char* message) {
   return true;
 }
 
-TestResult::TestResult(const char* name, int line, const char* message)
-    : name(name), description(message), line(line) {
-  // Nothing to do here! ({:-)-+=<
-}
-
-TestResult::TestResult(const TestResult& other)
-    : name(other.name), description(other.description), line(other.line) {}
-
-bool TestResult::Failed() { return name != nullptr; }
-
-int TestResult::Quit() {
-  return Failed() ? APP_EXIT_FAILURE : APP_EXIT_SUCCESS;
-}
-
 }  // namespace _
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

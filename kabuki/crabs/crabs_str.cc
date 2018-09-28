@@ -24,7 +24,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-void COut(uintptr_t* buffer) { COut<char>(buffer); }
+void Console(uintptr_t* buffer) { Console<char>(buffer); }
 
 void COutAuto(uintptr_t* buffer) { COutAuto<char>(buffer); }
 
@@ -568,7 +568,7 @@ Utf8LineString::Utf8LineString(const char* string, int column_count)
   // Nothing to do here. ({:-)-+=<
 }
 
-void COutUtf8(uintptr_t* buffer) { return COut<char>(buffer); }
+void COutUtf8(uintptr_t* buffer) { return Console<char>(buffer); }
 
 void COutAutoUtf8(uintptr_t* buffer) { return COutAuto<char>(buffer); }
 
@@ -998,7 +998,7 @@ const char16_t* Scan(const char16_t* string, double& result) {
   return Scan<char16_t>(string, result);
 }
 
-void COutUtf16(uintptr_t* buffer) { return COut<char16_t>(buffer); }
+void COutUtf16(uintptr_t* buffer) { return Console<char16_t>(buffer); }
 
 void DCOutUtf16(uintptr_t* buffer) { return DCOut<char16_t>(buffer); }
 
@@ -1618,7 +1618,7 @@ const char32_t* Scan(const char32_t* string, double& result) {
   return Scan<char32_t>(string, result);
 }
 
-void COuUtf32(uintptr_t* buffer) { return COut<char32_t>(buffer); }
+void COuUtf32(uintptr_t* buffer) { return Console<char32_t>(buffer); }
 
 void COuUtf32(uintptr_t* buffer) { return DCOut<char32_t>(buffer); }
 

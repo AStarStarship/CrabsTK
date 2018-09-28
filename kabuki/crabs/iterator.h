@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_0
+#if SEAM >= SEAM_0_0_00
 #ifndef CRABS_ITERATOR_H
 #define CRABS_ITERATOR_H
 // Dependencies:

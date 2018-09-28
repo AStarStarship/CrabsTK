@@ -13,13 +13,14 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
+#if SEAM >= SEAM_00_00_00__00_01
 #include "tbinary.h"
 
 #include "ttest.h"
 
 #include <cmath>
 
-#if SEAM == SEAM_0_0_02
+#if SEAM == SEAM_00_00_00__00_01
 
 #define PRINT(item) Print(item)
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
@@ -66,17 +67,6 @@ specific language governing permissions and limitations under the License. */
 #endif
 
 namespace _ {
-
-bool ArgsToString(int args_count, char** args) {
-  if (args_count <= 1) return false;
-  if (args_count == 2) return true;
-  for (int i = 2; i < args_count; ++i) {
-    char* cursor = args[i];
-    while (*cursor) cursor--;
-    *cursor = ' ';
-  }
-  return true;
-}
 
 inline void FloatBytes(float value, char& byte_0, char& byte_1, char& byte_2,
                        char& byte_3) {
@@ -487,3 +477,4 @@ int HexToByte(uint16_t h) {
 #undef PRINT_HEADER
 #undef PRINT_HEADING
 #undef BEGIN_ITOS_ALGORITHM
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

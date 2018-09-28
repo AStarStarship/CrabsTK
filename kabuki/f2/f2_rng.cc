@@ -14,9 +14,9 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_02
-#ifndef INCLUDED_CRABS_RANDOM
-#define INCLUDED_CRABS_RANDOM
+#if SEAM >= SEAM_00_00_00__00_01
+#ifndef INCLUDED_KABUKI_F2_RNG
+#define INCLUDED_KABUKI_F2_RNG
 
 #include "trng.h"
 
@@ -53,14 +53,6 @@ RNG<I>& RNGStatic() {
 }
 
 template <typename I>
-I Random() {
-  std::mt19937 rng;
-  rng.seed(std::random_device()());
-  std::uniform_int_distribution<I> dist();
-  return dist(rng);
-}
-
-template <typename I>
 I Random(I min, I max) {
   std::mt19937 rng;
   rng.seed(std::random_device()());
@@ -88,23 +80,50 @@ uint64_t Random(uint64_t min, uint64_t max) {
 
 uint64_t Random(int64_t min, int64_t max) { return Random<int64_t>(min, max); }
 
-uint8_t RandomUI1() { return Random<uint8_t>(); }
+uint8_t RandomUI1() {
+  std::mt19937 rng;
+  return (uint8_t)rng();
+}
 
-int8_t RandomSI1() { return Random<int8_t>(); }
+int8_t RandomSI1() {
+  std::mt19937 rng;
+  rng.seed(std::random_device()());
+  return (uint8_t)rng();
+}
 
-uint16_t RandomUI2() { return Random<uint16_t>(); }
+uint16_t RandomUI2() {
+  std::mt19937 rng;
+  rng.seed(std::random_device()());
+  return (uint8_t)rng();
+}
 
-int16_t RandomSI2() { return Random<int16_t>(); }
+int16_t RandomSI2() {
+  std::mt19937 rng;
+  rng.seed(std::random_device()());
+  return (uint8_t)rng();
+}
 
-uint32_t RandomUI4() { return Random<uint32_t>(); }
+uint32_t RandomUI4() {
+  std::mt19937 rng;
+  rng.seed(std::random_device()());
+  return (uint8_t)rng();
+}
 
-int32_t RandomSI4() { return Random<int32_t>(); }
+int32_t RandomSI4() {
+  std::mt19937 rng;
+  rng.seed(std::random_device()());
+  return (uint8_t)rng();
+}
 
-uint64_t RandomUI8() { return Random<uint64_t>(); }
+uint64_t RandomUI8() {
+  std::mt19937 rng;
+  rng.seed(std::random_device()());
+  return ((uint64_t)rng() << 32) | rng();
+}
 
-uint64_t RandomSI8() { return Random<uint64_t>(); }
+uint64_t RandomSI8() { return (uint64_t)RandomUI8(); }
 
 }  // namespace _
-#endif  //< INCLUDED_CRABS_RANDOM
+#endif  //< INCLUDED_KABUKI_F2_RNG
 
-#endif  //< #if SEAM >= SEAM_0_0_02
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

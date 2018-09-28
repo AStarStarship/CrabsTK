@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/benchmark.h
+@file    ~/kabuki/f2/tbenchmark.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_02
+#if SEAM >= SEAM_00_00_00__00_01
 #ifndef INCLUDED_F2_TBENCHMARK
 #define INCLUDED_F2_TBENCHMARK
 
@@ -31,4 +31,4 @@ TestResult BenchmarkCaseLoop(const char* args) {
 }  // namespace _
 
 #endif  //< INCLUDED_F2_TBENCHMARK
-#endif  //< #if SEAM >= SEAM_0_0_02
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

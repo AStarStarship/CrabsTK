@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/crabs/random.h
+@file    ~/kabuki/f2/rng.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_0
+#if SEAM >= SEAM_00_00_00__00_01
 #ifndef INCLUDED_CRABS_RNGUNIFORM
 #define INCLUDED_CRABS_RNGUNIFORM
 
@@ -71,4 +71,4 @@ API inline uint64_t RandomSI8();
 }  // namespace _
 #endif  //< INCLUDED_CRABS_RNGUNIFORM
 
-#endif  //< #if SEAM >= SEAM_0_0_1
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

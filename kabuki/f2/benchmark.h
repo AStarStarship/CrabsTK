@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_02
+#if SEAM >= SEAM_00_00_00__00_01
 #ifndef INCLUDED_F2_BENCHMARK
 #define INCLUDED_F2_BENCHMARK 1
 
@@ -25,17 +25,17 @@ namespace _ {
 class BenchmarkCase {
  public:
   /* Constructs an object from the given values. */
-  BenchmarkCase(const char* name, TestCase* cases, int count);
+  BenchmarkCase(const char* name, SeamTree* cases, int count);
 
-  /* Runs the benhmark. */
+  /* Runs the benchmark. */
   TestResult Run(const char* args);
 
-  /* Gets the number of bcases in this benchmark. */
+  /* Gets the number of cases in this benchmark. */
   int GetCount();
 
  private:
   const char* name;  //< Name of this benchmark case.
-  TestCase* cases;   //< Array of pointers of BenchmarkCase(s).
+  SeamTree* cases;      //< Array of pointers of BenchmarkCase(s).
   int count;         //< Number of test cases.
 };
 
@@ -58,15 +58,7 @@ class Benchmark {
       columns_max;        //< Max test cases in any BenchmarkCase(s).
 };
 
-/* Runs a benchmark with the given arg_count of args.
-@return int main (const char*, int) return code for this OS.
-@param  args      An array of command-line arguments.
-@param  arg_count The number of command-line arguments.
-@param  header    A header string to print.
-@param  filename  The name of the .csv file. */
-int BenchmarkRun(const char* args, TestCase** test_functions, size_t test_count,
-                 const char* header, const char* filename);
 }  // namespace _
 
 #endif  //< INCLUDED_F2_BENCHMARK
-#endif  //< #if SEAM >= SEAM_0_0_02
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

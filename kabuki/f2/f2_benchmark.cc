@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_02
+#if SEAM >= SEAM_00_00_00__00_01
 #include "tbenchmark.h"
 
 #include "tbinary.h"
@@ -30,14 +30,14 @@ using namespace std::chrono;
 
 namespace _ {
 
-BenchmarkCase::BenchmarkCase(const char* name, TestCase* cases, int count)
+BenchmarkCase::BenchmarkCase(const char* name, SeamTree* cases, int count)
     : name(name), cases(cases), count(count) {}
 
 TestResult BenchmarkCase::Run(const char* args) {
   double nil_reading;
   int i;
   int columns_max;
-  ASSERT(ScanUnsigned<>(args, columns_max));
+  ASSERT(Scan<>(args, columns_max));
 
   for (i = 0; i < count; ++i) {
     TestResult result = (*cases[i])(nullptr);
@@ -45,12 +45,12 @@ TestResult BenchmarkCase::Run(const char* args) {
     if (i < count) Print(',', ' ');
   }
   for (; i < columns_max; ++i) Print(',');
-  Print();
+  PrintLn();
   for (i = 0; i < count; ++i) {
     TestResult result = (*cases[i])(nullptr);
     if (i < count) Print(',', ' ');
   }
-  Print();
+  PrintLn();
 
   return TestResult();
 }
@@ -88,4 +88,4 @@ TestResult Benchmark::Run(const char* args) {
 
 }  // namespace _
 
-#endif  //< #if SEAM >= SEAM_0_0_02
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

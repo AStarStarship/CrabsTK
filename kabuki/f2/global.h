@@ -19,8 +19,6 @@ specific language governing permissions and limitations under the License. */
 
 #include "talign.h"
 #include "trng.h"
-#if SEAM <= SEAM_N
 #include "ttest.h"
-#endif
 
 #endif  //< INCLUDED_F2_GLOBAL

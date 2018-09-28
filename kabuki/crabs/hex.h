@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <stdafx.h>
-#if SEAM >= SEAM_0_0_0
+#if SEAM >= SEAM_0_0_00
 #ifndef INCLUDED_CRABS_HEX
 #define INCLUDED_CRABS_HEX
 // Dependencies:
