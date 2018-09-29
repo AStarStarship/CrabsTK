@@ -24,18 +24,21 @@ specific language governing permissions and limitations under the License. */
 #define PRINTF(format, ...) _::Printf(format, __VA_ARGS__)
 #define PAUSE(message) _::Pause(message)
 #define PAUSEF(format, ...) _::Pausef(format, __VA_ARGS__)
+#define TEST_SEAM_NODE_BEGIN \
+  if (!args) return __FUNCTION__
 #else
 #define PRINT(item)
 #define PRINTF(x, ...)
 #define PAUSE(message)
 #define PAUSEF(format, ...)
+#define TEST_SEAM_NODE_BEGIN
 #endif  //< #if SEAM == SEAM_0_0_0
 
 #if SEAM <= SEAM_N
 
 namespace _ {
 
-int Seam_00_00_00__00_00(TestResult& test_result, const char* args) {
+const char* Seam_00_00_00__00_00(TestResult& test_result, const char* args) {
   static const uint64_t k10ToThe[20] = {
       1,           //< 10^0
       10,          //< 10^1

@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_1
+#if SEAM >= SEAM_00_00_00__00_01
 #include "../../kabuki/f2/ttest.h"
 
 #include <chrono>
@@ -155,4 +155,4 @@ TestCase TestMSbAsserted() {
   return 0;
 }
 
-#endif  //< #if SEAM >= SEAM_0_0_1
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

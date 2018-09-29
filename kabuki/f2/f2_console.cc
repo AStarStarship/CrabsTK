@@ -266,6 +266,16 @@ Console PrintHex(void* ptr) {
 
 int CInKey() { return _getch(); }
 
+bool CInState(int vk_code) {
+#if COMPILER == VISUAL_CPP
+
+#elif COMPILER == GCC
+
+#elif COMPILER == CLANG
+
+#endif
+}
+
 void Pause(const char* message) {
   if (!message) message = "";
   Printf("\n\n%s\nPress any key to continue...", message);

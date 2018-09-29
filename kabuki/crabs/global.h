@@ -20,8 +20,8 @@ specific language governing permissions and limitations under the License. */
 
 #include "../f2/global.h"
 
-#if SEAM >= SEAM_0_0_00
-#if SEAM == SEAM_0_0_00
+#if SEAM >= SEAM_00_00_00__00_00
+#if SEAM == SEAM_00_00_00__00_00
 #else
 #include "binary_32.h"
 #include "binary_64.h"
@@ -29,8 +29,8 @@ specific language governing permissions and limitations under the License. */
 #endif
 #endif
 
-#if SEAM >= SEAM_0_0_1
-#if SEAM == SEAM_0_0_1
+#if SEAM >= SEAM_00_00_00__00_01
+#if SEAM == SEAM_00_00_00__00_01
 #include "test.h"
 #else
 #include "binary_64.h"
@@ -41,8 +41,8 @@ specific language governing permissions and limitations under the License. */
 #endif
 #endif
 
-#if SEAM >= SEAM_0_0_2
-#if SEAM == SEAM_0_0_2
+#if SEAM >= SEAM_00_00_00__00_02
+#if SEAM == SEAM_00_00_00__00_02
 #include "array.h"
 #include "ascii.h"
 #include "bsq.h"
@@ -55,8 +55,8 @@ specific language governing permissions and limitations under the License. */
 #endif
 #endif
 
-#if SEAM >= SEAM_0_0_3
-#if SEAM == SEAM_0_0_3
+#if SEAM >= SEAM_00_00_00__00_03
+#if SEAM == SEAM_00_00_00__00_03
 #include "address.h"
 #include "args.h"
 #include "bin.h"
@@ -67,14 +67,12 @@ specific language governing permissions and limitations under the License. */
 #include "op.h"
 #include "room.h"
 #include "slot.h"
-#include "test.h"
 #endif
 #endif
 
-#if SEAM >= SEAM_0_0_4
-#if SEAM == SEAM_0_0_4
-#include "table.h"
-#include "test.h"
+#if SEAM >= SEAM_00_00_00__00_04
+#if SEAM == SEAM_00_00_00__00_04
+#include "library.h"
 #endif
 #endif
 // End dependencies.

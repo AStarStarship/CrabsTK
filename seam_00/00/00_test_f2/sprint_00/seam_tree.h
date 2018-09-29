@@ -14,6 +14,10 @@ specific language governing permissions and limitations under the License. */
 
 #include <kabuki/f2/public.h>
 
+#define SEAM_00_00_00__00_00 1
+#define SEAM_00_00_00__00_02 2
+#define SEAM_00_00_00__00_03 3
+
 namespace _ {
 const char* Seam_00_00_00__00_00(TestResult& test_result, const char* args);
 const char* Seam_00_00_00__00_01(TestResult& test_result, const char* args);

@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_1
+#if SEAM >= SEAM_00_00_00__00_01
 #include "itos_algorithms.h"
 
 #include "debug_itos_header.h"
@@ -378,4 +378,4 @@ NextMsd:
 }  // namespace _
 
 #include "debug_itos_footer.h"
-#endif  //< #if SEAM >= SEAM_0_0_1
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

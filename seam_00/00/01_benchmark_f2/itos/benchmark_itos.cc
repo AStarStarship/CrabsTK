@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_1
+#if SEAM >= SEAM_00_00_00__00_01
 #include "itos_algorithms.h"
 
 #include "../../kabuki/f2/global.h"
@@ -297,4 +297,4 @@ int main() {
   return 0;
 }
 
-#endif  //< #if SEAM >= SEAM_0_0_1
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_1
+#if SEAM >= SEAM_00_00_00__00_01
 #ifndef INCLUDED_SCRIPT_ITOS_TESTS
 #define INCLUDED_SCRIPT_ITOS_TESTS
 
@@ -54,4 +54,4 @@ void TestItoSSizeLut();
 void BenchmarkScriptItos();
 
 #endif  //< #ifndef INCLUDED_SCRIPT_ITOS_TESTS
-#endif  //< #if SEAM >= SEAM_0_0_1
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

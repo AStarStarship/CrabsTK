@@ -28,8 +28,9 @@ using namespace std;
 #define PAUSE(message)         \
   Printf("\n\n%s\n", message); \
   system("PAUSE");
-#define TEST_SEAM_BEGIN TestSeamTreeBegin(__FUNCTION__)
-#define TEST_SEAM_TREE_END TestSeamTreeEnd
+#define TEST_SEAM_BEGIN \
+  if (!args) return __FUNCTION__;
+#define TEST_SEAM_TREE_END TestSeamNodeEnd
 #else
 #define PRINTF(x, ...)
 #define PAUSE(message)
@@ -38,8 +39,8 @@ using namespace std;
 #endif
 
 namespace _ {
-int TestSEAM_00_00_00__00_01(TestResult& test_result, const char* args) {
-  TEST_SEAM_BEGIN;
+int Seam_00_00_00__00_01(TestResult& test_result, const char* args) {
+  c;
 
   // Setup C++1x random number generator.
   std::random_device rd;

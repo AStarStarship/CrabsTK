@@ -28,8 +28,6 @@ struct API TestResult {
       line;          //< The line the assertion failed at.
 };
 
-int TestFailure()
-
 }  // namespace _
 
 typedef const char* (*SeamNode)(_::TestResult& test_result, const char* args);
@@ -38,12 +36,10 @@ namespace _ {
 
 /* Tests an array of SeamNode(s).
 @return 0 upon success or an app exit code upon failure. */
-int Test(TestResult& test_result, const char* args, SeamNode* seams,
-         int node_count);
+int TestSeamTree(TestResult& test_result, const char* args, SeamNode* seams,
+                 int node_count);
 
-void TestSeamTreeEnd(const char* function_name) {
-  Print("\nDone testing ", function_name, ". (:-)-+=<");
-}
+void TestSeamNodeEnd(const char* function_name);
 
 /* Assert check if the given condition is true
 @return false if the condition is false.

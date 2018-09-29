@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_1
+#if SEAM >= SEAM_00_00_00__00_01
 #include "itos_algorithms.h"
 
 #include "debug_itos_header.h"
@@ -186,7 +186,8 @@ char* PrintMod100(uint32_t value, char* text, char* text_end) {
 
 /*
 char* PrintMod100B (uint32_t value, char* text, char* text_end) {
-    
+    
+
 
 
     // Lookup table of ASCII char pairs for 00, 01, ..., 99.
@@ -308,4 +309,4 @@ void TestPrintMod100() {
 }
 
 #include "debug_itos_footer.h"
-#endif  //< #if SEAM >= SEAM_0_0_1
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

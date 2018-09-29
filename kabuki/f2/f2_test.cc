@@ -20,8 +20,8 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-const char* Test(TestResult& test_result, const char* args, SeamNode* seams,
-                 int node_count) {
+const char* TestSeamTree(TestResult& test_result, const char* args,
+                         SeamNode* seams, int node_count) {
   enum { kSize = 128 };
   char buffer[kSize];
   char *end = buffer + kSize - 1,
@@ -47,10 +47,8 @@ const char* Test(TestResult& test_result, const char* args, SeamNode* seams,
   Print("\n\nDone testing Major Seam");
   Print(seam_major);
   Print('\n', '\n');
-  return TestResult();
+  return TestPassed();
 }
-
-int& Sprint::GetScrumCount() { return seam_count_; }
 
 bool Assert(bool condition) { return !condition; }
 

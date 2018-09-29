@@ -27,7 +27,7 @@ template <SeamNode... N>
 int Test(TestResult& test_result, const char* args, SeamNode* seams,
          int node_count) {
   static SeamTree nodes[sizeof...(N)] = {N...};
-  return Test(test_result, args, nodes, sizeof...(N));
+  return TestSeamTree(test_result, args, nodes, sizeof...(N));
 }
 
 template <typename Char>

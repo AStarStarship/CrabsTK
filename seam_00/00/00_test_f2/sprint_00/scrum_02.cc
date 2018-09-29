@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_2
+#if SEAM >= SEAM_00_00_02__00_00
 
 #include <random>
 
@@ -275,4 +275,4 @@ const char* Seam_00_00_00__00_02(TestResult& test_result, const char* args) {
 #else
 void TestSeam_1_2() {}
 }
-#endif  //< #if SEAM >= SEAM_0_0_2
+#endif  //< #if SEAM >= SEAM_00_00_02__00_00

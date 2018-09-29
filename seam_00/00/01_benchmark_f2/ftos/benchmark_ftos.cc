@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#if SEAM >= SEAM_0_0_1
+#if SEAM >= SEAM_00_00_00__00_01
 #include <chrono>
 #include <random>
 
@@ -28,4 +28,4 @@ int BenchmarkFtoS(const char* args, TestCase** test_functions,
 
 }  // namespace _
 
-#endif  //< #if SEAM >= SEAM_0_0_1
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01

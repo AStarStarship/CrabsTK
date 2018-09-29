@@ -12,7 +12,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#include "00/seam_tree.h"
+#include <kabuki/f2/public.h>
 
 namespace _ {
 int Seam_00_00(TestResult& test_result, const char* args);
