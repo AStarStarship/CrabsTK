@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/role.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -22,7 +22,7 @@
 
 namespace _ {
 
-/** A role that an entity plays in an organization.
+/* A role that an entity plays in an organization.
     Examples of a role are:
     
     1. Owner

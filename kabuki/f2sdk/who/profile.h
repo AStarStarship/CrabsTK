@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/profile.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -24,13 +24,13 @@
 
 namespace _ {
 
-/** An online profile of a person. */
+/* An online profile of a person. */
 class KABUKI Profile {
  public:
-  /** Constructor an anonymous Profile. */
+  /* Constructor an anonymous Profile. */
   Profile();
 
-  /** Prints this object to the console. */
+  /* Prints this object to the console. */
   Printer& Print(Printer& print);
 
  private:

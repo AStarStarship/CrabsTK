@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/privilage.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -25,19 +25,19 @@ namespace _ {
 
 typedef int Privileges;  //< typedef for an account privilege level.
 
-/** An account privilege level. */
+/* An account privilege level. */
 class KABUKI Privilege {
  public:
-  /** Default constructor. */
+  /* Default constructor. */
   Privilege(int num_privileges = 1);
 
-  /** Gets the privilege level. */
+  /* Gets the privilege level. */
   Privileges GetPrivilegeLevel();
 
-  /** Attempts to set the privilege level to the new level. */
+  /* Attempts to set the privilege level to the new level. */
   Privileges SetPrivilegeLevel(Privileges privileges);
 
-  /** Prints this object to a expression. */
+  /* Prints this object to a expression. */
   void Print(Log& log);
 
  private:

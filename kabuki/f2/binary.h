@@ -15,7 +15,7 @@ specific language governing permissions and limitations under the License. */
 
 #if SEAM >= SEAM_00_00_00__00_00
 #ifndef INCLUDED_CRABS_BINARY
-#define INCLUDED_CRABS_BINARY SEAM_00_00_00__00_00
+#define INCLUDED_CRABS_BINARY 1
 
 namespace _ {
 

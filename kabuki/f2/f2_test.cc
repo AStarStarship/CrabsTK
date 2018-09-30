@@ -20,34 +20,25 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-const char* TestSeamTree(TestResult& test_result, const char* args,
-                         SeamNode* seams, int node_count) {
-  enum { kSize = 128 };
-  char buffer[kSize];
-  char *end = buffer + kSize - 1,
-       *cursor = Print<>(buffer, end, "Testing Major SEAM_");
-  cursor = Print<uint, int>(cursor, end, seam_layer);
-  cursor = Print<>(cursor, end, '_');
-  cursor = Print<uint, int>(cursor, end, seam_major);
-  cursor = Print<>(cursor, end, "_x");
-  PrintHeading(buffer);
-  for (int seam_minor = 0; seam_minor < kSeamCount; ++seam_minor) {
-    cursor = Print<>(buffer, end, "Testing SEAM_");
-    cursor = Print<uint, int>(cursor, end, seam_layer);
-    cursor = Print<>(cursor, end, '_');
-    cursor = Print<uint, int>(cursor, end, seam_major);
-    cursor = Print<>(cursor, end, '_');
-    cursor = Print<uint, int>(cursor, end, seam_minor);
-    PrintHeading(buffer);
-    TestResult result = scrums_[seam_minor](args);
-    if (result.Failed()) return result;
-    Printf("\n\nDone testing SEAM_%i_%i_%i", seam_layer, seam_major,
-           seam_minor);
+const char* TestTree(TestResult& test_result, const char* args, TestCase* tests,
+                     int count) {
+  for (int i = 0; i < count; ++i) {
+    TestCase test = tests[i];
+    if (test) {
+      const char* seam = test(test_result, nullptr);
+      PrintHeading("Testing ", seam);
+      const char* error = test(test_result, args);
+      if (error) return error;
+      Print("\n\nDone testing ", seam);
+    } else {
+      Print("\n Test ").Print(i) << " missing!";
+    }
   }
-  Print("\n\nDone testing Major Seam");
-  Print(seam_major);
-  Print('\n', '\n');
-  return TestPassed();
+  return nullptr;
+}
+
+void TestEnd(const char* function_name) {
+  Print("\n  Done testing ", function_name);
 }
 
 bool Assert(bool condition) { return !condition; }

@@ -372,6 +372,16 @@ API Console PrintHeading(const char* heading = nullptr, int line_count = 5,
                          int width = 80, char token = '-',
                          char first_token = '+');
 
+/* Prints a the given line_count of new lines followed by a PrintLine, the
+heading, followed by another PrintLine.
+@param heading The heading to print.
+@param line_count The number of new lines before the heading to print.
+@param width The width of the line to print.
+@param first_token The first token to print. */
+API Console PrintHeading(const char* heading_a, const char* heading_b,
+                         int line_count = 5, int width = 80, char token = '-',
+                         char first_token = '+');
+
 /* Prints a message then pauses the application until a key is pressed. */
 API void Pause(const char* message = "");
 
@@ -528,5 +538,5 @@ API inline _::Console& operator<<(_::Console& cout, _::CHex& item);
 @param  item The item to print. */
 API inline _::Console& operator<<(_::Console& cout, _::CBinary& item);
 
-#endif  //< #ifndef INCLUDED_F2_CONSOLE
+#endif  //< #ifndef INCLUDED_KABUKI_F2_CONSOLE
 #endif  //< #if SEAM >= SEAM_00_00_00__00_01

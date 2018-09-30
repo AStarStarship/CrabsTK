@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/roster.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -23,35 +23,35 @@
 
 namespace _ {
 
-/** A list of registered users.
+/* A list of registered users.
 
 */
 class KABUKI Roster {
  public:
-  /** Creates an empty user list. */
+  /* Creates an empty user list. */
   Roster();
 
-  /** Gets the number of users in the list. */
+  /* Gets the number of users in the list. */
   int GetNumUsers();
 
-  /** Adds the new user to the list. */
+  /* Adds the new user to the list. */
   bool Add(const User& new_user);
 
-  /** Gets the number of users in the Roster. */
+  /* Gets the number of users in the Roster. */
   int GetCount();
 
-  /** Returns true if this list contains the given user query result. */
+  /* Returns true if this list contains the given user query result. */
   bool Contains(const char* string);
 
-  /** Returns true if this list contains the given user. */
+  /* Returns true if this list contains the given user. */
   bool Contains(const User& user);
 
-  /** Attempts to find a user with the given query.
+  /* Attempts to find a user with the given query.
       @return Returns a nullptr if this list does not contain the search query.
    */
   User* Find(const char* query);
 
-  /** Prints this object to a expression. */
+  /* Prints this object to a expression. */
   void Print(Log& log);
 
  private:

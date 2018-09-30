@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/entity_hist.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -23,26 +23,26 @@
 
 namespace _ {
 
-/** A List of entities.
+/* A List of entities.
     This is essentially a contact list. */
 class KABUKI EntityList {
  public:
-  /** Creates an empty list. */
+  /* Creates an empty list. */
   EntityList();
 
-  /** Gets the number of Accounts in the List. */
+  /* Gets the number of Accounts in the List. */
   int GetSize();
 
-  /** Adds an Entity to the list. */
+  /* Adds an Entity to the list. */
   void Add(Entity* entity);
 
-  /** Adds a list of Entity (string) to the list. */
+  /* Adds a list of Entity (string) to the list. */
   void Add(EntityList& enities);
 
-  /** Finds an entity in the list by the given search char. */
+  /* Finds an entity in the list by the given search char. */
   Entity* Find(const char* string);
 
-  /** Prints this object to the log. */
+  /* Prints this object to the log. */
   void Print(Log& log);
 
  private:

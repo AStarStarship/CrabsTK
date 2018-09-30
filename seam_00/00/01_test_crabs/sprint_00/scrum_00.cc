@@ -33,7 +33,7 @@ using namespace std;
 #define PAUSE(message)
 #endif
 
-TestResult Test00_00_00__00_00(SEAM_0_1, SEAM_0_1_0) {
+TestResult Seam00_00_00__00_00(SEAM_0_1, SEAM_0_1_0) {
   Printf("\n    Testing SEAM_0_0_1... ");
 
   // Setup C++1x random number generator.

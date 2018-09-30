@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/tag_library.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -25,27 +25,27 @@ namespace _ {
 
 using namespace kt;
 
-/** A container of strings sorted alphabetically.
+/* A container of strings sorted alphabetically.
     This object owns the memory for the strings. Each time a patch is added,
     each tag is added, a pointer to the char is passed back.
 */
 class TagLibrary {
  public:
-  /** Creates an empty tag library. */
+  /* Creates an empty tag library. */
   TagLibrary();
 
-  /** Gets the tag char, and adds it to the collection if it doesn't exist.
+  /* Gets the tag char, and adds it to the collection if it doesn't exist.
       @return Gets null if the tags list doesn't contain the Tag, and
           non-null if the Tag was added successfully. */
   char GetOrAddTag(char tag);
 
-  /** Sorts the tags alphabetically for fast binary search. */
+  /* Sorts the tags alphabetically for fast binary search. */
   void Sort();
 
-  /** Gets the number of tags. */
+  /* Gets the number of tags. */
   int GetNumTags();
 
-  /** Prints this object to a Expression. */
+  /* Prints this object to a Expression. */
   Text& Print(Text& txt);
 
  private:

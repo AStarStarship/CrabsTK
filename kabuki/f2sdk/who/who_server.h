@@ -1,4 +1,4 @@
-/** kabuki::pro
+/* kabuki::pro
     @file    $kabuki-toolkit/library/kt/id/server.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -23,37 +23,37 @@
 
 namespace _ {
 
-/** Manages user keys and assigns unique ids to events. */
+/* Manages user keys and assigns unique ids to events. */
 class IdServer {
  public:
   enum {
     kMaxKeyLength = 32,  //< The max key length.
   };
 
-  /** Creates an empty server. */
+  /* Creates an empty server. */
   IdServer();
 
-  /** Destructor. */
+  /* Destructor. */
   ~IdServer();
 
-  /** Registers an unique key with the server without cloning the name. */
+  /* Registers an unique key with the server without cloning the name. */
   int RegisterKey(char* key);
 
-  /** Registers an unique key the server and clones the name char. */
+  /* Registers an unique key the server and clones the name char. */
   int RegisterKey(const char* key);
 
-  /** Searches for the given key.
+  /* Searches for the given key.
       @return Returns a pointer to a key char upon success and null
               if the key does not exist. */
   int Find(const char* key);
 
-  /** Gets the number of events. */
+  /* Gets the number of events. */
   int NumEvents();
 
-  /** Registers a new Event UID by incrementing and returning the num_events. */
+  /* Registers a new Event UID by incrementing and returning the num_events. */
   int RegisterEvent();
 
-  /** Prints this object to the console. */
+  /* Prints this object to the console. */
   void Print(Log& log);
 
  private:

@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/OAuthAccount.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -23,14 +23,14 @@
 
 namespace _ {
 
-/** An OAuth account.
+/* An OAuth account.
  */
 class OAuthAccount {
  public:
-  /** Simple default constructor. */
+  /* Simple default constructor. */
   OAuthAccount();
 
-  /** Prints this object to a expression. */
+  /* Prints this object to a expression. */
   void Print(Log& log);
 };
 

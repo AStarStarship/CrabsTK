@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/handle.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -23,7 +23,7 @@
 
 namespace _ {
 
-/** A handle like a char or UID.
+/* A handle like a char or UID.
  */
 class KABUKI Handle {
  public:
@@ -35,26 +35,26 @@ class KABUKI Handle {
 
   static const char kDefault[];
 
-  /** Constructor creates a standard char. */
+  /* Constructor creates a standard char. */
   Handle(Authenticator* authenticator, const char* key,
          int min_length = kDefaultMinLength, int max_length = kMaxLength);
 
-  /** Gets a reference to the handle string. */
+  /* Gets a reference to the handle string. */
   const char* GetKey();
 
-  /** Gets true if this password is value. */
+  /* Gets true if this password is value. */
   bool SetKey(const char* key);
 
-  /** Returns true if the handle is valid. */
+  /* Returns true if the handle is valid. */
   bool IsValid(const char* key);
 
-  /** Returns true if this Handle is identical to the given Handle. */
+  /* Returns true if this Handle is identical to the given Handle. */
   bool Equals(const Handle& h);
 
-  /** Returns true if this Handle is identical to the given Handle. */
+  /* Returns true if this Handle is identical to the given Handle. */
   bool Equals(const char* handle);
 
-  /** Prints this object to the log. */
+  /* Prints this object to the log. */
   Text& Out(Text& txt = Text());
 
  private:

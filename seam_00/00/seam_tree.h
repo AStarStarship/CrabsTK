@@ -13,9 +13,14 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#include <kabuki/f2/public.h>
+#include <kabuki/f2/global.h>
 
 namespace _ {
 
-const char* Seam_00_00_00(TestResult& test_result, const char* args);
+const char* Seam_00_00_00__00(TestResult& test_result, const char* args);
+
+static const char* Seam_00_00_00(TestResult& test_result, const char* args) {
+  return TestTree<Seam_00_00_00__00>(test_result, args);
 }
+
+}  // namespace _

@@ -1,4 +1,4 @@
-﻿/** Kabuki Toolkit
+﻿/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/email_address.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -22,27 +22,27 @@
 
 namespace _ {
 
-/** Returns true if this is a valid email address.
+/* Returns true if this is a valid email address.
     @todo Fix regex email verifier script.
 */
 bool IsValidEmailAddress(const char* string);
 
-/** An email address. */
+/* An email address. */
 class KABUKI EmailAddress {
  public:
-  /** Default constructor. */
+  /* Default constructor. */
   EmailAddress(const char* address);
 
-  /** Gets the address char. */
+  /* Gets the address char. */
   char& GetAddress();
 
-  /** Attempts to set the address to the new char. */
+  /* Attempts to set the address to the new char. */
   void SetAddress(const char* string);
 
   // char mapToDomain (Match match);
-  /** Maps a domain to the given map??? */
+  /* Maps a domain to the given map??? */
 
-  /** Prints this object to a expression. */
+  /* Prints this object to a expression. */
   void Print(Log& log);
 
  private:

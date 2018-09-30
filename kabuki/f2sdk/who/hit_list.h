@@ -1,4 +1,4 @@
-﻿/** Kabuki Toolkit
+﻿/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/hit_list.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -23,44 +23,44 @@
 
 namespace _ {
 
-/** A collection of Hit(string).
+/* A collection of Hit(string).
  */
 class KABUKI HitList {
  public:
-  /** Simple default constructor. */
+  /* Simple default constructor. */
   HitList();
 
-  /** Adds a patch to the Hits. */
+  /* Adds a patch to the Hits. */
   bool AddHit(Hit& p);
 
-  /** Sorts the tags alphabetically. */
+  /* Sorts the tags alphabetically. */
   void SortTags();
 
-  /** Loads a patch from a JSON char. */
+  /* Loads a patch from a JSON char. */
   void LoadFromJSON(const char* json);
 
-  /** Converts a patch to a JSON char. */
+  /* Converts a patch to a JSON char. */
   const char* ToJson();
 
-  /** Gets true if their is a duplicate patch name. */
+  /* Gets true if their is a duplicate patch name. */
   bool FindDuplicateName(const char* value);
 
-  /** Gets the category name at the given index. */
+  /* Gets the category name at the given index. */
   const char* GetCategoryName(int index);
 
-  /** Gets a HitList of the given tag. */
+  /* Gets a HitList of the given tag. */
   HitList* FindTag(const char* tag);
 
-  /** Gets a HitList of the given tags. */
+  /* Gets a HitList of the given tags. */
   HitList* FindTags(data::Array<const char*>& tags);
 
-  /** Gets the category image name. */
+  /* Gets the category image name. */
   const char* GetCategoryImageName(const char* string);
 
-  /** Gets the subcategory image name. */
+  /* Gets the subcategory image name. */
   const char* GetSubcategoryImageName(const char* string);
 
-  /** Prints this object to the log. */
+  /* Prints this object to the log. */
   void Print(Log& log);
 
  private:
@@ -71,7 +71,7 @@ class KABUKI HitList {
       tags;                             //< List of tag strings.
 
   void loadTestHits();
-  /** Loads up some test data: delete me and make unit test! */
+  /* Loads up some test data: delete me and make unit test! */
 };
 
 }       // namespace _

@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/server.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -22,7 +22,7 @@
 
 namespace _ {
 
-/** A uid server that can save and load the uid from a file.
+/* A uid server that can save and load the uid from a file.
     Unique ids are indexed using only positive integers. 0 is hence used to
     flag when the server doesn't contain a uid. */
 template <typename T = uid_t>
@@ -30,7 +30,7 @@ class UidServer {
  public:
   enum { kInvalidUid = 0 };
 
-  /** Constructs object by setting next_id_ to init_uid and copying the
+  /* Constructs object by setting next_id_ to init_uid and copying the
       filename string. */
   UidServer(T init_uid = 1, const char* filename = "uid")
       : next_uid_((init_uid == kInvalidUid) ? kInvalidUid + 1 : init_uid),
@@ -40,10 +40,10 @@ class UidServer {
     //                           +---E  +----<||
   }
 
-  /** Peeks at the next uid with incrementing it. */
+  /* Peeks at the next uid with incrementing it. */
   T PeekNextUid() { return next_uid_; }
 
-  /** Gets the next uid. */
+  /* Gets the next uid. */
   T GetNextUid() {
     if (next_uid_ == kInvalidUid) return kInvalidUid + 1;
     return next_uid_++;

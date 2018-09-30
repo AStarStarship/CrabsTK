@@ -24,22 +24,23 @@ namespace _ {
 struct API TestResult {
   const char *name,  //< The file the assertion occurred at.
       *description;  //< An optional description to print.
-  int code,          //< The test result code.
-      line;          //< The line the assertion failed at.
+  int line,          //< The line the assertion failed at.
+      code;          //< The test result code.
 };
 
 }  // namespace _
 
-typedef const char* (*SeamNode)(_::TestResult& test_result, const char* args);
+typedef const char* (*TestCase)(_::TestResult& test_result, const char* args);
 
 namespace _ {
 
-/* Tests an array of SeamNode(s).
+/* Tests an array of TestCase(s).
 @return 0 upon success or an app exit code upon failure. */
-int TestSeamTree(TestResult& test_result, const char* args, SeamNode* seams,
-                 int node_count);
+const char* TestTree(TestResult& test_result, const char* args, TestCase* seams,
+                     int node_count);
 
-void TestSeamNodeEnd(const char* function_name);
+/* Prints a message when a TestCase completes without failure. */
+void TestEnd(const char* function_name);
 
 /* Assert check if the given condition is true
 @return false if the condition is false.
@@ -201,10 +202,21 @@ API bool AssertHandle(const char* file, int line,
   if (Test(item)) _::AssertHandle(__FILE__, __LINE__)
 #define TEST(a, b) \
   if (Test(a, b)) _::AssertHandle(__FILE__, __LINE__)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PAUSE(message)         \
+  Printf("\n\n%s\n", message); \
+  system("PAUSE");
+#define TEST_BEGIN \
+  if (!args) return __FUNCTION__
+#define TEST_END TestSeamNodeEnd(__FUNCTION__)
 #else
 #define ASSERT(condition)
 #define TEST1(item)
 #define TEST(a, b)
+#define PRINTF(x, ...)
+#define PAUSE(message)
+#define TEST_BEGIN
+#define TEST_END
 #endif
 
 #endif  //< #ifndef INCLUDED_KABUKI_F2_TEST

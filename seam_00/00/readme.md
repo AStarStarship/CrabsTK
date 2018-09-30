@@ -9,5 +9,4 @@
 * 0_0_06_test_hmi
 * 0_0_07_test_data
 * 0_0_08_test_pro
-* 0_0_09_test_perceptron_graph
-* 0_0_10_test_asio
+* 0_0_09_test_ai

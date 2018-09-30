@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/grammar.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -22,7 +22,7 @@
 
 namespace _ {
 
-/** Used for settings rules to text grammar.
+/* Used for settings rules to text grammar.
     Useful for rules for passwords.
 */
 class Word {
@@ -35,46 +35,46 @@ class Word {
     MustStartWithCharFlag       //<
   };
 
-  /** Creates and anarchy grammar with no rules. */
+  /* Creates and anarchy grammar with no rules. */
   Word();
 
-  /** Copy Constructor. */
+  /* Copy Constructor. */
   Word(const Word& initState);
 
-  /** Clones the given object. */
+  /* Clones the given object. */
   void Clone(const Word* grammar);
 
-  /** Verifies the given string to see if it has proper grammar. */
+  /* Verifies the given string to see if it has proper grammar. */
   bool IsValid(const char* string);
 
-  /** Gets the min length of a valid symbol. */
+  /* Gets the min length of a valid symbol. */
   int GetMinLength();
 
-  /** Sets the min length of a valid symbol. */
+  /* Sets the min length of a valid symbol. */
   bool SetMinLength(int value);
 
-  /** Gets the max length. */
+  /* Gets the max length. */
   int GetMaxLength();
 
-  /** Gets the max length. */
+  /* Gets the max length. */
   bool SetMaxLength(int value);
 
-  /** Checks to see if thisChar is an illegal char. */
+  /* Checks to see if thisChar is an illegal char. */
   bool IsIllegal(char aChar);
 
-  /** Adds char index of illegal chars.
+  /* Adds char index of illegal chars.
       @pre thisChar  must be > 0.
       @param thisChar The illegal char to add.
   */
   bool MakeIllegal(char thisChar, const char* descstring);
 
-  /** Adds char or range of indexes of illegal chars.
+  /* Adds char or range of indexes of illegal chars.
       @pre startIndex and stopIndex must be a printable char.
       @param startIndex The starting ASCII char index.
       @param stopIndex  The stopping ASCII char index. */
   bool MakeIllegal(int startIndex, int stopIndex, const char* descstring);
 
-  /** Adds a char or set of range of char indexes that must be included in a
+  /* Adds a char or set of range of char indexes that must be included in a
      valid symbol.
       @pre   start_index and stopIndex must be a printable char and numInstances
      must be > 0 and < max_length_.
@@ -84,7 +84,7 @@ class Word {
   bool MakeMandatory(int startIndex, int stopIndex, int numInstances,
                      const char* descstring);
 
-  /** Prints this object to a expression. */
+  /* Prints this object to a expression. */
   void Print(Log& log);
 
  private:

@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/user.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -24,7 +24,7 @@
 
 namespace _ {
 
-/** A user account on a computer.
+/* A user account on a computer.
     A user does not necessarily have an account. Some accounts are and any user
     can use. i.e. the guest account. */
 class KABUKI User : Portal {
@@ -36,100 +36,100 @@ class KABUKI User : Portal {
   };
   static const double kDefaultBalance;  //< Default account balance.
 
-  /** Creates a user with the given handle, password, and status. */
+  /* Creates a user with the given handle, password, and status. */
   User(Authenticator* authenticator, uid_t uid = 0,
        const char* handle = Handle::kDefault,
        const char* password = Password::kDefault,
        double balance = kDefaultBalance, int64_t value = kDefaultValue);
 
-  /** Constructor deep copies the other object. */
+  /* Constructor deep copies the other object. */
   User(const User& other);
 
   User& operator=(const User& other);
 
-  /** Virtual destructor. */
+  /* Virtual destructor. */
   virtual ~User();
 
-  /** Gets the handle's key. */
+  /* Gets the handle's key. */
   const char* GetStatus();
 
-  /** Gets the handle's key. */
+  /* Gets the handle's key. */
   virtual const char* SetStatus(const char* name);
 
-  /** Gets a reference to the handle_. */
+  /* Gets a reference to the handle_. */
   Handle& GetHandle();
 
-  /** Gets a reference to the handle_.GetKey (). */
+  /* Gets a reference to the handle_.GetKey (). */
   const char* GetHandleKey();
 
-  /** Gets a reference to the password. */
+  /* Gets a reference to the password. */
   Password& GetPassword();
 
-  /** Gets the user's uid. */
+  /* Gets the user's uid. */
   uid_t GetUid();
 
-  /** Gets the session uid. */
+  /* Gets the session uid. */
   int32_t GetSession();
 
-  /** Sets the session uid. */
+  /* Sets the session uid. */
   virtual const char* SetSession(int32_t session);
 
-  /** Gets the session uid. */
+  /* Gets the session uid. */
   uid_t GetSessionKey();
 
-  /** Gets the abstract response code. */
+  /* Gets the abstract response code. */
   uid_t GetResponse();
 
-  /** Sets the abstract response code. */
+  /* Sets the abstract response code. */
   virtual const char* SetResponse(uid_t response);
 
-  /** Gets the abstract balance. */
+  /* Gets the abstract balance. */
   double GetBalance();
 
-  /** Sets the abstract balance. */
+  /* Sets the abstract balance. */
   virtual const char* SetBalance(double balance);
 
-  /** Attempts to buy the given points.
+  /* Attempts to buy the given points.
       @returns false if the balance_ is too low. */
   bool BuyValue(int64_t num_coins, double point_cost);
 
-  /** Increase the balance_ by the given amount. */
+  /* Increase the balance_ by the given amount. */
   bool AddBalance(double amount);
 
-  /** Gets the abstract value. */
+  /* Gets the abstract value. */
   int64_t GetValue();
 
-  /** Increase the balance_ by the given amount. */
+  /* Increase the balance_ by the given amount. */
   int64_t AddValue(int64_t amount);
 
-  /** Sets the abstract value. */
+  /* Sets the abstract value. */
   virtual const char* SetValue(int64_t value);
 
-  /** Returns true if this user is the same as the given one.  */
+  /* Returns true if this user is the same as the given one.  */
   bool Equals(User* user);
 
-  /** Gets the Script Slot to send messages to this User. */
+  /* Gets the Script Slot to send messages to this User. */
   Expression* GetSlot();
 
 #if SCRIPT_USING_MIRROR
-  /** Gets the Script Slot to send messages to this User. */
+  /* Gets the Script Slot to send messages to this User. */
   Mirror* GetMirror();
 #endif  //< SCRIPT_USING_MIRROR
 
-  /** Returns true if this session and cypher match the same as the given
+  /* Returns true if this session and cypher match the same as the given
       one.  */
   bool IsAuthentic(int32_t session, uid_t public_key);
 
-  /** Prints this object to a expression. */
+  /* Prints this object to a expression. */
   virtual Text& Out(Text& txt = Text());
 
-  /** Handles Text input.
+  /* Handles Text input.
       @param text     Beginning of the Text buffer.
       @param strand_end End of the Text buffer.
       @return Returns nil upon success and an error string upon failure. */
   virtual const char* Sudo(const char* text, const char* strand_end);
 
-  /** Abstract Script Operation(s).
+  /* Abstract Script Operation(s).
       @param index The index of the expression.
       @param expr  The Expression to read and write from.
       @return      Returns null upon success, a Set header upon query, and an

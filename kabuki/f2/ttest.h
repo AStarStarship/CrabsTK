@@ -15,19 +15,18 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 
 #if SEAM >= SEAM_00_00_00__00_01
-#ifndef INCLUDED_F2_TTEST
-#define INCLUDED_F2_TTEST 1
+#ifndef INCLUDED_KABUKI_F2_TTEST
+#define INCLUDED_KABUKI_F2_TTEST 1
 
 #include "test.h"
 
 #include "tconsole.h"
 
 namespace _ {
-template <SeamNode... N>
-int Test(TestResult& test_result, const char* args, SeamNode* seams,
-         int node_count) {
+template <TestCase... N>
+const char* TestTreeNode(TestResult& test_result, const char* args) {
   static SeamTree nodes[sizeof...(N)] = {N...};
-  return TestSeamTree(test_result, args, nodes, sizeof...(N));
+  return TestTree(test_result, args, nodes, sizeof...(N));
 }
 
 template <typename Char>
@@ -35,9 +34,10 @@ bool Test(const Char* a, const Char* b) {
   char c = StringCompare<Char>(a, b);
   if (!c) return false;  //< Bad !c, burn your tiki torches elsewhere!
   Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
+  return true;
 }
 
 }  // namespace _
 
-#endif  //< INCLUDED_F2_TTEST
+#endif  //< INCLUDED_KABUKI_F2_TTEST
 #endif  //< #if SEAM >= SEAM_00_00_00__00_01

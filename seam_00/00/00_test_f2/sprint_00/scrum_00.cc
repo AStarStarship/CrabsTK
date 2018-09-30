@@ -125,7 +125,7 @@ const char* Seam_00_00_00__00_00(TestResult& test_result, const char* args) {
   static const uint64_t problem_children[] = {
       0,
   };
-  enum { kNumProblemChildren = 0, kSize = 24 };
+  enum { kNumProblemChildren = 0, kSize = 23 };
 
   char text[kSize + 1], expecting[kSize + 1];
   char buffer[kSize];
@@ -142,7 +142,7 @@ const char* Seam_00_00_00__00_00(TestResult& test_result, const char* args) {
 
   for (int i = 0; i < 1 << 6; ++i) {
     expected_ui8 = distr(eng);
-    Print<uint64_t, char, uint16_t>(buffer, buffer + 24, expected_ui8);
+    Print<uint64_t, char, uint16_t>(buffer, buffer + kSize, expected_ui8);
     const char* test = Scan<uint64_t, char>(buffer, result_ui8);
     TEST1(test);
     TEST(expected_ui8, result_ui8);
@@ -166,9 +166,9 @@ const char* Seam_00_00_00__00_00(TestResult& test_result, const char* args) {
       break;
     }
     *result = 0;
-    if (StringCompare(expecting, text)) {
+    if (StringCompare<>(expecting, text)) {
       PAUSEF("\n\nERROR: Expecting \"%s\":%llu and found \"%s\":%llu",
-             expecting, (uint)strlen(expecting), text, (uint)strlen(text));
+             expecting, StringLength<>(expecting), text, StringLength<>(text));
     }
   }
 

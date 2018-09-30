@@ -16,7 +16,6 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_CRABS_GLOBAL
 #define INCLUDED_CRABS_GLOBAL
 // Dependencies:
-#include "config.h"
 
 #include "../f2/global.h"
 

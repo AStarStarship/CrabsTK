@@ -19,11 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\kabuki\f2\f2_benchmark.cc" />
-    <ClCompile Include="..\..\kabuki\f2\f2_binary.cc" />
-    <ClCompile Include="..\..\kabuki\f2\f2_console.cc" />
-    <ClCompile Include="..\..\kabuki\f2\f2_rng.cc" />
-    <ClCompile Include="..\..\kabuki\f2\f2_test.cc" />
     <ClCompile Include="align\benchmark_align.cc" />
     <ClCompile Include="ftos\benchmark_ftos.cc" />
     <ClCompile Include="itos\benchmark_itos.cc" />
@@ -35,20 +30,6 @@
     <ClCompile Include="stdafx.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\kabuki\f2\benchmark.h" />
-    <ClInclude Include="..\..\kabuki\f2\rng.h" />
-    <ClInclude Include="..\..\kabuki\f2\tbenchmark.h" />
-    <ClInclude Include="..\..\kabuki\f2\binary.h" />
-    <ClInclude Include="..\..\kabuki\f2\console.h" />
-    <ClInclude Include="..\..\kabuki\f2\global.h" />
-    <ClInclude Include="..\..\kabuki\f2\public.h" />
-    <ClInclude Include="..\..\kabuki\f2\talign.h" />
-    <ClInclude Include="..\..\kabuki\f2\targetver.h" />
-    <ClInclude Include="..\..\kabuki\f2\tbinary.h" />
-    <ClInclude Include="..\..\kabuki\f2\tconsole.h" />
-    <ClInclude Include="..\..\kabuki\f2\test.h" />
-    <ClInclude Include="..\..\kabuki\f2\trng.h" />
-    <ClInclude Include="..\..\kabuki\f2\ttest.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="itos\debug_itos_footer.h" />
     <ClInclude Include="itos\debug_itos_header.h" />
@@ -57,7 +38,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\kabuki\f2\readme.md" />
     <None Include="readme.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

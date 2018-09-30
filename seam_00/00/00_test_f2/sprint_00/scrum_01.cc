@@ -20,27 +20,19 @@ specific language governing permissions and limitations under the License. */
 
 #include <kabuki/f2/global.h>
 
+#include <cmath>
+#include <random>
+
 using namespace _;
 using namespace std;
 
-#if SEAM_MAJOR == 0 && SEAM_MINOR == 0
-#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PAUSE(message)         \
-  Printf("\n\n%s\n", message); \
-  system("PAUSE");
-#define TEST_SEAM_BEGIN \
-  if (!args) return __FUNCTION__;
-#define TEST_SEAM_TREE_END TestSeamNodeEnd
-#else
-#define PRINTF(x, ...)
-#define PAUSE(message)
-#define TEST_SEAM_BEGIN
-#define TEST_SEAM_TREE_END
-#endif
-
 namespace _ {
-int Seam_00_00_00__00_01(TestResult& test_result, const char* args) {
-  c;
+
+const char* Seam_00_00_00__00_01(TestResult& test_result, const char* args) {
+  TEST_BEGIN;
+
+  enum { kSize = 24 };
+  char buffer[kSize + 1];
 
   // Setup C++1x random number generator.
   std::random_device rd;
@@ -59,7 +51,7 @@ int Seam_00_00_00__00_01(TestResult& test_result, const char* args) {
     } while (!IsFinite(dbl_expected));
     dbl_found = Ceiling(dbl_expected);
     dbl_expected = ceil(dbl_expected);
-    Compare(dbl_expected, dbl_found);
+    TEST(dbl_expected, dbl_found);
   }
 
   PRINTF("\n\nTesting float Char* Print<Char> (Char*, Char*, float&)...\n");
@@ -69,10 +61,9 @@ int Seam_00_00_00__00_01(TestResult& test_result, const char* args) {
       value = distr(eng);
       dbl_expected = static_cast<double>(value);
     } while (!IsFinite(dbl_expected));
-    char buffer[25];
-    Print(buffer, buffer + 24, dbl_expected);
+    Print<>(buffer, buffer + kSize, dbl_expected);
     Assert(scanf_s("%lf", &dbl_found));
-    Compare(value, dbl_expected);
+    TEST(value, dbl_expected);
   }
 
   PRINTF(
@@ -85,12 +76,13 @@ int Seam_00_00_00__00_01(TestResult& test_result, const char* args) {
       dbl_expected = static_cast<double>(value);
     } while (!IsFinite(dbl_expected));
     char buffer[24];
-    sprintf_s(buffer, 24, "%f", dbl_expected);
+    sprintf_s(buffer, kSize, "%f", dbl_expected);
     Assert(Scan(buffer, dbl_expected));
-    Compare(value, dbl_expected);
+    TEST(value, dbl_expected);
   }
 
-  PAUSE("Done testing SEAM_0_0_2! (:-)=-=<");
+  TEST_END;
 }
-
-#endif  //< #if SEAM >= SEAM_0_0_01
+}  // namespace _
+#include <kabuki/f2/test_footer.h>
+#endif  //< #if SEAM >= SEAM_0_0_01__00_01

@@ -1,4 +1,4 @@
-/** kabuki::pro
+/* kabuki::pro
     @file    $kabuki-toolkit/library/kt/id/implLibrary.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -25,7 +25,7 @@ Library::Library(const Hit& other) {}
 
 char* Library::GetHitChangeString() {}
 
-/** Adds a patch to the patches. */
+/* Adds a patch to the patches. */
 bool Library::AddHit(Hit& hit) {
   patches.Add(hit);
 

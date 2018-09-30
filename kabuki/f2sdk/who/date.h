@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/date.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -23,20 +23,20 @@
 
 namespace _ {
 
-/** An eventful date.
+/* An eventful date.
     @todo Create a list of events. Is it an Event? */
 class KABUKI Date {
  public:
-  /** Default constructor. */
+  /* Default constructor. */
   Date(time_t time);
 
-  /** Gets the date time. */
+  /* Gets the date time. */
   time_t GetTime();
 
-  /** Sets the date to the Unix timestamp. */
+  /* Sets the date to the Unix timestamp. */
   void SetTime(time_t t);
 
-  /** Prints this object to the log. */
+  /* Prints this object to the log. */
   void Print(Log& log);
 
  private:

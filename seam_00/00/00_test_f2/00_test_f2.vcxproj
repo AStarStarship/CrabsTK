@@ -19,9 +19,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\kabuki\f2\readme.md" />
     <None Include="sprint_00\readme.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\kabuki\f2\benchmark.h" />
+    <ClInclude Include="..\..\..\kabuki\f2\binary.h" />
+    <ClInclude Include="..\..\..\kabuki\f2\console.h" />
+    <ClInclude Include="..\..\..\kabuki\f2\global.h" />
+    <ClInclude Include="..\..\..\kabuki\f2\public.h" />
+    <ClInclude Include="..\..\..\kabuki\f2\rng.h" />
+    <ClInclude Include="..\..\..\kabuki\f2\talign.h" />
+    <ClInclude Include="..\..\..\kabuki\f2\tbenchmark.h" />
+    <ClInclude Include="..\..\..\kabuki\f2\tbinary.h" />
+    <ClInclude Include="..\..\..\kabuki\f2\tconsole.h" />
+    <ClInclude Include="..\..\..\kabuki\f2\test.h" />
+    <ClInclude Include="..\..\..\kabuki\f2\trng.h" />
+    <ClInclude Include="..\..\..\kabuki\f2\ttest.h" />
+    <ClInclude Include="..\..\..\kabuki\f2\vk.h" />
     <ClInclude Include="..\..\seam_tree.h" />
     <ClInclude Include="..\seam_tree.h" />
     <ClInclude Include="seam_tree.h" />
@@ -30,7 +45,12 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="seam_00_00_00.cc" />
+    <ClCompile Include="..\..\..\kabuki\f2\f2_benchmark.cc" />
+    <ClCompile Include="..\..\..\kabuki\f2\f2_binary.cc" />
+    <ClCompile Include="..\..\..\kabuki\f2\f2_console.cc" />
+    <ClCompile Include="..\..\..\kabuki\f2\f2_rng.cc" />
+    <ClCompile Include="..\..\..\kabuki\f2\f2_test.cc" />
+    <ClCompile Include="..\..\..\kabuki\f2\f2_vk.cc" />
     <ClCompile Include="sprint_00\scrum_00.cc" />
     <ClCompile Include="sprint_00\scrum_01.cc" />
     <ClCompile Include="sprint_00\scrum_02.cc" />
@@ -96,7 +116,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(ProjectDir)../../../cpputest/lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

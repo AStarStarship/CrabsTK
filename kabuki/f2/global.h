@@ -14,11 +14,11 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <stdafx.h>
 
-#ifndef INCLUDED_F2_GLOBAL
-#define INCLUDED_F2_GLOBAL
+#ifndef INCLUDED_KABUKI_F2_GLOBAL
+#define INCLUDED_KABUKI_F2_GLOBAL
 
 #include "talign.h"
 #include "trng.h"
 #include "ttest.h"
 
-#endif  //< INCLUDED_F2_GLOBAL
+#endif  //< INCLUDED_KABUKI_F2_GLOBAL

@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/entity_group.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -23,27 +23,27 @@
 
 namespace _ {
 
-/** A group of entities.
+/* A group of entities.
     @todo
 */
 class KABUKI EntityGroup {
  public:
-  /** A group of entities such as people or businesses. */
+  /* A group of entities such as people or businesses. */
   EntityGroup(const char* name);
 
-  /** Gets the name of the entity group. */
+  /* Gets the name of the entity group. */
   const char* GetName();
 
-  /** Sets the name of the entity group. */
+  /* Sets the name of the entity group. */
   void SetName(const char* string);
 
-  /** Applies privileges to the entity group. */
+  /* Applies privileges to the entity group. */
   void ApplyPrivilege(const char* privileges);
 
-  /** Returns true if this list of entities contains the given char. */
+  /* Returns true if this list of entities contains the given char. */
   virtual int Search(const char* string);
 
-  /** Prints this object to a expression. */
+  /* Prints this object to a expression. */
   virtual void Print(Log& log);
 
  private:

@@ -30,7 +30,7 @@ using namespace std::chrono;
 
 namespace _ {
 
-BenchmarkCase::BenchmarkCase(const char* name, SeamTree* cases, int count)
+BenchmarkCase::BenchmarkCase(const char* name, TestCase* cases, int count)
     : name(name), cases(cases), count(count) {}
 
 TestResult BenchmarkCase::Run(const char* args) {
@@ -72,7 +72,7 @@ TestResult Benchmark::Run(const char* args) {
   auto* coutbuf = std::cout.rdbuf();
   std::cout.rdbuf(out.rdbuf());
 
-  for (size_t i = 1; i < count; ++i) {
+  for (size_t i = 0; i < count; ++i) {
     BenchmarkCase group = groups[i];
     TestResult result = group.Run(args);
     ASSERT(result.name);

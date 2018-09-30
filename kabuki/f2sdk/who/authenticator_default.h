@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/authenticator.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -25,27 +25,28 @@ namespace _ {
 
 class AuthenticatorDefault : public Authenticator {
  public:
+  /* Constructs a Foo. */
   AuthenticatorDefault();
 
-  /** Gets the min handle length. */
+  /* Gets the min handle length. */
   int GetMinHandleLength();
 
-  /** Gets the max handle length. */
+  /* Gets the max handle length. */
   int GetMaxHandleLength();
 
-  /** Gets the min password length. */
+  /* Gets the min password length. */
   int GetMinPasswordLength();
 
-  /** Gets the max password length. */
+  /* Gets the max password length. */
   int GetMaxPasswordLength();
 
-  /** Function validates the handle for correctness.
+  /* Function validates the handle for correctness.
       @param  handle The handle to validate.
       @return Returns null upon success and a pointer to an error string
               if the input is invalid. */
   virtual const char* HandleIsInvalid(const char* handle);
 
-  /** Function validates the password for correctness.
+  /* Function validates the password for correctness.
       @param  password The password to validate.
       @return Returns null upon success and a pointer to an error string
               if the input is invalid. */

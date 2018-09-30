@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-bool ConsoleArgs(int args_count, char** args) {
+const char* ConsoleArgs(int args_count, char** args) {
   if (args_count <= 1) return false;
   if (args_count == 2) return true;
   for (int i = 2; i < args_count; ++i) {
@@ -30,7 +30,7 @@ bool ConsoleArgs(int args_count, char** args) {
     while (*cursor) cursor--;
     *cursor = ' ';
   }
-  return true;
+  return args[1];
 }
 
 inline Console Print(char c) { putchar(c); }
@@ -161,6 +161,19 @@ Console PrintLine(int width, char token, char first_token) {
   Print(first_token);
   while (width-- > 0) Print(token);
   return Console();
+}
+
+Console PrintHeading(const char* heading_a, const char* heading_b,
+                     int line_count, int width, char token, char first_token) {
+  if (line_count < 1 || width < 1) return Console();
+  while (line_count-- > 0) Print('\n');
+  PrintLine(width, token, '+');
+  Print("\n| ");
+  Print(heading_a);
+  Print(heading_b);
+  Print('\n');
+  PrintLine(width, token, '+');
+  return Print('\n');
 }
 
 Console PrintHeading(const char* heading, int line_count, int width, char token,

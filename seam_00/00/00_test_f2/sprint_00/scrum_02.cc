@@ -25,7 +25,7 @@ specific language governing permissions and limitations under the License. */
 #define PAUSE(message) Pause(message)
 #define PRINT_HEADING(message) PrintHeading(message)
 #define PRINT_LINE(c) PrintLine(c)
-#define TEST_SEAM_BEGIN \
+#define TEST_BEGIN \
   if (!args) return __FUNCTION__;
 #define TEST_SEAM_END TestSeamEnd(__FUNCTION__)
 #else
@@ -34,14 +34,14 @@ specific language governing permissions and limitations under the License. */
 #define PAUSE(message)
 #define PRINT_HEADING(c)
 #define PRINT_LINE(c)
-#define TEST_SEAM_BEGIN
+#define TEST_BEGIN
 #define TEST_SEAM_END
 #endif
 
 namespace _ {
 
 const char* Seam_00_00_00__00_02(TestResult& test_result, const char* args) {
-  TEST_SEAM_BEGIN
+  TEST_BEGIN
 
   PRINTF("\n\nTesting Text...");
 #if CRABS_TEXT

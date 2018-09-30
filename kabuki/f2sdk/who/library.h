@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/library.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -23,44 +23,44 @@
 
 namespace _ {
 
-/** The main library of Hits.
+/* The main library of Hits.
     This class KABUKI owns the memory for the patches.
 */
 class KABUKI Library {
  public:
-  /** Simple default constructor. */
+  /* Simple default constructor. */
   Library();
 
-  /** Adds a patch to the Hits. */
+  /* Adds a patch to the Hits. */
   bool AddHit(Hit& p);
 
-  /** Sorts the tags alphabetically. */
+  /* Sorts the tags alphabetically. */
   void SortTags();
 
-  /** Loads a patch from a JSON char. */
+  /* Loads a patch from a JSON char. */
   void LoadFromJSON(char jsonString);
 
-  /** Converts a patch to a JSON char. */
+  /* Converts a patch to a JSON char. */
   char ToJson();
 
-  /** Gets true if their is a duplicate patch name. */
+  /* Gets true if their is a duplicate patch name. */
   bool FindDuplicateName(char value);
 
-  /** Gets the category name at the given index. */
+  /* Gets the category name at the given index. */
   char GetCategoryName(int index);
 
-  /** Searches for hits with the given search query. */
+  /* Searches for hits with the given search query. */
   Library Find(char tag);
 
   Library Find(vector<char>& tags);
 
-  /** Gets the subcategory image name. */
+  /* Gets the subcategory image name. */
   char GetCategoryImageName(char string);
 
-  /** Gets the subcategory image name. */
+  /* Gets the subcategory image name. */
   char GetSubcategoryImageName(char string);
 
-  /** Prints this object to a Expression. */
+  /* Prints this object to a Expression. */
   void Print(Log& log);
 
   // void injectTestData ();
@@ -71,10 +71,10 @@ class KABUKI Library {
   std::vector<char> catagories,        //< The list of categories.
       tags;                            //< List of tag strings.
 
-  /** Gets the default library in JSON. */
+  /* Gets the default library in JSON. */
   char& GetDefaultHitLibrary();
 
-  /** Gets the number 0 at this point in time. */
+  /* Gets the number 0 at this point in time. */
   int InitNumHits();
 };
 

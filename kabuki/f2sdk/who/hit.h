@@ -1,4 +1,4 @@
-﻿/** Kabuki Toolkit
+﻿/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/Hit.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -23,7 +23,7 @@
 
 namespace _ {
 
-/** A list of search hits.
+/* A list of search hits.
     @note This class was for creating patch lists for musical instruments, but
         is getting generalized to metadata search.
 
@@ -38,7 +38,7 @@ class KABUKI Hit {
     kMaxDescriptionLength = 256  //< Max description length.
   };
 
-  /** Creates a hit from the given metadata.
+  /* Creates a hit from the given metadata.
   User produces the SomeTags list as a new array of std::strings, and this
   object consumes it and is responsible for the deallocation of the memory.
   */
@@ -46,64 +46,64 @@ class KABUKI Hit {
       const char** tags = nullptr, char hit = 0, const char* category = "",
       const char* ttype = "", int num_tags = 0);
 
-  /** Gets the name. */
+  /* Gets the name. */
   const char* GetName();
 
-  /** Sets the name.
+  /* Sets the name.
       @return returns 0 upon success, -1 if the input is nullptr, and 1 if the
      label is too uint32_t. */
   const char* SetName(const char* name);
 
-  /** Gets the Id. */
+  /* Gets the Id. */
   int GetId();
 
-  /** Sets the Id. */
+  /* Sets the Id. */
   void SetId(int value);
 
-  /** Gets the description const char*. */
+  /* Gets the description const char*. */
   const char* GetDescription();
 
-  /** Sets the description.
+  /* Sets the description.
       @return returns 0 upon success and 1 if the label is too uint32_t. */
   const char* SetDescription(const char* description);
 
-  /** Gets the category const char*.
+  /* Gets the category const char*.
       @return Gets an empty const char* no tags exist. */
   const char* GetCategory();
 
-  /** Gets the subcategory const char*.
+  /* Gets the subcategory const char*.
   @return Gets an empty const char* no tags exist. */
   const char* GetSubcategory();
 
-  /** Adds a tag to the tag list.
+  /* Adds a tag to the tag list.
       @return returns 0 upon success, -1 if the input is nullptr, and 1 if the
      label is too uint32_t. */
   const char* AddTag(const char* tag);
 
-  /** Adds a collection of tags to the hit-list. */
+  /* Adds a collection of tags to the hit-list. */
   void AddTags(char* tags, int num_tags);
 
-  /** Removes the given tag if it exists.
+  /* Removes the given tag if it exists.
       @return Gets true upon success, 1 if the input is nullptr, and the given
      tag if the it doesn't exist. */
   const char* RemoveTag(const char* tag);
 
-  /** Gets true if this hit contains the given tag. */
+  /* Gets true if this hit contains the given tag. */
   bool ContainsTag(const char* tag);
 
-  /** Gets true if this hit contains any of the given tags. */
+  /* Gets true if this hit contains any of the given tags. */
   bool ContainsTags(data::StringArray* tags);
 
-  /** Gets the list of tags. */
+  /* Gets the list of tags. */
   data::StringArray* GetTags();
 
-  /** Gets a comma separated const char* of the tags. */
+  /* Gets a comma separated const char* of the tags. */
   const char* ToStringTags();
 
-  /** Serializes to JSON const char*. */
+  /* Serializes to JSON const char*. */
   const char* ToJson();
 
-  /** Prints this object to the given text buffer. */
+  /* Prints this object to the given text buffer. */
   Printer Print(Printer print);
 
  private:

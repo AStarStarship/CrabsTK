@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/tag.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -24,16 +24,16 @@ namespace _ {
 
 class KABUKI Tag {
  public:
-  /** Gets the Unique identifier number. */
+  /* Gets the Unique identifier number. */
   virtual int GetUid() = 0;
 
-  /** Sets the Unique identifier number. */
+  /* Sets the Unique identifier number. */
   virtual char SetUid(int value) = 0;
 
-  /** Gets the ID name. */
+  /* Gets the ID name. */
   virtual char GetName() = 0;
 
-  /** Sets the ID name. */
+  /* Sets the ID name. */
   virtual char SetName(const char* name) = 0;
 };
 }       // namespace _

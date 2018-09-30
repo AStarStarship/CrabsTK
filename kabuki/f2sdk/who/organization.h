@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/organization.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -23,16 +23,16 @@
 
 namespace _ {
 
-/** An entity that is not a person such as a business or non-profit
+/* An entity that is not a person such as a business or non-profit
    organization. Roster - list or plan showing turns of duty or leave for
    individuals or groups in an organization.
 */
 class KABUKI Organization : public Entity {
  public:
-  /** Default constructor. */
+  /* Default constructor. */
   Organization();
 
-  /** Prints this object to a expression. */
+  /* Prints this object to a expression. */
   void Print(Log& log);
 
  private:

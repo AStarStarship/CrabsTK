@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/authenticator.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -22,19 +22,19 @@
 
 namespace _ {
 
-/** Interface for a class that can validate a string for correctness.
+/* Interface for a class that can validate a string for correctness.
     This interface is useful for making rules for things like Handle(s) and
     Password(s). Classes that implement this interface must define the indexes
     of the types.
 */
 struct Authenticator {
-  /** Function validates the handle for correctness.
+  /* Function validates the handle for correctness.
       @param  handle The handle to validate.
       @return Returns null upon success and a pointer to an error string
               if the input is invalid. */
   virtual const char* HandleIsInvalid(const char* handle) = 0;
 
-  /** Function validates the password for correctness.
+  /* Function validates the password for correctness.
       @param  password The password to validate.
       @return Returns null upon success and a pointer to an error string
               if the input is invalid. */

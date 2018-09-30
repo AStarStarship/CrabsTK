@@ -12,7 +12,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <stdafx.h>
 
-#include <kabuki/f2/public.h>
+#include <kabuki/f2/global.h>
 
 #define SEAM_00_00_00__00_00 1
 #define SEAM_00_00_00__00_02 2
@@ -22,4 +22,12 @@ namespace _ {
 const char* Seam_00_00_00__00_00(TestResult& test_result, const char* args);
 const char* Seam_00_00_00__00_01(TestResult& test_result, const char* args);
 const char* Seam_00_00_00__00_02(TestResult& test_result, const char* args);
+
+static const char* Seam_00_00_00__00(TestResult& test_result,
+                                     const char* args) {
+  return TestTreeNode<Seam_00_00_00__00_00, Seam_00_00_00__00_01,
+                      Seam_00_00_00__00_02>(test_result, args);
+}
 }  // namespace _
+
+#include <kabuki/f2/test_footer.h>

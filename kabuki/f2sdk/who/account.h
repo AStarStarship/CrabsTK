@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/account.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -26,39 +26,39 @@
 
 namespace _ {
 
-/** An account with a char and password.
+/* An account with a char and password.
     @todo Integrate with OS accounts.
 */
 class KABUKI Account {
  public:
-  /** Constructs an Account with the given char. */
+  /* Constructs an Account with the given char. */
   Account(const char* username);
 
-  /** Constructs an account from the given char and password. */
+  /* Constructs an account from the given char and password. */
   Account(const char* username, const char* password);
 
-  /** Returns true if this is a valid account. */
+  /* Returns true if this is a valid account. */
   bool IsValid();
 
-  /** Gets a reference to the name char.  */
+  /* Gets a reference to the name char.  */
   const char* GetName();
 
-  /** Sets the name to the char. */
+  /* Sets the name to the char. */
   bool SetName(const char* string);
 
-  /** Returns true if this account requires a password. */
+  /* Returns true if this account requires a password. */
   bool RequiresPassword();
 
-  /** Sets the password to the new char. */
+  /* Sets the password to the new char. */
   void SetPassword(const char* string);
 
-  /** Gets a reverence to the user list. */
+  /* Gets a reverence to the user list. */
   Roster& GetUsers();
 
-  /** Allows another user to be attached to this account. */
+  /* Allows another user to be attached to this account. */
   void AddUser(User& user);
 
-  /** Prints this object to the log. */
+  /* Prints this object to the log. */
   Printer Print(Printer& printer);
 
  private:

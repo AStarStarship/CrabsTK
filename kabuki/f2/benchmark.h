@@ -15,8 +15,8 @@ specific language governing permissions and limitations under the License. */
 #include <stdafx.h>
 
 #if SEAM >= SEAM_00_00_00__00_01
-#ifndef INCLUDED_F2_BENCHMARK
-#define INCLUDED_F2_BENCHMARK 1
+#ifndef INCLUDED_KABUKI_F2_BENCHMARK
+#define INCLUDED_KABUKI_F2_BENCHMARK 1
 
 #include "test.h"
 
@@ -25,7 +25,7 @@ namespace _ {
 class BenchmarkCase {
  public:
   /* Constructs an object from the given values. */
-  BenchmarkCase(const char* name, SeamTree* cases, int count);
+  BenchmarkCase(const char* name, TestCase* cases, int count);
 
   /* Runs the benchmark. */
   TestResult Run(const char* args);
@@ -35,7 +35,7 @@ class BenchmarkCase {
 
  private:
   const char* name;  //< Name of this benchmark case.
-  SeamTree* cases;      //< Array of pointers of BenchmarkCase(s).
+  SeamTree* cases;   //< Array of pointers of BenchmarkCase(s).
   int count;         //< Number of test cases.
 };
 
@@ -60,5 +60,5 @@ class Benchmark {
 
 }  // namespace _
 
-#endif  //< INCLUDED_F2_BENCHMARK
+#endif  //< INCLUDED_KABUKI_F2_BENCHMARK
 #endif  //< #if SEAM >= SEAM_00_00_00__00_01

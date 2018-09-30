@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/name.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -23,13 +23,13 @@
 
 namespace _ {
 
-/** A name of an entity. */
+/* A name of an entity. */
 class KABUKI Name {
  public:
-  /** Default constructor. */
+  /* Default constructor. */
   Name();
 
-  /** Writes this object to the given text. */
+  /* Writes this object to the given text. */
   void Write(Text& text);
 };
 

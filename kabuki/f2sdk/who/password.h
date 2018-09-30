@@ -1,4 +1,4 @@
-/** Kabuki Toolkit
+/* Kabuki Toolkit
     @file    $kabuki-toolkit/library/kt/id/password.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -23,13 +23,13 @@
 
 namespace _ {
 
-/** Interface for a class that can validate a password. */
+/* Interface for a class that can validate a password. */
 struct PasswordAuthenticator {
-  /** Function validates the password for correctness. */
+  /* Function validates the password for correctness. */
   virtual const char* IsValid(const char* password) = 0;
 };
 
-/** An account password Authenticator .
+/* An account password Authenticator .
     @todo Add salt!
 */
 class KABUKI Password {
@@ -42,33 +42,33 @@ class KABUKI Password {
 
   static const char kDefault[];  //< Default password.
 
-  /** Attempts to create a password from the given password with the default
+  /* Attempts to create a password from the given password with the default
       format.
       If the password does not match the default format, the default password
       will be used.
   */
   Password(Authenticator* authenticator, const char* password = kDefault);
 
-  /** Destructs the password. */
+  /* Destructs the password. */
   ~Password();
 
-  /** Gets the password key. */
+  /* Gets the password key. */
   const char* GetKey();
 
-  /** Attempts to set the password and returns a non-zero error message upon
+  /* Attempts to set the password and returns a non-zero error message upon
    * failure. */
   bool SetKey(const char* password);
 
-  /** Gets true if the given password is valid. */
+  /* Gets true if the given password is valid. */
   static bool IsValid(const char* password);
 
-  /** Returns true if this password equals the given one. */
+  /* Returns true if this password equals the given one. */
   bool Equals(const char* string);
 
-  /** Returns true if this password equals the given one. */
+  /* Returns true if this password equals the given one. */
   bool Equals(const Password& p);
 
-  /** Prints this object to a expression. */
+  /* Prints this object to a expression. */
   Text& Out(Text& txt = Text());
 
  private:
