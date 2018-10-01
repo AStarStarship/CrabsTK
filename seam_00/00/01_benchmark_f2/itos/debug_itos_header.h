@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 
-#include <stdafx.h>
+#include <pch.h>
 
 #if SEAM == SEAM_0_0_0
 

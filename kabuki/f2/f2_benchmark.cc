@@ -11,7 +11,7 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
-#include <stdafx.h>
+#include <pch.h>
 
 #if SEAM >= SEAM_00_00_00__00_01
 #include "tbenchmark.h"
@@ -33,26 +33,27 @@ namespace _ {
 BenchmarkCase::BenchmarkCase(const char* name, TestCase* cases, int count)
     : name(name), cases(cases), count(count) {}
 
-TestResult BenchmarkCase::Run(const char* args) {
+const char* BenchmarkCase::Run(char* cursor, char* end, const char* args) {
+  /*
   double nil_reading;
   int i;
   int columns_max;
   ASSERT(Scan<>(args, columns_max));
 
   for (i = 0; i < count; ++i) {
-    TestResult result = (*cases[i])(nullptr);
-    Print(result.name);
+    const char* result = (*cases[i])(nullptr, nullptr, nullptr);
+    Print(result);
     if (i < count) Print(',', ' ');
   }
   for (; i < columns_max; ++i) Print(',');
   PrintLn();
   for (i = 0; i < count; ++i) {
-    TestResult result = (*cases[i])(nullptr);
+    const char* result = (*cases[i])(nullptr, nullptr, nullptr);
     if (i < count) Print(',', ' ');
   }
   PrintLn();
-
-  return TestResult();
+  */
+  return nullptr;
 }
 
 int BenchmarkCase::GetCount() {}
@@ -66,7 +67,8 @@ Benchmark::Benchmark(const char* name, const char* filename,
   }
 }
 
-TestResult Benchmark::Run(const char* args) {
+const char* Benchmark::Run(char* cursor, char* end, const char* args) {
+  /*
   std::ofstream out(filename);
 
   auto* coutbuf = std::cout.rdbuf();
@@ -74,16 +76,16 @@ TestResult Benchmark::Run(const char* args) {
 
   for (size_t i = 0; i < count; ++i) {
     BenchmarkCase group = groups[i];
-    TestResult result = group.Run(args);
-    ASSERT(result.name);
-    Print(result.name);
+    const char* result = group.Run(cursor, end, args);
+    ASSERT(result);
+    Print(result);
   }
-  BenchmarkCase *cursor = groups, *end = groups + count - 1;
-  while (cursor <= end) {
-    (cursor++)->Run(args);
+  BenchmarkCase *benchmark_case = groups, *end = groups + count - 1;
+  for (int i = 0; i <  {
+    groups[i]->Run(cursor, end, args);
   }
-  std::cout.rdbuf(coutbuf);
-  return TestResult();
+  std::cout.rdbuf(coutbuf);*/
+  return nullptr;
 }
 
 }  // namespace _

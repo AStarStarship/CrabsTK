@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\..\seam.h">
+      <Filter>seam_00</Filter>
+    </ClInclude>
+    <ClInclude Include="..\seam.h">
+      <Filter>seam_00\00</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cc" />
+    <ClCompile Include="pch.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="seam_00">
+      <UniqueIdentifier>{06a50c59-37fa-45fe-92f2-8a2b7ccfbb6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00">
+      <UniqueIdentifier>{5b5b6e2f-e70d-4e6d-8cf6-0b4645ec271f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\01">
+      <UniqueIdentifier>{4eaad064-e7b9-4ce9-a9ae-0e5f4bd2110a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\02">
+      <UniqueIdentifier>{f7d95a46-e01d-42db-aab3-e86f04c03c25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\03">
+      <UniqueIdentifier>{d30b639c-8552-4548-a42d-0e84c698cbb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\04">
+      <UniqueIdentifier>{af3a5f7b-05b8-42b3-91e9-f2b2d12038f0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\readme.md">
+      <Filter>seam_00\00</Filter>
+    </None>
+  </ItemGroup>
+</Project>

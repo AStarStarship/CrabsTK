@@ -1,55 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="kabuki">
-      <UniqueIdentifier>{cc781c14-e0fe-419a-a152-41bf7d78ab0e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="resources">
+    <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="kabuki">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
     <Filter Include="kabuki\f2">
-      <UniqueIdentifier>{bf4eaa44-93da-40d5-b92d-992f938e44e2}</UniqueIdentifier>
+      <UniqueIdentifier>{e509a2ff-6dec-4423-82a9-70845d2eaf92}</UniqueIdentifier>
     </Filter>
     <Filter Include="seam_00">
-      <UniqueIdentifier>{fa5a8488-3dee-46df-82e4-4002de43c1cc}</UniqueIdentifier>
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="seam_00\00">
-      <UniqueIdentifier>{dab5b93a-8d43-46e6-bdba-4cbdcd7ff580}</UniqueIdentifier>
+      <UniqueIdentifier>{f1b4d4c4-3d20-4ca6-976c-28026dec3322}</UniqueIdentifier>
     </Filter>
     <Filter Include="seam_00\00\00_test_f2">
-      <UniqueIdentifier>{3aa20d48-9bf7-4d80-bcd2-497304516bf4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_00\00\00_test_f2\sprint_00">
-      <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
+      <UniqueIdentifier>{8097299a-8ff6-4073-bf3e-f9ac46f0c1a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sprint_00\readme.md">
-      <Filter>seam_00\00\00_test_f2\sprint_00</Filter>
-    </None>
-    <None Include="..\..\..\kabuki\f2\readme.md">
+    <ClCompile Include="pch.cc">
+      <Filter>seam_00\00\00_test_f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kabuki\f2\f2_benchmark.cc">
       <Filter>kabuki\f2</Filter>
-    </None>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kabuki\f2\f2_binary.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kabuki\f2\f2_console.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kabuki\f2\f2_rng.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kabuki\f2\f2_test.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kabuki\f2\f2_vk.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\seam_tree.h">
-      <Filter>seam_00</Filter>
-    </ClInclude>
-    <ClInclude Include="..\seam_tree.h">
-      <Filter>seam_00\00</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="pch.h">
       <Filter>seam_00\00\00_test_f2</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>seam_00\00\00_test_f2</Filter>
+    <ClInclude Include="..\..\..\kabuki\f2\binary.h">
+      <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="sprint_00\seam_tree.h">
-      <Filter>seam_00\00\00_test_f2\sprint_00</Filter>
+    <ClInclude Include="..\..\..\kabuki\f2\config.h">
+      <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="seam_tree.h">
-      <Filter>seam_00\00\00_test_f2</Filter>
+    <ClInclude Include="..\..\..\kabuki\f2\console.h">
+      <Filter>kabuki\f2</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\kabuki\f2\global.h">
       <Filter>kabuki\f2</Filter>
@@ -75,6 +83,9 @@
     <ClInclude Include="..\..\..\kabuki\f2\test.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\kabuki\f2\test_footer.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\kabuki\f2\trng.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
@@ -87,43 +98,10 @@
     <ClInclude Include="..\..\..\kabuki\f2\benchmark.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\kabuki\f2\binary.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\kabuki\f2\console.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="sprint_00\scrum_00.cc">
-      <Filter>seam_00\00\00_test_f2\sprint_00</Filter>
-    </ClCompile>
-    <ClCompile Include="sprint_00\scrum_01.cc">
-      <Filter>seam_00\00\00_test_f2\sprint_00</Filter>
-    </ClCompile>
-    <ClCompile Include="sprint_00\scrum_02.cc">
-      <Filter>seam_00\00\00_test_f2\sprint_00</Filter>
-    </ClCompile>
-    <ClCompile Include="stdafx.cc">
-      <Filter>seam_00\00\00_test_f2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\kabuki\f2\f2_vk.cc">
+    <None Include="..\..\..\kabuki\f2\readme.md">
       <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\kabuki\f2\f2_benchmark.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\kabuki\f2\f2_binary.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\kabuki\f2\f2_console.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\kabuki\f2\f2_rng.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\kabuki\f2\f2_test.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
+    </None>
   </ItemGroup>
 </Project>

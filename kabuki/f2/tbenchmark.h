@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 
 #if SEAM >= SEAM_00_00_00__00_01
 #ifndef INCLUDED_KABUKI_F2_TBENCHMARK
@@ -23,7 +23,7 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 template <typename UI>
-TestResult BenchmarkCaseLoop(const char* args) {
+const char* BenchmarkCaseLoop(char* cursor, char* end, const char* args) {
   PrintHeading((sizeof(UI) == 8) ? "Testing 64-bit use case"
                                  : "Testing 32-bit use case");
 }

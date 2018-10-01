@@ -12,35 +12,25 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 
 #if SEAM >= SEAM_00_00_00__00_00
 #ifndef INCLUDED_KABUKI_F2_TEST
-#define INCLUDED_KABUKI_F2_TEST SEAM_00_00_00__00_00
+#define INCLUDED_KABUKI_F2_TEST 1
 
-namespace _ {
-
-/* Class for storing information about a failed assertion. */
-struct API TestResult {
-  const char *name,  //< The file the assertion occurred at.
-      *description;  //< An optional description to print.
-  int line,          //< The line the assertion failed at.
-      code;          //< The test result code.
-};
-
-}  // namespace _
-
-typedef const char* (*TestCase)(_::TestResult& test_result, const char* args);
+/* Function pointer prototype for a test case with command line argument string
+ * .*/
+typedef const char* (*TestCase)(char* test_result, const char* args);
 
 namespace _ {
 
 /* Tests an array of TestCase(s).
 @return 0 upon success or an app exit code upon failure. */
-const char* TestTree(TestResult& test_result, const char* args, TestCase* seams,
-                     int node_count);
+const char* TestTree(char* test_result, char* test_details, const char* args,
+                     TestCase* seams, int node_count);
 
 /* Prints a message when a TestCase completes without failure. */
-void TestEnd(const char* function_name);
+bool TestBegin(char* seam_log, char* seam_header, const char* args);
 
 /* Assert check if the given condition is true
 @return false if the condition is false.

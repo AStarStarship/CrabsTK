@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 
 #if SEAM >= SEAM_00_00_00__00_01
 #ifndef INCLUDED_KABUKI_F2_TTEST
@@ -23,8 +23,9 @@ specific language governing permissions and limitations under the License. */
 #include "tconsole.h"
 
 namespace _ {
+
 template <TestCase... N>
-const char* TestTreeNode(TestResult& test_result, const char* args) {
+const char* TestTreeNode(char* test_result, const char* args) {
   static SeamTree nodes[sizeof...(N)] = {N...};
   return TestTree(test_result, args, nodes, sizeof...(N));
 }

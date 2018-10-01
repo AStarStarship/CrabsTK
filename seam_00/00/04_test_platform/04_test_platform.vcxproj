@@ -20,11 +20,11 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{AEEEE287-C028-4A3E-BBA2-1B3F5DEDFBBA}</ProjectGuid>
+    <ProjectGuid>{A05F64E2-0BD3-42F7-AAC4-4D57909E9D85}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>kabukitoolkit</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
-    <ProjectName>03_test_chinese_room</ProjectName>
+    <ProjectName>04_test_platform</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

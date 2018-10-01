@@ -12,10 +12,10 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 
-#ifndef INCLUDED_KABUKI_F2_TEST
-#define INCLUDED_KABUKI_F2_TEST 1
+#ifndef INCLUDED_KABUKI_F2_TEST_FOOTER
+#define INCLUDED_KABUKI_F2_TEST_FOOTER 1
 
 #if SEAM > 0 && SEAM <= SEAM_N
 #undef ASSERT(condition)
@@ -27,4 +27,4 @@ specific language governing permissions and limitations under the License. */
 #undef TEST_END
 #endif
 
-#endif  //< #ifndef INCLUDED_KABUKI_F2_TEST
+#endif  //< #ifndef INCLUDED_KABUKI_F2_TEST_FOOTER

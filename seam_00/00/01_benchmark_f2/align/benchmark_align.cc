@@ -1,5 +1,5 @@
 
-#include <stdafx.h>
+#include <pch.h>
 
 #if SEAM >= SEAM_00_00_00__00_01
 namespace _ {}

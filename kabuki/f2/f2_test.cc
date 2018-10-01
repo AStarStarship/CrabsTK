@@ -11,7 +11,7 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
-#include <stdafx.h>
+#include <pch.h>
 
 #if SEAM >= SEAM_00_00_00__00_01
 #include "ttest.h"
@@ -20,7 +20,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-const char* TestTree(TestResult& test_result, const char* args, TestCase* tests,
+const char* TestTree(char* test_result, const char* args, TestCase* tests,
                      int count) {
   for (int i = 0; i < count; ++i) {
     TestCase test = tests[i];

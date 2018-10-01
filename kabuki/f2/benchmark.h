@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 
 #if SEAM >= SEAM_00_00_00__00_01
 #ifndef INCLUDED_KABUKI_F2_BENCHMARK
@@ -22,20 +22,28 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
+/* Class for storing information about a failed assertion.
+struct API TestResult {
+  const char *name,  //< The file the assertion occurred at.
+      *description;  //< An optional description to print.
+  int line,          //< The line the assertion failed at.
+      code;          //< The test result code.
+}; */
+
 class BenchmarkCase {
  public:
   /* Constructs an object from the given values. */
   BenchmarkCase(const char* name, TestCase* cases, int count);
 
   /* Runs the benchmark. */
-  TestResult Run(const char* args);
+  const char* Run(char* cursor, char* end, const char* args);
 
   /* Gets the number of cases in this benchmark. */
   int GetCount();
 
  private:
   const char* name;  //< Name of this benchmark case.
-  SeamTree* cases;   //< Array of pointers of BenchmarkCase(s).
+  TestCase* cases;   //< Array of pointers of BenchmarkCase(s).
   int count;         //< Number of test cases.
 };
 
@@ -48,7 +56,7 @@ class Benchmark {
 
   /* Runs the benchmark.
   @return If args is nil, result will contain the name as */
-  TestResult Run(const char* args);
+  const char* Run(char* cursor, char* end, const char* args);
 
  private:
   const char *name,       //< Name of the benchmark.
