@@ -11,7 +11,7 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
-#include <stdafx.h>
+#include <pch.h>
 #if SEAM >= SEAM_0_0_1
 #ifndef INCLUDED_CRABS_UTF8
 #define INCLUDED_CRABS_UTF8
@@ -83,7 +83,7 @@ KABUKI const char* StringEquals(const char* text_a, const char* text_b);
 
 /* Compares the source and query char as nil-terminated strings. */
 KABUKI const char* StringEquals(const char* text, const char* text_end,
-                              const char* query);
+                                const char* query);
 
 /* Searches the given char for the given char.
 @param  text      The char to search.

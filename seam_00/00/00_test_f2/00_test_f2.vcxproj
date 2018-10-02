@@ -100,7 +100,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
@@ -169,7 +169,30 @@
     <ClInclude Include="..\..\..\kabuki\f2\trng.h" />
     <ClInclude Include="..\..\..\kabuki\f2\ttest.h" />
     <ClInclude Include="..\..\..\kabuki\f2\vk.h" />
+    <ClInclude Include="..\..\seam_footer.h" />
+    <ClInclude Include="..\..\seam_header.h" />
+    <ClInclude Include="..\seam.h" />
+    <ClInclude Include="..\seam_footer.h" />
+    <ClInclude Include="..\seam_header.h" />
+    <ClInclude Include="00\00\seam.h" />
+    <ClInclude Include="00\00\seam_footer.h" />
+    <ClInclude Include="00\00\seam_header.h" />
+    <ClInclude Include="00\seam.h" />
+    <ClInclude Include="00\seam_footer.h" />
+    <ClInclude Include="00\seam_header.h" />
+    <ClInclude Include="01\00\seam.h" />
+    <ClInclude Include="01\00\seam_footer.h" />
+    <ClInclude Include="01\00\seam_header.h" />
+    <ClInclude Include="01\01\seam.h" />
+    <ClInclude Include="01\01\seam_footer.h" />
+    <ClInclude Include="01\01\seam_header.h" />
+    <ClInclude Include="01\02\seam.h" />
+    <ClInclude Include="01\02\seam_footer.h" />
+    <ClInclude Include="01\02\seam_header.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="seam.h" />
+    <ClInclude Include="seam_footer.h" />
+    <ClInclude Include="seam_header.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\kabuki\f2\f2_benchmark.cc" />
@@ -178,15 +201,19 @@
     <ClCompile Include="..\..\..\kabuki\f2\f2_rng.cc" />
     <ClCompile Include="..\..\..\kabuki\f2\f2_test.cc" />
     <ClCompile Include="..\..\..\kabuki\f2\f2_vk.cc" />
-    <ClCompile Include="pch.cc">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="..\..\seam_tree.cc" />
+    <ClCompile Include="pch.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\kabuki\f2\readme.md" />
+    <None Include="..\..\readme.md" />
+    <None Include="..\readme.md" />
+    <None Include="00\00\readme.md" />
+    <None Include="00\readme.md" />
+    <None Include="01\00\readme.md" />
+    <None Include="01\01\readme.md" />
+    <None Include="01\02\readme.md" />
+    <None Include="readme.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

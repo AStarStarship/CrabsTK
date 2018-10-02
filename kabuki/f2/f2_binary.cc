@@ -21,11 +21,9 @@ specific language governing permissions and limitations under the License. */
 #include <cmath>
 
 #if SEAM == SEAM_00_00_00__00_01
-
 #define PRINT(item) Print(item)
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PRINTED                                                   \
-  ;                                                                     \
   sprintf_s(buffer, 24, "%u", value);                                   \
   *end = 0;                                                             \
   Printf("\n    Printed \"%s\" leaving value:\"%s\":%u", begin, buffer, \
@@ -42,7 +40,7 @@ specific language governing permissions and limitations under the License. */
   Char* begin = cursor;                \
   Char buffer[256];                    \
   sprintf_s(buffer, 256, "%u", value); \
-  Printf("Expecting %s:%u", buffer, (uint)strlen(buffer));
+  Printf("Expecting %s:%u", buffer, StringLength<>(buffer));
 #define BEGIN_ITOS_ALGORITHM \
   Print('\n');               \
   for (int i = 80; i > 0; --i) Print('-')

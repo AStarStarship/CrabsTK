@@ -26,7 +26,7 @@ namespace _ {
 
 template <TestCase... N>
 const char* TestTreeNode(char* test_result, const char* args) {
-  static SeamTree nodes[sizeof...(N)] = {N...};
+  static TestCase nodes[sizeof...(N)] = {N...};
   return TestTree(test_result, args, nodes, sizeof...(N));
 }
 

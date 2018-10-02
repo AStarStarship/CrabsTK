@@ -24,8 +24,10 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 int main(int arg_count, char** args) {
+  enum { kSeamLogSize = 1024 };
+  char seam_log[kSeamLogSize];
   return TestTree<Seam_00_00, Seam_00_01, Seam_00_02, Seam_00_03, Seam_00_04>(
-             test_result, args)
+             seam_log, args)
              ? APP_EXIT_SUCCESS
              : APP_EXIT_FAILURE;
 }

@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 #ifndef INCLUDED_CRABS_EXPR
 #define INCLUDED_CRABS_EXPR
 #if SEAM >= SEAM_0_0_4
@@ -35,7 +35,7 @@ namespace _ {
     App/Driver/User writes to the end of the Tx buffer and the driver reads from
     the beginning. The user writes are synchronous and the driver reads are
     asynchronous.
-    
+    
 
 
 
@@ -47,7 +47,7 @@ namespace _ {
 
 
     # Ring Buffer Streaming Diagram
-    
+    
 
 
 
@@ -67,7 +67,7 @@ namespace _ {
     BIn   |>-Buffer->|>-Async Portal Tx->|>-Sync User Writes->|>-Buffer->|
           |__________|___________________|____________________|__________|
     @endcode
-    
+    
 
 
 
@@ -80,7 +80,7 @@ namespace _ {
 
     Almost all block of memory in Script has something that grows up and another
     that grows down.
-    
+    
 
 
 
@@ -92,7 +92,7 @@ namespace _ {
 
 
     # Stack Memory Layout
-    
+    
 
 
 
@@ -183,8 +183,8 @@ API BOut* ExprBOut(Expr* expr);
     @param unpacked_buffer The word-aligned expression buffer.
     @param unpacked_size   Size of the unpacked buffer. */
 API Expr* ExprInit(uintptr_t* buffer, uint_t buffer_size, uint_t stack_count,
-                      Operand* root, uintptr_t* unpacked_buffer,
-                      uintptr_t unpacked_size);
+                   Operand* root, uintptr_t* unpacked_buffer,
+                   uintptr_t unpacked_size);
 
 /* Gets the base address of the device stack. */
 inline Operand** ExprStack(Expr* expr) {
@@ -257,7 +257,7 @@ inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
    const char* cursor = ArgsParse (expr->args_cursor, expr->args_end,
                                    params, args);
    if (!cursor) {
-       
+       
 
 
 

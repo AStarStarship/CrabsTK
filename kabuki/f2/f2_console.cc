@@ -23,8 +23,8 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 const char* ConsoleArgs(int args_count, char** args) {
-  if (args_count <= 1) return false;
-  if (args_count == 2) return true;
+  if (args_count <= 1) return nullptr;
+  if (args_count == 2) return args[1];
   for (int i = 2; i < args_count; ++i) {
     char* cursor = args[i];
     while (*cursor) cursor--;

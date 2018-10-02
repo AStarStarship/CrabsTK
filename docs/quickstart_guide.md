@@ -4,38 +4,29 @@
  | | | | | | | |/ __| |/ / __| __/ _` | '__| __| | |  _| | | | |/ _` |/ _ \
  | |_| | |_| | | (__|   <\__ \ || (_| | |  | |_  | |_| | |_| | | (_| |  __/
   \__\_\\__,_|_|\___|_|\_\___/\__\__,_|_|   \__|  \____|\__,_|_|\__,_|\___|
-                                                                                
 ```
+
+***This Quickstart is broken because I've integrated most of the stuff into one SDK. Just look at the seam_00.***
 
 # Visual Studio Setup
 Right now the Visual Studio projects are mapped to "C:\Workspace" at the moment. Please feel free to remap the include and library directories to relative paths. It's a todo.
 
 ## Step 1
-Download and install [Visual Studio 2017](https://www.visualstudio.com/) with all of the C++ tools, and create folder "C:\Workspace".
+Download and install [Visual Studio 2017](https://www.visualstudio.com/) with all of the C++ tools, and create folder "C:\workspace".
 
 ## Step 2
 
-Download and isntall Git at https://git-scm.com/, and add the path to `git.exe` into your OS console.
+Download and install Git at https://git-scm.com/, and add the path to `git.exe` into your OS console.
 
 ## Step 3
-```
-cd C:\workspace
-git clone https://github.com/cpputest/cpputest.git
-```
-
-## Step 3B
-
-Open up the CppUTest visual studio solution file in the "C:/workspace/cpputest" root directory. Click `Build`->`Build Batch...`.
-
-## Step 4
 
 ```
 git clone https://github.com/google/angle.git
 ```
 
-## Step 5
+## Step 4
 
-Loop through the ~/projects directory for a project that could work for a bootstrap for your project and copy the folder into yoru workspace and modify the "assembly.h" and `pch.h` to suit your needs.
+Loop through the ~/seam_00 directory for a project that could work for a bootstrap for your project and copy the folder into yoru workspace and modify the "assembly.h" and `pch.h` to suit your needs.
 
 # CMake Setup
 
@@ -45,7 +36,7 @@ Download CMake Executables (Building CMake is outside of the scope of this Guide
 
 ## Step 2
 
-Open a console in the ~/kabuki/toolkit folder and build the Kabuki Toolkit Library with the command:
+Open a console in the ~/kabuki folder and build the Kabuki Toolkit Library with the command:
 
 ```
 cmake ./

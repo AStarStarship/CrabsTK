@@ -13,7 +13,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 #if SEAM >= SEAM_0_0_2
 #ifndef INCLUDED_CRABS_CLOCK
 #define INCLUDED_CRABS_CLOCK
@@ -153,19 +153,19 @@ API int ClockCompare(Clock& clock, Clock& other);
 
 /* Compares the given Tms to the time and prints the results. */
 API int ClockCompare(Clock& clock, int year, int month, int day, int hour,
-                        int minute, int second);
+                     int minute, int second);
 
 /* Zeros out the struct values.
     @param calendar_time A calendar time struct to zero out. */
 API void ClockZeroTime(Clock& seconds);
 
 /* Creates a 32-bit seconds timestamp.  */
-API Tms ClockTimeTMS(int year, int month, int day, int hour = 0,
-                        int minute = 0, int second = 0);
+API Tms ClockTimeTMS(int year, int month, int day, int hour = 0, int minute = 0,
+                     int second = 0);
 
 /* Creates a 64-bit seconds timestamp.  */
-API Tme ClockTimeTME(int year, int month, int day, int hour = 0,
-                        int minute = 0, int second = 0);
+API Tme ClockTimeTME(int year, int month, int day, int hour = 0, int minute = 0,
+                     int second = 0);
 
 #if USING_UTF8
 /* Writes the given time to the text buffer.
@@ -220,7 +220,7 @@ API char* PrintTime(char* begin, char* end, Tme time);
 @param minute The location to write the number of minutes to.
 @param Second The location to write the number of seconds to. */
 API const char* TextScanTime(const char* string, int& hour, int& minute,
-                                int& second);
+                             int& second);
 
 /* Converts a keyboard input to char and deletes the char.
 @return Nil upon buffer failure or char directly after the end of the
@@ -292,8 +292,8 @@ API char16_t* Print(char16_t* begin, char16_t* end, Tme time);
 @param hour   The location to write the number of hours to.
 @param minute The location to write the number of minutes to.
 @param Second The location to write the number of seconds to. */
-API const char16_t* TextScanTime(const char16_t* string, int& hour,
-                                    int& minute, int& second);
+API const char16_t* TextScanTime(const char16_t* string, int& hour, int& minute,
+                                 int& second);
 
 /* Converts a keyboard input to char16_t and deletes the char16_t.
 @return Nil upon buffer failure or char16_t directly after the end of the
@@ -364,8 +364,8 @@ API char32_t* PrintTime(char32_t* begin, char32_t* end, Tme time);
 @16:20:00
 @endcode
 */
-API const char32_t* TextScanTime(const char32_t* input, int& hour,
-                                    int& minute, int& second);
+API const char32_t* TextScanTime(const char32_t* input, int& hour, int& minute,
+                                 int& second);
 
 /* Converts a keyboard input to char and deletes the char.
  */

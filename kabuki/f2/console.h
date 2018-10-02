@@ -21,10 +21,10 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* Converts int main(int,char**) arguments back into a string.
-@return false if there are no args to convert.
+@return nil if there are no arguments or the args string upon success.
 @param arg_count The number of arguments.
 @param args      The arguments. */
-bool ConsoleArgs(int args_count, char** args);
+const char* ConsoleArgs(int arg_count, char** args);
 
 class API Console {
  public:

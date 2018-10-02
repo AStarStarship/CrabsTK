@@ -12,50 +12,31 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 #ifndef INCLUDED_CRABS_GLOBAL
 #define INCLUDED_CRABS_GLOBAL
 // Dependencies:
 
 #include "../f2/global.h"
 
-#if SEAM >= SEAM_00_00_00__00_00
-#if SEAM == SEAM_00_00_00__00_00
-#else
-#include "binary_32.h"
-#include "binary_64.h"
-#include "random.h"
-#endif
-#endif
-
-#if SEAM >= SEAM_00_00_00__00_01
-#if SEAM == SEAM_00_00_00__00_01
-#include "test.h"
-#else
-#include "binary_64.h"
-#include "clock.h"
-#include "hex.h"
-#include "socket.h"
-#include "str.h"
-#endif
-#endif
-
 #if SEAM >= SEAM_00_00_00__00_02
-#if SEAM == SEAM_00_00_00__00_02
-#include "array.h"
 #include "ascii.h"
 #include "bsq.h"
-#include "list.h"
-#include "map.h"
-#include "stack.h"
-#include "test.h"
+#include "tarray.h"
+#include "tlst.h"
+#include "tmap.h"
+#include "tstk.h"
 //#include "multimap.h"
 //#include "dictionary.h"
 #endif
+
+#if SEAM >= SEAM_00_00_00__00_03
+#include "clock.h"
+#include "socket.h"
+#include "str.h"
 #endif
 
 #if SEAM >= SEAM_00_00_00__00_03
-#if SEAM == SEAM_00_00_00__00_03
 #include "address.h"
 #include "args.h"
 #include "bin.h"
@@ -67,12 +48,9 @@ specific language governing permissions and limitations under the License. */
 #include "room.h"
 #include "slot.h"
 #endif
-#endif
 
 #if SEAM >= SEAM_00_00_00__00_04
-#if SEAM == SEAM_00_00_00__00_04
 #include "library.h"
-#endif
 #endif
 // End dependencies.
 

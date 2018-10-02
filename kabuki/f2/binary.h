@@ -13,8 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00_00
-#ifndef INCLUDED_CRABS_BINARY
+#if (SEAM >= SEAM_00_00_00__00_00) && INCLUDED_CRABS_BINARY == 0
 #define INCLUDED_CRABS_BINARY 1
 
 namespace _ {
@@ -188,5 +187,4 @@ API int HexToByte(uint16_t h);
 
 }  // namespace _
 
-#endif  //< #if INCLUDED_CRABS_BINARY
-#endif  //< #if SEAM >= SEAM_00_00_00__00_01
+#endif  //< #if SEAM >= SEAM_00_00_00__00_01 && INCLUDED_CRABS_BINARY == 0

@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 #if SEAM >= SEAM_0_0_4
 #ifndef INCLUDED_CRABS_BOUT
 #define INCLUDED_CRABS_BOUT
@@ -34,7 +34,7 @@ typedef enum BOutStates {
 
     The BOut ring buffer is defined as being contiguous
 
-    
+    
 
 
 
@@ -49,7 +49,7 @@ typedef enum BOutStates {
 
 
     @code
-    
+    
 
 
 

@@ -26,11 +26,11 @@ namespace _ {
 
 /* Tests an array of TestCase(s).
 @return 0 upon success or an app exit code upon failure. */
-const char* TestTree(char* test_result, char* test_details, const char* args,
+const char* TestTree(char* seam_log, char* seam_end, const char* args,
                      TestCase* seams, int node_count);
 
 /* Prints a message when a TestCase completes without failure. */
-bool TestBegin(char* seam_log, char* seam_header, const char* args);
+bool TestBegin(char* seam_log, char* seam_end, const char* args);
 
 /* Assert check if the given condition is true
 @return false if the condition is false.

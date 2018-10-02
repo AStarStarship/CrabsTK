@@ -14,8 +14,77 @@
     <Filter Include="kabuki\crabs">
       <UniqueIdentifier>{b24abc50-1aa7-4ebf-8b17-28642b880959}</UniqueIdentifier>
     </Filter>
-    <Filter Include="sprint_00">
+    <Filter Include="seam_00">
       <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="seam_00\00">
+      <UniqueIdentifier>{b422a68d-88ed-415f-a7cc-6cd1fc64b0a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\01_test_crabs">
+      <UniqueIdentifier>{6751a9c9-baaa-45c7-b573-d99512d2e477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\01_test_crabs\00">
+      <UniqueIdentifier>{b920f446-2f56-4ec5-850a-5db584ce4f00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\01_test_crabs\00\00">
+      <UniqueIdentifier>{151653ec-e891-45ee-a857-40e75f195209}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\01_test_crabs\01">
+      <UniqueIdentifier>{0746cdb7-2def-4865-934b-caf9b57a0dcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\01_test_crabs\01\00">
+      <UniqueIdentifier>{bec775a4-6e56-4efe-850a-cf40a7d2ad30}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\seam_tree.cc">
+      <Filter>seam_00</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cc">
+      <Filter>seam_00\00\01_test_crabs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="assembly.h">
+      <Filter>seam_00\00\01_test_crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>seam_00\00\01_test_crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="seam.h">
+      <Filter>seam_00\00\01_test_crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="seam_footer.h">
+      <Filter>seam_00\00\01_test_crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="seam_header.h">
+      <Filter>seam_00\00\01_test_crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>seam_00\00\01_test_crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\seam.h">
+      <Filter>seam_00\00</Filter>
+    </ClInclude>
+    <ClInclude Include="..\seam_footer.h">
+      <Filter>seam_00\00</Filter>
+    </ClInclude>
+    <ClInclude Include="..\seam_header.h">
+      <Filter>seam_00\00</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\seam_footer.h">
+      <Filter>seam_00</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\seam_header.h">
+      <Filter>seam_00</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\readme.md">
+      <Filter>seam_00\00</Filter>
+    </None>
+    <None Include="..\..\readme.md">
+      <Filter>seam_00</Filter>
+    </None>
   </ItemGroup>
 </Project>

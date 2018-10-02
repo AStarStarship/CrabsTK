@@ -18,6 +18,27 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\seam_tree.cc" />
+    <ClCompile Include="pch.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\seam_footer.h" />
+    <ClInclude Include="..\..\seam_header.h" />
+    <ClInclude Include="..\seam.h" />
+    <ClInclude Include="..\seam_footer.h" />
+    <ClInclude Include="..\seam_header.h" />
+    <ClInclude Include="assembly.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="seam.h" />
+    <ClInclude Include="seam_footer.h" />
+    <ClInclude Include="seam_header.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\readme.md" />
+    <None Include="..\readme.md" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{AC5BE637-837A-474B-A683-3ADFC6921F39}</ProjectGuid>
@@ -111,7 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)/../../;$(ProjectDir)/../../kabuki/;$(ProjectDir)/;$(ProjectDir)..\..\cpputest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\;$(ProjectDir)\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

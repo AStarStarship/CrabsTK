@@ -1,4 +1,5 @@
 /* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
 @file    ~/seam_00/00/00_test_f2/sprint_01/seam.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -12,23 +13,19 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#include "../seam.h"
+#include "seam_header.h"
 
-#include "sprint_00/seam.h"
-
-#define SEAM_00_00_00__00_00 1
-#define SEAM_00_00_00__00_02 2
-#define SEAM_00_00_00__00_03 3
+#include "00/seam.h"
+#include "01/seam.h"
 
 namespace _ {
-const char* Seam_00_00_00__00_00(char* seam_begin, char* seam_end, const char* args);
-const char* Seam_00_00_00__00_01(char* seam_begin, char* seam_end, const char* args);
-const char* Seam_00_00_00__00_02(char* seam_begin, char* seam_end, const char* args);
 
-static const char* Seam_00_00_00__00(char* seam_begin, char* seam_end,
+static const char* Seam_00_00_00__00(char* seam_log, char* seam_end, 
                                      const char* args) {
-  return TestTreeNode<Seam_00_00_00__00_00, Seam_00_00_00__00_01,
-                      Seam_00_00_00__00_02>(test_result, args);
+  if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
+  return TestTreeNode<Seam_00_00_00__00, Seam_00_00_00__01>(seam_log, seam_end, args);
 }
 
 }  // namespace _
+
+#include "seam_footer.h"

@@ -12,15 +12,12 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 
-#if SEAM >= SEAM_0_0_1
+#if SEAM >= SEAM_00_00_00__01_01
 
 #ifndef INCLUDED_CRABS_ALIGN
 #define INCLUDED_CRABS_ALIGN
-// Dependencies:
-#include "config.h"
-// End dependencies.
 
 namespace _ {
 
@@ -33,10 +30,10 @@ API inline int32_t AlignPowerOf2(int32_t value);
 /* Aligns the given buffer pointer up to a cache line boundary (64 bytes). */
 API inline uintptr_t* AlignUpCacheLine(uintptr_t* buffer);
 
-/* Aligns the given pointer up to a word boandard. */
+/* Aligns the given pointer up to a word boundary. */
 API char* AlignUpPointerWord(char* pointer);
 
-/* Aligns the given pointer up to a word boandard. */
+/* Aligns the given pointer up to a word boundary. */
 API const char* AlignUpPointerWord(const char* pointer);
 
 /* Aligns the pointer down to a word boundary. */
@@ -46,8 +43,7 @@ API char* AlignDownPointerWord(char* pointer);
 API const char* AlignDownPointerWord(const char* pointer);
 
 /* Aligns up the pointer to the given boundary_bit_count. */
-API inline uintptr_t* AlignUp(uintptr_t* pointer,
-                                 uintptr_t boundary_bit_count);
+API inline uintptr_t* AlignUp(uintptr_t* pointer, uintptr_t boundary_bit_count);
 
 /* Aligns the given value up to an 8-byte boundary. */
 API inline int8_t AlignUp(int8_t value);

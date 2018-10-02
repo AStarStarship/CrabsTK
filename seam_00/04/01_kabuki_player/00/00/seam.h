@@ -11,18 +11,20 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
-#include <stdafx.h>
+#include <pch.h>
+
+#include "seam_header.h"
 
 #include <kabuki/f2/test_header.h>
 
 namespace _ {
-const char* Seam_00_04_01__00_00(char* test_log, char* test_heading, 
-                                 const char* args) {
-  TestBegin (test_log, log_end, __FUNCTION__);
+const char* Seam_00_04_01__00_00(char* seam_log, char* seam_end, 
+                          const char* args) {
+  if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
   
   
   
   return nullptr;
 }
 }
-#include <kabuki/f2/test_footer.h>
+#include "seam_footer.h"

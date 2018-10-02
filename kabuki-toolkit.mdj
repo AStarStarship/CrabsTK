@@ -12728,7 +12728,7 @@
 											"top": 198,
 											"width": 75.84814453125,
 											"height": 13,
-											"text": "system"
+											"text": "osal"
 										},
 										{
 											"_type": "LabelView",
@@ -13278,7 +13278,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFkAhjh8A2K30Y="
 					},
-					"name": "system",
+					"name": "osal",
 					"ownedElements": [
 						{
 							"_type": "UMLDependency",
@@ -13318,6 +13318,14 @@
 							"target": {
 								"$ref": "AAAAAAFkBSgFEq4xxAo="
 							}
+						},
+						{
+							"_type": "UMLSubsystem",
+							"_id": "AAAAAAFmMs0kE+QEHmQ=",
+							"_parent": {
+								"$ref": "AAAAAAFjPIwaFbi7m/I="
+							},
+							"name": "Subsystem1"
 						}
 					],
 					"documentation": "SEAM_1, SEAM_3, SEAM_4, SEAM_5, SEAM_6, SEAM_7, SEAM_8"

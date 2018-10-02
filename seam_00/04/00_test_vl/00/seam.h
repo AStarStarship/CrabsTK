@@ -11,7 +11,9 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
-#include <stdafx.h>
+#include <pch.h>
+
+#include "seam_header.h"
 
 #include "../seam_tree.h"
 
@@ -19,7 +21,10 @@ specific language governing permissions and limitations under the License. */
 #include "01.h"
 
 namespace _ {
-const char* Seam_00_04_00(TestResult& test_result, const char* args) {
-    return TestTree<Seam_00_01_00> (test_result, args);
+const char* Seam_00_04_00char* seam_log, char* seam_end, 
+                                 const char* args) {
+  if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
+    return TestTree<Seam_00_01_00> (seam_log, seam_end, args);
 }
 }
+#include "seam_footer.h"

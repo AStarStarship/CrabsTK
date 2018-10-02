@@ -12,12 +12,12 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 #if SEAM >= SEAM_0_0_2
 #ifndef INCLUDED_CRABS_TOBJ
 #define INCLUDED_CRABS_TOBJ
 // Dependencies:
-#include "test.h"
+#include "../f2/test.h"
 #include "obj.h"
 // End dependencies.
 
@@ -89,9 +89,9 @@ inline SI ObjCountRound(SI count) {
 /* A word-aligned ASCII OBJ with a size that is a positive integer multiple
 of 8.
 
-ASCII Objs may only use 16-bit, 32-bit, and 64-bit signed integers for their
+ASCII Objects may only use 16-bit, 32-bit, and 64-bit signed integers for their
 size. The minimum and maximum bounds of size of ASCII objects are defined by the
-minimu size required to store the header with minimum item count, and the
+minimum size required to store the header with minimum item count, and the
 highest positive integer multiple of 8. The fastest way to covert the upper
 bounds is to invert the bits and subtract 7 as follows:
 
@@ -104,23 +104,23 @@ int64_t upper_bounds_si8 = (~(int64_t)0) - 7;
 template <typename Size>
 class TObj {
  public:
-  /* Constructs a buffer with either stically or dynamically allocated memory
+  /* Constructs a buffer with either statically or dynamically allocated memory
   based on if buffer is nil. */
   TObj() : Buffer(size, buffer), destructor(nullptr) {
     // Nothing to do here! ({:-)-/==<
   }
 
-  /* Constructs a buffer with either stically or dynamically allocated memory
+  /* Constructs a buffer with either statically or dynamically allocated memory
   based on if buffer is nil. */
   TObj(Destructor destructor) : Buffer(size, buffer), destructor(destructor) {
     // Nothing to do here! ({:-)-/==<
   }
 
-  /* Constructs a buffer with either stically or dynamically allocated memory
+  /* Constructs a buffer with either statically or dynamically allocated memory
   based on if buffer is nil. */
   TObj(Size size, Destructor destructor = nullptr) : Buffer(size, buffer) {}
 
-  /* Constructs a buffer with either stically or dynamically allocated memory
+  /* Constructs a buffer with either statically or dynamically allocated memory
   based on if buffer is nil. */
   TObj(Size size, uintptr_t* buffer, Destructor destructor = nullptr)
       : Buffer(size, buffer) {}
@@ -142,7 +142,7 @@ class TObj {
   /* Gets the size_. */
   Size GetSize() { return ObjSize<Size>(begin); }
 
-  /* Doubles the size of the buffer and copyes the given byte_count.
+  /* Doubles the size of the buffer and copies the given byte_count.
   @return A positive size of the new buffer upon success and -1 upon failure.
   @param byte_count The number of bytes to copy after growing the buffer. */
   Size Grow(Size new_size) { return ObjGrow<Size>(obj_.begin, new_size); }

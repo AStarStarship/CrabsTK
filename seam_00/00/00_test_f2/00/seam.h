@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@file    ~/seam_00/00/test_f2/sprint_01/scrums.h
+@file    ~/seam_00/00/00_test_f2/00/seam.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,19 +12,17 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#include "00/seam.h"
+#include "seam_header.h"
 
-#define SEAM_00_00_00__00_00 1
-#define SEAM_00_00_00__00_02 2
-#define SEAM_00_00_00__00_03 3
+#include "00/seam.h"
 
 namespace _ {
 
-static const char* Seam_00_00_00__00(char* seam_begin, char* seam_end,
+static const char* Seam_00_00_00__00(char* seam_log, char* seam_end,
                                      const char* args) {
-  return TestTreeNode<Seam_00_00_00__00_00, Seam_00_00_00__00_01,
-                      Seam_00_00_00__00_02>(test_result, args);
+  if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
+  return TestTreeNode<Seam_00_00_00__00_00>(seam_log, seam_end, args);
 }
 }  // namespace _
 
-#include <kabuki/f2/test_footer.h>
+#include "seam_footer.h"
