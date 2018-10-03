@@ -26,11 +26,11 @@ namespace _ {
 
 /* Tests an array of TestCase(s).
 @return 0 upon success or an app exit code upon failure. */
-const char* TestTree(char* seam_log, char* seam_end, const char* args,
+const char* TestTree(char* seam_log, char* log_end, const char* args,
                      TestCase* seams, int node_count);
 
 /* Prints a message when a TestCase completes without failure. */
-bool TestBegin(char* seam_log, char* seam_end, const char* args);
+bool TestBegin(char* seam_log, char* log_end, const char* args);
 
 /* Assert check if the given condition is true
 @return false if the condition is false.
@@ -192,13 +192,11 @@ API bool AssertHandle(const char* file, int line,
   if (Test(item)) _::AssertHandle(__FILE__, __LINE__)
 #define TEST(a, b) \
   if (Test(a, b)) _::AssertHandle(__FILE__, __LINE__)
-#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PAUSE(message)         \
-  Printf("\n\n%s\n", message); \
-  system("PAUSE");
 #define TEST_BEGIN \
-  if (!args) return __FUNCTION__
-#define TEST_END TestSeamNodeEnd(__FUNCTION__)
+  if (!TestBegin(seam_log, log_end, args)) return __FUNCTION__
+#define TEST_END                           \
+  Print(seam_log, seam_end, __FUNCTION__); \
+  return
 #else
 #define ASSERT(condition)
 #define TEST1(item)

@@ -19,16 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\seam.h" />
+    <ClInclude Include="..\..\seam_footer.h" />
+    <ClInclude Include="..\..\seam_header.h" />
     <ClInclude Include="..\seam.h" />
+    <ClInclude Include="..\seam_footer.h" />
+    <ClInclude Include="..\seam_header.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\pch.cc" />
     <ClCompile Include="main.cc" />
     <ClCompile Include="pch.cc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\readme.md" />
     <None Include="..\readme.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

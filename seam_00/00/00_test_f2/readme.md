@@ -1,6 +1,29 @@
-# Seam_00_00_00_test_f2__00_00
+# Seam_0test_f2
 
 This seam develops the F2 Foundational framework.
 
-## Seam_00_00_00_test_f2__00_00__01
+## Sprints
 
+### seam_itos_and_stoi.h
+
+This seam tests the integer-to-string and string-to-integer algorithms.
+
+### seam_ftos_and_stof.h
+
+This seam tests the integer-to-string and string-to-integer algorithms.
+
+### seam_core_text_functions.h
+
+This seam tests the core text functions like printing strings and hex.
+
+### seam_ascii_string_types.h
+
+Tests the Automata Standard Code for Information Interchange (ASCCIK) string types and arrays of strings.
+
+### seam_ascii_clock.h
+
+This seam tests the ASCII TME, TMS, and TMU timestamps and sub-second clock.
+
+### seam_ascii_data_types.h
+
+This seam develops the ASCII contiguous object types and maps.

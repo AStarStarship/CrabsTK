@@ -40,7 +40,7 @@ API const char* Address() {
 
 /* Returns a pointer to static variable for writing the address { a, \0 } to.
  */
-inline uint16_t PackAddress(byte a) { return ((1 << 8) | a); }
+inline uint16_t PackAddress(uint8_t a) { return ((1 << 8) | a); }
 
 /* Returns a pointer to static variable for writing the
     address { a, b, \0, \0 } to. */

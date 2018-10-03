@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/seam_00/00/00_test_f2/sprint_01/seam.h
+@file    ~/eam_00/00/00_test_f2/seam.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -15,15 +15,18 @@ specific language governing permissions and limitations under the License. */
 
 #include "seam_header.h"
 
-#include "00/seam.h"
-#include "01/seam.h"
+#include "00/seam_itos_and_stoi.h"
+#include "01/seam_ftos_and_stof.h"
+#include "02/seam_core_text_functions.h"
+#include "03/seam.h"
 
 namespace _ {
 
-static const char* Seam_00_00_00__00(char* seam_log, char* seam_end, 
+static const char* Seam_00_00_00__00(char* seam_log, char* log_end,
                                      const char* args) {
-  if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
-  return TestTreeNode<Seam_00_00_00__00, Seam_00_00_00__01>(seam_log, seam_end, args);
+  if (!TestBegin(seam_log, log_end, args)) return __FUNCTION__;
+  return TestTreeNode<Seam_00_00_00__00, Seam_00_00_00__01>(seam_log, log_end,
+                                                            args);
 }
 
 }  // namespace _

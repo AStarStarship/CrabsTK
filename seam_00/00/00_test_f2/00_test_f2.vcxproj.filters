@@ -25,32 +25,20 @@
     <Filter Include="seam_00\00\00_test_f2\00">
       <UniqueIdentifier>{a930541f-abfe-4a4b-870d-bf832ffdc269}</UniqueIdentifier>
     </Filter>
-    <Filter Include="seam_00\01">
-      <UniqueIdentifier>{904de823-d5a2-4f80-a98c-e6f87e0a46f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_00\02">
-      <UniqueIdentifier>{06c805f2-f867-4bc6-8a53-65b6277c37e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_00\03">
-      <UniqueIdentifier>{7fc2ffed-7aa9-4175-a6da-06edd6c595b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_00\04">
-      <UniqueIdentifier>{d33e5012-fa03-43bc-aeca-a4e0c31ae51a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="seam_00\00\00_test_f2\01">
       <UniqueIdentifier>{5df014b6-2ba8-49ae-abec-b77c730f65f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="seam_00\00\00_test_f2\00\00">
-      <UniqueIdentifier>{de1279f5-f63d-4eaf-a726-935099ae2d00}</UniqueIdentifier>
+    <Filter Include="seam_00\00\00_test_f2\02">
+      <UniqueIdentifier>{356fbbae-f866-4aaa-a912-ab68ea260758}</UniqueIdentifier>
     </Filter>
-    <Filter Include="seam_00\00\00_test_f2\01\00">
+    <Filter Include="seam_00\00\00_test_f2\03">
       <UniqueIdentifier>{eb8ed47b-7fa4-4130-b3ef-ed65da6fed0b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="seam_00\00\00_test_f2\01\01">
+    <Filter Include="seam_00\00\00_test_f2\04">
       <UniqueIdentifier>{18156168-3851-4aef-b37a-025ea7bfebe4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="seam_00\00\00_test_f2\01\02">
-      <UniqueIdentifier>{356fbbae-f866-4aaa-a912-ab68ea260758}</UniqueIdentifier>
+    <Filter Include="seam_00\00\00_test_f2\05">
+      <UniqueIdentifier>{7e5cc901-7bca-46c7-9641-f765c5f2a46e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +62,6 @@
     </ClCompile>
     <ClCompile Include="..\..\seam_tree.cc">
       <Filter>seam_00</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cc">
-      <Filter>seam_00\00\00_test_f2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,9 +113,6 @@
     <ClInclude Include="..\..\..\kabuki\f2\benchmark.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="..\seam.h">
-      <Filter>seam_00\00</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>seam_00\00\00_test_f2</Filter>
     </ClInclude>
@@ -143,70 +125,79 @@
     <ClInclude Include="seam_header.h">
       <Filter>seam_00\00\00_test_f2</Filter>
     </ClInclude>
-    <ClInclude Include="00\seam_footer.h">
-      <Filter>seam_00\00\00_test_f2\00</Filter>
-    </ClInclude>
-    <ClInclude Include="00\seam.h">
-      <Filter>seam_00\00\00_test_f2\00</Filter>
-    </ClInclude>
-    <ClInclude Include="00\00\seam_header.h">
-      <Filter>seam_00\00\00_test_f2\00\00</Filter>
-    </ClInclude>
-    <ClInclude Include="00\00\seam.h">
-      <Filter>seam_00\00\00_test_f2\00\00</Filter>
-    </ClInclude>
-    <ClInclude Include="00\00\seam_footer.h">
-      <Filter>seam_00\00\00_test_f2\00\00</Filter>
-    </ClInclude>
-    <ClInclude Include="01\00\seam_footer.h">
-      <Filter>seam_00\00\00_test_f2\01\00</Filter>
-    </ClInclude>
-    <ClInclude Include="01\00\seam_header.h">
-      <Filter>seam_00\00\00_test_f2\01\00</Filter>
-    </ClInclude>
-    <ClInclude Include="01\00\seam.h">
-      <Filter>seam_00\00\00_test_f2\01\00</Filter>
-    </ClInclude>
-    <ClInclude Include="01\01\seam_footer.h">
-      <Filter>seam_00\00\00_test_f2\01\01</Filter>
-    </ClInclude>
-    <ClInclude Include="01\01\seam_header.h">
-      <Filter>seam_00\00\00_test_f2\01\01</Filter>
-    </ClInclude>
-    <ClInclude Include="01\01\seam.h">
-      <Filter>seam_00\00\00_test_f2\01\01</Filter>
-    </ClInclude>
-    <ClInclude Include="01\02\seam_footer.h">
-      <Filter>seam_00\00\00_test_f2\01\02</Filter>
-    </ClInclude>
-    <ClInclude Include="01\02\seam_header.h">
-      <Filter>seam_00\00\00_test_f2\01\02</Filter>
-    </ClInclude>
-    <ClInclude Include="01\02\seam.h">
-      <Filter>seam_00\00\00_test_f2\01\02</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\seam_footer.h">
       <Filter>seam_00</Filter>
     </ClInclude>
     <ClInclude Include="..\..\seam_header.h">
       <Filter>seam_00</Filter>
     </ClInclude>
+    <ClInclude Include="..\seam_footer.h">
+      <Filter>seam_00\00</Filter>
+    </ClInclude>
+    <ClInclude Include="..\seam_header.h">
+      <Filter>seam_00\00</Filter>
+    </ClInclude>
+    <ClInclude Include="..\seam.h">
+      <Filter>seam_00\00</Filter>
+    </ClInclude>
+    <ClInclude Include="00\seam_footer.h">
+      <Filter>seam_00\00\00_test_f2\00</Filter>
+    </ClInclude>
     <ClInclude Include="00\seam_header.h">
       <Filter>seam_00\00\00_test_f2\00</Filter>
     </ClInclude>
-    <ClInclude Include="..\seam_header.h">
+    <ClInclude Include="00\seam_itos_and_stoi.h">
       <Filter>seam_00\00\00_test_f2\00</Filter>
     </ClInclude>
-    <ClInclude Include="..\seam_footer.h">
-      <Filter>seam_00\00\00_test_f2\00</Filter>
+    <ClInclude Include="01\seam_ftos_and_stof.h">
+      <Filter>seam_00\00\00_test_f2\01</Filter>
+    </ClInclude>
+    <ClInclude Include="01\seam_header.h">
+      <Filter>seam_00\00\00_test_f2\01</Filter>
+    </ClInclude>
+    <ClInclude Include="01\seam_footer.h">
+      <Filter>seam_00\00\00_test_f2\01</Filter>
+    </ClInclude>
+    <ClInclude Include="02\seam_header.h">
+      <Filter>seam_00\00\00_test_f2\02</Filter>
+    </ClInclude>
+    <ClInclude Include="02\seam_footer.h">
+      <Filter>seam_00\00\00_test_f2\02</Filter>
+    </ClInclude>
+    <ClInclude Include="03\seam_header.h">
+      <Filter>seam_00\00\00_test_f2\03</Filter>
+    </ClInclude>
+    <ClInclude Include="03\seam.h">
+      <Filter>seam_00\00\00_test_f2\03</Filter>
+    </ClInclude>
+    <ClInclude Include="03\seam_footer.h">
+      <Filter>seam_00\00\00_test_f2\03</Filter>
+    </ClInclude>
+    <ClInclude Include="04\seam_header.h">
+      <Filter>seam_00\00\00_test_f2\04</Filter>
+    </ClInclude>
+    <ClInclude Include="04\seam.h">
+      <Filter>seam_00\00\00_test_f2\04</Filter>
+    </ClInclude>
+    <ClInclude Include="04\seam_footer.h">
+      <Filter>seam_00\00\00_test_f2\04</Filter>
+    </ClInclude>
+    <ClInclude Include="05\seam_header.h">
+      <Filter>seam_00\00\00_test_f2\05</Filter>
+    </ClInclude>
+    <ClInclude Include="05\seam.h">
+      <Filter>seam_00\00\00_test_f2\05</Filter>
+    </ClInclude>
+    <ClInclude Include="05\seam_footer.h">
+      <Filter>seam_00\00\00_test_f2\05</Filter>
+    </ClInclude>
+    <ClInclude Include="02\seam_core_text_functions.h">
+      <Filter>seam_00\00\00_test_f2\02</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\kabuki\f2\readme.md">
       <Filter>kabuki\f2</Filter>
-    </None>
-    <None Include="..\readme.md">
-      <Filter>seam_00\00</Filter>
     </None>
     <None Include="..\..\readme.md">
       <Filter>seam_00</Filter>
@@ -214,20 +205,29 @@
     <None Include="readme.md">
       <Filter>seam_00\00\00_test_f2</Filter>
     </None>
+    <None Include="..\readme.md">
+      <Filter>seam_00\00</Filter>
+    </None>
     <None Include="00\readme.md">
       <Filter>seam_00\00\00_test_f2\00</Filter>
     </None>
-    <None Include="00\00\readme.md">
-      <Filter>seam_00\00\00_test_f2\00\00</Filter>
+    <None Include="01\readme.md">
+      <Filter>seam_00\00\00_test_f2\01</Filter>
     </None>
-    <None Include="01\00\readme.md">
-      <Filter>seam_00\00\00_test_f2\01\00</Filter>
+    <None Include="02\readme.md">
+      <Filter>seam_00\00\00_test_f2\02</Filter>
     </None>
-    <None Include="01\01\readme.md">
-      <Filter>seam_00\00\00_test_f2\01\01</Filter>
+    <None Include="03\readme.md">
+      <Filter>seam_00\00\00_test_f2\03</Filter>
     </None>
-    <None Include="01\02\readme.md">
-      <Filter>seam_00\00\00_test_f2\01\02</Filter>
+    <None Include="03\seam.s2">
+      <Filter>seam_00\00\00_test_f2\03</Filter>
+    </None>
+    <None Include="04\readme.md">
+      <Filter>seam_00\00\00_test_f2\04</Filter>
+    </None>
+    <None Include="05\readme.md">
+      <Filter>seam_00\00\00_test_f2\05</Filter>
     </None>
   </ItemGroup>
 </Project>

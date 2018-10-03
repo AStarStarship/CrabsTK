@@ -2,17 +2,29 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="..\..\seam.h">
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\..\seam_footer.h">
+      <Filter>seam_00</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\seam_header.h">
       <Filter>seam_00</Filter>
     </ClInclude>
     <ClInclude Include="..\seam.h">
       <Filter>seam_00\00</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\seam_footer.h">
+      <Filter>seam_00\00</Filter>
+    </ClInclude>
+    <ClInclude Include="..\seam_header.h">
+      <Filter>seam_00\00</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cc" />
     <ClCompile Include="pch.cc" />
+    <ClCompile Include="..\..\pch.cc">
+      <Filter>seam_00</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="seam_00">
@@ -21,20 +33,26 @@
     <Filter Include="seam_00\00">
       <UniqueIdentifier>{5b5b6e2f-e70d-4e6d-8cf6-0b4645ec271f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="seam_00\00\00_test">
+      <UniqueIdentifier>{dd81ded9-6014-4b31-a8dd-6728c541c21a}</UniqueIdentifier>
+    </Filter>
     <Filter Include="seam_00\01">
-      <UniqueIdentifier>{4eaad064-e7b9-4ce9-a9ae-0e5f4bd2110a}</UniqueIdentifier>
+      <UniqueIdentifier>{a6a5e368-7964-4d9a-9372-e50ed6cafdcf}</UniqueIdentifier>
     </Filter>
     <Filter Include="seam_00\02">
-      <UniqueIdentifier>{f7d95a46-e01d-42db-aab3-e86f04c03c25}</UniqueIdentifier>
+      <UniqueIdentifier>{c71c98d5-a7d1-4d1e-a7ac-e57b3286eb6f}</UniqueIdentifier>
     </Filter>
     <Filter Include="seam_00\03">
-      <UniqueIdentifier>{d30b639c-8552-4548-a42d-0e84c698cbb2}</UniqueIdentifier>
+      <UniqueIdentifier>{f75465dd-1eed-4bb4-9db8-a861264d26b5}</UniqueIdentifier>
     </Filter>
     <Filter Include="seam_00\04">
-      <UniqueIdentifier>{af3a5f7b-05b8-42b3-91e9-f2b2d12038f0}</UniqueIdentifier>
+      <UniqueIdentifier>{29b2dbd0-ca32-49c9-a0aa-043374c3c3b8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\readme.md">
+      <Filter>seam_00</Filter>
+    </None>
     <None Include="..\readme.md">
       <Filter>seam_00\00</Filter>
     </None>

@@ -11,7 +11,9 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
-#include <pch.h>
-
-#if SEAM == SEAM_00
+#if SEAM == SEAM_00_00_00__01_00
+#undef PRINT
+#undef PRINTF
+#undef PRINT_PRINTED
+#undef BEGIN_ITOS_ALGORITHM
 #endif

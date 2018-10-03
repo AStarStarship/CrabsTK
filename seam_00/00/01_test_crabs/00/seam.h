@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@file    ~/seam_00/00/test_crabs/00/seam.h
+@file    ~/seam_00/00/01_test_f2/00/00/seam.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,14 +14,16 @@ specific language governing permissions and limitations under the License. */
 
 #include "seam_header.h"
 
-#include "00/seam.h"
+#include <kabuki/f2/global.h>
 
 namespace _ {
 
-static const char* Seam_00_00_00__00(char* seam_log, char* seam_end, 
+static const char* Seam_00_00_01__00_00(char* seam_log, char* seam_end,
                                      const char* args) {
   if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
-  return TestTreeNode<Seam_00_00_01__00_00>(seam_log, seam_end, args);
+
+  return nullptr;
 }
 }  // namespace _
+
 #include "seam_footer.h"

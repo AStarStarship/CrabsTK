@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_CRABS_TBINARY
 #define INCLUDED_CRABS_TBINARY 1
 
-#include <seam_00\00\00_test_f2\01\00\seam_header.h>
+#include <seam_00\00\00_test_f2\00\seam_header.h>
 
 #include "binary.h"
 
@@ -600,7 +600,7 @@ const Char* Scan(const Char* buffer, UI& result) {
   result = value;
   return end;
 }
-
+#if SEAM >= SEAM_00_00_00__01_00
 /* Searches for the highest MSb asserted.
 @return -1 */
 template <typename UI>
@@ -1182,9 +1182,9 @@ using Binary32 = Binary<float, uint32_t>;
 using Binary64 = Binary<double, uint64_t>;
 // using Binary128 = Binary<quad, uint128_t>;
 //< Coming soon but not in Visual-C++ due to lack of 128-bit integer support.
-
+#endif  // #if SEAM >= SEAM_00_00_00__01_00
 }  // namespace _
 
-#include <seam_00\00\00_test_f2\01\00\seam_footer.h>
+#include <seam_00\00\00_test_f2\00\seam_footer.h>
 #endif  //< #if INCLUDED_CRABS_TBINARY
 #endif  //< #if SEAM >= SEAM_00_00_00__00_01
