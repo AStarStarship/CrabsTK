@@ -16,7 +16,16 @@ specific language governing permissions and limitations under the License. */
 #include "00/seam_itos_and_stoi.h"
 #include "01/seam_ftos_and_stof.h"
 #include "02/seam_core_text_functions.h"
-#include "03/seam.h"
+#include "03/seam_ascii_clock.h"
+#include "04/seam_stack.h"
+#include "05/seam_array.h"
+#include "06/seam_.h"
+#include "07/seam_loom.h"
+#include "08/seam_table.h"
+#include "09/seam_list.h"
+#include "10/seam_map.h"
+#include "11/seam_book.h"
+#include "12/seam_dictionary.h"
 
 namespace _ {
 
