@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#include "seam_header.h"
+#include "header.h"
 
 #include <kabuki/f2/test_header.h>
 
@@ -27,4 +27,4 @@ const char* Seam_00_04_01__00_00(char* seam_log, char* seam_end,
   return nullptr;
 }
 }
-#include "seam_footer.h"
+#include "footer.h"

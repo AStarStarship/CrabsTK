@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#include "seam_header.h"
+#include "header.h"
 
 #if SEAM >= SEAM_00_00_02__01_02
 
@@ -21,29 +21,9 @@ specific language governing permissions and limitations under the License. */
 
 #include <kabuki/crabs/global.h>
 
-#if SEAM == SEAM_00_00_00_01_02
-#define PRINT(item) Print(item)
-#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PAUSE(message) Pause(message)
-#define PRINT_HEADING(message) PrintHeading(message)
-#define PRINT_LINE(c) PrintLine(c)
-#define TEST_BEGIN \
-  if (!args) return __FUNCTION__;
-#define TEST_SEAM_END TestSeamEnd(__FUNCTION__)
-#else
-#define PRINT(item)
-#define PRINTF(x, ...)
-#define PAUSE(message)
-#define PRINT_HEADING(c)
-#define PRINT_LINE(c)
-#define TEST_BEGIN
-#define TEST_SEAM_END
-#endif
-
 namespace _ {
 
-const char* Seam_00_00_00__01_02(char* seam_log, char* log_end,
-                                 const char* args) {
+const char* Seam_00_00_00__01(char* seam_log, char* log_end, const char* args) {
   if (!TestBegin(seam_log, log_end, args)) return __FUNCTION__;
 
   PRINTF("\n\nTesting Text...");
@@ -177,75 +157,102 @@ const char* Seam_00_00_00__01_02(char* seam_log, char* log_end,
 
   utf.Set(buffer) << Center(kStringNumbers, 6);
   STRCMP_EQUAL(kStringsCentered[3], buffer);
+  int i = 0;  //< Shared looping variable.
 
-  PRINT_LINE('-');
-  PRINTF("\n\n Testing PrintMemory (void*, int size)...");
+  PRINT_HEADING("\nTesting Console ().Print ()... ");
+
+  COUT << "Testing " << 1 << ", 2, " << -3;
+
+  PRINT_HEADING("\nTesting SEAM_0_0_3... ");
+
+  PRINTF("\n\nTesting ASCII OBJ Types");
+
+  PRINTF("\n\nTesting Stack...\n\nPushing items on to the Stack...\n");
+
+  Stack<> stack(8);
+
+  for (i = 0; i <= 10; ++i) stack.Push(i);
+
+  COUT << stack;
+
+  PRINTF("\nPopping items off the Stack...\n");
+
+  for (i = 10; i > 0; i--)
+    Compare(i, stack.Pop())
+
+            COUT
+        << stack;
+
+  PRINTF("\n\nDone testing Stack!")
+
+  /*
+  PRINTF ("\n\nTest Array...\n\n");
+  static const int array_3d_exected[2][2][2] = { { { 0, 1 }, { 2, 3 } },
+                                                 { { 4, 5 }, { 6, 7 } }
+                                               };
+  const int* test = Dimensions<2, 2, 2> ();
+  Array<int> test_array (test);
+  *test_array.Elements () = { { { 0, 1 }, { 2, 3 } },
+                              { { 4, 5 }, { 6, 7 } }
+                            };
+  i = 0;
+  int* array_base = test_array.Elements ();
+  for (int z = 0; z < 2; ++z)
+      for (int y = 0; y < 2; ++y)
+          for (int x = 0; x < 2; ++x)
+              Compare (i++, array_3d_exected[x][y][z]);
+  PAUSE ("\n\nDone Array!")
+  */
+
+  PRINT_HEADING("\n\nTest List...\n\n")
+
+  List<> list(36, 960);
+  Assert(list.This())
+
+      PRINTF("\nPushing items on to the List stack...\n")
+
+          const int test_ints[] = {'1', '2', '3', '4'};
+
+  const int list_test_count = 12;
+  for (int i = 0; i < 4;) {
+    PRINTF("\ni%i:", i)
+    list.Push(SI4, &test_ints[i++]);
+    COUT << '\n'
+         << list << '\n'
+         << "\n\n"
+         << Socket(list.This(), list.This()->size);
+  }
+  const float test_floats[] = {9.0, 10.0, 11.0, 12.0};
+  for (int i = 0; i < 4;) {
+    PRINTF("\ni%i:", i)
+    list.Push(FLT, &test_floats[i++]);
+    COUT << '\n'
+         << list << '\n'
+         << "\n\n"
+         << Socket(list.This(), list.This()->size);
+  }
+
+  const char* test_strings[] = {"Test", " 1, ", " 2, ", " 3"};
+  for (int i = 0; i < 4;) {
+    PRINTF("\ni%i:", i)
+    list.Push(STR, test_strings[i++]);
+    COUT << '\n'
+         << list << '\n'
+         << "\n\n"
+         << Socket(list.This(), list.This()->size);
+    system("PAUSE");
+  }
+
+  for (int i = list_test_count - 1; i > 0; --i) list.Pop();
+
+  PRINTF("\n\nDone testing List!");
+
+  PRINT_HEADING("Testing PrintMemory (void*, int size)...");
 
   for (int i = 1; i <= kSize; ++i) buffer_b[i - 1] = '0' + i % 10;
   buffer_b[kSize] = 0;
   Assert(PrintMemory(buffer, buffer + kSize, buffer_b, buffer_b + 160));
   PRINTF("\n    Printed:\n%s", buffer);
-
-  PRINT_LINE('-');
-  PRINTF("\n\n    Testing TextScanTime...");
-
-  Tms t, t_found;
-  const char* result;
-
-  // @note The following dates must be the current day to work right in order
-  //       to auto-detect the year.
-  const char* strings[] = {
-      "8/9",
-      "08/09",
-      "8/9/18",
-      "8/09/18",
-      "8/9/2018",
-      "8/09/2018",
-      "8/09/2018",
-      "08/9/2018",
-      "8/09/2018@00",
-      "8.09.2018@00AM",
-      "8/09/2018@00:00",
-      "8/09/18@00:0AM",
-      "8/09/2018@00:00:00",
-      "8/09/2018@00:00:00AM",
-      "2018-08-09@00:00:00AM",
-      "2018-08-09@00:00:00am",
-      "2018-08-09@00:00:00A",
-      "2018-08-09@00:00:00a ",
-  };
-
-  for (int i = 0; i < 18; ++i) {
-    PRINT_LINE('-');
-    PRINTF("\n    %i", i);
-    Tms t = 0;
-    result = TextScanTime(strings[i], t);
-    // Assert (!ClockCompare (t, 2018, 8, 9, 0, 0, 0))
-  }
-
-  PRINTF("\n\n    Testing more valid input...\n");
-
-  t = ClockTimeTMS(8, 9, 17, 4, 20);
-  Print(buffer, buffer + kSize, t);
-  result = TextScanTime(buffer, t_found);
-  Assert(ClockCompare(t_found, t))
-
-      t = ClockTimeTMS(2020, 4, 20, 4, 20);
-  Print(buffer, buffer + kSize, t);
-  result = TextScanTime(buffer, t_found);
-  Assert(ClockCompare(t, t_found))
-
-      t = ClockTimeTMS(1947, 12, 7, 23, 5, 7);
-  Print(buffer, buffer + kSize, t);
-  result = TextScanTime(buffer, t_found);
-  Assert(ClockCompare(t, t_found));
-
-  PRINT_HEADING("\nTesting invalid input...\n");
-  TextScanTime("cat", t);
-
-  TextScanTime("2017-30-40", t);
-
-  PRINTF("\nDone testing date parsing utils! :-)\n");
 
   PRINT_HEADING("\n\nTest MemoryCopy and MemoryCompare...\n\n");
   enum {
@@ -274,4 +281,4 @@ const char* Seam_00_00_00__01_02(char* seam_log, char* log_end,
 
 }  // namespace _
 
-#include "seam_footer.h"
+#include "footer.h"

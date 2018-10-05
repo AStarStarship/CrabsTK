@@ -14,9 +14,9 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00_01
-#ifndef INCLUDED_CRABS_TCONSOLE
-#define INCLUDED_CRABS_TCONSOLE 1
+#if SEAM >= SEAM_00_00_00__01
+#ifndef INCLUDED_F2_TCONSOLE
+#define INCLUDED_F2_TCONSOLE 1
 
 #include "console.h"
 
@@ -38,6 +38,6 @@ Console PrintHex(UI value) {
 
 }  // namespace _
 
-#endif  //< INCLUDED_CRABS_TCONSOLE
+#endif  //< INCLUDED_F2_TCONSOLE
 
-#endif  //< #if SEAM >= SEAM_00_00_00__00_01
+#endif  //< #if SEAM >= SEAM_00_00_00__01

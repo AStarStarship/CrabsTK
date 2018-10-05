@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00_01
+#if SEAM >= SEAM_00_00_00__01
 #include "itos_algorithms.h"
 
 #include "../../kabuki/f2/tbinary.h"
@@ -293,4 +293,4 @@ PrintLoop:
 }  // namespace _
 
 #include "debug_itos_footer.h"
-#endif  //< #if SEAM >= SEAM_00_00_00__00_01
+#endif  //< #if SEAM >= SEAM_00_00_00__01

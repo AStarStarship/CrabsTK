@@ -86,7 +86,7 @@ inline void PrintPrinted(char* cursor) {
   char* begin = cursor;                                 \
   char buffer[256];                                     \
   sprintf_s(buffer, 256, "%u", value);                  \
-  Printf("Expecting %s:%u", buffer, (uint)strlen(buffer));
+  Printf("Expecting %s:%u", buffer, StringLength<>(buffer));
 #define BEGIN_PUFF_ITOS_ALGORITHM \
   putchar('\n');                  \
   for (int32_t i = 80; i > 0; --i) putchar('-')

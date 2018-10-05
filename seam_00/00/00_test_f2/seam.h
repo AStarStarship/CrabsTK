@@ -13,8 +13,6 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#include "seam_header.h"
-
 #include "00/seam_itos_and_stoi.h"
 #include "01/seam_ftos_and_stof.h"
 #include "02/seam_core_text_functions.h"
@@ -22,13 +20,10 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-static const char* Seam_00_00_00__00(char* seam_log, char* log_end,
-                                     const char* args) {
-  if (!TestBegin(seam_log, log_end, args)) return __FUNCTION__;
-  return TestTreeNode<Seam_00_00_00__00, Seam_00_00_00__01>(seam_log, log_end,
-                                                            args);
+static bool Seam_00_00_00__00(char* seam_log, char* log_end, const char* args) {
+  if (!TestBegin(seam_log, log_end, args, __FUNCTION__)) return false;
+  return TestTree<Seam_00_00_00__00, Seam_00_00_00__01>(seam_log, log_end,
+                                                        args);
 }
 
 }  // namespace _
-
-#include "seam_footer.h"

@@ -14,7 +14,7 @@
              permissions and limitations under the License.
 */
 
-#include <stdafx.h>
+#include <pch.h>
 #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
 #if SEAM_MAJOR == 2 && SEAM_MINOR == 2
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)

@@ -14,7 +14,7 @@
 */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2
 #ifndef HEADER_FOR_KABUKI_TOOLKIT_ID_ACCOUNT
 #define HEADER_FOR_KABUKI_TOOLKIT_ID_ACCOUNT

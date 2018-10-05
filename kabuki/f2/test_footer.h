@@ -23,6 +23,7 @@ specific language governing permissions and limitations under the License. */
 #undef TEST(a, b)
 #undef PRINTF(x, ...)
 #undef PAUSE(message)
+#undef PAUSEF(message)
 #undef TEST_BEGIN
 #undef TEST_END
 #endif

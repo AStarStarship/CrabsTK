@@ -15,7 +15,7 @@
 */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
 #include "perceptron_graph.h"
 #ifndef HEADER_FOR_KABUKI_TOOLKIT_AIML_PERCEPTRONMODEL

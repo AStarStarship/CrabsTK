@@ -13,21 +13,21 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00_01
+#if SEAM >= SEAM_00_00_00__01
 #include "tbinary.h"
 
 #include "ttest.h"
 
 #include <cmath>
 
-#if SEAM == SEAM_00_00_00__00_01
+#if SEAM == SEAM_00_00_00__01
 #define PRINT(item) Print(item)
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PRINTED                                                   \
   sprintf_s(buffer, 24, "%u", value);                                   \
   *end = 0;                                                             \
   Printf("\n    Printed \"%s\" leaving value:\"%s\":%u", begin, buffer, \
-         (uint)strlen(buffer))
+         StringLength<>(buffer))
 #define PRINT_BINARY \
   PrintIndent(4);    \
   PrintBinary(value);
@@ -475,4 +475,4 @@ int HexToByte(uint16_t h) {
 #undef PRINT_HEADER
 #undef PRINT_HEADING
 #undef BEGIN_ITOS_ALGORITHM
-#endif  //< #if SEAM >= SEAM_00_00_00__00_01
+#endif  //< #if SEAM >= SEAM_00_00_00__01

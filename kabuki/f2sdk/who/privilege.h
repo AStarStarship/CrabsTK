@@ -14,7 +14,7 @@
 */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2
 #ifndef KT_ID_PRIVILAGE_H
 #define KT_ID_PRIVILAGE_H

@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00_01
+#if SEAM >= SEAM_00_00_00__01
 #ifndef INCLUDED_KABUKI_F2_TTEST
 #define INCLUDED_KABUKI_F2_TTEST 1
 
@@ -33,7 +33,7 @@ const char* TestTreeNode(char* test_result, const char* args) {
 template <typename Char>
 bool Test(const Char* a, const Char* b) {
   char c = StringCompare<Char>(a, b);
-  if (!c) return false;  //< Bad !c, burn your tiki torches elsewhere!
+  if (!c) return false;
   Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
   return true;
 }
@@ -41,4 +41,4 @@ bool Test(const Char* a, const Char* b) {
 }  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_TTEST
-#endif  //< #if SEAM >= SEAM_00_00_00__00_01
+#endif  //< #if SEAM >= SEAM_00_00_00__01

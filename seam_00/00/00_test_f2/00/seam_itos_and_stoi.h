@@ -13,14 +13,13 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#include "seam_header.h"
-
 #include <random>
+
+#include "header.h"
 
 namespace _ {
 
-const char* Seam_00_00_00__00_00(char* seam_log, char* log_end,
-                                 const char* args) {
+const char* Seam_00_00_00(char* seam_log, char* log_end, const char* args) {
   if (!TestBegin(seam_log, log_end, args)) return __FUNCTION__;
   static const uint64_t k10ToThe[20] = {
       1,           //< 10^0
@@ -141,7 +140,7 @@ const char* Seam_00_00_00__00_00(char* seam_log, char* log_end,
     expected_ui8 = problem_children[i];
     sprintf_s(expecting, 24, "%llu", expected_ui8);
     PRINTF("\n%i.) Expecting \"%s\":%llu", i + 1, expecting,
-           (uint)strlen(expecting));
+           StringLength<>(expecting));
     result =
         Print<uint64_t, char, uint16_t>(text, text + kSize - 1, expected_ui8);
     if (!result) {
@@ -169,7 +168,7 @@ const char* Seam_00_00_00__00_00(char* seam_log, char* log_end,
     *result = 0;
     if (strcmp(expecting, text)) {
       PAUSEF("\n\nERROR: Expecting \"%s\":%llu and found \"%s\":%llu",
-             expecting, (uint)strlen(expecting), text, (uint)strlen(text));
+             expecting, StringLength<>(expecting), text, StringLength<>(text));
     }
   }
 
@@ -187,7 +186,7 @@ const char* Seam_00_00_00__00_00(char* seam_log, char* log_end,
     *result = 0;
     if (StringCompare(expecting, text)) {
       PAUSEF("\n\nERROR: Expecting \"%s\":%llu and found \"%s\":%llu",
-             expecting, (uint)strlen(expecting), text, (uint)strlen(text));
+             expecting, StringLength<>(expecting), text, StringLength<>(text));
     }
   }
 
@@ -263,4 +262,4 @@ const char* Seam_00_00_00__00_00(char* seam_log, char* log_end,
 }
 }  // namespace _
 
-#include "seam_footer.h"
+#include "footer.h"

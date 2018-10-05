@@ -14,7 +14,7 @@
 */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 
 #ifndef HEADER_FOR_KABUKI_STORE_ITEM
 #define HEADER_FOR_KABUKI_STORE_ITEM

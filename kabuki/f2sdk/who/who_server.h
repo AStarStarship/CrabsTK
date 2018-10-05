@@ -14,7 +14,7 @@
 */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2
 #ifndef KABUKI_PRO_IDSERVER
 #define KABUKI_PRO_IDSERVER

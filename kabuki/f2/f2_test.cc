@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00_01
+#if SEAM >= SEAM_00_00_00__01
 #include "ttest.h"
 
 #include "console.h"
@@ -194,4 +194,4 @@ bool AssertHandle(const char* file, int line, const char* message) {
 }
 
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_00_00_00__00_01
+#endif  //< #if SEAM >= SEAM_00_00_00__01

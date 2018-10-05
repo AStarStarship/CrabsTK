@@ -12,7 +12,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#include "seam_header.h"
+#include "header.h"
 
 #if SEAM >= SEAM_00_00_00__01_01
 
@@ -30,8 +30,7 @@ using namespace std;
 
 namespace _ {
 
-const char* Seam_00_00_00__01_01(char* seam_log, char* log_end,
-                                 const char* args) {
+const char* Seam_00_00_00__01(char* seam_log, char* log_end, const char* args) {
   if (!TestBegin(seam_log, log_end, args)) return __FUNCTION__;
 
   enum { kSize = 24 };
@@ -88,4 +87,4 @@ const char* Seam_00_00_00__01_01(char* seam_log, char* log_end,
 }
 }  // namespace _
 #endif  //< #if SEAM >= SEAM_0_0_01__00_01
-#include "seam_footer.h"
+#include "footer.h"

@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00_01
+#if SEAM >= SEAM_00_00_00__01
 #include "tbenchmark.h"
 
 #include "tbinary.h"
@@ -90,4 +90,4 @@ const char* Benchmark::Run(char* cursor, char* end, const char* args) {
 
 }  // namespace _
 
-#endif  //< #if SEAM >= SEAM_00_00_00__00_01
+#endif  //< #if SEAM >= SEAM_00_00_00__01

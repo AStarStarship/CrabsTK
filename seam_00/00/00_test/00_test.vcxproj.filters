@@ -36,18 +36,6 @@
     <Filter Include="seam_00\00\00_test">
       <UniqueIdentifier>{dd81ded9-6014-4b31-a8dd-6728c541c21a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="seam_00\01">
-      <UniqueIdentifier>{a6a5e368-7964-4d9a-9372-e50ed6cafdcf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_00\02">
-      <UniqueIdentifier>{c71c98d5-a7d1-4d1e-a7ac-e57b3286eb6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_00\03">
-      <UniqueIdentifier>{f75465dd-1eed-4bb4-9db8-a861264d26b5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_00\04">
-      <UniqueIdentifier>{29b2dbd0-ca32-49c9-a0aa-043374c3c3b8}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\readme.md">

@@ -14,9 +14,9 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00_01
-#ifndef INCLUDED_CRABS_RNGUNIFORM
-#define INCLUDED_CRABS_RNGUNIFORM
+#if SEAM >= SEAM_00_00_00__01
+#ifndef INCLUDED_F2_RNGUNIFORM
+#define INCLUDED_F2_RNGUNIFORM
 
 namespace _ {
 
@@ -69,6 +69,6 @@ API inline uint64_t RandomUI8();
 API inline uint64_t RandomSI8();
 
 }  // namespace _
-#endif  //< INCLUDED_CRABS_RNGUNIFORM
+#endif  //< INCLUDED_F2_RNGUNIFORM
 
-#endif  //< #if SEAM >= SEAM_00_00_00__00_01
+#endif  //< #if SEAM >= SEAM_00_00_00__01

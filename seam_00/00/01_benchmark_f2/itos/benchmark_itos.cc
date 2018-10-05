@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00_01
+#if SEAM >= SEAM_00_00_00__01
 #include "itos_algorithms.h"
 
 #include "../../kabuki/f2/global.h"
@@ -79,7 +79,7 @@ void BenchmarkScriptItos() {
     *result = 0;
     if (StringCompare<>(expecting, buffer)) {
       Pausef("\n\nERROR in Print: Expecting \"%s\":%u and found \"%s\":%u",
-             expecting, (uint)strlen(expecting), buffer, (uint)strlen(buffer));
+             expecting, StringLength<>(expecting), buffer, StringLength<>(buffer));
     }
 
     result = PrintMod10(buffer, kSize, value);
@@ -90,13 +90,13 @@ void BenchmarkScriptItos() {
     *result = 0;
     if (StringCompare<>(expecting, buffer)) {
       Pausef("\n\nERROR in PrintMod10: Expecting \"%s\":%u and found \"%s\":%u",
-             expecting, (uint)strlen(expecting), buffer, (uint)strlen(buffer));
+             expecting, StringLength<>(expecting), buffer, StringLength<>(buffer));
     }
 
     result = PrintMod100(buffer, kSize, value);
     if (!result) {
       Pausef("\n%i.) Expecting \"%s\":%u\nAn error occurred in PrintMod100:-(",
-             i + 1, expecting, (uint)strlen(expecting));
+             i + 1, expecting, StringLength<>(expecting));
       break;
     }
     *result = 0;
@@ -297,4 +297,4 @@ int main() {
   return 0;
 }
 
-#endif  //< #if SEAM >= SEAM_00_00_00__00_01
+#endif  //< #if SEAM >= SEAM_00_00_00__01

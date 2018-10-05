@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#include "seam_header.h"
+#include "header.h"
 
 #include "00/seam.h"
 #include "01/seam.h"
@@ -25,4 +25,4 @@ const char* Seam_00_04_00(char* seam_log, char* seam_end,
     return TestTree<Seam_00_01_00> (seam_log, seam_end, args);
 }
 }
-#include "seam_footer.h"
+#include "footer.h"

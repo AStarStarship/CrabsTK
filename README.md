@@ -14,18 +14,18 @@
 
 Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) and Virtual Machine for 32-bit and 64-bit processors featuring the F2 Foundational Framework (F2), Chinese Room Abstract Stack Machine (Crabs), and Kabuki Virtual Machine (VM) that provides:
 
-* Standard Seam Trees provide in-order unit tests with debug information customized for each tree node best described as a bulleted list of seams with SI Units to denote tree depth in the order: Layer_{Milli_Micro_Nano_Pico_Femto}__Sprint_Scrum.
+* Standard Seam Trees provide in-order unit tests for Agile and Issue Driven Development with debug information customized for each tree node best described as a bulleted list of seams with SI Units to denote tree depth in the order: LAYER_{MILLI_MICRO_NANO_PICO_FEMTO}__SPRINT_SCRUM.
 * Modern Embedded-C++1x core with Doxygen API docs.
-* ASCII Data Types operate seamlessly across assembly boundary with optimal RAM usage and CPU cache performance from ROM-able ASCII Contiguous Objects.
-* Rapid compile time using C Application Binary Interface (ABI) with semi-hidden C++ templates and UML-compatible object-oriented wrapper classes.
+* ASCII Data Types and the Crabs Factory operate seamlessly across assembly boundary with optimal RAM usage and CPU cache performance from ROM-able ASCII Contiguous Objects.
+* Rapid compile time using C Application Binary Interface (ABI) with separated C++ templates for cross-language bindings.
 * Code automatically formatted to Google C++ Style Guide upon save and formatted to not fight clang-format.
-* Deep Internet-of-Things integration using the Script Software Defined Networking Protocol.
+* Deep Internet-of-Things integration using the SCRIPT Software Defined Networking Protocol where everything is A=A*B.
 * Artificial Intelligence and Deep Learning library with graph-based neural-intelligent networks coming soon.
 * Modeled after AI philosophy and ASCII mimicry of the Chinese Room Thought Experiment and C0 Control Codes.
 
 ## ASCII Data Types
 
-ASCII Data Types provide a suitable replacement for the C++ std library suitable for embedded systems that facilitates:
+ASCII Data Types provide a suitable replacement for the C++ std library suitable for embedded systems and AI that facilitates:
 
 * All of the C++ POD types.
 * Year 2038-safe 32-bit, 64- bit and dual-32-bit with 16-year epoch and sub-second tick timestamps.

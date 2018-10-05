@@ -11,7 +11,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 using namespace std;
 #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
 #include "nmist_importer.h"

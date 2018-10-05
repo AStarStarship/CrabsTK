@@ -15,7 +15,7 @@
 */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
 #include "perceptron_layer.h"
 

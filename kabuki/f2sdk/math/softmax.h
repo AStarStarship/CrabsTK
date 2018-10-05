@@ -14,7 +14,7 @@
 */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 #if MAJOR_SEAM >= 5 && MINOR_SEAM >= 1
 #ifndef HEADER_FOR_KABUKI_TOOLKIT_AIML_PERCEPTRONGRAPH2D
 #define HEADER_FOR_KABUKI_TOOLKIT_AIML_PERCEPTRONGRAPH2D

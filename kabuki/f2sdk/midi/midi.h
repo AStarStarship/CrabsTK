@@ -3,7 +3,7 @@
 */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 
 // Notice: This code originally came from an open-source Windows MIDI project, but is getting completely changed.
 

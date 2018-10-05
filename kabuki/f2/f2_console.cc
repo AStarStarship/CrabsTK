@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00_01
+#if SEAM >= SEAM_00_00_00__01
 #include "tconsole.h"
 
 #include <conio.h>
@@ -86,7 +86,7 @@ Console Print(const char* a, const char* b, const char* c) {
 }
 
 Console Print(uint64_t value) {
-#if SEAM == SEAM_00_00_00__00_01
+#if SEAM == SEAM_00_00_00__01
   return Printf(FORMAT_UI8, value);
 #else
   enum { kSize = 24 };
@@ -97,7 +97,7 @@ Console Print(uint64_t value) {
 }
 
 Console Print(uint32_t value) {
-#if SEAM == SEAM_00_00_00__00_01
+#if SEAM == SEAM_00_00_00__01
   return Printf("%u", value);
 #else
   return Print((uint64_t)value);
@@ -105,7 +105,7 @@ Console Print(uint32_t value) {
 }
 
 Console Print(int64_t value) {
-#if SEAM == SEAM_00_00_00__00_01
+#if SEAM == SEAM_00_00_00__01
   return Printf(FORMAT_SI8, value);
 #else
   enum { kSize = 24 };
@@ -116,7 +116,7 @@ Console Print(int64_t value) {
 }
 
 Console Print(int32_t value) {
-#if SEAM == SEAM_00_00_00__00_01
+#if SEAM == SEAM_00_00_00__01
   return Printf("%i", value);
 #else
   return Print((int64_t)value);
@@ -124,7 +124,7 @@ Console Print(int32_t value) {
 }
 
 Console Print(float value) {
-#if SEAM == SEAM_00_00_00__00_01
+#if SEAM == SEAM_00_00_00__01
   return Printf("%f", value);
 #else
   enum { kSize = 16 };
@@ -135,7 +135,7 @@ Console Print(float value) {
 }
 
 Console Print(double value) {
-#if SEAM == SEAM_00_00_00__00_01
+#if SEAM == SEAM_00_00_00__01
   return Printf("%f", value);
 #else
   enum { kSize = 24 };
@@ -627,4 +627,4 @@ _::Console& operator<<(_::Console& cout, _::CHex& item) { return cout; }
 
 _::Console& operator<<(_::Console& cout, _::CBinary& item) { return cout; }
 
-#endif  //< #if SEAM >= SEAM_00_00_00__00_01
+#endif  //< #if SEAM >= SEAM_00_00_00__01

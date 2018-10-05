@@ -15,7 +15,7 @@
 */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 #if MAJOR_SEAM >= 2 && MINOR_SEAM >= 1
 
 #ifndef SCRIPT_COLOR_H

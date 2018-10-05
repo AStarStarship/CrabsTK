@@ -30,7 +30,7 @@ const char* TestTree(char* seam_log, char* log_end, const char* args,
                      TestCase* seams, int node_count);
 
 /* Prints a message when a TestCase completes without failure. */
-bool TestBegin(char* seam_log, char* log_end, const char* args);
+const char* TestBegin(char* seam_log, char* log_end, const char* args);
 
 /* Assert check if the given condition is true
 @return false if the condition is false.
@@ -208,4 +208,4 @@ API bool AssertHandle(const char* file, int line,
 #endif
 
 #endif  //< #ifndef INCLUDED_KABUKI_F2_TEST
-#endif  //< #if SEAM >= SEAM_00_00_00__00_01
+#endif  //< #if SEAM >= SEAM_00_00_00__01

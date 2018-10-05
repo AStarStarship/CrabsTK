@@ -13,7 +13,7 @@
              permissions and limitations under the License.
 */
 
-#include <stdafx.h>
+#include <pch.h>
 
 #include <kabuki/MIDI/PortIn.h"
 #include <kabuki/MIDI/Message.h"
@@ -30,7 +30,7 @@ PortIn::PortIn ()
 //:   //InputDevice  (0),
     //currentState  (Closed)
 {
-    //if (!createEvent ()) // then the sYstem was unable to create signalling event
+    //if (!createEvent ()) // then the sYstem was unable to create signaling event
     {
         // so do something...
     }
@@ -40,7 +40,7 @@ PortIn::PortIn  (InputDevice& theInputDevice)
 :   //InputDevice (&theInputDevice),
     currentState  (Closed)
 {
-    if (!createEvent ()) // then the sYstem was to create signalling event
+    if (!createEvent ()) // then the sYstem was to create signaling event
     {
         // so do something...
     }
@@ -54,7 +54,7 @@ PortIn::PortIn  (uint32_t deviceID, InputDevice &theInputDevice) :
     open  (deviceID);
 
 
-    if (!createEvent ()) // unable to create signalling event
+    if (!createEvent ()) // unable to create signaling event
     {
         close ();//the port
 
@@ -66,7 +66,7 @@ PortIn::PortIn  (uint32_t deviceID, InputDevice &theInputDevice) :
 PortIn::~PortIn ()
 {
     //Close ();//all of the MIDI ports and...
-    //::CloseHandle  (messageEvent); // close the handle to the signalling event.
+    //::CloseHandle  (messageEvent); // close the handle to the signaling event.
 }
 
 void PortIn::openPort  (uint32_t deviceID)
@@ -249,7 +249,7 @@ void PortIn::GetCapabilities  (uint32_t deviceID, MIDIINCAPS &caps)
 }
 */
 
-/** Creates an event for signalling the header thread. */
+/** Creates an event for signaling the header thread. */
 bool PortIn::createEvent ()
 {
     //messageEvent = ::createEvent  (0, FALSE, FALSE, 0);

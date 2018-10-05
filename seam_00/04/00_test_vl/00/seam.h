@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#include "seam_header.h"
+#include "header.h"
 
 #include "../seam_tree.h"
 
@@ -21,10 +21,10 @@ specific language governing permissions and limitations under the License. */
 #include "01.h"
 
 namespace _ {
-const char* Seam_00_04_00char* seam_log, char* seam_end, 
-                                 const char* args) {
+const char* Seam_00_04_00 (char* seam_log, char* seam_end, 
+                           const char* args) {
   if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
     return TestTree<Seam_00_01_00> (seam_log, seam_end, args);
 }
 }
-#include "seam_footer.h"
+#include "footer.h"

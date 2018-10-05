@@ -14,9 +14,9 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00_01
-#ifndef INCLUDED_CRABS_TALIGN
-#define INCLUDED_CRABS_TALIGN 1
+#if SEAM >= SEAM_00_00_00__01
+#ifndef INCLUDED_F2_TALIGN
+#define INCLUDED_F2_TALIGN 1
 
 namespace _ {
 
@@ -109,6 +109,6 @@ inline T* AlignUp2(const void* pointer) {
 }
 
 }  // namespace _
-#endif  //< INCLUDED_CRABS_TALIGN
+#endif  //< INCLUDED_F2_TALIGN
 
-#endif  //< #if SEAM >= SEAM_00_00_00__00_01
+#endif  //< #if SEAM >= SEAM_00_00_00__01

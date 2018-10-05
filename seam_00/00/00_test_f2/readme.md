@@ -1,4 +1,4 @@
-# Seam_0test_f2
+# Seam[00] 00_test_f2
 
 This seam develops the F2 Foundational framework.
 
@@ -24,6 +24,6 @@ Tests the Automata Standard Code for Information Interchange (ASCCIK) string typ
 
 This seam tests the ASCII TME, TMS, and TMU timestamps and sub-second clock.
 
-### seam_ascii_data_types.h
+### seam_ascii_data.h
 
 This seam develops the ASCII contiguous object types and maps.

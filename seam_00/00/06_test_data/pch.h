@@ -16,9 +16,7 @@ specific language governing permissions and limitations under the License. */
 #define SEAM_MAJOR 2
 #define SEAM_MINOR 1
 
-#ifndef INCLUDED_SEAMS
 #include <seams.h>
-#endif
 
 #include <stdarg.h>
 #include <cstdint>

@@ -15,7 +15,7 @@
 */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
 #ifndef HEADER_FOR_KT_PRO_SCHEDULE
 #define HEADER_FOR_KT_PRO_SCHEDULE

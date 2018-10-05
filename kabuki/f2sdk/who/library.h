@@ -14,7 +14,7 @@
 */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2
 #ifndef HEADER_FOR_KT_ID_LIBRARY
 #define HEADER_FOR_KT_ID_LIBRARY

@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00_01
+#if SEAM >= SEAM_00_00_00__01
 #ifndef INCLUDED_KABUKI_F2_TBENCHMARK
 #define INCLUDED_KABUKI_F2_TBENCHMARK
 
@@ -31,4 +31,4 @@ const char* BenchmarkCaseLoop(char* cursor, char* end, const char* args) {
 }  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_TBENCHMARK
-#endif  //< #if SEAM >= SEAM_00_00_00__00_01
+#endif  //< #if SEAM >= SEAM_00_00_00__01

@@ -14,9 +14,9 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00_01
-#ifndef INCLUDED_CRABS_CONSOLE
-#define INCLUDED_CRABS_CONSOLE 1
+#if SEAM >= SEAM_00_00_00__01
+#ifndef INCLUDED_F2_CONSOLE
+#define INCLUDED_F2_CONSOLE 1
 
 namespace _ {
 
@@ -539,4 +539,4 @@ API inline _::Console& operator<<(_::Console& cout, _::CHex& item);
 API inline _::Console& operator<<(_::Console& cout, _::CBinary& item);
 
 #endif  //< #ifndef INCLUDED_KABUKI_F2_CONSOLE
-#endif  //< #if SEAM >= SEAM_00_00_00__00_01
+#endif  //< #if SEAM >= SEAM_00_00_00__01

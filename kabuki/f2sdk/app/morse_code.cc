@@ -14,7 +14,7 @@
 */
 
 #pragma once
-#include <stdafx.h>
+#include <pch.h>
 
 #include <ChineseRoom\MorseCode.h>
 

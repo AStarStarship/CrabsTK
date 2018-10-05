@@ -13,60 +13,24 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4
+#if SEAM >= SEAM_00_00_01
 #ifndef INCLUDED_CRABS_BOUT
 #define INCLUDED_CRABS_BOUT
-// Dependencies:
+
+#include <kabuki/f2/str1.h>
+
 #include "op.h"
-#include "str1.h"
-// End dependencies.
 
 namespace _ {
 
-/* List of the Fnewe BOut States. */
+/* List of the Finite BOut States. */
 typedef enum BOutStates {
   kBOutStateDisconnected = 0,  //< BOut State 0: BOut locked.
   kBOutStateWriting,           //< BOut State 1: Most common state.
   kBOutStateWritingBsc,        //< BOut State 2: Writing BSQ.
 } BOutState;
 
-/* B-Output ring buffer socket.
-
-    The BOut ring buffer is defined as being contiguous
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @code
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @endcode
-
-    A B-Output ring-buffer is identical in structure to an BOut ring-buffer, but
-    the stop becomes volatile and start is not volatile. */
+/* B-Output ring buffer socket. */
 struct API BOut {
   uint_t size;            //< Size of the B-Output.
   volatile uint_t start;  //< Starting index of the ring-buffer data.
@@ -136,6 +100,6 @@ inline _::Utf8& operator<<(_::Utf8& print, _::BOut* bout) {
 }
 #endif
 
-#endif  //< #if SEAM >= SEAM_0_0_4
+#endif  //< #if SEAM >= SEAM_00_00_01
 #endif  //< INCLUDED_CRABS_BOUT
 #undef DEBUG_CRABS_BOUT

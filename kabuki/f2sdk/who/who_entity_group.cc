@@ -13,7 +13,7 @@
              permissions and limitations under the License.
 */
 
-#include <stdafx.h>
+#include <pch.h>
 #if MAJOR_SEAM > 2 || MAJOR_SEAM == 2 && MINOR_SEAM >= 2
 #include "../entity_group.h"
 
