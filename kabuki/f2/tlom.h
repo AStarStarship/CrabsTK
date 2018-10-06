@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/loom.h
+@file    kabuki-toolkit.git/kabuki/f2/loom.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,19 +14,19 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_01__06
-#ifndef INCLUDED_F2_VARINT
-#define INCLUDED_F2_VARINT
+#if SEAM >= SEAM_00_00_01__07
 
-#include "config.h"
+#ifndef INCLUDED_KABUKI_F2_VARINT
+#define INCLUDED_KABUKI_F2_VARINT
 
+#include <seam_00/00/00_test_f2/07/header.h>
 
 namespace _ {
 
 /* A ordered collection of either UTF-8 or UTF-16 strands starting at index 0.
 CLoom shares the same design pattern as the ASCII STR (Strand) type: the lower
 5 bits store the type LOM, b6:b7 stores the size of the UI type and b5 stores
-if it is a UTF-8 (deasserted) or UTF-16 (asserted).
+if it is a UTF-8 (de-asserted) or UTF-16 (asserted).
 */
 template <typename UI, typename SI, typename Char>
 struct CLoom {
@@ -48,13 +48,13 @@ size_t BitCount() {
 }
 
 template <typename UI, typename SI, typename Char>
-inline LoomCountMin() {
+inline SI LoomCountMin() {
   enum { kCountMin = 8 / sizeof(SI) };
   return kCountMin;
 }
 
 template <typename UI, typename SI, typename Char>
-inline LoomSizeMin() {
+inline SI LoomSizeMin() {
   enum {
     kCountMin = 8 / sizeof(SI),
     kSizeMin = sizeof(CLoom<UI, SI, Char>) + kCountMin * (sizeof(UI) + 2),
@@ -128,5 +128,5 @@ SI LoomPrint(Utf8& print, CLoom* loom, const Char* strand) {
 }
 
 }  // namespace _
-#endif  //< INCLUDED_F2_VARINT
+#endif  //< INCLUDED_KABUKI_F2_VARINT
 #endif  //< #if SEAM >= SEAM_00_00_01__06

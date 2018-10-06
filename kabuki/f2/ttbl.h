@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@file    ~/kabuki/f2/table.h
+@file    kabuki-toolkit.git/kabuki/f2/table.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,11 +12,10 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_00_01__06
-#ifndef INCLUDED_F2_TABLE
-#define INCLUDED_F2_TABLE
+#if SEAM >= SEAM_00_00_01__08
+#ifndef INCLUDED_KABUKI_F2_TABLE
+#define INCLUDED_KABUKI_F2_TABLE
 
-#include "operand.h"
 #include "socket.h"
 
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 3
@@ -58,10 +57,6 @@ namespace _ {
     terminated by an invalid index that is greater than kMaxNumOps.
     collissionsList[0] is an invalid index, so the collisionsList is searched
     from lower address up.
-    
-
-
-
     # Memory Layout
 
     @code
@@ -608,4 +603,4 @@ Utf8& TablePrint(Utf8& print, Table<UI, SI>* table) {
 
 }  // namespace _
 #endif  //< #if SEAM >= SEAM_00_00_01__06
-#endif  //< INCLUDED_F2_TABLE
+#endif  //< INCLUDED_KABUKI_F2_TABLE

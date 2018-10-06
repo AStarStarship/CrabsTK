@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    ~/libraries/pro/impl/task.cc
+@file    kabuki-toolkit.git/libraries/pro/impl/task.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
           All right reserved (R). Licensed under the Apache License, Version
@@ -15,7 +15,8 @@
 */
 
 #include <pch.h>
-#if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
+
+#if SEAM >= SEAM_00_00_00__07
 #include "task.h"
 
 namespace _ {
@@ -237,7 +238,7 @@ const char* Task::Command(char* input) {
       *buffer;   //< String buffer.
   int value;     //< Value to (possibly) be parsed and temp value.
   float number;  //< A number to (possibly) be parsed.
-  Tms time;   //< Time to (possibly) be parsed.
+  Tms time;      //< Time to (possibly) be parsed.
   if (input == nullptr) return "Task input was null";
   input = SkipSpaces(input);
   c = *input;
@@ -337,5 +338,5 @@ const char* Task::Command(char* input) {
   return "Invalid Task command";
 }
 
-}       //< namespace _
+}  // namespace _
 #endif  //< #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0

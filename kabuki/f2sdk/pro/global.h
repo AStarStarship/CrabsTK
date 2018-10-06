@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    ~/libraries/pro/script_module.h
+@file    kabuki-toolkit.git/libraries/pro/script_module.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -14,9 +14,9 @@
              permissions and limitations under the License.
 */
 
-#ifndef HEADER_FOR_KT_PRO_MODULE_H
-#define HEADER_FOR_KT_PRO_MODULE_H
+#ifndef INCLUDED_KABUKI_PRO_GLOBAL
+#define INCLUDED_KABUKI_PRO_GLOBAL
 
 #include "project.h"
 
-#endif  //< HEADER_FOR_KT_PRO_MODULE_H
+#endif  //< INCLUDED_KABUKI_PRO_GLOBAL

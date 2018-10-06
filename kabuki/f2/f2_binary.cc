@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/f2_binary.cc
+@file    kabuki-toolkit.git/kabuki/f2/f2_binary.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,44 +13,14 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__01
+#if SEAM >= SEAM_00_00_00__00
 #include "tbinary.h"
 
 #include "ttest.h"
 
 #include <cmath>
 
-#if SEAM == SEAM_00_00_00__01
-#define PRINT(item) Print(item)
-#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PRINT_PRINTED                                                   \
-  sprintf_s(buffer, 24, "%u", value);                                   \
-  *end = 0;                                                             \
-  Printf("\n    Printed \"%s\" leaving value:\"%s\":%u", begin, buffer, \
-         StringLength<>(buffer))
-#define PRINT_BINARY \
-  PrintIndent(4);    \
-  PrintBinary(value);
-#define PRINT_BINARY_TABLE PrintBinaryTable(value);
-#define PRINT_HEADER                   \
-  for (int i = 0; i < 10; ++i) {       \
-    *(cursor + i) = 'x';               \
-  }                                    \
-  *(cursor + 21) = 0;                  \
-  Char* begin = cursor;                \
-  Char buffer[256];                    \
-  sprintf_s(buffer, 256, "%u", value); \
-  Printf("Expecting %s:%u", buffer, StringLength<>(buffer));
-#define BEGIN_ITOS_ALGORITHM \
-  Print('\n');               \
-  for (int i = 80; i > 0; --i) Print('-')
-#else
-#define PRINT(item)
-#define PRINTF(x, ...)
-#define PRINT_PRINTED
-#define PRINT_HEADER
-#define PRINT_HEADING
-#endif
+#include <seam_00/00/00_test_f2/01/header.h>
 
 #ifdef __LITTLE_ENDIAN
 #define HI(x) *(1 + (int32_t*)&x)
@@ -140,6 +110,9 @@ char* Print(char* begin, char* end, char byte_0, char byte_1, char byte_2) {
 #endif
   return &begin[4];
 }
+
+#endif  //< #if SEAM >= SEAM_00_00_00__00
+#if SEAM >= SEAM_00_00_00__01
 
 char puff_lut[2 * 100 + (8 + 2) * 87];
 
@@ -469,10 +442,5 @@ int HexToByte(uint16_t h) {
 
 }  // namespace _
 
-#undef PRINT
-#undef PRINTF
-#undef PRINT_PRINTED
-#undef PRINT_HEADER
-#undef PRINT_HEADING
-#undef BEGIN_ITOS_ALGORITHM
+#include <seam_00/00/00_test_f2/01/header.h>
 #endif  //< #if SEAM >= SEAM_00_00_00__01

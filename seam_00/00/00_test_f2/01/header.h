@@ -1,16 +1,31 @@
-/* Kabuki Toolkit @version 0.x
-@link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/seam_00/header.h
-@author  Cale McCollough <cale.mccollough@gmail.com>
-@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
-All right reserved (R). Licensed under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance with the License.
-You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
-Unless required by applicable law or agreed to in writing, software distributed
-under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-CONDITIONS OF ANY KIND, either express or implied. See the License for the
-specific language governing permissions and limitations under the License. */
-
-#include <pch.h>
-
-#if SEAM >= SEAM_00_00_01
+#if SEAM == SEAM_00_00_00__00
+#define PRINT(item) Print(item)
+#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
+#define PRINT_PRINTED                                                   \
+  sprintf_s(buffer, 24, "%u", value);                                   \
+  *end = 0;                                                             \
+  Printf("\n    Printed \"%s\" leaving value:\"%s\":%u", begin, buffer, \
+         StringLength<>(buffer))
+#define PRINT_BINARY \
+  PrintIndent(4);    \
+  PrintBinary(value);
+#define PRINT_BINARY_TABLE PrintBinaryTable(value);
+#define PRINT_HEADER                   \
+  for (int i = 0; i < 10; ++i) {       \
+    *(cursor + i) = 'x';               \
+  }                                    \
+  *(cursor + 21) = 0;                  \
+  Char* begin = cursor;                \
+  Char buffer[256];                    \
+  sprintf_s(buffer, 256, "%u", value); \
+  Printf("Expecting %s:%u", buffer, StringLength<>(buffer));
+#define BEGIN_ITOS_ALGORITHM \
+  Print('\n');               \
+  for (int i = 80; i > 0; --i) Print('-')
+#else
+#define PRINT(item)
+#define PRINTF(x, ...)
+#define PRINT_PRINTED
+#define PRINT_HEADER
+#define PRINT_HEADING
+#endif

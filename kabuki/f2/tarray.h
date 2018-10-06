@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/f2_console.cc
+@file    kabuki-toolkit.git/kabuki/f2/f2_console.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,12 +13,11 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_3
-#ifndef INCLUDED_F2_ARRAY
-#define INCLUDED_F2_ARRAY
+#if SEAM >= SEAM_00_00_00__06
+#ifndef INCLUDED_KABUKI_F2_ARRAY
+#define INCLUDED_KABUKI_F2_ARRAY
 
 #include "tstk.h"
-
 
 namespace _ {
 
@@ -195,7 +194,7 @@ class Array {
   /* Deletes the dynamically allocated Array. */
   ~Array() { delete[] begin; }
 
-  /* Clones the other object; upsizing the buffer only if required. */
+  /* Clones the other object; up-sizing the buffer only if required. */
   void Clone(Array<T, UI, SI>& other) {}
 
   /* Gets the number of dimensions. */
@@ -218,7 +217,7 @@ class Array {
   }
 
  private:
-  uintptr_t* begin;  //< Dynamically allocted word-aligned buffer.
+  uintptr_t* begin;  //< Dynamically word-aligned buffer.
 };                   //< class Array
 }  // namespace _
 
@@ -232,5 +231,5 @@ inline _::Utf8& operator<<(_::Utf8& printer, _::Stack<T, UI, SI>& stack) {
   return _::PrintArray<T, UI, SI>(printer, stack.Obj());
 }
 
-#endif  //< INCLUDED_F2_ARRAY
-#endif  //< #if SEAM >= SEAM_0_0_3
+#endif  //< INCLUDED_KABUKI_F2_ARRAY
+#endif  //< #if SEAM >= SEAM_00_00_00__06

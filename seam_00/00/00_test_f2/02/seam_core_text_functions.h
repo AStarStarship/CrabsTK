@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    ~/tests/test_seam_0_0_2.cc
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    kabuki-toolkit.git/tests/test_seam_0_0_2.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,13 +13,13 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#include "header.h"
-
 #if SEAM >= SEAM_00_00_02__01_02
 
-#include <random>
-
 #include <kabuki/crabs/global.h>
+
+#include "header.h"
+
+#include <random>
 
 namespace _ {
 
@@ -282,3 +282,4 @@ const char* Seam_00_00_00__01(char* seam_log, char* log_end, const char* args) {
 }  // namespace _
 
 #include "footer.h"
+#endif  //< #if SEAM >= SEAM_00_00_00__02

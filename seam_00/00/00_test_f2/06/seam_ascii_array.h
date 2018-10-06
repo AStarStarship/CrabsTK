@@ -18,9 +18,9 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-static const char* Seam_00_00_01__00_00(char* seam_log, char* seam_end,
-                                        const char* args) {
-#if SEAM == SEAM_00_00_01__00_00
+static const char* Seam_00_00_00__06(char* seam_log, char* seam_end,
+                                     const char* args) {
+#if SEAM >= SEAM_00_00_00__06
   if (!TestBegin(seam_log, seam_end, args, __FUNCTION__, "Description"))
     return nullptr;
 

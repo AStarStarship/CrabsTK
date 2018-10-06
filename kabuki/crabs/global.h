@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/crabs/global.h
+@file    kabuki-toolkit.git/kabuki/crabs/global.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -19,21 +19,22 @@ specific language governing permissions and limitations under the License. */
 
 #include "../f2/global.h"
 
+#include <kabuki/f2/ascii.h>
+#include <kabuki/f2/str.h>
+#include <kabuki/f2/tarray.h>
+#include <kabuki/f2/tlst.h>
+#include <kabuki/f2/tmap.h>
+#include <kabuki/f2/tstk.h>
+
 #if SEAM >= SEAM_00_00_00__00_02
-#include "ascii.h"
 #include "bsq.h"
-#include "tarray.h"
-#include "tlst.h"
-#include "tmap.h"
-#include "tstk.h"
 //#include "multimap.h"
 //#include "dictionary.h"
 #endif
 
 #if SEAM >= SEAM_00_00_00__00_03
-#include "clock.h"
+#include "clock.h>
 #include "socket.h"
-#include "str.h"
 #endif
 
 #if SEAM >= SEAM_00_00_00__00_03

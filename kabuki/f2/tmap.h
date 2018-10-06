@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/map.h
+@file    kabuki-toolkit.git/kabuki/f2/map.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -19,31 +19,6 @@ specific language governing permissions and limitations under the License. */
 
 #include "ascii_data.h"
 #include "socket.h"
-
-#if SEAM == SEAM_00_00_01__06
-#ifndef PRINTF
-#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PRINT(c) Print(c)
-#define PRINT_HEADING                             \
-  {                                               \
-    Print('\n');                                  \
-    for (int i = 80; i > 0; --i) std::cout << '-' \
-  }
-#define PRINT_TYPE(type, value) Console<>().Out() << TypeValue(type, value);
-#define WIPE MapWipe<UI, SI>(map);
-#define PRINT_LINE(token)                                                 \
-  {                                                                       \
-    for (int cout_123 = 80; count > 0; --count) std::cout << (char)token; \
-  }
-#endif
-#else
-#define PRINTF(x, ...)
-#define PRINT(c)
-#define PRINT_HEADING
-#define PRINT_TYPE(type, value)
-#define WIPE(buffer, size)
-#define PRINT_LINE(token)
-#endif
 
 namespace _ {
 

@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/f2_console.cc
+@file    kabuki-toolkit.git/kabuki/f2/f2_console.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_00_01__06
-#ifndef INCLUDED_F2_TYPES
-#define INCLUDED_F2_TYPES
+#if SEAM >= SEAM_00_00_01__03
+#ifndef INCLUDED_KABUKI_F2_TYPES
+#define INCLUDED_KABUKI_F2_TYPES
 
 #include "align.h"
 #include "config.h"
@@ -249,7 +249,7 @@ nil upon failure.
 @param value   The value to print or nil. */
 API char* Print(char* begin, char* end, type_t type, const void* value);
 }  // namespace _
-/* Writes the given value to the print jusified right.
+/* Writes the given value to the print justified right.
 @return The utf.
 @param  utf The utf.
 @param  item The item to print. */
@@ -264,9 +264,9 @@ nil upon failure.
 @param type    The type to print.
 @param value   The value to print or nil. */
 API char16_t* Print(char16_t* begin, char16_t* end, type_t type,
-                       const void* value);
+                    const void* value);
 }  // namespace _
-/* Writes the given value to the print jusified right.
+/* Writes the given value to the print justified right.
 @return The utf.
 @param  utf The utf.
 @param  item The item to print. */
@@ -282,9 +282,9 @@ of the read number or nil upon failure.
 @param type    The type to print.
 @param value   The value to print or nil. */
 API char16_t* Print(char16_t* begin, char16_t* end, type_t type,
-                       const void* value);
+                    const void* value);
 }  // namespace _
-/* Writes the given value to the print jusified right.
+/* Writes the given value to the print justified right.
 @return The utf.
 @param  utf The utf.
 @param  item The item to print. */
@@ -293,5 +293,5 @@ API _::Utf32& operator<<(_::Utf32& utf, const _::TypeValue& type_value);
 
 }  // namespace _
 
-#endif  //< #if SEAM >= SEAM_00_00_01__06
-#endif  //< INCLUDED_F2_TYPES
+#endif  //< #if SEAM >= SEAM_00_00_01__03
+#endif  //< INCLUDED_KABUKI_F2_TYPES

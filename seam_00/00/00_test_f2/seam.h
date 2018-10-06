@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/eam_00/00/00_test_f2/seam.h
+@file    kabuki-toolkit.git/eam_00/00/00_test_f2/seam.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -16,23 +16,29 @@ specific language governing permissions and limitations under the License. */
 #include "00/seam_itos_and_stoi.h"
 #include "01/seam_ftos_and_stof.h"
 #include "02/seam_core_text_functions.h"
-#include "03/seam_ascii_clock.h"
-#include "04/seam_stack.h"
-#include "05/seam_array.h"
-#include "06/seam_.h"
-#include "07/seam_loom.h"
-#include "08/seam_table.h"
-#include "09/seam_list.h"
-#include "10/seam_map.h"
-#include "11/seam_book.h"
-#include "12/seam_dictionary.h"
+#include "03/seam_ascii_strings.h"
+#include "04/seam_ascii_clock.h"
+#include "05/seam_ascii_stack.h"
+#include "06/seam_ascii_array.h"
+#include "07/seam_ascii_loom.h"
+#include "08/seam_ascii_table.h"
+#include "09/seam_ascii_varint.h"
+#include "10/seam_ascii_list.h"
+#include "11/seam_ascii_map.h"
+#include "12/seam_ascii_book.h"
+#include "13/seam_ascii_dictionary.h"
 
 namespace _ {
 
-static bool Seam_00_00_00__00(char* seam_log, char* log_end, const char* args) {
-  if (!TestBegin(seam_log, log_end, args, __FUNCTION__)) return false;
-  return TestTree<Seam_00_00_00__00, Seam_00_00_00__01>(seam_log, log_end,
-                                                        args);
+static const char* Seam_00_00_00__00(char* seam_log, char* log_end,
+                                     const char* args) {
+  if (!TestBegin(seam_log, log_end, args)) return __FUNCTION__;
+  return TestTree<Seam_00_00_00__00, Seam_00_00_00__01, Seam_00_00_00__02,
+                  Seam_00_00_00__03, Seam_00_00_00__04, Seam_00_00_00__05,
+                  Seam_00_00_00__06, Seam_00_00_00__07, Seam_00_00_00__08,
+                  Seam_00_00_00__09, Seam_00_00_00__10, Seam_00_00_00__11,
+                  Seam_00_00_00__012, Seam_00_00_00__013>(seam_log, log_end,
+                                                          args);
 }
 
 }  // namespace _

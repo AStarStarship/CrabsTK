@@ -18,6 +18,7 @@
     <ClInclude Include="..\seam_header.h">
       <Filter>seam_00\00</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cc" />
@@ -35,6 +36,30 @@
     </Filter>
     <Filter Include="seam_00\00\00_test">
       <UniqueIdentifier>{dd81ded9-6014-4b31-a8dd-6728c541c21a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\00_test_f2">
+      <UniqueIdentifier>{cda0c48b-ae79-4fdd-92a6-c2cd0d2e25e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\01_test_crabs">
+      <UniqueIdentifier>{2896a120-c89b-40e6-8f98-3f2b4ebf58c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\02_test_hal">
+      <UniqueIdentifier>{454133e0-1da0-4672-b3f6-49c63cc463ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\03_test_drivers">
+      <UniqueIdentifier>{e468f169-3584-49fa-b10a-66b4d116ed0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\04_test_platform">
+      <UniqueIdentifier>{42f6d2fc-225a-4a01-82cc-e30c8409a314}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\05_features">
+      <UniqueIdentifier>{0d21e16c-7fab-4a0c-9724-ba701e46e3f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\06_platform">
+      <UniqueIdentifier>{9670ce00-2ab0-4b34-93a8-81852ea6e892}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\07">
+      <UniqueIdentifier>{7de1eb9e-f08f-4492-8bdd-4fc970cc2759}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

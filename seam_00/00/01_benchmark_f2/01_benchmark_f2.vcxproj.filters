@@ -11,75 +11,78 @@
     <Filter Include="kabuki\f2">
       <UniqueIdentifier>{a1858cc5-bdf5-4842-98ba-c99ab7559375}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source">
+    <Filter Include="seam_00">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="source\itos">
-      <UniqueIdentifier>{8fae8fd7-c32b-41a0-8b0c-6289abf72963}</UniqueIdentifier>
+    <Filter Include="seam_00\00">
+      <UniqueIdentifier>{0a17e6d9-d311-4813-aeea-e943da71de5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\align">
+    <Filter Include="seam_00\00\align">
       <UniqueIdentifier>{0d3a2cf1-9f70-40cd-821c-3efe9db213db}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\msbasserted">
-      <UniqueIdentifier>{9ab2123d-b104-4eed-997c-8896b42bb942}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\ftos">
+    <Filter Include="seam_00\00\ftos">
       <UniqueIdentifier>{acf88f04-8009-49c2-abbc-2ea3966e91bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="seam_00\00\itos">
+      <UniqueIdentifier>{8fae8fd7-c32b-41a0-8b0c-6289abf72963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\msbasserted">
+      <UniqueIdentifier>{9ab2123d-b104-4eed-997c-8896b42bb942}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cc">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="itos\itos_algorithms.cc">
-      <Filter>source\itos</Filter>
+      <Filter>seam_00\00\itos</Filter>
     </ClCompile>
     <ClCompile Include="itos\print_mlsd.cc">
-      <Filter>source\itos</Filter>
+      <Filter>seam_00\00\itos</Filter>
     </ClCompile>
     <ClCompile Include="itos\print_mlsd2.cc">
-      <Filter>source\itos</Filter>
+      <Filter>seam_00\00\itos</Filter>
     </ClCompile>
     <ClCompile Include="itos\print_mod100sc.cc">
-      <Filter>source\itos</Filter>
+      <Filter>seam_00\00\itos</Filter>
     </ClCompile>
     <ClCompile Include="itos\benchmark_itos.cc">
-      <Filter>source\itos</Filter>
+      <Filter>seam_00\00\itos</Filter>
     </ClCompile>
     <ClCompile Include="msbasserted\benchmark_msbasserted.cc">
-      <Filter>source\msbasserted</Filter>
+      <Filter>seam_00\00\msbasserted</Filter>
     </ClCompile>
     <ClCompile Include="align\benchmark_align.cc">
-      <Filter>source\align</Filter>
+      <Filter>seam_00\00\align</Filter>
     </ClCompile>
     <ClCompile Include="ftos\benchmark_ftos.cc">
-      <Filter>source\ftos</Filter>
+      <Filter>seam_00\00\ftos</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cc">
+      <Filter>seam_00\00</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>source</Filter>
-    </ClInclude>
     <ClInclude Include="itos\itos_algorithms.h">
-      <Filter>source\itos</Filter>
+      <Filter>seam_00\00\itos</Filter>
     </ClInclude>
     <ClInclude Include="itos\debug_itos_footer.h">
-      <Filter>source\itos</Filter>
+      <Filter>seam_00\00\itos</Filter>
     </ClInclude>
     <ClInclude Include="itos\debug_itos_header.h">
-      <Filter>source\itos</Filter>
+      <Filter>seam_00\00\itos</Filter>
     </ClInclude>
     <ClInclude Include="config.h">
-      <Filter>source</Filter>
+      <Filter>seam_00\00</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>seam_00\00</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>seam_00\00</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.md">
-      <Filter>source</Filter>
+      <Filter>seam_00\00</Filter>
     </None>
   </ItemGroup>
 </Project>

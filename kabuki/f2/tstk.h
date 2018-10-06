@@ -1,6 +1,6 @@
-/* Kabuki Toolkit
-@version 0.x
-@file    ~/kabuki/f2/stack.h
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    kabuki-toolkit.git/kabuki/f2/stack.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,15 +13,14 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_00_01__06
-#ifndef INCLUDED_F2_STACK
-#define INCLUDED_F2_STACK
+#if SEAM >= SEAM_00_00_01__05
+#ifndef INCLUDED_KABUKI_F2_STK
+#define INCLUDED_KABUKI_F2_STK
 
 #include "config.h"
 #include "obj.h"
 #include "socket.h"
 #include "str1.h"
-
 
 namespace _ {
 
@@ -68,7 +67,10 @@ constexpr UI UnsignedMax() {
     given types, and another for a multi-dimensional array that uses the 1-d
     array in order to store the dimensions. The only different between them is
     that the size_array variable gets set to 0.
-    
+    
+
+
+
 
 
 
@@ -654,5 +656,5 @@ class Stack {
 
 }  // namespace _
 
-#endif  //< INCLUDED_F2_STACK
-#endif  //< #if SEAM >= SEAM_00_00_01__06
+#endif  //< INCLUDED_KABUKI_F2_STK
+#endif  //< #if SEAM >= SEAM_00_00_01__05

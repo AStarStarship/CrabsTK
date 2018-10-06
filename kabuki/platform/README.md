@@ -15,15 +15,16 @@ The Kabuki VM Platform is based on mbed, an IoT platform similar to Arduino for 
    1. Abstract hardware model for common processor peripherals.
    2. Hardware agnostic code shared between targets processors.
    3. Target implementations for various processors.
-2. **Platform** - Platform such as an operating system or bare-metal firmware that creates a higher-level virtual machine.
+2. **Drivers** - Drivers for common communication peripherals such as SPI, UART, Timers, GPIO, etc.
+3. **Platform** - Platform such as an operating system or bare-metal firmware that creates a higher-level virtual machine.
    1. Platform abstraction layer for common platform features.
    2. Platform agnostic code shared between platforms.
    3. Platform implementation.
-3. **Features** - Cross-platform features.
+4. **Features** - Cross-platform features.
    1. Feature model with common interface for features.
    2. Feature framework shares cross-platform code between features.
    3. Feature implementation.
-4. **Toolkit Modules** - Cross-platform toolkit built on top of the features.
+5. **Firmware-to-Software Development Kit** - Cross-platform toolkit built on top of the features.
    1. Module model.
    3. Crabs layer.
    3. Module implementation.

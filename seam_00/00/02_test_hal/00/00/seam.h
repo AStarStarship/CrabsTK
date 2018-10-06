@@ -15,16 +15,17 @@ specific language governing permissions and limitations under the License. */
 
 #include "header.h"
 
-#include <kabuki/f2/global>
+#include <kabuki/f2/global.h>
 
 namespace _ {
-const char* Seam_00_00_02__00_00(char* seam_log, char* seam_end, 
-                                     const char* args) {
+const char* Seam_00_00_02__00(char* seam_log, char* seam_end,
+                              const char* args) {
+#if SEAM >= SEAM_00_00_02__00
   if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
-    if (!TestBegin (test_cursor, test_end, args)) return __FUNCTION__;
-    
-    return nullptr;
+
+#endif
+  return nullptr;
 }
-}
+}  // namespace _
 
 #include "footer.h"

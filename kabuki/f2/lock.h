@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/lock.h
+@file    kabuki-toolkit.git/kabuki/f2/lock.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,8 +12,8 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#ifndef INCLUDED_F2_LOCK
-#define INCLUDED_F2_LOCK
+#ifndef INCLUDED_KABUKI_F2_LOCK
+#define INCLUDED_KABUKI_F2_LOCK
 #include "config.h"
 
 namespace _ {
@@ -26,4 +26,4 @@ API inline void RoomUnlock();
 
 }  // namespace _
 
-#endif  //< #if INCLUDED_F2_LOCK
+#endif  //< #if INCLUDED_KABUKI_F2_LOCK

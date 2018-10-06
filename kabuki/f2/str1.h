@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/str1.h
+@file    kabuki-toolkit.git/kabuki/f2/str1.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,9 +12,9 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_00_00_01__01
-#ifndef INCLUDED_F2_UTF8
-#define INCLUDED_F2_UTF8
+#if SEAM >= SEAM_00_00_00__03
+#ifndef INCLUDED_KABUKI_F2_UTF8
+#define INCLUDED_KABUKI_F2_UTF8
 
 #include "ascii_data.h"
 #include "clock.h"
@@ -54,7 +54,7 @@ API const char* TextLineEnd(const char* text, int column_count);
 
 /* Returns a pointer to the char at the end of the row. */
 API const char* TextLineEnd(const char* text, const char* text_end,
-                               int column_count);
+                            int column_count);
 
 /* Returns the pointer to the next char in the char that is not an ASCII
 number.
@@ -83,7 +83,7 @@ API const char* StringEquals(const char* text_a, const char* text_b);
 
 /* Compares the source and query char as nil-terminated strings. */
 API const char* StringEquals(const char* text, const char* text_end,
-                                const char* query);
+                             const char* query);
 
 /* Searches the given char for the given char.
 @param  text      The char to search.
@@ -92,7 +92,7 @@ API const char* StringEquals(const char* text, const char* text_end,
 after the end of the text upon success. */
 API const char* StringFind(const char* text, const char* query);
 
-/* Printrs the given string to the print buffer.
+/* Prints the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
 upon success.
 @param  begin  The beginning address of the buffer.
@@ -156,14 +156,14 @@ upon success.
 @param value The value to print. */
 API char* Print(char* begin, char* end, double value);
 
-/* Printrs the given string to the print buffer.
+/* Prints the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
 upon success.
 @param begin  The beginning address of the buffer.
 @param end    The end address of the buffer.
 @param string The potentially unsafe string to write. */
 API char* PrintCenter(char* begin, char* end, const char* string,
-                         int column_count);
+                      int column_count);
 
 /* Writes the give char to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -171,8 +171,7 @@ upon success.
 @param begin Beginning address of the buffer.
 @param end The end address of the buffer.
 @param character The value to write. */
-API char* PrintCenter(char* begin, char* end, char character,
-                         int column_count);
+API char* PrintCenter(char* begin, char* end, char character, int column_count);
 
 /* Writes the give char to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -180,8 +179,7 @@ upon success.
 @param begin The beginning address of the buffer.
 @param end The end address of the buffer.
 @param value The value to print. */
-API char* PrintCenter(char* begin, char* end, uint32_t valu,
-                         int column_count);
+API char* PrintCenter(char* begin, char* end, uint32_t valu, int column_count);
 
 /* Writes the give char to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -189,8 +187,7 @@ upon success.
 @param begin The beginning address of the buffer.
 @param end The end address of the buffer.
 @param value The value to print. */
-API char* PrintCenter(char* begin, char* end, int32_t value,
-                         int column_count);
+API char* PrintCenter(char* begin, char* end, int32_t value, int column_count);
 
 /* Writes the give char to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -198,8 +195,7 @@ upon success.
 @param begin The beginning address of the buffer.
 @param end The end address of the buffer.
 @param value The value to print. */
-API char* PrintCenter(char* begin, char* end, uint64_t value,
-                         int column_count);
+API char* PrintCenter(char* begin, char* end, uint64_t value, int column_count);
 
 /* Writes the give char to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -207,8 +203,7 @@ upon success.
 @param begin The beginning address of the buffer.
 @param end The end address of the buffer.
 @param value The value to print. */
-API char* PrintCenter(char* begin, char* end, int64_t value,
-                         int column_count);
+API char* PrintCenter(char* begin, char* end, int64_t value, int column_count);
 
 /* Writes the give char to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -224,17 +219,16 @@ upon success.
 @param begin The beginning address of the buffer.
 @param end The end address of the buffer.
 @param value The value to print. */
-API char* PrintCenter(char* begin, char* end, double value,
-                         int column_count);
+API char* PrintCenter(char* begin, char* end, double value, int column_count);
 
-/* Printrs the given string to the print buffer.
+/* Prints the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
 upon success.
 @param begin  The beginning address of the buffer.
 @param end    The end address of the buffer.
 @param string The potentially unsafe string to write. */
 API char* PrintRight(char* begin, char* end, const char* string,
-                        int column_count);
+                     int column_count);
 
 /* Writes the give char to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -242,8 +236,7 @@ upon success.
 @param begin     Beginning address of the buffer.
 @param end       The end address of the buffer.
 @param character The value to write. */
-API char* PrintRight(char* begin, char* end, char character,
-                        int column_count);
+API char* PrintRight(char* begin, char* end, char character, int column_count);
 
 /* Writes the give char to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -251,8 +244,7 @@ upon success.
 @param begin The beginning address of the buffer.
 @param end The end address of the buffer.
 @param value The value to print. */
-API char* PrintRight(char* begin, char* end, uint32_t value,
-                        int column_count);
+API char* PrintRight(char* begin, char* end, uint32_t value, int column_count);
 
 /* Writes the give char to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -260,8 +252,7 @@ upon success.
 @param begin The beginning address of the buffer.
 @param end The end address of the buffer.
 @param value The value to print. */
-API char* PrintRight(char* begin, char* end, int32_t value,
-                        int column_count);
+API char* PrintRight(char* begin, char* end, int32_t value, int column_count);
 
 /* Writes the give char to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -269,8 +260,7 @@ upon success.
 @param begin The beginning address of the buffer.
 @param end The end address of the buffer.
 @param value The value to print. */
-API char* PrintRight(char* begin, char* end, uint64_t value,
-                        int column_count);
+API char* PrintRight(char* begin, char* end, uint64_t value, int column_count);
 
 /* Writes the give char to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -278,8 +268,7 @@ upon success.
 @param begin The beginning address of the buffer.
 @param end The end address of the buffer.
 @param value The value to print. */
-API char* PrintRight(char* begin, char* end, int64_t value,
-                        int column_count);
+API char* PrintRight(char* begin, char* end, int64_t value, int column_count);
 
 /* Writes the give char to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -297,7 +286,7 @@ upon success.
 @param value The value to print. */
 API char* PrintRight(char* begin, char* end, double value, int column_count);
 
-/* Printrs the given string to the print buffer.
+/* Prints the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
 upon success.
 @param begin  The beginning address of the buffer.
@@ -377,7 +366,7 @@ upon success.
 @param value The value to print. */
 API char* PrintHex(char* begin, char* end, double value);
 
-/* Printrs the given string to the print buffer.
+/* Prints the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
 upon success.
 @param begin  The beginning address of the buffer.
@@ -466,8 +455,7 @@ upon success.
 API char* PrintBinary(char* begin, char* end, double value);
 
 /* Prints the given memory socket to the text buffer. */
-API char* PrintMemory(char* begin, char* end, const void* start,
-                         size_t size);
+API char* PrintMemory(char* begin, char* end, const void* start, size_t size);
 
 /* Prints out the contents of the address to the utf buffer.
 @return Null upon failure or a pointer to the byte after the last
@@ -477,7 +465,7 @@ byte written.
 @param start The beginning of the read buffer.
 @param stop  The end of the read buffer. */
 API char* PrintMemory(char* begin, char* end, const void* start,
-                         const void* stop);
+                      const void* stop);
 
 /* Prints a line of the given column_count.
 @return Returns a pointer to the next char after the end of the read number or
@@ -496,7 +484,7 @@ nil upon failure.
 @param string The string to print.
 @param column_count The number of columns. */
 API char* PrintLineString(char* cursor, char* end, const char* string,
-                             int column_count);
+                          int column_count);
 
 /* Converts the given string to a 8-bit signed integer.
 @return Null upon failure or a pointer to the byte after the last
@@ -575,10 +563,10 @@ API const char* Scan(const char* text, float& result);
 of the read number or nil upon failure. */
 API const char* Scan(const char* text, double& result);
 
-/* Prints the buffer to the consoele as a UTF-8 string. */
+/* Prints the buffer to the console as a UTF-8 string. */
 void COutUtf8(uintptr_t* buffer);
 
-/* Prints the buffer to the consoele as a UTF-8 string. */
+/* Prints the buffer to the console as a UTF-8 string. */
 void COutAutoUtf8(uintptr_t* buffer);
 
 /* Utility class for printing strings.
@@ -887,7 +875,7 @@ API _::Utf8& operator<<(_::Utf8& utf, double value);
 @param  item The item to write to print. */
 API _::Utf8& operator<<(_::Utf8& utf, _::Utf8Center item);
 
-/* Writes the given value to the print jusified right.
+/* Writes the given value to the print justified right.
 @return The utf.
 @param  utf The utf.
 @param  item The item to print. */
@@ -900,5 +888,5 @@ API _::Utf8& operator<<(_::Utf8& utf, _::Utf8Line line);
 API _::Utf8& operator<<(_::Utf8& utf, _::Utf8LineString line);
 
 #endif  //< #if USING_UTF8
-#endif  //< #if INCLUDED_F2_UTF8
-#endif  //< #if SEAM >= SEAM_00_00_01__01
+#endif  //< #if INCLUDED_KABUKI_F2_UTF8
+#endif  //< #if SEAM >= SEAM_00_00_00__03

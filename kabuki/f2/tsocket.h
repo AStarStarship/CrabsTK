@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    ~/kabuki-toolkit/kabuki/f2/socket.h
+@file    kabuki-toolkit.git/kabuki-toolkit/kabuki/f2/socket.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,12 +14,11 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 #if SEAM >= SEAM_00_00_01__01
-#ifndef INCLUDED_F2_KABUKI_SOCKET
-#define INCLUDED_F2_KABUKI_SOCKET
+#ifndef INCLUDED_KABUKI_F2_KABUKI_SOCKET
+#define INCLUDED_KABUKI_F2_KABUKI_SOCKET
 
 #include "align.h"
-#include "binary_64.h"
-
+#include "binary.h"
 
 namespace _ {
 
@@ -51,13 +50,13 @@ class TSocket {
 
 /* @group ::_::Socket */
 
-/* Syntactical sugar for reinterpret_cast using tampltes. */
+/* Syntactical sugar for reinterpret_cast using templates. */
 template <typename T>
 inline T* Ptr(void* ptr) {
   return reinterpret_cast<T*>(ptr);
 }
 
-/* Syntactical sugar for reinterpret_cast using tampltes. */
+/* Syntactical sugar for reinterpret_cast using templates. */
 template <typename T>
 inline T* Ptr(const void* ptr) {
   return reinterpret_cast<T*>(ptr);
@@ -65,7 +64,7 @@ inline T* Ptr(const void* ptr) {
 
 /* Utility function for syntactical sugar creating a pointer from a base plus
 offset.
-@return Pointer of the type specified by template paramter T.
+@return Pointer of the type specified by template parameter T.
 @param base The base address.
 @param offset The offset.
 */
@@ -74,7 +73,7 @@ inline T* Ptr(const void* begin, intptr_t offset) {
   return reinterpret_cast<T*>(reinterpret_cast<uintptr_t>(begin) + offset);
 }
 
-/* Creates a new buffer of the given size or deltes it. */
+/* Creates a new buffer of the given size or deletes it. */
 template <typename Size = int32_t>
 uintptr_t* New(uintptr_t* buffer, intptr_t size) {
   size = AlignUp(size);
@@ -83,5 +82,5 @@ uintptr_t* New(uintptr_t* buffer, intptr_t size) {
 
 }  // namespace _
 
-#endif  //< INCLUDED_F2_KABUKI_SOCKET
+#endif  //< INCLUDED_KABUKI_F2_KABUKI_SOCKET
 #endif  //< #if SEAM >= SEAM_00_00_01__01

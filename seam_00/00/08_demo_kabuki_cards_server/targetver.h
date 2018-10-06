@@ -1,5 +1,5 @@
 /** Kabuki Arcade
-    @file    ~/source/projects/kabuki_cards_server/resultver.h
+    @file    kabuki-toolkit.git/source/projects/kabuki_cards_server/resultver.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2017-2018 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version

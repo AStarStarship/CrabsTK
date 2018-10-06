@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    ~/kabuki/f2/tstr.h
+@file    kabuki-toolkit.git/kabuki/f2/tstr.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_01__06
-#ifndef INCLUDED_F2_UTFN
-#define INCLUDED_F2_UTFN
+#if SEAM >= SEAM_00_00_01__03
+#ifndef INCLUDED_KABUKI_F2_UTFN
+#define INCLUDED_KABUKI_F2_UTFN
 
 #include "../f2/test.h"
 #include "config.h"
@@ -356,10 +356,10 @@ inline const Char* TextSkipNumbers(const Char* cursor) {
 /* Prints the given token aligned right the given column_count.
 @return Nil if any of the pointers are nil or if column_count < 1, and a
 pointer to the nil-term char upon success.
-@param  cursor The beign of the buffer.
+@param  cursor The begin of the buffer.
 @param  end    The end of the buffer.
 @param  token  The token to print.
-@param  column_count The number of columsn to align right to. */
+@param  column_count The number of columns to align right to. */
 template <typename Char = char>
 Char* PrintRight(Char* cursor, Char* end, const Char* token, int column_count) {
   ASSERT(token);
@@ -971,7 +971,7 @@ upon destruct.
 
 This class is designed to take advantage of the behavior of the C++ operator
 overloads. When you have a string of overloads, the objects get destructed
-in the oposite order then where called, which is a stack push pop operation.
+in the opposite order then where called, which is a stack push pop operation.
 For this reason the destructor is programmable.
 
 # Statically Allocated Strings
@@ -1206,7 +1206,7 @@ API _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, _::TCenter<Char> item) {
   return utf.Set(_::Print<Char>(utf.begin, utf.end, item));
 }
 
-/* Writes the given value to the print jusified right.
+/* Writes the given value to the print justified right.
 @return The utf.
 @param  utf The utf.
 @param  item The item to print. */
@@ -1223,8 +1223,7 @@ API _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, _::TLine<Char> line) {
 
 /* Prints a line string of the given column_count to the utf. */
 template <typename Char = char>
-API _::TUtf<Char>& operator<<(_::TUtf<Char>& utf,
-                                 _::TLineString<Char> line) {
+API _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, _::TLineString<Char> line) {
   return utf.Set(_::Print<Char>(utf.begin, utf.end, line));
 }
 
@@ -1232,5 +1231,5 @@ API _::TUtf<Char>& operator<<(_::TUtf<Char>& utf,
 #undef PRINTF
 #undef PRINT_HEADING
 #undef PRINT_FLOAT_BINARY
-#endif  //< #if INCLUDED_F2_UTFN
-#endif  //< #if SEAM >= SEAM_00_00_01__06
+#endif  //< #if INCLUDED_KABUKI_F2_UTFN
+#endif  //< #if SEAM >= SEAM_00_00_01__03

@@ -35,6 +35,9 @@
     <Filter Include="seam_00\00\01_test_crabs\01\00">
       <UniqueIdentifier>{bec775a4-6e56-4efe-850a-cf40a7d2ad30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="seam_00\00\00_test_f2">
+      <UniqueIdentifier>{91903689-5d8b-41b5-b4b7-4e3b974b3da5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\seam_tree.cc">

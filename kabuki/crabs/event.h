@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/crabs/event.h
+@file    kabuki-toolkit.git/kabuki/crabs/event.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -23,7 +23,8 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* Interface for a temporal event in a Bayesian net.
-    
+    
+
 
 
 

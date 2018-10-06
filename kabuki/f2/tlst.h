@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    ~/libraries/f2/list.h
+@file    kabuki-toolkit.git/libraries/f2/list.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,31 +13,14 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_00_01__06
-#ifndef INCLUDED_F2_LIST
-#define INCLUDED_F2_LIST
 
-#include "align.h"
-#include "set.h"
-#include "stack.h"
+#if SEAM >= SEAM_00_00_00__10
+#ifndef INCLUDED_KABUKI_F2_TLIST
+#define INCLUDED_KABUKI_F2_TLIST
 
-#if SEAM == SEAM_00_00_01__06
-#ifndef PRINTF
-#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PRINT(c) Print(c)
-#define PRINT_HEADING \
-  Print('\n');        \
-  for (int i = 80; i > 0; --i) std::cout << '-'
-#define PRINT_TYPE(type, value) Console<>().Out() << TypeValue(type, value);
-#define WIPE ListWipe<UI, SI>(list);
-#endif
-#else
-#define PRINTF(x, ...)
-#define PRINT(c)
-#define PRINT_HEADING
-#define PRINT_TYPE(type, value)
-#define WIPE(buffer, size)
-#endif
+#include "talign.h"
+#include "tset.h"
+#include "tstk.h"
 
 namespace _ {
 
@@ -479,7 +462,7 @@ class List {
     return PrintList<UI, SI>(printer, Obj());
   }
 
-  /* Returns the contiugous ASCII List buffer_. */
+  /* Returns the contiguous ASCII List buffer_. */
   inline CList<UI, SI>* Obj() {
     return reinterpret_cast<CList<UI, SI>*>(begin);
   }
@@ -502,10 +485,5 @@ inline _::Utf8& operator<<(_::Utf8& printer, _::CList<UI, SI>* list) {
   return _::PrintList<UI, SI>(printer, list);
 }
 
-#undef PRINTF
-#undef PRINT
-#undef PRINT_HEADING
-#undef PRINT_TYPE
-#undef WIPE
-#endif  //< INCLUDED_F2_LIST
-#endif  //< #if SEAM >= SEAM_0_0_0
+#endif  //< INCLUDED_KABUKI_F2_TLIST
+#endif  //< #if SEAM >= SEAM_00_00_00__10

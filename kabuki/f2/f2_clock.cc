@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/f2_clock.cc
+@file    kabuki-toolkit.git/kabuki/f2/f2_clock.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,25 +14,13 @@ specific language governing permissions and limitations under the License. */
 #include <pch.h>
 #include <ctime>
 
-#if SEAM >= SEAM_00_00_01__06
+#if SEAM >= SEAM_00_00_01__04
 
 #include "clock.h"
 #include "lock.h"
 #include "tbinary.h"
 #include "tclock.h"
 #include "test.h"
-
-#if SEAM_MAJOR == 0 && SEAM_MINOR == 2
-#define PRINT(item) Print(item)
-#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PRINT_DATE(date)                                                    \
-  Printf("%i/%i/%i@%i:%i:%i", date.year + kSecondsPerEpoch, date.month + 1, \
-         date.day, date.hour, date.minute, date.second);
-#else
-#define PRINTF(value, ...)
-#define PRINT(item)
-#define PRINT_DATE(date)
-#endif
 
 namespace _ {
 
@@ -479,7 +467,5 @@ const char32_t* TextScanTime(const char32_t* string, Tme& result) {
 #endif
 
 }  // namespace _
-#undef PRINT
-#undef PRINTF
-#undef PRINT_DATE
-#endif  //< SEAM_MAJOR == 0 && SEAM_MINOR >= 2
+
+#endif  //< #if SEAM >= SEAM_00_00_00__04

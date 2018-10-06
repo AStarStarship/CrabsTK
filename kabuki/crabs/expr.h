@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/crabs/expr.h
+@file    kabuki-toolkit.git/kabuki/crabs/expr.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -35,7 +35,8 @@ namespace _ {
     App/Driver/User writes to the end of the Tx buffer and the driver reads from
     the beginning. The user writes are synchronous and the driver reads are
     asynchronous.
-    
+    
+
 
 
 
@@ -48,7 +49,8 @@ namespace _ {
 
 
     # Ring Buffer Streaming Diagram
-    
+    
+
 
 
 
@@ -69,7 +71,8 @@ namespace _ {
     BIn   |>-Buffer->|>-Async Portal Tx->|>-Sync User Writes->|>-Buffer->|
           |__________|___________________|____________________|__________|
     @endcode
-    
+    
+
 
 
 
@@ -83,7 +86,8 @@ namespace _ {
 
     Almost all block of memory in Script has something that grows up and another
     that grows down.
-    
+    
+
 
 
 
@@ -96,7 +100,8 @@ namespace _ {
 
 
     # Stack Memory Layout
-    
+    
+
 
 
 
@@ -262,7 +267,8 @@ inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
    const char* cursor = ArgsParse (expr->args_cursor, expr->args_end,
                                    params, args);
    if (!cursor) {
-       
+       
+
 
 
 

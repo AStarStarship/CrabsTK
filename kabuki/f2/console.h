@@ -1,6 +1,6 @@
-/* Kabuki Toolkit @version 0.x @version 0.x
+/* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/test.h
+@file    kabuki-toolkit.git/kabuki/f2/test.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,9 +14,9 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__01
-#ifndef INCLUDED_F2_CONSOLE
-#define INCLUDED_F2_CONSOLE 1
+#if SEAM >= SEAM_00_00_00__00
+#ifndef INCLUDED_KABUKI_F2_CONSOLE
+#define INCLUDED_KABUKI_F2_CONSOLE 1
 
 namespace _ {
 
@@ -539,4 +539,4 @@ API inline _::Console& operator<<(_::Console& cout, _::CHex& item);
 API inline _::Console& operator<<(_::Console& cout, _::CBinary& item);
 
 #endif  //< #ifndef INCLUDED_KABUKI_F2_CONSOLE
-#endif  //< #if SEAM >= SEAM_00_00_00__01
+#endif  //< #if SEAM >= SEAM_00_00_00__00

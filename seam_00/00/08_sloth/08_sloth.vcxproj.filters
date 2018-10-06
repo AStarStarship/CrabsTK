@@ -23,14 +23,14 @@
     <Filter Include="kabuki\f2sdk\who">
       <UniqueIdentifier>{1cdb8a29-971f-44fe-b95b-f787485b81d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="kabuki\f2sdk\ai">
-      <UniqueIdentifier>{2890cc0f-e032-4464-b8b7-16162ee35a6e}</UniqueIdentifier>
+    <Filter Include="kabuki\osal">
+      <UniqueIdentifier>{ed264764-89ce-4a4b-aaad-fc91a9e0cfcc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="kabuki\f2sdk\al">
-      <UniqueIdentifier>{902f36d5-ac4d-43f3-916a-c2a66d27c62b}</UniqueIdentifier>
+    <Filter Include="kabuki\features">
+      <UniqueIdentifier>{bb538528-75cc-4140-a1fa-e0be77178558}</UniqueIdentifier>
     </Filter>
-    <Filter Include="kabuki\f2sdk\app">
-      <UniqueIdentifier>{4aa86083-fedb-427f-8c66-9dd649451991}</UniqueIdentifier>
+    <Filter Include="kabuki\hal">
+      <UniqueIdentifier>{104ef258-22ac-46bb-9848-d03ac74f3776}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

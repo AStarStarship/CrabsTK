@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/str2.h
+@file    kabuki-toolkit.git/kabuki/f2/str2.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,9 +12,9 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_00_00_01__01
-#ifndef INCLUDED_F2_PRINT_UTF16
-#define INCLUDED_F2_PRINT_UTF16
+#if SEAM >= SEAM_00_00_00__03
+#ifndef INCLUDED_KABUKI_F2_PRINT_UTF16
+#define INCLUDED_KABUKI_F2_PRINT_UTF16
 
 #include "clock.h"
 
@@ -70,7 +70,7 @@ API const char16_t* TextSkipSpaces(const char16_t* text);
 
 /* Compares the source and query char16_t as nil-terminated strings. */
 API const char16_t* StringEquals(const char16_t* text_a,
-                                  const char16_t* text_b);
+                                 const char16_t* text_b);
 
 /* Searches the given char16_t for the given char16_t.
 @param  text      The char16_t to search.
@@ -79,7 +79,7 @@ API const char16_t* StringEquals(const char16_t* text_a,
 after the end of the text upon success. */
 API const char16_t* StringFind(const char16_t* begin, const char16_t* query);
 
-/* Printrs the given string to the print buffer.
+/* Prints the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
 upon success.
 @param  begin  The beginning address of the buffer.
@@ -143,14 +143,14 @@ upon success.
 @param value The value to print. */
 API char16_t* Print(char16_t* begin, char16_t* end, double value);
 
-/* Printrs the given string to the print buffer.
+/* Prints the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
 upon success.
 @param begin  The beginning address of the buffer.
 @param end    The end address of the buffer.
 @param string The potentially unsafe string to write. */
 API char16_t* PrintCenter(char16_t* begin, char16_t* end,
-                             const char16_t* string, int column_count);
+                          const char16_t* string, int column_count);
 
 /* Writes the give char16_t to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -159,7 +159,7 @@ upon success.
 @param end The end address of the buffer.
 @param character The value to write. */
 API char16_t* PrintCenter(char16_t* begin, char16_t* end, char16_t character,
-                             int column_count);
+                          int column_count);
 
 /* Writes the give char16_t to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -168,7 +168,7 @@ upon success.
 @param end The end address of the buffer.
 @param value The value to print. */
 API char16_t* PrintCenter(char16_t* begin, char16_t* end, uint32_t valu,
-                             int column_count);
+                          int column_count);
 
 /* Writes the give char16_t to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -177,7 +177,7 @@ upon success.
 @param end The end address of the buffer.
 @param value The value to print. */
 API char16_t* PrintCenter(char16_t* begin, char16_t* end, int32_t value,
-                             int column_count);
+                          int column_count);
 
 /* Writes the give char16_t to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -186,7 +186,7 @@ upon success.
 @param end The end address of the buffer.
 @param value The value to print. */
 API char16_t* PrintCenter(char16_t* begin, char16_t* end, uint64_t value,
-                             int column_count);
+                          int column_count);
 
 /* Writes the give char16_t to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -195,7 +195,7 @@ upon success.
 @param end The end address of the buffer.
 @param value The value to print. */
 API char16_t* PrintCenter(char16_t* begin, char16_t* end, int64_t value,
-                             int column_count);
+                          int column_count);
 
 /* Writes the give char16_t to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -204,7 +204,7 @@ upon success.
 @param end The end address of the buffer.
 @param value The value to print. */
 API char16_t* PrintCenter(char16_t* begin, char16_t* end, float value,
-                             int column_count);
+                          int column_count);
 
 /* Writes the give char16_t to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -213,16 +213,16 @@ upon success.
 @param end The end address of the buffer.
 @param value The value to print. */
 API char16_t* PrintCenter(char16_t* begin, char16_t* end, double value,
-                             int column_count);
+                          int column_count);
 
-/* Printrs the given string to the print buffer.
+/* Prints the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
 upon success.
 @param begin  The beginning address of the buffer.
 @param end    The end address of the buffer.
 @param string The potentially unsafe string to write. */
-API char16_t* PrintRight(char16_t* begin, char16_t* end,
-                            const char16_t* string, int column_count);
+API char16_t* PrintRight(char16_t* begin, char16_t* end, const char16_t* string,
+                         int column_count);
 
 /* Writes the give char16_t to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -231,7 +231,7 @@ upon success.
 @param end       The end address of the buffer.
 @param character The value to write. */
 API char16_t* PrintRight(char16_t* begin, char16_t* end, char16_t character,
-                            int column_count);
+                         int column_count);
 
 /* Writes the give char16_t to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -240,7 +240,7 @@ upon success.
 @param end The end address of the buffer.
 @param value The value to print. */
 API char16_t* PrintRight(char16_t* begin, char16_t* end, uint32_t value,
-                            int column_count);
+                         int column_count);
 
 /* Writes the give char16_t to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -249,7 +249,7 @@ upon success.
 @param end The end address of the buffer.
 @param value The value to print. */
 API char16_t* PrintRight(char16_t* begin, char16_t* end, int32_t value,
-                            int column_count);
+                         int column_count);
 
 /* Writes the give char16_t to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -258,7 +258,7 @@ upon success.
 @param end The end address of the buffer.
 @param value The value to print. */
 API char16_t* PrintRight(char16_t* begin, char16_t* end, uint64_t value,
-                            int column_count);
+                         int column_count);
 
 /* Writes the give char16_t to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -267,7 +267,7 @@ upon success.
 @param end The end address of the buffer.
 @param value The value to print. */
 API char16_t* PrintRight(char16_t* begin, char16_t* end, int64_t value,
-                            int column_count);
+                         int column_count);
 
 /* Writes the give char16_t to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -276,7 +276,7 @@ upon success.
 @param end The end address of the buffer.
 @param value The value to print. */
 API char16_t* PrintRight(char16_t* begin, char16_t* end, float value,
-                            int column_count);
+                         int column_count);
 
 /* Writes the give char16_t to the given buffer center.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -285,9 +285,9 @@ upon success.
 @param end The end address of the buffer.
 @param value The value to print. */
 API char16_t* PrintRight(char16_t* begin, char16_t* end, double value,
-                            int column_count);
+                         int column_count);
 
-/* Printrs the given string to the print buffer.
+/* Prints the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
 upon success.
 @param begin   The beginning address of the buffer.
@@ -375,14 +375,13 @@ upon success.
 @param value The value to print. */
 API char16_t* PrintHex(char16_t* begin, char16_t* end, double value);
 
-/* Printrs the given string to the print buffer.
+/* Prints the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
 upon success.
 @param begin  The beginning address of the buffer.
 @param end    The end address of the buffer.
 @param pointer The pointer to print to hex. */
-API char16_t* PrintBinary(char16_t* begin, char16_t* end,
-                             const void* pointer);
+API char16_t* PrintBinary(char16_t* begin, char16_t* end, const void* pointer);
 
 /* Writes the give char16_t to the given buffer in binary form.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char16_t
@@ -472,7 +471,7 @@ byte written.
 @param start The beginning of the read buffer.
 @param stop  The end of the read buffer. */
 API char16_t* PrintMemory(char16_t* begin, char16_t* end, const void* start,
-                             const void* stop);
+                          const void* stop);
 
 /* Prints out the contents of the address to the printer buffer.
 @return Null upon failure or a pointer to the byte after the last
@@ -482,7 +481,7 @@ byte written.
 @param start The beginning of the read buffer.
 @param size  The size of the read buffer. */
 API char16_t* PrintMemory(char16_t* begin, char16_t* end, const void* start,
-                             size_t size);
+                          size_t size);
 
 /* Writes the given time to the text buffer.
 @return Null upon failure or a pointer to the byte after the last
@@ -516,7 +515,7 @@ or nil upon failure.
 @param token The token to print.
 @param column_count The number of tokens to print. */
 API char16_t* PrintLine(char16_t* cursor, char16_t* end, char16_t token,
-                           int column_count);
+                        int column_count);
 
 /* Prints a line of the given column_count.
 @return Returns a pointer to the next char16_t after the end of the read number
@@ -526,12 +525,12 @@ or nil upon failure.
 @param string The string to print.
 @param column_count The number of columns. */
 API char16_t* PrintLineString(char16_t* cursor, char16_t* end,
-                                 const char16_t* string, int column_count);
+                              const char16_t* string, int column_count);
 
-/* Prints the buffer to the consoele as a UTF-8 string. */
+/* Prints the buffer to the console as a UTF-8 string. */
 void COutUtf16(uintptr_t* buffer);
 
-/* Prints the buffer to the consoele as a UTF-8 string. */
+/* Prints the buffer to the console as a UTF-8 string. */
 void COutAutoUtf16(uintptr_t* buffer);
 
 /* Converts the given string to a 8-bit signed integer.
@@ -892,12 +891,12 @@ API _::Utf16& operator<<(_::Utf16& printer, double value);
 @param  value The value to write to the print justified center. */
 API _::Utf16& operator<<(_::Utf16& printer, _::Utf16Center item);
 
-/* Writes the given value to the print jusified right.
+/* Writes the given value to the print justified right.
 @return The printer.
 @param  printer The printer.
 @param  value The value to write to the print. */
 API _::Utf16& operator<<(_::Utf16& printer, _::Utf16Right item);
 
 #endif  //< #if USING_UTF16
-#endif  //< #if INCLUDED_F2_PRINT_UTF16
+#endif  //< #if INCLUDED_KABUKI_F2_PRINT_UTF16
 #endif  //< #if SEAM >= SEAM_00_00_01__01

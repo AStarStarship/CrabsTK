@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/test.h
+@file    kabuki-toolkit.git/kabuki/f2/test.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00_00
+#if SEAM >= SEAM_00_00_00__00
 #ifndef INCLUDED_KABUKI_F2_TEST
 #define INCLUDED_KABUKI_F2_TEST 1
 
@@ -185,27 +185,5 @@ API bool AssertHandle(const char* file, int line,
                       const char* message = nullptr);
 }  // namespace _
 
-#if SEAM > 0 && SEAM <= SEAM_N
-#define ASSERT(condition) \
-  if (Assert(condition)) _::AssertHandle(__FILE__, __LINE__)
-#define TEST1(item) \
-  if (Test(item)) _::AssertHandle(__FILE__, __LINE__)
-#define TEST(a, b) \
-  if (Test(a, b)) _::AssertHandle(__FILE__, __LINE__)
-#define TEST_BEGIN \
-  if (!TestBegin(seam_log, log_end, args)) return __FUNCTION__
-#define TEST_END                           \
-  Print(seam_log, seam_end, __FUNCTION__); \
-  return
-#else
-#define ASSERT(condition)
-#define TEST1(item)
-#define TEST(a, b)
-#define PRINTF(x, ...)
-#define PAUSE(message)
-#define TEST_BEGIN
-#define TEST_END
-#endif
-
 #endif  //< #ifndef INCLUDED_KABUKI_F2_TEST
-#endif  //< #if SEAM >= SEAM_00_00_00__01
+#endif  //< #if SEAM >= SEAM_00_00_00__00

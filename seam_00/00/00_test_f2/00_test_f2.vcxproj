@@ -100,14 +100,14 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\;$(ProjectDir).\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\;$(ProjectDir)\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -186,7 +186,7 @@
     <ClInclude Include="..\..\..\kabuki\f2\tlom.h" />
     <ClInclude Include="..\..\..\kabuki\f2\tlst.h" />
     <ClInclude Include="..\..\..\kabuki\f2\tmap.h" />
-    <ClInclude Include="..\..\..\kabuki\f2\tmud.h" />
+    <ClInclude Include="..\..\..\kabuki\f2\tbook.h" />
     <ClInclude Include="..\..\..\kabuki\f2\tobj.h" />
     <ClInclude Include="..\..\..\kabuki\f2\trng.h" />
     <ClInclude Include="..\..\..\kabuki\f2\tset.h" />
@@ -214,7 +214,7 @@
     <ClInclude Include="02\seam_core_text_functions.h" />
     <ClInclude Include="03\footer.h" />
     <ClInclude Include="03\header.h" />
-    <ClInclude Include="03\seam_ascii_string_types.h" />
+    <ClInclude Include="03\seam_ascii_strings.h" />
     <ClInclude Include="04\footer.h" />
     <ClInclude Include="04\header.h" />
     <ClInclude Include="04\seam_ascii_clock.h" />
@@ -223,7 +223,28 @@
     <ClInclude Include="05\seam_ascii_stack.h" />
     <ClInclude Include="06\footer.h" />
     <ClInclude Include="06\header.h" />
-    <ClInclude Include="06\seam_ascii_arrays.h" />
+    <ClInclude Include="06\seam_ascii_array.h" />
+    <ClInclude Include="07\footer.h" />
+    <ClInclude Include="07\header.h" />
+    <ClInclude Include="07\seam_ascii_loom.h" />
+    <ClInclude Include="08\footer.h" />
+    <ClInclude Include="08\header.h" />
+    <ClInclude Include="08\seam_ascii_table.h" />
+    <ClInclude Include="09\footer.h" />
+    <ClInclude Include="09\header.h" />
+    <ClInclude Include="09\seam_ascii_varint.h" />
+    <ClInclude Include="10\footer.h" />
+    <ClInclude Include="10\header.h" />
+    <ClInclude Include="10\seam_ascii_list.h" />
+    <ClInclude Include="11\footer.h" />
+    <ClInclude Include="11\header.h" />
+    <ClInclude Include="11\seam_ascii_map.h" />
+    <ClInclude Include="12\footer.h" />
+    <ClInclude Include="12\header.h" />
+    <ClInclude Include="12\seam_ascii_book.h" />
+    <ClInclude Include="13\footer.h" />
+    <ClInclude Include="13\header.h" />
+    <ClInclude Include="13\seam_ascii_dictionary.h" />
     <ClInclude Include="footer.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="pch.h" />
@@ -257,6 +278,13 @@
     <None Include="04\readme.md" />
     <None Include="05\readme.md" />
     <None Include="06\readme.md" />
+    <None Include="07\readme.md" />
+    <None Include="08\readme.md" />
+    <None Include="09\readme.md" />
+    <None Include="10\readme.md" />
+    <None Include="11\readme.md" />
+    <None Include="12\readme.md" />
+    <None Include="13\readme.md" />
     <None Include="readme.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

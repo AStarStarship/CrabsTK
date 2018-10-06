@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/tbinary.h
+@file    kabuki-toolkit.git/kabuki/f2/tbinary.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,8 +14,10 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#ifndef INCLUDED_F2_TBINARY
-#define INCLUDED_F2_TBINARY 1
+#ifndef INCLUDED_KABUKI_F2_TBINARY
+#define INCLUDED_KABUKI_F2_TBINARY 1
+
+#if SEAM >= SEAM_00_00_00__00
 
 #include <seam_00\00\00_test_f2\00\header.h>
 
@@ -599,7 +601,11 @@ const Char* Scan(const Char* buffer, UI& result) {
   result = value;
   return end;
 }
-#if SEAM >= SEAM_00_00_00__00
+#endif  //< #if SEAM >= SEAM_00_00_00__00
+#include <seam_00/00/00_test_f2/00/footer.h>
+#include <seam_00/00/00_test_f2/00/header.h>
+#if SEAM >= SEAM_00_00_00__01
+
 /* Searches for the highest MSb asserted.
 @return -1 */
 template <typename UI>
@@ -1189,4 +1195,5 @@ using Binary64 = Binary<double, uint64_t>;
 }  // namespace _
 
 #include <seam_00\00\00_test_f2\01\footer.h>
-#endif  //< #if INCLUDED_F2_TBINARY
+#endif  //< #if SEAM >= SEAM_00_00_00__01
+#endif  //< #if INCLUDED_KABUKI_F2_TBINARY

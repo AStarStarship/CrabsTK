@@ -1,24 +1,23 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    ~/libraries/pro/project.h
+@file    kabuki-toolkit.git/libraries/pro/project.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
+
 
 #pragma once
 #include <pch.h>
-#if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
-#ifndef HEADER_FOR_KT_PRO_PROJECT_H
-#define HEADER_FOR_KT_PRO_PROJECT_H
+
+#if SEAM >= SEAM_00_00_00__07
+#ifndef INCLUDED_KABUKI_PRO_PROJECT
+#define INCLUDED_KABUKI_PRO_PROJECT
 #include "schedule.h"
 #include "task.h"
 
@@ -40,9 +39,9 @@ const char* Push(Stack<Project*>* stack, Project* project);
 class Project : public Operand {
  public:
   enum {
-    INIT_NUM_SCHEDULES = 4,    //< The initial number of Schedule(string).
-    MAX_SCHEDULES = 32,        //< Max number of Schedule(string).
-    MAX_SUMMARY_LENGTH = 256,  //< The max readme char length.
+    INIT_NUM_SCHEDULES = 4,           //< Initial number of Schedule(string).
+    MAX_SCHEDULES = 32,               //< Max number of Schedule(string).
+    MAX_SUMMARY_LENGTH = 256,         //< The max readme char length.
     MAX_DETAIL_LENGTH = 1024 * 1024,  //< The max detail char length.
   };
 
@@ -74,23 +73,23 @@ class Project : public Operand {
   void CloneReadMe(const char* new_readme);
 
   /* Adds a Project.
-      @param project The project to add.
-      @return Returns false if the key is not a token. */
+  @param project The project to add.
+  @return Returns false if the key is not a token. */
   bool AddProject(const char* key);
 
   /* Adds a Project.
-      @param project The project to add.
-      @return Returns false if the key is not a token. */
+  @param project The project to add.
+  @return Returns false if the key is not a token. */
   bool AddProject(Project* project);
 
   /* Adds a Schedule.
-      @param key The key of the new schedule to add.
-      @return Returns false if the key is not a token. */
+  @param key The key of the new schedule to add.
+  @return Returns false if the key is not a token. */
   bool AddSchedule(const char* key);
 
   /* Adds a currently existing Schedule.
-      @param schedule A new schedule this object now owns the memory of.
-      @return Returns false if the key is not a token. */
+  @param schedule A new schedule this object now owns the memory of.
+  @return Returns false if the key is not a token. */
   bool AddSchedule(Schedule* schedule);
 
   /* Lists the keys in the given scope. */
@@ -137,7 +136,7 @@ class Project : public Operand {
   /* Selects the task at the given index. */
   bool Select(int index);
 
-  /* Deserializes the file with the stored key.
+  /* De-serializes the file with the stored key.
       @return Returns 0 upon success and a pointer to an error char upon
               failure. */
   void Load();
@@ -162,17 +161,18 @@ class Project : public Operand {
   void Out(int indent_level = 0, char bullet_type = '1',
            int spaces_per_tab = 4);
 
-  /* Script operations. */
+  /* Script operations.
+  */
   virtual const Op* Star(wchar_t index, Expr* expr);
 
  private:
-  char *key_,                 //< Entity key.
-      *readme_;               //< Project readme.
+  char* key_,                 //< Entity key.
+      * readme_;              //< Project readme.
   Schedule* task_;            //< Current Schedule being edited.
   ScheduleArray* schedules_;  //< Composition of Schedule(string).
   ProjectArray* projects_;    //< Child projects.
 };
 
-}   //< namespace _
-#endif  //< HEADER_FOR_KT_PRO_PROJECT_H
+}  // namespace _
+#endif  //< INCLUDED_KABUKI_PRO_PROJECT
 #endif  //< #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0

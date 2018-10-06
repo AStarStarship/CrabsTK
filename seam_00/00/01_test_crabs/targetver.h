@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/library/targetver.h
+@file    kabuki-toolkit.git/library/targetver.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
              All right reserved (R). Licensed under the Apache License, Version

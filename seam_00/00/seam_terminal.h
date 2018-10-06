@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~\seam_00\00\seam.h
+@file    kabuki-toolkit.git\seam_00\00\seam.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -19,8 +19,8 @@ specific language governing permissions and limitations under the License. */
 #include "01_test_crabs/seam.h"
 #include "02_test_hal/seam.h"
 #include "03_test_drivers/seam.h"
-#include "04_test_platform/seam.h"
-#include "05_test_features/seam.h"
+#include "04_platform/seam.h"
+#include "05_features/seam.h"
 #include "06_test_data/seam.h"
 #include "07_test_pro/seam.h"
 

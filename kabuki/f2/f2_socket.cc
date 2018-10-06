@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/f2_utils.cc
+@file    kabuki-toolkit.git/kabuki/f2/f2_utils.cc
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_00_00_01__02
+#if SEAM >= SEAM_00_00_00__01
 
 #include "align.h"
 #include "binary.h"
@@ -20,7 +20,7 @@ specific language governing permissions and limitations under the License. */
 #include "test.h"
 #include "tstr.h"
 
-#if SEAM == SEAM_00_00_01__02
+#if SEAM == SEAM_00_00_00__01
 #define PRINT(item) Print(item)
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define SOCKET_SAVE(cursor, end_a) Socket socket_to_print(cursor, end_a);
@@ -82,9 +82,9 @@ char* SocketClear(char* cursor, char* end, intptr_t byte_count) {
   // 3.) Align write_end pointer down and copy the unaligned bytes in the
   //     upper memory region.
   // 4.) Copy the word-aligned middle region.
-  char *success = end, *aligned_pointer = AlignUpPointerWord(cursor);
+  char *success = end, *aligned_pointer = AlignUp<>(cursor);
   while (cursor < aligned_pointer) *cursor++ = 0;
-  aligned_pointer = AlignDownPointerWord(end);
+  aligned_pointer = AlignDown<>(end);
   while (end > aligned_pointer) *end-- = 0;
 
   uintptr_t *words = reinterpret_cast<uintptr_t*>(cursor),
@@ -230,8 +230,5 @@ void DestructorDeleteBuffer(uintptr_t* buffer) {
 }
 
 }  // namespace _
-#undef PRINT
-#undef PRINTF
-#undef SOCKET_SAVE
-#undef SOCKET_PRINT
-#endif  //< SEAM_MAJOR == 0 && SEAM_MINOR >= 1
+#include <seam_00>
+#endif  //<  #if SEAM >= SEAM_00_00_00__01

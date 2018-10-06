@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/clock.h
+@file    kabuki-toolkit.git/kabuki/f2/clock.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -14,20 +14,12 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_00_01__01
-#ifndef INCLUDED_F2_TCLOCK
-#define INCLUDED_F2_TCLOCK
+#if SEAM >= SEAM_00_00_01__04
+#ifndef INCLUDED_KABUKI_F2_TCLOCK
+#define INCLUDED_KABUKI_F2_TCLOCK
 
 #include "test.h"
 #include "tstr.h"
-
-#if SEAM_MAJOR == 0 && SEAM_MINOR == 2
-#define PRINT(item)  // Print(item)
-#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#else
-#define PRINT(item)
-#define PRINTF(x, ...)
-#endif
 
 namespace _ {
 
@@ -488,5 +480,5 @@ const Char* TextScanTime(const Char* begin, Tss& result) {
 
 #undef PRINT
 #undef PRINTF
-#endif  //< #ifndef INCLUDED_F2_TCLOCK
-#endif  //< #if SEAM >= SEAM_00_00_01__01
+#endif  //< #ifndef INCLUDED_KABUKI_F2_TCLOCK
+#endif  //< #if SEAM >= SEAM_00_00_01__04

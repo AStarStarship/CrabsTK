@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    ~/libraries/pro/impl/schedule.cc
+@file    kabuki-toolkit.git/libraries/pro/impl/schedule.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -15,7 +15,8 @@
 */
 
 #include <pch.h>
-#if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
+
+#if SEAM >= SEAM_00_00_00__07
 #include "schedule.h"
 
 namespace _ {
@@ -177,5 +178,5 @@ const char* Schedule::Command(char* input) {
   return "Invalid Schedule command";
 }
 
-}       //< namespace _
+}  // namespace _
 #endif  //< #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0

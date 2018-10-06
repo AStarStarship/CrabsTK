@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/binary.h
+@file    kabuki-toolkit.git/kabuki/f2/binary.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #include <pch.h>
 
 #if SEAM >= SEAM_00_00_00__00
-#define INCLUDED_F2_BINARY 1
+#define INCLUDED_KABUKI_F2_BINARY 1
 
 namespace _ {
 
@@ -187,4 +187,4 @@ API int HexToByte(uint16_t h);
 
 }  // namespace _
 
-#endif  //< #if SEAM >= SEAM_00_00_00__01 && INCLUDED_F2_BINARY == 0
+#endif  //< #if SEAM >= SEAM_00_00_00__01

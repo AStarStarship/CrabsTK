@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/kabuki/f2/tconsole.h
+@file    kabuki-toolkit.git/kabuki/f2/tconsole.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -15,8 +15,8 @@ specific language governing permissions and limitations under the License. */
 #include <pch.h>
 
 #if SEAM >= SEAM_00_00_00__01
-#ifndef INCLUDED_F2_TCONSOLE
-#define INCLUDED_F2_TCONSOLE 1
+#ifndef INCLUDED_KABUKI_F2_TCONSOLE
+#define INCLUDED_KABUKI_F2_TCONSOLE 1
 
 #include "console.h"
 
@@ -38,6 +38,6 @@ Console PrintHex(UI value) {
 
 }  // namespace _
 
-#endif  //< INCLUDED_F2_TCONSOLE
+#endif  //< INCLUDED_KABUKI_F2_TCONSOLE
 
 #endif  //< #if SEAM >= SEAM_00_00_00__01
