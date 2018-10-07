@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/tbook.h
+@file    /kabuki/f2/tbook.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,14 +13,14 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_00_00__12
+#if SEAM >= SEAM_0_0_0__12
 #ifndef INCLUDED_KABUKI_F2_TBOOK
 #define INCLUDED_KABUKI_F2_TBOOK
 
 #include "ascii_data.h"
 #include "socket.h"
 
-#if SEAM == SEAM_00_00_00__12
+#if SEAM == SEAM_0_0_0__12
 #ifndef PRINTF
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT(c) Print(c)
@@ -813,4 +813,4 @@ using Multimap8 = TMap<uint32_t, uint32_t, uint64_t>;
 #undef PRINT
 #undef PRINT_HEADING
 #endif  //< INCLUDED_KABUKI_F2_TBOOK
-#endif  //< #if SEAM >= SEAM_00_00_00__12
+#endif  //< #if SEAM >= SEAM_0_0_0__12

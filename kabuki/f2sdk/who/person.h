@@ -1,5 +1,5 @@
 /* Kabuki Toolkit
-    @file    $kabuki-toolkit/library/kt/id/Person.h
+    @file    /library/kt/id/Person.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -26,7 +26,7 @@ namespace _ {
 /* Class that represents a person/human.
     @todo Load a person from social media account using Facebook and OAuth APIs.
 */
-class KABUKI Person : public Entity {
+class API Person : public Entity {
  public:
   Person();
   /*Creates a person with no name. */

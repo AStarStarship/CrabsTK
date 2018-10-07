@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/utf.h
+@file    /kabuki/f2/utf.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_00_00_00__03
+#if SEAM >= SEAM_0_0_0__03
 #ifndef INCLUDED_KABUKI_F2_UTF
 #define INCLUDED_KABUKI_F2_UTF
 
@@ -52,4 +52,4 @@ using LineString = Utf32LineString;
 #undef PRINT
 #undef PRINTF
 #endif  //< #if INCLUDED_KABUKI_F2_UTF
-#endif  //< #if SEAM >= SEAM_00_00_00__03
+#endif  //< #if SEAM >= SEAM_0_0_0__03

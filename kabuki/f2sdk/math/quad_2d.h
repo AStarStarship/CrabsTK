@@ -21,7 +21,7 @@ namespace _ {
 
 /** A 2D quadralateral storted as Type types. */
 template<typename T>
-struct KABUKI_TOOLKIT Quad {
+struct API Quad {
     T x0,   //< The x0 coordinate.
       x1,     //< The x1 coordinate.
       x2,     //< The x2 coordinate.

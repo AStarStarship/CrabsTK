@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/f2_utils.cc
+@file    /kabuki/f2/f2_utils.cc
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__01
+#if SEAM >= SEAM_0_0_0__01
 #include "align.h"
 #include "socket.h"
 #include "talign.h"
@@ -51,39 +51,63 @@ int32_t AlignPowerOf2(int32_t value) {
   return (int32_t)value;
 }
 
-uintptr_t* AlignUpCacheLine(uintptr_t* buffer) {
-  return AlignUp<kCpuCacheLineSize>(buffer);
+uintptr_t* AlignUp(uintptr_t* buffer) {
+  return AlignUp<uintptr_t>(buffer, kCpuCacheLineSize - 1);
 }
 
-char* AlignUpPointerWord(char* pointer) {
-  return AlignUpPointerWord<char>(pointer);
+char* AlignUp(char* pointer, uintptr_t mask) {
+  return AlignUp<char>(pointer, mask);
 }
 
-const char* AlignUpPointerWord(const char* pointer) {
-  return AlignUpPointerWord<char>(pointer);
+const char* AlignUp(const char* pointer, uintptr_t mask) {
+  return AlignUp<const char>(pointer, mask);
 }
 
-char* AlignDownPointerWord(char* pointer) {
-  return AlignDownPointer<char>(pointer);
+char* AlignDown(char* pointer, uintptr_t mask) {
+  return AlignDown<char*>(pointer, mask);
 }
 
-const char* AlignDownPointerWord(const char* pointer) {
-  return AlignDownPointer<char>(pointer);
+const char* AlignDown(const char* pointer, uintptr_t mask) {
+  return AlignDown<const char*>(pointer, mask);
 }
 
 uintptr_t* AlignUp(uintptr_t* pointer, uintptr_t boundary_bit_count) {
   return AlignUp<uintptr_t>(pointer, boundary_bit_count);
 }
 
-int8_t AlignUp(int8_t value) { return AlignUp<8, int8_t>(value); }
+uint8_t AlignUp(uint8_t value, uint8_t mask) {
+  return AlignUp<uint8_t>(value, mask);
+}
 
-int16_t AlignUp(int16_t value) { return AlignUp<8, int16_t>(value); }
+int8_t AlignUp(int8_t value, int8_t mask) {
+  return AlignUp<int8_t>(value, mask);
+}
 
-int32_t AlignUp(int32_t value) { return AlignUp<8, int32_t>(value); }
+uint16_t AlignUp(uint16_t value, uint16_t mask) {
+  return AlignUp<uint16_t>(value, mask);
+}
 
-int64_t AlignUp(int64_t value) { return AlignUp<8, int64_t>(value); }
+int16_t AlignUp(int16_t value, int16_t mask) {
+  return AlignUp<int16_t>(value, mask);
+}
+
+uint32_t AlignUp(uint32_t value, uint32_t mask) {
+  return AlignUp<uint32_t>(value, mask);
+}
+
+int32_t AlignUp(int32_t value, int32_t mask) {
+  return AlignUp<int32_t>(value, mask);
+}
+
+uint64_t AlignUp(uint64_t value, uint64_t mask) {
+  return AlignUp<uint64_t>(value, mask);
+}
+
+int64_t AlignUp(int64_t value, int64_t mask) {
+  return AlignUp<int64_t>(value, mask);
+}
 
 }  // namespace _
 #undef PRINTF
 #undef PRINT
-#endif  //< SEAM_MAJOR > 0 || SEAM_MAJOR == 0 && SEAM_MINOR >= 1
+#endif  //< #if SEAM >= SEAM_0_0_0__01

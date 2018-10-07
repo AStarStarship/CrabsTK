@@ -1,5 +1,5 @@
 /* Kabuki Toolkit
-    @file    $kabuki-toolkit/library/kt/id/password.h
+    @file    /library/kt/id/password.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -32,7 +32,7 @@ struct PasswordAuthenticator {
 /* An account password Authenticator .
     @todo Add salt!
 */
-class KABUKI Password {
+class API Password {
  public:
   enum {
     kValidation = 2,        //< Validation type.

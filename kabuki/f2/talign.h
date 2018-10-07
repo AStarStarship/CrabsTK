@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/talign.h
+@file    /kabuki/f2/talign.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__01
+#if SEAM >= SEAM_0_0_0__01
 #ifndef INCLUDED_KABUKI_F2_TALIGN
 #define INCLUDED_KABUKI_F2_TALIGN 1
 
@@ -69,7 +69,22 @@ inline I AlignUpOffset(I value, I mask = sizeof(I) * 8 - 1) {
 /* Aligns the given pointer to a power of two boundary.
 @warning Function does not check if the boundary is a power of 2! */
 template <typename T = char>
+inline T AlignUp(T value, T mask = sizeof(void*) - 1) {
+  return reinterpret_cast<T*>(value + AlignUpOffset<>(value, mask));
+}
+
+/* Aligns the given pointer to a power of two boundary.
+@warning Function does not check if the boundary is a power of 2! */
+template <typename T = char>
 inline T* AlignUp(void* pointer, uintptr_t mask = sizeof(void*) - 1) {
+  uintptr_t value = reinterpret_cast<uintptr_t>(pointer);
+  return reinterpret_cast<T*>(value + AlignUpOffset<>(pointer, mask));
+}
+
+/* Aligns the given pointer to a power of two boundary.
+@warning Function does not check if the boundary is a power of 2! */
+template <typename T = char>
+inline T* AlignUp(const void* pointer, uintptr_t mask = sizeof(void*) - 1) {
   uintptr_t value = reinterpret_cast<uintptr_t>(pointer);
   return reinterpret_cast<T*>(value + AlignUpOffset<>(pointer, mask));
 }
@@ -80,6 +95,24 @@ inline T* AlignUp(void* pointer, uintptr_t mask = sizeof(void*) - 1) {
 template <typename I = uintptr_t>
 inline I AlignDownOffset(I value, I mask = sizeof(void*) - 1) {
   return value & mask;
+}
+
+/* Aligns the given pointer to the sizeof (WordBoundary) down..
+@param  value The value to align.
+@return The aligned value. */
+template <typename T = uintptr_t>
+inline T AlignDown(void* value, uintptr_t mask = sizeof(void*) - 1) {
+  uintptr_t ptr = reinterpret_cast<uintptr_t>(value);
+  return ptr - AlignDownOffset<>(ptr, mask);
+}
+
+/* Aligns the given pointer to the sizeof (WordBoundary) down..
+@param  value The value to align.
+@return The aligned value. */
+template <typename T = uintptr_t>
+inline T AlignDown(const void* value, uintptr_t mask = sizeof(void*) - 1) {
+  uintptr_t ptr = reinterpret_cast<uintptr_t>(value);
+  return ptr - AlignDownOffset<>(value, mask);
 }
 
 /* Aligns the given pointer to the sizeof (WordBoundary) down..
@@ -111,4 +144,4 @@ inline T* AlignUp2(const void* pointer) {
 }  // namespace _
 #endif  //< INCLUDED_KABUKI_F2_TALIGN
 
-#endif  //< #if SEAM >= SEAM_00_00_00__01
+#endif  //< #if SEAM >= SEAM_0_0_0__01

@@ -1,5 +1,5 @@
 ﻿/* Kabuki Toolkit
-    @file    $kabuki-toolkit/library/kt/id/hit_list.h
+    @file    /library/kt/id/hit_list.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -25,7 +25,7 @@ namespace _ {
 
 /* A collection of Hit(string).
  */
-class KABUKI HitList {
+class API HitList {
  public:
   /* Simple default constructor. */
   HitList();

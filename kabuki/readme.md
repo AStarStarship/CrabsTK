@@ -1,6 +1,6 @@
 # `~/kabuki`
 
-This folder contains the Kabuki Toolkit library source code, a Visual Studio 2017 Project (kabuki_toolkit.sln), Eclipse Project, and CMake Project (CMakeLists.txt). Please @see `~/docs/quickstart-guide.md`.
+This is the root folder of the Kabuki VM
 
 ## Module Descriptions
 
@@ -26,8 +26,8 @@ Common platform features.
 
 #### Features
 
-* Filesystem
-* RtAudio
+* boost::filesystem
+* PortAudio
 * RtMidi
 
 ### hal
@@ -63,7 +63,7 @@ Firmware toolkit
 * AnyLED - A universal LED light controller that can control any LED.
 * FlowerBed - A automated plant water.
 
-### toolkit
+### f2sdk
 
 General software and firmware toolkit.
 

@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/expr.h
+@file    /kabuki/crabs/expr.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,17 +13,15 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
+#if SEAM >= SEAM_0_0_4_0__00_00
 #ifndef INCLUDED_CRABS_EXPR
 #define INCLUDED_CRABS_EXPR
-#if SEAM >= SEAM_0_0_4
-// Dependencies:
 #include "args.h"
 #include "bin.h"
 #include "bout.h"
 #include "bsq.h"
 #include "error.h"
 #include "operand.h"
-// End dependencies.
 
 namespace _ {
 
@@ -35,33 +33,9 @@ namespace _ {
     App/Driver/User writes to the end of the Tx buffer and the driver reads from
     the beginning. The user writes are synchronous and the driver reads are
     asynchronous.
-    
-
-
-
-
-
-
-
-
-
-
-
-
+    
     # Ring Buffer Streaming Diagram
-    
-
-
-
-
-
-
-
-
-
-
-
-
+    
     @code
           |>---------------------- Ring Buffer ------------------------->|
           ________________________________________________________________
@@ -71,48 +45,12 @@ namespace _ {
     BIn   |>-Buffer->|>-Async Portal Tx->|>-Sync User Writes->|>-Buffer->|
           |__________|___________________|____________________|__________|
     @endcode
-    
-
-
-
-
-
-
-
-
-
-
-
-
+    
     Almost all block of memory in Script has something that grows up and another
     that grows down.
-    
-
-
-
-
-
-
-
-
-
-
-
-
+    
     # Stack Memory Layout
-    
-
-
-
-
-
-
-
-
-
-
-
-
+    
     @code
         |=========================|
         |     Evaluated Result    |
@@ -206,7 +144,7 @@ inline Operand** ExprStack(Expr* expr) {
 
 API char* ExprEndAddress(Expr* expr);
 
-/* Resets this Stack to the newial state. */
+/* Resets this Stack to the new state. */
 API const Op* ExprReset(Expr* expr);
 
 /* Pushes the operand at the given index of the current
@@ -267,19 +205,6 @@ inline const Op* ExprArgs (Expr* expr, const uint_t* params, void** args) {
    const char* cursor = ArgsParse (expr->args_cursor, expr->args_end,
                                    params, args);
    if (!cursor) {
-       
-
-
-
-
-
-
-
-
-
-
-
-
    }
 }*/
 
@@ -358,5 +283,5 @@ inline _::Utf8& operator<<(_::Utf8& printer, _::Expr* expr) {
 }
 #endif
 
-#endif  //< #if SEAM >= SEAM_0_0_4
 #endif  //< INCLUDED_CRABS_EXPR
+#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00

@@ -1,5 +1,5 @@
 /* Kabuki Toolkit
-    @file    $kabuki-toolkit/library/kt/id/library.h
+    @file    /library/kt/id/library.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -24,9 +24,9 @@
 namespace _ {
 
 /* The main library of Hits.
-    This class KABUKI owns the memory for the patches.
+    This class API owns the memory for the patches.
 */
-class KABUKI Library {
+class API Library {
  public:
   /* Simple default constructor. */
   Library();

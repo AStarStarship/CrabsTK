@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/crabs_console.cc
+@file    /kabuki/crabs/crabs_console.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,12 +13,11 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4
+#if SEAM >= SEAM_0_0_4_0__00_00
 #ifndef INCLUDED_CRABS_ADDRESS
 #define INCLUDED_CRABS_ADDRESS
-// Dependencies:
+
 #include "config.h"
-// End dependencies.
 
 namespace _ {
 
@@ -89,4 +88,4 @@ inline uint64_t PackAddress(uint64_t a, uint64_t b, uint64_t c, uint64_t d,
 
 }  // namespace _
 #endif  //< INCLUDED_CRABS_ADDRESS
-#endif  //< #if SEAM >= SEAM_0_0_0
+#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00

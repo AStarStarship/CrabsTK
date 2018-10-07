@@ -23,7 +23,7 @@ namespace _ {
 
 /** Class that represents a n order Bezier. */
 template<typename T>
-class KABUKI_TOOLKIT Bezier2D {
+class API Bezier2D {
     public:
 
     enum { 

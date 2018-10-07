@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/crabs_expression.cc
+@file    /kabuki/crabs/crabs_expression.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,14 +12,14 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4
+#if SEAM >= SEAM_0_0_4_0__00_00
 // Dependencies:
 #include "bsq.h"
 #include "clock.h"
-#include "test.h"
 #include "expr.h"
 #include "hash.h"
 #include "hex.h"
+#include "test.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
@@ -149,7 +149,7 @@ Expr* ExprInit(uintptr_t* buffer, uint_t buffer_size, uint_t stack_size,
     //uint_t offset    = sizeof (Expr) + total_stack_size - sizeof (void*);
     //bin_offset       = sizeof (BIn) + total_stack_size + offset;
     expr->header_size = sizeof (Expr) + 2 * sizeof (void*) * stack_size;
-    expr->hash = kLargest16BitPrime;
+    expr->hash = kPrime2Unsigned;
     expr->result = nullptr;
     expr->header = nullptr;
     expr->header_start = nullptr;
@@ -691,7 +691,7 @@ const Op* ExprUnpack(Expr* expr) {
 #if DEBUG_CRABS_EXPR
         Write("\nSuccess reading hash!");
 #endif
-        hash = kLargest16BitPrime;  //< Reset hash to largest 16-bit prime.
+        hash = kPrime2Unsigned;  //< Reset hash to largest 16-bit prime.
 #if DEBUG_CRABS_EXPR
         Write("\nResetting hash.\n");
 #endif
@@ -718,7 +718,7 @@ const Op* ExprUnpack(Expr* expr) {
 #if DEBUG_CRABS_EXPR
           Write("\nResetting hash.");
 #endif
-          hash = kLargest16BitPrime;  //< Reset hash to largest 16-bit prime.
+          hash = kPrime2Unsigned;  //< Reset hash to largest 16-bit prime.
           expr->operand = expr->root;
           expr->result = nullptr;
           bin_state = kBInStateAddress;
@@ -951,4 +951,4 @@ Utf8& PrintExpr(Utf8& print, Expr* expr) {
 
 #undef PRINTF
 #undef PRINT
-#endif  //> #if SEAM >= SEAM_0_0_4
+#endif  //> #if SEAM >= SEAM_0_0_4_0__00_00

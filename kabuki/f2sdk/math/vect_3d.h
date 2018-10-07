@@ -22,7 +22,7 @@ namespace _ {
 
  /** A 3D vector. */
 template<typename T>
-struct KABUKI_TOOLKIT Vect3D
+struct API Vect3D
 {
     T x,            //< The x component.
       y,          //< The y component.

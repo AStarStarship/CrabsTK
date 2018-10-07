@@ -24,7 +24,7 @@ namespace _ {
 /** Binary coded decimal for precise math.
     This BCD class uses optional dynamic memory. The is_dynamic flag if true 
     will trigger the destructor on the ptr. */
-class KABUKI_TOOLKIT BCD {
+class API BCD {
     public:
 
     enum { 

@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/error.h
+@file    /kabuki/crabs/error.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,12 +13,10 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4
+#if SEAM >= SEAM_0_0_4_0__00_00
 #ifndef INCLUDED_CRABS_ERROR
 #define INCLUDED_CRABS_ERROR
-// Dependencies:
 #include "config.h"
-// End dependencies.
 
 namespace _ {
 
@@ -33,7 +31,7 @@ typedef enum ScriptError {
   kErrorInvalidHash,          //< Script Error  7: Invalid hash.
   kErrorInvalidType,          //< Script Error  8: Invalid type.
   kErrorInvalidIndex,         //< Script Error  9: Invalid index.
-  kErrorInvalidEnquery,       //< Script Error 10: Invalid enquiry.
+  kErrorInvalidEnquery,       //< Script Error 10: Invalid inquiry.
   kErrorInvalidArgument,      //< Script Error 11: Invalid argument.
   kErrorInvalidDoor,          //< Script Error 12: Invalid door.
   kErrorTooManyParameters,    //< Script Error 13: Too many parameters.
@@ -61,5 +59,5 @@ API const char** ErrorStrings();
 API const char* ErrorString(Error error);
 
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_4
 #endif  //< INCLUDED_CRABS_ERROR
+#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00

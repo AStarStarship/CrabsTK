@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/socket.h
+@file    /kabuki/f2/socket.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__01
+#if SEAM >= SEAM_0_0_0__01
 
 #ifndef INCLUDED_KABUKI_F2_KABUKI_SOCKET
 #define INCLUDED_KABUKI_F2_KABUKI_SOCKET
@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 #include "align.h"
 #include "binary.h"
 
-#include <seam_00/00/00_test_f2/00/header.h>
+#include <seam_0/0/00_seam_f2/00/header.h>
 
 namespace _ {
 
@@ -128,6 +128,6 @@ API inline bool SocketCompare(const void* begin_a, intptr_t size_a,
 
 }  // namespace _
 
-#include <seam_00/00/00_test_f2/00/footer.h>
+#include <seam_0/0/00_seam_f2/00/footer.h>
 #endif  //< INCLUDED_KABUKI_F2_KABUKI_SOCKET
-#endif  //< #if SEAM >= SEAM_00_00_00__01
+#endif  //< #if SEAM >= SEAM_0_0_0__01

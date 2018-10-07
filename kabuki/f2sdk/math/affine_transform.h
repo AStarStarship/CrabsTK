@@ -22,7 +22,7 @@ namespace math {
 
 /** A 2D affine transformation. */
 template<typename T>
-class KABUKI_TOOLKIT AffineTransform {
+class API AffineTransform {
     public:
 
     /** Constructs an unintialized object. */

@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/expr.h
+@file    /kabuki/crabs/expr.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,12 +13,10 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_00
+#if SEAM >= SEAM_0_0_4_0__00_00
 #ifndef INCLUDED_CRABS_LIBRARY
 #define INCLUDED_CRABS_LIBRARY
-// Dependencies:
 #include "config.h"
-// End dependencies.
 
 namespace _ {
 #if CRABS_TEXT
@@ -35,7 +33,7 @@ class Library : public Operand {
 
   virtual ~Library() {}
 
-  /* Returns true if the current Bok has a hash table. */
+  /* Returns true if the current Book has a hash table. */
   bool HasHashTable() { return collisions_size_ != 0; }
 
   /* Gets the number of keys in the current scope. */
@@ -196,7 +194,7 @@ class Library : public Operand {
       collisions_size_;  //< Current size of the header and names buffer in
                          // bytes.
   TData data_size_;      //< Current total size of the bag.
-                         // Bok<TIndex, TKey, TData, TData> bag;
+                         // Book<TIndex, TKey, TData, TData> bag;
 };
 
 /* Destructs the given bag. */
@@ -207,5 +205,5 @@ API void Destruct(Library<TIndex, TKey, TData, TData, MaxStackSize>* r) {
 }
 #endif  //< CRABS_MEMORY_PROFILE > 2
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_0
 #endif  //< INCLUDED_CRABS_LIBRARY
+#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00

@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/room.h
+@file    /kabuki/crabs/room.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,13 +13,11 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_3
+#if SEAM >= SEAM_0_0_4_0__00_00
 #ifndef INCLUDED_CRABS_ROOM
 #define INCLUDED_CRABS_ROOM
-// Dependencies:
 #include "interrupts.h"
 #include "wall.h"
-// End dependencies.
 
 namespace _ {
 
@@ -82,13 +80,13 @@ Use Case Scenario:
 Actors: Jo  - The app developer.
         Sam - The end-user.
 1.  Jo is creating an App and needs to make a Chinese Room so Jo downloads
-    Kabuki Toolkit, starts his Apps, and makes a Room. Jo defines a Floor
+    Kabuki Toolkit, starts his app, and makes a Room. Jo defines a Floor
     statically but is does not define any walls.
     2.  Host creates a memory stack without any heap space.
 2.  Jo needs to add a UART port out to his App so he adds a BOut with a
     slot_size of 2KB.
     3.  Host adds the Slot to the Program Stack.
-4.  Jo needs to add a SPI IO device so he newializes a Slot with 256
+4.  Jo needs to add a SPI IO device so he initializes a Slot with 256
     bytes.
     5.  Host adds the new Slot on top of the Slot.
 6.  Jo is out of memory in the Floor so he creates a Ceiling of size 2KB.
@@ -237,5 +235,5 @@ class Room : public Operand {
 // API Room* ChineseRoom (Room* room = nullptr);
 
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_3
 #endif  //< CRABS_ROOM_HDi
+#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00

@@ -22,7 +22,7 @@ namespace _ {
 /** Utility class for rotating rectangles.
 */
 template<typename T>
-class KABUKI_TOOLKIT Rect2DRotor
+class API Rect2DRotor
 {
     public:
 

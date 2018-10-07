@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/test.h
+@file    /kabuki/f2/test.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,12 +14,12 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00
+#if SEAM >= SEAM_0_0_0__00
 #ifndef INCLUDED_KABUKI_F2_TEST
 #define INCLUDED_KABUKI_F2_TEST 1
 
-/* Function pointer prototype for a test case with command line argument string
- * .*/
+/* Function pointer prototype for a test case with command line argument
+string.*/
 typedef const char* (*TestCase)(char* test_result, const char* args);
 
 namespace _ {
@@ -186,4 +186,4 @@ API bool AssertHandle(const char* file, int line,
 }  // namespace _
 
 #endif  //< #ifndef INCLUDED_KABUKI_F2_TEST
-#endif  //< #if SEAM >= SEAM_00_00_00__00
+#endif  //< #if SEAM >= SEAM_0_0_0__00

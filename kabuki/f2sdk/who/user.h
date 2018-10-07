@@ -1,5 +1,5 @@
 /* Kabuki Toolkit
-    @file    $kabuki-toolkit/library/kt/id/user.h
+    @file    /library/kt/id/user.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -27,7 +27,7 @@ namespace _ {
 /* A user account on a computer.
     A user does not necessarily have an account. Some accounts are and any user
     can use. i.e. the guest account. */
-class KABUKI User : Portal {
+class API User : Portal {
  public:
   enum {
     kDefaultMinDislpayNameLength = 2,  //< Default max display name length.

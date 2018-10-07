@@ -1,5 +1,5 @@
 /* Kabuki Toolkit
-    @file    $kabuki-toolkit/library/kt/id/entity_group.h
+    @file    /library/kt/id/entity_group.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -26,7 +26,7 @@ namespace _ {
 /* A group of entities.
     @todo
 */
-class KABUKI EntityGroup {
+class API EntityGroup {
  public:
   /* A group of entities such as people or businesses. */
   EntityGroup(const char* name);

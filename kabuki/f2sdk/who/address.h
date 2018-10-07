@@ -1,5 +1,5 @@
 ﻿/* Kabuki Toolkit
-    @file    $kabuki-toolkit/library/kt/id/address.h
+    @file    /library/kt/id/address.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -30,7 +30,7 @@ inline const char* AddressTypeLabel(AddressType type);
 /* A physical address.
     @todo Integrate with Google Maps API.
 */
-class KABUKI Address {
+class API Address {
  public:
   /* Default constructor. */
   Address();

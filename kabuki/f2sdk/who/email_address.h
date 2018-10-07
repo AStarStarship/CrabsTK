@@ -1,5 +1,5 @@
 ﻿/* Kabuki Toolkit
-    @file    $kabuki-toolkit/library/kt/id/email_address.h
+    @file    /library/kt/id/email_address.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -28,7 +28,7 @@ namespace _ {
 bool IsValidEmailAddress(const char* string);
 
 /* An email address. */
-class KABUKI EmailAddress {
+class API EmailAddress {
  public:
   /* Default constructor. */
   EmailAddress(const char* address);

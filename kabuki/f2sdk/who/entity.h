@@ -1,5 +1,5 @@
 /* Kabuki Toolkit
-    @file    $kabuki-toolkit/library/kt/id/entity.h
+    @file    /library/kt/id/entity.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -26,7 +26,7 @@ namespace _ {
 /* A entity with contact information.
     @todo Attach a compressed image link.
 */
-class KABUKI Entity {
+class API Entity {
  public:
   /* A real-world entity with . */
   Entity();

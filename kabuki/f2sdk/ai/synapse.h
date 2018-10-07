@@ -1,5 +1,5 @@
 /** Kabuki Toolkit @version 0.x
-@file    $kabuki-toolkit/kabuki/f2sdk/aiml/perceptron.h
+@file    /kabuki/f2sdk/ai/perceptron.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the

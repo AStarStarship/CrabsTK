@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/crabs_console.cc
+@file    /kabuki/crabs/crabs_console.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4
+#if SEAM >= SEAM_0_0_4_0__00_00
 #ifndef INCLUDED_CRABS_BIN
 #define INCLUDED_CRABS_BIN
 // Dependencies:
@@ -51,46 +51,26 @@ struct API BIn {
 };
 
 /* Get's the B-Input's buffer. */
-inline char* BInBegin(BIn* bin) {
-  return reinterpret_cast<char*>(bin) + sizeof(BIn);
-}
+inline char* BInBegin(BIn* bin);
 
-inline char* BInEnd(BIn* bin) {
-  ASSERT(bin)
-  return reinterpret_cast<char*>(bin) + bin->size;
-}
+inline char* BInEnd(BIn* bin);
 
 /* Calculates the used ring buffer space.
     @param  Start The start of the data.
     @param  Stop  The stop of the data.
     @param  Size  The size of the buffer. */
-inline intptr_t SlotLength(char* start, char* stop, uintptr_t size) {
-  ASSERT(start < stop)
-  return stop - start;
-}
+inline intptr_t SlotLength(char* start, char* stop, uintptr_t size);
 
 /* Calculates the space left in the given ring buffer.
     @param  Start The start of the data.
     @param  Stop  The stop of the data.
     @param  Size  The size of the buffer. */
-inline intptr_t SlotSpace(char* start, char* stop, uintptr_t size) {
-  ASSERT(start < stop)
-  return size - (stop - start);
-}
+inline intptr_t SlotSpace(char* start, char* stop, uintptr_t size);
 
 /* Gets the rx buffer length. */
-inline uint_t BInSpace(BIn* bin) {
-  ASSERT(bin)
-  char* txb_ptr = reinterpret_cast<char*>(bin);
-  return (uint_t)SlotSpace(txb_ptr + bin->start, txb_ptr + bin->stop,
-                           bin->size);
-}
+inline uint_t BInSpace(BIn* bin);
 
-inline uint_t BinBufferLength(BIn* bin) {
-  ASSERT(bin)
-  char* begin = BInBegin(bin);
-  return (uint_t)SlotLength(begin + bin->start, begin + bin->stop, bin->size);
-}
+inline uint_t BinBufferLength(BIn* bin);
 
 #if CRABS_TEXT
 /* Gets a a char for printing out the bin_state. */
@@ -146,7 +126,6 @@ API Utf16& Print(Utf16& printer, BIn* bin);
 @return The text. */
 API Utf32& Print(Utf32& printer, BIn* bin);
 #endif  //< #if USING_UTF32
-#endif
 
 }  // namespace _
 
@@ -158,4 +137,4 @@ inline _::Utf8& operator<<(_::Utf8& print, _::BIn* bin) {
 #endif
 
 #endif  //< INCLUDED_CRABS_BIN
-#endif  //> #if SEAM >= SEAM_0_0_4
+#endif  //> #if SEAM >= SEAM_0_0_4_0__00_00

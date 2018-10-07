@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/f2_types.cc
+@file    /kabuki/f2/f2_types.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_01__03
+#if SEAM >= SEAM_0_0_0__01
 
 #include "ascii_data.h"
 #include "socket.h"
@@ -252,4 +252,4 @@ _::Utf32& operator<<(_::Utf32& utf, const _::TypeValue& item) {
 }
 #endif
 
-#endif  //< #if SEAM >= SEAM_0_0_3
+#endif  //< #if SEAM >= SEAM_0_0_0__01

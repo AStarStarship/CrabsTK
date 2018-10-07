@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{4EE9D839-2648-4DFD-8F3A-E9E063FA40A3}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>kabukitoolkit</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)\.;$(ProjectDir)\..\</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="kabuki\f2\align.h" />
+    <ClInclude Include="kabuki\f2\ascii.h" />
+    <ClInclude Include="kabuki\f2\ascii_data.h" />
+    <ClInclude Include="kabuki\f2\benchmark.h" />
+    <ClInclude Include="kabuki\f2\binary.h" />
+    <ClInclude Include="kabuki\f2\clock.h" />
+    <ClInclude Include="kabuki\f2\config.h" />
+    <ClInclude Include="kabuki\f2\console.h" />
+    <ClInclude Include="kabuki\f2\global.h" />
+    <ClInclude Include="kabuki\f2\hash.h" />
+    <ClInclude Include="kabuki\f2\lock.h" />
+    <ClInclude Include="kabuki\f2\obj.h" />
+    <ClInclude Include="kabuki\f2\public.h" />
+    <ClInclude Include="kabuki\f2\rng.h" />
+    <ClInclude Include="kabuki\f2\socket.h" />
+    <ClInclude Include="kabuki\f2\str.h" />
+    <ClInclude Include="kabuki\f2\str1.h" />
+    <ClInclude Include="kabuki\f2\str2.h" />
+    <ClInclude Include="kabuki\f2\str4.h" />
+    <ClInclude Include="kabuki\f2\talign.h" />
+    <ClInclude Include="kabuki\f2\tarray.h" />
+    <ClInclude Include="kabuki\f2\tascii_data.h" />
+    <ClInclude Include="kabuki\f2\tbenchmark.h" />
+    <ClInclude Include="kabuki\f2\tbinary.h" />
+    <ClInclude Include="kabuki\f2\tbook.h" />
+    <ClInclude Include="kabuki\f2\tclock.h" />
+    <ClInclude Include="kabuki\f2\tconsole.h" />
+    <ClInclude Include="kabuki\f2\tdic.h" />
+    <ClInclude Include="kabuki\f2\test.h" />
+    <ClInclude Include="kabuki\f2\test_footer.h" />
+    <ClInclude Include="kabuki\f2\test_header.h" />
+    <ClInclude Include="kabuki\f2\thash.h" />
+    <ClInclude Include="kabuki\f2\tlom.h" />
+    <ClInclude Include="kabuki\f2\tlst.h" />
+    <ClInclude Include="kabuki\f2\tmap.h" />
+    <ClInclude Include="kabuki\f2\tobj.h" />
+    <ClInclude Include="kabuki\f2\trng.h" />
+    <ClInclude Include="kabuki\f2\tset.h" />
+    <ClInclude Include="kabuki\f2\tsocket.h" />
+    <ClInclude Include="kabuki\f2\tstk.h" />
+    <ClInclude Include="kabuki\f2\tstr.h" />
+    <ClInclude Include="kabuki\f2\ttbl.h" />
+    <ClInclude Include="kabuki\f2\ttest.h" />
+    <ClInclude Include="kabuki\f2\varint.h" />
+    <ClInclude Include="kabuki\f2\vk.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\00\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\00\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\00\test_itos_and_stoi.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\01\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\01\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\01\test_ftos_and_stof.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\02\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\02\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\02\test_core_text_functions.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\03\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\03\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\03\test_ascii_strings.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\04\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\04\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\04\test_ascii_clock.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\05\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\05\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\05\test_ascii_stack.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\06\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\06\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\06\test_ascii_array.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\07\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\07\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\07\test_ascii_loom.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\08\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\08\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\08\test_ascii_table.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\09\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\09\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\09\test_ascii_varint.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\10\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\10\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\10\test_ascii_list.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\11\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\11\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\11\test_ascii_map.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\12\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\12\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\12\test_ascii_book.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\13\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\13\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\13\test_ascii_dictionary.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\footer.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\header.h" />
+    <ClInclude Include="seam_0\0\00_seam_f2\seam.h" />
+    <ClInclude Include="seam_0\0\01_seam_hal\00\footer.h" />
+    <ClInclude Include="seam_0\0\01_seam_hal\00\header.h" />
+    <ClInclude Include="seam_0\0\01_seam_hal\00\project_foo.h" />
+    <ClInclude Include="seam_0\0\01_seam_hal\assembly.h" />
+    <ClInclude Include="seam_0\0\01_seam_hal\footer.h" />
+    <ClInclude Include="seam_0\0\01_seam_hal\header.h" />
+    <ClInclude Include="seam_0\0\01_seam_hal\seam.h" />
+    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\00\footer.h" />
+    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\00\header.h" />
+    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\00\project_room.h" />
+    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\assembly.h" />
+    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\footer.h" />
+    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\header.h" />
+    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\pch.h" />
+    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\seam.h" />
+    <ClInclude Include="seam_0\assembly.h" />
+    <ClInclude Include="seam_0\footer.h" />
+    <ClInclude Include="seam_0\header.h" />
+    <ClInclude Include="seam_0\pch.h" />
+    <ClInclude Include="seam_0\seam_kabuki.h" />
+    <ClInclude Include="seam_0\targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="kabuki\f2\f2_align.cc" />
+    <ClCompile Include="kabuki\f2\f2_ascii_data.cc" />
+    <ClCompile Include="kabuki\f2\f2_benchmark.cc" />
+    <ClCompile Include="kabuki\f2\f2_binary.cc" />
+    <ClCompile Include="kabuki\f2\f2_clock.cc" />
+    <ClCompile Include="kabuki\f2\f2_console.cc" />
+    <ClCompile Include="kabuki\f2\f2_hash.cc" />
+    <ClCompile Include="kabuki\f2\f2_lock.cc" />
+    <ClCompile Include="kabuki\f2\f2_obj.cc" />
+    <ClCompile Include="kabuki\f2\f2_rng.cc" />
+    <ClCompile Include="kabuki\f2\f2_socket.cc" />
+    <ClCompile Include="kabuki\f2\f2_str.cc" />
+    <ClCompile Include="kabuki\f2\f2_test.cc" />
+    <ClCompile Include="kabuki\f2\f2_vk.cc" />
+    <ClCompile Include="seam_0\pch.cc" />
+    <ClCompile Include="seam_0\seam_tree.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="docs\development.md" />
+    <None Include="docs\Doxyfile" />
+    <None Include="docs\f2_style_guide.md" />
+    <None Include="docs\f2_style_guide_-_classes.md" />
+    <None Include="docs\f2_style_guide_-_comments.md" />
+    <None Include="docs\f2_style_guide_-_c_plus_plus.md" />
+    <None Include="docs\f2_style_guide_-_exceptions_to_the_rules.md" />
+    <None Include="docs\f2_style_guide_-_formatting.md" />
+    <None Include="docs\f2_style_guide_-_functions.md" />
+    <None Include="docs\f2_style_guide_-_header_files.md" />
+    <None Include="docs\f2_style_guide_-_naming.md" />
+    <None Include="docs\f2_style_guide_-_other.md" />
+    <None Include="docs\f2_style_guide_-_scoping.md" />
+    <None Include="docs\faq.md" />
+    <None Include="docs\quickstart_guide.md" />
+    <None Include="docs\readme.md" />
+    <None Include="kabuki\f2\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\00\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\01\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\02\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\03\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\04\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\05\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\06\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\07\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\08\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\09\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\10\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\11\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\12\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\13\readme.md" />
+    <None Include="seam_0\0\00_seam_f2\readme.md" />
+    <None Include="seam_0\0\04_features\00_seam_crabs\00\readme.md" />
+    <None Include="seam_0\0\04_features\00_seam_crabs\00\seam.s2" />
+    <None Include="seam_0\readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="docs\kabuki_vm_package_diagram.jpg" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

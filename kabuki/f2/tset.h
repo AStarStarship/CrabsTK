@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/tset.h
+@file    /kabuki/f2/tset.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_00_00__03
+#if SEAM >= SEAM_0_0_0__03
 #ifndef F2_COLLECTION_H
 #define F2_COLLECTION_H
 
@@ -109,5 +109,5 @@ struct Collection {
   virtual Utf8& Print(Utf8& out_) = 0;
 };
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_00_00_00__03
+#endif  //< #if SEAM >= SEAM_0_0_0__03
 #endif  //< F2_COLLECTION_H

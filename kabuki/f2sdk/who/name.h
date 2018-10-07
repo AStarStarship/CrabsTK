@@ -1,5 +1,5 @@
 /* Kabuki Toolkit
-    @file    $kabuki-toolkit/library/kt/id/name.h
+    @file    /library/kt/id/name.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -24,7 +24,7 @@
 namespace _ {
 
 /* A name of an entity. */
-class KABUKI Name {
+class API Name {
  public:
   /* Default constructor. */
   Name();

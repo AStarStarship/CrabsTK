@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/crabs_console.cc
+@file    /kabuki/crabs/crabs_console.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4
+#if SEAM >= SEAM_0_0_4_0__00_00
 #ifndef INCLUDED_CRABS_ARGS
 #define INCLUDED_CRABS_ARGS
 // Dependencies:
@@ -1211,5 +1211,5 @@ inline void** Args(void** ptrs, const void* a, const void* b, const void* c,
 
 }  // namespace _
 
-#endif  //< SEAM_MAJOR == 0 && MINOR_MAJOR_SEAM == 1 && SEAM_MINOR >= 4
 #endif  //< INCLUDED_CRABS_ARGS
+#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00

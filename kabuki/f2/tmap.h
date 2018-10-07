@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/map.h
+@file    /kabuki/f2/map.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_00_01__06
+#if SEAM >= SEAM_0_0_0__06
 #ifndef INCLUDED_CRAPS_MAP
 #define INCLUDED_CRAPS_MAP
 
@@ -25,7 +25,7 @@ namespace _ {
 /* A one-to-one map that does not use hash table.
 
     Maps share the same data structure as Multimaps, Dictionary(s) and Lists.
-   Maps like all Script Objs are required to are required to have a
+   Maps like all Script Objects are required to are required to have a
    stack_height, size_bytes, and header_size that is a multiple of 8 as well as
    being .
 
@@ -104,8 +104,8 @@ namespace _ {
     * Uses less memory.
     * Fast push back when within buffer size.
     * Faster inserts on small collections when within buffer size.
-    * 64-bit memory alignment ensures highest performace on Intel.
-    * Mandating zeros in buffered memory space can serve help sanatize input.
+    * 64-bit memory alignment ensures highest performance on Intel.
+    * Mandating zeros in buffered memory space can serve help sanitize input.
 
     # Design Weaknesses
 
@@ -223,7 +223,7 @@ SI MapCountUpperBounds() {
   return CountUpperBounds;
 }
 
-/* Insets the given key-type-value typle.
+/* Insets the given key-type-value tuple.
  */
 template <typename UI = uint32_t, typename SI = int32_t, typename I = int16_t>
 SI MapInsert(TMap<UI, SI, I>* map, void* value, type_t type, SI index) {
@@ -661,4 +661,4 @@ class Map {
 #undef PRINT_TYPE
 #undef WIPE
 #undef PRINT_LINE
-#endif  //< #if SEAM >= SEAM_00_00_01__06
+#endif  //< #if SEAM >= SEAM_0_0_01__06

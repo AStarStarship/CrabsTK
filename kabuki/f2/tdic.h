@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/libraries/f2/dictionary.h
+@file    /libraries/f2/dictionary.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__12
+#if SEAM >= SEAM_0_0_0__12
 
 #ifndef INCLUDED_KABUKI_F2_BOOK
 #define INCLUDED_KABUKI_F2_BOOK 1
@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 #include "ascii_data.h"
 #include "socket.h"
 
-#include <seam_00/00/00_test_f2/06/header.h>
+#include <seam_0/0/00_seam_f2/06/header.h>
 
 namespace _ {
 
@@ -741,5 +741,5 @@ Utf8& DicPrint(Utf8& print, Dictionary<UI, SI, I>* dictionary) {
 }
 
 }  // namespace _
-#include <seam_00/00/00_test_f2/06/footer.h>
+#include <seam_0/0/00_seam_f2/06/footer.h>
 #endif  //< INCLUDED_KABUKI_F2_BOOK

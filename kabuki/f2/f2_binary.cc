@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/f2_binary.cc
+@file    /kabuki/f2/f2_binary.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,14 +13,14 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00
+#if SEAM >= SEAM_0_0_0__00
 #include "tbinary.h"
 
 #include "ttest.h"
 
 #include <cmath>
 
-#include <seam_00/00/00_test_f2/01/header.h>
+#include <seam_0/0/00_seam_f2/01/header.h>
 
 #ifdef __LITTLE_ENDIAN
 #define HI(x) *(1 + (int32_t*)&x)
@@ -111,8 +111,8 @@ char* Print(char* begin, char* end, char byte_0, char byte_1, char byte_2) {
   return &begin[4];
 }
 
-#endif  //< #if SEAM >= SEAM_00_00_00__00
-#if SEAM >= SEAM_00_00_00__01
+#endif  //< #if SEAM >= SEAM_0_0_0__00
+#if SEAM >= SEAM_0_0_0__01
 
 char puff_lut[2 * 100 + (8 + 2) * 87];
 
@@ -442,5 +442,5 @@ int HexToByte(uint16_t h) {
 
 }  // namespace _
 
-#include <seam_00/00/00_test_f2/01/header.h>
-#endif  //< #if SEAM >= SEAM_00_00_00__01
+#include <seam_0/0/00_seam_f2/01/header.h>
+#endif  //< #if SEAM >= SEAM_0_0_0__01

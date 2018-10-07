@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/library/script/mirror.h
+@file    /library/script/mirror.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,19 +13,17 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_00
+#if SEAM >= SEAM_0_0_4_0__00_00
 #ifndef INCLUDED_SCRIPT_MIRROR
 #define INCLUDED_SCRIPT_MIRROR
-// Dependencies:
 #include "bin.h"
 #include "bout.h"
 #include "op.h"
-// End dependencies.
 
 namespace _ {
 
 /* A Mirror in a Chinese Room.
-    A Mirror */
+A Mirror */
 struct API Mirror {
   uint_t size,  //< The size of the buffer.
       start,    //< The starting index of the ring buffer data.
@@ -43,15 +41,15 @@ enum {
 static const uintptr_t kMaxMirrorSize = ~((uintptr_t)0);
 
 /* Calculates the used ring buffer space.
-    @param  Start The start of the data.
-    @param  Stop  The stop of the data.
-    @param  Size The size of the buffer. */
+@param  Start The start of the data.
+@param  Stop  The stop of the data.
+@param  Size The size of the buffer. */
 API uint_t MirrorLength(char* start, char* stop, uint_t size);
 
 /* Calculates the space left in the given ring buffer.
-    @param  Start The start of the data.
-    @param  Stop  The stop of the data.
-    @param  Size  The size of the buffer. */
+@param  Start The start of the data.
+@param  Stop  The stop of the data.
+@param  Size  The size of the buffer. */
 API uint_t MirrorSpace(char* start, char* stop, uint_t size);
 
 /* Checks if the given slot contains the specified address. */
@@ -76,63 +74,63 @@ API const Op* MirrorRead(Mirror* mirror, const uint_t* params, void** args);
 API bool MirrorIsReadable(Mirror* mirror);
 
 /* Used to return an erroneous result from a B-Input.
-    @param  bin     The source Mirror.
-    @param  error   The error type.
-    @param  header  The B-Sequence Header.
-    @param  offset  The offset to the type in error in the B-Sequence.
-    @param  address The address of the byte in error.
-    @return         Returns a Static Error Operation Result. */
+@param  bin     The source Mirror.
+@param  error   The error type.
+@param  header  The B-Sequence Header.
+@param  offset  The offset to the type in error in the B-Sequence.
+@param  address The address of the byte in error.
+@return         Returns a Static Error Operation Result. */
 API const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header);
 /* Used to return an erroneous result from a B-Input.
-    @param  bin     The source Mirror.
-    @param  error   The error type.
-    @param  header  The B-Sequence Header.
-    @param  offset  The offset to the type in error in the B-Sequence.
-    @param  address The address of the byte in error.
-    @return         Returns a Static Error Operation Result. */
+@param  bin     The source Mirror.
+@param  error   The error type.
+@param  header  The B-Sequence Header.
+@param  offset  The offset to the type in error in the B-Sequence.
+@param  address The address of the byte in error.
+@return         Returns a Static Error Operation Result. */
 API const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header);
 
 /* Used to return an erroneous result from a B-Input.
-    @param  bin     The source Mirror.
-    @param  error   The error type.
-    @param  header  The B-Sequence Header.
-    @param  offset  The offset to the type in error in the B-Sequence.
-    @param  address The address of the byte in error.
-    @return         Returns a Static Error Operation Result. */
+@param  bin     The source Mirror.
+@param  error   The error type.
+@param  header  The B-Sequence Header.
+@param  offset  The offset to the type in error in the B-Sequence.
+@param  address The address of the byte in error.
+@return         Returns a Static Error Operation Result. */
 API const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
                            byte offset);
 
 /* Used to return an erroneous result from a B-Input.
-    @param  bin     The source Mirror.
-    @param  error   The error type.
-    @param  header  The B-Sequence Header.
-    @param  offset  The offset to the type in error in the B-Sequence.
-    @param  address The address of the byte in error.
-    @return         Returns a Static Error Operation Result. */
+@param  bin     The source Mirror.
+@param  error   The error type.
+@param  header  The B-Sequence Header.
+@param  offset  The offset to the type in error in the B-Sequence.
+@param  address The address of the byte in error.
+@return         Returns a Static Error Operation Result. */
 // API const Op* MirrorResult (Mirror* mirror, Error error,
 //                                   const uint_t* header,
 //                                   uint_t offset);
 
 /* Used to return an erroneous result from a B-Input.
-    @param  bin     The source Mirror.
-    @param  error   The error type.
-    @param  header  The B-Sequence Header.
-    @param  offset  The offset to the type in error in the B-Sequence.
-    @param  address The address of the byte in error.
-    @return         Returns a Static Error Operation Result. */
+@param  bin     The source Mirror.
+@param  error   The error type.
+@param  header  The B-Sequence Header.
+@param  offset  The offset to the type in error in the B-Sequence.
+@param  address The address of the byte in error.
+@return         Returns a Static Error Operation Result. */
 API const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
                            uint_t offset, char* address);
 
 /* Used to return an erroneous result from a B-Input.
-    @param  bin     The source Mirror.
-    @param  error   The error type.
-    @param  header  The B-Sequence Header.
-    @param  offset  The offset to the type in error in the B-Sequence.
-    @param  address The address of the byte in error.
-    @return         Returns a Static Error Operation Result. */
+@param  bin     The source Mirror.
+@param  error   The error type.
+@param  header  The B-Sequence Header.
+@param  offset  The offset to the type in error in the B-Sequence.
+@param  address The address of the byte in error.
+@return         Returns a Static Error Operation Result. */
 API const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
                            uint_t offset, char* address);
 
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_0
 #endif  //< INCLUDED_SCRIPT_MIRROR
+#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00

@@ -22,7 +22,7 @@
 namespace _ {
 
 template<typename T>
-class KABUKI_TOOLKIT Rect2D<T>
+class API Rect2D<T>
 {
     public:
 

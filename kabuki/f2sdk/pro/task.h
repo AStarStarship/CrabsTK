@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    kabuki-toolkit.git/libraries/kt/pro/task.h
+@file    /libraries/kt/pro/task.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
           All right reserved (R). Licensed under the Apache License, Version
@@ -16,7 +16,7 @@
 
 #pragma once
 #include <pch.h>
-#if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
+#if SEAM >= SEAM_00_03_00_00__00
 #ifndef HEADER_FOR_KT_PRO_TASK
 #define HEADER_FOR_KT_PRO_TASK
 #include "config.h"
@@ -173,4 +173,4 @@ class Task {
 };
 }       //< namespace _
 #endif  //< HEADER_FOR_KT_PRO_TASK
-#endif  //< #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
+#endif  //< #if SEAM >= SEAM_00_03_00_00__00

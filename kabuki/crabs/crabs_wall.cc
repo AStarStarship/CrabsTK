@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/crabs_wall.cc
+@file    /kabuki/crabs/crabs_wall.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,20 +12,14 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4
-// Dependencies:
-#include "align.h"
-#include "test.h"
-#include "tstk.h"
+#if SEAM >= SEAM_0_0_4_0__00_00
+
 #include "wall.h"
-// End dependencies.
-#if SEAM_MAJOR == 0 && SEAM_MINOR == 4
-#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define PRINT(c) Print(c)
-#else
-#define PRINTF(x, ...)
-#define PRINT(c)
-#endif
+
+#include <kabuki/f2/align.h>
+#include <kabuki/f2/stk.h>
+
+#include <seam_0/0/04_features/00_seam_crabs/00/header.h>
 
 namespace _ {
 
@@ -88,6 +82,5 @@ Slot& Wall::Print(Slot& slot) {
 }
 
 }  // namespace _
-#undef PRINTF
-#undef PRINT
-#endif  //< #if SEAM >= SEAM_0_0_4
+#include <seam_0/0/04_features/00_seam_crabs/00/footer.h>
+#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00

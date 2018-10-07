@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/crabs_bin.cc
+@file    /kabuki/crabs/crabs_bin.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,13 +12,12 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4
+#if SEAM >= SEAM_0_0_4_0__00_00
 // Dependencies:
-#include "ascii_data_types.h"
+#include "ascii_data.h"
 #include "bin.h"
 #include "bout.h"
 #include "bsq.h"
-#include "test.h"
 #include "hash.h"
 #include "hex.h"
 #include "line.h"
@@ -41,6 +40,38 @@ specific language governing permissions and limitations under the License. */
 #endif
 
 namespace _ {
+
+inline char* BInBegin(BIn* bin) {
+  return reinterpret_cast<char*>(bin) + sizeof(BIn);
+}
+
+char* BInEnd(BIn* bin) {
+  ASSERT(bin)
+  return reinterpret_cast<char*>(bin) + bin->size;
+}
+
+intptr_t SlotLength(char* start, char* stop, uintptr_t size) {
+  ASSERT(start < stop)
+  return stop - start;
+}
+
+intptr_t SlotSpace(char* start, char* stop, uintptr_t size) {
+  ASSERT(start < stop)
+  return size - (stop - start);
+}
+
+uint_t BInSpace(BIn* bin) {
+  ASSERT(bin)
+  char* txb_ptr = reinterpret_cast<char*>(bin);
+  return (uint_t)SlotSpace(txb_ptr + bin->start, txb_ptr + bin->stop,
+                           bin->size);
+}
+
+uint_t BinBufferLength(BIn* bin) {
+  ASSERT(bin)
+  char* begin = BInBegin(bin);
+  return (uint_t)SlotLength(begin + bin->start, begin + bin->stop, bin->size);
+}
 
 #if CRABS_TEXT
 const char** BInStateStrings() {
@@ -178,7 +209,7 @@ const Op* BInRead(BIn* bin, const uint_t* params, void** args) {
 
   if (num_params == 0) return 0;  //< Nothing to do.
 
-  hash = kLargest16BitPrime;
+  hash = kPrime2Unsigned;
   size = bin->size;
 
   char *begin = BInBegin(bin),            //< The beginning of the buffer.
@@ -612,4 +643,4 @@ Utf8& Print(Utf8& print, BIn* bin) {
 #undef PRINT_BSQ
 #undef PRINT_BIN
 #undef DEBUG
-#endif  //< #if SEAM >= SEAM_0_0_4
+#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00

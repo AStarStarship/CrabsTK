@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/hash.h
+@file    /kabuki/f2/hash.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__04
+#if SEAM >= SEAM_0_0_0__04
 
 #ifndef INCLUDED_KABUKI_F2_HASH
 #define INCLUDED_KABUKI_F2_HASH
@@ -26,7 +26,7 @@ namespace _ {
 
 /* Hashes a single byte. */
 inline uint16_t Hash16(char c, uint16_t hash) {
-  return (c * kLargest16BitPrime) + hash;
+  return (c * kPrime2Unsigned) + hash;
 }
 
 /* Hashes a single byte. */
@@ -40,10 +40,10 @@ inline hash64_t Hash64(char c, hash64_t hash) {
 }
 
 /* Hashes the given char using the primeHash function. */
-API uint16_t Hash16(const char* string, uint16_t hash = kLargest16BitPrime);
+API uint16_t Hash16(const char* string, uint16_t hash = kPrime2Unsigned);
 
 /* Hashes the given char using the primeHash function. */
-API uint16_t Hash32(const char* string, hash32_t hash = kLargest32BitPrime);
+API uint32_t Hash32(const char* string, hash32_t hash = kLargest32BitPrime);
 
 /* Hashes the given char using the primeHash function. */
 API hash64_t Hash64(const char* string, hash64_t hash = kLargest64BitPrime);

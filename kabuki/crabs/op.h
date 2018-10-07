@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/op.h
+@file    /kabuki/crabs/op.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,12 +13,15 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_2
+
+#if SEAM >= SEAM_0_0_4_0__00_00
+
 #ifndef INCLUDED_CRABS_OP
 #define INCLUDED_CRABS_OP
 
+#include <kabuki/f2/str1.h>
+
 #include "error.h"
-#include "str1.h"
 
 namespace _ {
 
@@ -90,5 +93,5 @@ inline _::Utf8& operator<<(_::Utf8& print, const _::Op* op) {
   return _::Print(print, op);
 }
 
-#endif  //< #if SEAM >= SEAM_0_0_2
 #endif  //< INCLUDED_CRABS_OP
+#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00

@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    kabuki-toolkit.git/kabuki/f2/bsq.h
+@file    /kabuki/f2/bsq.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,12 +13,11 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_2
+#if SEAM >= SEAM_0_0_0__13
 #ifndef INCLUDED_KABUKI_F2_VARINT
 #define INCLUDED_KABUKI_F2_VARINT
 
 #include "config.h"
-
 
 namespace _ {
 
@@ -80,4 +79,4 @@ inline int64_t PackSV8(int64_t value) {
 
 }  // namespace _
 #endif  //< INCLUDED_KABUKI_F2_VARINT
-#endif  //< #if SEAM >= SEAM_0_0_2
+#endif  //< #if SEAM >= SEAM_0_0_0__13

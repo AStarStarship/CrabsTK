@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/crabs_bout.cc
+@file    /kabuki/crabs/crabs_bout.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,19 +12,17 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4
-// Dependencies:
+#if SEAM >= SEAM_0_0_4_0__00_00
 #include "args.h"
-#include "ascii_data_types.h"
+#include "ascii_data.h"
 #include "bout.h"
 #include "bsq.h"
-#include "test.h"
 #include "hash.h"
 #include "hex.h"
 #include "line.h"
 #include "slot.h"
 #include "socket.h"
-// End dependencies.
+#include "test.h"
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT(c) Print(c)
@@ -210,7 +208,7 @@ const Op* BOutWrite(BOut* bout, const uint_t* params, void** args) {
 #if USING_CRABS_8_BYTE_TYPES
   const uint64_t* ui8_ptr;  //< Pointer to a 8-byte type.
 #endif
-  uint16_t hash = kLargest16BitPrime;  //< Reset hash to largest 16-bit prime.
+  uint16_t hash = kPrime2Unsigned;  //< Reset hash to largest 16-bit prime.
 
   space = (uint_t)SlotSpace(start, stop, size);
 
@@ -745,4 +743,4 @@ Utf8& PrintBOut(Utf8& print, BOut* bout) {
 #undef PRINT
 #undef PRINT_BSQ
 #undef PRINT_BOUT
-#endif  //> #if SEAM >= SEAM_0_0_4
+#endif  //> #if SEAM >= SEAM_0_0_4_0__00_00

@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/crabs_door.cc
+@file    /kabuki/crabs/crabs_door.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,9 +12,8 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4
+#if SEAM >= SEAM_0_0_4_0__00_00
 // Dependencies:
-#include "test.h"
 #include "door.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
@@ -125,4 +124,4 @@ static Door* DoorInit (uintptr_t* buffer, slot_t slot_size) {
 }  // namespace _
 #undef PRINTF
 #undef PRINT
-#endif  //> #if SEAM >= SEAM_0_0_4
+#endif  //> #if SEAM >= SEAM_0_0_4_0__00_00

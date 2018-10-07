@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/f2_utils.cc
+@file    /kabuki/f2/f2_utils.cc
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_00_00_00__01
+#if SEAM >= SEAM_0_0_0__01
 
 #include "align.h"
 #include "binary.h"
@@ -20,7 +20,7 @@ specific language governing permissions and limitations under the License. */
 #include "test.h"
 #include "tstr.h"
 
-#if SEAM == SEAM_00_00_00__01
+#if SEAM == SEAM_0_0_0__01
 #define PRINT(item) Print(item)
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define SOCKET_SAVE(cursor, end_a) Socket socket_to_print(cursor, end_a);
@@ -230,5 +230,5 @@ void DestructorDeleteBuffer(uintptr_t* buffer) {
 }
 
 }  // namespace _
-#include <seam_00>
-#endif  //<  #if SEAM >= SEAM_00_00_00__01
+#include <seam_0>
+#endif  //<  #if SEAM >= SEAM_0_0_0__01

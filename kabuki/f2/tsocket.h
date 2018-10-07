@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    kabuki-toolkit.git/kabuki-toolkit/kabuki/f2/socket.h
+@file    /kabuki-toolkit/kabuki/f2/socket.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_00_01__01
+#if SEAM >= SEAM_0_0_01__01
 #ifndef INCLUDED_KABUKI_F2_KABUKI_SOCKET
 #define INCLUDED_KABUKI_F2_KABUKI_SOCKET
 
@@ -83,4 +83,4 @@ uintptr_t* New(uintptr_t* buffer, intptr_t size) {
 }  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_KABUKI_SOCKET
-#endif  //< #if SEAM >= SEAM_00_00_01__01
+#endif  //< #if SEAM >= SEAM_0_0_01__01

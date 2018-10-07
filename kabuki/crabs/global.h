@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/global.h
+@file    /kabuki/crabs/global.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,46 +13,24 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
+#if SEAM >= SEAM_0_0_4_0__00_00
 #ifndef INCLUDED_CRABS_GLOBAL
 #define INCLUDED_CRABS_GLOBAL
-// Dependencies:
 
 #include "../f2/global.h"
 
-#include <kabuki/f2/ascii.h>
-#include <kabuki/f2/str.h>
-#include <kabuki/f2/tarray.h>
-#include <kabuki/f2/tlst.h>
-#include <kabuki/f2/tmap.h>
-#include <kabuki/f2/tstk.h>
-
-#if SEAM >= SEAM_00_00_00__00_02
-#include "bsq.h"
-//#include "multimap.h"
-//#include "dictionary.h"
-#endif
-
-#if SEAM >= SEAM_00_00_00__00_03
-#include "clock.h>
-#include "socket.h"
-#endif
-
-#if SEAM >= SEAM_00_00_00__00_03
 #include "address.h"
 #include "args.h"
 #include "bin.h"
 #include "bout.h"
+#include "bsq.h"
 #include "event.h"
 #include "expr.h"
 #include "interrupts.h"
+#include "library.h"
 #include "op.h"
 #include "room.h"
 #include "slot.h"
-#endif
-
-#if SEAM >= SEAM_00_00_00__00_04
-#include "library.h"
-#endif
-// End dependencies.
 
 #endif  //< INCLUDED_CRABS_GLOBAL
+#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00

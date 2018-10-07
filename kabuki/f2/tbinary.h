@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/tbinary.h
+@file    /kabuki/f2/tbinary.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -17,9 +17,8 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_TBINARY
 #define INCLUDED_KABUKI_F2_TBINARY 1
 
-#if SEAM >= SEAM_00_00_00__00
-
-#include <seam_00\00\00_test_f2\00\header.h>
+#if SEAM >= SEAM_0_0_0__00
+#include <seam_0\0\00_seam_f2\00\header.h>
 
 #include "binary.h"
 
@@ -601,10 +600,11 @@ const Char* Scan(const Char* buffer, UI& result) {
   result = value;
   return end;
 }
-#endif  //< #if SEAM >= SEAM_00_00_00__00
-#include <seam_00/00/00_test_f2/00/footer.h>
-#include <seam_00/00/00_test_f2/00/header.h>
-#if SEAM >= SEAM_00_00_00__01
+#include <seam_0/0/00_seam_f2/00/footer.h>
+#endif  //< #if SEAM >= SEAM_0_0_0__00
+
+#include <seam_0/0/00_seam_f2/00/header.h>
+#if SEAM >= SEAM_0_0_0__01
 
 /* Searches for the highest MSb asserted.
 @return -1 */
@@ -753,16 +753,18 @@ class Binary {
     return (SI)(nan << (sizeof(UI) * 8 - 1));
   }
 
-#include <seam_00\00\00_test_f2\00\footer.h>
+#include <seam_0/0/00_seam_f2/00/footer.h>
+#endif  //< #if SEAm >= SEAM_0_0_0__00
 
-#include <seam_00\00\00_test_f2\01\header.h>
+#if SEAM >= SEAM_0_0_0__01
+#include <seam_0/0/00_seam_f2/01/header.h>
 
   /* Non-working algorithm DOES NOT converts a string-to-float.
   @return nil if there is no number to scan or pointer to the next char after
   the end of the scanned number upon success.
   @brief Algorithm uses a 32-bit unsigned value to scan the floating-point
   number, which can only have 10 digits max, so the maximum floating-point
-  number digit count we can scan is 9 digits long.
+  number digit count we can scan is 9 digits long.*/
   template <typename Char = char>
   const Char* Scan(const Char* buffer, Float& result) {
     ASSERT(buffer);
@@ -926,10 +928,10 @@ class Binary {
     // result = result_flt;
 
     return end;
-  }*/
+  }
+  * /
 
- private:
-  UI f;
+      private : UI f;
   int32_t e;
 
   Binary NormalizeBoundary() const {
@@ -949,13 +951,14 @@ class Binary {
     return res;
 #endif
   }
-  /*
-  static const uint64_t  // kDpExponentMask = 0x7FF0000000000000,
-  kDpSignificandMask = 0x000FFFFFFFFFFFFF,
-  kDpHiddenBit = 0x0010000000000000;*/
 
-  /* Normalizes the boundaries.
-  inline void NormalizedBoundaries(Binary& m_minus, Binary& m_plus) const {
+  static const uint64_t  // kDpExponentMask = 0x7FF0000000000000,
+      kDpSignificandMask = 0x000FFFFFFFFFFFFF,
+      kDpHiddenBit = 0x0010000000000000;
+  * /
+
+      /* Normalizes the boundaries. */
+      inline void NormalizedBoundaries(Binary& m_minus, Binary& m_plus) const {
     UI l_f,   //< Local copy of f.
         l_e;  //< Local copy of e.
     Binary pl = Binary((l_f << 1) + 1, l_e - 1).NormalizeBoundary();
@@ -969,7 +972,7 @@ class Binary {
     *m_minus = mi;
   }
 
-  /* Rounds the Grisu estimation closer to the inside of the squeeze.
+  /* Rounds the Grisu estimation closer to the inside of the squeeze. */
   template <typename Char>
   inline void Round(Char& lsd, uint64_t delta, uint64_t rest,
                     uint64_t ten_kappa, uint64_t wp_w) {
@@ -979,10 +982,10 @@ class Binary {
       --lsd;
       rest += ten_kappa;
     }
-  } */
+  }
 
   /* Prints the integer portion of the floating-point number.
-  @return Nil upon failure or a pointer to the nil-term Char upon success.
+  @return Nil upon failure or a pointer to the nil-term Char upon success. */
   template <typename Char>
   inline Char* PrintDecimals(Char* cursor, Char* end, const Binary& w,
                              const Binary& m_plus, uint64_t delta, int32_t& k) {
@@ -1168,7 +1171,7 @@ class Binary {
     buffer[1] = '.';
     buffer[length + 1] = 'e';
     return Print<Char, DChar>(length + 2, end, kk - 1);
-  } */
+  }
 };
 
 template <typename Float = double, typename UI = uint64_t, typename Char = char,
@@ -1191,9 +1194,9 @@ using Binary32 = Binary<float, uint32_t>;
 using Binary64 = Binary<double, uint64_t>;
 // using Binary128 = Binary<quad, uint128_t>;
 //< Coming soon but not in Visual-C++ due to lack of 128-bit integer support.
-#endif  // #if SEAM >= SEAM_00_00_00__00
 }  // namespace _
 
-#include <seam_00\00\00_test_f2\01\footer.h>
-#endif  //< #if SEAM >= SEAM_00_00_00__01
+#include <seam_0/0/00_seam_f2/01/footer.h>
+#endif  //< #if SEAM >= SEAM_0_0_0__01
+
 #endif  //< #if INCLUDED_KABUKI_F2_TBINARY

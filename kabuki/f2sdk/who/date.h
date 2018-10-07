@@ -1,5 +1,5 @@
 /* Kabuki Toolkit
-    @file    $kabuki-toolkit/library/kt/id/date.h
+    @file    /library/kt/id/date.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -25,7 +25,7 @@ namespace _ {
 
 /* An eventful date.
     @todo Create a list of events. Is it an Event? */
-class KABUKI Date {
+class API Date {
  public:
   /* Default constructor. */
   Date(time_t time);

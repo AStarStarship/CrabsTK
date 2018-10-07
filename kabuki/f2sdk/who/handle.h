@@ -1,5 +1,5 @@
 /* Kabuki Toolkit
-    @file    $kabuki-toolkit/library/kt/id/handle.h
+    @file    /library/kt/id/handle.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -25,7 +25,7 @@ namespace _ {
 
 /* A handle like a char or UID.
  */
-class KABUKI Handle {
+class API Handle {
  public:
   enum {
     kValidation = 1,        //< Validation type.

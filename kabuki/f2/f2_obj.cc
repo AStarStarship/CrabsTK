@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/f2_object.h
+@file    /kabuki/f2/f2_object.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__03
+#if SEAM >= SEAM_0_0_0__03
 
 #include "align.h"
 #include "obj.h"
@@ -82,4 +82,4 @@ void Delete(uintptr_t* buffer) {
 }
 
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_00_00_00__04
+#endif  //< #if SEAM >= SEAM_0_0_0__04

@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    kabuki-toolkit.git/kabuki/crabs/wall.h
+@file    /kabuki/crabs/wall.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,13 +13,11 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_3
+#if SEAM >= SEAM_0_0_4_0__00_00
 #ifndef INCLUDED_CRABS_WALL
 #define INCLUDED_CRABS_WALL
-// Dependencies:
 #include "door.h"
 #include "op.h"
-// End dependencies.
 
 namespace _ {
 
@@ -88,4 +86,4 @@ class Wall {
 
 }  // namespace _
 #endif  //< INCLUDED_CRABS_WALL
-#endif  //< #if SEAM >= SEAM_0_0_3
+#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00

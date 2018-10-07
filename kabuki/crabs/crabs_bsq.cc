@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/crabs_bsq.cc
+@file    /kabuki/crabs/crabs_bsq.cc
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,11 +12,11 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_3
+#if SEAM >= SEAM_0_0_4_0__00_00
 // Dependencies:
 #include "bsq.h"
-#include "test.h"
 #include "str1.h"
+#include "test.h"
 // End dependencies.
 
 namespace _ {
@@ -237,4 +237,4 @@ Utf8& PrintBsq(Utf8& print, const uint_t* params) {
 
 }  // namespace _
 
-#endif  //> #if SEAM >= SEAM_0_0_3
+#endif  //> #if SEAM >= SEAM_0_0_4_0__00_00

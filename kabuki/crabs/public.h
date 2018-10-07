@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    kabuki-toolkit.git/kabuki/crabs/global.h
+@file    /kabuki/crabs/global.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -16,24 +16,11 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_CRABS_GLOBAL
 #define INCLUDED_CRABS_GLOBAL
 
-#include "binary_64.h"
-#include "random.h"
-
-#include "binary_64.h"
-#include "clock.h"
-#include "test.h"
-#include "hex.h"
-#include "socket.h"
-#include "str.h"
-
-#include "array.h"
-#include "ascii.h"
-#include "bsq.h"
-
 #include "address.h"
 #include "args.h"
 #include "bin.h"
 #include "bout.h"
+#include "bsq.h"
 #include "event.h"
 #include "expr.h"
 #include "interrupts.h"

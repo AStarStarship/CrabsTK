@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2sdk/web/app.h */
+@file    /kabuki/f2sdk/web/app.h */
 
 #pragma once
 

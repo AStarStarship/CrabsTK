@@ -23,7 +23,7 @@ namespace _ {
 
 /** A 2D point storted as Type types. */
 template<typename T>
-class KABUKI_TOOLKIT Point2D {
+class API Point2D {
     public:
 
     T x,    //< The X position.

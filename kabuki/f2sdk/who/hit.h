@@ -1,5 +1,5 @@
 ﻿/* Kabuki Toolkit
-    @file    $kabuki-toolkit/library/kt/id/Hit.h
+    @file    /library/kt/id/Hit.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -30,7 +30,7 @@ namespace _ {
     Each hit has a name and category, and type std::strings, and a list of tags
    that describe the sound.
 */
-class KABUKI Hit {
+class API Hit {
  public:
   enum {
     kMaxnameLength = 12,         //< Max name length.

@@ -22,7 +22,7 @@
 namespace _ {
     
 template<typename T>
-class KABUKI_TOOLKIT Poly2D
+class API Poly2D
 /*< A 2D polygon that uses 32-bit floating point values. 
     This class is a C++ implementation of Java's polygon interface that does not 
     use polymorphism.

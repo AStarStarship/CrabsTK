@@ -1,4 +1,4 @@
-# kabuki::aiml
+# kabuki::ai
 
 Module contains Artificial Intelligence and Machine Learning building blocks.
 

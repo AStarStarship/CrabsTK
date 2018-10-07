@@ -28,7 +28,7 @@ namespace _ {
 
 /** Class that represents a 4th order Bezier. */
 template<typename T>
-class KABUKI_TOOLKIT QuadBezier2D
+class API QuadBezier2D
 {
     public:
 

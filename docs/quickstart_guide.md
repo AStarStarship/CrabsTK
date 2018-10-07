@@ -6,7 +6,7 @@
   \__\_\\__,_|_|\___|_|\_\___/\__\__,_|_|   \__|  \____|\__,_|_|\__,_|\___|
 ```
 
-***This Quickstart is broken because I've integrated most of the stuff into one SDK. Just look at the seam_00.***
+***This Quickstart is broken because I've integrated most of the stuff into one SDK. Just look at the seam_0.***
 
 # Visual Studio Setup
 Right now the Visual Studio projects are mapped to "C:\Workspace" at the moment. Please feel free to remap the include and library directories to relative paths. It's a todo.
@@ -26,7 +26,7 @@ git clone https://github.com/google/angle.git
 
 ## Step 4
 
-Loop through the ~/seam_00 directory for a project that could work for a bootstrap for your project and copy the folder into yoru workspace and modify the "assembly.h" and `pch.h` to suit your needs.
+Loop through the ~/seam_0 directory for a project that could work for a bootstrap for your project and copy the folder into yoru workspace and modify the "assembly.h" and `pch.h` to suit your needs.
 
 # CMake Setup
 

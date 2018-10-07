@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/clock.h
+@file    /kabuki/f2/clock.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_00_01__04
+#if SEAM >= SEAM_0_0_0__04
 #ifndef INCLUDED_KABUKI_F2_TCLOCK
 #define INCLUDED_KABUKI_F2_TCLOCK
 
@@ -481,4 +481,4 @@ const Char* TextScanTime(const Char* begin, Tss& result) {
 #undef PRINT
 #undef PRINTF
 #endif  //< #ifndef INCLUDED_KABUKI_F2_TCLOCK
-#endif  //< #if SEAM >= SEAM_00_00_01__04
+#endif  //< #if SEAM >= SEAM_0_0_0__04

@@ -311,7 +311,7 @@ inline int GetNextPrime (int thisNumber);
 /** An Inter-process calculator for doing math on distributed systems.
     @todo Map the above functions to the I2P operations.
 */
-class KABUKI_TOOLKIT Calc : public _::Operand {
+class API Calc : public _::Operand {
     public:
 
     /** Constructs a calculator. */

@@ -1,5 +1,5 @@
 /* Kabuki Toolkit
-    @file    $kabuki-toolkit/library/kt/id/entity_hist.h
+    @file    /library/kt/id/entity_hist.h
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -25,7 +25,7 @@ namespace _ {
 
 /* A List of entities.
     This is essentially a contact list. */
-class KABUKI EntityList {
+class API EntityList {
  public:
   /* Creates an empty list. */
   EntityList();

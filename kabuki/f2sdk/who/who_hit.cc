@@ -1,5 +1,5 @@
 ﻿/* kabuki::pro
-    @file    $kabuki-toolkit/library/kt/id/impl/hit.cc
+    @file    /library/kt/id/impl/hit.cc
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version
@@ -137,7 +137,8 @@ const char* Hit::ToJson() {
   description + "\",\"tags\": [";
 
   tagsString = "";
-  
+  
+
   int count = tags.size ();
   for (int i = 0; i < count; i++)
   {
