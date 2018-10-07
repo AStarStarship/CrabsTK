@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/stack.h
+@file    /kabuki/f2/stack.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -67,7 +67,8 @@ constexpr UI UnsignedMax() {
     given types, and another for a multi-dimensional array that uses the 1-d
     array in order to store the dimensions. The only different between them is
     that the size_array variable gets set to 0.
-    
+    
+
 
 
 

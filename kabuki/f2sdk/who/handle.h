@@ -25,7 +25,7 @@ namespace _ {
 
 /* A handle like a char or UID.
  */
-class KABUKI Handle {
+class API Handle {
  public:
   enum {
     kValidation = 1,        //< Validation type.

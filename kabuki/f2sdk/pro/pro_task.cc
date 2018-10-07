@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    kabuki-toolkit.git/libraries/pro/impl/task.cc
+@file    /libraries/pro/impl/task.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
           All right reserved (R). Licensed under the Apache License, Version
@@ -339,4 +339,4 @@ const char* Task::Command(char* input) {
 }
 
 }  // namespace _
-#endif  //< #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
+#endif  //< #if SEAM >= SEAM_00_03_00_00__00

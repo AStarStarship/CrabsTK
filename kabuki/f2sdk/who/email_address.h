@@ -28,7 +28,7 @@ namespace _ {
 bool IsValidEmailAddress(const char* string);
 
 /* An email address. */
-class KABUKI EmailAddress {
+class API EmailAddress {
  public:
   /* Default constructor. */
   EmailAddress(const char* address);

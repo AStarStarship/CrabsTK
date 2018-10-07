@@ -30,7 +30,7 @@ namespace _ {
     Each hit has a name and category, and type std::strings, and a list of tags
    that describe the sound.
 */
-class KABUKI Hit {
+class API Hit {
  public:
   enum {
     kMaxnameLength = 12,         //< Max name length.

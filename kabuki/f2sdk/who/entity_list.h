@@ -25,7 +25,7 @@ namespace _ {
 
 /* A List of entities.
     This is essentially a contact list. */
-class KABUKI EntityList {
+class API EntityList {
  public:
   /* Creates an empty list. */
   EntityList();

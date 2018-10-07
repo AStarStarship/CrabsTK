@@ -24,14 +24,15 @@ namespace _ {
 
 /* A role that an entity plays in an organization.
     Examples of a role are:
-    
+    
+
     1. Owner
     2. Executive
     3. Manager
     4. Employee
     5. Volunteer
 */
-struct KABUKI Role {
+struct API Role {
   uid_t GetRole() = 0;
 };
 }       // namespace _

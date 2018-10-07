@@ -24,7 +24,7 @@
 namespace _ {
 
 /* A name of an entity. */
-class KABUKI Name {
+class API Name {
  public:
   /* Default constructor. */
   Name();

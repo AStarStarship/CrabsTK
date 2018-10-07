@@ -29,7 +29,7 @@ namespace _ {
 /* An account with a char and password.
     @todo Integrate with OS accounts.
 */
-class KABUKI Account {
+class API Account {
  public:
   /* Constructs an Account with the given char. */
   Account(const char* username);

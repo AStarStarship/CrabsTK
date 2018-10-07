@@ -27,7 +27,7 @@ namespace _ {
    organization. Roster - list or plan showing turns of duty or leave for
    individuals or groups in an organization.
 */
-class KABUKI Organization : public Entity {
+class API Organization : public Entity {
  public:
   /* Default constructor. */
   Organization();

@@ -25,7 +25,7 @@
 namespace _ {
 
 /* An online profile of a person. */
-class KABUKI Profile {
+class API Profile {
  public:
   /* Constructor an anonymous Profile. */
   Profile();

@@ -22,7 +22,7 @@
 
 namespace _ {
 
-class KABUKI Tag {
+class API Tag {
  public:
   /* Gets the Unique identifier number. */
   virtual int GetUid() = 0;

@@ -26,7 +26,7 @@ namespace _ {
 /* A group of entities.
     @todo
 */
-class KABUKI EntityGroup {
+class API EntityGroup {
  public:
   /* A group of entities such as people or businesses. */
   EntityGroup(const char* name);

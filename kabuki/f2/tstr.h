@@ -1,6 +1,6 @@
 /* Kabuki Toolkit
 @version 0.x
-@file    kabuki-toolkit.git/kabuki/f2/tstr.h
+@file    /kabuki/f2/tstr.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,14 +13,14 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_01__03
+#if SEAM >= SEAM_00_00_00__03
 #ifndef INCLUDED_KABUKI_F2_UTFN
 #define INCLUDED_KABUKI_F2_UTFN
 
-#include "../f2/test.h"
-#include "config.h"
+#include "ascii.h"
 #include "socket.h"
 #include "tbinary.h"
+#include "test.h"
 #include "tobj.h"
 
 #if SEAM == SEAM_00_00_01__06
@@ -638,7 +638,7 @@ class TCenter {
  public:
   /* Prints the value to the text buffer. */
   TCenter(const Char* string, int column_count)
-      : string(TextSet<Char>(string)), column_coun(column_count) {
+      : string(TextSet<Char>(string)), column_count(column_count) {
     // Nothing to do here!
   }
 
@@ -696,7 +696,7 @@ class TRight {
  public:
   /* Prints the value to the text buffer. */
   TRight(const Char* string, int column_count)
-      : string(TextSet<Char>(string)), column_coun(column_count) {
+      : string(TextSet<Char>(string)), column_count(column_count) {
     // Nothing to do here!
   }
 
@@ -1232,4 +1232,4 @@ API _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, _::TLineString<Char> line) {
 #undef PRINT_HEADING
 #undef PRINT_FLOAT_BINARY
 #endif  //< #if INCLUDED_KABUKI_F2_UTFN
-#endif  //< #if SEAM >= SEAM_00_00_01__03
+#endif  //< #if SEAM >= SEAM_00_00_00__03

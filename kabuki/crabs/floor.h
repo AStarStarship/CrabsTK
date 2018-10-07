@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/crabs/floor.h
+@file    /kabuki/crabs/floor.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -25,12 +25,12 @@ The Floor is the Floor in the Chinese Room. In Kabuki Crabs, the floor is
 designed to store variables without having to inlude the classes the variable
 controls. For this reason only strings and POD types are in the Floor.
 */
-struct KABUKI Floor {
+struct API Floor {
   int16_t epoch;
 };
 
 /* Returns the the global Floor. */
-KABUKI inline Floor* Global();
+API inline Floor* Global();
 
 }  // namespace _
 

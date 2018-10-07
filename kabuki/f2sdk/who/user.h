@@ -27,7 +27,7 @@ namespace _ {
 /* A user account on a computer.
     A user does not necessarily have an account. Some accounts are and any user
     can use. i.e. the guest account. */
-class KABUKI User : Portal {
+class API User : Portal {
  public:
   enum {
     kDefaultMinDislpayNameLength = 2,  //< Default max display name length.

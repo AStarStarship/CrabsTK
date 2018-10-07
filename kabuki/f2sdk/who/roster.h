@@ -26,7 +26,7 @@ namespace _ {
 /* A list of registered users.
 
 */
-class KABUKI Roster {
+class API Roster {
  public:
   /* Creates an empty user list. */
   Roster();

@@ -26,7 +26,7 @@ namespace _ {
 /* A entity with contact information.
     @todo Attach a compressed image link.
 */
-class KABUKI Entity {
+class API Entity {
  public:
   /* A real-world entity with . */
   Entity();

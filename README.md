@@ -1,4 +1,4 @@
-  
+
 ```
   /\
  ( /   @ @    ()   _  __     _           _    _   _____           _ _    _ _   
@@ -14,7 +14,7 @@
 
 Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) and Virtual Machine for 32-bit and 64-bit processors featuring the F2 Foundational Framework (F2), Chinese Room Abstract Stack Machine (Crabs), and Kabuki Virtual Machine (VM) that provides:
 
-* Standard Seam Trees provide in-order unit tests for Agile and Issue Driven Development with debug information customized for each tree node best described as a bulleted list of seams with SI Units to denote tree depth in the order: LAYER_{MILLI_MICRO_NANO_PICO_FEMTO}__SPRINT_SCRUM.
+* Standard Seam Trees provide in-order unit tests for Agile and Issue Driven Development with debug information customized for each tree node best described as a bulleted list of seams with SI Units to denote tree depth in the order: `LAYER_{MILLI_MICRO_NANO_PICO_FEMTO}__SPRINT_SCRUM`.
 * Modern Embedded-C++1x core with Doxygen API docs.
 * ASCII Data Types and the Crabs Factory operate seamlessly across assembly boundary with optimal RAM usage and CPU cache performance from ROM-able ASCII Contiguous Objects.
 * Rapid compile time using C Application Binary Interface (ABI) with separated C++ templates for cross-language bindings.
@@ -68,26 +68,26 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
 | data   | Data and logging library. |
 | hmi    | Human-Machine interface. |
 | id     | Identification and authorization library. |
-| gl     | Graphics library. |
+| gi     | Graphics interface. |
 | gui    | Graphical user interface. |
 | math   | Math library. |
 | pl     | Plotting library. |
 | midi   | Musical instrument digital interface. |
-| pro    | Project and scheduling library. |
+| pro    | IDD, Projects, and scheduling library. |
 | store  | Store and inventory library. |
 
 ### 3rd Party APIs
 
-* [boost asio and filesystem](https://www.boost.org/)
-* [SDL](https://www.libsdl.org/)
-* [Cairo](https://www.cairographics.org/)
-* [PLplot](https://github.com/PLplot/PLplot)
-* [ANGLE](https://github.com/google/angle)
-* [PortAudio](http://www.portaudio.com/)
-* [Maximilian](https://github.com/micknoise/Maximilian)
-* [RtMIDI](https://github.com/thestk/rtmidi)
-* [Static Math](https://github.com/Morwenn/static_math)
-* [mbed](https://www.mbed.com/en/)
+* [ANGLE](https://github.com/google/angle) - Graphics and Windowing System.
+* [boost asio](https://www.boost.org/doc/libs/1_68_0/doc/html/boost_asio.html)
+* [Crow](https://github.com/ipkn/crow) - GCC 4.7/C++11 web microframework.
+* [boost filesystem 1.68](https://www.boost.org/doc/libs/1_68_0/doc/html/boost_filesystem.html) - Cross-platform filesystem.
+* [Cairo](https://www.cairographics.org/) - Vector graphics.
+* [PLplot](https://github.com/PLplot/PLplot) - Math plotting library.
+* [PortAudio](http://www.portaudio.com/) - Cross-platform audio driver.
+* [Maximilian](https://github.com/micknoise/Maximilian) - Audio synthesis and DSP.
+* [RtMIDI](https://github.com/thestk/rtmidi) - Cross-platform MIDI driver.
+* [mbed](https://www.mbed.com/en/) - Firmware abstraction layer.
 
 ### Kabuki VM Seam Package Diagram
 

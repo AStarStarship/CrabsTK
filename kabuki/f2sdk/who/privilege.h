@@ -26,7 +26,7 @@ namespace _ {
 typedef int Privileges;  //< typedef for an account privilege level.
 
 /* An account privilege level. */
-class KABUKI Privilege {
+class API Privilege {
  public:
   /* Default constructor. */
   Privilege(int num_privileges = 1);

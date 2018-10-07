@@ -32,7 +32,7 @@ struct PasswordAuthenticator {
 /* An account password Authenticator .
     @todo Add salt!
 */
-class KABUKI Password {
+class API Password {
  public:
   enum {
     kValidation = 2,        //< Validation type.

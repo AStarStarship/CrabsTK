@@ -24,9 +24,9 @@
 namespace _ {
 
 /* The main library of Hits.
-    This class KABUKI owns the memory for the patches.
+    This class API owns the memory for the patches.
 */
-class KABUKI Library {
+class API Library {
  public:
   /* Simple default constructor. */
   Library();

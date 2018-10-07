@@ -1,20 +1,18 @@
-/* Kabuki Toolkit
-@file    ~/source/hmi/hmi_parameter.cc
-@author  Cale McCollough <cale.mccollough@gmail.com>
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    /kabuki/features/hmi/hmi_parameter.cc
+@author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
+#if SEAM >= SEAM_00_03_00_00__00
 #if SEAM_MAJOR == 2 && SEAM_MINOR == 2
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT_PAUSE(message)   \
@@ -26,7 +24,6 @@
 #endif
 
 #include "parameter.h"
-
 
 namespace _ {
 
@@ -65,7 +62,7 @@ Parameter::Parameter(const Parameter& o)
       max_value_(o.max_value_)
 
 // Nothing to do here. :-)
-}  // namespace hmi
+}  // namespace _
 
 int Parameter::compare(const Parameter& o) const {
   if (type_ != o.type_ || channel_ != o.channel_ || value_ != o.value_ ||
@@ -291,4 +288,4 @@ void Parameter::GetType(uint16_t value_) {
 
 }  // namespace kt
 }  //< namespace kt
-#endif  //< #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
+#endif  //< #if SEAM >= SEAM_00_03_00_00__00

@@ -30,7 +30,7 @@ inline const char* AddressTypeLabel(AddressType type);
 /* A physical address.
     @todo Integrate with Google Maps API.
 */
-class KABUKI Address {
+class API Address {
  public:
   /* Default constructor. */
   Address();

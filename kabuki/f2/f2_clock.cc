@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/f2_clock.cc
+@file    /kabuki/f2/f2_clock.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,9 +12,10 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#include <ctime>
 
-#if SEAM >= SEAM_00_00_01__04
+#if SEAM >= SEAM_00_00_00__04
+
+#include <ctime>
 
 #include "clock.h"
 #include "lock.h"

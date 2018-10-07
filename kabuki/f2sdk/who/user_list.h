@@ -34,7 +34,7 @@ namespace _ {
     Users may login and out. When a User logs out the pointer and class gets
     deleted.
 */
-class KABUKI UserList : public Operand {
+class API UserList : public Operand {
  public:
   enum {
     kDefaultMaxUsers = 1024,

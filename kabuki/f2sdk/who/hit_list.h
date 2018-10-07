@@ -25,7 +25,7 @@ namespace _ {
 
 /* A collection of Hit(string).
  */
-class KABUKI HitList {
+class API HitList {
  public:
   /* Simple default constructor. */
   HitList();

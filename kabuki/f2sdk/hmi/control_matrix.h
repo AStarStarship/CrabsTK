@@ -1,21 +1,19 @@
-/* Kabuki Toolkit
-@file    ~/source/hmi/hmi_control_matrix.h
-@author  Cale McCollough <calemccollough.github.io>
-@license Copyright (C) 2014-2017 Cale McCollough <calemccollough@gmail.com>;
-             All right reserved (R). Licensed under the Apache License, Version
-             2.0 (the "License"); you may not use this file except in
-             compliance with the License. You may obtain a copy of the License
-             [here](http://www.apache.org/licenses/LICENSE-2.0). Unless
-             required by applicable law or agreed to in writing, software
-             distributed under the License is distributed on an "AS IS" BASIS,
-             WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-             implied. See the License for the specific language governing
-             permissions and limitations under the License.
-*/
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    /kabuki/features/hmi/hmi_control_matrix.h
+@author  Cale McCollough <https://calemccollough.github.io>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
+#if SEAM >= SEAM_00_03_00_00__00
 #ifndef HEADER_FOR_KT_HMI_CONTROLMATRIX
 #define HEADER_FOR_KT_HMI_CONTROLMATRIX
 
@@ -25,11 +23,11 @@ namespace _ {
 
 /* A grid of Controls.
     Each Parameter<int> Layer on the Symmetry Live can either have 8 pots or
-   encoders, or can have 4 pots and 4 encoders. This class KABUKI helps us swap
+   encoders, or can have 4 pots and 4 encoders. This class API helps us swap
    the values out quickly and efficiently.
 
     A ControlMatrix must have the option of being bifurcated. */
-class KABUKI ControlMatrix {
+class API ControlMatrix {
  public:
   enum {
     kMinNumRows = 1,                             //< The min number of rows.
@@ -69,6 +67,6 @@ class KABUKI ControlMatrix {
       num_columns_;     //< Number of columns.
   ParameterSet* rows_;  //< Rows of control array columns.
 };                      //< class ControlMatrix
-}       //< namespace _
+}  // namespace _
 #endif  //< HEADER_FOR_KT_HMI_CONTROLMATRIX
-#endif  //< #if SEAM_MAJOR > 2 || SEAM_MAJOR == 2 && SEAM_MINOR >= 0
+#endif  //< #if SEAM >= SEAM_00_03_00_00__00

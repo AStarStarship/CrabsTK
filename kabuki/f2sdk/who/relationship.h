@@ -24,7 +24,7 @@
 namespace _ {
 
 /* A relationship node between . */
-class KABUKI Relationship {
+class API Relationship {
  public:
   /* Default constructor. */
   Relationship();

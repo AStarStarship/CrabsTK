@@ -25,7 +25,7 @@ namespace _ {
 
 /* An eventful date.
     @todo Create a list of events. Is it an Event? */
-class KABUKI Date {
+class API Date {
  public:
   /* Default constructor. */
   Date(time_t time);

@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/ttest.h
+@file    /kabuki/f2/ttest.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_00_00_00__00
+#if SEAM > 0
 #ifndef INCLUDED_KABUKI_F2_TTEST
 #define INCLUDED_KABUKI_F2_TTEST 1
 
@@ -32,8 +32,8 @@ const char* TestTreeNode(char* test_result, const char* args) {
 
 template <typename Char>
 bool Test(const Char* a, const Char* b) {
-  char c = StringCompare<Char>(a, b);
-  if (!c) return false;
+  int result = StringCompare<Char>(a, b);
+  if (!result) return false;
   Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
   return true;
 }
@@ -41,4 +41,4 @@ bool Test(const Char* a, const Char* b) {
 }  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_TTEST
-#endif  //< #if SEAM >= SEAM_00_00_00__00
+#endif  //< #if SEAM > 0

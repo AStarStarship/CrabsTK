@@ -1,5 +1,5 @@
 /* Kabuki Toolkit @version 0.x
-@file    kabuki-toolkit.git/kabuki/f2/table.h
+@file    /kabuki/f2/table.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,13 +12,15 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_00_01__08
+
+#if SEAM >= SEAM_00_00_00__08
+
 #ifndef INCLUDED_KABUKI_F2_TABLE
 #define INCLUDED_KABUKI_F2_TABLE
 
 #include "socket.h"
 
-#if SEAM_MAJOR == 0 && SEAM_MINOR == 3
+#if SEAM == SEAM_00_00_00__08
 #ifndef PRINTF
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT(c) Print(c)
@@ -601,6 +603,5 @@ Utf8& TablePrint(Utf8& print, Table<UI, SI>* table) {
 }
 #endif
 
-}  // namespace _
-#endif  //< #if SEAM >= SEAM_00_00_01__06
 #endif  //< INCLUDED_KABUKI_F2_TABLE
+}  // namespace _SEAM_00_00_00__08

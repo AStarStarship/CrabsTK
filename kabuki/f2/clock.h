@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/clock.h
+@file    /kabuki/f2/clock.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-8 Cale McCollough <calemccollough@gmail.com>;
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;

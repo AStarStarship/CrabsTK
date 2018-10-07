@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    kabuki-toolkit.git/kabuki/f2/f2_utils.cc
+@file    /kabuki/f2/f2_utils.cc
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -52,36 +52,32 @@ int32_t AlignPowerOf2(int32_t value) {
 }
 
 uintptr_t* AlignUpCacheLine(uintptr_t* buffer) {
-  return AlignUp<kCpuCacheLineSize>(buffer);
+  return AlignUp<uintptr_t>(buffer, kCpuCacheLineSize);
 }
 
-char* AlignUpPointerWord(char* pointer) {
-  return AlignUpPointerWord<char>(pointer);
+char* AlignUp(char* pointer) { return AlignUp<char>(pointer); }
+
+const char* AlignUp(const char* pointer) {
+  return AlignUp<const char>(pointer);
 }
 
-const char* AlignUpPointerWord(const char* pointer) {
-  return AlignUpPointerWord<char>(pointer);
-}
+char* AlignDownPointerWord(char* pointer) { return AlignDown<char>(pointer); }
 
-char* AlignDownPointerWord(char* pointer) {
-  return AlignDownPointer<char>(pointer);
-}
-
-const char* AlignDownPointerWord(const char* pointer) {
-  return AlignDownPointer<char>(pointer);
+const char* AlignDown(const char* pointer) {
+  return AlignDown<const char>(pointer);
 }
 
 uintptr_t* AlignUp(uintptr_t* pointer, uintptr_t boundary_bit_count) {
   return AlignUp<uintptr_t>(pointer, boundary_bit_count);
 }
 
-int8_t AlignUp(int8_t value) { return AlignUp<8, int8_t>(value); }
+int8_t AlignUp(int8_t value) { return AlignUp<int8_t>(value); }
 
-int16_t AlignUp(int16_t value) { return AlignUp<8, int16_t>(value); }
+int16_t AlignUp(int16_t value) { return AlignUp<int16_t>(value); }
 
-int32_t AlignUp(int32_t value) { return AlignUp<8, int32_t>(value); }
+int32_t AlignUp(int32_t value) { return AlignUp<int32_t>(value); }
 
-int64_t AlignUp(int64_t value) { return AlignUp<8, int64_t>(value); }
+int64_t AlignUp(int64_t value) { return AlignUp<int64_t>(value); }
 
 }  // namespace _
 #undef PRINTF

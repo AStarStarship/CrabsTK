@@ -26,7 +26,7 @@ namespace _ {
 /* Class that represents a person/human.
     @todo Load a person from social media account using Facebook and OAuth APIs.
 */
-class KABUKI Person : public Entity {
+class API Person : public Entity {
  public:
   Person();
   /*Creates a person with no name. */

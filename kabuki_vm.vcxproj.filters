@@ -1,13 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="kabuki">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="resources">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="seam_00">
+      <UniqueIdentifier>{db851b71-2f72-4bab-9264-8dcb13ad12af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00">
+      <UniqueIdentifier>{7bc6d40c-8901-4374-b782-8ffd10622434}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\01">
+      <UniqueIdentifier>{f9ba56cf-0660-402b-a50b-472f448355bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\02">
+      <UniqueIdentifier>{7e238fd4-218b-40c3-bf75-3e18d10d72cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\03">
+      <UniqueIdentifier>{33fd50bf-c899-4cfc-a859-4897d61bbd5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\04">
+      <UniqueIdentifier>{38ad69c2-1291-4378-bb7a-1a01559b1413}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\00">
+      <UniqueIdentifier>{c11a586e-dd55-42da-bfef-e9cdabb8ea8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_00\00\01">
+      <UniqueIdentifier>{14cd073e-1f0d-4de1-81d3-116dfe99b1c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="kabuki\crabs">
       <UniqueIdentifier>{f903bc53-c392-4479-a2ab-6c20b11efc8b}</UniqueIdentifier>
@@ -31,326 +55,1119 @@
     <Filter Include="kabuki\f2sdk\math">
       <UniqueIdentifier>{ae51c362-3560-4475-aaa5-d4c5d9b215a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="kabuki\f2sdk\midi">
+    <Filter Include="kabuki\f2sdk\music">
       <UniqueIdentifier>{bbd78a9d-a8b1-49d8-a969-faaf8dd9169e}</UniqueIdentifier>
     </Filter>
     <Filter Include="kabuki\f2sdk\pro">
       <UniqueIdentifier>{8e811a06-23b1-487f-a48d-46f4e3abb100}</UniqueIdentifier>
     </Filter>
-    <Filter Include="kabuki\f2sdk\rcs">
+    <Filter Include="kabuki\f2sdk\who">
       <UniqueIdentifier>{6f7946df-31f3-4628-8c7a-d1e70170a2f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="kabuki\f2sdk\hmi">
-      <UniqueIdentifier>{f10cc6d4-ae80-43be-b165-cf9dbd5eb3e0}</UniqueIdentifier>
     </Filter>
     <Filter Include="kabuki\f2sdk\al">
       <UniqueIdentifier>{ec5c0ba2-5f69-4b46-a6b8-37d8e0bc6a0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kabuki\f2sdk\web">
+      <UniqueIdentifier>{557e64d1-cf6f-48fa-8055-44ef3e5f129a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\f2sdk\ai">
+      <UniqueIdentifier>{8fd823b5-a20c-47e3-b01f-c56c44b23918}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\drivers">
+      <UniqueIdentifier>{b8ab9dbe-1939-42fe-8998-47b344f82cf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\osal">
+      <UniqueIdentifier>{c39d9ae5-d8a7-4234-a897-e468248e0a99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\platform">
+      <UniqueIdentifier>{a3a0e747-7d42-4570-9ed9-5a541ad36e47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\features">
+      <UniqueIdentifier>{a7428e6b-3939-4b1b-8709-eb5f80d74f90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\features\hmi">
+      <UniqueIdentifier>{f10cc6d4-ae80-43be-b165-cf9dbd5eb3e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\features\cellular">
+      <UniqueIdentifier>{55e2fd91-4c2e-4a8b-a70b-472847c150ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\features\lorawan">
+      <UniqueIdentifier>{f39a652a-cf2e-489d-bc47-784505c06ca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\features\lwipstack">
+      <UniqueIdentifier>{e55ff83c-32ec-4276-9944-5f92ea86b77a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\features\tls">
+      <UniqueIdentifier>{dc595da2-b314-42da-a931-db3df2fc9cc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\features\storage">
+      <UniqueIdentifier>{fa904131-ea3e-4240-946b-65c682c1e384}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\features\storage\blockdevice">
+      <UniqueIdentifier>{89ead806-d8e3-4f52-afef-cd702678f2ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="targetver.h">
-      <Filter>kabuki</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>kabuki</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\door.h">
+    <ClInclude Include="kabuki\crabs\address.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\error.h">
+    <ClInclude Include="kabuki\crabs\args.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\event.h">
+    <ClInclude Include="kabuki\crabs\bin.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\expr.h">
+    <ClInclude Include="kabuki\crabs\bout.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\floor.h">
+    <ClInclude Include="kabuki\crabs\bsq.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\global.h">
+    <ClInclude Include="kabuki\crabs\buffer.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\hash.h">
+    <ClInclude Include="kabuki\crabs\door.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\hex.h">
+    <ClInclude Include="kabuki\crabs\error.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\interrupts.h">
+    <ClInclude Include="kabuki\crabs\event.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\iterator.h">
+    <ClInclude Include="kabuki\crabs\expr.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\language.h">
+    <ClInclude Include="kabuki\crabs\floor.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\library.h">
+    <ClInclude Include="kabuki\crabs\global.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\lock.h">
+    <ClInclude Include="kabuki\crabs\interrupts.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\mirror.h">
+    <ClInclude Include="kabuki\crabs\iterator.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\obj.h">
+    <ClInclude Include="kabuki\crabs\language.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\op.h">
+    <ClInclude Include="kabuki\crabs\library.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\operand.h">
+    <ClInclude Include="kabuki\crabs\mirror.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\public.h">
+    <ClInclude Include="kabuki\crabs\op.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\room.h">
+    <ClInclude Include="kabuki\crabs\operand.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\slot.h">
+    <ClInclude Include="kabuki\crabs\public.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\socket.h">
+    <ClInclude Include="kabuki\crabs\room.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\str.h">
+    <ClInclude Include="kabuki\crabs\slot.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\str1.h">
+    <ClInclude Include="kabuki\crabs\wall.h">
       <Filter>kabuki\crabs</Filter>
     </ClInclude>
-    <ClInclude Include="crabs\str2.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\str4.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\tascii_data_types.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\tclock.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\tdic.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\tlom.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\tlst.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\tmap.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\tmud.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\tobj.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\tset.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\tsocket.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\tstk.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\tstr.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\ttbl.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\varint.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\wall.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\address.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\align.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\args.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\array.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\ascii.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\ascii_data_types.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\bin.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\bout.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\bsq.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\buffer.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="crabs\clock.h">
-      <Filter>kabuki\crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="f2\rng.h">
+    <ClInclude Include="kabuki\f2\align.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="f2\talign.h">
+    <ClInclude Include="kabuki\f2\ascii.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="f2\targetver.h">
+    <ClInclude Include="kabuki\f2\ascii_data.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="f2\tbenchmark.h">
+    <ClInclude Include="kabuki\f2\benchmark.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="f2\tbinary.h">
+    <ClInclude Include="kabuki\f2\binary.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="f2\tconsole.h">
+    <ClInclude Include="kabuki\f2\clock.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="f2\test.h">
+    <ClInclude Include="kabuki\f2\config.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="f2\trng.h">
+    <ClInclude Include="kabuki\f2\console.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="f2\ttest.h">
+    <ClInclude Include="kabuki\f2\global.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="f2\benchmark.h">
+    <ClInclude Include="kabuki\f2\hash.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="f2\binary.h">
+    <ClInclude Include="kabuki\f2\lock.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="f2\console.h">
+    <ClInclude Include="kabuki\f2\obj.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="f2\global.h">
+    <ClInclude Include="kabuki\f2\public.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="f2\public.h">
+    <ClInclude Include="kabuki\f2\rng.h">
       <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\socket.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\str.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\str1.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\str2.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\str4.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\talign.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tarray.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tascii_data.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tbenchmark.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tbinary.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tbook.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tclock.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tconsole.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tdic.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\test.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\test_footer.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tlom.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tlst.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tmap.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tobj.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\trng.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tset.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tsocket.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tstk.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\tstr.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\ttbl.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\ttest.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\varint.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\vk.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\adsr.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\button.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\button_dmx.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\button_dummy.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\button_event.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\button_macro.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\button_page.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\button_radio.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\button_scroller.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\button_swap.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\channel_group.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\component.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\config.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\control_dmx.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\control_master.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\control_matrix.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\controller.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\device_button.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\event.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\isymmetric_controller.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\key_event.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\key_event_buffer.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\keyboard_buffer.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\midi_button.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\midi_control.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\mixer.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\mixer_channel.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\mixer_page.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\mode_button.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\parameter.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\parameter_set.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\set.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\widget.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\widget_manager.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\widget_midi.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\widget_page.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\hmi\workspace.h">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\pro\config.h">
+      <Filter>kabuki\f2sdk\pro</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\pro\doxygen.h">
+      <Filter>kabuki\f2sdk\pro</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\pro\git.h">
+      <Filter>kabuki\f2sdk\pro</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\pro\global.h">
+      <Filter>kabuki\f2sdk\pro</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\pro\project.h">
+      <Filter>kabuki\f2sdk\pro</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\pro\schedule.h">
+      <Filter>kabuki\f2sdk\pro</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\pro\task.h">
+      <Filter>kabuki\f2sdk\pro</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\account.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\address.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\authenticator.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\authenticator_default.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\config.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\date.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\email_address.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\entity.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\entity_group.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\entity_list.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\global.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\handle.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\hit.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\hit_list.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\library.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\name.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\oauth_account.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\organization.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\password.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\person.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\privilege.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\profile.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\relationship.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\role.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\roster.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\symbol.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\tag.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\tag_tibrary.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\user.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\user_list.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\uwho_server.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\who\who_server.h">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\http_connection.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\http_parser_merged.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\http_request.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\http_response.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\http_server.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\json.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\logging.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\middleware.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\middleware_context.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\mustache.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\parser.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\public.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\query_string.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\routing.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\settings.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\socket_adaptors.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\utility.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\websocket.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\TinySHA1.hpp">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\app.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\ci_map.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\common.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\web\dumb_timer_queue.h">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\control.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\controller.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\device.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\long_message.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\message.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\midi.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\midi_listener.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\midi_map.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\midi_note_listener.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\note.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\port.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\port_in.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\port_out.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\rtmidi.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\rtmidi_c.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\short_message.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\music\tempo_sync.h">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\invalid_path_exception.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\matrix.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\operator_add.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\operator_divide.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\operator_multiply.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\operator_subtract.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\point_2d.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\point_3d.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\polar_2d.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\poly_2d.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\poly_3d.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\quad_2d.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\quad_bezier_2d.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\rect_2d.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\rect_2d_rotor.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\softmax.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\static_math.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\trigonometry.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\vect_2d.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\vect_3d.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\affine_transform.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\angle_2d.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\bcd.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\bezier_2d.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\calc.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\config.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\math\equation.h">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\ai\agent.h">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\ai\asyncronous.h">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\ai\nmist_importer.h">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\ai\perceptron.h">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\ai\perceptron_graph.h">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\ai\perceptron_graph_2d.h">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\ai\perceptron_layer.h">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\ai\perceptron_model.h">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\ai\persenseron.h">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2sdk\ai\synapse.h">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\f2\test_header.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="kabuki\crabs\config.h">
+      <Filter>kabuki\crabs</Filter>
+    </ClInclude>
+    <ClInclude Include="assembly.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="footer.h" />
+    <ClInclude Include="header.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="kabuki\f2sdk\hmi\xycontrol.h">
+      <Filter>kabuki\features\hmi</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>kabuki</Filter>
-    </ClCompile>
-    <ClCompile Include="crabs\crabs_lock.cc">
+    <ClCompile Include="kabuki\crabs\crabs_expr.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_obj.cc">
+    <ClCompile Include="kabuki\crabs\crabs_floor.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_op.cc">
+    <ClCompile Include="kabuki\crabs\crabs_hex.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_operand.cc">
+    <ClCompile Include="kabuki\crabs\crabs_interrupts.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_right.cc">
+    <ClCompile Include="kabuki\crabs\crabs_op.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_room.cc">
+    <ClCompile Include="kabuki\crabs\crabs_operand.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_script_itos.cc">
+    <ClCompile Include="kabuki\crabs\crabs_room.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_slot.cc">
+    <ClCompile Include="kabuki\crabs\crabs_script_itos.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_socket.cc">
+    <ClCompile Include="kabuki\crabs\crabs_slot.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_str.cc">
+    <ClCompile Include="kabuki\crabs\crabs_wall.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_wall.cc">
+    <ClCompile Include="kabuki\crabs\crabs_bin.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_align.cc">
+    <ClCompile Include="kabuki\crabs\crabs_bout.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_ascii_data_types.cc">
+    <ClCompile Include="kabuki\crabs\crabs_bsq.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_bin.cc">
+    <ClCompile Include="kabuki\crabs\crabs_debug.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_bout.cc">
+    <ClCompile Include="kabuki\crabs\crabs_door.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_bsq.cc">
+    <ClCompile Include="kabuki\crabs\crabs_error.cc">
       <Filter>kabuki\crabs</Filter>
     </ClCompile>
-    <ClCompile Include="crabs\crabs_clock.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="crabs\crabs_debug.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="crabs\crabs_door.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="crabs\crabs_error.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="crabs\crabs_expr.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="crabs\crabs_floor.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="crabs\crabs_hash.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="crabs\crabs_hex.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="crabs\crabs_interrupts.cc">
-      <Filter>kabuki\crabs</Filter>
-    </ClCompile>
-    <ClCompile Include="f2\f2_benchmark.cc">
+    <ClCompile Include="kabuki\f2\f2_binary.cc">
       <Filter>kabuki\f2</Filter>
     </ClCompile>
-    <ClCompile Include="f2\f2_binary.cc">
+    <ClCompile Include="kabuki\f2\f2_clock.cc">
       <Filter>kabuki\f2</Filter>
     </ClCompile>
-    <ClCompile Include="f2\f2_console.cc">
+    <ClCompile Include="kabuki\f2\f2_console.cc">
       <Filter>kabuki\f2</Filter>
     </ClCompile>
-    <ClCompile Include="f2\f2_rng.cc">
+    <ClCompile Include="kabuki\f2\f2_hash.cc">
       <Filter>kabuki\f2</Filter>
     </ClCompile>
-    <ClCompile Include="f2\f2_test.cc">
+    <ClCompile Include="kabuki\f2\f2_lock.cc">
       <Filter>kabuki\f2</Filter>
     </ClCompile>
+    <ClCompile Include="kabuki\f2\f2_obj.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2\f2_rng.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2\f2_socket.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2\f2_str.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2\f2_test.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2\f2_vk.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2\f2_align.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2\f2_ascii_data.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2\f2_benchmark.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_swap_button.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_widget.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_widget_midi.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_widget_page.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_workspace.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_xy_control.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_button.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_button_dmx.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_button_dummy.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_button_event.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_button_macro.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_button_midi.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_button_mode.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_button_page.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_button_radio.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_button_scroller.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_channel_group.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_component.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_control_dmx.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_control_matrix.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_control_midi.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_device_button.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_event.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_isymmetric_controller.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_key_event.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_keyboard_buffer.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_keyboard_realtime.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_mixer.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_mixer_channel.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_mixer_page.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_parameter.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_parameter_set.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\hmi\hmi_set.cc">
+      <Filter>kabuki\features\hmi</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\pro\pro_git.cc">
+      <Filter>kabuki\f2sdk\pro</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\pro\pro_project.cc">
+      <Filter>kabuki\f2sdk\pro</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\pro\pro_schedule.cc">
+      <Filter>kabuki\f2sdk\pro</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\pro\pro_task.cc">
+      <Filter>kabuki\f2sdk\pro</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_date.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_email_address.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_entity.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_entity_group.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_entity_list.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_handle.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_hit.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_hit_list.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_library.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_name.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_oauth_account.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_organization.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_password.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_person.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_privilege.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_profile.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_relationship.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_roster.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_server.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_symbol.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_tag_library.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_user.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_user_list.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_account.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_address.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\who\who_authenticatordefault.cc">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\music\midi_long_message.cc">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\music\midi_map.cc">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\music\midi_message.cc">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\music\midi_port.cc">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\music\midi_port_in.cc">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\music\midi_port_out.cc">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\music\midi_short_message.cc">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\music\midi_target_device.cc">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\music\rtmidi.cc">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\music\rtmidi_c.cc">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\music\tempo_sync.cc">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\music\midi_control.cc">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\music\midi_control_surface.cc">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\music\midi_device.cc">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\math\bcd.cc">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\math\calc.cc">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\ai\ai_perceptron_graph_2d.cc">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\ai\ai_perceptron_layer.cc">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\ai\aiml_synapse.cc">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\ai\ai_mnist_importer.cc">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\ai\ai_perceptron.cc">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="kabuki\f2sdk\ai\ai_perceptron_graph.cc">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="seam_tree.cc" />
+    <ClCompile Include="pch.cc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="crabs\README.md">
+    <None Include="kabuki\crabs\README.md">
       <Filter>kabuki\crabs</Filter>
     </None>
-    <None Include="f2\readme.md">
+    <None Include="kabuki\f2\readme.md">
       <Filter>kabuki\f2</Filter>
     </None>
+    <None Include="kabuki\f2sdk\hmi\readme.md">
+      <Filter>kabuki\features\hmi</Filter>
+    </None>
+    <None Include="kabuki\f2sdk\pro\readme.md">
+      <Filter>kabuki\f2sdk\pro</Filter>
+    </None>
+    <None Include="kabuki\f2sdk\who\readme.md">
+      <Filter>kabuki\f2sdk\who</Filter>
+    </None>
+    <None Include="kabuki\f2sdk\web\README.md">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </None>
+    <None Include="kabuki\f2sdk\music\readme.md">
+      <Filter>kabuki\f2sdk\music</Filter>
+    </None>
+    <None Include="kabuki\f2sdk\math\poly_2d.inl">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </None>
+    <None Include="kabuki\f2sdk\math\trigonometry.inl">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </None>
+    <None Include="kabuki\f2sdk\math\readme.md">
+      <Filter>kabuki\f2sdk\math</Filter>
+    </None>
+    <None Include="kabuki\f2sdk\ai\readme.md">
+      <Filter>kabuki\f2sdk\ai</Filter>
+    </None>
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="kabuki\f2sdk\web\CMakeLists.txt">
+      <Filter>kabuki\f2sdk\web</Filter>
+    </Text>
   </ItemGroup>
 </Project>
