@@ -11,9 +11,6 @@
     <Filter Include="kabuki\crabs">
       <UniqueIdentifier>{c9fed358-324c-4fa2-8799-73e59bffd98d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="tests">
-      <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="kabuki\f2sdk">
       <UniqueIdentifier>{718113ca-5727-428c-b4ef-076064150bfb}</UniqueIdentifier>
     </Filter>
@@ -37,6 +34,15 @@
     </Filter>
     <Filter Include="kabuki\f2">
       <UniqueIdentifier>{8d4c9549-8733-4499-b3b5-ec23506f8265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0">
+      <UniqueIdentifier>{e18ebb8a-bdf3-42d2-9091-50bd4f9c4dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0">
+      <UniqueIdentifier>{12e1c628-9f22-4d6a-8225-c96b162f4964}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\4_features">
+      <UniqueIdentifier>{407c6442-6968-4807-8a7a-155e1b1de3ec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

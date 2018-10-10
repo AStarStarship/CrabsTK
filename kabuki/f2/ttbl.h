@@ -13,14 +13,22 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
+<<<<<<< HEAD
 #if SEAM >= SEAM_0_0_0__08
+=======
+#if SEAM >= SEAM_00_00_00__08
+>>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
 
 #ifndef INCLUDED_KABUKI_F2_TABLE
 #define INCLUDED_KABUKI_F2_TABLE
 
 #include "socket.h"
 
+<<<<<<< HEAD
 #if SEAM == SEAM_0_0_0__08
+=======
+#if SEAM == SEAM_00_00_00__08
+>>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
 #ifndef PRINTF
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT(c) Print(c)
@@ -603,7 +611,12 @@ Utf8& TablePrint(Utf8& print, Table<UI, SI>* table) {
 }
 #endif
 
+<<<<<<< HEAD
 }  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_TABLE
 #endif  //< #if SEAM >= SEAM_0_0_0__08
+=======
+#endif  //< INCLUDED_KABUKI_F2_TABLE
+}  // namespace _SEAM_00_00_00__08
+>>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336

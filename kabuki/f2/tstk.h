@@ -13,7 +13,11 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
+<<<<<<< HEAD
 #if SEAM >= SEAM_0_0_01__05
+=======
+#if SEAM >= SEAM_00_00_01__05
+>>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
 #ifndef INCLUDED_KABUKI_F2_STK
 #define INCLUDED_KABUKI_F2_STK
 
@@ -658,4 +662,8 @@ class Stack {
 }  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_STK
+<<<<<<< HEAD
 #endif  //< #if SEAM >= SEAM_0_0_01__05
+=======
+#endif  //< #if SEAM >= SEAM_00_00_01__05
+>>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336

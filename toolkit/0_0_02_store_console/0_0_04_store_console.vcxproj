@@ -31,7 +31,11 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>experiments</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+<<<<<<< HEAD:toolkit/0_0_02_store_console/0_0_04_store_console.vcxproj
     <ProjectName>0_1_0_04_store_console</ProjectName>
+=======
+    <ProjectName>0_0_0_0_04_store_console</ProjectName>
+>>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336:toolkit/0_0_02_store_console/0_0_04_store_console.vcxproj
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

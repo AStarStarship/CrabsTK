@@ -1,6 +1,10 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
+<<<<<<< HEAD:seam_0/seam_kabuki.h
 @file    /seam_0/seam_tree_node.h
+=======
+@file    /seam_00/seam_tree_node.h
+>>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336:seam_0/seam_kabuki.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -26,7 +30,7 @@ namespace _ {
 static const char* Seam_0(char* seam_log, char* log_end, const char* args) {
   enum { kSeamLogSize = 1024 };
   char seam_log[kSeamLogSize];
-  return TestTree<Seam_00_00, Seam_00_01, Seam_00_02, Seam_00_03, Seam_00_04>(
+  return TestTree<Seam_0_0, Seam_00_01, Seam_00_02, Seam_00_03, Seam_00_04>(
       seam_log, args);
 }
 }  // namespace _

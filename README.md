@@ -56,6 +56,24 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
 * [Kabuki Starship Website](https://kabuki-starship.github.io/)
   - *Official Kabuki Toolkit website. We are currently looking for someone to help us fix the CSS on the website. It only works right at < 1024 pixel width so the problem is in the @media section.*
 
+## Kabuki F2SDK Modules
+
+| Module | Description |
+|:------:|:------------|
+| ai     | Artificial Intelligence library. |
+| al     | Audio library. |
+| app    | Application framework. |
+| db     | Non-ASCII Data structures and database. |
+| hmi    | Human-Machine interface. |
+| id     | Identification and authorization library. |
+| gi     | Graphics interface. |
+| gui    | Graphical user interface. |
+| math   | Math library. |
+| pl     | Plotting library. |
+| midi   | Musical instrument digital interface. |
+| pro    | IDD, Projects, and scheduling library. |
+| store  | Store and inventory library. |
+
 ## Kabuki Toolkit Modules
 
 | Module | Description |
@@ -75,7 +93,6 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
 | midi   | Musical instrument digital interface. |
 | pro    | IDD, Projects, and scheduling library. |
 | store  | Store and inventory library. |
-
 ### 3rd Party APIs
 
 * [ANGLE](https://github.com/google/angle) - Graphics and Windowing System.

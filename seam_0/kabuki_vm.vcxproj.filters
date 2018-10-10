@@ -94,543 +94,151 @@
     <Filter Include="seam_0\4">
       <UniqueIdentifier>{38ad69c2-1291-4378-bb7a-1a01559b1413}</UniqueIdentifier>
     </Filter>
-    <Filter Include="seam_0\0\00_test_f2">
-      <UniqueIdentifier>{c11a586e-dd55-42da-bfef-e9cdabb8ea8d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\02_seam_drivers">
-      <UniqueIdentifier>{6caac6a7-f503-423a-978b-5d432229dab3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\01_test_hal">
-      <UniqueIdentifier>{14cd073e-1f0d-4de1-81d3-116dfe99b1c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\03_seam_platform">
-      <UniqueIdentifier>{afee8c69-d9d8-4de2-9ff9-149a4711164c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\04_features">
-      <UniqueIdentifier>{696c26fd-d414-4f2c-b68e-11790ff74679}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\00_test_f2\00">
-      <UniqueIdentifier>{2493acfa-e09d-436e-baf6-6b191b3fdca3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\00_test_f2\01">
-      <UniqueIdentifier>{7fd0e018-b0f3-4d92-acac-31cf33254e8f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\00_test_f2\02">
-      <UniqueIdentifier>{5f1d08f9-d6ca-4e02-ad2c-ae26a733a5a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\00_test_f2\03">
-      <UniqueIdentifier>{af255e02-293d-40aa-b219-5cd5c080ed81}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\00_test_f2\04">
-      <UniqueIdentifier>{4f66c897-0c5b-4724-b8b5-c4ad7905728a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\00_test_f2\05">
-      <UniqueIdentifier>{42874483-f53f-4fcf-ae62-0df07b5dc7df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\00_test_f2\06">
-      <UniqueIdentifier>{ef175178-b2e1-4029-b65a-c265cba0bc1c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\00_test_f2\07">
-      <UniqueIdentifier>{89445494-2ebf-4d5b-8792-5c72a8f13a07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\00_test_f2\08">
-      <UniqueIdentifier>{8f4d4a1a-bba0-4f7a-a02b-391b53421ddd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\00_test_f2\09">
-      <UniqueIdentifier>{d632a581-8c3b-4722-b342-5b00b5224fcf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\00_test_f2\10">
-      <UniqueIdentifier>{d23a43cd-6836-4285-8929-a30f0f96d83f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\00_test_f2\11">
-      <UniqueIdentifier>{e90692b2-c2ad-441f-a1d3-7ee44ba45fd6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\00_test_f2\12">
-      <UniqueIdentifier>{b2528b8b-3c49-4188-85e6-d06cd0dc234e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\00_test_f2\13">
-      <UniqueIdentifier>{fc530c10-629b-4b5b-ac8a-dd7a7f91768f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\01_test_hal\00">
-      <UniqueIdentifier>{b3e8484e-4c40-400e-ad5e-4b0d908bd9b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\02_seam_drivers\00">
-      <UniqueIdentifier>{e1b2eba7-cbf4-4124-8049-52ea0a8576e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\03_seam_platform\00">
-      <UniqueIdentifier>{e4fc191a-8f2b-4470-900e-cf782420bd93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\4\00_seam_vl">
-      <UniqueIdentifier>{1a429c2b-bf80-4a1c-80e3-fb19062e8118}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\3\00_seam_angle">
-      <UniqueIdentifier>{b3e02080-fe25-457a-ba56-3b295a7ee3de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\3\02_gui">
-      <UniqueIdentifier>{65249e8f-eb5c-4be7-a9e2-0ef8c2685f78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\3\03_pl">
-      <UniqueIdentifier>{2844ae59-9553-4d8e-916e-dd309f4d10ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\3\01_gi">
-      <UniqueIdentifier>{e0695e7b-ae54-4d82-953b-1f0d72dc9c45}</UniqueIdentifier>
-    </Filter>
     <Filter Include="kabuki\features\crabs">
       <UniqueIdentifier>{f903bc53-c392-4479-a2ab-6c20b11efc8b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\04_features\00_crabs">
-      <UniqueIdentifier>{3ef2c041-0492-4151-8239-da17ecde285c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\04_features\00_crabs\00">
-      <UniqueIdentifier>{0a39e9df-3a46-443a-bd2d-e5a0c85ed9f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seam_0\0\04_features\01_filesystem">
-      <UniqueIdentifier>{9544f513-9466-45d4-b478-ba1a1ae1c15b}</UniqueIdentifier>
     </Filter>
     <Filter Include="docs">
       <UniqueIdentifier>{8dc6c42a-71c0-42ba-b81a-b4be3da7bab9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="seam_0\4\0_seam_vl">
+      <UniqueIdentifier>{1a429c2b-bf80-4a1c-80e3-fb19062e8118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\3\0_seam_angle">
+      <UniqueIdentifier>{b3e02080-fe25-457a-ba56-3b295a7ee3de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\3\1_gi">
+      <UniqueIdentifier>{e0695e7b-ae54-4d82-953b-1f0d72dc9c45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\3\2_gui">
+      <UniqueIdentifier>{65249e8f-eb5c-4be7-a9e2-0ef8c2685f78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\3\3_pl">
+      <UniqueIdentifier>{2844ae59-9553-4d8e-916e-dd309f4d10ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2">
+      <UniqueIdentifier>{c11a586e-dd55-42da-bfef-e9cdabb8ea8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2\00">
+      <UniqueIdentifier>{2493acfa-e09d-436e-baf6-6b191b3fdca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2\01">
+      <UniqueIdentifier>{7fd0e018-b0f3-4d92-acac-31cf33254e8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2\02">
+      <UniqueIdentifier>{5f1d08f9-d6ca-4e02-ad2c-ae26a733a5a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2\03">
+      <UniqueIdentifier>{af255e02-293d-40aa-b219-5cd5c080ed81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2\04">
+      <UniqueIdentifier>{4f66c897-0c5b-4724-b8b5-c4ad7905728a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2\05">
+      <UniqueIdentifier>{42874483-f53f-4fcf-ae62-0df07b5dc7df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2\06">
+      <UniqueIdentifier>{ef175178-b2e1-4029-b65a-c265cba0bc1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2\07">
+      <UniqueIdentifier>{89445494-2ebf-4d5b-8792-5c72a8f13a07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2\08">
+      <UniqueIdentifier>{8f4d4a1a-bba0-4f7a-a02b-391b53421ddd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2\09">
+      <UniqueIdentifier>{d632a581-8c3b-4722-b342-5b00b5224fcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2\10">
+      <UniqueIdentifier>{d23a43cd-6836-4285-8929-a30f0f96d83f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2\11">
+      <UniqueIdentifier>{e90692b2-c2ad-441f-a1d3-7ee44ba45fd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2\12">
+      <UniqueIdentifier>{b2528b8b-3c49-4188-85e6-d06cd0dc234e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\0_seam_f2\13">
+      <UniqueIdentifier>{fc530c10-629b-4b5b-ac8a-dd7a7f91768f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\1_test_hal">
+      <UniqueIdentifier>{14cd073e-1f0d-4de1-81d3-116dfe99b1c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\1_test_hal\0">
+      <UniqueIdentifier>{b3e8484e-4c40-400e-ad5e-4b0d908bd9b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\2_seam_drivers">
+      <UniqueIdentifier>{6caac6a7-f503-423a-978b-5d432229dab3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\2_seam_drivers\0">
+      <UniqueIdentifier>{e1b2eba7-cbf4-4124-8049-52ea0a8576e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\3_seam_platform">
+      <UniqueIdentifier>{afee8c69-d9d8-4de2-9ff9-149a4711164c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\3_seam_platform\0">
+      <UniqueIdentifier>{e4fc191a-8f2b-4470-900e-cf782420bd93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\4_features">
+      <UniqueIdentifier>{696c26fd-d414-4f2c-b68e-11790ff74679}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\4_features\0_crabs">
+      <UniqueIdentifier>{3ef2c041-0492-4151-8239-da17ecde285c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\4_features\0_crabs\0">
+      <UniqueIdentifier>{0a39e9df-3a46-443a-bd2d-e5a0c85ed9f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="seam_0\0\4_features\1_filesystem">
+      <UniqueIdentifier>{9544f513-9466-45d4-b478-ba1a1ae1c15b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="kabuki\f2\align.h">
-      <Filter>kabuki\f2</Filter>
+    <ClInclude Include="0\header.h">
+      <Filter>seam_0\0</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\f2\ascii.h">
-      <Filter>kabuki\f2</Filter>
+    <ClInclude Include="0\seam_terminal.h">
+      <Filter>seam_0\0</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\f2\ascii_data.h">
-      <Filter>kabuki\f2</Filter>
+    <ClInclude Include="0\footer.h">
+      <Filter>seam_0\0</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\f2\benchmark.h">
-      <Filter>kabuki\f2</Filter>
+    <ClInclude Include="1\footer.h">
+      <Filter>seam_0\1</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\f2\binary.h">
-      <Filter>kabuki\f2</Filter>
+    <ClInclude Include="1\header.h">
+      <Filter>seam_0\1</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\f2\clock.h">
-      <Filter>kabuki\f2</Filter>
+    <ClInclude Include="1\seam_web.h">
+      <Filter>seam_0\1</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\f2\config.h">
-      <Filter>kabuki\f2</Filter>
+    <ClInclude Include="2\header.h">
+      <Filter>seam_0\2</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\f2\console.h">
-      <Filter>kabuki\f2</Filter>
+    <ClInclude Include="2\seam_audio.h">
+      <Filter>seam_0\2</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\f2\global.h">
-      <Filter>kabuki\f2</Filter>
+    <ClInclude Include="2\footer.h">
+      <Filter>seam_0\2</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\f2\hash.h">
-      <Filter>kabuki\f2</Filter>
+    <ClInclude Include="3\header.h">
+      <Filter>seam_0\3</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\f2\lock.h">
-      <Filter>kabuki\f2</Filter>
+    <ClInclude Include="3\seam_visual.h">
+      <Filter>seam_0\3</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\f2\obj.h">
-      <Filter>kabuki\f2</Filter>
+    <ClInclude Include="3\footer.h">
+      <Filter>seam_0\3</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\f2\public.h">
-      <Filter>kabuki\f2</Filter>
+    <ClInclude Include="4\footer.h">
+      <Filter>seam_0\4</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\f2\rng.h">
-      <Filter>kabuki\f2</Filter>
+    <ClInclude Include="4\header.h">
+      <Filter>seam_0\4</Filter>
     </ClInclude>
-    <ClInclude Include="kabuki\f2\socket.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\str.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\str1.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\str2.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\str4.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\talign.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tarray.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tascii_data.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tbenchmark.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tbinary.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tbook.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tclock.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tconsole.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tdic.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\test.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\test_footer.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tlom.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tlst.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tmap.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tobj.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\trng.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tset.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tsocket.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tstk.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\tstr.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\ttbl.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\ttest.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\varint.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\vk.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\test_header.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\header.h">
-      <Filter>seam_0\0\00_test_f2</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\seam.h">
-      <Filter>seam_0\0\00_test_f2</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\footer.h">
-      <Filter>seam_0\0\00_test_f2</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\00\test_itos_and_stoi.h">
-      <Filter>seam_0\0\00_test_f2\00</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\00\footer.h">
-      <Filter>seam_0\0\00_test_f2\00</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\00\header.h">
-      <Filter>seam_0\0\00_test_f2\00</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\01\test_ftos_and_stof.h">
-      <Filter>seam_0\0\00_test_f2\01</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\01\footer.h">
-      <Filter>seam_0\0\00_test_f2\01</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\01\header.h">
-      <Filter>seam_0\0\00_test_f2\01</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\02\header.h">
-      <Filter>seam_0\0\00_test_f2\02</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\02\test_core_text_functions.h">
-      <Filter>seam_0\0\00_test_f2\02</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\02\footer.h">
-      <Filter>seam_0\0\00_test_f2\02</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\03\header.h">
-      <Filter>seam_0\0\00_test_f2\03</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\03\test_ascii_strings.h">
-      <Filter>seam_0\0\00_test_f2\03</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\03\footer.h">
-      <Filter>seam_0\0\00_test_f2\03</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\07\test_ascii_loom.h">
-      <Filter>seam_0\0\00_test_f2\07</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\07\footer.h">
-      <Filter>seam_0\0\00_test_f2\07</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\07\header.h">
-      <Filter>seam_0\0\00_test_f2\07</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\06\test_ascii_array.h">
-      <Filter>seam_0\0\00_test_f2\06</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\06\footer.h">
-      <Filter>seam_0\0\00_test_f2\06</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\06\header.h">
-      <Filter>seam_0\0\00_test_f2\06</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\05\header.h">
-      <Filter>seam_0\0\00_test_f2\05</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\05\test_ascii_stack.h">
-      <Filter>seam_0\0\00_test_f2\05</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\05\footer.h">
-      <Filter>seam_0\0\00_test_f2\05</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\04\header.h">
-      <Filter>seam_0\0\00_test_f2\04</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\04\test_ascii_clock.h">
-      <Filter>seam_0\0\00_test_f2\04</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\04\footer.h">
-      <Filter>seam_0\0\00_test_f2\04</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\08\header.h">
-      <Filter>seam_0\0\00_test_f2\08</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\08\test_ascii_table.h">
-      <Filter>seam_0\0\00_test_f2\08</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\08\footer.h">
-      <Filter>seam_0\0\00_test_f2\08</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\09\header.h">
-      <Filter>seam_0\0\00_test_f2\09</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\09\test_ascii_varint.h">
-      <Filter>seam_0\0\00_test_f2\09</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\09\footer.h">
-      <Filter>seam_0\0\00_test_f2\09</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\10\test_ascii_list.h">
-      <Filter>seam_0\0\00_test_f2\10</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\10\footer.h">
-      <Filter>seam_0\0\00_test_f2\10</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\10\header.h">
-      <Filter>seam_0\0\00_test_f2\10</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\11\header.h">
-      <Filter>seam_0\0\00_test_f2\11</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\11\test_ascii_map.h">
-      <Filter>seam_0\0\00_test_f2\11</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\11\footer.h">
-      <Filter>seam_0\0\00_test_f2\11</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\12\test_ascii_book.h">
-      <Filter>seam_0\0\00_test_f2\12</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\12\footer.h">
-      <Filter>seam_0\0\00_test_f2\12</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\12\header.h">
-      <Filter>seam_0\0\00_test_f2\12</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\13\header.h">
-      <Filter>seam_0\0\00_test_f2\13</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\13\test_ascii_dictionary.h">
-      <Filter>seam_0\0\00_test_f2\13</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\00_seam_f2\13\footer.h">
-      <Filter>seam_0\0\00_test_f2\13</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\01_seam_hal\footer.h">
-      <Filter>seam_0\0\01_test_hal</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\01_seam_hal\header.h">
-      <Filter>seam_0\0\01_test_hal</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\01_seam_hal\seam.h">
-      <Filter>seam_0\0\01_test_hal</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\01_seam_hal\assembly.h">
-      <Filter>seam_0\0\01_test_hal</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\01_seam_hal\00\project_foo.h">
-      <Filter>seam_0\0\01_test_hal\00</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\01_seam_hal\00\footer.h">
-      <Filter>seam_0\0\01_test_hal\00</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\01_seam_hal\00\header.h">
-      <Filter>seam_0\0\01_test_hal\00</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\00\project_room.h">
-      <Filter>seam_0\0\04_features\00_crabs\00</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\00\footer.h">
-      <Filter>seam_0\0\04_features\00_crabs\00</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\00\header.h">
-      <Filter>seam_0\0\04_features\00_crabs\00</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\assembly.h">
-      <Filter>seam_0\0\04_features\00_crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\footer.h">
-      <Filter>seam_0\0\04_features\00_crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\header.h">
-      <Filter>seam_0\0\04_features\00_crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\pch.h">
-      <Filter>seam_0\0\04_features\00_crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\0\04_features\00_seam_crabs\seam.h">
-      <Filter>seam_0\0\04_features\00_crabs</Filter>
-    </ClInclude>
-    <ClInclude Include="kabuki\f2\thash.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\header.h">
-      <Filter>seam_0</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\pch.h">
-      <Filter>seam_0</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\seam_kabuki.h">
-      <Filter>seam_0</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\targetver.h">
-      <Filter>seam_0</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\assembly.h">
-      <Filter>seam_0</Filter>
-    </ClInclude>
-    <ClInclude Include="seam_0\footer.h">
-      <Filter>seam_0</Filter>
+    <ClInclude Include="4\seam_multimedia.h">
+      <Filter>seam_0\4</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="kabuki\f2\f2_binary.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="kabuki\f2\f2_clock.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="kabuki\f2\f2_console.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="kabuki\f2\f2_hash.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="kabuki\f2\f2_lock.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="kabuki\f2\f2_obj.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="kabuki\f2\f2_rng.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="kabuki\f2\f2_socket.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="kabuki\f2\f2_str.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="kabuki\f2\f2_test.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="kabuki\f2\f2_vk.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="kabuki\f2\f2_align.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="kabuki\f2\f2_ascii_data.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="kabuki\f2\f2_benchmark.cc">
-      <Filter>kabuki\f2</Filter>
-    </ClCompile>
-    <ClCompile Include="seam_0\pch.cc">
-      <Filter>seam_0</Filter>
-    </ClCompile>
-    <ClCompile Include="seam_0\seam_tree.cc">
-      <Filter>seam_0</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="kabuki\f2\readme.md">
-      <Filter>kabuki\f2</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\readme.md">
-      <Filter>seam_0\0\00_test_f2</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\00\readme.md">
-      <Filter>seam_0\0\00_test_f2\00</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\01\readme.md">
-      <Filter>seam_0\0\00_test_f2\01</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\02\readme.md">
-      <Filter>seam_0\0\00_test_f2\02</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\03\readme.md">
-      <Filter>seam_0\0\00_test_f2\03</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\07\readme.md">
-      <Filter>seam_0\0\00_test_f2\07</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\06\readme.md">
-      <Filter>seam_0\0\00_test_f2\06</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\05\readme.md">
-      <Filter>seam_0\0\00_test_f2\05</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\04\readme.md">
-      <Filter>seam_0\0\00_test_f2\04</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\08\readme.md">
-      <Filter>seam_0\0\00_test_f2\08</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\09\readme.md">
-      <Filter>seam_0\0\00_test_f2\09</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\10\readme.md">
-      <Filter>seam_0\0\00_test_f2\10</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\11\readme.md">
-      <Filter>seam_0\0\00_test_f2\11</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\12\readme.md">
-      <Filter>seam_0\0\00_test_f2\12</Filter>
-    </None>
-    <None Include="seam_0\0\00_seam_f2\13\readme.md">
-      <Filter>seam_0\0\00_test_f2\13</Filter>
-    </None>
-    <None Include="seam_0\0\04_features\00_seam_crabs\00\readme.md">
-      <Filter>seam_0\0\04_features\00_crabs\00</Filter>
-    </None>
-    <None Include="seam_0\0\04_features\00_seam_crabs\00\seam.s2">
-      <Filter>seam_0\0\04_features\00_crabs\00</Filter>
-    </None>
     <None Include="docs\development.md">
       <Filter>docs</Filter>
     </None>
@@ -679,8 +287,8 @@
     <None Include="docs\readme.md">
       <Filter>docs</Filter>
     </None>
-    <None Include="seam_0\readme.md">
-      <Filter>seam_0</Filter>
+    <None Include="0\readme.md">
+      <Filter>seam_0\0</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

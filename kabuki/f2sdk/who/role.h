@@ -1,5 +1,9 @@
 /* Kabuki Toolkit
+<<<<<<< HEAD
     @file    /library/kt/id/role.h
+=======
+    @file    $kabuki-toolkit/library/kt/id/role.h
+>>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
     @author  Cale McCollough <cale.mccollough@gmail.com>
     @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
              All right reserved (R). Licensed under the Apache License, Version

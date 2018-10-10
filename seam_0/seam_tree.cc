@@ -1,6 +1,10 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
+<<<<<<< HEAD:seam_0/seam_tree.cc
 @file    /seam_0/seam_tree.h
+=======
+@file    /seam_00/seam_tree_node.h
+>>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336:seam_tree.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the

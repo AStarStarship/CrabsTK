@@ -31,7 +31,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>kabukitoolkit</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
-    <ProjectName>0_2_02_music_demo</ProjectName>
+    <ProjectName>0_2_2_music_demo</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

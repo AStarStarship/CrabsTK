@@ -1,7 +1,12 @@
 #define SEAM_0_0_0__00 1        //< kabuki.f2.test_itos_and_stoi
+#define SEAM_0_0_0__00_00 2        //< kabuki.f2.test_itos_and_stoi
+#define SEAM_0_0_0__01 2        //< kabuki.f2.test_ftos_and_stof
 #define SEAM_0_0_0__01 2        //< kabuki.f2.test_ftos_and_stof
 #define SEAM_0_0_0__02 3        //< kabuki.f2.test_core_text_functions
+#define SEAM_0_0_0__02 3        //< kabuki.f2.test_core_text_functions
 #define SEAM_0_0_0__03 4        //< kabuki.f2.test_ascii_strings
+#define SEAM_0_0_0__03 4        //< kabuki.f2.test_ascii_strings
+#define SEAM_0_0_0__04 5        //< kabuki.f2.test_ascii_clock
 #define SEAM_0_0_0__04 5        //< kabuki.f2.test_ascii_clock
 #define SEAM_0_0_0__05 6        //< kabuki.f2.test_ascii_
 #define SEAM_0_0_0__06 7        //< kabuki.f2.
@@ -32,12 +37,3 @@
 #define SEAM_0_0_4__00 32       //< kabuki.features.nfc
 
 #define SEAM_N SEAM_0_0_4__00
-
-// kabuki.features.unsupported
-
-#if SEAM > 0 && SEAM <= SEAN_N
-// Add global debug macros here.
-#else
-// This is for when the code is not being debugged and the global debug macros
-// don't do anything.
-#endif
