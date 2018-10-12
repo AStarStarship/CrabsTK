@@ -63,10 +63,10 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
 |:---------:|:------------|
 | f2        | F2 Foundational Framework. |
 | f2sdk     | Firmware-to-Software Development SDK. |
-| features  | Application framework. |
-| hal       | Non-ASCII Data structures and database. |
-| osal      | Human-Machine interface. |
-| platform  | Identification and authorization library. |
+| features  | System features. |
+| hal       | Hardware Abstraction Layer. |
+| osal      | Operating System Abstraction Layer. |
+| platform  | Hardware platform. |
 | tek       | Kabuki tek firmware. |
 
 ## kabuki.drivers
@@ -81,28 +81,28 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
 | Module     | Description |
 |:----------:|:------------|
 | audio      | Audio library. |
+| crabs      | Chinese Room Abstract Stack Machine. |
 | filesystem | Filesystem. |
+| graphics   | Graphics library. |
 | midi       | Musical instrument digital interface. |
-| ng         | Native graphics library. |
 
 ## kabuki.f2sdk Modules
 
-| Module | Description |
-|:------:|:------------|
-| crabs  | Chinese Room Abstract Stack Machine. |
-| ai     | Artificial Intelligence library. |
-| al     | Audio library. |
-| app    | Application framework. |
-| data   | Data and logging library. |
-| hmi    | Human-Machine interface. |
-| gui    | Graphical user interface. |
-| math   | Math library. |
-| pl     | Plotting library. |
-| pro    | IDD and misc project and scheduling library. |
-| store  | Store and inventory library. |
-| vg     | Vector graphics library. |
-| web    | HTTP server and web microframework. |
-| who    | Identification and authorization library. |
+| Module   | Description |
+|:--------:|:------------|
+| ai       | Artificial Intelligence library. |
+| adsp     | Audio Digital Signal Processing library. |
+| app      | Application framework. |
+| data     | Data and logging library. |
+| drawing  | Vector drawing library. |
+| hmi      | Human-Machine interface. |
+| gui      | Graphical user interface. |
+| math     | (Coming soon) Math library. |
+| plotting | Plotting library. |
+| pro      | IDD and misc project and scheduling library. |
+| store    | Store and inventory library. |
+| web      | HTTP server and web microframework. |
+| who      | Identification and authorization library. |
 
 ## kabuki.tek Firmware
 
@@ -121,7 +121,7 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 * [boost asio](https://www.boost.org/doc/libs/1_68_0/doc/html/boost_asio.html)
 * [Crow](https://github.com/ipkn/crow) - GCC 4.7/C++11 web microframework.
 * [boost filesystem](https://www.boost.org/doc/libs/1_68_0/doc/html/boost_filesystem.html) - Cross-platform filesystem.
-* [Cairo](https://www.cairographics.org/) - Vector graphics.
+* [Cairo](https://www.cairographics.org/) - 2D graphics library.
 * [PLplot](https://github.com/PLplot/PLplot) - Math plotting library.
 * [PortAudio](http://www.portaudio.com/) - Cross-platform audio driver.
 * [Maximilian](https://github.com/micknoise/Maximilian) - Audio DSP and synthesis library.
