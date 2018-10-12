@@ -1,4 +1,4 @@
-# Graphics Library
+# Vector Graphics Library
 
 There some code in here at one point but the requirements for the gl is very strictly regulated to Cairo and ANGLE now. The future GUI toolkit will be mapping the kabuki.features.hmi (Human-machine Interface) library which is good for easy mapping of controls over a serial line or the IoT. It provides the ability to multiplex pages of controls on buttons that use touchscreen widgets on PC or mobile device.
 

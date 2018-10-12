@@ -15,13 +15,13 @@
 Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) and Virtual Machine for 32-bit and 64-bit processors featuring the F2 Foundational Framework (F2), Chinese Room Abstract Stack Machine (Crabs), and Kabuki Virtual Machine (VM) that provides:
 
 * Standard Seam Trees provide in-order unit tests for Agile and Issue Driven Development with debug information customized for each tree node best described as a bulleted list of seams with SI Units to denote tree depth in the order: `LAYER_{MILLI_MICRO_NANO_PICO_FEMTO}__PROJECT_SPRINT_SCRUM`.
-  * Custom build tool coming soon.
-* Modern Embedded-C++1x core with Doxygen API docs.
+  * Custom build tool based on StarUML plugin with Crabs Script command-line utilities coming soon.
+* Modern Embedded-C++11/GCC 4.7 core with Doxygen API docs without depreciated libraries.
 * ASCII Data Types and the Crabs Factory operate seamlessly across assembly boundary with optimal RAM usage and CPU cache performance from ROM-able ASCII Contiguous Objects.
 * Rapid compile time using C Application Binary Interface (ABI) with separated C++ templates for cross-language bindings.
 * Code automatically formatted to Google C++ Style Guide upon save and formatted to not fight clang-format.
 * Deep Internet-of-Things integration using the SCRIPT Software Defined Networking Protocol where everything is A=A*B.
-* Artificial Intelligence and Deep Learning library with graph-based neural-intelligent networks coming soon.
+* Artificial Intelligence and Deep Learning library with graph-based neural-intelligent networks and blockchain technology coming soon.
 * Modeled after AI philosophy and ASCII mimicry of the Chinese Room Thought Experiment and C0 Control Codes.
 
 ## ASCII Data Types
@@ -57,53 +57,74 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
 * [Kabuki Starship Website](https://kabuki-starship.github.io/)
   - *Official Kabuki Toolkit website. We are currently looking for someone to help us fix the CSS on the website. It only works right at < 1024 pixel width so the problem is in the @media section.*
 
-## Kabuki F2SDK Modules
+## kabuki Modules
 
-| Module | Description |
-|:------:|:------------|
-| ai     | Artificial Intelligence library. |
-| al     | Audio library. |
-| app    | Application framework. |
-| db     | Non-ASCII Data structures and database. |
-| hmi    | Human-Machine interface. |
-| id     | Identification and authorization library. |
-| gi     | Graphics interface. |
-| gui    | Graphical user interface. |
-| math   | Math library. |
-| pl     | Plotting library. |
-| midi   | Musical instrument digital interface. |
-| pro    | IDD, Projects, and scheduling library. |
-| store  | Store and inventory library. |
+| Module    | Description |
+|:---------:|:------------|
+| f2        | F2 Foundational Framework. |
+| f2sdk     | Firmware-to-Software Development SDK. |
+| features  | Application framework. |
+| hal       | Non-ASCII Data structures and database. |
+| osal      | Human-Machine interface. |
+| platform  | Identification and authorization library. |
+| tek       | Kabuki tek firmware. |
 
-## Kabuki Toolkit Modules
+## kabuki.drivers
+| Module     | Description |
+|:----------:|:------------|
+| Ethernet   | Basic TCP support. |
+| Serial     | UART/Serial driver. |
+| ...        | Many more drivers coming soon. |
+
+## kabuki.features
+
+| Module     | Description |
+|:----------:|:------------|
+| audio      | Audio library. |
+| filesystem | Filesystem. |
+| midi       | Musical instrument digital interface. |
+| ng         | Native graphics library. |
+
+## kabuki.f2sdk Modules
 
 | Module | Description |
 |:------:|:------------|
 | crabs  | Chinese Room Abstract Stack Machine. |
-| tek    | Firmware toolkit. |
 | ai     | Artificial Intelligence library. |
 | al     | Audio library. |
 | app    | Application framework. |
 | data   | Data and logging library. |
 | hmi    | Human-Machine interface. |
-| id     | Identification and authorization library. |
-| gi     | Graphics interface. |
 | gui    | Graphical user interface. |
 | math   | Math library. |
 | pl     | Plotting library. |
-| midi   | Musical instrument digital interface. |
-| pro    | IDD, Projects, and scheduling library. |
+| pro    | IDD and misc project and scheduling library. |
 | store  | Store and inventory library. |
+| vg     | Vector graphics library. |
+| web    | HTTP server and web microframework. |
+| who    | Identification and authorization library. |
+
+## kabuki.tek Firmware
+
+All currently broken. Sorry. Please contribute as a developer. Thanks.
+
+| Module        | Description |
+|:-------------:|:------------|
+| AnyLED        | Firmware to control PWM and addressable LEDs. |
+| Unicontroller | A universal controller firmware for MIDI, DMX, SCRIPT SDNP, and OSC. |
+| Flowerbed     | Automatic watering system for plants. |
+| Cooler        | (Coming soon) A SCRIPT SDNP fan controller. |
+
 ### 3rd Party APIs
 
 * [ANGLE](https://github.com/google/angle) - Graphics and Windowing System.
 * [boost asio](https://www.boost.org/doc/libs/1_68_0/doc/html/boost_asio.html)
 * [Crow](https://github.com/ipkn/crow) - GCC 4.7/C++11 web microframework.
-* [boost filesystem 1.68](https://www.boost.org/doc/libs/1_68_0/doc/html/boost_filesystem.html) - Cross-platform filesystem.
+* [boost filesystem](https://www.boost.org/doc/libs/1_68_0/doc/html/boost_filesystem.html) - Cross-platform filesystem.
 * [Cairo](https://www.cairographics.org/) - Vector graphics.
 * [PLplot](https://github.com/PLplot/PLplot) - Math plotting library.
 * [PortAudio](http://www.portaudio.com/) - Cross-platform audio driver.
-* [Maximilian](https://github.com/micknoise/Maximilian) - Audio synthesis and DSP.
+* [Maximilian](https://github.com/micknoise/Maximilian) - Audio DSP and synthesis library.
 * [RtMIDI](https://github.com/thestk/rtmidi) - Cross-platform MIDI driver.
 * [mbed](https://www.mbed.com/en/) - Firmware abstraction layer.
 
