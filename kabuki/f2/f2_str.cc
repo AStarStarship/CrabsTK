@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #include "socket.h"
 #include "tstr.h"
 
-#include <Seam_0/0/00_seam_f2/header.h>
+#include <Seam_0/0/0_f2/header.h>
 
 #if F2_TEXT
 
@@ -1882,4 +1882,4 @@ _::Utf32& operator<<(_::Utf32& utf, _::Utf32Right item) {
 
 #endif  //< #if USING_UTF32
 
-#include <Seam_0/00/00_seam_f2/footer.h>
+#include <Seam_0/00/0_f2/footer.h>

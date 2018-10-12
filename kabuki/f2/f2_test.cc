@@ -20,14 +20,14 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-const char* TestTree(char* test_result, const char* args, TestCase* tests,
-                     int count) {
+const char* TestTree(char* seam_log, char* seam_end, const char* args,
+                     TestCase* tests, int count) {
   for (int i = 0; i < count; ++i) {
     TestCase test = tests[i];
     if (test) {
-      const char* seam = test(test_result, nullptr);
+      const char* seam = test(seam_log, seam_end, nullptr);
       PrintHeading("Testing ", seam);
-      const char* error = test(test_result, args);
+      const char* error = test(seam_log, seam_end, args);
       if (error) return error;
       Print("\n\nDone testing ", seam);
     } else {
@@ -35,6 +35,10 @@ const char* TestTree(char* test_result, const char* args, TestCase* tests,
     }
   }
   return nullptr;
+}
+
+bool TestBegin(char* seam_log, char* log_end, const char* args) {
+  return ((intptr_t)seam_log) || ((intptr_t)seam_log) || ((intptr_t)seam_log);
 }
 
 void TestEnd(const char* function_name) {
@@ -183,12 +187,9 @@ bool Test(double value) {
   return false;
 }
 
-bool AssertHandle(const char* file, int line, const char* message) {
-  if (message)
-    Printf("\n%s\n,TestResult failed at line %d in \"%s\" with message:\n%s",
-           line, file, message);
-  else
-    Printf("\nAssertion failed at line %d in \"%s\"", line, file);
+bool AssertHandle(const char* function, const char* file, int line) {
+  Printf("\nAssertion failed in function %s at line %d in \"%s\"", function,
+         line, file);
   Pause();
   return true;
 }

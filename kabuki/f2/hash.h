@@ -22,31 +22,20 @@ specific language governing permissions and limitations under the License. */
 #include "config.h"
 // End dependencies.
 
+typedef uint16_t hash16_t;
+typedef uint32_t hash32_t;
+typedef uint64_t hash64_t;
+
 namespace _ {
 
-/* Hashes a single byte. */
-inline uint16_t Hash16(char c, uint16_t hash) {
-  return (c * kPrime2Unsigned) + hash;
-}
-
-/* Hashes a single byte. */
-inline hash32_t Hash32(char c, hash32_t hash) {
-  return (c * kLargest32BitPrime) + hash;
-}
-
-/* Hashes a single byte. */
-inline hash64_t Hash64(char c, hash64_t hash) {
-  return (c * kLargest64BitPrime) + hash;
-}
+/* Hashes the given char using the primeHash function. */
+API uint16_t Hash16(const char* string, uint16_t hash = 65535);
 
 /* Hashes the given char using the primeHash function. */
-API uint16_t Hash16(const char* string, uint16_t hash = kPrime2Unsigned);
+API uint32_t Hash32(const char* string, uint32_t hash = 4294967291);
 
 /* Hashes the given char using the primeHash function. */
-API uint32_t Hash32(const char* string, hash32_t hash = kLargest32BitPrime);
-
-/* Hashes the given char using the primeHash function. */
-API hash64_t Hash64(const char* string, hash64_t hash = kLargest64BitPrime);
+API hash64_t Hash64(const char* string, hash64_t hash = 18446744073709551557);
 
 }  // namespace _
 #endif  //< #if SEAM >= SEAM_0_0_0

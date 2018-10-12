@@ -14,16 +14,12 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-<<<<<<< HEAD
 #if SEAM >= SEAM_0_0_0__07
-=======
-#if SEAM >= SEAM_00_00_00__07
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
 
 #ifndef INCLUDED_KABUKI_F2_VARINT
 #define INCLUDED_KABUKI_F2_VARINT
 
-#include <seam_0/0/00_seam_f2/07/header.h>
+#include <kabuki/0/0_f2/07/header.h>
 
 namespace _ {
 
@@ -133,8 +129,4 @@ SI LoomPrint(Utf8& print, CLoom* loom, const Char* strand) {
 
 }  // namespace _
 #endif  //< INCLUDED_KABUKI_F2_VARINT
-<<<<<<< HEAD
 #endif  //< #if SEAM >= SEAM_0_0_0__06
-=======
-#endif  //< #if SEAM >= SEAM_00_00_00__06
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336

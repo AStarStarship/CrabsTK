@@ -17,15 +17,9 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_TBINARY
 #define INCLUDED_KABUKI_F2_TBINARY 1
 
-<<<<<<< HEAD
-#if SEAM >= SEAM_0_0_0__00
-#include <seam_0\0\00_seam_f2\00\header.h>
-=======
-#if SEAM >= SEAM_00_00_00__00
-#include <seam_00\00\00_test_f2\00\header.h>
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
-
 #include "binary.h"
+
+#include <kabuki\0\0_f2\00\header.h>
 
 namespace _ {
 
@@ -605,19 +599,11 @@ const Char* Scan(const Char* buffer, UI& result) {
   result = value;
   return end;
 }
-<<<<<<< HEAD
-#include <seam_0/0/00_seam_f2/00/footer.h>
-#endif  //< #if SEAM >= SEAM_0_0_0__00
 
-#include <seam_0/0/00_seam_f2/00/header.h>
+#include <kabuki/0/0_f2/00/footer.h>
+
+#include <kabuki/0/0_f2/00/header.h>
 #if SEAM >= SEAM_0_0_0__01
-=======
-#include <seam_00/00/00_test_f2/00/footer.h>
-#endif  //< #if SEAM >= SEAM_00_00_00__00
-
-#include <seam_00/00/00_test_f2/00/header.h>
-#if SEAM >= SEAM_00_00_00__01
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
 
 /* Searches for the highest MSb asserted.
 @return -1 */
@@ -766,19 +752,11 @@ class Binary {
     return (SI)(nan << (sizeof(UI) * 8 - 1));
   }
 
-<<<<<<< HEAD
-#include <seam_0/0/00_seam_f2/00/footer.h>
+#include <kabuki/0/0_f2/00/footer.h>
 #endif  //< #if SEAm >= SEAM_0_0_0__00
 
 #if SEAM >= SEAM_0_0_0__01
-#include <seam_0/0/00_seam_f2/01/header.h>
-=======
-#include <seam_00\00\00_test_f2\00\footer.h>
-#endif  //< #if SEAm >= SEAM_00_00_00__00
-
-#if SEAM >= SEAM_00_00_00__01
-#include <seam_00\00\00_test_f2\01\header.h>
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
+#include <kabuki/0/0_f2/01/header.h>
 
   /* Non-working algorithm DOES NOT converts a string-to-float.
   @return nil if there is no number to scan or pointer to the next char after
@@ -950,9 +928,9 @@ class Binary {
 
     return end;
   }
-  * /
 
-      private : UI f;
+ private:
+  UI f;
   int32_t e;
 
   Binary NormalizeBoundary() const {
@@ -976,10 +954,9 @@ class Binary {
   static const uint64_t  // kDpExponentMask = 0x7FF0000000000000,
       kDpSignificandMask = 0x000FFFFFFFFFFFFF,
       kDpHiddenBit = 0x0010000000000000;
-  * /
 
-      /* Normalizes the boundaries. */
-      inline void NormalizedBoundaries(Binary& m_minus, Binary& m_plus) const {
+  /* Normalizes the boundaries. */
+  inline void NormalizedBoundaries(Binary& m_minus, Binary& m_plus) const {
     UI l_f,   //< Local copy of f.
         l_e;  //< Local copy of e.
     Binary pl = Binary((l_f << 1) + 1, l_e - 1).NormalizeBoundary();
@@ -1217,12 +1194,6 @@ using Binary64 = Binary<double, uint64_t>;
 //< Coming soon but not in Visual-C++ due to lack of 128-bit integer support.
 }  // namespace _
 
-<<<<<<< HEAD
-#include <seam_0/0/00_seam_f2/01/footer.h>
+#include <kabuki/0/0_f2/01/footer.h>
 #endif  //< #if SEAM >= SEAM_0_0_0__01
-=======
-#include <seam_00\00\00_test_f2\01\footer.h>
-#endif  //< #if SEAM >= SEAM_00_00_00__01
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
-
 #endif  //< #if INCLUDED_KABUKI_F2_TBINARY

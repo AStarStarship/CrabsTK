@@ -14,13 +14,13 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__00
 #ifndef INCLUDED_KABUKI_F2_TEST
 #define INCLUDED_KABUKI_F2_TEST 1
 
 /* Function pointer prototype for a test case with command line argument
 string.*/
-typedef const char* (*TestCase)(char* test_result, const char* args);
+typedef const char* (*TestCase)(char* seam_log, char* seam_end,
+                                const char* args);
 
 namespace _ {
 
@@ -30,7 +30,7 @@ const char* TestTree(char* seam_log, char* log_end, const char* args,
                      TestCase* seams, int node_count);
 
 /* Prints a message when a TestCase completes without failure. */
-const char* TestBegin(char* seam_log, char* log_end, const char* args);
+bool TestBegin(char* seam_log, char* log_end, const char* args);
 
 /* Assert check if the given condition is true
 @return false if the condition is false.
@@ -176,14 +176,12 @@ API bool Test(float value);
 @param  value The value to test. */
 API bool Test(double value);
 
-/* Handles an assert by printing a debug statement and locks up the system.
+/* Handles an assert.
 @return True upon failure.
 @param  line    The line the program failed at.
 @param  file    The file the error occurred at.
 @param  message An optional message to print. */
-API bool AssertHandle(const char* file, int line,
-                      const char* message = nullptr);
+API bool AssertHandle(const char* funciton, const char* file, int line);
 }  // namespace _
 
 #endif  //< #ifndef INCLUDED_KABUKI_F2_TEST
-#endif  //< #if SEAM >= SEAM_0_0_0__00

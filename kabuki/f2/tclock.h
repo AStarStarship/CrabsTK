@@ -14,11 +14,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-<<<<<<< HEAD
 #if SEAM >= SEAM_0_0_0__04
-=======
-#if SEAM >= SEAM_00_00_00__04
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
 #ifndef INCLUDED_KABUKI_F2_TCLOCK
 #define INCLUDED_KABUKI_F2_TCLOCK
 
@@ -485,8 +481,4 @@ const Char* TextScanTime(const Char* begin, Tss& result) {
 #undef PRINT
 #undef PRINTF
 #endif  //< #ifndef INCLUDED_KABUKI_F2_TCLOCK
-<<<<<<< HEAD
 #endif  //< #if SEAM >= SEAM_0_0_0__04
-=======
-#endif  //< #if SEAM >= SEAM_00_00_00__04
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336

@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/f2/f2_console.cc
+@file    /kabuki/f2/tascii_data.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -13,11 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-<<<<<<< HEAD
 #if SEAM >= SEAM_0_0_0__03
-=======
-#if SEAM >= SEAM_00_00_00__03
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
 #ifndef INCLUDED_KABUKI_F2_TYPES
 #define INCLUDED_KABUKI_F2_TYPES
 
@@ -72,7 +68,7 @@ typedef enum AsciiTypes {
   BSQ,      //< 23. B-Sequence.
   OBJ,      //< 24. N-byte object.
   LOM,      //< 25. A loom of UTF-8, UTF-16, or UTF-32 strings.
-  TBL,      //< 26. A sorted sequencential hash table.
+  TBL,      //< 26. A hash table.
   EXP,      //< 27. Script Expression.
   LST,      //< 28. Set or multiset of Type-Value tuples.
   MAP,      //< 29. One-to-one map of Integer-{Type-Value} records.
@@ -297,9 +293,5 @@ API _::Utf32& operator<<(_::Utf32& utf, const _::TypeValue& type_value);
 
 }  // namespace _
 
-<<<<<<< HEAD
-=======
-#endif  //< #if SEAM >= SEAM_00_00_00__03
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
 #endif  //< INCLUDED_KABUKI_F2_TYPES
 #endif  //< #if SEAM >= SEAM_0_0_0__03

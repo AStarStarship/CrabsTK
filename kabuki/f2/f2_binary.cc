@@ -20,7 +20,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <cmath>
 
-#include <seam_0/0/00_seam_f2/01/header.h>
+#include <kabuki/0/0_f2/01/header.h>
 
 #ifdef __LITTLE_ENDIAN
 #define HI(x) *(1 + (int32_t*)&x)
@@ -442,5 +442,5 @@ int HexToByte(uint16_t h) {
 
 }  // namespace _
 
-#include <seam_0/0/00_seam_f2/01/header.h>
+#include <kabuki/0/0_f2/01/footer.h>
 #endif  //< #if SEAM >= SEAM_0_0_0__01

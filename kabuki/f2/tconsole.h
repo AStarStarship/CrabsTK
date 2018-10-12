@@ -14,11 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-<<<<<<< HEAD
 #if SEAM >= SEAM_0_0_0__00
-=======
-#if SEAM >= SEAM_00_00_00__00
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
 
 #ifndef INCLUDED_KABUKI_F2_TCONSOLE
 #define INCLUDED_KABUKI_F2_TCONSOLE 1
@@ -45,8 +41,4 @@ Console PrintHex(UI value) {
 
 #endif  //< INCLUDED_KABUKI_F2_TCONSOLE
 
-<<<<<<< HEAD
 #endif  //< #if SEAM >= SEAM_0_0_0__00
-=======
-#endif  //< #if SEAM >= SEAM_00_00_00__00
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336

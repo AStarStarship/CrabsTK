@@ -13,11 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-<<<<<<< HEAD
-#if SEAM >= SEAM_0_0_01__05
-=======
-#if SEAM >= SEAM_00_00_01__05
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
+#if SEAM >= SEAM_0_0_00__05
 #ifndef INCLUDED_KABUKI_F2_STK
 #define INCLUDED_KABUKI_F2_STK
 
@@ -71,7 +67,7 @@ constexpr UI UnsignedMax() {
     given types, and another for a multi-dimensional array that uses the 1-d
     array in order to store the dimensions. The only different between them is
     that the size_array variable gets set to 0.
-    
+    
 
 
 
@@ -662,8 +658,4 @@ class Stack {
 }  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_STK
-<<<<<<< HEAD
 #endif  //< #if SEAM >= SEAM_0_0_01__05
-=======
-#endif  //< #if SEAM >= SEAM_00_00_01__05
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336

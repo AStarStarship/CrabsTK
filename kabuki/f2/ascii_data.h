@@ -1,10 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-<<<<<<< HEAD
 @file    /kabuki/f2/f2_asciidata.cc
-=======
-@file    /kabuki/f2/f2_console.cc
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -27,7 +23,6 @@ specific language governing permissions and limitations under the License. */
 #include "tstr.h"
 
 namespace _ {
-
 /* A type-value tuple. */
 struct API TypeValue {
   type_t type;        //< ASCII Type.
@@ -125,6 +120,7 @@ API inline bool TypeIsString(type_t type);
 API inline bool TypeIsUtf16(type_t type);
 
 API inline int TypeSizeWidthCode(type_t type);
+}  // namespace _
 
 #if USING_UTF8
 namespace _ {
@@ -178,8 +174,6 @@ API char16_t* Print(char16_t* begin, char16_t* end, type_t type,
 @param  item The item to print. */
 API _::Utf32& operator<<(_::Utf32& utf, const _::TypeValue& type_value);
 #endif
-
-}  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_TYPES
 #endif  //< #if SEAM >= SEAM_0_0_0__03

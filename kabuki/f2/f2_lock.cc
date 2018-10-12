@@ -24,8 +24,4 @@ void RoomLock() {}
 void RoomUnlock() {}
 
 }  // namespace _
-<<<<<<< HEAD
 #endif  //< #if SEAM >= SEAM_0_0_0__01
-=======
-#endif  //< #if SEAM >= SEAM_00_00_00__01
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336

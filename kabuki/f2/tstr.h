@@ -13,11 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-<<<<<<< HEAD
 #if SEAM >= SEAM_0_0_0__03
-=======
-#if SEAM >= SEAM_00_00_00__03
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
 #ifndef INCLUDED_KABUKI_F2_UTFN
 #define INCLUDED_KABUKI_F2_UTFN
 
@@ -1235,9 +1231,5 @@ API _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, _::TLineString<Char> line) {
 #undef PRINTF
 #undef PRINT_HEADING
 #undef PRINT_FLOAT_BINARY
-#endif  //< #if INCLUDED_KABUKI_F2_UTFN
-<<<<<<< HEAD
+#endif  //< #if INCLUDED_KABUKI_F2_TSTR
 #endif  //< #if SEAM >= SEAM_0_0_0__03
-=======
-#endif  //< #if SEAM >= SEAM_00_00_00__03
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336

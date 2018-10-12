@@ -51,8 +51,7 @@ int32_t AlignPowerOf2(int32_t value) {
   return (int32_t)value;
 }
 
-<<<<<<< HEAD
-uintptr_t* AlignUp(uintptr_t* buffer) {
+uintptr_t* AlignUp(uintptr_t* buffer, uintptr_t mask) {
   return AlignUp<uintptr_t>(buffer, kCpuCacheLineSize - 1);
 }
 
@@ -70,9 +69,6 @@ char* AlignDown(char* pointer, uintptr_t mask) {
 
 const char* AlignDown(const char* pointer, uintptr_t mask) {
   return AlignDown<const char*>(pointer, mask);
-=======
-uintptr_t* AlignUpCacheLine(uintptr_t* buffer) {
-  return AlignUp<uintptr_t>(buffer, kCpuCacheLineSize);
 }
 
 char* AlignUp(char* pointer) { return AlignUp<char>(pointer); }
@@ -81,18 +77,14 @@ const char* AlignUp(const char* pointer) {
   return AlignUp<const char>(pointer);
 }
 
-char* AlignDownPointerWord(char* pointer) { return AlignDown<char>(pointer); }
-
-const char* AlignDown(const char* pointer) {
-  return AlignDown<const char>(pointer);
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
+const char* AlignDown(const char* pointer, uintptr_t mask) {
+  return AlignDown<const char*>(pointer, mask);
 }
 
-uintptr_t* AlignUp(uintptr_t* pointer, uintptr_t boundary_bit_count) {
-  return AlignUp<uintptr_t>(pointer, boundary_bit_count);
+uintptr_t* AlignUp(uintptr_t* pointer, uintptr_t mask) {
+  return AlignUp<uintptr_t>(pointer, mask);
 }
 
-<<<<<<< HEAD
 uint8_t AlignUp(uint8_t value, uint8_t mask) {
   return AlignUp<uint8_t>(value, mask);
 }
@@ -124,7 +116,7 @@ uint64_t AlignUp(uint64_t value, uint64_t mask) {
 int64_t AlignUp(int64_t value, int64_t mask) {
   return AlignUp<int64_t>(value, mask);
 }
-=======
+
 int8_t AlignUp(int8_t value) { return AlignUp<int8_t>(value); }
 
 int16_t AlignUp(int16_t value) { return AlignUp<int16_t>(value); }
@@ -132,7 +124,6 @@ int16_t AlignUp(int16_t value) { return AlignUp<int16_t>(value); }
 int32_t AlignUp(int32_t value) { return AlignUp<int32_t>(value); }
 
 int64_t AlignUp(int64_t value) { return AlignUp<int64_t>(value); }
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
 
 }  // namespace _
 #undef PRINTF

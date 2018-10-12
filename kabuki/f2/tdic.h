@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 #include "ascii_data.h"
 #include "socket.h"
 
-#include <seam_0/0/00_seam_f2/06/header.h>
+#include <kabuki/0/0_f2/06/header.h>
 
 namespace _ {
 
@@ -741,5 +741,5 @@ Utf8& DicPrint(Utf8& print, Dictionary<UI, SI, I>* dictionary) {
 }
 
 }  // namespace _
-#include <seam_0/0/00_seam_f2/06/footer.h>
+#include <kabuki/0/0_f2/06/footer.h>
 #endif  //< INCLUDED_KABUKI_F2_BOOK

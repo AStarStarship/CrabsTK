@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 #include "align.h"
 #include "binary.h"
 
-#include <seam_0/0/00_seam_f2/00/header.h>
+#include <kabuki/0/0_f2/00/header.h>
 
 namespace _ {
 
@@ -128,6 +128,6 @@ API inline bool SocketCompare(const void* begin_a, intptr_t size_a,
 
 }  // namespace _
 
-#include <seam_0/0/00_seam_f2/00/footer.h>
 #endif  //< INCLUDED_KABUKI_F2_KABUKI_SOCKET
+#include <kabuki/0/0_f2/00/footer.h>
 #endif  //< #if SEAM >= SEAM_0_0_0__01

@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/f2/align.h
+@file    /kabuki/f2/thash.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,10 +14,12 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__01
+#if SEAM >= SEAM_0_0_0__04
 
-#ifndef INCLUDED_KABUKI_F2_ALIGN
-#define INCLUDED_KABUKI_F2_ALIGN
+#include "thash.h"
+
+#ifndef INCLUDED_KABUKI_F2_THASH
+#define INCLUDED_KABUKI_F2_THASH
 
 namespace _ {
 
@@ -32,6 +34,7 @@ inline SI PrimeMaxSigned() {
                             ? sizeof(SI) == 4
                                   ? 2147483647
                                   : sizeof(SI) == 8 ? 9223372036854775783 : 0;
+  return prime;
 }
 
 /* Returns the highest signed prime that can fit in type UI.
@@ -40,12 +43,12 @@ template <typename UI>
 inline UI PrimeMaxUnigned() {
   UI prime = sizeif(UI) == 1 ? 251
                              : sizeof(UI) == 2
-                 ? 65535 ? sizeof(UI) == 4
-                               ? 4294967291
-                               : sizeof(UI) == 8 18446744073709551557
-                         : 0;
+                 ? 65535
+                 ? sizeof(UI) == 4 ? 4294967291
+                                   : sizeof(UI) == 8 ? 18446744073709551557 : 0;
+  return prime;
 }
 
 }  // namespace _
-#endif  //< INCLUDED_KABUKI_F2_ALIGN
-#endif  //< #if SEAM >= SEAM_0_0_0__01
+#endif  //< INCLUDED_KABUKI_F2_THASH
+#endif  //< #if SEAM >= SEAM_0_0_0__04

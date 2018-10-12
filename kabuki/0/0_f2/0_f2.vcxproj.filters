@@ -1,0 +1,628 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="kabuki">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="kabuki\f2">
+      <UniqueIdentifier>{bd41eaa6-af69-4a51-9ac8-8de493afdc70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29">
+      <UniqueIdentifier>{5f96f00d-6b45-4c62-a522-4791e009b059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2">
+      <UniqueIdentifier>{f6b8bc82-0027-42ba-bc4c-9b408b8285d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2\00">
+      <UniqueIdentifier>{8b744c2c-da98-4213-b583-112d04e4d093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2\01">
+      <UniqueIdentifier>{8648f082-3142-4eb8-9e05-cc0a2da7d522}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2\02">
+      <UniqueIdentifier>{2e48dcbe-9a38-4d1f-bcad-24b599a5e841}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2\03">
+      <UniqueIdentifier>{27de895e-5907-442d-934c-63ec3c6ade59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2\04">
+      <UniqueIdentifier>{620bd0ee-2e6f-4f38-80e7-730acf58e0bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2\05">
+      <UniqueIdentifier>{10b9850e-034a-4763-9ddf-8ab0dbdcde36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2\06">
+      <UniqueIdentifier>{61756cd7-c605-4cd4-9531-f5e5a96d212f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2\07">
+      <UniqueIdentifier>{32735858-7ed8-4b0f-8ac0-6b52f621caf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2\08">
+      <UniqueIdentifier>{765c0b9a-0ddd-4eea-8c88-37fe31a2ddd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2\09">
+      <UniqueIdentifier>{e4fdd383-a5ed-47f4-aff8-0ff2c8f050b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2\11">
+      <UniqueIdentifier>{410406fa-511c-4e95-909c-e1023c0f6557}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2\10">
+      <UniqueIdentifier>{1955b941-3f77-4ab1-be05-83bca4cd4f80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2\12">
+      <UniqueIdentifier>{f6b6eae6-1732-404e-bcc5-c2d5f3f80649}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\0_f2\13">
+      <UniqueIdentifier>{1617bc6f-5a75-4485-ac62-3023608a963c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\1_hal">
+      <UniqueIdentifier>{0794ac64-695c-4f81-9f49-564d71815949}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\1_hal\00">
+      <UniqueIdentifier>{878fd702-c1d9-4cd1-bcbc-1e719d8a48fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\2_drivers">
+      <UniqueIdentifier>{3dffb375-432d-4c93-aeb5-8fa5a20b77b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\4_features">
+      <UniqueIdentifier>{35c0ddb1-d9f5-4a8c-95ed-2073abec66ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\4_features\2_hmi">
+      <UniqueIdentifier>{e9b47e29-dbc2-41e6-8305-6901a31951a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\4_features\0_filesystem">
+      <UniqueIdentifier>{1bf746b5-2c32-4aa3-8814-c68c61a880db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\4_features\1_crabs">
+      <UniqueIdentifier>{dfdc759b-702d-4503-b371-1dc48b05bf0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\5_data">
+      <UniqueIdentifier>{92305745-5091-4169-9c09-70908c5492d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\6_pro">
+      <UniqueIdentifier>{fa61f382-aac6-4835-994e-e142b3813a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\7_ai_math">
+      <UniqueIdentifier>{e5a34565-15fe-4333-a780-1425fcc333a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\0%28terminal%29\3_platform">
+      <UniqueIdentifier>{41022b0b-3d08-4786-a92f-8de4f3a3d8e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\1%28web%29">
+      <UniqueIdentifier>{7f500dbf-a816-49cf-91b8-15921c769734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\1%28web%29\0_who">
+      <UniqueIdentifier>{569e651a-2d45-48ea-86cd-5ae8335c2850}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\1%28web%29\1_web">
+      <UniqueIdentifier>{d6849799-6e06-488c-a618-a1407419b905}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\1%28web%29\2_orm">
+      <UniqueIdentifier>{8fd76de5-d540-4743-a37f-9c6c147f095a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\1%28web%29\3_store">
+      <UniqueIdentifier>{195d2977-026f-438b-9582-1ac67347bba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\2%28audio%29">
+      <UniqueIdentifier>{99f3ede6-02a1-4c77-9abe-36e1dbb3ce5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\2%28audio%29\0_audio">
+      <UniqueIdentifier>{e1308290-7b6b-42ba-bb45-dd8922ee00be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\2%28audio%29\1_adsp">
+      <UniqueIdentifier>{5f02ef51-2515-4c54-92d6-be4c19e9687b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\2%28audio%29\2_music">
+      <UniqueIdentifier>{ba5d743a-4d4d-47b3-bb3e-f07532c3894f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\3%28visual%29">
+      <UniqueIdentifier>{04cdbd78-3fbd-4096-84e6-1280c74d80f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\3%28visual%29\0_angle">
+      <UniqueIdentifier>{f470a04b-5dee-4823-b101-79062ba8ce80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\3%28visual%29\1_gi">
+      <UniqueIdentifier>{5bab1531-224c-4520-a9ab-35f9d573ed09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\3%28visual%29\2_gui">
+      <UniqueIdentifier>{360db56b-7a25-4c12-9327-8d32940993cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\3%28visual%29\3_pl">
+      <UniqueIdentifier>{98428275-d956-4f86-92f3-7aefa9398395}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\3%28visual%29\4_igeek">
+      <UniqueIdentifier>{f8e99617-a096-4427-8583-454779775c01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\4%28multimedia%29">
+      <UniqueIdentifier>{8b6c3678-dda0-47cf-aca2-24e136d8170f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\4%28multimedia%29\0_vl">
+      <UniqueIdentifier>{fa442b18-f593-42dc-a50f-5bad023c5e8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>kabuki\0%28terminal%29\0_f2</Filter>
+    </ClInclude>
+    <ClInclude Include="seam_f2.h">
+      <Filter>kabuki\0%28terminal%29\0_f2</Filter>
+    </ClInclude>
+    <ClInclude Include="footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2</Filter>
+    </ClInclude>
+    <ClInclude Include="header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2</Filter>
+    </ClInclude>
+    <ClInclude Include="00\header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\00</Filter>
+    </ClInclude>
+    <ClInclude Include="00\test_itos_and_stoi.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\00</Filter>
+    </ClInclude>
+    <ClInclude Include="00\footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\00</Filter>
+    </ClInclude>
+    <ClInclude Include="01\header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\01</Filter>
+    </ClInclude>
+    <ClInclude Include="01\test_ftos_and_stof.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\01</Filter>
+    </ClInclude>
+    <ClInclude Include="01\footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\01</Filter>
+    </ClInclude>
+    <ClInclude Include="02\test_core_text_functions.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\02</Filter>
+    </ClInclude>
+    <ClInclude Include="02\footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\02</Filter>
+    </ClInclude>
+    <ClInclude Include="02\header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\02</Filter>
+    </ClInclude>
+    <ClInclude Include="03\header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\03</Filter>
+    </ClInclude>
+    <ClInclude Include="03\test_ascii_strings.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\03</Filter>
+    </ClInclude>
+    <ClInclude Include="03\footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\03</Filter>
+    </ClInclude>
+    <ClInclude Include="04\header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\04</Filter>
+    </ClInclude>
+    <ClInclude Include="04\test_ascii_clock.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\04</Filter>
+    </ClInclude>
+    <ClInclude Include="04\footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\04</Filter>
+    </ClInclude>
+    <ClInclude Include="05\header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\05</Filter>
+    </ClInclude>
+    <ClInclude Include="05\test_ascii_stack.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\05</Filter>
+    </ClInclude>
+    <ClInclude Include="05\footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\05</Filter>
+    </ClInclude>
+    <ClInclude Include="06\footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\06</Filter>
+    </ClInclude>
+    <ClInclude Include="06\header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\06</Filter>
+    </ClInclude>
+    <ClInclude Include="06\test_ascii_array.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\06</Filter>
+    </ClInclude>
+    <ClInclude Include="07\header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\07</Filter>
+    </ClInclude>
+    <ClInclude Include="07\test_ascii_loom.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\07</Filter>
+    </ClInclude>
+    <ClInclude Include="07\footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\07</Filter>
+    </ClInclude>
+    <ClInclude Include="08\footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\08</Filter>
+    </ClInclude>
+    <ClInclude Include="08\header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\08</Filter>
+    </ClInclude>
+    <ClInclude Include="08\test_ascii_table.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\08</Filter>
+    </ClInclude>
+    <ClInclude Include="09\header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\09</Filter>
+    </ClInclude>
+    <ClInclude Include="09\test_ascii_varint.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\09</Filter>
+    </ClInclude>
+    <ClInclude Include="09\footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\09</Filter>
+    </ClInclude>
+    <ClInclude Include="10\footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\10</Filter>
+    </ClInclude>
+    <ClInclude Include="10\header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\10</Filter>
+    </ClInclude>
+    <ClInclude Include="10\test_ascii_list.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\10</Filter>
+    </ClInclude>
+    <ClInclude Include="11\test_ascii_map.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\11</Filter>
+    </ClInclude>
+    <ClInclude Include="11\footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\11</Filter>
+    </ClInclude>
+    <ClInclude Include="11\header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\11</Filter>
+    </ClInclude>
+    <ClInclude Include="12\footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\12</Filter>
+    </ClInclude>
+    <ClInclude Include="12\header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\12</Filter>
+    </ClInclude>
+    <ClInclude Include="12\test_ascii_book.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\12</Filter>
+    </ClInclude>
+    <ClInclude Include="13\header.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\13</Filter>
+    </ClInclude>
+    <ClInclude Include="13\test_ascii_dictionary.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\13</Filter>
+    </ClInclude>
+    <ClInclude Include="13\footer.h">
+      <Filter>kabuki\0%28terminal%29\0_f2\13</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header.h">
+      <Filter>kabuki\0%28terminal%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\seam_terminal.h">
+      <Filter>kabuki\0%28terminal%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\footer.h">
+      <Filter>kabuki\0%28terminal%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\footer.h">
+      <Filter>kabuki\1%28web%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\header.h">
+      <Filter>kabuki\1%28web%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\seam_web.h">
+      <Filter>kabuki\1%28web%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\0_who\footer.h">
+      <Filter>kabuki\1%28web%29\0_who</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\0_who\header.h">
+      <Filter>kabuki\1%28web%29\0_who</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\0_who\pch.h">
+      <Filter>kabuki\1%28web%29\0_who</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\0_who\seam_who.h">
+      <Filter>kabuki\1%28web%29\0_who</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\1_web\header.h">
+      <Filter>kabuki\1%28web%29\1_web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\1_web\pch.h">
+      <Filter>kabuki\1%28web%29\1_web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\1_web\seam_web.h">
+      <Filter>kabuki\1%28web%29\1_web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\1_web\footer.h">
+      <Filter>kabuki\1%28web%29\1_web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\2_orm\footer.h">
+      <Filter>kabuki\1%28web%29\2_orm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\2_orm\header.h">
+      <Filter>kabuki\1%28web%29\2_orm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\2_orm\pch.h">
+      <Filter>kabuki\1%28web%29\2_orm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\3_store\footer.h">
+      <Filter>kabuki\1%28web%29\3_store</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\3_store\header.h">
+      <Filter>kabuki\1%28web%29\3_store</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\1\3_store\pch.h">
+      <Filter>kabuki\1%28web%29\3_store</Filter>
+    </ClInclude>
+    <ClInclude Include="..\1_hal\footer.h">
+      <Filter>kabuki\0%28terminal%29\1_hal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\1_hal\header.h">
+      <Filter>kabuki\0%28terminal%29\1_hal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\1_hal\pch.h">
+      <Filter>kabuki\0%28terminal%29\1_hal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\1_hal\seam_hal.h">
+      <Filter>kabuki\0%28terminal%29\1_hal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\1_hal\assembly.h">
+      <Filter>kabuki\0%28terminal%29\1_hal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\align.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\ascii.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\ascii_data.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\benchmark.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\binary.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\clock.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\config.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\console.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\global.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\hash.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\lock.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\obj.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\public.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\rng.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\socket.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\str.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\str1.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\str2.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\str4.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\talign.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tarray.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tascii_data.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tbenchmark.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tbinary.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tbook.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tclock.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tconsole.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tdic.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\test.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\test_footer.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\test_header.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\thash.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tlom.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tlst.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tmap.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tobj.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\trng.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tset.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tsocket.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tstk.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\tstr.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\ttbl.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\ttest.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\varint.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\f2\vk.h">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\targetver.h">
+      <Filter>kabuki</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\assembly.h">
+      <Filter>kabuki</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\footer.h">
+      <Filter>kabuki</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header.h">
+      <Filter>kabuki</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pch.h">
+      <Filter>kabuki</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\seam_kabuki.h">
+      <Filter>kabuki</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2</Filter>
+    </None>
+    <None Include="00\readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2\00</Filter>
+    </None>
+    <None Include="01\readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2\01</Filter>
+    </None>
+    <None Include="02\readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2\02</Filter>
+    </None>
+    <None Include="03\readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2\03</Filter>
+    </None>
+    <None Include="04\readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2\04</Filter>
+    </None>
+    <None Include="05\readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2\05</Filter>
+    </None>
+    <None Include="06\readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2\06</Filter>
+    </None>
+    <None Include="07\readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2\07</Filter>
+    </None>
+    <None Include="08\readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2\08</Filter>
+    </None>
+    <None Include="09\readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2\09</Filter>
+    </None>
+    <None Include="10\readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2\10</Filter>
+    </None>
+    <None Include="11\readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2\11</Filter>
+    </None>
+    <None Include="12\readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2\12</Filter>
+    </None>
+    <None Include="13\readme.md">
+      <Filter>kabuki\0%28terminal%29\0_f2\13</Filter>
+    </None>
+    <None Include="..\readme.md">
+      <Filter>kabuki\0%28terminal%29</Filter>
+    </None>
+    <None Include="..\..\f2\readme.md">
+      <Filter>kabuki\f2</Filter>
+    </None>
+    <None Include="..\..\readme.md">
+      <Filter>kabuki</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\1\3_store\seam_store.h">
+      <Filter>kabuki\1%28web%29\3_store</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f2\f2_lock.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f2\f2_obj.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f2\f2_rng.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f2\f2_socket.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f2\f2_str.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f2\f2_test.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f2\f2_vk.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f2\f2_align.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f2\f2_ascii_data.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f2\f2_benchmark.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f2\f2_binary.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f2\f2_clock.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f2\f2_console.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\f2\f2_hash.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pch.cc">
+      <Filter>kabuki</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\seam_tree.cc">
+      <Filter>kabuki</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\1\2_orm\seam_orm.h">
+      <Filter>kabuki\1%28web%29\2_orm</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

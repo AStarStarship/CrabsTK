@@ -13,6 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
+
 #if SEAM >= SEAM_0_0_0__06
 #ifndef INCLUDED_KABUKI_F2_ARRAY
 #define INCLUDED_KABUKI_F2_ARRAY
@@ -22,11 +23,10 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* @group Array
-    @brief A multi-dimensional array.
-    @desc  ASCII Array uses the same data structure as the ASCII Stack, the
-           difference being that the size_array of the Stack is set to 0 for
-           the Stack and the Array has a packed multi-dimensional array after
-           the stack of dimensions. */
+@brief A multi-dimensional array.
+@desc  ASCII Array uses the same data structure as the ASCII Stack, the
+difference being that the size_array of the Stack is set to 0 for the Stack and
+the Array has a packed multi-dimensional array after the stack of dimensions. */
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 constexpr SI ArrayCountUpperLimit(SI dimension_count, SI element_count) {
   UI header_size = (UI)(sizeof(CArray<T, UI, SI>) +

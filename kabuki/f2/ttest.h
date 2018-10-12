@@ -14,7 +14,6 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM > 0
 #ifndef INCLUDED_KABUKI_F2_TTEST
 #define INCLUDED_KABUKI_F2_TTEST 1
 
@@ -41,4 +40,3 @@ bool Test(const Char* a, const Char* b) {
 }  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_TTEST
-#endif  //< #if SEAM > 0
