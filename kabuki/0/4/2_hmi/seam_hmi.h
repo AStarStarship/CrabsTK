@@ -1,41 +1,29 @@
-/** Kabuki Starship
-    @file /.../Source/KabukiTheater-Impl/_Theater/HMI/TESTS/ControlArrayTests.h
-    @author  Cale McCollough <cale.mccollough@gmail.com>
-    @license Copyright (C) 2017 Cale McCollough
-   <https://calemccollough.github.io>
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    /kabuki/0/4/2_hmi/seam_hmi.h
+@author  Cale McCollough <cale.mccollough@gmail.com>
+@license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
+#pragma once
+#include <kabuki/features/hmi/control_array.h>
+#include <kabuki/features/hmi/controlmatrix.h>
+#include <kabuki/features/hmi/midicontrol.h>
+#include <kabuki/features/hmi/macronutton.h>
+#include <kabuki/features/hmi/widgetpage.h>
 
-                            All right reserved (R).
+#include "header.h"
+namespace _ {
 
-        Licensed under the Apache License, Version 2.0 (the "License"); you may
-        not use this file except in compliance with the License. You may obtain
-        a copy of the License at
+const char* Seam_0_4_2__00 (char* seam_log, char* seam_end, const char* args) {
+  control_array a();
 
-        http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
-*/
-
-#include <_Theater/HMI/ControlArray.h>
-#include <_Theater/HMI/ControlMatrix.h>
-#include <_Theater/HMI/MIDIControl.h>
-#include <_Theater/HMI/MacroButton.h>
-#include <_Theater/HMI/WidgetPage.h>
-
-#include <CppUTest/CommandLineTestRunner.h>
-#include <CppUTest/TestHarness.h>
-
-#include <stdio.h>
-
-using namespace _;
-
-TEST(_HMI_Tests, _Theater_HMI_ControlArrayTests_1) {
-  ControlArray a();
-
-  PRINTF("Testing const char* print (I2P::Expression& slot)...");
+  PRINTF("Testing const char* print (_::Expr& slot)...");
   a.Print();
 
   DMXControl c1("Control 1", 50, 33);
@@ -46,7 +34,7 @@ TEST(_HMI_Tests, _Theater_HMI_ControlArrayTests_1) {
   a.SetControl(0, &c1);
   a.SetControl(1, &c2);
 
-  printf("Added 2 controls to a:\n");
+  PRINTF("Added 2 controls to a:\n");
   a.Print();
 
   DMXControl c3("Control 3", 27, 66);
@@ -75,41 +63,41 @@ TEST(_HMI_Tests, _Theater_HMI_ControlArrayTests_1) {
   PRINTF("Attempted to add some buttons:\n");
   a.Print();
 
-  PRINTF("Controls::ControlArray tests completed successfully. :-)");
+  PRINTF("_::control_array tests completed successfully. :-)");
 }
 
 TEST(_HMI_Tests, ProjectTests1) {
-  printf("Controls::DMXButton class API\n");
+  PRINTF("_::DMXButton class API\n");
 
   DMXButton a("DMX Button A");
 
-  printf("Testing const char* print (I2P::Expression& slot)...");
+  PRINTF("Testing const char* print (_::Expr& slot)...");
   a.Print();
 
-  printf("Testing void processPress () and void processDepress ()");
+  PRINTF("Testing void processPress () and void processDepress ()");
   a.Press();
   CHECK(a.isPressed());
   a.Depress();
   CHECK(!a.isPressed());
 
-  printf("Testing void toggle ()");
+  PRINTF("Testing void toggle ()");
   a.SetButtonAction(ButtonAction::Latching);
   a.Toggle();
   CHECK(a.GetValue() == a.GetMaxValue());
   a.Toggle();
   CHECK(a.GetValue() == a.GetMinValue());
 
-  printf("\n\n_Theater::ProjectTests completed.\n\n");
+  PRINTF("\n\n_Theater::ProjectTests completed.\n\n");
 }
 
 TEST(_HMI_Tests, _Theater_HMI_ControlMatrixTests_1) {
-  printf("Testing Controls::ControlMatrix class.");
+  PRINTF("Testing _::ControlMatrix class.");
 
-  printf("Testing const char* print (I2P::Expression& slot):\n");
+  PRINTF("Testing const char* print (_::Expr& slot):\n");
   ControlMatrix cm(5, 2);
   cm.Print();
 
-  printf("Testing setControl ()");
+  PRINTF("Testing setControl ()");
 
   DMXControl testControl0_0("DMX Control 1");
   MIDIControl testControl1_0("MIDI Control 1");
@@ -137,55 +125,55 @@ TEST(_HMI_Tests, _Theater_HMI_ControlMatrixTests_1) {
 
   cm.Print();
 
-  printf("Done testing Controls::ControlMatrix class API! :-)");
+  PRINTF("Done testing _::ControlMatrix class API! :-)");
 
-  printf("\n\n_Theater::ProjectTests completed.\n\n");
+  PRINTF("\n\n_Theater::ProjectTests completed.\n\n");
 }
 
 TEST(_HMI_Tests, _Theater_HMI_Widget_Tests_1) {
-  printf("Running Widget tests...");
+  PRINTF("Running Widget tests...");
 
-  printf("Testing Controls::Widget class API\n");
-  _::printLine('~');
+  PRINTF("Testing _::Widget class API\n");
+  PRINT_LINE('~');
 
   Widget w("Test Widget");
 
-  printf("Testing const char* ToString ()\n");
+  PRINTF("Testing const char* ToString ()\n");
 
   w.Print();
 
-  printf("Testing insertPage  (const char*&)\n");
+  PRINTF("Testing InsertPage  (const char*&)\n");
 
-  const char* pageNameString;
+  const char* page_name_string;
   char pageIndex = '1';
 
   for (int i = 0; i < 6; ++i) {
-    pageNameString = "Page " + pageIndex;
-    printf("Inserting Page %s...", pageNameString);
-    CHECK(!w.insertPage(pageNameString),
-          "Error: Failed to insert page " + pageNameString + "!\n");
+    page_name_string = "Page " + pageIndex;
+    PRINTF("Inserting Page %s...", page_name_string);
+    CHECK(!w.InsertPage(page_name_string),
+          "Error: Failed to insert page " + page_name_string + "!\n");
     ++pageIndex;
   }
 
-  printf(w.ToString());
+  PRINTF(w.ToString());
 
-  printf("Testing contains  (const char*&)...");
+  PRINTF("Testing contains  (const char*&)...");
 
-  CHECK(!w.contains("Page 1"), "Error: w does not contians \"Page 1\"");
+  CHECK(!w.contains("Page 1"), "Error: w does not contains \"Page 1\"");
 
-  printf("Testing deletePage  (int)... ");
+  PRINTF("Testing deletePage  (int)... ");
 
-  int debugCode;
+  int debug_code;
 
-  debugCode = w.deletePage(1);
+  debug_code = w.deletePage(1);
 
-  CHECK(debugCode == 1,
-        "Error: w.deletePage  (1) returrned invalid debugCode: " + debugCode);
+  CHECK(debug_code == 1,
+        "Error: w.deletePage  (1) returned invalid debug_code: " + debug_code);
 
   w.deletePage(2);
   w.deletePage(3);
-  debugCode = w.deletePage(3);
-  CHECK(debugCode == 1, "Error: debugCdode was not equal to 1: " + debugCode);
+  debug_code = w.deletePage(3);
+  CHECK(debug_code == 1, "Error: debugCdode was not equal to 1: " + debug_code);
   w.deletePage(3);
   w.deletePage(1);
   w.deletePage(2);
@@ -196,238 +184,235 @@ TEST(_HMI_Tests, _Theater_HMI_Widget_Tests_1) {
   w.deletePage(1);
   w.Print();
 
-  printf("Testing inserting duplicate page names...");
+  PRINTF("Testing inserting duplicate page names...");
 
   for (int i = 0; i < 5; ++i) {
-    debugCode = w.insertPage("Untitled");
-    printf((i + 1) + ".) Debug code: " + debugCode);
+    debug_code = w.InsertPage("Untitled");
+    PRINTF((i + 1) + ".) Debug code: " + debug_code);
   }
-  debugCode = w.insertPage("Untitled");
+  debug_code = w.InsertPage("Untitled");
 
   w.deletePage("Untitled 4");
-  debugCode = w.insertPage("Untitled");
+  debug_code = w.InsertPage("Untitled");
 
-  printf(w.ToString());
+  PRINTF(w.ToString());
 
-  printf("Testing copy constructor...");
+  PRINTF("Testing copy constructor...");
   Widget wc(w);
   wc.Print();
 
-  printf("Done testing Widget class API");
+  PRINTF("Done testing Widget class API");
 
-  printf("\n\nRunning _Theater::HMI::Widget tests completed.\n\n");
+  PRINTF("\n\nRunning _::Widget tests completed.\n\n");
 }
 
 TEST(_HMI_Tests, _Teather_HMI_WidgetPage_Tests_1) {
-  printf("Testing Controls::WidgetPage");
+  PRINTF("Testing _::WidgetPage");
 
-  printf("Testing Page class\n");
-  _::printLine('~');
+  PRINTF("Testing Page class\n");
+  PRINT_LINE('~');
 
   WidgetPage p("Test Page");
 
-  printf("Testing const char* toString ()");
+  PRINTF("Testing const char* toString ()");
   p.Print();
 
-  printf("Testing copy constructor...");
+  PRINTF("Testing copy constructor...");
   WidgetPage pc(p);
   pc.Print();
 
-  printf("Done testing Page class");
+  PRINTF("Done testing Page class");
 
-  printf("\n\nRunning _Theater::HMI::WidgetPage tests completed.\n\n");
+  PRINTF("\n\nRunning _::WidgetPage tests completed.\n\n");
 }
 
 TEST(_HMI_Tests, ProjectTests1) {
-  printf("Testing Controls::MIDIControl\n");
+  PRINTF("Testing _::MIDIControl\n");
 
   MIDIControl a("MIDI Control A");
   a.Print();
 
-  printf("Testing setCC ()");
+  PRINTF("Testing setCC ()");
   a.SetCC(127);
   CHECK(a.GetCC() == 127);
   a.SetCC(128);
   CHECK(a.GetCC() == 127);
   a.SetCC(-1);
-  printf("a:\n");
+  PRINTF("a:\n");
   a.Print();
   CHECK(a.GetCC() == 0);
 
-  printf("Done testing Controls::MIDIControl class API. :-)\n");
+  PRINTF("Done testing _::MIDIControl class API. :-)\n");
 }
 
 TEST(_HMI_Tests, MIDIButtonTests1) {
-  printf("Controls::MIDIButton...\n");
+  PRINTF("_::MIDIButton...\n");
 
   MIDIButton a("MIDI Button A");
 
-  printf("Testing const char* print (I2P::Expression& slot)");
+  PRINTF("Testing const char* print (_::Expr& slot)");
   a.Print();
 
-  printf("\n\n_Theater::MIDIButton tests completed.\n\n");
+  PRINTF("\n\n_Theater::MIDIButton tests completed.\n\n");
 }
 
 TEST(_HMI_Tests, MacroButtonTests) {
-  printf("Testing Controls::MacroButton class API:\n");
+  PRINTF("Testing _::MacroButton class API:\n");
 
   auto macroA = MacroButton("Macro Button A");
 
-  printf("Testing const char* print (_::verifier&)...");
-  printf(macroA.Print(I2P::Expression & slot));
-  printf("Testing add  (Parameter<int>*)");
+  PRINTF("Testing const char* print (_::verifier&)...");
+  PRINTF(macroA.Print(_::Expr & slot));
+  PRINTF("Testing add  (Parameter<int>*)");
   macroA.add(new DMXControl("Macro 1"));
   macroA.add(new MIDIControl("Macro 2"));
   macroA.add(new DMXButton("Macro 3"));
   macroA.add(new MIDIButton("Macro 4"));
-  printf("Added " + const char*(macroA.numControls()) + " test controls.\n" +
-         macroA.Print(I2P::Expression & slot));
-  printf("Testing void trigger ()");
+  PRINTF("Added " + const char*(macroA.numControls()) + " test controls.\n" +
+         macroA.Print(_::Expr & slot));
+  PRINTF("Testing void trigger ()");
   macroA.trigger();
-  printf("Testing Parameter<int>* remove  (index);");
+  PRINTF("Testing Parameter<int>* remove  (index);");
 
-  printf("\n\n_Theater::ProjectTests completed.\n\n");
+  PRINTF("\n\n_Theater::ProjectTests completed.\n\n");
 }
 
 TEST(_HMI_Tests, ProjectTests1) {
-  printf("Controls::Label Class.\n");
+  PRINTF("_::Label Class.\n");
 
-  const char *invalidString = "Invalid label ~",
-             *validString1 = "Valid label 1",
-             *validString2 = "Valid label !@%^",
-             *validString3 = "Valid label &* ()";
+  const char *invalid_string = "Invalid label ~",
+             *valid_string_1 = "Valid label 1",
+             *valid_string_2 = "Valid label !@%^",
+             *valid_string_3 = "Valid label &* ()";
 
-  Label validLabel1(validString1);
-  Label validLabel2(validString1);
-  Label validLabel3(validString3);
-  Label invalidLabel(invalidString);
+  Label valid_label_1(valid_string_1);
+  Label valid_label_2(valid_string_1);
+  Label valid_label_3(valid_string_3);
+  Label invalid_label(invalid_string);
 
-  printf("Testing valid string input.");
+  PRINTF("Testing valid string input.");
 
-  printf("Testing int isValid  (const char* &)");
-  printf("isValidString(validString1): %b", isValidLabel(validString1));
-  CHECK(isValidLabel(validString1) == Valid);
-  printf("Testing invalid string input.");
-  CHECK(isValidLabel(invalidString) != Valid);
-  CHECK(isValidLabel("") != 0);
-  CHECK(isValidLabel("123456789012345678901") != 0);
+  PRINTF("Testing int isValid  (const char* &)");
+  PRINTF("isValidString(valid_string_1): %b", is_valid_label(valid_string_1));
+  CHECK(is_valid_label(valid_string_1) == Valid);
+  PRINTF("Testing invalid string input.");
+  CHECK(is_valid_label(invalid_string) != Valid);
+  CHECK(is_valid_label("") != 0);
+  CHECK(is_valid_label("123456789012345678901") != 0);
 
-  printf("Testing int compare  (const char* &)\n");
-  invalidLabel.Print();
-  printf("Testing valid comparisons...");
-  CHECK(!validLabel1.Compare(validString1));
-  printf("Testing invalid comparisons...");
-  CHECK(validLabel1.Compare(validString2) != Comperable);
-  CHECK(validLabel2.Compare(validString3) != Comperable);
+  PRINTF("Testing int compare  (const char* &)\n");
+  invalid_label.Print();
+  PRINTF("Testing valid comparisons...");
+  CHECK(!valid_label_1.Compare(valid_string_1));
+  PRINTF("Testing invalid comparisons...");
+  CHECK(valid_label_1.Compare(valid_string_2) != Comperable);
+  CHECK(valid_label_2.Compare(valid_string_3) != Comperable);
 
-  printf("Attempting to SetLabel to the InvalidString");
+  PRINTF("Attempting to SetLabel to the invalid_string");
   // auto expectedLabel = "Test string 1";
-  validLabel1.SetLabel(invalidString);
-  CHECK(!validLabel1.Compare(invalidLabel));
-  printf("Setting the label to validString3");
-  validLabel1.SetLabel(validString3);
-  CHECK(validLabel1.GetLabel() == validString3);
+  valid_label_1.SetLabel(invalid_string);
+  CHECK(!valid_label_1.Compare(invalid_label));
+  PRINTF("Setting the label to valid_string_3");
+  valid_label_1.SetLabel(valid_string_3);
+  CHECK(valid_label_1.GetLabel() == valid_string_3);
 
-  printf("Done testing Controls::Label class API.");
+  PRINTF("Done testing _::Label class API.");
 
-  printf("\n\n_Theater::ProjectTests completed.\n\n");
-}
+  PRINTF("\n\n_Theater::ProjectTests completed.\n\n");
 
-TEST(_HMI_Tests, IsymmetricControllerTests) {
-  printf("Testing IsymmetricController class _KabukiToolkit\n");
-  _::printLine('~');
+  PRINTF("Testing IsymmetricController class _KabukiToolkit\n");
+  PRINT_LINE('~');
 
   IsymmetricController controller();
 
-  printf("Testing ToString ().");
-  printf(controller.Print());
+  PRINTF("Testing ToString ().");
+  PRINTF(controller.Print());
 
   // testISCS.addTemplate ();
 
-  printf("Done testing IsymmetricController class _KabukiToolkit");
+  PRINTF("Done testing IsymmetricController class _KabukiToolkit");
 
-  printf("\n\n_Theater::ProjectTests completed.\n\n");
-}
+  PRINTF("\n\n_Theater::ProjectTests completed.\n\n");
 
-TEST(_HMI_Tests, DMXControlTests) {
-  printf("Controls::DMXControl");
+  PRINTF("_::DMXControl");
 
-  _::printLine('-');
-  DMXControl controlA("DMX Control A");
+  PRINT_LINE('-');
+  DMXControl control_a("DMX Control A");
 
-  printf("Printing controlA.Print (I2P::Expression& slot)\n");
-  controlA.Print();
+  PRINTF("Printing control_a.Print (_::Expr& slot)\n");
+  control_a.Print();
 
-  printf("Testing copy constructor\n");
-  DMXControl controlB(controlA);
-  printf("Printing controlB.Print (I2P::Expression& slot)\n");
-  controlB.Print();
-  printf("Testing int Compare  (const Control&)");
+  PRINTF("Testing copy constructor\n");
+  DMXControl control_b(control_a);
+  PRINTF("Printing control_b.Print (_::Expr& slot)\n");
+  control_b.Print();
+  PRINTF("Testing int Compare  (const Control&)");
 
-  CHECK(controlA.Compare(controlB) == 0);
-  int CompareValue = controlA.Compare(controlB);
-  printf("Testing int Compare  (const Control&): " + CompareValue);
-  CHECK(CompareValue == 0);
+  CHECK(control_a.Compare(control_b) == 0);
+  int compare_value = control_a.Compare(control_b);
+  PRINTF("Testing int Compare  (const Control&): " + compare_value);
+  CHECK(compare_value == 0);
 
-  printf("Testing valid inputs...");
+  PRINTF("Testing valid inputs...");
 
-  controlA = DMXControl("", 1, 1, 0, 255, 8);
+  control_a = DMXControl("", 1, 1, 0, 255, 8);
 
-  printf("Printing controlA.Print (I2P::Expression& slot)...\n");
-  controlA.Print();
+  PRINTF("Printing control_a.Print (_::Expr& slot)...\n");
+  control_a.Print();
 
-  controlA.SetLabel("DMX Control B");
-  CHECK(controlA.label() == "DMX Control B");
-  controlA.SetInitValue(35);
-  controlA.Print() CHECK(controlA.initValue() == 35);
-  controlA.SetLSBValue(66);
-  CHECK(controlA.lSBValue() == 66);
-  controlA.SetMaxValue(245);
-  CHECK(controlA.maxValue() == 245);
-  controlA.SetMinValue(70);
-  CHECK(controlA.GetMinValue() == 70);
+  control_a.SetLabel("DMX Control B");
+  CHECK(control_a.label() == "DMX Control B");
+  control_a.SetInitValue(35);
+  control_a.Print() CHECK(control_a.initValue() == 35);
+  control_a.SetLSBValue(66);
+  CHECK(control_a.lSBValue() == 66);
+  control_a.SetMaxValue(245);
+  CHECK(control_a.maxValue() == 245);
+  control_a.SetMinValue(70);
+  CHECK(control_a.GetMinValue() == 70);
 
-  printf("Retesting copy constructor");
+  PRINTF("Retesting copy constructor");
 
-  controlB = DMXControl(controlA);
-  CompareValue = controlA.Compare(controlB);
-  CHECK(!CompareValue);
+  control_b = DMXControl(control_a);
+  compare_value = control_a.Compare(control_b);
+  CHECK(!compare_value);
 
-  printf("Testing invalid input...");
+  PRINTF("Testing invalid input...");
 
-  controlA.SetWordSize(5);
-  printf("controlA.wordSize (): %i\n", controlA.wordSize());
-  CHECK(controlA.GetWordSize() == 7);
-  controlA.SetChannel(555);
-  CHECK(controlA.GetChannel() == DMXControl::NumChannels);
-  controlA.SetChannel(-5);
-  CHECK(controlA.GetChannel() == 0);
-  controlA.SetChannel(1);
-  CHECK(controlA.GetChannel() == 1);
+  control_a.SetWordSize(5);
+  PRINTF("control_a.WordSize (): %i\n", control_a.WordSize());
+  CHECK(control_a.GetWordSize() == 7);
+  control_a.SetChannel(555);
+  CHECK(control_a.GetChannel() == DMXControl::NumChannels);
+  control_a.SetChannel(-5);
+  CHECK(control_a.GetChannel() == 0);
+  control_a.SetChannel(1);
+  CHECK(control_a.GetChannel() == 1);
 
-  printf("Done testing DMXControl class API");
-}
+  PRINTF("Done testing DMXControl class API");
 
-TEST(ControlArrayTests, DmxButtonTests) {
-  printf("Controls::DMXButton class API\n");
+  PRINTF("_::DMXButton class API\n");
 
   DMXButton a("DMX Button A");
 
-  printf("Testing const char* print (I2P::Expression& slot)...");
+  PRINTF("Testing const char* print (_::Expr& slot)...");
   a.Print();
 
-  printf("Testing void processPress () and void processDepress ()");
+  PRINTF("Testing void processPress () and void processDepress ()");
   a.Press();
   CHECK(a.IsPressed());
   a.Depress();
   CHECK(!a.IsPressed());
 
-  printf("Testing void toggle ()");
+  PRINTF("Testing void toggle ()");
   a.SetButtonAction(ButtonAction::Latching);
   a.Toggle();
   CHECK(a.GetValue() == a.GetMaxValue());
   a.Toggle();
   CHECK(a.GetValue() == a.GetMinValue());
 
-  printf("\n\n_Theater::ProjectTests completed.\n\n");
+  PRINTF("\n\n_Theater::ProjectTests completed.\n\n");
+#endif
+  return nullptr.
 }
+#include "footer.h"

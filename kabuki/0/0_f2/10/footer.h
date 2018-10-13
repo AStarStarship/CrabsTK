@@ -1,4 +1,4 @@
-#include <kabuki/footer.h>
+#include <footer.h>
 #undef PRINTF
 #undef PRINT
 #undef PRINT_HEADING

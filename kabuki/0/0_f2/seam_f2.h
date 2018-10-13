@@ -13,20 +13,20 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#include "00/test_itos_and_stoi.h"
-#include "01/test_ftos_and_stof.h"
-#include "02/test_core_text_functions.h"
-#include "03/test_ascii_strings.h"
-#include "04/test_ascii_clock.h"
-#include "05/test_ascii_stack.h"
-#include "06/test_ascii_array.h"
-#include "07/test_ascii_loom.h"
-#include "08/test_ascii_table.h"
-#include "09/test_ascii_varint.h"
-#include "10/test_ascii_list.h"
-#include "11/test_ascii_map.h"
-#include "12/test_ascii_book.h"
-#include "13/test_ascii_dictionary.h"
+#include "00/itos_and_stoi.h"
+#include "01/ftos_and_stof.h"
+#include "02/core_text_functions.h"
+#include "03/ascii_strings.h"
+#include "04/ascii_clock.h"
+#include "05/ascii_stack.h"
+#include "06/ascii_array.h"
+#include "07/ascii_loom.h"
+#include "08/ascii_table.h"
+#include "09/ascii_varint.h"
+#include "10/ascii_list.h"
+#include "11/ascii_map.h"
+#include "12/ascii_book.h"
+#include "13/ascii_dictionary.h"
 
 namespace _ {
 

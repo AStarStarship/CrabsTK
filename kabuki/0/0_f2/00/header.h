@@ -1,4 +1,4 @@
-#include <kabuki/header.h>
+#include <header.h>
 #if SEAM == SEAM_0_0_0__00
 
 #include <kabuki/f2/console.h>

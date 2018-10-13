@@ -1,0 +1,36 @@
+#include <kabuki/f2/test_footer.h>
+
+#undef SEAM_0_0_0__00
+#undef SEAM_0_0_0__01
+#undef SEAM_0_0_0__02
+#undef SEAM_0_0_0__03
+#undef SEAM_0_0_0__04
+#undef SEAM_0_0_0__05
+#undef SEAM_0_0_0__06
+#undef SEAM_0_0_0__07
+#undef SEAM_0_0_0__08
+#undef SEAM_0_0_0__09
+#undef SEAM_0_0_0__10
+#undef SEAM_0_0_0__11
+#undef SEAM_0_0_0__12
+#undef SEAM_0_0_0__13
+#undef SEAM_0_0_4_0__00
+#undef SEAM_0_0_4_0__00_00
+#undef SEAM_0_0_2__00
+#undef SEAM_0_0_3__00
+#undef SEAM_0_0_4__00
+#undef SEAM_0_0_4__00
+#undef SEAM_0_0_4__00
+#undef SEAM_0_0_4__00
+#undef SEAM_0_0_4__00
+#undef SEAM_0_0_4__00
+#undef SEAM_0_0_4__00
+#undef SEAM_0_0_4__00
+#undef SEAM_0_0_4__00
+#undef SEAM_0_0_4__00
+#undef SEAM_0_0_4__00
+#undef SEAM_0_0_4__00
+#undef SEAM_0_0_4__00
+#undef SEAM_0_0_4__00
+
+#undef SEAM_N

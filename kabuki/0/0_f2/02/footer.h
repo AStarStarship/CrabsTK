@@ -1,4 +1,4 @@
-#include <kabuki/footer.h>
+#include <footer.h>
 #undef PRINT(item)
 #undef PRINTF(x, ...)
 #undef PAUSE(message)

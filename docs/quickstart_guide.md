@@ -26,7 +26,7 @@ git clone https://github.com/google/angle.git
 
 ## Step 4
 
-Loop through the ~/seam_0 directory for a project that could work for a bootstrap for your project and copy the folder into yoru workspace and modify the "assembly.h" and `pch.h` to suit your needs.
+Loop through the /kabuki directory for a project that could work for a bootstrap for your project and copy the folder into yoru workspace and modify the "assembly.h" and `pch.h` to suit your needs.
 
 # CMake Setup
 

@@ -1,10 +1,6 @@
-# kabuki::toolkit::midi
+# kabuki::toolkit::music
 
-This module contains a cross-platform MIDI engine.
-
-# Development
-
-None of this code is working or tested. It was written many years ago and is crap.
+Doesn't contain anything at the moment.
 
 ## Author
 

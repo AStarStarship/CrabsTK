@@ -113,7 +113,6 @@ All currently broken. Sorry. Please contribute as a developer. Thanks.
 | AnyLED        | Firmware to control PWM and addressable LEDs. |
 | Unicontroller | A universal controller firmware for MIDI, DMX, SCRIPT SDNP, and OSC. |
 | Flowerbed     | Automatic watering system for plants. |
-| Cooler        | (Coming soon) A SCRIPT SDNP fan controller. |
 
 ### 3rd Party APIs
 

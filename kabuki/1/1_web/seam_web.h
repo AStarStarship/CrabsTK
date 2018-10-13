@@ -1,3 +1,25 @@
+/* Kabuki Toolkit @version 0.x
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    \kabuki\1\1_web\seam_web.h
+@author
+@license
+All right reserved (R). Licensed under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at www.apache.org/licenses/LICENSE-2.0.
+Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
+specific language governing permissions and limitations under the License. */
+#pragma once
+#include <kabuki/f2/global.h>
+#include "00/project_foo.h"
+namespace _ {
+const char* Seam_0_1_1(char* seam_log, char* seam_end, const char* args) {
+  if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
+  return TestTree<Seam_0_1_1__00>(seam_log, seam_end, args);
+}
+
+#if 0
 //#define CROW_ENABLE_LOGGING
 #define CROW_LOG_LEVEL 0
 #define CROW_ENABLE_DEBUG
@@ -29,26 +51,35 @@ void error_print(const A& a, Args...args)
 template <typename ...Args>
 void fail(Args...args) { error_print(args...);failed__ = true; }
 
-#define ASSERT_TRUE(x) if (!(x)) fail(__FILE__ ":", __LINE__, ": Assert fail: expected ", #x, " is true, at " __FILE__ ":",__LINE__)
-#define ASSERT_EQUAL(a, b) if ((a) != (b)) fail(__FILE__ ":", __LINE__, ": Assert fail: expected ", (a), " actual ", (b),  ", " #a " == " #b ", at " __FILE__ ":",__LINE__)
-#define ASSERT_NOTEQUAL(a, b) if ((a) == (b)) fail(__FILE__ ":", __LINE__, ": Assert fail: not expected ", (a), ", " #a " != " #b ", at " __FILE__ ":",__LINE__)
-#define ASSERT_THROW(x) \
-    try \
-    { \
-        x; \
-        fail(__FILE__ ":", __LINE__, ": Assert fail: exception should be thrown"); \
-    } \
-    catch(std::exception&) \
-    { \
-    }
+#define ASSERT_TRUE(x)                                         \
+  if (!(x))                                                    \
+  fail(__FILE__ ":", __LINE__, ": Assert fail: expected ", #x, \
+       " is true, at " __FILE__ ":", __LINE__)
+#define ASSERT_EQUAL(a, b)                                                  \
+  if ((a) != (b))                                                           \
+  fail(__FILE__ ":", __LINE__, ": Assert fail: expected ", (a), " actual ", \
+       (b), ", " #a " == " #b ", at " __FILE__ ":", __LINE__)
+#define ASSERT_NOTEQUAL(a, b)                                       \
+  if ((a) == (b))                                                   \
+  fail(__FILE__ ":", __LINE__, ": Assert fail: not expected ", (a), \
+       ", " #a " != " #b ", at " __FILE__ ":", __LINE__)
+#define ASSERT_THROW(x)                                                        \
+  try {                                                                        \
+    x;                                                                         \
+    fail(__FILE__ ":", __LINE__, ": Assert fail: exception should be thrown"); \
+  } catch (std::exception&) {                                                  \
+  }
 
-
-
-#define TEST(x) struct test##x:public Test{void test();}x##_; \
-    void test##x::test()
-#define DISABLE_TEST(x) struct test##x{void test();}x##_; \
-    void test##x::test()
-
+#define TEST(x)                  \
+  struct test##x : public Test { \
+    void test();                 \
+  } x##_;                        \
+  void test##x::test()
+#define DISABLE_TEST(x) \
+  struct test##x {      \
+    void test();        \
+  } x##_;               \
+  void test##x::test()
 
 #define LOCALHOST_ADDRESS "127.0.0.1"
 
@@ -1226,3 +1257,4 @@ int main()
 {
     return testmain();
 }
+#endif

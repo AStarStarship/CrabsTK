@@ -10,5 +10,3 @@
 #undef ASSERT(condition)
 #undef TEST_END
 #endif
-
-0 : Move seam_0 folder into kabuki folder.
