@@ -1,6 +1,6 @@
-# Seam Tree Node Assets
+# Document Assets
 
-This folder contains assets that are shared between every application in this seam tree node.
+This folder contains assets created by Kabuki Starship and not third-party resources.
 
 ## Author
 

@@ -62,51 +62,51 @@ namespace _ {
     # Memory Layout
 
     @code
-       _____________________________________________________
-       |_______ | Key 1                                    |
-       |_______ | ...                          Keys        |
-       |_______ v Key N                                    |
-       |___________________________________________________|
+       ____________________________________
+       |_____ | Key 1                                    |
+       |_____ | ...                          Keys        |
+       |_____ v Key N                                    |
+       |__________________________________|
        |                                                   |
        |               Header Buffer Space                 |
-       |___________________________________________________|
-       |_______                          UI Size = 2^N     |
-       |_______                                            |
-       |_______   Collision List N          Hash Table     |
-       |_______ ^ ...                        Collision     |
-       |_______ | Collision List 0              List       |
-       |___________________________________________________|
-       |_______                          UI Size = 2^N     |
-       |_______   Buffer Indexes                           |
-       |_______                             Hash Table     |
-       |_______ ^ Collision Table N          Unsorted      |
-       |_______ | ...                         Indexes      |
+       |__________________________________|
+       |_____                          UI Size = 2^N     |
+       |_____                                            |
+       |_____   Collision List N          Hash Table     |
+       |_____ ^ ...                        Collision     |
+       |_____ | Collision List 0              List       |
+       |__________________________________|
+       |_____                          UI Size = 2^N     |
+       |_____   Buffer Indexes                           |
+       |_____                             Hash Table     |
+       |_____ ^ Collision Table N          Unsorted      |
+       |_____ | ...                         Indexes      |
        |        | Collision table 0                        |
-       |___________________________________________________|
-       |_______                          UI Size = 2^N     |
-       |_______   Buffer Indexes                           |
-       |_______                             Hash Table     |
-       |_______ ^ Collision SI N          Collision     |
-       |_______ | ...                         Indexes      |
+       |__________________________________|
+       |_____                          UI Size = 2^N     |
+       |_____   Buffer Indexes                           |
+       |_____                             Hash Table     |
+       |_____ ^ Collision SI N          Collision     |
+       |_____ | ...                         Indexes      |
        |        | Collision SI 0                        |
-       |___________________________________________________|
-       |_______                          UI Size = 2^(N+1) |
-       |_______   Buffer Indexes                           |
-       |_______                                UI          |
-       |_______ ^ Key Offset N                 key         |
-       |_______ | ...                        Offsets       |
+       |__________________________________|
+       |_____                          UI Size = 2^(N+1) |
+       |_____   Buffer Indexes                           |
+       |_____                                UI          |
+       |_____ ^ Key Offset N                 key         |
+       |_____ | ...                        Offsets       |
        |        | Key Offset 1                             |
-       |___________________________________________________|
-       |_______                          UI Size = 2^(N+1) |
-       |_______   Buffer Indexes                           |
-       |_______                               UI           |
-       |_______ ^ Sorted Hash N              Hashes        |
-       |_______ | ...                                      |
+       |__________________________________|
+       |_____                          UI Size = 2^(N+1) |
+       |_____   Buffer Indexes                           |
+       |_____                               UI           |
+       |_____ ^ Sorted Hash N              Hashes        |
+       |_____ | ...                                      |
        |        | Sorted Hash 1                            |
-       |___________________________________________________|
+       |__________________________________|
      ^ |                                                   |
      | |                 Header (8 bytes)                  |
-    0x0|___________________________________________________|
+    0x0|__________________________________|
     @endcode
 */
 template <typename UI, typename SI>

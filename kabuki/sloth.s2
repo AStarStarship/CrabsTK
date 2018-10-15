@@ -1,8 +1,7 @@
-Sloth KabukiToolkit {
+Sloth Kabuki {
     Refresh {
 	}
-
-	mbed {
+	mbed-os {
 		Refresh {
 			git clone https://github.com/ARMmbed/mbed-os.git
 			ConvertToUpperCaseCammel

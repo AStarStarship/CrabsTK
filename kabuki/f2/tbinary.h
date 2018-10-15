@@ -19,9 +19,10 @@ specific language governing permissions and limitations under the License. */
 
 #include "binary.h"
 
-#include <kabuki\0\0_f2\00\header.h>
-
+#include "00\header.h"
 namespace _ {
+
+inline void PrintDigits(char* cursor, uint16_t digits) {}
 
 /* Prints a Unicode string to the given buffer.
  @return Nil upon failure or a pointer to the nil-term Char upon success.
@@ -144,8 +145,8 @@ inline bool IsWhitespace(Char character) {
 }
 
 template <typename Char = char>
-const Char* StringCompare(const Char* string_a, const Char* string_b,
-                          Char delimiter = 0) {
+int StringCompare(const Char* string_a, const Char* string_b,
+                  Char delimiter = 0) {
   int a, b, result;
   if (!string_a) {
     if (!string_b) return 0;
@@ -172,7 +173,7 @@ const Char* StringCompare(const Char* string_a, const Char* string_b,
       PRINTF(" is not a hit.");
       return result;
     }
-    if (a <= delimiter) {
+    if (a <= (int)delimiter) {
       PRINTF(" is a partial match but a reached a delimiter first.");
       return result;
     }
@@ -181,7 +182,7 @@ const Char* StringCompare(const Char* string_a, const Char* string_b,
     a = *string_a;
     b = *string_b;
   }
-  if (a > delimiter) {
+  if (a > (int)delimiter) {
     PRINTF(" is only a partial match but b reached a delimiter first.");
     return b - a;
   }
@@ -544,12 +545,12 @@ inline uint64_t Negative(uint64_t value) {
 success.
 @param  print The text formatter to print to.
 @param value The value to write. */
-template <typename UI = uint64_t, typename SI = int64_t, typename Char = char,
+template <typename SI = uint64_t, typename Char = char,
           typename DChar = uint16_t>
 inline Char* Print(Char* buffer, Char* end, SI value) {
-  if (value >= 0) return Print<Char, DChar>(buffer, end, (UI)value);
+  if (value >= 0) return Print<Char, DChar>(buffer, end, Unsigned(value));
   *buffer++ = '-';
-  return Print<Char, DChar, UI>(buffer, end, Negative(value));
+  return Print<UI, Char, DChar>(buffer, end, Negative(value));
 }
 
 /* Writes the give value to the given buffer as an ASCII string.
@@ -600,10 +601,10 @@ const Char* Scan(const Char* buffer, UI& result) {
   return end;
 }
 
-#include <kabuki/0/0_f2/00/footer.h>
+#include "00/footer.h"
 
-#include <kabuki/0/0_f2/00/header.h>
 #if SEAM >= SEAM_0_0_0__01
+#include "01/header.h"
 
 /* Searches for the highest MSb asserted.
 @return -1 */
@@ -752,11 +753,10 @@ class Binary {
     return (SI)(nan << (sizeof(UI) * 8 - 1));
   }
 
-#include <kabuki/0/0_f2/00/footer.h>
-#endif  //< #if SEAm >= SEAM_0_0_0__00
+#include "00/footer.h"
 
 #if SEAM >= SEAM_0_0_0__01
-#include <kabuki/0/0_f2/01/header.h>
+#include "01/header.h"
 
   /* Non-working algorithm DOES NOT converts a string-to-float.
   @return nil if there is no number to scan or pointer to the next char after
@@ -1192,8 +1192,8 @@ using Binary32 = Binary<float, uint32_t>;
 using Binary64 = Binary<double, uint64_t>;
 // using Binary128 = Binary<quad, uint128_t>;
 //< Coming soon but not in Visual-C++ due to lack of 128-bit integer support.
-}  // namespace _
 
-#include <kabuki/0/0_f2/01/footer.h>
+#include "01/footer.h"
 #endif  //< #if SEAM >= SEAM_0_0_0__01
+}  // namespace _
 #endif  //< #if INCLUDED_KABUKI_F2_TBINARY

@@ -440,7 +440,7 @@ int HexToByte(uint16_t h) {
   return lowerValue | (upper_value << 4);
 }
 
-}  // namespace _
-
 #include <kabuki/0/0_f2/01/footer.h>
 #endif  //< #if SEAM >= SEAM_0_0_0__01
+
+}  // namespace _

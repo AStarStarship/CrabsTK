@@ -30,22 +30,22 @@ Like most ASCII OBJ Types, the size may only be 16-bit, 32-bit, or
 
 @code
 +==========================+ -----------
-|_______ Buffer            |   ^     ^
-|_______ ...               |   |     |
-|_______ Data N            |  Data   |
-|_______ ...               |   |     |
-|_______ Data 0            |   v     |
+|_____ Buffer            |   ^     ^
+|_____ ...               |   |     |
+|_____ Data N            |  Data   |
+|_____ ...               |   |     |
+|_____ Data 0            |   v     |
 |==========================| -----   |
-|_______ count_max         |   ^     |
-|_______ ...               |   |     |
-|_______ Data Offset N     |   |     |
-|_______ ...               |   |    Size
+|_____ count_max         |   ^     |
+|_____ ...               |   |     |
+|_____ Data Offset N     |   |     |
+|_____ ...               |   |    Size
 |        Data Offset 1     |   |     |
 |==========================| Header  |
-|_______ count_max         |   |     |
-|_______ ...               |   |     |
-|_______ Type byte N       |   |     |
-|_______ ...               |   |     |
+|_____ count_max         |   |     |
+|_____ ...               |   |     |
+|_____ Type byte N       |   |     |
+|_____ ...               |   |     |
 |        Type byte 1       |   |     |   ^ Up in addresses
 |==========================|   |     |   |
 | AsciiList<UI, SI> Struct |   v     v   ^

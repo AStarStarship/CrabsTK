@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/f2/f2_str.cc
+@file    \kabuki\f2\f2_str.cc
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,14 +12,13 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-
+#if SEAM >= SEAM_0_0_0__04
 #include "ascii.h"
 #include "binary.h"
 #include "socket.h"
 #include "tstr.h"
 
-#include <Seam_0/0/0_f2/header.h>
-
+#include <kabuki/0/0_f2/header.h>
 #if F2_TEXT
 
 namespace _ {
@@ -1882,4 +1881,5 @@ _::Utf32& operator<<(_::Utf32& utf, _::Utf32Right item) {
 
 #endif  //< #if USING_UTF32
 
-#include <Seam_0/00/0_f2/footer.h>
+#include <kabuki/00/0_f2/footer.h>
+#endif  //< #if SEAM >= SEAM_0_0_0__04

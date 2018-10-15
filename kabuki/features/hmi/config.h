@@ -17,7 +17,5 @@ specific language governing permissions and limitations under the License. */
 #ifndef HEADER_FOR_KABUKI_HMI_MODULE_COFIG
 #define HEADER_FOR_KABUKI_HMI_MODULE_COFIG
 
-#include "../config.h"
-
 #endif  //< HEADER_FOR_KABUKI_HMI_MODULE_COFIG
 #endif  //< #if SEAM_MAJOR >= 2 && SEAM_MINOR >= 0

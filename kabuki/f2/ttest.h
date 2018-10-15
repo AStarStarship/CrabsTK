@@ -24,16 +24,24 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 template <TestCase... N>
-const char* TestTreeNode(char* test_result, const char* args) {
+const char* TestTree(char* seam_log, char* seam_end, const char* args) {
   static TestCase nodes[sizeof...(N)] = {N...};
-  return TestTree(test_result, args, nodes, sizeof...(N));
+  return TestTree(seam_log, seam_end, args, nodes, sizeof...(N));
+}
+
+template <TestCase... N>
+int TestTree(char* seam_log, intptr_t seam_log_size, const char* args) {
+  static TestCase nodes[sizeof...(N)] = {N...};
+  return TestTree(seam_log, seam_log + seam_log_size - 1, args, nodes,
+                  sizeof...(N));
 }
 
 template <typename Char>
 bool Test(const Char* a, const Char* b) {
-  int result = StringCompare<Char>(a, b);
-  if (!result) return false;
-  Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
+  // int result = StringCompare<Char>(a, b);
+  // if (!result) return false;
+  Print("\nERROR: Fix test code.");
+  // Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
   return true;
 }
 
