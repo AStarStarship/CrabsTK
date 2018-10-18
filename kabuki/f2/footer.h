@@ -1,1 +1,1 @@
-#include <seams_footer.h>
+#include "../test_footer.h"

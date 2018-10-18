@@ -11,6 +11,7 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
+#pragma once
 #include <pch.h>
 
 #include <kabuki/f2/global.h>
@@ -21,7 +22,8 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-const char* Kabuki__F2___Core_text_functions(char* seam_log, char* log_end, const char* args) {
+const char* _0_0_0__02_Core_text_functions(char* seam_log, char* seam_end,
+                                           const char* args) {
 #if SEAM >= SEAM_0_0_0__02
   BEGIN_TEST;
 
@@ -109,7 +111,7 @@ const char* Kabuki__F2___Core_text_functions(char* seam_log, char* log_end, cons
   Assert(!StringEquals<>(kCompareStrings[2], kCompareStrings[3]));
   Assert(StringEquals<>(kCompareStrings[2], kCompareStrings[2]));
 
-  Compare(9, TextLength<>("123456789"));
+  Compare(9, StringLength<>("123456789"));
 
   Assert(StringFind(kTestingString, "one"));
   Assert(StringFind(kTestingString, "three."));
@@ -117,7 +119,7 @@ const char* Kabuki__F2___Core_text_functions(char* seam_log, char* log_end, cons
   PRINTF("\n\n    Testing PrintRight...");
 
   Assert(PrintRight<>(buffer, buffer + kSize, kTestingString, 28));
-  PRINTF("\n    Wrote:\"%s\":%i", buffer, TextLength<>(buffer));
+  PRINTF("\n    Wrote:\"%s\":%i", buffer, StringLength<>(buffer));
   STRCMP_EQUAL(kStringsRightAligned[0], buffer);
 
   Assert(PrintRight(buffer, buffer + kSize, kTestingString, 7));

@@ -30,14 +30,16 @@ const char* TestTree(char* seam_log, char* seam_end, const char* args) {
 }
 
 template <TestCase... N>
-int TestTree(char* seam_log, intptr_t seam_log_size, const char* args) {
+int SeamTreeTest(char* seam_log, size_t seam_log_size, const char* args) {
   static TestCase nodes[sizeof...(N)] = {N...};
   return TestTree(seam_log, seam_log + seam_log_size - 1, args, nodes,
-                  sizeof...(N));
+                  sizeof...(N)) == nullptr
+             ? APP_EXIT_SUCCESS
+             : APP_EXIT_FAILURE;
 }
 
 template <typename Char>
-bool Test(const Char* a, const Char* b) {
+bool Compare(const Char* a, const Char* b) {
   // int result = StringCompare<Char>(a, b);
   // if (!result) return false;
   Print("\nERROR: Fix test code.");

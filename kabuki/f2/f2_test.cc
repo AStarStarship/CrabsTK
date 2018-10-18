@@ -31,13 +31,15 @@ const char* TestTree(char* seam_log, char* seam_end, const char* args,
       if (error) return error;
       Print("\n\nDone testing ", seam);
     } else {
-      Print("\n Test ").Print(i) << " missing!";
+      Print("\n Test ");
+      Print(i);
+      Print(" missing!");
     }
   }
   return nullptr;
 }
 
-bool TestBegin(char* seam_log, char* log_end, const char* args) {
+bool TestBegin(char* seam_log, char* seam_end, const char* args) {
   return ((intptr_t)seam_log) || ((intptr_t)seam_log) || ((intptr_t)seam_log);
 }
 
@@ -47,77 +49,112 @@ void TestEnd(const char* function_name) {
 
 bool Assert(bool condition) { return !condition; }
 
-bool Test(const char* a, const char* b) { return Test<char>(a, b); }
+bool Test(const char* a, const char* b) { return Compare<char>(a, b); }
 
-bool Test(const char16_t* a, const char16_t* b) { return Test<char16_t>(a, b); }
+bool Test(const char16_t* a, const char16_t* b) {
+  return Compare<char16_t>(a, b);
+}
 
-bool Test(const char32_t* a, const char32_t* b) { return Test<char32_t>(a, b); }
+bool Test(const char32_t* a, const char32_t* b) {
+  return Compare<char32_t>(a, b);
+}
 
 bool Test(const void* a, const void* b) {
   if (a == b) return true;
-  CHex test(b);
-  Print("\nERROR: Expecting:").Hex(a)
-      << "\n           Found:" << test;  // CHex (b);
+  Print("\nERROR: Expecting:");
+  PrintHex(a);
+  Print("\n           Found:");
+  PrintHex(b);
   return false;
 }
 
 bool Test(uint8_t a, uint8_t b) {
   if (a == b) return true;
-  Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
+  Print("\nERROR: Expecting:");
+  Print(a);
+  Print("\n           Found:");
+  Print(b);
   return false;
 }
 
 bool Test(int8_t a, int8_t b) {
   if (a == b) return true;
-  Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
+  Print("\nERROR: Expecting:");
+  Print(a);
+  Print("\n           Found:");
+  Print(b);
   return false;
 }
 
 bool Test(uint16_t a, uint16_t b) {
   if (a == b) return true;
-  Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
+  Print("\nERROR: Expecting:");
+  Print(a);
+  Print("\n           Found:");
+  Print(b);
   return false;
 }
 
 bool Test(int16_t a, int16_t b) {
   if (a == b) return true;
-  Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
+  Print("\nERROR: Expecting:");
+  Print(a);
+  Print("\n           Found:");
+  Print(b);
   return false;
 }
 
 bool Test(uint32_t a, uint32_t b) {
   if (a == b) return true;
-  Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
+  Print("\nERROR: Expecting:");
+  Print(a);
+  Print("\n           Found:");
+  Print(b);
   return false;
 }
 
 bool Test(int32_t a, int32_t b) {
   if (a == b) return true;
-  Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
+  Print("\nERROR: Expecting:");
+  Print(a);
+  Print("\n           Found:");
+  Print(b);
   return false;
 }
 
 bool Test(uint64_t a, uint64_t b) {
   if (a == b) return true;
-  Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
+  Print("\nERROR: Expecting:");
+  Print(a);
+  Print("\n           Found:");
+  Print(b);
   return false;
 }
 
 bool Test(int64_t a, int64_t b) {
   if (a == b) return true;
-  Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
+  Print("\nERROR: Expecting:");
+  Print(a);
+  Print("\n           Found:");
+  Print(b);
   return false;
 }
 
 bool Test(float a, float b) {
   if (a == b) return true;
-  Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
+  Print("\nERROR: Expecting:");
+  Print(a);
+  Print("\n           Found:");
+  Print(b);
   return false;
 }
 
 bool Test(double a, double b) {
   if (a == b) return true;
-  Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
+  Print("\nERROR: Expecting:");
+  Print(a);
+  Print("\n           Found:");
+  Print(b);
   return false;
 }
 
@@ -187,9 +224,15 @@ bool Test(double value) {
   return false;
 }
 
-bool AssertHandle(const char* function, const char* file, int line) {
+bool ErrorWarn(const char* function, const char* file, int line) {
   Printf("\nAssertion failed in function %s at line %d in \"%s\"", function,
          line, file);
+  Pause();
+  return true;
+}
+
+bool ErrorFreeze(const char* function, const char* file, int line) {
+  ErrorWarn(function, file, line);
   Pause();
   return true;
 }

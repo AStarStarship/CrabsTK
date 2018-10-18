@@ -1,4 +1,4 @@
-#include <seams.h>
+#include <kabuki/config.h>
 #if SEAM == SEAM_0_0_01__10
 #define PRINT_TYPE(type, value) Console<>().Out() << TypeValue(type, value);
 #define WIPE ListWipe<UI, SI>(list);

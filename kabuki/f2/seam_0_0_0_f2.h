@@ -14,6 +14,7 @@ specific language governing permissions and limitations under the License. */
 #include <pch.h>
 
 #include "00/itos_and_stoi.h"
+/*
 #include "01/ftos_and_stof.h"
 #include "02/core_text_functions.h"
 #include "03/ascii_strings.h"
@@ -26,28 +27,23 @@ specific language governing permissions and limitations under the License. */
 #include "10/ascii_list.h"
 #include "11/ascii_map.h"
 #include "12/ascii_book.h"
-#include "13/ascii_dictionary.h"
+#include "13/ascii_dictionary.h"*/
 
 namespace _ {
 
-static const char* Kabuki__Terminal___Kabuki__F2(char* seam_log, char* log_end, const char* args) {
+static const char* Seam_0_0_0_F2(char* seam_log, char* seam_end,
+                                 const char* args) {
 #if SEAM >= SEAM_0_0_0
-  if (!TestBegin(seam_log, log_end, args)) return __FUNCTION__;
+  if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
 #endif
-  return TestTree<
-    Kabuki__F2___ItoS_and_StoI,
-    Kabuki__F2___FtoS_and_StoF,
-    Kabuki__F2___Core_text_functions,
-    Kabuki__F2___ASCII_Clock,
-    Kabuki__F2___ASCII_Stack,
-    Kabuki__F2___ASCII_Array,
-    Kabuki__F2___ASCII_Loom,
-    Kabuki__F2___ASCII_Table,
-    Kabuki__F2___ASCII_Varint,
-    Kabuki__F2___ASCII_List,
-    Kabuki__F2___ASCII_Map,
-    Kabuki__F2___ASCII_Book,
-    Kabuki__F2___ASCII_Dictionary>(seam_log, log_end, args);
+  return TestTree<_0_0_0__00_ItoS_and_StoI/*, _0_0_0__01_FtoS_and_StoF,
+                  _0_0_0__02_Core_text_functions, _0_0_0__03_ASCII_Strings,
+                  _0_0_0__04_ASCII_Clock, _0_0_0__05_ASCII_Stack,
+                  _0_0_0__00_ASCII_Array, _0_0_0__07_ASCII_Loom,
+                  _0_0_0__08_ASCII_Table, _0_0_0__09_ASCII_Varint,
+                  _0_0_0__10_ASCII_List, _0_0_0__11_ASCII_Map,
+                  _0_0_0__12_ASCII_Book, _0_0_0__13_ASCII_Dictionary*/>(
+      seam_log, seam_end, args);
 }
 
 }  // namespace _

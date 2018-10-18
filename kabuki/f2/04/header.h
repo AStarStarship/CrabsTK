@@ -1,4 +1,4 @@
-#include <seams.h>
+#include <kabuki/config.h>
 #if SEAM == SEAM_0_0_0__04
 #define PRINT_DATE(date)                                                    \
   Printf("%i/%i/%i@%i:%i:%i", date.year + kSecondsPerEpoch, date.month + 1, \

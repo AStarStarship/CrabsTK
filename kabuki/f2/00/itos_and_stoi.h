@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/0/0_f2/01/00/seam.h
+@file    /kabuki/f2/00/itos_and_stoi.h
 @author  Cale McCollough <calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -11,18 +11,22 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
+#pragma once
 #include <pch.h>
 
 #include <random>
+
+#include <kabuki/f2/global.h>
 
 #include "header.h"
 
 namespace _ {
 
-const char* Kabuki__F2___ItoS_and_StoI(char* seam_log, char* log_end,
-                                       const char* args) {
+const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
+                                     const char* args) {
 #if SEAM >= SEAM_0_0_0__00
-  if (!TestBegin(seam_log, log_end, args)) return __FUNCTION__;
+  TEST_BEGIN;
+
   static const uint64_t k10ToThe[20] = {
       1,           //< 10^0
       10,          //< 10^1
@@ -126,10 +130,10 @@ const char* Kabuki__F2___ItoS_and_StoI(char* seam_log, char* log_end,
 
   for (int i = 0; i < 1 << 6; ++i) {
     expected_ui8 = distr(eng);
-    Print<uint64_t, char, uint16_t>(buffer, buffer + kSize, expected_ui8);
+    Print<uint64_t, char>(buffer, buffer + kSize, expected_ui8);
     const char* test = Scan<uint64_t, char>(buffer, result_ui8);
-    TEST1(test);
-    TEST(expected_ui8, result_ui8);
+    ASSERT(test);
+    AVOW(expected_ui8, result_ui8);
   }
 
   PRINT("\n\nTesting Script ItoS Algorithm...\n\n");
@@ -143,8 +147,7 @@ const char* Kabuki__F2___ItoS_and_StoI(char* seam_log, char* log_end,
     sprintf_s(expecting, 24, "%llu", expected_ui8);
     PRINTF("\n%i.) Expecting \"%s\":%llu", i + 1, expecting,
            StringLength<>(expecting));
-    result =
-        Print<uint64_t, char, uint16_t>(text, text + kSize - 1, expected_ui8);
+    result = Print<uint64_t, char>(text, text + kSize - 1, expected_ui8);
     if (!result) {
       PAUSE("An error occurred :-(");
       break;
@@ -161,8 +164,7 @@ const char* Kabuki__F2___ItoS_and_StoI(char* seam_log, char* log_end,
     expected_ui8 = test_value[i];
     sprintf_s(expecting, 24, "%llu", expected_ui8);
     PRINTF("\n%i.) ", i + 1);
-    result =
-        Print<uint64_t, char, uint16_t>(text, text + kSize - 1, expected_ui8);
+    result = Print<uint64_t, char>(text, text + kSize - 1, expected_ui8);
     if (!result) {
       PAUSE("An error occurred :-(");
       break;
@@ -179,8 +181,7 @@ const char* Kabuki__F2___ItoS_and_StoI(char* seam_log, char* log_end,
   for (int i = 0; i < 0x0000ffff; ++i) {
     expected_ui8 = distr(eng);
     sprintf_s(expecting, 24, "%llu", expected_ui8);
-    result =
-        Print<uint64_t, char, uint16_t>(text, text + kSize - 1, expected_ui8);
+    result = Print<uint64_t, char>(text, text + kSize - 1, expected_ui8);
     if (!result) {
       PAUSE("An error occurred :-(");
       break;
@@ -203,7 +204,7 @@ const char* Kabuki__F2___ItoS_and_StoI(char* seam_log, char* log_end,
     } while (!IsFinite(dbl_expected));
     dbl_found = Ceiling(dbl_expected);
     dbl_expected = ceil(dbl_expected);
-    TEST(dbl_expected, dbl_found);
+    COMPARE(dbl_expected, dbl_found);
   }
 
   PRINT("\n\nTesting float Char* Print<Char> (Char*, Char*, float&)...\n");
@@ -213,9 +214,9 @@ const char* Kabuki__F2___ItoS_and_StoI(char* seam_log, char* log_end,
       expected_ui8 = distr(eng);
       dbl_expected = static_cast<double>(expected_ui8);
     } while (!IsFinite(dbl_expected));
-    Print<double, uint64_t, char, uint16_t>(buffer, buffer + 24, dbl_expected);
-    TEST(0, scanf_s("%lf", &dbl_found));
-    TEST(dbl_expected, dbl_found);
+    Print<double, uint64_t, char>(buffer, buffer + 24, dbl_expected);
+    COMPARE(0, scanf_s("%lf", &dbl_found));
+    COMPARE(dbl_expected, dbl_found);
   }
 
   PRINTF(
@@ -228,8 +229,8 @@ const char* Kabuki__F2___ItoS_and_StoI(char* seam_log, char* log_end,
       dbl_expected = static_cast<double>(expected_ui8);
     } while (!IsFinite(dbl_expected));
     sprintf_s(buffer, 24, "%f", dbl_expected);
-    TEST(0, Scan(buffer, dbl_found));
-    TEST(dbl_expected, dbl_found);
+    COMPARE(0, Scan(buffer, dbl_found));
+    COMPARE(dbl_expected, dbl_found);
   }
 
   PRINT("\n\nTesting ArgsToString...\n");

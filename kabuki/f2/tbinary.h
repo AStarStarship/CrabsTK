@@ -24,6 +24,27 @@ namespace _ {
 
 inline void PrintDigits(char* cursor, uint16_t digits) {}
 
+/* Scrolls over to the next double quote mark.
+@warning This function is only safe to use on ROM strings with a nil-term
+char. */
+template <typename Char = char>
+inline const Char* StringEnd(const Char* cursor, Char delimiter = 0) {
+  ASSERT(cursor);
+  while (*cursor++ != delimiter)
+    ;
+  return cursor - 1;
+}
+
+/* Gets the length of the given char.
+@return  Returns -1 if the text char is nil.
+@warning This function is only safe to use on ROM strings with a nil-term
+char. */
+template <typename Char, typename I = int>
+I StringLength(const Char* cursor) {
+  ASSERT(cursor);
+  return (I)(StringEnd<Char>(cursor) - cursor);
+}
+
 /* Prints a Unicode string to the given buffer.
  @return Nil upon failure or a pointer to the nil-term Char upon success.
  @param  cursor    The beginning of the buffer.
@@ -601,20 +622,6 @@ const Char* Scan(const Char* buffer, UI& result) {
   return end;
 }
 
-#include "00/footer.h"
-
-#if SEAM >= SEAM_0_0_0__01
-#include "01/header.h"
-
-/* Searches for the highest MSb asserted.
-@return -1 */
-template <typename UI>
-int MSbAssertedReverse(UI value) {
-  for (int i = sizeof(UI) * 8 - 1; i > 0; --i)
-    if ((value >> i) != 0) return i;
-  return -1;
-}
-
 /* Scans the given buffer for an Signed Integer (SI).
 @return Nil if there is no UI to scan.
 @param buffer The beginning of the buffer.
@@ -657,6 +664,18 @@ const Char* ScanSigned(const Char* buffer, SI& result) {
   }
   result = sign * value;
   return end;
+}
+
+#if SEAM >= SEAM_0_0_0__01
+#include "01/header.h"
+
+/* Searches for the highest MSb asserted.
+@return -1 */
+template <typename UI>
+int MSbAssertedReverse(UI value) {
+  for (int i = sizeof(UI) * 8 - 1; i > 0; --i)
+    if ((value >> i) != 0) return i;
+  return -1;
 }
 
 /* A decimal number in floating-point format. */
@@ -752,11 +771,6 @@ class Binary {
     UI nan = 1;
     return (SI)(nan << (sizeof(UI) * 8 - 1));
   }
-
-#include "00/footer.h"
-
-#if SEAM >= SEAM_0_0_0__01
-#include "01/header.h"
 
   /* Non-working algorithm DOES NOT converts a string-to-float.
   @return nil if there is no number to scan or pointer to the next char after
@@ -1195,5 +1209,6 @@ using Binary64 = Binary<double, uint64_t>;
 
 #include "01/footer.h"
 #endif  //< #if SEAM >= SEAM_0_0_0__01
+
 }  // namespace _
 #endif  //< #if INCLUDED_KABUKI_F2_TBINARY

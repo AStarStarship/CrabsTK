@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #include "header.h"
 
 namespace _ {
-static const char* Seam_0_0_3_00(char* seam_log, char* seam_end,
+static const char* Kabuki_Platform_00(char* seam_log, char* seam_end,
                                  const char* args) {
 #if SEAM >= SEAM_0_0_3_00
   if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;

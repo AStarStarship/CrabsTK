@@ -11,9 +11,10 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
+#pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__00
+#ifndef INCLUDED_KABUKI_F2_BINARY
 #define INCLUDED_KABUKI_F2_BINARY 1
 
 namespace _ {
@@ -93,18 +94,6 @@ API inline bool IsInfinite(float value);
 
 /* Checks if the given value is not NaN or +/- Infinity. */
 API inline bool IsInfinite(double value);
-
-/* Gets the packed IEEE754 LUT for printing integers and floating-point numbers.
- */
-API inline const uint16_t* IEEE754LUT();
-
-/* Gets the packed IEEE754 LUT for printing integers and floating-point numbers.
- */
-API inline const uint16_t* IEEE754Pow10E();
-
-/* Gets the packed IEEE754 LUT for printing integers and floating-point numbers.
- */
-API inline const uint64_t* IEEE754Pow10F();
 
 /* Returns the ceiling of the given value to the next highest up integer. */
 API float Ceiling(float value);
@@ -187,4 +176,4 @@ API int HexToByte(uint16_t h);
 
 }  // namespace _
 
-#endif  //< #if SEAM >= SEAM_0_0_0__00
+#endif  //< #ifndef INCLUDED_KABUKI_F2_BINARY

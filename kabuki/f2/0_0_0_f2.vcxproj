@@ -38,17 +38,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\assembly.h" />
+    <ClInclude Include="..\config.h" />
     <ClInclude Include="..\footer.h" />
     <ClInclude Include="..\global.h" />
     <ClInclude Include="..\mbed.h" />
-    <ClInclude Include="..\pch.h" />
-    <ClInclude Include="..\platform\footer.h" />
-    <ClInclude Include="..\platform\header.h" />
-    <ClInclude Include="..\platform\platform.h" />
-    <ClInclude Include="..\platform\seam.h" />
-    <ClInclude Include="..\platform\seam_platform.h" />
     <ClInclude Include="..\public.h" />
-    <ClInclude Include="..\seams.h" />
     <ClInclude Include="..\targetver.h" />
     <ClInclude Include="00\footer.h" />
     <ClInclude Include="00\header.h" />
@@ -109,7 +103,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="public.h" />
     <ClInclude Include="rng.h" />
-    <ClInclude Include="seam_f2.h" />
+    <ClInclude Include="seam_0_0_0_f2.h" />
     <ClInclude Include="socket.h" />
     <ClInclude Include="str.h" />
     <ClInclude Include="str1.h" />
@@ -143,8 +137,8 @@
     <ClInclude Include="vk.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\platform\README.md" />
     <None Include="..\readme.md" />
+    <None Include="..\sloth.s2" />
     <None Include="00\readme.md" />
     <None Include="01\readme.md" />
     <None Include="02\readme.md" />

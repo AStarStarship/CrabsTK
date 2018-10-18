@@ -17,19 +17,9 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-uint16_t Hash16(uint16_t hash, uint8_t value) {
-  return Hash<uint16_t, uint8_t>(hash, value);
-}
+hash16_t Hash16(hash16_t hash, char value) { return hash + hash * value; }
 
-uint32_t Hash32(uint32_t hash, uint16_t value) {
-  return Hash<uint32_t, uint16_t>(hash, value);
-}
-
-uint64_t Hash64(uint64_t hash, uint32_t value) {
-  return Hash<uint64_t, uint32_t>(hash, value);
-}
-
-uint16_t Hash16(const char* string, uint16_t hash) {
+hash16_t Hash16(const char* string, hash16_t hash) {
   uint8_t c = *string;
   while (c) {
     hash = Hash16(c, hash);
@@ -39,7 +29,9 @@ uint16_t Hash16(const char* string, uint16_t hash) {
   return hash;
 }
 
-uint16_t Hash32(const char* string, hash32_t hash) {
+hash32_t Hash32(hash32_t hash, char16_t value) { return hash + hash * value; }
+
+hash32_t Hash32(const char* string, hash32_t hash) {
   uint8_t c = *string;
   while (c) {
     hash = Hash32(hash, c);
@@ -48,6 +40,7 @@ uint16_t Hash32(const char* string, hash32_t hash) {
   }
   return hash;
 }
+hash64_t Hash64(hash64_t hash, char32_t value) { return hash + hash * value; }
 
 hash64_t Hash64(const char* string, hash64_t hash) {
   uint8_t c = *string;
@@ -60,28 +53,31 @@ hash64_t Hash64(const char* string, hash64_t hash) {
 }
 
 uint16_t Hash16UI2(uint16_t value, uint16_t hash) {
-  hash = ((value & 0xff) * Prime2Unsigned<uint16_t>()) + hash;
-  hash = ((value >> 8) * Prime2Unsigned<uint16_t>()) + hash;
+  uint16_t prime = PrimeMaxUnigned<uint16_t>();
+  hash = ((value & 0xff) * prime) + hash;
+  hash = ((value >> 8) * prime) + hash;
   return hash;
 }
 
 uint16_t Hash16UI4(uint32_t value, uint16_t hash) {
-  hash = ((value & 0xff) * Prime2Unsigned<uint16_t>()) + hash;
-  hash = (((value >> 8) & 0xff) * Prime2Unsigned<uint16_t>()) + hash;
-  hash = (((value >> 16) & 0xff) * Prime2Unsigned<uint16_t>()) + hash;
-  hash = (((value >> 24) & 0xff) * Prime2Unsigned<uint16_t>()) + hash;
+  uint16_t prime = PrimeMaxUnigned<uint16_t>();
+  hash = ((value & 0xff) * prime) + hash;
+  hash = (((value >> 8) & 0xff) * prime) + hash;
+  hash = (((value >> 16) & 0xff) * prime) + hash;
+  hash = (((value >> 24) & 0xff) * prime) + hash;
   return hash;
 }
 
 uint16_t Hash16UI8(uint64_t value, uint16_t hash) {
-  hash = ((value & 0xff) * Prime2Unsigned<uint16_t>()) + hash;
-  hash = (((value >> 8) & 0xff) * Prime2Unsigned<uint16_t>()) + hash;
-  hash = (((value >> 16) & 0xff) * Prime2Unsigned<uint16_t>()) + hash;
-  hash = (((value >> 24) & 0xff) * Prime2Unsigned<uint16_t>()) + hash;
-  hash = (((value >> 32) & 0xff) * Prime2Unsigned<uint16_t>()) + hash;
-  hash = (((value >> 40) & 0xff) * Prime2Unsigned<uint16_t>()) + hash;
-  hash = (((value >> 48) & 0xff) * Prime2Unsigned<uint16_t>()) + hash;
-  hash = (((value >> 56) & 0xff) * Prime2Unsigned<uint16_t>()) + hash;
+  uint16_t prime = PrimeMaxUnigned<uint16_t>();
+  hash = ((value & 0xff) * prime) + hash;
+  hash = (((value >> 8) & 0xff) * prime) + hash;
+  hash = (((value >> 16) & 0xff) * prime) + hash;
+  hash = (((value >> 24) & 0xff) * prime) + hash;
+  hash = (((value >> 32) & 0xff) * prime) + hash;
+  hash = (((value >> 40) & 0xff) * prime) + hash;
+  hash = (((value >> 48) & 0xff) * prime) + hash;
+  hash = (((value >> 56) & 0xff) * prime) + hash;
   return hash;
 }
 

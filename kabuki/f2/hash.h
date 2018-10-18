@@ -28,11 +28,17 @@ typedef uint64_t hash64_t;
 
 namespace _ {
 
-/* Hashes the given char using the primeHash function. */
-API uint16_t Hash16(const char* string, uint16_t hash = 65535);
+API inline hash16_t Hash16(hash16_t hash, char value);
+
+API inline hash32_t Hash32(hash32_t hash, char16_t value);
+
+API inline hash64_t Hash64(hash64_t hash, char32_t value);
 
 /* Hashes the given char using the primeHash function. */
-API uint32_t Hash32(const char* string, uint32_t hash = 4294967291);
+API hash16_t Hash16(const char* string, hash16_t hash = 65535);
+
+/* Hashes the given char using the primeHash function. */
+API hash32_t Hash32(const char* string, hash32_t hash = 4294967291);
 
 /* Hashes the given char using the primeHash function. */
 API hash64_t Hash64(const char* string, hash64_t hash = 18446744073709551557);

@@ -10,6 +10,7 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
+#pragma once
 #include <pch.h>
 
 #include <kabuki/f2/global.h>
@@ -18,10 +19,10 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-static const char* Kabuki__F2___ASCII_Clock(char* seam_log, char* seam_end,
-                                 const char* args) {
+static const char* _0_0_0__04_ASCII_Clock(char* seam_log, char* seam_end,
+                                          const char* args) {
 #if SEAM == SEAM_0_0_0__04
-  if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
+  TEST_BEGIN;
 
   PRINT_HEADING("\n\n    Testing TextScanTime...");
 
@@ -64,14 +65,14 @@ static const char* Kabuki__F2___ASCII_Clock(char* seam_log, char* seam_end,
   t = ClockTimeTMS(8, 9, 17, 4, 20);
   Print(buffer, buffer + kSize, t);
   result = TextScanTime(buffer, t_found);
-  Assert(ClockCompare(t_found, t))
+  Assert(ClockCompare(t_found, t));
 
-      t = ClockTimeTMS(2020, 4, 20, 4, 20);
+  t = ClockTimeTMS(2020, 4, 20, 4, 20);
   Print(buffer, buffer + kSize, t);
   result = TextScanTime(buffer, t_found);
-  Assert(ClockCompare(t, t_found))
+  Assert(ClockCompare(t, t_found));
 
-      t = ClockTimeTMS(1947, 12, 7, 23, 5, 7);
+  t = ClockTimeTMS(1947, 12, 7, 23, 5, 7);
   Print(buffer, buffer + kSize, t);
   result = TextScanTime(buffer, t_found);
   Assert(ClockCompare(t, t_found));

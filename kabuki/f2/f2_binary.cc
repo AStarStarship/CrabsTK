@@ -13,14 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__00
 #include "tbinary.h"
 
 #include "ttest.h"
-
-#include <cmath>
-
-#include <kabuki/0/0_f2/01/header.h>
 
 #ifdef __LITTLE_ENDIAN
 #define HI(x) *(1 + (int32_t*)&x)
@@ -111,14 +106,18 @@ char* Print(char* begin, char* end, char byte_0, char byte_1, char byte_2) {
   return &begin[4];
 }
 
-#endif  //< #if SEAM >= SEAM_0_0_0__00
+}  // namespace _
+
+#include <cmath>
+
+namespace _ {
 #if SEAM >= SEAM_0_0_0__01
 
 char puff_lut[2 * 100 + (8 + 2) * 87];
 
 constexpr intptr_t IEEE754LutElementCount() { return 87; }
 
-const uint16_t* IEEE754LUT() {
+inline const uint16_t* IEEE754LUT() {
   /* Lookup table of ASCII Char pairs for 00, 01, ..., 99 in little-endian
   format. */
   static const uint16_t kDigits00To99[100] = {
@@ -187,9 +186,9 @@ const uint16_t* IEEE754LUT() {
   return kDigits00To99;
 }
 
-const uint16_t* IEEE754Pow10E() { return IEEE754LUT() + 100; }
+inline const uint16_t* IEEE754Pow10E() { return IEEE754LUT() + 100; }
 
-const uint64_t* IEEE754Pow10F() {
+inline const uint64_t* IEEE754Pow10F() {
   return reinterpret_cast<const uint64_t*>(IEEE754LUT() + 100 +
                                            IEEE754LutElementCount());
 }
@@ -440,7 +439,7 @@ int HexToByte(uint16_t h) {
   return lowerValue | (upper_value << 4);
 }
 
-#include <kabuki/0/0_f2/01/footer.h>
+#include <01/footer.h>
 #endif  //< #if SEAM >= SEAM_0_0_0__01
 
 }  // namespace _

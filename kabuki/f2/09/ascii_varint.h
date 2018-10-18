@@ -10,6 +10,7 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
+#pragma once
 #include <pch.h>
 
 #include <kabuki/f2/global.h>
@@ -18,8 +19,8 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-static const char* Kabuki__F2___ASCII_Varint(char* seam_log, char* seam_end,
-                                 const char* args) {
+static const char* _0_0_0__09_ASCII_Varint(char* seam_log, char* seam_end,
+                                           const char* args) {
 #if SEAM >= SEAM_0_0_0__09
   TEST_BEGIN;
 

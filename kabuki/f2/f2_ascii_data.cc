@@ -107,7 +107,7 @@ inline char* WriteString(char* begin, char* end, const void* value) {
   begin = AlignUpPointer<char>(begin);
   if (end - begin < 2 * sizeof(UI)) return nullptr;
   const Char* source = reinterpret_cast<const Char*>(value);
-  UI length = TextLength<UI, Char>(source);
+  UI length = StringLength<UI, Char>(source);
   UI* target = reinterpret_cast<UI*>(begin);
   *target++ = length;
   return MemoryCopy(target, end, value, length + sizeof(Char));

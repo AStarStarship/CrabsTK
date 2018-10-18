@@ -10,6 +10,7 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
+#pragma once
 #include <pch.h>
 
 #include <kabuki/f2/global.h>
@@ -18,12 +19,11 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-static const char* Kabuki__F2___ASCII_Book(char* seam_log, char* seam_end,
-                                 const char* args) {
+static const char* _0_0_0__12_ASCII_Book(char* seam_log, char* seam_end,
+                                         const char* args) {
 #if SEAM >= SEAM_0_0_0__12
-  if (!TestBegin(seam_log, seam_end, args, __FUNCTION__, "Description"))
-    return nullptr;
-  
+  TEST_BEGIN;
+
   wchar_t index;
   uintptr_t buffer[128];
   Printf("\n &buffer[0]:%p &buffer[127]:%p\n", &buffer[0], &buffer[127]);
@@ -154,5 +154,4 @@ static const char* Kabuki__F2___ASCII_Book(char* seam_log, char* seam_end,
   return nullptr;
 }
 }  // namespace _
-
 #include "footer.h"

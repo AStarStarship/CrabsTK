@@ -36,13 +36,13 @@ API char16_t PrintableChar(char16_t value);
 /* Scrolls over to the next double quote mark.
 @warning This function is only safe to use on ROM strings with a nil-term
 char16_t. */
-API const char16_t* TextEnd(const char16_t* text);
+API const char16_t* StringEnd(const char16_t* text);
 
 /* Gets the length of the given char16_t.
 @return  Returns -1 if the text char16_t is nil.
 @warning This function is only safe to use on ROM strings with a nil-term
 char16_t. */
-API int TextLength(const char16_t* text);
+API int StringLength(const char16_t* text);
 
 /* Clones the given string.
 @param  A nil-terminated string in ROM.

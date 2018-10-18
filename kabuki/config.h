@@ -1,9 +1,16 @@
-
-
 #pragma once
-#include <kabuki/f2/test_header.h>
+
 #ifndef INCLUDED_SEAM_0_HEADER
 #define INCLUDED_SEAM_0_HEADER 1
+
+#include <kabuki/f2/config.h>
+
+#if DLL
+#define API Foo
+#else
+#define API
+#endif
+
 #define SEAM_0_0_0__00 1     //< kabuki.f2.itos_and_stoi
 #define SEAM_0_0_0__01 2     //< kabuki.f2.ftos_and_stof
 #define SEAM_0_0_0__02 3     //< kabuki.f2.core_text_functions
@@ -23,5 +30,6 @@
 #define SEAM_0_0_4_0__00 17  //< kabuki.features.storage.filesystem
 #define SEAM_0_0_4_1__00 18  //< kabuki.features.crabs
 #define SEAM_0_0_4_2__00 19  //< kabuki.features.hmi
+
 #define SEAM_N SEAM_0_0_4_2__00
 #endif  //< #ifndef INCLUDED_SEAM_0_HEADER

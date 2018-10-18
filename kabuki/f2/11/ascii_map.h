@@ -18,11 +18,10 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-static const char* Kabuki__F2___ASCII_Map(char* seam_log, char* seam_end,
-                                 const char* args) {
+static const char* _0_0_0__11_ASCII_Map(char* seam_log, char* seam_end,
+                                        const char* args) {
 #if SEAM >= SEAM_0_0_0__11
-  if (!TestBegin(seam_log, seam_end, args, __FUNCTION__, "Description"))
-    return nullptr;
+  TEST_BEGIN;
 
   Printf("\n\nTesting ASCII OBJ Types");
 

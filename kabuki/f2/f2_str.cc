@@ -45,9 +45,9 @@ bool IsWhitespace(char character) { return IsWhitespace<char>(character); }
 
 char PrintableChar(char value) { return PrintableChar<char>(value); }
 
-const char* TextEnd(const char* text) { return TextEnd<char>(text); }
+const char* StringEnd(const char* text) { return StringEnd<char>(text); }
 
-int TextLength(const char* text) { return TextLength<char, int>(text); }
+int StringLength(const char* text) { return StringLength<char, int>(text); }
 
 const char* TextLineEnd(const char* text, int column_count) {
   return TextLineEnd<char>(text, column_count);
@@ -657,11 +657,11 @@ char16_t PrintableChar(char16_t value) {
   return PrintableChar<char16_t>(value);
 }
 
-const char16_t* TextEnd(const char16_t* text) {
-  return TextEnd<char16_t>(text);
+const char16_t* StringEnd(const char16_t* text) {
+  return StringEnd<char16_t>(text);
 }
 
-int TextLength(const char16_t* text) { return TextLength<char16_t, int>(text); }
+int StringLength(const char16_t* text) { return StringLength<char16_t, int>(text); }
 
 char16_t* TextClone(const char16_t* text) { return TextClone<char16_t>(text); }
 
@@ -1279,11 +1279,11 @@ char32_t PrintableChar(char32_t value) {
   return PrintableChar<char32_t>(value);
 }
 
-const char32_t* TextEnd(const char32_t* text) {
-  return TextEnd<char32_t>(text);
+const char32_t* StringEnd(const char32_t* text) {
+  return StringEnd<char32_t>(text);
 }
 
-int TextLength(const char32_t* text) { return TextLength<char32_t, int>(text); }
+int StringLength(const char32_t* text) { return StringLength<char32_t, int>(text); }
 
 char32_t* TextClone(const char32_t* text) { return TextClone<char32_t>(text); }
 

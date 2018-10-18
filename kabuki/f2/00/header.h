@@ -1,9 +1,8 @@
-#include <seams.h>
-#if SEAM >= SEAM_0_0_0
-#include <kabuki/f2/global.h>
-#endif
+#pragma once
+#include <pch.h>
 
 #if SEAM == SEAM_0_0_0__00
+#include "../global.h"
 namespace _ {
 
 template <typename UI>

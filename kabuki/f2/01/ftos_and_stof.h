@@ -11,17 +11,12 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
+#pragma once
 #include <pch.h>
-
-#if SEAM >= SEAM_0_0_0__01
 
 #include <kabuki/f2/global.h>
 
 #include "header.h"
-
-//#include <stdio.h>
-//#include <cmath>
-//#include <random>
 
 #include <cmath>
 #include <random>
@@ -31,10 +26,10 @@ using namespace std;
 
 namespace _ {
 
-const char* Kabuki__F2___FtoS_and_StoF(char* seam_log, char* log_end, const char* args) {
+const char* _0_0_0__01_FtoS_and_StoF(char* seam_log, char* seam_end,
+                                     const char* args) {
 #if SEAM >= SEAM_0_0_0__01
-  TEST_BEGIN
-#endif
+  TEST_BEGIN;
 
   enum { kSize = 24 };
   char buffer[kSize + 1];
@@ -87,7 +82,8 @@ const char* Kabuki__F2___FtoS_and_StoF(char* seam_log, char* log_end, const char
   }
 
   TEST_END;
+#endif
+  return nullptr;
 }
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_01__00_01
 #include "footer.h"

@@ -27,7 +27,7 @@ namespace _ {
 
 /* Prints the following value to the console in Hex. */
 template <typename UI>
-Console PrintHex(UI value) {
+void PrintHex(UI value) {
   enum { kHexStringLengthSizeMax = sizeof(UI) * 2 + 3 };
 
   Print('0', 'x');

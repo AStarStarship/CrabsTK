@@ -74,30 +74,9 @@ inline Char PrintableChar(Char value) {
 /* Sets the string to either the given value or empty string if input is
 nil. */
 template <typename Char = char>
-inline Char* TextSet(Char* string) {
+inline Char* StringSet(Char* string) {
   if (!string) return StringEmpty<Char>();
   return string;
-}
-
-/* Scrolls over to the next double quote mark.
-@warning This function is only safe to use on ROM strings with a nil-term
-char. */
-template <typename Char = char>
-inline const Char* TextEnd(const Char* cursor, Char delimiter = 0) {
-  ASSERT(cursor);
-  while (*cursor++ != delimiter)
-    ;
-  return cursor - 1;
-}
-
-/* Gets the length of the given char.
-@return  Returns -1 if the text char is nil.
-@warning This function is only safe to use on ROM strings with a nil-term
-char. */
-template <typename Char, typename I = int>
-I TextLength(const Char* cursor) {
-  ASSERT(cursor);
-  return (I)(TextEnd<Char>(cursor) - cursor);
 }
 
 template <typename Char, typename I = int>
@@ -372,7 +351,7 @@ Char* PrintRight(Char* cursor, Char* end, const Char* token, int column_count) {
     return nullptr;
   }
 
-  const Char* token_end = TextEnd<Char>(token);
+  const Char* token_end = StringEnd<Char>(token);
   Char c;  //< Temp variable.
   if (token == token_end) return cursor;
   intptr_t length = token_end - token;
@@ -440,7 +419,7 @@ Char* PrintCenter(Char* cursor, Char* end, const Char* string,
   ASSERT(cursor < end);
 
   // We need to leave at least one space to the left and right of
-  int length = TextLength<Char>(string), offset;
+  int length = StringLength<Char>(string), offset;
   PRINTF("\n\n    Printing \"%s\":%i column_count:%i", string, length,
          column_count);
 
@@ -638,7 +617,7 @@ class TCenter {
  public:
   /* Prints the value to the text buffer. */
   TCenter(const Char* string, int column_count)
-      : string(TextSet<Char>(string)), column_count(column_count) {
+      : string(StringSet<Char>(string)), column_count(column_count) {
     // Nothing to do here!
   }
 
@@ -696,7 +675,7 @@ class TRight {
  public:
   /* Prints the value to the text buffer. */
   TRight(const Char* string, int column_count)
-      : string(TextSet<Char>(string)), column_count(column_count) {
+      : string(StringSet<Char>(string)), column_count(column_count) {
     // Nothing to do here!
   }
 

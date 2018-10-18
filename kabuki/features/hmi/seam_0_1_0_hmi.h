@@ -13,17 +13,13 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_4_2__00
-#include <kabuki/features/hmi/control_array.h>
-#include <kabuki/features/hmi/controlmatrix.h>
-#include <kabuki/features/hmi/macronutton.h>
-#include <kabuki/features/hmi/midicontrol.h>
-#include <kabuki/features/hmi/widgetpage.h>
+#if SEAM >= SEAM_0_0_1_0__00
+#include "global.h"
 
 #include "header.h"
 namespace _ {
 
-const char* Seam_0_4_2__00(char* seam_log, char* seam_end, const char* args) {
+const char* Kabuki__Terminal___Kabuki__Features__HMI(char* seam_log, char* seam_end, const char* args) {
   control_array a();
 
   PRINTF("Testing const char* print (_::Expr& slot)...");

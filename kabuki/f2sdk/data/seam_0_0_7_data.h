@@ -1,5 +1,6 @@
 /* Kabuki Toolkit @version 0.x
-@file    \kabuki\0\4_features\seam_features.h
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    /kabuki/f2sdk/data/seam_0_0_7_data.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,15 +13,16 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#include "0_filesystem/seam_filesystem.h"
-#include "1_crabs/seam_crabs.h"
-#include "2_hmi/seam_hmi.h"
+#include "header.h"
+
+#include "00/project_foo.h"
 
 namespace _ {
-static const char* Seam_0_0_4(char* seam_log, char* seam_end,
+
+static const char* Seam_0_0_7_Data(char* seam_log, char* seam_end,
                               const char* args) {
   if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
-  return TestTreeNode<Seam_0_0_4_0, Seam_0_0_4_1, Seam_0_0_4_2>(seam_log,
-                                                                seam_end, args);
+  return TestTreeNode<Seam_0_0_5__00>(seam_log, seam_end, args);
 }
 }  // namespace _
+#include "footer.h"

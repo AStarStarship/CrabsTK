@@ -1,4 +1,5 @@
-#include <seams_footer.h>
+#include "../test_footer.h"
+
 #undef PRINT(item)
 #undef PRINTF(x, ...)
 #undef PAUSE(message)

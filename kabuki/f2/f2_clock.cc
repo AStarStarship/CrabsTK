@@ -22,6 +22,7 @@ specific language governing permissions and limitations under the License. */
 #include "tbinary.h"
 #include "tclock.h"
 #include "test.h"
+#include "test_header.h"
 
 namespace _ {
 

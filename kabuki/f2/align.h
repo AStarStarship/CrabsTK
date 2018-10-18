@@ -17,9 +17,13 @@ specific language governing permissions and limitations under the License. */
 #if SEAM >= SEAM_0_0_0__01
 
 #ifndef INCLUDED_KABUKI_F2_ALIGN
-#define INCLUDED_KABUKI_F2_ALIGN
+#define INCLUDED_KABUKI_F2_ALIGN 1
 
 namespace _ {
+
+enum {
+  kCpuCacheLineSize = 64,
+};
 
 /* Compute the next highest power of 2. */
 API inline uint32_t AlignPowerOf2(uint32_t value);

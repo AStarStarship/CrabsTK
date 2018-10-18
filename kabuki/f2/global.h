@@ -15,10 +15,10 @@ specific language governing permissions and limitations under the License. */
 #include <pch.h>
 
 #ifndef INCLUDED_KABUKI_F2_GLOBAL
-#define INCLUDED_KABUKI_F2_GLOBAL
+#define INCLUDED_KABUKI_F2_GLOBAL 1
 
 #include "talign.h"
-#include "trng.h"
 #include "ttest.h"
+//#include "trng.h"
 
 #endif  //< INCLUDED_KABUKI_F2_GLOBAL

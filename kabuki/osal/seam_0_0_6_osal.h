@@ -1,5 +1,6 @@
 /* Kabuki Toolkit @version 0.x
-@file    \seam_0\0\3_platform\seam_platform.h
+@link    https://github.com/kabuki-starship/kabuki-toolkit.git
+@file    /kabuki/0/1_hal/seam_hal.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -12,18 +13,15 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#include <kabuki/f2/global.h>
-
 #include "00/project_foo.h"
-
-#include "header.h"
 
 namespace _ {
 
-static const char* Kabuki__Terminal___Kabuki__Platform(char* seam_log, char* seam_end,
+static const char* Kabuki__Terminal___Kabuki__OSAL(char* seam_log, char* seam_end,
                               const char* args) {
+#if SEAM >= SEAM_0_0_1
   if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
-  return TestTreeNode<Seam_0_0_3>(seam_log, seam_end, args);
+#endif
+  return TestTreeNode<Seam_0_0_1__00>(seam_log, seam_end, args);
 }
 }  // namespace _
-#include "footer.h"
