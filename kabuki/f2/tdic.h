@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 #include "ascii_data.h"
 #include "socket.h"
 
-#include <kabuki/0/0_f2/06/header.h>
+#include "06/seam_header.inl"
 
 namespace _ {
 
@@ -33,11 +33,11 @@ namespace _ {
 
   @code
   +==========================+ -----------
-  |_____ Buffer            |   ^     ^
-  |_____ ...               |   |     |
-  |_____ Data N            |  Data   |
-  |_____ ...               |   |     |
-  |_____ Data 0            |   v     |
+  |_______ Buffer            |   ^     ^
+  |_______ ...               |   |     |
+  |_______ Data N            |  Data   |
+  |_______ ...               |   |     |
+  |_______ Data 0            |   v     |
   |==========================| -----   |
   |        Key 1             |   ^     |
   |        ...               |   |     |
@@ -45,44 +45,44 @@ namespace _ {
   |vvvvvvvvvvvvvvvvvvvvvvvvvv|   |     |
   |        buffer            |   |     |
   |^^^^^^^^^^^^^^^^^^^^^^^^^^|   |     |
-  |_____ Collision N       |   |     |
-  |_____ ...               |   |     |
+  |_______ Collision N       |   |     |
+  |_______ ...               |   |     |
   |        Collision 1       |   |     |
   |==========================|   |     |
-  |_____ count_max         |   |     |
-  |_____ ...               |   |     |
-  |_____ Collision Index N |   |     |
-  |_____ ...               |   |     |
+  |_______ count_max         |   |     |
+  |_______ ...               |   |     |
+  |_______ Collision Index N |   |     |
+  |_______ ...               |   |     |
   |        Collision Index 1 |   |     |
   |==========================|   |    Size
-  |_____ count_max         |   |     |
-  |_____ ...               |   |     |
-  |_____ Collision Table N |   |     |
-  |_____ ...               |   |     |
+  |_______ count_max         |   |     |
+  |_______ ...               |   |     |
+  |_______ Collision Table N |   |     |
+  |_______ ...               |   |     |
   |        Collision Table 1 |   |     |
   |==========================| Header  |
-  |_____ count_max         |   |     |
-  |_____ ...               |   |     |
-  |_____ Key Offset N      |   |     |
-  |_____ ...               |   |     |
+  |_______ count_max         |   |     |
+  |_______ ...               |   |     |
+  |_______ Key Offset N      |   |     |
+  |_______ ...               |   |     |
   |        Key Offset 1      |   |     |
   |==========================|   |     |
-  |_____ count_max         |   |     |
-  |_____ ...               |   |     |
-  |_____ Sorted Mappings N |   |     |
-  |_____ ...               |   |     |
+  |_______ count_max         |   |     |
+  |_______ ...               |   |     |
+  |_______ Sorted Mappings N |   |     |
+  |_______ ...               |   |     |
   |        Sorted Mappings 1 |   |     |
   |==========================|   |     |
-  |_____ count_max         |   |     |
-  |_____ ...               |   |     |
-  |_____ Data Offset N     |   |     |
-  |_____ ...               |   |     |
+  |_______ count_max         |   |     |
+  |_______ ...               |   |     |
+  |_______ Data Offset N     |   |     |
+  |_______ ...               |   |     |
   |        Data Offset 1     |   |     |
   |==========================|   |     |
-  |_____ count_max         |   |     |
-  |_____ ...               |   |     |
-  |_____ Type byte N       |   |     |
-  |_____ ...               |   |     |
+  |_______ count_max         |   |     |
+  |_______ ...               |   |     |
+  |_______ Type byte N       |   |     |
+  |_______ ...               |   |     |
   |        Type byte 1       |   |     |   ^ Up in addresses
   |==========================|   |     |   |
   |  TMapKey<UI, SI> Struct  |   v     v   ^
@@ -741,5 +741,5 @@ Utf8& DicPrint(Utf8& print, Dictionary<UI, SI, I>* dictionary) {
 }
 
 }  // namespace _
-#include <kabuki/0/0_f2/06/footer.h>
+#include "06/seam_footer.inl"
 #endif  //< INCLUDED_KABUKI_F2_BOOK

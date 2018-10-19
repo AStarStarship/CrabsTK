@@ -13,7 +13,6 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__00
 #include "tconsole.h"
 
 #include <conio.h>
@@ -22,7 +21,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-const char* ConsoleArgs(int args_count, char** args) {
+const char* ArgsToString(int args_count, char** args) {
   if (args_count <= 1) return nullptr;
   if (args_count == 2) return args[1];
   for (int i = 2; i < args_count; ++i) {
@@ -67,6 +66,10 @@ void PrintfLn(const char* format, ...) {
 
 void Print(const char* string) { return Printf(string); }
 
+void Print(const char16_t* string) { PrintString<char16_t>(string); }
+
+void Print(const char32_t* string) { PrintString<char32_t>(string); }
+
 void Print(const char* string, char delimiter) {
   Printf(string);
   return Print(delimiter);
@@ -79,7 +82,7 @@ void Print(const char* a, const char* b, const char* c) {
 }
 
 void Print(uint64_t value) {
-#if SEAM == SEAM_0_0_0__01
+#if SEAM == SEAM_0_0_0__00
   return Printf(FORMAT_UI8, value);
 #else
   enum { kSize = 24 };
@@ -90,7 +93,7 @@ void Print(uint64_t value) {
 }
 
 void Print(uint32_t value) {
-#if SEAM == SEAM_0_0_0__01
+#if SEAM == SEAM_0_0_0__00
   return Printf("%u", value);
 #else
   return Print((uint64_t)value);
@@ -98,7 +101,7 @@ void Print(uint32_t value) {
 }
 
 void Print(int64_t value) {
-#if SEAM == SEAM_0_0_0__01
+#if SEAM == SEAM_0_0_0__00
   return Printf(FORMAT_SI8, value);
 #else
   enum { kSize = 24 };
@@ -109,7 +112,7 @@ void Print(int64_t value) {
 }
 
 void Print(int32_t value) {
-#if SEAM == SEAM_0_0_0__01
+#if SEAM == SEAM_0_0_0__00
   return Printf("%i", value);
 #else
   return Print((int64_t)value);
@@ -117,7 +120,7 @@ void Print(int32_t value) {
 }
 
 void Print(float value) {
-#if SEAM == SEAM_0_0_0__01
+#if SEAM == SEAM_0_0_0__00
   return Printf("%f", value);
 #else
   enum { kSize = 16 };
@@ -128,7 +131,7 @@ void Print(float value) {
 }
 
 void Print(double value) {
-#if SEAM == SEAM_0_0_0__01
+#if SEAM == SEAM_0_0_0__00
   return Printf("%f", value);
 #else
   enum { kSize = 24 };
@@ -238,7 +241,7 @@ void PrintBinary(const void* ptr) {
 
 void PrintHex(uint8_t value) { PrintHex<uint8_t>(value); }
 
-void PrintHex(int8_t value) { PrintHex<uint8_t>((int8_t)value); }
+void PrintHex(int8_t value) { PrintHex<uint8_t>((uint8_t)value); }
 
 void PrintHex(uint16_t value) { PrintHex<uint16_t>(value); }
 
@@ -274,6 +277,7 @@ bool CInState(int vk_code) {
 #elif COMPILER == CLANG
 
 #endif
+  return false;
 }
 
 void Pause(const char* message) {
@@ -296,5 +300,3 @@ void Pausef(const char* format, ...) {
 }
 
 }  // namespace _
-
-#endif  //< #if SEAM >= SEAM_0_0_0__00

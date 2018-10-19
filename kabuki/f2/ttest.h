@@ -30,20 +30,26 @@ const char* TestTree(char* seam_log, char* seam_end, const char* args) {
 }
 
 template <TestCase... N>
-int SeamTreeTest(char* seam_log, size_t seam_log_size, const char* args) {
+int SeamTreeTest(int arg_count, char** args, char* seam_log,
+                 int seam_log_size) {
+  if (seam_log_size < 0) return APP_EXIT_FAILURE;
   static TestCase nodes[sizeof...(N)] = {N...};
-  return TestTree(seam_log, seam_log + seam_log_size - 1, args, nodes,
-                  sizeof...(N)) == nullptr
-             ? APP_EXIT_SUCCESS
-             : APP_EXIT_FAILURE;
+  const char* result =
+      TestTree(seam_log, seam_log + seam_log_size - 1,
+               ArgsToString(arg_count, args), nodes, sizeof...(N));
+  return result == nullptr ? APP_EXIT_SUCCESS : APP_EXIT_FAILURE;
 }
 
 template <typename Char>
-bool Compare(const Char* a, const Char* b) {
-  // int result = StringCompare<Char>(a, b);
-  // if (!result) return false;
-  Print("\nERROR: Fix test code.");
-  // Print("\nERROR: Expecting:").Print(a) << "\n           Found:" << b;
+bool Test(const Char* a, const Char* b) {
+  int result = ::_::StringCompare<Char>(a, b);
+  if (!result) return false;
+  Print("\nERROR: Expecting:");
+  Print(a);
+  Print("\n           Found:");
+  Print(b);
+  Print("\n      Difference:");
+  Print(result);
   return true;
 }
 

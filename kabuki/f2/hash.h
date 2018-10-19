@@ -18,9 +18,7 @@ specific language governing permissions and limitations under the License. */
 
 #ifndef INCLUDED_KABUKI_F2_HASH
 #define INCLUDED_KABUKI_F2_HASH
-// Dependencies:
 #include "config.h"
-// End dependencies.
 
 typedef uint16_t hash16_t;
 typedef uint32_t hash32_t;
@@ -28,19 +26,47 @@ typedef uint64_t hash64_t;
 
 namespace _ {
 
-API inline hash16_t Hash16(hash16_t hash, char value);
+/* Basic prime multiple hash algorithm.
+@return hash + value * hash.
+@param  value The char value to hash.
+@param  hash  The hash. */
+API inline hash16_t Hash16(char value, hash16_t hash = 65535);
 
-API inline hash32_t Hash32(hash32_t hash, char16_t value);
+/* Basic prime multiple hash algorithm.
+@return hash + value * hash.
+@param  value The char value to hash.
+@param  hash  The hash. */
+API inline hash32_t Hash32(char16_t value, hash32_t hash = 4294967291);
 
-API inline hash64_t Hash64(hash64_t hash, char32_t value);
+/* Basic prime multiple hash algorithm.
+@return hash + value * hash.
+@param  value The char value to hash.
+@param  hash  The hash. */
+API inline hash64_t Hash64(char32_t value,
+                           hash64_t hash = 18446744073709551557);
 
-/* Hashes the given char using the primeHash function. */
+/* Hashes the given char using the primeHash function.
+If you are experiencing collisions in your hash table, you may want to change
+the see to a different prime number.
+@return A prime multiple hash of the given string.
+@param  string The string to hash.
+@param  hash   A prime number seed hash. */
 API hash16_t Hash16(const char* string, hash16_t hash = 65535);
 
-/* Hashes the given char using the primeHash function. */
+/* Hashes the given char using the primeHash function.
+If you are experiencing collisions in your hash table, you may want to change
+the see to a different prime number.
+@return A prime multiple hash of the given string.
+@param  string The string to hash.
+@param  hash   A prime number seed hash. */
 API hash32_t Hash32(const char* string, hash32_t hash = 4294967291);
 
-/* Hashes the given char using the primeHash function. */
+/* Hashes the given char using the primeHash function.
+If you are experiencing collisions in your hash table, you may want to change
+the see to a different prime number.
+@return A prime multiple hash of the given string.
+@param  string The string to hash.
+@param  hash   A prime number seed hash. */
 API hash64_t Hash64(const char* string, hash64_t hash = 18446744073709551557);
 
 }  // namespace _

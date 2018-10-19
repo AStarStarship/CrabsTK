@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    ~/seam_0/1/3_db/00/project_foo.h
+@file    ~/kabuki/f2sdk/ai/00/project_foo.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -17,7 +17,7 @@ specific language governing permissions and limitations under the License. */
 
 #include "header.h"
 namespace _ {
-const char* Seam_0_1_3__00(char* seam_log, char* seam_end, 
+const char* _0_1_3__00_ProjectFoo(char* seam_log, char* seam_end, 
                            const char* args) {
 #if SEAM >= SEAM_0_1_3__00
   if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;

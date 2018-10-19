@@ -12,7 +12,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#include <kabuki/f2/global.h>
+#include "00/project_foo.h"
 
 namespace _ {
 
@@ -21,7 +21,7 @@ static const char* Kabuki__Terminal___Kabuki__F2SDK__AI_Math(char* seam_log, cha
 #if SEAM >= SEAM_0_0_7
   if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
 #endif
-  return TestTreeNode<SEAM_0_0_07__00, SEAM_0_0_07__01>(seam_log, seam_end, args);
+  return TestTreeNode<_0_1_3__00_ProjectFoo>(seam_log, seam_end, args);
 }
 }  // namespace _
 #include "footer.h"

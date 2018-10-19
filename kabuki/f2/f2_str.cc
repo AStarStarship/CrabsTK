@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #include "socket.h"
 #include "tstr.h"
 
-#include <kabuki/0/0_f2/header.h>
+#include <seam_header.inl"
 #if F2_TEXT
 
 namespace _ {
@@ -661,7 +661,9 @@ const char16_t* StringEnd(const char16_t* text) {
   return StringEnd<char16_t>(text);
 }
 
-int StringLength(const char16_t* text) { return StringLength<char16_t, int>(text); }
+int StringLength(const char16_t* text) {
+  return StringLength<char16_t, int>(text);
+}
 
 char16_t* TextClone(const char16_t* text) { return TextClone<char16_t>(text); }
 
@@ -1283,7 +1285,9 @@ const char32_t* StringEnd(const char32_t* text) {
   return StringEnd<char32_t>(text);
 }
 
-int StringLength(const char32_t* text) { return StringLength<char32_t, int>(text); }
+int StringLength(const char32_t* text) {
+  return StringLength<char32_t, int>(text);
+}
 
 char32_t* TextClone(const char32_t* text) { return TextClone<char32_t>(text); }
 
@@ -1881,5 +1885,5 @@ _::Utf32& operator<<(_::Utf32& utf, _::Utf32Right item) {
 
 #endif  //< #if USING_UTF32
 
-#include <kabuki/00/0_f2/footer.h>
+#include <03/seam_footer.inl"
 #endif  //< #if SEAM >= SEAM_0_0_0__04

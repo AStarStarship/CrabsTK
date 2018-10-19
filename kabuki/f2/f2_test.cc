@@ -47,17 +47,13 @@ void TestEnd(const char* function_name) {
   Print("\n  Done testing ", function_name);
 }
 
-bool Assert(bool condition) { return !condition; }
+bool Test(bool condition) { return !condition; }
 
-bool Test(const char* a, const char* b) { return Compare<char>(a, b); }
+bool Test(const char* a, const char* b) { return Test<char>(a, b); }
 
-bool Test(const char16_t* a, const char16_t* b) {
-  return Compare<char16_t>(a, b);
-}
+bool Test(const char16_t* a, const char16_t* b) { return Test<char16_t>(a, b); }
 
-bool Test(const char32_t* a, const char32_t* b) {
-  return Compare<char32_t>(a, b);
-}
+bool Test(const char32_t* a, const char32_t* b) { return Test<char32_t>(a, b); }
 
 bool Test(const void* a, const void* b) {
   if (a == b) return true;
@@ -224,7 +220,7 @@ bool Test(double value) {
   return false;
 }
 
-bool ErrorWarn(const char* function, const char* file, int line) {
+bool TestWarn(const char* function, const char* file, int line) {
   Printf("\nAssertion failed in function %s at line %d in \"%s\"", function,
          line, file);
   Pause();
@@ -232,7 +228,7 @@ bool ErrorWarn(const char* function, const char* file, int line) {
 }
 
 bool ErrorFreeze(const char* function, const char* file, int line) {
-  ErrorWarn(function, file, line);
+  TestWarn(function, file, line);
   Pause();
   return true;
 }

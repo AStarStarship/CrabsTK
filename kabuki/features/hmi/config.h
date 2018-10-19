@@ -13,9 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_00_03_00_00__00
-#ifndef HEADER_FOR_KABUKI_HMI_MODULE_COFIG
-#define HEADER_FOR_KABUKI_HMI_MODULE_COFIG
+#ifndef INCLUDED_KABUKI_HMI_COFIG
+#define INCLUDED_KABUKI_HMI_COFIG
 
-#endif  //< HEADER_FOR_KABUKI_HMI_MODULE_COFIG
-#endif  //< #if SEAM_MAJOR >= 2 && SEAM_MINOR >= 0
+#define SEAM_0_0_4_2__00 19  //< kabuki.features.hmi
+
+#endif  //< INCLUDED_KABUKI_HMI_COFIG

@@ -16,9 +16,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <random>
 
-#include <kabuki/f2/global.h>
-
-#include "header.h"
+#include "seam_header.inl"
 
 namespace _ {
 
@@ -26,6 +24,38 @@ const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
                                      const char* args) {
 #if SEAM >= SEAM_0_0_0__00
   TEST_BEGIN;
+
+  PRINT("\n\nTesting ArgsToString...\n");
+
+  char arg_string[] = "Foo\0Bar    \0   420    \0";
+  char* test_args[] = {arg_string, arg_string + 11};
+  const int kArgCount = 3;
+
+  PRINT("\nArguments:\n");
+  for (int i = 0; i < kArgCount; ++i) {
+    char* arg = test_args[i];
+    PRINTF("\ni:%i\"%s\" 0x%p", i, arg, arg);
+  }
+  PRINT("\n\nContiguous Args:\n");
+  char* end = test_args[kArgCount - 1];
+  while (*end) ++end;
+  PRINT("\n\nContiguous Args:\n");
+  char* cursor = test_args[0];
+  while (cursor != end) {
+    char c = *cursor++;
+    if (c == 0)
+      PRINT('`');
+    else if (c < ' ')
+      PRINT('~');
+    else
+      PRINT(c);
+  }
+  PRINT("\n\nPrinting argument string...\n");
+  _::ArgsToString(kArgCount, test_args);
+  PRINT('\n');
+  PRINT(test_args[1]);
+
+  PRINT("\n\nDone testing ArgsToString(int, char**)");
 
   static const uint64_t k10ToThe[20] = {
       1,           //< 10^0
@@ -119,7 +149,7 @@ const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
   char buffer[kSize];
   char* result;
   uint64_t result_ui8, expected_ui8;
-  double dbl_expected, dbl_found;
+  // double dbl_expected, dbl_found;
 
   // Setup C++1x random number generator.
   std::random_device rd;
@@ -187,84 +217,16 @@ const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
       break;
     }
     *result = 0;
-    if (StringCompare(expecting, text)) {
+    if (StringCompare<>(expecting, text)) {
       PAUSEF("\n\nERROR: Expecting \"%s\":%llu and found \"%s\":%llu",
              expecting, StringLength<>(expecting), text, StringLength<>(text));
     }
   }
 
   PRINT("\n Done testing ItoS :)\n\n");
-
-  PRINT("\n\nTesting Float Ceiling<Float, UI> (Float)...\n");
-
-  for (int i = 0; i < 1 << 20; ++i) {
-    do {
-      expected_ui8 = distr(eng);
-      dbl_expected = static_cast<double>(expected_ui8);
-    } while (!IsFinite(dbl_expected));
-    dbl_found = Ceiling(dbl_expected);
-    dbl_expected = ceil(dbl_expected);
-    COMPARE(dbl_expected, dbl_found);
-  }
-
-  PRINT("\n\nTesting float Char* Print<Char> (Char*, Char*, float&)...\n");
-
-  for (int i = 0; i < 1 << 20; ++i) {
-    do {
-      expected_ui8 = distr(eng);
-      dbl_expected = static_cast<double>(expected_ui8);
-    } while (!IsFinite(dbl_expected));
-    Print<double, uint64_t, char>(buffer, buffer + 24, dbl_expected);
-    COMPARE(0, scanf_s("%lf", &dbl_found));
-    COMPARE(dbl_expected, dbl_found);
-  }
-
-  PRINTF(
-      "\n\nTesting const Char* Scan<Char> (const Char*, const Char*, float&) "
-      "functions...\n");
-
-  for (int i = 0; i < 1 << 20; ++i) {
-    do {
-      expected_ui8 = distr(eng);
-      dbl_expected = static_cast<double>(expected_ui8);
-    } while (!IsFinite(dbl_expected));
-    sprintf_s(buffer, 24, "%f", dbl_expected);
-    COMPARE(0, Scan(buffer, dbl_found));
-    COMPARE(dbl_expected, dbl_found);
-  }
-
-  PRINT("\n\nTesting ArgsToString...\n");
-
-  char arg_string[] = "Foo\0Bar    \0   420    \0";
-  char* test_args[] = {arg_string, arg_string + 11};
-  const int kArgCount = 3;
-
-  PRINT("\nArguments:\n");
-  for (int i = 0; i < kArgCount; ++i) {
-    char* arg = test_args[i];
-    PRINTF("\ni:%i\"%s\" 0x%p", i, arg, arg);
-  }
-  PRINT("\n\nContiguous Args:\n");
-  char* end = test_args[kArgCount - 1];
-  while (*end) ++end;
-  PRINT("\n\nContiguous Args:\n");
-  char* cursor = test_args[0];
-  while (cursor != end) {
-    char c = *cursor++;
-    if (c == 0)
-      PRINT('`');
-    else if (c < ' ')
-      PRINT('~');
-    else
-      PRINT(c);
-  }
-  PRINT("\n\nPrinting argument string...\n");
-  _::ConsoleArgs(kArgCount, test_args);
-  PRINT('\n');
-  PRINT(test_args[1]);
 #endif
   return 0;
 }
 }  // namespace _
 
-#include "footer.h"
+#include "seam_footer.inl"

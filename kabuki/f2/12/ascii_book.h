@@ -15,7 +15,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <kabuki/f2/global.h>
 
-#include "header.h"
+#include "seam_header.inl"
 
 namespace _ {
 
@@ -154,4 +154,4 @@ static const char* _0_0_0__12_ASCII_Book(char* seam_log, char* seam_end,
   return nullptr;
 }
 }  // namespace _
-#include "footer.h"
+#include "seam_footer.inl"

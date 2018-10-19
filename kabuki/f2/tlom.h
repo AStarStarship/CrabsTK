@@ -19,7 +19,7 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_VARINT
 #define INCLUDED_KABUKI_F2_VARINT
 
-#include <kabuki/0/0_f2/07/header.h>
+#include "07/seam_header.inl"
 
 namespace _ {
 

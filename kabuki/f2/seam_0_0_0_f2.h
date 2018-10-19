@@ -30,12 +30,7 @@ specific language governing permissions and limitations under the License. */
 #include "13/ascii_dictionary.h"*/
 
 namespace _ {
-
-static const char* Seam_0_0_0_F2(char* seam_log, char* seam_end,
-                                 const char* args) {
-#if SEAM >= SEAM_0_0_0
-  if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
-#endif
+static const char* _0_0_0_F2(char* seam_log, char* seam_end, const char* args) {
   return TestTree<_0_0_0__00_ItoS_and_StoI/*, _0_0_0__01_FtoS_and_StoF,
                   _0_0_0__02_Core_text_functions, _0_0_0__03_ASCII_Strings,
                   _0_0_0__04_ASCII_Clock, _0_0_0__05_ASCII_Stack,
@@ -45,5 +40,13 @@ static const char* Seam_0_0_0_F2(char* seam_log, char* seam_end,
                   _0_0_0__12_ASCII_Book, _0_0_0__13_ASCII_Dictionary*/>(
       seam_log, seam_end, args);
 }
-
 }  // namespace _
+
+#if SEAM >= SEAM_0_0_0__00 && SEAM <= SEAM_0_0_0__13
+using namespace _;
+int main(int arg_count, char** args) {
+  enum { kSize = 1024 };
+  char seam_log[kSize];
+  return SeamTreeTest<_0_0_0_F2>(arg_count, args, seam_log, kSize);
+}
+#endif

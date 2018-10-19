@@ -59,54 +59,55 @@ namespace _ {
     terminated by an invalid index that is greater than kMaxNumOps.
     collissionsList[0] is an invalid index, so the collisionsList is searched
     from lower address up.
+
     # Memory Layout
 
     @code
-       ____________________________________
+       ___________________________________________________
        |_____ | Key 1                                    |
        |_____ | ...                          Keys        |
        |_____ v Key N                                    |
-       |__________________________________|
-       |                                                   |
-       |               Header Buffer Space                 |
-       |__________________________________|
+       |_________________________________________________|
+       |                                                 |
+       |               Header Buffer Space               |
+       |_________________________________________________|
        |_____                          UI Size = 2^N     |
        |_____                                            |
        |_____   Collision List N          Hash Table     |
        |_____ ^ ...                        Collision     |
        |_____ | Collision List 0              List       |
-       |__________________________________|
+       |_________________________________________________|
        |_____                          UI Size = 2^N     |
        |_____   Buffer Indexes                           |
        |_____                             Hash Table     |
        |_____ ^ Collision Table N          Unsorted      |
        |_____ | ...                         Indexes      |
-       |        | Collision table 0                        |
-       |__________________________________|
+       |        | Collision table 0                      |
+       |_________________________________________________|
        |_____                          UI Size = 2^N     |
        |_____   Buffer Indexes                           |
        |_____                             Hash Table     |
-       |_____ ^ Collision SI N          Collision     |
+       |_____ ^ Collision SI N            Collision      |
        |_____ | ...                         Indexes      |
-       |        | Collision SI 0                        |
-       |__________________________________|
+       |      | Collision SI 0                           |
+       |_________________________________________________|
        |_____                          UI Size = 2^(N+1) |
        |_____   Buffer Indexes                           |
        |_____                                UI          |
        |_____ ^ Key Offset N                 key         |
        |_____ | ...                        Offsets       |
-       |        | Key Offset 1                             |
-       |__________________________________|
+       |        | Key Offset 1                           |
+       |_________________________________________________|
        |_____                          UI Size = 2^(N+1) |
        |_____   Buffer Indexes                           |
        |_____                               UI           |
        |_____ ^ Sorted Hash N              Hashes        |
        |_____ | ...                                      |
-       |        | Sorted Hash 1                            |
-       |__________________________________|
-     ^ |                                                   |
-     | |                 Header (8 bytes)                  |
-    0x0|__________________________________|
+       |        | Sorted Hash 1                          |
+       |_________________________________________________|
+     ^ |                                                 |
+     | |                 Header (8 bytes)                |
+    0x0|_________________________________________________|
     @endcode
 */
 template <typename UI, typename SI>

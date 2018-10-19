@@ -23,7 +23,7 @@ namespace _ {
 @return nil if there are no arguments or the args string upon success.
 @param arg_count The number of arguments.
 @param args      The arguments. */
-API const char* ConsoleArgs(int arg_count, char** args);
+API const char* ArgsToString(int arg_count, char** args);
 
 /* Prints a single char to the console. */
 API inline void Print(char c);
@@ -36,6 +36,12 @@ API void Print(char first, char second, char third);
 
 /* Prints a single string to the console. */
 API void Print(const char* string);
+
+/* Prints a single string to the console. */
+API void Print(const char16_t* string);
+
+/* Prints a single string to the console. */
+API void Print(const char32_t* string);
 
 /* Prints a single string to the console followed by the given delimiter. */
 API void Print(const char* string, char delimiter);

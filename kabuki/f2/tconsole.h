@@ -14,8 +14,6 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__00
-
 #ifndef INCLUDED_KABUKI_F2_TCONSOLE
 #define INCLUDED_KABUKI_F2_TCONSOLE 1
 
@@ -34,11 +32,8 @@ void PrintHex(UI value) {
   for (int num_bits_shift = sizeof(UI) * 8 - 4; num_bits_shift >= 0;
        num_bits_shift -= 4)
     Print(HexNibbleToUpperCase((uint8_t)(value >> num_bits_shift)));
-  return Console();
 }
 
 }  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_TCONSOLE
-
-#endif  //< #if SEAM >= SEAM_0_0_0__00

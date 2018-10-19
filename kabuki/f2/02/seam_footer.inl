@@ -1,4 +1,4 @@
-#include "../test_footer.h"
+#include "../seam_footer.inl"
 
 #undef PRINT(item)
 #undef PRINTF(x, ...)

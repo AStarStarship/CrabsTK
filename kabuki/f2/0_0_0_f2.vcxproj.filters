@@ -57,14 +57,11 @@
     <Filter Include="kabuki\f2\style_guide">
       <UniqueIdentifier>{f32f5283-9169-4898-b662-38b550b6817c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="toolkit">
+      <UniqueIdentifier>{f59beabf-333a-479c-a947-c991ef5e7253}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\pch.cc">
-      <Filter>kabuki</Filter>
-    </ClCompile>
-    <ClCompile Include="..\seam_tree.cc">
-      <Filter>kabuki</Filter>
-    </ClCompile>
     <ClCompile Include="f2_align.cc">
       <Filter>kabuki\f2</Filter>
     </ClCompile>
@@ -107,38 +104,11 @@
     <ClCompile Include="f2_vk.cc">
       <Filter>kabuki\f2</Filter>
     </ClCompile>
+    <ClCompile Include="seam_tree.cc">
+      <Filter>kabuki\f2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="00\footer.h">
-      <Filter>kabuki\f2\00</Filter>
-    </ClInclude>
-    <ClInclude Include="00\header.h">
-      <Filter>kabuki\f2\00</Filter>
-    </ClInclude>
-    <ClInclude Include="00\itos_and_stoi.h">
-      <Filter>kabuki\f2\00</Filter>
-    </ClInclude>
-    <ClInclude Include="..\footer.h">
-      <Filter>kabuki</Filter>
-    </ClInclude>
-    <ClInclude Include="..\global.h">
-      <Filter>kabuki</Filter>
-    </ClInclude>
-    <ClInclude Include="..\mbed.h">
-      <Filter>kabuki</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public.h">
-      <Filter>kabuki</Filter>
-    </ClInclude>
-    <ClInclude Include="..\targetver.h">
-      <Filter>kabuki</Filter>
-    </ClInclude>
-    <ClInclude Include="..\assembly.h">
-      <Filter>kabuki</Filter>
-    </ClInclude>
-    <ClInclude Include="..\config.h">
-      <Filter>kabuki</Filter>
-    </ClInclude>
     <ClInclude Include="str.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
@@ -179,12 +149,6 @@
       <Filter>kabuki\f2</Filter>
     </ClInclude>
     <ClInclude Include="test.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="test_footer.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="test_header.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
     <ClInclude Include="thash.h">
@@ -253,16 +217,10 @@
     <ClInclude Include="console.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="footer.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
     <ClInclude Include="global.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
     <ClInclude Include="hash.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
-    <ClInclude Include="header.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
     <ClInclude Include="lock.h">
@@ -286,110 +244,14 @@
     <ClInclude Include="socket.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="01\ftos_and_stof.h">
-      <Filter>kabuki\f2\01</Filter>
-    </ClInclude>
-    <ClInclude Include="01\header.h">
-      <Filter>kabuki\f2\01</Filter>
-    </ClInclude>
-    <ClInclude Include="01\footer.h">
-      <Filter>kabuki\f2\01</Filter>
-    </ClInclude>
-    <ClInclude Include="02\footer.h">
-      <Filter>kabuki\f2\02</Filter>
-    </ClInclude>
-    <ClInclude Include="02\header.h">
-      <Filter>kabuki\f2\02</Filter>
-    </ClInclude>
-    <ClInclude Include="02\core_text_functions.h">
-      <Filter>kabuki\f2\02</Filter>
-    </ClInclude>
-    <ClInclude Include="03\ascii_strings.h">
-      <Filter>kabuki\f2\03</Filter>
-    </ClInclude>
-    <ClInclude Include="03\footer.h">
-      <Filter>kabuki\f2\03</Filter>
-    </ClInclude>
-    <ClInclude Include="03\header.h">
-      <Filter>kabuki\f2\03</Filter>
-    </ClInclude>
-    <ClInclude Include="04\ascii_clock.h">
-      <Filter>kabuki\f2\04</Filter>
-    </ClInclude>
-    <ClInclude Include="04\footer.h">
-      <Filter>kabuki\f2\04</Filter>
-    </ClInclude>
-    <ClInclude Include="04\header.h">
-      <Filter>kabuki\f2\04</Filter>
-    </ClInclude>
-    <ClInclude Include="06\footer.h">
-      <Filter>kabuki\f2\06</Filter>
-    </ClInclude>
-    <ClInclude Include="06\header.h">
-      <Filter>kabuki\f2\06</Filter>
-    </ClInclude>
-    <ClInclude Include="06\ascii_array.h">
-      <Filter>kabuki\f2\06</Filter>
-    </ClInclude>
-    <ClInclude Include="05\footer.h">
-      <Filter>kabuki\f2\05</Filter>
-    </ClInclude>
-    <ClInclude Include="05\header.h">
-      <Filter>kabuki\f2\05</Filter>
-    </ClInclude>
-    <ClInclude Include="05\ascii_stack.h">
-      <Filter>kabuki\f2\05</Filter>
-    </ClInclude>
-    <ClInclude Include="07\footer.h">
-      <Filter>kabuki\f2\07</Filter>
-    </ClInclude>
-    <ClInclude Include="07\header.h">
-      <Filter>kabuki\f2\07</Filter>
-    </ClInclude>
-    <ClInclude Include="07\ascii_loom.h">
-      <Filter>kabuki\f2\07</Filter>
-    </ClInclude>
-    <ClInclude Include="08\ascii_table.h">
-      <Filter>kabuki\f2\08</Filter>
-    </ClInclude>
-    <ClInclude Include="08\footer.h">
-      <Filter>kabuki\f2\08</Filter>
-    </ClInclude>
-    <ClInclude Include="08\header.h">
-      <Filter>kabuki\f2\08</Filter>
-    </ClInclude>
-    <ClInclude Include="09\footer.h">
-      <Filter>kabuki\f2\09</Filter>
-    </ClInclude>
-    <ClInclude Include="09\header.h">
-      <Filter>kabuki\f2\09</Filter>
-    </ClInclude>
     <ClInclude Include="09\ascii_varint.h">
       <Filter>kabuki\f2\09</Filter>
     </ClInclude>
     <ClInclude Include="10\ascii_list.h">
       <Filter>kabuki\f2\10</Filter>
     </ClInclude>
-    <ClInclude Include="10\footer.h">
-      <Filter>kabuki\f2\10</Filter>
-    </ClInclude>
-    <ClInclude Include="10\header.h">
-      <Filter>kabuki\f2\10</Filter>
-    </ClInclude>
-    <ClInclude Include="11\footer.h">
-      <Filter>kabuki\f2\11</Filter>
-    </ClInclude>
-    <ClInclude Include="11\header.h">
-      <Filter>kabuki\f2\11</Filter>
-    </ClInclude>
     <ClInclude Include="11\ascii_map.h">
       <Filter>kabuki\f2\11</Filter>
-    </ClInclude>
-    <ClInclude Include="12\footer.h">
-      <Filter>kabuki\f2\12</Filter>
-    </ClInclude>
-    <ClInclude Include="12\header.h">
-      <Filter>kabuki\f2\12</Filter>
     </ClInclude>
     <ClInclude Include="12\ascii_book.h">
       <Filter>kabuki\f2\12</Filter>
@@ -397,22 +259,127 @@
     <ClInclude Include="13\ascii_dictionary.h">
       <Filter>kabuki\f2\13</Filter>
     </ClInclude>
-    <ClInclude Include="13\footer.h">
+    <ClInclude Include="08\ascii_table.h">
+      <Filter>kabuki\f2\08</Filter>
+    </ClInclude>
+    <ClInclude Include="00\itos_and_stoi.h">
+      <Filter>kabuki\f2\00</Filter>
+    </ClInclude>
+    <ClInclude Include="03\ascii_strings.h">
+      <Filter>kabuki\f2\03</Filter>
+    </ClInclude>
+    <ClInclude Include="02\core_text_functions.h">
+      <Filter>kabuki\f2\02</Filter>
+    </ClInclude>
+    <ClInclude Include="01\ftos_and_stof.h">
+      <Filter>kabuki\f2\01</Filter>
+    </ClInclude>
+    <ClInclude Include="04\ascii_clock.h">
+      <Filter>kabuki\f2\04</Filter>
+    </ClInclude>
+    <ClInclude Include="05\ascii_stack.h">
+      <Filter>kabuki\f2\05</Filter>
+    </ClInclude>
+    <ClInclude Include="06\ascii_array.h">
+      <Filter>kabuki\f2\06</Filter>
+    </ClInclude>
+    <ClInclude Include="07\ascii_loom.h">
+      <Filter>kabuki\f2\07</Filter>
+    </ClInclude>
+    <ClInclude Include="00\seam_footer.inl">
+      <Filter>kabuki\f2\00</Filter>
+    </ClInclude>
+    <ClInclude Include="00\seam_header.inl">
+      <Filter>kabuki\f2\00</Filter>
+    </ClInclude>
+    <ClInclude Include="01\seam_footer.inl">
+      <Filter>kabuki\f2\01</Filter>
+    </ClInclude>
+    <ClInclude Include="01\seam_header.inl">
+      <Filter>kabuki\f2\01</Filter>
+    </ClInclude>
+    <ClInclude Include="02\seam_footer.inl">
+      <Filter>kabuki\f2\02</Filter>
+    </ClInclude>
+    <ClInclude Include="02\seam_header.inl">
+      <Filter>kabuki\f2\02</Filter>
+    </ClInclude>
+    <ClInclude Include="03\seam_footer.inl">
+      <Filter>kabuki\f2\03</Filter>
+    </ClInclude>
+    <ClInclude Include="03\seam_header.inl">
+      <Filter>kabuki\f2\03</Filter>
+    </ClInclude>
+    <ClInclude Include="04\seam_footer.inl">
+      <Filter>kabuki\f2\04</Filter>
+    </ClInclude>
+    <ClInclude Include="04\seam_header.inl">
+      <Filter>kabuki\f2\04</Filter>
+    </ClInclude>
+    <ClInclude Include="05\seam_footer.inl">
+      <Filter>kabuki\f2\05</Filter>
+    </ClInclude>
+    <ClInclude Include="05\seam_header.inl">
+      <Filter>kabuki\f2\05</Filter>
+    </ClInclude>
+    <ClInclude Include="06\seam_footer.inl">
+      <Filter>kabuki\f2\06</Filter>
+    </ClInclude>
+    <ClInclude Include="06\seam_header.inl">
+      <Filter>kabuki\f2\06</Filter>
+    </ClInclude>
+    <ClInclude Include="07\seam_footer.inl">
+      <Filter>kabuki\f2\07</Filter>
+    </ClInclude>
+    <ClInclude Include="07\seam_header.inl">
+      <Filter>kabuki\f2\07</Filter>
+    </ClInclude>
+    <ClInclude Include="08\seam_footer.inl">
+      <Filter>kabuki\f2\08</Filter>
+    </ClInclude>
+    <ClInclude Include="08\seam_header.inl">
+      <Filter>kabuki\f2\08</Filter>
+    </ClInclude>
+    <ClInclude Include="09\seam_footer.inl">
+      <Filter>kabuki\f2\09</Filter>
+    </ClInclude>
+    <ClInclude Include="09\seam_header.inl">
+      <Filter>kabuki\f2\09</Filter>
+    </ClInclude>
+    <ClInclude Include="10\seam_footer.inl">
+      <Filter>kabuki\f2\10</Filter>
+    </ClInclude>
+    <ClInclude Include="10\seam_header.inl">
+      <Filter>kabuki\f2\10</Filter>
+    </ClInclude>
+    <ClInclude Include="11\seam_footer.inl">
+      <Filter>kabuki\f2\11</Filter>
+    </ClInclude>
+    <ClInclude Include="11\seam_header.inl">
+      <Filter>kabuki\f2\11</Filter>
+    </ClInclude>
+    <ClInclude Include="12\seam_footer.inl">
+      <Filter>kabuki\f2\12</Filter>
+    </ClInclude>
+    <ClInclude Include="12\seam_header.inl">
+      <Filter>kabuki\f2\12</Filter>
+    </ClInclude>
+    <ClInclude Include="13\seam_header.inl">
       <Filter>kabuki\f2\13</Filter>
     </ClInclude>
-    <ClInclude Include="13\header.h">
+    <ClInclude Include="13\seam_footer.inl">
       <Filter>kabuki\f2\13</Filter>
+    </ClInclude>
+    <ClInclude Include="seam_footer.inl">
+      <Filter>kabuki\f2</Filter>
+    </ClInclude>
+    <ClInclude Include="seam_header.inl">
+      <Filter>kabuki\f2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="00\readme.md">
       <Filter>kabuki\f2\00</Filter>
-    </None>
-    <None Include="..\readme.md">
-      <Filter>kabuki</Filter>
-    </None>
-    <None Include="..\sloth.s2">
-      <Filter>kabuki</Filter>
     </None>
     <None Include="readme.md">
       <Filter>kabuki\f2</Filter>
