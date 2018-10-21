@@ -504,17 +504,17 @@ inline Char* PrintNil(Char* cursor) {
 }
 
 template <typename Char = char>
-inline Char* Print8Decimals<Char>(Char* cursor, uint32_t value_ui4,
-                                  const uint16_t* lut) {
+inline Char* Print8Decimals(Char* cursor, uint32_t value_ui4,
+                            const uint16_t* lut) {
   PRINT("\n    Printing 8 decimals fast:");
   PRINT(value_ui4);
-  uint16_t pow_10 = 10000, digits5and6 = (uint16_t)(value_ui4 / pow_10),
-           digits1and2 = value_ui4 - pow_10 * digits5and6;
-  pow_10 = 100;
-  uint16_t digits7and8 = digits5and6 / pow_10,
-           digits3and4 = digits1and2 / pow_10;
-  digits5and6 -= pow_10 * digits7and8;
-  digits1and2 -= pow_10 * digits3and4;
+  uint16_t pow_10_ui2 = 10000, digits5and6 = (uint16_t)(value_ui4 / pow_10_ui2),
+           digits1and2 = value_ui4 - pow_10_ui2 * digits5and6;
+  pow_10_ui2 = 100;
+  uint16_t digits7and8 = digits5and6 / pow_10_ui2,
+           digits3and4 = digits1and2 / pow_10_ui2;
+  digits5and6 -= pow_10_ui2 * digits7and8;
+  digits1and2 -= pow_10_ui2 * digits3and4;
   PrintDecimals<Char>(cursor, lut[digits7and8]);
   PrintDecimals<Char>(cursor + 2, lut[digits5and6]);
   PrintDecimals<Char>(cursor + 4, lut[digits3and4]);
@@ -523,11 +523,14 @@ inline Char* Print8Decimals<Char>(Char* cursor, uint32_t value_ui4,
 }
 
 template <typename Char = char>
-void Print8or16Decimals(Char* cursor, uint32_t lsd, uint16_t* lut,
+void Print8or16Decimals(Char* cursor, uint32_t lsd, const uint16_t* lut,
                         uint32_t middle_sd, uint32_t delta) {
   Print8Decimals<Char>(cursor, lsd, lut);
   if (delta == 16) Print8Decimals<Char>(cursor + 8, middle_sd, lut);
 }
+
+inline uint32_t ValueUI4(uint32_t value) { return value; }
+inline uint32_t ValueUI4(uint64_t value) { return (uint32_t)value; }
 
 /* Prints the give value to the given buffer as a Unicode string.
 @return Nil upon buffer overflow and a pointer to the nil-term Char upon
@@ -541,7 +544,8 @@ Char* Print(Char* cursor, Char* end, UI value) {
   if (!cursor || cursor >= end) return nullptr;
 
   Char* nil_ptr;
-  uint32_t comparator, delta;
+  uint16_t pow_10_ui2;
+  uint32_t pow_10_ui4, delta = 0;
   const uint16_t* lut = PuffDigitsLut();
 
   // The best way to understand how the numbers are getting converted is that
@@ -564,128 +568,130 @@ Char* Print(Char* cursor, Char* end, UI value) {
     return PrintNil<Char>(cursor + delta + 2);
   } else {
     if ((value >> 10) == 0) {
-      uint16_t digits1and2 = (uint16_t)value;
-      uint16_t pow_10 = 1000;
-      if (digits1and2 >= pow_10) {
+      pow_10_ui2 = 1000;
+      if (value >= pow_10_ui2) {
+      Print4A:
         PRINT("\n    Range:[1000, 1023] length:4");
         nil_ptr = cursor + delta + 4;
         if (nil_ptr >= end) return nullptr;
-        digits1and2 -= pow_10;
+        uint16_t digits1and2 = (uint16_t)(value - pow_10_ui2);
         PrintDigits<Char>(cursor, '1', '0');
         PrintDecimals<Char>(cursor + 2, lut[digits1and2]);
         return PrintNil<Char>(nil_ptr);
       }
     Print3:
       PRINT("\n    Range:[100, 999] length:3");
-      pow_10 = 10000;
       nil_ptr = cursor + delta + 3;
       if (nil_ptr >= end) return nullptr;
-      digits1and2 = (uint16_t)value;
-      pow_10 = 100;
-      Char digit = (Char)(digits1and2 / pow_10);
-      digits1and2 -= digit * pow_10;
+      uint16_t digits1and2 = (uint16_t)value, pow_10_ui2 = 100;
+      Char digit = (Char)(digits1and2 / pow_10_ui2);
+      digits1and2 -= digit * pow_10_ui2;
       PrintDecimal<Char>(cursor, digit);
       PrintDecimals<Char>(cursor + 1, lut[digits1and2]);
       return PrintNil<Char>(nil_ptr);
     } else if ((value >> 13) == 0) {
-      uint32_t pow_10 = 10000;
-      uint16_t digits1and2 = (uint16_t)value;
-      if (digits1and2 >= pow_10) {
-      Print5:
+      pow_10_ui2 = 10000;
+      if (value >= pow_10_ui2) {
+      Print5A:
         PRINT("\n    Range:[10000, 16383] length:5");
         nil_ptr = cursor + delta + 5;
         if (nil_ptr >= end) return nullptr;
         cursor = PrintChar<Char>(cursor, '1');
-        digits1and2 -= pow_10;
+        value -= pow_10_ui2;
       } else {
-        PRINT("\n    Range:[1024, 9999] length:4");
       Print4:
+        PRINT("\n    Range:[1024, 9999] length:4");
         nil_ptr = cursor + delta + 4;
         if (nil_ptr >= end) return nullptr;
         PrintNil<Char>(nil_ptr);
       }
-      pow_10 = 100;
-      uint16_t digits3and4 = digits1and2 / pow_10;
-      digits1and2 -= digits3and4 * pow_10;
+      pow_10_ui2 = 100;
+      uint16_t digits1and2 = (uint16_t)value,
+               digits3and4 = digits1and2 / pow_10_ui2;
+      digits1and2 -= digits3and4 * pow_10_ui2;
       PrintDecimals<Char>(cursor, lut[digits3and4]);
       PrintDecimals<Char>(cursor + 2, lut[digits1and2]);
       return PrintNil<Char>(nil_ptr);
     } else if ((value >> 14) == 0) {
       if (value >= 100000) {
+      Print6A:
         PRINT("\n    Range:[65536, 131071] length:6");
         goto Print6;
       }
+    Print5:
       PRINT("\n    Range:[10000, 65535] length:5");
       nil_ptr = cursor + delta + 5;
       if (nil_ptr >= end) return nullptr;
-      uint32_t value_ui4 = (uint32_t)value;
-      uint16_t pow_10 = 10000;
-      Char digit = (uint8_t)(value_ui4 / pow_10);
-      value_ui4 -= pow_10 * digit;
+      uint32_t value_ui4 = ValueUI4(value);
+      pow_10_ui2 = 10000;
+      Char digit = (uint8_t)(value_ui4 / pow_10_ui2);
+      value_ui4 -= pow_10_ui2 * digit;
       cursor = PrintChar<Char>(cursor, '0' + digit);
-      pow_10 = 100;
-      uint16_t digits3and4 = ((uint16_t)value_ui4) / pow_10;
-      uint16_t digits1and2 = (uint16_t)(value_ui4 - digits3and4 * pow_10);
+      pow_10_ui2 = 100;
+      uint16_t digits3and4 = ((uint16_t)value_ui4) / pow_10_ui2,
+               digits1and2 = (uint16_t)(value_ui4 - digits3and4 * pow_10_ui2);
       PrintDecimals<Char>(cursor, lut[digits1and2]);
       PrintDecimals<Char>(cursor + 2, lut[digits3and4]);
       return PrintNil<Char>(nil_ptr);
     } else if ((value >> 17) == 0) {
-      comparator = 1000000;
-      if (value >= comparator) {
+      pow_10_ui4 = 1000000;
+      if (value >= pow_10_ui4) {
+      Print7A:
         PRINT("\n    Range:[100000, 1048575] length:7");
         nil_ptr = cursor + delta + 7;
         if (nil_ptr >= end) return nullptr;
         cursor = PrintChar(cursor, '1');
-        value -= comparator;
+        value -= pow_10_ui4;
       } else {
-        PRINT("\n    Range:[131072, 999999] length:6");
       Print6:
+        PRINT("\n    Range:[131072, 999999] length:6");
         nil_ptr = cursor + delta + 6;
         if (nil_ptr >= end) return nullptr;
         PrintNil<Char>(nil_ptr);
       }
       uint32_t value_ui4 = (uint32_t)value;
-      uint16_t pow_10 = 10000, digits5and6 = (uint16_t)(value_ui4 / pow_10),
-               digits1and2 = value_ui4 - pow_10 * digits5and6;
-      pow_10 = 100;
-      uint16_t digits7and8 = digits5and6 / pow_10,
-               digits3and4 = digits1and2 / pow_10;
-      digits5and6 -= pow_10 * digits7and8;
-      digits1and2 -= pow_10 * digits3and4;
+      pow_10_ui2 = 10000;
+      uint16_t digits5and6 = (uint16_t)(value_ui4 / pow_10_ui2),
+               digits1and2 = value_ui4 - pow_10_ui2 * digits5and6;
+      pow_10_ui2 = 100;
+      uint16_t digits7and8 = digits5and6 / pow_10_ui2,
+               digits3and4 = digits1and2 / pow_10_ui2;
+      digits5and6 -= pow_10_ui2 * digits7and8;
+      digits1and2 -= pow_10_ui2 * digits3and4;
       PrintDecimals<Char>(cursor, lut[digits5and6]);
       PrintDecimals<Char>(cursor + 2, lut[digits3and4]);
       PrintDecimals<Char>(cursor + 4, lut[digits1and2]);
       return nil_ptr;
     } else if ((value >> 20) == 0) {
-      uint32_t comparator = 10000000;
-      uint32_t value_ui4 = (uint32_t)value;
-      if (value_ui4 >= comparator)
-        return Print8Decimals<Char>(cursor, value, lut);
+      pow_10_ui4 = 10000000;
+      if (value >= pow_10_ui4)
+        return Print8Decimals<Char>(cursor, ValueUI4(value), lut);
+    Print7:
       PRINT("\n    Range:[1048576, 9999999] length:7");
       nil_ptr = cursor + delta + 7;
       if (nil_ptr >= end) return nullptr;
-      uint16_t pow_10 = 10000;
-      value_ui4 = (uint32_t)value;
-      uint16_t digits5and6 = value_ui4 / pow_10,
-               digits1and2 = value_ui4 - pow_10 * digits5and6;
-      pow_10 = 100;
-      uint16_t digits7and8 = digits5and6 / pow_10,
-               digits3and4 = digits1and2 / pow_10;
-      digits5and6 -= pow_10 * digits7and8;
-      digits1and2 -= pow_10 * digits3and4;
+      uint16_t pow_10_ui2 = 10000;
+      uint32_t value_ui4 = ValueUI4(value);
+      uint16_t digits5and6 = value_ui4 / pow_10_ui2,
+               digits1and2 = value_ui4 - pow_10_ui2 * digits5and6;
+      pow_10_ui2 = 100;
+      uint16_t digits7and8 = digits5and6 / pow_10_ui2,
+               digits3and4 = digits1and2 / pow_10_ui2;
+      digits5and6 -= pow_10_ui2 * digits7and8;
+      digits1and2 -= pow_10_ui2 * digits3and4;
       PrintDecimals<Char>(cursor, lut[digits5and6]);
       PrintDecimals<Char>(cursor + 2, lut[digits3and4]);
       PrintDecimals<Char>(cursor + 4, lut[digits1and2]);
       PrintDecimal<Char>(cursor + 5, (Char)digits7and8);
       return PrintNil<Char>(nil_ptr);
     } else {
-      comparator = 100000000;  // 10^8
+      uint32_t comparator = 100000000;  // 10^8
       if (value < comparator) {
         PRINT("\n    Range:[100000000, 99999999] length:8");
         nil_ptr = cursor + delta + 8;
         if (nil_ptr >= end) return nullptr;
         PrintNil<Char>(nil_ptr);
-        return Print8Decimals<Char>(cursor, value, lut);
+        return Print8Decimals<Char>(cursor, ValueUI4(value), lut);
       }
 
       UI msd = value / comparator;
@@ -695,7 +701,7 @@ Char* Print(Char* cursor, Char* end, UI value) {
         PRINTF("\n    Printing more than 16 decimals with LSD:");
         delta = 16;
         uint32_t value_ui4 = (uint32_t)(value / comparator);
-        middle_sd = msd - value_ui4 * lsd;
+        middle_sd = ValueUI4(msd) - value_ui4 * lsd;
         msd = value_ui4;
         PRINT(middle_sd);
         PRINT(lsd);
@@ -709,44 +715,45 @@ Char* Print(Char* cursor, Char* end, UI value) {
         delta = 8;
       }
       if (value < 10) {
-        cursor = Print8Decimals<Char>(cursor, middle_sd);
-        Print8Decimals<Char>(cursor, lsd);
+        cursor = Print8Decimals<Char>(cursor, middle_sd, lut);
+        Print8Decimals<Char>(cursor, lsd, lut);
         goto Print1;
       } else if (value < 100) {
-        PrintDecimals<Char>(cursor, value, lut);
+        Print8Decimals<Char>(cursor, ValueUI4(value), lut);
         goto Print2;
       }
       if ((value >> 10) == 0) {
-        uint16_t pow_10 = 1000;  //< 10^3
-        if (value >= pow_10) goto PrintMod4;
-        Print8or16Decimals(cursor + 7, lsd, lut, middle_sd, delta);
-        goto Print7;
+        pow_10_ui2 = 1000;
+        if (value >= pow_10_ui2) goto Print4A;
+        Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
+        goto Print3;
       } else if ((value >> 13) == 0) {
-        uint16_t pow_10 = 10000;  //< 10^4
-        if (value >= pow_10) goto PrintMod5;
-      PrintMod4:
-        Print8or16Decimals(cursor + 7, lsd, lut, middle_sd, delta);
-        goto Print7;
-      } else if ((value >> 17) == 0) {
-        uint32_t comparator = 100000;  //< 10^5
-        if (value >= comparator) goto PrintMod6;
-      PrintMod5:
-        Print8or16Decimals(cursor + 7, lsd, lut, middle_sd, delta);
-        goto Print7;
-      } else if ((value >> 20) == 0) {
-        uint32_t comparator = 1000000;  //< 10^6
-        if (value >= comparator) goto PrintMod7;
-      PrintMod6:
-        Print8or16Decimals(cursor + 7, lsd, lut, middle_sd, delta);
-        goto Print7;
-      } else {
-        comparator = 100000000;  // 10^8
-        if (value >= comparator) {
-          Print8or16Decimals(cursor + 8, lsd, lut, middle_sd, delta);
-          goto Print8;
+        pow_10_ui2 = 10000;
+        if (value >= pow_10_ui2) {
+          Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
+          goto Print5A;
         }
-      PrintMod7:
-        Print8or16Decimals(cursor + 7, lsd, lut, middle_sd, delta);
+        Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
+        goto Print4;
+      } else if ((value >> 17) == 0) {
+        pow_10_ui4 = 100000;
+        if (value >= pow_10_ui4) {
+          Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
+          goto Print6A;
+        }
+        Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
+        goto Print5;
+      } else if ((value >> 20) == 0) {
+        pow_10_ui4 = 1000000;
+        if (value >= pow_10_ui4) {
+          Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
+          goto Print7A;
+        }
+        Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
+        goto Print6;
+      } else {
+        //@note There is no case for length 8 because that is length 16.
+        Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
         goto Print7;
       }
     }
@@ -812,12 +819,12 @@ const Char* Scan(const Char* buffer, UI& result) {
 
   c = *cursor--;
   UI value = (UI)(c - '0');
-  UI pow_10 = 1;
+  UI pow_10_ui2 = 1;
 
   while (cursor >= buffer) {
     c = *cursor--;
-    pow_10 *= 10;
-    UI new_value = value + pow_10 * (c - '0');
+    pow_10_ui2 *= 10;
+    UI new_value = value + pow_10_ui2 * (c - '0');
     if (new_value < value) return nullptr;
     value = new_value;
     PRINTF("\nvalue:%u", (uint)value);
@@ -857,12 +864,12 @@ const Char* ScanSigned(const Char* buffer, SI& result) {
 
   c = *cursor--;
   UI value = (UI)(c - '0');
-  UI pow_10 = 1;
+  UI pow_10_ui2 = 1;
 
   while (cursor >= buffer) {
     c = *cursor--;
-    pow_10 *= 10;
-    UI new_value = value + pow_10 * (c - '0');
+    pow_10_ui2 *= 10;
+    UI new_value = value + pow_10_ui2 * (c - '0');
     if (new_value < value) return nullptr;
     value = new_value;
     PRINTF("\nvalue:%u", (uint)value);
@@ -995,7 +1002,7 @@ class Binary {
     uint32_t integer,  //< Integer portion in Binary.
         sign,          //< Sign in Binary32 format.
         ui_value,      //< Unsigned value.
-        pow_10;        //< Power of 10 for converting integers.
+        pow_10_ui2;    //< Power of 10 for converting integers.
 
     // Scan sign of number:
 
@@ -1022,12 +1029,12 @@ class Binary {
 
     c = *cursor--;
     ui_value = (uint32_t)(c - '0');
-    pow_10 = 1;
+    pow_10_ui2 = 1;
 
     while (cursor >= buffer) {
       c = *cursor--;
-      pow_10 *= 10;
-      uint32_t new_value = ui_value + pow_10 * (c - '0');
+      pow_10_ui2 *= 10;
+      uint32_t new_value = ui_value + pow_10_ui2 * (c - '0');
       if (new_value < ui_value) return nullptr;
       ui_value = new_value;
       PRINTF("\nvalue:%u", (uint)ui_value);
@@ -1075,13 +1082,13 @@ class Binary {
 
     // Manually load the first char.
     c = *cursor--;
-    ui_value = (uint32_t)(c - '0'), pow_10 = 1;
+    ui_value = (uint32_t)(c - '0'), pow_10_ui2 = 1;
 
     // Then iterate through the rest in a loop.
     while (cursor >= buffer) {
       c = *cursor--;
-      pow_10 *= 10;
-      uint32_t new_value = ui_value + pow_10 * (c - '0');
+      pow_10_ui2 *= 10;
+      uint32_t new_value = ui_value + pow_10_ui2 * (c - '0');
       if (new_value < ui_value) {
         PRINTF("\nUnsigned wrap-around!");
         return nullptr;
@@ -1207,48 +1214,48 @@ class Binary {
   inline Char* PrintDecimals(Char* cursor, Char* end, const Binary& w,
                              const Binary& m_plus, uint64_t delta, int32_t& k) {
     Binary one(((uint64_t)1) << -m_plus.e, m_plus.e), wp_w = m_plus - w;
-    uint32_t d, pow_10, p_1 = static_cast<uint32_t>(m_plus.f >> -one.e);
+    uint32_t d, pow_10_ui2, p_1 = static_cast<uint32_t>(m_plus.f >> -one.e);
     uint64_t p_2 = m_plus.f & (one.f - 1);
     int kappa;
-    if (p_1 < (pow_10 = 10)) {
+    if (p_1 < (pow_10_ui2 = 10)) {
       kappa = 1;
-    } else if (p_1 < (pow_10 = 100)) {
+    } else if (p_1 < (pow_10_ui2 = 100)) {
       kappa = 2;
     } else {
       if ((p_1 >> 10) == 0) {
         kappa = 3;
-        pow_10 = 1000;
+        pow_10_ui2 = 1000;
       } else if (!(p_1 >> 13)) {
         kappa = 4;
-        pow_10 = 10000;
+        pow_10_ui2 = 10000;
       } else if (!(p_1 >> 17)) {
         kappa = 5;
-        pow_10 = 100000;
+        pow_10_ui2 = 100000;
       } else if (!(p_1 >> 20)) {
         kappa = 6;
-        pow_10 = 1000000;
+        pow_10_ui2 = 1000000;
       } else if (!(p_1 >> 24)) {
         kappa = 7;
-        pow_10 = 10000000;
+        pow_10_ui2 = 10000000;
       } else if (!(p_1 >> 27)) {
         kappa = 8;
-        pow_10 = 100000000;
+        pow_10_ui2 = 100000000;
       } else if (!(p_1 >> 30)) {
         kappa = 9;
-        pow_10 = 1000000000;
+        pow_10_ui2 = 1000000000;
       } else {
         kappa = 10;
-        pow_10 = 10000000000;
+        pow_10_ui2 = 10000000000;
       }
-      if (p_1 >= pow_10) {
+      if (p_1 >= pow_10_ui2) {
         ++kappa;
-        pow_10 *= 10;
+        pow_10_ui2 *= 10;
       }
     }
     while (kappa > 0) {
       uint32_t d;
-      d = p_1 / pow_10;
-      p_1 -= d * pow_10;
+      d = p_1 / pow_10_ui2;
+      p_1 -= d * pow_10_ui2;
 
       if (cursor >= end) return nullptr;
 
@@ -1279,38 +1286,38 @@ class Binary {
       }
     }
 
-    // Load integer pow_10 from the i-cache.
+    // Load integer pow_10_ui2 from the i-cache.
     switch (kappa) {
       case 1:
         d = p_1;
         p_1 = 0;
         break;
       case 2:
-        pow_10 = 10;
+        pow_10_ui2 = 10;
         break;
       case 3:
-        pow_10 = 100;
+        pow_10_ui2 = 100;
         break;
       case 4:
-        pow_10 = 1000;
+        pow_10_ui2 = 1000;
         break;
       case 5:
-        pow_10 = 10000;
+        pow_10_ui2 = 10000;
         break;
       case 6:
-        pow_10 = 100000;
+        pow_10_ui2 = 100000;
         break;
       case 7:
-        pow_10 = 1000000;
+        pow_10_ui2 = 1000000;
         break;
       case 8:
-        pow_10 = 10000000;
+        pow_10_ui2 = 10000000;
         break;
       case 9:
-        pow_10 = 100000000;
+        pow_10_ui2 = 100000000;
         break;
       case 10:
-        pow_10 = 1000000000;
+        pow_10_ui2 = 1000000000;
         break;
     }
   }
