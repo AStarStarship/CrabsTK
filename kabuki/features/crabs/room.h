@@ -70,11 +70,29 @@ vice versa.
   |  | Floor (Static Memory) |
 0xN +-----------------------+
 @endcode
+
+# ASCII Mappings
+
+The mapping of the layout of the Chinese Room can be seen in the following
+super cute ASCII house is:
+
+@code
+ _________
+/_________\
+[_#_]@[_#_]
+@endcode
+
+
+# Room Connections
+
 There are multiple doors in a Chinese Room that lead to other Chinese Rooms.
 Each door has multiple slots in lead to the same room. These slots are the
 various IO ports of the system.
+
 # Doors
+
 There are two ways to access Doors in the CR. in the Root Scope, there are:
+
 @code
 Use Case Scenario:
 Actors: Jo  - The app developer.

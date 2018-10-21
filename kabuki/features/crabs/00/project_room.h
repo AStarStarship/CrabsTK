@@ -22,7 +22,6 @@ namespace _ {
 static const char* Seam_0_0_4_0__00(char* seam_log, char* seam_end,
                                      const char* args) {
 #if SEAM == SEAM_0_0_4_0__00
-  if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
 #endif
   return nullptr;
 }

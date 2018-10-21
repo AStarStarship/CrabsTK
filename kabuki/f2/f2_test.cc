@@ -26,7 +26,11 @@ const char* TestTree(char* seam_log, char* seam_end, const char* args,
     TestCase test = tests[i];
     if (test) {
       const char* seam = test(seam_log, seam_end, nullptr);
-      PrintHeading("Testing ", seam);
+
+      if (seam)
+        PrintHeading("Testing ", seam);
+      else
+        PrintHeading("Testing nil caption");
       const char* error = test(seam_log, seam_end, args);
       if (error) return error;
       Print("\n\nDone testing ", seam);
@@ -223,7 +227,6 @@ bool Test(double value) {
 bool TestWarn(const char* function, const char* file, int line) {
   Printf("\nAssertion failed in function %s at line %d in \"%s\"", function,
          line, file);
-  Pause();
   return true;
 }
 

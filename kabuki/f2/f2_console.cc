@@ -24,7 +24,7 @@ namespace _ {
 const char* ArgsToString(int args_count, char** args) {
   if (args_count <= 1) return nullptr;
   if (args_count == 2) return args[1];
-  for (int i = 2; i < args_count; ++i) {
+  for (int i = 1; i < args_count; ++i) {
     char* cursor = args[i];
     while (*cursor) cursor--;
     *cursor = ' ';
@@ -50,6 +50,7 @@ void PrintLn(char c) { Print('\n', c); }
 void PrintLn(char first, char second) { return Print('\n', first, second); }
 
 void Printf(const char* format, ...) {
+  ASSERT(format);
   va_list arg;
   va_start(arg, format);
   vfprintf(stdout, format, arg);
@@ -57,6 +58,7 @@ void Printf(const char* format, ...) {
 }
 
 void PrintfLn(const char* format, ...) {
+  ASSERT(format);
   PrintLn();
   va_list arg;
   va_start(arg, format);
@@ -281,6 +283,7 @@ bool CInState(int vk_code) {
 }
 
 void Pause(const char* message) {
+  ASSERT(message);
   if (!message) message = "";
   Printf("\n\n%s\nPress any key to continue...", message);
   while (CInKey() < 0)
@@ -288,6 +291,7 @@ void Pause(const char* message) {
 }
 
 void Pausef(const char* format, ...) {
+  ASSERT(format);
   PrintLn();
   va_list arg;
   va_start(arg, format);

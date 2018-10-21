@@ -29,9 +29,6 @@ struct API Floor {
   int16_t epoch;
 };
 
-<<<<<<< HEAD
-/* Returns the global Floor. */
-=======
 /* Returns the the global Floor. */
 >>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
 API inline Floor* Global();

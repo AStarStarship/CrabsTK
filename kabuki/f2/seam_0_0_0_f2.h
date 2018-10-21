@@ -29,9 +29,10 @@ specific language governing permissions and limitations under the License. */
 #include "12/ascii_book.h"
 #include "13/ascii_dictionary.h"*/
 
+#include "seam_header.inl"
 namespace _ {
 static const char* _0_0_0_F2(char* seam_log, char* seam_end, const char* args) {
-  return TestTree<_0_0_0__00_ItoS_and_StoI/*, _0_0_0__01_FtoS_and_StoF,
+  return TestTree<_0_0_0__00_ItoS_and_StoI /*, _0_0_0__01_FtoS_and_StoF,
                   _0_0_0__02_Core_text_functions, _0_0_0__03_ASCII_Strings,
                   _0_0_0__04_ASCII_Clock, _0_0_0__05_ASCII_Stack,
                   _0_0_0__00_ASCII_Array, _0_0_0__07_ASCII_Loom,
@@ -50,3 +51,4 @@ int main(int arg_count, char** args) {
   return SeamTreeTest<_0_0_0_F2>(arg_count, args, seam_log, kSize);
 }
 #endif
+#include "seam_footer.inl"

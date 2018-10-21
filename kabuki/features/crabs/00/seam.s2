@@ -62,19 +62,14 @@ let esc_sequence = .Parent.Child1.Bar ("This is an Escape sequence!");
 /* Dictionary Example.
    Dictionaries are created and edited using Escape Sequences.
 
- +-------------------------------------- Operation with key "let" that takes a
- |                                       Token (TKN), which is UTF-8 string 
- |                                       without any whitespace or symbols.
- |                                       Operation basically creates a 
- |                                       Expression that we then start writing 
- |                                       to.
- |                 +-------------------- Operation Push "=DIC_4" is a special 
- |                 |                     function that creates a dictionary that is size 1024 
- |                 |                     bytes with a maximum of 3 entries and 
- |                 |                     pushes it onto the stack. This Operation Push
- |                 |                     gets written to the new Expression.
- |                 |    
- v                 V               */
+
+             +-------------------- Operation Push "=DIC_4" is a special 
+             |                     function that creates a dictionary that is size 1024 
+             |                     bytes with a maximum of 3 entries and 
+             |                     pushes it onto the stack. This Operation Push
+             |                     gets written to the new Expression.
+             |    
+             V  */
 let root :=DIC_4 (2048, 3) {
 /*< 
     +----------------------------------- Operation with key "+DIC_4" identical 
@@ -120,7 +115,7 @@ let root :=DIC_4 (2048, 3) {
 	@param <NIL>:<BSQ>
 */
 
-let abc123 := { 1 2 3 } /*< Operand "=$" default takes a Unicode char.
+abc123 := { 1 2 3 }    /*< Operand "=$" default takes a Unicode char.
                            and returns a BSQ token 123.
 				   +------ Then we pass the return address as a input parameter
 				   |       using the $ operator which is similar to static const.
@@ -137,6 +132,6 @@ FooBar (stuff, 1);
     
 */
 
-let xyz =UI2(+ UI2(* 2 3) 3 4)
+xyz =UI2(+ UI2(* 2 3) 3 4)
 
 FooWeNeedNewNames (return_address $xyz);

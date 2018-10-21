@@ -30,9 +30,9 @@ struct API Expr;
     Let B be a set of bytes in a set of Abstract Serial Ports.
 
     @code
-    +----------- Result: The set of fnewe states
+    +----------- Result: The set of finite states
     | +--------- Op
-    | | +------- Set of fnewe states
+    | | +------- Set of finite states
     | | | +----- Star Op
     | | | | +--- Operands (input values)
     | | | | |

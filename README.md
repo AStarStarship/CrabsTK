@@ -15,13 +15,11 @@
 Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) and Virtual Machine for 32-bit and 64-bit processors featuring the F2 Foundational Framework (F2), Chinese Room Abstract Stack Machine (Crabs), and Kabuki Virtual Machine (VM) that provides:
 
 * Standard Seam Trees provide in-order unit tests for Agile and Issue Driven Development with debug information customized for each tree node best described as a bulleted list of seams with SI Units to denote tree depth in the order: `LAYER_{MILLI_MICRO_NANO_PICO_FEMTO}__PROJECT_SPRINT_SCRUM`.
-  * Custom build tool based on StarUML plugin with Crabs Script command-line utilities coming soon.
-* Modern Embedded-C++11/GCC 4.7 core with Doxygen API docs without depreciated libraries.
+* Modern Embedded-C++11/Visual-C++/GCC 4.7 core with Doxygen API docs without depreciated libraries.
 * ASCII Data Types and the Crabs Factory operate seamlessly across assembly boundary with optimal RAM usage and CPU cache performance from ROM-able ASCII Contiguous Objects.
 * Rapid compile time using C Application Binary Interface (ABI) with separated C++ templates for cross-language bindings.
 * Code automatically formatted to Google C++ Style Guide upon save and formatted to not fight clang-format.
-* Deep Internet-of-Things integration using the SCRIPT Software Defined Networking Protocol where everything is A=A*B.
-* Artificial Intelligence and Deep Learning library with graph-based neural-intelligent networks and blockchain technology coming soon.
+* Deep Internet-of-Things integration using the SCRIPT Software Defined Networking Protocol.
 * Modeled after AI philosophy and ASCII mimicry of the Chinese Room Thought Experiment and C0 Control Codes.
 
 ## ASCII Data Types

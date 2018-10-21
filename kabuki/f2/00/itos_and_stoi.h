@@ -27,17 +27,22 @@ const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
 
   PRINT("\n\nTesting ArgsToString...\n");
 
-  char arg_string[] = "Foo\0Bar    \0   420    \0";
-  char* test_args[] = {arg_string, arg_string + 11};
+  char arg_string[] = "C:\\Windows\\0Foo\\0Bar    \0   420    \0";
+  char* test_args[] = {arg_string, arg_string + 11, arg_string + 15,
+                       arg_string + 26};
   const int kArgCount = 3;
 
   PRINT("\nArguments:\n");
-  for (int i = 0; i < kArgCount; ++i) {
+  for (int i = 0; i < kArgCount - 1; ++i) {
     char* arg = test_args[i];
-    PRINTF("\ni:%i\"%s\" 0x%p", i, arg, arg);
+    if (arg) {
+      PRINTF("\ni:%i\"%s\" 0x%p", i, arg, arg);
+    } else {
+      PRINT("\nNil arg.");
+    }
   }
   PRINT("\n\nContiguous Args:\n");
-  char* end = test_args[kArgCount - 1];
+  char* end = test_args[kArgCount - 2];
   while (*end) ++end;
   PRINT("\n\nContiguous Args:\n");
   char* cursor = test_args[0];
