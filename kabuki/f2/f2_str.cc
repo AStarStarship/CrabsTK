@@ -12,13 +12,13 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__04
+#if SEAM >= SEAM_0_0_0__01
 #include "ascii.h"
-#include "binary.h"
 #include "socket.h"
+#include "tbinary.h"
 #include "tstr.h"
 
-#include <seam_header.inl"
+#include "01/seam_header.inl"
 #if F2_TEXT
 
 namespace _ {
@@ -70,12 +70,12 @@ const char* TextSkipChar(const char* text, char skip_char) {
   return TextSkipChar<char>(text, skip_char);
 }
 
-const char* TextSkipSpaces(const char* text) {
-  return TextSkipSpaces<char>(text);
+const char* StringSkipSpaces(const char* text) {
+  return StringSkipSpaces<char>(text);
 }
 
-const char* TextSkipSpaces(const char* text, const char* text_end) {
-  return TextSkipSpaces<char>(text, text_end);
+const char* StringSkipSpaces(const char* text, const char* text_end) {
+  return StringSkipSpaces<char>(text, text_end);
 }
 
 const char* StringEquals(const char* text_a, const char* text_b) {
@@ -96,11 +96,11 @@ bool TextQualifies(const char* text, const char* text_end) {
 int StringCompare(const char* text_a, const char* text_b) {
   return StringCompare<char>(text_a, text_b);
 }
-
+/*
 int StringCompare(const char* text_a, const char* text_end,
                   const char* text_b) {
   return StringCompare<char>(text_a, text_end, text_b);
-}
+}*/
 
 const char* StringFind(const char* text, const char* query) {
   return StringFind<char>(text, query);
@@ -114,29 +114,42 @@ char* Print(char* begin, char* end, char character) {
   return PrintChar<char>(begin, end, character);
 }
 
-char* Print(char* begin, char* end, uint32_t value) {
-  return Print<char>(begin, end, value);
-}
-
-char* Print(char* begin, char* end, int32_t value) {
-  return Print<char>(begin, end, value);
-}
-
 char* Print(char* begin, char* end, uint64_t value) {
-  return Print<char>(begin, end, value);
+  return PrintUnsigned<uint64_t, char>(begin, end, value);
 }
 
 char* Print(char* begin, char* end, int64_t value) {
-  return Print<char>(begin, end, value);
+  return PrintSigned<int64_t, uint64_t, char>(begin, end, value);
 }
 
+#if ALU_WORD_SIZE != 32
+char* Print(char* begin, char* end, uint32_t value) {
+  return Print(begin, end, (uint64_t)value);
+}
+
+char* Print(char* begin, char* end, int32_t value) {
+  return Print(begin, end, (int64_t)value);
+}
+#else
+char* Print(char* begin, char* end, uint32_t value) {
+  return PrintUnsigned<uint64_t, char>(begin, end, (uint64_t)value);
+}
+
+char* Print(char* begin, char* end, int32_t value) {
+  return PrintSigned<int64_t, uint64_t, char>(begin, end, (int64_t)value);
+}
+#endif
+
+#if SEAM >= SEAM_0_0_0__02
+
 char* Print(char* begin, char* end, float value) {
-  return Print<char>(begin, end, value);
+  return PrintFloat<float, uint32_t, char>(begin, end, value);
 }
 
 char* Print(char* begin, char* end, double value) {
-  return Print<char>(begin, end, value);
+  return PrintFloat<double, uint64_t, char>(begin, end, value);
 }
+#endif  //< #if SEAM >= SEAM_0_0_0__2
 
 char* PrintCenter(char* begin, char* end, const char* string,
                   int column_count) {
@@ -318,43 +331,45 @@ char* PrintLineString(char* cursor, char* end, const char* string,
 }
 
 const char* Scan(const char* string, int8_t& result) {
-  return ScanSigned<char, int8_t, uint8_t>(string, result);
+  return ScanSigned<int8_t, uint8_t, char>(string, result);
 }
 
 const char* Scan(const char* string, uint8_t& result) {
-  return ScanUnsined<char, uint8_t>(string, result);
+  return ScanUnsigned<uint8_t, char>(string, result);
 }
 
 const char* Scan(const char* string, int16_t& result) {
-  return ScanSigned<char, int16_t, uint16_t>(string, result);
+  return ScanSigned<int16_t, uint16_t, char>(string, result);
 }
 
 const char* Scan(const char* string, uint16_t& result) {
-  return ScanUnsined<char, uint16_t>(string, result);
+  return ScanUnsigned<uint16_t, char>(string, result);
 }
 
 const char* Scan(const char* string, int32_t& result) {
-  return ScanSigned<char, int32_t, uint32_t>(string, result);
+  return ScanSigned<int32_t, uint32_t, char>(string, result);
 }
 
 const char* Scan(const char* string, uint32_t& result) {
-  return ScanUnsined<char, uint32_t>(string, result);
+  return ScanUnsigned<uint32_t, char>(string, result);
 }
 
 const char* Scan(const char* string, int64_t& result) {
-  return ScanSigned<char, int64_t, uint64_t>(string, result);
+  return ScanSigned<int64_t, uint64_t, char>(string, result);
 }
 
 const char* Scan(const char* string, uint64_t& result) {
-  return ScanUnsined<char, uint64_t>(string, result);
+  return ScanUnsigned<uint64_t, char>(string, result);
 }
 
 const char* Scan(const char* string, float& result) {
-  return Scan<char>(string, result);
+  // return ScanFloat<char>(string, result);
+  return nullptr;
 }
 
 const char* Scan(const char* string, double& result) {
-  return Scan<char>(string, result);
+  // return Scan<char>(string, result);
+  return nullptr;
 }
 
 Utf8::Utf8(char* begin, size_t buffer_size)
@@ -478,28 +493,30 @@ Utf8Text::Utf8Text(char character) {
 }
 
 Utf8Text::Utf8Text(int32_t value) {
-  Print<char>(string, string + kSize - 1, value);
+  PrintSigned<int32_t, uint32_t, char>(string, string + kSize - 1, value);
 }
 
 Utf8Text::Utf8Text(uint32_t value) {
-  Print<char>(string, string + kSize - 1, value);
+  PrintUnsigned<uint32_t, char>(string, string + kSize - 1, value);
 }
 
 Utf8Text::Utf8Text(int64_t value) {
-  Print<char>(string, string + kSize - 1, value);
+  PrintSigned<int64_t, uint64_t, char>(string, string + kSize - 1, value);
 }
 
 Utf8Text::Utf8Text(uint64_t value) {
-  Print<char>(string, string + kSize - 1, value);
+  PrintUnsigned<uint64_t, char>(string, string + kSize - 1, value);
 }
 
+#if SEAM == SEAM_0_0_0__02
 Utf8Text::Utf8Text(float value) {
-  Print<char>(string, string + kSize - 1, value);
+  PrintFloat<float, uint32_t, char>(string, string + kSize - 1, value);
 }
 
 Utf8Text::Utf8Text(double value) {
-  Print<char>(string, string + kSize - 1, value);
+  PrintFloat<double, uint64_t, char>(string, string + kSize - 1, value);
 }
+#endif  //< #if SEAM == SEAM_0_0_0__02
 
 const char* Utf8Text::String() { return string; }
 
@@ -518,11 +535,13 @@ Utf8Center::Utf8Center(int64_t value, int column_count)
 Utf8Center::Utf8Center(uint64_t value, int column_count)
     : string(nullptr), number(value), column_count(column_count) {}
 
+#if SEAM == SEAM_0_0_0__02
 Utf8Center::Utf8Center(float value, int column_count)
     : string(nullptr), number(value), column_count(column_count) {}
 
 Utf8Center::Utf8Center(double value, int column_count)
     : string(nullptr), number(value), column_count(column_count) {}
+#endif
 
 const char* Utf8Center::String() {
   return (string == nullptr) ? number.String() : string;
@@ -559,12 +578,12 @@ int Utf8Right::GetColumnCount() { return column_count; }
 
 Utf8Line::Utf8Line(char token, int column_count)
     : token(token), column_count(column_count) {
-  // Nothing to do here. ({:-)-+=<
+  // Nothing to do here. (:-)-+=<
 }
 
 Utf8LineString::Utf8LineString(const char* string, int column_count)
     : string(string), column_count(column_count) {
-  // Nothing to do here. ({:-)-+=<
+  // Nothing to do here. (:-)-+=<
 }
 
 void COutUtf8(uintptr_t* buffer) { return Console<char>(buffer); }
@@ -609,6 +628,7 @@ _::Utf8& operator<<(_::Utf8& utf, uint64_t value) {
   return utf.Set(_::Print(utf.begin, utf.end, value));
 }
 
+#if SEAM == SEAM_0_0_0__02
 _::Utf8& operator<<(_::Utf8& utf, float value) {
   return utf.Set(_::Print(utf.begin, utf.end, value));
 }
@@ -616,6 +636,7 @@ _::Utf8& operator<<(_::Utf8& utf, float value) {
 _::Utf8& operator<<(_::Utf8& utf, double value) {
   return utf.Set(_::Print(utf.begin, utf.end, value));
 }
+#endif
 
 _::Utf8& operator<<(_::Utf8& utf, _::Utf8Center item) {
   return utf.Set(
@@ -665,7 +686,9 @@ int StringLength(const char16_t* text) {
   return StringLength<char16_t, int>(text);
 }
 
-char16_t* TextClone(const char16_t* text) { return TextClone<char16_t>(text); }
+char16_t* StringClone(const char16_t* text) {
+  return StringClone<char16_t>(text);
+}
 
 const char16_t* TextLineEnd(const char16_t* text, int column_count) {
   return TextLineEnd<char16_t>(text, column_count);
@@ -688,12 +711,13 @@ const char16_t* TextSkipChar(const char16_t* text, char16_t skip_char) {
   return TextSkipChar<char16_t>(text, skip_char);
 }
 
-const char16_t* TextSkipSpaces(const char16_t* text) {
-  return TextSkipSpaces<char16_t>(text);
+const char16_t* StringSkipSpaces(const char16_t* text) {
+  return StringSkipSpaces<char16_t>(text);
 }
 
-const char16_t* TextSkipSpaces(const char16_t* text, const char16_t* text_end) {
-  return TextSkipSpaces<char16_t>(text, text_end);
+const char16_t* StringSkipSpaces(const char16_t* text,
+                                 const char16_t* text_end) {
+  return StringSkipSpaces<char16_t>(text, text_end);
 }
 
 const char16_t* StringEquals(const char16_t* text_a, const char16_t* text_b) {
@@ -964,7 +988,7 @@ const char16_t* Scan(const char16_t* string, int8_t& result) {
 }
 
 const char16_t* Scan(const char16_t* string, uint8_t& result) {
-  return ScanUnsined<char16_t, uint8_t>(string, result);
+  return ScanUnsigned<char16_t, uint8_t>(string, result);
 }
 
 const char16_t* Scan(const char16_t* string, int16_t& result) {
@@ -972,7 +996,7 @@ const char16_t* Scan(const char16_t* string, int16_t& result) {
 }
 
 const char16_t* Scan(const char16_t* string, uint16_t& result) {
-  return ScanUnsined<char16_t, uint16_t>(string, result);
+  return ScanUnsigned<char16_t, uint16_t>(string, result);
 }
 
 const char16_t* Scan(const char16_t* string, int32_t& result) {
@@ -980,7 +1004,7 @@ const char16_t* Scan(const char16_t* string, int32_t& result) {
 }
 
 const char16_t* Scan(const char16_t* string, uint32_t& result) {
-  return ScanUnsined<char16_t, uint32_t>(string, result);
+  return ScanUnsigned<char16_t, uint32_t>(string, result);
 }
 
 const char16_t* Scan(const char16_t* string, int64_t& result) {
@@ -988,7 +1012,7 @@ const char16_t* Scan(const char16_t* string, int64_t& result) {
 }
 
 const char16_t* Scan(const char16_t* string, uint64_t& result) {
-  return ScanUnsined<char16_t, uint64_t>(string, result);
+  return ScanUnsigned<char16_t, uint64_t>(string, result);
 }
 
 const char16_t* Scan(const char16_t* string, float& result) {
@@ -1289,7 +1313,9 @@ int StringLength(const char32_t* text) {
   return StringLength<char32_t, int>(text);
 }
 
-char32_t* TextClone(const char32_t* text) { return TextClone<char32_t>(text); }
+char32_t* StringClone(const char32_t* text) {
+  return StringClone<char32_t>(text);
+}
 
 const char32_t* TextLineEnd(const char32_t* text, int column_count) {
   return TextLineEnd<char32_t>(text, column_count);
@@ -1312,12 +1338,13 @@ const char32_t* TextSkipChar(const char32_t* text, char32_t skip_char) {
   return TextSkipChar<char32_t>(text, skip_char);
 }
 
-const char32_t* TextSkipSpaces(const char32_t* text) {
-  return TextSkipSpaces<char32_t>(text);
+const char32_t* StringSkipSpaces(const char32_t* text) {
+  return StringSkipSpaces<char32_t>(text);
 }
 
-const char32_t* TextSkipSpaces(const char32_t* text, const char32_t* text_end) {
-  return TextSkipSpaces<char32_t>(text, text_end);
+const char32_t* StringSkipSpaces(const char32_t* text,
+                                 const char32_t* text_end) {
+  return StringSkipSpaces<char32_t>(text, text_end);
 }
 
 const char32_t* StringEquals(const char32_t* text_a, const char32_t* text_b) {
@@ -1586,7 +1613,7 @@ const char32_t* Scan(const char32_t* string, int8_t& result) {
 }
 
 const char32_t* Scan(const char32_t* string, uint8_t& result) {
-  return ScanUnsined<char32_t, uint8_t>(string, result);
+  return ScanUnsigned<char32_t, uint8_t>(string, result);
 }
 
 const char32_t* Scan(const char32_t* string, int16_t& result) {
@@ -1594,7 +1621,7 @@ const char32_t* Scan(const char32_t* string, int16_t& result) {
 }
 
 const char32_t* Scan(const char32_t* string, uint16_t& result) {
-  return ScanUnsined<char32_t, uint16_t>(string, result);
+  return ScanUnsigned<char32_t, uint16_t>(string, result);
 }
 
 const char32_t* Scan(const char32_t* string, int32_t& result) {
@@ -1602,7 +1629,7 @@ const char32_t* Scan(const char32_t* string, int32_t& result) {
 }
 
 const char32_t* Scan(const char32_t* string, uint32_t& result) {
-  return ScanUnsined<char32_t, uint32_t>(string, result);
+  return ScanUnsigned<char32_t, uint32_t>(string, result);
 }
 
 const char32_t* Scan(const char32_t* string, int64_t& result) {
@@ -1610,7 +1637,7 @@ const char32_t* Scan(const char32_t* string, int64_t& result) {
 }
 
 const char32_t* Scan(const char32_t* string, uint64_t& result) {
-  return ScanUnsined<char32_t, uint64_t>(string, result);
+  return ScanUnsigned<char32_t, uint64_t>(string, result);
 }
 
 const char32_t* Scan(const char32_t* string, float& result) {
@@ -1885,5 +1912,5 @@ _::Utf32& operator<<(_::Utf32& utf, _::Utf32Right item) {
 
 #endif  //< #if USING_UTF32
 
-#include <03/seam_footer.inl"
-#endif  //< #if SEAM >= SEAM_0_0_0__04
+#include "01/seam_footer.inl"
+#endif  //< #if SEAM >= SEAM_0_0_0__01

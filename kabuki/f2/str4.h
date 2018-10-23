@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__03
+#if SEAM >= SEAM_0_0_0__01
 #ifndef INCLUDED_KABUKI_F2_PRINT_UTF32
 #define INCLUDED_KABUKI_F2_PRINT_UTF32
 
@@ -47,7 +47,7 @@ API int StringLength(const char32_t* begin);
 /* Clones the given string.
 @param  A nil-terminated string in ROM.
 @return Returns a new copy you must delete. */
-API char32_t* TextClone(const char32_t* begin);
+API char32_t* StringClone(const char32_t* begin);
 
 /* Returns a pointer to the char32_t at the end of the line. */
 API const char32_t* TextLineEnd(const char32_t* begin, int column_count);
@@ -61,13 +61,13 @@ API const char32_t* TextNumberStop(const char32_t* begin);
 API const char32_t* TextSkipChar(const char32_t* begin, char32_t skip_char);
 
 /* Skips all the spaces at the start of the char32_t. */
-API const char32_t* TextSkipSpaces(const char32_t* begin);
+API const char32_t* StringSkipSpaces(const char32_t* begin);
 
 /* Skips all the spaces at the start of the char32_t.
 @param  begin Beginning address of the read buffer.
 @param  end   The end address of the input buffer.
 @return A pointer to the end of the text read or if no text read. */
-API const char32_t* TextSkipSpaces(const char32_t* begin,
+API const char32_t* StringSkipSpaces(const char32_t* begin,
                                    const char32_t* text_end);
 
 /* Compares the source and query char32_t as nil-terminated strings. */
@@ -985,4 +985,4 @@ API _::Utf32& operator<<(_::Utf32& printer, _::Utf32Right item);
 
 #endif  //< #if USING_UTF32
 #endif  //< #if INCLUDED_KABUKI_F2_PRINT_UTF32
-#endif  //< #if SEAM >= SEAM_0_0_0__03
+#endif  //< #if SEAM >= SEAM_0_0_0__01

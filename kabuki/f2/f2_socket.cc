@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/f2/f2_utils.cc
+@file    /kabuki/f2/f2_socket.cc
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,30 +14,61 @@ specific language governing permissions and limitations under the License. */
 #include <pch.h>
 #if SEAM >= SEAM_0_0_0__01
 
-#include "align.h"
-#include "binary.h"
-#include "socket.h"
-#include "test.h"
-#include "tstr.h"
+#include "tsocket.h"
 
-#if SEAM == SEAM_0_0_0__01
-#define PRINT(item) Print(item)
-#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define SOCKET_SAVE(cursor, end_a) Socket socket_to_print(cursor, end_a);
-#define SOCKET_PRINT \
-  TStr<>(&Console) << Socket(socket_to_print.cursor, socket_to_print.end_a);
-#else
-#define PRINT(item)
-#define PRINTF(x, ...)
-#define SOCKET_SAVE(begin, end)
-#define SOCKET_PRINT
-#endif
-
+#include "01/seam_header.inl"
 namespace _ {
+
+uintptr_t* AlignUp(uintptr_t* buffer, uintptr_t mask) {
+  return AlignUp<uintptr_t>(buffer, mask);
+}
+
+char* AlignUp(char* pointer, uintptr_t mask) {
+  return AlignUp<char>(pointer, mask);
+}
+
+const char* AlignUp(const char* pointer, uintptr_t mask) {
+  return AlignUp<const char>(pointer, mask);
+}
+
+uint8_t AlignUp(uint8_t value, uint8_t mask) {
+  return AlignUpUnsigned<uint8_t>(value, mask);
+}
+
+int8_t AlignUp(int8_t value, int8_t mask) {
+  return AlignUpSigned<int8_t>(value, mask);
+}
+
+uint16_t AlignUp(uint16_t value, uint16_t mask) {
+  return AlignUpUnsigned<uint16_t>(value, mask);
+}
+
+int16_t AlignUp(int16_t value, int16_t mask) {
+  return AlignUpSigned<int16_t>(value, mask);
+}
+
+uint32_t AlignUp(uint32_t value, uint32_t mask) {
+  return AlignUpUnsigned<uint32_t>(value, mask);
+}
+
+int32_t AlignUp(int32_t value, int32_t mask) {
+  return AlignUpSigned<int32_t>(value, mask);
+}
+
+uint64_t AlignUp(uint64_t value, uint64_t mask) {
+  return AlignUpUnsigned<uint64_t>(value, mask);
+}
+
+int64_t AlignUp(int64_t value, int64_t mask) {
+  return AlignUpSigned<int64_t>(value, mask);
+}
 
 uintptr_t* New(intptr_t size) { return new uintptr_t[size]; }
 
-void MemoryDestroy(uintptr_t* buffer) { delete buffer; }
+void Delete(uintptr_t* socket) {
+  ASSERT(socket);
+  delete[] socket;
+}
 
 uintptr_t UIntPtr(const void* value) {
   return reinterpret_cast<uintptr_t>(value);
@@ -84,7 +115,7 @@ char* SocketClear(char* cursor, char* end, intptr_t byte_count) {
   // 4.) Copy the word-aligned middle region.
   char *success = end, *aligned_pointer = AlignUp<>(cursor);
   while (cursor < aligned_pointer) *cursor++ = 0;
-  aligned_pointer = AlignDown<>(end);
+  aligned_pointer = AlignDown<char*>(end);
   while (end > aligned_pointer) *end-- = 0;
 
   uintptr_t *words = reinterpret_cast<uintptr_t*>(cursor),
@@ -94,6 +125,7 @@ char* SocketClear(char* cursor, char* end, intptr_t byte_count) {
 
   return success;
 }
+
 char* SocketClear(void* cursor, intptr_t size, intptr_t count) {
   return SocketClear(reinterpret_cast<char*>(cursor),
                      reinterpret_cast<char*>(cursor) + size, count);
@@ -135,10 +167,10 @@ char* SocketCopy(void* begin, intptr_t size, const void* read,
   // 3.) Align write_end pointer down and copy the unaligned bytes in the
   //     upper memory region.
   // 4.) Copy the word-aligned middle region.
-  char *success = end_ptr, *aligned_pointer = AlignUpPointerWord(cursor);
+  char *success = end_ptr, *aligned_pointer = AlignUp<>(cursor);
   PRINTF("\n  AlignUpPointer<> (begin):0x%p", aligned_pointer);
   while (cursor < aligned_pointer) *cursor++ = *start_ptr++;
-  aligned_pointer = AlignDownPointerWord(end_ptr);
+  aligned_pointer = AlignDown<char*>(end_ptr);
   PRINTF("\n  AlignDownPointer<> (begin):0x%p", aligned_pointer);
   while (end_ptr > aligned_pointer) *end_ptr-- = *stop_ptr--;
   PRINTF("\n  Down-stage pointers are now begin:0x%p end:0x%p", cursor,
@@ -190,7 +222,7 @@ bool SocketCompare(const void* begin_a, void* end_a, const void* begin_b,
 }
 
 Socket::Socket() {
-  // Nothing to do here! ({:-)-+=<
+  // Nothing to do here! (:-)-+=<
 }
 
 Socket::Socket(void* begin, void* end)
@@ -211,7 +243,7 @@ Socket::Socket(void* begin, intptr_t size)
 }
 
 Socket::Socket(const Socket& other) : begin(other.begin), end(other.end) {
-  // Nothing to do here! ({:-)-+=<
+  // Nothing to do here! (:-)-+=<
 }
 
 Socket& Socket::operator=(const Socket& other) {
@@ -221,7 +253,7 @@ Socket& Socket::operator=(const Socket& other) {
 }
 
 void DestructorNoOp(uintptr_t* buffer) {
-  // Nothing to do here! ({:-)+==<
+  // Nothing to do here! (:-)+==<
 }
 
 void DestructorDeleteBuffer(uintptr_t* buffer) {
@@ -230,5 +262,5 @@ void DestructorDeleteBuffer(uintptr_t* buffer) {
 }
 
 }  // namespace _
-#include <kabuki>
+#include "01/seam_footer.inl"
 #endif  //<  #if SEAM >= SEAM_0_0_0__01

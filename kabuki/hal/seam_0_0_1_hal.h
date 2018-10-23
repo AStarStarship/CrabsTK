@@ -17,11 +17,12 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-static const char* Kabuki__Terminal___Kabuki__HAL(char* seam_log, char* seam_end,
-                              const char* args) {
+static const char* Kabuki__Terminal___Kabuki__HAL(char* seam_log,
+                                                  char* seam_end,
+                                                  const char* args) {
 #if SEAM >= SEAM_0_0_1
   if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
 #endif
-  return TestTreeNode<Seam_0_0_1__00>(seam_log, seam_end, args);
+  return SeamTreeTest<Seam_0_0_1__00>(seam_log, seam_end, args);
 }
 }  // namespace _

@@ -14,12 +14,12 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__06
+#if SEAM >= SEAM_0_0_0__01
 
 #ifndef INCLUDED_KABUKI_F2_OBJ
 #define INCLUDED_KABUKI_F2_OBJ
 
-#include "align.h"
+#include "socket.h"
 #include "test.h"
 
 typedef void (*Destructor)(uintptr_t* buffer);
@@ -32,8 +32,8 @@ struct CObj {
   Destructor destructor;  //< Pointer to the destructor.
 };
 
-/* Destructor deletes the buffer. */
-API void Delete(uintptr_t* buffer);
+/* Deletes the given objects dynamic memory if any is used. */
+inline void Delete(CObj obj);
 
 /* Checks if the value is a valid object index, that it's 7 less than the max
 value or less. */
@@ -76,5 +76,5 @@ API uintptr_t* ObjClone(uintptr_t* ascii_object, int32_t size);
 API uintptr_t* ObjClone(uintptr_t* ascii_object, int64_t size);
 
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_0__06
+#endif  //< #if SEAM >= SEAM_0_0_0__07
 #endif  //< INCLUDED_KABUKI_F2_OBJ

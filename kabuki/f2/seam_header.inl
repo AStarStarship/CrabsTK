@@ -1,11 +1,7 @@
+#include <pch.h>
+
 #include "ttest.h"
-#ifndef SEAM_N
-#define SEAM_N 1
-#endif
 #if SEAM > 0 && SEAM <= SEAM_N
-#include <kabuki/f2/ttest.h>
-#define TEST_BEGIN \
-  if (!_::TestBegin(seam_log, seam_end, args)) return __FUNCTION__
 #define PRINT(item) _::Print(item)
 #define PRINT_DATE(date) _::PrintDate()
 #define PRINTF(format, ...) _::Printf(format, __VA_ARGS__)
@@ -21,7 +17,6 @@
   if (!_::Test(condition)) _::ErrorFreeze(__FUNCTION__, __FILE__, __LINE__)
 #define AVOW(a, b) \
   if (!_::Test(a, b)) _::ErrorFreeze(__FUNCTION__, __FILE__, __LINE__)
-#define TEST_END Print("\n\nDone testing ", __FUNCTION__)
 #define DPRINT(item) _::Print(item)
 #define DPRINT_DATE(date) _::PrintDate()
 #define DPRINTF(format, ...) _::Printf(format, __VA_ARGS__)

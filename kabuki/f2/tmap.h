@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__06
+#if SEAM >= SEAM_0_0_0__07
 #ifndef INCLUDED_CRAPS_MAP
 #define INCLUDED_CRAPS_MAP
 
@@ -610,7 +610,7 @@ class Map {
       */
   Map(UI size = 0, I count_max = 0)
       : buffer(MapNew<UI, SI, I>(size, count_max)) {
-    // Nothing to do here! ({:-)-+=<
+    // Nothing to do here! (:-)-+=<
   }
 
   /* Destructs the dynamically allocated buffer. */

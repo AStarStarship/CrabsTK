@@ -12,7 +12,7 @@
 
 ![Under Construction Image](https://github.com/kabuki-starship/kabuki-toolkit/wiki/under_construction.png)
 
-Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) and Virtual Machine for 32-bit and 64-bit processors featuring the F2 Foundational Framework (F2), Chinese Room Abstract Stack Machine (Crabs), and Kabuki Virtual Machine (VM) that provides:
+Kabuki Toolkit (KT) is a cross-platform Firmware-to-Software Development Kit (F2SDK) and Virtual Machine for 32-bit and 64-bit processors featuring the F2 Foundational Framework (F2) and Chinese Room Abstract Stack Machine (Crabs):
 
 * Standard Seam Trees provide in-order unit tests for Agile and Issue Driven Development with debug information customized for each tree node best described as a bulleted list of seams with SI Units to denote tree depth in the order: `LAYER_{MILLI_MICRO_NANO_PICO_FEMTO}__PROJECT_SPRINT_SCRUM`.
 * Modern Embedded-C++11/Visual-C++/GCC 4.7 core with Doxygen API docs without depreciated libraries.
@@ -53,7 +53,7 @@ ASCII Data Types provide a suitable replacement for the C++ std library suitable
 * [Script Specification RFC](https://github.com/kabuki-starship/script/wiki/SCRIPT-Specification-RFC)
   - *Release for Comment for Serial Chinese Room, Interprocess, and Telemetry (SCRIPT) Specification.*
 * [Kabuki Starship Website](https://kabuki-starship.github.io/)
-  - *Official Kabuki Toolkit website. We are currently looking for someone to help us fix the CSS on the website. It only works right at < 1024 pixel width so the problem is in the @media section.*
+  - *We are currently in need of some help fixing the CSS on the website. It only works right at < 1024 pixel width so the problem is in the @media section. Please make pull request to issue #1 in [https://github.com/kabuki-starship/kabuki-starship.github.io/issues](https://github.com/kabuki-starship/kabuki-starship.github.io/issues).*
 
 ## kabuki Modules
 

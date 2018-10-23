@@ -14,12 +14,12 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__03
+#if SEAM >= SEAM_0_0_0__04
 
-#ifndef INCLUDED_KABUKI_F2_TYPES
-#define INCLUDED_KABUKI_F2_TYPES
+#ifndef INCLUDED_KABUKI_F2_ASCIIDATA
+#define INCLUDED_KABUKI_F2_ASCIIDATA
 
-#include "align.h"
+#include "socket.h"
 #include "tstr.h"
 
 namespace _ {
@@ -175,5 +175,5 @@ API char16_t* Print(char16_t* begin, char16_t* end, type_t type,
 API _::Utf32& operator<<(_::Utf32& utf, const _::TypeValue& type_value);
 #endif
 
-#endif  //< INCLUDED_KABUKI_F2_TYPES
-#endif  //< #if SEAM >= SEAM_0_0_0__03
+#endif  //< INCLUDED_KABUKI_F2_ASCIIDATA
+#endif  //< #if SEAM >= SEAM_0_0_0__04

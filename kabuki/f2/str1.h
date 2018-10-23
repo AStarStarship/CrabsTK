@@ -13,12 +13,16 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__03
+#if SEAM >= SEAM_0_0_0__01
 #ifndef INCLUDED_KABUKI_F2_UTF8
 #define INCLUDED_KABUKI_F2_UTF8
 
 #include "ascii_data.h"
 #include "clock.h"
+
+#ifndef USING_UTF8
+#define USING_UTF8 1
+#endif
 
 #if USING_UTF8
 
@@ -48,7 +52,7 @@ API int StringLength(const char* text);
 /* Clones the given string.
 @param  A nil-terminated string in ROM.
 @return Returns a new copy you must delete. */
-API char* TextClone(const char* text);
+API char* StringClone(const char* text);
 
 /* Returns a pointer to the char at the end of the line. */
 API const char* TextLineEnd(const char* text, int column_count);
@@ -71,13 +75,13 @@ API const char* TextNumberStop(const char* text);
 API const char* TextSkipChar(const char* text, char skip_char);
 
 /* Skips all the spaces at the start of the char. */
-API const char* TextSkipSpaces(const char* text);
+API const char* StringSkipSpaces(const char* text);
 
 /* Skips all the spaces at the start of the char.
 @param  begin Beginning address of the read buffer.
 @param  end   The end address of the input buffer.
 @return A pointer to the end of the text read or if no text read. */
-API const char* TextSkipSpaces(const char* text, const char* text_end);
+API const char* StringSkipSpaces(const char* text, const char* text_end);
 
 /* Compares the source and query char as nil-terminated strings. */
 API const char* StringEquals(const char* text_a, const char* text_b);
@@ -890,4 +894,4 @@ API _::Utf8& operator<<(_::Utf8& utf, _::Utf8LineString line);
 
 #endif  //< #if USING_UTF8
 #endif  //< #if INCLUDED_KABUKI_F2_UTF8
-#endif  //< #if SEAM >= SEAM_0_0_0__03
+#endif  //< #if SEAM >= SEAM_0_0_0__01

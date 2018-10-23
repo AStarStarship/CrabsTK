@@ -15,10 +15,13 @@ specific language governing permissions and limitations under the License. */
 
 #include "tconsole.h"
 
+#include "ttest.h"
+
 #include <conio.h>
 #include <cstdio>
 #include <iostream>
 
+#include "00/seam_header.inl"
 namespace _ {
 
 const char* ArgsToString(int args_count, char** args) {
@@ -89,8 +92,8 @@ void Print(uint64_t value) {
 #else
   enum { kSize = 24 };
   char buffer[kSize];
-  Print<>(buffer, kSize, value);
-  return Print(buffer);
+  PrintUnsigned<>(buffer, kSize, value);
+  Print(buffer);
 #endif
 }
 
@@ -98,7 +101,9 @@ void Print(uint32_t value) {
 #if SEAM == SEAM_0_0_0__00
   return Printf("%u", value);
 #else
-  return Print((uint64_t)value);
+  enum { kSize = 24 };
+  char buffer[kSize];
+  PrintUnsigned<uint32_t, char>(buffer, kSize, value);
 #endif
 }
 
@@ -108,8 +113,8 @@ void Print(int64_t value) {
 #else
   enum { kSize = 24 };
   char buffer[kSize];
-  Print<>(buffer, kSize, value);
-  return Print(buffer);
+  PrintSigned<>(buffer, kSize, value);
+  Print(buffer);
 #endif
 }
 
@@ -117,35 +122,37 @@ void Print(int32_t value) {
 #if SEAM == SEAM_0_0_0__00
   return Printf("%i", value);
 #else
-  return Print((int64_t)value);
+  enum { kSize = 24 };
+  char buffer[kSize];
+  PrintSigned<>(buffer, kSize, (int64_t)value);
 #endif
 }
 
 void Print(float value) {
-#if SEAM == SEAM_0_0_0__00
+#if SEAM <= SEAM_0_0_0__02
   return Printf("%f", value);
 #else
   enum { kSize = 16 };
   char buffer[kSize];
-  Print<>(buffer, kSize, value);
-  return Print(buffer);
+  PrintFloat<>(buffer, kSize, value);
+  Print(buffer);
 #endif
 }
 
 void Print(double value) {
-#if SEAM == SEAM_0_0_0__00
+#if SEAM <= SEAM_0_0_0__02
   return Printf("%f", value);
 #else
   enum { kSize = 24 };
   char buffer[kSize];
-  Print<>(buffer, kSize, value);
-  return Print(buffer);
+  PrintFloat<>(buffer, kSize, value);
+  Print(buffer);
 #endif
 }
 
 void PrintLn(const char* string) {
   Print('\n');
-  return Print(string);
+  Print(string);
 }
 
 void PrintIndent(int count) {
@@ -154,6 +161,7 @@ void PrintIndent(int count) {
 }
 
 void PrintLine(int width, char token, char first_token) {
+  Print('\n');
   if (width < 1) Print(first_token);
   while (width-- > 0) Print(token);
 }
@@ -168,7 +176,7 @@ void PrintHeading(const char* heading_a, const char* heading_b, int line_count,
   Print(heading_b);
   Print('\n');
   PrintLine(width, token, '+');
-  return Print('\n');
+  Print('\n');
 }
 
 void PrintHeading(const char* heading, int line_count, int width, char token,
@@ -180,7 +188,7 @@ void PrintHeading(const char* heading, int line_count, int width, char token,
   Print(heading);
   Print('\n');
   PrintLine(width, token, '+');
-  return Print('\n');
+  Print('\n');
 }
 
 template <typename UI>
@@ -304,3 +312,4 @@ void Pausef(const char* format, ...) {
 }
 
 }  // namespace _
+#include "00/seam_footer.inl"

@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__03
+#if SEAM >= SEAM_0_0_0__04
 #ifndef F2_COLLECTION_H
 #define F2_COLLECTION_H
 
@@ -109,5 +109,5 @@ struct Collection {
   virtual Utf8& Print(Utf8& out_) = 0;
 };
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_0__03
+#endif  //< #if SEAM >= SEAM_0_0_0__04
 #endif  //< F2_COLLECTION_H

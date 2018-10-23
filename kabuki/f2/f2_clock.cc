@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__04
+#if SEAM >= SEAM_0_0_0__05
 
 #include <ctime>
 
@@ -470,4 +470,4 @@ const char32_t* TextScanTime(const char32_t* string, Tme& result) {
 
 }  // namespace _
 
-#endif  //< #if SEAM >= SEAM_0_0_0__04
+#endif  //< #if SEAM >= SEAM_0_0_0__05

@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__06
+#if SEAM >= SEAM_0_0_0__07
 #ifndef INCLUDED_KABUKI_F2_ARRAY
 #define INCLUDED_KABUKI_F2_ARRAY
 
@@ -232,4 +232,4 @@ inline _::Utf8& operator<<(_::Utf8& printer, _::Stack<T, UI, SI>& stack) {
 }
 
 #endif  //< INCLUDED_KABUKI_F2_ARRAY
-#endif  //< #if SEAM >= SEAM_0_0_0__06
+#endif  //< #if SEAM >= SEAM_0_0_0__07

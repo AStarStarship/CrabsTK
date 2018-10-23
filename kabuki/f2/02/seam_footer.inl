@@ -1,7 +1,6 @@
-#include "../seam_footer.inl"
+#include <kabuki/f2/seam_footer.inl>
 
-#undef PRINT(item)
-#undef PRINTF(x, ...)
-#undef PAUSE(message)
-#undef PRINT_HEADING(c)
-#undef PRINT_LINE(c)
+#undef PRINT_PRINTED
+#undef PRINT_HEADER
+#undef PRINT_HEADING
+#undef BEGIN_ITOS_ALGORITHM

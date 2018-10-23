@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__03
+#if SEAM >= SEAM_0_0_0__01
 #ifndef INCLUDED_KABUKI_F2_PRINT_UTF16
 #define INCLUDED_KABUKI_F2_PRINT_UTF16
 
@@ -47,7 +47,7 @@ API int StringLength(const char16_t* text);
 /* Clones the given string.
 @param  A nil-terminated string in ROM.
 @return Returns a new copy you must delete. */
-API char16_t* TextClone(const char16_t* text);
+API char16_t* StringClone(const char16_t* text);
 
 /* Returns a pointer to the char16_t at the end of the line. */
 API const char16_t* TextLineEnd(const char16_t* text, int column_count);
@@ -66,7 +66,7 @@ API const char16_t* TextNumberStop(const char16_t* begin);
 API const char16_t* TextSkipChar(const char16_t* text, char16_t skip_char);
 
 /* Skips all the spaces at the start of the char16_t. */
-API const char16_t* TextSkipSpaces(const char16_t* text);
+API const char16_t* StringSkipSpaces(const char16_t* text);
 
 /* Compares the source and query char16_t as nil-terminated strings. */
 API const char16_t* StringEquals(const char16_t* text_a,
@@ -899,4 +899,4 @@ API _::Utf16& operator<<(_::Utf16& printer, _::Utf16Right item);
 
 #endif  //< #if USING_UTF16
 #endif  //< #if INCLUDED_KABUKI_F2_PRINT_UTF16
-#endif  //< #if SEAM >= SEAM_0_0_01__01
+#endif  //< #if SEAM >= SEAM_0_0_0__01

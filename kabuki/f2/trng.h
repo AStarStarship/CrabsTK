@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__01
+#if SEAM >= SEAM_0_0_0__00
 #ifndef INCLUDED_CRAB_TRNG
 #define INCLUDED_CRAB_TRNG
 
@@ -27,7 +27,7 @@ namespace _ {
 interface does not effect performance but also allows for hiding of the
 C++ standard library implementation. */
 template <typename T>
-struct RNG {
+struct TRNG {
   /* Sets the RNG. */
   virtual void Seed(uint32_t seed) = 0;
 
@@ -38,4 +38,4 @@ struct RNG {
 }  // namespace _
 #endif  //< INCLUDED_CRAB_TRNG
 
-#endif  //< #if SEAM >= SEAM_0_0_0__01
+#endif  //< #if SEAM >= SEAM_0_0_0__00

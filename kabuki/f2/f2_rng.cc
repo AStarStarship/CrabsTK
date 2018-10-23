@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__01
+#if SEAM >= SEAM_0_0_0__00
 #ifndef INCLUDED_KABUKI_F2_RNG
 #define INCLUDED_KABUKI_F2_RNG
 
@@ -23,38 +23,36 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-inline uint RandomizeSeed() { return std::random_device()(); }
+static std::mt19937 rng;
 
-template <typename I>
-class MersenneTwister : public RNG<I> {
- public:
-  MersenneTwister(I min, I max) : rng(RandomizeSeed()), dist(min, max) {}
+inline uint RandomSeed() { return std::random_device()(); }
 
-  MersenneTwister() : rng(RandomizeSeed()), dist() {}
+inline void RandomizeSeed() { return rng.seed(RandomSeed()); }
 
-  virtual void Seed(uint32_t seed) { rng.seed(seed); }
+inline void RandomNumber(int8_t& result) { result = (int8_t)rng(); }
 
-  virtual I Next() { return dist(rng); }
+inline void RandomNumber(uint8_t& result) { result = (uint8_t)rng(); }
 
-  static inline MersenneTwister& Static() {
-    static MersenneTwister<I> rng();
-    return rng;
-  }
+inline void RandomNumber(int16_t& result) { result = (int16_t)rng(); }
 
- private:
-  std::mt19937 rng;
-  std::uniform_int_distribution<std::mt19937::result_type> dist;
-};
+inline void RandomNumber(uint16_t& result) { result = (uint16_t)rng(); }
 
-template <typename I>
-RNG<I>& RNGStatic() {
-  return MersenneTwister<I>::Static();
+inline void RandomNumber(int32_t& result) { result = (int32_t)rng(); }
+
+inline void RandomNumber(uint32_t& result) { result = rng(); }
+
+inline void RandomNumber(int64_t& result) {
+  uint64_t a = rng(), b = rng();
+  result = (int64_t)(a | (b << 32));
+}
+
+inline void Random(uint64_t& result) {
+  uint64_t a = rng(), b = rng();
+  result = a | (b << 32);
 }
 
 template <typename I>
 I Random(I min, I max) {
-  std::mt19937 rng;
-  rng.seed(std::random_device()());
   std::uniform_int_distribution<I> dist(min, max);
   return dist(rng);
 }
@@ -122,7 +120,20 @@ uint64_t RandomUI8() {
 
 uint64_t RandomSI8() { return (uint64_t)RandomUI8(); }
 
+/* Hidden MersenneTwister wrapper class. */
+template <typename I>
+class MersenneTwister : public TRNG<I> {
+ public:
+  virtual void Seed(uint32_t seed) { rng.seed(seed); }
+
+  virtual I Next() {
+    I random;
+    RandomNumbber(random);
+    return I;
+  }
+};
+
 }  // namespace _
 #endif  //< INCLUDED_KABUKI_F2_RNG
 
-#endif  //< #if SEAM >= SEAM_0_0_0__01
+#endif  //< #if SEAM >= SEAM_0_0_0__00

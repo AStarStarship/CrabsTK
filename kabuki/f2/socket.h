@@ -19,12 +19,46 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_KABUKI_SOCKET
 #define INCLUDED_KABUKI_F2_KABUKI_SOCKET
 
-#include "align.h"
-#include "binary.h"
-
-#include "00/seam_header.inl"
-
 namespace _ {
+
+enum {
+  kCpuCacheLineSize = 64,
+  kWordBitCount = sizeof(void*) == 8 ? 3 : sizeof(void*) == 4 ? 2 : 0
+};
+
+/* Aligns the given buffer pointer up to a cache line boundary (64 bytes). */
+API inline uintptr_t* AlignUp(uintptr_t* buffer,
+                              uintptr_t mask = kWordBitsMask);
+
+/* Aligns the given pointer up to a word boundary. */
+API char* AlignUp(char* pointer, uintptr_t mask = sizeof(void*));
+
+/* Aligns the given pointer up to a word boundary. */
+API const char* AlignUp(const char* pointer, uintptr_t mask = sizeof(void*));
+
+/* Aligns the given value up to an 8-byte boundary. */
+API inline uint8_t AlignUp(uint8_t value, uint8_t mask = kWordBitsMask);
+
+/* Aligns the given value up to an 8-byte boundary. */
+API inline int8_t AlignUp(int8_t value, int8_t mask = kWordBitsMask);
+
+/* Aligns the given value up to an 16-byte boundary. */
+API uint16_t AlignUp(uint16_t value, uint16_t mask = kWordBitsMask);
+
+/* Aligns the given value up to an 16-byte boundary. */
+API int16_t AlignUp(int16_t value, int16_t mask = kWordBitsMask);
+
+/* Aligns the given value up to an 32-byte boundary. */
+API inline uint32_t AlignUp(uint32_t value, uint32_t mask = kWordBitsMask);
+
+/* Aligns the given value up to an 32-byte boundary. */
+API inline int32_t AlignUp(int32_t value, int32_t mask = kWordBitsMask);
+
+/* Aligns the given value up to an 64-byte boundary. */
+API inline uint64_t AlignUp(uint64_t value, uint64_t mask = kWordBitsMask);
+
+/* Aligns the given value up to an 64-byte boundary. */
+API inline int64_t AlignUp(int64_t value, int64_t mask = kWordBitsMask);
 
 /* A managed general purpose (i.e. not just for networking) memory socket.
     A socket is just a hole in something for fitting something in, like a light
@@ -56,6 +90,9 @@ struct Socket {
 /* Creates a block of dynamic memory. */
 API inline uintptr_t* New(intptr_t size);
 
+/* Destructor deletes the socket. */
+API inline void Delete(uintptr_t* socket);
+
 /* Converts the pointer to a std::uintptr_t. */
 API inline uintptr_t UIntPtr(const void* value);
 
@@ -78,6 +115,12 @@ API char* SocketClear(void* begin, intptr_t size, intptr_t byte_count);
 @return False upon failure. */
 API bool SocketWipe(void* begin, void* end, intptr_t size);
 
+/* Copies the source to the target functionally identical to memcpy.
+@param  begin     The begin of the write buffer.
+@param  size      The end of the write buffer.
+@param  start     The start of the read buffer.
+@param  read_size Number of bytes to copy.
+@return Pointer to the last byte written or nil upon failure. */
 API char* SocketCopy(void* begin, intptr_t size, const void* read,
                      intptr_t read_size);
 
@@ -129,5 +172,4 @@ API inline bool SocketCompare(const void* begin_a, intptr_t size_a,
 }  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_KABUKI_SOCKET
-#include "00/seam_footer.inl"
 #endif  //< #if SEAM >= SEAM_0_0_0__01

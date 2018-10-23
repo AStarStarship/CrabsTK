@@ -14,10 +14,9 @@ specific language governing permissions and limitations under the License. */
 #include <pch.h>
 
 #include "00/itos_and_stoi.h"
+#include "01/ascii_strings_and_socket.h"
+#include "02/ftos_and_stof.h"
 /*
-#include "01/ftos_and_stof.h"
-#include "02/core_text_functions.h"
-#include "03/ascii_strings.h"
 #include "04/ascii_clock.h"
 #include "05/ascii_stack.h"
 #include "06/ascii_array.h"
@@ -32,7 +31,8 @@ specific language governing permissions and limitations under the License. */
 #include "seam_header.inl"
 namespace _ {
 static const char* _0_0_0_F2(char* seam_log, char* seam_end, const char* args) {
-  return TestTree<_0_0_0__00_ItoS_and_StoI /*, _0_0_0__01_FtoS_and_StoF,
+  return TestTree<_0_0_0__00_ItoS_and_StoI, _0_0_0__01_ASCII_Strings_and_Socket
+    /* , _0_0_0__01_FtoS_and_StoF,
                   _0_0_0__02_Core_text_functions, _0_0_0__03_ASCII_Strings,
                   _0_0_0__04_ASCII_Clock, _0_0_0__05_ASCII_Stack,
                   _0_0_0__00_ASCII_Array, _0_0_0__07_ASCII_Loom,
@@ -43,7 +43,7 @@ static const char* _0_0_0_F2(char* seam_log, char* seam_end, const char* args) {
 }
 }  // namespace _
 
-#if SEAM >= SEAM_0_0_0__00 && SEAM <= SEAM_0_0_0__13
+#if SEAM >= SEAM_0_0_0__00 && SEAM <= SEAM_0_0_0__12
 using namespace _;
 int main(int arg_count, char** args) {
   enum { kSize = 1024 };

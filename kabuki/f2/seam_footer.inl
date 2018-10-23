@@ -4,13 +4,12 @@
 #undef PAUSEF
 #undef PRINT_HEADING
 #undef PRINT_LINE
-#undef TEST_BEGIN
 #undef CHECK
 #undef COMPARE
 #undef ASSERT
 #undef AVOW
-#undef TEST_END
 #undef PRINT_DATE
+#undef DTEST_BEGIN
 #undef DPRINT
 #undef DPRINTF
 #undef DPAUSE
@@ -23,4 +22,5 @@
 #undef DASSERT
 #undef DAVOW
 #undef DPRINT_DATE
+#undef DTEST_END
 #undef SEAM_N

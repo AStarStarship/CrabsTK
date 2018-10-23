@@ -104,6 +104,30 @@ static const uint32_t kIEEE754Pow10[] = {
 
 // const uint16_t* PuffDigitsLut() { return kDigits00To99; }
 
+inline uint8_t Unsigned(int8_t value) { return (uint8_t)(value); }
+
+inline uint16_t Unsigned(int16_t value) { return (uint16_t)(value); }
+
+inline uint32_t Unsigned(int32_t value) { return (uint32_t)(value); }
+
+inline uint64_t Unsigned(int64_t value) { return (uint64_t)(value); }
+
+inline uint8_t Negative(int8_t value) { return (uint8_t)(-value); }
+
+inline uint16_t Negative(int16_t value) { return (uint16_t)(-value); }
+
+inline uint32_t Negative(int32_t value) { return (uint32_t)(-value); }
+
+inline uint64_t Negative(int64_t value) { return (uint64_t)(-value); }
+
+inline uint8_t Negative(uint8_t value) { return (uint8_t)(-(int8_t)value); }
+
+inline uint16_t Negative(uint16_t value) { return (uint16_t)(-(int16_t)value); }
+
+inline uint32_t Negative(uint32_t value) { return (uint32_t)(-(int32_t)value); }
+
+inline uint64_t Negative(uint64_t value) { return (uint64_t)(-(int64_t)value); }
+
 bool IsNaN(int8_t value) {
   return (value > NanUnsigned<int8_t>()) &&
          (value > NanSigned<int8_t, uint8_t>());
@@ -186,6 +210,64 @@ void PrintHex(const void* ptr) {
 #include <cmath>
 
 #if SEAM >= SEAM_0_0_0__01
+#include "01/seam_header.inl"
+
+namespace _ {
+
+inline int FloatDigitsMax() { return 0; }
+
+inline int DoubleDigitsMax() {}
+
+float FloatDecimalPower(int decimal_count) { return 0.0f; }
+
+double DoubleDecimalPower(int decimal_count) { return 0.0; }
+
+inline bool IsNaN(float value) { return false; }
+
+inline bool IsNaN(double value) { return false; }
+
+inline bool IsFinite(float value) { return false; }
+
+inline bool IsFinite(double value) { return false; }
+
+inline bool IsInfinite(float value) { return false; }
+
+inline bool IsInfinite(double value) { return false; }
+
+float Ceiling(float value) { return 0.0f; }
+
+double Ceiling(double value) { return 0.0f; }
+
+int MSbAsserted(uint8_t value) { return MSbAssertedReverse<uint8_t>(value); }
+
+int MSbAsserted(int8_t value) {
+  return MSbAssertedReverse<uint8_t>((uint64_t)value);
+}
+
+int MSbAsserted(uint16_t value) { return MSbAssertedReverse<uint16_t>(value); }
+
+int MSbAsserted(int16_t value) {
+  return MSbAssertedReverse<uint16_t>((uint64_t)value);
+}
+
+int MSbAsserted(uint32_t value) { return MSbAssertedReverse<uint32_t>(value); }
+
+int MSbAsserted(int32_t value) {
+  return MSbAssertedReverse<uint32_t>((uint64_t)value);
+}
+
+int MSbAsserted(uint64_t value) { return MSbAssertedReverse<uint64_t>(value); }
+
+int MSbAsserted(int64_t value) {
+  return MSbAssertedReverse<uint64_t>((uint64_t)value);
+}
+
+}  // namespace _
+#include "01/seam_footer.inl"
+#endif  //< #if SEAM >= SEAM_0_0_0__01
+
+#if SEAM >= SEAM_0_0_0__02
+#include "02/seam_header.inl"
 namespace _ {
 inline void FloatBytes(float value, char& byte_0, char& byte_1, char& byte_2,
                        char& byte_3) {
@@ -439,5 +521,5 @@ int MSbAsserted(int64_t value) {
 
 }  // namespace _
 
-#include <01/seam_footer.inl"
-#endif  //< #if SEAM >= SEAM_0_0_0__01
+#include "02/seam_footer.inl"
+#endif  //< #if SEAM >= SEAM_0_0_0__02

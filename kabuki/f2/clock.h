@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__04
+#if SEAM >= SEAM_0_0_0__05
 #ifndef INCLUDED_KABUKI_F2_CLOCK
 #define INCLUDED_KABUKI_F2_CLOCK
 
@@ -385,4 +385,4 @@ API const char32_t* TextScanTime(const char32_t* input, Tme& result);
 #undef PRINT
 #undef PRINTF
 #endif  //< #ifndef INCLUDED_KABUKI_F2_CLOCK
-#endif  //< #if SEAM >= SEAM_0_0_0__04
+#endif  //< #if SEAM >= SEAM_0_0_0__05

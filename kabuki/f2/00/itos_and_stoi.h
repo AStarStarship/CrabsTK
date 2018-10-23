@@ -14,7 +14,9 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#include <random>
+#include <cstdio>
+#include <cstring>
+#include "../trng.h"
 
 #include "seam_header.inl"
 
@@ -23,7 +25,7 @@ namespace _ {
 const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
                                      const char* args) {
 #if SEAM >= SEAM_0_0_0__00
-  TEST_BEGIN;
+  DTEST_BEGIN;
 
   PRINT("\n\nTesting ArgsToString...\n");
 
@@ -44,6 +46,7 @@ const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
   PRINT("\n\nContiguous Args:\n");
   char* end = test_args[kArgCount - 2];
   while (*end) ++end;
+
   PRINT("\n\nContiguous Args:\n");
   char* cursor = test_args[0];
   while (cursor != end) {
@@ -146,7 +149,7 @@ const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
   system ("PAUSE");*/
 
   static const uint64_t problem_children[] = {
-      0,
+      9173263544803952,
   };
   enum { kNumProblemChildren = 0, kSize = 23 };
 
@@ -154,35 +157,32 @@ const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
   char buffer[kSize];
   char* result;
   uint64_t result_ui8, expected_ui8;
-  // double dbl_expected, dbl_found;
-
-  // Setup C++1x random number generator.
-  std::random_device rd;
-  std::mt19937_64 eng(rd());
-  std::uniform_int_distribution<uint64_t> distr;
 
   PRINT("\nTesting ScanUnsigned<UI, Char> (const Char*, const char*, I);");
 
   for (int i = 0; i < 1 << 6; ++i) {
-    expected_ui8 = distr(eng);
-    Print<uint64_t, char>(buffer, buffer + kSize, expected_ui8);
-    const char* test = Scan<uint64_t, char>(buffer, result_ui8);
+    RandomNumber(expected_ui8);
+    sprintf_s(buffer, kSize, FORMAT_UI8, expected_ui8);
+    const char* test = ScanUnsigned<uint64_t, char>(buffer, result_ui8);
     ASSERT(test);
     AVOW(expected_ui8, result_ui8);
   }
 
-  PRINT("\n\nTesting Script ItoS Algorithm...\n\n");
+  PRINT("\n\nTesting Puff ItoS Algorithm...\n\n");
 
   // PrintDigits99To99Lut ();
 
   PRINT("\n\nTesting problem children...\n\n");
 
   for (int i = 0; i < kNumProblemChildren; ++i) {
+    PRINT_LINE('-');
+    Print('\n');
     expected_ui8 = problem_children[i];
     sprintf_s(expecting, 24, "%llu", expected_ui8);
     PRINTF("\n%i.) Expecting \"%s\":%llu", i + 1, expecting,
            StringLength<>(expecting));
-    result = Print<uint64_t, char>(text, text + kSize - 1, expected_ui8);
+    result =
+        PrintUnsigned<uint64_t, char>(text, text + kSize - 1, expected_ui8);
     if (!result) {
       PAUSE("An error occurred :-(");
       break;
@@ -196,10 +196,13 @@ const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
 
   PRINT("\n\nTesting edge conditions...\n\n");
   for (int i = 0; i < 28; ++i) {
+    PRINT_LINE('-');
+    Print('\n');
     expected_ui8 = test_value[i];
     sprintf_s(expecting, 24, "%llu", expected_ui8);
     PRINTF("\n%i.) ", i + 1);
-    result = Print<uint64_t, char>(text, text + kSize - 1, expected_ui8);
+    result =
+        PrintUnsigned<uint64_t, char>(text, text + kSize - 1, expected_ui8);
     if (!result) {
       PAUSE("An error occurred :-(");
       break;
@@ -214,9 +217,12 @@ const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
   PRINTF("\n\nTesting random numbers...\n\n");
 
   for (int i = 0; i < 0x0000ffff; ++i) {
-    expected_ui8 = distr(eng);
+    PRINT_LINE('-');
+    Print('\n');
+    RandomNumber(expected_ui8);
     sprintf_s(expecting, 24, "%llu", expected_ui8);
-    result = Print<uint64_t, char>(text, text + kSize - 1, expected_ui8);
+    result =
+        PrintUnsigned<uint64_t, char>(text, text + kSize - 1, expected_ui8);
     if (!result) {
       PAUSE("An error occurred :-(");
       break;
@@ -228,7 +234,7 @@ const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
     }
   }
 
-  PRINT("\n Done testing ItoS :)\n\n");
+  DTEST_END
 #endif
   return 0;
 }

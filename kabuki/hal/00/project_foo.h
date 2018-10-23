@@ -19,8 +19,7 @@ specific language governing permissions and limitations under the License. */
 #include "header.h"
 
 namespace _ {
-const char* Seam_0_0_1__00(char* seam_log, char* seam_end,
-                              const char* args) {
+const char* _0_0_1__00_Foo(char* seam_log, char* seam_end, const char* args) {
 #if SEAM >= SEAM_0_0_1__00
   if (!TestBegin(seam_log, seam_end, args)) return __FUNCTION__;
 #endif

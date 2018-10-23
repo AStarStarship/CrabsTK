@@ -1,6 +1,6 @@
-# SEAM_0_0_0__00
+# Seam_0_0_1__00_00
 
-This is the development branch of 
+This scrum tests the basic Crabs API.
 
 ## Sprints
 

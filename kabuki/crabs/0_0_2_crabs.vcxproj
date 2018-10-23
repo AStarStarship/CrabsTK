@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\f2\00\itos_and_stoi.h" />
+    <ClInclude Include="..\f2\01\socket.h" />
+    <ClInclude Include="..\f2\02\ftos_and_stof.h" />
+    <ClInclude Include="..\f2\03\core_text_functions.h" />
+    <ClInclude Include="..\f2\04\ascii_strings.h" />
+    <ClInclude Include="..\f2\05\ascii_clock.h" />
+    <ClInclude Include="..\f2\06\ascii_stack.h" />
+    <ClInclude Include="..\f2\07\ascii_array.h" />
+    <ClInclude Include="..\f2\08\ascii_loom.h" />
+    <ClInclude Include="..\f2\09\ascii_table.h" />
+    <ClInclude Include="..\f2\10\ascii_list.h" />
+    <ClInclude Include="..\f2\11\ascii_list.h" />
+    <ClInclude Include="..\f2\12\ascii_map.h" />
+    <ClInclude Include="..\f2\13\ascii_book.h" />
+    <ClInclude Include="..\f2\14\ascii_dictionary.h" />
+    <ClInclude Include="..\f2\ascii.h" />
+    <ClInclude Include="..\f2\ascii_data.h" />
+    <ClInclude Include="..\f2\benchmark.h" />
+    <ClInclude Include="..\f2\binary.h" />
+    <ClInclude Include="..\f2\clock.h" />
+    <ClInclude Include="..\f2\console.h" />
+    <ClInclude Include="..\f2\global.h" />
+    <ClInclude Include="..\f2\hash.h" />
+    <ClInclude Include="..\f2\lock.h" />
+    <ClInclude Include="..\f2\obj.h" />
+    <ClInclude Include="..\f2\pch.h" />
+    <ClInclude Include="..\f2\public.h" />
+    <ClInclude Include="..\f2\rng.h" />
+    <ClInclude Include="..\f2\seam_0_0_0_f2.h" />
+    <ClInclude Include="..\f2\socket.h" />
+    <ClInclude Include="..\f2\str.h" />
+    <ClInclude Include="..\f2\str1.h" />
+    <ClInclude Include="..\f2\str2.h" />
+    <ClInclude Include="..\f2\str4.h" />
+    <ClInclude Include="..\f2\tarray.h" />
+    <ClInclude Include="..\f2\tascii_data.h" />
+    <ClInclude Include="..\f2\tbenchmark.h" />
+    <ClInclude Include="..\f2\tbinary.h" />
+    <ClInclude Include="..\f2\tbook.h" />
+    <ClInclude Include="..\f2\tclock.h" />
+    <ClInclude Include="..\f2\tconsole.h" />
+    <ClInclude Include="..\f2\tdic.h" />
+    <ClInclude Include="..\f2\test.h" />
+    <ClInclude Include="..\f2\thash.h" />
+    <ClInclude Include="..\f2\tlom.h" />
+    <ClInclude Include="..\f2\tlst.h" />
+    <ClInclude Include="..\f2\tmap.h" />
+    <ClInclude Include="..\f2\tobj.h" />
+    <ClInclude Include="..\f2\trng.h" />
+    <ClInclude Include="..\f2\tset.h" />
+    <ClInclude Include="..\f2\tsocket.h" />
+    <ClInclude Include="..\f2\tstk.h" />
+    <ClInclude Include="..\f2\tstr.h" />
+    <ClInclude Include="..\f2\ttbl.h" />
+    <ClInclude Include="..\f2\ttest.h" />
+    <ClInclude Include="..\f2\varint.h" />
+    <ClInclude Include="..\f2\vk.h" />
+    <ClInclude Include="..\hal\config.h" />
+    <ClInclude Include="..\hal\seam.h" />
+    <ClInclude Include="..\hal\seam_0_0_1_hal.h" />
+    <ClInclude Include="00\footer.h" />
+    <ClInclude Include="00\header.h" />
+    <ClInclude Include="00\room.h" />
+    <ClInclude Include="address.h" />
+    <ClInclude Include="args.h" />
+    <ClInclude Include="bin.h" />
+    <ClInclude Include="bout.h" />
+    <ClInclude Include="bsq.h" />
+    <ClInclude Include="buffer.h" />
+    <ClInclude Include="config.h" />
+    <ClInclude Include="door.h" />
+    <ClInclude Include="error.h" />
+    <ClInclude Include="event.h" />
+    <ClInclude Include="expr.h" />
+    <ClInclude Include="floor.h" />
+    <ClInclude Include="footer.h" />
+    <ClInclude Include="global.h" />
+    <ClInclude Include="header.h" />
+    <ClInclude Include="interrupts.h" />
+    <ClInclude Include="iterator.h" />
+    <ClInclude Include="language.h" />
+    <ClInclude Include="library.h" />
+    <ClInclude Include="mirror.h" />
+    <ClInclude Include="op.h" />
+    <ClInclude Include="operand.h" />
+    <ClInclude Include="public.h" />
+    <ClInclude Include="room.h" />
+    <ClInclude Include="seam.h" />
+    <ClInclude Include="seam_0_0_4_0_crabs.h" />
+    <ClInclude Include="slot.h" />
+    <ClInclude Include="wall.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\f2\00\readme.md" />
+    <None Include="..\f2\00\seam_footer.inl" />
+    <None Include="..\f2\00\seam_header.inl" />
+    <None Include="..\f2\01\readme.md" />
+    <None Include="..\f2\01\seam_footer.inl" />
+    <None Include="..\f2\01\seam_header.inl" />
+    <None Include="..\f2\02\readme.md" />
+    <None Include="..\f2\02\seam_footer.inl" />
+    <None Include="..\f2\02\seam_header.inl" />
+    <None Include="..\f2\03\readme.md" />
+    <None Include="..\f2\03\seam_footer.inl" />
+    <None Include="..\f2\03\seam_header.inl" />
+    <None Include="..\f2\04\readme.md" />
+    <None Include="..\f2\04\seam_footer.inl" />
+    <None Include="..\f2\04\seam_header.inl" />
+    <None Include="..\f2\05\readme.md" />
+    <None Include="..\f2\05\seam_footer.inl" />
+    <None Include="..\f2\05\seam_header.inl" />
+    <None Include="..\f2\06\readme.md" />
+    <None Include="..\f2\06\seam_footer.inl" />
+    <None Include="..\f2\06\seam_header.inl" />
+    <None Include="..\f2\07\readme.md" />
+    <None Include="..\f2\07\seam_footer.inl" />
+    <None Include="..\f2\07\seam_header.inl" />
+    <None Include="..\f2\08\readme.md" />
+    <None Include="..\f2\08\seam_footer.inl" />
+    <None Include="..\f2\08\seam_header.inl" />
+    <None Include="..\f2\09\readme.md" />
+    <None Include="..\f2\09\seam_footer.inl" />
+    <None Include="..\f2\09\seam_header.inl" />
+    <None Include="..\f2\10\readme.md" />
+    <None Include="..\f2\10\seam_footer.inl" />
+    <None Include="..\f2\10\seam_header.inl" />
+    <None Include="..\f2\11\readme.md" />
+    <None Include="..\f2\11\seam_footer.inl" />
+    <None Include="..\f2\11\seam_header.inl" />
+    <None Include="..\f2\12\readme.md" />
+    <None Include="..\f2\12\seam_footer.inl" />
+    <None Include="..\f2\12\seam_header.inl" />
+    <None Include="..\f2\13\readme.md" />
+    <None Include="..\f2\13\seam_footer.inl" />
+    <None Include="..\f2\13\seam_header.inl" />
+    <None Include="..\f2\14\readme.md" />
+    <None Include="..\f2\14\seam_footer.inl" />
+    <None Include="..\f2\14\seam_header.inl" />
+    <None Include="..\f2\config.inl" />
+    <None Include="..\f2\readme.md" />
+    <None Include="..\f2\seam_footer.inl" />
+    <None Include="..\f2\seam_header.inl" />
+    <None Include="..\hal\footer.inl" />
+    <None Include="..\hal\header.inl" />
+    <None Include="..\hal\README.md" />
+    <None Include="00\readme.md" />
+    <None Include="00\seam.s2" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\f2\f2_ascii_data.cc" />
+    <ClCompile Include="..\f2\f2_benchmark.cc" />
+    <ClCompile Include="..\f2\f2_binary.cc" />
+    <ClCompile Include="..\f2\f2_clock.cc" />
+    <ClCompile Include="..\f2\f2_console.cc" />
+    <ClCompile Include="..\f2\f2_hash.cc" />
+    <ClCompile Include="..\f2\f2_lock.cc" />
+    <ClCompile Include="..\f2\f2_obj.cc" />
+    <ClCompile Include="..\f2\f2_rng.cc" />
+    <ClCompile Include="..\f2\f2_socket.cc" />
+    <ClCompile Include="..\f2\f2_str.cc" />
+    <ClCompile Include="..\f2\f2_test.cc" />
+    <ClCompile Include="..\f2\f2_vk.cc" />
+    <ClCompile Include="..\f2\seam_tree.cc" />
+    <ClCompile Include="crabs_bin.cc" />
+    <ClCompile Include="crabs_bout.cc" />
+    <ClCompile Include="crabs_bsq.cc" />
+    <ClCompile Include="crabs_debug.cc" />
+    <ClCompile Include="crabs_door.cc" />
+    <ClCompile Include="crabs_error.cc" />
+    <ClCompile Include="crabs_expr.cc" />
+    <ClCompile Include="crabs_floor.cc" />
+    <ClCompile Include="crabs_hex.cc" />
+    <ClCompile Include="crabs_interrupts.cc" />
+    <ClCompile Include="crabs_morsecode.cc" />
+    <ClCompile Include="crabs_op.cc" />
+    <ClCompile Include="crabs_operand.cc" />
+    <ClCompile Include="crabs_room.cc" />
+    <ClCompile Include="crabs_slot.cc" />
+    <ClCompile Include="crabs_wall.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\hal\CMakeLists.txt" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{83D57FD7-117F-45C5-998A-CBBA7849D5F0}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>My0f2</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectName>0_0_2_crabs</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)\.;$(ProjectDir)\..\..\..\;</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)\.;$(ProjectDir)\..\..\</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

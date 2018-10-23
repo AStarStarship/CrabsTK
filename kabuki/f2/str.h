@@ -14,9 +14,13 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__03
+#if SEAM >= SEAM_0_0_0__01
 #ifndef INCLUDED_KABUKI_F2_UTF
 #define INCLUDED_KABUKI_F2_UTF
+
+#ifndef USING_UTF8
+#define USING_UTF8 1
+#endif
 
 #if USING_UTF8
 #include "str1.h"
@@ -28,7 +32,6 @@ specific language governing permissions and limitations under the License. */
 #include "str4.h"
 #endif
 
-#if F2_TEXT
 namespace _ {
 #if F2_TEXT == UTF8
 using Utf = Utf8;
@@ -50,8 +53,6 @@ using Line = Utf32Line;
 using LineString = Utf32LineString;
 #endif
 }  // namespace _
-#endif
-#undef PRINT
-#undef PRINTF
+
 #endif  //< #if INCLUDED_KABUKI_F2_UTF
-#endif  //< #if SEAM >= SEAM_0_0_0__03
+#endif  //< #if SEAM >= SEAM_0_0_0__01

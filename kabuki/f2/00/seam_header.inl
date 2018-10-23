@@ -1,11 +1,6 @@
 #include "../seam_header.inl"
 #if SEAM == SEAM_0_0_0__00
-
 #define PRINT_PRINTED PrintPrinted<Char>(buffer);
-#define PRINT_BINARY \
-  PrintIndent(4);    \
-  PrintBinary(value);
-#define PRINT_BINARY_TABLE PrintBinaryTable(value);
 #define BEGIN_ITOS_ALGORITHM                                          \
   static const char* ui_format = sizeof(UI) == 8 ? FORMAT_UI8 : "%u"; \
   PuffItoSBegin<Char>(cursor);                                        \

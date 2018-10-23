@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="f2_align.cc" />
     <ClCompile Include="f2_ascii_data.cc" />
     <ClCompile Include="f2_benchmark.cc" />
     <ClCompile Include="f2_binary.cc" />
@@ -39,52 +38,23 @@
     <ClInclude Include="00\seam_footer.inl" />
     <ClInclude Include="00\seam_header.inl" />
     <ClInclude Include="00\itos_and_stoi.h" />
-    <ClInclude Include="01\seam_footer.inl" />
-    <ClInclude Include="01\ftos_and_stof.h" />
-    <ClInclude Include="01\seam_header.inl" />
-    <ClInclude Include="02\core_text_functions.h" />
-    <ClInclude Include="02\seam_footer.inl" />
-    <ClInclude Include="02\seam_header.inl" />
-    <ClInclude Include="03\ascii_strings.h" />
-    <ClInclude Include="03\seam_footer.inl" />
-    <ClInclude Include="03\seam_header.inl" />
-    <ClInclude Include="04\ascii_clock.h" />
-    <ClInclude Include="04\seam_footer.inl" />
-    <ClInclude Include="04\seam_header.inl" />
-    <ClInclude Include="05\ascii_stack.h" />
-    <ClInclude Include="05\seam_footer.inl" />
-    <ClInclude Include="05\seam_header.inl" />
-    <ClInclude Include="06\ascii_array.h" />
-    <ClInclude Include="06\seam_footer.inl" />
-    <ClInclude Include="06\seam_header.inl" />
-    <ClInclude Include="07\ascii_loom.h" />
-    <ClInclude Include="07\seam_footer.inl" />
-    <ClInclude Include="07\seam_header.inl" />
-    <ClInclude Include="08\ascii_table.h" />
-    <ClInclude Include="08\seam_footer.inl" />
-    <ClInclude Include="08\seam_header.inl" />
-    <ClInclude Include="09\ascii_varint.h" />
-    <ClInclude Include="09\seam_footer.inl" />
-    <ClInclude Include="09\seam_header.inl" />
-    <ClInclude Include="10\ascii_list.h" />
-    <ClInclude Include="10\seam_footer.inl" />
-    <ClInclude Include="10\seam_header.inl" />
-    <ClInclude Include="11\ascii_map.h" />
-    <ClInclude Include="11\seam_footer.inl" />
-    <ClInclude Include="11\seam_header.inl" />
-    <ClInclude Include="12\ascii_book.h" />
-    <ClInclude Include="12\seam_footer.inl" />
-    <ClInclude Include="12\seam_header.inl" />
-    <ClInclude Include="13\ascii_dictionary.h" />
-    <ClInclude Include="13\seam_footer.inl" />
-    <ClInclude Include="13\seam_header.inl" />
-    <ClInclude Include="align.h" />
+    <ClInclude Include="01\ascii_strings_and_socket.h" />
+    <ClInclude Include="02\ftos_and_stof.h" />
+    <ClInclude Include="03\ascii_clock.h" />
+    <ClInclude Include="04\ascii_stack.h" />
+    <ClInclude Include="05\ascii_array.h" />
+    <ClInclude Include="06\ascii_loom.h" />
+    <ClInclude Include="07\ascii_table.h" />
+    <ClInclude Include="08\ascii_list.h" />
+    <ClInclude Include="09\ascii_list.h" />
+    <ClInclude Include="10\ascii_map.h" />
+    <ClInclude Include="11\ascii_book.h" />
+    <ClInclude Include="12\ascii_dictionary.h" />
     <ClInclude Include="ascii.h" />
     <ClInclude Include="ascii_data.h" />
     <ClInclude Include="benchmark.h" />
     <ClInclude Include="binary.h" />
     <ClInclude Include="clock.h" />
-    <ClInclude Include="config.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="seam_footer.inl" />
     <ClInclude Include="global.h" />
@@ -101,7 +71,6 @@
     <ClInclude Include="str1.h" />
     <ClInclude Include="str2.h" />
     <ClInclude Include="str4.h" />
-    <ClInclude Include="talign.h" />
     <ClInclude Include="tarray.h" />
     <ClInclude Include="tascii_data.h" />
     <ClInclude Include="tbenchmark.h" />
@@ -129,18 +98,42 @@
   <ItemGroup>
     <None Include="00\readme.md" />
     <None Include="01\readme.md" />
+    <None Include="01\seam_footer.inl" />
+    <None Include="01\seam_header.inl" />
     <None Include="02\readme.md" />
+    <None Include="02\seam_footer.inl" />
+    <None Include="02\seam_header.inl" />
     <None Include="03\readme.md" />
+    <None Include="03\seam_footer.inl" />
+    <None Include="03\seam_header.inl" />
     <None Include="04\readme.md" />
+    <None Include="04\seam_footer.inl" />
+    <None Include="04\seam_header.inl" />
     <None Include="05\readme.md" />
+    <None Include="05\seam_footer.inl" />
+    <None Include="05\seam_header.inl" />
     <None Include="06\readme.md" />
+    <None Include="06\seam_footer.inl" />
+    <None Include="06\seam_header.inl" />
     <None Include="07\readme.md" />
+    <None Include="07\seam_footer.inl" />
+    <None Include="07\seam_header.inl" />
     <None Include="08\readme.md" />
+    <None Include="08\seam_footer.inl" />
+    <None Include="08\seam_header.inl" />
     <None Include="09\readme.md" />
+    <None Include="09\seam_footer.inl" />
+    <None Include="09\seam_header.inl" />
     <None Include="10\readme.md" />
+    <None Include="10\seam_footer.inl" />
+    <None Include="10\seam_header.inl" />
     <None Include="11\readme.md" />
+    <None Include="11\seam_footer.inl" />
+    <None Include="11\seam_header.inl" />
     <None Include="12\readme.md" />
-    <None Include="13\readme.md" />
+    <None Include="12\seam_footer.inl" />
+    <None Include="12\seam_header.inl" />
+    <None Include="config.inl" />
     <None Include="readme.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -233,6 +226,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir)\.;$(ProjectDir)\..\..\</AdditionalIncludeDirectories>
+      <AssemblerOutput>All</AssemblerOutput>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

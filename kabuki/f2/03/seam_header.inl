@@ -1,6 +1,8 @@
 #include <kabuki/config.h>
-#if SEAM == SEAM_0_0_0__03
-#define PRINT_SLOT print << slot << Dump();
+#if SEAM == SEAM_0_0_0__05
+#define PRINT_DATE(date)                                                    \
+  Printf("%i/%i/%i@%i:%i:%i", date.year + kSecondsPerEpoch, date.month + 1, \
+         date.day, date.hour, date.minute, date.second);
 #else
-#define PRINT_SLOT
+#define PRINT_DATE(date)
 #endif

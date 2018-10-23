@@ -13,11 +13,10 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__03
+#if SEAM >= SEAM_0_0_0__04
 
 #include "ascii_data.h"
-#include "socket.h"
-#include "talign.h"
+#include "tsocket.h"
 #include "ttest.h"
 
 namespace _ {
@@ -30,7 +29,7 @@ bool TypeIsValid(type_t type) {
 
 TypeValue::TypeValue(type_t type, const void* value)
     : type(type), value(value) {
-  // Nothing to do here! ({:-)-+=<
+  // Nothing to do here! (:-)-+=<
 }
 
 uint_t TypeFixedSize(uint_t type) {
@@ -252,4 +251,4 @@ _::Utf32& operator<<(_::Utf32& utf, const _::TypeValue& item) {
 }
 #endif
 
-#endif  //< #if SEAM >= SEAM_0_0_0__03
+#endif  //< #if SEAM >= SEAM_0_0_0__04

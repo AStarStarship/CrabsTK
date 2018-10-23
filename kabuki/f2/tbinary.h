@@ -23,38 +23,6 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-#if SEAM == SEAM_0_0_0__00
-
-template <typename UI>
-void PrintToDebug(UI value) {
-  enum { kSize = sizeof(UI) * 8 };
-
-  const char* debug_table =
-      sizeof(UI) == 8
-          ? "\n    "
-            "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-            "\n    "
-            "6666555555555544444444443333333333222222222211111111110000000000"
-            "\n    "
-            "3210987654321098765432109876543210987654321098765432109876543210"
-            "\n    "
-            "|  |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |  |  |   |"
-            "\n    "
-            "2  1  1  1   1  1  1   1  1  1   1  0  0   0  0  0   0  0  0   0"
-            "\n    "
-            "0  9  8  7   6  5  4   3  2  1   0  9  8   7  6  5   4  3  2   1"
-          : "\n    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-            "\n    33222222222211111111110000000000"
-            "\n    10987654321098765432109876543210"
-            "\n    ||  |  |   |  |  |   |  |  |   |"
-            "\n    |1  0  0   0  0  0   0  0  0   0"
-            "\n    |0  9  8   7  6  5   4  3  2   1";
-
-  PrintIndent(4);
-  PrintBinary(value);
-  Printf(debug_table);
-}
-
 template <typename Char>
 void PrintString(const Char* string) {
   ASSERT(string);
@@ -94,12 +62,7 @@ void PrintPrinted(Char* cursor) {
   intptr_t print_count = PrintAndCount<Char>(PuffItoSBegin<Char>());
   Print(':');
   Print(print_count);
-  Print("\" leaving value:\"");
-  print_count = PrintAndCount<Char>(cursor);
-  Print(':');
-  Print(print_count);
 }
-#endif  //< #if SEAM == SEAM_0_0_0__00
 
 template <typename UI>
 inline UI NanUnsigned() {
@@ -140,7 +103,6 @@ int StringCompare(const Char* string_a, const Char* string_b,
   // string_b SHOULD be a nil-terminated string without whitespace.
   while (b) {
     result = b - a;
-    PRINTF("\nb - a = %i - %i = %i", b, a, result);
     if (result) {
       PRINTF(" is not a hit.");
       return result;
@@ -282,6 +244,7 @@ Char* PrintHex(Char* cursor, Char* end, UI value) {
   return cursor;
 }
 
+/* Prints the given value to Binary. */
 template <typename Char, typename T>
 Char* PrintBinary(Char* cursor, Char* end, T value) {
   if (cursor + sizeof(uint64_t) * 8 >= end) {
@@ -334,7 +297,6 @@ int StringQuery(const Char* cursor, const Char* end, const Char* query) {
   // text SHOULD be a nil-terminated string without whitespace.
   while (b) {
     result = b - a;
-    PRINTF("\nb - a = %c - %c = %i", b, a, result);
     if (result) {
       PRINTF(" is not a hit.");
       return result;
@@ -359,72 +321,6 @@ int StringQuery(const Char* cursor, const Char* end, const Char* query) {
   return 0;
 }
 
-template <typename Char = char>
-const Char* StringFind(const Char* cursor, const Char* query) {
-  ASSERT(cursor);
-  ASSERT(query);
-
-  Char string = *cursor,  //< Current cursor Char.
-      t = *query,         //< Current query Char.
-      c = t;              //< The first Char of the query we're searching for.
-  if (c == 0)             //< We're not allowing empty queries.
-    return nullptr;
-  const Char *start_of_query, *begin = cursor;
-  query = TextSkipSpaces(query);
-
-  // Scroll through each Char and match it to the query Char.
-  while (string) {
-    if (string == c) {  // The first Char matches:
-                        // Setup to compare the strings;
-      start_of_query = cursor;
-      begin = query;
-      t = c;
-      // check the rest of the Char:
-      while (string == t) {
-        string = *(++cursor);
-        t = *(++begin);
-        if (t == 0)  // Once we've reached the delimiter it's a match!
-          return start_of_query;
-        if (!string)  // We've reached the end of Char without a hit.
-          return nullptr;
-      }
-    }
-    // The Char did not match so repeat the process for each Char.
-    string = *(++cursor);
-    t = *(++begin);
-  }
-  // If we haven't found it by now it's not in the cursor.
-  return nullptr;
-}
-
-/* Prints a two decimals to the buffer.
-If the SEAM == SEAM_0_0_0 (1), then this function will print debug data.
-@warning This function DOES NOT do any error checking! */
-template <typename Char = char>
-inline Char* PrintDecimals(Char* buffer, uint16_t decimal_pair) {
-  enum { kSizeBits = sizeof(Char) * 8 };
-  buffer[0] = (Char)(decimal_pair >> 8);
-  buffer[1] = (Char)(decimal_pair & 0xff);
-  PRINT_PRINTED;
-  return buffer;
-}
-
-inline char* PrintDigits(char* buffer, uint16_t value) {
-  buffer[0] = (char)(value >> 8);
-  buffer[1] = (char)(value & 0xff);
-  using Char = char;
-  PRINT_PRINTED;
-  return buffer;
-}
-
-inline char16_t* PrintDigits(char16_t* cursor, uint16_t decimal_pair) {
-  return PrintDecimals<char16_t>(cursor, decimal_pair);
-}
-
-inline char32_t* PrintDigits(char32_t* cursor, uint16_t decimal_pair) {
-  return PrintDecimals<char32_t>(cursor, decimal_pair);
-}
-
 /* Prints a single decimal to the buffer.
 @warning This function DOES NOT do any error checking and if the SEAM ==
 SEAM_0_0_0 (1), then this function will print debug data. */
@@ -445,6 +341,17 @@ inline Char* PrintChar(Char* buffer, Char value) {
   return buffer;
 }
 
+/* Prints a single decimal to the buffer.
+If the SEAM == SEAM_0_0_0 (1), then this function will print debug data.
+@warning This function DOES NOT do any error checking! */
+template <typename Char = char>
+inline Char* PrintChar(Char* buffer, Char* end, Char value) {
+  if (!buffer || buffer >= end) return nullptr;
+  *buffer++ = value;
+  PRINT_PRINTED;
+  return buffer;
+}
+
 inline char* PrintChar(char* cursor, char c) {
   return PrintChar<char>(cursor, c);
 }
@@ -455,37 +362,6 @@ inline char16_t* PrintChar(char16_t* cursor, char16_t c) {
 
 inline char32_t* PrintChar(char32_t* cursor, char32_t c) {
   PrintChar<char32_t>(cursor, c);
-}
-
-/* Prints two chars to the console.
-@warning This function DOES NOT do any error checking! */
-template <typename Char = char, typename DChar = uint16_t>
-inline void PrintDecimals(Char* buffer, Char a, Char b) {
-  DChar value = (DChar)('0' + b) << (sizeof(DChar) * 2);
-  value |= ((DChar)('0' + a));
-  *reinterpret_cast<DChar*>(buffer) = value;
-  PRINT_PRINTED;
-}
-
-/* Prints two chars to the console.
-@warning This function DOES NOT do any error checking! */
-template <typename Char = char, typename DChar = uint16_t>
-inline void PrintDecimals(Char* buffer, Char a, Char b, Char c) {
-  enum { kSizeBits = sizeof(DChar) * 8 };
-  DChar value = ((DChar)('0' + c)) << (2 * kSizeBits);
-  value |= ((DChar)('0' + b)) << kSizeBits;
-  *reinterpret_cast<DChar*>(buffer) = ((DChar)('0' + a)) | value;
-  PRINT_PRINTED;
-}
-
-/* Prints two chars to the console.
-@warning This function DOES NOT do any error checking! */
-template <typename Char = char, typename DChar = uint16_t>
-inline void PrintDigits(Char* buffer, Char a, Char b) {
-  DChar value = ((DChar)b) << (sizeof(DChar) * 2);
-  value |= ((DChar)a);
-  *reinterpret_cast<DChar*>(buffer) = value;
-  PRINT_PRINTED;
 }
 
 /* Checks if the given char is a digit of a number.
@@ -503,30 +379,70 @@ inline Char* PrintNil(Char* cursor) {
   return cursor;
 }
 
+/* Prints a two decimals to the buffer.
+If the SEAM == SEAM_0_0_0 (1), then this function will print debug data.
+@warning This function DOES NOT do any error checking! */
 template <typename Char = char>
-inline Char* Print8Decimals(Char* cursor, uint32_t value_ui4,
-                            const uint16_t* lut) {
-  PRINT("\n    Printing 8 decimals fast:");
-  PRINT(value_ui4);
-  uint16_t pow_10_ui2 = 10000, digits5and6 = (uint16_t)(value_ui4 / pow_10_ui2),
-           digits1and2 = value_ui4 - pow_10_ui2 * digits5and6;
+inline Char* Print2Decimals(Char* buffer, uint16_t decimal_pair) {
+  enum { kSizeBits = sizeof(Char) * 8 };
+  buffer[0] = (Char)(decimal_pair >> 8);
+  char c = (char)decimal_pair;
+  buffer[1] = (Char)(c);
+  PRINT_PRINTED;
+  return buffer;
+}
+
+inline char* PrintCharPair(char* buffer, uint16_t value) {
+#if ALIGN_MEMORY
+  buffer[0] = (char)(value >> 8);
+  buffer[1] = (char)(value);
+#else
+  *((uint16_t*)buffer) = value;
+#endif
+  using Char = char;
+  PRINT_PRINTED;
+  return buffer;
+}
+
+inline char16_t* PrintCharPair(char16_t* cursor, uint16_t decimal_pair) {
+  return Print2Decimals<char16_t>(cursor, decimal_pair);
+}
+
+inline char32_t* PrintCharPair(char32_t* cursor, uint16_t decimal_pair) {
+  return Print2Decimals<char32_t>(cursor, decimal_pair);
+}
+
+/* Prints 8 decimals to the given buffer with given LUT.*/
+template <typename Char = char>
+Char* Print8Decimals(Char* cursor, uint32_t value, const uint16_t* lut) {
+  PRINT("\n    Printing 8 decimals:");
+  PRINT(value);
+  uint16_t pow_10_ui2 = 10000, digits6and5 = (uint16_t)(value / pow_10_ui2),
+           digits2and1 = value - pow_10_ui2 * digits6and5;
   pow_10_ui2 = 100;
-  uint16_t digits7and8 = digits5and6 / pow_10_ui2,
-           digits3and4 = digits1and2 / pow_10_ui2;
-  digits5and6 -= pow_10_ui2 * digits7and8;
-  digits1and2 -= pow_10_ui2 * digits3and4;
-  PrintDecimals<Char>(cursor, lut[digits7and8]);
-  PrintDecimals<Char>(cursor + 2, lut[digits5and6]);
-  PrintDecimals<Char>(cursor + 4, lut[digits3and4]);
-  PrintDecimals<Char>(cursor + 6, lut[digits1and2]);
+  uint16_t digits8and7 = digits6and5 / pow_10_ui2,
+           digits4and3 = digits2and1 / pow_10_ui2;
+  digits6and5 -= pow_10_ui2 * digits8and7;
+  digits2and1 -= pow_10_ui2 * digits4and3;
+  PrintCharPair(cursor, lut[digits8and7]);
+  PrintCharPair(cursor + 2, lut[digits6and5]);
+  PrintCharPair(cursor + 4, lut[digits4and3]);
+  PrintCharPair(cursor + 6, lut[digits2and1]);
+  PRINT_PRINTED;
   return cursor + 8;
 }
 
 template <typename Char = char>
-void Print8or16Decimals(Char* cursor, uint32_t lsd, const uint16_t* lut,
-                        uint32_t middle_sd, uint32_t delta) {
-  Print8Decimals<Char>(cursor, lsd, lut);
-  if (delta == 16) Print8Decimals<Char>(cursor + 8, middle_sd, lut);
+inline void Print8or16Decimals(Char* cursor, uint32_t lsd, const uint16_t* lut,
+                               uint32_t middle_sd, uint32_t delta) {
+  if (delta == 8) {
+    PRINTF("\n    Printing less than 17 decimals:");
+    Print8Decimals<Char>(cursor, lsd, lut);
+  } else {
+    PRINTF("\n    Printing more than 16 decimals:");
+    Print8Decimals<Char>(cursor, middle_sd, lut);
+    Print8Decimals<Char>(cursor + 8, lsd, lut);
+  }
 }
 
 inline uint32_t ValueUI4(uint32_t value) { return value; }
@@ -538,33 +454,35 @@ success.
 @param  cursor The beginning of the buffer.
 @param  end    The end address of the buffer. */
 template <typename UI = uint64_t, typename Char = char>
-Char* Print(Char* cursor, Char* end, UI value) {
+Char* PrintUnsigned(Char* cursor, Char* end, UI value) {
   BEGIN_ITOS_ALGORITHM;
 
   if (!cursor || cursor >= end) return nullptr;
 
   Char* nil_ptr;
-  uint16_t pow_10_ui2;
-  uint32_t pow_10_ui4, delta = 0;
+  uint16_t pow_10_ui2, delta = 0;
+  uint32_t pow_10_ui4;
   const uint16_t* lut = PuffDigitsLut();
 
   // The best way to understand how the numbers are getting converted is that
   // numbers get broken up into up to 8 pairs of 100, in each pair of 10000
   // there will be a Most Significant Decimal (MSD) pair and a Least
-  // Significant Decimal (LSD) pair. The digits1and2 and digits5and6 will
-  // always be the LSD and digits3and4 and digits7and8 will always be the MSD.
+  // Significant Decimal (LSD) pair. The digits2and1 and digits6and5 will
+  // always be the LSD and digits4and3 and digits8and7 will always be the MSD.
 
   if (value < 10) {
     PRINT("\n    Range:[0, 9] length:1 ");
   Print1:
-    if (cursor + 1 >= end) return nullptr;
+    nil_ptr = cursor + delta + 1;
+    if (nil_ptr >= end) return nullptr;
     PrintDecimal<Char>(cursor, (Char)value);
     return PrintNil<Char>(cursor + delta + 1);
   } else if (value < 100) {
   Print2:
     PRINT("\n    Range:[10, 99] length:2 ");
-    if (cursor + 2 >= end) return nullptr;
-    PrintDecimals(cursor, lut[value]);
+    nil_ptr = cursor + delta + 2;
+    if (cursor + delta + 2 >= end) return nullptr;
+    PrintCharPair(cursor, lut[value]);
     return PrintNil<Char>(cursor + delta + 2);
   } else {
     if ((value >> 10) == 0) {
@@ -574,22 +492,28 @@ Char* Print(Char* cursor, Char* end, UI value) {
         PRINT("\n    Range:[1000, 1023] length:4");
         nil_ptr = cursor + delta + 4;
         if (nil_ptr >= end) return nullptr;
-        uint16_t digits1and2 = (uint16_t)(value - pow_10_ui2);
-        PrintDigits<Char>(cursor, '1', '0');
-        PrintDecimals<Char>(cursor + 2, lut[digits1and2]);
+        uint16_t digits2and1 = (uint16_t)(value - pow_10_ui2);
+#if CPU_ENDIAN == LITTLE_ENDIAN
+        cursor[0] = '1';
+        cursor[1] = '0';
+#else
+        cursor[0] = '0';
+        cursor[1] = '1';
+#endif
+        PrintCharPair(cursor + 2, lut[digits2and1]);
         return PrintNil<Char>(nil_ptr);
       }
     Print3:
       PRINT("\n    Range:[100, 999] length:3");
       nil_ptr = cursor + delta + 3;
       if (nil_ptr >= end) return nullptr;
-      uint16_t digits1and2 = (uint16_t)value, pow_10_ui2 = 100;
-      Char digit = (Char)(digits1and2 / pow_10_ui2);
-      digits1and2 -= digit * pow_10_ui2;
+      uint16_t digits2and1 = (uint16_t)value, pow_10_ui2 = 100;
+      Char digit = (Char)(digits2and1 / pow_10_ui2);
+      digits2and1 -= digit * pow_10_ui2;
       PrintDecimal<Char>(cursor, digit);
-      PrintDecimals<Char>(cursor + 1, lut[digits1and2]);
+      PrintCharPair(cursor + 1, lut[digits2and1]);
       return PrintNil<Char>(nil_ptr);
-    } else if ((value >> 13) == 0) {
+    } else if ((value >> 14) == 0) {
       pow_10_ui2 = 10000;
       if (value >= pow_10_ui2) {
       Print5A:
@@ -606,13 +530,13 @@ Char* Print(Char* cursor, Char* end, UI value) {
         PrintNil<Char>(nil_ptr);
       }
       pow_10_ui2 = 100;
-      uint16_t digits1and2 = (uint16_t)value,
-               digits3and4 = digits1and2 / pow_10_ui2;
-      digits1and2 -= digits3and4 * pow_10_ui2;
-      PrintDecimals<Char>(cursor, lut[digits3and4]);
-      PrintDecimals<Char>(cursor + 2, lut[digits1and2]);
+      uint16_t digits2and1 = (uint16_t)value,
+               digits4and3 = digits2and1 / pow_10_ui2;
+      digits2and1 -= digits4and3 * pow_10_ui2;
+      PrintCharPair(cursor, lut[digits4and3]);
+      PrintCharPair(cursor + 2, lut[digits2and1]);
       return PrintNil<Char>(nil_ptr);
-    } else if ((value >> 14) == 0) {
+    } else if ((value >> 17) == 0) {
       if (value >= 100000) {
       Print6A:
         PRINT("\n    Range:[65536, 131071] length:6");
@@ -624,16 +548,16 @@ Char* Print(Char* cursor, Char* end, UI value) {
       if (nil_ptr >= end) return nullptr;
       uint32_t value_ui4 = ValueUI4(value);
       pow_10_ui2 = 10000;
-      Char digit = (uint8_t)(value_ui4 / pow_10_ui2);
-      value_ui4 -= pow_10_ui2 * digit;
-      cursor = PrintChar<Char>(cursor, '0' + digit);
+      Char digit6 = (uint8_t)(value_ui4 / pow_10_ui2);
+      value_ui4 -= pow_10_ui2 * digit6;
+      cursor = PrintChar<Char>(cursor, '0' + digit6);
       pow_10_ui2 = 100;
-      uint16_t digits3and4 = ((uint16_t)value_ui4) / pow_10_ui2,
-               digits1and2 = (uint16_t)(value_ui4 - digits3and4 * pow_10_ui2);
-      PrintDecimals<Char>(cursor, lut[digits1and2]);
-      PrintDecimals<Char>(cursor + 2, lut[digits3and4]);
+      uint16_t digits4and3 = ((uint16_t)value_ui4) / pow_10_ui2,
+               digits2and1 = (uint16_t)(value_ui4 - digits4and3 * pow_10_ui2);
+      PrintCharPair(cursor, lut[digits4and3]);
+      PrintCharPair(cursor + 2, lut[digits2and1]);
       return PrintNil<Char>(nil_ptr);
-    } else if ((value >> 17) == 0) {
+    } else if ((value >> 20) == 0) {
       pow_10_ui4 = 1000000;
       if (value >= pow_10_ui4) {
       Print7A:
@@ -651,97 +575,93 @@ Char* Print(Char* cursor, Char* end, UI value) {
       }
       uint32_t value_ui4 = (uint32_t)value;
       pow_10_ui2 = 10000;
-      uint16_t digits5and6 = (uint16_t)(value_ui4 / pow_10_ui2),
-               digits1and2 = value_ui4 - pow_10_ui2 * digits5and6;
+      uint16_t digits6and5 = (uint16_t)(value_ui4 / pow_10_ui2),
+               digits2and1 = value_ui4 - pow_10_ui2 * digits6and5;
       pow_10_ui2 = 100;
-      uint16_t digits7and8 = digits5and6 / pow_10_ui2,
-               digits3and4 = digits1and2 / pow_10_ui2;
-      digits5and6 -= pow_10_ui2 * digits7and8;
-      digits1and2 -= pow_10_ui2 * digits3and4;
-      PrintDecimals<Char>(cursor, lut[digits5and6]);
-      PrintDecimals<Char>(cursor + 2, lut[digits3and4]);
-      PrintDecimals<Char>(cursor + 4, lut[digits1and2]);
+      uint16_t digits8and7 = digits6and5 / pow_10_ui2,
+               digits4and3 = digits2and1 / pow_10_ui2;
+      digits6and5 -= pow_10_ui2 * digits8and7;
+      digits2and1 -= pow_10_ui2 * digits4and3;
+      PrintCharPair(cursor, lut[digits6and5]);
+      PrintCharPair(cursor + 2, lut[digits4and3]);
+      PrintCharPair(cursor + 4, lut[digits2and1]);
       return nil_ptr;
-    } else if ((value >> 20) == 0) {
-      pow_10_ui4 = 10000000;
-      if (value >= pow_10_ui4)
+    } else if ((value >> 24) == 0) {
+      pow_10_ui4 = 10000000;  //< 10^7
+      if (value >= pow_10_ui4) {
+        PRINT("\n    Range:[10000000, 16777216] length:8");
         return Print8Decimals<Char>(cursor, ValueUI4(value), lut);
+      }
     Print7:
       PRINT("\n    Range:[1048576, 9999999] length:7");
       nil_ptr = cursor + delta + 7;
       if (nil_ptr >= end) return nullptr;
       uint16_t pow_10_ui2 = 10000;
       uint32_t value_ui4 = ValueUI4(value);
-      uint16_t digits5and6 = value_ui4 / pow_10_ui2,
-               digits1and2 = value_ui4 - pow_10_ui2 * digits5and6;
+      uint16_t digits6and5 = value_ui4 / pow_10_ui2,
+               digits2and1 = value_ui4 - pow_10_ui2 * digits6and5;
       pow_10_ui2 = 100;
-      uint16_t digits7and8 = digits5and6 / pow_10_ui2,
-               digits3and4 = digits1and2 / pow_10_ui2;
-      digits5and6 -= pow_10_ui2 * digits7and8;
-      digits1and2 -= pow_10_ui2 * digits3and4;
-      PrintDecimals<Char>(cursor, lut[digits5and6]);
-      PrintDecimals<Char>(cursor + 2, lut[digits3and4]);
-      PrintDecimals<Char>(cursor + 4, lut[digits1and2]);
-      PrintDecimal<Char>(cursor + 5, (Char)digits7and8);
+      uint16_t digit7 = digits6and5 / pow_10_ui2,
+               digits4and3 = digits2and1 / pow_10_ui2;
+      digits6and5 -= pow_10_ui2 * digit7;
+      digits2and1 -= pow_10_ui2 * digits4and3;
+      PrintDecimal(cursor, (Char)(digit7));
+      PrintCharPair(cursor + 1, lut[digits6and5]);
+      PrintCharPair(cursor + 3, lut[digits4and3]);
+      PrintCharPair(cursor + 5, lut[digits2and1]);
       return PrintNil<Char>(nil_ptr);
     } else {
       uint32_t comparator = 100000000;  // 10^8
-      if (value < comparator) {
-        PRINT("\n    Range:[100000000, 99999999] length:8");
-        nil_ptr = cursor + delta + 8;
-        if (nil_ptr >= end) return nullptr;
-        PrintNil<Char>(nil_ptr);
-        return Print8Decimals<Char>(cursor, ValueUI4(value), lut);
-      }
-
-      UI msd = value / comparator;
+      UI msd = (value >= (~(uint32_t)0)) ? value / comparator
+                                         : ValueUI4(value) / comparator;
       uint32_t lsd = (uint32_t)(value - comparator * msd), middle_sd;
-      value -= comparator * value;
-      if (value >= comparator) {
-        PRINTF("\n    Printing more than 16 decimals with LSD:");
+      if (msd >= comparator) {
         delta = 16;
-        uint32_t value_ui4 = (uint32_t)(value / comparator);
-        middle_sd = ValueUI4(msd) - value_ui4 * lsd;
-        msd = value_ui4;
-        PRINT(middle_sd);
-        PRINT(lsd);
-        PRINT(" and MSD:");
-        PRINT(msd);
-      } else {
-        PRINTF("\n    Printing less than 17 decimals with LSD:");
-        PRINT(lsd);
-        PRINT(" and MSD:");
+        value = msd / comparator;
+        middle_sd = ValueUI4(msd - value * comparator);
         PRINT(value);
+        PRINT('_');
+        PRINT(middle_sd);
+        PRINT('_');
+        PRINT(lsd);
+      } else {
+        value = msd;
+        middle_sd = 0;
         delta = 8;
+        PRINT(value);
+        PRINT('_');
+        PRINT(lsd);
       }
       if (value < 10) {
-        cursor = Print8Decimals<Char>(cursor, middle_sd, lut);
-        Print8Decimals<Char>(cursor, lsd, lut);
+        Print8or16Decimals<Char>(cursor + 1, lsd, lut, middle_sd, delta);
         goto Print1;
       } else if (value < 100) {
-        Print8Decimals<Char>(cursor, ValueUI4(value), lut);
+        Print8or16Decimals<Char>(cursor + 2, lsd, lut, middle_sd, delta);
         goto Print2;
       }
       if ((value >> 10) == 0) {
         pow_10_ui2 = 1000;
-        if (value >= pow_10_ui2) goto Print4A;
-        Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
+        if (value >= pow_10_ui2) {
+          Print8or16Decimals<Char>(cursor + 4, lsd, lut, middle_sd, delta);
+          goto Print4A;
+        }
+        Print8or16Decimals<Char>(cursor + 3, lsd, lut, middle_sd, delta);
         goto Print3;
       } else if ((value >> 13) == 0) {
         pow_10_ui2 = 10000;
         if (value >= pow_10_ui2) {
-          Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
+          Print8or16Decimals<Char>(cursor + 5, lsd, lut, middle_sd, delta);
           goto Print5A;
         }
-        Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
+        Print8or16Decimals<Char>(cursor + 4, lsd, lut, middle_sd, delta);
         goto Print4;
       } else if ((value >> 17) == 0) {
         pow_10_ui4 = 100000;
         if (value >= pow_10_ui4) {
-          Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
+          Print8or16Decimals<Char>(cursor + 6, lsd, lut, middle_sd, delta);
           goto Print6A;
         }
-        Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
+        Print8or16Decimals<Char>(cursor + 5, lsd, lut, middle_sd, delta);
         goto Print5;
       } else if ((value >> 20) == 0) {
         pow_10_ui4 = 1000000;
@@ -749,10 +669,15 @@ Char* Print(Char* cursor, Char* end, UI value) {
           Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
           goto Print7A;
         }
-        Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
+        Print8or16Decimals<Char>(cursor + 6, lsd, lut, middle_sd, delta);
         goto Print6;
       } else {
-        //@note There is no case for length 8 because that is length 16.
+        comparator = 10000000;
+        if (value >= comparator) {
+          Print8Decimals<Char>(cursor, ValueUI4(value), lut);
+          Print8Decimals<Char>(cursor + 8, lsd, lut);
+          return PrintNil<Char>(cursor + 16);
+        }
         Print8or16Decimals<Char>(cursor + 7, lsd, lut, middle_sd, delta);
         goto Print7;
       }
@@ -761,18 +686,9 @@ Char* Print(Char* cursor, Char* end, UI value) {
   return nullptr;  //< Unreachable.
 }
 
-inline uint8_t Negative(int8_t value) { return (uint8_t)(-((int8_t)value)); }
-
-inline uint16_t Negative(int16_t value) {
-  return (uint16_t)(-((int16_t)value));
-}
-
-inline uint32_t Negative(int32_t value) {
-  return (uint32_t)(-((int32_t)value));
-}
-
-inline uint64_t Negative(int64_t value) {
-  return (uint64_t)(-((int64_t)value));
+template <typename UI = uint64_t, typename Char = char>
+inline Char* PrintUnsigned(Char* buffer, int size, UI value) {
+  return PrintUnsigned<UI, Char>(buffer, buffer + size - 1, value);
 }
 
 /* Writes the give value to the given buffer as an ASCII string.
@@ -782,9 +698,16 @@ success.
 @param value The value to write. */
 template <typename SI = int64_t, typename UI = uint64_t, typename Char = char>
 inline Char* PrintSigned(Char* buffer, Char* end, SI value) {
-  if (value >= 0) return Print<Char>(buffer, end, Unsigned(value));
+  if (value >= 0) {
+    return PrintUnsigned<UI, Char>(buffer, end, (UI)value);
+  }
   *buffer++ = '-';
-  return Print<UI, Char>(buffer, end, Negative(value));
+  return PrintUnsigned<UI, Char>(buffer, end, (UI)(-(SI)value));
+}
+
+template <typename SI = int64_t, typename UI = uint64_t, typename Char = char>
+inline Char* PrintSigned(Char* buffer, int size, SI value) {
+  return PrintSigned<SI, UI, Char>(buffer, buffer + size - 1, value);
 }
 
 /* Writes the give value to the given buffer as an ASCII string.
@@ -793,7 +716,7 @@ success.
 @param  print The text formatter to print to.
 @param value The value to write. */
 template <typename SI = int64_t, typename UI = uint64_t, typename Char = char>
-inline Char* Print(Char* buffer, intptr_t size, SI value) {
+inline Char* PrintSigned(Char* buffer, intptr_t size, SI value) {
   return PrintSigned<SI, UI, Char>(buffer, buffer + size - 1, value);
 }
 
@@ -802,7 +725,7 @@ inline Char* Print(Char* buffer, intptr_t size, SI value) {
 @param buffer The beginning of the buffer.
 @param result The UI to write the scanned UI. */
 template <typename UI, typename Char = char>
-const Char* Scan(const Char* buffer, UI& result) {
+const Char* ScanUnsigned(const Char* buffer, UI& result) {
   ASSERT(buffer);
   PRINTF("\nScanning unsigned value:%s", buffer);
   const Char* cursor = buffer;
@@ -889,6 +812,12 @@ int MSbAssertedReverse(UI value) {
     if ((value >> i) != 0) return i;
   return -1;
 }
+
+#include "01/seam_footer.inl"
+#endif  //< #if SEAM >= SEAM_0_0_0__01
+
+#if SEAM >= SEAM_0_0_0__02
+#include "02/seam_header.inl"
 
 /* A decimal number in floating-point format. */
 template <typename Float, typename UI>
@@ -1211,7 +1140,7 @@ class Binary {
   /* Prints the integer portion of the floating-point number.
   @return Nil upon failure or a pointer to the nil-term Char upon success. */
   template <typename Char>
-  inline Char* PrintDecimals(Char* cursor, Char* end, const Binary& w,
+  inline Char* PrintCharPair(Char* cursor, Char* end, const Binary& w,
                              const Binary& m_plus, uint64_t delta, int32_t& k) {
     Binary one(((uint64_t)1) << -m_plus.e, m_plus.e), wp_w = m_plus - w;
     uint32_t d, pow_10_ui2, p_1 = static_cast<uint32_t>(m_plus.f >> -one.e);
@@ -1356,7 +1285,7 @@ class Binary {
     Binary w_plus = plus * c_mk, w_minus = minus * c_mk;
     w_minus.f++;
     w_plus.f--;
-    return PrintDecimals<Char>(buffer, end, W, w_plus, w_plus.f - w_minus.f, k);
+    return PrintCharPair<Char>(buffer, end, W, w_plus, w_plus.f - w_minus.f, k);
   }
 
   template <typename Char = char>
@@ -1405,7 +1334,7 @@ inline Char* Print(Char* buffer, Char* end, Float value) {
 }
 
 template <typename Float = double, typename UI = uint64_t, typename Char = char>
-inline Char* Print(Char* buffer, intptr_t size, Float value) {
+inline Char* Print(Char* buffer, int size, Float value) {
   // return Binary<Float, UI>::Print<Char>(buffer, buffer + size - 1,
   //                                             value);
   return nullptr;
@@ -1417,8 +1346,8 @@ using Binary64 = Binary<double, uint64_t>;
 // using Binary128 = Binary<quad, uint128_t>;
 //< Coming soon but not in Visual-C++ due to lack of 128-bit integer support.
 
-#include "01/seam_footer.inl"
-#endif  //< #if SEAM >= SEAM_0_0_0__01
+#include "02/seam_footer.inl"
+#endif  //< #if SEAM >= SEAM_0_0_0__02
 
 }  // namespace _
 #endif  //< #if INCLUDED_KABUKI_F2_TBINARY

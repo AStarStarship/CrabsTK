@@ -21,7 +21,10 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* Gets a random generator device seed. */
-API inline uint RandomizeSeed();
+API inline uint RandomSeed();
+
+/* Re-seeds the static mersenne twister engine. */
+API inline void RandomizeSeed();
 
 /* Gets a random 8-bit/1-byte unsigned integer. */
 API inline uint8_t Random(uint8_t min, uint8_t max);
@@ -67,6 +70,30 @@ API inline uint64_t RandomUI8();
 
 /* Gets a random 64-bit/8-byte signed integer. */
 API inline uint64_t RandomSI8();
+
+/* Gets a random 8-bit/1-byte unsigned integer. */
+API inline void RandomNumber(uint8_t& result);
+
+/* Gets a random 8-bit/1-byte signed integer. */
+API inline void RandomNumber(int8_t& result);
+
+/* Gets a random 16-bit/2-byte unsigned integer. */
+API inline void RandomNumber(uint16_t& result);
+
+/* Gets a random 16-bit/2-byte signed integer. */
+API inline void RandomNumber(int16_t& result);
+
+/* Gets a random 32-bit/4-byte unsigned integer. */
+API inline void RandomNumber(uint32_t& result);
+
+/* Gets a random 32-bit/4-byte signed integer. */
+API inline void RandomNumber(int32_t& result);
+
+/* Gets a random 64-bit/8-byte unsigned integer. */
+API inline void RandomNumber(uint64_t& result);
+
+/* Gets a random 64-bit/8-byte signed integer. */
+API inline void RandomNumber(int64_t& result);
 
 }  // namespace _
 #endif  //< INCLUDED_KABUKI_F2_RNGUNIFORM

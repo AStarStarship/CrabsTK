@@ -13,11 +13,11 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__03
+#if SEAM >= SEAM_0_0_0__04
 #ifndef INCLUDED_KABUKI_F2_TYPES
 #define INCLUDED_KABUKI_F2_TYPES
 
-#include "align.h"
+#include "socket.h"
 #include "config.h"
 #include "tstr.h"
 
@@ -294,4 +294,4 @@ API _::Utf32& operator<<(_::Utf32& utf, const _::TypeValue& type_value);
 }  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_TYPES
-#endif  //< #if SEAM >= SEAM_0_0_0__03
+#endif  //< #if SEAM >= SEAM_0_0_0__04

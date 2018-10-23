@@ -13,36 +13,19 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__03
+#if SEAM >= SEAM_0_0_0__01
 #ifndef INCLUDED_KABUKI_F2_UTFN
 #define INCLUDED_KABUKI_F2_UTFN
 
+#include "str.h"
+
 #include "ascii.h"
-#include "socket.h"
 #include "tbinary.h"
 #include "test.h"
 #include "tobj.h"
+#include "tsocket.h"
 
-#if SEAM == SEAM_0_0_01__06
-#define PRINT(c) Print(c)
-#define PRINTF(format, ...) Printf(format, __VA_ARGS__)
-#define BEGIN_PUFF_ALGORITHM(heading) PrintHeading(heading)
-#define PRINT_FLOAT_BINARY(integer, decimals, decimal_count)             \
-  Printf("\nFound bit_pattern:0b\'");                                    \
-  uint32_t bits_1234567890 = integer;                                    \
-  int bit_count_1234567890 = 31;                                         \
-  while ((bit_count_1234567890 > 0) &&                                   \
-         ((bits_1234567890 >> bit_count_1234567890--) == 0))             \
-    if (bit_count_1234567890 == 0) Print('0');                           \
-  while (bit_count_1234567890 > 0)                                       \
-    Print(((bit_count_1234567890 >> bit_count_1234567890--) & 1) + '0'); \
-  while (decimal_count > 0) Print(((decimals >> decimal_count--) && 0x1) + '0')
-#else
-#define PRINTF(x, ...)
-#define PRINT(item)
-#define PRINT_HEADING(heading)
-#define PRINT_FLOAT_BINARY(integer, decimals, decimal_count)
-#endif
+#include "01/seam_header.inl"
 
 namespace _ {
 
@@ -196,7 +179,7 @@ Char* TextSkipChar(Char* cursor, Char skip_char) {
 }
 
 template <typename Char = char>
-const Char* TextSkipSpaces(const Char* cursor) {
+const Char* StringSkipSpaces(const Char* cursor) {
   if (!cursor) return nullptr;
   Char c = *cursor;
   while (IsWhitespace<Char>(c)) {
@@ -209,7 +192,45 @@ const Char* TextSkipSpaces(const Char* cursor) {
 }
 
 template <typename Char = char>
-const Char* TextSkipSpaces(const Char* cursor, const Char* end) {
+const Char* StringFind(const Char* cursor, const Char* query) {
+  ASSERT(cursor);
+  ASSERT(query);
+
+  Char string = *cursor,  //< Current cursor Char.
+      t = *query,         //< Current query Char.
+      c = t;              //< The first Char of the query we're searching for.
+  if (c == 0)             //< We're not allowing empty queries.
+    return nullptr;
+  const Char *start_of_query, *begin = cursor;
+  query = StringSkipSpaces<Char>(query);
+
+  // Scroll through each Char and match it to the query Char.
+  while (string) {
+    if (string == c) {  // The first Char matches:
+                        // Setup to compare the strings;
+      start_of_query = cursor;
+      begin = query;
+      t = c;
+      // check the rest of the Char:
+      while (string == t) {
+        string = *(++cursor);
+        t = *(++begin);
+        if (t == 0)  // Once we've reached the delimiter it's a match!
+          return start_of_query;
+        if (!string)  // We've reached the end of Char without a hit.
+          return nullptr;
+      }
+    }
+    // The Char did not match so repeat the process for each Char.
+    string = *(++cursor);
+    t = *(++begin);
+  }
+  // If we haven't found it by now it's not in the cursor.
+  return nullptr;
+}
+
+template <typename Char = char>
+const Char* StringSkipSpaces(const Char* cursor, const Char* end) {
   if (!cursor) return nullptr;
   if (cursor > end) return nullptr;
   PRINTF("\nSkipping spaces: ");
@@ -596,12 +617,13 @@ class TToken {
   /* Prints the value to the text buffer. */
   TToken(uint64_t value) { Print<Char>(string, string + kSize, value); }
 
+#if SEAM >= SEAM_0_0_0__02
   /* Prints the value to the text buffer. */
   TToken(float value) { Print<Char>(string, string + kSize, value); }
 
   /* Prints the value to the text buffer. */
   TToken(double value) { Print<Char>(string, string + kSize, value); }
-
+#endif
   /* Gets the number string. */
   const Char* String() { return string; }
 
@@ -645,6 +667,7 @@ class TCenter {
     // Nothing to do here!
   }
 
+#if SEAM >= SEAM_0_0_0__02
   /* Prints the value to the text buffer. */
   TCenter(float value, int column_count)
       : string(nullptr), number(value), column_count(column_count) {
@@ -656,6 +679,7 @@ class TCenter {
       : string(nullptr), number(value), column_count(column_count) {
     // Nothing to do here!
   }
+#endif
 
   /* Gets the number string. */
   const Char* String() { return string; }
@@ -664,9 +688,9 @@ class TCenter {
   int GetColumnCount() { return column_count; }
 
  private:
-  const Char* string;  //< Pointer to the string.
-  TToken number;       //< Pointer to a pointer to print.
-  int column_count;    //< Number of columns to center.
+  const Char* string;   //< Pointer to the string.
+  TToken<Char> number;  //< Pointer to a pointer to print.
+  int column_count;     //< Number of columns to center.
 };
 
 /* Utility class for printing hex with operator<<. */
@@ -675,34 +699,35 @@ class TRight {
  public:
   /* Prints the value to the text buffer. */
   TRight(const Char* string, int column_count)
-      : string(StringSet<Char>(string)), column_count(column_count) {
+      : string_(StringSet<Char>(string)), column_count_(column_count) {
     // Nothing to do here!
   }
 
   /* Prints the value to the text buffer. */
   TRight(int32_t value, int column_count)
-      : string(nullptr), number(value), column_count(column_count) {
+      : string_(nullptr), number_(value), column_count_(column_count) {
     // Nothing to do here!
   }
 
   /* Prints the value to the text buffer. */
   TRight(uint32_t value, int column_count)
-      : string(nullptr), number(value), column_count(column_count) {
+      : string_(nullptr), number_(value), column_count_(column_count) {
     // Nothing to do here!
   }
 
   /* Prints the value to the text buffer. */
   TRight(int64_t value, int column_count)
-      : string(nullptr), number(value), column_count(column_count) {
+      : string_(nullptr), number_(value), column_count_(column_count) {
     // Nothing to do here!
   }
 
   /* Prints the value to the text buffer. */
   TRight(uint64_t value, int column_count)
-      : string(nullptr), number(value), column_count(column_count) {
+      : string_(nullptr), number_(value), column_count_(column_count) {
     // Nothing to do here!
   }
 
+#if SEAM >= SEAM_0_0_0__02
   /* Prints the value to the text buffer. */
   TRight(float value, int column_count)
       : string(nullptr), number(value), column_count(column_count) {
@@ -714,17 +739,17 @@ class TRight {
       : string(nullptr), number(value), column_count(column_count) {
     // Nothing to do here!
   }
-
+#endif
   /* Gets the number string. */
-  const Char* String() { return string; }
+  const Char* String() { return string_; }
 
   /* Gets the column_count. */
-  int GetColumnCount() { return colun_count; }
+  int GetColumnCount() { return column_count_; }
 
  private:
-  const Char* string;  //< Pointer to the string.
-  TToken number;       //< Pointer to a pointer to print.
-  int column_count;    //< Number of columns to center.
+  const Char* string_;   //< Pointer to the string.
+  TToken<Char> number_;  //< Pointer to a pointer to print.
+  int column_count_;     //< Number of columns to center.
 };
 
 /* Utility class for printing a single Char token line with operator<<. */
@@ -750,27 +775,27 @@ struct API TLineString {
 };
 
 /* Buffer destructor prints the buffer to the console without deleting the
- * buffer. */
+buffer. */
 template <typename Char = char>
 void Console(uintptr_t* buffer) {
   if (!buffer) return;
   uintptr_t address = reinterpret_cast<uintptr_t>(buffer) + sizeof(SI);
-  Print<Char>(reinterpret_cast<const char*>(address));
+  Print(reinterpret_cast<const char*>(address));
 }
 
 /* Buffer destructor prints the buffer to the console and deletes the
- * buffer. */
+buffer. */
 template <typename Char = char>
 void COutAuto(uintptr_t* buffer) {
   if (!buffer) return;
   uintptr_t address = reinterpret_cast<uintptr_t>(buffer) + sizeof(SI);
-  Print<Char>(reinterpret_cast<const char*>(address));
+  Print(reinterpret_cast<const char*>(address));
   delete[] buffer;
 }
 
 template <typename Char = char, typename Size = int>
 inline void StrTerminate(CObj obj) {
-  uintptr_t* begin = obj_.Begin();
+  uintptr_t* begin = obj.begin;
   Size size = ObjSize<Size>(begin);
   if (size < (2 * sizeof(Char))) {
     PRINTF("\nSTR too small! %i", (int)size);
@@ -814,7 +839,7 @@ struct TUtf {
   TUtf(Char* begin, intptr_t size)
       : begin(begin), end(Ptr<Char>(begin, size - 1)) {
     ASSERT(begin);
-    ASSERT(ObjSizeIsValid(size, 8));
+    ASSERT(ObjSizeIsValid<intptr_t>(size, 8));
   }
 
   /* Initializes the Utf& from the given buffer pointers.
@@ -874,6 +899,7 @@ struct TUtf {
     return Set(PrintHex<Char>(begin, end, value));
   }
 
+#if SEAM >= SEAM_0_0_0__02
   /* Prints the given value as hex. */
   inline TUtf& Hex(float value) {
     return Set(PrintHex<Char>(begin, end, value));
@@ -883,9 +909,10 @@ struct TUtf {
   inline TUtf& Hex(double value) {
     return Set(PrintHex<Char>(begin, end, value));
   }
+#endif
 
   /* Prints the given pointer as hex. */
-  inline TUtf& Hex(const void* pointer) {
+  inline TUtf& Hex(const void* value) {
     return Set(PrintHex<Char>(begin, end, value));
   }
 
@@ -929,6 +956,7 @@ struct TUtf {
     return Set(Binary<Char>(begin, end, value));
   }
 
+#if SEAM >= SEAM_0_0_0__02
   /* Prints the given value as binary. */
   inline TUtf& Binary(float value) {
     return Set(Binary<Char>(begin, end, value));
@@ -938,9 +966,9 @@ struct TUtf {
   inline TUtf& Binary(double value) {
     return Set(Binary<Char>(begin, end, value));
   }
-
+#endif
   /* Prints the given pointer as binary. */
-  inline TUtf& Binary(const void* pointer) {
+  inline TUtf& Binary(const void* value) {
     return Set(Binary<Char>(begin, end, value));
   }
 };
@@ -995,7 +1023,7 @@ class TStr : public TUtf<Char> {
     Size size = ObjSize<Size>(obj_);
     ASSERT(((size - sizeof(Size)) & 7) == 0);
     Char* start_ptr = reinterpret_cast<Char*>(
-        reinterpret_cast<uintptr_t>(begin) + sizeof(Size));
+        reinterpret_cast<uintptr_t>(obj_.begin) + sizeof(Size));
     return TUtf<Char>(start_ptr, start_ptr + (size >> BitShiftCount<Size>()));
   }
 
@@ -1042,6 +1070,7 @@ class TStr : public TUtf<Char> {
   @return A UTF. */
   inline TUtf<Char> Print(uint64_t value) { return Print<uint64_t>(value); }
 
+#if SEAM >= SEAM_0_0_0__02
   /* Prints the given value.
   @return A UTF. */
   inline TUtf<Char> Print(float value) { return Print<float>(value); }
@@ -1049,12 +1078,13 @@ class TStr : public TUtf<Char> {
   /* Prints the given value.
   @return A UTF. */
   inline TUtf<Char> Print(double value) { return Print<double>(value); }
+#endif
 
-  /* Returns the last byte of the buffer. */
-  inline Char* End() { return ObjEnd<Char, Size>(obj_.Begin()); }
-
-  /* Returns the last char in the buffer. */
+  /* Returns the stop of the buffer. */
   inline Char* Stop() { return StrStop<Char, Size>(obj_.Begin()); }
+
+  /* Returns the end of the buffer. */
+  inline Char* End() { return ObjEnd<Char, Size>(obj_); }
 
   /* Writes a nil-term char at the end of the string. */
   inline void Terminate() { *obj_.End() = 0; }
@@ -1068,7 +1098,7 @@ class TStr : public TUtf<Char> {
 
 template <typename Char = char>
 TUtf<Char> Print(Destructor* mh) {
-  return Str<Char>(mh);
+  return TStr<Char>(mh);
 }
 
 }  // namespace _
@@ -1157,6 +1187,7 @@ API _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, uint64_t value) {
   return utf.Set(_::Print<Char>(utf.begin, utf.end, value));
 }
 
+#if SEAM >= SEAM_0_0_0__02
 /* Writes the given value to the print.
 @return The utf.
 @desc
@@ -1175,6 +1206,7 @@ template <typename Char = char>
 API _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, double value) {
   return utf.Set(_::Print<Char>(utf.begin, utf.end, value));
 }
+#endif
 
 /* Writes the given value to the print.
 @return The utf.
@@ -1206,9 +1238,6 @@ API _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, _::TLineString<Char> line) {
   return utf.Set(_::Print<Char>(utf.begin, utf.end, line));
 }
 
-#undef PRINT
-#undef PRINTF
-#undef PRINT_HEADING
-#undef PRINT_FLOAT_BINARY
+#include "01/seam_footer.inl"
 #endif  //< #if INCLUDED_KABUKI_F2_TSTR
-#endif  //< #if SEAM >= SEAM_0_0_0__03
+#endif  //< #if SEAM >= SEAM_0_0_0__01

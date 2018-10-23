@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__13
+#if SEAM >= SEAM_0_0_0__14
 #ifndef INCLUDED_KABUKI_F2_VARINT
 #define INCLUDED_KABUKI_F2_VARINT
 
@@ -79,4 +79,4 @@ inline int64_t PackSV8(int64_t value) {
 
 }  // namespace _
 #endif  //< INCLUDED_KABUKI_F2_VARINT
-#endif  //< #if SEAM >= SEAM_0_0_0__13
+#endif  //< #if SEAM >= SEAM_0_0_0__14

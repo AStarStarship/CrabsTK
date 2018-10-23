@@ -28,6 +28,7 @@ specific language governing permissions and limitations under the License. */
 using namespace std;
 using namespace std::chrono;
 
+#include "01/seam_header.inl"
 namespace _ {
 
 BenchmarkCase::BenchmarkCase(const char* name, TestCase* cases, int count)
@@ -56,7 +57,7 @@ const char* BenchmarkCase::Run(char* cursor, char* end, const char* args) {
   return nullptr;
 }
 
-int BenchmarkCase::GetCount() {}
+int BenchmarkCase::GetCount() { return count; }
 
 Benchmark::Benchmark(const char* name, const char* filename,
                      BenchmarkCase* groups, int count)
@@ -90,4 +91,5 @@ const char* Benchmark::Run(char* cursor, char* end, const char* args) {
 
 }  // namespace _
 
+#include "01/seam_footer.inl"
 #endif  //< #if SEAM >= SEAM_0_0_0__01

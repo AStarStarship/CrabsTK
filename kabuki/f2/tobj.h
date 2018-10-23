@@ -13,44 +13,54 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__03
+
+#if SEAM >= SEAM_0_0_0__01
 #ifndef INCLUDED_KABUKI_F2_TOBJ
 #define INCLUDED_KABUKI_F2_TOBJ
 
-#include "../f2/test.h"
 #include "obj.h"
+
+#include "tsocket.h"
+
+#include "01/seam_header.inl"
 
 namespace _ {
 
 template <typename SI>
-inline SI ObjCountMax() {
+inline SI ObjSizeMax() {
   SI count_max = 0;
-  return (~count_max) - 7;
+  return (~count_max) - 15;
 }
 
-template <typename SI>
+template <typename SI = intptr_t>
 inline bool ObjSizeIsValid(SI size, SI size_min) {
-  return (size >= size_min) && (size <= ObjCountMax<SI>());
+  return (size >= size_min) && (size <= ObjSizeMax<SI>());
 }
 
 template <typename SI>
 inline bool ObjCountIsValid(SI index, SI count_min) {
-  return (index >= count_min) && (index < ObjCountMax<SI>());
+  return (index >= count_min) && (index < ObjSizeMax<SI>());
 }
 
 /* Returns the ASCII OBJ size. */
 template <typename Size>
 inline Size ObjSize(uintptr_t* object) {
-  ASSERT(object);
+  DASSERT(object);
   return *reinterpret_cast<Size*>(object);
 }
 
 /* Returns the ASCII OBJ size. */
 template <typename Size>
 inline Size ObjSize(CObj obj) {
-  ASSERT(obj);
-  ASSERT(obj.begin);
+  DASSERT(obj.begin);
   return *reinterpret_cast<Size*>(obj.begin);
+}
+
+template <typename Size>
+inline Size ObjEnd(CObj obj) {
+  uintptr_t buffer = obj.begin;
+  DASSERT(buffer);
+  return *buffer;
 }
 
 template <typename Size>
@@ -73,6 +83,18 @@ uintptr_t* ObjClone(uintptr_t* buffer, Size size) {
   // SocketCopy(clone, size, buffer, size);
   *reinterpret_cast<Size*>(buffer) = size;
   return clone;
+}
+
+/* */
+template <typename Size>
+Size ObjGrow(CObj obj, Size new_size) {
+  ASSERT(obj.begin);
+  if (!obj.destructor) return 0;
+  Size size = ObjSize<Size>(obj);
+  if (new_size < size) return 0;
+  uintptr_t* temp = obj.begin;
+  obj.begin = ObjClone<Size>(temp, size);
+  delete temp;
 }
 
 template <typename T, typename UI = uint, typename SI = int>
@@ -105,27 +127,28 @@ class TObj {
  public:
   /* Constructs a buffer with either statically or dynamically allocated memory
   based on if buffer is nil. */
-  TObj() : Buffer(size, buffer), destructor(nullptr) {
-    // Nothing to do here! ({:-)-/==<
+  TObj() : obj_({nullptr, nullptr}) {
+    // Nothing to do here! (:-)-/==<
   }
 
   /* Constructs a buffer with either statically or dynamically allocated memory
   based on if buffer is nil. */
-  TObj(Destructor destructor) : Buffer(size, buffer), destructor(destructor) {
-    // Nothing to do here! ({:-)-/==<
+  TObj(Destructor destructor) : obj_({nullptr, destructor}) {
+    // Nothing to do here! (:-)-/==<
   }
 
   /* Constructs a buffer with either statically or dynamically allocated memory
   based on if buffer is nil. */
-  TObj(Size size, Destructor destructor = nullptr) : Buffer(size, buffer) {}
+  TObj(Size size, Destructor destructor = nullptr)
+      : obj_({Buffer(size), destructor}) {}
 
-  /* Constructs a buffer with either statically or dynamically allocated memory
-  based on if buffer is nil. */
+  /* Constructs a buffer with either statically or dynamically allocated
+  memory based on if buffer is nil. */
   TObj(Size size, uintptr_t* buffer, Destructor destructor = nullptr)
-      : Buffer(size, buffer) {}
+      : obj_({Buffer(size, buffer), destructor}) {}
 
   /* Destructor deletes dynamic memory if is_dynamic_ is true. */
-  ~TObj() { Destruct(obj_); }
+  ~TObj() { Delete(obj_); }
 
   /* Returns the buffer_. */
   uintptr_t* Begin() { return obj_.begin; }
@@ -133,25 +156,29 @@ class TObj {
   /* Returns the buffer_. */
   uintptr_t* GetStart() { return obj_.begin; }
 
+  /* Gets the stopping address of the buffer. */
   char* GetStop() {
-    Size size = ObjSize<Size>(begin);
+    Size size = ObjSize<Size>(obj_.begin);
     return reinterpret_cast<char*>(obj_.begin) + size - 1;
   }
 
   /* Gets the size_. */
-  Size GetSize() { return ObjSize<Size>(begin); }
+  Size GetSize() { return ObjSize<Size>(obj_); }
 
   /* Doubles the size of the buffer and copies the given byte_count.
   @return A positive size of the new buffer upon success and -1 upon failure.
   @param byte_count The number of bytes to copy after growing the buffer. */
-  Size Grow(Size new_size) { return ObjGrow<Size>(obj_.begin, new_size); }
+  Size Grow(Size new_size) { return ObjGrow<Size>(obj_, new_size); }
 
-  inline CObj& Obj() { return begin; }
+  /* Gets the CObj. */
+  inline CObj& Obj() { return obj_.begin; }
 
  private:
   CObj obj_;  //< ASCII OBJ harness.
 };
 
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_0__03
+
+#include "01/seam_footer.inl"
 #endif  //< INCLUDED_KABUKI_F2_TOBJ
+#endif  //< #if SEAM >= SEAM_0_0_0__01

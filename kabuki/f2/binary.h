@@ -78,6 +78,42 @@ API inline bool IsNaN(int64_t value);
 @return True if the value is NaN and false otherwise. */
 API inline bool IsNaN(uint64_t value);
 
+/* Utility function for casting a sign to an unsigned in templates. */
+inline uint8_t Unsigned(int8_t value);
+
+/* Utility function for casting a sign to an unsigned in templates. */
+inline uint16_t Unsigned(int16_t value);
+
+/* Utility function for casting a sign to an unsigned in templates. */
+inline uint32_t Unsigned(int32_t value);
+
+/* Utility function for casting a sign to an unsigned in templates. */
+inline uint64_t Unsigned(int64_t value);
+
+/* Utility function multiplies the given value by -1. */
+inline uint8_t Negative(int8_t value);
+
+/* Utility function multiplies the given value by -1. */
+inline uint16_t Negative(int16_t value);
+
+/* Utility function multiplies the given value by -1. */
+inline uint32_t Negative(int32_t value);
+
+/* Utility function multiplies the given value by -1. */
+inline uint64_t Negative(int64_t value);
+
+/* Utility function inverts the bits and adds one (i.e. multiplies by -1). */
+inline uint8_t Negative(uint8_t value);
+
+/* Utility function inverts the bits and adds one (i.e. multiplies by -1). */
+inline uint16_t Negative(uint16_t value);
+
+/* Utility function inverts the bits and adds one (i.e. multiplies by -1). */
+inline uint32_t Negative(uint32_t value);
+
+/* Utility function inverts the bits and adds one (i.e. multiplies by -1). */
+inline uint64_t Negative(uint64_t value);
+
 /* Converts a single uint8_t a one-uint8_t hex representation. */
 API uint8_t HexNibbleToLowerCase(uint8_t b);
 
@@ -194,6 +230,16 @@ API int MSbAsserted(uint64_t value);
 @return A negative number if value is zero and the highest bit. */
 API int MSbAsserted(int64_t value);
 #endif  //< #if SEAM >= SEAM_0_0_0__01
+
+#if SEAM >= SEAM_0_0_0__02
+
+/* Prints the given float to the buffer. */
+API char* PrintFloat(char* cursor, char* end, float value);
+
+/* Prints the given float to the buffer. */
+API char* PrintFloat(char* cursor, char* end, double value);
+
+#endif  //< #if SEAM >= SEAM_0_0_0__02
 }  // namespace _
 
 #endif  //< #ifndef INCLUDED_KABUKI_F2_BINARY
