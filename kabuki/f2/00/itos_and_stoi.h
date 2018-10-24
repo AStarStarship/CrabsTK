@@ -22,8 +22,8 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
-                                     const char* args) {
+static const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
+                                            const char* args) {
 #if SEAM >= SEAM_0_0_0__00
   DTEST_BEGIN;
 
@@ -161,7 +161,7 @@ const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
   PRINT("\nTesting ScanUnsigned<UI, Char> (const Char*, const char*, I);");
 
   for (int i = 0; i < 1 << 6; ++i) {
-    RandomNumber(expected_ui8);
+    expected_ui8 = RandomUI8();
     sprintf_s(buffer, kSize, FORMAT_UI8, expected_ui8);
     const char* test = ScanUnsigned<uint64_t, char>(buffer, result_ui8);
     ASSERT(test);
@@ -219,7 +219,7 @@ const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
   for (int i = 0; i < 0x0000ffff; ++i) {
     PRINT_LINE('-');
     Print('\n');
-    RandomNumber(expected_ui8);
+    expected_ui8 = RandomUI8();
     sprintf_s(expecting, 24, "%llu", expected_ui8);
     result =
         PrintUnsigned<uint64_t, char>(text, text + kSize - 1, expected_ui8);

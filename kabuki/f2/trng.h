@@ -14,7 +14,6 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__00
 #ifndef INCLUDED_CRAB_TRNG
 #define INCLUDED_CRAB_TRNG
 
@@ -40,5 +39,3 @@ struct TRNG {
 
 }  // namespace _
 #endif  //< INCLUDED_CRAB_TRNG
-
-#endif  //< #if SEAM >= SEAM_0_0_0__00

@@ -13,7 +13,6 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__00
 #ifndef INCLUDED_KABUKI_F2_RNG
 #define INCLUDED_KABUKI_F2_RNG
 
@@ -116,5 +115,3 @@ class MersenneTwister : public TRNG<T> {
 
 }  // namespace _
 #endif  //< INCLUDED_KABUKI_F2_RNG
-
-#endif  //< #if SEAM >= SEAM_0_0_0__00

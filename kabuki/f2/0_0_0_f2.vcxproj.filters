@@ -104,9 +104,6 @@
     <ClInclude Include="tobj.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="trng.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
     <ClInclude Include="tset.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>

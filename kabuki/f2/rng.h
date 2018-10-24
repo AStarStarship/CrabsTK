@@ -14,7 +14,6 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__01
 #ifndef INCLUDED_KABUKI_F2_RNGUNIFORM
 #define INCLUDED_KABUKI_F2_RNGUNIFORM
 
@@ -97,5 +96,3 @@ API inline void RandomNumber(int64_t& result);
 
 }  // namespace _
 #endif  //< INCLUDED_KABUKI_F2_RNGUNIFORM
-
-#endif  //< #if SEAM >= SEAM_0_0_0__01

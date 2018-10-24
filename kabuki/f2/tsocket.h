@@ -66,7 +66,7 @@ unsgiend_example = AlignUp<int32_t, uint16_t, uint16_t> (unsigned_example);
 @endcode */
 template <typename I = uintptr_t>
 inline I AlignUpOffset(I value, I mask = sizeof(I) * 8 - 1) {
-  return Negative(value) & mask;
+  return 0;  // Negative (value) & mask;
 }
 
 /* Aligns the given pointer to a power of two boundary.

@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="kabuki">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="typecraft">
+      <UniqueIdentifier>{cc3e6710-3504-4a5c-8b6a-de098213f94d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\f2sdk">
+      <UniqueIdentifier>{59ceed22-6b09-4901-8111-03ba3b5f828d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\f2sdk\pro">
+      <UniqueIdentifier>{2ad2885a-f78b-44ad-abe8-d31f390cca6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\f2sdk\id">
+      <UniqueIdentifier>{93c82f2f-6bba-4b86-a10f-273c06eb14ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\f2sdk\data">
+      <UniqueIdentifier>{62d924fa-1d6f-4235-976f-11bfe784cb74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="kabuki\features">
+      <UniqueIdentifier>{fe896bc4-c4d1-406d-a659-4c7b438455e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kabuki\features\crabs">
+      <UniqueIdentifier>{dd38b6bc-1e17-4f43-ade7-db1e2d1209b8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="mob.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_block.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_chunk.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_chunk_row.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_crafting_table.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_entity.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_game.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_inventory.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_item.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_item_group.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_project.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_recipe.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_server.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_spawn.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_tester.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_tests.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+    <ClCompile Include="typecraft_world.cc">
+      <Filter>typecraft</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="server.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="spawn.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="world.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="a.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="assembly.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="block.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="chunk.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="chunk_row.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="crafting_table.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="enchantment.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="entity.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="inventory.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="item_group.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="mob.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+    <ClInclude Include="recipe.h">
+      <Filter>typecraft</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

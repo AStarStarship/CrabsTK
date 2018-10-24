@@ -67,7 +67,6 @@
     <ClInclude Include="tlst.h" />
     <ClInclude Include="tmap.h" />
     <ClInclude Include="tobj.h" />
-    <ClInclude Include="trng.h" />
     <ClInclude Include="tset.h" />
     <ClInclude Include="tsocket.h" />
     <ClInclude Include="tstk.h" />
