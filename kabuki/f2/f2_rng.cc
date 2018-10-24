@@ -17,7 +17,7 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_RNG
 #define INCLUDED_KABUKI_F2_RNG
 
-#include "trng.h"
+#include "rng.h"
 
 #include <random>
 
@@ -29,109 +29,90 @@ inline uint RandomSeed() { return std::random_device()(); }
 
 inline void RandomizeSeed() { return rng.seed(RandomSeed()); }
 
-inline void RandomNumber(int8_t& result) { result = (int8_t)rng(); }
+inline uint8_t RandomUI1() { return (uint8_t)rng(); }
 
-inline void RandomNumber(uint8_t& result) { result = (uint8_t)rng(); }
+inline int8_t RandomSI1() { return (int8_t)RandomUI1(); }
 
-inline void RandomNumber(int16_t& result) { result = (int16_t)rng(); }
+inline uint16_t RandomUI2() { return (uint16_t)rng(); }
 
-inline void RandomNumber(uint16_t& result) { result = (uint16_t)rng(); }
+inline int16_t RandomSI2() { return (int16_t)RandomUI2(); }
 
-inline void RandomNumber(int32_t& result) { result = (int32_t)rng(); }
+inline uint32_t RandomUI4() { return (int32_t)rng(); }
 
-inline void RandomNumber(uint32_t& result) { result = rng(); }
+inline int32_t RandomSI4() { return (int32_t)RandomUI4(); }
 
-inline void RandomNumber(int64_t& result) {
+inline uint64_t RandomUI8() {
   uint64_t a = rng(), b = rng();
-  result = (int64_t)(a | (b << 32));
+  return (int64_t)(a | (b << 32));
 }
 
-inline void Random(uint64_t& result) {
-  uint64_t a = rng(), b = rng();
-  result = a | (b << 32);
-}
+int64_t RandomSI8() { return (int64_t)RandomUI8(); }
+
+inline void RandomNumber(uint8_t& result) { result = RandomUI1(); }
+
+inline void RandomNumber(int8_t& result) { result = RandomSI1(); }
+
+inline void RandomNumber(uint16_t& result) { result = RandomUI2(); }
+
+inline void RandomNumber(int16_t& result) { result = RandomSI2(); }
+
+inline void RandomNumber(uint32_t& result) { result = RandomUI4(); }
+
+inline void RandomNumber(int32_t& result) { result = RandomSI4(); }
+
+inline void RandomNumber(uint64_t& result) { result = RandomUI8(); }
+
+inline void RandomNumber(int64_t& result) { result = RandomSI8(); }
 
 template <typename I>
-I Random(I min, I max) {
+inline I Random(I min, I max) {
   std::uniform_int_distribution<I> dist(min, max);
   return dist(rng);
 }
 
-uint8_t Random(uint8_t min, uint8_t max) { return Random<uint8_t>(min, max); }
+// uint8_t Random(uint8_t min, uint8_t max) { return Random<uint8_t>(min, max);
+// }
 
-uint8_t Random(int8_t min, int8_t max) { return Random<int8_t>(min, max); }
+// uint8_t Random(int8_t min, int8_t max) { return Random<int8_t>(min, max); }
 
-uint16_t Random(uint16_t min, uint16_t max) {
+inline uint16_t Random(uint16_t min, uint16_t max) {
   return Random<uint16_t>(min, max);
 }
 
-uint16_t Random(int16_t min, int16_t max) { return Random<int16_t>(min, max); }
+inline uint16_t Random(int16_t min, int16_t max) {
+  return Random<int16_t>(min, max);
+}
 
-uint32_t Random(uint32_t min, uint32_t max) {
+inline uint32_t Random(uint32_t min, uint32_t max) {
   return Random<uint32_t>(min, max);
 }
 
-uint64_t Random(uint64_t min, uint64_t max) {
+inline uint64_t Random(uint64_t min, uint64_t max) {
   return Random<uint64_t>(min, max);
 }
 
-uint64_t Random(int64_t min, int64_t max) { return Random<int64_t>(min, max); }
-
-uint8_t RandomUI1() {
-  std::mt19937 rng;
-  return (uint8_t)rng();
+inline uint64_t Random(int64_t min, int64_t max) {
+  return Random<int64_t>(min, max);
 }
 
-int8_t RandomSI1() {
-  std::mt19937 rng;
-  rng.seed(std::random_device()());
-  return (uint8_t)rng();
-}
-
-uint16_t RandomUI2() {
-  std::mt19937 rng;
-  rng.seed(std::random_device()());
-  return (uint8_t)rng();
-}
-
-int16_t RandomSI2() {
-  std::mt19937 rng;
-  rng.seed(std::random_device()());
-  return (uint8_t)rng();
-}
-
-uint32_t RandomUI4() {
-  std::mt19937 rng;
-  rng.seed(std::random_device()());
-  return (uint8_t)rng();
-}
-
-int32_t RandomSI4() {
-  std::mt19937 rng;
-  rng.seed(std::random_device()());
-  return (uint8_t)rng();
-}
-
-uint64_t RandomUI8() {
-  std::mt19937 rng;
-  rng.seed(std::random_device()());
-  return ((uint64_t)rng() << 32) | rng();
-}
-
-uint64_t RandomSI8() { return (uint64_t)RandomUI8(); }
-
-/* Hidden MersenneTwister wrapper class. */
-template <typename I>
-class MersenneTwister : public TRNG<I> {
+/* Hidden MersenneTwister wrapper class.
+template <typename T>
+class MersenneTwister : public TRNG<T> {
  public:
   virtual void Seed(uint32_t seed) { rng.seed(seed); }
 
-  virtual I Next() {
-    I random;
+  virtual T Next() {
+    T random;
     RandomNumbber(random);
-    return I;
+    return T;
   }
-};
+
+  virtual T Next(T min, T max) {
+    T result;
+    RandomNumber(min, max);
+    return T;
+  }
+}; */
 
 }  // namespace _
 #endif  //< INCLUDED_KABUKI_F2_RNG

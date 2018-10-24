@@ -114,17 +114,17 @@ inline uint64_t Unsigned(int64_t value) { return (uint64_t)(value); }
 
 inline uint8_t Negative(int8_t value) { return (uint8_t)(-value); }
 
-inline uint16_t Negative(int16_t value) { return (uint16_t)(-value); }
-
-inline uint32_t Negative(int32_t value) { return (uint32_t)(-value); }
-
-inline uint64_t Negative(int64_t value) { return (uint64_t)(-value); }
-
 inline uint8_t Negative(uint8_t value) { return (uint8_t)(-(int8_t)value); }
+
+inline uint16_t Negative(int16_t value) { return (uint16_t)(-value); }
 
 inline uint16_t Negative(uint16_t value) { return (uint16_t)(-(int16_t)value); }
 
+inline uint32_t Negative(int32_t value) { return (uint32_t)(-value); }
+
 inline uint32_t Negative(uint32_t value) { return (uint32_t)(-(int32_t)value); }
+
+inline uint64_t Negative(int64_t value) { return (uint64_t)(-value); }
 
 inline uint64_t Negative(uint64_t value) { return (uint64_t)(-(int64_t)value); }
 

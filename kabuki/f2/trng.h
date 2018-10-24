@@ -22,7 +22,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-/* Interface for a random number generator.
+/* Interface for an abstract random number generator.
 @theory Random number generation takes enough CPU cycles that use of an
 interface does not effect performance but also allows for hiding of the
 C++ standard library implementation. */
@@ -33,6 +33,9 @@ struct TRNG {
 
   /* Returns the next random number. */
   virtual T Next() = 0;
+
+  /* Returns the next random number. */
+  virtual T Next(T min, T max) = 0;
 };
 
 }  // namespace _

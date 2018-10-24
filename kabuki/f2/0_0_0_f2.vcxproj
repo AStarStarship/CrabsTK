@@ -19,22 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="f2_ascii_data.cc" />
-    <ClCompile Include="f2_benchmark.cc" />
-    <ClCompile Include="f2_binary.cc" />
-    <ClCompile Include="f2_clock.cc" />
-    <ClCompile Include="f2_console.cc" />
-    <ClCompile Include="f2_hash.cc" />
-    <ClCompile Include="f2_lock.cc" />
-    <ClCompile Include="f2_obj.cc" />
-    <ClCompile Include="f2_rng.cc" />
-    <ClCompile Include="f2_socket.cc" />
-    <ClCompile Include="f2_str.cc" />
-    <ClCompile Include="f2_test.cc" />
-    <ClCompile Include="f2_vk.cc" />
-    <ClCompile Include="seam_tree.cc" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="00\seam_footer.inl" />
     <ClInclude Include="00\seam_header.inl" />
     <ClInclude Include="00\itos_and_stoi.h" />
@@ -56,10 +40,8 @@
     <ClInclude Include="binary.h" />
     <ClInclude Include="clock.h" />
     <ClInclude Include="console.h" />
-    <ClInclude Include="seam_footer.inl" />
     <ClInclude Include="global.h" />
     <ClInclude Include="hash.h" />
-    <ClInclude Include="seam_header.inl" />
     <ClInclude Include="lock.h" />
     <ClInclude Include="obj.h" />
     <ClInclude Include="pch.h" />
@@ -135,6 +117,27 @@
     <None Include="12\seam_header.inl" />
     <None Include="config.inl" />
     <None Include="readme.md" />
+    <None Include="seam_footer.inl" />
+    <None Include="seam_header.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="f2_ascii_data.cc" />
+    <ClCompile Include="f2_benchmark.cc" />
+    <ClCompile Include="f2_binary.cc" />
+    <ClCompile Include="f2_clock.cc" />
+    <ClCompile Include="f2_console.cc" />
+    <ClCompile Include="f2_hash.cc" />
+    <ClCompile Include="f2_lock.cc" />
+    <ClCompile Include="f2_obj.cc" />
+    <ClCompile Include="f2_rng.cc" />
+    <ClCompile Include="f2_socket.cc" />
+    <ClCompile Include="f2_str.cc" />
+    <ClCompile Include="f2_test.cc" />
+    <ClCompile Include="f2_vk.cc" />
+    <ClCompile Include="seam_tree.cc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

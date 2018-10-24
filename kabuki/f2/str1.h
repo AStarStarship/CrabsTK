@@ -51,8 +51,8 @@ API int StringLength(const char* text);
 
 /* Clones the given string.
 @param  A nil-terminated string in ROM.
-@return Returns a new copy you must delete. */
-API char* StringClone(const char* text);
+@return Returns a new copy you must delete.
+API char* StringClone(const char* text); */
 
 /* Returns a pointer to the char at the end of the line. */
 API const char* TextLineEnd(const char* text, int column_count);
@@ -145,6 +145,7 @@ upon success.
 @param value The value to print. */
 API char* Print(char* begin, char* end, int64_t value);
 
+#if SEAM >= SEAM_0_0_0__00
 /* Writes the give char to the given buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
 upon success.
@@ -160,6 +161,54 @@ upon success.
 @param end The end address of the buffer.
 @param value The value to print. */
 API char* Print(char* begin, char* end, double value);
+
+/* Converts the given string to a 32-bit floating-point number.
+@param  text  A nil-terminated string in ROM.
+@param  result The result of the conversion.
+@return Returns a pointer to the next char after the end
+of the read number or nil upon failure. */
+API const char* Scan(const char* text, float& result);
+
+/* Converts the given string to a 64-bit floating-point number.
+@param  text  A nil-terminated string in ROM.
+@param  result The result of the conversion.
+@return Returns a pointer to the next char after the end
+of the read number or nil upon failure. */
+API const char* Scan(const char* text, double& result);
+
+/* Writes the give char to the given buffer center.
+@return Returns nil upon buffer overflow and a pointer to the nil-term char
+upon success.
+@param begin The beginning address of the buffer.
+@param end The end address of the buffer.
+@param value The value to print. */
+API char* PrintCenter(char* begin, char* end, float value, int column_count);
+
+/* Writes the give char to the given buffer center.
+@return Returns nil upon buffer overflow and a pointer to the nil-term char
+upon success.
+@param begin The beginning address of the buffer.
+@param end The end address of the buffer.
+@param value The value to print. */
+API char* PrintCenter(char* begin, char* end, double value, int column_count);
+
+/* Writes the give char to the given buffer center.
+@return Returns nil upon buffer overflow and a pointer to the nil-term char
+upon success.
+@param begin The beginning address of the buffer.
+@param end The end address of the buffer.
+@param value The value to print. */
+API char* PrintRight(char* begin, char* end, float value, int column_count);
+
+/* Writes the give char to the given buffer center.
+@return Returns nil upon buffer overflow and a pointer to the nil-term char
+upon success.
+@param begin The beginning address of the buffer.
+@param end The end address of the buffer.
+@param value The value to print. */
+API char* PrintRight(char* begin, char* end, double value, int column_count);
+
+#endif  //< SEAM_0_0_0__00
 
 /* Prints the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -210,22 +259,6 @@ upon success.
 @param value The value to print. */
 API char* PrintCenter(char* begin, char* end, int64_t value, int column_count);
 
-/* Writes the give char to the given buffer center.
-@return Returns nil upon buffer overflow and a pointer to the nil-term char
-upon success.
-@param begin The beginning address of the buffer.
-@param end The end address of the buffer.
-@param value The value to print. */
-API char* PrintCenter(char* begin, char* end, float value, int column_count);
-
-/* Writes the give char to the given buffer center.
-@return Returns nil upon buffer overflow and a pointer to the nil-term char
-upon success.
-@param begin The beginning address of the buffer.
-@param end The end address of the buffer.
-@param value The value to print. */
-API char* PrintCenter(char* begin, char* end, double value, int column_count);
-
 /* Prints the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
 upon success.
@@ -274,22 +307,6 @@ upon success.
 @param end The end address of the buffer.
 @param value The value to print. */
 API char* PrintRight(char* begin, char* end, int64_t value, int column_count);
-
-/* Writes the give char to the given buffer center.
-@return Returns nil upon buffer overflow and a pointer to the nil-term char
-upon success.
-@param begin The beginning address of the buffer.
-@param end The end address of the buffer.
-@param value The value to print. */
-API char* PrintRight(char* begin, char* end, float value, int column_count);
-
-/* Writes the give char to the given buffer center.
-@return Returns nil upon buffer overflow and a pointer to the nil-term char
-upon success.
-@param begin The beginning address of the buffer.
-@param end The end address of the buffer.
-@param value The value to print. */
-API char* PrintRight(char* begin, char* end, double value, int column_count);
 
 /* Prints the given string to the print buffer.
 @return Returns nil upon buffer overflow and a pointer to the nil-term char
@@ -554,20 +571,6 @@ API const char* Scan(const char* text, int64_t& result);
 of the read number or nil upon failure. */
 API const char* Scan(const char* text, uint64_t& result);
 
-/* Converts the given string to a 32-bit floating-point number.
-@param  text  A nil-terminated string in ROM.
-@param  result The result of the conversion.
-@return Returns a pointer to the next char after the end
-of the read number or nil upon failure. */
-API const char* Scan(const char* text, float& result);
-
-/* Converts the given string to a 64-bit floating-point number.
-@param  text  A nil-terminated string in ROM.
-@param  result The result of the conversion.
-@return Returns a pointer to the next char after the end
-of the read number or nil upon failure. */
-API const char* Scan(const char* text, double& result);
-
 /* Prints the buffer to the console as a UTF-8 string. */
 void COutUtf8(uintptr_t* buffer);
 
@@ -688,12 +691,13 @@ class Utf8Text {
   /* Prints the value to the text buffer. */
   Utf8Text(uint64_t value);
 
+#if SEAM >= SEAM_0_0_0__02
   /* Prints the value to the text buffer. */
   Utf8Text(float value);
 
   /* Prints the value to the text buffer. */
   Utf8Text(double value);
-
+#endif
   /* Gets the number string. */
   const char* String();
 
@@ -721,11 +725,13 @@ class Utf8Center {
   /* Prints the value to the text buffer. */
   Utf8Center(uint64_t value, int column_count);
 
+#if SEAM >= SEAM_0_0_0__02
   /* Prints the value to the text buffer. */
   Utf8Center(float value, int column_count);
 
   /* Prints the value to the text buffer. */
   Utf8Center(double value, int column_count);
+#endif
 
   /* Gets the number string. */
   const char* String();
@@ -757,11 +763,13 @@ class Utf8Right {
   /* Prints the value to the text buffer. */
   Utf8Right(uint64_t value, int column_count);
 
+#if SEAM >= SEAM_0_0_0__02
   /* Prints the value to the text buffer. */
   Utf8Right(float value, int column_count);
 
   /* Prints the value to the text buffer. */
   Utf8Right(double value, int column_count);
+#endif
 
   /* Gets the number string. */
   const char* String();
@@ -793,16 +801,16 @@ struct API Utf8LineString {
   Utf8LineString(const char* string, int column_count);
 };
 
-class API Utf8String {
- public:
-  /* Constructs a bank UTF-8 string with dynamic memory. */
-  Utf8String();
-
-  /* Calls the destructor if there is one. */
-  ~Utf8String();
-
- private:
-};
+// class API Utf8String {
+// public:
+//  /* Constructs a bank UTF-8 string with dynamic memory. */
+//  Utf8String();
+//
+//  /* Calls the destructor if there is one. */
+//  ~Utf8String();
+//
+// private:
+//};
 
 }  // namespace _
 
@@ -861,6 +869,7 @@ API _::Utf8& operator<<(_::Utf8& utf, int64_t value);
 @param  value The value to write to the print. */
 API _::Utf8& operator<<(_::Utf8& utf, uint64_t value);
 
+#if SEAM >= SEAM_0_0_0__00
 /* Writes the given value to the print.
 @return The utf.
 @desc
@@ -873,6 +882,7 @@ API _::Utf8& operator<<(_::Utf8& utf, float value);
 @param  utf The utf.
 @param  value The value to write to the print. */
 API _::Utf8& operator<<(_::Utf8& utf, double value);
+#endif
 
 /* Writes the given value to the print.
 @return The utf.

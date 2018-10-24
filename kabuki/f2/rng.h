@@ -27,27 +27,6 @@ API inline uint RandomSeed();
 API inline void RandomizeSeed();
 
 /* Gets a random 8-bit/1-byte unsigned integer. */
-API inline uint8_t Random(uint8_t min, uint8_t max);
-
-/* Gets a random 8-bit/1-byte signed integer. */
-API inline uint8_t Random(int8_t min, int8_t max);
-
-/* Gets a random 16-bit/2-byte unsigned integer. */
-API inline uint16_t Random(uint16_t min, uint16_t max);
-
-/* Gets a random 16-bit/2-byte signed integer. */
-API inline uint16_t Random(int16_t min, int16_t max);
-
-/* Gets a random 32-bit/4-byte unsigned integer. */
-API inline uint32_t Random(uint32_t min, uint32_t max);
-
-/* Gets a random 64-bit/8-byte unsigned integer. */
-API inline uint64_t Random(uint64_t min, uint64_t max);
-
-/* Gets a random 64-bit/8-byte signed integer. */
-API inline uint64_t Random(int64_t min, int64_t max);
-
-/* Gets a random 8-bit/1-byte unsigned integer. */
 API inline uint8_t RandomUI1();
 
 /* Gets a random 8-bit/1-byte signed integer. */
@@ -69,7 +48,28 @@ API inline int32_t RandomSI4();
 API inline uint64_t RandomUI8();
 
 /* Gets a random 64-bit/8-byte signed integer. */
-API inline uint64_t RandomSI8();
+API inline int64_t RandomSI8();
+
+/* Gets a random 8-bit/1-byte unsigned integer.
+API inline uint8_t Random(uint8_t min, uint8_t max); */
+
+/* Gets a random 8-bit/1-byte signed integer.
+API inline uint8_t Random(int8_t min, int8_t max); */
+
+/* Gets a random 16-bit/2-byte unsigned integer. */
+API inline uint16_t Random(uint16_t min, uint16_t max);
+
+/* Gets a random 16-bit/2-byte signed integer. */
+API inline uint16_t Random(int16_t min, int16_t max);
+
+/* Gets a random 32-bit/4-byte unsigned integer. */
+API inline uint32_t Random(uint32_t min, uint32_t max);
+
+/* Gets a random 64-bit/8-byte unsigned integer. */
+API inline uint64_t Random(uint64_t min, uint64_t max);
+
+/* Gets a random 64-bit/8-byte signed integer. */
+API inline uint64_t Random(int64_t min, int64_t max);
 
 /* Gets a random 8-bit/1-byte unsigned integer. */
 API inline void RandomNumber(uint8_t& result);

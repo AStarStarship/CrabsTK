@@ -93,23 +93,23 @@ inline uint64_t Unsigned(int64_t value);
 /* Utility function multiplies the given value by -1. */
 inline uint8_t Negative(int8_t value);
 
-/* Utility function multiplies the given value by -1. */
-inline uint16_t Negative(int16_t value);
-
-/* Utility function multiplies the given value by -1. */
-inline uint32_t Negative(int32_t value);
-
-/* Utility function multiplies the given value by -1. */
-inline uint64_t Negative(int64_t value);
-
 /* Utility function inverts the bits and adds one (i.e. multiplies by -1). */
 inline uint8_t Negative(uint8_t value);
+
+/* Utility function multiplies the given value by -1. */
+inline uint16_t Negative(int16_t value);
 
 /* Utility function inverts the bits and adds one (i.e. multiplies by -1). */
 inline uint16_t Negative(uint16_t value);
 
+/* Utility function multiplies the given value by -1. */
+inline uint32_t Negative(int32_t value);
+
 /* Utility function inverts the bits and adds one (i.e. multiplies by -1). */
 inline uint32_t Negative(uint32_t value);
+
+/* Utility function multiplies the given value by -1. */
+inline uint64_t Negative(int64_t value);
 
 /* Utility function inverts the bits and adds one (i.e. multiplies by -1). */
 inline uint64_t Negative(uint64_t value);
@@ -229,6 +229,7 @@ API int MSbAsserted(uint64_t value);
 /* Gets the Most Significant Asserted Bit (MSbAsserted).
 @return A negative number if value is zero and the highest bit. */
 API int MSbAsserted(int64_t value);
+
 #endif  //< #if SEAM >= SEAM_0_0_0__01
 
 #if SEAM >= SEAM_0_0_0__02

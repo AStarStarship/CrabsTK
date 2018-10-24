@@ -149,7 +149,33 @@ char* Print(char* begin, char* end, float value) {
 char* Print(char* begin, char* end, double value) {
   return PrintFloat<double, uint64_t, char>(begin, end, value);
 }
-#endif  //< #if SEAM >= SEAM_0_0_0__2
+
+char* PrintCenter(char* begin, char* end, float value, int column_count) {
+  return PrintRight<char>(begin, end, Utf8Text(value).String(), column_count);
+}
+
+char* PrintCenter(char* begin, char* end, double value, int column_count) {
+  return PrintRight<char>(begin, end, Utf8Text(value).String(), column_count);
+}
+
+char* PrintRight(char* begin, char* end, float value, int column_count) {
+  return PrintRight<char>(begin, end, Utf8Text(value).String(), column_count);
+}
+
+char* PrintRight(char* begin, char* end, double value, int column_count) {
+  return PrintRight<char>(begin, end, Utf8Text(value).String(), column_count);
+}
+
+const char* Scan(const char* string, float& result) {
+  // return ScanFloat<char>(string, result);
+  return nullptr;
+}
+
+const char* Scan(const char* string, double& result) {
+  // return Scan<char>(string, result);
+  return nullptr;
+}
+#endif  //< #if SEAM >= SEAM_0_0_0__02
 
 char* PrintCenter(char* begin, char* end, const char* string,
                   int column_count) {
@@ -177,14 +203,6 @@ char* PrintCenter(char* begin, char* end, int64_t value, int column_count) {
   return PrintRight<char>(begin, end, Utf8Text(value).String(), column_count);
 }
 
-char* PrintCenter(char* begin, char* end, float value, int column_count) {
-  return PrintRight<char>(begin, end, Utf8Text(value).String(), column_count);
-}
-
-char* PrintCenter(char* begin, char* end, double value, int column_count) {
-  return PrintRight<char>(begin, end, Utf8Text(value).String(), column_count);
-}
-
 char* PrintRight(char* begin, char* end, const char* string, int column_count) {
   return PrintRight<char>(begin, end, string, column_count);
 }
@@ -207,14 +225,6 @@ char* PrintRight(char* begin, char* end, uint64_t value, int column_count) {
 }
 
 char* PrintRight(char* begin, char* end, int64_t value, int column_count) {
-  return PrintRight<char>(begin, end, Utf8Text(value).String(), column_count);
-}
-
-char* PrintRight(char* begin, char* end, float value, int column_count) {
-  return PrintRight<char>(begin, end, Utf8Text(value).String(), column_count);
-}
-
-char* PrintRight(char* begin, char* end, double value, int column_count) {
   return PrintRight<char>(begin, end, Utf8Text(value).String(), column_count);
 }
 
@@ -360,16 +370,6 @@ const char* Scan(const char* string, int64_t& result) {
 
 const char* Scan(const char* string, uint64_t& result) {
   return ScanUnsigned<uint64_t, char>(string, result);
-}
-
-const char* Scan(const char* string, float& result) {
-  // return ScanFloat<char>(string, result);
-  return nullptr;
-}
-
-const char* Scan(const char* string, double& result) {
-  // return Scan<char>(string, result);
-  return nullptr;
 }
 
 Utf8::Utf8(char* begin, size_t buffer_size)
@@ -564,11 +564,13 @@ Utf8Right::Utf8Right(int64_t value, int column_count)
 Utf8Right::Utf8Right(uint64_t value, int column_count)
     : string(nullptr), number(value), column_count(column_count) {}
 
+#if SEAM >= SEAM_0_0_0__02
 Utf8Right::Utf8Right(float value, int column_count)
     : string(nullptr), number(value), column_count(column_count) {}
 
 Utf8Right::Utf8Right(double value, int column_count)
     : string(nullptr), number(value), column_count(column_count) {}
+#endif
 
 const char* Utf8Right::String() {
   return (string == nullptr) ? number.String() : string;
