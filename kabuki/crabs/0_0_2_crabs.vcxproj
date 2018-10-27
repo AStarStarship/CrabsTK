@@ -20,20 +20,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\f2\00\itos_and_stoi.h" />
-    <ClInclude Include="..\f2\01\socket.h" />
+    <ClInclude Include="..\f2\01\ascii_strings_and_socket.h" />
     <ClInclude Include="..\f2\02\ftos_and_stof.h" />
-    <ClInclude Include="..\f2\03\core_text_functions.h" />
-    <ClInclude Include="..\f2\04\ascii_strings.h" />
-    <ClInclude Include="..\f2\05\ascii_clock.h" />
-    <ClInclude Include="..\f2\06\ascii_stack.h" />
-    <ClInclude Include="..\f2\07\ascii_array.h" />
-    <ClInclude Include="..\f2\08\ascii_loom.h" />
-    <ClInclude Include="..\f2\09\ascii_table.h" />
-    <ClInclude Include="..\f2\10\ascii_list.h" />
-    <ClInclude Include="..\f2\11\ascii_list.h" />
-    <ClInclude Include="..\f2\12\ascii_map.h" />
-    <ClInclude Include="..\f2\13\ascii_book.h" />
-    <ClInclude Include="..\f2\14\ascii_dictionary.h" />
+    <ClInclude Include="..\f2\03\ascii_clock.h" />
+    <ClInclude Include="..\f2\04\ascii_stack.h" />
+    <ClInclude Include="..\f2\05\ascii_array.h" />
+    <ClInclude Include="..\f2\06\ascii_loom.h" />
+    <ClInclude Include="..\f2\07\ascii_table.h" />
+    <ClInclude Include="..\f2\08\ascii_list.h" />
+    <ClInclude Include="..\f2\09\ascii_list.h" />
+    <ClInclude Include="..\f2\10\ascii_map.h" />
+    <ClInclude Include="..\f2\11\ascii_book.h" />
+    <ClInclude Include="..\f2\12\ascii_dictionary.h" />
     <ClInclude Include="..\f2\ascii.h" />
     <ClInclude Include="..\f2\ascii_data.h" />
     <ClInclude Include="..\f2\benchmark.h" />
@@ -76,7 +74,6 @@
     <ClInclude Include="..\f2\ttest.h" />
     <ClInclude Include="..\f2\varint.h" />
     <ClInclude Include="..\f2\vk.h" />
-    <ClInclude Include="..\hal\config.h" />
     <ClInclude Include="..\hal\seam.h" />
     <ClInclude Include="..\hal\seam_0_0_1_hal.h" />
     <ClInclude Include="00\footer.h" />
@@ -104,6 +101,7 @@
     <ClInclude Include="mirror.h" />
     <ClInclude Include="op.h" />
     <ClInclude Include="operand.h" />
+    <ClInclude Include="pch.h" />
     <ClInclude Include="public.h" />
     <ClInclude Include="room.h" />
     <ClInclude Include="seam.h" />
@@ -112,6 +110,7 @@
     <ClInclude Include="wall.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\README.md" />
     <None Include="..\f2\00\readme.md" />
     <None Include="..\f2\00\seam_footer.inl" />
     <None Include="..\f2\00\seam_header.inl" />
@@ -151,12 +150,6 @@
     <None Include="..\f2\12\readme.md" />
     <None Include="..\f2\12\seam_footer.inl" />
     <None Include="..\f2\12\seam_header.inl" />
-    <None Include="..\f2\13\readme.md" />
-    <None Include="..\f2\13\seam_footer.inl" />
-    <None Include="..\f2\13\seam_header.inl" />
-    <None Include="..\f2\14\readme.md" />
-    <None Include="..\f2\14\seam_footer.inl" />
-    <None Include="..\f2\14\seam_header.inl" />
     <None Include="..\f2\config.inl" />
     <None Include="..\f2\readme.md" />
     <None Include="..\f2\seam_footer.inl" />
@@ -164,6 +157,7 @@
     <None Include="..\hal\footer.inl" />
     <None Include="..\hal\header.inl" />
     <None Include="..\hal\README.md" />
+    <None Include="..\readme.md" />
     <None Include="00\readme.md" />
     <None Include="00\seam.s2" />
     <None Include="README.md" />

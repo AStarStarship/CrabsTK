@@ -25,7 +25,7 @@ namespace _ {
 
 template <typename Char>
 void PrintString(const Char* string) {
-  ASSERT(string);
+  if (!string) return;
   Char c = *string;
   while (c) {
     Print(c);
@@ -35,7 +35,7 @@ void PrintString(const Char* string) {
 
 template <typename Char>
 intptr_t PrintAndCount(const Char* string) {
-  ASSERT(string);
+  if (!string) return;
   int print_count = 0;
   Char c = *string;
   while (c) {
@@ -462,7 +462,7 @@ Char* PrintUnsigned(Char* cursor, Char* end, UI value) {
   Char* nil_ptr;
   uint16_t pow_10_ui2, delta = 0;
   uint32_t pow_10_ui4;
-  const uint16_t* lut = PuffDigitsLut();
+  const uint16_t* lut = BinaryDecimalsLUT();
 
   // The best way to understand how the numbers are getting converted is that
   // numbers get broken up into up to 8 pairs of 100, in each pair of 10000
@@ -800,6 +800,7 @@ const Char* ScanSigned(const Char* buffer, SI& result) {
   result = sign * value;
   return end;
 }
+#include <00/seam_footer.inl>
 
 #if SEAM >= SEAM_0_0_0__01
 #include "01/seam_header.inl"
@@ -1152,8 +1153,8 @@ class Binary {
       kappa = 2;
     } else {
       if ((p_1 >> 10) == 0) {
-        kappa = 3;
         pow_10_ui2 = 1000;
+        kappa = 3;
       } else if (!(p_1 >> 13)) {
         kappa = 4;
         pow_10_ui2 = 10000;

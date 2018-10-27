@@ -22,7 +22,7 @@ namespace _ {
 static const char* _0_0_0__11_ASCII_Book(char* seam_log, char* seam_end,
                                          const char* args) {
 #if SEAM >= SEAM_0_0_0__11
-  DTEST_BEGIN;
+  TEST_BEGIN;
 
   wchar_t index;
   uintptr_t buffer[128];

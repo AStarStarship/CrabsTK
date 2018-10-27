@@ -14,13 +14,11 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-//#include <cmath>
-//#include <random>
-#include "../trng.h"
+#include "../rng.h"
 
-#include <kabuki/f2/tsocket.h>
-#include <kabuki/f2/tstr.h>
-#include <kabuki/f2/ttest.h>
+#include "../tsocket.h"
+#include "../tstr.h"
+#include "../ttest.h"
 
 #include "seam_header.inl"
 
@@ -30,7 +28,8 @@ static const char* _0_0_0__01_ASCII_Strings_and_Socket(char* seam_log,
                                                        char* seam_end,
                                                        const char* args) {
 #if SEAM >= SEAM_0_0_0__01
-  DTEST_BEGIN;
+  TEST_BEGIN;
+
   PRINTF("\n\nTesting Text...");
   enum {
     kCompareStringsCount = 5,
@@ -64,12 +63,22 @@ static const char* _0_0_0__01_ASCII_Strings_and_Socket(char* seam_log,
                                            "  1234567890 \0", "123...\0"};
 
   const char* end;
-  char buffer[kSize + 1], buffer_b[kSize + 1];
+  char buffer[kSize + 2], buffer_b[kSize + 1];
+
+  enum { kCheckChar = '!' };
+  char* check_char = buffer + kSize + 1;
+
+  SocketFill(buffer, kSize);
+  Print<>(buffer, kSize, "Testing 1, 2, 3");
+  SOCKET_PRINT(buffer, kSize);
+
+  *check_char = kCheckChar;
 
   Utf8 utf(buffer, kSize);
 
   for (int i = 0; i < kCompareStringsCount; ++i) {
     end = Print(buffer, buffer + kSize, test_strings[i][0]);
+    SOCKET_PRINT(buffer, kSize);
     Test(end);
 
     end = StringEquals<>(buffer, test_strings[i][0]);
@@ -123,22 +132,28 @@ static const char* _0_0_0__01_ASCII_Strings_and_Socket(char* seam_log,
   PRINTF("\n\n    Testing PrintRight...");
 
   Test(PrintRight<>(buffer, buffer + kSize, kTestingString, 28));
+  SOCKET_PRINT(buffer, kSize);
   PRINTF("\n    Wrote:\"%s\":%i", buffer, StringLength<>(buffer));
   AVOW(kStringsRightAligned[0], buffer);
 
   Test(PrintRight(buffer, buffer + kSize, kTestingString, 7));
+  SOCKET_PRINT(buffer, kSize);
   AVOW(kStringsRightAligned[1], buffer);
 
   Test(PrintRight(buffer, buffer + kSize, kTestingString, 1));
+  SOCKET_PRINT(buffer, kSize);
   AVOW(kStringsRightAligned[2], buffer);
 
   Test(PrintRight(buffer, buffer + kSize, kTestingString, 2));
+  SOCKET_PRINT(buffer, kSize);
   AVOW(kStringsRightAligned[3], buffer);
 
   Test(PrintRight(buffer, buffer + kSize, kTestingString, 3));
+  SOCKET_PRINT(buffer, kSize);
   AVOW(kStringsRightAligned[4], buffer);
 
   Test(PrintRight(buffer, buffer + kSize, kTestingString, 4));
+  SOCKET_PRINT(buffer, kSize);
   AVOW(kStringsRightAligned[5], buffer);
 
   PRINTF("\n\n    Testing PrintCentered...");
@@ -148,18 +163,23 @@ static const char* _0_0_0__01_ASCII_Strings_and_Socket(char* seam_log,
   }
 
   utf.Set(buffer) << Center(kStringNumbers, 10);
+  SOCKET_PRINT(buffer, kSize);
   AVOW(kStringNumbers, buffer);
 
   utf.Set(buffer) << Center(kStringNumbers, 11);
+  SOCKET_PRINT(buffer, kSize);
   AVOW(kStringsCentered[0], buffer);
 
   utf.Set(buffer) << Center(kStringNumbers, 12);
+  SOCKET_PRINT(buffer, kSize);
   AVOW(kStringsCentered[1], buffer);
 
   utf.Set(buffer) << Center(kStringNumbers, 13);
+  SOCKET_PRINT(buffer, kSize);
   AVOW(kStringsCentered[2], buffer);
 
   utf.Set(buffer) << Center(kStringNumbers, 6);
+  SOCKET_PRINT(buffer, kSize);
   AVOW(kStringsCentered[3], buffer);
   int i = 0;  //< Shared looping variable.
 
@@ -169,14 +189,16 @@ static const char* _0_0_0__01_ASCII_Strings_and_Socket(char* seam_log,
 
   PRINT_HEADING("\nTesting Core Text Functions!");
 
-  PRINT_HEADING("Testing PrintMemory (void*, int size)...");
+  PRINT_HEADING("Testing PrintSocket (void*, int size)...");
 
   for (int i = 1; i <= kSize; ++i) buffer_b[i - 1] = '0' + i % 10;
   buffer_b[kSize] = 0;
-  Test(PrintMemory<>(buffer, buffer + kSize, buffer_b, buffer_b + 160));
+  Test(PrintSocket<>(buffer, buffer + kSize, buffer_b, buffer_b + 160));
+  SOCKET_PRINT(buffer, kSize);
   PRINTF("\n    Printed:\n%s", buffer);
 
   PRINT_HEADING("\n\nTest MemoryCopy and MemoryCompare...\n\n");
+
   enum {
     kTestCharsCount = 1024,
     kTestCharsOffsetCount = 16,
@@ -198,7 +220,7 @@ static const char* _0_0_0__01_ASCII_Strings_and_Socket(char* seam_log,
 
   PRINTF("\n\nDone testing MemoryCopy!\n");
 
-  DTEST_END;
+  TEST_END;
 #endif
   return nullptr;
 }

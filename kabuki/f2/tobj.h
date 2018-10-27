@@ -45,21 +45,21 @@ inline bool ObjCountIsValid(SI index, SI count_min) {
 /* Returns the ASCII OBJ size. */
 template <typename Size>
 inline Size ObjSize(uintptr_t* object) {
-  DASSERT(object);
+  ASSERT(object);
   return *reinterpret_cast<Size*>(object);
 }
 
 /* Returns the ASCII OBJ size. */
 template <typename Size>
 inline Size ObjSize(CObj obj) {
-  DASSERT(obj.begin);
+  ASSERT(obj.begin);
   return *reinterpret_cast<Size*>(obj.begin);
 }
 
 template <typename Size>
 inline Size ObjEnd(CObj obj) {
   uintptr_t buffer = obj.begin;
-  DASSERT(buffer);
+  ASSERT(buffer);
   return *buffer;
 }
 

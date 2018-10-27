@@ -1,4 +1,4 @@
-#include <kabuki/config.h>
-#if SEAM == SEAM_0_0_0__14
+#if SEAM == SEAM_0_0_0__12
+#include "../seam_header.inl"
 #else
 #endif

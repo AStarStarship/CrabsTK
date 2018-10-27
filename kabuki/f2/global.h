@@ -17,8 +17,46 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_GLOBAL
 #define INCLUDED_KABUKI_F2_GLOBAL 1
 
-#include "talign.h"
+#if SEAM == SEAM_0_0_0__00
+#include "rng.h"
 #include "ttest.h"
-//#include "trng.h"
+#endif
+#if SEAM == SEAM_0_0_0__01
+#include "rng.h"
+#include "ttest.h"
+#endif
+#if SEAM == SEAM_0_0_0__02
+#include "ttest.h"
+#endif
+#if SEAM == SEAM_0_0_0__03
+#include "ttest.h"
+#endif
+#if SEAM == SEAM_0_0_0__04
+#include "ttest.h"
+#endif
+#if SEAM == SEAM_0_0_0__05
+#include "ttest.h"
+#endif
+#if SEAM == SEAM_0_0_0__06
+#include "ttest.h"
+#endif
+#if SEAM == SEAM_0_0_0__07
+#include "ttest.h"
+#endif
+#if SEAM == SEAM_0_0_0__08
+#include "ttest.h"
+#endif
+#if SEAM == SEAM_0_0_0__09
+#include "ttest.h"
+#endif
+#if SEAM == SEAM_0_0_0__10
+#include "ttest.h"
+#endif
+#if SEAM == SEAM_0_0_0__11
+#include "ttest.h"
+#endif
+#if SEAM == SEAM_0_0_0__12
+#include "ttest.h"
+#endif
 
-#endif  //< INCLUDED_KABUKI_F2_GLOBAL
+#endif  //< #ifndef INCLUDED_KABUKI_F2_GLOBAL

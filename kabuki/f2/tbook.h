@@ -51,11 +51,11 @@ namespace _ {
 
     @code
     +==========================+ -----------
-    |_____ Buffer            |   ^     ^
-    |_____ ...               |   |     |
-    |_____ Data N            |  Data   |
-    |_____ ...               |   |     |
-    |_____ Data 0            |   v     |
+    |_______ Buffer            |   ^     ^
+    |_______ ...               |   |     |
+    |_______ Data N            |  Data   |
+    |_______ ...               |   |     |
+    |_______ Data 0            |   v     |
     |==========================| -----   |
     |        Key 1             |   ^     |
     |        ...               |   |     |
@@ -63,22 +63,22 @@ namespace _ {
     |vvvvvvvvvvvvvvvvvvvvvvvvvv|   |     |
     |        buffer            |   |     |
     |==========================|   |     |
-    |_____ count_max         |   |     |
-    |_____ ...               |   |    Size
-    |_____ Key Offset N      |   |     |
-    |_____ ...               |   |     |
+    |_______ count_max         |   |     |
+    |_______ ...               |   |    Size
+    |_______ Key Offset N      |   |     |
+    |_______ ...               |   |     |
     |        Key Offset 1      |   |     |
     |==========================| Header  |
-    |_____ count_max         |   |     |
-    |_____ ...               |   |     |
-    |_____ Data Offset N     |   |     |
-    |_____ ...               |   |     |
+    |_______ count_max         |   |     |
+    |_______ ...               |   |     |
+    |_______ Data Offset N     |   |     |
+    |_______ ...               |   |     |
     |        Data Offset 1     |   |     |
     |==========================|   |     |
-    |_____ count_max         |   |     |
-    |_____ ...               |   |     |
-    |_____ Type uint8_t N       |   |     |
-    |_____ ...               |   |     |
+    |_______ count_max         |   |     |
+    |_______ ...               |   |     |
+    |_______ Type uint8_t N       |   |     |
+    |_______ ...               |   |     |
     |        Type uint8_t 1       |   |     |   ^ Up in addresses
     |==========================|   |     |   |
     |  TMapKey<UI, SI> Struct  |   v     v   ^
@@ -650,7 +650,7 @@ void MultimapPrint(const TMap<SI, I>* multimap) {
     }
     PrintLine ('_');
 
-    PrintMemory (reinterpret_cast<const char*> (multimap) + 
+    PrintSocket (reinterpret_cast<const char*> (multimap) + 
                  sizeof (TMap<SI, I>), multimap->size);
     PRINTF ('\n';
 }

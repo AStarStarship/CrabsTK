@@ -16,8 +16,8 @@ specific language governing permissions and limitations under the License. */
 #if SEAM >= SEAM_0_0_0__01
 #include "tbenchmark.h"
 
+#include "rng.h"
 #include "tbinary.h"
-#include "trng.h"
 #include "ttest.h"
 
 #include <chrono>

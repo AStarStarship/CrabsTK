@@ -105,15 +105,11 @@ API inline const void* ConstVoidPtr(uintptr_t value);
 /* Calculates the difference between the begin and end address. */
 API inline intptr_t SizeOf(const void* begin, const void* end);
 
-/* Overwrites the memory with zeros functionally identical to memset. */
-API char* SocketClear(char* begin, char* end, intptr_t size);
+/* Overwrites the memory with fill_char; functionally identical to memset. */
+API char* SocketFill(char* begin, char* end, intptr_t size, char fill_char = 0);
 
-/* Overwrites the memory with zeros functionally identical to memset. */
-API char* SocketClear(void* begin, intptr_t size, intptr_t byte_count);
-
-/* Overwrites the memory with zeros functionally identical to memset.
-@return False upon failure. */
-API bool SocketWipe(void* begin, void* end, intptr_t size);
+/* Overwrites the memory with fill_char; functionally identical to memset. */
+API char* SocketFill(void* begin, intptr_t size, char fill_char = 0);
 
 /* Copies the source to the target functionally identical to memcpy.
 @param  begin     The begin of the write buffer.

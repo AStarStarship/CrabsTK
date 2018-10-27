@@ -13,11 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-<<<<<<< HEAD
-#if SEAM >= SEAM_0_0_4_0__00_00
-=======
-#if SEAM >= SEAM_00_00_01__00
->>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
+#if SEAM >= SEAM_0_0_2__00
 #ifndef INCLUDED_CRABS_ADDRESS
 #define INCLUDED_CRABS_ADDRESS
 
@@ -92,4 +88,4 @@ inline uint64_t PackAddress(uint64_t a, uint64_t b, uint64_t c, uint64_t d,
 
 }  // namespace _
 #endif  //< INCLUDED_CRABS_ADDRESS
-#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00
+#endif  //< #if SEAM >= SEAM_0_0_2__00

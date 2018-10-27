@@ -89,7 +89,17 @@ intptr_t SizeOf(const void* begin, const void* end) {
          reinterpret_cast<const char*>(begin);
 }
 
-char* SocketClear(char* cursor, char* end, intptr_t byte_count) {
+inline uintptr_t FillWord(char fill_char) {
+  uintptr_t value = fill_char;
+#if CPU_WORD_SIze == 32
+  return value | (value << 8) | (value << 16) | (value << 24);
+#else
+  return value | (value << 8) | (value << 16) | (value << 24) | (value << 32) |
+         (value << 48) | (value << 56);
+#endif
+}
+
+char* SocketFill(char* cursor, char* end, intptr_t byte_count, char fill_char) {
   ASSERT(cursor);
   ASSERT(byte_count > 0);
 
@@ -102,38 +112,42 @@ char* SocketClear(char* cursor, char* end, intptr_t byte_count) {
   PRINTF("\nFilling %i bytes from %p", (int)byte_count, cursor);
 
   if (byte_count < (2 * sizeof(void*) + 1)) {
-    while (cursor < end) *cursor++ = 0;
+    while (cursor < end) *cursor++ = fill_char;
     return cursor;
   }
 
+  uintptr_t fill_word = FillWord(fill_char);
+
   // Algorithm:
   // 1.) Save return value.
-  // 2.) Align write pointer up and copy the unaligned bytes in the lower
+  // 2.) Align write pointer up and copy the unaligned bytes in
+  // the lower
   //     memory region.
-  // 3.) Align write_end pointer down and copy the unaligned bytes in the
+  // 3.) Align write_end pointer down and copy the unaligned
+  // bytes in the
   //     upper memory region.
   // 4.) Copy the word-aligned middle region.
   char *success = end, *aligned_pointer = AlignUp<>(cursor);
-  while (cursor < aligned_pointer) *cursor++ = 0;
+  while (cursor < aligned_pointer) *cursor++ = fill_char;
   aligned_pointer = AlignDown<char*>(end);
-  while (end > aligned_pointer) *end-- = 0;
+  while (end > aligned_pointer) *end-- = fill_char;
 
   uintptr_t *words = reinterpret_cast<uintptr_t*>(cursor),
             *words_end = reinterpret_cast<uintptr_t*>(end);
 
-  while (words < words_end) *words++ = 0;
+  while (words < words_end) *words++ = fill_word;
 
   return success;
 }
 
-char* SocketClear(void* cursor, intptr_t size, intptr_t count) {
-  return SocketClear(reinterpret_cast<char*>(cursor),
-                     reinterpret_cast<char*>(cursor) + size, count);
+char* SocketFill(void* cursor, intptr_t count, char fill_char) {
+  return SocketFill(reinterpret_cast<char*>(cursor),
+                    reinterpret_cast<char*>(cursor) + count, count, fill_char);
 }
 
 bool SocketWipe(void* cursor, void* end, intptr_t count) {
-  return SocketClear(reinterpret_cast<char*>(cursor),
-                     reinterpret_cast<char*>(end), count) != nullptr;
+  return SocketFill(reinterpret_cast<char*>(cursor),
+                    reinterpret_cast<char*>(end), count) != nullptr;
 }
 
 char* SocketCopy(void* begin, intptr_t size, const void* read,

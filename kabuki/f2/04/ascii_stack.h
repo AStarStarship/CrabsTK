@@ -22,7 +22,7 @@ namespace _ {
 static const char* _0_0_0__04_ASCII_Stack(char* seam_log, char* seam_end,
                                           const char* args) {
 #if SEAM >= SEAM_0_0_0__04
-  DTEST_BEGIN;
+  TEST_BEGIN;
 
   PRINTF("\n\nPushing items on to the Stack...\n");
 
@@ -38,7 +38,7 @@ static const char* _0_0_0__04_ASCII_Stack(char* seam_log, char* seam_end,
 
   PRINT(stack);
 
-  DTEST_END;
+  TEST_END;
 #endif
   return nullptr;
 }

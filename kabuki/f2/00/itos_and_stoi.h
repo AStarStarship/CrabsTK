@@ -16,22 +16,22 @@ specific language governing permissions and limitations under the License. */
 
 #include <cstdio>
 #include <cstring>
-#include "../trng.h"
+
+#include "../global.h"
 
 #include "seam_header.inl"
 
 namespace _ {
-
-static const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
+inline const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
                                             const char* args) {
 #if SEAM >= SEAM_0_0_0__00
-  DTEST_BEGIN;
+  TEST_BEGIN;
 
-  PRINT("\n\nTesting ArgsToString...\n");
+  PRINT("\n\nDone testing const char* ArgsToString(int, char**)");
 
-  char arg_string[] = "C:\\Windows\\0Foo\\0Bar    \0   420    \0";
+  char arg_string[] = "C:\\Windows\0Foo\0\0Bar    \0\0\0   420    \0";
   char* test_args[] = {arg_string, arg_string + 11, arg_string + 15,
-                       arg_string + 26};
+                       arg_string + 25};
   const int kArgCount = 3;
 
   PRINT("\nArguments:\n");
@@ -62,8 +62,6 @@ static const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
   _::ArgsToString(kArgCount, test_args);
   PRINT('\n');
   PRINT(test_args[1]);
-
-  PRINT("\n\nDone testing ArgsToString(int, char**)");
 
   static const uint64_t k10ToThe[20] = {
       1,           //< 10^0
@@ -145,7 +143,7 @@ static const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
   num_bits);
       }
   }
-  Print ('\n');
+  PRINT ('\n');
   system ("PAUSE");*/
 
   static const uint64_t problem_children[] = {
@@ -176,7 +174,7 @@ static const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
 
   for (int i = 0; i < kNumProblemChildren; ++i) {
     PRINT_LINE('-');
-    Print('\n');
+    PRINT('\n');
     expected_ui8 = problem_children[i];
     sprintf_s(expecting, 24, "%llu", expected_ui8);
     PRINTF("\n%i.) Expecting \"%s\":%llu", i + 1, expecting,
@@ -197,7 +195,7 @@ static const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
   PRINT("\n\nTesting edge conditions...\n\n");
   for (int i = 0; i < 28; ++i) {
     PRINT_LINE('-');
-    Print('\n');
+    PRINT('\n');
     expected_ui8 = test_value[i];
     sprintf_s(expecting, 24, "%llu", expected_ui8);
     PRINTF("\n%i.) ", i + 1);
@@ -218,7 +216,7 @@ static const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
 
   for (int i = 0; i < 0x0000ffff; ++i) {
     PRINT_LINE('-');
-    Print('\n');
+    PRINT('\n');
     expected_ui8 = RandomUI8();
     sprintf_s(expecting, 24, "%llu", expected_ui8);
     result =
@@ -234,7 +232,7 @@ static const char* _0_0_0__00_ItoS_and_StoI(char* seam_log, char* seam_end,
     }
   }
 
-  DTEST_END
+  TEST_END;
 #endif
   return 0;
 }

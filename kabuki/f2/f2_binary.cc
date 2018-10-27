@@ -50,7 +50,7 @@ static const uint16_t kDigits00To99[100] = {
     0x3939};
 #endif
 
-#if SEAM >= SEAM_0_0_0__01
+#if SEAM >= SEAM_0_0_0__02
 
 static const int16_t kCachedPowersE[] = {
     -1220, -1193, -1166, -1140, -1113, -1087, -1060, -1034, -1007, -980, -954,
@@ -100,9 +100,9 @@ static const uint32_t kIEEE754Pow10[] = {
     0,      1,       10,       100,       1000,      10000,
     100000, 1000000, 10000000, 100000000, 1000000000};
 
-#endif  //<  #if SEAM >= SEAM_0_0_0__01
+#endif  //<  #if SEAM >= SEAM_0_0_0__02
 
-// const uint16_t* PuffDigitsLut() { return kDigits00To99; }
+// inline const uint16_t* BinaryDecimalsLUT() { return kDigits00To99; }
 
 inline uint8_t Unsigned(int8_t value) { return (uint8_t)(value); }
 
@@ -147,13 +147,13 @@ bool IsNaN(int64_t value) { return value > NanSigned<int64_t, uint64_t>(); }
 
 bool IsNaN(uint64_t value) { return value > NanUnsigned<uint64_t>(); }
 
-uint8_t HexNibbleToLowerCase(uint8_t b) {
+char HexNibbleToLowerCase(uint8_t b) {
   b = b & 0xf;
   if (b > 9) return b + ('a' - 10);
   return b + '0';
 }
 
-uint8_t HexNibbleToUpperCase(uint8_t b) {
+char HexNibbleToUpperCase(uint8_t b) {
   b = b & 0xf;
   if (b > 9) return b + ('A' - 10);
   return b + '0';
@@ -174,7 +174,7 @@ uint16_t HexByteToUpperCase(uint8_t b) {
   return value;
 }
 
-int HexToByte(uint8_t c) {
+int HexToByte(char c) {
   if (c < '0') {
     return -1;
   }
@@ -191,27 +191,26 @@ int HexToByte(uint8_t c) {
 }
 
 int HexToByte(uint16_t h) {
-  int lowerValue = HexToByte((uint8_t)(h >> 8));
+  int lowerValue = HexToByte((char)(h >> 8));
 
   if (lowerValue < 0) return -1;
 
-  int upper_value = HexToByte((uint8_t)h);
+  int upper_value = HexToByte((char)h);
   if (upper_value < 0) return -1;
 
   return lowerValue | (upper_value << 4);
 }
 
-void PrintHex(const void* ptr) {
-  uintptr_t value = reinterpret_cast<uintptr_t>(ptr);
-}
+int BinaryLength(uint32_t value) {}
+
+int BinaryLength(uint64_t value) {}
 
 }  // namespace _
 
 #include <cmath>
 
-#if SEAM >= SEAM_0_0_0__01
-#include "01/seam_header.inl"
-
+#if SEAM >= SEAM_0_0_0__02
+#include "02/seam_header.inl"
 namespace _ {
 
 inline int FloatDigitsMax() { return 0; }
@@ -262,13 +261,6 @@ int MSbAsserted(int64_t value) {
   return MSbAssertedReverse<uint64_t>((uint64_t)value);
 }
 
-}  // namespace _
-#include "01/seam_footer.inl"
-#endif  //< #if SEAM >= SEAM_0_0_0__01
-
-#if SEAM >= SEAM_0_0_0__02
-#include "02/seam_header.inl"
-namespace _ {
 inline void FloatBytes(float value, char& byte_0, char& byte_1, char& byte_2,
                        char& byte_3) {
   uint32_t ui_value = *reinterpret_cast<uint32_t*>(&value);
@@ -517,6 +509,14 @@ int MSbAsserted(uint64_t value) { return MSbAssertedReverse<uint64_t>(value); }
 
 int MSbAsserted(int64_t value) {
   return MSbAssertedReverse<uint64_t>((uint64_t)value);
+}
+
+char* Print(char* cursor, char* end, float value) {
+  return PrintFloat<float, uint32_t, char>(cursor, end, value);
+}
+
+char* Print(char* cursor, char* end, double value) {
+  return PrintFloat<double, uint64_t, char>(cursor, end, value);
 }
 
 }  // namespace _

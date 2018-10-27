@@ -1,6 +1,6 @@
 #include "../seam_header.inl"
 #if SEAM == SEAM_0_0_0__00
-#define PRINT_PRINTED PrintPrinted<Char>(buffer);
+#define PRINT_PRINTED PrintPrinted<Char>(PuffItoSBegin<Char>())
 #define BEGIN_ITOS_ALGORITHM                                          \
   static const char* ui_format = sizeof(UI) == 8 ? FORMAT_UI8 : "%u"; \
   PuffItoSBegin<Char>(cursor);                                        \
@@ -9,8 +9,13 @@
   enum { kSize = 256 };                                               \
   char buffer[kSize];                                                 \
   sprintf_s(buffer, kSize, ui_format, value);                         \
-  Printf(" Expecting %s:%i ", buffer, StringLength<Char>(buffer))
+  printf(" Expecting %s:%i ", buffer, StringLength<Char>(buffer))
+#define PRINT_ARGS                                     \
+  Printf("\nargs_count:%i args:%p", args_count, args); \
+  for (int i = 0; i < args_count; ++i)                 \
+  Printf("\n%i:\"%s\"", i, args[args_count])
 #else
-#define PRINT_PRINTED ;
+#define PRINT_PRINTED
 #define BEGIN_ITOS_ALGORITHM
+#define PRINT_ARGS
 #endif

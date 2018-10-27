@@ -59,7 +59,6 @@
     <ClInclude Include="tbinary.h" />
     <ClInclude Include="tbook.h" />
     <ClInclude Include="tclock.h" />
-    <ClInclude Include="tconsole.h" />
     <ClInclude Include="tdic.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="thash.h" />
@@ -123,6 +122,7 @@
     <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\seam_tree.cc" />
     <ClCompile Include="f2_ascii_data.cc" />
     <ClCompile Include="f2_benchmark.cc" />
     <ClCompile Include="f2_binary.cc" />
@@ -136,7 +136,6 @@
     <ClCompile Include="f2_str.cc" />
     <ClCompile Include="f2_test.cc" />
     <ClCompile Include="f2_vk.cc" />
-    <ClCompile Include="seam_tree.cc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

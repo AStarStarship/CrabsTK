@@ -26,11 +26,7 @@ const char* TestTree(char* seam_log, char* seam_end, const char* args,
     TestCase test = tests[i];
     if (test) {
       const char* seam = test(seam_log, seam_end, nullptr);
-
-      if (seam)
-        PrintHeading("Testing ", seam);
-      else
-        PrintHeading("Testing nil caption");
+      if (seam) PrintHeading("Testing ", seam);
       const char* error = test(seam_log, seam_end, args);
       if (error) return error;
       Print("\n\nDone testing ", seam);

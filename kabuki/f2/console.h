@@ -205,6 +205,9 @@ API void PrintHex(const void* value);
 @return A negative number (typically 1) if no keys are pressed. */
 API int CInKey();
 
+/* Prints the given socket to the stdout. */
+API void PrintSocket(const char* begin, const char* end);
+
 }  // namespace _
 
 #endif  //< #ifndef INCLUDED_KABUKI_F2_CONSOLE

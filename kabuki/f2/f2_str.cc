@@ -322,13 +322,13 @@ char* PrintBinary(char* begin, char* end, double value) {
   return PrintBinary<char, uint64_t>(begin, end, ui);
 }
 
-char* PrintMemory(char* begin, char* end, const void* start, size_t size) {
-  return PrintMemory<char>(begin, end, start,
+char* PrintSocket(char* begin, char* end, const void* start, size_t size) {
+  return PrintSocket<char>(begin, end, start,
                            reinterpret_cast<const char*>(start) + size);
 }
 
-char* PrintMemory(char* begin, char* end, const void* start, const void* stop) {
-  return PrintMemory<char>(begin, end, start, stop);
+char* PrintSocket(char* begin, char* end, const void* start, const void* stop) {
+  return PrintSocket<char>(begin, end, start, stop);
 }
 
 char* PrintLine(char* cursor, char* end, char token, int column_count) {
@@ -972,15 +972,15 @@ char16_t* PrintBinary(char16_t* begin, char16_t* end, double value) {
   return PrintBinary<char16_t>(begin, end, ui);
 }
 
-char16_t* PrintMemory(char16_t* begin, char16_t* end, const void* start,
+char16_t* PrintSocket(char16_t* begin, char16_t* end, const void* start,
                       size_t size) {
-  return PrintMemory<char16_t>(begin, end, start,
+  return PrintSocket<char16_t>(begin, end, start,
                                reinterpret_cast<const char16_t*>(start) + size);
 }
 
-char16_t* PrintMemory(char16_t* begin, char16_t* end, const void* start,
+char16_t* PrintSocket(char16_t* begin, char16_t* end, const void* start,
                       const void* stop) {
-  return PrintMemory<char16_t>(begin, end, start, stop);
+  return PrintSocket<char16_t>(begin, end, start, stop);
 }
 }  // namespace _
 }  // namespace _
@@ -1599,15 +1599,15 @@ char32_t* PrintBinary(char32_t* begin, char32_t* end, double value) {
   return PrintBinary<char32_t, uint64_t>(begin, end, ui);
 }
 
-char32_t* PrintMemory(char32_t* begin, char32_t* end, const void* start,
+char32_t* PrintSocket(char32_t* begin, char32_t* end, const void* start,
                       size_t size) {
-  return PrintMemory<char32_t>(begin, end, start,
+  return PrintSocket<char32_t>(begin, end, start,
                                reinterpret_cast<const char32_t*>(start) + size);
 }
 
-char32_t* PrintMemory(char32_t* begin, char32_t* end, const void* start,
+char32_t* PrintSocket(char32_t* begin, char32_t* end, const void* start,
                       const void* stop) {
-  return PrintMemory<char32_t>(begin, end, start, stop);
+  return PrintSocket<char32_t>(begin, end, start, stop);
 }
 
 const char32_t* Scan(const char32_t* string, int8_t& result) {

@@ -22,7 +22,7 @@ namespace _ {
 static const char* _0_0_0__09_ASCII_List(char* seam_log, char* seam_end,
                                          const char* args) {
 #if SEAM >= SEAM_0_0_0__09
-  DTEST_BEGIN;
+  TEST_BEGIN;
 
   List<> list(36, 960);
   Assert(list.This())
@@ -64,7 +64,7 @@ static const char* _0_0_0__09_ASCII_List(char* seam_log, char* seam_end,
 
   for (int i = list_test_count - 1; i > 0; --i) list.Pop();
 
-  DTEST_END;
+  TEST_END;
 #endif
   return nullptr;
 }

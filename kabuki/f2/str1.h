@@ -477,7 +477,7 @@ upon success.
 API char* PrintBinary(char* begin, char* end, double value);
 
 /* Prints the given memory socket to the text buffer. */
-API char* PrintMemory(char* begin, char* end, const void* start, size_t size);
+API char* PrintSocket(char* begin, char* end, const void* start, size_t size);
 
 /* Prints out the contents of the address to the utf buffer.
 @return Null upon failure or a pointer to the byte after the last
@@ -486,7 +486,7 @@ byte written.
 @param end   The end of the write buffer.
 @param start The beginning of the read buffer.
 @param stop  The end of the read buffer. */
-API char* PrintMemory(char* begin, char* end, const void* start,
+API char* PrintSocket(char* begin, char* end, const void* start,
                       const void* stop);
 
 /* Prints a line of the given column_count.

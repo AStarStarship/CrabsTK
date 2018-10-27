@@ -13,16 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 
-#define SEAM_LAYER 0
-#define SEAM_MILLI 0
-#define SEAM_MICRO 4
-#define SEAM_NANO 0
-#define SEAM_PICO 0
-#define SEAM_FEMTO 0
-#define SEAM_PROJECT 0
-#define SEAM_SPRINT 0
-#define SEAM_SCRUM 0
+#include <kabuki/f2/config.inl>
 
-#include <kabuki/f2/config.h>
-
-#define SEAM SEAM_0_0_0__00
+#define SEAM SEAM_0_0_2__00
+#define SEAM_N SEAM

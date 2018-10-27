@@ -22,7 +22,7 @@ namespace _ {
 static const char* _0_0_0__05_ASCII_Array(char* seam_log, char* seam_end,
                                           const char* args) {
 #if SEAM >= SEAM_0_0_0__05
-  DTEST_BEGIN;
+  TEST_BEGIN;
 
   static const int array_3d_exected[2][2][2] = {{{0, 1}, {2, 3}},
                                                 {{4, 5}, {6, 7}}};
@@ -35,7 +35,7 @@ static const char* _0_0_0__05_ASCII_Array(char* seam_log, char* seam_end,
     for (int y = 0; y < 2; ++y)
       for (int x = 0; x < 2; ++x) Compare(i++, array_3d_exected[x][y][z]);
 
-  DTEST_END;
+  TEST_END;
 #endif
   return nullptr;
 }

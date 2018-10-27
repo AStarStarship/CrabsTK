@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/f2/ttest.h
+@file    \kabuki\f2\ttest.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -19,7 +19,8 @@ specific language governing permissions and limitations under the License. */
 
 #include "test.h"
 
-#include "tconsole.h"
+#include "console.h"
+#include "tbinary.h"
 
 namespace _ {
 
@@ -37,7 +38,11 @@ int SeamTreeTest(int arg_count, char** args, char* seam_log,
   const char* result =
       TestTree(seam_log, seam_log + seam_log_size - 1,
                ArgsToString(arg_count, args), nodes, sizeof...(N));
-  return result == nullptr ? APP_EXIT_SUCCESS : APP_EXIT_FAILURE;
+  if (result) {
+    Print("\nERROR: ", result);
+    return APP_EXIT_FAILURE;
+  }
+  return APP_EXIT_SUCCESS;
 }
 
 template <typename Char>

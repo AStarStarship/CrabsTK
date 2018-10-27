@@ -682,7 +682,7 @@ Utf8& DicPrint(Utf8& print, const Dictionary<UI, SI, I>* dictionary) {
     }
     PrintLine ('_');
 
-    PrintMemory (reinterpret_cast<const char*> (dictionary) + 
+    PrintSocket (reinterpret_cast<const char*> (dictionary) + 
                  sizeof (Dictionary<UI, SI, I>), dictionary->size);
     PRINT ('\n')
 }

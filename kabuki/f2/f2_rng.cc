@@ -36,14 +36,15 @@ inline uint16_t RandomUI2() { return (uint16_t)rng(); }
 
 inline int16_t RandomSI2() { return (int16_t)RandomUI2(); }
 
-inline uint32_t RandomUI4() { return (int32_t)rng(); }
+// uint32_t RandomUI4() { return rng(); }
 
 inline int32_t RandomSI4() { return (int32_t)RandomUI4(); }
 
+/*
 inline uint64_t RandomUI8() {
-  uint64_t a = rng(), b = rng();
+  uint64_t a = RandomUI4(), b = RandomUI4();
   return (int64_t)(a | (b << 32));
-}
+}*/
 
 int64_t RandomSI8() { return (int64_t)RandomUI8(); }
 
@@ -93,25 +94,6 @@ inline uint64_t Random(uint64_t min, uint64_t max) {
 inline uint64_t Random(int64_t min, int64_t max) {
   return Random<int64_t>(min, max);
 }
-
-/* Hidden MersenneTwister wrapper class.
-template <typename T>
-class MersenneTwister : public TRNG<T> {
- public:
-  virtual void Seed(uint32_t seed) { rng.seed(seed); }
-
-  virtual T Next() {
-    T random;
-    RandomNumbber(random);
-    return T;
-  }
-
-  virtual T Next(T min, T max) {
-    T result;
-    RandomNumber(min, max);
-    return T;
-  }
-}; */
 
 }  // namespace _
 #endif  //< INCLUDED_KABUKI_F2_RNG

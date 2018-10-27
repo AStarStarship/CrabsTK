@@ -4,7 +4,7 @@
 
 ## Quick Links
 
-* [F2 Foundational Framework Overview](https://github.com/CaleMcCollough/script-and-kabuki-toolkit-cookbook/blob/master/02-f2-foundation-framework.md)
+* [F2 Foundational Framework Overview](https://github.com/CaleMcCollough/script2-and-kabuki-toolkit-cookbook/blob/master/02-f2-foundation-framework.md)
 
 ## Author
 

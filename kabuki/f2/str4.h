@@ -68,7 +68,7 @@ API const char32_t* StringSkipSpaces(const char32_t* begin);
 @param  end   The end address of the input buffer.
 @return A pointer to the end of the text read or if no text read. */
 API const char32_t* StringSkipSpaces(const char32_t* begin,
-                                   const char32_t* text_end);
+                                     const char32_t* text_end);
 
 /* Compares the source and query char32_t as nil-terminated strings. */
 API const char32_t* StringEquals(const char32_t* text_a,
@@ -470,7 +470,7 @@ upon success.
 API char32_t* PrintBinary(char32_t* begin, char32_t* end, double value);
 
 /* Prints the given memory socket to the text buffer. */
-API char32_t* PrintMemory(char32_t* begin, char32_t* end, const void* start,
+API char32_t* PrintSocket(char32_t* begin, char32_t* end, const void* start,
                           size_t size);
 
 /* Prints out the contents of the address to the printer buffer.
@@ -480,7 +480,7 @@ byte written.
 @param end   The end of the write buffer.
 @param start The beginning of the read buffer.
 @param stop  The end of the read buffer. */
-API char32_t* PrintMemory(char32_t* begin, char32_t* end, const void* start,
+API char32_t* PrintSocket(char32_t* begin, char32_t* end, const void* start,
                           const void* stop);
 
 /* Prints out the contents of the address to the printer buffer.
@@ -490,7 +490,7 @@ byte written.
 @param end   The end of the write buffer.
 @param start The beginning of the read buffer.
 @param size  The size of the read buffer. */
-API char32_t* PrintMemory(char32_t* begin, char32_t* end, const void* start,
+API char32_t* PrintSocket(char32_t* begin, char32_t* end, const void* start,
                           size_t size);
 
 /* Writes the given time to the text buffer.

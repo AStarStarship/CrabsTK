@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_0_2_crabs", "kabuki\crabs
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_0_1_hal_drivers_platform", "kabuki\hal\0_0_1_hal_drivers_platform.vcxproj", "{39F6896A-2D79-4999-82CB-FF150A5E3A43}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0_0_2_hello_machina_spectulatrix", "toolkit\0_0_2_hello_machina_spectulatrix\0_0_2_hello_machina_spectulatrix.vcxproj", "{6DC2D062-DC62-42EF-A35B-24B40E536D2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -72,6 +74,13 @@ Global
 		{39F6896A-2D79-4999-82CB-FF150A5E3A43}.Release|x64.Build.0 = Release|x64
 		{39F6896A-2D79-4999-82CB-FF150A5E3A43}.Release|x86.ActiveCfg = Release|Win32
 		{39F6896A-2D79-4999-82CB-FF150A5E3A43}.Release|x86.Build.0 = Release|Win32
+		{6DC2D062-DC62-42EF-A35B-24B40E536D2E}.Debug|x64.ActiveCfg = Debug|x64
+		{6DC2D062-DC62-42EF-A35B-24B40E536D2E}.Debug|x86.ActiveCfg = Debug|Win32
+		{6DC2D062-DC62-42EF-A35B-24B40E536D2E}.Debug|x86.Build.0 = Debug|Win32
+		{6DC2D062-DC62-42EF-A35B-24B40E536D2E}.Release|x64.ActiveCfg = Release|x64
+		{6DC2D062-DC62-42EF-A35B-24B40E536D2E}.Release|x64.Build.0 = Release|x64
+		{6DC2D062-DC62-42EF-A35B-24B40E536D2E}.Release|x86.ActiveCfg = Release|Win32
+		{6DC2D062-DC62-42EF-A35B-24B40E536D2E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +92,7 @@ Global
 		{706DA7C9-FEAD-4885-8351-3471961BFEBC} = {81D8102E-FE86-4792-96C0-F2526481D750}
 		{83D57FD7-117F-45C5-998A-CBBA7849D5F0} = {40FAFD18-BEA0-4021-A24F-63AE69789B14}
 		{39F6896A-2D79-4999-82CB-FF150A5E3A43} = {40FAFD18-BEA0-4021-A24F-63AE69789B14}
+		{6DC2D062-DC62-42EF-A35B-24B40E536D2E} = {81D8102E-FE86-4792-96C0-F2526481D750}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5BAE086E-1F80-43C0-8709-6E87D4D05BC0}

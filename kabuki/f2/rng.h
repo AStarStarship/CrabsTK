@@ -17,6 +17,8 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_RNGUNIFORM
 #define INCLUDED_KABUKI_F2_RNGUNIFORM
 
+#include <random>
+
 namespace _ {
 
 /* Gets a random generator device seed. */
@@ -38,13 +40,21 @@ API inline uint16_t RandomUI2();
 API inline int16_t RandomSI2();
 
 /* Gets a random 32-bit/4-byte unsigned integer. */
-API inline uint32_t RandomUI4();
+inline uint32_t RandomUI4() {
+  static std::mt19937 rng;
+  return rng();
+}
 
 /* Gets a random 32-bit/4-byte signed integer. */
 API inline int32_t RandomSI4();
 
 /* Gets a random 64-bit/8-byte unsigned integer. */
-API inline uint64_t RandomUI8();
+inline uint64_t RandomUI8() {
+  std::mt19937 rng;
+  rng.seed(std::random_device()());
+  uint64_t a = RandomUI4(), b = RandomUI4();
+  return (int64_t)(a | (b << 32));
+}
 
 /* Gets a random 64-bit/8-byte signed integer. */
 API inline int64_t RandomSI8();

@@ -203,9 +203,6 @@
     <ClInclude Include="tclock.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
-    <ClInclude Include="tconsole.h">
-      <Filter>kabuki\f2</Filter>
-    </ClInclude>
     <ClInclude Include="tdic.h">
       <Filter>kabuki\f2</Filter>
     </ClInclude>
@@ -395,8 +392,8 @@
     <ClCompile Include="f2_vk.cc">
       <Filter>kabuki\f2</Filter>
     </ClCompile>
-    <ClCompile Include="seam_tree.cc">
-      <Filter>kabuki\f2</Filter>
+    <ClCompile Include="..\seam_tree.cc">
+      <Filter>kabuki</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

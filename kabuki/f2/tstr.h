@@ -510,7 +510,7 @@ Char* PrintLineString(Char* cursor, Char* end, const Char* string,
 }
 
 template <typename Char = char>
-Char* PrintMemory(Char* cursor, Char* end, const void* start,
+Char* PrintSocket(Char* cursor, Char* end, const void* start,
                   const void* stop) {
   ASSERT(start);
   ASSERT(cursor);

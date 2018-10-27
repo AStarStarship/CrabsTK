@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/f2/test.h
+@file    \kabuki\f2\test.h
 @author  Cale McCollough <cale.mccollough@gmail.com>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -36,7 +36,7 @@ const char* TestTree(char* seam_log, char* seam_end, const char* args,
 /* Prints a message when a TestCase completes without failure. */
 bool TestBegin(char* seam_log, char* seam_end, const char* args);
 
-/* Tests if the two pointers are equal.
+/* Tests if the pointer is nil.
 @return false if the condition is false.
 @param  value The value to test.  */
 API bool Test(const void* value);
@@ -45,12 +45,6 @@ API bool Test(const void* value);
 @return false if the condition is false.
 @param condition The condition to check. */
 API bool Test(bool condition);
-
-/* Test function to assist in casting boolean types.
-@return false if the condition is false.
-@param  value The value to test.
-@param  b Parameter b. */
-API bool Test(uint8_t value, uint8_t b);
 
 /* Test function to assist in casting boolean types.
 @return false if the condition is false.

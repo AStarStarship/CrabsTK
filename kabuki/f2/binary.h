@@ -20,7 +20,8 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* Lookup table of ASCII Char pairs for 00, 01, ..., 99. */
-API inline const uint16_t* PuffDigitsLut() {
+// API inline const uint16_t* BinaryDecimalsLUT ();
+inline const uint16_t* BinaryDecimalsLUT() {
   static const uint16_t kDigits00To99[100] = {
       0x3030, 0x3130, 0x3230, 0x3330, 0x3430, 0x3530, 0x3630, 0x3730, 0x3830,
       0x3930, 0x3031, 0x3131, 0x3231, 0x3331, 0x3431, 0x3531, 0x3631, 0x3731,
@@ -114,48 +115,31 @@ inline uint64_t Negative(int64_t value);
 /* Utility function inverts the bits and adds one (i.e. multiplies by -1). */
 inline uint64_t Negative(uint64_t value);
 
-/* Converts a single uint8_t a one-uint8_t hex representation. */
-API uint8_t HexNibbleToLowerCase(uint8_t b);
+/* Converts a byte a one-uint8_t hex representation. */
+API char HexNibbleToLowerCase(uint8_t b);
 
-/* Converts a single uint8_t a one-uint8_t hex representation. */
-API uint8_t HexNibbleToUpperCase(uint8_t b);
+/* Converts a byte a one-uint8_t hex representation. */
+API char HexNibbleToUpperCase(uint8_t b);
 
-/* Converts a single uint8_t a two-uint8_t hex representation. */
+/* Converts a byte a two-byte hex representation. */
 API uint16_t HexByteToLowerCase(uint8_t b);
 
-/* Converts a single uint8_t a two-uint8_t hex representation. */
+/* Converts a byte a two-byte hex representation. */
 API uint16_t HexByteToUpperCase(uint8_t b);
 
 /* Converts a single hex uint8_t a uint8_t.
 @return Returns -1 if c is not a hex uint8_t. */
-API int HexToByte(uint8_t hex_byte);
+API int HexToByte(char hex_byte);
 
-/* Converts a single uint8_t into a two-uint8_t hex representation.
+/* Converts a byte into a two-byte hex representation.
 @return Returns -1 if c is not a hex uint8_t.
 */
 API int HexToByte(uint16_t hex);
 
-/* Converts a single uint8_t a one-uint8_t hex representation. */
-API uint8_t HexNibbleToLowerCase(uint8_t b);
+API inline int BinaryLength(uint32_t value);
+API inline int BinaryLength(uint64_t value);
 
-/* Converts a single uint8_t a one-uint8_t hex representation. */
-API uint8_t HexNibbleToUpperCase(uint8_t b);
-
-/* Converts a single uint8_t a two-uint8_t hex representation. */
-API uint16_t HexByteToLowerCase(uint8_t b);
-
-/* Converts a single uint8_t a two-uint8_t hex representation. */
-API uint16_t HexByteToUpperCase(uint8_t b);
-
-/* Converts a single hex uint8_t a uint8_t.
-@return Returns -1 if c is not a hex uint8_t. */
-API int HexToByte(uint8_t c);
-
-/* Converts a single uint8_t into a two-uint8_t hex representation.
-@return Returns -1 if c is not a hex uint8_t. */
-API int HexToByte(uint16_t h);
-
-#if SEAM >= SEAM_0_0_0__01
+#if SEAM >= SEAM_0_0_0__02
 /* Gets the maximum number of digits required to represent a float as in
 ASCII. */
 API inline int FloatDigitsMax();
@@ -230,15 +214,11 @@ API int MSbAsserted(uint64_t value);
 @return A negative number if value is zero and the highest bit. */
 API int MSbAsserted(int64_t value);
 
-#endif  //< #if SEAM >= SEAM_0_0_0__01
-
-#if SEAM >= SEAM_0_0_0__02
+/* Prints the given float to the buffer. */
+API char* Print(char* cursor, char* end, float value);
 
 /* Prints the given float to the buffer. */
-API char* PrintFloat(char* cursor, char* end, float value);
-
-/* Prints the given float to the buffer. */
-API char* PrintFloat(char* cursor, char* end, double value);
+API char* Print(char* cursor, char* end, double value);
 
 #endif  //< #if SEAM >= SEAM_0_0_0__02
 }  // namespace _

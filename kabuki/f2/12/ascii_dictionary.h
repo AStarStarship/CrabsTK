@@ -22,7 +22,7 @@ namespace _ {
 static const char* _0_0_0__12_ASCII_Dictionary(char* seam_log, char* seam_end,
                                                const char* args) {
 #if SEAM >= SEAM_0_0_0__12
-  DTEST_BEGIN;
+  TEST_BEGIN;
 
   Printf("\n\nTesting ASCII OBJ Types");
 

@@ -22,7 +22,7 @@ namespace _ {
 static const char* _0_0_0__03_ASCII_Clock(char* seam_log, char* seam_end,
                                           const char* args) {
 #if SEAM == SEAM_0_0_0__03
-  DTEST_BEGIN;
+  TEST_BEGIN;
 
   PRINT_HEADING("\n\n    Testing TextScanTime...");
 

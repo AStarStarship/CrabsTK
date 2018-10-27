@@ -1,9 +1,9 @@
-# Seam_0_0_1__00_00
+# _0_0_0__05_ASCII_Array
 
-This scrum tests the basic Crabs API.
+This subseam tests the ASCII Array.
 
-## Sprints
+## License
 
-* 00: Tests the ItoS and String-to-Integer function.
-* 01: Tests the FPtoS and String-to-Floating-point functions.
-* 02: Tests the F2 text printing functions.
+Copyright 2014-18 (C) [Cale McCollough](mailto:calemccollough@gmail.com). All rights reserved (R).
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0). Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.

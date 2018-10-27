@@ -470,7 +470,7 @@ byte written.
 @param end   The end of the write buffer.
 @param start The beginning of the read buffer.
 @param stop  The end of the read buffer. */
-API char16_t* PrintMemory(char16_t* begin, char16_t* end, const void* start,
+API char16_t* PrintSocket(char16_t* begin, char16_t* end, const void* start,
                           const void* stop);
 
 /* Prints out the contents of the address to the printer buffer.
@@ -480,7 +480,7 @@ byte written.
 @param end   The end of the write buffer.
 @param start The beginning of the read buffer.
 @param size  The size of the read buffer. */
-API char16_t* PrintMemory(char16_t* begin, char16_t* end, const void* start,
+API char16_t* PrintSocket(char16_t* begin, char16_t* end, const void* start,
                           size_t size);
 
 /* Writes the given time to the text buffer.

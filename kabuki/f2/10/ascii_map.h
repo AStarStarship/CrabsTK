@@ -21,7 +21,7 @@ namespace _ {
 static const char* _0_0_0__10_ASCII_Map(char* seam_log, char* seam_end,
                                         const char* args) {
 #if SEAM >= SEAM_0_0_0__10
-  DTEST_BEGIN;
+  TEST_BEGIN;
 
   Printf("\n\nTesting ASCII OBJ Types");
 

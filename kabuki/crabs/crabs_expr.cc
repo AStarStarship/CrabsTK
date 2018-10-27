@@ -825,11 +825,11 @@ void ExprClear(Expr* expr) {
 
   if (start == stop) return;  //< Nothing to do.
   if (start > stop) {
-    SocketClear(start, end - start);
-    SocketClear(begin, start - begin);
+    SocketFill(start, end - start);
+    SocketFill(begin, start - begin);
     return;
   }
-  SocketClear(start, stop - start);
+  SocketFill(start, stop - start);
   bin->start = (uint_t)Size(expr, begin);
   bin->stop = (uint_t)Size(expr, start + 1);
 }

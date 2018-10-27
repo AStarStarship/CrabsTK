@@ -14,6 +14,7 @@ specific language governing permissions and limitations under the License. */
 #include <pch.h>
 
 #include <kabuki/f2/seam_0_0_0_f2.h>
+
 /*
 #include <kabuki/hal/seam_0_0_1_hal.h>
 
@@ -76,33 +77,40 @@ using namespace _;
 int main(int arg_count, char** args) {
   enum { kSize = 1024 };
   char seam_log[kSize];
+  return SeamTreeTest<_0_0_0_F2>(arg_count, args, seam_log, kSize); */
+
+using namespace _;
+int main(int arg_count, char** args) {
+  enum { kSize = 1024 };
+  char seam_log[kSize];
   return SeamTreeTest<_0_0_0_F2>(arg_count, args, seam_log, kSize);
-  /*
-  Seam_0_0_1_HAL,
-  Seam_0_0_2_Drivers,
-  Seam_0_0_3_Platform,
-  Seam_0_0_4_0_Crabs,
-  Seam_0_0_4_1_FileCabinet,
-  Seam_0_0_4_2_TLS,
-  Seam_0_0_5_OSAL,
-  Seam_0_0_6_Data,
-  Seam_0_0_7_Who,
-  Seam_0_0_8_Pro,
-  Seam_0_0_9_uWeb,
-  Seam_0_0_10_ORM,
-  Seam_0_0_11_AI_Math,
-  Seam_0_1_0_HMI,
-  Seam_0_2_3_Audio,
-  Seam_0_2_3_ADSP,
-  Seam_0_2_3_MIDI,
-  Seam_0_2_3_Music,
-  Seam_0_2_5_AI_Math,
-  Seam_0_3_0_Lights,
-  Seam_0_3_1_Graphics,
-  Seam_0_3_2_GUI,
-  Seam_0_3_3_Plotting,
-  Seam_0_3_5_Camera,
-  Seam_0_4_0_Webcam,
-  Seam_0_4_1_Video,
-  Seam_0_4_2_AI_Math
-} */
+}
+/*
+Seam_0_0_1_HAL,
+Seam_0_0_2_Drivers,
+Seam_0_0_3_Platform,
+Seam_0_0_4_0_Crabs,
+Seam_0_0_4_1_FileCabinet,
+Seam_0_0_4_2_TLS,
+Seam_0_0_5_OSAL,
+Seam_0_0_6_Data,
+Seam_0_0_7_Who,
+Seam_0_0_8_Pro,
+Seam_0_0_9_uWeb,
+Seam_0_0_10_ORM,
+Seam_0_0_11_AI_Math,
+Seam_0_1_0_HMI,
+Seam_0_2_3_Audio,
+Seam_0_2_3_ADSP,
+Seam_0_2_3_MIDI,
+Seam_0_2_3_Music,
+Seam_0_2_5_AI_Math,
+Seam_0_3_0_Lights,
+Seam_0_3_1_Graphics,
+Seam_0_3_2_GUI,
+Seam_0_3_3_Plotting,
+Seam_0_3_5_Camera,
+Seam_0_4_0_Webcam,
+Seam_0_4_1_Video,
+Seam_0_4_2_AI_Math
+*/

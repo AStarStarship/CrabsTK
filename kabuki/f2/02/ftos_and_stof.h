@@ -26,7 +26,7 @@ namespace _ {
 const char* _0_0_0__02_FtoS_and_StoF(char* seam_log, char* seam_end,
                                      const char* args) {
 #if SEAM >= SEAM_0_0_0__02
-  DTEST_BEGIN;
+  TEST_BEGIN;
 
   enum { kSize = 24 };
   char buffer[kSize + 1];
@@ -78,7 +78,7 @@ const char* _0_0_0__02_FtoS_and_StoF(char* seam_log, char* seam_end,
     Test(value, dbl_expected);
   }
 
-  DTEST_END;
+  TEST_END;
 #endif
   return nullptr;
 }
