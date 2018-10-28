@@ -12,14 +12,14 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4_0__00_00
+#if SEAM >= _0_0_4_0__00_00
 // Dependencies:
 #include "bsq.h"
 #include "clock.h"
 #include "expr.h"
 #include "hash.h"
 #include "hex.h"
-#include "test.h"
+#include "ctest.h"
 // End dependencies.
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
@@ -951,4 +951,4 @@ Utf8& PrintExpr(Utf8& print, Expr* expr) {
 
 #undef PRINTF
 #undef PRINT
-#endif  //> #if SEAM >= SEAM_0_0_4_0__00_00
+#endif  //> #if SEAM >= _0_0_4_0__00_00

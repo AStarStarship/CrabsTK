@@ -13,64 +13,64 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#include <kabuki/f2/seam_0_0_0_f2.h>
+#include <kabuki/f2/0_0_0_f2.h>
 
 /*
-#include <kabuki/hal/seam_0_0_1_hal.h>
+#include <kabuki/hal/0_0_1_hal.h>
 
-#include <kabuki/drivers/seam_0_0_2_drivers.h>
+#include <kabuki/drivers/0_0_2_drivers.h>
 
-#include <kabuki/platform/seam_0_0_3_platform.h>
+#include <kabuki/platform/0_0_3_platform.h>
 
-#include <kabuki/features/filecabinent/seam_0_0_4_filecabinent.h>
+#include <kabuki/features/filecabinent/0_0_4_filecabinent.h>
 
-#include <kabuki/features/crabs/seam_0_0_5_crabs.h>
+#include <kabuki/features/crabs/0_0_5_crabs.h>
 
-#include <kabuki/features/tls/seam_0_0_6_tls.h>
+#include <kabuki/features/tls/0_0_6_tls.h>
 
-#include <kabuki/osal/seam_0_0_7_osal.h>
+#include <kabuki/osal/0_0_7_osal.h>
 
-#include <kabuki/f2sdk/data/seam_0_0_8_data.h>
+#include <kabuki/f2sdk/data/0_0_8_data.h>
 
-#include <kabuki/f2sdk/who/seam_0_0_9_who.h>
+#include <kabuki/f2sdk/who/0_0_9_who.h>
 
-#include <kabuki/f2sdk/pro/seam_0_0_10_pro.h>
+#include <kabuki/f2sdk/pro/0_0_10_pro.h>
 
-#include <kabuki/f2sdk/uweb/seam_0_0_11_uweb.h>
+#include <kabuki/f2sdk/uweb/0_0_11_uweb.h>
 
-#include <kabuki/f2sdk/orm/seam_0_0_12_orm.h>
+#include <kabuki/f2sdk/orm/0_0_12_orm.h>
 
-#include <kabuki/f2sdk/ai/seam_0_0_13_ai_math.h>
+#include <kabuki/f2sdk/ai/0_0_13_ai_math.h>
 
-#include <kabuki/features/hmi/seam_0_1_0_hmi.h>
+#include <kabuki/features/hmi/0_1_0_hmi.h>
 
-#include <kabuki/features/audio/seam_0_2_0_audio.h>
+#include <kabuki/features/audio/0_2_0_audio.h>
 
-#include <kabuki/f2sdk/adsp/seam_0_2_1_adsp.h>
+#include <kabuki/f2sdk/adsp/0_2_1_adsp.h>
 
-#include <kabuki/features/midi/seam_0_2_2_midi.h>
+#include <kabuki/features/midi/0_2_2_midi.h>
 
-#include <kabuki/f2sdk/music/seam_0_2_3_music.h>
+#include <kabuki/f2sdk/music/0_2_3_music.h>
 
-#include <kabuki/f2sdk/ai/seam_0_2_4_ai_math.h>
+#include <kabuki/f2sdk/ai/0_2_4_ai_math.h>
 
-#include <kabuki/features/lights/seam_0_3_0_lights.h>
+#include <kabuki/features/lights/0_3_0_lights.h>
 
-#include <kabuki/features/graphics/seam_0_3_1_graphics.h>
+#include <kabuki/features/graphics/0_3_1_graphics.h>
 
-#include <kabuki/f2sdk/drawing/seam_0_3_2_drawing.h>
+#include <kabuki/f2sdk/drawing/0_3_2_drawing.h>
 
-#include <kabuki/f2sdk/gui/seam_0_3_3_gui.h>
+#include <kabuki/f2sdk/gui/0_3_3_gui.h>
 
-#include <kabuki/f2sdk/plotting/seam_0_3_4_plotting.h>
+#include <kabuki/f2sdk/plotting/0_3_4_plotting.h>
 
-#include <kabuki/features/camera/seam_0_3_5_camera.h>
+#include <kabuki/features/camera/0_3_5_camera.h>
 
-#include <kabuki/features/webcam/seam_0_4_0_webcam.h>
+#include <kabuki/features/webcam/0_4_0_webcam.h>
 
-#include <kabuki/f2sdk/video/seam_0_4_1_video.h>
+#include <kabuki/f2sdk/video/0_4_1_video.h>
 
-#include <kabuki/f2sdk/ai/seam_0_4_2_ai_math.h>
+#include <kabuki/f2sdk/ai/0_4_2_ai_math.h>
 
 using namespace _;
 

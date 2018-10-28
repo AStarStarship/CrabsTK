@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4_0__00_00
+#if SEAM >= _0_0_4_0__00_00
 // Dependencies:
 #include "hex.h"
 #if CRABS_TEXT
@@ -22,4 +22,4 @@ namespace _ {}  // namespace _
 #undef PRINTF
 #undef PRINT
 #endif  //< CRABS_TEXT
-#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00
+#endif  //< #if SEAM >= _0_0_4_0__00_00

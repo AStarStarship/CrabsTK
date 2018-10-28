@@ -12,17 +12,17 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4_0__00_00
+#if SEAM >= _0_0_4_0__00_00
 #include "args.h"
-#include "ascii_data.h"
+#include "casciidata.h"
 #include "bout.h"
 #include "bsq.h"
 #include "hash.h"
 #include "hex.h"
 #include "line.h"
 #include "slot.h"
-#include "socket.h"
-#include "test.h"
+#include "csocket.h"
+#include "ctest.h"
 #if SEAM_MAJOR == 0 && SEAM_MINOR == 4
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT(c) Print(c)
@@ -743,4 +743,4 @@ Utf8& PrintBOut(Utf8& print, BOut* bout) {
 #undef PRINT
 #undef PRINT_BSQ
 #undef PRINT_BOUT
-#endif  //> #if SEAM >= SEAM_0_0_4_0__00_00
+#endif  //> #if SEAM >= _0_0_4_0__00_00

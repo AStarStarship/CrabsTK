@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 
-#include <kabuki/f2/config.inl>
+#include <kabuki/f2/global_config.inl>
 
-#define SEAM SEAM_0_0_2__00
-#define SEAM_N SEAM
+#define SEAM _0_0_2__00
+#define SEAM_TEST SEAM

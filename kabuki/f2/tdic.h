@@ -14,15 +14,19 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__13
+#if SEAM >= _0_0_0__12
 
 #ifndef INCLUDED_KABUKI_F2_BOOK
 #define INCLUDED_KABUKI_F2_BOOK 1
 
-#include "ascii_data.h"
-#include "socket.h"
+#include "casciidata.h"
+#include "csocket.h"
 
-#include "06/seam_header.inl"
+#if SEAM >= _0_0_0__12
+#include "test_debug.inl"
+#else
+#include "test_release.inl"
+#endif
 
 namespace _ {
 
@@ -743,3 +747,4 @@ Utf8& DicPrint(Utf8& print, Dictionary<UI, SI, I>* dictionary) {
 }  // namespace _
 #include "06/seam_footer.inl"
 #endif  //< INCLUDED_KABUKI_F2_BOOK
+#endif  //< #if SEAM >= _0_0_0__12

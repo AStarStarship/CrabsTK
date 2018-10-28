@@ -18,6 +18,82 @@ specific language governing permissions and limitations under the License. */
 #include "ttest.h"
 
 namespace _ {
+char HexNibbleToUpperCase(uint8_t b) {
+  b = b & 0xf;
+  if (b > 9) return b + ('A' - 10);
+  return b + '0';
+}
+}  // namespace _
+
+#if SEAM >= _0_0_0__01
+namespace _ {
+
+int StringLength(uint64_t value) {
+  if (value < 10) return 1;
+  if (value < 100) return 2;
+  if (value < 1000) return 3;
+  if (value < 10000) return 4;
+  if (value < 100000) return 5;
+  if (value < 1000000) return 6;
+  if (value < 10000000) return 7;
+  if (value < 100000000) return 8;
+  if (value < 1000000000) return 9;
+  if (value < 10000000000) return 10;
+  if (value < 100000000000) return 11;
+  if (value < 1000000000000) return 12;
+  if (value < 10000000000000) return 13;
+  if (value < 100000000000000) return 14;
+  if (value < 1000000000000000) return 15;
+  if (value < 10000000000000000) return 16;
+  if (value < 100000000000000000) return 17;
+  if (value < 1000000000000000000) return 18;
+  if (value < 10000000000000000000) return 19;
+  return 20;
+}
+
+template <typename Char>
+Char* PrintMod10(Char* cursor, Char* end, uint32_t value) {
+  if (!cursor || cursor >= end) return nullptr;
+
+  uint32_t length;
+  if (value < 10) {
+    if (cursor + 1 >= end) return nullptr;
+    *cursor = '0' + value;
+    *(cursor + 1) = 0;
+    *return cursor + 1;
+  } else if (value < 100) {
+    uint32_t ten = 10;
+    length = value / 10;
+
+  } else if (value < 1000)
+    length = 3;
+  else if (value < 10000)
+    length = 4;
+  else if (value < 100000)
+    length = 5;
+  else if (value < 1000000)
+    length = 6;
+  else if (value < 10000000)
+    length = 7;
+  else if (value < 100000000)
+    length = 8;
+  else if (value < 1000000000)
+    length = 9;
+  else if (value < 10000000000)
+    length = 10;
+  else if (value < 100000000000)
+    length = 11;
+  else
+    length = 12;
+  Char* stop = cursor + length - 1;
+  if (stop >= end) return nullptr;
+  uint32_t ten = 10;
+  while (length > 0) {
+    uint32_t scalar = value / ten;
+  }
+}
+
+char* PrintMod10(char* cursor, char* end, uint64_t value);
 
 #if CPU_ENDIAN == LITTLE_ENDIAN
 static const uint16_t kDigits00To99[100] = {
@@ -50,8 +126,10 @@ static const uint16_t kDigits00To99[100] = {
     0x3939};
 #endif
 
-#if SEAM >= SEAM_0_0_0__02
-
+#if SEAM >= _0_0_0__03
+/* Precomputed IEEE 754 base 2 powers of ten exponents:
+10^-348, 10^-340, ..., 10^340.
+Size bytes is 87 elements * 8 bytes/element = 696 bytes. */
 static const int16_t kCachedPowersE[] = {
     -1220, -1193, -1166, -1140, -1113, -1087, -1060, -1034, -1007, -980, -954,
     -927,  -901,  -874,  -847,  -821,  -794,  -768,  -741,  -715,  -688, -661,
@@ -100,9 +178,9 @@ static const uint32_t kIEEE754Pow10[] = {
     0,      1,       10,       100,       1000,      10000,
     100000, 1000000, 10000000, 100000000, 1000000000};
 
-#endif  //<  #if SEAM >= SEAM_0_0_0__02
+#endif  //<  #if SEAM >= _0_0_0__03
 
-// inline const uint16_t* BinaryDecimalsLUT() { return kDigits00To99; }
+inline const uint16_t* BinaryDecimalsLUT() { return kDigits00To99; }
 
 inline uint8_t Unsigned(int8_t value) { return (uint8_t)(value); }
 
@@ -153,12 +231,6 @@ char HexNibbleToLowerCase(uint8_t b) {
   return b + '0';
 }
 
-char HexNibbleToUpperCase(uint8_t b) {
-  b = b & 0xf;
-  if (b > 9) return b + ('A' - 10);
-  return b + '0';
-}
-
 uint16_t HexByteToLowerCase(uint8_t b) {
   uint16_t value = HexNibbleToLowerCase(b & 0xf);
   value = value << 8;
@@ -206,36 +278,22 @@ int BinaryLength(uint32_t value) {}
 int BinaryLength(uint64_t value) {}
 
 }  // namespace _
+#endif
 
-#include <cmath>
+#if SEAM >= _0_0_0__03
+//#include <cmath>
 
-#if SEAM >= SEAM_0_0_0__02
-#include "02/seam_header.inl"
+#if SEAM == _0_0_0__03
+#include "test_debug.inl"
+#else
+#include "test_release.inl"
+#endif
+
 namespace _ {
 
-inline int FloatDigitsMax() { return 0; }
+inline int FloatDigitsMax() { return 15; }
 
-inline int DoubleDigitsMax() {}
-
-float FloatDecimalPower(int decimal_count) { return 0.0f; }
-
-double DoubleDecimalPower(int decimal_count) { return 0.0; }
-
-inline bool IsNaN(float value) { return false; }
-
-inline bool IsNaN(double value) { return false; }
-
-inline bool IsFinite(float value) { return false; }
-
-inline bool IsFinite(double value) { return false; }
-
-inline bool IsInfinite(float value) { return false; }
-
-inline bool IsInfinite(double value) { return false; }
-
-float Ceiling(float value) { return 0.0f; }
-
-double Ceiling(double value) { return 0.0f; }
+inline int DoubleDigitsMax() { return 31; }
 
 int MSbAsserted(uint8_t value) { return MSbAssertedReverse<uint8_t>(value); }
 
@@ -340,21 +398,12 @@ char* Print(char* begin, char* end, char byte_0, char byte_1, char byte_2) {
 
 constexpr intptr_t IEEE754LutElementCount() { return 87; }
 
-inline const uint16_t* IEEE754Pow10E() {
+inline const int16_t* IEEE754Pow10E() {
   /* Precomputed powers of 10 exponents for Grisu. */
   return kCachedPowersE;
 }
-}  // namespace _
 
 inline const uint64_t* IEEE754Pow10F() { return kCachedPowersF; }
-
-inline const uint16_t* IEEE754Exponents(const char* lut) {
-  return reinterpret_cast<const uint16_t*>(lut + 100);
-}
-
-inline const uint16_t* IEEE754Pow10(const char* lut) {
-  return reinterpret_cast<const uint16_t*>(lut) + 100;
-}
 
 void NumberRealLutGenerate(char* lut, size_t size) {
   ASSERT(size);
@@ -390,30 +439,12 @@ const uint64_t* PufLutPow10(char* puff_lut) {
   return reinterpret_cast<const uint64_t*>(puff_lut + 374);
 }
 
-int FloatDigitsMax() { return 8; }  //< 3 + FLT_MANT_DIG - FLT_MIN_EXP;
-
 inline uint32_t Value(float value) {
   return *reinterpret_cast<uint32_t*>(&value);
 }
 
 inline uint64_t Value(double value) {
   return *reinterpret_cast<uint64_t*>(&value);
-}
-
-float FloatDecimalPower(int decimal_count) {
-  static const float kDecimals[] = {0.1f,       0.01f,      0.001f,
-                                    0.0001f,    0.00001f,   0.000001f,
-                                    0.0000001f, 0.00000001f};
-
-  if (decimal_count < 1 || decimal_count > FloatDigitsMax()) return 0.0f;
-  return kDecimals[decimal_count - 1];
-}
-
-int DoubleDigitsMax() { return 16; }  //< 3 + DBL_MANT_DIG - DBL_MIN_EXP;
-
-double DoubleDecimalPower(int decimal_count) {
-  if (decimal_count < 0 || decimal_count > DoubleDigitsMax()) return 0.0;
-  return IEEE754LUT()[decimal_count];
 }
 
 bool IsNaNPositive(int8_t value) { return value > NanUnsigned<int8_t>(); }
@@ -476,40 +507,16 @@ uint64_t ComputePow10(int e, int alpha, int gamma) {
   return *reinterpret_cast<uint64_t*>(&pow_10);
 }
 
-template <typename UI, typename Float>
-float TCeiling(Float f) {
+template <typename Float, typename UI>
+Float TCeiling(Float f) {
   UI f_floor = static_cast<UI>(f);
-  if (f - static_cast<Float>(f_floor) = 0) return f;
+  if (f - static_cast<Float>(f_floor) == 0) return f;
   return static_cast<Float>(f_floor + 1);
 }
 
-double Ceiling(double value) { return TCeiling<uint64_t, double>(value); }
+double Ceiling(double value) { return TCeiling<double, uint64_t>(value); }
 
-float Ceiling(float value) { return TCeiling<uint32_t, float>(value); }
-
-int MSbAsserted(uint8_t value) { return MSbAssertedReverse<uint8_t>(value); }
-
-int MSbAsserted(int8_t value) {
-  return MSbAssertedReverse<uint8_t>((uint8_t)value);
-}
-
-int MSbAsserted(uint16_t value) { return MSbAssertedReverse<uint16_t>(value); }
-
-int MSbAsserted(int16_t value) {
-  return MSbAssertedReverse<uint16_t>((uint16_t)value);
-}
-
-int MSbAsserted(uint32_t value) { return MSbAssertedReverse<uint32_t>(value); }
-
-int MSbAsserted(int32_t value) {
-  return MSbAssertedReverse<uint32_t>((uint32_t)value);
-}
-
-int MSbAsserted(uint64_t value) { return MSbAssertedReverse<uint64_t>(value); }
-
-int MSbAsserted(int64_t value) {
-  return MSbAssertedReverse<uint64_t>((uint64_t)value);
-}
+float Ceiling(float value) { return TCeiling<float, uint32_t>(value); }
 
 char* Print(char* cursor, char* end, float value) {
   return PrintFloat<float, uint32_t, char>(cursor, end, value);
@@ -518,8 +525,6 @@ char* Print(char* cursor, char* end, float value) {
 char* Print(char* cursor, char* end, double value) {
   return PrintFloat<double, uint64_t, char>(cursor, end, value);
 }
-
 }  // namespace _
-
-#include "02/seam_footer.inl"
-#endif  //< #if SEAM >= SEAM_0_0_0__02
+#include "test_footer.inl"
+#endif  //< #if SEAM >= _0_0_0__03

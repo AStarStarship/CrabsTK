@@ -16,11 +16,11 @@ specific language governing permissions and limitations under the License. */
 #define SEAM_LAYER 0
 #define SEAM_MILLI 0
 #define SEAM_MICRO 1
-#define SEAM_NANO 0
+#define SEAM_TESTANO 0
 #define SEAM_PICO 0
 #define SEAM_FEMTO 0
 #define SEAM_PROJECT 0
 #define SEAM_SPRINT 0
 #define SEAM_SCRUM 0
 
-#define SEAM SEAM_0_0_0__00
+#define SEAM _0_0_0__01

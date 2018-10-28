@@ -17,7 +17,7 @@ In order to print floating-point numbers we need to first test the memory copy a
 
 * [Cale McCollough](https://calemccollough.github.io) <[cale.mccollough@gmail.com](mailto:cale.mccollough@gmail.com)>
 
-## The License
+## License
 
 Copyright 2018 (C) [Cale McCollough](mailto:calemccollough@gmail.com) and contributors. All rights reserved (R).
 

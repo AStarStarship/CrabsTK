@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4_0__00_00
+#if SEAM >= _0_0_4_0__00_00
 // Dependencies:
 #include "door.h"
 // End dependencies.
@@ -124,4 +124,4 @@ static Door* DoorInit (uintptr_t* buffer, slot_t slot_size) {
 }  // namespace _
 #undef PRINTF
 #undef PRINT
-#endif  //> #if SEAM >= SEAM_0_0_4_0__00_00
+#endif  //> #if SEAM >= _0_0_4_0__00_00

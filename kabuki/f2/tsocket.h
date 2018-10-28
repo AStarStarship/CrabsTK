@@ -1,6 +1,6 @@
 /* Kabuki Toolkit @version 0.x
 @link    https://github.com/kabuki-starship/kabuki-toolkit.git
-@file    /kabuki/f2/socket.h
+@file    /kabuki/f2/csocket.h
 @author  Cale McCollough <https://calemccollough.github.io>
 @license Copyright (C) 2014-2017 Cale McCollough <calemccollough.github.io>;
 All right reserved (R). Licensed under the Apache License, Version 2.0 (the
@@ -14,13 +14,13 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__01
+#if SEAM >= _0_0_0__02
 #ifndef INCLUDED_KABUKI_F2_KABUKI_TSOCKET
 #define INCLUDED_KABUKI_F2_KABUKI_TSOCKET
 
-#include "socket.h"
+#include "csocket.h"
 
-#include "binary.h"
+#include "cbinary.h"
 
 namespace _ {
 
@@ -225,4 +225,4 @@ uintptr_t* New(uintptr_t* buffer, intptr_t size) {
 }  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_KABUKI_TSOCKET
-#endif  //< #if SEAM >= SEAM_0_0_0__01
+#endif  //< #if SEAM >= _0_0_0__02

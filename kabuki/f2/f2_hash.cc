@@ -12,7 +12,7 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__05
+#if SEAM >= _0_0_0__06
 #include "thash.h"
 
 namespace _ {
@@ -82,4 +82,4 @@ uint16_t Hash16UI8(uint64_t value, uint16_t hash) {
 }
 
 }  // namespace _
-#endif  //> #if SEAM >= SEAM_0_0_0__05
+#endif  //> #if SEAM >= _0_0_0__06

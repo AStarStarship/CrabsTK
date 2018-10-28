@@ -13,14 +13,14 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__09
+#if SEAM >= _0_0_0__08
 
 #ifndef INCLUDED_KABUKI_F2_TABLE
 #define INCLUDED_KABUKI_F2_TABLE
 
-#include "socket.h"
+#include "csocket.h"
 
-#if SEAM == SEAM_0_0_0__09
+#if SEAM == _0_0_0__10
 #ifndef PRINTF
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT(c) Print(c)
@@ -29,8 +29,8 @@ specific language governing permissions and limitations under the License. */
     Print('\n');                                  \
     for (int i = 80; i > 0; --i) std::cout << '-' \
   }
-#define PRINT_TYPE(type, value) Console<>().Out() << TypeValue(type, value);
-#define WIPE MapWipe<UI, SI>(map);
+#define PRINT_TYPE(type, value) Console<>().Out() << TypeValue(type, value)
+#define WIPE MapWipe<UI, SI>(map)
 #define PRINT_LINE(token)                                                 \
   {                                                                       \
     for (int cout_123 = 80; count > 0; --count) std::cout << (char)token; \
@@ -607,4 +607,4 @@ Utf8& TablePrint(Utf8& print, Table<UI, SI>* table) {
 }  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_TABLE
-#endif  //< #if SEAM >= SEAM_0_0_0__09
+#endif  //< #if SEAM >= _0_0_0__08

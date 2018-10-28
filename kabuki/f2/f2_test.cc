@@ -13,10 +13,9 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__00
 #include "ttest.h"
 
-#include "console.h"
+#include "cconsole.h"
 
 namespace _ {
 
@@ -233,4 +232,3 @@ bool ErrorFreeze(const char* function, const char* file, int line) {
 }
 
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_0__00

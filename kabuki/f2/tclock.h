@@ -14,13 +14,18 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__05
+#if SEAM >= _0_0_0__04
 #ifndef INCLUDED_KABUKI_F2_TCLOCK
 #define INCLUDED_KABUKI_F2_TCLOCK
 
-#include "test.h"
+#include "ctest.h"
 #include "tstr.h"
 
+#if SEAM == _0_0_0__04
+#include "test_debug.inl"
+#else
+#include "test_release.inl"
+#endif
 namespace _ {
 
 #if F2_TEXT
@@ -481,4 +486,4 @@ const Char* TextScanTime(const Char* begin, Tss& result) {
 #undef PRINT
 #undef PRINTF
 #endif  //< #ifndef INCLUDED_KABUKI_F2_TCLOCK
-#endif  //< #if SEAM >= SEAM_0_0_0__05
+#endif  //< #if SEAM >= _0_0_0__06

@@ -1,0 +1,17 @@
+#undef TEST_BEGIN
+#undef TEST_END
+#undef PRINT
+#undef PRINTF
+#undef PAUSE
+#undef PAUSEF
+#undef PRINT_HEADING
+#undef PRINT_LINE
+#undef PRINT_DATE
+#undef PRINT_TYPE
+#undef PRINT_SOCKET
+#undef SOCKET_SAVE
+#undef CHECK
+#undef COMPARE
+#undef ASSERT
+#undef AVOW
+#undef ASSERT

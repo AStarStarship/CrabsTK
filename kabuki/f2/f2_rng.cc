@@ -13,40 +13,36 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#ifndef INCLUDED_KABUKI_F2_RNG
-#define INCLUDED_KABUKI_F2_RNG
-
-#include "rng.h"
+#include "crng.h"
 
 #include <random>
 
 namespace _ {
 
-static std::mt19937 rng;
+static std::default_random_engine rng;
+
+inline uint32_t RandomUI4() { return rng(); }
 
 inline uint RandomSeed() { return std::random_device()(); }
 
 inline void RandomizeSeed() { return rng.seed(RandomSeed()); }
 
-inline uint8_t RandomUI1() { return (uint8_t)rng(); }
+inline uint8_t RandomUI1() { return (uint8_t)RandomUI4(); }
 
 inline int8_t RandomSI1() { return (int8_t)RandomUI1(); }
 
-inline uint16_t RandomUI2() { return (uint16_t)rng(); }
+inline uint16_t RandomUI2() { return (uint16_t)RandomUI4(); }
 
 inline int16_t RandomSI2() { return (int16_t)RandomUI2(); }
 
-// uint32_t RandomUI4() { return rng(); }
-
 inline int32_t RandomSI4() { return (int32_t)RandomUI4(); }
 
-/*
 inline uint64_t RandomUI8() {
   uint64_t a = RandomUI4(), b = RandomUI4();
   return (int64_t)(a | (b << 32));
-}*/
+}
 
-int64_t RandomSI8() { return (int64_t)RandomUI8(); }
+inline int64_t RandomSI8() { return (int64_t)RandomUI8(); }
 
 inline void RandomNumber(uint8_t& result) { result = RandomUI1(); }
 
@@ -70,11 +66,6 @@ inline I Random(I min, I max) {
   return dist(rng);
 }
 
-// uint8_t Random(uint8_t min, uint8_t max) { return Random<uint8_t>(min, max);
-// }
-
-// uint8_t Random(int8_t min, int8_t max) { return Random<int8_t>(min, max); }
-
 inline uint16_t Random(uint16_t min, uint16_t max) {
   return Random<uint16_t>(min, max);
 }
@@ -96,4 +87,3 @@ inline uint64_t Random(int64_t min, int64_t max) {
 }
 
 }  // namespace _
-#endif  //< INCLUDED_KABUKI_F2_RNG

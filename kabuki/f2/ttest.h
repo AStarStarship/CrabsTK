@@ -17,9 +17,9 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_TTEST
 #define INCLUDED_KABUKI_F2_TTEST 1
 
-#include "test.h"
+#include "ctest.h"
 
-#include "console.h"
+#include "cconsole.h"
 #include "tbinary.h"
 
 namespace _ {

@@ -1,0 +1,16 @@
+#define TEST_BEGIN
+#define TEST_END
+#define PRINT(item)
+#define PRINTF(format, ...)
+#define PAUSE(message)
+#define PAUSEF(format, ...)
+#define PRINT_HEADING(message)
+#define PRINT_LINE(c)
+#define PRINT_DATE(date)
+#define PRINT_TYPE(type, value)
+#define PRINT_SOCKET(begin, end_or_size)
+#define SOCKET_SAVE(begin, end)
+#define ASSERT(condition)
+#define CHECK(condition)
+#define COMPARE(a, b)
+#define AVOW(a, b)

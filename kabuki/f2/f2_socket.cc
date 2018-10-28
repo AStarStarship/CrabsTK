@@ -12,11 +12,16 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__01
+#if SEAM >= _0_0_0__02
 
 #include "tsocket.h"
 
-#include "01/seam_header.inl"
+#if SEAM == _0_0_0__02
+#include "test_debug.inl"
+#else
+#include "test_release.inl"
+#endif
+
 namespace _ {
 
 uintptr_t* AlignUp(uintptr_t* buffer, uintptr_t mask) {
@@ -276,5 +281,5 @@ void DestructorDeleteBuffer(uintptr_t* buffer) {
 }
 
 }  // namespace _
-#include "01/seam_footer.inl"
-#endif  //<  #if SEAM >= SEAM_0_0_0__01
+#include "test_footer.inl"
+#endif  //<  #if SEAM >= _0_0_0__02

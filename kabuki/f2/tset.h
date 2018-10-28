@@ -13,12 +13,12 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__04
-#ifndef F2_COLLECTION_H
-#define F2_COLLECTION_H
+#if SEAM >= _0_0_0__05
+#ifndef INCLUDED_F2_SET
+#define INCLUDED_F2_SET 1
 
-#include "ascii_data.h"
 #include "binary.h"
+#include "casciidata.h"
 
 namespace _ {
 /*
@@ -109,5 +109,5 @@ struct Collection {
   virtual Utf8& Print(Utf8& out_) = 0;
 };
 }  // namespace _
-#endif  //< #if SEAM >= SEAM_0_0_0__04
-#endif  //< F2_COLLECTION_H
+#endif  //< #if SEAM >= _0_0_0__05
+#endif  //< INCLUDED_F2_SET

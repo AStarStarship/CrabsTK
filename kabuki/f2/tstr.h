@@ -13,19 +13,23 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__01
+#if SEAM >= _0_0_0__02
 #ifndef INCLUDED_KABUKI_F2_UTFN
 #define INCLUDED_KABUKI_F2_UTFN
 
-#include "str.h"
+#include "cstr.h"
 
-#include "ascii.h"
+#include "cascii.h"
+#include "ctest.h"
 #include "tbinary.h"
-#include "test.h"
 #include "tobj.h"
 #include "tsocket.h"
 
-#include "01/seam_header.inl"
+#if SEAM == _0_0_0__02
+#include "test_debug.inl"
+#else
+#include "test_release.inl"
+#endif
 
 namespace _ {
 
@@ -510,8 +514,8 @@ Char* PrintLineString(Char* cursor, Char* end, const Char* string,
 }
 
 template <typename Char = char>
-Char* PrintSocket(Char* cursor, Char* end, const void* start,
-                  const void* stop) {
+Char* TPrintSocket(Char* cursor, Char* end, const void* start,
+                   const void* stop) {
   ASSERT(start);
   ASSERT(cursor);
   ASSERT(cursor < end);
@@ -617,7 +621,7 @@ class TToken {
   /* Prints the value to the text buffer. */
   TToken(uint64_t value) { Print<Char>(string, string + kSize, value); }
 
-#if SEAM >= SEAM_0_0_0__02
+#if SEAM >= _0_0_0__03
   /* Prints the value to the text buffer. */
   TToken(float value) { Print<Char>(string, string + kSize, value); }
 
@@ -667,7 +671,7 @@ class TCenter {
     // Nothing to do here!
   }
 
-#if SEAM >= SEAM_0_0_0__02
+#if SEAM >= _0_0_0__03
   /* Prints the value to the text buffer. */
   TCenter(float value, int column_count)
       : string(nullptr), number(value), column_count(column_count) {
@@ -727,16 +731,16 @@ class TRight {
     // Nothing to do here!
   }
 
-#if SEAM >= SEAM_0_0_0__02
+#if SEAM >= _0_0_0__03
   /* Prints the value to the text buffer. */
   TRight(float value, int column_count)
-      : string(nullptr), number(value), column_count(column_count) {
+      : string_(nullptr), number_(value), column_count_(column_count) {
     // Nothing to do here!
   }
 
   /* Prints the value to the text buffer. */
   TRight(double value, int column_count)
-      : string(nullptr), number(value), column_count(column_count) {
+      : string_(nullptr), number_(value), column_count_(column_count) {
     // Nothing to do here!
   }
 #endif
@@ -899,7 +903,7 @@ struct TUtf {
     return Set(PrintHex<Char>(begin, end, value));
   }
 
-#if SEAM >= SEAM_0_0_0__02
+#if SEAM >= _0_0_0__03
   /* Prints the given value as hex. */
   inline TUtf& Hex(float value) {
     return Set(PrintHex<Char>(begin, end, value));
@@ -956,7 +960,7 @@ struct TUtf {
     return Set(Binary<Char>(begin, end, value));
   }
 
-#if SEAM >= SEAM_0_0_0__02
+#if SEAM >= _0_0_0__03
   /* Prints the given value as binary. */
   inline TUtf& Binary(float value) {
     return Set(Binary<Char>(begin, end, value));
@@ -1004,16 +1008,16 @@ class TStr : public TUtf<Char> {
   TStr() : TUtf<Char>(), obj_() { Terminate(); }
 
   /* Constructs the Utf& pointers to the buffer_. */
-  TStr(Destructor destructor) : obj_(destructor) { Terminate(); }
+  TStr(HeapManager destructor) : obj_(destructor) { Terminate(); }
 
   /* Constructs the Utf& pointers to the buffer_. */
-  TStr(intptr_t size, Destructor destructor = nullptr)
+  TStr(intptr_t size, HeapManager destructor = nullptr)
       : obj_(size, destructor) {
     Terminate();
   }
 
   /* Constructs the Utf& pointers to the buffer_. */
-  TStr(intptr_t size, uintptr_t* buffer, Destructor destructor = nullptr)
+  TStr(intptr_t size, uintptr_t* buffer, HeapManager destructor = nullptr)
       : TObj(size, buffer, destructor) {
     Terminate();
   }
@@ -1070,7 +1074,7 @@ class TStr : public TUtf<Char> {
   @return A UTF. */
   inline TUtf<Char> Print(uint64_t value) { return Print<uint64_t>(value); }
 
-#if SEAM >= SEAM_0_0_0__02
+#if SEAM >= _0_0_0__03
   /* Prints the given value.
   @return A UTF. */
   inline TUtf<Char> Print(float value) { return Print<float>(value); }
@@ -1097,8 +1101,64 @@ class TStr : public TUtf<Char> {
 };
 
 template <typename Char = char>
-TUtf<Char> Print(Destructor* mh) {
-  return TStr<Char>(mh);
+TUtf<Char> Print(HeapManager* hm) {
+  return TStr<Char>(hm);
+}
+
+template <typename Char = char>
+int StringQuery(const Char* cursor, const Char* end, const Char* query) {
+  Char a = *cursor, b = *query;
+  int result;
+
+  if (!cursor) {
+    if (!query) return 0;
+    a = 0;
+    b = *query;
+    return b - a;
+  }
+  if (!query) {
+    a = *cursor;
+    b = 0;
+    return b - a;
+  }
+  if (cursor > end) return *query;
+
+  // Algorithm combines loops for better performance.
+  a = *cursor;
+  b = *query;
+  if (!a) {
+    if (!b) return 0;
+    return b;
+  }
+  if (!b) {
+    if (!a) return 0;
+    return 0 - a;
+  }
+  // text SHOULD be a nil-terminated string without whitespace.
+  while (b) {
+    result = b - a;
+    if (result) {
+      PRINTF(" is not a hit.");
+      return result;
+    }
+    if (!a) {
+      PRINTF(" is a partial match but !a.");
+      return result;
+    }
+    if (++cursor >= end) {
+      PRINTF(" but buffer overflowed!");
+      return result;
+    }
+    ++query;
+    a = *cursor;
+    b = *query;
+  }
+  if (a && !IsWhitespace<Char>(a)) {
+    PRINTF(" is only a partial match but found %s", (a ? "a" : "space"));
+    return b - a;
+  }
+  PRINTF(" is a match!");
+  return 0;
 }
 
 }  // namespace _
@@ -1187,7 +1247,7 @@ API _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, uint64_t value) {
   return utf.Set(_::Print<Char>(utf.begin, utf.end, value));
 }
 
-#if SEAM >= SEAM_0_0_0__02
+#if SEAM >= _0_0_0__03
 /* Writes the given value to the print.
 @return The utf.
 @desc
@@ -1238,6 +1298,6 @@ API _::TUtf<Char>& operator<<(_::TUtf<Char>& utf, _::TLineString<Char> line) {
   return utf.Set(_::Print<Char>(utf.begin, utf.end, line));
 }
 
-#include "01/seam_footer.inl"
+#include "test_footer.inl"
 #endif  //< #if INCLUDED_KABUKI_F2_TSTR
-#endif  //< #if SEAM >= SEAM_0_0_0__01
+#endif  //< #if SEAM >= _0_0_0__02

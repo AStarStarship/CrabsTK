@@ -17,46 +17,37 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_GLOBAL
 #define INCLUDED_KABUKI_F2_GLOBAL 1
 
-#if SEAM == SEAM_0_0_0__00
-#include "rng.h"
-#include "ttest.h"
+#if SEAM == _0_0_0__00
+#include "crng.h"
 #endif
-#if SEAM == SEAM_0_0_0__01
-#include "rng.h"
-#include "ttest.h"
+#if SEAM == _0_0_0__01
+#include "crng.h"
 #endif
-#if SEAM == SEAM_0_0_0__02
-#include "ttest.h"
+#if SEAM == _0_0_0__02
+#include "crng.h"
 #endif
-#if SEAM == SEAM_0_0_0__03
-#include "ttest.h"
+#if SEAM == _0_0_0__03
+#include "crng.h"
 #endif
-#if SEAM == SEAM_0_0_0__04
-#include "ttest.h"
+#if SEAM == _0_0_0__04
 #endif
-#if SEAM == SEAM_0_0_0__05
-#include "ttest.h"
+#if SEAM == _0_0_0__05
 #endif
-#if SEAM == SEAM_0_0_0__06
-#include "ttest.h"
+#if SEAM == _0_0_0__06
 #endif
-#if SEAM == SEAM_0_0_0__07
-#include "ttest.h"
+#if SEAM == _0_0_0__07
 #endif
-#if SEAM == SEAM_0_0_0__08
-#include "ttest.h"
+#if SEAM == _0_0_0__08
 #endif
-#if SEAM == SEAM_0_0_0__09
-#include "ttest.h"
+#if SEAM == _0_0_0__09
 #endif
-#if SEAM == SEAM_0_0_0__10
-#include "ttest.h"
+#if SEAM == _0_0_0__10
 #endif
-#if SEAM == SEAM_0_0_0__11
-#include "ttest.h"
+#if SEAM == _0_0_0__11
 #endif
-#if SEAM == SEAM_0_0_0__12
-#include "ttest.h"
+#if SEAM == _0_0_0__12
+#endif
+#if SEAM == _0_0_0__13
 #endif
 
 #endif  //< #ifndef INCLUDED_KABUKI_F2_GLOBAL

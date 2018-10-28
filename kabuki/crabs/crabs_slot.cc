@@ -12,16 +12,16 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4_0__00_00
-#include <kabuki/f2/socket.h>
-#include <kabuki/f2/ascii_data.h>
+#if SEAM >= _0_0_4_0__00_00
+#include <kabuki/f2/csocket.h>
+#include <kabuki/f2/casciidata.h>
 #include <kabuki/f2/hex.h>
 #include <kabuki/f2/tstr.h>
 
 #include "slot.h"
 // End dependencies.
 
-#if SEAM == SEAM_0_0_4_0__00_00
+#if SEAM == _0_0_4_0__00_00
 #define PRINTF(format, ...) Printf(format, __VA_ARGS__)
 #define PRINT(c) Print(c)
 #define PRINT_BSQ(bsq) Console<>().Out() << header << '\n' << Bsq(bsq);
@@ -146,12 +146,12 @@ bool Slot::IsReadable() { return start != stop; }
         size_t top_chunk = end - stop;
         size -= top_chunk;
 
-        MemoryCopy (target, target_end, start, top_chunk);
-        MemoryCopy (reinterpret_cast<char*>(target) + top_chunk, size,
+        SocketCopy (target, target_end, start, top_chunk);
+        SocketCopy (reinterpret_cast<char*>(target) + top_chunk, size,
                     begin);
         return begin + size;
     }
-    MemoryCopy (target, target_end, stop, size);
+    SocketCopy (target, target_end, stop, size);
     return start + size;
 }*/
 
@@ -529,4 +529,4 @@ Utf8& Slot::Print(Utf8& print) {
 }  // namespace _
 #undef PRINTF
 #undef PRINT
-#endif  //> #if SEAM >= SEAM_0_0_4
+#endif  //> #if SEAM >= _0_0_4

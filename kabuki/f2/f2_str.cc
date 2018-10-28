@@ -12,13 +12,13 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__01
-#include "ascii.h"
-#include "socket.h"
+#if SEAM >= _0_0_0__02
+#include "cascii.h"
+#include "csocket.h"
 #include "tbinary.h"
 #include "tstr.h"
 
-#include "01/seam_header.inl"
+#include "test_release.inl"
 #if F2_TEXT
 
 namespace _ {
@@ -32,7 +32,7 @@ void COutAuto(uintptr_t* buffer) { COutAuto<char>(buffer); }
 #endif  // #if F2_TEXT
 
 #if USING_UTF8
-#include "str1.h"
+#include "cstr1.h"
 namespace _ {
 
 const char* StringEmpty() { return StringEmpty<char>(); }
@@ -140,15 +140,7 @@ char* Print(char* begin, char* end, int32_t value) {
 }
 #endif
 
-#if SEAM >= SEAM_0_0_0__02
-
-char* Print(char* begin, char* end, float value) {
-  return PrintFloat<float, uint32_t, char>(begin, end, value);
-}
-
-char* Print(char* begin, char* end, double value) {
-  return PrintFloat<double, uint64_t, char>(begin, end, value);
-}
+#if SEAM >= _0_0_0__03
 
 char* PrintCenter(char* begin, char* end, float value, int column_count) {
   return PrintRight<char>(begin, end, Utf8Text(value).String(), column_count);
@@ -175,7 +167,7 @@ const char* Scan(const char* string, double& result) {
   // return Scan<char>(string, result);
   return nullptr;
 }
-#endif  //< #if SEAM >= SEAM_0_0_0__02
+#endif  //< #if SEAM >= _0_0_0__03
 
 char* PrintCenter(char* begin, char* end, const char* string,
                   int column_count) {
@@ -323,12 +315,12 @@ char* PrintBinary(char* begin, char* end, double value) {
 }
 
 char* PrintSocket(char* begin, char* end, const void* start, size_t size) {
-  return PrintSocket<char>(begin, end, start,
-                           reinterpret_cast<const char*>(start) + size);
+  return TPrintSocket<char>(begin, end, start,
+                            reinterpret_cast<const char*>(start) + size);
 }
 
 char* PrintSocket(char* begin, char* end, const void* start, const void* stop) {
-  return PrintSocket<char>(begin, end, start, stop);
+  return TPrintSocket<char>(begin, end, start, stop);
 }
 
 char* PrintLine(char* cursor, char* end, char token, int column_count) {
@@ -508,7 +500,7 @@ Utf8Text::Utf8Text(uint64_t value) {
   PrintUnsigned<uint64_t, char>(string, string + kSize - 1, value);
 }
 
-#if SEAM == SEAM_0_0_0__02
+#if SEAM == _0_0_0__03
 Utf8Text::Utf8Text(float value) {
   PrintFloat<float, uint32_t, char>(string, string + kSize - 1, value);
 }
@@ -516,7 +508,7 @@ Utf8Text::Utf8Text(float value) {
 Utf8Text::Utf8Text(double value) {
   PrintFloat<double, uint64_t, char>(string, string + kSize - 1, value);
 }
-#endif  //< #if SEAM == SEAM_0_0_0__02
+#endif  //< #if SEAM == _0_0_0__03
 
 const char* Utf8Text::String() { return string; }
 
@@ -535,7 +527,7 @@ Utf8Center::Utf8Center(int64_t value, int column_count)
 Utf8Center::Utf8Center(uint64_t value, int column_count)
     : string(nullptr), number(value), column_count(column_count) {}
 
-#if SEAM == SEAM_0_0_0__02
+#if SEAM == _0_0_0__03
 Utf8Center::Utf8Center(float value, int column_count)
     : string(nullptr), number(value), column_count(column_count) {}
 
@@ -564,7 +556,7 @@ Utf8Right::Utf8Right(int64_t value, int column_count)
 Utf8Right::Utf8Right(uint64_t value, int column_count)
     : string(nullptr), number(value), column_count(column_count) {}
 
-#if SEAM >= SEAM_0_0_0__02
+#if SEAM >= _0_0_0__03
 Utf8Right::Utf8Right(float value, int column_count)
     : string(nullptr), number(value), column_count(column_count) {}
 
@@ -630,7 +622,7 @@ _::Utf8& operator<<(_::Utf8& utf, uint64_t value) {
   return utf.Set(_::Print(utf.begin, utf.end, value));
 }
 
-#if SEAM == SEAM_0_0_0__02
+#if SEAM == _0_0_0__03
 _::Utf8& operator<<(_::Utf8& utf, float value) {
   return utf.Set(_::Print(utf.begin, utf.end, value));
 }
@@ -1914,5 +1906,5 @@ _::Utf32& operator<<(_::Utf32& utf, _::Utf32Right item) {
 
 #endif  //< #if USING_UTF32
 
-#include "01/seam_footer.inl"
-#endif  //< #if SEAM >= SEAM_0_0_0__01
+#include "test_footer.inl"
+#endif  //< #if SEAM >= _0_0_0__02

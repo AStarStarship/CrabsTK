@@ -12,7 +12,7 @@
 * [Cale McCollough](https://calemccollough.github.io) <[cale.mccollough@gmail.com](mailto:cale.mccollough@gmail.com)>
 * Authors of third-party APIs attributed in source headers.
 
-## The License
+## License
 
 Copyright 2014-18 (C) [Cale McCollough](mailto:calemccollough@gmail.com) and contributors. All rights reserved (R).
 

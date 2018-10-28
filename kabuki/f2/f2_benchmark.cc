@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__01
+#if SEAM >= _0_0_0__12
 #include "tbenchmark.h"
 
 #include "rng.h"
@@ -28,7 +28,12 @@ specific language governing permissions and limitations under the License. */
 using namespace std;
 using namespace std::chrono;
 
-#include "01/seam_header.inl"
+#if SEAM == _0_0_0__12
+#include "test_release.inl"
+#else
+#include "test_release.inl"
+#endif
+
 namespace _ {
 
 BenchmarkCase::BenchmarkCase(const char* name, TestCase* cases, int count)
@@ -92,4 +97,4 @@ const char* Benchmark::Run(char* cursor, char* end, const char* args) {
 }  // namespace _
 
 #include "01/seam_footer.inl"
-#endif  //< #if SEAM >= SEAM_0_0_0__01
+#endif

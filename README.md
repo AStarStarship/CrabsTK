@@ -139,7 +139,7 @@ The Vision of KT is to provide a F2SDK the quality of JUCE with an Apache 2.0 li
 * [Cale McCollough](https://calemccollough.github.io) <[cale.mccollough@gmail.com](mailto:cale.mccollough@gmail.com)>
 * Authors of third-party APIs attributed in source headers.
 
-## The License
+## License
 
 Copyright 2014-18 (C) [Cale McCollough](mailto:calemccollough@gmail.com). All rights reserved (R).
 

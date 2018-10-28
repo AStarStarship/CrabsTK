@@ -19,6 +19,6 @@ specific language governing permissions and limitations under the License. */
 
 #include "binary.h"
 #include "console.h"
-#include "test.h"
+#include "ctest.h"
 
 #endif  //< INCLUDED_KABUKI_F2_PUBLIC

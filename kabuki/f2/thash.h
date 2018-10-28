@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__05
+#if SEAM >= _0_0_0__08
 
 #include "hash.h"
 
@@ -51,4 +51,4 @@ inline UI PrimeMaxUnigned() {
 
 }  // namespace _
 #endif  //< INCLUDED_KABUKI_F2_THASH
-#endif  //< #if SEAM >= SEAM_0_0_0__05
+#endif  //< #if SEAM >= _0_0_0__08

@@ -13,12 +13,12 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_0__07
+#if SEAM >= _0_0_0__10
 #ifndef INCLUDED_CRAPS_MAP
 #define INCLUDED_CRAPS_MAP
 
-#include "ascii_data.h"
-#include "socket.h"
+#include "casciidata.h"
+#include "csocket.h"
 
 namespace _ {
 
@@ -661,4 +661,4 @@ class Map {
 #undef PRINT_TYPE
 #undef WIPE
 #undef PRINT_LINE
-#endif  //< #if SEAM >= SEAM_0_0_01__06
+#endif  //< #if SEAM >= _0_0_0__10

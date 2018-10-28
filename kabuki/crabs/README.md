@@ -15,7 +15,7 @@ The easiest way to get up to speed with how Crabs works is by learning about how
 
 ## Minor Seams
 
-### SEAM_0_0_0
+### _0_0_0
 
 Seam develops the Script Integer-to-ASCII (**itoa**) algorithm, the fastest integer to string algorithm in the world along with corresponding string-to-integer functions.
 
@@ -24,7 +24,7 @@ Seam develops the Script Integer-to-ASCII (**itoa**) algorithm, the fastest inte
 * `kabuki`
   * `crabs`
 
-### SEAM_0_0_1
+### _0_0_1
 
 Seam contains 
 
@@ -33,7 +33,7 @@ Seam contains
 * `kabuki`
   * `crabs`
 
-### SEAM_0_0_2
+### _0_0_2
 
 Develops the Universal Text Formatter (UTF), which contains all of the essential tools to print and scan plain-old-data types in UTF-8, UTF-16, and UTF-32, the end-product of the seam is the Clock utilities for printing and scanning timestamps.
 
@@ -42,7 +42,7 @@ Develops the Universal Text Formatter (UTF), which contains all of the essential
 * `kabuki`
   * `crabs`
 
-### SEAM_0_0_3
+### _0_0_3
 
 Develops the ASCII Data Types.
 
@@ -52,7 +52,7 @@ Develops the ASCII Data Types.
   * `crabs`
 
 
-### SEAM_0_0_4
+### _0_0_4
 
 Develops the BIn, BOut, Slot, Expr,
 

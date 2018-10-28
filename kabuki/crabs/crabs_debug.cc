@@ -15,7 +15,7 @@ specific language governing permissions and limitations under the License. */
 
 #include <conio.h>
 #include <cstdio>
-#include "test.h"
+#include "ctest.h"
 
 namespace _ {
 

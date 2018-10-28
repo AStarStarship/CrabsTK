@@ -14,15 +14,15 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__01
+#if SEAM >= _0_0_0__02
 #ifndef INCLUDED_KABUKI_F2_TOBJ
 #define INCLUDED_KABUKI_F2_TOBJ
 
-#include "obj.h"
+#include "cobj.h"
 
 #include "tsocket.h"
 
-#include "01/seam_header.inl"
+#include "test_release.inl"
 
 namespace _ {
 
@@ -133,21 +133,21 @@ class TObj {
 
   /* Constructs a buffer with either statically or dynamically allocated memory
   based on if buffer is nil. */
-  TObj(Destructor destructor) : obj_({nullptr, destructor}) {
+  TObj(HeapManager destructor) : obj_({nullptr, destructor}) {
     // Nothing to do here! (:-)-/==<
   }
 
   /* Constructs a buffer with either statically or dynamically allocated memory
   based on if buffer is nil. */
-  TObj(Size size, Destructor destructor = nullptr)
+  TObj(Size size, HeapManager destructor = nullptr)
       : obj_({Buffer(size), destructor}) {}
 
   /* Constructs a buffer with either statically or dynamically allocated
   memory based on if buffer is nil. */
-  TObj(Size size, uintptr_t* buffer, Destructor destructor = nullptr)
+  TObj(Size size, uintptr_t* buffer, HeapManager destructor = nullptr)
       : obj_({Buffer(size, buffer), destructor}) {}
 
-  /* Destructor deletes dynamic memory if is_dynamic_ is true. */
+  /* HeapManager deletes dynamic memory if is_dynamic_ is true. */
   ~TObj() { Delete(obj_); }
 
   /* Returns the buffer_. */
@@ -179,6 +179,6 @@ class TObj {
 
 }  // namespace _
 
-#include "01/seam_footer.inl"
+#include "test_footer.inl"
 #endif  //< INCLUDED_KABUKI_F2_TOBJ
-#endif  //< #if SEAM >= SEAM_0_0_0__01
+#endif  //< #if SEAM >= _0_0_0__02

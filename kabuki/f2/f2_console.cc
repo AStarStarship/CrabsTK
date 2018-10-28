@@ -13,19 +13,28 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#include "console.h"
-
-#include "ascii.h"
-#include "tbinary.h"
-#include "ttest.h"
-
 #include <conio.h>
 #include <cstdio>
 #include <iostream>
 
-#include "00/seam_header.inl"
+#include "cconsole.h"
+
+#include "cascii.h"
+#include "tbinary.h"
+#include "ttest.h"
+
 namespace _ {
 
+#if SEAM == _0_0_0__00
+#include "test_debug.inl"
+#define PRINT_ARGS                                     \
+  Printf("\nargs_count:%i args:%p", args_count, args); \
+  for (int i = 0; i < args_count; ++i)                 \
+  Printf("\n%i:\"%s\"", i, args[args_count])
+#else
+#include "test_release.inl"
+#define PRINT_ARGS
+#endif
 const char* ArgsToString(int args_count, char** args) {
   if (args_count <= 1) return nullptr;
   if (args_count == 2) return args[1];
@@ -38,8 +47,10 @@ const char* ArgsToString(int args_count, char** args) {
   }
   return args[1];
 }
+#undef PRINT_ARGS
+#include "test_footer.inl"
 
-inline void Print(char c) { std::cout << c; }
+inline void Print(char c) { putchar(c); }
 
 inline void Print(char first, char second) {
   Print(first);
@@ -73,7 +84,7 @@ void PrintfLn(const char* format, ...) {
   va_end(arg);
 }
 
-void Print(const char* string) { std::cout << string; }
+void Print(const char* string) { Printf(string); }
 
 void Print(const char16_t* string) { PrintString<char16_t>(string); }
 
@@ -86,16 +97,19 @@ void Print(const char* string, char delimiter) {
 
 void Print(const char* a, const char* b) {
   if (!a || !b) return;
-  std::cout << a << b;
+  Print(a);
+  Print(b);
 }
 
 void Print(const char* a, const char* b, const char* c) {
   if (!a || !b || !c) return;
-  std::cout << a << b << c;
+  Print(a);
+  Print(b);
+  Print(c);
 }
 
 void Print(uint64_t value) {
-#if SEAM == SEAM_0_0_0__00
+#if SEAM <= _0_0_0__00
   return Printf(FORMAT_UI8, value);
 #else
   enum { kSize = 24 };
@@ -106,7 +120,7 @@ void Print(uint64_t value) {
 }
 
 void Print(uint32_t value) {
-#if SEAM == SEAM_0_0_0__00
+#if SEAM <= _0_0_0__00
   return Printf("%u", value);
 #else
   enum { kSize = 24 };
@@ -116,7 +130,7 @@ void Print(uint32_t value) {
 }
 
 void Print(int64_t value) {
-#if SEAM == SEAM_0_0_0__00
+#if SEAM <= _0_0_0__00
   return Printf(FORMAT_SI8, value);
 #else
   enum { kSize = 24 };
@@ -127,7 +141,7 @@ void Print(int64_t value) {
 }
 
 void Print(int32_t value) {
-#if SEAM == SEAM_0_0_0__00
+#if SEAM <= _0_0_0__00
   return Printf("%i", value);
 #else
   enum { kSize = 24 };
@@ -137,23 +151,23 @@ void Print(int32_t value) {
 }
 
 void Print(float value) {
-#if SEAM < SEAM_0_0_0__02
+#if SEAM <= _0_0_0__03
   return Printf("%f", value);
 #else
   enum { kSize = 16 };
   char buffer[kSize];
-  PrintFloat<float, uint32_t>(buffer, kSize - 1, value);
+  PrintFloat<float, uint32_t, char>(buffer, kSize, value);
   Print(buffer);
 #endif
 }
 
 void Print(double value) {
-#if SEAM < SEAM_0_0_0__02
+#if SEAM <= _0_0_0__03
   return Printf("%f", value);
 #else
   enum { kSize = 24 };
   char buffer[kSize];
-  PrintFloat<double, uint64_t>(buffer, kSize - 1, value);
+  PrintFloat<double, uint64_t, char>(buffer, kSize - 1, value);
   Print(buffer);
 #endif
 }
@@ -331,9 +345,16 @@ void Pausef(const char* format, ...) {
     ;
 }
 
+}  // namespace _
+
+#if SEAM >= _0_0_0__02
+
+namespace _ {
+
 void PrintSocket(const char* begin, const char* end) {
-  if (!begin || !end) return;
-  ASSERT(cursor < end);
+  ASSERT(begin);
+  ASSERT(end);
+  ASSERT(begin < end);
 
   const char *address_ptr = reinterpret_cast<const char*>(begin),
              *address_end_ptr = reinterpret_cast<const char*>(end);
@@ -363,7 +384,7 @@ void PrintSocket(const char* begin, const char* end) {
 
   PrintHex(address_ptr);
 
-  PRINTF("\nBuffer space left:%i", (int)(end - cursor));
+  PRINTF("\nBuffer space left:%i", (int)(end - begin));
   char c;
   while (address_ptr < address_end_ptr) {
     Print('\n');
@@ -395,5 +416,12 @@ void PrintSocket(const char* begin, const char* end) {
   PrintHex(address_ptr + size);
 }
 
+void PrintSocket(const void* begin, intptr_t size) {
+  const char* begin_char = reinterpret_cast<const char*>(begin);
+  return PrintSocket(begin_char, begin_char + size);
+}
+
 }  // namespace _
-#include "00/seam_footer.inl"
+#undef PRINT_ARGS
+#include "test_footer.inl"
+#endif  //< #if SEAM >= _0_0_0__02

@@ -17,12 +17,16 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_TBINARY
 #define INCLUDED_KABUKI_F2_TBINARY 1
 
-#include "binary.h"
+#include "cbinary.h"
+#include "cconsole.h"
 
-#include "00\seam_header.inl"
-
+#if SEAM >= _0_0_0__00
+#if SEAM == _0_0_0__00
+#include "test_debug.inl"
+#else
+#include "test_release.inl"
+#endif
 namespace _ {
-
 template <typename Char>
 void PrintString(const Char* string) {
   if (!string) return;
@@ -31,47 +35,6 @@ void PrintString(const Char* string) {
     Print(c);
     c = *(++string);
   }
-}
-
-template <typename Char>
-intptr_t PrintAndCount(const Char* string) {
-  if (!string) return;
-  int print_count = 0;
-  Char c = *string;
-  while (c) {
-    Print(c);
-    ++print_count;
-    c = *(++string);
-  }
-  return print_count;
-}
-
-template <typename Char>
-Char* PuffItoSBegin(Char* cursor = nullptr) {
-  static Char* buffer_begin = 0;
-  if (cursor) {
-    buffer_begin = cursor;
-    return cursor;
-  }
-  return buffer_begin;
-}
-
-template <typename Char>
-void PrintPrinted(Char* cursor) {
-  Print("\n    Printed \"");
-  intptr_t print_count = PrintAndCount<Char>(PuffItoSBegin<Char>());
-  Print(':');
-  Print(print_count);
-}
-
-template <typename UI>
-inline UI NanUnsigned() {
-  return ~0;
-}
-
-template <typename SI, typename UI>
-inline SI NanSigned() {
-  return (SI)(((UI)1) << (sizeof(SI) * 8 - 1));
 }
 
 /* Compares the two strings up to the given delimiter.
@@ -121,6 +84,70 @@ int StringCompare(const Char* string_a, const Char* string_b,
     return b - a;
   }
   return 0;
+}
+}  // namespace _
+#include "test_footer.inl"
+#endif
+
+#if SEAM >= _0_0_0__01
+#if SEAM == _0_0_0__01
+#include "test_debug.inl"
+#define BEGIN_ITOS_ALGORITHM                                          \
+  static const char* ui_format = sizeof(UI) == 8 ? FORMAT_UI8 : "%u"; \
+  PuffItoSBegin<Char>(cursor);                                        \
+  for (int32_t i = 0; i < 10; ++i) *(cursor + i) = 'x';               \
+  *(cursor + 21) = 0;                                                 \
+  enum { kSize = 256 };                                               \
+  char buffer[kSize];                                                 \
+  sprintf_s(buffer, kSize, ui_format, value);                         \
+  Printf(" Expecting %s:%i ", buffer, StringLength<Char>(buffer))
+#define PRINT_PRINTED PrintPrinted<Char>(PuffItoSBegin<Char>())
+#else
+#include "test_release.inl"
+#define BEGIN_ITOS_ALGORITHM
+#endif
+
+namespace _ {
+
+template <typename Char>
+intptr_t PrintAndCount(const Char* string) {
+  if (!string) return 0;
+  int print_count = 0;
+  Char c = *string;
+  while (c) {
+    Print(c);
+    ++print_count;
+    c = *(++string);
+  }
+  return print_count;
+}
+
+template <typename Char>
+Char* PuffItoSBegin(Char* cursor = nullptr) {
+  static Char* buffer_begin = 0;
+  if (cursor) {
+    buffer_begin = cursor;
+    return cursor;
+  }
+  return buffer_begin;
+}
+
+template <typename Char>
+void PrintPrinted(Char* cursor) {
+  Print("\n    Printed \"");
+  intptr_t print_count = PrintAndCount<Char>(PuffItoSBegin<Char>());
+  Print('\"', ':');
+  Print(print_count);
+}
+
+template <typename UI>
+inline UI NanUnsigned() {
+  return ~0;
+}
+
+template <typename SI, typename UI>
+inline SI NanSigned() {
+  return (SI)(((UI)1) << (sizeof(SI) * 8 - 1));
 }
 
 /* Scrolls over to the next double quote mark.
@@ -265,65 +292,9 @@ inline bool IsWhitespace(Char character) {
   return character <= ' ';
 }
 
-template <typename Char = char>
-int StringQuery(const Char* cursor, const Char* end, const Char* query) {
-  Char a = *cursor, b = *query;
-  int result;
-
-  if (!cursor) {
-    if (!query) return 0;
-    a = 0;
-    b = *query;
-    return b - a;
-  }
-  if (!query) {
-    a = *cursor;
-    b = 0;
-    return b - a;
-  }
-  if (cursor > end) return *query;
-
-  // Algorithm combines loops for better performance.
-  a = *cursor;
-  b = *query;
-  if (!a) {
-    if (!b) return 0;
-    return b;
-  }
-  if (!b) {
-    if (!a) return 0;
-    return 0 - a;
-  }
-  // text SHOULD be a nil-terminated string without whitespace.
-  while (b) {
-    result = b - a;
-    if (result) {
-      PRINTF(" is not a hit.");
-      return result;
-    }
-    if (!a) {
-      PRINTF(" is a partial match but !a.");
-      return result;
-    }
-    if (++cursor >= end) {
-      PRINTF(" but buffer overflowed!");
-      return result;
-    }
-    ++query;
-    a = *cursor;
-    b = *query;
-  }
-  if (a && !IsWhitespace<Char>(a)) {
-    PRINTF(" is only a partial match but found %s", (a ? "a" : "space"));
-    return b - a;
-  }
-  PRINTF(" is a match!");
-  return 0;
-}
-
 /* Prints a single decimal to the buffer.
 @warning This function DOES NOT do any error checking and if the SEAM ==
-SEAM_0_0_0 (1), then this function will print debug data. */
+_0_0_0 (1), then this function will print debug data. */
 template <typename Char = char>
 inline Char* PrintDecimal(Char* buffer, Char value) {
   *reinterpret_cast<Char*>(buffer) = '0' + value;
@@ -332,7 +303,7 @@ inline Char* PrintDecimal(Char* buffer, Char value) {
 }
 
 /* Prints a single decimal to the buffer.
-If the SEAM == SEAM_0_0_0 (1), then this function will print debug data.
+If the SEAM == _0_0_0 (1), then this function will print debug data.
 @warning This function DOES NOT do any error checking! */
 template <typename Char = char>
 inline Char* PrintChar(Char* buffer, Char value) {
@@ -342,7 +313,7 @@ inline Char* PrintChar(Char* buffer, Char value) {
 }
 
 /* Prints a single decimal to the buffer.
-If the SEAM == SEAM_0_0_0 (1), then this function will print debug data.
+If the SEAM == _0_0_0 (1), then this function will print debug data.
 @warning This function DOES NOT do any error checking! */
 template <typename Char = char>
 inline Char* PrintChar(Char* buffer, Char* end, Char value) {
@@ -371,6 +342,43 @@ bool IsDigit(Char c) {
   return (c >= '0') && (c <= '9');
 }
 
+/* Scans the given buffer for an unsigned integer (UI).
+@return Nil if there is no UI to scan.
+@param buffer The beginning of the buffer.
+@param result The UI to write the scanned UI. */
+template <typename UI, typename Char = char>
+const Char* ScanUnsigned(const Char* buffer, UI& result) {
+  ASSERT(buffer);
+  PRINTF("\nScanning unsigned value:%s", buffer);
+  const Char* cursor = buffer;
+  Char c = *cursor++;
+  if (!IsDigit<Char>(c)) return nullptr;
+
+  // Find length:
+  c = *cursor++;
+  while (IsDigit<Char>(c)) c = *cursor++;
+  const Char* end = cursor;  // Store end to return.
+  cursor -= 2;
+  PRINTF("\nPointed at \'%c\' and found length:%i", *cursor,
+         (int32_t)(cursor - buffer));
+
+  c = *cursor--;
+  UI value = (UI)(c - '0');
+  UI pow_10_ui2 = 1;
+
+  while (cursor >= buffer) {
+    c = *cursor--;
+    pow_10_ui2 *= 10;
+    UI new_value = value + pow_10_ui2 * (c - '0');
+    if (new_value < value) return nullptr;
+    value = new_value;
+    PRINTF("\nvalue:%u", (uint)value);
+  }
+  PRINTF("\nvalue:%u", (uint)value);
+  result = value;
+  return end;
+}
+
 /* Prints two chars to the console.
 @warning This function DOES NOT do any error checking! */
 template <typename Char = char>
@@ -380,7 +388,7 @@ inline Char* PrintNil(Char* cursor) {
 }
 
 /* Prints a two decimals to the buffer.
-If the SEAM == SEAM_0_0_0 (1), then this function will print debug data.
+If the SEAM == _0_0_0 (1), then this function will print debug data.
 @warning This function DOES NOT do any error checking! */
 template <typename Char = char>
 inline Char* Print2Decimals(Char* buffer, uint16_t decimal_pair) {
@@ -720,43 +728,6 @@ inline Char* PrintSigned(Char* buffer, intptr_t size, SI value) {
   return PrintSigned<SI, UI, Char>(buffer, buffer + size - 1, value);
 }
 
-/* Scans the given buffer for an unsigned integer (UI).
-@return Nil if there is no UI to scan.
-@param buffer The beginning of the buffer.
-@param result The UI to write the scanned UI. */
-template <typename UI, typename Char = char>
-const Char* ScanUnsigned(const Char* buffer, UI& result) {
-  ASSERT(buffer);
-  PRINTF("\nScanning unsigned value:%s", buffer);
-  const Char* cursor = buffer;
-  Char c = *cursor++;
-  if (!IsDigit<Char>(c)) return nullptr;
-
-  // Find length:
-  c = *cursor++;
-  while (IsDigit<Char>(c)) c = *cursor++;
-  const Char* end = cursor;  // Store end to return.
-  cursor -= 2;
-  PRINTF("\nPointed at \'%c\' and found length:%i", *cursor,
-         (int32_t)(cursor - buffer));
-
-  c = *cursor--;
-  UI value = (UI)(c - '0');
-  UI pow_10_ui2 = 1;
-
-  while (cursor >= buffer) {
-    c = *cursor--;
-    pow_10_ui2 *= 10;
-    UI new_value = value + pow_10_ui2 * (c - '0');
-    if (new_value < value) return nullptr;
-    value = new_value;
-    PRINTF("\nvalue:%u", (uint)value);
-  }
-  PRINTF("\nvalue:%u", (uint)value);
-  result = value;
-  return end;
-}
-
 /* Scans the given buffer for an Signed Integer (SI).
 @return Nil if there is no UI to scan.
 @param buffer The beginning of the buffer.
@@ -800,10 +771,17 @@ const Char* ScanSigned(const Char* buffer, SI& result) {
   result = sign * value;
   return end;
 }
-#include <00/seam_footer.inl>
+#include "test_footer.inl"
+}  // namespace _
+#endif  //< #if SEAM >= _0_0_0__01
 
-#if SEAM >= SEAM_0_0_0__01
-#include "01/seam_header.inl"
+#if SEAM >= _0_0_0__02
+#if SEAM == _0_0_0__02
+#include "test_debug.inl"
+#else
+#include "test_release.inl"
+#endif
+namespace _ {
 
 /* Searches for the highest MSb asserted.
 @return -1 */
@@ -813,14 +791,24 @@ int MSbAssertedReverse(UI value) {
     if ((value >> i) != 0) return i;
   return -1;
 }
+}  // namespace _
+#include "test_footer.inl"
+#endif  //< #if SEAM >= _0_0_0__02
 
-#include "01/seam_footer.inl"
-#endif  //< #if SEAM >= SEAM_0_0_0__01
+#if SEAM >= _0_0_0__03
+#if SEAM == _0_0_0__03
+#include "test_debug.inl"
+#define PRINT_FLOAT_BINARY(integer, decimals, decimal_count) \
+  Print("\nBinary:\"");                                      \
+  PrintBinary(value);                                        \
+  Print('\n')
+#else
+#include "test_release.inl"
+#define PRINT_FLOAT_BINARY(integer, decimals, decimal_count)
+#endif
+namespace _ {
 
-#if SEAM >= SEAM_0_0_0__02
-#include "02/seam_header.inl"
-
-/* A decimal number in floating-point format. */
+/* A decimal number in floating-point format.
 template <typename Float, typename UI>
 class Binary {
  public:
@@ -848,10 +836,10 @@ class Binary {
     return (decimal << (kExponentSizeBits + 1)) >> (kExponentSizeBits + 1);
   }
 
-  /* Constructs an uninitialized floating-point number. */
+  // Constructs an uninitialized floating-point number.
   Binary() {}
 
-  /* Converts a Float to a Binary*/
+  // Converts a Float to a Binary
   Binary(Float binary) {
     UI ui = *reinterpret_cast<UI*>(&binary);
     uint32_t biased_e = ui << 1;  //< Get rid of sign bit.
@@ -902,6 +890,7 @@ class Binary {
     char* cursor = Print<Char>(buffer, end, value, &length, k);
     return Standardize(buffer, length, k);
   }
+
   template <typename UI = uintptr_t>
   inline UI NaNUnsigned() {
     UI nan = 0;
@@ -914,12 +903,12 @@ class Binary {
     return (SI)(nan << (sizeof(UI) * 8 - 1));
   }
 
-  /* Non-working algorithm DOES NOT converts a string-to-float.
-  @return nil if there is no number to scan or pointer to the next char after
-  the end of the scanned number upon success.
-  @brief Algorithm uses a 32-bit unsigned value to scan the floating-point
-  number, which can only have 10 digits max, so the maximum floating-point
-  number digit count we can scan is 9 digits long.*/
+  // Non-working algorithm DOES NOT converts a string-to-float.
+  //@return nil if there is no number to scan or pointer to the next char after
+  //the end of the scanned number upon success.
+  //@brief Algorithm uses a 32-bit unsigned value to scan the floating-point
+  //number, which can only have 10 digits max, so the maximum floating-point
+  //number digit count we can scan is 9 digits long.
   template <typename Char = char>
   const Char* Scan(const Char* buffer, Float& result) {
     ASSERT(buffer);
@@ -1111,7 +1100,7 @@ class Binary {
       kDpSignificandMask = 0x000FFFFFFFFFFFFF,
       kDpHiddenBit = 0x0010000000000000;
 
-  /* Normalizes the boundaries. */
+  // Normalizes the boundaries.
   inline void NormalizedBoundaries(Binary& m_minus, Binary& m_plus) const {
     UI l_f,   //< Local copy of f.
         l_e;  //< Local copy of e.
@@ -1126,10 +1115,9 @@ class Binary {
     *m_minus = mi;
   }
 
-  /* Rounds the Grisu estimation closer to the inside of the squeeze. */
+  // Rounds the Grisu estimation closer to the inside of the squeeze.
   template <typename Char>
-  inline void Round(Char& lsd, uint64_t delta, uint64_t rest,
-                    uint64_t ten_kappa, uint64_t wp_w) {
+  inline void Round(Char& lsd, UI delta, UI rest, UI ten_kappa, UI wp_w) {
     while (rest < wp_w && (delta - rest) >= ten_kappa &&
            (rest + ten_kappa < wp_w ||  /// closer
             (wp_w - rest) > (rest + ten_kappa - wp_w))) {
@@ -1138,54 +1126,54 @@ class Binary {
     }
   }
 
-  /* Prints the integer portion of the floating-point number.
-  @return Nil upon failure or a pointer to the nil-term Char upon success. */
+  // Prints the integer portion of the floating-point number.
+  //@return Nil upon failure or a pointer to the nil-term Char upon success.
   template <typename Char>
   inline Char* PrintCharPair(Char* cursor, Char* end, const Binary& w,
                              const Binary& m_plus, uint64_t delta, int32_t& k) {
     Binary one(((uint64_t)1) << -m_plus.e, m_plus.e), wp_w = m_plus - w;
-    uint32_t d, pow_10_ui2, p_1 = static_cast<uint32_t>(m_plus.f >> -one.e);
+    uint32_t d, pow_10, p_1 = static_cast<uint32_t>(m_plus.f >> -one.e);
     uint64_t p_2 = m_plus.f & (one.f - 1);
     int kappa;
-    if (p_1 < (pow_10_ui2 = 10)) {
+    if (p_1 < (pow_10 = 10)) {
       kappa = 1;
-    } else if (p_1 < (pow_10_ui2 = 100)) {
+    } else if (p_1 < (pow_10 = 100)) {
       kappa = 2;
     } else {
       if ((p_1 >> 10) == 0) {
-        pow_10_ui2 = 1000;
         kappa = 3;
+        pow_10 = 1000;
       } else if (!(p_1 >> 13)) {
         kappa = 4;
-        pow_10_ui2 = 10000;
+        pow_10 = 10000;
       } else if (!(p_1 >> 17)) {
         kappa = 5;
-        pow_10_ui2 = 100000;
+        pow_10 = 100000;
       } else if (!(p_1 >> 20)) {
         kappa = 6;
-        pow_10_ui2 = 1000000;
+        pow_10 = 1000000;
       } else if (!(p_1 >> 24)) {
         kappa = 7;
-        pow_10_ui2 = 10000000;
+        pow_10 = 10000000;
       } else if (!(p_1 >> 27)) {
         kappa = 8;
-        pow_10_ui2 = 100000000;
+        pow_10 = 100000000;
       } else if (!(p_1 >> 30)) {
         kappa = 9;
-        pow_10_ui2 = 1000000000;
+        pow_10 = 1000000000;
       } else {
         kappa = 10;
-        pow_10_ui2 = 10000000000;
+        pow_10 = 10000000000;
       }
-      if (p_1 >= pow_10_ui2) {
+      if (p_1 >= pow_10) {
         ++kappa;
-        pow_10_ui2 *= 10;
+        pow_10 *= 10;
       }
     }
     while (kappa > 0) {
       uint32_t d;
-      d = p_1 / pow_10_ui2;
-      p_1 -= d * pow_10_ui2;
+      d = p_1 / pow_10;
+      p_1 -= d * pow_10;
 
       if (cursor >= end) return nullptr;
 
@@ -1216,38 +1204,38 @@ class Binary {
       }
     }
 
-    // Load integer pow_10_ui2 from the i-cache.
+    // Load integer pow_10 from the i-cache.
     switch (kappa) {
       case 1:
         d = p_1;
         p_1 = 0;
         break;
       case 2:
-        pow_10_ui2 = 10;
+        pow_10 = 10;
         break;
       case 3:
-        pow_10_ui2 = 100;
+        pow_10 = 100;
         break;
       case 4:
-        pow_10_ui2 = 1000;
+        pow_10 = 1000;
         break;
       case 5:
-        pow_10_ui2 = 10000;
+        pow_10 = 10000;
         break;
       case 6:
-        pow_10_ui2 = 100000;
+        pow_10 = 100000;
         break;
       case 7:
-        pow_10_ui2 = 1000000;
+        pow_10 = 1000000;
         break;
       case 8:
-        pow_10_ui2 = 10000000;
+        pow_10 = 10000000;
         break;
       case 9:
-        pow_10_ui2 = 100000000;
+        pow_10 = 100000000;
         break;
       case 10:
-        pow_10_ui2 = 1000000000;
+        pow_10 = 1000000000;
         break;
     }
   }
@@ -1270,7 +1258,7 @@ class Binary {
     ASSERT(index < 87);
 
     // Save exponents pointer and offset to avoid creating base pointer again.
-    uint16_t* exponents = &IEEE754Pow10E()[index];
+    const int16_t* exponents = &IEEE754Pow10E()[index];
     return Binary(IEEE754Pow10(exponents), *exponents);
   }
 
@@ -1325,30 +1313,35 @@ class Binary {
     buffer[1] = '.';
     buffer[length + 1] = 'e';
     return Print<Char>(length + 2, end, kk - 1);
-  }
-};
+};*/
 
 template <typename Float = double, typename UI = uint64_t, typename Char = char>
-inline Char* Print(Char* buffer, Char* end, Float value) {
-  // return Binary<Float, UI>::Print<Char>(buffer, end, value);
+Char* PrintFloat(Char* cursor, Char* end, Float value) {
+  // return Binary<Float, UI>.Print<Char>(cursor, end, value);
+  return nullptr;
+}
+
+template <typename Float = float, typename UI = uint32_t, typename Char = char>
+Char* PrintFloat(Char* cursor, intptr_t size, Float value) {
+  // return Binary<Float, UI>.Print<Char>(cursor, cursor + size - 1, value);
   return nullptr;
 }
 
 template <typename Float = double, typename UI = uint64_t, typename Char = char>
-inline Char* Print(Char* buffer, int size, Float value) {
-  // return Binary<Float, UI>::Print<Char>(buffer, buffer + size - 1,
-  //                                             value);
+Char* ScanFloat(Char* cursor, Float value) {
+  // return Binary<Float, UI>.Scan<Char>(cursor, value);
   return nullptr;
 }
 
 // using Binary16 = Binary<half, uint32_t>; //< Coming soon.
-using Binary32 = Binary<float, uint32_t>;
-using Binary64 = Binary<double, uint64_t>;
+// using Binary32 = Binary<float, uint32_t>;
+// using Binary64 = Binary<double, uint64_t>;
 // using Binary128 = Binary<quad, uint128_t>;
 //< Coming soon but not in Visual-C++ due to lack of 128-bit integer support.
 
-#include "02/seam_footer.inl"
-#endif  //< #if SEAM >= SEAM_0_0_0__02
-
 }  // namespace _
+#undef PRINT_FLOAT_BINARY
+#include "test_footer.inl"
+#endif  //< #if SEAM >= _0_0_0__03
+
 #endif  //< #if INCLUDED_KABUKI_F2_TBINARY

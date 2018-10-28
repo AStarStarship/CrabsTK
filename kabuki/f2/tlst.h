@@ -14,13 +14,19 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__11
+#if SEAM >= _0_0_0__09
 #ifndef INCLUDED_KABUKI_F2_TLIST
 #define INCLUDED_KABUKI_F2_TLIST
 
-#include "talign.h"
 #include "tset.h"
+#include "tsocket.h"
 #include "tstk.h"
+
+#if SEAM == _0_0_0__09
+#include "test_debug.inl"
+#else
+#include "test_release.inl"
+#endif
 
 namespace _ {
 
@@ -30,22 +36,22 @@ Like most ASCII OBJ Types, the size may only be 16-bit, 32-bit, or
 
 @code
 +==========================+ -----------
-|_____ Buffer            |   ^     ^
-|_____ ...               |   |     |
-|_____ Data N            |  Data   |
-|_____ ...               |   |     |
-|_____ Data 0            |   v     |
+|_______ Buffer            |   ^     ^
+|_______ ...               |   |     |
+|_______ Data N            |  Data   |
+|_______ ...               |   |     |
+|_______ Data 0            |   v     |
 |==========================| -----   |
-|_____ count_max         |   ^     |
-|_____ ...               |   |     |
-|_____ Data Offset N     |   |     |
-|_____ ...               |   |    Size
+|_______ count_max         |   ^     |
+|_______ ...               |   |     |
+|_______ Data Offset N     |   |     |
+|_______ ...               |   |    Size
 |        Data Offset 1     |   |     |
 |==========================| Header  |
-|_____ count_max         |   |     |
-|_____ ...               |   |     |
-|_____ Type byte N       |   |     |
-|_____ ...               |   |     |
+|_______ count_max         |   |     |
+|_______ ...               |   |     |
+|_______ Type byte N       |   |     |
+|_______ ...               |   |     |
 |        Type byte 1       |   |     |   ^ Up in addresses
 |==========================|   |     |   |
 | AsciiList<UI, SI> Struct |   v     v   ^
@@ -485,5 +491,6 @@ inline _::Utf8& operator<<(_::Utf8& printer, _::CList<UI, SI>* list) {
   return _::PrintList<UI, SI>(printer, list);
 }
 
+#include "test_footer.inl"
 #endif  //< INCLUDED_KABUKI_F2_TLIST
-#endif  //< #if SEAM >= SEAM_0_0_0__11
+#endif  //< #if SEAM >= _0_0_0__12

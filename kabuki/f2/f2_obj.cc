@@ -13,13 +13,18 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__01
+#if SEAM >= _0_0_0__03
 
-#include "obj.h"
-#include "socket.h"
+#include "cobj.h"
+#include "csocket.h"
 #include "tobj.h"
 
-#include <kabuki/f2/seam_header.inl>
+#if SEAM == _0_0_0__03
+#include "test_debug.inl"
+#else
+#include "test_release.inl"
+#endif
+
 namespace _ {
 
 void Delete(CObj obj) {
@@ -82,5 +87,5 @@ uintptr_t* ObjNew(int16_t size, size_t header_size) {
 }
 
 }  // namespace _
-#include <kabuki/f2/seam_footer.inl>
-#endif  //< #if SEAM >= SEAM_0_0_0__01
+#include "test_footer.inl"
+#endif  //< #if SEAM >= _0_0_0__05

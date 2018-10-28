@@ -12,9 +12,15 @@
     <ClCompile Include="main.cc">
       <Filter>0_0_0_0_experiments</Filter>
     </ClCompile>
+    <ClCompile Include="f2_rng.cc">
+      <Filter>0_0_0_0_experiments</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
+      <Filter>0_0_0_0_experiments</Filter>
+    </ClInclude>
+    <ClInclude Include="crng.h">
       <Filter>0_0_0_0_experiments</Filter>
     </ClInclude>
   </ItemGroup>

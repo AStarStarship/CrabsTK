@@ -12,11 +12,11 @@ CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4_0__00_00
+#if SEAM >= _0_0_4_0__00_00
 
 #include "wall.h"
 
-#include <kabuki/f2/socket.h>
+#include <kabuki/f2/csocket.h>
 #include <kabuki/f2/stk.h>
 
 #include <seam_0/0/04_features/00_seam_crabs/00/header.h>
@@ -83,4 +83,4 @@ Slot& Wall::Print(Slot& slot) {
 
 }  // namespace _
 #include <seam_0/0/04_features/00_seam_crabs/00/footer.h>
-#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00
+#endif  //< #if SEAM >= _0_0_4_0__00_00

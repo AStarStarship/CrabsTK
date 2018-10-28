@@ -13,7 +13,12 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= SEAM_0_0_0__05
+#if SEAM >= _0_0_0__04
+#if SEAM == _0_0_0__04
+#include "test_debug.inl"
+#else
+#include "test_release.inl"
+#endif
 
 #include <ctime>
 
@@ -21,8 +26,6 @@ specific language governing permissions and limitations under the License. */
 #include "lock.h"
 #include "tbinary.h"
 #include "tclock.h"
-#include "test.h"
-#include "test_header.h"
 
 namespace _ {
 
@@ -470,4 +473,5 @@ const char32_t* TextScanTime(const char32_t* string, Tme& result) {
 
 }  // namespace _
 
-#endif  //< #if SEAM >= SEAM_0_0_0__05
+#include "test_footer.inl"
+#endif  //< #if SEAM >= _0_0_0__04

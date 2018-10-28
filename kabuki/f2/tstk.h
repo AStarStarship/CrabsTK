@@ -13,14 +13,15 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_00__05
+#if SEAM >= _0_0_0__05
 #ifndef INCLUDED_KABUKI_F2_STK
 #define INCLUDED_KABUKI_F2_STK
 
 #include "config.h"
-#include "obj.h"
-#include "socket.h"
-#include "str1.h"
+
+#include "cobj.h"
+#include "csocket.h"
+#include "cstr1.h"
 
 namespace _ {
 
@@ -68,6 +69,7 @@ constexpr UI UnsignedMax() {
     array in order to store the dimensions. The only different between them is
     that the size_array variable gets set to 0.
     
+
 
 
 
@@ -658,4 +660,4 @@ class Stack {
 }  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_STK
-#endif  //< #if SEAM >= SEAM_0_0_01__05
+#endif  //< #if SEAM >= _0_0_0__05

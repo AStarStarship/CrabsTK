@@ -13,7 +13,7 @@ specific language governing permissions and limitations under the License. */
 
 #pragma once
 #include <pch.h>
-#if SEAM >= SEAM_0_0_4_0__00_00
+#if SEAM >= _0_0_4_0__00_00
 #ifndef INCLUDED_CRABS_GLOBAL
 #define INCLUDED_CRABS_GLOBAL
 
@@ -33,4 +33,4 @@ specific language governing permissions and limitations under the License. */
 #include "slot.h"
 
 #endif  //< INCLUDED_CRABS_GLOBAL
-#endif  //< #if SEAM >= SEAM_0_0_4_0__00_00
+#endif  //< #if SEAM >= _0_0_4_0__00_00
