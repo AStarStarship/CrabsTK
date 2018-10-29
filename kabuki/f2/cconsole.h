@@ -19,6 +19,12 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
+/* Converts int main(int,char**) arguments back into a string.
+@return nil if there are no arguments or the args string upon success.
+@param arg_count The number of arguments.
+@param args      The arguments. */
+API const char* ArgsToString(int arg_count, char** args);
+
 /* Prints a single char to the console. */
 API inline void Print(char c);
 
@@ -204,12 +210,6 @@ API void PrintSocket(const char* begin, const char* end);
 
 /* Prints the given socket to the stdout. */
 API void PrintSocket(const void* begin, intptr_t size);
-
-/* Converts int main(int,char**) arguments back into a string.
-@return nil if there are no arguments or the args string upon success.
-@param arg_count The number of arguments.
-@param args      The arguments. */
-API const char* ArgsToString(int arg_count, char** args);
 
 }  // namespace _
 

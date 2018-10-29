@@ -158,6 +158,6 @@ static const char* _0_0_0__10_ASCII_Map(char* seam_log, char* seam_end,
 #endif
   return nullptr;
 }
-}  // namespace _
+}  //< namespace _
 
 #include "test_footer.inl"

@@ -131,7 +131,7 @@ SI LoomPrint(Utf8& print, CLoom* loom, const Char* strand) {
   }
 }
 
-}  // namespace _
+}  //< namespace _
 #include "test_footer.inl"
 #endif  //< INCLUDED_KABUKI_F2_VARINT
 #endif  //< #if SEAM >= _0_0_0__08

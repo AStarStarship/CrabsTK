@@ -53,5 +53,5 @@ enum {
   US,       //< 31
   DEL = 127
 };
-}  // namespace _
+}  //< namespace _
 #endif  //< INCLUDED_KABUKI_F2_ASCII

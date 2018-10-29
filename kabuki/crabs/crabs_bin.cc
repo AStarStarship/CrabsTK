@@ -635,7 +635,7 @@ Utf8& Print(Utf8& print, BIn* bin) {
 }
 #endif
 
-}  // namespace _
+}  //< namespace _
 
 #undef PRINTF
 #undef PRINT

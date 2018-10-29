@@ -477,7 +477,7 @@ class List {
   uintptr_t* begin;  //< Dynamically allocated word-aligned buffer.
 };
 
-}  // namespace _
+}  //< namespace _
 
 /* Overloaded operator<< prints the list. */
 template <typename UI = uint32_t, typename SI = int16_t>

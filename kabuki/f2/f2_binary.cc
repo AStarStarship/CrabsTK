@@ -17,6 +17,8 @@ specific language governing permissions and limitations under the License. */
 
 #include "ttest.h"
 
+#include <cmath>
+
 namespace _ {
 char HexNibbleToUpperCase(uint8_t b) {
   b = b & 0xf;

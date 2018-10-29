@@ -75,6 +75,6 @@ API uintptr_t* ObjClone(uintptr_t* ascii_object, int32_t size);
 /* Clones the given ASCII OBJ. */
 API uintptr_t* ObjClone(uintptr_t* ascii_object, int64_t size);
 
-}  // namespace _
+}  //< namespace _
 #endif  //< #if SEAM >= _0_0_0__08
 #endif  //< INCLUDED_KABUKI_F2_OBJ

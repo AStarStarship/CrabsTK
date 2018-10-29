@@ -471,7 +471,7 @@ const char32_t* TextScanTime(const char32_t* string, Tme& result) {
 
 #endif
 
-}  // namespace _
+}  //< namespace _
 
 #include "test_footer.inl"
 #endif  //< #if SEAM >= _0_0_0__04

@@ -280,6 +280,6 @@ void DestructorDeleteBuffer(uintptr_t* buffer) {
   delete buffer;
 }
 
-}  // namespace _
+}  //< namespace _
 #include "test_footer.inl"
 #endif  //<  #if SEAM >= _0_0_0__02

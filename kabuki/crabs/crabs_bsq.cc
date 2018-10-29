@@ -235,6 +235,6 @@ Utf8& PrintBsq(Utf8& print, const uint_t* params) {
   return print;
 }
 
-}  // namespace _
+}  //< namespace _
 
 #endif  //> #if SEAM >= _0_0_4_0__00_00

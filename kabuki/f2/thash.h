@@ -49,6 +49,6 @@ inline UI PrimeMaxUnigned() {
   return prime;
 }
 
-}  // namespace _
+}  //< namespace _
 #endif  //< INCLUDED_KABUKI_F2_THASH
 #endif  //< #if SEAM >= _0_0_0__08

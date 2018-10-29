@@ -34,6 +34,6 @@ inline char* Buffer() {
   return reinterpret_cast<char*>(buffer);
 }
 
-}  // namespace _
+}  //< namespace _
 #endif  //< INCLUDED_CRABS_BUFFER
 #endif  //< #if SEAM >= _0_0_4_0__00_00

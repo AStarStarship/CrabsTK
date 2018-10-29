@@ -81,5 +81,5 @@ uint16_t Hash16UI8(uint64_t value, uint16_t hash) {
   return hash;
 }
 
-}  // namespace _
+}  //< namespace _
 #endif  //> #if SEAM >= _0_0_0__06

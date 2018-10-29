@@ -152,7 +152,7 @@ API Utf8& PrintBsq(Utf8& printer, const uint_t* params);
 /*< Returns the requested parameter number. */
 API uint_t BsqParamNumber(const uint_t* bsq, int param_number);
 
-}  // namespace _
+}  //< namespace _
 
 #if USING_UTF8
 /*  Prints out the parameters. */

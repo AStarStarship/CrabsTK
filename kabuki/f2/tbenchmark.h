@@ -28,7 +28,7 @@ const char* BenchmarkCaseLoop(char* cursor, char* end, const char* args) {
                                  : "Testing 32-bit use case");
 }
 
-}  // namespace _
+}  //< namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_TBENCHMARK
 #endif  //< #if SEAM >= _0_0_0__12

@@ -23,5 +23,5 @@ void RoomLock() {}
 
 void RoomUnlock() {}
 
-}  // namespace _
+}  //< namespace _
 #endif  //< #if SEAM >= _0_0_0__02

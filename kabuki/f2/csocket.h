@@ -165,7 +165,7 @@ API inline bool SocketCompare(const void* begin_a, void* end_a,
 API inline bool SocketCompare(const void* begin_a, intptr_t size_a,
                               const void* begin_b, intptr_t size_b);
 
-}  // namespace _
+}  //< namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_KABUKI_SOCKET
 #endif  //< #if SEAM >= _0_0_0__02

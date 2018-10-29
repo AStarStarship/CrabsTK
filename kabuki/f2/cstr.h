@@ -52,7 +52,7 @@ using Right = Utf32Right;
 using Line = Utf32Line;
 using LineString = Utf32LineString;
 #endif
-}  // namespace _
+}  //< namespace _
 
 #endif  //< #if INCLUDED_KABUKI_F2_UTF
 #endif  //< #if SEAM >= _0_0_0__02

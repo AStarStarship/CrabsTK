@@ -69,6 +69,6 @@ the see to a different prime number.
 @param  hash   A prime number seed hash. */
 API hash64_t Hash64(const char* string, hash64_t hash = 18446744073709551557);
 
-}  // namespace _
+}  //< namespace _
 #endif  //< #if SEAM >= _0_0_0__08
 #endif  //< INCLUDED_KABUKI_F2_HASH

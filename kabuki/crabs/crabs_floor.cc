@@ -31,5 +31,5 @@ inline Floor* Global() {
   return floor_socket.Start<Floor>();
 }
 
-}  // namespace _
+}  //< namespace _
 #endif  // #if SEAM >= _0_0_4_0__00_00

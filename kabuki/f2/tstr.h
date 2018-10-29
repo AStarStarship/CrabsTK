@@ -1161,7 +1161,7 @@ int StringQuery(const Char* cursor, const Char* end, const Char* query) {
   return 0;
 }
 
-}  // namespace _
+}  //< namespace _
 
 #define COUT ::_::TStr<>(&Console).Print();
 

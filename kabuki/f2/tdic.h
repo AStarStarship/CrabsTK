@@ -744,7 +744,7 @@ Utf8& DicPrint(Utf8& print, Dictionary<UI, SI, I>* dictionary) {
   return print;
 }
 
-}  // namespace _
+}  //< namespace _
 #include "06/seam_footer.inl"
 #endif  //< INCLUDED_KABUKI_F2_BOOK
 #endif  //< #if SEAM >= _0_0_0__12

@@ -380,7 +380,7 @@ API const char32_t* TextScanTime(const char32_t* input, Tms& result);
 API const char32_t* TextScanTime(const char32_t* input, Tme& result);
 
 #endif  //< #if USING_UTF32
-}  // namespace _
+}  //< namespace _
 
 #undef PRINT
 #undef PRINTF

@@ -62,5 +62,5 @@ const char* ErrorString(Error error) {
   return ErrorStrings()[error];
 }
 
-}  // namespace _
+}  //< namespace _
 #endif  //> #if SEAM >= _0_0_4_0__00_00

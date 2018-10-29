@@ -737,7 +737,7 @@ Utf8& PrintBOut(Utf8& print, BOut* bout) {
 }
 #endif
 
-}  // namespace _
+}  //< namespace _
 
 #undef PRINTF
 #undef PRINT

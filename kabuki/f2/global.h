@@ -18,16 +18,22 @@ specific language governing permissions and limitations under the License. */
 #define INCLUDED_KABUKI_F2_GLOBAL 1
 
 #if SEAM == _0_0_0__00
+#include "cconsole.h"
 #include "crng.h"
 #endif
 #if SEAM == _0_0_0__01
+#include "cconsole.h"
 #include "crng.h"
 #endif
 #if SEAM == _0_0_0__02
+#include "cconsole.h"
 #include "crng.h"
+#include "tbinary.h"
 #endif
 #if SEAM == _0_0_0__03
+#include "cconsole.h"
 #include "crng.h"
+#include "tbinary.h"
 #endif
 #if SEAM == _0_0_0__04
 #endif

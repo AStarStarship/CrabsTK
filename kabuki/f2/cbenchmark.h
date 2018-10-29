@@ -66,7 +66,7 @@ class Benchmark {
       columns_max;        //< Max test cases in any BenchmarkCase(s).
 };
 
-}  // namespace _
+}  //< namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_BENCHMARK
 #endif  //< #if SEAM >= _0_0_0__12

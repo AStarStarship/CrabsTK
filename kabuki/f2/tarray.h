@@ -219,7 +219,7 @@ class Array {
  private:
   uintptr_t* begin;  //< Dynamically word-aligned buffer.
 };                   //< class Array
-}  // namespace _
+}  //< namespace _
 
 template <typename T = intptr_t, typename UI = uint, typename SI = int>
 inline _::Utf8& operator<<(_::Utf8& printer, _::Stack<T, UI, SI>* stack) {

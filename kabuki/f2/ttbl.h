@@ -604,7 +604,7 @@ Utf8& TablePrint(Utf8& print, Table<UI, SI>* table) {
 }
 #endif
 
-}  // namespace _
+}  //< namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_TABLE
 #endif  //< #if SEAM >= _0_0_0__08

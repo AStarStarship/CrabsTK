@@ -187,6 +187,6 @@ API bool TestWarn(const char* funciton, const char* file, int line);
 @param  file    The file the error occurred at.
 @param  message An optional message to print. */
 API bool ErrorFreeze(const char* funciton, const char* file, int line);
-}  // namespace _
+}  //< namespace _
 
 #endif  //< #ifndef INCLUDED_KABUKI_F2_COMPARE

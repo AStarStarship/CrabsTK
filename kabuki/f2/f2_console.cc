@@ -25,7 +25,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-#if SEAM == _0_0_0__01
+#if SEAM == _0_0_0__00
 #include "test_debug.inl"
 #define PRINT_ARGS                                     \
   Printf("\nargs_count:%i args:%p", args_count, args); \
@@ -35,6 +35,7 @@ namespace _ {
 #include "test_release.inl"
 #define PRINT_ARGS
 #endif
+
 const char* ArgsToString(int args_count, char** args) {
   if (args_count <= 1) return nullptr;
   if (args_count == 2) return args[1];
@@ -352,9 +353,7 @@ void Pausef(const char* format, ...) {
 namespace _ {
 
 void PrintSocket(const char* begin, const char* end) {
-  ASSERT(begin);
-  ASSERT(end);
-  ASSERT(begin < end);
+  if (!begin || begin >= end) return;
 
   const char *address_ptr = reinterpret_cast<const char*>(begin),
              *address_end_ptr = reinterpret_cast<const char*>(end);
@@ -384,7 +383,6 @@ void PrintSocket(const char* begin, const char* end) {
 
   PrintHex(address_ptr);
 
-  PRINTF("\nBuffer space left:%i", (int)(end - begin));
   char c;
   while (address_ptr < address_end_ptr) {
     Print('\n');

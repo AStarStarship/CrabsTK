@@ -40,6 +40,6 @@ struct Language {
       lowercase_end;        //< Last lowercase Unicode char index.
 };
 
-}  // namespace _
+}  //< namespace _
 #endif  //< #if SEAM >= _0_0_0
 #endif  //< INCLUDED_CRABS_LANGUAGE

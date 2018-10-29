@@ -81,6 +81,6 @@ Slot& Wall::Print(Slot& slot) {
   return slot;
 }
 
-}  // namespace _
+}  //< namespace _
 #include <seam_0/0/04_features/00_seam_crabs/00/footer.h>
 #endif  //< #if SEAM >= _0_0_4_0__00_00

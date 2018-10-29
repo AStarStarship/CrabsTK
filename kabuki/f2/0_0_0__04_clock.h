@@ -88,6 +88,6 @@ static const char* _0_0_0__04_ASCII_Clock(char* seam_log, char* seam_end,
 #endif
   return nullptr;
 }
-}  // namespace _
+}  //< namespace _
 
 #include "seam_footer.inl"

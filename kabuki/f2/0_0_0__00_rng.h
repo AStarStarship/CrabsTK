@@ -14,6 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
+#include "cconsole.h"
 #include "crng.h"
 
 #if SEAM == _0_0_0__00
@@ -27,6 +28,44 @@ inline const char* _0_0_0__00_RNG(char* seam_log, char* seam_end,
                                   const char* args) {
 #if SEAM >= _0_0_0__00
   TEST_BEGIN;
+  PRINT_HEADING("Testing ArgsToString");
+
+  char arg_string[] = "C:\\Windows\0Foo\0\0Bar    \0\0\0   420    \0";
+  char* test_args[] = {arg_string, arg_string + 11, arg_string + 16,
+                       arg_string + 26};
+  const int kArgCount = 4;
+
+  PRINT("\nArguments:\n");
+  for (int i = 0; i < kArgCount; ++i) {
+    char* arg = test_args[i];
+    if (arg) {
+      PRINTF("\ni:%i\"%s\" 0x%p", i, arg, arg);
+    } else {
+      PRINT("\nNil arg.");
+    }
+  }
+  PRINT("\n\nContiguous Args:\n");
+  char* end = test_args[kArgCount - 2];
+  while (*end) ++end;
+
+  PRINT("\n\nContiguous Args:\n");
+  char* cursor = test_args[0];
+  while (cursor != end) {
+    char c = *cursor++;
+    if (c == 0)
+      PRINT('`');
+    else if (c < ' ')
+      PRINT('~');
+    else
+      PRINT(c);
+  }
+  PRINT("\n\nPrinting argument string...\n");
+  ArgsToString(kArgCount, test_args);
+  PRINT('\n');
+  PRINT(test_args[1]);
+
+  PRINT("\n\nDone testing const char* ArgsToString(int, char**)\n\n");
+  PRINT_HEADING("Testing RNG");
 
   for (int i = 0; i < 10000; ++i) {
     PRINT("\n");

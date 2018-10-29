@@ -526,7 +526,7 @@ Utf8& Slot::Print(Utf8& print) {
 }
 #endif
 
-}  // namespace _
+}  //< namespace _
 #undef PRINTF
 #undef PRINT
 #endif  //> #if SEAM >= _0_0_4

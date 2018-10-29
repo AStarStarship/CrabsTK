@@ -41,6 +41,6 @@ static const char* _0_0_0__06_ASCII_Array(char* seam_log, char* seam_end,
 #endif
   return nullptr;
 }
-}  // namespace _
+}  //< namespace _
 
 #include "seam_footer.inl"

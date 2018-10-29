@@ -252,6 +252,6 @@ class Room : public Operand {
 /* Returns the Room-Level Script. */
 // API Room* ChineseRoom (Room* room = nullptr);
 
-}  // namespace _
+}  //< namespace _
 #endif  //< CRABS_ROOM_HDi
 #endif  //< #if SEAM >= _0_0_4_0__00_00

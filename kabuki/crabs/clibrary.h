@@ -204,6 +204,6 @@ API void Destruct(Library<TIndex, TKey, TData, TData, MaxStackSize>* r) {
   delete reinterpret_cast<char*>(r);
 }
 #endif  //< CRABS_MEMORY_PROFILE > 2
-}  // namespace _
+}  //< namespace _
 #endif  //< INCLUDED_CRABS_LIBRARY
 #endif  //< #if SEAM >= _0_0_4_0__00_00

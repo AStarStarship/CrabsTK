@@ -25,4 +25,4 @@ static const char* Kabuki__Terminal___Kabuki__Features__Crabs(char* seam_log, ch
 #endif
   return TestTree<Seam_0_0_4_0__00>(seam_log, log_end, args);
 }
-}  // namespace _
+}  //< namespace _

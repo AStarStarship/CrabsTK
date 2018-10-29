@@ -1209,7 +1209,7 @@ inline void** Args(void** ptrs, const void* a, const void* b, const void* c,
   return const_cast<void**>(const_ptrs);
 }
 
-}  // namespace _
+}  //< namespace _
 
 #endif  //< INCLUDED_CRABS_ARGS
 #endif  //< #if SEAM >= _0_0_4_0__00_00

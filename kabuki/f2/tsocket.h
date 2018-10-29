@@ -222,7 +222,7 @@ uintptr_t* New(uintptr_t* buffer, intptr_t size) {
   return new uintptr_t[size >> kWordBitCount];
 }
 
-}  // namespace _
+}  //< namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_KABUKI_TSOCKET
 #endif  //< #if SEAM >= _0_0_0__02

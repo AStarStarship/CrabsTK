@@ -84,6 +84,6 @@ class Wall {
   CArray<Door*>* doors_;  //< The doors in the room.
 };
 
-}  // namespace _
+}  //< namespace _
 #endif  //< INCLUDED_CRABS_WALL
 #endif  //< #if SEAM >= _0_0_4_0__00_00

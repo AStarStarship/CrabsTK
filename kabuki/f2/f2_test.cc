@@ -231,4 +231,4 @@ bool ErrorFreeze(const char* function, const char* file, int line) {
   return true;
 }
 
-}  // namespace _
+}  //< namespace _

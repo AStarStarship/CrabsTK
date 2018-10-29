@@ -285,7 +285,7 @@ API Utf8& PrintExpr(Utf8& printer, Expr* expr);
 API Utf8& PrintExprStack(Utf8& printer, Expr* expr);
 #endif
 
-}  // namespace _
+}  //< namespace _
 
 #if CRABS_TEXT
 /* Prints the given Expr to the Text buffer. */
@@ -648,7 +648,7 @@ API Utf8& PrintExpr(Utf8& printer, Expr* expr);
 API Utf8& PrintExprStack(Utf8& printer, Expr* expr);
 #endif
 
-}  // namespace _
+}  //< namespace _
 
 #if CRABS_TEXT
 /* Prints the given Expr to the Text buffer. */

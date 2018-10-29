@@ -93,7 +93,7 @@ API void BInKeyStrokes();
 API Utf8& PrintBOut(Utf8& printer, BOut* bout);
 #endif
 
-}  // namespace _
+}  //< namespace _
 
 #if CRABS_TEXT
 /* Prints out the bin to the text. */

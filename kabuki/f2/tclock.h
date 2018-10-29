@@ -481,7 +481,7 @@ const Char* TextScanTime(const Char* begin, Tss& result) {
 }
 #endif  // #if F2_TEXT
 
-}  // namespace _
+}  //< namespace _
 
 #undef PRINT
 #undef PRINTF

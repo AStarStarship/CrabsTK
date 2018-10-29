@@ -947,7 +947,7 @@ Utf8& PrintExpr(Utf8& print, Expr* expr) {
 
 #endif
 
-}  // namespace _
+}  //< namespace _
 
 #undef PRINTF
 #undef PRINT

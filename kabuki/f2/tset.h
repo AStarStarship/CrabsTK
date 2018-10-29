@@ -108,6 +108,6 @@ struct Collection {
   /*  */
   virtual Utf8& Print(Utf8& out_) = 0;
 };
-}  // namespace _
+}  //< namespace _
 #endif  //< #if SEAM >= _0_0_0__05
 #endif  //< INCLUDED_F2_SET

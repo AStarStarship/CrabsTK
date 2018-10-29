@@ -177,7 +177,7 @@ class TObj {
   CObj obj_;  //< ASCII OBJ harness.
 };
 
-}  // namespace _
+}  //< namespace _
 
 #include "test_footer.inl"
 #endif  //< INCLUDED_KABUKI_F2_TOBJ

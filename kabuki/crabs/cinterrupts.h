@@ -29,7 +29,7 @@ struct API RoomCrashException : public std::exception {
   const char* what() const throw();
 };
 #endif
-}  // namespace _
+}  //< namespace _
 #endif  //< USING_CRABS_INTERRUPTS
 #endif  //< INCLUDED_CRABS_EXCEPTIONS
 #endif  //< #if SEAM >= _0_0_4_0__00_00

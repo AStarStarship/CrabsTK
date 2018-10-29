@@ -20,5 +20,5 @@ API inline void RoomLock();
 
 /* Unlocks the processor. */
 API inline void RoomUnlock();
-}  // namespace _
+}  //< namespace _
 #endif  //< #if INCLUDED_KABUKI_F2_LOCK

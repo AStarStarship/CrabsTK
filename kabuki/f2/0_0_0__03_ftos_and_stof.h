@@ -39,11 +39,11 @@ const char* _0_0_0__03_FtoS_and_StoF(char* seam_log, char* seam_end,
 
   for (int i = 0; i < 1 << 20; ++i) {
     do {
-      value = distr(eng);
+      value = RandomUI8();
       dbl_expected = static_cast<double>(value);
-    } while (!isfinite(dbl_expected));
+    } while (!IsFinite(dbl_expected));
     dbl_found = Ceiling(dbl_expected);
-    dbl_expected = ceil(dbl_expected);
+    dbl_expected = Ceiling(dbl_expected);
     Test(dbl_expected, dbl_found);
   }
 
@@ -51,9 +51,9 @@ const char* _0_0_0__03_FtoS_and_StoF(char* seam_log, char* seam_end,
 
   for (int i = 0; i < 1 << 20; ++i) {
     do {
-      value = distr(eng);
+      value = RandomUI8();
       dbl_expected = static_cast<double>(value);
-    } while (!isfinite(dbl_expected));
+    } while (!IsFinite(dbl_expected));
     PrintFloat<>(buffer, buffer + kSize, dbl_expected);
     Test(scanf_s("%lf", &dbl_found));
     Test(dbl_expected, dbl_found);
@@ -65,9 +65,9 @@ const char* _0_0_0__03_FtoS_and_StoF(char* seam_log, char* seam_end,
 
   for (int i = 0; i < 1 << 20; ++i) {
     do {
-      value = distr(eng);
+      value = RandomUI8();
       dbl_expected = static_cast<double>(value);
-    } while (!isfinite(dbl_expected));
+    } while (!IsFinite(dbl_expected));
     char buffer[24];
     sprintf_s(buffer, kSize, "%f", dbl_expected);
     Test(ScanFloat<double, uint64_t, char>(buffer, dbl_expected));

@@ -91,7 +91,7 @@ inline wchar_t OpLast(const Op* op) {
 Utf8& Print(Utf8& print, const Op* op);
 #endif
 
-}  // namespace _
+}  //< namespace _
 
 inline _::Utf8& operator<<(_::Utf8& print, const _::Op* op) {
   return _::Print(print, op);

@@ -27,6 +27,6 @@ const char* RoomCrashException::what() const throw() {
 }
 #endif
 
-}  // namespace _
+}  //< namespace _
 #endif  //< USING_CRABS_INTERRUPTS
 #endif  ///< #if SEAM >= _0_0_4_0__00_00

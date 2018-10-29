@@ -25,6 +25,6 @@ static const char* Seam_0_0_4_0__00(char* seam_log, char* seam_end,
 #endif
   return nullptr;
 }
-}  // namespace _
+}  //< namespace _
 
 #include "footer.h"

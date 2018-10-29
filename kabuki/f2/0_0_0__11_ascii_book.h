@@ -155,5 +155,5 @@ static const char* _0_0_0__11_ASCII_Book(char* seam_log, char* seam_end,
 #endif
   return nullptr;
 }
-}  // namespace _
+}  //< namespace _
 #include "0_0_0__11_ascii_book.inl"

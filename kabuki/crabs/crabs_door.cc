@@ -121,7 +121,7 @@ static Door* DoorInit (uintptr_t* buffer, slot_t slot_size) {
     w->door_one = nullptr;
 }*/
 
-}  // namespace _
+}  //< namespace _
 #undef PRINTF
 #undef PRINT
 #endif  //> #if SEAM >= _0_0_4_0__00_00

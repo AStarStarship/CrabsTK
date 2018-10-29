@@ -188,7 +188,7 @@ enum {
   kFloorSize = 1024,  //< Size, or initial size, of the Floor.
 };
 
-}  // namespace _
+}  //< namespace _
 
 #undef MAX_ERRORS
 #undef MAX_NUM_PARAMS

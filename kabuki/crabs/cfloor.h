@@ -33,7 +33,7 @@ struct API Floor {
 >>>>>>> af98cdd86f8b7b5188063c203df0e9dd4e771336
 API inline Floor* Global();
 
-}  // namespace _
+}  //< namespace _
 
 #endif  // #if INCLUDED_CRABS_FLOOR
 #endif  // #if SEAM >= _0_0_4_0__00_00

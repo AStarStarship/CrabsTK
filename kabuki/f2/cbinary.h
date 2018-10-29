@@ -17,8 +17,12 @@ specific language governing permissions and limitations under the License. */
 #ifndef INCLUDED_KABUKI_F2_BINARY
 #define INCLUDED_KABUKI_F2_BINARY 1
 
-#if SEAM >= _0_0_0__01
 namespace _ {
+
+/* Converts a byte a one-uint8_t hex representation. */
+API char HexNibbleToUpperCase(uint8_t b);
+
+#if SEAM >= _0_0_0__01
 
 /* Lookup table of ASCII Char pairs for 00, 01, ..., 99. */
 API const uint16_t* BinaryDecimalsLUT();
@@ -136,9 +140,6 @@ uint64_t Negative(uint64_t value);
 /* Converts a byte a one-uint8_t hex representation. */
 API char HexNibbleToLowerCase(uint8_t b);
 
-/* Converts a byte a one-uint8_t hex representation. */
-API char HexNibbleToUpperCase(uint8_t b);
-
 /* Converts a byte a two-byte hex representation. */
 API uint16_t HexByteToLowerCase(uint8_t b);
 
@@ -239,5 +240,4 @@ API char* Print(char* cursor, char* end, double value);
 
 #endif  //< #if SEAM >= _0_0_0__03
 }  // namespace _
-
 #endif  //< #ifndef INCLUDED_KABUKI_F2_BINARY

@@ -18,7 +18,7 @@ specific language governing permissions and limitations under the License. */
 #if CRABS_TEXT
 // End dependencies.
 
-namespace _ {}  // namespace _
+namespace _ {}  //< namespace _
 #undef PRINTF
 #undef PRINT
 #endif  //< CRABS_TEXT

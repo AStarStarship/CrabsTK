@@ -86,6 +86,6 @@ uintptr_t* ObjNew(int16_t size, size_t header_size) {
   return buffer;
 }
 
-}  // namespace _
+}  //< namespace _
 #include "test_footer.inl"
 #endif  //< #if SEAM >= _0_0_0__05

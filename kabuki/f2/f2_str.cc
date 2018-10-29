@@ -27,7 +27,7 @@ void Console(uintptr_t* buffer) { Console<char>(buffer); }
 
 void COutAuto(uintptr_t* buffer) { COutAuto<char>(buffer); }
 
-}  // namespace _
+}  //< namespace _
 
 #endif  // #if F2_TEXT
 
@@ -584,7 +584,7 @@ void COutUtf8(uintptr_t* buffer) { return Console<char>(buffer); }
 
 void COutAutoUtf8(uintptr_t* buffer) { return COutAuto<char>(buffer); }
 
-}  // namespace _
+}  //< namespace _
 
 _::Utf8& operator<<(_::Utf8& utf, const char* string) {
   return utf.Set(_::Print(utf.begin, utf.end, string));
@@ -974,8 +974,8 @@ char16_t* PrintSocket(char16_t* begin, char16_t* end, const void* start,
                       const void* stop) {
   return PrintSocket<char16_t>(begin, end, start, stop);
 }
-}  // namespace _
-}  // namespace _
+}  //< namespace _
+}  //< namespace _
 
 const char16_t* Scan(const char16_t* string, int8_t& result) {
   return ScanSigned<char16_t, int8_t>(string, result);
@@ -1223,7 +1223,7 @@ const char16_t* Utf16Right::GetString() {
 
 int Utf16Right::GetColumnCount() { return column_count; }
 
-}  // namespace _
+}  //< namespace _
 
 _::Utf16& operator<<(_::Utf16& utf, const char16_t* string) {
   return utf.Set(_::Print(utf.begin, utf.end, string));
@@ -1848,7 +1848,7 @@ const char32_t* Utf32Right::GetString() {
 
 int Utf32Right::GetColumnCount() { return column_count; }
 
-}  // namespace _
+}  //< namespace _
 
 _::Utf32& operator<<(_::Utf32& utf, const char32_t* string) {
   return utf.Set(_::Print(utf.begin, utf.end, string));

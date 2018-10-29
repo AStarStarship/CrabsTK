@@ -77,6 +77,6 @@ inline int64_t PackSV8(int64_t value) {
 //    return temp;
 //}
 
-}  // namespace _
+}  //< namespace _
 #endif  //< INCLUDED_KABUKI_F2_VARINT
 #endif  //< #if SEAM >= _0_0_0__14

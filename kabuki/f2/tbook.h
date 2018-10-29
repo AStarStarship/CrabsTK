@@ -807,7 +807,7 @@ using Multimap2 = TMap<uint8_t, uint16_t, uint16_t>;
 using Multimap4 = TMap<uint16_t, uint16_t, uint32_t>;
 using Multimap8 = TMap<uint32_t, uint32_t, uint64_t>;
 
-}  // namespace _
+}  //< namespace _
 
 #undef PRINTF
 #undef PRINT

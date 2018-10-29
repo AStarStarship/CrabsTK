@@ -58,6 +58,6 @@ API const char** ErrorStrings();
 /* Returns one of the Errors () strings. */
 API const char* ErrorString(Error error);
 
-}  // namespace _
+}  //< namespace _
 #endif  //< INCLUDED_CRABS_ERROR
 #endif  //< #if SEAM >= _0_0_4_0__00_00

@@ -107,6 +107,6 @@ static Door* DoorInit (int* buffer, uint_t slot_size) {
     w->door_one = nullptr;
 }*/
 
-}  // namespace _
+}  //< namespace _
 #endif  //< #if SEAM >= _0_0_4_0__00_00
 #endif  //< INCLUDED_CRABS_DOOR

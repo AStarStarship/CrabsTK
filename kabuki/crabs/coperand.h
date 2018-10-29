@@ -90,7 +90,7 @@ Slot& OperandQuery(Operand* root, const char* address, Slot& key);
 API Utf8& PrintOperand(Utf8& slot, Operand* operand);
 #endif
 
-}  // namespace _
+}  //< namespace _
 
 #if CRABS_TEXT
 /* Overloaded operator<< prints the given operand to the text. */

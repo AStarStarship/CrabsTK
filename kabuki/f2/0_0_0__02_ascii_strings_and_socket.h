@@ -229,5 +229,5 @@ static const char* _0_0_0__02_ASCII_Strings_and_Socket(char* seam_log,
 #endif
   return nullptr;
 }
-}  // namespace _
+}  //< namespace _
 #include "test_footer.inl"

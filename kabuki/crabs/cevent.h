@@ -45,6 +45,6 @@ struct API Event : public Operand {
   virtual const Op* Star(wchar_t index, Expr* expr) = 0;
 };
 
-}  // namespace _
+}  //< namespace _
 #endif  //< INCLUDED_CRABS_EVENT
 #endif  //< #if SEAM >= _0_0_4_0__00_00

@@ -131,6 +131,6 @@ API const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
 API const Op* MirrorResult(Mirror* mirror, Error error, const uint_t* header,
                            uint_t offset, char* address);
 
-}  // namespace _
+}  //< namespace _
 #endif  //< INCLUDED_SCRIPT_MIRROR
 #endif  //< #if SEAM >= _0_0_4_0__00_00

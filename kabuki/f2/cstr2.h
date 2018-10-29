@@ -815,7 +815,7 @@ class Utf16Right {
   int column_count;        //< Number of columns to center.
 };
 
-}  // namespace _
+}  //< namespace _
 
 /* Writes a nil-terminated UTF-8 or ASCII string to the print.
 @param  printer The printer.

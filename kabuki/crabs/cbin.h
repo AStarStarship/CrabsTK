@@ -127,7 +127,7 @@ API Utf16& Print(Utf16& printer, BIn* bin);
 API Utf32& Print(Utf32& printer, BIn* bin);
 #endif  //< #if USING_UTF32
 
-}  // namespace _
+}  //< namespace _
 
 #if CRABS_TEXT
 /* Prints out the bin to the text. */

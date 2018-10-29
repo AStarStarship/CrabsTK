@@ -31,42 +31,6 @@ inline const char* _0_0_0__01_ItoS_and_StoI(char* seam_log, char* seam_end,
 #if SEAM >= _0_0_0__01
   TEST_BEGIN;
 
-  PRINT("\n\nDone testing const char* ArgsToString(int, char**)");
-
-  char arg_string[] = "C:\\Windows\0Foo\0\0Bar    \0\0\0   420    \0";
-  char* test_args[] = {arg_string, arg_string + 11, arg_string + 15,
-                       arg_string + 25};
-  const int kArgCount = 3;
-
-  PRINT("\nArguments:\n");
-  for (int i = 0; i < kArgCount - 1; ++i) {
-    char* arg = test_args[i];
-    if (arg) {
-      PRINTF("\ni:%i\"%s\" 0x%p", i, arg, arg);
-    } else {
-      PRINT("\nNil arg.");
-    }
-  }
-  PRINT("\n\nContiguous Args:\n");
-  char* end = test_args[kArgCount - 2];
-  while (*end) ++end;
-
-  PRINT("\n\nContiguous Args:\n");
-  char* cursor = test_args[0];
-  while (cursor != end) {
-    char c = *cursor++;
-    if (c == 0)
-      PRINT('`');
-    else if (c < ' ')
-      PRINT('~');
-    else
-      PRINT(c);
-  }
-  PRINT("\n\nPrinting argument string...\n");
-  _::ArgsToString(kArgCount, test_args);
-  PRINT('\n');
-  PRINT(test_args[1]);
-
   static const uint64_t k10ToThe[20] = {
       1,           //< 10^0
       10,          //< 10^1

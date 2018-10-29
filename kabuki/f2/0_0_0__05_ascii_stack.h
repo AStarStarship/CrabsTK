@@ -44,6 +44,6 @@ static const char* _0_0_0__05_ASCII_Stack(char* seam_log, char* seam_end,
 #endif
   return nullptr;
 }
-}  // namespace _
+}  //< namespace _
 
 #include "seam_footer.inl"

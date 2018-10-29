@@ -797,7 +797,7 @@ struct API Utf8LineString {
 // private:
 //};
 
-}  // namespace _
+}  //< namespace _
 
 /* Writes a nil-terminated UTF-8 or ASCII string to the print.
 @param  utf The utf.

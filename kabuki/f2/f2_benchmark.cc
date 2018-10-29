@@ -29,7 +29,7 @@ using namespace std;
 using namespace std::chrono;
 
 #if SEAM == _0_0_0__12
-#include "test_release.inl"
+#include "test_debug.inl"
 #else
 #include "test_release.inl"
 #endif
@@ -96,5 +96,5 @@ const char* Benchmark::Run(char* cursor, char* end, const char* args) {
 
 }  // namespace _
 
-#include "01/seam_footer.inl"
+#include "test_footer.inl"
 #endif

@@ -653,7 +653,7 @@ class Map {
     return reinterpret_cast<TMap<UI, SI, I>*>(buffer);
   }
 };  //< class Map
-}  // namespace _
+}  //< namespace _
 #endif  //< INCLUDED_CRAPS_MAP
 #undef PRINTF
 #undef PRINT

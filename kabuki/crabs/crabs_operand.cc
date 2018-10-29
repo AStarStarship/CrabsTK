@@ -109,7 +109,7 @@ Slot& OperandQuery(Operand* root, const char* address, Slot& slot) {
   return slot;
 }
 #endif
-}  // namespace _
+}  //< namespace _
 #undef PRINTF
 #undef PRINT
 #endif  //> #if SEAM >= _0_0_4_0__00_00

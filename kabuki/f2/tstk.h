@@ -68,7 +68,8 @@ constexpr UI UnsignedMax() {
     given types, and another for a multi-dimensional array that uses the 1-d
     array in order to store the dimensions. The only different between them is
     that the size_array variable gets set to 0.
-    
+    
+
 
 
 
@@ -657,7 +658,7 @@ class Stack {
   }
 };
 
-}  // namespace _
+}  //< namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_STK
 #endif  //< #if SEAM >= _0_0_0__05

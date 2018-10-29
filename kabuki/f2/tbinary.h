@@ -20,8 +20,8 @@ specific language governing permissions and limitations under the License. */
 #include "cbinary.h"
 #include "cconsole.h"
 
-#if SEAM >= _0_0_0__01
-#if SEAM == _0_0_0__01
+#if SEAM >= _0_0_0__00
+#if SEAM == _0_0_0__00
 #include "test_debug.inl"
 #else
 #include "test_release.inl"
@@ -105,6 +105,7 @@ int StringCompare(const Char* string_a, const Char* string_b,
 #else
 #include "test_release.inl"
 #define BEGIN_ITOS_ALGORITHM
+#define PRINT_PRINTED
 #endif
 
 namespace _ {

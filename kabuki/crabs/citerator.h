@@ -37,6 +37,6 @@ struct API Iterator {
   virtual bool IsDone() = 0;
 };
 
-}  // namespace _
+}  //< namespace _
 #endif  //< CRABS_ITERATOR_H
 #endif  //< #if SEAM >= _0_0_4_0__00_00

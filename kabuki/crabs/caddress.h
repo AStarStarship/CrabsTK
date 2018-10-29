@@ -86,6 +86,6 @@ inline uint64_t PackAddress(uint64_t a, uint64_t b, uint64_t c, uint64_t d,
           (f << 40) | (g << 48));
 }
 
-}  // namespace _
+}  //< namespace _
 #endif  //< INCLUDED_CRABS_ADDRESS
 #endif  //< #if SEAM >= _0_0_2__00

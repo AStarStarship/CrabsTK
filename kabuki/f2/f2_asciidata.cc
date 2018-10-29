@@ -13,11 +13,11 @@ specific language governing permissions and limitations under the License. */
 
 #include <pch.h>
 
-#if SEAM >= _0_0_0__02
-#if SEAM == _0_0_0__02
-#include "../test_release.h"
+#if SEAM >= _0_0_0__12
+#if SEAM == _0_0_0__12
+#include "test_debug.inl"
 #else
-#include "../test_release.h"
+#include "test_release.inl"
 #endif
 
 #include "casciidata.h"
@@ -135,10 +135,7 @@ char* Write(char* begin, char* end, type_t type, const void* value) {
   // 3.) Check for enough room in begin-end socket.
   // 4.) Use SocketCopy to copy the data into the given begin-end socket.
 
-  ASSERT(begin);
-  ASSERT(end);
-  ASSERT(value);
-  if (!TypeIsValid(type)) return nullptr;
+  if (!begin || begin >= end || !value || !TypeIsValid(type)) return nullptr;
 
   if (type <= UI1) {
     char* target_1 = reinterpret_cast<char*>(begin);
@@ -229,7 +226,7 @@ inline int TypeSizeWidthCode(type_t type) { return type >> 6; }
 namespace _ {
 char* Print(char* begin, char* end, type_t type, const void* value) {
   return Print<char>(begin, end, type, value);
-}  // namespace _
+}  //< namespace _
 _::Utf8& operator<<(_::Utf8& utf, const _::TypeValue& item) {
   return utf.Set(_::Print(utf.begin, utf.end, item.type, item.value));
 }
@@ -257,4 +254,4 @@ _::Utf32& operator<<(_::Utf32& utf, const _::TypeValue& item) {
 }
 #endif
 #include "test_footer.inl"
-#endif  //< #if SEAM >= _0_0_0__02
+#endif  //< #if SEAM >= _0_0_0__12

@@ -208,7 +208,7 @@ uintptr_t Room::GetSizeBytes() {
 Utf8& Room::Print(Utf8& print) { return print << "\nRoom: "; }
 #endif
 
-}  // namespace _
+}  //< namespace _
 #undef PRINTF
 #undef PRINT
 #endif  //> #if SEAM >= _0_0_4

@@ -190,4 +190,4 @@ bool AssertHandle(int line, const char* file, const char* message) {
 #endif
 }
 
-}  // namespace _
+}  //< namespace _

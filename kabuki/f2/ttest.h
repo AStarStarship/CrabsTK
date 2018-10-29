@@ -58,6 +58,6 @@ bool Test(const Char* a, const Char* b) {
   return true;
 }
 
-}  // namespace _
+}  //< namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_TTEST

@@ -121,7 +121,7 @@ struct Slot {
 #endif
 };
 
-}  // namespace _
+}  //< namespace _
 
 #if CRABS_TEXT
 /* Prints out the bin to the text. */

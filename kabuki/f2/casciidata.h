@@ -14,7 +14,7 @@ specific language governing permissions and limitations under the License. */
 #pragma once
 #include <pch.h>
 
-#if SEAM >= _0_0_0__05
+#if SEAM >= _0_0_0__12
 
 #ifndef INCLUDED_KABUKI_F2_ASCIIDATA
 #define INCLUDED_KABUKI_F2_ASCIIDATA
@@ -176,4 +176,4 @@ API _::Utf32& operator<<(_::Utf32& utf, const _::TypeValue& type_value);
 #endif
 
 #endif  //< INCLUDED_KABUKI_F2_ASCIIDATA
-#endif  //< #if SEAM >= _0_0_0__05
+#endif  //< #if SEAM >= _0_0_0__12
