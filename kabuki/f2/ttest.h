@@ -45,19 +45,6 @@ int SeamTreeTest(int arg_count, char** args, char* seam_log,
   return APP_EXIT_SUCCESS;
 }
 
-template <typename Char>
-bool Test(const Char* a, const Char* b) {
-  int result = ::_::StringCompare<Char>(a, b);
-  if (!result) return false;
-  Print("\nERROR: Expecting:");
-  Print(a);
-  Print("\n           Found:");
-  Print(b);
-  Print("\n      Difference:");
-  Print(result);
-  return true;
-}
-
-}  //< namespace _
+}  // namespace _
 
 #endif  //< INCLUDED_KABUKI_F2_TTEST

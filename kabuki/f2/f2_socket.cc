@@ -106,7 +106,8 @@ inline uintptr_t FillWord(char fill_char) {
 
 char* SocketFill(char* cursor, char* end, intptr_t byte_count, char fill_char) {
   ASSERT(cursor);
-  ASSERT(byte_count > 0);
+  PRINTF("\ncursor:%p\nbyte_count:%d", cursor, (int)byte_count);
+  ASSERT(byte_count >= 0);
 
   if ((end - cursor) < byte_count) {
     PRINT("\nBuffer overflow!");
@@ -280,6 +281,6 @@ void DestructorDeleteBuffer(uintptr_t* buffer) {
   delete buffer;
 }
 
-}  //< namespace _
+}  // namespace _
 #include "test_footer.inl"
 #endif  //<  #if SEAM >= _0_0_0__02

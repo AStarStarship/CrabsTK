@@ -17,7 +17,7 @@ specific language governing permissions and limitations under the License. */
 #include <cstdio>
 #include <cstring>
 
-#include "global.h"
+#include "tbinary.h"
 
 #if SEAM == _0_0_0__01
 #include "test_debug.inl"

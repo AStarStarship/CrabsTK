@@ -46,13 +46,43 @@ void TestEnd(const char* function_name) {
   Print("\n  Done testing ", function_name);
 }
 
-bool Test(bool condition) { return !condition; }
+bool Test(bool condition) { return condition; }
 
-bool Test(const char* a, const char* b) { return Test<char>(a, b); }
+bool Test(const char* a, const char* b) {
+  int result = ::_::StringCompare<char>(a, b);
+  if (!result) return true;
+  Print("\nERROR: Expecting:");
+  Print(a);
+  Print("\n           Found:");
+  Print(b);
+  Print("\n      Difference:");
+  Print(result);
+  return false;
+}
 
-bool Test(const char16_t* a, const char16_t* b) { return Test<char16_t>(a, b); }
+bool Test(const char16_t* a, const char16_t* b) {
+  int result = ::_::StringCompare<char16_t>(a, b);
+  if (!result) return true;
+  Print("\nERROR: Expecting:");
+  Print(a);
+  Print("\n           Found:");
+  Print(b);
+  Print("\n      Difference:");
+  Print(result);
+  return false;
+}
 
-bool Test(const char32_t* a, const char32_t* b) { return Test<char32_t>(a, b); }
+bool Test(const char32_t* a, const char32_t* b) {
+  int result = ::_::StringCompare<char32_t>(a, b);
+  if (!result) return true;
+  Print("\nERROR: Expecting:");
+  Print(a);
+  Print("\n           Found:");
+  Print(b);
+  Print("\n      Difference:");
+  Print(result);
+  return false;
+}
 
 bool Test(const void* a, const void* b) {
   if (a == b) return true;
@@ -231,4 +261,4 @@ bool ErrorFreeze(const char* function, const char* file, int line) {
   return true;
 }
 
-}  //< namespace _
+}  // namespace _

@@ -367,7 +367,8 @@ pointer to the nil-term char upon success.
 template <typename Char = char>
 Char* PrintRight(Char* cursor, Char* end, const Char* token, int column_count) {
   ASSERT(token);
-  ASSERT(cursor < end);
+  PRINTF("\ncursor:%p end:%p", cursor, end);
+  ASSERT(cursor <= end);
 
   if (cursor == nullptr || column_count < 1) return nullptr;
 
@@ -1161,7 +1162,7 @@ int StringQuery(const Char* cursor, const Char* end, const Char* query) {
   return 0;
 }
 
-}  //< namespace _
+}  // namespace _
 
 #define COUT ::_::TStr<>(&Console).Print();
 

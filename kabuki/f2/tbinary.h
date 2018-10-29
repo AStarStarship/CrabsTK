@@ -776,26 +776,6 @@ const Char* ScanSigned(const Char* buffer, SI& result) {
 }  // namespace _
 #endif  //< #if SEAM >= _0_0_0__01
 
-#if SEAM >= _0_0_0__02
-#if SEAM == _0_0_0__02
-#include "test_debug.inl"
-#else
-#include "test_release.inl"
-#endif
-namespace _ {
-
-/* Searches for the highest MSb asserted.
-@return -1 */
-template <typename UI>
-int MSbAssertedReverse(UI value) {
-  for (int i = sizeof(UI) * 8 - 1; i > 0; --i)
-    if ((value >> i) != 0) return i;
-  return -1;
-}
-}  // namespace _
-#include "test_footer.inl"
-#endif  //< #if SEAM >= _0_0_0__02
-
 #if SEAM >= _0_0_0__03
 #if SEAM == _0_0_0__03
 #include "test_debug.inl"
@@ -809,7 +789,17 @@ int MSbAssertedReverse(UI value) {
 #endif
 namespace _ {
 
-/* A decimal number in floating-point format.
+/* Searches for the highest MSb asserted.
+@return -1 */
+template <typename UI>
+int MSbAssertedReverse(UI value) {
+  for (int i = sizeof(UI) * 8 - 1; i > 0; --i)
+    if ((value >> i) != 0) return i;
+  return -1;
+}
+}  // namespace _
+
+/* A decimal number in floating-point format. */
 template <typename Float, typename UI>
 class Binary {
  public:
@@ -872,7 +862,7 @@ class Binary {
     }
     if (IsInfinite(value)) {
       if (end - buffer < 4) return nullptr;
-      buffer[0] = (f >> (sizeof(UI > *8 - 1))) ? '-' : '+';
+      buffer[0] = (f >> (sizeof(UI) *8 - 1))) ? '-' : '+';
       buffer[1] = 'i';
       buffer[2] = 'n';
       buffer[3] = 'f';
@@ -906,10 +896,10 @@ class Binary {
 
   // Non-working algorithm DOES NOT converts a string-to-float.
   //@return nil if there is no number to scan or pointer to the next char after
-  //the end of the scanned number upon success.
+  // the end of the scanned number upon success.
   //@brief Algorithm uses a 32-bit unsigned value to scan the floating-point
-  //number, which can only have 10 digits max, so the maximum floating-point
-  //number digit count we can scan is 9 digits long.
+  // number, which can only have 10 digits max, so the maximum floating-point
+  // number digit count we can scan is 9 digits long.
   template <typename Char = char>
   const Char* Scan(const Char* buffer, Float& result) {
     ASSERT(buffer);
@@ -1314,7 +1304,8 @@ class Binary {
     buffer[1] = '.';
     buffer[length + 1] = 'e';
     return Print<Char>(length + 2, end, kk - 1);
-};*/
+  }
+};
 
 template <typename Float = double, typename UI = uint64_t, typename Char = char>
 Char* PrintFloat(Char* cursor, Char* end, Float value) {
@@ -1334,11 +1325,10 @@ Char* ScanFloat(Char* cursor, Float value) {
   return nullptr;
 }
 
-// using Binary16 = Binary<half, uint32_t>; //< Coming soon.
-// using Binary32 = Binary<float, uint32_t>;
-// using Binary64 = Binary<double, uint64_t>;
+using Binary32 = Binary<float, uint32_t>;
+using Binary64 = Binary<double, uint64_t>;
+// using Binary16 = Binary<half, uint32_t>;
 // using Binary128 = Binary<quad, uint128_t>;
-//< Coming soon but not in Visual-C++ due to lack of 128-bit integer support.
 
 }  // namespace _
 #undef PRINT_FLOAT_BINARY

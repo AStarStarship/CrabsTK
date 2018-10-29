@@ -35,10 +35,10 @@ static const char* _0_0_0__02_ASCII_Strings_and_Socket(char* seam_log,
 #if SEAM >= _0_0_0__02
   TEST_BEGIN;
 
-  PRINTF("\n\nTesting Text...");
+  PRINT_HEADING("Testing ASCII Strings");
   enum {
     kCompareStringsCount = 5,
-    kSize = 2048,
+    kSize = 512,
   };
 
   static const char* test_strings[kCompareStringsCount][2] = {
@@ -64,8 +64,8 @@ static const char* _0_0_0__02_ASCII_Strings_and_Socket(char* seam_log,
 
   static const char kStringNumbers[] = "1234567890\0";
 
-  static const char* kStringsCentered[] = {" 1234567890\0", " 1234567890 \0",
-                                           "  1234567890 \0", "123...\0"};
+  static const char* kStringsCentered[] = {" 1234567890", " 1234567890 ",
+                                           "  1234567890 ", "123..."};
 
   const char* end;
   char buffer[kSize + 2], buffer_b[kSize + 1];
@@ -92,14 +92,7 @@ static const char* _0_0_0__02_ASCII_Strings_and_Socket(char* seam_log,
 
   static const char kTesting123[] = "Testing 1, 2, 3\0";
 
-  PRINT_HEADING("    Testing Utf...");
-  PRINTF("    Expecting \"%s\"...", kTesting123);
-
-  utf.Set(buffer) << "Testing " << 1 << ", " << 2 << ", " << 3;
-
-  AVOW(kTesting123, buffer);
-
-  PRINT_HEADING("    Running HexTest...");
+  PRINT_HEADING("    Running HexTest");
   for (int i = 0; i < 16; ++i) {
     int value = HexToByte(HexNibbleToLowerCase(i));
     Test(i, value);
@@ -115,53 +108,58 @@ static const char* _0_0_0__02_ASCII_Strings_and_Socket(char* seam_log,
            (char)c, (char)(c >> 8));
     int value = HexToByte(c);
     PRINTF("        HexToByte:%i", value);
-    Test(i, value);
+    AVOW(i, value);
     value = HexToByte(HexByteToUpperCase(i));
     PRINTF("     value is now:%i", value);
     Test(i, value);
   }
 
-  PRINT_HEADING("    Testing string utils...");
+  PRINT_HEADING("    Testing Universal Text Formatter");
+  PRINTF("\n\n    Expecting \"%s\"", kTesting123);
 
-  Test(!StringEquals<>(kCompareStrings[0], kCompareStrings[1]));
-  Test(!StringEquals<>(kCompareStrings[0], kCompareStrings[3]));
-  Test(StringEquals<>(kCompareStrings[0], kCompareStrings[0]));
-  Test(!StringEquals<>(kCompareStrings[2], kCompareStrings[3]));
-  Test(StringEquals<>(kCompareStrings[2], kCompareStrings[2]));
+  utf.Set(buffer) << "Testing " << 1 << ", " << 2 << ", " << 3;
+  PRINT_SOCKET(buffer, kSize);
+  AVOW(kTesting123, buffer);
 
-  Test(9, StringLength<>("123456789"));
+  ASSERT(!StringEquals<>(kCompareStrings[0], kCompareStrings[1]));
+  ASSERT(!StringEquals<>(kCompareStrings[0], kCompareStrings[3]));
+  ASSERT(StringEquals<>(kCompareStrings[0], kCompareStrings[0]));
+  ASSERT(!StringEquals<>(kCompareStrings[2], kCompareStrings[3]));
+  ASSERT(StringEquals<>(kCompareStrings[2], kCompareStrings[2]));
 
-  Test(StringFind(kTestingString, "one"));
-  Test(StringFind(kTestingString, "three."));
+  AVOW(9, StringLength<>("123456789"));
 
-  PRINTF("\n\n    Testing PrintRight...");
+  ASSERT(StringFind(kTestingString, "one"));
+  ASSERT(StringFind(kTestingString, "three."));
 
-  Test(PrintRight<>(buffer, buffer + kSize, kTestingString, 28));
+  PRINTF("\n\n    Testing PrintRight");
+
+  ASSERT(PrintRight<>(buffer, buffer + kSize, kTestingString, 28));
   PRINT_SOCKET(buffer, kSize);
   PRINTF("\n    Wrote:\"%s\":%i", buffer, StringLength<>(buffer));
   AVOW(kStringsRightAligned[0], buffer);
 
-  Test(PrintRight(buffer, buffer + kSize, kTestingString, 7));
+  ASSERT(PrintRight(buffer, buffer + kSize, kTestingString, 7));
   PRINT_SOCKET(buffer, kSize);
   AVOW(kStringsRightAligned[1], buffer);
 
-  Test(PrintRight(buffer, buffer + kSize, kTestingString, 1));
+  ASSERT(PrintRight(buffer, buffer + kSize, kTestingString, 1));
   PRINT_SOCKET(buffer, kSize);
   AVOW(kStringsRightAligned[2], buffer);
 
-  Test(PrintRight(buffer, buffer + kSize, kTestingString, 2));
+  ASSERT(PrintRight(buffer, buffer + kSize, kTestingString, 2));
   PRINT_SOCKET(buffer, kSize);
   AVOW(kStringsRightAligned[3], buffer);
 
-  Test(PrintRight(buffer, buffer + kSize, kTestingString, 3));
+  ASSERT(PrintRight(buffer, buffer + kSize, kTestingString, 3));
   PRINT_SOCKET(buffer, kSize);
   AVOW(kStringsRightAligned[4], buffer);
 
-  Test(PrintRight(buffer, buffer + kSize, kTestingString, 4));
+  ASSERT(PrintRight(buffer, buffer + kSize, kTestingString, 4));
   PRINT_SOCKET(buffer, kSize);
   AVOW(kStringsRightAligned[5], buffer);
 
-  PRINTF("\n\n    Testing PrintCentered...");
+  PRINTF("\n\n    Testing PrintCentered");
 
   for (int i = 0; i < 4; ++i) {
     PRINTF("\n    %i.)\"%s\"", i, kStringsCentered[i]);
@@ -188,21 +186,20 @@ static const char* _0_0_0__02_ASCII_Strings_and_Socket(char* seam_log,
   AVOW(kStringsCentered[3], buffer);
   int i = 0;  //< Shared looping variable.
 
-  PRINT_HEADING("\nTesting Console ().Print ()... ");
-
+  // PRINT_HEADING("\nTesting Console ().Print () ");
   // Console().Print() << "Testing " << 1 << ", 2, " << -3;
 
-  PRINT_HEADING("\nTesting Core Text Functions!");
+  PRINT_HEADING("Testing Socket");
 
-  PRINT_HEADING("Testing PrintSocket (void*, int size)...");
+  PRINT_HEADING("Testing PrintSocket (void*, int size)");
 
   for (int i = 1; i <= kSize; ++i) buffer_b[i - 1] = '0' + i % 10;
   buffer_b[kSize] = 0;
-  Test(TPrintSocket<>(buffer, buffer + kSize, buffer_b, buffer_b + 160));
+  ASSERT(TPrintSocket<>(buffer, buffer + kSize, buffer_b, buffer_b + 160));
   PRINT_SOCKET(buffer, kSize);
   PRINTF("\n    Printed:\n%s", buffer);
 
-  PRINT_HEADING("\n\nTest SocketCopy and MemoryCompare...\n\n");
+  PRINT_HEADING("\n\nTest SocketCopy and MemoryCompare\n\n");
 
   enum {
     kTestCharsCount = 1024,
@@ -218,9 +215,9 @@ static const char* _0_0_0__02_ASCII_Strings_and_Socket(char* seam_log,
     for (int j = 0; j < kTestCharsCount; ++j) test_chars[j] = (char)(j % 256);
     char* result = SocketCopy(test_chars_result + i, kTestCharsCount,
                               test_chars, kTestCharsCount);
-    Test(result);
-    Test(!SocketCompare(test_chars + i, kTestCharsCount, test_chars_result,
-                        kTestCharsCount));
+    ASSERT(result);
+    ASSERT(!SocketCompare(test_chars + i, kTestCharsCount, test_chars_result,
+                          kTestCharsCount));
   }
 
   PRINTF("\n\nDone testing SocketCopy!\n");
@@ -229,5 +226,5 @@ static const char* _0_0_0__02_ASCII_Strings_and_Socket(char* seam_log,
 #endif
   return nullptr;
 }
-}  //< namespace _
+}  // namespace _
 #include "test_footer.inl"

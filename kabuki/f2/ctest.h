@@ -36,11 +36,6 @@ const char* TestTree(char* seam_log, char* seam_end, const char* args,
 /* Prints a message when a TestCase completes without failure. */
 bool TestBegin(char* seam_log, char* seam_end, const char* args);
 
-/* Tests if the pointer is nil.
-@return false if the condition is false.
-@param  value The value to test.  */
-API bool Test(const void* value);
-
 /* Test function to assist in casting boolean types.
 @return false if the condition is false.
 @param condition The condition to check. */
@@ -96,11 +91,28 @@ API bool Test(float value);
 @param  value The value to test. */
 API bool Test(double value);
 
+/* Tests if the pointer is nil.
+@return false if the condition is false.
+@param  value The value to test.  */
+API bool Test(const void* value);
+
 /* Tests if the given arguments are equal.
 @return false if the condition is false.
 @param  a Parameter a.
 @param  b Parameter b. */
 API bool Test(const char* a, const char* b);
+
+/* Tests if the given arguments are equal.
+@return false if the condition is false.
+@param  a Parameter a.
+@param  b Parameter b. */
+API bool Test(const char16_t* a, const char16_t* b);
+
+/* Tests if the given arguments are equal.
+@return false if the condition is false.
+@param  a Parameter a.
+@param  b Parameter b. */
+API bool Test(const char32_t* a, const char32_t* b);
 
 /* Tests if the two pointers are equal.
 @return false if the condition is false.
@@ -187,6 +199,6 @@ API bool TestWarn(const char* funciton, const char* file, int line);
 @param  file    The file the error occurred at.
 @param  message An optional message to print. */
 API bool ErrorFreeze(const char* funciton, const char* file, int line);
-}  //< namespace _
+}  // namespace _
 
 #endif  //< #ifndef INCLUDED_KABUKI_F2_COMPARE

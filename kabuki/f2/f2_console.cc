@@ -185,7 +185,7 @@ void PrintIndent(int count) {
 
 void PrintLine(int width, char token, char first_token) {
   Print('\n');
-  if (width < 1) Print(first_token);
+  if (width > 1) Print(first_token);
   while (width-- > 0) Print(token);
 }
 
@@ -204,12 +204,11 @@ void PrintHeading(const char* heading_a, const char* heading_b, int line_count,
 
 void PrintHeading(const char* heading, int line_count, int width, char token,
                   char first_token) {
-  if (line_count < 1 || width < 1)
-    while (line_count-- > 0) Print('\n');
+  if (line_count < 1 || width < 1) return;
+  while (line_count-- > 0) Print('\n');
   PrintLine(width, token, '+');
   Print("\n| ");
   Print(heading);
-  Print('\n');
   PrintLine(width, token, '+');
   Print('\n');
 }
