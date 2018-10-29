@@ -30,7 +30,8 @@ inline const char* _0_0_0__00_RNG(char* seam_log, char* seam_end,
 
   for (int i = 0; i < 10000; ++i) {
     Print("\n");
-    Print(RandomUI4());
+    RandomizeSeed();
+    Print(RandomUI8());
   }
 
   TEST_END;

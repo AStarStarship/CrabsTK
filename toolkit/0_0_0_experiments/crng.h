@@ -20,73 +20,73 @@ specific language governing permissions and limitations under the License. */
 namespace _ {
 
 /* Gets a random generator device seed. */
-inline uint32_t RandomSeed();
+API uint32_t RandomSeed();
 
 /* Re-seeds the static mersenne twister engine. */
-inline void RandomizeSeed();
+API void RandomizeSeed();
 
 /* Gets a random 8-bit/1-byte unsigned integer. */
-inline uint8_t RandomUI1();
+API uint8_t RandomUI1();
 
 /* Gets a random 8-bit/1-byte signed integer. */
-inline int8_t RandomSI1();
+API int8_t RandomSI1();
 
 /* Gets a random 16-bit/2-byte unsigned integer. */
-inline uint16_t RandomUI2();
+API uint16_t RandomUI2();
 
 /* Gets a random 16-bit/2-byte signed integer. */
-inline int16_t RandomSI2();
+API int16_t RandomSI2();
 
 /* Gets a random 32-bit/4-byte unsigned integer. */
-inline uint32_t RandomUI4();
+API uint32_t RandomUI4();
 
 /* Gets a random 32-bit/4-byte signed integer. */
-inline int32_t RandomSI4();
+API int32_t RandomSI4();
 
 /* Gets a random 64-bit/8-byte unsigned integer. */
-inline uint64_t RandomUI8();
+API uint64_t RandomUI8();
 
 /* Gets a random 64-bit/8-byte signed integer. */
-inline int64_t RandomSI8();
+API int64_t RandomSI8();
 
 /* Gets a random 16-bit/2-byte unsigned integer. */
-inline uint16_t Random(uint16_t min, uint16_t max);
+API uint16_t Random(uint16_t min, uint16_t max);
 
 /* Gets a random 16-bit/2-byte signed integer. */
-inline uint16_t Random(int16_t min, int16_t max);
+API uint16_t Random(int16_t min, int16_t max);
 
 /* Gets a random 32-bit/4-byte unsigned integer. */
-inline uint32_t Random(uint32_t min, uint32_t max);
+API uint32_t Random(uint32_t min, uint32_t max);
 
 /* Gets a random 64-bit/8-byte unsigned integer. */
-inline uint64_t Random(uint64_t min, uint64_t max);
+API uint64_t Random(uint64_t min, uint64_t max);
 
 /* Gets a random 64-bit/8-byte signed integer. */
-inline uint64_t Random(int64_t min, int64_t max);
+API uint64_t Random(int64_t min, int64_t max);
 
 /* Gets a random 8-bit/1-byte unsigned integer. */
-inline void RandomNumber(uint8_t& result);
+API void RandomNumber(uint8_t& result);
 
 /* Gets a random 8-bit/1-byte signed integer. */
-inline void RandomNumber(int8_t& result);
+API void RandomNumber(int8_t& result);
 
 /* Gets a random 16-bit/2-byte unsigned integer. */
-inline void RandomNumber(uint16_t& result);
+API void RandomNumber(uint16_t& result);
 
 /* Gets a random 16-bit/2-byte signed integer. */
-inline void RandomNumber(int16_t& result);
+API void RandomNumber(int16_t& result);
 
 /* Gets a random 32-bit/4-byte unsigned integer. */
-inline void RandomNumber(uint32_t& result);
+API void RandomNumber(uint32_t& result);
 
 /* Gets a random 32-bit/4-byte signed integer. */
-inline void RandomNumber(int32_t& result);
+API void RandomNumber(int32_t& result);
 
 /* Gets a random 64-bit/8-byte unsigned integer. */
-inline void RandomNumber(uint64_t& result);
+API void RandomNumber(uint64_t& result);
 
 /* Gets a random 64-bit/8-byte signed integer. */
-inline void RandomNumber(int64_t& result);
+API void RandomNumber(int64_t& result);
 
 }  // namespace _
 #endif  //< INCLUDED_KABUKI_F2_CRNG

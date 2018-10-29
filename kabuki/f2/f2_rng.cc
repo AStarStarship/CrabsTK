@@ -21,69 +21,65 @@ namespace _ {
 
 static std::default_random_engine rng;
 
-inline uint32_t RandomUI4() { return rng(); }
+uint32_t RandomUI4() { return rng(); }
 
-inline uint RandomSeed() { return std::random_device()(); }
+uint RandomSeed() { return std::random_device()(); }
 
-inline void RandomizeSeed() { return rng.seed(RandomSeed()); }
+void RandomizeSeed() { return rng.seed(RandomSeed()); }
 
-inline uint8_t RandomUI1() { return (uint8_t)RandomUI4(); }
+uint8_t RandomUI1() { return (uint8_t)RandomUI4(); }
 
-inline int8_t RandomSI1() { return (int8_t)RandomUI1(); }
+int8_t RandomSI1() { return (int8_t)RandomUI1(); }
 
-inline uint16_t RandomUI2() { return (uint16_t)RandomUI4(); }
+uint16_t RandomUI2() { return (uint16_t)RandomUI4(); }
 
-inline int16_t RandomSI2() { return (int16_t)RandomUI2(); }
+int16_t RandomSI2() { return (int16_t)RandomUI2(); }
 
-inline int32_t RandomSI4() { return (int32_t)RandomUI4(); }
+int32_t RandomSI4() { return (int32_t)RandomUI4(); }
 
-inline uint64_t RandomUI8() {
+uint64_t RandomUI8() {
   uint64_t a = RandomUI4(), b = RandomUI4();
   return (int64_t)(a | (b << 32));
 }
 
-inline int64_t RandomSI8() { return (int64_t)RandomUI8(); }
+int64_t RandomSI8() { return (int64_t)RandomUI8(); }
 
-inline void RandomNumber(uint8_t& result) { result = RandomUI1(); }
+void RandomNumber(uint8_t& result) { result = RandomUI1(); }
 
-inline void RandomNumber(int8_t& result) { result = RandomSI1(); }
+void RandomNumber(int8_t& result) { result = RandomSI1(); }
 
-inline void RandomNumber(uint16_t& result) { result = RandomUI2(); }
+void RandomNumber(uint16_t& result) { result = RandomUI2(); }
 
-inline void RandomNumber(int16_t& result) { result = RandomSI2(); }
+void RandomNumber(int16_t& result) { result = RandomSI2(); }
 
-inline void RandomNumber(uint32_t& result) { result = RandomUI4(); }
+void RandomNumber(uint32_t& result) { result = RandomUI4(); }
 
-inline void RandomNumber(int32_t& result) { result = RandomSI4(); }
+void RandomNumber(int32_t& result) { result = RandomSI4(); }
 
-inline void RandomNumber(uint64_t& result) { result = RandomUI8(); }
+void RandomNumber(uint64_t& result) { result = RandomUI8(); }
 
-inline void RandomNumber(int64_t& result) { result = RandomSI8(); }
+void RandomNumber(int64_t& result) { result = RandomSI8(); }
 
 template <typename I>
-inline I Random(I min, I max) {
+I Random(I min, I max) {
   std::uniform_int_distribution<I> dist(min, max);
   return dist(rng);
 }
 
-inline uint16_t Random(uint16_t min, uint16_t max) {
+uint16_t Random(uint16_t min, uint16_t max) {
   return Random<uint16_t>(min, max);
 }
 
-inline uint16_t Random(int16_t min, int16_t max) {
-  return Random<int16_t>(min, max);
-}
+uint16_t Random(int16_t min, int16_t max) { return Random<int16_t>(min, max); }
 
-inline uint32_t Random(uint32_t min, uint32_t max) {
+uint32_t Random(uint32_t min, uint32_t max) {
   return Random<uint32_t>(min, max);
 }
 
-inline uint64_t Random(uint64_t min, uint64_t max) {
+uint64_t Random(uint64_t min, uint64_t max) {
   return Random<uint64_t>(min, max);
 }
 
-inline uint64_t Random(int64_t min, int64_t max) {
-  return Random<int64_t>(min, max);
-}
+uint64_t Random(int64_t min, int64_t max) { return Random<int64_t>(min, max); }
 
 }  // namespace _
