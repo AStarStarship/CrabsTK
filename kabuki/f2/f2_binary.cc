@@ -27,7 +27,7 @@ char HexNibbleToUpperCase(uint8_t b) {
 
 #if SEAM >= _0_0_0__01
 namespace _ {
-
+/*
 int StringLength(uint64_t value) {
   if (value < 10) return 1;
   if (value < 100) return 2;
@@ -60,7 +60,7 @@ Char* PrintMod10(Char* cursor, Char* end, uint32_t value) {
     if (cursor + 1 >= end) return nullptr;
     *cursor = '0' + value;
     *(cursor + 1) = 0;
-    *return cursor + 1;
+    return cursor + 1;
   } else if (value < 100) {
     uint32_t ten = 10;
     length = value / 10;
@@ -91,9 +91,9 @@ Char* PrintMod10(Char* cursor, Char* end, uint32_t value) {
   while (length > 0) {
     uint32_t scalar = value / ten;
   }
-}
+} */
 
-char* PrintMod10(char* cursor, char* end, uint64_t value);
+// char* PrintMod10(char* cursor, char* end, uint64_t value);
 
 #if CPU_ENDIAN == LITTLE_ENDIAN
 static const uint16_t kDigits00To99[100] = {
@@ -180,31 +180,31 @@ static const uint32_t kIEEE754Pow10[] = {
 
 #endif  //<  #if SEAM >= _0_0_0__03
 
-inline const uint16_t* BinaryDecimalsLUT() { return kDigits00To99; }
+const uint16_t* BinaryDecimalsLUT() { return kDigits00To99; }
 
-inline uint8_t Unsigned(int8_t value) { return (uint8_t)(value); }
+uint8_t Unsigned(int8_t value) { return (uint8_t)(value); }
 
-inline uint16_t Unsigned(int16_t value) { return (uint16_t)(value); }
+uint16_t Unsigned(int16_t value) { return (uint16_t)(value); }
 
-inline uint32_t Unsigned(int32_t value) { return (uint32_t)(value); }
+uint32_t Unsigned(int32_t value) { return (uint32_t)(value); }
 
-inline uint64_t Unsigned(int64_t value) { return (uint64_t)(value); }
+uint64_t Unsigned(int64_t value) { return (uint64_t)(value); }
 
-inline uint8_t Negative(int8_t value) { return (uint8_t)(-value); }
+uint8_t Negative(int8_t value) { return (uint8_t)(-value); }
 
-inline uint8_t Negative(uint8_t value) { return (uint8_t)(-(int8_t)value); }
+uint8_t Negative(uint8_t value) { return (uint8_t)(-(int8_t)value); }
 
-inline uint16_t Negative(int16_t value) { return (uint16_t)(-value); }
+uint16_t Negative(int16_t value) { return (uint16_t)(-value); }
 
-inline uint16_t Negative(uint16_t value) { return (uint16_t)(-(int16_t)value); }
+uint16_t Negative(uint16_t value) { return (uint16_t)(-(int16_t)value); }
 
-inline uint32_t Negative(int32_t value) { return (uint32_t)(-value); }
+uint32_t Negative(int32_t value) { return (uint32_t)(-value); }
 
-inline uint32_t Negative(uint32_t value) { return (uint32_t)(-(int32_t)value); }
+uint32_t Negative(uint32_t value) { return (uint32_t)(-(int32_t)value); }
 
-inline uint64_t Negative(int64_t value) { return (uint64_t)(-value); }
+uint64_t Negative(int64_t value) { return (uint64_t)(-value); }
 
-inline uint64_t Negative(uint64_t value) { return (uint64_t)(-(int64_t)value); }
+uint64_t Negative(uint64_t value) { return (uint64_t)(-(int64_t)value); }
 
 bool IsNaN(int8_t value) {
   return (value > NanUnsigned<int8_t>()) &&
@@ -273,10 +273,6 @@ int HexToByte(uint16_t h) {
   return lowerValue | (upper_value << 4);
 }
 
-int BinaryLength(uint32_t value) {}
-
-int BinaryLength(uint64_t value) {}
-
 }  // namespace _
 #endif
 
@@ -291,9 +287,9 @@ int BinaryLength(uint64_t value) {}
 
 namespace _ {
 
-inline int FloatDigitsMax() { return 15; }
+int FloatDigitsMax() { return 15; }
 
-inline int DoubleDigitsMax() { return 31; }
+int DoubleDigitsMax() { return 31; }
 
 int MSbAsserted(uint8_t value) { return MSbAssertedReverse<uint8_t>(value); }
 
@@ -319,8 +315,8 @@ int MSbAsserted(int64_t value) {
   return MSbAssertedReverse<uint64_t>((uint64_t)value);
 }
 
-inline void FloatBytes(float value, char& byte_0, char& byte_1, char& byte_2,
-                       char& byte_3) {
+void FloatBytes(float value, char& byte_0, char& byte_1, char& byte_2,
+                char& byte_3) {
   uint32_t ui_value = *reinterpret_cast<uint32_t*>(&value);
   byte_0 = (char)(ui_value);
   byte_1 = (char)(ui_value >> 8);
@@ -398,12 +394,12 @@ char* Print(char* begin, char* end, char byte_0, char byte_1, char byte_2) {
 
 constexpr intptr_t IEEE754LutElementCount() { return 87; }
 
-inline const int16_t* IEEE754Pow10E() {
+const int16_t* IEEE754Pow10E() {
   /* Precomputed powers of 10 exponents for Grisu. */
   return kCachedPowersE;
 }
 
-inline const uint64_t* IEEE754Pow10F() { return kCachedPowersF; }
+const uint64_t* IEEE754Pow10F() { return kCachedPowersF; }
 
 void NumberRealLutGenerate(char* lut, size_t size) {
   ASSERT(size);
@@ -439,13 +435,9 @@ const uint64_t* PufLutPow10(char* puff_lut) {
   return reinterpret_cast<const uint64_t*>(puff_lut + 374);
 }
 
-inline uint32_t Value(float value) {
-  return *reinterpret_cast<uint32_t*>(&value);
-}
+uint32_t Value(float value) { return *reinterpret_cast<uint32_t*>(&value); }
 
-inline uint64_t Value(double value) {
-  return *reinterpret_cast<uint64_t*>(&value);
-}
+uint64_t Value(double value) { return *reinterpret_cast<uint64_t*>(&value); }
 
 bool IsNaNPositive(int8_t value) { return value > NanUnsigned<int8_t>(); }
 
@@ -471,7 +463,7 @@ wish to do so.
 @param left_bits Number of bits to shift left.
 @param right_bits Number of bits to shift right. */
 template <typename UI>
-inline UI ShiftLeftRight(UI value, int left_bits, int right_bits) {
+UI ShiftLeftRight(UI value, int left_bits, int right_bits) {
   value = value << left_bits;
   return value >> right_bits;
 }
@@ -479,7 +471,7 @@ inline UI ShiftLeftRight(UI value, int left_bits, int right_bits) {
 /* Creates a mask with the given number of zeros in the MSb(s).
 @param msb_zero_count The number of zeros in the Most Significant bits. */
 template <typename UI>
-inline UI CreateMaskLSb(UI msb_zero_count) {
+UI CreateMaskLSb(UI msb_zero_count) {
   UI mask = 0;
   return (~mask) >> msb_zero_count;
 }
@@ -487,7 +479,7 @@ inline UI CreateMaskLSb(UI msb_zero_count) {
 /* Masks off the lower bits.
 @param msb_zero_count The number of zeros in the Most Significant bits. */
 template <typename UI>
-inline UI MaskLSb(UI value, UI msb_zero_count) {
+UI MaskLSb(UI value, UI msb_zero_count) {
   return value & CreateMaskLSb<UI>(msb_zero_count);
 }
 
@@ -495,7 +487,7 @@ inline UI MaskLSb(UI value, UI msb_zero_count) {
 @brief Function forces the compiler to create the mask without a LDR
 instruction. */
 template <typename I>
-inline I PowerOf2(I n) {
+I PowerOf2(I n) {
   I value = 1;
   return value << n;
 }

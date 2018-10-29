@@ -21,13 +21,17 @@ namespace _ {
 
 static std::random_device rd;
 static std::default_random_engine rng(rd);
+// static std::mt19937_64 rng64(rd);
 
 uint32_t RandomSeed() { return std::random_device()(); }
 
 void RandomizeSeed() { return rng.seed(RandomSeed()); }
 
+// void RandomizeSeed64() { return rng64.seed(RandomSeed()); }
+
 template <typename I>
 I RandomNumber(I min, I max) {
+  RandomizeSeed();
   std::uniform_int_distribution<I> dist(min, max);
   return dist(rng);
 }
@@ -70,15 +74,26 @@ uint8_t RandomUI1() {
 
 int8_t RandomSI1() { return (int8_t)RandomUI1(); }
 
-uint16_t RandomUI2() { return RandomNumber<uint16_t>(0, 0xffff); }
+uint16_t RandomUI2() {
+  uint16_t max = ~(uint16_t)0;
+  return RandomNumber<uint16_t>(0, max);
+}
 
 int16_t RandomSI2() { return (int16_t)RandomUI2(); }
 
-uint32_t RandomUI4() { return RandomNumber<uint32_t>(0, 0xffffffff); }
+uint32_t RandomUI4() {
+  uint32_t max = ~(uint32_t)0;
+  return RandomNumber<uint32_t>(0, max);
+}
 
 int32_t RandomSI4() { return (int32_t)RandomUI4(); }
 
-uint64_t RandomUI8() { return RandomNumber<uint64_t>(0, 0xffffffffffffffff); }
+uint64_t RandomUI8() {
+  uint64_t max = ~(uint64_t)0;
+  std::uniform_int_distribution<uint64_t> dist(0, max);
+  // return dist(rng64);
+  return dist(rng);
+}
 
 int64_t RandomSI8() { return (int64_t)RandomUI8(); }
 

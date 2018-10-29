@@ -25,7 +25,7 @@ specific language governing permissions and limitations under the License. */
 
 namespace _ {
 
-#if SEAM == _0_0_0__00
+#if SEAM == _0_0_0__01
 #include "test_debug.inl"
 #define PRINT_ARGS                                     \
   Printf("\nargs_count:%i args:%p", args_count, args); \
@@ -109,7 +109,7 @@ void Print(const char* a, const char* b, const char* c) {
 }
 
 void Print(uint64_t value) {
-#if SEAM <= _0_0_0__00
+#if SEAM <= _0_0_0__01
   return Printf(FORMAT_UI8, value);
 #else
   enum { kSize = 24 };
@@ -120,7 +120,7 @@ void Print(uint64_t value) {
 }
 
 void Print(uint32_t value) {
-#if SEAM <= _0_0_0__00
+#if SEAM <= _0_0_0__01
   return Printf("%u", value);
 #else
   enum { kSize = 24 };
@@ -130,7 +130,7 @@ void Print(uint32_t value) {
 }
 
 void Print(int64_t value) {
-#if SEAM <= _0_0_0__00
+#if SEAM <= _0_0_0__01
   return Printf(FORMAT_SI8, value);
 #else
   enum { kSize = 24 };
@@ -141,7 +141,7 @@ void Print(int64_t value) {
 }
 
 void Print(int32_t value) {
-#if SEAM <= _0_0_0__00
+#if SEAM <= _0_0_0__01
   return Printf("%i", value);
 #else
   enum { kSize = 24 };

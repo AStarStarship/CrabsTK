@@ -29,9 +29,10 @@ inline const char* _0_0_0__00_RNG(char* seam_log, char* seam_end,
   TEST_BEGIN;
 
   for (int i = 0; i < 10000; ++i) {
-    Print("\n");
+    PRINT("\n");
     RandomizeSeed();
-    Print(RandomUI8());
+    auto value = RandomUI2();
+    PRINT(value);
   }
 
   TEST_END;
